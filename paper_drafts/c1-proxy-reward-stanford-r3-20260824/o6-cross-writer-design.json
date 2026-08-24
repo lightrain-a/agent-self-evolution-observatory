@@ -1,0 +1,208 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "targeted-scientific-reopen-design",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "objection_id": "PROXY-O6",
+  "created_at": "2026-08-24T10:18:00+08:00",
+  "decision": "CROSS_WRITER_SEQUENTIAL_REPLICATION_PREREGISTERED",
+  "reviewer_gap": "The write-time intervention and downstream effect are currently demonstrated with one memory writer. A cross-writer replication can test whether the reward-conditioned state channel survives a writer-family change without simultaneously changing the downstream policy, task support, evidence, evaluator, or terminal estimand.",
+  "priority_rationale": [
+    "The core causal object is reward-conditioned persistent-state construction, so writer-family replication is more mechanism-aligned than changing only the downstream policy model.",
+    "The released live WebArena Shopping and reset endpoints were rechecked on 2026-08-24 and still time out from the execution host, so live-loop execution remains environment-blocked with zero scientific authority.",
+    "A full corruption-mask memory-bank sweep changes the corruption process and introduces multi-memory interactions; it is more expensive and less diagnostic than first testing whether the write-and-reuse channel survives a second writer.",
+    "The design is sequential: only eight writer calls are spent before deciding whether a 256-call terminal replication is scientifically justified."
+  ],
+  "authority": {
+    "human_program_authority_required": true,
+    "human_program_authority_source": "external content-addressed C1 repair-program permit",
+    "per_stage_execution_contract_required": true,
+    "outcome_driven_scope_expansion_authorized": false,
+    "claim_expansion_authority": false,
+    "submission_authority": false
+  },
+  "source_bindings": {
+    "stanford_r2_objection_matrix": {
+      "path": "generated/stanford-r2-objection-matrix.json",
+      "sha256": "f1c594a475a260c993797f405f386ea2eb160497c88d8ccbc2421d42c6ea6660"
+    },
+    "original_f0": {
+      "path": "/data/wyt/agent-self-evolution-observatory/paper-acceptance-artifacts/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE/f0-write-channel.json",
+      "sha256": "f2e4f3424faf1e3a9ec7aba7958e538eac457e89308552ef7a9c3d69c6a914f9"
+    },
+    "original_f2r1": {
+      "path": "/data/wyt/agent-self-evolution-observatory/paper-acceptance-artifacts/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE/f2r1-confirmatory.json",
+      "sha256": "04db52a9c2a1eac28df4213e5041e2f20e8e4b3591d5941f9e6d889a8b8dc2e9"
+    },
+    "fresh_o5_no_memory": {
+      "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/o5-manuscript-evidence.json",
+      "sha256": "202a253e9766221c4de727afc9aedb7b4395b4814f15c1f82db0b93c166ae7e8",
+      "reusable_in_stage2_descriptive_analysis": true,
+      "reason": "No-memory contains no writer-produced state, while downstream policy, future tasks, fixed evidence, and evaluator remain unchanged. It is not rerun and is not part of the stage-2 primary two-arm gate."
+    },
+    "trajectory_parquet": {
+      "sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e"
+    },
+    "reasoningbank_success_prompt": {
+      "sha256": "5d4893a5f3dc5fadda43f166d6f322d729c197d8a8a74ca953f7c10acabb940a"
+    },
+    "reasoningbank_failure_prompt": {
+      "sha256": "9bd01483afd8f8366ade02c7d839657d38f3eb263daa5cbfe15445b956116b45"
+    },
+    "terminal_support": {
+      "sha256": "b64635594251ac8f74251ea68b39a0c0c03b689b0708366be9c68ff193edd7ce"
+    },
+    "terminal_task_config": {
+      "sha256": "d25e83078ec728adc82bd43871338a24a3907e101b5a5fdb1ae81bb7f72f36a6"
+    },
+    "terminal_evaluator": {
+      "sha256": "f78eb61554c811f9411e7d72e0bdf2b5baa27379cbf632ade7fe49ce51a3f30d"
+    }
+  },
+  "frozen_source_units": [
+    {
+      "task_id": "21",
+      "trajectory_summary_sha256": "0697e64ba5a6c805cf0ce929ac1d947d2e884b75073c73ec63ec30f26156acab"
+    },
+    {
+      "task_id": "22",
+      "trajectory_summary_sha256": "ce3161ff3c47c24a5f96b109162935aa3d8126c47559aca38c6cd3c77c121446"
+    },
+    {
+      "task_id": "23",
+      "trajectory_summary_sha256": "4471ab8874a465680a66b48fe06b09633785d46fb549195b04d75e1d58646d23"
+    },
+    {
+      "task_id": "25",
+      "trajectory_summary_sha256": "9355929e90fb70ba7b554630fa21b93dfcc0117586a73cae1020782ace41444a"
+    }
+  ],
+  "stage1_cross_writer_write_channel": {
+    "question": "On the exact four source trajectories that define the existing terminal matrix, does a second writer family still produce different persistent memory when only the released ReasoningBank success-versus-failure reflection mode changes?",
+    "writer_model": {
+      "requested": "glm-5.3",
+      "temperature": 0.0,
+      "max_output_tokens": 2200,
+      "thinking": null,
+      "provider_retries": 0,
+      "store": true,
+      "resolved_model_family_rule": "Normalize the provider-resolved model to lowercase alphanumerics and require it to start with 'glm53'. A version suffix is allowed; another model family is not.",
+      "substitution_allowed": false
+    },
+    "conditions": [
+      "success_label_memory",
+      "failure_label_memory"
+    ],
+    "paired_sources": 4,
+    "provider_calls": 8,
+    "intervention": {
+      "fixed": [
+        "task prompt",
+        "released trajectory",
+        "historical action-summary algorithm",
+        "writer model",
+        "temperature",
+        "output schema"
+      ],
+      "changed": "only the exact released ReasoningBank success-reflection versus failure-reflection system prompt selected by reward label"
+    },
+    "metrics": [
+      "paired exact normalized-content change",
+      "paired token-set Jaccard distance",
+      "paired extracted Title-set change"
+    ],
+    "advance_to_stage2_if": {
+      "all_8_provider_calls_complete": true,
+      "exact_content_changed_pairs_min": 4,
+      "title_set_changed_pairs_min": 3,
+      "token_jaccard_threshold": null
+    },
+    "stop_if": "Any provider call is scientifically incomplete, fewer than four of four paired memories change normalized content, or fewer than three of four paired Title sets change. Do not lower this gate after outcomes.",
+    "claim_if_pass": "The identical-trajectory reward-conditioned write channel survives a second writer family on the same four source units. No general writer-population claim is permitted."
+  },
+  "stage2_cross_writer_terminal_replication": {
+    "execution_condition": "Stage 1 passes its frozen gate and a separate run-local execution contract verifies all stage-1 memory hashes and source bindings.",
+    "question": "When the second writer's paired memories are reused under the same downstream policy and fixed evidence, does the terminal success distribution retain a material success-memory versus failure-memory difference over the same frozen 4x4 source-by-future support?",
+    "source_memory_tasks": [
+      "21",
+      "22",
+      "23",
+      "25"
+    ],
+    "future_tasks": [
+      "164",
+      "385",
+      "387",
+      "388"
+    ],
+    "conditions": [
+      "success_label_memory",
+      "failure_label_memory"
+    ],
+    "downstream_model": {
+      "requested": "doubao-seed-2.0-mini",
+      "expected_resolved": "doubao-seed-2-0-mini-260215",
+      "temperature": 0.2,
+      "max_output_tokens": 900,
+      "thinking": "disabled",
+      "allow_thinking_compatibility_fallback": false,
+      "provider_retries": 0,
+      "store": true,
+      "substitution_allowed": false
+    },
+    "rollouts_per_cell_per_condition": 8,
+    "source_future_cells": 16,
+    "provider_calls": 256,
+    "primary_statistic": "mean across the 16 frozen source-future cells of the absolute benchmark terminal success-rate difference between the second-writer success-label-memory and failure-label-memory conditions",
+    "permutation_scheme": "Within each source-future cell, pool the sixteen binary terminal scores and randomly assign eight to each memory label; compute the mean absolute rate difference across all 16 cells.",
+    "permutation_repetitions": 100000,
+    "permutation_seed": 20260824,
+    "support_if": {
+      "mean_absolute_success_rate_difference_min": 0.15,
+      "permutation_p_lt": 0.05
+    },
+    "otherwise": "CROSS_WRITER_TERMINAL_GENERALIZATION_NOT_ESTABLISHED; preserve the positive stage-1 write-channel result if stage 1 passed, but do not rescue terminal generalization by lowering the gate.",
+    "secondary_descriptives": [
+      "signed-effect sign agreement with the original F2R1 matrix",
+      "Pearson correlation of the 16 signed cell effects with original F2R1",
+      "zero/positive/negative cell counts",
+      "branch location relative to the already-frozen O5 no-memory baseline, without treating four shared baselines as sixteen independent observations"
+    ],
+    "primary_gate_uses_o5_no_memory": false
+  },
+  "economy": {
+    "stage1_calls": 8,
+    "stage2_calls_if_stage1_passes": 256,
+    "maximum_new_provider_calls": 264,
+    "additional_no_memory_calls": 0,
+    "training_runs": 0,
+    "gpu_runs": 0,
+    "early_stop_saves_if_stage1_fails": 256
+  },
+  "claim_boundary": {
+    "allowed_if_stage1_only_passes": "The write-time reward-conditioned state channel replicates across DeepSeek-V4-Flash and GLM-5.3 on the four frozen source trajectories; downstream cross-writer terminal propagation remains unestablished.",
+    "allowed_if_both_stages_pass": "On the same four source trajectories and four fixed-evidence future tasks, the reward-conditioned write-and-reuse channel survives a second writer family while the downstream policy is held fixed.",
+    "forbidden": [
+      "Claim writer-family invariance in general from two writers.",
+      "Claim domain generalization beyond WebArena Shopping.",
+      "Pool or select cells after seeing outcomes.",
+      "Lower the stage-1 structural gate or stage-2 0.15/p<0.05 gate after outcomes.",
+      "Treat live-loop environment timeout as scientific negative evidence.",
+      "Treat the reused O5 no-memory baseline as sixteen independent observations.",
+      "Expand to a corruption-mask or new-domain claim without another frozen subcontract."
+    ]
+  },
+  "live_loop_recheck": {
+    "checked_at": "2026-08-24T10:10:00+08:00",
+    "execution_host": "222.20.126.69",
+    "shopping_port_7770_reachable": false,
+    "reset_port_4399_reachable": false,
+    "failure_mode": "TCP timeout after approximately four seconds for each endpoint",
+    "scientific_authority": false,
+    "execution_action": "KEEP_SUPPORT_DEBT_NO_MODEL_CALLS"
+  },
+  "next_gate": {
+    "state": "READY_TO_COMPILE_STAGE1_EXECUTION_CONTRACT",
+    "provider_calls_before_stage1_contract": 0,
+    "stage2_provider_calls_before_stage1_pass": 0
+  }
+}

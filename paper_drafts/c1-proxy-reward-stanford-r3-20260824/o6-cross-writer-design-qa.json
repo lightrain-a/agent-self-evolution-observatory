@@ -1,0 +1,41 @@
+{
+  "artifact_type": "o6-cross-writer-design-qa",
+  "checks": {
+    "economy_consistent": true,
+    "f0_binding": true,
+    "f2r1_binding": true,
+    "failure_prompt_binding": true,
+    "four_frozen_sources": true,
+    "identity": true,
+    "live_loop_still_blocked": true,
+    "matrix_binding": true,
+    "no_claim_expansion_authority": true,
+    "o5_binding": true,
+    "o5_not_primary_gate": true,
+    "parquet_binding": true,
+    "stage1_exactly_eight_calls": true,
+    "stage1_gate_frozen": true,
+    "stage1_writer_exact": true,
+    "stage2_exactly_256_calls": true,
+    "stage2_gate_not_relaxed": true,
+    "stage2_model_exact": true,
+    "stage2_support_exact": true,
+    "success_prompt_binding": true,
+    "terminal_evaluator_binding": true,
+    "terminal_support_binding": true,
+    "terminal_task_config_binding": true
+  },
+  "design_sha256": "e33996f4e4f00da7b162bf7e9c26ca004aaf7e5d04f2547aacbc04f47ad05c1e",
+  "experiment_authority": false,
+  "objection_id": "PROXY-O6",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "PASS",
+  "summary": {
+    "passed": 23,
+    "stage1_provider_calls_before_contract": 0,
+    "stage2_provider_calls_before_stage1_pass": 0,
+    "total": 23
+  }
+}
