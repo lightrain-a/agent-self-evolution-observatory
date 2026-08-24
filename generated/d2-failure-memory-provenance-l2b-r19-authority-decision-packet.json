@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "packet_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-AUTHORITY-DECISION-PACKET",
+  "recorded_date": "2026-08-24",
+  "status": "R19_AUTHORITY_DECISION_PACKET_READY_NOT_AUTHORIZED",
+  "role": "HUMAN_DECISION_SUPPORT_NOT_AUTHORITY",
+  "bindings": {
+    "r19_contract_sha256": "ed803f0958002ab2095563a56cff6328a054ff4c4d7bd9fc18fc97bb3bdc3282",
+    "r19_readiness_sha256": "606b6f68377777ad9b9d1794df95c69d6ad3ae3005b397cbee080396ffa24133",
+    "r19_claim_policy_sha256": "6c45274d59ec91865bd48b5ab4afe5358a5fe60dd57657da24cce569b87a9e86",
+    "r18c_stop_sha256": "6b1625bcc9f5ce917019958c3555c3bb985999f0496ea22a961d609f76040abb"
+  },
+  "decision_context": {
+    "engineering_contract_ready": true,
+    "authority_decision_ready": true,
+    "execution_ready_without_new_authority": false,
+    "R18_attempt_consumed_and_not_retriable": true,
+    "R19_is_new_experiment": true,
+    "R19_current_scientific_verdict": "NO_VERDICT_PRE_AUTHORITY"
+  },
+  "exact_scope_if_authorized": {
+    "scientific_object": "R19 new 35-template L2B metadata-only experiment; not R18 retry",
+    "independent_tasks": 35,
+    "terminal_episodes": 140,
+    "memory": "reuse R17 exact frozen memory bytes; zero regeneration/editing",
+    "treatment": "STATUS_S versus STATUS_F only; selected source record/order and actionable memory bytes identical across arms",
+    "executor": "frozen content-addressed local Qwen executor under the R19 alias/transport contract",
+    "prebenchmark_support_completions": 2,
+    "benchmark_agent_completion_upper_bound": 4200,
+    "benchmark_fuzzy_evaluator_completion_upper_bound": 600,
+    "maximum_new_local_model_completions": 4802,
+    "primary_endpoint": "official terminal WebArena score",
+    "primary_analysis": "35 task-level deltas; two-sided sign-flip, 100000 permutations; |mean delta|>=0.15 and p<0.05",
+    "full_completion_required": "140/140 valid terminal episodes"
+  },
+  "mandatory_prebenchmark_sequence_if_authorized": [
+    "Re-run zero-call alias/tokenizer registry preflight and live Shopping reset/BrowserGym support preflight.",
+    "Run one fixed nonbenchmark synthetic completion through alias gpt-4; inspect only transport success/non-empty response.",
+    "Run one fixed nonbenchmark synthetic completion through alias gpt-4-1106-preview; inspect only transport success/non-empty response.",
+    "If either synthetic smoke fails, stop before any benchmark episode.",
+    "If both pass, execute the frozen 140-episode schedule exactly once under the R19 retry/fail-closed rules.",
+    "Apply only the precommitted R19 claim-impact branch after execution."
+  ],
+  "authorization_text_for_human_decision": "Authorize R19 only under the frozen 35-task / 140-episode contract bound by this packet. Permit the two fixed nonbenchmark local transport smokes and, only if both pass before benchmark exposure, permit the frozen local model/browser/evaluator execution up to 4802 new local model completions total. Do not authorize R18 retry, task replacement, memory regeneration/editing, model-manifest/provider switching, threshold/endpoint/statistical changes, L3 transport, claim expansion, external paid API calls, or post-outcome sample extension. Scientific support is not granted in advance and must be determined only by the frozen R19 claim-impact policy.",
+  "decision_options": {
+    "AUTHORIZE_EXACT_R19_SCOPE": "Human explicitly approves the authorization text or an unambiguously equivalent scope.",
+    "DO_NOT_AUTHORIZE": "Keep R19 at pre-authority readiness; no benchmark or synthetic model completion is run."
+  },
+  "not_authorized_by": [
+    "this packet",
+    "generic continuation language",
+    "paper SUBMISSION_READY state",
+    "prior R16 authority",
+    "engineering readiness",
+    "reviewer demand for O5 evidence"
+  ],
+  "current_authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_completions": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "gpu": false,
+    "submission": false
+  },
+  "verdict": "NO_AUTHORITY_DECISION_RECORDED"
+}

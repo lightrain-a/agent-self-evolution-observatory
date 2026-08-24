@@ -688,7 +688,11 @@
             "readiness_receipt": "generated/d2-failure-memory-provenance-l2b-r19-readiness.json",
             "engineering_contract_ready": true,
             "authority_decision_ready": true,
-            "execution_ready_now": false
+            "execution_ready_now": false,
+            "claim_impact_policy_status": "R19_POSTOUTCOME_INTERPRETATION_AND_MANUSCRIPT_TRANSITIONS_FROZEN_PREOUTCOME",
+            "claim_impact_policy_receipt": "generated/d2-failure-memory-provenance-l2b-r19-claim-impact-policy.json",
+            "outcome_interpretation_branches": 4,
+            "no_effect_claim_authorized": false
           }
         },
         {
