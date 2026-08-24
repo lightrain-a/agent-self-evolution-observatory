@@ -12,17 +12,17 @@
   "authorization_semantics": {
     "any_scope_or_budget_change_requires_new_plan_hash_and_new_authorization": true,
     "generic_continue_instruction_is_not_interpreted_as_new_scientific_execution_authority": true,
-    "required_human_directive": "Explicitly authorize reopening TEMP-O4 Stage A on the DeepSeek primary track and executing the bound 210-call fresh N/G0/T plan through Ark Plan.",
+    "required_human_directive": "Explicitly authorize reopening TEMP-O4 Stage A on the DeepSeek primary track and executing the bound 210-call fresh N/G0/T plan through the frozen Ark Plan /api/plan/v3 route.",
     "required_runtime_confirmation": {
       "ark_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
-      "ark_plan_target_confirmed_and_propagated": true,
-      "ark_plan_target_model": "deepseek-v4-pro"
+      "requested_model": "deepseek-v4-pro",
+      "required_resolved_model": "deepseek-v4-pro-260425"
     }
   },
   "bound_analyzer_sha256": "7125f288bb622d67a720341dc92058106e89e03b23b3eb8c4f3f67807aad33f9",
-  "bound_plan_body_sha256": "d0e0635ce314628894fa4a4eccce9345274289ca2966fc64796c2cf5f31aecd9",
-  "bound_preflight_receipt_body_sha256": "a9e1b6c39e219038e5021dc94d9036a9439ce1b24c804355848df8a24ea7f741",
-  "bound_runner_sha256": "4682f369aac5caf1d583a40477b437eb7d25780c87cf98f8af7edcac26137d39",
+  "bound_plan_body_sha256": "d59c64584d08f748d76dd42643da5dc0632f155a5574a0f4df00b67d9a83ed62",
+  "bound_preflight_receipt_body_sha256": "4aefe8548274294323b7bff55dad07da52167eaf96115c43edca5b79e61cc2e4",
+  "bound_runner_sha256": "394b62c398ea95a38b8d4273a4ca5172f418218456ac1411dc32dc29bb28c276",
   "budget": {
     "arms": [
       "N_FRESH",
@@ -46,17 +46,18 @@
     "GPU_EXECUTION"
   ],
   "model_identity": {
-    "ark_code_latest_counts_as_same_model_evidence_only_if_provider_resolves_exact_required_model": true,
-    "direct_extra_billed_model_route_forbidden": true,
+    "direct_model_name_on_plan_route_allowed": true,
+    "historical_same_env_plan_route_resolved_exact_model": true,
+    "online_api_v3_route_forbidden": true,
     "plan_only_billing_route_required": true,
-    "requested_model": "ark-code-latest",
+    "requested_model": "deepseek-v4-pro",
     "required_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
     "required_plan_target_model": "deepseek-v4-pro",
     "required_resolved_model": "deepseek-v4-pro-260425"
   },
   "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
   "provider_spend_authority": false,
-  "request_body_sha256": "0f5bf5024100c56ea4f8843cd99aee8ee7a196c608f13ab28308c9785d65edd9",
+  "request_body_sha256": "ab69c2decd07a3d35548a4624f1272d54af2408fe1c17ed7fb0b18f57a0d4ca6",
   "request_id": "TEMP-O4-G0-STAGE-A-DEEPSEEK-EXECUTION-AUTH-REQUEST-20260824",
   "request_type": "explicit-external-human-scientific-reopen-and-experiment-authorization",
   "requested_scope": [

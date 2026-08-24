@@ -1,0 +1,92 @@
+{
+  "analysis_type": "TEMP-O4-stage-a-deepseek-primary-g0-analysis",
+  "claim_upgrade_authorized": false,
+  "integrity": {
+    "duplicate_units": [],
+    "errors": [],
+    "extra_units": [],
+    "invalid_rows": [],
+    "missing_units": [],
+    "observed_rows": 210,
+    "pass": true,
+    "planned_units": 210
+  },
+  "load_bearing_cells_frozen_before_outcomes": [
+    [
+      "C3-R",
+      "exogenous_grounding"
+    ],
+    [
+      "C4-R",
+      "exogenous_grounding"
+    ],
+    [
+      "C4-R4",
+      "temporal_cutoff"
+    ]
+  ],
+  "neutrality": {
+    "bootstrap_90_ci": [
+      -0.14285714285714285,
+      0.02857142857142857
+    ],
+    "bootstrap_draws": 20000,
+    "bootstrap_seed": 20260824,
+    "equivalence_margin": [
+      -0.1,
+      0.1
+    ],
+    "estimand": "G0_NOOP_minus_N_FRESH endpoint-repeat-mean risk difference",
+    "family_guardrails": [],
+    "family_summaries": {
+      "exogenous_grounding": {
+        "guardrail_direction": null,
+        "guardrail_trigger": false,
+        "losses": 0,
+        "mean": 0.0,
+        "n": 10,
+        "one_sided_sign_p_negative": 1.0,
+        "one_sided_sign_p_positive": 1.0,
+        "ties": 10,
+        "wins": 0
+      },
+      "release_alignment": {
+        "guardrail_direction": null,
+        "guardrail_trigger": false,
+        "losses": 0,
+        "mean": 0.0,
+        "n": 5,
+        "one_sided_sign_p_negative": 1.0,
+        "one_sided_sign_p_positive": 1.0,
+        "ties": 5,
+        "wins": 0
+      },
+      "temporal_cutoff": {
+        "guardrail_direction": null,
+        "guardrail_trigger": false,
+        "losses": 6,
+        "mean": -0.1,
+        "n": 20,
+        "one_sided_sign_p_negative": 0.14453125,
+        "one_sided_sign_p_positive": 0.96484375,
+        "ties": 12,
+        "wins": 2
+      }
+    },
+    "global_nonneutral_trigger": false,
+    "global_wins_ties_losses": {
+      "losses": 6,
+      "ties": 27,
+      "wins": 2
+    },
+    "point": -0.05714285714285714
+  },
+  "neutrality_go": false,
+  "operation_specificity_evaluated": false,
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "plan_body_sha256": "d59c64584d08f748d76dd42643da5dc0632f155a5574a0f4df00b67d9a83ed62",
+  "preflight_receipt_body_sha256": "4aefe8548274294323b7bff55dad07da52167eaf96115c43edca5b79e61cc2e4",
+  "result_payload_sha256": "f8ad984a3c7d96f6b8e56d7419284408bbb1aa037cb63ceb4f5f7de1976684e5",
+  "schema_version": "1.0",
+  "status": "HOLD_NEUTRALITY_INCONCLUSIVE"
+}

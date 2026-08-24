@@ -5,7 +5,7 @@
     "gpu": false,
     "scientific": false
   },
-  "created_at": "2026-08-24T01:55:45+00:00",
+  "created_at": "2026-08-24T02:13:38+00:00",
   "g0": {
     "output": {},
     "reads_context": false,
@@ -17,16 +17,17 @@
     "source_sha256": "4f2fe9670376d6452d8bb10cba5ba2cabd45d88742584c40018c7152b46e1c05"
   },
   "model_identity": {
-    "ark_code_latest_counts_as_same_model_evidence_only_if_provider_resolves_exact_required_model": true,
-    "direct_extra_billed_model_route_forbidden": true,
+    "direct_model_name_on_plan_route_allowed": true,
+    "historical_same_env_plan_route_resolved_exact_model": true,
+    "online_api_v3_route_forbidden": true,
     "plan_only_billing_route_required": true,
-    "requested_model": "ark-code-latest",
+    "requested_model": "deepseek-v4-pro",
     "required_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
     "required_plan_target_model": "deepseek-v4-pro",
     "required_resolved_model": "deepseek-v4-pro-260425"
   },
   "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
-  "plan_body_sha256": "d0e0635ce314628894fa4a4eccce9345274289ca2966fc64796c2cf5f31aecd9",
+  "plan_body_sha256": "d59c64584d08f748d76dd42643da5dc0632f155a5574a0f4df00b67d9a83ed62",
   "plan_id": "TEMP-O4-G0-NEUTRALITY-FRESH-3ARM-V1",
   "rows": [
     {
@@ -37,7 +38,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -48,7 +49,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -59,7 +60,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -70,7 +71,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -81,7 +82,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -92,7 +93,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -103,7 +104,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -114,7 +115,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -125,7 +126,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -136,7 +137,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -147,7 +148,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -158,7 +159,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -169,7 +170,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -180,7 +181,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -191,7 +192,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -202,7 +203,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -213,7 +214,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -224,7 +225,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -235,7 +236,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -246,7 +247,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -257,7 +258,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -268,7 +269,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -279,7 +280,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -290,7 +291,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -301,7 +302,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -312,7 +313,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -323,7 +324,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -334,7 +335,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -345,7 +346,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -356,7 +357,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -367,7 +368,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -378,7 +379,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -389,7 +390,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -400,7 +401,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -411,7 +412,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -422,7 +423,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -433,7 +434,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -444,7 +445,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -455,7 +456,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -466,7 +467,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -477,7 +478,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -488,7 +489,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -499,7 +500,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -510,7 +511,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -521,7 +522,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -532,7 +533,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -543,7 +544,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -554,7 +555,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -565,7 +566,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -576,7 +577,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -587,7 +588,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -598,7 +599,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -609,7 +610,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -620,7 +621,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -631,7 +632,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -642,7 +643,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -653,7 +654,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -664,7 +665,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -675,7 +676,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -686,7 +687,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -697,7 +698,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -708,7 +709,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -719,7 +720,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -730,7 +731,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -741,7 +742,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -752,7 +753,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -763,7 +764,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -774,7 +775,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -785,7 +786,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -796,7 +797,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -807,7 +808,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -818,7 +819,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -829,7 +830,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -840,7 +841,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -851,7 +852,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -862,7 +863,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -873,7 +874,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -884,7 +885,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -895,7 +896,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -906,7 +907,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -917,7 +918,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -928,7 +929,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -939,7 +940,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -950,7 +951,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -961,7 +962,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -972,7 +973,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -983,7 +984,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -994,7 +995,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1005,7 +1006,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1016,7 +1017,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1027,7 +1028,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1038,7 +1039,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1049,7 +1050,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1060,7 +1061,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1071,7 +1072,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1082,7 +1083,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1093,7 +1094,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1104,7 +1105,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1115,7 +1116,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1126,7 +1127,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1137,7 +1138,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1148,7 +1149,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1159,7 +1160,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1170,7 +1171,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1181,7 +1182,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1192,7 +1193,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1203,7 +1204,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1214,7 +1215,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1225,7 +1226,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1236,7 +1237,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1247,7 +1248,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1258,7 +1259,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1269,7 +1270,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1280,7 +1281,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1291,7 +1292,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1302,7 +1303,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1313,7 +1314,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1324,7 +1325,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1335,7 +1336,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1346,7 +1347,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1357,7 +1358,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1368,7 +1369,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1379,7 +1380,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1390,7 +1391,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1401,7 +1402,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1412,7 +1413,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1423,7 +1424,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1434,7 +1435,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1445,7 +1446,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1456,7 +1457,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1467,7 +1468,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1478,7 +1479,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1489,7 +1490,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1500,7 +1501,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1511,7 +1512,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1522,7 +1523,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1533,7 +1534,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1544,7 +1545,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1555,7 +1556,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1566,7 +1567,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1577,7 +1578,7 @@
       "failure_family": "release_alignment",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1588,7 +1589,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1599,7 +1600,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1610,7 +1611,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1621,7 +1622,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1632,7 +1633,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1643,7 +1644,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1654,7 +1655,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1665,7 +1666,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1676,7 +1677,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1687,7 +1688,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1698,7 +1699,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1709,7 +1710,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1720,7 +1721,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1731,7 +1732,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1742,7 +1743,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1753,7 +1754,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1764,7 +1765,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1775,7 +1776,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1786,7 +1787,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1797,7 +1798,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1808,7 +1809,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1819,7 +1820,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1830,7 +1831,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1841,7 +1842,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1852,7 +1853,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1863,7 +1864,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1874,7 +1875,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1885,7 +1886,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1896,7 +1897,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1907,7 +1908,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1918,7 +1919,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1929,7 +1930,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1940,7 +1941,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1951,7 +1952,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1962,7 +1963,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1973,7 +1974,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1984,7 +1985,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -1995,7 +1996,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2006,7 +2007,7 @@
       "failure_family": "release_alignment",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2017,7 +2018,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2028,7 +2029,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2039,7 +2040,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2050,7 +2051,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2061,7 +2062,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2072,7 +2073,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2083,7 +2084,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2094,7 +2095,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2105,7 +2106,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2116,7 +2117,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2127,7 +2128,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2138,7 +2139,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2149,7 +2150,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2160,7 +2161,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2171,7 +2172,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2182,7 +2183,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2193,7 +2194,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2204,7 +2205,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C3-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2215,7 +2216,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2226,7 +2227,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2237,7 +2238,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2248,7 +2249,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2259,7 +2260,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2270,7 +2271,7 @@
       "failure_family": "temporal_cutoff",
       "phase": "C4-R4",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2281,7 +2282,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2292,7 +2293,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2303,7 +2304,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C3-R",
       "repeat_id": 0,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2314,7 +2315,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2325,7 +2326,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     },
     {
@@ -2336,7 +2337,7 @@
       "failure_family": "exogenous_grounding",
       "phase": "C4-R",
       "repeat_id": 1,
-      "requested_model": "ark-code-latest",
+      "requested_model": "deepseek-v4-pro",
       "required_resolved_model": "deepseek-v4-pro-260425"
     }
   ],

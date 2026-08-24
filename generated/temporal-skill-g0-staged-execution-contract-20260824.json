@@ -1,0 +1,85 @@
+{
+  "authority": {
+    "execution_authorized": false,
+    "scientific_authority": false
+  },
+  "bound_plan_body_sha256": "d59c64584d08f748d76dd42643da5dc0632f155a5574a0f4df00b67d9a83ed62",
+  "checkpoint_policy": {
+    "append_csv_per_unit": true,
+    "append_jsonl_per_unit": true,
+    "atomic_summary_json": true,
+    "fsync_csv_and_jsonl": true,
+    "never_rerun_successfully_checkpointed_unit": true,
+    "persist_after_every_model_call": true,
+    "raw_json_per_unit": true,
+    "recover_raw_receipt_if_csv_append_was_interrupted": true,
+    "resume_key": "endpoint_id|repeat_id|arm"
+  },
+  "contract_id": "TEMP-O4-G0-STAGED-EXECUTION-20260824-R2",
+  "full": {
+    "model_calls_after_pilot": 198,
+    "model_calls_total": 210,
+    "pilot_rows_count_toward_full": true,
+    "resume_missing_only": true
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "pilot": {
+    "coverage": [
+      "R4/EIA temporal_cutoff",
+      "R3 exogenous_grounding",
+      "R3 release_alignment",
+      "R3 temporal_cutoff"
+    ],
+    "model_calls": 12,
+    "promotion_gate": "runtime/protocol/checkpoint integrity only",
+    "row_keys": [
+      "eia-cutoff::doc_4054808c7b19|r0|N_FRESH",
+      "eia-cutoff::doc_4054808c7b19|r0|G0_NOOP",
+      "eia-cutoff::doc_4054808c7b19|r0|T_FROZEN",
+      "composite-align::doc_cc293f199ada|r0|G0_NOOP",
+      "composite-align::doc_cc293f199ada|r0|T_FROZEN",
+      "composite-align::doc_cc293f199ada|r0|N_FRESH",
+      "composite-ground::doc_1dfccd3a55dd|r0|T_FROZEN",
+      "composite-ground::doc_1dfccd3a55dd|r0|N_FRESH",
+      "composite-ground::doc_1dfccd3a55dd|r0|G0_NOOP",
+      "composite-cutoff::doc_70e1e3d18499|r0|N_FRESH",
+      "composite-cutoff::doc_70e1e3d18499|r0|G0_NOOP",
+      "composite-cutoff::doc_70e1e3d18499|r0|T_FROZEN"
+    ],
+    "scientific_outcomes_used_for_promotion": false,
+    "units": [
+      {
+        "endpoint_id": "eia-cutoff::doc_4054808c7b19",
+        "repeat_id": 0
+      },
+      {
+        "endpoint_id": "composite-ground::doc_1dfccd3a55dd",
+        "repeat_id": 0
+      },
+      {
+        "endpoint_id": "composite-align::doc_cc293f199ada",
+        "repeat_id": 0
+      },
+      {
+        "endpoint_id": "composite-cutoff::doc_70e1e3d18499",
+        "repeat_id": 0
+      }
+    ]
+  },
+  "route_repair": {
+    "historical_same_env_evidence": true,
+    "observed_resolved_model": "doubao-seed-evolving",
+    "parent_failed_plan_sha256": "d0e0635ce314628894fa4a4eccce9345274289ca2966fc64796c2cf5f31aecd9",
+    "parent_failed_requested_model": "ark-code-latest",
+    "repair": "request deepseek-v4-pro directly on unchanged /api/plan/v3 route",
+    "scientific_model_changed": false
+  },
+  "schema_version": "1.0",
+  "stage_contract_sha256": "6d1509f7c67a7a155d336b41033ca6875afbc07341a4495e3d7879db2acfa4c4",
+  "stop_policy": {
+    "outcome_driven_stopping_forbidden": true,
+    "stop_on_parse_or_score_failure": true,
+    "stop_on_resolved_model_drift": true,
+    "stop_on_runtime_invalid": true
+  }
+}

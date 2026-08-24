@@ -20,7 +20,7 @@ REPLAY_ROOT = DATA_ROOT / "paper-acceptance" / "source-native-replay" / PAPER_ID
 R3 = REPLAY_ROOT / "20260822-r3"
 R4 = REPLAY_ROOT / "20260822-r4-postreview-eia"
 
-REQUESTED_MODEL = "ark-code-latest"
+REQUESTED_MODEL = "deepseek-v4-pro"
 REQUIRED_PLAN_TARGET_MODEL = "deepseek-v4-pro"
 REQUIRED_RESOLVED_MODEL = "deepseek-v4-pro-260425"
 REQUIRED_PLAN_BASE_URL = "https://ark.cn-beijing.volces.com/api/plan/v3"
@@ -170,8 +170,9 @@ def build_plan(endpoints: dict[str, dict[str, Any]], meta: dict[str, dict[str, s
             "required_plan_target_model": REQUIRED_PLAN_TARGET_MODEL,
             "required_resolved_model": REQUIRED_RESOLVED_MODEL,
             "plan_only_billing_route_required": True,
-            "direct_extra_billed_model_route_forbidden": True,
-            "ark_code_latest_counts_as_same_model_evidence_only_if_provider_resolves_exact_required_model": True,
+            "online_api_v3_route_forbidden": True,
+            "direct_model_name_on_plan_route_allowed": True,
+            "historical_same_env_plan_route_resolved_exact_model": True,
         },
         "g0": {
             "source": G0_SOURCE,
@@ -363,8 +364,9 @@ def build_receipt() -> tuple[dict[str, Any], dict[str, Any]]:
             "credential_ready_in_this_isolated_worktree": bool(ark.get("configured")),
             "model_identity_route_requires_ark_plan_target_deepseek_v4_pro": True,
             "ark_plan_base_url_required": REQUIRED_PLAN_BASE_URL,
-            "direct_deepseek_v4_pro_route_forbidden_by_cost_policy": True,
-            "ark_code_latest_must_resolve_exact_required_model": True,
+            "online_api_v3_route_forbidden_by_cost_policy": True,
+            "direct_deepseek_v4_pro_name_on_plan_v3_allowed": True,
+            "requested_model_must_resolve_exact_required_model": True,
         },
         "authority": {
             "scientific": False,
@@ -376,7 +378,7 @@ def build_receipt() -> tuple[dict[str, Any], dict[str, Any]]:
                 "explicit external-human scientific reopen scoped to TEMP-O4/G0",
                 "experiment authority bound to this plan_body_sha256",
                 "provider-spend authorization / credential-bearing execution environment",
-                "Ark Plan target explicitly set to deepseek-v4-pro and allowed to propagate before execution",
+                "deepseek-v4-pro requested on the frozen Ark Plan /api/plan/v3 route; online /api/v3 forbidden",
             ],
         },
         "deferred_stage_b": {
@@ -433,11 +435,11 @@ def build_authorization_request(receipt: dict[str, Any], plan: dict[str, Any]) -
         },
         "authorization_semantics": {
             "generic_continue_instruction_is_not_interpreted_as_new_scientific_execution_authority": True,
-            "required_human_directive": "Explicitly authorize reopening TEMP-O4 Stage A on the DeepSeek primary track and executing the bound 210-call fresh N/G0/T plan through Ark Plan.",
+            "required_human_directive": "Explicitly authorize reopening TEMP-O4 Stage A on the DeepSeek primary track and executing the bound 210-call fresh N/G0/T plan through the frozen Ark Plan /api/plan/v3 route.",
             "required_runtime_confirmation": {
                 "ark_plan_base_url": REQUIRED_PLAN_BASE_URL,
-                "ark_plan_target_model": REQUIRED_PLAN_TARGET_MODEL,
-                "ark_plan_target_confirmed_and_propagated": True,
+                "requested_model": REQUESTED_MODEL,
+                "required_resolved_model": REQUIRED_RESOLVED_MODEL,
             },
             "any_scope_or_budget_change_requires_new_plan_hash_and_new_authorization": True,
         },

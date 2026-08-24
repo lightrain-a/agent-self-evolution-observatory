@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import importlib.util
 import json
@@ -25,9 +26,17 @@ R3 = REPLAY_ROOT / "20260822-r3"
 R4 = REPLAY_ROOT / "20260822-r4-postreview-eia"
 DEFAULT_PLAN = PROJECT_ROOT / "generated" / "temporal-skill-g0-fresh-factorial-plan-20260824.json"
 DEFAULT_PREFLIGHT = PROJECT_ROOT / "generated" / "temporal-skill-g0-reopen-preflight-20260824.json"
+DEFAULT_STAGE_CONTRACT = PROJECT_ROOT / "generated" / "temporal-skill-g0-staged-execution-contract-20260824.json"
 DEFAULT_AUTHORIZATION = PROJECT_ROOT / "generated" / "temporal-skill-g0-human-authorization-20260824.json"
 ANALYZER_PATH = PROJECT_ROOT / "research_pipeline" / "temporal_skill_g0_analyze.py"
-DEFAULT_OUTPUT = REPLAY_ROOT / "20260824-g0-stage-a-deepseek" / "results.json"
+DEFAULT_OUTPUT = REPLAY_ROOT / "20260824-g0-stage-a-deepseek-plan-r2" / "results.json"
+CSV_FIELDS = [
+    "unit_key", "plan_index", "endpoint_id", "failure_family", "phase", "repeat_id", "arm", "condition_id",
+    "condition_position", "requested_model", "required_resolved_model", "resolved_model", "runtime_valid", "family_success",
+    "failure_kind", "provider_status", "usage_input_tokens", "usage_output_tokens", "usage_total_tokens", "prompt_sha256",
+    "helper_source_sha256", "provider_response_id_sha256", "raw_text_sha256", "runtime_seconds", "generation_post_attempts",
+    "get_recovery_attempts", "get_recovered", "prediction_json", "family_score_json", "error_type", "error", "raw_receipt_path",
+]
 
 MAX_OUTPUT_TOKENS = 768
 POLL_MAX = 3
@@ -55,8 +64,73 @@ def read_json(path: Path) -> Any:
 def atomic_json(path: Path, value: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + ".tmp")
-    tmp.write_text(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    with tmp.open("w", encoding="utf-8") as fh:
+        fh.write(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
+        fh.flush()
+        os.fsync(fh.fileno())
     os.replace(tmp, path)
+
+
+def row_key(row: dict[str, Any]) -> str:
+    return f"{row['endpoint_id']}|r{int(row['repeat_id'])}|{row['arm']}"
+
+
+def _json_cell(value: Any) -> str:
+    return json.dumps(value, ensure_ascii=False, sort_keys=True) if value is not None else ""
+
+
+def load_csv_rows(path: Path) -> dict[str, dict[str, str]]:
+    if not path.exists() or path.stat().st_size == 0:
+        return {}
+    with path.open("r", encoding="utf-8", newline="") as fh:
+        return {row["unit_key"]: row for row in csv.DictReader(fh)}
+
+
+def persist_checkpoint(output: Path, row: dict[str, Any], plan_index: int) -> None:
+    out_dir = output.parent
+    raw_dir = out_dir / "raw"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    key = row_key(row)
+    raw_path = raw_dir / f"{plan_index:03d}-{hashlib.sha256(key.encode()).hexdigest()[:16]}.json"
+    atomic_json(raw_path, row)
+    csv_path = out_dir / "results.csv"
+    existing = load_csv_rows(csv_path)
+    if key not in existing:
+        usage = row.get("usage") or {}
+        values = {**row, "unit_key": key, "plan_index": plan_index, "raw_receipt_path": str(raw_path),
+                  "usage_input_tokens": usage.get("input_tokens", ""), "usage_output_tokens": usage.get("output_tokens", ""),
+                  "usage_total_tokens": usage.get("total_tokens", ""), "prediction_json": _json_cell(row.get("prediction")),
+                  "family_score_json": _json_cell(row.get("family_score"))}
+        record = {field: "" if values.get(field) is None else str(values.get(field, "")) for field in CSV_FIELDS}
+        new_file = not csv_path.exists() or csv_path.stat().st_size == 0
+        with csv_path.open("a", encoding="utf-8", newline="") as fh:
+            writer = csv.DictWriter(fh, fieldnames=CSV_FIELDS)
+            if new_file:
+                writer.writeheader()
+            writer.writerow(record)
+            fh.flush()
+            os.fsync(fh.fileno())
+        with (out_dir / "results.jsonl").open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+            fh.flush()
+            os.fsync(fh.fileno())
+
+
+def recover_orphan_raw(output: Path, plan: dict[str, Any]) -> int:
+    raw_dir = output.parent / "raw"
+    if not raw_dir.exists():
+        return 0
+    plan_index = {row_key(row): i for i, row in enumerate(plan["rows"])}
+    existing = load_csv_rows(output.parent / "results.csv")
+    recovered = 0
+    for raw_path in sorted(raw_dir.glob("*.json")):
+        row = read_json(raw_path)
+        key = row_key(row)
+        if key in plan_index and key not in existing:
+            persist_checkpoint(output, row, plan_index[key])
+            existing[key] = {}
+            recovered += 1
+    return recovered
 
 
 def load_module(path: Path, name: str):
@@ -119,7 +193,7 @@ def load_assets() -> dict[str, Any]:
     }
 
 
-def validate_authorization(auth: dict[str, Any], plan: dict[str, Any]) -> list[str]:
+def validate_authorization(auth: dict[str, Any], plan: dict[str, Any], stage_contract: dict[str, Any] | None = None) -> list[str]:
     errors: list[str] = []
     required_scope = {
         "TEMP-O4_STAGE_A_DEEPSEEK_PRIMARY",
@@ -136,6 +210,8 @@ def validate_authorization(auth: dict[str, Any], plan: dict[str, Any]) -> list[s
         errors.append("provider-spend-not-authorized")
     if str(auth.get("bound_plan_body_sha256") or "") != str(plan["plan_body_sha256"]):
         errors.append("authorization-plan-hash-mismatch")
+    if stage_contract is not None and str(auth.get("bound_stage_contract_sha256") or "") != str(stage_contract.get("stage_contract_sha256") or ""):
+        errors.append("authorization-stage-contract-hash-mismatch")
     if not required_scope.issubset(set(auth.get("scope") or [])):
         errors.append("authorization-scope-incomplete")
     budget = auth.get("bounded_budget") or {}
@@ -143,6 +219,8 @@ def validate_authorization(auth: dict[str, Any], plan: dict[str, Any]) -> list[s
         errors.append("authorization-call-budget-mismatch")
     if bool(budget.get("reruns_allowed")):
         errors.append("reruns-must-be-forbidden")
+    if not bool(budget.get("resume_missing_only")):
+        errors.append("resume-missing-only-required")
     if bool(auth.get("outcome_driven_selection_authorized")):
         errors.append("outcome-driven-selection-must-be-forbidden")
     model = auth.get("model_identity") or {}
@@ -150,9 +228,12 @@ def validate_authorization(auth: dict[str, Any], plan: dict[str, Any]) -> list[s
         errors.append("authorization-requested-model-mismatch")
     if str(model.get("required_resolved_model") or "") != str(plan["model_identity"]["required_resolved_model"]):
         errors.append("authorization-resolved-model-mismatch")
-    if not bool(auth.get("ark_plan_target_confirmed_and_propagated")):
+    confirmation_mode = str(auth.get("ark_plan_target_confirmation_mode") or "")
+    if confirmation_mode != "runtime_first_call_exact_resolved_model_fail_closed" and not bool(auth.get("ark_plan_target_confirmed_and_propagated")):
         errors.append("ark-plan-target-not-confirmed")
-    if str(auth.get("ark_plan_target_model") or "") != str(plan["model_identity"]["required_plan_target_model"]):
+    if confirmation_mode not in {"", "runtime_first_call_exact_resolved_model_fail_closed"}:
+        errors.append("ark-plan-target-confirmation-mode-invalid")
+    if auth.get("ark_plan_target_model") and str(auth.get("ark_plan_target_model")) != str(plan["model_identity"]["required_plan_target_model"]):
         errors.append("ark-plan-target-model-mismatch")
     if str(auth.get("ark_plan_base_url") or "") != str(plan["model_identity"]["required_plan_base_url"]):
         errors.append("ark-plan-base-url-mismatch")
@@ -390,38 +471,152 @@ def execute(plan_path: Path, preflight_path: Path, auth_path: Path, output: Path
         release_authority(DATA_ROOT, OWNER_ID, str(authority["authority_id"]), release_outcome)
 
 
+def checkpoint_progress(output: Path, plan: dict[str, Any], stage: str, status: str, note: str = "") -> dict[str, Any]:
+    rows = load_csv_rows(output.parent / "results.csv")
+    payload = {
+        "schema_version": "1.0", "paper_id": PAPER_ID, "stage": stage, "status": status,
+        "plan_body_sha256": plan["plan_body_sha256"], "checkpoint_rows": len(rows),
+        "planned_rows": len(plan["rows"]), "remaining_rows": len(plan["rows"]) - len(rows),
+        "results_csv": str(output.parent / "results.csv"), "results_jsonl": str(output.parent / "results.jsonl"),
+        "raw_dir": str(output.parent / "raw"), "note": note,
+    }
+    atomic_json(output.parent / "checkpoint.json", payload)
+    return payload
+
+
+def pilot_runtime_gate(output: Path, stage_contract: dict[str, Any]) -> dict[str, Any]:
+    rows = load_csv_rows(output.parent / "results.csv")
+    required = list(stage_contract["pilot"]["row_keys"])
+    missing = [key for key in required if key not in rows]
+    invalid = [key for key in required if key in rows and rows[key].get("runtime_valid") != "True"]
+    drift = [key for key in required if key in rows and rows[key].get("resolved_model") != rows[key].get("required_resolved_model")]
+    raw_missing = [key for key in required if key in rows and not Path(rows[key].get("raw_receipt_path") or "").exists()]
+    passed = not (missing or invalid or drift or raw_missing)
+    gate = {
+        "schema_version": "1.0", "gate": "TEMP-O4-G0-PILOT-RUNTIME-INTEGRITY", "pass": passed,
+        "pilot_calls": len(required), "missing": missing, "runtime_invalid": invalid, "model_drift": drift,
+        "raw_missing": raw_missing, "scientific_outcomes_inspected_for_promotion": False,
+        "promotion_rule": "runtime/protocol/checkpoint integrity only; family_success is not a promotion criterion",
+    }
+    atomic_json(output.parent / "pilot-gate.json", gate)
+    return gate
+
+
+def rebuild_results_json(output: Path, plan: dict[str, Any], preflight: dict[str, Any], auth: dict[str, Any], assets: dict[str, Any]) -> dict[str, Any]:
+    raw_by_key: dict[str, dict[str, Any]] = {}
+    raw_dir = output.parent / "raw"
+    if raw_dir.exists():
+        for path in raw_dir.glob("*.json"):
+            row = read_json(path)
+            raw_by_key[row_key(row)] = row
+    ordered = [raw_by_key[row_key(plan_row)] for plan_row in plan["rows"] if row_key(plan_row) in raw_by_key]
+    payload = {
+        "schema_version": "1.0", "paper_id": PAPER_ID, "run_id": "TEMP-O4-G0-STAGE-A-DEEPSEEK-20260824",
+        "plan_body_sha256": plan["plan_body_sha256"], "preflight_receipt_body_sha256": preflight["receipt_body_sha256"],
+        "authorization_sha256": auth["authorization_sha256"], "runner_sha256": sha_file(Path(__file__)),
+        "asset_hashes": assets["hashes"], "model_identity": plan["model_identity"], "rows": ordered,
+        "rows_total": len(ordered), "runtime_valid_rows": sum(bool(row.get("runtime_valid")) for row in ordered),
+        "status": "completed" if len(ordered) == len(plan["rows"]) else "partial",
+    }
+    payload["scientific_result_available"] = payload["status"] == "completed" and payload["runtime_valid_rows"] == len(ordered)
+    payload["result_body_sha256"] = canonical_sha({k: v for k, v in payload.items() if k != "result_body_sha256"})
+    atomic_json(output, payload)
+    return payload
+
+
+def execute_staged(plan_path: Path, preflight_path: Path, stage_path: Path, auth_path: Path, output: Path, stage: str) -> dict[str, Any]:
+    plan = read_json(plan_path)
+    preflight = read_json(preflight_path)
+    stage_contract = read_json(stage_path)
+    if not auth_path.exists():
+        raise RuntimeError(f"human authorization artifact missing: {auth_path}")
+    auth = read_json(auth_path)
+    auth_errors = validate_authorization(auth, plan, stage_contract)
+    if auth_errors:
+        raise RuntimeError("authorization invalid: " + ",".join(auth_errors))
+    if str(preflight["fresh_execution_contract"]["plan_body_sha256"]) != str(plan["plan_body_sha256"]):
+        raise RuntimeError("preflight/plan hash mismatch")
+    if str(preflight["frozen_execution_code"]["runner_sha256"]) != sha_file(Path(__file__)):
+        raise RuntimeError("runner changed after preflight freeze")
+    if str(preflight["frozen_execution_code"]["analyzer_sha256"]) != sha_file(ANALYZER_PATH):
+        raise RuntimeError("analyzer changed after preflight freeze")
+    if str(stage_contract.get("bound_plan_body_sha256")) != str(plan["plan_body_sha256"]):
+        raise RuntimeError("stage contract/plan hash mismatch")
+    assets = load_assets()
+    plan_keys = [row_key(row) for row in plan["rows"]]
+    plan_index = {key: i for i, key in enumerate(plan_keys)}
+    recover_orphan_raw(output, plan)
+    existing = load_csv_rows(output.parent / "results.csv")
+    invalid_existing = [key for key, row in existing.items() if row.get("runtime_valid") != "True"]
+    if invalid_existing:
+        raise RuntimeError("checkpoint contains runtime-invalid row requiring adjudication: " + invalid_existing[0])
+    if stage == "full":
+        gate_path = output.parent / "pilot-gate.json"
+        if not gate_path.exists() or not bool(read_json(gate_path).get("pass")):
+            raise RuntimeError("pilot runtime-integrity gate has not passed")
+        target_keys = set(plan_keys)
+    else:
+        target_keys = set(stage_contract["pilot"]["row_keys"])
+    raw_settings = ArkSettings.from_env(required=True)
+    if raw_settings.base_url.rstrip("/") != str(plan["model_identity"]["required_plan_base_url"]).rstrip("/"):
+        raise RuntimeError("Ark base URL is not the frozen Plan billing route")
+    settings = ArkSettings(api_key=raw_settings.api_key, base_url=raw_settings.base_url, default_model=raw_settings.default_model,
+                           timeout_seconds=180.0, max_retries=0)
+    client = ArkResponsesClient(settings)
+    run_id = f"TEMP-O4-G0-{stage.upper()}-DEEPSEEK-20260824"
+    authority = acquire_authority(DATA_ROOT, OWNER_ID, str(plan["plan_body_sha256"]), "temporal-skill-g0-executor", f"TEMP-O4-{stage.upper()}", run_id)
+    release_outcome = "runner-exception"
+    try:
+        checkpoint_progress(output, plan, stage, "running")
+        for plan_row in plan["rows"]:
+            key = row_key(plan_row)
+            if key not in target_keys or key in load_csv_rows(output.parent / "results.csv"):
+                continue
+            row = run_one(client, assets, plan_row)
+            persist_checkpoint(output, row, plan_index[key])
+            checkpoint_progress(output, plan, stage, "running", f"last={key}")
+            if not row.get("runtime_valid"):
+                release_outcome = str(row.get("failure_kind") or "runtime-invalid")
+                checkpoint_progress(output, plan, stage, "stopped", release_outcome)
+                return {"status": "stopped", "reason": release_outcome, "unit_key": key}
+        if stage == "pilot":
+            gate = pilot_runtime_gate(output, stage_contract)
+            release_outcome = "pilot-pass" if gate["pass"] else "pilot-fail"
+            checkpoint_progress(output, plan, stage, release_outcome)
+            return {"status": release_outcome, "pilot_gate": gate}
+        final = rebuild_results_json(output, plan, preflight, auth, assets)
+        release_outcome = "completed" if final["scientific_result_available"] else "partial"
+        checkpoint_progress(output, plan, stage, release_outcome)
+        return {"status": release_outcome, "rows_total": final["rows_total"], "output": str(output)}
+    finally:
+        release_authority(DATA_ROOT, OWNER_ID, str(authority["authority_id"]), release_outcome)
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Execute the pre-authorized TEMP-O4 Stage-A fresh N/G0/T plan.")
+    parser = argparse.ArgumentParser(description="Execute checkpointed staged TEMP-O4 Stage-A fresh N/G0/T plan.")
     parser.add_argument("--plan", type=Path, default=DEFAULT_PLAN)
     parser.add_argument("--preflight", type=Path, default=DEFAULT_PREFLIGHT)
+    parser.add_argument("--stage-contract", type=Path, default=DEFAULT_STAGE_CONTRACT)
     parser.add_argument("--authorization", type=Path, default=DEFAULT_AUTHORIZATION)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--stage", choices=["pilot", "full"], default="pilot")
     parser.add_argument("--validate-only", action="store_true")
     args = parser.parse_args()
-
     plan = read_json(args.plan)
-    assets = load_assets()
+    stage_contract = read_json(args.stage_contract)
     summary = {
-        "plan_body_sha256": plan["plan_body_sha256"],
-        "planned_model_calls": plan["summary"]["planned_model_calls"],
-        "runner_sha256": sha_file(Path(__file__)),
-        "asset_hashes": assets["hashes"],
-        "authorization_present": args.authorization.exists(),
-        "output_exists": args.output.exists(),
+        "plan_body_sha256": plan["plan_body_sha256"], "stage_contract_sha256": stage_contract["stage_contract_sha256"],
+        "planned_model_calls": plan["summary"]["planned_model_calls"], "pilot_model_calls": stage_contract["pilot"]["model_calls"],
+        "runner_sha256": sha_file(Path(__file__)), "authorization_present": args.authorization.exists(),
+        "checkpoint_rows": len(load_csv_rows(args.output.parent / "results.csv")),
     }
     if args.validate_only:
         if args.authorization.exists():
-            summary["authorization_errors"] = validate_authorization(read_json(args.authorization), plan)
+            summary["authorization_errors"] = validate_authorization(read_json(args.authorization), plan, stage_contract)
         print(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True))
         return
-
-    result = execute(args.plan, args.preflight, args.authorization, args.output)
-    print(json.dumps({
-        "status": result["status"],
-        "attempted_rows": result.get("attempted_rows", 0),
-        "scientific_result_available": result.get("scientific_result_available", False),
-        "output": str(args.output),
-    }, indent=2))
+    result = execute_staged(args.plan, args.preflight, args.stage_contract, args.authorization, args.output, args.stage)
+    print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,73 @@
+{
+  "A1_A2_pooling_for_primary": false,
+  "analysis_type": "TEMP-O4-G0-A2-independent-neutrality",
+  "cross_stage_operation_specificity_authorized": true,
+  "integrity": {
+    "duplicates": 0,
+    "extra": 0,
+    "invalid": [],
+    "missing": 0,
+    "observed": 280,
+    "pass": true,
+    "planned": 280
+  },
+  "neutrality": {
+    "bootstrap_90_ci": [
+      -0.09285714285714286,
+      0.05
+    ],
+    "equivalence_margin": [
+      -0.1,
+      0.1
+    ],
+    "family_guardrails": [],
+    "family_summaries": {
+      "exogenous_grounding": {
+        "directional_sign_p": 0.25,
+        "guardrail_trigger": false,
+        "losses": 0,
+        "mean": 0.05,
+        "n": 10,
+        "one_sided_sign_p_negative": 1.0,
+        "one_sided_sign_p_positive": 0.25,
+        "ties": 8,
+        "wins": 2
+      },
+      "release_alignment": {
+        "directional_sign_p": 1.0,
+        "guardrail_trigger": false,
+        "losses": 0,
+        "mean": 0.0,
+        "n": 5,
+        "one_sided_sign_p_negative": 1.0,
+        "one_sided_sign_p_positive": 1.0,
+        "ties": 5,
+        "wins": 0
+      },
+      "temporal_cutoff": {
+        "directional_sign_p": 0.36328125,
+        "guardrail_trigger": false,
+        "losses": 5,
+        "mean": -0.0625,
+        "n": 20,
+        "one_sided_sign_p_negative": 0.36328125,
+        "one_sided_sign_p_positive": 0.85546875,
+        "ties": 12,
+        "wins": 3
+      }
+    },
+    "global_nonneutral_trigger": false,
+    "independent_endpoints": 35,
+    "losses": 5,
+    "point": -0.02142857142857143,
+    "repeats_per_arm": 4,
+    "ties": 25,
+    "wins": 5
+  },
+  "neutrality_go": true,
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "plan_body_sha256": "3afa03f00a62a3f0387b536379a98fcaaec4c51bcfedb184055d2881e6f9ac4a",
+  "result_payload_sha256": "fb01ae2549975872445da6e7aafd9635cd09714b47b90600d4f0d9184437f57d",
+  "schema_version": "1.0",
+  "status": "NEUTRALITY_GO"
+}
