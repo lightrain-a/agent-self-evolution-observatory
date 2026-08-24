@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "paper_label": "E1.STRI",
+  "stage": "METHOD_RELATED_SIGNIFICANCE_REPAIR_FROM_EXISTING_REVIEWS",
+  "analysis_date": "2026-08-24",
+  "branch": "paper/e1-stri-stanford-template-20260824",
+  "base_head": "f4b4cbfc0a222098ae90f3795d31e94a9f580cb7",
+  "purpose": "Resolve high-value wording/positioning objections from already completed STRI reviews without reopening the frozen scientific claim scope or running score-chasing experiments.",
+  "source_reviews": [
+    {
+      "path": "generated/asset-first-stri-post-isolation-review-adjudication-20260819.json",
+      "sha256": "a6ea89483e630f9bbe7268a503a360f67363fff12d2c35cd9d2122951d5cff6e"
+    },
+    {
+      "path": "generated/asset-first-stri-iclr2027-final-review-20260816.json",
+      "sha256": "b57ebf98bdb3cc186c0a719f0f2c781f1e1c46982ca0ab7cfd086963023ad2bf"
+    },
+    {
+      "path": "generated/asset-first-stri-narrow-final-review-20260816.json",
+      "sha256": "9af211d9482130f74c9bacf067b5bcf0d1fc3442e36d6488c31ccd3a5e1aa66d"
+    },
+    {
+      "path": "generated/asset-first-stri-narrow-collision-review-20260816.json",
+      "sha256": "f617871228cc194c402d24e3e69134fce84cd81fdeddc92a87247fdea50b2a73"
+    },
+    {
+      "path": "generated/stri-r3-independent-review-20260819/deepseek-post-isolation.json",
+      "sha256": "495bc8abf8a867872457ad18ebf87e30b004ebbdad5d727d1063facca4d187f4"
+    }
+  ],
+  "review_to_text_actions": [
+    {
+      "objection": "The LP/cone machinery is elementary and must not be positioned as the technical novelty.",
+      "disposition": "RESOLVED_BY_POSITIONING",
+      "repair": "Related Work now separates controlled skill-representation studies, the closest self-evolving controller substrate, and the classical optimization boundary. Contributions explicitly locate novelty in the support-fixed systems invariant, information boundary, and exact audit mapping rather than in LP/cone/fairness machinery.",
+      "claim_expansion": false
+    },
+    {
+      "objection": "The method previously required the reader to infer why quotienting, the strongest same-information baseline, and cone feasibility appear in that order.",
+      "disposition": "RESOLVED_BY_METHOD_RATIONALE",
+      "repair": "Protocol-at-a-glance now starts from the geometric identity e=Aw and explains the five-stage design: freeze provenance, quotient clone nuisance, overgrant arbitrary package mass with full frozen support, solve primal/dual, and separate diagnosis from interface-changing repair.",
+      "claim_expansion": false
+    },
+    {
+      "objection": "Semantic-first selection can look like an overstated repair contribution.",
+      "disposition": "RESOLVED_BY_DEMOTION_TO_BOUNDARY_WITNESS",
+      "repair": "Semantic-first control is consistently described as an action-basis escape / constructive boundary witness that changes the interface and is not a validated downstream repair.",
+      "claim_expansion": false
+    },
+    {
+      "objection": "The practical significance of a diagnostic certificate is unclear if the paper does not validate task utility or an automatic repair method.",
+      "disposition": "ADDRESSED_WITHIN_FROZEN_CLAIM_SCOPE",
+      "repair": "STRI-Cert output is now translated into a theorem-backed three-way decision triage: R*=1 keeps package-only retuning viable in principle; R*>1 rules out every same-information package router for the declared target; invalid support/target provenance redirects effort to identification. Discussion explicitly says this is triage, not automatic taxonomy correction.",
+      "remaining_limitation": "Whether STRI distortion changes practical task utility, safety, or longitudinal regret remains unestablished and is not papered over by this wording repair.",
+      "claim_expansion": false
+    },
+    {
+      "objection": "The abstract should state the core mechanism boundary directly rather than make readers infer it from positive/negative regimes.",
+      "disposition": "RESOLVED_IN_ABSTRACT",
+      "repair": "The abstract now states that target non-realizability in the package support cone, not overlap prevalence, is the audited discriminator across the positive and negative regimes.",
+      "claim_expansion": false
+    },
+    {
+      "objection": "Single-substrate AutoSkill evidence and absence of downstream utility limit external significance.",
+      "disposition": "PRESERVED_AS_LIMITATION_NOT_TEXTUALLY_ERASED",
+      "repair": "AutoSkill remains one bounded P19 existence proof; SkillRL remains phenotype-only without independent A; the discussion continues to forbid population utility, safety, regret, prevalence, or general AutoSkill conclusions.",
+      "claim_expansion": false
+    }
+  ],
+  "manuscript_effect": {
+    "related_work": "Changed from a citation inventory into estimand-level comparison: availability/granularity and representation/retrieval studies change different variables; Skill-SP is named as the closest support-bearing control substrate; optimization machinery is explicitly classical.",
+    "method": "Added support-column geometry, deliberate overgrant rationale, five-stage design logic, and operational realizable/residual/fail-closed semantics.",
+    "abstract": "Promotes support-cone target non-realizability versus overlap prevalence to the scan-level mechanism conclusion and removes solver timing from the abstract.",
+    "discussion": "Adds diagnostic triage while preserving all utility/safety/generalization limitations.",
+    "main_text_pages": 9,
+    "main_text_page_limit": 9,
+    "total_pdf_pages": 11,
+    "citation_count": 19
+  },
+  "qa": {
+    "paper_qa": {"status": "PASS", "checks_passed": 97, "checks_total": 97},
+    "official_iclr_qa": {"status": "PASS", "checks_passed": 64, "checks_total": 64, "main_text_pages": 9},
+    "paper_quality": {"status": "PASS_MANUSCRIPT_EVIDENCE", "passed": true, "evidence_debt": 0},
+    "undefined_citations_or_references": 0,
+    "overfull_boxes": 0
+  },
+  "release_candidate": {
+    "directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r12-method-related-repair-20260824",
+    "manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r12-method-related-repair-20260824/R12-MANIFEST.json",
+    "manifest_sha256": "4e0e2369894b8a729a3f56581654dd9e6cbf21efbd362f179d4b31f02a697e1f",
+    "pdf_sha256": "e81b7a513be61e4d13dbba74b55bde11955bfbf2bc942c883062881782532046",
+    "source_zip_sha256": "c752403084b19d67fa5673963c223e8ea694b460383030584292a48538fcc1a3",
+    "source_isolated_compile": "PASS",
+    "supplement_sha256": "4a28ddc2db92d3f38141ea0496ce6989796ed93e7566b9831c77c2e77c075586",
+    "supplement_byte_identical_to_r11": true,
+    "supplement_manifest_recheck": "PASS",
+    "supplement_anonymity_recheck": "PASS",
+    "supplement_full_reproduction_inherited_from_identical_r11_bytes": "PASS",
+    "supplement_unit_tests_inherited_from_identical_r11_bytes": "29/29 PASS",
+    "canonical_release_overwritten": false
+  },
+  "sha256": {
+    "manuscript_body": "5fc087955a94e24d9713bc5c091847e271994705c907d9a591c87c6b629e0531",
+    "compiled_pdf": "e81b7a513be61e4d13dbba74b55bde11955bfbf2bc942c883062881782532046"
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_outcome_data": false,
+    "new_support_annotations": false,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "new_reviewer_calls": 0,
+    "dynamic_qwen3_proposer_pilot_reopened": false,
+    "utility_claim_added": false,
+    "safety_claim_added": false,
+    "longitudinal_regret_claim_added": false,
+    "validated_repair_claim_added": false,
+    "lp_novelty_claim_added": false
+  },
+  "scientific_authority": false,
+  "disposition": "READY_NARROW_ICLR_METHOD_RELATED_SIGNIFICANCE_REPAIR_COMPLETE"
+}
