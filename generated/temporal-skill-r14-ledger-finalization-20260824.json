@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r14-canonical-ledger-finalization",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "status": "FINALIZED_R14_SUBMISSION_READY",
+  "before_sha256": "e302e087184b946746cadd357e2a33f8f3ef40c10be777fa5c890d8c1ac5b3e5",
+  "after_sha256": "a83d5bd8190007d160709fbe7746cea3eca79b494e2e3ed0ac923b5e2ffdca87",
+  "previous_contract_sha256": "11b28d21ca311b04f2de9a0f312dd45e4b71c809c019c271cb9dab2612e96be5",
+  "current_contract_sha256": "6d992c931f076f805a0aa0bc24edd731b3b668ab37710a7befe313d8c31e0dae",
+  "current_state": "SUBMISSION_READY",
+  "title": "Do Temporal Skills Really Repair Agents? An Intervention Audit of Repair and Attribution",
+  "runtime_valid_rows": 2056,
+  "new_scientific_execution": false,
+  "new_experiment_required_for_current_narrow_claim": false,
+  "submission_authority": false,
+  "scientific_authority": false,
+  "receipt_sha256": "edd86706e3d769bdfdd0d2deb697ab67a39d11501a0c75ccaf477a471e85a849"
+}

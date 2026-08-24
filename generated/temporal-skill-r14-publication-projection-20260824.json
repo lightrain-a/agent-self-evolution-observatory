@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "status": "E2_R14_SELECTIVE_PROJECTION_PUBLISHED",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "title": "Do Temporal Skills Really Repair Agents? An Intervention Audit of Repair and Attribution",
+  "runtime_valid_rows": 2056,
+  "stable_hashes": {
+    "pdf": "0fef51f15bb188fc669411be8d6dedaeae7d83389cec3f5d917f9a120fe2906e",
+    "source_zip": "809fd3a52b5263bc8944b361ebc5bafcc2da7d615fec2b4a900a39127f485c0f",
+    "supplement_zip": "0cd9aee6f5a23bc0d5818bb42300c437a8c12df822d03230510e6073af127b0d"
+  },
+  "other_paper_rows_preserved": true,
+  "scientific_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "ca0c15527d4369da608c71e43371a548a1c99a9f938b26c579a77524ad886e3e"
+}

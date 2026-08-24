@@ -54671,9 +54671,9 @@
         },
         {
           "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
-          "title": "When Do Reusable Temporal Procedures Actually Repair Agents?",
-          "central_question": "When does a reusable temporal operation repair a recurring failure, and is callable skill state necessary once operation content and evidence are fixed?",
-          "contract_sha256": "11b28d21ca311b04f2de9a0f312dd45e4b71c809c019c271cb9dab2612e96be5",
+          "title": "Do Temporal Skills Really Repair Agents? An Intervention Audit of Repair and Attribution",
+          "central_question": "When does an apparent reusable temporal-skill effect represent net repair, surface perturbation, or an integration-surface effect under matched evidence?",
+          "contract_sha256": "6d992c931f076f805a0aa0bc24edd731b3b668ab37710a7befe313d8c31e0dae",
           "scientific_status": "READY",
           "current_state": "SUBMISSION_READY",
           "gate_clean_submission_ready": true,
@@ -54692,12 +54692,12 @@
             "review_receipts": 2,
             "decision_critical_objections": 4,
             "category_counts": {
-              "causal-identification": 1,
-              "external-validity": 1,
+              "attribution": 1,
+              "external-replication": 1,
               "reproducibility": 1,
               "scope": 1,
               "statistics": 1,
-              "treatment-parity": 1
+              "surface-scope": 1
             },
             "evidence_state_counts": {
               "existing-evidence": 6
@@ -54714,63 +54714,65 @@
           },
           "supported_claims": 4,
           "active_unrefuted_claims": 0,
-          "unsupported_claims": 3,
+          "unsupported_claims": 6,
           "limitations": [
-            "The frozen TimeSage-EV evaluated snapshot remains unavailable, so BEA/NOAA/EIA is independent source-native evidence rather than an exact rerun.",
-            "The 35 endpoint units have uneven resolution; Kimi alignment has three endpoints, Kimi same-domain grounding has two, and cross-domain grounding is null.",
-            "G0 neutrality holds only under the frozen +/-10-point rule on the tested DeepSeek and Kimi tracks; it does not make historical G neutral.",
-            "R is a strong same-information integration control for the exact frozen operation output, not an exhaustive equivalence result for all learned retrievers or context budgets.",
-            "Endpoints are independent scientific units; repeats characterize runtime robustness only."
+            "The TimeSage-EV evaluated snapshot remains unavailable; the source-native replay is independent mechanistic evidence, not an exact rerun.",
+            "DeepSeek grounding has five endpoints per cell; Kimi alignment has three endpoints and Kimi grounding two, so small cells are directional/descriptive rather than high-resolution.",
+            "G0 is a same-surface placebo, not a universally neutral control; full-track equivalence does not transport to every stratum.",
+            "EIA is a post-hoc compatibility probe selected for a dated-release structure compatible with the cutoff mechanism.",
+            "R_surf is a forced-one-answer exact-output surface check; its passing +/-10-point portfolio TOST has low observed-variance sensitivity and does not resolve the strictly non-ceiling subset.",
+            "Adaptive multi-turn callable interfaces and independently designed temporal retrievers are outside the experiment."
           ],
           "reopen_conditions": [
-            "Reopen callable-container value only if a prospectively matched same-information comparison yields a reproducible material T-R residual beyond 10 points.",
-            "Treat a future first-party TimeSage-EV evaluated snapshot as an external replication target."
+            "Treat a future first-party TimeSage-EV evaluated snapshot as an external replication target.",
+            "Reopen broader integration-surface claims only with prospectively powered non-ceiling endpoints or an adaptive multi-turn interface test.",
+            "Reopen temporal-retrieval equivalence only with an independently implemented retriever/reranker receiving the same raw candidate evidence."
           ],
           "summary": {
-            "events": 94,
-            "allowed_transitions": 16,
+            "events": 116,
+            "allowed_transitions": 24,
             "blocked_transitions": 0,
-            "story_search_receipts": 2,
-            "mock_reviews": 6,
-            "claim_audit_receipts": 3,
-            "manuscript_ci_receipts": 8,
-            "prebuttal_receipts": 3,
-            "submission_readiness_receipts": 2,
+            "story_search_receipts": 3,
+            "mock_reviews": 8,
+            "claim_audit_receipts": 4,
+            "manuscript_ci_receipts": 9,
+            "prebuttal_receipts": 4,
+            "submission_readiness_receipts": 3,
             "contract_revisions": 0,
-            "scientific_reopens": 1
+            "scientific_reopens": 2
           },
           "latest_story_search": {
             "pass": true,
-            "selected_story_id": "R13-OPERATION-FIRST",
-            "selected_story_title": "Operation-first identification ladder",
-            "story_search_sha256": "39b74b0a64411092890f1a375b1bfed3bca8f47cc91eb47e57fda8cba04c4fd1",
+            "selected_story_id": "R14-ATTRIBUTION-FIRST",
+            "selected_story_title": "Attribution layers before skill credit",
+            "story_search_sha256": "75f057f40d58f40923aa316ab1f032a98751b9d875ba50a769fbb54b8e644cb9",
             "valid_candidates": 2,
-            "paper_design_memory_query_pack_sha256": "96b8b60bf6ae37db542a14ab4fbf2c616e9d95ee94560718e468bf608bf4ccf3",
-            "paper_design_memory_binding_sha256": "01448d33d95cc6f2cf73d2818cd5a27700f59d8bfa3cba0b49e8c48896f88059",
+            "paper_design_memory_query_pack_sha256": "c2ecad4f37257f64d015cc2f1ea7a0f2b35364fab130712f207ed0905d1764a7",
+            "paper_design_memory_binding_sha256": "629e4642d064c22804c036a8bcd0cd663393c223721fdd7993c59e4876b4ebf8",
             "paper_design_memory_wiki_sha256": "b535c75e7f5424b54931d8539a9e1178979a713640beab0b9895abae30075043",
             "paper_design_memory_selected": 4,
-            "paper_design_review_lessons_selected": 2
+            "paper_design_review_lessons_selected": 1
           },
           "mock_pc_modes": {
-            "BLIND_MANUSCRIPT": "edd5832518c40808db3e38e7b5013d24a96bf7e7503aa856ed332f99dec5394c",
-            "ARTIFACT_AWARE": "76dc003543469bcca4f523709e1b394f9e67b3236c3851c7273591a5fa038780"
+            "BLIND_MANUSCRIPT": "108ce0cfa0d9195ebac38bd2ede9e0d6656d7528bef683e8ec310f14cc0c0def",
+            "ARTIFACT_AWARE": "f126eeba0ac934693ccf6e5260639aa13c47f6ad9ebd15340104a8df52094d7f"
           },
           "latest_mock_review": {
             "mode": "ARTIFACT_AWARE",
-            "review_sha256": "76dc003543469bcca4f523709e1b394f9e67b3236c3851c7273591a5fa038780",
+            "review_sha256": "f126eeba0ac934693ccf6e5260639aa13c47f6ad9ebd15340104a8df52094d7f",
             "summary": {
               "objections": 3,
-              "decision_critical": 2,
+              "decision_critical": 1,
               "targeted_experiment_proposals": 0,
               "claim_expansion_requests_preserved_as_limitations": 0
             }
           },
           "latest_claim_audit": {
             "pass": true,
-            "claim_audit_sha256": "4aee386e93495dd02053eaf1bfb33aee5d1d1d7ae59d881f1d26f91955942707",
+            "claim_audit_sha256": "ea1a875bd82e70ae49feea7b676920c7c95a3d6ee978370af2e4998a3daa2e23",
             "blockers": [],
-            "checks": 31,
-            "passed": 31
+            "checks": 13,
+            "passed": 13
           },
           "latest_manuscript_ci": {
             "pass": true,
@@ -54787,8 +54789,8 @@
           },
           "latest_paper_preparation": {
             "pass": true,
-            "protocol_version": "1.0+r13-g0-retrieval-closure",
-            "receipt_sha256": "b7c1c0ad39e20433cd65d691ccfbcd7dac67c2837c6d710f89fc7df957ae4fbd",
+            "protocol_version": "1.0+r14-intervention-audit",
+            "receipt_sha256": "415430e9ade74febc868de01e340982b72030d98d52d85514a4d0d51217c16c3",
             "required_gates": 8,
             "passed_gates": 8,
             "gate_pass": {
@@ -54816,7 +54818,7 @@
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "040b22cd6339ee06a6effc4fa762963f4df175f1ef5389568f94669e3600ce5e",
+            "receipt_sha256": "cd4686cdb926f23421f97830fe15c1df71ba421d721c6df9b46410d4ca983921",
             "blockers": []
           },
           "source_native_evidence": {
@@ -54825,7 +54827,7 @@
             "institutional_systems": 3,
             "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED",
             "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION",
-            "finalization_sha256": "922947d1153a5851ffd8b2bf9e59cc3960b572a505b9271f254040651af97341"
+            "finalization_sha256": "d7cea3b17b4c89ea65e292de1a8730dcaa0f08c93f7fc43121e0f10083bbabfc"
           },
           "latest_transition": {
             "from": "PREBUTTAL",
