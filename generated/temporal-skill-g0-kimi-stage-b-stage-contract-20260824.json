@@ -1,0 +1,65 @@
+{
+  "bound_plan_body_sha256": "51a9f3ca1471197f49617e3b70961469dafe2f22a958bdba03b178a1c7e34720",
+  "checkpoint_policy": {
+    "append_csv_per_unit": true,
+    "append_jsonl_per_unit": true,
+    "atomic_checkpoint_json": true,
+    "fsync_after_each_unit": true,
+    "never_rerun_successfully_checkpointed_unit": true,
+    "raw_json_per_unit": true,
+    "resume_key": "endpoint_id|repeat_id|arm"
+  },
+  "contract_id": "TEMP-O4-G0-KIMI-STAGE-B-STAGED-20260824",
+  "full": {
+    "model_calls_after_pilot": 126,
+    "model_calls_total": 138,
+    "pilot_rows_count_toward_full": true,
+    "resume_missing_only": true
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "pilot": {
+    "model_calls": 12,
+    "promotion_gate": "runtime/protocol/checkpoint integrity only",
+    "row_keys": [
+      "composite-ground::doc_71b83aedc0f9|r0|G0_NOOP",
+      "composite-ground::doc_71b83aedc0f9|r0|T_FROZEN",
+      "composite-ground::doc_71b83aedc0f9|r0|N_FRESH",
+      "composite-ground::doc_65c03428faa4|r0|N_FRESH",
+      "composite-ground::doc_65c03428faa4|r0|G0_NOOP",
+      "composite-ground::doc_65c03428faa4|r0|T_FROZEN",
+      "composite-cutoff::doc_128dc1bd848f|r0|N_FRESH",
+      "composite-cutoff::doc_128dc1bd848f|r0|G0_NOOP",
+      "composite-cutoff::doc_128dc1bd848f|r0|T_FROZEN",
+      "composite-align::doc_187e543fe980|r0|G0_NOOP",
+      "composite-align::doc_187e543fe980|r0|T_FROZEN",
+      "composite-align::doc_187e543fe980|r0|N_FRESH"
+    ],
+    "scientific_outcomes_used_for_promotion": false,
+    "units": [
+      {
+        "endpoint_id": "composite-align::doc_187e543fe980",
+        "repeat_id": 0
+      },
+      {
+        "endpoint_id": "composite-ground::doc_71b83aedc0f9",
+        "repeat_id": 0
+      },
+      {
+        "endpoint_id": "composite-cutoff::doc_128dc1bd848f",
+        "repeat_id": 0
+      },
+      {
+        "endpoint_id": "composite-ground::doc_65c03428faa4",
+        "repeat_id": 0
+      }
+    ]
+  },
+  "schema_version": "1.0",
+  "stage_contract_sha256": "200348e322be3159f977ad288001af656c38855b3e484ae27d60a8422151626e",
+  "stop_policy": {
+    "outcome_driven_stopping_forbidden": true,
+    "parse_or_score_failure": true,
+    "resolved_model_drift": true,
+    "runtime_invalid": true
+  }
+}

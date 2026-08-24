@@ -1,0 +1,46 @@
+{
+  "authority_source": "user instruction in active project conversation on 2026-08-24",
+  "authorization_sha256": "1910e6f2b15e0e5ca23d08f28ab7d51d7ea96c55b16089cf36d0bd3629384a0c",
+  "bound_analyzer_sha256": "d9b44ed5e1290f5ffa0d71ce56f140961365273bba6cbc13dd60d325eb1b8490",
+  "bound_core_runner_sha256": "394b62c398ea95a38b8d4273a4ca5172f418218456ac1411dc32dc29bb28c276",
+  "bound_executor_sha256": "e20bb836a84a432535f73db79b31e6a7f9420fc9a55412da4bcba30c0b351d59",
+  "bound_family_scorer_sha256": "6f117360b046fa83c8246c19772d2eda7dd9250a882f94d7de5fa18a286358cb",
+  "bound_plan_body_sha256": "51a9f3ca1471197f49617e3b70961469dafe2f22a958bdba03b178a1c7e34720",
+  "bound_preflight_sha256": "a807bdef44b2e1eb5d16e8e8211b6901345a6c65dc20182f51deaeefa22e4027",
+  "bound_stage_contract_sha256": "200348e322be3159f977ad288001af656c38855b3e484ae27d60a8422151626e",
+  "bounded_budget": {
+    "full_remaining_after_pilot": 126,
+    "model_calls_upper_bound": 138,
+    "pilot_model_calls": 12,
+    "reruns_allowed": false,
+    "resume_missing_only": true
+  },
+  "directive": "所有初步试验符合要求，授权后续实验继续跑；先小跑、没问题再全跑；每一步保存CSV中间结果并支持中断恢复。",
+  "execution_authorized": true,
+  "model_identity": {
+    "online_api_v3_route_forbidden": true,
+    "plan_only_billing_route_required": true,
+    "requested_model": "kimi-k3",
+    "required_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "required_resolved_model": "kimi-k3"
+  },
+  "outcome_driven_stopping_authorized": false,
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "pilot_promotion_rule": {
+    "runtime_protocol_checkpoint_integrity_only": true,
+    "scientific_outcomes_used_for_promotion": false
+  },
+  "provider_spend_authorized": true,
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_reopen_authorized": true,
+  "scope": [
+    "TEMP-O4_G0_KIMI_STAGE_B",
+    "KIMI_PILOT_THEN_FULL",
+    "PER_UNIT_CSV_CHECKPOINT_AND_RESUME",
+    "BEHAVIOR_NEUTRAL_G0",
+    "PRE_FROZEN_LOAD_BEARING_TARGETS_ONLY"
+  ],
+  "status": "HUMAN_EXECUTION_AUTHORITY_RECORDED",
+  "submission_authority": false
+}

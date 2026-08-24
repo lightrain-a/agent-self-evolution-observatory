@@ -1,0 +1,60 @@
+{
+  "authority": {
+    "execution_authorized": false,
+    "scientific_authority": false
+  },
+  "bound_plan_body_sha256": "51a9f3ca1471197f49617e3b70961469dafe2f22a958bdba03b178a1c7e34720",
+  "bound_stage_contract_sha256": "200348e322be3159f977ad288001af656c38855b3e484ae27d60a8422151626e",
+  "frozen_code": {
+    "analyzer_sha256": "d9b44ed5e1290f5ffa0d71ce56f140961365273bba6cbc13dd60d325eb1b8490",
+    "checkpoint_core_sha256": "394b62c398ea95a38b8d4273a4ca5172f418218456ac1411dc32dc29bb28c276",
+    "executor_sha256": "e20bb836a84a432535f73db79b31e6a7f9420fc9a55412da4bcba30c0b351d59",
+    "family_scorer_sha256": "6f117360b046fa83c8246c19772d2eda7dd9250a882f94d7de5fa18a286358cb"
+  },
+  "historical_family_metric_replay": {
+    "aggregate_projection_used_to_tune_new_scorer": false,
+    "full_5repeat_aggregate_projection_mismatches": [
+      {
+        "aggregate_receipt": 7,
+        "condition": "G3",
+        "family": "exogenous_grounding",
+        "phase": "C3-R",
+        "replayed": 8
+      },
+      {
+        "aggregate_receipt": 9,
+        "condition": "T3",
+        "family": "exogenous_grounding",
+        "phase": "C3-R",
+        "replayed": 10
+      },
+      {
+        "aggregate_receipt": 20,
+        "condition": "T3",
+        "family": "exogenous_grounding",
+        "phase": "C4-R",
+        "replayed": 19
+      }
+    ],
+    "matched": 69,
+    "pass": true,
+    "row_level_receipt": "kimi_f0_family_contract_audit.json",
+    "rows": 69,
+    "warning": "Three grounding aggregate counters in full_5repeat_family_audit are not exactly reproducible from preserved raw rows plus the row-level-replay scorer. The row-level 69/69 receipt is authoritative for defining the new pre-outcome scorer; old aggregate discrepancy is retained as provenance debt."
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "receipt_sha256": "a807bdef44b2e1eb5d16e8e8211b6901345a6c65dc20182f51deaeefa22e4027",
+  "receipt_type": "TEMP-O4-G0-KIMI-STAGE-B-PREFLIGHT",
+  "schema_version": "1.0",
+  "status": "READY_WITH_USER_AUTHORIZATION",
+  "zero_call_precision": {
+    "N0_endpoints_with_variation": 4,
+    "historical_N0_endpoints": 23,
+    "historical_repeats": 5,
+    "prob_abs_delta_le_0_10": 0.99368,
+    "two_repeat_null_90_ci": [
+      -0.06521739130434782,
+      0.06521739130434782
+    ]
+  }
+}

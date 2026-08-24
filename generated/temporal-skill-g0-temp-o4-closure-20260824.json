@@ -1,0 +1,60 @@
+{
+  "artifacts": {
+    "deepseek_a2_analysis_sha256": "210681be63752e7bb87978edbe15bb471ad27d5067d600c08cffe9b6d3f7cc39",
+    "deepseek_crossstage_sha256": "bd8e0a6411cabb428771f0983b307d43c9c708b32601ab2caf0ac9c179aee28b",
+    "kimi_analysis_sha256": "5f9700fc6d414e546a631482dc3ccd9c409f3bb5b9210323762a7543beba8bff",
+    "kimi_results_csv_sha256": "8cf1c10eada4a0a90bd6bf8f05798dc4796392d78701b32b4eedd9d365a0df68",
+    "kimi_results_json_sha256": "a66fa76ae5acd98b2694780bd055e93d71d6c067073df969a51d94d55b00b8f9"
+  },
+  "authority": {
+    "TEMP_O4_closed": true,
+    "TEMP_O5_closed": false,
+    "claim_expansion": false,
+    "submission_authority": false
+  },
+  "checks": {
+    "deepseek_neutrality_go": true,
+    "deepseek_primary_survives": true,
+    "kimi_csv_138": true,
+    "kimi_exact_model": true,
+    "kimi_grounding_downgraded": true,
+    "kimi_neutrality_go": true,
+    "kimi_raw_138": true,
+    "kimi_release_alignment_survives": true,
+    "kimi_runtime_138": true
+  },
+  "conclusion": {
+    "deepseek": {
+      "neutrality_ci90": [
+        -0.09285714285714286,
+        0.05
+      ],
+      "neutrality_point": -0.02142857142857143,
+      "primary_track_status": "STAGE_A_PRIMARY_TRACK_SURVIVES_DIRECTIONAL_GATE"
+    },
+    "kimi": {
+      "grounding_same_domain_T_minus_G0": -0.25,
+      "grounding_same_domain_T_minus_N": 0.0,
+      "neutrality_ci90": [
+        -0.043478260869565216,
+        0.08695652173913043
+      ],
+      "neutrality_point": 0.021739130434782608,
+      "release_alignment_T_minus_G0": 0.5,
+      "release_alignment_T_minus_N": 0.5,
+      "required_claim_action": "Downgrade Kimi same-domain grounding support; do not rerun for sign repair."
+    },
+    "resolution": "No-op reusable helper G0 is behaviorally neutral against fresh no-skill under the preregistered +/-10pp equivalence margin on independent DeepSeek and Kimi tracks. Targeted-vs-G0 evidence therefore cannot be explained solely by a deliberately harmful generic helper.",
+    "reviewer_objection": "Alternative behavior-neutral generic control was missing."
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "provenance_debt": {
+    "historical_kimi_full_5repeat_grounding_aggregate_projection_mismatch": true,
+    "new_stage_b_scorer_row_level_audit_replay": "69/69 exact",
+    "old_aggregate_used_to_tune_new_scorer": false
+  },
+  "receipt_sha256": "84c56f308980bc4b70b505fa0fc2f3233054a46b271ad9cfe1d339c41dc373b6",
+  "receipt_type": "TEMP-O4-BEHAVIOR-NEUTRAL-GENERIC-CONTROL-CLOSURE",
+  "schema_version": "1.0",
+  "status": "TEMP_O4_RESOLVED_WITH_KIMI_GROUNDING_DOWNGRADE"
+}
