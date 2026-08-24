@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import tempfile
 import unittest
@@ -328,10 +329,20 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
 
     def test_external_source_review_receipt_merges_as_zero_authority_exposure_only(self) -> None:
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td);storage=self.storage(root);review=root/"source-review.json"
+            root=Path(td);storage=self.storage(root);review=root/"source-review.json";artifact=root/"review-artifact.json"
+            refs=["arXiv:10","arXiv:11","arXiv:12","arXiv:13"]
+            artifact.write_text(json.dumps({
+                "schema_version":"1.0","run_id":"external-fresh-r1","status":"EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+                "summary":{"sources_discovered":4,"identity_verified":4,"provider_model_calls":0},
+                "policy":{"review_exposure_is_retrieval_metadata_only":True,"review_exposure_cannot_authorize_or_skip_scientific_gates":True},
+                "sources":[{"ref":ref,"identity_verified":True} for ref in refs],
+                "authority":{"scientific_authority":False,"candidate_generation":False,"problem":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            }),encoding="utf-8")
             review.write_text(json.dumps({"schema_version":"1.0","receipts":[{
                 "run_id":"external-fresh-r1","status":"EXTERNAL_FRESH_INTAKE_REVIEWED",
-                "source_refs":["arXiv:10","arXiv:11","arXiv:12","arXiv:13"],"scientific_authority":False,
+                "source_refs":refs,"review_artifact":"review-artifact.json","review_artifact_sha256":hashlib.sha256(artifact.read_bytes()).hexdigest(),"review_complete":True,
+                "identity_verified_count":4,"provider_model_calls":0,"scientific_authority":False,
+                "authority":{"candidate_generation":False,"problem":False,"method":False,"experiment":False,"p0":False,"gpu":False},
             }]}),encoding="utf-8")
             counts,runs,portable,receipts=_source_exposure_state(
                 storage,
@@ -343,6 +354,65 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertTrue(all(value==1 for value in counts.values()))
         self.assertEqual(receipts[0]["status"],"EXTERNAL_FRESH_INTAKE_REVIEWED")
         self.assertFalse(receipts[0]["scientific_authority"])
+
+    def test_external_source_review_receipt_without_matching_artifact_cannot_change_exposure(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);review=root/"source-review.json";artifact=root/"review-artifact.json"
+            artifact.write_text(json.dumps({
+                "run_id":"external-forged","status":"EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+                "summary":{"sources_discovered":4,"identity_verified":4,"provider_model_calls":0},
+                "policy":{"review_exposure_is_retrieval_metadata_only":True,"review_exposure_cannot_authorize_or_skip_scientific_gates":True},
+                "sources":[{"ref":ref,"identity_verified":True} for ref in ["arXiv:30","arXiv:31","arXiv:32","arXiv:DIFFERENT"]],
+                "authority":{"scientific_authority":False,"candidate_generation":False,"problem":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            }),encoding="utf-8")
+            review.write_text(json.dumps({"schema_version":"1.0","receipts":[{
+                "run_id":"external-forged","status":"EXTERNAL_FRESH_INTAKE_REVIEWED",
+                "source_refs":["arXiv:30","arXiv:31","arXiv:32","arXiv:33"],"review_artifact":"review-artifact.json","review_artifact_sha256":hashlib.sha256(artifact.read_bytes()).hexdigest(),
+                "review_complete":True,"identity_verified_count":4,"provider_model_calls":0,"scientific_authority":False,
+                "authority":{"candidate_generation":False,"problem":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            }]}),encoding="utf-8")
+            counts,runs,portable,receipts=_source_exposure_state(storage,portable_source_review_state_path=review)
+        self.assertEqual((counts,runs,portable,receipts),({},0,0,[]))
+
+    def test_external_source_review_receipt_with_wrong_artifact_hash_cannot_change_exposure(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);review=root/"source-review.json";artifact=root/"review-artifact.json"
+            refs=["arXiv:40","arXiv:41","arXiv:42","arXiv:43"]
+            artifact.write_text(json.dumps({
+                "run_id":"external-hash","status":"EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+                "summary":{"sources_discovered":4,"identity_verified":4,"provider_model_calls":0},
+                "policy":{"review_exposure_is_retrieval_metadata_only":True,"review_exposure_cannot_authorize_or_skip_scientific_gates":True},
+                "sources":[{"ref":ref,"identity_verified":True} for ref in refs],
+                "authority":{"scientific_authority":False,"candidate_generation":False,"problem":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            }),encoding="utf-8")
+            review.write_text(json.dumps({"schema_version":"1.0","receipts":[{
+                "run_id":"external-hash","status":"EXTERNAL_FRESH_INTAKE_REVIEWED","source_refs":refs,
+                "review_artifact":"review-artifact.json","review_artifact_sha256":"0"*64,"review_complete":True,
+                "identity_verified_count":4,"provider_model_calls":0,"scientific_authority":False,
+                "authority":{"candidate_generation":False,"problem":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            }]}),encoding="utf-8")
+            counts,runs,portable,receipts=_source_exposure_state(storage,portable_source_review_state_path=review)
+        self.assertEqual((counts,runs,portable,receipts),({},0,0,[]))
+
+    def test_external_source_review_receipt_requires_explicit_zero_authority_artifact(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);review=root/"source-review.json";artifact=root/"review-artifact.json"
+            refs=["arXiv:50","arXiv:51","arXiv:52","arXiv:53"]
+            artifact.write_text(json.dumps({
+                "run_id":"external-authority","status":"EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+                "summary":{"sources_discovered":4,"identity_verified":4,"provider_model_calls":0},
+                "policy":{"review_exposure_is_retrieval_metadata_only":True,"review_exposure_cannot_authorize_or_skip_scientific_gates":True},
+                "sources":[{"ref":ref,"identity_verified":True} for ref in refs],
+                "authority":{"scientific_authority":False,"candidate_generation":False,"problem":False,"method":False,"experiment":False,"p0":False},
+            }),encoding="utf-8")
+            review.write_text(json.dumps({"schema_version":"1.0","receipts":[{
+                "run_id":"external-authority","status":"EXTERNAL_FRESH_INTAKE_REVIEWED","source_refs":refs,
+                "review_artifact":"review-artifact.json","review_artifact_sha256":hashlib.sha256(artifact.read_bytes()).hexdigest(),"review_complete":True,
+                "identity_verified_count":4,"provider_model_calls":0,"scientific_authority":False,
+                "authority":{"candidate_generation":False,"problem":False,"method":False,"experiment":False,"p0":False,"gpu":False},
+            }]}),encoding="utf-8")
+            counts,runs,portable,receipts=_source_exposure_state(storage,portable_source_review_state_path=review)
+        self.assertEqual((counts,runs,portable,receipts),({},0,0,[]))
 
     def test_external_source_review_receipt_cannot_gain_exposure_with_scientific_authority(self) -> None:
         with tempfile.TemporaryDirectory() as td:
@@ -464,6 +534,8 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
         self.assertEqual(public["summary"]["coverage_anchor_count"],1)
         self.assertTrue(public["policy"]["source_coverage_scheduler_is_discovery_only"])
         self.assertTrue(public["policy"]["source_review_exposure_has_zero_scientific_authority"])
+        self.assertTrue(public["policy"]["portable_source_review_receipts_require_bound_review_artifact"])
+        self.assertTrue(public["policy"]["portable_source_review_receipts_require_content_addressed_review_artifact"])
         self.assertTrue(public["policy"]["source_exposure_cannot_skip_generation_or_problem_gate"])
         self.assertTrue(public["policy"]["source_exposure_does_not_relax_relevance_or_freshness"])
         self.assertFalse(private["source_coverage"]["scientific_authority"])

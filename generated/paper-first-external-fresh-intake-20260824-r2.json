@@ -1,0 +1,254 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T02:32:53Z",
+  "run_id": "external-fresh-intake-20260824-r2",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "source_window": {
+    "publication_dates": [
+      "2026-08-13",
+      "2026-08-14",
+      "2026-08-15",
+      "2026-08-17",
+      "2026-08-18",
+      "2026-08-19"
+    ],
+    "selection_rule": "Current canonical Primary sources with prior_review_exposure=0 that received explicit source-level review in the 2026-08-24 contradiction/reopen audit."
+  },
+  "summary": {
+    "sources_discovered": 10,
+    "exact_prior_exposure_zero": 10,
+    "identity_verified": 10,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "typed_evidence_extraction_version": "typed-v3",
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "no_emit_is_not_automatically_a_scientific_dead_end": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "contradiction_requires_exact_existing_reopen_contract": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2608.18933",
+      "title": "SkillForge: Self-Distilling Agents for Project-Specific Issue Resolution",
+      "published": "2026-08-19",
+      "source_sha256": "6947bda920074d45ac568bf4f3f165710d8300508c9092f2bd47e815a1ad0c61",
+      "fulltext_sha256": "b32f0a7bcde946f3c7b960deba8c528ded17b4187a598a722ee59bdb9968b7cc",
+      "disposition": "SUPPORT_COMPONENT_ONLY",
+      "reduction": [],
+      "note": "The source directly supports project-specific external diagnostic memory and internal intervention-memory ablations, but it is only one component of PORT-017. It does not repair the missing aligned SkillEvo endpoint or the required third independent entity-level intervention-knowledge mechanism.",
+      "evidence_basis": [
+        "generated/port-017-third-mechanism-support-audit.json",
+        "generated/paper-first-pre-f0-problem-falsifier-preflight.json"
+      ],
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 2,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.19197",
+      "title": "SPADE: Self-Play in Adaptive Synthetic Executable Environments",
+      "published": "2026-08-19",
+      "source_sha256": "bb3361cd1dbe387d657a3b35d29287e8cfce71c0ee45bd2900b43c767c93342b",
+      "fulltext_sha256": "20e30a9390fa857c20f6d903de770f60eedf75cb408ad55f41478a677229cbf0",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "compound-negative-transfer"
+      ],
+      "note": "Freezing the environment designer while removing its memory changes multiple adaptation inputs at once. The observed below-base collapse is already explained by compound distributional mismatch/negative transfer absent a same-information residual.",
+      "evidence_basis": [
+        "research-memory:MEM-DISC-087393b9919c0ee1df"
+      ],
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 2,
+        "boundary_observations": 2
+      }
+    },
+    {
+      "ref": "arXiv:2608.19047",
+      "title": "Eureka: Task-Conditioned Meta-Agent Orchestration for Scientific Discovery",
+      "published": "2026-08-19",
+      "source_sha256": "32340367f06ce4ec2f7b1b3ab1e77e9cf3e94e8b9ff855ac0494290038808829",
+      "fulltext_sha256": "2de6028cecfc086ac9b7e647be1040b53e6db863404249ebbc9e960e67504182",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "fixed-cost-amortization"
+      ],
+      "note": "Persistent specialist autonomy is valuable when its one-time promotion cost is amortized by repeated future service. The observed break-even is not a new phase transition without a matched non-amortization state variable.",
+      "evidence_basis": [
+        "research-memory:MEM-DISC-f0bdf8c41199121210"
+      ],
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 1,
+        "measured_failures": 0,
+        "boundary_observations": 1
+      }
+    },
+    {
+      "ref": "arXiv:2608.18575",
+      "title": "Beyond LLM-Based Reasoning: Lightweight GNNs for Agent Failure Attribution",
+      "published": "2026-08-19",
+      "source_sha256": "0a07c0e63f9cb5a75a9cdb118c5e5cddd6b1d743b32222b063f57b0ec2acaa32",
+      "fulltext_sha256": "3f3ef293601d112bb7f11413e22dd7612a28a67416ee074727d926b423b1e615",
+      "disposition": "NO_EMIT_THIS_PASS",
+      "reduction": [
+        "failure-attribution-without-incompatible-repair-targets"
+      ],
+      "note": "The paper supplies source-faithful faulty-agent/error-type attribution evidence, but not matched observable units requiring incompatible correct repairs. It therefore does not satisfy the SHADOW-P03 identifiability reopen contract.",
+      "evidence_basis": [
+        "generated/paper-first-search-portfolio-design-adjudication.json#SHADOW-P03-C01"
+      ],
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 2,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.18351",
+      "title": "Task-Conditioned Least-Privilege Learning for Executable Terminal and MCP Agents",
+      "published": "2026-08-18",
+      "source_sha256": "7a8681f4b79be32efb5e8ac7e9717295ae8b989db00d20fef56ee3907ab59852",
+      "fulltext_sha256": "6c1b5ecf30408f679476cc7c0f13743b9898e80f81cf5c09574c5843bbdd37ff",
+      "disposition": "NO_EMIT_THIS_PASS",
+      "reduction": [
+        "constrained-policy-optimization"
+      ],
+      "note": "Improved safe success together with reduced excess authority is evidence that task-conditioned least privilege can satisfy a constrained utility objective. The result does not expose an irreducible self-evolution failure beyond the existing safety/utility constraint formulation.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 2,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.17310",
+      "title": "Agentic ESOpt: Fine-Tuning Long-Horizon LLM Agents with Minimal GPU Requirements",
+      "published": "2026-08-18",
+      "source_sha256": "dba9b97fa676d9263964b72d553cfdcecb1073a00ed4594d8ee3614728ec6bf0",
+      "fulltext_sha256": "ff2050d489fac20e6a6b56628093a88a3e95ce193e794d6eb682e7a83702a099",
+      "disposition": "CAPABILITY_EVIDENCE_ONLY",
+      "reduction": [],
+      "note": "Trajectory-level evolution-strategy optimization under sparse terminal reward is a useful method/capability result, but canonical closures do not assert that long-horizon agent adaptation requires step-level or process-level credit. No existing opposite prediction is contradicted.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 2
+      }
+    },
+    {
+      "ref": "arXiv:2608.16068",
+      "title": "CAPO: Constraint-Aware Prompt Optimization for LLM Agents",
+      "published": "2026-08-17",
+      "source_sha256": "0df293a543e5570795634acf0a4e1771396808e78474881468bb2db796d33b1b",
+      "fulltext_sha256": "aa432f8d3abaf5378723879473958d13bef00260d162d3d992d359ab85dc7541",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "constrained-optimization"
+      ],
+      "note": "The same threshold-constrained formulation transfers across cost, safety, formatting, over-refusal, privacy, and instruction-following constraints. This reinforces rather than contradicts the canonical constrained-optimization reduction.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 1
+      }
+    },
+    {
+      "ref": "arXiv:2608.15265",
+      "title": "VibeWorlding: Can Multimodal Agents Construct 3D Open Worlds End-to-End?",
+      "published": "2026-08-15",
+      "source_sha256": "8323a1d4c00e86b6fa1c1356c8043950c6ec5b00dfa734e893ef78e00dff8a98",
+      "fulltext_sha256": "6982d567fbc764ab921dbb411b5493c5ad83fd752a4f49dcd67a6fcd686f25bf",
+      "disposition": "CAPABILITY_BOUNDARY_ONLY",
+      "reduction": [
+        "static-capability-and-underspecification"
+      ],
+      "note": "Persistent failures on spatial quantities and long underspecified 3D instructions are real capability boundaries, but the source does not isolate a longitudinal self-evolution mechanism or matched update-history residual.",
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 2,
+        "boundary_observations": 1
+      }
+    },
+    {
+      "ref": "arXiv:2608.13900",
+      "title": "Agentic Transaction: Towards ACID-Compliant Agent Systems",
+      "published": "2026-08-14",
+      "source_sha256": "e98f09a47f0ad5938169eb4cab7beb13e9d425f3400c69ccb0b9752057290f31",
+      "fulltext_sha256": "807c0dcaf3009fe4969b6273bcc1eb5154e6b4833f2d6b34b5bf8975e87e9fe1",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "cost-sensitive-operating-point",
+        "transaction-semantics"
+      ],
+      "note": "Failed-state contamination motivates transactional isolation, while confidence-triggered retry thresholds trade unnecessary retry against failure propagation. The retry threshold itself remains standard cost-sensitive operating-point selection under matched costs/confidence.",
+      "evidence_basis": [
+        "research-memory:MEM-DISC-3e95edd7bafe36fb61"
+      ],
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 1,
+        "boundary_observations": 1
+      }
+    },
+    {
+      "ref": "arXiv:2608.13120",
+      "title": "SkillEvo: Self-Renewing Evolution Gradients from Multi-Turn Interaction Feedback",
+      "published": "2026-08-13",
+      "source_sha256": "8ca635e35e131422f263aa7f65c19fadde9a6ffe881ecbf998b2627d065ba2c7",
+      "fulltext_sha256": "82d698a58bc95ccd17e5b53d0e49612c439a2f66dfc43c2e034e0932bfcd536f",
+      "disposition": "SUPPORT_COMPONENT_ONLY",
+      "reduction": [],
+      "note": "Multi-turn feedback supplies a strong evolution-gradient effect and a clear feedback-source ablation, but the source does not define the same entity-level intervention-knowledge endpoint as SkillForge. It therefore cannot complete PORT-017's frozen convergent-failure support contract.",
+      "evidence_basis": [
+        "generated/port-017-third-mechanism-support-audit.json",
+        "generated/paper-first-pre-f0-problem-falsifier-preflight.json"
+      ],
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 1,
+        "boundary_observations": 0
+      }
+    }
+  ],
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

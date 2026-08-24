@@ -492,9 +492,62 @@ def _portable_review_receipts(generator_state_path: Path | None, primary_state_p
 
 
 def _portable_source_review_receipts(path: Path | None) -> list[dict[str, Any]]:
-    """Read explicit zero-authority review receipts outside generator transactions."""
+    """Read explicit zero-authority review receipts outside generator transactions.
+
+    External review exposure changes the source-coverage scheduler, so a receipt is
+    accepted only when it is bound to a review artifact with the exact same run id
+    and source refs.  The artifact remains zero scientific authority; this check
+    prevents a hand-edited receipt from silently marking arbitrary papers reviewed.
+    """
     payload=_load_json_object(path)
-    return [dict(row) for row in payload.get("receipts") or [] if isinstance(row,dict)][-64:]
+    valid: list[dict[str, Any]]=[]
+    for row in payload.get("receipts") or []:
+        if not isinstance(row,dict) or row.get("scientific_authority") is not False:
+            continue
+        receipt_authority=row.get("authority") or {}
+        if any(receipt_authority.get(key) is not False for key in ("candidate_generation","problem","method","experiment","p0","gpu")):
+            continue
+        run_id=str(row.get("run_id") or "").strip()
+        status=str(row.get("status") or "").strip()
+        refs=sorted({str(ref).strip() for ref in row.get("source_refs") or [] if str(ref).strip().startswith("arXiv:")})
+        if not run_id or status!="EXTERNAL_FRESH_INTAKE_REVIEWED" or len(refs)<4:
+            continue
+        if row.get("review_complete") is not True or int(row.get("identity_verified_count") or 0)!=len(refs):
+            continue
+        artifact_ref=str(row.get("review_artifact") or "").strip()
+        artifact_rel=Path(artifact_ref)
+        if not artifact_ref or artifact_rel.is_absolute() or ".." in artifact_rel.parts:
+            continue
+        artifact_path=PROJECT_ROOT/artifact_rel
+        if not artifact_path.is_file() and path is not None:
+            artifact_path=Path(path).parent/artifact_rel
+        artifact_sha=str(row.get("review_artifact_sha256") or "").strip().lower()
+        if not re.fullmatch(r"[0-9a-f]{64}",artifact_sha) or not artifact_path.is_file():
+            continue
+        if hashlib.sha256(artifact_path.read_bytes()).hexdigest()!=artifact_sha:
+            continue
+        artifact=_load_json_object(artifact_path)
+        artifact_policy=artifact.get("policy") or {}
+        artifact_authority=artifact.get("authority") or {}
+        artifact_sources=[source for source in artifact.get("sources") or [] if isinstance(source,dict)]
+        artifact_refs=sorted({str(source.get("ref") or "").strip() for source in artifact_sources if str(source.get("ref") or "").strip().startswith("arXiv:")})
+        artifact_summary=artifact.get("summary") or {}
+        if artifact.get("run_id")!=run_id or artifact.get("status")!="EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY":
+            continue
+        if artifact_refs!=refs or len(artifact_sources)!=len(refs) or any(source.get("identity_verified") is not True for source in artifact_sources):
+            continue
+        if int(artifact_summary.get("identity_verified") or 0)!=len(refs) or int(artifact_summary.get("sources_discovered") or 0)!=len(refs):
+            continue
+        if int(row.get("provider_model_calls") or 0)!=int(artifact_summary.get("provider_model_calls") or 0):
+            continue
+        if artifact_policy.get("review_exposure_is_retrieval_metadata_only") is not True or artifact_policy.get("review_exposure_cannot_authorize_or_skip_scientific_gates") is not True:
+            continue
+        required_authority=("scientific_authority","candidate_generation","problem","method","experiment","p0","gpu")
+        if any(artifact_authority.get(key) is not False for key in required_authority):
+            continue
+        normalized=dict(row);normalized["run_id"]=run_id;normalized["source_refs"]=refs;normalized["scientific_authority"]=False
+        valid.append(normalized)
+    return valid[-64:]
 
 
 def _source_exposure_state(
@@ -1483,6 +1536,8 @@ def build_primary_evidence_pool(
             "carrier_probe_pending_skips_live_generator_call": True,
             "source_review_exposure_has_zero_scientific_authority": True,
             "portable_source_review_receipts_have_zero_scientific_authority": True,
+            "portable_source_review_receipts_require_bound_review_artifact": True,
+            "portable_source_review_receipts_require_content_addressed_review_artifact": True,
             "private_saturation_ledger_runs_exported_as_zero_authority_portable_receipts": True,
             "source_exposure_cannot_skip_generation_or_problem_gate": True,
             "source_exposure_does_not_relax_relevance_or_freshness": True,
