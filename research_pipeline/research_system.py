@@ -2185,6 +2185,11 @@ def validate_state(state: dict[str, Any]) -> list[str]:
         errors.extend(f"Canonical Pre-F0 evidence acquisition: {error}" for error in validate_pre_f0_evidence_acquisition_public(pre_f0_evidence))
         if any(key in pre_f0_evidence for key in ("entries","candidate_id","source_refs","design","evidence_receipt")):
             errors.append("canonical Pre-F0 evidence public state cannot expose private candidate or evidence material")
+        evidence_snapshots={str(value or "").strip().lower() for value in pre_f0_evidence.get("candidate_snapshot_sha256s") or [] if str(value or "").strip()}
+        queue_snapshots={str(row.get("candidate_snapshot_sha256") or "").strip().lower() for row in pre_f0_rows if str(row.get("candidate_snapshot_sha256") or "").strip()}
+        support_snapshots={str(row.get("candidate_snapshot_sha256") or "").strip().lower() for row in (pre_f0_support.get("rows") or []) if isinstance(row,dict) and str(row.get("candidate_snapshot_sha256") or "").strip()}
+        if evidence_snapshots and (not evidence_snapshots.issubset(queue_snapshots) or not evidence_snapshots.issubset(support_snapshots)):
+            errors.append("canonical Pre-F0 evidence acquisition is stale versus current queue/support candidate snapshots")
     discovery_frontier=state.get("paper_first_discovery_frontier") or {}
     if discovery_frontier:
         errors.extend(f"Paper-first discovery frontier: {error}" for error in validate_paper_first_discovery_frontier(discovery_frontier))
