@@ -1,0 +1,57 @@
+{
+  "bound_plan_body_sha256": "13bfe161c9c0d200b570f28e0f0bf5020708f5b78cb7c3c8881b6bfe57b1246e",
+  "checkpoint_policy": {
+    "append_csv_per_unit": true,
+    "append_jsonl_per_unit": true,
+    "atomic_checkpoint_json": true,
+    "fsync_after_each_unit": true,
+    "never_rerun_successfully_checkpointed_unit": true,
+    "raw_json_per_unit": true,
+    "resume_key": "endpoint_id|repeat_id|arm"
+  },
+  "contract_id": "TEMP-O5-DEEPSEEK-STAGED-20260824",
+  "full": {
+    "model_calls_after_pilot": 66,
+    "model_calls_total": 72,
+    "pilot_rows_count_toward_full": true,
+    "resume_missing_only": true
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "pilot": {
+    "coverage": "one endpoint from each pre-frozen load-bearing cell",
+    "model_calls": 6,
+    "promotion_gate": "runtime/protocol/checkpoint/parity integrity only",
+    "row_keys": [
+      "composite-ground::doc_128dc1bd848f|r0|T_CALLABLE",
+      "composite-ground::doc_128dc1bd848f|r0|R_RETRIEVAL",
+      "composite-ground::doc_15ffceb07aa2|r0|R_RETRIEVAL",
+      "composite-ground::doc_15ffceb07aa2|r0|T_CALLABLE",
+      "eia-cutoff::doc_229defbde6bb|r0|R_RETRIEVAL",
+      "eia-cutoff::doc_229defbde6bb|r0|T_CALLABLE"
+    ],
+    "scientific_outcomes_used_for_promotion": false,
+    "units": [
+      {
+        "endpoint_id": "composite-ground::doc_128dc1bd848f",
+        "repeat_id": 0
+      },
+      {
+        "endpoint_id": "composite-ground::doc_15ffceb07aa2",
+        "repeat_id": 0
+      },
+      {
+        "endpoint_id": "eia-cutoff::doc_229defbde6bb",
+        "repeat_id": 0
+      }
+    ]
+  },
+  "schema_version": "1.0",
+  "stage_contract_sha256": "55305bce31ebada37eec71cc64055a6c04edd3479849deacc21032815d8f7ff9",
+  "stop_policy": {
+    "operation_parity_failure": true,
+    "outcome_driven_stopping_forbidden": true,
+    "parse_or_score_failure": true,
+    "resolved_model_drift": true,
+    "runtime_invalid": true
+  }
+}

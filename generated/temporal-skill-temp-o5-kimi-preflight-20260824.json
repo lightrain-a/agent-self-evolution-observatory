@@ -1,0 +1,70 @@
+{
+  "authority": {
+    "execution_authorized": false,
+    "scientific_authority": false
+  },
+  "bound_plan_body_sha256": "6dad35e96a6dc141b6bb336324a57380e81c0da12b29d0a0254cca665a92baca",
+  "bound_stage_contract_sha256": "cee8f88d0f873b087c03e8951cbb538818a5168765df137da4686aa2e00d46f0",
+  "frozen_code": {
+    "analyzer_sha256": "f16c5d91c86e8b96d2eb0c50e911687c5df69bb36faaacd9edbb18a1fbbeb59c",
+    "checkpoint_core_sha256": "394b62c398ea95a38b8d4273a4ca5172f418218456ac1411dc32dc29bb28c276",
+    "executor_sha256": "8dde6c0df0f78d5e67a1d2d1354de5eafc48dd3e9bc4cb7879ecd9788b67290b",
+    "family_scorer_sha256": "6f117360b046fa83c8246c19772d2eda7dd9250a882f94d7de5fa18a286358cb",
+    "retrieval_surface_sha256": "ae19010425f210d37add779c779adbd2d2d3314510fabb1926fa6ec0b8ce80b4",
+    "surface_executor_sha256": "f91778a424394ae9320ddd15116c6f57b07ea85179acf6bc2051b56f37ac2f7b"
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "receipt_sha256": "0eb6cf5a876c8051749d52f642692ab466608a36c47a783634057ee1df5ca59d",
+  "receipt_type": "TEMP-O5-KIMI-ALIGNMENT-SECONDARY-PREFLIGHT",
+  "role_boundary": "secondary low-resolution robustness only; cannot authorize a new container-value claim",
+  "schema_version": "1.0",
+  "status": "READY_WITH_USER_AUTHORIZATION",
+  "synthetic_gate_tests": {
+    "directional_T_over_R_remains_secondary_only": true,
+    "equal_surface_descriptive_no_material": true,
+    "missing_unit_integrity_hold": true
+  },
+  "zero_call_parity": {
+    "endpoints": 3,
+    "pass": true,
+    "passed": 3,
+    "rows": [
+      {
+        "candidate_evidence_preserved": true,
+        "endpoint_id": "composite-align::doc_187e543fe980",
+        "failure_family": "release_alignment",
+        "materialized_operation_output_sha256": "bc2399c18cfd6b32642fcfcd8f14fdbbb14b26d97225f49d6f9ad96c70c561da",
+        "only_added_field": true,
+        "operation_output_content_equal": true,
+        "operation_output_sha256": "bc2399c18cfd6b32642fcfcd8f14fdbbb14b26d97225f49d6f9ad96c70c561da",
+        "original_package_sha256": "368fd098a6c30c8a8e738e57eaef9cd64e0efc92041329a09d8c252720d5ebf1",
+        "phase": "C4-R",
+        "retrieval_package_without_operation_sha256": "368fd098a6c30c8a8e738e57eaef9cd64e0efc92041329a09d8c252720d5ebf1"
+      },
+      {
+        "candidate_evidence_preserved": true,
+        "endpoint_id": "composite-align::doc_5c43ed3f16d2",
+        "failure_family": "release_alignment",
+        "materialized_operation_output_sha256": "bc2399c18cfd6b32642fcfcd8f14fdbbb14b26d97225f49d6f9ad96c70c561da",
+        "only_added_field": true,
+        "operation_output_content_equal": true,
+        "operation_output_sha256": "bc2399c18cfd6b32642fcfcd8f14fdbbb14b26d97225f49d6f9ad96c70c561da",
+        "original_package_sha256": "bdf639e89d3a76dcb88795c795bd3d01f776fe7c3fad2616a9cfb0aeae2ee7d3",
+        "phase": "C4-R",
+        "retrieval_package_without_operation_sha256": "bdf639e89d3a76dcb88795c795bd3d01f776fe7c3fad2616a9cfb0aeae2ee7d3"
+      },
+      {
+        "candidate_evidence_preserved": true,
+        "endpoint_id": "composite-align::doc_950378981b9f",
+        "failure_family": "release_alignment",
+        "materialized_operation_output_sha256": "bfd65c74198c3080b2a60622a64e91163a510f778896d4d3625b1f006ab637a7",
+        "only_added_field": true,
+        "operation_output_content_equal": true,
+        "operation_output_sha256": "bfd65c74198c3080b2a60622a64e91163a510f778896d4d3625b1f006ab637a7",
+        "original_package_sha256": "05e07688f1feb8248ecb6d327fe5ebe5e5658e534c3c94d802b1a56626c2af01",
+        "phase": "C4-R",
+        "retrieval_package_without_operation_sha256": "05e07688f1feb8248ecb6d327fe5ebe5e5658e534c3c94d802b1a56626c2af01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-skill-r13-final-claim-audit",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "display_code": "E2",
+  "revision": "r13",
+  "date": "2026-08-24",
+  "title": "When Do Reusable Temporal Procedures Actually Repair Agents?",
+  "scientific_state": {
+    "TEMP_O4": "RESOLVED_WITH_KIMI_GROUNDING_DOWNGRADE",
+    "TEMP_O5": "RESOLVED_NO_MATERIAL_CALLABLE_CONTAINER_ADVANTAGE",
+    "TEMP_O6": "PERMANENT_CLAIM_BOUNDARY"
+  },
+  "headline_identification": {
+    "base_false_positive": {
+      "cell": "DeepSeek C3-R temporal_cutoff",
+      "N_percent": 100,
+      "G_percent": 72,
+      "T_percent": 100,
+      "verdict": "NO_REPAIR_DESPITE_T_MINUS_G_PLUS_28"
+    },
+    "behavior_neutral_control": {
+      "deepseek_A2_G0_minus_N_points": -2.142857142857143,
+      "deepseek_A2_90_ci_points": [-9.285714285714286, 5.0],
+      "kimi_G0_minus_N_points": 2.1739130434782608,
+      "kimi_90_ci_points": [-4.3478260869565215, 8.695652173913043],
+      "equivalence_margin_points": [-10, 10],
+      "verdict": "NEUTRALITY_GO_BOTH_TRACKS"
+    },
+    "retrieval_surface": {
+      "deepseek_independent_endpoints": 18,
+      "deepseek_T_minus_R_points": 0.0,
+      "deepseek_90_ci_points": [-5.555555555555555, 5.555555555555555],
+      "deepseek_WTL": [1, 16, 1],
+      "kimi_alignment_endpoints": 3,
+      "kimi_alignment_repeats_per_arm": 5,
+      "kimi_T_minus_R_points": 0.0,
+      "verdict": "NO_MATERIAL_CALLABLE_CONTAINER_ADVANTAGE"
+    },
+    "required_downgrade": {
+      "cell": "Kimi C4-R exogenous_grounding same-domain",
+      "fresh_T_minus_G0_points": -25.0,
+      "fresh_T_minus_N_points": 0.0,
+      "action": "REMOVE_AS_POSITIVE_CROSS_MODEL_GROUNDING_TRANSFER_SUPPORT"
+    }
+  },
+  "manuscript_checks": {
+    "scientific_object_is_operation_not_container": true,
+    "G0_executed_not_described_as_future": true,
+    "R_executed_not_described_as_future": true,
+    "historical_G_not_called_behaviorally_neutral": true,
+    "Kimi_same_domain_grounding_downgrade_visible": true,
+    "Kimi_alignment_secondary_parity_visible": true,
+    "retrieval_context_parity_explicitly_conceded": true,
+    "callable_container_superiority_not_claimed": true,
+    "TEMP_O6_cross_domain_and_small_n_boundary_preserved": true,
+    "TimeSage_exact_replication_debt_preserved": true,
+    "endpoints_not_repeats_are_independent_units": true,
+    "fresh_A1_inconclusive_not_pooled_with_A2": true,
+    "A2_standalone_neutrality_gate_preserved": true,
+    "new_positive_cells_not_promoted_from_stronger_control_search": true,
+    "runtime_valid_row_total_reported_as_2056": true,
+    "internal_research_os_terms_absent_from_manuscript": true
+  },
+  "evidence_integrity": {
+    "A1_deepseek_calls": 210,
+    "A2_deepseek_calls": 280,
+    "Kimi_G0_calls": 138,
+    "O5_deepseek_calls": 72,
+    "O5_kimi_calls": 30,
+    "new_formal_calls_total": 730,
+    "failed_auto_route_calls_zero_scientific_authority": 1,
+    "checkpoint_policy": "Each completed unit is persisted as raw JSON plus fsynced CSV and JSONL before the next unit; resume executes missing units only.",
+    "all_formal_new_rows_runtime_valid": true,
+    "all_formal_new_rows_exact_required_model": true,
+    "O5_retrieval_parity_all_rows": true
+  },
+  "not_claimed": [
+    "universal temporal-skill gain",
+    "callable skill state is necessary",
+    "callable skill state is superior to operation-matched retrieval/context construction",
+    "all temporal retrieval systems are equivalent",
+    "general cross-domain grounding transfer",
+    "model-invariant temporal procedure effect",
+    "behavioral neutrality of the historical target-blind generic helper",
+    "exact TimeSage-EV replication"
+  ],
+  "bindings": {
+    "TEMP_O4_closure_sha256": "43ea0646c8343474e586b4139b44ea0877464bc1229f817496eb1905f2631c5e",
+    "TEMP_O5_closure_sha256": "796c10e89d8f8e584e9f78270d801bc51974f36785cc95b779c59619fd035bde",
+    "DeepSeek_A2_analysis_sha256": "210681be63752e7bb87978edbe15bb471ad27d5067d600c08cffe9b6d3f7cc39",
+    "Kimi_G0_analysis_sha256": "5f9700fc6d414e546a631482dc3ccd9c409f3bb5b9210323762a7543beba8bff",
+    "DeepSeek_O5_analysis_sha256": "88e544558d6432a5dce6fd33e3fb7317b29055e187470c076d9ad975e668220f",
+    "Kimi_O5_analysis_sha256": "afcfd902c2880ff055feab1e6ebc6ad45939bd2cce28c7cdbaa75b01ab19ea70"
+  },
+  "pass": true,
+  "claim_expansion": false,
+  "submission_authority": false
+}

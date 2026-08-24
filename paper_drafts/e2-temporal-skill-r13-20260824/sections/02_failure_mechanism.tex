@@ -1,0 +1,46 @@
+\section{From Recurring Failure to a Procedure Bottleneck}
+\label{sec:mechanism}
+The intuition is to treat a reusable procedure as an intervention, not as a label attached to a successful run. The original agent must first provide the reference behavior: if it already succeeds, a targeted helper cannot be credited with repairing that endpoint. A target-blind helper then tests whether the gain is specific to the nominated operation rather than to receiving some structured assistance. Only after both comparisons are visible do we ask whether the same unchanged operation retains its direction on future compatible endpoints.
+
+Let endpoint $i$ specify a question $x_i$, a cutoff-valid evidence package $E_i$, a model configuration $M_i$, and a family-specific binary success rule $Y_i\in\{0,1\}$. We intervene only on the reusable procedure exposed to the frozen harness. The three executed conditions are $N$ (no experimental helper), $G$ (a complexity-matched target-blind helper), and $T$ (the mechanism-specific targeted procedure). All other endpoint inputs and scoring rules are held fixed.
+
+For a set of frozen endpoints $\mathcal I$ within one model--task regime, we report two empirical contrasts,
+\begin{equation}
+\widehat{\Delta}_{T-N}
+= \frac{1}{|\mathcal I|}\sum_{i\in\mathcal I}\left(\bar Y_i(T)-\bar Y_i(N)\right),
+\qquad
+\widehat{\Delta}_{T-G}
+= \frac{1}{|\mathcal I|}\sum_{i\in\mathcal I}\left(\bar Y_i(T)-\bar Y_i(G)\right),
+\end{equation}
+where $\bar Y_i(a)$ averages repeated executions of the same endpoint under arm $a$. Repeats characterize execution robustness and do not increase the number of independent endpoint units. The two contrasts have different jobs: $\widehat{\Delta}_{T-N}$ asks whether inserting the procedure changes the original agent, whereas $\widehat{\Delta}_{T-G}$ asks whether the targeted operation outperforms the executed target-blind helper. Neither contrast establishes that $G$ is behaviorally neutral or that the callable-skill container itself is necessary.
+
+\paragraph{Definition 1 (intervention-defined procedure bottleneck).}
+A targeted procedure is a \emph{binding repair under the base three-arm intervention} for a frozen model--task regime only when it improves the registered family outcome over both the original agent and matched generic assistance, i.e., when the endpoint evidence supports $\widehat{\Delta}_{T-N}>0$ and $\widehat{\Delta}_{T-G}>0$. A positive targeted-minus-generic contrast with $\widehat{\Delta}_{T-N}\leq0$ is explicitly classified as \emph{no repair}. This base definition identifies the value of inserting the operation; stronger controls then determine whether that value survives behaviorally neutral extra computation and whether the callable container itself matters.
+
+\paragraph{Stronger identification layers.}
+We prospectively freeze and execute two additional treatments. G$_0$ is a no-op helper that uses the same helper-execution surface as T but returns an empty object and reads neither the evidence package nor task context. It is admitted as a neutral control only if fresh G$_0$ and fresh N are equivalent within a predeclared $\pm10$-point margin. R executes the \emph{same frozen temporal operation} as T on the same candidates, but places the identical operation output in the retrieved evidence context and exposes no callable helper. Thus
+\begin{equation}
+\widehat{\Delta}_{T-G_0}=\frac{1}{|\mathcal I|}\sum_i\bigl(\bar Y_i(T)-\bar Y_i(G_0)\bigr),\qquad
+\widehat{\Delta}_{T-R}=\frac{1}{|\mathcal I|}\sum_i\bigl(\bar Y_i(T)-\bar Y_i(R)\bigr)
+\end{equation}
+separate operation specificity from callable-container value. A T$>$G$_0$ residual supports value beyond neutral extra computation. By contrast, T$\approx$R supports the operation while rejecting the stronger claim that callable skill state is necessary.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig1_temporal_skill_causal.pdf}
+\caption{Three-arm procedure-bottleneck test. The same frozen endpoint is evaluated as the original no-skill agent (N), with a complexity-matched target-blind helper (G), and with the targeted reusable procedure (T). A binding repair requires T to beat both N and G; unchanged-code held-out replay separately tests reuse.}
+\label{fig:causal}
+\end{figure}
+
+The design targets three failure modes that recur as release content changes.
+
+\subsection{Cutoff validity}
+The cutoff procedure receives a query date and candidate evidence timestamps and returns only evidence admissible by that date. It addresses future leakage: a later release may be highly relevant yet invalid for an earlier information set. The matched generic helper can validate evidence-package structure but is forbidden from comparing release dates with the cutoff.
+
+\subsection{Release alignment}
+The alignment procedure maps a source release to the reporting period represented by its content and verifies the selected time-series row against that period. It addresses cases in which publication time and reporting time differ. The matched generic helper can inspect document structure but cannot perform the date-to-period mapping.
+
+\subsection{Exogenous grounding}
+The grounding procedure links a numerical change to first-party documentary evidence available before the cutoff. It operates over the full frozen candidate-span region rather than a gold-only pool and returns evidence tied to the requested attribution slots. Its generic helper exposes document structure without the mechanism-specific contextual event selector.
+
+No targeted procedure contains scenario-specific answers, gold labels, or endpoint-specific fitted values. Source hashes are frozen before execution, and unchanged implementations are reused on held-out periods. This gives three direct tests of the bottleneck interpretation: a two-arm false positive must be rejected by N; gains should disappear at no-skill ceiling; and compatible held-out releases should preserve direction without rewriting the procedure.

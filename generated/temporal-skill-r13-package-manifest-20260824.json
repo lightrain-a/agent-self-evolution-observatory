@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "display_code": "E2",
+  "revision": "r13",
+  "date": "2026-08-24",
+  "title": "When Do Reusable Temporal Procedures Actually Repair Agents?",
+  "artifacts": {
+    "pdf": {
+      "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r13-20260824.pdf",
+      "sha256": "80580931de3e85b5fc68756772a8b5186cbf50c1d29d77dd6935e8fa3b9290de"
+    },
+    "source_zip": {
+      "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r13-20260824-source.zip",
+      "sha256": "1b6a85d3942af1899b9f52df368c00ac981861c048b3fcd8760bc8d4d8da5a8c"
+    },
+    "supplement_zip": {
+      "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r13-20260824-supplement.zip",
+      "sha256": "710ebd1b56fdec3c984572c68b19d0cf86c368cd55eb15df69beaf45cde705d9"
+    },
+    "claim_audit": {
+      "path": "generated/temporal-skill-r13-claim-audit-20260824.json",
+      "sha256": "4aee386e93495dd02053eaf1bfb33aee5d1d1d7ae59d881f1d26f91955942707"
+    },
+    "verification": {
+      "path": "generated/temporal-skill-r13-verification-20260824.json",
+      "sha256": "2927462c2464ca426022b3a8779027edf1010d225b207c122e55d7affdffdc24"
+    },
+    "TEMP_O4_closure": {
+      "path": "generated/temporal-skill-g0-temp-o4-closure-20260824.json",
+      "sha256": "43ea0646c8343474e586b4139b44ea0877464bc1229f817496eb1905f2631c5e"
+    },
+    "TEMP_O5_closure": {
+      "path": "generated/temporal-skill-temp-o5-closure-20260824.json",
+      "sha256": "796c10e89d8f8e584e9f78270d801bc51974f36785cc95b779c59619fd035bde"
+    }
+  },
+  "revision_aliases": {
+    "pdf": "downloads/E2-Temporal-Skill-r13-20260824.pdf",
+    "source_zip": "downloads/E2-Temporal-Skill-r13-20260824-source.zip",
+    "supplement_zip": "downloads/E2-Temporal-Skill-r13-20260824-supplement.zip",
+    "byte_identical_to_named_package": true
+  },
+  "scientific_resolution": {
+    "TEMP_O4": "RESOLVED_WITH_KIMI_GROUNDING_DOWNGRADE",
+    "TEMP_O5": "RESOLVED_NO_MATERIAL_CALLABLE_CONTAINER_ADVANTAGE",
+    "TEMP_O6": "PERMANENT_CLAIM_BOUNDARY",
+    "strongest_supported_object": "conditional reusable temporal operation bottleneck",
+    "container_claim": "NO_MATERIAL_CALLABLE_CONTAINER_ADVANTAGE_AT_TESTED_RESOLUTION",
+    "retrieval_claim": "operation-matched retrieval/context construction is equally effective at tested resolution"
+  },
+  "verification_summary": {
+    "pass": true,
+    "conclusion_page": 9,
+    "references_start_page": 10,
+    "total_pdf_pages": 15,
+    "clean_source_rebuild": true,
+    "clean_source_text_identical": true,
+    "raster_pages_checked": 15,
+    "raster_border_clipping_flags": 0,
+    "fonts_embedded": true,
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0,
+    "supplement_entries": 890,
+    "secret_value_marker_hits": 0
+  },
+  "stable_aliases_modified": false,
+  "submission_authority": false
+}
