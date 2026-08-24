@@ -20,11 +20,13 @@ POLICY: dict[str, Any] = {
     "problem_gate_pass_is_only_paper_design_eligibility": True,
     "soft_capacity_targets_do_not_relax_scientific_thresholds": True,
     "multiple_candidates_may_remain_visible_while_one_line_is_blocked": True,
+    "pre_f0_adjudication_can_close_current_formulation_without_promotion": True,
 }
 
 _STAGE_PRIORITY = {
     "GENERATOR_REVIEW": 10,
     "PRE_F0_EVIDENCE_ACQUISITION": 20,
+    "PRE_F0_ADJUDICATION": 25,
     "PROBLEM_GATE": 30,
     "PAPER_DESIGN_BACKLOG": 40,
 }
@@ -57,6 +59,7 @@ def build_research_candidate_portfolio(
     pre_f0_state: dict[str, Any],
     problem_gate_state: dict[str, Any],
     paper_design_backlog_state: dict[str, Any],
+    pre_f0_adjudication_state: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Compile existing candidate surfaces into one zero-authority persistent portfolio.
 
@@ -90,6 +93,26 @@ def build_research_candidate_portfolio(
             "scientific_authority": False,
         })
 
+    for row in _rows((pre_f0_adjudication_state or {}).get("entries")):
+        if row.get("scientific_authority") is not False:
+            continue
+        portfolio_state = _text(row.get("portfolio_state"))
+        if portfolio_state not in {"SEARCH_STOP_CURRENT_FORMULATION", "SEARCH_REVIEW", "SEARCH_HOLD"}:
+            continue
+        _put(index, {
+            "candidate_id": _candidate_id(row),
+            "candidate_identity_version": _text(row.get("candidate_identity_version")),
+            "candidate_snapshot_sha256": _text(row.get("candidate_snapshot_sha256")),
+            "title": _text(row.get("title")),
+            "stage": "PRE_F0_ADJUDICATION",
+            "portfolio_state": portfolio_state,
+            "source_status": _text(row.get("status")),
+            "discovery_lane": _text(row.get("discovery_lane")),
+            "reopen_only_if": _text(row.get("reopen_only_if")),
+            "paper_design_eligible": False,
+            "scientific_authority": False,
+        })
+
     for key, portfolio_state in (("audited", "PROBLEM_GATE_AUDITED"), ("passed", "ACTIVE_PAPER_PROBLEM"), ("blocked", "PROBLEM_GATE_BLOCKED")):
         for row in _rows(problem_gate_state.get(key)):
             _put(index, {
@@ -118,6 +141,7 @@ def build_research_candidate_portfolio(
     active = sum(str(row.get("portfolio_state") or "").startswith("ACTIVE_") for row in rows)
     search_holds = sum(row.get("portfolio_state") in {"SEARCH_HOLD", "SEARCH_REVIEW"} for row in rows)
     blocked = sum(row.get("portfolio_state") == "PROBLEM_GATE_BLOCKED" for row in rows)
+    stopped_current = sum(row.get("portfolio_state") == "SEARCH_STOP_CURRENT_FORMULATION" for row in rows)
     targets = dict(SOFT_CAPACITY_TARGETS)
     return {
         "schema_version": SCHEMA_VERSION,
@@ -129,6 +153,7 @@ def build_research_candidate_portfolio(
             "active_problem_lines": active,
             "search_holds": search_holds,
             "problem_gate_blocked": blocked,
+            "search_stopped_current_formulation": stopped_current,
             "active_target": targets["active_problem_lines"],
             "active_shortfall": max(0, targets["active_problem_lines"] - active),
             "search_hold_min_target": targets["search_hold_min"],

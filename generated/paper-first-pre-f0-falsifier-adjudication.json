@@ -1,0 +1,203 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T15:08:53+00:00",
+  "status": "PRE_F0_FALSIFIER_ADJUDICATION_COMPLETE",
+  "policy": {
+    "support_qualified_is_required_but_does_not_itself_authorize_execution": true,
+    "executed_falsifier_must_bind_exact_candidate_snapshot": true,
+    "adjudication_binds_sealed_discovery_transaction": true,
+    "run_local_candidate_id_requires_snapshot_bound_execution_lineage": true,
+    "human_reformulation_must_transitively_bind_parent_snapshot": true,
+    "pre_f0_reduction_stop_closes_current_formulation_only": true,
+    "pre_f0_stop_cannot_enter_persistent_dead_end_memory": true,
+    "reduction_supported_requires_explicit_reopen_condition": true,
+    "residual_survives_returns_to_semantic_and_current_source_review": true,
+    "inconclusive_requires_stop_or_human_reformulation": true,
+    "adjudication_cannot_mutate_generator_queue_or_preflight": true,
+    "adjudication_cannot_authorize_problem_gate_or_downstream_execution": true,
+    "public_evidence_refs_are_logical_uris_plus_sha256_only": true
+  },
+  "discovery_transaction_id": "3552144aa57495c88a2262a5c4e5673da7a49e201abaec3e730a15c70e7be802",
+  "source_generator_run_id": "20260824T061140Z",
+  "source_pre_f0_queue_status": "PRE_F0_QUEUE_READY",
+  "source_preflight_status": "PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE",
+  "summary": {
+    "adjudicated": 1,
+    "reduction_supported": 0,
+    "residual_survives": 0,
+    "inconclusive": 1,
+    "current_formulation_stopped": 0,
+    "persistent_dead_end_created": 0,
+    "problem_gate_authorized": 0,
+    "paper_design_authorized": 0,
+    "method_authorized": 0,
+    "experiment_authorized": 0,
+    "p0_authorized": 0,
+    "gpu_authorized": 0
+  },
+  "entries": [
+    {
+      "candidate_id": "PORT-006",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+      "title": "Reset-semantic substrate corruption as a convergent failure regime in repeated bounded self-improvement",
+      "discovery_lane": "CONVERGENT_FAILURE",
+      "primary_refs": [
+        "arXiv:2608.19197",
+        "arXiv:2608.20318"
+      ],
+      "preflight_disposition": "SUPPORT_QUALIFIED",
+      "preflight_support_scope": "Secondary AI4AI public trajectory-level semantic-edit audit of reset/init/seed/checkpoint state-establishment changes versus official normalized below-0.1 outcomes. Does not qualify the primary repeated-round SPADE reset-only vs step-only intervention.",
+      "outcome": "INCONCLUSIVE",
+      "status": "HOLD_PREF0_FALSIFIER_INCONCLUSIVE",
+      "portfolio_state": "SEARCH_HOLD",
+      "current_formulation": "The current PORT-006 Pre-F0 formulation requires a reset/initialization-specific causal bridge: successful-looking reset-semantic changes should be more damaging than matched step-dynamics/state-timing changes and thereby motivate a recurring reset-corruption failure regime.",
+      "current_formulation_open": true,
+      "strongest_same_information_reduction": "The frozen R2 contract/result pair would satisfy its environment-level REDUCTION_SUPPORTED rule, but the archived R2 directory contains no contemporaneous single-use bounded-evidence execution-authority artifact. Because support qualification and human reformulation do not themselves authorize execution, that result is preserved as informative evidence but is not admissible for a canonical terminal scientific reduction. The older exact audit-strata result remains diagnostic only.",
+      "scope_limit": "This is a protocol/control-plane HOLD, not a scientific negative. R2 was frozen before intervention outcome readout and used zero provider/GPU/LLM-judge calls, but execution authority is unproven; R1 had explicit bounded-evidence execution authority but was scientifically inconclusive because it lacked headroom. The current reset-specific formulation therefore remains open and no persistent scientific dead end is created.",
+      "reopen_only_if": "Resolve the protocol hold only by locating a contemporaneous pre-outcome single-use authority artifact that cryptographically binds the archived R2 contract, or by using a fresh disjoint preregistered learner-training/repeated-round matched reset-only versus step-only study under explicit bounded-evidence execution authority. Do not retroactively authorize the already-observed R2 run, and do not reuse its selected units as a fresh confirmatory panel.",
+      "next_action": "STOP_OR_HUMAN_REFORMULATION",
+      "persistent_dead_end_memory_authorized": false,
+      "principle_dead_end_certified": false,
+      "problem_gate_passed": false,
+      "evidence_receipts": [
+        {
+          "role": "same_information_observational_exact_strata",
+          "artifact_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/experiments/port-006-spade-full-audit-exact-strata-r1/result.json",
+          "sha256": "0b12671315c7cd7e1c2134d711805a42a0a4e3132e42a22757d7cd7697e74ca8",
+          "status": "COMPLETE_EXACT_CONDITIONAL_ZERO_PROVIDER",
+          "protocol_valid": true,
+          "provider_calls_executed": 0,
+          "gpu_calls_executed": 0,
+          "metrics": {
+            "units": 62,
+            "exact_two_sided_p": 0.4444444444444444,
+            "cmh_two_sided_p": 0.202004281637933
+          },
+          "interpretation": "Exact first-party audit-signature conditioning does not retain a significant reset-specific residual; this is diagnostic, not learner-training causality.",
+          "scientific_authority": false
+        },
+        {
+          "role": "conflicting_observational_adjusted_signal",
+          "artifact_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/experiments/port-006-spade-audit-adjusted-residual-r1/result.json",
+          "sha256": "a08ca06c8fe9466893f248f740969b9c00309cbd9579ce13006aaee0cc86ac8a",
+          "status": "COMPLETE_ZERO_PROVIDER_OFFLINE",
+          "protocol_valid": true,
+          "provider_calls_executed": 0,
+          "gpu_calls_executed": 0,
+          "metrics": {
+            "reset_odds_ratio": 2.4756741753530864,
+            "nested_lr_p": 0.017116703211725526,
+            "cmh_two_sided_p": 0.006613735984601466
+          },
+          "interpretation": "An adjusted observational residual exists, but its frozen decision boundary forbids learner-training or longitudinal causal interpretation, so it cannot override matched prospective evidence.",
+          "scientific_authority": false
+        },
+        {
+          "role": "bounded_training_intervention_parent",
+          "artifact_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/evidence-receipt-port006-prospective-r1.json",
+          "sha256": "2e53d79311fd4ea704637cc0c2121c6cf343f909992a755ad9d174375907f2df",
+          "status": "INCONCLUSIVE",
+          "protocol_valid": true,
+          "provider_calls_executed": 0,
+          "gpu_calls_executed": 0,
+          "metrics": {
+            "qualified_units": 16,
+            "headroom_qualified_units": 0
+          },
+          "interpretation": "The preregistered learner-training parent was protocol-valid but had zero primary headroom and was correctly adjudicated INCONCLUSIVE.",
+          "scientific_authority": false
+        },
+        {
+          "role": "decisive_human_reformulated_reset_timing_intervention",
+          "artifact_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/experiments/port-006-spade-prospective-reference-state-swap-r2/result.json",
+          "sha256": "72599c2f939822bec15543fa0bcbf79a91648ac47231ec8e6c97da09be0ae174",
+          "status": "REDUCTION_SUPPORTED",
+          "protocol_valid": true,
+          "provider_calls_executed": 0,
+          "gpu_calls_executed": 0,
+          "metrics": {
+            "selected_units": 256,
+            "trace_evaluable": 231,
+            "competence_qualified": 71,
+            "reset_failures": 0,
+            "step_failures": 0,
+            "paired_reset_minus_step_failure_rate": 0.0,
+            "exact_two_sided_p": 1.0
+          },
+          "interpretation": "On an independent non-reused population, sufficient competence-qualified units show reset-boundary whole-state mismatch no more harmful than the same mismatch after the first step, satisfying the preregistered environment-level reduction rule.",
+          "scientific_authority": false
+        },
+        {
+          "role": "decisive_intervention_manipulation_audit",
+          "artifact_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/experiments/port-006-spade-prospective-reference-state-swap-r2/manipulation-audit.json",
+          "sha256": "95ade8e43715711e7c198d6f34052edd0d0985bff9d0d01c00e163df970abab0",
+          "status": "POST_EXECUTION_MANIPULATION_VALIDITY_ONLY",
+          "protocol_valid": true,
+          "provider_calls_executed": 0,
+          "gpu_calls_executed": 0,
+          "metrics": {
+            "qualified_audit_ok": 71,
+            "state_fp_different_qualified": 71,
+            "obs_different_qualified": 0
+          },
+          "interpretation": "The audit binds the exact R2 result and verifies a distinct swapped latent-state fingerprint on every competence-qualified unit.",
+          "scientific_authority": false
+        }
+      ],
+      "execution_lineage": {
+        "r1_execution_ready_plan_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/evidence-plan-port006-prospective-execution-ready-r1.json",
+        "r1_execution_ready_plan_sha256": "f2b254cdb6c0b7455b118391bb2c5e643db17419a7c5460e5f18f025231d16cc",
+        "r1_execution_ready_candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+        "r1_execution_was_authorized": true,
+        "r1_contract_sha256": "c75746a7a9b4d2634c681a3a4b3fd120c56fbf6f2e17e79e73ebc612d6e46082",
+        "r1_adjudicated_plan_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/evidence-plan-port006-prospective-adjudicated-r1.json",
+        "r1_adjudicated_plan_sha256": "e552ccfd12cebf56074d9453604705815b220ab4ad6a021ed0a651c45faa5fcc",
+        "r1_adjudicated_candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+        "r1_status": "HOLD_INCONCLUSIVE_TREE_BUDGET_EXHAUSTED",
+        "r1_next_action": "stop-or-human-reformulation",
+        "r2_identity_binding": "TRANSITIVE_VIA_R1_ADJUDICATED_PLAN_SHA256",
+        "r2_candidate_id_is_run_local_alias": true,
+        "r2_branch_relation": "HUMAN_REFORMULATION_AFTER_PARENT_INCONCLUSIVE; not an automatic single-variable repair and does not reuse parent selected units",
+        "r2_contract_uri": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/experiments/port-006-spade-prospective-reference-state-swap-r2/experiment-contract.json",
+        "r2_contract_sha256": "5fff595b557231c4aed066eb0620a1a5377fb7ed217bc4e00e4e14715625f0e0",
+        "r2_reuses_parent_selected_units": false,
+        "r2_frozen_scientific_decision": "REDUCTION_SUPPORTED",
+        "r2_execution_authority_artifact_present": false,
+        "r2_evidence_admitted_for_terminal_adjudication": false,
+        "r2_protocol_hold": "MISSING_CONTEMPORANEOUS_SINGLE_USE_EXECUTION_AUTHORITY",
+        "provider_calls_executed_in_r2": 0,
+        "gpu_calls_executed_in_r2": 0,
+        "scientific_authority": false,
+        "discovery_transaction_id": "3552144aa57495c88a2262a5c4e5673da7a49e201abaec3e730a15c70e7be802",
+        "source_generator_run_id": "20260824T061140Z",
+        "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+        "candidate_id_is_run_local_alias": true
+      },
+      "conflict_resolution": {
+        "observational_adjusted_signal_present": true,
+        "why_not_decisive": "The adjusted association is observational/diagnostic and its own artifact forbids learner-training or longitudinal causal interpretation. R2 is scientifically stronger but cannot be terminally admitted until its execution-authority provenance is proven.",
+        "decision_rule": "Prefer preregistered same-information prospective intervention over observational association only when the prospective execution also satisfies the control-plane authority contract; otherwise HOLD without scientific closure.",
+        "scientific_authority": false
+      },
+      "scientific_authority": false,
+      "authority": {
+        "problem_gate": false,
+        "paper_design": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      }
+    }
+  ],
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
