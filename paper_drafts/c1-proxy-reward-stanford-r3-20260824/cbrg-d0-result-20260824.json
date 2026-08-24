@@ -1,0 +1,647 @@
+{
+  "claim_expansion_authority": false,
+  "contract_sha256": "c29aff4f4ae225f9d51ff61f829e005123bfc04a4ab68e7a3fff003dc130a17d",
+  "experiment_authority": false,
+  "experiment_id": "C1-CBRG-D0-ZERO-CALL-RESIDUAL-FEASIBILITY",
+  "gpu_runs": 0,
+  "interpretation_boundary": "Threshold-free representation-feasibility diagnostic only. No terminal outcomes enter any metric; no method effect or novelty claim is authorized.",
+  "pair_results": [
+    {
+      "common_core_strength": 0.5233279744784037,
+      "domain": "reddit",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": null,
+      "residual_energy": 0.47667202552159627,
+      "source": 404,
+      "success_units": 6
+    },
+    {
+      "common_core_strength": 0.6511127551396688,
+      "domain": "reddit",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": null,
+      "residual_energy": 0.34888724486033124,
+      "source": 405,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.7674021621545156,
+      "domain": "reddit",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": null,
+      "residual_energy": 0.2325978378454844,
+      "source": 595,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.39008337673213744,
+      "domain": "reddit",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": null,
+      "residual_energy": 0.6099166232678626,
+      "source": 610,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.5402573876910739,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.5478466716077592,
+      "residual_energy": 0.45974261230892605,
+      "source": 21,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.5710592816273371,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.6539532740910848,
+      "residual_energy": 0.42894071837266284,
+      "source": 22,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.5491438508033752,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.6144160131613413,
+      "residual_energy": 0.45085614919662476,
+      "source": 23,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.5212740898132324,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.6368346744113498,
+      "residual_energy": 0.4787259101867676,
+      "source": 25,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.6081546048323313,
+      "domain": "shopping",
+      "failure_units": 3,
+      "neutral_to_sf_max_alignment": 0.6559195584721036,
+      "residual_energy": 0.39184539516766864,
+      "source": 118,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.6195210036304262,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.7004284262657166,
+      "residual_energy": 0.38047899636957383,
+      "source": 125,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.659798252913687,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.6886101166407267,
+      "residual_energy": 0.340201747086313,
+      "source": 141,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.7491614090071784,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.6930069592263963,
+      "residual_energy": 0.2508385909928216,
+      "source": 145,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.8005555669466654,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.7494974401262071,
+      "residual_energy": 0.19944443305333456,
+      "source": 146,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.5936580267217424,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.7906880378723145,
+      "residual_energy": 0.4063419732782576,
+      "source": 148,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.6550914330614938,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.6259854899512397,
+      "residual_energy": 0.34490856693850624,
+      "source": 158,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.6076346255011029,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.7078821857770284,
+      "residual_energy": 0.39236537449889713,
+      "source": 159,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.6896254519621531,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.7128017014927335,
+      "residual_energy": 0.31037454803784686,
+      "source": 163,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.6006576385762956,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.6830887264675565,
+      "residual_energy": 0.3993423614237044,
+      "source": 188,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.6495737416876687,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.7650930682818095,
+      "residual_energy": 0.3504262583123313,
+      "source": 189,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.7896296911769443,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.7263405389255948,
+      "residual_energy": 0.21037030882305569,
+      "source": 225,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.5961637000242869,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.6590676241450839,
+      "residual_energy": 0.4038362999757131,
+      "source": 226,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.7791570822397867,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.8300271232922872,
+      "residual_energy": 0.22084291776021323,
+      "source": 231,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.6843722379869885,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.7458036674393548,
+      "residual_energy": 0.3156277620130115,
+      "source": 232,
+      "success_units": 9
+    },
+    {
+      "common_core_strength": 0.6202287938859727,
+      "domain": "shopping",
+      "failure_units": 9,
+      "neutral_to_sf_max_alignment": 0.7438117530610826,
+      "residual_energy": 0.37977120611402726,
+      "source": 260,
+      "success_units": 9
+    }
+  ],
+  "provider_call_authority": false,
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "D0_ZERO_CALL_CONTINUOUS_DIAGNOSTIC_COMPLETE",
+  "summary": {
+    "common_core_strength": {
+      "max": 0.8005555669466654,
+      "mean": 0.6340268391081029,
+      "median": 0.6198748987581995,
+      "min": 0.39008337673213744,
+      "n": 24,
+      "q25": 0.5936580267217424,
+      "q75": 0.6896254519621531,
+      "stdev": 0.09611218452353873
+    },
+    "residual_energy": {
+      "max": 0.6099166232678626,
+      "mean": 0.3659731608918972,
+      "median": 0.38012510124180054,
+      "min": 0.19944443305333456,
+      "n": 24,
+      "q25": 0.3156277620130115,
+      "q75": 0.42894071837266284,
+      "stdev": 0.09611218452353873
+    },
+    "shopping_neutral_alignment": {
+      "max": 0.8300271232922872,
+      "mean": 0.6965551525354385,
+      "median": 0.6967176927460564,
+      "min": 0.5478466716077592,
+      "n": 20,
+      "q25": 0.6559195584721036,
+      "q75": 0.7458036674393548,
+      "stdev": 0.06429048622095229
+    },
+    "sources_with_multiple_targets": 9,
+    "sources_with_multiple_targets_and_nonzero_applicability_range": 8,
+    "target_branch_applicability_gap": {
+      "max": 0.07679774269137596,
+      "mean": 0.029987911894073956,
+      "median": 0.02368256108458411,
+      "min": 0.0018402716117265072,
+      "n": 44,
+      "q25": 0.011585232987966876,
+      "q75": 0.04572942861325302,
+      "stdev": 0.022349365345094064
+    },
+    "target_max_residual_applicability": {
+      "max": 0.2728979651410768,
+      "mean": 0.1449144732471183,
+      "median": 0.1421348850681392,
+      "min": 0.0457821524027775,
+      "n": 44,
+      "q25": 0.1059554257548605,
+      "q75": 0.1788267922674791,
+      "stdev": 0.04870067669834063
+    }
+  },
+  "support": {
+    "paired_sources": 24,
+    "reddit_pairs": 4,
+    "reddit_targets": 8,
+    "shopping_pairs": 20,
+    "shopping_targets": 36,
+    "targets": 44
+  },
+  "target_results": [
+    {
+      "branch_applicability_gap": 0.00866630671274038,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.2102262582605121,
+      "source": 25,
+      "success_residual_applicability": 0.20155995154777173,
+      "task": 26
+    },
+    {
+      "branch_applicability_gap": 0.0276794502921085,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.11307685739313733,
+      "source": 226,
+      "success_residual_applicability": 0.14075630768524583,
+      "task": 124
+    },
+    {
+      "branch_applicability_gap": 0.037715511138314284,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.11003355435934203,
+      "source": 226,
+      "success_residual_applicability": 0.14774906549765632,
+      "task": 126
+    },
+    {
+      "branch_applicability_gap": 0.01829883749321226,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.08730526698771257,
+      "source": 141,
+      "success_residual_applicability": 0.10560410448092483,
+      "task": 142
+    },
+    {
+      "branch_applicability_gap": 0.01611227246178437,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.09885981992258586,
+      "source": 141,
+      "success_residual_applicability": 0.08274754746080148,
+      "task": 143
+    },
+    {
+      "branch_applicability_gap": 0.0018402716117265072,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.12532439955497665,
+      "source": 141,
+      "success_residual_applicability": 0.12716467116670316,
+      "task": 144
+    },
+    {
+      "branch_applicability_gap": 0.03425859747347104,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.08036568103281994,
+      "source": 146,
+      "success_residual_applicability": 0.046107083559348894,
+      "task": 147
+    },
+    {
+      "branch_applicability_gap": 0.06042044034892058,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.0711140622208859,
+      "source": 148,
+      "success_residual_applicability": 0.13153450256980648,
+      "task": 149
+    },
+    {
+      "branch_applicability_gap": 0.04427697589150448,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.08893244216542939,
+      "source": 226,
+      "success_residual_applicability": 0.13320941805693387,
+      "task": 150
+    },
+    {
+      "branch_applicability_gap": 0.0021293167414349057,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.15609361748092,
+      "source": 163,
+      "success_residual_applicability": 0.1582229342223549,
+      "task": 164
+    },
+    {
+      "branch_applicability_gap": 0.0021293167414349057,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.15609361748092,
+      "source": 163,
+      "success_residual_applicability": 0.1582229342223549,
+      "task": 165
+    },
+    {
+      "branch_applicability_gap": 0.0021293167414349057,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.15609361748092,
+      "source": 163,
+      "success_residual_applicability": 0.1582229342223549,
+      "task": 167
+    },
+    {
+      "branch_applicability_gap": 0.016072008309230057,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.16823800323566473,
+      "source": 189,
+      "success_residual_applicability": 0.1843100115448948,
+      "task": 190
+    },
+    {
+      "branch_applicability_gap": 0.025925087410385572,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.25981030757549206,
+      "source": 188,
+      "success_residual_applicability": 0.2338852201651065,
+      "task": 192
+    },
+    {
+      "branch_applicability_gap": 0.06505044103408153,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.12406024685805761,
+      "source": 226,
+      "success_residual_applicability": 0.18911068789213914,
+      "task": 227
+    },
+    {
+      "branch_applicability_gap": 0.06893388302952275,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.13840836514560806,
+      "source": 226,
+      "success_residual_applicability": 0.2073422481751308,
+      "task": 228
+    },
+    {
+      "branch_applicability_gap": 0.07418340246088206,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.11924537077582897,
+      "source": 226,
+      "success_residual_applicability": 0.19342877323671104,
+      "task": 229
+    },
+    {
+      "branch_applicability_gap": 0.04572942861325302,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.11606295574391368,
+      "source": 226,
+      "success_residual_applicability": 0.1617923843571667,
+      "task": 230
+    },
+    {
+      "branch_applicability_gap": 0.07679774269137596,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.19610022244970082,
+      "source": 232,
+      "success_residual_applicability": 0.2728979651410768,
+      "task": 233
+    },
+    {
+      "branch_applicability_gap": 0.021275066049426528,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.10580874732814749,
+      "source": 226,
+      "success_residual_applicability": 0.12708381337757402,
+      "task": 279
+    },
+    {
+      "branch_applicability_gap": 0.018656360066546362,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.08756553995923344,
+      "source": 226,
+      "success_residual_applicability": 0.1062219000257798,
+      "task": 280
+    },
+    {
+      "branch_applicability_gap": 0.004547501441491519,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.04123465096128598,
+      "source": 225,
+      "success_residual_applicability": 0.0457821524027775,
+      "task": 281
+    },
+    {
+      "branch_applicability_gap": 0.008791951115583174,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.1347215113354494,
+      "source": 226,
+      "success_residual_applicability": 0.14351346245103258,
+      "task": 282
+    },
+    {
+      "branch_applicability_gap": 0.04865673799905679,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.17528385701751859,
+      "source": 188,
+      "success_residual_applicability": 0.1266271190184618,
+      "task": 319
+    },
+    {
+      "branch_applicability_gap": 0.05194973019547788,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.18473762575259656,
+      "source": 188,
+      "success_residual_applicability": 0.13278789555711867,
+      "task": 320
+    },
+    {
+      "branch_applicability_gap": 0.06335908668696533,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.1874506236884379,
+      "source": 188,
+      "success_residual_applicability": 0.12409153700147257,
+      "task": 321
+    },
+    {
+      "branch_applicability_gap": 0.03933922662039535,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.1736438672624807,
+      "source": 188,
+      "success_residual_applicability": 0.13430464064208536,
+      "task": 322
+    },
+    {
+      "branch_applicability_gap": 0.038323102829330935,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.15286245094049633,
+      "source": 188,
+      "success_residual_applicability": 0.1145393481111654,
+      "task": 323
+    },
+    {
+      "branch_applicability_gap": 0.01235223167383026,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.09027986958727752,
+      "source": 141,
+      "success_residual_applicability": 0.10263210126110778,
+      "task": 329
+    },
+    {
+      "branch_applicability_gap": 0.011585232987966876,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.10194885574365209,
+      "source": 141,
+      "success_residual_applicability": 0.09036362275568521,
+      "task": 330
+    },
+    {
+      "branch_applicability_gap": 0.006204664317788655,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.09394203883529784,
+      "source": 141,
+      "success_residual_applicability": 0.08773737451750918,
+      "task": 331
+    },
+    {
+      "branch_applicability_gap": 0.007581139082457611,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.11863572294519642,
+      "source": 141,
+      "success_residual_applicability": 0.11105458386273881,
+      "task": 333
+    },
+    {
+      "branch_applicability_gap": 0.005714361120643829,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.13449581212725548,
+      "source": 189,
+      "success_residual_applicability": 0.1402101732478993,
+      "task": 358
+    },
+    {
+      "branch_applicability_gap": 0.020947695702194125,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.08500773005266637,
+      "source": 231,
+      "success_residual_applicability": 0.1059554257548605,
+      "task": 360
+    },
+    {
+      "branch_applicability_gap": 0.011890765240877954,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.1350829679244825,
+      "source": 231,
+      "success_residual_applicability": 0.12319220268360453,
+      "task": 362
+    },
+    {
+      "branch_applicability_gap": 0.06820569800236154,
+      "domain": "shopping",
+      "failure_residual_applicability": 0.1531848287909554,
+      "source": 25,
+      "success_residual_applicability": 0.08497913078859387,
+      "task": 384
+    },
+    {
+      "branch_applicability_gap": 0.03140305978829794,
+      "domain": "reddit",
+      "failure_residual_applicability": 0.03276396806494475,
+      "source": 405,
+      "success_residual_applicability": 0.06416702785324269,
+      "task": 27
+    },
+    {
+      "branch_applicability_gap": 0.044219029218281136,
+      "domain": "reddit",
+      "failure_residual_applicability": 0.03241080009652819,
+      "source": 405,
+      "success_residual_applicability": 0.07662982931480933,
+      "task": 29
+    },
+    {
+      "branch_applicability_gap": 0.021440034758782645,
+      "domain": "reddit",
+      "failure_residual_applicability": 0.07994738039523952,
+      "source": 595,
+      "success_residual_applicability": 0.10138741515402216,
+      "task": 30
+    },
+    {
+      "branch_applicability_gap": 0.03717540158193877,
+      "domain": "reddit",
+      "failure_residual_applicability": 0.040969467854033326,
+      "source": 405,
+      "success_residual_applicability": 0.0781448694359721,
+      "task": 31
+    },
+    {
+      "branch_applicability_gap": 0.03261983445880823,
+      "domain": "reddit",
+      "failure_residual_applicability": 0.1867132324554941,
+      "source": 404,
+      "success_residual_applicability": 0.21933306691430232,
+      "task": 66
+    },
+    {
+      "branch_applicability_gap": 0.012804712332775026,
+      "domain": "reddit",
+      "failure_residual_applicability": 0.16212210434298946,
+      "source": 404,
+      "success_residual_applicability": 0.17492681667576448,
+      "task": 67
+    },
+    {
+      "branch_applicability_gap": 0.011259833824068366,
+      "domain": "reddit",
+      "failure_residual_applicability": 0.16756695844341074,
+      "source": 404,
+      "success_residual_applicability": 0.1788267922674791,
+      "task": 68
+    },
+    {
+      "branch_applicability_gap": 0.06081705904708912,
+      "domain": "reddit",
+      "failure_residual_applicability": 0.0550010695255132,
+      "source": 610,
+      "success_residual_applicability": 0.11581812857260232,
+      "task": 69
+    }
+  ]
+}
