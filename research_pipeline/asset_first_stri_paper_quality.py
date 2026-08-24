@@ -15,6 +15,9 @@ COHERENCE = "generated/asset-first-stri-narrow-paper-coherence-20260816.json"
 FINAL_REVIEW = "generated/asset-first-stri-narrow-final-review-20260816.json"
 PAPER_ANALYSIS = "generated/asset-first-stri-paper-analysis-suite-20260816.json"
 REVIEWER_EXTENSIONS = "generated/asset-first-stri-reviewer-extensions-20260819.json"
+OFFLINE_COMPLETION_ANALYSIS = "generated/asset-first-stri-offline-completion-analysis-20260824.json"
+OFFLINE_COMPLETION_ANALYSIS_CODE = "research_pipeline/asset_first_stri_offline_completion_analysis_20260824.py"
+OFFLINE_COMPLETION_ANALYSIS_TEST = "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py"
 CONTROLLER_AUDIT = "generated/asset-first-stri-released-controller-clone-audit-20260819.json"
 CONTROLLER_AUDIT_CODE = "research_pipeline/asset_first_stri_released_controller_clone_audit.py"
 CONTROLLER_AUDIT_TEST = "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py"
@@ -139,7 +142,24 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     controller_refs = [CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST]
     dynamic_refs = [DYNAMIC_QUALIFICATION, DYNAMIC_CONTRACT, DYNAMIC_PLAN, DYNAMIC_RESULT, DYNAMIC_RUN_MANIFEST, MEDIATOR_V1_CONTRACT, MEDIATOR_V1_DIAGNOSIS, MEDIATOR_V2_CONTRACT, MEDIATOR_V2_RESULT]
     certificate_refs = [CERTIFICATE_CODE, CERTIFICATE_TEST]
-    analysis_refs = [PAPER_ANALYSIS, REVIEWER_EXTENSIONS, PRUNING_BASELINE, *controller_refs, *dynamic_refs, *certificate_refs]
+    offline_refs = [OFFLINE_COMPLETION_ANALYSIS, OFFLINE_COMPLETION_ANALYSIS_CODE, OFFLINE_COMPLETION_ANALYSIS_TEST]
+    analysis_refs = [PAPER_ANALYSIS, REVIEWER_EXTENSIONS, PRUNING_BASELINE, *offline_refs, *controller_refs, *dynamic_refs, *certificate_refs]
+    offline_path = project_root / OFFLINE_COMPLETION_ANALYSIS
+    offline = json.loads(offline_path.read_text(encoding="utf-8")) if offline_path.exists() else {}
+    support_stress = offline.get("support_misspecification_sensitivity") if isinstance(offline.get("support_misspecification_sensitivity"), dict) else {}
+    scale = offline.get("rstar_solver_scalability") if isinstance(offline.get("rstar_solver_scalability"), dict) else {}
+    support_aggregate = support_stress.get("aggregate") if isinstance(support_stress.get("aggregate"), dict) else {}
+    scale_summary = scale.get("summary") if isinstance(scale.get("summary"), list) else []
+    offline_completion_pass = (
+        offline.get("scientific_authority") is False
+        and ((offline.get("scientific_boundary") or {}).get("claim_expansion") is False)
+        and ((offline.get("scientific_boundary") or {}).get("model_calls") == 0)
+        and ((offline.get("scientific_boundary") or {}).get("gpu_runs") == 0)
+        and ((support_stress.get("base") or {}).get("decision") == "RESIDUAL")
+        and ((support_stress.get("base") or {}).get("R_star") == 2.0)
+        and int(support_aggregate.get("minimum_changed_cells_for_valid_class_flip") or 0) == 22
+        and any(int(row.get("rows") or 0) == 16384 and int(row.get("packages") or 0) == 96 for row in scale_summary if isinstance(row, dict))
+    )
     dynamic_path = project_root / DYNAMIC_RESULT
     dynamic = json.loads(dynamic_path.read_text(encoding="utf-8")) if dynamic_path.exists() else {}
     mediator_path = project_root / MEDIATOR_V2_RESULT
@@ -166,10 +186,11 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     body = body_path.read_text(encoding="utf-8") if body_path.exists() else ""
     tables = tables_path.read_text(encoding="utf-8") if tables_path.exists() else ""
     manuscript_ablation = "\\label{fig:ablation-robustness}" in body and "representation ablations" in body.lower()
-    manuscript_failure = "Across 49 Level-1 tools" in body and "overlap-without-witness" in body and "exact per-tool LP" in body
-    manuscript_sensitivity = "1,387 perturbed Level-1 matrices" in body and "127/595 break equalizability" in body and "500 fixed-seed tool-bootstrap" in body
-    manuscript_dynamic = "AutoSkill: dynamic behavioral propagation" in body and "6/6 original" in body and "0/6 split" in body and "p=0.00108" in body and "matched cleanup add-back yields 0/3" in body and "Fisher $=1/20$" in body
-    manuscript_refs = [PAPER_BODY, PAPER_TABLES, PAPER_ANALYSIS, REVIEWER_EXTENSIONS]
+    manuscript_failure = "Across 49 Level-1 tools" in body and "overlap-without-witness" in body and "exact LP" in body
+    manuscript_sensitivity = all(marker in body for marker in ("1,387", "366 non-uncovering deletions", "127/595", "500 fixed-seed tool bootstraps", "184 valid tool-block", "49/56", "22 missing rows"))
+    manuscript_dynamic = all(marker in body for marker in ("AutoSkill: dynamic behavioral propagation", "6/6 original", "0/6 split", "3/3 placebo", "3/3 quotient", "0.00108", "matched cleanup add-back", "1/20"))
+    manuscript_scale = all(marker in body for marker in ("E6: conditional solver cost", "16{,}384\\times96", "0.765", "32,768 inequalities", "24.25 MiB", "environment/load-specific"))
+    manuscript_refs = [PAPER_BODY, PAPER_TABLES, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, *offline_refs]
     visual_review = {"caption_claim_aligned": True, "legible_labels": True, "legend_or_direct_labels": True, "non_deceptive_scale": True, "source_data_versioned": True}
     visualizations = [
         {"id": "V-OVERVIEW", "status": "PASS", "artifact_refs": [FIG_OVERVIEW], "script_refs": [PLOT_OVERVIEW], "caption_ref": "fig:stri-overview", "visual_review": dict(visual_review)},
@@ -191,14 +212,14 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
             {"id": "AN-MECHANISM", "status": "PASS", "artifact_refs": existing_coherence + existing_reduction + controller_refs},
             completed("AN-RULEOUT"),
             completed("AN-FAILURE"),
-            completed("AN-SENSITIVITY"),
+            {"id": "AN-SENSITIVITY", "status": "PASS" if completed("AN-SENSITIVITY")["status"] == "PASS" and offline_completion_pass and manuscript_sensitivity else "PLANNED", "artifact_refs": analysis_refs if completed("AN-SENSITIVITY")["status"] == "PASS" and offline_completion_pass and manuscript_sensitivity else []},
             completed("AN-UNCERTAINTY", allow_scoped=True),
             {"id": "AN-DYNAMIC-CONSEQUENCE", "status": "PASS" if dynamic_pass else "PLANNED", "artifact_refs": dynamic_refs if dynamic_pass else []},
             {"id": "O-MAIN", "status": "PASS", "artifact_refs": existing_reduction + controller_refs},
             {"id": "O-ABLATION", "status": "PASS" if manuscript_ablation else "PLANNED", "artifact_refs": manuscript_refs if manuscript_ablation else []},
             {"id": "O-MECHANISM", "status": "PASS", "artifact_refs": existing_coherence + existing_reduction + controller_refs},
             {"id": "O-FAILURE", "status": "PASS" if manuscript_failure else "PLANNED", "artifact_refs": manuscript_refs if manuscript_failure else []},
-            {"id": "O-SENSITIVITY", "status": "PASS" if manuscript_sensitivity else "PLANNED", "artifact_refs": manuscript_refs if manuscript_sensitivity else []},
+            {"id": "O-SENSITIVITY", "status": "PASS" if manuscript_sensitivity and offline_completion_pass and manuscript_scale else "PLANNED", "artifact_refs": manuscript_refs if manuscript_sensitivity and offline_completion_pass and manuscript_scale else []},
             {"id": "O-DYNAMIC", "status": "PASS" if dynamic_pass and manuscript_dynamic else "PLANNED", "artifact_refs": [PAPER_BODY, *dynamic_refs] if dynamic_pass and manuscript_dynamic else []},
         ],
         "visualizations": visualizations,
@@ -213,7 +234,7 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
 def build_asset_first_stri_paper_quality(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     quality = build_stri_quality_contract()
     completion = build_stri_completion(project_root)
-    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST, DYNAMIC_QUALIFICATION, DYNAMIC_CONTRACT, DYNAMIC_PLAN, DYNAMIC_RESULT, DYNAMIC_RUN_MANIFEST, MEDIATOR_V1_CONTRACT, MEDIATOR_V1_DIAGNOSIS, MEDIATOR_V2_CONTRACT, MEDIATOR_V2_RESULT, CERTIFICATE_CODE, CERTIFICATE_TEST, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
+    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, OFFLINE_COMPLETION_ANALYSIS, OFFLINE_COMPLETION_ANALYSIS_CODE, OFFLINE_COMPLETION_ANALYSIS_TEST, CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST, DYNAMIC_QUALIFICATION, DYNAMIC_CONTRACT, DYNAMIC_PLAN, DYNAMIC_RESULT, DYNAMIC_RUN_MANIFEST, MEDIATOR_V1_CONTRACT, MEDIATOR_V1_DIAGNOSIS, MEDIATOR_V2_CONTRACT, MEDIATOR_V2_RESULT, CERTIFICATE_CODE, CERTIFICATE_TEST, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
     source_sha256 = {rel: _sha256(project_root / rel) for rel in source_artifacts}
     audit = audit_manuscript_evidence_completion(
         quality,

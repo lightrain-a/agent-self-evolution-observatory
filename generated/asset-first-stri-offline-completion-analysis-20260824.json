@@ -1,0 +1,3895 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis_type": "offline manuscript-completion analysis for structured support sensitivity and conditional R* scaling",
+  "analysis_date": "2026-08-24",
+  "input": {
+    "membership_sha256": "b73d86370e06e83179a1ce4c7f26431c58b27f7958722974e96a4c316f2e17d4",
+    "rows": 530
+  },
+  "support_misspecification_sensitivity": {
+    "scope": "frozen released Skill-SP API-Bank Level-1 support matrix only",
+    "base": {
+      "covered_rows": 314,
+      "active_packages": 6,
+      "active_skill_ids": [
+        "skill_001",
+        "skill_002",
+        "skill_003",
+        "skill_004",
+        "skill_005",
+        "skill_015"
+      ],
+      "observed_support_signatures": 8,
+      "R_star": 2.0,
+      "decision": "RESIDUAL"
+    },
+    "families": {
+      "support_signature_block_relabel": {
+        "definition": "For every ordered pair of distinct support signatures already observed in the frozen Level-1 matrix, relabel every row with the source signature to the target signature.",
+        "summary": {
+          "perturbations": 56,
+          "valid_covered_perturbations": 56,
+          "fail_closed_uncovered_or_invalid": 0,
+          "same_original_class": 49,
+          "same_original_class_fraction_among_valid": 0.875,
+          "class_flips_among_valid": 7,
+          "minimum_changed_cells_for_class_flip": 109,
+          "minimum_R_star_among_valid": 1.0,
+          "maximum_R_star_among_valid": 2.0,
+          "decision_counts": {
+            "EQUALIZABLE": 7,
+            "RESIDUAL": 49
+          }
+        },
+        "records": [
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "affected_rows": 109,
+            "changed_cells": 109,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "affected_rows": 109,
+            "changed_cells": 218,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "affected_rows": 109,
+            "changed_cells": 109,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "affected_rows": 109,
+            "changed_cells": 218,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 109,
+            "changed_cells": 109,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 109,
+            "changed_cells": 109,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 109,
+            "changed_cells": 109,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "affected_rows": 3,
+            "changed_cells": 9,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "affected_rows": 3,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "affected_rows": 3,
+            "changed_cells": 9,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 3,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "target_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 3,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "target_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 3,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 5,
+            "changed_cells": 10,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "affected_rows": 5,
+            "changed_cells": 15,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "affected_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "affected_rows": 5,
+            "changed_cells": 10,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 5,
+            "changed_cells": 15,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 5,
+            "changed_cells": 15,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "target_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 5,
+            "changed_cells": 15,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 36,
+            "changed_cells": 36,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "affected_rows": 36,
+            "changed_cells": 72,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "affected_rows": 36,
+            "changed_cells": 36,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "affected_rows": 36,
+            "changed_cells": 108,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 36,
+            "changed_cells": 72,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 36,
+            "changed_cells": 72,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "target_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 36,
+            "changed_cells": 72,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 17,
+            "changed_cells": 34,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "affected_rows": 17,
+            "changed_cells": 51,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "affected_rows": 17,
+            "changed_cells": 34,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "affected_rows": 17,
+            "changed_cells": 51,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 17,
+            "changed_cells": 17,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "target_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 17,
+            "changed_cells": 51,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "target_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 17,
+            "changed_cells": 51,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 35,
+            "changed_cells": 35,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "affected_rows": 35,
+            "changed_cells": 70,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "affected_rows": 35,
+            "changed_cells": 105,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "affected_rows": 35,
+            "changed_cells": 70,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "affected_rows": 35,
+            "changed_cells": 35,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 35,
+            "changed_cells": 70,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 35,
+            "changed_cells": 70,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 33,
+            "changed_cells": 33,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "affected_rows": 33,
+            "changed_cells": 66,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "affected_rows": 33,
+            "changed_cells": 99,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "affected_rows": 33,
+            "changed_cells": 66,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "affected_rows": 33,
+            "changed_cells": 99,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 33,
+            "changed_cells": 66,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 33,
+            "changed_cells": 66,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 76,
+            "changed_cells": 76,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              0,
+              1,
+              1
+            ],
+            "affected_rows": 76,
+            "changed_cells": 152,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              0
+            ],
+            "affected_rows": 76,
+            "changed_cells": 228,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              0,
+              1,
+              0,
+              1
+            ],
+            "affected_rows": 76,
+            "changed_cells": 152,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              0
+            ],
+            "affected_rows": 76,
+            "changed_cells": 228,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              0,
+              1,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 76,
+            "changed_cells": 152,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "source_signature": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "target_signature": [
+              0,
+              1,
+              0,
+              0,
+              0,
+              1
+            ],
+            "affected_rows": 76,
+            "changed_cells": 152,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          }
+        ]
+      },
+      "package_wide_systematic_bias": {
+        "definition": "For each active package, force its support bit to one for every covered row (systematic false positive) or to zero for every covered row (systematic false negative).",
+        "summary": {
+          "perturbations": 12,
+          "valid_covered_perturbations": 9,
+          "fail_closed_uncovered_or_invalid": 3,
+          "same_original_class": 3,
+          "same_original_class_fraction_among_valid": 0.3333333333333333,
+          "class_flips_among_valid": 6,
+          "minimum_changed_cells_for_class_flip": 22,
+          "minimum_R_star_among_valid": 1.0,
+          "maximum_R_star_among_valid": 2.0,
+          "decision_counts": {
+            "EQUALIZABLE": 6,
+            "FAIL_CLOSED_INVALID_SUPPORT": 3,
+            "RESIDUAL": 3
+          }
+        },
+        "records": [
+          {
+            "skill": "skill_001",
+            "mode": "systematic_false_positive",
+            "changed_cells": 238,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "skill": "skill_001",
+            "mode": "systematic_false_negative",
+            "changed_cells": 76,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "skill": "skill_002",
+            "mode": "systematic_false_positive",
+            "changed_cells": 281,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "skill": "skill_002",
+            "mode": "systematic_false_negative",
+            "changed_cells": 33,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "skill": "skill_003",
+            "mode": "systematic_false_positive",
+            "changed_cells": 262,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "skill": "skill_003",
+            "mode": "systematic_false_negative",
+            "changed_cells": 52,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "skill": "skill_004",
+            "mode": "systematic_false_positive",
+            "changed_cells": 273,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "skill": "skill_004",
+            "mode": "systematic_false_negative",
+            "changed_cells": 41,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "skill": "skill_005",
+            "mode": "systematic_false_positive",
+            "changed_cells": 311,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "skill": "skill_005",
+            "mode": "systematic_false_negative",
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "skill": "skill_015",
+            "mode": "systematic_false_positive",
+            "changed_cells": 22,
+            "R_star": 1.0,
+            "decision": "EQUALIZABLE"
+          },
+          {
+            "skill": "skill_015",
+            "mode": "systematic_false_negative",
+            "changed_cells": 292,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          }
+        ]
+      },
+      "tool_block_package_systematic_bias": {
+        "definition": "For every observed tool × active-package block, force that package support bit to one or zero on every covered row of the tool; unchanged blocks are omitted.",
+        "summary": {
+          "perturbations": 219,
+          "valid_covered_perturbations": 184,
+          "fail_closed_uncovered_or_invalid": 35,
+          "same_original_class": 184,
+          "same_original_class_fraction_among_valid": 1.0,
+          "class_flips_among_valid": 0,
+          "minimum_changed_cells_for_class_flip": null,
+          "minimum_R_star_among_valid": 2.0,
+          "maximum_R_star_among_valid": 3.0,
+          "decision_counts": {
+            "FAIL_CLOSED_INVALID_SUPPORT": 35,
+            "RESIDUAL": 184
+          }
+        },
+        "records": [
+          {
+            "tool": "AddAgenda",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddAgenda",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddAgenda",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddAgenda",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddAgenda",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddAgenda",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "AddAlarm",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddAlarm",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddAlarm",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddAlarm",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddAlarm",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddAlarm",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "AddMeeting",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddMeeting",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddMeeting",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddMeeting",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddMeeting",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddMeeting",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "AddReminder",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddReminder",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddReminder",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddReminder",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddReminder",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddReminder",
+            "skill": "skill_005",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 5,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AddReminder",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "AppointmentRegistration",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 11,
+            "changed_cells": 11,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AppointmentRegistration",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 11,
+            "changed_cells": 11,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AppointmentRegistration",
+            "skill": "skill_003",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 11,
+            "changed_cells": 11,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "AppointmentRegistration",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 11,
+            "changed_cells": 11,
+            "R_star": 3.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AppointmentRegistration",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 11,
+            "changed_cells": 11,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AppointmentRegistration",
+            "skill": "skill_015",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 11,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "AppointmentRegistration",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 11,
+            "changed_cells": 8,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "Calculator",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "Calculator",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "Calculator",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "Calculator",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "Calculator",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "Calculator",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "CancelRegistration",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "CancelRegistration",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "CancelRegistration",
+            "skill": "skill_003",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "CancelRegistration",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 3.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "CancelRegistration",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "CancelRegistration",
+            "skill": "skill_015",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "CancelRegistration",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 13,
+            "changed_cells": 9,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAccount",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 14,
+            "changed_cells": 14,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAccount",
+            "skill": "skill_002",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 14,
+            "changed_cells": 14,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAccount",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 14,
+            "changed_cells": 14,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAccount",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 14,
+            "changed_cells": 14,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAccount",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 14,
+            "changed_cells": 14,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAccount",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 14,
+            "changed_cells": 14,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAgenda",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAgenda",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAgenda",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAgenda",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAgenda",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAgenda",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "DeleteAlarm",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAlarm",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAlarm",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAlarm",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAlarm",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteAlarm",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "DeleteMeeting",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteMeeting",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteMeeting",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteMeeting",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteMeeting",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteMeeting",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "DeleteReminder",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteReminder",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteReminder",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteReminder",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteReminder",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "DeleteReminder",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "EmergencyKnowledge",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 18,
+            "changed_cells": 18,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "EmergencyKnowledge",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 18,
+            "changed_cells": 18,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "EmergencyKnowledge",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 18,
+            "changed_cells": 18,
+            "R_star": 3.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "EmergencyKnowledge",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 18,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "EmergencyKnowledge",
+            "skill": "skill_004",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 18,
+            "changed_cells": 17,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "EmergencyKnowledge",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 18,
+            "changed_cells": 18,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "EmergencyKnowledge",
+            "skill": "skill_015",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 18,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "EmergencyKnowledge",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 18,
+            "changed_cells": 17,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "ForgotPassword",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ForgotPassword",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ForgotPassword",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ForgotPassword",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ForgotPassword",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ForgotPassword",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "GetUserToken",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 82,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "GetUserToken",
+            "skill": "skill_001",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 82,
+            "changed_cells": 76,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "GetUserToken",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 82,
+            "changed_cells": 82,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "GetUserToken",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 82,
+            "changed_cells": 82,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "GetUserToken",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 82,
+            "changed_cells": 82,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "GetUserToken",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 82,
+            "changed_cells": 82,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "GetUserToken",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 82,
+            "changed_cells": 82,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "ModifyAgenda",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 2,
+            "changed_cells": 2,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyAgenda",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 2,
+            "changed_cells": 2,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyAgenda",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 2,
+            "changed_cells": 2,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyAgenda",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 2,
+            "changed_cells": 2,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyAgenda",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 2,
+            "changed_cells": 2,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyAgenda",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 2,
+            "changed_cells": 2,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "ModifyAlarm",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyAlarm",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyAlarm",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyAlarm",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyAlarm",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyAlarm",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "ModifyMeeting",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyMeeting",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyMeeting",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyMeeting",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyMeeting",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyMeeting",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "ModifyPassword",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyPassword",
+            "skill": "skill_002",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyPassword",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyPassword",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyPassword",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyPassword",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyRegistration",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 14,
+            "changed_cells": 14,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyRegistration",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 14,
+            "changed_cells": 14,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyRegistration",
+            "skill": "skill_003",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 14,
+            "changed_cells": 14,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "ModifyRegistration",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 14,
+            "changed_cells": 14,
+            "R_star": 3.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyRegistration",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 14,
+            "changed_cells": 14,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyRegistration",
+            "skill": "skill_015",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 14,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyRegistration",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 14,
+            "changed_cells": 9,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyReminder",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 8,
+            "changed_cells": 8,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyReminder",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 8,
+            "changed_cells": 8,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyReminder",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 8,
+            "changed_cells": 8,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyReminder",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 8,
+            "changed_cells": 8,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyReminder",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 8,
+            "changed_cells": 8,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "ModifyReminder",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 8,
+            "changed_cells": 8,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "OpenBankAccount",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 9,
+            "changed_cells": 9,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "OpenBankAccount",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 9,
+            "changed_cells": 9,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "OpenBankAccount",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 9,
+            "changed_cells": 9,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "OpenBankAccount",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 9,
+            "changed_cells": 9,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "OpenBankAccount",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 9,
+            "changed_cells": 9,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "OpenBankAccount",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 9,
+            "changed_cells": 9,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "QueryAgenda",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryAgenda",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryAgenda",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryAgenda",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryAgenda",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryAgenda",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "QueryAlarm",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryAlarm",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryAlarm",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryAlarm",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryAlarm",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryAlarm",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "QueryBalance",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryBalance",
+            "skill": "skill_002",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryBalance",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryBalance",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryBalance",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryBalance",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 13,
+            "changed_cells": 13,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHealthData",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHealthData",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHealthData",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 3.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHealthData",
+            "skill": "skill_004",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "QueryHealthData",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHealthData",
+            "skill": "skill_015",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 2,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHealthData",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 5,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHistoryToday",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHistoryToday",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHistoryToday",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHistoryToday",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHistoryToday",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryHistoryToday",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 5,
+            "changed_cells": 5,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "QueryMeeting",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryMeeting",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryMeeting",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryMeeting",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryMeeting",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryMeeting",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 3,
+            "changed_cells": 3,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "QueryRegistration",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 15,
+            "changed_cells": 15,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryRegistration",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 15,
+            "changed_cells": 15,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryRegistration",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 15,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryRegistration",
+            "skill": "skill_003",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 15,
+            "changed_cells": 14,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "QueryRegistration",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 15,
+            "changed_cells": 15,
+            "R_star": 3.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryRegistration",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 15,
+            "changed_cells": 15,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryRegistration",
+            "skill": "skill_015",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 15,
+            "changed_cells": 5,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryRegistration",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 15,
+            "changed_cells": 10,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "QueryReminder",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryReminder",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryReminder",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryReminder",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryReminder",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 4,
+            "changed_cells": 2,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryReminder",
+            "skill": "skill_005",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 4,
+            "changed_cells": 2,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryReminder",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 4,
+            "changed_cells": 4,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "QueryStock",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 11,
+            "changed_cells": 11,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryStock",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 11,
+            "changed_cells": 11,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryStock",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 11,
+            "changed_cells": 11,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryStock",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 11,
+            "changed_cells": 11,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryStock",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 11,
+            "changed_cells": 11,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "QueryStock",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 11,
+            "changed_cells": 11,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "RecordHealthData",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 17,
+            "changed_cells": 17,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "RecordHealthData",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 17,
+            "changed_cells": 17,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "RecordHealthData",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 17,
+            "changed_cells": 17,
+            "R_star": 3.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "RecordHealthData",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 17,
+            "changed_cells": 3,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "RecordHealthData",
+            "skill": "skill_004",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 17,
+            "changed_cells": 14,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "RecordHealthData",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 17,
+            "changed_cells": 17,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "RecordHealthData",
+            "skill": "skill_015",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 17,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "RecordHealthData",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 17,
+            "changed_cells": 16,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "RegisterUser",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "RegisterUser",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "RegisterUser",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "RegisterUser",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "RegisterUser",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "RegisterUser",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 1,
+            "changed_cells": 1,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "SymptomSearch",
+            "skill": "skill_001",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "SymptomSearch",
+            "skill": "skill_002",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "SymptomSearch",
+            "skill": "skill_003",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 3.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "SymptomSearch",
+            "skill": "skill_004",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "SymptomSearch",
+            "skill": "skill_004",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 6,
+            "changed_cells": 5,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          },
+          {
+            "tool": "SymptomSearch",
+            "skill": "skill_005",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 6,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "SymptomSearch",
+            "skill": "skill_015",
+            "mode": "tool_block_false_positive",
+            "affected_tool_rows": 6,
+            "changed_cells": 1,
+            "R_star": 2.0,
+            "decision": "RESIDUAL"
+          },
+          {
+            "tool": "SymptomSearch",
+            "skill": "skill_015",
+            "mode": "tool_block_false_negative",
+            "affected_tool_rows": 6,
+            "changed_cells": 5,
+            "R_star": null,
+            "decision": "FAIL_CLOSED_INVALID_SUPPORT"
+          }
+        ]
+      }
+    },
+    "aggregate": {
+      "structured_perturbations": 287,
+      "valid_class_flips": 13,
+      "minimum_changed_cells_for_valid_class_flip": 22,
+      "minimum_class_flip_examples": [
+        {
+          "skill": "skill_015",
+          "mode": "systematic_false_positive",
+          "changed_cells": 22,
+          "R_star": 1.0,
+          "decision": "EQUALIZABLE"
+        },
+        {
+          "source_signature": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "target_signature": [
+            0,
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          "affected_rows": 109,
+          "changed_cells": 109,
+          "R_star": 1.0,
+          "decision": "EQUALIZABLE"
+        },
+        {
+          "source_signature": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "target_signature": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "affected_rows": 109,
+          "changed_cells": 109,
+          "R_star": 1.0,
+          "decision": "EQUALIZABLE"
+        },
+        {
+          "source_signature": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "target_signature": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "affected_rows": 109,
+          "changed_cells": 109,
+          "R_star": 1.0,
+          "decision": "EQUALIZABLE"
+        },
+        {
+          "source_signature": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "target_signature": [
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "affected_rows": 109,
+          "changed_cells": 109,
+          "R_star": 1.0,
+          "decision": "EQUALIZABLE"
+        },
+        {
+          "source_signature": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "target_signature": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "affected_rows": 109,
+          "changed_cells": 109,
+          "R_star": 1.0,
+          "decision": "EQUALIZABLE"
+        },
+        {
+          "source_signature": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "target_signature": [
+            0,
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "affected_rows": 109,
+          "changed_cells": 218,
+          "R_star": 1.0,
+          "decision": "EQUALIZABLE"
+        },
+        {
+          "source_signature": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "target_signature": [
+            0,
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "affected_rows": 109,
+          "changed_cells": 218,
+          "R_star": 1.0,
+          "decision": "EQUALIZABLE"
+        }
+      ]
+    },
+    "interpretation_boundary": {
+      "supports": "Deterministic sensitivity of the frozen STRI certificate to three structured families of support-label misspecification.",
+      "does_not_support": [
+        "a calibrated probability model for support-label error",
+        "robustness to arbitrary adversarial multi-cell corruption",
+        "accuracy of any learned support estimator",
+        "retrospective replacement of the frozen support truth used by the main result"
+      ]
+    }
+  },
+  "rstar_solver_scalability": {
+    "scope": "CPU solver profiling of the existing SciPy/HiGHS neutral-target R* LP after a support matrix is already materialized; this does not profile support annotation or signature enumeration.",
+    "runtime_environment": {
+      "python": "3.10.19",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "platform": "Linux-6.11.0-17-generic-x86_64-with-glibc2.39",
+      "machine": "x86_64",
+      "logical_cpu_count": 256
+    },
+    "grid": [
+      [
+        128,
+        8
+      ],
+      [
+        512,
+        16
+      ],
+      [
+        2048,
+        32
+      ],
+      [
+        8192,
+        64
+      ],
+      [
+        16384,
+        96
+      ]
+    ],
+    "repeats_per_grid": 3,
+    "seed_base": 20260824,
+    "generator": "binary covered support matrix with deterministic seeded row degrees in {1,2,3}; every package is forced to appear at least once",
+    "records": [
+      {
+        "rows": 128,
+        "packages": 8,
+        "repeat": 0,
+        "seed": 20260824,
+        "variables": 9,
+        "inequality_constraints": 256,
+        "dense_lp_coefficients": 2304,
+        "dense_lp_matrix_MiB": 0.017578125,
+        "support_density": 0.2216796875,
+        "R_star": 4.0,
+        "wall_seconds": 0.002374749630689621
+      },
+      {
+        "rows": 128,
+        "packages": 8,
+        "repeat": 1,
+        "seed": 20260825,
+        "variables": 9,
+        "inequality_constraints": 256,
+        "dense_lp_coefficients": 2304,
+        "dense_lp_matrix_MiB": 0.017578125,
+        "support_density": 0.2158203125,
+        "R_star": 3.0,
+        "wall_seconds": 0.0023621805012226105
+      },
+      {
+        "rows": 128,
+        "packages": 8,
+        "repeat": 2,
+        "seed": 20260826,
+        "variables": 9,
+        "inequality_constraints": 256,
+        "dense_lp_coefficients": 2304,
+        "dense_lp_matrix_MiB": 0.017578125,
+        "support_density": 0.2197265625,
+        "R_star": 4.0,
+        "wall_seconds": 0.0023527611047029495
+      },
+      {
+        "rows": 512,
+        "packages": 16,
+        "repeat": 0,
+        "seed": 20261824,
+        "variables": 17,
+        "inequality_constraints": 1024,
+        "dense_lp_coefficients": 17408,
+        "dense_lp_matrix_MiB": 0.1328125,
+        "support_density": 0.109130859375,
+        "R_star": 4.0,
+        "wall_seconds": 0.007193178869783878
+      },
+      {
+        "rows": 512,
+        "packages": 16,
+        "repeat": 1,
+        "seed": 20261825,
+        "variables": 17,
+        "inequality_constraints": 1024,
+        "dense_lp_coefficients": 17408,
+        "dense_lp_matrix_MiB": 0.1328125,
+        "support_density": 0.1102294921875,
+        "R_star": 4.0,
+        "wall_seconds": 0.006818859837949276
+      },
+      {
+        "rows": 512,
+        "packages": 16,
+        "repeat": 2,
+        "seed": 20261826,
+        "variables": 17,
+        "inequality_constraints": 1024,
+        "dense_lp_coefficients": 17408,
+        "dense_lp_matrix_MiB": 0.1328125,
+        "support_density": 0.1065673828125,
+        "R_star": 3.0,
+        "wall_seconds": 0.007386017590761185
+      },
+      {
+        "rows": 2048,
+        "packages": 32,
+        "repeat": 0,
+        "seed": 20262824,
+        "variables": 33,
+        "inequality_constraints": 4096,
+        "dense_lp_coefficients": 135168,
+        "dense_lp_matrix_MiB": 1.03125,
+        "support_density": 0.0547332763671875,
+        "R_star": 4.0,
+        "wall_seconds": 0.029648792929947376
+      },
+      {
+        "rows": 2048,
+        "packages": 32,
+        "repeat": 1,
+        "seed": 20262825,
+        "variables": 33,
+        "inequality_constraints": 4096,
+        "dense_lp_coefficients": 135168,
+        "dense_lp_matrix_MiB": 1.03125,
+        "support_density": 0.05364990234375,
+        "R_star": 4.0,
+        "wall_seconds": 0.0273124435916543
+      },
+      {
+        "rows": 2048,
+        "packages": 32,
+        "repeat": 2,
+        "seed": 20262826,
+        "variables": 33,
+        "inequality_constraints": 4096,
+        "dense_lp_coefficients": 135168,
+        "dense_lp_matrix_MiB": 1.03125,
+        "support_density": 0.0536041259765625,
+        "R_star": 4.0,
+        "wall_seconds": 0.026103047654032707
+      },
+      {
+        "rows": 8192,
+        "packages": 64,
+        "repeat": 0,
+        "seed": 20263824,
+        "variables": 65,
+        "inequality_constraints": 16384,
+        "dense_lp_coefficients": 1064960,
+        "dense_lp_matrix_MiB": 8.125,
+        "support_density": 0.02684783935546875,
+        "R_star": 4.0,
+        "wall_seconds": 0.49643915705382824
+      },
+      {
+        "rows": 8192,
+        "packages": 64,
+        "repeat": 1,
+        "seed": 20263825,
+        "variables": 65,
+        "inequality_constraints": 16384,
+        "dense_lp_coefficients": 1064960,
+        "dense_lp_matrix_MiB": 8.125,
+        "support_density": 0.026622772216796875,
+        "R_star": 4.0,
+        "wall_seconds": 0.11580520495772362
+      },
+      {
+        "rows": 8192,
+        "packages": 64,
+        "repeat": 2,
+        "seed": 20263826,
+        "variables": 65,
+        "inequality_constraints": 16384,
+        "dense_lp_coefficients": 1064960,
+        "dense_lp_matrix_MiB": 8.125,
+        "support_density": 0.026666641235351562,
+        "R_star": 4.0,
+        "wall_seconds": 0.10835028812289238
+      },
+      {
+        "rows": 16384,
+        "packages": 96,
+        "repeat": 0,
+        "seed": 20264824,
+        "variables": 97,
+        "inequality_constraints": 32768,
+        "dense_lp_coefficients": 3178496,
+        "dense_lp_matrix_MiB": 24.25,
+        "support_density": 0.017785390218098957,
+        "R_star": 4.0,
+        "wall_seconds": 0.8185477647930384
+      },
+      {
+        "rows": 16384,
+        "packages": 96,
+        "repeat": 1,
+        "seed": 20264825,
+        "variables": 97,
+        "inequality_constraints": 32768,
+        "dense_lp_coefficients": 3178496,
+        "dense_lp_matrix_MiB": 24.25,
+        "support_density": 0.017725626627604168,
+        "R_star": 4.0,
+        "wall_seconds": 0.9621566850692034
+      },
+      {
+        "rows": 16384,
+        "packages": 96,
+        "repeat": 2,
+        "seed": 20264826,
+        "variables": 97,
+        "inequality_constraints": 32768,
+        "dense_lp_coefficients": 3178496,
+        "dense_lp_matrix_MiB": 24.25,
+        "support_density": 0.01779492696126302,
+        "R_star": 4.0,
+        "wall_seconds": 0.31946850661188364
+      }
+    ],
+    "summary": [
+      {
+        "rows": 128,
+        "packages": 8,
+        "variables": 9,
+        "inequality_constraints": 256,
+        "median_wall_seconds": 0.0023621805012226105,
+        "p95_wall_seconds": 0.00237349271774292,
+        "max_wall_seconds": 0.002374749630689621,
+        "dense_lp_matrix_MiB": 0.017578125,
+        "mean_support_density": 0.21907552083333334,
+        "R_star_values": [
+          4.0,
+          3.0,
+          4.0
+        ]
+      },
+      {
+        "rows": 512,
+        "packages": 16,
+        "variables": 17,
+        "inequality_constraints": 1024,
+        "median_wall_seconds": 0.007193178869783878,
+        "p95_wall_seconds": 0.007366733718663454,
+        "max_wall_seconds": 0.007386017590761185,
+        "dense_lp_matrix_MiB": 0.1328125,
+        "mean_support_density": 0.108642578125,
+        "R_star_values": [
+          4.0,
+          4.0,
+          3.0
+        ]
+      },
+      {
+        "rows": 2048,
+        "packages": 32,
+        "variables": 33,
+        "inequality_constraints": 4096,
+        "median_wall_seconds": 0.0273124435916543,
+        "p95_wall_seconds": 0.029415157996118067,
+        "max_wall_seconds": 0.029648792929947376,
+        "dense_lp_matrix_MiB": 1.03125,
+        "mean_support_density": 0.053995768229166664,
+        "R_star_values": [
+          4.0,
+          4.0,
+          4.0
+        ]
+      },
+      {
+        "rows": 8192,
+        "packages": 64,
+        "variables": 65,
+        "inequality_constraints": 16384,
+        "median_wall_seconds": 0.11580520495772362,
+        "p95_wall_seconds": 0.45837576184421774,
+        "max_wall_seconds": 0.49643915705382824,
+        "dense_lp_matrix_MiB": 8.125,
+        "mean_support_density": 0.026712417602539062,
+        "R_star_values": [
+          4.0,
+          4.0,
+          4.0
+        ]
+      },
+      {
+        "rows": 16384,
+        "packages": 96,
+        "variables": 97,
+        "inequality_constraints": 32768,
+        "median_wall_seconds": 0.8185477647930384,
+        "p95_wall_seconds": 0.9477957930415869,
+        "max_wall_seconds": 0.9621566850692034,
+        "dense_lp_matrix_MiB": 24.25,
+        "mean_support_density": 0.01776864793565538,
+        "R_star_values": [
+          4.0,
+          4.0,
+          4.0
+        ]
+      }
+    ],
+    "claim_boundary": [
+      "The reported wall times characterize this reference dense-LP implementation on the recorded current CPU environment and host load only; repeat batches may differ materially in wall time.",
+      "They do not establish asymptotic solver novelty, population-scale support acquisition cost, or end-to-end skill-system scalability."
+    ]
+  },
+  "paper_use": {
+    "E4_artifact_diagnostic_quality": "structured support-misspecification sensitivity",
+    "E6_efficiency_cost_scale": "reference R* LP CPU scaling after support materialization"
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_outcome_data": false,
+    "new_support_annotations": false,
+    "model_calls": 0,
+    "gpu_runs": 0,
+    "preserve_same_run_causal_scope": true,
+    "preserve_skillrl_as_adjacent_not_independent_support": true,
+    "preserve_autoskill_as_closest_work_not_prevalence": true
+  },
+  "scientific_authority": false,
+  "authority": {
+    "method": false,
+    "experiment": false,
+    "gpu": false,
+    "paper_claim_expansion": false
+  }
+}

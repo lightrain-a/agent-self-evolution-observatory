@@ -27,7 +27,7 @@
     "abstract_single_paragraph": true,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "resolved_citations": 16,
+    "resolved_citations": 19,
     "overfull_boxes": 0,
     "undefined_citations": 0,
     "undefined_references": 0,
@@ -63,23 +63,23 @@
   "delivery": {
     "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages",
     "pdf": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816.pdf",
-      "sha256": "56a26d51d20a2683e3718d63ba86f047561626b8203d437f7b0ce3da402621c5"
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-iclr2027-r6-20260824/paper.pdf",
+      "sha256": "92de85d16bf400818610d63378b9f36dbbf02251f6cc71a7d8102255f8065a1d"
     },
     "source_zip": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-source.zip",
-      "sha256": "7b5dbe61e9c76f8226c0f0f3da727afb5455a20ec445e51edf0a3cbf0f92db20",
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-iclr2027-r6-20260824/source.zip",
+      "sha256": "d0ec6d41915942c509818010efaba8d7629ae060dd4a6dc731a33a53d91a3b82",
       "files": 12,
       "isolated_compile_verified": true
     },
     "supplement_zip": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-      "sha256": "c0f2ece30cab3a816549acf963f5e0a6351f8a473347f7c424e2186fb5f8172b",
-      "manifest_sha256": "a98b706a5ede42c618597d66e54dd2d2a5e76caa48b4d3c2dc134eb7941dc8fb",
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-iclr2027-r6-20260824/supplement.zip",
+      "sha256": "71b5e4503053802c9d126e615b1d9d7523426421c4e7a35b351277b435041f96",
+      "manifest_sha256": "040b4f7ef11934ea3f92882e293650aa9d3f5b287b071c3e8861f12008fb337e",
       "isolated_reproduction_verified": true,
-      "unit_tests": "29/29 PASS",
+      "unit_tests": "32/32 PASS",
       "identity_path_scan": "PASS",
-      "paper_quality_v2_reproduction": "PASS_V2_1_VISUAL_EVIDENCE"
+      "paper_quality_v2_reproduction": "PASS_MANUSCRIPT_EVIDENCE"
     }
   },
   "official_deadlines_aoe": {
@@ -111,7 +111,8 @@
       "failure",
       "sensitivity",
       "uncertainty"
-    ]
+    ],
+    "content_addressed_files": 32
   },
   "visual_evidence": {
     "main_figures": 4,
@@ -202,5 +203,25 @@
     "autoskill_p19_mediator_claim_supported": true,
     "autoskill_p19_mediator_exact_fisher": "1/20",
     "autoskill_p19_stage3_replay_agreement": "18/18"
+  },
+  "offline_completion_analysis": {
+    "path": "generated/asset-first-stri-offline-completion-analysis-20260824.json",
+    "sha256": "9fc5810b37f1eb94323597155e8c4b50d7717e78f0e222e38edcb88a930883f0",
+    "support_structured_perturbations": 287,
+    "support_valid_class_flips": 13,
+    "minimum_changed_cells_for_valid_class_flip": 22,
+    "largest_solver_grid": "16384x96",
+    "conditional_solver_profile_only": true,
+    "claim_expansion": false,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0
+  },
+  "template_revision": {
+    "receipt": "generated/asset-first-stri-stanford-template-revision-20260824.json",
+    "sha256": "a3c9fa6941eacced9baf1801cd65852311620c2a42cd138da1d9e2735eca508d",
+    "template_id": "ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1",
+    "template_version": "1.0",
+    "E1_E6_required_lanes_satisfied": true,
+    "E7_optional_satisfied": true
   }
 }

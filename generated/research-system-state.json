@@ -6526,13 +6526,13 @@
     "paper_first_fresh_phenomenon_ready_problem_review": 0,
     "paper_first_fresh_phenomenon_archived": 0,
     "paper_first_evidence_migration_status": "NOT_RUN",
-    "asset_first_stri_status": "HOLD_ASSET_FIRST_PAPER_NOT_READY",
-    "asset_first_stri_paper_ready": 0,
+    "asset_first_stri_status": "READY_NARROW_ICLR",
+    "asset_first_stri_paper_ready": 1,
     "asset_first_stri_claims_supported": 3,
     "asset_first_stri_claims_total": 3,
     "asset_first_stri_qa_checks_passed": 60,
     "asset_first_stri_qa_checks_total": 60,
-    "asset_first_stri_submission_status": "HOLD_PAPER_QUALITY_V2",
+    "asset_first_stri_submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
     "asset_first_stri_official_qa_checks_passed": 60,
     "asset_first_stri_official_qa_checks_total": 60,
     "asset_first_stri_main_text_pages": 9,
@@ -6542,7 +6542,7 @@
     "asset_first_stri_paper_quality_v2_passed": 1,
     "asset_first_stri_paper_quality_source_binding": 1,
     "asset_first_stri_paper_quality_content_addressed_completion": 1,
-    "asset_first_stri_paper_quality_content_addressed_files": 29,
+    "asset_first_stri_paper_quality_content_addressed_files": 32,
     "asset_first_stri_paper_quality_evidence_debt": 0,
     "asset_first_stri_main_visualizations": 4,
     "asset_first_stri_canonical_problem_gate_added": 0,
@@ -41370,9 +41370,9 @@
     "paper_id": "STRI",
     "candidate_id": "skill-taxonomy-representation-invariance",
     "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
-    "status": "HOLD_ASSET_FIRST_PAPER_NOT_READY",
-    "submission_status": "HOLD_PAPER_QUALITY_V2",
-    "track": "ASSET_FIRST_PAPER_QUALITY_REPAIR",
+    "status": "READY_NARROW_ICLR",
+    "submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
+    "track": "ASSET_FIRST_PAPER_READY",
     "gates": {
       "final_review": true,
       "claim_coherence": true,
@@ -41385,7 +41385,7 @@
       "paper_quality_content_addressed_completion": true,
       "official_iclr2027_format": true,
       "anonymous_supplement": true,
-      "public_download_assets": false,
+      "public_download_assets": true,
       "openreview_machine_handoff": true
     },
     "claims": {
@@ -41406,7 +41406,7 @@
       }
     },
     "summary": {
-      "paper_ready": 0,
+      "paper_ready": 1,
       "claims_supported": 3,
       "claims_total": 3,
       "qa_checks_passed": 60,
@@ -41416,14 +41416,14 @@
       "main_text_pages": 9,
       "main_text_page_limit": 9,
       "supplement_ready": 1,
-      "supplement_unit_tests": "29/29 PASS",
+      "supplement_unit_tests": "32/32 PASS",
       "human_signoff_pending": 1,
       "new_gpu_evidence_required": 0,
       "final_review_confidence": 0.92,
       "paper_quality_v2_passed": 1,
       "paper_quality_source_binding": 1,
       "paper_quality_content_addressed_completion": 1,
-      "paper_quality_content_addressed_files": 29,
+      "paper_quality_content_addressed_files": 32,
       "paper_quality_evidence_debt": 0,
       "paper_quality_missing_ids": [],
       "paper_quality_visualizations": 4,
@@ -41485,18 +41485,18 @@
       "title_freezes_at_full_paper_deadline": true,
       "deadline_source_verified_on": "2026-08-20",
       "deadline_human_action": "Use the aligned ICLR 2027 author-facing deadlines: genuine abstract and frozen author membership by 2026-09-18 AoE; full paper and anonymous supplement by 2026-09-25 AoE.",
-      "pdf_sha256": "56a26d51d20a2683e3718d63ba86f047561626b8203d437f7b0ce3da402621c5",
-      "source_zip_sha256": "7b5dbe61e9c76f8226c0f0f3da727afb5455a20ec445e51edf0a3cbf0f92db20",
-      "supplement_zip_sha256": "c0f2ece30cab3a816549acf963f5e0a6351f8a473347f7c424e2186fb5f8172b",
+      "pdf_sha256": "92de85d16bf400818610d63378b9f36dbbf02251f6cc71a7d8102255f8065a1d",
+      "source_zip_sha256": "d0ec6d41915942c509818010efaba8d7629ae060dd4a6dc731a33a53d91a3b82",
+      "supplement_zip_sha256": "71b5e4503053802c9d126e615b1d9d7523426421c4e7a35b351277b435041f96",
       "downloads": {
         "tex": "downloads/STRI-ICLR2027.tex",
         "pdf": "downloads/STRI-ICLR2027.pdf",
         "source_zip": "downloads/STRI-ICLR2027-source.zip"
       },
       "download_sha256": {
-        "tex": "3ecb724621e9eb4b1db70bcd009bd73f1b0fedaac8442227675a2f9f3a63be12",
-        "pdf": "0375ea42e2c14f89c81de74900bcebe7135d67eaf0a2faedc1f875bc9f6d11ba",
-        "source_zip": "4fbd8fa3bc6aea0025bca676bb24c81785d415ce39cdef81835315ae6f28e823"
+        "tex": "4875a301f0af5ccef90a961d824db0f52d01e3f10ea4f83188a56dd60b875502",
+        "pdf": "92de85d16bf400818610d63378b9f36dbbf02251f6cc71a7d8102255f8065a1d",
+        "source_zip": "d0ec6d41915942c509818010efaba8d7629ae060dd4a6dc731a33a53d91a3b82"
       },
       "human_action": "author-list/profile/quota/dual-submission/ethics/AI-use signoff and OpenReview upload only"
     },
@@ -41600,7 +41600,7 @@
       },
       "paper_quality_v2": {
         "path": "generated/asset-first-stri-paper-quality-v2-20260816.json",
-        "sha256": "016855719be9fe3d1a4752727ed2120ef603edf9a1d61def739ce421810bf6e0",
+        "sha256": "b8f115a11d1792088088c7c3c2b8bd0b9285e2e7842f303c66a512882ad85452",
         "present": true
       },
       "current_source_review": {
@@ -41610,22 +41610,22 @@
       },
       "official_final_state": {
         "path": "generated/asset-first-stri-iclr2027-final-state-20260816.json",
-        "sha256": "0d8cd3c5fc07479514d6edeb1df072ae11e94997bc1b70e2e2f66b868ac1ea9b",
+        "sha256": "0a667f4fef73f1b8a3f14333b52e650e6f0a429fcec2d9b4be75db4acc2c3637",
         "present": true
       },
       "official_submission_qa": {
         "path": "generated/asset-first-stri-iclr2027-submission-qa-20260816.json",
-        "sha256": "5bd2880a51ad6e598ad0d31dab0d6fa9c3f191ee2e7cabcec9332f09b04aa412",
+        "sha256": "59fd8918e39d114953d0c8455e3812694973ed3318f3b6bd8cbf05e38468a66b",
         "present": true
       },
       "supplement_state": {
         "path": "generated/asset-first-stri-iclr2027-supplement-state-20260816.json",
-        "sha256": "cb3980260a23838555d9647da6e452dbe180ba48e66cfacb286aa6b9b2cd368d",
+        "sha256": "acaf2d14b24cfc670d699bc5167c6ab7829568ab3d1cf33789a1148bd8828f02",
         "present": true
       },
       "openreview_readiness": {
         "path": "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json",
-        "sha256": "abfd7978f4745908908efeda79095c538e00854d3660ad2cd0e02774223ec5c0",
+        "sha256": "6ee74ad66e885ab3260708c67249e6f3c988c72ed4e11fbd3d4cb7093d15cb5c",
         "present": true
       },
       "skillrl_p0e_principle_disposition": {

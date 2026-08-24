@@ -9,7 +9,7 @@
   "main_text_page_limit": 9,
   "post_main_page": 10,
   "total_pdf_pages": 11,
-  "citation_count": 16,
+  "citation_count": 19,
   "double_blind_anonymity": "PASS",
   "abstract_single_paragraph": true,
   "ai_use_statement": "PRESENT_REQUIRED",
@@ -18,10 +18,10 @@
   "undefined_references": 0,
   "overfull_boxes": 0,
   "official_style_zip_sha256": "0d940dfa9398ae99a18f24a85a8a683f367204b6af6d17d2899e60a67102529e",
-  "source_sha256": "3ecb724621e9eb4b1db70bcd009bd73f1b0fedaac8442227675a2f9f3a63be12",
-  "body_sha256": "aa52efd66f0e2b7dd41430b06cc817079b23ea6cc2a5ab3be5d0d2cce4c1a805",
-  "tables_sha256": "57c8967bb68e721317135c96f33c9196d8fed726529fbfbfb9c4b3a2e47df7f7",
-  "bibliography_sha256": "9971f55a1d27f7ce524446bc36b9e88b359cb0e40ff84914b60b351781c732d2",
+  "source_sha256": "4875a301f0af5ccef90a961d824db0f52d01e3f10ea4f83188a56dd60b875502",
+  "body_sha256": "92adf9a4a09345cf5da232b0fb98c321da1e6f24e9e88d7990abe9798e2f614d",
+  "tables_sha256": "29770a1574e6c00ea890bdf0a57ad3c8ec17b827821fa32a017c8b2d8dafe45f",
+  "bibliography_sha256": "f215e2b20f012255099222e0aa9a0aff9bf420d80cec9573b6016ba12db400f7",
   "scientific_claim_scope": [
     "N1 released control-plane representation sensitivity",
     "N2 exact finite support equalizability R*(A)",
@@ -48,5 +48,18 @@
     "main_figures": 4,
     "ablation_robustness_sha256": "fa47cec4d82263f8b5976b2d73d05950c2129e94c34bb7096a3bdb7bcbd05542",
     "paper_quality_schema": "2.1"
+  },
+  "r6_revalidation": {
+    "isolated_source_compile": "PASS",
+    "anonymous_pdf_text_scan": "PASS",
+    "rasterized_main_pages": 9,
+    "raster_dimensions": "1020x1320",
+    "manual_visual_contact_sheet": "UNAVAILABLE_REMOTE_FETCH_BLOCKED",
+    "paper_quality_sha256": "b8f115a11d1792088088c7c3c2b8bd0b9285e2e7842f303c66a512882ad85452",
+    "template_revision_receipt_sha256": "a3c9fa6941eacced9baf1801cd65852311620c2a42cd138da1d9e2735eca508d",
+    "offline_completion_analysis_sha256": "9fc5810b37f1eb94323597155e8c4b50d7717e78f0e222e38edcb88a930883f0",
+    "claim_expansion": false,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0
   }
 }

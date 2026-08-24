@@ -4,19 +4,19 @@
   "stage": "ICLR2027_ANONYMOUS_SUPPLEMENT_READY",
   "status": "PASS",
   "package": {
-    "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/STRI-ICLR2027-20260816-supplement.zip",
-    "sha256": "c0f2ece30cab3a816549acf963f5e0a6351f8a473347f7c424e2186fb5f8172b",
-    "manifest_sha256": "a98b706a5ede42c618597d66e54dd2d2a5e76caa48b4d3c2dc134eb7941dc8fb",
-    "package_metadata_sha256": "d39a2713bb8be53c4306996cad2301c4b32fe7a17f649b073870ad8762f4d879"
+    "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-iclr2027-r6-20260824/supplement.zip",
+    "sha256": "71b5e4503053802c9d126e615b1d9d7523426421c4e7a35b351277b435041f96",
+    "manifest_sha256": "040b4f7ef11934ea3f92882e293650aa9d3f5b287b071c3e8861f12008fb337e",
+    "package_metadata_sha256": "cc2e2f9c6ebc9a3d5ea016ecba9a879f7c6a3ad96fbdfeb3ff8b6f2decd8146e"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
     "reproduce_py": "PASS",
-    "unit_tests": "29/29 PASS",
+    "unit_tests": "32/32 PASS",
     "binary_identity_path_scan": "PASS",
     "text_identity_path_scan": "PASS",
     "figure_regeneration": "PASS_4_OF_4_FIGURES",
-    "paper_quality_v2_reproduction": "PASS_V2_1_VISUAL_EVIDENCE"
+    "paper_quality_v2_reproduction": "PASS_MANUSCRIPT_EVIDENCE"
   },
   "reproduced_results": {
     "skillsp_level1_full": {
@@ -207,6 +207,18 @@
       "stage3_replay_agreement": "18/18",
       "judge_calls": 0,
       "claim_boundary": "Specific mediator attribution on one archived P19 substrate only. This strengthens the representation-to-retrieval-to-executed-behavior chain but does not establish task utility, longitudinal regret, end-to-end AutoSkill behavior, or general AutoSkill safety."
+    },
+    "offline_completion_analysis": {
+      "structured_support_perturbations": 287,
+      "valid_class_flips": 13,
+      "minimum_changed_cells_for_valid_class_flip": 22,
+      "tool_block_valid_residual": "184/184",
+      "largest_solver_grid": "16384x96",
+      "largest_solver_variables": 97,
+      "largest_solver_inequalities": 32768,
+      "dense_lp_matrix_MiB": 24.25,
+      "wall_time_exact_reproduction_required": false,
+      "analysis_sha256": "9fc5810b37f1eb94323597155e8c4b50d7717e78f0e222e38edcb88a930883f0"
     }
   },
   "frozen_external_repositories": {
@@ -233,7 +245,9 @@
       "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
       "treating quotient-conserved clone allocation as downstream utility validation or as a repair for non-realizable partial-overlap support geometry",
       "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
-      "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety"
+      "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety",
+      "treating conditional solver wall time as an algorithmic-novelty or end-to-end scalability result",
+      "treating structured misspecification sensitivity as calibration of a learned support estimator"
     ]
   },
   "new_gpu_evidence_required_for_current_claim_scope": false,

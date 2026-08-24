@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "idea_code": "E1",
+  "receipt_type": "material-manuscript-revision-template-binding",
+  "revision": "r6",
+  "date": "2026-08-24",
+  "parent_revision": "r5",
+  "parent_package": "stri-iclr2027-supplement-reseal-r5-20260823",
+  "stanford_round2": {
+    "score": 6.1,
+    "verdict": "Accept",
+    "instruction": {
+      "zh": "只做低成本 scalability / support-misspecification 离线分析，其余保持 scope boundary。",
+      "en": "Only low-cost scalability/support-misspecification analysis is worth doing now; keep the rest as scope boundaries."
+    }
+  },
+  "template_binding": {
+    "template_id": "ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1",
+    "template_version": "1.0",
+    "main_body_target_pages": 9,
+    "binding_required_satisfied": true
+  },
+  "manuscript": {
+    "main_tex_sha256": "4875a301f0af5ccef90a961d824db0f52d01e3f10ea4f83188a56dd60b875502",
+    "body_tex_sha256": "92adf9a4a09345cf5da232b0fb98c321da1e6f24e9e88d7990abe9798e2f614d",
+    "tables_tex_sha256": "29770a1574e6c00ea890bdf0a57ad3c8ec17b827821fa32a017c8b2d8dafe45f",
+    "pdf_sha256": "92de85d16bf400818610d63378b9f36dbbf02251f6cc71a7d8102255f8065a1d",
+    "source_zip_sha256": "d0ec6d41915942c509818010efaba8d7629ae060dd4a6dc731a33a53d91a3b82",
+    "main_text_pages": 9,
+    "total_pdf_pages": 11,
+    "anonymous_scan": "PASS"
+  },
+  "experiment_lane_binding": [
+    {
+      "id": "E1",
+      "status": "SATISFIED_EXISTING_EVIDENCE",
+      "binding": "Skill-SP Level-1 R*=2 against arbitrary same-information package reweighting; bounded AutoSkill original/split/placebo/quotient result."
+    },
+    {
+      "id": "E2",
+      "status": "SATISFIED_EXISTING_EVIDENCE",
+      "binding": "Quotient, minimum exact-coverage pruning, identity rename, clone/split, whole-package and scalar/global-weight reductions."
+    },
+    {
+      "id": "E3",
+      "status": "SATISFIED_EXISTING_EVIDENCE",
+      "binding": "Factor-2 witnesses, per-tool exact LP, and AutoSkill crowded-out-skill mediator add-back."
+    },
+    {
+      "id": "E4",
+      "status": "SATISFIED_OFFLINE_PLUS_EXISTING",
+      "binding": "Tool-disjoint/negative regimes, one-cell stress, and 287 structured support-misspecification perturbations."
+    },
+    {
+      "id": "E5",
+      "status": "SATISFIED_EXISTING_EVIDENCE",
+      "binding": "Equalizable negative regimes, SkillRL realization STOP boundary, fail-closed support cases, package-wide misspecification flips."
+    },
+    {
+      "id": "E6",
+      "status": "SATISFIED_OFFLINE",
+      "binding": "Unchanged dense SciPy/HiGHS R* LP through 16,384x96; wall time explicitly environment/load-specific and conditional on support materialization."
+    },
+    {
+      "id": "E7",
+      "status": "OPTIONAL_SATISFIED",
+      "binding": "Released sparse witnesses and one bounded AutoSkill representation→retrieval→behavior trace."
+    }
+  ],
+  "objection_disposition": {
+    "STRI-O1": "BOUNDARY_PRESERVED",
+    "STRI-O2": "CLOSED_OFFLINE_STRUCTURED_MISSPECIFICATION",
+    "STRI-O3": "BOUNDARY_PRESERVED",
+    "STRI-O4": "BOUNDARY_PRESERVED",
+    "STRI-O5": "CLOSED_OFFLINE_RSTAR_PROFILE",
+    "STRI-O6": "RESOLVED_POSITIONING_PRESERVED"
+  },
+  "offline_analysis": {
+    "path": "generated/asset-first-stri-offline-completion-analysis-20260824.json",
+    "sha256": "9fc5810b37f1eb94323597155e8c4b50d7717e78f0e222e38edcb88a930883f0",
+    "model_calls": 0,
+    "gpu_runs": 0,
+    "new_task_outcomes": 0,
+    "new_support_annotations": 0
+  },
+  "claim_boundary": {
+    "claim_expansion": false,
+    "post_query_controller_claim": false,
+    "skillrl_independent_support_claim": false,
+    "autoskill_prevalence_claim": false,
+    "validated_repair_claim": false,
+    "lp_solver_novelty_claim": false
+  },
+  "pdf_qa": {
+    "main_text_pages": 9,
+    "page_limit": 9,
+    "total_pages": 11,
+    "rasterized_main_pages": 9,
+    "raster_dimensions": "1020x1320",
+    "overfull_boxes": 0,
+    "undefined_references": 0,
+    "undefined_citations": 0,
+    "visual_manual_inspection": "NOT_AVAILABLE_REMOTE_CONTACT_SHEET_FETCH_BLOCKED"
+  },
+  "authority": {
+    "scientific": false,
+    "method": false,
+    "experiment": false,
+    "provider_calls": false,
+    "gpu": false,
+    "submission": false
+  },
+  "human_signoff_pending": true
+}
