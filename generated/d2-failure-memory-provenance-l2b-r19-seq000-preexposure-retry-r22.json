@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-SEQ000-PREEXPOSURE-RETRY-ADJUDICATION",
+  "recorded_date": "2026-08-24",
+  "status": "SEQ000_PREEXPOSURE_RESET_FAILURE_EXACT_RETRY_CONSUMED_THEN_COMPLETE",
+  "failed_attempt": {
+    "receipt_sha256": "064ac9858c8c5619fb889f0379accce0c0c9b409ad99e3d78ada0bdb86cca5a5",
+    "class": "RemoteDisconnected",
+    "scientific_exposure": false,
+    "model_completions": 0,
+    "browser_actions": 0,
+    "evaluator_calls": 0
+  },
+  "retry_adjudication": {
+    "frozen_rule": "one exact retry permitted before first model completion/browser action/evaluator call",
+    "exact_retry_consumed": true,
+    "additional_preexposure_retry_for_sequence0_permitted": false,
+    "task_id_unchanged": true,
+    "source_task_id_unchanged": true,
+    "arm_unchanged": true,
+    "memory_unchanged": true,
+    "model_unchanged": true,
+    "analysis_unchanged": true
+  },
+  "durable_result": {
+    "attempts_sha256": "9c8af48af1961d9635bfd1c724303108ce41e28812e0d7441213a036dc5cd0a5",
+    "progress_sha256": "ba31b4efa23f4a6ccdf89d18158f5c82d98c5aecdcd5ff16b7f3600d9dfcb12b",
+    "sequence0_complete": true,
+    "terminal_score_recorded": true,
+    "agent_completions": 30,
+    "parser_retry_completions": 0
+  },
+  "scientific_verdict": "NO_SEPARATE_VERDICT_SUPPORT_RETRY_ONLY"
+}
