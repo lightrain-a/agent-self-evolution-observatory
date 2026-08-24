@@ -1,0 +1,510 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T04:56:08Z",
+  "run_id": "external-fresh-exact-16-review-20260824-r7",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "selection_projection": {
+    "staging_refresh_root": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r7",
+    "preview_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r7/preview-public.json",
+    "preview_artifact_sha256": "8e9a2ae8e21984ac99b12e74dd90d4a0b82f0fe7077ee8dae0c1c7f06b4701d5",
+    "private_pool_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r7/data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "private_pool_artifact_sha256": "4ef2e1e28cfad7c6f78864aaaf0bfdcd74f0929e9112aebec13efda9d1b2890e",
+    "corpus_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r7/data/corpora/semantic-scholar-corpus.json",
+    "corpus_artifact_sha256": "2d27a6a0e8439be73da947b74cdbe61f1ae1c57ea89f0d559bae28f1d1585b86",
+    "refresh_generated_at": "2026-08-24T04:52:38+00:00",
+    "refresh_status": "READY",
+    "discovery_mode": "arxiv-primary-fallback",
+    "source_retrieval_complete": true,
+    "selected": 32,
+    "verified": 32,
+    "selected_previously_reviewed": 16,
+    "selected_unreviewed": 16,
+    "eligible_unreviewed": 55,
+    "fulltext_verified": 29,
+    "fetch_errors": 0,
+    "fulltext_fetch_errors": 3,
+    "undercovered_lanes": [],
+    "source_coverage_exhausted": false,
+    "global_source_coverage_exhausted_claim": false,
+    "exact_unreviewed_refs_in_scheduler_order": [
+      "arXiv:2607.20543",
+      "arXiv:2607.10878",
+      "arXiv:2607.09195",
+      "arXiv:2607.09175",
+      "arXiv:2607.10011",
+      "arXiv:2607.09375",
+      "arXiv:2607.08375",
+      "arXiv:2607.08252",
+      "arXiv:2607.07508",
+      "arXiv:2607.05805",
+      "arXiv:2607.16269",
+      "arXiv:2607.06140",
+      "arXiv:2607.04728",
+      "arXiv:2607.05352",
+      "arXiv:2607.05391",
+      "arXiv:2607.05471"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 16,
+    "sources_reviewed": 16,
+    "exact_prior_exposure_zero": 16,
+    "identity_verified": 16,
+    "deep_review": 7,
+    "triage_review": 9,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "fresh_scientific_survivors": 0,
+    "stop_reduction": 3,
+    "support_component_only": 4,
+    "scope_excluded": 9,
+    "watch_reopen_seeds": 1,
+    "source_retrieval_complete": true,
+    "global_source_coverage_exhausted": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "exact_tranche_identity_requires_content_addressed_refresh_projection": true,
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "deep_review_routes_collision_reopen_or_decisive_baseline_cases": true,
+    "triage_is_allowed_only_for_clear_scope_or_component_cases": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "no_emit_is_not_a_scientific_dead_end": true,
+    "global_source_exhaustion_must_not_be_inferred_from_bounded_tranche_completion": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2607.20543",
+      "title": "When RLVR Shrinks the Reasoning Boundary: Diagnosing Pass@k Inversion",
+      "published": "2026-07-12",
+      "lane_keys": [
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "3bfa2b70b4aa96df213b9f874d37f1442a7785804f93c431a812d8eefd3c5d5d",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING_DIAGNOSTIC",
+      "reduction": [
+        "rlvr-mode-collapse",
+        "rare-success-coverage",
+        "base-policy-anchoring"
+      ],
+      "note": "Pass@k inversion is a useful diagnostic of RLVR mode coverage and rare correct trajectories, with PBA reducing boundary losses under matched GRPO. It concerns offline policy post-training and sampling coverage rather than autonomous persistent self-modification at deployment.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "1e7674f777a099ee60d853d837eeb55503724200133b1dad68c35218ca2b1a65",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.10878",
+      "title": "LOGOS: A Living Logic for AI Agent Teams That Evolve With Humans",
+      "published": "2026-07-12",
+      "lane_keys": [
+        "skill_harness",
+        "memory_continual",
+        "runtime_deployment"
+      ],
+      "source_sha256": "d0eb7ab5384c3677e174af17e631e67d7d659cf3f5908c650e4cc908a9dd7bb9",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_RELEASE_GOVERNANCE",
+      "reduction": [
+        "versioned-agent-pack-release",
+        "proposer-independent-promotion-gate",
+        "human-owned-root-policy-and-authorization"
+      ],
+      "note": "LOGOS is strong governance evidence for self-evolving agent systems: prompts, memory, skills, tools, roles, and workflows remain isolated release candidates until held-out execution evidence, human-owned policy, and authorization permit promotion. Gate ablations show off/proxy rules can adopt harmful candidates while evidence gates reject them in controlled suites. This strongly supports the Research-OS authority, evidence, rollback, and release-engineering boundary, but it is a governance/control protocol rather than a newly identified irreducible scientific self-evolution variable.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "fa7503f09ee72b1680b0ab316f705547cd6a179f5256f09e6a0e3f2c58a8deef",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.09195",
+      "title": "Toward Auditable AI Scientists: A Hypothesis Evolution Protocol for LLM Agents",
+      "published": "2026-07-10",
+      "lane_keys": [
+        "skill_harness",
+        "autonomous_science"
+      ],
+      "source_sha256": "f328766305d4162a598b682da18b0c591d90c04d98dcdae6e284314ba4a504e2",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_AUDITABLE_SCIENCE",
+      "reduction": [
+        "persistent-hypothesis-registry",
+        "append-only-evidence-belief-log",
+        "hypothesis-test-evidence-belief-cycle"
+      ],
+      "note": "HEP makes hypotheses persistent typed objects with unique ids, append-only event logs, belief updates, lifecycle states, explicit tests, evidence attachment, refinement, and merging. Compared with a planning-style agent it produces a much more explicit hypothesis-test-evidence-belief cycle. This is high-value Research-OS component evidence for auditable scientific reasoning and hypothesis state, but it does not establish a new causal self-evolution object beyond structured scientific state and workflow.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "40e3a91c5d7a303b9fe94cd80e6652252079dbbf7400869d5e68dcbdc856106f",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.09175",
+      "title": "Scoped Verification for Reliable Long-Horizon Agentic Context Evolution under Distribution Shift",
+      "published": "2026-07-10",
+      "lane_keys": [
+        "skill_harness",
+        "runtime_deployment",
+        "safety_reliability"
+      ],
+      "source_sha256": "ff70a9f4cfd51301e635686ee2ee57079ec9b2f39910e0d33fed308c57f2c524",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION_WATCH",
+      "reduction": [
+        "persistent-instruction-evolution",
+        "typed-graph-representation",
+        "scoped-structural-validation-and-consolidation"
+      ],
+      "note": "GRACE is the strongest r7 near-boundary source. It holds model, tools, harness, initial instruction, experience batches, held-out evaluation set, and batch-level update schedule fixed, and compares flat-text HCE, a graph substrate without structural analysis, and full graph-regularized scoped validation under alternating distribution shift. Full GRACE sustains strict reliability while flat text and graph-without-consolidation degrade, strongly supporting structural representation plus local validation/consolidation for long-lived control artifacts. However the treatments differ in representation and the semantic information available to the update/validation procedure; internal LLM-call budgets are not matched and diagnosis content can diverge after the first update. If full typed graph/executable instruction semantics are supplied to the strongest versioned/nonstationary/context-maintenance baseline, the result is an implementation/verification advantage rather than an additional causal state variable. Preserve as a watch seed for a same-semantic-content, same-compute representation test.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-16b145b18dd60e1811",
+          "result": "NOT_SATISFIED",
+          "boundary": "A strongest versioned/nonstationary treatment baseline must receive the full observable instruction semantics, graph relations, version state, and update history; GRACE does not show an opposite ex-ante prediction after that information parity."
+        },
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Failure-derived instruction edits and consolidation remain corrective context/skill optimization once failure evidence, semantic content, edit budget, update count, and held-out evaluation are matched."
+        }
+      ],
+      "watch_reopen_seed": true,
+      "fulltext_sha256": "a899d6828bb386bf7d3da5a438acd20b892a3d286f56cf1fd7de065eabf9812b",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.10011",
+      "title": "Religion and Artificial Intelligence as Distributed Meaning Systems: A Naturalistic Conceptual Model",
+      "published": "2026-07-10",
+      "lane_keys": [
+        "world_model"
+      ],
+      "source_sha256": "95a592b129367243199a9f7604ca7c401bb6aa763cd65488df1a0b7738118d7c",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_CONCEPTUAL_MODEL",
+      "reduction": [
+        "distributed-cognition-conceptual-model",
+        "cultural-meaning-systems"
+      ],
+      "note": "This source is a conceptual comparison of religion and AI as distributed meaning systems. It provides no execution-backed intervention on an autonomous agent and the optional full text was unavailable in this refresh, so it is outside the scientific self-evolution gate.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_available": false
+    },
+    {
+      "ref": "arXiv:2607.09375",
+      "title": "Mach-Mind-4-Flash Technical Report",
+      "published": "2026-07-10",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "0aa76cec0c5971981ab7665f392d892f3782cc1699d18a953dcfca1f31e18d25",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_FOUNDATION_MODEL_POSTTRAINING",
+      "reduction": [
+        "multi-teacher-on-policy-distillation",
+        "domain-rl-experts",
+        "reasoning-compression"
+      ],
+      "note": "Mach-Mind-4-Flash is a multi-stage foundation-model post-training report using domain RL experts, distillation, and token-efficiency optimization. The deployed model is fixed rather than autonomously evolving across tasks.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "485568b80266745524e55ddee8c315ba9321463dc954bafb82433c613a9dbaec",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.08375",
+      "title": "WCog-VLA: A Dual-Level World-Cognitive Vision-Language-Action Model for End-to-End Autonomous Driving",
+      "published": "2026-07-09",
+      "lane_keys": [
+        "world_model",
+        "collective"
+      ],
+      "source_sha256": "7de9637b4eb7845f88b100a07ee310c3656b57a01d5d8fa3e45f005a515b83a2",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_WORLD_MODEL",
+      "reduction": [
+        "semantic-world-forecasting",
+        "generative-multiagent-world-model",
+        "game-theoretic-cot-driving"
+      ],
+      "note": "WCog-VLA is an end-to-end driving architecture with semantic and generative world modeling. Its world evolution is predicted environment/trajectory state within inference, not persistent improvement of the agent artifact.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "6c1d767b8dac0746f9b458226d0ef79c626eade3aed1104abd2f9db497d601cb",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.08252",
+      "title": "AutoPersonas: A Multi-Timescale Loop Engine for Open-Ended Persona Evolution",
+      "published": "2026-07-09",
+      "lane_keys": [
+        "memory_continual",
+        "runtime_deployment",
+        "safety_reliability"
+      ],
+      "source_sha256": "d69fcc20bf36ed3629f663c2c724dc3337d81cad67b4ecd84ef6af0fe4b1bf83",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "context-visibility-bounding",
+        "diversity-targeted-generation",
+        "evidence-governed-state-absorption"
+      ],
+      "note": "AutoPersonas documents a real long-run self-locking symptom in recursive persona-life loops and shows a same-runtime A/B where context-slice masking plus per-sample divergence targeting substantially reduces macro-theme repetition while the downstream OSO absorption chain remains active. But the intervention explicitly changes what historical/state context the generator can see and injects withheld divergence targets, so it changes pre-outcome information and sampling pressure rather than isolating a hidden self-evolution variable. The paper itself states that it lacks a scalar co-evolution metric, broad persona coverage, and exhaustive component ablation. The current result therefore reduces to context gravity/visibility, diversity-seeking generation, and evidence-governed state management.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-d5f761dcabd8831fff",
+          "result": "NOT_SATISFIED",
+          "boundary": "The compared systems do not have identical pre-outcome information because masking changes visible state/history and divergence targeting changes the generation objective; no same-information residual beyond information/proxy/distribution effects is isolated."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "7d90e6607e130b05af92dbf2f230cc94af708a9b41eed24dd47a579d51c07ef3",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.07508",
+      "title": "Single-Rollout Asynchronous Optimization for Agentic Reinforcement Learning",
+      "published": "2026-07-08",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "eaba1ee953635fa9fd0189d79aa9fd6e2cf7e526b57487c9f8a9e840c6d613ee",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "asynchronous-agentic-rl",
+        "single-rollout-optimization",
+        "critic-tracking"
+      ],
+      "note": "SAO is an asynchronous RL post-training algorithm designed for stability and off-policy correction. It is an optimization/training method, not deployment-time persistent self-evolution.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "b07d3e58aba3d0865029ce39fbfbb1c518c0773dd7442f0a3be02126fadaf6a6",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.05805",
+      "title": "Onnes: A Physics-Grounded Multi-Agent LLM Simulator for Cryogenic Fault Diagnosis in Quantum Computing Infrastructure",
+      "published": "2026-07-07",
+      "lane_keys": [
+        "parametric_model_state",
+        "collective"
+      ],
+      "source_sha256": "c1ee98385d9a94e41fe64459a3a7abc11a926e9aace169b6b8192009a9c3402d",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_SIMULATION_AND_INCONTEXT_ADAPTATION",
+      "reduction": [
+        "physics-digital-twin",
+        "multiagent-diagnosis-panel",
+        "fewshot-incontext-recovery"
+      ],
+      "note": "Onnes is a physics-grounded simulator and multi-agent diagnosis study. The improved panel recovers with curated few-shot demonstrations and self-consistency without parameter updates; this is in-context scaffolding over a simulated diagnostic task, not persistent autonomous self-modification.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "586827c0fe9c059cd029d38453c603fe1513a8fcfab350f6fe78ab2b1ba8d21e",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.16269",
+      "title": "From Intent to Infrastructure: LLM-Driven Agent Compilers for ISAC Networks",
+      "published": "2026-07-07",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment",
+        "safety_reliability"
+      ],
+      "source_sha256": "0f635249168e21c68ea93574c6d2a81e7a9927336c186a090662c7bb5579d0f7",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_RUNTIME_COMPILER",
+      "reduction": [
+        "intent-to-policy-graph-compilation",
+        "time-scale-separated-runtime-adaptation",
+        "partial-workflow-recompilation"
+      ],
+      "note": "The ISAC Agent Compiler provides a verifiable policy-graph intermediate representation and separates fast parameter control, subgraph recompilation, and full workflow recompilation across time scales. This is useful systems/control-plane evidence for hierarchical runtime adaptation and recompilation, but the reported mechanism is explicit engineering control over an infrastructure configuration rather than an irreducible agent self-evolution causal state.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "799145023c4cd5d42e8248eb21d69d2258d1ff0064db156c7ca378487ec225ad",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.06140",
+      "title": "CurateEvo: Data-Curation Evolving for Agentic Post-Training",
+      "published": "2026-07-07",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "dd585d422743a449f5ae10b3990efb4ce2a7ca51a6d1b4fc8da4126bf05cddc6",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "failure-driven-curation-code-search",
+        "fixed-corpus-data-transformation",
+        "heldout-dev-model-selection"
+      ],
+      "note": "CurateEvo explicitly represents the data-curation strategy as executable code and evolves it from failed held-out-development trajectories. At each epoch the strategy transforms the same fixed raw corpus into SFT data, RL data, and an inference-time memory bank; the agent is retrained from the same base with a fixed recipe and evaluated on a fixed dev set. Ablations show effectiveness-driven revision is the largest contributor and each output resource helps. This is a clean verifier-guided program/data-pipeline search over an explicit objective, with ordinary failure-driven corrective adaptation and selection on a development proxy; it does not identify a new self-evolution causal primitive.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SCIE-63da8f6c3c1c818d32",
+          "result": "NOT_SATISFIED",
+          "boundary": "Executable curation-code generation, execution, evaluation, and revision are expressible as verifier-guided program search/repair when the strongest baseline receives the same raw corpus, failure transcript, candidate code, objective, and search budget."
+        },
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Failed-dev-trajectory-driven revisions remain corrective adaptation after matching failure evidence, supervision, update budget, and held-out evaluation."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "52dcb99df7457ca91287982adabfd841089561399aa40977086de33fcc921359",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.04728",
+      "title": "Turning Off-Policy Tokens On-Policy: A Plug-in Approach for Improving LLM Alignment",
+      "published": "2026-07-06",
+      "lane_keys": [
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "305a244f357a2bd1ea2b4ac44220b2bb61f56ba451a34c563467ec198035edd5",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "selective-importance-sampling",
+        "offpolicy-correction",
+        "policy-gradient-posttraining"
+      ],
+      "note": "SIS is a token-level importance-sampling correction for RL post-training. It improves training stability and performance but does not define a persistent autonomous deployment-time update process.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "7ec5fad9c164b1d08c99d9278fbf319a90189a8e4a5a3b35a3b08ccb9286294a",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.05352",
+      "title": "Multiplayer Interactive World Models with Representation Autoencoders",
+      "published": "2026-07-06",
+      "lane_keys": [
+        "world_model",
+        "safety_reliability"
+      ],
+      "source_sha256": "e4024ed975f6c42040e0ccf3ad047c82b499fbbd02b3d2fb15d2234ba8d26a60",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_WORLD_MODEL",
+      "reduction": [
+        "multiplayer-world-model",
+        "multiagent-action-conditioning",
+        "latent-video-diffusion"
+      ],
+      "note": "This multiplayer world model predicts a shared dynamic environment under several agents actions. The optional full text was unavailable in this refresh; the abstract describes a fixed learned simulator rather than an autonomous self-evolving agent artifact.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_available": false
+    },
+    {
+      "ref": "arXiv:2607.05391",
+      "title": "LLM-as-a-Verifier: A General-Purpose Verification Framework",
+      "published": "2026-07-06",
+      "lane_keys": [
+        "parametric_model_state",
+        "embodied"
+      ],
+      "source_sha256": "46a1d74a9d41a637e31cd980843c2b28c3cf076fa8a58506c132b0790fee4721",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_VERIFICATION",
+      "reduction": [
+        "probabilistic-llm-verifier",
+        "repeated-evaluation",
+        "criteria-decomposition"
+      ],
+      "note": "LLM-as-a-Verifier supplies fine-grained continuous verification signals by scoring token-logit expectations and scaling through repeated evaluation and criteria decomposition; it can also serve as a dense RL reward. This is strong evaluator/control-plane component evidence, but the verifier itself is not a longitudinal self-evolution scientific object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "1a5889050991f972967311b553d76240167df5dd970b15cc604dc633d0641aa1",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.05471",
+      "title": "KAT-Coder-V2.5 Technical Report",
+      "published": "2026-07-06",
+      "lane_keys": [
+        "skill_harness",
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "6299bf4ea58e7e009f7cca4dd47999764b4a856236087689e2def3ac9e3c74e2",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_AGENTIC_POSTTRAINING",
+      "reduction": [
+        "executable-environment-reconstruction",
+        "trajectory-filtering",
+        "agentic-rl-and-distillation"
+      ],
+      "note": "KAT-Coder-V2.5 is an agentic model post-training stack built from reconstructed executable environments, filtered trajectories, RL, and expert distillation. The final model is fixed at deployment and does not instantiate autonomous persistent self-evolution.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "f13b03885e1896f9e7077e995b95590839ae7e5cfdbb4d9d03c987527f24b2ba",
+      "fulltext_available": true
+    }
+  ],
+  "next_action": "Record these 16 exact refs as zero-authority source-review exposure. No source satisfies an exact durable reopen contract, so do not trigger generator/provider/GPU work. Preserve GRACE only as a watch seed requiring a same-semantic-content, same-compute representation/validation comparison against a fully informed versioned/nonstationary baseline. Refresh the source scheduler from a new immutable staging copy.",
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
