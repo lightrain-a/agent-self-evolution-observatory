@@ -204,7 +204,8 @@ def make_agent_env(GenericAgentArgs: Any, Flags: Any, ChatModelArgs: Any, EnvArg
     )
     agent = GenericAgentArgs(chat_model_args=chat, flags=flags)
     env = EnvArgs(
-        task_name=f"browsergym/webarena.{task_id}",
+        # EnvArgs._get_env_name() adds the browsergym/ namespace itself.
+        task_name=f"webarena.{task_id}",
         task_seed=0,
         max_steps=30,
         headless=True,

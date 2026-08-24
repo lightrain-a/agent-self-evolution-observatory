@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R18A-PREOUTCOME-SUPPORT-ADJUDICATION",
+  "recorded_date": "2026-08-24",
+  "status": "PRE_OUTCOME_TASK_NAMESPACE_ADAPTER_FAILURE_ZERO_SCIENTIFIC_EXPOSURE",
+  "role": "SUPPORT_FAILURE_ADJUDICATION",
+  "failed_run": {
+    "run_root": "/data/wyt/agent-self-evolution-observatory/runs/b1-l2b-r18-20260824",
+    "sequence_index": 0,
+    "episode_id": "seq000_task166_src163_rep0_STATUS_S",
+    "frozen_scientific_condition": {
+      "task_id": "166",
+      "source_task_id": "163",
+      "arm": "STATUS_S",
+      "repeat_id": 0
+    },
+    "attempts_jsonl_sha256": "263ca1f7ee0efefe975ac996b7c6b66b966acfeb102efd577ea1733ab169de2c",
+    "failure_json_sha256": "7988b85e5691e92bf51518600e8ed2d525618f32e214cba549a85a876eb8e509",
+    "browsergym_summary_sha256": "04dc66ccafc1192b9fb3fcd530a58dcac1d92790d10d9b0fe6d5f5171a5e3210",
+    "runner_commit": "e95415907fe5",
+    "runner_sha256": "dc007188bc8f5588602740ed6c747f049a46d1f8157807f23baad36807fc000e"
+  },
+  "failure": {
+    "class": "TASK_NAMESPACE_DOUBLE_PREFIX",
+    "passed_task_name": "browsergym/webarena.166",
+    "EnvArgs_behavior": "BrowserGym experiments EnvArgs._get_env_name adds browsergym/ namespace to task_name",
+    "malformed_result": "browsergym/browsergym/webarena.166",
+    "failure_location": "gymnasium environment ID parsing inside EnvArgs.make_env before environment creation",
+    "scientific_mechanism_changed": false
+  },
+  "zero_exposure_evidence": {
+    "browsergym_n_steps": 0,
+    "cum_reward": 0,
+    "cum_raw_reward": 0,
+    "terminated": null,
+    "truncated": null,
+    "step_artifacts_present": false,
+    "experiment_directory_files": [
+      "exp_args.pkl",
+      "experiment.log",
+      "package_versions.txt",
+      "summary_info.json"
+    ],
+    "executor_completion_observed": false,
+    "browser_action_observed": false,
+    "evaluator_call_observed": false,
+    "terminal_episode_consumed": false,
+    "scientific_outcome_opened": false
+  },
+  "allowed_repair": {
+    "only_change": "Pass task_name=webarena.<id> to EnvArgs so its unchanged namespace mapper produces browsergym/webarena.<id>",
+    "task_id_unchanged": true,
+    "source_memory_unchanged": true,
+    "status_arm_unchanged": true,
+    "model_unchanged": true,
+    "temperature_unchanged": true,
+    "rollout_schedule_unchanged": true,
+    "analysis_unchanged": true,
+    "threshold_unchanged": true,
+    "new_run_root_required": true,
+    "new_run_root": "/data/wyt/agent-self-evolution-observatory/runs/b1-l2b-r18b-20260824"
+  },
+  "adjudication": {
+    "support_failure_not_scientific_failure": true,
+    "R15_pre_outcome_repair_condition_satisfied": true,
+    "single_confirmatory_attempt_consumed": false,
+    "sequence_0_may_be_executed_once_in_new_run_root": true,
+    "old_failure_receipt_must_be_preserved": true,
+    "pool_old_zero_reward_into_analysis": false
+  },
+  "scientific_verdict": "NO_VERDICT_PRE_OUTCOME_SUPPORT_FAILURE",
+  "scientific_authority": false,
+  "authority": {
+    "experiment_execution_continues_under_R16": true,
+    "claim_expansion": false,
+    "l3": false,
+    "threshold_change": false,
+    "submission": false
+  }
+}
