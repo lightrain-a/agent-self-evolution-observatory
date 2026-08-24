@@ -1,0 +1,531 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T04:39:51Z",
+  "run_id": "external-fresh-exact-16-review-20260824-r4",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "selection_projection": {
+    "staging_refresh_root": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r4",
+    "preview_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r4/preview-public.json",
+    "preview_artifact_sha256": "98b981861df7251d9f0b8cb1624b8bdc10676dbc64c46cf00f93e7eead96b8f3",
+    "private_pool_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r4/data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "private_pool_artifact_sha256": "36cb78a02329893895ef45a4a430074726ecf73a08fecb1c08aa7f35a7a05b56",
+    "corpus_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r4/data/corpora/semantic-scholar-corpus.json",
+    "corpus_artifact_sha256": "2d27a6a0e8439be73da947b74cdbe61f1ae1c57ea89f0d559bae28f1d1585b86",
+    "refresh_generated_at": "2026-08-24T04:35:24+00:00",
+    "refresh_status": "READY",
+    "discovery_mode": "arxiv-primary-fallback",
+    "source_retrieval_complete": true,
+    "selected": 32,
+    "verified": 32,
+    "selected_previously_reviewed": 16,
+    "selected_unreviewed": 16,
+    "fulltext_verified": 30,
+    "fetch_errors": 0,
+    "fulltext_fetch_errors": 2,
+    "undercovered_lanes": [],
+    "source_coverage_exhausted": false,
+    "global_source_coverage_exhausted_claim": false,
+    "exact_unreviewed_refs_in_scheduler_order": [
+      "arXiv:2607.24720",
+      "arXiv:2607.24112",
+      "arXiv:2607.24653",
+      "arXiv:2607.23809",
+      "arXiv:2607.22999",
+      "arXiv:2607.23181",
+      "arXiv:2607.24850",
+      "arXiv:2607.23124",
+      "arXiv:2607.22375",
+      "arXiv:2607.22186",
+      "arXiv:2608.20401",
+      "arXiv:2607.21361",
+      "arXiv:2607.21725",
+      "arXiv:2607.19749",
+      "arXiv:2607.18970",
+      "arXiv:2607.19321"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 16,
+    "sources_reviewed": 16,
+    "exact_prior_exposure_zero": 16,
+    "identity_verified": 16,
+    "deep_review": 7,
+    "triage_review": 9,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "fresh_scientific_survivors": 0,
+    "stop_reduction": 2,
+    "support_component_only": 6,
+    "scope_excluded": 8,
+    "watch_reopen_seeds": 1,
+    "source_retrieval_complete": true,
+    "global_source_coverage_exhausted": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "exact_tranche_identity_requires_content_addressed_refresh_projection": true,
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "deep_review_routes_collision_reopen_or_decisive_baseline_cases": true,
+    "triage_is_allowed_only_for_clear_scope_or_component_cases": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "no_emit_is_not_a_scientific_dead_end": true,
+    "global_source_exhaustion_must_not_be_inferred_from_bounded_tranche_completion": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2607.24720",
+      "title": "The Physics of Multi-Turn Long-Horizon Planning: From Pre-training to Post-training via Single- and Multi-Teacher On-Policy Agentic Distillation",
+      "published": "2026-07-27",
+      "lane_keys": [
+        "skill_harness",
+        "world_model",
+        "parametric_model_state"
+      ],
+      "source_sha256": "b5112885895d40286c794d5cf5cd8fb5b85503197587bb3059459e55aa871fd2",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_TRAINING",
+      "reduction": [
+        "controlled-pretraining",
+        "agentic-posttraining",
+        "on-policy-distillation"
+      ],
+      "note": "The Physics of Multi-Turn Long-Horizon Planning studies how planning capability is acquired and shaped through controlled pre-training, GRPO/OPD, and multi-teacher distillation. These are offline training interventions on a model, not autonomous persistent deployment-time self-modification.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "568c76cd524211c2dfcb64bc5c4ebb765cac99384c6cb7ea19c49b459f21ebc7",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.24112",
+      "title": "Scaling GUI Agents with Visual State Transitions",
+      "published": "2026-07-27",
+      "lane_keys": [
+        "world_model"
+      ],
+      "source_sha256": "4aa196aa2c37afa61dd5ea0c29be3d78feecf488a23d593429250930ba0bc7f4",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_WORLD_MODEL_TRAINING",
+      "reduction": [
+        "visual-state-transition-pretraining",
+        "forward-and-inverse-dynamics",
+        "offline-gui-agent-training"
+      ],
+      "note": "State Transition Pretraining improves GUI agents by continually pretraining forward/inverse visual dynamics and then fine-tuning on trajectories. The evaluated model is fixed at deployment; this is world-model/post-training evidence rather than a longitudinal self-evolution object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "cb632201630dc91394d89c8d0e17160a66d2c06e6fe8498e240339b54cabac04",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.24653",
+      "title": "Kimi K3: Open Frontier Intelligence",
+      "published": "2026-07-27",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "b383f2baa285d138cf60da361f4ad3dcbf38ce3fb95de06611f89f38e09eae6e",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_FOUNDATION_MODEL_TRAINING",
+      "reduction": [
+        "foundation-model-pretraining",
+        "agentic-rl",
+        "mixture-of-experts-scaling"
+      ],
+      "note": "Kimi K3 is a large-scale foundation-model training and deployment report. Persistent rollout/sandbox state is infrastructure for agentic RL, not an autonomous deployed artifact that updates itself across tasks.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "c671cb054bbaf0acbce36dfa604a5090bfde4781fcc67d1fa0bfc806209f55fa",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.23809",
+      "title": "ACM: Agentic Context Management for Long Horizon Tasks",
+      "published": "2026-07-26",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state"
+      ],
+      "source_sha256": "b5eeffc1d0dfe015beb9b758f77335d7a87d2adc2625e873a3e22472905e328c",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_INFERENCE_CONTEXT_MANAGEMENT",
+      "reduction": [
+        "agent-controlled-context-editing",
+        "external-memory-offload-and-retrieval",
+        "offline-context-management-posttraining"
+      ],
+      "note": "ACM gives agents tools to edit/offload/retrieve long-horizon context and later post-trains models on context-management demonstrations. Its state changes are inference-time context management and offline training, not a persistent self-evolving behavioral artifact driven by success/failure across tasks.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "238a9ee9f785370b484693bd7bd55e2eec399b1d071a4299e89249091b2d636f",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.22999",
+      "title": "WCM: World-Cognition Model for Generalizable Human-Robot Interaction",
+      "published": "2026-07-25",
+      "lane_keys": [
+        "memory_continual",
+        "world_model",
+        "embodied",
+        "runtime_deployment"
+      ],
+      "source_sha256": "e3e9ee1db48b628c5da9cfa1231dcdd203f72599260bf12391bcbecea25799f8",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_HUMAN_SUPERVISED_CONTINUAL_TRAINING",
+      "reduction": [
+        "human-in-the-loop-robot-teaching",
+        "trajectory-to-cot-supervision",
+        "continual-model-training"
+      ],
+      "note": "WCM combines asynchronous embodied orchestration with a human teaching mode and converts teaching episodes/autonomous rollouts into chain-of-thought supervision to improve the model. This is human-supervised/trajectory-supervised continual training, not an autonomous persistent self-evolution mechanism isolated under same-information controls.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "0aeeb13bfdd2c31c14807c5d1ce1b50ea5b4910f586129fa29d112891af4791f",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.23181",
+      "title": "Towards Dual-Brain Minimal Sufficient Representation for Vision-Language Navigation",
+      "published": "2026-07-25",
+      "lane_keys": [
+        "world_model",
+        "embodied",
+        "safety_reliability"
+      ],
+      "source_sha256": "41ea3feae1893fdcbcd0b3718c02f2fd00205794174ea2727bc6e287ad18be81",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_WORLD_MODEL_REPRESENTATION",
+      "reduction": [
+        "minimal-sufficient-representation",
+        "latent-bottleneck-world-model",
+        "selective-perception"
+      ],
+      "note": "BrainNav studies a compact task-relevant latent representation and compressed world model for VLN. The mechanism is a static representation/world-model design, not a deployment-time artifact evolution process.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "2887df0702718c82e9d02b2891ede999dbedd1c515fbe1ac0662f1bbcbf4e52d",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.24850",
+      "title": "SearchArt: Training Long-Horizon Search Agent with Scalable Synthetic and Verified Task",
+      "published": "2026-07-25",
+      "lane_keys": [
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "e3cf81987d93d8722ecb1d8dfc81f4b371516bea3f9863418ca67672fcd61c7e",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_VERIFIER_GOVERNANCE",
+      "reduction": [
+        "evolving-audit-skill",
+        "frozen-regression-and-adversarial-validation",
+        "versioned-rollback-gated-maintenance"
+      ],
+      "note": "SearchArt contains a strong governance component: a self-evolving Judge Auditor stores criteria, known hacking patterns, rules, and examples in an external Audit Skill; proposed updates are admitted only after frozen regression, adversarial, and clean controls satisfy explicit recall/FPR/Macro-F1/regression thresholds, otherwise they are rolled back and revised. This is exactly versioned feedback-guided audit-skill maintenance under external validation. It supports evaluator governance and rollback controls, but does not demonstrate a same-information agent-specific residual beyond corrective skill/program maintenance and verifier-exogeneity models.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-759a3b89b8a31c2936",
+          "result": "NOT_SATISFIED",
+          "boundary": "Verifier provenance, task truth, history, observations, and validation criteria are observable; no modification-dependency residual beyond verifier-exogeneity/information-limit models is shown."
+        },
+        {
+          "memory_id": "MEM-SEAR-f7666f0670963d8d7c",
+          "result": "NOT_SATISFIED",
+          "boundary": "The paper explicitly uses frozen/adversarial/clean external stress tests; no contamination-induced residual beyond self-generated-verification and external-test controls is isolated."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "3c7c4800864a2bc67e35c30c2475efde91fb6b74c5f61baedd343157f32dda06",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.23124",
+      "title": "AgentOmnia: Scaling Agentic Models for Full-Scenario Applications",
+      "published": "2026-07-25",
+      "lane_keys": [
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "2e7d5281e210440c20ff026fcd1f7425be1a0f3e41a385fee79551efd8382ab5",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_AGENTIC_TRAINING_PIPELINE",
+      "reduction": [
+        "environment-task-synthesis",
+        "online-agentic-rl",
+        "evaluation-to-prd-improvement-loop"
+      ],
+      "note": "AgentOmnia coordinates task synthesis, SFT, online agentic RL, evaluation, and targeted improvement from PRDs. It is an end-to-end training/product-improvement pipeline; the source does not isolate a deployment-time persistent artifact with a new self-evolution causal primitive.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "7fc55c2c8324756ce84425c73fa3a10071b08aae59634b3d3788449e3ab56630",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.22375",
+      "title": "IDEAgent: Agentic Quality-Diversity Search for Research Idea Generation",
+      "published": "2026-07-24",
+      "lane_keys": [
+        "memory_continual",
+        "collective",
+        "autonomous_science"
+      ],
+      "source_sha256": "a63aed2d33743d136a5d5dfce087c94fbb8c27f61f771d730bde196a0ff3c5d0",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_SCIENTIFIC_QD_SEARCH",
+      "reduction": [
+        "quality-diversity-search",
+        "idea-lineage-memory",
+        "multi-objective-repair-and-refinement"
+      ],
+      "note": "IDEAgent explicitly treats research ideation as quality-diversity search under a fixed discovery budget, maintaining active/historical/rejected memories and idea lineages while repairing and refining proposals. Yield jointly thresholds quality and extracts a mutually diverse subset. This is strong Research-OS support for lineage-aware QD search, failure memory, and repair; its gains are still predictions of mature multi-objective/QD/adaptive search plus memory and evaluator design, not a new longitudinal self-evolution causal object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "de0ecfd102adef95eb03ab50f08ff0a9e702135a63e0d4cee49de7e541af1bfc",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.22186",
+      "title": "Deconstructing Off-Policy Ratios: Entropy-Scaled Trust Regions for Asynchronous Reinforcement Learning",
+      "published": "2026-07-24",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "2c48802440ade0386fc58ce1284c76843d8ed3def684bf663e4bf67a2947995f",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "asynchronous-offpolicy-rl",
+        "entropy-scaled-trust-region",
+        "static-policy-optimization"
+      ],
+      "note": "ESTR addresses stale/off-policy data during asynchronous RL post-training using entropy-scaled trust regions. This is an optimization/training method, not autonomous persistent deployment-time self-evolution.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "832d78aafe42749f39c2242078f5a7c099c5268bda7468df538de958e8c8ea81",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2608.20401",
+      "title": "World models of environment, agent and joint agent-environment systems",
+      "published": "2026-07-23",
+      "lane_keys": [
+        "world_model"
+      ],
+      "source_sha256": "9885a1a15f539804d2994dba1f4774fe5478e72fa6b3ca1bf3b7deb7fea945e5",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_WORLD_MODEL_TAXONOMY",
+      "reduction": [
+        "canonical-environment-model",
+        "canonical-agent-model",
+        "joint-agent-environment-causal-state"
+      ],
+      "note": "This first-party abstract distinguishes environment, agent, and joint agent-environment predictive channels and defines canonical predictive-state objects. It is useful theoretical taxonomy for world-model/control analysis. The optional full text was unavailable in this refresh (HTTP 404), so no stronger empirical/mechanistic claim is made; it does not by itself establish an autonomous self-evolution intervention.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_available": false
+    },
+    {
+      "ref": "arXiv:2607.21361",
+      "title": "FedAgentKE: Federated Semantic Knowledge Evolution for Heterogeneous Agents",
+      "published": "2026-07-23",
+      "lane_keys": [
+        "memory_continual",
+        "collective"
+      ],
+      "source_sha256": "581008a01933730c75870a97fa6ffc2229eb9fd78c158ae05cfc19a55c3dfc5d",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "semantic-trajectory-distillation",
+        "federated-knowledge-aggregation",
+        "utility-and-transferability-selection"
+      ],
+      "note": "FedAgentKE distills local execution trajectories into semantic knowledge units, clusters and selects them by empirical utility and cross-agent transferability, deduplicates/updates a global pool, and redistributes adapted knowledge without sharing raw trajectories. The evolving object is therefore an explicit semantic memory/knowledge base whose selection and aggregation criteria are observable. Cross-framework/cross-task gains remain expressible by memory distillation, transfer learning, federated aggregation, relevance/redundancy, and utility-based selection; no same-information irreducible co-evolution state is isolated.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-1ba2b6e8d305dafaad",
+          "result": "NOT_SATISFIED",
+          "boundary": "No residual is shown after matching knowledge count, semantic relevance, redundancy/complementarity, context budget, backbone, and observable utilization."
+        },
+        {
+          "memory_id": "MEM-SEAR-4674f46501819d1414",
+          "result": "NOT_SATISFIED",
+          "boundary": "No preregistered matched factorial demonstrates a non-additive co-evolution interaction beyond expert/knowledge-set quality, aggregation, and routing/allocation."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "0104c4df4043c7f8f949804cc9c11938e94a4550004358205a189ecba3a57d56",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.21725",
+      "title": "Addressing the Orchestration Gap in Generalist Robots via Physical Agency",
+      "published": "2026-07-23",
+      "lane_keys": [
+        "skill_harness",
+        "parametric_model_state",
+        "embodied",
+        "safety_reliability"
+      ],
+      "source_sha256": "fc81fd25a09b50356e362d956ffea00f8815486d4a7c840045ef2648b0fde7c6",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_ORCHESTRATION",
+      "reduction": [
+        "closed-loop-physical-orchestration",
+        "verification-and-recovery",
+        "frozen-motor-backend"
+      ],
+      "note": "Pigey supplies high-level planning, decomposition, memory, routing, verification, and recovery over frozen VLA/skill backends without post-training. This is strong component evidence that orchestration can recover substantial task-level capability at inference time, but it is a workflow/control architecture rather than an evolving persistent scientific object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "0bf2b039f11e799e50938c80bb7c463fbb5de0965118ac80f50d3f09298cee73",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.19749",
+      "title": "The World Model Remembers, the Actor Forgets: Dream Rehearsal for Continual Model-Based RL",
+      "published": "2026-07-22",
+      "lane_keys": [
+        "skill_harness",
+        "memory_continual",
+        "world_model",
+        "safety_reliability"
+      ],
+      "source_sha256": "31db541b14b33d190b66de13804890c5cd3001022695cc1d8942e52cc6b2d7e6",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION_WATCH",
+      "reduction": [
+        "continual-rl-channel-instability",
+        "graded-generative-rehearsal",
+        "supervised-self-imitation"
+      ],
+      "note": "Dream Rehearsal is the strongest mechanism source in r4. Under never-clear replay, pre-registered probes show the world model retains old-task reward/value/termination information while the actor forgets. With the world model frozen and identical imagined rollouts, RL-in-imagination fails to recover a lost skill in 0/3 seeds whereas supervised self-imitation succeeds in 3/3, and interleaved graded dream rehearsal retains four- and eight-task chains with no task labels or parameter growth. This is a real same-data update-channel result, but the source itself locates the effect in the policy-gradient/continual-RL channel and names ordinary plasticity/primacy/optimization hypotheses still requiring variance, critic, and entropy ablations. It therefore identifies a valuable continual-learning mechanism rather than an irreducible agent self-evolution state under the current durable gates. Preserve as a watch seed only.",
+      "reopen_contracts_checked": [
+        {
+          "result": "NOT_SATISFIED",
+          "boundary": "A scientific reopen would require identical frozen world-model state, imagined trajectories/rewards/values, actor initialization/capacity, update count, and compute, plus a source-grounded structural variable that forces opposite retention/recovery predictions beyond strongest continual-RL plasticity, optimization-channel, regularization, and supervised-rehearsal baselines. BC-versus-RL algorithm choice alone is not such a residual."
+        }
+      ],
+      "watch_reopen_seed": true,
+      "fulltext_sha256": "3e5dffae0268e92e515906048da9ae6905bcd7d8aaf5772af406d799b4684b29",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.18970",
+      "title": "Skillware: A Software Ontology and Engineering Lifecycle for Persistent Behavioral Artifacts",
+      "published": "2026-07-21",
+      "lane_keys": [
+        "skill_harness",
+        "runtime_deployment"
+      ],
+      "source_sha256": "22a35abdf9138e50ae76087dcaaf90f261f42d0fe96acc2588154bc6b672e9f0",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_ARTIFACT_IDENTITY",
+      "reduction": [
+        "independent-behavioral-artifact-identity",
+        "versioned-lifecycle-continuity",
+        "host-runtime-separation"
+      ],
+      "note": "Skillware formalizes persistent behavioral artifacts as independently addressable software units with behavioral primacy, software identity, Agent Host activation, version/provenance, and lifecycle continuity through maintenance/rollback/removal. This strongly supports the Research-OS artifact identity and lifecycle boundary. Because version and executable semantics are explicitly observable software state, it reinforces rather than breaks the existing versioned/nonstationary-treatment reduction.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-16b145b18dd60e1811",
+          "result": "NOT_SATISFIED",
+          "boundary": "Observable artifact identity/version/executable mapping must be supplied equally to the strongest versioned/nonstationary treatment baseline; Skillware adds software engineering structure, not a new causal primitive."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "159a5d4c418d2de0b511c5ff70f434dba642e83b73048f4194c973b557e95746",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.19321",
+      "title": "ResearchArena: Evaluating Sabotage and Monitoring in Automated AI R&D",
+      "published": "2026-07-21",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "a0934900f8347c317a661eb09c54e25682df5e5719b3942bc1f15a3a09e9894f",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_AI_RD_CONTROL",
+      "reduction": [
+        "artifact-level-ai-control",
+        "sabotage-monitoring-evaluation",
+        "active-artifact-probing"
+      ],
+      "note": "ResearchArena is strong AI-R&D control evidence: it separates embedded artifact sabotage from independent sandbox sabotage and varies monitor access to executable artifact probes and chain-of-thought. Artifact execution can materially help, yet training-data sabotage remains difficult and monitors fail through surface-only inspection, anomaly rationalization, or wrong probes. These results support executable-artifact inspection and externally grounded active monitoring. They do not establish a longitudinal self-evolution variable beyond monitor information/access, active testing, and control-evaluation models.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-d43a6b9bf2c46382b8",
+          "result": "NOT_SATISFIED",
+          "boundary": "No same-information agent-specific residual is shown after matching treatment, monitoring state, task distribution, artifact/trace access, and probe budget."
+        },
+        {
+          "memory_id": "MEM-DISC-d5f761dcabd8831fff",
+          "result": "NOT_SATISFIED",
+          "boundary": "Detection gaps change with evaluator/monitor-visible evidence and active probe access; no identical-information opposite prediction beyond information/proxy misspecification is established."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "ddd7dcb5b9f46f421c298b458c0d045bc7fe5fc4a3bdf14d43bb60a064d1e510",
+      "fulltext_available": true
+    }
+  ],
+  "next_action": "Record these 16 exact refs as zero-authority source-review exposure. No source satisfies an exact durable reopen contract, so do not trigger generator/provider/GPU work. Preserve Dream Rehearsal only as a watch seed for a future same-information continual-RL update-channel residual; refresh the source scheduler from a new immutable staging copy.",
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
