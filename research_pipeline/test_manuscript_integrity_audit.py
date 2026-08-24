@@ -8,6 +8,7 @@ from pathlib import Path
 from .manuscript_integrity_audit import (
     audit_post_draft_integrity,
     build_post_draft_integrity_receipt,
+    build_manuscript_integrity_layer_state,
     integrity_findings_to_reviewer_receipt,
     lint_machine_like_prose,
 )
@@ -95,6 +96,18 @@ class ManuscriptIntegrityAuditTest(unittest.TestCase):
         lint = lint_machine_like_prose("It is worth noting that this comprehensive framework paves the way for future work.")
         self.assertGreater(lint["warning_count"], 0)
         self.assertFalse(lint["ai_detector_evasion_goal"])
+
+    def test_layer_state_routes_to_canonical_internal_skills(self) -> None:
+        state = build_manuscript_integrity_layer_state()
+        self.assertEqual(state["status"], "MANUSCRIPT_INTEGRITY_CONTRACTS_INSTALLED")
+        self.assertEqual(state["summary"]["audit_surfaces"], 7)
+        self.assertEqual(state["summary"]["internal_skill_routes"], 3)
+        self.assertEqual(state["summary"]["internal_skill_routes_ready"], 3)
+        self.assertEqual(state["summary"]["external_skill_runtime_dependencies"], 0)
+        self.assertEqual(state["internal_skill_routes"]["manuscript_drafting"]["selected_skills"][0]["skill_id"], "evidence-first-manuscript")
+        self.assertEqual(state["internal_skill_routes"]["source_and_citation_integrity"]["selected_skills"][0]["skill_id"], "source-evidence-integrity")
+        self.assertEqual(state["internal_skill_routes"]["optional_theory_audit"]["selected_skills"][0]["skill_id"], "formal-math-verification")
+        self.assertFalse(state["scientific_authority"])
 
     def test_integrity_findings_enter_issue_graph_without_experiment_authority(self) -> None:
         with tempfile.TemporaryDirectory() as td:

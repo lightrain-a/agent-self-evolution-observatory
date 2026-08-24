@@ -355,7 +355,7 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertEqual(scienceflow["local_gap_test"]["verdict"],"gap-confirmed-and-closed")
         self.assertIn("HOLD/STOP/MERGED/PAPER_READY",scienceflow["local_gap_test"]["after"])
         skills=next(row for row in state["designs"] if row["system"].startswith("Research skill ecosystems"))
-        self.assertEqual(skills["status"],"merged-existing");self.assertFalse(skills["local_gap_test"]["automatic_skill_installation"])
+        self.assertEqual(skills["status"],"merged-existing");self.assertFalse(skills["local_gap_test"]["automatic_skill_installation"]);self.assertEqual(skills["local_gap_test"]["external_runtime_dependencies"],0);self.assertIn("seven local typed skills",skills["local_gap_test"]["after"])
         integrity=next(row for row in state["designs"] if row["system"].startswith("Manuscript integrity skill ecosystems"))
         self.assertEqual(integrity["status"],"merged-existing");self.assertFalse(integrity["local_gap_test"]["experiment_authority"])
 

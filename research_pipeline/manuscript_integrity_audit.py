@@ -7,6 +7,8 @@ import re
 from pathlib import Path
 from typing import Any, Iterable
 
+from .internal_research_skills import route_internal_skills
+
 SCHEMA_VERSION = "1.0"
 
 POLICY: dict[str, Any] = {
@@ -235,6 +237,7 @@ def audit_post_draft_integrity(manifest: dict[str, Any], *, project_root: Path |
     return {
         "schema_version": SCHEMA_VERSION,
         "status": "PASS_POST_DRAFT_INTEGRITY" if integrity_pass and editorial_pass else "BLOCK_POST_DRAFT_INTEGRITY",
+        "internal_skill_contracts": ["source-evidence-integrity", "evidence-first-manuscript"],
         "policy": dict(POLICY),
         "manuscript_ref": manuscript_ref,
         "manuscript_sha256": manuscript_sha,
@@ -281,6 +284,9 @@ def build_post_draft_integrity_receipt(manifest: dict[str, Any], *, project_root
 
 
 def build_manuscript_integrity_layer_state() -> dict[str, Any]:
+    writing_route = route_internal_skills({"task_family": "paper-writing", "capability_types": ["writing", "reviewing", "visualization"]})
+    integrity_route = route_internal_skills({"task_family": "citation-audit", "capability_types": ["citation", "literature", "reviewing"]})
+    theory_route = route_internal_skills({"task_family": "theory-audit", "capability_types": ["reviewing", "coding"]})
     return {
         "schema_version": SCHEMA_VERSION,
         "status": "MANUSCRIPT_INTEGRITY_CONTRACTS_INSTALLED",
@@ -293,8 +299,16 @@ def build_manuscript_integrity_layer_state() -> dict[str, Any]:
             "deterministic-post-draft-integrity", "independent-model-review", "reviewer-issue-graph",
             "targeted-repair", "deterministic-re-audit", "claim-audit",
         ],
+        "internal_skill_routes": {
+            "manuscript_drafting": writing_route,
+            "source_and_citation_integrity": integrity_route,
+            "optional_theory_audit": theory_route,
+        },
         "summary": {
             "audit_surfaces": 7,
+            "internal_skill_routes": 3,
+            "internal_skill_routes_ready": sum(route.get("status") == "INTERNAL_SKILL_ROUTE_READY" for route in (writing_route, integrity_route, theory_route)),
+            "external_skill_runtime_dependencies": 0,
             "deterministic_before_agentic_review": 1,
             "automatic_scientific_authority": 0,
             "automatic_experiment_authority": 0,

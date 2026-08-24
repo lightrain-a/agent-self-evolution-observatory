@@ -3,6 +3,8 @@ from __future__ import annotations
 import re
 from typing import Any, Iterable
 
+from .internal_research_skills import build_internal_research_skill_state, route_internal_skills
+
 
 POLICY: dict[str, Any] = {
     "schema_version": "1.0",
@@ -19,6 +21,9 @@ POLICY: dict[str, Any] = {
     "skill_pack_orchestrator_never_becomes_a_second_research_os": True,
     "skill_capability_never_implies_scientific_experiment_gpu_or_submission_authority": True,
     "unqualified_skill_cannot_be_silently_loaded": True,
+    "reviewed_external_skill_packs_are_distilled_not_installed": True,
+    "canonical_internal_skills_have_zero_external_runtime_dependency": True,
+    "external_skill_orchestrators_are_design_provenance_not_runtime_authority": True,
 }
 
 REFERENCES = [
@@ -35,16 +40,9 @@ SKILL_CAPABILITY_TYPES = (
     "reviewing", "visualization", "causal-inference", "signal-processing", "ml-research",
 )
 
-SKILL_PACK_CATALOG: tuple[dict[str, Any], ...] = (
-    {"skill_pack": "Academic Research Skills", "status": "CATALOGUED_NOT_INSTALLED", "capabilities": ["citation", "reviewing", "writing"], "role": "integrity and academic research support"},
-    {"skill_pack": "Scientific Agent Skills", "status": "CATALOGUED_NOT_INSTALLED", "capabilities": ["statistics", "experiment", "coding"], "role": "domain scientific execution"},
-    {"skill_pack": "nature-skills", "status": "CATALOGUED_NOT_INSTALLED", "capabilities": ["writing", "reviewing", "visualization"], "role": "evidence-first manuscript drafting and polishing"},
-    {"skill_pack": "Claude Scholar", "status": "CATALOGUED_NOT_INSTALLED", "capabilities": ["literature", "citation", "reviewing"], "role": "literature management and reference checks"},
-    {"skill_pack": "Auto-Empirical Research Skills", "status": "CATALOGUED_NOT_INSTALLED", "capabilities": ["statistics", "causal-inference", "coding"], "role": "social-science empirical methods"},
-    {"skill_pack": "AI-Research-SKILLs", "status": "CATALOGUED_NOT_INSTALLED", "capabilities": ["ml-research", "experiment", "coding"], "role": "AI/ML domain execution; orchestration authority explicitly excluded"},
-    {"skill_pack": "codex-claude-academic-skills", "status": "CATALOGUED_NOT_INSTALLED", "capabilities": ["signal-processing", "statistics", "coding"], "role": "MATLAB/Python engineering analysis"},
-    {"skill_pack": "Research Paper Writing Skills", "status": "CATALOGUED_NOT_INSTALLED", "capabilities": ["writing", "reviewing"], "role": "paper structure and editorial policy"},
-)
+# Legacy compatibility only. The eight previously catalogued packs were distilled into
+# canonical local skills; no external pack remains a runtime dependency or install queue.
+SKILL_PACK_CATALOG: tuple[dict[str, Any], ...] = ()
 
 
 def _skill_risk_score(manifest: dict[str, Any]) -> int:
@@ -264,6 +262,7 @@ CAPABILITIES: tuple[dict[str, Any], ...] = (
 def build_research_capability_registry() -> dict[str, Any]:
     high_risk = [row["id"] for row in CAPABILITIES if row["risk"] == "high"]
     advisory = [row["id"] for row in CAPABILITIES if row["authority"] in {"advisory-only", "interpretation-proposal-only", "diagnostic-only"}]
+    internal_skills = build_internal_research_skill_state()
     return {
         "schema_version": "1.0",
         "policy": POLICY,
@@ -273,12 +272,27 @@ def build_research_capability_registry() -> dict[str, Any]:
             "high_risk": len(high_risk),
             "advisory_or_diagnostic": len(advisory),
             "dynamic_registration_policy": "schema+version+smoke required",
-            "skill_packs_catalogued_not_installed": len(SKILL_PACK_CATALOG),
+            "skill_packs_catalogued_not_installed": 0,
+            "external_skill_packs_reviewed": int((internal_skills.get("summary") or {}).get("external_skill_packs_reviewed") or 0),
+            "external_skill_packs_distilled": int((internal_skills.get("summary") or {}).get("external_skill_packs_distilled") or 0),
+            "canonical_internal_skills": int((internal_skills.get("summary") or {}).get("canonical_internal_skills") or 0),
+            "canonical_internal_skill_ids": [str(row.get("skill_id") or "") for row in internal_skills.get("skills") or [] if str(row.get("skill_id") or "")],
+            "external_skill_runtime_dependencies": int((internal_skills.get("summary") or {}).get("external_runtime_dependencies") or 0),
+            "discarded_external_skill_surfaces": int((internal_skills.get("summary") or {}).get("discarded_external_surfaces") or 0),
             "skill_admission_contract_installed": 1,
             "skill_router_contract_installed": 1,
+            "internal_skill_router_installed": 1,
             "automatic_skill_authority": 0,
         },
-        "skill_pack_catalog": list(SKILL_PACK_CATALOG),
+        "skill_pack_catalog": [],
+        "external_skill_distillation": list(internal_skills.get("external_distillation") or []),
+        "internal_skill_library": internal_skills,
+        "internal_skill_routing_contract": {
+            "rule": "route only canonical local distilled skills; external packs are provenance, not runtime dependencies",
+            "router": "route_internal_skills",
+            "external_runtime_dependencies": 0,
+            "authority": {"scientific": False, "experiment": False, "gpu": False, "submission": False},
+        },
         "skill_admission_contract": {
             "required_identity": ["skill_id", "skill_version", "source_repository", "content-addressed revision", "license", "maintainer"],
             "required_permissions": ["data_access_level", "external_network_access", "filesystem_write_access", "code_execution", "gpu_access", "secret_access"],

@@ -168,6 +168,19 @@ def build_research_control_plane_state(
     runtime = governance.get("runtime") or {}
     failures = failure_asset_library or {}
     paper_summary = paper_registry_summary or {}
+    skill_summary = dict((research_skill_registry or {}).get("summary") or {})
+    internal_skill_library = (research_skill_registry or {}).get("internal_skill_library") or {}
+    skill_summary["internal_skill_ids"] = [str(row.get("skill_id") or "") for row in internal_skill_library.get("skills") or [] if str(row.get("skill_id") or "")]
+    skill_summary["external_distillation"] = [
+        {
+            "source_pack": str(row.get("source_pack") or ""),
+            "decision": str(row.get("decision") or ""),
+            "kept": list(row.get("kept") or []),
+            "discarded": list(row.get("discarded") or []),
+            "internal_skills": list(row.get("internal_skills") or []),
+        }
+        for row in internal_skill_library.get("external_distillation") or [] if isinstance(row, dict)
+    ]
     checks = {
         "execution_kernel": research_execution_kernel.get("status") == "KERNEL_CONTRACTS_INSTALLED",
         "reasoning_layer": research_reasoning_layer.get("status") == "REASONING_CONTRACTS_INSTALLED",
@@ -191,7 +204,7 @@ def build_research_control_plane_state(
             "review_control": dict(review_control.get("summary") or {}),
             "figure_claim_graph": dict(figure_claim_graph.get("summary") or {}),
             "failure_differential_registry": dict((failure_differential_registry or {}).get("summary") or {}),
-            "research_skill_registry": dict((research_skill_registry or {}).get("summary") or {}),
+            "research_skill_registry": skill_summary,
             "manuscript_integrity_layer": dict((manuscript_integrity_layer or {}).get("summary") or {}),
         },
         "research_states": states,
@@ -213,6 +226,9 @@ def build_research_control_plane_state(
             "registered_papers": int(paper_summary.get("papers") or 0),
             "submission_ready_papers": int(paper_summary.get("submission_ready") or 0),
             "catalogued_skill_packs": int(((research_skill_registry or {}).get("summary") or {}).get("skill_packs_catalogued_not_installed") or 0),
+            "external_skill_packs_distilled": int(((research_skill_registry or {}).get("summary") or {}).get("external_skill_packs_distilled") or 0),
+            "canonical_internal_skills": int(((research_skill_registry or {}).get("summary") or {}).get("canonical_internal_skills") or 0),
+            "external_skill_runtime_dependencies": int(((research_skill_registry or {}).get("summary") or {}).get("external_skill_runtime_dependencies") or 0),
             "post_draft_integrity_surfaces": int(((manuscript_integrity_layer or {}).get("summary") or {}).get("audit_surfaces") or 0),
             "automatic_scientific_authority": 0,
             "automatic_experiment_authority": 0,
