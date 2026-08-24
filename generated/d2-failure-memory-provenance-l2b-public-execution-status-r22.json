@@ -18,10 +18,10 @@
   },
   "execution_prefix": {
     "episodes_expected": 140,
-    "episodes_complete": 20,
-    "complete_independent_tasks": 5,
-    "next_sequence_index": 20,
-    "agent_completions": 432,
+    "episodes_complete": 24,
+    "complete_independent_tasks": 6,
+    "next_sequence_index": 24,
+    "agent_completions": 473,
     "agent_completion_budget": 4200,
     "fuzzy_evaluator_completions": 0,
     "fuzzy_evaluator_completion_budget": 600,
@@ -36,7 +36,7 @@
     "confidence_interval_computed": false,
     "claim_update_allowed": false,
     "full_140_required_for_confirmatory_analysis": true,
-    "resume_only_exact_frozen_sequence": 20
+    "resume_only_exact_frozen_sequence": 24
   },
   "stanford_o5": {
     "disposition": "REQUIRES_SCIENTIFIC_REOPEN",
