@@ -99,6 +99,7 @@ from .longitudinal_safety_post_race_triage import load_post_race_triage, validat
 from .longitudinal_safety_material_child_race import load_material_child_race, validate_material_child_race, write_material_child_race
 from .semantic_commit_gap_collision import load_semantic_commit_gap_collision, validate_semantic_commit_gap_collision, write_semantic_commit_gap_collision
 from .ai4ai_strategy_reopen_contradiction import load_ai4ai_strategy_reopen_contradiction, validate_ai4ai_strategy_reopen_contradiction, write_ai4ai_strategy_reopen_contradiction
+from .longitudinal_cross_failure_orthogonal_screen_20260824 import load_cross_failure_orthogonal_screen, validate_cross_failure_orthogonal_screen, write_cross_failure_orthogonal_screen
 from .search_funnel_telemetry import build_search_funnel_telemetry
 from .premium_model_policy import policy_summary as premium_model_policy_summary
 from .public_state_redaction import redact_private_paths
@@ -742,6 +743,7 @@ def build_research_system_state() -> dict[str, Any]:
     longitudinal_safety_material_child_race = load_material_child_race()
     semantic_commit_gap_collision = load_semantic_commit_gap_collision()
     ai4ai_strategy_reopen_contradiction = load_ai4ai_strategy_reopen_contradiction()
+    longitudinal_cross_failure_orthogonal_screen = load_cross_failure_orthogonal_screen()
     research_memory_wiki = build_research_memory_wiki(
         search_design_state=paper_first_search_portfolio_design,
         failure_asset_library=failure_asset_library,
@@ -1133,6 +1135,9 @@ def build_research_system_state() -> dict[str, Any]:
             "ai4ai_strategy_reopen_support_lead":int((ai4ai_strategy_reopen_contradiction.get("summary") or {}).get("support_lead") or 0),
             "ai4ai_strategy_reopen_scientific_reopen":int((ai4ai_strategy_reopen_contradiction.get("summary") or {}).get("scientific_reopen_authorized") or 0),
             "ai4ai_strategy_reopen_recognition_positive_units":int((ai4ai_strategy_reopen_contradiction.get("summary") or {}).get("recognition_positive_units_verified") or 0),
+            "cross_failure_orthogonal_carriers":int((longitudinal_cross_failure_orthogonal_screen.get("summary") or {}).get("cross_failure_carriers") or 0),
+            "cross_failure_orthogonal_survivors":int((longitudinal_cross_failure_orthogonal_screen.get("summary") or {}).get("survivors") or 0),
+            "cross_failure_orthogonal_debate_eligible":int((longitudinal_cross_failure_orthogonal_screen.get("summary") or {}).get("debate_eligible") or 0),
             "failure_assets":failure_asset_library["summary"]["assets"],
             "value_scheduler_candidates":experiment_value_scheduler["summary"]["candidates"],
             "research_replay_passed":research_system_replay["summary"]["passed"],
@@ -1297,6 +1302,7 @@ def build_research_system_state() -> dict[str, Any]:
         "longitudinal_safety_material_child_race":longitudinal_safety_material_child_race,
         "semantic_commit_gap_collision":semantic_commit_gap_collision,
         "ai4ai_strategy_reopen_contradiction":ai4ai_strategy_reopen_contradiction,
+        "longitudinal_cross_failure_orthogonal_screen":longitudinal_cross_failure_orthogonal_screen,
         "failure_asset_library":failure_asset_library,
         "experiment_value_scheduler":experiment_value_scheduler,
         "research_system_replay":research_system_replay,
@@ -1687,6 +1693,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"longitudinal-material-child-race", "pass":not validate_material_child_race(state.get("longitudinal_safety_material_child_race") or {}) and int(((state.get("longitudinal_safety_material_child_race") or {}).get("summary") or {}).get("survivors") or 0)==0 and int(((state.get("longitudinal_safety_material_child_race") or {}).get("summary") or {}).get("debate_eligible") or 0)==0 and int(((state.get("longitudinal_safety_material_child_race") or {}).get("summary") or {}).get("provider_calls_authorized") or 0)==0 and (state.get("longitudinal_safety_material_child_race") or {}).get("scientific_authority") is False, "detail":{"status":(state.get("longitudinal_safety_material_child_race") or {}).get("status"),"summary":(state.get("longitudinal_safety_material_child_race") or {}).get("summary")}},
         {"key":"semantic-commit-gap-collision", "pass":not validate_semantic_commit_gap_collision(state.get("semantic_commit_gap_collision") or {}) and int(((state.get("semantic_commit_gap_collision") or {}).get("summary") or {}).get("current_scientific_object_survives") or 0)==0 and int(((state.get("semantic_commit_gap_collision") or {}).get("summary") or {}).get("problem_gate_eligible") or 0)==0 and int(((state.get("semantic_commit_gap_collision") or {}).get("summary") or {}).get("provider_calls_authorized") or 0)==0 and int(((state.get("semantic_commit_gap_collision") or {}).get("summary") or {}).get("sealed_v19_units_consumed") or 0)==0 and (state.get("semantic_commit_gap_collision") or {}).get("scientific_authority") is False, "detail":{"status":(state.get("semantic_commit_gap_collision") or {}).get("status"),"summary":(state.get("semantic_commit_gap_collision") or {}).get("summary")}},
         {"key":"ai4ai-strategy-reopen-contradiction", "pass":not validate_ai4ai_strategy_reopen_contradiction(state.get("ai4ai_strategy_reopen_contradiction") or {}) and int(((state.get("ai4ai_strategy_reopen_contradiction") or {}).get("summary") or {}).get("support_lead") or 0)==1 and int(((state.get("ai4ai_strategy_reopen_contradiction") or {}).get("summary") or {}).get("scientific_reopen_authorized") or 0)==0 and int(((state.get("ai4ai_strategy_reopen_contradiction") or {}).get("summary") or {}).get("problem_gate_eligible") or 0)==0 and int(((state.get("ai4ai_strategy_reopen_contradiction") or {}).get("summary") or {}).get("provider_calls_authorized") or 0)==0 and int(((state.get("ai4ai_strategy_reopen_contradiction") or {}).get("summary") or {}).get("sealed_v19_units_consumed") or 0)==0 and (state.get("ai4ai_strategy_reopen_contradiction") or {}).get("scientific_authority") is False, "detail":{"status":(state.get("ai4ai_strategy_reopen_contradiction") or {}).get("status"),"summary":(state.get("ai4ai_strategy_reopen_contradiction") or {}).get("summary")}},
+        {"key":"longitudinal-cross-failure-orthogonal-screen", "pass":not validate_cross_failure_orthogonal_screen(state.get("longitudinal_cross_failure_orthogonal_screen") or {}) and int(((state.get("longitudinal_cross_failure_orthogonal_screen") or {}).get("summary") or {}).get("cross_failure_carriers") or 0)==3 and int(((state.get("longitudinal_cross_failure_orthogonal_screen") or {}).get("summary") or {}).get("survivors") or 0)==0 and int(((state.get("longitudinal_cross_failure_orthogonal_screen") or {}).get("summary") or {}).get("debate_eligible") or 0)==0 and int(((state.get("longitudinal_cross_failure_orthogonal_screen") or {}).get("summary") or {}).get("problem_gate_eligible") or 0)==0 and int(((state.get("longitudinal_cross_failure_orthogonal_screen") or {}).get("summary") or {}).get("provider_calls_authorized") or 0)==0 and (state.get("longitudinal_cross_failure_orthogonal_screen") or {}).get("scientific_authority") is False, "detail":{"status":(state.get("longitudinal_cross_failure_orthogonal_screen") or {}).get("status"),"summary":(state.get("longitudinal_cross_failure_orthogonal_screen") or {}).get("summary")}},
         {"key":"aris-harness-alignment", "pass":state["research_harness_assurance"].get("status")=="PASS_HARNESS_ASSURANCE" and int((state["research_harness_assurance"].get("summary") or {}).get("failed") or 0)==0 and state["research_candidate_portfolio"].get("scientific_authority") is False and int((state["research_candidate_portfolio"].get("summary") or {}).get("automatic_promotions") or 0)==0 and state["search_funnel_telemetry"].get("scientific_authority") is False and state["scientific_research_graph"].get("scientific_authority") is False and (state["scientific_research_graph"].get("policy") or {}).get("experiment_failure_edge_cannot_close_core_principle") is True, "detail":{"assurance":state["research_harness_assurance"].get("summary"),"portfolio":state["research_candidate_portfolio"].get("summary"),"funnel":state["search_funnel_telemetry"].get("summary"),"graph":state["scientific_research_graph"].get("summary")}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
@@ -2339,6 +2346,12 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if int(ai4ai_reopen_summary.get("support_lead") or 0)!=1 or int(ai4ai_reopen_summary.get("outcome_independent_endpoint_supported") or 0)!=1: errors.append("AI4AI strategy reopen screen must preserve endpoint support lead")
     if int(ai4ai_reopen_summary.get("recognition_positive_units_verified") or 0)!=0 or int(ai4ai_reopen_summary.get("compute_search_matched") or 0)!=0 or int(ai4ai_reopen_summary.get("scientific_reopen_authorized") or 0)!=0: errors.append("AI4AI strategy reopen screen cannot infer recognition or scientific reopen from effort scaling")
     if int(ai4ai_reopen_summary.get("problem_gate_eligible") or 0)!=0 or int(ai4ai_reopen_summary.get("research_item_eligible") or 0)!=0 or int(ai4ai_reopen_summary.get("provider_calls_authorized") or 0)!=0 or int(ai4ai_reopen_summary.get("gpu_authorized") or 0)!=0 or int(ai4ai_reopen_summary.get("sealed_v19_units_consumed") or 0)!=0: errors.append("AI4AI strategy reopen support lead cannot authorize execution or consume V19 sealed units")
+    cross_failure_screen=state.get("longitudinal_cross_failure_orthogonal_screen") or {};cross_failure_summary=cross_failure_screen.get("summary") or {}
+    cross_failure_errors=validate_cross_failure_orthogonal_screen(cross_failure_screen)
+    if cross_failure_errors: errors.append("longitudinal cross-failure orthogonal screen invalid:"+";".join(cross_failure_errors))
+    if int(cross_failure_summary.get("cross_failure_carriers") or 0)!=3 or int(cross_failure_summary.get("reduced_before_debate") or 0)!=3: errors.append("cross-failure orthogonal screen must reduce all three carriers before debate")
+    if int(cross_failure_summary.get("survivors") or 0)!=0 or int(cross_failure_summary.get("debate_eligible") or 0)!=0 or int(cross_failure_summary.get("problem_gate_eligible") or 0)!=0 or int(cross_failure_summary.get("research_item_eligible") or 0)!=0: errors.append("cross-failure orthogonal screen cannot promote reduced carriers")
+    if int(cross_failure_summary.get("provider_calls_authorized") or 0)!=0 or int(cross_failure_summary.get("gpu_authorized") or 0)!=0 or int(cross_failure_summary.get("new_external_claims") or 0)!=0: errors.append("cross-failure orthogonal screen cannot authorize execution or claim fresh evidence")
     if not state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"]: errors.append("experiment value scheduler must remain advisory")
     if state["research_system_replay"]["summary"].get("failed") != 0: errors.append("research-system replay benchmark has failing epistemic cases")
     if not state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"]: errors.append("external system designs require a local gap test before adoption")
@@ -2417,6 +2430,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_material_child_race()
     write_semantic_commit_gap_collision()
     write_ai4ai_strategy_reopen_contradiction()
+    write_cross_failure_orthogonal_screen()
     write_skill_validation_transfer_scout()
     # Persistent search memory must be rebuilt before the fresh portfolio because
     # the latter content-addresses the former. Reversing this order guarantees a

@@ -6766,7 +6766,10 @@
     "semantic_commit_gap_provider_calls_authorized": 0,
     "ai4ai_strategy_reopen_support_lead": 1,
     "ai4ai_strategy_reopen_scientific_reopen": 0,
-    "ai4ai_strategy_reopen_recognition_positive_units": 0
+    "ai4ai_strategy_reopen_recognition_positive_units": 0,
+    "cross_failure_orthogonal_carriers": 3,
+    "cross_failure_orthogonal_survivors": 0,
+    "cross_failure_orthogonal_debate_eligible": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -88763,5 +88766,162 @@
       "repo:research_pipeline/v19r003_forced_switch_failure_assets_20260824.json"
     ],
     "screen_sha256": "85dfcadc86e99a8a509eb7dd3f5d3744a7959f257b754edf69e8afc151141a35"
+  },
+  "longitudinal_cross_failure_orthogonal_screen": {
+    "schema_version": "1.0",
+    "generated_at": "2026-08-24T02:30:00+00:00",
+    "status": "CROSS_FAILURE_ORTHOGONAL_SCREEN_ZERO_SURVIVOR",
+    "scope": "Cross-failure mutation after the ranked historical failure-leaf race and its material children reached zero survivors. This screen deliberately avoids the concurrent state-equivalent-future-divergence line and tests three orthogonal carriers using existing canonical evidence only.",
+    "policy": {
+      "p15_remains_closed": true,
+      "pathbench_experiment_budget_remains_do_not_run": true,
+      "same_task_ranking_reversal_probe_trajectory_and_seu_remain_closure_support_only": true,
+      "failure_memory_is_mutation_prior_not_positive_evidence": true,
+      "cross_failure_child_must_change_scientific_object": true,
+      "same_information_reduction_precedes_debate_and_execution": true,
+      "baseline_receives_full_pre_outcome_observable_and_action_support": true,
+      "causal_write_path_is_necessary_for_feedback_experiments_not_sufficient_for_novelty": true,
+      "internal_exact_reduction_may_stop_before_new_external_search": true,
+      "fresh_primary_search_required_before_any_survivor_promotion": true,
+      "zero_survivor_is_valid": true,
+      "no_provider_or_gpu_execution_for_this_screen": true
+    },
+    "source_refs": [
+      "repo:generated/longitudinal-safety-discovery-cycle-20260823.json",
+      "repo:generated/longitudinal-safety-material-child-race-20260824.json",
+      "repo:generated/semantic-commit-gap-collision-20260824.json",
+      "repo:generated/p15-pathbench-task-order-closure-readjudication-20260824.json",
+      "repo:generated/ai4ai-strategy-reopen-contradiction-screen-20260824.json",
+      "repo:research_pipeline/human_terminal_state_a.json#compositional-update-compatibility",
+      "repo:research_pipeline/human_terminal_independent.json#interventional-permission-triage-under-ceiling",
+      "repo:research_pipeline/human_terminal_independent.json#constraint-complete-typed-memory-order-logic"
+    ],
+    "carriers": [
+      {
+        "carrier_id": "revision-authority-topology",
+        "title": "Revision-Authority Topology",
+        "failure_inputs": [
+          "LS-DEBATE-STRATEGY-LOCK-PHASED-SEARCH",
+          "LS-DEBATE-HARNESS-COMMIT-MULTIOBJECTIVE",
+          "LS-DEBATE-EVENT-TRIGGER-OPTIONS",
+          "interventional-permission-triage-under-ceiling"
+        ],
+        "material_change": "Replace strategy timing, commit thresholds, or privilege scores with a persistent directed authority topology: which subsystem may propose, revise, commit, veto, or roll back which persistent update surfaces. A proposed intervention changes authority edges while holding task evidence and candidate updates fixed.",
+        "scientific_object": "persistent revision-authority graph over update surfaces",
+        "pre_outcome_observable": "the frozen authority graph, feasible update/rollback set, enforcement semantics, current committed state, and all evidence available before the next commit",
+        "strongest_same_information_reduction": {
+          "name": "graph-conditioned constrained policy / access-control state machine",
+          "same_information": "identical authority graph, feasible action set, enforcement semantics, update candidates, evidence history, current state, rollback support, costs, and decision budget",
+          "exact_reduction": "If an authority edge changes which update is executable, it changes the feasible action set or transition kernel. A generic constrained policy or access-control state machine given that same graph and action support can implement exactly the same commit/veto/rollback map. If authority is learned or leased over time, it is still a permission-state controller; the canonical E-4 line already showed that an intervention-trained permission triage was matched or dominated by a same-label Boolean rule. The topology is therefore a useful governance representation, not yet an irreducible self-evolution scientific object.",
+          "canonical_collision": [
+            "E-4 interventional permission triage under a fixed ceiling",
+            "generic constrained MDP / finite-state controller",
+            "strategy-reopen matched action-support reduction"
+          ]
+        },
+        "cheapest_falsifier": "Compile the authority graph into the exact feasible action/transition relation and give that relation plus the same evidence to an unrestricted bounded constrained policy. If every proposed commit/veto/rollback decision is representable without an authority-specific latent object, stop before any agent rollout.",
+        "decision": "STOP_CONSTRAINED_POLICY_ACCESS_CONTROL_REDUCTION",
+        "reopen_condition": "Require a source-grounded, independently manipulable governance variable that changes a prospective update decision after the full feasible action set, enforcement transition semantics, evidence/history, current state, rollback support, and budget are matched and supplied to the strongest graph-conditioned constrained policy. A renamed permission edge, new lease score, or hidden action-support difference is insufficient.",
+        "debate_eligible": false,
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "carrier_id": "feedback-to-write-coupling-topology",
+        "title": "Feedback-to-Write Coupling Topology",
+        "failure_inputs": [
+          "LS-REDUCE-VERIFIER-EXOGENEITY",
+          "LS-SOURCE-UNOBSERVED-INTERNAL-SIGNAL",
+          "LS-DEBATE-EVALUATOR-ENV-GAP-REDUCTION",
+          "LS-DEBATE-WEAK-JUDGE-SAME-SUPERVISION",
+          "autodesign-dev-acceptance-feedback-principle-readjudication",
+          "semantic-commit-gap-collision-20260824"
+        ],
+        "material_change": "Move the object from evaluator accuracy to the causal routing by which evaluation channels can authorize or shape persistent writes. The candidate stores a channel-to-update-surface coupling graph and proposes rewiring which feedback channels may affect proposal, acceptance, rollback, or memory/skill writes.",
+        "scientific_object": "persistent feedback-to-write causal coupling graph",
+        "pre_outcome_observable": "raw feedback channels, channel provenance, coupling graph, candidate updates, update-surface state, acceptance history, action support, and write/rollback budget before the persistent transition",
+        "strongest_same_information_reduction": {
+          "name": "same-graph closed-loop update policy plus endogenous-supervision model",
+          "same_information": "identical raw feedback, channel provenance, coupling graph, candidate set, update state/history, action/write support, costs, and downstream transition interface",
+          "exact_reduction": "A causal write path is necessary for a feedback-effect experiment, but once the write graph and all channel values are observable, the resulting persistent transition is simply a graph-conditioned closed-loop policy. Adaptive-validation, verifier-exogeneity, proxy-misspecification, and endogenous-supervision models already represent how feeding evaluation information back into selection changes future proposals. Rewiring the graph changes policy inputs or transition support; a generic history-conditioned controller with the same graph can express the same update distribution. Hiding the coupling graph from the baseline would create an information mismatch rather than novelty.",
+          "canonical_collision": [
+            "adaptive validation / selection-facing feedback",
+            "verifier exogeneity and endogenous supervision",
+            "generic history-conditioned closed-loop update policy",
+            "semantic commit lifecycle decomposition"
+          ]
+        },
+        "cheapest_falsifier": "Represent each proposed coupling intervention as a pre-transition causal graph plus observable channel vector. Allow an unrestricted same-budget controller to condition on both. If its policy class contains every proposed persistent write decision, the coupling topology is an instrumentation/governance object rather than a new learning mechanism.",
+        "decision": "STOP_CLOSED_LOOP_FEEDBACK_POLICY_REDUCTION",
+        "reopen_condition": "Require a prospective, pre-outcome coupling intervention whose effect on the next persistent write cannot be represented by a controller receiving the identical channel values, provenance, causal write graph, update history/state, candidate/action support, and budget. The residual must survive independent external truth; a report-only metric, hidden internal accept signal, or weaker no-feedback comparator cannot reopen the object.",
+        "debate_eligible": false,
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "carrier_id": "executable-composition-invariant-witness",
+        "title": "Executable Composition-Invariant Witness",
+        "failure_inputs": [
+          "LS-DEBATE-QUOTIENT-ALGEBRA-REDUCTION",
+          "LS-MEMENTO-COMPOSITION-HOLD-ESCAPE",
+          "P15-PATHBENCH-TASK-ORDER-CLOSURE",
+          "compositional-update-compatibility",
+          "constraint-complete-typed-memory-order-logic"
+        ],
+        "material_change": "Replace post-hoc interaction scores or order-sensitive outcome prediction with a pre-composition executable witness over update operators: a certified commutation, preservation, exclusion, or associativity condition checked before the final task outcome and intended to transfer across unseen operator identities.",
+        "scientific_object": "pre-composition executable invariant witness over persistent update operators",
+        "pre_outcome_observable": "exact component operator descriptors or transition relations, typed dependencies, support identities, current state, proposed order/composition, and the witness value before outcome execution",
+        "strongest_same_information_reduction": {
+          "name": "symbolic operator/action model or direct set/order-aware risk with identical operator information",
+          "same_information": "identical operator transition/descriptor information, typed dependencies, support identities, order, current state, intervention records, solver/search budget, and independent execution truth",
+          "exact_reduction": "If the witness is deterministically checkable from the supplied operator transition semantics, a symbolic operator/action model or formal constraint checker can compute the same admissibility relation. If the witness must be learned from order/composition interventions, a generic set-conditioned or n-ary order-aware model can consume the identical data. Canonical A-4 and B-10 CPU P0s already reached exact parity with direct order-aware risk plus repair and with a matched typed n-ary factor. P15 additionally closes order/path evidence when a strong history-integrated baseline receives the same ordered history. Therefore naming the representation an invariant does not itself escape the mature composition basin.",
+          "canonical_collision": [
+            "A-4 direct order-aware risk plus equal-budget repair",
+            "B-10 matched typed n-ary factor",
+            "symbolic operator/action-model planning and formal constraint checking",
+            "P15 strongest path-integrated ordered-history baseline"
+          ]
+        },
+        "cheapest_falsifier": "For the frozen operator language, ask whether the proposed witness is a deterministic function of the same operator transition relation or of the same intervention table. If yes, compute the same admissibility decisions with a generic operator model/constraint checker or n-ary set model and stop without new execution.",
+        "decision": "STOP_OPERATOR_MODEL_ORDER_RISK_REDUCTION",
+        "reopen_condition": "Require an independently validated pre-composition structural variable or theorem-bearing invariant that forces a held-out prediction after exact operator/support/history information and budget are matched, while the strongest symbolic operator model, unrestricted set/order-aware predictor, and path-integrated baseline still cannot express that prediction. Another clause language, commutativity label, finer order statistic, or outcome-selected witness does not qualify.",
+        "debate_eligible": false,
+        "problem_gate_eligible": false,
+        "research_item_eligible": false,
+        "provider_calls_authorized": 0,
+        "gpu_authorized": false,
+        "scientific_authority": false
+      }
+    ],
+    "summary": {
+      "cross_failure_carriers": 3,
+      "reduced_before_debate": 3,
+      "survivors": 0,
+      "debate_eligible": 0,
+      "problem_gate_eligible": 0,
+      "research_item_eligible": 0,
+      "provider_calls_authorized": 0,
+      "gpu_authorized": 0,
+      "new_external_claims": 0
+    },
+    "next_action": "Do not mutate these three carriers by adding another score, graph encoding, clause language, or weaker baseline. The current failure-memory cross-product is saturated under same-information reduction. Move to bounded fresh-source discovery for a genuinely new pre-outcome observable/intervention, while keeping P15 closed. Any fresh survivor must first pass source grounding and exact mature reduction before Debate or ProblemGate.",
+    "scientific_authority": false,
+    "authority": {
+      "debate": false,
+      "problem_gate": false,
+      "research_item": false,
+      "paper_design": false,
+      "method": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false
+    },
+    "screen_sha256": "1e63a0831228932f28b470bc06e9aeee696f69df55d79fd6c61c525833c7ae5b"
   }
 }

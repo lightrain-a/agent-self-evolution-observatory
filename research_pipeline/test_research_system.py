@@ -112,6 +112,25 @@ class ResearchSystemTest(unittest.TestCase):
         broken["ai4ai_strategy_reopen_contradiction"]["summary"]["scientific_reopen_authorized"]=1
         self.assertTrue(any("AI4AI strategy reopen" in error for error in validate_state(broken)))
 
+    def test_cross_failure_orthogonal_screen_is_embedded_and_zero_authority(self) -> None:
+        screen=self.state["longitudinal_cross_failure_orthogonal_screen"]
+        summary=screen["summary"]
+        self.assertEqual(screen["status"],"CROSS_FAILURE_ORTHOGONAL_SCREEN_ZERO_SURVIVOR")
+        self.assertEqual(summary["cross_failure_carriers"],3)
+        self.assertEqual(summary["reduced_before_debate"],3)
+        self.assertEqual(summary["survivors"],0)
+        self.assertEqual(summary["debate_eligible"],0)
+        self.assertEqual(summary["problem_gate_eligible"],0)
+        self.assertEqual(summary["provider_calls_authorized"],0)
+        self.assertEqual(summary["gpu_authorized"],0)
+        self.assertEqual(summary["new_external_claims"],0)
+        self.assertTrue(screen["policy"]["p15_remains_closed"])
+        self.assertTrue(screen["policy"]["pathbench_experiment_budget_remains_do_not_run"])
+        self.assertFalse(screen["scientific_authority"])
+        broken=copy.deepcopy(self.state)
+        broken["longitudinal_cross_failure_orthogonal_screen"]["summary"]["debate_eligible"]=1
+        self.assertTrue(any("cross-failure orthogonal screen" in error for error in validate_state(broken)))
+
     def test_failure_memory_projection_drift_is_detected(self) -> None:
         broken=copy.deepcopy(self.state)
         library=broken["failure_asset_library"]
