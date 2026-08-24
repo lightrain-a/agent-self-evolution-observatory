@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-23T07:54:45+00:00",
-  "source_revision": "3981c949828f9acc623498d0b4d5fad828cf6d41",
+  "generated_at": "2026-08-24T02:21:54+00:00",
+  "source_revision": "2203e14dc87606d9af74d4eaa8aebbe56370e193",
   "policy": {
     "research_item_is_primary_scientific_entity": true,
     "experiment_is_evidence_event_not_parallel_current_state": true,
@@ -7067,14 +7067,14 @@
       "paper_transition": {
         "paper_id": "AGENT-SAFETY-R9",
         "acceptance_paper_id": "AGENT-SAFETY-R9",
-        "status": "SUBMISSION_READY",
+        "status": "PREBUTTAL",
         "scientific_status": "READY",
         "blocked": false,
         "primary_next_action": {
-          "action_class": "NO_INTERNAL_ACTION",
-          "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
-          "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
-          "blocking_on": "",
+          "action_class": "EXTERNAL_EVIDENCE_REQUIRED",
+          "action": "Wait for or acquire the named external support asset, then rerun the same frozen internal readiness checks.",
+          "action_zh": "等待或取得已命名的外部支持资产，再按同一冻结规则重跑内部就绪检查。",
+          "blocking_on": "HUMAN_SEMANTIC_LABEL_EVIDENCE_REQUIRED",
           "machine_actionable": false,
           "scientific_authority": false,
           "experiment_authority": false,
@@ -7094,7 +7094,7 @@
         "blocking_on": "REOPEN_CONDITION",
         "reopen_condition_present": true,
         "paper_id": "AGENT-SAFETY-R9",
-        "paper_next_action_class": "NO_INTERNAL_ACTION",
+        "paper_next_action_class": "EXTERNAL_EVIDENCE_REQUIRED",
         "machine_actionable": false,
         "scientific_authority": false,
         "experiment_authority": false,

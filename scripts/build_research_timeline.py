@@ -1241,15 +1241,20 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
     registry_date = str(registry.get("generated_at") or "")[:10]
     research_date = str(research.get("generated_at") or "")[:10]
     dashboard_date = max((value for value in (latest_date, registry_date, research_date) if value), default="")
+    # Projection-only updates (for example a paper receipt on Monday) must not
+    # erase the weekly narrative when the committed timeline has no event in
+    # that newer calendar week.  Keep the dashboard freshness date, but anchor
+    # the weekly activity window to the latest actual timeline event.
+    week_end = latest_date or dashboard_date
     week_start = ""
     week_events: list[dict[str, Any]] = []
-    if dashboard_date:
-        latest_dt = datetime.strptime(dashboard_date, "%Y-%m-%d").date()
+    if week_end:
+        latest_dt = datetime.strptime(week_end, "%Y-%m-%d").date()
         start_dt = latest_dt - timedelta(days=latest_dt.weekday())
         week_start = start_dt.isoformat()
         week_events = [
             row for row in events
-            if week_start <= china_date(str(row.get("occurred_at"))) <= dashboard_date
+            if week_start <= china_date(str(row.get("occurred_at"))) <= week_end
         ]
 
     week_classes = Counter(str(row.get("event_class") or "system") for row in week_events)
@@ -1370,7 +1375,7 @@ def build_dashboard(timeline: dict[str, Any]) -> dict[str, Any]:
         "papers": paper_rows,
         "week": {
             "start_date": week_start,
-            "end_date": dashboard_date,
+            "end_date": week_end,
             "research_days": len(week_days),
             "events": len(week_events),
             "substantive_events": sum(count for cls, count in week_classes.items() if cls != "system"),

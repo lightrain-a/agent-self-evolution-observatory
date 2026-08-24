@@ -883,7 +883,20 @@ def validate_research_item_state(state):
     if by_code.get("E-7",{}).get("scientific_state") != "PAPER_READY" or (by_code.get("E-7",{}).get("paper_transition") or {}).get("paper_id") != "STRI" or (by_code.get("E-7",{}).get("paper_transition") or {}).get("status") != "SUBMISSION_READY": errors.append("E-7 must remain PAPER_READY scientifically and bind to STRI/SUBMISSION_READY in Paper Acceptance")
     if by_code.get("G-1",{}).get("scientific_state") != "HOLD" or by_code.get("G-1",{}).get("principle_dead_end_certified"): errors.append("G-1 broader research/replication program must remain reopenable HOLD")
     g1_paper = by_code.get("G-1",{}).get("paper_transition") or {}
-    if g1_paper.get("status") != "SUBMISSION_READY" or g1_paper.get("scientific_status") != "READY" or g1_paper.get("blocked") is not False: errors.append("G-1 bounded R9 PaperState must be READY / SUBMISSION_READY while the broader ResearchItem remains HOLD")
+    _, acceptance_by_id = paper_acceptance_state()
+    g1_acceptance = acceptance_by_id.get("AGENT-SAFETY-R9") or {}
+    expected_g1_blocked = g1_acceptance.get("scientific_status") == "CAUSAL_HOLD"
+    if not g1_acceptance:
+        errors.append("G-1 bounded R9 PaperState is missing from canonical Paper Acceptance")
+    elif (
+        g1_paper.get("paper_id") != "AGENT-SAFETY-R9"
+        or g1_paper.get("acceptance_paper_id") != "AGENT-SAFETY-R9"
+        or g1_paper.get("status") != g1_acceptance.get("current_state")
+        or g1_paper.get("scientific_status") != g1_acceptance.get("scientific_status")
+        or g1_paper.get("blocked") is not expected_g1_blocked
+        or dict(g1_paper.get("primary_next_action") or {}) != dict(g1_acceptance.get("primary_next_action") or {})
+    ):
+        errors.append("G-1 bounded R9 PaperState must follow the current canonical Paper Acceptance epoch while the broader ResearchItem remains HOLD")
     if any(bool((r.get("execution_authority") or {}).get("gpu")) for r in items): errors.append("ResearchItem projection cannot expose current GPU authority")
     if any(r.get("scientific_authority") is not False for r in experiments): errors.append("ExperimentRecord projection must remain zero scientific-transition authority")
     public_codes = set(codes)
@@ -962,8 +975,15 @@ def validate_paper_registry(registry, research_state):
         errors.append("legacy STRI evidence checklist must remain zero-debt")
     if paper.get("paper_stage") != "SUBMISSION_READY" or paper.get("submission_ready") is not True:
         errors.append(f"STRI must follow latest acceptance state SUBMISSION_READY with submission_ready=true, got {paper.get('paper_stage')}/{paper.get('submission_ready')}")
-    if safety.get("source_research_item") != "G-1" or safety.get("paper_stage") != "SUBMISSION_READY" or safety.get("scientific_status") != "READY" or safety.get("submission_ready") is not True:
-        errors.append("Agent Safety bounded R9 PaperState must be G-1 / READY / SUBMISSION_READY")
+    expected_safety = acceptance_by_id.get("AGENT-SAFETY-R9") or {}
+    expected_safety_ready = bool((expected_safety.get("latest_submission_readiness") or {}).get("submission_ready"))
+    if (
+        safety.get("source_research_item") != "G-1"
+        or safety.get("paper_stage") != expected_safety.get("current_state")
+        or safety.get("scientific_status") != expected_safety.get("scientific_status")
+        or safety.get("submission_ready") is not expected_safety_ready
+    ):
+        errors.append("Agent Safety bounded R9 PaperState must follow the current canonical Paper Acceptance state")
 
     expected_summary = (acceptance.get("ledger_index") or {}).get("summary") or {}
     summary = registry.get("summary") or {}

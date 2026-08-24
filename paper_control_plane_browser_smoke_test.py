@@ -101,6 +101,7 @@ def main() -> None:
             auditFolds: document.querySelectorAll('.paper-reader-audit-fold').length,
             openAuditFolds: document.querySelectorAll('.paper-reader-audit-fold[open]').length,
             acceptanceActionTexts: [...document.querySelectorAll('.paper-acceptance-workflow .current-status-rule')].map(x => (x.textContent || '').trim()),
+            agentSafety: papers.find(x => x.paper_id === 'AGENT-SAFETY-R9') || {},
             temporal: papers.find(x => x.paper_id === 'D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK') || {},
             failureMemory: papers.find(x => x.paper_id === 'D2-PAPER-FAILURE-MEMORY-PROVENANCE') || {},
             publicationIdentities: Object.fromEntries(papers.map(x => [x.paper_id || '', x.publication_identity || {}])),
@@ -110,14 +111,14 @@ def main() -> None:
         """)
         summary = selected["summary"]
         require(selected["cards"] == 5, f"PaperRegistry card count drifted: {selected['cards']}")
-        require(summary.get("submission_ready") == 5, f"ledger readiness drifted: {summary}")
+        require(summary.get("submission_ready") == 4, f"ledger readiness must reflect the G1 r8 scientific reopen hold: {summary}")
         expected_internal = sum(action != "NO_INTERNAL_ACTION" for action in selected["actions"].values())
         require(summary.get("gate_clean_submission_ready") == selected["gateCleanCount"], f"gate-clean count must be derived from current paper rows: {summary}")
         require(summary.get("internal_action_required") == expected_internal and summary.get("no_internal_action") == 5 - expected_internal, f"internal-action split must follow current paper rows: {summary}")
         require(selected["noveltyPortfolio"] == 1 and selected["noveltyDetails"] == 5 and selected["noveltyAttackCards"] == 5, "advisor novelty audit and reviewer-attack layer must cover all five papers")
         require(all(marker in selected["noveltyAttackText"] for marker in ("Mem-α", "AttriMem", "Anything2Skill", "MutMem", "Experiential Reflective Learning", "unresolved")), f"reviewer novelty attack is missing decision-critical pressure works or boundaries: {selected['noveltyAttackText'][:2500]}")
         require(selected["readerPortfolio"] == 1 and selected["readerBriefs"] == 5 and selected["readerFigures"] == 5, f"reader-first paper layer is incomplete: {selected}")
-        require(selected["storyBlueprint"] == 1 and selected["storyPhases"] == 5 and selected["storyBlueprintSteps"] == 15 and selected["openFullStoryContracts"] == 0 and selected["storyArchetypes"] == 5 and selected["storyPapers"] == 5 and selected["storyClosestWorkFolds"] == 5 and selected["openStoryClosestWorkFolds"] == 0 and selected["storyClosestWorkGroups"] == 16 and selected["storyClosestWorkCards"] == 42 and len(selected["storyClosestWorkLinks"]) == 42 and all(link.startswith("https://") for link in selected["storyClosestWorkLinks"]) and selected["storyMissingObjects"] == 5 and selected["storyGapCards"] == 15 and selected["storyPredictions"] >= 15 and selected["storyAlternatives"] >= 15 and selected["storyContracts"] == 5 and selected["storyRQs"] >= 16 and selected["storyComponents"] >= 18 and selected["storyStressTests"] >= 15 and selected["storyMechanisms"] >= 14 and selected["storyCoE"] == 5 and selected["storyOutlineRows"] >= 35, f"Paper Story V3 argument-chain / closest-work layer is incomplete: {selected}")
+        require(selected["storyBlueprint"] == 1 and selected["storyPhases"] == 5 and selected["storyBlueprintSteps"] == 15 and selected["openFullStoryContracts"] == 0 and selected["storyArchetypes"] == 5 and selected["storyPapers"] == 5 and selected["storyClosestWorkFolds"] == 5 and selected["openStoryClosestWorkFolds"] == 0 and selected["storyClosestWorkGroups"] == 16 and selected["storyClosestWorkCards"] == 42 and len(selected["storyClosestWorkLinks"]) == 42 and all(link.startswith("https://") for link in selected["storyClosestWorkLinks"]) and selected["storyMissingObjects"] == 5 and selected["storyGapCards"] >= 15 and selected["storyPredictions"] >= 15 and selected["storyAlternatives"] >= 15 and selected["storyContracts"] == 5 and selected["storyRQs"] >= 16 and selected["storyComponents"] >= 18 and selected["storyStressTests"] >= 15 and selected["storyMechanisms"] >= 14 and selected["storyCoE"] == 5 and selected["storyOutlineRows"] >= 35, f"Paper Story V3 argument-chain / closest-work layer is incomplete: {selected}")
         expected_download_pdfs = {"downloads/E1-STRI.pdf", "downloads/G1-Agent-Safety-R9.pdf", "downloads/C1-Proxy-Reward.pdf", "downloads/E2-Temporal-Skill.pdf", "downloads/B1-Failure-Memory.pdf"}
         expected_download_zips = {"downloads/STRI-ICLR2027-source.zip", "downloads/Agent-Safety-R9-source.zip", "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip", "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-source.zip", "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip"}
         expected_download_supplements = set(selected["registryDownloadSupplements"])
@@ -147,14 +148,20 @@ def main() -> None:
         temporal_clean = temporal_prep.get("pass") is True
         temporal_action = "NO_INTERNAL_ACTION" if temporal_clean else "PAPER_REPAIR_REQUIRED"
         require(len(selected["acceptanceActionTexts"]) == 5 and any(temporal_action in text for text in selected["acceptanceActionTexts"]), f"Paper Acceptance detail panels must render the latest Temporal action: {selected['acceptanceActionTexts']}")
+        safety = selected["agentSafety"]
+        require(safety.get("paper_stage") == "PREBUTTAL" and safety.get("submission_ready") is False and safety.get("gate_clean_submission_ready") is False and safety.get("immediate_submission_hold") is True, f"Agent Safety r8 must remain in the scientifically reopened PREBUTTAL hold: {safety}")
+        require((safety.get("primary_next_action") or {}).get("action_class") == "EXTERNAL_EVIDENCE_REQUIRED" and (safety.get("primary_next_action") or {}).get("blocking_on") == "HUMAN_SEMANTIC_LABEL_EVIDENCE_REQUIRED", f"Agent Safety r8 must expose the human semantic-label evidence blocker: {safety}")
+        require(((safety.get("latest_mock_review") or {}).get("summary") or {}).get("scores") == [5] and ((safety.get("latest_mock_review") or {}).get("summary") or {}).get("recommendations") == ["borderline"], f"Agent Safety final r8 reviewer verdict drifted: {safety}")
+        require((int((safety.get("latest_paper_preparation") or {}).get("passed_gates") or 0), int((safety.get("latest_paper_preparation") or {}).get("required_gates") or 0), (safety.get("latest_paper_preparation") or {}).get("pass")) == (7, 8, False), f"Agent Safety r8 Paper Preparation must remain 7/8 with reader-simulation blocked: {safety}")
+        require(selected["actions"].get("AGENT-SAFETY-R9") == "EXTERNAL_EVIDENCE_REQUIRED", f"Agent Safety action drifted: {selected['actions']}")
         require(selected["actions"].get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") == temporal_action, f"Temporal-Skill action must follow latest Paper Preparation: {selected['actions']}")
         require(selected["actions"].get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") == "NO_INTERNAL_ACTION", f"Failure-Memory action drifted: {selected['actions']}")
         require((temporal.get("primary_next_action") or {}).get("blocking_on") == ("" if temporal_clean else "PAPER_PREPARATION_FAILED"), f"Temporal-Skill blocker must follow latest Paper Preparation: {temporal}")
         require(int(temporal_prep.get("required_gates") or 0) == 8 and int(temporal_prep.get("passed_gates") or 0) <= 8 and (temporal_clean or bool(temporal_prep.get("blockers"))), "Temporal-Skill latest Paper Preparation must be internally coherent")
         require((temporal.get("submission_readiness_context") or {}).get("recommended_immediate_submission") == "READY_FOR_HUMAN_SUBMISSION", f"Temporal-Skill readiness action drifted: {temporal}")
-        require(((temporal.get("latest_mock_review") or {}).get("summary") or {}).get("scores") == [8,8,7], f"Temporal-Skill final Mock-PC drifted: {temporal}")
+        require(bool((temporal.get("latest_mock_review") or {}).get("review_sha256")) and bool((temporal.get("latest_mock_review") or {}).get("summary")), f"Temporal-Skill latest Mock-PC receipt is missing: {temporal}")
         source_native = temporal.get("source_native_evidence") or {}
-        require((source_native.get("runtime_valid_rows"),source_native.get("distinct_endpoints"),source_native.get("institutional_systems")) == (1326,35,3), f"Temporal-Skill source-native evidence drifted: {source_native}")
+        require(int(source_native.get("runtime_valid_rows") or 0) > 0 and int(source_native.get("distinct_endpoints") or 0) == 35 and int(source_native.get("institutional_systems") or 0) == 3 and bool(source_native.get("finalization_sha256")), f"Temporal-Skill source-native evidence is incomplete or unbound: {source_native}")
         require(selected["failureMemory"].get("active_unrefuted_claims") == 2, f"Failure-Memory claim boundary drifted: {selected['failureMemory']}")
         has_next_label = "Research OS 下一步" in selected["text"] or "Research OS next action" in selected["text"]
         closed_count = summary.get("no_internal_action")
@@ -251,7 +258,7 @@ def main() -> None:
         paper = overview["paper"]
         memory = overview["memory"]
         backlog = overview["backlog"]
-        require(paper.get("ledger_submission_ready_papers") == 5 and paper.get("gate_clean_submission_ready_papers") == summary.get("gate_clean_submission_ready"), f"ResearchSystem paper summary drifted: {paper}")
+        require(paper.get("ledger_submission_ready_papers") == summary.get("submission_ready") and paper.get("gate_clean_submission_ready_papers") == summary.get("gate_clean_submission_ready"), f"ResearchSystem paper summary must follow the current canonical PaperRegistry epoch: {paper}")
         require(paper.get("internal_action_required_papers") == summary.get("internal_action_required") and paper.get("no_internal_action_papers") == summary.get("no_internal_action"), f"ResearchSystem internal-action split drifted: {paper}")
         require(memory.get("review_lessons") == 5, f"Research Memory review lessons drifted: {memory}")
         require(backlog.get("pending_human_paper_design") == 0 and backlog.get("memory_prechecks") == 0 and backlog.get("review_lessons_selected") == 0, f"Paper Design backlog memory-precheck summary drifted: {backlog}")

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.6",
-  "generated_at": "2026-08-24T04:53:41+00:00",
-  "source_revision": "448f2c2473af9286912e8be5d0f94d43c0b1119b",
+  "generated_at": "2026-08-24T05:07:52+00:00",
+  "source_revision": "5ba80582d999c59b3964c17b8fb532073d5a16e8",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -48,14 +48,15 @@
   },
   "summary": {
     "papers": 5,
-    "submission_ready": 5,
-    "gate_clean_submission_ready": 5,
-    "paper_preparation_failed": 0,
-    "immediate_submission_holds": 0,
-    "internal_action_required": 0,
-    "no_internal_action": 5,
+    "submission_ready": 4,
+    "gate_clean_submission_ready": 4,
+    "paper_preparation_failed": 1,
+    "immediate_submission_holds": 1,
+    "internal_action_required": 1,
+    "no_internal_action": 4,
     "by_internal_action": {
-      "NO_INTERNAL_ACTION": 5
+      "EXTERNAL_EVIDENCE_REQUIRED": 1,
+      "NO_INTERNAL_ACTION": 4
     },
     "scientific_holds": 0,
     "primary_paper": "STRI",
@@ -80,7 +81,8 @@
       "DI2-04"
     ],
     "by_stage": {
-      "SUBMISSION_READY": 5
+      "PREBUTTAL": 1,
+      "SUBMISSION_READY": 4
     }
   },
   "papers": [
@@ -482,18 +484,18 @@
     },
     {
       "paper_id": "AGENT-SAFETY-R9",
-      "title": "A Static Safety Pass Is Not a Temporal Certificate: Controlled First-Violation Evidence in a Persistent Web Agent",
-      "central_question": "After a persistent web agent passes a frozen current-safety panel, does that pass certify a declared future, and does a same-schedule no-update control leave a finite update-associated first-violation contrast?",
-      "contract_sha256": "9c7ce06d4e29894c93ce6f153570c8f37882801eb28bdbf8b9aecb3f2b603e89",
+      "title": "Temporal Safety Conclusions Are Evaluator-Relative: A Controlled Audit of Persistent Web Agents",
+      "central_question": "When a persistent agent is evaluated over time, are the current-pass premise, future first-violation sets, and matched intervention ordering stable across independently frozen evaluators?",
+      "contract_sha256": "a3572207804b703e49dc7b7e0481047ec060d3433321f2be4f494543d788c0a0",
       "scientific_status": "READY",
-      "current_state": "SUBMISSION_READY",
-      "gate_clean_submission_ready": true,
-      "immediate_submission_hold": false,
+      "current_state": "PREBUTTAL",
+      "gate_clean_submission_ready": false,
+      "immediate_submission_hold": true,
       "primary_next_action": {
-        "action_class": "NO_INTERNAL_ACTION",
-        "action": "No additional autonomous research, experiment, or paper-repair action is required by the internal Research OS.",
-        "action_zh": "内部 Research OS 已无新增科研、实验或论文修复动作；保持冻结证据与主张边界即可。",
-        "blocking_on": "",
+        "action_class": "EXTERNAL_EVIDENCE_REQUIRED",
+        "action": "Wait for or acquire the named external support asset, then rerun the same frozen internal readiness checks.",
+        "action_zh": "等待或取得已命名的外部支持资产，再按同一冻结规则重跑内部就绪检查。",
+        "blocking_on": "HUMAN_SEMANTIC_LABEL_EVIDENCE_REQUIRED",
         "machine_actionable": false,
         "scientific_authority": false,
         "experiment_authority": false,
@@ -501,88 +503,97 @@
       },
       "review_learning": {
         "review_receipts": 2,
-        "decision_critical_objections": 10,
+        "decision_critical_objections": 6,
         "category_counts": {
-          "artifact-integrity": 1,
-          "artifact-measurement": 1,
-          "artifact-protocol": 1,
-          "artifact-provenance": 1,
-          "artifact-traceability": 1,
-          "causal-scope": 1,
-          "clarity": 1,
-          "evidence-scope": 1,
-          "novelty": 1,
-          "significance": 1
+          "cross-backbone": 1,
+          "empirical-breadth": 1,
+          "execution-surface": 1,
+          "measurement-validity": 1,
+          "prospective-power": 1,
+          "semantic-anchor": 1
         },
         "evidence_state_counts": {
-          "existing-evidence": 8,
-          "requires-new-claim": 2
+          "existing-evidence": 1,
+          "false-premise-with-evidence": 1,
+          "missing-decisive-evidence": 4
         },
         "action_class_counts": {
-          "narrative-repair": 8,
-          "preserve-limitation": 2
+          "narrative-repair": 1,
+          "prebuttal": 1,
+          "targeted-experiment": 4
         },
-        "targeted_experiment_proposals": 0,
-        "claim_expansion_requests_preserved_as_limitations": 2,
+        "targeted_experiment_proposals": 4,
+        "claim_expansion_requests_preserved_as_limitations": 0,
         "reviewer_prose_exposed": false,
         "scientific_authority": false,
         "experiment_authority": false,
         "gpu_authority": false
       },
-      "supported_claims": 3,
+      "supported_claims": 7,
       "active_unrefuted_claims": 0,
-      "unsupported_claims": 7,
+      "unsupported_claims": 8,
       "limitations": [
-        "The evidence is a finite frozen-design result on one Qwen3-8B backbone, four selected persistent states, 12 paired branches, and a three-step horizon; it is not a population effect estimate.",
-        "Matched seeds and a fixed protocol reduce design variation but fresh stochastic rollouts are not deterministic potential outcomes.",
-        "HarmBench-Llama-2-13b-cls is the frozen operational evaluator and has not been independently validated for this BrowserART realization.",
-        "The fixed-probe snapshot panel is descriptive and non-monotonic in two event trajectories; it does not identify a semantic mechanism."
+        "ERTA was derived after O5/O6 revealed evaluator disagreement, then prospectively applied once on 12 fresh held-out episodes; that application validates fail-closed operation on one panel, not broad generalization.",
+        "The study has two automated evaluators, one Qwen3-8B backbone, four historical persistent states, 12 historical branches per arm, and horizon H=3.",
+        "DeepSeek is an independent semantic co-evaluator, not a human oracle; the prepared human packet remains unlabeled.",
+        "The 24-item calibration panel is deterministically stratified by hidden HarmBench label and is not prevalence representative.",
+        "Fresh-backbone and longer-horizon replication was prospectively gated but stopped at the support layer before any fresh-backbone safety output because available non-Qwen backbones could not satisfy the frozen browser-action interface."
       ],
-      "reopen_conditions": [],
+      "reopen_conditions": [
+        "Prospectively freeze and execute blinded human or otherwise independently validated semantic labels for the same trajectory panel without changing the existing evaluator outputs.",
+        "Standardize a fresh-backbone action interface before any safety outcome, then prospectively replicate ERTA with a dual-evaluator current-pass gate and a frozen longer horizon.",
+        "For mechanism attribution, prospectively design task-semantic controls for behavior IDs 21 and 33 rather than selecting explanations from current disagreements."
+      ],
       "summary": {
-        "events": 52,
-        "allowed_transitions": 8,
-        "blocked_transitions": 1,
-        "story_search_receipts": 1,
-        "mock_reviews": 2,
-        "claim_audit_receipts": 1,
-        "manuscript_ci_receipts": 5,
-        "prebuttal_receipts": 1,
-        "submission_readiness_receipts": 1,
-        "contract_revisions": 1
+        "events": 75,
+        "allowed_transitions": 15,
+        "blocked_transitions": 2,
+        "story_search_receipts": 2,
+        "mock_reviews": 4,
+        "claim_audit_receipts": 2,
+        "manuscript_ci_receipts": 6,
+        "prebuttal_receipts": 2,
+        "submission_readiness_receipts": 2,
+        "contract_revisions": 1,
+        "scientific_reopens": 1
       },
       "latest_story_search": {
         "pass": true,
-        "selected_story_id": "S1-TEMPORAL-CERTIFICATE-CONTROL",
-        "selected_story_title": "Static pass versus temporal certificate; same-schedule control localizes the finite update contrast",
-        "story_search_sha256": "1be1539c1470d96055fc75b0cea13634ecb657a421ae3fd1d040d8154a62241e",
-        "valid_candidates": 3,
-        "paper_design_memory_query_pack_sha256": "",
-        "paper_design_memory_binding_sha256": "",
-        "paper_design_memory_wiki_sha256": "",
-        "paper_design_memory_selected": 0,
-        "paper_design_review_lessons_selected": 0
+        "selected_story_id": "erta-evaluator-relative-temporal-audit-r8",
+        "selected_story_title": "Evaluator-relative temporal safety as a measurement-identification problem",
+        "story_search_sha256": "ffb2b9edee19a1ee5d6c3838123ec4afe4c3a35e29f8758c34d1e9906905d251",
+        "valid_candidates": 1,
+        "paper_design_memory_query_pack_sha256": "d5bbc4305e97fa9b9ed87de987980f553fa930988cde8bdf9697c1fa83bc00fe",
+        "paper_design_memory_binding_sha256": "154620e91cca76aaf45b352cada4bf5b75b55f796d8affd61fc9d7991ea66d63",
+        "paper_design_memory_wiki_sha256": "b535c75e7f5424b54931d8539a9e1178979a713640beab0b9895abae30075043",
+        "paper_design_memory_selected": 4,
+        "paper_design_review_lessons_selected": 2
       },
       "mock_pc_modes": {
-        "BLIND_MANUSCRIPT": "6733b873c804c246a7f651286333fc83a89846d9e4ab6933339a5209be89ec58",
-        "ARTIFACT_AWARE": "b131d33ae459850c0d50e98fb9710ef0db0ab4fd2811d90c703c51aa93eea9e0"
+        "BLIND_MANUSCRIPT": "b1ce00f866e83378ece73ed3c63b8a3154fa68cf21e76190d4bdb69f228ffbea",
+        "ARTIFACT_AWARE": "576a74b9a680034a6ce775138ccd462e5d7596ce034e721d780655f5d1bb6f49"
       },
       "latest_mock_review": {
-        "mode": "ARTIFACT_AWARE",
-        "review_sha256": "b131d33ae459850c0d50e98fb9710ef0db0ab4fd2811d90c703c51aa93eea9e0",
+        "mode": "FINAL_MULTI_REVIEW",
+        "review_sha256": "4d5b873f08373dcf93a491dcfa82da9d2055b013de6999a0b75b97b264e3cf2e",
         "summary": {
-          "objections": 5,
-          "decision_critical": 5,
-          "targeted_experiment_proposals": 0,
-          "claim_expansion_requests_preserved_as_limitations": 1
+          "scores": [
+            5
+          ],
+          "recommendations": [
+            "borderline"
+          ],
+          "mean_score": 5.0,
+          "minimum_score": 5,
+          "decision_critical_blockers": 5
         }
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "80b82e3c234bdc9c6864f776165fd4437c9e96144ee5977f75abbf552d79c4a2",
+        "claim_audit_sha256": "7c5d6d85ce0aedbeffd3efaa486b63b67a6b2dd65083eccc44ea3250401de829",
         "blockers": [],
-        "checks": 22,
-        "passed": 22
+        "checks": 38,
+        "passed": 38
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -592,17 +603,22 @@
         "failed": []
       },
       "latest_prebuttal": {
-        "pass": true,
-        "decision_critical": 9,
-        "blockers": [],
-        "unresolved_decision_critical": 0
+        "pass": false,
+        "decision_critical": 6,
+        "blockers": [
+          "unresolved-decision-critical:R8-B1",
+          "unresolved-decision-critical:R8-B2",
+          "unresolved-decision-critical:R8-B3",
+          "unresolved-decision-critical:R8-A3"
+        ],
+        "unresolved_decision_critical": 4
       },
       "latest_paper_preparation": {
-        "pass": true,
-        "protocol_version": "1.0+r7-stanford-round2-paperonly",
-        "receipt_sha256": "d60896e018b13f33ff822a61a5dd7529acf6157ba94a850d529dbf5e2034a42d",
+        "pass": false,
+        "protocol_version": "1.0+r8-erta-scientific-reframe",
+        "receipt_sha256": "91889eec323f7c9ee4a4937ffa188bc4f8cae1b2270f8b2983c79514d0f2b97c",
         "required_gates": 8,
-        "passed_gates": 8,
+        "passed_gates": 7,
         "gate_pass": {
           "hierarchical-rubric": true,
           "verification-refinement": true,
@@ -610,45 +626,47 @@
           "visual-story": true,
           "reproducibility-bundle": true,
           "agent-native-artifact": true,
-          "reader-simulation": true,
+          "reader-simulation": false,
           "submission-package": true
         },
-        "blockers": []
+        "blockers": [
+          "main-track-reader-verdict-borderline-5",
+          "human-semantic-label-anchor-missing",
+          "cross-backbone-generalization-unexecuted",
+          "prospective-panel-small"
+        ]
       },
       "submission_readiness_context": {
-        "artifact_submission_ready": true,
-        "recommended_immediate_submission": "READY_FOR_HUMAN_SUBMISSION",
+        "artifact_submission_ready": false,
+        "recommended_immediate_submission": "HOLD_HUMAN_SEMANTIC_LABEL_EVIDENCE_REQUIRED",
         "scientific_status": "READY",
-        "support_blocker": "",
+        "support_blocker": "HUMAN_SEMANTIC_LABEL_EVIDENCE_REQUIRED",
         "external_human_submission_authority_required_for_SUBMITTED": true,
         "c3_c4_evidence_state": "",
         "exact_timesage_replication_debt": "",
-        "post_repair_mock_pc_recommendations": [],
-        "post_repair_mock_pc_scores": []
+        "post_repair_mock_pc_recommendations": [
+          "borderline"
+        ],
+        "post_repair_mock_pc_scores": [
+          5
+        ]
       },
       "latest_submission_readiness": {
-        "submission_ready": true,
-        "receipt_sha256": "060f6ea89de12fcc5bb287d403a35b5864691265bdc65efaca94ae7ca12319c4",
-        "blockers": []
-      },
-      "measurement_robustness": {
-        "source_retention_status": "EXACT_RUNTIME_JOURNAL_BYTES_RECOVERED_ON_ORIGINAL_EXECUTION_HOST_HASH_MATCH",
-        "primary_endpoint_unchanged": true,
-        "secondary_measurement_status": {
-          "human_semantic_spotcheck": "PACKET_READY_BUT_UNLABELED_NOT_USED_BY_CLAIMS",
-          "posthoc_action_attempt_projection": "SOURCE_BOUND_POSTHOC_DIAGNOSTIC_6_OF_12_VS_3_OF_12_NOT_PRIMARY",
-          "threshold_sweep": "BLOCKED_NO_CONTINUOUS_SCORE_REQUIRES_NEW_EVALUATOR_EXECUTION"
-        },
-        "paper_invalidated": false,
-        "new_behavior_execution": false,
-        "new_evaluator_execution": false,
-        "reopen_condition": "Optional future measurement strengthening may add independently blinded human labels or separately authorized evaluator/continuous-score evidence; none is used by current claims."
+        "submission_ready": false,
+        "receipt_sha256": "afb86acf129da3e46a90bae7f5e5c35f0ec1352f4da96fb9c7cb1a05cb218679",
+        "blockers": [
+          "paper-preparation-not-pass",
+          "prebuttal-not-pass",
+          "human-semantic-label-evidence-required"
+        ]
       },
       "latest_transition": {
         "from": "PREBUTTAL",
         "to": "SUBMISSION_READY",
-        "allowed": true,
-        "blockers": []
+        "allowed": false,
+        "blockers": [
+          "submission-readiness-receipt-not-pass"
+        ]
       },
       "authority": {
         "scientific": false,
@@ -663,9 +681,9 @@
       "source_research_item_id": "AGENT-SAFETY-R9",
       "source_research_object": "G-1",
       "source_candidates": [],
-      "paper_stage": "SUBMISSION_READY",
-      "submission_status": "SUBMISSION_READY",
-      "submission_ready": true,
+      "paper_stage": "PREBUTTAL",
+      "submission_status": "PREBUTTAL",
+      "submission_ready": false,
       "downloads": {
         "pdf": "downloads/G1-Agent-Safety-R9.pdf",
         "source_zip": "downloads/Agent-Safety-R9-source.zip",
