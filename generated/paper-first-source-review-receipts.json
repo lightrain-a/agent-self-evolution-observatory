@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-24T04:45:12Z",
+  "generated_at": "2026-08-24T04:50:56Z",
   "receipts": [
     {
       "run_id": "external-fresh-intake-20260818-r1",
@@ -374,6 +374,42 @@
       ],
       "review_artifact": "generated/paper-first-external-fresh-exact-16-review-20260824-r5.json",
       "review_artifact_sha256": "33b148be36d9c178ce9cec19a944464b6716fd6b70ab551f13df9350e26afe93",
+      "review_complete": true,
+      "identity_verified_count": 16,
+      "provider_model_calls": 0,
+      "scientific_authority": false,
+      "authority": {
+        "candidate_generation": false,
+        "problem": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      }
+    },
+    {
+      "run_id": "external-fresh-exact-16-review-20260824-r6",
+      "status": "EXTERNAL_FRESH_INTAKE_REVIEWED",
+      "source_refs": [
+        "arXiv:2607.11053",
+        "arXiv:2607.11126",
+        "arXiv:2607.11228",
+        "arXiv:2607.11444",
+        "arXiv:2607.11787",
+        "arXiv:2607.12463",
+        "arXiv:2607.12747",
+        "arXiv:2607.12875",
+        "arXiv:2607.12894",
+        "arXiv:2607.13162",
+        "arXiv:2607.13960",
+        "arXiv:2607.13988",
+        "arXiv:2607.14145",
+        "arXiv:2607.14186",
+        "arXiv:2607.14187",
+        "arXiv:2607.14396"
+      ],
+      "review_artifact": "generated/paper-first-external-fresh-exact-16-review-20260824-r6.json",
+      "review_artifact_sha256": "678f4156584fe406d7afcd8960e6fa44f9b5fbc3025ae7b6dc470cea9d2a9458",
       "review_complete": true,
       "identity_verified_count": 16,
       "provider_model_calls": 0,
