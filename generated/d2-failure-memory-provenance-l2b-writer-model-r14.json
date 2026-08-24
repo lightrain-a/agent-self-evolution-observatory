@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-WRITER-MODEL-R14",
+  "recorded_date": "2026-08-24",
+  "status": "WRITER_MODEL_REALIZATION_CONTENT_ADDRESSED_NO_INFERENCE",
+  "role": "PRE_OUTCOME_SUPPORT_ONLY",
+  "parent_r13": {
+    "contract": "generated/d2-failure-memory-provenance-l2b-writer-input-contract-r13.json",
+    "sha256": "ffbe9baad45ae9e79b9c3eddb8eb54bf57734d6095810e97a45d3cc4b452aa8f",
+    "source_tasks": 36,
+    "writer_model_family": "Qwen2.5-32B",
+    "temperature": 0.0
+  },
+  "prospective_writer_realization": {
+    "runtime": "Ollama OpenAI-compatible local service",
+    "ollama_version": "ollama version is 0.18.2",
+    "model_tag": "qwen2.5:32b",
+    "manifest_digest": "sha256:9f13ba1299afea09d9a956fc6a85becc99115a6d596fae201a5487a03bdc4368",
+    "manifest_sha256_verified": true,
+    "format": "gguf",
+    "family": "qwen2",
+    "parameter_size": "32.8B",
+    "parameter_count": 32763876352,
+    "quantization": "Q4_K_M",
+    "model_layer_digest": "sha256:eabc98a9bcbfce7fd70f3e07de599f8fda98120fefed5881934161ede8bd1a41",
+    "all_manifest_blobs_sha256_verified": true,
+    "manifest_layers": [
+      {
+        "media_type": "application/vnd.docker.container.image.v1+json",
+        "digest": "sha256:833f525ce183cdb6a00e35838035c46507fcd08332d6a753aa39dbb77d68e2a1",
+        "size_bytes": 488,
+        "sha256_verified": true
+      },
+      {
+        "media_type": "application/vnd.ollama.image.model",
+        "digest": "sha256:eabc98a9bcbfce7fd70f3e07de599f8fda98120fefed5881934161ede8bd1a41",
+        "size_bytes": 19851336288,
+        "sha256_verified": true
+      },
+      {
+        "media_type": "application/vnd.ollama.image.system",
+        "digest": "sha256:66b9ea09bd5b7099cbb4fc820f31b575c0366fa439b08245566692c6784e281e",
+        "size_bytes": 68,
+        "sha256_verified": true
+      },
+      {
+        "media_type": "application/vnd.ollama.image.template",
+        "digest": "sha256:eb4402837c7829a690fa845de4d7f3fd842c2adee476d5341da8a46ea9255175",
+        "size_bytes": 1482,
+        "sha256_verified": true
+      },
+      {
+        "media_type": "application/vnd.ollama.image.license",
+        "digest": "sha256:832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+        "size_bytes": 11343,
+        "sha256_verified": true
+      }
+    ],
+    "show_metadata_sha256": "e6e56810c471a24dace665dc07bc05cfbbef484969134c84468ab22a02d590e5",
+    "openai_v1_models_registry_sha256": "6703863be807a9da22ed17db2796572f6e3acea598935ac04571e0d0bc69c89c",
+    "openai_v1_model_ids": [
+      "qwen2.5:32b"
+    ]
+  },
+  "historical_relationship": {
+    "R6_model_family_match": true,
+    "R6_temperature_match": true,
+    "R6_exact_binary_or_quantization_was_archived": false,
+    "claim_exact_binary_identity_with_R6": false,
+    "claim_exact_quantization_identity_with_R6": false,
+    "prospective_realization_label": "QWEN25_32B_Q4_K_M_OLLAMA_MANIFEST_9F13BA12",
+    "interpretation": "This is a new prospectively pinned realization of the R6 Qwen2.5-32B family, not a recovered binary-identical R6 writer artifact."
+  },
+  "writer_execution_policy": {
+    "uniform_same_model_for_all_36_sources": true,
+    "temperature": 0.0,
+    "request_count_if_scientifically_authorized": 36,
+    "prompt_and_compact_trace_inputs_frozen_by_R13": true,
+    "automatic_model_or_quantization_substitution_forbidden": true,
+    "first_complete_parseable_response_frozen": true,
+    "semantic_retry_or_prompt_change_forbidden": true
+  },
+  "openai_compatible_transport_preflight": {
+    "model_registry_endpoint_checked": true,
+    "model_visible_as": "qwen2.5:32b",
+    "chat_completion_called": false,
+    "generation_or_embedding_called": false
+  },
+  "execution_gate": {
+    "writer_inputs_frozen": true,
+    "exact_writer_model_artifact_bound": true,
+    "writer_model_transport_preflight_pass": true,
+    "writer_calls_executed": 0,
+    "writer_calls_permitted": false,
+    "exact_memory_bytes_bound": false,
+    "downstream_l2_outcomes_permitted": false,
+    "scientific_authority": false,
+    "experiment_model_call_authority": false
+  },
+  "scientific_verdict": "NO_VERDICT_MODEL_REALIZATION_ONLY",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_calls": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "gpu": false,
+    "submission": false
+  }
+}
