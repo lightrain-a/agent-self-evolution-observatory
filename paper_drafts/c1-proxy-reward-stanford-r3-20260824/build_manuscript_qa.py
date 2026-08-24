@@ -7,12 +7,14 @@ import subprocess
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[1]
 SRC = HERE / "source"
 DIAG = json.loads((HERE / "existing-evidence-diagnostics.json").read_text())
 O5 = json.loads((HERE / "o5-manuscript-evidence.json").read_text())
 O6 = json.loads((HERE / "o6-final-evidence.json").read_text())
 O6_REDUCTION = json.loads((HERE / "o6-full-bank-corruption-reduction.json").read_text())
 CHRONOLOGY = json.loads((HERE / "f2r1-chronology-receipt.json").read_text())
+OPTIMIZATION = json.loads((HERE / "daytime-story-optimization-contract.json").read_text())
 
 
 def sha(path: Path) -> str:
@@ -39,6 +41,23 @@ def main() -> None:
 
     checks = {}
     checks["abstract_150_220"] = 150 <= approx_words(abstract) <= 220
+    checks["scoped_title"] = "\\title{Reward Errors Become Persistent State: A Controlled Intervention in Reward-Conditioned Agent Memory}" in main_tex
+    checks["single_chain_story"] = all(x in intro for x in ["The evidence supports one causal chain", "Contribution and closest-work boundary", "load-bearing pieces"])
+    checks["completion_conditioning_in_setup"] = all(x in setup for x in ["completion-conditioned estimand", "conditional on the four complete pairs", "condition-dependent provider completion cannot be ruled out"])
+    main_scientific_text = "\n".join([abstract, intro, setup, f0, control, downstream, limits])
+    checks["no_research_os_stage_headings_in_main"] = all(x not in main_scientific_text for x in ["\\section{F0:", "\\section{C4:", "reviewer-requested", "Stanford-targeted", "Post-ready"])
+    checks["bounded_consequence_not_top_level_claim"] = all(x in main_scientific_text for x in ["bounded consequence analysis", "not an empirical corruption sweep", "no claim of", "general law of reward-corruption variance"])
+    checks["daytime_optimization_contract_bound"] = (
+        OPTIMIZATION["status"] == "FROZEN_PAPER_ONLY_OPTIMIZATION"
+        and OPTIMIZATION["new_scientific_provider_calls"] == 0
+        and OPTIMIZATION["new_rollouts"] == 0
+        and OPTIMIZATION["claim_expansion"] is False
+        and len(OPTIMIZATION["manuscript_actions"]) == 10
+    )
+    story_text = (REPO / "paper-story-reward-memory.js").read_text()
+    reader_text = (REPO / "paper-reader-data.js").read_text()
+    checks["paper_story_current_boundary"] = all(x in story_text for x in ["GLM-5.3", "0.140625", "fresh no-memory control", "top-1 retrieval", "paired completion"])
+    checks["paper_reader_current_boundary"] = all(x in reader_text for x in ["GLM-5.3", "0.140625", "No-memory branch location", "provider-incomplete failure arms"])
     order = [main_tex.index(x) for x in [
         "sections/01_intro", "sections/05_related", "sections/02_mechanism", "sections/02b_setup",
         "sections/03_f0", "sections/03a_prompt_control", "sections/04_variance_protocol", "sections/06_limitations_conclusion"
@@ -67,7 +86,7 @@ def main() -> None:
     checks["provider_missingness_explicit"] = (
         DIAG["execution_accounting"]["f0_writer_provider_failures"] == 2
         and DIAG["claim_boundary"]["provider_missingness_resolved"] is False
-        and all(x in all_text for x in ["failure-label arm", "ArkResponseStateError", "do not extrapolate"])
+        and all(x in all_text for x in ["failure-label", "ArkResponseStateError", "conditional on paired completion"])
     )
     checks["no_memory_boundary_explicit"] = (
         O5["execution_accounting"]["recovery_scientifically_usable_units"] == 32
@@ -103,9 +122,9 @@ def main() -> None:
         and O6_REDUCTION["symbolic_factorization"]["multi_memory_interaction_identifiable_under_released_top1_mechanism"] is False
         and O6_REDUCTION["economy_decision"]["new_provider_calls_authorized"] == 0
         and O6_REDUCTION["relationship_to_existing_evidence"]["current_fixed_evidence_prompt_byte_equivalent_to_source_reasoningbank_wrapper"] is False
-        and all(x in limits for x in ["top-$1$", "threshold 0.3", "all other mask bits are inert", "stop this sweep by matched simplification", "Source-faithful retrieval-wrapper"])
+        and all(x in limits for x in ["top-$1$", "threshold 0.3", "nonselected corruption-mask bits are therefore inert", "different retrieval substrate", "transport debt"])
     )
-    checks["semantic_claim_not_expanded"] = "not an embedding" in all_text or "not embedding" in all_text
+    checks["semantic_claim_not_expanded"] = "embedding-semantic claim" in all_text and "coarse diagnostics" in limits
     checks["interaction_not_predictor"] = "predictive transfer model" in all_text and "84.1\\%" in all_text
     checks["writer_generalization_boundary"] = (
         O6["claim_boundary"]["terminal_cross_writer_generalization_supported"] is False
@@ -136,12 +155,12 @@ def main() -> None:
         and O6["execution_accounting"]["repair_4096_writer_calls"] == 8
         and O6["execution_accounting"]["stage2_terminal_calls"] == 256
         and O6["execution_accounting"]["o6_provider_posts_observable_lower_bound"] == 273
-        and all(x in setup for x in ["108 initial-terminal calls", "64 O5 calls", "832 requests", "at least 841"])
+        and all(x in appendix for x in ["108 initial terminal calls", "64 no-memory calls", "832 provider requests", "at least 841"])
     )
     checks["diagnostic_zero_new_calls"] = "No provider calls" in DIAG["analysis_scope"]
     checks["system_E1_main_comparison"] = checks["terminal_effect_bound"]
     checks["system_E2_simplification_control"] = "0.105" in all_text and "0.0078" in all_text
-    checks["system_E3_mechanism_analysis"] = "7 of 12" in all_text and checks["writer_jaccard_bound"] and checks["controlled_structural_diagnostic_bound"]
+    checks["system_E3_mechanism_analysis"] = ("7 of 12" in all_text or "7/12" in all_text) and checks["writer_jaccard_bound"] and checks["controlled_structural_diagnostic_bound"]
     checks["system_E4_robustness_boundary"] = checks["interaction_diagnostic_bound"] and checks["write_terminal_nonmonotonic_diagnostic"] and checks["no_memory_boundary_explicit"] and checks["o5_fresh_no_memory_control"] and checks["o6_cross_writer_boundary"] and checks["o6_full_bank_corruption_reduction"] and checks["f2r1_chronology_and_uniform_replication"]
     checks["system_E5_negative_failure"] = all(x in all_text for x in ["0.311", "0.160", "ArkResponseStateError", "zero scientific authority", "0.140625", "below the preregistered 0.15 floor"])
     checks["system_E6_efficiency_cost_scale"] = checks["execution_accounting_complete"] and checks["inference_only_accounting"]
@@ -171,7 +190,7 @@ def main() -> None:
     payload = {
         "schema_version": "1.0",
         "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-        "revision": "STANFORD-R3-BLIND-REVIEW-PROVENANCE-REPAIR-20260824",
+        "revision": "STANFORD-R3-DAYTIME-STORY-OPTIMIZATION-20260824",
         "status": "PASS" if all(checks.values()) else "FAIL",
         "abstract_words_approx": approx_words(abstract),
         "pdf_pages_total": pages,
@@ -184,15 +203,22 @@ def main() -> None:
         "o6_evidence_sha256": sha(HERE / "o6-final-evidence.json"),
         "o6_full_bank_reduction_sha256": sha(HERE / "o6-full-bank-corruption-reduction.json"),
         "f2r1_chronology_receipt_sha256": sha(HERE / "f2r1-chronology-receipt.json"),
+        "daytime_story_optimization_contract_sha256": sha(HERE / "daytime-story-optimization-contract.json"),
+        "paper_story_reward_memory_sha256": sha(REPO / "paper-story-reward-memory.js"),
+        "paper_reader_data_sha256": sha(REPO / "paper-reader-data.js"),
         "paper_pdf_sha256": sha(pdf),
         "main_tex_sha256": sha(SRC / "main.tex"),
         "scientific_authority": False,
         "experiment_authority": False,
         "claim_expansion": False,
-        "new_provider_calls_exact": None,
-        "new_provider_calls_observable_lower_bound": O5["execution_accounting"]["o5_total_provider_calls_consumed"] + O6["execution_accounting"]["o6_provider_posts_observable_lower_bound"],
-        "new_scientifically_usable_provider_calls": O5["execution_accounting"]["recovery_scientifically_usable_units"] + O6["execution_accounting"]["repair_4096_writer_calls"] + O6["execution_accounting"]["stage2_terminal_calls"],
-        "new_terminal_rollouts": O5["execution_accounting"]["recovery_scientifically_usable_units"] + O6["execution_accounting"]["stage2_terminal_calls"],
+        "new_provider_calls_exact": 0,
+        "new_provider_calls_observable_lower_bound": 0,
+        "new_scientifically_usable_provider_calls": 0,
+        "new_terminal_rollouts": 0,
+        "cumulative_r3_repair_provider_calls_exact": None,
+        "cumulative_r3_repair_provider_calls_observable_lower_bound": O5["execution_accounting"]["o5_total_provider_calls_consumed"] + O6["execution_accounting"]["o6_provider_posts_observable_lower_bound"],
+        "cumulative_r3_repair_scientifically_usable_provider_calls": O5["execution_accounting"]["recovery_scientifically_usable_units"] + O6["execution_accounting"]["repair_4096_writer_calls"] + O6["execution_accounting"]["stage2_terminal_calls"],
+        "cumulative_r3_repair_terminal_rollouts": O5["execution_accounting"]["recovery_scientifically_usable_units"] + O6["execution_accounting"]["stage2_terminal_calls"],
     }
     (HERE / "manuscript-qa.json").write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
     print(json.dumps(payload, indent=2))

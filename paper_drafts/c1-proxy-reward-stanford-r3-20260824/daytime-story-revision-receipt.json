@@ -1,0 +1,79 @@
+{
+  "abstract_words_approx": 205,
+  "artifact_type": "daytime-paper-story-revision-receipt",
+  "canonical_note": "The stable PaperRegistry/acceptance ledger is intentionally not overwritten by this daytime candidate before the next single external review.",
+  "canonical_stable_registry_overwritten": false,
+  "changes": [
+    {
+      "id": "story",
+      "result": "One causal chain now organizes the paper: fixed-trajectory write intervention -> stronger wording reduction -> matched downstream propagation -> bounded interpretation/generalization."
+    },
+    {
+      "id": "scope",
+      "result": "Title/abstract scope is narrowed from generic self-improving agents to reward-conditioned agent memory; broader writer/domain/live claims remain disallowed."
+    },
+    {
+      "id": "novelty",
+      "result": "Introduction and Related Work explicitly surrender judge unreliability, feedback-driven memory construction, memory-reward amplification, and general variance novelty."
+    },
+    {
+      "id": "missingness",
+      "result": "Paired provider completion is part of the Experimental Setup estimand; downstream source support is explicitly conditional on four complete pairs."
+    },
+    {
+      "id": "boundary",
+      "result": "No-memory and GLM results are presented as branch-location and cross-writer boundaries rather than extra contributions."
+    },
+    {
+      "id": "simplification",
+      "result": "Released top-1 retrieval reduction is integrated as a matched scientific stop for multi-bit full-bank interaction, not as omitted experimentation."
+    },
+    {
+      "id": "presentation",
+      "result": "Research OS stage labels and reviewer-response language are removed from main scientific headings/prose; detailed execution accounting is moved to the appendix."
+    },
+    {
+      "id": "chronology",
+      "result": "Conclusion describes the terminal confirmation as a same-support uniform replication after an initial non-pass, with unchanged support and dual gate."
+    },
+    {
+      "id": "variance",
+      "result": "Plug-in corruption variance is demoted to bounded consequence analysis and removed from the top-level conclusion contribution summary."
+    },
+    {
+      "id": "system_projection",
+      "result": "PaperStory V3 and the reader-facing C1 summary reflect fresh no-memory evidence, the GLM cross-writer boundary, and the top-1 retrieval reduction."
+    }
+  ],
+  "cumulative_r3_repair_provider_calls_exact": null,
+  "cumulative_r3_repair_provider_calls_observable_lower_bound": 337,
+  "cumulative_r3_repair_scientifically_usable_provider_calls": 296,
+  "cumulative_r3_repair_terminal_rollouts": 288,
+  "current_candidate_pdf_sha256": "0e8a0d5d4685674a439fac72b14cbdef8f8692719d5d95a4e57b7603b0397cc2",
+  "experiment_authority": false,
+  "external_review_calls": 0,
+  "external_review_deferred_to_evening": true,
+  "main_text_pages": 9,
+  "manuscript_qa_checks_passed": 38,
+  "manuscript_qa_checks_total": 38,
+  "manuscript_qa_sha256": "d5f0ef674570d4bf43c8e1d3cd685bc68850c1861cc9e8fa411a37db15e71732",
+  "manuscript_qa_status": "PASS",
+  "new_rollouts": 0,
+  "new_scientific_provider_calls": 0,
+  "optimization_contract_sha256": "dcc1dbb049e8dc8828768cfe12ce102a9cf5d7ddcb065d94d60850b2c7a31fd7",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "paper_reader_data_sha256": "5e5485a622bbef42d173283b5450bfffc916d647d47b2b2ac67b1d600497420f",
+  "paper_story_v3_contract_pass": true,
+  "paper_story_v3_sha256": "5f12b9b2fcae87add032ad2ceaedd911cf5bf5428333c92440544266599d2808",
+  "pdf_pages_total": 14,
+  "previous_candidate_pdf_sha256": "24a220df1000771998cc55249588065a98c372ea7286a92dbba098e94cf099f9",
+  "revision": "STANFORD-R3-DAYTIME-STORY-OPTIMIZATION-20260824",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_claims_expanded": false,
+  "scientific_values_changed": false,
+  "status": "PAPER_ONLY_STORY_OPTIMIZATION_COMPLETE",
+  "submission_authority": false,
+  "title_after": "Reward Errors Become Persistent State: A Controlled Intervention in Reward-Conditioned Agent Memory",
+  "title_before": "Reward Errors Become Persistent State: A Controlled Write-Time Memory Intervention in Self-Improving Agents"
+}

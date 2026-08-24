@@ -1,4 +1,4 @@
-\section{Problem Setup: Reward Error as a Persistent-State Intervention}
+\section{Causal Object: Reward Error as a Persistent-State Intervention}
 \label{sec:mechanism}
 Let task $x$ produce trajectory $\tau$, and let the terminal evaluator emit $r\in\{0,1\}$. A reward-conditioned memory writer constructs
 \begin{equation}
@@ -22,8 +22,8 @@ For a matched future task state $x'$, let $Y$ denote a downstream behavioral or 
 \end{equation}
 The future task evidence and policy configuration are held fixed across the pair. This separates variation introduced by persistent memory state from variation in the observed future state.
 
-\subsection{Variance amplification}
-Across self-improvement runs, reward errors can cause different memories to be written from otherwise comparable experiences. Let $M$ denote the persistent memory state available to later tasks. The law of total variance gives
+\subsection{A bounded variance consequence}
+If terminal-label corruption stochastically selects between the two measured reward-conditioned memories, the resulting state mixture has a direct variance consequence. Let $M$ denote the persistent memory state available to later tasks. The law of total variance gives
 \begin{equation}
 \mathrm{Var}(Y)=
 \mathbb{E}_{M}[\mathrm{Var}(Y\mid M)]
@@ -32,4 +32,4 @@ Across self-improvement runs, reward errors can cause different memories to be w
 \end{equation}
 The second term is the component induced by variation in persistent memory state. If reward corruption changes which memory is written and the paired memories produce different conditional success probabilities, reward uncertainty contributes directly to this term. Section~\ref{sec:variance} estimates the paired conditional effect and converts it into an explicit corruption-rate variance curve.
 
-This channel is immediate for external-memory agents. No parameter update is required: a mislabeled episode can change the context available to the very next retrieval.
+This consequence is secondary to the causal identification above. No parameter update is required for the channel itself: in the released external-memory mechanism, a mislabeled episode can change the context available to a later retrieval.

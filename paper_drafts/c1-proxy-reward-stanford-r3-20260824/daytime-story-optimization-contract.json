@@ -1,0 +1,114 @@
+{
+  "artifact_type": "daytime-paper-story-optimization-contract",
+  "claim_expansion": false,
+  "date": "2026-08-24",
+  "experiment_authority": false,
+  "forbidden_actions": [
+    "new scientific provider experiment before the planned evening external review",
+    "third-writer fishing",
+    "larger matrix solely to chase reviewer score",
+    "re-POST of missing write arms",
+    "lowering the 0.15 gate",
+    "claiming writer-invariant downstream effects",
+    "claiming no-memory superiority",
+    "claiming empirical full-bank corruption interactions under released top-1 retrieval"
+  ],
+  "inputs": {
+    "advisor_design_constraints": [
+      "Explain the scientific idea, value, mechanism-level distinction, and decisive falsifier before implementation chronology.",
+      "Maintain one claim-to-experiment hierarchy rather than mixing phenomenon, method, validation, and extensions as a flat list.",
+      "Novelty must be the residual scientific object after surrendering existing paradigms, not an existing method plus a small repair."
+    ],
+    "blind_review": {
+      "confidence_1_to_5": 4,
+      "new_experiment_required_for_current_narrow_claim": false,
+      "post_repair_recommendation": "weak_accept",
+      "remaining_risks": [
+        "external validity",
+        "failure-arm provider missingness",
+        "downstream effect concentration",
+        "cross-writer downstream non-invariance",
+        "mild rhetorical overbreadth"
+      ],
+      "score_1_to_10": 6
+    },
+    "research_os": [
+      "Preserve frozen claim and estimand boundaries.",
+      "Keep strongest simplification/control load-bearing.",
+      "Expose negative evidence and completion/support debt without promoting execution failures to scientific negatives.",
+      "Separate core mechanism evidence from boundary/generalization analyses.",
+      "No outcome-driven task/cell selection, threshold relaxation, or claim expansion."
+    ]
+  },
+  "manuscript_actions": [
+    {
+      "action": "Narrow title from generic self-improving agents to reward-conditioned agent memory.",
+      "id": "A1"
+    },
+    {
+      "action": "Rewrite abstract around the causal object and hierarchy; reduce metric density while preserving decisive numbers and missingness.",
+      "id": "A2"
+    },
+    {
+      "action": "Rewrite introduction so the residual novelty and one-chain contribution appear before detailed results.",
+      "id": "A3"
+    },
+    {
+      "action": "Sharpen Related Work around explicit surrendered novelty versus defended residual object.",
+      "id": "A4"
+    },
+    {
+      "action": "Move paired-completion conditioning into Experimental Setup as part of the estimand, not only Limitations.",
+      "id": "A5"
+    },
+    {
+      "action": "Remove Research OS stage labels (F0/C4/O5/O6) from main-text scientific headings and prose where not needed for reproducibility.",
+      "id": "A6"
+    },
+    {
+      "action": "Present no-memory, cross-writer, heterogeneity, and top-1 reduction as interpretation/generalization boundaries, not reviewer-response add-ons.",
+      "id": "A7"
+    },
+    {
+      "action": "Correct conclusion chronology: F2R1 is a targeted uniform same-support replication after an initial non-pass; remove “independently frozen” wording.",
+      "id": "A8"
+    },
+    {
+      "action": "Demote plug-in corruption variance from top-level contribution to bounded consequence analysis.",
+      "id": "A9"
+    },
+    {
+      "action": "Reconcile PaperStory V3 with completed no-memory, cross-writer, and top-1 reduction evidence.",
+      "id": "A10"
+    }
+  ],
+  "new_rollouts": 0,
+  "new_scientific_provider_calls": 0,
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "single_scientific_story": {
+    "boundary_evidence": [
+      "2 failure-arm provider incompletes: selection direction unidentified",
+      "first-action distribution stress p=0.311: stronger action-distribution claim unresolved",
+      "no-memory control: no uniform success-good/failure-bad ordering",
+      "GLM-5.3: write divergence replicates but terminal practical-effect gate fails at 0.140625",
+      "released top-1 retrieval: full-bank multi-bit corruption interaction is structurally reduced, not an omitted experiment"
+    ],
+    "core_chain": [
+      "fixed trajectory -> reward-conditioned writer-mode intervention",
+      "persistent-memory divergence beyond stronger same-mode wording perturbation",
+      "matched future action/outcome propagation",
+      "bounded branch-location and cross-writer/generalization boundary"
+    ],
+    "load_bearing_evidence": [
+      "4/4 complete paired memories diverge, conditional on paired completion",
+      "same-mode wording reduction: 0.700 vs 0.595, excess 0.105, p=0.0078",
+      "same-support 4x4 terminal replication: mean |delta| 0.15625, p=0.00074 after initial non-pass with unchanged dual gate"
+    ],
+    "missing_object": "A controlled write-time intervention that holds the experience fixed, changes only the reward-conditioned writer branch, challenges generic prompt sensitivity, and then carries the resulting state through matched future evidence.",
+    "scene": "Terminal feedback in reward-conditioned external-memory agents is also a state-update input because it selects how a completed trajectory is written into persistent memory."
+  },
+  "status": "FROZEN_PAPER_ONLY_OPTIMIZATION",
+  "submission_authority": false
+}
