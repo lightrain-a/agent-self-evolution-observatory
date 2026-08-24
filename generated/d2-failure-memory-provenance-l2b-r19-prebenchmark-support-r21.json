@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-PREBENCHMARK-SUPPORT-R21",
+  "recorded_at": "2026-08-24T06:09:19+00:00",
+  "status": "R19_PREBENCHMARK_ZERO_COMPLETION_SUPPORT_GATE_PASS",
+  "bindings": {
+    "r19_contract_sha256": "ed803f0958002ab2095563a56cff6328a054ff4c4d7bd9fc18fc97bb3bdc3282",
+    "r21_authority_receipt_sha256": "f7ad4044e80e7fce30e7e63940eebafac6af7af2b7fa08ea38169f797ceb905f",
+    "authority_artifact_sha256": "88e9865b647f24add014963285e9b81503acbb592c6500700e62cf2b2334c507",
+    "executor_manifest_digest": "sha256:5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216"
+  },
+  "alias_registry": {
+    "all_three_aliases_present_and_manifest_identical": true,
+    "required_aliases": [
+      "b1-qwen25-32b-l2b-executor:latest",
+      "gpt-4:latest",
+      "gpt-4-1106-preview:latest"
+    ],
+    "model_completions": 0
+  },
+  "tokenizers": [
+    {
+      "model_name": "gpt-4",
+      "encoding": "cl100k_base",
+      "lookup_pass": true
+    },
+    {
+      "model_name": "gpt-4-1106-preview",
+      "encoding": "cl100k_base",
+      "lookup_pass": true
+    }
+  ],
+  "live_support": {
+    "shopping_reset_complete": true,
+    "shopping_health_http": 200,
+    "smoke_task_id": "353",
+    "smoke_task_is_in_R19_cohort": true,
+    "environment_reset": true,
+    "native_evaluator_constructed": true,
+    "native_evaluator_class": "EvaluatorComb",
+    "browser_actions": 0,
+    "evaluator_calls": 0,
+    "scientific_terminal_outcomes": 0,
+    "endpoint_redacted": true
+  },
+  "gate": {
+    "zero_completion_alias_tokenizer_preflight_pass": true,
+    "live_reset_zero_action_evaluator_construction_pass": true,
+    "synthetic_support_completions_remaining": 2,
+    "benchmark_execution_permitted_after_this_receipt_alone": false
+  },
+  "scientific_verdict": "NO_VERDICT_SUPPORT_GATE_ONLY"
+}

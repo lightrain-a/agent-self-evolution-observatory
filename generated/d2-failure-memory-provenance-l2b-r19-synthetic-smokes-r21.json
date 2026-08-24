@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-SYNTHETIC-SMOKES-R21",
+  "recorded_at": "2026-08-24T06:14:31+00:00",
+  "status": "R19_TWO_FIXED_NONBENCHMARK_SYNTHETIC_COMPLETION_SMOKES_PASS",
+  "bindings": {
+    "r19_contract_sha256": "ed803f0958002ab2095563a56cff6328a054ff4c4d7bd9fc18fc97bb3bdc3282",
+    "prebenchmark_support_receipt_sha256": "cb5cf78c753ff38b8ab40e5c761e8aaa57fd14922d8c4186aed43c0b7f7e5f05",
+    "authority_artifact_sha256": "88e9865b647f24add014963285e9b81503acbb592c6500700e62cf2b2334c507",
+    "first_transport_timeout_receipt_sha256": "d70f51b8398ae2df45a90c6c6b81f779017e51394e4d58c07c350d74c2c28171"
+  },
+  "prompt": {
+    "benchmark_content_present": false,
+    "prompt_sha256": "29beadb00bfa65e63457851030bf821fc4739eb525d194055cc1a629e5c7200f",
+    "semantic_response_used_for_selection": false
+  },
+  "smokes": [
+    {
+      "alias": "gpt-4",
+      "http_status": 200,
+      "assistant_nonempty": true,
+      "assistant_chars": 13,
+      "assistant_sha256": "a2542670074ea3e0c6876ad6d0f75e2dc933461c6b765c0c5fab376a498215b8",
+      "semantic_content_retained": false
+    },
+    {
+      "alias": "gpt-4-1106-preview",
+      "http_status": 200,
+      "assistant_nonempty": true,
+      "assistant_chars": 13,
+      "assistant_sha256": "a2542670074ea3e0c6876ad6d0f75e2dc933461c6b765c0c5fab376a498215b8",
+      "semantic_content_retained": false
+    }
+  ],
+  "transport_request_attempts": 3,
+  "first_alias_exact_retry_used": true,
+  "completion_count": 2,
+  "budget": {
+    "authorized_successful_completions": 2,
+    "consumed_successful_completions": 2,
+    "remaining_successful_completions": 0,
+    "precompletion_transport_retry_used": 1
+  },
+  "gate": {
+    "both_transport_paths_pass": true,
+    "benchmark_execution_support_gate_pass": true,
+    "scientific_claim_prejudged": false
+  },
+  "scientific_verdict": "NO_VERDICT_TRANSPORT_SUPPORT_ONLY"
+}

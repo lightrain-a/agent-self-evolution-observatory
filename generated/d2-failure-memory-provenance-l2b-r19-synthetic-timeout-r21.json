@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-SYNTHETIC-TIMEOUT-R21",
+  "recorded_at": "2026-08-24T06:13:42+00:00",
+  "status": "PREBENCHMARK_SYNTHETIC_TRANSPORT_TIMEOUT_ZERO_COMPLETION_EXACT_RETRY_ALLOWED",
+  "bindings": {
+    "prebenchmark_support_receipt_sha256": "cb5cf78c753ff38b8ab40e5c761e8aaa57fd14922d8c4186aed43c0b7f7e5f05",
+    "authority_artifact_sha256": "88e9865b647f24add014963285e9b81503acbb592c6500700e62cf2b2334c507",
+    "ollama_log_sha256": "bfc6c6933fd613138c20cdda2a9407097e41d581a6c0b36f32652b486eb008ad"
+  },
+  "failed_attempt": {
+    "alias": "gpt-4",
+    "request_semantics_changed": false,
+    "client_timeout_seconds": 120,
+    "server_http_status_after_client_close": 499,
+    "failure_stage": "initial model load before server became available",
+    "server_aborted_load_after_client_close": true,
+    "assistant_completion_observed": false,
+    "successful_completion_budget_consumed": 0,
+    "benchmark_content_present": false,
+    "browser_action": false,
+    "evaluator_call": false,
+    "benchmark_outcome": false
+  },
+  "frozen_retry_rule_application": {
+    "failure_before_first_model_completion_browser_action_or_evaluator_call": true,
+    "one_exact_retry_allowed": true,
+    "exact_retry_remaining": 1,
+    "same_model_alias_required": true,
+    "same_prompt_and_generation_parameters_required": true,
+    "only_client_wait_window_may_be_extended_for_model_load": true,
+    "model_provider_or_manifest_change": false,
+    "benchmark_execution_still_blocked_until_both_synthetic_smokes_pass": true
+  },
+  "scientific_verdict": "NO_VERDICT_PREBENCHMARK_SUPPORT_FAILURE_RETRYABLE_ONCE"
+}
