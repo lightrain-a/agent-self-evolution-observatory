@@ -87,7 +87,20 @@ def count_agent_completions(exp_dir: Path) -> dict[str, int]:
     }
 
 
+def require_no_confirmatory_stop(run_root: Path) -> None:
+    marker = run_root / "confirmatory-stop.json"
+    if not marker.exists():
+        return
+    try:
+        obj = json.loads(marker.read_text(encoding="utf-8"))
+        reason = str(obj.get("reason") or obj.get("status") or "unknown")
+    except Exception:
+        reason = "unreadable-stop-marker"
+    raise RuntimeError(f"R19 confirmatory stop marker exists; execution permanently stopped: {reason}")
+
+
 def execute(a: argparse.Namespace) -> dict[str, Any]:
+    require_no_confirmatory_stop(a.run_root)
     authority = require_authority(a.authority)
     contract = load_bound(a.contract, EXPECTED_R19_CONTRACT_SHA, "R19 contract")
     authority_receipt = load_bound(a.authority_receipt, EXPECTED_R21_AUTHORITY_RECEIPT_SHA, "R21 authority receipt")

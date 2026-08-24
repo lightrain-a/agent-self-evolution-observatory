@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-SEQ029-PREEXPOSURE-RETRY-EXHAUSTION-R31",
+  "recorded_at": "2026-08-24T14:27:33+00:00",
+  "status": "SEQ029_PREEXPOSURE_SUPPORT_FAILURE_EXACT_RETRY_EXHAUSTED_R19_STOPPED",
+  "support_failure_chain": {
+    "sequence_index": 29,
+    "task_id": "147",
+    "source_task_id": "148",
+    "first_attempt": {
+      "receipt_sha256": "6ed109898606969797019806dd84d31e23b01e94c501c626e3f1b7386e8c8f21",
+      "scientific_exposure": false,
+      "model_completions": 0,
+      "browser_actions": 0,
+      "evaluator_calls": 0
+    },
+    "exact_retry_attempt": {
+      "receipt_sha256": "c605c7e7eb1563ce7d951cd8eb9e6c0e38491175bf88b133f84527b1b3a734bf",
+      "scientific_exposure": false,
+      "model_completions": 0,
+      "browser_actions": 0,
+      "evaluator_calls": 0
+    },
+    "exact_retry_consumed": true,
+    "additional_retry_permitted": false
+  },
+  "durable_prefix": {
+    "episodes_complete": 29,
+    "episodes_expected": 140,
+    "complete_independent_tasks": 7,
+    "current_incomplete_task_id": "147",
+    "current_incomplete_task_completed_episodes": 1,
+    "last_complete_sequence_index": 28,
+    "attempts_jsonl_sha256": "b2c2a3b6e870eb2ce96dbfd19e6cc79deb40a3439d36d213ba90900c92455731",
+    "progress_jsonl_sha256": "ebb2fb7af007029b81ba07103fa37f7752e709804243aaa204d99d8c811eaddf",
+    "run_contract_sha256": "556a40ad84664aec45ab8f33d7e5306a8e7c03ff707d4f6d501ddf465498275d",
+    "summary_sha256": "92c36fa9b9431483528935328f0853e1e0e9d058be4571408d962c033c2c855e",
+    "agent_completions": 513,
+    "fuzzy_evaluator_completions": 0,
+    "terminal_scores_exposed_in_receipt": false
+  },
+  "adjudication": {
+    "current_R19_confirmatory_execution_stopped": true,
+    "resume_sequence29_under_current_R19": false,
+    "execute_sequence30_or_later_under_current_R19": false,
+    "partial_29_episode_prefix_may_enter_confirmatory_analysis": false,
+    "task_deltas_may_be_computed": false,
+    "effect_mean_may_be_computed": false,
+    "p_value_may_be_computed": false,
+    "confidence_interval_may_be_computed": false,
+    "support_failure_is_scientific_negative": false,
+    "no_effect_claim_authorized": false,
+    "R19_current_attempt_retriable": false
+  },
+  "reopen_condition": {
+    "current_R19_may_not_resume": true,
+    "future_work_requires_new_experiment_contract": true,
+    "future_work_requires_new_explicit_scientific_and_execution_authority": true,
+    "support_must_be_restored_before_new_benchmark_exposure": true,
+    "partial_R19_outcomes_must_not_select_new_tasks_thresholds_endpoints_or_models": true,
+    "R18_or_R19_partial_outcomes_must_not_be_pooled_into_new_confirmatory_sample": true
+  },
+  "scientific_verdict": "NO_VERDICT_PREOUTCOME_SUPPORT_FAILURE_RETRY_EXHAUSTED",
+  "scientific_negative": false,
+  "scientific_claim_authority": false,
+  "submission_authority": false
+}
