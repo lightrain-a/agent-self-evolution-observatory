@@ -559,8 +559,8 @@
         "en": "Round 2 remains correct about L0-L3 and the unresolved causal sign. After the complete 28/140 task boundary, R19 entered its eighth task and completed sequence 28. The first Shopping reset for sequence 29 and the single exact pre-exposure retry both timed out before STARTED, each with zero scientific exposure. Under the frozen contract the retry is exhausted, so the current R19 confirmatory attempt must fail closed and STOP. The durable partial prefix is 29/140 (seven complete tasks plus one episode of an incomplete task), with no interim effect, p-value, interval, or claim update permitted. PSMG remains a pre-outcome method design with no new treatment execution authority."
       },
       "next": {
-        "zh": "当前 R19 不得继续或再 retry。R33 的零 outcome feasibility census 进一步表明：同一 frozen WebArena asset 在排除 R18/R19 全部已暴露 template 后只剩 27 个 fully-unexposed units；n=27 在 task-SD=.30 下的近似 two-sided power 仅 0.738，低于约 n=32 的 80% 规划参考，也低于原 35-task ambition。因此 O5 的首选 reopen 方向是新的 task universe / substrate，先恢复稳定 support，再预先冻结新的 provenance surface、fresh cohort、完整 schedule/analysis contract，并重新获得 explicit scientific + execution authority。R19 partial outcomes 不得参与新设计选择或样本拼接；PSMG 仍只作为闭环方法设计，无 mitigation execution authority。O6 financial L3 仍独立 support-blocked。",
-        "en": "The current R19 attempt may not continue or retry. R33 zero-outcome feasibility further shows that, after excluding every R18/R19 scientifically exposed template, the same frozen WebArena asset retains only 27 fully unexposed units. At task-level SD=0.30, n=27 has approximate two-sided power 0.738, below the roughly n=32 80% planning reference and below the original 35-task ambition. The preferred O5 reopen direction is therefore a new task universe or substrate: restore stable support first, prospectively freeze a new provenance surface, fresh cohort, and complete schedule/analysis contract, then obtain new explicit scientific plus execution authority. R19 partial outcomes may not select the new design or be pooled into its sample; PSMG remains a closure-method design with no mitigation-experiment authority. O6 financial L3 remains independently support-blocked."
+        "zh": "当前 R19 不得继续或再 retry。R33 已证明同一 frozen WebArena asset 只剩 27 个 fully-unexposed templates，低于原 35-task ambition，且 n=27 在 task-SD=.30 下近似 two-sided power 仅 0.738；因此不建议降规格榨干同一 asset。R34 的 fresh release-surface recheck 进一步确认：SMA 仍是最强外部 process-provenance 候选（priority-1），但官方页仍是 Code Coming Soon，source-outcome 存储/执行可见性未验证；IBM Trajectory Tips priority-2，construct 很强但 writer/consolidation 与 outcome 耦合且 paper-specific first-party artifact 未发布；MutMem 继续因 post-use reward≠source-trajectory provenance 而 STOP。下一步首选等待并 pin SMA first-party code release，再做 schema/exact-information/fresh-capacity 资格审计；任何新 confirmatory execution 都需新的完整 contract 与 explicit scientific+execution authority。PSMG 保持闭环方法设计，不得用 R19 partial outcomes rescue 或调参。",
+        "en": "The current R19 attempt may not continue or retry. R33 shows that the same frozen WebArena asset retains only 27 fully unexposed templates, below the original 35-task ambition; at task-level SD=0.30, n=27 has approximate two-sided power only 0.738, so draining the same asset under a weaker design is not preferred. R34 fresh release-surface recheck further confirms that SMA remains the strongest external process-provenance candidate (priority 1), but its official page still says Code Coming Soon and source-outcome storage/runtime visibility is unverified. IBM Trajectory Tips remains priority 2: construct match is strong but outcome is entangled with writing/consolidation and no paper-specific first-party artifact is released. MutMem remains STOP because post-use reward is not source-trajectory provenance. The preferred next step is to wait for and pin SMA first-party code, then audit schema, exact-information intervention capacity, and fresh independent units. Any new confirmatory execution requires a new complete contract and explicit scientific plus execution authority. PSMG remains a paper-closure method design and may not use R19 partial outcomes for rescue or tuning."
       },
       "objections": [
         {
@@ -762,6 +762,31 @@
             "preferred": "NEW_TASK_UNIVERSE_OR_NEW_SUBSTRATE_WITH_NATIVE_OR_AUDITABLE_PROVENANCE_SURFACE",
             "execution_authorized": false,
             "receipt": "generated/d2-failure-memory-provenance-l2b-r33-replacement-feasibility.json"
+          },
+          "external_substrate_recheck": {
+            "status": "NO_EXTERNAL_REPLACEMENT_EXECUTION_SURFACE_UNBLOCKED_SMA_REMAINS_PRIORITY1",
+            "SMA": {
+              "priority": 1,
+              "construct_match": "STRONGEST_EXTERNAL_SOURCE_OUTCOME_PROVENANCE_CANDIDATE",
+              "code_release_unblocked": false,
+              "exact_information_l2_ready": false,
+              "preferred_trigger": "SMA_FIRST_PARTY_CODE_RELEASE"
+            },
+            "IBM": {
+              "priority": 2,
+              "construct_match": "STRONG_SOURCE_TRAJECTORY_OUTCOME_BUT_NATIVE_WRITER_CONSOLIDATION_CONFOUNDED",
+              "code_release_unblocked": false,
+              "exact_information_l2_ready": false
+            },
+            "MutMem": {
+              "disposition": "STOP_CONSTRUCT_MISMATCH_FOR_B1",
+              "execute_now": false
+            },
+            "replacement_execution_ready_now": false,
+            "WebArena_support_failure_does_not_relax_construct_match": true,
+            "absence_of_public_release_is_scientific_negative": false,
+            "same_asset_R33_27_unit_fallback_automatically_authorized": false,
+            "receipt": "generated/d2-failure-memory-provenance-r34-external-substrate-release-recheck.json"
           }
         },
         {
