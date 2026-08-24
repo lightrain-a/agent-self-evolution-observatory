@@ -1,0 +1,498 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T05:01:52Z",
+  "run_id": "external-fresh-exact-16-review-20260824-r8",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "selection_projection": {
+    "staging_refresh_root": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r8",
+    "preview_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r8/preview-public.json",
+    "preview_artifact_sha256": "ae82aa902c175298f27ae99bf6f42faefb2df9b27126d75b7ce93684da99815a",
+    "private_pool_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r8/data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "private_pool_artifact_sha256": "29ed87491f489e6ba73c8b4b8001d915ff7e64cfeac9713229c4b3f6cbbe1ed3",
+    "corpus_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r8/data/corpora/semantic-scholar-corpus.json",
+    "corpus_artifact_sha256": "2d27a6a0e8439be73da947b74cdbe61f1ae1c57ea89f0d559bae28f1d1585b86",
+    "refresh_generated_at": "2026-08-24T04:57:43+00:00",
+    "refresh_status": "READY",
+    "discovery_mode": "arxiv-primary-fallback",
+    "source_retrieval_complete": true,
+    "selected": 32,
+    "verified": 32,
+    "selected_previously_reviewed": 16,
+    "selected_unreviewed": 16,
+    "eligible_unreviewed": 39,
+    "fulltext_verified": 31,
+    "fetch_errors": 0,
+    "fulltext_fetch_errors": 1,
+    "undercovered_lanes": [],
+    "source_coverage_exhausted": false,
+    "global_source_coverage_exhausted_claim": false,
+    "exact_unreviewed_refs_in_scheduler_order": [
+      "arXiv:2607.04884",
+      "arXiv:2607.04574",
+      "arXiv:2607.04235",
+      "arXiv:2607.04409",
+      "arXiv:2607.04096",
+      "arXiv:2607.04426",
+      "arXiv:2607.03964",
+      "arXiv:2607.03726",
+      "arXiv:2607.03065",
+      "arXiv:2607.02959",
+      "arXiv:2607.02469",
+      "arXiv:2607.02807",
+      "arXiv:2607.02497",
+      "arXiv:2607.01846",
+      "arXiv:2607.01415",
+      "arXiv:2607.01232"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 16,
+    "sources_reviewed": 16,
+    "exact_prior_exposure_zero": 16,
+    "identity_verified": 16,
+    "deep_review": 6,
+    "triage_review": 10,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "fresh_scientific_survivors": 0,
+    "stop_reduction": 2,
+    "support_component_only": 4,
+    "scope_excluded": 10,
+    "watch_reopen_seeds": 1,
+    "source_retrieval_complete": true,
+    "global_source_coverage_exhausted": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "exact_tranche_identity_requires_content_addressed_refresh_projection": true,
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "deep_review_routes_collision_reopen_or_decisive_baseline_cases": true,
+    "triage_is_allowed_only_for_clear_scope_or_component_cases": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "no_emit_is_not_a_scientific_dead_end": true,
+    "global_source_exhaustion_must_not_be_inferred_from_bounded_tranche_completion": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2607.04884",
+      "title": "HunyuanOCR-1.5: Making Lightweight OCR VLMs Faster and Better",
+      "published": "2026-07-06",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "7537cffd82ed824fdeb64eb9c893af3b2315a0edcbedc357b1a474e7c42c81fe",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_DATA_SYNTHESIS_AND_POSTTRAINING",
+      "reduction": [
+        "agentic-data-construction",
+        "weakness-driven-data-requirements",
+        "offline-model-training"
+      ],
+      "note": "HunyuanOCR-1.5 uses an agentic data-flow system to turn observed model weaknesses into data requirements, search/verify material, and build training pipelines, after which the OCR model is trained and released as a fixed model. This is autonomous data engineering for offline capability expansion, not persistent deployment-time self-modification of the evaluated agent.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "c79e6daed1b2597282fb956fcfb3d519a6b785d714b4d3c1643b01729f267dc0",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.04574",
+      "title": "A Few Teacher Steps Go a Long Way: Cost-Efficient On-Policy Data Augmentation for Agent Post-Training",
+      "published": "2026-07-06",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "dce0b64f31d2448e16d4a0f690e5823b02e79dc6a08860a9357f003a12c4ca01",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "learner-induced-context-supervision",
+        "teacher-budget-allocation",
+        "supervised-posttraining"
+      ],
+      "note": "A Few Teacher Steps Go a Long Way compares on-policy teacher augmentation strategies for supervised agent post-training under matched teacher/supervision budgets. The mechanism addresses student-context distribution mismatch during offline training and does not instantiate autonomous persistent deployment-time self-evolution.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "ae3fc51125dfcd8e06ef0ed3d4fc083354ab90f5b15f0d97673152764c814a98",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.04235",
+      "title": "Spinning Straw into Gold: Relabeling LLM Agent Trajectories in Hindsight for Successful Demonstrations",
+      "published": "2026-07-05",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "1baa3f3eb3a703b945e81ed74b8a403f7e9b2c20194430106975be44a82f3da4",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "hindsight-goal-relabeling",
+        "trajectory-supervision",
+        "offline-finetuning"
+      ],
+      "note": "Hindsight Supervised Learning relabels completed trajectories with unintended successful goals and uses those pairs for SFT/DPO. It is an offline supervision/relabeling technique, not a persistent self-evolving deployment artifact.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "b56d576ee7d7edc07e0d4ac45b4989d28dc96bdd07c529528f3f1215969e535d",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.04409",
+      "title": "Learning Task-Sufficient World Models by Synergizing Agentic Exploration and Structured Modeling",
+      "published": "2026-07-05",
+      "lane_keys": [
+        "skill_harness",
+        "world_model",
+        "embodied"
+      ],
+      "source_sha256": "dbe9444e7c3e1209538e08ad157c57c87567c0aa0b2cf1afc494b38c352f0284",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "active-information-acquisition",
+        "adaptive-curriculum",
+        "task-sufficient-world-model-representation"
+      ],
+      "note": "MIST-WM couples active probing under an adaptive curriculum with structured world-model learning and sequentially expands a task-sufficient latent representation. Its experiments separately compare data-collection methods under matched budgets and world-model representations, and ablations show both exploration and structured modeling matter. But the paper does not supply a matched factorial that independently varies exploration adaptation and world-model adaptation while matching collected trajectories, task distribution, representation capacity, curriculum, supervision, and compute, then demonstrates a non-additive held-out interaction. The observed synergy is therefore compatible with ordinary active learning/curriculum plus representation/world-model quality.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-4674f46501819d1414",
+          "result": "NOT_SATISFIED",
+          "boundary": "No preregistered matched factorial independently varies the evolving exploration/data-allocation process and the world-model representation process under comparable task distribution, data, capacity, supervision, compute, and evaluation while showing a repeatable non-additive residual beyond curriculum/allocation and representation quality."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "c38453144efe730cbdfd6a2fee07f3b3474851b10125f4107d863adfa0b14469",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.04096",
+      "title": "Forethought: Verifiable Reasoning from Neurosymbolic Primitive Programming",
+      "published": "2026-07-05",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "e2777194dfc8ae72013291fccabf51a3cb80152f6db4d26525b20d975c2d1f68",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_VERIFIABLE_REASONING",
+      "reduction": [
+        "typed-reasoning-primitives",
+        "design-time-program-verification",
+        "contract-checked-execution"
+      ],
+      "note": "Forethought makes agent reasoning an explicit program over symbolic/SLM primitives with typed contracts, design-time verification, and per-step runtime checks. Reasoning programs can be inspected and modified before deployment and transfer across base models. This is strong Research-OS evidence for explicit executable reasoning artifacts, contracts, and independent verification, but it does not study an autonomous deployment-time process that persistently improves those artifacts from outcomes.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "ef9f4f39701e1c1683e5bfb592748605b93e46c207f7bebf7103aa23ad3db524",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.04426",
+      "title": "ACE-Brain-0.5: A Unified Embodied Foundational Model for Physical Agentic AI",
+      "published": "2026-07-05",
+      "lane_keys": [
+        "memory_continual",
+        "embodied",
+        "runtime_deployment",
+        "safety_reliability"
+      ],
+      "source_sha256": "68c15512b276f759768dbe1c04aa51b4e2c5dff2a5d5e9e9511ffd58d8abf222",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_FOUNDATION_MODEL_TRAINING",
+      "reduction": [
+        "embodied-foundation-model",
+        "self-monitoring-training",
+        "offline-self-improvement-objective"
+      ],
+      "note": "ACE-Brain-0.5 unifies embodied perception, planning, interaction, monitoring, and improvement in a foundation-model training stack. The advertised self-improvement capability is learned through model training rather than an execution-backed persistent deployment-time artifact update loop.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "929233bd817b60646f0a1c2fd2c769f7b8365c770b8edaca63a47c998189fc77",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.03964",
+      "title": "Worldscape-MoE: A Unified Mixture-of-Experts World Model for Scalable Heterogeneous Action Control",
+      "published": "2026-07-04",
+      "lane_keys": [
+        "world_model",
+        "embodied"
+      ],
+      "source_sha256": "cdcf5a6401300c95ef618f378997e0f7920c6853176d5112b39224cdf5b4ac58",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_WORLD_MODEL_EXTENSION",
+      "reduction": [
+        "mixture-of-experts-world-model",
+        "continual-modality-extension",
+        "offline-model-tuning"
+      ],
+      "note": "Worldscape-MoE progressively tunes shared and modality-specific experts to absorb new action modalities. Temporary degradation during extension is an offline continual-training phenomenon inside a world model, not an autonomous persistent agent self-evolution mechanism.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "f4b68ca5896fde4869d478a6079ae9809a48bccade5a0463d34e5b8fd088b665",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.03726",
+      "title": "SelfMem: Self-Optimizing Memory for AI Agents",
+      "published": "2026-07-04",
+      "lane_keys": [
+        "skill_harness",
+        "memory_continual",
+        "safety_reliability"
+      ],
+      "source_sha256": "b228ae21fcd671686fd0b0c10f94daad453fd703c36eca63a1eefd3d2582354c",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION_WATCH",
+      "reduction": [
+        "memory-policy-meta-optimization",
+        "agent-controlled-memory-management",
+        "feedback-guided-procedural-strategy-search"
+      ],
+      "note": "SelfMem is the strongest r8 near-boundary source. It exposes an immutable transcript, memory tools, review diagnostics, and operational signals while letting the agent decide what to inspect, store, revise, compress, merge, and retrieve. Memory construction itself receives no hidden benchmark answers, rubrics, held-out labels, or per-question judge feedback. A later optimization study refines procedural memory-strategy notes from aggregate training-conversation scores and diagnostics, while held-out conversations are used only for final evaluation; the default held-out score 0.472 rises to 0.497 for the final strategy and 0.510 for the best discovered strategy. This credibly shows that optimizing the memory-management policy can outperform fixed memory frameworks. However the evolving object is an explicit procedural strategy searched by a generic model from training feedback over a fixed transcript/tool environment. The paper does not give a fully informed generic memory-policy/meta-optimization baseline the identical strategy semantics, transcript evidence, diagnostics, action space, feedback, compute, and memory budget while varying an independent self-evolution structural state. Preserve as a watch seed, not a scientific reopen.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Feedback-guided procedural strategy revisions remain generic corrective/meta-optimization unless an additional self-evolution-specific variable yields a distinct ex-ante prediction after training evidence, strategy content, tool/feedback information, update budget, and held-out evaluation are matched."
+        },
+        {
+          "memory_id": "MEM-SEAR-1ba2b6e8d305dafaad",
+          "result": "NOT_SATISFIED",
+          "boundary": "Memory utility remains expressible through relevance, compatibility, compression/redundancy, retrieval/context allocation, and strategy selection when memory contents, history, token/context budget, and utilization information are matched."
+        }
+      ],
+      "watch_reopen_seed": true,
+      "fulltext_sha256": "6a24ad8d09be64497a2c78584d1137b01e2b8c2a02bbaa9886e3b316053de2c0",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.03065",
+      "title": "Spectral Rewiring for Exploration, Purification, and Model Merging",
+      "published": "2026-07-03",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "8ebf18cb189df8f8b499d1a5199f3c519878897859ff45ed150cb316b40e7a50",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_MODEL_EDITING",
+      "reduction": [
+        "spectral-model-editing",
+        "posthoc-update-purification",
+        "model-merging"
+      ],
+      "note": "Subspace-Aligned Rewiring is a post-hoc model-editing/purification technique for trained weight updates and model merging. It does not define an autonomous persistent self-evolving agent process.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "745da904c365ee7864af19b55b65472a20501c50de514c1d0b6ea9b29f0e08f1",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.02959",
+      "title": "Incentivizing Vision Language Models to Search for Long Video Question Answering",
+      "published": "2026-07-03",
+      "lane_keys": [
+        "parametric_model_state",
+        "collective"
+      ],
+      "source_sha256": "69afe6564d30bac81a18b2429797c4335c29f2e1fb9225919e31a5211d0a733c",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "agentic-video-search",
+        "formal-visual-retrieval-reward",
+        "rl-posttraining"
+      ],
+      "note": "VSeek trains a long-video search-and-reason policy with verifiable visual-event rewards. The resulting model is post-trained offline and evaluated as a fixed policy, not as a persistent self-evolving system.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "956c29ffef7b58e9234b174176b1588822ce4ec3ab4eb330ace8b360d921618a",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.02469",
+      "title": "TestEvo-Bench: An Executable and Live Benchmark for Test and Code Co-Evolution",
+      "published": "2026-07-02",
+      "lane_keys": [
+        "skill_harness"
+      ],
+      "source_sha256": "f593180a186498ec71e523a7b66e6b855e22852d14033e8fc8e5779c5b519c35",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_LIVE_EXECUTABLE_BENCHMARK",
+      "reduction": [
+        "code-test-coevolution-benchmark",
+        "commit-anchored-provenance",
+        "execution-grounded-live-evaluation"
+      ],
+      "note": "TestEvo-Bench is useful evaluation infrastructure: test-generation/update tasks are anchored to real code commits, packaged for executable metrics, and periodically refreshed so evaluation can postdate model training cutoffs. Its harness-failure breakdown also separates model/harness compatibility from execution/compiler failure. This supports live, provenance-grounded longitudinal evaluation but is a benchmark/control component rather than a self-evolution causal object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "479a71f1a3c851a86605c7363ebfa6d7e194a505a38fd3aa0cc5159e29eb1ad5",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.02807",
+      "title": "SwarmResearch: Orchestrating Coding Agents for Open-Ended Discovery",
+      "published": "2026-07-02",
+      "lane_keys": [
+        "skill_harness",
+        "collective"
+      ],
+      "source_sha256": "466feb3a614438df4c34f82ec3062d6e2322e8a42149f05ffd5b25849971ace1",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_RESEARCH_SEARCH",
+      "reduction": [
+        "orchestrator-guided-search",
+        "lineage-local-context",
+        "adaptive-parallelism-and-parent-selection"
+      ],
+      "note": "SwarmResearch separates global orchestration from lineage-local search-agent context using git branches/worktrees, fresh Explorer contexts, inherited Optimizer histories, and lightweight lineage findings. It outperforms or matches strong search baselines on 13/15 tasks and, under a fixed 60-iteration study, an orchestrator restricted to branch/parent selection can beat the best fixed serial/parallel scaling on 4/5 tasks. This is strong Research-OS evidence for adaptive branching, diversity preservation, parent selection, and parallelism allocation. Those gains remain explainable by mature adaptive search, branching, context isolation, and resource-allocation mechanisms rather than a new longitudinal self-evolution causal variable.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "828030a3651a7ad3fc3fc94d9611ed2afae50763cfe862fa80180873bde08495",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.02497",
+      "title": "Seek to Segment: Active Perception for Panoramic Referring Segmentation",
+      "published": "2026-07-02",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state",
+        "embodied"
+      ],
+      "source_sha256": "a5e44f666f730bc186a5b00427d4d30e5172ea31b88a7b6645ea20b784355ab6",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING_AND_INFERENCE_MEMORY",
+      "reduction": [
+        "active-perception-memory",
+        "spatial-search-planning",
+        "sft-and-rl-posttraining"
+      ],
+      "note": "PanoSeeker incrementally builds a spatial EgoSphere during an episode and is trained with expert trajectories and GRPO. The memory is within-episode active-perception state and the policy is trained offline, not an autonomous persistent behavioral artifact update across tasks.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "cc53c6da157b3b6543ae34463154a7cbf313076cfe498d093d486c4f544eb68b",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.01846",
+      "title": "CLAP: Closed-Loop Training, Evaluation, and Release Control for Domain Agent Post-training",
+      "published": "2026-07-02",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "60876c6e7bac30be3a3a7c7880f40953ec4ff31587d3473eb69adcdd60871b98",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_RELEASE_GOVERNANCE",
+      "reduction": [
+        "posttraining-release-gates",
+        "application-chain-replay",
+        "risk-and-regression-control"
+      ],
+      "note": "CLAP explicitly treats post-training as a governed data-training-evaluation-release loop: it records versioned assets, diagnoses reward/KL/runtime risk, holds regressing batches, and validates adapters in the real application chain with promote/canary/hold/reject/rollback decisions. Only three of five SFT batches improve and its same-3B ABCD replay separates RAG necessity from adapter synthesis gains. This is strong component evidence for release governance and application-level replay, not a new self-evolution scientific object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "6a57ee18fd7d918c4613bf633693c5750f1ca1e019b7787b24a7fb0b1fb07fb2",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.01415",
+      "title": "The Rollout Infrastructure Tax in Coding-Agent Reinforcement Learning",
+      "published": "2026-07-01",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "94fe2e89be6c67f68558b2f8987930ab6e5fd9bfba06524473f4283f9cc0f66b",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_TRAINING_INFRASTRUCTURE",
+      "reduction": [
+        "rollout-infrastructure-benchmark",
+        "rl-systems-efficiency",
+        "execution-substrate-optimization"
+      ],
+      "note": "The Rollout Infrastructure Tax quantifies latency/worker-hour variation across execution substrates for coding-agent RL. It concerns training-system efficiency, not a persistent autonomous self-evolution mechanism.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "ffe8c1f27840e32d9912cc8eb7f151068530a495ababffb0b03c4cebb9611e35",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.01232",
+      "title": "Is One Layer Enough? Training A Single Transformer Layer Can Match Full-Parameter RL Training",
+      "published": "2026-07-01",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "5fbb51f9b8bd6809c1ed35f127cc04eca24132fed6295572c544e1b39c6cb989",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "layerwise-rl-adaptation",
+        "single-layer-finetuning",
+        "offline-policy-training"
+      ],
+      "note": "Is One Layer Enough? measures how RL adaptation is concentrated across transformer layers and shows single-layer training can recover much of full-parameter RL gains. This is an offline training/parameter-allocation result rather than deployment-time persistent self-evolution.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "0bd0b56ecc5782c262424d619a1131be09795378cd631ff6a78af0f5c9e15d76",
+      "fulltext_available": true
+    }
+  ],
+  "next_action": "Record these 16 exact refs as zero-authority source-review exposure. No source satisfies an exact durable reopen contract, so do not trigger generator/provider/GPU work. Preserve SelfMem only as a watch seed requiring a fully informed same-information memory-policy/meta-optimization baseline with matched procedural strategy semantics, transcript/tool feedback, memory/context budget, update compute, and held-out evaluation. Refresh the source scheduler from a new immutable staging copy.",
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
