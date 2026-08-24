@@ -178,7 +178,7 @@ AutoSkill~\citep{yang2026autoskill} exposes a first-party \texttt{sdk.search} se
 \subsection{Matched baselines, representation ablations, and failure analysis}
 Table~\ref{tab:reductions} gives the same-information ladder. Minimum exact-coverage pruning removes 61.2\% of Level-1 overlap (183 to 71 multi-membership rows), yet arbitrary nonnegative package mass with the full support matrix still has $R^*=2$ on full, calibration, and heldout regimes. Exact column cloning/splitting leaves the support cone and $R^*(A;q)$ unchanged; quotienting restores the original support rows and interpretable witness layer (Figure~\ref{fig:ablation-robustness}A).
 
-Across 49 Level-1 tools, 4 have the closed-form witness and all are residual; all 10 overlap-without-witness tools are resolved equalizable by the exact LP (Figure~\ref{fig:ablation-robustness}C). One-cell stress is also asymmetric and explicit: all 1,387 additions and all 366 non-uncovering deletions keep Level-1 residual, whereas Level-3 turns residual under every one of 102 additions and the logical domain breaks under 127/595 valid deletions. Earlier leave-one-out and 500 fixed-seed tool bootstraps remain consistent.
+Across 49 Level-1 tools, 4 have the closed-form witness and all are residual; all 10 overlap-without-witness tools are equalizable by the exact LP. One-cell stress is asymmetric: all 1,387 additions and all 366 non-uncovering deletions keep Level-1 residual, whereas Level-3 turns residual under all 102 additions and the logical domain breaks under 127/595 valid deletions. Earlier leave-one-out and 500 fixed-seed tool bootstraps remain consistent.
 
 \paragraph{E4: structured support, target, and weight sensitivity.}
 All 184 tool-block$\times$package biases and 49/56 observed-signature relabels remain residual; only 3/9 package-wide coverage-preserving variants do. Exact neutral-target MILPs require at least 22 added cells (the \texttt{skill\_015} completion) or 71 deletions to reach $R^*=1$. Stronger controls agree: 200 degree-preserving bipartite rewirings all retain $R^*=2$; seven frozen representation-independent tool-frequency target rays are all residual (neutral $q$ is least distorted at $R^*=2$); and max-share $\rho\in[1/6,1]$ leaves $R^*=2$. These are sensitivity controls, not a randomization $p$-value or deployment-priority claim.
@@ -189,7 +189,7 @@ Iteratively peeling all positive-mass rows of one tight sparse dual optimum leav
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.99\linewidth]{figures/stri-ablation-robustness.pdf}
-\caption{Representation-ablation and robustness evidence. \textbf{A:} clone-induced raw multiplicity/witness changes vanish under exact-support quotienting. \textbf{B:} factor-2 witnesses survive deletion tests and 500 tool resamples. \textbf{C:} the simple witness is only a template; exact LP subsequently resolves the ten overlap/no-witness tools as equalizable.}
+\caption{Structural robustness. \textbf{A:} clone perturbation and quotient recovery. \textbf{B:} exact edit radii are 22 additions/71 deletions; 200/200 degree-preserving rewirings retain $R^*=2$. \textbf{C:} the residual survives 22 disjoint three-row witnesses spanning 19 tools. \textbf{D:} 7/7 frozen target rays remain residual and max-share $\rho\in[1/6,1]$ leaves $R^*=2$.}
 \label{fig:ablation-robustness}
 \end{figure}
 

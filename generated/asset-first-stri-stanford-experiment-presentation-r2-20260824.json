@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "paper_label": "E1.STRI",
+  "round": "R2-EXPERIMENT-PRESENTATION-AND-REPRODUCTION",
+  "analysis_date": "2026-08-24",
+  "branch": "paper/e1-stri-stanford-template-20260824",
+  "parent_enrichment_commit": "63f6775",
+  "purpose": "Convert the frozen structural-enrichment experiments into reviewer-readable main-paper evidence and a fully reproducible anonymous release candidate without expanding the scientific claim contract.",
+  "main_paper_changes": {
+    "figure": "paper_drafts/figures/stri-ablation-robustness.pdf",
+    "figure_panels": {
+      "A": "representation clone perturbation and exact quotient recovery",
+      "B": "exact neutral-target support-edit radii plus degree-preserving rewiring control",
+      "C": "successive pairwise-disjoint sparse dual-witness peeling",
+      "D": "representation-independent target-ray and max-share sensitivity"
+    },
+    "exact_support_edit_radius": {"minimum_additions": 22, "minimum_deletions": 71, "mip_gap": 0.0, "verified_equalizable_R_star": 1.0},
+    "degree_preserving_rewires": {"draws": 200, "residual": 200, "equalizable": 0, "R_star": 2.0},
+    "target_rays": {"tested": 7, "residual": 7, "neutral_R_star": 2.0},
+    "max_share": {"feasible_tested": 9, "preserve_R_star_2": 9, "rho_range": [0.16666666666666666, 1.0]},
+    "witness_peeling": {"pairwise_disjoint_three_row_witnesses": 22, "rows_removed": 66, "tools_spanned": 19, "final_R_star": 1.0},
+    "obsolete_panel_reference_removed": true
+  },
+  "paper_quality": {
+    "paper_qa": {"status": "PASS", "checks_passed": 97, "checks_total": 97},
+    "official_iclr_qa": {"status": "PASS", "checks_passed": 64, "checks_total": 64, "main_text_pages": 9, "main_text_page_limit": 9, "total_pdf_pages": 11, "citation_count": 19},
+    "paper_quality_v2_in_memory": {"status": "PASS_MANUSCRIPT_EVIDENCE", "passed": true, "evidence_debt": 0},
+    "load_bearing_change": "AN-SENSITIVITY and O-SENSITIVITY now require the structural-enrichment artifacts to pass, rather than treating them as decorative figure evidence."
+  },
+  "anonymous_supplement_verification": {
+    "temporary_package_only": true,
+    "canonical_supplement_overwritten": false,
+    "manifest_entries": 70,
+    "anonymity_scan": "PASS",
+    "reproduce_py": "PASS",
+    "reproduced_structural_enrichment": {
+      "target_rays_residual": "7/7",
+      "degree_preserving_rewires_residual": "200/200",
+      "max_share_constraints_preserving_R_star_2": "9/9",
+      "disjoint_three_row_witnesses": 22,
+      "witness_rows_removed": 66,
+      "witness_tools_spanned": 19,
+      "minimum_additions_to_equalizable": 22,
+      "minimum_deletions_to_equalizable": 71,
+      "new_model_calls": 0,
+      "new_gpu_runs": 0
+    },
+    "unit_tests": "29/29 PASS"
+  },
+  "release_candidate": {
+    "directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r11-structural-enrichment-20260824",
+    "pdf": {
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r11-structural-enrichment-20260824/E1-STRI-R11-structural-enrichment.pdf",
+      "sha256": "c42daae7e245e67264ebd29f3c1a2b944f172b99bc87c9f6968977c112d65825"
+    },
+    "source_zip": {
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r11-structural-enrichment-20260824/E1-STRI-R11-structural-enrichment-source.zip",
+      "sha256": "61dfeef20a2af55833072edd10fbcdd53498420feb8f874305374dc8e12f3eb5",
+      "files": 12,
+      "isolated_compile": "PASS"
+    },
+    "supplement_zip": {
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r11-structural-enrichment-20260824/E1-STRI-R11-structural-enrichment-supplement.zip",
+      "sha256": "4a28ddc2db92d3f38141ea0496ce6989796ed93e7566b9831c77c2e77c075586",
+      "files": 71,
+      "manifest_entries": 70,
+      "anonymity_scan": "PASS",
+      "reproduction": "PASS",
+      "unit_tests": "29/29 PASS"
+    },
+    "canonical_release_overwritten": false
+  },
+  "sha256": {
+    "manuscript_body": "35a1d273e56698f240a959188c177b648673b5d93df61f4484b74c8bb58c9537",
+    "plot_script": "ae0809cf4a247c4b0168372befb447543ce80a4d94fcb3d67fa26262eb9f0155",
+    "figure_pdf": "e15b04a862cf2aa6773569b7c8b81da3165a6fcbf4e3a172c00388db0d2079af",
+    "figure_png": "dd768926b1a1542fc96d4f21cd8c736d8b8646f4f7a916abed328f1905a0dfc8",
+    "paper_quality_code": "5f3a7bcbb8cac95f24fe04cd89534f23916d4599ee486b2d59427fecfcf02576",
+    "release_refresh_code": "a7b6e2e0641474357c78542f06159326f633b82a8916bc255280fb367b0acd42"
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "N1_N2_N3_scope_changed": false,
+    "new_outcome_data": false,
+    "new_support_annotations": false,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "qwen3_proposer_qualification_failure_reopened": false,
+    "task_utility_claim_added": false,
+    "general_safety_claim_added": false,
+    "mixed_support_edit_robustness_claim_added": false,
+    "learned_support_calibration_claim_added": false
+  },
+  "scientific_authority": false,
+  "disposition": "R11_STRUCTURAL_ENRICHMENT_RELEASE_CANDIDATE_VERIFIED"
+}

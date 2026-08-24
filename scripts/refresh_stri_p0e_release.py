@@ -42,6 +42,10 @@ MEDIATOR_V1_DIAGNOSIS = GEN / "asset-first-stri-autoskill-p19-mediator-isolation
 MEDIATOR_V2_CONTRACT = GEN / "asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json"
 MEDIATOR_V2_RESULT = GEN / "asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json"
 POST_ISOLATION_REVIEW = GEN / "asset-first-stri-post-isolation-review-adjudication-20260819.json"
+TARGET_NULL_ANALYSIS = GEN / "asset-first-stri-target-null-analysis-20260824.json"
+WITNESS_PEELING = GEN / "asset-first-stri-witness-peeling-20260824.json"
+SUPPORT_EDIT_RADIUS = GEN / "asset-first-stri-support-edit-radius-20260824.json"
+STANFORD_EXPERIMENT_ENRICHMENT = GEN / "asset-first-stri-stanford-experiment-enrichment-20260824.json"
 
 DOWNLOAD_PDF = DOWNLOADS / "STRI-ICLR2027.pdf"
 DOWNLOAD_TEX = DOWNLOADS / "STRI-ICLR2027.tex"
@@ -259,6 +263,10 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (GEN / "asset-first-stri-skillrl-final-policy-p0e-contract-20260816.json", "asset-first-stri-skillrl-final-policy-p0e-contract-20260816.json"),
         (GEN / "asset-first-stri-skillrl-final-policy-p0e-panel-20260816.json", "asset-first-stri-skillrl-final-policy-p0e-panel-20260816.json"),
         (GEN / "asset-first-stri-reviewer-extensions-20260819.json", "asset-first-stri-reviewer-extensions-20260819.json"),
+        (TARGET_NULL_ANALYSIS, "asset-first-stri-target-null-analysis-20260824.json"),
+        (WITNESS_PEELING, "asset-first-stri-witness-peeling-20260824.json"),
+        (SUPPORT_EDIT_RADIUS, "asset-first-stri-support-edit-radius-20260824.json"),
+        (STANFORD_EXPERIMENT_ENRICHMENT, "asset-first-stri-stanford-experiment-enrichment-20260824.json"),
         (GEN / "asset-first-stri-released-controller-clone-audit-20260819.json", "asset-first-stri-released-controller-clone-audit-20260819.json"),
         (AUTOSKILL_QUALIFICATION, "asset-first-stri-autoskill-p19-substrate-qualification-20260819.json"),
         (AUTOSKILL_CONTRACT, "asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json"),
@@ -281,8 +289,13 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (ROOT / "research_pipeline" / "test_asset_first_stri_reviewer_extensions.py", "test_asset_first_stri_reviewer_extensions.py"),
         (ROOT / "research_pipeline" / "asset_first_stri_released_controller_clone_audit.py", "asset_first_stri_released_controller_clone_audit.py"),
         (ROOT / "research_pipeline" / "test_asset_first_stri_released_controller_clone_audit.py", "test_asset_first_stri_released_controller_clone_audit.py"),
+        (ROOT / "research_pipeline" / "asset_first_stri_target_null_analysis_20260824.py", "asset_first_stri_target_null_analysis_20260824.py"),
+        (ROOT / "research_pipeline" / "asset_first_stri_witness_peeling_20260824.py", "asset_first_stri_witness_peeling_20260824.py"),
+        (ROOT / "research_pipeline" / "asset_first_stri_support_edit_radius_20260824.py", "asset_first_stri_support_edit_radius_20260824.py"),
+        (ROOT / "research_pipeline" / "test_asset_first_stri_target_null_analysis_20260824.py", "test_asset_first_stri_target_null_analysis_20260824.py"),
     ]:
         shutil.copy2(source, tree / "research_pipeline" / name)
+    shutil.copy2(PAPER / "stri-20260816-plot-ablation-robustness.py", tree / "paper_drafts" / "stri-20260816-plot-ablation-robustness.py")
 
     meta_path = tree / "PACKAGE-METADATA.json"
     meta = load(meta_path)
@@ -307,6 +320,38 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         "artifact_sha256": sha(reviewer_artifact),
         "contents": ["exact LP dual", "semantic-first target construction", "max-share constrained audit", "exhaustive one-cell support perturbations", "per-tool exact LP"],
         "learned_support_calibration_claim": False,
+    }
+    target_null = load(TARGET_NULL_ANALYSIS)
+    witness_peeling = load(WITNESS_PEELING)
+    support_edit = load(SUPPORT_EDIT_RADIUS)
+    ts = ((target_null.get("target_ray_sensitivity") or {}).get("summary") or {})
+    ms = ((target_null.get("max_share_sensitivity") or {}).get("summary") or {})
+    ns = ((target_null.get("degree_preserving_null_ensemble") or {}).get("summary") or {})
+    ws = ((witness_peeling.get("witness_peeling") or {}).get("summary") or {})
+    er = support_edit.get("support_edit_radius") or {}
+    if not (
+        ts.get("targets") == 7 and ts.get("all_tested_targets_residual") is True
+        and ms.get("valid_constraints") == 9 and ms.get("all_valid_constraints_residual") is True
+        and ns.get("residual_draws") == 200 and ns.get("equalizable_draws") == 0
+        and ws.get("peeling_rounds_before_equalizable") == 22 and ws.get("pairwise_disjoint_witness_rows_removed") == 66 and ws.get("unique_tools_spanned") == 19
+        and er.get("minimum_additions_to_equalizable") == 22 and er.get("minimum_deletions_to_equalizable") == 71
+        and abs(float((er.get("addition_solution") or {}).get("mip_gap", -1.0))) < 1e-12
+        and abs(float((er.get("deletion_solution") or {}).get("mip_gap", -1.0))) < 1e-12
+    ):
+        raise RuntimeError("STRI structural-enrichment artifacts failed frozen checks")
+    meta["structural_enrichment"] = {
+        "target_null_artifact": "artifacts/asset-first-stri-target-null-analysis-20260824.json",
+        "target_null_sha256": sha(TARGET_NULL_ANALYSIS),
+        "witness_peeling_artifact": "artifacts/asset-first-stri-witness-peeling-20260824.json",
+        "witness_peeling_sha256": sha(WITNESS_PEELING),
+        "support_edit_radius_artifact": "artifacts/asset-first-stri-support-edit-radius-20260824.json",
+        "support_edit_radius_sha256": sha(SUPPORT_EDIT_RADIUS),
+        "enrichment_receipt": "artifacts/asset-first-stri-stanford-experiment-enrichment-20260824.json",
+        "enrichment_receipt_sha256": sha(STANFORD_EXPERIMENT_ENRICHMENT),
+        "headline": {"target_rays_residual": "7/7", "degree_preserving_rewires_residual": "200/200", "disjoint_three_row_witnesses": 22, "witness_tools_spanned": 19, "minimum_additions_to_equalizable": 22, "minimum_deletions_to_equalizable": 71, "max_share_constraints_preserving_R_star_2": "9/9"},
+        "new_model_calls": 0,
+        "new_gpu_runs": 0,
+        "claim_expansion": False,
     }
     controller_artifact = GEN / "asset-first-stri-released-controller-clone-audit-20260819.json"
     controller = load(controller_artifact)
@@ -376,6 +421,9 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
     reviewer_marker = "## Reviewer-requested certificate extensions"
     if reviewer_marker not in readme:
         readme += """\n\n## Reviewer-requested certificate extensions\n\n`artifacts/asset-first-stri-reviewer-extensions-20260819.json` records the exact LP dual, semantic-first target construction, max-share-constrained certificate, exhaustive single-support-edge perturbation audit, and per-tool exact LP analysis used in the revised manuscript. These analyses are deterministic over the packaged frozen support matrices. The one-cell perturbation audit is a finite local sensitivity analysis, not a claim that learned support labels are calibrated or that arbitrary multi-cell support error is harmless.\n"""
+    structural_marker = "## Structural robustness enrichment"
+    if structural_marker not in readme:
+        readme += """\n\n## Structural robustness enrichment\n\nThe revised main-paper robustness panel is reproduced from the packaged frozen Skill-SP Level-1 membership matrix without model calls or GPU execution. `artifacts/asset-first-stri-target-null-analysis-20260824.json` records seven representation-independent tool-frequency target rays, nine feasible max-share constraints, and 200 degree-preserving bipartite rewires; all tested cases remain residual and every rewire has neutral `R*=2`. `artifacts/asset-first-stri-witness-peeling-20260824.json` records 22 successive pairwise-disjoint three-row dual witnesses spanning 19 tools before the peeled remainder becomes equalizable. `artifacts/asset-first-stri-support-edit-radius-20260824.json` solves exact addition-only and deletion-only MILPs: at least 22 support additions or 71 deletions are required to make the frozen neutral target equalizable, with MIP gap zero and independent `R*` verification. `reproduce.py` recomputes these results from the packaged membership data; the stored artifacts are provenance receipts, not substitutes for reproduction. These controls do not validate learned support, mixed-edit robustness, downstream utility, or a broader dynamic STRI claim.\n"""
     controller_marker = "## Released Skill-SP controller audit"
     if controller_marker not in readme:
         readme += """\n\n## Released Skill-SP controller audit\n\n`artifacts/asset-first-stri-released-controller-clone-audit-20260819.json` is the content-addressed receipt for the sampler/prompt-mixture audit. The audit code and unit tests are packaged under `research_pipeline/`. The third-party Skill-SP repository is intentionally not copied into this supplement. To rerun the first-party audit end-to-end, obtain the author release at the exact commit recorded in the receipt and run the packaged audit against the packaged `data/skillsp-toolcall-membership.jsonl`. The receipt records that a same-content clone yields the identical author questioner message string while the released ID-normalized sampler changes message-class mixture TV to 7/120; quotient-conserved class mass restores prompt-mixture and exposure TV to zero. This is a controller-input-distribution result, not downstream utility evidence.\n"""
@@ -396,6 +444,12 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
             "from research_pipeline.asset_first_stri_paper_analysis_suite import build as build_paper_analysis\nfrom research_pipeline.asset_first_stri_reviewer_extensions import evaluate as evaluate_reviewer_extensions\n",
             1,
         )
+    if "from research_pipeline.asset_first_stri_target_null_analysis_20260824 import build as build_target_null" not in reproduce:
+        reproduce = reproduce.replace(
+            "from research_pipeline.asset_first_stri_reviewer_extensions import evaluate as evaluate_reviewer_extensions\n",
+            "from research_pipeline.asset_first_stri_reviewer_extensions import evaluate as evaluate_reviewer_extensions\nfrom research_pipeline.asset_first_stri_target_null_analysis_20260824 import build as build_target_null\nfrom research_pipeline.asset_first_stri_witness_peeling_20260824 import build as build_witness_peeling\nfrom research_pipeline.asset_first_stri_support_edit_radius_20260824 import build as build_support_edit_radius\n",
+            1,
+        )
     if marker_code not in reproduce:
         check_code = f'''\n    {marker_code}\n    p0e = json.loads((ROOT / "artifacts/{artifact_name}").read_text())\n    assert p0e["competence_calibration"]["pristine_success"] == 18\n    assert p0e["paired_causal_result"]["paired_units"] == 24\n    assert set(p0e["paired_causal_result"]["success_rate"].values()) == {{0.75}}\n    assert set(p0e["paired_causal_result"]["paired_disagreement"].values()) == {{0.0}}\n    assert p0e["trajectory_boundary"]["B_vs_A_action_sequence_disagreement"] == 11\n    assert p0e["trajectory_boundary"]["C_vs_A_action_sequence_disagreement"] == 15\n    assert p0e["trajectory_boundary"]["D_vs_A_exact_trajectory_units"] == 24\n    assert p0e["trajectory_boundary"]["any_simple_B_over_C_dominance_supported"] is False\n    assert p0e["statistical_resolution"]["two_sided_exact_mcnemar_p_at_effect_floor"] == 0.25\n    assert p0e["statistical_resolution"]["minimum_unidirectional_discordances_for_p_lt_0_05"] == 6\n    assert p0e["final_disposition"]["experimental_stop_valid"] is True\n    assert p0e["final_disposition"]["persistent_principle_dead_end_certified"] is False\n    assert p0e["final_disposition"]["broader_STRI_N1_N2_N3_unchanged"] is True\n    p0e_summary = {{"experimental_realization": p0e["final_disposition"]["experimental_realization"], "principle_disposition": p0e["final_disposition"]["principle_disposition"], "paired_units": 24, "terminal_success_per_arm": "18/24", "endpoint_disagreement": 0, "B_action_diff": 11, "C_action_diff": 15, "persistent_principle_dead_end_certified": False}}\n'''
         reproduce = reproduce.replace("\n    out = {", check_code + "\n    out = {", 1)
@@ -405,6 +459,11 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         reviewer_code = '''\n    # REVIEWER EXTENSIONS CHECK\n    reviewer = evaluate_reviewer_extensions(tool_rows, logical_rows)\n    checks = reviewer["headline_checks"]\n    assert checks["all_primal_dual_gaps_le_1e_8"] is True\n    assert checks["semantic_first_neutral_target_exact_on_all_five_regimes"] is True\n    assert checks["level1_residual_survives_all_single_support_additions"] is True\n    assert checks["level1_residual_survives_all_nonuncovering_single_support_deletions"] is True\n    assert checks["logical_rho_075_not_equalizable"] is True\n    assert checks["logical_single_deletions_can_break_equalizability"] is True\n    assert checks["all_overlap_without_simple_witness_tools_resolve_equalizable"] is True\n    reviewer_summary = {\n        "headline_checks": checks,\n        "level1": reviewer["contexts"]["api_bank_level1_all"],\n        "logical": reviewer["contexts"]["logical_compiler_validation"],\n        "per_tool": reviewer["per_tool_exact_lp"],\n    }\n'''
         reproduce = reproduce.replace("\n    out = {", reviewer_code + "\n    out = {", 1)
         reproduce = reproduce.replace('        "skillrl_p0e": p0e_summary,', '        "skillrl_p0e": p0e_summary,\n        "reviewer_extensions": reviewer_summary,', 1)
+    structural_code_marker = "# STRUCTURAL ROBUSTNESS ENRICHMENT CHECK"
+    if structural_code_marker not in reproduce:
+        structural_code = '''\n    # STRUCTURAL ROBUSTNESS ENRICHMENT CHECK\n    structural_membership = ROOT / "data/skillsp-toolcall-membership.jsonl"\n    target_null = build_target_null(structural_membership)\n    target_summary = target_null["target_ray_sensitivity"]["summary"]\n    share_summary = target_null["max_share_sensitivity"]["summary"]\n    null_summary = target_null["degree_preserving_null_ensemble"]["summary"]\n    assert target_summary["targets"] == 7\n    assert target_summary["all_tested_targets_residual"] is True\n    assert abs(target_summary["neutral_R_star"] - 2.0) < 1e-12\n    assert share_summary["valid_constraints"] == 9\n    assert share_summary["all_valid_constraints_residual"] is True\n    assert null_summary["residual_draws"] == 200 and null_summary["equalizable_draws"] == 0\n    assert abs(null_summary["minimum_R_star"] - 2.0) < 1e-12 and abs(null_summary["maximum_R_star"] - 2.0) < 1e-12\n    witness = build_witness_peeling(structural_membership)\n    witness_summary = witness["witness_peeling"]["summary"]\n    assert witness_summary["peeling_rounds_before_equalizable"] == 22\n    assert witness_summary["pairwise_disjoint_witness_rows_removed"] == 66\n    assert witness_summary["unique_tools_spanned"] == 19\n    assert abs(witness_summary["final_R_star"] - 1.0) < 1e-12\n    edit = build_support_edit_radius(structural_membership)\n    edit_radius = edit["support_edit_radius"]\n    assert edit_radius["minimum_additions_to_equalizable"] == 22\n    assert edit_radius["minimum_deletions_to_equalizable"] == 71\n    assert abs(edit_radius["addition_solution"]["mip_gap"]) < 1e-12\n    assert abs(edit_radius["deletion_solution"]["mip_gap"]) < 1e-12\n    assert abs(edit_radius["addition_solution"]["verified_R_star"] - 1.0) < 1e-12\n    assert abs(edit_radius["deletion_solution"]["verified_R_star"] - 1.0) < 1e-12\n    structural_summary = {\n        "target_rays_residual": "7/7",\n        "degree_preserving_rewires_residual": "200/200",\n        "max_share_constraints_preserving_R_star_2": "9/9",\n        "disjoint_three_row_witnesses": 22,\n        "witness_rows_removed": 66,\n        "witness_tools_spanned": 19,\n        "minimum_additions_to_equalizable": 22,\n        "minimum_deletions_to_equalizable": 71,\n        "new_model_calls": 0,\n        "new_gpu_runs": 0,\n    }\n'''
+        reproduce = reproduce.replace("\n    out = {", structural_code + "\n    out = {", 1)
+        reproduce = reproduce.replace('        "reviewer_extensions": reviewer_summary,', '        "reviewer_extensions": reviewer_summary,\n        "structural_enrichment": structural_summary,', 1)
     controller_code_marker = "# RELEASED CONTROLLER AUDIT RECEIPT CHECK"
     if controller_code_marker not in reproduce:
         controller_code = '''\n    # RELEASED CONTROLLER AUDIT RECEIPT CHECK\n    controller = json.loads((ROOT / "artifacts/asset-first-stri-released-controller-clone-audit-20260819.json").read_text())\n    assert controller["all_checks_pass"] is True\n    cc = controller["checks"]\n    assert cc["clone_weights_recomputed_by_author_sampling_function"] is True\n    assert cc["author_duplicate_filter_would_reject_literal_exact_text_clone"] is True\n    assert cc["same_content_clone_has_identical_author_questioner_messages"] is True\n    assert cc["released_sampler_clone_changes_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conservation_exactly_restores_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conserved_allocation_exactly_restores_base_exposure"] is True\n    ch = controller["headline"]\n    assert abs(ch["base_package_probability"] - (1.0 / 15.0)) < 1e-12\n    assert abs(ch["exact_clone_family_probability"] - (1.0 / 8.0)) < 1e-12\n    assert len(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"][0] - (7.0 / 120.0)) < 1e-12\n    assert len(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"][0]) < 1e-12\n    assert len(ch["quotient_conserved_exposure_profile_tv_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_exposure_profile_tv_all_targets"][0]) < 1e-12\n    controller_summary = {\n        "author_repo_commit": controller["author_release"]["commit"],\n        "all_checks_pass": True,\n        "base_package_probability": ch["base_package_probability"],\n        "clone_family_probability": ch["exact_clone_family_probability"],\n        "released_prompt_mixture_tv": ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_prompt_mixture_tv": ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_exposure_profile_tv": ch["quotient_conserved_exposure_profile_tv_all_targets"],\n        "third_party_author_repo_packaged": False,\n    }\n'''
@@ -471,8 +530,8 @@ def build_and_verify_supplement() -> dict:
         repro_python = find_repro_python()
         repro = run([repro_python, "reproduce.py"], cwd=tree)
         reproduced = json.loads((tree / "outputs" / "reproduction-summary.json").read_text(encoding="utf-8"))
-        if reproduced.get("status") != "PASS" or "skillrl_p0e" not in reproduced or "autoskill_p19_dynamic" not in reproduced or "autoskill_p19_mediator_isolation" not in reproduced:
-            raise RuntimeError("supplement reproduction did not retain SkillRL P0-E, AutoSkill P19 Stage-3, and mediator-isolation receipts")
+        if reproduced.get("status") != "PASS" or "skillrl_p0e" not in reproduced or "structural_enrichment" not in reproduced or "autoskill_p19_dynamic" not in reproduced or "autoskill_p19_mediator_isolation" not in reproduced:
+            raise RuntimeError("supplement reproduction did not retain STRI structural enrichment, SkillRL P0-E, AutoSkill P19 Stage-3, and mediator-isolation receipts")
         tests = run([repro_python, "-m", "unittest", "discover", "-s", "research_pipeline", "-t", ".", "-p", "test_asset_first_stri_*.py"], cwd=tree)
         test_line = next((line.strip() for line in tests.stdout.splitlines() if line.startswith("Ran ")), "")
         if "OK" not in tests.stdout:
@@ -507,6 +566,7 @@ def build_and_verify_supplement() -> dict:
         state["isolated_verification"]["text_identity_path_scan"] = "PASS"
         state["isolated_verification"]["unit_tests"] = f"{unit_test_count}/{unit_test_count} PASS"
         state["reproduced_results"]["skillrl_p0e"] = p0e_summary(receipt)
+        state["reproduced_results"]["structural_enrichment"] = reproduced.get("structural_enrichment") or {}
         state["reproduced_results"]["released_controller_audit"] = reproduced.get("released_controller_audit") or {}
         state["reproduced_results"]["autoskill_p19_dynamic"] = reproduced.get("autoskill_p19_dynamic") or {}
         state["reproduced_results"]["autoskill_p19_mediator_isolation"] = reproduced.get("autoskill_p19_mediator_isolation") or {}
@@ -576,6 +636,7 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
         "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
         "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety",
         "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
+        "treating the 22-addition/71-deletion support-edit radii as robustness to mixed edits, learned-support error, or downstream utility perturbations",
     ]))
     final["new_gpu_evidence_required_for_current_claim_scope"] = False
     final["delivery"]["pdf"].update({"path": str(REMOTE_PDF), "sha256": sha(REMOTE_PDF)})
@@ -586,6 +647,25 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
         "passed": bool(paper_quality.get("paper_quality_gate_passed", False)),
         "evidence_debt": len((paper_quality.get("evidence_debt") or {}).get("missing_or_incomplete_ids") or []),
     })
+    target_null_release = load(TARGET_NULL_ANALYSIS)
+    witness_release = load(WITNESS_PEELING)
+    edit_release = load(SUPPORT_EDIT_RADIUS)
+    final["structural_enrichment"] = {
+        "target_null_sha256": sha(TARGET_NULL_ANALYSIS),
+        "witness_peeling_sha256": sha(WITNESS_PEELING),
+        "support_edit_radius_sha256": sha(SUPPORT_EDIT_RADIUS),
+        "target_rays_residual": f"{((target_null_release.get('target_ray_sensitivity') or {}).get('summary') or {}).get('residual_targets')}/7",
+        "degree_preserving_rewires_residual": f"{((target_null_release.get('degree_preserving_null_ensemble') or {}).get('summary') or {}).get('residual_draws')}/200",
+        "max_share_constraints_preserving_R_star_2": f"{((target_null_release.get('max_share_sensitivity') or {}).get('summary') or {}).get('valid_constraints')}/9",
+        "disjoint_three_row_witnesses": ((witness_release.get("witness_peeling") or {}).get("summary") or {}).get("peeling_rounds_before_equalizable"),
+        "witness_tools_spanned": ((witness_release.get("witness_peeling") or {}).get("summary") or {}).get("unique_tools_spanned"),
+        "minimum_additions_to_equalizable": (edit_release.get("support_edit_radius") or {}).get("minimum_additions_to_equalizable"),
+        "minimum_deletions_to_equalizable": (edit_release.get("support_edit_radius") or {}).get("minimum_deletions_to_equalizable"),
+        "new_model_calls": 0,
+        "new_gpu_runs": 0,
+        "claim_expansion": False,
+        "supplement_reproduction_verified": True,
+    }
     final["dynamic_boundary"] = {
         "skillrl_p0e_experimental_realization": str(principle.get("experimental_realization_disposition") or ""),
         "skillrl_p0e_principle_disposition": str(principle.get("principle_disposition") or ""),
@@ -620,6 +700,11 @@ def refresh_delivery(qa: dict, source: dict, supplement: dict) -> dict:
         "new_gpu_evidence_required_for_current_claim_scope": False,
         "paper_quality_v2": "PASS_MANUSCRIPT_EVIDENCE_V2_1",
         "paper_quality_evidence_debt": 0,
+        "stri_structural_edit_radius": "22 additions / 71 deletions to neutral equalizability",
+        "stri_degree_preserving_rewires": "200/200 retain R*=2",
+        "stri_target_rays": "7/7 residual",
+        "stri_max_share_constraints": "9/9 retain R*=2",
+        "stri_witness_peeling": "22 disjoint three-row witnesses spanning 19 tools",
         "skillrl_p0e_experimental_realization": str(principle.get("experimental_realization_disposition") or ""),
         "skillrl_p0e_principle_disposition": str(principle.get("principle_disposition") or ""),
         "skillrl_p0e_persistent_dead_end": False,
