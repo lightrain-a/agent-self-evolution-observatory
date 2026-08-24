@@ -1,0 +1,452 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-C45-REASONINGBANK-MEMORY-AVAILABILITY-R12",
+  "recorded_date": "2026-08-24",
+  "status": "ZERO_LOCAL_EXACT_MEMORY_BYTES_UNIFORM_36_WRITER_REALIZATION_PREFERRED",
+  "role": "ZERO_CALL_SOURCE_MEMORY_AVAILABILITY_CENSUS",
+  "parent_r9": {
+    "status": "NATIVE_STATUS_FIELD_AND_36_UNIT_COHORT_VERIFIED_EXECUTION_BLOCKED",
+    "source_task_count": 36,
+    "source_task_ids": [
+      "163",
+      "352",
+      "239",
+      "270",
+      "432",
+      "330",
+      "654",
+      "529",
+      "148",
+      "437",
+      "125",
+      "320",
+      "145",
+      "690",
+      "572",
+      "335",
+      "159",
+      "507",
+      "298",
+      "466",
+      "512",
+      "795",
+      "586",
+      "517",
+      "48",
+      "280",
+      "360",
+      "285",
+      "325",
+      "261",
+      "275",
+      "231",
+      "190",
+      "510",
+      "21",
+      "385"
+    ],
+    "source_assignment_sha256": "cb1db95e9cc86344b6e3a8144d50bf3cb6e3ad6c4e33354e5f3cf116dfc1bff2"
+  },
+  "bounded_census_scope": {
+    "local_run_root": "/data/wyt/agent-self-evolution-observatory/runs/d2-paper-failure-memory-provenance-20260822-c45",
+    "local_plausible_exact_memory_files": [],
+    "git_submission_package_result": "summary/aggregate receipts only; no exact R4/R6 memory text discovered in bounded audit",
+    "r6_remote_recheck": "SSH_TIMEOUT_2026_08_24",
+    "r6_remote_exact_bytes_counted_as_available": false
+  },
+  "summary": {
+    "local_exact_reasoningbank_bytes_verified": 0,
+    "historical_reasoningbank_writer_output_hash_or_remote_only": 8,
+    "generic_auxiliary_guidance_construct_invalid": 2,
+    "no_valid_historical_memory_artifact_discovered": 26,
+    "historical_reasoningbank_hash_or_remote_task_ids": [
+      "148",
+      "145",
+      "159",
+      "298",
+      "48",
+      "231",
+      "190",
+      "385"
+    ],
+    "generic_auxiliary_invalid_task_ids": [
+      "125",
+      "360"
+    ],
+    "no_valid_historical_artifact_task_ids": [
+      "163",
+      "352",
+      "239",
+      "270",
+      "432",
+      "330",
+      "654",
+      "529",
+      "437",
+      "320",
+      "690",
+      "572",
+      "335",
+      "507",
+      "466",
+      "512",
+      "795",
+      "586",
+      "517",
+      "280",
+      "285",
+      "325",
+      "261",
+      "275",
+      "510",
+      "21"
+    ],
+    "exact_reasoningbank_memory_coverage_for_execution": "0/36",
+    "support_gate_pass_for_immediate_l2_execution": false
+  },
+  "source_memory_rows": [
+    {
+      "source_task_id": "163",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "352",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "239",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "270",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "432",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "330",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "654",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "529",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "148",
+      "category": "HISTORICAL_REASONINGBANK_WRITER_OUTPUT_HASH_OR_REMOTE_ONLY",
+      "evidence": {
+        "historical_stage": "R6",
+        "aggregate_memories_sha256": "a2a04f2fa6569b42c515662ef899c495d87b21fc3d70f803976a752b45aa345f",
+        "remote_run_root": "/data/wyt/agent-self-evolution-observatory/runs/d2-paper-failure-memory-provenance-20260822-c45/r6",
+        "remote_host": "root@10.42.8.52",
+        "exact_bytes_local": false
+      }
+    },
+    {
+      "source_task_id": "437",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "125",
+      "category": "GENERIC_AUXILIARY_GUIDANCE_CONSTRUCT_INVALID",
+      "evidence": {
+        "historical_stage": "EXPLICIT_CUE_BRIDGE",
+        "reason_invalid": "fixed generic guidance is not a naturally generated ReasoningBank memory item",
+        "may_substitute_for_r9_memory": false
+      }
+    },
+    {
+      "source_task_id": "320",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "145",
+      "category": "HISTORICAL_REASONINGBANK_WRITER_OUTPUT_HASH_OR_REMOTE_ONLY",
+      "evidence": {
+        "historical_stage": "R6",
+        "aggregate_memories_sha256": "a2a04f2fa6569b42c515662ef899c495d87b21fc3d70f803976a752b45aa345f",
+        "remote_run_root": "/data/wyt/agent-self-evolution-observatory/runs/d2-paper-failure-memory-provenance-20260822-c45/r6",
+        "remote_host": "root@10.42.8.52",
+        "exact_bytes_local": false
+      }
+    },
+    {
+      "source_task_id": "690",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "572",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "335",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "159",
+      "category": "HISTORICAL_REASONINGBANK_WRITER_OUTPUT_HASH_OR_REMOTE_ONLY",
+      "evidence": {
+        "historical_stage": "R6",
+        "aggregate_memories_sha256": "a2a04f2fa6569b42c515662ef899c495d87b21fc3d70f803976a752b45aa345f",
+        "remote_run_root": "/data/wyt/agent-self-evolution-observatory/runs/d2-paper-failure-memory-provenance-20260822-c45/r6",
+        "remote_host": "root@10.42.8.52",
+        "exact_bytes_local": false
+      }
+    },
+    {
+      "source_task_id": "507",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "298",
+      "category": "HISTORICAL_REASONINGBANK_WRITER_OUTPUT_HASH_OR_REMOTE_ONLY",
+      "evidence": {
+        "historical_stage": "R6",
+        "aggregate_memories_sha256": "a2a04f2fa6569b42c515662ef899c495d87b21fc3d70f803976a752b45aa345f",
+        "remote_run_root": "/data/wyt/agent-self-evolution-observatory/runs/d2-paper-failure-memory-provenance-20260822-c45/r6",
+        "remote_host": "root@10.42.8.52",
+        "exact_bytes_local": false
+      }
+    },
+    {
+      "source_task_id": "466",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "512",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "795",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "586",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "517",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "48",
+      "category": "HISTORICAL_REASONINGBANK_WRITER_OUTPUT_HASH_OR_REMOTE_ONLY",
+      "evidence": {
+        "historical_stage": "R6",
+        "aggregate_memories_sha256": "a2a04f2fa6569b42c515662ef899c495d87b21fc3d70f803976a752b45aa345f",
+        "remote_run_root": "/data/wyt/agent-self-evolution-observatory/runs/d2-paper-failure-memory-provenance-20260822-c45/r6",
+        "remote_host": "root@10.42.8.52",
+        "exact_bytes_local": false
+      }
+    },
+    {
+      "source_task_id": "280",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "360",
+      "category": "GENERIC_AUXILIARY_GUIDANCE_CONSTRUCT_INVALID",
+      "evidence": {
+        "historical_stage": "EXPLICIT_CUE_BRIDGE",
+        "reason_invalid": "fixed generic guidance is not a naturally generated ReasoningBank memory item",
+        "may_substitute_for_r9_memory": false
+      }
+    },
+    {
+      "source_task_id": "285",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "325",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "261",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "275",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "231",
+      "category": "HISTORICAL_REASONINGBANK_WRITER_OUTPUT_HASH_OR_REMOTE_ONLY",
+      "evidence": {
+        "historical_stage": "R6",
+        "aggregate_memories_sha256": "a2a04f2fa6569b42c515662ef899c495d87b21fc3d70f803976a752b45aa345f",
+        "remote_run_root": "/data/wyt/agent-self-evolution-observatory/runs/d2-paper-failure-memory-provenance-20260822-c45/r6",
+        "remote_host": "root@10.42.8.52",
+        "exact_bytes_local": false
+      }
+    },
+    {
+      "source_task_id": "190",
+      "category": "HISTORICAL_REASONINGBANK_WRITER_OUTPUT_HASH_OR_REMOTE_ONLY",
+      "evidence": {
+        "historical_stage": "R6",
+        "aggregate_memories_sha256": "a2a04f2fa6569b42c515662ef899c495d87b21fc3d70f803976a752b45aa345f",
+        "remote_run_root": "/data/wyt/agent-self-evolution-observatory/runs/d2-paper-failure-memory-provenance-20260822-c45/r6",
+        "remote_host": "root@10.42.8.52",
+        "exact_bytes_local": false
+      }
+    },
+    {
+      "source_task_id": "510",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "21",
+      "category": "NO_VALID_HISTORICAL_MEMORY_ARTIFACT_DISCOVERED",
+      "evidence": {
+        "exact_bytes_local": false,
+        "historical_reasoningbank_generation_receipt_discovered": false
+      }
+    },
+    {
+      "source_task_id": "385",
+      "category": "HISTORICAL_REASONINGBANK_WRITER_OUTPUT_HASH_OR_REMOTE_ONLY",
+      "evidence": {
+        "historical_stage": "R4",
+        "aggregate_memories_sha256": "02623a2fdad5c87e17ecf175afe26df1d64cb8ac06a623ed3f1da99d1da15bf3",
+        "exact_bytes_local": false,
+        "per_item_digest_available": false
+      }
+    }
+  ],
+  "adjudication": {
+    "scientific_verdict": "NO_VERDICT_SOURCE_MEMORY_BYTES_UNAVAILABLE",
+    "support_failure_is_scientific_failure": false,
+    "recovering_only_historical_8_is_preferred": false,
+    "hybrid_old_and_new_writer_outputs_is_preferred": false,
+    "preferred_future_realization": "Generate one fixed ReasoningBank memory record for all 36 frozen source tasks under one common prospectively frozen writer contract, then content-address and freeze every memory record before any downstream L2 outcome.",
+    "why_uniform_36": "A uniform writer realization avoids mixing historical R4/R6 writer configurations with newly generated memories and prevents availability-driven source-memory heterogeneity.",
+    "actual_native_source_status_may_condition_writer": true,
+    "downstream_metadata_treatment_must_not_regenerate_memory": true,
+    "historical_r5_rescued": false,
+    "o6_l3_unblocked": false
+  },
+  "execution_gate": {
+    "exact_memory_bytes_bound": false,
+    "writer_contract_frozen": false,
+    "writer_calls_permitted": false,
+    "downstream_l2_outcomes_permitted": false,
+    "scientific_authority": false,
+    "experiment_model_call_authority": false
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_calls": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "gpu": false,
+    "submission": false
+  }
+}
