@@ -31,7 +31,7 @@
       "hard_constraint": "High semantic applicability cannot grant actionable authority when evidence validity is contradicted or unverifiable; the reward/success/failure label is not evidence for its own residual."
     },
     "name": "Counterfactual Branch Residual Gating",
-    "novelty_claim_status": "CANDIDATE_ONLY_D0B_CONTRACT_PENDING_FRESH_COLLISION_CLEARANCE",
+    "novelty_claim_status": "STOP_MERGED_CURRENT_EXTENSION_REOPEN_ONLY_ON_NEW_QUALIFIED_EVIDENCE",
     "scientific_residual": "Same-trajectory counterfactual operational branch contrast plus outcome-independent evidence-gated trigger authority over only that contrast. The branch contrast is not an atom-level causal-purity claim without seed/noise-floor control. Neutral/metadata memory, common-core/residual factorization, and semantic applicability are baseline-only components."
   },
   "collision_audit": [
@@ -66,7 +66,7 @@
       "work": "ReasoningBank"
     }
   ],
-  "current_revision": "ICLR-C1-EXECUTABLE-CLOSURE-V3-20260824",
+  "current_revision": "ICLR-C1-EXECUTABLE-CLOSURE-V4-20260825",
   "method_novelty_residual_reviewer_gate": {
     "gate_id": "C1_EXECUTABLE_CLOSURE_REVIEWER_GATE_V3",
     "gate_profile": "C1_EXECUTABLE_CLOSURE_V3",
@@ -132,7 +132,7 @@
         "UNVERIFIABLE"
       ],
       "trigger_authority_status_now": "CONTRACT_ONLY_NO_BRANCH_AUTHORITY",
-      "current_binding_stage": "D0B2_SEMANTIC_ADJUDICATOR_NOT_BOUND_READINESS_HOLD",
+      "current_binding_stage": "D0B2_CURRENT_CBRG_EXTENSION_STOP_MERGE_AFTER_BOUNDED_ADJUDICATOR_INVENTORY",
       "packet_level_evidence_hash_is_not_claim_level_binding": true,
       "candidate_memory_atom_requires_residual_identity_before_semantic_validity": true,
       "operational_branch_contrast_is_not_atom_level_causal_purity": true,
@@ -230,7 +230,7 @@
     "failure_mode": "A single potentially wrong terminal reward bit has undifferentiated authority over the full actionable persistent-memory rewrite, even though much of the reusable procedural content is branch invariant and the branch residual has sparse future decision relevance.",
     "finding": "Reward-conditioned writing is robust, while branch-specific native uptake and terminal transport are sparse and domain/task dependent."
   },
-  "paper_development_state": "ANALYSIS_INCOMPLETE_FOR_TOP_TIER__D0B2_READINESS_HOLD_NO_QUALIFIED_VALIDITY_SIGNAL",
+  "paper_development_state": "STAGE_RESOLVED_IDENTIFICATION_MEASUREMENT_PAPER_RETAINED__CBRG_EXTENSION_STOP_MERGE",
   "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
   "paper_only_repairs_now": [
     "add a main-text stage-resolved boundary figure showing forced leverage versus native Shopping/Reddit transport, first-action uptake, and structured-neutral boundary",
@@ -238,7 +238,7 @@
     "preserve analysis-only fallback if CBRG D0 or method experiment stops"
   ],
   "schema_version": "1.1",
-  "status": "DESIGN_ONLY_NO_PROVIDER_AUTHORITY",
+  "status": "REVISION_ONLY_CBRG_EXTENSION_STOP_MERGE_ZERO_PROVIDER_AUTHORITY",
   "strongest_simple_baselines": [
     "outcome-blind neutral/metadata memory",
     "generic common-core/branch-residual with residual always active",
@@ -280,8 +280,9 @@
       "D0-B1b atom-level causal residual purity: HOLD; not required if method remains operationally defined",
       "D0-B1c operational branch-contrast unit compiler: GO; exact lexical evidence locator: PARTIAL 397/423 with 26 fail-closed unlocated",
       "D0-B2 semantic adjudicator readiness: HOLD; 0 qualified local adjudicators and 0 C1 qualification receipts; MiniLM/lexical similarity remain baseline-only",
-      "D0-B2 semantic validity execution: LOCKED; 26 unlocated units remain future-forced UNVERIFIABLE if B2 reopens",
-      "D0-B3 fresh collision clearance before ProblemGate: LOCKED_BEHIND_B2"
+      "D0-B2 bounded repository adjudicator inventory: EXHAUSTED for the current frozen zero-call closure; 0 external candidates and 0 external qualification receipts",
+      "D0-B2 current CBRG extension: STOP/MERGE; semantic validity execution remains LOCKED and no branch authority is granted",
+      "D0-B3 fresh collision clearance / provider method experiment: NOT REACHED for the stopped current extension; reopen requires new qualified content-addressed evidence"
     ],
     "provider_call_budget": 0,
     "gpu_run_budget": 0,
@@ -454,6 +455,40 @@
     "runner_sha256": "ef20fbc54ec1f8c74c249f389ee97c1096298a03aee073cf873c62d6e1ce0c0a",
     "interpretation": "B1c has made 423 operational contrast units and 397 exact candidate anchors executable, but the frozen local stack currently contains no qualified C1 semantic-validity adjudicator. No entailment/contradiction-labelled classifier was found in the bounded local model search, no C1 semantic qualification receipt exists, and the frozen MiniLM model is an embedding-only BertModel. Therefore no SUPPORTED/CONTRADICTED/UNVERIFIABLE semantic labels are scientifically admissible in this zero-call round.",
     "next_permitted_action": "Zero-call qualification/binding work only. Reopen B2 only after binding a content-addressed support/contradiction/unverifiable-capable classifier or deterministic semantic rule together with an independent pre-outcome C1 qualification receipt and a nonreducibility check against similarity/applicability baselines. Otherwise STOP/MERGE CBRG and preserve C1 as the stage-resolved identification/measurement paper.",
+    "authority": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
+  },
+  "zero_call_D0_B2_adjudicator_inventory_closure_observed": {
+    "status": "D0B2_BOUNDED_ADJUDICATOR_INVENTORY_EXHAUSTED_CURRENT_EXTENSION_STOP_MERGE",
+    "decision": "STOP_MERGE_CBRG_EXTENSION_NO_QUALIFIED_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL",
+    "scope": "CURRENT_FROZEN_ZERO_CALL_CBRG_EXTENSION_ONLY",
+    "local_qualified_adjudicators": 0,
+    "repository_admissible_adjudicators": 0,
+    "external_semantic_qualification_receipts": 0,
+    "repository_text_files_scanned": 597,
+    "tri_state_vocabulary_hits": 12,
+    "entailment_contradiction_vocabulary_hits": 6,
+    "provider_calls": 0,
+    "gpu_runs": 0,
+    "cbrg_extension_terminal_state": "STOP_MERGE_CURRENT_EXTENSION",
+    "c1_measurement_paper_state": "RETAIN_STAGE_RESOLVED_IDENTIFICATION_MEASUREMENT",
+    "existing_measurement_evidence_invalidated": false,
+    "scientific_failure_declared": false,
+    "automatic_reopen": false,
+    "generic_nli_or_renamed_baseline_can_reopen": false,
+    "qualified_content_addressed_reopen_evidence_required": true,
+    "audit_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json",
+    "audit_sha256": "716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc",
+    "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b2_adjudicator_inventory_closure.py",
+    "runner_sha256": "a354ae88093b8b6f2137202f167889532609407bcd97a09d0254ff14c79f1675",
+    "interpretation": "The bounded zero-call closure now covers both the frozen local model inventory and the repository verifier inventory. The repository scan finds only C1 self/gate contract vocabulary hits, with no external executable adjudicator candidate and no external task-specific semantic qualification receipt. Therefore the current CBRG extension is STOP/MERGE. This does not invalidate the stage-resolved C1 measurement evidence and does not declare a C1 scientific failure.",
+    "reopen_rule": "Do not reopen from a generic NLI model, renamed similarity/common-residual baseline, or self-authored post-outcome semantic rule. Reopen only after new content-addressed adjudicator evidence, an independent pre-outcome C1 qualification receipt, non-reducibility against same-information baselines, and fresh collision clearance are all bound.",
     "authority": {
       "scientific": false,
       "experiment": false,

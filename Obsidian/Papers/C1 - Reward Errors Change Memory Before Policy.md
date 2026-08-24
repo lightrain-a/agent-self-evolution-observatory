@@ -131,9 +131,13 @@ D0-B1a establishes a narrower positive result without new calls: all **24/24** f
 
 D0-B1c now makes that object executable. It compiles **423/423** directional same-field branch-contrast units and scans **58,230** outcome-excluded pre-writer browser-state lines for exact lexical evidence anchors. **397/423 (93.85%)** units bind a nonzero exact anchor; **26/423** remain unlocated and are deliberately not given similarity-only pseudo-evidence. This is locator coverage, not semantic support: validity remains **0/423 adjudicated** and branch authority remains zero.
 
-D0-B2 readiness is now explicitly **HOLD** rather than silently substituting similarity for validity. The bounded local asset audit finds **0** entailment+contradiction-labelled classifier configs, **0** C1 semantic-qualification receipts, and therefore **0** qualified semantic adjudicators. The frozen MiniLM model is an embedding-only `BertModel` with no classifier label map and stays baseline-only. Semantic execution remains locked: no `SUPPORTED`, `CONTRADICTED`, or `UNVERIFIABLE` label has been assigned yet. A future B2 reopen requires a content-addressed semantic rule/classifier, an independent pre-outcome C1 qualification receipt, and evidence that its decisions are not just lexical/embedding similarity in disguise. The 26 currently unlocated units remain fail-closed unless a separately frozen locator is added before adjudication. Provider execution stays HOLD.
+D0-B2 readiness first reached **HOLD** rather than silently substituting similarity for validity. The bounded local asset audit finds **0** entailment+contradiction-labelled classifier configs, **0** C1 semantic-qualification receipts, and therefore **0** qualified semantic adjudicators. The frozen MiniLM model is an embedding-only `BertModel` with no classifier label map and stays baseline-only. Semantic execution remains locked: no `SUPPORTED`, `CONTRADICTED`, or `UNVERIFIABLE` label has been assigned.
 
-### D0 STOP
+The subsequent v4 zero-call repository inventory closes the current method route rather than inventing a verifier after the fact. Across **597** bounded text/code artifacts, all **12** three-state vocabulary hits and all **6** entailment+contradiction vocabulary hits are C1 self/gate contracts; there are **0 external executable adjudicator candidates** and **0 external semantic-qualification receipts**. Therefore the current CBRG extension is **`STOP_MERGE_CBRG_EXTENSION_NO_QUALIFIED_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL`**. This STOP is scoped to the current frozen method extension: it does **not** invalidate the stage-resolved C1 measurement evidence and does **not** declare a C1 scientific failure. The provider method experiment is not authorized.
+
+Latest versioned knowledge: [[C1 - Executable Closure Gate v4 - 2026-08-25]].
+
+### D0 STOP — FIRED FOR CURRENT CBRG EXTENSION
 
 Stop the method extension if:
 
@@ -143,9 +147,9 @@ Stop the method extension if:
 - a simple similarity/applicability rule subsumes the proposed gate;
 - current literature directly covers the exact counterfactual branch-residual intervention.
 
-### D0 GO
+### Historical D0 GO contract — superseded by terminal STOP
 
-Only if the above survives, preregister a fresh experiment comparing matched information/cost:
+Only a future valid reopen satisfying the v4 four-part reopen contract may return to the following preregistered fresh-experiment design:
 
 1. original full reward-conditioned memory;
 2. outcome-blind neutral/core-only memory;
@@ -156,14 +160,14 @@ Only if the above survives, preregister a fresh experiment comparing matched inf
 
 Primary target: improve the clean-utility vs corrupted-label robustness frontier, not merely reject more memories.
 
-## Manuscript closure if CBRG passes
+## Active manuscript closure after CBRG STOP/MERGE
 
-`phenomenon -> stage-resolved mechanism -> undifferentiated write-authority diagnosis -> CBRG -> controlled reward corruption -> robustness/utility frontier -> design rule`
+Do not manufacture another method. Keep C1 as an identification/measurement paper and promote the stage-resolved boundary to the formal contribution:
 
-Engineering rule:
+`phenomenon -> strongest reductions -> forced leverage -> native boundary -> first-action uptake localization -> cross-domain heterogeneity -> evaluation/design rule`
 
-> Terminal reward may guide persistent memory, but a possibly wrong terminal bit should not automatically own the entire actionable memory state.
+Design implication:
 
-## If CBRG stops
+> Reward-induced memory divergence is not equivalent to validated downstream behavioral authority; evaluation must resolve where the effect actually survives the write → exposure → uptake → outcome chain.
 
-Do not manufacture another method. Keep C1 as an identification/measurement paper, promote the stage-resolved boundary to the formal contribution, and add a main-text boundary figure. A failed method extension would strengthen the claim that the phenomenon does not automatically imply a useful complex repair.
+The stopped method extension is development evidence that the observed mechanism does not automatically imply a useful complex repair.

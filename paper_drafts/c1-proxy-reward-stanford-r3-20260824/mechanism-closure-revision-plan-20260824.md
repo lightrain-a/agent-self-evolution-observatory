@@ -1,12 +1,12 @@
-# C1 mechanism-to-intervention revision plan — collision-audited v3 · executable residual gate
+# C1 mechanism-to-intervention revision plan — collision-audited v4 · terminal executable closure
 
 Paper: `D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE`
 
 Current title: **Reward Errors Change Memory Before They Change Policy**
 
-Plan status: `D0_A_COMPLETE -> D0_B0_ENVELOPE_COMPLETE -> D0_B1A_OPERATIONAL_CONTRAST_GO -> D0_B1C_COMPILER_GO_LOCATOR_397_423 -> D0_B2_READINESS_HOLD_NO_QUALIFIED_VALIDITY_SIGNAL`
+Plan status: `D0_A_COMPLETE -> D0_B0_ENVELOPE_COMPLETE -> D0_B1A_OPERATIONAL_CONTRAST_GO -> D0_B1C_COMPILER_GO_LOCATOR_397_423 -> D0_B2_READINESS_HOLD -> BOUNDED_ADJUDICATOR_INVENTORY_EXHAUSTED -> CBRG_EXTENSION_STOP_MERGE`
 
-Execution status: `DESIGN_ONLY / ZERO_PROVIDER_AUTHORITY / ZERO_NEW_SCIENTIFIC_PROVIDER_CALLS`
+Execution status: `REVISION_ONLY / CURRENT_CBRG_EXTENSION_STOPPED / ZERO_PROVIDER_AUTHORITY / ZERO_NEW_SCIENTIFIC_PROVIDER_CALLS`
 
 The current B12 manuscript and all completed non-passes remain frozen. This plan does not overwrite stable PaperRegistry or reinterpret old outcomes.
 
@@ -32,7 +32,7 @@ ICLR-style analysis-only papers are possible. C1 therefore must **not** add a me
 
 However, C1 currently exposes a concrete actionable variable: a possibly wrong terminal reward bit receives undifferentiated authority over an entire actionable memory rewrite, while the evidence shows that much reusable procedural content is branch invariant and branch-specific transport is sparse.
 
-That makes a bounded intervention scientifically natural. We therefore test the intervention route first, with an analysis-only fallback if it stops.
+That made a bounded intervention scientifically natural, so the intervention route was tested through the zero-call D0 gates. It has now hit its frozen STOP/MERGE condition: no qualified outcome-independent semantic adjudicator is available in the bounded local/repository evidence set. The analysis/measurement fallback is therefore the active paper route.
 
 ## 3. Collision audit: demote simple ideas to baselines
 
@@ -49,7 +49,7 @@ The following are **not** standalone C1 novelty:
 
 A fresh closest-work scan is still required before any ProblemGate. The surviving object is only a candidate, not a declared novelty claim.
 
-## 4. Surviving candidate: Counterfactual Branch Residual Gating (CBRG)
+## 4. Former candidate: Counterfactual Branch Residual Gating (CBRG) — current extension STOP/MERGE
 
 For one byte-identical trajectory `tau`, generate both released counterfactual reflections:
 
@@ -78,13 +78,13 @@ The core remains available. Only the reward-branch residual receives conditional
 
 Not core/residual factorization. Not provenance. Not applicability routing.
 
-The narrow candidate residual is:
+The narrow candidate residual that entered D0 was:
 
 > **the semantic residual created by counterfactual success/failure reflection of the same byte-identical trajectory, together with outcome-independent evidence-gated trigger authority over only that residual.**
 
 Generic `Core/Residual`, neutral/metadata memory, and semantic applicability are measurement/control interfaces only. They are not allowed to re-enter the novelty set by being composed into a larger router.
 
-If a fresh paper directly covers this exact intervention, merge/stop.
+This current extension is now STOP/MERGE for an earlier gate reason: the required outcome-independent semantic-validity layer cannot be qualified from the frozen zero-call evidence set. The definition is retained only as lineage and a possible future reopen target under the explicit reopen contract.
 
 ## 5. Why each component exists
 
@@ -106,7 +106,7 @@ Needed because native branch effects are sparse even after retrieval. Applicabil
 
 Every component is removable. If neutral core, always-on factorization, or a simple similarity rule ties the full method, remove/stop the complex method.
 
-## 6. D0-A complete; D0-B0 envelope complete; D0-B1a operational contrast GO, causal-atom purity HOLD
+## 6. D0 closure: operational contrast survives; current CBRG extension STOP/MERGE
 
 D0 is the next authorized **design/analysis** action. It uses archived artifacts only.
 
@@ -153,11 +153,13 @@ It is **not** enough to certify atom-level causal purity: the current 24-pair po
 
 D0-B1c has now executed with zero new provider/GPU calls. It compiles **423/423** directional same-field operational branch-contrast units and scans **58,230** outcome-excluded browser-state lines. **397/423 (93.85%)** units bind a nonzero exact lexical evidence anchor; **26/423** have no nonzero lexical anchor and remain deliberately `UNLOCATED`. No embedding/similarity fallback is allowed to fabricate evidence. Mean best lexical anchor including zeros is **0.1102**. This closes compiler feasibility and partial exact-location feasibility only: **0/423 semantic validity decisions** and **0** nonzero branch-authority units.
 
-The D0-B1c verdict remains **`D0B1C_COMPILER_GO_LOCATOR_PARTIAL_FAIL_CLOSED_D0B2_READY`**, but the subsequent D0-B2 readiness audit is now **`D0B2_READINESS_HOLD_NO_ADMISSIBLE_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL`**. The bounded local asset scan finds **0** frozen classifier configs with explicit entailment+contradiction labels, **0** C1 semantic-qualification receipts, and therefore **0** qualified semantic adjudicators. The exact MiniLM asset is an embedding-only `BertModel` with no classifier labels and remains a similarity baseline. Consequently **0/423** semantic validity states are assigned; there are still **0** supported, **0** contradicted, and **0** semantically adjudicated unverifiable units. The 26 unlocated units are only *future-forced* fail-closed if B2 later reopens. Full D0-B cannot advance until a content-addressed adjudicator plus independent pre-outcome qualification receipt passes a non-reducibility check against similarity/applicability and fresh collision clearance is then rerun.
+The D0-B1c verdict remains **`D0B1C_COMPILER_GO_LOCATOR_PARTIAL_FAIL_CLOSED_D0B2_READY`**, but D0-B2 first reached **`D0B2_READINESS_HOLD_NO_ADMISSIBLE_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL`**. The bounded local asset scan found **0** frozen classifier configs with explicit entailment+contradiction labels, **0** C1 semantic-qualification receipts, and therefore **0** qualified semantic adjudicators. The exact MiniLM asset is an embedding-only `BertModel` with no classifier labels and remains a similarity baseline. Consequently **0/423** semantic validity states were assigned; there are still **0** supported, **0** contradicted, and **0** semantically adjudicated unverifiable units.
 
-No D0 state automatically grants scientific, provider, GPU, claim-expansion, or submission authority.
+The final zero-call closure then audited the repository verifier inventory rather than inventing a new rule after seeing the failure. It scanned **597** bounded text/code artifacts. The **12** files containing all three required validity-state terms and the **6** files containing entailment+contradiction vocabulary are all C1 self/gate contracts; there are **0 external executable adjudicator candidates** and **0 external semantic-qualification receipts**. The closure receipt therefore fires **`STOP_MERGE_CBRG_EXTENSION_NO_QUALIFIED_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL`** for the **current frozen CBRG extension only**.
 
-The versioned program is machine-bound to `C1_EXECUTABLE_CLOSURE_REVIEWER_GATE_V3` in `research_pipeline.methodology_controls`. The gate fails closed unless all baseline-only components remain demoted, the novelty set is exactly `{same-trajectory-counterfactual-branch-residual, evidence-gated-trigger-authority}`, the trajectory pair is controlled, evidence validity is claim-bound and outcome-independent, an evidence receipt is required before any branch-specific authority, contradicted/unverifiable claims default to withholding authority, the D0 provider-call budget is exactly zero, and all downstream authority fields remain false. Additional reviewer gates enforce **packet evidence != claim evidence**, **memory atom != certified residual claim**, and **operational branch contrast != atom-level causal purity**. Without seed binding or a same-condition noise-floor control, causal-atom wording fails closed even though the operational paired contrast remains admissible.
+This STOP does **not** invalidate the 423-unit operational branch-contrast compiler, the stage-resolved write/exposure/uptake/outcome evidence, or the C1 identification/measurement paper. It also does not declare a C1 scientific failure. Provider/GPU/fresh-experiment/claim-expansion/submission authority all remain false.
+
+The versioned program remains historically bound to `C1_EXECUTABLE_CLOSURE_REVIEWER_GATE_V3`, but a seventh terminal reviewer gate now overrides its earlier D0-design eligibility. The historical gate records that the residual was legitimate to test; the terminal gate records that it may not continue under the current frozen evidence set. Reopen requires all of: a new content-addressed `SUPPORTED / CONTRADICTED / UNVERIFIABLE` adjudicator candidate, an independent task-specific pre-outcome C1 qualification receipt bound to its exact SHA, non-reducibility beyond lexical/embedding/applicability baselines on the same information, and fresh collision clearance. Generic NLI availability, renamed similarity, common-residual composition, or a self-authored post-outcome semantic rule cannot reopen it.
 
 ### D0 observed on 2026-08-24 — representation feasible, semantic branch selectivity weak
 
@@ -174,9 +176,11 @@ Observed:
 
 Adjudication: the core/residual representation is not obviously degenerate and target relevance varies meaningfully, but **semantic target relevance alone is not sufficient evidence for branch authority**. A simple similarity gate is therefore demoted to the strongest simple baseline, not promoted as CBRG.
 
-This closes **D0-A**, **D0-B0 envelope integrity**, **D0-B1a operational intervention contrast**, and **D0-B1c compiler/partial exact locator**. D0-B2 itself is **not executable yet**: readiness is on HOLD because no qualified semantic-validity adjudicator is bound. The provider method experiment remains **HOLD**, and atom-level causal purity stays explicitly unresolved unless a later noise-floor control is authorized. The only permitted next step is zero-call qualification/binding of a frozen `SUPPORTED / CONTRADICTED / UNVERIFIABLE`-capable classifier or deterministic rule together with an independent pre-outcome C1 qualification receipt and a non-reducibility check against lexical/semantic similarity and applicability. If that cannot be done without reward/outcome leakage—or the qualified signal still collapses to similarity—**STOP/MERGE CBRG** and retain the stage-resolved identification/measurement paper rather than manufacturing a semantic gate.
+This closes **D0-A**, **D0-B0 envelope integrity**, **D0-B1a operational intervention contrast**, **D0-B1c compiler/partial exact locator**, and the current **D0-B2 method-extension route**. The provider method experiment is no longer merely on HOLD for this extension; it is **not authorized because the current extension is STOP/MERGE**. Atom-level causal purity remains unresolved, but no new noise-floor or provider experiment is authorized merely to rescue CBRG. The active C1 work returns to paper-only strengthening of the stage-resolved identification/measurement story.
 
-## 7. Fresh decisive experiment — only after D0 + Problem/Economy gate
+## 7. Archived fresh decisive experiment contract — locked for the stopped current extension
+
+The following contract is retained only as lineage for a future valid reopen. It is **not executable now**.
 
 Scientific question:
 
@@ -225,9 +229,9 @@ Stop or merge if:
 - gains are dominated by one source/template/domain;
 - no fresh support provides reward-error behavioral headroom.
 
-## 8. Full evidence matrix only if the decisive experiment passes
+## 8. Full evidence matrix — not authorized under the current STOP/MERGE
 
-Then, and only then, expand to:
+Only a future valid reopen followed by a passed decisive experiment could unlock:
 
 - at least two fresh task domains or task families justified before outcomes;
 - a second downstream policy family under a new contract;
@@ -258,23 +262,17 @@ This is a scientific figure, not decoration.
 
 Surrender broad claims that reward affects later behavior, feedback changes memory, retrieval differs from reuse, or provenance matters. Center the defended residual on **reward-conditioned write authority** and the measured write/exposure/uptake/outcome decomposition.
 
-## 10. Two possible final paper stories
-
-### If CBRG passes
-
-`phenomenon -> strongest reductions -> stage-resolved mechanism -> undifferentiated write-authority diagnosis -> CBRG -> controlled reward corruption -> robustness/utility frontier -> design rule`
-
-Design rule:
-
-> A terminal reward may guide memory construction, but a possibly wrong terminal bit should not automatically own the entire actionable persistent state.
-
-### If CBRG stops
+## 10. Selected final paper story after CBRG STOP/MERGE
 
 Do not manufacture another solution. Keep C1 as an identification/measurement paper:
 
 `phenomenon -> strongest reductions -> forced leverage -> native boundary -> uptake localization -> cross-domain heterogeneity -> evaluation/design rule`
 
-The stopped method attempt becomes evidence that the observed mechanism does not automatically imply a useful complex repair.
+The stopped CBRG attempt becomes useful negative method-development evidence: the observed stage-resolved mechanism exposes a plausible governance variable, but the current frozen evidence set cannot support a non-self-validating semantic authority gate. This sharpens rather than weakens the paper boundary.
+
+Design rule retained from the diagnosis:
+
+> A terminal reward may guide memory construction, but observed memory divergence should not be equated with validated downstream behavioral authority.
 
 ## 11. Forbidden next moves
 

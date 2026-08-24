@@ -1,0 +1,179 @@
+{
+  "artifact_type": "c1-d0b2-adjudicator-inventory-closure",
+  "audit_id": "C1-CBRG-D0B2-ADJUDICATOR-INVENTORY-CLOSURE-V1",
+  "claim_expansion_authority": false,
+  "closure_reasoning": {
+    "local_model_inventory_has_admissible_adjudicator": false,
+    "new_semantic_rule_may_be_invented_after_outcome_to_avoid_stop": false,
+    "repository_inventory_has_admissible_adjudicator": false,
+    "self_referential_c1_gate_may_qualify_itself": false,
+    "similarity_or_locator_may_be_promoted_to_validity": false,
+    "task_specific_preoutcome_qualification_receipt_exists": false,
+    "therefore_current_extension_may_advance_to_semantic_execution": false
+  },
+  "decision": "STOP_MERGE_CBRG_EXTENSION_NO_QUALIFIED_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL",
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "gpu_runs_added": 0,
+  "input_binding": {
+    "semantic_readiness_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-semantic-readiness-audit-20260824.json",
+    "semantic_readiness_bound_adjudicators": 0,
+    "semantic_readiness_local_qualified_adjudicators": 0,
+    "semantic_readiness_sha256": "f854b1957d884ba6528cf860b4d39e90689ff580072ad9373505578f1c8052ab"
+  },
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "provider_call_authority": false,
+  "provider_calls_added": 0,
+  "reopen_contract": {
+    "automatic_reopen": false,
+    "generic_nli_model_existence_is_sufficient": false,
+    "renamed_similarity_or_common_residual_is_sufficient": false,
+    "reopen_authority_granted_by_this_receipt": false,
+    "required_all": [
+      "new content-addressed adjudicator candidate with explicit SUPPORTED/CONTRADICTED/UNVERIFIABLE semantics",
+      "independent task-specific pre-outcome C1 qualification receipt bound to the exact adjudicator SHA",
+      "non-reducibility evidence against lexical locator and embedding/applicability baselines on the same frozen information",
+      "fresh collision clearance showing the surviving residual is still not subsumed by closest work"
+    ]
+  },
+  "repository_inventory": {
+    "admissible_qualified_repository_adjudicators": 0,
+    "entailment_contradiction_vocabulary_hit_count": 6,
+    "entailment_contradiction_vocabulary_hits": [
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "research_pipeline/methodology_controls.py"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b2_adjudicator_inventory_closure.py"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b2_semantic_readiness.py"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-semantic-readiness-audit-20260824.json"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/mechanism-closure-program-20260824.json"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/mechanism-closure-revision-plan-20260824.md"
+      }
+    ],
+    "external_semantic_qualification_receipt_count": 0,
+    "external_semantic_qualification_receipts": [],
+    "external_textual_candidate_count": 0,
+    "external_textual_candidates": [],
+    "scan_roots": [
+      "research_pipeline",
+      "scripts",
+      "paper_drafts"
+    ],
+    "text_files_scanned": 597,
+    "tri_state_vocabulary_hit_count": 12,
+    "tri_state_vocabulary_hits": [
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "research_pipeline/methodology_controls.py"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b2_adjudicator_inventory_closure.py"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b2_semantic_readiness.py"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": false,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b_claim_binding_v2.py"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": false,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b_receipt_structure.py"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": false,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b-claim-binding-audit-v2-20260824.json"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": false,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b-receipt-structural-audit-20260824.json"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": false,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-semantic-readiness-audit-20260824.json"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": false,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/compile_cbrg_d0b1c_operational_contrasts.py"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/mechanism-closure-program-20260824.json"
+      },
+      {
+        "classification": "C1_SELF_OR_GATE_CONTRACT_ONLY",
+        "contains_all_required_tristate_terms": true,
+        "contains_entailment_and_contradiction_vocab": true,
+        "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/mechanism-closure-revision-plan-20260824.md"
+      }
+    ]
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scope": "CURRENT_FROZEN_ZERO_CALL_CBRG_EXTENSION_ONLY",
+  "status": "D0B2_BOUNDED_ADJUDICATOR_INVENTORY_EXHAUSTED_CURRENT_EXTENSION_STOP_MERGE",
+  "submission_authority": false,
+  "terminal_routing": {
+    "c1_existing_measurement_evidence_invalidated": false,
+    "c1_stage_resolved_identification_measurement_paper": "RETAIN",
+    "cbrg_method_extension": "STOP_MERGE_CURRENT_EXTENSION",
+    "fresh_experiment": "LOCKED_NOT_AUTHORIZED",
+    "provider_method_experiment": "LOCKED_NOT_AUTHORIZED",
+    "scientific_failure_declared": false
+  }
+}

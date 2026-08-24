@@ -10,6 +10,7 @@ from .methodology_controls import (
     adjudicate_c1_d0b1_intervention_identifiability,
     adjudicate_c1_d0b1c_locator_observation,
     adjudicate_c1_d0b2_semantic_readiness_observation,
+    adjudicate_c1_d0b2_inventory_closure_observation,
     adjudicate_c1_executable_closure_gate,
     build_methodology_controls_state,
     load_c1_d0b_claim_binding_observation,
@@ -17,6 +18,7 @@ from .methodology_controls import (
     load_c1_d0b1_intervention_identifiability_observation,
     load_c1_d0b1c_locator_observation,
     load_c1_d0b2_semantic_readiness_observation,
+    load_c1_d0b2_inventory_closure_observation,
     load_c1_executable_closure_candidate,
 )
 
@@ -53,7 +55,7 @@ class MethodologyControlsTest(unittest.TestCase):
         self.assertTrue(row["rules"]["reproduction_must_execute_without_copying_checked_in_results"])
         self.assertIn("independent reproduction report", row["required_artifacts"])
 
-    def test_c1_revision_program_passes_only_the_zero_authority_d0_design_gate(self) -> None:
+    def test_c1_historical_d0_design_gate_is_preserved_but_terminal_closure_overrides_current_eligibility(self) -> None:
         candidate = load_c1_executable_closure_candidate()
         result = adjudicate_c1_executable_closure_gate(candidate)
         self.assertEqual(result["gate"], C1_GATE_ID)
@@ -62,8 +64,10 @@ class MethodologyControlsTest(unittest.TestCase):
         registered = self.state["reviewer_gates"]["c1_executable_closure_v3"]
         self.assertTrue(registered["candidate_loaded"])
         self.assertTrue(registered["candidate_adjudication"]["eligible_for_d0_design"])
+        self.assertTrue(self.state["summary"]["c1_reviewer_gate_historical_d0_design_eligible"])
+        self.assertFalse(self.state["summary"]["c1_reviewer_gate_d0_design_eligible"])
         self.assertFalse(self.state["summary"]["c1_reviewer_gate_downstream_authority"])
-        self.assertEqual(self.state["summary"]["registered_reviewer_gates"], 6)
+        self.assertEqual(self.state["summary"]["registered_reviewer_gates"], 7)
 
     def test_c1_d0b_structural_receipt_audit_is_go_but_semantic_authority_stays_hold(self) -> None:
         observation = load_c1_d0b_structural_observation()
@@ -236,6 +240,46 @@ class MethodologyControlsTest(unittest.TestCase):
         self.assertTrue(any("downstream authority" in error for error in result["errors"]))
         self.assertFalse(result["semantic_adjudicator_ready"])
         self.assertFalse(result["semantic_authority"])
+        self.assertFalse(any(result["authority"].values()))
+
+    def test_c1_d0b2_inventory_closure_stops_only_current_extension_and_retains_measurement_paper(self) -> None:
+        observation = load_c1_d0b2_inventory_closure_observation()
+        result = adjudicate_c1_d0b2_inventory_closure_observation(observation)
+        self.assertTrue(result["terminal_closure_valid"], result["errors"])
+        self.assertTrue(result["current_cbrg_extension_stopped"])
+        self.assertTrue(result["measurement_paper_retained"])
+        self.assertFalse(result["scientific_failure"])
+        self.assertFalse(result["automatic_reopen"])
+        self.assertFalse(any(result["authority"].values()))
+        self.assertEqual(observation["local_qualified_adjudicators"], 0)
+        self.assertEqual(observation["repository_admissible_adjudicators"], 0)
+        self.assertEqual(observation["external_semantic_qualification_receipts"], 0)
+        self.assertFalse(observation["existing_measurement_evidence_invalidated"])
+        registered = self.state["reviewer_gates"]["c1_d0b2_adjudicator_inventory_closure"]
+        self.assertTrue(registered["observation_loaded"])
+        self.assertTrue(registered["observation_adjudication"]["terminal_closure_valid"])
+        self.assertTrue(self.state["summary"]["c1_d0b2_current_extension_stopped"])
+        self.assertTrue(self.state["summary"]["c1_d0b2_measurement_paper_retained"])
+        self.assertFalse(self.state["summary"]["c1_d0b2_closure_scientific_failure"])
+        self.assertFalse(self.state["summary"]["c1_d0b2_closure_automatic_reopen"])
+        self.assertFalse(self.state["summary"]["c1_d0b2_closure_downstream_authority"])
+
+    def test_c1_d0b2_inventory_closure_rejects_fake_reopen_or_core_paper_invalidation(self) -> None:
+        observation = copy.deepcopy(load_c1_d0b2_inventory_closure_observation())
+        observation["automatic_reopen"] = True
+        observation["generic_nli_or_renamed_baseline_can_reopen"] = True
+        observation["existing_measurement_evidence_invalidated"] = True
+        observation["scientific_failure_declared"] = True
+        observation["authority"]["provider"] = True
+        result = adjudicate_c1_d0b2_inventory_closure_observation(observation)
+        self.assertFalse(result["terminal_closure_valid"])
+        self.assertTrue(any("automatically reopen" in error for error in result["errors"]))
+        self.assertTrue(any("generic NLI or renamed baseline" in error for error in result["errors"]))
+        self.assertTrue(any("measurement evidence" in error for error in result["errors"]))
+        self.assertTrue(any("scientific failure" in error for error in result["errors"]))
+        self.assertTrue(any("downstream authority" in error for error in result["errors"]))
+        self.assertFalse(result["scientific_failure"])
+        self.assertFalse(result["automatic_reopen"])
         self.assertFalse(any(result["authority"].values()))
 
     def test_c1_d0b_structural_gate_fails_closed_on_fake_semantic_or_branch_authority(self) -> None:

@@ -41,6 +41,9 @@ C1_D0B1C_LOCATOR_ARTIFACT = Path(__file__).resolve().parents[1] / "paper_drafts"
 C1_D0B2_READINESS_STATUS = "D0B2_SEMANTIC_ADJUDICATOR_NOT_BOUND_READINESS_HOLD"
 C1_D0B2_READINESS_DECISION = "D0B2_READINESS_HOLD_NO_ADMISSIBLE_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL"
 C1_D0B2_READINESS_ARTIFACT = Path(__file__).resolve().parents[1] / "paper_drafts" / "c1-proxy-reward-stanford-r3-20260824" / "cbrg-d0b2-semantic-readiness-audit-20260824.json"
+C1_D0B2_CLOSURE_STATUS = "D0B2_BOUNDED_ADJUDICATOR_INVENTORY_EXHAUSTED_CURRENT_EXTENSION_STOP_MERGE"
+C1_D0B2_CLOSURE_DECISION = "STOP_MERGE_CBRG_EXTENSION_NO_QUALIFIED_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL"
+C1_D0B2_CLOSURE_ARTIFACT = Path(__file__).resolve().parents[1] / "paper_drafts" / "c1-proxy-reward-stanford-r3-20260824" / "cbrg-d0b2-adjudicator-inventory-closure-20260825.json"
 C1_EXECUTABLE_CLOSURE_REVIEWER_GATE: dict[str, Any] = {
     "gate": C1_GATE_ID,
     "profile": C1_GATE_PROFILE,
@@ -649,6 +652,103 @@ def adjudicate_c1_d0b2_semantic_readiness_observation(observation: dict[str, Any
     }
 
 
+def adjudicate_c1_d0b2_inventory_closure_observation(observation: dict[str, Any]) -> dict[str, Any]:
+    """Terminate only the current CBRG extension after bounded zero-call adjudicator exhaustion."""
+    errors: list[str] = []
+    if observation.get("status") != C1_D0B2_CLOSURE_STATUS:
+        errors.append("D0-B2 closure status drift")
+    if observation.get("decision") != C1_D0B2_CLOSURE_DECISION:
+        errors.append("D0-B2 closure decision drift")
+    if observation.get("scope") != "CURRENT_FROZEN_ZERO_CALL_CBRG_EXTENSION_ONLY":
+        errors.append("D0-B2 closure scope must remain limited to the current frozen CBRG extension")
+
+    expected_zero = {
+        "local_qualified_adjudicators": 0,
+        "repository_admissible_adjudicators": 0,
+        "external_semantic_qualification_receipts": 0,
+        "provider_calls": 0,
+        "gpu_runs": 0,
+    }
+    for key, expected in expected_zero.items():
+        if observation.get(key) != expected:
+            errors.append(f"D0-B2 closure zero field drift: {key}")
+
+    if observation.get("cbrg_extension_terminal_state") != "STOP_MERGE_CURRENT_EXTENSION":
+        errors.append("current CBRG extension must route to STOP/MERGE")
+    if observation.get("c1_measurement_paper_state") != "RETAIN_STAGE_RESOLVED_IDENTIFICATION_MEASUREMENT":
+        errors.append("C1 measurement paper must be retained when the extension stops")
+    if observation.get("existing_measurement_evidence_invalidated") is not False:
+        errors.append("method-extension STOP must not invalidate existing C1 measurement evidence")
+    if observation.get("scientific_failure_declared") is not False:
+        errors.append("bounded adjudicator exhaustion is not a C1 scientific failure")
+    if observation.get("automatic_reopen") is not False:
+        errors.append("stopped CBRG extension cannot automatically reopen")
+    if observation.get("generic_nli_or_renamed_baseline_can_reopen") is not False:
+        errors.append("generic NLI or renamed baseline cannot reopen the stopped extension")
+    if observation.get("qualified_content_addressed_reopen_evidence_required") is not True:
+        errors.append("reopen must require new qualified content-addressed evidence")
+    if not _all_authority_false(observation.get("authority")):
+        errors.append("D0-B2 terminal closure must keep all downstream authority false")
+
+    ref = str(observation.get("audit_artifact") or "")
+    digest = str(observation.get("audit_sha256") or "")
+    expected_ref = str(C1_D0B2_CLOSURE_ARTIFACT.relative_to(Path(__file__).resolve().parents[1]))
+    if ref != expected_ref or len(digest) != 64 or not C1_D0B2_CLOSURE_ARTIFACT.is_file():
+        errors.append("D0-B2 closure artifact binding is incomplete")
+    else:
+        import hashlib
+        actual = hashlib.sha256(C1_D0B2_CLOSURE_ARTIFACT.read_bytes()).hexdigest()
+        if actual != digest:
+            errors.append("D0-B2 closure artifact SHA drift")
+        else:
+            try:
+                artifact = json.loads(C1_D0B2_CLOSURE_ARTIFACT.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                artifact = {}
+                errors.append("D0-B2 closure artifact is unreadable")
+            inventory = artifact.get("repository_inventory") or {}
+            routing = artifact.get("terminal_routing") or {}
+            reopen = artifact.get("reopen_contract") or {}
+            if artifact.get("status") != C1_D0B2_CLOSURE_STATUS or artifact.get("decision") != C1_D0B2_CLOSURE_DECISION:
+                errors.append("D0-B2 closure artifact status/decision drift")
+            if artifact.get("scope") != "CURRENT_FROZEN_ZERO_CALL_CBRG_EXTENSION_ONLY":
+                errors.append("D0-B2 closure artifact overstates its scope")
+            if inventory.get("external_textual_candidate_count") != 0:
+                errors.append("D0-B2 closure artifact contains an external textual adjudicator candidate")
+            if inventory.get("external_semantic_qualification_receipt_count") != 0:
+                errors.append("D0-B2 closure artifact contains an external qualification receipt")
+            if inventory.get("admissible_qualified_repository_adjudicators") != 0:
+                errors.append("D0-B2 closure artifact contains an admissible repository adjudicator")
+            if routing.get("cbrg_method_extension") != "STOP_MERGE_CURRENT_EXTENSION":
+                errors.append("D0-B2 closure artifact does not stop the current CBRG extension")
+            if routing.get("c1_stage_resolved_identification_measurement_paper") != "RETAIN":
+                errors.append("D0-B2 closure artifact does not retain the C1 measurement paper")
+            if routing.get("c1_existing_measurement_evidence_invalidated") is not False or routing.get("scientific_failure_declared") is not False:
+                errors.append("D0-B2 closure artifact incorrectly invalidates or scientifically fails C1")
+            if reopen.get("automatic_reopen") is not False:
+                errors.append("D0-B2 closure artifact permits automatic reopen")
+            if reopen.get("generic_nli_model_existence_is_sufficient") is not False or reopen.get("renamed_similarity_or_common_residual_is_sufficient") is not False:
+                errors.append("D0-B2 closure artifact lets generic/renamed baselines reopen the extension")
+            if len(reopen.get("required_all") or []) != 4 or reopen.get("reopen_authority_granted_by_this_receipt") is not False:
+                errors.append("D0-B2 closure artifact reopen contract is incomplete")
+            if artifact.get("provider_calls_added") != 0 or artifact.get("gpu_runs_added") != 0:
+                errors.append("D0-B2 closure artifact must remain zero-call/zero-GPU")
+            if any(bool(artifact.get(key)) for key in ("scientific_authority", "experiment_authority", "provider_call_authority", "gpu_authority", "claim_expansion_authority", "submission_authority")):
+                errors.append("D0-B2 closure artifact contains nonzero downstream authority")
+
+    return {
+        "paper_id": C1_PAPER_ID,
+        "status": C1_D0B2_CLOSURE_STATUS,
+        "terminal_closure_valid": not errors,
+        "current_cbrg_extension_stopped": not errors,
+        "measurement_paper_retained": not errors,
+        "scientific_failure": False,
+        "automatic_reopen": False,
+        "errors": errors,
+        "authority": dict(C1_EXECUTABLE_CLOSURE_REVIEWER_GATE["authority"]),
+    }
+
+
 def require_c1_executable_closure_gate(candidate: dict[str, Any]) -> dict[str, Any]:
     result = adjudicate_c1_executable_closure_gate(candidate)
     if result["eligible_for_d0_design"] is not True:
@@ -702,6 +802,12 @@ def load_c1_d0b2_semantic_readiness_observation(path: Path = C1_REVISION_PROGRAM
     return observation if isinstance(observation, dict) else {}
 
 
+def load_c1_d0b2_inventory_closure_observation(path: Path = C1_REVISION_PROGRAM) -> dict[str, Any]:
+    program = _load_c1_revision_program(path)
+    observation = program.get("zero_call_D0_B2_adjudicator_inventory_closure_observed") or {}
+    return observation if isinstance(observation, dict) else {}
+
+
 POLICY: dict[str, Any] = {
     "schema_version": "1.1",
     "cross_cutting_controls_do_not_create_a_seventh_functional_layer": True,
@@ -727,6 +833,10 @@ POLICY: dict[str, Any] = {
     "semantic_validity_requires_a_qualified_content_addressed_adjudicator": True,
     "generic_nli_model_existence_without_task_specific_qualification_is_not_validity_authority": True,
     "absence_of_qualified_semantic_adjudicator_is_readiness_hold_not_scientific_failure": True,
+    "c1_current_cbrg_extension_stop_merge_does_not_invalidate_measurement_paper": True,
+    "c1_stopped_extension_cannot_reopen_on_renamed_baseline_or_generic_nli": True,
+    "c1_extension_reopen_requires_new_qualified_content_addressed_evidence": True,
+    "c1_terminal_closure_overrides_historical_d0_design_eligibility": True,
 }
 
 
@@ -859,6 +969,8 @@ def build_methodology_controls_state() -> dict[str, Any]:
     c1_d0b1c_locator_adjudication = adjudicate_c1_d0b1c_locator_observation(c1_d0b1c_locator_observation)
     c1_d0b2_readiness_observation = load_c1_d0b2_semantic_readiness_observation()
     c1_d0b2_readiness_adjudication = adjudicate_c1_d0b2_semantic_readiness_observation(c1_d0b2_readiness_observation)
+    c1_d0b2_closure_observation = load_c1_d0b2_inventory_closure_observation()
+    c1_d0b2_closure_adjudication = adjudicate_c1_d0b2_inventory_closure_observation(c1_d0b2_closure_observation)
     c1_reviewer_gate = {
         **C1_EXECUTABLE_CLOSURE_REVIEWER_GATE,
         "candidate_loaded": bool(c1_candidate),
@@ -895,6 +1007,11 @@ def build_methodology_controls_state() -> dict[str, Any]:
                 "observation_loaded": bool(c1_d0b2_readiness_observation),
                 "observation_adjudication": c1_d0b2_readiness_adjudication,
             },
+            "c1_d0b2_adjudicator_inventory_closure": {
+                "status": "REGISTERED_CURRENT_EXTENSION_STOP_MERGE_MEASUREMENT_RETAINED",
+                "observation_loaded": bool(c1_d0b2_closure_observation),
+                "observation_adjudication": c1_d0b2_closure_adjudication,
+            },
         },
         "summary": {
             "controls": len(controls),
@@ -902,9 +1019,10 @@ def build_methodology_controls_state() -> dict[str, Any]:
             "functional_layers_added": 0,
             "measured_controls": sum(str(row["status"]).startswith("measured") for row in controls),
             "spec_or_contract_ready": sum("ready" in str(row["status"]) for row in controls),
-            "registered_reviewer_gates": 6,
+            "registered_reviewer_gates": 7,
             "c1_reviewer_gate_loaded": bool(c1_candidate),
-            "c1_reviewer_gate_d0_design_eligible": c1_adjudication["eligible_for_d0_design"],
+            "c1_reviewer_gate_historical_d0_design_eligible": c1_adjudication["eligible_for_d0_design"],
+            "c1_reviewer_gate_d0_design_eligible": c1_adjudication["eligible_for_d0_design"] and not c1_d0b2_closure_adjudication["current_cbrg_extension_stopped"],
             "c1_reviewer_gate_downstream_authority": any(bool(value) for value in c1_adjudication["authority"].values()),
             "c1_d0b_structural_observation_loaded": bool(c1_d0b_observation),
             "c1_d0b_structurally_feasible": c1_d0b_adjudication["structurally_feasible"],
@@ -930,6 +1048,13 @@ def build_methodology_controls_state() -> dict[str, Any]:
             "c1_d0b2_semantic_adjudicator_ready": c1_d0b2_readiness_adjudication["semantic_adjudicator_ready"],
             "c1_d0b2_semantic_authority": c1_d0b2_readiness_adjudication["semantic_authority"],
             "c1_d0b2_downstream_authority": any(bool(value) for value in c1_d0b2_readiness_adjudication["authority"].values()),
+            "c1_d0b2_closure_observation_loaded": bool(c1_d0b2_closure_observation),
+            "c1_d0b2_terminal_closure_valid": c1_d0b2_closure_adjudication["terminal_closure_valid"],
+            "c1_d0b2_current_extension_stopped": c1_d0b2_closure_adjudication["current_cbrg_extension_stopped"],
+            "c1_d0b2_measurement_paper_retained": c1_d0b2_closure_adjudication["measurement_paper_retained"],
+            "c1_d0b2_closure_scientific_failure": c1_d0b2_closure_adjudication["scientific_failure"],
+            "c1_d0b2_closure_automatic_reopen": c1_d0b2_closure_adjudication["automatic_reopen"],
+            "c1_d0b2_closure_downstream_authority": any(bool(value) for value in c1_d0b2_closure_adjudication["authority"].values()),
         },
         "merge_only_external_designs": [
             {
