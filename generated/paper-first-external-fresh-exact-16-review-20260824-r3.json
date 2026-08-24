@@ -1,0 +1,507 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T04:33:42Z",
+  "run_id": "external-fresh-exact-16-review-20260824-r3",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "selection_projection": {
+    "staging_refresh_root": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r3",
+    "preview_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r3/preview-public.json",
+    "preview_artifact_sha256": "99916e85d62cea281b0cbe2a60b45ee5f2b8f99b7ff30017a686a83c90bf9aba",
+    "private_pool_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r3/data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "private_pool_artifact_sha256": "f8350902676523759947d38f1f3a7fb167c4967aa0e252b1108c60d4005deaf9",
+    "corpus_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r3/data/corpora/semantic-scholar-corpus.json",
+    "corpus_artifact_sha256": "2d27a6a0e8439be73da947b74cdbe61f1ae1c57ea89f0d559bae28f1d1585b86",
+    "refresh_generated_at": "2026-08-24T04:19:11+00:00",
+    "refresh_status": "READY",
+    "discovery_mode": "arxiv-primary-fallback",
+    "source_retrieval_complete": true,
+    "selected": 32,
+    "verified": 32,
+    "selected_previously_reviewed": 16,
+    "selected_unreviewed": 16,
+    "fulltext_verified": 31,
+    "fetch_errors": 0,
+    "fulltext_fetch_errors": 1,
+    "undercovered_lanes": [],
+    "source_coverage_exhausted": false,
+    "global_source_coverage_exhausted_claim": false,
+    "exact_unreviewed_refs_in_scheduler_order": [
+      "arXiv:2608.00181",
+      "arXiv:2607.29031",
+      "arXiv:2607.28829",
+      "arXiv:2607.27973",
+      "arXiv:2607.28802",
+      "arXiv:2607.27690",
+      "arXiv:2607.28026",
+      "arXiv:2607.28037",
+      "arXiv:2607.27822",
+      "arXiv:2607.26784",
+      "arXiv:2607.26358",
+      "arXiv:2607.27275",
+      "arXiv:2607.25728",
+      "arXiv:2607.25904",
+      "arXiv:2607.26160",
+      "arXiv:2607.24998"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 16,
+    "sources_reviewed": 16,
+    "exact_prior_exposure_zero": 16,
+    "identity_verified": 16,
+    "deep_review": 5,
+    "triage_review": 11,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "fresh_scientific_survivors": 0,
+    "stop_reduction": 4,
+    "support_component_only": 6,
+    "scope_excluded": 6,
+    "watch_reopen_seeds": 1,
+    "source_retrieval_complete": true,
+    "global_source_coverage_exhausted": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "exact_tranche_identity_requires_content_addressed_refresh_projection": true,
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "deep_review_routes_collision_reopen_or_decisive_baseline_cases": true,
+    "triage_is_allowed_only_for_clear_scope_or_component_cases": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "no_emit_is_not_a_scientific_dead_end": true,
+    "global_source_exhaustion_must_not_be_inferred_from_bounded_tranche_completion": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2608.00181",
+      "title": "Cross-Benchmark Generalization in Long-Horizon Agents",
+      "published": "2026-07-31",
+      "lane_keys": [
+        "skill_harness",
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "0ba7b880bd999bc016684f710b3a1c15af1f6f7cb7cee867d255d33b7dc5c9f4",
+      "fulltext_sha256": "7a77140e2ec0f7e8d8d4eb4f2a47223b432b377b5c487b7c4cc693a0adb433fa",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "offline-agentic-posttraining",
+        "cross-benchmark-transfer",
+        "behavioral-generalization-analysis"
+      ],
+      "note": "Cross-Benchmark Generalization studies a two-stage SFT/RL post-training pipeline and transfer of the resulting fixed policy to held-out benchmarks. It is useful evidence that behavioral competence can transfer across environments, but the deployed agent is not autonomously and persistently updating itself.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.29031",
+      "title": "Auto-JEPA: A Latent World Model of Continuous Intent for End-to-End Autonomous Driving",
+      "published": "2026-07-31",
+      "lane_keys": [
+        "memory_continual",
+        "world_model",
+        "embodied"
+      ],
+      "source_sha256": "d4b04a7a47f87b62228b98ef523fe0fccc87054b71f1ebe9b01991504bd5f02b",
+      "fulltext_sha256": "75ec78dd2d3aa2ec2aac98f3086ef880abc5c79267e11e908acae641bf8da9e2",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_WORLD_MODEL",
+      "reduction": [
+        "latent-world-modeling",
+        "trajectory-memory-retrieval",
+        "scene-conditioned-candidate-ranking"
+      ],
+      "note": "Auto-JEPA learns a latent action-oriented world model and retrieves trajectories from a fixed memory. Its components are trained offline and used by a static planner; this is not deployment-time persistent self-evolution.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.28829",
+      "title": "When Unlearning Fails: Reliable Data Deletion under Post-Training in Agent Networks",
+      "published": "2026-07-30",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "c23e17421683b8185b1661ad72dcf5677d3cbb110ea91cacb9a73d764238b96e",
+      "fulltext_sha256": "a6426faaf37c2fc5b302f105fb500a2be0211496fcbc3b752f13cfbca5040e4f",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_LONGITUDINAL_DATA_LINEAGE",
+      "reduction": [
+        "treatment-affected-data-lineage",
+        "continual-unlearning",
+        "influence-provenance-and-containment"
+      ],
+      "note": "MUTE provides unusually direct evidence that a learn-and-act loop can move the influence of forget data into later retained trajectories. Retraining on the observed retain set can therefore fail, influence regeneration increases with the fraction of policy-shaped retained data, and deployment/collection/aggregation ledgers can trace that lineage. This is strong longitudinal lineage and sustained-deletion evidence, but the decisive variable is observable causal ancestry of later training data. A same-information dynamic data-lineage/unlearning baseline can represent the mechanism; the source does not force a new self-evolution state or reopen a closed candidate.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.27973",
+      "title": "TAPO: Transition-Aware Policy Optimization for LLM Agents",
+      "published": "2026-07-30",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "aa8d6c1cf9806293a62235814c104dd233cdb23433e8e369d43b00aa9b6f3539",
+      "fulltext_sha256": "fc92b7cd2160bdb2b0637c213891c5cf3bde5617592dba6a3b8f223166c29f69",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "transition-supervised-agentic-rl",
+        "next-observation-prediction",
+        "offline-policy-optimization"
+      ],
+      "note": "TAPO augments agentic RL post-training with transition prediction supervision on rollout data. The learned policy is trained offline and then evaluated; it does not define a deployment-time persistent self-evolution state.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.28802",
+      "title": "Model or Harness? An Interaction-Centric Taxonomy for Localizing Agent Failures",
+      "published": "2026-07-30",
+      "lane_keys": [
+        "skill_harness",
+        "memory_continual",
+        "parametric_model_state",
+        "collective",
+        "safety_reliability"
+      ],
+      "source_sha256": "318fbb12898c753376d350493838a9ec6d86e4595ef581369286dd840d5b67f1",
+      "fulltext_sha256": "bd794f821604c485937f02b99a2969cefe85749ffacd2c3348f6b4c5fb3515ef",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_FAILURE_LOCALIZATION",
+      "reduction": [
+        "interaction-centric-failure-taxonomy",
+        "model-versus-harness-attribution",
+        "repair-assignment"
+      ],
+      "note": "Model or Harness? supplies a component-level failure taxonomy that localizes faults to model, harness, user, tool, memory, environment, or benchmark interactions. This is useful diagnosis/control-plane evidence but not a new longitudinal causal object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.27690",
+      "title": "LabEvolver: Training-Free Experience Evolution for Safe and Grounded Wet-Lab Agents",
+      "published": "2026-07-30",
+      "lane_keys": [
+        "skill_harness",
+        "memory_continual",
+        "embodied",
+        "autonomous_science"
+      ],
+      "source_sha256": "7da09df8da54f7af9c6c22f91bc8ec5235b24add2cc51bb02c7dc834de723535",
+      "fulltext_sha256": "0906fd97905459c3968b2e6e2dcb2dc85cd523a7a2d7d8ac7a2fa0bdb431c551",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "state-grounded-closed-loop-control",
+        "episodic-experience-distillation",
+        "corrective-skill-strategy-safety-memory"
+      ],
+      "note": "LabEvolver separates an inner state-grounded execution/safety loop from an outer loop that distills completed trajectories into reusable skill, strategy, and safety experience. Inner-only versus LabEvolver and continual ALFWorld results support the value of accumulated experience, while physical pouring/pH tasks show reusable parameter and strategy transfer. The treatment, however, directly adds explicit distilled experience derived from success/failure trajectories. This is mature episodic memory/corrective skill adaptation plus safe closed-loop control; no same-information residual is isolated once the strongest baseline receives the same trajectories, state, experience content, retrieval budget, and update budget.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "No residual survives after matching initial skill/content, failed and successful trajectory evidence, task-score/feedback information, edit budget, update count, executor, and held-out evaluation."
+        },
+        {
+          "memory_id": "MEM-SEAR-1ba2b6e8d305dafaad",
+          "result": "NOT_SATISFIED",
+          "boundary": "Experience retrieval/reuse remains explainable by relevance, compatibility, redundancy, and finite-context planning once retrieval support and budget are matched."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.28026",
+      "title": "Contrastive Reinforced Policy Optimization via Privileged Self-Distillation",
+      "published": "2026-07-30",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "31ef42697e4aa706aeb0c2a2dbf8af340b1755e235fcf2f2194f884b1bb1e5ec",
+      "fulltext_sha256": "d0844e95639f85717f0e648277189bf8d070728f6c2a5039d63b0dc9235a6a2d",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "contrastive-policy-optimization",
+        "privileged-self-distillation",
+        "offline-agentic-rl"
+      ],
+      "note": "CRPO is a post-training objective for agentic self-distillation/RL. It modifies model parameters during training and evaluates a fixed trained policy; no autonomous persistent deployment-time update loop is studied.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.28037",
+      "title": "ClawTrack: Towards Trace-Level Evaluation and Improvement of Real-World Autonomous Agents",
+      "published": "2026-07-30",
+      "lane_keys": [
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "9bea0c35321446d37f1eb230de1be269bd4091c46e9877a56d6e15a2f6db1eba",
+      "fulltext_sha256": "e993732ee59ed7eb3d8d41e4d21dd719f01713217b75038faf34d6b9a176b3fa",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_PROCESS_EVALUATION",
+      "reduction": [
+        "trace-level-process-evaluation",
+        "failure-attribution",
+        "process-filtered-posttraining"
+      ],
+      "note": "ClawTrack shows that outcome scores can hide process deficiencies and provides trace-level process grading and failure attribution. It is valuable evaluation/control-plane evidence; trajectory filtering is then used for ordinary post-training, not an autonomous persistent self-evolution mechanism.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.27822",
+      "title": "CLVisc Agent for autonomous relativistic hydrodynamics studies",
+      "published": "2026-07-30",
+      "lane_keys": [
+        "skill_harness",
+        "collective"
+      ],
+      "source_sha256": "fda38103f8cc93a6b42fe70dd55465df6d84212f4e1cb8643c924a94654b3259",
+      "fulltext_sha256": "45c46a47aab4205fc51b237ea08e8d2a7467f316e68e1e836679c08136f9ac4e",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_AUTONOMOUS_SCIENCE",
+      "reduction": [
+        "meta-skill-guided-program-understanding",
+        "iterative-skill-refinement",
+        "scientific-workflow-automation"
+      ],
+      "note": "The CLVisc Agent uses a meta skill to inspect source code, build/refine a specialized operational skill, and then execute end-to-end scientific simulations and analysis. This supports reusable scientific-workflow and skill-induction components, but the reported contribution is an application workflow rather than an irreducible longitudinal self-evolution causal object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.26784",
+      "title": "SkillRise: Agentic Reinforcement Learning for Cross-Task Skill Evolution",
+      "published": "2026-07-29",
+      "lane_keys": [
+        "skill_harness",
+        "runtime_deployment"
+      ],
+      "source_sha256": "846f765c5b276156c835db67717302edd014987b7e9bfffcbb9b0f1a6f84f36e",
+      "fulltext_sha256": "e769f5257aebf259e20d490373c45c57ad0be097f297a3ccb0b71f8bb9c17e3a",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION_WATCH",
+      "reduction": [
+        "cross-task-curriculum",
+        "persistent-skill-document",
+        "downstream-return-credit-assignment"
+      ],
+      "note": "SkillRise is the strongest near-boundary source in r3. It keeps K=3 task sequences and environment interaction budget fixed in its no-curation ablation; removing inter-task curation and skill transfer leaves the same sequence but loses roughly three points at the end of training. Only the evolving skill document is carried between tasks, so the result is credible evidence that persistent cross-task representation helps beyond sequence exposure alone. Still, the treatment is presence versus absence of a distilled skill representation; the no-curation baseline is not given the same distilled content in another memory/representation form. Task sequences are also deliberately ordered from easier to harder within known families. Thus a same-information procedural-memory/representation plus curriculum baseline can express the current result. Preserve as a watch seed only for a future matched-content representation test.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "No same-information baseline receives the identical transferable skill content, task histories, supervision, update budget, and executor while only a self-evolution-specific structural variable differs."
+        },
+        {
+          "memory_id": "MEM-SEAR-4674f46501819d1414",
+          "result": "NOT_SATISFIED",
+          "boundary": "Cross-task family grouping and progressive ordering remain curriculum/allocation variables; no matched factorial isolates a non-additive evolution interaction beyond skill representation and curriculum."
+        }
+      ],
+      "watch_reopen_seed": true
+    },
+    {
+      "ref": "arXiv:2607.26358",
+      "title": "Post-Training at the Edge of Detectability: A Game-Theoretic Approach to Fine-Tuning",
+      "published": "2026-07-29",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "89ccc0c433ceaa534d08e2e88c4b823044a99e3112855108a1a6a18d9e02233f",
+      "fulltext_sha256": "7db5468c6c58ada4899d1db637ef043f47b1a7b58457e145b8169d32579d041b",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "kl-regularized-rl",
+        "game-theoretic-policy-monitoring",
+        "continual-learning-regularization"
+      ],
+      "note": "Post-Training at the Edge of Detectability derives a KL-regularized fine-tuning equilibrium and evaluates continual-learning/auditing trade-offs. It is a model-training/monitoring result rather than deployment-time autonomous persistent self-evolution.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.27275",
+      "title": "Flat Score, Amplified Failures: How the Error Budget Masks Damage in Quantized LLM Agents",
+      "published": "2026-07-29",
+      "lane_keys": [
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "e6b92c91c21cef794fedb27af153419648dbfad8ff2a842f6fedba28a27f4aa1",
+      "fulltext_sha256": "142b8d6f54c10edce5c57fb690dbef1cd2830fdf8dc011887c398fb1b88d8930",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_SAFETY_PROCESS_METRICS",
+      "reduction": [
+        "quantization-process-damage",
+        "failure-budget-masking",
+        "process-level-safety-evaluation"
+      ],
+      "note": "Flat Score, Amplified Failures shows that a standard task score can remain statistically flat while quantization amplifies pre-existing tool/entity failures because the benchmark error budget absorbs them. This strongly supports process-level and failure-budget safety auditing, but quantization is a static model perturbation rather than a longitudinal self-evolution process.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.25728",
+      "title": "Shared Voxel-Map-Based Cooperative Indoor UAV Guidance with a Multi-Agent Soft Actor-Critic Controller",
+      "published": "2026-07-28",
+      "lane_keys": [
+        "world_model",
+        "embodied",
+        "collective"
+      ],
+      "source_sha256": "7d86858a2675079c6d280d619e1c2e76440b08210dc7dd8231ddcc0bb8fb8418",
+      "fulltext_sha256": "230fe8757ea4d3146b2df8588fbc43b9ebe304daae0963b03e680129041c98a9",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_MULTIAGENT_RL",
+      "reduction": [
+        "shared-world-map",
+        "multi-agent-soft-actor-critic",
+        "offline-imitation-adaptation"
+      ],
+      "note": "The UAV system is a conventional shared-map multi-agent RL controller with offline sim-to-real adaptation. It does not expose a persistent autonomous self-modification loop.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.25904",
+      "title": "Interactive Reward Agent: GUI Task Evaluation via Environment-State Verification",
+      "published": "2026-07-28",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "180f09f1f1fe3483726f5a1861839e11468f95cb3178807232cb7551afbeb380",
+      "fulltext_sha256": "f6744b440da823b819f01f6020654b2689409e713f56d6883c3f33951b889721",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_EXTERNAL_VERIFICATION",
+      "reduction": [
+        "environment-state-verification",
+        "interactive-reward-agent",
+        "external-evaluator-evidence-acquisition"
+      ],
+      "note": "IRA demonstrates that reliable GUI-agent evaluation requires post-execution environment-state evidence and implements propose-then-verify tool use. This is strong verifier/evidence-plane support, but it is an evaluation component with no scientific self-evolution authority.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.26160",
+      "title": "GuideSkill: Evolving Executable LLM Agent Skills for Guideline-Grounded Clinical Reasoning",
+      "published": "2026-07-28",
+      "lane_keys": [
+        "skill_harness"
+      ],
+      "source_sha256": "5f60256f15cb3cf8de667b223bc8e4bcccc02b6a8c91d64c6da46bcab4665dca",
+      "fulltext_sha256": "51f6d6af6cddbb5333ee7d25e213a40a8953876e83468a64cf6ea2cee4f55c10",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "guideline-to-executable-rule-compilation",
+        "supervised-case-conditioned-rule-expansion",
+        "external-skill-library"
+      ],
+      "note": "GuideSkill converts guidelines into executable disease-specific scorers and then uses labeled case-diagnosis pairs to refine covered rules and add missing diagnoses. GuideSkill-Evo raises gold-label skill coverage from 56.5% to 99.5% and improves over guideline RAG and matched training baselines. The evolution mechanism is supervised program/rule synthesis and coverage expansion from labeled cases; its state, supervision, and executable semantics are observable. No same-information residual remains beyond program synthesis, rule induction, coverage expansion, and external decision-support execution.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Case-conditioned rule refinement is corrective/supervised adaptation once labeled evidence, initial rules, update budget, and held-out evaluation are matched."
+        },
+        {
+          "memory_id": "MEM-SCIE-63da8f6c3c1c818d32",
+          "result": "NOT_SATISFIED",
+          "boundary": "Executable rule generation and validation remain expressible as feedback-guided program synthesis/repair with the same specification and evidence."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2607.24998",
+      "title": "VPR-Evolve: Multi-Agent-Driven Algorithm Evolution for FPGA Place and Route",
+      "published": "2026-07-27",
+      "lane_keys": [
+        "memory_continual",
+        "collective",
+        "runtime_deployment"
+      ],
+      "source_sha256": "3c4fed684f07ecdedf8c32ac359870eb56dad29029e7999d93f7e19622d57380",
+      "fulltext_sha256": "d2b9349444e919a73dc077bb6b280534c55bd121fc06b2e850a7f27c0f88ea74",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "verifier-guided-code-evolution",
+        "multi-agent-program-search",
+        "persistent-search-memory"
+      ],
+      "note": "VPR-Evolve expands beyond hyperparameter tuning by modifying VPR source code, but the source explicitly places itself in the AlphaEvolve/AuDoPEDA/GR-Evolve family. Planner/Coder/Reviewer agents propose patches, rebuild/run VPR, and keep or revert candidates according to an explicit CPD/WL/runtime objective; shared memory prevents repeated unproductive search. This is mature verifier-guided program/algorithm search over source code. Beating a fixed-implementation tuner shows a larger search space, not an irreducible self-evolution causal primitive.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SCIE-63da8f6c3c1c818d32",
+          "result": "NOT_SATISFIED",
+          "boundary": "No matched program-search/repair baseline receives the same source tree, candidate/measurement history, evaluator, search budget, and proposal capability while a distinct self-evolution state forces a different prediction."
+        }
+      ],
+      "watch_reopen_seed": false
+    }
+  ],
+  "next_action": "Record these 16 exact refs as zero-authority source-review exposure. No source satisfies an exact durable reopen contract, so do not trigger generator/provider/GPU work. Preserve SkillRise only as a watch seed requiring an identical-content memory/representation control under matched task order, histories, supervision, update budget, and executor. Refresh the source scheduler from a new immutable staging copy.",
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
