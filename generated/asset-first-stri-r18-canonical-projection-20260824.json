@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "acceptance_paper_id": "STRI-ICLR2027",
+  "revision": "R18",
+  "status": "R18_CANONICAL_PROJECTION_PUBLISHED",
+  "canonical_base": "67228aef9ea47a388c5a529c0a46cad5eb45e15a",
+  "integration_source_head": "3d73b9fc612dd39b80559024ad4b881f4bc351b9",
+  "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/R18-MANIFEST.json",
+  "release_manifest_sha256": "9bcaf956966a2719e37ca9cc2ac2e3ab753b97fc13f15b5efad06b19104c673a",
+  "release_manifest_canonical_sha256": "8a086f72857fc09ab198a899eda9771745f5ea419e1ad4e0938748dab8888c0c",
+  "stable_hashes": {
+    "pdf": "a841d3a51f85630b43e824b7eac48980ede4becfd9606d449ac1ab8d5c225e98",
+    "legacy_pdf": "a841d3a51f85630b43e824b7eac48980ede4becfd9606d449ac1ab8d5c225e98",
+    "source_zip": "0c14d03615446918865777c25bf3bb1901d9cec2dc38c65cd5cd8ad00daa137a",
+    "supplement_zip": "3dc94258ccf333f277c3779fd39267a112eb160461e295f6db5cda97de056753",
+    "tex": "4875a301f0af5ccef90a961d824db0f52d01e3f10ea4f83188a56dd60b875502"
+  },
+  "qa": {
+    "paper_qa": "97/97 PASS",
+    "official_iclr_qa": "64/64 PASS",
+    "main_text_pages": 9,
+    "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
+    "supplement_reproduction": "PASS",
+    "supplement_unit_tests": "31/31 PASS",
+    "new_experiment_unit_tests": "22/22 PASS",
+    "paper_quality_referenced_files": 64,
+    "paper_quality_registered_digests": 67,
+    "citation_count": 21
+  },
+  "ledger": {
+    "current_state": "SUBMISSION_READY",
+    "contract_sha256": "30ba1a82ae4547d8e3385f514352da55415b31dcf83b8dabab1f756af34309ad",
+    "gate_clean_submission_ready": true,
+    "paper_preparation_protocol": "1.0+r18-second-substrate-audit",
+    "primary_next_action": "NO_INTERNAL_ACTION"
+  },
+  "experimental_breadth": {
+    "practical_package_weight_baselines": 10,
+    "leave_one_tool_out": "8 folds; exact-R*/uniform max=2.0; NNLS median=2.625, max=6.098",
+    "exact_sparsity_frontier": "Level-1 budgets 1-2 infeasible; 3 active packages attain unrestricted R*=2 through budget 6",
+    "skillrl_budget_sweep": "8 top-k x 12 clone targets x 223 tasks",
+    "skillrouter_external_relevance_analogue": "75 expert queries; core 24 single / 51 multi; R*=1 analogue",
+    "skillsbench_support_qualification": "STOP_79_OF_87_METADATA_AVAILABILITY_MISMATCH",
+    "agentskillos_oracle_analogue": "30 tasks / 20 multi / full uniform spread 4x / full oracle-set R*=2.5 / category R*=2,2,1,1,1",
+    "second_support_qualification": "5 candidates screened / 0 new exact support / 1 new oracle-set analogue"
+  },
+  "other_paper_rows_preserved": true,
+  "claim_expansion": false,
+  "new_model_calls": 0,
+  "new_gpu_runs": 0,
+  "scientific_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "e38137016bca3496c6942d304f68db73b50c134eba9598d308818a251f3a7d5b"
+}

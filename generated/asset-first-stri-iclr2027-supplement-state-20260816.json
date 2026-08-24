@@ -4,10 +4,10 @@
   "stage": "ICLR2027_ANONYMOUS_SUPPLEMENT_READY",
   "status": "PASS",
   "package": {
-    "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/E1-STRI-R17-crossval-sparsity-supplement.zip",
-    "sha256": "646fa2d8dd3c20fd9c34d2b76e4a26a56ed4a28066fa44b5929ca42ff5592ab9",
-    "manifest_sha256": "cca7c48fa58fbf1800ed6ce02cc4333a56149ff204095f83e44b0153f1500b45",
-    "package_metadata_sha256": "c98ee4d7b61e9d8dafbb317a3b6a2e048d8d0091bb9cc9ad6d321767b6ac878e"
+    "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/E1-STRI-R18-second-substrate-audit-supplement.zip",
+    "sha256": "3dc94258ccf333f277c3779fd39267a112eb160461e295f6db5cda97de056753",
+    "manifest_sha256": "9e5431baf09a22e44b6e4c22a864322462cb8c8cc16feada02c907bc59021105",
+    "package_metadata_sha256": "67b0f88554021470994ebc4b45c4454fbcee0ca6acdda896c901f27b7c544868"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
@@ -15,7 +15,7 @@
     "unit_tests": "31/31 PASS",
     "binary_identity_path_scan": "PASS",
     "text_identity_path_scan": "PASS",
-    "figure_regeneration": "R17_BOUNDARY_FIGURE_REGENERATED_AND_SOURCE_BOUND",
+    "figure_regeneration": "R18_BOUNDARY_FIGURE_REGENERATED_AND_SOURCE_BOUND",
     "paper_quality_v2_reproduction": "PASS_MANUSCRIPT_EVIDENCE"
   },
   "reproduced_results": {
@@ -248,6 +248,18 @@
       "skillrouter_graded_uniform_R": 21.0,
       "skillrouter_graded_exact_R": 1.0,
       "skillsbench_support_qualification": "STOP_79_OF_87_METADATA_AVAILABILITY_MISMATCH",
+      "agentskillos_full_uniform_R": 4.0,
+      "agentskillos_full_oracle_R": 2.5,
+      "agentskillos_residual_categories": [
+        "data_computation",
+        "document_creation"
+      ],
+      "agentskillos_equalizable_categories": [
+        "motion_video",
+        "visual_creation",
+        "web_interaction"
+      ],
+      "second_exact_support_substrates_qualified": 0,
       "new_model_calls": 0,
       "new_gpu_runs": 0
     }

@@ -27,7 +27,7 @@
     "abstract_single_paragraph": true,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "resolved_citations": 20,
+    "resolved_citations": 21,
     "overfull_boxes": 0,
     "undefined_citations": 0,
     "undefined_references": 0,
@@ -61,21 +61,21 @@
   },
   "new_gpu_evidence_required_for_current_claim_scope": false,
   "delivery": {
-    "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824",
+    "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824",
     "pdf": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/E1-STRI-R17-crossval-sparsity.pdf",
-      "sha256": "0da435717e4871f282c10d1c728292d0dd04e70f87a44dffddfcc190ebdaa553"
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/E1-STRI-R18-second-substrate-audit.pdf",
+      "sha256": "a841d3a51f85630b43e824b7eac48980ede4becfd9606d449ac1ab8d5c225e98"
     },
     "source_zip": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/E1-STRI-R17-crossval-sparsity-source.zip",
-      "sha256": "da58aa688e29cf8bc9c5d0914cafa8e47c5bd255d59e06572368705571a960a0",
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/E1-STRI-R18-second-substrate-audit-source.zip",
+      "sha256": "0c14d03615446918865777c25bf3bb1901d9cec2dc38c65cd5cd8ad00daa137a",
       "files": 12,
       "isolated_compile_verified": true
     },
     "supplement_zip": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/E1-STRI-R17-crossval-sparsity-supplement.zip",
-      "sha256": "646fa2d8dd3c20fd9c34d2b76e4a26a56ed4a28066fa44b5929ca42ff5592ab9",
-      "manifest_sha256": "cca7c48fa58fbf1800ed6ce02cc4333a56149ff204095f83e44b0153f1500b45",
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/E1-STRI-R18-second-substrate-audit-supplement.zip",
+      "sha256": "3dc94258ccf333f277c3779fd39267a112eb160461e295f6db5cda97de056753",
+      "manifest_sha256": "9e5431baf09a22e44b6e4c22a864322462cb8c8cc16feada02c907bc59021105",
       "isolated_reproduction_verified": true,
       "unit_tests": "31/31 PASS",
       "identity_path_scan": "PASS",
@@ -112,7 +112,7 @@
       "sensitivity",
       "uncertainty"
     ],
-    "content_addressed_files": 59
+    "content_addressed_files": 64
   },
   "visual_evidence": {
     "main_figures": 4,
@@ -225,16 +225,17 @@
     "E7_optional_satisfied": true
   },
   "canonical_reconciliation": {
-    "revision": "R17",
-    "canonical_base": "849bec25b37d09237683067bc7a098e442d9db4e",
-    "integration_source_head": "0094baffacb62220d8dc455c86fbb5adc8deeb48",
-    "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/R17-MANIFEST.json",
-    "release_manifest_sha256": "f96c4b5a621e10e2f902e9ccf438ed7afc92b93a6b43b551b1e7c7652f3c9653",
-    "release_manifest_canonical_sha256": "868de61141b831188d278e525dbc11e46b77d3cb81297c2f947307d162b9d337",
+    "revision": "R18",
+    "canonical_base": "67228aef9ea47a388c5a529c0a46cad5eb45e15a",
+    "integration_source_head": "3d73b9fc612dd39b80559024ad4b881f4bc351b9",
+    "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/R18-MANIFEST.json",
+    "release_manifest_sha256": "9bcaf956966a2719e37ca9cc2ac2e3ab753b97fc13f15b5efad06b19104c673a",
+    "release_manifest_canonical_sha256": "8a086f72857fc09ab198a899eda9771745f5ea419e1ad4e0938748dab8888c0c",
     "paper_qa": "97/97 PASS",
     "official_iclr_qa": "64/64 PASS",
     "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
-    "paper_quality_content_addressed_files": 59,
+    "paper_quality_content_addressed_files": 64,
+    "paper_quality_registered_digests": 67,
     "supplement_reproduction": "PASS",
     "supplement_unit_tests": "31/31 PASS",
     "experimental_breadth": {
@@ -248,7 +249,21 @@
       "skillrl_tasks": 223,
       "skillrl_clone_targets": 12,
       "skillrouter_expert_queries": 75,
-      "skillsbench_support_qualification": "STOP_79_OF_87_METADATA_AVAILABILITY_MISMATCH"
+      "skillsbench_support_qualification": "STOP_79_OF_87_METADATA_AVAILABILITY_MISMATCH",
+      "agentskillos_oracle_tasks": 30,
+      "agentskillos_multi_skill_tasks": 20,
+      "agentskillos_full_uniform_R": 4.0,
+      "agentskillos_full_oracle_R": 2.5,
+      "agentskillos_residual_categories": [
+        "data_computation",
+        "document_creation"
+      ],
+      "agentskillos_equalizable_categories": [
+        "motion_video",
+        "visual_creation",
+        "web_interaction"
+      ],
+      "second_exact_support_substrates_qualified": 0
     },
     "claim_expansion": false,
     "new_model_calls": 0,
