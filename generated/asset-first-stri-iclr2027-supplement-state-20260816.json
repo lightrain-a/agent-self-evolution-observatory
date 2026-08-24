@@ -4,10 +4,10 @@
   "stage": "ICLR2027_ANONYMOUS_SUPPLEMENT_READY",
   "status": "PASS",
   "package": {
-    "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/E1-STRI-R18-second-substrate-audit-supplement.zip",
-    "sha256": "3dc94258ccf333f277c3779fd39267a112eb160461e295f6db5cda97de056753",
-    "manifest_sha256": "9e5431baf09a22e44b6e4c22a864322462cb8c8cc16feada02c907bc59021105",
-    "package_metadata_sha256": "67b0f88554021470994ebc4b45c4454fbcee0ca6acdda896c901f27b7c544868"
+    "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r19-heldout-pilot-stop-20260824/E1-STRI-R19-heldout-pilot-stop-supplement.zip",
+    "sha256": "e710574e68b4443af92cb02c5797f7759958c35bd83308f27be63a651c8643c2",
+    "manifest_sha256": "810a53f249bac6a192b400d287a22a011bd7f5400cad31e36e2999b84b1ea206",
+    "package_metadata_sha256": "8f24b6cae624e97293eec2b67ed1e558321271526948ba36f9c567686f3d6bd2"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
@@ -15,7 +15,7 @@
     "unit_tests": "31/31 PASS",
     "binary_identity_path_scan": "PASS",
     "text_identity_path_scan": "PASS",
-    "figure_regeneration": "R18_BOUNDARY_FIGURE_REGENERATED_AND_SOURCE_BOUND",
+    "figure_regeneration": "R19_BOUNDARY_FIGURE_REGENERATED_AND_SOURCE_BOUND",
     "paper_quality_v2_reproduction": "PASS_MANUSCRIPT_EVIDENCE"
   },
   "reproduced_results": {
@@ -262,6 +262,28 @@
       "second_exact_support_substrates_qualified": 0,
       "new_model_calls": 0,
       "new_gpu_runs": 0
+    },
+    "autoskill_multitask_pilot": {
+      "retrieval_qualification": "9/9",
+      "selected_units": [
+        "skillmisevo-coding-22-P21",
+        "skillmisevo-coding-21-P19"
+      ],
+      "stage1_runs": 8,
+      "all_executions_valid": true,
+      "stage1_gate_pass": false,
+      "decision": "STOP_EXPANSION_STAGE1_GATE_NOT_MET",
+      "stage2_repeat_runs": 0,
+      "remaining_unit_runs": 0,
+      "unit_diagnoses": {
+        "skillmisevo-coding-22-P21": "CONTROL_NONCONCORDANCE_NO_SPLIT_SPECIFIC_ATTRIBUTION",
+        "skillmisevo-coding-21-P19": "NO_ACTION_SIGNATURE_SEPARATION"
+      },
+      "raw_trajectories_packaged": false,
+      "new_agent_runs": 8,
+      "judge_calls": 0,
+      "new_gpu_runs": 0,
+      "claim_expansion": false
     }
   },
   "frozen_external_repositories": {

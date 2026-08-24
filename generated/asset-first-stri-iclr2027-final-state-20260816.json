@@ -61,21 +61,21 @@
   },
   "new_gpu_evidence_required_for_current_claim_scope": false,
   "delivery": {
-    "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824",
+    "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r19-heldout-pilot-stop-20260824",
     "pdf": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/E1-STRI-R18-second-substrate-audit.pdf",
-      "sha256": "a841d3a51f85630b43e824b7eac48980ede4becfd9606d449ac1ab8d5c225e98"
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r19-heldout-pilot-stop-20260824/E1-STRI-R19-heldout-pilot-stop.pdf",
+      "sha256": "c2440a127a0cb078c0af5ddd5617bf1b3ed6a627bc635d53a0eaae306c9265c7"
     },
     "source_zip": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/E1-STRI-R18-second-substrate-audit-source.zip",
-      "sha256": "0c14d03615446918865777c25bf3bb1901d9cec2dc38c65cd5cd8ad00daa137a",
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r19-heldout-pilot-stop-20260824/E1-STRI-R19-heldout-pilot-stop-source.zip",
+      "sha256": "b8cd9c0e708009788bf40167dbe8b5d21a37cedbde46a317c2cd43ff8b172f4c",
       "files": 12,
       "isolated_compile_verified": true
     },
     "supplement_zip": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/E1-STRI-R18-second-substrate-audit-supplement.zip",
-      "sha256": "3dc94258ccf333f277c3779fd39267a112eb160461e295f6db5cda97de056753",
-      "manifest_sha256": "9e5431baf09a22e44b6e4c22a864322462cb8c8cc16feada02c907bc59021105",
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r19-heldout-pilot-stop-20260824/E1-STRI-R19-heldout-pilot-stop-supplement.zip",
+      "sha256": "e710574e68b4443af92cb02c5797f7759958c35bd83308f27be63a651c8643c2",
+      "manifest_sha256": "810a53f249bac6a192b400d287a22a011bd7f5400cad31e36e2999b84b1ea206",
       "isolated_reproduction_verified": true,
       "unit_tests": "31/31 PASS",
       "identity_path_scan": "PASS",
@@ -112,7 +112,7 @@
       "sensitivity",
       "uncertainty"
     ],
-    "content_addressed_files": 64
+    "content_addressed_files": 73
   },
   "visual_evidence": {
     "main_figures": 4,
@@ -225,17 +225,17 @@
     "E7_optional_satisfied": true
   },
   "canonical_reconciliation": {
-    "revision": "R18",
-    "canonical_base": "67228aef9ea47a388c5a529c0a46cad5eb45e15a",
-    "integration_source_head": "3d73b9fc612dd39b80559024ad4b881f4bc351b9",
-    "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/R18-MANIFEST.json",
-    "release_manifest_sha256": "9bcaf956966a2719e37ca9cc2ac2e3ab753b97fc13f15b5efad06b19104c673a",
-    "release_manifest_canonical_sha256": "8a086f72857fc09ab198a899eda9771745f5ea419e1ad4e0938748dab8888c0c",
+    "revision": "R19",
+    "canonical_base": "4f0fd8400c1e4434f3ae73523c3dd2062808a282",
+    "integration_source_head": "9e1c60845d4245c5ad7645d1cee06eb82f278871",
+    "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r19-heldout-pilot-stop-20260824/R19-MANIFEST.json",
+    "release_manifest_sha256": "c6da7056eb4ba0082b31745df86ba1023cb89b27ec23753acaf1840e0b1828f2",
+    "release_manifest_canonical_sha256": "57780c494f5e03cb55dc1c3187bfa692d761fd3345d06283bd5d4375d82c82e3",
     "paper_qa": "97/97 PASS",
     "official_iclr_qa": "64/64 PASS",
     "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
-    "paper_quality_content_addressed_files": 64,
-    "paper_quality_registered_digests": 67,
+    "paper_quality_content_addressed_files": 73,
+    "paper_quality_registered_digests": 76,
     "supplement_reproduction": "PASS",
     "supplement_unit_tests": "31/31 PASS",
     "experimental_breadth": {
@@ -265,8 +265,25 @@
       ],
       "second_exact_support_substrates_qualified": 0
     },
+    "heldout_behavior_pilot": {
+      "retrieval_qualification": "9/9",
+      "selection_outcome_blind": true,
+      "selected_units": [
+        "skillmisevo-coding-22-P21",
+        "skillmisevo-coding-21-P19"
+      ],
+      "stage1_runs": 8,
+      "all_executions_valid": true,
+      "stage1_gate_pass": false,
+      "decision": "STOP_EXPANSION_STAGE1_GATE_NOT_MET",
+      "stage2_repeat_runs": 0,
+      "remaining_unit_runs": 0,
+      "p19_role": "bounded existence proof"
+    },
     "claim_expansion": false,
-    "new_model_calls": 0,
+    "new_agent_runs": 8,
+    "new_model_profile": false,
+    "judge_calls": 0,
     "new_gpu_runs": 0
   }
 }
