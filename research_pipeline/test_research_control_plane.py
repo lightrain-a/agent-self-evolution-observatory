@@ -93,6 +93,10 @@ class ResearchControlPlaneTest(unittest.TestCase):
         self.assertEqual(state["component_snapshots"]["feynman_socratic_gate"]["false_reduction_alerts"], 0)
         self.assertGreaterEqual(state["component_snapshots"]["failure_differential_registry"]["historical_terminalized_labels"], 15)
         self.assertEqual(state["component_snapshots"]["failure_differential_registry"]["prospective_scored_cases"], 0)
+        self.assertEqual(state["component_snapshots"]["research_skill_registry"]["skill_packs_catalogued_not_installed"], 8)
+        self.assertEqual(state["component_snapshots"]["manuscript_integrity_layer"]["audit_surfaces"], 7)
+        self.assertEqual(state["summary"]["catalogued_skill_packs"], 8)
+        self.assertEqual(state["summary"]["post_draft_integrity_surfaces"], 7)
         self.assertFalse(state["shadow_extensions"]["shadow_extension_grants_scientific_authority"])
 
     def test_system_overview_loads_selective_control_plane_projection(self) -> None:

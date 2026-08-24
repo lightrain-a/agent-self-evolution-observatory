@@ -95,6 +95,11 @@ POLICY: dict[str, Any] = {
     "ledger_contract_digest_is_immutable_between_scientific_revisions": True,
     "scientific_contract_revision_requires_evidence_closure_at_paper_evidence": True,
     "submitted_state_requires_external_human_submission_authority": True,
+    "post_draft_integrity_audit_precedes_independent_model_review_for_new_workflows": True,
+    "post_draft_integrity_is_receipt_backed_not_reviewer_self_attestation": True,
+    "legacy_paper_ledgers_are_not_retroactively_invalidated_by_new_post_draft_integrity_contract": True,
+    "deterministic_integrity_findings_feed_reviewer_issue_graph_before_targeted_repair": True,
+    "machine_like_prose_lint_is_editorial_quality_not_ai_detector_evasion": True,
 }
 
 
@@ -454,15 +459,31 @@ def evaluate_prebuttal(objections: Sequence[ReviewerObjection], resolutions: Seq
     }
 
 
-def evaluate_manuscript_ci(checks: Mapping[str, bool]) -> dict[str, Any]:
-    missing = tuple(name for name in MANDATORY_MANUSCRIPT_CI_CHECKS if name not in checks)
-    failed = tuple(name for name in MANDATORY_MANUSCRIPT_CI_CHECKS if checks.get(name) is False)
+def evaluate_manuscript_ci(
+    checks: Mapping[str, bool], *,
+    post_draft_integrity: Mapping[str, Any] | None = None,
+    require_post_draft_integrity: bool = False,
+) -> dict[str, Any]:
+    missing = list(name for name in MANDATORY_MANUSCRIPT_CI_CHECKS if name not in checks)
+    failed = list(name for name in MANDATORY_MANUSCRIPT_CI_CHECKS if checks.get(name) is False)
+    integrity = post_draft_integrity or {}
+    integrity_pass = integrity.get("pass") is True
+    if require_post_draft_integrity:
+        if not integrity:
+            missing.append("post-draft-integrity-receipt")
+        elif not integrity_pass:
+            failed.append("post-draft-integrity-receipt")
+    required = len(MANDATORY_MANUSCRIPT_CI_CHECKS) + int(require_post_draft_integrity)
+    passed = sum(checks.get(name) is True for name in MANDATORY_MANUSCRIPT_CI_CHECKS) + int(require_post_draft_integrity and integrity_pass)
     return {
         "pass": not missing and not failed,
-        "required": len(MANDATORY_MANUSCRIPT_CI_CHECKS),
-        "passed": sum(checks.get(name) is True for name in MANDATORY_MANUSCRIPT_CI_CHECKS),
-        "missing": missing,
-        "failed": failed,
+        "required": required,
+        "passed": passed,
+        "missing": tuple(missing),
+        "failed": tuple(failed),
+        "post_draft_integrity_required": require_post_draft_integrity,
+        "post_draft_integrity_pass": integrity_pass if integrity else None,
+        "post_draft_integrity_receipt_sha256": str(integrity.get("receipt_sha256") or ""),
         "scientific_authority": False,
     }
 
@@ -534,10 +555,20 @@ def build_paper_acceptance_system_state() -> dict[str, Any]:
         "mock_review_modes": [mode.value for mode in MockReviewMode],
         "mandatory_manuscript_ci_checks": list(MANDATORY_MANUSCRIPT_CI_CHECKS),
         "review_action_classes": [action.value for action in ReviewActionClass],
+        "post_draft_integrity_contract": {
+            "order": ["deterministic-post-draft-integrity", "independent-model-review", "reviewer-issue-graph", "targeted-repair", "deterministic-re-audit", "claim-audit"],
+            "hard_checks": ["facts", "citation-existence-and-support", "numbers", "table-cells", "claim-evidence-binding"],
+            "editorial_checks": ["first-use-term-definition", "component-input-output-explanation", "machine-like-prose-lint"],
+            "legacy_ledgers_retroactively_blocked": False,
+            "scientific_authority": False,
+            "experiment_authority": False,
+        },
         "summary": {
             "paper_states": len(PAPER_ACCEPTANCE_FLOW),
             "mock_review_modes": len(MockReviewMode),
             "mandatory_manuscript_ci_checks": len(MANDATORY_MANUSCRIPT_CI_CHECKS),
+            "post_draft_integrity_contract_installed": 1,
+            "post_draft_integrity_automatic_experiment_authority": 0,
             "append_only_ledger": True,
             "automatic_scientific_authority": 0,
             "automatic_experiment_authority": 0,

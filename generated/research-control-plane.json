@@ -137,6 +137,24 @@
       "adoption_gap_test_ready": false,
       "retrospective_label_leakage_allowed": 0,
       "automatic_repair_authority": 0
+    },
+    "research_skill_registry": {
+      "capabilities": 9,
+      "high_risk": 1,
+      "advisory_or_diagnostic": 3,
+      "dynamic_registration_policy": "schema+version+smoke required",
+      "skill_packs_catalogued_not_installed": 8,
+      "skill_admission_contract_installed": 1,
+      "skill_router_contract_installed": 1,
+      "automatic_skill_authority": 0
+    },
+    "manuscript_integrity_layer": {
+      "audit_surfaces": 7,
+      "deterministic_before_agentic_review": 1,
+      "automatic_scientific_authority": 0,
+      "automatic_experiment_authority": 0,
+      "automatic_gpu_authority": 0,
+      "automatic_submission_authority": 0
     }
   },
   "research_states": [],
@@ -263,6 +281,8 @@
     "reviewer_issue_papers": 5,
     "registered_papers": 5,
     "submission_ready_papers": 4,
+    "catalogued_skill_packs": 8,
+    "post_draft_integrity_surfaces": 7,
     "automatic_scientific_authority": 0,
     "automatic_experiment_authority": 0,
     "automatic_gpu_authority": 0
@@ -608,10 +628,10 @@
     "projection_cannot_mutate_source_artifacts": true
   },
   "source_artifact_sha256": {
-    "generated/research-system-state.json": "c1d7b6ed0c3ee0493a965cad5d8c5ddc58d045612161b9b78964f422c976f97d",
-    "generated/paper-registry.json": "51aece2c0a2a97ea4af2db06e8654b80d6b24279d9430f803ff6bf8a8c1fa9ef",
+    "generated/research-system-state.json": "f1c9383dc5cf9cf0455e64606d2309e671d88ede405ec66bbdaea7c2606c7f24",
+    "generated/paper-registry.json": "c46ba750f1b07485fd8f8280aea6fa26db3726dc08618f75880f916167674f94",
     "generated/research-governance-v2.json": "328869b78bb48972c52e0b36ede97d15d2d90487541095e689f0c225b424d059",
     "generated/asset-first-stri-paper-quality-v2-20260816.json": "31ec9a9a882123a24ff3d0967b653ba32b44067807e532b3d2540da549971708"
   },
-  "projection_sha256": "81ee669d891688efbc4d7527f3fee4c655e2cb863c22224d0c933c947d26d095"
+  "projection_sha256": "99c7ccd0c72dc64957dbd62757db3cb549ba9bc6490046ac694a32f39581c50e"
 }

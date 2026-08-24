@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
+from .manuscript_integrity_audit import build_post_draft_integrity_receipt
 from .paper_acceptance import (
     MockReviewMode, PAPER_ACCEPTANCE_FLOW, PaperContract, PaperState, PrebuttalResolution,
     ReviewerObjection, StoryCandidate, build_claim_audit_receipt, build_mock_review_receipt,
@@ -51,6 +52,7 @@ def _refresh(row: dict[str, Any]) -> None:
         "mock_reviews": sum(event.get("event_type") == "mock-pc-review" for event in events),
         "claim_audit_receipts": sum(event.get("event_type") == "claim-audit" for event in events),
         "manuscript_ci_receipts": sum(event.get("event_type") == "manuscript-ci" for event in events),
+        "post_draft_integrity_receipts": sum(event.get("event_type") == "post-draft-integrity" for event in events),
         "prebuttal_receipts": sum(event.get("event_type") == "prebuttal" for event in events),
         "submission_readiness_receipts": sum(event.get("event_type") == "submission-readiness" for event in events),
         "contract_revisions": sum(event.get("event_type") == "paper-contract-revised" for event in events),
@@ -662,9 +664,27 @@ def record_claim_audit(
     return _append(root, contract, actor, {"event_type": "claim-audit", "receipt": receipt})
 
 
-def record_manuscript_ci(root: Path, contract: PaperContract, checks: Mapping[str, bool], actor: str = "manuscript-ci") -> dict[str, Any]:
-    result = evaluate_manuscript_ci(checks)
+def record_post_draft_integrity(
+    root: Path, contract: PaperContract, manifest: Mapping[str, Any], *,
+    project_root: Path | None = None, actor: str = "post-draft-integrity",
+) -> dict[str, Any]:
+    receipt = build_post_draft_integrity_receipt(dict(manifest), project_root=project_root)
+    return _append(root, contract, actor, {"event_type": "post-draft-integrity", "receipt": receipt})
+
+
+def record_manuscript_ci(
+    root: Path, contract: PaperContract, checks: Mapping[str, bool], actor: str = "manuscript-ci", *,
+    require_post_draft_integrity: bool = False,
+) -> dict[str, Any]:
+    row = initialize_paper_ledger(root, contract, actor)
+    integrity = (_latest(row, "post-draft-integrity").get("receipt") or {}) if require_post_draft_integrity else {}
+    result = evaluate_manuscript_ci(
+        checks,
+        post_draft_integrity=integrity,
+        require_post_draft_integrity=require_post_draft_integrity,
+    )
     return _append(root, contract, actor, {"event_type": "manuscript-ci", "checks": dict(checks),
+        "post_draft_integrity_receipt_sha256": str(integrity.get("receipt_sha256") or ""),
         "result": {**result, "missing": list(result["missing"]), "failed": list(result["failed"])}})
 
 
