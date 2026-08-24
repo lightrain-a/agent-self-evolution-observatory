@@ -1,0 +1,226 @@
+{
+  "authority": {
+    "execution_authorized": false,
+    "experiment": false,
+    "gpu": false,
+    "provider_spend": false,
+    "required_before_execution": [
+      "explicit external-human scientific reopen scoped to TEMP-O4/G0",
+      "experiment authority bound to this plan_body_sha256",
+      "provider-spend authorization / credential-bearing execution environment",
+      "Ark Plan target explicitly set to deepseek-v4-pro and allowed to propagate before execution"
+    ],
+    "scientific": false
+  },
+  "canonical_ledger_snapshot": {
+    "authority": {
+      "experiment": false,
+      "gpu": false,
+      "scientific": false,
+      "submission": false
+    },
+    "authority_open": false,
+    "current_state": "SUBMISSION_READY",
+    "path": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK.json",
+    "scientific_reopen_required_in_latest_r10": true,
+    "scientific_status": "READY",
+    "sha256": "7c285106d98ef12c66dc195fc96d23e1820e3d7654d9eab6d406cba4db8402b5",
+    "updated_at": "2026-08-23T14:04:43+00:00"
+  },
+  "cost_preflight": {
+    "historical_N_total_tokens_mean": 1790.4,
+    "historical_T_total_tokens_mean": 1850.76,
+    "pricing_not_inferred": true,
+    "provider_billing_authority": false,
+    "rough_planned_total_tokens": 382309.19999999995,
+    "rough_planned_total_tokens_millions": 0.38230919999999996
+  },
+  "deferred_stage_b": {
+    "estimated_calls_if_same_3arm_2repeat_design": 138,
+    "model": "kimi-k3",
+    "not_part_of_stage_a": true,
+    "rough_historical_token_estimate_millions": 0.308,
+    "source_native_endpoints": 23,
+    "would_require_fresh_authorization": true
+  },
+  "design_delta_from_r12": {
+    "changed_before_new_outcomes": true,
+    "preflight_candidate": "empty-output no-op helper",
+    "r12_candidate": "identity projection",
+    "r12_historical_receipt_mutated": false,
+    "reason": "A family-uniform identity projection is ill-defined for release alignment and may duplicate evidence/salience. Empty output preserves wrapper/call exposure while adding no evidence transformation or task information."
+  },
+  "fresh_execution_contract": {
+    "arms": [
+      "N_FRESH",
+      "G0_NOOP",
+      "T_FROZEN"
+    ],
+    "condition_order_seed": "TEMP-O4-G0-20260824-v1",
+    "condition_position_counts": {
+      "G0_NOOP": {
+        "0": 23,
+        "1": 24,
+        "2": 23
+      },
+      "N_FRESH": {
+        "0": 24,
+        "1": 23,
+        "2": 23
+      },
+      "T_FROZEN": {
+        "0": 23,
+        "1": 23,
+        "2": 24
+      }
+    },
+    "endpoints": 35,
+    "fresh_n_required": true,
+    "fresh_t_required": true,
+    "historical_N_or_T_not_substituted_for_fresh_pairing": true,
+    "independent_unit": "endpoint",
+    "plan_body_sha256": "d0e0635ce314628894fa4a4eccce9345274289ca2966fc64796c2cf5f31aecd9",
+    "plan_id": "TEMP-O4-G0-NEUTRALITY-FRESH-3ARM-V1",
+    "planned_model_calls": 210,
+    "provider_failure_policy": "No outcome-driven replacement. A provider object with no assistant text may be GET-recovered only; do not re-POST the same unit as a hidden replacement.",
+    "repeats_per_arm": 2,
+    "requested_model": "ark-code-latest",
+    "required_resolved_model": "deepseek-v4-pro-260425",
+    "stop_on_resolved_model_drift": true
+  },
+  "frozen_execution_code": {
+    "analyzer_path": "research_pipeline/temporal_skill_g0_analyze.py",
+    "analyzer_sha256": "7125f288bb622d67a720341dc92058106e89e03b23b3eb8c4f3f67807aad33f9",
+    "runner_path": "research_pipeline/temporal_skill_g0_execute.py",
+    "runner_sha256": "4682f369aac5caf1d583a40477b437eb7d25780c87cf98f8af7edcac26137d39"
+  },
+  "frozen_support_inventory": {
+    "family_endpoint_counts": {
+      "exogenous_grounding": 10,
+      "release_alignment": 5,
+      "temporal_cutoff": 20
+    },
+    "frozen_n0_rows": 175,
+    "independent_endpoints": 35,
+    "n0_repeat_stable_endpoints": 27,
+    "n0_repeat_varying_endpoints": 8,
+    "n0_repeats_per_endpoint": 5,
+    "r3_endpoints_path": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260822-r3/endpoints.json",
+    "r3_endpoints_sha256": "c67f2e94d295b94d3a0a0f019a37ae7243e68793060ccf7619ecbcff0b713cd6",
+    "r4_endpoints_path": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260822-r4-postreview-eia/endpoints.json",
+    "r4_endpoints_sha256": "c18fd185dcb34bdf00b6d1efd11a75be850e0b49cd4c306cb6b326b1692418b0",
+    "repeat_subsample_diagnostic": {
+      "1": {
+        "mae_to_five_repeat_mean": 0.10285714285714286,
+        "max": 0.8
+      },
+      "2": {
+        "mae_to_five_repeat_mean": 0.08,
+        "max": 0.6
+      },
+      "3": {
+        "mae_to_five_repeat_mean": 0.043809523809523805,
+        "max": 0.4
+      },
+      "4": {
+        "mae_to_five_repeat_mean": 0.025714285714285714,
+        "max": 0.2
+      }
+    },
+    "support_sufficient_for_fixed_two_repeat_fresh_factorial": true,
+    "varying_endpoint_ids": [
+      "eia-cutoff::doc_229defbde6bb",
+      "eia-cutoff::doc_4054808c7b19",
+      "eia-cutoff::doc_5d365ee5ff93",
+      "eia-cutoff::doc_62014739d975",
+      "eia-cutoff::doc_a4f03bdc5762",
+      "eia-cutoff::doc_ae1b2e192c9b",
+      "eia-cutoff::doc_b246cd0161c9",
+      "eia-cutoff::doc_c07997777e83"
+    ]
+  },
+  "g0_static_contract": {
+    "output": {},
+    "reads_context": false,
+    "reads_package": false,
+    "same_callable_signature": true,
+    "same_helper_execution_count": true,
+    "same_wrapper_exposure": true,
+    "source": "def skill(package, context):\n    return {}\n",
+    "source_sha256": "4f2fe9670376d6452d8bb10cba5ba2cabd45d88742584c40018c7152b46e1c05"
+  },
+  "generated_at": "2026-08-24T01:55:45+00:00",
+  "neutrality_contract": {
+    "bootstrap_draws": 20000,
+    "bootstrap_seed": 20260824,
+    "confidence_interval": "90% endpoint-stratified bootstrap by failure_family",
+    "equivalence_margin_absolute_risk_difference": [
+      -0.1,
+      0.1
+    ],
+    "estimand": "mean across 35 endpoints of [repeat-mean family_success(G0_NOOP) - repeat-mean family_success(N_FRESH)]",
+    "family_guardrail": "temporal_cutoff, release_alignment, and exogenous_grounding evaluated separately; small cells remain guardrails, not population-effect claims",
+    "go": "90% CI strictly inside [-0.10,+0.10] and no family non-neutrality guardrail fires",
+    "nonneutral_stop": "global |point estimate| >= 0.10 with 90% CI excluding 0, or a family has |mean delta| >= 0.20 with a one-sided exact sign p <= 0.05 in that direction",
+    "otherwise": "HOLD_INCONCLUSIVE_DO_NOT_CALL_G0_NEUTRAL"
+  },
+  "operation_specificity_contract": {
+    "claim_rule": "Any currently claimed DeepSeek-primary positive cell that becomes non-positive against either fresh G0 or fresh N is downgraded; null/ceiling cells remain visible.",
+    "fresh_contrasts": [
+      "T_FROZEN - G0_NOOP",
+      "T_FROZEN - N_FRESH"
+    ],
+    "no_omnibus_universal_skill_claim": true,
+    "only_evaluated_if_g0_neutrality_go": true,
+    "paper_level_TEMP_O4_full_closure_not_automatic": true,
+    "residual_support_layer": "Kimi held-out alignment/grounding remains without a behavior-neutral G0 unless separately authorized as Stage B.",
+    "same_preexisting_family_phase_cells": true,
+    "stage": "A_DEEPSEEK_PRIMARY_ONLY"
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "policy": {
+    "TEMP_O5_retrieval_baseline_deferred": true,
+    "cannot_resolve_primary_track_TEMP_O4_without_fresh_outcomes": true,
+    "new_gpu_execution": 0,
+    "new_model_calls": 0,
+    "new_provider_calls": 0,
+    "paper_level_TEMP_O4_full_closure_requires_residual_support_layer_adjudication": true,
+    "preflight_has_zero_scientific_result_authority": true
+  },
+  "purpose": "Freeze Stage A: a behavior-neutral second generic control for the registered DeepSeek primary track before any new provider/model outcome is generated.",
+  "receipt_body_sha256": "a9e1b6c39e219038e5021dc94d9036a9439ce1b24c804355848df8a24ea7f741",
+  "receipt_type": "temporal-skill-g0-scientific-reopen-preflight",
+  "runtime_readiness": {
+    "ark": {
+      "api_key_in_output": false,
+      "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+      "configured": false,
+      "default_model": "ark-code-latest",
+      "max_retries": 2,
+      "timeout_seconds": 120.0
+    },
+    "ark_code_latest_must_resolve_exact_required_model": true,
+    "ark_plan_base_url_required": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "credential_ready_in_this_isolated_worktree": false,
+    "direct_deepseek_v4_pro_route_forbidden_by_cost_policy": true,
+    "model_identity_route_requires_ark_plan_target_deepseek_v4_pro": true
+  },
+  "schema_version": "1.0",
+  "status": "HOLD_EXPLICIT_SCIENTIFIC_REOPEN_AND_EXPERIMENT_AUTHORITY",
+  "zero_call_design_evidence": {
+    "draws": 50000,
+    "fresh_repeats_per_arm": 2,
+    "null_global_delta_percentile_90": [
+      -0.05714285714285714,
+      0.05714285714285714
+    ],
+    "null_global_delta_percentile_95": [
+      -0.07142857142857142,
+      0.07142857142857142
+    ],
+    "p_abs_delta_le_0_10": 0.99668,
+    "seed": 20260824,
+    "simulation_only_zero_scientific_authority": true,
+    "source": "frozen five-repeat N0 endpoint frequencies only"
+  }
+}
