@@ -555,12 +555,12 @@
         "verdict": "Weak Reject"
       },
       "read": {
-        "zh": "Round 2 对 L0–L3 与 causal sign unresolved 的判断仍成立。后续工程已把 O5 推到真正的 metadata-only execution：R17 用统一 writer 完成 36/36 exact memory bytes；R18a/R18b 两个 pre-outcome support failure 均未打开科学结果；R18c 在 sequence 0 的 agent action 之后、terminal evaluator 完成之前遇到 evaluator model-alias support failure。按预注册 no-retry 规则，R18 confirmatory attempt 已停止，terminal score 无效，当前仍是 NO_VERDICT，而不是负结果。",
-        "en": "Round 2 remains correct about L0–L3 and the unresolved causal sign. Subsequent engineering reaches a genuine metadata-only execution surface: R17 uniformly realizes exact memory bytes for 36/36 sources; R18a/R18b are pre-outcome support failures; R18c encounters an evaluator model-alias support failure after the sequence-0 agent action but before a valid terminal evaluator score. Under the preregistered no-retry rule, the R18 confirmatory attempt is stopped and remains NO_VERDICT rather than negative evidence."
+        "zh": "Round 2 对 L0–L3 与 causal sign unresolved 的判断仍成立。R19 已获得 bounded execution authority，benchmark 前 support/synthetic gates 均通过；当前在完整 task boundary 停于 8/140 episodes、2/35 independent tasks，未计算任何 interim effect、p-value 或区间。",
+        "en": "Round 2 remains correct about L0–L3 and the unresolved causal sign. R19 now has bounded execution authority and passes the prebenchmark support/synthetic gates; execution is checkpointed at a complete task boundary with 8/140 episodes and 2/35 independent tasks, with no interim effect, p-value, or interval computed."
       },
       "next": {
-        "zh": "不要 retry R18。R19 已零 outcome 冻结为一个新的 35-template experiment candidate：剔除 R18c 暴露 template，30/35 downstream task 为新 task，5/35 为从未执行的原 task，35/35 与 frozen source memory task 不同；native evaluator/alias/tokenizer preflight 已通过，140-episode contract 与 4200 agent + 600 fuzzy-evaluator + 2 synthetic-smoke 上限已冻结。下一步只有在获得新的 explicit scientific + experiment/model-call authority 后，先通过两次非 benchmark synthetic completion smoke，才能打开任何 R19 outcome。O6 financial L3 仍独立 support-blocked。",
-        "en": "Do not retry R18. R19 is frozen, with zero new outcomes, as a new 35-template experiment candidate: the R18c-exposed template is removed, 30/35 downstream tasks are new, five are never-executed retained tasks, and every downstream task differs from its frozen source-memory task. Native evaluator plus alias/tokenizer preflights pass; a 140-episode contract freezes upper bounds of 4200 agent completions, 600 fuzzy-evaluator completions, and two synthetic support smokes. No R19 outcome may open until new explicit scientific and experiment/model-call authority is granted and both nonbenchmark synthetic completion smokes pass. O6 financial L3 remains independently support-blocked."
+        "zh": "R19 只允许从 frozen sequence 8 继续；保持 cohort、R17 memory bytes、model manifest、endpoint、预算和统计判据不变。140/140 完整前禁止 effect/p-value/claim 更新；STARTED 后 unresolved support failure 直接 NO_VERDICT 且不 retry。O6 financial L3 仍独立 support-blocked。",
+        "en": "R19 may resume only from frozen sequence 8 with the cohort, R17 memory bytes, model manifest, endpoint, budgets, and statistical rule unchanged. No effect, p-value, or claim update is allowed before 140/140 completion; any unresolved support failure after STARTED yields NO_VERDICT with no retry. O6 financial L3 remains independently support-blocked."
       },
       "objections": [
         {
@@ -635,13 +635,13 @@
             "en": "Historical R5 (5/10 support stop) and the six-task generic explicit-cue bridge retain their original adjudications and cannot be pooled with later objects. R9–R15 close the native-status, cohort, runtime, live-Shopping, writer/executor, and analysis contracts; R17 uniformly realizes and freezes exact memory bytes for 36/36 sources before downstream outcomes. R18a/R18b are zero-scientific-exposure support failures. R18c fails after an agent action but before a valid native terminal evaluator score because the evaluator hard-coded model alias is absent. Under the R15/R16 post-exposure no-retry and single-attempt rules, R18 must STOP. This is not scientific negative evidence, and cum_reward=0 is not a terminal score."
           },
           "reopen": {
-            "zh": "R18 不得重试。若要继续 O5，只能把 R19 当作新的 scientific object：35 个 template-independent units，完全剔除已暴露 template136/task166；30 个 downstream task 相对 R9 全新，5 个 retained task 从未执行，且全部 downstream≠source。复用 R17 在任何下游暴露前冻结的 exact memory bytes，不重新生成 memory。R19 已冻结 140 episodes、task-level two-sided sign-flip、|Δ|≥.15、p<.05、100k permutations/100k bootstrap，以及 agent/evaluator 分离预算。必须重新获得 explicit scientific + experiment/model-call authority，并在第一条 benchmark episode 前重新检查 aliases/tokenizers/live reset，再各做一次 gpt-4 与 gpt-4-1106-preview 的固定非 benchmark synthetic completion smoke。",
-            "en": "R18 may not be retried. Further O5 work must treat R19 as a new scientific object: 35 template-independent units, excluding exposed template136/task166 entirely; 30 downstream tasks are new relative to R9, five retained tasks were never executed, and every downstream differs from its source. Reuse the exact R17 memory bytes frozen before downstream exposure; do not regenerate memory. R19 freezes 140 episodes, task-level two-sided sign-flip inference, |Δ|>=.15, p<.05, 100k permutations/100k bootstrap, and separate agent/evaluator budgets. New explicit scientific and experiment/model-call authority is required; before the first benchmark episode, aliases/tokenizers/live reset must be rechecked and fixed nonbenchmark synthetic completions for gpt-4 and gpt-4-1106-preview must both pass."
+            "zh": "R19 已作为新的 scientific object 获得 bounded execution authority；不得 retry R18。继续时只能从 frozen sequence 4 恢复，复用 R17 exact memory bytes，不改 task/model/endpoint/threshold/statistics。只有 140/140 valid terminal episodes 完整后才执行冻结的 task-level two-sided sign-flip；完整但不过联合 gate 仍是 INCONCLUSIVE_NO_NO_EFFECT_AUTHORITY；STARTED 后 support failure 则 NO_VERDICT 且禁止 retry。",
+            "en": "R19 now has bounded execution authority as a new scientific object; R18 remains non-retriable. Execution may resume only from frozen sequence 4, reusing the exact R17 memory bytes with no task/model/endpoint/threshold/statistical change. The frozen task-level two-sided sign-flip analysis runs only after 140/140 valid terminal episodes. A complete run that misses the joint gate remains INCONCLUSIVE_NO_NO_EFFECT_AUTHORITY; a support failure after STARTED yields NO_VERDICT with no retry."
           },
           "action": "SCIENTIFIC_REOPEN_REQUIRED",
-          "e": "B1 public L2B status r19: R18 STOPPED_NO_VERDICT; R19 35-template new-experiment candidate frozen, execution_permitted=false",
-          "engineering_reproducibility": "RESOLVED_R19_NEW_EXPERIMENT_PREOUTCOME_CONTRACT",
-          "scientific_gap": "R18_NO_VERDICT_POST_EXPOSURE_SUPPORT_FAILURE_R19_NEW_AUTHORITY_REQUIRED",
+          "e": "B1 R22/R23 public execution status: R19 bounded authority valid; support gates PASS; 8/140 at complete task boundary; no interim inference",
+          "engineering_reproducibility": "R19_AUTHORIZED_CONFIRMATORY_EXECUTION_IN_PROGRESS_NO_INTERIM_INFERENCE",
+          "scientific_gap": "R19_INCOMPLETE_8_OF_140_NO_INTERIM_VERDICT",
           "historical_auxiliary_bridge": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY_6_TASKS_144_CALLS_DELTA_0_UNCHANGED",
           "r5_execution": "UNEXECUTED_SUPPORT_FAILURE_5_OF_10_UNCHANGED",
           "pooling": "FORBIDDEN_R5_BRIDGE_R18_R19_ARE_SEPARATE_OBJECTS",
@@ -681,18 +681,46 @@
             "effect_floor": 0.15,
             "alpha": 0.05,
             "execution_permitted": false,
-            "new_scientific_authority": false,
-            "new_experiment_authority": false,
+            "new_scientific_authority": true,
+            "new_experiment_authority": true,
             "public_status_receipt": "generated/d2-failure-memory-provenance-l2b-public-status-r19.json",
             "readiness_status": "READY_FOR_NEW_R19_AUTHORITY_NOT_READY_FOR_EXECUTION",
             "readiness_receipt": "generated/d2-failure-memory-provenance-l2b-r19-readiness.json",
             "engineering_contract_ready": true,
             "authority_decision_ready": true,
-            "execution_ready_now": false,
+            "execution_ready_now": true,
             "claim_impact_policy_status": "R19_POSTOUTCOME_INTERPRETATION_AND_MANUSCRIPT_TRANSITIONS_FROZEN_PREOUTCOME",
             "claim_impact_policy_receipt": "generated/d2-failure-memory-provenance-l2b-r19-claim-impact-policy.json",
             "outcome_interpretation_branches": 4,
-            "no_effect_claim_authorized": false
+            "no_effect_claim_authorized": false,
+            "bounded_execution_authority_valid": true,
+            "scientific_claim_authority": false,
+            "prebenchmark_zero_completion_support_gate_pass": true,
+            "two_synthetic_transport_smokes_pass": true,
+            "execution_in_progress": true,
+            "episodes_complete": 8,
+            "complete_independent_tasks": 2,
+            "next_sequence_index": 8,
+            "agent_completions": 213,
+            "fuzzy_evaluator_completions": 0,
+            "interim_inference": false
+          },
+          "execution_status": {
+            "status": "R19_AUTHORIZED_CONFIRMATORY_EXECUTION_IN_PROGRESS_NO_INTERIM_INFERENCE",
+            "episodes_complete": 8,
+            "episodes_expected": 140,
+            "complete_independent_tasks": 2,
+            "independent_tasks_expected": 35,
+            "next_sequence_index": 8,
+            "agent_completions": 213,
+            "agent_completion_budget": 4200,
+            "fuzzy_evaluator_completions": 0,
+            "fuzzy_evaluator_completion_budget": 600,
+            "post_started_failure": false,
+            "interim_inference": false,
+            "claim_update_allowed": false,
+            "public_execution_status_receipt": "generated/d2-failure-memory-provenance-l2b-public-execution-status-r22.json",
+            "csv_durability_receipt": "generated/d2-failure-memory-provenance-l2b-r19-csv-durability-r23.json"
           }
         },
         {

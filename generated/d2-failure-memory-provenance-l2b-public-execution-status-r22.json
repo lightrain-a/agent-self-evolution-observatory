@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "status": "R19_AUTHORIZED_CONFIRMATORY_EXECUTION_IN_PROGRESS_NO_INTERIM_INFERENCE",
+  "authority": {
+    "bounded_r19_scientific_execution_authority_valid": true,
+    "scientific_claim_authority": false,
+    "r18_retry_authorized": false,
+    "l3_authorized": false,
+    "authority_receipt_sha256": "f7ad4044e80e7fce30e7e63940eebafac6af7af2b7fa08ea38169f797ceb905f"
+  },
+  "prebenchmark_support": {
+    "zero_completion_support_gate_pass": true,
+    "synthetic_transport_smokes_pass": true,
+    "successful_synthetic_completions": 2,
+    "support_receipt_sha256": "cb5cf78c753ff38b8ab40e5c761e8aaa57fd14922d8c4186aed43c0b7f7e5f05",
+    "synthetic_smokes_sha256": "77c34fd1bdd92434e4e9669a7544e3c60f0f1311f21a5d92ad609a779cda56c4"
+  },
+  "execution_prefix": {
+    "episodes_expected": 140,
+    "episodes_complete": 8,
+    "complete_independent_tasks": 2,
+    "next_sequence_index": 8,
+    "agent_completions": 213,
+    "agent_completion_budget": 4200,
+    "fuzzy_evaluator_completions": 0,
+    "fuzzy_evaluator_completion_budget": 600,
+    "post_started_failure": false,
+    "in_flight_episode": false
+  },
+  "interim_policy": {
+    "terminal_scores_exposed_in_projection": false,
+    "task_deltas_computed": false,
+    "effect_mean_computed": false,
+    "p_value_computed": false,
+    "confidence_interval_computed": false,
+    "claim_update_allowed": false,
+    "full_140_required_for_confirmatory_analysis": true,
+    "resume_only_exact_frozen_sequence": 8
+  },
+  "stanford_o5": {
+    "disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+    "scientific_reopen_status": "AUTHORIZED_EXECUTION_IN_PROGRESS",
+    "current_verdict": "NO_VERDICT_INCOMPLETE_CONFIRMATORY_EXECUTION"
+  },
+  "redaction": {
+    "terminal_scores": false,
+    "browser_actions": false,
+    "raw_memory_text": false,
+    "internal_run_paths": false,
+    "authority_source_message": false
+  }
+}
