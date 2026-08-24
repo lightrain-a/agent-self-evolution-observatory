@@ -1,0 +1,216 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T03:30:14Z",
+  "run_id": "external-fresh-reducer-audit-20260824-r1",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "source_window": {
+    "publication_dates": [
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12"
+    ],
+    "selection_rule": "Five highest-priority r4 first-party sources named for reducer audit (Emotion2Skill, MERA, WMRL, SPaRTan, SiriusDeliver), each with exact portable review exposure zero before this run; reviewed from provenance-bound arXiv primary/fulltext cache without provider or generator execution."
+  },
+  "summary": {
+    "sources_discovered": 5,
+    "exact_prior_exposure_zero": 5,
+    "identity_verified": 5,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "stop_reduction": 5,
+    "watch_reopen_seeds": 1,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "typed_evidence_extraction_version": "typed-v3",
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "no_emit_is_not_automatically_a_scientific_dead_end": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2608.09248",
+      "title": "Emotion2Skill: Model-Internal Emotion Signals for Adaptive Skill Selection and Evolution",
+      "published": "2026-08-10",
+      "source_sha256": "56b34d93cab7ea8323f0e9eea2928bf2b81ba09a6c0f38130c8456bc35bfa648",
+      "fulltext_sha256": "622e2cba93e2881816b6e052ca5bcb30dad680a338e6a685de96a2e6c5cb1de7",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "state-observation-augmentation",
+        "state-sufficiency-and-aliasing",
+        "pomdp-belief-state"
+      ],
+      "note": "The source shows that a 27-dimensional residual-stream-derived pre-action emotion state can improve skill selection relative to a text-only selector and can trigger targeted skill rewriting. This is genuine pre-outcome state evidence, but it does not defeat a same-information state/POMDP baseline: once the residual/emotion vector is observable to the candidate, the comparator must receive the same variable and may condition its belief/state policy on it. The encoder is also learned from warm-up tuples containing downstream success labels, so the current evidence does not identify emotion as an irreducible causal state primitive. Preserve as a watch seed only for a future matched state-aliasing falsifier.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-661f381a9f7ddc830e",
+          "result": "NOT_SATISFIED",
+          "boundary": "No matched strongest state-aware controller receives the identical latent/residual trajectory and still makes the opposite ex-ante routing/update prediction."
+        },
+        {
+          "memory_id": "MEM-DISC-4facef9c0ef2e6ab92",
+          "result": "NOT_SATISFIED",
+          "boundary": "No matched same-information strategy policy with identical current strategy, evidence, action support and compute is shown to require a different revision decision."
+        }
+      ],
+      "watch_reopen_seed": true,
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 1,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.10333",
+      "title": "MERA: Model Evolution and Routing with Skill Adaptation for Agentic Systems at Scale",
+      "published": "2026-08-11",
+      "source_sha256": "3590dc6936bf0773a90c6918eeade425a99fef17c471c96f73ee411aa26deec7",
+      "fulltext_sha256": "87957b3bf6a91424019f4bdd64e49b821271a58e07a6a5b26d9cc15388cd8eeb",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "failed-example-corrective-learning",
+        "teacher-distillation-and-posttraining",
+        "contextual-routing-with-verifier-fallback"
+      ],
+      "note": "MERA replays failed student invocations, obtains execution-verified teacher demonstrations, distills reusable SkillBook procedures, updates a student adapter with SFT/optional GRPO, fits an input-only router, and admits the combined state through joint replay. Its strongest direct capability evidence is ordinary corrective post-training, while the deployment result is dominated by verifier-backed fallback; the paper itself reports that the learned pre-router is weak. No matched factorial independently varies skill evolution and routing while holding candidate support, supervision and compute fixed, and no non-additive residual beyond corrective learning/distillation/routing is identified.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "No matched sign-flip comparison equalizes initial skill, failure/success evidence, supervision, edit/update budget and held-out evaluation while isolating a self-evolution-specific structural variable."
+        },
+        {
+          "memory_id": "MEM-SEAR-eca0cdefae1ce14d2a",
+          "result": "NOT_SATISFIED",
+          "boundary": "No independently varied matched skill-evolution x router factorial with a repeatable non-additive held-out interaction beyond contextual routing/MoE/nonstationary expert-set models."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.12564",
+      "title": "Scaling Automatic Research Agents via World Models",
+      "published": "2026-08-12",
+      "source_sha256": "0d4aa251426a7c5f9b2192eeec79547d38b04ebf5e881b16d100a089bf8117f1",
+      "fulltext_sha256": "dce99d7f17db0fbf7fde1c6340cc39c81cbea00bf5afd6b04829d60a8d35db11",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "model-based-rl",
+        "learned-reward-proxy-bias-and-noise",
+        "ground-truth-anchor-calibration"
+      ],
+      "note": "WMRL explicitly replaces costly environment execution with a learned world-model reward, decomposes proxy error into systematic bias and zero-mean noise, retains roughly a 10% stream of real-execution anchor groups, fits online isotonic recalibration, and combines real/proxy gradient streams by inverse-variance weighting. Its ablation keeps the two reward streams fixed and toggles the bias/variance corrections. This is a direct instance of mature model-based RL / learned-reward proxy correction and simulator-bias control, not an opposite prediction to those reducers.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-d5f761dcabd8831fff",
+          "result": "NOT_SATISFIED",
+          "boundary": "The source does not produce two systems with identical pre-outcome proxy/environment information for which an agent-specific structural variable forces different future-improvement predictions beyond proxy misspecification/domain-shift models."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.09128",
+      "title": "Social Gym and SPaRTan: Benchmarking and Improving LLM Social Reasoning via Multi-Agent Game Tournaments",
+      "published": "2026-08-10",
+      "source_sha256": "57fe491be6aa3a6d8dee313ea8748444887d2e9a1e84c4c6c64b481463dde7b7",
+      "fulltext_sha256": "c1e47c4e36b97ccb2fad9d6ad24ae81ac5644454b178941a041182ea11a13a0e",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "on-policy-self-reflection",
+        "natural-language-playbook-distillation",
+        "self-generated-evidence-distribution"
+      ],
+      "note": "SPaRTan self-plays rule-scored games, reflects on its own trajectories and outcomes into a natural-language playbook, and reuses or distills that playbook. Objective rule outcomes improve verifier quality, but they do not exogenize the trajectory distribution or reflection intervention. The paper explicitly reports modest samples and no content-matched placebo-playbook control, and the gains are capacity-dependent, largely vanishing for Qwen3-32B. Current evidence is therefore compatible with ordinary reflection/prompt transfer, policy distillation and on-policy evidence-distribution effects rather than a new self-evolution primitive.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-7e451ba3cb785c6ad1",
+          "result": "NOT_SATISFIED",
+          "boundary": "On-policy versus alternative evidence is not matched on occupancy/support, playbook quality/size, information and update budget with a held-out residual beyond distribution shift and stale supervision."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "ref": "arXiv:2608.09185",
+      "title": "SiriusDeliver: Automating Data Warehouse Delivery at Tencent",
+      "published": "2026-08-10",
+      "source_sha256": "e540921a4604c93ccf0ec1bfbd83b24cfa5e2abf2643103a221fb4b3cf1d1c79",
+      "fulltext_sha256": "771a49bbd009fd60cdb1fa5766948b98d0985912250c9d2eed48db3c01ea582a",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "dependency-aware-workflow-orchestration",
+        "feedback-guided-artifact-repair",
+        "bounded-corrective-skill-maintenance"
+      ],
+      "note": "SiriusDeliver maintains explicit workflow/artifact/platform state, verifies dependencies and configurations before submission, repairs failures from deterministic platform evidence after execution, and performs bounded offline skill refinement from success/failure traces with replay validation, mandatory human review, version recording and rollback. In the component ablation, hierarchical orchestration and artifact lifecycle control account for much larger success drops than trace-driven skill evolution; removing skill evolution costs about 2 success points while materially increasing tokens/turns. The source therefore strengthens workflow-control, feedback-guided repair and corrective-maintenance reducers rather than establishing an irreducible semantic-transaction mechanism.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-4c581f224fb4b896ea",
+          "result": "NOT_SATISFIED",
+          "boundary": "No evolution-specific state remains after matching workflow/action surface, verifier/platform feedback, iteration budget, retention and evaluation information."
+        },
+        {
+          "memory_id": "MEM-SEAR-16b145b18dd60e1811",
+          "result": "NOT_SATISFIED",
+          "boundary": "Versioned artifact semantics are observable and can be supplied to the same-information workflow/nonstationary baseline; no ex-ante residual beyond that representation is shown."
+        },
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Trace-driven failure repair is compatible with ordinary corrective skill optimization; no matched structural sign-flip residual is isolated."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "typed_v3_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 2,
+        "boundary_observations": 0
+      }
+    }
+  ],
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
