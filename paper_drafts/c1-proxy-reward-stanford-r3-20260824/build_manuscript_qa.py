@@ -17,6 +17,7 @@ CHRONOLOGY = json.loads((HERE / "f2r1-chronology-receipt.json").read_text())
 EXPANSION = json.loads((HERE / "baseline-aligned-expansion-evidence.json").read_text())
 FOLLOWUP = json.loads((HERE / "baseline-aligned-followup-evidence.json").read_text())
 LOCALIZATION = json.loads((HERE / "transport-localization-evidence.json").read_text())
+B11 = json.loads((HERE / "b11-working-memory-localization-evidence.json").read_text())
 
 
 def sha(path: Path) -> str:
@@ -173,6 +174,19 @@ def main() -> None:
         and lcb["generic_memory_presence_first_action_effect_confirmatory"] is False
         and all(x in all_text for x in ["0.027778", "0.016593", "0.170139", "descriptive"])
     )
+    checks["b11_working_memory_localization_bounded"] = (
+        B11["status"] == "B11_WORKING_MEMORY_LOCALIZATION_COMPLETE_STOP"
+        and B11["provider_calls"] == 0
+        and B11["new_rollouts"] == 0
+        and B11["stop_decision"]["B12_provider_experiment_authorized"] is False
+        and abs(B11["branch_specific_uptake"]["mean_pair_relative_shift"] - 0.0033469072206773693) < 1e-12
+        and abs(B11["branch_specific_uptake"]["posthoc_permutation_p"] - 0.2051979480205198) < 1e-12
+        and abs(B11["generic_common_core_tendency"]["mean_common_centroid_uptake"] - 0.022332304099109024) < 1e-12
+        and abs(B11["generic_common_core_tendency"]["posthoc_signflip_p"] - 0.06639933600663993) < 1e-12
+        and abs(B11["transport_linkage"]["pearson_working_memory_shift_vs_first_action_tv"] - 0.46437044778212805) < 1e-12
+        and abs(B11["transport_linkage"]["pearson_working_memory_shift_vs_terminal_effect"] + 0.022965905301220373) < 1e-12
+        and all(x in all_text for x in ["0.00335", "0.205", "0.0223", "0.066", "0.464", "working-memory"])
+    )
     checks["experiment_ladder_present"] = all(x in downstream for x in ["Core identification/transport ladder", "Write breadth", "Native branch transport", "Native controls", "Native first-action uptake"])
 
     checks["o5_original_branch_location_preserved"] = (
@@ -261,8 +275,8 @@ def main() -> None:
 
     story_text = (REPO / "paper-story-reward-memory.js").read_text()
     reader_text = (REPO / "paper-reader-data.js").read_text()
-    checks["paper_story_expansion_current"] = all(x in story_text for x in ["20/20", "72.7", "0.02083", "0.04514", "0.00775", "0.01951", "0.06944", "0.5801", "0.17014", "branch-specific uptake", "support stop"])
-    checks["paper_reader_expansion_current"] = all(x in reader_text for x in ["20/20", "125/172", "0.02083", "0.04514", "0.00775", "0.01951", "0.06944", ".5801", ".17014", "branch-specific uptake"])
+    checks["paper_story_expansion_current"] = all(x in story_text for x in ["20/20", "72.7", "0.02083", "0.04514", "0.00775", "0.01951", "0.06944", "0.5801", "0.17014", "0.00335", "0.205", "working-memory", "support stop"])
+    checks["paper_reader_expansion_current"] = all(x in reader_text for x in ["20/20", "125/172", "0.02083", "0.04514", "0.00775", "0.01951", "0.06944", ".5801", ".17014", ".00335", ".205", "working-memory"])
 
     pdf = HERE / "paper.pdf"
     pdfinfo = subprocess.check_output(["pdfinfo", str(pdf)], text=True)
@@ -285,9 +299,9 @@ def main() -> None:
     checks["expanded_pdf_reasonable_total_pages"] = pages <= 19
 
     payload = {
-        "schema_version": "1.2",
+        "schema_version": "1.3",
         "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-        "revision": "ICLR-TRANSPORT-LOCALIZATION-B10-20260824",
+        "revision": "ICLR-WORKING-MEMORY-LOCALIZATION-B11-20260824",
         "status": "PASS" if all(checks.values()) else "FAIL",
         "abstract_words_approx": approx_words(abstract),
         "pdf_pages_total": pages,
@@ -303,6 +317,7 @@ def main() -> None:
         "baseline_aligned_expansion_evidence_sha256": sha(HERE / "baseline-aligned-expansion-evidence.json"),
         "baseline_aligned_followup_evidence_sha256": sha(HERE / "baseline-aligned-followup-evidence.json"),
         "transport_localization_evidence_sha256": sha(HERE / "transport-localization-evidence.json"),
+        "b11_working_memory_localization_evidence_sha256": sha(HERE / "b11-working-memory-localization-evidence.json"),
         "paper_story_reward_memory_sha256": sha(REPO / "paper-story-reward-memory.js"),
         "paper_reader_data_sha256": sha(REPO / "paper-reader-data.js"),
         "paper_pdf_sha256": sha(pdf),
@@ -310,13 +325,13 @@ def main() -> None:
         "scientific_authority": False,
         "experiment_authority": False,
         "claim_expansion": False,
-        "new_provider_calls_exact": lacct["b10_new_provider_posts"],
-        "new_scientifically_usable_provider_calls": lacct["b10_scientifically_usable_process_calls"],
+        "new_provider_calls_exact": 0,
+        "new_scientifically_usable_provider_calls": 0,
         "new_scientifically_usable_writer_calls": 0,
         "new_terminal_rollouts": 0,
-        "new_process_rollouts": lacct["b10_scientifically_usable_process_calls"],
+        "new_process_rollouts": 0,
         "cross_policy_support_failure_posts": acct["cross_policy_support_failure_posts"],
-        "prior_full_paper_observable_provider_posts_lower_bound": lacct["prior_followup_full_paper_provider_posts_lower_bound"],
+        "prior_full_paper_observable_provider_posts_lower_bound": lacct["full_paper_observable_provider_posts_lower_bound_after_b10"],
         "updated_full_paper_observable_provider_posts_lower_bound": lacct["full_paper_observable_provider_posts_lower_bound_after_b10"],
         "baseline_program_provider_posts_total": 1074,
         "baseline_program_scientifically_usable_completions_total": 1040,

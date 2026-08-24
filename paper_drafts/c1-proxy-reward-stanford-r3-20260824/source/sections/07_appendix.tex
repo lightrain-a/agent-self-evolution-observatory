@@ -350,6 +350,32 @@ States with memory/no-memory modal shift & 6/36 & secondary \\
 \end{tabular}
 \end{table}
 
+\subsection{Post-hoc working-memory branch attribution}
+B11 reuses the 432 archived B10 outputs and introduces zero provider calls. The BrowserUse-style response schema emits a \texttt{current\_state.memory} field before the first structured action. This field is recoverable for all 432 outputs (405 strict JSON, 27 narrow string recoveries). For each future task, we embed this working-memory text and the exact success/failure input memories with the same cached all-MiniLM-L6-v2 encoder used by the released retriever. The pair-relative margin is $m(y)=\cos(E(y),E(M_S))-\cos(E(y),E(M_F))$; the task-level uptake statistic is the mean margin under success-conditioned outputs minus the mean margin under failure-conditioned outputs. Because this observable was introduced after B10, all tests here are post-hoc and have no confirmatory gate.
+
+The mean task-level branch shift is 0.003347 (median 0.003835), with 21 positive and 15 negative tasks, paired $d_z=0.148$, and within-state label-permutation $p=0.2052$. Thus explicit branch-specific working-memory uptake is not established. A common-centroid diagnostic---similarity to the normalized midpoint of the two input memories under either memory condition relative to no-memory---is larger at 0.02233, but remains suggestive only ($d_z=0.258$, sign-flip $p=0.0664$). Branch-relative working-memory shift is descriptively associated with first-action TV (Pearson $r=0.464$, Spearman $\rho=0.419$; leave-one-out Pearson range 0.358--0.515) but not with terminal absolute effect ($r=-0.023$). Finally, input S/F memory cosine distance averages 0.131 (range 0.045--0.218) and correlates only 0.095, 0.115, and 0.137 with working-memory shift, first-action TV, and terminal effect, respectively; simple input-pair semantic distance therefore does not explain the attenuation monotonically. We use B11 only to localize the boundary earlier in the chain and do not select positive cells for further experiments.
+
+\begin{table}[h]
+\centering
+\small
+\caption{B11 zero-call working-memory localization. All quantities are post-hoc diagnostics.}
+\label{tab:b11-working-memory}
+\begin{tabular}{lr}
+\toprule
+Metric & Value \\
+\midrule
+Pair-relative branch shift & 0.003347 \\
+Within-state permutation $p$ & 0.2052 \\
+Paired effect size $d_z$ & 0.148 \\
+Positive / negative task shifts & 21 / 15 \\
+Common-centroid uptake & 0.02233 \\
+Common-centroid sign-flip $p$ & 0.0664 \\
+Working-memory shift vs. first-action TV & $r=0.464$ \\
+Working-memory shift vs. terminal effect & $r=-0.023$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Cross-policy support stop}
 The downstream-policy transfer is frozen on the identical 36-task support before any DeepSeek-V4-Flash outcome. At the Doubao-matched 900-token cap, the first frozen unit ends with provider status incomplete, reason \texttt{length}, and no assistant text. One execution-only repair raises the cap uniformly to 2,200, requires all 288 units to be fresh, and forbids a second repair; the same first unit again length-censors without assistant text. The cross-policy line therefore stops after two provider POSTs with zero scientific units. The preregistered no-memory continuation is not triggered because its condition is complete paired execution, regardless of paired scientific outcome.
 
@@ -358,6 +384,6 @@ For completeness, the earlier forced-swap matrix implies a descriptive between-m
 
 \section{Execution Accounting and Reliability}
 \label{sec:execution-accounting}
-All scientific evidence is inference-only; there are no training runs or local GPU fine-tuning runs. Before the baseline-aligned expansion, the observable provider-POST lower bound was at least 841, excluding the unresolved low-level request count of the early 12-unit aligned action witness. The original expansion adds 498 observable POSTs: 32 breadth-parent writer calls, 32 fresh breadth-repair writer calls, 288 native retrieval-matched branch rollouts, 144 matched no-memory rollouts, and two DeepSeek cross-policy support-failure calls. The raw writer-input trajectory follow-up adds 144 terminal POSTs, and the native first-action localization adds 432 process-level POSTs. Across expansion, raw follow-up, and B10 this is 1,074 observable POSTs, of which 1,040 are scientifically usable completions: 32 breadth writer calls, 576 terminal rollouts, and 432 first-action rollouts. The updated full-paper observable POST lower bound is therefore at least 1,915. Retrieval audits, endpoint-headroom/tie-aware analyses, and the B10 next-goal diagnostic use zero provider calls.
+All scientific evidence is inference-only; there are no training runs or local GPU fine-tuning runs. Before the baseline-aligned expansion, the observable provider-POST lower bound was at least 841, excluding the unresolved low-level request count of the early 12-unit aligned action witness. The original expansion adds 498 observable POSTs: 32 breadth-parent writer calls, 32 fresh breadth-repair writer calls, 288 native retrieval-matched branch rollouts, 144 matched no-memory rollouts, and two DeepSeek cross-policy support-failure calls. The raw writer-input trajectory follow-up adds 144 terminal POSTs, and the native first-action localization adds 432 process-level POSTs. Across expansion, raw follow-up, and B10 this is 1,074 observable POSTs, of which 1,040 are scientifically usable completions: 32 breadth writer calls, 576 terminal rollouts, and 432 first-action rollouts. The updated full-paper observable POST lower bound is therefore at least 1,915. Retrieval audits, endpoint-headroom/tie-aware analyses, the B10 next-goal diagnostic, and B11 working-memory attribution use zero provider calls.
 
 The 32-call breadth parent completes 29 units but length-censors three failure-branch writes; only the fresh uniform 4,096-token repair has breadth authority. B4, B5, B8, and B10 complete 288/288, 144/144, 144/144, and 432/432 provider calls, respectively, with zero provider failures in those scientific runs; B10 also has zero unrecoverable parse failures. The DeepSeek policy-transfer parent and sole output-cap repair each fail on their first unit with no assistant text and contribute zero scientific units. Earlier execution failures---the two original F0 failure-arm incompletions, the execution-invalid first no-memory attempt, and the failed parent GLM writer attempt---remain recorded separately and are never imputed as scientific outcomes. Provider outputs are content-addressed or response-first archived where the frozen runner supports it.

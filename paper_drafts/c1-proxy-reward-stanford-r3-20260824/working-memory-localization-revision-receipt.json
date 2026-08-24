@@ -1,0 +1,84 @@
+{
+  "artifact_type": "working-memory-localization-revision-receipt",
+  "b11_working_memory_attribution_sha256": "c17ed88b2bfa496f91c4753cbae6d3dcaad5e95b45f794679741fd0fdc4de9e2",
+  "b11_working_memory_localization_evidence_sha256": "28f73f425695804abdfcd40881a247255fcc8cbb4f898f1c858892a7b0ea568a",
+  "branch_specific_uptake": {
+    "mean_pair_relative_shift": 0.0033469072206773693,
+    "median_shift": 0.0038352161645889282,
+    "negative_tasks": 15,
+    "paired_dz": 0.1479075191935324,
+    "positive_tasks": 21,
+    "posthoc_permutation_p": 0.2051979480205198,
+    "verdict": "NOT_ESTABLISHED_POSTHOC"
+  },
+  "canonical_note": "B11 is a zero-call daytime diagnostic candidate. Stable PaperRegistry/acceptance projection remains unchanged pending external review.",
+  "canonical_stable_registry_overwritten": false,
+  "claim_expansion_authority": false,
+  "current_revision_new_provider_calls": 0,
+  "current_revision_new_rollouts": 0,
+  "experiment_authority": false,
+  "external_review_calls_current_revision": 0,
+  "external_review_deferred_to_evening": true,
+  "full_paper_observable_provider_posts_lower_bound": 1915,
+  "generic_common_core_tendency": {
+    "mean_common_centroid_uptake": 0.022332304099109024,
+    "paired_dz": 0.25774477787807437,
+    "posthoc_signflip_p": 0.06639933600663993,
+    "verdict": "SUGGESTIVE_ONLY_NOT_CONFIRMATORY"
+  },
+  "main_text_pages": 9,
+  "manuscript_qa_sha256": "4d542612649cf23879e11e1d31d8c80fe26af42de6ed57d16e3fd7cd71a125de",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "paper_pdf_sha256": "ec62f65a06e6378752f786c303109560e676b3d4ecb826cbbe3f14a9e76d70a9",
+  "paper_reader_data_sha256": "bec11b06f02050f2e6c2c0769892f09d7a6d16010728c1d0396faf434d50379c",
+  "paper_story_sha256": "07f543c2479ac6afe2be1e2775f8f102d88a79e014909898c5b3e1b3e3cb91d4",
+  "pdf_pages_total": 19,
+  "prior_transport_localization_evidence_sha256": "89b17623214d429efdefd791cc119b74b5231784815990f6a70f6c725e6598bc",
+  "prior_transport_localization_receipt_sha256": "a7eda078d3e680bdc8badae3facef46958a09c874a7d3127d1e16fb6cb7de450",
+  "qa_checks_passed": 40,
+  "qa_checks_total": 40,
+  "references_begin_page": 10,
+  "revision": "ICLR-WORKING-MEMORY-LOCALIZATION-B11-20260824",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_claims_expanded": false,
+  "scientific_values_changed": true,
+  "simple_similarity_falsifier": {
+    "input_memory_cosine_distance_mean": 0.1313443730274836,
+    "interpretation": "Input-pair semantic distance is not a useful monotonic explanation for branch uptake or downstream magnitude on the frozen support.",
+    "pearson_distance_vs_first_action_tv": 0.11527436191907425,
+    "pearson_distance_vs_terminal_effect": 0.13652265714695444,
+    "pearson_distance_vs_working_memory_shift": 0.09547663332085542,
+    "range": [
+      0.045279085636138916,
+      0.21760249137878418
+    ]
+  },
+  "status": "WORKING_MEMORY_LOCALIZATION_INTEGRATED_QA_PASS",
+  "stop_decision": {
+    "B12_provider_experiment_authorized": false,
+    "forbidden": [
+      "select future tasks by B10 first-action TV",
+      "select tasks by B11 attribution shift",
+      "lower prior practical floors",
+      "model fishing for a positive branch-uptake result"
+    ],
+    "reason": "B11 is post-hoc and does not establish a robust branch-specific pre-action uptake signal. Selecting only B10/B11 positive cells would be outcome-driven support selection.",
+    "reopen_only_if": [
+      "a new branch-specific pre-action observable is frozen before new policy outputs and evaluated on outcome-independent support",
+      "or a representation-preserving common-core versus branch-residual intervention is preregistered on the full frozen support without positive-cell selection"
+    ]
+  },
+  "submission_authority": false,
+  "title": "Reward Errors Become Persistent State: Write-Time Causality and Transport Boundaries in Agent Memory",
+  "transport_linkage": {
+    "interpretation": "States with more branch-relative working-memory movement tend descriptively to show more first-action distribution movement, but this does not carry to terminal outcomes.",
+    "leave_one_out_pearson_range": [
+      0.35767864808579375,
+      0.5145252239991214
+    ],
+    "pearson_working_memory_shift_vs_first_action_tv": 0.46437044778212805,
+    "pearson_working_memory_shift_vs_terminal_effect": -0.022965905301220373,
+    "spearman_working_memory_shift_vs_first_action_tv": 0.41853933527826886
+  }
+}
