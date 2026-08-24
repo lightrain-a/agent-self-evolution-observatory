@@ -17,7 +17,12 @@ CHRONOLOGY = json.loads((HERE / "f2r1-chronology-receipt.json").read_text())
 EXPANSION = json.loads((HERE / "baseline-aligned-expansion-evidence.json").read_text())
 FOLLOWUP = json.loads((HERE / "baseline-aligned-followup-evidence.json").read_text())
 LOCALIZATION = json.loads((HERE / "transport-localization-evidence.json").read_text())
-B11 = json.loads((HERE / "b11-working-memory-localization-evidence.json").read_text())
+B11 = json.loads((HERE / "b11-scientific-evidence.json").read_text())
+B11_CONCENTRATION = json.loads((HERE / "b11-concentration-evidence.json").read_text())
+STORY_SEARCH = json.loads((HERE / "story-v4-argument-search-20260824.json").read_text())
+STORY_V5 = json.loads((HERE / "story-v5-crossdomain-adjudication-20260824.json").read_text())
+B12 = json.loads((HERE / "b12-crossdomain-reddit-evidence.json").read_text())
+WORKING_MEMORY = json.loads((HERE / "b11-working-memory-localization-evidence.json").read_text())
 
 
 def sha(path: Path) -> str:
@@ -54,11 +59,32 @@ def main() -> None:
     le = LOCALIZATION["experiments"]
     lacct = LOCALIZATION["execution_accounting"]
     lcb = LOCALIZATION["claim_boundary"]
+    b11w = B11["writer_stage"]
+    b11t = B11["terminal_stage"]
+    b11acct = B11["execution_accounting"]
+    b11cb = B11["claim_boundary_delta"]
+    b11c = B11_CONCENTRATION["summary"]
+    b12w = B12["writer_stage"]
+    b12t = B12["terminal_stage"]
+    b12acct = B12["execution_accounting"]
+    b12cb = B12["claim_boundary"]
     checks: dict[str, bool] = {}
 
     checks["abstract_150_220"] = 150 <= approx_words(abstract) <= 220
-    checks["transport_boundary_title"] = "\\title{Reward Errors Become Persistent State: Write-Time Causality and Transport Boundaries in Agent Memory}" in main_tex
-    checks["identification_transport_decomposition"] = all(x in intro for x in ["identification-and-transport decomposition", "forced downstream swaps", "branch-specific uptake"])
+    checks["stage_resolved_title"] = "\\title{Reward Errors Change Memory Before They Change Policy}" in main_tex
+    checks["stage_resolved_story"] = all(x in intro for x in ["stage-resolved", "forced memory swap", "branch-specific policy uptake", "outcome-blind procedural memory"])
+    checks["story_search_winner_bound"] = (
+        STORY_SEARCH["status"] == "STORY_SEARCH_COMPLETE_WINNER_FROZEN"
+        and STORY_SEARCH["winner"]["id"] == "S1-WRITE-TO-UPTAKE-BOTTLENECK"
+        and STORY_SEARCH["winner"]["score"] == 98
+        and STORY_SEARCH["system_story_contract"]["forbidden_story_mode"] == "experiment chronology / B-number diary"
+        and all(x in STORY_SEARCH["winner"]["final_story_spine"][-2] for x in ["S/F", "raw", "no-memory", "structured"])
+        and STORY_V5["status"] == "STORY_WINNER_PRESERVED_AFTER_REDDIT_REPLICATION"
+        and STORY_V5["prior_winner"] == "S1-WRITE-TO-UPTAKE-BOTTLENECK"
+        and STORY_V5["story_adjudication"]["winner_changes"] is False
+        and STORY_V5["story_adjudication"]["new_story_role"] == "E5 generalization and failure boundary"
+        and STORY_V5["next_experiment_policy"]["another_same_family_reddit_sweep"] == "STOP"
+    )
     checks["no_research_os_process_language_main"] = all(x not in main_text for x in ["\\section{F0:", "\\section{C4:", "reviewer-requested", "Stanford-targeted", "Post-ready"])
     checks["system_section_order"] = [main_tex.index(x) for x in ["sections/01_intro", "sections/05_related", "sections/02_mechanism", "sections/02b_setup", "sections/03_f0", "sections/03a_prompt_control", "sections/04_variance_protocol", "sections/06_limitations_conclusion"]] == sorted(main_tex.index(x) for x in ["sections/01_intro", "sections/05_related", "sections/02_mechanism", "sections/02b_setup", "sections/03_f0", "sections/03a_prompt_control", "sections/04_variance_protocol", "sections/06_limitations_conclusion"])
     checks["experimental_setup_present"] = "\\section{Experimental Setup}" in setup
@@ -91,7 +117,7 @@ def main() -> None:
         and CHRONOLOGY["relationship"]["alpha_changed"] is False
         and all(x in all_text for x in ["0.145833", "0.160128", "0.15625", "0.00074", "same-support"])
     )
-    checks["forced_swap_not_native_transport"] = all(x in main_text for x in ["forced memory-swap", "forced-intervention sensitivity", "not retrieval probability", "not source-faithful retrieval transport"])
+    checks["forced_swap_not_native_transport"] = all(x in main_text for x in ["forced memory-swap", "forced-intervention sensitivity", "bypasses native retrieval", "not source-faithful retrieval transport"])
 
     checks["original_bank_retrieval_audit_bound"] = (
         e["B1_original_bank_exact_retrieval"]["shopping_heldout_tasks"] == 188
@@ -117,7 +143,7 @@ def main() -> None:
         and e["B4_native_retrieval_matched_branch_transport"]["zero_cells"] == 34
         and e["B4_native_retrieval_matched_branch_transport"]["joint_floor_cells"] == 18
         and e["B4_native_retrieval_matched_branch_transport"]["joint_ceiling_cells"] == 16
-        and all(x in all_text for x in ["0.02083", "0.4289", "34/36", "eighteen", "sixteen"])
+        and all(x in all_text for x in ["0.02083", "0.4289", "34/36", "18 joint", "16 joint"])
     )
     checks["native_no_memory_floor_fail_bound"] = (
         e["B5_native_support_no_memory"]["complete_calls"] == 144
@@ -172,22 +198,79 @@ def main() -> None:
         and abs(b10["mean_memory_presence_first_action_tv"] - 0.170139) < 1e-9
         and b10["states_where_either_memory_modal_differs_from_no_memory"] == 6
         and lcb["generic_memory_presence_first_action_effect_confirmatory"] is False
-        and all(x in all_text for x in ["0.027778", "0.016593", "0.170139", "descriptive"])
+        and all(x in all_text for x in ["0.02778", "0.01659", "0.17014", "descriptive"])
     )
-    checks["b11_working_memory_localization_bounded"] = (
-        B11["status"] == "B11_WORKING_MEMORY_LOCALIZATION_COMPLETE_STOP"
-        and B11["provider_calls"] == 0
-        and B11["new_rollouts"] == 0
-        and B11["stop_decision"]["B12_provider_experiment_authorized"] is False
-        and abs(B11["branch_specific_uptake"]["mean_pair_relative_shift"] - 0.0033469072206773693) < 1e-12
-        and abs(B11["branch_specific_uptake"]["posthoc_permutation_p"] - 0.2051979480205198) < 1e-12
-        and abs(B11["generic_common_core_tendency"]["mean_common_centroid_uptake"] - 0.022332304099109024) < 1e-12
-        and abs(B11["generic_common_core_tendency"]["posthoc_signflip_p"] - 0.06639933600663993) < 1e-12
-        and abs(B11["transport_linkage"]["pearson_working_memory_shift_vs_first_action_tv"] - 0.46437044778212805) < 1e-12
-        and abs(B11["transport_linkage"]["pearson_working_memory_shift_vs_terminal_effect"] + 0.022965905301220373) < 1e-12
-        and all(x in all_text for x in ["0.00335", "0.205", "0.0223", "0.066", "0.464", "working-memory"])
+    checks["working_memory_posthoc_localization_bounded"] = (
+        WORKING_MEMORY["status"] == "B11_WORKING_MEMORY_LOCALIZATION_COMPLETE_STOP"
+        and WORKING_MEMORY["provider_calls"] == 0
+        and WORKING_MEMORY["new_rollouts"] == 0
+        and abs(WORKING_MEMORY["branch_specific_uptake"]["mean_pair_relative_shift"] - 0.0033469072206773693) < 1e-12
+        and abs(WORKING_MEMORY["branch_specific_uptake"]["posthoc_permutation_p"] - 0.2051979480205198) < 1e-12
+        and abs(WORKING_MEMORY["generic_common_core_tendency"]["mean_common_centroid_uptake"] - 0.022332304099109024) < 1e-12
+        and abs(WORKING_MEMORY["generic_common_core_tendency"]["posthoc_signflip_p"] - 0.06639933600663993) < 1e-12
+        and abs(WORKING_MEMORY["transport_linkage"]["pearson_working_memory_shift_vs_first_action_tv"] - 0.46437044778212805) < 1e-12
+        and abs(WORKING_MEMORY["transport_linkage"]["pearson_working_memory_shift_vs_terminal_effect"] + 0.022965905301220373) < 1e-12
+        and "select tasks by B11 attribution shift" in WORKING_MEMORY["stop_decision"]["forbidden"]
+        and all(x in all_text for x in ["0.00335", "0.205", "0.02233", "0.0664", "0.464", "working-memory"])
     )
-    checks["experiment_ladder_present"] = all(x in downstream for x in ["Core identification/transport ladder", "Write breadth", "Native branch transport", "Native controls", "Native first-action uptake"])
+    checks["outcome_blind_structured_writer_bound"] = (
+        B11["status"] == "B11_OUTCOME_BLIND_STRUCTURED_CONTROL_COMPLETE"
+        and b11w["complete_calls"] == 20
+        and b11w["provider_failures"] == 0
+        and b11w["required_native_sources_complete"] == 11
+        and abs(b11w["mean_neutral_to_success_token_jaccard_distance"] - 0.61179) < 1e-9
+        and abs(b11w["mean_neutral_to_failure_token_jaccard_distance"] - 0.690062) < 1e-9
+        and b11w["neutral_title_set_equals_success_sources"] == 0
+        and b11w["neutral_title_set_equals_failure_sources"] == 0
+        and b11t["complete_calls"] == 144
+        and abs(b11t["mean_absolute_reward_conditioned_vs_neutral_effect"] - 0.045139) < 1e-9
+        and abs(b11t["permutation_p"] - 0.0048) < 1e-9
+        and abs(b11t["practical_effect_floor"] - 0.15) < 1e-12
+        and b11t["primary_gate_pass"] is False
+        and b11t["zero_effect_tasks"] == 32
+        and b11t["all_five_arms_equal_tasks"] == 30
+        and all(x in all_text for x in ["outcome-blind", "0.04514", "0.0048", "32/36", "30/36"])
+    )
+    checks["b11_concentration_bounded"] = (
+        B11_CONCENTRATION["status"] == "B11_ZERO_CALL_CONCENTRATION_COMPLETE"
+        and B11_CONCENTRATION["provider_calls"] == 0
+        and abs(b11c["top1_share_of_absolute_effect_mass"] - 0.615385) < 1e-9
+        and abs(b11c["top1_share_of_squared_effect_mass"] - 0.876712) < 1e-9
+        and abs(b11c["top2_share_of_squared_effect_mass"] - 0.931507) < 1e-9
+        and abs(b11c["minimum_leave_one_task_out_mean_effect"] - 0.017857) < 1e-9
+        and b11c["sources_with_nonzero_effect"] == 2
+        and b11c["native_selected_source_count"] == 11
+        and all(x in all_text for x in ["61.5\\%", "87.7\\%", "0.01786", "2/11"])
+    )
+    checks["b12_reddit_crossdomain_bound"] = (
+        B12["status"] == "B12_REDDIT_CROSSDOMAIN_REPLICATION_COMPLETE"
+        and B12["qualification"]["offline_eligible_retrieval_hits"] == 8
+        and B12["qualification"]["eligible_intent_templates"] == 2
+        and B12["qualification"]["distinct_selected_source_tasks"] == 4
+        and b12w["complete_pairs"] == 4
+        and b12w["exact_content_change_pairs"] == 4
+        and b12w["title_set_change_pairs"] == 4
+        and abs(b12w["mean_token_jaccard_distance"] - 0.652342) < 1e-9
+        and b12t["scientific_calls"] == 64
+        and abs(b12t["mean_absolute_success_rate_difference"] - 0.125) < 1e-12
+        and abs(b12t["permutation_p"] - 0.225268) < 1e-9
+        and b12t["gate_pass"] is False
+        and b12t["zero_effect_tasks"] == 6
+        and b12t["nonzero_effect_tasks"] == 2
+        and b12t["mean_signed_failure_minus_success"] == 0.0
+        and b12t["all_leave_one_task_out_means_below_floor"] is True
+        and b12t["leave_one_task_out_mean_range"] == [0.071429, 0.142857]
+        and all(x in all_text for x in ["Reddit", "0.652", "0.125", "0.2253", "6/8", "0.071429--0.142857"])
+    )
+    checks["b12_uniform_repair_bound"] = (
+        B12["execution_repair"]["parent_provider_posts"] == 8
+        and B12["execution_repair"]["parent_scientific_pairs"] == 0
+        and B12["execution_repair"]["all_8_writer_units_regenerated_fresh"] is True
+        and B12["execution_repair"]["parent_successes_reused_for_science"] is False
+        and B12["execution_repair"]["second_repair_allowed"] is False
+        and all(x in appendix for x in ["4,096-token cap", "8,192", "regenerates all eight writer units fresh", "second repair is forbidden"])
+    )
+    checks["experiment_ladder_present"] = all(x in downstream for x in ["Stage-resolved evidence", "Write identification", "Forced leverage", "Native exposure", "First-action uptake", "Outcome-blind structured control", "Reddit cross-domain replication"])
 
     checks["o5_original_branch_location_preserved"] = (
         O5["status"] == "O5_FRESH_NO_MEMORY_CONTROL_COMPLETE"
@@ -211,7 +294,7 @@ def main() -> None:
         and e["B6_cross_policy_support_stop"]["failure_reason"] == "length/no assistant text"
         and e["B6_cross_policy_support_stop"]["B7_executed"] is False
         and cb["cross_policy_terminal_transfer_status"] == "SUPPORT_STOP_ZERO_SCIENTIFIC_UNITS"
-        and all(x in all_text for x in ["900-token", "2,200-token", "zero scientific units", "not a scientific null"])
+        and all(x in all_text for x in ["900-token", "2,200-token", "zero scientific units", "scientific null"])
     )
 
     checks["top1_retrieval_contract_preserved"] = (
@@ -220,8 +303,8 @@ def main() -> None:
         and O6_REDUCTION["released_mechanism_facts"]["reward_conditioned_memory_document_used_in_retrieval_embedding"] is False
         and all(x in all_text for x in ["all-MiniLM-L6-v2", "top-$1$", "threshold 0.3"])
     )
-    checks["live_transport_boundary_preserved"] = all(x in limits for x in ["frozen browser-state packets rather than live endpoints", "without claiming live or population transport"])
-    checks["semantic_diagnostics_bounded"] = all(x in limits for x in ["Token Jaccard", "operation slots", "bounded diagnostics"])
+    checks["live_transport_boundary_preserved"] = all(x in limits for x in ["fixed browser-state packets rather than live endpoints", "population risk are outside scope"])
+    checks["semantic_diagnostics_bounded"] = all(x in appendix for x in ["token-set Jaccard", "operation-slot", "descriptive supporting evidence"])
     checks["corruption_decomposition_demoted"] = all(x in appendix for x in ["Bounded corruption-rate consequence", "not an empirical corruption sweep"])
 
     checks["execution_accounting_expansion"] = (
@@ -247,14 +330,36 @@ def main() -> None:
         and lacct["b10_scientifically_usable_process_calls"] == 432
         and lacct["b10d_new_provider_posts"] == 0
         and lacct["full_paper_observable_provider_posts_lower_bound_after_b10"] == 1915
-        and all(x in appendix for x in ["1,074 observable POSTs", "1,040 are scientifically usable", "576 terminal rollouts", "432 first-action rollouts", "at least 1,915"])
+    )
+    checks["execution_accounting_b11"] = (
+        b11acct["prior_full_paper_observable_provider_posts_lower_bound_after_b10"] == 1915
+        and b11acct["b11_writer_provider_posts"] == 20
+        and b11acct["b11_terminal_provider_posts"] == 144
+        and b11acct["b11_total_provider_posts"] == 164
+        and b11acct["b11_scientifically_usable_provider_completions"] == 164
+        and b11acct["full_paper_observable_provider_posts_lower_bound_after_b11"] == 2079
+    )
+    checks["execution_accounting_b12"] = (
+        b12acct["prior_full_paper_observable_provider_posts_lower_bound"] == 2079
+        and b12acct["parent_writer_provider_posts"] == 8
+        and b12acct["r1_writer_provider_posts"] == 8
+        and b12acct["r1_terminal_provider_posts"] == 64
+        and b12acct["b12_observable_provider_posts_total"] == 80
+        and b12acct["b12_scientifically_usable_calls"] == 72
+        and b12acct["b12_scientifically_usable_writer_calls"] == 8
+        and b12acct["b12_scientifically_usable_terminal_rollouts"] == 64
+        and b12acct["full_paper_observable_provider_posts_lower_bound_after_b12"] == 2159
+        and all(x in appendix for x in ["1,318 observable POSTs", "1,276 are scientifically usable", "60 writer calls", "784 terminal rollouts", "432 first-action rollouts", "at least 2,159"])
     )
     checks["inference_only_accounting"] = (
         "inference-only" in setup
-        and "no training or local GPU fine-tuning" in setup
+        and "no training" in setup
+        and "no local GPU fine-tuning" in setup
         and acct["training_runs"] == 0 and acct["gpu_runs"] == 0
         and facct["training_runs"] == 0 and facct["gpu_runs"] == 0
         and lacct["training_runs"] == 0 and lacct["gpu_runs"] == 0
+        and b11acct["training_runs"] == 0 and b11acct["gpu_runs"] == 0
+        and b12acct["training_runs"] == 0 and b12acct["gpu_runs"] == 0
     )
     checks["claim_boundary_matrix"] = (
         cb["write_channel_breadth_supported"] is True
@@ -270,13 +375,22 @@ def main() -> None:
         and lcb["B10_native_first_action_branch_transport_supported"] is False
         and lcb["generic_memory_presence_first_action_effect_confirmatory"] is False
         and lcb["model_theory_cause_established"] is False
-        and all(x in limits for x in ["writer-invariant effects are not established", "not a scientific null", "Claims are local to the released ReasoningBank"])
+        and b11cb["practically_large_reward_conditioned_effect_beyond_outcome_blind_structured_rewrite_supported"] is False
+        and b11cb["generic_structured_memory_presence_confirmed"] is False
+        and b11cb["neutral_writer_superiority_supported"] is False
+        and b11cb["live_browser_transport_supported"] is False
+        and b12cb["crossdomain_write_divergence_supported_on_four_required_reddit_sources"] is True
+        and b12cb["crossdomain_reddit_native_practical_transport_supported"] is False
+        and b12cb["uniform_failure_memory_harm_supported"] is False
+        and b12cb["shopping_native_magnitude_is_universal_supported"] is False
+        and b12cb["live_browser_transport_supported"] is False
+        and all(x in limits for x in ["writer-invariant downstream effects remain unestablished", "provider-support stop", "released top-$1$/0.3 retrieval substrate"])
     )
 
     story_text = (REPO / "paper-story-reward-memory.js").read_text()
     reader_text = (REPO / "paper-reader-data.js").read_text()
-    checks["paper_story_expansion_current"] = all(x in story_text for x in ["20/20", "72.7", "0.02083", "0.04514", "0.00775", "0.01951", "0.06944", "0.5801", "0.17014", "0.00335", "0.205", "working-memory", "support stop"])
-    checks["paper_reader_expansion_current"] = all(x in reader_text for x in ["20/20", "125/172", "0.02083", "0.04514", "0.00775", "0.01951", "0.06944", ".5801", ".17014", ".00335", ".205", "working-memory"])
+    checks["paper_story_expansion_current"] = all(x in story_text for x in ["20/20", "72.7", "0.02083", "0.04514", "0.0048", "30/36", "61.5", "0.01786", "0.06944", "0.5801", "0.00335", "0.205", "Reddit", "0.125", "0.2253", "0.652", "branch-specific uptake", "support stop"])
+    checks["paper_reader_expansion_current"] = all(x in reader_text for x in ["20/20", "125/172", "0.02083", "0.04514", ".0048", "30/36", "61.5", ".01786", "0.06944", ".00335", ".205", "Reddit", "0.125", ".2253", ".652", "branch-specific uptake"])
 
     pdf = HERE / "paper.pdf"
     pdfinfo = subprocess.check_output(["pdfinfo", str(pdf)], text=True)
@@ -296,12 +410,12 @@ def main() -> None:
     references_page = heading_page("References")
     checks["main_text_within_nine_pages"] = conclusion_page is not None and conclusion_page <= 9
     checks["references_not_before_conclusion"] = references_page is not None and conclusion_page is not None and references_page >= conclusion_page
-    checks["expanded_pdf_reasonable_total_pages"] = pages <= 19
+    checks["expanded_pdf_reasonable_total_pages"] = pages <= 20
 
     payload = {
-        "schema_version": "1.3",
+        "schema_version": "1.4",
         "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-        "revision": "ICLR-WORKING-MEMORY-LOCALIZATION-B11-20260824",
+        "revision": "ICLR-STAGE-RESOLVED-B12-CROSSDOMAIN-20260824",
         "status": "PASS" if all(checks.values()) else "FAIL",
         "abstract_words_approx": approx_words(abstract),
         "pdf_pages_total": pages,
@@ -317,7 +431,12 @@ def main() -> None:
         "baseline_aligned_expansion_evidence_sha256": sha(HERE / "baseline-aligned-expansion-evidence.json"),
         "baseline_aligned_followup_evidence_sha256": sha(HERE / "baseline-aligned-followup-evidence.json"),
         "transport_localization_evidence_sha256": sha(HERE / "transport-localization-evidence.json"),
-        "b11_working_memory_localization_evidence_sha256": sha(HERE / "b11-working-memory-localization-evidence.json"),
+        "b11_scientific_evidence_sha256": sha(HERE / "b11-scientific-evidence.json"),
+        "b11_concentration_evidence_sha256": sha(HERE / "b11-concentration-evidence.json"),
+        "story_v4_argument_search_sha256": sha(HERE / "story-v4-argument-search-20260824.json"),
+        "story_v5_crossdomain_adjudication_sha256": sha(HERE / "story-v5-crossdomain-adjudication-20260824.json"),
+        "b12_crossdomain_reddit_evidence_sha256": sha(HERE / "b12-crossdomain-reddit-evidence.json"),
+        "working_memory_posthoc_evidence_sha256": sha(HERE / "b11-working-memory-localization-evidence.json"),
         "paper_story_reward_memory_sha256": sha(REPO / "paper-story-reward-memory.js"),
         "paper_reader_data_sha256": sha(REPO / "paper-reader-data.js"),
         "paper_pdf_sha256": sha(pdf),
@@ -325,18 +444,19 @@ def main() -> None:
         "scientific_authority": False,
         "experiment_authority": False,
         "claim_expansion": False,
-        "new_provider_calls_exact": 0,
-        "new_scientifically_usable_provider_calls": 0,
-        "new_scientifically_usable_writer_calls": 0,
-        "new_terminal_rollouts": 0,
+        "new_provider_calls_exact": b12acct["b12_observable_provider_posts_total"],
+        "new_scientifically_usable_provider_calls": b12acct["b12_scientifically_usable_calls"],
+        "new_scientifically_usable_writer_calls": b12acct["b12_scientifically_usable_writer_calls"],
+        "new_terminal_rollouts": b12acct["b12_scientifically_usable_terminal_rollouts"],
         "new_process_rollouts": 0,
         "cross_policy_support_failure_posts": acct["cross_policy_support_failure_posts"],
-        "prior_full_paper_observable_provider_posts_lower_bound": lacct["full_paper_observable_provider_posts_lower_bound_after_b10"],
-        "updated_full_paper_observable_provider_posts_lower_bound": lacct["full_paper_observable_provider_posts_lower_bound_after_b10"],
-        "baseline_program_provider_posts_total": 1074,
-        "baseline_program_scientifically_usable_completions_total": 1040,
-        "baseline_program_terminal_rollouts_total": facct["baseline_program_scientifically_usable_terminal_rollouts_total"],
-        "baseline_program_process_rollouts_total": lacct["b10_scientifically_usable_process_calls"],
+        "prior_full_paper_observable_provider_posts_lower_bound": b12acct["prior_full_paper_observable_provider_posts_lower_bound"],
+        "updated_full_paper_observable_provider_posts_lower_bound": b12acct["full_paper_observable_provider_posts_lower_bound_after_b12"],
+        "baseline_program_provider_posts_total": 1318,
+        "baseline_program_scientifically_usable_completions_total": 1276,
+        "baseline_program_writer_calls_total": 60,
+        "baseline_program_terminal_rollouts_total": 784,
+        "baseline_program_process_rollouts_total": 432,
         "training_runs": 0,
         "gpu_runs": 0,
     }

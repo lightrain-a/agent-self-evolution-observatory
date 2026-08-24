@@ -1,0 +1,235 @@
+{
+  "artifact_type": "b12-crossdomain-reddit-evidence",
+  "claim_boundary": {
+    "claim_expansion_authority": false,
+    "crossdomain_reddit_native_practical_transport_supported": false,
+    "crossdomain_write_divergence_supported_on_four_required_reddit_sources": true,
+    "live_browser_transport_supported": false,
+    "population_effect_supported": false,
+    "shopping_native_magnitude_is_universal_supported": false,
+    "uniform_failure_memory_harm_supported": false
+  },
+  "claim_expansion_authority": false,
+  "cross_domain_synthesis": {
+    "both_domains_pass_015_floor": false,
+    "interpretation": "The write-time channel generalizes more cleanly than native transport magnitude. Native branch sensitivity is domain/task heterogeneous: Reddit is descriptively larger than Shopping, but neither domain establishes the prespecified broad practical effect.",
+    "reddit_minus_shopping": 0.104167,
+    "reddit_native_mean_absolute_effect": 0.125,
+    "reddit_to_shopping_ratio": 6.0,
+    "shopping_native_mean_absolute_effect": 0.020833
+  },
+  "execution_accounting": {
+    "b12_observable_provider_posts_total": 80,
+    "b12_scientifically_usable_calls": 72,
+    "b12_scientifically_usable_terminal_rollouts": 64,
+    "b12_scientifically_usable_writer_calls": 8,
+    "full_paper_observable_provider_posts_lower_bound_after_b12": 2159,
+    "gpu_runs": 0,
+    "parent_writer_provider_posts": 8,
+    "prior_full_paper_observable_provider_posts_lower_bound": 2079,
+    "qualification_provider_posts": 0,
+    "r1_terminal_provider_posts": 64,
+    "r1_writer_provider_posts": 8,
+    "training_runs": 0
+  },
+  "execution_repair": {
+    "all_8_writer_units_regenerated_fresh": true,
+    "failure": "source 610 failure branch length-censored without assistant text at 4096",
+    "parent_provider_posts": 8,
+    "parent_scientific_pairs": 0,
+    "parent_successes_reused_for_science": false,
+    "r1_change_only": "uniform writer output cap 4096 -> 8192",
+    "second_repair_allowed": false
+  },
+  "experiment_authority": true,
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "qualification": {
+    "distinct_selected_source_tasks": 4,
+    "eligible_intent_templates": 2,
+    "offline_eligible_retrieval_hits": 8,
+    "provider_calls": 0,
+    "reddit_config_tasks": 129,
+    "reddit_trajectory_tasks": 106,
+    "required_source_writer_tasks": [
+      404,
+      405,
+      595,
+      610
+    ]
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "source_bindings": {
+    "parent_result_sha256": "32f0e68509f260ae5ddd1f511dfabe5b33be468558c3690503c8b66d3ab7c7c9",
+    "qualification_sha256": "aea009c807faa50e7590f7f0dc40a631e06ba4a595d878a90f6cc00aa975852e",
+    "r1_result_sha256": "70db568e8ea0fefb94b5b5b38650456809bd01bf11e9cac0b09c966838e37aa5",
+    "shopping_b4_sha256": "fb3fef89a38806e9a3b13efd8413b920f81b132390818403f4d5be957f42feeb"
+  },
+  "status": "B12_REDDIT_CROSSDOMAIN_REPLICATION_COMPLETE",
+  "submission_authority": false,
+  "terminal_stage": {
+    "all_leave_one_task_out_means_below_floor": true,
+    "by_intent_template": {
+      "17": {
+        "mean_absolute_effect": 0.125,
+        "nonzero_tasks": 1,
+        "signed_mean": -0.125,
+        "tasks": 4
+      },
+      "33": {
+        "mean_absolute_effect": 0.125,
+        "nonzero_tasks": 1,
+        "signed_mean": 0.125,
+        "tasks": 4
+      }
+    },
+    "cell_results": [
+      {
+        "absolute_rate_difference": 0.0,
+        "failure_memory_rate": 1.0,
+        "future_task": 27,
+        "intent_template_id": 33,
+        "retrieval_similarity": 0.32592493,
+        "selected_source_task": 405,
+        "signed_failure_minus_success": 0.0,
+        "success_memory_rate": 1.0
+      },
+      {
+        "absolute_rate_difference": 0.5,
+        "failure_memory_rate": 0.75,
+        "future_task": 29,
+        "intent_template_id": 33,
+        "retrieval_similarity": 0.49042964,
+        "selected_source_task": 405,
+        "signed_failure_minus_success": 0.5,
+        "success_memory_rate": 0.25
+      },
+      {
+        "absolute_rate_difference": 0.0,
+        "failure_memory_rate": 1.0,
+        "future_task": 30,
+        "intent_template_id": 33,
+        "retrieval_similarity": 0.36124468,
+        "selected_source_task": 595,
+        "signed_failure_minus_success": 0.0,
+        "success_memory_rate": 1.0
+      },
+      {
+        "absolute_rate_difference": 0.0,
+        "failure_memory_rate": 1.0,
+        "future_task": 31,
+        "intent_template_id": 33,
+        "retrieval_similarity": 0.35058302,
+        "selected_source_task": 405,
+        "signed_failure_minus_success": 0.0,
+        "success_memory_rate": 1.0
+      },
+      {
+        "absolute_rate_difference": 0.0,
+        "failure_memory_rate": 0.0,
+        "future_task": 66,
+        "intent_template_id": 17,
+        "retrieval_similarity": 0.56020391,
+        "selected_source_task": 404,
+        "signed_failure_minus_success": 0.0,
+        "success_memory_rate": 0.0
+      },
+      {
+        "absolute_rate_difference": 0.5,
+        "failure_memory_rate": 0.5,
+        "future_task": 67,
+        "intent_template_id": 17,
+        "retrieval_similarity": 0.5904454,
+        "selected_source_task": 404,
+        "signed_failure_minus_success": -0.5,
+        "success_memory_rate": 1.0
+      },
+      {
+        "absolute_rate_difference": 0.0,
+        "failure_memory_rate": 0.0,
+        "future_task": 68,
+        "intent_template_id": 17,
+        "retrieval_similarity": 0.59716058,
+        "selected_source_task": 404,
+        "signed_failure_minus_success": 0.0,
+        "success_memory_rate": 0.0
+      },
+      {
+        "absolute_rate_difference": 0.0,
+        "failure_memory_rate": 1.0,
+        "future_task": 69,
+        "intent_template_id": 17,
+        "retrieval_similarity": 0.37097615,
+        "selected_source_task": 610,
+        "signed_failure_minus_success": 0.0,
+        "success_memory_rate": 1.0
+      }
+    ],
+    "future_tasks": 8,
+    "gate_pass": false,
+    "intent_templates": 2,
+    "interpretation": "Reddit shows a larger native point estimate than Shopping but still misses both the unchanged practical and permutation criteria. The two nonzero cells lie in different intent templates and have opposite signs; every leave-one-task-out mean remains below the 0.15 floor.",
+    "leave_one_task_out": [
+      {
+        "left_out_effect": 0.0,
+        "left_out_future_task": 27,
+        "mean_absolute_effect": 0.142857
+      },
+      {
+        "left_out_effect": 0.5,
+        "left_out_future_task": 29,
+        "mean_absolute_effect": 0.071429
+      },
+      {
+        "left_out_effect": 0.0,
+        "left_out_future_task": 30,
+        "mean_absolute_effect": 0.142857
+      },
+      {
+        "left_out_effect": 0.0,
+        "left_out_future_task": 31,
+        "mean_absolute_effect": 0.142857
+      },
+      {
+        "left_out_effect": 0.0,
+        "left_out_future_task": 66,
+        "mean_absolute_effect": 0.142857
+      },
+      {
+        "left_out_effect": 0.5,
+        "left_out_future_task": 67,
+        "mean_absolute_effect": 0.071429
+      },
+      {
+        "left_out_effect": 0.0,
+        "left_out_future_task": 68,
+        "mean_absolute_effect": 0.142857
+      },
+      {
+        "left_out_effect": 0.0,
+        "left_out_future_task": 69,
+        "mean_absolute_effect": 0.142857
+      }
+    ],
+    "leave_one_task_out_mean_range": [
+      0.071429,
+      0.142857
+    ],
+    "mean_absolute_success_rate_difference": 0.125,
+    "mean_signed_failure_minus_success": 0.0,
+    "nonzero_effect_tasks": 2,
+    "permutation_p": 0.225268,
+    "practical_effect_floor": 0.15,
+    "scientific_calls": 64,
+    "selected_source_tasks": 4,
+    "zero_effect_tasks": 6
+  },
+  "writer_stage": {
+    "complete_pairs": 4,
+    "exact_content_change_pairs": 4,
+    "interpretation": "The label-conditioned write divergence replicates on four Reddit source identities required by the frozen native support.",
+    "mean_token_jaccard_distance": 0.652342,
+    "scientific_calls": 8,
+    "title_set_change_pairs": 4
+  }
+}

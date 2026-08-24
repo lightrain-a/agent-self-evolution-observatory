@@ -1,0 +1,128 @@
+{
+  "artifact_type": "b11-outcome-blind-structured-control-scientific-evidence",
+  "changed_assumption": "B8 compared rewritten memory to raw trajectory evidence. B11 instead gives the same trajectory to the same writer family and requests the same memory-item schema without outcome-conditioned reflection semantics, isolating branch-specific semantics from generic structured rewriting.",
+  "claim_boundary_delta": {
+    "claim_expansion_authority": false,
+    "forced_intervention_equals_native_transport": false,
+    "generic_structured_memory_presence_confirmed": false,
+    "live_browser_transport_supported": false,
+    "neutral_writer_superiority_supported": false,
+    "population_effect_supported": false,
+    "practically_large_reward_conditioned_effect_beyond_outcome_blind_structured_rewrite_supported": false
+  },
+  "claim_expansion_authority": false,
+  "execution_accounting": {
+    "b11_scientifically_usable_provider_completions": 164,
+    "b11_terminal_provider_posts": 144,
+    "b11_total_provider_posts": 164,
+    "b11_writer_provider_posts": 20,
+    "full_paper_observable_provider_posts_lower_bound_after_b11": 2079,
+    "gpu_runs": 0,
+    "prior_full_paper_observable_provider_posts_lower_bound_after_b10": 1915,
+    "training_runs": 0
+  },
+  "experiment_authority": true,
+  "experiment_id": "D2-PROXY-B11-OUTCOME-BLIND-PROCEDURAL-WRITER",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_synthesis_delta": {
+    "forced_vs_native": "The forced 4x4 intervention remains evidence of latent conditional leverage; B11 strengthens the boundary that latent leverage is not equivalent to broad source-faithful branch-specific uptake.",
+    "stage_resolved_interpretation": "Reward-conditioned writing robustly changes durable text, but broad native retrieval usually maps success/failure/neutral/raw/no-memory states to the same downstream outcome; B10 independently localizes much of this attenuation before terminal scoring at branch-specific first-action uptake.",
+    "strongest_simple_reduction": "The native attenuation cannot be reduced to omission, raw-experience representation, or generic structured rewriting: all three controls miss the same 0.15 practical floor relative to reward-conditioned memories."
+  },
+  "source_bindings": {
+    "b10": "89b17623214d429efdefd791cc119b74b5231784815990f6a70f6c725e6598bc",
+    "contract": "f95cb2d52bc59b3cfa8b3c0ac4eb4c89b2c48a76d999e6e37f0fa5c6f0f3761c",
+    "manifest": "7714bbb8d0950762632b3b350b81954800fd0d866cf8d184c73852fe9571f6fc",
+    "terminal": "c13afbb4ce983f9a643cc8e1aa908f6189bc59984f60cae81de89ad82e66ec4c",
+    "writer": "2efc0a19c356043e6f3f0f991d47121c3bfbdcf5a1e425a7633ea949d67acdb0"
+  },
+  "status": "B11_OUTCOME_BLIND_STRUCTURED_CONTROL_COMPLETE",
+  "submission_authority": false,
+  "terminal_stage": {
+    "all_five_arms_equal_tasks": 30,
+    "complete_calls": 144,
+    "decision": "REWARD_CONDITIONED_EFFECT_BEYOND_NEUTRAL_REWRITE_NOT_ESTABLISHED",
+    "future_tasks": 36,
+    "interpretation": "A statistically detectable three-arm difference exists, but reward-conditioned branch semantics do not achieve the preregistered practically-large effect relative to a same-information outcome-blind structured rewrite. The effect is highly localized rather than broad.",
+    "mean_absolute_neutral_vs_no_memory": 0.069444,
+    "mean_absolute_neutral_vs_raw": 0.0625,
+    "mean_absolute_reward_conditioned_vs_neutral_effect": 0.045139,
+    "neutral_equals_failure_tasks": 33,
+    "neutral_equals_no_memory_tasks": 32,
+    "neutral_equals_raw_tasks": 31,
+    "neutral_equals_success_tasks": 33,
+    "nonzero_cells": [
+      {
+        "effect": 0.125,
+        "failure_memory_rate": 1.0,
+        "future_task": 144,
+        "neutral_memory_rate": 0.75,
+        "no_memory_rate": 0.0,
+        "raw_trajectory_rate": 1.0,
+        "selected_source_task": 141,
+        "success_memory_rate": 0.75
+      },
+      {
+        "effect": 0.25,
+        "failure_memory_rate": 0.0,
+        "future_task": 228,
+        "neutral_memory_rate": 0.0,
+        "no_memory_rate": 0.0,
+        "raw_trajectory_rate": 0.0,
+        "selected_source_task": 226,
+        "success_memory_rate": 0.5
+      },
+      {
+        "effect": 1.0,
+        "failure_memory_rate": 1.0,
+        "future_task": 229,
+        "neutral_memory_rate": 0.0,
+        "no_memory_rate": 1.0,
+        "raw_trajectory_rate": 1.0,
+        "selected_source_task": 226,
+        "success_memory_rate": 1.0
+      },
+      {
+        "effect": 0.25,
+        "failure_memory_rate": 1.0,
+        "future_task": 331,
+        "neutral_memory_rate": 0.75,
+        "no_memory_rate": 1.0,
+        "raw_trajectory_rate": 0.5,
+        "selected_source_task": 141,
+        "success_memory_rate": 1.0
+      }
+    ],
+    "nonzero_effect_tasks": 4,
+    "permutation_p": 0.0048,
+    "practical_effect_floor": 0.15,
+    "primary_gate_pass": false,
+    "provider_calls": 144,
+    "provider_failures": 0,
+    "top_effect_share_of_absolute_effect_mass": 0.615385,
+    "top_effect_task": 229,
+    "top_effect_value": 1.0,
+    "top_two_squared_effect_mass_share": 0.931507,
+    "zero_effect_tasks": 32
+  },
+  "writer_stage": {
+    "complete_calls": 20,
+    "interpretation": "The outcome-blind writer produces a third structured state rather than copying either reward-conditioned branch; text geometry is descriptive only.",
+    "mean_neutral_to_failure_token_jaccard_distance": 0.690062,
+    "mean_neutral_to_success_token_jaccard_distance": 0.61179,
+    "memory_item_count_distribution": {
+      "1": 0,
+      "2": 1,
+      "3": 19
+    },
+    "neutral_closer_to_failure_sources": 4,
+    "neutral_closer_to_success_sources": 16,
+    "neutral_title_set_equals_failure_sources": 0,
+    "neutral_title_set_equals_success_sources": 0,
+    "provider_calls": 20,
+    "provider_failures": 0,
+    "required_native_sources_complete": 11
+  }
+}

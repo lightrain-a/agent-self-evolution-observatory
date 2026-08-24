@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "paper-story-v4-argument-search",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "status": "STORY_SEARCH_COMPLETE_WINNER_FROZEN",
+  "paper_archetype": "causal_mechanism",
+  "system_story_contract": {
+    "required_order": [
+      "scene",
+      "practical_stake",
+      "current_paradigm",
+      "concrete_failure_mode",
+      "missing_scientific_object",
+      "falsifiable_question",
+      "design_requirements",
+      "gap_to_component",
+      "mechanism_predictions",
+      "evaluation_contract",
+      "main_effect",
+      "mechanism_aligned_stress",
+      "alternative_explanations",
+      "generalization_and_failure_boundary",
+      "bounded_final_claim"
+    ],
+    "forbidden_story_mode": "experiment chronology / B-number diary",
+    "causal_mechanism_requirements": [
+      "explicit treatment and held-fixed information",
+      "strongest simple alternative explanations",
+      "intermediate process witness",
+      "downstream outcome",
+      "negative/null evidence retained",
+      "forced intervention separated from native transport"
+    ]
+  },
+  "evidence_snapshot": {
+    "write_identification": "20/20 complete paired sources diverge; pooled token Jaccard 0.673014",
+    "wording_reduction": "reward-mode 0.700 vs same-mode wording 0.595; paired excess 0.105; exact p=0.0078",
+    "forced_terminal": "4x4 same-support forced swap: mean |delta|=0.15625; p=0.00074",
+    "native_exposure": "20-source released retriever: 125/172 held-out Shopping hits; 36 pre-outcome terminal-eligible",
+    "native_terminal": "S/F mean |delta|=0.020833; p=0.428866; 34/36 zero",
+    "raw_control": "rewrite-vs-raw=0.045139; p=0.00775; below 0.15 practical floor",
+    "endpoint_diagnostic": "post-hoc fractional-reference S/F=0.019511 overall; 0.028274 on 16 multi-reference tasks",
+    "branch_uptake": "B10 S/F first-action TV=0.069444; p=0.580094; below 0.20 floor; 0/36 modal S/F action changes",
+    "outcome_blind_structured_control": "B11 S/F-vs-neutral structured effect=0.045139; p=0.0048; below 0.15 floor; 32/36 zero; 30/36 all five arms equal",
+    "cross_writer": "GLM-5.3 preserves upstream divergence but terminal 0.140625 misses 0.15 floor",
+    "cross_policy": "DeepSeek-V4-Flash native transfer support stop; zero scientific units"
+  },
+  "rubric": {
+    "causal_mechanism_fit": 20,
+    "closest_work_separation": 15,
+    "evidence_coverage": 15,
+    "negative_result_integration": 15,
+    "falsifiability_and_controls": 10,
+    "narrative_compression": 10,
+    "practical_stake": 10,
+    "headline_overclaim_risk": 5
+  },
+  "candidates": [
+    {
+      "id": "S1-WRITE-TO-UPTAKE-BOTTLENECK",
+      "title": "Reward Errors Change Memory Before They Change Policy",
+      "one_sentence_thesis": "A terminal label is a write-time state-update treatment: it robustly changes durable memory text, but source-faithful retrieval usually attenuates the success/failure distinction before branch-specific policy uptake, so forced sensitivity is not realized transport.",
+      "missing_scientific_object": "A stage-resolved causal decomposition of write -> exposure -> branch-specific uptake -> outcome for reward-conditioned persistent memory.",
+      "core_insight": "The scientific object is not whether feedback can shape memory; it is where a controlled label intervention survives or attenuates along the persistent-state transport path.",
+      "load_bearing_chain": [
+        "same experience, label-only writer intervention -> 20/20 durable state divergence",
+        "stronger same-mode wording reduction -> reward semantics survives generic prompt explanation",
+        "forced swap -> latent conditional leverage exists",
+        "exact retrieval -> exposure is measurable and can be broad",
+        "native S/F first-action probe -> branch-specific uptake is weak before terminal scoring",
+        "native terminal + raw + neutral structured controls -> broad practically-large branch-specific transport is not established"
+      ],
+      "closest_work_boundary": "ReasoningBank/Reflexion/AttriMem already establish feedback-conditioned or learned memory construction; this story claims stage-resolved identification and attenuation of a label-only state intervention, not a new memory architecture or feedback-learning method.",
+      "negative_evidence_role": "Native non-passes are load-bearing localization evidence rather than failed replications.",
+      "score": {
+        "causal_mechanism_fit": 20,
+        "closest_work_separation": 15,
+        "evidence_coverage": 15,
+        "negative_result_integration": 15,
+        "falsifiability_and_controls": 10,
+        "narrative_compression": 9,
+        "practical_stake": 9,
+        "headline_overclaim_risk": 5,
+        "total": 98
+      }
+    },
+    {
+      "id": "S2-EVALUATOR-AS-STATE-UPDATER",
+      "title": "Your Evaluator Is Also a State Updater",
+      "one_sentence_thesis": "When terminal feedback selects a persistent-memory writer, evaluator error is no longer only a scoring error because it can modify durable state that future decisions may retrieve.",
+      "missing_scientific_object": "Evaluator reliability after the score is consumed by persistent-state updates.",
+      "core_insight": "A judge can be operationally consequential even without parameter updates because its label changes memory construction.",
+      "load_bearing_chain": [
+        "label-only write intervention",
+        "durable state divergence",
+        "forced downstream leverage",
+        "native attenuation boundary"
+      ],
+      "closest_work_boundary": "Strong practical framing but higher collision risk with JudgeBench/RewardBench and Memory Reward Inflation unless the stage-resolved transport decomposition remains explicit.",
+      "negative_evidence_role": "Native attenuation narrows the safety/reliability consequence rather than supporting a broad harm claim.",
+      "score": {
+        "causal_mechanism_fit": 17,
+        "closest_work_separation": 10,
+        "evidence_coverage": 14,
+        "negative_result_integration": 12,
+        "falsifiability_and_controls": 9,
+        "narrative_compression": 10,
+        "practical_stake": 10,
+        "headline_overclaim_risk": 3,
+        "total": 85
+      }
+    },
+    {
+      "id": "S3-INTERVENTION-NOT-TRANSPORT",
+      "title": "Memory Intervention Sensitivity Is Not Memory Transport",
+      "one_sentence_thesis": "A persistent state can change outcomes under forced injection while producing little effect under the released retrieval/interface path, so intervention sensitivity and realized transport must be evaluated separately.",
+      "missing_scientific_object": "A methodological separation between forced state intervention and source-faithful persistent-state transport.",
+      "core_insight": "The same memory pair can be causally potent under injection yet behaviorally inert under native exposure and uptake.",
+      "load_bearing_chain": [
+        "forced 4x4 positive",
+        "original-bank exposure audit",
+        "expanded-bank native terminal null",
+        "first-action uptake localization",
+        "raw/neutral controls"
+      ],
+      "closest_work_boundary": "Very clean evaluation lesson, but it underuses the novel byte-identical reward-conditioned write intervention and risks reading as a benchmark/protocol paper.",
+      "negative_evidence_role": "Central.",
+      "score": {
+        "causal_mechanism_fit": 17,
+        "closest_work_separation": 12,
+        "evidence_coverage": 13,
+        "negative_result_integration": 15,
+        "falsifiability_and_controls": 10,
+        "narrative_compression": 9,
+        "practical_stake": 7,
+        "headline_overclaim_risk": 5,
+        "total": 88
+      }
+    }
+  ],
+  "winner": {
+    "id": "S1-WRITE-TO-UPTAKE-BOTTLENECK",
+    "score": 98,
+    "reason": "It preserves the strongest novelty boundary (label-only write intervention), uses B10/B11 negative evidence as mechanism localization rather than embarrassment, and gives the causal-mechanism archetype an explicit mediator path from durable state to policy uptake to outcome.",
+    "final_story_spine": [
+      "Scene: self-evolving agents convert self-judged outcomes into reusable persistent memory.",
+      "Stake: a wrong label can become state, but text corruption matters only if it survives retrieval and policy uptake.",
+      "Current paradigm: success/failure-conditioned or reward-trained memory construction is established prior art.",
+      "Failure mode: the same byte-identical experience can be committed through a different reflection objective when the terminal bit is wrong.",
+      "Missing object: stage-resolved survival of a label-only intervention across write -> exposure -> branch-specific uptake -> outcome.",
+      "Identification: 20/20 write divergence beyond a stronger wording reduction.",
+      "Latent leverage: forced injection passes a terminal practical-effect gate.",
+      "Exposure: exact released retrieval can be broad after bank expansion.",
+      "Uptake bottleneck: native S/F first-action TV and modal action changes are weak.",
+      "Outcome boundary: native S/F, raw, no-memory, outcome-blind structured, and denser-endpoint controls do not establish a broad practically-large branch-specific effect.",
+      "Bounded conclusion: evaluator reliability is a persistent-state reliability issue, but downstream risk requires stage-resolved transport auditing rather than inference from memory-text divergence alone."
+    ]
+  },
+  "additional_experiment_adjudication": {
+    "candidate": "B12-neutral-first-action-arm",
+    "question": "Would an outcome-blind structured-memory first-action arm materially change the winning story?",
+    "verdict": "DEFER_NOT_NEEDED_FOR_CURRENT_CLAIM",
+    "reason": "The paper's causal treatment is success-vs-failure label switching. B10 already measures this exact treatment at first-action uptake, while B11 controls generic structured rewriting at the downstream endpoint. A neutral first-action arm would mainly estimate generic structured-memory presence relative to outcome-conditioned writers, which is outside the current narrow claim and would not be required to establish branch-specific attenuation.",
+    "reopen_condition": "Run B12 only if the manuscript expands its claim to generic structured-memory presence, outcome-conditioned-writer semantics independent of label direction, or a formal mediation claim requiring the neutral arm at the same process endpoint.",
+    "provider_calls_avoided": 144
+  },
+  "claim_expansion": false,
+  "external_review_authority": false,
+  "submission_authority": false
+}

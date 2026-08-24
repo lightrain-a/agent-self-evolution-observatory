@@ -1,35 +1,44 @@
-\section{Causal Object: Reward Error as a Persistent-State Intervention}
+\section{Causal Object: Where Does a Label Intervention Survive?}
 \label{sec:mechanism}
-Let task $x$ produce trajectory $\tau$, and let the terminal evaluator emit $r\in\{0,1\}$. A reward-conditioned memory writer constructs
+Let source task $x$ produce trajectory $\tau$, and let a terminal evaluator emit $r\in\{0,1\}$. A fixed reward-conditioned writer constructs persistent memory
 \begin{equation}
-M(r)=G(\tau,r).
+M_r = G(\tau,r).
 \end{equation}
-In the released ReasoningBank implementation, $r=1$ selects the success-reflection objective and $r=0$ selects the failure-reflection objective. The intervention studied here holds $\tau$ fixed and changes only this branch. The immediate causal estimand is therefore the paired persistent-state contrast $M(1)$ versus $M(0)$ for the same experience.
+In released ReasoningBank, $r=1$ and $r=0$ select success- and failure-reflection objectives. Our write-stage intervention holds $x$ and $\tau$ fixed and changes only this branch. The first gate is therefore \emph{state construction}: does $M_1\neq M_0$ under a label-only treatment, beyond ordinary prompt sensitivity?
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/fig1_reward_write_channel.pdf}
-\caption{The reward-to-memory-to-outcome channel. The source trajectory is fixed while the reward label selects the reflection writer. The resulting persistent memory is then injected into a matched held-out task packet under a fixed policy configuration. Repeated outcomes identify the between-memory component of run variance.}
+\caption{Stage-resolved persistent-state channel. A terminal label selects the write objective for a fixed source trajectory. Forced injection directly tests latent leverage of the resulting state; native transport additionally requires retrieval exposure and branch-specific policy uptake before a terminal effect can occur.}
 \label{fig:write}
 \end{figure}
 
-For a matched future task state $x'$, let $Y$ denote a downstream behavioral or terminal outcome under retrieved memory $M$. The reuse-stage contrast is
+For a future query $x'$, the released retriever chooses a source identity from task-description embeddings. Let $E(x')\in\{0,1\}$ indicate that a source memory is exposed to the policy. Because reward-conditioned memory content is not used in this retrieval embedding, exposure is a separate gate from the success/failure branch itself. Conditional on exposure, the downstream policy produces an action distribution
 \begin{equation}
-\Delta_Y(x')=
-\mathbb{E}[Y\mid do(M=M(0)),x']-
-\mathbb{E}[Y\mid do(M=M(1)),x'].
-\label{eq:terminal-contrast}
+A \sim \pi(\cdot\mid o, M_r),
 \end{equation}
-The future task evidence and policy configuration are held fixed across the pair. This separates variation introduced by persistent memory state from variation in the observed future state.
-
-\subsection{A bounded variance consequence}
-If terminal-label corruption stochastically selects between the two measured reward-conditioned memories, the resulting state mixture has a direct variance consequence. Let $M$ denote the persistent memory state available to later tasks. The law of total variance gives
+where $o$ is the held-fixed future evidence. We call the S/F difference in this distribution \emph{branch-specific uptake}. A terminal outcome $Y$ is then a later consequence of the resulting interaction. The native chain is thus
 \begin{equation}
-\mathrm{Var}(Y)=
-\mathbb{E}_{M}[\mathrm{Var}(Y\mid M)]
-+\mathrm{Var}_{M}(\mathbb{E}[Y\mid M]).
-\label{eq:variance}
+\text{label }r \rightarrow M_r \rightarrow E(x') \rightarrow A \rightarrow Y.
+\label{eq:stage-chain}
 \end{equation}
-The second term is the component induced by variation in persistent memory state. If reward corruption changes which memory is written and the paired memories produce different conditional success probabilities, reward uncertainty contributes directly to this term. Section~\ref{sec:variance} estimates the paired conditional effect and converts it into an explicit corruption-rate variance curve.
+A forced memory swap uses $do(M=M_r)$ and therefore bypasses the exposure gate. It answers whether a state difference can have leverage under direct injection, not whether the released system will realize that leverage broadly.
 
-This consequence is secondary to the causal identification above. No parameter update is required for the channel itself: in the released external-memory mechanism, a mislabeled episode can change the context available to a later retrieval.
+To distinguish branch-specific semantics from generic rewriting, we also construct an outcome-blind structured control
+\begin{equation}
+M_N = G_N(\tau),
+\end{equation}
+using the same task and action-summary information, writer family, and memory schema but no success/failure, reward, score, or outcome semantics. On the frozen native support, the preregistered terminal statistic is
+\begin{equation}
+D_N=\frac{1}{|\mathcal{T}|}\sum_{x'\in\mathcal{T}}
+\frac{|p_1(x')-p_N(x')|+|p_0(x')-p_N(x')|}{2},
+\label{eq:neutral-control}
+\end{equation}
+where $p_r$ and $p_N$ are conditional success rates. A practically large reward-conditioned effect beyond generic structured rewriting requires both $D_N\ge 0.15$ and the frozen permutation criterion $p<0.05$.
+
+\subsection{Bounded variance consequence}
+If label corruption stochastically selects between two measured persistent states, the law of total variance gives
+\begin{equation}
+\mathrm{Var}(Y)=\mathbb{E}_{M}[\mathrm{Var}(Y\mid M)] + \mathrm{Var}_{M}(\mathbb{E}[Y\mid M]).
+\end{equation}
+The second term is nonzero when the selected memory changes conditional outcomes. We use this only as a consequence analysis of the forced intervention. It is not evidence that native retrieval, uptake, or population risk is large.

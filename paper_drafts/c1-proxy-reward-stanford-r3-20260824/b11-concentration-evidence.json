@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "b11-zero-call-concentration-public-evidence",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "D2-PROXY-B11-OUTCOME-BLIND-PROCEDURAL-WRITER",
+  "status": "B11_ZERO_CALL_CONCENTRATION_COMPLETE",
+  "source_artifact_sha256": "db68bfd72e48c0b28d8d299270088d063f490fd7c049fecbbd24bf75df17712d",
+  "provider_calls": 0,
+  "new_rollouts": 0,
+  "summary": {
+    "observed_mean_effect": 0.045139,
+    "nonzero_tasks": 4,
+    "zero_tasks": 32,
+    "top1_effect_task": 229,
+    "top1_effect": 1.0,
+    "top1_share_of_absolute_effect_mass": 0.615385,
+    "top2_share_of_absolute_effect_mass": 0.769231,
+    "top1_share_of_squared_effect_mass": 0.876712,
+    "top2_share_of_squared_effect_mass": 0.931507,
+    "minimum_leave_one_task_out_mean_effect": 0.017857,
+    "minimum_leave_one_task_out_trigger": {
+      "left_out_future_task": 229,
+      "left_out_source_task": 226,
+      "left_out_effect": 1.0
+    },
+    "sources_with_nonzero_effect": 2,
+    "native_selected_source_count": 11
+  },
+  "sources_with_nonzero_effect": [
+    {
+      "selected_source_task": 141,
+      "future_task_count": 7,
+      "nonzero_effect_tasks": 2,
+      "mean_effect": 0.053571,
+      "absolute_effect_mass": 0.375
+    },
+    {
+      "selected_source_task": 226,
+      "future_task_count": 10,
+      "nonzero_effect_tasks": 2,
+      "mean_effect": 0.125,
+      "absolute_effect_mass": 1.25
+    }
+  ],
+  "interpretation": "Descriptive concentration audit only. The statistically detectable B11 difference is highly localized: one task contributes most of the absolute and squared effect mass, and only two of eleven native-selected sources contain any nonzero task. Removing the largest cell reduces the mean effect to 0.017857. This does not alter the preregistered B11 gate, permutation p-value, or floor-fail verdict.",
+  "inferential_authority": false,
+  "scientific_authority": false,
+  "claim_expansion_authority": false
+}
