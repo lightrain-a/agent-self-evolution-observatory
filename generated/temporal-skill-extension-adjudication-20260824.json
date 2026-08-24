@@ -1,0 +1,389 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "status": "EXTENSION_ADJUDICATED",
+  "current_canonical_revision": "R15",
+  "r15_automatic_mutation": false,
+  "experiments": {
+    "historical_benign_generic_pilot": {
+      "status": "UNINFORMATIVE_ALL_TIES_NO_SCALE",
+      "calls": 12,
+      "rows": [
+        {
+          "endpoint_id": "eia-cutoff::doc_4054808c7b19",
+          "arm": "N_FRESH",
+          "success": true
+        },
+        {
+          "endpoint_id": "eia-cutoff::doc_4054808c7b19",
+          "arm": "B_GENERIC",
+          "success": true
+        },
+        {
+          "endpoint_id": "eia-cutoff::doc_4054808c7b19",
+          "arm": "T_FROZEN",
+          "success": true
+        },
+        {
+          "endpoint_id": "composite-align::doc_cc293f199ada",
+          "arm": "B_GENERIC",
+          "success": false
+        },
+        {
+          "endpoint_id": "composite-align::doc_cc293f199ada",
+          "arm": "T_FROZEN",
+          "success": false
+        },
+        {
+          "endpoint_id": "composite-align::doc_cc293f199ada",
+          "arm": "N_FRESH",
+          "success": false
+        },
+        {
+          "endpoint_id": "composite-ground::doc_1dfccd3a55dd",
+          "arm": "T_FROZEN",
+          "success": false
+        },
+        {
+          "endpoint_id": "composite-ground::doc_1dfccd3a55dd",
+          "arm": "N_FRESH",
+          "success": false
+        },
+        {
+          "endpoint_id": "composite-ground::doc_1dfccd3a55dd",
+          "arm": "B_GENERIC",
+          "success": false
+        },
+        {
+          "endpoint_id": "composite-cutoff::doc_70e1e3d18499",
+          "arm": "N_FRESH",
+          "success": false
+        },
+        {
+          "endpoint_id": "composite-cutoff::doc_70e1e3d18499",
+          "arm": "B_GENERIC",
+          "success": false
+        },
+        {
+          "endpoint_id": "composite-cutoff::doc_70e1e3d18499",
+          "arm": "T_FROZEN",
+          "success": false
+        }
+      ]
+    },
+    "fresh_eia_benign_generic": {
+      "endpoint_arm_means": {
+        "eia-future-cutoff::doc_54edb69113f2": {
+          "N_FRESH": 1.0,
+          "B_GENERIC": 1.0,
+          "T_FROZEN": 1.0
+        },
+        "eia-future-cutoff::doc_6055cf568717": {
+          "N_FRESH": 0.5,
+          "B_GENERIC": 1.0,
+          "T_FROZEN": 1.0
+        },
+        "eia-future-cutoff::doc_4ead0febfea2": {
+          "N_FRESH": 0.0,
+          "B_GENERIC": 1.0,
+          "T_FROZEN": 1.0
+        },
+        "eia-future-cutoff::doc_4385d0dddeb8": {
+          "N_FRESH": 0.0,
+          "B_GENERIC": 1.0,
+          "T_FROZEN": 1.0
+        }
+      },
+      "rates": {
+        "N_FRESH": 0.375,
+        "B_GENERIC": 1.0,
+        "T_FROZEN": 1.0
+      },
+      "contrast_means": {
+        "T-N": 0.625,
+        "B-N": 0.625,
+        "T-B": 0.0
+      },
+      "contrast_signs": {
+        "T-N": {
+          "positive": 3,
+          "tie": 1,
+          "negative": 0
+        },
+        "B-N": {
+          "positive": 3,
+          "tie": 1,
+          "negative": 0
+        },
+        "T-B": {
+          "positive": 0,
+          "tie": 4,
+          "negative": 0
+        }
+      },
+      "run_rows": 24,
+      "status": "APPENDIX_HIGH_VALUE",
+      "interpretation": "On four new EIA cutoff endpoints, T and the benign evidence organizer both reach 1.0 endpoint-mean success while N is 0.375. Net repair is real relative to N, but targeted-specific credit is fully absorbed by generic evidence organization on this substrate."
+    },
+    "bls_cpi_crossdomain": {
+      "endpoint_arm_means": {
+        "bls-cpi-cutoff::doc_620281aa5553": {
+          "T_FROZEN": 1.0,
+          "B_GENERIC": 1.0,
+          "N_FRESH": 0.0
+        },
+        "bls-cpi-cutoff::doc_ba7167003f4e": {
+          "B_GENERIC": 1.0,
+          "N_FRESH": 0.5,
+          "T_FROZEN": 1.0
+        },
+        "bls-cpi-cutoff::doc_f16689211f85": {
+          "B_GENERIC": 1.0,
+          "N_FRESH": 1.0,
+          "T_FROZEN": 1.0
+        },
+        "bls-cpi-cutoff::doc_21c49e9a6d31": {
+          "T_FROZEN": 1.0,
+          "B_GENERIC": 0.0,
+          "N_FRESH": 0.0
+        }
+      },
+      "rates": {
+        "N_FRESH": 0.375,
+        "B_GENERIC": 0.75,
+        "T_FROZEN": 1.0
+      },
+      "contrast_means": {
+        "T-N": 0.625,
+        "B-N": 0.375,
+        "T-B": 0.25
+      },
+      "contrast_signs": {
+        "T-N": {
+          "positive": 3,
+          "tie": 1,
+          "negative": 0
+        },
+        "B-N": {
+          "positive": 2,
+          "tie": 2,
+          "negative": 0
+        },
+        "T-B": {
+          "positive": 1,
+          "tie": 3,
+          "negative": 0
+        }
+      },
+      "run_rows": 24,
+      "status": "APPENDIX_HIGH_VALUE",
+      "interpretation": "Across four BLS CPI endpoints, T=1.0, benign organizer=0.75, N=0.375. Generic organization explains part, but not all, of the targeted residual; one endpoint has stable T>B=N across both repeats."
+    },
+    "multiturn_callable_vs_context": {
+      "success_rates": {
+        "BASE": 1.0,
+        "CONTEXT": 1.0,
+        "TOOL": 1.0
+      },
+      "tool_call_rate": 0.5,
+      "tool_vs_context": {
+        "eia-future-cutoff::doc_54edb69113f2": 0,
+        "eia-future-cutoff::doc_6055cf568717": 0,
+        "eia-future-cutoff::doc_4ead0febfea2": 0,
+        "eia-future-cutoff::doc_4385d0dddeb8": 0
+      },
+      "endpoints": {
+        "eia-future-cutoff::doc_54edb69113f2": {
+          "TOOL": {
+            "success": true,
+            "tool_called": false,
+            "tool_call_count": 0
+          },
+          "CONTEXT": {
+            "success": true,
+            "tool_called": false,
+            "tool_call_count": 0
+          },
+          "BASE": {
+            "success": true,
+            "tool_called": false,
+            "tool_call_count": 0
+          }
+        },
+        "eia-future-cutoff::doc_6055cf568717": {
+          "TOOL": {
+            "success": true,
+            "tool_called": false,
+            "tool_call_count": 0
+          },
+          "BASE": {
+            "success": true,
+            "tool_called": false,
+            "tool_call_count": 0
+          },
+          "CONTEXT": {
+            "success": true,
+            "tool_called": false,
+            "tool_call_count": 0
+          }
+        },
+        "eia-future-cutoff::doc_4ead0febfea2": {
+          "BASE": {
+            "success": true,
+            "tool_called": false,
+            "tool_call_count": 0
+          },
+          "CONTEXT": {
+            "success": true,
+            "tool_called": false,
+            "tool_call_count": 0
+          },
+          "TOOL": {
+            "success": true,
+            "tool_called": true,
+            "tool_call_count": 1
+          }
+        },
+        "eia-future-cutoff::doc_4385d0dddeb8": {
+          "BASE": {
+            "success": true,
+            "tool_called": false,
+            "tool_call_count": 0
+          },
+          "TOOL": {
+            "success": true,
+            "tool_called": true,
+            "tool_call_count": 1
+          },
+          "CONTEXT": {
+            "success": true,
+            "tool_called": false,
+            "tool_call_count": 0
+          }
+        }
+      },
+      "status": "APPENDIX_BOUNDARY_NULL",
+      "interpretation": "Actual function calling is supported and endogenous use occurs on 2/4 endpoints, but BASE=CONTEXT=TOOL=1.0 in the exploratory EIA fork. No callable-over-context residual is observed."
+    },
+    "planning_exploratory_eia": {
+      "single_endpoint_means": {
+        "eia-future-cutoff::doc_54edb69113f2": 1.0,
+        "eia-future-cutoff::doc_6055cf568717": 0.5,
+        "eia-future-cutoff::doc_4ead0febfea2": 0.0,
+        "eia-future-cutoff::doc_4385d0dddeb8": 0.0
+      },
+      "planning_endpoint_means": {
+        "eia-future-cutoff::doc_54edb69113f2": 1.0,
+        "eia-future-cutoff::doc_6055cf568717": 0.5,
+        "eia-future-cutoff::doc_4ead0febfea2": 1.0,
+        "eia-future-cutoff::doc_4385d0dddeb8": 1.0
+      },
+      "single_mean": 0.375,
+      "planning_mean": 0.875,
+      "mean_delta": 0.5,
+      "paired_delta": {
+        "eia-future-cutoff::doc_54edb69113f2": 0.0,
+        "eia-future-cutoff::doc_6055cf568717": 0.0,
+        "eia-future-cutoff::doc_4ead0febfea2": 1.0,
+        "eia-future-cutoff::doc_4385d0dddeb8": 1.0
+      },
+      "signs": {
+        "positive": 2,
+        "tie": 2,
+        "negative": 0
+      },
+      "status": "EXPLORATORY_POSITIVE_NOT_CONFIRMATORY"
+    },
+    "planning_exploratory_bls": {
+      "single_endpoint_means": {
+        "bls-cpi-cutoff::doc_620281aa5553": 0.0,
+        "bls-cpi-cutoff::doc_ba7167003f4e": 0.5,
+        "bls-cpi-cutoff::doc_f16689211f85": 1.0,
+        "bls-cpi-cutoff::doc_21c49e9a6d31": 0.0
+      },
+      "planning_endpoint_means": {
+        "bls-cpi-cutoff::doc_620281aa5553": 1.0,
+        "bls-cpi-cutoff::doc_ba7167003f4e": 1.0,
+        "bls-cpi-cutoff::doc_f16689211f85": 1.0,
+        "bls-cpi-cutoff::doc_21c49e9a6d31": 1.0
+      },
+      "single_mean": 0.375,
+      "planning_mean": 1.0,
+      "mean_delta": 0.625,
+      "paired_delta": {
+        "bls-cpi-cutoff::doc_620281aa5553": 1.0,
+        "bls-cpi-cutoff::doc_ba7167003f4e": 0.5,
+        "bls-cpi-cutoff::doc_f16689211f85": 0.0,
+        "bls-cpi-cutoff::doc_21c49e9a6d31": 1.0
+      },
+      "signs": {
+        "positive": 3,
+        "tie": 1,
+        "negative": 0
+      },
+      "status": "EXPLORATORY_POSITIVE_NOT_CONFIRMATORY"
+    },
+    "planning_prospective_fed": {
+      "single_endpoint_means": {
+        "fed-fomc-cutoff::doc_aecbe8d1f47e": 0.0,
+        "fed-fomc-cutoff::doc_0ba933543292": 0.0,
+        "fed-fomc-cutoff::doc_317ea9593211": 1.0,
+        "fed-fomc-cutoff::doc_ce239324ec71": 0.0
+      },
+      "planning_endpoint_means": {
+        "fed-fomc-cutoff::doc_aecbe8d1f47e": 0.0,
+        "fed-fomc-cutoff::doc_0ba933543292": 0.0,
+        "fed-fomc-cutoff::doc_317ea9593211": 0.0,
+        "fed-fomc-cutoff::doc_ce239324ec71": 1.0
+      },
+      "single_mean": 0.25,
+      "planning_mean": 0.25,
+      "mean_delta": 0.0,
+      "paired_delta": {
+        "fed-fomc-cutoff::doc_aecbe8d1f47e": 0.0,
+        "fed-fomc-cutoff::doc_0ba933543292": 0.0,
+        "fed-fomc-cutoff::doc_317ea9593211": -1.0,
+        "fed-fomc-cutoff::doc_ce239324ec71": 1.0
+      },
+      "signs": {
+        "positive": 1,
+        "tie": 2,
+        "negative": 1
+      },
+      "status": "PROSPECTIVE_FALSIFIER_NO_EFFECT",
+      "interpretation": "The single-turn-vs-planning comparison and four Fed endpoints were frozen before any Fed model outcomes. Single-turn N and planning-only both average 0.25; paired changes are one planning-only win, one N-only win, and two ties. The proposed general planning effect does not survive prospective third-substrate testing."
+    }
+  },
+  "routing": {
+    "current_paper_appendix": [
+      "fresh_eia_benign_generic",
+      "bls_cpi_crossdomain",
+      "multiturn_callable_vs_context"
+    ],
+    "current_paper_main_claim_change": "NO; add follow-up robustness/claim-boundary evidence only. Preserve T-N as net repair and explicitly show that generic organization can absorb all or part of targeted credit.",
+    "next_paper_candidate": {
+      "object": "structured planning/deliberation absorbs apparent temporal-skill gains",
+      "decision": "STOP_FOR_NOW",
+      "why": "Exploratory EIA/BLS gains do not survive the prospectively frozen Fed FOMC falsifier.",
+      "reopen_condition": "A new prospectively frozen independent substrate must show a stable planning-over-single-turn residual under the same-information contract without selecting endpoints after outcomes."
+    },
+    "multiturn_new_paper": "STOP_FOR_NOW_NO_CALLABLE_RESIDUAL"
+  },
+  "provenance": {
+    "eia_source_manifest_sha256": "4d3cc76ae3b0bcb4cdd52dc7d227e295be961acc45f807a1dfce0d5116e89f1b",
+    "eia_plan_sha256": "e6c4172ca844cffc9e972233a5e610c335617e4d7d8d12c0a9e324d233661edf",
+    "bls_source_manifest_sha256": "ae7030736ce2a3a3730d0678e1ec14e4ea5c7a6dabb868c0fea4e5d7a3b12781",
+    "bls_plan_sha256": "bff912da0bc2278c64181a79632eedbe27fcae6fd1390e1462940d1ce574001f",
+    "multiturn_plan_sha256": "ce77470e5a3d62874acfd11dc5fb57376e16f98e85a1ae11d3ffa84ebbe456b3",
+    "fed_source_manifest_sha256": "17ab2fbd087273d5bc6d73d63756b3db7ab89975e6e2bb6709f25f050e0689f8",
+    "fed_single_plan_sha256": "7fdcc76f04bb0640684b61ac78d377408a256d32dbf29813b050390207ef98f0",
+    "fed_planning_plan_sha256": "1a080d1014647cc1ed9378e09f9a0a1a41a3ec8412d7b81faada274bd62cbc8a"
+  },
+  "provider": {
+    "route": "Ark Plan /api/plan/v3",
+    "requested_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-260425"
+  },
+  "scientific_authority": false,
+  "submission_authority": false
+}
