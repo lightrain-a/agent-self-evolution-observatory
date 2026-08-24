@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r16-extension-claim-audit",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r16",
+  "checks": [
+    {
+      "id": "C01",
+      "pass": true,
+      "check": "R15 core attribution claim is not replaced by extension outcomes."
+    },
+    {
+      "id": "C02",
+      "pass": true,
+      "check": "Benign B is defined as useful but forbidden from executing the target temporal mechanism."
+    },
+    {
+      "id": "C03",
+      "pass": true,
+      "check": "Fresh EIA N/B/T endpoint-mean result is exposed."
+    },
+    {
+      "id": "C04",
+      "pass": true,
+      "check": "BLS cross-domain N/B/T endpoint-mean result is exposed."
+    },
+    {
+      "id": "C05",
+      "pass": true,
+      "check": "Execution repeats are not promoted to independent scientific units."
+    },
+    {
+      "id": "C06",
+      "pass": true,
+      "check": "Actual multi-turn tool-use null is visible with endogenous call rate."
+    },
+    {
+      "id": "C07",
+      "pass": true,
+      "check": "Multi-turn TOOL-vs-CONTEXT is not overclaimed as pure placement identification."
+    },
+    {
+      "id": "C08",
+      "pass": true,
+      "check": "EIA/BLS planning gains are labeled exploratory/data-induced."
+    },
+    {
+      "id": "C09",
+      "pass": true,
+      "check": "Prospectively frozen Fed planning falsifier is exposed."
+    },
+    {
+      "id": "C10",
+      "pass": true,
+      "check": "Fed paired null is reported rather than hidden."
+    },
+    {
+      "id": "C11",
+      "pass": true,
+      "check": "Failed next-paper candidate is explicitly stopped."
+    },
+    {
+      "id": "C12",
+      "pass": true,
+      "check": "Follow-up evidence is not retroactively inserted into the primary preregistration."
+    },
+    {
+      "id": "C13",
+      "pass": true,
+      "check": "Anonymous manuscript does not expose internal revision/reviewer workflow."
+    }
+  ],
+  "summary": {
+    "checks": 13,
+    "passed": 13,
+    "failed": 0,
+    "pass": true
+  },
+  "adjudication_sha256": "feaa586cefc3832473e9bbb69c3e6410c141c971730dbcf0268e7b0a26e5b6f7",
+  "appendix_sha256": "f81a1a18b7fbbbaff58a6b9dd1103e168309677475c8592ebcec87fad6c96fd4",
+  "new_model_calls_for_r16_paper_repair": 0,
+  "new_provider_calls_for_r16_paper_repair": 0,
+  "scientific_authority": false,
+  "submission_authority": false
+}
