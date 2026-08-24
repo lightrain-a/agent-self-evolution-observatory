@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "cross-policy-output-cap-repair-addendum",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "status": "FROZEN_BEFORE_B6_R1_PROVIDER_CALLS",
+  "parent_program": "b6-b7-cross-policy-program.json",
+  "parent_B6_failure": {
+    "experiment_id": "D2-PROXY-B6-CROSS-POLICY-RETRIEVAL-MATCHED",
+    "provider_calls_attempted": 1,
+    "scientifically_usable_calls": 0,
+    "failed_stage": "terminal-26-source-25-success-r1",
+    "failure_type": "ArkResponseStateError",
+    "incomplete_reason": "length",
+    "requested_model": "deepseek-v4-flash",
+    "resolved_model": "deepseek-v4-flash-ga-260731",
+    "max_output_tokens": 900
+  },
+  "repair": {
+    "only_execution_change": "DeepSeek max_output_tokens 900 -> 2200",
+    "applies_to": ["B6 fresh full rerun", "B7 no-memory stage"],
+    "B6_reuse_parent_outputs": false,
+    "B6_fresh_provider_calls": 288,
+    "B7_provider_calls": 144,
+    "unchanged": [
+      "36-task support",
+      "retrieval identities",
+      "success/failure memory bytes",
+      "native ReasoningBank wrapper",
+      "fixed evidence",
+      "deterministic evaluator",
+      "DeepSeek-V4-Flash model family",
+      "temperature 0.2",
+      "thinking=None",
+      "provider retries 0",
+      "0.15 practical-effect floors",
+      "permutation tests",
+      "no outcome-driven task selection"
+    ]
+  },
+  "stop_rule": "If any B6-R1 unit still returns no-text length censoring at max_output_tokens=2200, stop the DeepSeek cross-policy line with support failure; do not increase the cap again.",
+  "scientific_interpretation": "The 900-token parent has zero scientific authority because it produced no assistant text on its first frozen unit. The repair changes provider output support only and is not motivated by a scientific outcome.",
+  "scientific_authority": false,
+  "experiment_authority": true,
+  "claim_expansion_authority": false,
+  "submission_authority": false
+}

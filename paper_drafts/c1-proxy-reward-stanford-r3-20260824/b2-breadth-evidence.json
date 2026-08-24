@@ -1,0 +1,380 @@
+{
+  "artifact_type": "c1-write-channel-breadth-evidence",
+  "claim_boundary": "Supports broader upstream write-time divergence on 20 complete paired sources total. It does not establish native retrieval transport, cross-policy downstream transfer, or a population effect.",
+  "claim_expansion_authority": false,
+  "combined_complete_pairs": 20,
+  "execution_accounting": {
+    "parent_2200_complete": 29,
+    "parent_2200_failure_branch_length_censoring": 3,
+    "parent_2200_provider_posts": 32,
+    "r1_4096_complete": 32,
+    "r1_4096_provider_posts": 32,
+    "scientifically_usable_r1_provider_posts": 32,
+    "total_b2_provider_posts": 64
+  },
+  "experiment_authority": true,
+  "new_complete_pairs": 16,
+  "new_distinct_intent_templates": 11,
+  "new_pair_results": [
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "bc51cd467c34b2be6c84fdd06993a0f2e5471bf92cc32e731209a5d1589ef621",
+      "failure_titles": [
+        "Use condition-specific search terms for health-related product searches"
+      ],
+      "intent_template_id": 151,
+      "original_is_successful": false,
+      "success_memory_sha256": "95ab7239d05c4ff412b95446915e11739895f3d8f880ae8eebf43f5ce8e565db",
+      "success_titles": [
+        "Use broad search terms then filter by condition-specific keywords",
+        "Extract structured product data with relevance annotations",
+        "Prioritize explicitly marketed solutions and explain their benefit"
+      ],
+      "task_id": "118",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.849673
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "4eeb14bf2da094b76ab1d26affc851c709699f1446a4ba5776e55fcf2bb4357c",
+      "failure_titles": [
+        "Verify complete pagination before reporting a range",
+        "Use price sorting to obtain min/max efficiently",
+        "Ensure extracted product data is complete and not truncated"
+      ],
+      "intent_template_id": 159,
+      "original_is_successful": false,
+      "success_memory_sha256": "5b40da8cf07d3b3664e8926f42da30a62b0520463ea708c9bf114cab45e6d46c",
+      "success_titles": [
+        "Determine price range by aggregating across all search result pages",
+        "Use structured extraction for product listings",
+        "Report price range with supporting evidence"
+      ],
+      "task_id": "125",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.692708
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "e378066be20a1c0e265359482292390bb47770d4c9a363d73a5ea48d1a976054",
+      "failure_titles": [
+        "Sum only qualifying item subtotals, not entire order totals",
+        "Process all relevant orders on a page before navigating away",
+        "Verify the list page is fully loaded before clicking pagination"
+      ],
+      "intent_template_id": 162,
+      "original_is_successful": false,
+      "success_memory_sha256": "ad22f5f7f8ad83b2009a1b3a9d41e74fd5ba77dc5c2b789244e9cd04b43ccb88",
+      "success_titles": [
+        "Locating orders in a date range via account order history",
+        "Inspecting orders for category-qualifying items",
+        "Navigating back to a paginated list after viewing details"
+      ],
+      "task_id": "141",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.677778
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "16d4758c3d50207adf1ea3485cdfc523cd57ee3de028e677ebd17b55b0476aa3",
+      "failure_titles": [
+        "Access full order history through account navigation",
+        "Increase page size to locate orders by date",
+        "Extract product specifications from the order detail page"
+      ],
+      "intent_template_id": 155,
+      "original_is_successful": false,
+      "success_memory_sha256": "1ec11bdd5158a00babba8fc6158bcb0fe982bffb63b1dc2c1bcce0c2c88047c7",
+      "success_titles": [
+        "Access order history through the account section",
+        "Increase order list page size to locate a specific order by date",
+        "Retrieve product specifications from the individual order detail page"
+      ],
+      "task_id": "146",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.565476
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "8255c1c005ca51869db8a03289040c4c3e29e6808157f20733fc9807b6585e80",
+      "failure_titles": [
+        "Compare all viable options before recommending",
+        "Verify product details beyond the title",
+        "Define \u201cbest\u201d based on user needs and future use"
+      ],
+      "intent_template_id": 171,
+      "original_is_successful": false,
+      "success_memory_sha256": "f8f10a26eb7ec40bdd8dd36ac00a64fb98f106e20fb339807933c7e0807e31fd",
+      "success_titles": [
+        "Confirm capacity from product titles when structured data is incomplete",
+        "Recommend the smallest capacity that comfortably fits the user\u2019s needs",
+        "Verify product details on the product page before finalizing a recommendation"
+      ],
+      "task_id": "158",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.668293
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "dd34a667bd22b3807f5bfceff4c0337341016ba91495b8df1f0de66aa75f89ea",
+      "failure_titles": [
+        "Load and expand all reviews before extracting criticisms",
+        "Extract full review text rather than page-scoped snippets",
+        "Distinguish explicit criticisms from neutral caveats"
+      ],
+      "intent_template_id": 136,
+      "original_is_successful": false,
+      "success_memory_sha256": "10192de9e12b69acc119a58e6c2f40cef6330f1a052baaf80ddff928f835bc14",
+      "success_titles": [
+        "Navigate to the reviews section before extracting criticisms",
+        "Extract full review text and scan for explicit negative statements",
+        "Separate criticisms from overall positive sentiment"
+      ],
+      "task_id": "163",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.642105
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "3b515282f3ed43221b52937dd40b2858b715d04fe78b6a7a07c839eab890d0a7",
+      "failure_titles": [
+        "Verify order status before reporting the latest pending order",
+        "Confirm the reported total corresponds to the correct order",
+        "Use full order history when recent orders may not show pending status"
+      ],
+      "intent_template_id": 214,
+      "original_is_successful": false,
+      "success_memory_sha256": "dc349e277c7ae66a812d936f6c943cb215f79c3069e4fb5f477e2e87f49cb3f5",
+      "success_titles": [
+        "Locating order information via account navigation",
+        "Identifying the relevant order from a list",
+        "Reporting the requested cost directly"
+      ],
+      "task_id": "189",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.698718
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "3c92fc98ee62f140539ed3ba9acf1ca51c7bc3e44d89d27215eadeda73c7b22c",
+      "failure_titles": [
+        "Access order details through the account page",
+        "Confirm the order matches the requested criteria",
+        "Finish once the target information is visible"
+      ],
+      "intent_template_id": 213,
+      "original_is_successful": false,
+      "success_memory_sha256": "33ba80bc67b74c21152a7580c0a686389ff8695253fb4a5c2606837d8cb56c5e",
+      "success_titles": [
+        "Navigate to account area for order-related queries",
+        "Identify the most recent pending order from the visible order list",
+        "Finish promptly once the requested information is found"
+      ],
+      "task_id": "232",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.55
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "b0100d4b9e8408d45820449ce0f3d4b55f142d316161048a2032798ad894f9f9",
+      "failure_titles": [
+        "Navigate pagination carefully when searching historical orders",
+        "Exclude non-completed orders from spending calculations",
+        "Verify order contents match the spending category"
+      ],
+      "intent_template_id": 162,
+      "original_is_successful": true,
+      "success_memory_sha256": "78e13a4b175800e1e7e2114df020c0ab8eb841cdf95a7fea3e4cc6636c382fb4",
+      "success_titles": [
+        "Locate historical orders through account order history and pagination",
+        "Verify order details before including them in a spending total",
+        "Count only completed orders when calculating spending"
+      ],
+      "task_id": "145",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.59375
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "25ec01af72f2cbb1d2b66293fc682f3aedf782126d52b579076a991a3a369369",
+      "failure_titles": [
+        "Verify order date before opening order details",
+        "Returning to order list resets pagination",
+        "Use item-level details to confirm the target product"
+      ],
+      "intent_template_id": 155,
+      "original_is_successful": true,
+      "success_memory_sha256": "6bad21c9a2efd22f712a67a468e60f120baad9157ecd0dcf2e62a56a0e8b6af9",
+      "success_titles": [
+        "Locating Past Orders by Time Period",
+        "Checking Multiple Candidate Orders",
+        "Extracting Product Configuration from Order Details"
+      ],
+      "task_id": "148",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.593548
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "e51923633111905a2fc0c39f8b2376b6f43c0188ccb0820d03632e6129732896",
+      "failure_titles": [
+        "Define \"best\" criteria before evaluating storage products",
+        "Avoid redundant product revisits and repeated searches",
+        "Use targeted search and result inspection to find capacity-specific options"
+      ],
+      "intent_template_id": 171,
+      "original_is_successful": true,
+      "success_memory_sha256": "df0adcc82c03dee8513cb7f7fe8c19c0773c75ecbfa799c1935f9627ecf6e5aa",
+      "success_titles": [
+        "Use capacity-specific search terms to surface relevant storage products",
+        "Confirm capacity and suitability on the product page before deciding",
+        "Compare multiple sufficient options to determine the \"best\" fit"
+      ],
+      "task_id": "159",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.732143
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "4060dc820521f1b9d7d5c6a4175497106410def85d0c9bbd8ed1b6fd7d720b88",
+      "failure_titles": [
+        "Navigate to account/order history before answering order-related queries",
+        "Identify the correct order by status and recency",
+        "Provide the requested value with supporting order context"
+      ],
+      "intent_template_id": 214,
+      "original_is_successful": true,
+      "success_memory_sha256": "daaec8b7b48fbf4edd2aa02caf08fefed8ed16690dfa4a7e74fd0e1d24b4aa8f",
+      "success_titles": [
+        "Locate order history through account navigation",
+        "Identify the target order from the recent orders table",
+        "Complete the task with a direct answer"
+      ],
+      "task_id": "188",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.681818
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "c3e68878f69e7f87c61ada1a9af6a425a4c4a0e5279c56115058c48ce933dcfb",
+      "failure_titles": [
+        "Prioritize products with visible review counts",
+        "Refine the search when reviewed products are scarce",
+        "Recognize no-review signals and exit quickly"
+      ],
+      "intent_template_id": 135,
+      "original_is_successful": true,
+      "success_memory_sha256": "1d66ec96f63223b8dc75927f4c0a1a7899b92ac8d4d35a874c0244c1f7041d09",
+      "success_titles": [
+        "Confirm reviews exist before attempting extraction",
+        "Prioritize products with visible review counts in search results",
+        "Refine the search query to surface products with reviews"
+      ],
+      "task_id": "225",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.587097
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "3e18f433a94f032495d46f2bdd48dc299afd4de8136a5a096604020fd040dbf9",
+      "failure_titles": [
+        "Determine full result-set size before answering aggregate questions",
+        "Use price sorting to find min/max efficiently",
+        "Validate final answer against the original question's scope"
+      ],
+      "intent_template_id": 370,
+      "original_is_successful": true,
+      "success_memory_sha256": "8387a740c76862210fdfea308de8e32b979bb3b36650c2eef85f112749ce553e",
+      "success_titles": [
+        "Determine price range by searching and extracting structured product data",
+        "Use pagination to gather a broader sample of prices",
+        "Report the computed range with supporting evidence"
+      ],
+      "task_id": "226",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.731579
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "7d64866d11c289ed10bbea67ff3ae3a589ba2b6ac8a134d076d7959289f9a06a",
+      "failure_titles": [
+        "Access order history through the account area",
+        "Identify the target order by status and recency in the list",
+        "Confirm the order number on the detail page before finalizing"
+      ],
+      "intent_template_id": 213,
+      "original_is_successful": true,
+      "success_memory_sha256": "441691c7108251468ad7a93b846974d29e24fb6e7d7629e665619d44b436abb1",
+      "success_titles": [
+        "Navigate to full order history via account area",
+        "Identify the target order by status and date",
+        "Confirm order details on the order detail page"
+      ],
+      "task_id": "231",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.544776
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "2968aebd50b186a75151f12d1be2f90720377f910d9938b338d27d95e84593f8",
+      "failure_titles": [
+        "Browsing a category is more than opening the page",
+        "Verify the page matches the requested category before finishing",
+        "Keep completion reports concise and informative"
+      ],
+      "intent_template_id": 211,
+      "original_is_successful": true,
+      "success_memory_sha256": "c7291f27fd2891f7fb76b1e28cc1f0f7cfa39ddff0493a1ed89a45788058df37",
+      "success_titles": [
+        "Use navigation menu category links to browse product categories",
+        "Verify category page success through listing indicators",
+        "Report visible product examples when finishing a browsing task"
+      ],
+      "task_id": "260",
+      "title_set_changed": true,
+      "token_jaccard_distance": 0.711656
+    }
+  ],
+  "new_provider_calls_after_r1_completion": 0,
+  "new_source_balance": {
+    "original_failure": 8,
+    "original_success": 8
+  },
+  "original_complete_pairs": 4,
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "repair_interpretation": "The 2200-token parent is execution-censored in three failure-branch units and has zero breadth-gate authority. R1 changes only max_output_tokens 2200->4096 uniformly, regenerates all 32 units fresh, and is the sole scientifically usable B2 breadth replication.",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "source_bindings": {
+    "f0": "f2e4f3424faf1e3a9ec7aba7958e538eac457e89308552ef7a9c3d69c6a914f9",
+    "parent": "fd59a0d61c40a28e1c59bcf1452fc66e6ef2fa4d05d5c9830f4c57d18ee9fff1",
+    "r1": "42d655b7c55d615356bf1ceb048ebc69ba1a403d2c8e10e33e89149298684d3b",
+    "selection": "8ee0eeee70adb35612b6bb8dcb04c70d8d5da75be324b93f7ce7bce3c193ebf1"
+  },
+  "status": "B2_BROAD_WRITE_CHANNEL_SUPPORTED",
+  "summary": {
+    "combined_exact_content_change_rate": 1.0,
+    "combined_exact_content_changed_pairs": 20,
+    "combined_title_set_change_rate": 1.0,
+    "combined_title_set_changed_pairs": 20,
+    "new_mean_token_jaccard_distance": 0.65757,
+    "original_mean_token_jaccard_distance": 0.734789,
+    "pooled_20_pair_mean_token_jaccard_distance": 0.673014
+  }
+}

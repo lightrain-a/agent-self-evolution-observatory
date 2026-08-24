@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "cross-policy-three-arm-program",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "status": "FROZEN_BEFORE_B6_PROVIDER_CALLS",
+  "frozen_support_source": "B4 36-task retrieval-matched fixed-evidence support",
+  "policy_model": {
+    "requested": "deepseek-v4-flash",
+    "expected_resolved": "deepseek-v4-flash-ga-260731",
+    "temperature": 0.2,
+    "max_output_tokens": 900,
+    "thinking": null,
+    "provider_retries": 0,
+    "store": true,
+    "substitution_allowed": false
+  },
+  "decoding_boundary": "Temperature and output cap match B4. DeepSeek uses the provider-supported thinking=None surface already exercised by B2; this is a model-family transfer, not a claim of byte-identical decoder internals across model families.",
+  "B6": {
+    "conditions": ["success", "failure"],
+    "future_tasks": 36,
+    "rollouts_per_task_per_condition": 4,
+    "provider_call_ceiling": 288,
+    "primary_gate": {
+      "min_mean_absolute_success_rate_difference": 0.15,
+      "permutation_p_lt": 0.05,
+      "permutation_repetitions": 100000,
+      "permutation_seed": 20260824
+    }
+  },
+  "B7": {
+    "condition": "no_memory",
+    "future_tasks": 36,
+    "rollouts_per_task": 4,
+    "provider_call_ceiling": 144,
+    "execute_if": "B6 completes all 288 frozen units without unresolved provider/support failure, regardless of whether the B6 scientific gate passes or fails",
+    "primary_gate": {
+      "statistic": "mean over 36 tasks of 0.5*(|p_success_memory-p_no_memory|+|p_failure_memory-p_no_memory|)",
+      "min_mean_absolute_memory_presence_effect": 0.15,
+      "omnibus_permutation_p_lt": 0.05,
+      "permutation_repetitions": 100000,
+      "permutation_seed": 20260824
+    }
+  },
+  "forbidden": [
+    "change the 36-task support after B6 outcomes",
+    "lower the 0.15 practical-effect floor",
+    "skip B7 because B6 is negative",
+    "run B7 only because B6 is positive",
+    "replace DeepSeek with another family after outcomes",
+    "claim live-browser end-to-end transport",
+    "claim population causal effects"
+  ],
+  "scientific_authority": false,
+  "experiment_authority": true,
+  "claim_expansion_authority": false,
+  "submission_authority": false
+}

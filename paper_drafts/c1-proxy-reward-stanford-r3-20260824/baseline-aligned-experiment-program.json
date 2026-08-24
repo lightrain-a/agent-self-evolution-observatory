@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "baseline-aligned-scientific-experiment-program",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "status": "FROZEN_BEFORE_NEW_EXPERIMENTS",
+  "purpose": "Increase ICLR-level experimental breadth without relaxing any existing gate or changing the core causal object.",
+  "authorization": {
+    "master_human_authority_path": "/data/wyt/agent-self-evolution-observatory/human-authority/c1-proxy-reward-stanford-r3-20260824/master-human-authorization.json",
+    "master_human_authority_sha256": "ddc5bd50487ed431f5d24ee84cda4e422f36216b4191a02db21db18ae821161f",
+    "fresh_user_direction": "baseline-aligned experimental expansion requested after the daytime paper-only optimization",
+    "claim_expansion_authorized": false,
+    "submission_authority": false
+  },
+  "baseline_alignment": [
+    {
+      "paper": "On the Fragility of Self-Improving Agents: Variance, Task Order, and Underspecification",
+      "arxiv": "2608.18066",
+      "experimental_pattern": "multiple runs, task-order perturbations, and multiple benchmark families",
+      "c1_gap": "current C1 has strong repeated rollouts but limited transport/generalization axes"
+    },
+    {
+      "paper": "AttriMem: Attribution-Guided Process Feedback for Agent Memory Learning",
+      "arxiv": "2607.21106",
+      "experimental_pattern": "multiple benchmarks, controlled baselines, answer-model transfer, reward-granularity ablation",
+      "c1_gap": "current C1 lacks downstream-model transfer and a reward-blind writer ablation"
+    },
+    {
+      "paper": "RoMeRL: Balancing Feedback Coverage and the Memory-Reward Trap in Self-Evolving Agent Memory via Reduced-Order Utility States",
+      "arxiv": "2608.02508",
+      "experimental_pattern": "cross-model memory transfer, controlled noise stress, component ablation, efficiency analysis",
+      "c1_gap": "current C1 has cross-writer but no cross-policy transfer and no source-faithful retrieval exposure audit"
+    },
+    {
+      "paper": "Memory Reward Inflation in Self-Improving LLM Agents",
+      "arxiv": "2608.00017",
+      "experimental_pattern": "cross-model reward/judge stress and end-to-end memory-to-behavior coupling",
+      "c1_gap": "proxy-judge disagreement is deployment relevance only because the released Fragility memory experiment uses benchmark reward"
+    }
+  ],
+  "frozen_existing_support": {
+    "source_memory_tasks": ["21", "22", "23", "25"],
+    "future_tasks": ["164", "385", "387", "388"],
+    "original_f0_sha256": "f2e4f3424faf1e3a9ec7aba7958e538eac457e89308552ef7a9c3d69c6a914f9",
+    "original_f2r1_contract_sha256": "ea9a2260858c9da50ddfea0c6cec7722112953a437853b6e4d55c4013dec01f5",
+    "original_f2r1_result_sha256": "04db52a9c2a1eac28df4213e5041e2f20e8e4b3591d5941f9e6d889a8b8dc2e9",
+    "existing_terminal_gate": {
+      "mean_absolute_success_rate_difference_min": 0.15,
+      "permutation_p_lt": 0.05
+    },
+    "existing_gate_must_not_be_relaxed": true
+  },
+  "experiments": {
+    "B1_exact_retrieval_exposure": {
+      "status": "AUTHORIZED_ZERO_PROVIDER_CALLS",
+      "question": "Under the exact released ReasoningBank retriever, which Shopping tasks retrieve each of the four C1 source memories, and do the four existing future tasks actually cross the 0.3 retrieval threshold?",
+      "corpus": "all 812 released WebArena task intents; Shopping-only results are reported separately and are the primary exposure population",
+      "retrieval_documents": "the four frozen source task descriptions for tasks 21, 22, 23, 25",
+      "model": "sentence-transformers/all-MiniLM-L6-v2",
+      "max_seq_length": 256,
+      "pooling": "attention-mask mean pooling followed by L2 normalization, exactly matching the released SentenceTransformer modules",
+      "top_k": 1,
+      "threshold": 0.3,
+      "primary_outputs": ["top1 source", "cosine similarity", "threshold hit", "runner-up similarity", "top1 margin", "per-source exposure counts"],
+      "selection_guard": "No terminal outcome may be used to alter retrieval support or threshold.",
+      "provider_call_ceiling": 0
+    },
+    "B2_reward_blind_writer_ablation": {
+      "status": "AUTHORIZED_AFTER_B1_COMPLETES_REGARDLESS_OF_B1_OUTCOME",
+      "question": "Does a reward-blind procedural summary occupy a distinct downstream position relative to success-conditioned, failure-conditioned, and no-memory states?",
+      "source_tasks": ["21", "22", "23", "25"],
+      "writer_model": {
+        "requested": "deepseek-v4-flash",
+        "temperature": 0.0,
+        "max_output_tokens": 2200,
+        "thinking": null,
+        "provider_retries": 0,
+        "substitution_allowed": false
+      },
+      "writer_prompt_rule": "Use the same task and action-summary bytes as the original F0 writer input, but give no success/failure label, no score, and no outcome language. Ask only for reusable procedural memory items in the same Markdown Title/Description/Content schema.",
+      "writer_calls": 4,
+      "terminal_policy": {
+        "requested": "doubao-seed-2.0-mini",
+        "temperature": 0.2,
+        "max_output_tokens": 900,
+        "thinking": "disabled",
+        "provider_retries": 0,
+        "substitution_allowed": false
+      },
+      "future_tasks": ["164", "385", "387", "388"],
+      "rollouts_per_source_future_cell": 8,
+      "terminal_calls": 128,
+      "primary_analysis": "descriptive four-way branch geometry over success-memory, failure-memory, reward-blind memory, and shared no-memory; no new global superiority claim",
+      "provider_call_ceiling": 132
+    },
+    "B3_cross_policy_transfer": {
+      "status": "AUTHORIZED_AFTER_B1_COMPLETES_REGARDLESS_OF_B1_OUTCOME",
+      "question": "Do the original paired memory states alter terminal outcome distributions when only the downstream policy family changes?",
+      "source_tasks": ["21", "22", "23", "25"],
+      "future_tasks": ["164", "385", "387", "388"],
+      "memory_conditions": ["success_label_memory", "failure_label_memory"],
+      "memory_bytes": "recover exactly from historical F2R1 prompts and require SHA equality with the original F0 memory SHA before any call",
+      "policy_model": {
+        "requested": "deepseek-v4-flash",
+        "expected_resolved_family_prefix": "deepseek-v4-flash",
+        "temperature": 0.2,
+        "max_output_tokens": 900,
+        "thinking": "disabled",
+        "provider_retries": 0,
+        "substitution_allowed": false
+      },
+      "future_evidence": "identical released fixed-evidence packets used by F2R1",
+      "rollouts_per_cell_per_condition": 8,
+      "provider_call_ceiling": 256,
+      "primary_statistic": "mean over all 16 frozen cells of absolute success-rate difference between failure-label and success-label memory",
+      "gate": {
+        "mean_absolute_success_rate_difference_min": 0.15,
+        "permutation_p_lt": 0.05,
+        "permutation_repetitions": 100000,
+        "permutation_seed": 20260824
+      },
+      "interpretation_guard": "A small p-value does not override the 0.15 practical-effect floor. Failure of either criterion means cross-policy terminal generalization is not established."
+    },
+    "B4_proxy_judge_deployment_stress": {
+      "status": "DEFER_UNTIL_EXISTING_RESPONSE_TEXT_SUPPORT_IS_VERIFIED",
+      "question": "If benchmark terminal responses were scored by a proxy LLM judge rather than the released deterministic evaluator, how often would the labels disagree?",
+      "scientific_role": "deployment-relevance stress only; not source-faithful evidence for the released Fragility memory experiment because its main memory construction uses benchmark reward",
+      "sampling_rule": "If exact historical response text can be recovered without re-running terminal policies, freeze 64 responses stratified by deterministic correctness and future task before judge calls.",
+      "judge_model": "deepseek-v4-pro",
+      "provider_call_ceiling": 64,
+      "stop_rule": "If exact historical response text cannot be recovered with SHA bindings, STOP with zero judge calls."
+    }
+  },
+  "program_budget": {
+    "provider_call_ceiling_if_B4_support_missing": 388,
+    "provider_call_ceiling_if_B4_support_available": 452,
+    "gpu_runs": 0,
+    "training_runs": 0
+  },
+  "global_stop_rules": [
+    "No threshold or source/future support may be changed after observing terminal outcomes.",
+    "No failed scientific unit is topped up unless a separately frozen execution-repair contract identifies a non-scientific implementation bug.",
+    "No new model is added merely to fish for a passing generalization gate.",
+    "No top_k or retrieval-key change is permitted under this paper to manufacture multi-memory interaction.",
+    "External review remains deferred; these experiments do not authorize an additional daytime review submission."
+  ],
+  "scientific_authority": false,
+  "experiment_authority": true,
+  "provider_call_authority": true,
+  "claim_expansion_authority": false,
+  "submission_authority": false
+}

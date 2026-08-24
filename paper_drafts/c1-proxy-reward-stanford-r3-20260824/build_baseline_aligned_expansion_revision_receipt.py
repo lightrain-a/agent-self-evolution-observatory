@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+import hashlib,json
+from pathlib import Path
+HERE=Path(__file__).resolve().parent;REPO=HERE.parents[1]
+def sha(p:Path)->str:return hashlib.sha256(p.read_bytes()).hexdigest()
+def main():
+ q=json.loads((HERE/'manuscript-qa.json').read_text());e=json.loads((HERE/'baseline-aligned-expansion-evidence.json').read_text())
+ if q['status']!='PASS' or q['revision']!='ICLR-BASELINE-ALIGNED-EXPERIMENT-EXPANSION-20260824':raise RuntimeError('current QA not PASS')
+ if e['status']!='BASELINE_ALIGNED_EXPANSION_COMPLETE_WITH_CROSS_POLICY_SUPPORT_STOP':raise RuntimeError('expansion evidence not current')
+ r={'schema_version':'1.0','artifact_type':'baseline-aligned-expansion-revision-receipt','paper_id':'D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE','status':'BASELINE_ALIGNED_EXPERIMENT_EXPANSION_INTEGRATED','revision':q['revision'],'title':'Reward Errors Become Persistent State: Write-Time Causality and Transport Boundaries in Agent Memory','paper_pdf_sha256':sha(HERE/'paper.pdf'),'manuscript_qa_sha256':sha(HERE/'manuscript-qa.json'),'baseline_aligned_expansion_evidence_sha256':sha(HERE/'baseline-aligned-expansion-evidence.json'),'paper_story_v3_sha256':sha(REPO/'paper-story-reward-memory.js'),'paper_reader_data_sha256':sha(REPO/'paper-reader-data.js'),'manuscript_qa_checks_passed':sum(q['checks'].values()),'manuscript_qa_checks_total':len(q['checks']),'abstract_words_approx':q['abstract_words_approx'],'main_text_pages':q['main_text_pages'],'pdf_pages_total':q['pdf_pages_total'],'experiment_program':e['experiments'],'scientific_synthesis':e['scientific_synthesis'],'claim_boundary':e['claim_boundary'],'execution_accounting':e['execution_accounting'],'scientific_values_changed':True,'scientific_claims_expanded':False,'new_provider_calls_exact':q['new_provider_calls_exact'],'new_scientifically_usable_provider_calls':q['new_scientifically_usable_provider_calls'],'new_terminal_rollouts':q['new_terminal_rollouts'],'external_review_calls':0,'external_review_deferred_to_evening':True,'canonical_stable_registry_overwritten':False,'canonical_note':'The stable PaperRegistry/acceptance ledger remains unchanged until the next scheduled external review adjudicates this expanded candidate.','scientific_authority':False,'experiment_authority':False,'submission_authority':False}
+ (HERE/'baseline-aligned-expansion-revision-receipt.json').write_text(json.dumps(r,ensure_ascii=False,indent=2,sort_keys=True)+'\n')
+ print(json.dumps({'status':r['status'],'pdf_sha256':r['paper_pdf_sha256'],'qa':f"{r['manuscript_qa_checks_passed']}/{r['manuscript_qa_checks_total']}",'new_calls':r['new_provider_calls_exact'],'usable':r['new_scientifically_usable_provider_calls'],'terminal':r['new_terminal_rollouts'],'full_lower_bound':r['execution_accounting']['updated_full_paper_observable_provider_posts_lower_bound']},indent=2))
+if __name__=='__main__':main()
