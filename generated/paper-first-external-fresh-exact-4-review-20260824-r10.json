@@ -1,0 +1,184 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T05:14:41Z",
+  "run_id": "external-fresh-exact-4-review-20260824-r10",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "selection_projection": {
+    "staging_refresh_root": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r10",
+    "preview_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r10/preview-public.json",
+    "preview_artifact_sha256": "a0c55de075f055c767b4f54145e3c5c48d39a5c2938f61b8608769c612f2a4f3",
+    "private_pool_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r10/data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "private_pool_artifact_sha256": "fb6333a037aa73c695348fbc47e966b9e545d78b0b4a0f52153877a8162abe32",
+    "corpus_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r10/data/corpora/semantic-scholar-corpus.json",
+    "corpus_artifact_sha256": "2d27a6a0e8439be73da947b74cdbe61f1ae1c57ea89f0d559bae28f1d1585b86",
+    "refresh_generated_at": "2026-08-24T05:12:04+00:00",
+    "refresh_status": "READY",
+    "discovery_mode": "arxiv-primary-fallback",
+    "source_retrieval_complete": true,
+    "selected": 32,
+    "verified": 32,
+    "selected_previously_reviewed": 28,
+    "selected_unreviewed": 4,
+    "eligible_unreviewed": 7,
+    "eligible_lane_unreviewed": 4,
+    "eligible_no_lane_unreviewed": 3,
+    "fulltext_verified": 31,
+    "fetch_errors": 0,
+    "fulltext_fetch_errors": 1,
+    "undercovered_lanes": [],
+    "source_coverage_exhausted": false,
+    "global_source_coverage_exhausted_claim": false,
+    "exact_unreviewed_refs_in_scheduler_order": [
+      "arXiv:2608.13566",
+      "arXiv:2606.28436",
+      "arXiv:2606.28524",
+      "arXiv:2606.27814"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 4,
+    "sources_reviewed": 4,
+    "exact_prior_exposure_zero": 4,
+    "identity_verified": 4,
+    "deep_review": 2,
+    "triage_review": 2,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "fresh_scientific_survivors": 0,
+    "stop_reduction": 0,
+    "support_component_only": 2,
+    "scope_excluded": 2,
+    "watch_reopen_seeds": 0,
+    "source_retrieval_complete": true,
+    "global_source_coverage_exhausted": false,
+    "remaining_eligible_no_lane_unreviewed_before_next_refresh": 3,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "exact_tranche_identity_requires_content_addressed_refresh_projection": true,
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "no_emit_is_not_a_scientific_dead_end": true,
+    "do_not_mix_no_lane_sources_into_exact_lane_tranche_to_satisfy_receipt_minimum": true,
+    "global_source_exhaustion_must_not_be_inferred_from_bounded_tranche_completion": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2608.13566",
+      "title": "Don't Claim Benchmark-Oriented Optimization Improves General Coding Capability -- Diverse Evaluation Is Required",
+      "published": "2026-06-26",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "8016b3e48c2d2bb1602d8afdd2cfef4d1da2de06725f5af6d32ee7689267c304",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_EVALUATION_GENERALIZATION",
+      "reduction": [
+        "benchmark-specialization",
+        "cross-task-transfer-audit",
+        "claim-scope-control"
+      ],
+      "note": "This source directly challenges broad capability claims from benchmark-oriented coding post-training. Across 28 out-of-domain checkpoint-benchmark comparisons it reports more degradations than improvements and limited transfer from SWE-bench-oriented optimization to a separate Django suite or LiveCodeBench. This is strong evidence for differentiated evaluation, held-out task diversity, and claim-scope control under optimization pressure, but it is an evaluation/measurement boundary rather than a new self-evolution mechanism.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "6352631ab0180f2445117fb9c28967425d9e7e94c69f86187a1dd68cf75eb61f",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.28436",
+      "title": "Dockerless: Environment-Free Program Verifier for Coding Agents",
+      "published": "2026-06-26",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "82d817ad54d65272fbec7761b528bc453d5bf51fe57137e3e9c1c084417db276",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_EXTERNAL_VERIFICATION",
+      "reduction": [
+        "agentic-patch-verification",
+        "repository-evidence-acquisition",
+        "verifier-driven-posttraining"
+      ],
+      "note": "Dockerless verifies code patches without repository execution by actively gathering repository evidence, substantially outperforming other verifier baselines; it can then serve as SFT trajectory filter and RL reward for an environment-free post-training pipeline. This is strong verifier/evidence-plane component support, but the acting model is still trained offline and no autonomous persistent self-evolution state is identified.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-759a3b89b8a31c2936",
+          "result": "NOT_SATISFIED",
+          "boundary": "Verifier access and evidence acquisition are explicit; no modification-dependency residual beyond verifier quality/provenance and information availability is shown."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "6a4162f98230c574e98c1bc22c8c5fa8714e159ad4e5e490bac890b6613111ce",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.28524",
+      "title": "Developmental Trajectories of Situation Modeling and Mentalizing in Transformer Language Models",
+      "published": "2026-06-26",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "4c5bc4f46a6ed95e43d0c5d3d164e432cec2c016093c2955492d27573e2c6a42",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_DEVELOPMENTAL_TRAINING_STUDY",
+      "reduction": [
+        "training-stage-developmental-analysis",
+        "situation-modeling",
+        "mental-state-reasoning"
+      ],
+      "note": "This work traces situation modeling and false-belief behavior across model size, pretraining volume, SFT, and DPO stages. It studies how capabilities emerge during ordinary model training and remains a static developmental analysis, not an autonomous persistent deployment-time self-evolution process.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "b8cd93d64c24fff8e93b91b4e56f2ccb46b6241f484c6449f8116135788460d9",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.27814",
+      "title": "ATOD: Annealed Turn-Aware On-Policy Distillation for Multi-Turn Agentic Tasks",
+      "published": "2026-06-26",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "95b7acf8c8f5f1a8e4f23988238ef1468ae43579b73032a227acce7d06f487ce",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "on-policy-distillation",
+        "annealed-opd-rl",
+        "turn-level-disagreement-uncertainty-reweighting"
+      ],
+      "note": "ATOD combines early on-policy distillation with progressively stronger RL and turn-level disagreement/uncertainty weighting. Its gains and ablations concern offline multi-turn agentic post-training; the final deployed student is not autonomously and persistently modifying itself.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "8d257b0f6fc40f8091fce822a019432824619d5c424707f72f3705535f41f8b3",
+      "fulltext_available": true
+    }
+  ],
+  "next_action": "Record these four exact lane/object refs as zero-authority source-review exposure. No source satisfies a durable scientific reopen contract, so do not trigger generator/provider/GPU work. Refresh the scheduler from a new immutable staging copy to determine the status of the three currently eligible no-lane unreviewed sources; do not mix them into this receipt or claim global exhaustion.",
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
