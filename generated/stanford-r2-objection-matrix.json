@@ -559,8 +559,8 @@
         "en": "Round 2 remains correct about L0-L3 and the unresolved causal sign. After the complete 28/140 task boundary, R19 entered its eighth task and completed sequence 28. The first Shopping reset for sequence 29 and the single exact pre-exposure retry both timed out before STARTED, each with zero scientific exposure. Under the frozen contract the retry is exhausted, so the current R19 confirmatory attempt must fail closed and STOP. The durable partial prefix is 29/140 (seven complete tasks plus one episode of an incomplete task), with no interim effect, p-value, interval, or claim update permitted. PSMG remains a pre-outcome method design with no new treatment execution authority."
       },
       "next": {
-        "zh": "当前 R19 不得从 seq29 或 seq30+ 继续，也不得再 retry。若继续 O5，只能先恢复稳定 support，再建立新的 fresh confirmatory experiment contract、fresh/independent units 与新的 explicit scientific + execution authority；R19 的 29 条 partial outcomes 不得用于选择 task、threshold、endpoint、model 或新样本，也不得与新 confirmatory sample 拼接。PSMG 继续作为“现象→识别→治理”闭环设计，但不能用来 rescue 当前 NO_VERDICT，也不能在没有独立新授权时启动 mitigation treatment。O6 financial L3 仍独立 support-blocked。",
-        "en": "The current R19 attempt may not resume at sequence 29 or sequence 30+, and no further retry is permitted. Further O5 work requires restored stable support, a new fresh confirmatory experiment contract, fresh/independent units, and new explicit scientific plus execution authority. The 29 partial R19 outcomes may not select tasks, thresholds, endpoints, models, or a new sample and may not be pooled into a new confirmatory sample. PSMG remains the phenomenon-to-identification-to-governance closure design, but it cannot rescue the current NO_VERDICT or launch a mitigation treatment without separate new authority. O6 financial L3 remains independently support-blocked."
+        "zh": "当前 R19 不得继续或再 retry。R33 的零 outcome feasibility census 进一步表明：同一 frozen WebArena asset 在排除 R18/R19 全部已暴露 template 后只剩 27 个 fully-unexposed units；n=27 在 task-SD=.30 下的近似 two-sided power 仅 0.738，低于约 n=32 的 80% 规划参考，也低于原 35-task ambition。因此 O5 的首选 reopen 方向是新的 task universe / substrate，先恢复稳定 support，再预先冻结新的 provenance surface、fresh cohort、完整 schedule/analysis contract，并重新获得 explicit scientific + execution authority。R19 partial outcomes 不得参与新设计选择或样本拼接；PSMG 仍只作为闭环方法设计，无 mitigation execution authority。O6 financial L3 仍独立 support-blocked。",
+        "en": "The current R19 attempt may not continue or retry. R33 zero-outcome feasibility further shows that, after excluding every R18/R19 scientifically exposed template, the same frozen WebArena asset retains only 27 fully unexposed units. At task-level SD=0.30, n=27 has approximate two-sided power 0.738, below the roughly n=32 80% planning reference and below the original 35-task ambition. The preferred O5 reopen direction is therefore a new task universe or substrate: restore stable support first, prospectively freeze a new provenance surface, fresh cohort, and complete schedule/analysis contract, then obtain new explicit scientific plus execution authority. R19 partial outcomes may not select the new design or be pooled into its sample; PSMG remains a closure-method design with no mitigation-experiment authority. O6 financial L3 remains independently support-blocked."
       },
       "objections": [
         {
@@ -639,7 +639,7 @@
             "en": "R18 remains non-retriable, and the current R19 attempt is now permanently stopped because the single exact retry for the sequence-29 pre-exposure reset support failure was exhausted. Further O5 work must be a new confirmatory experiment: stable support must be restored first, fresh/independent units and a complete new schedule/analysis contract must be frozen prospectively, and new explicit scientific plus experiment/model-call authority must be granted. The 29 partial R19 outcomes may not select a new cohort, threshold, endpoint, model, or statistical method and may not be pooled into the new sample."
           },
           "action": "SCIENTIFIC_REOPEN_REQUIRED",
-          "e": "B1 R31/R32 fail-closed stop: R19 29/140 durable partial prefix; seq29 first reset and single exact retry both fail pre-STARTED with zero exposure; retry exhausted; no interim inference",
+          "e": "B1 R31/R32 fail-closed stop plus R33 zero-outcome feasibility: current R19 stopped at 29/140 NO_VERDICT; same frozen asset has only 27 fully unexposed templates, so new task universe/substrate is preferred",
           "engineering_reproducibility": "R19_FAIL_CLOSED_STOP_RETRY_EXHAUSTED_NO_INTERIM_INFERENCE",
           "scientific_gap": "R19_NO_VERDICT_PREOUTCOME_SUPPORT_FAILURE_RETRY_EXHAUSTED_NEW_EXPERIMENT_REQUIRED",
           "historical_auxiliary_bridge": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY_6_TASKS_144_CALLS_DELTA_0_UNCHANGED",
@@ -747,6 +747,21 @@
             "design_receipt": "generated/d2-failure-memory-provenance-psmg-method-design-r27.json",
             "new_treatment_execution_authorized": false,
             "claim_expansion_authorized": false
+          },
+          "replacement_feasibility": {
+            "status": "R33_SAME_ASSET_FULLY_UNEXPOSED_CAPACITY_27_NEW_SUBSTRATE_PREFERRED",
+            "same_asset_fully_unexposed_templates": 27,
+            "same_asset_can_supply_fresh_35": false,
+            "medium_variance_80pct_reference_n": 32,
+            "shortfall_vs_medium_variance_reference": 5,
+            "shortfall_vs_35_task_target": 8,
+            "power_sd_0_20": 0.973637,
+            "power_sd_0_30": 0.738302,
+            "power_sd_0_40": 0.495496,
+            "unconditional_80pct_power_claim": false,
+            "preferred": "NEW_TASK_UNIVERSE_OR_NEW_SUBSTRATE_WITH_NATIVE_OR_AUDITABLE_PROVENANCE_SURFACE",
+            "execution_authorized": false,
+            "receipt": "generated/d2-failure-memory-provenance-l2b-r33-replacement-feasibility.json"
           }
         },
         {

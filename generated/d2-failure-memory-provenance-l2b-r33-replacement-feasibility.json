@@ -1,0 +1,136 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R33-REPLACEMENT-FEASIBILITY",
+  "recorded_date": "2026-08-24",
+  "status": "R33_SAME_ASSET_FULLY_UNEXPOSED_CAPACITY_27_NEW_SUBSTRATE_PREFERRED",
+  "role": "ZERO_OUTCOME_POST_R19_STOP_REPLACEMENT_FEASIBILITY",
+  "scientific_relationship": "NEW_EXPERIMENT_FEASIBILITY_NOT_R19_RESUME_NOT_R5_RESCUE",
+  "parent_stop": {
+    "r31_status": "SEQ029_PREEXPOSURE_SUPPORT_FAILURE_EXACT_RETRY_EXHAUSTED_R19_STOPPED",
+    "r19_scientific_verdict": "NO_VERDICT_PREOUTCOME_SUPPORT_FAILURE_RETRY_EXHAUSTED",
+    "r19_partial_prefix_episodes": 29,
+    "r19_partial_outcomes_read_for_R33_selection": false,
+    "r19_partial_outcomes_used_for_R33_selection": false
+  },
+  "exposure_only_selection": {
+    "eligible_template_universe": 36,
+    "R18_exposed_templates": [
+      "136"
+    ],
+    "R19_scientifically_exposed_templates": [
+      "137",
+      "138",
+      "139",
+      "145",
+      "147",
+      "153",
+      "154",
+      "155"
+    ],
+    "all_exposed_templates_excluded": [
+      "136",
+      "137",
+      "138",
+      "139",
+      "145",
+      "147",
+      "153",
+      "154",
+      "155"
+    ],
+    "selection_uses_only_template_identity_and_scientific_exposure": true,
+    "selection_uses_terminal_scores": false,
+    "selection_uses_task_deltas": false,
+    "selection_uses_p_values": false,
+    "selection_uses_subgroups": false
+  },
+  "same_asset_capacity": {
+    "fully_unexposed_templates_remaining": 27,
+    "remaining_template_ids": [
+      "156",
+      "159",
+      "160",
+      "162",
+      "163",
+      "165",
+      "169",
+      "171",
+      "172",
+      "180",
+      "186",
+      "189",
+      "191",
+      "194",
+      "196",
+      "197",
+      "204",
+      "206",
+      "207",
+      "208",
+      "211",
+      "212",
+      "213",
+      "214",
+      "216",
+      "222",
+      "666"
+    ],
+    "fully_unexposed_existing_R17_memory_units_available": 27,
+    "can_supply_fresh_35_task_cohort": false,
+    "can_supply_medium_variance_80pct_reference_n": false,
+    "medium_variance_80pct_reference_n": 32,
+    "shortfall_vs_medium_variance_80pct_reference": 5,
+    "shortfall_vs_35_task_target": 8,
+    "remaining_units_are_automatically_authorized_as_R33": false
+  },
+  "power_sensitivity_only": {
+    "target_absolute_effect": 0.15,
+    "alpha": 0.05,
+    "approximation": "normal approximation for a paired task-level mean; not confirmatory inference",
+    "scenarios": [
+      {
+        "task_level_sd": 0.2,
+        "independent_tasks": 27,
+        "approx_two_sided_power": 0.973637
+      },
+      {
+        "task_level_sd": 0.3,
+        "independent_tasks": 27,
+        "approx_two_sided_power": 0.738302
+      },
+      {
+        "task_level_sd": 0.4,
+        "independent_tasks": 27,
+        "approx_two_sided_power": 0.495496
+      }
+    ],
+    "unconditional_80pct_power_claim": false,
+    "interpretation": "n=27 retains high sensitivity only under the low-variance scenario; at SD=0.30 its approximate power is below 0.80, so a same-asset replacement would materially weaken the original confirmatory ambition."
+  },
+  "recommended_replacement_direction": {
+    "preferred": "NEW_TASK_UNIVERSE_OR_NEW_SUBSTRATE_WITH_NATIVE_OR_AUDITABLE_PROVENANCE_SURFACE",
+    "reason": "The current frozen WebArena asset cannot supply enough fully unexposed template-independent units for the prior 35-task ambition or the medium-variance 80% planning reference.",
+    "minimum_design_requirement": "Freeze a new independently sourced task/template universe prospectively, restore support reliability before benchmark exposure, and bind a new source-memory/provenance surface without reading R19 partial outcomes.",
+    "same_asset_27_unit_fallback": "DESIGN_OPTION_ONLY_NOT_AUTHORIZED; would require an explicit lower-power contract and new authority, and must still exclude all exposed templates."
+  },
+  "forbidden": [
+    "resume current R19 at sequence29 or later",
+    "reuse any R18/R19 scientifically exposed template in a fresh confirmatory sample",
+    "use R19 terminal scores, deltas, p-values, or subgroups to select R33",
+    "pool R19 partial outcomes into R33",
+    "reinterpret the remaining 27 unexposed units as an already-authorized continuation",
+    "execute PSMG mitigation as a rescue without a separate gate"
+  ],
+  "authority": {
+    "scientific_execution": false,
+    "experiment": false,
+    "model_calls": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "gpu": false,
+    "claim_expansion": false,
+    "submission": false
+  },
+  "scientific_verdict": "NO_VERDICT_REPLACEMENT_FEASIBILITY_ONLY"
+}
