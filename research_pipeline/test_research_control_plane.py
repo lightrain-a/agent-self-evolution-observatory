@@ -5,7 +5,14 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from .research_control_plane import build_experiment_tree, build_research_control_plane_state, evaluate_mode_action, inspect_artifact
+from .config import PROJECT_ROOT
+from .research_control_plane import (
+    build_experiment_tree,
+    build_public_research_control_plane_projection,
+    build_research_control_plane_state,
+    evaluate_mode_action,
+    inspect_artifact,
+)
 
 
 class ResearchControlPlaneTest(unittest.TestCase):
@@ -63,6 +70,37 @@ class ResearchControlPlaneTest(unittest.TestCase):
         self.assertEqual(state["resource_snapshot"]["active_gpu_leases"], 2)
         self.assertFalse(state["resource_snapshot"]["control_plane_can_grant_gpu"])
         self.assertEqual(state["summary"]["automatic_scientific_authority"], 0)
+        self.assertIn("feynman_socratic_gate", state["component_snapshots"])
+        self.assertIn("review_control", state["component_snapshots"])
+
+    def test_public_projection_is_selective_and_does_not_mutate_source_snapshots(self) -> None:
+        paths = [
+            PROJECT_ROOT / "generated" / "research-system-state.json",
+            PROJECT_ROOT / "generated" / "paper-registry.json",
+            PROJECT_ROOT / "generated" / "research-governance-v2.json",
+            PROJECT_ROOT / "generated" / "asset-first-stri-paper-quality-v2-20260816.json",
+        ]
+        before = {str(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
+        state = build_public_research_control_plane_projection(PROJECT_ROOT)
+        after = {str(path): hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
+        self.assertEqual(before, after)
+        self.assertEqual(state["status"], "CONTROL_PLANE_READY")
+        self.assertTrue(state["projection_policy"]["selective_projection_only"])
+        self.assertTrue(state["projection_policy"]["full_research_system_rebuild_forbidden"])
+        self.assertFalse(state["scientific_authority"])
+        self.assertEqual(len(state["source_artifact_sha256"]), 4)
+        self.assertTrue(all(len(value) == 64 for value in state["source_artifact_sha256"].values()))
+        self.assertEqual(state["component_snapshots"]["feynman_socratic_gate"]["false_reduction_alerts"], 0)
+        self.assertGreaterEqual(state["component_snapshots"]["failure_differential_registry"]["historical_terminalized_labels"], 15)
+        self.assertEqual(state["component_snapshots"]["failure_differential_registry"]["prospective_scored_cases"], 0)
+        self.assertFalse(state["shadow_extensions"]["shadow_extension_grants_scientific_authority"])
+
+    def test_system_overview_loads_selective_control_plane_projection(self) -> None:
+        html = (PROJECT_ROOT / "system-overview.html").read_text(encoding="utf-8")
+        js = (PROJECT_ROOT / "system-overview-operations.js").read_text(encoding="utf-8")
+        self.assertIn('generated/research-control-plane.js', html)
+        self.assertIn('window.RESEARCH_CONTROL_PLANE || state.research_control_plane', js)
+        self.assertIn('generated/research-control-plane.json/js', js)
 
 
 if __name__ == "__main__":

@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from pathlib import Path
 from typing import Any, Iterable
 
 SCHEMA_VERSION = "1.0"
+DEFAULT_JSON_NAME = "research-control-plane.json"
+DEFAULT_JS_NAME = "research-control-plane.js"
 
 POLICY: dict[str, Any] = {
     "control_plane_is_distinct_from_runtime_execution_plane": True,
@@ -152,6 +155,7 @@ def build_research_control_plane_state(
     *, research_execution_kernel: dict[str, Any], research_reasoning_layer: dict[str, Any],
     feynman_socratic_gate: dict[str, Any], reproduction_gate: dict[str, Any],
     review_control: dict[str, Any], figure_claim_graph: dict[str, Any],
+    failure_differential_registry: dict[str, Any] | None = None,
     experiment_nodes: Iterable[dict[str, Any]] = (), research_states: Iterable[dict[str, Any]] = (),
     governance_state: dict[str, Any] | None = None, failure_asset_library: dict[str, Any] | None = None,
     paper_registry_summary: dict[str, Any] | None = None,
@@ -177,6 +181,15 @@ def build_research_control_plane_state(
         "policy": dict(POLICY),
         "research_modes": {mode: {"allowed_actions": sorted(actions), "scientific_authority": False, "execution_authority": False} for mode, actions in MODE_ACTIONS.items()},
         "component_checks": checks,
+        "component_snapshots": {
+            "execution_kernel": dict(research_execution_kernel.get("summary") or {}),
+            "reasoning_layer": dict(research_reasoning_layer.get("summary") or {}),
+            "feynman_socratic_gate": dict(feynman_socratic_gate.get("summary") or {}),
+            "reproduction_gate": dict(reproduction_gate.get("summary") or {}),
+            "review_control": dict(review_control.get("summary") or {}),
+            "figure_claim_graph": dict(figure_claim_graph.get("summary") or {}),
+            "failure_differential_registry": dict((failure_differential_registry or {}).get("summary") or {}),
+        },
         "research_states": states,
         "experiment_tree": tree,
         "resource_snapshot": {
@@ -201,3 +214,108 @@ def build_research_control_plane_state(
         },
         "scientific_authority": False,
     }
+
+
+def _load_public_json(path: Path) -> dict[str, Any]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
+def _artifact_sha256(path: Path) -> str:
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except OSError:
+        return ""
+
+
+def build_public_research_control_plane_projection(project_root: Path) -> dict[str, Any]:
+    """Build the control plane only from committed/public artifacts plus deterministic contracts.
+
+    This deliberately avoids rebuilding the whole research-system projection, so publishing the
+    control plane cannot accidentally absorb unrelated paper, corpus, or experiment deltas owned
+    by another canonical writer.
+    """
+    root = project_root.resolve()
+    generated = root / "generated"
+    system_path = generated / "research-system-state.json"
+    paper_path = generated / "paper-registry.json"
+    governance_path = generated / "research-governance-v2.json"
+    quality_path = generated / "asset-first-stri-paper-quality-v2-20260816.json"
+    system_state = _load_public_json(system_path)
+    paper_registry = _load_public_json(paper_path)
+    governance = _load_public_json(governance_path)
+    paper_quality = _load_public_json(quality_path)
+
+    from .failure_differential_registry import build_sage_mhfa_shadow_state
+    from .feynman_socratic_gate import build_feynman_socratic_gate_state
+    from .figure_claim_graph import build_figure_claim_graph
+    from .reproduction_gate import build_reproduction_gate_state
+    from .research_execution_kernel import build_research_execution_kernel_state
+    from .research_reasoning_layer import build_research_reasoning_layer_state
+    from .reviewer_issue_graph import build_review_control_state_from_registry
+
+    execution_kernel = build_research_execution_kernel_state(root / "research_pipeline")
+    reasoning_layer = build_research_reasoning_layer_state()
+    feynman = build_feynman_socratic_gate_state(root)
+    reproduction = build_reproduction_gate_state(root)
+    review_control = build_review_control_state_from_registry(paper_registry)
+    figure_claim = build_figure_claim_graph(paper_quality)
+    failure_differential = build_sage_mhfa_shadow_state(root)
+    experiment_nodes = ((system_state.get("experiment_iteration") or {}).get("nodes") or [])
+    failure_assets = system_state.get("failure_asset_library") or {}
+
+    state = build_research_control_plane_state(
+        research_execution_kernel=execution_kernel,
+        research_reasoning_layer=reasoning_layer,
+        feynman_socratic_gate=feynman,
+        reproduction_gate=reproduction,
+        review_control=review_control,
+        figure_claim_graph=figure_claim,
+        failure_differential_registry=failure_differential,
+        experiment_nodes=experiment_nodes,
+        research_states=(),
+        governance_state=governance,
+        failure_asset_library=failure_assets,
+        paper_registry_summary=paper_registry.get("summary") or {},
+    )
+    state["shadow_extensions"] = {
+        "failure_differential_registry": failure_differential,
+        "shadow_extension_grants_scientific_authority": False,
+        "shadow_extension_grants_experiment_authority": False,
+    }
+    sources = {
+        str(path.relative_to(root)): _artifact_sha256(path)
+        for path in (system_path, paper_path, governance_path, quality_path)
+    }
+    projection = {
+        **state,
+        "projection_policy": {
+            "selective_projection_only": True,
+            "full_research_system_rebuild_forbidden": True,
+            "public_committed_artifacts_are_inputs": True,
+            "projection_cannot_mutate_source_artifacts": True,
+        },
+        "source_artifact_sha256": sources,
+    }
+    projection["projection_sha256"] = hashlib.sha256(
+        json.dumps(projection, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+    return projection
+
+
+def write_public_research_control_plane_projection(project_root: Path) -> dict[str, Any]:
+    root = project_root.resolve()
+    state = build_public_research_control_plane_projection(root)
+    generated = root / "generated"
+    generated.mkdir(parents=True, exist_ok=True)
+    json_path = generated / DEFAULT_JSON_NAME
+    js_path = generated / DEFAULT_JS_NAME
+    json_path.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    js_path.write_text(
+        "window.RESEARCH_CONTROL_PLANE = " + json.dumps(state, ensure_ascii=False, separators=(",", ":")) + ";\n",
+        encoding="utf-8",
+    )
+    return state
