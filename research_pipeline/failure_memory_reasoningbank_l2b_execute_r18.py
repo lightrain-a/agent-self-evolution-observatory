@@ -29,7 +29,10 @@ EXPECTED_R16_SHA = "f12b18c129c4e65c076b2f811b65a0a505bf618665f63c87fb883c6d4cf7
 EXPECTED_R17_SHA = "58de4f998b16aace4ddfeef0693d88a347b293c032d997e0da471e6b92c69235"
 EXPECTED_PRIVATE_MEMORIES_SHA = "2d056b69202653c2a61c16107f13f164707d2564db73cc858589d1c35f4f3dd2"
 EXPECTED_EXECUTOR_MANIFEST = "sha256:5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216"
-EXECUTOR_MODEL = "b1-qwen25-32b-l2b-executor:latest"
+# Tokenizer-compatibility transport alias. Ollama resolves this tag to the
+# exact same R15 executor manifest digest (5bce411d...c216); only the OpenAI
+# model-name string changes so first-party tiktoken lookup can use gpt-4.
+EXECUTOR_MODEL = "gpt-4"
 
 
 def now() -> str:

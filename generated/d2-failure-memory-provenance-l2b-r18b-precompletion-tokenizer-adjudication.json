@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R18B-PRECOMPLETION-TOKENIZER-ADJUDICATION",
+  "recorded_date": "2026-08-24",
+  "status": "PRECOMPLETION_TOKENIZER_LOOKUP_FAILURE_ZERO_EXECUTOR_COMPLETIONS",
+  "role": "SUPPORT_FAILURE_ADJUDICATION",
+  "failed_run": {
+    "run_root": "/data/wyt/agent-self-evolution-observatory/runs/b1-l2b-r18b-20260824",
+    "sequence_index": 0,
+    "episode_id": "seq000_task166_src163_rep0_STATUS_S",
+    "attempts_jsonl_sha256": "e1c17a5c87b4d884e0b9aa4a9d518551d4b39b38cad2fa66e751c4c2a603f7ae",
+    "failure_json_sha256": "c8b2b36e7074a2df9f28b1c41c8366242ae17755a8d9f46a681445eb4c970cec",
+    "browsergym_summary_sha256": "0e9801b765e7631be1f638d930aae51c66dbed805611d5756d473f5e3035a358",
+    "runner_sha256": "83aab82ae96da135caa54dabf56d65be76f5a9c53e718f6a01498d2a278e7f38"
+  },
+  "failure": {
+    "class": "TIKTOKEN_CUSTOM_OPENAI_MODEL_NAME_UNMAPPED",
+    "location": "first-party dynamic_prompting.fit_tokens -> llm_utils.count_tokens before ChatOpenAI completion",
+    "model_name_at_failure": "openai/b1-qwen25-32b-l2b-executor:latest",
+    "environment_reset_completed": true,
+    "initial_observation_created": true,
+    "executor_completion_observed": false,
+    "browser_action_observed": false,
+    "evaluator_call_observed": false,
+    "terminal_score_observed": false,
+    "browsergym_n_steps": 0,
+    "cum_reward": 0,
+    "cum_raw_reward": 0
+  },
+  "compatibility_alias": {
+    "new_openai_model_name": "openai/gpt-4",
+    "reason": "first-party OpenAI token counter requires a tiktoken-recognized model-name key",
+    "ollama_source_tag": "b1-qwen25-32b-l2b-executor:latest",
+    "ollama_alias_tag": "gpt-4:latest",
+    "source_manifest_digest": "sha256:5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216",
+    "alias_manifest_digest": "sha256:5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216",
+    "manifest_digest_equal": true,
+    "underlying_model": "Qwen2.5-32B Q4_K_M",
+    "underlying_model_changed": false,
+    "num_ctx": 32768,
+    "num_ctx_changed": false,
+    "alias_show_metadata_sha256": "79ac289ef5f944d7d66dabe261628c3d5dbc65746977876b7d6f5c69aaa31d2a",
+    "first_party_source_changed": false,
+    "scientific_treatment_changed": false
+  },
+  "allowed_repair": {
+    "only_change": "Use digest-identical local Ollama alias gpt-4 for the OpenAI-compatible model-name string so tiktoken can count prompt tokens; preserve the R15 executor manifest and all scientific parameters.",
+    "task_id_unchanged": true,
+    "source_memory_unchanged": true,
+    "status_arm_unchanged": true,
+    "model_manifest_unchanged": true,
+    "temperature_unchanged": true,
+    "schedule_unchanged": true,
+    "analysis_unchanged": true,
+    "threshold_unchanged": true,
+    "new_run_root": "/data/wyt/agent-self-evolution-observatory/runs/b1-l2b-r18c-20260824"
+  },
+  "adjudication": {
+    "support_failure_not_scientific_failure": true,
+    "R15_pre_completion_repair_condition_satisfied": true,
+    "terminal_episode_consumed": false,
+    "executor_completion_budget_consumed": 0,
+    "single_confirmatory_attempt_consumed": false,
+    "old_zero_reward_must_not_enter_analysis": true,
+    "sequence_0_may_be_executed_once_in_new_run_root": true
+  },
+  "scientific_verdict": "NO_VERDICT_PRECOMPLETION_SUPPORT_FAILURE",
+  "scientific_authority": false,
+  "authority": {
+    "experiment_execution_continues_under_R16": true,
+    "claim_expansion": false,
+    "l3": false,
+    "threshold_change": false,
+    "submission": false
+  }
+}
