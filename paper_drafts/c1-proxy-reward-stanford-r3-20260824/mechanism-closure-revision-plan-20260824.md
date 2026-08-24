@@ -1,245 +1,253 @@
-# C1 mechanism-to-intervention revision plan — 2026-08-24
+# C1 mechanism-to-intervention revision plan — collision-audited v2
 
 Paper: `D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE`
 
 Current title: **Reward Errors Change Memory Before They Change Policy**
 
-Plan status: `DESIGN_ONLY / ZERO_EXECUTION_AUTHORITY`
+Plan status: `ANALYSIS_INCOMPLETE_FOR_TOP_TIER -> SOLUTION_CLOSURE_DESIGN`
 
-Current scientific candidate remains the B12 stage-resolved manuscript; this plan does not reinterpret or overwrite any completed experiment.
+Execution status: `DESIGN_ONLY / ZERO_PROVIDER_AUTHORITY`
 
-## 1. Revision decision
+The current B12 manuscript and all completed non-passes remain frozen. This plan does not overwrite stable PaperRegistry or reinterpret old outcomes.
 
-C1 is no longer bottlenecked by same-support experiment volume. The current evidence already includes write breadth, wording reduction, forced leverage, exact retrieval exposure, native terminal transport, raw/no-memory/outcome-blind controls, first-action uptake, post-hoc working-memory localization, cross-writer evidence, and a second-domain Reddit replication.
+## 1. What is already strong
 
-The remaining ICLR-level weakness is **closure**: the paper identifies that reward-conditioned state divergence attenuates before broad policy uptake, but does not yet turn that mechanism into a falsifiable system intervention.
+C1 is no longer bottlenecked by experiment volume. It already has:
 
-Do **not** reopen by adding Shopping rollout depth, selecting known nonzero cells, lowering the 0.15/0.20 floors, rescuing the old DeepSeek transfer, or searching for a third domain with a larger post-hoc effect.
+- byte-identical reward-label write identification;
+- 20/20 Shopping write breadth plus stronger same-mode wording control;
+- forced 4x4 downstream leverage;
+- exact released retrieval exposure;
+- native Shopping terminal non-pass on all 36 frozen hits;
+- no-memory, raw-trajectory, fractional-endpoint, and outcome-blind structured controls;
+- preregistered first-action uptake localization plus zero-call working-memory diagnostics;
+- GLM writer replication and a separately recorded DeepSeek policy support stop;
+- second-domain Reddit write replication and native terminal boundary.
 
-## 2. Mechanism-derived actionable variable
+The remaining weakness is not “too few calls.” It is that the diagnosis has not yet been turned into either (A) a mechanism/theory contribution deep enough to stand alone, or (B) a falsifiable intervention derived from the diagnosed bottleneck.
 
-Current mechanism:
+## 2. Paper-archetype decision
 
-`label-only intervention -> large write divergence -> broad exposure possible -> weak branch-specific working-state/action uptake -> sparse/domain-dependent terminal transport`
+ICLR-style analysis-only papers are possible. C1 therefore must **not** add a method merely for narrative symmetry.
 
-The actionable variable is therefore **the authority given to reward-conditioned semantic residuals inside an otherwise reusable procedural memory**.
+However, C1 currently exposes a concrete actionable variable: a possibly wrong terminal reward bit receives undifferentiated authority over an entire actionable memory rewrite, while the evidence shows that much reusable procedural content is branch invariant and branch-specific transport is sparse.
 
-A whole reward-conditioned reflection currently mixes two objects:
+That makes a bounded intervention scientifically natural. We therefore test the intervention route first, with an analysis-only fallback if it stops.
 
-- an outcome-insensitive procedural core that often remains useful across branches; and
-- an outcome-conditioned residual whose validity and future applicability are uncertain.
+## 3. Collision audit: demote simple ideas to baselines
 
-The method extension should intervene on that decomposition rather than invent a generic memory router.
+The following are **not** standalone C1 novelty:
 
-## 3. Working method hypothesis: Outcome-Decoupled Memory (name not frozen)
+1. **retrieval vs post-retrieval reuse / query-conditioned applicability** — covered by Beyond Retrieval / QCR;
+2. **generic common-root + residual representation** — covered by DeltaMem-style residual memory;
+3. **what happened vs how to use it decomposition** — covered by Live-Evo;
+4. **generic provenance-preserving authorization** — covered by Memory Provenance Laundering / PPMF;
+5. **signed outcome evidence / mutation authorization** — covered by MutMem;
+6. **success/failure reflection** — ReasoningBank substrate;
+7. **outcome-blind neutral memory plus reward metadata** — strongest simple baseline, not contribution.
 
-Let an episode be `(x, tau, r_hat)`, where `r_hat` is the observed terminal label and may be wrong. The released baseline writes
+A fresh closest-work scan is still required before any ProblemGate. The surviving object is only a candidate, not a declared novelty claim.
 
-`M_r = W(x, tau; r)`.
+## 4. Surviving candidate: Counterfactual Branch Residual Gating (CBRG)
 
-The proposed extension first generates a counterfactual reflection pair independent of which label was observed:
+For one byte-identical trajectory `tau`, generate both released counterfactual reflections:
 
-`M_plus = W(x, tau; success)`
+`M_S = W_S(tau)`
 
-`M_minus = W(x, tau; failure)`.
+`M_F = W_F(tau)`
 
-A contrastive compiler then produces
+Factorize:
 
-`(C, D_plus, D_minus) = F(M_plus, M_minus, tau)`,
+`C(tau) = Core(M_S, M_F)`
+
+`D_S, D_F = Residual(M_S, M_F)`
 
 where:
 
-- `C` is the label-invariant reusable procedural core;
-- `D_plus / D_minus` contain branch-exclusive rules;
-- every residual carries an explicit applicability predicate and source-evidence anchors.
+- `C` is the branch-invariant actionable/procedural core;
+- `D_S / D_F` are semantic claims/rules introduced specifically by the reward branch.
 
-### V1 — source-evidence validator
+For target query/state `o` and evidence metadata `z_r`, expose:
 
-`V_src(tau, D_r) -> {SUPPORTED, CONTRADICTED, UNVERIFIABLE}`
+`M_r(tau;o) = C(tau) + g(o, D_r, z_r) * D_r`.
 
-The reward bit is not evidence. Only source-supported residuals can receive actionable authority; rejected/unverifiable residuals may remain as provenance but are quarantined from operative memory.
+The core remains available. Only the reward-branch residual receives conditional actionable authority.
 
-### V2 — target-applicability gate
+### What may be novel
 
-For current query/state `(q,o)`:
+Not core/residual factorization. Not provenance. Not applicability routing.
 
-`g(q,o,D_r) in {0,1}`.
+The narrow candidate residual is:
 
-The policy receives
+> **the semantic residual created by counterfactual success/failure reflection of the same trajectory, together with evidence-/target-conditioned actionable authority over only that residual.**
 
-`M*(q,o) = C + g(q,o,D_r) * D_r`.
+If a fresh paper directly covers this exact intervention, merge/stop.
 
-This targets the observed sparse decision-bottleneck: a branch residual should only become operative when the future state actually instantiates its decision predicate.
+## 5. Why each component exists
 
-## 4. Why the components are scientifically necessary
+### Counterfactual pair
 
-1. **Counterfactual pair / compiler** is motivated by the robust label-only write divergence; it identifies what changes because of the reward branch.
-2. **Source-evidence validation** is motivated by the fact that a possibly wrong reward currently receives write authority over persistent state.
-3. **Target applicability** is motivated by the Shopping/Reddit result that branch-specific effects are sparse and task-dependent even after retrieval.
+Needed because C1's strongest finding is a label-only write intervention. A single observed branch cannot identify which actionable statements are reward-branch-specific.
 
-If a strongest simple baseline eliminates the need for any component, remove the component. Method length is not a success criterion.
+### Core/residual compiler
 
-## 5. Current-source collision boundaries
+Needed to prevent one potentially wrong reward bit from rewriting branch-invariant procedure. Plain factorization is a baseline; it becomes useful here only as the measurement interface for the label-induced residual.
 
-The method must survive a fresh primary-source scan before ProblemGate.
+### Residual evidence authority
 
-- **Beyond Retrieval / QCR** already separates retrieval from reuse and uses target-bound procedure/applicability/verification support. Therefore generic query-conditioned reuse or an applicability gate is not novelty. C1 must remain specifically about reward-conditioned write errors and label-invariant-core / reward-residual decomposition.
-- **AttriMem** addresses coarse outcome credit by token-level process feedback for memory-policy RL. C1 cannot claim that fine-grained feedback for memory learning is new; its question is robustness when terminal feedback itself may be wrong.
-- **Memory Provenance Laundering / PPMF** already provides provenance-preserving memory authorization. C1 cannot sell generic provenance firewalls; source evidence is only a validator input.
-- **MutMem** already authorizes memory mutation and stores signed positive/negative outcome evidence. C1 cannot sell authorized mutation or signed outcome logging.
-- **DELTAMEM / delta-mem** names are occupied by multiple 2026 memory systems and must not be used. More importantly, DELTAMEM already represents generalized experience with root/common content plus residual nodes, so a generic core+residual representation is not novelty. C1 must bind the residual specifically to counterfactual success/failure reflection of the same trajectory and to reward-error authority.
-- **Live-Evo** already decouples what happened from how to use it through an Experience Bank and task-adaptive Meta-Guideline Bank. Generic experience/guidance decoupling is therefore not novelty either.
-- **ReasoningBank** itself already distills both successful and failed experiences; success/failure reflection is substrate, not contribution.
+The reward label itself is not evidence for a residual claim. Residual authority must refer back to source/trajectory facts or be marked unverifiable.
 
-Reopen only if a fresh scan leaves the residual object intact.
+### Target-state applicability
 
-## 6. Phase 0 — zero-provider support and identifiability preflight
+Needed because native branch effects are sparse even after retrieval. A residual should become operative only when the future decision context instantiates the condition it talks about.
 
-Before any method call:
+Every component is removable. If neutral core, always-on factorization, or a simple similarity rule ties the full method, remove/stop the complex method.
 
-1. Scan all available released WebArena/AWM domains for fresh trajectory + deterministic evaluator + exact native-retrieval support.
-2. Exclude current C1 source/future units and do not select by B4/B10/B11/B12 outcome.
-3. Require enough independent source identities, intent templates, and future tasks for at least a bounded D0.
-4. Freeze model/prompt/compiler schema/validators/metrics/corruption schedule/budgets/stopping rule before outcomes.
-5. If support cannot realize reward-conditioned behavioral headroom without outcome-driven selection, STOP the method extension and retain C1 as an identification/negative-boundary paper.
+## 6. Immediate D0 — zero provider calls
 
-## 7. Phase 1 — decisive D0
+D0 is the next authorized **design/analysis** action. It uses archived artifacts only.
 
-Question:
+Support:
 
-> Does separating label-invariant core from reward-conditioned residual authority reduce controlled reward-error regret while preserving clean memory utility?
+- all available Shopping paired memories from the current breadth evidence;
+- all four Reddit paired memories used by the qualified second-domain replication;
+- all frozen native Shopping 36 + Reddit 8 target tasks;
+- no selection by B4/B10/B11/B12 downstream outcomes.
 
-Use an independent benchmark/programmatic source outcome as reference label `r*`; generate the observed label `r_hat` with a preregistered random flip schedule.
+D0 questions:
 
-Recommended dose curve:
+1. Can `Core` and branch `Residual` be extracted reproducibly from the paired memory texts?
+2. Is the residual materially more branch-specific and more compact than the full memory?
+3. Does residual content define outcome-independent predicates that can be evaluated against target query/state?
+4. Is the resulting gate non-degenerate over **all** frozen support?
+5. Does neutral/core-only memory already capture essentially all actionable content?
+6. Can residual source support be determined without using the reward bit as evidence?
 
-- `q=0` clean;
-- `q=0.10`;
-- `q=0.25` primary corruption condition;
-- `q=0.50` stress condition.
-
-The q values are controlled intervention doses, not estimates of real-world reward-error prevalence.
-
-### Baseline ladder
-
-1. no memory;
-2. raw trajectory;
-3. released ReasoningBank reward-conditioned memory;
-4. outcome-blind core only;
-5. core + selected residual, no validator;
-6. core + source validator;
-7. full core + source validator + applicability gate;
-8. matched-information / matched-cost QCR-style target-bound reuse baseline;
-9. matched-cost ReasoningBank/self-consistency baseline;
-10. oracle applicability/true-label upper bound where appropriate.
-
-### Primary metrics
-
-- clean utility at `q=0`;
-- corruption regret `R(q)=U(r*)-U(r_hat)`;
-- harmful-update rate under corrupted labels;
-- retained positive-memory utility;
-- worst-case/tail regression;
-- first-action decision change / uptake diagnostics;
-- delta activation, validator abstention, calls, tokens, latency.
+Prefer threshold-free diagnostics first. If thresholds are needed, freeze them before looking at the corresponding D0 outputs.
 
 ### D0 GO
 
-GO only if, on fresh outcome-independent support:
+Proceed to a fresh method experiment only if:
 
-1. the full method improves the robustness–utility frontier versus the strongest matched-information/matched-cost baseline;
-2. clean utility satisfies a preregistered non-inferiority margin;
-3. robustness is not obtained by simply rejecting almost all reward-conditioned residuals;
-4. at least one mechanism-required component has a reproducible nontrivial contribution;
-5. the result is not driven by one source/task/template.
+- residual extraction is stable and nontrivial;
+- applicability is neither always-on nor always-off;
+- neutral/core-only does not absorb essentially all actionable information;
+- a simple same-information applicability rule does not fully subsume the proposed gate;
+- a fresh current-source scan leaves the exact counterfactual branch-residual intervention open.
 
-### D0 STOP / MERGE
+### D0 STOP
 
-Stop the standalone method claim if:
+Stop the method extension if any load-bearing condition fails. Keep the existing C1 mechanism/measurement paper valid.
 
-- outcome-blind core-only ties the full method;
-- matched-cost QCR ties it;
-- a simple similarity/applicability rule ties it;
-- the validator only rejects more memory without improving the robustness–utility frontier;
-- fresh native support again has almost no reward-error behavioral headroom;
-- the apparent advantage exists only on units selected from old positive C1 cells.
+No provider calls are authorized by D0 completion alone.
 
-A STOP does not invalidate the existing C1 analysis paper.
+## 7. Fresh decisive experiment — only after D0 + Problem/Economy gate
 
-## 8. If D0 passes — full ICLR evidence matrix
+Scientific question:
 
-Target at least:
+> Under controlled reward-label error, does restricting actionable authority to target-relevant counterfactual branch residuals improve the robustness–utility frontier beyond the strongest same-information simple baseline?
 
-- two fresh domains;
-- two downstream policy families;
-- clean plus multiple corruption doses;
-- matched information, calls/tokens, and environment evidence;
-- independent source/task units rather than rollout count alone.
+Use independently known task outcome `r*` as reference and a preregistered corruption process to construct observed label `r_hat`. Corruption rate is an intervention dose, not a claim about real-world prevalence.
 
-Ablations:
+### Matched arm ladder
 
-- no counterfactual pair;
-- no source-evidence validator;
-- no target-applicability gate;
-- core-only / residual-only / full;
-- evidence anchors removed;
-- hard/soft gate only if both are scientifically motivated.
+1. no memory;
+2. raw trajectory;
+3. released full reward-conditioned memory;
+4. outcome-blind neutral/core-only memory;
+5. core + selected residual, always-on;
+6. core + simple same-information applicability rule;
+7. **CBRG**;
+8. matched-information QCR-style target-bound reuse baseline;
+9. clean-label/oracle upper bound where valid.
 
-Mechanism analyses:
+### Primary outcomes
 
-- whether residualization concentrates branch differences into decision-relevant rules;
-- whether gate activation predicts first-action change beyond retrieval similarity;
-- whether correct residuals preserve useful uptake;
-- whether corrupted residuals are selectively quarantined rather than blanket-rejected;
-- failure analysis across headroom, task difficulty, retrieval similarity, source identity, and intent template.
+- clean-label utility / non-inferiority;
+- corruption-induced regret;
+- harmful-update rate;
+- retained positive-memory utility;
+- residual activation precision / coverage;
+- wrong-residual activation rate;
+- first-action uptake;
+- calls, tokens, latency;
+- worst regression / tail risk.
 
-Sensitivity:
+### Method GO
 
-- q curve;
-- gate threshold curve;
-- memory-bank scale;
-- retrieval-similarity bins;
-- floor/ceiling headroom;
-- leave-one-source/template/domain-out;
-- second-policy transfer;
-- cost/latency.
+CBRG must improve the clean-utility vs corruption-robustness frontier over the strongest matched-information/matched-cost baseline, without achieving robustness by simply suppressing almost every residual.
 
-## 9. Manuscript redesign if the method passes
+### Method STOP / MERGE
 
-New argument chain:
+Stop or merge if:
 
-1. phenomenon — reward labels robustly change persistent state;
-2. strongest reductions — wording, raw, omission, outcome-blind structured control, endpoint headroom;
-3. mechanism — common procedural information transports more readily than branch-specific reward residuals;
-4. insufficiency of the current design — one reward-conditioned reflection gives the terminal label undifferentiated authority over actionable memory while providing no explicit residual applicability boundary;
-5. method — separate core and reward residual, verify residual against source evidence, activate it only at relevant decision contexts;
-6. controlled corruption — demonstrate a better robustness–utility frontier under matched information/cost;
-7. generalization — domains, policy families, corruption doses, component ablations;
-8. engineering rule — terminal reward may guide memory, but should not automatically own the entire actionable memory state.
+- neutral core ties CBRG;
+- always-on factorization ties CBRG;
+- simple similarity/applicability ties CBRG;
+- QCR-style matched reuse ties CBRG;
+- gains require old positive C1 cells;
+- clean utility violates the frozen non-inferiority margin;
+- gains are dominated by one source/template/domain;
+- no fresh support provides reward-error behavioral headroom.
 
-Recommended main visual portfolio:
+## 8. Full evidence matrix only if the decisive experiment passes
 
-- Fig.1 stage-resolved phenomenon;
-- Fig.2 Shopping/Reddit native boundary and concentration;
-- Fig.3 method overview (counterfactual pair -> core/residual -> V1 -> V2);
-- Fig.4 clean-utility vs corruption-robustness frontier / q curve;
-- Fig.5 ablation, gate calibration, and failure regimes.
+Then, and only then, expand to:
 
-## 10. If the method stops
+- at least two fresh task domains or task families justified before outcomes;
+- a second downstream policy family under a new contract;
+- multiple frozen corruption doses;
+- component ablations mapped one-to-one to the four method requirements;
+- calibration/activation analysis;
+- leave-one-source/template/domain-out robustness;
+- cost/latency frontier;
+- failure regimes and explicit negative boundaries.
 
-Do not manufacture a replacement method. Keep the current paper as a mechanism/identification paper and strengthen the evaluation contribution:
+Do not add algorithms, validators, parameters, or formulas unless they isolate one of these scientific questions.
 
-- make the stage-resolved boundary the formal evaluation object;
-- add a main-text boundary figure rather than more rollouts;
-- explicitly state the design rule that write divergence cannot stand in for behavioral transport;
-- preserve the clean negative result as an engineering warning;
-- use the failed method-extension contract as evidence that a simple method does not follow automatically from the phenomenon.
+## 9. Paper-only improvements that should happen regardless
 
-## 11. Immediate order
+### Stage-resolved boundary figure
 
-1. freeze this plan as design-only;
-2. current-source collision scan for the method residual;
-3. zero-call fresh-support qualification;
-4. Problem/Economy/identifiability gate;
-5. only then authorize a bounded D0;
-6. no same-support C1 experimental expansion before that gate.
+The main paper currently under-visualizes its strongest new result. Add one main-text multi-panel figure answering a single reviewer question: **where does reward-induced memory divergence stop propagating?**
+
+Suggested panels:
+
+- A: gate status — write 20/20, retrieval 125/172, first-action TV .069, Shopping terminal .021, Reddit terminal .125;
+- B: forced .156 vs Shopping native .021 vs Reddit .125 vs outcome-blind .045, with the frozen .15 practical floor;
+- C: heterogeneity — Shopping 34/36 zero, Reddit 6/8 zero/opposite signs, outcome-blind top-task concentration 87.7% squared mass.
+
+This is a scientific figure, not decoration.
+
+### Novelty wording
+
+Surrender broad claims that reward affects later behavior, feedback changes memory, retrieval differs from reuse, or provenance matters. Center the defended residual on **reward-conditioned write authority** and the measured write/exposure/uptake/outcome decomposition.
+
+## 10. Two possible final paper stories
+
+### If CBRG passes
+
+`phenomenon -> strongest reductions -> stage-resolved mechanism -> undifferentiated write-authority diagnosis -> CBRG -> controlled reward corruption -> robustness/utility frontier -> design rule`
+
+Design rule:
+
+> A terminal reward may guide memory construction, but a possibly wrong terminal bit should not automatically own the entire actionable persistent state.
+
+### If CBRG stops
+
+Do not manufacture another solution. Keep C1 as an identification/measurement paper:
+
+`phenomenon -> strongest reductions -> forced leverage -> native boundary -> uptake localization -> cross-domain heterogeneity -> evaluation/design rule`
+
+The stopped method attempt becomes evidence that the observed mechanism does not automatically imply a useful complex repair.
+
+## 11. Forbidden next moves
+
+- no extra Shopping rollout depth to chase significance;
+- no third-domain search because a point estimate looks bigger;
+- no lowering the .15 terminal or .20 process floors;
+- no selecting known nonzero tasks/sources/templates;
+- no old DeepSeek B6 rescue;
+- no post-hoc working-memory mediation claim;
+- no formula/validator/module inflation to imitate the visual complexity of other papers;
+- no stable PaperRegistry promotion before the next external-review adjudication.
