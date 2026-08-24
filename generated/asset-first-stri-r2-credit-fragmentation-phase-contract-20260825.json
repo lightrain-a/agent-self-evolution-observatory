@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "experiment_id": "STRI-R2-SKILLSP-CREDIT-FRAGMENTATION-P1-PHASE-20260825",
+  "parent_p0_contract": "generated/asset-first-stri-r2-credit-fragmentation-contract-20260825.json",
+  "parent_p0_result": "generated/asset-first-stri-r2-credit-fragmentation-result-20260825.json",
+  "stage": "MECHANISM_REDESIGN_DETERMINISTIC_P1_PHASE_DIAGRAM",
+  "scientific_question": "Does the released per-ID retirement rule exhibit a predictable multiplicity-by-evidence phase boundary rather than a single hand-picked 8-versus-4+4 example?",
+  "first_party_release": {
+    "repo": "https://github.com/Qwen-Applications/skill-self-play.git",
+    "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "native_functions": ["update_skill_stats_from_records", "prune_easy_skills", "sampling_weights"],
+    "default_min_attempts_M": 8
+  },
+  "grid": {
+    "clone_multiplicity_k": [1, 2, 3, 4, 5, 6],
+    "semantic_feedback_count_N": "0 through 48 inclusive",
+    "p_hat_regimes": [0.10, 0.50, 0.90],
+    "consistency": true,
+    "feedback_partition": "round-robin across k exact IDs",
+    "selection_before_feedback": false
+  },
+  "analytic_prediction": {
+    "retirement_eligible_regime": "For p_hat=0.90 and consistency=true, canonical k=1 retires iff N>=M. Under a balanced exact k-refinement, all k IDs retire iff N>=kM; hence representation-only class-decision divergence occurs for M<=N<kM.",
+    "non_retirement_regimes": "For frozen p_hat=0.10 or 0.50 with the released default retirement predicates, neither canonical nor split should retire on this grid; the fragmentation boundary is specific to evidence that is otherwise retirement-eligible.",
+    "quotient_credit_prediction": "Replacing per-ID attempt gating by class-level evidence aggregation collapses the boundary back to N>=M for every k."
+  },
+  "derived_mechanism_quantity": {
+    "name": "representation-induced retirement lag",
+    "definition": "minimum additional semantic feedback records required for the balanced native k-split semantic class to become fully retired relative to canonical",
+    "prediction_for_default_M": "lag=(k-1)M for p_hat=0.90"
+  },
+  "primary_endpoints": [
+    "native semantic class active/inactive for every grid cell",
+    "analytic-vs-released-function boundary agreement",
+    "retirement lag by clone multiplicity",
+    "future focal semantic sampling probability after the update/prune gate"
+  ],
+  "pass_gate": "All p_hat=0.90 native grid cells match the M<=N<kM analytic divergence rule; all p_hat=0.10/0.50 cells remain non-retired; quotient class-level prediction is N>=M independent of k; source commit/default threshold checks pass.",
+  "stop_gate": "Any systematic released-function disagreement with the frozen analytic boundary stops the phase-mechanism claim and keeps P0 as a single deterministic counterexample only.",
+  "claim_boundary": "Controller-level mechanism phase diagram for one released Skill-SP update/prune path; no endogenous task generation, no utility, no cross-system prevalence, no task-general behavior claim.",
+  "new_model_calls_authorized": 0,
+  "new_agent_runs_authorized": 0,
+  "new_gpu_runs_authorized": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}
