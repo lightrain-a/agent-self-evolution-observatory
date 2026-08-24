@@ -475,7 +475,7 @@ def _portable_review_receipts(generator_state_path: Path | None, primary_state_p
     if (
         run_id and run_id not in known
         and saturation.get("current_run_recorded") is True
-        and status in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}
+        and status in {"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE"}
     ):
         primary=_load_json_object(primary_state_path)
         records=[row for row in primary.get("records") or [] if isinstance(row,dict) and row.get("ref")]
@@ -585,7 +585,7 @@ def _source_exposure_state(
             ref = str(ref or "").strip()
             if ref:
                 counts[ref] = counts.get(ref, 0) + 1
-        if run_id and len(refs)>=4 and status in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"} and row.get("scientific_authority") is False:
+        if run_id and len(refs)>=4 and status in {"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE"} and row.get("scientific_authority") is False:
             portable_valid.append({
                 "run_id":run_id,
                 "pool_sha256":row.get("pool_sha256"),
@@ -608,7 +608,7 @@ def _source_exposure_state(
         run_id=str(row.get("run_id") or "").strip()
         if not run_id or row.get("scientific_authority") is not False:
             continue
-        if str(row.get("status") or "") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE","EXTERNAL_FRESH_INTAKE_REVIEWED"}:
+        if str(row.get("status") or "") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE","EXTERNAL_FRESH_INTAKE_REVIEWED"}:
             continue
         refs=sorted({str(ref).strip() for ref in row.get("source_refs") or [] if str(ref).strip().startswith("arXiv:")})
         if len(refs)<4:

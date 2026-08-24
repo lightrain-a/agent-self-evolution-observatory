@@ -429,7 +429,8 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
             root=Path(td);storage=self.storage(root);discovery=root/"paper-first-problem-discovery";discovery.mkdir(parents=True)
             runs=[]
             for idx in (1,2):
-                runs.append({"run_id":f"private-{idx}","pool_sha256":str(idx)*64,"negative_space_sha256":"f"*64,"source_refs":[f"arXiv:{idx}-{j}" for j in range(4)],"status":"GENERATED_ZERO_CANDIDATES","requested_model":"ark-code-latest","resolved_model":"doubao-seed-evolving","raw_sha256":"e"*64,"scientific_authority":False})
+                status="GENERATED_PRE_F0_EVIDENCE_ACQUISITION" if idx==2 else "GENERATED_ZERO_CANDIDATES"
+                runs.append({"run_id":f"private-{idx}","pool_sha256":str(idx)*64,"negative_space_sha256":"f"*64,"source_refs":[f"arXiv:{idx}-{j}" for j in range(4)],"status":status,"requested_model":"ark-code-latest","resolved_model":"doubao-seed-evolving","raw_sha256":"e"*64,"scientific_authority":False})
             (discovery/"discovery-saturation-ledger.json").write_text(json.dumps({"schema_version":"1.0","runs":runs}),encoding="utf-8")
             counts,run_count,portable_added,receipts=_source_exposure_state(storage,portable_generator_state_path=root/"missing-generator.json",portable_primary_state_path=root/"missing-primary.json")
         self.assertEqual(run_count,2);self.assertEqual(portable_added,0);self.assertEqual(len(counts),8)
@@ -443,6 +444,16 @@ class PaperFirstPrimaryEvidenceTest(unittest.TestCase):
             primary.write_text(json.dumps({"status":"READY","records":[{"ref":f"arXiv:{i}"} for i in range(4)]}),encoding="utf-8")
             counts,runs,portable,receipts=_source_exposure_state(storage,portable_generator_state_path=generator,portable_primary_state_path=primary)
         self.assertEqual((runs,portable),(1,1));self.assertEqual(len(counts),4);self.assertTrue(all(value==1 for value in counts.values()));self.assertEqual(receipts[0]["run_id"],"legacy-public-run")
+
+    def test_pre_f0_public_transaction_bootstraps_cross_host_exposure(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);storage=self.storage(root);generator=root/"generator.json";primary=root/"primary.json"
+            generator.write_text(json.dumps({"run_id":"pre-f0-public-run","status":"GENERATED_PRE_F0_EVIDENCE_ACQUISITION","summary":{"primary_evidence_records":4},"saturation_memory":{"current_run_recorded":True,"scientific_authority":False}}),encoding="utf-8")
+            primary.write_text(json.dumps({"status":"READY","records":[{"ref":f"arXiv:{i}"} for i in range(4)]}),encoding="utf-8")
+            counts,runs,portable,receipts=_source_exposure_state(storage,portable_generator_state_path=generator,portable_primary_state_path=primary)
+        self.assertEqual((runs,portable),(1,1));self.assertEqual(len(counts),4);self.assertTrue(all(value==1 for value in counts.values()))
+        self.assertEqual(receipts[0]["status"],"GENERATED_PRE_F0_EVIDENCE_ACQUISITION")
+        self.assertFalse(receipts[0]["scientific_authority"])
 
     def test_source_coverage_scheduler_preserves_anchors_and_adds_unreviewed_tail(self) -> None:
         papers=[]

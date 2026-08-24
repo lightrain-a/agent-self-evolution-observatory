@@ -464,6 +464,29 @@ class PaperFirstProblemGeneratorTest(unittest.TestCase):
         self.assertEqual(ledger["runs"][-1]["discovery_operator_version"],DISCOVERY_OPERATOR_VERSION)
         self.assertTrue(second["policy"]["source_coverage_saturation_reopens_once_on_operator_change"])
 
+    def test_saturated_pre_f0_operator_receipt_blocks_repeat_portfolio_call(self) -> None:
+        candidate=self.raw_candidate()
+        candidate["paperability_axes"]={"P":{"status":"PLAUSIBLE"},"E":{"status":"SUPPORTED"}}
+        portfolio={
+            "schema_version":"3.0-double-funnel","policy":{"scientific_authority":False},"config":{},
+            "summary":{"raw_seeds":1,"semantic_unique":1,"unique_problem_families":1,"breadth_archive":1,"mean_archive_pairwise_distance":0.0,"evolved_branches":0,"max_branch_depth":0,"reviewer_attacks":0,"repair_children":0,"formulated_candidates":1,"portfolio_calls":1},
+            "lane_counts":{"CONTRADICTION":1},"archive_lane_counts":{},"family_counts":{},"archives":{},
+            "formulated_candidates":[candidate],"scientific_authority":False,
+        }
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);now=datetime(2026,8,13,tzinfo=timezone.utc);storage=self.storage(root);pool=self.pool(root,now)
+            payload=json.loads(pool.read_text());payload["source_coverage"]={"coverage_exhausted":True,"source_retrieval_complete":True,"eligible_lane_linked_sources":4,"reviewed_lane_linked_sources":4,"unreviewed_lane_linked_sources":0,"unreviewed_no_lane_sources":0,"carrier_probe_required":False,"carrier_probe_pending":0,"carrier_probe_complete":True,"scientific_authority":False};pool.write_text(json.dumps(payload),encoding="utf-8")
+            with patch("research_pipeline.paper_first_problem_generator.run_search_portfolio",return_value=portfolio) as search, patch("research_pipeline.paper_first_problem_generator.audit_problem_candidate",return_value={"passed":False,"blockers":["unresolved-exact-reduction-test:1"]}):
+                first=run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto1.json",portfolio_mode=True,now=now)
+                second=run_problem_generator(storage=storage,primary_pool_path=pool,auto_inbox_path=root/"auto2.json",portfolio_mode=True,now=now+timedelta(minutes=1))
+            ledger=json.loads((root/"paper-first-problem-discovery"/"discovery-saturation-ledger.json").read_text())
+        self.assertEqual(first["status"],"GENERATED_PRE_F0_EVIDENCE_ACQUISITION")
+        self.assertTrue(first["saturation_memory"]["current_run_recorded"])
+        self.assertEqual(first["saturation_memory"]["current_review_receipt"]["status"],"GENERATED_PRE_F0_EVIDENCE_ACQUISITION")
+        self.assertEqual(second["status"],"SKIPPED_SOURCE_COVERAGE_SATURATED")
+        self.assertEqual(search.call_count,1)
+        self.assertEqual(ledger["runs"][-1]["status"],"GENERATED_PRE_F0_EVIDENCE_ACQUISITION")
+
     def test_same_operator_legacy_receipt_does_not_saturate_canonical_double_funnel(self) -> None:
         empty_portfolio={"schema_version":"3.0-double-funnel","policy":{"scientific_authority":False},"config":{},"summary":{"raw_seeds":0,"semantic_unique":0,"unique_problem_families":0,"breadth_archive":0,"mean_archive_pairwise_distance":0.0,"evolved_branches":0,"max_branch_depth":0,"reviewer_attacks":0,"repair_children":0,"formulated_candidates":0,"portfolio_calls":0},"lane_counts":{},"archive_lane_counts":{},"family_counts":{},"archives":{},"formulated_candidates":[],"scientific_authority":False}
         with tempfile.TemporaryDirectory() as td:

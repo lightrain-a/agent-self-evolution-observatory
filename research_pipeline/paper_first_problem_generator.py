@@ -330,7 +330,7 @@ def _discovery_execution_mode(*, portfolio: bool) -> str:
 
 def _is_current_operator_receipt(row:dict[str,Any],pool_sha:str,negative_space_sha:str,execution_mode:str)->bool:
     return bool(
-        row.get("status") in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}
+        row.get("status") in {"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE"}
         and row.get("pool_sha256")==pool_sha
         and row.get("negative_space_sha256")==negative_space_sha
         and row.get("discovery_operator_version")==DISCOVERY_OPERATOR_VERSION
@@ -346,7 +346,7 @@ def _has_current_operator_receipt(storage:StorageSettings,pool_sha:str,portable_
 
 
 def _record_saturation_run(storage:StorageSettings,state:dict[str,Any],pool_sha:str,registry:dict[str,dict[str,Any]],saturation_ledger_path:Path|None=None)->None:
-    if state.get("status") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE"}: return
+    if state.get("status") not in {"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE"}: return
     ledger=_load_saturation_ledger(storage,saturation_ledger_path)
     raw=(state.get("raw_artifacts") or {}).get("generator") or {}
     execution_mode=_discovery_execution_mode(portfolio=(state.get("policy") or {}).get("search_portfolio_enabled") is True)
@@ -1109,7 +1109,7 @@ def _merge_portable_review_receipts(state:dict[str,Any],previous:dict[str,Any])-
     for row in rows:
         run_id=str(row.get("run_id") or "").strip();status=str(row.get("status") or "")
         refs=sorted({str(ref).strip() for ref in row.get("source_refs") or [] if str(ref).strip().startswith("arXiv:")})
-        if not run_id or len(refs)<4 or status not in {"GENERATED_ZERO_CANDIDATES","GENERATED_AWAIT_PROBLEM_GATE","EXTERNAL_FRESH_INTAKE_REVIEWED"} or row.get("scientific_authority") is not False:
+        if not run_id or len(refs)<4 or status not in {"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE","EXTERNAL_FRESH_INTAKE_REVIEWED"} or row.get("scientific_authority") is not False:
             continue
         normalized=dict(row);normalized["run_id"]=run_id;normalized["source_refs"]=refs;normalized["scientific_authority"]=False
         by_run[run_id]=normalized
