@@ -1191,6 +1191,16 @@ class ResearchSystemTest(unittest.TestCase):
         broken_row["candidate_snapshot_sha256"]="0"*64
         self.assertTrue(any("candidate snapshots do not exactly match" in error for error in validate_state(broken)))
 
+    def test_pre_f0_evidence_control_rejects_stale_candidate_snapshot_projection(self) -> None:
+        state=copy.deepcopy(self.state)
+        evidence=state.get("paper_first_pre_f0_evidence_acquisition") or {}
+        if str(evidence.get("status") or "NOT_RUN")=="NOT_RUN" or not evidence.get("candidate_snapshot_sha256s"):
+            self.skipTest("current durable state has no canonical Pre-F0 evidence control")
+        self.assertEqual(validate_state(state),[])
+        broken=copy.deepcopy(state)
+        broken["paper_first_pre_f0_evidence_acquisition"]["candidate_snapshot_sha256s"]=["f"*64]
+        self.assertTrue(any("stale versus current queue/support candidate snapshots" in error for error in validate_state(broken)))
+
     def test_v17_double_funnel_pre_f0_receipt_uses_full_search_vocabulary(self) -> None:
         state=copy.deepcopy(self.state);generator=state["paper_first_problem_generator"]
         if (generator.get("policy") or {}).get("search_portfolio_enabled") is not True:
