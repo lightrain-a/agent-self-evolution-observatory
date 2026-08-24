@@ -20,6 +20,12 @@ class AutomationCheckoutIsolationTest(unittest.TestCase):
             self.assertIn("ExecStartPre=/usr/bin/git -c http.proxy= -c https.proxy= fetch origin main", text)
             self.assertIn("ExecStartPre=/usr/bin/git merge --ff-only origin/main", text)
 
+    def test_systemd_timeouts_leave_headroom_for_full_projection_and_publication(self) -> None:
+        daily = (ROOT / "deploy" / "systemd" / "agent-evolution-daily.service").read_text(encoding="utf-8")
+        weekly = (ROOT / "deploy" / "systemd" / "agent-evolution-weekly.service").read_text(encoding="utf-8")
+        self.assertIn("TimeoutStartSec=90min", daily)
+        self.assertIn("TimeoutStartSec=3h", weekly)
+
     def test_on_52_supports_external_env_file_for_isolated_checkout(self) -> None:
         text = (ROOT / "scripts" / "on-52.sh").read_text(encoding="utf-8")
         self.assertIn('ENV_FILE="${RESEARCH_ENV_FILE:-${PROJECT_ROOT}/.env}"', text)

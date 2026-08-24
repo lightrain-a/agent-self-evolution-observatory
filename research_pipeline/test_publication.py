@@ -125,6 +125,8 @@ class PublicationTest(unittest.TestCase):
                 "generated/p0-e3-stateful.js",
                 "generated/p0-e4-permission-cpu.json",
                 "generated/p0-e4-permission-cpu.js",
+                "generated/longitudinal-safety-post-race-triage-20260824.json",
+                "generated/longitudinal-safety-material-child-race-20260824.json",
                 "generated/research-system-state.json",
                 "generated/research-system-state.js",
                 "generated/research-memory-wiki.json",
@@ -193,7 +195,7 @@ class PublicationTest(unittest.TestCase):
         self.assertIn("generated/s2-literature.js", WEEKLY_ARTIFACTS)
         self.assertIn("generated/iclr-low-resource-ideas.json", WEEKLY_ARTIFACTS)
         self.assertIn("generated/paper-first-paper-design-backlog.json", DAILY_ARTIFACTS)
-        for artifact in ("generated/research-items.json", "generated/research-items.js", "generated/paper-registry.json", "generated/paper-registry.js", "generated/research-memory-wiki.json", "generated/research-memory-wiki.js", "generated/research-dashboard.json", "generated/research-dashboard.js"):
+        for artifact in ("generated/research-items.json", "generated/research-items.js", "generated/paper-registry.json", "generated/paper-registry.js", "generated/research-memory-wiki.json", "generated/research-memory-wiki.js", "generated/research-dashboard.json", "generated/research-dashboard.js", "generated/longitudinal-safety-post-race-triage-20260824.json", "generated/longitudinal-safety-material-child-race-20260824.json"):
             self.assertIn(artifact, DAILY_ARTIFACTS)
         for artifact in (
             "generated/paper-first-pre-f0-queue.json",

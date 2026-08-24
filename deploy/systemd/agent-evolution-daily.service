@@ -20,7 +20,7 @@ ExecStart=/usr/bin/bash scripts/on-52.sh python3 -m research_pipeline.automation
 Nice=10
 IOSchedulingClass=best-effort
 IOSchedulingPriority=6
-TimeoutStartSec=30min
+TimeoutStartSec=90min
 
 [Install]
 WantedBy=multi-user.target

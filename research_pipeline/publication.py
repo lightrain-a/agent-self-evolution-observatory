@@ -78,6 +78,8 @@ DAILY_ARTIFACTS = (
     "generated/p0-e3-stateful.js",
     "generated/p0-e4-permission-cpu.json",
     "generated/p0-e4-permission-cpu.js",
+    "generated/longitudinal-safety-post-race-triage-20260824.json",
+    "generated/longitudinal-safety-material-child-race-20260824.json",
     "generated/research-system-state.json",
     "generated/research-system-state.js",
     "generated/research-memory-wiki.json",
