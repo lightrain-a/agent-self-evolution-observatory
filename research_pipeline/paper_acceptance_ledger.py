@@ -54,6 +54,7 @@ def _refresh(row: dict[str, Any]) -> None:
         "prebuttal_receipts": sum(event.get("event_type") == "prebuttal" for event in events),
         "submission_readiness_receipts": sum(event.get("event_type") == "submission-readiness" for event in events),
         "contract_revisions": sum(event.get("event_type") == "paper-contract-revised" for event in events),
+        "scientific_reopens": sum(event.get("event_type") == "paper-contract-scientific-reopen" for event in events),
     }
 
 
@@ -170,6 +171,135 @@ def revise_paper_contract(
         _refresh(row)
         _atomic(path, row)
         return row
+
+
+def reopen_ready_paper_contract(
+    root: Path,
+    revised_contract: PaperContract,
+    *,
+    reopen_evidence_refs: Sequence[str],
+    superseded_claims: Mapping[str, str],
+    reason: str,
+    actor: str = "scientific-evidence-reopen",
+) -> dict[str, Any]:
+    """Fail-closed scientific reopen for an unsubmitted READY paper.
+
+    This is the inverse governance path of evidence-closure revision: it is legal only
+    after PAPER_EVIDENCE and before SUBMITTED, requires new content-addressed evidence,
+    explicitly accounts for every previously supported claim that changes or disappears,
+    preserves all prior evidence references, replaces the scientific contract, and resets
+    the workflow to PAPER_EVIDENCE so all paper gates must be re-run under the new digest.
+    """
+    path, lock = _paths(root, revised_contract.paper_id)
+    with lock.open("a+", encoding="utf-8") as handle:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
+        if not path.exists():
+            raise RuntimeError(f"paper ledger missing for {revised_contract.paper_id}")
+        row = json.loads(path.read_text(encoding="utf-8"))
+        previous = row.get("contract") or {}
+        previous_digest = str(row.get("contract_sha256") or "")
+        if not isinstance(previous, dict) or _digest(previous) != previous_digest:
+            raise RuntimeError("existing paper contract payload/digest mismatch")
+        if str(previous.get("scientific_status") or "") != "READY" or str(row.get("scientific_status") or "") != "READY":
+            raise RuntimeError("scientific reopen requires a currently READY paper contract")
+        try:
+            previous_state = PaperState(str(row.get("current_state") or ""))
+        except ValueError as error:
+            raise RuntimeError("scientific reopen requires a valid current paper state") from error
+        state_index = PAPER_ACCEPTANCE_FLOW.index(previous_state)
+        if state_index <= PAPER_ACCEPTANCE_FLOW.index(PaperState.PAPER_EVIDENCE):
+            raise RuntimeError("scientific reopen requires a post-evidence paper state")
+        if state_index >= PAPER_ACCEPTANCE_FLOW.index(PaperState.SUBMITTED):
+            raise RuntimeError("scientific reopen is forbidden after SUBMITTED")
+
+        revised_payload = paper_contract_payload(revised_contract)
+        revised_digest = paper_contract_digest(revised_contract)
+        if revised_contract.scientific_status.value != "READY" or not revised_contract.post_evidence_ready:
+            raise RuntimeError("reopened scientific contract must remain evidence-backed READY")
+        if str(previous.get("paper_id") or "") != revised_contract.paper_id:
+            raise RuntimeError("paper id cannot change during scientific reopen")
+
+        previous_claims = dict(previous.get("supported_claims") or {})
+        revised_claims = dict(revised_payload.get("supported_claims") or {})
+        changed_claim_ids = {key for key, value in previous_claims.items() if revised_claims.get(key) != value}
+        superseded = {str(key): str(value).strip() for key, value in dict(superseded_claims).items() if str(key) and str(value).strip()}
+        if set(superseded) != changed_claim_ids:
+            raise RuntimeError("every changed or removed supported claim must be declared exactly once as superseded")
+        if not changed_claim_ids:
+            raise RuntimeError("scientific reopen requires at least one changed or removed supported claim")
+
+        previous_refs = set(str(ref) for ref in previous.get("evidence_refs") or [] if str(ref))
+        revised_refs = set(str(ref) for ref in revised_payload.get("evidence_refs") or [] if str(ref))
+        reopen_refs = tuple(dict.fromkeys(str(ref) for ref in reopen_evidence_refs if str(ref)))
+        if not reopen_refs:
+            raise RuntimeError("scientific reopen requires new evidence references")
+        if any(not re.fullmatch(r"artifact:sha256:[0-9a-f]{64}", ref) for ref in reopen_refs):
+            raise RuntimeError("scientific reopen evidence must use artifact:sha256 references")
+        if not previous_refs.issubset(revised_refs):
+            raise RuntimeError("reopened contract must retain all prior evidence references")
+        if not set(reopen_refs).issubset(revised_refs):
+            raise RuntimeError("scientific reopen evidence references must be bound into revised contract")
+        if not (set(reopen_refs) - previous_refs):
+            raise RuntimeError("scientific reopen requires at least one newly bound evidence reference")
+        if not str(reason).strip():
+            raise RuntimeError("scientific reopen requires a reason")
+
+        superseded_rows = [
+            {
+                "claim_id": claim_id,
+                "previous_claim": previous_claims[claim_id],
+                "revised_claim": str(revised_claims.get(claim_id) or ""),
+                "reason": superseded[claim_id],
+            }
+            for claim_id in sorted(changed_claim_ids)
+        ]
+        event = {
+            "event_type": "paper-contract-scientific-reopen",
+            "actor": actor,
+            "recorded_at": _now(),
+            "previous_state": previous_state.value,
+            "state_reset_to": PaperState.PAPER_EVIDENCE.value,
+            "previous_contract_sha256": previous_digest,
+            "previous_contract": previous,
+            "new_contract_sha256": revised_digest,
+            "new_contract": revised_payload,
+            "reopen_evidence_refs": list(reopen_refs),
+            "superseded_claims": superseded_rows,
+            "reason": str(reason).strip(),
+            "scientific_authority": False,
+            "experiment_authority": False,
+            "gpu_authority": False,
+            "submission_authority": False,
+        }
+        event["event_id"] = _digest([revised_contract.paper_id, previous_digest, revised_digest, len(row.get("events") or []), event])[:24]
+        row.setdefault("events", []).append(event)
+        row["contract_sha256"] = revised_digest
+        row["contract"] = revised_payload
+        row["scientific_status"] = revised_contract.scientific_status.value
+        row["current_state"] = PaperState.PAPER_EVIDENCE.value
+        row["updated_at"] = event["recorded_at"]
+        _refresh(row)
+        _atomic(path, row)
+        return row
+
+
+def _current_contract_epoch_view(row: Mapping[str, Any]) -> dict[str, Any]:
+    """Return a shallow ledger view containing only effective events for the current contract.
+
+    Historical receipts remain append-only in the ledger, but after a contract mutation they
+    must not render as the latest effective gates for the new scientific contract.
+    """
+    events = [event for event in row.get("events") or [] if isinstance(event, dict)]
+    current_digest = str(row.get("contract_sha256") or "")
+    start = -1
+    for index, event in enumerate(events):
+        if event.get("event_type") not in {"paper-contract-revised", "paper-contract-scientific-reopen"}:
+            continue
+        if str(event.get("new_contract_sha256") or "") == current_digest:
+            start = index
+    view = dict(row)
+    view["events"] = events[start + 1:] if start >= 0 else events
+    return view
 
 
 def _latest(row: Mapping[str, Any], event_type: str) -> dict[str, Any]:
@@ -605,7 +735,7 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
     if isinstance(final_contract, dict) and final_contract_sha256:
         contract_by_digest[final_contract_sha256] = dict(final_contract)
     for event in events:
-        if not isinstance(event, dict) or event.get("event_type") != "paper-contract-revised":
+        if not isinstance(event, dict) or event.get("event_type") not in {"paper-contract-revised", "paper-contract-scientific-reopen"}:
             continue
         previous = event.get("previous_contract") or {}
         revised = event.get("new_contract") or {}
@@ -636,6 +766,58 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
         if any(event.get(key) is True for key in ("scientific_authority", "experiment_authority", "gpu_authority", "submission_authority")):
             errors.append("paper event leaked authority")
         event_type = str(event.get("event_type") or "")
+
+        if event_type == "paper-contract-scientific-reopen":
+            previous = event.get("previous_contract") or {}
+            revised = event.get("new_contract") or {}
+            previous_digest = str(event.get("previous_contract_sha256") or "")
+            revised_digest = str(event.get("new_contract_sha256") or "")
+            reopen_refs = tuple(str(ref) for ref in (event.get("reopen_evidence_refs") or []) if str(ref))
+            previous_state = str(event.get("previous_state") or "")
+            if previous_digest != simulated_contract_sha256:
+                errors.append("scientific reopen previous digest does not match replay contract")
+            if not isinstance(previous, dict) or previous != simulated_contract:
+                errors.append("scientific reopen previous snapshot does not match replay contract")
+            if previous_state != simulated_state.value:
+                errors.append("scientific reopen previous state does not match replay state")
+            if PAPER_ACCEPTANCE_FLOW.index(simulated_state) <= PAPER_ACCEPTANCE_FLOW.index(PaperState.PAPER_EVIDENCE):
+                errors.append("scientific reopen did not originate after PAPER_EVIDENCE")
+            if PAPER_ACCEPTANCE_FLOW.index(simulated_state) >= PAPER_ACCEPTANCE_FLOW.index(PaperState.SUBMITTED):
+                errors.append("scientific reopen occurred after SUBMITTED")
+            if str(previous.get("scientific_status") or "") != "READY" or not isinstance(revised, dict) or str(revised.get("scientific_status") or "") != "READY":
+                errors.append("scientific reopen requires READY contracts")
+            if str(previous.get("paper_id") or "") != str(revised.get("paper_id") or ""):
+                errors.append("scientific reopen changed paper id")
+            previous_claims = dict(previous.get("supported_claims") or {})
+            revised_claims = dict(revised.get("supported_claims") or {}) if isinstance(revised, dict) else {}
+            changed_claim_ids = {key for key, value in previous_claims.items() if revised_claims.get(key) != value}
+            superseded_rows = [item for item in (event.get("superseded_claims") or []) if isinstance(item, dict)]
+            superseded_ids = {str(item.get("claim_id") or "") for item in superseded_rows if str(item.get("claim_id") or "")}
+            if changed_claim_ids != superseded_ids or not changed_claim_ids:
+                errors.append("scientific reopen superseded-claim accounting mismatch")
+            for item in superseded_rows:
+                claim_id = str(item.get("claim_id") or "")
+                if claim_id not in changed_claim_ids:
+                    continue
+                if item.get("previous_claim") != previous_claims.get(claim_id) or str(item.get("revised_claim") or "") != str(revised_claims.get(claim_id) or "") or not str(item.get("reason") or "").strip():
+                    errors.append("scientific reopen superseded-claim snapshot mismatch")
+                    break
+            previous_refs = set(str(ref) for ref in previous.get("evidence_refs") or [] if str(ref))
+            revised_refs = set(str(ref) for ref in revised.get("evidence_refs") or [] if str(ref)) if isinstance(revised, dict) else set()
+            if not previous_refs.issubset(revised_refs):
+                errors.append("scientific reopen dropped prior evidence")
+            if not reopen_refs or any(not re.fullmatch(r"artifact:sha256:[0-9a-f]{64}", ref) for ref in reopen_refs) or not set(reopen_refs).issubset(revised_refs):
+                errors.append("scientific reopen evidence is missing, invalid, or unbound")
+            if reopen_refs and not (set(reopen_refs) - previous_refs):
+                errors.append("scientific reopen did not bind new evidence")
+            if str(event.get("state_reset_to") or "") != PaperState.PAPER_EVIDENCE.value:
+                errors.append("scientific reopen state reset is invalid")
+            if not str(event.get("reason") or "").strip():
+                errors.append("scientific reopen reason missing")
+            simulated_contract_sha256 = revised_digest
+            simulated_contract = dict(revised) if isinstance(revised, dict) else {}
+            simulated_row["contract_sha256"] = simulated_contract_sha256
+            simulated_state = PaperState.PAPER_EVIDENCE
 
         if event_type == "paper-contract-revised":
             previous = event.get("previous_contract") or {}
@@ -737,23 +919,24 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
     typed gate summaries, and zero-authority invariants.
     """
     contract = row.get("contract") or {}
-    latest_story = _latest(row, "story-search").get("receipt") or {}
-    latest_ci = _latest(row, "manuscript-ci").get("result") or {}
-    latest_review = _latest(row, "mock-pc-review").get("receipt") or {}
+    effective_row = _current_contract_epoch_view(row)
+    latest_story = _latest(effective_row, "story-search").get("receipt") or {}
+    latest_ci = _latest(effective_row, "manuscript-ci").get("result") or {}
+    latest_review = _latest(effective_row, "mock-pc-review").get("receipt") or {}
 
-    latest_prebuttal_event = _latest_versioned(row, "prebuttal")
+    latest_prebuttal_event = _latest_versioned(effective_row, "prebuttal")
     latest_prebuttal = _event_payload(latest_prebuttal_event)
-    latest_preparation_event = _latest_versioned(row, "paper-preparation")
+    latest_preparation_event = _latest_versioned(effective_row, "paper-preparation")
     latest_preparation = _event_payload(latest_preparation_event)
-    latest_readiness_event = _latest_versioned(row, "submission-readiness")
+    latest_readiness_event = _latest_versioned(effective_row, "submission-readiness")
     latest_readiness = _event_payload(latest_readiness_event)
-    latest_claim_audit_event = _latest_versioned(row, "claim-audit")
+    latest_claim_audit_event = _latest_versioned(effective_row, "claim-audit")
     latest_claim_audit = _event_payload(latest_claim_audit_event)
-    latest_submission_context = _latest_versioned(row, "submission-readiness-context")
-    latest_measurement_audit = _latest_versioned(row, "measurement-robustness-audit")
-    latest_final_review = _latest_regex(row, r"mock-pc-final-r[1-9][0-9]*")
-    latest_title_revision = _latest_regex(row, r"manuscript-title-r[1-9][0-9]*")
-    latest_finalization = _latest_regex(row, r"source-native-r[1-9][0-9]*-finalization")
+    latest_submission_context = _latest_versioned(effective_row, "submission-readiness-context")
+    latest_measurement_audit = _latest_versioned(effective_row, "measurement-robustness-audit")
+    latest_final_review = _latest_regex(effective_row, r"mock-pc-final-r[1-9][0-9]*")
+    latest_title_revision = _latest_regex(effective_row, r"manuscript-title-r[1-9][0-9]*")
+    latest_finalization = _latest_regex(effective_row, r"source-native-r[1-9][0-9]*-finalization")
 
     preparation_recorded = bool(latest_preparation_event)
     preparation_pass = latest_preparation.get("pass") is True
@@ -808,14 +991,14 @@ def public_paper_ledger_summary(row: Mapping[str, Any]) -> dict[str, Any]:
         immediate_submission_hold=immediate_submission_hold,
         gate_clean_submission_ready=gate_clean_submission_ready,
     )
-    review_learning = _public_review_learning_signals(row)
+    review_learning = _public_review_learning_signals(effective_row)
     mock_modes = {}
-    for event in row.get("events") or []:
+    for event in effective_row.get("events") or []:
         receipt = (event.get("receipt") or {}) if isinstance(event, dict) and event.get("event_type") == "mock-pc-review" else {}
         mode = str(receipt.get("mode") or "")
         if mode in {item.value for item in MockReviewMode} and _receipt_hash_valid(receipt):
             mock_modes[mode] = str(receipt.get("review_sha256") or "")
-    latest_transition = _latest(row, "paper-transition")
+    latest_transition = _latest(effective_row, "paper-transition")
     return {
         "paper_id": str(row.get("paper_id") or ""),
         "title": public_title,

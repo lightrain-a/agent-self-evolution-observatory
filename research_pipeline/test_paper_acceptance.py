@@ -41,6 +41,7 @@ from .paper_acceptance_ledger import (
     record_prebuttal,
     record_submission_readiness,
     revise_paper_contract,
+    reopen_ready_paper_contract,
     validate_paper_ledger,
     public_paper_ledger_summary,
 )
@@ -59,6 +60,45 @@ class PaperAcceptanceTest(unittest.TestCase):
             unsupported_claims={"U1": "STRI improves downstream dynamic self-evolution utility."},
             limitations=("The frozen claim is static and deliberately narrower than downstream utility.",),
             evidence_refs=("stri:theorem", "stri:table-main", "stri:negative-control"),
+            scientific_status=ScientificPaperStatus.READY,
+        )
+
+    def _advance_ready_contract_to_submission_ready(self, root: Path, contract: PaperContract) -> None:
+        initialize_paper_ledger(root, contract)
+        self.assertTrue(advance_paper_ledger(root, contract, PaperState.PAPER_DESIGN)["receipt"]["allowed"])
+        record_story_search(root, contract, [StoryCandidate("story-a", "Certificate", "Exact certificate", tuple(contract.supported_claims), tuple(contract.supported_claims))])
+        self.assertTrue(advance_paper_ledger(root, contract, PaperState.MANUSCRIPT)["receipt"]["allowed"])
+        self.assertTrue(advance_paper_ledger(root, contract, PaperState.MOCK_PC)["receipt"]["allowed"])
+        objection = ReviewerObjection("R1", "significance", "Main reject reason", True, ObjectionEvidenceState.EXISTING_EVIDENCE, (next(iter(contract.supported_claims)),))
+        record_mock_review(root, contract, MockReviewMode.BLIND_MANUSCRIPT, [objection])
+        record_mock_review(root, contract, MockReviewMode.ARTIFACT_AWARE, [objection])
+        self.assertTrue(advance_paper_ledger(root, contract, PaperState.TARGETED_REPAIR)["receipt"]["allowed"])
+        self.assertTrue(advance_paper_ledger(root, contract, PaperState.CLAIM_AUDIT)["receipt"]["allowed"])
+        claim_ids = tuple(contract.supported_claims)
+        record_claim_audit(root, contract, manuscript_ref="artifact:manuscript", claimed_ids=claim_ids, evidence_bound_claim_ids=claim_ids, limitations_preserved=True)
+        self.assertTrue(advance_paper_ledger(root, contract, PaperState.PDF_QA)["receipt"]["allowed"])
+        record_manuscript_ci(root, contract, {name: True for name in MANDATORY_MANUSCRIPT_CI_CHECKS})
+        self.assertTrue(advance_paper_ledger(root, contract, PaperState.PREBUTTAL)["receipt"]["allowed"])
+        record_prebuttal(root, contract, [objection], [PrebuttalResolution("R1", True, tuple(contract.evidence_refs[:1]))])
+        row = record_submission_readiness(root, contract)
+        self.assertTrue(row["events"][-1]["receipt"]["submission_ready"])
+        self.assertTrue(advance_paper_ledger(root, contract, PaperState.SUBMISSION_READY)["receipt"]["allowed"])
+
+    @staticmethod
+    def _reframed_stri_contract(base: PaperContract, *, drop_prior_evidence: bool = False) -> PaperContract:
+        refs = (() if drop_prior_evidence else tuple(base.evidence_refs)) + ("artifact:sha256:" + "a" * 64,)
+        return PaperContract(
+            paper_id=base.paper_id,
+            title="Representation-Invariance Audits Need a Revised Boundary",
+            central_question="Which representation-invariance claims survive newly bound contradictory evidence?",
+            supported_claims={
+                "C1": base.supported_claims["C1"],
+                "C2": "The new evidence narrows the former static-control interpretation.",
+                "C3": "A newly observed audit boundary is evidence-backed under the revised contract.",
+            },
+            unsupported_claims={**base.unsupported_claims, "U2": "The superseded C2 wording remains evaluator-independent."},
+            limitations=base.limitations + ("The new contract supersedes one previously supported interpretation.",),
+            evidence_refs=refs,
             scientific_status=ScientificPaperStatus.READY,
         )
 
@@ -374,6 +414,76 @@ class PaperAcceptanceTest(unittest.TestCase):
             submitted = advance_paper_ledger(root, contract, PaperState.SUBMITTED, external_submission_authority_ref="human:submit-approval")
             self.assertTrue(submitted["receipt"]["allowed"])
             self.assertFalse(submitted["receipt"]["submission_authority"])
+
+    def test_ready_submission_can_scientifically_reopen_with_explicit_claim_withdrawal(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); original = self.stri_contract()
+            self._advance_ready_contract_to_submission_ready(root, original)
+            revised = self._reframed_stri_contract(original)
+            row = reopen_ready_paper_contract(
+                root, revised,
+                reopen_evidence_refs=("artifact:sha256:" + "a" * 64,),
+                superseded_claims={"C2": "New contradictory evidence narrows the former supported interpretation."},
+                reason="Fresh evidence changes a previously supported claim and requires complete paper-gate re-audit.",
+            )
+            self.assertEqual(row["current_state"], PaperState.PAPER_EVIDENCE.value)
+            self.assertEqual(row["scientific_status"], "READY")
+            self.assertEqual(row["summary"]["scientific_reopens"], 1)
+            self.assertEqual(row["events"][-1]["event_type"], "paper-contract-scientific-reopen")
+            self.assertEqual(row["events"][-1]["previous_state"], PaperState.SUBMISSION_READY.value)
+            self.assertEqual(validate_paper_ledger(row), [])
+            public = public_paper_ledger_summary(row)
+            self.assertFalse(public["gate_clean_submission_ready"])
+            self.assertFalse(public["latest_paper_preparation"]["pass"])
+            self.assertFalse(public["latest_submission_readiness"]["submission_ready"])
+            self.assertTrue(advance_paper_ledger(root, revised, PaperState.PAPER_DESIGN)["receipt"]["allowed"])
+            stale_gate = advance_paper_ledger(root, revised, PaperState.MANUSCRIPT)
+            self.assertFalse(stale_gate["receipt"]["allowed"])
+            self.assertIn("story-search-winner-receipt-required", stale_gate["receipt"]["blockers"])
+
+    def test_scientific_reopen_rejects_unaccounted_claims_missing_or_dropped_evidence(self) -> None:
+        cases = (
+            ("missing-supersede", (), {"C2": "reason"}, False),
+            ("unaccounted-claim", ("artifact:sha256:" + "a" * 64,), {}, False),
+            ("dropped-prior-evidence", ("artifact:sha256:" + "a" * 64,), {"C2": "reason"}, True),
+            ("invalid-evidence-ref", ("artifact:not-content-addressed",), {"C2": "reason"}, False),
+        )
+        for name, refs, superseded, drop_prior in cases:
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as td:
+                root = Path(td); original = self.stri_contract()
+                self._advance_ready_contract_to_submission_ready(root, original)
+                revised = self._reframed_stri_contract(original, drop_prior_evidence=drop_prior)
+                with self.assertRaises(RuntimeError):
+                    reopen_ready_paper_contract(root, revised, reopen_evidence_refs=refs, superseded_claims=superseded, reason="contradictory evidence")
+
+    def test_scientific_reopen_is_forbidden_after_submitted(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); original = self.stri_contract()
+            self._advance_ready_contract_to_submission_ready(root, original)
+            submitted = advance_paper_ledger(root, original, PaperState.SUBMITTED, external_submission_authority_ref="human:submission")
+            self.assertTrue(submitted["receipt"]["allowed"])
+            revised = self._reframed_stri_contract(original)
+            with self.assertRaises(RuntimeError):
+                reopen_ready_paper_contract(
+                    root, revised,
+                    reopen_evidence_refs=("artifact:sha256:" + "a" * 64,),
+                    superseded_claims={"C2": "new evidence"},
+                    reason="too late after submission",
+                )
+
+    def test_validator_detects_tampered_scientific_reopen_claim_accounting(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td); original = self.stri_contract()
+            self._advance_ready_contract_to_submission_ready(root, original)
+            revised = self._reframed_stri_contract(original)
+            row = reopen_ready_paper_contract(
+                root, revised,
+                reopen_evidence_refs=("artifact:sha256:" + "a" * 64,),
+                superseded_claims={"C2": "new evidence"},
+                reason="evidence contradiction",
+            )
+            row["events"][-1]["superseded_claims"] = []
+            self.assertIn("scientific reopen superseded-claim accounting mismatch", validate_paper_ledger(row))
 
     def test_public_ledger_index_exposes_state_without_raw_events_or_paths(self) -> None:
         with tempfile.TemporaryDirectory() as td:
