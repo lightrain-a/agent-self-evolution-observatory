@@ -1,0 +1,168 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T03:52:08Z",
+  "run_id": "external-fresh-four-source-reconciliation-20260824-r1",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "source_window": {
+    "selection_rule": "Independent clean-worktree reconciliation of four zero-portable-exposure arXiv sources that were present in a concurrent dirty r4 review. The concurrent r4 receipt was not reused because its recorded review-artifact SHA-256 did not match the artifact bytes observed during reconciliation. These four sources were independently checked against first-party arXiv evidence and durable/local scientific reducers before this receipt was created.",
+    "canonical_review_date": "2026-08-24",
+    "publication_date": "2026-08-20",
+    "global_source_coverage_exhausted_claim": false
+  },
+  "concurrent_run_integrity": {
+    "concurrent_run_id": "external-fresh-intake-20260824-r4",
+    "concurrent_worktree": "external-fresh-intake-r4-20260824",
+    "observed_artifact_sha256": "482dd8a513c75c0d94d6531efc6b710a16c405579532bce285f5adea37db1765",
+    "observed_receipt_sha256": "d70b808e67b5de7222fa844b3e65b6377465a77b4b7e8bed4c159901cd952669",
+    "sha_match": false,
+    "canonicalized_from_concurrent_receipt": false,
+    "action": "FAIL_CLOSED_AND_REVIEW_INDEPENDENTLY"
+  },
+  "summary": {
+    "sources_discovered": 4,
+    "exact_prior_exposure_zero": 4,
+    "identity_verified": 4,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "fresh_scientific_survivors": 0,
+    "support_component_only": 1,
+    "closure_support_only": 1,
+    "stop_mature_reduction": 1,
+    "scope_excluded": 1,
+    "concurrent_receipt_integrity_failure_observed": true,
+    "global_source_coverage_exhausted": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "hash_mismatched_concurrent_receipt_must_fail_closed": true,
+    "independent_reconciliation_requires_new_run_id": true,
+    "no_emit_is_not_automatically_a_scientific_dead_end": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "global_source_coverage_must_not_be_inferred_from_bounded_tranche_completion": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2608.19652",
+      "title": "Can Agent Memory Systems Track Evolving State?",
+      "published": "2026-08-20",
+      "primary_url": "https://arxiv.org/abs/2608.19652",
+      "source_sha256": "cc9ecac48b7f275983952183c55a96cdd57e31eb2073cacd81ccdd6a491df043",
+      "fulltext_sha256": "83811cb77c23117286a1794ed1fb5a7fac7b80371d45a8119843ea08868f5387",
+      "evidence_provenance": "Provenance-bound first-party arXiv abstract/fulltext cache from new-idea-source-review-20260823, independently cross-checked against current arXiv HTML on 2026-08-24.",
+      "disposition": "SUPPORT_COMPONENT_ONLY_STATE_TRACKING",
+      "reduction": [
+        "state-sufficiency",
+        "typed-belief-revision",
+        "supersession-and-dependency-state-tracking"
+      ],
+      "note": "StateMemBench cleanly isolates current-state versus superseded-state errors and StateMem explicitly tracks supersession plus dependency invalidation. The paper provides unusually strong component evidence: drift persists under perfect retrieval, the state wrapper improves six memory/retrieval backends, and a length/cost-matched control attributes a substantial portion of the gain to state structure rather than extra context. Nevertheless, state structure is supplied as observable typed state/revision information. Once a strongest state compiler or typed-belief-revision baseline receives the identical event chronology, supersession/dependency relations, provenance, memory budget, query and backbone, the source does not report an additional irreducible longitudinal state variable or opposite prediction. A prior exact-reduction screen reached the same conclusion.",
+      "prior_support_artifacts": [
+        "/data/wyt/agent-self-evolution-observatory/runs/new-idea-source-review-20260823/04-state-trace-identifiability-exact-reduction-stop.json",
+        "/data/wyt/agent-self-evolution-observatory/runs/new-idea-source-review-20260823/01-behavioral-supersession-current-work-collision.json"
+      ],
+      "reopen_contracts_checked": [
+        {
+          "artifact": "04-state-trace-identifiability-exact-reduction-stop.json",
+          "result": "NOT_SATISFIED",
+          "boundary": "Withhold the decisive validity/supersession relation from all methods and require an equally observable signal that forces the typed-belief baseline and explicit state-tracking mechanism to make different ex-ante predictions, rather than different implementation accuracies."
+        }
+      ],
+      "p15_reopen_value": "INSUFFICIENT_DIFFERENT_TREATMENT",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.20202",
+      "title": "MemTrapBench: Benchmarking Cognitive Traps in LLM Memory Use",
+      "published": "2026-08-20",
+      "primary_url": "https://arxiv.org/abs/2608.20202",
+      "evidence_provenance": "Current first-party arXiv abstract independently reviewed on 2026-08-24; no provenance-bound local fulltext cache was available in the clean review substrate, so no independent source/fulltext SHA is asserted here.",
+      "disposition": "CLOSURE_SUPPORT_ONLY_MEMORY_HARM",
+      "reduction": [
+        "memory-negative-transfer",
+        "reasoning-fixation",
+        "belief-distortion-under-retrieval",
+        "nonmonotonic-memory-use"
+      ],
+      "note": "MemTrapBench directly demonstrates a strong failure phenomenon: faithfully recorded and semantically relevant memory can degrade current-task reasoning, and across two model families and five memory frameworks every evaluated memory strategy underperforms no-memory, with even the strongest dropping by more than ten percent. AdaptiveMem is an inference-time instruction designed to avoid those traps. This strengthens the empirical case for memory harm but remains expressible by negative transfer, fixation/belief distortion and non-monotonic memory-use baselines. The source does not isolate a persistent self-evolution state or an outcome-independent fixed-content order/path residual.",
+      "prior_support_artifacts": [
+        "/data/wyt/agent-self-evolution-observatory/runs/new-idea-source-review-20260823/01-behavioral-supersession-current-work-collision.json"
+      ],
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-ce4e8393492dfe39f",
+          "result": "NOT_SATISFIED",
+          "boundary": "Memory-induced degradation is compatible with ordinary negative transfer unless a matched persistent state predicts gain/harm sign beyond compatibility, conflict structure, task distribution and observable memory use."
+        }
+      ],
+      "p15_reopen_value": "CLOSURE_SUPPORT_ONLY_DOWNSTREAM_OUTCOME",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.19993",
+      "title": "Optimal Skill Selection for LLM Agents with Provable Bicriteria Guarantees",
+      "published": "2026-08-20",
+      "primary_url": "https://arxiv.org/abs/2608.19993",
+      "source_sha256": "a4fc6ff3458e1170608e5ea4d342f05b85b5bb8acbf4f8896e7e4800729fc884",
+      "fulltext_sha256": "74e4f19d1049d86c16db247de8cb9ba12111ecf2e04e4b0f2a6234d6efe9fb45",
+      "evidence_provenance": "Provenance-bound first-party arXiv abstract/fulltext cache from new-idea-source-review-20260823, independently cross-checked against current arXiv HTML on 2026-08-24.",
+      "disposition": "STOP_MATURE_SET_SELECTION_REDUCTION",
+      "reduction": [
+        "monotone-submodular-skill-benefit",
+        "context-cost-penalty",
+        "retrieval-redundancy-and-budgeted-set-selection"
+      ],
+      "note": "The paper explicitly formulates bounded-context skill selection as a hard-token-budget optimization maximizing monotone submodular benefit minus context penalty and gives a bicriteria approximation algorithm. Its contamination-controlled execution benchmark reports higher task success with fewer injected tokens. This directly occupies the mature marginal-information/redundancy/context-cost set-selection basin. The treatment changes which skill set is selected, not a longitudinal state or the order/path of a fixed support/content set.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-1ba2b6e8d305dafaad",
+          "result": "NOT_SATISFIED",
+          "boundary": "No self-evolution-specific structural variable remains after matching selected-skill count, relevance profile, context/token budget, redundancy/complementarity, planner/backbone and observable utilization."
+        }
+      ],
+      "p15_reopen_value": "NONE_SELECTED_CONTENT_CHANGES",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.19662",
+      "title": "ReCache: Efficient KV Cache Reuse and Compression for Tool-Augmented LLM Agents",
+      "published": "2026-08-20",
+      "primary_url": "https://arxiv.org/abs/2608.19662",
+      "evidence_provenance": "Current first-party arXiv abstract independently reviewed on 2026-08-24; no provenance-bound local fulltext cache was available in the clean review substrate, so no independent source/fulltext SHA is asserted here.",
+      "disposition": "SCOPE_EXCLUDED_SYSTEMS_RUNTIME",
+      "reduction": [
+        "resource-wise-attention",
+        "composition-invariant-kv-representation-by-construction",
+        "inference-systems-cache-optimization"
+      ],
+      "note": "ReCache removes cross-resource interactions and uses resource-local positions to construct composition-invariant KV blocks, then prunes visibility/fields for cache efficiency. The main evidence is systems/runtime: near-identical invocation F1 with large TTFT, KV-memory and attention-efficiency gains. The invariance is engineered into the inference representation rather than learned as a persistent self-evolution transition. It therefore does not reopen composition/state objects and is outside the longitudinal scientific scope.",
+      "reopen_contracts_checked": [],
+      "p15_reopen_value": "NONE_SYSTEMS_RUNTIME",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0
+    }
+  ],
+  "next_action": "Record these four exact refs as independently reviewed retrieval exposure only. Do not reopen P15/V19 or authorize generator/provider/GPU work from this artifact. Continue bounded fresh-source retrieval; only a source satisfying an exact durable reopen contract may enter scientific generation.",
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-24T03:47:04Z",
+  "generated_at": "2026-08-24T03:52:08Z",
   "receipts": [
     {
       "run_id": "external-fresh-intake-20260818-r1",
@@ -169,6 +169,30 @@
       "review_artifact_sha256": "08ab984b7bdce34c1030cb63bde79e5004a7a643a583c9a116890b2bdcdece52",
       "review_complete": true,
       "identity_verified_count": 7,
+      "provider_model_calls": 0,
+      "scientific_authority": false,
+      "authority": {
+        "candidate_generation": false,
+        "problem": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      }
+    },
+    {
+      "run_id": "external-fresh-four-source-reconciliation-20260824-r1",
+      "status": "EXTERNAL_FRESH_INTAKE_REVIEWED",
+      "source_refs": [
+        "arXiv:2608.19652",
+        "arXiv:2608.19662",
+        "arXiv:2608.19993",
+        "arXiv:2608.20202"
+      ],
+      "review_artifact": "generated/paper-first-four-source-reconciliation-20260824-r1.json",
+      "review_artifact_sha256": "376c3ade31d3237ed9172a18481209134dd594a5dff53a5b4ec1f26d72bd7811",
+      "review_complete": true,
+      "identity_verified_count": 4,
       "provider_model_calls": 0,
       "scientific_authority": false,
       "authority": {
