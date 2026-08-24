@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "blind-review-targeted-repair-receipt",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "status": "PAPER_ONLY_PROVENANCE_REPAIR_SELECTED",
+  "reviewed_candidate_pdf_sha256": "97341a9814a0b38e111e0c7f3018ff5eb2731ffb03d62b5fc1c9a7d83e9c43ee",
+  "review_calls": 2,
+  "review_calls_are_scientific_evidence": false,
+  "strict_review": {
+    "artifact_sha256": "f63825e5ee86fe183543b21c78f0cf442ab7fde5006c39ba46c90de05dc5e366",
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-260425",
+    "recommendation": "weak_reject",
+    "score_1_to_10": 5,
+    "confidence_1_to_5": 4,
+    "submission_advice": "major_revision",
+    "fatal_flaw_count": 0,
+    "decision_critical_categories": [
+      "small frozen 4x4 support",
+      "cross-writer terminal practical-effect gate non-pass",
+      "failure-arm provider missingness"
+    ]
+  },
+  "evidence_review": {
+    "artifact_sha256": "b0b8f5dad64f801edbd23d318ba079e14d519269ae55c7f25bae6fc010f08b6a",
+    "requested_model": "kimi-k3",
+    "resolved_model": "kimi-k3",
+    "evidence_chain_valid": true,
+    "advisory_verdict": "revise",
+    "extra_experiment_needed_before_submission": false,
+    "highest_value_repair_class": "make F2 to F2R1 chronology, unchanged support, unchanged dual gate, and all 16 initial-versus-confirmatory cells explicit"
+  },
+  "selected_repair": {
+    "class": "paper-only provenance and confirmatory-design clarification",
+    "new_scientific_experiment": false,
+    "new_scientific_provider_calls": 0,
+    "new_rollouts": 0,
+    "claim_expansion": false,
+    "f2r1_chronology_receipt_sha256": "4408addea31621988e1cc0031b556f039bdc76103d4a8dcba7e09c301f51fe36",
+    "clarification": "F2R1 is a targeted uniform replication after the initial F2 non-pass. It preserves the same 4x4 support, 0.15 practical-effect floor, and p<0.05 permutation gate, forbids source/future selection after outcomes, and changes only fresh replication depth from 3 to 8 per condition per cell.",
+    "raw_reviewer_prose_added_to_manuscript_or_supplement": false
+  },
+  "deferred_not_required_before_submission_by_evidence_reviewer": [
+    "larger source/future pools",
+    "third writer",
+    "live WebArena transport while endpoint remains unavailable"
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}

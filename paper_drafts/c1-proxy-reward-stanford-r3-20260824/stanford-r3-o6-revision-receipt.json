@@ -1,16 +1,43 @@
 {
   "artifact_bindings": {
+    "blind_review_repair_receipt_sha256": "6e8cf963592c22afdba66e15892121dbc8ae261b878194f0d1b0bc501712ee1c",
     "diagnostic_sha256": "c86e515ce3f453ac5a96456c51ae31cfdacf76d9bca6f026543e5a8dc8a429b4",
-    "manuscript_qa_sha256": "27328cbc68264f1c327987d64144704f7b480df9a47e1af094cb53bc6c45b5bd",
+    "f2r1_chronology_receipt_sha256": "4408addea31621988e1cc0031b556f039bdc76103d4a8dcba7e09c301f51fe36",
+    "manuscript_qa_sha256": "f663a91610303f36441b1193e47030dc25df6bab90c8b4d5175189bd3fce048f",
     "o5_evidence_sha256": "202a253e9766221c4de727afc9aedb7b4395b4814f15c1f82db0b93c166ae7e8",
     "o6_evidence_sha256": "61cb8af412d49fba39457309b8e221104f5a4441227b8fb652f80fcaac8ddad2",
     "o6_full_bank_reduction_sha256": "7f6307eb6b309cc802a4974ce7077eb2ab007fa1fd835b66035568676021cbf1",
-    "paper_pdf_sha256": "97341a9814a0b38e111e0c7f3018ff5eb2731ffb03d62b5fc1c9a7d83e9c43ee"
+    "paper_pdf_sha256": "24a220df1000771998cc55249588065a98c372ea7286a92dbba098e94cf099f9",
+    "post_repair_blind_review_validation_receipt_sha256": "ed87207259b123080f715f7cf19fea931b9f7fede20d613c8650a4c5628bc16f"
   },
   "base_review": "STANFORD-R2-OBJECTION-MATRIX-20260823",
   "claim_expansion": false,
   "experiment_authority": false,
   "gpu_authority": false,
+  "latest_paper_only_repair": {
+    "claim_expansion": false,
+    "evidence_chain_valid": true,
+    "extra_experiment_needed_before_submission": false,
+    "new_rollouts": 0,
+    "new_scientific_provider_calls": 0,
+    "post_repair_validation": {
+      "confidence_1_to_5": 4,
+      "current_narrow_claim_evidence_sufficient": true,
+      "decision": "FREEZE_SCIENTIFIC_EXPERIMENTS_FOR_CURRENT_NARROW_PAPER",
+      "recommendation": "weak_accept",
+      "recommendation_change": "weak_reject -> weak_accept",
+      "review_calls_are_scientific_evidence": false,
+      "score_1_to_10": 6,
+      "score_change": 1,
+      "status": "POST_REPAIR_BLIND_REVIEW_WEAK_ACCEPT"
+    },
+    "review_calls": 2,
+    "review_calls_are_scientific_evidence": false,
+    "selected_repair_class": "paper-only provenance and confirmatory-design clarification",
+    "strict_recommendation_before_repair": "weak_reject",
+    "strict_score_before_repair": 5,
+    "trigger": "blind independent ICLR review after O5/O6 completion"
+  },
   "new_experiment": true,
   "new_provider_calls_exact": null,
   "new_provider_calls_observable_lower_bound": 337,
@@ -40,16 +67,25 @@
       "revision_status": "PRESERVED_PERMANENT_CLAIM_BOUNDARY"
     },
     "PROXY-O4": {
-      "boundary": "Finite 4x4 descriptive decomposition plus a four-source non-monotonic magnitude check only; no general predictor of transfer-effect magnitude.",
+      "boundary": "Finite 4x4 descriptive decomposition plus a four-source non-monotonic magnitude check only; no general predictor of transfer-effect magnitude. F2R1 is explicitly documented as a targeted uniform same-support replication after an initial non-pass, not as the first outcome-blind terminal experiment; no source/future selection or gate relaxation occurred.",
       "evidence": {
+        "alpha_changed": false,
+        "confirmatory_terminal_gate_pass": true,
+        "effect_floor_changed": false,
+        "f2r1_chronology_status": "CHRONOLOGY_AND_UNIFORM_REPLICATION_VERIFIED",
         "future_main_share": 0.065217,
         "future_task_164_joint_ceiling": true,
+        "future_task_selection_changed": false,
+        "initial_terminal_gate_pass": false,
+        "initial_vs_confirmatory_cells_exposed": 16,
         "near_matched_write_divergence_sources": [
           "23",
           "25"
         ],
+        "same_4x4_support": true,
         "source_future_interaction_share": 0.84058,
         "source_main_share": 0.094203,
+        "source_selection_changed": false,
         "top_two_squared_effect_mass_share": 0.782051,
         "write_slot_distance_vs_source_mean_effect_pearson_descriptive": -0.367257,
         "write_token_distance_vs_source_mean_effect_pearson_descriptive": -0.729606,
@@ -144,14 +180,14 @@
   "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
   "paper_only_revision": false,
   "receipt_type": "stanford-r3-targeted-experiment-revision",
-  "revision": "STANFORD-R3-O6-CROSS-WRITER-AND-CORRUPTION-REDUCTION-20260824",
+  "revision": "STANFORD-R3-BLIND-REVIEW-PROVENANCE-REPAIR-20260824",
   "schema_version": "1.0",
   "scientific_authority": false,
   "stanford_r2_score": 6.3,
   "stanford_r2_verdict": "Weak Accept",
   "submission_authority": false,
   "system_paper_requirements": {
-    "abstract_words_approx": 215,
+    "abstract_words_approx": 220,
     "execution_accounting_added": true,
     "experiment_program_E1_E6": {
       "E1_main_comparison": {
@@ -167,7 +203,7 @@
         "status": "PASS"
       },
       "E4_robustness_transfer_boundary": {
-        "evidence": "All 16 frozen source-future cells are exposed; a fresh no-memory control locates branches without pseudoreplication; GLM-5.3 reproduces 4/4 write-time divergence but its 256-call terminal replication misses the frozen 0.15 effect floor (0.140625, p=0.00012) and reverses direction in two of six cells nonzero under both writers. A source-code-bound reduction further shows that the released top-1 task-description retriever makes a multi-bit full-bank corruption interaction unidentifiable: nonretrieved mask bits are causally inert.",
+        "evidence": "All 16 initial and confirmatory source-future cells are exposed side by side. The initial 3-rollout/cell F2 is a committed non-pass (0.145833, p=0.160128); F2R1 then uniformly increases replication depth to 8 on the identical 4x4 support while retaining the same 0.15/p<0.05 dual gate and prohibiting source/future selection after outcomes. A fresh no-memory control locates branches without pseudoreplication; GLM-5.3 reproduces 4/4 write-time divergence but its 256-call terminal replication misses the frozen 0.15 effect floor (0.140625, p=0.00012) and reverses direction in two of six cells nonzero under both writers. A source-code-bound reduction further shows that the released top-1 task-description retriever makes a multi-bit full-bank corruption interaction unidentifiable: nonretrieved mask bits are causally inert.",
         "status": "PASS_FINITE_BOUNDARY"
       },
       "E5_negative_failure_cases": {

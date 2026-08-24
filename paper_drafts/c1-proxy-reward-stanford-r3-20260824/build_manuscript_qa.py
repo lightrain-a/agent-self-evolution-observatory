@@ -12,6 +12,7 @@ DIAG = json.loads((HERE / "existing-evidence-diagnostics.json").read_text())
 O5 = json.loads((HERE / "o5-manuscript-evidence.json").read_text())
 O6 = json.loads((HERE / "o6-final-evidence.json").read_text())
 O6_REDUCTION = json.loads((HERE / "o6-full-bank-corruption-reduction.json").read_text())
+CHRONOLOGY = json.loads((HERE / "f2r1-chronology-receipt.json").read_text())
 
 
 def sha(path: Path) -> str:
@@ -50,6 +51,19 @@ def main() -> None:
     wt = DIAG["terminal_heterogeneity"]["write_to_terminal_magnitude_diagnostic"]
     checks["write_terminal_nonmonotonic_diagnostic"] = all(x in all_text for x in ["0.031", "0.156", "not a monotonic proxy"]) and abs(wt["pearson_token_distance_vs_source_mean_absolute_effect"] + 0.729606) < 1e-6
     checks["terminal_effect_bound"] = "0.15625" in all_text and "0.00074" in all_text
+    checks["f2r1_chronology_and_uniform_replication"] = (
+        CHRONOLOGY["status"] == "CHRONOLOGY_AND_UNIFORM_REPLICATION_VERIFIED"
+        and CHRONOLOGY["relationship"]["confirmatory_was_designed_after_initial_nonpass"] is True
+        and CHRONOLOGY["relationship"]["same_4x4_support"] is True
+        and CHRONOLOGY["relationship"]["source_selection_changed"] is False
+        and CHRONOLOGY["relationship"]["future_task_selection_changed"] is False
+        and CHRONOLOGY["relationship"]["effect_floor_changed"] is False
+        and CHRONOLOGY["relationship"]["alpha_changed"] is False
+        and CHRONOLOGY["initial_stage"]["gate_pass"] is False
+        and CHRONOLOGY["confirmatory_stage"]["gate_pass"] is True
+        and len(CHRONOLOGY["cell_comparison"]) == 16
+        and all(x in all_text for x in ["targeted \\emph{uniform replication after the initial non-pass}", "730c2bc", "ea9a2260", "F2R1 $|\\Delta|$"])
+    )
     checks["provider_missingness_explicit"] = (
         DIAG["execution_accounting"]["f0_writer_provider_failures"] == 2
         and DIAG["claim_boundary"]["provider_missingness_resolved"] is False
@@ -128,7 +142,7 @@ def main() -> None:
     checks["system_E1_main_comparison"] = checks["terminal_effect_bound"]
     checks["system_E2_simplification_control"] = "0.105" in all_text and "0.0078" in all_text
     checks["system_E3_mechanism_analysis"] = "7 of 12" in all_text and checks["writer_jaccard_bound"] and checks["controlled_structural_diagnostic_bound"]
-    checks["system_E4_robustness_boundary"] = checks["interaction_diagnostic_bound"] and checks["write_terminal_nonmonotonic_diagnostic"] and checks["no_memory_boundary_explicit"] and checks["o5_fresh_no_memory_control"] and checks["o6_cross_writer_boundary"] and checks["o6_full_bank_corruption_reduction"]
+    checks["system_E4_robustness_boundary"] = checks["interaction_diagnostic_bound"] and checks["write_terminal_nonmonotonic_diagnostic"] and checks["no_memory_boundary_explicit"] and checks["o5_fresh_no_memory_control"] and checks["o6_cross_writer_boundary"] and checks["o6_full_bank_corruption_reduction"] and checks["f2r1_chronology_and_uniform_replication"]
     checks["system_E5_negative_failure"] = all(x in all_text for x in ["0.311", "0.160", "ArkResponseStateError", "zero scientific authority", "0.140625", "below the preregistered 0.15 floor"])
     checks["system_E6_efficiency_cost_scale"] = checks["execution_accounting_complete"] and checks["inference_only_accounting"]
 
@@ -157,7 +171,7 @@ def main() -> None:
     payload = {
         "schema_version": "1.0",
         "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-        "revision": "STANFORD-R3-O6-CROSS-WRITER-AND-CORRUPTION-REDUCTION-20260824",
+        "revision": "STANFORD-R3-BLIND-REVIEW-PROVENANCE-REPAIR-20260824",
         "status": "PASS" if all(checks.values()) else "FAIL",
         "abstract_words_approx": approx_words(abstract),
         "pdf_pages_total": pages,
@@ -169,6 +183,7 @@ def main() -> None:
         "o5_evidence_sha256": sha(HERE / "o5-manuscript-evidence.json"),
         "o6_evidence_sha256": sha(HERE / "o6-final-evidence.json"),
         "o6_full_bank_reduction_sha256": sha(HERE / "o6-full-bank-corruption-reduction.json"),
+        "f2r1_chronology_receipt_sha256": sha(HERE / "f2r1-chronology-receipt.json"),
         "paper_pdf_sha256": sha(pdf),
         "main_tex_sha256": sha(SRC / "main.tex"),
         "scientific_authority": False,

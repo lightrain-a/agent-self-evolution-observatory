@@ -21,6 +21,9 @@ def main() -> None:
     o5 = json.loads((HERE / "o5-manuscript-evidence.json").read_text())
     o6 = json.loads((HERE / "o6-final-evidence.json").read_text())
     o6_reduction = json.loads((HERE / "o6-full-bank-corruption-reduction.json").read_text())
+    chronology = json.loads((HERE / "f2r1-chronology-receipt.json").read_text())
+    blind_repair = json.loads((HERE / "blind-review-20260824/repair-receipt.json").read_text())
+    post_repair_review = json.loads((HERE / "blind-review-20260824/post-repair-validation-receipt.json").read_text())
     original = {row["id"]: row for row in paper["objections"]}
     interaction = diag["terminal_heterogeneity"]["two_way_centered_effect_decomposition"]
     write_terminal = diag["terminal_heterogeneity"]["write_to_terminal_magnitude_diagnostic"]
@@ -32,7 +35,7 @@ def main() -> None:
         "receipt_type": "stanford-r3-targeted-experiment-revision",
         "paper_id": PAPER_ID,
         "paper_code": paper["code"],
-        "revision": "STANFORD-R3-O6-CROSS-WRITER-AND-CORRUPTION-REDUCTION-20260824",
+        "revision": "STANFORD-R3-BLIND-REVIEW-PROVENANCE-REPAIR-20260824",
         "base_review": matrix["matrix_id"],
         "stanford_r2_score": paper["r2"]["score"],
         "stanford_r2_verdict": paper["r2"]["verdict"],
@@ -43,6 +46,30 @@ def main() -> None:
         "new_scientifically_usable_provider_calls": o5["execution_accounting"]["recovery_scientifically_usable_units"] + o6["execution_accounting"]["repair_4096_writer_calls"] + o6["execution_accounting"]["stage2_terminal_calls"],
         "new_terminal_rollouts": o5["execution_accounting"]["recovery_scientifically_usable_units"] + o6["execution_accounting"]["stage2_terminal_calls"],
         "claim_expansion": False,
+        "latest_paper_only_repair": {
+            "trigger": "blind independent ICLR review after O5/O6 completion",
+            "review_calls": blind_repair["review_calls"],
+            "review_calls_are_scientific_evidence": blind_repair["review_calls_are_scientific_evidence"],
+            "strict_recommendation_before_repair": blind_repair["strict_review"]["recommendation"],
+            "strict_score_before_repair": blind_repair["strict_review"]["score_1_to_10"],
+            "evidence_chain_valid": blind_repair["evidence_review"]["evidence_chain_valid"],
+            "extra_experiment_needed_before_submission": blind_repair["evidence_review"]["extra_experiment_needed_before_submission"],
+            "selected_repair_class": blind_repair["selected_repair"]["class"],
+            "new_scientific_provider_calls": blind_repair["selected_repair"]["new_scientific_provider_calls"],
+            "new_rollouts": blind_repair["selected_repair"]["new_rollouts"],
+            "claim_expansion": blind_repair["selected_repair"]["claim_expansion"],
+            "post_repair_validation": {
+                "status": post_repair_review["status"],
+                "recommendation": post_repair_review["post_repair_strict_review"]["recommendation"],
+                "score_1_to_10": post_repair_review["post_repair_strict_review"]["score_1_to_10"],
+                "confidence_1_to_5": post_repair_review["post_repair_strict_review"]["confidence_1_to_5"],
+                "recommendation_change": post_repair_review["recommendation_change"],
+                "score_change": post_repair_review["score_change"],
+                "current_narrow_claim_evidence_sufficient": post_repair_review["post_repair_strict_review"]["current_narrow_claim_evidence_sufficient"],
+                "decision": post_repair_review["decision"],
+                "review_calls_are_scientific_evidence": post_repair_review["review_calls_are_scientific_evidence"],
+            },
+        },
         "objections": {
             "PROXY-O1": {
                 "original_disposition": original["PROXY-O1"]["d"],
@@ -79,8 +106,17 @@ def main() -> None:
                     "write_token_distance_vs_source_mean_effect_pearson_descriptive": write_terminal["pearson_token_distance_vs_source_mean_absolute_effect"],
                     "write_slot_distance_vs_source_mean_effect_pearson_descriptive": write_terminal["pearson_slot_distance_vs_source_mean_absolute_effect"],
                     "near_matched_write_divergence_sources": ["23", "25"],
+                    "f2r1_chronology_status": chronology["status"],
+                    "initial_terminal_gate_pass": chronology["initial_stage"]["gate_pass"],
+                    "confirmatory_terminal_gate_pass": chronology["confirmatory_stage"]["gate_pass"],
+                    "same_4x4_support": chronology["relationship"]["same_4x4_support"],
+                    "source_selection_changed": chronology["relationship"]["source_selection_changed"],
+                    "future_task_selection_changed": chronology["relationship"]["future_task_selection_changed"],
+                    "effect_floor_changed": chronology["relationship"]["effect_floor_changed"],
+                    "alpha_changed": chronology["relationship"]["alpha_changed"],
+                    "initial_vs_confirmatory_cells_exposed": len(chronology["cell_comparison"]),
                 },
-                "boundary": "Finite 4x4 descriptive decomposition plus a four-source non-monotonic magnitude check only; no general predictor of transfer-effect magnitude.",
+                "boundary": "Finite 4x4 descriptive decomposition plus a four-source non-monotonic magnitude check only; no general predictor of transfer-effect magnitude. F2R1 is explicitly documented as a targeted uniform same-support replication after an initial non-pass, not as the first outcome-blind terminal experiment; no source/future selection or gate relaxation occurred.",
             },
             "PROXY-O5": {
                 "original_disposition": original["PROXY-O5"]["d"],
@@ -145,7 +181,7 @@ def main() -> None:
                 },
                 "E4_robustness_transfer_boundary": {
                     "status": "PASS_FINITE_BOUNDARY",
-                    "evidence": "All 16 frozen source-future cells are exposed; a fresh no-memory control locates branches without pseudoreplication; GLM-5.3 reproduces 4/4 write-time divergence but its 256-call terminal replication misses the frozen 0.15 effect floor (0.140625, p=0.00012) and reverses direction in two of six cells nonzero under both writers. A source-code-bound reduction further shows that the released top-1 task-description retriever makes a multi-bit full-bank corruption interaction unidentifiable: nonretrieved mask bits are causally inert.",
+                    "evidence": "All 16 initial and confirmatory source-future cells are exposed side by side. The initial 3-rollout/cell F2 is a committed non-pass (0.145833, p=0.160128); F2R1 then uniformly increases replication depth to 8 on the identical 4x4 support while retaining the same 0.15/p<0.05 dual gate and prohibiting source/future selection after outcomes. A fresh no-memory control locates branches without pseudoreplication; GLM-5.3 reproduces 4/4 write-time divergence but its 256-call terminal replication misses the frozen 0.15 effect floor (0.140625, p=0.00012) and reverses direction in two of six cells nonzero under both writers. A source-code-bound reduction further shows that the released top-1 task-description retriever makes a multi-bit full-bank corruption interaction unidentifiable: nonretrieved mask bits are causally inert.",
                 },
                 "E5_negative_failure_cases": {
                     "status": "PASS_VISIBLE_NEGATIVES",
@@ -175,6 +211,9 @@ def main() -> None:
             "o5_evidence_sha256": sha(HERE / "o5-manuscript-evidence.json"),
             "o6_evidence_sha256": sha(HERE / "o6-final-evidence.json"),
             "o6_full_bank_reduction_sha256": sha(HERE / "o6-full-bank-corruption-reduction.json"),
+            "f2r1_chronology_receipt_sha256": sha(HERE / "f2r1-chronology-receipt.json"),
+            "blind_review_repair_receipt_sha256": sha(HERE / "blind-review-20260824/repair-receipt.json"),
+            "post_repair_blind_review_validation_receipt_sha256": sha(HERE / "blind-review-20260824/post-repair-validation-receipt.json"),
             "manuscript_qa_sha256": sha(HERE / "manuscript-qa.json"),
             "paper_pdf_sha256": sha(HERE / "paper.pdf"),
         },

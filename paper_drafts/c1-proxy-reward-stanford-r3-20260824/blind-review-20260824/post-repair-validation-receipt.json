@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "blind-review-post-repair-validation-receipt",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "status": "POST_REPAIR_BLIND_REVIEW_WEAK_ACCEPT",
+  "repair_class": "paper-only F2-to-F2R1 chronology and confirmatory-design provenance clarification",
+  "pre_repair_strict_review": {
+    "artifact_sha256": "f63825e5ee86fe183543b21c78f0cf442ab7fde5006c39ba46c90de05dc5e366",
+    "reviewed_pdf_sha256": "97341a9814a0b38e111e0c7f3018ff5eb2731ffb03d62b5fc1c9a7d83e9c43ee",
+    "recommendation": "weak_reject",
+    "score_1_to_10": 5,
+    "confidence_1_to_5": 4
+  },
+  "evidence_design_review": {
+    "artifact_sha256": "b0b8f5dad64f801edbd23d318ba079e14d519269ae55c7f25bae6fc010f08b6a",
+    "evidence_chain_valid": true,
+    "advisory_verdict": "revise",
+    "extra_experiment_needed_before_submission": false
+  },
+  "post_repair_strict_review": {
+    "artifact_sha256": "6cad4b7b7fa195f304159eef0fcc1b9ace949879e10d66d18c62bd018bf10d5a",
+    "reviewed_pdf_sha256": "24a220df1000771998cc55249588065a98c372ea7286a92dbba098e94cf099f9",
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-260425",
+    "recommendation": "weak_accept",
+    "score_1_to_10": 6,
+    "confidence_1_to_5": 4,
+    "submission_advice": "minor_revision",
+    "fatal_flaw_count": 0,
+    "current_narrow_claim_evidence_sufficient": true,
+    "additional_domain_or_writer_replication_required_for_current_narrow_claim": false
+  },
+  "score_change": 1,
+  "recommendation_change": "weak_reject -> weak_accept",
+  "remaining_risk_classes": [
+    "external validity beyond the single released ReasoningBank/WebArena Shopping configuration",
+    "failure-label provider missingness for two requested source pairs",
+    "downstream effect concentration and cross-writer non-invariance"
+  ],
+  "decision": "FREEZE_SCIENTIFIC_EXPERIMENTS_FOR_CURRENT_NARROW_PAPER",
+  "reason": "After the provenance repair, the strict blind reviewer judges the evidence sufficient for the manuscript's narrow configuration-bound claims. Remaining concerns require broader substrates or resolving missing provider outputs, not another same-support paper-only loop or post-hoc rescue experiment.",
+  "blind_review_calls_in_cycle": 3,
+  "review_calls_are_scientific_evidence": false,
+  "new_scientific_provider_calls": 0,
+  "new_rollouts": 0,
+  "claim_expansion": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}

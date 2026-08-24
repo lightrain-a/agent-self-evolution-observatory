@@ -57,37 +57,35 @@ Mean & & 0.700 & 0.595 & 0.105 \\
 The distributional action stress test retains all four intervention states from the action-reach experiment and uses eight rollouts per memory condition. The per-state success-memory versus failure-memory TV distances are 0.625 for task 22 and 0.375 for task 23. They are 0.125 for task 24 and 0.250 for task 26. Their mean is 0.34375. The frozen 100,000-draw permutation audit gives $p=0.310527$.
 
 \subsection{Frozen terminal matrix}
-The terminal confirmatory experiment reuses every complete F0 pair and every future task frozen for the earlier fixed-evidence run. Source-memory tasks form $\{21,22,23,25\}$. Future tasks form $\{164,385,387,388\}$. The design therefore contains 16 source--future cells. Each cell receives eight fresh success-memory rollouts and eight fresh failure-memory rollouts. The policy model is Doubao Seed 2.0 Mini at temperature 0.2. All 256 requested calls complete with zero provider failures.
-
-The primary statistic is the mean across cells of the absolute difference between success-memory and failure-memory terminal benchmark success rates. The support gate is frozen before calls at an effect floor of 0.15 together with a within-cell permutation $p<0.05$. The permutation audit uses 100,000 draws with seed 20260822. The observed statistic is 0.15625 and the audit gives $p=0.00074$.
+The initial terminal experiment and F2R1 use the same complete F0 source set $\{21,22,23,25\}$, the same future-task set $\{164,385,387,388\}$, and the same aggregate absolute-effect statistic with the same dual gate: mean absolute difference at least 0.15 and within-cell permutation $p<0.05$. The initial stage uses three fresh rollouts per condition per cell and is already frozen in Git commit \texttt{730c2bc} at 2026-08-22 00:01:42 +08:00; it yields 0.145833 with $p=0.160128$ and does not pass. The separately authorized F2R1 contract is content-addressed as \texttt{ea9a2260\ldots01f5}; its first provider receipt is generated at 2026-08-22 01:50:32 +08:00. It explicitly forbids source/future-task selection after outcomes and increases only uniform replication depth to eight fresh rollouts per condition in every cell. All 256 F2R1 calls complete, yielding 0.15625 with $p=0.00074$. Thus F2R1 is a targeted same-support replication after an initial non-pass, not a claim that the confirmatory design was chosen before any terminal outcomes were observed.
 
 \begin{table}[h]
 \centering
-\caption{F2R1 confirmatory terminal success rates. S denotes success-label memory and F denotes failure-label memory.}
-\label{tab:f2r1-cells}
+\caption{Initial F2 and F2R1 cell-level terminal rates on identical 4-by-4 support. S/F denote success-/failure-label memory.}
+\label{tab:f2-f2r1-compare}
 \scriptsize
-\begin{tabular}{ccccc}
+\begin{tabular}{ccrrrrrr}
 \toprule
-Source & Future & S rate & F rate & $|\Delta|$ \\
+Source & Future & F2 S & F2 F & F2 $|\Delta|$ & F2R1 S & F2R1 F & F2R1 $|\Delta|$ \\
 \midrule
-21 & 164 & 1.000 & 1.000 & 0.000 \\
-21 & 385 & 0.000 & 0.250 & 0.250 \\
-21 & 387 & 0.125 & 0.250 & 0.125 \\
-21 & 388 & 1.000 & 0.625 & 0.375 \\
-22 & 164 & 1.000 & 1.000 & 0.000 \\
-22 & 385 & 0.000 & 0.125 & 0.125 \\
-22 & 387 & 0.125 & 0.000 & 0.125 \\
-22 & 388 & 0.250 & 1.000 & 0.750 \\
-23 & 164 & 1.000 & 1.000 & 0.000 \\
-23 & 385 & 0.000 & 0.000 & 0.000 \\
-23 & 387 & 0.125 & 0.250 & 0.125 \\
-23 & 388 & 1.000 & 1.000 & 0.000 \\
-25 & 164 & 1.000 & 1.000 & 0.000 \\
-25 & 385 & 0.000 & 0.000 & 0.000 \\
-25 & 387 & 0.125 & 0.750 & 0.625 \\
-25 & 388 & 1.000 & 1.000 & 0.000 \\
+21 & 164 & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 0.000 \\
+21 & 385 & 0.000 & 0.333 & 0.333 & 0.000 & 0.250 & 0.250 \\
+21 & 387 & 0.000 & 0.333 & 0.333 & 0.125 & 0.250 & 0.125 \\
+21 & 388 & 1.000 & 0.333 & 0.667 & 1.000 & 0.625 & 0.375 \\
+22 & 164 & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 0.000 \\
+22 & 385 & 0.000 & 0.667 & 0.667 & 0.000 & 0.125 & 0.125 \\
+22 & 387 & 0.000 & 0.000 & 0.000 & 0.125 & 0.000 & 0.125 \\
+22 & 388 & 1.000 & 1.000 & 0.000 & 0.250 & 1.000 & 0.750 \\
+23 & 164 & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 0.000 \\
+23 & 385 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+23 & 387 & 0.000 & 0.000 & 0.000 & 0.125 & 0.250 & 0.125 \\
+23 & 388 & 0.667 & 1.000 & 0.333 & 1.000 & 1.000 & 0.000 \\
+25 & 164 & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 0.000 \\
+25 & 385 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+25 & 387 & 0.000 & 0.000 & 0.000 & 0.125 & 0.750 & 0.625 \\
+25 & 388 & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 0.000 \\
 \midrule
-\multicolumn{4}{r}{Mean absolute difference} & 0.15625 \\
+\multicolumn{2}{r}{Mean $|\Delta|$} & \multicolumn{3}{c}{0.145833} & \multicolumn{3}{c}{0.15625} \\
 \bottomrule
 \end{tabular}
 \end{table}
