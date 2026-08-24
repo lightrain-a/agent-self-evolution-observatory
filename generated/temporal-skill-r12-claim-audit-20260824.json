@@ -1,0 +1,131 @@
+{
+  "schema_version": "1.2",
+  "receipt_type": "temporal-r12-claim-audit",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "display_code": "E2",
+  "revision": "r12",
+  "date": "2026-08-24",
+  "title": "When Do Reusable Temporal Procedures Actually Repair Agents?",
+  "revision_goal": "Separate executed operation-value evidence from unexecuted behavior-neutral-compute and container-value estimands while preserving the Stanford round-2 and ICLR-template boundaries.",
+  "checks": {
+    "title_centers_operation_level_scientific_question": true,
+    "abstract_setting_gap_method_result_boundary": true,
+    "abstract_does_not_claim_behavior_neutral_generic": true,
+    "abstract_does_not_claim_container_superiority": true,
+    "concrete_false_positive_on_first_page": true,
+    "plain_language_intuition_precedes_formal_estimand": true,
+    "three_arm_estimand_formalized": true,
+    "T_must_beat_G_and_N_for_executed_binding_repair_label": true,
+    "T_minus_N_identified_as_original_agent_increment_not_resource_matched_neutral_control": true,
+    "T_minus_G_identified_as_target_blind_helper_contrast": true,
+    "G0_behavior_neutral_candidate_explicitly_unexecuted": true,
+    "R_operation_matched_retrieval_explicitly_unexecuted": true,
+    "operation_value_and_container_value_separated": true,
+    "endpoint_is_independent_unit": true,
+    "repeats_not_counted_as_independent_tasks": true,
+    "related_work_has_three_mechanism_families": true,
+    "strongest_same_information_container_alternative_named": true,
+    "method_design_requirements_precede_components": true,
+    "overview_figure_early": true,
+    "resource_parity_semantics_corrected": true,
+    "no_latency_provider_cost_or_call_count_speedup_claim": true,
+    "cross_domain_grounding_null_retained": true,
+    "ceiling_cells_retained": true,
+    "small_alignment_grounding_cells_marked_low_resolution": true,
+    "timesage_source_native_replay_not_misrepresented_as_exact_replication": true,
+    "r9_invocation_order_length_audit_preserved": true,
+    "r10_iso_date_audit_preserved": true,
+    "prospective_G0_R_contract_adds_zero_outcome_evidence": true
+  },
+  "identification_ladder": {
+    "T_minus_N": {
+      "status": "EXECUTED",
+      "quantity": "incremental value of inserting the targeted procedure over the original agent"
+    },
+    "T_minus_G": {
+      "status": "EXECUTED",
+      "quantity": "targeted-operation value relative to the frozen complexity-matched target-blind helper"
+    },
+    "T_minus_G0": {
+      "status": "UNEXECUTED_SCIENTIFIC_REOPEN_REQUIRED",
+      "quantity": "operation-specific value beyond separately validated behavior-neutral extra computation"
+    },
+    "T_minus_R": {
+      "status": "UNEXECUTED_SCIENTIFIC_REOPEN_REQUIRED",
+      "quantity": "callable-skill value beyond an operation-matched retrieval-side implementation"
+    }
+  },
+  "template_lanes": {
+    "E1_main_comparison": "COMPLETE_for_executed_N_G_T_operation_level_question",
+    "E2_component_simplification": "PARTIAL_existing_target_blind_G_and_N_complete;_behavior_neutral_G0_and_operation_matched_R_require_scientific_reopen",
+    "E3_mechanism_aligned_analysis": "COMPLETE_false_positive_headroom_and_ceiling_predictions",
+    "E4_robustness_transfer_boundary": "COMPLETE_future_release_ceiling_and_cross_domain_null_boundary",
+    "E5_negative_failure_cases": "COMPLETE_T_gt_G_T_eq_N_false_positive_plus_null_and_ceiling_cases",
+    "E6_efficiency_cost_scale": "PARITY_AUDIT_ONLY_T_and_G_equal_helper_calls_and_source_complexity;N_is_original_agent_not_equal_call_control;no_speedup_claim",
+    "E7_case_study_optional": "COMPLETE_cutoff_false_positive_case"
+  },
+  "headline_evidence": {
+    "false_positive_cutoff_deepseek": {
+      "N": 100,
+      "G": 72,
+      "T": 100,
+      "verdict": "NO_REPAIR"
+    },
+    "grounding_deepseek_acquisition": {
+      "N": 20,
+      "G": 20,
+      "T": 60
+    },
+    "eia_cutoff_deepseek_heldout": {
+      "N": 47.5,
+      "G": 70,
+      "T": 100,
+      "T_minus_N_sign_test_p": 0.0156
+    },
+    "alignment_kimi_heldout": {
+      "N": "7/12",
+      "G": "4/12",
+      "T": "12/12",
+      "independent_endpoints": 3,
+      "T_minus_G_sign_test_p": 0.25
+    },
+    "eia_mini_no_skill_ceiling": "40/40",
+    "cross_domain_grounding": "NULL"
+  },
+  "build_contract": {
+    "main_body_conclusion_page": 9,
+    "references_start_page": 10,
+    "total_pages_including_references_and_appendix": 14,
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0,
+    "raster_pages_checked": 14,
+    "raster_border_clipping_flags": 0,
+    "source_zip_independent_rebuild_pass": true,
+    "source_zip_rebuild_text_identical": true,
+    "all_pdf_fonts_embedded": true
+  },
+  "claim_ladder": {
+    "observed": "In selected non-ceiling frozen model-task cells, targeted temporal procedures improve the registered family outcome over both the original agent and the executed target-blind helper.",
+    "supported_interpretation": "A reusable temporal operation can be a binding repair under the executed N/G/T intervention in a conditional procedure-by-model-by-task regime.",
+    "not_claimed": [
+      "universal temporal-skill gain",
+      "model-invariant or general cross-domain transfer",
+      "unique causal explanation of the original failure",
+      "autonomous endogenous tool-use benefit",
+      "behavioral neutrality of the executed generic helper",
+      "benefit beyond a resource-matched behavior-neutral helper",
+      "callable-skill superiority over an operation-matched retrieval-side temporal implementation",
+      "latency, provider-cost, or call-count speedup over the original agent"
+    ]
+  },
+  "remaining_scientific_reopen": [
+    "TEMP-O4",
+    "TEMP-O5"
+  ],
+  "permanent_claim_boundary": [
+    "TEMP-O6"
+  ],
+  "new_scientific_execution": false,
+  "new_model_calls": 0
+}

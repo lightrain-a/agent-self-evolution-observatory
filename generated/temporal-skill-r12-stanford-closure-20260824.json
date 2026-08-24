@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.2",
+  "receipt_type": "temporal-r12-stanford-round2-closure",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "display_code": "E2",
+  "revision": "r12",
+  "date": "2026-08-24",
+  "title": "When Do Reusable Temporal Procedures Actually Repair Agents?",
+  "source_review_matrix": "generated/stanford-r2-objection-matrix.json",
+  "review_round": 2,
+  "review_status": "NO_NEW_EXTERNAL_REVIEW_IN_R12",
+  "policy": {
+    "historical_review_artifact_modified": false,
+    "new_scientific_execution": false,
+    "new_model_calls": 0,
+    "claim_upgrade_from_unexecuted_treatments": false,
+    "prospective_reopen_contract_is_not_evidence": true
+  },
+  "objections": [
+    {
+      "id": "TEMP-O1",
+      "disposition": "RESOLVED",
+      "r12_closure": "The title, abstract, introduction, and related work center procedure-repair identification rather than skill-container novelty. Temporal retrieval and reusable-skill learning remain explicitly conceded prior art."
+    },
+    {
+      "id": "TEMP-O2",
+      "disposition": "RESOLVED",
+      "r12_closure": "The canonical r9 zero-call audit remains intact: targeted/generic are forced once in 442/442 rows each, no-skill 0/442; condition-position p>.65 in every arm; targeted prompts average 18.85 input tokens shorter. R12 further limits these diagnostics to explanations of T-G rather than treating them as resource matching for T-N."
+    },
+    {
+      "id": "TEMP-O3",
+      "disposition": "RESOLVED",
+      "r12_closure": "The canonical r10 ISO-date audit remains a reproducibility diagnostic: all serialized date fields are valid YYYY-MM-DD and 88/88 observed T1 lexical comparisons agree with parsed-calendar order. No new scientific result is inferred."
+    },
+    {
+      "id": "TEMP-O4",
+      "disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+      "r12_closure": "Still unexecuted. R12 now distinguishes the executed target-blind G from a prospective behavior-neutral G0 and explicitly states that N is the original agent, not a resource-matched neutral-helper arm. The G0 treatment semantics are frozen in a design-only reopen receipt, but no neutrality outcome exists.",
+      "reopen_contract": "generated/temporal-skill-r12-reopen-contract-20260824.json",
+      "claim_effect": "NO_UPGRADE"
+    },
+    {
+      "id": "TEMP-O5",
+      "disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+      "r12_closure": "Still unexecuted. R12 names operation-matched retrieval as the strongest same-information alternative for any container claim and defines a prospective T-R estimand. The manuscript explicitly limits current evidence to operation value under N/G/T.",
+      "reopen_contract": "generated/temporal-skill-r12-reopen-contract-20260824.json",
+      "claim_effect": "NO_UPGRADE"
+    },
+    {
+      "id": "TEMP-O6",
+      "disposition": "PERMANENT_CLAIM_BOUNDARY",
+      "r12_closure": "Small endpoint cells, ceiling regimes, and the cross-domain grounding null remain visible in the main story. R12 further compresses transfer language to a conditional compatible/non-ceiling boundary and does not claim model-invariant or general cross-domain transfer."
+    },
+    {
+      "id": "TEMP-O7",
+      "disposition": "RESOLVED",
+      "r12_closure": "Controlled helper exposure remains explicitly distinguished from endogenous skill selection; R12 continues to estimate forced procedure exposure rather than autonomous call propensity."
+    }
+  ],
+  "r12_material_improvements": [
+    "operation value separated from implementation/container value",
+    "T-N correctly described as original-agent increment rather than equal-call control",
+    "G0 behavior-neutral helper explicitly separated from executed G",
+    "operation-matched retrieval R explicitly identified as the missing container-comparison treatment",
+    "prospective G0/R treatment semantics frozen without execution",
+    "transfer and limitation prose compressed while preserving nulls and page budget"
+  ],
+  "remaining_scientific_reopen": [
+    "TEMP-O4",
+    "TEMP-O5"
+  ],
+  "permanent_claim_boundary": [
+    "TEMP-O6"
+  ],
+  "current_external_verdict_authority": "Stanford round-2 historical verdict remains Weak Accept; R12 has not been externally rescored."
+}
