@@ -29,6 +29,10 @@ PRACTICAL_BASELINES = "generated/asset-first-stri-practical-baselines-20260824.j
 PRACTICAL_BASELINES_CSV = "generated/asset-first-stri-practical-baselines-20260824.csv"
 PRACTICAL_BASELINES_CODE = "research_pipeline/asset_first_stri_practical_baselines_20260824.py"
 PRACTICAL_BASELINES_TEST = "research_pipeline/test_asset_first_stri_practical_baselines_20260824.py"
+CROSSVAL_SPARSITY = "generated/asset-first-stri-crossval-sparsity-20260824.json"
+CROSSVAL_SPARSITY_CSV = "generated/asset-first-stri-crossval-sparsity-20260824.csv"
+CROSSVAL_SPARSITY_CODE = "research_pipeline/asset_first_stri_crossval_sparsity_20260824.py"
+CROSSVAL_SPARSITY_TEST = "research_pipeline/test_asset_first_stri_crossval_sparsity_20260824.py"
 SKILLRL_BUDGET_BASELINES = "generated/asset-first-stri-skillrl-budget-baselines-20260824.json"
 SKILLRL_BUDGET_BASELINES_CSV = "generated/asset-first-stri-skillrl-budget-baselines-20260824.csv"
 SKILLRL_BUDGET_BASELINES_CODE = "research_pipeline/asset_first_stri_skillrl_budget_baselines_20260824.py"
@@ -167,7 +171,7 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     certificate_refs = [CERTIFICATE_CODE, CERTIFICATE_TEST]
     offline_refs = [OFFLINE_COMPLETION_ANALYSIS, OFFLINE_COMPLETION_ANALYSIS_CODE, OFFLINE_COMPLETION_ANALYSIS_TEST]
     structural_refs = [TARGET_NULL_ANALYSIS, TARGET_NULL_ANALYSIS_CODE, WITNESS_PEELING, WITNESS_PEELING_CODE, SUPPORT_EDIT_RADIUS, SUPPORT_EDIT_RADIUS_CODE, STRUCTURAL_ENRICHMENT_TEST]
-    breadth_refs = [PRACTICAL_BASELINES, PRACTICAL_BASELINES_CSV, PRACTICAL_BASELINES_CODE, PRACTICAL_BASELINES_TEST, SKILLRL_BUDGET_BASELINES, SKILLRL_BUDGET_BASELINES_CSV, SKILLRL_BUDGET_BASELINES_CODE, SKILLRL_BUDGET_BASELINES_TEST, SKILLROUTER_RELEVANCE, SKILLROUTER_RELEVANCE_CSV, SKILLROUTER_RELEVANCE_CODE, SKILLROUTER_RELEVANCE_TEST, SKILLSBENCH_SUPPORT_QUAL, SKILLSBENCH_SUPPORT_QUAL_CSV, SKILLSBENCH_SUPPORT_QUAL_CODE, SKILLSBENCH_SUPPORT_QUAL_TEST]
+    breadth_refs = [PRACTICAL_BASELINES, PRACTICAL_BASELINES_CSV, PRACTICAL_BASELINES_CODE, PRACTICAL_BASELINES_TEST, CROSSVAL_SPARSITY, CROSSVAL_SPARSITY_CSV, CROSSVAL_SPARSITY_CODE, CROSSVAL_SPARSITY_TEST, SKILLRL_BUDGET_BASELINES, SKILLRL_BUDGET_BASELINES_CSV, SKILLRL_BUDGET_BASELINES_CODE, SKILLRL_BUDGET_BASELINES_TEST, SKILLROUTER_RELEVANCE, SKILLROUTER_RELEVANCE_CSV, SKILLROUTER_RELEVANCE_CODE, SKILLROUTER_RELEVANCE_TEST, SKILLSBENCH_SUPPORT_QUAL, SKILLSBENCH_SUPPORT_QUAL_CSV, SKILLSBENCH_SUPPORT_QUAL_CODE, SKILLSBENCH_SUPPORT_QUAL_TEST]
     analysis_refs = [PAPER_ANALYSIS, REVIEWER_EXTENSIONS, PRUNING_BASELINE, *offline_refs, *structural_refs, *breadth_refs, *controller_refs, *dynamic_refs, *certificate_refs]
     offline_path = project_root / OFFLINE_COMPLETION_ANALYSIS
     offline = json.loads(offline_path.read_text(encoding="utf-8")) if offline_path.exists() else {}
@@ -229,6 +233,10 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     practical_head = practical.get("headline") if isinstance(practical.get("headline"), dict) else {}
     transfer = practical.get("calibration_to_heldout") if isinstance(practical.get("calibration_to_heldout"), dict) else {}
     transfer_rows = {str(row.get("baseline")): row for row in (transfer.get("results") or []) if isinstance(row, dict)}
+    crossval_path = project_root / CROSSVAL_SPARSITY
+    crossval = json.loads(crossval_path.read_text(encoding="utf-8")) if crossval_path.exists() else {}
+    crossval_head = crossval.get("headline") if isinstance(crossval.get("headline"), dict) else {}
+    l1_sparsity = ((crossval.get("sparsity_frontiers") or {}).get("skillsp_l1_full") or {})
     skillrl_budget_path = project_root / SKILLRL_BUDGET_BASELINES
     skillrl_budget = json.loads(skillrl_budget_path.read_text(encoding="utf-8")) if skillrl_budget_path.exists() else {}
     skillrl_head = skillrl_budget.get("headline") if isinstance(skillrl_budget.get("headline"), dict) else {}
@@ -247,6 +255,16 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
         and float(practical_head.get("level1_nnls_cv") or 99.0) < float(practical_head.get("level1_uniform_cv") or -99.0)
         and transfer.get("no_heldout_refit") is True
         and abs(float(((transfer_rows.get("exact_rstar") or {}).get("heldout_metrics") or {}).get("distortion_ratio") or -99.0) - 2.0) <= 1e-12
+        and crossval.get("new_model_calls") == 0 and crossval.get("new_gpu_runs") == 0 and crossval.get("claim_expansion") is False
+        and int(crossval_head.get("leave_one_tool_out_folds") or 0) == 8
+        and abs(float(crossval_head.get("exact_rstar_heldout_ratio_median") or -99.0) - 2.0) <= 1e-12
+        and abs(float(crossval_head.get("exact_rstar_heldout_ratio_max") or -99.0) - 2.0) <= 1e-12
+        and abs(float(crossval_head.get("uniform_heldout_ratio_max") or -99.0) - 2.0) <= 1e-12
+        and float(crossval_head.get("nnls_heldout_ratio_max") or 0.0) > 6.0
+        and int(crossval_head.get("l1_minimum_feasible_active_packages") or 0) == 3
+        and int(crossval_head.get("l1_minimum_active_packages_attaining_unrestricted_R_star") or 0) == 3
+        and abs(float(crossval_head.get("l1_unrestricted_R_star") or -99.0) - 2.0) <= 1e-12
+        and int(l1_sparsity.get("minimum_feasible_active_packages") or 0) == 3
         and skillrl_budget.get("new_model_calls") == 0 and skillrl_budget.get("new_gpu_runs") == 0 and skillrl_budget.get("claim_expansion") is False
         and int(skillrl_head.get("top_k_6_official_targets_changed") or 0) == 11
         and int(skillrl_head.get("top_k_6_official_targets_reduced") or 0) == 5
@@ -296,7 +314,7 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     manuscript_ablation = "\\label{fig:ablation-robustness}" in body and "representation ablations" in body.lower()
     manuscript_failure = all(marker in body for marker in ("Across 49 tools", "overlap-without-witness", "equalizable", "Package-wide support overstatement"))
     manuscript_sensitivity = all(marker in body for marker in ("1,387", "366 valid deletions", "127/595", "184 tool-block", "49/56", "Exact neutral-target MILPs require at least 22 added cells", "71 deletions", "200 degree-preserving bipartite rewirings", "7/7 frozen target rays", "max-share", "22 pairwise-disjoint three-row witnesses", "19 tools"))
-    manuscript_breadth = all(marker in (body + tables) for marker in ("98.33", "NNLS", "Heldout", "without refitting", "SkillRouter", "75 scored queries", "11/12 targets", "k=13", "non-dynamic-ID duplicate", "retrieval-relevance analogue", "79/87 rows disagree"))
+    manuscript_breadth = all(marker in (body + tables) for marker in ("98.33", "NNLS", "Heldout", "leave-one-tool-out", "6.10", "budgets 1--2 cannot cover Level-1", "SkillRouter", "75 scored queries", "11/12 targets", "k=13", "non-dynamic-ID duplicate", "retrieval-relevance analogue", "79/87 rows disagree"))
     manuscript_dynamic = all(marker in body for marker in ("AutoSkill: dynamic behavioral propagation", "6/6 original", "0/6 split", "3/3 placebo", "3/3 quotient", "0.00108", "matched cleanup add-back", "1/20"))
     manuscript_scale = all(marker in body for marker in ("E6: conditional solver cost", "16{,}384\\times96", "0.765", "32,768 inequalities", "24.25 MiB", "host-load-dependent"))
     manuscript_refs = [PAPER_BODY, PAPER_TABLES, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, *offline_refs, *structural_refs, *breadth_refs]
@@ -343,7 +361,7 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
 def build_asset_first_stri_paper_quality(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     quality = build_stri_quality_contract()
     completion = build_stri_completion(project_root)
-    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, OFFLINE_COMPLETION_ANALYSIS, OFFLINE_COMPLETION_ANALYSIS_CODE, OFFLINE_COMPLETION_ANALYSIS_TEST, TARGET_NULL_ANALYSIS, TARGET_NULL_ANALYSIS_CODE, WITNESS_PEELING, WITNESS_PEELING_CODE, SUPPORT_EDIT_RADIUS, SUPPORT_EDIT_RADIUS_CODE, STRUCTURAL_ENRICHMENT_TEST, PRACTICAL_BASELINES, PRACTICAL_BASELINES_CSV, PRACTICAL_BASELINES_CODE, PRACTICAL_BASELINES_TEST, SKILLRL_BUDGET_BASELINES, SKILLRL_BUDGET_BASELINES_CSV, SKILLRL_BUDGET_BASELINES_CODE, SKILLRL_BUDGET_BASELINES_TEST, SKILLROUTER_RELEVANCE, SKILLROUTER_RELEVANCE_CSV, SKILLROUTER_RELEVANCE_CODE, SKILLROUTER_RELEVANCE_TEST, SKILLSBENCH_SUPPORT_QUAL, SKILLSBENCH_SUPPORT_QUAL_CSV, SKILLSBENCH_SUPPORT_QUAL_CODE, SKILLSBENCH_SUPPORT_QUAL_TEST, CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST, DYNAMIC_QUALIFICATION, DYNAMIC_CONTRACT, DYNAMIC_PLAN, DYNAMIC_RESULT, DYNAMIC_RUN_MANIFEST, MEDIATOR_V1_CONTRACT, MEDIATOR_V1_DIAGNOSIS, MEDIATOR_V2_CONTRACT, MEDIATOR_V2_RESULT, CERTIFICATE_CODE, CERTIFICATE_TEST, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
+    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, OFFLINE_COMPLETION_ANALYSIS, OFFLINE_COMPLETION_ANALYSIS_CODE, OFFLINE_COMPLETION_ANALYSIS_TEST, TARGET_NULL_ANALYSIS, TARGET_NULL_ANALYSIS_CODE, WITNESS_PEELING, WITNESS_PEELING_CODE, SUPPORT_EDIT_RADIUS, SUPPORT_EDIT_RADIUS_CODE, STRUCTURAL_ENRICHMENT_TEST, PRACTICAL_BASELINES, PRACTICAL_BASELINES_CSV, PRACTICAL_BASELINES_CODE, PRACTICAL_BASELINES_TEST, CROSSVAL_SPARSITY, CROSSVAL_SPARSITY_CSV, CROSSVAL_SPARSITY_CODE, CROSSVAL_SPARSITY_TEST, SKILLRL_BUDGET_BASELINES, SKILLRL_BUDGET_BASELINES_CSV, SKILLRL_BUDGET_BASELINES_CODE, SKILLRL_BUDGET_BASELINES_TEST, SKILLROUTER_RELEVANCE, SKILLROUTER_RELEVANCE_CSV, SKILLROUTER_RELEVANCE_CODE, SKILLROUTER_RELEVANCE_TEST, SKILLSBENCH_SUPPORT_QUAL, SKILLSBENCH_SUPPORT_QUAL_CSV, SKILLSBENCH_SUPPORT_QUAL_CODE, SKILLSBENCH_SUPPORT_QUAL_TEST, CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST, DYNAMIC_QUALIFICATION, DYNAMIC_CONTRACT, DYNAMIC_PLAN, DYNAMIC_RESULT, DYNAMIC_RUN_MANIFEST, MEDIATOR_V1_CONTRACT, MEDIATOR_V1_DIAGNOSIS, MEDIATOR_V2_CONTRACT, MEDIATOR_V2_RESULT, CERTIFICATE_CODE, CERTIFICATE_TEST, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
     source_sha256 = {rel: _sha256(project_root / rel) for rel in source_artifacts}
     audit = audit_manuscript_evidence_completion(
         quality,

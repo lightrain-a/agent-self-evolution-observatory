@@ -19,22 +19,22 @@ SkillRL & Fresh-ID exact clones change semantic retrieval for 11/12 targets acro
 
 \begin{table}[t]
 \centering
-\caption{Practical package-weight baselines. Entries are neutral-target worst-case exposure ratios (lower is better). ``Heldout'' freezes weights fitted on calibration tools; no heldout refit is allowed. Semantic-first changes the action basis and is shown only as an upper-bound construction.}
+\caption{Practical package-weight baselines. Entries are neutral-target worst-case exposure ratios (lower is better). ``Heldout'' is the frozen 4-tool$\to$4-tool split; ``LOO max'' is the worst of eight leave-one-tool-out transfers with no heldout refit. Semantic-first changes the action basis and is only an upper bound.}
 \label{tab:reductions}
 \small
-\setlength{\tabcolsep}{2.7pt}
-\begin{tabular}{lrrrr}
+\setlength{\tabcolsep}{2.1pt}
+\begin{tabular}{lrrrrr}
 \toprule
-Baseline & L1 full & Heldout & L3 & Logical \\
+Baseline & L1 full & Heldout & LOO max & L3 & Logical \\
 \midrule
-Released uniform & 2.00 & 2.00 & 1.00 & 8.00 \\
-Inverse support size & 98.33 & 2.89 & 3.00 & 15.67 \\
-Inverse $\sqrt{\text{support}}$ & 10.87 & 2.38 & 1.73 & 11.02 \\
-NNLS target fit & 5.51 & 3.98 & 1.00 & 1.00 \\
-Exact min-cover + uniform & 2.00 & 2.00 & 1.00 & 1.00 \\
-Max--min fair & 2.00 & 2.00 & 1.00 & 1.00 \\
-Exact $R^*$ & \textbf{2.00} & \textbf{2.00} & \textbf{1.00} & \textbf{1.00} \\
-Semantic-first$^\dagger$ & 1.00 & 1.00 & 1.00 & 1.00 \\
+Released uniform & 2.00 & 2.00 & 2.00 & 1.00 & 8.00 \\
+Inverse support size & 98.33 & 2.89 & 3.50 & 3.00 & 15.67 \\
+Inverse $\sqrt{\text{support}}$ & 10.87 & 2.38 & 2.58 & 1.73 & 11.02 \\
+NNLS target fit & 5.51 & 3.98 & 6.10 & 1.00 & 1.00 \\
+Exact min-cover + uniform & 2.00 & 2.00 & 2.00 & 1.00 & 1.00 \\
+Max--min fair & 2.00 & 2.00 & 2.00 & 1.00 & 1.00 \\
+Exact $R^*$ & \textbf{2.00} & \textbf{2.00} & \textbf{2.00} & \textbf{1.00} & \textbf{1.00} \\
+Semantic-first$^\dagger$ & 1.00 & 1.00 & 1.00 & 1.00 & 1.00 \\
 \bottomrule
 \end{tabular}
 \end{table}
