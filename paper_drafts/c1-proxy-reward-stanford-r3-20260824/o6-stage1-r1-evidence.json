@@ -1,0 +1,178 @@
+{
+  "artifact_type": "o6-cross-writer-stage1-r1-handoff",
+  "bindings": {
+    "authorization_sha256": "52895af2094b1277fae551a45f9bf4df2283b482b27926fe32a3cccd9ffa100a",
+    "contract_sha256": "16be37f6419a8ec36a214fb09dac1c96117e6607b8a97cd8d649c6cf4a690e72",
+    "parent_failure_asset_sha256": "f7c204ea3f68a87082c729d5f6206077e04d995c93242af8baf8caa803bf7112",
+    "repair_design_sha256": "19b3ea55704f4774405713f285b29d53f0ece7d78f9299fbb81ae86939f879b8",
+    "result_sha256": "85662afcc1a49b9d51e8ea5b22c6a30e85749c37828513a9e45d08070d8a0bf2"
+  },
+  "claim_boundary": {
+    "domain_generalization_supported": false,
+    "terminal_cross_writer_supported": false,
+    "write_channel_cross_writer_supported_on_four_sources": true,
+    "writer_population_generalization_supported": false
+  },
+  "claim_expansion_authority": false,
+  "execution_accounting": {
+    "parent_2200_provider_posts_exact": null,
+    "parent_2200_provider_posts_observable_lower_bound": 9,
+    "parent_2200_scientific_stage_pass": false,
+    "r1_4096_provider_calls": 8,
+    "r1_4096_scientifically_usable_calls": 8,
+    "r1_resume_new_calls": 2,
+    "r1_resume_reused_cached_calls": 6
+  },
+  "memory_objects": [
+    {
+      "condition": "success_label_memory",
+      "raw_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o6-cross-writer-glm53-stage1-r1-4096-20260824/private/raw/f1/f192e822b752b19f720df3f8b4e6b97f7fb8d4bf89200912159dd6a55fc76900.txt",
+      "raw_sha256": "f192e822b752b19f720df3f8b4e6b97f7fb8d4bf89200912159dd6a55fc76900",
+      "source_memory_task": "21"
+    },
+    {
+      "condition": "failure_label_memory",
+      "raw_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o6-cross-writer-glm53-stage1-r1-4096-20260824/private/raw/22/22ebbc4b7c7af34765f078c5262777310dd75ae15fd564181c64c7185b8bad04.txt",
+      "raw_sha256": "22ebbc4b7c7af34765f078c5262777310dd75ae15fd564181c64c7185b8bad04",
+      "source_memory_task": "21"
+    },
+    {
+      "condition": "success_label_memory",
+      "raw_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o6-cross-writer-glm53-stage1-r1-4096-20260824/private/raw/55/55c0544a8b20c26418e75003528bd5830cd0038a37791d125427b0eb7e372fe0.txt",
+      "raw_sha256": "55c0544a8b20c26418e75003528bd5830cd0038a37791d125427b0eb7e372fe0",
+      "source_memory_task": "22"
+    },
+    {
+      "condition": "failure_label_memory",
+      "raw_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o6-cross-writer-glm53-stage1-r1-4096-20260824/private/raw/af/af99ffb053231d9c2b85c94e84be0b1442b0a4415fe4682e96a8de0a05ef4696.txt",
+      "raw_sha256": "af99ffb053231d9c2b85c94e84be0b1442b0a4415fe4682e96a8de0a05ef4696",
+      "source_memory_task": "22"
+    },
+    {
+      "condition": "success_label_memory",
+      "raw_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o6-cross-writer-glm53-stage1-r1-4096-20260824/private/raw/6d/6d23409e4036c1970416ef67b6bc23b77d6d4cff918505711f5b3ed143b99523.txt",
+      "raw_sha256": "6d23409e4036c1970416ef67b6bc23b77d6d4cff918505711f5b3ed143b99523",
+      "source_memory_task": "23"
+    },
+    {
+      "condition": "failure_label_memory",
+      "raw_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o6-cross-writer-glm53-stage1-r1-4096-20260824/private/raw/d2/d29c8a65ab17ad05b448bf25d5aa4bc2e7c0cd2f15ed246bd64d42d10ba31a0d.txt",
+      "raw_sha256": "d29c8a65ab17ad05b448bf25d5aa4bc2e7c0cd2f15ed246bd64d42d10ba31a0d",
+      "source_memory_task": "23"
+    },
+    {
+      "condition": "success_label_memory",
+      "raw_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o6-cross-writer-glm53-stage1-r1-4096-20260824/private/raw/ae/ae53802eea468ada4cb0e183c5aa7862ee3f777042b9c7cad037a4a42ccaef77.txt",
+      "raw_sha256": "ae53802eea468ada4cb0e183c5aa7862ee3f777042b9c7cad037a4a42ccaef77",
+      "source_memory_task": "25"
+    },
+    {
+      "condition": "failure_label_memory",
+      "raw_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o6-cross-writer-glm53-stage1-r1-4096-20260824/private/raw/bd/bd997de47ce3aed07cca76e3ae5b2b580be6b19cfa48b1d938228510d70e0a80.txt",
+      "raw_sha256": "bd997de47ce3aed07cca76e3ae5b2b580be6b19cfa48b1d938228510d70e0a80",
+      "source_memory_task": "25"
+    }
+  ],
+  "objection_id": "PROXY-O6",
+  "pair_results": [
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "22ebbc4b7c7af34765f078c5262777310dd75ae15fd564181c64c7185b8bad04",
+      "failure_titles": [
+        "Exhaust all review pages before concluding a search",
+        "Detect and recover from truncated extraction and answer outputs",
+        "Expand collapsed review text and scroll before extracting"
+      ],
+      "success_memory_sha256": "f192e822b752b19f720df3f8b4e6b97f7fb8d4bf89200912159dd6a55fc76900",
+      "success_titles": [
+        "Navigate to the Reviews section before scanning for reviewer feedback",
+        "Use keyword variants and explicit output fields when extracting review content",
+        "Return structured, evidence-backed answers and plan for pagination"
+      ],
+      "task_id": "21",
+      "title_set_changed": true,
+      "title_set_parseable_both": true,
+      "token_jaccard_distance": 0.782772
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "af99ffb053231d9c2b85c94e84be0b1442b0a4415fe4682e96a8de0a05ef4696",
+      "failure_titles": [
+        "Explicitly extract content after every pagination click",
+        "Verify complete pagination coverage before concluding \"no matches\"",
+        "Match semantic paraphrases rather than only literal keyword variants"
+      ],
+      "success_memory_sha256": "55c0544a8b20c26418e75003528bd5830cd0038a37791d125427b0eb7e372fe0",
+      "success_titles": [
+        "Open the dedicated Reviews section before scanning review content",
+        "Search for multiple spelling and phrasing variants of the target keyword",
+        "Exhaust all review pages before concluding no matches exist"
+      ],
+      "task_id": "22",
+      "title_set_changed": true,
+      "title_set_parseable_both": true,
+      "token_jaccard_distance": 0.728395
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "d29c8a65ab17ad05b448bf25d5aa4bc2e7c0cd2f15ed246bd64d42d10ba31a0d",
+      "failure_titles": [
+        "Extract relevant details on the first visit to each paginated page",
+        "Match feature mentions using synonyms and paraphrases",
+        "Verify complete coverage of all items before concluding"
+      ],
+      "success_memory_sha256": "6d23409e4036c1970416ef67b6bc23b77d6d4cff918505711f5b3ed143b99523",
+      "success_titles": [
+        "Access Reviews via the Review Count Link on Product Pages",
+        "Systematically Traverse All Pages of Paginated Reviews",
+        "Search for Synonyms and Report Reviewers with Supporting Quotes"
+      ],
+      "task_id": "23",
+      "title_set_changed": true,
+      "title_set_parseable_both": true,
+      "token_jaccard_distance": 0.715356
+    },
+    {
+      "complete_pair": true,
+      "exact_content_changed": true,
+      "failure_memory_sha256": "bd997de47ce3aed07cca76e3ae5b2b580be6b19cfa48b1d938228510d70e0a80",
+      "failure_titles": [
+        "Exhaustively paginate through all review pages before concluding",
+        "Match semantic intent, not just keyword overlap",
+        "Detect and handle truncated extraction output"
+      ],
+      "success_memory_sha256": "ae53802eea468ada4cb0e183c5aa7862ee3f777042b9c7cad037a4a42ccaef77",
+      "success_titles": [
+        "Use synonym-rich keywords when extracting subjective sentiment from reviews",
+        "Apply semantic filtering beyond keyword matches",
+        "Open the dedicated reviews section first and check for pagination"
+      ],
+      "task_id": "25",
+      "title_set_changed": true,
+      "title_set_parseable_both": true,
+      "token_jaccard_distance": 0.723404
+    }
+  ],
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "stage2_gate_inherited_unchanged": {
+    "mean_absolute_success_rate_difference_min": 0.15,
+    "permutation_p_lt": 0.05
+  },
+  "stage2_provider_calls_authorized_by_handoff": 0,
+  "stage2_requires_separate_execution_contract": true,
+  "status": "STAGE1_R1_PASS_READY_FOR_SEPARATE_STAGE2_CONTRACT",
+  "summary": {
+    "complete_pairs": 4,
+    "complete_provider_calls": 8,
+    "exact_content_changed_pairs": 4,
+    "mean_token_jaccard_distance": 0.737482,
+    "requested_provider_calls": 8,
+    "stage1_gate_pass": true,
+    "title_set_changed_pairs": 4
+  }
+}
