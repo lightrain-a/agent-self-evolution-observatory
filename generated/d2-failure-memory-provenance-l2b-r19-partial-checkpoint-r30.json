@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-PARTIAL-CHECKPOINT-R30",
+  "recorded_at": "2026-08-24T13:42:06+00:00",
+  "status": "R19_CONFIRMATORY_PREFIX_CHECKPOINT_NO_INTERIM_INFERENCE",
+  "execution": {
+    "episodes_expected": 140,
+    "episodes_complete": 28,
+    "complete_independent_tasks": 7,
+    "next_sequence_index": 28,
+    "agent_completions": 483,
+    "agent_completion_budget": 4200,
+    "fuzzy_evaluator_completions": 0,
+    "fuzzy_evaluator_completion_budget": 600,
+    "post_started_failure": false,
+    "in_flight_episode": false
+  },
+  "integrity": {
+    "attempts_jsonl_sha256": "48099117ad0d10f9ad430780ebebd13ba0ab80c315c7e113f2ae3558d0355e67",
+    "progress_jsonl_sha256": "a3ed9bd8cc4358490f75625aaeb751322de7690b8c682e61da18d7a7cc2c6b49",
+    "run_contract_sha256": "4aaddd71a0e89fa6d4e57c61f8f84acbea833ad7bb0c237128c1695c12cfa786",
+    "summary_sha256": "92c36fa9b9431483528935328f0853e1e0e9d058be4571408d962c033c2c855e",
+    "seq000_preexposure_failure_sha256": "064ac9858c8c5619fb889f0379accce0c0c9b409ad99e3d78ada0bdb86cca5a5",
+    "seq000_retry_adjudication_sha256": "a7d951ef6a29d83988d7475e8dd970fccd60e3370f72c095a1e30068b11834d0",
+    "seq026_preexposure_failure_sha256": "6db0e08ef26006c07f18811833c613832df6196fc647e2e3fe807a6d08d33f2f",
+    "seq026_retry_adjudication_sha256": "b59ce863db0af091fe2e914a2edffd3ef6dc1d32fc4a6bca8bf06529f40c0810"
+  },
+  "retry_state": {
+    "sequence26_exact_retry_consumed": true,
+    "sequence26_additional_retry_permitted": false
+  },
+  "interim_policy": {
+    "terminal_scores_in_public_checkpoint": false,
+    "task_deltas_computed": false,
+    "effect_mean_computed": false,
+    "p_value_computed": false,
+    "confidence_interval_computed": false,
+    "outcome_adaptive_stop_or_extension": false,
+    "next_execution_must_resume_exact_frozen_sequence": 28,
+    "claim_update_allowed": false
+  },
+  "scientific_verdict": "NO_VERDICT_INCOMPLETE_CONFIRMATORY_EXECUTION",
+  "scientific_claim_authority": false
+}

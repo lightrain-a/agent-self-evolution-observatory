@@ -53,6 +53,11 @@ def main() -> None:
         'post_started_failure':ck['execution']['post_started_failure'],
         'in_flight_episode':ck['execution']['in_flight_episode'],
       },
+      'pre_exposure_retry_state':{
+        'sequence26_exact_retry_consumed':bool((ck.get('retry_state') or {}).get('sequence26_exact_retry_consumed',False)),
+        'sequence26_additional_retry_permitted':bool((ck.get('retry_state') or {}).get('sequence26_additional_retry_permitted',False)),
+        'sequence26_retry_adjudication_sha256':(ck.get('integrity') or {}).get('seq026_retry_adjudication_sha256'),
+      },
       'interim_policy':{
         'terminal_scores_exposed_in_projection':False,
         'task_deltas_computed':False,'effect_mean_computed':False,'p_value_computed':False,'confidence_interval_computed':False,
