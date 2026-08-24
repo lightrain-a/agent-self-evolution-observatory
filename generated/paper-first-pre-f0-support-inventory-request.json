@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0-pre-f0",
-  "generated_at": "2026-08-23T07:07:34+00:00",
-  "run_id": "20260823T063055Z",
+  "generated_at": "2026-08-24T06:51:38+00:00",
+  "run_id": "operator-recompile-v18",
   "status": "PROBLEM_FALSIFIER_SUPPORT_INVENTORY_REQUEST_READY",
   "source": "CANONICAL_PRE_F0_QUEUE",
   "policy": {
@@ -30,8 +30,8 @@
     "automatic_gpu_authority": false
   },
   "summary": {
-    "queued": 1,
-    "inventory_requests": 1,
+    "queued": 3,
+    "inventory_requests": 3,
     "problem_gate_authorized": 0,
     "paper_design_authorized": 0,
     "method_authorized": 0,
@@ -41,20 +41,63 @@
   },
   "rows": [
     {
-      "candidate_id": "PORT-017",
+      "candidate_id": "PORT-006",
       "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "4b5cf1325651543149a72c088ddd670d9fcb3d7366988353c996940c4a571566",
-      "title": "The Intervention Knowledge Bottleneck: Convergent Failure at Entity-Level Modification Knowledge",
+      "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+      "title": "Reset-semantic substrate corruption as a convergent failure regime in repeated bounded self-improvement",
       "discovery_lane": "CONVERGENT_FAILURE",
-      "source_branch_id": "CONVERGENT_FAILURE-P1-002",
+      "source_branch_id": "CONVERGENT_FAILURE-P1-001-G1-G2",
+      "primary_refs": [
+        "arXiv:2608.19197",
+        "arXiv:2608.20318"
+      ],
+      "exact_prediction": "In a repeated bounded self-improvement loop on executable Gym-style or repository-training substrates, edits that change reset/initialization semantics while preserving or improving the fixed evaluator's short-run score will produce lower downstream training performance than matched edits that change only step dynamics; moreover, the probability or severity of below-no-training performance will increase across rounds when corrupted artifacts are carried forward, even after controlling for task distribution, diversity, step-transition validity, code complexity, and training budget.",
+      "strongest_same_information_baseline": "A compound distribution-shift/negative-transfer plus coupled-optimization baseline that receives the same generated-task distribution, step-transition statistics, reward signal, memory/designer state, learner state, training budget, and evaluator feedback, and attributes below-baseline outcomes to non-reset mismatch or instability.",
+      "falsifier_expression": "Using released or easily constructed Gym-style executable environments, create a small preregistered repeated-round study with matched edit pairs: one edit changes reset/initialization only, the other changes step dynamics only, while holding task goal, reward scale, transition difficulty/diversity, code complexity, training budget, and evaluator score fixed. Train identical learners after each edit and across carried rounds. The candidate is falsified if reset-only edits do not produce more below-no-training outcomes or more recurrence than step-only edits after these controls. A secondary AI4AI-Bench-side check can statically/dynamically diff submitted rewrites for initialization, seeding, checkpoint loading, dataloader construction, environment construction, and reset-call changes and test whether those changes predict below-0.1 cells after controlling for other code-change features.",
+      "endpoint_headroom_requirement": "The effect must exceed ordinary distribution-shift and coupled-optimization controls under matched information; a merely nonzero rate of below-baseline edits is insufficient because 124/290 already establishes aggregate regression, not reset-specific causation.",
+      "support_inventory_question": "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
+      "required_receipt_dispositions": [
+        "HOLD_SUPPORT_UNAVAILABLE",
+        "SUPPORT_QUALIFIED"
+      ],
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "PORT-010",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3",
+      "title": "Complex-description boundary in end-to-end 3D world construction",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "source_branch_id": "UNEXPLAINED_BOUNDARY-P1-004",
+      "primary_refs": [
+        "arXiv:2608.15265"
+      ],
+      "exact_prediction": "After matching prompt length, number of constraints, referential ambiguity, asset count, rubric difficulty, and spatial-quantity demand, Complex Description/Scene Restatement queries will still show lower Pass@1 and a higher concentration of cross-stage intent-to-layout/render binding failures than other VWE-Bench query types; clarifying text alone will not close the gap unless it also resolves executable binding.",
+      "strongest_same_information_baseline": "A matched long-context plus spatial-grounding baseline that uses query length, constraint count, ambiguity, asset count, distance/angle/object-count demands, and stage-specific grounding/editing errors to predict Pass@1.",
+      "falsifier_expression": "Using released VWE-Bench/VibeWorlding-Gym units, construct a matched comparison: sample Complex Description/Scene Restatement failures and easier-query controls matched on length, constraint count, asset count, rubric difficulty, and spatial-quantity demand; annotate stage-specific errors; optionally generate clarified-query versions. The falsifier is passed if query type no longer predicts Pass@1 or stage-specific binding failure after these controls.",
+      "endpoint_headroom_requirement": "To remain paperable beyond a benchmark observation, the candidate needs a prospective pre-outcome feature or controlled intervention that predicts the below-50% basin and separates executable cross-stage binding from long-context, generic underspecification, and spatial-grounding baselines.",
+      "support_inventory_question": "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
+      "required_receipt_dispositions": [
+        "HOLD_SUPPORT_UNAVAILABLE",
+        "SUPPORT_QUALIFIED"
+      ],
+      "scientific_authority": false
+    },
+    {
+      "candidate_id": "PORT-011",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "17b8b764c71b1ce6de7e9b221e4181043d190f66de2cf0189c6e4452c3970674",
+      "title": "Stateful-feedback validity horizon for self-evolving skill controllers",
+      "discovery_lane": "ASSUMPTION_BREAK",
+      "source_branch_id": "ASSUMPTION_BREAK-P1-002",
       "primary_refs": [
         "arXiv:2608.13120",
-        "arXiv:2608.18933"
+        "arXiv:2608.20139"
       ],
-      "exact_prediction": "Across additional independent self-evolution methods (beyond SkillForge and SkillEvo), failure will consistently occur at the entity-level intervention knowledge level when the acquisition mechanism lacks multi-turn interaction or entity-grounded modification examples, and this failure will not be overcome by simply increasing the quantity of single-turn or non-entity-grounded data.",
-      "strongest_same_information_baseline": "Knowledge representation bottleneck theory (procedural vs declarative knowledge) applied to self-evolving agents.",
-      "falsifier_expression": "Identify a third independent self-evolution method (e.g., a different knowledge acquisition approach) and test whether it also fails specifically at entity-level intervention knowledge when lacking multi-turn or entity-grounded data. If the third method does not show this convergent failure, or if the failure is overcome by increasing data quantity without the specific structural characteristics, the convergence claim is falsified.",
-      "endpoint_headroom_requirement": "The convergent failure must be observed in at least one additional independent method with a statistically significant performance drop (e.g., >3%) at the intervention knowledge level, and the failure must persist despite increased data quantity lacking the required structural characteristics.",
+      "exact_prediction": "Under matched model, task distribution, initial feedback, update budget, and harness-state statistics, an update schedule selected from initial single-turn feedback will fail or stagnate when later multi-turn interactions reveal defects outside the initial feedback basis; a stateful feedback-refresh controller will improve on those same units. A generic stale-supervision/nonstationarity baseline given the same feedback recency and occupancy statistics will not predict the basis-mismatch split.",
+      "strongest_same_information_baseline": "A stale-supervision/nonstationary online-learning baseline that receives the same early and later feedback samples, recency, sample size, occupancy/domain-shift statistics, and update budget, and predicts performance solely from distribution shift and fresh-information availability.",
+      "falsifier_expression": "Using the released or reproducible SkillEvo substrate, create matched units with the same initial single-turn feedback and early TSR trajectory. In one arm, keep later defects within the initially revealed gap classes; in the other, introduce later multi-turn defects outside that class while matching task difficulty, model, revision budget, governance, and feedback quantity. Compare an initial-feedback-selected schedule against a stateful feedback-refresh schedule and a generic stale-supervision/nonstationarity baseline. If the generic baseline predicts the split equally well, reject the new problem formulation.",
+      "endpoint_headroom_requirement": "The residual must appear on prospective later-round defects before observing endpoint TSR, not by post hoc selection of trajectories where multi-turn feedback wins. It must survive matched feedback quantity, recency, task difficulty, governance action, and harness-state statistics.",
       "support_inventory_question": "Determine whether primary/author-released artifacts directly expose the observational/interventional units and fields needed for this frozen Pre-F0 falsifier, or whether author-released first-party code / an existing provenance-audited substrate can materialize those units as independent truth under the frozen operationalization. Reconstructed support is admissible only after materialization and provenance hashing, without synthetic substitution, candidate-mechanism injection, candidate-pool changes, or hidden-outcome retuning.",
       "required_receipt_dispositions": [
         "HOLD_SUPPORT_UNAVAILABLE",

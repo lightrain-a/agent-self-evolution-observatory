@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-23T07:07:34+00:00",
-  "source_generator_run_id": "20260823T063055Z",
+  "generated_at": "2026-08-24T09:34:22+00:00",
+  "source_generator_run_id": "20260824T061140Z",
   "source_generator_status": "GENERATED_PRE_F0_EVIDENCE_ACQUISITION",
   "status": "PRE_F0_QUEUE_READY",
   "policy": {
@@ -28,7 +28,7 @@
     "automatic_gpu_authority": false
   },
   "summary": {
-    "queued": 1,
+    "queued": 3,
     "problem_gate_authorized": 0,
     "paper_design_authorized": 0,
     "method_authorized": 0,
@@ -38,50 +38,51 @@
   },
   "rows": [
     {
-      "candidate_id": "PORT-017",
+      "candidate_id": "PORT-006",
       "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "4b5cf1325651543149a72c088ddd670d9fcb3d7366988353c996940c4a571566",
-      "title": "The Intervention Knowledge Bottleneck: Convergent Failure at Entity-Level Modification Knowledge",
+      "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+      "title": "Reset-semantic substrate corruption as a convergent failure regime in repeated bounded self-improvement",
       "discovery_lane": "CONVERGENT_FAILURE",
-      "source_branch_id": "CONVERGENT_FAILURE-P1-002",
+      "source_branch_id": "CONVERGENT_FAILURE-P1-001-G1-G2",
       "primary_refs": [
-        "arXiv:2608.13120",
-        "arXiv:2608.18933"
+        "arXiv:2608.19197",
+        "arXiv:2608.20318"
       ],
-      "irreducible_object": "The structural constraint that makes entity-level intervention knowledge (how to change specific code entities) a convergent failure point for both repository-grounded skill distillation and interaction-feedback skill evolution, despite their different knowledge acquisition mechanisms.",
+      "irreducible_object": "A repeated bounded self-improvement regime in which successful-looking updates to an executable learning substrate alter reset/initialization semantics rather than only step dynamics, causing later optimization to start from a corrupted or non-comparable state. The scientific question is whether such reset-semantic corruption forms a recurring/accumulating attractor across rounds, beyond one-shot weak edits, ordinary negative transfer, or generic nonstationarity.",
       "paperability_axes": {
         "P": {
           "label": "principle_or_problem_formulation",
-          "status": "OPEN",
-          "rationale": "The problem of identifying a convergent failure point across independent method families is formulated, but requires validation that the convergence is not coincidental or reducible to a generic limitation in knowledge acquisition."
+          "status": "PLAUSIBLE",
+          "rationale": "The branch formulates a potentially new failure regime: convergent degradation of reset/initialization semantics in self-modifying training substrates. It is not yet fully supported because the supplied evidence shows net regression but does not directly isolate reset-semantic changes from other algorithmic or distributional causes."
         },
         "M": {
           "label": "method_or_method_boundary",
           "status": "NOT_CLAIMED",
-          "rationale": "No new method is proposed; the contribution is the identification and characterization of the convergent failure regime."
+          "rationale": "No new repair or optimization method is proposed; the candidate is a problem/failure-regime formulation and measurement protocol."
         },
         "E": {
           "label": "empirical_phenomenon",
-          "status": "SUPPORTED",
-          "rationale": "The empirical evidence from two independent methods (SkillForge and SkillEvo) shows convergent failure at the intervention knowledge level, satisfying the lane contract for convergent failure."
+          "status": "PLAUSIBLE",
+          "rationale": "Two independent primary studies exhibit below-baseline regression after bounded self-improvement. However, the shared reset-corruption interpretation is not directly measured in the supplied evidence, so the phenomenon is plausible rather than established."
         },
         "B": {
           "label": "benchmark_or_evaluation",
-          "status": "NOT_CLAIMED",
-          "rationale": "No new benchmark is proposed."
+          "status": "OPEN",
+          "rationale": "A benchmark contribution could survive if the work introduces reset-semantic diagnostics and repeated-round evaluations on AI4AI-Bench/SPADE-like substrates. The current branch does not yet supply a concrete benchmark protocol or released controlled harness."
         },
         "T": {
           "label": "theory_or_guarantee",
           "status": "OPEN",
-          "rationale": "A theoretical contribution is possible if the structural constraint causing the convergence can be formalized (e.g., as a fundamental limitation in representing actionable modification knowledge), but this requires showing the constraint is not already captured by existing theories of knowledge representation or acquisition."
+          "rationale": "A theory contribution could identify conditions under which reset-semantic edits accumulate or recur, but no theorem or formal guarantee is supplied in the branch."
         },
         "S": {
           "label": "system_or_capability",
           "status": "NOT_CLAIMED",
-          "rationale": "No new system capability is claimed."
+          "rationale": "No new deployed system or capability is claimed; the emphasis is on diagnosing a failure regime."
         }
       },
       "surviving_paperability_axes": [
+        "P",
         "E"
       ],
       "non_principle_surviving_axes": [
@@ -89,12 +90,177 @@
       ],
       "route_reason": "EXACT_REDUCTION_PENDING",
       "reduction_blockers": [
-        "unresolved-exact-reduction-test:1"
+        "saturation-exact-reduction-pending:durable-runtime-improvement-vs-aging",
+        "saturation-exact-reduction-pending:future-evolvability-debt",
+        "saturation-exact-reduction-pending:persistent-world-gain-decomposition",
+        "saturation-exact-reduction-pending:self-play-evidence-endogeneity",
+        "unresolved-exact-reduction-test:1",
+        "unresolved-exact-reduction-test:3",
+        "unresolved-exact-reduction-test:4"
       ],
-      "exact_prediction": "Across additional independent self-evolution methods (beyond SkillForge and SkillEvo), failure will consistently occur at the entity-level intervention knowledge level when the acquisition mechanism lacks multi-turn interaction or entity-grounded modification examples, and this failure will not be overcome by simply increasing the quantity of single-turn or non-entity-grounded data.",
-      "strongest_same_information_baseline": "Knowledge representation bottleneck theory (procedural vs declarative knowledge) applied to self-evolving agents.",
-      "cheapest_problem_falsifier": "Identify a third independent self-evolution method (e.g., a different knowledge acquisition approach) and test whether it also fails specifically at entity-level intervention knowledge when lacking multi-turn or entity-grounded data. If the third method does not show this convergent failure, or if the failure is overcome by increasing data quantity without the specific structural characteristics, the convergence claim is falsified.",
-      "endpoint_headroom_requirement": "The convergent failure must be observed in at least one additional independent method with a statistically significant performance drop (e.g., >3%) at the intervention knowledge level, and the failure must persist despite increased data quantity lacking the required structural characteristics.",
+      "exact_prediction": "In a repeated bounded self-improvement loop on executable Gym-style or repository-training substrates, edits that change reset/initialization semantics while preserving or improving the fixed evaluator's short-run score will produce lower downstream training performance than matched edits that change only step dynamics; moreover, the probability or severity of below-no-training performance will increase across rounds when corrupted artifacts are carried forward, even after controlling for task distribution, diversity, step-transition validity, code complexity, and training budget.",
+      "strongest_same_information_baseline": "A compound distribution-shift/negative-transfer plus coupled-optimization baseline that receives the same generated-task distribution, step-transition statistics, reward signal, memory/designer state, learner state, training budget, and evaluator feedback, and attributes below-baseline outcomes to non-reset mismatch or instability.",
+      "cheapest_problem_falsifier": "Using released or easily constructed Gym-style executable environments, create a small preregistered repeated-round study with matched edit pairs: one edit changes reset/initialization only, the other changes step dynamics only, while holding task goal, reward scale, transition difficulty/diversity, code complexity, training budget, and evaluator score fixed. Train identical learners after each edit and across carried rounds. The candidate is falsified if reset-only edits do not produce more below-no-training outcomes or more recurrence than step-only edits after these controls. A secondary AI4AI-Bench-side check can statically/dynamically diff submitted rewrites for initialization, seeding, checkpoint loading, dataloader construction, environment construction, and reset-call changes and test whether those changes predict below-0.1 cells after controlling for other code-change features.",
+      "endpoint_headroom_requirement": "The effect must exceed ordinary distribution-shift and coupled-optimization controls under matched information; a merely nonzero rate of below-baseline edits is insufficient because 124/290 already establishes aggregate regression, not reset-specific causation.",
+      "next_if_positive": "RERUN_EXACT_SAME_INFORMATION_REDUCTION",
+      "next_if_support_missing": "SUPPORT_STOP_OR_BOUNDED_SUPPORT_ACQUISITION",
+      "next_if_protocol_invalid": "PROTOCOL_STOP_AND_REPAIR",
+      "next_if_realization_fails": "REALIZATION_STOP_AND_REPAIR",
+      "scientific_authority": false,
+      "authority": {
+        "problem_gate": false,
+        "paper_design": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      }
+    },
+    {
+      "candidate_id": "PORT-010",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3",
+      "title": "Complex-description boundary in end-to-end 3D world construction",
+      "discovery_lane": "UNEXPLAINED_BOUNDARY",
+      "source_branch_id": "UNEXPLAINED_BOUNDARY-P1-004",
+      "primary_refs": [
+        "arXiv:2608.15265"
+      ],
+      "irreducible_object": "A measurable failure-regime boundary in end-to-end multimodal world construction: after RL raises overall executable 3D construction performance, long underspecified Complex Description and Scene Restatement queries remain below 50% Pass@1. The scientific object is not query difficulty in general, but the transition between queries that can be solved by the trained intent-layout-tool-render-reflect loop and those that fail despite broad 3D-reasoning gains.",
+      "paperability_axes": {
+        "P": {
+          "label": "principle_or_problem_formulation",
+          "status": "PLAUSIBLE",
+          "rationale": "The branch can formulate a new problem around the executable-world-construction instruction-complexity boundary, but the supplied evidence only establishes aggregate query-type difficulty and does not yet define an independently manipulable boundary variable. A mature long-context/instruction-following or underspecification account may reduce P unless matched query features and execution stages are isolated."
+        },
+        "M": {
+          "label": "method_or_method_boundary",
+          "status": "NOT_CLAIMED",
+          "rationale": "No new agent method, training algorithm, or repair mechanism is supplied; the branch is currently a boundary/failure-regime candidate rather than a method contribution."
+        },
+        "E": {
+          "label": "empirical_phenomenon",
+          "status": "SUPPORTED",
+          "rationale": "Primary evidence supports a strong empirical phenomenon: frontier and RL-improved agents remain below 50% Pass@1 on Complex Description and Scene Restatement while overall post-RL performance reaches 56-85%, with VibeWorlder-30B-A3B at 85%."
+        },
+        "B": {
+          "label": "benchmark_or_evaluation",
+          "status": "PLAUSIBLE",
+          "rationale": "VWE-Bench/VibeWorlding-Gym already provides a substrate and query-type split, but benchmark-only novelty is insufficient. The axis survives only if the work adds a matched diagnostic protocol or controlled slice that predicts which long underspecified queries fail, rather than merely reporting existing categories."
+        },
+        "T": {
+          "label": "theory_or_guarantee",
+          "status": "OPEN",
+          "rationale": "No theorem, identifiability result, or formal guarantee is supplied. A theory contribution would require a testable decomposition of instruction complexity, underspecification, spatial precision, and execution-stage failure that makes ex-ante predictions."
+        },
+        "S": {
+          "label": "system_or_capability",
+          "status": "PLAUSIBLE",
+          "rationale": "The end-to-end system constraint is concrete: intent inference, layout planning, asset retrieval/editing, rendering, and multimodal reflection must all be present. However, no new system capability is yet demonstrated beyond the released VibeWorlding setup."
+        }
+      },
+      "surviving_paperability_axes": [
+        "P",
+        "E",
+        "B",
+        "S"
+      ],
+      "non_principle_surviving_axes": [
+        "E",
+        "B",
+        "S"
+      ],
+      "route_reason": "EXACT_REDUCTION_PENDING",
+      "reduction_blockers": [
+        "saturation-exact-reduction-pending:artifact-uptake-after-retrieval",
+        "saturation-exact-reduction-pending:self-generated-supervision-information-limit",
+        "saturation-exact-reduction-pending:verifier-exogeneity",
+        "unresolved-exact-reduction-test:1",
+        "unresolved-exact-reduction-test:2",
+        "unresolved-exact-reduction-test:3"
+      ],
+      "exact_prediction": "After matching prompt length, number of constraints, referential ambiguity, asset count, rubric difficulty, and spatial-quantity demand, Complex Description/Scene Restatement queries will still show lower Pass@1 and a higher concentration of cross-stage intent-to-layout/render binding failures than other VWE-Bench query types; clarifying text alone will not close the gap unless it also resolves executable binding.",
+      "strongest_same_information_baseline": "A matched long-context plus spatial-grounding baseline that uses query length, constraint count, ambiguity, asset count, distance/angle/object-count demands, and stage-specific grounding/editing errors to predict Pass@1.",
+      "cheapest_problem_falsifier": "Using released VWE-Bench/VibeWorlding-Gym units, construct a matched comparison: sample Complex Description/Scene Restatement failures and easier-query controls matched on length, constraint count, asset count, rubric difficulty, and spatial-quantity demand; annotate stage-specific errors; optionally generate clarified-query versions. The falsifier is passed if query type no longer predicts Pass@1 or stage-specific binding failure after these controls.",
+      "endpoint_headroom_requirement": "To remain paperable beyond a benchmark observation, the candidate needs a prospective pre-outcome feature or controlled intervention that predicts the below-50% basin and separates executable cross-stage binding from long-context, generic underspecification, and spatial-grounding baselines.",
+      "next_if_positive": "RERUN_EXACT_SAME_INFORMATION_REDUCTION",
+      "next_if_support_missing": "SUPPORT_STOP_OR_BOUNDED_SUPPORT_ACQUISITION",
+      "next_if_protocol_invalid": "PROTOCOL_STOP_AND_REPAIR",
+      "next_if_realization_fails": "REALIZATION_STOP_AND_REPAIR",
+      "scientific_authority": false,
+      "authority": {
+        "problem_gate": false,
+        "paper_design": false,
+        "method": false,
+        "experiment": false,
+        "p0": false,
+        "gpu": false
+      }
+    },
+    {
+      "candidate_id": "PORT-011",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "17b8b764c71b1ce6de7e9b221e4181043d190f66de2cf0189c6e4452c3970674",
+      "title": "Stateful-feedback validity horizon for self-evolving skill controllers",
+      "discovery_lane": "ASSUMPTION_BREAK",
+      "source_branch_id": "ASSUMPTION_BREAK-P1-002",
+      "primary_refs": [
+        "arXiv:2608.13120",
+        "arXiv:2608.20139"
+      ],
+      "irreducible_object": "A feedback-validity horizon object for self-evolving agents: given the same initial controller/update schedule and observable early-feedback state, predict whether later persistent-state changes will make the schedule invalid because newly exposed multi-turn defects lie outside the initial error basis. The object must separate feedback-source exhaustion from ordinary nonstationarity, stale supervision, and governance/action-surface changes.",
+      "paperability_axes": {
+        "P": {
+          "label": "principle_or_problem_formulation",
+          "status": "PLAUSIBLE",
+          "rationale": "A concrete new formulation is possible: characterize update policies whose validity depends on continuously stateful error feedback rather than initial-stage information. This is not merely nonstationary control in general because the agent object is the mismatch between the initial feedback basis and later defects exposed through persistent harness/memory/tool/verifier evolution. However, the supplied evidence only motivates the problem; it does not yet prove that existing continual-learning or online-learning formulations cannot express it."
+        },
+        "M": {
+          "label": "method_or_method_boundary",
+          "status": "OPEN",
+          "rationale": "No method is supplied in the branch. A surviving method contribution would require a controller, diagnostic, or intervention that uses the stateful-feedback horizon to decide when to refresh feedback or retire an update schedule, with matched controls for generic nonstationary adaptation and stale supervision."
+        },
+        "E": {
+          "label": "empirical_phenomenon",
+          "status": "PLAUSIBLE",
+          "rationale": "The SkillEvo evidence already shows a strong empirical contrast between single-turn and multi-turn feedback. A paper-worthy empirical axis would need a controlled comparison showing that initial-feedback-selected schedules fail predictably under later persistent-state changes, not merely that multi-turn feedback improves TSR."
+        },
+        "B": {
+          "label": "benchmark_or_evaluation",
+          "status": "OPEN",
+          "rationale": "No benchmark or evaluation protocol is yet specified beyond TSR in one source. A benchmark contribution would require tasks, agents, and metrics that expose delayed defects and measure schedule invalidity under matched initial information."
+        },
+        "T": {
+          "label": "theory_or_guarantee",
+          "status": "OPEN",
+          "rationale": "No theorem or guarantee is supplied. A theory contribution could state conditions under which initial-stage feedback is insufficient, but it must make an exact prediction beyond generic nonstationary model selection or stale-supervision bounds."
+        },
+        "S": {
+          "label": "system_or_capability",
+          "status": "NOT_CLAIMED",
+          "rationale": "The branch does not propose a deployed system or capability artifact; it is a problem-formulation and possible failure-regime candidate."
+        }
+      },
+      "surviving_paperability_axes": [
+        "P",
+        "E"
+      ],
+      "non_principle_surviving_axes": [
+        "E"
+      ],
+      "route_reason": "EXACT_REDUCTION_PENDING",
+      "reduction_blockers": [
+        "saturation-exact-reduction-pending:future-evolvability-debt",
+        "saturation-exact-reduction-pending:self-generated-supervision-information-limit",
+        "saturation-exact-reduction-pending:snapshot-validity-horizon",
+        "unresolved-exact-reduction-test:1",
+        "unresolved-exact-reduction-test:2",
+        "unresolved-exact-reduction-test:3"
+      ],
+      "exact_prediction": "Under matched model, task distribution, initial feedback, update budget, and harness-state statistics, an update schedule selected from initial single-turn feedback will fail or stagnate when later multi-turn interactions reveal defects outside the initial feedback basis; a stateful feedback-refresh controller will improve on those same units. A generic stale-supervision/nonstationarity baseline given the same feedback recency and occupancy statistics will not predict the basis-mismatch split.",
+      "strongest_same_information_baseline": "A stale-supervision/nonstationary online-learning baseline that receives the same early and later feedback samples, recency, sample size, occupancy/domain-shift statistics, and update budget, and predicts performance solely from distribution shift and fresh-information availability.",
+      "cheapest_problem_falsifier": "Using the released or reproducible SkillEvo substrate, create matched units with the same initial single-turn feedback and early TSR trajectory. In one arm, keep later defects within the initially revealed gap classes; in the other, introduce later multi-turn defects outside that class while matching task difficulty, model, revision budget, governance, and feedback quantity. Compare an initial-feedback-selected schedule against a stateful feedback-refresh schedule and a generic stale-supervision/nonstationarity baseline. If the generic baseline predicts the split equally well, reject the new problem formulation.",
+      "endpoint_headroom_requirement": "The residual must appear on prospective later-round defects before observing endpoint TSR, not by post hoc selection of trajectories where multi-turn feedback wins. It must survive matched feedback quantity, recency, task difficulty, governance action, and harness-state statistics.",
       "next_if_positive": "RERUN_EXACT_SAME_INFORMATION_REDUCTION",
       "next_if_support_missing": "SUPPORT_STOP_OR_BOUNDED_SUPPORT_ACQUISITION",
       "next_if_protocol_invalid": "PROTOCOL_STOP_AND_REPAIR",

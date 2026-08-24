@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-23T06:29:46+00:00",
+  "generated_at": "2026-08-24T05:16:44+00:00",
   "policy": {
     "semantic_scholar_is_discovery_metadata_not_primary_evidence": true,
     "verified_primary_page_required": true,
@@ -70,6 +70,8 @@
     "carrier_probe_pending_skips_live_generator_call": true,
     "source_review_exposure_has_zero_scientific_authority": true,
     "portable_source_review_receipts_have_zero_scientific_authority": true,
+    "portable_source_review_receipts_require_bound_review_artifact": true,
+    "portable_source_review_receipts_require_content_addressed_review_artifact": true,
     "private_saturation_ledger_runs_exported_as_zero_authority_portable_receipts": true,
     "source_exposure_cannot_skip_generation_or_problem_gate": true,
     "source_exposure_does_not_relax_relevance_or_freshness": true,
@@ -85,112 +87,166 @@
   },
   "summary": {
     "corpus_available": true,
-    "corpus_fresh": true,
-    "discovery_mode": "semantic-scholar-plus-arxiv-augmentation",
-    "augmentation_discovered": 560,
-    "augmentation_added": 505,
+    "corpus_fresh": false,
+    "discovery_mode": "arxiv-primary-fallback",
+    "augmentation_discovered": 0,
+    "augmentation_added": 0,
     "selected": 32,
     "verified": 32,
     "fetch_errors": 0,
     "title_mismatches": 0,
     "fulltext_verified": 31,
     "fulltext_fetch_errors": 1,
-    "empirical_fact_candidates": 118,
+    "empirical_fact_candidates": 115,
     "empirical_fact_tier_counts": {
-      "quantitative-directional": 56,
-      "strong-observation": 42,
-      "owned-directional": 7,
-      "result-section-directional": 13
+      "result-section-directional": 15,
+      "strong-observation": 41,
+      "quantitative-directional": 54,
+      "owned-directional": 5
     },
     "typed_evidence_candidates": {
-      "operational_assumptions": 4,
-      "measured_failures": 20,
-      "boundary_observations": 14
+      "operational_assumptions": 5,
+      "measured_failures": 18,
+      "boundary_observations": 12
     },
-    "recent_verified_cache_reused": 0,
-    "recent_raw_primary_cache_reused": 32,
-    "recent_raw_fulltext_cache_reused": 31,
-    "recent_fulltext_failure_cooldown_skips": 0,
+    "recent_verified_cache_reused": 27,
+    "recent_raw_primary_cache_reused": 1,
+    "recent_raw_fulltext_cache_reused": 0,
+    "recent_fulltext_failure_cooldown_skips": 1,
     "lane_floor": 1,
     "source_coverage_scheduler_active": true,
-    "saturation_ledger_runs": 32,
-    "portable_review_receipts_merged": 9,
-    "prior_reviewed_sources": 254,
-    "eligible_unreviewed": 226,
-    "eligible_lane_unreviewed": 222,
-    "eligible_no_lane_unreviewed": 4,
-    "selected_previously_reviewed": 7,
-    "selected_unreviewed": 25,
-    "selected_object_unreviewed": 25,
-    "selected_lane_unreviewed": 25,
+    "saturation_ledger_runs": 48,
+    "portable_review_receipts_merged": 25,
+    "prior_reviewed_sources": 450,
+    "eligible_unreviewed": 3,
+    "eligible_lane_unreviewed": 0,
+    "eligible_no_lane_unreviewed": 3,
+    "selected_previously_reviewed": 32,
+    "selected_unreviewed": 0,
+    "selected_object_unreviewed": 0,
+    "selected_lane_unreviewed": 0,
     "selected_no_lane_unreviewed": 0,
-    "carrier_probe_required": false,
-    "carrier_probe_attempted": 0,
+    "carrier_probe_required": true,
+    "carrier_probe_attempted": 3,
     "carrier_probe_reused": 0,
     "carrier_probe_rescued": 0,
     "carrier_probe_pending": 0,
     "carrier_probe_errors": 0,
     "carrier_probe_complete": true,
-    "eligible_object_linked_sources": 410,
-    "reviewed_object_linked_sources": 188,
-    "unreviewed_object_linked_sources": 222,
-    "eligible_lane_linked_sources": 445,
-    "reviewed_lane_linked_sources": 223,
-    "unreviewed_lane_linked_sources": 222,
-    "unreviewed_no_lane_sources": 4,
-    "source_coverage_exhausted": false,
+    "eligible_object_linked_sources": 345,
+    "reviewed_object_linked_sources": 345,
+    "unreviewed_object_linked_sources": 0,
+    "eligible_lane_linked_sources": 373,
+    "reviewed_lane_linked_sources": 373,
+    "unreviewed_lane_linked_sources": 0,
+    "unreviewed_no_lane_sources": 3,
+    "source_coverage_exhausted": true,
     "source_retrieval_complete": true,
     "coverage_anchor_count": 16,
     "eligible_object_lane_counts": {
-      "skill_harness": 212,
-      "memory_continual": 141,
-      "world_model": 46,
-      "parametric_model_state": 137
+      "skill_harness": 169,
+      "memory_continual": 109,
+      "world_model": 45,
+      "parametric_model_state": 134
     },
     "selected_object_lane_counts": {
-      "skill_harness": 14,
+      "skill_harness": 15,
       "memory_continual": 8,
-      "world_model": 3,
+      "world_model": 2,
       "parametric_model_state": 18
     },
     "eligible_lane_counts": {
-      "skill_harness": 212,
-      "memory_continual": 141,
-      "world_model": 46,
-      "parametric_model_state": 137,
-      "embodied": 60,
-      "collective": 42,
-      "autonomous_science": 18,
-      "runtime_deployment": 121,
-      "safety_reliability": 150
+      "skill_harness": 169,
+      "memory_continual": 109,
+      "world_model": 45,
+      "parametric_model_state": 134,
+      "embodied": 46,
+      "collective": 37,
+      "autonomous_science": 17,
+      "runtime_deployment": 108,
+      "safety_reliability": 123
     },
     "selected_lane_counts": {
-      "skill_harness": 14,
+      "skill_harness": 15,
       "memory_continual": 8,
-      "world_model": 3,
+      "world_model": 2,
       "parametric_model_state": 18,
       "embodied": 3,
       "collective": 1,
       "autonomous_science": 2,
       "runtime_deployment": 5,
-      "safety_reliability": 7
+      "safety_reliability": 6
     },
     "verified_lane_counts": {
-      "skill_harness": 14,
+      "skill_harness": 15,
       "memory_continual": 8,
-      "world_model": 3,
+      "world_model": 2,
       "parametric_model_state": 18,
       "embodied": 3,
       "collective": 1,
       "autonomous_science": 2,
       "runtime_deployment": 5,
-      "safety_reliability": 7
+      "safety_reliability": 6
     },
     "undercovered_lanes": [],
     "verified_undercovered_lanes": [],
     "candidate_generation_ready": true
   },
   "records": [
+    {
+      "evidence_id": "0d0e77a6c930079898491c5ea774974b8ddcf43d697ef9cb130eaf755d048fde",
+      "ref": "arXiv:2608.21156",
+      "title": "Graph Engineering in the Era of LLM Agents: From Individual Intelligence to System Intelligence",
+      "primary_url": "https://arxiv.org/abs/2608.21156",
+      "source_sha256": "46b610b1a891b5949e7e638c970256aea1a24e193a61efd85855eb370ed10e96",
+      "abstract_sha256": "1c45510d0f3e4402bf1d9ae441182d58dbdf2645a05ec14b7ffdefd1d3245cc9",
+      "year": 2026,
+      "publication_date": "2026-08-21",
+      "fetched_at": "2026-08-24T03:59:59+00:00",
+      "fulltext_sha256": "d93e1b0fe6fda213df186ecbe41a4d70ea8fe27b4dc065b51685f963deb59e18",
+      "empirical_fact_count": 2,
+      "typed_evidence_counts": {
+        "operational_assumptions": 1,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
+    {
+      "evidence_id": "133eb5fddf46e01f4092ef0ca9d5f4e3f0c946fc54f99fa9f9ca881c044fce3e",
+      "ref": "arXiv:2608.20920",
+      "title": "ForeDreamer: A Self-Evolving Dual-Agent Memory Architecture for Future Event Prediction",
+      "primary_url": "https://arxiv.org/abs/2608.20920",
+      "source_sha256": "624e74b67e8f1a3f2fed7380d690f079c22a7acdc135e099080cb0956748767c",
+      "abstract_sha256": "ca46a484c99ef01945b60188abfa1cc0eec82ae81342d2b8eb0c6c95110ee130",
+      "year": 2026,
+      "publication_date": "2026-08-21",
+      "fetched_at": "2026-08-24T03:59:59+00:00",
+      "fulltext_sha256": "0fcf1124a7ebc0367f45007dee2e901162c2f215fad3fb925e79111c93f52bc7",
+      "empirical_fact_count": 4,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 1
+      }
+    },
+    {
+      "evidence_id": "fbbe1fdbb6c62724f56885cae99359a32fae15820e82b4f54200e98c8376dbe3",
+      "ref": "arXiv:2608.21075",
+      "title": "AudioWorldSim: Realistic Binaural Audio Datasets For World Models",
+      "primary_url": "https://arxiv.org/abs/2608.21075",
+      "source_sha256": "6c593d602db8a2a820ea8528c7416571d13e88539d81a5b3512c8400150ffb6b",
+      "abstract_sha256": "3ee9889589cd72f8af000ad2d949fa0dbd03cffa4910801d3270cbcf080dedef",
+      "year": 2026,
+      "publication_date": "2026-08-21",
+      "fetched_at": "2026-08-24T03:59:59+00:00",
+      "fulltext_sha256": "68d1c04903216b01de8b7a2695269712759b45f83ae207bcf9b5e5614695e61c",
+      "empirical_fact_count": 3,
+      "typed_evidence_counts": {
+        "operational_assumptions": 0,
+        "measured_failures": 0,
+        "boundary_observations": 0
+      }
+    },
     {
       "evidence_id": "649b895d14b31e686a8542f8d448b8de98d81d1238790a40c2d9a00dd9c01eb6",
       "ref": "arXiv:2608.19842",
@@ -200,7 +256,7 @@
       "abstract_sha256": "36031e8be4ccb6549c171aa0297f5b48c05429807efc176661db2e7aa764d496",
       "year": 2026,
       "publication_date": "2026-08-20",
-      "fetched_at": "2026-08-23T06:30:50+00:00",
+      "fetched_at": "2026-08-24T03:59:59+00:00",
       "fulltext_sha256": "cfb380df59b6b8aeec9bf405c854d19dc4e4e1c9fc77e7fb789ed2a3138c96ed",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -210,16 +266,16 @@
       }
     },
     {
-      "evidence_id": "c850fe9df81306b8020abfbad8423a19f52598a753467455ca6de9804947fa2f",
+      "evidence_id": "6222d50bdbfba3532b45f81741907c38148fbd98c3afbb6b6ab34919e45066f2",
       "ref": "arXiv:2608.20139",
-      "title": "Reinforcement LearningtoHarness Approximation Errors for Long-Time QuantumSimulation",
+      "title": "Reinforcement Learning to Harness Approximation Errors for Long-Time Quantum Simulation",
       "primary_url": "https://arxiv.org/abs/2608.20139",
-      "source_sha256": "450e059953fc74225b89dedbaca5bb0aa1c9f34082641065a12105145e11a088",
+      "source_sha256": "eaf3b14130d9957d96629c98e2f9c02f48bf6f1314675463e127693887499653",
       "abstract_sha256": "727e2128a523399719ac8789611244ab285f11722fbc5683c9d36e087d3ea2f0",
       "year": 2026,
       "publication_date": "2026-08-20",
-      "fetched_at": "2026-08-23T06:30:50+00:00",
-      "fulltext_sha256": "f1425184eaa2ac3f00763945a95803cfb1620620d696e12c0e78c55fe6de0dc6",
+      "fetched_at": "2026-08-24T03:59:59+00:00",
+      "fulltext_sha256": "7741a70ae5a3bb757fd549dac771e16e0ef8a02ebde60c05ccf4ed22e7f2cb73",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
         "operational_assumptions": 1,
@@ -228,15 +284,15 @@
       }
     },
     {
-      "evidence_id": "f4eaa7cc976a29cc51ca4360df6e9b6905ffa8ccd496c04091972140079d4afa",
+      "evidence_id": "93d205c4830d44712938f3e4589bd759c2389dd2793c9ab9dceb88bdbe450ddc",
       "ref": "arXiv:2608.20314",
       "title": "MidTool: Mid-training Data Synthesis for Agentic Tool Use",
       "primary_url": "https://arxiv.org/abs/2608.20314",
-      "source_sha256": "a608e16e4845849cc6ba9404255df62e81aa4d4be53e26c87c6624aff2435604",
+      "source_sha256": "e8aa9b1764fb0ceb0d536aacba72c36af74ea26933d4b858bfbd217960bf3ab9",
       "abstract_sha256": "6aaa9e14dc0ac08ce49f9c9f2d8a853f21fb0cc62caed744edeb123b969b7589",
       "year": 2026,
       "publication_date": "2026-08-20",
-      "fetched_at": "2026-08-23T06:30:50+00:00",
+      "fetched_at": "2026-08-24T03:59:59+00:00",
       "fulltext_sha256": "986db124b6cff01b2386cc186a021661526ef575d0c5ea3c681c9e44556f0d2c",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -254,7 +310,7 @@
       "abstract_sha256": "c045863051d1fce1de14c3fe2a226d9427370d6652621729e73421f81e9742ca",
       "year": 2026,
       "publication_date": "2026-08-20",
-      "fetched_at": "2026-08-23T06:30:51+00:00",
+      "fetched_at": "2026-08-24T05:17:52+00:00",
       "fulltext_sha256": "",
       "empirical_fact_count": 0,
       "typed_evidence_counts": {
@@ -272,7 +328,7 @@
       "abstract_sha256": "0cbaa0a9c1f606234ebf47e3b9be1ec40c6a7d89417ed5c0f6616d544fc4b9a8",
       "year": 2026,
       "publication_date": "2026-08-20",
-      "fetched_at": "2026-08-23T06:30:51+00:00",
+      "fetched_at": "2026-08-24T04:00:00+00:00",
       "fulltext_sha256": "f28374e677a0543db1140a1b54f3b61c50e758c161b8b35d849cafbc7e2fcf6c",
       "empirical_fact_count": 3,
       "typed_evidence_counts": {
@@ -290,7 +346,7 @@
       "abstract_sha256": "1d1d8795424c2fb13f31ccb695c2c137fe367d7b27a4d0ec6ef3eef20dfa4cf9",
       "year": 2026,
       "publication_date": "2026-08-20",
-      "fetched_at": "2026-08-23T06:30:51+00:00",
+      "fetched_at": "2026-08-24T04:00:00+00:00",
       "fulltext_sha256": "c02902de7d9a238934f62fe96cf9332b0e0039081d9dcba8110d76d744d3ef85",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -308,7 +364,7 @@
       "abstract_sha256": "467253365745b391f1e055abf76c44593053c2ccb504a3ddfc80114b2445a7ef",
       "year": 2026,
       "publication_date": "2026-08-19",
-      "fetched_at": "2026-08-23T06:30:51+00:00",
+      "fetched_at": "2026-08-24T04:00:00+00:00",
       "fulltext_sha256": "b424d69aaf6d5ce5a6d04920bb1025d89036da7a8e714611f4d967c08f67e465",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -326,7 +382,7 @@
       "abstract_sha256": "dd10bb1e42b4036671476c4dc12b1e1bba311aaf5fdcd7e0ad404bfe6d75a989",
       "year": 2026,
       "publication_date": "2026-08-19",
-      "fetched_at": "2026-08-23T06:30:51+00:00",
+      "fetched_at": "2026-08-24T04:00:00+00:00",
       "fulltext_sha256": "b32f0a7bcde946f3c7b960deba8c528ded17b4187a598a722ee59bdb9968b7cc",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -344,7 +400,7 @@
       "abstract_sha256": "d020b20ac602cde0136e67a25288b8764dc8be704fa1dc2f632f8f9941345635",
       "year": 2026,
       "publication_date": "2026-08-19",
-      "fetched_at": "2026-08-23T06:30:52+00:00",
+      "fetched_at": "2026-08-24T04:00:01+00:00",
       "fulltext_sha256": "20e30a9390fa857c20f6d903de770f60eedf75cb408ad55f41478a677229cbf0",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -362,7 +418,7 @@
       "abstract_sha256": "773acc2a191514ba18612f6fbde67fe3768328fca6f07c760b78f30149f75968",
       "year": 2026,
       "publication_date": "2026-08-19",
-      "fetched_at": "2026-08-23T06:30:52+00:00",
+      "fetched_at": "2026-08-24T04:00:01+00:00",
       "fulltext_sha256": "9c77e8e9678a0507784547ed84e2d5f44940ad86390a5d9ac46d483b0bd6c35e",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -380,7 +436,7 @@
       "abstract_sha256": "f28d7952a23fe553916e0545ff1c313bafed94eab959a4117be0729dfd574335",
       "year": 2026,
       "publication_date": "2026-08-19",
-      "fetched_at": "2026-08-23T06:30:52+00:00",
+      "fetched_at": "2026-08-24T04:00:01+00:00",
       "fulltext_sha256": "2de6028cecfc086ac9b7e647be1040b53e6db863404249ebbc9e960e67504182",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -398,7 +454,7 @@
       "abstract_sha256": "27ed9bbc133adeea916a96819a1ad5680b624f14d056ac04c5c02be5feb7bde0",
       "year": 2026,
       "publication_date": "2026-08-19",
-      "fetched_at": "2026-08-23T06:30:52+00:00",
+      "fetched_at": "2026-08-24T04:00:01+00:00",
       "fulltext_sha256": "3f3ef293601d112bb7f11413e22dd7612a28a67416ee074727d926b423b1e615",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -416,7 +472,7 @@
       "abstract_sha256": "68fc0bdc39a7986667130e23dfa193fb98282c30c32aca4ab30059708c935252",
       "year": 2026,
       "publication_date": "2026-08-18",
-      "fetched_at": "2026-08-23T06:30:52+00:00",
+      "fetched_at": "2026-08-24T04:00:02+00:00",
       "fulltext_sha256": "2d24607853cec7142861ffd0b601bc100a9e1d20b38a1640fe8c839299370b5f",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -434,7 +490,7 @@
       "abstract_sha256": "937079c154e37361b4e8b05252b07352deefbf836192ca8bd88a9a6a8c6e1865",
       "year": 2026,
       "publication_date": "2026-08-18",
-      "fetched_at": "2026-08-23T06:30:52+00:00",
+      "fetched_at": "2026-08-24T05:13:08+00:00",
       "fulltext_sha256": "6c1b5ecf30408f679476cc7c0f13743b9898e80f81cf5c09574c5843bbdd37ff",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -452,7 +508,7 @@
       "abstract_sha256": "3abe4bbf4a3e6b41b30cc4c45a27e4335c5cb3086ff20f4c8cadf52435d57980",
       "year": 2026,
       "publication_date": "2026-08-18",
-      "fetched_at": "2026-08-23T06:30:52+00:00",
+      "fetched_at": "2026-08-24T05:13:10+00:00",
       "fulltext_sha256": "0920047a1aa02ab3cefaad564065f464dba7f0555993a79cea91904d9a69c320",
       "empirical_fact_count": 3,
       "typed_evidence_counts": {
@@ -462,34 +518,16 @@
       }
     },
     {
-      "evidence_id": "a25208c4c38a496bea4551115574686de11412d0a2d04af4b7367ea5f696f6b3",
-      "ref": "arXiv:2608.18066",
-      "title": "On the Fragility of Self-Improving Agents: Variance, Task Order, and Underspecification",
-      "primary_url": "https://arxiv.org/abs/2608.18066",
-      "source_sha256": "d6c188120b6e2268a4bc44f601282a1b9569e4199743c6ffa09729b1c5c5e2b3",
-      "abstract_sha256": "a0ebca13c07ca38c9142e9bf989061004d55dd09d4e2052c5587bd64a247c54a",
-      "year": 2026,
-      "publication_date": "2026-08-18",
-      "fetched_at": "2026-08-23T06:30:53+00:00",
-      "fulltext_sha256": "12c8bc7ab1f80a19fc296c67748814390c474469b482854923a3768591723650",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 0,
-        "boundary_observations": 2
-      }
-    },
-    {
-      "evidence_id": "d7cc71767dbb8b9c02317f6597316ee1a7148ba1b10f78e2575da3f3118a45bf",
+      "evidence_id": "275196d3b13cec3b58aaaedf9f41db937901928545d1a34f54634138013c7380",
       "ref": "arXiv:2608.17310",
       "title": "Agentic ESOpt: Fine-Tuning Long-Horizon LLM Agents with Minimal GPU Requirements",
       "primary_url": "https://arxiv.org/abs/2608.17310",
-      "source_sha256": "dba9b97fa676d9263964b72d553cfdcecb1073a00ed4594d8ee3614728ec6bf0",
+      "source_sha256": "6abceb4315b0cc882c1c33a0b7788bde9a7a93a3b09413c280ff9911dde49688",
       "abstract_sha256": "996939c6bcee15e439d32a17d568de52362f4b194cc9c31d24b9059e30c2ac4e",
       "year": 2026,
       "publication_date": "2026-08-18",
-      "fetched_at": "2026-08-23T06:30:53+00:00",
-      "fulltext_sha256": "ff2050d489fac20e6a6b56628093a88a3e95ce193e794d6eb682e7a83702a099",
+      "fetched_at": "2026-08-24T05:13:12+00:00",
+      "fulltext_sha256": "f2eaf2c43b81f60e35d6697e495293828d47849bfb29cb3073474910c3936c71",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
         "operational_assumptions": 0,
@@ -506,7 +544,7 @@
       "abstract_sha256": "4c1c695f979ae4259a43ead8b40c014177d19edb6450f0cf7aeceaa2521319a4",
       "year": 2026,
       "publication_date": "2026-08-18",
-      "fetched_at": "2026-08-23T06:30:53+00:00",
+      "fetched_at": "2026-08-24T05:13:13+00:00",
       "fulltext_sha256": "6834f41cd9878ab947194857f53df2da149d7d059de406d09eadf6f9d2fe23d4",
       "empirical_fact_count": 2,
       "typed_evidence_counts": {
@@ -524,7 +562,7 @@
       "abstract_sha256": "5c6ed4f464e9cb9848c2bea616456ef2d4446d7ea9b65a6fd32f2af13f476bf2",
       "year": 2026,
       "publication_date": "2026-08-17",
-      "fetched_at": "2026-08-23T06:30:53+00:00",
+      "fetched_at": "2026-08-24T05:13:15+00:00",
       "fulltext_sha256": "234d7aede7ae20f88ac1daffdd86b3c317548ef853f8f140d934f4ac5170e2a9",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -542,7 +580,7 @@
       "abstract_sha256": "b02fe4ee82f7d0e69deedb11cfd5103c2db021fbed1df9e25fb114b47bfcdaac",
       "year": 2026,
       "publication_date": "2026-08-17",
-      "fetched_at": "2026-08-23T06:30:53+00:00",
+      "fetched_at": "2026-08-24T05:13:16+00:00",
       "fulltext_sha256": "c9d92852d8e93bb0aeae36bee5458ed3d671de07460703e25a57d1f9cfa54a89",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -560,7 +598,7 @@
       "abstract_sha256": "728c0b2b22000d1a3b5763d72dfe9f97958b40ad06a1a5304bce4d552b3b9314",
       "year": 2026,
       "publication_date": "2026-08-17",
-      "fetched_at": "2026-08-23T06:30:53+00:00",
+      "fetched_at": "2026-08-24T05:13:18+00:00",
       "fulltext_sha256": "aa432f8d3abaf5378723879473958d13bef00260d162d3d992d359ab85dc7541",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -578,7 +616,7 @@
       "abstract_sha256": "642795162011e88bf69d9b6d50361c5f466c3e587fdf11cd375c083d5288eb19",
       "year": 2026,
       "publication_date": "2026-08-17",
-      "fetched_at": "2026-08-23T06:30:53+00:00",
+      "fetched_at": "2026-08-24T05:13:20+00:00",
       "fulltext_sha256": "e4ab1d78bfd008cc4691e1ec32b3e4c53511bcd9d22d427c26a2cb71051ac55b",
       "empirical_fact_count": 2,
       "typed_evidence_counts": {
@@ -596,7 +634,7 @@
       "abstract_sha256": "5ddcab3bab4eeb684406622aff629f89d6eedab4902189b896cca1b479cb1d60",
       "year": 2026,
       "publication_date": "2026-08-16",
-      "fetched_at": "2026-08-23T06:30:54+00:00",
+      "fetched_at": "2026-08-24T05:13:21+00:00",
       "fulltext_sha256": "9ae514032696a021cad6641193f13c15dab247c795072100f81982045a540892",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -614,7 +652,7 @@
       "abstract_sha256": "a93865d24f9ab3226f88236603d5235be4bdb96d690893dd5cafc4673467300e",
       "year": 2026,
       "publication_date": "2026-08-15",
-      "fetched_at": "2026-08-23T06:30:54+00:00",
+      "fetched_at": "2026-08-24T05:13:23+00:00",
       "fulltext_sha256": "6982d567fbc764ab921dbb411b5493c5ad83fd752a4f49dcd67a6fcd686f25bf",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -632,7 +670,7 @@
       "abstract_sha256": "342f23b09054cc237e9ce94e7468c9f487a1386db56a19f79775b6b059fadbe6",
       "year": 2026,
       "publication_date": "2026-08-15",
-      "fetched_at": "2026-08-23T06:30:54+00:00",
+      "fetched_at": "2026-08-24T05:13:25+00:00",
       "fulltext_sha256": "41f829be7378c578bf611d1a739243e42d47ee65c221ff5ddd21e1c50a87fd5f",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -650,7 +688,7 @@
       "abstract_sha256": "ef09237097b63147a4ab6ddc7dc96c8cf03059764c0e72bd609edd968f2a63a1",
       "year": 2026,
       "publication_date": "2026-08-14",
-      "fetched_at": "2026-08-23T06:30:54+00:00",
+      "fetched_at": "2026-08-24T05:13:27+00:00",
       "fulltext_sha256": "62539c3a34ceede3989326edea4d7131080905de4666db17fb322e387fe29b0a",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -660,15 +698,15 @@
       }
     },
     {
-      "evidence_id": "813b07688d037fdc9889b5f061d74dc016d23b30e4ab4101d63bf9b414c3c423",
+      "evidence_id": "6768b3e54f0a218ef13db79d696c333720993f5cbda0aa2d34fd158010892f5c",
       "ref": "arXiv:2608.14498",
       "title": "Rollplex: Cross-Phase GPU Spatial Sharing for Vision Language Model Post-Training",
       "primary_url": "https://arxiv.org/abs/2608.14498",
-      "source_sha256": "858b99b2e6bfff20543c87937f3eb11b734cad488b964fd3ca6d1903c47a684d",
+      "source_sha256": "b7535755e803be63711ab6574d14f72e0e12311fd3861e21ca1a96149efa6fa0",
       "abstract_sha256": "113f2cc18034eef9a67e958e4cc1cd0de2e0912e6940867c7453a229343d422a",
       "year": 2026,
       "publication_date": "2026-08-14",
-      "fetched_at": "2026-08-23T06:30:54+00:00",
+      "fetched_at": "2026-08-24T05:17:53+00:00",
       "fulltext_sha256": "fb0694e6d6ef11915113e9cd100224ca02d5a6d93b8b97fb4dc0ba91598e286a",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -686,7 +724,7 @@
       "abstract_sha256": "937ccaebf328da4944dcab7f2dd3408b3c83359053d1a3235afbf476e8b6d7cf",
       "year": 2026,
       "publication_date": "2026-08-14",
-      "fetched_at": "2026-08-23T06:30:54+00:00",
+      "fetched_at": "2026-08-24T05:17:55+00:00",
       "fulltext_sha256": "807c0dcaf3009fe4969b6273bcc1eb5154e6b4833f2d6b34b5bf8975e87e9fe1",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -704,7 +742,7 @@
       "abstract_sha256": "79a0c70ea28cefa663513c8722a6a63eb83b9611f1286eed548d3d206a91ec7e",
       "year": 2026,
       "publication_date": "2026-08-13",
-      "fetched_at": "2026-08-23T06:30:55+00:00",
+      "fetched_at": "2026-08-24T05:17:57+00:00",
       "fulltext_sha256": "0ee1e52ced6161dfbb6336e826aa634986edb8d6bb21c08cce2fbd04ba78dc3b",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -722,7 +760,7 @@
       "abstract_sha256": "5abce0ee8564c094d2717cf8af4c73b269f4fd5e1571f96865aa1678904937dc",
       "year": 2026,
       "publication_date": "2026-08-13",
-      "fetched_at": "2026-08-23T06:30:55+00:00",
+      "fetched_at": "2026-08-24T05:17:59+00:00",
       "fulltext_sha256": "82d698a58bc95ccd17e5b53d0e49612c439a2f66dfc43c2e034e0932bfcd536f",
       "empirical_fact_count": 4,
       "typed_evidence_counts": {
@@ -730,54 +768,18 @@
         "measured_failures": 1,
         "boundary_observations": 0
       }
-    },
-    {
-      "evidence_id": "03f9a1451ec8018e7d3a80777903ba9746a49726eb51a592b54b55648343b4ab",
-      "ref": "arXiv:2608.13103",
-      "title": "S2-HWM: Sparse Event-Structured Hierarchical World Model for Long-Horizon Surgical Robot Manipulation",
-      "primary_url": "https://arxiv.org/abs/2608.13103",
-      "source_sha256": "bdd02e13bf01a8e7207482b044fbbad6544cd45ba1f889bad576fe8c10f6eba4",
-      "abstract_sha256": "24835c85bee1408fa345fd14cdd2e063703cecb469c5dba6d8613714cc1e31b8",
-      "year": 2026,
-      "publication_date": "2026-08-13",
-      "fetched_at": "2026-08-23T06:30:55+00:00",
-      "fulltext_sha256": "5c9d4cdfc0291fcd83df91c654127be45c95a4654b5e6e37aed89c1f0f8ef122",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 2,
-        "boundary_observations": 1
-      }
-    },
-    {
-      "evidence_id": "daac8ba8626d723aa1eaa3613d03326c14a5b430d5eed9fb808a28e11cf479ed",
-      "ref": "arXiv:2608.13552",
-      "title": "PlayWorld: Benchmarking World Models with Agent Players over Long-Horizon Objectives",
-      "primary_url": "https://arxiv.org/abs/2608.13552",
-      "source_sha256": "a0540cdcba7cc49f8fa9635b93f7cb3171f61e1058c13843819b5d7271224c45",
-      "abstract_sha256": "64680c3cf845dd60d44b2064f8e5ec34029f806e15acf5ccf6865ffd102bfadd",
-      "year": 2026,
-      "publication_date": "2026-08-13",
-      "fetched_at": "2026-08-23T06:30:55+00:00",
-      "fulltext_sha256": "4966589e2fbf9888cbd3baca988ada001b7e26e16bcb0e743be57b9406ced912",
-      "empirical_fact_count": 4,
-      "typed_evidence_counts": {
-        "operational_assumptions": 0,
-        "measured_failures": 0,
-        "boundary_observations": 0
-      }
     }
   ],
   "errors": [],
   "discovery_errors": [],
   "corpus_retrieved_at": "2026-08-13T07:06:23+00:00",
-  "corpus_age_days": 9.974581285439815,
+  "corpus_age_days": 10.923864224282408,
   "carrier_probe": {
     "enabled": true,
-    "required": false,
-    "classifier_version": "",
+    "required": true,
+    "classifier_version": "existing-object-carrier-v1",
     "probe_limit": 3,
-    "attempted": 0,
+    "attempted": 3,
     "reused": 0,
     "rescued": 0,
     "pending": 0,
@@ -785,20 +787,8 @@
     "errors": [],
     "portable_receipts": [
       {
-        "ref": "arXiv:2608.08022",
-        "probed_at": "2026-08-16T16:18:50+00:00",
-        "title_fingerprint": "e1ef70e1156ed8fc24a129a6f2dc62cb343b2e553be137214ac300a09b776bdc",
-        "publication_date": "2026-08-08",
-        "primary_sha256": "6258788ff2947915d3c8981663bc64658be20805f332220efd98123284e44dc6",
-        "fulltext_sha256": "821b631067e7cb2449b8a87744706b02abe0356795679f26de0a92f02404928f",
-        "classifier_version": "existing-object-carrier-v1",
-        "matched_existing_object_lanes": [],
-        "live_rescue_eligible_lanes": [],
-        "scientific_authority": false
-      },
-      {
         "ref": "arXiv:2607.14408",
-        "probed_at": "2026-08-17T16:17:14+00:00",
+        "probed_at": "2026-08-24T05:16:44+00:00",
         "title_fingerprint": "694774a91ece195df7804e18fad505513562192ad3175102565966f883998b27",
         "publication_date": "2026-07-15",
         "primary_sha256": "cd1960e907ae5df706ba1ba199aaf0a6568f7e2693eeddaa155f061397380b74",
@@ -810,7 +800,7 @@
       },
       {
         "ref": "arXiv:2607.03766",
-        "probed_at": "2026-08-17T16:17:14+00:00",
+        "probed_at": "2026-08-24T05:16:44+00:00",
         "title_fingerprint": "c09047514dc69d3b7498d61977a9250c40f0f9fbf481051880e30077d27cf30e",
         "publication_date": "2026-07-04",
         "primary_sha256": "9b65189075f272ec69303ddaf584198c74dd7e86dc7666801860e9e19751be65",
@@ -822,7 +812,7 @@
       },
       {
         "ref": "arXiv:2607.11913",
-        "probed_at": "2026-08-16T16:18:50+00:00",
+        "probed_at": "2026-08-24T05:16:44+00:00",
         "title_fingerprint": "d76384b12243b53f6d86a76750d22f4fa9445ffdf826327562e8e5d27c58ab03",
         "publication_date": "2026-07-04",
         "primary_sha256": "a615cc1c77c69b95f5b23fa86d2447b10c8d91b6198df5d2abf7b7289ba1787a",
@@ -840,10 +830,10 @@
   "fulltext_errors": [
     {
       "ref": "arXiv:2608.19880",
-      "error": "RuntimeError:HTTP 404"
+      "error": "recent-fulltext-failure-cooldown"
     }
   ],
   "status": "READY",
-  "discovery_transaction_id": "937727fc9687537371d657268f505ad1167f4a1dab32cfb85c2a5bf27f2004cf",
+  "discovery_transaction_id": "3552144aa57495c88a2262a5c4e5673da7a49e201abaec3e730a15c70e7be802",
   "discovery_transaction_role": "primary"
 }
