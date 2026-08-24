@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "external-review-submission-public",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "publication_code": "E2",
+  "revision": "R14",
+  "title": "Do Temporal Skills Really Repair Agents? An Intervention Audit of Repair and Attribution",
+  "service": "Stanford Agentic Reviewer · paperreview.ai",
+  "venue": "ICLR",
+  "status": "SUBMITTED_FOR_EXTERNAL_REVIEW",
+  "review_result_status": "PENDING",
+  "generated_at": "2026-08-24T05:43:19.300739+00:00",
+  "submitted_at_utc": "2026-08-24T05:43:19.300739+00:00",
+  "submitted_at_beijing": "2026-08-24 13:43:19 +08:00",
+  "pdf_sha256": "0fef51f15bb188fc669411be8d6dedaeae7d83389cec3f5d917f9a120fe2906e",
+  "pdf_pages": 14,
+  "review_token_private": true,
+  "email_private": true,
+  "review_result_available": false,
+  "interpretation_zh": "E2 R14 已重新提交 Stanford Agentic Reviewer。当前只公开送审状态与内容哈希，不公开 review token 或邮箱；结果返回前不预填分数或 verdict。",
+  "interpretation_en": "E2 R14 has been resubmitted to Stanford Agentic Reviewer. Only submission status and content hash are public; the review token and email remain private, and no score or verdict is filled before the result arrives.",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "submission": false,
+    "external_review_advisory_only": true
+  }
+}

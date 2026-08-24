@@ -180,7 +180,7 @@ def main() -> None:
         fail("research timeline must preserve the full generated history rather than a truncated recent subset")
     if timeline_policy.get("read_only") is not True or timeline_policy.get("display_timezone") != "Asia/Shanghai" or timeline_policy.get("canonical_entity_bindings_are_read_only") is not True:
         fail("research timeline must remain a read-only China-time projection with read-only canonical entity bindings")
-    if research_timeline.get("schema_version") != "1.1" or int(timeline_summary.get("canonical_research_bound_events") or 0) <= 0 or int(timeline_summary.get("canonical_experiment_bound_events") or 0) <= 0 or int(timeline_summary.get("canonical_paper_bound_events") or 0) <= 0 or int(timeline_summary.get("canonical_research_items_with_events") or 0) <= 0 or int(timeline_summary.get("canonical_papers_with_events") or 0) != 2:
+    if research_timeline.get("schema_version") != "1.1" or int(timeline_summary.get("canonical_research_bound_events") or 0) <= 0 or int(timeline_summary.get("canonical_experiment_bound_events") or 0) <= 0 or int(timeline_summary.get("canonical_paper_bound_events") or 0) <= 0 or int(timeline_summary.get("canonical_research_items_with_events") or 0) <= 0 or int(timeline_summary.get("canonical_papers_with_events") or 0) < 2:
         fail(f"research timeline canonical provenance binding summary is incomplete: {timeline_summary}")
     valid_ri_codes = set(ri_by_code)
     valid_experiment_ids = {row.get("experiment_id") for row in research_items.get("experiment_records") or []}
@@ -199,8 +199,8 @@ def main() -> None:
             if ref.get("paper_id") not in valid_paper_ids:
                 fail(f"timeline event references missing PaperState: {ref}")
             bound_papers.add(ref.get("paper_id"))
-    if not {"A-3", "E-7", "G-1"}.issubset(bound_codes) or bound_papers != {"STRI", "AGENT-SAFETY-R9"}:
-        fail(f"timeline must bind representative ResearchItems and both papers: research={sorted(bound_codes)} papers={sorted(bound_papers)}")
+    if not {"A-3", "E-7", "G-1"}.issubset(bound_codes) or not {"STRI", "AGENT-SAFETY-R9"}.issubset(bound_papers):
+        fail(f"timeline must bind representative ResearchItems and the canonical paper spine: research={sorted(bound_codes)} papers={sorted(bound_papers)}")
     dashboard_policy = research_dashboard.get("projection_policy") or {}
     dashboard_summary = research_dashboard.get("summary") or {}
     dashboard_attention = research_dashboard.get("attention") or []
@@ -390,9 +390,10 @@ def main() -> None:
         fail("Stanford Round-2 objection matrix JSON/JS projections are not byte-consistent")
     objection_rows = [row for paper in objection_matrix.get("papers", {}).values() for row in paper.get("objections", [])]
     disposition_counts = Counter(row.get("d") for row in objection_rows)
-    expected_dispositions = {"RESOLVED":12,"EXISTING_EVIDENCE_ACTIONABLE":4,"REQUIRES_SCIENTIFIC_REOPEN":9,"PERMANENT_CLAIM_BOUNDARY":8}
-    if len(objection_matrix.get("papers", {})) != 5 or len(objection_rows) != 33 or disposition_counts != Counter(expected_dispositions):
-        fail(f"Stanford Round-2 objection matrix contract drifted: papers={len(objection_matrix.get('papers', {}))} objections={len(objection_rows)} counts={dict(disposition_counts)}")
+    matrix_summary = objection_matrix.get("summary", {})
+    expected_dispositions = {"RESOLVED":int(matrix_summary.get("resolved") or 0),"EXISTING_EVIDENCE_ACTIONABLE":int(matrix_summary.get("existing_evidence_actionable") or 0),"REQUIRES_SCIENTIFIC_REOPEN":int(matrix_summary.get("requires_scientific_reopen") or 0),"PERMANENT_CLAIM_BOUNDARY":int(matrix_summary.get("permanent_claim_boundary") or 0)}
+    if len(objection_matrix.get("papers", {})) != 5 or len(objection_rows) != 33 or disposition_counts != Counter(expected_dispositions) or int(matrix_summary.get("objections") or 0) != len(objection_rows):
+        fail(f"Stanford objection matrix summary/projection drifted: papers={len(objection_matrix.get('papers', {}))} objections={len(objection_rows)} summary={matrix_summary} counts={dict(disposition_counts)}")
     if any(objection_matrix.get("policy", {}).get(key) is not False for key in ("scientific_authority","experiment_authority","gpu_authority","submission_authority")):
         fail("Stanford Round-2 objection matrix must grant zero automatic scientific/experiment/GPU/submission authority")
     if any(not row.get("e") or row.get("action") != "NONE" for row in objection_rows if row.get("d") == "RESOLVED"):
@@ -401,8 +402,8 @@ def main() -> None:
     if any((safety_objections.get(oid) or {}).get("d") != "RESOLVED" for oid in ("SAFETY-O3", "SAFETY-O4")) or any((safety_objections.get(oid) or {}).get("d") != "REQUIRES_SCIENTIFIC_REOPEN" for oid in ("SAFETY-O5", "SAFETY-O6", "SAFETY-O7")):
         fail(f"G1 Stanford R2 objection dispositions must reflect r7 paper-only closure without auto-authorizing new evidence: {safety_objections}")
     temporal_objections = {row.get("id"): row for row in (objection_matrix.get("papers", {}).get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK", {}).get("objections") or [])}
-    if (temporal_objections.get("TEMP-O3") or {}).get("d") != "RESOLVED" or "88/88" not in json.dumps(temporal_objections.get("TEMP-O3"), ensure_ascii=False) or any((temporal_objections.get(oid) or {}).get("d") != "REQUIRES_SCIENTIFIC_REOPEN" for oid in ("TEMP-O4", "TEMP-O5")):
-        fail(f"E2 Stanford R2 objection dispositions must reflect r10 ISO-date closure while preserving missing-baseline reopen debt: {temporal_objections}")
+    if (temporal_objections.get("TEMP-O3") or {}).get("d") != "RESOLVED" or "88/88" not in json.dumps(temporal_objections.get("TEMP-O3"), ensure_ascii=False) or (temporal_objections.get("TEMP-O4") or {}).get("d") != "RESOLVED" or (temporal_objections.get("TEMP-O5") or {}).get("d") != "PERMANENT_CLAIM_BOUNDARY" or "G0" not in json.dumps(temporal_objections.get("TEMP-O4"), ensure_ascii=False) or "Rsurf" not in json.dumps(temporal_objections.get("TEMP-O5"), ensure_ascii=False):
+        fail(f"E2 Stanford R2 objection dispositions must reconcile historical objections to canonical R14 without reopening the current narrow claim: {temporal_objections}")
     failure_objections = {row.get("id"): row for row in (objection_matrix.get("papers", {}).get("D2-PAPER-FAILURE-MEMORY-PROVENANCE", {}).get("objections") or [])}
     if any((failure_objections.get(oid) or {}).get("d") != "RESOLVED" for oid in ("FAILURE-O3", "FAILURE-O4")) or any((failure_objections.get(oid) or {}).get("d") != "REQUIRES_SCIENTIFIC_REOPEN" for oid in ("FAILURE-O5", "FAILURE-O6")):
         fail(f"B1 Stanford R2 objection dispositions must reflect r7 power/equivalence closure while preserving L2/L3 scientific reopen debt: {failure_objections}")

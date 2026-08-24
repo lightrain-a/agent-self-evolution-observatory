@@ -4,8 +4,8 @@
   "review_round": 2,
   "review_service": "Stanford Agentic Reviewer · paperreview.ai",
   "fetched_at_utc": "2026-08-23T11:02:56.126406+00:00",
-  "rechecked_at_utc": "2026-08-23T12:19:37.277875+00:00",
-  "recheck": "5/5 HTTP 200; response SHA256 unchanged",
+  "rechecked_at_utc": "2026-08-24T05:43:19.300739+00:00",
+  "recheck": "Round 2 reviewer text preserved; current Temporal dispositions reconciled to canonical R14. Fresh R14 external review pending.",
   "policy": {
     "advisory_only": true,
     "text_verdict_precedes_numeric": true,
@@ -40,10 +40,10 @@
   "summary": {
     "papers": 5,
     "objections": 33,
-    "resolved": 12,
+    "resolved": 13,
     "existing_evidence_actionable": 4,
-    "requires_scientific_reopen": 9,
-    "permanent_claim_boundary": 8,
+    "requires_scientific_reopen": 7,
+    "permanent_claim_boundary": 9,
     "automatic_actions": 0
   },
   "paper_order": [
@@ -285,12 +285,12 @@
         "verdict": "Weak Accept"
       },
       "read": {
-        "zh": "Round 2 的文字 verdict 已由 borderline reject 反转为 weak accept。r9+r10 已清掉可用现有证据回答的 harness/order/date 实现质疑；剩余负担是两个尚未执行的新 treatment，不能靠现有结果推断。",
-        "en": "The Round-2 textual verdict flips from borderline reject to weak accept. r9+r10 close the harness/order/date implementation concerns answerable from existing evidence; the remaining burden is two unexecuted new treatments that cannot be inferred from current outcomes."
+        "zh": "Round 2 的历史文字 verdict 是 Weak Accept。R14 已执行 G₀ 与 exact-output Rsurf，并把论文收窄成 attribution audit；当前窄 claim 已通过 Research OS，新的 Stanford R14 review 已提交、结果待回。",
+        "en": "The historical Round-2 textual verdict is Weak Accept. R14 executes G0 and exact-output Rsurf and narrows the paper to an attribution audit; the current narrow claim is Research-OS clean and a fresh Stanford R14 review is pending."
       },
       "next": {
-        "zh": "r9 已关闭 invocation/order/prompt-length，r10 又关闭 ISO-date serialization；当前只剩两个真正需要 scientific reopen 的识别缺口：behavior-neutral 第二 generic 与等价 retrieval-side temporal baseline。",
-        "en": "r9 closes invocation/order/prompt-length concerns and r10 closes ISO-date serialization. The only remaining identification gaps that require scientific reopen are a behavior-neutral second generic and an equivalent retrieval-side temporal baseline."
+        "zh": "不再自动扩实验。等待 R14 新外审；只有新意见对当前窄 claim 提出 decision-critical 缺口时才考虑 reopen。",
+        "en": "Do not expand experiments automatically. Wait for the fresh R14 external review and reopen only if it identifies a decision-critical gap in the current narrow claim."
       },
       "objections": [
         {
@@ -347,18 +347,14 @@
             "zh": "第二个 behavior-neutral generic",
             "en": "second behavior-neutral generic"
           },
-          "d": "REQUIRES_SCIENTIFIC_REOPEN",
+          "d": "RESOLVED",
           "why": {
-            "zh": "canonical r9 明确 alternative generic 未执行；新 arm 会生成新 model outcomes。",
-            "en": "Canonical r9 explicitly records that the alternative generic was not executed; a new arm would create new model outcomes."
+            "zh": "R14 已执行 same-surface no-op G₀。结果反而证明 full-track neutrality 不能自动运输到每个 stratum，因此论文把 G₀ 改成 placebo/surface diagnostic，并把 T−G₀ 与 G₀−N 分开；当前 claim 不再依赖“behavior-neutral generic”假设。",
+            "en": "R14 executes same-surface no-op G0. The result shows full-track neutrality does not automatically transport to every stratum, so G0 is reframed as a placebo/surface diagnostic and T−G0 is kept separate from G0−N; the current claim no longer depends on a behavior-neutral-generic assumption."
           },
-          "e": "temporal r9: alternative_behavior_neutral_generic_control_executed=false",
-          "action": "SCIENTIFIC_REOPEN_REQUIRED",
-          "canon": "CURRENT_CANONICAL",
-          "reopen": {
-            "zh": "预先冻结 behavior-neutral alternative generic、独立 endpoint units 与三臂判据后，重新通过 scientific/experiment gate。",
-            "en": "Pre-freeze a behavior-neutral alternative generic, independent endpoint units, and the three-arm criterion, then pass scientific/experiment gates."
-          }
+          "e": "R14 G0 A1/A2/Kimi execution + contrast decomposition; current claim audit 13/13",
+          "action": "NONE",
+          "canon": "R14_CURRENT_CANONICAL"
         },
         {
           "id": "TEMP-O5",
@@ -367,17 +363,17 @@
             "zh": "等价 retrieval-side temporal baseline",
             "en": "equivalent retrieval-side temporal baseline"
           },
-          "d": "REQUIRES_SCIENTIFIC_REOPEN",
+          "d": "PERMANENT_CLAIM_BOUNDARY",
           "why": {
-            "zh": "当前只识别 operation value；container comparison 需要新的 retrieval treatment。canonical r9 明确该 baseline 未执行。",
-            "en": "Current evidence identifies operation value; container comparison requires a new retrieval treatment. Canonical r9 explicitly records the baseline as unexecuted."
+            "zh": "R14 已执行 exact-output Rsurf，只能识别 forced one-answer harness 的 integration-surface placement；它不是独立 temporal retriever。论文明确删除 skill-vs-temporal-RAG equivalence / superiority claim，真正独立 retriever 留作更宽 future claim 的 reopen，而不是当前缺口。",
+            "en": "R14 executes exact-output Rsurf, which only identifies integration-surface placement under the forced one-answer harness and is not an independent temporal retriever. The paper explicitly removes skill-vs-temporal-RAG equivalence/superiority claims; a real independent retriever is a reopen condition for a broader future claim, not a gap in the current one."
           },
-          "e": "temporal r9: retrieval_side_temporal_filter_baseline_executed=false",
-          "action": "SCIENTIFIC_REOPEN_REQUIRED",
-          "canon": "CURRENT_CANONICAL",
+          "e": "R14 Rsurf 18-endpoint frozen-margin check + explicit retrieval-equivalence disclaimer",
+          "action": "NONE",
+          "canon": "R14_CURRENT_CANONICAL",
           "reopen": {
-            "zh": "预先冻结与 targeted operation 行为等价的 retrieval-side treatment、matched endpoints 与 container-comparison estimand 后，重新通过 scientific/experiment gate。",
-            "en": "Pre-freeze a behaviorally equivalent retrieval-side treatment, matched endpoints, and the container-comparison estimand, then pass scientific/experiment gates."
+            "zh": "只有未来要主张 temporal-retrieval equivalence / superiority 时，才需要同 raw candidates 的独立 retriever/reranker。",
+            "en": "Only a future temporal-retrieval equivalence/superiority claim requires an independent retriever/reranker over the same raw candidates."
           }
         },
         {
@@ -389,10 +385,11 @@
           },
           "d": "PERMANENT_CLAIM_BOUNDARY",
           "why": {
-            "zh": "当前只能保留 endpoint-level descriptive / ceiling-aware claim，不能升级成一般跨域 transfer。",
-            "en": "Current evidence supports endpoint-level descriptive/ceiling-aware claims, not general cross-domain transfer."
+            "zh": "R14 进一步收窄：DeepSeek grounding 每 cell n=5 仅 directional；Kimi grounding 被降级；EIA 仅 post-hoc compatibility probe；Rsurf non-ceiling n=4 unresolved。",
+            "en": "R14 narrows further: DeepSeek grounding is directional with n=5 per cell; Kimi grounding is downgraded; EIA is only a post-hoc compatibility probe; Rsurf non-ceiling n=4 remains unresolved."
           },
-          "action": "NONE"
+          "action": "NONE",
+          "canon": "R14_CURRENT_CANONICAL"
         },
         {
           "id": "TEMP-O7",

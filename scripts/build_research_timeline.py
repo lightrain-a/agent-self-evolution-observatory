@@ -219,6 +219,7 @@ def state_cn(value: Any) -> str:
     raw = text(value, 220)
     u = raw.upper()
     if not raw or u == "ARTIFACT_RECORDED": return "已记录"
+    if "SUBMITTED_FOR_EXTERNAL_REVIEW" in u: return "已提交外部审稿，结果待回"
     if "READY_TO_SUBMIT" in u: return "论文就绪，待人工确认并提交"
     if "SUBMISSION" in u and ("READY" in u or "PASS" in u): return "投稿材料已就绪"
     if "PAPER" in u and "READY" in u: return "论文阶段已就绪"

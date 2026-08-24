@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-24T02:44:29+00:00",
+  "generated_at": "2026-08-24T05:43:19.300739+00:00",
   "projection_policy": {
     "read_only": true,
     "display_timezone": "Asia/Shanghai",
@@ -14,29 +14,29 @@
     "canonical_entity_bindings_are_read_only": true
   },
   "summary": {
-    "events": 913,
-    "dated_structured_artifacts_projected": 314,
+    "events": 914,
+    "dated_structured_artifacts_projected": 315,
     "runtime_memory_source": "preserved_committed_snapshot",
     "runtime_memory_events": 6,
     "key_events": 14,
     "authority_bearing_scoped_events": 50,
     "canonical_research_bound_events": 245,
     "canonical_experiment_bound_events": 29,
-    "canonical_paper_bound_events": 174,
+    "canonical_paper_bound_events": 175,
     "canonical_research_items_with_events": 61,
-    "canonical_papers_with_events": 2,
+    "canonical_papers_with_events": 3,
     "days": 23,
     "class_counts": {
       "blocker": 25,
       "closure": 116,
       "experiment": 162,
       "idea": 154,
-      "paper": 88,
+      "paper": 89,
       "scientific": 2,
       "system": 366
     },
     "date_counts": {
-      "2026-08-24": 21,
+      "2026-08-24": 22,
       "2026-08-23": 79,
       "2026-08-22": 59,
       "2026-08-21": 52,
@@ -62,6 +62,91 @@
     }
   },
   "events": [
+    {
+      "event_id": "d1193267b7ca0e40",
+      "occurred_at": "2026-08-24T05:43:19.300739+00:00",
+      "time_precision": "exact",
+      "event_class": "paper",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "research_label_zh": "E2 · Temporal Skill · R14",
+      "title": "Do Temporal Skills Really Repair Agents? An Intervention Audit of Repair and Attribution",
+      "title_zh": "E2 R14 已提交 Stanford 外部审稿，结果待回",
+      "state_before": "SUBMISSION_READY",
+      "state_after": "SUBMITTED_FOR_EXTERNAL_REVIEW",
+      "summary": {
+        "en": "E2 R14 was submitted to Stanford Agentic Reviewer; the fresh review result is pending.",
+        "zh": "E2 R14 已重新提交 Stanford Agentic Reviewer；当前只记录送审成功，新的 review 结果仍待返回。"
+      },
+      "why": {
+        "en": "This records the latest external-review handoff without pre-filling a score or verdict.",
+        "zh": "用于把最新外部审稿 handoff 放入研究时间轴；结果返回前不预填分数或 verdict。"
+      },
+      "limitation": {
+        "en": "External review is advisory only; the token and email remain private and this event creates no scientific authority.",
+        "zh": "外审只提供 advisory signal；review token 与邮箱保持私有，这条时间轴记录不增加科研权限。"
+      },
+      "next_action": "Wait for the fresh Stanford R14 review and adjudicate only its decision-critical objections.",
+      "next_action_zh": "等待 R14 新外审；只对 decision-critical objection 做后续裁决，不自动扩实验。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "外审本身不能自动重开实验；如需新实验仍须单独满足 Research OS gate。",
+      "evidence": [
+        {
+          "label": "revision",
+          "value": "R14"
+        },
+        {
+          "label": "PDF SHA256",
+          "value": "0fef51f15bb188fc669411be8d6dedaeae7d83389cec3f5d917f9a120fe2906e"
+        },
+        {
+          "label": "pages",
+          "value": 14
+        },
+        {
+          "label": "review result",
+          "value": "PENDING"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "read-only external-review submission record",
+        "scope_zh": "只读外审送审记录；无科研、实验、GPU 或投稿状态授权。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/temporal-skill-r14-stanford-submission-public-20260824.json",
+          "sha256": "c229237d3eb72d9a0c836788ecadcb46bd98750fa34ae53637353fb807174f11",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "论文",
+          "href": "selected-paper.html"
+        },
+        {
+          "label": "Paper D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+          "href": "selected-paper.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [
+          {
+            "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+            "source_research_item": null,
+            "paper_stage": "SUBMISSION_READY",
+            "scientific_status": "READY",
+            "submission_ready": true
+          }
+        ],
+        "categories": []
+      }
+    },
     {
       "event_id": "c59aa7498ac9e4d7",
       "occurred_at": "2026-08-24T02:44:29+00:00",
