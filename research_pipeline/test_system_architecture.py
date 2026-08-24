@@ -57,6 +57,7 @@ class SystemArchitectureTest(unittest.TestCase):
             {"component":{"en":"Wide-search simplification-challenge ideation"},"status":"running"},
             {"component":{"en":"Protocol-validity auditor + research-system replay benchmark"},"status":"running"},
             {"component":{"en":"Literature retrieval + Evidence Integrity layer"},"status":"running"},
+            {"component":{"en":"Paper novelty → method → experiment blueprint contract"},"status":"running"},
         ])
         architecture = build_system_architecture(items, build_methodology_controls_state())
         self.assertEqual(architecture["summary"]["reader_chapters"], 10)
@@ -65,7 +66,7 @@ class SystemArchitectureTest(unittest.TestCase):
         self.assertEqual(architecture["summary"]["reader_stage_duplicates"], 0)
         self.assertEqual(architecture["summary"]["reader_stage_extra"], 0)
         self.assertEqual(set(architecture["stage_group_map"]), {row["key"] for row in TEMPORAL_FLOW})
-        self.assertEqual(architecture["summary"]["cross_cutting_controls"], 3)
+        self.assertEqual(architecture["summary"]["cross_cutting_controls"], 4)
         self.assertEqual(architecture["summary"]["orphan_cross_cutting_controls"], 0)
         self.assertEqual(architecture["summary"]["functional_layers"], 6)
 

@@ -130,6 +130,40 @@ def build_methodology_controls_state() -> dict[str, Any]:
                 "Scaling Reproducibility",
             ],
         },
+        {
+            "key": "mechanism-to-intervention-closure",
+            "owner_component": "paper-design-contract",
+            "primary_layer": "paper-design",
+            "status": "contract-ready-not-yet-portfolio-scored",
+            "purpose": {
+                "en": "Prevent a mechanism paper from stopping at an interesting observation when the identified bottleneck naturally implies a falsifiable intervention, while avoiding decorative method complexity when no intervention is scientifically justified.",
+                "zh": "防止机制分析论文在发现有趣现象后戛然而止：如果已识别瓶颈自然导出可证伪干预，就必须检查能否闭环；如果并不存在科学上合理的干预，也禁止为了显得复杂而硬造方法。",
+            },
+            "required_chain": [
+                "phenomenon or failure regime",
+                "strongest simple explanation ruled out",
+                "localized mechanism or bottleneck",
+                "mechanism-derived actionable variable",
+                "strongest same-information intervention baseline",
+                "decisive intervention or explicit analysis-only boundary",
+                "engineering/design implication bound to evidence",
+            ],
+            "rules": {
+                "method_complexity_is_not_a_contribution_by_itself": True,
+                "mechanism_derived_intervention_must_change_a_variable_identified_by_the_analysis": True,
+                "intervention_must_compete_with_the_strongest_same_information_simple_baseline": True,
+                "go_and_stop_outcomes_must_both_change_the_paper_conclusion": True,
+                "posthoc_positive_cells_cannot_define_intervention_support": True,
+                "analysis_only_archetype_is_allowed_when_intervention_is_not_scientifically_justified": True,
+                "analysis_only_papers_must_show_a_changed_measurement_design_or_engineering_decision": True,
+                "do_not_add_a_solution_only_to_make_the_story_look_closed": True,
+            },
+            "design_sources": [
+                "Scaling LLM Test-Time Compute Optimally Can Be More Effective than Scaling Parameters for Reasoning",
+                "GSM-Symbolic: Understanding the Limitations of Mathematical Reasoning in Large Language Models",
+                "Paper Story V3 / strongest-same-information baseline contract",
+            ],
+        },
     ]
     return {
         "schema_version": "1.0",
