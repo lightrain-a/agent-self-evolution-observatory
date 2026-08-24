@@ -1,0 +1,504 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T04:50:56Z",
+  "run_id": "external-fresh-exact-16-review-20260824-r6",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "selection_projection": {
+    "staging_refresh_root": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r6",
+    "preview_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r6/preview-public.json",
+    "preview_artifact_sha256": "6ac87604ff70fedc8fbb479868a9a61265f7370f2a224324471675fd4b1b5662",
+    "private_pool_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r6/data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "private_pool_artifact_sha256": "c80a691ab309c84945d1e74dade78f8c7263d77fd86fbcb299d88e626f046436",
+    "corpus_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r6/data/corpora/semantic-scholar-corpus.json",
+    "corpus_artifact_sha256": "2d27a6a0e8439be73da947b74cdbe61f1ae1c57ea89f0d559bae28f1d1585b86",
+    "refresh_generated_at": "2026-08-24T04:46:58+00:00",
+    "refresh_status": "READY",
+    "discovery_mode": "arxiv-primary-fallback",
+    "source_retrieval_complete": true,
+    "selected": 32,
+    "verified": 32,
+    "selected_previously_reviewed": 16,
+    "selected_unreviewed": 16,
+    "eligible_unreviewed": 71,
+    "fulltext_verified": 31,
+    "fetch_errors": 0,
+    "fulltext_fetch_errors": 1,
+    "undercovered_lanes": [],
+    "source_coverage_exhausted": false,
+    "global_source_coverage_exhausted_claim": false,
+    "exact_unreviewed_refs_in_scheduler_order": [
+      "arXiv:2607.13988",
+      "arXiv:2607.14187",
+      "arXiv:2607.14186",
+      "arXiv:2607.13960",
+      "arXiv:2607.14396",
+      "arXiv:2607.13162",
+      "arXiv:2607.12747",
+      "arXiv:2607.14145",
+      "arXiv:2607.12875",
+      "arXiv:2607.12894",
+      "arXiv:2607.12463",
+      "arXiv:2607.11444",
+      "arXiv:2607.11126",
+      "arXiv:2607.11787",
+      "arXiv:2607.11053",
+      "arXiv:2607.11228"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 16,
+    "sources_reviewed": 16,
+    "exact_prior_exposure_zero": 16,
+    "identity_verified": 16,
+    "deep_review": 5,
+    "triage_review": 11,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "fresh_scientific_survivors": 0,
+    "stop_reduction": 2,
+    "support_component_only": 3,
+    "scope_excluded": 11,
+    "watch_reopen_seeds": 0,
+    "source_retrieval_complete": true,
+    "global_source_coverage_exhausted": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "exact_tranche_identity_requires_content_addressed_refresh_projection": true,
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "deep_review_routes_collision_reopen_or_decisive_baseline_cases": true,
+    "triage_is_allowed_only_for_clear_scope_or_component_cases": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "no_emit_is_not_a_scientific_dead_end": true,
+    "global_source_exhaustion_must_not_be_inferred_from_bounded_tranche_completion": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2607.13988",
+      "title": "TRACE: Turn-level Reward Assignment via Credit Estimation for Long-Horizon Agents",
+      "published": "2026-07-15",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "6ad56bdc0906d6a11ab732393b42c922c5107c47235bda6fe30898a06056a07d",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "dense-credit-assignment",
+        "agentic-rl-posttraining",
+        "transition-value-estimation"
+      ],
+      "note": "TRACE assigns turn-level rewards during agentic RL post-training from frozen-reference gold-answer likelihood changes at tool-call boundaries. It is a dense credit-assignment/training method evaluated on a fixed trained policy, not an autonomous persistent deployment-time self-evolution mechanism.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "caf7d7dcc3574b5eec842f74b35691c253b2c6c8df36078cd8e8f39e38257533",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.14187",
+      "title": "RxBrain: Embodied Cognition Foundation Model with Joint Language-Visual Reasoning and Imagination",
+      "published": "2026-07-15",
+      "lane_keys": [
+        "world_model",
+        "embodied"
+      ],
+      "source_sha256": "244f471116ac54f3a0257603de14e4ca3313d9fa1cc9b16751cef08bf7dcde02",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_FOUNDATION_WORLD_MODEL",
+      "reduction": [
+        "embodied-foundation-model",
+        "joint-language-visual-imagination",
+        "offline-multimodal-training"
+      ],
+      "note": "RxBrain is an embodied foundation/world-model architecture trained to jointly reason in language and visual imagination. Its planning state is an inference representation; the source does not expose a persistent behavioral artifact autonomously revised from outcomes across tasks.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "28aac7108cd144b1ce7748f1a63513ecff0622c44b8a919469178a9fea9e7365",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.14186",
+      "title": "NexForge: Scaling Agent Capabilities through Requirement-Driven Task Synthesis for LLMs",
+      "published": "2026-07-15",
+      "lane_keys": [
+        "skill_harness",
+        "parametric_model_state",
+        "runtime_deployment"
+      ],
+      "source_sha256": "40337ca247683301e9ad139cb9e6b1cb77ff32cc8149fec507a028d14e3cea8c",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_TRAINING_DATA_SYNTHESIS",
+      "reduction": [
+        "requirement-driven-task-synthesis",
+        "expert-trajectory-generation",
+        "static-sft-data-scaling"
+      ],
+      "note": "NexForge synthesizes executable tasks and expert trajectories from capability requirements for supervised post-training. It is a data-generation/training pipeline rather than a deployment-time persistent self-evolving agent object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "79b67fb9ac9a8f576580798c6b0a1e74f2f1d60e59abf03d7362c46b7253bf19",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.13960",
+      "title": "GigaWorld-Policy-0.5: A Faster and Stronger WAM Empowered by AutoResearch",
+      "published": "2026-07-15",
+      "lane_keys": [
+        "world_model",
+        "embodied",
+        "runtime_deployment"
+      ],
+      "source_sha256": "5f04ac48dc5cbfa48341be37dacaf39dd273b8e13d67b68260555a4cf8116d32",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_WORLD_MODEL_TRAINING",
+      "reduction": [
+        "world-action-model-training",
+        "future-visual-supervision",
+        "offline-autoresearch-optimization"
+      ],
+      "note": "GigaWorld-Policy-0.5 improves a world-action model through pretraining/finetuning and architecture optimization while decoding actions only at inference. The deployed policy is fixed and does not autonomously persistently modify itself.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "af5120d949571e63a15c605eff5fb4e73a1a86fd6ca7b75d69a17c0d1ff5c08f",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.14396",
+      "title": "CatalogAgent: A Supervisor-mediated Self-Learning System Enabling Context Engineering for GenAI Models",
+      "published": "2026-07-15",
+      "lane_keys": [
+        "memory_continual"
+      ],
+      "source_sha256": "01f89fee8f908f98fcae40570229410100989d6a7782bf7fcee86b75d3645158",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "supervisor-mediated-corrective-memory",
+        "context-engineering",
+        "regression-gated-update"
+      ],
+      "note": "CatalogAgent turns Generator/Evaluator disagreements and seller feedback into Supervisor investigations, stores case-level Supervisor activity in a Memory Base, summarizes recurring patterns, and feeds validated learnings back through prompt, metadata, and input-context engineering. The reported worker gains are real, but the update explicitly changes the context/metadata supplied to workers and is directly derived from observed conflicts and Supervisor decisions. This is corrective distillation/context engineering with regression gating, not an irreducible self-evolution state under information parity.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "No residual survives after matching conflict/seller evidence, Supervisor decisions, summarized learning content, worker context budget, update count, and held-out evaluation."
+        },
+        {
+          "memory_id": "MEM-DISC-96d9445f9dc2dfe39f",
+          "result": "NOT_SATISFIED",
+          "boundary": "Regression-gated context updates are expressible as a constrained stability-plasticity/commit decision when gain, risk, validity, interaction, and budget information are matched."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "498eea23b8292279dcb02946f0fc81a14fc17a55dab202025b901a11f82b6981",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.13162",
+      "title": "What Models Express, Suppress, and Resist: Auditing Open-Weight LLMs with Persona Vectors",
+      "published": "2026-07-14",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "81fa6a6dfd7bc8bbfbd9bc75f0379af242330b345be8b30518b035574277c526",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_REPRESENTATION_AUDIT",
+      "reduction": [
+        "activation-space-persona-audit",
+        "representation-steering",
+        "static-behavior-probing"
+      ],
+      "note": "Persona-vector auditing characterizes natural, steerable, and resistant behavioral directions in fixed open-weight models and tests activation steering/transfer. It is a static representation/audit study rather than longitudinal autonomous self-modification.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "d870a4faf3dd77bf50c96bc5e7da3ff6847e53e55d73ff29695b429c780f0792",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.12747",
+      "title": "Tracing Agentic Failure from the Flow of Success",
+      "published": "2026-07-14",
+      "lane_keys": [
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "f8f276b67570e1bab2c22018046a8bb8bdb29efdf870d0428148f298cfd06c4c",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_FAILURE_ATTRIBUTION",
+      "reduction": [
+        "one-class-trajectory-modeling",
+        "neural-cde-anomaly-scoring",
+        "step-level-failure-attribution"
+      ],
+      "note": "OAT learns the normal dynamical flow of successful agent trajectories using a lightweight Neural CDE and attributes failure steps by deviations from that learned flow, without failure labels or frontier-model inference. It is strong component evidence for scalable failure attribution and process diagnosis, but does not update the acting agent or identify a new self-evolution causal variable.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "5715cd07d541dc72848b2f866278310c29cd4729584c429c16394836445e764f",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.14145",
+      "title": "ToolAnchor: Anchoring Counterfactual Context to Boost Agentic Tool-use Capability",
+      "published": "2026-07-14",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "821e56dfe0a2ed875702e6306f368e21638fc4592d2bc065829db1814e1d26e4",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "counterfactual-context-anchoring",
+        "teacher-verified-rollouts",
+        "agentic-posttraining"
+      ],
+      "note": "ToolAnchor uses teacher-generated counterfactual contexts to recover failed tool-use trajectories and internalizes successful interventions through post-training. The final agent is trained offline; the source does not study autonomous persistent deployment-time self-modification.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "22e3470806f1d56ca155a6f1940fb426f70cc5de53ea5b563dc4e5f8e305fa35",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.12875",
+      "title": "MetaInfer: A Knowledge Only LLM Inference Engine Generator SKILL Toolbox",
+      "published": "2026-07-14",
+      "lane_keys": [
+        "skill_harness",
+        "collective",
+        "runtime_deployment"
+      ],
+      "source_sha256": "c86b9fc99ecdf524584203526c71b867321fa3a6e5db399619793c5fae6cbbab",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_PROGRAM_GENERATION",
+      "reduction": [
+        "contract-knowledge-base",
+        "validation-guided-program-generation",
+        "knowledge-consolidation"
+      ],
+      "note": "MetaInfer is a knowledge-only LLM-as-Compiler system that generates customized inference engines from runtime constraints and a Contract Knowledge Base. For uncovered models/platforms it runs controlled exploration, validation, knowledge consolidation, and revalidation before zero-reference generation. This is strong program-generation/knowledge-evolution infrastructure evidence, but the evolving object is explicit engineering knowledge used by verifier-guided code synthesis; it does not establish an irreducible agent self-evolution causal state.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SCIE-63da8f6c3c1c818d32",
+          "result": "NOT_SATISFIED",
+          "boundary": "Generation from explicit contracts plus validation remains expressible as program synthesis/repair when the strongest baseline receives the same specifications, knowledge, validation transcript, and search budget."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "5e507859a5fd065163f90e296a13e5827cfe94c3444facbb3ea9bf4682a288c4",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.12894",
+      "title": "Hy-Embodied-VLM-1.0: Efficient Physical-World Agents",
+      "published": "2026-07-14",
+      "lane_keys": [
+        "parametric_model_state",
+        "embodied",
+        "runtime_deployment"
+      ],
+      "source_sha256": "c303d918081d3168faa32a87640135b67d1a8da490f170e5b079eb784dea11e2",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_FOUNDATION_MODEL_TRAINING",
+      "reduction": [
+        "embodied-foundation-model-training",
+        "multimodal-pretraining",
+        "agentic-posttraining"
+      ],
+      "note": "Hy-Embodied-VLM-1.0 is an embodied foundation-model training report spanning pretraining and post-training. It does not expose a deployment-time persistent self-evolution transition.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "3c4911a6fa2cbbc707abf7d010a3513cd271e3ca58668f8030eceffc0b4c5d0b",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.12463",
+      "title": "Function-Aware Fill-in-the-Middle as Mid-Training for Coding Agent Foundation Models",
+      "published": "2026-07-14",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "8483da0801ef19dcd478d6f5b379e4dbb13f1868ddd09c9c5c83355d10596ab1",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_MIDTRAINING",
+      "reduction": [
+        "function-aware-fim",
+        "coding-agent-midtraining",
+        "offline-representation-learning"
+      ],
+      "note": "Function-aware FIM is a self-supervised mid-training objective that improves later coding-agent post-training. It changes model parameters offline and is outside the persistent deployment-time self-evolution scope.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "114a426a9513f809072643d9f1e57bb6a5f32c199dbb607a84513af4fcfc1092",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.11444",
+      "title": "UMoE:Unlocking Every Expert in Domain-Specific Training",
+      "published": "2026-07-13",
+      "lane_keys": [
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "f9fffed73981b431d571b16cb72e5e4fd3de72326476f7763087e49080083e54",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "moe-expert-prune-regrow",
+        "domain-specific-sft",
+        "static-expert-pool-realignment"
+      ],
+      "note": "UMoE prunes and regrows domain-misaligned experts before standard SFT under a fixed parameter/inference budget. This is an offline post-training architecture/optimization method, not an autonomous persistent agent update loop.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "c2f8ca52184e5f3264a9125d58de8f2847ff4f928a2f3177536a0e1d5182bf81",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.11126",
+      "title": "ToolAtlas: Learning Once, Reusing Everywhere with Tool-Side Memory",
+      "published": "2026-07-13",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "cd494839d13d33a6e631c3ff06c00aba879920da843e00d370603dd84984e525",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "provider-side-semantic-memory",
+        "capability-frontier-exploration",
+        "adaptive-graph-retrieval"
+      ],
+      "note": "ToolAtlas builds persistent provider-side memory of tool traces, affordances, failure boundaries, and cross-tool compositions through execution-verified frontier probing, then reuses the same memory across heterogeneous agent frameworks and environment instances. Its transfer and ablations strongly validate tool-centered knowledge organization and deliberate capability exploration. However all evolving state is explicit tool knowledge and retrieval structure; capability/frontier probing changes knowledge coverage, while graph traversal changes selection. A strongest semantic-memory/retrieval baseline given the same tool knowledge, coverage, context budget, and utilization can express the current result.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-1ba2b6e8d305dafaad",
+          "result": "NOT_SATISFIED",
+          "boundary": "No residual is shown after matching memory knowledge count/content, affordance/boundary/composition coverage, relevance, context/token budget, backbone, and observable utilization."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "c310a0aafe0ab28cce5dd34fa7e997b8651ea126f6640fa68a289da91326de33",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.11787",
+      "title": "Forgetting Our Way to Shared Meaning: Effects of Forgetting on Conceptual Alignment in a Non-Partnership Coordination Game",
+      "published": "2026-07-13",
+      "lane_keys": [
+        "memory_continual"
+      ],
+      "source_sha256": "f4c5aad28ba5287d6e4f2b72c7a1bf16032648836f462a3c208a2c6ea0328a10",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_SIMULATED_SOCIAL_DYNAMICS",
+      "reduction": [
+        "conceptual-alignment-game",
+        "memory-degradation-simulation",
+        "adaptive-agent-social-dynamics"
+      ],
+      "note": "This work simulates conceptual alignment under different adaptiveness and memory-degradation settings. The object is a stylized social/coordination model rather than a deployed LLM agent autonomously improving its behavioral artifacts.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "facdf8ed55907d375cff0666d3b278d92d817c81726bd39716d9621dbce88024",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.11053",
+      "title": "Flout at Your Own Risk: LLMs Struggle with Pragmatic Cooperativity Under Epistemic Asymmetry",
+      "published": "2026-07-13",
+      "lane_keys": [
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "1936ac8b01511a5a791b719c0cba9b701e04dfa1a45f76fffa9ffbfc382f9c6f",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_EVALUATION_POSTTRAINING",
+      "reduction": [
+        "pragmatic-cooperativity-evaluation",
+        "epistemic-asymmetry",
+        "prompting-and-posttraining"
+      ],
+      "note": "The pragmatic-cooperativity study evaluates fixed agents under partial information and tests prompting/post-training remedies. It does not define a persistent autonomous self-evolution mechanism.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "dcf7d886e6bba9e04018abbc25b6ceb77aea472786ccacbaa0a49fbc30e669a9",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.11228",
+      "title": "DeepBias: Adaptive In-depth Probing of Social Biases in LVLMs",
+      "published": "2026-07-13",
+      "lane_keys": [
+        "skill_harness",
+        "safety_reliability"
+      ],
+      "source_sha256": "6aadd2e4414331e662973d42ed3ef3805adfc7999712e26432ad6eea3b5b8184",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_ADAPTIVE_SAFETY_EVAL",
+      "reduction": [
+        "adaptive-adversarial-evaluation",
+        "dpo-evolved-test-distribution",
+        "multi-turn-skill-driven-probing"
+      ],
+      "note": "DeepBias evolves an adversarial evaluation distribution with DPO using target-model responses and then performs multi-turn, response-conditioned probing via a curated DiggerAgent skill library. Its ablation shows DPO adaptation materially strengthens the later probing stage. This is strong component evidence for adaptive safety evaluation and target-aware benchmark construction; the evolving object is the evaluator/test distribution, not the evaluated target model, so it cannot reopen actor self-evolution.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "354d760a9ed25d97797b98a856485cf8eb62918747f9f493aa54802487b1de1f",
+      "fulltext_available": true
+    }
+  ],
+  "next_action": "Record these 16 exact refs as zero-authority source-review exposure. No source satisfies an exact durable reopen contract, so do not trigger generator/provider/GPU work. Refresh the source scheduler from a new immutable staging copy; bounded tranche completion must not be treated as global source exhaustion.",
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
