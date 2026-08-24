@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-EXECUTION-AUTHORITY-R21",
+  "recorded_date": "2026-08-24",
+  "status": "R19_EXTERNAL_HUMAN_BOUNDED_SCIENTIFIC_EXECUTION_AUTHORITY_VALID",
+  "authority_artifact_sha256": "88e9865b647f24add014963285e9b81503acbb592c6500700e62cf2b2334c507",
+  "source_message_ref": "active-project-conversation-2026-08-24T13:58+08:00",
+  "source_message_sha256": "36c33de30c5a14be5a0902f7b7320b7b59c8e979f213f23c315ca5967d6946cd",
+  "reviewed_at": "2026-08-24T13:58:00+08:00",
+  "bindings": {
+    "r19_contract_sha256": "ed803f0958002ab2095563a56cff6328a054ff4c4d7bd9fc18fc97bb3bdc3282",
+    "r19_readiness_sha256": "606b6f68377777ad9b9d1794df95c69d6ad3ae3005b397cbee080396ffa24133",
+    "r19_claim_policy_sha256": "6c45274d59ec91865bd48b5ab4afe5358a5fe60dd57657da24cce569b87a9e86",
+    "r19_authority_packet_sha256": "92a59337bb32bca7e0ffea45aed6085d447707f57fe58ddc8ac5a7a0eac80655",
+    "r17_writer_realization_sha256": "58de4f998b16aace4ddfeef0693d88a347b293c032d997e0da471e6b92c69235",
+    "executor_manifest_digest": "sha256:5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216"
+  },
+  "budgets": {
+    "independent_tasks": 35,
+    "terminal_episode_budget": 140,
+    "agent_completion_budget": 4200,
+    "fuzzy_evaluator_completion_budget": 600,
+    "synthetic_support_completion_budget": 2,
+    "total_local_model_completion_budget": 4802
+  },
+  "scope": {
+    "r19_scientific_execution_authorized": true,
+    "experiment_authorized": true,
+    "model_completions_authorized": true,
+    "browser_actions_authorized": true,
+    "evaluator_calls_authorized": true,
+    "gpu_authorized": true,
+    "single_confirmatory_attempt": true,
+    "external_api_authorized": false,
+    "r18_retry_authorized": false,
+    "l3_authorized": false,
+    "task_replacement_authorized": false,
+    "memory_regeneration_authorized": false,
+    "model_or_provider_switch_authorized": false,
+    "threshold_change_authorized": false,
+    "endpoint_change_authorized": false,
+    "statistical_change_authorized": false,
+    "outcome_adaptive_extension_authorized": false,
+    "claim_expansion_authorized": false
+  },
+  "scientific_claim_authority": false,
+  "submission_authority": false,
+  "rule": "This authority permits exactly one R19 scientific execution under the frozen R19 contract. Scientific claim support remains determined only by the pre-outcome R19 claim-impact policy."
+}
