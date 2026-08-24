@@ -215,6 +215,94 @@ Source & Token distance & Slot distance & Mean terminal $|\Delta|$ \\
 \end{table}
 Sources 23 and 25 are effectively matched on both reported write-divergence magnitudes but differ fivefold in source-averaged terminal sensitivity. Across the four points, the descriptive Pearson correlations are $-0.730$ for token distance and $-0.367$ for slot distance versus mean terminal $|\Delta|$. With $n=4$ these correlations have no inferential status; they are included only to reject the simple monotonic reading that a larger textual or operation-slot perturbation necessarily produces a larger downstream effect.
 
+\section{Breadth, Retrieval, and Transport Expansion}
+\label{sec:breadth-transport-details}
+\subsection{Sixteen-source write replication}
+The breadth sample is selected before new writer outputs. It excludes all original write/control tasks, the four forced-terminal futures, and the eight held-out tasks identified as retrieval hits by the first exact-retriever audit. Within each original-outcome stratum, selection first takes the lowest task ID from each previously unused intent-template family, then fills remaining slots by task ID. Table~\ref{tab:b2-breadth} reports all 16 fresh pairs. The 2,200-token parent run produces three failure-branch length-censored calls (tasks 118, 125, and 232); its 29 completed units are not used for the breadth gate. The sole repair changes only the output cap to 4,096, regenerates all 32 units fresh, and completes every pair.
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Fresh source-breadth replication. O is the trajectory's original benchmark outcome; F/S denote failure/success. All 16 pairs change both exact content and memory-item title sets.}
+\label{tab:b2-breadth}
+\begin{tabular}{crr@{\qquad}crr}
+\toprule
+Task & O & Jaccard & Task & O & Jaccard \\
+\midrule
+118 & F & .850 & 145 & S & .594 \\
+125 & F & .693 & 148 & S & .594 \\
+141 & F & .678 & 159 & S & .732 \\
+146 & F & .565 & 188 & S & .682 \\
+158 & F & .668 & 225 & S & .587 \\
+163 & F & .642 & 226 & S & .732 \\
+189 & F & .699 & 231 & S & .545 \\
+232 & F & .550 & 260 & S & .712 \\
+\bottomrule
+\end{tabular}
+\end{table}
+The fresh mean token-set distance is 0.65757. Pooling these 16 complete pairs with the four original complete pairs gives 20/20 exact-content changes, 20/20 title-set changes, and pooled mean token-set distance 0.673014.
+
+\subsection{Exact released-retriever exposure}
+The retrieval audit directly executes the cached all-MiniLM-L6-v2 encoder with the released SentenceTransformer mean-pooling and normalization configuration, maximum sequence length 256, top-$1$ retrieval, and threshold 0.3. No provider call is used. Table~\ref{tab:retrieval-audit} separates exposure under the original sparse bank from exposure after source expansion.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Exact released-retriever exposure on held-out Shopping tasks. ``Eligible'' additionally requires a released trajectory and deterministic offline string-match evaluator.}
+\label{tab:retrieval-audit}
+\begin{tabular}{lrrrr}
+\toprule
+Memory bank & Held-out & Hits & Hit rate & Eligible \\
+\midrule
+4 original sources & 188 & 8 & 4.26\% & -- \\
+20 sources & 172 & 125 & 72.67\% & 36 \\
+\bottomrule
+\end{tabular}
+\end{table}
+None of the original four forced-terminal futures retrieves an original-bank memory. After expansion, future task 164 retrieves new source 163 with cosine 1.0; the other three original futures remain below threshold. Across the 20-source bank, the 125 hits span 39 intent-template families; the 36 pre-outcome terminal-eligible tasks span 13 families and retrieve 11 distinct sources.
+
+\subsection{Full 36-task native-wrapper outcomes}
+Table~\ref{tab:native-36} exposes all frozen transport cells. S/F are success- and failure-conditioned retrieved-memory rates; N is the independently generated no-memory rate. Each rate uses four fresh Doubao Seed 2.0 Mini rollouts. The reward-branch experiment has mean $|S-F|=0.020833$ and permutation $p=0.428866$. The three-arm memory-presence statistic has mean 0.045139 and omnibus $p=0.00147$, but misses the frozen 0.15 practical floor. Only tasks 144, 228, and 319 have nonzero branch-to-omission magnitude; 34/36 tasks have S=F, comprising 18 joint 0/0 floors and 16 joint 1/1 ceilings.
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{All 36 pre-outcome retrieval-matched fixed-evidence tasks. Src is the exact released top-$1$ source. P is the mean absolute memory-presence effect $\frac12(|S-N|+|F-N|)$.}
+\label{tab:native-36}
+\begin{tabular}{rrrrrr@{\qquad}rrrrrr}
+\toprule
+Task & Src & S & F & N & P & Task & Src & S & F & N & P \\
+\midrule
+26  & 25  & 0 & 0 & 0 & 0 & 229 & 226 & 1 & 1 & 1 & 0 \\
+124 & 226 & 0 & 0 & 0 & 0 & 230 & 226 & 1 & 1 & 1 & 0 \\
+126 & 226 & 1 & 1 & 1 & 0 & 233 & 232 & 1 & 1 & 1 & 0 \\
+142 & 141 & 0 & 0 & 0 & 0 & 279 & 226 & 0 & 0 & 0 & 0 \\
+143 & 141 & 0 & 0 & 0 & 0 & 280 & 226 & 0 & 0 & 0 & 0 \\
+144 & 141 & .75 & 1 & 0 & .875 & 281 & 225 & 0 & 0 & 0 & 0 \\
+147 & 146 & 0 & 0 & 0 & 0 & 282 & 226 & 0 & 0 & 0 & 0 \\
+149 & 148 & 1 & 1 & 1 & 0 & 319 & 188 & 1 & 1 & .5 & .5 \\
+150 & 226 & 1 & 1 & 1 & 0 & 320 & 188 & 0 & 0 & 0 & 0 \\
+164 & 163 & 1 & 1 & 1 & 0 & 321 & 188 & 0 & 0 & 0 & 0 \\
+165 & 163 & 0 & 0 & 0 & 0 & 322 & 188 & 1 & 1 & 1 & 0 \\
+167 & 163 & 0 & 0 & 0 & 0 & 323 & 188 & 0 & 0 & 0 & 0 \\
+190 & 189 & 1 & 1 & 1 & 0 & 329 & 141 & 1 & 1 & 1 & 0 \\
+192 & 188 & 0 & 0 & 0 & 0 & 330 & 141 & 0 & 0 & 0 & 0 \\
+227 & 226 & 1 & 1 & 1 & 0 & 331 & 141 & 1 & 1 & 1 & 0 \\
+228 & 226 & .5 & 0 & 0 & .25 & 333 & 141 & 0 & 0 & 0 & 0 \\
+358 & 189 & 1 & 1 & 1 & 0 & 360 & 231 & 1 & 1 & 1 & 0 \\
+362 & 231 & 1 & 1 & 1 & 0 & 384 & 25 & 0 & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cross-policy support stop}
+The downstream-policy transfer is frozen on the identical 36-task support before any DeepSeek-V4-Flash outcome. At the Doubao-matched 900-token cap, the first frozen unit ends with provider status incomplete, reason \texttt{length}, and no assistant text. One execution-only repair raises the cap uniformly to 2,200, requires all 288 units to be fresh, and forbids a second repair; the same first unit again length-censors without assistant text. The cross-policy line therefore stops after two provider POSTs with zero scientific units. The preregistered no-memory continuation is not triggered because its condition is complete paired execution, regardless of paired scientific outcome.
+
+\subsection{Bounded corruption-rate consequence}
+For completeness, the earlier forced-swap matrix implies a descriptive between-memory variance under a hypothetical reward-label corruption probability $q$. If $p_S(c)$ and $p_F(c)$ are the forced-swap conditional success probabilities in cell $c$, then $V_c(q)=q(1-q)[p_F(c)-p_S(c)]^2$. The mean squared conditional effect across the 16 cells is 0.076172, giving $\bar V(q)=0.076172q(1-q)$ and 0.019043 at $q=0.5$. A 100,000-repetition cell bootstrap gives a descriptive $V(0.5)$ interval $[0.002686,0.041016]$. This is a deterministic consequence analysis of the forced intervention, not an empirical corruption sweep or a claim about native transport.
+
 \section{Execution Accounting and Reliability}
 \label{sec:execution-accounting}
-All scientific evidence in this paper is inference-only; there are no training runs or local GPU fine-tuning runs. Directly countable execution comprises 12 primary write requests (10 complete), 32 prompt-control writer requests, 96 first-action distribution calls, 108 initial terminal calls, 256 confirmatory terminal calls, 64 no-memory calls (32 execution-invalid plus 32 scientifically usable recovery calls), eight repaired GLM writer calls, and 256 GLM terminal calls. These stages account for 832 provider requests outside the failed parent GLM writer attempt. That parent attempt has zero scientific authority and an exact POST count that is not reconstructible after an overlapping-runner race; its observable lower bound is nine. The full provider-POST lower bound is therefore at least 841, excluding the unresolved low-level request count of the earlier 12-unit aligned action-existence witness. Provider responses are archived before analysis where the frozen runner supports it; incomplete or execution-invalid units are never imputed into scientific estimates.
+All scientific evidence is inference-only; there are no training runs or local GPU fine-tuning runs. Before the baseline-aligned expansion, the observable provider-POST lower bound was at least 841, excluding the unresolved low-level request count of the early 12-unit aligned action witness. The expansion adds 498 observable POSTs: 32 breadth-parent writer calls, 32 fresh breadth-repair writer calls, 288 native retrieval-matched branch rollouts, 144 matched no-memory rollouts, and two DeepSeek cross-policy support-failure calls. Of these, 464 are scientifically usable completions: 32 breadth writer calls plus 432 terminal rollouts. The updated full-paper observable POST lower bound is therefore at least 1,339.
+
+The 32-call breadth parent completes 29 units but length-censors three failure-branch writes; only the fresh uniform 4,096-token repair has breadth authority. B4 and B5 complete 288/288 and 144/144 provider calls, respectively, with zero provider failures. The DeepSeek policy-transfer parent and sole output-cap repair each fail on their first unit with no assistant text and contribute zero scientific units. Earlier execution failures---the two original F0 failure-arm incompletions, the execution-invalid first no-memory attempt, and the failed parent GLM writer attempt---remain recorded separately and are never imputed as scientific outcomes. Provider outputs are content-addressed or response-first archived where the frozen runner supports it.
