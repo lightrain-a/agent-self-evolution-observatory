@@ -1,0 +1,139 @@
+{
+  "analysis_type": "TEMP-O4-G0-KIMI-STAGE-B",
+  "integrity": {
+    "duplicates": 0,
+    "extra": 0,
+    "invalid": [],
+    "missing": 0,
+    "observed": 138,
+    "pass": true,
+    "planned": 138
+  },
+  "neutrality": {
+    "bootstrap_90_ci": [
+      -0.043478260869565216,
+      0.08695652173913043
+    ],
+    "endpoints": 23,
+    "equivalence_margin": [
+      -0.1,
+      0.1
+    ],
+    "family_guardrails": [],
+    "family_summaries": {
+      "exogenous_grounding": {
+        "directional_sign_p": 0.5,
+        "guardrail_trigger": false,
+        "losses": 0,
+        "mean": 0.05,
+        "n": 10,
+        "one_sided_sign_p_negative": 1.0,
+        "one_sided_sign_p_positive": 0.5,
+        "ties": 9,
+        "wins": 1
+      },
+      "release_alignment": {
+        "directional_sign_p": 0.75,
+        "guardrail_trigger": false,
+        "losses": 1,
+        "mean": 0.0,
+        "n": 5,
+        "one_sided_sign_p_negative": 0.75,
+        "one_sided_sign_p_positive": 0.75,
+        "ties": 3,
+        "wins": 1
+      },
+      "temporal_cutoff": {
+        "directional_sign_p": 1.0,
+        "guardrail_trigger": false,
+        "losses": 0,
+        "mean": 0.0,
+        "n": 8,
+        "one_sided_sign_p_negative": 1.0,
+        "one_sided_sign_p_positive": 1.0,
+        "ties": 8,
+        "wins": 0
+      }
+    },
+    "global_nonneutral_trigger": false,
+    "losses": 1,
+    "point": 0.021739130434782608,
+    "repeats_per_arm": 2,
+    "status": "NEUTRALITY_GO",
+    "ties": 20,
+    "wins": 2
+  },
+  "neutrality_go": true,
+  "new_positive_target_promotion_forbidden": true,
+  "operation_specificity": {
+    "all_pre_frozen_targets_survive": false,
+    "downgrades": [
+      "C4-R|exogenous_grounding|same_domain"
+    ],
+    "load_bearing_targets": {
+      "C4-R|exogenous_grounding|same_domain": {
+        "T_minus_G0": {
+          "losses": 1,
+          "mean": -0.25,
+          "n": 2,
+          "one_sided_positive_sign_p": 1.0,
+          "one_sided_sign_p_negative": 0.5,
+          "one_sided_sign_p_positive": 1.0,
+          "ties": 1,
+          "wins": 0
+        },
+        "T_minus_N": {
+          "losses": 0,
+          "mean": 0.0,
+          "n": 2,
+          "one_sided_positive_sign_p": 1.0,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 1.0,
+          "ties": 2,
+          "wins": 0
+        },
+        "endpoint_ids": [
+          "composite-ground::doc_15ffceb07aa2",
+          "composite-ground::doc_71b83aedc0f9"
+        ],
+        "n_endpoints": 2,
+        "survives_directional_gate": false
+      },
+      "C4-R|release_alignment": {
+        "T_minus_G0": {
+          "losses": 0,
+          "mean": 0.5,
+          "n": 3,
+          "one_sided_positive_sign_p": 0.25,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 0.25,
+          "ties": 1,
+          "wins": 2
+        },
+        "T_minus_N": {
+          "losses": 0,
+          "mean": 0.5,
+          "n": 3,
+          "one_sided_positive_sign_p": 0.25,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 0.25,
+          "ties": 1,
+          "wins": 2
+        },
+        "endpoint_ids": [
+          "composite-align::doc_187e543fe980",
+          "composite-align::doc_5c43ed3f16d2",
+          "composite-align::doc_950378981b9f"
+        ],
+        "n_endpoints": 3,
+        "survives_directional_gate": true
+      }
+    }
+  },
+  "operation_specificity_evaluated": true,
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "plan_body_sha256": "51a9f3ca1471197f49617e3b70961469dafe2f22a958bdba03b178a1c7e34720",
+  "result_payload_sha256": "3dd19a7a855e284044bd0842b655f49deea452cc4b93495d8a6d96c02ef21e5b",
+  "schema_version": "1.0",
+  "status": "KIMI_SUPPORT_LAYER_DOWNGRADE"
+}
