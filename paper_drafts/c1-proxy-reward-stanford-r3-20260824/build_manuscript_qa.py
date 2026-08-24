@@ -16,6 +16,7 @@ O6_REDUCTION = json.loads((HERE / "o6-full-bank-corruption-reduction.json").read
 CHRONOLOGY = json.loads((HERE / "f2r1-chronology-receipt.json").read_text())
 EXPANSION = json.loads((HERE / "baseline-aligned-expansion-evidence.json").read_text())
 FOLLOWUP = json.loads((HERE / "baseline-aligned-followup-evidence.json").read_text())
+LOCALIZATION = json.loads((HERE / "transport-localization-evidence.json").read_text())
 
 
 def sha(path: Path) -> str:
@@ -49,11 +50,14 @@ def main() -> None:
     fe = FOLLOWUP["experiments"]
     facct = FOLLOWUP["execution_accounting"]
     fcb = FOLLOWUP["claim_boundary_delta"]
+    le = LOCALIZATION["experiments"]
+    lacct = LOCALIZATION["execution_accounting"]
+    lcb = LOCALIZATION["claim_boundary"]
     checks: dict[str, bool] = {}
 
     checks["abstract_150_220"] = 150 <= approx_words(abstract) <= 220
     checks["transport_boundary_title"] = "\\title{Reward Errors Become Persistent State: Write-Time Causality and Transport Boundaries in Agent Memory}" in main_tex
-    checks["identification_transport_decomposition"] = all(x in intro for x in ["identification-and-transport decomposition", "forced downstream swaps", "negative transport boundary"])
+    checks["identification_transport_decomposition"] = all(x in intro for x in ["identification-and-transport decomposition", "forced downstream swaps", "branch-specific uptake"])
     checks["no_research_os_process_language_main"] = all(x not in main_text for x in ["\\section{F0:", "\\section{C4:", "reviewer-requested", "Stanford-targeted", "Post-ready"])
     checks["system_section_order"] = [main_tex.index(x) for x in ["sections/01_intro", "sections/05_related", "sections/02_mechanism", "sections/02b_setup", "sections/03_f0", "sections/03a_prompt_control", "sections/04_variance_protocol", "sections/06_limitations_conclusion"]] == sorted(main_tex.index(x) for x in ["sections/01_intro", "sections/05_related", "sections/02_mechanism", "sections/02b_setup", "sections/03_f0", "sections/03a_prompt_control", "sections/04_variance_protocol", "sections/06_limitations_conclusion"])
     checks["experimental_setup_present"] = "\\section{Experimental Setup}" in setup
@@ -145,7 +149,31 @@ def main() -> None:
         and fe["B9_partial_reference_endpoint_headroom"]["confirmatory_gate"] is None
         and all(x in all_text for x in ["post-hoc", "0.01951", "0.02827"])
     )
-    checks["experiment_ladder_present"] = all(x in downstream for x in ["Experimental ladder", "Write breadth", "Native branch transport", "Native controls", "DeepSeek policy transfer"])
+    b10 = le["B10_native_first_action_transport"]
+    b10d = le["B10D_zero_call_process_diagnostic"]
+    checks["native_first_action_transport_nonpass"] = (
+        LOCALIZATION["status"] == "TRANSPORT_LOCALIZATION_COMPLETE"
+        and b10["complete_calls"] == 432
+        and b10["provider_failures_or_parse_failures"] == 0
+        and abs(b10["mean_success_failure_first_action_tv"] - 0.069444) < 1e-9
+        and abs(b10["permutation_p"] - 0.580094) < 1e-9
+        and abs(b10["practical_tv_floor"] - 0.20) < 1e-12
+        and b10["gate_pass"] is False
+        and b10["states_with_nonzero_success_failure_tv"] == 9
+        and b10["states_with_modal_success_failure_difference"] == 0
+        and all(x in all_text for x in ["0.06944", "0.5801", "0.20 process floor", "0/36"])
+    )
+    checks["b10_posthoc_process_diagnostic_bounded"] = (
+        b10d["states"] == 36
+        and abs(b10d["coarse_action_family_mean_success_failure_tv"] - 0.027778) < 1e-9
+        and abs(b10d["mean_next_goal_success_failure_excess_over_within"] - 0.016593) < 1e-9
+        and abs(b10d["mean_next_goal_memory_vs_no_memory_distance"] - 0.554403) < 1e-9
+        and abs(b10["mean_memory_presence_first_action_tv"] - 0.170139) < 1e-9
+        and b10["states_where_either_memory_modal_differs_from_no_memory"] == 6
+        and lcb["generic_memory_presence_first_action_effect_confirmatory"] is False
+        and all(x in all_text for x in ["0.027778", "0.016593", "0.170139", "descriptive"])
+    )
+    checks["experiment_ladder_present"] = all(x in downstream for x in ["Core identification/transport ladder", "Write breadth", "Native branch transport", "Native controls", "Native first-action uptake"])
 
     checks["o5_original_branch_location_preserved"] = (
         O5["status"] == "O5_FRESH_NO_MEMORY_CONTROL_COMPLETE"
@@ -160,7 +188,7 @@ def main() -> None:
         and abs(O6["terminal_stage"]["mean_absolute_success_rate_difference"] - 0.140625) < 1e-9
         and abs(O6["terminal_stage"]["permutation_p"] - 0.00012) < 1e-9
         and O6["terminal_stage"]["joint_gate_pass"] is False
-        and all(x in all_text for x in ["0.737", "0.140625", "0.00012", "two of six"])
+        and all(x in all_text for x in ["0.737", "0.140625", "0.00012", "two sign reversals"])
     )
     checks["cross_policy_support_stop_not_null"] = (
         e["B6_cross_policy_support_stop"]["scientifically_usable_calls"] == 0
@@ -178,7 +206,7 @@ def main() -> None:
         and O6_REDUCTION["released_mechanism_facts"]["reward_conditioned_memory_document_used_in_retrieval_embedding"] is False
         and all(x in all_text for x in ["all-MiniLM-L6-v2", "top-$1$", "threshold 0.3"])
     )
-    checks["live_transport_boundary_preserved"] = all(x in limits for x in ["frozen browser-state packets rather than live endpoints", "do not claim live end-to-end or population transport"])
+    checks["live_transport_boundary_preserved"] = all(x in limits for x in ["frozen browser-state packets rather than live endpoints", "without claiming live or population transport"])
     checks["semantic_diagnostics_bounded"] = all(x in limits for x in ["Token Jaccard", "operation slots", "bounded diagnostics"])
     checks["corruption_decomposition_demoted"] = all(x in appendix for x in ["Bounded corruption-rate consequence", "not an empirical corruption sweep"])
 
@@ -198,13 +226,21 @@ def main() -> None:
         and facct["baseline_program_scientifically_usable_completions_total"] == 608
         and facct["baseline_program_scientifically_usable_terminal_rollouts_total"] == 576
         and facct["full_paper_observable_provider_posts_lower_bound_after_followup"] == 1483
-        and all(x in appendix for x in ["642 observable POSTs", "608 are scientifically usable", "576 terminal rollouts", "at least 1,483"])
+    )
+    checks["execution_accounting_b10"] = (
+        lacct["prior_followup_full_paper_provider_posts_lower_bound"] == 1483
+        and lacct["b10_new_provider_posts"] == 432
+        and lacct["b10_scientifically_usable_process_calls"] == 432
+        and lacct["b10d_new_provider_posts"] == 0
+        and lacct["full_paper_observable_provider_posts_lower_bound_after_b10"] == 1915
+        and all(x in appendix for x in ["1,074 observable POSTs", "1,040 are scientifically usable", "576 terminal rollouts", "432 first-action rollouts", "at least 1,915"])
     )
     checks["inference_only_accounting"] = (
         "inference-only" in setup
         and "no training or local GPU fine-tuning" in setup
         and acct["training_runs"] == 0 and acct["gpu_runs"] == 0
         and facct["training_runs"] == 0 and facct["gpu_runs"] == 0
+        and lacct["training_runs"] == 0 and lacct["gpu_runs"] == 0
     )
     checks["claim_boundary_matrix"] = (
         cb["write_channel_breadth_supported"] is True
@@ -217,13 +253,16 @@ def main() -> None:
         and fcb["partial_reference_metric_replaces_binary_gate"] is False
         and fcb["endpoint_resolution_explains_away_native_branch_nonpass"] is False
         and fcb["external_trajectory_retrieval_method_replication_claimed"] is False
+        and lcb["B10_native_first_action_branch_transport_supported"] is False
+        and lcb["generic_memory_presence_first_action_effect_confirmatory"] is False
+        and lcb["model_theory_cause_established"] is False
         and all(x in limits for x in ["writer-invariant effects are not established", "not a scientific null", "Claims are local to the released ReasoningBank"])
     )
 
     story_text = (REPO / "paper-story-reward-memory.js").read_text()
     reader_text = (REPO / "paper-reader-data.js").read_text()
-    checks["paper_story_expansion_current"] = all(x in story_text for x in ["20/20", "72.7", "0.02083", "0.04514", "0.00775", "0.01951", "support stop"])
-    checks["paper_reader_expansion_current"] = all(x in reader_text for x in ["20/20", "125/172", "0.02083", "0.04514", "0.00775", "0.01951"])
+    checks["paper_story_expansion_current"] = all(x in story_text for x in ["20/20", "72.7", "0.02083", "0.04514", "0.00775", "0.01951", "0.06944", "0.5801", "0.17014", "branch-specific uptake", "support stop"])
+    checks["paper_reader_expansion_current"] = all(x in reader_text for x in ["20/20", "125/172", "0.02083", "0.04514", "0.00775", "0.01951", "0.06944", ".5801", ".17014", "branch-specific uptake"])
 
     pdf = HERE / "paper.pdf"
     pdfinfo = subprocess.check_output(["pdfinfo", str(pdf)], text=True)
@@ -243,12 +282,12 @@ def main() -> None:
     references_page = heading_page("References")
     checks["main_text_within_nine_pages"] = conclusion_page is not None and conclusion_page <= 9
     checks["references_not_before_conclusion"] = references_page is not None and conclusion_page is not None and references_page >= conclusion_page
-    checks["expanded_pdf_reasonable_total_pages"] = pages <= 17
+    checks["expanded_pdf_reasonable_total_pages"] = pages <= 19
 
     payload = {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-        "revision": "ICLR-BASELINE-ALIGNED-FOLLOWUP-RAW-TRAJECTORY-ENDPOINT-20260824",
+        "revision": "ICLR-TRANSPORT-LOCALIZATION-B10-20260824",
         "status": "PASS" if all(checks.values()) else "FAIL",
         "abstract_words_approx": approx_words(abstract),
         "pdf_pages_total": pages,
@@ -263,6 +302,7 @@ def main() -> None:
         "f2r1_chronology_receipt_sha256": sha(HERE / "f2r1-chronology-receipt.json"),
         "baseline_aligned_expansion_evidence_sha256": sha(HERE / "baseline-aligned-expansion-evidence.json"),
         "baseline_aligned_followup_evidence_sha256": sha(HERE / "baseline-aligned-followup-evidence.json"),
+        "transport_localization_evidence_sha256": sha(HERE / "transport-localization-evidence.json"),
         "paper_story_reward_memory_sha256": sha(REPO / "paper-story-reward-memory.js"),
         "paper_reader_data_sha256": sha(REPO / "paper-reader-data.js"),
         "paper_pdf_sha256": sha(pdf),
@@ -270,16 +310,18 @@ def main() -> None:
         "scientific_authority": False,
         "experiment_authority": False,
         "claim_expansion": False,
-        "new_provider_calls_exact": facct["followup_new_provider_posts"],
-        "new_scientifically_usable_provider_calls": facct["followup_new_scientifically_usable_provider_completions"],
+        "new_provider_calls_exact": lacct["b10_new_provider_posts"],
+        "new_scientifically_usable_provider_calls": lacct["b10_scientifically_usable_process_calls"],
         "new_scientifically_usable_writer_calls": 0,
-        "new_terminal_rollouts": facct["followup_new_scientifically_usable_provider_completions"],
+        "new_terminal_rollouts": 0,
+        "new_process_rollouts": lacct["b10_scientifically_usable_process_calls"],
         "cross_policy_support_failure_posts": acct["cross_policy_support_failure_posts"],
-        "prior_full_paper_observable_provider_posts_lower_bound": acct["updated_full_paper_observable_provider_posts_lower_bound"],
-        "updated_full_paper_observable_provider_posts_lower_bound": facct["full_paper_observable_provider_posts_lower_bound_after_followup"],
-        "baseline_program_provider_posts_total": facct["baseline_program_provider_posts_total"],
-        "baseline_program_scientifically_usable_completions_total": facct["baseline_program_scientifically_usable_completions_total"],
+        "prior_full_paper_observable_provider_posts_lower_bound": lacct["prior_followup_full_paper_provider_posts_lower_bound"],
+        "updated_full_paper_observable_provider_posts_lower_bound": lacct["full_paper_observable_provider_posts_lower_bound_after_b10"],
+        "baseline_program_provider_posts_total": 1074,
+        "baseline_program_scientifically_usable_completions_total": 1040,
         "baseline_program_terminal_rollouts_total": facct["baseline_program_scientifically_usable_terminal_rollouts_total"],
+        "baseline_program_process_rollouts_total": lacct["b10_scientifically_usable_process_calls"],
         "training_runs": 0,
         "gpu_runs": 0,
     }

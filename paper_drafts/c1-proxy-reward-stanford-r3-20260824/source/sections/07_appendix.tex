@@ -323,6 +323,33 @@ Sixteen of the 36 native-support tasks require more than one reference substring
 
 The diagnostic confirms some endpoint compression but not a hidden large reward-branch effect. Joint success/failure floors fall from 18 under the binary score to 10 under fractional coverage. Nevertheless, mean absolute S/F separation is 0.019511 over all 36 tasks and 0.028274 over the frozen 16-task multi-reference subset. Mean absolute memory-presence separation under fractional coverage is 0.045635 over all 36 tasks. Only three tasks have identical binary S/F means but different fractional-coverage S/F means. We therefore retain endpoint headroom as one transport gate without using score resolution to explain away the native branch non-pass.
 
+\subsection{Native first-action transport localization}
+To test whether terminal attenuation occurs only after decisions are made, we freeze a pre-terminal process endpoint on the identical 36 native-hit tasks. For every task, the selected source remains the exact released top-$1$ source. The future observation is the released trajectory's step-1 browser state, with any pre-existing task-history memory stripped before the experiment; there is no task-specific step selection. Success-memory, failure-memory, and no-memory conditions each receive four fresh Doubao Seed 2.0 Mini rollouts at the same temperature and output cap as B4/B5. The action signature is inherited from the earlier F1D protocol: first structured action name, with click-element index retained for clicks. All 432 calls complete with zero provider or unrecoverable parse failures.
+
+The preregistered statistic is mean per-state empirical TV between success- and failure-memory first-action distributions, with the inherited 0.20 process floor and 100,000-draw within-state permutation test. The observed mean TV is 0.069444 with $p=0.580094$, so branch-specific first-action transport is not established. Nine of 36 states have any nonzero S/F TV, but none changes its modal S/F action. Coarsening clicks by removing element indices reduces mean S/F action-family TV to 0.027778 and leaves only four states with any family-level difference. The secondary no-memory geometry is larger but descriptive: mean $\frac12(\mathrm{TV}(S,N)+\mathrm{TV}(F,N))=0.170139$, and six states have a modal action under at least one memory branch that differs from no-memory. Because no confirmatory presence gate was preregistered, this supports only the interpretation that generic procedural context can influence action selection while reward-branch-specific uptake remains weak.
+
+A zero-call post-hoc next-goal diagnostic uses the archived B10 outputs without adding provider calls. Mean cross-branch token-set Jaccard distance between success and failure next-goal texts is 0.464370, while the average within-branch rollout distance is already 0.447776; the branch-specific excess is therefore only 0.016593. By contrast, mean memory-versus-no-memory next-goal distance is 0.554403. This diagnostic has no inferential authority and cannot rescue the B10 gate; it further localizes the observed attenuation before or at branch-specific operative planning rather than solely at terminal scoring.
+
+\begin{table}[h]
+\centering
+\small
+\caption{B10 process localization on the 36 frozen native-hit states. Presence TV is $\frac12(\mathrm{TV}(S,N)+\mathrm{TV}(F,N))$.}
+\label{tab:b10-process}
+\begin{tabular}{lrr}
+\toprule
+Metric & Value & Registered status \\
+\midrule
+Mean S/F first-action TV & 0.069444 & floor fail ($0.20$) \\
+Permutation $p$ & 0.580094 & fail \\
+States with nonzero S/F TV & 9/36 & descriptive \\
+States with modal S/F action difference & 0/36 & descriptive \\
+Mean coarse action-family S/F TV & 0.027778 & post-hoc \\
+Mean memory-presence first-action TV & 0.170139 & secondary \\
+States with memory/no-memory modal shift & 6/36 & secondary \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Cross-policy support stop}
 The downstream-policy transfer is frozen on the identical 36-task support before any DeepSeek-V4-Flash outcome. At the Doubao-matched 900-token cap, the first frozen unit ends with provider status incomplete, reason \texttt{length}, and no assistant text. One execution-only repair raises the cap uniformly to 2,200, requires all 288 units to be fresh, and forbids a second repair; the same first unit again length-censors without assistant text. The cross-policy line therefore stops after two provider POSTs with zero scientific units. The preregistered no-memory continuation is not triggered because its condition is complete paired execution, regardless of paired scientific outcome.
 
@@ -331,6 +358,6 @@ For completeness, the earlier forced-swap matrix implies a descriptive between-m
 
 \section{Execution Accounting and Reliability}
 \label{sec:execution-accounting}
-All scientific evidence is inference-only; there are no training runs or local GPU fine-tuning runs. Before the baseline-aligned expansion, the observable provider-POST lower bound was at least 841, excluding the unresolved low-level request count of the early 12-unit aligned action witness. The original expansion adds 498 observable POSTs: 32 breadth-parent writer calls, 32 fresh breadth-repair writer calls, 288 native retrieval-matched branch rollouts, 144 matched no-memory rollouts, and two DeepSeek cross-policy support-failure calls. The raw writer-input trajectory follow-up adds 144 further terminal POSTs. Across expansion plus follow-up this is 642 observable POSTs, of which 608 are scientifically usable completions: 32 breadth writer calls plus 576 terminal rollouts. The updated full-paper observable POST lower bound is therefore at least 1,483. The endpoint-headroom and tie-aware geometry audits use zero provider calls.
+All scientific evidence is inference-only; there are no training runs or local GPU fine-tuning runs. Before the baseline-aligned expansion, the observable provider-POST lower bound was at least 841, excluding the unresolved low-level request count of the early 12-unit aligned action witness. The original expansion adds 498 observable POSTs: 32 breadth-parent writer calls, 32 fresh breadth-repair writer calls, 288 native retrieval-matched branch rollouts, 144 matched no-memory rollouts, and two DeepSeek cross-policy support-failure calls. The raw writer-input trajectory follow-up adds 144 terminal POSTs, and the native first-action localization adds 432 process-level POSTs. Across expansion, raw follow-up, and B10 this is 1,074 observable POSTs, of which 1,040 are scientifically usable completions: 32 breadth writer calls, 576 terminal rollouts, and 432 first-action rollouts. The updated full-paper observable POST lower bound is therefore at least 1,915. Retrieval audits, endpoint-headroom/tie-aware analyses, and the B10 next-goal diagnostic use zero provider calls.
 
-The 32-call breadth parent completes 29 units but length-censors three failure-branch writes; only the fresh uniform 4,096-token repair has breadth authority. B4, B5, and B8 complete 288/288, 144/144, and 144/144 provider calls, respectively, with zero provider failures. The DeepSeek policy-transfer parent and sole output-cap repair each fail on their first unit with no assistant text and contribute zero scientific units. Earlier execution failures---the two original F0 failure-arm incompletions, the execution-invalid first no-memory attempt, and the failed parent GLM writer attempt---remain recorded separately and are never imputed as scientific outcomes. Provider outputs are content-addressed or response-first archived where the frozen runner supports it.
+The 32-call breadth parent completes 29 units but length-censors three failure-branch writes; only the fresh uniform 4,096-token repair has breadth authority. B4, B5, B8, and B10 complete 288/288, 144/144, 144/144, and 432/432 provider calls, respectively, with zero provider failures in those scientific runs; B10 also has zero unrecoverable parse failures. The DeepSeek policy-transfer parent and sole output-cap repair each fail on their first unit with no assistant text and contribute zero scientific units. Earlier execution failures---the two original F0 failure-arm incompletions, the execution-invalid first no-memory attempt, and the failed parent GLM writer attempt---remain recorded separately and are never imputed as scientific outcomes. Provider outputs are content-addressed or response-first archived where the frozen runner supports it.

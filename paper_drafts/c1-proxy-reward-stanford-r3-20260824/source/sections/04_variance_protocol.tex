@@ -21,13 +21,13 @@ The result is sharply different from the forced-swap matrix. Mean absolute succe
 
 We then omit memory entirely on the identical 36-task support, policy, evidence, evaluator, and four-rollout depth. All 144 calls complete. The preregistered three-arm statistic averages $|p_S-p_0|$ and $|p_F-p_0|$ within task; its mean is 0.04514. An omnibus permutation test gives $p=0.00147$, but the effect misses the unchanged 0.15 practical floor, so a practically large native memory-presence effect is not established. At the point estimate, no-memory is equidistant from the two reward-conditioned branches on 34/36 tasks, closer to success memory on one, and closer to failure memory on one.
 
-\paragraph{Stronger representation and endpoint controls.}
-A 144-call raw writer-input trajectory arm on the same 36 tasks completes without provider failure. Its preregistered mean rewrite-versus-raw effect is 0.04514 ($p=0.00775$), again below the 0.15 practical floor; 31/36 tasks have identical S/F/raw/no-memory point estimates. Separately, a post-hoc fractional-reference re-score of the 432 archived S/F/no-memory outputs reduces joint S/F floors from 18 to 10 but leaves mean S/F separation at 0.01951 overall and 0.02827 on the 16 multi-reference tasks. This zero-call diagnostic cannot replace the frozen binary gate, but it argues against discretization alone as the explanation for weak native branch transport.
+\paragraph{Where does native transport attenuate?}
+A 144-call raw writer-input trajectory arm on the same 36 tasks gives mean rewrite-versus-raw effect 0.04514 ($p=0.00775$), below the 0.15 floor, with 31/36 S/F/raw/no-memory point estimates identical. A post-hoc fractional-reference re-score reduces joint S/F floors from 18 to 10 but leaves mean S/F separation at 0.01951, arguing against binary discretization as the main explanation. We therefore move earlier in the chain. B10 freezes each native-hit task at released trajectory step 1 and samples success-memory, failure-memory, and no-memory first structured actions. All 432 calls complete. Mean S/F first-action TV is 0.06944 with permutation $p=0.5801$, far below the inherited 0.20 process floor; only 9/36 states have any S/F TV and 0/36 change their modal action. Removing click indices lowers mean S/F action-family TV to 0.02778. A descriptive memory-versus-no-memory first-action TV of 0.17014 with six modal shifts suggests generic procedural context can affect decision-making, but it is not a confirmatory reward-branch effect. Together with the raw and endpoint controls, this localizes the dominant attenuation before or at branch-specific policy uptake rather than solely at terminal scoring.
 
 \begin{table}[t]
 \centering
 \scriptsize
-\caption{Experimental ladder. ``Pass'' always requires the preregistered practical-effect criterion when one exists; a small $p$-value alone is insufficient. Retrieval audits use zero provider calls.}
+\caption{Core identification/transport ladder. Practical-effect floors remain binding when preregistered. Retrieval audits use zero provider calls.}
 \label{tab:experiment-ladder}
 \begin{tabular}{@{}p{0.27\linewidth}p{0.18\linewidth}p{0.27\linewidth}p{0.18\linewidth}@{}}
 \toprule
@@ -39,15 +39,12 @@ Original-bank retrieval & 188 held-out / 0 & 8 hits (4.26\%); forced futures 0/4
 20-source retrieval & 172 held-out / 0 & 125 hits (72.7\%); 36 terminal-eligible & support \\
 Native branch transport & 36 tasks / 288 & mean $|\Delta|=.02083$, $p=.4289$ & non-pass \\
 Native controls & 36 tasks / 288 & omission .04514 ($p=.00147$); raw .04514 ($p=.00775$) & both floor fail \\
-GLM writer transfer & 4$\times$4 / 256 & .140625, $p=.00012$ & floor fail \\
-DeepSeek policy transfer & 2 support posts & no assistant text at 900 and 2200 token caps & support stop \\
+Native first-action uptake & 36 states / 432 & S/F TV .06944, $p=.5801$; 0/36 modal diff. & non-pass \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{What generalizes, and what does not?}
-A sequential GLM-5.3 writer replication holds the four original sources, ReasoningBank reward-mode prompts, future support, downstream policy, evaluator, and terminal gate fixed. After one execution-only output-cap repair, all four paired memories change content and titles (mean token-set Jaccard distance 0.737). Its 256-call terminal stage gives mean $|\Delta|=0.140625$ with $p=0.00012$: the statistical criterion passes, but the frozen 0.15 practical floor does not, and two of six cells nonzero under both writers reverse sign. This again shows that upstream write divergence transfers more readily than downstream magnitude or direction.
+A GLM-5.3 writer replication changes all four original paired memories (mean token-set Jaccard 0.737), but its matched 256-call terminal effect is 0.140625 ($p=0.00012$), below the frozen 0.15 floor, with two sign reversals. A preregistered DeepSeek-V4-Flash policy transfer remains unresolved: its first frozen unit length-censors without assistant text at both the 900-token parent and sole allowed 2,200-token repair, so the line stops with zero scientific units.
 
-We preregister a DeepSeek-V4-Flash policy transfer on the same 36-task support. Its first frozen unit length-censors without assistant text at both the 900-token parent and sole allowed 2,200-token repair. The contract forbids further cap escalation or model substitution, so this line stops after two provider-support failures with zero scientific units; it is not a scientific null.
-
-The evidence therefore separates robust write-time state change from conditional transport. Forced swaps show that paired states can matter, while native retrieval, raw-trajectory, omission, and endpoint-headroom controls show that realized magnitude depends on exposure, representation, endpoint headroom, and policy. Appendix~\ref{sec:breadth-transport-details} gives the cell-level results and bounded consequence analyses.
+Overall, forced swaps establish conditional leverage, native retrieval establishes exposure, raw/endpoint controls reject two simple explanations for the broad terminal non-pass, and B10 places the dominant attenuation before or at reward-branch-specific policy uptake. Appendix~\ref{sec:breadth-transport-details} gives cell-level results and bounded consequence analyses.
