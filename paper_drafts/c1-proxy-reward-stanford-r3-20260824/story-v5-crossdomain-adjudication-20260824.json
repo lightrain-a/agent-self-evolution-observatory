@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "paper-story-v5-crossdomain-adjudication",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "status": "STORY_WINNER_PRESERVED_AFTER_REDDIT_REPLICATION",
+  "prior_winner": "S1-WRITE-TO-UPTAKE-BOTTLENECK",
+  "title": "Reward Errors Change Memory Before They Change Policy",
+  "new_evidence": {
+    "domain": "WebArena Reddit",
+    "support_qualification": "8 offline deterministic retrieval-hit futures, 2 intent templates, 4 selected source identities; qualified with zero provider calls before writer execution",
+    "write_replication": "4/4 required Reddit source pairs change content and title sets; mean token Jaccard distance 0.652342",
+    "native_terminal": "8 frozen futures, 64 scientific terminal calls, mean |delta|=0.125, permutation p=0.225268, unchanged practical floor=0.15, gate fail",
+    "heterogeneity": "6/8 zero; two nonzero cells are 0.5 in different intent templates with opposite signs; every leave-one-task-out mean remains below 0.15",
+    "execution_repair": "4096-token writer parent had one length/no-text failure; R1 uniformly regenerated all eight writer units fresh at 8192 with no reuse of parent successes"
+  },
+  "story_adjudication": {
+    "winner_changes": false,
+    "reason": "Reddit strengthens the same stage-resolved story rather than creating a new one: write-time divergence transfers across domains, whereas native branch magnitude remains conditional and heterogeneous. The Shopping first-action experiment remains the mechanism-localization evidence; Reddit is a generalization/boundary experiment, not evidence that the uptake bottleneck is identical in every domain.",
+    "new_story_role": "E5 generalization and failure boundary",
+    "forbidden_reframes": [
+      "native branch transport is universally near zero",
+      "Shopping magnitude 0.02083 is a cross-domain law",
+      "failure-conditioned memory is uniformly harmful",
+      "Reddit p=0.225 is evidence of no effect",
+      "Reddit 0.125 is a positive practical transport result"
+    ],
+    "revised_bounded_claim": "Reward-conditioned writing transfers more robustly than native behavioral magnitude. Across Shopping and Reddit, label-conditioned memories reliably diverge at write time, while native branch transport is domain/task heterogeneous and neither evaluated domain establishes the prespecified broad practical effect."
+  },
+  "next_experiment_policy": {
+    "another_same_family_reddit_sweep": "STOP",
+    "reason": "The second-domain question is already answered at useful resolution; expanding Reddit task count would require non-deterministic/live evaluators and would change the evidence substrate.",
+    "reopen_only_if": [
+      "a third domain has outcome-independent offline deterministic support comparable to the frozen Reddit qualification",
+      "a live source-faithful endpoint becomes available under the already specified transport contract",
+      "or a second downstream policy can execute the full frozen support without provider-support failure"
+    ]
+  },
+  "claim_expansion": false,
+  "external_review_authority": false,
+  "submission_authority": false
+}

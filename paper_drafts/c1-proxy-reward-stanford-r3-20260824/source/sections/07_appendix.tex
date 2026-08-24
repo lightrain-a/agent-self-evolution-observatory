@@ -384,6 +384,36 @@ Sources with any nonzero task & 2/11 \\
 \end{tabular}
 \end{table}
 
+\subsection{Cross-domain Reddit replication}
+A zero-call qualification freezes the second-domain support before any new writer output. We start from the released AWM shuffle-1 Reddit trajectory file (106 trajectories) and all 129 Reddit task configs. All released string-match tasks are reserved from source selection. Within each original-outcome stratum, a deterministic rule first maximizes intent-template diversity and then fills by task ID, producing 20 source descriptions balanced 10 successful / 10 failed across 15 templates. Exact all-MiniLM-L6-v2 top-$1$/0.3 replay yields 102 held-out retrieval hits. Eight tasks also have released trajectories and deterministic offline string-match evaluators, spanning two intent templates and retrieving four distinct source identities (404, 405, 595, 610). This passes the preregistered support gate of at least six eligible hits, two templates, and two selected sources with no provider call.
+
+Only those four retriever-required sources enter the writer replication. The parent freezes eight success/failure writer calls at a 4,096-token cap; seven complete, while source 610's failure branch length-censors without assistant text. No parent success is reused scientifically. A single execution-only repair raises only the writer output cap to 8,192 and regenerates all eight units fresh; a second repair is forbidden. All repaired calls complete. All four pairs change both content and title sets, with mean token-set Jaccard distance 0.652342.
+
+The repaired memories are serialized through the same released ReasoningBank wrapper. On all eight qualified futures, future evidence, Doubao Seed 2.0 Mini, evaluator, temperature, and four-rollout depth are matched across S/F branches. All 64 calls complete with zero provider failures. Mean $|S-F|=0.125$ and the 100,000-draw within-task permutation test gives $p=0.225268$, so the unchanged 0.15/$p<0.05$ gate fails. Six tasks are zero. Task 29 has signed $F-S=+0.5$ and task 67 has $F-S=-0.5$; they lie in different intent templates, so the aggregate signed mean is exactly zero. Every leave-one-task-out mean remains below 0.15 (range 0.071429--0.142857). This supports cross-domain write divergence while retaining a bounded, heterogeneous native-transport non-pass.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Second-domain Reddit replication. Writer divergence transfers; native terminal magnitude is larger than Shopping but still misses the unchanged practical/statistical gate.}
+\label{tab:b12-reddit}
+\begin{tabular}{lr}
+\toprule
+Metric & Value \\
+\midrule
+Zero-call qualified future tasks & 8 \\
+Qualified intent templates / selected sources & 2 / 4 \\
+Fresh repaired writer pairs & 4/4 divergent \\
+Writer mean token Jaccard distance & 0.652342 \\
+Scientific terminal calls & 64/64 complete \\
+Mean native $|S-F|$ & 0.125 \\
+Permutation $p$ & 0.225268 \\
+Practical floor & 0.15 (fail) \\
+Zero-effect tasks & 6/8 \\
+Leave-one-task-out mean range & 0.071429--0.142857 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Cross-policy support stop}
 The downstream-policy transfer is frozen on the identical 36-task support before any DeepSeek-V4-Flash outcome. At the Doubao-matched 900-token cap, the first frozen unit ends with provider status incomplete, reason \texttt{length}, and no assistant text. One execution-only repair raises the cap uniformly to 2,200, requires all 288 units to be fresh, and forbids a second repair; the same first unit again length-censors without assistant text. The cross-policy line therefore stops after two provider POSTs with zero scientific units. The preregistered no-memory continuation is not triggered because its condition is complete paired execution, regardless of paired scientific outcome.
 
@@ -392,6 +422,6 @@ For completeness, the earlier forced-swap matrix implies a descriptive between-m
 
 \section{Execution Accounting and Reliability}
 \label{sec:execution-accounting}
-All scientific evidence is inference-only; there are no training runs or local GPU fine-tuning runs. Before the baseline-aligned expansion, the observable provider-POST lower bound was at least 841, excluding the unresolved low-level request count of the early 12-unit aligned action witness. The original expansion adds 498 observable POSTs. The raw writer-input follow-up adds 144 terminal POSTs, native first-action localization adds 432 process POSTs, and the outcome-blind structured-memory control adds 20 writer plus 144 terminal POSTs. Across these expansion/follow-up stages this is 1,238 observable POSTs, of which 1,204 are scientifically usable completions: 52 writer calls, 720 terminal rollouts, and 432 first-action rollouts. The updated full-paper observable POST lower bound is therefore at least 2,079. Retrieval audits, endpoint-headroom and tie-aware analyses, the first-action next-goal diagnostic, and the B11 concentration/CSV projections use zero provider calls.
+All scientific evidence is inference-only; there are no training runs or local GPU fine-tuning runs. Before the baseline-aligned expansion, the observable provider-POST lower bound was at least 841, excluding the unresolved low-level request count of the early 12-unit aligned action witness. The original expansion adds 498 observable POSTs. The raw writer-input follow-up adds 144 terminal POSTs, native first-action localization adds 432 process POSTs, the outcome-blind structured-memory control adds 20 writer plus 144 terminal POSTs, and the Reddit cross-domain program adds 80 observable POSTs (8 execution-parent writer POSTs plus 8 fresh repaired writer and 64 terminal POSTs). Across these expansion/follow-up stages this is 1,318 observable POSTs, of which 1,276 are scientifically usable completions: 60 writer calls, 784 terminal rollouts, and 432 first-action rollouts. The updated full-paper observable POST lower bound is therefore at least 2,159. Retrieval audits, endpoint-headroom and tie-aware analyses, the first-action next-goal diagnostic, B11 concentration/CSV projections, and Reddit support qualification use zero provider calls.
 
-The 32-call breadth parent completes 29 units but length-censors three failure-branch writes; only the fresh uniform 4,096-token repair has breadth authority. Native branch, no-memory, raw-trajectory, first-action, and outcome-blind structured-memory scientific runs complete 288/288, 144/144, 144/144, 432/432, and 164/164 provider calls respectively, with zero provider failures in those runs; the first-action stage also has zero unrecoverable parse failures. The DeepSeek policy-transfer parent and sole output-cap repair each fail on their first unit with no assistant text and contribute zero scientific units. Earlier execution failures---the two original F0 failure-arm incompletions, the execution-invalid first no-memory attempt, and the failed parent GLM writer attempt---remain recorded separately and are never imputed as scientific outcomes. Provider outputs are content-addressed or response-first archived where the frozen runner supports it.
+The 32-call Shopping breadth parent completes 29 units but length-censors three failure-branch writes; only its fresh uniform 4,096-token repair has breadth authority. The Reddit writer parent similarly completes 7/8 but length-censors source 610's failure branch at 4,096; the only authorized repair regenerates all eight writer units fresh at 8,192 and then completes 64/64 terminal calls. Parent writer successes are excluded from the Reddit scientific result. Native branch, no-memory, raw-trajectory, first-action, outcome-blind structured-memory, and Reddit R1 scientific stages otherwise complete without provider failure; the first-action stage also has zero unrecoverable parse failures. The DeepSeek policy-transfer parent and sole output-cap repair each fail on their first unit with no assistant text and contribute zero scientific units. Earlier execution failures---the two original F0 failure-arm incompletions, the execution-invalid first no-memory attempt, and the failed parent GLM writer attempt---remain recorded separately and are never imputed as scientific outcomes. Provider outputs are content-addressed or response-first archived where the frozen runner supports it.

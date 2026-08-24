@@ -1,0 +1,118 @@
+{
+  "abstract_words_approx": 183,
+  "artifact_type": "stage-resolved-b12-revision-receipt",
+  "b12_crossdomain_reddit_evidence_sha256": "08b475dde3be086b2e3461e5941c204f502624bd7112cdda6a5e4ca878c48f3c",
+  "b12_execution_repair": {
+    "all_8_writer_units_regenerated_fresh": true,
+    "failure": "source 610 failure branch length-censored without assistant text at 4096",
+    "parent_provider_posts": 8,
+    "parent_scientific_pairs": 0,
+    "parent_successes_reused_for_science": false,
+    "r1_change_only": "uniform writer output cap 4096 -> 8192",
+    "second_repair_allowed": false
+  },
+  "b12_terminal_stage": {
+    "all_leave_one_task_out_means_below_floor": true,
+    "by_intent_template": {
+      "17": {
+        "mean_absolute_effect": 0.125,
+        "nonzero_tasks": 1,
+        "signed_mean": -0.125,
+        "tasks": 4
+      },
+      "33": {
+        "mean_absolute_effect": 0.125,
+        "nonzero_tasks": 1,
+        "signed_mean": 0.125,
+        "tasks": 4
+      }
+    },
+    "future_tasks": 8,
+    "gate_pass": false,
+    "intent_templates": 2,
+    "interpretation": "Reddit shows a larger native point estimate than Shopping but still misses both the unchanged practical and permutation criteria. The two nonzero cells lie in different intent templates and have opposite signs; every leave-one-task-out mean remains below the 0.15 floor.",
+    "leave_one_task_out_mean_range": [
+      0.071429,
+      0.142857
+    ],
+    "mean_absolute_success_rate_difference": 0.125,
+    "mean_signed_failure_minus_success": 0.0,
+    "nonzero_effect_tasks": 2,
+    "permutation_p": 0.225268,
+    "practical_effect_floor": 0.15,
+    "scientific_calls": 64,
+    "selected_source_tasks": 4,
+    "zero_effect_tasks": 6
+  },
+  "b12_writer_stage": {
+    "complete_pairs": 4,
+    "exact_content_change_pairs": 4,
+    "interpretation": "The label-conditioned write divergence replicates on four Reddit source identities required by the frozen native support.",
+    "mean_token_jaccard_distance": 0.652342,
+    "scientific_calls": 8,
+    "title_set_change_pairs": 4
+  },
+  "canonical_note": "B12 is a bounded daytime second-domain candidate update. Stable PaperRegistry/acceptance projection remains unchanged pending external-review adjudication.",
+  "canonical_stable_registry_overwritten": false,
+  "claim_boundary": {
+    "claim_expansion_authority": false,
+    "crossdomain_reddit_native_practical_transport_supported": false,
+    "crossdomain_write_divergence_supported_on_four_required_reddit_sources": true,
+    "live_browser_transport_supported": false,
+    "population_effect_supported": false,
+    "shopping_native_magnitude_is_universal_supported": false,
+    "uniform_failure_memory_harm_supported": false
+  },
+  "claim_expansion_authority": false,
+  "cross_domain_synthesis": {
+    "both_domains_pass_015_floor": false,
+    "interpretation": "The write-time channel generalizes more cleanly than native transport magnitude. Native branch sensitivity is domain/task heterogeneous: Reddit is descriptively larger than Shopping, but neither domain establishes the prespecified broad practical effect.",
+    "reddit_minus_shopping": 0.104167,
+    "reddit_native_mean_absolute_effect": 0.125,
+    "reddit_to_shopping_ratio": 6.0,
+    "shopping_native_mean_absolute_effect": 0.020833
+  },
+  "current_revision_observable_provider_posts": 80,
+  "current_revision_scientifically_usable_calls": 72,
+  "current_revision_scientifically_usable_terminal_rollouts": 64,
+  "current_revision_scientifically_usable_writer_calls": 8,
+  "execution_accounting": {
+    "b12_observable_provider_posts_total": 80,
+    "b12_scientifically_usable_calls": 72,
+    "b12_scientifically_usable_terminal_rollouts": 64,
+    "b12_scientifically_usable_writer_calls": 8,
+    "full_paper_observable_provider_posts_lower_bound_after_b12": 2159,
+    "gpu_runs": 0,
+    "parent_writer_provider_posts": 8,
+    "prior_full_paper_observable_provider_posts_lower_bound": 2079,
+    "qualification_provider_posts": 0,
+    "r1_terminal_provider_posts": 64,
+    "r1_writer_provider_posts": 8,
+    "training_runs": 0
+  },
+  "experiment_authority": false,
+  "external_review_calls_current_revision": 0,
+  "external_review_deferred_to_evening": true,
+  "full_paper_observable_provider_posts_lower_bound": 2159,
+  "main_text_pages": 9,
+  "manuscript_qa_sha256": "493f1b23583c4a9b4f8eb5a4ed74d4aa372ca749840f8735f3b6aaa567efd954",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "paper_pdf_sha256": "dcfe1a6eb5112da7d8ad64a559b3e7ef6f5045cfe6ccff062cce6f7d041d946f",
+  "paper_reader_data_sha256": "356cf8969ab15f5abc91677522c16819cb7832cdc6fa2b6b1e3a17a8a1b6245b",
+  "paper_story_sha256": "c1b687efceb1967b4e73cfd3aaebb117ec962f5d1fd5416a4bae4254ee31f5ba",
+  "pdf_pages_total": 20,
+  "qa_checks_passed": 46,
+  "qa_checks_total": 46,
+  "references_begin_page": 10,
+  "revision": "ICLR-STAGE-RESOLVED-B12-CROSSDOMAIN-20260824",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_claims_expanded": false,
+  "scientific_values_changed": true,
+  "status": "STAGE_RESOLVED_B12_INTEGRATED_QA_PASS",
+  "story_v4_sha256": "677aa8b44e8a09b30abd7277813916dfb7ffe370f090fde5c30c3b8ccb35d6b8",
+  "story_v5_sha256": "8beaa6cc587d86802164cb4be747558e09f9930c1ebbc6d2cdaa0c410c60abb9",
+  "story_winner_changed": false,
+  "submission_authority": false,
+  "title": "Reward Errors Change Memory Before They Change Policy"
+}
