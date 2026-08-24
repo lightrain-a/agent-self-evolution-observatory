@@ -97,6 +97,7 @@ from .research_memory_wiki import build_research_memory_wiki, write_research_mem
 from .longitudinal_safety_discovery_cycle import load_discovery_cycle
 from .longitudinal_safety_post_race_triage import load_post_race_triage, validate_post_race_triage, write_post_race_triage
 from .longitudinal_safety_material_child_race import load_material_child_race, validate_material_child_race, write_material_child_race
+from .semantic_commit_gap_collision import load_semantic_commit_gap_collision, validate_semantic_commit_gap_collision, write_semantic_commit_gap_collision
 from .search_funnel_telemetry import build_search_funnel_telemetry
 from .premium_model_policy import policy_summary as premium_model_policy_summary
 from .public_state_redaction import redact_private_paths
@@ -738,6 +739,7 @@ def build_research_system_state() -> dict[str, Any]:
     longitudinal_safety_discovery_cycle = load_discovery_cycle()
     longitudinal_safety_post_race_triage = load_post_race_triage()
     longitudinal_safety_material_child_race = load_material_child_race()
+    semantic_commit_gap_collision = load_semantic_commit_gap_collision()
     research_memory_wiki = build_research_memory_wiki(
         search_design_state=paper_first_search_portfolio_design,
         failure_asset_library=failure_asset_library,
@@ -1123,6 +1125,9 @@ def build_research_system_state() -> dict[str, Any]:
             "material_child_race_generated":int((longitudinal_safety_material_child_race.get("summary") or {}).get("children_generated") or 0),
             "material_child_race_survivors":int((longitudinal_safety_material_child_race.get("summary") or {}).get("survivors") or 0),
             "material_child_race_debate_eligible":int((longitudinal_safety_material_child_race.get("summary") or {}).get("debate_eligible") or 0),
+            "semantic_commit_gap_survivors":int((semantic_commit_gap_collision.get("summary") or {}).get("current_scientific_object_survives") or 0),
+            "semantic_commit_gap_problem_gate_eligible":int((semantic_commit_gap_collision.get("summary") or {}).get("problem_gate_eligible") or 0),
+            "semantic_commit_gap_provider_calls_authorized":int((semantic_commit_gap_collision.get("summary") or {}).get("provider_calls_authorized") or 0),
             "failure_assets":failure_asset_library["summary"]["assets"],
             "value_scheduler_candidates":experiment_value_scheduler["summary"]["candidates"],
             "research_replay_passed":research_system_replay["summary"]["passed"],
@@ -1285,6 +1290,7 @@ def build_research_system_state() -> dict[str, Any]:
         "research_memory_wiki":research_memory_wiki,
         "longitudinal_safety_post_race_triage":longitudinal_safety_post_race_triage,
         "longitudinal_safety_material_child_race":longitudinal_safety_material_child_race,
+        "semantic_commit_gap_collision":semantic_commit_gap_collision,
         "failure_asset_library":failure_asset_library,
         "experiment_value_scheduler":experiment_value_scheduler,
         "research_system_replay":research_system_replay,
@@ -1673,6 +1679,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"research-memory-wiki", "pass":state["research_memory_wiki"].get("status")=="MEMORY_COMPILED" and state["research_memory_wiki"].get("scientific_authority") is False and int(((state["research_memory_wiki"].get("lint") or {}).get("summary") or {}).get("errors") or 0)==0 and (state["research_memory_wiki"].get("policy") or {}).get("transient_operational_noise_is_not_prompt_eligible") is True and (state["research_memory_wiki"].get("policy") or {}).get("query_pack_never_relaxes_downstream_gates") is True and (state["research_memory_wiki"].get("policy") or {}).get("paper_design_reserves_at_least_one_review_lesson_when_available") is True, "detail":{"summary":state["research_memory_wiki"].get("summary"),"lint":(state["research_memory_wiki"].get("lint") or {}).get("summary")}}, 
         {"key":"longitudinal-post-race-triage", "pass":not validate_post_race_triage(state.get("longitudinal_safety_post_race_triage") or {}) and int(((state.get("longitudinal_safety_post_race_triage") or {}).get("summary") or {}).get("current_post_race_survivors") or 0)==0 and int(((state.get("longitudinal_safety_post_race_triage") or {}).get("summary") or {}).get("problem_gate_eligible") or 0)==0 and int(((state.get("longitudinal_safety_post_race_triage") or {}).get("summary") or {}).get("provider_calls_authorized") or 0)==0 and (state.get("longitudinal_safety_post_race_triage") or {}).get("scientific_authority") is False, "detail":{"status":(state.get("longitudinal_safety_post_race_triage") or {}).get("status"),"summary":(state.get("longitudinal_safety_post_race_triage") or {}).get("summary")}},
         {"key":"longitudinal-material-child-race", "pass":not validate_material_child_race(state.get("longitudinal_safety_material_child_race") or {}) and int(((state.get("longitudinal_safety_material_child_race") or {}).get("summary") or {}).get("survivors") or 0)==0 and int(((state.get("longitudinal_safety_material_child_race") or {}).get("summary") or {}).get("debate_eligible") or 0)==0 and int(((state.get("longitudinal_safety_material_child_race") or {}).get("summary") or {}).get("provider_calls_authorized") or 0)==0 and (state.get("longitudinal_safety_material_child_race") or {}).get("scientific_authority") is False, "detail":{"status":(state.get("longitudinal_safety_material_child_race") or {}).get("status"),"summary":(state.get("longitudinal_safety_material_child_race") or {}).get("summary")}},
+        {"key":"semantic-commit-gap-collision", "pass":not validate_semantic_commit_gap_collision(state.get("semantic_commit_gap_collision") or {}) and int(((state.get("semantic_commit_gap_collision") or {}).get("summary") or {}).get("current_scientific_object_survives") or 0)==0 and int(((state.get("semantic_commit_gap_collision") or {}).get("summary") or {}).get("problem_gate_eligible") or 0)==0 and int(((state.get("semantic_commit_gap_collision") or {}).get("summary") or {}).get("provider_calls_authorized") or 0)==0 and int(((state.get("semantic_commit_gap_collision") or {}).get("summary") or {}).get("sealed_v19_units_consumed") or 0)==0 and (state.get("semantic_commit_gap_collision") or {}).get("scientific_authority") is False, "detail":{"status":(state.get("semantic_commit_gap_collision") or {}).get("status"),"summary":(state.get("semantic_commit_gap_collision") or {}).get("summary")}},
         {"key":"aris-harness-alignment", "pass":state["research_harness_assurance"].get("status")=="PASS_HARNESS_ASSURANCE" and int((state["research_harness_assurance"].get("summary") or {}).get("failed") or 0)==0 and state["research_candidate_portfolio"].get("scientific_authority") is False and int((state["research_candidate_portfolio"].get("summary") or {}).get("automatic_promotions") or 0)==0 and state["search_funnel_telemetry"].get("scientific_authority") is False and state["scientific_research_graph"].get("scientific_authority") is False and (state["scientific_research_graph"].get("policy") or {}).get("experiment_failure_edge_cannot_close_core_principle") is True, "detail":{"assurance":state["research_harness_assurance"].get("summary"),"portfolio":state["research_candidate_portfolio"].get("summary"),"funnel":state["search_funnel_telemetry"].get("summary"),"graph":state["scientific_research_graph"].get("summary")}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
@@ -2314,6 +2321,11 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if int(material_child_summary.get("children_generated") or 0)!=3 or int(material_child_summary.get("children_reduced_before_execution") or 0)!=3: errors.append("material-child race must mutate and reduce all three post-race vectors")
     if int(material_child_summary.get("survivors") or 0)!=0 or int(material_child_summary.get("debate_eligible") or 0)!=0 or int(material_child_summary.get("problem_gate_eligible") or 0)!=0: errors.append("material-child race cannot promote reduced children")
     if int(material_child_summary.get("provider_calls_authorized") or 0)!=0 or int(material_child_summary.get("gpu_authorized") or 0)!=0: errors.append("material-child race cannot authorize provider or GPU execution")
+    semantic_gap=state.get("semantic_commit_gap_collision") or {};semantic_gap_summary=semantic_gap.get("summary") or {}
+    semantic_gap_errors=validate_semantic_commit_gap_collision(semantic_gap)
+    if semantic_gap_errors: errors.append("semantic commit gap collision invalid:"+";".join(semantic_gap_errors))
+    if int(semantic_gap_summary.get("current_scientific_object_survives") or 0)!=0 or int(semantic_gap_summary.get("problem_gate_eligible") or 0)!=0 or int(semantic_gap_summary.get("research_item_eligible") or 0)!=0: errors.append("semantic commit gap collision cannot promote current formulation")
+    if int(semantic_gap_summary.get("provider_calls_authorized") or 0)!=0 or int(semantic_gap_summary.get("gpu_authorized") or 0)!=0 or int(semantic_gap_summary.get("sealed_v19_units_consumed") or 0)!=0: errors.append("semantic commit gap collision cannot authorize execution or consume V19 sealed units")
     if not state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"]: errors.append("experiment value scheduler must remain advisory")
     if state["research_system_replay"]["summary"].get("failed") != 0: errors.append("research-system replay benchmark has failing epistemic cases")
     if not state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"]: errors.append("external system designs require a local gap test before adoption")
@@ -2390,6 +2402,7 @@ def write_research_system_state(json_path:Path=DEFAULT_JSON, js_path:Path=DEFAUL
     write_fresh_saturation_state()
     write_post_race_triage()
     write_material_child_race()
+    write_semantic_commit_gap_collision()
     write_skill_validation_transfer_scout()
     # Persistent search memory must be rebuilt before the fresh portfolio because
     # the latter content-addresses the former. Reversing this order guarantees a

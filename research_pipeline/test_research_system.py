@@ -79,6 +79,21 @@ class ResearchSystemTest(unittest.TestCase):
         broken["longitudinal_safety_material_child_race"]["summary"]["debate_eligible"]=1
         self.assertTrue(any("material-child race" in error for error in validate_state(broken)))
 
+    def test_semantic_commit_gap_collision_is_embedded_and_zero_authority(self) -> None:
+        collision=self.state["semantic_commit_gap_collision"]
+        summary=collision["summary"]
+        self.assertEqual(collision["status"],"STOP_CURRENT_FORMULATION_MATURE_LIFECYCLE_REDUCTION")
+        self.assertEqual(summary["current_scientific_object_survives"],0)
+        self.assertEqual(summary["problem_gate_eligible"],0)
+        self.assertEqual(summary["research_item_eligible"],0)
+        self.assertEqual(summary["provider_calls_authorized"],0)
+        self.assertEqual(summary["gpu_authorized"],0)
+        self.assertEqual(summary["sealed_v19_units_consumed"],0)
+        self.assertFalse(collision["scientific_authority"])
+        broken=copy.deepcopy(self.state)
+        broken["semantic_commit_gap_collision"]["summary"]["sealed_v19_units_consumed"]=1
+        self.assertTrue(any("semantic commit gap" in error for error in validate_state(broken)))
+
     def test_failure_memory_projection_drift_is_detected(self) -> None:
         broken=copy.deepcopy(self.state)
         library=broken["failure_asset_library"]
