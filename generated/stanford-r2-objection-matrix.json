@@ -704,17 +704,30 @@
           },
           "d": "REQUIRES_SCIENTIFIC_REOPEN",
           "why": {
-            "zh": "2026-08-24 fresh public support recheck 仍未发现作者发布的 financial per-query ReasoningBank/audit bundle；当前 arXiv v1 结尾仍声明 code and audit artifacts 将在 publication 后发布。通用 ReasoningBank repo 与 WebArena bridge 都不能替代 source-faithful financial transport，因此 O6 仍是 support + experiment debt，而不是 scientific negative。",
-            "en": "A fresh public support recheck on 2026-08-24 still discovers no author-released financial per-query ReasoningBank/audit bundle; the current arXiv v1 still states that code and audit artifacts will be released upon publication. Neither a generic ReasoningBank repository nor the WebArena bridge substitutes for source-faithful financial transport, so O6 remains support plus experiment debt rather than a scientific negative."
+            "zh": "2026-08-24 fresh public release-surface recheck 仍只观察到 arXiv v1（2026-08-18）；源论文结论仍明确声明 code and audit artifacts 将在 publication 后发布。按 exact title、arXiv ID、作者/ORCID 对 GitHub 与 Hugging Face 做 bounded discovery，仍未发现可核验的 first-party financial per-query ReasoningBank/audit bundle。第三方 Request Code 页面不算发布证据，ORCID 的 JS-only 页面也不作为不存在的负证据。因此 O6 继续是 support + experiment debt，而非 scientific negative。",
+            "en": "A fresh public release-surface recheck on 2026-08-24 still observes only arXiv v1 (2026-08-18); the source paper conclusion still states that code and audit artifacts will be released upon publication. Bounded discovery over the exact title, arXiv ID, and author/ORCID queries on GitHub and Hugging Face finds no verifiable first-party financial per-query ReasoningBank/audit bundle. Third-party Request Code pages do not count as release evidence, and JavaScript-only ORCID pages are not treated as negative evidence. O6 therefore remains support plus experiment debt rather than a scientific negative."
           },
           "action": "SCIENTIFIC_REOPEN_REQUIRED",
           "reopen": {
             "zh": "恢复可执行的 source-faithful financial runtime/provenance intervention surface，预先冻结 transport estimand 与独立 units，并重新通过 scientific/experiment gate。",
             "en": "Restore an executable source-faithful financial runtime/provenance intervention surface, pre-freeze the transport estimand and independent units, and pass scientific/experiment gates."
           },
-          "e": "B1 r8 L3 public support recheck: NO_NEW_FIRST_PARTY_L3_ARTIFACT_DISCOVERED",
-          "support_recheck": "NO_NEW_FIRST_PARTY_L3_ARTIFACT_DISCOVERED",
-          "scientific_gap": "OPEN_SUPPORT_FAILURE_NO_VERDICT"
+          "e": "B1 R20 public release-surface recheck: NO_FIRST_PARTY_FINANCIAL_L3_RELEASE_SURFACE_DELTA_DISCOVERED",
+          "support_recheck": "NO_FIRST_PARTY_FINANCIAL_L3_RELEASE_SURFACE_DELTA_DISCOVERED",
+          "scientific_gap": "OPEN_SOURCE_FAITHFUL_FINANCIAL_BUNDLE_AND_AUTHORITY_NO_VERDICT",
+          "l3_public_recheck_r20": {
+            "status": "NO_FIRST_PARTY_FINANCIAL_L3_RELEASE_SURFACE_DELTA_DISCOVERED",
+            "receipt": "generated/d2-failure-memory-provenance-l3-public-support-recheck-r20.json",
+            "arxiv_version": "v1",
+            "submitted_date": "2026-08-18",
+            "future_release_statement_present": true,
+            "first_party_financial_bundle_publicly_verified": false,
+            "release_surface_delta_vs_r8": false,
+            "l3_support_unblocked": false,
+            "l3_execution_authorized": false,
+            "support_failure_is_scientific_negative": false,
+            "scientific_verdict": "NO_VERDICT_SUPPORT_FAILURE"
+          }
         },
         {
           "id": "FAILURE-O7",

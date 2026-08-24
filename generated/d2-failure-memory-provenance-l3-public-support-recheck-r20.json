@@ -1,0 +1,93 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_type": "source-faithful-l3-public-release-surface-recheck",
+  "receipt_id": "D2-C45-L3-PUBLIC-RELEASE-RECHECK-R20",
+  "recorded_date": "2026-08-24",
+  "status": "NO_FIRST_PARTY_FINANCIAL_L3_RELEASE_SURFACE_DELTA_DISCOVERED",
+  "role": "ZERO_SCIENTIFIC_EXECUTION_PUBLIC_SUPPORT_RECHECK",
+  "question": "Has the source paper or a discoverable first-party public release exposed the per-query financial ReasoningBank/audit bundle and runtime bindings needed for source-faithful L3 transport?",
+  "prior_r8": {
+    "path": "generated/d2-failure-memory-provenance-l3-support-recheck-r8.json",
+    "sha256": "7833f07d0efaab453023bf31604163458b7e6b79434633bb6a3d85512c3edda4",
+    "status": "NO_NEW_FIRST_PARTY_L3_ARTIFACT_DISCOVERED"
+  },
+  "primary_source_snapshot": {
+    "arxiv_id": "2608.17684",
+    "title": "Auditing Self-Evolution in Financial Agents: Capability Gains, Security Drift, and Execution-Interface Mismatch",
+    "authors": [
+      "Jialong Li",
+      "Jialing Zhu"
+    ],
+    "arxiv_abs": "https://arxiv.org/abs/2608.17684",
+    "arxiv_html": "https://arxiv.org/html/2608.17684v1",
+    "version_observed": "v1",
+    "submitted_date": "2026-08-18",
+    "later_arxiv_version_observed": false,
+    "release_statement": "Code and audit artifacts will be released upon publication.",
+    "release_statement_location": "Conclusion",
+    "direct_author_project_repository_link_observed_in_arxiv_metadata": false,
+    "generic_arxiv_code_data_media_integrations_are_not_first_party_release_evidence": true
+  },
+  "bounded_public_discovery": {
+    "queries": [
+      "exact paper title + GitHub",
+      "arXiv 2608.17684 + GitHub repository",
+      "arXiv 2608.17684 + Hugging Face",
+      "exact paper title + code data audit ReasoningBank",
+      "author names/ORCID + GitHub"
+    ],
+    "github_first_party_financial_audit_repository_discovered": false,
+    "huggingface_first_party_financial_audit_bundle_discovered": false,
+    "indexed_third_party_request_code_pages_seen": true,
+    "third_party_request_code_page_counts_as_release": false,
+    "orcid_pages_required_javascript_and_were_not_used_as_negative_evidence": true,
+    "scope_note": "This is a bounded public discovery result as of the recorded date, not proof that no private, unindexed, or future release exists."
+  },
+  "required_l3_surface": {
+    "per_query_financial_reasoningbank_records_or_equivalent": true,
+    "source_trajectory_outcome_provenance_join": true,
+    "source_writer_model_prompt_and_checkpoint_binding": true,
+    "source_embedding_model_and_retrieval_binding": true,
+    "provenance_bearing_memory_interface_runtime_fields": true,
+    "source_native_downstream_units_and_schedule": true,
+    "content_addressable_artifacts_sufficient_for_same_information_transport": true
+  },
+  "availability": {
+    "per_query_financial_reasoningbank_bundle_publicly_verified": false,
+    "source_writer_checkpoint_and_prompt_binding_publicly_verified": false,
+    "source_embedding_binding_publicly_verified": false,
+    "source_native_provenance_intervention_surface_publicly_verified": false,
+    "all_required_l3_surface_available": false
+  },
+  "adjudication": {
+    "release_surface_delta_vs_r8": false,
+    "l3_support_unblocked": false,
+    "l3_execution_authorized": false,
+    "webarena_l2b_can_substitute_for_l3": false,
+    "generic_reasoningbank_repo_can_substitute_for_financial_bundle": false,
+    "absence_of_public_release_is_scientific_negative": false,
+    "scientific_verdict": "NO_VERDICT_SUPPORT_FAILURE",
+    "o5_r19_state_changed": false,
+    "paper_claims_changed": false
+  },
+  "reopen_condition": {
+    "trigger": "A first-party publication/repository/artifact release or independently verified equivalent exposes the financial per-query provenance-bearing bundle and auditable source runtime bindings.",
+    "then_require": [
+      "content-address the newly released source artifacts before inspection-driven task selection",
+      "freeze source-faithful L3 estimand and independent units pre-outcome",
+      "verify writer/model/embedding/memory-interface and downstream schedule bindings",
+      "obtain separate explicit L3 scientific and experiment/model-call authority"
+    ]
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_calls": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "gpu": false,
+    "submission": false
+  },
+  "scientific_verdict": "NO_VERDICT_PUBLIC_SUPPORT_RECHECK_ONLY"
+}
