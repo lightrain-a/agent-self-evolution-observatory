@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "targeted-scientific-reopen-design",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "objection_id": "PROXY-O5",
+  "created_at": "2026-08-24T09:37:22+08:00",
+  "reviewer_gap": "The confirmatory terminal experiment has success-label-memory and failure-label-memory conditions but no fresh no-memory terminal arm, so it cannot locate either memory-conditioned branch relative to memory omission.",
+  "decision": "REOPEN_CANDIDATE_READY_EXECUTION_BLOCKED",
+  "decision_rationale": [
+    "The requested no-memory arm is a genuinely new treatment and cannot be inferred from the two existing confirmatory arms.",
+    "The arm is nevertheless a narrow secondary control: it does not change the write-time intervention, source memories, future-task support, model, evaluator, or primary F2R1 estimand.",
+    "The strongest remaining paper-value gain is interpretability of the confirmed terminal shift, not a new memory-writer or three-arm-method claim.",
+    "The existing 12 no-memory calls belong to the earlier non-passing exploratory terminal stage and are excluded from confirmatory inference.",
+    "Research-OS authority rules forbid treating generic continuation or this AI-authored design as scientific/experiment execution authority."
+  ],
+  "authority": {
+    "design_proposal_ready": true,
+    "design_authority": false,
+    "scientific_reopen_authority": false,
+    "experiment_authority": false,
+    "provider_call_authority": false,
+    "claim_expansion_authority": false,
+    "submission_authority": false,
+    "required_before_execution": "A separate external content-addressed human authorization artifact that explicitly names PROXY-O5, this frozen contract SHA256, the 32-call ceiling, and permission for provider calls."
+  },
+  "source_bindings": {
+    "stanford_r2_objection_matrix": {
+      "path": "generated/stanford-r2-objection-matrix.json",
+      "sha256": "f1c594a475a260c993797f405f386ea2eb160497c88d8ccbc2421d42c6ea6660"
+    },
+    "research_memory_authority_policy": {
+      "path": "generated/research-memory-wiki.json",
+      "sha256": "b9da545e286e44bbce91e76f96279e9d417cf49a193e02e4e98665dac31cdab7"
+    },
+    "f2r1_contract": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-memory-variance-f2r1-20260822/f2r1-contract.json",
+      "sha256": "ea9a2260858c9da50ddfea0c6cec7722112953a437853b6e4d55c4013dec01f5"
+    },
+    "f2r1_confirmatory": {
+      "path": "/data/wyt/agent-self-evolution-observatory/paper-acceptance-artifacts/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE/f2r1-confirmatory.json",
+      "sha256": "04db52a9c2a1eac28df4213e5041e2f20e8e4b3591d5941f9e6d889a8b8dc2e9"
+    },
+    "f2_initial_exploratory": {
+      "path": "/data/wyt/agent-self-evolution-observatory/paper-acceptance-artifacts/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE/f2-initial-terminal.json",
+      "sha256": "f4bd5428887db58f7e2651248ba13458b686786bd80f71cf669bcd440655aeb6"
+    },
+    "prior_f2r1_authorization": {
+      "path": "/data/wyt/agent-self-evolution-observatory/paper-acceptance-artifacts/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE/f2r1-scoped-authorization-receipt.json",
+      "sha256": "3cc970ee2e5d2f2570be13c1076054855d3b1a347f5648d3fa161bbee4142081",
+      "reusable_for_o5": false,
+      "reason": "It authorizes only the prior two-arm F2R1 scope and cannot authorize a new no-memory treatment."
+    },
+    "frozen_o5_analysis_code": {
+      "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/analyze_o5_no_memory_control.py",
+      "sha256": "86d43aee36a5fa2a65dfc4c3021cad8e9f12a85b34a2c30a6f5df824eded4be6"
+    }
+  },
+  "scientific_contract": {
+    "question": "For each frozen future task, where does the memory-free terminal success probability lie relative to the already-confirmed success-label-memory and failure-label-memory branches?",
+    "primary_f2r1_estimand_unchanged": "mean across 16 frozen source-future cells of absolute difference in benchmark terminal success rate between success-label-memory and failure-label-memory conditions",
+    "o5_estimand_class": "secondary control / branch-location diagnostic",
+    "o5_does_not_replace_primary_gate": true,
+    "o5_does_not_retest_writer_identification": true,
+    "o5_does_not_create_three_arm_method_claim": true,
+    "frozen_source_memory_tasks_for_comparison_only": ["21", "22", "23", "25"],
+    "frozen_future_tasks": ["164", "385", "387", "388"],
+    "new_treatment": "no_memory",
+    "treatment_definition": "Use the identical fixed-evidence future-task prompt/policy construction as F2R1 but omit the persistent memory content entirely; do not replace it with an irrelevant-memory, placebo, summary, or empty-looking token payload.",
+    "source_independence": "The no-memory treatment contains no source-memory object, so a no-memory rollout is indexed only by future task and fresh rollout index. The same estimated future-task baseline may be referenced by all four source-memory comparison cells but must never be counted four times as independent evidence.",
+    "fresh_units": {
+      "unit": "one fresh provider response for one frozen future task under literal no-memory omission",
+      "rollouts_per_future_task": 8,
+      "future_task_count": 4,
+      "total_new_provider_calls": 32,
+      "source_dimension_duplicated": false,
+      "existing_exploratory_no_memory_calls_reused": 0,
+      "existing_exploratory_no_memory_calls_excluded": 12
+    },
+    "model": {
+      "requested": "doubao-seed-2.0-mini",
+      "temperature": 0.2,
+      "max_output_tokens": 900,
+      "thinking": "disabled",
+      "allow_thinking_compatibility_fallback": false,
+      "provider_retries": 0,
+      "store": true,
+      "substitution_allowed": false,
+      "substitution_rule": "If the exact F2R1 model/provider semantics cannot be reproduced, STOP rather than substitute another model, including a cheaper plan model or DeepSeek, because substitution changes the comparison object."
+    },
+    "evidence_and_evaluator": {
+      "fixed_evidence_support_sha256": "b64635594251ac8f74251ea68b39a0c0c03b689b0708366be9c68ff193edd7ce",
+      "parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+      "task_config_sha256": "d25e83078ec728adc82bd43871338a24a3907e101b5a5fdb1ae81bb7f72f36a6",
+      "evaluator_source_sha256": "f78eb61554c811f9411e7d72e0bdf2b5baa27379cbf632ade7fe49ce51a3f30d",
+      "must_match_f2r1": true
+    },
+    "missingness_policy": {
+      "provider_retries": 0,
+      "regenerate_failed_units": false,
+      "impute_failed_units": false,
+      "replace_future_task": false,
+      "report_all_requested_complete_failed_counts": true,
+      "interpretation_if_any_provider_failure": "Report the incomplete arm and its selection limitation. Do not silently top up, replace, or change the task set. A fresh separately authorized recovery contract would be required for any additional call."
+    }
+  },
+  "analysis_contract": {
+    "new_no_memory_rate": "For each future task f, estimate p0(f) from exactly 8 fresh binary benchmark outcomes.",
+    "cell_relative_contrasts": [
+      "delta_success(s,f) = p_success_F2R1(s,f) - p0(f)",
+      "delta_failure(s,f) = p_failure_F2R1(s,f) - p0(f)"
+    ],
+    "uncertainty": "Report 95% Wilson intervals for each of the four new no-memory rates and Newcombe-style score intervals for each memory-minus-no-memory contrast. Preserve the shared p0(f) dependence across the four source comparisons for a given future task.",
+    "branch_location_table": "For every one of the 16 frozen source-by-future cells, report the F2R1 success-memory rate, F2R1 failure-memory rate, shared future-task no-memory rate, both contrasts, and uncertainty. Classify only the point-estimate geometry as BASELINE_BETWEEN_ARMS, BASELINE_CLOSER_TO_SUCCESS, BASELINE_CLOSER_TO_FAILURE, or EQUIDISTANT; do not turn this descriptive class into a new significance claim.",
+    "global_p_value_required": false,
+    "reason_no_global_gate": "O5 is a reviewer-requested interpretability control over a primary effect already confirmed by F2R1. Reusing four source-independent baselines as sixteen pseudo-independent observations would create a misleading significance test.",
+    "old_exploratory_no_memory_role": "The 12 earlier no-memory calls may be displayed only as historical exploratory context after the fresh analysis is frozen; they are excluded from the confirmatory estimator, intervals, and any decision rule.",
+    "outcome_invariant_completion_gate": [
+      "The pre-execution contract and authorization hashes verify.",
+      "Exactly 32 calls are requested: 8 for each of the four frozen future tasks.",
+      "No source dimension is introduced into the no-memory treatment.",
+      "Every completed response is scored by the exact frozen F2R1 evaluator.",
+      "All failures, if any, remain visible without replacement or imputation."
+    ]
+  },
+  "claim_boundary": {
+    "allowed_if_executed": [
+      "Describe where each memory-conditioned terminal branch lies relative to a fresh memory-free baseline on the same four frozen future tasks.",
+      "Use the no-memory arm to distinguish cases consistent with one branch moving away from omission from cases where both memory branches differ from omission.",
+      "State explicitly that the control is finite-support and shares a future-task baseline across source comparisons."
+    ],
+    "forbidden": [
+      "Recast C4 as a three-arm randomized causal effect across an independent 4x4x3 factorial design.",
+      "Count one no-memory rollout four times across source memories.",
+      "Pool the 12 exploratory no-memory calls into the fresh confirmatory arm.",
+      "Change the four future tasks after seeing outcomes.",
+      "Switch model/provider/evaluator to reduce cost.",
+      "Use a favorable no-memory result to expand cross-model, live-WebArena, full-memory-bank, or general population claims.",
+      "Interpret an unfavorable or incomplete no-memory control as refuting the already-supported two-arm F2R1 effect without a separately preregistered equivalence/falsification contract."
+    ]
+  },
+  "economy": {
+    "new_provider_calls_if_authorized": 32,
+    "new_training_runs": 0,
+    "new_gpu_finetuning_runs": 0,
+    "avoided_redundant_calls_vs_naive_16_cell_replication": 96,
+    "why_32_is_minimal_matched_scope": "Eight rollouts matches the per-condition F2R1 cell replication depth, while no-memory has no source-memory factor and therefore requires only four future-task strata."
+  },
+  "next_gate": {
+    "state": "AWAIT_EXTERNAL_CONTENT_ADDRESSED_HUMAN_AUTHORITY",
+    "provider_calls_now": 0,
+    "may_execute_from_this_artifact_alone": false,
+    "on_authority": "Bind the authorization artifact SHA256 into a run-local copy of this contract, verify all source hashes and exact model/evaluator settings, then permit at most 32 provider calls.",
+    "without_authority": "Keep PROXY-O5 blocked and retain the current R3 paper-only no-memory limitation."
+  }
+}

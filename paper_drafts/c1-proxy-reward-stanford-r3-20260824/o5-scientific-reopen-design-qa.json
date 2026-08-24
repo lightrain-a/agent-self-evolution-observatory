@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "targeted-scientific-reopen-design-qa",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "objection_id": "PROXY-O5",
+  "design_sha256": "4ba22e9dee9a753e6a2cf6e136259c0763f12f9503aef2ccc75285571b2817a9",
+  "status": "PASS",
+  "checks": {
+    "paper_and_objection_identity": true,
+    "proposal_only_no_design_authority": true,
+    "zero_execution_authority": true,
+    "requires_content_addressed_human_authority": true,
+    "binding_stanford_r2_objection_matrix": true,
+    "binding_research_memory_authority_policy": true,
+    "binding_f2r1_contract": true,
+    "binding_f2r1_confirmatory": true,
+    "binding_f2_initial_exploratory": true,
+    "binding_prior_f2r1_authorization": true,
+    "binding_frozen_o5_analysis_code": true,
+    "o5_still_requires_scientific_reopen": true,
+    "future_tasks_frozen": true,
+    "source_tasks_comparison_only_frozen": true,
+    "f2r1_had_no_confirmatory_no_memory": true,
+    "old_no_memory_is_exploratory_only": true,
+    "minimal_32_call_scope": true,
+    "exact_model_match": true,
+    "exact_evidence_and_evaluator_match": true,
+    "primary_estimand_unchanged": true,
+    "no_pseudoreplication": true,
+    "missingness_fail_closed": true,
+    "no_claim_expansion": true,
+    "no_training_or_gpu": true
+  },
+  "summary": {
+    "passed": 24,
+    "total": 24,
+    "new_provider_calls_permitted_now": 0,
+    "new_provider_call_ceiling_if_separately_authorized": 32
+  }
+}
