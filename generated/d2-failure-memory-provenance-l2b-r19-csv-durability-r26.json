@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-CSV-DURABILITY-R26",
+  "status": "R19_PRIVATE_CSV_DURABILITY_CHECKPOINT_BOUND_NO_INTERIM_INFERENCE",
+  "checkpoint_sha256": "60303d9e5b76c1fed56e880247da1a823a90a2a967586ce1b1e9fbead73d35c1",
+  "episodes_complete": 20,
+  "complete_independent_tasks": 5,
+  "next_sequence_index": 20,
+  "private_csv": {
+    "attempts_rows": 20,
+    "attempts_csv_sha256": "7769420dcaef4520890fdf5fb9fa8f91e8257ed428ce2bae9eafd5b09c05203c",
+    "progress_rows": 20,
+    "progress_csv_sha256": "06f5eb26be9e24360c8d16dbf7c9f11ca6045ae5e7186df11b7cabeae5a09d04",
+    "contents_embedded_publicly": false,
+    "private_paths_embedded_publicly": false
+  },
+  "interim_policy": {
+    "terminal_scores_exposed": false,
+    "task_deltas_computed": false,
+    "effect_mean_computed": false,
+    "p_value_computed": false,
+    "confidence_interval_computed": false
+  },
+  "scientific_verdict": "NO_VERDICT_DURABILITY_CHECKPOINT_ONLY"
+}

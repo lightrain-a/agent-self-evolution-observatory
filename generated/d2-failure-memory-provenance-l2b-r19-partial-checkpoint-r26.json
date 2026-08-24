@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-PARTIAL-CHECKPOINT-R26",
+  "recorded_at": "2026-08-24T11:01:46+00:00",
+  "status": "R19_CONFIRMATORY_PREFIX_CHECKPOINT_NO_INTERIM_INFERENCE",
+  "execution": {
+    "episodes_expected": 140,
+    "episodes_complete": 20,
+    "complete_independent_tasks": 5,
+    "next_sequence_index": 20,
+    "agent_completions": 432,
+    "agent_completion_budget": 4200,
+    "fuzzy_evaluator_completions": 0,
+    "fuzzy_evaluator_completion_budget": 600,
+    "post_started_failure": false,
+    "in_flight_episode": false
+  },
+  "integrity": {
+    "attempts_jsonl_sha256": "e960c21c126862064bbffe75021b6d414f640f147444cf470de490bf262d1663",
+    "progress_jsonl_sha256": "319ea34bf347c6548750da8f97ea482e461cf127c993a02ce31e28e4ff39fe60",
+    "run_contract_sha256": "32c9ffe1a1839bd33e9939d26dd7f3a7e65fa1690dbbafdcb5263839677aa45d",
+    "summary_sha256": "580abcacf1faec6efa9098c3a9ae218340df3ef237003f937606ae680fe273b6",
+    "seq000_preexposure_failure_sha256": "064ac9858c8c5619fb889f0379accce0c0c9b409ad99e3d78ada0bdb86cca5a5",
+    "seq000_retry_adjudication_sha256": "a7d951ef6a29d83988d7475e8dd970fccd60e3370f72c095a1e30068b11834d0"
+  },
+  "interim_policy": {
+    "terminal_scores_in_public_checkpoint": false,
+    "task_deltas_computed": false,
+    "effect_mean_computed": false,
+    "p_value_computed": false,
+    "confidence_interval_computed": false,
+    "outcome_adaptive_stop_or_extension": false,
+    "next_execution_must_resume_exact_frozen_sequence": 20,
+    "claim_update_allowed": false
+  },
+  "scientific_verdict": "NO_VERDICT_INCOMPLETE_CONFIRMATORY_EXECUTION",
+  "scientific_claim_authority": false
+}
