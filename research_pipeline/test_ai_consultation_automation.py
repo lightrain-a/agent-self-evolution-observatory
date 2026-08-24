@@ -79,6 +79,98 @@ class AIConsultationAutomationTest(unittest.TestCase):
                 cleared = consultation_launch_clearance(storage, "x")
                 self.assertTrue(cleared["pass"])
 
+    def test_post_screen_dossier_hides_final_diagnosis_from_differential_reviewers(self) -> None:
+        from .ai_consultation_automation import _diagnosis_candidates
+        synthetic = {
+            "experiment_iteration": {
+                "nodes": [{
+                    "idea_id": "x", "code": "X-1", "qualification_pass": True,
+                    "experiment_identifiable": False, "scientific_belief_update_allowed": False,
+                    "scale_up_allowed": False, "diagnosis": "inconclusive",
+                    "diagnosis_layer": "experiment_identifiability", "evidence": {"trace": "pre"},
+                    "repair_children": [{"id": "hidden-repair"}],
+                }]
+            },
+            "mem_xfer_workflow": {},
+        }
+        with patch("research_pipeline.ai_consultation_automation._load", return_value=synthetic):
+            weak, _ = _diagnosis_candidates()
+        self.assertEqual(len(weak), 1)
+        self.assertNotIn("diagnosis", weak[0]["dossier"])
+        self.assertNotIn("diagnosis_layer", weak[0]["dossier"])
+        self.assertNotIn("repair_children", weak[0]["dossier"])
+        self.assertEqual(weak[0]["single_diagnosis_baseline"]["diagnosis_layer"], "experiment_identifiability")
+        self.assertTrue(weak[0]["single_diagnosis_baseline"]["not_exposed_to_differential_reviewers"])
+
+    def test_failure_differential_freezes_before_final_label_then_scores_later(self) -> None:
+        from .ai_consultation_automation import _freeze_failure_differential, _sync_failure_differential_scores
+        case = {
+            "case_id": "aic-prospective", "checkpoint": "post_screen_differential_diagnosis", "subject_id": "x",
+            "input_hash": "1" * 64, "status": "complete", "single_diagnosis_baseline": {"diagnosis_layer": "experiment_identifiability"},
+            "reviews": {
+                "r1": {"status": "complete", "reviewer": "r1", "payload": {"ranked_failure_hypotheses": [
+                    {"failure_layer": "experiment_identifiability", "rationale": "support is weak", "repair_route": "repair substrate"},
+                    {"failure_layer": "method_realization", "rationale": "simple baseline may absorb", "repair_route": "simplify"},
+                ]}},
+                "r2": {"status": "complete", "reviewer": "r2", "payload": {"ranked_failure_hypotheses": [
+                    {"failure_layer": "method_realization", "rationale": "matched reduction is plausible", "repair_route": "merge"},
+                ]}},
+                "r3": {"status": "complete", "reviewer": "r3", "payload": {"ranked_failure_hypotheses": [
+                    {"failure_layer": "operationalization", "rationale": "measurement bridge may be wrong", "repair_route": "recompile"},
+                ]}},
+            },
+        }
+        with patch("research_pipeline.ai_consultation_automation._final_failure_row", return_value={}):
+            _freeze_failure_differential(case)
+        frozen = case["failure_differential_hypothesis_set"]
+        self.assertEqual(frozen["status"], "HYPOTHESIS_SET_FROZEN")
+        self.assertTrue(frozen["frozen_before_final_adjudication"])
+        self.assertFalse(frozen["scientific_authority"])
+        state = {"cases": {"aic-prospective": case}}
+        final = {"failure_layer": "method_realization", "failure_evidence": {"evidence_sha256": "a" * 64}}
+        with patch("research_pipeline.ai_consultation_automation._final_failure_row", return_value=final):
+            _sync_failure_differential_scores(state)
+        score = case["failure_differential_score"]
+        self.assertEqual(score["status"], "PROSPECTIVE_CASE_SCORED")
+        self.assertTrue(score["topk_contains_truth"])
+        self.assertTrue(score["top1_correct"])
+        self.assertFalse(score["single_diagnosis_correct"])
+        self.assertFalse(score["scientific_authority"])
+
+    def test_old_final_label_is_snapshotted_and_cannot_score_a_new_case(self) -> None:
+        from .ai_consultation_automation import _freeze_failure_differential, _sync_failure_differential_scores
+        case = {
+            "case_id": "aic-new-cycle", "checkpoint": "post_screen_differential_diagnosis", "subject_id": "x",
+            "input_hash": "2" * 64, "status": "complete",
+            "reviews": {"r1": {"status": "complete", "reviewer": "r1", "payload": {"ranked_failure_hypotheses": [
+                {"failure_layer": "method_realization", "rationale": "baseline absorbs", "repair_route": "merge"}
+            ]}}},
+        }
+        old_final = {
+            "failure_layer": "method_realization", "failure_class": "METHOD_FAIL", "decision_source": "old-cycle",
+            "p0_decision": "OLD", "failure_evidence": {"evidence_sha256": "b" * 64},
+        }
+        with patch("research_pipeline.ai_consultation_automation._final_failure_row", return_value=old_final):
+            _freeze_failure_differential(case)
+        self.assertEqual(case["failure_differential_hypothesis_set"]["status"], "HYPOTHESIS_SET_FROZEN")
+        self.assertEqual(case["failure_differential_status"], "HYPOTHESIS_SET_FROZEN_WAIT_NEW_FINAL_EVIDENCE")
+        state = {"cases": {"aic-new-cycle": case}}
+        with patch("research_pipeline.ai_consultation_automation._final_failure_row", return_value=old_final):
+            _sync_failure_differential_scores(state)
+        self.assertNotIn("failure_differential_score", case)
+        new_final = {**old_final, "decision_source": "new-cycle", "p0_decision": "NEW", "failure_evidence": {"evidence_sha256": "c" * 64}}
+        with patch("research_pipeline.ai_consultation_automation._final_failure_row", return_value=new_final):
+            _sync_failure_differential_scores(state)
+        self.assertEqual(case["failure_differential_score"]["status"], "PROSPECTIVE_CASE_SCORED")
+        self.assertTrue(case["failure_differential_score"]["final_failure_identity_differs_from_freeze"])
+
+    def test_partial_panel_does_not_freeze_failure_hypotheses(self) -> None:
+        from .ai_consultation_automation import _freeze_failure_differential
+        case = {"case_id": "aic-partial", "checkpoint": "post_screen_differential_diagnosis", "subject_id": "x", "status": "partial"}
+        _freeze_failure_differential(case)
+        self.assertEqual(case["failure_differential_status"], "WAIT_COMPLETE_INDEPENDENT_PANEL")
+        self.assertNotIn("failure_differential_hypothesis_set", case)
+
     def test_reviewer_failure_is_missing_and_ai_never_authorizes_execution(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             storage = self._storage(Path(tmp))

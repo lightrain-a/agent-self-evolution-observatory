@@ -179,8 +179,16 @@ def score_failure_hypothesis_set(
 
 def build_sage_mhfa_shadow_state(project_root: Path, prospective_scores: Iterable[dict[str, Any]] = ()) -> dict[str, Any]:
     inventory = build_historical_failure_label_inventory(project_root)
-    scores = [dict(row) for row in prospective_scores if isinstance(row, dict) and row.get("status") == "PROSPECTIVE_CASE_SCORED"]
-    prospective_n = len(scores)
+    supplied_scores = list(prospective_scores)
+    scores = [dict(row) for row in supplied_scores if isinstance(row, dict) and row.get("status") == "PROSPECTIVE_CASE_SCORED"]
+    automation_summary = ((_load(project_root.resolve() / "generated" / "ai-consultation-automation.json").get("summary") or {}) if not supplied_scores else {})
+    prospective_n = len(scores) if supplied_scores else int(automation_summary.get("failure_differential_scored") or 0)
+    frozen_n = len(scores) if supplied_scores else int(automation_summary.get("failure_differential_frozen") or 0)
+    waiting_final_n = 0 if supplied_scores else int(automation_summary.get("failure_differential_waiting_new_final") or 0)
+    top1 = sum(row.get("top1_correct") is True for row in scores) if supplied_scores else int(automation_summary.get("failure_differential_top1_correct") or 0)
+    topk = sum(row.get("topk_contains_truth") is True for row in scores) if supplied_scores else int(automation_summary.get("failure_differential_topk_contains_truth") or 0)
+    single = sum(row.get("single_diagnosis_correct") is True for row in scores) if supplied_scores else int(automation_summary.get("failure_differential_single_diagnosis_correct") or 0)
+    single_evaluable = sum(row.get("single_diagnosis_correct") in {True, False} for row in scores) if supplied_scores else int(automation_summary.get("failure_differential_single_diagnosis_evaluable") or 0)
     ready = prospective_n >= MIN_PROSPECTIVE_REPLAY_CASES
     return {
         "schema_version": SCHEMA_VERSION,
@@ -192,8 +200,17 @@ def build_sage_mhfa_shadow_state(project_root: Path, prospective_scores: Iterabl
         "summary": {
             "historical_terminalized_labels": int((inventory.get("summary") or {}).get("terminalized_failure_labels") or 0),
             "historical_label_count_sufficient": bool((inventory.get("summary") or {}).get("historical_label_count_sufficient")),
+            "prospective_frozen_cases": frozen_n,
             "prospective_scored_cases": prospective_n,
+            "prospective_cases_waiting_new_final_evidence": waiting_final_n,
             "minimum_prospective_replay_cases": MIN_PROSPECTIVE_REPLAY_CASES,
+            "top1_correct": top1,
+            "topk_contains_truth": topk,
+            "single_diagnosis_evaluable": single_evaluable,
+            "single_diagnosis_correct": single,
+            "top1_accuracy": (top1 / prospective_n) if prospective_n else None,
+            "topk_recall": (topk / prospective_n) if prospective_n else None,
+            "single_diagnosis_accuracy": (single / single_evaluable) if single_evaluable else None,
             "adoption_gap_test_ready": ready,
             "retrospective_label_leakage_allowed": 0,
             "automatic_repair_authority": 0,

@@ -65,6 +65,27 @@ class FailureDifferentialRegistryTest(unittest.TestCase):
         self.assertFalse(state["summary"]["adoption_gap_test_ready"])
         self.assertEqual(state["summary"]["retrospective_label_leakage_allowed"], 0)
 
+    def test_sage_gap_test_becomes_ready_only_from_prospective_scores(self) -> None:
+        scores = [
+            {
+                "status": "PROSPECTIVE_CASE_SCORED",
+                "case_id": f"P-{index}",
+                "top1_correct": index % 3 != 0,
+                "topk_contains_truth": True,
+                "single_diagnosis_correct": index % 2 == 0,
+            }
+            for index in range(MIN_PROSPECTIVE_REPLAY_CASES)
+        ]
+        state = build_sage_mhfa_shadow_state(PROJECT_ROOT, scores)
+        summary = state["summary"]
+        self.assertEqual(state["status"], "READY_FOR_SAGE_MHFA_GAP_TEST")
+        self.assertEqual(summary["prospective_scored_cases"], MIN_PROSPECTIVE_REPLAY_CASES)
+        self.assertTrue(summary["adoption_gap_test_ready"])
+        self.assertEqual(summary["topk_contains_truth"], MIN_PROSPECTIVE_REPLAY_CASES)
+        self.assertAlmostEqual(summary["topk_recall"], 1.0)
+        self.assertIsNotNone(summary["top1_accuracy"])
+        self.assertIsNotNone(summary["single_diagnosis_accuracy"])
+
 
 if __name__ == "__main__":
     unittest.main()

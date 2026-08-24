@@ -25,6 +25,13 @@ class AIConsultationClinicTest(unittest.TestCase):
             self.assertTrue(checkpoint["required_outputs"])
             self.assertTrue(checkpoint["compile_to"])
 
+    def test_post_screen_differential_hypotheses_are_prospective(self) -> None:
+        checkpoint = next(row for row in self.state["checkpoints"] if row["key"] == "post_screen_differential_diagnosis")
+        self.assertIn("ranked_failure_hypotheses", checkpoint["required_outputs"])
+        self.assertIn("failure_differential_registry", checkpoint["compile_to"])
+        self.assertNotIn("failure_layer", checkpoint["required_outputs"])
+        self.assertTrue(self.state["policy"]["post_screen_ranked_hypotheses_must_freeze_before_final_failure_adjudication"])
+
 
 if __name__ == "__main__":
     unittest.main()

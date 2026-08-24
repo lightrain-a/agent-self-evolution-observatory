@@ -112,8 +112,17 @@
     "failure_differential_registry": {
       "historical_terminalized_labels": 27,
       "historical_label_count_sufficient": true,
+      "prospective_frozen_cases": 0,
       "prospective_scored_cases": 0,
+      "prospective_cases_waiting_new_final_evidence": 0,
       "minimum_prospective_replay_cases": 15,
+      "top1_correct": 0,
+      "topk_contains_truth": 0,
+      "single_diagnosis_evaluable": 0,
+      "single_diagnosis_correct": 0,
+      "top1_accuracy": null,
+      "topk_recall": null,
+      "single_diagnosis_accuracy": null,
       "adoption_gap_test_ready": false,
       "retrospective_label_leakage_allowed": 0,
       "automatic_repair_authority": 0
@@ -557,8 +566,17 @@
       "summary": {
         "historical_terminalized_labels": 27,
         "historical_label_count_sufficient": true,
+        "prospective_frozen_cases": 0,
         "prospective_scored_cases": 0,
+        "prospective_cases_waiting_new_final_evidence": 0,
         "minimum_prospective_replay_cases": 15,
+        "top1_correct": 0,
+        "topk_contains_truth": 0,
+        "single_diagnosis_evaluable": 0,
+        "single_diagnosis_correct": 0,
+        "top1_accuracy": null,
+        "topk_recall": null,
+        "single_diagnosis_accuracy": null,
         "adoption_gap_test_ready": false,
         "retrospective_label_leakage_allowed": 0,
         "automatic_repair_authority": 0
@@ -577,10 +595,10 @@
     "projection_cannot_mutate_source_artifacts": true
   },
   "source_artifact_sha256": {
-    "generated/research-system-state.json": "41b64f7de7dac7a2901980660268ec39c81fea77f199c9a114519c524f2c84e0",
-    "generated/paper-registry.json": "d50718ede566a49af40b18afaa15806ef78ad44d26ce00cc0e8d67f99fdbe395",
+    "generated/research-system-state.json": "03d24f50dc6dc4365794eaeaa5c52e5a0060c8b6df903d34448236baec9ecba1",
+    "generated/paper-registry.json": "652144a8d70b878f0d3deaab91175cc34d366207fc6bf254cd9dd1de99c1821c",
     "generated/research-governance-v2.json": "328869b78bb48972c52e0b36ede97d15d2d90487541095e689f0c225b424d059",
-    "generated/asset-first-stri-paper-quality-v2-20260816.json": "016855719be9fe3d1a4752727ed2120ef603edf9a1d61def739ce421810bf6e0"
+    "generated/asset-first-stri-paper-quality-v2-20260816.json": "b320e6d2cea935280f099bfd3aa71fd3887decd0937542ede09ec7f40dca65cc"
   },
-  "projection_sha256": "90c84dcf4411decd86160f745dbf9b52e76a4fb32cef928b7a690bec93f8b204"
+  "projection_sha256": "e961c8cdef347128e77457b15381332b133b313e1f664b83e38f8920f149df7e"
 }

@@ -17,6 +17,7 @@ POLICY={
  'schema_version':'1.0','ai_vote_has_scientific_authority':False,'ai_vote_can_authorize_gpu':False,
  'ai_vote_can_authorize_second_backbone':False,'ai_vote_can_emit_method_pass_fail':False,
  'consultation_is_diagnostic_not_authoritative':True,'high_risk_findings_must_be_compiled_into_machine_checks':True,
+ 'post_screen_ranked_hypotheses_must_freeze_before_final_failure_adjudication':True,
  'unresolved_high_risk_findings_block_the_next_expensive_transition':True,
  'human_may_accept_residual_risk_only_with_explicit_reason':True,
 }
@@ -51,9 +52,9 @@ CHECKPOINTS=(
   'key':'post_screen_differential_diagnosis','stage':'after-screening-or-nonpositive-pilot-before-repair','priority':4,
   'trigger':'SCREENING-NO-SIGNAL, INCONCLUSIVE, floor/ceiling, or surprising weak result',
   'purpose':'separate formulation, substrate, representation, optimization, baseline, and execution failures before another run',
-  'questions':['Did the experiment fail to expose the mechanism, or did the mechanism lose under a qualified test?','Is the prediction unit/observable wrong despite a valid scientific principle?','Did a simpler baseline absorb the apparent gain?','What single-variable repair is falsifiable without reopening the full experiment?'],
-  'required_outputs':['failure_layer','principle_vs_formulation','baseline_reducibility','one_atomic_repair','repair_falsifier'],
-  'compile_to':['experiment_iteration','repair_queue','pre_p0_recompile'],
+  'questions':['Did the experiment fail to expose the mechanism, or did the mechanism lose under a qualified test?','Is the prediction unit/observable wrong despite a valid scientific principle?','Did a simpler baseline absorb the apparent gain?','Before final adjudication, what are the top 1–3 competing failure layers and what evidence would distinguish them?','What single-variable repair is falsifiable without reopening the full experiment?'],
+  'required_outputs':['ranked_failure_hypotheses','principle_vs_formulation','baseline_reducibility','one_atomic_repair','repair_falsifier'],
+  'compile_to':['failure_differential_registry','experiment_iteration','repair_queue','pre_p0_recompile'],
   'cost_saving_role':'prevents blind reruns, larger models, or extra seeds when the real failure is structural',
  },
  {
@@ -83,6 +84,9 @@ def validate_ai_consultation_clinic_state(state:dict[str,Any])->list[str]:
  keys=[str(row.get('key') or '') for row in state.get('checkpoints') or []]
  if len(keys)!=len(set(keys)) or not all(keys): errors.append('AI consultation checkpoint keys must be unique and non-empty')
  if any(not row.get('compile_to') or not row.get('required_outputs') for row in state.get('checkpoints') or []): errors.append('Every AI consultation checkpoint needs structured outputs and a machine compilation target')
+ post=next((row for row in state.get('checkpoints') or [] if row.get('key')=='post_screen_differential_diagnosis'),{})
+ if state.get('policy',{}).get('post_screen_ranked_hypotheses_must_freeze_before_final_failure_adjudication') is not True: errors.append('Post-screen differential hypotheses must freeze before final adjudication')
+ if 'ranked_failure_hypotheses' not in (post.get('required_outputs') or []) or 'failure_differential_registry' not in (post.get('compile_to') or []): errors.append('Post-screen diagnosis must compile ranked hypotheses into the failure differential registry')
  return errors
 
 def write_ai_consultation_clinic_state(json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS)->dict[str,Any]:
