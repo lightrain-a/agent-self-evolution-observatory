@@ -70,6 +70,7 @@ from .paper_first_problem_generator import installed_problem_generator_policy, l
 from .paper_first_problem_gate_queue import load_problem_gate_queue_state
 from .paper_first_pre_f0_queue import load_pre_f0_queue
 from .paper_first_problem_falsifier_preflight import load_pre_f0_problem_falsifier_preflight
+from .paper_first_pre_f0_falsifier_adjudication import load_adjudication as load_pre_f0_falsifier_adjudication, validate_adjudication as validate_pre_f0_falsifier_adjudication
 from .paper_first_pre_f0_evidence_control import load_public as load_pre_f0_evidence_acquisition_public, validate_public_state as validate_pre_f0_evidence_acquisition_public
 from .paper_first_shadow_search_admission import DEFAULT_JSON as SHADOW_SEARCH_ADMISSION_JSON, build_shadow_search_admission, public_shadow_search_admission_summary, validate_shadow_search_admission, write_shadow_search_admission
 from .paper_first_shadow_continuation_frontier import build_shadow_continuation_frontier, validate_shadow_continuation_frontier
@@ -599,6 +600,7 @@ def build_research_system_state() -> dict[str, Any]:
     paper_first_problem_generator = load_problem_generator_state()
     paper_first_pre_f0_queue = load_pre_f0_queue()
     paper_first_pre_f0_problem_falsifier_preflight = load_pre_f0_problem_falsifier_preflight()
+    paper_first_pre_f0_falsifier_adjudication = load_pre_f0_falsifier_adjudication()
     paper_first_pre_f0_evidence_acquisition = load_pre_f0_evidence_acquisition_public()
     paper_first_problem_memory = ((paper_first_problem_generator.get("saturation_memory") or {}).get("blocked_problem_memory") or {})
     paper_first_lane_search = paper_first_problem_generator.get("search_diagnostics") or {}
@@ -665,6 +667,7 @@ def build_research_system_state() -> dict[str, Any]:
         pre_f0_state=paper_first_pre_f0_queue,
         problem_gate_state=paper_first_problem_gate_queue,
         paper_design_backlog_state=paper_first_paper_design_backlog,
+        pre_f0_adjudication_state=paper_first_pre_f0_falsifier_adjudication,
     )
     search_funnel_telemetry = build_search_funnel_telemetry(
         primary_state=paper_first_primary_evidence,
@@ -951,6 +954,9 @@ def build_research_system_state() -> dict[str, Any]:
             "paper_first_pre_f0_support_status":paper_first_pre_f0_problem_falsifier_preflight.get("status"),
             "paper_first_pre_f0_support_ready":(paper_first_pre_f0_problem_falsifier_preflight.get("summary") or {}).get("support_qualified",0),
             "paper_first_pre_f0_support_holds":(paper_first_pre_f0_problem_falsifier_preflight.get("summary") or {}).get("hold_support_unavailable",0),
+            "paper_first_pre_f0_falsifier_adjudicated":int((paper_first_pre_f0_falsifier_adjudication.get("summary") or {}).get("adjudicated") or 0),
+            "paper_first_pre_f0_current_formulation_stopped":int((paper_first_pre_f0_falsifier_adjudication.get("summary") or {}).get("current_formulation_stopped") or 0),
+            "paper_first_pre_f0_persistent_dead_end_created":int((paper_first_pre_f0_falsifier_adjudication.get("summary") or {}).get("persistent_dead_end_created") or 0),
             "paper_first_pre_f0_evidence_status":paper_first_pre_f0_evidence_acquisition.get("status","NOT_RUN"),
             "paper_first_pre_f0_evidence_candidates":int((paper_first_pre_f0_evidence_acquisition.get("summary") or {}).get("provisional_problem_candidates") or 0),
             "paper_first_pre_f0_evidence_execution_ready":int((paper_first_pre_f0_evidence_acquisition.get("summary") or {}).get("execution_ready") or 0),
@@ -1355,6 +1361,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_problem_generator":paper_first_problem_generator,
         "paper_first_pre_f0_queue":paper_first_pre_f0_queue,
         "paper_first_pre_f0_problem_falsifier_preflight":paper_first_pre_f0_problem_falsifier_preflight,
+        "paper_first_pre_f0_falsifier_adjudication":paper_first_pre_f0_falsifier_adjudication,
         "paper_first_pre_f0_evidence_acquisition":paper_first_pre_f0_evidence_acquisition,
         "paper_first_problem_gate_queue":paper_first_problem_gate_queue,
         "paper_first_search_portfolio_design_adjudication":paper_first_search_portfolio_design,
@@ -2059,6 +2066,15 @@ def validate_state(state: dict[str, Any]) -> list[str]:
             support_rows=[row for row in pre_f0_support.get("rows") or [] if isinstance(row,dict)]
             support_identity={(str(row.get("candidate_id") or ""),str(row.get("candidate_identity_version") or ""),str(row.get("candidate_snapshot_sha256") or "").strip().lower()) for row in support_rows}
             if len(support_identity)!=len(support_rows) or support_identity!=queue_identity: errors.append("canonical Pre-F0 support preflight candidate snapshots do not exactly match the queue")
+    pre_f0_adjudication=state.get("paper_first_pre_f0_falsifier_adjudication") or {}
+    if pre_f0_adjudication:
+        errors.extend(f"Canonical Pre-F0 falsifier adjudication: {error}" for error in validate_pre_f0_falsifier_adjudication(
+            pre_f0_adjudication, queue=pre_f0, preflight=pre_f0_support,
+            transaction_queue=state.get("paper_first_problem_gate_queue") or {},
+        ))
+        adj_summary=pre_f0_adjudication.get("summary") or {}
+        if int(adj_summary.get("persistent_dead_end_created") or 0)!=0 or int(adj_summary.get("current_formulation_stopped") or 0)>int(pre_f0_support_summary.get("support_qualified") or 0):
+            errors.append("canonical Pre-F0 falsifier adjudication cannot create dead-end memory or stop more formulations than support-qualified snapshots")
     generated_discovery_statuses={"GENERATED_ZERO_CANDIDATES","GENERATED_PRE_F0_EVIDENCE_ACQUISITION","GENERATED_AWAIT_PROBLEM_GATE"}
     expected_lane_statuses={"EXPANDED","EMPTY"} if generator_double_funnel else {"NO_PAIR","REDUCIBLE","CANDIDATE"}
     if generator_schema >= "2.4" and generator.get("status") in generated_discovery_statuses:
