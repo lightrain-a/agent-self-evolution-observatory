@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0-shadow",
-  "generated_at": "2026-08-23T07:20:23+00:00",
-  "run_id": "20260823T063055Z",
+  "generated_at": "2026-08-24T07:58:48+00:00",
+  "run_id": "20260824T061140Z",
   "status": "PROBLEM_FALSIFIER_PREFLIGHT_COMPLETE",
-  "support_inventory_origin": "PORT-017 canonical-primary and first-party asset audit; no scientific execution",
-  "support_inventory_sha256": "af744103df5b9f41c47e152d40017e55599031e8bff59605e50e15f6f8b1e37d",
+  "support_inventory_origin": "r11 Pre-F0 first-party support audit 2026-08-24",
+  "support_inventory_sha256": "c8b92c0f5a3bc9891a66013cda8571078ede1402696b06a3ff1e9a0bf59e222c",
   "policy": {
     "problem_falsifier_queue_is_zero_authority": true,
     "support_inventory_precedes_falsifier_execution": true,
@@ -36,9 +36,9 @@
     "no_gpu": true
   },
   "summary": {
-    "queued": 1,
-    "support_qualified": 0,
-    "hold_support_unavailable": 1,
+    "queued": 3,
+    "support_qualified": 1,
+    "hold_support_unavailable": 2,
     "falsifier_executed": 0,
     "problem_gate_authorized": 0,
     "paper_design_authorized": 0,
@@ -49,21 +49,54 @@
   },
   "rows": [
     {
-      "candidate_id": "PORT-017",
-      "title": "The Intervention Knowledge Bottleneck: Convergent Failure at Entity-Level Modification Knowledge",
-      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
-      "required_unit": "A third independent self-evolution mechanism with first-party, source-native units that directly measure the same entity-level modification/intervention-knowledge endpoint as the frozen candidate, with at least 8 aligned units across at least 3 mutation/operation types, plus a source-native comparison showing that the failure persists under more single-turn or non-entity-grounded data and changes under targeted entity-grounded or multi-turn intervention evidence.",
-      "asset_audit": "Canonical source audit found a more basic comparability gap before third-method execution: SkillForge directly measures project-specific/entity-level intervention-knowledge ablation, whereas SkillEvo directly measures single-turn feedback-gradient saturation versus multi-turn feedback and does not directly label that endpoint as entity-level modification knowledge. Reviewed first-party near-neighbors (MindMemOS, EvoGraph-R1, SciToolAgent-Evo, EvoSOP, DeepSearch-Evolve, Agentic ESOpt, AI4AI-Bench) either measure a different entity/schema/tool/algorithm object, lack the frozen operation headroom, or are benchmarks rather than an independent acquisition mechanism. No >=8-unit / >=3-operation source-native third-mechanism table for the frozen endpoint is currently available.",
+      "candidate_id": "PORT-006",
+      "title": "Reset-semantic substrate corruption as a convergent failure regime in repeated bounded self-improvement",
+      "disposition": "SUPPORT_QUALIFIED",
+      "required_unit": "A first-party AI4AI task×model×effort trajectory with frozen candidate-algorithm text and official normalized score; raw patch bytes are not required for this secondary semantic-edit audit.",
+      "asset_audit": "AI4AI first-party release exposes 290/290 trajectory pages and /ai4ai/data/points.json. All 290 detail pages were materialized and SHA-256 hashed; official normalized points reproduce 124/290 below 0.1 and the published 0.166 mean. Public release is redacted and does not expose raw diff bytes, so support is qualified only for the frozen secondary semantic-edit falsifier, not source-diff or repeated-round causal claims.",
       "primary_refs": [
-        "arXiv:2608.13120",
-        "arXiv:2608.18933"
+        "arXiv:2608.19197",
+        "arXiv:2608.20318"
       ],
       "scientific_authority": false,
       "candidate_identity_version": "candidate-content-v1",
-      "candidate_snapshot_sha256": "4b5cf1325651543149a72c088ddd670d9fcb3d7366988353c996940c4a571566",
-      "support_audit_artifact": "generated/port-017-third-mechanism-support-audit.json",
-      "support_audit_sha256": "06a0e91b1614164bab96e115fa8e4c072fb552a3e300acef70cba65c6125d99a",
-      "reopen_only_if": "Reopen only after primary or author-released first-party evidence closes both missing conditions: (1) SkillEvo or a reformulated independent source directly exposes a source-defined entity-level modification/intervention-knowledge endpoint comparable to SkillForge, rather than a generator-authored bridge from generic multi-turn gain; and (2) a third independent self-evolution mechanism supplies at least 8 source-native aligned units across at least 3 mutation/operation types plus a matched structural test separating targeted entity-grounded or multi-turn intervention evidence from merely more single-turn/non-entity-grounded data. Synthetic proxies, relabeling unrelated entity/schema/tool units, or candidate-mechanism injection do not reopen this HOLD.",
+      "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+      "support_mode": "RELEASED_UNITS",
+      "qualified_units": 290,
+      "unit_manifest_sha256": "0aa414ad49241a51b169bd8d08c70176f33d204fb85accda41d9e593d7cc8449",
+      "support_scope": "Secondary AI4AI public trajectory-level semantic-edit audit of reset/init/seed/checkpoint state-establishment changes versus official normalized below-0.1 outcomes. Does not qualify the primary repeated-round SPADE reset-only vs step-only intervention.",
+      "falsifier_execution_authorized": false
+    },
+    {
+      "candidate_id": "PORT-010",
+      "title": "Complex-description boundary in end-to-end 3D world construction",
+      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+      "required_unit": "VWE-Bench per-case query metadata sufficient for matching plus first-party per-case Pass@1/model outcome and preferably stage-specific failure labels.",
+      "asset_audit": "Official VibeWorlding-Gym code was cloned at ddb6ff54d34a2483859960743319f5d5e5b33e96. README declares 6,828 VWE-Bench queries and 254 evaluation cases, but the GitHub checkout contains data placeholders; this run did not materialize the Hugging Face query corpus or first-party per-case model outcome table. Code release alone cannot instantiate the frozen matched boundary falsifier.",
+      "primary_refs": [
+        "arXiv:2608.15265"
+      ],
+      "scientific_authority": false,
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3",
+      "reopen_only_if": "First-party VWE-Bench query units and per-case model/evaluator outcomes can be materialized with content hashes so matching and stage-error analysis are independent of the candidate claim.",
+      "bounded_first_party_evidence_design_allowed": true,
+      "next_route": "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET"
+    },
+    {
+      "candidate_id": "PORT-011",
+      "title": "Stateful-feedback validity horizon for self-evolving skill controllers",
+      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+      "required_unit": "SkillEvo round-level units exposing the same initial single-turn feedback basis, later multi-turn defect classes, revision schedule, TSR/defect outcomes, and a reproducible controller or first-party code/data sufficient to construct matched within-basis versus outside-basis units.",
+      "asset_audit": "As of 2026-08-24, source review found the SkillEvo paper and aggregate results over 9 production Skills and 98 skill-reference files but no verified maintained first-party repository or released unit-level dataset sufficient for the frozen matched horizon falsifier. Aggregate TSR curves cannot establish feedback-basis mismatch.",
+      "primary_refs": [
+        "arXiv:2608.13120",
+        "arXiv:2608.20139"
+      ],
+      "scientific_authority": false,
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "17b8b764c71b1ce6de7e9b221e4181043d190f66de2cf0189c6e4452c3970674",
+      "reopen_only_if": "A first-party SkillEvo repository/dataset or provenance-equivalent unit-level release exposes feedback/revision trajectories needed for matched inside-basis versus outside-basis analysis.",
       "bounded_first_party_evidence_design_allowed": true,
       "next_route": "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET"
     }

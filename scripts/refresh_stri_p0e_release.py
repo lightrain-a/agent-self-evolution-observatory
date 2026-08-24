@@ -59,6 +59,14 @@ SKILLSBENCH_SUPPORT_QUAL_CSV = GEN / "asset-first-stri-skillsbench-support-quali
 AGENTSKILLOS_ORACLE = GEN / "asset-first-stri-agentskillos-oracle-analogue-20260824.json"
 AGENTSKILLOS_ORACLE_CSV = GEN / "asset-first-stri-agentskillos-oracle-analogue-20260824.csv"
 SECOND_SUBSTRATE_QUAL = GEN / "asset-first-stri-second-substrate-qualification-20260824.json"
+MULTITASK_QUAL = GEN / "asset-first-stri-autoskill-multitask-qualification-20260824.json"
+MULTITASK_QUAL_CSV = GEN / "asset-first-stri-autoskill-multitask-qualification-20260824.csv"
+MULTITASK_CONTRACT = GEN / "asset-first-stri-autoskill-multitask-pilot-contract-20260824.json"
+MULTITASK_RUN_MANIFEST = GEN / "asset-first-stri-autoskill-multitask-pilot-run-manifest-20260824.json"
+MULTITASK_STAGE1 = GEN / "asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json"
+MULTITASK_STAGE1_CSV = GEN / "asset-first-stri-autoskill-multitask-pilot-stage1-20260824.csv"
+MULTITASK_FAILURE = GEN / "asset-first-stri-autoskill-multitask-pilot-failure-lesson-20260824.json"
+MULTITASK_CLOSURE = GEN / "asset-first-stri-autoskill-multitask-pilot-closure-r19-20260824.json"
 
 DOWNLOAD_PDF = DOWNLOADS / "STRI-ICLR2027.pdf"
 DOWNLOAD_TEX = DOWNLOADS / "STRI-ICLR2027.tex"
@@ -288,6 +296,14 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (SKILLSBENCH_SUPPORT_QUAL_CSV, "asset-first-stri-skillsbench-support-qualification-20260824.csv"),
         (AGENTSKILLOS_ORACLE_CSV, "asset-first-stri-agentskillos-oracle-analogue-20260824.csv"),
         (SECOND_SUBSTRATE_QUAL, "asset-first-stri-second-substrate-qualification-20260824.json"),
+        (MULTITASK_QUAL, "asset-first-stri-autoskill-multitask-qualification-20260824.json"),
+        (MULTITASK_QUAL_CSV, "asset-first-stri-autoskill-multitask-qualification-20260824.csv"),
+        (MULTITASK_CONTRACT, "asset-first-stri-autoskill-multitask-pilot-contract-20260824.json"),
+        (MULTITASK_RUN_MANIFEST, "asset-first-stri-autoskill-multitask-pilot-run-manifest-20260824.json"),
+        (MULTITASK_STAGE1, "asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json"),
+        (MULTITASK_STAGE1_CSV, "asset-first-stri-autoskill-multitask-pilot-stage1-20260824.csv"),
+        (MULTITASK_FAILURE, "asset-first-stri-autoskill-multitask-pilot-failure-lesson-20260824.json"),
+        (MULTITASK_CLOSURE, "asset-first-stri-autoskill-multitask-pilot-closure-r19-20260824.json"),
         (GEN / "asset-first-stri-released-controller-clone-audit-20260819.json", "asset-first-stri-released-controller-clone-audit-20260819.json"),
         (AUTOSKILL_QUALIFICATION, "asset-first-stri-autoskill-p19-substrate-qualification-20260819.json"),
         (AUTOSKILL_CONTRACT, "asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json"),
@@ -364,6 +380,8 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         "generalized dynamic STRI success beyond the frozen AutoSkill/P19 behavior-level result",
         "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety",
         "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
+        "treating 9/9 held-out AutoSkill retrieval sensitivity as task-general behavioral propagation after the preregistered stage-1 behavior gate stopped",
+        "reopening the stopped AutoSkill held-out pilot by relaxing the frozen action signature, selecting units from observed behavior, or using tool-call count as the primary endpoint",
     ]
     meta["forbidden_inferences"] = list(dict.fromkeys(forbidden + additions))
     meta["skillrl_p0e"] = {
@@ -501,6 +519,65 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         "new_gpu_runs": 0,
         "claim_expansion": False,
     }
+    multitask_qual = load(MULTITASK_QUAL)
+    multitask_contract = load(MULTITASK_CONTRACT)
+    multitask_manifest = load(MULTITASK_RUN_MANIFEST)
+    multitask_stage1 = load(MULTITASK_STAGE1)
+    multitask_failure = load(MULTITASK_FAILURE)
+    selected_multitask_units = [str(row.get("unit_id")) for row in (multitask_contract.get("selected_units") or [])]
+    if not (
+        multitask_qual.get("selection_outcome_blind") is True
+        and int(((multitask_qual.get("summary") or {}).get("screened_units") or 0)) == 9
+        and int(((multitask_qual.get("summary") or {}).get("qualified_units") or 0)) == 9
+        and selected_multitask_units == ["skillmisevo-coding-22-P21", "skillmisevo-coding-21-P19"]
+        and int(multitask_manifest.get("run_count") or 0) == 8
+        and multitask_manifest.get("all_valid") is True
+        and multitask_manifest.get("raw_trajectories_packaged") is False
+        and multitask_stage1.get("decision") == "STOP_EXPANSION_STAGE1_GATE_NOT_MET"
+        and multitask_stage1.get("all_executions_valid") is True
+        and multitask_stage1.get("stage1_gate_pass") is False
+        and multitask_stage1.get("stage2_repeat_runs_authorized") is False
+        and multitask_stage1.get("remaining_seven_units_authorized") is False
+        and int(multitask_stage1.get("new_agent_runs") or 0) == 8
+        and int(multitask_stage1.get("judge_calls") or 0) == 0
+        and int(multitask_stage1.get("new_gpu_runs") or 0) == 0
+        and multitask_stage1.get("claim_expansion") is False
+        and ((multitask_stage1.get("per_unit") or {}).get("skillmisevo-coding-22-P21") or {}).get("diagnosis") == "CONTROL_NONCONCORDANCE_NO_SPLIT_SPECIFIC_ATTRIBUTION"
+        and ((multitask_stage1.get("per_unit") or {}).get("skillmisevo-coding-21-P19") or {}).get("diagnosis") == "NO_ACTION_SIGNATURE_SEPARATION"
+        and multitask_failure.get("memory_class") == "FAILURE_ASSET"
+        and multitask_failure.get("stop_class") == "PREREGISTERED_PILOT_GATE_STOP"
+    ):
+        raise RuntimeError("STRI AutoSkill held-out behavior pilot STOP artifacts failed frozen checks")
+    meta["autoskill_multitask_behavior_pilot"] = {
+        "qualification_artifact": "artifacts/asset-first-stri-autoskill-multitask-qualification-20260824.json",
+        "qualification_sha256": sha(MULTITASK_QUAL),
+        "contract_artifact": "artifacts/asset-first-stri-autoskill-multitask-pilot-contract-20260824.json",
+        "contract_sha256": sha(MULTITASK_CONTRACT),
+        "run_manifest_artifact": "artifacts/asset-first-stri-autoskill-multitask-pilot-run-manifest-20260824.json",
+        "run_manifest_sha256": sha(MULTITASK_RUN_MANIFEST),
+        "stage1_artifact": "artifacts/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json",
+        "stage1_sha256": sha(MULTITASK_STAGE1),
+        "failure_asset": "artifacts/asset-first-stri-autoskill-multitask-pilot-failure-lesson-20260824.json",
+        "failure_asset_sha256": sha(MULTITASK_FAILURE),
+        "closure_receipt": "artifacts/asset-first-stri-autoskill-multitask-pilot-closure-r19-20260824.json",
+        "closure_receipt_sha256": sha(MULTITASK_CLOSURE),
+        "headline": {
+            "retrieval_qualification": "9/9 held-out units",
+            "selected_units": selected_multitask_units,
+            "stage1_runs": 8,
+            "all_executions_valid": True,
+            "stage1_gate_pass": False,
+            "decision": "STOP_EXPANSION_STAGE1_GATE_NOT_MET",
+            "stage2_repeat_runs": 0,
+            "remaining_unit_runs": 0,
+            "p19_role": "bounded existence proof"
+        },
+        "raw_trajectories_packaged": False,
+        "new_agent_runs": 8,
+        "judge_calls": 0,
+        "new_gpu_runs": 0,
+        "claim_expansion": False,
+    }
     controller_artifact = GEN / "asset-first-stri-released-controller-clone-audit-20260819.json"
     controller = load(controller_artifact)
     meta["released_controller_audit"] = {
@@ -578,6 +655,9 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
     second_substrate_marker = "## Second exact-support substrate qualification"
     if second_substrate_marker not in readme:
         readme += """\n\n## Second exact-support substrate qualification\n\n`artifacts/asset-first-stri-second-substrate-qualification-20260824.json` applies one fail-closed support gate to five external candidates. No second exact executable-support substrate qualifies. AgentSkillOS is retained only as an author-oracle-set analogue: its 30 benchmark tasks contain 20 multi-skill oracle sets, the full oracle graph has uniform exposure spread 4x and analogue `R*=2.5`, while category analogues split between residual (`data_computation`, `document_creation`, `R*=2`) and equalizable (`motion_video`, `visual_creation`, `web_interaction`, `R*=1`). `task.skills` is directly consumed by the first-party specified mode, but omitted skills are not proven incapable of supporting a task. SWE-Skills-Bench, SkillLearnBench, SkillsBench, and SkillRouter likewise lack a complete released executable-support zero-edge contract. These objects therefore cannot expand the exact STRI certificate. The AgentSkillOS receipt binds the first-party commit and source-file hashes; rerunning it requires that author release, which is intentionally not redistributed.\n"""
+    multitask_marker = "## Held-out AutoSkill behavior pilot STOP"
+    if multitask_marker not in readme:
+        readme += """\n\n## Held-out AutoSkill behavior pilot STOP\n\nA pre-outcome retrieval-only qualification found 9/9 held-out units where an exact split changes the first-party top-5 semantic retrieval set while ID-placebo and semantic quotient restore the original set. A frozen SHA-256 rule selected two units from different scenarios and positions before any new behavior was observed. One fresh A/B/C/D execution per unit produced 8/8 valid runs under the pre-existing 2026-08-16 judge-independent five-dimensional action signature, but neither unit met the preregistered split-specific stage-1 gate: one had identical A/B/C/D signatures and the other had A=B=C with a different quotient control. The contract therefore stops repeat-2 and the remaining seven units. Raw trajectories are not redistributed; the packaged run manifest content-addresses them, while aggregate signatures and run hashes are included. This failure boundary means robust retrieval sensitivity is not sufficient for task-general behavioral propagation; the earlier P19 result remains a bounded existence proof and does not establish utility, safety, regret, or cross-library generalization.\n"""
     old_breadth_sentence = "`artifacts/asset-first-stri-practical-baselines-20260824.json` evaluates uniform, inverse-coverage, NNLS, cover, max--min, and exact package weighting across five frozen regimes and freezes calibration weights before tool-disjoint heldout evaluation. `reproduce.py` recomputes this suite from packaged Skill-SP/logical data."
     new_breadth_sentence = "`artifacts/asset-first-stri-practical-baselines-20260824.json` evaluates uniform, inverse-coverage, NNLS, cover, max--min, and exact package weighting across five frozen regimes and freezes calibration weights before tool-disjoint heldout evaluation. `artifacts/asset-first-stri-crossval-sparsity-20260824.json` adds eight leave-one-tool-out no-refit transfers and exact active-package sparsity frontiers. `reproduce.py` recomputes both suites from packaged Skill-SP/logical data."
     readme = readme.replace(old_breadth_sentence, new_breadth_sentence)
@@ -655,6 +735,11 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
     if second_substrate_code_marker not in reproduce:
         second_substrate_code = '''\n    # SECOND SUPPORT SUBSTRATE QUALIFICATION CHECK\n    agentskillos = json.loads((ROOT / "artifacts/asset-first-stri-agentskillos-oracle-analogue-20260824.json").read_text())\n    ah = agentskillos["headline"]\n    assert agentskillos["decision"] == "QUALIFY_AUTHOR_ORACLE_SET_ANALOGUE_ONLY"\n    assert (ah["tasks"], ah["categories"], ah["unique_oracle_skills"], ah["multi_skill_tasks"]) == (30, 5, 19, 20)\n    assert abs(ah["full_uniform_exposure_ratio"] - 4.0) < 1e-12\n    assert abs(ah["full_oracle_set_R_star_analogue"] - 2.5) < 1e-12\n    assert set(ah["residual_categories"]) == {"data_computation", "document_creation"}\n    assert set(ah["equalizable_categories"]) == {"motion_video", "visual_creation", "web_interaction"}\n    assert "not a complete executable semantic-support relation" in agentskillos["scientific_boundary"]\n    assert agentskillos["rerun_requires_author_release_at_recorded_commit"] is True\n    second_support = json.loads((ROOT / "artifacts/asset-first-stri-second-substrate-qualification-20260824.json").read_text())\n    sq = second_support["summary"]\n    assert sq["candidates_screened"] == 5\n    assert sq["new_exact_support_substrates"] == 0\n    assert sq["new_external_analogues"] == 1\n    assert sq["exact_support_search_disposition"] == "NO_SECOND_EXACT_SUPPORT_SUBSTRATE_QUALIFIED"\n    breadth_summary["agentskillos_full_uniform_R"] = 4.0\n    breadth_summary["agentskillos_full_oracle_R"] = 2.5\n    breadth_summary["agentskillos_residual_categories"] = ah["residual_categories"]\n    breadth_summary["agentskillos_equalizable_categories"] = ah["equalizable_categories"]\n    breadth_summary["second_exact_support_substrates_qualified"] = 0\n'''
         reproduce = reproduce.replace("\n    out = {", second_substrate_code + "\n    out = {", 1)
+    multitask_code_marker = "# AUTOSKILL HELD-OUT BEHAVIOR PILOT STOP CHECK"
+    if multitask_code_marker not in reproduce:
+        multitask_code = '''\n    # AUTOSKILL HELD-OUT BEHAVIOR PILOT STOP CHECK\n    mtq = json.loads((ROOT / "artifacts/asset-first-stri-autoskill-multitask-qualification-20260824.json").read_text())\n    mtc = json.loads((ROOT / "artifacts/asset-first-stri-autoskill-multitask-pilot-contract-20260824.json").read_text())\n    mtm = json.loads((ROOT / "artifacts/asset-first-stri-autoskill-multitask-pilot-run-manifest-20260824.json").read_text())\n    mts = json.loads((ROOT / "artifacts/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json").read_text())\n    mtf = json.loads((ROOT / "artifacts/asset-first-stri-autoskill-multitask-pilot-failure-lesson-20260824.json").read_text())\n    assert mtq["selection_outcome_blind"] is True\n    assert (mtq["summary"]["screened_units"], mtq["summary"]["qualified_units"]) == (9, 9)\n    assert [u["unit_id"] for u in mtc["selected_units"]] == ["skillmisevo-coding-22-P21", "skillmisevo-coding-21-P19"]\n    assert mtm["run_count"] == 8 and mtm["all_valid"] is True and mtm["raw_trajectories_packaged"] is False\n    assert mts["decision"] == "STOP_EXPANSION_STAGE1_GATE_NOT_MET"\n    assert mts["all_executions_valid"] is True and mts["stage1_gate_pass"] is False\n    assert mts["stage2_repeat_runs_authorized"] is False and mts["remaining_seven_units_authorized"] is False\n    assert mts["new_agent_runs"] == 8 and mts["judge_calls"] == 0 and mts["new_gpu_runs"] == 0 and mts["claim_expansion"] is False\n    assert mts["per_unit"]["skillmisevo-coding-22-P21"]["diagnosis"] == "CONTROL_NONCONCORDANCE_NO_SPLIT_SPECIFIC_ATTRIBUTION"\n    assert mts["per_unit"]["skillmisevo-coding-21-P19"]["diagnosis"] == "NO_ACTION_SIGNATURE_SEPARATION"\n    assert mtf["memory_class"] == "FAILURE_ASSET" and mtf["stop_class"] == "PREREGISTERED_PILOT_GATE_STOP"\n    multitask_summary = {\n        "retrieval_qualification": "9/9",\n        "selected_units": [u["unit_id"] for u in mtc["selected_units"]],\n        "stage1_runs": 8,\n        "all_executions_valid": True,\n        "stage1_gate_pass": False,\n        "decision": mts["decision"],\n        "stage2_repeat_runs": 0,\n        "remaining_unit_runs": 0,\n        "unit_diagnoses": {uid: row["diagnosis"] for uid, row in mts["per_unit"].items()},\n        "raw_trajectories_packaged": False,\n        "new_agent_runs": 8,\n        "judge_calls": 0,\n        "new_gpu_runs": 0,\n        "claim_expansion": False,\n    }\n'''
+        reproduce = reproduce.replace("\n    out = {", multitask_code + "\n    out = {", 1)
+        reproduce = reproduce.replace('        "experimental_breadth": breadth_summary,', '        "experimental_breadth": breadth_summary,\n        "autoskill_multitask_pilot": multitask_summary,', 1)
     controller_code_marker = "# RELEASED CONTROLLER AUDIT RECEIPT CHECK"
     if controller_code_marker not in reproduce:
         controller_code = '''\n    # RELEASED CONTROLLER AUDIT RECEIPT CHECK\n    controller = json.loads((ROOT / "artifacts/asset-first-stri-released-controller-clone-audit-20260819.json").read_text())\n    assert controller["all_checks_pass"] is True\n    cc = controller["checks"]\n    assert cc["clone_weights_recomputed_by_author_sampling_function"] is True\n    assert cc["author_duplicate_filter_would_reject_literal_exact_text_clone"] is True\n    assert cc["same_content_clone_has_identical_author_questioner_messages"] is True\n    assert cc["released_sampler_clone_changes_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conservation_exactly_restores_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conserved_allocation_exactly_restores_base_exposure"] is True\n    ch = controller["headline"]\n    assert abs(ch["base_package_probability"] - (1.0 / 15.0)) < 1e-12\n    assert abs(ch["exact_clone_family_probability"] - (1.0 / 8.0)) < 1e-12\n    assert len(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"][0] - (7.0 / 120.0)) < 1e-12\n    assert len(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"][0]) < 1e-12\n    assert len(ch["quotient_conserved_exposure_profile_tv_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_exposure_profile_tv_all_targets"][0]) < 1e-12\n    controller_summary = {\n        "author_repo_commit": controller["author_release"]["commit"],\n        "all_checks_pass": True,\n        "base_package_probability": ch["base_package_probability"],\n        "clone_family_probability": ch["exact_clone_family_probability"],\n        "released_prompt_mixture_tv": ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_prompt_mixture_tv": ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_exposure_profile_tv": ch["quotient_conserved_exposure_profile_tv_all_targets"],\n        "third_party_author_repo_packaged": False,\n    }\n'''
@@ -721,8 +806,8 @@ def build_and_verify_supplement() -> dict:
         repro_python = find_repro_python()
         repro = run([repro_python, "reproduce.py"], cwd=tree)
         reproduced = json.loads((tree / "outputs" / "reproduction-summary.json").read_text(encoding="utf-8"))
-        if reproduced.get("status") != "PASS" or "skillrl_p0e" not in reproduced or "structural_enrichment" not in reproduced or "experimental_breadth" not in reproduced or "autoskill_p19_dynamic" not in reproduced or "autoskill_p19_mediator_isolation" not in reproduced:
-            raise RuntimeError("supplement reproduction did not retain STRI structural enrichment, experimental breadth, SkillRL P0-E, AutoSkill P19 Stage-3, and mediator-isolation receipts")
+        if reproduced.get("status") != "PASS" or "skillrl_p0e" not in reproduced or "structural_enrichment" not in reproduced or "experimental_breadth" not in reproduced or "autoskill_p19_dynamic" not in reproduced or "autoskill_p19_mediator_isolation" not in reproduced or "autoskill_multitask_pilot" not in reproduced:
+            raise RuntimeError("supplement reproduction did not retain STRI structural enrichment, experimental breadth, SkillRL P0-E, AutoSkill P19 Stage-3/mediator, and held-out behavior-pilot STOP receipts")
         tests = run([repro_python, "-m", "unittest", "discover", "-s", "research_pipeline", "-t", ".", "-p", "test_asset_first_stri_*.py"], cwd=tree)
         test_line = next((line.strip() for line in tests.stdout.splitlines() if line.startswith("Ran ")), "")
         if "OK" not in tests.stdout:
@@ -762,6 +847,7 @@ def build_and_verify_supplement() -> dict:
         state["reproduced_results"]["released_controller_audit"] = reproduced.get("released_controller_audit") or {}
         state["reproduced_results"]["autoskill_p19_dynamic"] = reproduced.get("autoskill_p19_dynamic") or {}
         state["reproduced_results"]["autoskill_p19_mediator_isolation"] = reproduced.get("autoskill_p19_mediator_isolation") or {}
+        state["reproduced_results"]["autoskill_multitask_pilot"] = reproduced.get("autoskill_multitask_pilot") or {}
         forbidden = [
             str(item)
             for item in (state["claim_boundary"].get("forbidden") or [])
@@ -772,6 +858,8 @@ def build_and_verify_supplement() -> dict:
             "treating the AutoSkill P19 behavior-level result as task utility, longitudinal regret, end-to-end AutoSkill runtime validation, or general AutoSkill safety",
             "treating the qualified SkillRL C4 realization STOP as a population-level no-effect theorem or persistent principle dead end",
             "treating quotient-conserved clone allocation as downstream utility validation or as a repair for non-realizable partial-overlap support geometry",
+            "treating 9/9 held-out AutoSkill retrieval sensitivity as task-general behavioral propagation after the preregistered stage-1 behavior gate stopped",
+            "reopening the stopped AutoSkill held-out pilot by relaxing the frozen action signature, selecting units from observed behavior, or using tool-call count as the primary endpoint",
         ]))
         state["new_gpu_evidence_required_for_current_claim_scope"] = False
         dump(SUPPLEMENT_STATE_PATH, state)

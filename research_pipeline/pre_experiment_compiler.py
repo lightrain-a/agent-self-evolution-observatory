@@ -11,6 +11,7 @@ from .pre_experiment_execution import compute_graph, measured_throughput, observ
 from .pre_experiment_science import baseline_competence, mechanism_identifiability, parameter_provenance, qualification_path, statistical_resolution
 from .pre_experiment_specs import GATES, POLICY
 from .paper_design_contract import audit_paper_design_contract
+from .internal_research_skills import route_internal_skills
 from .principle_adjudication import audit_principle_certificate
 from .protocol_validity import audit_protocol_validity
 
@@ -60,15 +61,26 @@ def _research_execution_plan(
     protocol_validity: dict[str, Any],
     updater_competence: dict[str, Any],
     gates: list[dict[str, Any]],
+    config: dict[str, Any],
 ) -> dict[str, Any]:
     """Compile scientific intent into an auditable execution plan without adding launch authority."""
     contract = principle_certificate.get("contract") or {}
     prediction_ids = [str(row.get("id") or "") for row in contract.get("predictions") or [] if row.get("id")]
+    skill_spec = ((config.get("pre_experiment") or {}).get("skill_requirements") or {}) if isinstance(config, dict) else {}
+    explicit_skill_caps = [str(x).strip().lower() for x in skill_spec.get("capability_types") or [] if str(x).strip()]
+    inferred_skill_caps = set(explicit_skill_caps)
+    inferred_skill_caps.update({"statistics", "experiment"})
+    if config.get("models"):
+        inferred_skill_caps.update({"ml-research", "coding"})
+    task_family = str(skill_spec.get("task_family") or ("ai-ml-experiment" if "ml-research" in inferred_skill_caps else "experiment-analysis"))
+    internal_skill_route = route_internal_skills({"task_family": task_family, "capability_types": sorted(inferred_skill_caps)})
     plan_core = {
         "idea_id": idea_id,
         "prediction_ids": prediction_ids,
         "dependencies": ["principle-certificate", "protocol-validity", "updater-competence", "pre-experiment-8-of-8"],
         "capability_requirements": ["cpu-falsifier", "gpu-experiment", "independent-analysis"],
+        "internal_skill_requirements": sorted(inferred_skill_caps),
+        "internal_skill_ids": [str(row.get("skill_id") or "") for row in internal_skill_route.get("selected_skills") or []],
         "expected_artifacts": ["frozen-config", "plan-hash", "incremental-raw-trace", "metric-table", "analysis-provenance", "decision-ledger-update", "persistent-update-effect-realization-audit-when-applicable"],
     }
     checkpoints = [
@@ -86,6 +98,8 @@ def _research_execution_plan(
         "dependencies": plan_core["dependencies"],
         "verification_checkpoints": checkpoints,
         "capability_requirements": plan_core["capability_requirements"],
+        "internal_skill_requirements": plan_core["internal_skill_requirements"],
+        "internal_skill_route": internal_skill_route,
         "expected_artifacts": plan_core["expected_artifacts"],
         "fallback_conditions": [
             {"if": "execution-or-runtime-invalid", "action": "repair execution only; preserve scientific contract"},
@@ -119,8 +133,11 @@ def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root:
     ]
     if [gate["key"] for gate in gates] != [gate["key"] for gate in GATES]:
         raise RuntimeError("pre-experiment gate order drift")
-    research_execution_plan = _research_execution_plan(idea_id, principle_certificate, protocol_validity, updater_competence, gates)
+    research_execution_plan = _research_execution_plan(idea_id, principle_certificate, protocol_validity, updater_competence, gates, config)
+    skill_route_ready = (research_execution_plan.get("internal_skill_route") or {}).get("status") == "INTERNAL_SKILL_ROUTE_READY"
     blockers = list(paper_design.get("blockers") or []) + list(principle_certificate.get("blockers") or []) + list(protocol_validity.get("blockers") or []) + list(updater_competence.get("blockers") or []) + [blocker for gate in gates for blocker in gate["blockers"]]
+    if not skill_route_ready:
+        blockers.append("research-skill-route-hold")
     passed = sum(bool(gate["pass"]) for gate in gates)
     gates_passed = passed == len(gates)
     paper_design_ready = paper_design.get("passed") is True
@@ -149,8 +166,8 @@ def compile_pre_experiment_card(idea_id: str, config: dict[str, Any], data_root:
         "research_execution_plan": research_execution_plan,
         "gate_count": len(gates),
         "passed_gates": passed,
-        "execution_authorized": paper_design_ready and principle_ready and protocol_ready and updater_competent and gates_passed,
-        "status": "pass" if paper_design_ready and principle_ready and protocol_ready and updater_competent and gates_passed else "blocked",
+        "execution_authorized": paper_design_ready and principle_ready and protocol_ready and updater_competent and gates_passed and skill_route_ready,
+        "status": "pass" if paper_design_ready and principle_ready and protocol_ready and updater_competent and gates_passed and skill_route_ready else "blocked",
         "blockers": blockers,
         "gates": gates,
         "compute_graph": next(gate["detail"] for gate in gates if gate["key"] == "compute_graph"),

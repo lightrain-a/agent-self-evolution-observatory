@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "acceptance_paper_id": "STRI-ICLR2027",
+  "revision": "R19",
+  "status": "R19_CANONICAL_PROJECTION_PUBLISHED",
+  "canonical_base": "4f0fd8400c1e4434f3ae73523c3dd2062808a282",
+  "integration_source_head": "9e1c60845d4245c5ad7645d1cee06eb82f278871",
+  "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r19-heldout-pilot-stop-20260824/R19-MANIFEST.json",
+  "release_manifest_sha256": "c6da7056eb4ba0082b31745df86ba1023cb89b27ec23753acaf1840e0b1828f2",
+  "release_manifest_canonical_sha256": "57780c494f5e03cb55dc1c3187bfa692d761fd3345d06283bd5d4375d82c82e3",
+  "stable_hashes": {
+    "pdf": "c2440a127a0cb078c0af5ddd5617bf1b3ed6a627bc635d53a0eaae306c9265c7",
+    "legacy_pdf": "c2440a127a0cb078c0af5ddd5617bf1b3ed6a627bc635d53a0eaae306c9265c7",
+    "source_zip": "b8cd9c0e708009788bf40167dbe8b5d21a37cedbde46a317c2cd43ff8b172f4c",
+    "supplement_zip": "e710574e68b4443af92cb02c5797f7759958c35bd83308f27be63a651c8643c2",
+    "tex": "4875a301f0af5ccef90a961d824db0f52d01e3f10ea4f83188a56dd60b875502"
+  },
+  "qa": {
+    "paper_qa": "97/97 PASS",
+    "official_iclr_qa": "64/64 PASS",
+    "main_text_pages": 9,
+    "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
+    "supplement_reproduction": "PASS",
+    "supplement_unit_tests": "31/31 PASS",
+    "new_experiment_unit_tests": "3/3 PASS",
+    "paper_quality_referenced_files": 73,
+    "paper_quality_registered_digests": 76,
+    "citation_count": 21
+  },
+  "ledger": {
+    "current_state": "SUBMISSION_READY",
+    "contract_sha256": "30ba1a82ae4547d8e3385f514352da55415b31dcf83b8dabab1f756af34309ad",
+    "gate_clean_submission_ready": true,
+    "paper_preparation_protocol": "1.0+r19-heldout-pilot-stop",
+    "primary_next_action": "NO_INTERNAL_ACTION"
+  },
+  "experimental_breadth": {
+    "practical_package_weight_baselines": 10,
+    "leave_one_tool_out": "8 folds; exact-R*/uniform max=2.0; NNLS median=2.625, max=6.098",
+    "exact_sparsity_frontier": "Level-1 budgets 1-2 infeasible; 3 active packages attain unrestricted R*=2 through budget 6",
+    "skillrl_budget_sweep": "8 top-k x 12 clone targets x 223 tasks",
+    "skillrouter_external_relevance_analogue": "75 expert queries; core 24 single / 51 multi; R*=1 analogue",
+    "skillsbench_support_qualification": "STOP_79_OF_87_METADATA_AVAILABILITY_MISMATCH",
+    "agentskillos_oracle_analogue": "30 tasks / 20 multi / full uniform spread 4x / full oracle-set R*=2.5 / category R*=2,2,1,1,1",
+    "second_support_qualification": "5 candidates screened / 0 new exact support / 1 new oracle-set analogue"
+  },
+  "heldout_behavior_pilot": {
+    "retrieval_qualification": "9/9",
+    "selection_outcome_blind": true,
+    "selected_units": [
+      "skillmisevo-coding-22-P21",
+      "skillmisevo-coding-21-P19"
+    ],
+    "stage1_runs": 8,
+    "all_executions_valid": true,
+    "stage1_gate_pass": false,
+    "decision": "STOP_EXPANSION_STAGE1_GATE_NOT_MET",
+    "stage2_repeat_runs": 0,
+    "remaining_unit_runs": 0,
+    "p19_role": "bounded existence proof"
+  },
+  "other_paper_rows_preserved": true,
+  "claim_expansion": false,
+  "new_agent_runs": 8,
+  "new_model_profile": false,
+  "judge_calls": 0,
+  "new_gpu_runs": 0,
+  "scientific_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "3894972d30039d7eea42b3c0119fe0c3152c8b7e935afa0740d5bf5b5de6b272"
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "revision": "R19-heldout-pilot-stop",
+  "stage": "TARGETED_BEHAVIORAL_REPLICATION_CLOSURE",
+  "experiment_id": "ASSET-FIRST-STRI-AUTOSKILL-MULTITASK-BEHAVIOR-PILOT-20260824",
+  "decision": "STOP_EXPANSION_STAGE1_GATE_NOT_MET",
+  "scientific_update": "A pre-outcome first-party retrieval gate qualified all 9 held-out units, but the preregistered two-unit behavior pilot produced 8/8 valid fresh executions and no split-specific first-repeat action-signature separation. Stage-2 repeats and the remaining seven units are therefore not authorized. P19 remains a bounded existence proof rather than a demonstrated task-general behavioral effect.",
+  "qualification": {
+    "screened_units": 9,
+    "qualified_units": 9,
+    "selection_outcome_blind": true,
+    "artifact": "generated/asset-first-stri-autoskill-multitask-qualification-20260824.json",
+    "artifact_sha256": "ec152d0406716d78fe5f2784c1e153d2a1a8891985dc789a8f21b652002e46fb",
+    "csv_sha256": "1ca527c81864ce0006458ab2e749c3dd193ea35167935c2b1abe97d598ae8a5c"
+  },
+  "contract": {
+    "artifact": "generated/asset-first-stri-autoskill-multitask-pilot-contract-20260824.json",
+    "sha256": "ca697a3a111d8e3069759d81a23c9bb600f9c7ffd84102b0f763c749dca72b3f",
+    "selected_units": ["skillmisevo-coding-22-P21", "skillmisevo-coding-21-P19"],
+    "selection_rule": "outcome-blind SHA256 rank with cross-scenario and cross-position diversity",
+    "primary_endpoint": "pre-existing judge-independent five-dimensional action-level signature"
+  },
+  "stage1": {
+    "runs": 8,
+    "all_executions_valid": true,
+    "gate_pass": false,
+    "stage2_repeat_runs_authorized": false,
+    "remaining_seven_units_authorized": false,
+    "unit_diagnoses": {
+      "skillmisevo-coding-22-P21": "CONTROL_NONCONCORDANCE_NO_SPLIT_SPECIFIC_ATTRIBUTION",
+      "skillmisevo-coding-21-P19": "NO_ACTION_SIGNATURE_SEPARATION"
+    },
+    "artifact_sha256": "a84c97bd6fc340814087741aa39d46a5864e0527c885c275896b53ec21a5364a",
+    "csv_sha256": "a017d3b803e58abc620c4c84e19c61be14834e52a0d640285b516b186d5cea28",
+    "run_manifest_sha256": "18000c4de98e0812ea326bf230af5c751868cd8452f263f0e665fbd24cee8704"
+  },
+  "failure_memory": {
+    "artifact": "generated/asset-first-stri-autoskill-multitask-pilot-failure-lesson-20260824.json",
+    "sha256": "14944129fdad3670ec67fafa801e25daa74463c06437e060246cf9a0e0751178",
+    "stop_class": "PREREGISTERED_PILOT_GATE_STOP",
+    "reopen_condition": "Only a new preregistered design with an independently justified action observable whose control-arm reliability is established before split outcomes, or a different independently pinned library/substrate with a pre-outcome mechanism-specific behavioral prediction."
+  },
+  "verification": {
+    "canonical_verifier_sha256": "a834011eacd9ae347bff08f2d92f965c5fe7a2f950a8a59eabed2cb8ad6dfd83",
+    "canonical_test_sha256": "bf3fb2ddb8b7691afbf913932d1dda875fde5111509a1e128cd609e249d53144",
+    "unit_tests": "3/3 PASS",
+    "invariant_checks": "11/11 PASS",
+    "paper_qa": "97/97 PASS",
+    "official_iclr_qa": "64/64 PASS",
+    "main_text_pages": 9,
+    "total_pdf_pages": 11,
+    "citation_count": 21,
+    "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
+    "paper_quality_referenced_files": 73,
+    "paper_quality_registered_digests": 76,
+    "supplement_upgrade_smoke": "PASS",
+    "supplement_reproduce": "PASS",
+    "supplement_unit_tests": "31/31 PASS",
+    "raw_trajectories_packaged": false
+  },
+  "scientific_boundary": {
+    "p19_role": "bounded existence proof",
+    "task_general_behavioral_propagation_supported": false,
+    "task_utility_claim_added": false,
+    "population_safety_claim_added": false,
+    "longitudinal_regret_claim_added": false,
+    "cross_library_generalization_claim_added": false,
+    "claim_expansion": false,
+    "new_agent_runs": 8,
+    "new_model_profile": false,
+    "judge_calls": 0,
+    "new_gpu_runs": 0
+  },
+  "forbidden_rescues": [
+    "run repeat-2 despite the failed stage-1 gate",
+    "expand to the remaining seven units under the failed contract",
+    "change the five-dimensional primary endpoint after seeing outcomes",
+    "select replacement units using observed behavior",
+    "promote descriptive tool-call-count differences to the primary endpoint"
+  ],
+  "scientific_authority": false,
+  "submission_authority": false
+}

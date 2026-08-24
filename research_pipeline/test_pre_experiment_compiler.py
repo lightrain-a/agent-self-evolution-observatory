@@ -116,6 +116,9 @@ class PreExperimentCompilerTest(unittest.TestCase):
                 self.assertFalse(plan["execution_authority"])
                 self.assertEqual(len(plan["verification_checkpoints"]), 11)
                 self.assertIn("gpu-experiment", plan["capability_requirements"])
+                self.assertEqual(plan["internal_skill_route"]["status"], "INTERNAL_SKILL_ROUTE_READY")
+                self.assertIn("statistical-analysis-core", [row["skill_id"] for row in plan["internal_skill_route"]["selected_skills"]])
+                self.assertFalse(plan["internal_skill_route"]["scientific_authority"])
                 self.assertFalse(card["execution_authorized"], name)
                 self.assertIn("primary-readout-type-missing-or-unknown", card["blockers"])
                 self.assertIn("execution-cap-censoring-policy-invalid", card["blockers"])
@@ -167,7 +170,30 @@ class PreExperimentCompilerTest(unittest.TestCase):
                 self.assertTrue(card["paper_design_prerequisite"]["passed"], name)
                 self.assertTrue(card["principle_certificate_prerequisite"]["passed"], name)
                 self.assertTrue(card["updater_competence_prerequisite"]["passed"], name)
+                self.assertEqual(card["research_execution_plan"]["internal_skill_route"]["status"], "INTERNAL_SKILL_ROUTE_READY")
+                if config.get("models"):
+                    self.assertIn("ai-ml-experiment-engineering", [row["skill_id"] for row in card["research_execution_plan"]["internal_skill_route"]["selected_skills"]])
                 self.assertTrue(card["execution_authorized"], name)
+
+    def test_missing_declared_internal_skill_is_capability_hold(self) -> None:
+        repaired = {"checks": [
+            {"key": key, "pass": True, "evidence": "repaired pre-GPU evidence"}
+            for key in ("claim_alignment", "target_variation", "baseline_disagreement", "representability", "tiny_overfit", "competence_window", "effect_variation")
+        ], "blockers": [], "execution_ready": True, "status": "pass"}
+        with tempfile.TemporaryDirectory() as td, patch("research_pipeline.pre_experiment_science.audit_contract", return_value=repaired):
+            root = Path(td)
+            self.write_evidence(root)
+            config = mark_endpoint_headroom_pass(copy.deepcopy(load_json(Path(__file__).with_name("p0_a1_screening_config.json"))))
+            config["pre_experiment"]["paper_design"] = paper_design_contract()
+            config["pre_experiment"]["updater_competence"]["passed"] = True
+            config["pre_experiment"]["updater_competence"]["status"] = "pass"
+            config["pre_experiment"]["updater_competence"]["decision"] = "UPDATER_COMPETENT"
+            config["pre_experiment"]["skill_requirements"] = {"task_family": "unknown-domain", "capability_types": ["unavailable-domain-skill"]}
+            card = compile_pre_experiment_card(config["idea_id"], config, root)
+            self.assertFalse(card["execution_authorized"])
+            self.assertIn("research-skill-route-hold", card["blockers"])
+            self.assertEqual(card["research_execution_plan"]["internal_skill_route"]["status"], "INTERNAL_SKILL_ROUTE_HOLD")
+            self.assertFalse(card["research_execution_plan"]["internal_skill_route"]["scientific_authority"])
 
     def test_missing_competence_artifact_blocks_launch(self) -> None:
         config_path = Path(__file__).with_name("p0_a1_screening_config.json")

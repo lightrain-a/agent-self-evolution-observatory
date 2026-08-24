@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "PAPER_FIRST_R11_ZERO_PROVIDER_SEALING_RECOVERY",
+  "generated_at": "2026-08-24T09:34:22+00:00",
+  "status": "ATOMIC_STATE_VALIDATED_CANONICAL_PROJECTION_ELIGIBLE",
+  "source_run": {
+    "label": "external-fresh-primary-refresh-20260824-r11",
+    "generator_run_id": "20260824T061140Z",
+    "generator_status": "GENERATED_PRE_F0_EVIDENCE_ACQUISITION",
+    "primary_public": {
+      "path": "run-data://external-fresh-primary-refresh-20260824-r11/preview-public.json",
+      "sha256": "9b47a41d17a9d18e4e71a7bf2eb15a81bddb133adb5dfadff60bac04715e2bac"
+    },
+    "primary_private": {
+      "path": "private-data://external-fresh-primary-refresh-20260824-r11/paper-first-problem-discovery/primary-evidence-pool.json",
+      "sha256": "ac2dd60cbab60f9975830818deaead0e8ca0585f5532e2562277afa9cb558150",
+      "logical_pool_sha256": "fbb45d30b8c7fdb5345d7111c1ecefb387050002194393d66a0c72e78f26131a"
+    },
+    "generator": {
+      "path": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/generator-state.json",
+      "sha256": "a24c847fc00cf9d070a91139adfb12148591591fa53f2a331cca3c1cd1902d85"
+    },
+    "search_portfolio": {
+      "path": "private-data://source-scheduler-r11-20260824/paper-first-problem-discovery/search-portfolios/20260824T061140Z-portfolio.json",
+      "sha256": "9cfb18ba3c22158e76c43d29108820234ce6312c0a21f718e5bf84a78e9777d4"
+    },
+    "pre_f0_queue": {
+      "path": "run-data://external-fresh-primary-refresh-20260824-r11/operator-recompile-v18/pre-f0-queue.json",
+      "sha256": "c28eada72d1faf64cdff0641f79394f9293f682f893499347ce77245d517f5a7"
+    },
+    "historical_provider_calls_executed": 40,
+    "original_current_review_receipt_missing": true,
+    "original_last_completed_lane_search_missing": true,
+    "scientific_authority": false
+  },
+  "recovery_method": {
+    "source_bytes_immutable": true,
+    "primary_public_private_manifest_exact_match": true,
+    "missing_envelope_reconstructed_only_on_copy": true,
+    "archived_formulation_ingestion_witness_zero_provider": true,
+    "witness_replay_generator_run_id": "20260824T093253Z-ingestion-replay",
+    "witness_replay_provider_calls_executed": 0,
+    "candidate_identity_basis": "candidate-content-v1 snapshot SHA; candidate_id is run-local ordinal",
+    "candidate_aliases": [
+      {
+        "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+        "source_candidate_id": "PORT-006",
+        "witness_replay_candidate_id": "PORT-008",
+        "sealed_candidate_id": "PORT-006",
+        "identity_preserved": true
+      },
+      {
+        "candidate_snapshot_sha256": "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3",
+        "source_candidate_id": "PORT-010",
+        "witness_replay_candidate_id": "PORT-014",
+        "sealed_candidate_id": "PORT-010",
+        "identity_preserved": true
+      },
+      {
+        "candidate_snapshot_sha256": "17b8b764c71b1ce6de7e9b221e4181043d190f66de2cf0189c6e4452c3970674",
+        "source_candidate_id": "PORT-011",
+        "witness_replay_candidate_id": "PORT-015",
+        "sealed_candidate_id": "PORT-011",
+        "identity_preserved": true
+      }
+    ],
+    "scientific_authority": false
+  },
+  "sealed_atomic_state": {
+    "transaction_id": "3552144aa57495c88a2262a5c4e5673da7a49e201abaec3e730a15c70e7be802",
+    "transaction_status": "COMMITTED_EXISTING_CLOSED_STATE",
+    "transaction_receipt_path": "recovery-data://r11-zero-provider-sealing-recovery-20260824/paper-first-discovery-transactions/3552144aa57495c88a2262a5c4e5673da7a49e201abaec3e730a15c70e7be802.json",
+    "transaction_receipt_sha256": "cd7fba4a98a46eef9fe7aa4b73f2172e984d2178c4730a2db96e1c9629d99c49",
+    "provider_calls_executed": 0,
+    "source_scheduler_runs_executed": 0,
+    "generator_receipt_sha256": "597c7e338c2661d1fdcc8ea036797ffc01c90042df4dde67573dd0821a295ae0",
+    "generator_receipt_raw_sha256": "1cd5ed73a0dcbb7f0924116613f02fe6ce1ad06e62ea91cb9232225c6fa02e78",
+    "primary_sha256": "0bf392acae7dab5637d0ed8f3fe2768e728d972ac81cb7f99513f92308c0da51",
+    "generator_sha256": "5fb505a28bad2e98060ad6ce82788e5e8961ddea9959715278b53e5d0b8b9429",
+    "queue_sha256": "942eb6b1e0c0c5d74c0f3a8cae5170d093489dda0927764190ea2b018f33d9c8",
+    "pre_f0_queue_sha256": "f986e15889e0285fd05ee563bda95218979dee61c3e8ae45da6f274afee6f903",
+    "transaction_roles_share_one_id": true,
+    "pre_f0_rows": [
+      {
+        "candidate_id": "PORT-006",
+        "candidate_identity_version": "candidate-content-v1",
+        "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+        "title": "Reset-semantic substrate corruption as a convergent failure regime in repeated bounded self-improvement"
+      },
+      {
+        "candidate_id": "PORT-010",
+        "candidate_identity_version": "candidate-content-v1",
+        "candidate_snapshot_sha256": "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3",
+        "title": "Complex-description boundary in end-to-end 3D world construction"
+      },
+      {
+        "candidate_id": "PORT-011",
+        "candidate_identity_version": "candidate-content-v1",
+        "candidate_snapshot_sha256": "17b8b764c71b1ce6de7e9b221e4181043d190f66de2cf0189c6e4452c3970674",
+        "title": "Stateful-feedback validity horizon for self-evolving skill controllers"
+      }
+    ],
+    "pre_f0_queued": 3,
+    "problem_gate_submitted": 0,
+    "problem_gate_passed": 0,
+    "transaction_validator_pre_close_errors": [],
+    "transaction_validator_post_close_errors": [],
+    "scientific_authority": false
+  },
+  "projection_policy": {
+    "eligible_for_canonical_atomic_projection": true,
+    "r12_has_no_new_generator_transaction": true,
+    "r12_reuses_identical_primary_private_bytes": true,
+    "run_local_candidate_ids_must_not_be_globalized": true,
+    "canonical_identity_requires_transaction_id_run_id_candidate_snapshot_sha256": true,
+    "must_project_matching_pre_f0_support_preflight_with_queue": true,
+    "must_not_mutate_original_r11_run": true
+  },
+  "authority": {
+    "scientific_authority": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}

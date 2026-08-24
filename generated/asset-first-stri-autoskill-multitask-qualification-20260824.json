@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-AUTOSKILL-MULTITASK-QUALIFICATION-20260824",
+  "role": "sanitized content-addressed receipt for pre-outcome retrieval-only qualification",
+  "selection_outcome_blind": true,
+  "source_execution_host_role": "direct historical execution host; host/path intentionally omitted from public receipt",
+  "source": {
+    "misevolve_commit": "766f9c4761933c4bb214811042bc4dcbf895db1d",
+    "autoskill_source_commit": "94c47ca488d4ba4117d20272e66d49b9877e68cf",
+    "frozen_screen_plan_sha256": "be566d9597fb88b33c838eabc1e0134f61e833da5e614fbac0d1e46a7027f28a",
+    "source_qualification_script_sha256": "83e54b9f3026aefe67495f63d06159844e250a89c1053135d99c2a39602dddb1",
+    "source_qualification_json_sha256": "02a7377bfa007104ebe1490fc7cea7f76ebb6aba4e50aa028441ffd72fdc4617",
+    "source_qualification_csv_sha256": "5e1dd0391f3511bf753e0d53d6711f42760b258d111d2c6c6724746459e9347f",
+    "top_k": 5
+  },
+  "gate": {
+    "required": "split semantic set differs from original AND ID-placebo semantic set equals original AND quotient semantic set equals original",
+    "behavior_outcome_read_for_selection": false
+  },
+  "units": [
+    {"unit_id":"skillmisevo-coding-22-P19","episode_id":"skillmisevo-coding-22","position":19,"original_unique_semantics":5,"split_unique_semantics":2,"qualified":true},
+    {"unit_id":"skillmisevo-coding-22-P20","episode_id":"skillmisevo-coding-22","position":20,"original_unique_semantics":5,"split_unique_semantics":4,"qualified":true},
+    {"unit_id":"skillmisevo-coding-22-P21","episode_id":"skillmisevo-coding-22","position":21,"original_unique_semantics":5,"split_unique_semantics":4,"qualified":true},
+    {"unit_id":"skillmisevo-coding-14-P19","episode_id":"skillmisevo-coding-14","position":19,"original_unique_semantics":5,"split_unique_semantics":2,"qualified":true},
+    {"unit_id":"skillmisevo-coding-14-P20","episode_id":"skillmisevo-coding-14","position":20,"original_unique_semantics":5,"split_unique_semantics":3,"qualified":true},
+    {"unit_id":"skillmisevo-coding-14-P21","episode_id":"skillmisevo-coding-14","position":21,"original_unique_semantics":5,"split_unique_semantics":3,"qualified":true},
+    {"unit_id":"skillmisevo-coding-21-P19","episode_id":"skillmisevo-coding-21","position":19,"original_unique_semantics":5,"split_unique_semantics":3,"qualified":true},
+    {"unit_id":"skillmisevo-coding-21-P20","episode_id":"skillmisevo-coding-21","position":20,"original_unique_semantics":5,"split_unique_semantics":4,"qualified":true},
+    {"unit_id":"skillmisevo-coding-21-P21","episode_id":"skillmisevo-coding-21","position":21,"original_unique_semantics":5,"split_unique_semantics":4,"qualified":true}
+  ],
+  "summary": {
+    "screened_units": 9,
+    "qualified_units": 9,
+    "pilot_gate_met": true,
+    "new_model_calls": 0,
+    "new_agent_runs": 0,
+    "new_gpu_runs": 0
+  },
+  "scientific_boundary": "This receipt establishes only a representation-sensitive first-party retrieval seam before new behavior outcomes are observed. The nine units share one frozen five-skill library; qualification does not establish behavior, task utility, safety, or cross-library generalization.",
+  "scientific_authority": false
+}

@@ -1,0 +1,10 @@
+unit_id,episode_id,position,split_changes_semantic_set,placebo_restores_original_semantic_set,quotient_restores_original_semantic_set,qualified_for_behavior_pilot,original_unique_semantics,split_unique_semantics
+skillmisevo-coding-22-P19,skillmisevo-coding-22,19,True,True,True,True,5,2
+skillmisevo-coding-22-P20,skillmisevo-coding-22,20,True,True,True,True,5,4
+skillmisevo-coding-22-P21,skillmisevo-coding-22,21,True,True,True,True,5,4
+skillmisevo-coding-14-P19,skillmisevo-coding-14,19,True,True,True,True,5,2
+skillmisevo-coding-14-P20,skillmisevo-coding-14,20,True,True,True,True,5,3
+skillmisevo-coding-14-P21,skillmisevo-coding-14,21,True,True,True,True,5,3
+skillmisevo-coding-21-P19,skillmisevo-coding-21,19,True,True,True,True,5,3
+skillmisevo-coding-21-P20,skillmisevo-coding-21,20,True,True,True,True,5,4
+skillmisevo-coding-21-P21,skillmisevo-coding-21,21,True,True,True,True,5,4

@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0",
-  "generated_at": "2026-08-23T07:05:56+00:00",
+  "generated_at": "2026-08-24T09:34:22+00:00",
   "source_inbox": "private-data://paper-first-problem-discovery/candidate-inbox.json",
   "source_inboxes": [
     "private-data://paper-first-problem-discovery/candidate-inbox.json",
@@ -17,6 +17,15 @@
     "lane_contract_independent_review_required": true,
     "independent_semantic_reduction_review_required": true,
     "semantic_reviewer_is_block_only": true,
+    "feynman_socratic_certificate_required_before_problem_gate": true,
+    "feynman_socratic_gate_is_zero_authority": true,
+    "feynman_socratic_mature_reduction_alert_only_uses_typed_existing_review": true,
+    "problem_insight_certificate_runs_in_shadow_and_does_not_change_live_problem_gate_authority_yet": true,
+    "contribution_attribution_shadow_is_recorded_before_any_future_live-gate migration": true,
+    "prospective_shadow_records_current_verdict_and_waits_for_eventual_closest_work_and_paper_survival": true,
+    "shadow_simplification_attribution_cannot_mutate_live_problem_gate": true,
+    "closest_work_reproduction_required_only_when_implementation_is_decisive": true,
+    "missing_source_faithful_reproduction_assets_is_support_hold_not_scientific_negative": true,
     "all_candidates_require_problem_gate": true,
     "problem_gate_pass_only_grants_human_paper_design_eligibility": true,
     "old_solution_first_discovery_is_archival_input_only": true,
@@ -33,6 +42,15 @@
     "paper_design_eligible": 0,
     "inbox_errors": 0,
     "primary_evidence_records": 32,
+    "feynman_socratic_clear": 0,
+    "feynman_socratic_revise": 0,
+    "feynman_socratic_reduction_alert": 0,
+    "reproduction_required": 0,
+    "reproduction_qualified": 0,
+    "reproduction_support_holds": 0,
+    "contribution_shadow_complete": 0,
+    "simplification_attribution_shadow_evaluable": 0,
+    "shadow_live_problem_gate_mutations": 0,
     "submitted_by_lane": {
       "CONTRADICTION": 0,
       "CONVERGENT_FAILURE": 0,
@@ -63,6 +81,6 @@
   "blocked": [],
   "audited": [],
   "next_action": "Human Paper Design review may inspect passed candidates. Blocked, stale, malformed, or missing candidates do not create a paper, method, experiment, or P0 lifecycle entry.",
-  "discovery_transaction_id": "937727fc9687537371d657268f505ad1167f4a1dab32cfb85c2a5bf27f2004cf",
+  "discovery_transaction_id": "3552144aa57495c88a2262a5c4e5673da7a49e201abaec3e730a15c70e7be802",
   "discovery_transaction_role": "queue"
 }

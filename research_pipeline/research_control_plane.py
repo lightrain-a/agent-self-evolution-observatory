@@ -156,6 +156,8 @@ def build_research_control_plane_state(
     feynman_socratic_gate: dict[str, Any], reproduction_gate: dict[str, Any],
     review_control: dict[str, Any], figure_claim_graph: dict[str, Any],
     failure_differential_registry: dict[str, Any] | None = None,
+    research_skill_registry: dict[str, Any] | None = None,
+    manuscript_integrity_layer: dict[str, Any] | None = None,
     experiment_nodes: Iterable[dict[str, Any]] = (), research_states: Iterable[dict[str, Any]] = (),
     governance_state: dict[str, Any] | None = None, failure_asset_library: dict[str, Any] | None = None,
     paper_registry_summary: dict[str, Any] | None = None,
@@ -166,6 +168,19 @@ def build_research_control_plane_state(
     runtime = governance.get("runtime") or {}
     failures = failure_asset_library or {}
     paper_summary = paper_registry_summary or {}
+    skill_summary = dict((research_skill_registry or {}).get("summary") or {})
+    internal_skill_library = (research_skill_registry or {}).get("internal_skill_library") or {}
+    skill_summary["internal_skill_ids"] = [str(row.get("skill_id") or "") for row in internal_skill_library.get("skills") or [] if str(row.get("skill_id") or "")]
+    skill_summary["external_distillation"] = [
+        {
+            "source_pack": str(row.get("source_pack") or ""),
+            "decision": str(row.get("decision") or ""),
+            "kept": list(row.get("kept") or []),
+            "discarded": list(row.get("discarded") or []),
+            "internal_skills": list(row.get("internal_skills") or []),
+        }
+        for row in internal_skill_library.get("external_distillation") or [] if isinstance(row, dict)
+    ]
     checks = {
         "execution_kernel": research_execution_kernel.get("status") == "KERNEL_CONTRACTS_INSTALLED",
         "reasoning_layer": research_reasoning_layer.get("status") == "REASONING_CONTRACTS_INSTALLED",
@@ -189,6 +204,8 @@ def build_research_control_plane_state(
             "review_control": dict(review_control.get("summary") or {}),
             "figure_claim_graph": dict(figure_claim_graph.get("summary") or {}),
             "failure_differential_registry": dict((failure_differential_registry or {}).get("summary") or {}),
+            "research_skill_registry": skill_summary,
+            "manuscript_integrity_layer": dict((manuscript_integrity_layer or {}).get("summary") or {}),
         },
         "research_states": states,
         "experiment_tree": tree,
@@ -208,6 +225,11 @@ def build_research_control_plane_state(
             "reviewer_issue_papers": int((review_control.get("summary") or {}).get("papers") or 0),
             "registered_papers": int(paper_summary.get("papers") or 0),
             "submission_ready_papers": int(paper_summary.get("submission_ready") or 0),
+            "catalogued_skill_packs": int(((research_skill_registry or {}).get("summary") or {}).get("skill_packs_catalogued_not_installed") or 0),
+            "external_skill_packs_distilled": int(((research_skill_registry or {}).get("summary") or {}).get("external_skill_packs_distilled") or 0),
+            "canonical_internal_skills": int(((research_skill_registry or {}).get("summary") or {}).get("canonical_internal_skills") or 0),
+            "external_skill_runtime_dependencies": int(((research_skill_registry or {}).get("summary") or {}).get("external_skill_runtime_dependencies") or 0),
+            "post_draft_integrity_surfaces": int(((manuscript_integrity_layer or {}).get("summary") or {}).get("audit_surfaces") or 0),
             "automatic_scientific_authority": 0,
             "automatic_experiment_authority": 0,
             "automatic_gpu_authority": 0,
@@ -250,10 +272,12 @@ def build_public_research_control_plane_projection(project_root: Path) -> dict[s
     paper_quality = _load_public_json(quality_path)
 
     from .failure_differential_registry import build_sage_mhfa_shadow_state
+    from .manuscript_integrity_audit import build_manuscript_integrity_layer_state
     from .feynman_socratic_gate import build_feynman_socratic_gate_state
     from .figure_claim_graph import build_figure_claim_graph
     from .reproduction_gate import build_reproduction_gate_state
     from .research_execution_kernel import build_research_execution_kernel_state
+    from .research_capability_registry import build_research_capability_registry
     from .research_reasoning_layer import build_research_reasoning_layer_state
     from .reviewer_issue_graph import build_review_control_state_from_registry
 
@@ -264,6 +288,8 @@ def build_public_research_control_plane_projection(project_root: Path) -> dict[s
     review_control = build_review_control_state_from_registry(paper_registry)
     figure_claim = build_figure_claim_graph(paper_quality)
     failure_differential = build_sage_mhfa_shadow_state(root)
+    research_skill_registry = build_research_capability_registry()
+    manuscript_integrity = build_manuscript_integrity_layer_state()
     experiment_nodes = ((system_state.get("experiment_iteration") or {}).get("nodes") or [])
     failure_assets = system_state.get("failure_asset_library") or {}
 
@@ -275,6 +301,8 @@ def build_public_research_control_plane_projection(project_root: Path) -> dict[s
         review_control=review_control,
         figure_claim_graph=figure_claim,
         failure_differential_registry=failure_differential,
+        research_skill_registry=research_skill_registry,
+        manuscript_integrity_layer=manuscript_integrity,
         experiment_nodes=experiment_nodes,
         research_states=(),
         governance_state=governance,

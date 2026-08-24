@@ -14,9 +14,9 @@
     "resolved_citations": 21,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "paper_pdf_sha256": "a841d3a51f85630b43e824b7eac48980ede4becfd9606d449ac1ab8d5c225e98",
-    "paper_source_zip_sha256": "0c14d03615446918865777c25bf3bb1901d9cec2dc38c65cd5cd8ad00daa137a",
-    "anonymous_supplement_zip_sha256": "3dc94258ccf333f277c3779fd39267a112eb160461e295f6db5cda97de056753",
+    "paper_pdf_sha256": "c2440a127a0cb078c0af5ddd5617bf1b3ed6a627bc635d53a0eaae306c9265c7",
+    "paper_source_zip_sha256": "b8cd9c0e708009788bf40167dbe8b5d21a37cedbde46a317c2cd43ff8b172f4c",
+    "anonymous_supplement_zip_sha256": "e710574e68b4443af92cb02c5797f7759958c35bd83308f27be63a651c8643c2",
     "supplement_reproduction": "PASS",
     "supplement_unit_tests": "31/31 PASS",
     "final_independent_review": "READY_TO_SUBMIT",
@@ -50,7 +50,7 @@
     "claim_expansion_for_r15": false,
     "new_model_calls_for_r15": 0,
     "new_gpu_runs_for_r15": 0,
-    "paper_quality_content_addressed_files": 64,
+    "paper_quality_content_addressed_files": 73,
     "experimental_breadth": "10 package-weight baselines; 4-to-4 no-refit transfer; 8-fold leave-one-tool-out exact R max=2 and NNLS worst=6.10; Level-1 exact sparsity frontier reaches unrestricted R*=2 at 3 active packages; SkillRL 8-budget sweep x 12 clones x 223 tasks; SkillRouter 75-query relevance analogue; AgentSkillOS 30-task oracle-set analogue (full R*=2.5, category R*=2/2/1/1/1); five-candidate second-support tournament qualifies zero new exact support substrates",
     "r16_canonical_reconciliation": true,
     "claim_expansion_for_r16": false,
@@ -60,11 +60,18 @@
     "claim_expansion_for_r17": false,
     "new_model_calls_for_r17": 0,
     "new_gpu_runs_for_r17": 0,
-    "paper_quality_registered_digests": 67,
+    "paper_quality_registered_digests": 76,
     "r18_canonical_reconciliation": true,
     "claim_expansion_for_r18": false,
     "new_model_calls_for_r18": 0,
-    "new_gpu_runs_for_r18": 0
+    "new_gpu_runs_for_r18": 0,
+    "heldout_behavior_pilot": "9/9 retrieval-qualified; outcome-blind hash-selected two units; 8/8 valid A/B/C/D runs; preregistered stage-1 split-specific gate failed; repeat-2 and remaining seven not authorized; P19 remains bounded",
+    "r19_canonical_reconciliation": true,
+    "claim_expansion_for_r19": false,
+    "new_agent_runs_for_r19": 8,
+    "new_model_profile_for_r19": false,
+    "judge_calls_for_r19": 0,
+    "new_gpu_runs_for_r19": 0
   },
   "human_signoff_required": [
     {
@@ -101,9 +108,9 @@
     }
   ],
   "submission_files": {
-    "pdf": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/E1-STRI-R18-second-substrate-audit.pdf",
-    "source_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/E1-STRI-R18-second-substrate-audit-source.zip",
-    "supplement_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r18-second-substrate-audit-20260824/E1-STRI-R18-second-substrate-audit-supplement.zip"
+    "pdf": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r19-heldout-pilot-stop-20260824/E1-STRI-R19-heldout-pilot-stop.pdf",
+    "source_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r19-heldout-pilot-stop-20260824/E1-STRI-R19-heldout-pilot-stop-source.zip",
+    "supplement_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r19-heldout-pilot-stop-20260824/E1-STRI-R19-heldout-pilot-stop-supplement.zip"
   },
   "next_action": "Human-author signoff only. Do not reopen dynamic P0, launch GPU experiments, broaden N1-N3, or restart idea search for this paper unless new independently qualified evidence or a direct collision invalidates the current narrow submission.",
   "scientific_authority": false

@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "inventory_origin": "r11 Pre-F0 first-party support audit 2026-08-24",
+  "rows": [
+    {
+      "candidate_id": "PORT-006",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "9b57dbc5728b0f2247917c2f27e3e65b6876f57b3b18ff1026b945e73fb96d3c",
+      "primary_refs": [
+        "arXiv:2608.19197",
+        "arXiv:2608.20318"
+      ],
+      "scientific_authority": false,
+      "disposition": "SUPPORT_QUALIFIED",
+      "required_unit": "A first-party AI4AI task×model×effort trajectory with frozen candidate-algorithm text and official normalized score; raw patch bytes are not required for this secondary semantic-edit audit.",
+      "asset_audit": "AI4AI first-party release exposes 290/290 trajectory pages and /ai4ai/data/points.json. All 290 detail pages were materialized and SHA-256 hashed; official normalized points reproduce 124/290 below 0.1 and the published 0.166 mean. Public release is redacted and does not expose raw diff bytes, so support is qualified only for the frozen secondary semantic-edit falsifier, not source-diff or repeated-round causal claims.",
+      "support_mode": "RELEASED_UNITS",
+      "qualified_units": 290,
+      "unit_manifest_sha256": "0aa414ad49241a51b169bd8d08c70176f33d204fb85accda41d9e593d7cc8449",
+      "support_scope": "Secondary AI4AI public trajectory-level semantic-edit audit of reset/init/seed/checkpoint state-establishment changes versus official normalized below-0.1 outcomes. Does not qualify the primary repeated-round SPADE reset-only vs step-only intervention.",
+      "falsifier_execution_authorized": false
+    },
+    {
+      "candidate_id": "PORT-010",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3",
+      "primary_refs": [
+        "arXiv:2608.15265"
+      ],
+      "scientific_authority": false,
+      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+      "required_unit": "VWE-Bench per-case query metadata sufficient for matching plus first-party per-case Pass@1/model outcome and preferably stage-specific failure labels.",
+      "asset_audit": "Official VibeWorlding-Gym code was cloned at ddb6ff54d34a2483859960743319f5d5e5b33e96. README declares 6,828 VWE-Bench queries and 254 evaluation cases, but the GitHub checkout contains data placeholders; this run did not materialize the Hugging Face query corpus or first-party per-case model outcome table. Code release alone cannot instantiate the frozen matched boundary falsifier.",
+      "reopen_only_if": "First-party VWE-Bench query units and per-case model/evaluator outcomes can be materialized with content hashes so matching and stage-error analysis are independent of the candidate claim.",
+      "bounded_first_party_evidence_design_allowed": true
+    },
+    {
+      "candidate_id": "PORT-011",
+      "candidate_identity_version": "candidate-content-v1",
+      "candidate_snapshot_sha256": "17b8b764c71b1ce6de7e9b221e4181043d190f66de2cf0189c6e4452c3970674",
+      "primary_refs": [
+        "arXiv:2608.13120",
+        "arXiv:2608.20139"
+      ],
+      "scientific_authority": false,
+      "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+      "required_unit": "SkillEvo round-level units exposing the same initial single-turn feedback basis, later multi-turn defect classes, revision schedule, TSR/defect outcomes, and a reproducible controller or first-party code/data sufficient to construct matched within-basis versus outside-basis units.",
+      "asset_audit": "As of 2026-08-24, source review found the SkillEvo paper and aggregate results over 9 production Skills and 98 skill-reference files but no verified maintained first-party repository or released unit-level dataset sufficient for the frozen matched horizon falsifier. Aggregate TSR curves cannot establish feedback-basis mismatch.",
+      "reopen_only_if": "A first-party SkillEvo repository/dataset or provenance-equivalent unit-level release exposes feedback/revision trajectories needed for matched inside-basis versus outside-basis analysis.",
+      "bounded_first_party_evidence_design_allowed": true
+    }
+  ],
+  "scientific_authority": false
+}
