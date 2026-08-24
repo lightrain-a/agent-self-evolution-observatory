@@ -136,6 +136,8 @@ def build_supplement(tree: Path, *, source_sha: str, pdf_sha: str) -> None:
         "blind-review-repair-receipt.json": HERE / "blind-review-20260824/repair-receipt.json",
         "post-repair-blind-review-validation-receipt.json": HERE / "blind-review-20260824/post-repair-validation-receipt.json",
         "stanford-r3-o6-revision-receipt.json": HERE / "stanford-r3-o6-revision-receipt.json",
+        "daytime-story-optimization-contract.json": HERE / "daytime-story-optimization-contract.json",
+        "daytime-story-revision-receipt.json": HERE / "daytime-story-revision-receipt.json",
     }
     for name, src in branch_files.items():
         shutil.copy2(src, evidence / name)
@@ -159,19 +161,27 @@ def build_supplement(tree: Path, *, source_sha: str, pdf_sha: str) -> None:
     blind_repair = load(HERE / "blind-review-20260824/repair-receipt.json")
     post_repair_review = load(HERE / "blind-review-20260824/post-repair-validation-receipt.json")
     receipt = load(HERE / "stanford-r3-o6-revision-receipt.json")
+    daytime = load(HERE / "daytime-story-revision-receipt.json")
     projection = {
         "schema_version": "1.0",
         "receipt_type": "supplement-current-projection",
         "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-        "revision": "stanford-r3-blind-review-provenance-repair-20260824",
+        "revision": "stanford-r3-daytime-story-optimization-20260824",
+        "title": "Reward Errors Become Persistent State: A Controlled Intervention in Reward-Conditioned Agent Memory",
         "current_pdf_sha256": pdf_sha,
         "current_source_zip_sha256": source_sha,
-        "new_experiment": True,
-        "scientific_values_changed": True,
+        "new_experiment": False,
+        "scientific_values_changed": False,
+        "current_revision_new_scientific_provider_calls": daytime["new_scientific_provider_calls"],
+        "current_revision_new_rollouts": daytime["new_rollouts"],
+        "current_revision_external_review_calls": daytime["external_review_calls"],
         "claim_expansion": False,
-        "new_provider_calls_exact": None,
+        "new_provider_calls_exact": qa["new_provider_calls_exact"],
         "new_provider_calls_observable_lower_bound": qa["new_provider_calls_observable_lower_bound"],
         "new_scientifically_usable_provider_calls": qa["new_scientifically_usable_provider_calls"],
+        "cumulative_r3_repair_provider_calls_observable_lower_bound": qa["cumulative_r3_repair_provider_calls_observable_lower_bound"],
+        "cumulative_r3_repair_scientifically_usable_provider_calls": qa["cumulative_r3_repair_scientifically_usable_provider_calls"],
+        "cumulative_r3_repair_terminal_rollouts": qa["cumulative_r3_repair_terminal_rollouts"],
         "main_text_pages": qa["main_text_pages"],
         "references_begin_page": qa["references_begin_page"],
         "o6_write_channel_cross_writer_supported": o6["claim_boundary"]["write_channel_cross_writer_supported_on_four_sources"],
@@ -189,13 +199,16 @@ def build_supplement(tree: Path, *, source_sha: str, pdf_sha: str) -> None:
         "post_repair_scientific_freeze_decision": post_repair_review["decision"],
         "o6_provider_posts_observable_lower_bound": o6["execution_accounting"]["o6_provider_posts_observable_lower_bound"],
         "known_provider_posts_observable_lower_bound_full_paper": receipt["system_paper_requirements"]["experiment_program_E1_E6"]["E6_efficiency_cost_scale"]["evidence"]["known_provider_posts_observable_lower_bound"],
+        "daytime_story_revision_status": daytime["status"],
+        "daytime_story_revision_pdf_sha256": daytime["current_candidate_pdf_sha256"],
+        "canonical_stable_registry_overwritten": daytime["canonical_stable_registry_overwritten"],
         "scientific_authority": False,
         "experiment_authority": False,
         "submission_authority": False,
     }
     write_json(tree / "CURRENT-PROJECTION.json", projection)
 
-    readme = """# Proxy Reward Memory Variance - Stanford R3 targeted-repair supplement\n\nThis anonymous supplement binds the frozen evidence used by the current manuscript. The terminal chronology is explicit: the initial 3-rollout-per-condition F2 on the full 4x4 support is a committed non-pass (mean absolute effect 0.145833, p=0.160128). F2R1 is a targeted uniform replication after that non-pass: it preserves the same four sources, same four future tasks, same 0.15 practical-effect floor, and same p<0.05 dual gate, forbids source/future selection after outcomes, and increases only fresh replication depth to eight per condition per cell. All 16 initial and confirmatory cells are exposed side by side.\n\nO5 adds a fresh 32-call no-memory branch-location control after a separately recorded execution-validator failure; only the frozen recovery outcomes enter science. O6 adds a sequential GLM-5.3 cross-writer test. The repaired writer stage changes all four paired memories and title sets (mean token-set Jaccard distance 0.737482), but the 256-call terminal replication yields mean absolute success-rate difference 0.140625 with permutation p=0.00012, below the preregistered 0.15 minimum-effect floor. The manuscript therefore does not claim writer-invariant terminal generalization.\n\nA source-code-bound O6 reduction closes the proposed full-bank corruption-mask interaction sweep without new provider calls. Released ReasoningBank retrieves top-1 over label-invariant task-description embeddings (threshold 0.3) and injects only that entry, so conditional on retrieval only the selected source's corruption bit can affect the prompt; nonretrieved mask bits are inert. This reduction does not claim byte-equivalent source-faithful retrieval/interface transport.\n\nA blind independent review pass motivated only a paper-level provenance clarification; its raw reviewer prose is not packaged and is not scientific evidence. The packaged repair receipt records that this clarification adds zero scientific provider calls, zero rollouts, and no claim expansion. The failed parent GLM writer attempt remains execution/operationalization debt with zero scientific authority. Including O5 and O6, the paper has at least 841 observable provider POSTs, excluding the unresolved low-level count of the early 12-unit action witness. No training or local GPU fine-tuning is used.\n\nPrivate raw model text, provider response identifiers, human-authorization artifacts, host paths, credentials, and raw reviewer prose are intentionally excluded. Run `python verify_current_supplement.py` from this directory to validate the numerical, chronology, and claim-boundary contract.\n"""
+    readme = """# Reward Errors Become Persistent State - current candidate supplement\n\nThis anonymous supplement binds the frozen evidence used by the current manuscript, titled **Reward Errors Become Persistent State: A Controlled Intervention in Reward-Conditioned Agent Memory**. The current daytime revision is paper-only: it adds zero scientific provider calls, zero rollouts, and no claim expansion. It reorganizes the manuscript around one causal chain (byte-identical write intervention -> stronger wording reduction -> matched downstream propagation) and moves no-memory, cross-writer, and top-1 retrieval results into interpretation/generalization boundaries.\n\nThe terminal chronology remains explicit. The initial 3-rollout-per-condition stage on the full 4x4 support is a committed non-pass (mean absolute effect 0.145833, p=0.160128). The confirmatory stage is a targeted uniform replication after that non-pass: it preserves the same four sources, four future tasks, 0.15 practical-effect floor, and p<0.05 gate, and increases only fresh replication depth to eight per condition per cell.\n\nThe fresh no-memory control is branch-location only. The GLM-5.3 writer reproduces write-time divergence on all four sources, but its 256-call terminal replication reaches 0.140625 with p=0.00012 and misses the preregistered 0.15 floor; writer-invariant downstream effects are therefore not claimed. A source-code-bound reduction further shows that released ReasoningBank top-1 retrieval over label-invariant task descriptions makes nonretrieved corruption-mask bits inert, so a multi-bit full-bank interaction is not identifiable without changing substrate.\n\nHistorical blind-review receipts are retained only as non-scientific paper-development provenance; raw reviewer prose and provider response identifiers are excluded. The cumulative evidence program has at least 841 observable provider POSTs, but the current daytime story revision adds none. No training or local GPU fine-tuning is used. The stable canonical PaperRegistry is intentionally not overwritten by this candidate before the next scheduled external review. Run `python verify_current_supplement.py` from this directory to validate the numerical, chronology, story, and claim-boundary contract.\n"""
     (tree / "README.md").write_text(readme, encoding="utf-8")
 
     verifier = r'''from pathlib import Path
@@ -205,7 +218,7 @@ E=ROOT/'evidence'
 def L(n): return json.load(open(E/n))
 f0=L('f0-write-channel.json'); f2=L('f2r1-confirmatory.json'); q=L('manuscript-qa.json')
 o6=L('o6-final-evidence.json'); red=L('o6-full-bank-corruption-reduction.json'); r=L('stanford-r3-o6-revision-receipt.json'); fail=L('o6-stage1-failure-asset.json')
-chron=L('f2r1-chronology-receipt.json'); repair=L('blind-review-repair-receipt.json'); post=L('post-repair-blind-review-validation-receipt.json')
+chron=L('f2r1-chronology-receipt.json'); repair=L('blind-review-repair-receipt.json'); post=L('post-repair-blind-review-validation-receipt.json'); day=L('daytime-story-revision-receipt.json'); dayc=L('daytime-story-optimization-contract.json')
 o5=L('o5-manuscript-evidence-public.json')['payload']; s1=L('o6-stage1-r1-result-public.json')['payload']; s2=L('o6-stage2-result-public.json')['payload']; proj=json.load(open(ROOT/'CURRENT-PROJECTION.json'))
 checks=[
  f0['summary']['paired_trajectories_complete']==4,
@@ -222,7 +235,9 @@ checks=[
  o6['cross_writer_comparison']['same_direction_among_nonzero_both']==4, o6['cross_writer_comparison']['opposite_direction_among_nonzero_both']==2,
  o6['execution_accounting']['o6_provider_posts_observable_lower_bound']==273,
  fail['execution_concurrency_failure']['provider_post_count_observable_lower_bound']==9,
- q['status']=='PASS', q['main_text_pages']==9, q['references_begin_page']>=q['main_text_pages'],
+ q['status']=='PASS', q['revision']=='STANFORD-R3-DAYTIME-STORY-OPTIMIZATION-20260824', q['main_text_pages']==9, q['references_begin_page']>=q['main_text_pages'],
+ q['checks']['scoped_title'] is True, q['checks']['single_chain_story'] is True, q['checks']['completion_conditioning_in_setup'] is True, q['checks']['no_research_os_stage_headings_in_main'] is True,
+ q['checks']['paper_story_current_boundary'] is True, q['checks']['paper_reader_current_boundary'] is True,
  q['checks']['o5_fresh_no_memory_control'] is True, q['checks']['o6_cross_writer_boundary'] is True, q['checks']['o6_full_bank_corruption_reduction'] is True, q['checks']['f2r1_chronology_and_uniform_replication'] is True,
  chron['status']=='CHRONOLOGY_AND_UNIFORM_REPLICATION_VERIFIED', chron['relationship']['confirmatory_was_designed_after_initial_nonpass'] is True,
  chron['relationship']['same_4x4_support'] is True, chron['relationship']['source_selection_changed'] is False, chron['relationship']['future_task_selection_changed'] is False,
@@ -230,6 +245,8 @@ checks=[
  repair['review_calls_are_scientific_evidence'] is False, repair['selected_repair']['new_scientific_provider_calls']==0, repair['selected_repair']['new_rollouts']==0, repair['selected_repair']['claim_expansion'] is False,
  post['status']=='POST_REPAIR_BLIND_REVIEW_WEAK_ACCEPT', post['post_repair_strict_review']['recommendation']=='weak_accept', post['post_repair_strict_review']['score_1_to_10']==6,
  post['post_repair_strict_review']['current_narrow_claim_evidence_sufficient'] is True, post['decision']=='FREEZE_SCIENTIFIC_EXPERIMENTS_FOR_CURRENT_NARROW_PAPER', post['review_calls_are_scientific_evidence'] is False,
+ day['status']=='PAPER_ONLY_STORY_OPTIMIZATION_COMPLETE', day['current_candidate_pdf_sha256']==proj['current_pdf_sha256'], day['new_scientific_provider_calls']==0, day['new_rollouts']==0, day['scientific_claims_expanded'] is False, day['external_review_calls']==0, day['canonical_stable_registry_overwritten'] is False,
+ dayc['status']=='FROZEN_PAPER_ONLY_OPTIMIZATION', dayc['new_scientific_provider_calls']==0, dayc['new_rollouts']==0, dayc['claim_expansion'] is False,
  red['status']=='STOP_FULL_BANK_CORRUPTION_MASK_INTERACTION_BY_TOP1_LABEL_INVARIANT_RETRIEVAL_REDUCTION', red['released_mechanism_facts']['default_top_k']==1,
  abs(red['released_mechanism_facts']['default_similarity_threshold']-0.3)<1e-12, red['symbolic_factorization']['multi_memory_interaction_identifiable_under_released_top1_mechanism'] is False,
  red['economy_decision']['new_provider_calls_authorized']==0, red['relationship_to_existing_evidence']['current_fixed_evidence_prompt_byte_equivalent_to_source_reasoningbank_wrapper'] is False,
@@ -241,6 +258,10 @@ checks=[
  proj['f2r1_chronology_verified'] is True, proj['f2r1_confirmatory_after_initial_nonpass'] is True, proj['f2r1_same_4x4_support'] is True, proj['f2r1_gate_relaxed_after_initial'] is False,
  proj['blind_review_repair_new_scientific_calls']==0, proj['blind_review_repair_new_rollouts']==0,
  proj['post_repair_blind_review_recommendation']=='weak_accept', proj['post_repair_blind_review_score']==6, proj['post_repair_scientific_freeze_decision']=='FREEZE_SCIENTIFIC_EXPERIMENTS_FOR_CURRENT_NARROW_PAPER',
+ proj['revision']=='stanford-r3-daytime-story-optimization-20260824', proj['title']=='Reward Errors Become Persistent State: A Controlled Intervention in Reward-Conditioned Agent Memory',
+ proj['new_experiment'] is False, proj['scientific_values_changed'] is False, proj['new_provider_calls_exact']==0, proj['new_provider_calls_observable_lower_bound']==0, proj['new_scientifically_usable_provider_calls']==0,
+ proj['current_revision_new_scientific_provider_calls']==0, proj['current_revision_new_rollouts']==0, proj['current_revision_external_review_calls']==0, proj['canonical_stable_registry_overwritten'] is False,
+ proj['cumulative_r3_repair_provider_calls_observable_lower_bound']==337, proj['cumulative_r3_repair_scientifically_usable_provider_calls']==296, proj['cumulative_r3_repair_terminal_rollouts']==288,
 ]
 print({'checks':len(checks),'passed':sum(checks),'pass':all(checks)})
 sys.exit(0 if all(checks) else 1)
