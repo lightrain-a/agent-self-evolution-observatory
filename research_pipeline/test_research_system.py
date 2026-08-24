@@ -716,7 +716,7 @@ class ResearchSystemTest(unittest.TestCase):
         disabled = [item for item in self.state["components"] if item["status"] == "intentionally-disabled"]
         self.assertEqual(len(disabled), 1)
 
-    def test_asset_first_stri_r15_ready_remains_zero_authority(self) -> None:
+    def test_asset_first_stri_r16_ready_remains_zero_authority(self) -> None:
         stri=self.state["asset_first_stri_paper_ready"]
         self.assertEqual(stri["status"],"READY_NARROW_ICLR")
         self.assertEqual((stri.get("summary") or {}).get("paper_ready"),1)
@@ -751,7 +751,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_v2_passed"],1)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_source_binding"],1)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_completion"],1)
-        self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_files"],39)
+        self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_files"],55)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_evidence_debt"],0)
         self.assertEqual(self.state["summary"]["asset_first_stri_official_qa_checks_passed"],self.state["summary"]["asset_first_stri_official_qa_checks_total"])
         self.assertEqual((self.state["summary"]["asset_first_stri_main_text_pages"],self.state["summary"]["asset_first_stri_main_text_page_limit"]),(9,9))

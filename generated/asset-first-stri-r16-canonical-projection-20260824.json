@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "acceptance_paper_id": "STRI-ICLR2027",
+  "revision": "R16",
+  "status": "R16_CANONICAL_PROJECTION_PUBLISHED",
+  "canonical_base": "622709f4f2a5c58740fc97dbd080c72aa632a988",
+  "integration_source_head": "a6a7bae8b234902ddcf1f864bbee5391bd4b2a4b",
+  "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/R16-MANIFEST.json",
+  "release_manifest_sha256": "82dc75096c1f6a59f35bd549d19d8373880dfc392558d8e17742c121572628f4",
+  "release_manifest_canonical_sha256": "6a37bbf3a6884411435c6b2c895ba4f6306dda74a66e8590a09865d01afe6908",
+  "stable_hashes": {
+    "pdf": "227c0e47bbb4cddd26bb5823f39d56b9978e2a134185a71ba1b3eb66338721c9",
+    "legacy_pdf": "227c0e47bbb4cddd26bb5823f39d56b9978e2a134185a71ba1b3eb66338721c9",
+    "source_zip": "4ec82b977f391840fe5e5a7a88d14e94d79c3d8841d1955017da161a1ad24aae",
+    "supplement_zip": "cdd6272374d7acc37b3620c516fdc1800806ff26233797723fefdbf55a17c5c4",
+    "tex": "4875a301f0af5ccef90a961d824db0f52d01e3f10ea4f83188a56dd60b875502"
+  },
+  "qa": {
+    "paper_qa": "97/97 PASS",
+    "official_iclr_qa": "64/64 PASS",
+    "main_text_pages": 9,
+    "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
+    "supplement_reproduction": "PASS",
+    "supplement_unit_tests": "29/29 PASS",
+    "new_experiment_unit_tests": "17/17 PASS",
+    "paper_quality_referenced_files": 55,
+    "paper_quality_registered_digests": 58,
+    "citation_count": 20
+  },
+  "ledger": {
+    "current_state": "SUBMISSION_READY",
+    "contract_sha256": "30ba1a82ae4547d8e3385f514352da55415b31dcf83b8dabab1f756af34309ad",
+    "gate_clean_submission_ready": true,
+    "paper_preparation_protocol": "1.0+r16-experiment-breadth",
+    "primary_next_action": "NO_INTERNAL_ACTION"
+  },
+  "experimental_breadth": {
+    "practical_package_weight_baselines": 10,
+    "skillrl_budget_sweep": "8 top-k x 12 clone targets x 223 tasks",
+    "skillrouter_external_relevance_analogue": "75 expert queries; core 24 single / 51 multi; R*=1 analogue",
+    "skillsbench_support_qualification": "STOP_79_OF_87_METADATA_AVAILABILITY_MISMATCH"
+  },
+  "other_paper_rows_preserved": true,
+  "claim_expansion": false,
+  "new_model_calls": 0,
+  "new_gpu_runs": 0,
+  "scientific_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "753eda584ed35754ec14a95b7399aac06caf1676807435d160f56fb1945ef3b7"
+}

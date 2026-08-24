@@ -27,7 +27,7 @@
     "abstract_single_paragraph": true,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "resolved_citations": 19,
+    "resolved_citations": 20,
     "overfull_boxes": 0,
     "undefined_citations": 0,
     "undefined_references": 0,
@@ -61,21 +61,21 @@
   },
   "new_gpu_evidence_required_for_current_claim_scope": false,
   "delivery": {
-    "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824",
+    "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824",
     "pdf": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/E1-STRI-R15-canonical-final.pdf",
-      "sha256": "f60b57fc7909ca753926424bf479f9a442f974ecd70ed74981f25093200361c2"
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth.pdf",
+      "sha256": "227c0e47bbb4cddd26bb5823f39d56b9978e2a134185a71ba1b3eb66338721c9"
     },
     "source_zip": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/E1-STRI-R15-canonical-final-source.zip",
-      "sha256": "d22d0c76a16a6e9009768586ac14a66f7718203f0645be91c9d594c61303a97a",
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth-source.zip",
+      "sha256": "4ec82b977f391840fe5e5a7a88d14e94d79c3d8841d1955017da161a1ad24aae",
       "files": 12,
       "isolated_compile_verified": true
     },
     "supplement_zip": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/E1-STRI-R15-canonical-final-supplement.zip",
-      "sha256": "4a28ddc2db92d3f38141ea0496ce6989796ed93e7566b9831c77c2e77c075586",
-      "manifest_sha256": "5b19fc0121ba2e81299ce1716b86621269d8bf118388d4679a32f04b590da53e",
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth-supplement.zip",
+      "sha256": "cdd6272374d7acc37b3620c516fdc1800806ff26233797723fefdbf55a17c5c4",
+      "manifest_sha256": "07cc0b11420c2a7e518fdb23c493da0989203dd419801af54afcff4fbff22e25",
       "isolated_reproduction_verified": true,
       "unit_tests": "29/29 PASS",
       "identity_path_scan": "PASS",
@@ -112,7 +112,7 @@
       "sensitivity",
       "uncertainty"
     ],
-    "content_addressed_files": 39
+    "content_addressed_files": 55
   },
   "visual_evidence": {
     "main_figures": 4,
@@ -225,16 +225,26 @@
     "E7_optional_satisfied": true
   },
   "canonical_reconciliation": {
-    "revision": "R15",
-    "canonical_base": "c021e20d4a78b77b96ff877c4ed3b8e5986b1299",
-    "integration_source_head": "448f2c2473af9286912e8be5d0f94d43c0b1119b",
-    "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/R15-MANIFEST.json",
-    "release_manifest_sha256": "2e6d6731a6b337fa07753a6c5ee9a75f1bfc025d9129f65be53911d8a8119a8e",
+    "revision": "R16",
+    "canonical_base": "622709f4f2a5c58740fc97dbd080c72aa632a988",
+    "integration_source_head": "a6a7bae8b234902ddcf1f864bbee5391bd4b2a4b",
+    "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/R16-MANIFEST.json",
+    "release_manifest_sha256": "82dc75096c1f6a59f35bd549d19d8373880dfc392558d8e17742c121572628f4",
+    "release_manifest_canonical_sha256": "6a37bbf3a6884411435c6b2c895ba4f6306dda74a66e8590a09865d01afe6908",
     "paper_qa": "97/97 PASS",
     "official_iclr_qa": "64/64 PASS",
     "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
+    "paper_quality_content_addressed_files": 55,
     "supplement_reproduction": "PASS",
     "supplement_unit_tests": "29/29 PASS",
+    "experimental_breadth": {
+      "practical_package_weight_baselines": 10,
+      "skillrl_top_k_values": 8,
+      "skillrl_tasks": 223,
+      "skillrl_clone_targets": 12,
+      "skillrouter_expert_queries": 75,
+      "skillsbench_support_qualification": "STOP_79_OF_87_METADATA_AVAILABILITY_MISMATCH"
+    },
     "claim_expansion": false,
     "new_model_calls": 0,
     "new_gpu_runs": 0

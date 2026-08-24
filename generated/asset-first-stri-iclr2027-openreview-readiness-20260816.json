@@ -11,12 +11,12 @@
     "official_iclr2027_style": true,
     "double_blind_pdf": true,
     "main_text_pages": "9/9",
-    "resolved_citations": 19,
+    "resolved_citations": 20,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "paper_pdf_sha256": "f60b57fc7909ca753926424bf479f9a442f974ecd70ed74981f25093200361c2",
-    "paper_source_zip_sha256": "d22d0c76a16a6e9009768586ac14a66f7718203f0645be91c9d594c61303a97a",
-    "anonymous_supplement_zip_sha256": "4a28ddc2db92d3f38141ea0496ce6989796ed93e7566b9831c77c2e77c075586",
+    "paper_pdf_sha256": "227c0e47bbb4cddd26bb5823f39d56b9978e2a134185a71ba1b3eb66338721c9",
+    "paper_source_zip_sha256": "4ec82b977f391840fe5e5a7a88d14e94d79c3d8841d1955017da161a1ad24aae",
+    "anonymous_supplement_zip_sha256": "cdd6272374d7acc37b3620c516fdc1800806ff26233797723fefdbf55a17c5c4",
     "supplement_reproduction": "PASS",
     "supplement_unit_tests": "29/29 PASS",
     "final_independent_review": "READY_TO_SUBMIT",
@@ -49,7 +49,13 @@
     "r15_canonical_reconciliation": true,
     "claim_expansion_for_r15": false,
     "new_model_calls_for_r15": 0,
-    "new_gpu_runs_for_r15": 0
+    "new_gpu_runs_for_r15": 0,
+    "paper_quality_content_addressed_files": 55,
+    "experimental_breadth": "10 package-weight baselines; no-refit heldout transfer; SkillRL 8-budget sweep x 12 clones x 223 tasks; SkillRouter 75-query relevance analogue; SkillsBench support qualification STOP",
+    "r16_canonical_reconciliation": true,
+    "claim_expansion_for_r16": false,
+    "new_model_calls_for_r16": 0,
+    "new_gpu_runs_for_r16": 0
   },
   "human_signoff_required": [
     {
@@ -86,9 +92,9 @@
     }
   ],
   "submission_files": {
-    "pdf": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/E1-STRI-R15-canonical-final.pdf",
-    "source_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/E1-STRI-R15-canonical-final-source.zip",
-    "supplement_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/E1-STRI-R15-canonical-final-supplement.zip"
+    "pdf": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth.pdf",
+    "source_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth-source.zip",
+    "supplement_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth-supplement.zip"
   },
   "next_action": "Human-author signoff only. Do not reopen dynamic P0, launch GPU experiments, broaden N1-N3, or restart idea search for this paper unless new independently qualified evidence or a direct collision invalidates the current narrow submission.",
   "scientific_authority": false

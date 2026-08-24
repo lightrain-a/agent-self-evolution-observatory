@@ -1,7 +1,7 @@
 {
   "schema_version": "1.6",
-  "generated_at": "2026-08-24T05:27:36+00:00",
-  "source_revision": "03f2e6eef0259067e5cc6a2282a8fc9905a5a652",
+  "generated_at": "2026-08-24T06:25:24+00:00",
+  "source_revision": "a6a7bae8b234902ddcf1f864bbee5391bd4b2a4b",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -129,7 +129,7 @@
       "new_gpu_evidence_required": false,
       "paper_quality_v2_passed": true,
       "paper_quality_content_addressed_completion": true,
-      "paper_quality_content_addressed_files": 39,
+      "paper_quality_content_addressed_files": 55,
       "paper_quality_evidence_debt": 0,
       "paper_quality_missing_ids": [],
       "paper_quality_schema_version": "2.1",
@@ -304,7 +304,7 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 49,
+        "events": 54,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
@@ -373,8 +373,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r15-canonical-reconciliation",
-        "receipt_sha256": "70624e8adf38b204bbdd8a27732ce664f65729ed4d14bbe198f11230f822de56",
+        "protocol_version": "1.0+r16-experiment-breadth",
+        "receipt_sha256": "bca4e14deea39060ffce0ceafa994b0267f9ac9cb020e52f6e89bdf000bd5fcd",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -410,7 +410,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "b20e475406fc6879181a057442d1aa6e1267e0f96e5e83b25b015fdd41f0b58b",
+        "receipt_sha256": "7edd5ded5fe454556259ccdf94084fcb80ff8503a94a90ea995f2350905f8f2a",
         "blockers": []
       },
       "latest_transition": {
