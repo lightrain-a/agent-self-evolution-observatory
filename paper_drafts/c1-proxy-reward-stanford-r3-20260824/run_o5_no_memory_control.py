@@ -15,6 +15,7 @@ EXPECTED_DESIGN_SHA256 = "4ba22e9dee9a753e6a2cf6e136259c0763f12f9503aef2ccc75285
 EXPECTED_FUTURE_TASKS = ["164", "385", "387", "388"]
 EXPECTED_CALLS = 32
 EXPECTED_MODEL = "doubao-seed-2.0-mini"
+EXPECTED_RESOLVED_MODEL = "doubao-seed-2-0-mini-260215"
 EXPECTED_BASE_URL = "https://ark.cn-beijing.volces.com/api/plan/v3"
 
 
@@ -238,10 +239,24 @@ def _run_one(*, client, error_type, model_cfg: dict[str, Any], task: str, rollou
             store=True,
             allow_thinking_compatibility_fallback=False,
         )
+        answer = str(response.get("text") or "").strip()
+        response_archive = {
+            **base,
+            "response_id": response.get("response_id"),
+            "requested_model_returned": response.get("requested_model"),
+            "resolved_model": response.get("resolved_model"),
+            "status": response.get("status"),
+            "usage": response.get("usage") or {},
+            "answer": answer,
+            "answer_sha256": hashlib.sha256(answer.encode("utf-8")).hexdigest() if answer else "",
+            "thinking_requested": response.get("thinking_requested"),
+            "thinking_effective": response.get("thinking_effective"),
+            "thinking_compatibility_fallback": response.get("thinking_compatibility_fallback"),
+        }
+        atomic_json(private_root / "provider-responses" / f"{stage}.json", response_archive)
         require(response.get("thinking_compatibility_fallback") is False, "provider silently applied thinking fallback")
         require(str(response.get("requested_model")) == EXPECTED_MODEL, "requested model drift in response")
-        require(str(response.get("resolved_model")) == EXPECTED_MODEL, f"resolved model drift: {response.get('resolved_model')}")
-        answer = str(response.get("text") or "").strip()
+        require(str(response.get("resolved_model")) == EXPECTED_RESOLVED_MODEL, f"resolved model drift: {response.get('resolved_model')}")
         require(bool(answer), "provider returned empty assistant text")
         score, checks = _must_include_score(answer, list(data["reference_answers"]))
         private_payload = {
