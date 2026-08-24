@@ -23,6 +23,9 @@ POLICY: dict[str, Any] = {
     "writing_must_prefer_clear_direct_concrete_language": True,
     "next_material_revision_should_bind_iclr_agent_paper_template_v1": True,
     "iclr_template_experiment_lane_planning_does_not_authorize_execution": True,
+    "material_story_revision_after_results_requires_result_analysis": True,
+    "result_analysis_must_separate_observed_supported_not_supported_and_failure_layer": True,
+    "stopped_method_extension_may_redirect_paper_archetype_without_invalidating_independent_evidence": True,
 }
 
 CURRENT_PAPER_IDS = (
@@ -182,6 +185,21 @@ def guidance_payload() -> dict[str, Any]:
             "binding_required_on_next_material_revision": True,
             "experiment_lane_planning_is_not_execution": True,
         },
+        "result_interpretation_rule": {
+            "required_before_material_story_revision_after_new_results": True,
+            "required_fields": [
+                "observed findings bound to evidence",
+                "estimand / scientific object",
+                "positive implication",
+                "negative boundary / what is not established",
+                "strongest alternative explanation and disposition",
+                "typed failure layer for HOLD/STOP",
+                "does-not-imply boundary",
+                "next scientific action and reusable lesson"
+            ],
+            "paper_routing_rule": "A method-extension STOP changes only the contribution layer it actually tests. If independently established phenomenon/mechanism/measurement evidence survives, select the appropriate paper archetype instead of manufacturing another method.",
+            "authority": {"scientific": False, "experiment": False, "gpu": False}
+        },
         "advisor_assessment": {
             "problem_value": "WORTH_PURSUING",
             "method_direction": "PLAUSIBLE_FOR_THE_STATED_PROBLEM",
@@ -277,7 +295,7 @@ def research_memory_entry() -> dict[str, Any]:
         "principle_update_allowed": False,
         "reopen_condition": "",
         "opposite_search_seed": "",
-        "reusable_precheck": f"Bind {ICLR_TEMPLATE_ID} v{ICLR_TEMPLATE_VERSION} on the next material revision and fill E1-E6 as experiment-planning slots (or archetype-justified N/A); planning never authorizes execution. Then verify four dimensions: problem necessity/challenge and related-work map; method intuition/design principles/load-bearing details; experiments inspired by closest-work protocols and method-specific predictions; and plain, direct, reader-comprehensible writing. Treat missing depth as manuscript-development debt, not a scientific STOP.",
+        "reusable_precheck": f"Bind {ICLR_TEMPLATE_ID} v{ICLR_TEMPLATE_VERSION} on the next material revision and fill E1-E6 as experiment-planning slots (or archetype-justified N/A); planning never authorizes execution. After any new result, first bind a result-analysis receipt that separates observed evidence, estimand, positive implication, negative boundary, strongest alternative explanation, typed failure layer, does-not-imply scope, next action, and reusable lesson. Then verify four dimensions: problem necessity/challenge and related-work map; method intuition/design principles/load-bearing details; experiments inspired by closest-work protocols and method-specific predictions; and plain, direct, reader-comprehensible writing. Treat missing depth as manuscript-development debt, not a scientific STOP, and treat a stopped method extension as a contribution-layer routing event rather than automatic whole-paper failure.",
         "source_refs": ["human-advisor-guidance:2026-08-23"],
         "source_artifact": GUIDANCE_ID,
         "guidance": payload,

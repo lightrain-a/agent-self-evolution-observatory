@@ -105,6 +105,7 @@ from .manuscript_integrity_audit import build_manuscript_integrity_layer_state
 from .research_candidate_portfolio import build_research_candidate_portfolio
 from .research_harness_assurance import build_research_harness_assurance
 from .research_memory_wiki import build_research_memory_wiki, write_research_memory_wiki
+from .result_analysis import build_result_analysis_state, result_analysis_failure_assets
 from .longitudinal_safety_discovery_cycle import load_discovery_cycle
 from .longitudinal_safety_post_race_triage import load_post_race_triage, validate_post_race_triage, write_post_race_triage
 from .longitudinal_safety_material_child_race import load_material_child_race, validate_material_child_race, write_material_child_race
@@ -749,13 +750,14 @@ def build_research_system_state() -> dict[str, Any]:
     p0_decision_ledger = build_p0_decision_ledger(p0_admission, p0_offline_qualification, human_terminal_ideas, four_direction_iteration)
     p0_decision_ledger_public = {"summary": p0_decision_ledger["summary"], "policy": p0_decision_ledger["policy"]}
     scientific_meta_trace = build_scientific_meta_trace(pre_experiment_compiler, principle_layer, experiment_iteration, p0_decision_ledger_public)
+    result_analysis = build_result_analysis_state()
     failure_asset_library = build_failure_asset_library(
         experiment_iteration,
         p0_economy_public,
         paper_first_post_c2,
         paper_first_p0_f0,
         principle_layer,
-        additional_assets=_load_external_failure_assets(),
+        additional_assets=_load_external_failure_assets() + result_analysis_failure_assets(result_analysis),
     )
     live_ledger_index = build_paper_ledger_index(experiment_data_root)
     live_ledger_summary = live_ledger_index.get("summary") or {}
@@ -789,6 +791,7 @@ def build_research_system_state() -> dict[str, Any]:
         generator_state=paper_first_problem_generator,
         paper_ledger_index=paper_ledger_index,
         discovery_cycle=longitudinal_safety_discovery_cycle,
+        result_analysis=result_analysis,
     )
     scientific_research_graph = build_scientific_research_graph(
         evidence_graph=evidence_graph,
@@ -1215,6 +1218,11 @@ def build_research_system_state() -> dict[str, Any]:
             "research_memory_contribution_lesson_templates":int(research_memory_wiki["summary"].get("contribution_aware_lesson_templates") or 0),
             "research_memory_certainty_audit_pass":1 if (research_memory_wiki.get("certainty_audit") or {}).get("status")=="PASS" else 0,
             "research_memory_lint_warnings":research_memory_wiki["lint"]["summary"]["warnings"],
+            "result_analysis_records":result_analysis["summary"]["analyses"],
+            "result_analysis_terminal_results":result_analysis["summary"]["terminal_results_analyzed"],
+            "result_analysis_discovery_lessons":result_analysis["summary"]["discovery_lessons"],
+            "result_analysis_failure_assets":result_analysis["summary"]["failure_assets"],
+            "result_analysis_errors":result_analysis["summary"]["errors"],
             "post_race_ranked_failure_leaves":int((longitudinal_safety_post_race_triage.get("summary") or {}).get("ranked_failure_leaves") or 0),
             "post_race_current_survivors":int((longitudinal_safety_post_race_triage.get("summary") or {}).get("current_post_race_survivors") or 0),
             "post_race_material_child_required":int((longitudinal_safety_post_race_triage.get("summary") or {}).get("material_child_required") or 0),
@@ -1405,6 +1413,7 @@ def build_research_system_state() -> dict[str, Any]:
         "principle_layer":principle_layer,
         "scientific_meta_trace":scientific_meta_trace,
         "scientific_research_graph":scientific_research_graph,
+        "result_analysis":result_analysis,
         "research_memory_wiki":research_memory_wiki,
         "longitudinal_safety_post_race_triage":longitudinal_safety_post_race_triage,
         "longitudinal_safety_material_child_race":longitudinal_safety_material_child_race,
@@ -1797,6 +1806,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"paper-first-p0-f0", "pass":state["paper_first_p0_f0"]["summary"].get("ideas") == 4 and state["paper_first_p0_f0"]["summary"].get("quarantined") == 4 and state["paper_first_p0_f0"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_p0_f0"]["summary"].get("method_fail_authorized") == 0 and state["paper_first_p0_f0"]["policy"].get("unauthorized_execution_is_preserved_as_diagnostic_not_scientific_authority") is True, "detail":state["paper_first_p0_f0"]["summary"]},
         {"key":"paper-first-premature-method-diagnostics", "pass":state["paper_first_premature_method_diagnostics"]["summary"].get("directions") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("completed_diagnostics") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("same_information_reducibility_findings") == 2 and state["paper_first_premature_method_diagnostics"]["summary"].get("scientifically_authorized") == 0 and state["paper_first_premature_method_diagnostics"]["summary"].get("p0_lifecycle_mutations") == 0 and state["paper_first_premature_method_diagnostics"]["authority"].get("cannot_retroactively_authorize") is True, "detail":state["paper_first_premature_method_diagnostics"]["summary"]},
         {"key":"research-learning-loop", "pass":state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"] and state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"] and state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"] and state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"] and state["experiment_value_scheduler"]["policy"]["scheduler_cannot_authorize_execution"] and state["research_system_replay"]["summary"]["failed"] == 0 and state["external_system_learning"]["policy"]["every_candidate_design_requires_local_gap_test"], "detail":{"meta":state["scientific_meta_trace"]["summary"],"failure_assets":state["failure_asset_library"]["summary"],"scheduler":state["experiment_value_scheduler"]["summary"],"replay":state["research_system_replay"]["summary"],"external":state["external_system_learning"]["summary"]}},
+        {"key":"result-analysis-distillation", "pass":state["result_analysis"].get("status")=="RESULT_ANALYSIS_DISTILLED" and state["result_analysis"].get("scientific_authority") is False and int((state["result_analysis"].get("summary") or {}).get("analyses") or 0)>=1 and int((state["result_analysis"].get("summary") or {}).get("terminal_results_analyzed") or 0)==int((state["result_analysis"].get("summary") or {}).get("analyses") or 0) and int((state["result_analysis"].get("summary") or {}).get("errors") or 0)==0 and (state["result_analysis"].get("policy") or {}).get("raw_result_artifact_is_not_result_analysis") is True and (state["result_analysis"].get("policy") or {}).get("terminal_result_requires_interpretation_before_distillation") is True and (state["result_analysis"].get("policy") or {}).get("analysis_must_type_failure_layer_before_terminal_routing") is True and (state["result_analysis"].get("policy") or {}).get("support_or_qualification_failure_is_not_method_effect_failure") is True and (state["result_analysis"].get("policy") or {}).get("post_outcome_validator_invention_cannot_rescue_a_failed_gate") is True, "detail":state["result_analysis"].get("summary") or {}},
         {"key":"research-memory-wiki", "pass":state["research_memory_wiki"].get("status")=="MEMORY_COMPILED" and state["research_memory_wiki"].get("scientific_authority") is False and int(((state["research_memory_wiki"].get("lint") or {}).get("summary") or {}).get("errors") or 0)==0 and (state["research_memory_wiki"].get("policy") or {}).get("transient_operational_noise_is_not_prompt_eligible") is True and (state["research_memory_wiki"].get("policy") or {}).get("query_pack_never_relaxes_downstream_gates") is True and (state["research_memory_wiki"].get("policy") or {}).get("paper_design_reserves_at_least_one_review_lesson_when_available") is True and (str(state["research_memory_wiki"].get("schema_version") or "1.0")<"1.2" or ((state["research_memory_wiki"].get("certainty_audit") or {}).get("status")=="PASS" and (state["research_memory_wiki"].get("policy") or {}).get("automatic_memory_to_skill_promotion_is_forbidden") is True)), "detail":{"summary":state["research_memory_wiki"].get("summary"),"lint":(state["research_memory_wiki"].get("lint") or {}).get("summary"),"certainty_audit":state["research_memory_wiki"].get("certainty_audit") or {}}},
         {"key":"longitudinal-post-race-triage", "pass":not validate_post_race_triage(state.get("longitudinal_safety_post_race_triage") or {}) and int(((state.get("longitudinal_safety_post_race_triage") or {}).get("summary") or {}).get("current_post_race_survivors") or 0)==0 and int(((state.get("longitudinal_safety_post_race_triage") or {}).get("summary") or {}).get("problem_gate_eligible") or 0)==0 and int(((state.get("longitudinal_safety_post_race_triage") or {}).get("summary") or {}).get("provider_calls_authorized") or 0)==0 and (state.get("longitudinal_safety_post_race_triage") or {}).get("scientific_authority") is False, "detail":{"status":(state.get("longitudinal_safety_post_race_triage") or {}).get("status"),"summary":(state.get("longitudinal_safety_post_race_triage") or {}).get("summary")}},
         {"key":"longitudinal-material-child-race", "pass":not validate_material_child_race(state.get("longitudinal_safety_material_child_race") or {}) and int(((state.get("longitudinal_safety_material_child_race") or {}).get("summary") or {}).get("survivors") or 0)==0 and int(((state.get("longitudinal_safety_material_child_race") or {}).get("summary") or {}).get("debate_eligible") or 0)==0 and int(((state.get("longitudinal_safety_material_child_race") or {}).get("summary") or {}).get("provider_calls_authorized") or 0)==0 and (state.get("longitudinal_safety_material_child_race") or {}).get("scientific_authority") is False, "detail":{"status":(state.get("longitudinal_safety_material_child_race") or {}).get("status"),"summary":(state.get("longitudinal_safety_material_child_race") or {}).get("summary")}},
@@ -2527,6 +2537,11 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"]: errors.append("active scientific authority must never decay as memory")
     if not state["failure_asset_library"]["policy"]["assets_are_retrieved_before_new_experiment_design"]: errors.append("failure assets must be retrieved before new experiment design")
     if not state["failure_asset_library"]["policy"]["institutional_memory_requires_scope_and_effectiveness_tracking"]: errors.append("institutional failure memory must track scope and reuse effectiveness")
+    result_analysis=state.get("result_analysis") or {};result_policy=result_analysis.get("policy") or {};result_summary=result_analysis.get("summary") or {}
+    if result_analysis.get("status")!="RESULT_ANALYSIS_DISTILLED" or result_analysis.get("scientific_authority") is not False or int(result_summary.get("errors") or 0)!=0: errors.append("terminal result analysis must be structurally distilled with zero authority before memory projection")
+    if int(result_summary.get("analyses") or 0)<1 or int(result_summary.get("terminal_results_analyzed") or 0)!=int(result_summary.get("analyses") or 0): errors.append("registered terminal results must all have completed result analysis")
+    if result_policy.get("raw_result_artifact_is_not_result_analysis") is not True or result_policy.get("terminal_result_requires_interpretation_before_distillation") is not True or result_policy.get("analysis_must_type_failure_layer_before_terminal_routing") is not True: errors.append("result analysis must separate artifact ingestion from typed scientific interpretation")
+    if result_policy.get("support_or_qualification_failure_is_not_method_effect_failure") is not True or result_policy.get("method_extension_stop_does_not_invalidate_independent_measurement_evidence") is not True or result_policy.get("post_outcome_validator_invention_cannot_rescue_a_failed_gate") is not True: errors.append("result analysis must preserve failure-layer scope and forbid post-outcome rescue validators")
     memory_wiki=state.get("research_memory_wiki") or {};memory_policy=memory_wiki.get("policy") or {};memory_lint=memory_wiki.get("lint") or {};memory_summary=memory_wiki.get("summary") or {}
     if memory_wiki.get("status")!="MEMORY_COMPILED" or memory_wiki.get("scientific_authority") is not False or int((memory_lint.get("summary") or {}).get("errors") or 0)!=0: errors.append("research memory wiki must compile with zero lint errors and zero scientific authority")
     if memory_policy.get("wiki_is_compiled_from_canonical_artifacts_not_a_second_source_of_truth") is not True or memory_policy.get("transient_operational_noise_is_not_prompt_eligible") is not True or memory_policy.get("query_pack_never_relaxes_downstream_gates") is not True or memory_policy.get("paper_design_reserves_at_least_one_review_lesson_when_available") is not True: errors.append("research memory wiki must remain a derived zero-authority query-pack layer with a bounded Paper Design reviewer-memory reserve")
@@ -2549,9 +2564,12 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     embedded_failure_assets=state.get("failure_asset_library") or {};embedded_failure_summary=embedded_failure_assets.get("summary") or {}
     embedded_failure_signatures={str(row.get("signature") or "") for row in embedded_failure_assets.get("assets") or []}
     external_failure_signatures={str(row.get("signature") or "") for row in _load_external_failure_assets()}
+    result_failure_signatures={str(row.get("signature") or "") for row in result_analysis_failure_assets(result_analysis)}
     if not external_failure_signatures.issubset(embedded_failure_signatures): errors.append("failure asset projection must include every canonical external failure-memory input")
+    if not result_failure_signatures.issubset(embedded_failure_signatures): errors.append("failure asset projection must include every distilled result-analysis failure asset")
     if int(embedded_failure_summary.get("unique_signatures") or 0)!=len(embedded_failure_signatures): errors.append("failure asset unique-signature summary must match embedded assets")
     if int(memory_summary.get("failure_assets") or 0)!=int(embedded_failure_summary.get("unique_signatures") or 0) or int((memory_wiki.get("source_manifest") or {}).get("failure_assets") or 0)!=int(embedded_failure_summary.get("assets") or 0): errors.append("research memory failure-asset projection must match failure asset library")
+    if int((memory_wiki.get("source_manifest") or {}).get("result_analysis_records") or 0)!=int(result_summary.get("analyses") or 0) or int((memory_wiki.get("source_manifest") or {}).get("result_analysis_lessons") or 0)!=int(result_summary.get("discovery_lessons") or 0): errors.append("research memory must project every distilled result analysis and discovery lesson")
     if int((state.get("summary") or {}).get("research_memory_entries") or 0)!=int(memory_summary.get("entries") or 0): errors.append("research-system memory-entry summary must match embedded research memory")
     if int((state.get("summary") or {}).get("failure_assets") or 0)!=int(embedded_failure_summary.get("assets") or 0): errors.append("research-system failure-asset summary must match embedded failure asset library")
     post_race_triage=state.get("longitudinal_safety_post_race_triage") or {};post_race_summary=post_race_triage.get("summary") or {}

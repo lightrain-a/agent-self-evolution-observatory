@@ -350,14 +350,14 @@
     "principle_falsifications": 0,
     "protocol_validity_pass": 4,
     "meta_trace_unresolved": 2,
-    "scientific_research_graph_nodes": 622,
-    "scientific_research_graph_edges": 701,
-    "research_memory_entries": 92,
-    "research_memory_certainty_typed": 92,
-    "research_memory_skill_candidates": 29,
+    "scientific_research_graph_nodes": 624,
+    "scientific_research_graph_edges": 702,
+    "research_memory_entries": 96,
+    "research_memory_certainty_typed": 96,
+    "research_memory_skill_candidates": 33,
     "research_memory_contribution_lesson_templates": 2,
     "research_memory_certainty_audit_pass": 1,
-    "research_memory_lint_warnings": 14,
+    "research_memory_lint_warnings": 15,
     "post_race_ranked_failure_leaves": 9,
     "post_race_current_survivors": 0,
     "post_race_material_child_required": 3,
@@ -377,7 +377,7 @@
     "cross_failure_orthogonal_carriers": 3,
     "cross_failure_orthogonal_survivors": 0,
     "cross_failure_orthogonal_debate_eligible": 0,
-    "failure_assets": 9,
+    "failure_assets": 10,
     "value_scheduler_candidates": 6,
     "research_replay_passed": 8,
     "external_systems_reviewed": 46,
@@ -498,7 +498,12 @@
     "paper_first_pre_f0_execution_control_status": "PRE_F0_FALSIFIER_EXECUTION_CONTROL_LOCKED",
     "paper_first_pre_f0_execution_control_requests": 1,
     "paper_first_pre_f0_falsifier_execution_authorized": 0,
-    "paper_first_pre_f0_authorization_request_status": "AWAITING_EXPLICIT_EXTERNAL_HUMAN_EXECUTION_AUTHORITY"
+    "paper_first_pre_f0_authorization_request_status": "AWAITING_EXPLICIT_EXTERNAL_HUMAN_EXECUTION_AUTHORITY",
+    "result_analysis_records": 1,
+    "result_analysis_terminal_results": 1,
+    "result_analysis_discovery_lessons": 3,
+    "result_analysis_failure_assets": 1,
+    "result_analysis_errors": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -43274,13 +43279,186 @@
         "high_risk": 1,
         "advisory_or_diagnostic": 3,
         "dynamic_registration_policy": "schema+version+smoke required",
-        "skill_packs_catalogued_not_installed": 8,
+        "skill_packs_catalogued_not_installed": 0,
+        "external_skill_packs_reviewed": 8,
+        "external_skill_packs_distilled": 8,
+        "canonical_internal_skills": 7,
+        "canonical_internal_skill_ids": [
+          "source-evidence-integrity",
+          "statistical-analysis-core",
+          "causal-empirical-analysis",
+          "ai-ml-experiment-engineering",
+          "signal-scientific-computing",
+          "formal-math-verification",
+          "evidence-first-manuscript"
+        ],
+        "external_skill_runtime_dependencies": 0,
+        "discarded_external_skill_surfaces": 23,
         "skill_admission_contract_installed": 1,
         "skill_router_contract_installed": 1,
-        "automatic_skill_authority": 0
+        "internal_skill_router_installed": 1,
+        "automatic_skill_authority": 0,
+        "internal_skill_ids": [
+          "source-evidence-integrity",
+          "statistical-analysis-core",
+          "causal-empirical-analysis",
+          "ai-ml-experiment-engineering",
+          "signal-scientific-computing",
+          "formal-math-verification",
+          "evidence-first-manuscript"
+        ],
+        "external_distillation": [
+          {
+            "source_pack": "Academic Research Skills",
+            "decision": "DISTILLED",
+            "kept": [
+              "reference existence/provenance checks",
+              "atomic research artifacts",
+              "reviewer reports but does not edit"
+            ],
+            "discarded": [
+              "external project scaffold",
+              "parallel end-to-end research orchestration",
+              "duplicate paper workflow"
+            ],
+            "internal_skills": [
+              "source-evidence-integrity",
+              "evidence-first-manuscript"
+            ]
+          },
+          {
+            "source_pack": "Scientific Agent Skills",
+            "decision": "DISTILLED",
+            "kept": [
+              "assumption-aware statistics",
+              "effect size and uncertainty",
+              "scientific-computing and visualization checks"
+            ],
+            "discarded": [
+              "large unrelated domain catalog",
+              "package-specific tutorials that do not encode a scientific invariant"
+            ],
+            "internal_skills": [
+              "statistical-analysis-core",
+              "signal-scientific-computing"
+            ]
+          },
+          {
+            "source_pack": "nature-skills",
+            "decision": "DISTILLED",
+            "kept": [
+              "evidence-first drafting",
+              "claim-evidence adjacency",
+              "verb strength calibrated to evidence",
+              "missing-input placeholders",
+              "adversarial self-review"
+            ],
+            "discarded": [
+              "Nature-specific stylistic imitation as a scientific criterion",
+              "duplicate submission orchestration",
+              "generic prose polishing with no research invariant"
+            ],
+            "internal_skills": [
+              "evidence-first-manuscript"
+            ]
+          },
+          {
+            "source_pack": "Claude Scholar",
+            "decision": "DISTILLED",
+            "kept": [
+              "reference metadata verification",
+              "pre-submission deterministic checks",
+              "math/figure verification principle"
+            ],
+            "discarded": [
+              "plugin command surface",
+              "provider-specific installation workflow",
+              "duplicate manuscript critique workflow"
+            ],
+            "internal_skills": [
+              "source-evidence-integrity",
+              "formal-math-verification"
+            ]
+          },
+          {
+            "source_pack": "Auto-Empirical Research Skills",
+            "decision": "DISTILLED",
+            "kept": [
+              "estimand-first causal design",
+              "identification assumptions",
+              "placebo/robustness checks",
+              "numeric benchmark mindset"
+            ],
+            "discarded": [
+              "thousands of vendored prompt skills",
+              "paper-workflow meta-orchestrator",
+              "domain methods not requested by the current task"
+            ],
+            "internal_skills": [
+              "causal-empirical-analysis",
+              "statistical-analysis-core"
+            ]
+          },
+          {
+            "source_pack": "AI-Research-SKILLs",
+            "decision": "DISTILLED",
+            "kept": [
+              "reproducible ML training/evaluation practice",
+              "evaluation contamination checks",
+              "resource/runtime provenance",
+              "domain-specific engineering troubleshooting"
+            ],
+            "discarded": [
+              "autoresearch orchestrator",
+              "install-all behavior",
+              "paper/idea authority",
+              "continuous-loop authority"
+            ],
+            "internal_skills": [
+              "ai-ml-experiment-engineering"
+            ]
+          },
+          {
+            "source_pack": "codex-claude-academic-skills",
+            "decision": "DISTILLED",
+            "kept": [
+              "MATLAB/Python scientific computing",
+              "signal-processing numerical checks",
+              "unit/sample-rate/frequency-domain discipline"
+            ],
+            "discarded": [
+              "office-document skill",
+              "duplicate research-writing skill",
+              "generic formatting helpers"
+            ],
+            "internal_skills": [
+              "signal-scientific-computing"
+            ]
+          },
+          {
+            "source_pack": "Research Paper Writing Skills",
+            "decision": "DISTILLED",
+            "kept": [
+              "section/paragraph argument flow",
+              "first-use terminology explanation",
+              "claim-support alignment",
+              "reviewer-facing self-check"
+            ],
+            "discarded": [
+              "standalone writer orchestration",
+              "style rules already covered by evidence-first manuscript policy"
+            ],
+            "internal_skills": [
+              "evidence-first-manuscript"
+            ]
+          }
+        ]
       },
       "manuscript_integrity_layer": {
         "audit_surfaces": 7,
+        "internal_skill_routes": 3,
+        "internal_skill_routes_ready": 3,
+        "external_skill_runtime_dependencies": 0,
         "deterministic_before_agentic_review": 1,
         "automatic_scientific_authority": 0,
         "automatic_experiment_authority": 0,
@@ -43351,8 +43529,8 @@
       "control_plane_can_grant_gpu": false
     },
     "failure_snapshot": {
-      "assets": 9,
-      "unique_signatures": 9,
+      "assets": 10,
+      "unique_signatures": 10,
       "principle_dead_ends": 0,
       "economy_dead_ends": 0,
       "experimental_stops_not_dead_ends": 23
@@ -43392,7 +43570,10 @@
       "reviewer_issue_papers": 5,
       "registered_papers": 5,
       "submission_ready_papers": 4,
-      "catalogued_skill_packs": 8,
+      "catalogued_skill_packs": 0,
+      "external_skill_packs_distilled": 8,
+      "canonical_internal_skills": 7,
+      "external_skill_runtime_dependencies": 0,
       "post_draft_integrity_surfaces": 7,
       "automatic_scientific_authority": 0,
       "automatic_experiment_authority": 0,
@@ -43700,8 +43881,8 @@
       "referenced_not_duplicated": true
     },
     "summary": {
-      "nodes": 622,
-      "edges": 701,
+      "nodes": 624,
+      "edges": 702,
       "node_kinds": {
         "candidate_problem": 3,
         "claim": 87,
@@ -43709,8 +43890,8 @@
         "dataset": 15,
         "domain": 13,
         "experiment": 78,
-        "failure_asset": 9,
-        "idea": 59,
+        "failure_asset": 10,
+        "idea": 60,
         "model": 6,
         "paper": 278,
         "paper-alias": 64,
@@ -43719,7 +43900,7 @@
       "relations": {
         "belongs-to": 29,
         "covers-domain": 72,
-        "diagnoses": 9,
+        "diagnoses": 10,
         "evaluates-on": 77,
         "nearest-work": 88,
         "principle_for": 2,
@@ -43732,13 +43913,13 @@
       },
       "base_nodes": 500,
       "base_edges": 612,
-      "overlay_nodes": 122,
-      "new_overlay_nodes": 122,
-      "overlay_edges": 89,
+      "overlay_nodes": 124,
+      "new_overlay_nodes": 124,
+      "overlay_edges": 90,
       "candidate_nodes": 3,
       "experiment_nodes": 78,
       "principle_nodes": 2,
-      "failure_asset_nodes": 9,
+      "failure_asset_nodes": 10,
       "scientific_closure_nodes": 0,
       "principle_closure_edges": 0
     },
@@ -43748,7 +43929,7 @@
         "kind": "candidate_problem",
         "label": "Reset-semantic substrate corruption as a convergent failure regime in repeated bounded self-improvement",
         "candidate_id": "PORT-006",
-        "stage": "PRE_F0_EVIDENCE_ACQUISITION",
+        "stage": "PRE_F0_ADJUDICATION",
         "portfolio_state": "SEARCH_HOLD",
         "source": "research_candidate_portfolio",
         "scientific_authority": false
@@ -44443,6 +44624,15 @@
         "scientific_authority": false
       },
       {
+        "id": "failure:66b801c1f9359fc0",
+        "kind": "failure_asset",
+        "label": "method_realization:evidence-authority-qualification-unavailable",
+        "affected_layer": "method_realization",
+        "does_not_imply": "method-effect failure, core-principle failure, measurement invalidity, or global impossibility of evidence-gated authority",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
         "id": "failure:6f0ef0212a9e976a",
         "kind": "failure_asset",
         "label": "operationalization:decision-context-support-mismatch",
@@ -44477,6 +44667,12 @@
         "does_not_imply": "P0 support PASS/HOLD, method failure, principle failure, or any retrospective scientific authority from the executed rows",
         "source": "failure_asset_library",
         "scientific_authority": false
+      },
+      {
+        "id": "idea:C1-CBRG",
+        "kind": "idea",
+        "label": "C1-CBRG",
+        "source": "failure_asset_library"
       },
       {
         "id": "idea:MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX",
@@ -45118,13 +45314,18 @@
         "source": "failure:3b8c706add40a9f3",
         "target": "idea:V19R-003-BOUNDARY-REPAIR-R2",
         "relation": "diagnoses"
+      },
+      {
+        "source": "failure:66b801c1f9359fc0",
+        "target": "idea:C1-CBRG",
+        "relation": "diagnoses"
       }
     ],
     "scientific_authority": false
   },
   "research_memory_wiki": {
     "schema_version": "1.2",
-    "generated_at": "2026-08-24T10:43:43+00:00",
+    "generated_at": "2026-08-24T17:09:27+00:00",
     "status": "MEMORY_COMPILED",
     "policy": {
       "schema_version": "1.2",
@@ -45175,37 +45376,39 @@
     "source_manifest": {
       "search_memory_closed_objects": 43,
       "search_memory_hold_objects": 9,
-      "failure_assets": 9,
+      "failure_assets": 10,
       "candidate_portfolio_visible": 3,
       "unresolved_principles": 2,
       "generator_blocked_attempts": 0,
       "paper_review_ledgers": 5,
-      "discovery_failure_lessons": 20
+      "discovery_failure_lessons": 20,
+      "result_analysis_records": 1,
+      "result_analysis_lessons": 3
     },
     "summary": {
-      "entries": 92,
+      "entries": 96,
       "search_closures": 41,
       "scientific_closures": 2,
       "holds": 9,
-      "failure_assets": 9,
+      "failure_assets": 10,
       "success_assets": 3,
       "open_questions": 2,
       "repeated_review_blocks": 0,
-      "discovery_lessons": 20,
+      "discovery_lessons": 23,
       "review_lessons": 5,
       "paper_development_guidance": 1,
       "contribution_aware_lesson_templates": 2,
-      "prompt_eligible": 92,
-      "skill_candidates": 29,
-      "certainty_confirmed": 14,
-      "certainty_supported": 66,
+      "prompt_eligible": 96,
+      "skill_candidates": 33,
+      "certainty_confirmed": 15,
+      "certainty_supported": 69,
       "certainty_tentative": 0,
       "certainty_speculative": 0,
       "certainty_refuted": 0,
       "certainty_not_applicable": 12,
       "transient": 0,
-      "recurring_systemic": 12,
-      "scientific": 80
+      "recurring_systemic": 15,
+      "scientific": 81
     },
     "entries": [
       {
@@ -45320,6 +45523,36 @@
           "receipt:50f14215548d97f797116f32e067719a327b2b72a40602175e0d316b5460035b"
         ],
         "source_artifact": "longitudinal_safety_discovery_cycle",
+        "reuse_effectiveness": {},
+        "scientific_authority": false,
+        "certainty": "SUPPORTED",
+        "certainty_basis": "structured-review-derived",
+        "certainty_scope_bound": true,
+        "skill_candidate_eligible": true,
+        "automatic_skill_promotion": false
+      },
+      {
+        "memory_id": "MEM-DISC-4925551d12663512f9",
+        "kind": "DISCOVERY_LESSON",
+        "title": "Persistent-state divergence is not downstream behavioral authority",
+        "summary": "A controlled update can robustly change durable memory while native behavioral transport is sparse. Measure write, exposure, policy uptake, and outcome separately; do not infer downstream control from state distance alone.",
+        "candidate_id": "C1-CBRG",
+        "scope": "MECHANISM_MEASUREMENT",
+        "affected_layer": "experiment_identifiability",
+        "memory_class": "MECHANISM_MEASUREMENT",
+        "durability_class": "recurring-systemic",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "A future claim may collapse the stages only if a preregistered intervention shows stable monotone transport from the persistent-state change through exposure and action uptake to held-out outcomes under matched evidence and budget.",
+        "opposite_search_seed": "Search for updates with matched durable-state divergence but different exposure/uptake transport, or matched exposure with different action uptake, to identify the missing transport variable.",
+        "reusable_precheck": "For every persistent update experiment, report at least one state-change metric and one downstream uptake/outcome metric, and localize the first stage where the treatment effect attenuates or changes sign.",
+        "source_refs": [
+          "repo://Obsidian/Papers/C1 - Reward Errors Change Memory Before Policy.md",
+          "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json#sha256=d127ea711288fc6455923198e48bdc9c6674663ad210aca30372256270b31d74"
+        ],
+        "source_artifact": "result_analysis_ledger",
         "reuse_effectiveness": {},
         "scientific_authority": false,
         "certainty": "SUPPORTED",
@@ -45449,6 +45682,36 @@
         "automatic_skill_promotion": false
       },
       {
+        "memory_id": "MEM-DISC-6b0e8c01227a2224b4",
+        "kind": "DISCOVERY_LESSON",
+        "title": "Evidence location, semantic validity, and behavioral authority are distinct gates",
+        "summary": "Finding an exact source span or high-similarity anchor only makes a claim auditable. It does not establish support versus contradiction and cannot grant treatment-specific behavioral authority without a separately qualified outcome-independent adjudicator.",
+        "candidate_id": "C1-CBRG",
+        "scope": "EVIDENCE_AUTHORITY",
+        "affected_layer": "operationalization",
+        "memory_class": "EVIDENCE_AUTHORITY",
+        "durability_class": "recurring-systemic",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "Collapse locator and validity only if an independently frozen rule proves that the locator deterministically entails the required support/contradiction semantics on the target scientific object; similarity alone is insufficient.",
+        "opposite_search_seed": "Search for cases with equally strong evidence anchors but opposite semantic validity, or equally supported claims with different downstream authority consequences.",
+        "reusable_precheck": "When evidence controls an update, implement three explicit states: located/unlocated, semantically supported/contradicted/unverifiable, and authority granted/withheld. Test and receipt them separately.",
+        "source_refs": [
+          "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json#sha256=d127ea711288fc6455923198e48bdc9c6674663ad210aca30372256270b31d74",
+          "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-semantic-readiness-audit-20260824.json#sha256=f854b1957d884ba6528cf860b4d39e90689ff580072ad9373505578f1c8052ab"
+        ],
+        "source_artifact": "result_analysis_ledger",
+        "reuse_effectiveness": {},
+        "scientific_authority": false,
+        "certainty": "SUPPORTED",
+        "certainty_basis": "structured-review-derived",
+        "certainty_scope_bound": true,
+        "skill_candidate_eligible": true,
+        "automatic_skill_promotion": false
+      },
+      {
         "memory_id": "MEM-DISC-759a3b89b8a31c2936",
         "kind": "DISCOVERY_LESSON",
         "title": "Modified evaluator data does not escape verifier exogeneity",
@@ -45470,6 +45733,35 @@
           "receipt:e0813425fb7db451c1a8250d91e07911aa9e421235f328b3c2830d83e2ebf5a5"
         ],
         "source_artifact": "longitudinal_safety_discovery_cycle",
+        "reuse_effectiveness": {},
+        "scientific_authority": false,
+        "certainty": "SUPPORTED",
+        "certainty_basis": "structured-review-derived",
+        "certainty_scope_bound": true,
+        "skill_candidate_eligible": true,
+        "automatic_skill_promotion": false
+      },
+      {
+        "memory_id": "MEM-DISC-79590c3e4c6f56c171",
+        "kind": "DISCOVERY_LESSON",
+        "title": "Qualification/support STOP is not a method-effect or scientific failure",
+        "summary": "If a proposed method cannot independently qualify a required validity signal before execution, the current realization should STOP/MERGE without fabricating a verifier. This blocks the method experiment but does not falsify an unrun method effect or independently established phenomenon/mechanism evidence.",
+        "candidate_id": "C1-CBRG",
+        "scope": "RESULT_INTERPRETATION",
+        "affected_layer": "method_realization",
+        "memory_class": "RESULT_INTERPRETATION",
+        "durability_class": "recurring-systemic",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "Reopen only with new content-addressed qualification evidence that existed independently of the terminal outcome, plus the original same-information non-reducibility and collision gates; a renamed baseline or generic model checkpoint is not enough.",
+        "opposite_search_seed": "Search for methods whose required validity signal is independently observable and qualified before method evaluation, so behavioral effect can be tested without self-validation.",
+        "reusable_precheck": "Before interpreting any STOP, name the exact failure layer and whether the claimed treatment was actually executed. Never translate execution/support/qualification failure into method-effect failure or core-principle failure.",
+        "source_refs": [
+          "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json#sha256=716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc"
+        ],
+        "source_artifact": "result_analysis_ledger",
         "reuse_effectiveness": {},
         "scientific_authority": false,
         "certainty": "SUPPORTED",
@@ -46088,6 +46380,41 @@
         "automatic_skill_promotion": false
       },
       {
+        "memory_id": "MEM-FAIL-d716cf73efa27a067f",
+        "kind": "FAILURE_ASSET",
+        "title": "method_realization:evidence-authority-qualification-unavailable",
+        "summary": "method-effect failure, core-principle failure, measurement invalidity, or global impossibility of evidence-gated authority",
+        "candidate_id": "",
+        "scope": "{\"ideas\": [\"C1-CBRG\"], \"reuse_scope\": {\"affected_layer\": \"method-realization\", \"diagnosis\": \"evidence-authority-qualification-unavailable\", \"method_family\": \"evidence-gated persistent-state or residual authority\"}}",
+        "affected_layer": "method_realization",
+        "memory_class": "FAILURE_ASSET",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "",
+        "opposite_search_seed": "",
+        "reusable_precheck": "Before a method gates treatment-specific residual content, freeze the validity semantics and independently qualify the evidence adjudicator on pre-outcome support. Locator coverage, semantic similarity, the treatment label, terminal reward, and downstream outcome cannot validate the residual. If no qualified signal exists, STOP/MERGE the current method extension rather than inventing a post-outcome verifier; preserve any independently valid measurement/mechanism result.",
+        "source_refs": [
+          "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json#sha256=716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc"
+        ],
+        "source_artifact": "failure_asset_library",
+        "occurrences": 1,
+        "last_revalidated": "2026-08-25",
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0
+        },
+        "scientific_authority": false,
+        "certainty": "CONFIRMED",
+        "certainty_basis": "failure-receipt-backed",
+        "certainty_scope_bound": true,
+        "skill_candidate_eligible": true,
+        "automatic_skill_promotion": false
+      },
+      {
         "memory_id": "MEM-FAIL-ff81c1bc68d6be7004",
         "kind": "FAILURE_ASSET",
         "title": "experiment_identifiability:composition-constituent-reference-instability",
@@ -46446,7 +46773,7 @@
         "principle_update_allowed": false,
         "reopen_condition": "",
         "opposite_search_seed": "",
-        "reusable_precheck": "Bind ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1 v1.0 on the next material revision and fill E1-E6 as experiment-planning slots (or archetype-justified N/A); planning never authorizes execution. Then verify four dimensions: problem necessity/challenge and related-work map; method intuition/design principles/load-bearing details; experiments inspired by closest-work protocols and method-specific predictions; and plain, direct, reader-comprehensible writing. Treat missing depth as manuscript-development debt, not a scientific STOP.",
+        "reusable_precheck": "Bind ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1 v1.0 on the next material revision and fill E1-E6 as experiment-planning slots (or archetype-justified N/A); planning never authorizes execution. After any new result, first bind a result-analysis receipt that separates observed evidence, estimand, positive implication, negative boundary, strongest alternative explanation, typed failure layer, does-not-imply scope, next action, and reusable lesson. Then verify four dimensions: problem necessity/challenge and related-work map; method intuition/design principles/load-bearing details; experiments inspired by closest-work protocols and method-specific predictions; and plain, direct, reader-comprehensible writing. Treat missing depth as manuscript-development debt, not a scientific STOP, and treat a stopped method extension as a contribution-layer routing event rather than automatic whole-paper failure.",
         "source_refs": [
           "human-advisor-guidance:2026-08-23"
         ],
@@ -46560,6 +46887,25 @@
             "generated_ref": "generated/iclr-agent-paper-template.json",
             "binding_required_on_next_material_revision": true,
             "experiment_lane_planning_is_not_execution": true
+          },
+          "result_interpretation_rule": {
+            "required_before_material_story_revision_after_new_results": true,
+            "required_fields": [
+              "observed findings bound to evidence",
+              "estimand / scientific object",
+              "positive implication",
+              "negative boundary / what is not established",
+              "strongest alternative explanation and disposition",
+              "typed failure layer for HOLD/STOP",
+              "does-not-imply boundary",
+              "next scientific action and reusable lesson"
+            ],
+            "paper_routing_rule": "A method-extension STOP changes only the contribution layer it actually tests. If independently established phenomenon/mechanism/measurement evidence survives, select the appropriate paper archetype instead of manufacturing another method.",
+            "authority": {
+              "scientific": false,
+              "experiment": false,
+              "gpu": false
+            }
           },
           "advisor_assessment": {
             "problem_value": "WORTH_PURSUING",
@@ -46694,7 +47040,10 @@
             "experiment_program_must_use_both_prior_work_protocols_and_method_specific_tests": true,
             "writing_must_prefer_clear_direct_concrete_language": true,
             "next_material_revision_should_bind_iclr_agent_paper_template_v1": true,
-            "iclr_template_experiment_lane_planning_does_not_authorize_execution": true
+            "iclr_template_experiment_lane_planning_does_not_authorize_execution": true,
+            "material_story_revision_after_results_requires_result_analysis": true,
+            "result_analysis_must_separate_observed_supported_not_supported_and_failure_layer": true,
+            "stopped_method_extension_may_redirect_paper_archetype_without_invalidating_independent_evidence": true
           },
           "authority": {
             "scientific": false,
@@ -48372,7 +48721,7 @@
       "p0": false,
       "gpu": false
     },
-    "wiki_sha256": "3cc05e5208f26e14c41b715fccf6e21c45cc8311ceb9aa57bdeb7eb366052f36",
+    "wiki_sha256": "0b2859c1ee331ce15c1fcbc11cfacc4fc57bd4fa4ac50820e5bb0b1345254a25",
     "lint": {
       "schema_version": "1.2",
       "status": "PASS",
@@ -48425,6 +48774,11 @@
         },
         {
           "code": "failure-asset-not-yet-effectiveness-validated",
+          "memory_id": "MEM-FAIL-d716cf73efa27a067f",
+          "detail": "method_realization:evidence-authority-qualification-unavailable"
+        },
+        {
+          "code": "failure-asset-not-yet-effectiveness-validated",
           "memory_id": "MEM-FAIL-ff81c1bc68d6be7004",
           "detail": "experiment_identifiability:composition-constituent-reference-instability"
         },
@@ -48447,8 +48801,8 @@
       ],
       "summary": {
         "errors": 0,
-        "warnings": 14,
-        "unconsumed_failure_assets": 6,
+        "warnings": 15,
+        "unconsumed_failure_assets": 7,
         "missing_revalidation_dates": 4
       },
       "scientific_authority": false
@@ -48505,7 +48859,7 @@
         "MEM-HOLD-452d1a58eea1476812",
         "MEM-REVI-ccb86700ca3f850cdb",
         "MEM-SEAR-2a5a804540732de3fd",
-        "MEM-DISC-4e7fcf79aa7f407d8e",
+        "MEM-DISC-4925551d12663512f9",
         "MEM-FAIL-78733cb49dfe6297da"
       ],
       "automatic_skill_promotions": 0,
@@ -49639,8 +49993,8 @@
       }
     ],
     "summary": {
-      "assets": 9,
-      "unique_signatures": 9,
+      "assets": 10,
+      "unique_signatures": 10,
       "principle_dead_ends": 0,
       "economy_dead_ends": 0,
       "experimental_stops_not_dead_ends": 23
@@ -49868,6 +50222,32 @@
         "source_decision": "CLOSED_SUPPORT_NONEXECUTABLE_PRE_HEADROOM_UNRESOLVED",
         "external_memory_input": true,
         "scientific_authority": false
+      },
+      {
+        "signature": "method_realization:evidence-authority-qualification-unavailable",
+        "idea_id": "C1-CBRG",
+        "diagnosis": "evidence-authority-qualification-unavailable",
+        "affected_layer": "method_realization",
+        "reusable_precheck": "Before a method gates treatment-specific residual content, freeze the validity semantics and independently qualify the evidence adjudicator on pre-outcome support. Locator coverage, semantic similarity, the treatment label, terminal reward, and downstream outcome cannot validate the residual. If no qualified signal exists, STOP/MERGE the current method extension rather than inventing a post-outcome verifier; preserve any independently valid measurement/mechanism result.",
+        "evidence_ref": "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json#sha256=716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc",
+        "does_not_imply": "method-effect failure, core-principle failure, measurement invalidity, or global impossibility of evidence-gated authority",
+        "memory_scope": "institutional-research-memory",
+        "reuse_scope": {
+          "method_family": "evidence-gated persistent-state or residual authority",
+          "diagnosis": "evidence-authority-qualification-unavailable",
+          "affected_layer": "method-realization"
+        },
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "superseded_by": "",
+        "last_revalidated": "2026-08-25",
+        "source_decision": "STOP_MERGE_CURRENT_CBRG_EXTENSION_RETAIN_MEASUREMENT_PAPER",
+        "external_memory_input": true,
+        "scientific_authority": false
       }
     ],
     "reusable_prechecks": [
@@ -49979,6 +50359,19 @@
         "signature": "operationalization:semantic-action-observability",
         "affected_layer": "operationalization",
         "reusable_precheck": "Before authorizing any causal arm whose intervention boundary depends on a training or update action, audit the full accepted action surface so every accepted configuration either produces an independently verifiable persisted semantic update or is rejected before the scientific unit starts; support failures must map to NO_EVIDENCE.",
+        "occurrences": 1,
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "revalidation_required_after_scope_change": true
+      },
+      {
+        "signature": "method_realization:evidence-authority-qualification-unavailable",
+        "affected_layer": "method_realization",
+        "reusable_precheck": "Before a method gates treatment-specific residual content, freeze the validity semantics and independently qualify the evidence adjudicator on pre-outcome support. Locator coverage, semantic similarity, the treatment label, terminal reward, and downstream outcome cannot validate the residual. If no qualified signal exists, STOP/MERGE the current method extension rather than inventing a post-outcome verifier; preserve any independently valid measurement/mechanism result.",
         "occurrences": 1,
         "reuse_effectiveness": {
           "reuse_count": 0,
@@ -86292,8 +86685,8 @@
             "current_launchable": 0
           },
           "failure_assets": {
-            "assets": 9,
-            "unique_signatures": 9,
+            "assets": 10,
+            "unique_signatures": 10,
             "principle_dead_ends": 0,
             "economy_dead_ends": 0,
             "experimental_stops_not_dead_ends": 23
@@ -86323,34 +86716,34 @@
         "pass": true,
         "detail": {
           "summary": {
-            "entries": 92,
+            "entries": 96,
             "search_closures": 41,
             "scientific_closures": 2,
             "holds": 9,
-            "failure_assets": 9,
+            "failure_assets": 10,
             "success_assets": 3,
             "open_questions": 2,
             "repeated_review_blocks": 0,
-            "discovery_lessons": 20,
+            "discovery_lessons": 23,
             "review_lessons": 5,
             "paper_development_guidance": 1,
             "contribution_aware_lesson_templates": 2,
-            "prompt_eligible": 92,
-            "skill_candidates": 29,
-            "certainty_confirmed": 14,
-            "certainty_supported": 66,
+            "prompt_eligible": 96,
+            "skill_candidates": 33,
+            "certainty_confirmed": 15,
+            "certainty_supported": 69,
             "certainty_tentative": 0,
             "certainty_speculative": 0,
             "certainty_refuted": 0,
             "certainty_not_applicable": 12,
             "transient": 0,
-            "recurring_systemic": 12,
-            "scientific": 80
+            "recurring_systemic": 15,
+            "scientific": 81
           },
           "lint": {
             "errors": 0,
-            "warnings": 14,
-            "unconsumed_failure_assets": 6,
+            "warnings": 15,
+            "unconsumed_failure_assets": 7,
             "missing_revalidation_dates": 4
           },
           "certainty_audit": {
@@ -86405,7 +86798,7 @@
               "MEM-HOLD-452d1a58eea1476812",
               "MEM-REVI-ccb86700ca3f850cdb",
               "MEM-SEAR-2a5a804540732de3fd",
-              "MEM-DISC-4e7fcf79aa7f407d8e",
+              "MEM-DISC-4925551d12663512f9",
               "MEM-FAIL-78733cb49dfe6297da"
             ],
             "automatic_skill_promotions": 0,
@@ -86535,6 +86928,7 @@
             "active_problem_lines": 0,
             "search_holds": 3,
             "problem_gate_blocked": 0,
+            "search_stopped_current_formulation": 0,
             "active_target": 3,
             "active_shortfall": 3,
             "search_hold_min_target": 5,
@@ -86551,8 +86945,8 @@
             "visible_candidates": 3
           },
           "graph": {
-            "nodes": 622,
-            "edges": 701,
+            "nodes": 624,
+            "edges": 702,
             "node_kinds": {
               "candidate_problem": 3,
               "claim": 87,
@@ -86560,8 +86954,8 @@
               "dataset": 15,
               "domain": 13,
               "experiment": 78,
-              "failure_asset": 9,
-              "idea": 59,
+              "failure_asset": 10,
+              "idea": 60,
               "model": 6,
               "paper": 278,
               "paper-alias": 64,
@@ -86570,7 +86964,7 @@
             "relations": {
               "belongs-to": 29,
               "covers-domain": 72,
-              "diagnoses": 9,
+              "diagnoses": 10,
               "evaluates-on": 77,
               "nearest-work": 88,
               "principle_for": 2,
@@ -86583,13 +86977,13 @@
             },
             "base_nodes": 500,
             "base_edges": 612,
-            "overlay_nodes": 122,
-            "new_overlay_nodes": 122,
-            "overlay_edges": 89,
+            "overlay_nodes": 124,
+            "new_overlay_nodes": 124,
+            "overlay_edges": 90,
             "candidate_nodes": 3,
             "experiment_nodes": 78,
             "principle_nodes": 2,
-            "failure_asset_nodes": 9,
+            "failure_asset_nodes": 10,
             "scientific_closure_nodes": 0,
             "principle_closure_edges": 0
           }
@@ -86726,7 +87120,10 @@
             "reviewer_issue_papers": 5,
             "registered_papers": 5,
             "submission_ready_papers": 4,
-            "catalogued_skill_packs": 8,
+            "catalogued_skill_packs": 0,
+            "external_skill_packs_distilled": 8,
+            "canonical_internal_skills": 7,
+            "external_skill_runtime_dependencies": 0,
             "post_draft_integrity_surfaces": 7,
             "automatic_scientific_authority": 0,
             "automatic_experiment_authority": 0,
@@ -87139,6 +87536,21 @@
           "revise": 0,
           "block": 0
         }
+      },
+      {
+        "key": "result-analysis-distillation",
+        "pass": true,
+        "detail": {
+          "analyses": 1,
+          "terminal_results_analyzed": 1,
+          "failure_layers": {
+            "method_realization": 1
+          },
+          "discovery_lessons": 3,
+          "failure_assets": 1,
+          "paper_guidance_records": 1,
+          "errors": 0
+        }
       }
     ]
   },
@@ -87505,6 +87917,226 @@
       "experiment": false,
       "p0": false,
       "gpu": false
+    }
+  },
+  "result_analysis": {
+    "schema_version": "1.0",
+    "status": "RESULT_ANALYSIS_DISTILLED",
+    "policy": {
+      "schema_version": "1.0",
+      "raw_result_artifact_is_not_result_analysis": true,
+      "terminal_result_requires_interpretation_before_distillation": true,
+      "analysis_must_separate_observed_from_inferred": true,
+      "analysis_must_name_estimand_and_strongest_alternative_explanation": true,
+      "analysis_must_state_positive_implication_and_negative_boundary": true,
+      "analysis_must_type_failure_layer_before_terminal_routing": true,
+      "support_or_qualification_failure_is_not_method_effect_failure": true,
+      "method_extension_stop_does_not_invalidate_independent_measurement_evidence": true,
+      "post_outcome_validator_invention_cannot_rescue_a_failed_gate": true,
+      "distilled_memory_has_zero_scientific_or_execution_authority": true
+    },
+    "summary": {
+      "analyses": 1,
+      "terminal_results_analyzed": 1,
+      "failure_layers": {
+        "method_realization": 1
+      },
+      "discovery_lessons": 3,
+      "failure_assets": 1,
+      "paper_guidance_records": 1,
+      "errors": 0
+    },
+    "analyses": [
+      {
+        "analysis_id": "RA-C1-CBRG-CLOSURE-20260825",
+        "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+        "candidate_id": "C1-CBRG",
+        "result_scope": "C1 stage-resolved reward-to-memory mechanism plus the current frozen zero-call CBRG extension",
+        "terminal_decision": "STOP_MERGE_CURRENT_CBRG_EXTENSION_RETAIN_MEASUREMENT_PAPER",
+        "source_refs": [
+          "repo://Obsidian/Papers/C1 - Reward Errors Change Memory Before Policy.md",
+          "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json#sha256=d127ea711288fc6455923198e48bdc9c6674663ad210aca30372256270b31d74",
+          "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-semantic-readiness-audit-20260824.json#sha256=f854b1957d884ba6528cf860b4d39e90689ff580072ad9373505578f1c8052ab",
+          "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json#sha256=716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc"
+        ],
+        "estimands": [
+          "same-trajectory success-vs-failure writer intervention effect on durable memory state",
+          "stagewise transport of branch-specific state through retrieval exposure, first-action uptake, and terminal outcome",
+          "operational branch-contrast auditability versus semantic evidence validity and actionable authority"
+        ],
+        "observed": [
+          {
+            "statement": "Reward-conditioned writing is robust under the frozen same-trajectory intervention.",
+            "evidence": "Shopping write diverges for 20/20 success/failure pairs; the combined frozen D0 lineage has 24/24 same pre-writer trajectory projections, same resolved writer model within pair, temperature 0, and different branch-memory content."
+          },
+          {
+            "statement": "The writer-mode effect is larger than a stronger same-mode wording perturbation in the archived F0C control.",
+            "evidence": "Mean between-minus-within distance is 0.104978 with exact one-sided sign-flip p=0.007812 over the frozen eight-task control."
+          },
+          {
+            "statement": "A large write difference does not reliably propagate through native downstream behavior.",
+            "evidence": "Forced injection terminal |Delta|=0.15625 passes the frozen 0.15 practical floor, while native Shopping terminal |S-F|=0.02083 with 34/36 zero; first-action TV=0.06944 with 0/36 modal branch-action differences; Reddit native terminal |S-F|=0.125 with 6/8 zero and opposite signs in the two nonzero cells."
+          },
+          {
+            "statement": "Operational branch differences are reproducibly compilable and mostly locatable in pre-writer evidence.",
+            "evidence": "423/423 directional same-field branch-contrast units compile; 397/423 have a nonzero exact lexical anchor across 58,230 frozen pre-writer browser-state lines; 26/423 remain unlocated."
+          },
+          {
+            "statement": "Evidence location did not establish evidence validity or branch authority.",
+            "evidence": "Semantic validity remains 0/423 and nonzero branch authority remains 0. The local stack has 0 qualified semantic adjudicators and 0 C1 semantic qualification receipts; the bounded repository inventory also finds 0 external executable adjudicator candidates and 0 external semantic qualification receipts."
+          }
+        ],
+        "analysis": {
+          "positive_implications": [
+            "The scientifically stable object is the stage-resolved intervention chain, not a generic correlation between reward and memory. A terminal label can causally select a different writer branch on the same trajectory at the intervention level.",
+            "Operational paired branch contrast is a legitimate measurable object even when atom-level causal purity is not certified; useful measurement objects need not be discarded merely because stronger causal language is unavailable.",
+            "The write-to-behavior attenuation itself is informative: persistent-state mutation and behavioral authority are separate stages that require separate measurements."
+          ],
+          "negative_boundaries": [
+            "The current data do not certify each textual Title/Description/Content delta atom as a pure causal effect because explicit decoding seeds or same-condition same-trajectory noise-floor replications are absent.",
+            "397/423 locator coverage is auditability, not semantic support. Lexical or embedding similarity cannot be promoted to SUPPORTED/CONTRADICTED evidence states.",
+            "No CBRG behavioral improvement has been measured because the provider method experiment never received scientific execution authority.",
+            "Absence of a qualified local/repository adjudicator does not prove that evidence-gated residual authority is globally impossible; it only closes the current frozen extension under its preregistered qualification contract."
+          ],
+          "strongest_alternative_explanations": [
+            {
+              "alternative": "Generic prompt wording rather than reward/reflection mode explains the memory difference.",
+              "disposition": "Weakened by the same-mode wording control: the between-mode effect exceeds the stronger within-mode wording perturbation, but atom-level stochastic purity remains unresolved."
+            },
+            {
+              "alternative": "Large memory divergence necessarily implies downstream policy divergence.",
+              "disposition": "Contradicted by stagewise evidence: forced leverage exists, but native first-action and terminal transport are sparse and heterogeneous."
+            },
+            {
+              "alternative": "Semantic similarity or exact lexical location is sufficient evidence authority.",
+              "disposition": "Rejected as a category error: locator/applicability can prioritize inspection but cannot distinguish support from contradiction and therefore cannot grant branch authority."
+            },
+            {
+              "alternative": "The CBRG STOP is evidence that the core C1 scientific phenomenon failed.",
+              "disposition": "Rejected. The STOP occurs before a method-effect experiment at the method-realization/qualification layer and leaves independently measured stage-resolved evidence intact."
+            }
+          ],
+          "mechanism_interpretation": "Reward-conditioned memory construction is a strong upstream state intervention whose behavioral influence is filtered by later exposure and uptake stages. The correct causal/mechanistic object is therefore a transport chain with stage-specific attenuation, not a one-step reward->behavior story. Evidence authority adds another distinct layer: a branch-specific statement can be locatable and applicable without being independently validated.",
+          "failure_layer": "method_realization",
+          "failure_type": "evidence-authority-qualification-unavailable",
+          "failure_diagnosis": "CBRG requires an outcome-independent semantic-validity adjudicator before any residual receives actionable authority. Under the frozen zero-call support, no independently qualified adjudicator or qualification receipt exists. Inventing one after observing this gate failure would create post-outcome self-validation. The current extension therefore stops at method realization rather than failing a behavioral effect test.",
+          "does_not_imply": "CBRG method-effect failure, C1 phenomenon failure, invalidation of the write/exposure/uptake/outcome measurements, or a global impossibility theorem for evidence-gated memory authority",
+          "paper_implication": "Use the stage-resolved identification/measurement archetype as the active C1 paper story. Make the main contribution the separation of durable write divergence from native behavioral transport, supported by forced leverage, exposure, first-action localization, terminal boundaries, and cross-domain heterogeneity. Keep CBRG as internal negative method-development evidence rather than a claimed solution.",
+          "next_scientific_action": "Paper-only strengthening on the frozen evidence base: build the stage-resolved boundary figure, rewrite the Introduction/claim hierarchy around memory-divergence-versus-behavioral-authority, and preserve the exact negative boundaries. Do not run a CBRG provider experiment unless the four-part reopen contract is independently satisfied."
+        },
+        "failure_asset": {
+          "signature": "method_realization:evidence-authority-qualification-unavailable",
+          "idea_id": "C1-CBRG",
+          "diagnosis": "evidence-authority-qualification-unavailable",
+          "affected_layer": "method_realization",
+          "reusable_precheck": "Before a method gates treatment-specific residual content, freeze the validity semantics and independently qualify the evidence adjudicator on pre-outcome support. Locator coverage, semantic similarity, the treatment label, terminal reward, and downstream outcome cannot validate the residual. If no qualified signal exists, STOP/MERGE the current method extension rather than inventing a post-outcome verifier; preserve any independently valid measurement/mechanism result.",
+          "evidence_ref": "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json#sha256=716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc",
+          "does_not_imply": "method-effect failure, core-principle failure, measurement invalidity, or global impossibility of evidence-gated authority",
+          "memory_scope": "institutional-research-memory",
+          "reuse_scope": {
+            "method_family": "evidence-gated persistent-state or residual authority",
+            "diagnosis": "evidence-authority-qualification-unavailable",
+            "affected_layer": "method-realization"
+          },
+          "reuse_effectiveness": {
+            "reuse_count": 0,
+            "helped_count": 0,
+            "hurt_count": 0,
+            "status": "not-yet-measured"
+          },
+          "superseded_by": "",
+          "last_revalidated": "2026-08-25",
+          "source_decision": "STOP_MERGE_CURRENT_CBRG_EXTENSION_RETAIN_MEASUREMENT_PAPER",
+          "scientific_authority": false
+        },
+        "discovery_lessons": [
+          {
+            "lesson_id": "LS-RESULT-STAGEWISE-TRANSPORT-NOT-STATE-DIVERGENCE",
+            "candidate_id": "C1-CBRG",
+            "lesson_type": "MECHANISM_MEASUREMENT",
+            "affected_layer": "experiment_identifiability",
+            "title": "Persistent-state divergence is not downstream behavioral authority",
+            "summary": "A controlled update can robustly change durable memory while native behavioral transport is sparse. Measure write, exposure, policy uptake, and outcome separately; do not infer downstream control from state distance alone.",
+            "source_refs": [
+              "repo://Obsidian/Papers/C1 - Reward Errors Change Memory Before Policy.md",
+              "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json#sha256=d127ea711288fc6455923198e48bdc9c6674663ad210aca30372256270b31d74"
+            ],
+            "reopen_condition": "A future claim may collapse the stages only if a preregistered intervention shows stable monotone transport from the persistent-state change through exposure and action uptake to held-out outcomes under matched evidence and budget.",
+            "reusable_precheck": "For every persistent update experiment, report at least one state-change metric and one downstream uptake/outcome metric, and localize the first stage where the treatment effect attenuates or changes sign.",
+            "opposite_search_seed": "Search for updates with matched durable-state divergence but different exposure/uptake transport, or matched exposure with different action uptake, to identify the missing transport variable."
+          },
+          {
+            "lesson_id": "LS-RESULT-LOCATOR-VALIDITY-AUTHORITY-SEPARATION",
+            "candidate_id": "C1-CBRG",
+            "lesson_type": "EVIDENCE_AUTHORITY",
+            "affected_layer": "operationalization",
+            "title": "Evidence location, semantic validity, and behavioral authority are distinct gates",
+            "summary": "Finding an exact source span or high-similarity anchor only makes a claim auditable. It does not establish support versus contradiction and cannot grant treatment-specific behavioral authority without a separately qualified outcome-independent adjudicator.",
+            "source_refs": [
+              "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json#sha256=d127ea711288fc6455923198e48bdc9c6674663ad210aca30372256270b31d74",
+              "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-semantic-readiness-audit-20260824.json#sha256=f854b1957d884ba6528cf860b4d39e90689ff580072ad9373505578f1c8052ab"
+            ],
+            "reopen_condition": "Collapse locator and validity only if an independently frozen rule proves that the locator deterministically entails the required support/contradiction semantics on the target scientific object; similarity alone is insufficient.",
+            "reusable_precheck": "When evidence controls an update, implement three explicit states: located/unlocated, semantically supported/contradicted/unverifiable, and authority granted/withheld. Test and receipt them separately.",
+            "opposite_search_seed": "Search for cases with equally strong evidence anchors but opposite semantic validity, or equally supported claims with different downstream authority consequences."
+          },
+          {
+            "lesson_id": "LS-RESULT-QUALIFICATION-STOP-NOT-METHOD-FAIL",
+            "candidate_id": "C1-CBRG",
+            "lesson_type": "RESULT_INTERPRETATION",
+            "affected_layer": "method_realization",
+            "title": "Qualification/support STOP is not a method-effect or scientific failure",
+            "summary": "If a proposed method cannot independently qualify a required validity signal before execution, the current realization should STOP/MERGE without fabricating a verifier. This blocks the method experiment but does not falsify an unrun method effect or independently established phenomenon/mechanism evidence.",
+            "source_refs": [
+              "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json#sha256=716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc"
+            ],
+            "reopen_condition": "Reopen only with new content-addressed qualification evidence that existed independently of the terminal outcome, plus the original same-information non-reducibility and collision gates; a renamed baseline or generic model checkpoint is not enough.",
+            "reusable_precheck": "Before interpreting any STOP, name the exact failure layer and whether the claimed treatment was actually executed. Never translate execution/support/qualification failure into method-effect failure or core-principle failure.",
+            "opposite_search_seed": "Search for methods whose required validity signal is independently observable and qualified before method evaluation, so behavioral effect can be tested without self-validation."
+          }
+        ],
+        "paper_guidance": {
+          "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+          "guidance_id": "C1-RESULT-DISTILLATION-GUIDANCE-20260825",
+          "active_archetype": "IDENTIFICATION_MEASUREMENT",
+          "active_story": "reward-label intervention -> durable write divergence -> forced leverage -> native transport boundary -> first-action uptake localization -> cross-domain heterogeneity -> evaluation/design implication",
+          "load_bearing_message": "Memory divergence is not behavioral divergence, and branch-specific memory content is not validated behavioral authority.",
+          "required_paper_only_actions": [
+            "Add a main-text stage-resolved boundary figure with write, retrieval exposure, first-action uptake, forced terminal leverage, native Shopping terminal, Reddit terminal, and outcome-blind control.",
+            "Rewrite Introduction and contribution hierarchy around the scientific mismeasurement: endpoint or memory-state metrics conflate distinct propagation stages.",
+            "State the operational-contrast versus atom-level-causal-purity boundary explicitly and keep 0/423 semantic-validity/authority facts visible.",
+            "Treat CBRG as stopped method-development evidence, not as a verified solution or a missing experiment to be rescued."
+          ],
+          "forbidden_rescue_moves": [
+            "invent a semantic verifier after observing the D0-B2 hold",
+            "promote lexical or embedding similarity to semantic validity",
+            "increase rollout depth or select positive cells to force a method story",
+            "interpret missing qualification infrastructure as proof that C1 or all evidence-gating methods fail"
+          ],
+          "scientific_authority": false,
+          "experiment_authority": false
+        },
+        "authority": {
+          "scientific": false,
+          "method": false,
+          "experiment": false,
+          "provider": false,
+          "gpu": false,
+          "claim_expansion": false,
+          "submission": false
+        }
+      }
+    ],
+    "errors": [],
+    "scientific_authority": false,
+    "authority": {
+      "problem_gate": false,
+      "method": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
     }
   }
 }

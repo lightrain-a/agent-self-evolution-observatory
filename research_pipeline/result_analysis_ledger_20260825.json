@@ -1,0 +1,197 @@
+{
+  "schema_version": "1.0",
+  "policy": {
+    "raw_result_artifact_is_not_result_analysis": true,
+    "terminal_result_requires_interpretation_before_distillation": true,
+    "analysis_must_separate_observed_from_inferred": true,
+    "analysis_must_name_estimand_and_strongest_alternative_explanation": true,
+    "analysis_must_state_positive_implication_and_negative_boundary": true,
+    "analysis_must_type_failure_layer_before_terminal_routing": true,
+    "support_or_qualification_failure_is_not_method_effect_failure": true,
+    "method_extension_stop_does_not_invalidate_independent_measurement_evidence": true,
+    "post_outcome_validator_invention_cannot_rescue_a_failed_gate": true,
+    "distilled_memory_has_zero_scientific_or_execution_authority": true
+  },
+  "analyses": [
+    {
+      "analysis_id": "RA-C1-CBRG-CLOSURE-20260825",
+      "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+      "candidate_id": "C1-CBRG",
+      "result_scope": "C1 stage-resolved reward-to-memory mechanism plus the current frozen zero-call CBRG extension",
+      "terminal_decision": "STOP_MERGE_CURRENT_CBRG_EXTENSION_RETAIN_MEASUREMENT_PAPER",
+      "source_refs": [
+        "repo://Obsidian/Papers/C1 - Reward Errors Change Memory Before Policy.md",
+        "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json#sha256=d127ea711288fc6455923198e48bdc9c6674663ad210aca30372256270b31d74",
+        "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-semantic-readiness-audit-20260824.json#sha256=f854b1957d884ba6528cf860b4d39e90689ff580072ad9373505578f1c8052ab",
+        "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json#sha256=716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc"
+      ],
+      "estimands": [
+        "same-trajectory success-vs-failure writer intervention effect on durable memory state",
+        "stagewise transport of branch-specific state through retrieval exposure, first-action uptake, and terminal outcome",
+        "operational branch-contrast auditability versus semantic evidence validity and actionable authority"
+      ],
+      "observed": [
+        {
+          "statement": "Reward-conditioned writing is robust under the frozen same-trajectory intervention.",
+          "evidence": "Shopping write diverges for 20/20 success/failure pairs; the combined frozen D0 lineage has 24/24 same pre-writer trajectory projections, same resolved writer model within pair, temperature 0, and different branch-memory content."
+        },
+        {
+          "statement": "The writer-mode effect is larger than a stronger same-mode wording perturbation in the archived F0C control.",
+          "evidence": "Mean between-minus-within distance is 0.104978 with exact one-sided sign-flip p=0.007812 over the frozen eight-task control."
+        },
+        {
+          "statement": "A large write difference does not reliably propagate through native downstream behavior.",
+          "evidence": "Forced injection terminal |Delta|=0.15625 passes the frozen 0.15 practical floor, while native Shopping terminal |S-F|=0.02083 with 34/36 zero; first-action TV=0.06944 with 0/36 modal branch-action differences; Reddit native terminal |S-F|=0.125 with 6/8 zero and opposite signs in the two nonzero cells."
+        },
+        {
+          "statement": "Operational branch differences are reproducibly compilable and mostly locatable in pre-writer evidence.",
+          "evidence": "423/423 directional same-field branch-contrast units compile; 397/423 have a nonzero exact lexical anchor across 58,230 frozen pre-writer browser-state lines; 26/423 remain unlocated."
+        },
+        {
+          "statement": "Evidence location did not establish evidence validity or branch authority.",
+          "evidence": "Semantic validity remains 0/423 and nonzero branch authority remains 0. The local stack has 0 qualified semantic adjudicators and 0 C1 semantic qualification receipts; the bounded repository inventory also finds 0 external executable adjudicator candidates and 0 external semantic qualification receipts."
+        }
+      ],
+      "analysis": {
+        "positive_implications": [
+          "The scientifically stable object is the stage-resolved intervention chain, not a generic correlation between reward and memory. A terminal label can causally select a different writer branch on the same trajectory at the intervention level.",
+          "Operational paired branch contrast is a legitimate measurable object even when atom-level causal purity is not certified; useful measurement objects need not be discarded merely because stronger causal language is unavailable.",
+          "The write-to-behavior attenuation itself is informative: persistent-state mutation and behavioral authority are separate stages that require separate measurements."
+        ],
+        "negative_boundaries": [
+          "The current data do not certify each textual Title/Description/Content delta atom as a pure causal effect because explicit decoding seeds or same-condition same-trajectory noise-floor replications are absent.",
+          "397/423 locator coverage is auditability, not semantic support. Lexical or embedding similarity cannot be promoted to SUPPORTED/CONTRADICTED evidence states.",
+          "No CBRG behavioral improvement has been measured because the provider method experiment never received scientific execution authority.",
+          "Absence of a qualified local/repository adjudicator does not prove that evidence-gated residual authority is globally impossible; it only closes the current frozen extension under its preregistered qualification contract."
+        ],
+        "strongest_alternative_explanations": [
+          {
+            "alternative": "Generic prompt wording rather than reward/reflection mode explains the memory difference.",
+            "disposition": "Weakened by the same-mode wording control: the between-mode effect exceeds the stronger within-mode wording perturbation, but atom-level stochastic purity remains unresolved."
+          },
+          {
+            "alternative": "Large memory divergence necessarily implies downstream policy divergence.",
+            "disposition": "Contradicted by stagewise evidence: forced leverage exists, but native first-action and terminal transport are sparse and heterogeneous."
+          },
+          {
+            "alternative": "Semantic similarity or exact lexical location is sufficient evidence authority.",
+            "disposition": "Rejected as a category error: locator/applicability can prioritize inspection but cannot distinguish support from contradiction and therefore cannot grant branch authority."
+          },
+          {
+            "alternative": "The CBRG STOP is evidence that the core C1 scientific phenomenon failed.",
+            "disposition": "Rejected. The STOP occurs before a method-effect experiment at the method-realization/qualification layer and leaves independently measured stage-resolved evidence intact."
+          }
+        ],
+        "mechanism_interpretation": "Reward-conditioned memory construction is a strong upstream state intervention whose behavioral influence is filtered by later exposure and uptake stages. The correct causal/mechanistic object is therefore a transport chain with stage-specific attenuation, not a one-step reward->behavior story. Evidence authority adds another distinct layer: a branch-specific statement can be locatable and applicable without being independently validated.",
+        "failure_layer": "method_realization",
+        "failure_type": "evidence-authority-qualification-unavailable",
+        "failure_diagnosis": "CBRG requires an outcome-independent semantic-validity adjudicator before any residual receives actionable authority. Under the frozen zero-call support, no independently qualified adjudicator or qualification receipt exists. Inventing one after observing this gate failure would create post-outcome self-validation. The current extension therefore stops at method realization rather than failing a behavioral effect test.",
+        "does_not_imply": "CBRG method-effect failure, C1 phenomenon failure, invalidation of the write/exposure/uptake/outcome measurements, or a global impossibility theorem for evidence-gated memory authority",
+        "paper_implication": "Use the stage-resolved identification/measurement archetype as the active C1 paper story. Make the main contribution the separation of durable write divergence from native behavioral transport, supported by forced leverage, exposure, first-action localization, terminal boundaries, and cross-domain heterogeneity. Keep CBRG as internal negative method-development evidence rather than a claimed solution.",
+        "next_scientific_action": "Paper-only strengthening on the frozen evidence base: build the stage-resolved boundary figure, rewrite the Introduction/claim hierarchy around memory-divergence-versus-behavioral-authority, and preserve the exact negative boundaries. Do not run a CBRG provider experiment unless the four-part reopen contract is independently satisfied."
+      },
+      "failure_asset": {
+        "signature": "method_realization:evidence-authority-qualification-unavailable",
+        "idea_id": "C1-CBRG",
+        "diagnosis": "evidence-authority-qualification-unavailable",
+        "affected_layer": "method_realization",
+        "reusable_precheck": "Before a method gates treatment-specific residual content, freeze the validity semantics and independently qualify the evidence adjudicator on pre-outcome support. Locator coverage, semantic similarity, the treatment label, terminal reward, and downstream outcome cannot validate the residual. If no qualified signal exists, STOP/MERGE the current method extension rather than inventing a post-outcome verifier; preserve any independently valid measurement/mechanism result.",
+        "evidence_ref": "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json#sha256=716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc",
+        "does_not_imply": "method-effect failure, core-principle failure, measurement invalidity, or global impossibility of evidence-gated authority",
+        "memory_scope": "institutional-research-memory",
+        "reuse_scope": {
+          "method_family": "evidence-gated persistent-state or residual authority",
+          "diagnosis": "evidence-authority-qualification-unavailable",
+          "affected_layer": "method-realization"
+        },
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "superseded_by": "",
+        "last_revalidated": "2026-08-25",
+        "source_decision": "STOP_MERGE_CURRENT_CBRG_EXTENSION_RETAIN_MEASUREMENT_PAPER",
+        "scientific_authority": false
+      },
+      "discovery_lessons": [
+        {
+          "lesson_id": "LS-RESULT-STAGEWISE-TRANSPORT-NOT-STATE-DIVERGENCE",
+          "candidate_id": "C1-CBRG",
+          "lesson_type": "MECHANISM_MEASUREMENT",
+          "affected_layer": "experiment_identifiability",
+          "title": "Persistent-state divergence is not downstream behavioral authority",
+          "summary": "A controlled update can robustly change durable memory while native behavioral transport is sparse. Measure write, exposure, policy uptake, and outcome separately; do not infer downstream control from state distance alone.",
+          "source_refs": [
+            "repo://Obsidian/Papers/C1 - Reward Errors Change Memory Before Policy.md",
+            "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json#sha256=d127ea711288fc6455923198e48bdc9c6674663ad210aca30372256270b31d74"
+          ],
+          "reopen_condition": "A future claim may collapse the stages only if a preregistered intervention shows stable monotone transport from the persistent-state change through exposure and action uptake to held-out outcomes under matched evidence and budget.",
+          "reusable_precheck": "For every persistent update experiment, report at least one state-change metric and one downstream uptake/outcome metric, and localize the first stage where the treatment effect attenuates or changes sign.",
+          "opposite_search_seed": "Search for updates with matched durable-state divergence but different exposure/uptake transport, or matched exposure with different action uptake, to identify the missing transport variable."
+        },
+        {
+          "lesson_id": "LS-RESULT-LOCATOR-VALIDITY-AUTHORITY-SEPARATION",
+          "candidate_id": "C1-CBRG",
+          "lesson_type": "EVIDENCE_AUTHORITY",
+          "affected_layer": "operationalization",
+          "title": "Evidence location, semantic validity, and behavioral authority are distinct gates",
+          "summary": "Finding an exact source span or high-similarity anchor only makes a claim auditable. It does not establish support versus contradiction and cannot grant treatment-specific behavioral authority without a separately qualified outcome-independent adjudicator.",
+          "source_refs": [
+            "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json#sha256=d127ea711288fc6455923198e48bdc9c6674663ad210aca30372256270b31d74",
+            "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-semantic-readiness-audit-20260824.json#sha256=f854b1957d884ba6528cf860b4d39e90689ff580072ad9373505578f1c8052ab"
+          ],
+          "reopen_condition": "Collapse locator and validity only if an independently frozen rule proves that the locator deterministically entails the required support/contradiction semantics on the target scientific object; similarity alone is insufficient.",
+          "reusable_precheck": "When evidence controls an update, implement three explicit states: located/unlocated, semantically supported/contradicted/unverifiable, and authority granted/withheld. Test and receipt them separately.",
+          "opposite_search_seed": "Search for cases with equally strong evidence anchors but opposite semantic validity, or equally supported claims with different downstream authority consequences."
+        },
+        {
+          "lesson_id": "LS-RESULT-QUALIFICATION-STOP-NOT-METHOD-FAIL",
+          "candidate_id": "C1-CBRG",
+          "lesson_type": "RESULT_INTERPRETATION",
+          "affected_layer": "method_realization",
+          "title": "Qualification/support STOP is not a method-effect or scientific failure",
+          "summary": "If a proposed method cannot independently qualify a required validity signal before execution, the current realization should STOP/MERGE without fabricating a verifier. This blocks the method experiment but does not falsify an unrun method effect or independently established phenomenon/mechanism evidence.",
+          "source_refs": [
+            "repo://paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json#sha256=716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc"
+          ],
+          "reopen_condition": "Reopen only with new content-addressed qualification evidence that existed independently of the terminal outcome, plus the original same-information non-reducibility and collision gates; a renamed baseline or generic model checkpoint is not enough.",
+          "reusable_precheck": "Before interpreting any STOP, name the exact failure layer and whether the claimed treatment was actually executed. Never translate execution/support/qualification failure into method-effect failure or core-principle failure.",
+          "opposite_search_seed": "Search for methods whose required validity signal is independently observable and qualified before method evaluation, so behavioral effect can be tested without self-validation."
+        }
+      ],
+      "paper_guidance": {
+        "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+        "guidance_id": "C1-RESULT-DISTILLATION-GUIDANCE-20260825",
+        "active_archetype": "IDENTIFICATION_MEASUREMENT",
+        "active_story": "reward-label intervention -> durable write divergence -> forced leverage -> native transport boundary -> first-action uptake localization -> cross-domain heterogeneity -> evaluation/design implication",
+        "load_bearing_message": "Memory divergence is not behavioral divergence, and branch-specific memory content is not validated behavioral authority.",
+        "required_paper_only_actions": [
+          "Add a main-text stage-resolved boundary figure with write, retrieval exposure, first-action uptake, forced terminal leverage, native Shopping terminal, Reddit terminal, and outcome-blind control.",
+          "Rewrite Introduction and contribution hierarchy around the scientific mismeasurement: endpoint or memory-state metrics conflate distinct propagation stages.",
+          "State the operational-contrast versus atom-level-causal-purity boundary explicitly and keep 0/423 semantic-validity/authority facts visible.",
+          "Treat CBRG as stopped method-development evidence, not as a verified solution or a missing experiment to be rescued."
+        ],
+        "forbidden_rescue_moves": [
+          "invent a semantic verifier after observing the D0-B2 hold",
+          "promote lexical or embedding similarity to semantic validity",
+          "increase rollout depth or select positive cells to force a method story",
+          "interpret missing qualification infrastructure as proof that C1 or all evidence-gating methods fail"
+        ],
+        "scientific_authority": false,
+        "experiment_authority": false
+      },
+      "authority": {
+        "scientific": false,
+        "method": false,
+        "experiment": false,
+        "provider": false,
+        "gpu": false,
+        "claim_expansion": false,
+        "submission": false
+      }
+    }
+  ],
+  "scientific_authority": false
+}

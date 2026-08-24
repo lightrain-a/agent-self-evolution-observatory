@@ -4,6 +4,7 @@ import copy, tempfile, unittest
 from pathlib import Path
 
 from .research_memory_wiki import audit_certainty_typing, build_research_memory_wiki, compile_research_memory_query_pack, lint_research_memory_wiki, load_research_memory_wiki
+from .result_analysis import build_result_analysis_state
 
 
 def base_inputs():
@@ -79,6 +80,19 @@ class ResearchMemoryWikiTest(unittest.TestCase):
         wiki=self.build();idea=compile_research_memory_query_pack(wiki,purpose="IDEA_SEARCH",context="closed method",max_chars=1800);exp=compile_research_memory_query_pack(wiki,purpose="EXPERIMENT_DESIGN",context="supported effect",max_chars=1800)
         self.assertLessEqual(idea["summary"]["characters"],1800);self.assertLessEqual(exp["summary"]["characters"],1800);self.assertNotEqual(idea["query_pack_sha256"],exp["query_pack_sha256"]);self.assertFalse(idea["scientific_authority"])
 
+    def test_result_analysis_lessons_enter_memory_without_scientific_authority(self):
+        s,f,m,p,i,g,c=base_inputs();result_analysis=build_result_analysis_state()
+        wiki=build_research_memory_wiki(search_design_state=s,failure_asset_library=f,scientific_meta_trace=m,candidate_portfolio=p,experiment_iteration=i,generator_state=g,claim_ledger=c,result_analysis=result_analysis)
+        rows=[r for r in wiki["entries"] if r["kind"]=="DISCOVERY_LESSON" and r.get("source_artifact")=="result_analysis_ledger"]
+        self.assertEqual(len(rows),3)
+        self.assertEqual(wiki["source_manifest"]["result_analysis_records"],1)
+        self.assertEqual(wiki["source_manifest"]["result_analysis_lessons"],3)
+        self.assertTrue(all(r["prompt_eligible"] and r["scientific_authority"] is False and r["principle_update_allowed"] is False for r in rows))
+        by_title={r["title"]:r for r in rows}
+        self.assertIn("Persistent-state divergence is not downstream behavioral authority",by_title)
+        self.assertIn("Evidence location, semantic validity, and behavioral authority are distinct gates",by_title)
+        self.assertIn("Qualification/support STOP is not a method-effect or scientific failure",by_title)
+
     def test_discovery_failure_lessons_guide_idea_search_without_authority(self):
         s,f,m,p,i,g,c=base_inputs();cycle={"lessons":[{"lesson_id":"LS-X","candidate_id":"OLD-X","lesson_type":"SCIENTIFIC_REDUCTION","affected_layer":"problem_novelty","title":"failure-guided mutation","summary":"same-information reduction absorbs the old formulation","source_refs":["receipt:x"],"reopen_condition":"new structural observable forces opposite prediction","reusable_precheck":"run the matched simplification first","opposite_search_seed":"search outside the old reduction basin","scientific_authority":False}]}
         wiki=build_research_memory_wiki(search_design_state=s,failure_asset_library=f,scientific_meta_trace=m,candidate_portfolio=p,experiment_iteration=i,generator_state=g,claim_ledger=c,discovery_cycle=cycle)
@@ -131,6 +145,7 @@ class ResearchMemoryWikiTest(unittest.TestCase):
         self.assertEqual(len(rows),1);row=rows[0]
         self.assertTrue(row["prompt_eligible"]);self.assertEqual(row["durability_class"],"recurring-systemic");self.assertFalse(row["scientific_authority"]);self.assertFalse(row["principle_update_allowed"])
         self.assertEqual(len((row.get("guidance") or {}).get("dimensions") or []),4)
+        result_rule=(row.get("guidance") or {}).get("result_interpretation_rule") or {};self.assertTrue(result_rule.get("required_before_material_story_revision_after_new_results"));self.assertEqual(len(result_rule.get("required_fields") or []),8);self.assertFalse(any((result_rule.get("authority") or {}).values()))
         backlog=(row.get("guidance") or {}).get("paper_development_backlog") or [];self.assertEqual(len(backlog),5);self.assertTrue(all(x.get("maturity")=="INITIAL_DRAFT_NEEDS_DEEPENING" and x.get("paper_only_work_allowed") is True and x.get("may_execute_new_experiments") is False for x in backlog))
         pack=compile_research_memory_query_pack(wiki,purpose="PAPER_DESIGN",context="method related work experiment clarity",max_chars=1800,max_items=8)
         self.assertEqual(pack["selected"][0]["kind"],"PAPER_DEVELOPMENT_GUIDANCE");self.assertIn(row["memory_id"],pack["selected_memory_ids"]);self.assertTrue(pack["policy"]["paper_development_guidance_cannot_authorize_experiments"])
