@@ -94,6 +94,24 @@ class ResearchSystemTest(unittest.TestCase):
         broken["semantic_commit_gap_collision"]["summary"]["sealed_v19_units_consumed"]=1
         self.assertTrue(any("semantic commit gap" in error for error in validate_state(broken)))
 
+    def test_ai4ai_strategy_reopen_contradiction_is_embedded_support_only(self) -> None:
+        screen=self.state["ai4ai_strategy_reopen_contradiction"]
+        summary=screen["summary"]
+        self.assertEqual(screen["status"],"HOLD_SUPPORT_LEAD_NO_SCIENTIFIC_REOPEN")
+        self.assertEqual(summary["outcome_independent_endpoint_supported"],1)
+        self.assertEqual(summary["support_lead"],1)
+        self.assertEqual(summary["recognition_positive_units_verified"],0)
+        self.assertEqual(summary["compute_search_matched"],0)
+        self.assertEqual(summary["scientific_reopen_authorized"],0)
+        self.assertEqual(summary["problem_gate_eligible"],0)
+        self.assertEqual(summary["provider_calls_authorized"],0)
+        self.assertEqual(summary["gpu_authorized"],0)
+        self.assertEqual(summary["sealed_v19_units_consumed"],0)
+        self.assertFalse(screen["scientific_authority"])
+        broken=copy.deepcopy(self.state)
+        broken["ai4ai_strategy_reopen_contradiction"]["summary"]["scientific_reopen_authorized"]=1
+        self.assertTrue(any("AI4AI strategy reopen" in error for error in validate_state(broken)))
+
     def test_failure_memory_projection_drift_is_detected(self) -> None:
         broken=copy.deepcopy(self.state)
         library=broken["failure_asset_library"]

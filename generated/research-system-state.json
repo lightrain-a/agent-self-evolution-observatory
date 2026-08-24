@@ -6763,7 +6763,10 @@
     "material_child_race_debate_eligible": 0,
     "semantic_commit_gap_survivors": 0,
     "semantic_commit_gap_problem_gate_eligible": 0,
-    "semantic_commit_gap_provider_calls_authorized": 0
+    "semantic_commit_gap_provider_calls_authorized": 0,
+    "ai4ai_strategy_reopen_support_lead": 1,
+    "ai4ai_strategy_reopen_scientific_reopen": 0,
+    "ai4ai_strategy_reopen_recognition_positive_units": 0
   },
   "evidence_graph": {
     "schema_version": "1.0",
@@ -88603,5 +88606,162 @@
       "gpu": false
     },
     "collision_sha256": "ca88136df01d8739b83c19a07437f1668b6e731e99b9345012e705533738a0a5"
+  },
+  "ai4ai_strategy_reopen_contradiction": {
+    "schema_version": "1.0",
+    "generated_at": "2026-08-24T02:14:16+00:00",
+    "candidate_id": "AI4AI-STRATEGY-REOPEN-CONTRADICTION-20260824",
+    "title": "AI4AI-Bench as contradictory evidence for strategy reopening",
+    "status": "HOLD_SUPPORT_LEAD_NO_SCIENTIFIC_REOPEN",
+    "target_existing_object": "STRATEGY-REOPEN-C01",
+    "target_existing_object_status": "PRE_RESEARCHITEM_PROBLEM_FROZEN_SUBSTRATE_QUALIFICATION_HOLD",
+    "source_facts": {
+      "paper": {
+        "ref": "arXiv:2608.20318",
+        "title": "AI4AI-Bench: Benchmarking LLM Agents in Algorithmic Design for Recursive Self-Improvement",
+        "publication_date": "2026-08-20",
+        "primary_url": "https://arxiv.org/abs/2608.20318",
+        "primary_sha256": "b87040912edd6e714dac687a77b0ecd4d2e720c8385e0ebdfacba32367e234ee",
+        "fulltext_sha256": "c02902de7d9a238934f62fe96cf9332b0e0039081d9dcba8110d76d744d3ef85"
+      },
+      "protocol": {
+        "development_window": "4 hours on one B300 per task",
+        "submission_boundary": "Only the final source-code patch crosses into the fresh formal run; exploration weights/cache/notes do not.",
+        "formal_verification": "Submitted source is rerun from a clean start for up to 12 hours and scored by a fixed evaluator unavailable during exploration."
+      },
+      "outcome_independent_action_surface": {
+        "classifiable_submissions": 263,
+        "run_side_only": 141,
+        "touch_learning_procedure": 122,
+        "learning_families": [
+          "loss/objective",
+          "supervision",
+          "update rule",
+          "training data"
+        ],
+        "interpretation": "The source-patch structure makes whether a submission reaches the learning procedure checkable without using its final benchmark score."
+      },
+      "aggregate_effort_delta": {
+        "lowest_to_highest_effort_learning_touch_share": [
+          0.08,
+          0.64
+        ],
+        "lowest_to_highest_effort_mean_score": [
+          0.094,
+          0.196
+        ],
+        "codex_median_evaluations_per_task": [
+          4,
+          16
+        ],
+        "codex_median_edited_lines": [
+          18,
+          246
+        ],
+        "codex_median_output_tokens": [
+          11000,
+          109000
+        ],
+        "codex_median_exploration_cost_usd": [
+          1.69,
+          34.6
+        ],
+        "interpretation": "Reasoning-effort variation changes search/compute intensity by large factors, so the 8%-to-64% learning-layer shift is not a matched decision-surface intervention."
+      }
+    },
+    "qualification_tests": [
+      {
+        "key": "OUTCOME_INDEPENDENT_STRATEGY_FAMILY_ENDPOINT",
+        "pass": true,
+        "finding": "PASS",
+        "reason": "The final source patch can be structurally classified as run-side-only versus touching the learning procedure before consulting the hidden final evaluator. This is a substantially cleaner high-level action-family endpoint than endpoint utility or post-hoc success labels.",
+        "scientific_consequence": "AI4AI-Bench is a legitimate future substrate lead for the strategy-family endpoint layer."
+      },
+      {
+        "key": "INDEPENDENT_RECOGNITION_POSITIVE_PREFIX",
+        "pass": false,
+        "finding": "FAIL_CURRENT_SOURCE_SUPPORT",
+        "reason": "The current primary paper/repository evidence establishes what the submitted patch changes, but the present audit does not provide source-authored frozen prefixes proving that a low-effort agent had already recognized a mechanism-level reason to abandon the current strategy before it nevertheless stayed run-side-only. A task instruction to improve the training algorithm is not equivalent to independent recognition that the current high-level strategy is disconfirmed.",
+        "scientific_consequence": "The observation cannot distinguish failure to recognize from failure to reopen after recognition."
+      },
+      {
+        "key": "MATCHED_COMPUTE_SEARCH_AND_ACTION_SUPPORT",
+        "pass": false,
+        "finding": "FAIL_CONFOUNDED_BY_REASONING_EFFORT",
+        "reason": "Lowest-to-highest reasoning effort changes not only willingness to touch the learning layer but also the number of evaluations, edited lines, output tokens, and cost. Those are direct changes in search depth/compute, so ordinary capability/search-budget explanations receive the same observed evidence and remain sufficient.",
+        "scientific_consequence": "The aggregate effort comparison cannot identify a strategy-reopening decision-surface residual beyond more search/test-time compute."
+      }
+    ],
+    "strongest_same_information_reduction": {
+      "status": "REDUCED_FOR_CURRENT_REOPEN_CLAIM",
+      "reducer": "reasoning-compute/search-depth plus recognition uncertainty",
+      "prediction": "With more tokens, evaluations, edits, and spend, an agent explores a larger part of the available code/action space and is therefore more likely to reach an algorithmic-change family even if there is no distinct KEEP-versus-REOPEN control bottleneck. Without an independently recognition-positive prefix, low-effort run-side behavior is also compatible with failure to diagnose the need for a strategy change.",
+      "why_ai4ai_does_not_contradict_the_reducer": "AI4AI-Bench varies reasoning effort together with search intensity; it does not hold the decision-call/search budget fixed while manipulating only whether the current high-level strategy is exposed as a decision variable."
+    },
+    "reopen_path": {
+      "status": "SUPPORT_LEAD_ONLY",
+      "required_public_or_provenance_audited_unit": "A source/reviewable AI4AI trajectory prefix in which the agent explicitly and correctly diagnoses a mechanism-level defect requiring a learning-side strategy change before the final patch, paired with a matched prefix/continuation under identical model, harness, task, evidence, proxy observations, action support, wall-clock/evaluation budget, token/decision budget, and proposal interface.",
+      "decisive_intervention": "On independently recognition-positive prefixes, compare explicit content-free STRATEGY_REOPEN against GENERIC_REFLECTION and the local KEEP-versus-RETUNE placebo under the same information and call/search budget; score only the next committed source-defined strategy-family action, before final task outcome is opened.",
+      "go_condition": "A replicated strategy-family switch residual survives both generic reflection and local menu-salience controls under matched compute/search support across multiple task families.",
+      "stop_condition": "Recognition cannot be independently reconstructed, compute/search cannot be matched, or the switch delta is reproduced by generic reflection/local decision-menu salience."
+    },
+    "existing_contract": {
+      "estimand": "Among frozen trace prefixes independently qualified as recognition-positive, the difference in probability of a source-defined high-level strategy-family change between an explicit content-free STRATEGY_REOPEN decision surface and a matched GENERIC_REFLECTION opportunity with identical evidence, tools, history, and decision-call budget.",
+      "same_information_reducer": "ordinary replanning/reflection salience: once the agent receives the same evidence, history, tools, and one extra matched decision call, any apparent reopening effect should be explained by generic reconsideration rather than by exposing strategy as a distinct decision surface",
+      "prespecified_stop_rule": "STOP the current scientific object if generic reflection, a source-artifact replanning baseline, or the matched local-decision placebo reproduces the strategy-reopening effect under the same information and call budget; also STOP if recognition cannot be qualified independently or if observed switches collapse to source-defined within-strategy edits.",
+      "same_substrate_qualification_status": "HOLD_EXACT_SOURCE_NATIVE_REPLAY_NOT_YET_QUALIFIED"
+    },
+    "v19_boundary": {
+      "closure_status": "CLOSED_SUPPORT_NONEXECUTABLE_PRE_HEADROOM_UNRESOLVED",
+      "reopen_condition": "Reopen only with a new outcome-independent execution substrate that guarantees semantic observability for every accepted bounded training action before an API call is made. The task, model, data, strategy payload, boundary definition, and no-task-hop rule remain fixed unless a new candidate identity is created; a reopened unit must first re-establish PRE headroom, and prior NO_EVIDENCE runs cannot be reused as scientific outcomes.",
+      "semantic_observability_asset": "operationalization:semantic-action-observability",
+      "interpretation": "AI4AI-Bench does not repair V19's support/protocol failure and does not authorize reuse of prior NO_EVIDENCE units."
+    },
+    "policy": {
+      "new_primary_evidence_may_reopen_a_scientific_closure_only_after_exact_contract_collision": true,
+      "outcome_independent_endpoint_is_necessary_not_sufficient": true,
+      "recognition_positive_qualification_is_mandatory": true,
+      "reasoning_effort_is_not_a_matched_reopening_intervention": true,
+      "aggregate_success_association_cannot_authorize_reopen": true,
+      "support_lead_is_not_problem_gate_authority": true,
+      "zero_paid_execution_for_this_screen": true,
+      "sealed_v19_units_remain_unconsumed": true
+    },
+    "summary": {
+      "qualification_tests": 3,
+      "qualification_passed": 1,
+      "qualification_failed": 2,
+      "outcome_independent_endpoint_supported": 1,
+      "recognition_positive_units_verified": 0,
+      "compute_search_matched": 0,
+      "support_lead": 1,
+      "contradictory_evidence_sufficient": 0,
+      "scientific_reopen_authorized": 0,
+      "problem_gate_eligible": 0,
+      "research_item_eligible": 0,
+      "provider_calls_authorized": 0,
+      "gpu_authorized": 0,
+      "sealed_v19_units_consumed": 0
+    },
+    "scientific_authority": false,
+    "authority": {
+      "scientific_reopen": false,
+      "problem_gate": false,
+      "research_item": false,
+      "paper_design": false,
+      "method": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false
+    },
+    "source_refs": [
+      "arXiv:2608.20318v1",
+      "primary-fulltext:arXiv:2608.20318#sha256=c02902de7d9a238934f62fe96cf9332b0e0039081d9dcba8110d76d744d3ef85",
+      "https://github.com/Einsia/AI4AI-Bench",
+      "repo:research_pipeline/strategy_reopen_c01_scientific_object.json",
+      "repo:research_pipeline/strategy_reopen_c01_same_substrate_qualification.json",
+      "repo:research_pipeline/v19r003_forced_switch_failure_assets_20260824.json"
+    ],
+    "screen_sha256": "85dfcadc86e99a8a509eb7dd3f5d3744a7959f257b754edf69e8afc151141a35"
   }
 }
