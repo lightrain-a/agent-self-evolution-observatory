@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.1",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "display_code": "E2",
+  "revision": "r12",
+  "date": "2026-08-24",
+  "title": "When Do Reusable Temporal Procedures Actually Repair Agents?",
+  "artifacts": {
+    "pdf": {
+      "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r12-20260824.pdf",
+      "sha256": "9cb7c8d42db26e099cb0ccd37ae0a425fa1725871d2c90d2e5b51a344d023afd"
+    },
+    "source_zip": {
+      "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r12-20260824-source.zip",
+      "sha256": "54e4c3f22f6c50f4fcf01b86ec3eb6d8109a325024c9f8da9f1e07b26dfd857a"
+    },
+    "supplement_zip": {
+      "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r12-20260824-supplement.zip",
+      "sha256": "4d417292657d8c95c36499f359f10fd3f9099e2cb172bff25e4e27b3d05a66a2"
+    },
+    "claim_audit": {
+      "path": "generated/temporal-skill-r12-claim-audit-20260824.json",
+      "sha256": "3e140ad3375854a0dba90f19b920181bb7ae8a9c160baaaab3940afd24cb3f87"
+    },
+    "stanford_closure": {
+      "path": "generated/temporal-skill-r12-stanford-closure-20260824.json",
+      "sha256": "711db8ca5595b9a0f2270789c02b6d7359cb6ef37e56d05ae7547eafcfc680f5"
+    },
+    "reopen_contract": {
+      "path": "generated/temporal-skill-r12-reopen-contract-20260824.json",
+      "sha256": "b810a3ebee0ad0ad43e68b03199174c5e97a19967b2b23eab80da17027dd23a0"
+    },
+    "verification": {
+      "path": "generated/temporal-skill-r12-verification-20260824.json",
+      "sha256": "4ce9e5a9fb20f98a57a75946d95da9833820dd289d1a17cbaa3cbb5aef715994"
+    }
+  },
+  "stable_aliases_modified": false,
+  "new_scientific_execution": false,
+  "new_model_calls": 0,
+  "verification_summary": {
+    "manuscript_claim_boundary_qa": "9/9 PASS",
+    "source_zip_rebuild": "PASS",
+    "source_zip_rebuild_text_identical": true,
+    "pdf_pages": 14,
+    "main_body_conclusion_page": 9,
+    "references_start_page": 10,
+    "raster_pages_checked": 14,
+    "raster_border_clipping_flags": 0,
+    "fonts_embedded": true,
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0
+  },
+  "revision_aliases": {
+    "pdf": "downloads/E2-Temporal-Skill-r12-20260824.pdf",
+    "source_zip": "downloads/E2-Temporal-Skill-r12-20260824-source.zip",
+    "supplement_zip": "downloads/E2-Temporal-Skill-r12-20260824-supplement.zip",
+    "byte_identical_to_named_package": true
+  },
+  "scientific_boundary": {
+    "executed_estimands": [
+      "T_minus_N",
+      "T_minus_G"
+    ],
+    "unexecuted_scientific_reopen_estimands": [
+      "T_minus_G0",
+      "T_minus_R"
+    ],
+    "remaining_scientific_reopen": [
+      "TEMP-O4",
+      "TEMP-O5"
+    ],
+    "permanent_claim_boundary": [
+      "TEMP-O6"
+    ]
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r12-prospective-scientific-reopen-contract",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "display_code": "E2",
+  "revision": "r12",
+  "date": "2026-08-24",
+  "title": "When Do Reusable Temporal Procedures Actually Repair Agents?",
+  "purpose": "Freeze the semantics of the two Stanford-round-2 missing treatments without executing them or upgrading current claims.",
+  "policy": {
+    "design_receipt_only": true,
+    "new_scientific_execution": false,
+    "new_model_calls": 0,
+    "new_provider_calls": 0,
+    "new_gpu_calls": 0,
+    "claim_upgrade_authorized": false,
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "gpu_authority": false,
+    "submission_authority": false
+  },
+  "treatments": {
+    "G0_behavior_neutral_generic_candidate": {
+      "stanford_objection": "TEMP-O4",
+      "status": "UNEXECUTED_PROSPECTIVE_TREATMENT",
+      "question": "Does the targeted temporal operation add value beyond behaviorally neutral extra helper computation?",
+      "surface": "Execute exactly one helper call through the same callable wrapper as targeted/generic, but return an identity projection of the admissible evidence object in its original order.",
+      "forbidden_operations": [
+        "read or compare cutoff_date/release_date for temporal filtering",
+        "map publication dates to reporting periods",
+        "select exogenous grounding events or attribution cues",
+        "filter/re-rank evidence candidates",
+        "inject endpoint-specific facts, labels, expected answers, or gold spans"
+      ],
+      "static_preexecution_validity": [
+        "same input/output wrapper surface as T/G",
+        "one helper execution per assigned endpoint",
+        "no registered temporal-field access",
+        "identity/order preservation over the frozen evidence object",
+        "source, schema, serialization policy, endpoint set, condition schedule, model configuration, decoding, and scorer frozen before outcomes"
+      ],
+      "behavioral_neutrality": {
+        "is_assumption": false,
+        "must_be_empirically_tested": true,
+        "future_preregistration_requirements": [
+          "equivalence margin versus N",
+          "independent endpoint count",
+          "stopping rule",
+          "equivalence/statistical procedure"
+        ],
+        "failure_rule": "If G0 materially helps or harms N under the prospectively frozen neutrality criterion, G0 fails as a neutral control and cannot close TEMP-O4."
+      },
+      "strengthened_operation_claim_gate": "Only after G0 passes its prospective neutrality gate may a strengthened operation claim require T>N and T>G0 on the same independent endpoints; the existing G remains a target-blind stress control.",
+      "current_evidence_contribution": "NONE"
+    },
+    "R_operation_matched_retrieval": {
+      "stanford_objection": "TEMP-O5",
+      "status": "UNEXECUTED_PROSPECTIVE_TREATMENT",
+      "question": "Does callable skill state add value beyond an operation-matched retrieval-side implementation?",
+      "surface": "Apply the same frozen temporal operation upstream during evidence retrieval/context construction and materialize the operation output in retrieved context without the callable-skill wrapper.",
+      "information_parity_requirements": [
+        "same candidate evidence object",
+        "same temporal operation source/hash or mechanically verified behavioral equivalent",
+        "same selected evidence references/span IDs produced by the operation",
+        "same model configuration and decoding",
+        "same endpoint units and outcome scorer",
+        "same prospectively frozen condition schedule",
+        "matched model-call budget"
+      ],
+      "estimand": "Delta_T_minus_R",
+      "interpretation_rules": {
+        "T_approximately_R_at_frozen_resolution": "Supports operation value only; no callable-container advantage.",
+        "R_greater_than_T": "Refutes callable-container superiority for the tested regime.",
+        "prospectively_resolved_T_greater_than_R": "Could motivate a separate container-value claim after scientific reopen; no such result exists now."
+      },
+      "current_evidence_contribution": "NONE"
+    }
+  },
+  "future_execution_prerequisites": [
+    "fresh explicit scientific authority",
+    "fresh explicit experiment authority",
+    "prospectively frozen independent endpoint units",
+    "prospectively frozen numerical decision/equivalence criteria",
+    "no outcome-driven treatment redesign"
+  ],
+  "current_claim_boundary": "R12 estimates only operation value under the executed N/G/T intervention. Behavior-neutral-compute value and callable-container value remain unresolved."
+}
