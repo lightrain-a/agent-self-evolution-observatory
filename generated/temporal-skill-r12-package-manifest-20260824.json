@@ -8,15 +8,15 @@
   "artifacts": {
     "pdf": {
       "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r12-20260824.pdf",
-      "sha256": "9cb7c8d42db26e099cb0ccd37ae0a425fa1725871d2c90d2e5b51a344d023afd"
+      "sha256": "f68eb519c6a882492d093852d02aed002504b5425a65b49fb3f1e65c5756c724"
     },
     "source_zip": {
       "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r12-20260824-source.zip",
-      "sha256": "54e4c3f22f6c50f4fcf01b86ec3eb6d8109a325024c9f8da9f1e07b26dfd857a"
+      "sha256": "92efc41e9d57d494869fa3479380b368dca757df0cde7d7d3e0b46092b2de83b"
     },
     "supplement_zip": {
       "path": "downloads/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK-stanford-template-r12-20260824-supplement.zip",
-      "sha256": "4d417292657d8c95c36499f359f10fd3f9099e2cb172bff25e4e27b3d05a66a2"
+      "sha256": "3ee9d40b106b36469610fa7008bf19c73ece5d034faa903783f2e549cc572f59"
     },
     "claim_audit": {
       "path": "generated/temporal-skill-r12-claim-audit-20260824.json",
@@ -32,7 +32,7 @@
     },
     "verification": {
       "path": "generated/temporal-skill-r12-verification-20260824.json",
-      "sha256": "4ce9e5a9fb20f98a57a75946d95da9833820dd289d1a17cbaa3cbb5aef715994"
+      "sha256": "fbafb4306fdbd20762fa0c4105483b4a7b1a0da395398a2a6635f2725f187726"
     }
   },
   "stable_aliases_modified": false,
