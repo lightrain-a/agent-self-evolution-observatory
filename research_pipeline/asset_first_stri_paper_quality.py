@@ -62,6 +62,15 @@ MEDIATOR_V1_CONTRACT = "generated/asset-first-stri-autoskill-p19-mediator-isolat
 MEDIATOR_V1_DIAGNOSIS = "generated/asset-first-stri-autoskill-p19-mediator-isolation-v1-diagnosis-20260819.json"
 MEDIATOR_V2_CONTRACT = "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-contract-20260819.json"
 MEDIATOR_V2_RESULT = "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json"
+MULTITASK_QUAL = "generated/asset-first-stri-autoskill-multitask-qualification-20260824.json"
+MULTITASK_QUAL_CSV = "generated/asset-first-stri-autoskill-multitask-qualification-20260824.csv"
+MULTITASK_CONTRACT = "generated/asset-first-stri-autoskill-multitask-pilot-contract-20260824.json"
+MULTITASK_RUN_MANIFEST = "generated/asset-first-stri-autoskill-multitask-pilot-run-manifest-20260824.json"
+MULTITASK_STAGE1 = "generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json"
+MULTITASK_STAGE1_CSV = "generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.csv"
+MULTITASK_FAILURE = "generated/asset-first-stri-autoskill-multitask-pilot-failure-lesson-20260824.json"
+MULTITASK_CODE = "research_pipeline/asset_first_stri_autoskill_multitask_pilot_20260824.py"
+MULTITASK_TEST = "research_pipeline/test_asset_first_stri_autoskill_multitask_pilot_20260824.py"
 CERTIFICATE_CODE = "research_pipeline/asset_first_stri_certificate.py"
 CERTIFICATE_TEST = "research_pipeline/test_asset_first_stri_certificate.py"
 PRUNING_BASELINE = "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
@@ -172,7 +181,7 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     analysis = json.loads(analysis_path.read_text(encoding="utf-8")) if analysis_path.exists() else {}
     q = analysis.get("quality_v2_evidence") if isinstance(analysis.get("quality_v2_evidence"), dict) else {}
     controller_refs = [CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST]
-    dynamic_refs = [DYNAMIC_QUALIFICATION, DYNAMIC_CONTRACT, DYNAMIC_PLAN, DYNAMIC_RESULT, DYNAMIC_RUN_MANIFEST, MEDIATOR_V1_CONTRACT, MEDIATOR_V1_DIAGNOSIS, MEDIATOR_V2_CONTRACT, MEDIATOR_V2_RESULT]
+    dynamic_refs = [DYNAMIC_QUALIFICATION, DYNAMIC_CONTRACT, DYNAMIC_PLAN, DYNAMIC_RESULT, DYNAMIC_RUN_MANIFEST, MEDIATOR_V1_CONTRACT, MEDIATOR_V1_DIAGNOSIS, MEDIATOR_V2_CONTRACT, MEDIATOR_V2_RESULT, MULTITASK_QUAL, MULTITASK_QUAL_CSV, MULTITASK_CONTRACT, MULTITASK_RUN_MANIFEST, MULTITASK_STAGE1, MULTITASK_STAGE1_CSV, MULTITASK_FAILURE, MULTITASK_CODE, MULTITASK_TEST]
     certificate_refs = [CERTIFICATE_CODE, CERTIFICATE_TEST]
     offline_refs = [OFFLINE_COMPLETION_ANALYSIS, OFFLINE_COMPLETION_ANALYSIS_CODE, OFFLINE_COMPLETION_ANALYSIS_TEST]
     structural_refs = [TARGET_NULL_ANALYSIS, TARGET_NULL_ANALYSIS_CODE, WITNESS_PEELING, WITNESS_PEELING_CODE, SUPPORT_EDIT_RADIUS, SUPPORT_EDIT_RADIUS_CODE, STRUCTURAL_ENRICHMENT_TEST]
@@ -335,15 +344,41 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
         and (mediator_groups.get("F_cleanup_control") or {}).get("positive") == 0
         and mediator_stats.get("gate_pass_exact") is True
     )
+    multitask_qual = json.loads((project_root / MULTITASK_QUAL).read_text(encoding="utf-8"))
+    multitask_contract = json.loads((project_root / MULTITASK_CONTRACT).read_text(encoding="utf-8"))
+    multitask_manifest = json.loads((project_root / MULTITASK_RUN_MANIFEST).read_text(encoding="utf-8"))
+    multitask_stage1 = json.loads((project_root / MULTITASK_STAGE1).read_text(encoding="utf-8"))
+    multitask_failure = json.loads((project_root / MULTITASK_FAILURE).read_text(encoding="utf-8"))
+    multitask_stop_pass = (
+        multitask_qual.get("selection_outcome_blind") is True
+        and int(((multitask_qual.get("summary") or {}).get("screened_units") or 0)) == 9
+        and int(((multitask_qual.get("summary") or {}).get("qualified_units") or 0)) == 9
+        and [row.get("unit_id") for row in (multitask_contract.get("selected_units") or [])] == ["skillmisevo-coding-22-P21", "skillmisevo-coding-21-P19"]
+        and int(multitask_manifest.get("run_count") or 0) == 8
+        and multitask_manifest.get("all_valid") is True
+        and multitask_stage1.get("decision") == "STOP_EXPANSION_STAGE1_GATE_NOT_MET"
+        and multitask_stage1.get("all_executions_valid") is True
+        and multitask_stage1.get("stage1_gate_pass") is False
+        and multitask_stage1.get("stage2_repeat_runs_authorized") is False
+        and multitask_stage1.get("remaining_seven_units_authorized") is False
+        and int(multitask_stage1.get("new_agent_runs") or 0) == 8
+        and int(multitask_stage1.get("judge_calls") or 0) == 0
+        and int(multitask_stage1.get("new_gpu_runs") or 0) == 0
+        and multitask_stage1.get("claim_expansion") is False
+        and ((multitask_stage1.get("per_unit") or {}).get("skillmisevo-coding-22-P21") or {}).get("diagnosis") == "CONTROL_NONCONCORDANCE_NO_SPLIT_SPECIFIC_ATTRIBUTION"
+        and ((multitask_stage1.get("per_unit") or {}).get("skillmisevo-coding-21-P19") or {}).get("diagnosis") == "NO_ACTION_SIGNATURE_SEPARATION"
+        and multitask_failure.get("memory_class") == "FAILURE_ASSET"
+        and multitask_failure.get("stop_class") == "PREREGISTERED_PILOT_GATE_STOP"
+    )
     body_path = project_root / PAPER_BODY
     tables_path = project_root / PAPER_TABLES
     body = body_path.read_text(encoding="utf-8") if body_path.exists() else ""
     tables = tables_path.read_text(encoding="utf-8") if tables_path.exists() else ""
     manuscript_ablation = "\\label{fig:ablation-robustness}" in body and "representation ablations" in body.lower()
-    manuscript_failure = all(marker in body for marker in ("Across 49 tools", "overlap-without-witness", "equalizable", "Package-wide support overstatement"))
+    manuscript_failure = all(marker in body for marker in ("Across 49 tools", "overlap-without-witness", "equalizable", "package-wide overstatement is a boundary"))
     manuscript_sensitivity = all(marker in body for marker in ("1,387", "366 valid deletions", "127/595", "184 tool-block", "49/56", "Exact neutral-target MILPs require at least 22 added cells", "71 deletions", "200 degree-preserving bipartite rewirings", "7/7 frozen target rays", "max-share", "22 pairwise-disjoint three-row witnesses", "19 tools"))
     manuscript_breadth = all(marker in (body + tables) for marker in ("98.33", "NNLS", "Heldout", "leave-one-tool-out", "6.10", "budgets 1--2 cannot cover Level-1", "SkillRouter", "11/12 targets", "k=13", "non-dynamic-ID duplicate", "AgentSkillOS", "20/30 tasks", "analogue $R^*=2.5$", "relevance/oracle-set analogues", "79/87 rows disagree"))
-    manuscript_dynamic = all(marker in body for marker in ("AutoSkill: dynamic behavioral propagation", "6/6 original", "0/6 split", "3/3 placebo", "3/3 quotient", "0.00108", "matched cleanup add-back", "1/20"))
+    manuscript_dynamic = all(marker in body for marker in ("AutoSkill: dynamic behavioral propagation", "6/6 original", "0/6 split", "3/3 placebo", "3/3 quotient", "0.00108", "matched cleanup add-back", "1/20", "qualified 9/9 held-out units", "8/8 valid A/B/C/D runs", "repeat-2 and the remaining seven units were stopped", "not sufficient for task-general behavioral propagation"))
     manuscript_scale = all(marker in body for marker in ("E6: conditional solver cost", "16{,}384\\times96", "0.765", "32,768 inequalities", "24.25 MiB", "host-load-dependent"))
     manuscript_refs = [PAPER_BODY, PAPER_TABLES, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, *offline_refs, *structural_refs, *breadth_refs]
     visual_review = {"caption_claim_aligned": True, "legible_labels": True, "legend_or_direct_labels": True, "non_deceptive_scale": True, "source_data_versioned": True}
@@ -369,13 +404,13 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
             completed("AN-FAILURE"),
             {"id": "AN-SENSITIVITY", "status": "PASS" if completed("AN-SENSITIVITY")["status"] == "PASS" and offline_completion_pass and structural_enrichment_pass and experimental_breadth_pass and manuscript_sensitivity and manuscript_breadth else "PLANNED", "artifact_refs": analysis_refs if completed("AN-SENSITIVITY")["status"] == "PASS" and offline_completion_pass and structural_enrichment_pass and experimental_breadth_pass and manuscript_sensitivity and manuscript_breadth else []},
             completed("AN-UNCERTAINTY", allow_scoped=True),
-            {"id": "AN-DYNAMIC-CONSEQUENCE", "status": "PASS" if dynamic_pass else "PLANNED", "artifact_refs": dynamic_refs if dynamic_pass else []},
+            {"id": "AN-DYNAMIC-CONSEQUENCE", "status": "PASS" if dynamic_pass and multitask_stop_pass else "PLANNED", "artifact_refs": dynamic_refs if dynamic_pass and multitask_stop_pass else []},
             {"id": "O-MAIN", "status": "PASS", "artifact_refs": existing_reduction + controller_refs},
             {"id": "O-ABLATION", "status": "PASS" if manuscript_ablation else "PLANNED", "artifact_refs": manuscript_refs if manuscript_ablation else []},
             {"id": "O-MECHANISM", "status": "PASS", "artifact_refs": existing_coherence + existing_reduction + controller_refs},
             {"id": "O-FAILURE", "status": "PASS" if manuscript_failure else "PLANNED", "artifact_refs": manuscript_refs if manuscript_failure else []},
             {"id": "O-SENSITIVITY", "status": "PASS" if manuscript_sensitivity and manuscript_breadth and offline_completion_pass and structural_enrichment_pass and experimental_breadth_pass and manuscript_scale else "PLANNED", "artifact_refs": manuscript_refs if manuscript_sensitivity and manuscript_breadth and offline_completion_pass and structural_enrichment_pass and experimental_breadth_pass and manuscript_scale else []},
-            {"id": "O-DYNAMIC", "status": "PASS" if dynamic_pass and manuscript_dynamic else "PLANNED", "artifact_refs": [PAPER_BODY, *dynamic_refs] if dynamic_pass and manuscript_dynamic else []},
+            {"id": "O-DYNAMIC", "status": "PASS" if dynamic_pass and multitask_stop_pass and manuscript_dynamic else "PLANNED", "artifact_refs": [PAPER_BODY, *dynamic_refs] if dynamic_pass and multitask_stop_pass and manuscript_dynamic else []},
         ],
         "visualizations": visualizations,
         "claims": {
@@ -389,7 +424,7 @@ def build_stri_completion(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
 def build_asset_first_stri_paper_quality(project_root: Path = PROJECT_ROOT) -> dict[str, Any]:
     quality = build_stri_quality_contract()
     completion = build_stri_completion(project_root)
-    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, OFFLINE_COMPLETION_ANALYSIS, OFFLINE_COMPLETION_ANALYSIS_CODE, OFFLINE_COMPLETION_ANALYSIS_TEST, TARGET_NULL_ANALYSIS, TARGET_NULL_ANALYSIS_CODE, WITNESS_PEELING, WITNESS_PEELING_CODE, SUPPORT_EDIT_RADIUS, SUPPORT_EDIT_RADIUS_CODE, STRUCTURAL_ENRICHMENT_TEST, PRACTICAL_BASELINES, PRACTICAL_BASELINES_CSV, PRACTICAL_BASELINES_CODE, PRACTICAL_BASELINES_TEST, CROSSVAL_SPARSITY, CROSSVAL_SPARSITY_CSV, CROSSVAL_SPARSITY_CODE, CROSSVAL_SPARSITY_TEST, SKILLRL_BUDGET_BASELINES, SKILLRL_BUDGET_BASELINES_CSV, SKILLRL_BUDGET_BASELINES_CODE, SKILLRL_BUDGET_BASELINES_TEST, SKILLROUTER_RELEVANCE, SKILLROUTER_RELEVANCE_CSV, SKILLROUTER_RELEVANCE_CODE, SKILLROUTER_RELEVANCE_TEST, SKILLSBENCH_SUPPORT_QUAL, SKILLSBENCH_SUPPORT_QUAL_CSV, SKILLSBENCH_SUPPORT_QUAL_CODE, SKILLSBENCH_SUPPORT_QUAL_TEST, AGENTSKILLOS_ORACLE, AGENTSKILLOS_ORACLE_CSV, AGENTSKILLOS_ORACLE_CODE, AGENTSKILLOS_ORACLE_TEST, SECOND_SUBSTRATE_QUAL, CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST, DYNAMIC_QUALIFICATION, DYNAMIC_CONTRACT, DYNAMIC_PLAN, DYNAMIC_RESULT, DYNAMIC_RUN_MANIFEST, MEDIATOR_V1_CONTRACT, MEDIATOR_V1_DIAGNOSIS, MEDIATOR_V2_CONTRACT, MEDIATOR_V2_RESULT, CERTIFICATE_CODE, CERTIFICATE_TEST, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
+    source_artifacts = [REDUCTION, COHERENCE, FINAL_REVIEW, PAPER_ANALYSIS, REVIEWER_EXTENSIONS, OFFLINE_COMPLETION_ANALYSIS, OFFLINE_COMPLETION_ANALYSIS_CODE, OFFLINE_COMPLETION_ANALYSIS_TEST, TARGET_NULL_ANALYSIS, TARGET_NULL_ANALYSIS_CODE, WITNESS_PEELING, WITNESS_PEELING_CODE, SUPPORT_EDIT_RADIUS, SUPPORT_EDIT_RADIUS_CODE, STRUCTURAL_ENRICHMENT_TEST, PRACTICAL_BASELINES, PRACTICAL_BASELINES_CSV, PRACTICAL_BASELINES_CODE, PRACTICAL_BASELINES_TEST, CROSSVAL_SPARSITY, CROSSVAL_SPARSITY_CSV, CROSSVAL_SPARSITY_CODE, CROSSVAL_SPARSITY_TEST, SKILLRL_BUDGET_BASELINES, SKILLRL_BUDGET_BASELINES_CSV, SKILLRL_BUDGET_BASELINES_CODE, SKILLRL_BUDGET_BASELINES_TEST, SKILLROUTER_RELEVANCE, SKILLROUTER_RELEVANCE_CSV, SKILLROUTER_RELEVANCE_CODE, SKILLROUTER_RELEVANCE_TEST, SKILLSBENCH_SUPPORT_QUAL, SKILLSBENCH_SUPPORT_QUAL_CSV, SKILLSBENCH_SUPPORT_QUAL_CODE, SKILLSBENCH_SUPPORT_QUAL_TEST, AGENTSKILLOS_ORACLE, AGENTSKILLOS_ORACLE_CSV, AGENTSKILLOS_ORACLE_CODE, AGENTSKILLOS_ORACLE_TEST, SECOND_SUBSTRATE_QUAL, CONTROLLER_AUDIT, CONTROLLER_AUDIT_CODE, CONTROLLER_AUDIT_TEST, DYNAMIC_QUALIFICATION, DYNAMIC_CONTRACT, DYNAMIC_PLAN, DYNAMIC_RESULT, DYNAMIC_RUN_MANIFEST, MEDIATOR_V1_CONTRACT, MEDIATOR_V1_DIAGNOSIS, MEDIATOR_V2_CONTRACT, MEDIATOR_V2_RESULT, MULTITASK_QUAL, MULTITASK_QUAL_CSV, MULTITASK_CONTRACT, MULTITASK_RUN_MANIFEST, MULTITASK_STAGE1, MULTITASK_STAGE1_CSV, MULTITASK_FAILURE, MULTITASK_CODE, MULTITASK_TEST, CERTIFICATE_CODE, CERTIFICATE_TEST, PRUNING_BASELINE, P0E_DIAGNOSIS, P0E_PRINCIPLE, PAPER_BODY, PAPER_TABLES, FIG_OVERVIEW, FIG_WITNESS, FIG_BOUNDARY, FIG_ABLATION, PLOT_OVERVIEW, PLOT_WITNESS, PLOT_BOUNDARY, PLOT_ABLATION]
     source_sha256 = {rel: _sha256(project_root / rel) for rel in source_artifacts}
     audit = audit_manuscript_evidence_completion(
         quality,

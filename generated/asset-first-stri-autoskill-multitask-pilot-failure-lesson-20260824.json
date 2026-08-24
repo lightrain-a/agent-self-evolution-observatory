@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "memory_class": "FAILURE_ASSET",
+  "failure_id": "STRI-AUTOSKILL-MULTITASK-BEHAVIOR-PILOT-STAGE1-STOP-20260824",
+  "title": "Representation-sensitive retrieval is not sufficient for repeatable action-level propagation across held-out tasks",
+  "failure_layer": "behavioral_replication",
+  "stop_class": "PREREGISTERED_PILOT_GATE_STOP",
+  "source_artifacts": [
+    "generated/asset-first-stri-autoskill-multitask-qualification-20260824.json",
+    "generated/asset-first-stri-autoskill-multitask-pilot-contract-20260824.json",
+    "generated/asset-first-stri-autoskill-multitask-pilot-run-manifest-20260824.json",
+    "generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json",
+    "generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.csv"
+  ],
+  "evidence": {
+    "retrieval_qualification": "9/9 held-out units show exact-split semantic-set change while ID-placebo and quotient restore the original set",
+    "behavior_pilot": "8/8 fresh executions valid across two outcome-blind hash-selected held-out units and four arms",
+    "unit_22_P21": "A=B=C on the frozen five-dimensional signature while D differs, so matched controls are not concordant and no split-specific attribution is available",
+    "unit_21_P19": "A=B=C=D on the frozen five-dimensional signature, so retrieval crowd-out produces no separation on the preregistered action-level observable",
+    "stage1_gate_pass": false,
+    "stage2_repeat_runs_executed": 0,
+    "remaining_seven_unit_runs_executed": 0
+  },
+  "lesson": "A first-party retrieval intervention can be robust across tasks without producing a stable downstream effect on a coarse but preregistered action-level observable. Therefore retrieval-set change must not be treated as behavioral propagation, and additional task runs cannot be justified merely because the retrieval gate is positive.",
+  "paper_implication": "Keep the archived P19 result as a bounded existence proof. Report the held-out pilot STOP as a failure boundary; do not generalize P19 into a multi-task behavioral claim.",
+  "reopen_condition": "Reopen multi-task behavioral replication only with a new preregistered design that supplies an independently justified action-level observable with demonstrated control-arm reliability before split outcomes are observed, or a different independently pinned library/substrate with a pre-outcome mechanism-specific behavioral prediction. More held-out tasks, relaxed signature matching, post-hoc action metrics, or outcome-selected units do not reopen this stopped pilot.",
+  "forbidden_rescues": [
+    "run repeat-2 despite stage-1 gate failure",
+    "expand to the remaining seven units under the failed contract",
+    "replace the five-dimensional primary endpoint after seeing pilot outcomes",
+    "select new units using observed behavioral differences",
+    "reinterpret tool-call-count differences as the primary endpoint"
+  ],
+  "new_agent_runs": 8,
+  "new_gpu_runs": 0,
+  "judge_calls": 0,
+  "claim_expansion": false,
+  "scientific_authority": false
+}

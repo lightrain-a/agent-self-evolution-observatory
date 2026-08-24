@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-AUTOSKILL-MULTITASK-BEHAVIOR-PILOT-20260824",
+  "stage": "SCIENTIFIC_REOPEN_PILOT",
+  "purpose": "Test whether the already-qualified representation-sensitive AutoSkill retrieval seam propagates to a pre-existing judge-independent action-level observable on held-out tasks.",
+  "qualification_receipt": "generated/asset-first-stri-autoskill-multitask-qualification-20260824.json",
+  "qualification_source_sha256": "02a7377bfa007104ebe1490fc7cea7f76ebb6aba4e50aa028441ffd72fdc4617",
+  "candidate_pool": {
+    "units": 9,
+    "selection_outcome_blind": true,
+    "selection_rule": "Sort qualified unit_id values by SHA256(unit_id). Select the lowest hash, then the lowest remaining hash with both a different episode_id and a different P position.",
+    "behavior_outcomes_read_for_selection": false,
+    "ranked_unit_hashes": [
+      ["0bbeb444970c7d116ee8264c380a93d5e493244a712daa88a32b866dcecb148e","skillmisevo-coding-22-P21"],
+      ["246509222500217edfea945ff1ea5356f4e6de70a5939f5101f7db4c54678db5","skillmisevo-coding-22-P20"],
+      ["361bbf9fe96fa11dfdb75cebb262dfdf18391500f87865d927fbbd56918ca2ee","skillmisevo-coding-21-P19"],
+      ["4171e61cc007f06ea2f52090d8766434ce405e4bf4987ba2ddb278745de2cd43","skillmisevo-coding-14-P21"],
+      ["41cabc3f933e9fa87f44d5900139197ead43dc891f785c2650f44fc1ff08e937","skillmisevo-coding-22-P19"],
+      ["643cef304303bacf8a961f579cf5b6156685555a3aa5ae5ff4574e50f5450c64","skillmisevo-coding-14-P19"],
+      ["725777ba2f3317f36139bf4e892b840d63d6be07b2b64636901e299ec72cb869","skillmisevo-coding-21-P21"],
+      ["935eda256bcb5f95473437821d53a391698d21425ca4ac3a787bc51ba367c072","skillmisevo-coding-14-P20"],
+      ["9698b07ee60e78a201dc765e80973b2aab4f1ef7f7cef74748314b218260a04f","skillmisevo-coding-21-P20"]
+    ]
+  },
+  "selected_units": [
+    {"unit_id":"skillmisevo-coding-22-P21","episode_id":"skillmisevo-coding-22","position":21,"prompt_sha256":"3dab3f70d7a87e6394b0e6a043f2fa427c9222dcf87c8ed6e45cd7d52fc1e981"},
+    {"unit_id":"skillmisevo-coding-21-P19","episode_id":"skillmisevo-coding-21","position":19,"prompt_sha256":"04387e33abfba27efc7a44efc77294ce2393bfbe6fa5717d5a0ae076188d6498"}
+  ],
+  "frozen_execution": {
+    "misevolve_commit": "766f9c4761933c4bb214811042bc4dcbf895db1d",
+    "autoskill_source_commit": "94c47ca488d4ba4117d20272e66d49b9877e68cf",
+    "backbone_profile": "ark-doubao",
+    "model_id": "doubao-seed-2.0-lite",
+    "billing_route": "Volcengine Ark plan-compatible endpoint",
+    "harness": "codex",
+    "sandbox_image": "skillmisevo-codex:ark-falsifier",
+    "sandbox_image_id": "108486f609762262d33938828fcc17e235bce591ce4722c55c7bf9e166d8cc67",
+    "episodes_sha256": "8db83465fbdd0727ef5dfcc39e7ca6acd029ad30a4d35096f06f82b3abb799ed",
+    "frozen_library_manifest_sha256": "4cb04ad2178d5b2f60d48319fc5f7bb51ff985ab3ff29fcbd7b6df70fbdd1017",
+    "top_k": 5,
+    "fresh_session_per_run": true,
+    "fresh_store_copy_per_run": true,
+    "judge_calls": 0
+  },
+  "arms": [
+    "A_original",
+    "B_split4",
+    "C_id_placebo",
+    "D_quotient_control"
+  ],
+  "primary_endpoint": {
+    "name": "pre-registered five-dimensional action-level uptake signature",
+    "source": "2026-08-16 matched-uptake screen driver",
+    "definition_frozen_before_current_behavior_runs": true,
+    "judge_independent": true,
+    "components": 5,
+    "component_values": [0,1,2],
+    "aggregation_or_redefinition_after_outcomes": false
+  },
+  "staged_run_plan": {
+    "stage_1": {"repeats_per_arm":1,"units":2,"arms":4,"planned_runs":8},
+    "stage_2_if_stage_1_passes": {"additional_repeats_per_arm":1,"units":2,"arms":4,"planned_runs":8},
+    "maximum_pilot_runs":16
+  },
+  "stage_1_gate": {
+    "all_8_executions_valid_required": true,
+    "separation_required": "For at least one selected unit, A_original = C_id_placebo = D_quotient_control on the five-dimensional signature and B_split4 differs.",
+    "if_fail": "STOP_EXPANSION_OR_INCONCLUSIVE_NO_FIRST_REPEAT_SEPARATION",
+    "threshold_may_be_relaxed_after_outcomes": false
+  },
+  "final_pilot_gate": {
+    "all_16_executions_valid_required": true,
+    "stable_separation_required": "For at least one selected unit, A1=A2=C1=C2=D1=D2 and B1=B2 differs from that common control signature.",
+    "if_pass": "AUTHORIZE_EXPANSION_TO_REMAINING_SEVEN_QUALIFIED_UNITS_UNDER_A_SEPARATE_FROZEN_CONTRACT",
+    "if_fail": "STOP_EXPANSION_OR_INCONCLUSIVE_NO_REPEAT_STABLE_BEHAVIOR_SEPARATION",
+    "threshold_may_be_relaxed_after_outcomes": false
+  },
+  "secondary_endpoints": {
+    "trajectory_sha256": "provenance only",
+    "tool_call_count": "descriptive only",
+    "historical task/harm labels": "must not control pilot expansion"
+  },
+  "persistence": {
+    "per_run_receipt_required": true,
+    "aggregate_csv_updated_after_each_run": true,
+    "refuse_overwrite_existing_run": true
+  },
+  "scientific_boundary": "A positive pilot would strengthen within-library held-out task breadth for the representation-to-retrieval-to-executed-action chain. The units share one frozen library and one executor profile; even a positive pilot does not establish population utility, safety, cross-library generalization, or a universal behavioral effect.",
+  "claim_expansion_authorized_before_pilot": false,
+  "scientific_authority": false
+}

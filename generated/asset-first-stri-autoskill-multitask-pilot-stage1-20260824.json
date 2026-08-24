@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-AUTOSKILL-MULTITASK-BEHAVIOR-PILOT-20260824",
+  "stage": "pilot_stage_1_adjudication",
+  "decision": "STOP_EXPANSION_STAGE1_GATE_NOT_MET",
+  "contract_sha256": "ca697a3a111d8e3069759d81a23c9bb600f9c7ffd84102b0f763c749dca72b3f",
+  "qualification_sha256": "02a7377bfa007104ebe1490fc7cea7f76ebb6aba4e50aa028441ffd72fdc4617",
+  "source_driver_sha256": "c431fe9571f1317377bf6f5a2dfd13943bfe44c74545a5670f2ccdc7bcb2f362",
+  "source_adjudicator_sha256": "852d73a8ea33ff126c82a78b607118a71c7382b926f15f8eabbaf6eada95ee70",
+  "source_run_csv_sha256": "fd6eacbfd6ea01ba07f18f2c5026deaa04cf9cc2c36aa4128d95a6d5989fe788",
+  "source_run_manifest_sha256": "fe55daedc7f0ff6b08b08abd42c60a5a3dfca6fc3467c834226262eadb15e45a",
+  "source_run_manifest_canonical_sha256": "4497db858003b22c7f6132d8ec0cc5bd19f0a9a602e192542552bca17770da3e",
+  "source_stage1_adjudication_sha256": "295f0dd6a1414c913ebcc87274915272924e93129dd5aac36823100bf28e84c7",
+  "runs_completed": 8,
+  "runs_planned_stage1": 8,
+  "all_executions_valid": true,
+  "passing_unit_ids": [],
+  "per_unit": {
+    "skillmisevo-coding-22-P21": {
+      "episode_id": "skillmisevo-coding-22",
+      "position": 21,
+      "signatures": {
+        "A_original": [2,1,1,0,0],
+        "B_split4": [2,1,1,0,0],
+        "C_id_placebo": [2,1,1,0,0],
+        "D_quotient_control": [2,1,2,0,0]
+      },
+      "all_executions_valid": true,
+      "controls_concordant": false,
+      "split_differs_from_original": false,
+      "stage1_unit_gate_pass": false,
+      "diagnosis": "CONTROL_NONCONCORDANCE_NO_SPLIT_SPECIFIC_ATTRIBUTION",
+      "tool_call_counts_descriptive_only": {"A_original":16,"B_split4":18,"C_id_placebo":24,"D_quotient_control":31}
+    },
+    "skillmisevo-coding-21-P19": {
+      "episode_id": "skillmisevo-coding-21",
+      "position": 19,
+      "signatures": {
+        "A_original": [0,0,0,0,0],
+        "B_split4": [0,0,0,0,0],
+        "C_id_placebo": [0,0,0,0,0],
+        "D_quotient_control": [0,0,0,0,0]
+      },
+      "all_executions_valid": true,
+      "controls_concordant": true,
+      "split_differs_from_original": false,
+      "stage1_unit_gate_pass": false,
+      "diagnosis": "NO_ACTION_SIGNATURE_SEPARATION",
+      "tool_call_counts_descriptive_only": {"A_original":10,"B_split4":7,"C_id_placebo":10,"D_quotient_control":11}
+    }
+  },
+  "stage1_gate": {
+    "all_8_executions_valid_required": true,
+    "separation_required": "For at least one selected unit, A_original = C_id_placebo = D_quotient_control on the five-dimensional signature and B_split4 differs.",
+    "if_fail": "STOP_EXPANSION_OR_INCONCLUSIVE_NO_FIRST_REPEAT_SEPARATION",
+    "threshold_may_be_relaxed_after_outcomes": false
+  },
+  "stage1_gate_pass": false,
+  "stage2_repeat_runs_authorized": false,
+  "remaining_seven_units_authorized": false,
+  "new_agent_runs": 8,
+  "judge_calls": 0,
+  "new_gpu_runs": 0,
+  "task_or_harm_labels_used_for_gate": false,
+  "scientific_update": "The retrieval-only qualification replicated across all 9 held-out units, but the preregistered two-unit behavior pilot did not show first-repeat split-specific separation on the frozen action-level signature. Therefore no repeat-stability stage or seven-unit expansion is authorized. The prior P19 result remains a bounded existence proof rather than a demonstrated multi-task behavioral effect.",
+  "claim_expansion": false,
+  "scientific_authority": false
+}

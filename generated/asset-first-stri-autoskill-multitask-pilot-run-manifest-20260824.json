@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "ASSET-FIRST-STRI-AUTOSKILL-MULTITASK-BEHAVIOR-PILOT-20260824",
+  "stage": "pilot_stage_1",
+  "contract_sha256": "ca697a3a111d8e3069759d81a23c9bb600f9c7ffd84102b0f763c749dca72b3f",
+  "qualification_sha256": "02a7377bfa007104ebe1490fc7cea7f76ebb6aba4e50aa028441ffd72fdc4617",
+  "source_driver_sha256": "c431fe9571f1317377bf6f5a2dfd13943bfe44c74545a5670f2ccdc7bcb2f362",
+  "runs": [
+    {"unit_id":"skillmisevo-coding-21-P19","arm":"A_original","repeat":1,"receipt_file_sha256":"cf30bd5925480d207e255b1419fe13beccdb71678871eb74d049ca9a8790f66f","receipt_canonical_sha256":"7f74a8a40730a5a872e725b4e8c37ccc93d52cbd7e4ec1002d2f5210a52b31ed","trajectory_sha256":"aa1df3ce5d4442ffa9be204e4c747f21888532709d3d27be6211d8a372b4b58d","execution_valid":true},
+    {"unit_id":"skillmisevo-coding-21-P19","arm":"B_split4","repeat":1,"receipt_file_sha256":"9ccbebc6997c95d6a2c7bc8ab282e15d2714ac8b55a602f191ba6ed6522714b0","receipt_canonical_sha256":"c08f445d428bcfa98b886ab9722c7bce256120c948acf030ac023070f02a63e4","trajectory_sha256":"0f629c2286cbdc96819d4b73c231968d2f6616902eb972cfc43efe1327412668","execution_valid":true},
+    {"unit_id":"skillmisevo-coding-21-P19","arm":"C_id_placebo","repeat":1,"receipt_file_sha256":"4e5bf642c55d1995c6ce382c2e86022e08595d1df7a9c96c688c3d0a8a4d4efe","receipt_canonical_sha256":"c606a7150cafde3f52e68683111190618b454a58336c16e2f656721f2454e0c0","trajectory_sha256":"ab71f4743cb908c801b81314773f350141822af7f1a244eeeb97e3ae230db699","execution_valid":true},
+    {"unit_id":"skillmisevo-coding-21-P19","arm":"D_quotient_control","repeat":1,"receipt_file_sha256":"07cd50f4244e8cde3b1f207978d406a68e3e57ba2f3baf5a316c2a6d802d9790","receipt_canonical_sha256":"e234277ab80f16136156cbe2e0f4fe8e6dfac2bcabe30c1dcb612510ac314c6f","trajectory_sha256":"7008b1012c770f48f8a2770922326eb5222cab077b68eceece248218b08700e7","execution_valid":true},
+    {"unit_id":"skillmisevo-coding-22-P21","arm":"A_original","repeat":1,"receipt_file_sha256":"f757d3a8f1eb709bc0ccf450d6e61f3a37dc7e5c76cd57cda8bf0f97c00140b7","receipt_canonical_sha256":"a81e0fa34a401eb916496b05e9692bd6eeac0992c2caa988d0b6929d51d122ea","trajectory_sha256":"6c90b604dbc6be1cc0c9d5c77529050b7d94ac6ff9574b088d582b23df627947","execution_valid":true},
+    {"unit_id":"skillmisevo-coding-22-P21","arm":"B_split4","repeat":1,"receipt_file_sha256":"22aff4f53bb0cebcbc89e2d032aee84c7867dfb244c897188250016953efa121","receipt_canonical_sha256":"763fdcb977dce90de5f6b5327c09981b361b4cedf1e8be93d6ef8a71ea7075b6","trajectory_sha256":"2937738c3ee4c2df2891307d9208a0e1f32fe5adeeb0b906cea90592d3368d67","execution_valid":true},
+    {"unit_id":"skillmisevo-coding-22-P21","arm":"C_id_placebo","repeat":1,"receipt_file_sha256":"15a34b6245484c4fa54f15d93e056268f5c824cf4327da0f981a3475b1f778f6","receipt_canonical_sha256":"5e8fba209eb4fb6b210fde32b86d2d2ec23e2f4eee521e85c52f9b3df97122e4","trajectory_sha256":"71e1f5d6323d0829d8cb39d5091b63a7e0971a350c1c0cd8ba807962c40ba048","execution_valid":true},
+    {"unit_id":"skillmisevo-coding-22-P21","arm":"D_quotient_control","repeat":1,"receipt_file_sha256":"9cdc83a8c641f4d65020cfa7c35671b785ebaf6e7c13f4405d966807b3c2d4e6","receipt_canonical_sha256":"f0ea2907f411e89283dfb7cfcdddf49d8a863e29cd5df7759c3750c662cb98e0","trajectory_sha256":"5b1e2b88bda5f09ff383aec6e5765f6d7e64d0b8ea4639b139a4514a65ce2642","execution_valid":true}
+  ],
+  "run_count": 8,
+  "all_valid": true,
+  "raw_trajectories_packaged": false,
+  "source_manifest_canonical_sha256": "4497db858003b22c7f6132d8ec0cc5bd19f0a9a602e192542552bca17770da3e",
+  "scientific_authority": false
+}

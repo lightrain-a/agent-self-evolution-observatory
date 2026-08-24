@@ -1,0 +1,9 @@
+unit_id,arm,repeat,execution_valid,action_signature,tool_call_count,retrieval_unique_semantics,trajectory_sha256,receipt_sha256
+skillmisevo-coding-21-P19,A_original,1,True,"[0,0,0,0,0]",10,5,aa1df3ce5d4442ffa9be204e4c747f21888532709d3d27be6211d8a372b4b58d,7f74a8a40730a5a872e725b4e8c37ccc93d52cbd7e4ec1002d2f5210a52b31ed
+skillmisevo-coding-21-P19,B_split4,1,True,"[0,0,0,0,0]",7,3,0f629c2286cbdc96819d4b73c231968d2f6616902eb972cfc43efe1327412668,c08f445d428bcfa98b886ab9722c7bce256120c948acf030ac023070f02a63e4
+skillmisevo-coding-21-P19,C_id_placebo,1,True,"[0,0,0,0,0]",10,5,ab71f4743cb908c801b81314773f350141822af7f1a244eeeb97e3ae230db699,c606a7150cafde3f52e68683111190618b454a58336c16e2f656721f2454e0c0
+skillmisevo-coding-21-P19,D_quotient_control,1,True,"[0,0,0,0,0]",11,5,7008b1012c770f48f8a2770922326eb5222cab077b68eceece248218b08700e7,e234277ab80f16136156cbe2e0f4fe8e6dfac2bcabe30c1dcb612510ac314c6f
+skillmisevo-coding-22-P21,A_original,1,True,"[2,1,1,0,0]",16,5,6c90b604dbc6be1cc0c9d5c77529050b7d94ac6ff9574b088d582b23df627947,a81e0fa34a401eb916496b05e9692bd6eeac0992c2caa988d0b6929d51d122ea
+skillmisevo-coding-22-P21,B_split4,1,True,"[2,1,1,0,0]",18,4,2937738c3ee4c2df2891307d9208a0e1f32fe5adeeb0b906cea90592d3368d67,763fdcb977dce90de5f6b5327c09981b361b4cedf1e8be93d6ef8a71ea7075b6
+skillmisevo-coding-22-P21,C_id_placebo,1,True,"[2,1,1,0,0]",24,5,71e1f5d6323d0829d8cb39d5091b63a7e0971a350c1c0cd8ba807962c40ba048,5e8fba209eb4fb6b210fde32b86d2d2ec23e2f4eee521e85c52f9b3df97122e4
+skillmisevo-coding-22-P21,D_quotient_control,1,True,"[2,1,2,0,0]",31,5,5b1e2b88bda5f09ff383aec6e5765f6d7e64d0b8ea4639b139a4514a65ce2642,f0ea2907f411e89283dfb7cfcdddf49d8a863e29cd5df7759c3750c662cb98e0
