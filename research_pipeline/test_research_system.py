@@ -751,7 +751,7 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_v2_passed"],1)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_source_binding"],1)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_completion"],1)
-        self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_files"],55)
+        self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_content_addressed_files"],59)
         self.assertEqual(self.state["summary"]["asset_first_stri_paper_quality_evidence_debt"],0)
         self.assertEqual(self.state["summary"]["asset_first_stri_official_qa_checks_passed"],self.state["summary"]["asset_first_stri_official_qa_checks_total"])
         self.assertEqual((self.state["summary"]["asset_first_stri_main_text_pages"],self.state["summary"]["asset_first_stri_main_text_page_limit"]),(9,9))

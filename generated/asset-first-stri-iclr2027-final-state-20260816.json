@@ -61,23 +61,23 @@
   },
   "new_gpu_evidence_required_for_current_claim_scope": false,
   "delivery": {
-    "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824",
+    "remote_directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824",
     "pdf": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth.pdf",
-      "sha256": "227c0e47bbb4cddd26bb5823f39d56b9978e2a134185a71ba1b3eb66338721c9"
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/E1-STRI-R17-crossval-sparsity.pdf",
+      "sha256": "0da435717e4871f282c10d1c728292d0dd04e70f87a44dffddfcc190ebdaa553"
     },
     "source_zip": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth-source.zip",
-      "sha256": "4ec82b977f391840fe5e5a7a88d14e94d79c3d8841d1955017da161a1ad24aae",
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/E1-STRI-R17-crossval-sparsity-source.zip",
+      "sha256": "da58aa688e29cf8bc9c5d0914cafa8e47c5bd255d59e06572368705571a960a0",
       "files": 12,
       "isolated_compile_verified": true
     },
     "supplement_zip": {
-      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth-supplement.zip",
-      "sha256": "cdd6272374d7acc37b3620c516fdc1800806ff26233797723fefdbf55a17c5c4",
-      "manifest_sha256": "07cc0b11420c2a7e518fdb23c493da0989203dd419801af54afcff4fbff22e25",
+      "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/E1-STRI-R17-crossval-sparsity-supplement.zip",
+      "sha256": "646fa2d8dd3c20fd9c34d2b76e4a26a56ed4a28066fa44b5929ca42ff5592ab9",
+      "manifest_sha256": "cca7c48fa58fbf1800ed6ce02cc4333a56149ff204095f83e44b0153f1500b45",
       "isolated_reproduction_verified": true,
-      "unit_tests": "29/29 PASS",
+      "unit_tests": "31/31 PASS",
       "identity_path_scan": "PASS",
       "paper_quality_v2_reproduction": "PASS_MANUSCRIPT_EVIDENCE"
     }
@@ -112,7 +112,7 @@
       "sensitivity",
       "uncertainty"
     ],
-    "content_addressed_files": 55
+    "content_addressed_files": 59
   },
   "visual_evidence": {
     "main_figures": 4,
@@ -225,20 +225,25 @@
     "E7_optional_satisfied": true
   },
   "canonical_reconciliation": {
-    "revision": "R16",
-    "canonical_base": "622709f4f2a5c58740fc97dbd080c72aa632a988",
-    "integration_source_head": "a6a7bae8b234902ddcf1f864bbee5391bd4b2a4b",
-    "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/R16-MANIFEST.json",
-    "release_manifest_sha256": "82dc75096c1f6a59f35bd549d19d8373880dfc392558d8e17742c121572628f4",
-    "release_manifest_canonical_sha256": "6a37bbf3a6884411435c6b2c895ba4f6306dda74a66e8590a09865d01afe6908",
+    "revision": "R17",
+    "canonical_base": "849bec25b37d09237683067bc7a098e442d9db4e",
+    "integration_source_head": "0094baffacb62220d8dc455c86fbb5adc8deeb48",
+    "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/R17-MANIFEST.json",
+    "release_manifest_sha256": "f96c4b5a621e10e2f902e9ccf438ed7afc92b93a6b43b551b1e7c7652f3c9653",
+    "release_manifest_canonical_sha256": "868de61141b831188d278e525dbc11e46b77d3cb81297c2f947307d162b9d337",
     "paper_qa": "97/97 PASS",
     "official_iclr_qa": "64/64 PASS",
     "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
-    "paper_quality_content_addressed_files": 55,
+    "paper_quality_content_addressed_files": 59,
     "supplement_reproduction": "PASS",
-    "supplement_unit_tests": "29/29 PASS",
+    "supplement_unit_tests": "31/31 PASS",
     "experimental_breadth": {
       "practical_package_weight_baselines": 10,
+      "leave_one_tool_out_folds": 8,
+      "leave_one_tool_out_exact_R_max": 2.0,
+      "leave_one_tool_out_nnls_R_max": 6.098053181386519,
+      "l1_minimum_feasible_active_packages": 3,
+      "l1_minimum_active_packages_attaining_unrestricted_R_star": 3,
       "skillrl_top_k_values": 8,
       "skillrl_tasks": 223,
       "skillrl_clone_targets": 12,
