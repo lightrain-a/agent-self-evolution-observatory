@@ -1,0 +1,305 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T03:40:18Z",
+  "run_id": "external-fresh-reconstructed-followon-20260824-r1",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "source_window": {
+    "selection_rule": "Independent reconstructed follow-on review of eleven zero-exposure first-party sources co-located with the five named priority sources in the cached 2026-08-23 candidate pool. This artifact explicitly does NOT claim that these eleven are the exact members of the earlier rate-limited r4 preview; no exact length-16 preview manifest containing the five priority IDs was recoverable from recent transactions.",
+    "exact_r4_preview_identity_claim": false,
+    "cached_pool": "fresh-candidate-replenishment-20260823b primary-evidence-pool",
+    "publication_dates": [
+      "2026-08-10",
+      "2026-08-11",
+      "2026-08-12",
+      "2026-08-13"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 11,
+    "exact_prior_exposure_zero": 11,
+    "identity_verified": 11,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "stop_reduction": 4,
+    "scope_excluded": 5,
+    "support_component_only": 2,
+    "watch_reopen_seeds": 1,
+    "exact_r4_preview_identity_claim": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "no_emit_is_not_automatically_a_scientific_dead_end": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "reconstructed_followon_must_not_be_presented_as_exact_rate_limited_preview": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2608.08996",
+      "title": "Multi-agent discovery of practical quantum LDPC codes",
+      "published": "2026-08-10",
+      "source_sha256": "5c76924933eefea38bbd372b299a3bb4417c554dc2de8841c0024f2be9c80ff9",
+      "fulltext_sha256": "993e0ea8ed5c3626f9a774262dd04b9b3d12fd38cb3ec2f5efa7c2d3acb18031",
+      "disposition": "SUPPORT_COMPONENT_ONLY_SEARCH_ARCHITECTURE",
+      "reduction": [
+        "executable-program-evolution",
+        "map-elites-quality-diversity-search",
+        "deterministic-fitness-and-budgeted-verification",
+        "persistent-search-memory"
+      ],
+      "note": "The system couples researcher/curator proposals and persistent lessons to a MAP-Elites archive that mutates executable qLDPC-family generators under a fixed deterministic evaluator. This is strong first-party evidence for a useful scientific-search control architecture, including hypothesis-driven allocation of expensive verification, but the paper provides no matched ablation isolating the scientific-reasoning/memory loop from program evolution, quality-diversity search, and fixed fitness feedback. It therefore supports a component pattern rather than an irreducible self-evolution scientific object.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SCIE-63da8f6c3c1c818d32",
+          "result": "NOT_SATISFIED",
+          "boundary": "No matched state gives the same program population, executable specification, evaluator transcript, candidate/refinement history, generator capability and budget to a strongest program-search/repair baseline while a distinct scientific-memory variable forces a different ex-ante next-search or reachability prediction."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.09119",
+      "title": "Motif 3: Technical Report",
+      "published": "2026-08-10",
+      "source_sha256": "f90e3b483bae4d06112e7c1985a1fd31f1c759cf88bf591fb1a1192144c0cd23",
+      "fulltext_sha256": "c989b4b75ce14bc913bdffe5ef8b4b9d6a7d46689dc9156577afc92755c7355e",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "mixture-of-experts",
+        "multi-teacher-on-policy-distillation",
+        "static-posttraining"
+      ],
+      "note": "Motif 3 is a foundation-model architecture and post-training result. Its on-policy distillation, specialist teachers and routed experts are training mechanisms inside a static released model; the source does not expose an autonomous persistent artifact/update loop whose state evolves during deployment. Agentic benchmark gains therefore do not define a new longitudinal self-evolution object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.09142",
+      "title": "An Agentic Generative Large Language Model for Treatment Planning of Colorectal Cancer",
+      "published": "2026-08-10",
+      "source_sha256": "ce708850a54e3a9f133c8c52a7881f1598bbf5632084d0a11358977fc9a9f5c9",
+      "fulltext_sha256": "",
+      "disposition": "SCOPE_EXCLUDED_STATIC_DOMAIN_AGENT",
+      "reduction": [
+        "domain-pretraining-and-model-merging",
+        "two-stage-posttraining-and-agent-rl",
+        "time-sensitive-rag"
+      ],
+      "note": "GatorOnco combines biomedical pretraining, model merging, post-training, agent-based RL and guideline RAG. The first-party abstract establishes a high-capability domain agent but no deployment-time persistent self-evolution transition. Time-sensitive retrieval changes external evidence, not the agent artifact itself, so this source is outside the current longitudinal self-evolution ProblemGate.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0,
+      "fulltext_available": false
+    },
+    {
+      "ref": "arXiv:2608.09273",
+      "title": "Entropy-based Code Adversarial Translation for Real-world Repository Migration",
+      "published": "2026-08-10",
+      "source_sha256": "5a6cd524fb0f1af01286faaee0835aee4417b68eea157d3645d37a7de153077f",
+      "fulltext_sha256": "4cb5572fa8f852299cca229d747680db4b63fedf3c9cf921a9e57b9feeb84a54",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "verifier-guided-program-repair",
+        "monotone-proxy-objective-acceptance",
+        "successful-trajectory-distillation-and-retrieval"
+      ],
+      "note": "ECAT alternates an isolated discriminator and generator, accepts a repository update only when estimated Code Entropy decreases, and distills successful entropy-reducing trajectories into a shared memory tree. The strongest ablation is the independent discriminator; the memory-tree evidence is primarily optimization efficiency: the same stopping criterion is reached in 38 iterations with memory versus 66 without, with roughly half the tokens. This is explained by verifier-guided repair/CEGIS plus trajectory reuse; no same-information residual identifies the memory tree as a new causal primitive.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SCIE-63da8f6c3c1c818d32",
+          "result": "NOT_SATISFIED",
+          "boundary": "No matched verifier-guided repair baseline receives the same Code-Entropy objective, full discriminator transcript, candidate history, repair surface, memory contents and budget yet makes an opposite ex-ante repair/reachability prediction."
+        },
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Successful/failure-guided repository repair remains ordinary corrective optimization; no structural residual survives matched evidence, edit budget, update count and held-out evaluation."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.09333",
+      "title": "DH-VLM: Dual-Horizon Cooperative Latent Reasoning for Autonomous Driving",
+      "published": "2026-08-10",
+      "source_sha256": "705d89d1641084d13760d208977a9841d95389e34945391a9c115296f9842d72",
+      "fulltext_sha256": "dde943e78447a1096cba240c13e304e9f39629c0670df4c3f36c3597e942b965",
+      "disposition": "SCOPE_EXCLUDED_WITHIN_EPISODE_LATENT_REFINEMENT",
+      "reduction": [
+        "cooperative-latent-communication",
+        "conditional-latent-refinement",
+        "robust-information-fusion"
+      ],
+      "note": "DH-VLM uses infrastructure-provided latent guidance to refine ego-vehicle representations during a single inference episode. Its Infrastructure-Driven Latent Evolution is a forward-pass representation update, not a persistent learned artifact carried across tasks. The failure of naive direct latent injection is therefore a communication/information-fusion robustness result, not longitudinal self-evolution.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.09467",
+      "title": "RecoverFly: A Failure-Aware Reinforcement Learning Post-Training Framework for Aerial Vision-Language Navigation",
+      "published": "2026-08-10",
+      "source_sha256": "c34a8bb578e7dc291430d4675fc82699d5f10ba5be0e1dc8b3dfb9b7b01a8c7f",
+      "fulltext_sha256": "c44a43ca2702772574bb39d253855211f379963ed2b7a11397dfd0402cbdeadc",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "failure-replay",
+        "corrective-rl-posttraining",
+        "curriculum-and-reference-policy-regularization"
+      ],
+      "note": "RecoverFly revisits unresolved navigation failures during token-level RL post-training, adds a long-tail curriculum and reference-policy regularization, and reports held-out success gains. The object is standard failure-focused corrective RL and sample reweighting/post-training; there is no persistent autonomous artifact update at deployment and no matched structural sign-flip beyond corrective adaptation.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Failure replay does not satisfy the strict matched sign-flip contract after equalizing initial policy, failure/success evidence, supervision, update budget and evaluation."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.11152",
+      "title": "Scheduling Mixed RL Rollouts Beyond Prefix Locality",
+      "published": "2026-08-11",
+      "source_sha256": "33c25326b4ee1863fcfb6ccfeb3bb6d10931e0fde10bc8f3629ad58e5ddcc286",
+      "fulltext_sha256": "dc67baf427fc68b763317d98d2bfa43f4f42670ef0c82ff91e56b2470dabde68",
+      "disposition": "SCOPE_EXCLUDED_TRAINING_SERVING_SYSTEM",
+      "reduction": [
+        "rollout-serving-scheduling",
+        "kv-capacity-allocation",
+        "systems-throughput-optimization"
+      ],
+      "note": "MISA-T is an admission/scheduling policy for heterogeneous RL rollout serving. Its principal effects are throughput, iteration time and cache-residency efficiency while matched pass@4 remains within roughly half a point. It changes the training execution substrate, not a scientific self-evolution state or persistent agent artifact.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.11381",
+      "title": "From Numbers to Judgment: Specialist LLM Agents and Reinforcement Learning for European Listed Real Estate",
+      "published": "2026-08-11",
+      "source_sha256": "f6568f70df929944b138dc0e8f51a7e3eb8cfa758da1ec5ba2bf8d538cb91c26",
+      "fulltext_sha256": "8aebbce4ba7926eb53dc54c7ebf6edc4b0f9250e271cb7095201d07eca250ace",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "static-specialist-decomposition",
+        "task-effect-heterogeneity",
+        "grpo-posttraining"
+      ],
+      "note": "Larix holds model, source evidence, task instructions, output schema and scoring fixed while comparing monolithic versus specialist-decomposed prompting; the gain is concentrated in numerical tasks and does not reliably extend to judgment tasks. Subsequent GRPO changes the model policy and improves judgments. This is useful evidence for task-dependent decomposition and post-training, but it contains no persistent autonomous evolution state and is already represented by specialist decomposition/effect-heterogeneity plus standard RL post-training.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-e8e6261008e21c1d8b",
+          "result": "NOT_SATISFIED",
+          "boundary": "No self-evolution-specific variable remains after matching functional specialization/redundancy, source information, coordination budget and policy capacity; task-dependent decomposition gains are sufficient."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.11601",
+      "title": "How Can Driving World Models Do Counterfactual Prediction?",
+      "published": "2026-08-12",
+      "source_sha256": "6edee299e7aecfd0c791431946d85154964259f75621daf16955b65784319957",
+      "fulltext_sha256": "9dc4b09a3fc478b1865a197487dad9c5b061d9a11cdeb7ab7dc34a0e0092957d",
+      "disposition": "SUPPORT_COMPONENT_ONLY_INFORMATION_SUFFICIENCY",
+      "reduction": [
+        "causal-abduction-action-prediction",
+        "information-sufficiency",
+        "counterfactual-world-modeling"
+      ],
+      "note": "The paper shows that direct action-conditioned prediction omits the observed factual continuation needed to preserve episode-specific counterfactual information; a training-free transport/completion construction restores that evidence and improves matched counterfactual recovery. This is strong support for information-sufficiency auditing of world models, but the treatment explicitly changes available evidence. It therefore cannot establish a same-information hidden self-evolution state or reopen a longitudinal object.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-d5f761dcabd8831fff",
+          "result": "NOT_SATISFIED",
+          "boundary": "The compared predictors do not have identical pre-outcome information: the constructive pipeline explicitly transports factual-continuation evidence missing from direct prediction."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.11949",
+      "title": "ExRole: From Team Trajectories to Executable Roles in Multi-Agent Language Models",
+      "published": "2026-08-12",
+      "source_sha256": "f96e158035bac24f99dbd8ac73254b469727e24b48438e07cdd4064f7ac24792",
+      "fulltext_sha256": "3ec140b96367c7b9df64f69445e432203ef7def385e7ef7196e25757105cd0ba",
+      "disposition": "STOP_REDUCTION_WATCH",
+      "reduction": [
+        "future-supervised-trajectory-representation",
+        "clustering-and-role-discovery",
+        "multi-agent-role-conditioning",
+        "turn-aligned-credit-and-optional-lora-routing"
+      ],
+      "note": "ExRole is the strongest near-boundary source in this follow-on: it derives role embeddings from prefix-local team features, trains those embeddings against next-action/future-evidence/final-return targets, freezes the train-derived role library, and shows induced-role gains over no-role/manual/random/shuffled controls plus Role-Agent-Turn interventions. However, the future targets are training supervision, and the frozen role library is loaded for new episodes rather than inferred as an independently evolving deployment state. A same-supervision learned representation/role-MARL baseline receiving identical prefix features and policy-credit information can express the current result; no matched residual beyond that reducer is shown. Preserve only as a watch seed for a future same-information representation test.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-d291eff0df39c5584e",
+          "result": "NOT_SATISFIED",
+          "boundary": "No independently testable role invariant is shown to force a different prediction after a strongest same-supervision trajectory representation plus global clustering/role-learning baseline receives the identical prefix features, future targets, role count, capacity and policy-credit budget."
+        },
+        {
+          "memory_id": "MEM-SEAR-4674f46501819d1414",
+          "result": "NOT_SATISFIED",
+          "boundary": "Shared versus routed capacity is already directly compared and routing is not a stable primary gain; there is no matched non-additive evolution-by-routing interaction."
+        }
+      ],
+      "watch_reopen_seed": true,
+      "identity_verified": true,
+      "prior_exact_exposure": 0
+    },
+    {
+      "ref": "arXiv:2608.13505",
+      "title": "Intern-S2-Preview: Scientific Agentic Foundation Model",
+      "published": "2026-08-13",
+      "source_sha256": "143d32969dcf4d423402a8bdc7a84eb6a165a2fb026aa90ebe112ffac842958f",
+      "fulltext_sha256": "bcfb82ca9a5cacadce95e57ebf1de27fb87229cc50bb2fae5d8dd65a4142aaa1",
+      "disposition": "SCOPE_EXCLUDED_FOUNDATION_POSTTRAINING",
+      "reduction": [
+        "multimodal-pretraining",
+        "multi-task-agentic-rl",
+        "on-policy-distillation",
+        "training-stability-engineering"
+      ],
+      "note": "Intern-S2-Preview is a scientific agentic foundation-model training stack spanning multimodal pretraining, SFT, multi-task/agentic RL and on-policy distillation. Its agentic benchmark gains and training-stability techniques do not expose an autonomous deployment-time artifact that repeatedly updates itself, so they are capability/training evidence rather than a new longitudinal self-evolution mechanism.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "identity_verified": true,
+      "prior_exact_exposure": 0
+    }
+  ],
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
