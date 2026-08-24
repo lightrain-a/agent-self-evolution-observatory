@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "status": "E2_R13_SELECTIVE_PROJECTION_PUBLISHED",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "title": "When Do Reusable Temporal Procedures Actually Repair Agents?",
+  "runtime_valid_rows": 2056,
+  "stable_hashes": {
+    "pdf": "80580931de3e85b5fc68756772a8b5186cbf50c1d29d77dd6935e8fa3b9290de",
+    "source_zip": "1b6a85d3942af1899b9f52df368c00ac981861c048b3fcd8760bc8d4d8da5a8c",
+    "supplement_zip": "710ebd1b56fdec3c984572c68b19d0cf86c368cd55eb15df69beaf45cde705d9"
+  },
+  "other_paper_rows_preserved": true,
+  "scientific_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "573aa05efa5a9e3ac9e78266eef0d495caa9510aa363558c1d066791a2920473"
+}

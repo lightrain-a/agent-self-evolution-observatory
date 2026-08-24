@@ -1,7 +1,7 @@
 {
   "schema_version": "1.6",
-  "generated_at": "2026-08-23T14:58:03+00:00",
-  "source_revision": "c3b16df11e76de3706780dcb836e92d0fee65867",
+  "generated_at": "2026-08-24T04:04:23+00:00",
+  "source_revision": "b568a506613b34e754c4c5d03a7dd2522482184e",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -971,9 +971,9 @@
     },
     {
       "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
-      "title": "When Reusable Temporal Skills Become Causal Bottlenecks in Evolving Time-Series Agents",
-      "central_question": "Are recurring temporal-validity and exogenous-context failures caused by missing reusable procedures that targeted skills can repair beyond generic skill assistance?",
-      "contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+      "title": "When Do Reusable Temporal Procedures Actually Repair Agents?",
+      "central_question": "When does a reusable temporal operation repair a recurring failure, and is callable skill state necessary once operation content and evidence are fixed?",
+      "contract_sha256": "11b28d21ca311b04f2de9a0f312dd45e4b71c809c019c271cb9dab2612e96be5",
       "scientific_status": "READY",
       "current_state": "SUBMISSION_READY",
       "gate_clean_submission_ready": true,
@@ -989,104 +989,88 @@
         "gpu_authority": false
       },
       "review_learning": {
-        "review_receipts": 4,
-        "decision_critical_objections": 11,
+        "review_receipts": 2,
+        "decision_critical_objections": 4,
         "category_counts": {
-          "clarity": 1,
-          "empirical": 1,
-          "empirical-sufficiency": 5,
-          "experimental-design": 1,
-          "generalizability": 1,
-          "infrastructure": 1,
-          "methodology": 1,
-          "novelty": 2,
-          "reproducibility-feasibility": 1,
+          "causal-identification": 1,
+          "external-validity": 1,
+          "reproducibility": 1,
           "scope": 1,
-          "technical-quality": 1
+          "statistics": 1,
+          "treatment-parity": 1
         },
         "evidence_state_counts": {
-          "existing-evidence": 2,
-          "missing-decisive-evidence": 11,
-          "requires-new-claim": 1,
-          "uncertain": 2
+          "existing-evidence": 6
         },
         "action_class_counts": {
-          "human-adjudication": 2,
-          "narrative-repair": 2,
-          "preserve-limitation": 3,
-          "targeted-experiment": 9
+          "narrative-repair": 6
         },
-        "targeted_experiment_proposals": 9,
-        "claim_expansion_requests_preserved_as_limitations": 3,
+        "targeted_experiment_proposals": 0,
+        "claim_expansion_requests_preserved_as_limitations": 0,
         "reviewer_prose_exposed": false,
         "scientific_authority": false,
         "experiment_authority": false,
         "gpu_authority": false
       },
-      "supported_claims": 2,
-      "active_unrefuted_claims": 2,
-      "unsupported_claims": 2,
+      "supported_claims": 4,
+      "active_unrefuted_claims": 0,
+      "unsupported_claims": 3,
       "limitations": [
-        "The TimeSage paper declares a public dataset and code release. The current first-party GitHub repository contains a placeholder README, while the public Hugging Face repository currently exposes only repository metadata. The frozen May 2026 evaluated snapshot is therefore unavailable from these public release points at the time of this audit. Targeted reruns remain support debt until the evaluated snapshot or equivalent first-party artifacts are available.",
-        "The source paper reports aggregate gains from reusable skills and a 0.82$\\times$ token-cost ratio. It does not report the targeted intervention proposed here. The mechanism-specific causal effect therefore remains experiment debt even though the aggregate skill benefit is already observed.",
-        "Failure-family labels must be frozen before intervention outcomes are inspected. Temporal-validity cases require evidence-cutoff errors that can be checked against the benchmark timestamp contract. Exogenous-context cases require a source-grounded attribution target. This annotation pass remains experiment debt for the frozen snapshot.",
-        "A targeted skill can change more than one internal reasoning step. The matched generic-skill control reduces this concern by providing comparable reusable tooling. A stronger control can also match code length and tool-call count. This control refinement remains experiment debt.",
-        "The paper focuses on reusable procedural state. Some recurring failures can arise from model capability limits even when the correct procedure is available. The targeted-skill effect therefore estimates the subset of failures that are repairable through explicit reusable procedures."
+        "The frozen TimeSage-EV evaluated snapshot remains unavailable, so BEA/NOAA/EIA is independent source-native evidence rather than an exact rerun.",
+        "The 35 endpoint units have uneven resolution; Kimi alignment has three endpoints, Kimi same-domain grounding has two, and cross-domain grounding is null.",
+        "G0 neutrality holds only under the frozen +/-10-point rule on the tested DeepSeek and Kimi tracks; it does not make historical G neutral.",
+        "R is a strong same-information integration control for the exact frozen operation output, not an exhaustive equivalence result for all learned retrievers or context budgets.",
+        "Endpoints are independent scientific units; repeats characterize runtime robustness only."
       ],
-      "reopen_conditions": [],
+      "reopen_conditions": [
+        "Reopen callable-container value only if a prospectively matched same-information comparison yields a reproducible material T-R residual beyond 10 points.",
+        "Treat a future first-party TimeSage-EV evaluated snapshot as an external replication target."
+      ],
       "summary": {
-        "events": 72,
-        "allowed_transitions": 8,
+        "events": 94,
+        "allowed_transitions": 16,
         "blocked_transitions": 0,
-        "story_search_receipts": 1,
-        "mock_reviews": 4,
-        "claim_audit_receipts": 2,
-        "manuscript_ci_receipts": 7,
-        "prebuttal_receipts": 2,
-        "submission_readiness_receipts": 1,
-        "contract_revisions": 0
+        "story_search_receipts": 2,
+        "mock_reviews": 6,
+        "claim_audit_receipts": 3,
+        "manuscript_ci_receipts": 8,
+        "prebuttal_receipts": 3,
+        "submission_readiness_receipts": 2,
+        "contract_revisions": 0,
+        "scientific_reopens": 1
       },
       "latest_story_search": {
         "pass": true,
-        "selected_story_id": "S1-CURRENT-CHAIN",
-        "selected_story_title": "Current mechanism chain",
-        "story_search_sha256": "92856a345632fd19a6dd1bb513b4f0754cc3f2a97e7ccc5b4149f48e6e444615",
-        "valid_candidates": 3,
-        "paper_design_memory_query_pack_sha256": "",
-        "paper_design_memory_binding_sha256": "",
-        "paper_design_memory_wiki_sha256": "",
-        "paper_design_memory_selected": 0,
-        "paper_design_review_lessons_selected": 0
+        "selected_story_id": "R13-OPERATION-FIRST",
+        "selected_story_title": "Operation-first identification ladder",
+        "story_search_sha256": "39b74b0a64411092890f1a375b1bfed3bca8f47cc91eb47e57fda8cba04c4fd1",
+        "valid_candidates": 2,
+        "paper_design_memory_query_pack_sha256": "96b8b60bf6ae37db542a14ab4fbf2c616e9d95ee94560718e468bf608bf4ccf3",
+        "paper_design_memory_binding_sha256": "01448d33d95cc6f2cf73d2818cd5a27700f59d8bfa3cba0b49e8c48896f88059",
+        "paper_design_memory_wiki_sha256": "b535c75e7f5424b54931d8539a9e1178979a713640beab0b9895abae30075043",
+        "paper_design_memory_selected": 4,
+        "paper_design_review_lessons_selected": 2
       },
       "mock_pc_modes": {
-        "BLIND_MANUSCRIPT": "2cc6f6570745f3cdae75a3c6988232bb7dfb307098dd4243963f2a4f4e92623f",
-        "ARTIFACT_AWARE": "d0a5647699c32697c9dd1249e0f56d72a80659b015efbf58beeef5cc95d303e1"
+        "BLIND_MANUSCRIPT": "edd5832518c40808db3e38e7b5013d24a96bf7e7503aa856ed332f99dec5394c",
+        "ARTIFACT_AWARE": "76dc003543469bcca4f523709e1b394f9e67b3236c3851c7273591a5fa038780"
       },
       "latest_mock_review": {
-        "mode": "FINAL_MULTI_REVIEW",
-        "review_sha256": "6995ab7e22497a6a98cf5fe1a7490340067c3699dcbc4940c11b658ce37a408f",
+        "mode": "ARTIFACT_AWARE",
+        "review_sha256": "76dc003543469bcca4f523709e1b394f9e67b3236c3851c7273591a5fa038780",
         "summary": {
-          "scores": [
-            8,
-            8,
-            7
-          ],
-          "recommendations": [
-            "accept",
-            "accept",
-            "weak_accept"
-          ],
-          "mean_score": 7.666666666666667,
-          "minimum_score": 7,
-          "decision_critical_blockers": 0
+          "objections": 3,
+          "decision_critical": 2,
+          "targeted_experiment_proposals": 0,
+          "claim_expansion_requests_preserved_as_limitations": 0
         }
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "0dacf3bb271aee32e9bf5513ae0318b8d3355ccf4a0f007076c8f81e9d359120",
+        "claim_audit_sha256": "4aee386e93495dd02053eaf1bfb33aee5d1d1d7ae59d881f1d26f91955942707",
         "blockers": [],
-        "checks": 33,
-        "passed": 33
+        "checks": 31,
+        "passed": 31
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -1097,14 +1081,14 @@
       },
       "latest_prebuttal": {
         "pass": true,
-        "decision_critical": 10,
+        "decision_critical": 4,
         "blockers": [],
         "unresolved_decision_critical": 0
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r10-stanford-round2-zero-call-targeted-repair",
-        "receipt_sha256": "c6f96e9509a87ed0b542524b7da0c1a00190547f1a6a0ba7478c038249acdfa3",
+        "protocol_version": "1.0+r13-g0-retrieval-closure",
+        "receipt_sha256": "b7c1c0ad39e20433cd65d691ccfbcd7dac67c2837c6d710f89fc7df957ae4fbd",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -1125,31 +1109,23 @@
         "scientific_status": "READY",
         "support_blocker": "",
         "external_human_submission_authority_required_for_SUBMITTED": true,
-        "c3_c4_evidence_state": "",
-        "exact_timesage_replication_debt": "",
-        "post_repair_mock_pc_recommendations": [
-          "accept",
-          "accept",
-          "weak_accept"
-        ],
-        "post_repair_mock_pc_scores": [
-          8,
-          8,
-          7
-        ]
+        "c3_c4_evidence_state": "SOURCE_NATIVE_EVIDENCE_BACKED_WITH_EXACT_TIMESAGE_EXTERNAL_REPLICATION_DEBT",
+        "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED",
+        "post_repair_mock_pc_recommendations": [],
+        "post_repair_mock_pc_scores": []
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "c7718b8f8010e2686cdc59c7fb931b5e9259448d53247019e652671f52d08040",
+        "receipt_sha256": "040b22cd6339ee06a6effc4fa762963f4df175f1ef5389568f94669e3600ce5e",
         "blockers": []
       },
       "source_native_evidence": {
-        "runtime_valid_rows": 1326,
+        "runtime_valid_rows": 2056,
         "distinct_endpoints": 35,
         "institutional_systems": 3,
         "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED",
         "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION",
-        "finalization_sha256": "6835cf1cb01a9e5253b344324f52c164458e4357334336ef540b8fc105b4a0a4"
+        "finalization_sha256": "922947d1153a5851ffd8b2bf9e59cc3960b572a505b9271f254040651af97341"
       },
       "latest_transition": {
         "from": "PREBUTTAL",

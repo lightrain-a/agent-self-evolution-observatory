@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r13-canonical-ledger-finalization",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "status": "FINALIZED_R13_SUBMISSION_READY",
+  "before_sha256": "ceab9665dcb94e9bd7deb151981fa2fd9e4f493ebc88a908882344167987a0b4",
+  "after_sha256": "e302e087184b946746cadd357e2a33f8f3ef40c10be777fa5c890d8c1ac5b3e5",
+  "previous_contract_sha256": "a3942d3f7bb384893faf3649ce966419b5729dd6108c7b7b8d5fe76d3ad3025c",
+  "current_contract_sha256": "11b28d21ca311b04f2de9a0f312dd45e4b71c809c019c271cb9dab2612e96be5",
+  "current_state": "SUBMISSION_READY",
+  "title": "When Do Reusable Temporal Procedures Actually Repair Agents?",
+  "runtime_valid_rows": 2056,
+  "TEMP_O4": "RESOLVED_WITH_KIMI_GROUNDING_DOWNGRADE",
+  "TEMP_O5": "RESOLVED_NO_MATERIAL_CALLABLE_CONTAINER_ADVANTAGE",
+  "TEMP_O6": "PERMANENT_CLAIM_BOUNDARY",
+  "submission_authority": false,
+  "scientific_authority": false,
+  "receipt_sha256": "7cfff0ed6b5d0dd01d5d472b60d7f92b2ca45c7613cd9c90d714ee3e8d42de46"
+}
