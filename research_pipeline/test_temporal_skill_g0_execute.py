@@ -34,6 +34,7 @@ class TemporalSkillG0ExecuteTest(unittest.TestCase):
             "bounded_budget": {
                 "model_calls_upper_bound": self.plan["summary"]["planned_model_calls"],
                 "reruns_allowed": False,
+                "resume_missing_only": True,
             },
             "outcome_driven_selection_authorized": False,
             "model_identity": dict(self.plan["model_identity"]),
@@ -48,6 +49,7 @@ class TemporalSkillG0ExecuteTest(unittest.TestCase):
         auth = self.valid_authorization()
         auth.pop("authorization_sha256")
         auth["ark_plan_target_confirmed_and_propagated"] = False
+        auth["ark_plan_target_confirmation_mode"] = ""
         auth["ark_plan_base_url"] = "https://ark.cn-beijing.volces.com/api/v3"
         auth["authorization_sha256"] = execute.canonical_sha(auth)
         errors = execute.validate_authorization(auth, self.plan)
@@ -84,6 +86,25 @@ class TemporalSkillG0ExecuteTest(unittest.TestCase):
     def test_g0_source_matches_frozen_plan(self) -> None:
         self.assertEqual(self.plan["g0"]["source"], execute.G0_SOURCE)
         self.assertEqual(self.plan["g0"]["source_sha256"], execute.sha_bytes(execute.G0_SOURCE.encode("utf-8")))
+
+    def test_checkpoint_is_per_unit_and_idempotent(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "results.json"
+            row = {**self.plan["rows"][0], "runtime_valid": True, "family_success": False,
+                   "resolved_model": self.plan["rows"][0]["required_resolved_model"], "usage": {"total_tokens": 10}}
+            execute.persist_checkpoint(output, row, 0)
+            execute.persist_checkpoint(output, row, 0)
+            csv_rows = execute.load_csv_rows(output.parent / "results.csv")
+            self.assertEqual(len(csv_rows), 1)
+            self.assertTrue((output.parent / "results.jsonl").exists())
+            self.assertEqual(len(list((output.parent / "raw").glob("*.json"))), 1)
+
+    def test_stage_contract_pilot_is_runtime_only(self) -> None:
+        stage = execute.read_json(execute.DEFAULT_STAGE_CONTRACT)
+        self.assertEqual(stage["pilot"]["model_calls"], 12)
+        self.assertFalse(stage["pilot"]["scientific_outcomes_used_for_promotion"])
+        self.assertTrue(stage["checkpoint_policy"]["append_csv_per_unit"])
+        self.assertTrue(stage["checkpoint_policy"]["resume_missing_only"] if "resume_missing_only" in stage["checkpoint_policy"] else stage["full"]["resume_missing_only"])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,53 @@
+{
+  "ark_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "authority_source": "user instruction in active project conversation on 2026-08-24",
+  "authorization_sha256": "a5302bc5b3d19eff457bd8d4efa313a5ef8ba5f21dc9cd38cceada9d860312ae",
+  "bound_analyzer_sha256": "b9993fd52b69e6e8bfebe390c7881a2f97c2faf0df1c1c1373b32545d8bfe0ff",
+  "bound_core_runner_sha256": "394b62c398ea95a38b8d4273a4ca5172f418218456ac1411dc32dc29bb28c276",
+  "bound_crossstage_adjudicator_sha256": "67117482b1d366735674a1d00ec0709ed0c1776a54896092a19b837fe84f292d",
+  "bound_executor_sha256": "e53c5e76f3f337adb5b1527982e5292db3aefb6ea737b61e68d25073cf68b1ab",
+  "bound_plan_body_sha256": "3afa03f00a62a3f0387b536379a98fcaaec4c51bcfedb184055d2881e6f9ac4a",
+  "bound_preflight_sha256": "87791a80667d14b187d121261228eb1fbc85f47c01859f003c11f165afa9adc6",
+  "bound_stage_contract_sha256": "8fbb45fe3ae2957416e8e95fad2662d59fe8e83655589bf706fc697620e66895",
+  "bounded_budget": {
+    "full_remaining_after_pilot": 272,
+    "model_calls_upper_bound": 280,
+    "pilot_model_calls": 8,
+    "reruns_allowed": false,
+    "resume_missing_only": true
+  },
+  "directive": "所有初步试验符合要求，授权后续实验继续跑；先小跑、没问题再全跑；每一步保存CSV中间结果并支持中断恢复。",
+  "execution_authorized": true,
+  "model_identity": {
+    "online_api_v3_route_forbidden": true,
+    "plan_only_billing_route_required": true,
+    "requested_model": "deepseek-v4-pro",
+    "required_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "required_resolved_model": "deepseek-v4-pro-260425"
+  },
+  "online_api_v3_forbidden": true,
+  "outcome_driven_stopping_authorized": false,
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "primary_inference_policy": {
+    "A1_A2_pooling_for_neutrality_GO": false,
+    "A2_standalone_only": true,
+    "margin": [
+      -0.1,
+      0.1
+    ],
+    "scientific_outcomes_used_for_pilot_promotion": false
+  },
+  "provider_spend_authorized": true,
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_reopen_authorized": true,
+  "scope": [
+    "TEMP-O4_G0_A2_INDEPENDENT_NEUTRALITY_REPLICATION",
+    "A2_PILOT_THEN_FULL",
+    "PER_UNIT_CSV_CHECKPOINT_AND_RESUME",
+    "A2_STANDALONE_NO_A1_POOLING",
+    "CROSSSTAGE_ADJUDICATION_ONLY_IF_A2_GO"
+  ],
+  "status": "HUMAN_EXECUTION_AUTHORITY_RECORDED",
+  "submission_authority": false
+}

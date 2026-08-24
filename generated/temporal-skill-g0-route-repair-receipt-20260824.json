@@ -1,0 +1,14 @@
+{
+  "attempted_calls": 1,
+  "planned_required_model": "deepseek-v4-pro-260425",
+  "preserved_results_csv": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-g0-stage-a-deepseek/results.csv",
+  "receipt_type": "TEMP-O4-plan-auto-route-drift",
+  "repair": "direct deepseek-v4-pro model name on unchanged /api/plan/v3 route",
+  "repaired_run": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-g0-stage-a-deepseek-plan-r2",
+  "requested_model": "ark-code-latest",
+  "resolved_model": "doubao-seed-evolving",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_rows_admitted": 0,
+  "status": "ZERO_SCIENTIFIC_AUTHORITY_ROUTE_FAILURE"
+}

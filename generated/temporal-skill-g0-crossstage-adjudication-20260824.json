@@ -1,0 +1,228 @@
+{
+  "A1_integrity": {
+    "duplicate_units": [],
+    "errors": [],
+    "extra_units": [],
+    "invalid_rows": [],
+    "missing_units": [],
+    "observed_rows": 210,
+    "pass": true,
+    "planned_units": 210
+  },
+  "A1_plan_sha256": "d59c64584d08f748d76dd42643da5dc0632f155a5574a0f4df00b67d9a83ed62",
+  "A2_analysis_status": "NEUTRALITY_GO",
+  "A2_neutrality_go": true,
+  "adjudication_type": "TEMP-O4-independent-neutrality-then-A1-operation-specificity",
+  "claim_upgrade_authorized": false,
+  "load_bearing_cells_frozen_before_A2": [
+    [
+      "C3-R",
+      "exogenous_grounding"
+    ],
+    [
+      "C4-R",
+      "exogenous_grounding"
+    ],
+    [
+      "C4-R4",
+      "temporal_cutoff"
+    ]
+  ],
+  "new_positive_cells_authorized": false,
+  "operation_specificity": {
+    "Kimi_support_layer_not_adjudicated": true,
+    "TEMP_O5_not_adjudicated": true,
+    "cell_summaries": {
+      "C3-R4|temporal_cutoff": {
+        "T_minus_G0": {
+          "losses": 0,
+          "mean": 0.625,
+          "n": 4,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 0.125,
+          "ties": 1,
+          "wins": 3
+        },
+        "T_minus_N": {
+          "losses": 0,
+          "mean": 0.625,
+          "n": 4,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 0.125,
+          "ties": 1,
+          "wins": 3
+        },
+        "binding_direction": true,
+        "n_endpoints": 4,
+        "pre_frozen_load_bearing_cell": false
+      },
+      "C3-R|exogenous_grounding": {
+        "T_minus_G0": {
+          "losses": 0,
+          "mean": 0.3,
+          "n": 5,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 0.25,
+          "ties": 3,
+          "wins": 2
+        },
+        "T_minus_N": {
+          "losses": 0,
+          "mean": 0.3,
+          "n": 5,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 0.25,
+          "ties": 3,
+          "wins": 2
+        },
+        "binding_direction": true,
+        "n_endpoints": 5,
+        "pre_frozen_load_bearing_cell": true
+      },
+      "C3-R|release_alignment": {
+        "T_minus_G0": {
+          "losses": 0,
+          "mean": 0.0,
+          "n": 2,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 1.0,
+          "ties": 2,
+          "wins": 0
+        },
+        "T_minus_N": {
+          "losses": 0,
+          "mean": 0.0,
+          "n": 2,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 1.0,
+          "ties": 2,
+          "wins": 0
+        },
+        "binding_direction": false,
+        "n_endpoints": 2,
+        "pre_frozen_load_bearing_cell": false
+      },
+      "C3-R|temporal_cutoff": {
+        "T_minus_G0": {
+          "losses": 0,
+          "mean": 0.0,
+          "n": 5,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 1.0,
+          "ties": 5,
+          "wins": 0
+        },
+        "T_minus_N": {
+          "losses": 0,
+          "mean": 0.0,
+          "n": 5,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 1.0,
+          "ties": 5,
+          "wins": 0
+        },
+        "binding_direction": false,
+        "n_endpoints": 5,
+        "pre_frozen_load_bearing_cell": false
+      },
+      "C4-R4|temporal_cutoff": {
+        "T_minus_G0": {
+          "losses": 0,
+          "mean": 0.625,
+          "n": 8,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 0.03125,
+          "ties": 3,
+          "wins": 5
+        },
+        "T_minus_N": {
+          "losses": 0,
+          "mean": 0.375,
+          "n": 8,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 0.03125,
+          "ties": 3,
+          "wins": 5
+        },
+        "binding_direction": true,
+        "n_endpoints": 8,
+        "pre_frozen_load_bearing_cell": true
+      },
+      "C4-R|exogenous_grounding": {
+        "T_minus_G0": {
+          "losses": 0,
+          "mean": 0.2,
+          "n": 5,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 0.5,
+          "ties": 4,
+          "wins": 1
+        },
+        "T_minus_N": {
+          "losses": 0,
+          "mean": 0.2,
+          "n": 5,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 0.5,
+          "ties": 4,
+          "wins": 1
+        },
+        "binding_direction": true,
+        "n_endpoints": 5,
+        "pre_frozen_load_bearing_cell": true
+      },
+      "C4-R|release_alignment": {
+        "T_minus_G0": {
+          "losses": 0,
+          "mean": 0.0,
+          "n": 3,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 1.0,
+          "ties": 3,
+          "wins": 0
+        },
+        "T_minus_N": {
+          "losses": 0,
+          "mean": 0.0,
+          "n": 3,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 1.0,
+          "ties": 3,
+          "wins": 0
+        },
+        "binding_direction": false,
+        "n_endpoints": 3,
+        "pre_frozen_load_bearing_cell": false
+      },
+      "C4-R|temporal_cutoff": {
+        "T_minus_G0": {
+          "losses": 0,
+          "mean": 0.0,
+          "n": 3,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 1.0,
+          "ties": 3,
+          "wins": 0
+        },
+        "T_minus_N": {
+          "losses": 0,
+          "mean": 0.0,
+          "n": 3,
+          "one_sided_sign_p_negative": 1.0,
+          "one_sided_sign_p_positive": 1.0,
+          "ties": 3,
+          "wins": 0
+        },
+        "binding_direction": false,
+        "n_endpoints": 3,
+        "pre_frozen_load_bearing_cell": false
+      }
+    },
+    "load_bearing_cell_downgrades": [],
+    "stage_a_primary_track_survives_directional_gate": true
+  },
+  "operation_specificity_evaluated": true,
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "schema_version": "1.0",
+  "status": "STAGE_A_PRIMARY_TRACK_SURVIVES_DIRECTIONAL_GATE"
+}

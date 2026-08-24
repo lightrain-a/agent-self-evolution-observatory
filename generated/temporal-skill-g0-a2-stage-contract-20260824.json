@@ -1,0 +1,67 @@
+{
+  "bound_plan_body_sha256": "3afa03f00a62a3f0387b536379a98fcaaec4c51bcfedb184055d2881e6f9ac4a",
+  "checkpoint_policy": {
+    "append_csv_per_unit": true,
+    "append_jsonl_per_unit": true,
+    "atomic_summary_json": true,
+    "fsync_csv_and_jsonl": true,
+    "never_rerun_successfully_checkpointed_unit": true,
+    "persist_after_every_model_call": true,
+    "raw_json_per_unit": true,
+    "resume_key": "endpoint_id|repeat_id|arm"
+  },
+  "contract_id": "TEMP-O4-G0-A2-STAGED-EXECUTION-20260824",
+  "full": {
+    "model_calls_after_pilot": 272,
+    "model_calls_total": 280,
+    "pilot_rows_count_toward_full": true,
+    "resume_missing_only": true
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "pilot": {
+    "model_calls": 8,
+    "promotion_gate": "runtime/protocol/checkpoint integrity only",
+    "row_keys": [
+      "composite-cutoff::doc_70e1e3d18499|r0|N_FRESH",
+      "composite-cutoff::doc_70e1e3d18499|r0|G0_NOOP",
+      "composite-ground::doc_1dfccd3a55dd|r0|G0_NOOP",
+      "composite-ground::doc_1dfccd3a55dd|r0|N_FRESH",
+      "eia-cutoff::doc_4054808c7b19|r0|N_FRESH",
+      "eia-cutoff::doc_4054808c7b19|r0|G0_NOOP",
+      "composite-align::doc_cc293f199ada|r0|N_FRESH",
+      "composite-align::doc_cc293f199ada|r0|G0_NOOP"
+    ],
+    "scientific_outcomes_used_for_promotion": false,
+    "units": [
+      {
+        "endpoint_id": "eia-cutoff::doc_4054808c7b19",
+        "repeat_id": 0
+      },
+      {
+        "endpoint_id": "composite-ground::doc_1dfccd3a55dd",
+        "repeat_id": 0
+      },
+      {
+        "endpoint_id": "composite-align::doc_cc293f199ada",
+        "repeat_id": 0
+      },
+      {
+        "endpoint_id": "composite-cutoff::doc_70e1e3d18499",
+        "repeat_id": 0
+      }
+    ]
+  },
+  "schema_version": "1.0",
+  "scientific_policy": {
+    "A1_A2_pooling_for_primary_forbidden": true,
+    "A2_standalone_primary": true,
+    "T_arm_not_executed_in_A2": true
+  },
+  "stage_contract_sha256": "8fbb45fe3ae2957416e8e95fad2662d59fe8e83655589bf706fc697620e66895",
+  "stop_policy": {
+    "outcome_driven_stopping_forbidden": true,
+    "parse_or_score_failure": true,
+    "resolved_model_drift": true,
+    "runtime_invalid": true
+  }
+}

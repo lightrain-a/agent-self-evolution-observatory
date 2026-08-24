@@ -8,7 +8,7 @@
       "explicit external-human scientific reopen scoped to TEMP-O4/G0",
       "experiment authority bound to this plan_body_sha256",
       "provider-spend authorization / credential-bearing execution environment",
-      "Ark Plan target explicitly set to deepseek-v4-pro and allowed to propagate before execution"
+      "deepseek-v4-pro requested on the frozen Ark Plan /api/plan/v3 route; online /api/v3 forbidden"
     ],
     "scientific": false
   },
@@ -79,12 +79,12 @@
     "fresh_t_required": true,
     "historical_N_or_T_not_substituted_for_fresh_pairing": true,
     "independent_unit": "endpoint",
-    "plan_body_sha256": "d0e0635ce314628894fa4a4eccce9345274289ca2966fc64796c2cf5f31aecd9",
+    "plan_body_sha256": "d59c64584d08f748d76dd42643da5dc0632f155a5574a0f4df00b67d9a83ed62",
     "plan_id": "TEMP-O4-G0-NEUTRALITY-FRESH-3ARM-V1",
     "planned_model_calls": 210,
     "provider_failure_policy": "No outcome-driven replacement. A provider object with no assistant text may be GET-recovered only; do not re-POST the same unit as a hidden replacement.",
     "repeats_per_arm": 2,
-    "requested_model": "ark-code-latest",
+    "requested_model": "deepseek-v4-pro",
     "required_resolved_model": "deepseek-v4-pro-260425",
     "stop_on_resolved_model_drift": true
   },
@@ -92,7 +92,7 @@
     "analyzer_path": "research_pipeline/temporal_skill_g0_analyze.py",
     "analyzer_sha256": "7125f288bb622d67a720341dc92058106e89e03b23b3eb8c4f3f67807aad33f9",
     "runner_path": "research_pipeline/temporal_skill_g0_execute.py",
-    "runner_sha256": "4682f369aac5caf1d583a40477b437eb7d25780c87cf98f8af7edcac26137d39"
+    "runner_sha256": "394b62c398ea95a38b8d4273a4ca5172f418218456ac1411dc32dc29bb28c276"
   },
   "frozen_support_inventory": {
     "family_endpoint_counts": {
@@ -149,7 +149,7 @@
     "source": "def skill(package, context):\n    return {}\n",
     "source_sha256": "4f2fe9670376d6452d8bb10cba5ba2cabd45d88742584c40018c7152b46e1c05"
   },
-  "generated_at": "2026-08-24T01:55:45+00:00",
+  "generated_at": "2026-08-24T02:13:38+00:00",
   "neutrality_contract": {
     "bootstrap_draws": 20000,
     "bootstrap_seed": 20260824,
@@ -188,7 +188,7 @@
     "preflight_has_zero_scientific_result_authority": true
   },
   "purpose": "Freeze Stage A: a behavior-neutral second generic control for the registered DeepSeek primary track before any new provider/model outcome is generated.",
-  "receipt_body_sha256": "a9e1b6c39e219038e5021dc94d9036a9439ce1b24c804355848df8a24ea7f741",
+  "receipt_body_sha256": "4aefe8548274294323b7bff55dad07da52167eaf96115c43edca5b79e61cc2e4",
   "receipt_type": "temporal-skill-g0-scientific-reopen-preflight",
   "runtime_readiness": {
     "ark": {
@@ -199,11 +199,12 @@
       "max_retries": 2,
       "timeout_seconds": 120.0
     },
-    "ark_code_latest_must_resolve_exact_required_model": true,
     "ark_plan_base_url_required": "https://ark.cn-beijing.volces.com/api/plan/v3",
     "credential_ready_in_this_isolated_worktree": false,
-    "direct_deepseek_v4_pro_route_forbidden_by_cost_policy": true,
-    "model_identity_route_requires_ark_plan_target_deepseek_v4_pro": true
+    "direct_deepseek_v4_pro_name_on_plan_v3_allowed": true,
+    "model_identity_route_requires_ark_plan_target_deepseek_v4_pro": true,
+    "online_api_v3_route_forbidden_by_cost_policy": true,
+    "requested_model_must_resolve_exact_required_model": true
   },
   "schema_version": "1.0",
   "status": "HOLD_EXPLICIT_SCIENTIFIC_REOPEN_AND_EXPERIMENT_AUTHORITY",

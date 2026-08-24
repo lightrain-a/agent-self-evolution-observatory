@@ -1,0 +1,52 @@
+{
+  "artifacts": {
+    "a1_analysis_sha256": "d9cb940c7c38f44593d542c499c4b0543171fa76da69f6cd64bbcec1ddeed8c9",
+    "a1_results_csv_sha256": "a2877207b2f350d57e933b93797a8f87461e5201fb3e338fee30132ba877a51b",
+    "a1_results_json_sha256": "d7df1775f18e8043f391aa30816d1faf34f61eb2d3b46855577b953d7b458f9b",
+    "a2_analysis_sha256": "210681be63752e7bb87978edbe15bb471ad27d5067d600c08cffe9b6d3f7cc39",
+    "a2_results_csv_sha256": "187509aacef1baf56385bad4797089f508f29c8e6e00198b954df100fe870b77",
+    "a2_results_json_sha256": "5838ab1842a76aba63807183781c8ab1b11f6c64a81e64d1ac2d3579da810008",
+    "crossstage_sha256": "bd8e0a6411cabb428771f0983b307d43c9c708b32601ab2caf0ac9c179aee28b"
+  },
+  "checks": {
+    "a1_csv_210": true,
+    "a1_integrity_pass": true,
+    "a1_raw_210": true,
+    "a1_runtime_valid_210": true,
+    "a1_status_inconclusive": true,
+    "a2_csv_280": true,
+    "a2_integrity_pass": true,
+    "a2_neutrality_go": true,
+    "a2_raw_280": true,
+    "a2_runtime_valid_280": true,
+    "analyzer_hash_matches_preflight": true,
+    "core_runner_hash_matches_preflight": true,
+    "crossstage_no_load_bearing_downgrades": true,
+    "crossstage_primary_track_survives": true,
+    "kimi_not_yet_adjudicated": true,
+    "temp_o5_not_yet_adjudicated": true
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "receipt_type": "TEMP-O4-DeepSeek-stage-A-A2-verification",
+  "schema_version": "1.0",
+  "scientific_authority": "DeepSeek-primary TEMP-O4 support only; does not close Kimi support layer or TEMP-O5",
+  "status": "PASS_DEEPSEEK_PRIMARY_TRACK_G0_CLOSURE",
+  "submission_authority": false,
+  "summary": {
+    "a1_calls": 210,
+    "a1_neutrality_status": "HOLD_NEUTRALITY_INCONCLUSIVE",
+    "a2_G0_minus_N_ci90": [
+      -0.09285714285714286,
+      0.05
+    ],
+    "a2_G0_minus_N_point": -0.02142857142857143,
+    "a2_calls": 280,
+    "a2_neutrality_status": "NEUTRALITY_GO",
+    "checks": 16,
+    "crossstage_status": "STAGE_A_PRIMARY_TRACK_SURVIVES_DIRECTIONAL_GATE",
+    "failed_auto_route_calls_zero_authority": 1,
+    "passed": 16,
+    "total_scientific_calls": 490
+  },
+  "verification_sha256": "3299ab378066df94b5a533cd558450e37c207cfabb87856ec24156399e832d59"
+}

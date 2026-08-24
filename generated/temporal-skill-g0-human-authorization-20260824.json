@@ -1,0 +1,73 @@
+{
+  "ark_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "ark_plan_target_confirmation_mode": "runtime_first_call_exact_resolved_model_fail_closed",
+  "ark_plan_target_confirmed_and_propagated": true,
+  "ark_plan_target_model": "deepseek-v4-pro",
+  "authority_source": "user instruction in active project conversation on 2026-08-24",
+  "authorization_sha256": "d8bcdba1a8917fbf5f08f1e5514b06c1cf70304ff1f21dfc3921b388388e1d81",
+  "bound_analyzer_sha256": "7125f288bb622d67a720341dc92058106e89e03b23b3eb8c4f3f67807aad33f9",
+  "bound_plan_body_sha256": "d59c64584d08f748d76dd42643da5dc0632f155a5574a0f4df00b67d9a83ed62",
+  "bound_preflight_receipt_body_sha256": "4aefe8548274294323b7bff55dad07da52167eaf96115c43edca5b79e61cc2e4",
+  "bound_runner_sha256": "394b62c398ea95a38b8d4273a4ca5172f418218456ac1411dc32dc29bb28c276",
+  "bound_stage_contract_sha256": "6d1509f7c67a7a155d336b41033ca6875afbc07341a4495e3d7879db2acfa4c4",
+  "bounded_budget": {
+    "full_remaining_after_pilot": 198,
+    "model_calls_upper_bound": 210,
+    "outcome_driven_replacement_allowed": false,
+    "pilot_model_calls": 12,
+    "reruns_allowed": false,
+    "resume_missing_only": true
+  },
+  "checkpoint_requirements": {
+    "append_csv_per_unit": true,
+    "append_jsonl_per_unit": true,
+    "atomic_summary_json": true,
+    "fsync_csv_and_jsonl": true,
+    "never_rerun_successfully_checkpointed_unit": true,
+    "persist_after_every_model_call": true,
+    "raw_json_per_unit": true,
+    "recover_raw_receipt_if_csv_append_was_interrupted": true,
+    "resume_key": "endpoint_id|repeat_id|arm"
+  },
+  "directive": "授权后续实验继续跑；先少量 pilot，无运行问题再跑全部；每一步保存 CSV 中间结果并支持中断恢复。",
+  "execution_authorized": true,
+  "gpu_authorized": false,
+  "model_identity": {
+    "direct_model_name_on_plan_route_allowed": true,
+    "historical_same_env_plan_route_resolved_exact_model": true,
+    "online_api_v3_route_forbidden": true,
+    "plan_only_billing_route_required": true,
+    "requested_model": "deepseek-v4-pro",
+    "required_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "required_plan_target_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-260425"
+  },
+  "outcome_driven_selection_authorized": false,
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "pilot_promotion_rule": {
+    "runtime_protocol_checkpoint_integrity_only": true,
+    "scientific_outcomes_used_for_promotion": false
+  },
+  "provider_spend_authorized": true,
+  "route_repair_basis": {
+    "base_route_unchanged": "/api/plan/v3",
+    "historical_r3_r4_execution_date": "2026-08-22",
+    "historical_requested_model": "deepseek-v4-pro",
+    "historical_resolved_model": "deepseek-v4-pro-260425",
+    "online_api_v3_forbidden": true,
+    "same_env_file_mtime": "2026-08-08"
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_reopen_authorized": true,
+  "scope": [
+    "TEMP-O4_STAGE_A_DEEPSEEK_PRIMARY",
+    "G0_NOOP_BEHAVIOR_NEUTRALITY",
+    "FRESH_N_T_REPLICATION_FOR_SAME_UNITS",
+    "STAGED_PILOT_THEN_FULL",
+    "PER_UNIT_CSV_CHECKPOINT_AND_RESUME",
+    "PLAN_ROUTE_REPAIR_AFTER_AUTO_ALIAS_DRIFT"
+  ],
+  "status": "HUMAN_EXECUTION_AUTHORITY_RECORDED",
+  "submission_authority": false
+}

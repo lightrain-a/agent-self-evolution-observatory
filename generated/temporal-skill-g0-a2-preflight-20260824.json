@@ -1,0 +1,53 @@
+{
+  "authority": {
+    "execution_authorized": false,
+    "scientific_authority": false
+  },
+  "bound_plan_body_sha256": "3afa03f00a62a3f0387b536379a98fcaaec4c51bcfedb184055d2881e6f9ac4a",
+  "bound_stage_contract_sha256": "8fbb45fe3ae2957416e8e95fad2662d59fe8e83655589bf706fc697620e66895",
+  "checkpoint_policy": {
+    "append_csv_per_unit": true,
+    "append_jsonl_per_unit": true,
+    "atomic_summary_json": true,
+    "fsync_csv_and_jsonl": true,
+    "never_rerun_successfully_checkpointed_unit": true,
+    "persist_after_every_model_call": true,
+    "raw_json_per_unit": true,
+    "resume_key": "endpoint_id|repeat_id|arm"
+  },
+  "code": {
+    "analyzer_sha256": "b9993fd52b69e6e8bfebe390c7881a2f97c2faf0df1c1c1373b32545d8bfe0ff",
+    "checkpoint_core_sha256": "394b62c398ea95a38b8d4273a4ca5172f418218456ac1411dc32dc29bb28c276",
+    "crossstage_adjudicator_sha256": "67117482b1d366735674a1d00ec0709ed0c1776a54896092a19b837fe84f292d",
+    "executor_sha256": "e53c5e76f3f337adb5b1527982e5292db3aefb6ea737b61e68d25073cf68b1ab"
+  },
+  "design": {
+    "A1_A2_pooling_for_primary": false,
+    "A2_standalone_primary": true,
+    "arms": [
+      "N_FRESH",
+      "G0_NOOP"
+    ],
+    "calls": 280,
+    "endpoints": 35,
+    "fresh_repeats_per_arm": 4,
+    "margin_unchanged": [
+      -0.1,
+      0.1
+    ],
+    "pilot_calls": 8,
+    "sample_size_basis": "four-repeat precision option existed in the pre-A1 zero-call repeat diagnostic; no margin or outcome threshold was relaxed after A1"
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "parent_A1_ci90": [
+    -0.14285714285714285,
+    0.02857142857142857
+  ],
+  "parent_A1_neutrality_point": -0.05714285714285714,
+  "parent_A1_status": "HOLD_NEUTRALITY_INCONCLUSIVE",
+  "reason": "A1 integrity passed and triggered neither neutrality GO nor non-neutrality STOP. A2 is an independent standalone replication, not a pooled sequential extension.",
+  "receipt_sha256": "87791a80667d14b187d121261228eb1fbc85f47c01859f003c11f165afa9adc6",
+  "receipt_type": "TEMP-O4-G0-A2-independent-neutrality-preflight",
+  "schema_version": "1.0",
+  "status": "READY_WITH_EXPLICIT_USER_AUTHORIZATION"
+}
