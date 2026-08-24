@@ -1,0 +1,56 @@
+{
+  "authority_source": "user instruction in active project conversation on 2026-08-24",
+  "authorization_sha256": "5fdd6a585067b7dbe3d524d388a5d3cb99b25aa9d2e0ad6e6fa98e294c3e9c8a",
+  "bound_analyzer_sha256": "b493163e9833e62147d234427a69c10cd059818b659cde5c18c9b2b27121e4a5",
+  "bound_core_runner_sha256": "394b62c398ea95a38b8d4273a4ca5172f418218456ac1411dc32dc29bb28c276",
+  "bound_executor_sha256": "f91778a424394ae9320ddd15116c6f57b07ea85179acf6bc2051b56f37ac2f7b",
+  "bound_plan_body_sha256": "13bfe161c9c0d200b570f28e0f0bf5020708f5b78cb7c3c8881b6bfe57b1246e",
+  "bound_preflight_sha256": "ebdfd8cf7f0be77adcf298fba26bbbb41bfd9c2d38fac237b42fc6b1ee6e326a",
+  "bound_retrieval_surface_sha256": "ae19010425f210d37add779c779adbd2d2d3314510fabb1926fa6ec0b8ce80b4",
+  "bound_stage_contract_sha256": "55305bce31ebada37eec71cc64055a6c04edd3479849deacc21032815d8f7ff9",
+  "bounded_budget": {
+    "full_remaining_after_pilot": 66,
+    "model_calls_upper_bound": 72,
+    "pilot_model_calls": 6,
+    "reruns_allowed": false,
+    "resume_missing_only": true
+  },
+  "decision_contract": {
+    "R_outperforms_T": "90% CI upper < 0",
+    "bootstrap": "90% endpoint bootstrap stratified by pre-frozen load-bearing cell; 20000 draws; seed 20260824",
+    "claim_policy": "New container-value claim allowed only under container_residual_survives; otherwise paper remains operation-level and may explicitly concede retrieval-side implementation parity/superiority.",
+    "container_residual_survives": "mean T-R >= +0.10, 90% CI lower > 0, and one-sided exact sign p <= 0.05",
+    "material_container_advantage_threshold": 0.1,
+    "no_material_container_advantage": "90% CI upper <= +0.10 and no load-bearing cell has mean T-R >= +0.25 with one-sided exact sign p <= 0.05",
+    "otherwise": "HOLD_CONTAINER_VALUE_INCONCLUSIVE",
+    "primary_estimand": "endpoint-mean T_CALLABLE minus R_RETRIEVAL across 18 pre-frozen primary endpoints"
+  },
+  "directive": "所有初步试验符合要求，授权后续实验继续跑；第一次少跑一点，没问题再跑全部；每一步保存CSV中间结果并支持中断恢复。",
+  "execution_authorized": true,
+  "model_identity": {
+    "online_api_v3_route_forbidden": true,
+    "plan_only_billing_route_required": true,
+    "requested_model": "deepseek-v4-pro",
+    "required_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "required_resolved_model": "deepseek-v4-pro-260425"
+  },
+  "outcome_driven_stopping_authorized": false,
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "pilot_promotion_rule": {
+    "runtime_protocol_checkpoint_parity_only": true,
+    "scientific_outcomes_used_for_promotion": false
+  },
+  "provider_spend_authorized": true,
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_reopen_authorized": true,
+  "scope": [
+    "TEMP-O5_DEEPSEEK_OPERATION_MATCHED_RETRIEVAL",
+    "T_CALLABLE_VS_R_RETRIEVAL",
+    "PILOT_THEN_FULL",
+    "PER_UNIT_CSV_CHECKPOINT_AND_RESUME",
+    "NO_OUTCOME_DRIVEN_REDIRECTION"
+  ],
+  "status": "HUMAN_EXECUTION_AUTHORITY_RECORDED",
+  "submission_authority": false
+}

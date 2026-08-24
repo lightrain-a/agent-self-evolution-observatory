@@ -1,0 +1,77 @@
+{
+  "R_outperforms_T": false,
+  "analysis_type": "TEMP-O5-DEEPSEEK-T-VS-R",
+  "claim_expansion_default": false,
+  "claim_policy": {
+    "new_container_value_claim_authorized": false,
+    "operation_level_claim_remains_valid_if_no_container_advantage": true,
+    "retrieval_side_baseline_must_be_reported": true
+  },
+  "container_residual_survives": false,
+  "integrity": {
+    "duplicates": 0,
+    "extra": 0,
+    "invalid": [],
+    "missing": 0,
+    "observed": 72,
+    "pass": true,
+    "planned": 72
+  },
+  "interpretation": "The experiment rules out a >10pp callable-container advantage at the frozen 90% resolution, with no load-bearing cell-specific positive residual guardrail. The supported story remains operation value, not container superiority.",
+  "no_material_container_advantage": true,
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "plan_body_sha256": "13bfe161c9c0d200b570f28e0f0bf5020708f5b78cb7c3c8881b6bfe57b1246e",
+  "primary": {
+    "T_minus_R_point": 0.0,
+    "bootstrap_90_ci": [
+      -0.05555555555555555,
+      0.05555555555555555
+    ],
+    "cell_summaries": {
+      "C3-R|exogenous_grounding": {
+        "losses": 0,
+        "mean": 0.0,
+        "n": 5,
+        "one_sided_positive_sign_p": 1.0,
+        "one_sided_sign_p_negative": 1.0,
+        "one_sided_sign_p_positive": 1.0,
+        "positive_container_guardrail": false,
+        "ties": 5,
+        "wins": 0
+      },
+      "C4-R4|temporal_cutoff": {
+        "losses": 0,
+        "mean": 0.0,
+        "n": 8,
+        "one_sided_positive_sign_p": 1.0,
+        "one_sided_sign_p_negative": 1.0,
+        "one_sided_sign_p_positive": 1.0,
+        "positive_container_guardrail": false,
+        "ties": 8,
+        "wins": 0
+      },
+      "C4-R|exogenous_grounding": {
+        "losses": 1,
+        "mean": 0.0,
+        "n": 5,
+        "one_sided_positive_sign_p": 0.75,
+        "one_sided_sign_p_negative": 0.75,
+        "one_sided_sign_p_positive": 0.75,
+        "positive_container_guardrail": false,
+        "ties": 3,
+        "wins": 1
+      }
+    },
+    "independent_endpoints": 18,
+    "losses": 1,
+    "material_advantage_threshold": 0.1,
+    "one_sided_positive_sign_p": 0.75,
+    "positive_cell_guardrails": [],
+    "repeats_per_arm": 2,
+    "ties": 16,
+    "wins": 1
+  },
+  "result_payload_sha256": "8d89fa868af4e849ce8987e8c1bec9c4346362f84da186a2dc6232a90100bda0",
+  "schema_version": "1.0",
+  "status": "NO_MATERIAL_CONTAINER_ADVANTAGE"
+}

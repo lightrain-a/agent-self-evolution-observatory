@@ -1,0 +1,188 @@
+\section{Reproducibility and Sensitivity Audits}
+T1/G1 are byte-identical across the initial replay and EIA validation. The provenance-clean r3 reaudit is \texttt{6221016166b71ebe}; r4 adjudication is \texttt{316ee89a8eb1d53f}. The r5 replication bundle contains executable r3/r4 endpoints, harnesses, scorers, runner scripts, frozen helper source, first-party archived pages, retained result JSON, and a SHA-256 manifest. This bundle reproduces the source-native study and remains separate from the unavailable TimeSage-EV evaluated snapshot.
+
+\subsection{Exact frozen reusable helpers}
+The six helper implementations below are the executed source, not pseudocode. Each targeted/generic pair has equal lexical-token count and equal AST-node count under the pre-execution audit.
+
+\begingroup\scriptsize
+\begin{verbatim}
+# T1_temporal_cutoff.py
+def skill(package, context):
+    limit = context.get("cutoff_date", "")
+    chosen = []
+    for item in package.get("evidence_metadata", []):
+        marker = item.get("release_date", "")
+        ref = item.get("evidence_ref", "")
+        if isinstance(marker, str) and marker <= limit:
+            chosen.append(ref)
+    return {"evidence_refs": chosen}
+
+# G1_temporal_cutoff.py
+def skill(package, context):
+    limit = context.get("schema_ceiling", "")
+    chosen = []
+    for item in package.get("evidence_metadata", []):
+        marker = item.get("schema_version", "")
+        ref = item.get("evidence_ref", "")
+        if isinstance(marker, str) and marker <= limit:
+            chosen.append(ref)
+    return {"evidence_refs": chosen}
+
+# T2_release_alignment.py
+import re
+def skill(package, context):
+    text = " ".join(package.get("document_text", "").split())
+    match = re.search(r"([1-4])(?:st|nd|rd|th) Quarter(?: and Year)? (20\d{2})",
+                      text, re.I)
+    value = None
+    if match:
+        value = f"{match.group(2)}-Q{match.group(1)}"
+    return {"value": value}
+
+# G2_release_alignment.py
+import re
+def skill(package, context):
+    text = " ".join(package.get("document_text", "").split())
+    match = re.search(r"(News) (Release|Archive|Statement)(?: and Data)? "
+                      r"([A-Za-z]{2,20})", text, re.I)
+    value = None
+    if match:
+        value = f"{match.group(1)}-{match.group(3)}"
+    return {"value": value}
+
+# T3_exogenous_grounding.py
+def skill(package, context):
+    markers = ("contributors to", "reflected", "because", "collectively",
+               "favored", "favors ", "associated with", "due to")
+    chosen = []
+    for span in package.get("candidate_spans", []):
+        text = span.get("text", "").lower()
+        sid = span.get("span_id", "")
+        if any(marker in text for marker in markers):
+            chosen.append(sid)
+    return {"span_ids": chosen}
+
+# G3_exogenous_grounding.py
+def skill(package, context):
+    markers = ("table", "figure", "release", "appendix", "contact",
+               "notes ", "technical notes", "page")
+    chosen = []
+    for span in package.get("candidate_spans", []):
+        text = span.get("text", "").lower()
+        sid = span.get("span_id", "")
+        if any(marker in text for marker in markers):
+            chosen.append(sid)
+    return {"span_ids": chosen}
+\end{verbatim}
+\endgroup
+
+
+\subsection{Exploratory capacity-stress matrix}
+\begin{table}[ht]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{llrrrrr}
+\toprule
+Split & Family & N0 & Generic & Target & $\Delta_{T-G}$ & $\Delta_{T-N}$ \\
+\midrule
+C3-R & Cutoff & 32 & 0 & 72 & \textbf{+72} & \textbf{+40} \\
+C3-R & Align & 100 & 100 & 100 & 0 & 0 \\
+C3-R & Ground & 40 & 48 & 64 & +16 & +24 \\
+C4-R & Cutoff & 53 & 13 & 100 & \textbf{+87} & \textbf{+47} \\
+C4-R & Align & 80 & 93 & 100 & +7 & +20 \\
+C4-R & Ground & 60 & 52 & 64 & +12 & +4 \\
+\bottomrule
+\end{tabular}
+\caption{Exploratory mini-model capacity stress over five repeats (percent), reported separately from the registered primary and replication tracks.}
+\label{tab:capacity}
+\end{table}
+
+\subsection{Endpoint-level uncertainty and test resolution}
+Table~\ref{tab:endpointunc} averages repeats within endpoint-condition and bootstraps endpoints; W/T/L is targeted versus generic, and sign tests use non-ties. Repeats never increase the inferential sample size. For $n$ non-tied endpoints, the smallest attainable two-sided sign-test value is $2^{1-n}$ when every endpoint moves in the same direction. Thus two non-tied endpoints cannot yield a value below .5; three cannot go below .25; five cannot go below .0625; eight can reach .0078. Ties reduce resolution further. This arithmetic is why the two-endpoint grounding-transfer result is explicitly descriptive, why the three-endpoint Kimi alignment result remains underpowered despite a large effect, and why the eight-endpoint EIA validation supports a stronger endpoint-level claim.
+
+\begin{table}[ht]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{0.88}
+\setlength{\tabcolsep}{2.0pt}
+\begin{tabular}{lllccccc}
+\toprule
+Layer & Split & Fam. & $\Delta_{T-G}$ [95\%] & W/T/L & $p_G$ & $\Delta_{T-N}$ [95\%] & $p_N$ \\
+\midrule
+D & C3 & Cut & 28 [8,56] & 4/1/0 & .125 & 0 [0,0] & 1 \\
+D & C3 & Grd & 40 [0,80] & 2/3/0 & .50 & 40 [0,80] & .50 \\
+D & C4 & Cut & 13 [0,20] & 2/1/0 & .50 & 0 [0,0] & 1 \\
+D & C4 & Grd & 20 [0,60] & 1/4/0 & 1 & 20 [0,60] & 1 \\
+K & C3 & Grd & 10 [0,20] & 2/3/0 & .50 & 10 [0,30] & 1 \\
+K & C4 & Align & 66.7 [50,75] & 3/0/0 & .25 & 41.7 [25,75] & .25 \\
+K & C4 & Grd & 20 [0,60] & 1/4/0 & 1 & 20 [0,60] & 1 \\
+M & C3 & Cut & 72 [32,100] & 4/1/0 & .125 & 40 [8,72] & .25 \\
+M & C3 & Grd & 16 [-12,60] & 1/3/1 & 1 & 24 [0,64] & .50 \\
+M & C4 & Cut & 86.7 [60,100] & 3/0/0 & .25 & 46.7 [20,100] & .25 \\
+M & C4 & Align & 6.7 [0,20] & 1/2/0 & 1 & 20 [0,60] & 1 \\
+M & C4 & Grd & 12 [0,28] & 2/3/0 & .50 & 4 [-32,36] & 1 \\
+\bottomrule
+\end{tabular}
+\caption{Endpoint-level uncertainty for non-ceiling initial-replay cells. D=DeepSeek primary, K=Kimi replication, M=exploratory mini.}
+\label{tab:endpointunc}
+\end{table}
+
+\subsection{Why the family estimand is primary}
+The family contract and the full-task conjunctive score answer different questions. The family score asks whether the targeted temporal operation was corrected. The conjunctive score additionally requires orthogonal output fields and exact surface forms. A zero conjunctive score can therefore coexist with a successful cutoff intervention when temporal admissibility is correct but an unrelated field differs, or with successful release alignment when a semantically identical period is formatted differently. The family definitions were frozen before execution, so selecting them is determined by the experimental question and its time order. The conjunctive score is preserved as a sensitivity view and is never used to erase an unfavorable family result.
+
+\begin{table}[ht]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{0.88}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lll}
+\toprule
+Family & r3 full-task conjunctive score & Effect on claim \\
+\midrule
+Grounding & Identical to family score & Unchanged \\
+Cutoff & All cells collapse to 0 & Family estimand remains primary \\
+Alignment & All cells collapse to 0 & Family estimand remains primary \\
+\bottomrule
+\end{tabular}
+\caption{Sensitivity to the auxiliary full-task exact score. The two columns evaluate different estimands.}
+\label{tab:sensitivity}
+\end{table}
+
+\subsection{Call-rate, prompt-length, and condition-position audit}
+The retained source-native rows contain 442 no-skill, 442 generic, and 442 targeted observations. Helper execution is deterministic in the frozen harness: generic and targeted execute exactly once before the model answer in 442/442 rows each, whereas no-skill executes no helper in 0/442 rows. Thus targeted-minus-generic cannot be explained by a higher helper invocation rate; this experiment does not measure endogenous tool-use propensity. Across exact targeted/generic pairs, targeted prompts are shorter by 18.85 input tokens on average (302 shorter, 140 longer). Condition-position counts are 157/135/150 for no-skill, 145/155/142 for generic, and 140/152/150 for targeted across positions 0/1/2. Pooled $3\times2$ success-by-position tests give $p=.993$, $.657$, and $.914$ for no-skill, generic, and targeted respectively; targeted-minus-no-skill remains positive at all three positions. These are post-hoc zero-call diagnostics and do not substitute for a prospectively counterbalanced replication. The full audit is included in the supplement.
+
+\subsection{ISO date and period-representation audit}
+A zero-call static audit covers the 23 initial BEA/NOAA endpoints and the 12 post-review EIA endpoints. Across the serialized endpoint objects, all 55 occurrences of \texttt{cutoff\_date} and all 176 occurrences of \texttt{release\_date} are calendar-valid \texttt{YYYY-MM-DD} strings. Whenever both top-level and \texttt{skill\_context} cutoff fields are present they agree exactly. T1 makes 88 observed release-versus-cutoff comparisons over the frozen endpoint packages; lexical string order and parsed-calendar order agree on all 88. The executed T1 source is byte-identical between the initial and EIA phases (SHA-256 \texttt{df1950ef3930...d56d522}). Reporting-period identities are a separate representation layer: the initial replay uses canonical month/quarter identities for relevant families, while EIA uses day-level data-ending dates. These reporting-period strings never enter T1's release-date comparator and are adjudicated by the frozen family scorer.
+
+\subsection{Completed identification ladder}
+Table~\ref{tab:identification} separates four distinct questions that are all executed on the source-native replay. The controls were added prospectively in sequence: outcome thresholds, endpoint units, integration surfaces, model identities, and checkpoint policies were frozen before the corresponding fresh outcomes.
+
+\begin{table}[ht]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3.0pt}
+\begin{tabular}{p{0.19\linewidth}p{0.17\linewidth}p{0.17\linewidth}p{0.36\linewidth}}
+\toprule
+Question & Contrast & Status & Identified quantity \\
+\midrule
+Repair original agent? & T--N & Executed & Incremental value of inserting the targeted procedure over the original agent. \\
+Beat target-blind help? & T--G & Executed & Targeted-operation value relative to the frozen complexity-matched helper. \\
+Beat neutral extra help? & T--G$_0$ & Executed & Operation-specific value after G$_0$ independently passes a fresh N-equivalence gate. \\
+Does container matter? & T--R & Executed & Callable-skill value beyond the same frozen operation materialized in retrieved context. \\
+\bottomrule
+\end{tabular}
+\caption{Completed identification ladder. The stronger G$_0$ and R treatments change the interpretation of the historical N/G/T results: G$_0$ validates operation specificity in surviving cells, whereas R removes any supported claim of callable-container superiority.}
+\label{tab:identification}
+\end{table}
+
+\paragraph{G$_0$: prospectively validated neutral helper.}
+G$_0$ executes exactly one assigned helper call through the same harness surface as T but is information-empty: the frozen function is \texttt{def skill(package, context): return \{\}}. It reads neither package nor context. On DeepSeek, the first 35-endpoint two-repeat tranche is deliberately not promoted because its G$_0$--N 90\% interval $[-14.3,2.9]$ points exceeds the predeclared $\pm10$-point neutrality margin. We do not pool that tranche or relax the margin. An independently frozen A2 replication with four fresh repeats yields $-2.1$ points, 90\% CI $[-9.3,5.0]$, and passes the standalone equivalence gate. Kimi independently gives $+2.2$ points, 90\% CI $[-4.3,8.7]$. Only after these gates do we inspect the pre-frozen T--G$_0$ load-bearing cells. DeepSeek C3 grounding, C4 grounding, and held-out EIA cutoff retain positive direction; Kimi alignment retains +50 points, while Kimi same-domain grounding is downgraded (T--G$_0=-25$ points, T--N=0).
+
+\paragraph{R: operation-matched retrieval/context treatment.}
+R runs the exact same targeted operation source as T on the same candidate evidence. Rather than exposing the output through \texttt{reusable\_helper\_output}, the harness adds the identical object as \texttt{retrieval\_operation\_output} inside the evidence package and exposes no callable helper. A zero-call parity audit verifies for every tested endpoint that (i) removing this one field recovers the original evidence package exactly, (ii) the operation-output content hashes are identical between T and R, and (iii) no candidate evidence is removed or reordered. On all 18 pre-frozen DeepSeek load-bearing endpoints, two fresh repeats per arm give T--R $=0.0$ points with 90\% CI $[-5.6,5.6]$; all three load-bearing cells have zero mean residual. A secondary Kimi alignment check uses the three pre-frozen held-out alignment endpoints and five fresh repeats per arm: both T and R succeed on every run. We therefore rule out a material $>10$-point callable-container advantage at the registered primary resolution. This is a same-information integration result, not an evaluation of every possible learned temporal retriever.
+
+\paragraph{Checkpointed execution and recovery.}
+Every fresh G$_0$ and R model call is persisted before the next unit begins: an atomic raw JSON receipt, one fsynced CSV row, one fsynced JSONL row, and an atomic checkpoint summary keyed by endpoint$\times$repeat$\times$arm. Resume logic executes missing units only and never reruns a successfully checkpointed unit. Each experiment first runs a small runtime/protocol pilot whose promotion rule ignores scientific outcomes. This design was exercised in practice: transient control-channel failures occurred during the Kimi run while the remote process continued, and the already completed rows remained recoverable from CSV/raw checkpoints without replaying prior calls.
+
+Every retained row binds endpoint, condition, repeat, skill hash, prompt hash, raw response hash, and provider response-ID hash. Kimi repeat 4 is excluded by hash provenance with no replacement. The exact TimeSage-EV replication remains separate from all source-native evidence.

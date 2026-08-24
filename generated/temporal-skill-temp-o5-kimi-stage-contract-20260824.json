@@ -1,0 +1,33 @@
+{
+  "bound_plan_body_sha256": "6dad35e96a6dc141b6bb336324a57380e81c0da12b29d0a0254cca665a92baca",
+  "checkpoint_policy": {
+    "append_csv_per_unit": true,
+    "append_jsonl_per_unit": true,
+    "atomic_checkpoint_json": true,
+    "fsync_after_each_unit": true,
+    "never_rerun_successfully_checkpointed_unit": true,
+    "raw_json_per_unit": true,
+    "resume_key": "endpoint_id|repeat_id|arm"
+  },
+  "contract_id": "TEMP-O5-KIMI-ALIGN-STAGED-20260824",
+  "full": {
+    "model_calls_after_pilot": 26,
+    "model_calls_total": 30,
+    "pilot_rows_count_toward_full": true,
+    "resume_missing_only": true
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "pilot": {
+    "model_calls": 4,
+    "promotion_gate": "runtime/protocol/checkpoint/parity only",
+    "row_keys": [
+      "composite-align::doc_187e543fe980|r0|R_RETRIEVAL",
+      "composite-align::doc_187e543fe980|r0|T_CALLABLE",
+      "composite-align::doc_5c43ed3f16d2|r0|R_RETRIEVAL",
+      "composite-align::doc_5c43ed3f16d2|r0|T_CALLABLE"
+    ],
+    "scientific_outcomes_used_for_promotion": false
+  },
+  "schema_version": "1.0",
+  "stage_contract_sha256": "cee8f88d0f873b087c03e8951cbb538818a5168765df137da4686aa2e00d46f0"
+}

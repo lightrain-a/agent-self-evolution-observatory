@@ -1,0 +1,419 @@
+{
+  "analysis_contract": {
+    "cannot_authorize_container_claim": true,
+    "cannot_override_deepseek_primary_TEMP_O5_adjudication": true,
+    "material_threshold": 0.1,
+    "primary_authority": false,
+    "report": "endpoint-level five-repeat T-R means plus 90% endpoint bootstrap descriptive interval"
+  },
+  "authority": {
+    "execution_authorized": false,
+    "scientific_authority": false
+  },
+  "endpoint_selection": {
+    "endpoints": [
+      "composite-align::doc_187e543fe980",
+      "composite-align::doc_5c43ed3f16d2",
+      "composite-align::doc_950378981b9f"
+    ],
+    "independent_endpoints": 3,
+    "policy": "pre-frozen surviving Kimi C4-R release_alignment target from TEMP-O4"
+  },
+  "family_scorer": {
+    "historical_row_level_replay": "69/69",
+    "path": "research_pipeline/temporal_skill_g0_family_score.py",
+    "sha256": "6f117360b046fa83c8246c19772d2eda7dd9250a882f94d7de5fa18a286358cb"
+  },
+  "model_identity": {
+    "online_api_v3_route_forbidden": true,
+    "plan_only_billing_route_required": true,
+    "requested_model": "kimi-k3",
+    "required_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "required_resolved_model": "kimi-k3"
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "plan_body_sha256": "6dad35e96a6dc141b6bb336324a57380e81c0da12b29d0a0254cca665a92baca",
+  "plan_id": "TEMP-O5-KIMI-ALIGNMENT-SECONDARY-V1",
+  "retrieval_surface": {
+    "candidate_evidence_preserved": true,
+    "implementation_path": "research_pipeline/temporal_skill_retrieval_surface.py",
+    "implementation_sha256": "ae19010425f210d37add779c779adbd2d2d3314510fabb1926fa6ec0b8ce80b4",
+    "operation_output_identical_to_T": true
+  },
+  "role": "secondary low-resolution robustness only; cannot authorize a new container-value claim",
+  "rows": [
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_5c43ed3f16d2",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 2,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_5c43ed3f16d2",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 2,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_187e543fe980",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 0,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_187e543fe980",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 0,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_950378981b9f",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 3,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_950378981b9f",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 3,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_950378981b9f",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 2,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_950378981b9f",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 2,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_187e543fe980",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 2,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_187e543fe980",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 2,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_5c43ed3f16d2",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 4,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_5c43ed3f16d2",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 4,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_950378981b9f",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 1,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_950378981b9f",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 1,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_187e543fe980",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 4,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_187e543fe980",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 4,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_5c43ed3f16d2",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 1,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_5c43ed3f16d2",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 1,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_950378981b9f",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 4,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_950378981b9f",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 4,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_5c43ed3f16d2",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 3,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_5c43ed3f16d2",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 3,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_5c43ed3f16d2",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 0,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_5c43ed3f16d2",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 0,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_187e543fe980",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 3,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_187e543fe980",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 3,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_187e543fe980",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 1,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_187e543fe980",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 1,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "T_CALLABLE",
+      "condition_id": "T2",
+      "condition_position": 0,
+      "endpoint_id": "composite-align::doc_950378981b9f",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 0,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    },
+    {
+      "arm": "R_RETRIEVAL",
+      "condition_id": "R",
+      "condition_position": 1,
+      "endpoint_id": "composite-align::doc_950378981b9f",
+      "failure_family": "release_alignment",
+      "operation_source_sha256": "efac650d33d5802405ea8f5793f643fc9d1f3bc09c623b786710ac62a2737311",
+      "phase": "C4-R",
+      "repeat_id": 0,
+      "requested_model": "kimi-k3",
+      "required_resolved_model": "kimi-k3"
+    }
+  ],
+  "schema_version": "1.0",
+  "summary": {
+    "arms": [
+      "T_CALLABLE",
+      "R_RETRIEVAL"
+    ],
+    "calls_by_arm": {
+      "R_RETRIEVAL": 15,
+      "T_CALLABLE": 15
+    },
+    "planned_model_calls": 30,
+    "repeats_per_arm": 5
+  }
+}

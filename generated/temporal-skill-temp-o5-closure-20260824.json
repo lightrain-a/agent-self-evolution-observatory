@@ -1,0 +1,92 @@
+{
+  "artifacts": {
+    "deep_analysis_sha256": "88e544558d6432a5dce6fd33e3fb7317b29055e187470c076d9ad975e668220f",
+    "deep_results_csv_sha256": "a9fb9f0df705c32e712478d99d9cffc7f62404822627676a2aab3fb518c22601",
+    "deep_results_json_sha256": "08307c3a42cfb56bed6ca0901f48fd8c3f50b85069774e2f5ddc12dee7679bdc",
+    "kimi_analysis_sha256": "afcfd902c2880ff055feab1e6ebc6ad45939bd2cce28c7cdbaa75b01ab19ea70",
+    "kimi_results_csv_sha256": "eb88228176b601032482123ed8b1d08d5106824fdc191e322b5072b905e4baf3",
+    "kimi_results_json_sha256": "4ad9a278cdbd71be492f49a8e392f4f59bd08a625b0873e2875bbfd821f0d22e",
+    "retrieval_surface_sha256": "ae19010425f210d37add779c779adbd2d2d3314510fabb1926fa6ec0b8ce80b4"
+  },
+  "checks": {
+    "TEMP_O4_already_closed": true,
+    "deep_T_minus_R_zero": true,
+    "deep_ci_upper_below_10pp": true,
+    "deep_csv_72": true,
+    "deep_integrity": true,
+    "deep_no_cell_guardrail": true,
+    "deep_no_material_container_advantage": true,
+    "deep_raw_72": true,
+    "deep_runtime_72": true,
+    "kimi_T_minus_R_zero": true,
+    "kimi_csv_30": true,
+    "kimi_integrity": true,
+    "kimi_raw_30": true,
+    "kimi_runtime_30": true,
+    "kimi_secondary_no_material": true
+  },
+  "conclusion": {
+    "authority": {
+      "TEMP_O4_closed": true,
+      "TEMP_O5_closed": true,
+      "TEMP_O6_permanent_boundary_remains": true,
+      "claim_expansion": false,
+      "new_container_claim_authorized": false,
+      "submission_authority": false
+    },
+    "deepseek_primary": {
+      "T_minus_R": 0.0,
+      "bootstrap_90_ci": [
+        -0.05555555555555555,
+        0.05555555555555555
+      ],
+      "calls": 72,
+      "cell_guardrails": [],
+      "independent_endpoints": 18,
+      "losses": 1,
+      "ties": 16,
+      "wins": 1
+    },
+    "kimi_alignment_secondary": {
+      "T_minus_R": 0.0,
+      "bootstrap_90_ci": [
+        0.0,
+        0.0
+      ],
+      "calls": 30,
+      "endpoint_summaries": {
+        "composite-align::doc_187e543fe980": {
+          "R_rate": 1.0,
+          "T_minus_R": 0.0,
+          "T_rate": 1.0
+        },
+        "composite-align::doc_5c43ed3f16d2": {
+          "R_rate": 1.0,
+          "T_minus_R": 0.0,
+          "T_rate": 1.0
+        },
+        "composite-align::doc_950378981b9f": {
+          "R_rate": 1.0,
+          "T_minus_R": 0.0,
+          "T_rate": 1.0
+        }
+      },
+      "independent_endpoints": 3,
+      "repeats_per_arm": 5
+    },
+    "required_claim_action": [
+      "remove statements that G0 or R remain unexecuted",
+      "do not claim callable-skill container superiority or necessity",
+      "state that temporal retrieval/context construction is an equally effective integration surface at tested resolution",
+      "retain operation-level causal-bottleneck claim only in cells that survive N, G0, and other prior gates",
+      "downgrade Kimi same-domain grounding support per TEMP-O4"
+    ],
+    "scientific_interpretation": "The same frozen temporal operation produces the same measured benefit when materialized upstream in retrieved context. Callable skill state has no resolved material advantage in the tested primary regime. The paper must remain procedure/operation-level and explicitly concede retrieval-side implementation parity.",
+    "stanford_objection": "Equivalent retrieval-side temporal filter / normalization baseline was missing."
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "receipt_sha256": "e317cbd4d7c2aa95327468af7956f006b45b57b99e2333241e0f0bf9c3f3839e",
+  "receipt_type": "TEMP-O5-OPERATION-MATCHED-RETRIEVAL-CLOSURE",
+  "schema_version": "1.0",
+  "status": "TEMP_O5_RESOLVED_NO_MATERIAL_CALLABLE_CONTAINER_ADVANTAGE"
+}
