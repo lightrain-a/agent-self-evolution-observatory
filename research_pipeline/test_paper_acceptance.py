@@ -36,6 +36,7 @@ from .paper_acceptance_ledger import (
     initialize_paper_ledger,
     record_claim_audit,
     record_manuscript_ci,
+    record_post_draft_integrity,
     record_mock_review,
     record_story_search,
     record_prebuttal,
@@ -203,6 +204,37 @@ class PaperAcceptanceTest(unittest.TestCase):
         result = evaluate_manuscript_ci(checks)
         self.assertFalse(result["pass"])
         self.assertIn("statement-evidence-binding", result["missing"])
+
+    def test_new_manuscript_ci_can_require_post_draft_integrity_without_breaking_legacy_ci(self) -> None:
+        checks = {name: True for name in MANDATORY_MANUSCRIPT_CI_CHECKS}
+        self.assertTrue(evaluate_manuscript_ci(checks)["pass"])
+        missing = evaluate_manuscript_ci(checks, require_post_draft_integrity=True)
+        self.assertFalse(missing["pass"])
+        self.assertIn("post-draft-integrity-receipt", missing["missing"])
+        receipt = {"pass": True, "receipt_sha256": "a" * 64}
+        passed = evaluate_manuscript_ci(checks, post_draft_integrity=receipt, require_post_draft_integrity=True)
+        self.assertTrue(passed["pass"])
+        self.assertEqual(passed["required"], len(MANDATORY_MANUSCRIPT_CI_CHECKS) + 1)
+
+    def test_ledger_records_integrity_receipt_before_new_ci(self) -> None:
+        contract = self.stri_contract()
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            initialize_paper_ledger(root, contract)
+            manifest = {
+                "manuscript_ref": "paper/main.tex", "manuscript_sha256": "a" * 64,
+                "manuscript_text": "STRI is defined at first use.",
+                "content_inventory": {"facts": 0, "citations": 0, "numbers": 0, "tables": 0, "claims": 1, "extraction_complete": True, "extractor_version": "integrity-extractor-v1", "extractor_sha256": "c" * 64},
+                "facts": [], "citations": [], "numbers": [], "tables": [],
+                "expected_claim_ids": ["C1"],
+                "claims": [{"claim_id": "C1", "statement_ref": "sec:intro", "evidence_refs": ["stri:theorem"], "supported": True}],
+                "reader_comprehension": {"terms": [{"term": "STRI", "first_use_defined": True}], "components": []},
+            }
+            row = record_post_draft_integrity(root, contract, manifest)
+            self.assertTrue(row["events"][-1]["receipt"]["pass"])
+            row = record_manuscript_ci(root, contract, {name: True for name in MANDATORY_MANUSCRIPT_CI_CHECKS}, require_post_draft_integrity=True)
+            self.assertTrue(row["events"][-1]["result"]["pass"])
+            self.assertEqual(row["summary"]["post_draft_integrity_receipts"], 1)
 
     def test_submission_ready_requires_science_ci_and_prebuttal(self) -> None:
         contract = self.stri_contract()

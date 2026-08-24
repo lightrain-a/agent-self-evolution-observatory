@@ -12,7 +12,11 @@ from .p0_common import load_json
 from .literature_retrieval_audit import build_literature_retrieval_audit
 from .paper_design_contract import audit_contribution_archetype, audit_paper_design_contract, build_paper_first_workflow_state
 from .protocol_validity import audit_protocol_validity
-from .research_capability_registry import build_research_capability_registry
+from .research_capability_registry import (
+    build_research_capability_registry,
+    build_skill_admission_certificate,
+    route_research_skills,
+)
 from .research_system_replay import build_research_system_replay
 from .scientific_meta_trace import build_scientific_meta_trace
 
@@ -32,6 +36,26 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertEqual(by_id["ai-consultation"]["authority"], "advisory-only")
         self.assertIn("literature-relation-search", by_id)
         self.assertIn("BM25", state["retrieval_router_contract"]["simple_first"])
+
+    def test_skill_admission_and_least_privilege_routing_are_zero_authority(self) -> None:
+        base = {
+            "skill_version": "1.2.0", "source_repository": "https://example.org/research-skills.git",
+            "commit_sha": "a" * 40, "license": "MIT", "maintainer": "maintainer",
+            "data_access_level": "VERIFIED_ONLY", "execution_mode": "DETERMINISTIC",
+            "external_network_access": False, "filesystem_write_access": False, "code_execution": False,
+            "gpu_access": False, "secret_access": False, "expected_artifacts": ["audit.json"],
+            "smoke": {"passed": True, "artifact_ref": "smoke:sha256:" + "b" * 64},
+        }
+        citation = build_skill_admission_certificate({**base, "skill_id": "citation-check", "capability_types": ["citation"]})
+        broad = build_skill_admission_certificate({**base, "skill_id": "broad-review", "capability_types": ["citation", "reviewing"], "external_network_access": True})
+        self.assertEqual(citation["status"], "SKILL_QUALIFIED")
+        self.assertFalse(citation["scientific_authority"])
+        route = route_research_skills({"capability_types": ["citation"], "max_data_access_level": "VERIFIED_ONLY"}, [broad, citation])
+        self.assertEqual(route["status"], "SKILL_ROUTE_READY")
+        self.assertEqual(route["selected_skills"][0]["skill_id"], "citation-check")
+        self.assertFalse(route["experiment_authority"])
+        held = build_skill_admission_certificate({**base, "skill_id": "bad", "capability_types": ["citation"], "commit_sha": "latest"})
+        self.assertEqual(held["status"], "SKILL_ADMISSION_HOLD")
 
     def test_literature_audit_separates_deep_wide_relation_and_claim_modes(self) -> None:
         state = build_literature_retrieval_audit({"summary": {"nodes": 100, "edges": 200}}, {"statistics": {"paper_count": 80}})
@@ -330,6 +354,10 @@ class ResearchLearningLoopTest(unittest.TestCase):
         scienceflow=next(row for row in state["designs"] if row["system"]=="ScienceFlow")
         self.assertEqual(scienceflow["local_gap_test"]["verdict"],"gap-confirmed-and-closed")
         self.assertIn("HOLD/STOP/MERGED/PAPER_READY",scienceflow["local_gap_test"]["after"])
+        skills=next(row for row in state["designs"] if row["system"].startswith("Research skill ecosystems"))
+        self.assertEqual(skills["status"],"merged-existing");self.assertFalse(skills["local_gap_test"]["automatic_skill_installation"])
+        integrity=next(row for row in state["designs"] if row["system"].startswith("Manuscript integrity skill ecosystems"))
+        self.assertEqual(integrity["status"],"merged-existing");self.assertFalse(integrity["local_gap_test"]["experiment_authority"])
 
 
 if __name__ == "__main__":
