@@ -5,8 +5,10 @@ import unittest
 
 from .methodology_controls import (
     C1_GATE_ID,
+    adjudicate_c1_d0b_structural_observation,
     adjudicate_c1_executable_closure_gate,
     build_methodology_controls_state,
+    load_c1_d0b_structural_observation,
     load_c1_executable_closure_candidate,
 )
 
@@ -53,6 +55,38 @@ class MethodologyControlsTest(unittest.TestCase):
         self.assertTrue(registered["candidate_loaded"])
         self.assertTrue(registered["candidate_adjudication"]["eligible_for_d0_design"])
         self.assertFalse(self.state["summary"]["c1_reviewer_gate_downstream_authority"])
+        self.assertEqual(self.state["summary"]["registered_reviewer_gates"], 2)
+
+    def test_c1_d0b_structural_receipt_audit_is_go_but_semantic_authority_stays_hold(self) -> None:
+        observation = load_c1_d0b_structural_observation()
+        result = adjudicate_c1_d0b_structural_observation(observation)
+        self.assertTrue(result["structurally_feasible"], result["errors"])
+        self.assertFalse(result["semantic_authority"])
+        self.assertFalse(any(result["authority"].values()))
+        self.assertEqual(observation["paired_sources_structurally_bound"], 24)
+        self.assertEqual(observation["residual_claim_ids_bound"], 423)
+        self.assertEqual(observation["semantic_validity_adjudicated_claims"], 0)
+        self.assertEqual(observation["nonzero_branch_authority_receipts"], 0)
+        registered = self.state["reviewer_gates"]["c1_d0b_receipt_structure"]
+        self.assertTrue(registered["observation_loaded"])
+        self.assertTrue(registered["observation_adjudication"]["structurally_feasible"])
+        self.assertFalse(self.state["summary"]["c1_d0b_semantic_authority"])
+        self.assertFalse(self.state["summary"]["c1_d0b_downstream_authority"])
+
+    def test_c1_d0b_structural_gate_fails_closed_on_fake_semantic_or_branch_authority(self) -> None:
+        observation = copy.deepcopy(load_c1_d0b_structural_observation())
+        observation["semantic_validity_adjudicated_claims"] = 1
+        observation["supported_claims"] = 1
+        observation["nonzero_branch_authority_receipts"] = 1
+        observation["authority"]["provider"] = True
+        result = adjudicate_c1_d0b_structural_observation(observation)
+        self.assertFalse(result["structurally_feasible"])
+        self.assertTrue(any("semantic_validity_adjudicated_claims" in error for error in result["errors"]))
+        self.assertTrue(any("supported_claims" in error for error in result["errors"]))
+        self.assertTrue(any("nonzero_branch_authority_receipts" in error for error in result["errors"]))
+        self.assertTrue(any("downstream authority" in error for error in result["errors"]))
+        self.assertFalse(result["semantic_authority"])
+        self.assertFalse(any(result["authority"].values()))
 
     def test_c1_gate_fails_closed_if_a_baseline_reenters_novelty(self) -> None:
         candidate = copy.deepcopy(load_c1_executable_closure_candidate())

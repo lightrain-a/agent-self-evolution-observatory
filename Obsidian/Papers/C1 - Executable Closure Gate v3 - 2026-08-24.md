@@ -106,9 +106,9 @@ Decision:
 - **semantic applicability alone fails the branch-authority requirement and is frozen as a baseline**;
 - no provider execution is authorized.
 
-## D0-B · evidence-authority contract only
+## D0-B · structural receipt audit passed; semantic evidence authority remains HOLD
 
-No new scientific experiment is opened in this revision. D0-B is only a frozen zero-call contract.
+No new scientific experiment is opened in this revision. The first D0-B subgate has now been executed as a frozen **zero-call structural audit**; semantic validity is still unadjudicated.
 
 D0-B must answer, on outcome-independent archived/frozen support:
 
@@ -130,13 +130,15 @@ D0-B must answer, on outcome-independent archived/frozen support:
 - the evidence signal is non-degenerate and adds incremental information beyond the strongest same-information baseline;
 - current closest work does not subsume the exact residual.
 
-A GO here still grants **zero** scientific/provider/GPU/claim-expansion/submission authority.
+The structural subgate is now `GO`: **24/24** frozen source pairs (20 Shopping + 4 Reddit) can be content-addressed back to an outcome-excluded pre-writer trajectory projection, the exact recomputed writer-input action summary, both branch-memory hashes, deterministic residual-claim IDs, and released pre-writer browser-state evidence. This creates **423** bound residual-claim IDs, but semantic validity is assigned to **0/423** claims and **0** receipts carry nonzero branch authority. Current verdict: `D0B_STRUCTURAL_GO_SEMANTIC_AUTHORITY_HOLD`.
+
+A full D0-B GO still requires the remaining evidence-validity and incremental-information questions to pass. The structural GO grants **zero** scientific/provider/GPU/claim-expansion/submission authority.
 
 ### Machine binding
 
 This page is not the enforcement surface. The versioned JSON program is bound to `C1_EXECUTABLE_CLOSURE_REVIEWER_GATE_V3` in `research_pipeline.methodology_controls`. The machine gate permits D0 design only when the novelty set is exactly the same-trajectory counterfactual branch residual plus evidence-gated trigger authority; all neutral/metadata, generic core/residual, semantic applicability, query-conditioned reuse, provenance authorization, and success/failure reflection components remain baseline-only. It also requires byte-identical trajectory pairing, outcome-independent claim-bound evidence, receipt-before-authority, fail-closed handling of contradicted/unverifiable evidence, fresh collision clearance before ProblemGate, a zero provider-call D0 budget, and zero downstream authority. The evidence receipt itself must be content-addressed and bind the exact trajectory hash, both branch-memory hashes, residual-claim identity, exact evidence refs/hashes, validity state, extractor/adjudicator versions, and the resulting authority decision; the receipt can never escalate scientific or provider authority.
 
-A machine PASS therefore means **contract shape accepted for D0-B design**, not “D0-B passed scientifically” and not “fresh execution authorized.”
+The machine now registers both the residual-design gate and a second fail-closed D0-B structural-observation gate. A PASS means the contract shape is admissible and the 24-pair receipt structure is reproducibly bindable while semantic authority remains false. It does **not** mean “D0-B passed scientifically,” “423 claims are supported,” or “fresh execution authorized.” Any future artifact that changes semantic-adjudicated claims or nonzero branch authority away from zero without a separately versioned semantic adjudicator fails this structural gate.
 
 ### D0-B STOP / MERGE
 
@@ -179,4 +181,4 @@ The primary question is not “does the gate reject bad memory?” It is whether
 - GPU authority: **false**;
 - claim-expansion authority: **false**;
 - submission authority: **false**;
-- next permitted action: **reviewer-gate alignment + D0-B contract audit only**.
+- next permitted action: **D0-B zero-call semantic evidence-adjudicator design/audit only**; fresh provider execution remains locked.

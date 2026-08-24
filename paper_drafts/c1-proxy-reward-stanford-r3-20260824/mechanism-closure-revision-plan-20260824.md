@@ -106,7 +106,7 @@ Needed because native branch effects are sparse even after retrieval. Applicabil
 
 Every component is removable. If neutral core, always-on factorization, or a simple similarity rule ties the full method, remove/stop the complex method.
 
-## 6. D0-A complete; D0-B evidence-authority contract remains zero-call
+## 6. D0-A complete; D0-B structural receipt audit complete, semantic authority still zero-call HOLD
 
 D0 is the next authorized **design/analysis** action. It uses archived artifacts only.
 
@@ -132,9 +132,9 @@ Prefer threshold-free diagnostics first. If thresholds are needed, freeze them b
 
 D0-A only adjudicates the representation/applicability layer. It can keep the residual object measurable, but it cannot authorize a provider experiment. Its observed result demotes neutral/metadata, generic common-core/residual, and semantic applicability to baselines.
 
-### D0-B contract — not executed in this revision
+### D0-B structural receipt audit — executed with zero provider/GPU calls
 
-D0-B is the only next method-design gate. It must remain **0 provider calls / 0 GPU runs** and test whether branch authority can be grounded in outcome-independent evidence rather than semantic relevance or the treatment label.
+The first D0-B subgate is now executed as a structural audit only. It tests whether branch authority *could in principle be receipted* against exact frozen objects before any semantic validity rule is allowed to make a decision. It remains **0 provider calls / 0 GPU runs** and does not decide whether any branch residual is actually supported.
 
 D0-B questions:
 
@@ -145,7 +145,9 @@ D0-B questions:
 5. Can authority decisions be reproduced under deterministic or preregistered extraction rules?
 6. Does a fresh closest-work gate leave this exact same-trajectory residual + evidence-trigger authority open?
 
-D0-B is `GO -> DESIGN ELIGIBLE ONLY` if all six hold. It is `STOP/MERGE` if neutral/metadata, generic factorization, semantic applicability, or matched query-conditioned reuse reproduces the same authority decisions; if evidence validity is a transformed reward label; if evidence cannot be bound without outcome leakage; if the gate degenerates; or if current work directly subsumes the residual.
+The structural subgate now passes: all **24/24** frozen source pairs (20 Shopping, 4 Reddit) bind an outcome-excluded pre-writer trajectory projection, the exact recomputed writer-input action summary, both success/failure memory hashes, deterministic residual-claim IDs, and released pre-writer browser-state evidence. The audit binds **423 residual-claim IDs**. It deliberately assigns semantic validity to **0/423** claims and produces **0** nonzero branch-authority receipts. Therefore the current verdict is **`D0B_STRUCTURAL_GO_SEMANTIC_AUTHORITY_HOLD`**.
+
+Full D0-B is `GO -> DESIGN ELIGIBLE ONLY` only if the remaining semantic/evidence questions also hold. It is `STOP/MERGE` if neutral/metadata, generic factorization, semantic applicability, or matched query-conditioned reuse reproduces the same authority decisions; if evidence validity is a transformed reward label; if evidence cannot be bound without outcome leakage; if the gate degenerates; or if current work directly subsumes the residual.
 
 No D0 state automatically grants scientific, provider, GPU, claim-expansion, or submission authority.
 
@@ -166,7 +168,7 @@ Observed:
 
 Adjudication: the core/residual representation is not obviously degenerate and target relevance varies meaningfully, but **semantic target relevance alone is not sufficient evidence for branch authority**. A simple similarity gate is therefore demoted to the strongest simple baseline, not promoted as CBRG.
 
-This closes **D0-A**, not the full D0 sequence. The provider method experiment remains **HOLD**. D0-B must specify an outcome-independent, claim-bound branch-validity signal, preferably exact source/trajectory evidence support/contradiction, and show zero-call incremental information beyond neutral/metadata, generic core/residual, and semantic applicability baselines. If no such signal can be defined without using the reward bit as its own evidence, STOP/MERGE CBRG and retain the analysis paper.
+This closes **D0-A** and the **D0-B structural receipt-feasibility subgate**, not the full D0 sequence. The provider method experiment remains **HOLD**. The remaining D0-B work must define and audit an outcome-independent, claim-bound semantic validity rule that maps each bound residual claim to `SUPPORTED`, `CONTRADICTED`, or `UNVERIFIABLE`, then test whether that validity signal adds zero-call incremental information beyond neutral/metadata, generic core/residual, and semantic applicability baselines. The structural audit cannot be cited as evidence that any residual is valid. If no such semantic signal can be defined without using the reward bit, terminal outcome, or semantic similarity as self-validating evidence, STOP/MERGE CBRG and retain the analysis paper.
 
 ## 7. Fresh decisive experiment — only after D0 + Problem/Economy gate
 

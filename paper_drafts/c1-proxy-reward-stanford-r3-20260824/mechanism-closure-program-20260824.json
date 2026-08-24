@@ -265,7 +265,7 @@
     "support": "Reuse all archived Shopping and Reddit paired memories and all frozen native targets; do not select known positive downstream cells."
   },
   "zero_call_D0_B_contract": {
-    "status": "CONTRACT_ONLY_NOT_EXECUTED",
+    "status": "STRUCTURAL_AUDIT_EXECUTED_SEMANTIC_VALIDITY_NOT_ADJUDICATED",
     "provider_call_budget": 0,
     "gpu_run_budget": 0,
     "scientific_provider_calls_added_by_this_revision": 0,
@@ -333,5 +333,40 @@
       0.0457821524027775,
       0.2728979651410768
     ]
+  },
+  "zero_call_D0_B_structural_observed": {
+    "status": "D0B_RECEIPT_STRUCTURE_FEASIBLE_SEMANTIC_VALIDITY_UNADJUDICATED_AUTHORITY_HOLD",
+    "decision": "D0B_STRUCTURAL_GO_SEMANTIC_AUTHORITY_HOLD",
+    "provider_calls": 0,
+    "gpu_runs": 0,
+    "paired_sources_expected": 24,
+    "paired_sources_structurally_bound": 24,
+    "shopping_pairs_bound": 20,
+    "reddit_pairs_bound": 4,
+    "pre_writer_trajectory_projections_bound": 24,
+    "writer_input_action_summaries_recomputed_and_matched": 24,
+    "paired_branch_memories_hash_bound": 24,
+    "released_evidence_packets_hash_bound": 24,
+    "residual_claim_ids_bound": 423,
+    "semantic_validity_adjudicated_claims": 0,
+    "supported_claims": 0,
+    "contradicted_claims": 0,
+    "unverifiable_claims": 0,
+    "nonzero_branch_authority_receipts": 0,
+    "structural_complete": true,
+    "audit_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b-receipt-structural-audit-20260824.json",
+    "audit_sha256": "3f245fb99237c0da8f0ca34cd2c619b2d92bf0dc44245b53319f172e02c921ef",
+    "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b_receipt_structure.py",
+    "runner_sha256": "c58f418bca80242354cf4aedbf0a1e6e15691e5839f7132ddadcae460cd844c0",
+    "interpretation": "All frozen 24 same-trajectory source pairs admit content-addressed structural receipt prototypes binding pre-writer trajectory projection, exact branch memories, deterministic residual-claim identities, and released pre-writer evidence. This is a structural feasibility result only: zero residual claims have been semantically adjudicated, so branch-specific trigger authority remains withheld.",
+    "next_required_gate": "A separately versioned outcome-independent claim-evidence adjudicator must assign SUPPORTED, CONTRADICTED, or UNVERIFIABLE without treatment-label, semantic-similarity-only, terminal-reward, or downstream-outcome leakage.",
+    "authority": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
   }
 }

@@ -99,7 +99,7 @@ The novelty candidate is **not** core/residual factorization alone, **not** neut
 Target similarity/applicability may decide whether a residual is relevant enough to inspect, but it cannot by itself decide that the reward branch is valid. The reward/success/failure label also cannot serve as evidence for its own residual.
 A fresh source scan must still verify that no direct prior work subsumes this exact object.
 
-Enforcement is machine-bound, not note-bound: `C1_EXECUTABLE_CLOSURE_REVIEWER_GATE_V3` rejects any revision that promotes the demoted baselines back into novelty, drops same-trajectory/byte-identical pairing, omits claim-bound outcome-independent evidence or its receipt requirement, or grants provider/GPU/scientific authority. A gate PASS allows D0-B design work only.
+Enforcement is machine-bound, not note-bound: `C1_EXECUTABLE_CLOSURE_REVIEWER_GATE_V3` rejects any revision that promotes the demoted baselines back into novelty, drops same-trajectory/byte-identical pairing, omits claim-bound outcome-independent evidence or its receipt requirement, or grants provider/GPU/scientific authority. A second structural-observation gate now also verifies that the 24-pair D0-B receipt audit stays content-addressed and **structural-only**. Gate PASS allows D0-B design/audit work only.
 
 ## Zero-provider D0 before any method experiment
 
@@ -125,7 +125,7 @@ The frozen threshold-free diagnostic has now been executed on 24 archived Shoppi
 - 8/9 multi-target sources show nonzero target-relevance variation;
 - S/F residual-applicability gap: mean only **0.0300**, max **0.0768**.
 
-Interpretation: the representation is not obviously degenerate, and residual relevance varies by target, but **semantic relevance alone is weak at deciding which reward branch deserves authority**. Therefore similarity/applicability-only gating is now a baseline, not the method. This closes D0-A only. Provider execution remains HOLD. D0-B is contract-only and must require an outcome-independent, claim-bound branch-validity signal (for example source/trajectory evidence support/contradiction), with zero-call incremental information beyond semantic relevance before any fresh run.
+Interpretation: the representation is not obviously degenerate, and residual relevance varies by target, but **semantic relevance alone is weak at deciding which reward branch deserves authority**. Therefore similarity/applicability-only gating is now a baseline, not the method. D0-A is closed, and the first D0-B structural subgate also passes: 24/24 source pairs bind exact pre-writer trajectory projections, exact branch memories, released evidence, and 423 deterministic residual-claim IDs. Semantic validity remains 0/423 adjudicated and branch authority remains zero. Provider execution stays HOLD until a separately versioned outcome-independent semantic adjudicator can assign `SUPPORTED` / `CONTRADICTED` / `UNVERIFIABLE` and show zero-call incremental information beyond semantic relevance and other demoted baselines.
 
 ### D0 STOP
 

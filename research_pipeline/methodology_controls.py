@@ -26,6 +26,9 @@ C1_ALLOWED_NOVEL_COMPONENT_IDS = frozenset(
     }
 )
 C1_REQUIRED_VALIDITY_STATES = {"SUPPORTED", "CONTRADICTED", "UNVERIFIABLE"}
+C1_D0B_STRUCTURAL_STATUS = "D0B_RECEIPT_STRUCTURE_FEASIBLE_SEMANTIC_VALIDITY_UNADJUDICATED_AUTHORITY_HOLD"
+C1_D0B_STRUCTURAL_DECISION = "D0B_STRUCTURAL_GO_SEMANTIC_AUTHORITY_HOLD"
+C1_D0B_AUDIT_ARTIFACT = Path(__file__).resolve().parents[1] / "paper_drafts" / "c1-proxy-reward-stanford-r3-20260824" / "cbrg-d0b-receipt-structural-audit-20260824.json"
 C1_EXECUTABLE_CLOSURE_REVIEWER_GATE: dict[str, Any] = {
     "gate": C1_GATE_ID,
     "profile": C1_GATE_PROFILE,
@@ -174,6 +177,75 @@ def adjudicate_c1_executable_closure_gate(candidate: dict[str, Any]) -> dict[str
     }
 
 
+def adjudicate_c1_d0b_structural_observation(observation: dict[str, Any]) -> dict[str, Any]:
+    """Validate D0-B receipt *structure* without upgrading it to semantic or execution authority."""
+    errors: list[str] = []
+    if observation.get("status") != C1_D0B_STRUCTURAL_STATUS:
+        errors.append("D0-B structural status must preserve semantic-validity HOLD")
+    if observation.get("decision") != C1_D0B_STRUCTURAL_DECISION:
+        errors.append("D0-B structural decision must remain STRUCTURAL GO / SEMANTIC AUTHORITY HOLD")
+    for key in ("provider_calls", "gpu_runs", "semantic_validity_adjudicated_claims", "supported_claims", "contradicted_claims", "unverifiable_claims", "nonzero_branch_authority_receipts"):
+        if observation.get(key) != 0:
+            errors.append(f"D0-B structural-only field must remain zero: {key}")
+    required_counts = {
+        "paired_sources_expected": 24,
+        "paired_sources_structurally_bound": 24,
+        "shopping_pairs_bound": 20,
+        "reddit_pairs_bound": 4,
+        "pre_writer_trajectory_projections_bound": 24,
+        "writer_input_action_summaries_recomputed_and_matched": 24,
+        "paired_branch_memories_hash_bound": 24,
+        "released_evidence_packets_hash_bound": 24,
+        "residual_claim_ids_bound": 423,
+    }
+    for key, expected in required_counts.items():
+        if observation.get(key) != expected:
+            errors.append(f"D0-B structural binding count drift: {key}")
+    if observation.get("structural_complete") is not True:
+        errors.append("D0-B receipt structure is not complete")
+    if not _all_authority_false(observation.get("authority")):
+        errors.append("D0-B structural observation must keep all downstream authority false")
+    audit_ref = str(observation.get("audit_artifact") or "")
+    audit_sha = str(observation.get("audit_sha256") or "")
+    if not audit_ref or len(audit_sha) != 64:
+        errors.append("D0-B structural observation lacks a content-addressed audit artifact")
+    else:
+        expected_rel = str(C1_D0B_AUDIT_ARTIFACT.relative_to(Path(__file__).resolve().parents[1]))
+        if audit_ref != expected_rel:
+            errors.append("D0-B structural audit artifact path drift")
+        if not C1_D0B_AUDIT_ARTIFACT.is_file():
+            errors.append("D0-B structural audit artifact is missing")
+        else:
+            import hashlib
+            actual_sha = hashlib.sha256(C1_D0B_AUDIT_ARTIFACT.read_bytes()).hexdigest()
+            if actual_sha != audit_sha:
+                errors.append("D0-B structural audit artifact SHA drift")
+            else:
+                try:
+                    audit = json.loads(C1_D0B_AUDIT_ARTIFACT.read_text(encoding="utf-8"))
+                except (OSError, json.JSONDecodeError):
+                    audit = {}
+                    errors.append("D0-B structural audit artifact is unreadable")
+                summary = audit.get("summary") or {}
+                if audit.get("status") != C1_D0B_STRUCTURAL_STATUS:
+                    errors.append("D0-B audit artifact status no longer preserves semantic HOLD")
+                if audit.get("decision") != C1_D0B_STRUCTURAL_DECISION:
+                    errors.append("D0-B audit artifact decision drift")
+                if summary.get("semantic_validity_adjudicated_claims") != 0 or summary.get("nonzero_branch_authority_receipts") != 0:
+                    errors.append("D0-B audit artifact incorrectly contains semantic or branch authority")
+                audit_authority = {k: audit.get(k) for k in ("scientific_authority", "experiment_authority", "provider_call_authority", "gpu_authority", "claim_expansion_authority", "submission_authority")}
+                if not _all_authority_false(audit_authority):
+                    errors.append("D0-B audit artifact contains nonzero downstream authority")
+    return {
+        "paper_id": C1_PAPER_ID,
+        "status": C1_D0B_STRUCTURAL_STATUS,
+        "structurally_feasible": not errors,
+        "semantic_authority": False,
+        "errors": errors,
+        "authority": dict(C1_EXECUTABLE_CLOSURE_REVIEWER_GATE["authority"]),
+    }
+
+
 def require_c1_executable_closure_gate(candidate: dict[str, Any]) -> dict[str, Any]:
     result = adjudicate_c1_executable_closure_gate(candidate)
     if result["eligible_for_d0_design"] is not True:
@@ -181,15 +253,26 @@ def require_c1_executable_closure_gate(candidate: dict[str, Any]) -> dict[str, A
     return result
 
 
-def load_c1_executable_closure_candidate(path: Path = C1_REVISION_PROGRAM) -> dict[str, Any]:
+def _load_c1_revision_program(path: Path = C1_REVISION_PROGRAM) -> dict[str, Any]:
     if not path.exists():
         return {}
     try:
         program = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return {}
+    return program if isinstance(program, dict) else {}
+
+
+def load_c1_executable_closure_candidate(path: Path = C1_REVISION_PROGRAM) -> dict[str, Any]:
+    program = _load_c1_revision_program(path)
     candidate = program.get("method_novelty_residual_reviewer_gate") or {}
     return candidate if isinstance(candidate, dict) else {}
+
+
+def load_c1_d0b_structural_observation(path: Path = C1_REVISION_PROGRAM) -> dict[str, Any]:
+    program = _load_c1_revision_program(path)
+    observation = program.get("zero_call_D0_B_structural_observed") or {}
+    return observation if isinstance(observation, dict) else {}
 
 
 POLICY: dict[str, Any] = {
@@ -328,6 +411,8 @@ def build_methodology_controls_state() -> dict[str, Any]:
     ]
     c1_candidate = load_c1_executable_closure_candidate()
     c1_adjudication = adjudicate_c1_executable_closure_gate(c1_candidate)
+    c1_d0b_observation = load_c1_d0b_structural_observation()
+    c1_d0b_adjudication = adjudicate_c1_d0b_structural_observation(c1_d0b_observation)
     c1_reviewer_gate = {
         **C1_EXECUTABLE_CLOSURE_REVIEWER_GATE,
         "candidate_loaded": bool(c1_candidate),
@@ -339,6 +424,11 @@ def build_methodology_controls_state() -> dict[str, Any]:
         "controls": controls,
         "reviewer_gates": {
             "c1_executable_closure_v3": c1_reviewer_gate,
+            "c1_d0b_receipt_structure": {
+                "status": "REGISTERED_STRUCTURAL_ONLY_FAIL_CLOSED",
+                "observation_loaded": bool(c1_d0b_observation),
+                "observation_adjudication": c1_d0b_adjudication,
+            },
         },
         "summary": {
             "controls": len(controls),
@@ -346,10 +436,14 @@ def build_methodology_controls_state() -> dict[str, Any]:
             "functional_layers_added": 0,
             "measured_controls": sum(str(row["status"]).startswith("measured") for row in controls),
             "spec_or_contract_ready": sum("ready" in str(row["status"]) for row in controls),
-            "registered_reviewer_gates": 1,
+            "registered_reviewer_gates": 2,
             "c1_reviewer_gate_loaded": bool(c1_candidate),
             "c1_reviewer_gate_d0_design_eligible": c1_adjudication["eligible_for_d0_design"],
             "c1_reviewer_gate_downstream_authority": any(bool(value) for value in c1_adjudication["authority"].values()),
+            "c1_d0b_structural_observation_loaded": bool(c1_d0b_observation),
+            "c1_d0b_structurally_feasible": c1_d0b_adjudication["structurally_feasible"],
+            "c1_d0b_semantic_authority": c1_d0b_adjudication["semantic_authority"],
+            "c1_d0b_downstream_authority": any(bool(value) for value in c1_d0b_adjudication["authority"].values()),
         },
         "merge_only_external_designs": [
             {
