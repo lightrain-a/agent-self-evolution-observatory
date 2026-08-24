@@ -141,6 +141,23 @@ Stop the method extension if any load-bearing condition fails. Keep the existing
 
 No provider calls are authorized by D0 completion alone.
 
+### D0 observed on 2026-08-24 — representation feasible, semantic branch selectivity weak
+
+A frozen zero-call diagnostic was executed over all 24 archived Shopping+Reddit S/F memory pairs and all 44 native target intents. Memory `Title/Description/Content` fields were the deterministic semantic units; exact cached MiniLM embeddings produced continuous metrics only, with no selected threshold and no terminal outcome in the analysis.
+
+Observed:
+
+- mean cross-branch common-core strength = **0.6340**;
+- mean residual energy = **0.3660**;
+- mean Shopping neutral-to-S/F alignment = **0.6966**;
+- target residual applicability spans **0.0458–0.2729** (mean **0.1449**);
+- 8/9 sources with multiple future targets have nonzero target-applicability range;
+- but mean absolute S/F residual-applicability gap is only **0.0300** (max **0.0768**).
+
+Adjudication: the core/residual representation is not obviously degenerate and target relevance varies meaningfully, but **semantic target relevance alone is not sufficient evidence for branch authority**. A simple similarity gate is therefore demoted to the strongest simple baseline, not promoted as CBRG.
+
+The provider method experiment remains **HOLD**. Before any fresh execution, the method design must specify an outcome-independent branch-validity signal, preferably source-evidence support/contradiction, and show in zero-call D0 that it adds information beyond semantic applicability. If no such signal can be defined without using the reward bit as its own evidence, STOP CBRG and retain the analysis paper.
+
 ## 7. Fresh decisive experiment — only after D0 + Problem/Economy gate
 
 Scientific question:

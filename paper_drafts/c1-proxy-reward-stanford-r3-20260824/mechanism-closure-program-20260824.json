@@ -1,78 +1,21 @@
 {
-  "schema_version": "1.0",
-  "artifact_type": "c1-mechanism-to-intervention-closure-program",
-  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-  "current_revision": "ICLR-STAGE-RESOLVED-B12-CROSSDOMAIN-20260824",
-  "status": "DESIGN_ONLY_NO_PROVIDER_AUTHORITY",
-  "paper_development_state": "ANALYSIS_INCOMPLETE_FOR_TOP_TIER__SOLUTION_CLOSURE_DESIGN",
   "archetype_assessment": {
     "analysis_only_top_tier_is_possible": true,
-    "new_method_is_not_universally_required": true,
     "current_c1_assessment": "The stage-resolved finding is scientifically interesting and evidence-rich, but it currently sits between a pure mechanism/theory paper and a mechanism-derived intervention paper. Because the diagnosed authority mismatch naturally exposes a controllable variable, the cheapest next scientific step is a zero-provider intervention-identifiability D0 rather than more same-support rollout volume.",
-    "decorative_complexity_forbidden": true
+    "decorative_complexity_forbidden": true,
+    "new_method_is_not_universally_required": true
   },
-  "frozen_existing_evidence": {
-    "manuscript_qa_sha256": "f8df9dcbebc066a4c76152cb16db66081642060dc9b957686655f8ec775c29ae",
-    "b11_scientific_evidence_sha256": "f188806ce9ee23cb956c2fd06fdd62542dba29072421500e49f86cb3120314e8",
-    "b12_crossdomain_evidence_sha256": "08b475dde3be086b2e3461e5941c204f502624bd7112cdda6a5e4ca878c48f3c",
-    "b12_revision_receipt_sha256": "25992d3924f49aad0b3d980fc725f5b8f6ef2e6ec4588b137b9034909d489ad8",
-    "existing_claims_must_not_be_reinterpreted": true
+  "artifact_type": "c1-mechanism-to-intervention-closure-program",
+  "authority": {
+    "claim_expansion_authority": false,
+    "experiment_authority": false,
+    "gpu_authority": false,
+    "provider_call_authority": false,
+    "scientific_authority": false,
+    "submission_authority": false
   },
-  "mechanism_diagnosis": {
-    "chain": [
-      "reward-conditioned write",
-      "retrieval exposure",
-      "branch-specific policy uptake",
-      "outcome"
-    ],
-    "finding": "Reward-conditioned writing is robust, while branch-specific native uptake and terminal transport are sparse and domain/task dependent.",
-    "actionable_variable": "actionable authority granted to reward-branch-specific semantic residuals",
-    "failure_mode": "A single potentially wrong terminal reward bit has undifferentiated authority over the full actionable persistent-memory rewrite, even though much of the reusable procedural content is branch invariant and the branch residual has sparse future decision relevance."
-  },
-  "collision_audit": [
-    {
-      "work": "Beyond Retrieval / Query-Conditioned Reuse",
-      "covered": "retrieval versus post-retrieval reuse and target-bound applicability/verification support",
-      "consequence": "Generic query-conditioned reuse or an applicability gate is baseline/collision territory, not C1 novelty."
-    },
-    {
-      "work": "DeltaMem",
-      "covered": "generalized root/common experience plus incremental residual nodes",
-      "consequence": "Core-plus-residual representation alone is a representation baseline, not C1 novelty."
-    },
-    {
-      "work": "Live-Evo",
-      "covered": "decoupling what happened from how to use it via experience and guideline banks",
-      "consequence": "Generic experience/guidance decomposition is not C1 novelty."
-    },
-    {
-      "work": "Memory Provenance Laundering / PPMF",
-      "covered": "provenance-preserving authorization of memory-triggered actions",
-      "consequence": "Generic provenance firewall is not C1 novelty."
-    },
-    {
-      "work": "MutMem",
-      "covered": "authorized mutation plus signed positive/negative outcome evidence",
-      "consequence": "Signed outcome evidence and mutation authorization are not C1 novelty."
-    },
-    {
-      "work": "ReasoningBank",
-      "covered": "success/failure-conditioned reflection into reusable memory",
-      "consequence": "Success/failure reflection is the substrate, not a contribution."
-    }
-  ],
-  "strongest_simple_baselines": [
-    "outcome-blind neutral/core-only procedural memory",
-    "plain core-plus-branch-residual with residual always active",
-    "same-information similarity/applicability gate",
-    "matched-information query-conditioned reuse baseline",
-    "raw trajectory",
-    "no memory"
-  ],
   "candidate_method": {
-    "name": "Counterfactual Branch Residual Gating",
     "abbreviation": "CBRG",
-    "novelty_claim_status": "CANDIDATE_ONLY_REQUIRES_FRESH_COLLISION_CLEARANCE",
     "definition": {
       "counterfactual_pair": [
         "M_S = W_S(tau)",
@@ -84,36 +27,60 @@
       ],
       "target_conditioned_authority": "M_r(tau;o) = C(tau) + g(o, D_r, z_r) * D_r"
     },
+    "name": "Counterfactual Branch Residual Gating",
+    "novelty_claim_status": "CANDIDATE_ONLY_REQUIRES_FRESH_COLLISION_CLEARANCE",
     "scientific_residual": "The candidate contribution is not factorization or provenance separately. It is measuring the semantic residual induced by counterfactual success/failure reflection of the same byte-identical trajectory and granting only that residual evidence-/target-conditioned actionable authority."
   },
-  "zero_call_D0": {
-    "provider_calls": 0,
-    "gpu_runs": 0,
-    "support": "Reuse all archived Shopping and Reddit paired memories and all frozen native targets; do not select known positive downstream cells.",
-    "questions": [
-      "Can branch-invariant actionable core and branch-specific residual be extracted reproducibly?",
-      "Is the residual smaller and more branch-specific than the full memory rather than a restatement of common procedure?",
-      "Can target applicability vary non-degenerately over the full frozen support without using terminal outcomes?",
-      "Does neutral/core-only memory already capture essentially all actionable content?",
-      "Can residual evidence authority be defined from source/trajectory facts without using the reward bit as evidence?"
-    ],
-    "go_only_if": [
-      "residual extraction is stable and nontrivial",
-      "target gate is neither always-on nor always-off",
-      "neutral/core-only and a simple same-information gate do not fully subsume the proposed object",
-      "fresh closest-work scan leaves the exact counterfactual branch-residual object unsolved"
-    ],
-    "stop_if": [
-      "neutral/core-only captures essentially all actionable content",
-      "residual extraction is unstable or mostly common procedure",
-      "gate degenerates",
-      "simple similarity/applicability rule subsumes it",
-      "direct current work subsumes the exact intervention"
-    ]
+  "collision_audit": [
+    {
+      "consequence": "Generic query-conditioned reuse or an applicability gate is baseline/collision territory, not C1 novelty.",
+      "covered": "retrieval versus post-retrieval reuse and target-bound applicability/verification support",
+      "work": "Beyond Retrieval / Query-Conditioned Reuse"
+    },
+    {
+      "consequence": "Core-plus-residual representation alone is a representation baseline, not C1 novelty.",
+      "covered": "generalized root/common experience plus incremental residual nodes",
+      "work": "DeltaMem"
+    },
+    {
+      "consequence": "Generic experience/guidance decomposition is not C1 novelty.",
+      "covered": "decoupling what happened from how to use it via experience and guideline banks",
+      "work": "Live-Evo"
+    },
+    {
+      "consequence": "Generic provenance firewall is not C1 novelty.",
+      "covered": "provenance-preserving authorization of memory-triggered actions",
+      "work": "Memory Provenance Laundering / PPMF"
+    },
+    {
+      "consequence": "Signed outcome evidence and mutation authorization are not C1 novelty.",
+      "covered": "authorized mutation plus signed positive/negative outcome evidence",
+      "work": "MutMem"
+    },
+    {
+      "consequence": "Success/failure reflection is the substrate, not a contribution.",
+      "covered": "success/failure-conditioned reflection into reusable memory",
+      "work": "ReasoningBank"
+    }
+  ],
+  "current_revision": "ICLR-STAGE-RESOLVED-B12-CROSSDOMAIN-20260824",
+  "forbidden_actions": [
+    "increase Shopping rollout depth to chase significance",
+    "add a third domain because its observed effect is larger",
+    "lower the 0.15 terminal or 0.20 process floors",
+    "select known nonzero tasks/sources/templates",
+    "rescue the closed DeepSeek B6 support line",
+    "treat post-hoc working-memory correlation as mediation",
+    "add equations, validators, modules, or model families only to look more top-tier"
+  ],
+  "frozen_existing_evidence": {
+    "b11_scientific_evidence_sha256": "f188806ce9ee23cb956c2fd06fdd62542dba29072421500e49f86cb3120314e8",
+    "b12_crossdomain_evidence_sha256": "08b475dde3be086b2e3461e5941c204f502624bd7112cdda6a5e4ca878c48f3c",
+    "b12_revision_receipt_sha256": "25992d3924f49aad0b3d980fc725f5b8f6ef2e6ec4588b137b9034909d489ad8",
+    "existing_claims_must_not_be_reinterpreted": true,
+    "manuscript_qa_sha256": "f8df9dcbebc066a4c76152cb16db66081642060dc9b957686655f8ec775c29ae"
   },
   "future_fresh_experiment_if_D0_passes": {
-    "authorized_now": false,
-    "support_rule": "fresh or outcome-independent support only; never select B4/B10/B11/B12 positive cells",
     "arms": [
       "released full reward-conditioned memory",
       "outcome-blind neutral/core-only memory",
@@ -122,7 +89,15 @@
       "raw/no-memory controls",
       "clean-label/oracle upper bound where scientifically valid"
     ],
-    "primary_question": "Does CBRG improve the clean-utility versus controlled reward-corruption robustness frontier beyond the strongest same-information and matched-cost baseline?",
+    "authorized_now": false,
+    "method_stop_if": [
+      "neutral core ties CBRG",
+      "always-on factorization ties CBRG",
+      "matched-information simple gate ties CBRG",
+      "robustness comes only from rejecting almost all residuals",
+      "advantage is driven by a previously observed positive cell or one source/template",
+      "clean utility loss exceeds the preregistered non-inferiority margin"
+    ],
     "primary_metrics": [
       "clean utility/non-inferiority",
       "corruption-induced regret",
@@ -134,35 +109,76 @@
       "calls/tokens/latency",
       "leave-one-source/template/domain-out robustness"
     ],
-    "method_stop_if": [
-      "neutral core ties CBRG",
-      "always-on factorization ties CBRG",
-      "matched-information simple gate ties CBRG",
-      "robustness comes only from rejecting almost all residuals",
-      "advantage is driven by a previously observed positive cell or one source/template",
-      "clean utility loss exceeds the preregistered non-inferiority margin"
-    ]
+    "primary_question": "Does CBRG improve the clean-utility versus controlled reward-corruption robustness frontier beyond the strongest same-information and matched-cost baseline?",
+    "support_rule": "fresh or outcome-independent support only; never select B4/B10/B11/B12 positive cells"
   },
+  "mechanism_diagnosis": {
+    "actionable_variable": "actionable authority granted to reward-branch-specific semantic residuals",
+    "chain": [
+      "reward-conditioned write",
+      "retrieval exposure",
+      "branch-specific policy uptake",
+      "outcome"
+    ],
+    "failure_mode": "A single potentially wrong terminal reward bit has undifferentiated authority over the full actionable persistent-memory rewrite, even though much of the reusable procedural content is branch invariant and the branch residual has sparse future decision relevance.",
+    "finding": "Reward-conditioned writing is robust, while branch-specific native uptake and terminal transport are sparse and domain/task dependent."
+  },
+  "paper_development_state": "ANALYSIS_INCOMPLETE_FOR_TOP_TIER__SOLUTION_CLOSURE_DESIGN",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
   "paper_only_repairs_now": [
     "add a main-text stage-resolved boundary figure showing forced leverage versus native Shopping/Reddit transport, first-action uptake, and structured-neutral boundary",
     "restate novelty around undifferentiated reward-conditioned write authority rather than generic retrieval/reuse or provenance",
     "preserve analysis-only fallback if CBRG D0 or method experiment stops"
   ],
-  "forbidden_actions": [
-    "increase Shopping rollout depth to chase significance",
-    "add a third domain because its observed effect is larger",
-    "lower the 0.15 terminal or 0.20 process floors",
-    "select known nonzero tasks/sources/templates",
-    "rescue the closed DeepSeek B6 support line",
-    "treat post-hoc working-memory correlation as mediation",
-    "add equations, validators, modules, or model families only to look more top-tier"
+  "schema_version": "1.0",
+  "status": "DESIGN_ONLY_NO_PROVIDER_AUTHORITY",
+  "strongest_simple_baselines": [
+    "outcome-blind neutral/core-only procedural memory",
+    "plain core-plus-branch-residual with residual always active",
+    "same-information similarity/applicability gate",
+    "matched-information query-conditioned reuse baseline",
+    "raw trajectory",
+    "no memory"
   ],
-  "authority": {
-    "scientific_authority": false,
-    "experiment_authority": false,
-    "provider_call_authority": false,
-    "gpu_authority": false,
-    "claim_expansion_authority": false,
-    "submission_authority": false
+  "zero_call_D0": {
+    "go_only_if": [
+      "residual extraction is stable and nontrivial",
+      "target gate is neither always-on nor always-off",
+      "neutral/core-only and a simple same-information gate do not fully subsume the proposed object",
+      "fresh closest-work scan leaves the exact counterfactual branch-residual object unsolved"
+    ],
+    "gpu_runs": 0,
+    "provider_calls": 0,
+    "questions": [
+      "Can branch-invariant actionable core and branch-specific residual be extracted reproducibly?",
+      "Is the residual smaller and more branch-specific than the full memory rather than a restatement of common procedure?",
+      "Can target applicability vary non-degenerately over the full frozen support without using terminal outcomes?",
+      "Does neutral/core-only memory already capture essentially all actionable content?",
+      "Can residual evidence authority be defined from source/trajectory facts without using the reward bit as evidence?"
+    ],
+    "stop_if": [
+      "neutral/core-only captures essentially all actionable content",
+      "residual extraction is unstable or mostly common procedure",
+      "gate degenerates",
+      "simple similarity/applicability rule subsumes it",
+      "direct current work subsumes the exact intervention"
+    ],
+    "support": "Reuse all archived Shopping and Reddit paired memories and all frozen native targets; do not select known positive downstream cells."
+  },
+  "zero_call_D0_observed": {
+    "common_core_strength_mean": 0.6340268391081029,
+    "decision": "Do not authorize provider execution. Demote semantic applicability-only gating to strongest-simple baseline; require an outcome-independent branch-validity signal such as source-evidence support/contradiction and a second zero-call incremental-information check.",
+    "evidence_sha256": "0e20b5a27093ca0db4f0947cebf174a874e1dcb3d979f87aca9ba48593da38f3",
+    "multi_target_sources_with_nonzero_applicability_range": "8/9",
+    "provider_calls": 0,
+    "residual_energy_mean": 0.3659731608918972,
+    "status": "D0_REPRESENTATION_FEASIBLE_BRANCH_SELECTIVITY_WEAK_PROVIDER_REOPEN_HOLD",
+    "target_branch_applicability_gap_max": 0.07679774269137596,
+    "target_branch_applicability_gap_mean": 0.029987911894073956,
+    "target_max_residual_applicability_mean": 0.1449144732471183,
+    "target_max_residual_applicability_range": [
+      0.0457821524027775,
+      0.2728979651410768
+    ]
   }
 }

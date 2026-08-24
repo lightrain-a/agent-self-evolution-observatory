@@ -110,6 +110,18 @@ D0 asks only whether CBRG is identifiable and non-degenerate:
 
 No provider call, no terminal performance claim, no new scientific authority.
 
+### D0 observed · 2026-08-24
+
+The frozen threshold-free diagnostic has now been executed on 24 archived Shopping+Reddit S/F pairs and 44 native targets, with **0 provider calls**.
+
+- common-core strength mean: **0.6340**;
+- residual energy mean: **0.3660**;
+- target residual applicability: mean **0.1449**, range **0.0458–0.2729**;
+- 8/9 multi-target sources show nonzero target-relevance variation;
+- S/F residual-applicability gap: mean only **0.0300**, max **0.0768**.
+
+Interpretation: the representation is not obviously degenerate, and residual relevance varies by target, but **semantic relevance alone is weak at deciding which reward branch deserves authority**. Therefore similarity/applicability-only gating is now a baseline, not the method. Provider execution remains HOLD. CBRG must add an outcome-independent branch-validity signal (for example, source-evidence support/contradiction) and prove zero-call incremental information beyond semantic relevance before any fresh run.
+
 ### D0 STOP
 
 Stop the method extension if:
