@@ -19,6 +19,7 @@ def main() -> None:
     qa = json.loads((HERE / "manuscript-qa.json").read_text())
     diag = json.loads((HERE / "existing-evidence-diagnostics.json").read_text())
     o5 = json.loads((HERE / "o5-manuscript-evidence.json").read_text())
+    o6 = json.loads((HERE / "o6-final-evidence.json").read_text())
     original = {row["id"]: row for row in paper["objections"]}
     interaction = diag["terminal_heterogeneity"]["two_way_centered_effect_decomposition"]
     write_terminal = diag["terminal_heterogeneity"]["write_to_terminal_magnitude_diagnostic"]
@@ -30,14 +31,16 @@ def main() -> None:
         "receipt_type": "stanford-r3-targeted-experiment-revision",
         "paper_id": PAPER_ID,
         "paper_code": paper["code"],
-        "revision": "STANFORD-R3-O5-NO-MEMORY-20260824",
+        "revision": "STANFORD-R3-O6-CROSS-WRITER-20260824",
         "base_review": matrix["matrix_id"],
         "stanford_r2_score": paper["r2"]["score"],
         "stanford_r2_verdict": paper["r2"]["verdict"],
         "paper_only_revision": False,
         "new_experiment": True,
-        "new_provider_calls": 64,
-        "new_rollouts": 32,
+        "new_provider_calls_exact": None,
+        "new_provider_calls_observable_lower_bound": o5["execution_accounting"]["o5_total_provider_calls_consumed"] + o6["execution_accounting"]["o6_provider_posts_observable_lower_bound"],
+        "new_scientifically_usable_provider_calls": o5["execution_accounting"]["recovery_scientifically_usable_units"] + o6["execution_accounting"]["repair_4096_writer_calls"] + o6["execution_accounting"]["stage2_terminal_calls"],
+        "new_terminal_rollouts": o5["execution_accounting"]["recovery_scientifically_usable_units"] + o6["execution_accounting"]["stage2_terminal_calls"],
         "claim_expansion": False,
         "objections": {
             "PROXY-O1": {
@@ -93,8 +96,21 @@ def main() -> None:
             },
             "PROXY-O6": {
                 "original_disposition": original["PROXY-O6"]["d"],
-                "revision_status": "DEFERRED_SCIENTIFIC_REOPEN_REQUIRED",
-                "action": "No cross-model, live-loop, or corruption-sweep execution added.",
+                "revision_status": "PARTIALLY_ADDRESSED_WITH_FRESH_CROSS_WRITER_EXECUTION",
+                "evidence": {
+                    "writer_stage_complete_pairs": o6["writer_stage"]["complete_pairs"],
+                    "writer_stage_mean_token_jaccard_distance": o6["writer_stage"]["mean_token_jaccard_distance"],
+                    "terminal_stage_calls": o6["terminal_stage"]["complete_calls"],
+                    "terminal_mean_absolute_success_rate_difference": o6["terminal_stage"]["mean_absolute_success_rate_difference"],
+                    "terminal_permutation_p": o6["terminal_stage"]["permutation_p"],
+                    "terminal_effect_floor": o6["terminal_stage"]["effect_floor"],
+                    "terminal_effect_floor_shortfall": o6["terminal_stage"]["effect_floor_shortfall"],
+                    "terminal_joint_gate_pass": o6["terminal_stage"]["joint_gate_pass"],
+                    "cells_nonzero_in_both_writers": o6["cross_writer_comparison"]["cells_nonzero_in_both_writers"],
+                    "same_direction_among_nonzero_both": o6["cross_writer_comparison"]["same_direction_among_nonzero_both"],
+                    "opposite_direction_among_nonzero_both": o6["cross_writer_comparison"]["opposite_direction_among_nonzero_both"],
+                },
+                "boundary": "The write-time state divergence replicates with GLM-5.3 on all four frozen sources, but terminal writer invariance is not established because the preregistered 0.15 practical-effect floor is missed despite p=0.00012 and two cellwise direction reversals. Live WebArena remains environment-blocked and full-memory-bank corruption-mask interaction remains separate future scope, not a rescue of this failed gate.",
             },
         },
         "system_paper_requirements": {
@@ -123,19 +139,23 @@ def main() -> None:
                 },
                 "E4_robustness_transfer_boundary": {
                     "status": "PASS_FINITE_BOUNDARY",
-                    "evidence": "All 16 frozen source-future cells are exposed: 84.1% of centered signed-effect variation is source-by-future interaction, future task 164 is a joint ceiling, write divergence magnitude is not a monotonic downstream-effect proxy, and a fresh 32-call no-memory control locates the two memory branches relative to omission without pseudoreplication.",
+                    "evidence": "All 16 frozen source-future cells are exposed; a fresh no-memory control locates branches without pseudoreplication; GLM-5.3 reproduces 4/4 write-time divergence but its 256-call terminal replication misses the frozen 0.15 effect floor (0.140625, p=0.00012) and reverses direction in two of six cells nonzero under both writers.",
                 },
                 "E5_negative_failure_cases": {
                     "status": "PASS_VISIBLE_NEGATIVES",
-                    "evidence": "Two F0 failure-arm provider incompletions remain selection debt; F1D p=0.311 and initial terminal p=0.160 remain visible non-passing tests; the first O5 32-call attempt is retained as an execution-validator failure with zero scientific authority before a frozen one-for-one recovery.",
+                    "evidence": "Two F0 failure-arm provider incompletions remain selection debt; F1D p=0.311 and initial terminal p=0.160 remain visible non-passing tests; O5 retains its execution-invalid first attempt; the parent GLM writer attempt is retained as output-cap/concurrency execution debt; and the complete GLM terminal replication remains a real preregistered non-pass because 0.140625 < 0.15 despite p=0.00012.",
                 },
                 "E6_efficiency_cost_scale": {
                     "status": "PASS_ACCOUNTED",
                     "evidence": {
                         "inference_only": True,
-                        "known_directly_countable_requests": accounting["known_requests_excluding_unresolved_low_level_call_count_for_f1_action_existence"] + o5["execution_accounting"]["o5_total_provider_calls_consumed"],
+                        "known_provider_posts_observable_lower_bound": accounting["known_requests_excluding_unresolved_low_level_call_count_for_f1_action_existence"] + o5["execution_accounting"]["o5_total_provider_calls_consumed"] + o6["execution_accounting"]["o6_provider_posts_observable_lower_bound"],
+                        "exact_total_reconstructible": False,
                         "o5_provider_calls_consumed": o5["execution_accounting"]["o5_total_provider_calls_consumed"],
                         "o5_scientifically_usable_calls": o5["execution_accounting"]["recovery_scientifically_usable_units"],
+                        "o6_provider_posts_observable_lower_bound": o6["execution_accounting"]["o6_provider_posts_observable_lower_bound"],
+                        "o6_repair_writer_calls": o6["execution_accounting"]["repair_4096_writer_calls"],
+                        "o6_stage2_terminal_calls": o6["execution_accounting"]["stage2_terminal_calls"],
                         "f1_action_existence_aligned_paired_units": accounting["f1_action_existence_aligned_paired_units"],
                         "training_runs": accounting["training_runs"],
                         "local_gpu_finetuning_runs": accounting["local_gpu_finetuning_runs"],
@@ -147,6 +167,7 @@ def main() -> None:
         "artifact_bindings": {
             "diagnostic_sha256": sha(HERE / "existing-evidence-diagnostics.json"),
             "o5_evidence_sha256": sha(HERE / "o5-manuscript-evidence.json"),
+            "o6_evidence_sha256": sha(HERE / "o6-final-evidence.json"),
             "manuscript_qa_sha256": sha(HERE / "manuscript-qa.json"),
             "paper_pdf_sha256": sha(HERE / "paper.pdf"),
         },
@@ -155,7 +176,7 @@ def main() -> None:
         "gpu_authority": False,
         "submission_authority": False,
     }
-    (HERE / "stanford-r3-o5-revision-receipt.json").write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
+    (HERE / "stanford-r3-o6-revision-receipt.json").write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
     print(json.dumps(receipt, indent=2))
 
 
