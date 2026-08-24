@@ -1,8 +1,12 @@
 from __future__ import annotations
 
+import ast
+import inspect
+from pathlib import Path
 import unittest
 from unittest.mock import patch
 
+from . import research_system
 from .publication import (
     DAILY_ARTIFACTS,
     PUBLICATION_OK_STATES,
@@ -73,6 +77,10 @@ class PublicationTest(unittest.TestCase):
                 "generated/human-terminal-idea-state.js",
                 "generated/p0-admission-state.json",
                 "generated/p0-admission-state.js",
+                "generated/p0-four-direction-iteration.json",
+                "generated/p0-four-direction-iteration.js",
+                "generated/persistent-updater-program-final.json",
+                "generated/persistent-updater-program-final.js",
                 "generated/p0-decision-ledger.json",
                 "generated/p0-decision-ledger.js",
                 "generated/research-governance-v2.json",
@@ -127,6 +135,9 @@ class PublicationTest(unittest.TestCase):
                 "generated/p0-e4-permission-cpu.js",
                 "generated/longitudinal-safety-post-race-triage-20260824.json",
                 "generated/longitudinal-safety-material-child-race-20260824.json",
+                "generated/semantic-commit-gap-collision-20260824.json",
+                "generated/ai4ai-strategy-reopen-contradiction-screen-20260824.json",
+                "generated/longitudinal-cross-failure-orthogonal-screen-20260824.json",
                 "generated/research-system-state.json",
                 "generated/research-system-state.js",
                 "generated/research-memory-wiki.json",
@@ -179,6 +190,43 @@ class PublicationTest(unittest.TestCase):
             ),
         )
 
+    def test_research_system_direct_generated_side_effects_are_allowlisted(self) -> None:
+        source = Path(research_system.__file__).read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        writer_names: list[str] = []
+        for node in tree.body:
+            if isinstance(node, ast.FunctionDef) and node.name == "write_research_system_state":
+                for child in ast.walk(node):
+                    if isinstance(child, ast.Call) and isinstance(child.func, ast.Name) and child.func.id.startswith("write_"):
+                        writer_names.append(child.func.id)
+                break
+
+        missing: list[tuple[str, str]] = []
+        for writer_name in writer_names:
+            writer = getattr(research_system, writer_name, None)
+            if writer is None:
+                continue
+            artifacts: list[str] = []
+            for parameter in inspect.signature(writer).parameters.values():
+                default = parameter.default
+                if isinstance(default, Path) and "/generated/" in str(default):
+                    artifacts.append("generated/" + str(default).split("/generated/", 1)[1])
+            module = inspect.getmodule(writer)
+            if module is not None:
+                for constant in ("OUTPUT", "PUBLIC_JSON", "PUBLIC_JS", "DEFAULT_JSON", "DEFAULT_JS"):
+                    value = getattr(module, constant, None)
+                    if isinstance(value, Path) and "/generated/" in str(value):
+                        relative = "generated/" + str(value).split("/generated/", 1)[1]
+                        if relative not in artifacts:
+                            artifacts.append(relative)
+                    elif isinstance(value, str) and value.startswith("generated/") and value not in artifacts:
+                        artifacts.append(value)
+            for artifact in artifacts:
+                if artifact not in WEEKLY_ARTIFACTS:
+                    missing.append((writer_name, artifact))
+
+        self.assertEqual(missing, [])
+
     def test_transient_network_deferral_is_non_fatal(self) -> None:
         self.assertIn("deferred", PUBLICATION_OK_STATES)
         self.assertNotIn("blocked", PUBLICATION_OK_STATES)
@@ -195,7 +243,25 @@ class PublicationTest(unittest.TestCase):
         self.assertIn("generated/s2-literature.js", WEEKLY_ARTIFACTS)
         self.assertIn("generated/iclr-low-resource-ideas.json", WEEKLY_ARTIFACTS)
         self.assertIn("generated/paper-first-paper-design-backlog.json", DAILY_ARTIFACTS)
-        for artifact in ("generated/research-items.json", "generated/research-items.js", "generated/paper-registry.json", "generated/paper-registry.js", "generated/research-memory-wiki.json", "generated/research-memory-wiki.js", "generated/research-dashboard.json", "generated/research-dashboard.js", "generated/longitudinal-safety-post-race-triage-20260824.json", "generated/longitudinal-safety-material-child-race-20260824.json"):
+        for artifact in (
+            "generated/research-items.json",
+            "generated/research-items.js",
+            "generated/paper-registry.json",
+            "generated/paper-registry.js",
+            "generated/research-memory-wiki.json",
+            "generated/research-memory-wiki.js",
+            "generated/research-dashboard.json",
+            "generated/research-dashboard.js",
+            "generated/p0-four-direction-iteration.json",
+            "generated/p0-four-direction-iteration.js",
+            "generated/persistent-updater-program-final.json",
+            "generated/persistent-updater-program-final.js",
+            "generated/longitudinal-safety-post-race-triage-20260824.json",
+            "generated/longitudinal-safety-material-child-race-20260824.json",
+            "generated/semantic-commit-gap-collision-20260824.json",
+            "generated/ai4ai-strategy-reopen-contradiction-screen-20260824.json",
+            "generated/longitudinal-cross-failure-orthogonal-screen-20260824.json",
+        ):
             self.assertIn(artifact, DAILY_ARTIFACTS)
         for artifact in (
             "generated/paper-first-pre-f0-queue.json",
