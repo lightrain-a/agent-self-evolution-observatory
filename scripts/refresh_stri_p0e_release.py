@@ -56,6 +56,9 @@ SKILLROUTER_RELEVANCE = GEN / "asset-first-stri-skillrouter-relevance-analogue-2
 SKILLROUTER_RELEVANCE_CSV = GEN / "asset-first-stri-skillrouter-relevance-analogue-20260824.csv"
 SKILLSBENCH_SUPPORT_QUAL = GEN / "asset-first-stri-skillsbench-support-qualification-20260824.json"
 SKILLSBENCH_SUPPORT_QUAL_CSV = GEN / "asset-first-stri-skillsbench-support-qualification-20260824.csv"
+AGENTSKILLOS_ORACLE = GEN / "asset-first-stri-agentskillos-oracle-analogue-20260824.json"
+AGENTSKILLOS_ORACLE_CSV = GEN / "asset-first-stri-agentskillos-oracle-analogue-20260824.csv"
+SECOND_SUBSTRATE_QUAL = GEN / "asset-first-stri-second-substrate-qualification-20260824.json"
 
 DOWNLOAD_PDF = DOWNLOADS / "STRI-ICLR2027.pdf"
 DOWNLOAD_TEX = DOWNLOADS / "STRI-ICLR2027.tex"
@@ -283,6 +286,8 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (SKILLRL_BUDGET_BASELINES_CSV, "asset-first-stri-skillrl-budget-baselines-20260824.csv"),
         (SKILLROUTER_RELEVANCE_CSV, "asset-first-stri-skillrouter-relevance-analogue-20260824.csv"),
         (SKILLSBENCH_SUPPORT_QUAL_CSV, "asset-first-stri-skillsbench-support-qualification-20260824.csv"),
+        (AGENTSKILLOS_ORACLE_CSV, "asset-first-stri-agentskillos-oracle-analogue-20260824.csv"),
+        (SECOND_SUBSTRATE_QUAL, "asset-first-stri-second-substrate-qualification-20260824.json"),
         (GEN / "asset-first-stri-released-controller-clone-audit-20260819.json", "asset-first-stri-released-controller-clone-audit-20260819.json"),
         (AUTOSKILL_QUALIFICATION, "asset-first-stri-autoskill-p19-substrate-qualification-20260819.json"),
         (AUTOSKILL_CONTRACT, "asset-first-stri-autoskill-p19-dynamic-f0-contract-v2-20260819.json"),
@@ -313,6 +318,9 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
     skillsbench_packaged = load(SKILLSBENCH_SUPPORT_QUAL)
     skillsbench_packaged["rerun_requires_author_release_at_recorded_commit"] = True
     dump(tree / "artifacts" / "asset-first-stri-skillsbench-support-qualification-20260824.json", skillsbench_packaged)
+    agentskillos_packaged = load(AGENTSKILLOS_ORACLE)
+    agentskillos_packaged["rerun_requires_author_release_at_recorded_commit"] = True
+    dump(tree / "artifacts" / "asset-first-stri-agentskillos-oracle-analogue-20260824.json", agentskillos_packaged)
     packaged_autoskill_result = tree / "artifacts" / "asset-first-stri-autoskill-p19-stage3-result-20260819.json"
     sanitized_autoskill = load(AUTOSKILL_RESULT)
     sanitized_autoskill.pop("execution_root", None)
@@ -334,8 +342,16 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         (ROOT / "research_pipeline" / "asset_first_stri_skillrl_budget_baselines_20260824.py", "asset_first_stri_skillrl_budget_baselines_20260824.py"),
         (ROOT / "research_pipeline" / "asset_first_stri_skillrouter_relevance_analogue_20260824.py", "asset_first_stri_skillrouter_relevance_analogue_20260824.py"),
         (ROOT / "research_pipeline" / "asset_first_stri_skillsbench_support_qualification_20260824.py", "asset_first_stri_skillsbench_support_qualification_20260824.py"),
+        (ROOT / "research_pipeline" / "asset_first_stri_agentskillos_oracle_analogue_20260824.py", "asset_first_stri_agentskillos_oracle_analogue_20260824.py"),
     ]:
         shutil.copy2(source, tree / "research_pipeline" / name)
+    packaged_agentskillos_code = tree / "research_pipeline" / "asset_first_stri_agentskillos_oracle_analogue_20260824.py"
+    packaged_agentskillos_text = packaged_agentskillos_code.read_text(encoding="utf-8")
+    packaged_agentskillos_text = packaged_agentskillos_text.replace(
+        'DEFAULT_REPO = Path("/data/wyt/agent2-asset-first-external/AgentSkillOS")',
+        'DEFAULT_REPO = Path("external/AgentSkillOS")',
+    )
+    packaged_agentskillos_code.write_text(packaged_agentskillos_text, encoding="utf-8")
     shutil.copy2(PAPER / "stri-20260816-plot-ablation-robustness.py", tree / "paper_drafts" / "stri-20260816-plot-ablation-robustness.py")
     shutil.copy2(PAPER / "stri-20260816-plot-boundary.py", tree / "paper_drafts" / "stri-20260816-plot-boundary.py")
     for name in ("stri-rstar-boundary.pdf", "stri-rstar-boundary.png"):
@@ -407,6 +423,10 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
     rh = skillrouter_relevance.get("headline") or {}
     skillsbench_support = load(SKILLSBENCH_SUPPORT_QUAL)
     sb = skillsbench_support.get("summary") or {}
+    agentskillos = load(AGENTSKILLOS_ORACLE)
+    ah = agentskillos.get("headline") or {}
+    second_qual = load(SECOND_SUBSTRATE_QUAL)
+    sq = second_qual.get("summary") or {}
     if not (
         abs(float(ph.get("level1_uniform_ratio") or -99.0) - 2.0) < 1e-12
         and float(ph.get("level1_inverse_support_ratio") or 0.0) > 90.0
@@ -433,6 +453,18 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         and int(sb.get("required_skills_empty_tasks") or 0) == 75
         and int(sb.get("required_vs_task_local_mismatch_tasks") or 0) == 79
         and int(sb.get("task_local_skill_files") or 0) == 232
+        and agentskillos.get("decision") == "QUALIFY_AUTHOR_ORACLE_SET_ANALOGUE_ONLY"
+        and (int(ah.get("tasks") or 0), int(ah.get("categories") or 0), int(ah.get("unique_oracle_skills") or 0)) == (30, 5, 19)
+        and int(ah.get("multi_skill_tasks") or 0) == 20
+        and abs(float(ah.get("full_uniform_exposure_ratio") or -99.0) - 4.0) < 1e-12
+        and abs(float(ah.get("full_oracle_set_R_star_analogue") or -99.0) - 2.5) < 1e-12
+        and set(ah.get("residual_categories") or []) == {"data_computation", "document_creation"}
+        and set(ah.get("equalizable_categories") or []) == {"motion_video", "visual_creation", "web_interaction"}
+        and "not a complete executable semantic-support relation" in str(agentskillos.get("scientific_boundary") or "")
+        and int(sq.get("candidates_screened") or 0) == 5
+        and int(sq.get("new_exact_support_substrates", -1)) == 0
+        and int(sq.get("new_external_analogues") or 0) == 1
+        and sq.get("exact_support_search_disposition") == "NO_SECOND_EXACT_SUPPORT_SUBSTRATE_QUALIFIED"
     ):
         raise RuntimeError("STRI experimental-breadth artifacts failed frozen checks")
     meta["experimental_breadth"] = {
@@ -446,6 +478,10 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         "skillrouter_relevance_sha256": sha(SKILLROUTER_RELEVANCE),
         "skillsbench_support_qualification_artifact": "artifacts/asset-first-stri-skillsbench-support-qualification-20260824.json",
         "skillsbench_support_qualification_sha256": sha(SKILLSBENCH_SUPPORT_QUAL),
+        "agentskillos_oracle_analogue_artifact": "artifacts/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+        "agentskillos_oracle_analogue_sha256": sha(AGENTSKILLOS_ORACLE),
+        "second_substrate_qualification_artifact": "artifacts/asset-first-stri-second-substrate-qualification-20260824.json",
+        "second_substrate_qualification_sha256": sha(SECOND_SUBSTRATE_QUAL),
         "headline": {
             "level1_uniform_is_exact_worst_case_optimum": 2.0,
             "level1_inverse_support_ratio": ph.get("level1_inverse_support_ratio"),
@@ -457,8 +493,10 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
             "skillrouter_core": "24 single / 51 multi / R*=1",
             "skillrouter_graded_uniform_spread": 21.0,
             "skillsbench_support_qualification": "STOP: 79/87 required-vs-local mismatches",
+            "agentskillos_oracle_graph": "30 tasks / 20 multi / full oracle-set analogue R*=2.5; category R* = 2,2,1,1,1",
+            "second_exact_support_substrates_qualified": 0,
         },
-        "external_repo_policy": "SkillRL and SkillRouter first-party repositories are not redistributed; packaged receipts bind exact commits/file hashes and rerun requirements.",
+        "external_repo_policy": "SkillRL, SkillRouter, and AgentSkillOS first-party repositories are not redistributed; packaged receipts bind exact commits/file hashes and rerun requirements. AgentSkillOS is an author-oracle-set analogue, not executable support.",
         "new_model_calls": 0,
         "new_gpu_runs": 0,
         "claim_expansion": False,
@@ -537,6 +575,9 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
     breadth_marker = "## Experimental breadth and practical baselines"
     if breadth_marker not in readme:
         readme += """\n\n## Experimental breadth and practical baselines\n\n`artifacts/asset-first-stri-practical-baselines-20260824.json` evaluates uniform, inverse-coverage, NNLS, cover, max--min, and exact package weighting across five frozen regimes and freezes calibration weights before tool-disjoint heldout evaluation. `artifacts/asset-first-stri-crossval-sparsity-20260824.json` adds eight leave-one-tool-out no-refit transfers and exact active-package sparsity frontiers. `reproduce.py` recomputes both suites from packaged Skill-SP/logical data. The SkillRL budget artifact sweeps eight `top_k` values with fresh-dynamic-ID, non-dynamic-ID placebo, exact quotient, and capacity controls on the pinned first-party release. The SkillRouter artifact audits the released 75-query expert relevance graph as an external relevance analogue only; relevance is not executable semantic support. The SkillsBench qualification artifact records why task-local skill availability is not promoted to an exact support matrix: 79/87 tasks disagree with `required_skills` metadata and 75/87 `required_skills` lists are empty despite non-empty local skill directories. SkillRL, SkillRouter, and SkillsBench repositories are intentionally not redistributed and their receipts bind exact author commits/file hashes. No new model or GPU calls are used by these breadth analyses.\n"""
+    second_substrate_marker = "## Second exact-support substrate qualification"
+    if second_substrate_marker not in readme:
+        readme += """\n\n## Second exact-support substrate qualification\n\n`artifacts/asset-first-stri-second-substrate-qualification-20260824.json` applies one fail-closed support gate to five external candidates. No second exact executable-support substrate qualifies. AgentSkillOS is retained only as an author-oracle-set analogue: its 30 benchmark tasks contain 20 multi-skill oracle sets, the full oracle graph has uniform exposure spread 4x and analogue `R*=2.5`, while category analogues split between residual (`data_computation`, `document_creation`, `R*=2`) and equalizable (`motion_video`, `visual_creation`, `web_interaction`, `R*=1`). `task.skills` is directly consumed by the first-party specified mode, but omitted skills are not proven incapable of supporting a task. SWE-Skills-Bench, SkillLearnBench, SkillsBench, and SkillRouter likewise lack a complete released executable-support zero-edge contract. These objects therefore cannot expand the exact STRI certificate. The AgentSkillOS receipt binds the first-party commit and source-file hashes; rerunning it requires that author release, which is intentionally not redistributed.\n"""
     old_breadth_sentence = "`artifacts/asset-first-stri-practical-baselines-20260824.json` evaluates uniform, inverse-coverage, NNLS, cover, max--min, and exact package weighting across five frozen regimes and freezes calibration weights before tool-disjoint heldout evaluation. `reproduce.py` recomputes this suite from packaged Skill-SP/logical data."
     new_breadth_sentence = "`artifacts/asset-first-stri-practical-baselines-20260824.json` evaluates uniform, inverse-coverage, NNLS, cover, max--min, and exact package weighting across five frozen regimes and freezes calibration weights before tool-disjoint heldout evaluation. `artifacts/asset-first-stri-crossval-sparsity-20260824.json` adds eight leave-one-tool-out no-refit transfers and exact active-package sparsity frontiers. `reproduce.py` recomputes both suites from packaged Skill-SP/logical data."
     readme = readme.replace(old_breadth_sentence, new_breadth_sentence)
@@ -610,6 +651,10 @@ def update_supplement_tree(tree: Path, receipt: dict) -> None:
         if old_summary_tail not in reproduce:
             raise RuntimeError("cannot upgrade existing R16 breadth summary with R17 cross-validation outputs")
         reproduce = reproduce.replace(old_summary_tail, new_summary_tail, 1)
+    second_substrate_code_marker = "# SECOND SUPPORT SUBSTRATE QUALIFICATION CHECK"
+    if second_substrate_code_marker not in reproduce:
+        second_substrate_code = '''\n    # SECOND SUPPORT SUBSTRATE QUALIFICATION CHECK\n    agentskillos = json.loads((ROOT / "artifacts/asset-first-stri-agentskillos-oracle-analogue-20260824.json").read_text())\n    ah = agentskillos["headline"]\n    assert agentskillos["decision"] == "QUALIFY_AUTHOR_ORACLE_SET_ANALOGUE_ONLY"\n    assert (ah["tasks"], ah["categories"], ah["unique_oracle_skills"], ah["multi_skill_tasks"]) == (30, 5, 19, 20)\n    assert abs(ah["full_uniform_exposure_ratio"] - 4.0) < 1e-12\n    assert abs(ah["full_oracle_set_R_star_analogue"] - 2.5) < 1e-12\n    assert set(ah["residual_categories"]) == {"data_computation", "document_creation"}\n    assert set(ah["equalizable_categories"]) == {"motion_video", "visual_creation", "web_interaction"}\n    assert "not a complete executable semantic-support relation" in agentskillos["scientific_boundary"]\n    assert agentskillos["rerun_requires_author_release_at_recorded_commit"] is True\n    second_support = json.loads((ROOT / "artifacts/asset-first-stri-second-substrate-qualification-20260824.json").read_text())\n    sq = second_support["summary"]\n    assert sq["candidates_screened"] == 5\n    assert sq["new_exact_support_substrates"] == 0\n    assert sq["new_external_analogues"] == 1\n    assert sq["exact_support_search_disposition"] == "NO_SECOND_EXACT_SUPPORT_SUBSTRATE_QUALIFIED"\n    breadth_summary["agentskillos_full_uniform_R"] = 4.0\n    breadth_summary["agentskillos_full_oracle_R"] = 2.5\n    breadth_summary["agentskillos_residual_categories"] = ah["residual_categories"]\n    breadth_summary["agentskillos_equalizable_categories"] = ah["equalizable_categories"]\n    breadth_summary["second_exact_support_substrates_qualified"] = 0\n'''
+        reproduce = reproduce.replace("\n    out = {", second_substrate_code + "\n    out = {", 1)
     controller_code_marker = "# RELEASED CONTROLLER AUDIT RECEIPT CHECK"
     if controller_code_marker not in reproduce:
         controller_code = '''\n    # RELEASED CONTROLLER AUDIT RECEIPT CHECK\n    controller = json.loads((ROOT / "artifacts/asset-first-stri-released-controller-clone-audit-20260819.json").read_text())\n    assert controller["all_checks_pass"] is True\n    cc = controller["checks"]\n    assert cc["clone_weights_recomputed_by_author_sampling_function"] is True\n    assert cc["author_duplicate_filter_would_reject_literal_exact_text_clone"] is True\n    assert cc["same_content_clone_has_identical_author_questioner_messages"] is True\n    assert cc["released_sampler_clone_changes_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conservation_exactly_restores_author_questioner_prompt_mixture"] is True\n    assert cc["quotient_conserved_allocation_exactly_restores_base_exposure"] is True\n    ch = controller["headline"]\n    assert abs(ch["base_package_probability"] - (1.0 / 15.0)) < 1e-12\n    assert abs(ch["exact_clone_family_probability"] - (1.0 / 8.0)) < 1e-12\n    assert len(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"][0] - (7.0 / 120.0)) < 1e-12\n    assert len(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"][0]) < 1e-12\n    assert len(ch["quotient_conserved_exposure_profile_tv_all_targets"]) == 1\n    assert abs(ch["quotient_conserved_exposure_profile_tv_all_targets"][0]) < 1e-12\n    controller_summary = {\n        "author_repo_commit": controller["author_release"]["commit"],\n        "all_checks_pass": True,\n        "base_package_probability": ch["base_package_probability"],\n        "clone_family_probability": ch["exact_clone_family_probability"],\n        "released_prompt_mixture_tv": ch["released_sampler_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_prompt_mixture_tv": ch["quotient_conserved_questioner_prompt_mixture_tv_after_clone_all_targets"],\n        "quotient_exposure_profile_tv": ch["quotient_conserved_exposure_profile_tv_all_targets"],\n        "third_party_author_repo_packaged": False,\n    }\n'''

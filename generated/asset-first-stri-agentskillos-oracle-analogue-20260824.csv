@@ -1,0 +1,7 @@
+regime,tasks,skills,multi_skill_tasks,multi_skill_fraction,minimum_oracle_set_size,maximum_oracle_set_size,uniform_oracle_set_exposure_ratio,oracle_set_R_star_analogue,optimal_active_skills
+full,30,19,20,0.6666666666666666,1,4,4.0,2.5,16
+data_computation,6,7,3,0.5,1,4,4.0,2.0,4
+document_creation,6,7,4,0.6666666666666666,1,3,3.0,2.0,3
+motion_video,6,4,3,0.5,1,2,2.0,1.0,2
+visual_creation,6,8,5,0.8333333333333334,1,3,3.0,1.0,2
+web_interaction,6,7,5,0.8333333333333334,1,3,3.0,1.0,3

@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "revision": "R18-second-substrate-audit",
+  "stage": "EXPERIMENT_BREADTH_SECOND_SUBSTRATE_CLOSURE",
+  "date": "2026-08-24",
+  "purpose": "Search for a second independent exact-support substrate without weakening STRI's support-zero provenance requirement; add only typed external analogues when the exact gate fails.",
+  "qualification": {
+    "receipt": "generated/asset-first-stri-second-substrate-qualification-20260824.json",
+    "receipt_sha256": "ac23dfc16d83d09b7ddbb0ee532b456b4f958759bf6b6e15eb29ea21ee78c567",
+    "candidates_screened": 5,
+    "new_exact_support_substrates": 0,
+    "new_external_analogues": 1,
+    "disposition": "NO_SECOND_EXACT_SUPPORT_SUBSTRATE_QUALIFIED",
+    "fail_closed": true
+  },
+  "agentskillos_oracle_analogue": {
+    "artifact": "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+    "artifact_sha256": "0063490d02519e509407f2307e882aa3fe83c0af4a2e5a3ed6d2defc6a9e2564",
+    "csv": "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.csv",
+    "csv_sha256": "e71dbeae5333d0e14284f50ef377a2239ada71510b5dd9cb2c6823d2700ccec5",
+    "author_commit": "c3cfae10ea34a13973c461273ad9c5cc4aa907fe",
+    "tasks": 30,
+    "categories": 5,
+    "unique_oracle_skills": 19,
+    "multi_skill_tasks": 20,
+    "full_uniform_exposure_ratio": 4.0,
+    "full_oracle_set_R_star_analogue": 2.5,
+    "residual_categories": ["data_computation", "document_creation"],
+    "equalizable_categories": ["motion_video", "visual_creation", "web_interaction"],
+    "decision": "QUALIFY_AUTHOR_ORACLE_SET_ANALOGUE_ONLY",
+    "exact_support_certificate_authorized": false
+  },
+  "candidate_boundaries": {
+    "SWE-Skills-Bench": "paired skill-task intervention plus deterministic test_code; no complete cross-skill applicability/support zero-edge matrix",
+    "SkillLearnBench": "verifier-backed skill-dependent tasks; no all-task x all-skill support matrix",
+    "SkillsBench": "task-local availability/required_skills mismatch; absence is not semantic non-support",
+    "SkillRouter": "expert retrieval relevance graph; relevance exclusion is not executable semantic inability",
+    "AgentSkillOS": "task.skills is directly used in specified mode, but omission does not prove inability; oracle-set analogue only"
+  },
+  "qa": {
+    "paper_qa": "97/97 PASS",
+    "official_iclr_qa": "64/64 PASS",
+    "main_text_pages": 9,
+    "total_pdf_pages": 11,
+    "citation_count": 21,
+    "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
+    "paper_quality_referenced_files": 64,
+    "paper_quality_registered_digests": 67,
+    "paper_quality_evidence_debt": 0,
+    "breadth_unit_tests": "22/22 PASS",
+    "supplement_upgrade_smoke_reproduce": "PASS",
+    "supplement_upgrade_smoke_unit_tests": "31/31 PASS",
+    "supplement_anonymity_after_path_sanitization": "PASS"
+  },
+  "source_hashes": {
+    "agentskillos_code": "3115385dbb4f6a2a528257d53e88e4dc1d7f98da43af16377b595ae479b062d1",
+    "agentskillos_test": "57a3155911014665887cade97d2070640d4ac35bd0bfe7703e69881ea86d5144",
+    "paper_quality": "31ec9a9a882123a24ff3d0967b653ba32b44067807e532b3d2540da549971708",
+    "manuscript_body": "68bd853b23d1f2df26769d91e6647dbd229ad371dee9c2230541406478d5d92f",
+    "tables": "02cdf8a3a7c6d5a4ab4461fef9bee0cddf2f57662c7ce52a3cdb0f43b7e128be",
+    "bibliography": "e2a06bf9b89d4f4d0380364fb0b9e46cc784e181377e2170b056f01661d91f81",
+    "source_ledger": "aa1467209ca60c13e895fd4e26fe695b88cd438a9ac6a74a005ed45db0beac1a",
+    "supplement_refresh_script": "c00eb2c38d3a45fbc965544f0a80bbdbfd4a3dc912206759d930bd32731cae52"
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_support_annotations": 0,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "task_utility_claim_added": false,
+    "safety_claim_added": false,
+    "longitudinal_regret_claim_added": false,
+    "validated_repair_claim_added": false,
+    "lp_novelty_claim_added": false,
+    "agentskillos_promoted_to_exact_support": false
+  },
+  "next_if_more_experimental_breadth_is_required": "A new exact-support dataset search is currently exhausted under the frozen gate. The next material expansion should be a separately preregistered multi-task behavioral replication on a first-party control seam, not reinterpretation of relevance/oracle/availability labels as support.",
+  "scientific_authority": false,
+  "submission_authority": false,
+  "disposition": "READY_R18_SECOND_SUBSTRATE_AUDIT_NO_CLAIM_EXPANSION"
+}

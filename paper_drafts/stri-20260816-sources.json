@@ -135,6 +135,16 @@
       "paper_role": "external expert relevance-graph analogue and large-pool routing baseline context; relevance labels are not treated as executable support"
     },
     {
+      "key": "li2026agentskillos",
+      "title": "Organizing, Orchestrating, and Benchmarking Agent Skills at Ecosystem Scale",
+      "authors": ["Hao Li", "Chunjiang Mu", "Jianhao Chen", "Siyue Ren", "Zhiyao Cui", "Yiqun Zhang", "Lei Bai", "Shuyue Hu"],
+      "year": 2026,
+      "arxiv_id": "2603.02176",
+      "url": "https://arxiv.org/abs/2603.02176",
+      "metadata_provenance": ["arXiv primary metadata rechecked 2026-08-24", "first-party AgentSkillOS benchmark release commit c3cfae10ea34a13973c461273ad9c5cc4aa907fe"],
+      "paper_role": "external author-oracle-set geometry analogue; task.skills is not treated as executable semantic support"
+    },
+    {
       "key": "biega2018equity",
       "title": "Equity of Attention: Amortizing Individual Fairness in Rankings",
       "authors": ["Asia J. Biega", "Krishna P. Gummadi", "Gerhard Weikum"],
