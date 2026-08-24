@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-EXECUTION-AUTHORITY-R16",
+  "recorded_date": "2026-08-24",
+  "status": "EXTERNAL_HUMAN_BOUNDED_EXECUTION_AUTHORITY_VALID",
+  "authority_artifact_sha256": "83c6801eacb5787606e73eab0c130ce9c4e7130596254ed32eb32b760f76ff64",
+  "source_message_ref": "active-project-conversation-2026-08-24T10:58+08:00",
+  "source_message_sha256": "35edf038b45e1b1048bc37d565212140b39ef307a8700b3efd4d658a7e80599f",
+  "reviewed_at": "2026-08-24T10:58:00+08:00",
+  "bindings": {
+    "r13_writer_input_sha256": "ffbe9baad45ae9e79b9c3eddb8eb54bf57734d6095810e97a45d3cc4b452aa8f",
+    "r14_writer_model_sha256": "b0743822c6fe8e06895997bacce8951b26ee00281dcaf68f9bd426920dac3507",
+    "r15_executor_contract_sha256": "707d2f630ef4a6d40f607ff156348223a424e7a76df96c6c6925747fb66b3c59",
+    "writer_manifest_digest": "sha256:9f13ba1299afea09d9a956fc6a85becc99115a6d596fae201a5487a03bdc4368",
+    "executor_manifest_digest": "sha256:5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216"
+  },
+  "budgets": {
+    "writer_request_budget": 36,
+    "terminal_episode_budget": 144,
+    "executor_completion_budget": 4320,
+    "total_local_model_request_budget": 4356
+  },
+  "scope": {
+    "writer_generation_authorized": true,
+    "downstream_l2b_authorized": true,
+    "local_model_calls_authorized": true,
+    "browser_actions_authorized": true,
+    "evaluator_calls_authorized": true,
+    "gpu_lease_authorized": true,
+    "single_confirmatory_attempt": true,
+    "external_api_authorized": false,
+    "l3_authorized": false,
+    "threshold_change_authorized": false,
+    "task_replacement_authorized": false,
+    "outcome_adaptive_extension_authorized": false,
+    "claim_expansion_authorized": false
+  },
+  "scientific_authority": false,
+  "submission_authority": false,
+  "rule": "Execution permission allows exactly the preregistered bounded R13-R15 experiment. Scientific claim support remains determined only by the frozen R15 analysis gate."
+}
