@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-READINESS-GATE",
+  "recorded_date": "2026-08-24",
+  "status": "READY_FOR_NEW_R19_AUTHORITY_NOT_READY_FOR_EXECUTION",
+  "role": "FINAL_PRE_AUTHORITY_READINESS_GATE",
+  "bindings": {
+    "r18c_sha256": "6b1625bcc9f5ce917019958c3555c3bb985999f0496ea22a961d609f76040abb",
+    "candidate_sha256": "a5139944c90c08c62467d263ef6be9891557766ac89a0b432a127beb33d31135",
+    "evaluator_sha256": "edf2284814ee7387f9695488ea01b6457aa337b5ff23509ec2700404b41469ed",
+    "alias_sha256": "f8c32014025762309aceded37a4d07d990f35f702baf64f5c90f559807a83ef7",
+    "contract_sha256": "ed803f0958002ab2095563a56cff6328a054ff4c4d7bd9fc18fc97bb3bdc3282",
+    "public_status_sha256": "6532a02a6622295ec2ea25b224d63cf2efa9a760b16d4fa93d3f342deb1d66e2"
+  },
+  "closed_preoutcome_gates": {
+    "R18_prior_attempt_closed_no_retry": true,
+    "R19_35_task_cohort_frozen": true,
+    "R18_exposed_template_excluded": true,
+    "R17_exact_memory_bytes_reused_without_regeneration": true,
+    "all_R19_downstream_tasks_source_distinct": true,
+    "shopping_live_substrate_previously_verified": true,
+    "35_native_evaluators_constructed_zero_call": true,
+    "agent_and_evaluator_alias_manifest_equality_preflight_pass": true,
+    "gpt4_and_gpt4_1106_preview_tokenizer_lookup_pass": true,
+    "140_episode_schedule_frozen": true,
+    "task_level_primary_analysis_frozen": true,
+    "agent_and_fuzzy_evaluator_budgets_frozen": true,
+    "post_exposure_no_retry_policy_frozen": true,
+    "claim_boundary_frozen": true
+  },
+  "still_required": {
+    "new_explicit_scientific_authority": false,
+    "new_explicit_experiment_model_call_authority": false,
+    "repeat_zero_call_alias_tokenizer_and_live_reset_preflight_immediately_before_run": false,
+    "authorized_nonbenchmark_gpt4_synthetic_completion_smoke": false,
+    "authorized_nonbenchmark_gpt4_1106_preview_synthetic_completion_smoke": false
+  },
+  "readiness": {
+    "engineering_contract_ready": true,
+    "scientific_object_ready_for_explicit_authority_decision": true,
+    "execution_ready_now": false,
+    "current_scientific_authority": false,
+    "current_experiment_model_call_authority": false,
+    "R18_authority_reusable": false,
+    "R18_attempt_retriable": false,
+    "R19_is_new_experiment": true
+  },
+  "exact_scope_if_future_authority_is_granted": {
+    "object": "R19 new 35-template L2B experiment; not a retry of R18",
+    "cohort": {
+      "independent_tasks": 35,
+      "terminal_episodes": 140,
+      "new_downstream_tasks_relative_to_R9": 30,
+      "retained_never_executed_downstream_tasks": 5,
+      "R18c_exposed_template_excluded": true
+    },
+    "treatment": "STATUS_S versus STATUS_F only; frozen memory record ID/order and memory_items bytes identical across arms",
+    "memory": "reuse R17 exact frozen memory bytes; no regeneration or editing",
+    "executor": "frozen local Qwen executor and digest-identical gpt-4/gpt-4-1106-preview aliases as specified by R19 contract",
+    "support_smokes_before_benchmark": 2,
+    "benchmark_agent_completion_upper_bound": 4200,
+    "benchmark_fuzzy_evaluator_completion_upper_bound": 600,
+    "maximum_new_local_model_completions_including_smokes": 4802,
+    "primary_analysis": "two-sided task-level sign-flip, 100000 permutations; |mean delta| >= 0.15 and p < 0.05; full 140 episodes required",
+    "forbidden": [
+      "retry or reuse R18 as the confirmatory attempt",
+      "include template136/task166 in R19",
+      "change tasks after outcomes",
+      "regenerate or edit memory after outcomes",
+      "replace model/manifest/provider after scientific exposure",
+      "change effect floor, alpha, randomization method, or endpoint after outcomes",
+      "use incomplete R19 as negative/no-effect authority",
+      "pool R5, historical bridge, R18, or R19 as one sample",
+      "claim exact Python>=3.13 runtime replication",
+      "claim first-party default Gemini policy replication",
+      "claim financial AgentDojo L3 transport",
+      "claim broad cross-model or cross-runtime provenance generality"
+    ]
+  },
+  "authority_semantics": {
+    "generic_continuation_language_is_not_treated_as_new_R19_scientific_authority": true,
+    "new_authority_must_explicitly_identify_R19_or_equivalent_scope": true,
+    "new_authority_must_cover_scientific_execution_and_model_browser_evaluator_calls": true,
+    "new_authority_must_not_imply_claim_support_in_advance": true
+  },
+  "next_if_authorized": [
+    "Re-run zero-call alias/tokenizer and live Shopping reset/BrowserGym support preflights.",
+    "Run exactly two fixed nonbenchmark synthetic completion smokes: gpt-4 and gpt-4-1106-preview; inspect only transport success/non-empty response, not semantic content.",
+    "If both smokes pass before benchmark exposure, execute the frozen 140-episode R19 schedule exactly once.",
+    "Require all 140 valid terminal episodes for confirmatory analysis; otherwise apply the frozen fail-closed policy."
+  ],
+  "scientific_verdict": "NO_VERDICT_PRE_AUTHORITY_READINESS_ONLY",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_completions": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "gpu": false,
+    "submission": false
+  }
+}

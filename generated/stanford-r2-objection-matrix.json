@@ -683,7 +683,12 @@
             "execution_permitted": false,
             "new_scientific_authority": false,
             "new_experiment_authority": false,
-            "public_status_receipt": "generated/d2-failure-memory-provenance-l2b-public-status-r19.json"
+            "public_status_receipt": "generated/d2-failure-memory-provenance-l2b-public-status-r19.json",
+            "readiness_status": "READY_FOR_NEW_R19_AUTHORITY_NOT_READY_FOR_EXECUTION",
+            "readiness_receipt": "generated/d2-failure-memory-provenance-l2b-r19-readiness.json",
+            "engineering_contract_ready": true,
+            "authority_decision_ready": true,
+            "execution_ready_now": false
           }
         },
         {
