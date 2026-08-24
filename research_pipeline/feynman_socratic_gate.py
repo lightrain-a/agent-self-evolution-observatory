@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-SCHEMA_VERSION = "1.0"
+SCHEMA_VERSION = "1.1"
 
 POLICY: dict[str, Any] = {
     "certificate_is_zero_authority": True,
@@ -14,6 +14,10 @@ POLICY: dict[str, Any] = {
     "mature_reduction_alert_must_be_derived_from_typed_existing_review_not_freeform_judge_opinion": True,
     "gate_cannot_grant_problem_method_experiment_p0_or_gpu_authority": True,
     "retrospective_replay_is_regression_evidence_not_scientific_evidence": True,
+    "problem_insight_certificate_is_shadow_until_contribution_replay_and_prospective_validation_pass": True,
+    "method_complexity_is_not_paper_contribution": True,
+    "minimal_sufficient_intervention_is_preferred_over_unnecessary_complexity": True,
+    "under_explained_observation_may_be_primary_contribution_evidence_but_not_novelty_authority": True,
 }
 
 CORE_FIELDS = (
@@ -24,6 +28,16 @@ CORE_FIELDS = (
     "boundary_condition",
     "strongest_simplification",
     "falsifier",
+)
+
+PROBLEM_INSIGHT_SHADOW_FIELDS = (
+    "primary_contribution_type",
+    "problem_importance",
+    "under_explained_observation",
+    "missing_insight",
+    "minimal_decisive_test",
+    "minimal_sufficient_intervention",
+    "insight_predictions",
 )
 
 
@@ -105,6 +119,13 @@ def build_feynman_socratic_certificate(candidate: dict[str, Any]) -> dict[str, A
         "boundary_condition": _first(candidate.get("endpoint_headroom_requirement"), saturation, domain, candidate.get("reopen_only_if"), candidate.get("irreducible_object")),
         "strongest_simplification": _first(candidate.get("strongest_same_information_baseline"), review.get("strongest_reduction"), candidate.get("strongest_reduction")),
         "falsifier": _first(candidate.get("cheapest_problem_falsifier"), review.get("exact_reduction_test"), contract, candidate.get("reopen_only_if")),
+        "primary_contribution_type": _first(candidate.get("primary_contribution_type"), candidate.get("contribution_type")),
+        "problem_importance": _first(candidate.get("problem_importance")),
+        "under_explained_observation": _first(candidate.get("under_explained_observation")),
+        "missing_insight": _first(candidate.get("missing_insight")),
+        "minimal_decisive_test": _first(candidate.get("minimal_decisive_test")),
+        "minimal_sufficient_intervention": _first(candidate.get("minimal_sufficient_intervention")),
+        "insight_predictions": _first(candidate.get("insight_predictions")),
         "typed_reduction_witness": _typed_mature_reduction(candidate),
         "scientific_authority": False,
         "problem_gate_authority": False,
@@ -118,6 +139,9 @@ def build_feynman_socratic_certificate(candidate: dict[str, Any]) -> dict[str, A
 
 def audit_feynman_socratic_certificate(certificate: dict[str, Any]) -> dict[str, Any]:
     missing = [field for field in CORE_FIELDS if not _text(certificate.get(field))]
+    problem_insight_missing = [field for field in PROBLEM_INSIGHT_SHADOW_FIELDS if not _text(certificate.get(field))]
+    primary = str(certificate.get("primary_contribution_type") or "").strip().lower().replace("-", "_").replace(" ", "_")
+    problem_insight_shadow_status = "PROBLEM_INSIGHT_SHADOW_COMPLETE" if not problem_insight_missing else "PROBLEM_INSIGHT_SHADOW_INCOMPLETE"
     witness = certificate.get("typed_reduction_witness") if isinstance(certificate.get("typed_reduction_witness"), dict) else {}
     if witness:
         status = "MATURE_REDUCTION_ALERT"
@@ -131,6 +155,14 @@ def audit_feynman_socratic_certificate(certificate: dict[str, Any]) -> dict[str,
         "status": status,
         "missing_fields": missing,
         "typed_reduction_witness": witness,
+        "problem_insight_shadow": {
+            "status": problem_insight_shadow_status,
+            "missing_fields": problem_insight_missing,
+            "primary_contribution_type": primary,
+            "insight_dominant_candidate": primary == "insight" and not problem_insight_missing,
+            "live_problem_gate_authority": False,
+            "scientific_authority": False,
+        },
         "problem_gate_review_may_continue": status == "CLEAR_FOR_PROBLEM_GATE_REVIEW",
         "machine_actionable": False,
         "scientific_authority": False,

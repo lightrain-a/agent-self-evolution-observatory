@@ -4,6 +4,7 @@ from typing import Any
 
 from .paper_development_guidance import audit_development_quality
 from .paper_quality_gate import audit_paper_evidence_plan
+from .research_reasoning_layer import PAPER_ARCHETYPES, build_contribution_attribution
 from .system_architecture import TEMPORAL_FLOW
 
 
@@ -27,6 +28,11 @@ POLICY: dict[str, Any] = {
     "paper_development_quality_v1_required_for_schema_2_4_plus_or_explicit_contract": True,
     "current_initial_drafts_are_not_retroactively_demoted_by_new_development_guidance": True,
     "future_material_paper_revisions_should_bind_development_quality_v1": True,
+    "contribution_archetype_is_explicit_for_schema_2_5_plus": True,
+    "insight_dominant_paper_may_use_simple_method_but_requires_problem_insight_and_evidence_closure": True,
+    "method_simplicity_never_waives_closest_work_or_evidence_requirements": True,
+    "insight_evidence_ladder_is_required_for_explicit_insight_dominant_archetype": True,
+    "legacy_contracts_are_not_retroactively_forced_into_contribution_archetypes": True,
 }
 
 REQUIRED_NOVELTY_FIELDS = {
@@ -67,6 +73,97 @@ REQUIRED_EXPERIMENTAL_INTEGRITY_FIELDS = {
     "allowed_adaptations",
     "hidden_evaluation_access_policy",
 }
+
+INSIGHT_DOMINANT_REQUIRED_FIELDS = {
+    "problem_importance",
+    "under_explained_observation",
+    "missing_insight",
+    "minimal_decisive_test",
+    "minimal_sufficient_intervention",
+    "mechanism_predictions",
+    "alternative_explanation",
+    "contribution_attribution",
+}
+
+INSIGHT_EVIDENCE_STAGES = (
+    ("E1", "PHENOMENON", "Show the target problem or counterintuitive phenomenon exists."),
+    ("E2", "CONTROLLED_REPRODUCTION", "Show the phenomenon survives the main confound controls."),
+    ("E3", "MECHANISM_PREDICTION", "Test a prediction specific to the proposed insight."),
+    ("E4", "MINIMAL_INTERVENTION", "Change only the hypothesized cause with the minimal sufficient intervention."),
+    ("E5", "STRONGEST_ALTERNATIVE", "Test the strongest same-information alternative explanation."),
+    ("E6", "GENERALIZATION", "Check the insight across a meaningful model/task/data boundary."),
+    ("E7", "BOUNDARY", "Measure where the insight or intervention stops applying."),
+)
+
+
+def audit_contribution_archetype(novelty: dict[str, Any], blueprint: dict[str, Any]) -> dict[str, Any]:
+    archetype = str(novelty.get("contribution_archetype") or "").strip().upper()
+    blockers: list[str] = []
+    if archetype and archetype not in PAPER_ARCHETYPES:
+        blockers.append(f"unsupported-contribution-archetype:{archetype}")
+    attribution = build_contribution_attribution(novelty) if archetype else {
+        "status": "ATTRIBUTION_NOT_BOUND",
+        "primary_contribution_type": "",
+        "claimed_layers": [],
+        "novel_layers": [],
+        "blockers": [],
+        "scientific_authority": False,
+    }
+    if archetype and attribution.get("status") != "ATTRIBUTION_COMPLETE":
+        blockers.extend(f"contribution-attribution:{item}" for item in attribution.get("blockers") or [])
+    expected_primary = {
+        "METHOD_DOMINANT": "method",
+        "INSIGHT_DOMINANT": "insight",
+        "PHENOMENON_DOMINANT": "phenomenon",
+        "EVALUATION_DOMINANT": "evaluation",
+        "THEORY_DOMINANT": "theory",
+        "SYSTEM_DOMINANT": "system",
+    }.get(archetype)
+    if expected_primary and attribution.get("primary_contribution_type") != expected_primary:
+        blockers.append(f"contribution-archetype-primary-mismatch:{archetype}:{attribution.get('primary_contribution_type') or 'missing'}")
+
+    insight_ladder = blueprint.get("insight_evidence_ladder") or []
+    normalized_ladder: list[dict[str, Any]] = []
+    if archetype == "INSIGHT_DOMINANT":
+        for field in sorted(INSIGHT_DOMINANT_REQUIRED_FIELDS):
+            if not _nonempty(novelty.get(field)):
+                blockers.append(f"insight-dominant-field-missing:{field}")
+        by_stage = {
+            str(row.get("stage") or "").strip().upper(): row
+            for row in insight_ladder if isinstance(row, dict) and row.get("stage")
+        }
+        for stage, role, purpose in INSIGHT_EVIDENCE_STAGES:
+            row = by_stage.get(stage) or {}
+            test = _text(row.get("test"))
+            claim_id = _text(row.get("claim_id"))
+            strongest_baseline = _text(row.get("strongest_baseline"))
+            if not test:
+                blockers.append(f"insight-evidence-ladder-test-missing:{stage}")
+            if not claim_id:
+                blockers.append(f"insight-evidence-ladder-claim-missing:{stage}")
+            if stage in {"E3", "E4", "E5"} and not strongest_baseline:
+                blockers.append(f"insight-evidence-ladder-baseline-missing:{stage}")
+            normalized_ladder.append({
+                "stage": stage,
+                "role": role,
+                "purpose": purpose,
+                "claim_id": claim_id,
+                "test": test,
+                "strongest_baseline": strongest_baseline,
+                "scientific_authority": False,
+            })
+    return {
+        "schema_version": "1.0",
+        "required": bool(archetype),
+        "archetype": archetype,
+        "status": "PASS_CONTRIBUTION_ARCHETYPE" if archetype and not blockers else ("CONTRIBUTION_ARCHETYPE_NOT_BOUND" if not archetype else "BLOCK_CONTRIBUTION_ARCHETYPE"),
+        "blockers": sorted(set(blockers)),
+        "attribution": attribution,
+        "insight_evidence_ladder": normalized_ladder,
+        "method_simplicity_is_not_a_blocker": archetype == "INSIGHT_DOMINANT",
+        "scientific_authority": False,
+        "paper_authority": False,
+    }
 
 
 def _text(value: Any) -> str:
@@ -148,6 +245,12 @@ def audit_paper_design_contract(config: dict[str, Any]) -> dict[str, Any]:
         schema_major, schema_minor = 0, 0
     quality_required = bool(evidence_quality) or (schema_major, schema_minor) >= (2, 3)
     development_required = bool(development_quality) or (schema_major, schema_minor) >= (2, 4)
+    contribution_required = bool(novelty.get("contribution_archetype")) or (schema_major, schema_minor) >= (2, 5)
+    if (schema_major, schema_minor) >= (2, 5) and not _text(novelty.get("contribution_archetype")):
+        blockers.append("contribution-archetype-missing-for-schema-2.5-plus")
+    contribution_audit = audit_contribution_archetype(novelty, blueprint)
+    if contribution_required and contribution_audit.get("status") != "PASS_CONTRIBUTION_ARCHETYPE":
+        blockers.extend(str(item) for item in contribution_audit.get("blockers") or [])
     if quality_required:
         quality_audit = audit_paper_evidence_plan(evidence_quality, method_components=len(method.get("components") or []))
         if not quality_audit.get("passed"):
@@ -191,9 +294,15 @@ def audit_paper_design_contract(config: dict[str, Any]) -> dict[str, Any]:
             "paper_development_quality_required": development_required,
             "paper_development_quality_passed": development_audit.get("passed") is True,
             "paper_development_dimensions_passed": sum((row or {}).get("pass") is True for row in (development_audit.get("dimensions") or {}).values()),
+            "contribution_archetype_required": contribution_required,
+            "contribution_archetype": str(contribution_audit.get("archetype") or ""),
+            "contribution_archetype_passed": contribution_audit.get("status") == "PASS_CONTRIBUTION_ARCHETYPE",
+            "primary_contribution_type": str((contribution_audit.get("attribution") or {}).get("primary_contribution_type") or ""),
+            "insight_evidence_ladder_stages": len(contribution_audit.get("insight_evidence_ladder") or []),
         },
         "paper_quality": quality_audit,
         "development_quality": development_audit,
+        "contribution_archetype": contribution_audit,
         "contract": contract,
         "policy": POLICY,
     }
@@ -204,6 +313,7 @@ def build_paper_first_workflow_state(pre_experiment: dict[str, Any]) -> dict[str
     audits = [card.get("paper_design_prerequisite") or {} for card in cards]
     quality_audits = [audit.get("paper_quality") or {} for audit in audits]
     development_audits = [audit.get("development_quality") or {} for audit in audits]
+    contribution_audits = [audit.get("contribution_archetype") or {} for audit in audits]
     return {
         "schema_version": "1.1",
         "policy": POLICY,
@@ -223,6 +333,9 @@ def build_paper_first_workflow_state(pre_experiment: dict[str, Any]) -> dict[str
             "paper_development_quality_applied": sum(audit.get("required") is True for audit in development_audits),
             "paper_development_quality_passed": sum(audit.get("required") is True and audit.get("passed") is True for audit in development_audits),
             "paper_development_initial_draft_guidance": sum(audit.get("status") == "INITIAL_DRAFT_GUIDANCE_NOT_YET_BOUND" for audit in development_audits),
+            "contribution_archetype_applied": sum(audit.get("required") is True for audit in contribution_audits),
+            "contribution_archetype_passed": sum(audit.get("required") is True and audit.get("status") == "PASS_CONTRIBUTION_ARCHETYPE" for audit in contribution_audits),
+            "insight_dominant_papers": sum(str(audit.get("archetype") or "") == "INSIGHT_DOMINANT" for audit in contribution_audits),
         },
         "rule": "A local pilot tests a frozen paper-motivated method. If the core method changes, return to novelty/method design and invalidate any full-experiment authorization.",
     }

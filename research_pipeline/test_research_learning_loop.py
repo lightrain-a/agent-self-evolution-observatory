@@ -10,7 +10,7 @@ from .external_system_learning import build_external_system_learning_state
 from .failure_asset_library import build_failure_asset_library
 from .p0_common import load_json
 from .literature_retrieval_audit import build_literature_retrieval_audit
-from .paper_design_contract import audit_paper_design_contract, build_paper_first_workflow_state
+from .paper_design_contract import audit_contribution_archetype, audit_paper_design_contract, build_paper_first_workflow_state
 from .protocol_validity import audit_protocol_validity
 from .research_capability_registry import build_research_capability_registry
 from .research_system_replay import build_research_system_replay
@@ -105,6 +105,45 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertTrue(workflow["policy"]["current_initial_drafts_are_not_retroactively_demoted_by_new_development_guidance"])
         self.assertEqual(workflow["summary"]["paper_design_passed"], 1)
         self.assertEqual(workflow["summary"]["paper_development_initial_draft_guidance"], 1)
+
+    def test_insight_dominant_archetype_requires_full_insight_evidence_ladder(self) -> None:
+        novelty = {
+            "contribution_archetype": "INSIGHT_DOMINANT",
+            "primary_contribution_type": "insight",
+            "problem_importance": "persistent reuse failures affect reliable long-horizon agents",
+            "under_explained_observation": "locally correct experience can become harmful after context changes",
+            "missing_insight": "reuse validity depends on current applicability, not historical correctness alone",
+            "minimal_decisive_test": "hold experience fixed and cross applicability context",
+            "minimal_sufficient_intervention": "an applicability check before reuse",
+            "mechanism_predictions": "harm concentrates on applicability flips and vanishes when the check rejects reuse",
+            "alternative_explanation": "recency/frequency and generic confidence controls",
+            "contribution_attribution": {"layers": {
+                "problem": {"status": "NEW", "claim": "systematic applicability-flip failure"},
+                "insight": {"status": "NEW", "claim": "applicability mediates reuse validity"},
+                "method": {"status": "KNOWN", "claim": "simple applicability filter"},
+            }},
+        }
+        blueprint = {"insight_evidence_ladder": [
+            {"stage": "E1", "claim_id": "C1", "test": "establish phenomenon"},
+            {"stage": "E2", "claim_id": "C1", "test": "matched context controls"},
+            {"stage": "E3", "claim_id": "C2", "test": "predict applicability flips", "strongest_baseline": "recency/frequency"},
+            {"stage": "E4", "claim_id": "C2", "test": "minimal applicability intervention", "strongest_baseline": "generic confidence filter"},
+            {"stage": "E5", "claim_id": "C2", "test": "strongest alternative explanation", "strongest_baseline": "same-information threshold"},
+            {"stage": "E6", "claim_id": "C3", "test": "cross-task/model generalization"},
+            {"stage": "E7", "claim_id": "C4", "test": "measure boundary conditions"},
+        ]}
+        audit = audit_contribution_archetype(novelty, blueprint)
+        self.assertEqual(audit["status"], "PASS_CONTRIBUTION_ARCHETYPE")
+        self.assertEqual(audit["archetype"], "INSIGHT_DOMINANT")
+        self.assertEqual(len(audit["insight_evidence_ladder"]), 7)
+        self.assertTrue(audit["method_simplicity_is_not_a_blocker"])
+        self.assertFalse(audit["scientific_authority"])
+
+        broken = copy.deepcopy(blueprint)
+        broken["insight_evidence_ladder"] = broken["insight_evidence_ladder"][:-1]
+        blocked = audit_contribution_archetype(novelty, broken)
+        self.assertEqual(blocked["status"], "BLOCK_CONTRIBUTION_ARCHETYPE")
+        self.assertIn("insight-evidence-ladder-test-missing:E7", blocked["blockers"])
 
     def test_protocol_validity_contract(self) -> None:
         audit = audit_protocol_validity(self.config())
@@ -266,6 +305,12 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertEqual(ahois["status"],"adopted");self.assertEqual(ahois["local_gap_test"]["verdict"],"gap-confirmed-and-closed");self.assertIn("20-case",ahois["local_gap_test"]["after"])
         notes=next(row for row in state["designs"] if row["system"]=="Notes2Skills")
         self.assertEqual(notes["status"],"adopted");self.assertEqual(notes["local_gap_test"]["verdict"],"gap-confirmed-and-closed");self.assertIn("30/30",notes["local_gap_test"]["after"])
+        sgha=next(row for row in state["designs"] if row["system"]=="SGHA")
+        self.assertEqual(sgha["status"],"merged-existing");self.assertEqual(sgha["local_gap_test"]["verdict"],"shadow-gap-closed-live-migration-pending");self.assertIn("30/25/20/15/15/10/5",sgha["local_gap_test"]["after"])
+        first=next(row for row in state["designs"] if row["system"]=="FirstResearch")
+        self.assertEqual(first["status"],"merged-existing");self.assertIn("minimal decisive test",first["design"])
+        scideator=next(row for row in state["designs"] if row["system"]=="Scideator")
+        self.assertEqual(scideator["status"],"merged-existing");self.assertEqual(scideator["local_gap_test"]["verdict"],"gap-confirmed-in-shadow");self.assertIn("40-case",scideator["local_gap_test"]["after"])
         sage=next(row for row in state["designs"] if row["system"]=="SAGE-MHFA")
         self.assertEqual(sage["status"],"merged-existing")
         mhfa=sage["local_gap_test"]

@@ -3,6 +3,8 @@ from __future__ import annotations
 from collections import Counter
 from typing import Any
 
+from .research_reasoning_layer import CONTRIBUTION_LAYERS
+
 SCHEMA_VERSION = "1.0"
 
 POLICY: dict[str, Any] = {
@@ -13,6 +15,8 @@ POLICY: dict[str, Any] = {
     "quantitative_visual_uncertainty_requirement_must_be_visible_when_declared": True,
     "negative_refuted_or_inconclusive_evidence_cannot_be_hidden_by_affirmative_prose": True,
     "graph_has_zero_scientific_authority": True,
+    "claim_nodes_may_bind_contribution_layer_without_changing_claim_authority": True,
+    "insight_dominant_visual_story_prefers_phenomenon_prediction_intervention_alternative_and_boundary_evidence": True,
 }
 
 
@@ -54,9 +58,13 @@ def build_figure_claim_graph(paper_quality_state: dict[str, Any]) -> dict[str, A
         adjudication = str(row.get("adjudication_status") or "")
         trace_complete = row.get("trace_complete") is True
         prose_allowed = adjudication in {"SUPPORTED", "SUPPORTED_NARROWLY"} and trace_complete
+        contribution_layer = str(row.get("contribution_layer") or row.get("claim_contribution_layer") or "").strip().lower()
+        if contribution_layer not in CONTRIBUTION_LAYERS:
+            contribution_layer = ""
         nodes.append({
             "node_id": f"claim:{cid}", "node_type": "CLAIM", "claim_id": cid,
             "claim_type": str(row.get("claim_type") or ""), "claim_text": str(row.get("claim_text") or ""),
+            "contribution_layer": contribution_layer,
             "adjudication_status": adjudication, "trace_complete": trace_complete,
             "affirmative_prose_allowed": prose_allowed,
             "must_preserve_negative_or_inconclusive": row.get("must_preserve_negative_or_inconclusive") is True,
@@ -116,6 +124,10 @@ def build_figure_claim_graph(paper_quality_state: dict[str, Any]) -> dict[str, A
             blockers.append(f"claim-without-completed-visual-surface:{cid}")
 
     blockers = sorted(set(blockers))
+    contribution_counts = Counter(
+        str(node.get("contribution_layer") or "untyped")
+        for node in nodes if node.get("node_type") == "CLAIM"
+    )
     return {
         "schema_version": SCHEMA_VERSION,
         "paper_id": str(paper_quality_state.get("paper_id") or ""),
@@ -131,6 +143,8 @@ def build_figure_claim_graph(paper_quality_state: dict[str, Any]) -> dict[str, A
             "edges": len(edges),
             "affirmative_prose_claims": sum(n.get("node_type") == "CLAIM" and n.get("affirmative_prose_allowed") is True for n in nodes),
             "negative_or_inconclusive_claims": sum(n.get("node_type") == "CLAIM" and n.get("must_preserve_negative_or_inconclusive") is True for n in nodes),
+            "contribution_layer_counts": dict(contribution_counts),
+            "typed_contribution_claims": sum(count for key, count in contribution_counts.items() if key != "untyped"),
             "blockers": len(blockers),
         },
         "scientific_authority": False,
@@ -143,7 +157,7 @@ def writer_claim_surface(graph: dict[str, Any]) -> dict[str, Any]:
     for node in graph.get("nodes") or []:
         if not isinstance(node, dict) or node.get("node_type") != "CLAIM":
             continue
-        row = {"claim_id": node.get("claim_id"), "claim_text": node.get("claim_text"), "adjudication_status": node.get("adjudication_status")}
+        row = {"claim_id": node.get("claim_id"), "claim_text": node.get("claim_text"), "adjudication_status": node.get("adjudication_status"), "contribution_layer": node.get("contribution_layer")}
         if node.get("affirmative_prose_allowed") is True:
             allowed.append(row)
         if node.get("must_preserve_negative_or_inconclusive") is True:

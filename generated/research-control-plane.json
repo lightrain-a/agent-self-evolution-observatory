@@ -75,6 +75,13 @@
     },
     "reasoning_layer": {
       "contracts": 6,
+      "extensions": 4,
+      "contribution_replay_cases": 40,
+      "contribution_replay_wrong_whole_paper_stops": 0,
+      "contribution_replay_object_reduction_misses": 0,
+      "problem_first_shadow_generation_target": 120,
+      "prospective_contribution_shadow_minimum": 20,
+      "automatic_live_gate_migrations": 0,
       "automatic_scientific_authority": 0,
       "automatic_research_item_authority": 0,
       "automatic_experiment_authority": 0
@@ -95,9 +102,9 @@
     "review_control": {
       "papers": 5,
       "review_receipts": 16,
-      "decision_critical_objections": 48,
-      "targeted_experiment_proposals": 14,
-      "repeated_cross_paper_patterns": 7,
+      "decision_critical_objections": 44,
+      "targeted_experiment_proposals": 18,
+      "repeated_cross_paper_patterns": 5,
       "automatic_memory_promotions": 0
     },
     "figure_claim_graph": {
@@ -107,6 +114,10 @@
       "edges": 42,
       "affirmative_prose_claims": 3,
       "negative_or_inconclusive_claims": 0,
+      "contribution_layer_counts": {
+        "untyped": 3
+      },
+      "typed_contribution_claims": 0,
       "blockers": 0
     },
     "failure_differential_registry": {
@@ -200,21 +211,22 @@
   "review_snapshot": {
     "papers": 5,
     "review_receipts": 16,
-    "decision_critical_objections": 48,
-    "targeted_experiment_proposals": 14,
-    "repeated_cross_paper_patterns": 7,
+    "decision_critical_objections": 44,
+    "targeted_experiment_proposals": 18,
+    "repeated_cross_paper_patterns": 5,
     "automatic_memory_promotions": 0
   },
   "paper_readiness": {
     "papers": 5,
-    "submission_ready": 5,
-    "gate_clean_submission_ready": 5,
-    "paper_preparation_failed": 0,
-    "immediate_submission_holds": 0,
-    "internal_action_required": 0,
-    "no_internal_action": 5,
+    "submission_ready": 4,
+    "gate_clean_submission_ready": 4,
+    "paper_preparation_failed": 1,
+    "immediate_submission_holds": 1,
+    "internal_action_required": 1,
+    "no_internal_action": 4,
     "by_internal_action": {
-      "NO_INTERNAL_ACTION": 5
+      "EXTERNAL_EVIDENCE_REQUIRED": 1,
+      "NO_INTERNAL_ACTION": 4
     },
     "scientific_holds": 0,
     "primary_paper": "STRI",
@@ -239,7 +251,8 @@
       "DI2-04"
     ],
     "by_stage": {
-      "SUBMISSION_READY": 5
+      "PREBUTTAL": 1,
+      "SUBMISSION_READY": 4
     }
   },
   "summary": {
@@ -249,7 +262,7 @@
     "experiment_tree_nodes": 4,
     "reviewer_issue_papers": 5,
     "registered_papers": 5,
-    "submission_ready_papers": 5,
+    "submission_ready_papers": 4,
     "automatic_scientific_authority": 0,
     "automatic_experiment_authority": 0,
     "automatic_gpu_authority": 0
@@ -595,10 +608,10 @@
     "projection_cannot_mutate_source_artifacts": true
   },
   "source_artifact_sha256": {
-    "generated/research-system-state.json": "03d24f50dc6dc4365794eaeaa5c52e5a0060c8b6df903d34448236baec9ecba1",
-    "generated/paper-registry.json": "652144a8d70b878f0d3deaab91175cc34d366207fc6bf254cd9dd1de99c1821c",
+    "generated/research-system-state.json": "c1d7b6ed0c3ee0493a965cad5d8c5ddc58d045612161b9b78964f422c976f97d",
+    "generated/paper-registry.json": "51aece2c0a2a97ea4af2db06e8654b80d6b24279d9430f803ff6bf8a8c1fa9ef",
     "generated/research-governance-v2.json": "328869b78bb48972c52e0b36ede97d15d2d90487541095e689f0c225b424d059",
-    "generated/asset-first-stri-paper-quality-v2-20260816.json": "b320e6d2cea935280f099bfd3aa71fd3887decd0937542ede09ec7f40dca65cc"
+    "generated/asset-first-stri-paper-quality-v2-20260816.json": "31ec9a9a882123a24ff3d0967b653ba32b44067807e532b3d2540da549971708"
   },
-  "projection_sha256": "e961c8cdef347128e77457b15381332b133b313e1f664b83e38f8920f149df7e"
+  "projection_sha256": "81ee669d891688efbc4d7527f3fee4c655e2cb863c22224d0c933c947d26d095"
 }

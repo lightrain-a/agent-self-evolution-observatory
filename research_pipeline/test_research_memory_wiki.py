@@ -117,6 +117,15 @@ class ResearchMemoryWikiTest(unittest.TestCase):
         pack=compile_research_memory_query_pack(wiki,purpose="PAPER_DESIGN",context="closed method matched simplification taxonomy representation skill invariance",max_chars=1200,max_items=16)
         self.assertGreaterEqual(pack["summary"]["review_lessons_selected"],1);self.assertEqual(pack["selected"][0]["kind"],"PAPER_DEVELOPMENT_GUIDANCE");self.assertEqual(pack["selected"][1]["kind"],"REVIEW_LESSON");self.assertTrue(pack["policy"]["paper_design_reserves_review_lesson_when_available"]);self.assertTrue(pack["policy"]["paper_design_reserves_development_guidance_when_available"])
 
+    def test_contribution_aware_lesson_templates_do_not_invent_historical_memory(self):
+        wiki=self.build()
+        templates=wiki.get("lesson_templates") or {}
+        self.assertEqual(set(templates),{"COMPLEXITY_FOR_NOVELTY_FAILURE","METHOD_REDUCTION_DID_NOT_KILL_SCIENTIFIC_OBJECT"})
+        self.assertEqual(wiki["summary"]["contribution_aware_lesson_templates"],2)
+        self.assertTrue(all(row.get("scientific_authority") is False for row in templates.values()))
+        self.assertFalse(any(r.get("memory_id") in templates for r in wiki["entries"]))
+        self.assertTrue(wiki["policy"]["contribution_aware_lesson_templates_are_zero_authority_until_instantiated_by_evidence"])
+
     def test_senior_paper_development_guidance_is_always_zero_authority_and_reserved_for_paper_design(self):
         wiki=self.build();rows=[r for r in wiki["entries"] if r["kind"]=="PAPER_DEVELOPMENT_GUIDANCE"]
         self.assertEqual(len(rows),1);row=rows[0]

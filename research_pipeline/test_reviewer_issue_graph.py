@@ -35,6 +35,30 @@ class ReviewerIssueGraphTest(unittest.TestCase):
         self.assertFalse(by_id["R1"]["reviewer_prose_exposed"])
         self.assertFalse(graph["scientific_authority"])
 
+    def test_method_incrementality_does_not_default_to_complexification_for_insight_paper(self) -> None:
+        receipt = [{
+            "review_sha256": "b" * 64,
+            "objections": [{
+                "objection_id": "M1",
+                "category": "method-incrementality",
+                "text": "The method is a simple filter and appears incremental.",
+                "decision_critical": True,
+                "evidence_state": "EXISTING_EVIDENCE",
+                "claim_ids": ["C2"],
+            }],
+            "actions": [{"objection_id": "M1", "action_class": "NARRATIVE_REPAIR", "claim_expansion_authorized": False}],
+        }]
+        graph = build_reviewer_issue_graph(
+            paper_id="P-insight",
+            review_receipts=receipt,
+            paper_contribution={"primary_contribution_type": "insight"},
+        )
+        issue = graph["nodes"][0]
+        self.assertEqual(issue["attacked_contribution_layer"], "method")
+        self.assertEqual(issue["repair_focus"], "strengthen-primary-contribution-evidence-not-method-complexity")
+        self.assertFalse(issue["method_complexification_is_default_repair"])
+        self.assertEqual(graph["summary"]["method_objections_redirected_from_complexification"], 1)
+
     def test_resolution_requires_verification_artifact(self) -> None:
         graph = build_reviewer_issue_graph(paper_id="P1", review_receipts=self.receipts(), resolutions={"R1": {"resolved": True}})
         self.assertEqual(graph["status"], "BLOCK_REVIEWER_ISSUE_GRAPH")

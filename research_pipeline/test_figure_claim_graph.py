@@ -23,6 +23,19 @@ class FigureClaimGraphTest(unittest.TestCase):
         self.assertEqual(graph["summary"]["blockers"], 0)
         self.assertFalse(graph["scientific_authority"])
 
+    def test_claims_can_bind_contribution_layers_without_changing_evidence_authority(self) -> None:
+        state = copy.deepcopy(self.state)
+        state["audit"]["claim_ledger"][0]["contribution_layer"] = "phenomenon"
+        state["audit"]["claim_ledger"][1]["contribution_layer"] = "insight"
+        state["audit"]["claim_ledger"][2]["contribution_layer"] = "method"
+        graph = build_figure_claim_graph(state)
+        by_id = {row.get("claim_id"): row for row in graph["nodes"] if row.get("node_type") == "CLAIM"}
+        self.assertEqual(by_id["N1"]["contribution_layer"], "phenomenon")
+        self.assertEqual(by_id["N2"]["contribution_layer"], "insight")
+        self.assertEqual(by_id["N3"]["contribution_layer"], "method")
+        self.assertEqual(graph["summary"]["typed_contribution_claims"], 3)
+        self.assertFalse(graph["scientific_authority"])
+
     def test_writer_reads_supported_claims_but_cannot_create_evidence(self) -> None:
         surface = writer_claim_surface(build_figure_claim_graph(self.state))
         self.assertEqual(len(surface["affirmative_claims"]), 3)

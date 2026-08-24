@@ -11,6 +11,7 @@ from .paper_first_primary_evidence import load_private_primary_pool, private_pri
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, audit_problem_candidate
 from .feynman_socratic_gate import build_feynman_socratic_certificate, audit_feynman_socratic_certificate
 from .reproduction_gate import reproduction_from_candidate
+from .research_reasoning_layer import attribute_simplification, build_contribution_attribution
 from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-gate-queue.json"
@@ -122,6 +123,15 @@ def _candidate_snapshot(candidate: dict[str, Any]) -> dict[str, Any]:
             "endpoint_headroom_requirement",
             "importance",
             "likely_iclr_story",
+            "primary_contribution_type",
+            "problem_importance",
+            "under_explained_observation",
+            "missing_insight",
+            "minimal_decisive_test",
+            "minimal_sufficient_intervention",
+            "insight_predictions",
+            "contribution_attribution",
+            "simplification_attribution_evidence",
         )
     }
 
@@ -172,6 +182,24 @@ def build_problem_gate_queue(
         feynman_certificate = build_feynman_socratic_certificate(candidate)
         feynman_audit = audit_feynman_socratic_certificate(feynman_certificate)
         reproduction_contract, reproduction_audit = reproduction_from_candidate(candidate)
+        contribution_attribution = build_contribution_attribution(candidate)
+        simplification_spec = candidate.get("simplification_attribution_evidence") if isinstance(candidate.get("simplification_attribution_evidence"), dict) else {}
+        if contribution_attribution.get("status") == "ATTRIBUTION_COMPLETE" and simplification_spec.get("reproduced_layers"):
+            simplification_attribution = attribute_simplification(
+                primary_contribution_type=str(contribution_attribution.get("primary_contribution_type") or ""),
+                claimed_layers=contribution_attribution.get("claimed_layers") or [],
+                reproduced_layers=simplification_spec.get("reproduced_layers") or [],
+                baseline_ref=str(simplification_spec.get("baseline_ref") or ""),
+                same_information=simplification_spec.get("same_information") is True,
+            )
+        else:
+            simplification_attribution = {
+                "schema_version": "1.0",
+                "status": "SIMPLIFICATION_ATTRIBUTION_NOT_YET_EVALUABLE",
+                "whole_paper_stop_authorized": False,
+                "scientific_authority": False,
+                "paper_authority": False,
+            }
         audit = audit_problem_candidate(
             candidate,
             primary_evidence_by_ref=registry,
@@ -195,6 +223,19 @@ def build_problem_gate_queue(
             audit["passed"] = False
             audit["status"] = "PROBLEM_GATE_BLOCKED"
             audit["blockers"] = sorted(set(list(audit.get("blockers") or []) + pre_problem_blockers))
+        contribution_shadow = {
+            "schema_version": "1.0",
+            "current_problem_gate_status": str(audit.get("status") or ""),
+            "current_problem_gate_passed": audit.get("passed") is True,
+            "contribution_attribution": contribution_attribution,
+            "simplification_attribution": simplification_attribution,
+            "eventual_problem_gate": "PENDING_OR_CURRENT_ONLY",
+            "eventual_closest_work": "PENDING",
+            "eventual_paper_survival": "PENDING",
+            "live_problem_gate_mutated": False,
+            "scientific_authority": False,
+            "paper_authority": False,
+        }
         snapshot = _candidate_snapshot(candidate)
         row = {
             "candidate_id": cid,
@@ -204,6 +245,7 @@ def build_problem_gate_queue(
             "candidate": snapshot,
             "feynman_socratic": {"certificate": feynman_certificate, "audit": feynman_audit},
             "closest_work_reproduction": {"contract": reproduction_contract, "audit": reproduction_audit},
+            "contribution_shadow": contribution_shadow,
             "audit": audit,
             "paper_design_eligible": bool(audit.get("passed")),
             "authority": {
@@ -227,6 +269,7 @@ def build_problem_gate_queue(
                 "candidate": snapshot,
                 "feynman_socratic": {"certificate": feynman_certificate, "audit": feynman_audit},
                 "closest_work_reproduction": {"contract": reproduction_contract, "audit": reproduction_audit},
+                "contribution_shadow": contribution_shadow,
             })
 
     if duplicate_ids:
@@ -273,6 +316,10 @@ def build_problem_gate_queue(
             "feynman_socratic_certificate_required_before_problem_gate": True,
             "feynman_socratic_gate_is_zero_authority": True,
             "feynman_socratic_mature_reduction_alert_only_uses_typed_existing_review": True,
+            "problem_insight_certificate_runs_in_shadow_and_does_not_change_live_problem_gate_authority_yet": True,
+            "contribution_attribution_shadow_is_recorded_before_any_future_live-gate migration": True,
+            "prospective_shadow_records_current_verdict_and_waits_for_eventual_closest_work_and_paper_survival": True,
+            "shadow_simplification_attribution_cannot_mutate_live_problem_gate": True,
             "closest_work_reproduction_required_only_when_implementation_is_decisive": True,
             "missing_source_faithful_reproduction_assets_is_support_hold_not_scientific_negative": True,
             "all_candidates_require_problem_gate": True,
@@ -297,6 +344,9 @@ def build_problem_gate_queue(
             "reproduction_required": sum((row.get("closest_work_reproduction") or {}).get("audit", {}).get("required_for_problem_qualification") is True for row in audited),
             "reproduction_qualified": sum((row.get("closest_work_reproduction") or {}).get("audit", {}).get("required_for_problem_qualification") is True and (row.get("closest_work_reproduction") or {}).get("audit", {}).get("qualification_satisfied") is True for row in audited),
             "reproduction_support_holds": sum((row.get("closest_work_reproduction") or {}).get("audit", {}).get("support_hold") is True for row in audited),
+            "contribution_shadow_complete": sum((row.get("contribution_shadow") or {}).get("contribution_attribution", {}).get("status") == "ATTRIBUTION_COMPLETE" for row in audited),
+            "simplification_attribution_shadow_evaluable": sum((row.get("contribution_shadow") or {}).get("simplification_attribution", {}).get("status") != "SIMPLIFICATION_ATTRIBUTION_NOT_YET_EVALUABLE" for row in audited),
+            "shadow_live_problem_gate_mutations": sum((row.get("contribution_shadow") or {}).get("live_problem_gate_mutated") is True for row in audited),
             "submitted_by_lane": _count_by_lane(candidates),
             "passed_by_lane": _count_by_lane(passed),
             "blocked_by_lane": _count_by_lane(blocked),

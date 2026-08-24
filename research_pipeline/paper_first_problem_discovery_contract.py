@@ -52,6 +52,23 @@ FORBIDDEN_DISCOVERY_LANES: tuple[str, ...] = (
     "PURE_TOPIC_BRAINSTORM",
 )
 
+PROBLEM_FIRST_SHADOW_PRIMITIVES: tuple[str, ...] = (
+    "UNDER_EXPLAINED_IMPORTANT_PHENOMENON",
+    "COUNTERINTUITIVE_SCALING_OR_SIGN_INVERSION",
+    "KNOWN_WORKAROUND_WITHOUT_MECHANISTIC_EXPLANATION",
+    "MINIMAL_INTERVENTION_RESTORES_BEHAVIOR",
+)
+
+PROBLEM_FIRST_SHADOW_GENERATION_PRIOR: dict[str, int] = {
+    "unexplained_phenomena": 30,
+    "important_failure_or_problem_formulations": 25,
+    "mechanism_or_insight_hypotheses": 20,
+    "minimal_intervention_ideas": 15,
+    "method_innovations": 15,
+    "evaluation_gaps": 10,
+    "system_or_theory": 5,
+}
+
 SOURCE_EVIDENCE_ROLES: tuple[str, ...] = (
     "EMPIRICAL_FACT",
     "OPERATIONAL_ASSUMPTION",
@@ -259,6 +276,13 @@ POLICY: dict[str, Any] = {
     "positive_residual_direct_seed_required_in_unexplained_boundary_shard": True,
     "inactive_search_assets_hidden_from_generator": True,
     "inactive_search_assets_remain_provenance_archived": True,
+    "problem_first_shadow_search_enabled": True,
+    "problem_first_shadow_primitives": list(PROBLEM_FIRST_SHADOW_PRIMITIVES),
+    "problem_first_shadow_generation_prior": dict(PROBLEM_FIRST_SHADOW_GENERATION_PRIOR),
+    "problem_first_shadow_does_not_change_live_discovery_operator_or_provider_budget": True,
+    "problem_first_shadow_prior_is_attention_scheduling_not_novelty_authority": True,
+    "method_complexity_is_not_a_generation_reward": True,
+    "minimum_sufficient_intervention_is_preferred_before_learned_router_or_controller": True,
     "no_active_asset_fallback_requires_latest_primary_quantitative_anomaly": True,
     "fresh_phenomenon_seed_must_name_measured_boundary_or_failure": True,
     "fresh_phenomenon_asset_readiness_is_priority_not_novelty_authority": True,
@@ -785,10 +809,21 @@ def build_problem_discovery_contract_state() -> dict[str, Any]:
             "maximum_lane_minimum_distinct_primary_sources":max(LANE_DISTINCT_SOURCE_MINIMUM[lane] for lane in DISCOVERY_LANES),
             "minimum_grounded_evidence_items":2,
             "minimum_mature_theory_baselines":2,
+            "problem_first_shadow_primitives":len(PROBLEM_FIRST_SHADOW_PRIMITIVES),
+            "problem_first_shadow_generation_target":sum(PROBLEM_FIRST_SHADOW_GENERATION_PRIOR.values()),
             "automatic_method_authority":0,
             "automatic_experiment_authority":0,
         },
         "lane_contracts":[{"lane":lane,"source_roles":list(LANE_SOURCE_ROLES[lane]),"minimum_distinct_primary_sources":LANE_DISTINCT_SOURCE_MINIMUM[lane],"required_lane_evidence":list(LANE_EVIDENCE_REQUIRED[lane]),"machine_contract":LANE_MACHINE_CONTRACTS[lane]} for lane in DISCOVERY_LANES],
+        "problem_first_shadow":{
+            "primitives":list(PROBLEM_FIRST_SHADOW_PRIMITIVES),
+            "generation_prior":dict(PROBLEM_FIRST_SHADOW_GENERATION_PRIOR),
+            "normalizes_to_existing_live_lanes":True,
+            "live_discovery_operator_changed":False,
+            "provider_calls_authorized":0,
+            "problem_gate_authority":False,
+            "scientific_authority":False,
+        },
         "generator_order":[
             "INVERT certified closed basins only as zero-authority search priors: extract the opposite principle/search seed, then require fresh primary grounding and the recorded reopen condition before retaining a branch",
             "VERIFY any proposed feedback mechanism has a causal write path into selection, gating, rollback, synthesis, memory admission, artifact promotion, or another state transition; report-only measurements cannot justify feedback-effect experiments",
