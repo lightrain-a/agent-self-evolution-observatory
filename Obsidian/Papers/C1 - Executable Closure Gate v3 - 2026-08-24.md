@@ -2,7 +2,7 @@
 knowledge_version: C1-CLOSURE-v3-20260824
 paper_id: D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE
 paper_title: Reward Errors Change Memory Before They Change Policy
-status: D0A_COMPLETE_D0B1_OPERATIONAL_CONTRAST_GO_CAUSAL_ATOM_HOLD
+status: D0A_COMPLETE_D0B2_READINESS_HOLD_NO_QUALIFIED_VALIDITY_SIGNAL
 supersedes: C1 - Reward Errors Change Memory Before Policy
 scientific_provider_calls_added: 0
 ---
@@ -145,13 +145,19 @@ The subsequent D0-B1 identifiability audit sharpens what “residual identity”
 
 That supports an **operational same-trajectory branch contrast**, but it does not certify atom-level causal purity: the current 24 pairs bind **0/24 explicit decoding seeds** and **0/24 same-condition same-trajectory replication/noise-floor controls**. Therefore individual `Title/Description/Content` atoms cannot yet be described as purely caused by the reward/reflection label.
 
-Current verdict: `D0B1_OPERATIONAL_CONTRAST_GO_CAUSAL_ATOM_IDENTITY_HOLD`. CBRG may continue only with an operational definition such as `D_tau = Delta(W_success(tau), W_failure(tau))`; “causal residual atom” language remains forbidden unless a later frozen seed/noise-floor control supports it. The next zero-call gate is D0-B1c: compile reproducible branch-contrast units and bind exact per-unit outcome-independent evidence refs. D0-B2 semantic adjudication remains locked. All scientific/provider/GPU/claim-expansion/submission authority remains **false**.
+D0-B1c now compiles the operational object itself. All **423/423** directional branch-contrast units bind a same-field opposite-branch counterpart, with no threshold used to turn similarity into residual membership. The exact outcome-independent evidence locator then scans **58,230** frozen pre-writer browser-state lines. **397/423 (93.85%)** units have a nonzero exact lexical anchor; **26/423** have no such anchor and are deliberately left `UNLOCATED` rather than being assigned embedding/similarity-only pseudo-evidence. Mean best lexical anchor (including zeros) is **0.1102**; this is a locator diagnostic, not validity.
+
+D0-B1c verdict remains `D0B1C_COMPILER_GO_LOCATOR_PARTIAL_FAIL_CLOSED_D0B2_READY`: the operational object is executable, but locator coverage is not semantic validity.
+
+D0-B2 readiness has now been audited before running any semantic labeler. A bounded scan of the local Hugging Face cache plus the canonical Agent Self-Evolution data root finds **0** frozen classifier configs with explicit entailment+contradiction labels; the C1 program binds **0** semantic-qualification receipts and **0** qualified adjudicators. The frozen MiniLM asset is a plain `BertModel` with no `id2label/label2id`, so it remains an embedding-similarity baseline only. Merely finding a generic NLI model later would still be insufficient without a C1-specific pre-outcome qualification receipt and a non-reducibility check against lexical/embedding similarity.
+
+Current verdict: `D0B2_READINESS_HOLD_NO_ADMISSIBLE_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL`. Semantic validity remains **0/423 adjudicated**; `SUPPORTED=0`, `CONTRADICTED=0`, and no unit has yet been semantically marked `UNVERIFIABLE`. If B2 later reopens under a qualified adjudicator, the current **26 unlocated units are forced fail-closed** unless a separately frozen outcome-independent locator is added before adjudication. All scientific/provider/GPU/claim-expansion/submission authority remains **false**.
 
 ### Machine binding
 
 This page is not the enforcement surface. The versioned JSON program is bound to `C1_EXECUTABLE_CLOSURE_REVIEWER_GATE_V3` in `research_pipeline.methodology_controls`. The machine gate permits D0 design only when the novelty set is exactly the same-trajectory counterfactual branch residual plus evidence-gated trigger authority; all neutral/metadata, generic core/residual, semantic applicability, query-conditioned reuse, provenance authorization, and success/failure reflection components remain baseline-only. It also requires byte-identical trajectory pairing, outcome-independent claim-bound evidence, receipt-before-authority, fail-closed handling of contradicted/unverifiable evidence, fresh collision clearance before ProblemGate, a zero provider-call D0 budget, and zero downstream authority. The evidence receipt itself must be content-addressed and bind the exact trajectory hash, both branch-memory hashes, residual-claim identity, exact evidence refs/hashes, validity state, extractor/adjudicator versions, and the resulting authority decision; the receipt can never escalate scientific or provider authority.
 
-The machine now keeps the historical receipt-envelope audit visible and registers stricter claim-binding and intervention-identifiability gates. It fails closed if packet-level evidence hashing is promoted to claim-level evidence, if a parsed memory atom is renamed a certified residual without an explicit operational contrast identity, if an operational branch contrast is upgraded to atom-level causal purity without seed/noise-floor control, or if semantic/branch authority appears before exact claim evidence is bound. It does **not** mean “D0-B passed scientifically,” “423 claims are supported,” “branch difference equals pure causal effect,” or “fresh execution authorized.”
+The machine now keeps the historical receipt-envelope audit visible and registers stricter claim-binding, intervention-identifiability, B1c compiler/locator, and B2 semantic-readiness gates. It fails closed if packet-level evidence hashing is promoted to claim-level evidence, if a parsed memory atom is renamed a certified residual without an explicit operational contrast identity, if an operational branch contrast is upgraded to atom-level causal purity without seed/noise-floor control, if locator similarity is promoted to semantic support, if an unlocated unit receives imputed evidence authority, if a generic NLI model is treated as validity authority without task-specific qualification, or if semantic/branch authority appears while no qualified content-addressed adjudicator is bound. It does **not** mean “D0-B passed scientifically,” “397 claims are supported,” “branch difference equals pure causal effect,” or “fresh execution authorized.”
 
 ### D0-B STOP / MERGE
 
@@ -194,4 +200,4 @@ The primary question is not “does the gate reject bad memory?” It is whether
 - GPU authority: **false**;
 - claim-expansion authority: **false**;
 - submission authority: **false**;
-- next permitted action: **D0-B1c zero-call operational branch-contrast compiler + exact claim-evidence locator only**; semantic adjudication and fresh provider execution remain locked.
+- next permitted action: **zero-call semantic-adjudicator qualification/binding only**. Reopen D0-B2 only after binding a frozen `SUPPORTED / CONTRADICTED / UNVERIFIABLE`-capable classifier or deterministic rule, an independent pre-outcome C1 qualification receipt, and a non-reducibility check against similarity/applicability. Otherwise STOP/MERGE the CBRG extension; fresh provider execution remains locked.

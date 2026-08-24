@@ -9536,7 +9536,12 @@
       "claim_specific_evidence_refs_required_before_semantic_validity": true,
       "semantic_validity_required_before_nonzero_branch_authority": true,
       "operational_branch_contrast_is_not_atom_level_causal_purity": true,
-      "causal_residual_language_requires_seed_or_same_condition_noise_floor_control": true
+      "causal_residual_language_requires_seed_or_same_condition_noise_floor_control": true,
+      "evidence_locator_similarity_cannot_grant_semantic_support": true,
+      "unlocated_claims_cannot_receive_imputed_evidence_authority": true,
+      "semantic_validity_requires_a_qualified_content_addressed_adjudicator": true,
+      "generic_nli_model_existence_without_task_specific_qualification_is_not_validity_authority": true,
+      "absence_of_qualified_semantic_adjudicator_is_readiness_hold_not_scientific_failure": true
     },
     "controls": [
       {
@@ -9764,6 +9769,46 @@
             "submission": false
           }
         }
+      },
+      "c1_d0b1c_operational_contrast_locator": {
+        "status": "REGISTERED_COMPILER_GO_LOCATOR_PARTIAL_FAIL_CLOSED",
+        "observation_loaded": true,
+        "observation_adjudication": {
+          "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+          "status": "D0B1C_OPERATIONAL_CONTRAST_COMPILED_EXACT_LOCATOR_PARTIAL_SEMANTIC_HOLD",
+          "compiler_ready": true,
+          "locator_partial_fail_closed": true,
+          "semantic_authority": false,
+          "errors": [],
+          "authority": {
+            "scientific": false,
+            "experiment": false,
+            "provider": false,
+            "gpu": false,
+            "claim_expansion": false,
+            "submission": false
+          }
+        }
+      },
+      "c1_d0b2_semantic_readiness": {
+        "status": "REGISTERED_READINESS_HOLD_NO_QUALIFIED_VALIDITY_SIGNAL",
+        "observation_loaded": true,
+        "observation_adjudication": {
+          "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+          "status": "D0B2_SEMANTIC_ADJUDICATOR_NOT_BOUND_READINESS_HOLD",
+          "readiness_hold_valid": true,
+          "semantic_adjudicator_ready": false,
+          "semantic_authority": false,
+          "errors": [],
+          "authority": {
+            "scientific": false,
+            "experiment": false,
+            "provider": false,
+            "gpu": false,
+            "claim_expansion": false,
+            "submission": false
+          }
+        }
       }
     },
     "summary": {
@@ -9772,7 +9817,7 @@
       "functional_layers_added": 0,
       "measured_controls": 0,
       "spec_or_contract_ready": 3,
-      "registered_reviewer_gates": 4,
+      "registered_reviewer_gates": 6,
       "c1_reviewer_gate_loaded": true,
       "c1_reviewer_gate_d0_design_eligible": true,
       "c1_reviewer_gate_downstream_authority": false,
@@ -9789,7 +9834,17 @@
       "c1_d0b1_operational_contrast_identifiable": true,
       "c1_d0b1_causal_atom_purity_certified": false,
       "c1_d0b1_semantic_authority": false,
-      "c1_d0b1_downstream_authority": false
+      "c1_d0b1_downstream_authority": false,
+      "c1_d0b1c_locator_observation_loaded": true,
+      "c1_d0b1c_compiler_ready": true,
+      "c1_d0b1c_locator_partial_fail_closed": true,
+      "c1_d0b1c_semantic_authority": false,
+      "c1_d0b1c_downstream_authority": false,
+      "c1_d0b2_readiness_observation_loaded": true,
+      "c1_d0b2_readiness_hold_valid": true,
+      "c1_d0b2_semantic_adjudicator_ready": false,
+      "c1_d0b2_semantic_authority": false,
+      "c1_d0b2_downstream_authority": false
     },
     "merge_only_external_designs": [
       {
@@ -85099,7 +85154,35 @@
           "primary_components_added": 0,
           "functional_layers_added": 0,
           "measured_controls": 0,
-          "spec_or_contract_ready": 3
+          "spec_or_contract_ready": 3,
+          "registered_reviewer_gates": 6,
+          "c1_reviewer_gate_loaded": true,
+          "c1_reviewer_gate_d0_design_eligible": true,
+          "c1_reviewer_gate_downstream_authority": false,
+          "c1_d0b_structural_observation_loaded": true,
+          "c1_d0b_structurally_feasible": true,
+          "c1_d0b_semantic_authority": false,
+          "c1_d0b_downstream_authority": false,
+          "c1_d0b_claim_binding_observation_loaded": true,
+          "c1_d0b_claim_binding_envelope_feasible": true,
+          "c1_d0b_claim_binding_ready": false,
+          "c1_d0b_claim_binding_semantic_authority": false,
+          "c1_d0b_claim_binding_downstream_authority": false,
+          "c1_d0b1_identifiability_observation_loaded": true,
+          "c1_d0b1_operational_contrast_identifiable": true,
+          "c1_d0b1_causal_atom_purity_certified": false,
+          "c1_d0b1_semantic_authority": false,
+          "c1_d0b1_downstream_authority": false,
+          "c1_d0b1c_locator_observation_loaded": true,
+          "c1_d0b1c_compiler_ready": true,
+          "c1_d0b1c_locator_partial_fail_closed": true,
+          "c1_d0b1c_semantic_authority": false,
+          "c1_d0b1c_downstream_authority": false,
+          "c1_d0b2_readiness_observation_loaded": true,
+          "c1_d0b2_readiness_hold_valid": true,
+          "c1_d0b2_semantic_adjudicator_ready": false,
+          "c1_d0b2_semantic_authority": false,
+          "c1_d0b2_downstream_authority": false
         }
       },
       {

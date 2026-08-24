@@ -35,6 +35,12 @@ C1_D0B_CLAIM_BINDING_ARTIFACT = Path(__file__).resolve().parents[1] / "paper_dra
 C1_D0B1_IDENTIFIABILITY_STATUS = "D0B1_INTERVENTION_CONTRAST_IDENTIFIABLE_CAUSAL_ATOM_PURITY_HOLD"
 C1_D0B1_IDENTIFIABILITY_DECISION = "D0B1_OPERATIONAL_CONTRAST_GO_CAUSAL_ATOM_IDENTITY_HOLD"
 C1_D0B1_IDENTIFIABILITY_ARTIFACT = Path(__file__).resolve().parents[1] / "paper_drafts" / "c1-proxy-reward-stanford-r3-20260824" / "cbrg-d0b1-intervention-identifiability-audit-20260824.json"
+C1_D0B1C_LOCATOR_STATUS = "D0B1C_OPERATIONAL_CONTRAST_COMPILED_EXACT_LOCATOR_PARTIAL_SEMANTIC_HOLD"
+C1_D0B1C_LOCATOR_DECISION = "D0B1C_COMPILER_GO_LOCATOR_PARTIAL_FAIL_CLOSED_D0B2_READY"
+C1_D0B1C_LOCATOR_ARTIFACT = Path(__file__).resolve().parents[1] / "paper_drafts" / "c1-proxy-reward-stanford-r3-20260824" / "cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json"
+C1_D0B2_READINESS_STATUS = "D0B2_SEMANTIC_ADJUDICATOR_NOT_BOUND_READINESS_HOLD"
+C1_D0B2_READINESS_DECISION = "D0B2_READINESS_HOLD_NO_ADMISSIBLE_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL"
+C1_D0B2_READINESS_ARTIFACT = Path(__file__).resolve().parents[1] / "paper_drafts" / "c1-proxy-reward-stanford-r3-20260824" / "cbrg-d0b2-semantic-readiness-audit-20260824.json"
 C1_EXECUTABLE_CLOSURE_REVIEWER_GATE: dict[str, Any] = {
     "gate": C1_GATE_ID,
     "profile": C1_GATE_PROFILE,
@@ -452,6 +458,197 @@ def adjudicate_c1_d0b1_intervention_identifiability(observation: dict[str, Any])
     }
 
 
+def adjudicate_c1_d0b1c_locator_observation(observation: dict[str, Any]) -> dict[str, Any]:
+    """Validate operational contrast compilation while keeping locator/validity fail-closed."""
+    errors: list[str] = []
+    if observation.get("status") != C1_D0B1C_LOCATOR_STATUS:
+        errors.append("D0-B1c locator status drift")
+    if observation.get("decision") != C1_D0B1C_LOCATOR_DECISION:
+        errors.append("D0-B1c locator decision drift")
+    expected = {
+        "provider_calls": 0,
+        "gpu_runs": 0,
+        "paired_sources": 24,
+        "directional_branch_contrast_units": 423,
+        "same_field_opposite_counterpart_units": 423,
+        "units_with_exact_nonzero_lexical_evidence_anchor": 397,
+        "units_without_nonzero_lexical_evidence_anchor": 26,
+        "semantic_validity_adjudicated_units": 0,
+        "supported_units": 0,
+        "contradicted_units": 0,
+        "unverifiable_units": 0,
+        "nonzero_branch_authority_units": 0,
+    }
+    for key, value in expected.items():
+        if observation.get(key) != value:
+            errors.append(f"D0-B1c locator count/status drift: {key}")
+    coverage = observation.get("locator_coverage")
+    if not isinstance(coverage, (int, float)) or abs(float(coverage) - (397 / 423)) > 1e-12:
+        errors.append("D0-B1c locator coverage drift")
+    if observation.get("exact_locator_is_not_semantic_support") is not True:
+        errors.append("exact evidence location is incorrectly being promoted to semantic support")
+    if observation.get("unlocated_units_remain_fail_closed") is not True:
+        errors.append("unlocated units must remain fail-closed")
+    for key in ("treatment_label_used_as_evidence", "terminal_reward_or_rubric_used_as_evidence", "downstream_outcome_used_as_evidence"):
+        if observation.get(key) is not False:
+            errors.append(f"forbidden outcome/treatment evidence leaked into D0-B1c: {key}")
+    if not _all_authority_false(observation.get("authority")):
+        errors.append("D0-B1c observation must keep all downstream authority false")
+
+    ref = str(observation.get("audit_artifact") or "")
+    digest = str(observation.get("audit_sha256") or "")
+    expected_ref = str(C1_D0B1C_LOCATOR_ARTIFACT.relative_to(Path(__file__).resolve().parents[1]))
+    if ref != expected_ref or len(digest) != 64 or not C1_D0B1C_LOCATOR_ARTIFACT.is_file():
+        errors.append("D0-B1c locator artifact binding is incomplete")
+    else:
+        import hashlib
+        actual = hashlib.sha256(C1_D0B1C_LOCATOR_ARTIFACT.read_bytes()).hexdigest()
+        if actual != digest:
+            errors.append("D0-B1c locator artifact SHA drift")
+        else:
+            try:
+                artifact = json.loads(C1_D0B1C_LOCATOR_ARTIFACT.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                artifact = {}
+                errors.append("D0-B1c locator artifact is unreadable")
+            summary = artifact.get("summary") or {}
+            contract = artifact.get("evidence_locator_contract") or {}
+            if artifact.get("status") != C1_D0B1C_LOCATOR_STATUS or artifact.get("decision") != C1_D0B1C_LOCATOR_DECISION:
+                errors.append("D0-B1c artifact status/decision drift")
+            for key in ("paired_sources", "directional_branch_contrast_units", "same_field_opposite_counterpart_units", "units_with_exact_nonzero_lexical_evidence_anchor", "units_without_nonzero_lexical_evidence_anchor", "semantic_validity_adjudicated_units", "supported_units", "contradicted_units", "unverifiable_units", "nonzero_branch_authority_units"):
+                if summary.get(key) != expected[key]:
+                    errors.append(f"D0-B1c artifact summary drift: {key}")
+            if contract.get("lexical_similarity_is_locator_only_not_validity") is not True:
+                errors.append("D0-B1c artifact lets locator similarity act as validity")
+            if contract.get("no_anchor_forces_fail_closed_unlocated_state") is not True:
+                errors.append("D0-B1c artifact does not fail closed on unlocated units")
+            if any(bool(artifact.get(key)) for key in ("scientific_authority", "experiment_authority", "provider_call_authority", "gpu_authority", "claim_expansion_authority", "submission_authority")):
+                errors.append("D0-B1c artifact contains nonzero downstream authority")
+
+    return {
+        "paper_id": C1_PAPER_ID,
+        "status": C1_D0B1C_LOCATOR_STATUS,
+        "compiler_ready": not errors,
+        "locator_partial_fail_closed": not errors,
+        "semantic_authority": False,
+        "errors": errors,
+        "authority": dict(C1_EXECUTABLE_CLOSURE_REVIEWER_GATE["authority"]),
+    }
+
+
+def adjudicate_c1_d0b2_semantic_readiness_observation(observation: dict[str, Any]) -> dict[str, Any]:
+    """Fail closed when C1 has no independently qualified semantic-validity adjudicator."""
+    errors: list[str] = []
+    if observation.get("status") != C1_D0B2_READINESS_STATUS:
+        errors.append("D0-B2 semantic-readiness status drift")
+    if observation.get("decision") != C1_D0B2_READINESS_DECISION:
+        errors.append("D0-B2 semantic-readiness decision drift")
+    expected_zero = (
+        "nli_classifier_configs_with_entailment_and_contradiction_labels",
+        "c1_semantic_qualification_receipts",
+        "qualified_semantic_adjudicators_bound",
+        "semantic_validity_adjudicated_units",
+        "supported_units",
+        "contradicted_units",
+        "unverifiable_units_adjudicated",
+        "nonzero_branch_authority_units",
+        "provider_calls",
+        "gpu_runs",
+    )
+    for key in expected_zero:
+        if observation.get(key) != 0:
+            errors.append(f"D0-B2 readiness HOLD field must remain zero: {key}")
+    expected_counts = {
+        "operational_units_ready": 423,
+        "exact_candidate_anchors_ready": 397,
+        "future_forced_unverifiable_without_new_locator": 26,
+    }
+    for key, expected in expected_counts.items():
+        if observation.get(key) != expected:
+            errors.append(f"D0-B2 readiness count drift: {key}")
+    if observation.get("minilm_is_similarity_baseline_only") is not True:
+        errors.append("MiniLM must remain a similarity baseline rather than semantic-validity authority")
+    if observation.get("lexical_locator_is_not_semantic_validity") is not True:
+        errors.append("lexical evidence location must not be promoted to semantic validity")
+    if observation.get("generic_nli_existence_without_c1_qualification_is_insufficient") is not True:
+        errors.append("generic NLI existence cannot bypass C1-specific qualification")
+    for key in (
+        "treatment_label_used_as_validity_evidence",
+        "terminal_reward_or_rubric_used_as_validity_evidence",
+        "downstream_outcome_used_as_validity_evidence",
+    ):
+        if observation.get(key) is not False:
+            errors.append(f"forbidden validity evidence leaked into D0-B2 readiness: {key}")
+    if not _all_authority_false(observation.get("authority")):
+        errors.append("D0-B2 readiness HOLD must keep all downstream authority false")
+
+    ref = str(observation.get("audit_artifact") or "")
+    digest = str(observation.get("audit_sha256") or "")
+    expected_ref = str(C1_D0B2_READINESS_ARTIFACT.relative_to(Path(__file__).resolve().parents[1]))
+    if ref != expected_ref or len(digest) != 64 or not C1_D0B2_READINESS_ARTIFACT.is_file():
+        errors.append("D0-B2 semantic-readiness artifact binding is incomplete")
+    else:
+        import hashlib
+        actual = hashlib.sha256(C1_D0B2_READINESS_ARTIFACT.read_bytes()).hexdigest()
+        if actual != digest:
+            errors.append("D0-B2 semantic-readiness artifact SHA drift")
+        else:
+            try:
+                artifact = json.loads(C1_D0B2_READINESS_ARTIFACT.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                artifact = {}
+                errors.append("D0-B2 semantic-readiness artifact is unreadable")
+            local = artifact.get("local_asset_audit") or {}
+            ready = artifact.get("readiness_summary") or {}
+            baseline = artifact.get("baseline_asset_boundary") or {}
+            contract = artifact.get("adjudicator_contract") or {}
+            if artifact.get("status") != C1_D0B2_READINESS_STATUS or artifact.get("decision") != C1_D0B2_READINESS_DECISION:
+                errors.append("D0-B2 semantic-readiness artifact status/decision drift")
+            if local.get("nli_classifier_configs_with_entailment_and_contradiction_labels") != 0:
+                errors.append("D0-B2 artifact no longer records a zero local NLI-classifier snapshot")
+            if local.get("admissible_qualified_adjudicators") != 0:
+                errors.append("D0-B2 artifact unexpectedly contains an admissible qualified adjudicator")
+            if local.get("c1_semantic_qualification_receipts") not in ([], None):
+                errors.append("D0-B2 artifact unexpectedly contains a C1 semantic qualification receipt")
+            for key, expected in expected_counts.items():
+                artifact_key = {
+                    "operational_units_ready": "operational_units_ready",
+                    "exact_candidate_anchors_ready": "exact_candidate_anchors_ready",
+                    "future_forced_unverifiable_without_new_locator": "future_forced_unverifiable_without_new_locator",
+                }[key]
+                if ready.get(artifact_key) != expected:
+                    errors.append(f"D0-B2 artifact readiness count drift: {key}")
+            for key in (
+                "qualified_semantic_adjudicators_bound",
+                "semantic_validity_adjudicated_units",
+                "supported_units",
+                "contradicted_units",
+                "unverifiable_units_adjudicated",
+                "nonzero_branch_authority_units",
+                "provider_calls",
+                "gpu_runs",
+            ):
+                if ready.get(key) != 0:
+                    errors.append(f"D0-B2 artifact incorrectly advances {key}")
+            if baseline.get("classification") != "EMBEDDING_SIMILARITY_BASELINE_ONLY_NOT_A_VALIDITY_ADJUDICATOR":
+                errors.append("D0-B2 artifact incorrectly upgrades MiniLM beyond baseline status")
+            required_outputs = set(contract.get("required_output_states") or [])
+            if required_outputs != C1_REQUIRED_VALIDITY_STATES:
+                errors.append("D0-B2 adjudicator contract must retain SUPPORTED/CONTRADICTED/UNVERIFIABLE outputs")
+            if any(bool(artifact.get(key)) for key in ("scientific_authority", "experiment_authority", "provider_call_authority", "gpu_authority", "claim_expansion_authority", "submission_authority")):
+                errors.append("D0-B2 semantic-readiness artifact contains nonzero downstream authority")
+
+    return {
+        "paper_id": C1_PAPER_ID,
+        "status": C1_D0B2_READINESS_STATUS,
+        "readiness_hold_valid": not errors,
+        "semantic_adjudicator_ready": False,
+        "semantic_authority": False,
+        "errors": errors,
+        "authority": dict(C1_EXECUTABLE_CLOSURE_REVIEWER_GATE["authority"]),
+    }
+
+
 def require_c1_executable_closure_gate(candidate: dict[str, Any]) -> dict[str, Any]:
     result = adjudicate_c1_executable_closure_gate(candidate)
     if result["eligible_for_d0_design"] is not True:
@@ -493,6 +690,18 @@ def load_c1_d0b1_intervention_identifiability_observation(path: Path = C1_REVISI
     return observation if isinstance(observation, dict) else {}
 
 
+def load_c1_d0b1c_locator_observation(path: Path = C1_REVISION_PROGRAM) -> dict[str, Any]:
+    program = _load_c1_revision_program(path)
+    observation = program.get("zero_call_D0_B1C_operational_contrast_locator_observed") or {}
+    return observation if isinstance(observation, dict) else {}
+
+
+def load_c1_d0b2_semantic_readiness_observation(path: Path = C1_REVISION_PROGRAM) -> dict[str, Any]:
+    program = _load_c1_revision_program(path)
+    observation = program.get("zero_call_D0_B2_semantic_readiness_observed") or {}
+    return observation if isinstance(observation, dict) else {}
+
+
 POLICY: dict[str, Any] = {
     "schema_version": "1.1",
     "cross_cutting_controls_do_not_create_a_seventh_functional_layer": True,
@@ -513,6 +722,11 @@ POLICY: dict[str, Any] = {
     "semantic_validity_required_before_nonzero_branch_authority": True,
     "operational_branch_contrast_is_not_atom_level_causal_purity": True,
     "causal_residual_language_requires_seed_or_same_condition_noise_floor_control": True,
+    "evidence_locator_similarity_cannot_grant_semantic_support": True,
+    "unlocated_claims_cannot_receive_imputed_evidence_authority": True,
+    "semantic_validity_requires_a_qualified_content_addressed_adjudicator": True,
+    "generic_nli_model_existence_without_task_specific_qualification_is_not_validity_authority": True,
+    "absence_of_qualified_semantic_adjudicator_is_readiness_hold_not_scientific_failure": True,
 }
 
 
@@ -641,6 +855,10 @@ def build_methodology_controls_state() -> dict[str, Any]:
     c1_d0b_claim_binding_adjudication = adjudicate_c1_d0b_claim_binding_observation(c1_d0b_claim_binding_observation)
     c1_d0b1_identifiability_observation = load_c1_d0b1_intervention_identifiability_observation()
     c1_d0b1_identifiability_adjudication = adjudicate_c1_d0b1_intervention_identifiability(c1_d0b1_identifiability_observation)
+    c1_d0b1c_locator_observation = load_c1_d0b1c_locator_observation()
+    c1_d0b1c_locator_adjudication = adjudicate_c1_d0b1c_locator_observation(c1_d0b1c_locator_observation)
+    c1_d0b2_readiness_observation = load_c1_d0b2_semantic_readiness_observation()
+    c1_d0b2_readiness_adjudication = adjudicate_c1_d0b2_semantic_readiness_observation(c1_d0b2_readiness_observation)
     c1_reviewer_gate = {
         **C1_EXECUTABLE_CLOSURE_REVIEWER_GATE,
         "candidate_loaded": bool(c1_candidate),
@@ -667,6 +885,16 @@ def build_methodology_controls_state() -> dict[str, Any]:
                 "observation_loaded": bool(c1_d0b1_identifiability_observation),
                 "observation_adjudication": c1_d0b1_identifiability_adjudication,
             },
+            "c1_d0b1c_operational_contrast_locator": {
+                "status": "REGISTERED_COMPILER_GO_LOCATOR_PARTIAL_FAIL_CLOSED",
+                "observation_loaded": bool(c1_d0b1c_locator_observation),
+                "observation_adjudication": c1_d0b1c_locator_adjudication,
+            },
+            "c1_d0b2_semantic_readiness": {
+                "status": "REGISTERED_READINESS_HOLD_NO_QUALIFIED_VALIDITY_SIGNAL",
+                "observation_loaded": bool(c1_d0b2_readiness_observation),
+                "observation_adjudication": c1_d0b2_readiness_adjudication,
+            },
         },
         "summary": {
             "controls": len(controls),
@@ -674,7 +902,7 @@ def build_methodology_controls_state() -> dict[str, Any]:
             "functional_layers_added": 0,
             "measured_controls": sum(str(row["status"]).startswith("measured") for row in controls),
             "spec_or_contract_ready": sum("ready" in str(row["status"]) for row in controls),
-            "registered_reviewer_gates": 4,
+            "registered_reviewer_gates": 6,
             "c1_reviewer_gate_loaded": bool(c1_candidate),
             "c1_reviewer_gate_d0_design_eligible": c1_adjudication["eligible_for_d0_design"],
             "c1_reviewer_gate_downstream_authority": any(bool(value) for value in c1_adjudication["authority"].values()),
@@ -692,6 +920,16 @@ def build_methodology_controls_state() -> dict[str, Any]:
             "c1_d0b1_causal_atom_purity_certified": c1_d0b1_identifiability_adjudication["causal_atom_purity_certified"],
             "c1_d0b1_semantic_authority": c1_d0b1_identifiability_adjudication["semantic_authority"],
             "c1_d0b1_downstream_authority": any(bool(value) for value in c1_d0b1_identifiability_adjudication["authority"].values()),
+            "c1_d0b1c_locator_observation_loaded": bool(c1_d0b1c_locator_observation),
+            "c1_d0b1c_compiler_ready": c1_d0b1c_locator_adjudication["compiler_ready"],
+            "c1_d0b1c_locator_partial_fail_closed": c1_d0b1c_locator_adjudication["locator_partial_fail_closed"],
+            "c1_d0b1c_semantic_authority": c1_d0b1c_locator_adjudication["semantic_authority"],
+            "c1_d0b1c_downstream_authority": any(bool(value) for value in c1_d0b1c_locator_adjudication["authority"].values()),
+            "c1_d0b2_readiness_observation_loaded": bool(c1_d0b2_readiness_observation),
+            "c1_d0b2_readiness_hold_valid": c1_d0b2_readiness_adjudication["readiness_hold_valid"],
+            "c1_d0b2_semantic_adjudicator_ready": c1_d0b2_readiness_adjudication["semantic_adjudicator_ready"],
+            "c1_d0b2_semantic_authority": c1_d0b2_readiness_adjudication["semantic_authority"],
+            "c1_d0b2_downstream_authority": any(bool(value) for value in c1_d0b2_readiness_adjudication["authority"].values()),
         },
         "merge_only_external_designs": [
             {

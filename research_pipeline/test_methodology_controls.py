@@ -8,11 +8,15 @@ from .methodology_controls import (
     adjudicate_c1_d0b_claim_binding_observation,
     adjudicate_c1_d0b_structural_observation,
     adjudicate_c1_d0b1_intervention_identifiability,
+    adjudicate_c1_d0b1c_locator_observation,
+    adjudicate_c1_d0b2_semantic_readiness_observation,
     adjudicate_c1_executable_closure_gate,
     build_methodology_controls_state,
     load_c1_d0b_claim_binding_observation,
     load_c1_d0b_structural_observation,
     load_c1_d0b1_intervention_identifiability_observation,
+    load_c1_d0b1c_locator_observation,
+    load_c1_d0b2_semantic_readiness_observation,
     load_c1_executable_closure_candidate,
 )
 
@@ -59,7 +63,7 @@ class MethodologyControlsTest(unittest.TestCase):
         self.assertTrue(registered["candidate_loaded"])
         self.assertTrue(registered["candidate_adjudication"]["eligible_for_d0_design"])
         self.assertFalse(self.state["summary"]["c1_reviewer_gate_downstream_authority"])
-        self.assertEqual(self.state["summary"]["registered_reviewer_gates"], 4)
+        self.assertEqual(self.state["summary"]["registered_reviewer_gates"], 6)
 
     def test_c1_d0b_structural_receipt_audit_is_go_but_semantic_authority_stays_hold(self) -> None:
         observation = load_c1_d0b_structural_observation()
@@ -153,6 +157,84 @@ class MethodologyControlsTest(unittest.TestCase):
         self.assertTrue(any("certified_branch_residual_atoms" in error for error in result["errors"]))
         self.assertTrue(any("downstream authority" in error for error in result["errors"]))
         self.assertFalse(result["causal_atom_purity_certified"])
+        self.assertFalse(result["semantic_authority"])
+        self.assertFalse(any(result["authority"].values()))
+
+    def test_c1_d0b1c_compiler_go_keeps_unlocated_units_and_semantics_fail_closed(self) -> None:
+        observation = load_c1_d0b1c_locator_observation()
+        result = adjudicate_c1_d0b1c_locator_observation(observation)
+        self.assertTrue(result["compiler_ready"], result["errors"])
+        self.assertTrue(result["locator_partial_fail_closed"])
+        self.assertFalse(result["semantic_authority"])
+        self.assertFalse(any(result["authority"].values()))
+        self.assertEqual(observation["directional_branch_contrast_units"], 423)
+        self.assertEqual(observation["same_field_opposite_counterpart_units"], 423)
+        self.assertEqual(observation["units_with_exact_nonzero_lexical_evidence_anchor"], 397)
+        self.assertEqual(observation["units_without_nonzero_lexical_evidence_anchor"], 26)
+        self.assertAlmostEqual(observation["locator_coverage"], 397 / 423)
+        self.assertEqual(observation["semantic_validity_adjudicated_units"], 0)
+        self.assertTrue(observation["exact_locator_is_not_semantic_support"])
+        self.assertTrue(observation["unlocated_units_remain_fail_closed"])
+        registered = self.state["reviewer_gates"]["c1_d0b1c_operational_contrast_locator"]
+        self.assertTrue(registered["observation_loaded"])
+        self.assertTrue(registered["observation_adjudication"]["compiler_ready"])
+        self.assertTrue(self.state["summary"]["c1_d0b1c_locator_partial_fail_closed"])
+        self.assertFalse(self.state["summary"]["c1_d0b1c_semantic_authority"])
+        self.assertFalse(self.state["summary"]["c1_d0b1c_downstream_authority"])
+
+    def test_c1_d0b1c_gate_rejects_similarity_as_support_or_imputed_unlocated_authority(self) -> None:
+        observation = copy.deepcopy(load_c1_d0b1c_locator_observation())
+        observation["semantic_validity_adjudicated_units"] = 1
+        observation["supported_units"] = 1
+        observation["exact_locator_is_not_semantic_support"] = False
+        observation["unlocated_units_remain_fail_closed"] = False
+        observation["authority"]["provider"] = True
+        result = adjudicate_c1_d0b1c_locator_observation(observation)
+        self.assertFalse(result["compiler_ready"])
+        self.assertTrue(any("semantic_validity_adjudicated_units" in error for error in result["errors"]))
+        self.assertTrue(any("semantic support" in error for error in result["errors"]))
+        self.assertTrue(any("unlocated" in error for error in result["errors"]))
+        self.assertTrue(any("downstream authority" in error for error in result["errors"]))
+        self.assertFalse(result["semantic_authority"])
+        self.assertFalse(any(result["authority"].values()))
+
+    def test_c1_d0b2_readiness_hold_blocks_semantic_labels_without_qualified_adjudicator(self) -> None:
+        observation = load_c1_d0b2_semantic_readiness_observation()
+        result = adjudicate_c1_d0b2_semantic_readiness_observation(observation)
+        self.assertTrue(result["readiness_hold_valid"], result["errors"])
+        self.assertFalse(result["semantic_adjudicator_ready"])
+        self.assertFalse(result["semantic_authority"])
+        self.assertFalse(any(result["authority"].values()))
+        self.assertEqual(observation["operational_units_ready"], 423)
+        self.assertEqual(observation["exact_candidate_anchors_ready"], 397)
+        self.assertEqual(observation["future_forced_unverifiable_without_new_locator"], 26)
+        self.assertEqual(observation["qualified_semantic_adjudicators_bound"], 0)
+        self.assertEqual(observation["semantic_validity_adjudicated_units"], 0)
+        self.assertTrue(observation["minilm_is_similarity_baseline_only"])
+        self.assertTrue(observation["lexical_locator_is_not_semantic_validity"])
+        self.assertTrue(observation["generic_nli_existence_without_c1_qualification_is_insufficient"])
+        registered = self.state["reviewer_gates"]["c1_d0b2_semantic_readiness"]
+        self.assertTrue(registered["observation_loaded"])
+        self.assertTrue(registered["observation_adjudication"]["readiness_hold_valid"])
+        self.assertTrue(self.state["summary"]["c1_d0b2_readiness_hold_valid"])
+        self.assertFalse(self.state["summary"]["c1_d0b2_semantic_adjudicator_ready"])
+        self.assertFalse(self.state["summary"]["c1_d0b2_semantic_authority"])
+        self.assertFalse(self.state["summary"]["c1_d0b2_downstream_authority"])
+
+    def test_c1_d0b2_gate_rejects_fake_generic_nli_or_semantic_authority_upgrade(self) -> None:
+        observation = copy.deepcopy(load_c1_d0b2_semantic_readiness_observation())
+        observation["qualified_semantic_adjudicators_bound"] = 1
+        observation["semantic_validity_adjudicated_units"] = 1
+        observation["supported_units"] = 1
+        observation["generic_nli_existence_without_c1_qualification_is_insufficient"] = False
+        observation["authority"]["provider"] = True
+        result = adjudicate_c1_d0b2_semantic_readiness_observation(observation)
+        self.assertFalse(result["readiness_hold_valid"])
+        self.assertTrue(any("qualified_semantic_adjudicators_bound" in error for error in result["errors"]))
+        self.assertTrue(any("semantic_validity_adjudicated_units" in error for error in result["errors"]))
+        self.assertTrue(any("generic NLI" in error for error in result["errors"]))
+        self.assertTrue(any("downstream authority" in error for error in result["errors"]))
+        self.assertFalse(result["semantic_adjudicator_ready"])
         self.assertFalse(result["semantic_authority"])
         self.assertFalse(any(result["authority"].values()))
 
