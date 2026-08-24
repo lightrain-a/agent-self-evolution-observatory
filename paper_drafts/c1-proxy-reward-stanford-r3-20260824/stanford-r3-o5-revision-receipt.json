@@ -1,0 +1,178 @@
+{
+  "artifact_bindings": {
+    "diagnostic_sha256": "c86e515ce3f453ac5a96456c51ae31cfdacf76d9bca6f026543e5a8dc8a429b4",
+    "manuscript_qa_sha256": "a77a40955cc60e92fcda15d257c6e5564d43644dc74b5d1969258e827a0dc2c5",
+    "o5_evidence_sha256": "202a253e9766221c4de727afc9aedb7b4395b4814f15c1f82db0b93c166ae7e8",
+    "paper_pdf_sha256": "e2a1f51931d29e2591c0dda4a138b96cd12e5ef436d2cb0779650ea5b4d7da8d"
+  },
+  "base_review": "STANFORD-R2-OBJECTION-MATRIX-20260823",
+  "claim_expansion": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "new_experiment": true,
+  "new_provider_calls": 64,
+  "new_rollouts": 32,
+  "objections": {
+    "PROXY-O1": {
+      "action": "No novelty expansion; keep the identical-trajectory reward-conditioned writer-branch boundary.",
+      "original_disposition": "RESOLVED",
+      "revision_status": "PRESERVED_RESOLVED"
+    },
+    "PROXY-O2": {
+      "boundary": "Structural/operation-slot evidence only; no embedding-semantic equivalence claim.",
+      "evidence": {
+        "f0_mean_slot_jaccard_distance": 0.492857,
+        "f0_operation_slot_change_rate": 1.0,
+        "f0c_between_reward_modes_slot_distance": 0.555655,
+        "f0c_structural_excess": 0.309077,
+        "f0c_within_mode_rewording_slot_distance": 0.246578
+      },
+      "original_disposition": "EXISTING_EVIDENCE_ACTIONABLE",
+      "revision_status": "ADDRESSED_WITH_EXISTING_EVIDENCE"
+    },
+    "PROXY-O3": {
+      "action": "No re-POST, no imputation; 4/4 claims remain conditional on paired completion.",
+      "original_disposition": "PERMANENT_CLAIM_BOUNDARY",
+      "revision_status": "PRESERVED_PERMANENT_CLAIM_BOUNDARY"
+    },
+    "PROXY-O4": {
+      "boundary": "Finite 4x4 descriptive decomposition plus a four-source non-monotonic magnitude check only; no general predictor of transfer-effect magnitude.",
+      "evidence": {
+        "future_main_share": 0.065217,
+        "future_task_164_joint_ceiling": true,
+        "near_matched_write_divergence_sources": [
+          "23",
+          "25"
+        ],
+        "source_future_interaction_share": 0.84058,
+        "source_main_share": 0.094203,
+        "top_two_squared_effect_mass_share": 0.782051,
+        "write_slot_distance_vs_source_mean_effect_pearson_descriptive": -0.367257,
+        "write_token_distance_vs_source_mean_effect_pearson_descriptive": -0.729606,
+        "zero_effect_cells": 8
+      },
+      "original_disposition": "EXISTING_EVIDENCE_ACTIONABLE",
+      "revision_status": "ADDRESSED_WITH_EXISTING_EVIDENCE"
+    },
+    "PROXY-O5": {
+      "boundary": "Secondary branch-location control only: four source-independent no-memory baselines are shared across source comparisons, no global p-value is added, and the primary F2R1 two-arm gate remains unchanged.",
+      "evidence": {
+        "fresh_no_memory_calls": 32,
+        "future_task_rates": {
+          "164": 1.0,
+          "385": 0.0,
+          "387": 0.0,
+          "388": 1.0
+        },
+        "old_exploratory_calls_reused": 0,
+        "point_estimate_geometry_counts": {
+          "BASELINE_CLOSER_TO_FAILURE": 2,
+          "BASELINE_CLOSER_TO_SUCCESS": 6,
+          "EQUIDISTANT": 8
+        },
+        "source22_future388": {
+          "failure_memory_rate_f2r1": 1.0,
+          "failure_minus_no_memory": 0.0,
+          "failure_minus_no_memory_newcombe_95": [
+            -0.32440756488388023,
+            0.32440756488388023
+          ],
+          "future_task": "388",
+          "no_memory_rate_fresh": 1.0,
+          "point_estimate_geometry": "BASELINE_CLOSER_TO_FAILURE",
+          "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+          "source_memory_task": "22",
+          "success_memory_rate_f2r1": 0.25,
+          "success_minus_no_memory": -0.75,
+          "success_minus_no_memory_newcombe_95": [
+            -0.928520787247891,
+            -0.2795390552402787
+          ]
+        },
+        "source25_future387": {
+          "failure_memory_rate_f2r1": 0.75,
+          "failure_minus_no_memory": 0.75,
+          "failure_minus_no_memory_newcombe_95": [
+            0.27953905524027867,
+            0.9285207872478909
+          ],
+          "future_task": "387",
+          "no_memory_rate_fresh": 0.0,
+          "point_estimate_geometry": "BASELINE_CLOSER_TO_SUCCESS",
+          "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+          "source_memory_task": "25",
+          "success_memory_rate_f2r1": 0.125,
+          "success_minus_no_memory": 0.125,
+          "success_minus_no_memory_newcombe_95": [
+            -0.2152402668913369,
+            0.4708881822128535
+          ]
+        }
+      },
+      "original_disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+      "revision_status": "ADDRESSED_WITH_FRESH_EXECUTION"
+    },
+    "PROXY-O6": {
+      "action": "No cross-model, live-loop, or corruption-sweep execution added.",
+      "original_disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+      "revision_status": "DEFERRED_SCIENTIFIC_REOPEN_REQUIRED"
+    }
+  },
+  "paper_code": "C1",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "paper_only_revision": false,
+  "receipt_type": "stanford-r3-targeted-experiment-revision",
+  "revision": "STANFORD-R3-O5-NO-MEMORY-20260824",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "stanford_r2_score": 6.3,
+  "stanford_r2_verdict": "Weak Accept",
+  "submission_authority": false,
+  "system_paper_requirements": {
+    "abstract_words_approx": 214,
+    "execution_accounting_added": true,
+    "experiment_program_E1_E6": {
+      "E1_main_comparison": {
+        "evidence": "F2R1 fully crossed 4x4 terminal confirmation: mean absolute success-rate difference 0.15625, within-cell permutation p=0.00074.",
+        "status": "PASS"
+      },
+      "E2_component_or_simplification": {
+        "evidence": "F0C stronger same-mode semantic-preserving prompt rewording: paired excess 0.105, exact p=0.0078.",
+        "status": "PASS"
+      },
+      "E3_mechanism_aligned": {
+        "evidence": "Identical-trajectory write intervention changes all four complete paired memories; deterministic operation-slot audit and 7/12 aligned next-action witness expose intermediate state/behavior changes.",
+        "status": "PASS"
+      },
+      "E4_robustness_transfer_boundary": {
+        "evidence": "All 16 frozen source-future cells are exposed: 84.1% of centered signed-effect variation is source-by-future interaction, future task 164 is a joint ceiling, write divergence magnitude is not a monotonic downstream-effect proxy, and a fresh 32-call no-memory control locates the two memory branches relative to omission without pseudoreplication.",
+        "status": "PASS_FINITE_BOUNDARY"
+      },
+      "E5_negative_failure_cases": {
+        "evidence": "Two F0 failure-arm provider incompletions remain selection debt; F1D p=0.311 and initial terminal p=0.160 remain visible non-passing tests; the first O5 32-call attempt is retained as an execution-validator failure with zero scientific authority before a frozen one-for-one recovery.",
+        "status": "PASS_VISIBLE_NEGATIVES"
+      },
+      "E6_efficiency_cost_scale": {
+        "evidence": {
+          "f1_action_existence_aligned_paired_units": 12,
+          "inference_only": true,
+          "known_directly_countable_requests": 568,
+          "local_gpu_finetuning_runs": 0,
+          "o5_provider_calls_consumed": 64,
+          "o5_scientifically_usable_calls": 32,
+          "training_runs": 0
+        },
+        "status": "PASS_ACCOUNTED"
+      }
+    },
+    "experimental_setup_section_added": true,
+    "failure_and_scope_boundaries_preserved": true,
+    "heterogeneity_diagnostic_added": true,
+    "main_text_pages": 9,
+    "manuscript_qa_status": "PASS",
+    "mechanism_diagnostic_added": true,
+    "related_work_moved_before_method_results": true,
+    "strongest_simple_control_explicit": true,
+    "write_to_terminal_nonmonotonic_diagnostic_added": true
+  }
+}

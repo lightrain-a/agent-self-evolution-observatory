@@ -18,6 +18,7 @@ def main() -> None:
     paper = matrix["papers"][PAPER_ID]
     qa = json.loads((HERE / "manuscript-qa.json").read_text())
     diag = json.loads((HERE / "existing-evidence-diagnostics.json").read_text())
+    o5 = json.loads((HERE / "o5-manuscript-evidence.json").read_text())
     original = {row["id"]: row for row in paper["objections"]}
     interaction = diag["terminal_heterogeneity"]["two_way_centered_effect_decomposition"]
     write_terminal = diag["terminal_heterogeneity"]["write_to_terminal_magnitude_diagnostic"]
@@ -26,17 +27,17 @@ def main() -> None:
 
     receipt = {
         "schema_version": "1.0",
-        "receipt_type": "paper-only-stanford-r3-revision",
+        "receipt_type": "stanford-r3-targeted-experiment-revision",
         "paper_id": PAPER_ID,
         "paper_code": paper["code"],
-        "revision": "STANFORD-R3-EXISTING-EVIDENCE-20260824",
+        "revision": "STANFORD-R3-O5-NO-MEMORY-20260824",
         "base_review": matrix["matrix_id"],
         "stanford_r2_score": paper["r2"]["score"],
         "stanford_r2_verdict": paper["r2"]["verdict"],
-        "paper_only_revision": True,
-        "new_experiment": False,
-        "new_provider_calls": 0,
-        "new_rollouts": 0,
+        "paper_only_revision": False,
+        "new_experiment": True,
+        "new_provider_calls": 64,
+        "new_rollouts": 32,
         "claim_expansion": False,
         "objections": {
             "PROXY-O1": {
@@ -79,8 +80,16 @@ def main() -> None:
             },
             "PROXY-O5": {
                 "original_disposition": original["PROXY-O5"]["d"],
-                "revision_status": "DEFERRED_SCIENTIFIC_REOPEN_REQUIRED",
-                "action": "No no-memory terminal arm added; current estimand remains failure-conditioned versus success-conditioned memory.",
+                "revision_status": "ADDRESSED_WITH_FRESH_EXECUTION",
+                "evidence": {
+                    "fresh_no_memory_calls": o5["execution_accounting"]["recovery_scientifically_usable_units"],
+                    "old_exploratory_calls_reused": o5["execution_accounting"]["old_exploratory_no_memory_calls_reused"],
+                    "future_task_rates": {row["future_task"]: row["no_memory_rate"] for row in o5["fresh_no_memory_by_future_task"]},
+                    "point_estimate_geometry_counts": o5["point_estimate_geometry_counts"],
+                    "source22_future388": o5["selected_cell_diagnostics"]["source22_future388"],
+                    "source25_future387": o5["selected_cell_diagnostics"]["source25_future387"],
+                },
+                "boundary": "Secondary branch-location control only: four source-independent no-memory baselines are shared across source comparisons, no global p-value is added, and the primary F2R1 two-arm gate remains unchanged.",
             },
             "PROXY-O6": {
                 "original_disposition": original["PROXY-O6"]["d"],
@@ -114,17 +123,19 @@ def main() -> None:
                 },
                 "E4_robustness_transfer_boundary": {
                     "status": "PASS_FINITE_BOUNDARY",
-                    "evidence": "All 16 frozen source-future cells are exposed: 84.1% of centered signed-effect variation is source-by-future interaction, future task 164 is a joint ceiling, and write divergence magnitude is not a monotonic downstream-effect proxy.",
+                    "evidence": "All 16 frozen source-future cells are exposed: 84.1% of centered signed-effect variation is source-by-future interaction, future task 164 is a joint ceiling, write divergence magnitude is not a monotonic downstream-effect proxy, and a fresh 32-call no-memory control locates the two memory branches relative to omission without pseudoreplication.",
                 },
                 "E5_negative_failure_cases": {
                     "status": "PASS_VISIBLE_NEGATIVES",
-                    "evidence": "Two F0 failure-arm provider incompletions remain selection debt; F1D p=0.311 and initial terminal p=0.160 remain visible non-passing tests; no-memory confirmatory evidence is explicitly absent.",
+                    "evidence": "Two F0 failure-arm provider incompletions remain selection debt; F1D p=0.311 and initial terminal p=0.160 remain visible non-passing tests; the first O5 32-call attempt is retained as an execution-validator failure with zero scientific authority before a frozen one-for-one recovery.",
                 },
                 "E6_efficiency_cost_scale": {
                     "status": "PASS_ACCOUNTED",
                     "evidence": {
                         "inference_only": True,
-                        "known_directly_countable_requests": accounting["known_requests_excluding_unresolved_low_level_call_count_for_f1_action_existence"],
+                        "known_directly_countable_requests": accounting["known_requests_excluding_unresolved_low_level_call_count_for_f1_action_existence"] + o5["execution_accounting"]["o5_total_provider_calls_consumed"],
+                        "o5_provider_calls_consumed": o5["execution_accounting"]["o5_total_provider_calls_consumed"],
+                        "o5_scientifically_usable_calls": o5["execution_accounting"]["recovery_scientifically_usable_units"],
                         "f1_action_existence_aligned_paired_units": accounting["f1_action_existence_aligned_paired_units"],
                         "training_runs": accounting["training_runs"],
                         "local_gpu_finetuning_runs": accounting["local_gpu_finetuning_runs"],
@@ -135,6 +146,7 @@ def main() -> None:
         },
         "artifact_bindings": {
             "diagnostic_sha256": sha(HERE / "existing-evidence-diagnostics.json"),
+            "o5_evidence_sha256": sha(HERE / "o5-manuscript-evidence.json"),
             "manuscript_qa_sha256": sha(HERE / "manuscript-qa.json"),
             "paper_pdf_sha256": sha(HERE / "paper.pdf"),
         },
@@ -143,7 +155,7 @@ def main() -> None:
         "gpu_authority": False,
         "submission_authority": False,
     }
-    (HERE / "stanford-r3-revision-receipt.json").write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
+    (HERE / "stanford-r3-o5-revision-receipt.json").write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
     print(json.dumps(receipt, indent=2))
 
 

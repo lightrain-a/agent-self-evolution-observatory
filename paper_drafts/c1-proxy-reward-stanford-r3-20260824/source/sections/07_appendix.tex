@@ -92,6 +92,28 @@ Source & Future & S rate & F rate & $|\Delta|$ \\
 \end{tabular}
 \end{table}
 
+\subsection{Fresh no-memory branch-location control}
+The no-memory control is frozen after F2R1 as a secondary reviewer-requested diagnostic. It uses the identical four future tasks, released evidence packets, Doubao Seed 2.0 Mini settings, evaluator, and eight-rollout depth, but no source-memory dimension. The earlier 12 exploratory no-memory calls are excluded. An initial 32-call execution is also excluded from science because a new local validator incorrectly required the provider's resolved model name to equal the requested alias; all 32 responses resolved to \texttt{doubao-seed-2-0-mini-260215}, which is exactly the versioned model name recorded in all 256 historical F2R1 receipts. After freezing that execution-layer diagnosis and archiving provider responses before local validation, the one-for-one recovery completes 32/32 calls. Both attempts are counted in execution cost; only the recovery outcomes enter the analysis.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Fresh no-memory terminal baseline. Wilson intervals are per future task and are not replicated across source memories.}
+\label{tab:o5-no-memory}
+\begin{tabular}{lrrr}
+\toprule
+Future task & Successes & Rate & Wilson 95\% interval \\
+\midrule
+164 & 8/8 & 1.000 & [0.676, 1.000] \\
+385 & 0/8 & 0.000 & [0.000, 0.324] \\
+387 & 0/8 & 0.000 & [0.000, 0.324] \\
+388 & 8/8 & 1.000 & [0.676, 1.000] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Combining these four source-independent baselines descriptively with the 16 F2R1 cells yields eight cells where omission matches both memory branches, six where omission is closer to the success-memory branch, and two where it is closer to the failure-memory branch. The largest illustrative contrasts are source/future 22/388, where $(p_S,p_F,p_0)=(0.25,1.0,1.0)$, and 25/387, where $(p_S,p_F,p_0)=(0.125,0.75,0.0)$. The first isolates the success-conditioned memory as the deviation from omission; the second places both memories above omission. Because each $p_0$ is shared by four source rows, we report cellwise score intervals and no new global significance test.
+
 \subsection{Heterogeneity and corruption-rate decomposition}
 For each frozen cell, the confirmatory run estimates paired conditional success probabilities. Eight of the 16 cells have zero observed success-rate contrast. Six have positive failure-memory minus success-memory effects and two have negative effects. The largest squared effects occur at source/future pairs 22/388 and 25/387; together they contribute 78.2051\% of the total squared-effect mass. This sign and magnitude heterogeneity is why the paper treats the result as a variance channel instead of a uniform directional harm effect.
 

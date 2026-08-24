@@ -1,0 +1,531 @@
+{
+  "all_cell_comparisons": [
+    {
+      "failure_memory_rate_f2r1": 1.0,
+      "failure_minus_no_memory": 0.0,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ],
+      "future_task": "164",
+      "no_memory_rate_fresh": 1.0,
+      "point_estimate_geometry": "EQUIDISTANT",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "21",
+      "success_memory_rate_f2r1": 1.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 0.25,
+      "failure_minus_no_memory": 0.25,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.1202835935246061,
+        0.5907245696898311
+      ],
+      "future_task": "385",
+      "no_memory_rate_fresh": 0.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_SUCCESS",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "21",
+      "success_memory_rate_f2r1": 0.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 0.25,
+      "failure_minus_no_memory": 0.25,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.1202835935246061,
+        0.5907245696898311
+      ],
+      "future_task": "387",
+      "no_memory_rate_fresh": 0.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_SUCCESS",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "21",
+      "success_memory_rate_f2r1": 0.125,
+      "success_minus_no_memory": 0.125,
+      "success_minus_no_memory_newcombe_95": [
+        -0.2152402668913369,
+        0.4708881822128535
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 0.625,
+      "failure_minus_no_memory": -0.375,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.6942576053973726,
+        0.0274405699587969
+      ],
+      "future_task": "388",
+      "no_memory_rate_fresh": 1.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_SUCCESS",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "21",
+      "success_memory_rate_f2r1": 1.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 1.0,
+      "failure_minus_no_memory": 0.0,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ],
+      "future_task": "164",
+      "no_memory_rate_fresh": 1.0,
+      "point_estimate_geometry": "EQUIDISTANT",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "22",
+      "success_memory_rate_f2r1": 1.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 0.125,
+      "failure_minus_no_memory": 0.125,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.2152402668913369,
+        0.4708881822128535
+      ],
+      "future_task": "385",
+      "no_memory_rate_fresh": 0.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_SUCCESS",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "22",
+      "success_memory_rate_f2r1": 0.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 0.0,
+      "failure_minus_no_memory": 0.0,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ],
+      "future_task": "387",
+      "no_memory_rate_fresh": 0.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_FAILURE",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "22",
+      "success_memory_rate_f2r1": 0.125,
+      "success_minus_no_memory": 0.125,
+      "success_minus_no_memory_newcombe_95": [
+        -0.2152402668913369,
+        0.4708881822128535
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 1.0,
+      "failure_minus_no_memory": 0.0,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ],
+      "future_task": "388",
+      "no_memory_rate_fresh": 1.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_FAILURE",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "22",
+      "success_memory_rate_f2r1": 0.25,
+      "success_minus_no_memory": -0.75,
+      "success_minus_no_memory_newcombe_95": [
+        -0.928520787247891,
+        -0.2795390552402787
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 1.0,
+      "failure_minus_no_memory": 0.0,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ],
+      "future_task": "164",
+      "no_memory_rate_fresh": 1.0,
+      "point_estimate_geometry": "EQUIDISTANT",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "23",
+      "success_memory_rate_f2r1": 1.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 0.0,
+      "failure_minus_no_memory": 0.0,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ],
+      "future_task": "385",
+      "no_memory_rate_fresh": 0.0,
+      "point_estimate_geometry": "EQUIDISTANT",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "23",
+      "success_memory_rate_f2r1": 0.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 0.25,
+      "failure_minus_no_memory": 0.25,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.1202835935246061,
+        0.5907245696898311
+      ],
+      "future_task": "387",
+      "no_memory_rate_fresh": 0.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_SUCCESS",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "23",
+      "success_memory_rate_f2r1": 0.125,
+      "success_minus_no_memory": 0.125,
+      "success_minus_no_memory_newcombe_95": [
+        -0.2152402668913369,
+        0.4708881822128535
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 1.0,
+      "failure_minus_no_memory": 0.0,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ],
+      "future_task": "388",
+      "no_memory_rate_fresh": 1.0,
+      "point_estimate_geometry": "EQUIDISTANT",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "23",
+      "success_memory_rate_f2r1": 1.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 1.0,
+      "failure_minus_no_memory": 0.0,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ],
+      "future_task": "164",
+      "no_memory_rate_fresh": 1.0,
+      "point_estimate_geometry": "EQUIDISTANT",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "25",
+      "success_memory_rate_f2r1": 1.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 0.0,
+      "failure_minus_no_memory": 0.0,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ],
+      "future_task": "385",
+      "no_memory_rate_fresh": 0.0,
+      "point_estimate_geometry": "EQUIDISTANT",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "25",
+      "success_memory_rate_f2r1": 0.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 0.75,
+      "failure_minus_no_memory": 0.75,
+      "failure_minus_no_memory_newcombe_95": [
+        0.27953905524027867,
+        0.9285207872478909
+      ],
+      "future_task": "387",
+      "no_memory_rate_fresh": 0.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_SUCCESS",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "25",
+      "success_memory_rate_f2r1": 0.125,
+      "success_minus_no_memory": 0.125,
+      "success_minus_no_memory_newcombe_95": [
+        -0.2152402668913369,
+        0.4708881822128535
+      ]
+    },
+    {
+      "failure_memory_rate_f2r1": 1.0,
+      "failure_minus_no_memory": 0.0,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ],
+      "future_task": "388",
+      "no_memory_rate_fresh": 1.0,
+      "point_estimate_geometry": "EQUIDISTANT",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "25",
+      "success_memory_rate_f2r1": 1.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    }
+  ],
+  "artifact_type": "o5-manuscript-evidence-projection",
+  "claim_boundary": {
+    "cross_model_claim_supported": false,
+    "does_not_create_three_arm_factorial_claim": true,
+    "does_not_show_failure_memory_uniformly_bad": true,
+    "does_not_show_success_memory_uniformly_good": true,
+    "live_loop_claim_supported": false,
+    "no_global_p_value": true,
+    "primary_f2r1_two_arm_gate_unchanged": true,
+    "secondary_branch_location_control_only": true,
+    "shared_future_task_baseline_not_independent_across_sources": true
+  },
+  "claim_expansion_authority": false,
+  "execution_accounting": {
+    "first_attempt_provider_calls_execution_invalid": 32,
+    "first_attempt_scientifically_usable_units": 0,
+    "gpu_runs": 0,
+    "o5_total_provider_calls_consumed": 64,
+    "old_exploratory_no_memory_calls_excluded": 12,
+    "old_exploratory_no_memory_calls_reused": 0,
+    "recovery_provider_calls": 32,
+    "recovery_scientifically_usable_units": 32,
+    "training_runs": 0
+  },
+  "failure_asset": {
+    "diagnosis": "The new O5 harness incorrectly required resolved_model to equal the requested alias. Historical F2R1 resolves all 256 requests to the provider's versioned model name, so the validator rejected valid provider completions after POST.",
+    "historical_alias_audit": {
+      "historical_receipts": 256,
+      "interpretation": "The versioned resolved model is the exact historical F2R1 provider resolution for all 256 receipts, not a model substitution.",
+      "provider_status_counts": {
+        "completed": 251,
+        "incomplete": 5
+      },
+      "requested_model_counts": {
+        "doubao-seed-2.0-mini": 256
+      },
+      "resolved_model_counts": {
+        "doubao-seed-2-0-mini-260215": 256
+      },
+      "scientific_authority": false
+    },
+    "repair": {
+      "allow_exact_historical_resolved_model": "doubao-seed-2-0-mini-260215",
+      "archive_provider_response_before_local_validation": true,
+      "changed_layer": "execution-validator-and-receipt-persistence-only",
+      "claim_boundary_changed": false,
+      "evaluator_changed": false,
+      "model_requested_changed": false,
+      "scientific_contract_changed": false,
+      "task_support_changed": false
+    },
+    "status": "EXECUTION_VALIDATOR_MISMATCH_ZERO_SCIENTIFIC_AUTHORITY"
+  },
+  "fresh_no_memory_by_future_task": [
+    {
+      "future_task": "164",
+      "n": 8,
+      "no_memory_rate": 1.0,
+      "successes": 8,
+      "wilson_95": [
+        0.6755924351161198,
+        1.0
+      ]
+    },
+    {
+      "future_task": "385",
+      "n": 8,
+      "no_memory_rate": 0.0,
+      "successes": 0,
+      "wilson_95": [
+        0.0,
+        0.32440756488388023
+      ]
+    },
+    {
+      "future_task": "387",
+      "n": 8,
+      "no_memory_rate": 0.0,
+      "successes": 0,
+      "wilson_95": [
+        0.0,
+        0.32440756488388023
+      ]
+    },
+    {
+      "future_task": "388",
+      "n": 8,
+      "no_memory_rate": 1.0,
+      "successes": 8,
+      "wilson_95": [
+        0.6755924351161198,
+        1.0
+      ]
+    }
+  ],
+  "main_interpretation": "The fresh no-memory baseline does not induce a uniform ordering of success-label and failure-label memory. Across the 16 frozen source-by-future comparisons, eight are equidistant at the point estimate, six place omission closer to the success-memory branch, and two place omission closer to the failure-memory branch. Some cells therefore isolate one reward-conditioned branch as the deviation from omission, while others place both memory branches away from omission in the same direction.",
+  "objection_id": "PROXY-O5",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "point_estimate_geometry_counts": {
+    "BASELINE_CLOSER_TO_FAILURE": 2,
+    "BASELINE_CLOSER_TO_SUCCESS": 6,
+    "EQUIDISTANT": 8
+  },
+  "recovery_contract": {
+    "authority": {
+      "claim_expansion_authority": false,
+      "experiment_authority": true,
+      "gpu_authority": false,
+      "provider_call_authority": true,
+      "scientific_reopen_authority": true,
+      "submission_authority": false
+    },
+    "experiment_id": "D2-PROXY-O5-NO-MEMORY-RECOVERY-R1",
+    "recovery_budget": {
+      "new_provider_call_ceiling": 32,
+      "reason": "One-for-one rerun because all prior 32 POSTs were rendered scientifically unusable by an execution-layer validator bug; no prior outcome entered analysis.",
+      "stop_after_this_attempt": true
+    }
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "selected_cell_diagnostics": {
+    "source21_future385": {
+      "failure_memory_rate_f2r1": 0.25,
+      "failure_minus_no_memory": 0.25,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.1202835935246061,
+        0.5907245696898311
+      ],
+      "future_task": "385",
+      "no_memory_rate_fresh": 0.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_SUCCESS",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "21",
+      "success_memory_rate_f2r1": 0.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    "source21_future388": {
+      "failure_memory_rate_f2r1": 0.625,
+      "failure_minus_no_memory": -0.375,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.6942576053973726,
+        0.0274405699587969
+      ],
+      "future_task": "388",
+      "no_memory_rate_fresh": 1.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_SUCCESS",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "21",
+      "success_memory_rate_f2r1": 1.0,
+      "success_minus_no_memory": 0.0,
+      "success_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ]
+    },
+    "source22_future388": {
+      "failure_memory_rate_f2r1": 1.0,
+      "failure_minus_no_memory": 0.0,
+      "failure_minus_no_memory_newcombe_95": [
+        -0.32440756488388023,
+        0.32440756488388023
+      ],
+      "future_task": "388",
+      "no_memory_rate_fresh": 1.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_FAILURE",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "22",
+      "success_memory_rate_f2r1": 0.25,
+      "success_minus_no_memory": -0.75,
+      "success_minus_no_memory_newcombe_95": [
+        -0.928520787247891,
+        -0.2795390552402787
+      ]
+    },
+    "source25_future387": {
+      "failure_memory_rate_f2r1": 0.75,
+      "failure_minus_no_memory": 0.75,
+      "failure_minus_no_memory_newcombe_95": [
+        0.27953905524027867,
+        0.9285207872478909
+      ],
+      "future_task": "387",
+      "no_memory_rate_fresh": 0.0,
+      "point_estimate_geometry": "BASELINE_CLOSER_TO_SUCCESS",
+      "shared_baseline_note": "The same future-task no-memory estimate is shared by four source comparisons and is not an independent observation in each cell.",
+      "source_memory_task": "25",
+      "success_memory_rate_f2r1": 0.125,
+      "success_minus_no_memory": 0.125,
+      "success_minus_no_memory_newcombe_95": [
+        -0.2152402668913369,
+        0.4708881822128535
+      ]
+    }
+  },
+  "source_bindings": {
+    "analysis": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o5-no-memory-recovery-r1-20260824-0951/o5-analysis.json",
+      "sha256": "1f3080a5f0d02530f6b04ebe7d24a2a890ef5fa35165ea62e84cb8401affa996"
+    },
+    "failed_contract": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o5-no-memory-20260824-0951/o5-execution-contract.json",
+      "sha256": "614c3f0e335f0bfed0bf86ad72ed31eb319e32693356ff4d5cef6aa4dd1e129f"
+    },
+    "failure_receipt": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o5-no-memory-20260824-0951/o5-execution-failure-receipt.json",
+      "sha256": "bbffdc6be72addef2e71e6e32984888cfdcb950091380245d5b77a2731d93572"
+    },
+    "recovery_contract": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o5-no-memory-recovery-r1-20260824-0951/o5-recovery-contract.json",
+      "sha256": "525ff843676f4246c5945704b87e133cb3326ee7e84cd4e7328e1d40088a90c8"
+    },
+    "result": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-o5-no-memory-recovery-r1-20260824-0951/o5-result.json",
+      "sha256": "13d890bbf13b4eb77ea4161817af1d9260b2ef369bb9292fd240b94a266da379"
+    }
+  },
+  "status": "O5_FRESH_NO_MEMORY_CONTROL_COMPLETE",
+  "submission_authority": false
+}

@@ -9,6 +9,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SRC = HERE / "source"
 DIAG = json.loads((HERE / "existing-evidence-diagnostics.json").read_text())
+O5 = json.loads((HERE / "o5-manuscript-evidence.json").read_text())
 
 
 def sha(path: Path) -> str:
@@ -48,7 +49,14 @@ def main() -> None:
     checks["write_terminal_nonmonotonic_diagnostic"] = all(x in all_text for x in ["0.031", "0.156", "not a monotonic proxy"]) and abs(wt["pearson_token_distance_vs_source_mean_absolute_effect"] + 0.729606) < 1e-6
     checks["terminal_effect_bound"] = "0.15625" in all_text and "0.00074" in all_text
     checks["provider_missingness_explicit"] = all(x in all_text for x in ["two", "failure-arm", "selection limitation"]) and "ArkResponseStateError" in all_text
-    checks["no_memory_boundary_explicit"] = "not memory versus omission" in all_text and "no no-memory arm" in all_text
+    checks["no_memory_boundary_explicit"] = all(x in all_text for x in ["Fresh no-memory", "32-call no-memory", "not create an independent $4\\times4\\times3$ factorial design"])
+    checks["o5_fresh_no_memory_control"] = (
+        O5["status"] == "O5_FRESH_NO_MEMORY_CONTROL_COMPLETE"
+        and O5["execution_accounting"]["recovery_scientifically_usable_units"] == 32
+        and O5["execution_accounting"]["old_exploratory_no_memory_calls_reused"] == 0
+        and O5["point_estimate_geometry_counts"] == {"BASELINE_CLOSER_TO_FAILURE": 2, "BASELINE_CLOSER_TO_SUCCESS": 6, "EQUIDISTANT": 8}
+        and all(x in all_text for x in ["22/388", "25/387", "no new global $p$-value"])
+    )
     checks["semantic_claim_not_expanded"] = "not an embedding" in all_text or "not embedding" in all_text
     checks["interaction_not_predictor"] = "not a predictive transfer model" in all_text or "not a learned predictor" in all_text
     checks["single_writer_domain_boundary"] = "Replication across writer families and task domains" in limits
@@ -63,14 +71,17 @@ def main() -> None:
         and accounting["f2_initial_total_calls"] == 108
         and accounting["f2r1_confirmatory_policy_calls"] == 256
         and accounting["known_requests_excluding_unresolved_low_level_call_count_for_f1_action_existence"] == 504
-        and all(x in setup for x in ["96 policy calls", "96 primary memory-conditioned calls plus 12 no-memory calls", "504 directly countable"])
+        and O5["execution_accounting"]["o5_total_provider_calls_consumed"] == 64
+        and O5["execution_accounting"]["first_attempt_scientifically_usable_units"] == 0
+        and O5["execution_accounting"]["recovery_scientifically_usable_units"] == 32
+        and all(x in setup for x in ["96 policy calls", "96 primary memory-conditioned calls plus 12 exploratory no-memory calls", "64 additional provider calls", "568 directly countable"])
     )
     checks["diagnostic_zero_new_calls"] = "No provider calls" in DIAG["analysis_scope"]
     checks["system_E1_main_comparison"] = checks["terminal_effect_bound"]
     checks["system_E2_simplification_control"] = "0.105" in all_text and "0.0078" in all_text
     checks["system_E3_mechanism_analysis"] = "7 of 12" in all_text and checks["writer_jaccard_bound"] and checks["controlled_structural_diagnostic_bound"]
-    checks["system_E4_robustness_boundary"] = checks["interaction_diagnostic_bound"] and checks["write_terminal_nonmonotonic_diagnostic"] and checks["no_memory_boundary_explicit"]
-    checks["system_E5_negative_failure"] = all(x in all_text for x in ["0.311", "0.160", "ArkResponseStateError"])
+    checks["system_E4_robustness_boundary"] = checks["interaction_diagnostic_bound"] and checks["write_terminal_nonmonotonic_diagnostic"] and checks["no_memory_boundary_explicit"] and checks["o5_fresh_no_memory_control"]
+    checks["system_E5_negative_failure"] = all(x in all_text for x in ["0.311", "0.160", "ArkResponseStateError", "zero scientific authority"])
     checks["system_E6_efficiency_cost_scale"] = checks["execution_accounting_complete"] and checks["inference_only_accounting"]
 
     pdf = HERE / "paper.pdf"
@@ -98,7 +109,7 @@ def main() -> None:
     payload = {
         "schema_version": "1.0",
         "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-        "revision": "STANFORD-R3-EXISTING-EVIDENCE-20260824",
+        "revision": "STANFORD-R3-O5-NO-MEMORY-20260824",
         "status": "PASS" if all(checks.values()) else "FAIL",
         "abstract_words_approx": approx_words(abstract),
         "pdf_pages_total": pages,
@@ -107,13 +118,14 @@ def main() -> None:
         "main_text_page_boundary": f"Conclusion appears on PDF page {conclusion_page}; references begin on PDF page {references_page}.",
         "checks": checks,
         "diagnostic_sha256": sha(HERE / "existing-evidence-diagnostics.json"),
+        "o5_evidence_sha256": sha(HERE / "o5-manuscript-evidence.json"),
         "paper_pdf_sha256": sha(pdf),
         "main_tex_sha256": sha(SRC / "main.tex"),
         "scientific_authority": False,
         "experiment_authority": False,
         "claim_expansion": False,
-        "new_provider_calls": 0,
-        "new_rollouts": 0,
+        "new_provider_calls": 64,
+        "new_rollouts": 32,
     }
     (HERE / "manuscript-qa.json").write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
     print(json.dumps(payload, indent=2))
