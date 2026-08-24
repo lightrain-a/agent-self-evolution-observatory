@@ -1,0 +1,512 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T05:10:19Z",
+  "run_id": "external-fresh-exact-16-review-20260824-r9",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "selection_projection": {
+    "staging_refresh_root": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r9",
+    "preview_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r9/preview-public.json",
+    "preview_artifact_sha256": "b3f56de5da6c59af6ab1abe1a6d76cb7222807cf9d29bea1c47cc2e74c84d707",
+    "private_pool_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r9/data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "private_pool_artifact_sha256": "d8f4e4e5bca68cc82868c9c8eeace0e393d4e472bae71782fd079cd07d6a91db",
+    "corpus_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r9/data/corpora/semantic-scholar-corpus.json",
+    "corpus_artifact_sha256": "2d27a6a0e8439be73da947b74cdbe61f1ae1c57ea89f0d559bae28f1d1585b86",
+    "refresh_generated_at": "2026-08-24T05:04:16+00:00",
+    "refresh_status": "READY",
+    "discovery_mode": "arxiv-primary-fallback",
+    "source_retrieval_complete": true,
+    "selected": 32,
+    "verified": 32,
+    "selected_previously_reviewed": 16,
+    "selected_unreviewed": 16,
+    "eligible_unreviewed": 23,
+    "fulltext_verified": 30,
+    "fetch_errors": 0,
+    "fulltext_fetch_errors": 2,
+    "undercovered_lanes": [],
+    "source_coverage_exhausted": false,
+    "global_source_coverage_exhausted_claim": false,
+    "exact_unreviewed_refs_in_scheduler_order": [
+      "arXiv:2607.11906",
+      "arXiv:2606.31648",
+      "arXiv:2607.00254",
+      "arXiv:2606.31209",
+      "arXiv:2606.31551",
+      "arXiv:2606.31639",
+      "arXiv:2606.30568",
+      "arXiv:2606.29799",
+      "arXiv:2606.30191",
+      "arXiv:2606.30185",
+      "arXiv:2606.29315",
+      "arXiv:2606.29495",
+      "arXiv:2608.20379",
+      "arXiv:2606.28758",
+      "arXiv:2606.27632",
+      "arXiv:2606.27929"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 16,
+    "sources_reviewed": 16,
+    "exact_prior_exposure_zero": 16,
+    "identity_verified": 16,
+    "deep_review": 6,
+    "triage_review": 10,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "fresh_scientific_survivors": 0,
+    "stop_reduction": 2,
+    "support_component_only": 10,
+    "scope_excluded": 4,
+    "watch_reopen_seeds": 0,
+    "source_retrieval_complete": true,
+    "global_source_coverage_exhausted": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "exact_tranche_identity_requires_content_addressed_refresh_projection": true,
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "deep_review_routes_collision_reopen_or_decisive_baseline_cases": true,
+    "triage_is_allowed_only_for_clear_scope_or_component_cases": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "cross_substrate_mechanism_support_is_not_agent_specific_reopen_authority": true,
+    "no_emit_is_not_a_scientific_dead_end": true,
+    "global_source_exhaustion_must_not_be_inferred_from_bounded_tranche_completion": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2607.11906",
+      "title": "In-Context Reinforcement Learning under Non-Stationarity: A Survey",
+      "published": "2026-07-01",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state"
+      ],
+      "source_sha256": "a019350e99a48a2f8b9831034ef20861432543d049aa4be2992806c999f0c8f6",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_NONSTATIONARY_ICRL_TAXONOMY",
+      "reduction": [
+        "in-context-reinforcement-learning",
+        "nonstationary-context-adaptation",
+        "context-history-management"
+      ],
+      "note": "This survey organizes in-context reinforcement learning specifically under non-stationarity, where accumulated rewards, transitions, demonstrations, and retrieved experience may become stale as tasks change. It is useful closest-work/taxonomy support for nonstationary context and adaptation reducers, but supplies no new execution-backed causal intervention by itself.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "3763b88d5765b7707c701dfea7b0c3c54fe343be42afe678a94ec1d2a50c44c6",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.31648",
+      "title": "Think in English, Answer in Korean: Efficient Adaptation of Multilingual Tool-Using Agents",
+      "published": "2026-06-30",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state",
+        "runtime_deployment",
+        "safety_reliability"
+      ],
+      "source_sha256": "4958e9a65dbbd77dfbfa4fdd0a94b86e4eea3db41ee6b6131231059711f647da",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "multilingual-sft",
+        "rl-with-verifiable-rewards",
+        "language-consistency-alignment"
+      ],
+      "note": "LuckyStar 111B adapts an already post-trained model through multilingual SFT, verifiable-reward RL, language-consistency rewards, and quantization. This is an offline multilingual/tool-use post-training recipe; the deployed agent does not autonomously and persistently modify itself across tasks.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "97e7bbdc3df00491ad124aacc1a703ca3b42d8cffe62bd248f4db0578ac4d072",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.00254",
+      "title": "Query-Centric Optimization of AI Workflows via Approximate Query Processing and Proxy Models",
+      "published": "2026-06-30",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "3e9170e76b44df71dd06d0740682474c3a111a5c53457455fe35c6b4f441a767",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_WORKFLOW_EFFICIENCY",
+      "reduction": [
+        "approximate-query-processing",
+        "proxy-model-filtering",
+        "adaptive-stopping"
+      ],
+      "note": "Query-Centric Optimization treats expensive AI-workflow predicates as database queries and reduces oracle/reward-model calls through confidence-bounded online aggregation or lightweight proxy filtering. This is useful systems/control-plane evidence for cost-aware evaluation and adaptive stopping, but it does not introduce a persistent self-evolution state.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "93a65c85ee9e4869e406764f22d90b3cf723451e739a03222a8581a0b627168e",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.31209",
+      "title": "Long-term Traffic Simulation via Structured Autoregressive Modeling",
+      "published": "2026-06-30",
+      "lane_keys": [
+        "world_model",
+        "collective"
+      ],
+      "source_sha256": "45d3f54bb51786dd64710c5a51ca26eb22b081f91d7cad42002f6c5e38f58537",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_SIMULATOR",
+      "reduction": [
+        "structured-autoregressive-traffic-simulation",
+        "long-horizon-world-modeling"
+      ],
+      "note": "Long-term Traffic Simulation develops a structured autoregressive simulator/world model for long-horizon traffic dynamics. The evolving object is simulated environment state, not a behavioral agent artifact that persistently learns from outcomes.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "26f80df9248cef49edb3a1a8b196a20ce7d8b7d694163b39c9c684532e9ad324",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.31551",
+      "title": "AutoTrainess: Teaching Language Models to Improve Language Models Autonomously",
+      "published": "2026-06-30",
+      "lane_keys": [
+        "skill_harness",
+        "parametric_model_state"
+      ],
+      "source_sha256": "acf77877a0328ea66f3f2022dac854ab851aa500eb4656c35f4d17348053d07f",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_AUTONOMOUS_POSTTRAINING",
+      "reduction": [
+        "training-specialized-agent-computer-interface",
+        "structured-experiment-memory",
+        "evidence-grounded-autonomous-posttraining"
+      ],
+      "note": "AutoTrainess externalizes human LM-training expertise into explicit planning/data/training/evaluation/logging interfaces and a persistent experiment log. Under the same PostTrainBench task family and time limits it substantially improves over a raw CLI harness, and its interfaces generalize across agent backbones. This is strong Research-OS component evidence for structured autonomous post-training, explicit experiment state, and evidence-grounded iteration, but the intervention changes the scaffold/action space and imported human priors rather than isolating an irreducible self-evolution state.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "833b5d45128e3c2ec5b353a69f5e8f2f1a2e747d753543141c3f1a598c5962ad",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.31639",
+      "title": "A Lifecycle and Application-Stack Survey of Large Language Model Vulnerabilities: Attacks, Risks, Defenses, and Open Problems",
+      "published": "2026-06-30",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state",
+        "embodied",
+        "runtime_deployment",
+        "safety_reliability"
+      ],
+      "source_sha256": "e059914f831678e774b2161441cd31ee42bc635180b841f6e584b4756da5b0a4",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_SECURITY_TAXONOMY",
+      "reduction": [
+        "lifecycle-security-taxonomy",
+        "provenance-aware-retrieval",
+        "long-horizon-agent-security"
+      ],
+      "note": "This lifecycle/application-stack survey maps vulnerabilities across data, training, supply chain, retrieval/memory, prompting, tool execution, and deployment/maintenance, emphasizing trust-boundary composition, provenance, delegated authority, and long-horizon attacks. It is high-value security/control-plane background, not an execution-backed new scientific object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "1e2a88eaf68188979ab81d4f8f2926ba802a751fd396725d52d180494180e53b",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.30568",
+      "title": "Towards World Model-Empowered Integrated Sensing, Communication, and Decision for Complex Unmanned Systems",
+      "published": "2026-06-29",
+      "lane_keys": [
+        "world_model",
+        "embodied"
+      ],
+      "source_sha256": "ea7e0e78889d5f6f5683eb84565b8e83922c32f64251b91d9fab804fe7613663",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_WORLD_MODEL_CONTROL",
+      "reduction": [
+        "predictive-world-model",
+        "age-of-information-sensing",
+        "latent-rollout-and-knowledge-graph-coordination"
+      ],
+      "note": "This world-model-empowered SCD framework jointly schedules sensing, communication, and decision through predictive uncertainty, latent rollouts, and a multi-granularity knowledge graph. It supports world-model/control-system design but does not identify autonomous persistent self-modification of the agent artifact.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "d69edc1f0679cbed4e27b09f829d910adfe093662a14ebd61eedc964b970c241",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.29799",
+      "title": "The CRISTAL Method: Neurosymbolic analysis from AI-synthesized world models",
+      "published": "2026-06-29",
+      "lane_keys": [
+        "world_model"
+      ],
+      "source_sha256": "05e467759b6eba3d9ed8584510f294509bd514697d453b80102e39b2a717bf3d",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_NEUROSYMBOLIC_WORLD_MODEL",
+      "reduction": [
+        "probabilistic-program-world-model",
+        "bayesian-active-learning",
+        "llm-validated-program-synthesis"
+      ],
+      "note": "CRISTAL constructs and refines an interpretable probabilistic-program world model with LLM actor-critic validation, Bayesian inference, uncertainty quantification, and budget-aware active learning. It is strong support for explicit world-model state, model validation, and progressive information acquisition. The benchmark is synthetic and the mechanism is directly expressible by probabilistic modeling, active learning, and verifier-guided program synthesis; no agent-specific irreducible self-evolution state is isolated.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SCIE-63da8f6c3c1c818d32",
+          "result": "NOT_SATISFIED",
+          "boundary": "World-model code synthesis and validation remain expressible as verifier-guided program synthesis/repair when the strongest baseline receives the same prior knowledge, observations, test cases, candidate models, and budget."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "ed5a5b88d5c8c72d7f935b33cc02895d4436422aa11327d2e0bea0225d5ec814",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.30191",
+      "title": "From Detecting Agency to Doing Work: Self-Caused Credit Builds a Durable Behavioral Self in a Minimal Spiking Agent",
+      "published": "2026-06-29",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "b928f39e5250da2e4796e37c20d70bc4a36df697faeed62e795cb9b4ffc205a4",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_CROSS_SUBSTRATE_CREDIT",
+      "reduction": [
+        "agency-gated-slow-credit",
+        "persistent-plasticity",
+        "post-unload-behavioral-residue"
+      ],
+      "note": "This minimal Nengo spiking-agent study provides unusually clean cross-substrate mechanism evidence: reproducing the agency comparator and toggling only the slow-credit channel yields post-unload self-preservation 1.00 versus 0.00 at matched agency gain, with a retained fraction near 0.96 and collapse under slow-decoder reset or removal of the agency gate. The result establishes that explicit self-caused slow credit can do durable plastic work in this substrate. It does not, however, establish an LLM/harness-specific self-evolution primitive: the causal gate and slow parameter channel are explicit, and the substrate is not a language-agent artifact/memory/harness system. Preserve as mechanism support only.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "beb58d475b70861659d6c01a5e123a7fc1be07f0facdbfb51ee9d02d39feeabe",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.30185",
+      "title": "Dynamo: Dynamic Skill-Tool Evolution for Vision-Language Agents",
+      "published": "2026-06-29",
+      "lane_keys": [
+        "skill_harness",
+        "parametric_model_state"
+      ],
+      "source_sha256": "0f74bd8408d13ad6a3ee3f2a449c412d29a40d4b321acb5956de611d0846d41d",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "failure-driven-skill-tool-synthesis",
+        "validation-gated-capability-library",
+        "retrieval-and-tool-mastery"
+      ],
+      "note": "Dynamo freezes the VLM, uses a small labeled training subset with ground-truth answers, diagnoses correct and incorrect attempts, proposes multiple skill-plus-tool candidates, validates them on training/validation accuracy, and promotes only improving capabilities into a persistent library. Skills-only, tools-only, no-persistence, diagnosis, and mastery ablations support the engineering mechanism. This is mature failure-driven corrective adaptation plus executable tool/program synthesis, validation, retrieval, and persistent skill memory; no same-information self-evolution-specific residual remains.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "No residual survives after matching correct/incorrect trajectory evidence, ground-truth feedback, candidate skill/tool content, validation information, update budget, retrieval, and held-out evaluation."
+        },
+        {
+          "memory_id": "MEM-SCIE-63da8f6c3c1c818d32",
+          "result": "NOT_SATISFIED",
+          "boundary": "Executable tool generation and keep/revert validation remain verifier-guided program synthesis/repair with the same specification and evidence."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "3d50943a94b2d2d63f722701804ec84a49a8f5403f662fa240afe09b70ee61d8",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.29315",
+      "title": "Hierarchical Experimentalist Agents",
+      "published": "2026-06-28",
+      "lane_keys": [
+        "skill_harness",
+        "parametric_model_state"
+      ],
+      "source_sha256": "539e52dfb4ae9e7447b7348f04a1f2d140f39167a35ea4bdee915eed02f0d691",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "active-experimentation",
+        "reward-labeled-skill-distillation",
+        "hierarchical-skill-retrieval"
+      ],
+      "note": "HExA actively probes an unseen physics environment through intervention tools, contrasts high- and low-reward trajectories, distills hierarchical reusable skills, and retrieves them in later episodes. Reward-labeled skills materially outperform no-reward skill evolution, ReAct, and Reflexion, and skills learned on easier levels transfer to harder unseen levels without target-level experimentation. This is strong active-learning/experimentation plus reward-guided procedural-memory evidence, but its evolving object is an explicit skill bank derived from observable interaction outcomes. A strongest active-learning plus skill-distillation/retrieval baseline given the same trajectories, rewards, experiment budget, skill content, and context can express the result.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Reward-labeled success/failure skill updates remain corrective adaptation once trajectories, reward information, skill content, update budget, executor, and held-out evaluation are matched."
+        },
+        {
+          "memory_id": "MEM-SEAR-1ba2b6e8d305dafaad",
+          "result": "NOT_SATISFIED",
+          "boundary": "Skill reuse remains explainable by relevance, compatibility, hierarchy/redundancy, and context allocation when the same skill bank and token budget are available."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "f8a779ec8a484e82b46af7f0f862a70d1bfed760177dd7ce1a85fb51976801b1",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.29495",
+      "title": "Cognitive World Model for Progressive BDI/E Trajectory Evaluation of Conversational Agents",
+      "published": "2026-06-28",
+      "lane_keys": [
+        "world_model"
+      ],
+      "source_sha256": "e7933b19a96497800ca3cc407acec2d002b1a88004dca91abd06cce7e410b6bd",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_COGNITIVE_TRAJECTORY_EVAL",
+      "reduction": [
+        "cognitive-user-world-model",
+        "bdi-e-trajectory-tracking",
+        "process-level-agent-evaluation"
+      ],
+      "note": "CogWM jointly models user utterances and BDI/E state and evaluates conversational agents at turn, trajectory, and final-outcome levels. Context ablations and multi-agent interaction analyses support explicit cognitive-state tracking as a process-level evaluation surface. The model is an evaluator/user simulator rather than a self-modifying acting agent, so it is component evidence only.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "acc884d7e6a7e1021843665417f7c5a5ca3f508c6cb4297d964cfcb18e2d8862",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2608.20379",
+      "title": "A Survey on Foundations and Frontiers of Multimodal Agentic Frameworks: Techniques and Applications",
+      "published": "2026-06-28",
+      "lane_keys": [
+        "memory_continual",
+        "embodied",
+        "runtime_deployment"
+      ],
+      "source_sha256": "6977caa6a6a34a39d6800d59d4166fe487dea1711bed7f62e907125ffe35614d",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_MULTIMODAL_AGENT_TAXONOMY",
+      "reduction": [
+        "multimodal-agent-framework-taxonomy",
+        "memory-tools-planning-and-world-model-components"
+      ],
+      "note": "The first-party abstract surveys foundations and frontiers of multimodal agentic frameworks, including perception, memory, planning, tools, and world models. Optional full text was unavailable in this refresh, so this source is used only as zero-authority taxonomy/background support and carries no mechanistic scientific claim.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_available": false
+    },
+    {
+      "ref": "arXiv:2606.28758",
+      "title": "X-Mind: Efficient Visual Chain-of-Thought via Predictive World Model for End-to-End Driving",
+      "published": "2026-06-27",
+      "lane_keys": [
+        "world_model",
+        "embodied"
+      ],
+      "source_sha256": "6bf56500b445ba7641bd49de3873b8cc76d83ce6a7c178cd7fa35c715ff44d4e",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_WORLD_MODEL",
+      "reduction": [
+        "predictive-visual-cot",
+        "world-model-driving-policy",
+        "offline-model-training"
+      ],
+      "note": "X-Mind internalizes a predictive world model as compressed visual chain-of-thought for end-to-end driving. The world rollout occurs within inference and the policy is trained offline; no persistent autonomous artifact update across tasks is studied.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "d4d1e0a74ab7aeb715fdd605b7b7e2263e67082543f502ec64cfdb71af2a7bc1",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.27632",
+      "title": "Yuvion LLM: An Adversarially-Aware Large Language Model for Content And AI Safety",
+      "published": "2026-06-26",
+      "lane_keys": [
+        "parametric_model_state",
+        "runtime_deployment",
+        "safety_reliability"
+      ],
+      "source_sha256": "e5673f56e2f40801ece78ab440cbb418cda94934ecd6e2783f1136132f6e553b",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_SAFETY_POSTTRAINING",
+      "reduction": [
+        "adversarially-aware-data-construction",
+        "continued-pretraining",
+        "safety-sft-and-rl"
+      ],
+      "note": "Yuvion LLM is built through adversarially aware data construction, continued pretraining, safety SFT/RL, and agentic safety RL. It is a static safety-model/post-training result rather than an autonomous persistent self-evolution process at deployment.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "85d3a22ca48866510b5741e5ee588b2c85a56037fca3f8a58806cc03cae47ad2",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2606.27929",
+      "title": "When Multi-Robot Systems Meet Agentic AI:Towards Embodied Collective Intelligence",
+      "published": "2026-06-26",
+      "lane_keys": [
+        "skill_harness",
+        "memory_continual",
+        "embodied",
+        "collective"
+      ],
+      "source_sha256": "b46ed97be3b97e843d07952a4a2331b16705411a24b7886436570a141d618757",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_COLLECTIVE_MEMORY_TAXONOMY",
+      "reduction": [
+        "shared-world-memory",
+        "embodied-collective-intelligence",
+        "multi-robot-skill-experience-sharing"
+      ],
+      "note": "This perspective proposes Embodied Collective Intelligence in which robot teams share world context, task progress, and skill experience as common resources that influence future behavior. It is useful component/taxonomy support for collective memory and multi-robot agent loops, but does not provide a decisive controlled causal intervention that reopens a current ResearchItem.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "bcaa089ab18242e8efa2cef7d0e644c8d267d7bb4b0c0fd2842363939de53625",
+      "fulltext_available": true
+    }
+  ],
+  "next_action": "Record these 16 exact refs as zero-authority source-review exposure. No source satisfies an exact durable reopen contract, so do not trigger generator/provider/GPU work. Refresh the source scheduler from a new immutable staging copy and use the actual remaining unreviewed set; do not infer global exhaustion from this tranche.",
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
