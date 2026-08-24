@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "single-variable-operationalization-repair-design",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "objection_id": "PROXY-O6",
+  "repair_id": "O6-CROSS-WRITER-STAGE1-R1-OUTPUT-CAP",
+  "parent_design_sha256": "e33996f4e4f00da7b162bf7e9c26ca004aaf7e5d04f2547aacbc04f47ad05c1e",
+  "parent_contract_sha256": "7103efdbf1739638d815f9b0960462d7302821c91c063f42c5a6fcd331b46bfa",
+  "parent_failure_asset": {
+    "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/o6-stage1-failure-asset.json",
+    "sha256": "f7c204ea3f68a87082c729d5f6206077e04d995c93242af8baf8caa803bf7112"
+  },
+  "diagnosis": "The parent GLM-5.3 cross-writer stage is not scientifically complete because repeated failure-label responses hit the frozen max_output_tokens=2200 boundary exactly, with output_tokens=2200, reasoning_tokens=0, final status=incomplete, and no assistant text. This is output-cap censoring of the writer interface, not a measured absence of reward-conditioned state divergence.",
+  "repair_class": "ONE_LOAD_BEARING_OPERATIONALIZATION_VARIABLE",
+  "changed_scientific_variable": {
+    "field": "writer_model.max_output_tokens",
+    "parent": 2200,
+    "repair": 4096,
+    "rationale": "Use one bounded larger completion window for both reward modes and all four source trajectories. The Ark API documents max_tokens as a hard reply-length limit and uses 4096 as a standard example. This does not assert that 4096 is a model-specific maximum; it is the single allowed repair value."
+  },
+  "execution_only_repairs": [
+    "nonblocking single-writer transaction lock across the full eight-call run",
+    "stop immediately after the first scientifically incomplete provider response",
+    "archive provider response before any local model/schema validation"
+  ],
+  "freshness": {
+    "reuse_parent_successful_outputs": false,
+    "reason": "Changing max_output_tokens changes the provider request contract. All four success/failure pairs must therefore be generated fresh under one uniform repaired request surface.",
+    "fresh_source_tasks": ["21", "22", "23", "25"],
+    "fresh_conditions": ["success_label_memory", "failure_label_memory"],
+    "fresh_provider_calls_if_complete": 8
+  },
+  "unchanged_contract": {
+    "writer_model_requested": "glm-5.3",
+    "temperature": 0.0,
+    "thinking": null,
+    "provider_retries": 0,
+    "store": true,
+    "resolved_model_family_rule": "normalized resolved model starts with glm53",
+    "source_tasks": ["21", "22", "23", "25"],
+    "trajectory_summary_sha256": {
+      "21": "0697e64ba5a6c805cf0ce929ac1d947d2e884b75073c73ec63ec30f26156acab",
+      "22": "ce3161ff3c47c24a5f96b109162935aa3d8126c47559aca38c6cd3c77c121446",
+      "23": "4471ab8874a465680a66b48fe06b09633785d46fb549195b04d75e1d58646d23",
+      "25": "9355929e90fb70ba7b554630fa21b93dfcc0117586a73cae1020782ace41444a"
+    },
+    "trajectory_parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+    "success_prompt_sha256": "5d4893a5f3dc5fadda43f166d6f322d729c197d8a8a74ca953f7c10acabb940a",
+    "failure_prompt_sha256": "9bd01483afd8f8366ade02c7d839657d38f3eb263daa5cbfe15445b956116b45",
+    "stage1_gate": {
+      "all_8_provider_calls_complete": true,
+      "exact_content_changed_pairs_min": 4,
+      "title_set_changed_pairs_min": 3,
+      "token_jaccard_threshold": null
+    },
+    "stage2_gate": {
+      "mean_absolute_success_rate_difference_min": 0.15,
+      "permutation_p_lt": 0.05
+    }
+  },
+  "stop_rule": {
+    "if_any_provider_response_incomplete": "STOP_CROSS_WRITER_NO_FURTHER_TOKEN_CAP_RESCUE",
+    "if_exact_content_changed_pairs_lt_4": "STOP_CROSS_WRITER_WRITE_CHANNEL_NOT_REPLICATED",
+    "if_title_set_changed_pairs_lt_3": "STOP_CROSS_WRITER_STRUCTURAL_WRITE_CHANNEL_NOT_REPLICATED",
+    "if_pass": "ALLOW_COMPILATION_OF_SEPARATE_STAGE2_EXECUTION_CONTRACT",
+    "further_output_cap_repairs_allowed": false
+  },
+  "economy": {
+    "repair_stage1_provider_call_ceiling": 8,
+    "stage2_calls_authorized_now": 0,
+    "stage2_calls_if_repair_passes_and_separately_compiled": 256,
+    "additional_no_memory_calls": 0,
+    "training_runs": 0,
+    "gpu_runs": 0
+  },
+  "claim_boundary": {
+    "parent_2200_run_has_scientific_negative_authority": false,
+    "repair_can_authorize_stage2_directly": false,
+    "claim_expansion_authority": false,
+    "submission_authority": false
+  }
+}

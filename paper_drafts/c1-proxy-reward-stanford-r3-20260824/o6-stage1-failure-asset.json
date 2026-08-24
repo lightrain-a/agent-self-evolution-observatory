@@ -1,0 +1,70 @@
+{
+  "artifact_type": "execution-and-operationalization-failure-asset",
+  "execution_concurrency_failure": {
+    "distinct_raw_content_archives": 7,
+    "exact_provider_post_count_reconstructible": false,
+    "overlapping_runner_processes_observed": 2,
+    "parent_harness_transaction_lock_present": false,
+    "per_stage_provider_response_archives": 4,
+    "provider_post_count_observable_lower_bound": 9,
+    "transport_event": "MCP/SSH invocation returned HTTP 502 while the remote runner continued executing.",
+    "why_lower_bound_only": "Concurrent processes could POST the same stage before either wrote its stage receipt. Response archives are keyed by stage and can be overwritten, while identical duplicate outputs can also collapse to the same content hash."
+  },
+  "failure_layer": "operationalization-plus-execution",
+  "objection_id": "PROXY-O6",
+  "observed_stage_receipts": 6,
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "parent_contract_sha256": "7103efdbf1739638d815f9b0960462d7302821c91c063f42c5a6fcd331b46bfa",
+  "parent_design_sha256": "e33996f4e4f00da7b162bf7e9c26ca004aaf7e5d04f2547aacbc04f47ad05c1e",
+  "principle_update_authority": false,
+  "provider_incomplete": {
+    "count": 2,
+    "get_only_diagnosis": "Both inspected incomplete responses are final status=incomplete with output_tokens=2200, reasoning_tokens=0, no assistant text, and resolved_model=glm-5.3.",
+    "reason_counts": {
+      "length": 2
+    },
+    "response_ids_archived": 2,
+    "tasks_and_labels": [
+      {
+        "label": "failure",
+        "reason": "length",
+        "task_id": "21"
+      },
+      {
+        "label": "failure",
+        "reason": "length",
+        "task_id": "23"
+      }
+    ]
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_decision": "STOP_PARENT_STAGE1_NO_STAGE2_AUTHORITY",
+  "scientific_interpretation": "The parent Stage-1 gate cannot pass because repeated failure-label requests are censored exactly at the frozen 2200-output-token cap. This is not evidence that GLM-5.3 lacks reward-conditioned write divergence; the paired scientific outcome is missing for those units.",
+  "single_repair_child_allowed": {
+    "changed_scientific_variable": "writer max_output_tokens only: 2200 -> 4096 for all eight fresh GLM-5.3 writes",
+    "execution_only_repairs": [
+      "add nonblocking single-writer transaction lock",
+      "stop immediately after any scientifically incomplete provider response",
+      "archive provider response before local validation"
+    ],
+    "if_4096_still_length_incomplete": "STOP_CROSS_WRITER_NO_FURTHER_TOKEN_CAP_RESCUE",
+    "unchanged": [
+      "four source trajectories",
+      "task prompts",
+      "historical action-summary algorithm",
+      "ReasoningBank success/failure prompts",
+      "GLM-5.3 writer",
+      "temperature=0",
+      "thinking omitted",
+      "Stage-1 content/title gates",
+      "Stage-2 0.15 and p<0.05 gate"
+    ]
+  },
+  "stage2_experiment_authority": false,
+  "stage_status_counts": {
+    "complete": 4,
+    "provider_state_failure": 2
+  },
+  "status": "STAGE1_STOP_OUTPUT_CAP_CENSORING_PLUS_CONCURRENCY_RACE"
+}
