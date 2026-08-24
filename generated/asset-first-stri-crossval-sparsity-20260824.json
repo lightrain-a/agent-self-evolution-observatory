@@ -1,0 +1,1911 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis": "cross-validation-and-exact-controller-sparsity-frontier",
+  "input_supplement": "/data/wyt/agent-self-evolution-observatory/worktrees/e1-stri-cv-sparsity-20260824/downloads/STRI-ICLR2027-supplement.zip | /data/wyt/agent-self-evolution-observatory/worktrees/e1-stri-cv-sparsity-20260824/generated/asset-first-stri-tool-disjoint-split-20260816.json",
+  "input_split": "/data/wyt/agent-self-evolution-observatory/worktrees/e1-stri-cv-sparsity-20260824/downloads/STRI-ICLR2027-supplement.zip | /data/wyt/agent-self-evolution-observatory/worktrees/e1-stri-cv-sparsity-20260824/generated/asset-first-stri-tool-disjoint-split-20260816.json",
+  "new_model_calls": 0,
+  "new_gpu_runs": 0,
+  "claim_expansion": false,
+  "leave_one_tool_out": {
+    "split_id": "STRI-API-BANK-L1-TOOL-DISJOINT-v1",
+    "selected_tools": [
+      "AppointmentRegistration",
+      "CancelRegistration",
+      "EmergencyKnowledge",
+      "ModifyRegistration",
+      "QueryHealthData",
+      "QueryRegistration",
+      "RecordHealthData",
+      "SymptomSearch"
+    ],
+    "selected_rows": 103,
+    "folds": [
+      {
+        "heldout_tool": "AppointmentRegistration",
+        "train_tools": [
+          "CancelRegistration",
+          "EmergencyKnowledge",
+          "ModifyRegistration",
+          "QueryHealthData",
+          "QueryRegistration",
+          "RecordHealthData",
+          "SymptomSearch"
+        ],
+        "train_rows": 92,
+        "heldout_rows": 11,
+        "train_packages": 3,
+        "heldout_packages": 2,
+        "no_heldout_refit": true,
+        "results": [
+          {
+            "baseline": "released_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.257841025556124,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_support_size",
+            "train_distortion_ratio": 2.682926829268293,
+            "heldout_distortion_ratio": 1.5942028985507246,
+            "heldout_coefficient_of_variation": 0.18478211491096652,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.024390243902439025,
+              "skill_015": 0.014492753623188406
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_sqrt_support",
+            "train_distortion_ratio": 2.2972766972655805,
+            "heldout_distortion_ratio": 1.7708455737375188,
+            "heldout_coefficient_of_variation": 0.21998068608114454,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.15617376188860607,
+              "skill_015": 0.1203858530857692
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "fractional_load_inverse",
+            "train_distortion_ratio": 2.630434782608696,
+            "heldout_distortion_ratio": 1.7333333333333336,
+            "heldout_coefficient_of_variation": 0.2129991080681025,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.03636363636363636,
+              "skill_015": 0.02666666666666667
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "nnls_l2",
+            "train_distortion_ratio": 3.609756097560975,
+            "heldout_distortion_ratio": 1.383177570093458,
+            "heldout_coefficient_of_variation": 0.13346057070313666,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.7985074626865672,
+              "skill_015": 0.3059701492537315
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "chebyshev_linf",
+            "train_distortion_ratio": 2.0000000000000004,
+            "heldout_distortion_ratio": 2.0000000000000004,
+            "heldout_coefficient_of_variation": 0.2578410255561241,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.6666666666666666,
+              "skill_015": 0.6666666666666667
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "greedy_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.257841025556124,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_min_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.257841025556124,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "maxmin_fair",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.257841025556124,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.3333333333333333,
+              "skill_015": 0.3333333333333333
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_rstar",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.257841025556124,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "semantic_first_upper_bound",
+            "train_distortion_ratio": 1.0,
+            "heldout_distortion_ratio": 1.0,
+            "heldout_coefficient_of_variation": null,
+            "zero_exposure_rows": 0,
+            "interface_changing": true
+          }
+        ]
+      },
+      {
+        "heldout_tool": "CancelRegistration",
+        "train_tools": [
+          "AppointmentRegistration",
+          "EmergencyKnowledge",
+          "ModifyRegistration",
+          "QueryHealthData",
+          "QueryRegistration",
+          "RecordHealthData",
+          "SymptomSearch"
+        ],
+        "train_rows": 90,
+        "heldout_rows": 13,
+        "train_packages": 3,
+        "heldout_packages": 2,
+        "no_heldout_refit": true,
+        "results": [
+          {
+            "baseline": "released_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.27272727272727276,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_support_size",
+            "train_distortion_ratio": 2.743589743589743,
+            "heldout_distortion_ratio": 1.5735294117647058,
+            "heldout_coefficient_of_variation": 0.1894736842105263,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.02564102564102564,
+              "skill_015": 0.014705882352941176
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_sqrt_support",
+            "train_distortion_ratio": 2.3204505835470495,
+            "heldout_distortion_ratio": 1.7573172464461018,
+            "heldout_coefficient_of_variation": 0.22930645327614596,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.16012815380508713,
+              "skill_015": 0.12126781251816648
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "fractional_load_inverse",
+            "train_distortion_ratio": 2.608695652173913,
+            "heldout_distortion_ratio": 1.7027027027027026,
+            "heldout_coefficient_of_variation": 0.21818181818181817,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.038461538461538464,
+              "skill_015": 0.02702702702702703
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "nnls_l2",
+            "train_distortion_ratio": 3.50948509485095,
+            "heldout_distortion_ratio": 1.3984881209503237,
+            "heldout_coefficient_of_variation": 0.14415000976626074,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.7901023890784986,
+              "skill_015": 0.31484641638225247
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "chebyshev_linf",
+            "train_distortion_ratio": 2.0000000000000004,
+            "heldout_distortion_ratio": 2.0000000000000004,
+            "heldout_coefficient_of_variation": 0.2727272727272728,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.6666666666666666,
+              "skill_015": 0.6666666666666667
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "greedy_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.27272727272727276,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_min_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.27272727272727276,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "maxmin_fair",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.2727272727272727,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.3333333333333333,
+              "skill_015": 0.3333333333333333
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_rstar",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.27272727272727276,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "semantic_first_upper_bound",
+            "train_distortion_ratio": 1.0,
+            "heldout_distortion_ratio": 1.0,
+            "heldout_coefficient_of_variation": null,
+            "zero_exposure_rows": 0,
+            "interface_changing": true
+          }
+        ]
+      },
+      {
+        "heldout_tool": "EmergencyKnowledge",
+        "train_tools": [
+          "AppointmentRegistration",
+          "CancelRegistration",
+          "ModifyRegistration",
+          "QueryHealthData",
+          "QueryRegistration",
+          "RecordHealthData",
+          "SymptomSearch"
+        ],
+        "train_rows": 84,
+        "heldout_rows": 18,
+        "train_packages": 3,
+        "heldout_packages": 2,
+        "no_heldout_refit": true,
+        "results": [
+          {
+            "baseline": "released_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.1663780661615406,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_support_size",
+            "train_distortion_ratio": 3.5,
+            "heldout_distortion_ratio": 3.5,
+            "heldout_coefficient_of_variation": 0.1827610350498449,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.041666666666666664,
+              "skill_015": 0.016666666666666666
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_sqrt_support",
+            "train_distortion_ratio": 2.581138830084189,
+            "heldout_distortion_ratio": 2.581138830084189,
+            "heldout_coefficient_of_variation": 0.17105641145727757,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.2041241452319315,
+              "skill_015": 0.12909944487358058
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "fractional_load_inverse",
+            "train_distortion_ratio": 3.5258241758241757,
+            "heldout_distortion_ratio": 3.321428571428571,
+            "heldout_coefficient_of_variation": 0.18058495640193745,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.07142857142857142,
+              "skill_015": 0.03076923076923077
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "nnls_l2",
+            "train_distortion_ratio": 4.282051282051284,
+            "heldout_distortion_ratio": 4.121794871794877,
+            "heldout_coefficient_of_variation": 0.1895627368939871,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.7893030794165322,
+              "skill_015": 0.2528363047001619
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "chebyshev_linf",
+            "train_distortion_ratio": 2.0000000000000004,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.16637806616154063,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.6666666666666667,
+              "skill_015": 0.6666666666666667
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "greedy_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.1663780661615406,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_min_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.1663780661615406,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "maxmin_fair",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.1663780661615406,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.3333333333333333,
+              "skill_015": 0.3333333333333333
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_rstar",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.1663780661615406,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "semantic_first_upper_bound",
+            "train_distortion_ratio": 1.0,
+            "heldout_distortion_ratio": 1.0,
+            "heldout_coefficient_of_variation": null,
+            "zero_exposure_rows": 0,
+            "interface_changing": true
+          }
+        ]
+      },
+      {
+        "heldout_tool": "ModifyRegistration",
+        "train_tools": [
+          "AppointmentRegistration",
+          "CancelRegistration",
+          "EmergencyKnowledge",
+          "QueryHealthData",
+          "QueryRegistration",
+          "RecordHealthData",
+          "SymptomSearch"
+        ],
+        "train_rows": 89,
+        "heldout_rows": 14,
+        "train_packages": 3,
+        "heldout_packages": 2,
+        "no_heldout_refit": true,
+        "results": [
+          {
+            "baseline": "released_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.29166104054345077,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_support_size",
+            "train_distortion_ratio": 2.7894736842105265,
+            "heldout_distortion_ratio": 1.558823529411765,
+            "heldout_coefficient_of_variation": 0.19699516957880686,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.02631578947368421,
+              "skill_015": 0.014705882352941176
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_sqrt_support",
+            "train_distortion_ratio": 2.3377121081198773,
+            "heldout_distortion_ratio": 1.747545001596402,
+            "heldout_coefficient_of_variation": 0.24192914411530184,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.16222142113076254,
+              "skill_015": 0.12126781251816648
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "fractional_load_inverse",
+            "train_distortion_ratio": 2.608695652173913,
+            "heldout_distortion_ratio": 1.6756756756756759,
+            "heldout_coefficient_of_variation": 0.22571345667898285,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.04,
+              "skill_015": 0.02702702702702703
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "nnls_l2",
+            "train_distortion_ratio": 3.4159178433889603,
+            "heldout_distortion_ratio": 1.413921360255048,
+            "heldout_coefficient_of_variation": 0.15665010532141285,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.7792960662525881,
+              "skill_015": 0.32256728778467914
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "chebyshev_linf",
+            "train_distortion_ratio": 2.0000000000000004,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.2916610405434508,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.6666666666666667,
+              "skill_015": 0.6666666666666667
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "greedy_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.29166104054345077,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_min_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.29166104054345077,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "maxmin_fair",
+            "train_distortion_ratio": 2.0000000000000004,
+            "heldout_distortion_ratio": 2.0000000000000004,
+            "heldout_coefficient_of_variation": 0.29166104054345093,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.3333333333333333,
+              "skill_015": 0.33333333333333337
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_rstar",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.29166104054345077,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "semantic_first_upper_bound",
+            "train_distortion_ratio": 1.0,
+            "heldout_distortion_ratio": 1.0,
+            "heldout_coefficient_of_variation": null,
+            "zero_exposure_rows": 0,
+            "interface_changing": true
+          }
+        ]
+      },
+      {
+        "heldout_tool": "QueryHealthData",
+        "train_tools": [
+          "AppointmentRegistration",
+          "CancelRegistration",
+          "EmergencyKnowledge",
+          "ModifyRegistration",
+          "QueryRegistration",
+          "RecordHealthData",
+          "SymptomSearch"
+        ],
+        "train_rows": 98,
+        "heldout_rows": 5,
+        "train_packages": 3,
+        "heldout_packages": 2,
+        "no_heldout_refit": true,
+        "results": [
+          {
+            "baseline": "released_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.30618621784789724,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_support_size",
+            "train_distortion_ratio": 3.0555555555555554,
+            "heldout_distortion_ratio": 1.4864864864864866,
+            "heldout_coefficient_of_variation": 0.18448039903806362,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.027777777777777776,
+              "skill_015": 0.013513513513513514
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_sqrt_support",
+            "train_distortion_ratio": 2.433720877840438,
+            "heldout_distortion_ratio": 1.6974858324629158,
+            "heldout_coefficient_of_variation": 0.24088750521007943,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.16666666666666666,
+              "skill_015": 0.11624763874381928
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "fractional_load_inverse",
+            "train_distortion_ratio": 3.0512820512820515,
+            "heldout_distortion_ratio": 1.4875000000000003,
+            "heldout_coefficient_of_variation": 0.18477775622542356,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.05128205128205128,
+              "skill_015": 0.025
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "nnls_l2",
+            "train_distortion_ratio": 3.6923076923076916,
+            "heldout_distortion_ratio": 1.4083769633507854,
+            "heldout_coefficient_of_variation": 0.16068982332808068,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.7276190476190476,
+              "skill_015": 0.2971428571428572
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "chebyshev_linf",
+            "train_distortion_ratio": 2.0000000000000004,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.30618621784789724,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.6666666666666667,
+              "skill_015": 0.6666666666666667
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "greedy_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.30618621784789724,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_min_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.30618621784789724,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "maxmin_fair",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.30618621784789724,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.3333333333333333,
+              "skill_015": 0.3333333333333333
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_rstar",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.30618621784789724,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "semantic_first_upper_bound",
+            "train_distortion_ratio": 1.0,
+            "heldout_distortion_ratio": 1.0,
+            "heldout_coefficient_of_variation": null,
+            "zero_exposure_rows": 0,
+            "interface_changing": true
+          }
+        ]
+      },
+      {
+        "heldout_tool": "QueryRegistration",
+        "train_tools": [
+          "AppointmentRegistration",
+          "CancelRegistration",
+          "EmergencyKnowledge",
+          "ModifyRegistration",
+          "QueryHealthData",
+          "RecordHealthData",
+          "SymptomSearch"
+        ],
+        "train_rows": 88,
+        "heldout_rows": 15,
+        "train_packages": 3,
+        "heldout_packages": 2,
+        "no_heldout_refit": true,
+        "results": [
+          {
+            "baseline": "released_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.3061862178478973,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_support_size",
+            "train_distortion_ratio": 2.763157894736842,
+            "heldout_distortion_ratio": 2.763157894736842,
+            "heldout_coefficient_of_variation": 0.2511667391474959,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.02631578947368421,
+              "skill_015": 0.014925373134328358
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_sqrt_support",
+            "train_distortion_ratio": 2.3278395591097754,
+            "heldout_distortion_ratio": 2.3278395591097754,
+            "heldout_coefficient_of_variation": 0.2740907213355608,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.16222142113076254,
+              "skill_015": 0.12216944435630522
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "fractional_load_inverse",
+            "train_distortion_ratio": 2.5652173913043477,
+            "heldout_distortion_ratio": 2.44,
+            "heldout_coefficient_of_variation": 0.26655515425776755,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.04,
+              "skill_015": 0.027777777777777776
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "nnls_l2",
+            "train_distortion_ratio": 3.8359435173299086,
+            "heldout_distortion_ratio": 3.8359435173299086,
+            "heldout_coefficient_of_variation": 0.23310472619939523,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.805630515644373,
+              "skill_015": 0.28407847713514706
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "chebyshev_linf",
+            "train_distortion_ratio": 2.0000000000000004,
+            "heldout_distortion_ratio": 2.0000000000000004,
+            "heldout_coefficient_of_variation": 0.30618621784789735,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.6666666666666666,
+              "skill_015": 0.6666666666666667
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "greedy_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.3061862178478973,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_min_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.3061862178478973,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "maxmin_fair",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.3061862178478973,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 0.3333333333333333,
+              "skill_015": 0.3333333333333333
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_rstar",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.3061862178478973,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_003": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "semantic_first_upper_bound",
+            "train_distortion_ratio": 1.0,
+            "heldout_distortion_ratio": 1.0,
+            "heldout_coefficient_of_variation": null,
+            "zero_exposure_rows": 0,
+            "interface_changing": true
+          }
+        ]
+      },
+      {
+        "heldout_tool": "RecordHealthData",
+        "train_tools": [
+          "AppointmentRegistration",
+          "CancelRegistration",
+          "EmergencyKnowledge",
+          "ModifyRegistration",
+          "QueryHealthData",
+          "QueryRegistration",
+          "SymptomSearch"
+        ],
+        "train_rows": 84,
+        "heldout_rows": 17,
+        "train_packages": 3,
+        "heldout_packages": 2,
+        "no_heldout_refit": true,
+        "results": [
+          {
+            "baseline": "released_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.24037008503093263,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_support_size",
+            "train_distortion_ratio": 3.259259259259259,
+            "heldout_distortion_ratio": 3.259259259259259,
+            "heldout_coefficient_of_variation": 0.3091544594659225,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.037037037037037035,
+              "skill_015": 0.01639344262295082
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_sqrt_support",
+            "train_distortion_ratio": 2.5030832509409646,
+            "heldout_distortion_ratio": 2.5030832509409646,
+            "heldout_coefficient_of_variation": 0.2724682428499065,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.19245008972987526,
+              "skill_015": 0.12803687993289598
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "fractional_load_inverse",
+            "train_distortion_ratio": 3.303931451612903,
+            "heldout_distortion_ratio": 3.064516129032258,
+            "heldout_coefficient_of_variation": 0.30095687886855316,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.06451612903225806,
+              "skill_015": 0.03125
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "nnls_l2",
+            "train_distortion_ratio": 6.276828110161447,
+            "heldout_distortion_ratio": 6.098053181386519,
+            "heldout_coefficient_of_variation": 0.3756050604540087,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.8568293364191375,
+              "skill_015": 0.1680699094210126
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "chebyshev_linf",
+            "train_distortion_ratio": 2.0000000000000004,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.24037008503093255,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.6666666666666667,
+              "skill_015": 0.6666666666666667
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "greedy_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.24037008503093263,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_min_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.24037008503093263,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "maxmin_fair",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.2403700850309326,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.3333333333333333,
+              "skill_015": 0.3333333333333333
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_rstar",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.24037008503093263,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "semantic_first_upper_bound",
+            "train_distortion_ratio": 1.0,
+            "heldout_distortion_ratio": 1.0,
+            "heldout_coefficient_of_variation": null,
+            "zero_exposure_rows": 0,
+            "interface_changing": true
+          }
+        ]
+      },
+      {
+        "heldout_tool": "SymptomSearch",
+        "train_tools": [
+          "AppointmentRegistration",
+          "CancelRegistration",
+          "EmergencyKnowledge",
+          "ModifyRegistration",
+          "QueryHealthData",
+          "QueryRegistration",
+          "RecordHealthData"
+        ],
+        "train_rows": 96,
+        "heldout_rows": 6,
+        "train_packages": 3,
+        "heldout_packages": 2,
+        "no_heldout_refit": true,
+        "results": [
+          {
+            "baseline": "released_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.282842712474619,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_support_size",
+            "train_distortion_ratio": 3.0,
+            "heldout_distortion_ratio": 3.0,
+            "heldout_coefficient_of_variation": 0.30550504633038933,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.027777777777777776,
+              "skill_015": 0.013888888888888888
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "inverse_sqrt_support",
+            "train_distortion_ratio": 2.414213562373095,
+            "heldout_distortion_ratio": 2.414213562373095,
+            "heldout_coefficient_of_variation": 0.28901984392553937,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.16666666666666666,
+              "skill_015": 0.11785113019775792
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "fractional_load_inverse",
+            "train_distortion_ratio": 2.925,
+            "heldout_distortion_ratio": 2.925,
+            "heldout_coefficient_of_variation": 0.30331646281773306,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.05,
+              "skill_015": 0.025974025974025976
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "nnls_l2",
+            "train_distortion_ratio": 4.3264957264957316,
+            "heldout_distortion_ratio": 4.1106837606837665,
+            "heldout_coefficient_of_variation": 0.33412168836515616,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.7777540335505932,
+              "skill_015": 0.2500267122555825
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "chebyshev_linf",
+            "train_distortion_ratio": 2.0000000000000004,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.28284271247461895,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.6666666666666667,
+              "skill_015": 0.6666666666666667
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "greedy_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.282842712474619,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_min_cover_uniform",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.282842712474619,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "maxmin_fair",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.28284271247461895,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 0.3333333333333333,
+              "skill_015": 0.3333333333333333
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "exact_rstar",
+            "train_distortion_ratio": 2.0,
+            "heldout_distortion_ratio": 2.0,
+            "heldout_coefficient_of_variation": 0.282842712474619,
+            "zero_exposure_rows": 0,
+            "weights_frozen_from_train": {
+              "skill_004": 1.0,
+              "skill_015": 1.0
+            },
+            "interface_changing": false
+          },
+          {
+            "baseline": "semantic_first_upper_bound",
+            "train_distortion_ratio": 1.0,
+            "heldout_distortion_ratio": 1.0,
+            "heldout_coefficient_of_variation": null,
+            "zero_exposure_rows": 0,
+            "interface_changing": true
+          }
+        ]
+      }
+    ],
+    "aggregate": [
+      {
+        "baseline": "chebyshev_linf",
+        "folds": 8,
+        "finite_folds": 8,
+        "zero_exposure_folds": 0,
+        "heldout_ratio_median": 2.0,
+        "heldout_ratio_mean": 2.0,
+        "heldout_ratio_max": 2.0000000000000004,
+        "heldout_ratio_min": 2.0
+      },
+      {
+        "baseline": "exact_min_cover_uniform",
+        "folds": 8,
+        "finite_folds": 8,
+        "zero_exposure_folds": 0,
+        "heldout_ratio_median": 2.0,
+        "heldout_ratio_mean": 2.0,
+        "heldout_ratio_max": 2.0,
+        "heldout_ratio_min": 2.0
+      },
+      {
+        "baseline": "exact_rstar",
+        "folds": 8,
+        "finite_folds": 8,
+        "zero_exposure_folds": 0,
+        "heldout_ratio_median": 2.0,
+        "heldout_ratio_mean": 2.0,
+        "heldout_ratio_max": 2.0,
+        "heldout_ratio_min": 2.0
+      },
+      {
+        "baseline": "fractional_load_inverse",
+        "folds": 8,
+        "finite_folds": 8,
+        "zero_exposure_folds": 0,
+        "heldout_ratio_median": 2.086666666666667,
+        "heldout_ratio_mean": 2.2937695515215677,
+        "heldout_ratio_max": 3.321428571428571,
+        "heldout_ratio_min": 1.4875000000000003
+      },
+      {
+        "baseline": "greedy_cover_uniform",
+        "folds": 8,
+        "finite_folds": 8,
+        "zero_exposure_folds": 0,
+        "heldout_ratio_median": 2.0,
+        "heldout_ratio_mean": 2.0,
+        "heldout_ratio_max": 2.0,
+        "heldout_ratio_min": 2.0
+      },
+      {
+        "baseline": "inverse_sqrt_support",
+        "folds": 8,
+        "finite_folds": 8,
+        "zero_exposure_folds": 0,
+        "heldout_ratio_median": 2.049342566423647,
+        "heldout_ratio_mean": 2.0999336070938703,
+        "heldout_ratio_max": 2.581138830084189,
+        "heldout_ratio_min": 1.6974858324629158
+      },
+      {
+        "baseline": "inverse_support_size",
+        "folds": 8,
+        "finite_folds": 8,
+        "zero_exposure_folds": 0,
+        "heldout_ratio_median": 2.1786803966437835,
+        "heldout_ratio_mean": 2.341932435026223,
+        "heldout_ratio_max": 3.5,
+        "heldout_ratio_min": 1.4864864864864866
+      },
+      {
+        "baseline": "maxmin_fair",
+        "folds": 8,
+        "finite_folds": 8,
+        "zero_exposure_folds": 0,
+        "heldout_ratio_median": 2.0,
+        "heldout_ratio_mean": 2.0,
+        "heldout_ratio_max": 2.0000000000000004,
+        "heldout_ratio_min": 2.0
+      },
+      {
+        "baseline": "nnls_l2",
+        "folds": 8,
+        "finite_folds": 8,
+        "zero_exposure_folds": 0,
+        "heldout_ratio_median": 2.624932438792478,
+        "heldout_ratio_mean": 2.9713049182305857,
+        "heldout_ratio_max": 6.098053181386519,
+        "heldout_ratio_min": 1.383177570093458
+      },
+      {
+        "baseline": "released_uniform",
+        "folds": 8,
+        "finite_folds": 8,
+        "zero_exposure_folds": 0,
+        "heldout_ratio_median": 2.0,
+        "heldout_ratio_mean": 2.0,
+        "heldout_ratio_max": 2.0,
+        "heldout_ratio_min": 2.0
+      },
+      {
+        "baseline": "semantic_first_upper_bound",
+        "folds": 8,
+        "finite_folds": 8,
+        "zero_exposure_folds": 0,
+        "heldout_ratio_median": 1.0,
+        "heldout_ratio_mean": 1.0,
+        "heldout_ratio_max": 1.0,
+        "heldout_ratio_min": 1.0
+      }
+    ],
+    "selection_reads_outcomes": false,
+    "no_heldout_refit": true
+  },
+  "sparsity_frontiers": {
+    "skillsp_l1_full": {
+      "covered_rows": 314,
+      "packages": 6,
+      "skills": [
+        "skill_001",
+        "skill_002",
+        "skill_003",
+        "skill_004",
+        "skill_005",
+        "skill_015"
+      ],
+      "frontier": [
+        {
+          "active_package_budget": 1,
+          "feasible": false,
+          "best_R_star": null,
+          "best_subset": [],
+          "active_packages": 0,
+          "enumerated_subsets": 6,
+          "feasible_subsets": 0
+        },
+        {
+          "active_package_budget": 2,
+          "feasible": false,
+          "best_R_star": null,
+          "best_subset": [],
+          "active_packages": 0,
+          "enumerated_subsets": 21,
+          "feasible_subsets": 0
+        },
+        {
+          "active_package_budget": 3,
+          "feasible": true,
+          "best_R_star": 2.0,
+          "best_subset": [
+            "skill_003",
+            "skill_004",
+            "skill_015"
+          ],
+          "active_packages": 3,
+          "enumerated_subsets": 41,
+          "feasible_subsets": 1,
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.34117058616607215,
+            "best_scale_rmse": 0.32289563900147333,
+            "best_scale_max_abs_error": 0.4611005692599621,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "active_package_budget": 4,
+          "feasible": true,
+          "best_R_star": 2.0,
+          "best_subset": [
+            "skill_003",
+            "skill_004",
+            "skill_015"
+          ],
+          "active_packages": 3,
+          "enumerated_subsets": 56,
+          "feasible_subsets": 4,
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.34117058616607215,
+            "best_scale_rmse": 0.32289563900147333,
+            "best_scale_max_abs_error": 0.4611005692599621,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "active_package_budget": 5,
+          "feasible": true,
+          "best_R_star": 2.0,
+          "best_subset": [
+            "skill_003",
+            "skill_004",
+            "skill_015"
+          ],
+          "active_packages": 3,
+          "enumerated_subsets": 62,
+          "feasible_subsets": 7,
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.34117058616607215,
+            "best_scale_rmse": 0.32289563900147333,
+            "best_scale_max_abs_error": 0.4611005692599621,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        },
+        {
+          "active_package_budget": 6,
+          "feasible": true,
+          "best_R_star": 2.0,
+          "best_subset": [
+            "skill_003",
+            "skill_004",
+            "skill_015"
+          ],
+          "active_packages": 3,
+          "enumerated_subsets": 63,
+          "feasible_subsets": 8,
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.34117058616607215,
+            "best_scale_rmse": 0.32289563900147333,
+            "best_scale_max_abs_error": 0.4611005692599621,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        }
+      ],
+      "minimum_feasible_active_packages": 3,
+      "unrestricted_R_star": 2.0,
+      "minimum_active_packages_attaining_unrestricted_R_star": 3
+    },
+    "skillsp_l1_calibration": {
+      "covered_rows": 47,
+      "packages": 3,
+      "skills": [
+        "skill_003",
+        "skill_004",
+        "skill_015"
+      ],
+      "frontier": [
+        {
+          "active_package_budget": 1,
+          "feasible": false,
+          "best_R_star": null,
+          "best_subset": [],
+          "active_packages": 0,
+          "enumerated_subsets": 3,
+          "feasible_subsets": 0
+        },
+        {
+          "active_package_budget": 2,
+          "feasible": false,
+          "best_R_star": null,
+          "best_subset": [],
+          "active_packages": 0,
+          "enumerated_subsets": 6,
+          "feasible_subsets": 0
+        },
+        {
+          "active_package_budget": 3,
+          "feasible": true,
+          "best_R_star": 2.0,
+          "best_subset": [
+            "skill_003",
+            "skill_004",
+            "skill_015"
+          ],
+          "active_packages": 3,
+          "enumerated_subsets": 7,
+          "feasible_subsets": 1,
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.26867731575255843,
+            "best_scale_rmse": 0.2594750658969167,
+            "best_scale_max_abs_error": 0.452054794520548,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        }
+      ],
+      "minimum_feasible_active_packages": 3,
+      "unrestricted_R_star": 2.0,
+      "minimum_active_packages_attaining_unrestricted_R_star": 3
+    },
+    "skillsp_l1_heldout": {
+      "covered_rows": 52,
+      "packages": 3,
+      "skills": [
+        "skill_003",
+        "skill_004",
+        "skill_015"
+      ],
+      "frontier": [
+        {
+          "active_package_budget": 1,
+          "feasible": false,
+          "best_R_star": null,
+          "best_subset": [],
+          "active_packages": 0,
+          "enumerated_subsets": 3,
+          "feasible_subsets": 0
+        },
+        {
+          "active_package_budget": 2,
+          "feasible": false,
+          "best_R_star": null,
+          "best_subset": [],
+          "active_packages": 0,
+          "enumerated_subsets": 6,
+          "feasible_subsets": 0
+        },
+        {
+          "active_package_budget": 3,
+          "feasible": true,
+          "best_R_star": 2.0,
+          "best_subset": [
+            "skill_003",
+            "skill_004",
+            "skill_015"
+          ],
+          "active_packages": 3,
+          "enumerated_subsets": 7,
+          "feasible_subsets": 1,
+          "metrics": {
+            "distortion_ratio": 2.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 2.0,
+            "coefficient_of_variation": 0.2562791687704621,
+            "best_scale_rmse": 0.24825619819934597,
+            "best_scale_max_abs_error": 0.45783132530120485,
+            "active_packages": 3,
+            "max_package_share": 0.3333333333333333,
+            "effective_package_count": 3.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_003": 1.0,
+            "skill_004": 1.0,
+            "skill_015": 1.0
+          }
+        }
+      ],
+      "minimum_feasible_active_packages": 3,
+      "unrestricted_R_star": 2.0,
+      "minimum_active_packages_attaining_unrestricted_R_star": 3
+    },
+    "skillsp_l3": {
+      "covered_rows": 34,
+      "packages": 4,
+      "skills": [
+        "skill_006",
+        "skill_008",
+        "skill_009",
+        "skill_010"
+      ],
+      "frontier": [
+        {
+          "active_package_budget": 1,
+          "feasible": false,
+          "best_R_star": null,
+          "best_subset": [],
+          "active_packages": 0,
+          "enumerated_subsets": 4,
+          "feasible_subsets": 0
+        },
+        {
+          "active_package_budget": 2,
+          "feasible": false,
+          "best_R_star": null,
+          "best_subset": [],
+          "active_packages": 0,
+          "enumerated_subsets": 10,
+          "feasible_subsets": 0
+        },
+        {
+          "active_package_budget": 3,
+          "feasible": false,
+          "best_R_star": null,
+          "best_subset": [],
+          "active_packages": 0,
+          "enumerated_subsets": 14,
+          "feasible_subsets": 0
+        },
+        {
+          "active_package_budget": 4,
+          "feasible": true,
+          "best_R_star": 1.0,
+          "best_subset": [
+            "skill_006",
+            "skill_008",
+            "skill_009",
+            "skill_010"
+          ],
+          "active_packages": 4,
+          "enumerated_subsets": 15,
+          "feasible_subsets": 1,
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 4,
+            "max_package_share": 0.25,
+            "effective_package_count": 4.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_006": 1.0,
+            "skill_008": 1.0,
+            "skill_009": 1.0,
+            "skill_010": 1.0
+          }
+        }
+      ],
+      "minimum_feasible_active_packages": 4,
+      "unrestricted_R_star": 1.0,
+      "minimum_active_packages_attaining_unrestricted_R_star": 4
+    },
+    "logical_compiler": {
+      "covered_rows": 128,
+      "packages": 8,
+      "skills": [
+        "skill_001",
+        "skill_002",
+        "skill_003",
+        "skill_004",
+        "skill_005",
+        "skill_006",
+        "skill_007",
+        "skill_008"
+      ],
+      "frontier": [
+        {
+          "active_package_budget": 1,
+          "feasible": true,
+          "best_R_star": 1.0,
+          "best_subset": [
+            "skill_008"
+          ],
+          "active_packages": 1,
+          "enumerated_subsets": 8,
+          "feasible_subsets": 1,
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_008": 1.0
+          }
+        },
+        {
+          "active_package_budget": 2,
+          "feasible": true,
+          "best_R_star": 1.0,
+          "best_subset": [
+            "skill_008"
+          ],
+          "active_packages": 1,
+          "enumerated_subsets": 36,
+          "feasible_subsets": 8,
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_008": 1.0
+          }
+        },
+        {
+          "active_package_budget": 3,
+          "feasible": true,
+          "best_R_star": 1.0,
+          "best_subset": [
+            "skill_008"
+          ],
+          "active_packages": 1,
+          "enumerated_subsets": 92,
+          "feasible_subsets": 29,
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_008": 1.0
+          }
+        },
+        {
+          "active_package_budget": 4,
+          "feasible": true,
+          "best_R_star": 1.0,
+          "best_subset": [
+            "skill_008"
+          ],
+          "active_packages": 1,
+          "enumerated_subsets": 162,
+          "feasible_subsets": 64,
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_008": 1.0
+          }
+        },
+        {
+          "active_package_budget": 5,
+          "feasible": true,
+          "best_R_star": 1.0,
+          "best_subset": [
+            "skill_008"
+          ],
+          "active_packages": 1,
+          "enumerated_subsets": 218,
+          "feasible_subsets": 99,
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_008": 1.0
+          }
+        },
+        {
+          "active_package_budget": 6,
+          "feasible": true,
+          "best_R_star": 1.0,
+          "best_subset": [
+            "skill_008"
+          ],
+          "active_packages": 1,
+          "enumerated_subsets": 246,
+          "feasible_subsets": 120,
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_008": 1.0
+          }
+        },
+        {
+          "active_package_budget": 7,
+          "feasible": true,
+          "best_R_star": 1.0,
+          "best_subset": [
+            "skill_008"
+          ],
+          "active_packages": 1,
+          "enumerated_subsets": 254,
+          "feasible_subsets": 127,
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_008": 1.0
+          }
+        },
+        {
+          "active_package_budget": 8,
+          "feasible": true,
+          "best_R_star": 1.0,
+          "best_subset": [
+            "skill_008"
+          ],
+          "active_packages": 1,
+          "enumerated_subsets": 255,
+          "feasible_subsets": 128,
+          "metrics": {
+            "distortion_ratio": 1.0,
+            "minimum_relative_exposure": 1.0,
+            "maximum_relative_exposure": 1.0,
+            "coefficient_of_variation": 0.0,
+            "best_scale_rmse": 0.0,
+            "best_scale_max_abs_error": 0.0,
+            "active_packages": 1,
+            "max_package_share": 1.0,
+            "effective_package_count": 1.0,
+            "zero_exposure_rows": 0
+          },
+          "weights": {
+            "skill_008": 1.0
+          }
+        }
+      ],
+      "minimum_feasible_active_packages": 1,
+      "unrestricted_R_star": 1.0,
+      "minimum_active_packages_attaining_unrestricted_R_star": 1
+    }
+  },
+  "headline": {
+    "leave_one_tool_out_folds": 8,
+    "exact_rstar_heldout_ratio_median": 2.0,
+    "exact_rstar_heldout_ratio_max": 2.0,
+    "uniform_heldout_ratio_median": 2.0,
+    "uniform_heldout_ratio_max": 2.0,
+    "nnls_heldout_ratio_median": 2.624932438792478,
+    "nnls_heldout_ratio_max": 6.098053181386519,
+    "l1_minimum_feasible_active_packages": 3,
+    "l1_minimum_active_packages_attaining_unrestricted_R_star": 3,
+    "l1_unrestricted_R_star": 2.0
+  },
+  "scientific_boundary": "All folds and sparsity subsets are determined from frozen released support before evaluating heldout distortion. Leave-one-tool-out freezes weights without heldout refitting. Sparsity frontiers enumerate exact package subsets and optimize only the neutral support objective; neither experiment claims task utility or a learned deployment policy."
+}

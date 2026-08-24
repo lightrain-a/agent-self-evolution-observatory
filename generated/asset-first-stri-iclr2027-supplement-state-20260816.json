@@ -4,18 +4,18 @@
   "stage": "ICLR2027_ANONYMOUS_SUPPLEMENT_READY",
   "status": "PASS",
   "package": {
-    "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth-supplement.zip",
-    "sha256": "cdd6272374d7acc37b3620c516fdc1800806ff26233797723fefdbf55a17c5c4",
-    "manifest_sha256": "07cc0b11420c2a7e518fdb23c493da0989203dd419801af54afcff4fbff22e25",
-    "package_metadata_sha256": "f5b50473426063a7b5f258ecd981d2192c8e5ca116dfb9fece90298792e9e7bf"
+    "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/E1-STRI-R17-crossval-sparsity-supplement.zip",
+    "sha256": "646fa2d8dd3c20fd9c34d2b76e4a26a56ed4a28066fa44b5929ca42ff5592ab9",
+    "manifest_sha256": "cca7c48fa58fbf1800ed6ce02cc4333a56149ff204095f83e44b0153f1500b45",
+    "package_metadata_sha256": "c98ee4d7b61e9d8dafbb317a3b6a2e048d8d0091bb9cc9ad6d321767b6ac878e"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
     "reproduce_py": "PASS",
-    "unit_tests": "29/29 PASS",
+    "unit_tests": "31/31 PASS",
     "binary_identity_path_scan": "PASS",
     "text_identity_path_scan": "PASS",
-    "figure_regeneration": "R16_BOUNDARY_FIGURE_REGENERATED_AND_SOURCE_BOUND",
+    "figure_regeneration": "R17_BOUNDARY_FIGURE_REGENERATED_AND_SOURCE_BOUND",
     "paper_quality_v2_reproduction": "PASS_MANUSCRIPT_EVIDENCE"
   },
   "reproduced_results": {
@@ -237,6 +237,10 @@
       "practical_level1_inverse_support_R": 98.33333333333334,
       "practical_level1_nnls_R": 5.5095579354215305,
       "calibration_to_heldout_exact_R": 2.0,
+      "leave_one_tool_out_exact_R_max": 2.0,
+      "leave_one_tool_out_nnls_R_max": 6.098053181386519,
+      "l1_minimum_feasible_active_packages": 3,
+      "l1_minimum_active_packages_attaining_unrestricted_R_star": 3,
       "skillrl_top_k_6_targets_changed": 11,
       "skillrl_top_k_13_semantic_changes": 0,
       "skillrouter_core_uniform_R": 7.0,

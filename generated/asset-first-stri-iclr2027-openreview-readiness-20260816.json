@@ -14,11 +14,11 @@
     "resolved_citations": 20,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "paper_pdf_sha256": "227c0e47bbb4cddd26bb5823f39d56b9978e2a134185a71ba1b3eb66338721c9",
-    "paper_source_zip_sha256": "4ec82b977f391840fe5e5a7a88d14e94d79c3d8841d1955017da161a1ad24aae",
-    "anonymous_supplement_zip_sha256": "cdd6272374d7acc37b3620c516fdc1800806ff26233797723fefdbf55a17c5c4",
+    "paper_pdf_sha256": "0da435717e4871f282c10d1c728292d0dd04e70f87a44dffddfcc190ebdaa553",
+    "paper_source_zip_sha256": "da58aa688e29cf8bc9c5d0914cafa8e47c5bd255d59e06572368705571a960a0",
+    "anonymous_supplement_zip_sha256": "646fa2d8dd3c20fd9c34d2b76e4a26a56ed4a28066fa44b5929ca42ff5592ab9",
     "supplement_reproduction": "PASS",
-    "supplement_unit_tests": "29/29 PASS",
+    "supplement_unit_tests": "31/31 PASS",
     "final_independent_review": "READY_TO_SUBMIT",
     "new_gpu_evidence_required_for_current_claim_scope": false,
     "paper_quality_v2": "PASS_MANUSCRIPT_EVIDENCE",
@@ -50,12 +50,16 @@
     "claim_expansion_for_r15": false,
     "new_model_calls_for_r15": 0,
     "new_gpu_runs_for_r15": 0,
-    "paper_quality_content_addressed_files": 55,
-    "experimental_breadth": "10 package-weight baselines; no-refit heldout transfer; SkillRL 8-budget sweep x 12 clones x 223 tasks; SkillRouter 75-query relevance analogue; SkillsBench support qualification STOP",
+    "paper_quality_content_addressed_files": 59,
+    "experimental_breadth": "10 package-weight baselines; 4-to-4 no-refit transfer; 8-fold leave-one-tool-out exact R max=2 and NNLS worst=6.10; Level-1 exact sparsity frontier reaches unrestricted R*=2 at 3 active packages; SkillRL 8-budget sweep x 12 clones x 223 tasks; SkillRouter 75-query relevance analogue; SkillsBench support qualification STOP",
     "r16_canonical_reconciliation": true,
     "claim_expansion_for_r16": false,
     "new_model_calls_for_r16": 0,
-    "new_gpu_runs_for_r16": 0
+    "new_gpu_runs_for_r16": 0,
+    "r17_canonical_reconciliation": true,
+    "claim_expansion_for_r17": false,
+    "new_model_calls_for_r17": 0,
+    "new_gpu_runs_for_r17": 0
   },
   "human_signoff_required": [
     {
@@ -92,9 +96,9 @@
     }
   ],
   "submission_files": {
-    "pdf": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth.pdf",
-    "source_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth-source.zip",
-    "supplement_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r16-experiment-breadth-20260824/E1-STRI-R16-experiment-breadth-supplement.zip"
+    "pdf": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/E1-STRI-R17-crossval-sparsity.pdf",
+    "source_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/E1-STRI-R17-crossval-sparsity-source.zip",
+    "supplement_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/E1-STRI-R17-crossval-sparsity-supplement.zip"
   },
   "next_action": "Human-author signoff only. Do not reopen dynamic P0, launch GPU experiments, broaden N1-N3, or restart idea search for this paper unless new independently qualified evidence or a direct collision invalidates the current narrow submission.",
   "scientific_authority": false

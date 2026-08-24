@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "analysis": "Rsurf post-review power/MDE planning sensitivity",
+  "margin": [
+    -0.1,
+    0.1
+  ],
+  "margin_provenance": "The +/-10pp materiality threshold was frozen before Rsurf outcomes and was not selected from Rsurf variance or optimized to pass equivalence. The pre-outcome contract does not record a variance-based power rationale. A later scale note observes that already-known targeted contrasts were 20--60pp, but that note is contextual and is not retroactively treated as preregistered justification.",
+  "planning": {
+    "portfolio": {
+      "n": 18,
+      "mean": 0.0,
+      "observed_sd": 0.17149858514250885,
+      "power_at_current_n_if_true_mean_zero": 0.5328,
+      "zero_variance_caveat": false,
+      "estimated_n_for_80pct_power_same_sd": 27,
+      "simulated_power_n27": 0.80716
+    },
+    "C3_grounding": {
+      "n": 5,
+      "mean": 0.0,
+      "observed_sd": 0.0,
+      "power_at_current_n_if_true_mean_zero": null,
+      "zero_variance_caveat": true
+    },
+    "C4_grounding": {
+      "n": 5,
+      "mean": 0.0,
+      "observed_sd": 0.3535533905932738,
+      "power_at_current_n_if_true_mean_zero": 0.0013333333333333333,
+      "zero_variance_caveat": false,
+      "illustrative_power_n100_same_observed_sd": 0.75195,
+      "estimated_n_for_80pct_power_same_sd": 110,
+      "simulated_power_n110": 0.8065333333333333
+    },
+    "EIA_cutoff": {
+      "n": 8,
+      "mean": 0.0,
+      "observed_sd": 0.0,
+      "power_at_current_n_if_true_mean_zero": null,
+      "zero_variance_caveat": true
+    }
+  },
+  "interpretation": "At the pooled observed SD, n=18 has about 53% equivalence-detection sensitivity if the true mean is zero; about 27 independent endpoints would reach roughly 80% under the same variance. Family-specific observed SDs are unstable: C3/EIA are all ties/ceiling and cannot justify optimistic zero-variance planning; C4 has only five endpoints and large observed SD, with roughly 110 independent endpoints needed for about 80% sensitivity if that observed variance persisted. This is post-review future-design planning, not retroactive validation.",
+  "new_model_calls": 0,
+  "new_provider_calls": 0
+}

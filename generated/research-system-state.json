@@ -6542,7 +6542,7 @@
     "asset_first_stri_paper_quality_v2_passed": 1,
     "asset_first_stri_paper_quality_source_binding": 1,
     "asset_first_stri_paper_quality_content_addressed_completion": 1,
-    "asset_first_stri_paper_quality_content_addressed_files": 55,
+    "asset_first_stri_paper_quality_content_addressed_files": 59,
     "asset_first_stri_paper_quality_evidence_debt": 0,
     "asset_first_stri_main_visualizations": 4,
     "asset_first_stri_canonical_problem_gate_added": 0,
@@ -41416,14 +41416,14 @@
       "main_text_pages": 9,
       "main_text_page_limit": 9,
       "supplement_ready": 1,
-      "supplement_unit_tests": "29/29 PASS",
+      "supplement_unit_tests": "31/31 PASS",
       "human_signoff_pending": 1,
       "new_gpu_evidence_required": 0,
       "final_review_confidence": 0.92,
       "paper_quality_v2_passed": 1,
       "paper_quality_source_binding": 1,
       "paper_quality_content_addressed_completion": 1,
-      "paper_quality_content_addressed_files": 55,
+      "paper_quality_content_addressed_files": 59,
       "paper_quality_evidence_debt": 0,
       "paper_quality_missing_ids": [],
       "paper_quality_visualizations": 4,
@@ -41485,9 +41485,9 @@
       "title_freezes_at_full_paper_deadline": true,
       "deadline_source_verified_on": "2026-08-20",
       "deadline_human_action": "Use the aligned ICLR 2027 author-facing deadlines: genuine abstract and frozen author membership by 2026-09-18 AoE; full paper and anonymous supplement by 2026-09-25 AoE.",
-      "pdf_sha256": "227c0e47bbb4cddd26bb5823f39d56b9978e2a134185a71ba1b3eb66338721c9",
-      "source_zip_sha256": "4ec82b977f391840fe5e5a7a88d14e94d79c3d8841d1955017da161a1ad24aae",
-      "supplement_zip_sha256": "cdd6272374d7acc37b3620c516fdc1800806ff26233797723fefdbf55a17c5c4",
+      "pdf_sha256": "0da435717e4871f282c10d1c728292d0dd04e70f87a44dffddfcc190ebdaa553",
+      "source_zip_sha256": "da58aa688e29cf8bc9c5d0914cafa8e47c5bd255d59e06572368705571a960a0",
+      "supplement_zip_sha256": "646fa2d8dd3c20fd9c34d2b76e4a26a56ed4a28066fa44b5929ca42ff5592ab9",
       "downloads": {
         "tex": "downloads/STRI-ICLR2027.tex",
         "pdf": "downloads/STRI-ICLR2027.pdf",
@@ -41495,8 +41495,8 @@
       },
       "download_sha256": {
         "tex": "4875a301f0af5ccef90a961d824db0f52d01e3f10ea4f83188a56dd60b875502",
-        "pdf": "227c0e47bbb4cddd26bb5823f39d56b9978e2a134185a71ba1b3eb66338721c9",
-        "source_zip": "4ec82b977f391840fe5e5a7a88d14e94d79c3d8841d1955017da161a1ad24aae"
+        "pdf": "0da435717e4871f282c10d1c728292d0dd04e70f87a44dffddfcc190ebdaa553",
+        "source_zip": "da58aa688e29cf8bc9c5d0914cafa8e47c5bd255d59e06572368705571a960a0"
       },
       "human_action": "author-list/profile/quota/dual-submission/ethics/AI-use signoff and OpenReview upload only"
     },
@@ -41600,7 +41600,7 @@
       },
       "paper_quality_v2": {
         "path": "generated/asset-first-stri-paper-quality-v2-20260816.json",
-        "sha256": "e4ae3f5afa430f202199b8f4a08205b4db6a3be1dc8fddf8e85e000c3e647f40",
+        "sha256": "232db1369118e29dc96ced800437f0a6055920d51a91a7a35222a717e0aa0436",
         "present": true
       },
       "current_source_review": {
@@ -41610,22 +41610,22 @@
       },
       "official_final_state": {
         "path": "generated/asset-first-stri-iclr2027-final-state-20260816.json",
-        "sha256": "0916a51c2a79cb3a3035a1b7a07d1f7680a4eded86c0e480aade54a59c809e7b",
+        "sha256": "59be843ddec56a3d267b5abb835acdd281b0a88815b8d2618bcd92527be708a9",
         "present": true
       },
       "official_submission_qa": {
         "path": "generated/asset-first-stri-iclr2027-submission-qa-20260816.json",
-        "sha256": "fb8c5e97ab515986524397abdccd6c9d5dedf71a1368a331cf7f53f7dccd7d6c",
+        "sha256": "5b13ec7932f780bd3849c85124007512aa8361989e75f389d3011360d645b6c4",
         "present": true
       },
       "supplement_state": {
         "path": "generated/asset-first-stri-iclr2027-supplement-state-20260816.json",
-        "sha256": "3c6009d6464f2f3351996f3dd9dd6759b8aebd867f2babd84d2bb07c7eb8de7b",
+        "sha256": "15c978e8172ece561a0fa862b7cdfd147689b8655e88a15d9fa5b9b2a76303ba",
         "present": true
       },
       "openreview_readiness": {
         "path": "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json",
-        "sha256": "8b15cf73ae87aa876ccc54d268bf78d0caee60153e2402b437aa53e333c615a9",
+        "sha256": "c8ce70103521a64cf15bf8a7484808299ca835f32a0ef8cc7dd14696ff373810",
         "present": true
       },
       "skillrl_p0e_principle_disposition": {
@@ -54729,7 +54729,7 @@
             "Reopen temporal-retrieval equivalence only with an independently implemented retriever/reranker receiving the same raw candidate evidence."
           ],
           "summary": {
-            "events": 116,
+            "events": 123,
             "allowed_transitions": 24,
             "blocked_transitions": 0,
             "story_search_receipts": 3,
@@ -54769,10 +54769,10 @@
           },
           "latest_claim_audit": {
             "pass": true,
-            "claim_audit_sha256": "ea1a875bd82e70ae49feea7b676920c7c95a3d6ee978370af2e4998a3daa2e23",
+            "claim_audit_sha256": "6d955f687b0b8efaa6c68dc17110c1812dcb6b9a3d155d284310235d8cd9420b",
             "blockers": [],
-            "checks": 13,
-            "passed": 13
+            "checks": 15,
+            "passed": 15
           },
           "latest_manuscript_ci": {
             "pass": true,
@@ -54783,14 +54783,14 @@
           },
           "latest_prebuttal": {
             "pass": true,
-            "decision_critical": 4,
+            "decision_critical": 7,
             "blockers": [],
             "unresolved_decision_critical": 0
           },
           "latest_paper_preparation": {
             "pass": true,
-            "protocol_version": "1.0+r14-intervention-audit",
-            "receipt_sha256": "415430e9ade74febc868de01e340982b72030d98d52d85514a4d0d51217c16c3",
+            "protocol_version": "1.0+r15-stanford-accept-targeted-repair",
+            "receipt_sha256": "d3bab13863fd00596927fa9c164072bcda5e4b8791544bbb0ec6a4d01b2f97db",
             "required_gates": 8,
             "passed_gates": 8,
             "gate_pass": {
@@ -54818,7 +54818,7 @@
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "cd4686cdb926f23421f97830fe15c1df71ba421d721c6df9b46410d4ca983921",
+            "receipt_sha256": "41ffc2a954efc541662737e691e5dc235b2081612ba2cc1299f59985164f248a",
             "blockers": []
           },
           "source_native_evidence": {
@@ -54827,7 +54827,7 @@
             "institutional_systems": 3,
             "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED",
             "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION",
-            "finalization_sha256": "d7cea3b17b4c89ea65e292de1a8730dcaa0f08c93f7fc43121e0f10083bbabfc"
+            "finalization_sha256": "0759a99bd5ccd4cbe45ae2cf50ad0a227fcc6b362f1059c3f0373fa91a414237"
           },
           "latest_transition": {
             "from": "PREBUTTAL",
@@ -54901,7 +54901,7 @@
           ],
           "reopen_conditions": [],
           "summary": {
-            "events": 54,
+            "events": 58,
             "allowed_transitions": 8,
             "blocked_transitions": 0,
             "story_search_receipts": 1,
@@ -54970,8 +54970,8 @@
           },
           "latest_paper_preparation": {
             "pass": true,
-            "protocol_version": "1.0+r16-experiment-breadth",
-            "receipt_sha256": "bca4e14deea39060ffce0ceafa994b0267f9ac9cb020e52f6e89bdf000bd5fcd",
+            "protocol_version": "1.0+r17-crossval-sparsity",
+            "receipt_sha256": "8d9df2b0e5e44264c51a21cc0d8f2280f5dc0a97ca8f7b768b005efc46780a43",
             "required_gates": 8,
             "passed_gates": 8,
             "gate_pass": {
@@ -55007,7 +55007,7 @@
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "7edd5ded5fe454556259ccdf94084fcb80ff8503a94a90ea995f2350905f8f2a",
+            "receipt_sha256": "fd799d29d5ba7275add6455d7c0713a33006115aa51a1390f6c0b200d4966a09",
             "blockers": []
           },
           "latest_transition": {

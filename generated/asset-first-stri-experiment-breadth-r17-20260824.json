@@ -1,0 +1,150 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "paper_label": "E1.STRI",
+  "revision": "R17",
+  "stage": "CROSSVALIDATION_AND_CONTROLLER_SPARSITY_BREADTH",
+  "analysis_date": "2026-08-24",
+  "branch": "paper/e1-stri-cv-sparsity-20260824",
+  "base_head": "849bec25b37d09237683067bc7a098e442d9db4e",
+  "purpose": "Address experiment-breadth reviewer attacks that the R16 support result could be an artifact of one calibration/heldout split or of allowing an unrestricted number of active package arms, without expanding the scientific claim or running new model/GPU experiments.",
+  "baseline_paper_design_reference": [
+    {
+      "paper": "SkillsBench: A Benchmark for Skills and Agents",
+      "arxiv": "2602.12670",
+      "lesson_used": "broad controlled skill evaluation across domains/configurations rather than one aggregate result"
+    },
+    {
+      "paper": "Skill Availability and Presentation Granularity in Large-Language-Model Agents: A Controlled SkillsBench Study",
+      "arxiv": "2605.31408",
+      "lesson_used": "explicit skill-presentation conditions and controlled comparison structure"
+    },
+    {
+      "paper": "Demystifying Agent Skills: Why They Work—Until They Don't",
+      "arxiv": "2608.14036",
+      "lesson_used": "separate representation, retrieval, transfer, and failure-boundary experiments"
+    },
+    {
+      "paper": "SkillRL: Evolving Agents via Recursive Skill-Augmented Reinforcement Learning",
+      "arxiv": "2602.08234",
+      "lesson_used": "multiple environments and retrieval/evolution controls"
+    },
+    {
+      "paper": "SkillRouter: Retrieve-and-Rerank Skill Selection for LLM Agents at Scale",
+      "arxiv": "2603.22455",
+      "lesson_used": "large-pool retrieval controls and expert relevance stratification"
+    }
+  ],
+  "r16_breadth_context": {
+    "support_or_relevance_regimes": 5,
+    "package_weight_baselines": 10,
+    "skillrl_tasks": 223,
+    "skillrl_clone_targets": 12,
+    "skillrl_top_k_values": [1, 2, 3, 4, 6, 8, 12, 13],
+    "skillrl_controls": 4,
+    "skillrl_deterministic_retrieval_comparisons": 85632,
+    "skillrouter_expert_queries": 75,
+    "skillsbench_qualification_tasks": 87,
+    "skillsbench_exact_support_decision": "STOP_AS_EXACT_SUPPORT_SUBSTRATE"
+  },
+  "new_experiments": {
+    "eight_fold_leave_one_tool_out_no_refit": {
+      "artifact": "generated/asset-first-stri-crossval-sparsity-20260824.json",
+      "csv": "generated/asset-first-stri-crossval-sparsity-20260824.csv",
+      "folds": 8,
+      "selection_reads_outcomes": false,
+      "no_heldout_refit": true,
+      "headline": {
+        "exact_rstar_heldout_ratio_median": 2.0,
+        "exact_rstar_heldout_ratio_max": 2.0,
+        "uniform_heldout_ratio_median": 2.0,
+        "uniform_heldout_ratio_max": 2.0,
+        "nnls_heldout_ratio_median": 2.624932438792478,
+        "nnls_heldout_ratio_max": 6.098053181386519,
+        "inverse_support_heldout_ratio_max": 3.5,
+        "inverse_sqrt_support_heldout_ratio_max": 2.581138830084189
+      },
+      "interpretation": "The Level-1 residual is not a coincidence of the single frozen 4-tool to 4-tool split. Exact-R*, released uniform, exact min-cover, max-min, and Chebyshev controllers remain at worst-case heldout ratio 2 on every leave-one-tool-out fold, whereas average-fit NNLS can worsen to 6.10."
+    },
+    "exact_active_package_sparsity_frontier": {
+      "method": "exhaustive subset enumeration plus exact neutral-target LP; no big-M relaxation",
+      "headline": {
+        "skillsp_l1_full": {
+          "minimum_feasible_active_packages": 3,
+          "minimum_active_packages_attaining_unrestricted_R_star": 3,
+          "best_subset": ["skill_003", "skill_004", "skill_015"],
+          "unrestricted_R_star": 2.0,
+          "budgets_1_2": "INFEASIBLE",
+          "budgets_3_6": "R*=2"
+        },
+        "skillsp_l3": {
+          "minimum_feasible_active_packages": 4,
+          "unrestricted_R_star": 1.0
+        },
+        "logical_compiler": {
+          "minimum_feasible_active_packages": 1,
+          "best_subset": ["skill_008"],
+          "unrestricted_R_star": 1.0
+        }
+      },
+      "interpretation": "The Level-1 residual is not caused by allowing too many active package arms: the smallest coverage-feasible controller already attains the unrestricted optimum R*=2, and additional active packages cannot improve it. Negative regimes show different sparsity geometry rather than a universal package-count effect."
+    }
+  },
+  "source_hashes": {
+    "crossval_json": "ceada8d1b84fbdba0943db7b251b94ed4698ca0584314ac6d7d6fcb0f6151918",
+    "crossval_csv": "e8570195138114498e44bc14601e76e00a90d5534320b11d1882412ba5be46b0",
+    "crossval_code": "a32519c1ca5131bec1228aeb0f23cb5a12070f45889c9fcfbf80060e8c49a8bd",
+    "crossval_test": "1f8d9e21dd4bb89cef226abbb051a213c0261fe9c07cafe043779dd7d2977042",
+    "paper_quality": "232db1369118e29dc96ced800437f0a6055920d51a91a7a35222a717e0aa0436",
+    "manuscript_body": "edb1753667acc3e892ca914aa2d72fdfa8dde8feb81b01c70cb40bc7d22b4a05",
+    "tables": "26288b84273e48078dba65d5864563021e66e87bdc60ef078dab4a66629e49cb"
+  },
+  "qa": {
+    "new_experiment_tests": "2/2 PASS",
+    "combined_breadth_tests": "19/19 PASS",
+    "paper_qa": "97/97 PASS",
+    "official_iclr_qa": "64/64 PASS",
+    "main_text_pages": 9,
+    "total_pdf_pages": 11,
+    "citation_count": 20,
+    "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
+    "paper_quality_evidence_debt": 0,
+    "content_addressed_referenced_files": 59,
+    "content_addressed_registered_digests": 62,
+    "final_supplement_manifest": "PASS",
+    "final_supplement_reproduction": "PASS",
+    "final_supplement_unit_tests": "31/31 PASS",
+    "final_supplement_anonymity": "PASS",
+    "source_isolated_compile": "PASS",
+    "pdf_anonymity": "PASS"
+  },
+  "release_candidate": {
+    "directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824",
+    "pdf_sha256": "0da435717e4871f282c10d1c728292d0dd04e70f87a44dffddfcc190ebdaa553",
+    "source_zip_sha256": "da58aa688e29cf8bc9c5d0914cafa8e47c5bd255d59e06572368705571a960a0",
+    "supplement_zip_sha256": "646fa2d8dd3c20fd9c34d2b76e4a26a56ed4a28066fa44b5929ca42ff5592ab9",
+    "supplement_manifest_sha256": "cca7c48fa58fbf1800ed6ce02cc4333a56149ff204095f83e44b0153f1500b45",
+    "supplement_package_metadata_sha256": "c98ee4d7b61e9d8dafbb317a3b6a2e048d8d0091bb9cc9ad6d321767b6ac878e",
+    "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r17-crossval-sparsity-20260824/R17-MANIFEST.json",
+    "release_manifest_canonical_sha256": "868de61141b831188d278e525dbc11e46b77d3cb81297c2f947307d162b9d337",
+    "release_manifest_file_sha256": "f96c4b5a621e10e2f902e9ccf438ed7afc92b93a6b43b551b1e7c7652f3c9653",
+    "canonical_release_overwritten": false
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "new_support_annotations": 0,
+    "task_utility_claim_added": false,
+    "safety_claim_added": false,
+    "longitudinal_regret_claim_added": false,
+    "validated_repair_claim_added": false,
+    "lp_novelty_claim_added": false,
+    "skillrouter_relevance_is_executable_support": false,
+    "skillsbench_task_local_availability_is_executable_support": false,
+    "dynamic_qwen3_pilot_reopened": false
+  },
+  "scientific_authority": false,
+  "submission_authority": false,
+  "disposition": "R17_CROSSVALIDATION_SPARSITY_BREADTH_VERIFIED"
+}

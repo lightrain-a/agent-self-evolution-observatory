@@ -4,8 +4,8 @@
   "review_round": 2,
   "review_service": "Stanford Agentic Reviewer · paperreview.ai",
   "fetched_at_utc": "2026-08-23T11:02:56.126406+00:00",
-  "rechecked_at_utc": "2026-08-24T05:43:19.300739+00:00",
-  "recheck": "Round 2 reviewer text preserved; current Temporal dispositions reconciled to canonical R14. Fresh R14 external review pending.",
+  "rechecked_at_utc": "2026-08-24T05:53:03.864511+00:00",
+  "recheck": "Round 2 reviewer text preserved; current Temporal dispositions reconciled to canonical R15 after fresh R14 post-repair review (6.0 / Accept). No new experiment opened.",
   "policy": {
     "advisory_only": true,
     "text_verdict_precedes_numeric": true,
@@ -285,12 +285,12 @@
         "verdict": "Weak Accept"
       },
       "read": {
-        "zh": "Round 2 的历史文字 verdict 是 Weak Accept。R14 已执行 G₀ 与 exact-output Rsurf，并把论文收窄成 attribution audit；当前窄 claim 已通过 Research OS，新的 Stanford R14 review 已提交、结果待回。",
-        "en": "The historical Round-2 textual verdict is Weak Accept. R14 executes G0 and exact-output Rsurf and narrows the paper to an attribution audit; the current narrow claim is Research-OS clean and a fresh Stanford R14 review is pending."
+        "zh": "Round 2 历史文字 verdict 为 Weak Accept；最新 R14 post-repair 外审为 6.0 / Accept。R15 已完成针对性 paper/analysis repair，scientific contract 不变，当前仍为 SUBMISSION_READY / NO_INTERNAL_ACTION。",
+        "en": "The historical Round-2 textual verdict is Weak Accept; the latest R14 post-repair review is 6.0 / Accept. R15 completes targeted paper/analysis repair with the scientific contract unchanged and remains SUBMISSION_READY / NO_INTERNAL_ACTION."
       },
       "next": {
-        "zh": "不再自动扩实验。等待 R14 新外审；只有新意见对当前窄 claim 提出 decision-critical 缺口时才考虑 reopen。",
-        "en": "Do not expand experiments automatically. Wait for the fresh R14 external review and reopen only if it identifies a decision-critical gap in the current narrow claim."
+        "zh": "不再自动扩实验。R15 已吸收 Accept 审稿中的 margin/power、Rsurf residual、scorer、causal bookkeeping 与 multi-turn guidance；benign generic / 更多 non-ceiling / prospective cross-domain 只在未来扩大 claim 时 scientific reopen。",
+        "en": "Do not expand experiments automatically. R15 absorbs the Accept review through margin/power, Rsurf residual, scorer, causal-bookkeeping, and multi-turn guidance; a benign generic, more non-ceiling coverage, or prospective cross-domain work requires scientific reopen only for broader future claims."
       },
       "objections": [
         {
@@ -352,9 +352,9 @@
             "zh": "R14 已执行 same-surface no-op G₀。结果反而证明 full-track neutrality 不能自动运输到每个 stratum，因此论文把 G₀ 改成 placebo/surface diagnostic，并把 T−G₀ 与 G₀−N 分开；当前 claim 不再依赖“behavior-neutral generic”假设。",
             "en": "R14 executes same-surface no-op G0. The result shows full-track neutrality does not automatically transport to every stratum, so G0 is reframed as a placebo/surface diagnostic and T−G0 is kept separate from G0−N; the current claim no longer depends on a behavior-neutral-generic assumption."
           },
-          "e": "R14 G0 A1/A2/Kimi execution + contrast decomposition; current claim audit 13/13",
+          "e": "R14 G0 A1/A2/Kimi execution + R15 claim audit 15/15",
           "action": "NONE",
-          "canon": "R14_CURRENT_CANONICAL"
+          "canon": "R15_CURRENT_CANONICAL"
         },
         {
           "id": "TEMP-O5",
@@ -368,9 +368,9 @@
             "zh": "R14 已执行 exact-output Rsurf，只能识别 forced one-answer harness 的 integration-surface placement；它不是独立 temporal retriever。论文明确删除 skill-vs-temporal-RAG equivalence / superiority claim，真正独立 retriever 留作更宽 future claim 的 reopen，而不是当前缺口。",
             "en": "R14 executes exact-output Rsurf, which only identifies integration-surface placement under the forced one-answer harness and is not an independent temporal retriever. The paper explicitly removes skill-vs-temporal-RAG equivalence/superiority claims; a real independent retriever is a reopen condition for a broader future claim, not a gap in the current one."
           },
-          "e": "R14 Rsurf 18-endpoint frozen-margin check + explicit retrieval-equivalence disclaimer",
+          "e": "R14 Rsurf 18-endpoint frozen-margin check + R15 residual/power/scorer analysis",
           "action": "NONE",
-          "canon": "R14_CURRENT_CANONICAL",
+          "canon": "R15_CURRENT_CANONICAL",
           "reopen": {
             "zh": "只有未来要主张 temporal-retrieval equivalence / superiority 时，才需要同 raw candidates 的独立 retriever/reranker。",
             "en": "Only a future temporal-retrieval equivalence/superiority claim requires an independent retriever/reranker over the same raw candidates."
@@ -389,7 +389,7 @@
             "en": "R14 narrows further: DeepSeek grounding is directional with n=5 per cell; Kimi grounding is downgraded; EIA is only a post-hoc compatibility probe; Rsurf non-ceiling n=4 remains unresolved."
           },
           "action": "NONE",
-          "canon": "R14_CURRENT_CANONICAL"
+          "canon": "R15_CURRENT_CANONICAL"
         },
         {
           "id": "TEMP-O7",

@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "R14",
+  "external_review": {
+    "numeric": 6.0,
+    "textual": "Accept",
+    "round1": {
+      "numeric": 5.8,
+      "textual": "Borderline Reject"
+    },
+    "round2": {
+      "numeric": 5.4,
+      "textual": "Weak Accept"
+    }
+  },
+  "decision": "ACCEPT_NO_SCIENTIFIC_REOPEN_FOR_CURRENT_NARROW_CLAIM",
+  "reason": "The fresh external reviewer accepts the R14 attribution-audit thesis. Remaining decision-critical improvements are clarification or existing-data analysis; requested benign-generic/non-ceiling expansion would be new evidence for broader confidence, not a prerequisite for the current narrow claim.",
+  "questions": [
+    {
+      "id": "R14-S1",
+      "topic": "a priori +/-10pp margin and power",
+      "disposition": "ANALYSIS_AND_PAPER_ONLY",
+      "action": "State honestly that the margin was prospectively frozen as materiality, not power-derived; add post-review future-power planning and do not retrofit an a priori power claim."
+    },
+    {
+      "id": "R14-S2",
+      "topic": "benign mechanism-agnostic generic helper",
+      "disposition": "FUTURE_SCIENTIFIC_REOPEN_ONLY",
+      "action": "Do not run now. G is a stress comparator and G0 a same-surface placebo; a new benign generic is a distinct treatment for broader typical-practice triangulation."
+    },
+    {
+      "id": "R14-S3",
+      "topic": "multi-turn adaptive surface isolation",
+      "disposition": "PAPER_ONLY_FUTURE_DESIGN",
+      "action": "Add a prospective design sketch with episode as unit, synchronized evidence/output, and separate availability/use estimands; no current multi-turn claim."
+    },
+    {
+      "id": "R14-S4",
+      "topic": "per-endpoint Rsurf residuals/non-tie errors",
+      "disposition": "EXISTING_DATA_ANALYSIS",
+      "action": "Publish all 18 endpoint residuals and the two opposite-signed non-tie repeat patterns; no new calls."
+    },
+    {
+      "id": "R14-S5",
+      "topic": "alternative family/conjunctive scorers",
+      "disposition": "EXISTING_EVIDENCE_PAPER_ONLY",
+      "action": "Surface the already frozen auxiliary conjunctive-score sensitivity and explain the estimand mismatch; do not redefine the primary scorer post outcome."
+    },
+    {
+      "id": "R14-S6",
+      "topic": "formal causal graph",
+      "disposition": "PAPER_ONLY_CONCEPTUAL",
+      "action": "Add a minimal causal-audit diagram/assumption paragraph if useful, without claiming new SCM identification."
+    },
+    {
+      "id": "R14-S7",
+      "topic": "future stratum neutrality/sample size",
+      "disposition": "PAPER_ONLY_FUTURE_PREREGISTRATION",
+      "action": "Pre-register stratum units, margin, sample size/stopping before future outcomes; do not use adaptive outcome-driven expansion."
+    }
+  ],
+  "non_tie_diagnosis": [
+    {
+      "endpoint_id": "composite-ground::doc_15ffceb07aa2",
+      "mean_residual": 0.5,
+      "operation_output_content_equal_across_T_and_R": true,
+      "registered_operation_output_sha256": "9c9224d8282a81a8316d9e79e29755cab18ff710f4a95b37ecf0e7e5411a3c0b",
+      "repeat_outcomes": [
+        {
+          "repeat": 0,
+          "arm": "R_RETRIEVAL",
+          "success": false,
+          "selected_span_ids": [
+            "doc_15ffceb07aa2:s000",
+            "doc_15ffceb07aa2:s001"
+          ]
+        },
+        {
+          "repeat": 0,
+          "arm": "T_CALLABLE",
+          "success": true,
+          "selected_span_ids": [
+            "doc_15ffceb07aa2:s008",
+            "doc_15ffceb07aa2:s011"
+          ]
+        },
+        {
+          "repeat": 1,
+          "arm": "R_RETRIEVAL",
+          "success": false,
+          "selected_span_ids": [
+            "doc_15ffceb07aa2:s000",
+            "doc_15ffceb07aa2:s001"
+          ]
+        },
+        {
+          "repeat": 1,
+          "arm": "T_CALLABLE",
+          "success": false,
+          "selected_span_ids": [
+            "doc_15ffceb07aa2:s000",
+            "doc_15ffceb07aa2:s001"
+          ]
+        }
+      ]
+    },
+    {
+      "endpoint_id": "composite-ground::doc_187e543fe980",
+      "mean_residual": -0.5,
+      "operation_output_content_equal_across_T_and_R": true,
+      "registered_operation_output_sha256": "be65e754654cf9a3a3cb53f0b8aecdb17c1a6e8bfc3cfd5cbcd42a64def73c92",
+      "repeat_outcomes": [
+        {
+          "repeat": 0,
+          "arm": "R_RETRIEVAL",
+          "success": true,
+          "selected_span_ids": [
+            "doc_187e543fe980:s004",
+            "doc_187e543fe980:s007"
+          ]
+        },
+        {
+          "repeat": 0,
+          "arm": "T_CALLABLE",
+          "success": false,
+          "selected_span_ids": [
+            "doc_187e543fe980:s004",
+            "doc_187e543fe980:s003"
+          ]
+        },
+        {
+          "repeat": 1,
+          "arm": "R_RETRIEVAL",
+          "success": false,
+          "selected_span_ids": [
+            "doc_187e543fe980:s004",
+            "doc_187e543fe980:s003"
+          ]
+        },
+        {
+          "repeat": 1,
+          "arm": "T_CALLABLE",
+          "success": false,
+          "selected_span_ids": [
+            "doc_187e543fe980:s004",
+            "doc_187e543fe980:s003"
+          ]
+        }
+      ]
+    }
+  ],
+  "power_planning_ref": "generated/temporal-skill-r14-rsurf-power-planning-20260824.json",
+  "endpoint_residual_csv_ref": "generated/temporal-skill-r14-rsurf-endpoint-residuals-20260824.csv",
+  "new_experiment_now": false,
+  "new_model_calls": 0,
+  "new_provider_calls": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}

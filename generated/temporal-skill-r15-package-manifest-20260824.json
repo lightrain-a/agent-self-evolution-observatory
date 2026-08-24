@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r15",
+  "title": "Do Temporal Skills Really Repair Agents? An Intervention Audit of Repair and Attribution",
+  "artifacts": {
+    "pdf": {
+      "path": "downloads/E2-Temporal-Skill-r15-20260824.pdf",
+      "sha256": "b660df039bf5b431eab7855a17c2fc2e19df405e06dde1cf59802351e4f48f4c"
+    },
+    "source_zip": {
+      "path": "downloads/E2-Temporal-Skill-r15-20260824-source.zip",
+      "sha256": "79346dd8dc45fa8ae6bbc971781aed15050b6ffc37c5cb724ad63f56561380a2"
+    },
+    "supplement_zip": {
+      "path": "downloads/E2-Temporal-Skill-r15-20260824-supplement.zip",
+      "sha256": "c78ced1f9031593ac49afca11c0fff1fefb3677210ed1a568de51851e5e6bb13"
+    },
+    "stanford_review": {
+      "path": "generated/temporal-skill-r14-stanford-review-result-20260824.json",
+      "sha256": "9a0fe9e07677a763e0a5f112cfe4b29257b71f0a0a775bf0169d162ec3d36890"
+    },
+    "stanford_adjudication": {
+      "path": "generated/temporal-skill-r14-stanford-adjudication-20260824.json",
+      "sha256": "0208f83d5c55a891c95e21f795f4ceaceb6593b3af643167e3e9d89cf55db8d5"
+    },
+    "power_planning": {
+      "path": "generated/temporal-skill-r14-rsurf-power-planning-20260824.json",
+      "sha256": "8f7e486568c29b1a6ee04827fc8e2fbbbacecfd9e9bd19ef4dff41d9376e7445"
+    },
+    "stanford_closure": {
+      "path": "generated/temporal-skill-r15-stanford-closure-20260824.json",
+      "sha256": "054aa83f7dd472c0561a6a6a64617d01f89b8b43ed1cfc81cb56ba0f67b33d89"
+    },
+    "claim_audit": {
+      "path": "generated/temporal-skill-r15-claim-audit-20260824.json",
+      "sha256": "6d955f687b0b8efaa6c68dc17110c1812dcb6b9a3d155d284310235d8cd9420b"
+    },
+    "verification": {
+      "path": "generated/temporal-skill-r15-verification-20260824.json",
+      "sha256": "adfdeb1b856a89aa910a2c40fcabd9a4bf8bdfa2324989d8b540cf2e0e2318c0"
+    }
+  },
+  "new_scientific_execution": false,
+  "new_experiment_after_external_accept": false,
+  "external_review_textual_verdict": "Accept",
+  "external_review_numeric_nonofficial": 6.0,
+  "stable_aliases_modified": false,
+  "verification_pass": true,
+  "scientific_authority": false,
+  "submission_authority": false
+}

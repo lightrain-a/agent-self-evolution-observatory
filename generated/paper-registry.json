@@ -1,7 +1,7 @@
 {
   "schema_version": "1.6",
-  "generated_at": "2026-08-24T06:25:24+00:00",
-  "source_revision": "a6a7bae8b234902ddcf1f864bbee5391bd4b2a4b",
+  "generated_at": "2026-08-24T07:22:45+00:00",
+  "source_revision": "9dab8ffea39fe7283dde3b45034f9d27c57a529e",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -124,12 +124,12 @@
       "main_text_pages": 9,
       "main_text_page_limit": 9,
       "supplement_ready": true,
-      "supplement_unit_tests": "29/29 PASS",
+      "supplement_unit_tests": "31/31 PASS",
       "human_signoff_pending": true,
       "new_gpu_evidence_required": false,
       "paper_quality_v2_passed": true,
       "paper_quality_content_addressed_completion": true,
-      "paper_quality_content_addressed_files": 55,
+      "paper_quality_content_addressed_files": 59,
       "paper_quality_evidence_debt": 0,
       "paper_quality_missing_ids": [],
       "paper_quality_schema_version": "2.1",
@@ -304,7 +304,7 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 54,
+        "events": 58,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
@@ -373,8 +373,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r16-experiment-breadth",
-        "receipt_sha256": "bca4e14deea39060ffce0ceafa994b0267f9ac9cb020e52f6e89bdf000bd5fcd",
+        "protocol_version": "1.0+r17-crossval-sparsity",
+        "receipt_sha256": "8d9df2b0e5e44264c51a21cc0d8f2280f5dc0a97ca8f7b768b005efc46780a43",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -410,7 +410,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "7edd5ded5fe454556259ccdf94084fcb80ff8503a94a90ea995f2350905f8f2a",
+        "receipt_sha256": "fd799d29d5ba7275add6455d7c0713a33006115aa51a1390f6c0b200d4966a09",
         "blockers": []
       },
       "latest_transition": {
@@ -1048,7 +1048,7 @@
         "Reopen temporal-retrieval equivalence only with an independently implemented retriever/reranker receiving the same raw candidate evidence."
       ],
       "summary": {
-        "events": 116,
+        "events": 123,
         "allowed_transitions": 24,
         "blocked_transitions": 0,
         "story_search_receipts": 3,
@@ -1088,10 +1088,10 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "ea1a875bd82e70ae49feea7b676920c7c95a3d6ee978370af2e4998a3daa2e23",
+        "claim_audit_sha256": "6d955f687b0b8efaa6c68dc17110c1812dcb6b9a3d155d284310235d8cd9420b",
         "blockers": [],
-        "checks": 13,
-        "passed": 13
+        "checks": 15,
+        "passed": 15
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -1102,14 +1102,14 @@
       },
       "latest_prebuttal": {
         "pass": true,
-        "decision_critical": 4,
+        "decision_critical": 7,
         "blockers": [],
         "unresolved_decision_critical": 0
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r14-intervention-audit",
-        "receipt_sha256": "415430e9ade74febc868de01e340982b72030d98d52d85514a4d0d51217c16c3",
+        "protocol_version": "1.0+r15-stanford-accept-targeted-repair",
+        "receipt_sha256": "d3bab13863fd00596927fa9c164072bcda5e4b8791544bbb0ec6a4d01b2f97db",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -1137,7 +1137,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "cd4686cdb926f23421f97830fe15c1df71ba421d721c6df9b46410d4ca983921",
+        "receipt_sha256": "41ffc2a954efc541662737e691e5dc235b2081612ba2cc1299f59985164f248a",
         "blockers": []
       },
       "source_native_evidence": {
@@ -1146,7 +1146,7 @@
         "institutional_systems": 3,
         "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED",
         "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION",
-        "finalization_sha256": "d7cea3b17b4c89ea65e292de1a8730dcaa0f08c93f7fc43121e0f10083bbabfc"
+        "finalization_sha256": "0759a99bd5ccd4cbe45ae2cf50ad0a227fcc6b362f1059c3f0373fa91a414237"
       },
       "latest_transition": {
         "from": "PREBUTTAL",
