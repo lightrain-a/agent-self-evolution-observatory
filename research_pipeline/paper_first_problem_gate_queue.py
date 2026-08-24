@@ -9,6 +9,8 @@ from typing import Any
 from .config import PROJECT_ROOT, StorageSettings
 from .paper_first_primary_evidence import load_private_primary_pool, private_primary_pool_path
 from .paper_first_problem_discovery_contract import DISCOVERY_LANES, audit_problem_candidate
+from .feynman_socratic_gate import build_feynman_socratic_certificate, audit_feynman_socratic_certificate
+from .reproduction_gate import reproduction_from_candidate
 from .public_state_redaction import redact_private_paths
 
 DEFAULT_JSON = PROJECT_ROOT / "generated" / "paper-first-problem-gate-queue.json"
@@ -107,6 +109,7 @@ def _candidate_snapshot(candidate: dict[str, Any]) -> dict[str, Any]:
             "why_attack_no_longer_applies",
             "closest_work",
             "closest_work_distance",
+            "closest_work_reproduction",
             "mature_theory_baselines",
             "reduction_falsifiability_contract",
             "same_information_nonreducibility",
@@ -166,11 +169,32 @@ def build_problem_gate_queue(
         if cid in seen:
             duplicate_ids.append(cid)
         seen.add(cid)
+        feynman_certificate = build_feynman_socratic_certificate(candidate)
+        feynman_audit = audit_feynman_socratic_certificate(feynman_certificate)
+        reproduction_contract, reproduction_audit = reproduction_from_candidate(candidate)
         audit = audit_problem_candidate(
             candidate,
             primary_evidence_by_ref=registry,
             require_primary_registry=True,
         )
+        pre_problem_blockers: list[str] = []
+        if feynman_audit.get("status") != "CLEAR_FOR_PROBLEM_GATE_REVIEW":
+            pre_problem_blockers.append(
+                "feynman-socratic-mature-reduction-alert"
+                if feynman_audit.get("status") == "MATURE_REDUCTION_ALERT"
+                else "feynman-socratic-certificate-incomplete"
+            )
+        if reproduction_audit.get("required_for_problem_qualification") is True and reproduction_audit.get("qualification_satisfied") is not True:
+            pre_problem_blockers.append(
+                "closest-work-reproduction-support-hold"
+                if reproduction_audit.get("support_hold") is True
+                else "closest-work-reproduction-required"
+            )
+        if pre_problem_blockers:
+            audit = dict(audit)
+            audit["passed"] = False
+            audit["status"] = "PROBLEM_GATE_BLOCKED"
+            audit["blockers"] = sorted(set(list(audit.get("blockers") or []) + pre_problem_blockers))
         snapshot = _candidate_snapshot(candidate)
         row = {
             "candidate_id": cid,
@@ -178,6 +202,8 @@ def build_problem_gate_queue(
             "discovery_lane": str(candidate.get("discovery_lane") or "").strip().upper(),
             "source_inbox": str(candidate.get("_source_inbox") or ""),
             "candidate": snapshot,
+            "feynman_socratic": {"certificate": feynman_certificate, "audit": feynman_audit},
+            "closest_work_reproduction": {"contract": reproduction_contract, "audit": reproduction_audit},
             "audit": audit,
             "paper_design_eligible": bool(audit.get("passed")),
             "authority": {
@@ -199,6 +225,8 @@ def build_problem_gate_queue(
                 "paper_design_eligible": True,
                 "source_inbox": row["source_inbox"],
                 "candidate": snapshot,
+                "feynman_socratic": {"certificate": feynman_certificate, "audit": feynman_audit},
+                "closest_work_reproduction": {"contract": reproduction_contract, "audit": reproduction_audit},
             })
 
     if duplicate_ids:
@@ -242,6 +270,11 @@ def build_problem_gate_queue(
             "lane_contract_independent_review_required": True,
             "independent_semantic_reduction_review_required": True,
             "semantic_reviewer_is_block_only": True,
+            "feynman_socratic_certificate_required_before_problem_gate": True,
+            "feynman_socratic_gate_is_zero_authority": True,
+            "feynman_socratic_mature_reduction_alert_only_uses_typed_existing_review": True,
+            "closest_work_reproduction_required_only_when_implementation_is_decisive": True,
+            "missing_source_faithful_reproduction_assets_is_support_hold_not_scientific_negative": True,
             "all_candidates_require_problem_gate": True,
             "problem_gate_pass_only_grants_human_paper_design_eligibility": True,
             "old_solution_first_discovery_is_archival_input_only": True,
@@ -258,6 +291,12 @@ def build_problem_gate_queue(
             "paper_design_eligible": len(passed),
             "inbox_errors": len(inbox_errors),
             "primary_evidence_records": len(registry),
+            "feynman_socratic_clear": sum((row.get("feynman_socratic") or {}).get("audit", {}).get("status") == "CLEAR_FOR_PROBLEM_GATE_REVIEW" for row in audited),
+            "feynman_socratic_revise": sum((row.get("feynman_socratic") or {}).get("audit", {}).get("status") == "REVISE_CERTIFICATE" for row in audited),
+            "feynman_socratic_reduction_alert": sum((row.get("feynman_socratic") or {}).get("audit", {}).get("status") == "MATURE_REDUCTION_ALERT" for row in audited),
+            "reproduction_required": sum((row.get("closest_work_reproduction") or {}).get("audit", {}).get("required_for_problem_qualification") is True for row in audited),
+            "reproduction_qualified": sum((row.get("closest_work_reproduction") or {}).get("audit", {}).get("required_for_problem_qualification") is True and (row.get("closest_work_reproduction") or {}).get("audit", {}).get("qualification_satisfied") is True for row in audited),
+            "reproduction_support_holds": sum((row.get("closest_work_reproduction") or {}).get("audit", {}).get("support_hold") is True for row in audited),
             "submitted_by_lane": _count_by_lane(candidates),
             "passed_by_lane": _count_by_lane(passed),
             "blocked_by_lane": _count_by_lane(blocked),
