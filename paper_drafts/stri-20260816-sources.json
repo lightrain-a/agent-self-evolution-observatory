@@ -95,38 +95,46 @@
       "paper_role": "direct collision: skill+harness optimization and candidate selection"
     },
     {
-      "key": "bai2026skillzip",
-      "title": "SkillZip: Evaluation-Free Skill Compression for Self-Evolving Agents by Discovering Reusable Structure",
-      "authors": ["Xiaofan Bai", "Hongqiang Lin", "Chao Liu", "Yantao Zhang", "Xuan Jin", "Xipeng Cao", "Yuhong Li"],
+      "key": "jiang2026demystifying",
+      "title": "Demystifying Agent Skills: Why They Work-Until They Don't",
+      "authors": ["Zhiyuan Jiang", "Fangrui Huang", "Hanwen Xing", "Xander Wu", "Yipeng Gao", "Rui Cao", "Mengdi Wang", "Shilong Liu", "Yijiang Li"],
       "year": 2026,
-      "arxiv_id": "2608.11079",
-      "url": "https://arxiv.org/abs/2608.11079",
-      "metadata_provenance": ["canonical primary evidence title/ref", "arXiv primary Atom metadata"],
-      "paper_role": "direct collision: repeated skill-structure compression under coverage"
+      "arxiv_id": "2608.14036",
+      "url": "https://arxiv.org/abs/2608.14036",
+      "metadata_provenance": ["arXiv primary metadata rechecked 2026-08-24"],
+      "paper_role": "adjacent controlled skill-mechanism evidence: representation, retrieval difficulty, and cross-framework robustness"
     },
     {
-      "key": "slivkins2011contextual",
-      "title": "Contextual Bandits with Similarity Information",
-      "authors": ["Aleksandrs Slivkins"],
-      "year": 2011,
-      "venue": "Proceedings of the 24th Annual Conference on Learning Theory",
-      "volume": "19",
-      "pages": "679--702",
-      "url": "https://proceedings.mlr.press/v19/slivkins11a.html",
-      "metadata_provenance": ["PMLR primary page citation metadata"],
-      "paper_role": "mature theory reduction: similarity-aware contextual bandits"
+      "key": "gao2026compositional",
+      "title": "Compositional Skill Routing for LLM Agents: Decompose, Retrieve, and Compose",
+      "authors": ["Xueping Gao"],
+      "year": 2026,
+      "arxiv_id": "2606.18051",
+      "url": "https://arxiv.org/abs/2606.18051",
+      "metadata_provenance": ["arXiv primary metadata rechecked 2026-08-24"],
+      "paper_role": "adjacent routing work: decomposition granularity and compositional skill selection"
     },
     {
-      "key": "sen2018stochastic",
-      "title": "Contextual Bandits with Stochastic Experts",
-      "authors": ["Rajat Sen", "Karthikeyan Shanmugam", "Sanjay Shakkottai"],
+      "key": "xu2026skillavailability",
+      "title": "Skill Availability and Presentation Granularity in Large-Language-Model Agents: A Controlled SkillsBench Study",
+      "authors": ["Xiaonan Xu", "Wenjing Wu"],
+      "year": 2026,
+      "arxiv_id": "2605.31408",
+      "url": "https://arxiv.org/abs/2605.31408",
+      "metadata_provenance": ["arXiv primary metadata rechecked 2026-08-24"],
+      "paper_role": "adjacent controlled evidence: skill availability versus presentation granularity"
+    },
+    {
+      "key": "biega2018equity",
+      "title": "Equity of Attention: Amortizing Individual Fairness in Rankings",
+      "authors": ["Asia J. Biega", "Krishna P. Gummadi", "Gerhard Weikum"],
       "year": 2018,
-      "venue": "International Conference on Artificial Intelligence and Statistics",
-      "volume": "84",
-      "pages": "852--861",
-      "url": "https://proceedings.mlr.press/v84/sen18a.html",
-      "metadata_provenance": ["PMLR primary page citation metadata"],
-      "paper_role": "mature theory reduction: information sharing among stochastic experts"
+      "venue": "Proceedings of the 41st International ACM SIGIR Conference on Research and Development in Information Retrieval",
+      "pages": "405--414",
+      "doi": "10.1145/3209978.3210063",
+      "url": "https://dl.acm.org/doi/10.1145/3209978.3210063",
+      "metadata_provenance": ["ACM Digital Library primary publication metadata rechecked 2026-08-24"],
+      "paper_role": "adjacent exposure-allocation literature: amortized fairness under attention constraints"
     },
     {
       "key": "sinkhorn1967nonnegative",

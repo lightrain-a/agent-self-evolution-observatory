@@ -1,0 +1,1797 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis_type": "target-ray, package-mass, and same-marginal structural controls",
+  "analysis_date": "2026-08-24",
+  "input": {
+    "membership_sha256": "b73d86370e06e83179a1ce4c7f26431c58b27f7958722974e96a4c316f2e17d4",
+    "rows_all_levels": 530,
+    "level1_covered_rows": 314,
+    "active_packages": 6,
+    "support_edges": 497
+  },
+  "target_ray_sensitivity": {
+    "scope": "frozen Skill-SP API-Bank Level-1 support matrix",
+    "family": "representation-independent tool-frequency target rays",
+    "records": [
+      {
+        "alpha": -1.0,
+        "target_definition": "q_i proportional to count(tool_i)^alpha; mean(q)=1",
+        "minimum_q": 0.11262553802008608,
+        "maximum_q": 9.235294117647058,
+        "R_star": 81.99999999999999,
+        "decision": "RESIDUAL"
+      },
+      {
+        "alpha": -0.5,
+        "target_definition": "q_i proportional to count(tool_i)^alpha; mean(q)=1",
+        "minimum_q": 0.3834470255531028,
+        "maximum_q": 3.472260496456565,
+        "R_star": 9.055385138137417,
+        "decision": "RESIDUAL"
+      },
+      {
+        "alpha": -0.25,
+        "target_definition": "q_i proportional to count(tool_i)^alpha; mean(q)=1",
+        "minimum_q": 0.6417396191738479,
+        "maximum_q": 1.931133578064981,
+        "R_star": 3.437216451903977,
+        "decision": "RESIDUAL"
+      },
+      {
+        "alpha": 0.0,
+        "target_definition": "q_i proportional to count(tool_i)^alpha; mean(q)=1",
+        "minimum_q": 1.0,
+        "maximum_q": 1.0,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "alpha": 0.25,
+        "target_definition": "q_i proportional to count(tool_i)^alpha; mean(q)=1",
+        "minimum_q": 0.4798139226602138,
+        "maximum_q": 1.4438640682105057,
+        "R_star": 3.3898338006481312,
+        "decision": "RESIDUAL"
+      },
+      {
+        "alpha": 0.5,
+        "target_definition": "q_i proportional to count(tool_i)^alpha; mean(q)=1",
+        "minimum_q": 0.2130745723053235,
+        "maximum_q": 1.9294723153686129,
+        "R_star": 9.055385138137417,
+        "decision": "RESIDUAL"
+      },
+      {
+        "alpha": 1.0,
+        "target_definition": "q_i proportional to count(tool_i)^alpha; mean(q)=1",
+        "minimum_q": 0.03416757344940152,
+        "maximum_q": 2.801741022850925,
+        "R_star": 82.0,
+        "decision": "RESIDUAL"
+      }
+    ],
+    "summary": {
+      "targets": 7,
+      "neutral_R_star": 2.0,
+      "minimum_R_star": 2.0,
+      "maximum_R_star": 82.0,
+      "residual_targets": 7,
+      "all_tested_targets_residual": true
+    },
+    "claim_boundary": "This deterministic target family tests whether the released residual is an artifact of q=1. It does not claim that tool frequency is the unique deployment priority distribution."
+  },
+  "max_share_sensitivity": {
+    "scope": "neutral target on frozen Skill-SP API-Bank Level-1 support matrix",
+    "records": [
+      {
+        "rho": 1.0,
+        "pass": true,
+        "R_star": 2.0,
+        "attained_max_share": 0.3333333333333333
+      },
+      {
+        "rho": 0.75,
+        "pass": true,
+        "R_star": 2.0,
+        "attained_max_share": 0.3333333333333333
+      },
+      {
+        "rho": 0.5,
+        "pass": true,
+        "R_star": 2.0,
+        "attained_max_share": 0.3333333333333333
+      },
+      {
+        "rho": 0.4,
+        "pass": true,
+        "R_star": 2.0,
+        "attained_max_share": 0.3333333333333333
+      },
+      {
+        "rho": 0.3333333333333333,
+        "pass": true,
+        "R_star": 2.0,
+        "attained_max_share": 0.3333333333333333
+      },
+      {
+        "rho": 0.3,
+        "pass": true,
+        "R_star": 2.0,
+        "attained_max_share": 0.30000000000000004
+      },
+      {
+        "rho": 0.25,
+        "pass": true,
+        "R_star": 2.0,
+        "attained_max_share": 0.25
+      },
+      {
+        "rho": 0.2,
+        "pass": true,
+        "R_star": 2.0,
+        "attained_max_share": 0.20000000000000015
+      },
+      {
+        "rho": 0.16666666666666666,
+        "pass": true,
+        "R_star": 2.0,
+        "attained_max_share": 0.1666666666666667
+      }
+    ],
+    "summary": {
+      "valid_constraints": 9,
+      "minimum_R_star": 2.0,
+      "maximum_R_star": 2.0,
+      "all_valid_constraints_residual": true
+    },
+    "claim_boundary": "This is a feasibility sensitivity test for package-mass concentration, not a claim about which max-share constraint a deployed controller should use."
+  },
+  "degree_preserving_null_ensemble": {
+    "scope": "frozen Skill-SP API-Bank Level-1 support matrix",
+    "null": "bipartite double-edge-switch ensemble preserving every row membership cardinality and every package support count exactly",
+    "observed": {
+      "rows": 314,
+      "packages": 6,
+      "edges": 497,
+      "active_skill_ids": [
+        "skill_001",
+        "skill_002",
+        "skill_003",
+        "skill_004",
+        "skill_005",
+        "skill_015"
+      ],
+      "R_star": 2.0
+    },
+    "mixing": {
+      "draws": 200,
+      "successful_switches_per_draw": 19880,
+      "switches_per_edge": 40,
+      "seed_base": 2026082400
+    },
+    "records": [
+      {
+        "draw": 0,
+        "seed": 2026082400,
+        "successful_switches": 19880,
+        "attempts": 111841,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 1,
+        "seed": 2026082401,
+        "successful_switches": 19880,
+        "attempts": 110487,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 2,
+        "seed": 2026082402,
+        "successful_switches": 19880,
+        "attempts": 111663,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 3,
+        "seed": 2026082403,
+        "successful_switches": 19880,
+        "attempts": 112348,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 4,
+        "seed": 2026082404,
+        "successful_switches": 19880,
+        "attempts": 113480,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 5,
+        "seed": 2026082405,
+        "successful_switches": 19880,
+        "attempts": 111226,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 6,
+        "seed": 2026082406,
+        "successful_switches": 19880,
+        "attempts": 111569,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 7,
+        "seed": 2026082407,
+        "successful_switches": 19880,
+        "attempts": 111720,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 8,
+        "seed": 2026082408,
+        "successful_switches": 19880,
+        "attempts": 112932,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 9,
+        "seed": 2026082409,
+        "successful_switches": 19880,
+        "attempts": 111611,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 10,
+        "seed": 2026082410,
+        "successful_switches": 19880,
+        "attempts": 112522,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 11,
+        "seed": 2026082411,
+        "successful_switches": 19880,
+        "attempts": 112271,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 12,
+        "seed": 2026082412,
+        "successful_switches": 19880,
+        "attempts": 114050,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 13,
+        "seed": 2026082413,
+        "successful_switches": 19880,
+        "attempts": 112394,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 14,
+        "seed": 2026082414,
+        "successful_switches": 19880,
+        "attempts": 112596,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 15,
+        "seed": 2026082415,
+        "successful_switches": 19880,
+        "attempts": 111200,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 16,
+        "seed": 2026082416,
+        "successful_switches": 19880,
+        "attempts": 112703,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 17,
+        "seed": 2026082417,
+        "successful_switches": 19880,
+        "attempts": 112217,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 18,
+        "seed": 2026082418,
+        "successful_switches": 19880,
+        "attempts": 112136,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 19,
+        "seed": 2026082419,
+        "successful_switches": 19880,
+        "attempts": 111709,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 20,
+        "seed": 2026082420,
+        "successful_switches": 19880,
+        "attempts": 112443,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 21,
+        "seed": 2026082421,
+        "successful_switches": 19880,
+        "attempts": 111245,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 22,
+        "seed": 2026082422,
+        "successful_switches": 19880,
+        "attempts": 112534,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 23,
+        "seed": 2026082423,
+        "successful_switches": 19880,
+        "attempts": 113100,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 24,
+        "seed": 2026082424,
+        "successful_switches": 19880,
+        "attempts": 112115,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 25,
+        "seed": 2026082425,
+        "successful_switches": 19880,
+        "attempts": 112456,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 26,
+        "seed": 2026082426,
+        "successful_switches": 19880,
+        "attempts": 112164,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 27,
+        "seed": 2026082427,
+        "successful_switches": 19880,
+        "attempts": 112750,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 28,
+        "seed": 2026082428,
+        "successful_switches": 19880,
+        "attempts": 113068,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 29,
+        "seed": 2026082429,
+        "successful_switches": 19880,
+        "attempts": 111890,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 30,
+        "seed": 2026082430,
+        "successful_switches": 19880,
+        "attempts": 111812,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 31,
+        "seed": 2026082431,
+        "successful_switches": 19880,
+        "attempts": 113067,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 32,
+        "seed": 2026082432,
+        "successful_switches": 19880,
+        "attempts": 111549,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 33,
+        "seed": 2026082433,
+        "successful_switches": 19880,
+        "attempts": 111032,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 34,
+        "seed": 2026082434,
+        "successful_switches": 19880,
+        "attempts": 111894,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 35,
+        "seed": 2026082435,
+        "successful_switches": 19880,
+        "attempts": 112517,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 36,
+        "seed": 2026082436,
+        "successful_switches": 19880,
+        "attempts": 112271,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 37,
+        "seed": 2026082437,
+        "successful_switches": 19880,
+        "attempts": 111983,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 38,
+        "seed": 2026082438,
+        "successful_switches": 19880,
+        "attempts": 112373,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 39,
+        "seed": 2026082439,
+        "successful_switches": 19880,
+        "attempts": 112454,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 40,
+        "seed": 2026082440,
+        "successful_switches": 19880,
+        "attempts": 112314,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 41,
+        "seed": 2026082441,
+        "successful_switches": 19880,
+        "attempts": 113383,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 42,
+        "seed": 2026082442,
+        "successful_switches": 19880,
+        "attempts": 111605,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 43,
+        "seed": 2026082443,
+        "successful_switches": 19880,
+        "attempts": 113327,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 44,
+        "seed": 2026082444,
+        "successful_switches": 19880,
+        "attempts": 112177,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 45,
+        "seed": 2026082445,
+        "successful_switches": 19880,
+        "attempts": 112073,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 46,
+        "seed": 2026082446,
+        "successful_switches": 19880,
+        "attempts": 111483,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 47,
+        "seed": 2026082447,
+        "successful_switches": 19880,
+        "attempts": 112356,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 48,
+        "seed": 2026082448,
+        "successful_switches": 19880,
+        "attempts": 111865,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 49,
+        "seed": 2026082449,
+        "successful_switches": 19880,
+        "attempts": 112243,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 50,
+        "seed": 2026082450,
+        "successful_switches": 19880,
+        "attempts": 111466,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 51,
+        "seed": 2026082451,
+        "successful_switches": 19880,
+        "attempts": 111796,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 52,
+        "seed": 2026082452,
+        "successful_switches": 19880,
+        "attempts": 112319,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 53,
+        "seed": 2026082453,
+        "successful_switches": 19880,
+        "attempts": 111796,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 54,
+        "seed": 2026082454,
+        "successful_switches": 19880,
+        "attempts": 112366,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 55,
+        "seed": 2026082455,
+        "successful_switches": 19880,
+        "attempts": 112683,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 56,
+        "seed": 2026082456,
+        "successful_switches": 19880,
+        "attempts": 112673,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 57,
+        "seed": 2026082457,
+        "successful_switches": 19880,
+        "attempts": 112389,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 58,
+        "seed": 2026082458,
+        "successful_switches": 19880,
+        "attempts": 112368,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 59,
+        "seed": 2026082459,
+        "successful_switches": 19880,
+        "attempts": 113584,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 60,
+        "seed": 2026082460,
+        "successful_switches": 19880,
+        "attempts": 111370,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 61,
+        "seed": 2026082461,
+        "successful_switches": 19880,
+        "attempts": 111749,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 62,
+        "seed": 2026082462,
+        "successful_switches": 19880,
+        "attempts": 112352,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 63,
+        "seed": 2026082463,
+        "successful_switches": 19880,
+        "attempts": 113063,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 64,
+        "seed": 2026082464,
+        "successful_switches": 19880,
+        "attempts": 112309,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 65,
+        "seed": 2026082465,
+        "successful_switches": 19880,
+        "attempts": 112875,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 66,
+        "seed": 2026082466,
+        "successful_switches": 19880,
+        "attempts": 112272,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 67,
+        "seed": 2026082467,
+        "successful_switches": 19880,
+        "attempts": 112192,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 68,
+        "seed": 2026082468,
+        "successful_switches": 19880,
+        "attempts": 112348,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 69,
+        "seed": 2026082469,
+        "successful_switches": 19880,
+        "attempts": 113131,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 70,
+        "seed": 2026082470,
+        "successful_switches": 19880,
+        "attempts": 113326,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 71,
+        "seed": 2026082471,
+        "successful_switches": 19880,
+        "attempts": 112399,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 72,
+        "seed": 2026082472,
+        "successful_switches": 19880,
+        "attempts": 112492,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 73,
+        "seed": 2026082473,
+        "successful_switches": 19880,
+        "attempts": 111817,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 74,
+        "seed": 2026082474,
+        "successful_switches": 19880,
+        "attempts": 113231,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 75,
+        "seed": 2026082475,
+        "successful_switches": 19880,
+        "attempts": 112459,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 76,
+        "seed": 2026082476,
+        "successful_switches": 19880,
+        "attempts": 111488,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 77,
+        "seed": 2026082477,
+        "successful_switches": 19880,
+        "attempts": 112785,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 78,
+        "seed": 2026082478,
+        "successful_switches": 19880,
+        "attempts": 111603,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 79,
+        "seed": 2026082479,
+        "successful_switches": 19880,
+        "attempts": 112337,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 80,
+        "seed": 2026082480,
+        "successful_switches": 19880,
+        "attempts": 111224,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 81,
+        "seed": 2026082481,
+        "successful_switches": 19880,
+        "attempts": 112426,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 82,
+        "seed": 2026082482,
+        "successful_switches": 19880,
+        "attempts": 111358,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 83,
+        "seed": 2026082483,
+        "successful_switches": 19880,
+        "attempts": 112776,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 84,
+        "seed": 2026082484,
+        "successful_switches": 19880,
+        "attempts": 113206,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 85,
+        "seed": 2026082485,
+        "successful_switches": 19880,
+        "attempts": 110336,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 86,
+        "seed": 2026082486,
+        "successful_switches": 19880,
+        "attempts": 111859,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 87,
+        "seed": 2026082487,
+        "successful_switches": 19880,
+        "attempts": 114219,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 88,
+        "seed": 2026082488,
+        "successful_switches": 19880,
+        "attempts": 111333,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 89,
+        "seed": 2026082489,
+        "successful_switches": 19880,
+        "attempts": 112214,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 90,
+        "seed": 2026082490,
+        "successful_switches": 19880,
+        "attempts": 112326,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 91,
+        "seed": 2026082491,
+        "successful_switches": 19880,
+        "attempts": 112369,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 92,
+        "seed": 2026082492,
+        "successful_switches": 19880,
+        "attempts": 112419,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 93,
+        "seed": 2026082493,
+        "successful_switches": 19880,
+        "attempts": 111741,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 94,
+        "seed": 2026082494,
+        "successful_switches": 19880,
+        "attempts": 113057,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 95,
+        "seed": 2026082495,
+        "successful_switches": 19880,
+        "attempts": 111583,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 96,
+        "seed": 2026082496,
+        "successful_switches": 19880,
+        "attempts": 112225,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 97,
+        "seed": 2026082497,
+        "successful_switches": 19880,
+        "attempts": 112702,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 98,
+        "seed": 2026082498,
+        "successful_switches": 19880,
+        "attempts": 113639,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 99,
+        "seed": 2026082499,
+        "successful_switches": 19880,
+        "attempts": 111601,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 100,
+        "seed": 2026082500,
+        "successful_switches": 19880,
+        "attempts": 111800,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 101,
+        "seed": 2026082501,
+        "successful_switches": 19880,
+        "attempts": 111934,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 102,
+        "seed": 2026082502,
+        "successful_switches": 19880,
+        "attempts": 111791,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 103,
+        "seed": 2026082503,
+        "successful_switches": 19880,
+        "attempts": 111205,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 104,
+        "seed": 2026082504,
+        "successful_switches": 19880,
+        "attempts": 111979,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 105,
+        "seed": 2026082505,
+        "successful_switches": 19880,
+        "attempts": 113067,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 106,
+        "seed": 2026082506,
+        "successful_switches": 19880,
+        "attempts": 110952,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 107,
+        "seed": 2026082507,
+        "successful_switches": 19880,
+        "attempts": 111383,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 108,
+        "seed": 2026082508,
+        "successful_switches": 19880,
+        "attempts": 111463,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 109,
+        "seed": 2026082509,
+        "successful_switches": 19880,
+        "attempts": 112719,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 110,
+        "seed": 2026082510,
+        "successful_switches": 19880,
+        "attempts": 112192,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 111,
+        "seed": 2026082511,
+        "successful_switches": 19880,
+        "attempts": 111375,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 112,
+        "seed": 2026082512,
+        "successful_switches": 19880,
+        "attempts": 112693,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 113,
+        "seed": 2026082513,
+        "successful_switches": 19880,
+        "attempts": 111895,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 114,
+        "seed": 2026082514,
+        "successful_switches": 19880,
+        "attempts": 111795,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 115,
+        "seed": 2026082515,
+        "successful_switches": 19880,
+        "attempts": 113411,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 116,
+        "seed": 2026082516,
+        "successful_switches": 19880,
+        "attempts": 111604,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 117,
+        "seed": 2026082517,
+        "successful_switches": 19880,
+        "attempts": 112599,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 118,
+        "seed": 2026082518,
+        "successful_switches": 19880,
+        "attempts": 112973,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 119,
+        "seed": 2026082519,
+        "successful_switches": 19880,
+        "attempts": 112115,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 120,
+        "seed": 2026082520,
+        "successful_switches": 19880,
+        "attempts": 114070,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 121,
+        "seed": 2026082521,
+        "successful_switches": 19880,
+        "attempts": 112166,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 122,
+        "seed": 2026082522,
+        "successful_switches": 19880,
+        "attempts": 113196,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 123,
+        "seed": 2026082523,
+        "successful_switches": 19880,
+        "attempts": 113216,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 124,
+        "seed": 2026082524,
+        "successful_switches": 19880,
+        "attempts": 110277,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 125,
+        "seed": 2026082525,
+        "successful_switches": 19880,
+        "attempts": 111873,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 126,
+        "seed": 2026082526,
+        "successful_switches": 19880,
+        "attempts": 111888,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 127,
+        "seed": 2026082527,
+        "successful_switches": 19880,
+        "attempts": 113033,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 128,
+        "seed": 2026082528,
+        "successful_switches": 19880,
+        "attempts": 111303,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 129,
+        "seed": 2026082529,
+        "successful_switches": 19880,
+        "attempts": 111880,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 130,
+        "seed": 2026082530,
+        "successful_switches": 19880,
+        "attempts": 110840,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 131,
+        "seed": 2026082531,
+        "successful_switches": 19880,
+        "attempts": 112319,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 132,
+        "seed": 2026082532,
+        "successful_switches": 19880,
+        "attempts": 112843,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 133,
+        "seed": 2026082533,
+        "successful_switches": 19880,
+        "attempts": 112327,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 134,
+        "seed": 2026082534,
+        "successful_switches": 19880,
+        "attempts": 111607,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 135,
+        "seed": 2026082535,
+        "successful_switches": 19880,
+        "attempts": 111889,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 136,
+        "seed": 2026082536,
+        "successful_switches": 19880,
+        "attempts": 111833,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 137,
+        "seed": 2026082537,
+        "successful_switches": 19880,
+        "attempts": 112883,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 138,
+        "seed": 2026082538,
+        "successful_switches": 19880,
+        "attempts": 111863,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 139,
+        "seed": 2026082539,
+        "successful_switches": 19880,
+        "attempts": 112206,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 140,
+        "seed": 2026082540,
+        "successful_switches": 19880,
+        "attempts": 112998,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 141,
+        "seed": 2026082541,
+        "successful_switches": 19880,
+        "attempts": 112760,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 142,
+        "seed": 2026082542,
+        "successful_switches": 19880,
+        "attempts": 112215,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 143,
+        "seed": 2026082543,
+        "successful_switches": 19880,
+        "attempts": 110707,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 144,
+        "seed": 2026082544,
+        "successful_switches": 19880,
+        "attempts": 113464,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 145,
+        "seed": 2026082545,
+        "successful_switches": 19880,
+        "attempts": 113117,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 146,
+        "seed": 2026082546,
+        "successful_switches": 19880,
+        "attempts": 111984,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 147,
+        "seed": 2026082547,
+        "successful_switches": 19880,
+        "attempts": 112338,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 148,
+        "seed": 2026082548,
+        "successful_switches": 19880,
+        "attempts": 112860,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 149,
+        "seed": 2026082549,
+        "successful_switches": 19880,
+        "attempts": 112146,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 150,
+        "seed": 2026082550,
+        "successful_switches": 19880,
+        "attempts": 112486,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 151,
+        "seed": 2026082551,
+        "successful_switches": 19880,
+        "attempts": 112923,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 152,
+        "seed": 2026082552,
+        "successful_switches": 19880,
+        "attempts": 112422,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 153,
+        "seed": 2026082553,
+        "successful_switches": 19880,
+        "attempts": 111944,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 154,
+        "seed": 2026082554,
+        "successful_switches": 19880,
+        "attempts": 112559,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 155,
+        "seed": 2026082555,
+        "successful_switches": 19880,
+        "attempts": 112861,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 156,
+        "seed": 2026082556,
+        "successful_switches": 19880,
+        "attempts": 111764,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 157,
+        "seed": 2026082557,
+        "successful_switches": 19880,
+        "attempts": 111695,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 158,
+        "seed": 2026082558,
+        "successful_switches": 19880,
+        "attempts": 111884,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 159,
+        "seed": 2026082559,
+        "successful_switches": 19880,
+        "attempts": 112486,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 160,
+        "seed": 2026082560,
+        "successful_switches": 19880,
+        "attempts": 110741,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 161,
+        "seed": 2026082561,
+        "successful_switches": 19880,
+        "attempts": 111811,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 162,
+        "seed": 2026082562,
+        "successful_switches": 19880,
+        "attempts": 111882,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 163,
+        "seed": 2026082563,
+        "successful_switches": 19880,
+        "attempts": 113027,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 164,
+        "seed": 2026082564,
+        "successful_switches": 19880,
+        "attempts": 110937,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 165,
+        "seed": 2026082565,
+        "successful_switches": 19880,
+        "attempts": 113174,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 166,
+        "seed": 2026082566,
+        "successful_switches": 19880,
+        "attempts": 113343,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 167,
+        "seed": 2026082567,
+        "successful_switches": 19880,
+        "attempts": 112069,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 168,
+        "seed": 2026082568,
+        "successful_switches": 19880,
+        "attempts": 112377,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 169,
+        "seed": 2026082569,
+        "successful_switches": 19880,
+        "attempts": 111082,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 170,
+        "seed": 2026082570,
+        "successful_switches": 19880,
+        "attempts": 112843,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 171,
+        "seed": 2026082571,
+        "successful_switches": 19880,
+        "attempts": 111719,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 172,
+        "seed": 2026082572,
+        "successful_switches": 19880,
+        "attempts": 113668,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 173,
+        "seed": 2026082573,
+        "successful_switches": 19880,
+        "attempts": 112421,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 174,
+        "seed": 2026082574,
+        "successful_switches": 19880,
+        "attempts": 112301,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 175,
+        "seed": 2026082575,
+        "successful_switches": 19880,
+        "attempts": 111535,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 176,
+        "seed": 2026082576,
+        "successful_switches": 19880,
+        "attempts": 112056,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 177,
+        "seed": 2026082577,
+        "successful_switches": 19880,
+        "attempts": 111328,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 178,
+        "seed": 2026082578,
+        "successful_switches": 19880,
+        "attempts": 112183,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 179,
+        "seed": 2026082579,
+        "successful_switches": 19880,
+        "attempts": 112673,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 180,
+        "seed": 2026082580,
+        "successful_switches": 19880,
+        "attempts": 111853,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 181,
+        "seed": 2026082581,
+        "successful_switches": 19880,
+        "attempts": 112139,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 182,
+        "seed": 2026082582,
+        "successful_switches": 19880,
+        "attempts": 111602,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 183,
+        "seed": 2026082583,
+        "successful_switches": 19880,
+        "attempts": 111534,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 184,
+        "seed": 2026082584,
+        "successful_switches": 19880,
+        "attempts": 112058,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 185,
+        "seed": 2026082585,
+        "successful_switches": 19880,
+        "attempts": 110394,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 186,
+        "seed": 2026082586,
+        "successful_switches": 19880,
+        "attempts": 111203,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 187,
+        "seed": 2026082587,
+        "successful_switches": 19880,
+        "attempts": 113038,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 188,
+        "seed": 2026082588,
+        "successful_switches": 19880,
+        "attempts": 110720,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 189,
+        "seed": 2026082589,
+        "successful_switches": 19880,
+        "attempts": 111947,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 190,
+        "seed": 2026082590,
+        "successful_switches": 19880,
+        "attempts": 112017,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 191,
+        "seed": 2026082591,
+        "successful_switches": 19880,
+        "attempts": 111378,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 192,
+        "seed": 2026082592,
+        "successful_switches": 19880,
+        "attempts": 113166,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 193,
+        "seed": 2026082593,
+        "successful_switches": 19880,
+        "attempts": 111045,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 194,
+        "seed": 2026082594,
+        "successful_switches": 19880,
+        "attempts": 111552,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 195,
+        "seed": 2026082595,
+        "successful_switches": 19880,
+        "attempts": 112061,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 196,
+        "seed": 2026082596,
+        "successful_switches": 19880,
+        "attempts": 112294,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 197,
+        "seed": 2026082597,
+        "successful_switches": 19880,
+        "attempts": 112134,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 198,
+        "seed": 2026082598,
+        "successful_switches": 19880,
+        "attempts": 111630,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      },
+      {
+        "draw": 199,
+        "seed": 2026082599,
+        "successful_switches": 19880,
+        "attempts": 113046,
+        "R_star": 2.0,
+        "decision": "RESIDUAL"
+      }
+    ],
+    "summary": {
+      "minimum_R_star": 2.0,
+      "q05_R_star": 2.0,
+      "median_R_star": 2.0,
+      "mean_R_star": 2.0,
+      "q95_R_star": 2.0,
+      "maximum_R_star": 2.0,
+      "equalizable_draws": 0,
+      "residual_draws": 200,
+      "draws_at_least_observed_R_star": 200,
+      "empirical_tail_fraction_at_least_observed": 1.0
+    },
+    "claim_boundary": "The ensemble is a deterministic seeded structural control, not an exact uniform sampler over all bipartite graphs with these degrees and not a formal randomization-test p-value."
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_outcome_data": false,
+    "new_support_annotations": false,
+    "model_calls": 0,
+    "gpu_runs": 0,
+    "purpose": "reviewer-facing structural controls on the frozen released support matrix"
+  }
+}

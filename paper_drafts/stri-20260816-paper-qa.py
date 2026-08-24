@@ -16,6 +16,9 @@ data = json.loads((ROOT / "generated" / "asset-first-stri-narrow-paper-table-dat
 p0a = json.loads((ROOT / "generated" / "asset-first-stri-qwen3-merge-split-p0a-result-20260816.json").read_text(encoding="utf-8"))
 final_review = json.loads((ROOT / "generated" / "asset-first-stri-narrow-final-review-20260816.json").read_text(encoding="utf-8"))
 collision = json.loads((ROOT / "generated" / "asset-first-stri-narrow-collision-review-20260816.json").read_text(encoding="utf-8"))
+target_null = json.loads((ROOT / "generated" / "asset-first-stri-target-null-analysis-20260824.json").read_text(encoding="utf-8"))
+witness_peeling = json.loads((ROOT / "generated" / "asset-first-stri-witness-peeling-20260824.json").read_text(encoding="utf-8"))
+support_edit = json.loads((ROOT / "generated" / "asset-first-stri-support-edit-radius-20260824.json").read_text(encoding="utf-8"))
 log_paths = [PAPER / "stri-20260816-generic-wrapper.log", PAPER / "stri-20260816-iclr2027-main.log"]
 log_path = next((path for path in log_paths if path.exists()), log_paths[0])
 log = log_path.read_text(encoding="utf-8", errors="replace") if log_path.exists() else ""
@@ -49,7 +52,8 @@ for literal in [
     "1,387", "366", "127/595", "R^*_{0.75}=4/3",
     "Proposition 1 (quotient-factorization characterization)", "Corollary 1 (identity-local normalization is clone-sensitive)",
     "Proposition 2 (semantic-first construction handles arbitrary overlap)",
-    "R^*(A;q)", "D^*(A;q)", "\\operatorname{cone}(A)", "2/15", "2/16=1/8", "1/30+1/30", "$7/120=0.0583$",  "TV $=0$", "similarity 1.0", "0.33 rejection threshold",
+    "R^*(A;q)", "D^*(A;q)", "\\operatorname{cone}(A)", "2/15", "2/16=1/8", "7/120=0.0583", "restores prompt TV exactly to zero", "threshold 0.33", "all five observed specific--generic support-overlap pairs",
+    "200 degree-preserving bipartite rewirings", "22 pairwise-disjoint three-row witnesses", "21.0\\% of Level-1", "71 deletions",
     "6/6", "0/6", "3/3", "p=0.00108",
 ]:
     check(f"paper_literal_{literal}", literal in body or literal in tables, literal)
@@ -66,10 +70,10 @@ check("p0a_skill015_8", counts.get("skill_015", {}).get("contract_valid") == 8)
 # Claim-boundary language must be present; common accidental overclaims must be absent.
 required_boundaries = [
     "representation-independent semantic target",
-    "induction-time admission path would store a literal exact text duplicate",
-    "questioner message builder does not expose package ID",
-    "we \\textbf{do not} claim task utility, longitudinal regret, system-wide safety",
-    "LP novelty",
+    "not a claim that the induction path would admit a literal duplicate",
+    "package ID is absent from the questioner message",
+    "neither supports population utility, safety, or regret",
+    "not a new LP, cone theorem, or fairness objective",
     "not a population-level no-effect theorem",
 ]
 for text in required_boundaries:
@@ -93,8 +97,31 @@ ledger_keys = {str(e["key"]) for e in sources.get("entries", [])}
 check("all_cites_in_bib", cite_keys <= bib_keys, str(sorted(cite_keys - bib_keys)))
 check("all_cites_in_ledger", cite_keys <= ledger_keys, str(sorted(cite_keys - ledger_keys)))
 check("bib_entries_have_ledger", bib_keys <= ledger_keys, str(sorted(bib_keys - ledger_keys)))
-check("all_current_entries_cited", len(cite_keys) == 18 and cite_keys == bib_keys, f"cites={len(cite_keys)} bib={len(bib_keys)}")
+check("all_current_entries_cited", len(cite_keys) == 19 and cite_keys == bib_keys == ledger_keys, f"cites={len(cite_keys)} bib={len(bib_keys)} ledger={len(ledger_keys)}")
 check("ledger_zero_authority", sources.get("scientific_authority") is False)
+
+# Stanford-round experiment-enrichment checks: all are offline structural controls on frozen support.
+target_summary = target_null["target_ray_sensitivity"]["summary"]
+share_summary = target_null["max_share_sensitivity"]["summary"]
+null_summary = target_null["degree_preserving_null_ensemble"]["summary"]
+peel_summary = witness_peeling["witness_peeling"]["summary"]
+edit_radius = support_edit["support_edit_radius"]
+check("target_rays_7", target_summary.get("targets") == 7)
+check("target_rays_all_residual", target_summary.get("all_tested_targets_residual") is True)
+check("target_neutral_rstar_2", abs(float(target_summary.get("neutral_R_star", -99)) - 2.0) < 1e-12)
+check("max_share_9_valid", share_summary.get("valid_constraints") == 9)
+check("max_share_all_residual", share_summary.get("all_valid_constraints_residual") is True)
+check("degree_null_200", null_summary.get("residual_draws") == 200 and null_summary.get("equalizable_draws") == 0)
+check("degree_null_exact_rstar_2", abs(float(null_summary.get("minimum_R_star", -99)) - 2.0) < 1e-12 and abs(float(null_summary.get("maximum_R_star", -99)) - 2.0) < 1e-12)
+check("witness_peeling_22", peel_summary.get("peeling_rounds_before_equalizable") == 22)
+check("witness_peeling_66_rows", peel_summary.get("pairwise_disjoint_witness_rows_removed") == 66)
+check("witness_peeling_final_equalizable", abs(float(peel_summary.get("final_R_star", -99)) - 1.0) < 1e-12)
+check("support_edit_min_add_22", edit_radius.get("minimum_additions_to_equalizable") == 22)
+check("support_edit_min_delete_71", edit_radius.get("minimum_deletions_to_equalizable") == 71)
+check("support_edit_add_gap_zero", abs(float(edit_radius.get("addition_solution", {}).get("mip_gap", -1))) < 1e-12)
+check("support_edit_delete_gap_zero", abs(float(edit_radius.get("deletion_solution", {}).get("mip_gap", -1))) < 1e-12)
+check("support_edit_both_verify_equalizable", abs(float(edit_radius.get("addition_solution", {}).get("verified_R_star", -99)) - 1.0) < 1e-12 and abs(float(edit_radius.get("deletion_solution", {}).get("verified_R_star", -99)) - 1.0) < 1e-12)
+check("new_controls_zero_calls", target_null.get("scientific_boundary", {}).get("model_calls") == 0 and target_null.get("scientific_boundary", {}).get("gpu_runs") == 0 and witness_peeling.get("scientific_boundary", {}).get("model_calls") == 0 and witness_peeling.get("scientific_boundary", {}).get("gpu_runs") == 0 and support_edit.get("scientific_boundary", {}).get("model_calls") == 0 and support_edit.get("scientific_boundary", {}).get("gpu_runs") == 0)
 
 # Build health.
 check("latex_log_present", bool(log))

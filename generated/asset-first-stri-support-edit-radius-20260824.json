@@ -1,0 +1,729 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis_type": "exact neutral-target support-cell edit radius",
+  "analysis_date": "2026-08-24",
+  "input": {
+    "membership_sha256": "b73d86370e06e83179a1ce4c7f26431c58b27f7958722974e96a4c316f2e17d4",
+    "level1_covered_rows": 314,
+    "active_packages": 6,
+    "support_edges": 497,
+    "active_skill_ids": [
+      "skill_001",
+      "skill_002",
+      "skill_003",
+      "skill_004",
+      "skill_005",
+      "skill_015"
+    ]
+  },
+  "support_edit_radius": {
+    "observed_R_star": 2.0,
+    "minimum_additions_to_equalizable": 22,
+    "minimum_deletions_to_equalizable": 71,
+    "addition_solution": {
+      "mode": "addition",
+      "solver_status": 0,
+      "solver_message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "mip_gap": 0.0,
+      "mip_node_count": 1,
+      "edit_count": 22,
+      "package_weights": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "edited_cells": [
+        {
+          "row": 41,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 44,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 84,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 98,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 103,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 118,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 112,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 133,
+          "tool": "QueryHealthData"
+        },
+        {
+          "row": 126,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 148,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 147,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 181,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 161,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 199,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 185,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 233,
+          "tool": "QueryHealthData"
+        },
+        {
+          "row": 219,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 276,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 227,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 289,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 230,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 292,
+          "tool": "AppointmentRegistration"
+        },
+        {
+          "row": 231,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 293,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 232,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 295,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 233,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 297,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 249,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 315,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 252,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 318,
+          "tool": "AppointmentRegistration"
+        },
+        {
+          "row": 265,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 335,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 288,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 365,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 295,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 372,
+          "tool": "SymptomSearch"
+        },
+        {
+          "row": 296,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 373,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 297,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 375,
+          "tool": "AppointmentRegistration"
+        },
+        {
+          "row": 310,
+          "column": 5,
+          "skill_id": "skill_015",
+          "source_index": 394,
+          "tool": "CancelRegistration"
+        }
+      ],
+      "verified_R_star": 1.0,
+      "verified_all_rows_covered": true,
+      "edited_skill_ids": [
+        "skill_015"
+      ],
+      "all_additions_same_skill": true
+    },
+    "deletion_solution": {
+      "mode": "deletion",
+      "solver_status": 0,
+      "solver_message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+      "mip_gap": 0.0,
+      "mip_node_count": 0,
+      "edit_count": 71,
+      "package_weights": [
+        0.0,
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0
+      ],
+      "edited_cells": [
+        {
+          "row": 0,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 0,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 1,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 1,
+          "tool": "QueryHealthData"
+        },
+        {
+          "row": 2,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 2,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 3,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 5,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 4,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 6,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 5,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 7,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 6,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 8,
+          "tool": "SymptomSearch"
+        },
+        {
+          "row": 7,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 9,
+          "tool": "SymptomSearch"
+        },
+        {
+          "row": 8,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 10,
+          "tool": "AppointmentRegistration"
+        },
+        {
+          "row": 9,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 11,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 11,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 13,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 29,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 32,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 30,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 33,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 50,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 53,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 51,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 54,
+          "tool": "AppointmentRegistration"
+        },
+        {
+          "row": 52,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 55,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 58,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 65,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 59,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 66,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 60,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 70,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 61,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 71,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 70,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 80,
+          "tool": "QueryHealthData"
+        },
+        {
+          "row": 71,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 81,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 72,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 82,
+          "tool": "SymptomSearch"
+        },
+        {
+          "row": 76,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 89,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 77,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 90,
+          "tool": "AppointmentRegistration"
+        },
+        {
+          "row": 78,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 91,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 95,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 110,
+          "tool": "AppointmentRegistration"
+        },
+        {
+          "row": 96,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 111,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 113,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 134,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 114,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 135,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 115,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 136,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 116,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 137,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 117,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 138,
+          "tool": "AppointmentRegistration"
+        },
+        {
+          "row": 118,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 139,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 132,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 154,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 133,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 155,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 134,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 161,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 135,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 162,
+          "tool": "QueryHealthData"
+        },
+        {
+          "row": 136,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 163,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 144,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 176,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 145,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 177,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 146,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 178,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 162,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 200,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 163,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 201,
+          "tool": "AppointmentRegistration"
+        },
+        {
+          "row": 164,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 202,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 169,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 207,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 170,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 208,
+          "tool": "AppointmentRegistration"
+        },
+        {
+          "row": 171,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 209,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 176,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 221,
+          "tool": "ModifyRegistration"
+        },
+        {
+          "row": 177,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 222,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 203,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 255,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 204,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 256,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 207,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 262,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 208,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 263,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 217,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 274,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 218,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 275,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 238,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 302,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 239,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 303,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 240,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 304,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 241,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 305,
+          "tool": "AppointmentRegistration"
+        },
+        {
+          "row": 244,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 308,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 245,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 309,
+          "tool": "SymptomSearch"
+        },
+        {
+          "row": 257,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 324,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 258,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 325,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 269,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 343,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 270,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 344,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 284,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 360,
+          "tool": "QueryRegistration"
+        },
+        {
+          "row": 285,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 361,
+          "tool": "EmergencyKnowledge"
+        },
+        {
+          "row": 308,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 391,
+          "tool": "CancelRegistration"
+        },
+        {
+          "row": 309,
+          "column": 3,
+          "skill_id": "skill_004",
+          "source_index": 392,
+          "tool": "RecordHealthData"
+        },
+        {
+          "row": 311,
+          "column": 2,
+          "skill_id": "skill_003",
+          "source_index": 396,
+          "tool": "QueryRegistration"
+        }
+      ],
+      "verified_R_star": 1.0,
+      "verified_all_rows_covered": true
+    },
+    "claim_boundary": "These are exact cell-edit radii for the frozen binary support matrix, neutral q=1, and addition-only/deletion-only interventions. They do not cover mixed edits, learned support, or downstream utility."
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_outcome_data": false,
+    "new_support_annotations": false,
+    "model_calls": 0,
+    "gpu_runs": 0,
+    "purpose": "reviewer-facing exact robustness radius on the frozen released support matrix"
+  }
+}

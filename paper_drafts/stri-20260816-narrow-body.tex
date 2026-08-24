@@ -149,7 +149,7 @@ Two extensions make further assumptions explicit. For graded support with indepe
 Skill-SP Level-1 is the primary positive support regime; a frozen tool-disjoint split tests transfer and Level-3 is a disjoint negative control. A first-party logical compiler supplies a high-overlap programmatic negative regime. SkillRL is restricted to its released retrieval seam because it lacks independent support labels; AutoSkill contributes one frozen P19 representation intervention with mechanical behavior and matched placebo/quotient/add-back controls. The structural estimand is neutral $R^*(A;\mathbf1)$ with primal/dual tolerance $10^{-8}$, and the strongest same-information baseline is arbitrary nonnegative reweighting with the complete frozen $A$.
 
 \paragraph{Six evidence roles.}
-E1 is the released-system main result; E2 quotient/baseline ablations; E3 tool-disjoint, negative-regime, and bounded cross-system evidence; E4 diagnostic/support sensitivity; E5 sparse witnesses and the P19 mediator trace; E6 conditional solver cost. The added offline completion step uses E4/E6 analyses on frozen data or synthetic matrices---zero new support annotations, task outcomes, model calls, or GPU runs.
+E1 is the released-system main result; E2 quotient/baseline ablations; E3 tool-disjoint, negative-regime, and bounded cross-system evidence; E4 diagnostic/support and target sensitivity; E5 sparse-witness redundancy and the P19 mediator trace; E6 conditional solver cost. The added offline completion steps use only frozen released support or deterministic synthetic matrices---zero new support annotations, task outcomes, model calls, or GPU runs.
 
 \input{stri-20260816-tables.tex}
 
@@ -180,8 +180,11 @@ Table~\ref{tab:reductions} gives the same-information ladder. Minimum exact-cove
 
 Across 49 Level-1 tools, 4 have the closed-form witness and all are residual; all 10 overlap-without-witness tools are resolved equalizable by the exact LP (Figure~\ref{fig:ablation-robustness}C). One-cell stress is also asymmetric and explicit: all 1,387 additions and all 366 non-uncovering deletions keep Level-1 residual, whereas Level-3 turns residual under every one of 102 additions and the logical domain breaks under 127/595 valid deletions. Earlier leave-one-out and 500 fixed-seed tool bootstraps remain consistent.
 
-\paragraph{E4: structured support misspecification.}
-Correlated stress sharpens the support assumption. All 184 valid tool-block$\times$package biases remain residual and 49/56 observed-signature block relabels remain residual. Package-wide bias is the failure boundary: only 3/9 coverage-preserving variants remain residual, and adding \texttt{skill\_015} support to its 22 missing rows already makes the matrix equalizable. Thus local and tested tool-local errors are tolerated, but coherent package-wide overstatement need not be.
+\paragraph{E4: structured support, target, and weight sensitivity.}
+All 184 tool-block$\times$package biases and 49/56 observed-signature relabels remain residual; only 3/9 package-wide coverage-preserving variants do. Exact neutral-target MILPs require at least 22 added cells (the \texttt{skill\_015} completion) or 71 deletions to reach $R^*=1$. Stronger controls agree: 200 degree-preserving bipartite rewirings all retain $R^*=2$; seven frozen representation-independent tool-frequency target rays are all residual (neutral $q$ is least distorted at $R^*=2$); and max-share $\rho\in[1/6,1]$ leaves $R^*=2$. These are sensitivity controls, not a randomization $p$-value or deployment-priority claim.
+
+\paragraph{E5: sparse-witness redundancy.}
+Iteratively peeling all positive-mass rows of one tight sparse dual optimum leaves $R^*=2$ through 22 pairwise-disjoint three-row witnesses; after 66 rows spanning 19 tools (21.0\% of Level-1) are removed, the remainder reaches $R^*=1$. This is a solver-path redundancy stress, not minimum deletion or witness uniqueness.
 
 \begin{figure}[t]
 \centering
@@ -191,8 +194,8 @@ Correlated stress sharpens the support assumption. All 184 valid tool-block$\tim
 \end{figure}
 
 \subsection{E6: conditional solver cost}
-On deterministic covered synthetic matrices (three seeds/size), the recorded post-rebase batch of the unchanged dense SciPy/HiGHS Eq.~\eqref{eq:rstar} solver grows from 0.00234 s median at $128\times8$ to 0.685 s at $16{,}384\times96$; the largest-case maximum is 0.765 s. That LP has 97 variables, 32,768 inequalities, and 24.25 MiB dense coefficients. Wall time is environment/load-specific; this conditions on already-materialized support and makes no support-acquisition, asymptotic, or solver-novelty claim.
+On deterministic covered synthetic matrices (three seeds/size), the unchanged dense SciPy/HiGHS Eq.~\eqref{eq:rstar} solver grows from 0.00234 s median at $128\times8$ to 0.685 s at $16{,}384\times96$ (largest-case max 0.765 s; 97 variables, 32,768 inequalities, 24.25 MiB dense coefficients). This host-load-dependent profile conditions on materialized support and makes no support-acquisition, asymptotic, or solver-novelty claim.
 
 \section{Discussion, Limitations, and Takeaway}
 \label{sec:limitations}
-STRI-Cert is exact conditional on $A$ and $q$, not a certificate that support labels are correct; the 22-cell package-wide false-positive boundary makes this assumption concrete, and learned support would require independent calibration or justified box bounds. AutoSkill identifies one same-run P19 representation-to-behavior path, not population utility, safety, or longitudinal regret; a broader claim requires a separately preregistered post-query intervention. SkillRL remains an identity-sensitive phenotype without an independent $A$, and AutoSkill remains a bounded substrate rather than prevalence evidence. The CPU profile is conditional on materialized support, while semantic-first selection is a constructive action-basis witness rather than a validated repair. Practical takeaway: quotient representation nuisance, test $R^*(A;q)$, and repair only the assumption or interface the certificate identifies.
+STRI-Cert is conditional on $A,q$: support truth remains load-bearing, with the exact 22-addition boundary motivating calibrated or box-bounded support. AutoSkill gives one bounded P19 path and SkillRL lacks independent $A$; neither supports population utility, safety, or regret. Solver cost conditions on materialized support and semantic-first remains constructive. Takeaway: quotient representation nuisance, test $R^*(A;q)$, and repair only the identified assumption or interface.

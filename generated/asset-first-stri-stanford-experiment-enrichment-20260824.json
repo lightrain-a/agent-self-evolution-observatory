@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "paper_label": "E1.STRI",
+  "analysis_date": "2026-08-24",
+  "branch": "paper/e1-stri-stanford-template-20260824",
+  "base_head_before_enrichment": "cf523219dc41238828d0d77349b8357235e3fc0b",
+  "purpose": "Stanford/senior-reviewer experiment enrichment on the frozen narrow STRI claim contract",
+  "new_experiment_evidence": {
+    "target_ray_sensitivity": {
+      "artifact_json": "generated/asset-first-stri-target-null-analysis-20260824.json",
+      "artifact_csv": "generated/asset-first-stri-target-null-analysis-20260824.csv",
+      "tested_targets": 7,
+      "all_residual": true,
+      "neutral_R_star": 2.0,
+      "minimum_tested_R_star": 2.0,
+      "maximum_tested_R_star": 82.0,
+      "interpretation": "neutral q is not a cherry-picked residual-producing target within the frozen tool-frequency ray family"
+    },
+    "max_share_sensitivity": {
+      "tested_feasible_constraints": 9,
+      "rho_range": [0.16666666666666666, 1.0],
+      "R_star_all_feasible": 2.0,
+      "interpretation": "the strongest same-information package-weight baseline does not require a concentrated optimum"
+    },
+    "degree_preserving_null": {
+      "draws": 200,
+      "row_degrees_preserved": true,
+      "column_degrees_preserved": true,
+      "residual_draws": 200,
+      "equalizable_draws": 0,
+      "R_star_all_draws": 2.0,
+      "claim_boundary": "structural stress control only; not an exact uniform graph sampler and not a randomization-test p-value"
+    },
+    "dual_witness_peeling": {
+      "artifact_json": "generated/asset-first-stri-witness-peeling-20260824.json",
+      "artifact_csv": "generated/asset-first-stri-witness-peeling-20260824.csv",
+      "successive_pairwise_disjoint_three_row_witnesses": 22,
+      "rows_removed_before_equalizable": 66,
+      "fraction_level1_rows_removed": 0.21019108280254778,
+      "unique_tools_spanned": 19,
+      "unique_support_patterns_spanned": 5,
+      "final_R_star": 1.0,
+      "claim_boundary": "solver-path redundancy stress; not a minimum-deletion theorem and not witness uniqueness"
+    },
+    "exact_support_edit_radius": {
+      "artifact_json": "generated/asset-first-stri-support-edit-radius-20260824.json",
+      "artifact_csv": "generated/asset-first-stri-support-edit-radius-20260824.csv",
+      "neutral_observed_R_star": 2.0,
+      "minimum_additions_to_equalizable": 22,
+      "minimum_deletions_to_equalizable": 71,
+      "addition_optimum_skill_ids": ["skill_015"],
+      "addition_mip_gap": 0.0,
+      "deletion_mip_gap": 0.0,
+      "addition_verified_R_star": 1.0,
+      "deletion_verified_R_star": 1.0,
+      "interpretation": "the previously observed 22-cell skill_015 completion is globally minimum among addition-only edits under the frozen neutral-target support contract"
+    }
+  },
+  "paper_changes": {
+    "main_experiment_section": "E4 now reports exact support edit radius, target-ray sensitivity, degree-preserving structural controls, and package-mass concentration sensitivity; E5 reports sparse-witness redundancy",
+    "main_text_pages": 9,
+    "total_pdf_pages": 11,
+    "citation_count": 19,
+    "citation_bib_ledger_exact_match": true,
+    "undefined_citations_or_references": 0,
+    "overfull_boxes": 0
+  },
+  "qa": {
+    "paper_qa": {"status": "PASS", "checks_passed": 97, "checks_total": 97},
+    "official_iclr_qa": {"status": "PASS", "checks_passed": 64, "checks_total": 64, "main_text_pages": 9},
+    "python_compile": "PASS",
+    "toy_support_edit_radius_falsifier": "PASS"
+  },
+  "sha256": {
+    "membership_input": "b73d86370e06e83179a1ce4c7f26431c58b27f7958722974e96a4c316f2e17d4",
+    "manuscript_body": "e726b9152ea3786282d0aeab3af402b9aea8b74e7c58898e188d6084f7ec00d8",
+    "references_bib": "f54732ade2f6bb65732ec41399f1160c86cd79b3e701ae4d3616c5bbec2c823a",
+    "source_ledger": "7068308b662d611aaeb47201621a6e0016f49e7a6daff92f33f25e2428ba5ed9",
+    "compiled_pdf": "e4be341e04952b65554c8c67490eb1eb1d974674f5d5eba7034097cab35be05a",
+    "target_null_json": "1c42a092a05b2bc49e654dcc3de19a64b4b77afe6985447477eff47ff352e462",
+    "target_null_csv": "2435c786ca461ff3f48ed6f9be7e7073d92dc5db146fbbdb178dfaf8ccba7266",
+    "witness_peeling_json": "08ab180e233c967c64e8a59733518468f65e171543d1648db0fc0a74421b99f3",
+    "witness_peeling_csv": "593b38556b25ad6dac3e187af22499dbc0069f01d9d77cadd7230b8a5ddb5c8d",
+    "support_edit_radius_json": "1152977257c4c298686d91b78ead93e6786fa13819be203732322a1149fbca1a",
+    "support_edit_radius_csv": "d6c6ef6795d347753c954f9fc837d6b6d94362e325b058af0ba66c60f17934da"
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_outcome_data": false,
+    "new_support_annotations": false,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "dynamic_qwen3_proposer_pilot_reopened": false,
+    "dynamic_qwen3_proposer_pilot_status": "INCONCLUSIVE_PROPOSER_QUALIFICATION_FAILED",
+    "utility_safety_longitudinal_claim_added": false,
+    "N1_N2_N3_scope_changed": false
+  },
+  "scientific_authority": false,
+  "disposition": "READY_NARROW_ICLR_WITH_STRUCTURAL_EXPERIMENT_ENRICHMENT"
+}

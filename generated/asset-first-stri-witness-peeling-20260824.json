@@ -1,0 +1,852 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis_type": "iterative sparse dual-witness peeling stress",
+  "analysis_date": "2026-08-24",
+  "input": {
+    "membership_sha256": "b73d86370e06e83179a1ce4c7f26431c58b27f7958722974e96a4c316f2e17d4",
+    "rows_all_levels": 530,
+    "level1_covered_rows": 314
+  },
+  "witness_peeling": {
+    "scope": "frozen Skill-SP API-Bank Level-1 support matrix",
+    "procedure": "solve neutral R*, extract one tight HiGHS dual optimum, remove every row with positive alpha/beta mass, and repeat until equalizable",
+    "summary": {
+      "initial_rows": 314,
+      "initial_R_star": 2.0,
+      "peeling_rounds_before_equalizable": 22,
+      "pairwise_disjoint_witness_rows_removed": 66,
+      "fraction_rows_removed": 0.21019108280254778,
+      "three_row_sparse_rounds": 22,
+      "unique_tools_spanned": 19,
+      "active_skill_ids_spanned": 3,
+      "unique_support_patterns_spanned": 5,
+      "remaining_rows": 248,
+      "final_R_star": 1.0
+    },
+    "rounds": [
+      {
+        "round": 0,
+        "rows_before": 314,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 0,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 12,
+            "tool": "EmergencyKnowledge",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 44,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 1,
+        "rows_before": 311,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 2,
+            "tool": "CancelRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 17,
+            "tool": "QueryAlarm",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 118,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 2,
+        "rows_before": 308,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 6,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 19,
+            "tool": "QueryMeeting",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 148,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 3,
+        "rows_before": 305,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 10,
+            "tool": "AppointmentRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 20,
+            "tool": "GetUserToken",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 181,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 4,
+        "rows_before": 302,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 11,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 21,
+            "tool": "AddAgenda",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 199,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 5,
+        "rows_before": 299,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 22,
+            "tool": "AddAgenda",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 32,
+            "tool": "CancelRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 276,
+            "tool": "QueryRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 6,
+        "rows_before": 296,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 23,
+            "tool": "QueryStock",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 54,
+            "tool": "AppointmentRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 289,
+            "tool": "CancelRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 7,
+        "rows_before": 293,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 24,
+            "tool": "OpenBankAccount",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 66,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 292,
+            "tool": "AppointmentRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 8,
+        "rows_before": 290,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 30,
+            "tool": "AddReminder",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 70,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 293,
+            "tool": "QueryRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 9,
+        "rows_before": 287,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 31,
+            "tool": "AddReminder",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 81,
+            "tool": "CancelRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 295,
+            "tool": "CancelRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 10,
+        "rows_before": 284,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 34,
+            "tool": "QueryRegistration",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 90,
+            "tool": "AppointmentRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 315,
+            "tool": "QueryRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 11,
+        "rows_before": 281,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 35,
+            "tool": "ForgotPassword",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 110,
+            "tool": "AppointmentRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 318,
+            "tool": "AppointmentRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 12,
+        "rows_before": 278,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 36,
+            "tool": "ForgotPassword",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 134,
+            "tool": "CancelRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 335,
+            "tool": "QueryRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 13,
+        "rows_before": 275,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 39,
+            "tool": "RegisterUser",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 136,
+            "tool": "QueryRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 365,
+            "tool": "CancelRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 14,
+        "rows_before": 272,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 43,
+            "tool": "QueryReminder",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 138,
+            "tool": "AppointmentRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 373,
+            "tool": "QueryRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 15,
+        "rows_before": 269,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 45,
+            "tool": "ForgotPassword",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 154,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 375,
+            "tool": "AppointmentRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 16,
+        "rows_before": 266,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 46,
+            "tool": "ForgotPassword",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 161,
+            "tool": "ModifyRegistration",
+            "accepted_skill_ids": [
+              "skill_003",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 394,
+            "tool": "CancelRegistration",
+            "accepted_skill_ids": [
+              "skill_003"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 17,
+        "rows_before": 263,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 1,
+            "tool": "QueryHealthData",
+            "accepted_skill_ids": [
+              "skill_004",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 51,
+            "tool": "GetUserToken",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 98,
+            "tool": "RecordHealthData",
+            "accepted_skill_ids": [
+              "skill_004"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 18,
+        "rows_before": 260,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 5,
+            "tool": "EmergencyKnowledge",
+            "accepted_skill_ids": [
+              "skill_004",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 52,
+            "tool": "AddAgenda",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 133,
+            "tool": "QueryHealthData",
+            "accepted_skill_ids": [
+              "skill_004"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 19,
+        "rows_before": 257,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 7,
+            "tool": "RecordHealthData",
+            "accepted_skill_ids": [
+              "skill_004",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 59,
+            "tool": "GetUserToken",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 233,
+            "tool": "QueryHealthData",
+            "accepted_skill_ids": [
+              "skill_004"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 20,
+        "rows_before": 254,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 8,
+            "tool": "SymptomSearch",
+            "accepted_skill_ids": [
+              "skill_004",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 74,
+            "tool": "QueryStock",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 297,
+            "tool": "EmergencyKnowledge",
+            "accepted_skill_ids": [
+              "skill_004"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      },
+      {
+        "round": 21,
+        "rows_before": 251,
+        "R_star_before": 2.0,
+        "dual_lower_bound": 2.0,
+        "witness_rows": [
+          {
+            "index": 9,
+            "tool": "SymptomSearch",
+            "accepted_skill_ids": [
+              "skill_004",
+              "skill_015"
+            ],
+            "dual_role": "beta",
+            "dual_value": 1.0
+          },
+          {
+            "index": 78,
+            "tool": "QueryHistoryToday",
+            "accepted_skill_ids": [
+              "skill_015"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          },
+          {
+            "index": 372,
+            "tool": "SymptomSearch",
+            "accepted_skill_ids": [
+              "skill_004"
+            ],
+            "dual_role": "alpha",
+            "dual_value": 1.0
+          }
+        ],
+        "witness_row_count": 3
+      }
+    ],
+    "claim_boundary": "This deterministic solver-path stress test establishes repeated disjoint sparse certificates under successive row removal. It is not a minimum-deletion computation, does not prove that 66 rows are necessary, and does not claim uniqueness of the dual witness sequence."
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_outcome_data": false,
+    "new_support_annotations": false,
+    "model_calls": 0,
+    "gpu_runs": 0
+  }
+}
