@@ -132,6 +132,9 @@ def build_supplement(tree: Path, *, source_sha: str, pdf_sha: str) -> None:
         "o6-stage1-failure-asset.json": HERE / "o6-stage1-failure-asset.json",
         "o6-final-evidence.json": HERE / "o6-final-evidence.json",
         "o6-full-bank-corruption-reduction.json": HERE / "o6-full-bank-corruption-reduction.json",
+        "f2r1-chronology-receipt.json": HERE / "f2r1-chronology-receipt.json",
+        "blind-review-repair-receipt.json": HERE / "blind-review-20260824/repair-receipt.json",
+        "post-repair-blind-review-validation-receipt.json": HERE / "blind-review-20260824/post-repair-validation-receipt.json",
         "stanford-r3-o6-revision-receipt.json": HERE / "stanford-r3-o6-revision-receipt.json",
     }
     for name, src in branch_files.items():
@@ -152,12 +155,15 @@ def build_supplement(tree: Path, *, source_sha: str, pdf_sha: str) -> None:
     qa = load(HERE / "manuscript-qa.json")
     o6 = load(HERE / "o6-final-evidence.json")
     o6_reduction = load(HERE / "o6-full-bank-corruption-reduction.json")
+    chronology = load(HERE / "f2r1-chronology-receipt.json")
+    blind_repair = load(HERE / "blind-review-20260824/repair-receipt.json")
+    post_repair_review = load(HERE / "blind-review-20260824/post-repair-validation-receipt.json")
     receipt = load(HERE / "stanford-r3-o6-revision-receipt.json")
     projection = {
         "schema_version": "1.0",
         "receipt_type": "supplement-current-projection",
         "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-        "revision": "stanford-r3-o6-cross-writer-and-corruption-reduction-20260824",
+        "revision": "stanford-r3-blind-review-provenance-repair-20260824",
         "current_pdf_sha256": pdf_sha,
         "current_source_zip_sha256": source_sha,
         "new_experiment": True,
@@ -172,6 +178,15 @@ def build_supplement(tree: Path, *, source_sha: str, pdf_sha: str) -> None:
         "o6_terminal_cross_writer_generalization_supported": o6["claim_boundary"]["terminal_cross_writer_generalization_supported"],
         "o6_full_bank_corruption_interaction_reduced": o6_reduction["status"].startswith("STOP_FULL_BANK_CORRUPTION_MASK_INTERACTION"),
         "o6_full_bank_corruption_new_provider_calls": o6_reduction["economy_decision"]["new_provider_calls_authorized"],
+        "f2r1_chronology_verified": chronology["status"] == "CHRONOLOGY_AND_UNIFORM_REPLICATION_VERIFIED",
+        "f2r1_confirmatory_after_initial_nonpass": chronology["relationship"]["confirmatory_was_designed_after_initial_nonpass"],
+        "f2r1_same_4x4_support": chronology["relationship"]["same_4x4_support"],
+        "f2r1_gate_relaxed_after_initial": chronology["relationship"]["effect_floor_changed"] or chronology["relationship"]["alpha_changed"],
+        "blind_review_repair_new_scientific_calls": blind_repair["selected_repair"]["new_scientific_provider_calls"],
+        "blind_review_repair_new_rollouts": blind_repair["selected_repair"]["new_rollouts"],
+        "post_repair_blind_review_recommendation": post_repair_review["post_repair_strict_review"]["recommendation"],
+        "post_repair_blind_review_score": post_repair_review["post_repair_strict_review"]["score_1_to_10"],
+        "post_repair_scientific_freeze_decision": post_repair_review["decision"],
         "o6_provider_posts_observable_lower_bound": o6["execution_accounting"]["o6_provider_posts_observable_lower_bound"],
         "known_provider_posts_observable_lower_bound_full_paper": receipt["system_paper_requirements"]["experiment_program_E1_E6"]["E6_efficiency_cost_scale"]["evidence"]["known_provider_posts_observable_lower_bound"],
         "scientific_authority": False,
@@ -180,7 +195,7 @@ def build_supplement(tree: Path, *, source_sha: str, pdf_sha: str) -> None:
     }
     write_json(tree / "CURRENT-PROJECTION.json", projection)
 
-    readme = """# Proxy Reward Memory Variance - Stanford R3 O5/O6 supplement\n\nThis anonymous supplement binds the frozen evidence used by the current manuscript. O5 adds a fresh 32-call no-memory branch-location control after a separately recorded execution-validator failure; only the frozen recovery outcomes enter science. O6 adds a sequential GLM-5.3 cross-writer test. The repaired writer stage changes all four paired memories and title sets (mean token-set Jaccard distance 0.737482), but the 256-call terminal replication yields mean absolute success-rate difference 0.140625 with permutation p=0.00012, below the preregistered 0.15 minimum-effect floor. The manuscript therefore does not claim writer-invariant terminal generalization.\n\nA source-code-bound O6 reduction also closes the proposed full-bank corruption-mask interaction sweep without new provider calls. Released ReasoningBank retrieves top-1 over label-invariant task-description embeddings (threshold 0.3) and injects only that entry, so conditional on retrieval only the selected source's corruption bit can affect the prompt; nonretrieved mask bits are inert. This reduction does not claim byte-equivalent source-faithful retrieval/interface transport, which remains separate from the corruption-interaction question.\n\nThe failed parent GLM writer attempt remains execution/operationalization debt with zero scientific authority. Its exact provider POST count is unreconstructible after a concurrency race; the observable lower bound is nine. Including O5 and O6, the paper has at least 841 observable provider POSTs, excluding the unresolved low-level count of the early 12-unit action witness. No training or local GPU fine-tuning is used.\n\nPrivate raw model text, provider response identifiers, human-authorization artifacts, host paths, and credentials are intentionally excluded. Public projections preserve source artifact SHA-256 bindings while removing private locations. Run `python verify_current_supplement.py` from this directory to validate the numerical and claim-boundary contract.\n"""
+    readme = """# Proxy Reward Memory Variance - Stanford R3 targeted-repair supplement\n\nThis anonymous supplement binds the frozen evidence used by the current manuscript. The terminal chronology is explicit: the initial 3-rollout-per-condition F2 on the full 4x4 support is a committed non-pass (mean absolute effect 0.145833, p=0.160128). F2R1 is a targeted uniform replication after that non-pass: it preserves the same four sources, same four future tasks, same 0.15 practical-effect floor, and same p<0.05 dual gate, forbids source/future selection after outcomes, and increases only fresh replication depth to eight per condition per cell. All 16 initial and confirmatory cells are exposed side by side.\n\nO5 adds a fresh 32-call no-memory branch-location control after a separately recorded execution-validator failure; only the frozen recovery outcomes enter science. O6 adds a sequential GLM-5.3 cross-writer test. The repaired writer stage changes all four paired memories and title sets (mean token-set Jaccard distance 0.737482), but the 256-call terminal replication yields mean absolute success-rate difference 0.140625 with permutation p=0.00012, below the preregistered 0.15 minimum-effect floor. The manuscript therefore does not claim writer-invariant terminal generalization.\n\nA source-code-bound O6 reduction closes the proposed full-bank corruption-mask interaction sweep without new provider calls. Released ReasoningBank retrieves top-1 over label-invariant task-description embeddings (threshold 0.3) and injects only that entry, so conditional on retrieval only the selected source's corruption bit can affect the prompt; nonretrieved mask bits are inert. This reduction does not claim byte-equivalent source-faithful retrieval/interface transport.\n\nA blind independent review pass motivated only a paper-level provenance clarification; its raw reviewer prose is not packaged and is not scientific evidence. The packaged repair receipt records that this clarification adds zero scientific provider calls, zero rollouts, and no claim expansion. The failed parent GLM writer attempt remains execution/operationalization debt with zero scientific authority. Including O5 and O6, the paper has at least 841 observable provider POSTs, excluding the unresolved low-level count of the early 12-unit action witness. No training or local GPU fine-tuning is used.\n\nPrivate raw model text, provider response identifiers, human-authorization artifacts, host paths, credentials, and raw reviewer prose are intentionally excluded. Run `python verify_current_supplement.py` from this directory to validate the numerical, chronology, and claim-boundary contract.\n"""
     (tree / "README.md").write_text(readme, encoding="utf-8")
 
     verifier = r'''from pathlib import Path
@@ -190,6 +205,7 @@ E=ROOT/'evidence'
 def L(n): return json.load(open(E/n))
 f0=L('f0-write-channel.json'); f2=L('f2r1-confirmatory.json'); q=L('manuscript-qa.json')
 o6=L('o6-final-evidence.json'); red=L('o6-full-bank-corruption-reduction.json'); r=L('stanford-r3-o6-revision-receipt.json'); fail=L('o6-stage1-failure-asset.json')
+chron=L('f2r1-chronology-receipt.json'); repair=L('blind-review-repair-receipt.json'); post=L('post-repair-blind-review-validation-receipt.json')
 o5=L('o5-manuscript-evidence-public.json')['payload']; s1=L('o6-stage1-r1-result-public.json')['payload']; s2=L('o6-stage2-result-public.json')['payload']; proj=json.load(open(ROOT/'CURRENT-PROJECTION.json'))
 checks=[
  f0['summary']['paired_trajectories_complete']==4,
@@ -206,15 +222,25 @@ checks=[
  o6['cross_writer_comparison']['same_direction_among_nonzero_both']==4, o6['cross_writer_comparison']['opposite_direction_among_nonzero_both']==2,
  o6['execution_accounting']['o6_provider_posts_observable_lower_bound']==273,
  fail['execution_concurrency_failure']['provider_post_count_observable_lower_bound']==9,
- q['status']=='PASS', q['main_text_pages']==9, q['references_begin_page']==10,
- q['checks']['o5_fresh_no_memory_control'] is True, q['checks']['o6_cross_writer_boundary'] is True, q['checks']['o6_full_bank_corruption_reduction'] is True,
+ q['status']=='PASS', q['main_text_pages']==9, q['references_begin_page']>=q['main_text_pages'],
+ q['checks']['o5_fresh_no_memory_control'] is True, q['checks']['o6_cross_writer_boundary'] is True, q['checks']['o6_full_bank_corruption_reduction'] is True, q['checks']['f2r1_chronology_and_uniform_replication'] is True,
+ chron['status']=='CHRONOLOGY_AND_UNIFORM_REPLICATION_VERIFIED', chron['relationship']['confirmatory_was_designed_after_initial_nonpass'] is True,
+ chron['relationship']['same_4x4_support'] is True, chron['relationship']['source_selection_changed'] is False, chron['relationship']['future_task_selection_changed'] is False,
+ chron['relationship']['effect_floor_changed'] is False, chron['relationship']['alpha_changed'] is False, len(chron['cell_comparison'])==16,
+ repair['review_calls_are_scientific_evidence'] is False, repair['selected_repair']['new_scientific_provider_calls']==0, repair['selected_repair']['new_rollouts']==0, repair['selected_repair']['claim_expansion'] is False,
+ post['status']=='POST_REPAIR_BLIND_REVIEW_WEAK_ACCEPT', post['post_repair_strict_review']['recommendation']=='weak_accept', post['post_repair_strict_review']['score_1_to_10']==6,
+ post['post_repair_strict_review']['current_narrow_claim_evidence_sufficient'] is True, post['decision']=='FREEZE_SCIENTIFIC_EXPERIMENTS_FOR_CURRENT_NARROW_PAPER', post['review_calls_are_scientific_evidence'] is False,
  red['status']=='STOP_FULL_BANK_CORRUPTION_MASK_INTERACTION_BY_TOP1_LABEL_INVARIANT_RETRIEVAL_REDUCTION', red['released_mechanism_facts']['default_top_k']==1,
  abs(red['released_mechanism_facts']['default_similarity_threshold']-0.3)<1e-12, red['symbolic_factorization']['multi_memory_interaction_identifiable_under_released_top1_mechanism'] is False,
  red['economy_decision']['new_provider_calls_authorized']==0, red['relationship_to_existing_evidence']['current_fixed_evidence_prompt_byte_equivalent_to_source_reasoningbank_wrapper'] is False,
  q['checks']['system_E4_robustness_boundary'] is True, q['checks']['system_E5_negative_failure'] is True, q['checks']['system_E6_efficiency_cost_scale'] is True,
+ r['revision']=='STANFORD-R3-BLIND-REVIEW-PROVENANCE-REPAIR-20260824', r['latest_paper_only_repair']['new_scientific_provider_calls']==0,
  r['objections']['PROXY-O6']['revision_status']=='PARTIALLY_ADDRESSED_WITH_CROSS_WRITER_EXECUTION_AND_CORRUPTION_REDUCTION',
  r['system_paper_requirements']['experiment_program_E1_E6']['E6_efficiency_cost_scale']['evidence']['known_provider_posts_observable_lower_bound']==841,
  proj['claim_expansion'] is False, proj['o6_terminal_cross_writer_generalization_supported'] is False, proj['o6_full_bank_corruption_interaction_reduced'] is True, proj['o6_full_bank_corruption_new_provider_calls']==0,
+ proj['f2r1_chronology_verified'] is True, proj['f2r1_confirmatory_after_initial_nonpass'] is True, proj['f2r1_same_4x4_support'] is True, proj['f2r1_gate_relaxed_after_initial'] is False,
+ proj['blind_review_repair_new_scientific_calls']==0, proj['blind_review_repair_new_rollouts']==0,
+ proj['post_repair_blind_review_recommendation']=='weak_accept', proj['post_repair_blind_review_score']==6, proj['post_repair_scientific_freeze_decision']=='FREEZE_SCIENTIFIC_EXPERIMENTS_FOR_CURRENT_NARROW_PAPER',
 ]
 print({'checks':len(checks),'passed':sum(checks),'pass':all(checks)})
 sys.exit(0 if all(checks) else 1)
