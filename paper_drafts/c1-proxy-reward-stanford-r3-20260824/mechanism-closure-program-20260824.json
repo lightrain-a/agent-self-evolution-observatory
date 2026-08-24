@@ -23,7 +23,7 @@
       ],
       "factorization_baseline_interface": [
         "C(tau) = Core(M_S, M_F)",
-        "D_S, D_F = Residual(M_S, M_F)"
+        "D_S, D_F = OperationalBranchContrast(M_S, M_F); this is a paired branch-difference object, not atom-level causal-purity certification"
       ],
       "semantic_applicability_baseline": "a_r(o) = Applicability(o, D_r)",
       "outcome_independent_evidence_validity": "e_r = EvidenceValidity(D_r, E_tau)",
@@ -32,7 +32,7 @@
     },
     "name": "Counterfactual Branch Residual Gating",
     "novelty_claim_status": "CANDIDATE_ONLY_D0B_CONTRACT_PENDING_FRESH_COLLISION_CLEARANCE",
-    "scientific_residual": "Same-byte-identical-trajectory counterfactual branch residual plus outcome-independent evidence-gated trigger authority over only that residual. Neutral/metadata memory, common-core/residual factorization, and semantic applicability are baseline-only components."
+    "scientific_residual": "Same-trajectory counterfactual operational branch contrast plus outcome-independent evidence-gated trigger authority over only that contrast. The branch contrast is not an atom-level causal-purity claim without seed/noise-floor control. Neutral/metadata memory, common-core/residual factorization, and semantic applicability are baseline-only components."
   },
   "collision_audit": [
     {
@@ -131,7 +131,12 @@
         "CONTRADICTED",
         "UNVERIFIABLE"
       ],
-      "trigger_authority_status_now": "CONTRACT_ONLY_NO_BRANCH_AUTHORITY"
+      "trigger_authority_status_now": "CONTRACT_ONLY_NO_BRANCH_AUTHORITY",
+      "current_binding_stage": "D0B1_OPERATIONAL_BRANCH_CONTRAST_IDENTIFIABLE_CAUSAL_ATOM_PURITY_HOLD",
+      "packet_level_evidence_hash_is_not_claim_level_binding": true,
+      "candidate_memory_atom_requires_residual_identity_before_semantic_validity": true,
+      "operational_branch_contrast_is_not_atom_level_causal_purity": true,
+      "causal_residual_language_requires_seed_or_same_condition_noise_floor_control": true
     },
     "collision_audit_contract": {
       "status": "COLLISION_AUDITED_CANDIDATE_FRESH_CLEARANCE_REQUIRED_BEFORE_PROBLEMGATE",
@@ -222,7 +227,7 @@
     "failure_mode": "A single potentially wrong terminal reward bit has undifferentiated authority over the full actionable persistent-memory rewrite, even though much of the reusable procedural content is branch invariant and the branch residual has sparse future decision relevance.",
     "finding": "Reward-conditioned writing is robust, while branch-specific native uptake and terminal transport are sparse and domain/task dependent."
   },
-  "paper_development_state": "ANALYSIS_INCOMPLETE_FOR_TOP_TIER__SOLUTION_CLOSURE_DESIGN",
+  "paper_development_state": "ANALYSIS_INCOMPLETE_FOR_TOP_TIER__D0B1_OPERATIONAL_CONTRAST_GO_CAUSAL_ATOM_HOLD",
   "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
   "paper_only_repairs_now": [
     "add a main-text stage-resolved boundary figure showing forced leverage versus native Shopping/Reddit transport, first-action uptake, and structured-neutral boundary",
@@ -265,7 +270,15 @@
     "support": "Reuse all archived Shopping and Reddit paired memories and all frozen native targets; do not select known positive downstream cells."
   },
   "zero_call_D0_B_contract": {
-    "status": "STRUCTURAL_AUDIT_EXECUTED_SEMANTIC_VALIDITY_NOT_ADJUDICATED",
+    "status": "RECEIPT_ENVELOPE_AUDITED_CLAIM_BINDING_AND_SEMANTIC_VALIDITY_NOT_ADJUDICATED",
+    "subgates": [
+      "D0-B0 receipt-envelope lineage integrity: COMPLETE",
+      "D0-B1a operational same-trajectory branch contrast: GO",
+      "D0-B1b atom-level causal residual purity: HOLD; not required if method remains operationally defined",
+      "D0-B1c operational branch-contrast unit compiler + exact claim-evidence locator: NEXT_ZERO_CALL_GATE",
+      "D0-B2 semantic validity + incremental-information adjudication: LOCKED_BEHIND_B1C",
+      "D0-B3 fresh collision clearance before ProblemGate: REQUIRED_AFTER_B2"
+    ],
     "provider_call_budget": 0,
     "gpu_run_budget": 0,
     "scientific_provider_calls_added_by_this_revision": 0,
@@ -358,8 +371,84 @@
     "audit_sha256": "3f245fb99237c0da8f0ca34cd2c619b2d92bf0dc44245b53319f172e02c921ef",
     "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b_receipt_structure.py",
     "runner_sha256": "c58f418bca80242354cf4aedbf0a1e6e15691e5839f7132ddadcae460cd844c0",
-    "interpretation": "All frozen 24 same-trajectory source pairs admit content-addressed structural receipt prototypes binding pre-writer trajectory projection, exact branch memories, deterministic residual-claim identities, and released pre-writer evidence. This is a structural feasibility result only: zero residual claims have been semantically adjudicated, so branch-specific trigger authority remains withheld.",
-    "next_required_gate": "A separately versioned outcome-independent claim-evidence adjudicator must assign SUPPORTED, CONTRADICTED, or UNVERIFIABLE without treatment-label, semantic-similarity-only, terminal-reward, or downstream-outcome leakage.",
+    "interpretation": "Historical v1 receipt-envelope audit: all 24 same-trajectory source pairs bind trajectory lineage, exact branch memories, deterministic memory-atom identities, and a released pre-writer evidence packet. The later v2 correction shows that packet-level evidence hashing is not claim-level evidence binding and these 423 atoms are not yet certified branch residual claims.",
+    "next_required_gate": "Superseded for current readiness by zero_call_D0_B_claim_binding_observed. Do not run a semantic adjudicator until branch-residual identity and exact per-claim evidence refs are content-addressed.",
+    "authority": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
+  },
+  "zero_call_D0_B_claim_binding_observed": {
+    "status": "D0B_RECEIPT_ENVELOPE_COMPLETE_CLAIM_BINDING_HOLD",
+    "decision": "D0B_ENVELOPE_GO_CLAIM_BINDING_HOLD",
+    "provider_calls": 0,
+    "gpu_runs": 0,
+    "receipt_envelopes_expected": 24,
+    "receipt_envelopes_packet_bound": 24,
+    "candidate_memory_atoms": 423,
+    "candidate_memory_atoms_reconstructed": 423,
+    "certified_branch_residual_atoms": 0,
+    "claim_specific_evidence_refs_bound": 0,
+    "claim_level_evidence_receipts": 0,
+    "per_claim_validity_adjudicated_atoms": 0,
+    "nonzero_branch_authority_receipts": 0,
+    "packet_level_evidence_binding": true,
+    "claim_level_evidence_binding": false,
+    "candidate_memory_atom_is_not_yet_a_certified_residual_claim": true,
+    "residual_identity_certified": false,
+    "semantic_validity_adjudicated": false,
+    "evidence_authority_available": false,
+    "treatment_label_used_as_evidence": false,
+    "terminal_reward_or_rubric_used_as_evidence": false,
+    "procedural_marker_atoms_descriptive_only": 335,
+    "generalization_marker_atoms_descriptive_only": 66,
+    "audit_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b-claim-binding-audit-v2-20260824.json",
+    "audit_sha256": "9b6baf480dc7e00f3fd5f52b1669748ed52df26942771a5364a8d65a5adc192e",
+    "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b_claim_binding_v2.py",
+    "runner_sha256": "fe87cc14e479f6d8f2ff747ca66e82defb537f8483dd599709b4ee3ae0fc42b6",
+    "interpretation": "The 24 receipt envelopes are reproducibly content-addressed, but the historical 423 Title/Description/Content atoms lack certified same-trajectory branch-residual membership and exact claim-specific evidence refs. Therefore semantic validity and branch authority remain unavailable.",
+    "next_required_gate": "D0-B1 zero-call residual-identity plus exact claim-specific evidence-locator audit. Only after B1 passes may a separately versioned semantic adjudicator assign SUPPORTED, CONTRADICTED, or UNVERIFIABLE.",
+    "stop_condition": "If residual identity or claim-specific outcome-independent evidence cannot be bound without reward/outcome leakage, STOP/MERGE CBRG and preserve C1 as the stage-resolved identification/measurement paper.",
+    "authority": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
+  },
+  "zero_call_D0_B1_intervention_identifiability_observed": {
+    "status": "D0B1_INTERVENTION_CONTRAST_IDENTIFIABLE_CAUSAL_ATOM_PURITY_HOLD",
+    "decision": "D0B1_OPERATIONAL_CONTRAST_GO_CAUSAL_ATOM_IDENTITY_HOLD",
+    "pairs": 24,
+    "same_pre_writer_trajectory_projection_pairs": 24,
+    "same_resolved_writer_model_within_pair": 24,
+    "temperature_zero_pairs": 24,
+    "branch_memory_content_changed_pairs": 24,
+    "explicit_decoding_seed_bound_pairs": 0,
+    "same_condition_same_trajectory_replication_bound_pairs": 0,
+    "operational_branch_contrast_identifiable": true,
+    "atom_level_causal_residual_purity_certified": false,
+    "f0c_tasks_complete": 8,
+    "f0c_gate_pass": true,
+    "f0c_mean_between_minus_within_delta": 0.104978,
+    "f0c_exact_one_sided_sign_flip_p": 0.007812,
+    "certified_branch_residual_atoms": 0,
+    "claim_specific_evidence_refs_bound": 0,
+    "audit_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1-intervention-identifiability-audit-20260824.json",
+    "audit_sha256": "6b88cfb1ab9571db8c05714c54e087e77d340576d6df81a6909f4eb7b370eea0",
+    "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b1_intervention_identifiability.py",
+    "runner_sha256": "d0e7239cc66b70dc872deef3fcfed073e96003e0516b1435247dec5d4deccbba",
+    "interpretation": "The same-trajectory S/F writer contrast is operationally identifiable on all 24 frozen pairs: pre-writer trajectory projection is identical, the resolved writer model matches within pair, temperature is zero, and branch-memory content changes in every pair. Existing F0C independently supports an aggregate reward/reflection-mode effect beyond stronger same-mode wording perturbation. However no explicit decoding seed or same-condition same-trajectory replicate is bound for the current 24 pairs, so individual memory atoms cannot yet be called certified causal residuals.",
+    "terminology_rule": "Operational branch-contrast atom / candidate residual is allowed at D0 design level. Atom-level causal residual wording is forbidden until a bound seed or same-condition noise-floor/replication control supports it.",
+    "next_required_gate": "Either operationally define and compile branch-contrast delta units before exact claim-evidence location, or preserve causal-residual wording and preregister future same-condition replication/noise-floor control. Semantic validity remains locked.",
+    "provider_calls_added_by_this_audit": 0,
+    "gpu_runs_added_by_this_audit": 0,
     "authority": {
       "scientific": false,
       "experiment": false,

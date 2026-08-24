@@ -29,6 +29,12 @@ C1_REQUIRED_VALIDITY_STATES = {"SUPPORTED", "CONTRADICTED", "UNVERIFIABLE"}
 C1_D0B_STRUCTURAL_STATUS = "D0B_RECEIPT_STRUCTURE_FEASIBLE_SEMANTIC_VALIDITY_UNADJUDICATED_AUTHORITY_HOLD"
 C1_D0B_STRUCTURAL_DECISION = "D0B_STRUCTURAL_GO_SEMANTIC_AUTHORITY_HOLD"
 C1_D0B_AUDIT_ARTIFACT = Path(__file__).resolve().parents[1] / "paper_drafts" / "c1-proxy-reward-stanford-r3-20260824" / "cbrg-d0b-receipt-structural-audit-20260824.json"
+C1_D0B_CLAIM_BINDING_STATUS = "D0B_RECEIPT_ENVELOPE_COMPLETE_CLAIM_BINDING_HOLD"
+C1_D0B_CLAIM_BINDING_DECISION = "D0B_ENVELOPE_GO_CLAIM_BINDING_HOLD"
+C1_D0B_CLAIM_BINDING_ARTIFACT = Path(__file__).resolve().parents[1] / "paper_drafts" / "c1-proxy-reward-stanford-r3-20260824" / "cbrg-d0b-claim-binding-audit-v2-20260824.json"
+C1_D0B1_IDENTIFIABILITY_STATUS = "D0B1_INTERVENTION_CONTRAST_IDENTIFIABLE_CAUSAL_ATOM_PURITY_HOLD"
+C1_D0B1_IDENTIFIABILITY_DECISION = "D0B1_OPERATIONAL_CONTRAST_GO_CAUSAL_ATOM_IDENTITY_HOLD"
+C1_D0B1_IDENTIFIABILITY_ARTIFACT = Path(__file__).resolve().parents[1] / "paper_drafts" / "c1-proxy-reward-stanford-r3-20260824" / "cbrg-d0b1-intervention-identifiability-audit-20260824.json"
 C1_EXECUTABLE_CLOSURE_REVIEWER_GATE: dict[str, Any] = {
     "gate": C1_GATE_ID,
     "profile": C1_GATE_PROFILE,
@@ -246,6 +252,206 @@ def adjudicate_c1_d0b_structural_observation(observation: dict[str, Any]) -> dic
     }
 
 
+def adjudicate_c1_d0b_claim_binding_observation(observation: dict[str, Any]) -> dict[str, Any]:
+    """Validate the corrected D0-B envelope/claim-binding boundary and preserve the HOLD."""
+    errors: list[str] = []
+    if observation.get("status") != C1_D0B_CLAIM_BINDING_STATUS:
+        errors.append("D0-B claim-binding status must preserve the claim-binding HOLD")
+    if observation.get("decision") != C1_D0B_CLAIM_BINDING_DECISION:
+        errors.append("D0-B claim-binding decision must remain ENVELOPE GO / CLAIM-BINDING HOLD")
+    for key in (
+        "provider_calls",
+        "gpu_runs",
+        "certified_branch_residual_atoms",
+        "claim_specific_evidence_refs_bound",
+        "claim_level_evidence_receipts",
+        "per_claim_validity_adjudicated_atoms",
+        "nonzero_branch_authority_receipts",
+    ):
+        if observation.get(key) != 0:
+            errors.append(f"D0-B claim-binding HOLD field must remain zero: {key}")
+    required_counts = {
+        "receipt_envelopes_expected": 24,
+        "receipt_envelopes_packet_bound": 24,
+        "candidate_memory_atoms": 423,
+        "candidate_memory_atoms_reconstructed": 423,
+    }
+    for key, expected in required_counts.items():
+        if observation.get(key) != expected:
+            errors.append(f"D0-B claim-binding audit count drift: {key}")
+    if observation.get("packet_level_evidence_binding") is not True:
+        errors.append("D0-B receipt envelope must retain packet-level evidence binding")
+    if observation.get("claim_level_evidence_binding") is not False:
+        errors.append("claim-level evidence binding is incorrectly being claimed")
+    if observation.get("candidate_memory_atom_is_not_yet_a_certified_residual_claim") is not True:
+        errors.append("candidate memory atoms are incorrectly being treated as certified residual claims")
+    if observation.get("residual_identity_certified") is not False:
+        errors.append("branch-residual identity is incorrectly certified")
+    if observation.get("semantic_validity_adjudicated") is not False:
+        errors.append("semantic validity is incorrectly adjudicated before claim binding")
+    if observation.get("evidence_authority_available") is not False:
+        errors.append("evidence authority is incorrectly available before claim binding and validity")
+    if observation.get("treatment_label_used_as_evidence") is not False:
+        errors.append("treatment label leaked into the claim-binding audit")
+    if observation.get("terminal_reward_or_rubric_used_as_evidence") is not False:
+        errors.append("terminal outcome leaked into the claim-binding audit")
+    if not _all_authority_false(observation.get("authority")):
+        errors.append("D0-B claim-binding observation must keep all downstream authority false")
+
+    audit_ref = str(observation.get("audit_artifact") or "")
+    audit_sha = str(observation.get("audit_sha256") or "")
+    if not audit_ref or len(audit_sha) != 64:
+        errors.append("D0-B claim-binding observation lacks a content-addressed audit artifact")
+    else:
+        expected_rel = str(C1_D0B_CLAIM_BINDING_ARTIFACT.relative_to(Path(__file__).resolve().parents[1]))
+        if audit_ref != expected_rel:
+            errors.append("D0-B claim-binding audit artifact path drift")
+        if not C1_D0B_CLAIM_BINDING_ARTIFACT.is_file():
+            errors.append("D0-B claim-binding audit artifact is missing")
+        else:
+            import hashlib
+            actual_sha = hashlib.sha256(C1_D0B_CLAIM_BINDING_ARTIFACT.read_bytes()).hexdigest()
+            if actual_sha != audit_sha:
+                errors.append("D0-B claim-binding audit artifact SHA drift")
+            else:
+                try:
+                    audit = json.loads(C1_D0B_CLAIM_BINDING_ARTIFACT.read_text(encoding="utf-8"))
+                except (OSError, json.JSONDecodeError):
+                    audit = {}
+                    errors.append("D0-B claim-binding audit artifact is unreadable")
+                summary = audit.get("summary") or {}
+                semantics = audit.get("binding_semantics") or {}
+                if audit.get("status") != C1_D0B_CLAIM_BINDING_STATUS:
+                    errors.append("D0-B claim-binding audit status drift")
+                if audit.get("decision") != C1_D0B_CLAIM_BINDING_DECISION:
+                    errors.append("D0-B claim-binding audit decision drift")
+                for key, expected in required_counts.items():
+                    if summary.get(key) != expected:
+                        errors.append(f"D0-B claim-binding artifact count drift: {key}")
+                for key in (
+                    "certified_branch_residual_atoms",
+                    "claim_specific_evidence_refs_bound",
+                    "claim_level_evidence_receipts",
+                    "per_claim_validity_adjudicated_atoms",
+                    "nonzero_branch_authority_receipts",
+                ):
+                    if summary.get(key) != 0:
+                        errors.append(f"D0-B claim-binding artifact incorrectly advances {key}")
+                if semantics.get("packet_level_evidence_binding") is not True:
+                    errors.append("D0-B artifact lost packet-level evidence binding")
+                if semantics.get("claim_level_evidence_binding") is not False:
+                    errors.append("D0-B artifact incorrectly claims claim-level evidence binding")
+                if semantics.get("residual_identity_certified") is not False:
+                    errors.append("D0-B artifact incorrectly certifies residual identity")
+                if semantics.get("semantic_validity_adjudicated") is not False:
+                    errors.append("D0-B artifact incorrectly adjudicates semantic validity")
+                audit_authority = {k: audit.get(k) for k in ("scientific_authority", "experiment_authority", "provider_call_authority", "gpu_authority", "claim_expansion_authority", "submission_authority")}
+                if not _all_authority_false(audit_authority):
+                    errors.append("D0-B claim-binding artifact contains nonzero downstream authority")
+
+    return {
+        "paper_id": C1_PAPER_ID,
+        "status": C1_D0B_CLAIM_BINDING_STATUS,
+        "envelope_feasible": not errors,
+        "claim_binding_ready": False,
+        "semantic_authority": False,
+        "errors": errors,
+        "authority": dict(C1_EXECUTABLE_CLOSURE_REVIEWER_GATE["authority"]),
+    }
+
+
+def adjudicate_c1_d0b1_intervention_identifiability(observation: dict[str, Any]) -> dict[str, Any]:
+    """Preserve the distinction between an operational branch contrast and atom-level causal purity."""
+    errors: list[str] = []
+    if observation.get("status") != C1_D0B1_IDENTIFIABILITY_STATUS:
+        errors.append("D0-B1 identifiability status drift")
+    if observation.get("decision") != C1_D0B1_IDENTIFIABILITY_DECISION:
+        errors.append("D0-B1 decision must remain operational-contrast GO / causal-atom HOLD")
+    expected_counts = {
+        "pairs": 24,
+        "same_pre_writer_trajectory_projection_pairs": 24,
+        "same_resolved_writer_model_within_pair": 24,
+        "temperature_zero_pairs": 24,
+        "branch_memory_content_changed_pairs": 24,
+        "explicit_decoding_seed_bound_pairs": 0,
+        "same_condition_same_trajectory_replication_bound_pairs": 0,
+        "certified_branch_residual_atoms": 0,
+        "claim_specific_evidence_refs_bound": 0,
+        "provider_calls_added_by_this_audit": 0,
+        "gpu_runs_added_by_this_audit": 0,
+    }
+    for key, expected in expected_counts.items():
+        if observation.get(key) != expected:
+            errors.append(f"D0-B1 identifiability count drift: {key}")
+    if observation.get("operational_branch_contrast_identifiable") is not True:
+        errors.append("D0-B1 must preserve operational branch-contrast identifiability")
+    if observation.get("atom_level_causal_residual_purity_certified") is not False:
+        errors.append("D0-B1 cannot certify atom-level causal residual purity without a noise-floor control")
+    if observation.get("f0c_tasks_complete") != 8 or observation.get("f0c_gate_pass") is not True:
+        errors.append("D0-B1 must bind the existing eight-task F0C prompt-mode control")
+    if not _all_authority_false(observation.get("authority")):
+        errors.append("D0-B1 identifiability observation must keep all downstream authority false")
+
+    audit_ref = str(observation.get("audit_artifact") or "")
+    audit_sha = str(observation.get("audit_sha256") or "")
+    if not audit_ref or len(audit_sha) != 64:
+        errors.append("D0-B1 identifiability observation lacks a content-addressed audit artifact")
+    else:
+        expected_rel = str(C1_D0B1_IDENTIFIABILITY_ARTIFACT.relative_to(Path(__file__).resolve().parents[1]))
+        if audit_ref != expected_rel:
+            errors.append("D0-B1 identifiability audit artifact path drift")
+        if not C1_D0B1_IDENTIFIABILITY_ARTIFACT.is_file():
+            errors.append("D0-B1 identifiability audit artifact is missing")
+        else:
+            import hashlib
+            actual_sha = hashlib.sha256(C1_D0B1_IDENTIFIABILITY_ARTIFACT.read_bytes()).hexdigest()
+            if actual_sha != audit_sha:
+                errors.append("D0-B1 identifiability audit artifact SHA drift")
+            else:
+                try:
+                    audit = json.loads(C1_D0B1_IDENTIFIABILITY_ARTIFACT.read_text(encoding="utf-8"))
+                except (OSError, json.JSONDecodeError):
+                    audit = {}
+                    errors.append("D0-B1 identifiability audit artifact is unreadable")
+                lineage = audit.get("current_24_pair_intervention_lineage") or {}
+                f0c = audit.get("existing_prompt_mode_control") or {}
+                gate = audit.get("b1_gate") or {}
+                if audit.get("status") != C1_D0B1_IDENTIFIABILITY_STATUS or audit.get("decision") != C1_D0B1_IDENTIFIABILITY_DECISION:
+                    errors.append("D0-B1 identifiability artifact status/decision drift")
+                for key in (
+                    "pairs",
+                    "same_pre_writer_trajectory_projection_pairs",
+                    "same_resolved_writer_model_within_pair",
+                    "temperature_zero_pairs",
+                    "branch_memory_content_changed_pairs",
+                    "explicit_decoding_seed_bound_pairs",
+                    "same_condition_same_trajectory_replication_bound_pairs",
+                ):
+                    if lineage.get(key) != expected_counts[key]:
+                        errors.append(f"D0-B1 artifact lineage drift: {key}")
+                if lineage.get("operational_branch_contrast_identifiable") is not True:
+                    errors.append("D0-B1 artifact lost operational branch-contrast identity")
+                if lineage.get("atom_level_causal_residual_purity_certified") is not False:
+                    errors.append("D0-B1 artifact incorrectly certifies atom-level causal purity")
+                if f0c.get("tasks_complete") != 8 or f0c.get("same_mode_paraphrase_control_qualified") is not True:
+                    errors.append("D0-B1 artifact lost the existing F0C control")
+                if gate.get("certified_branch_residual_atoms") != 0 or gate.get("claim_specific_evidence_refs_bound") != 0:
+                    errors.append("D0-B1 artifact incorrectly advances residual/evidence authority")
+                audit_authority = {k: audit.get(k) for k in ("scientific_authority", "experiment_authority", "provider_call_authority", "gpu_authority", "claim_expansion_authority", "submission_authority")}
+                if not _all_authority_false(audit_authority):
+                    errors.append("D0-B1 identifiability artifact contains nonzero downstream authority")
+
+    return {
+        "paper_id": C1_PAPER_ID,
+        "status": C1_D0B1_IDENTIFIABILITY_STATUS,
+        "operational_contrast_identifiable": not errors,
+        "causal_atom_purity_certified": False,
+        "semantic_authority": False,
+        "errors": errors,
+        "authority": dict(C1_EXECUTABLE_CLOSURE_REVIEWER_GATE["authority"]),
+    }
+
+
 def require_c1_executable_closure_gate(candidate: dict[str, Any]) -> dict[str, Any]:
     result = adjudicate_c1_executable_closure_gate(candidate)
     if result["eligible_for_d0_design"] is not True:
@@ -275,6 +481,18 @@ def load_c1_d0b_structural_observation(path: Path = C1_REVISION_PROGRAM) -> dict
     return observation if isinstance(observation, dict) else {}
 
 
+def load_c1_d0b_claim_binding_observation(path: Path = C1_REVISION_PROGRAM) -> dict[str, Any]:
+    program = _load_c1_revision_program(path)
+    observation = program.get("zero_call_D0_B_claim_binding_observed") or {}
+    return observation if isinstance(observation, dict) else {}
+
+
+def load_c1_d0b1_intervention_identifiability_observation(path: Path = C1_REVISION_PROGRAM) -> dict[str, Any]:
+    program = _load_c1_revision_program(path)
+    observation = program.get("zero_call_D0_B1_intervention_identifiability_observed") or {}
+    return observation if isinstance(observation, dict) else {}
+
+
 POLICY: dict[str, Any] = {
     "schema_version": "1.1",
     "cross_cutting_controls_do_not_create_a_seventh_functional_layer": True,
@@ -289,6 +507,12 @@ POLICY: dict[str, Any] = {
     "semantic_applicability_alone_cannot_grant_evidence_authority": True,
     "treatment_label_cannot_serve_as_its_own_validity_evidence": True,
     "c1_d0_design_gate_cannot_authorize_fresh_execution": True,
+    "packet_level_evidence_hash_is_not_claim_level_evidence_binding": True,
+    "candidate_memory_atom_cannot_be_called_residual_claim_without_branch_residual_identity": True,
+    "claim_specific_evidence_refs_required_before_semantic_validity": True,
+    "semantic_validity_required_before_nonzero_branch_authority": True,
+    "operational_branch_contrast_is_not_atom_level_causal_purity": True,
+    "causal_residual_language_requires_seed_or_same_condition_noise_floor_control": True,
 }
 
 
@@ -413,6 +637,10 @@ def build_methodology_controls_state() -> dict[str, Any]:
     c1_adjudication = adjudicate_c1_executable_closure_gate(c1_candidate)
     c1_d0b_observation = load_c1_d0b_structural_observation()
     c1_d0b_adjudication = adjudicate_c1_d0b_structural_observation(c1_d0b_observation)
+    c1_d0b_claim_binding_observation = load_c1_d0b_claim_binding_observation()
+    c1_d0b_claim_binding_adjudication = adjudicate_c1_d0b_claim_binding_observation(c1_d0b_claim_binding_observation)
+    c1_d0b1_identifiability_observation = load_c1_d0b1_intervention_identifiability_observation()
+    c1_d0b1_identifiability_adjudication = adjudicate_c1_d0b1_intervention_identifiability(c1_d0b1_identifiability_observation)
     c1_reviewer_gate = {
         **C1_EXECUTABLE_CLOSURE_REVIEWER_GATE,
         "candidate_loaded": bool(c1_candidate),
@@ -425,9 +653,19 @@ def build_methodology_controls_state() -> dict[str, Any]:
         "reviewer_gates": {
             "c1_executable_closure_v3": c1_reviewer_gate,
             "c1_d0b_receipt_structure": {
-                "status": "REGISTERED_STRUCTURAL_ONLY_FAIL_CLOSED",
+                "status": "HISTORICAL_ENVELOPE_AUDIT_ONLY",
                 "observation_loaded": bool(c1_d0b_observation),
                 "observation_adjudication": c1_d0b_adjudication,
+            },
+            "c1_d0b_claim_binding_v2": {
+                "status": "REGISTERED_CURRENT_FAIL_CLOSED_CLAIM_BINDING_HOLD",
+                "observation_loaded": bool(c1_d0b_claim_binding_observation),
+                "observation_adjudication": c1_d0b_claim_binding_adjudication,
+            },
+            "c1_d0b1_intervention_identifiability": {
+                "status": "REGISTERED_OPERATIONAL_CONTRAST_GO_CAUSAL_ATOM_HOLD",
+                "observation_loaded": bool(c1_d0b1_identifiability_observation),
+                "observation_adjudication": c1_d0b1_identifiability_adjudication,
             },
         },
         "summary": {
@@ -436,7 +674,7 @@ def build_methodology_controls_state() -> dict[str, Any]:
             "functional_layers_added": 0,
             "measured_controls": sum(str(row["status"]).startswith("measured") for row in controls),
             "spec_or_contract_ready": sum("ready" in str(row["status"]) for row in controls),
-            "registered_reviewer_gates": 2,
+            "registered_reviewer_gates": 4,
             "c1_reviewer_gate_loaded": bool(c1_candidate),
             "c1_reviewer_gate_d0_design_eligible": c1_adjudication["eligible_for_d0_design"],
             "c1_reviewer_gate_downstream_authority": any(bool(value) for value in c1_adjudication["authority"].values()),
@@ -444,6 +682,16 @@ def build_methodology_controls_state() -> dict[str, Any]:
             "c1_d0b_structurally_feasible": c1_d0b_adjudication["structurally_feasible"],
             "c1_d0b_semantic_authority": c1_d0b_adjudication["semantic_authority"],
             "c1_d0b_downstream_authority": any(bool(value) for value in c1_d0b_adjudication["authority"].values()),
+            "c1_d0b_claim_binding_observation_loaded": bool(c1_d0b_claim_binding_observation),
+            "c1_d0b_claim_binding_envelope_feasible": c1_d0b_claim_binding_adjudication["envelope_feasible"],
+            "c1_d0b_claim_binding_ready": c1_d0b_claim_binding_adjudication["claim_binding_ready"],
+            "c1_d0b_claim_binding_semantic_authority": c1_d0b_claim_binding_adjudication["semantic_authority"],
+            "c1_d0b_claim_binding_downstream_authority": any(bool(value) for value in c1_d0b_claim_binding_adjudication["authority"].values()),
+            "c1_d0b1_identifiability_observation_loaded": bool(c1_d0b1_identifiability_observation),
+            "c1_d0b1_operational_contrast_identifiable": c1_d0b1_identifiability_adjudication["operational_contrast_identifiable"],
+            "c1_d0b1_causal_atom_purity_certified": c1_d0b1_identifiability_adjudication["causal_atom_purity_certified"],
+            "c1_d0b1_semantic_authority": c1_d0b1_identifiability_adjudication["semantic_authority"],
+            "c1_d0b1_downstream_authority": any(bool(value) for value in c1_d0b1_identifiability_adjudication["authority"].values()),
         },
         "merge_only_external_designs": [
             {

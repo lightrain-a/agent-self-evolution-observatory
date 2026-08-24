@@ -5,10 +5,14 @@ import unittest
 
 from .methodology_controls import (
     C1_GATE_ID,
+    adjudicate_c1_d0b_claim_binding_observation,
     adjudicate_c1_d0b_structural_observation,
+    adjudicate_c1_d0b1_intervention_identifiability,
     adjudicate_c1_executable_closure_gate,
     build_methodology_controls_state,
+    load_c1_d0b_claim_binding_observation,
     load_c1_d0b_structural_observation,
+    load_c1_d0b1_intervention_identifiability_observation,
     load_c1_executable_closure_candidate,
 )
 
@@ -55,7 +59,7 @@ class MethodologyControlsTest(unittest.TestCase):
         self.assertTrue(registered["candidate_loaded"])
         self.assertTrue(registered["candidate_adjudication"]["eligible_for_d0_design"])
         self.assertFalse(self.state["summary"]["c1_reviewer_gate_downstream_authority"])
-        self.assertEqual(self.state["summary"]["registered_reviewer_gates"], 2)
+        self.assertEqual(self.state["summary"]["registered_reviewer_gates"], 4)
 
     def test_c1_d0b_structural_receipt_audit_is_go_but_semantic_authority_stays_hold(self) -> None:
         observation = load_c1_d0b_structural_observation()
@@ -72,6 +76,85 @@ class MethodologyControlsTest(unittest.TestCase):
         self.assertTrue(registered["observation_adjudication"]["structurally_feasible"])
         self.assertFalse(self.state["summary"]["c1_d0b_semantic_authority"])
         self.assertFalse(self.state["summary"]["c1_d0b_downstream_authority"])
+
+    def test_c1_d0b_claim_binding_correction_preserves_envelope_but_blocks_semantic_upgrade(self) -> None:
+        observation = load_c1_d0b_claim_binding_observation()
+        result = adjudicate_c1_d0b_claim_binding_observation(observation)
+        self.assertTrue(result["envelope_feasible"], result["errors"])
+        self.assertFalse(result["claim_binding_ready"])
+        self.assertFalse(result["semantic_authority"])
+        self.assertFalse(any(result["authority"].values()))
+        self.assertEqual(observation["receipt_envelopes_packet_bound"], 24)
+        self.assertEqual(observation["candidate_memory_atoms"], 423)
+        self.assertEqual(observation["certified_branch_residual_atoms"], 0)
+        self.assertEqual(observation["claim_specific_evidence_refs_bound"], 0)
+        self.assertEqual(observation["per_claim_validity_adjudicated_atoms"], 0)
+        self.assertTrue(observation["packet_level_evidence_binding"])
+        self.assertFalse(observation["claim_level_evidence_binding"])
+        registered = self.state["reviewer_gates"]["c1_d0b_claim_binding_v2"]
+        self.assertTrue(registered["observation_loaded"])
+        self.assertTrue(registered["observation_adjudication"]["envelope_feasible"])
+        self.assertFalse(self.state["summary"]["c1_d0b_claim_binding_ready"])
+        self.assertFalse(self.state["summary"]["c1_d0b_claim_binding_semantic_authority"])
+        self.assertFalse(self.state["summary"]["c1_d0b_claim_binding_downstream_authority"])
+
+    def test_c1_d0b_claim_binding_gate_fails_closed_on_fake_claim_or_semantic_readiness(self) -> None:
+        observation = copy.deepcopy(load_c1_d0b_claim_binding_observation())
+        observation["certified_branch_residual_atoms"] = 1
+        observation["claim_specific_evidence_refs_bound"] = 1
+        observation["claim_level_evidence_binding"] = True
+        observation["semantic_validity_adjudicated"] = True
+        observation["authority"]["provider"] = True
+        result = adjudicate_c1_d0b_claim_binding_observation(observation)
+        self.assertFalse(result["envelope_feasible"])
+        self.assertTrue(any("certified_branch_residual_atoms" in error for error in result["errors"]))
+        self.assertTrue(any("claim_specific_evidence_refs_bound" in error for error in result["errors"]))
+        self.assertTrue(any("claim-level evidence binding" in error for error in result["errors"]))
+        self.assertTrue(any("semantic validity" in error for error in result["errors"]))
+        self.assertTrue(any("downstream authority" in error for error in result["errors"]))
+        self.assertFalse(result["claim_binding_ready"])
+        self.assertFalse(result["semantic_authority"])
+        self.assertFalse(any(result["authority"].values()))
+
+    def test_c1_d0b1_operational_contrast_go_keeps_atom_level_causal_purity_on_hold(self) -> None:
+        observation = load_c1_d0b1_intervention_identifiability_observation()
+        result = adjudicate_c1_d0b1_intervention_identifiability(observation)
+        self.assertTrue(result["operational_contrast_identifiable"], result["errors"])
+        self.assertFalse(result["causal_atom_purity_certified"])
+        self.assertFalse(result["semantic_authority"])
+        self.assertFalse(any(result["authority"].values()))
+        self.assertEqual(observation["pairs"], 24)
+        self.assertEqual(observation["same_pre_writer_trajectory_projection_pairs"], 24)
+        self.assertEqual(observation["same_resolved_writer_model_within_pair"], 24)
+        self.assertEqual(observation["temperature_zero_pairs"], 24)
+        self.assertEqual(observation["branch_memory_content_changed_pairs"], 24)
+        self.assertEqual(observation["explicit_decoding_seed_bound_pairs"], 0)
+        self.assertEqual(observation["same_condition_same_trajectory_replication_bound_pairs"], 0)
+        self.assertEqual(observation["f0c_tasks_complete"], 8)
+        self.assertTrue(observation["f0c_gate_pass"])
+        self.assertEqual(observation["certified_branch_residual_atoms"], 0)
+        self.assertEqual(observation["claim_specific_evidence_refs_bound"], 0)
+        registered = self.state["reviewer_gates"]["c1_d0b1_intervention_identifiability"]
+        self.assertTrue(registered["observation_loaded"])
+        self.assertTrue(registered["observation_adjudication"]["operational_contrast_identifiable"])
+        self.assertTrue(self.state["summary"]["c1_d0b1_operational_contrast_identifiable"])
+        self.assertFalse(self.state["summary"]["c1_d0b1_causal_atom_purity_certified"])
+        self.assertFalse(self.state["summary"]["c1_d0b1_semantic_authority"])
+        self.assertFalse(self.state["summary"]["c1_d0b1_downstream_authority"])
+
+    def test_c1_d0b1_gate_fails_closed_on_fake_atom_level_causal_upgrade(self) -> None:
+        observation = copy.deepcopy(load_c1_d0b1_intervention_identifiability_observation())
+        observation["atom_level_causal_residual_purity_certified"] = True
+        observation["certified_branch_residual_atoms"] = 1
+        observation["authority"]["provider"] = True
+        result = adjudicate_c1_d0b1_intervention_identifiability(observation)
+        self.assertFalse(result["operational_contrast_identifiable"])
+        self.assertTrue(any("atom-level causal residual purity" in error for error in result["errors"]))
+        self.assertTrue(any("certified_branch_residual_atoms" in error for error in result["errors"]))
+        self.assertTrue(any("downstream authority" in error for error in result["errors"]))
+        self.assertFalse(result["causal_atom_purity_certified"])
+        self.assertFalse(result["semantic_authority"])
+        self.assertFalse(any(result["authority"].values()))
 
     def test_c1_d0b_structural_gate_fails_closed_on_fake_semantic_or_branch_authority(self) -> None:
         observation = copy.deepcopy(load_c1_d0b_structural_observation())

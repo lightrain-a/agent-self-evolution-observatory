@@ -4,7 +4,7 @@ Paper: `D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE`
 
 Current title: **Reward Errors Change Memory Before They Change Policy**
 
-Plan status: `D0_A_COMPLETE -> D0_B_EVIDENCE_AUTHORITY_CONTRACT_ONLY`
+Plan status: `D0_A_COMPLETE -> D0_B0_ENVELOPE_COMPLETE -> D0_B1A_OPERATIONAL_CONTRAST_GO -> D0_B1C_EVIDENCE_BINDING_NEXT`
 
 Execution status: `DESIGN_ONLY / ZERO_PROVIDER_AUTHORITY / ZERO_NEW_SCIENTIFIC_PROVIDER_CALLS`
 
@@ -106,7 +106,7 @@ Needed because native branch effects are sparse even after retrieval. Applicabil
 
 Every component is removable. If neutral core, always-on factorization, or a simple similarity rule ties the full method, remove/stop the complex method.
 
-## 6. D0-A complete; D0-B structural receipt audit complete, semantic authority still zero-call HOLD
+## 6. D0-A complete; D0-B0 envelope complete; D0-B1a operational contrast GO, causal-atom purity HOLD
 
 D0 is the next authorized **design/analysis** action. It uses archived artifacts only.
 
@@ -132,9 +132,9 @@ Prefer threshold-free diagnostics first. If thresholds are needed, freeze them b
 
 D0-A only adjudicates the representation/applicability layer. It can keep the residual object measurable, but it cannot authorize a provider experiment. Its observed result demotes neutral/metadata, generic common-core/residual, and semantic applicability to baselines.
 
-### D0-B structural receipt audit — executed with zero provider/GPU calls
+### D0-B0 envelope audit + v2 reviewer correction — executed with zero provider/GPU calls
 
-The first D0-B subgate is now executed as a structural audit only. It tests whether branch authority *could in principle be receipted* against exact frozen objects before any semantic validity rule is allowed to make a decision. It remains **0 provider calls / 0 GPU runs** and does not decide whether any branch residual is actually supported.
+The first D0-B subgate establishes only receipt-envelope lineage: exact frozen trajectory lineage, branch-memory hashes, and a released pre-writer evidence packet can be content-addressed without reward/outcome leakage. A v2 reviewer audit then checks what that structural result actually licenses. It remains **0 provider calls / 0 GPU runs** and does not decide whether any parsed memory atom is a branch residual or whether any residual is supported.
 
 D0-B questions:
 
@@ -145,13 +145,15 @@ D0-B questions:
 5. Can authority decisions be reproduced under deterministic or preregistered extraction rules?
 6. Does a fresh closest-work gate leave this exact same-trajectory residual + evidence-trigger authority open?
 
-The structural subgate now passes: all **24/24** frozen source pairs (20 Shopping, 4 Reddit) bind an outcome-excluded pre-writer trajectory projection, the exact recomputed writer-input action summary, both success/failure memory hashes, deterministic residual-claim IDs, and released pre-writer browser-state evidence. The audit binds **423 residual-claim IDs**. It deliberately assigns semantic validity to **0/423** claims and produces **0** nonzero branch-authority receipts. Therefore the current verdict is **`D0B_STRUCTURAL_GO_SEMANTIC_AUTHORITY_HOLD`**.
+D0-B0 envelope integrity passes for all **24/24** frozen source pairs (20 Shopping, 4 Reddit). The corrected v2 audit reconstructs all **423/423** deterministic `Title/Description/Content` memory atoms, but finds **0/423 certified branch-residual identities**, **0/423 exact claim-specific evidence refs**, **0/423 semantic validity decisions**, and **0** nonzero branch-authority receipts.
 
-Full D0-B is `GO -> DESIGN ELIGIBLE ONLY` only if the remaining semantic/evidence questions also hold. It is `STOP/MERGE` if neutral/metadata, generic factorization, semantic applicability, or matched query-conditioned reuse reproduces the same authority decisions; if evidence validity is a transformed reward label; if evidence cannot be bound without outcome leakage; if the gate degenerates; or if current work directly subsumes the residual.
+D0-B1a now resolves the intervention-level identity without any new provider/GPU call. Across those 24 pairs, **24/24** bind the same pre-writer trajectory projection, **24/24** resolve to the same writer model within pair, **24/24** use temperature 0, and **24/24** change branch-memory content. The archived eight-task F0C control also shows the S/F reflection-mode change exceeds a stronger same-mode wording perturbation (mean between-minus-within distance **0.104978**, exact one-sided sign-flip **p=0.007812**). This is enough to define the scientific object operationally as `D_tau = Delta(W_success(tau), W_failure(tau))`.
+
+It is **not** enough to certify atom-level causal purity: the current 24-pair pool binds **0 explicit decoding seeds** and **0 same-condition same-trajectory replications/noise-floor controls**. Therefore the current verdict is **`D0B1_OPERATIONAL_CONTRAST_GO_CAUSAL_ATOM_IDENTITY_HOLD`**. The method may continue with operational branch-contrast units; it may not call every textual delta a pure causal residual. D0-B1c must next compile reproducible operational contrast units and bind exact outcome-independent evidence refs/hashes. Only after B1c passes can D0-B2 assign `SUPPORTED / CONTRADICTED / UNVERIFIABLE` and ask whether that signal adds information beyond similarity/applicability. Full D0-B is `GO -> DESIGN ELIGIBLE ONLY` only if B1c, B2, and fresh collision clearance hold.
 
 No D0 state automatically grants scientific, provider, GPU, claim-expansion, or submission authority.
 
-The versioned program is now machine-bound to `C1_EXECUTABLE_CLOSURE_REVIEWER_GATE_V3` in `research_pipeline.methodology_controls`. The gate fails closed unless all baseline-only components remain demoted, the novelty set is exactly `{same-trajectory-counterfactual-branch-residual, evidence-gated-trigger-authority}`, the trajectory pair is byte-identical, evidence validity is claim-bound and outcome-independent, an evidence receipt is required before any branch-specific authority, contradicted/unverifiable claims default to withholding authority, the D0 provider-call budget is exactly zero, and all downstream authority fields remain false. The receipt contract is itself content-addressed: it binds exact trajectory and branch-memory hashes, residual-claim identity, exact evidence refs/hashes, validity state, extractor/adjudicator versions, and the authority decision, while explicitly carrying zero provider/scientific authority. Passing this schema/adjudication gate means only that D0-B design work is admissible; it is not a D0-B scientific result.
+The versioned program is machine-bound to `C1_EXECUTABLE_CLOSURE_REVIEWER_GATE_V3` in `research_pipeline.methodology_controls`. The gate fails closed unless all baseline-only components remain demoted, the novelty set is exactly `{same-trajectory-counterfactual-branch-residual, evidence-gated-trigger-authority}`, the trajectory pair is controlled, evidence validity is claim-bound and outcome-independent, an evidence receipt is required before any branch-specific authority, contradicted/unverifiable claims default to withholding authority, the D0 provider-call budget is exactly zero, and all downstream authority fields remain false. Additional reviewer gates enforce **packet evidence != claim evidence**, **memory atom != certified residual claim**, and **operational branch contrast != atom-level causal purity**. Without seed binding or a same-condition noise-floor control, causal-atom wording fails closed even though the operational paired contrast remains admissible.
 
 ### D0 observed on 2026-08-24 — representation feasible, semantic branch selectivity weak
 
@@ -168,7 +170,7 @@ Observed:
 
 Adjudication: the core/residual representation is not obviously degenerate and target relevance varies meaningfully, but **semantic target relevance alone is not sufficient evidence for branch authority**. A simple similarity gate is therefore demoted to the strongest simple baseline, not promoted as CBRG.
 
-This closes **D0-A** and the **D0-B structural receipt-feasibility subgate**, not the full D0 sequence. The provider method experiment remains **HOLD**. The remaining D0-B work must define and audit an outcome-independent, claim-bound semantic validity rule that maps each bound residual claim to `SUPPORTED`, `CONTRADICTED`, or `UNVERIFIABLE`, then test whether that validity signal adds zero-call incremental information beyond neutral/metadata, generic core/residual, and semantic applicability baselines. The structural audit cannot be cited as evidence that any residual is valid. If no such semantic signal can be defined without using the reward bit, terminal outcome, or semantic similarity as self-validating evidence, STOP/MERGE CBRG and retain the analysis paper.
+This closes **D0-A**, **D0-B0 envelope integrity**, and **D0-B1a operational intervention contrast**, not the full D0 sequence. The provider method experiment remains **HOLD**. D0-B1c must now compile reproducible branch-contrast units and exact claim-specific evidence refs/hashes on frozen support; atom-level causal purity stays explicitly unresolved unless a later noise-floor control is authorized. Only after B1c may D0-B2 define a semantic validity rule mapping operational contrast claims to `SUPPORTED`, `CONTRADICTED`, or `UNVERIFIABLE` and test incremental information beyond neutral/metadata, generic core/residual, and semantic applicability baselines. If B1c cannot bind the scientific object without reward/outcome leakage—or B2 collapses to all-unverifiable / similarity in disguise—STOP/MERGE CBRG and retain the analysis paper.
 
 ## 7. Fresh decisive experiment — only after D0 + Problem/Economy gate
 

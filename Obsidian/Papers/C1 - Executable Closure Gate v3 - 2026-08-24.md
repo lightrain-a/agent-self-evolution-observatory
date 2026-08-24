@@ -2,7 +2,7 @@
 knowledge_version: C1-CLOSURE-v3-20260824
 paper_id: D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE
 paper_title: Reward Errors Change Memory Before They Change Policy
-status: D0A_COMPLETE_D0B_CONTRACT_ONLY_PROVIDER_HOLD
+status: D0A_COMPLETE_D0B1_OPERATIONAL_CONTRAST_GO_CAUSAL_ATOM_HOLD
 supersedes: C1 - Reward Errors Change Memory Before Policy
 scientific_provider_calls_added: 0
 ---
@@ -106,7 +106,7 @@ Decision:
 - **semantic applicability alone fails the branch-authority requirement and is frozen as a baseline**;
 - no provider execution is authorized.
 
-## D0-B · structural receipt audit passed; semantic evidence authority remains HOLD
+## D0-B · envelope audit passed; claim binding and semantic evidence authority remain HOLD
 
 No new scientific experiment is opened in this revision. The first D0-B subgate has now been executed as a frozen **zero-call structural audit**; semantic validity is still unadjudicated.
 
@@ -130,15 +130,28 @@ D0-B must answer, on outcome-independent archived/frozen support:
 - the evidence signal is non-degenerate and adds incremental information beyond the strongest same-information baseline;
 - current closest work does not subsume the exact residual.
 
-The structural subgate is now `GO`: **24/24** frozen source pairs (20 Shopping + 4 Reddit) can be content-addressed back to an outcome-excluded pre-writer trajectory projection, the exact recomputed writer-input action summary, both branch-memory hashes, deterministic residual-claim IDs, and released pre-writer browser-state evidence. This creates **423** bound residual-claim IDs, but semantic validity is assigned to **0/423** claims and **0** receipts carry nonzero branch authority. Current verdict: `D0B_STRUCTURAL_GO_SEMANTIC_AUTHORITY_HOLD`.
+Historical v1 established a narrower fact than its original wording suggested: **24/24** frozen source pairs (20 Shopping + 4 Reddit) can be content-addressed back to an outcome-excluded pre-writer trajectory projection, the exact recomputed writer-input action summary, both branch-memory hashes, and a released pre-writer browser-state evidence packet. It also assigned deterministic IDs to **423** parsed `Title/Description/Content` memory atoms.
 
-A full D0-B GO still requires the remaining evidence-validity and incremental-information questions to pass. The structural GO grants **zero** scientific/provider/GPU/claim-expansion/submission authority.
+The v2 reviewer correction makes the missing layer explicit: those **423 atoms are not yet certified branch-residual claims**, and a receipt-level evidence-packet SHA is **not** an exact claim-specific evidence reference. Current measured state is therefore:
+
+- receipt envelopes packet-bound: **24/24**;
+- candidate memory atoms reconstructed: **423/423**;
+- certified same-trajectory branch-residual atoms: **0/423**;
+- claim-specific exact evidence refs: **0/423**;
+- semantically adjudicated atoms: **0/423**;
+- nonzero branch-authority receipts: **0**.
+
+The subsequent D0-B1 identifiability audit sharpens what “residual identity” can mean without new calls. Across the same frozen 24 pairs, **24/24** use an identical pre-writer trajectory projection within the S/F pair, **24/24** resolve to the same writer model within pair, **24/24** use temperature 0, and **24/24** produce different branch-memory content. The archived eight-task F0C prompt-mode control independently shows that success/failure reflection changes memory more than a stronger same-mode wording perturbation (mean between-minus-within distance **0.104978**, exact one-sided sign-flip **p=0.007812**).
+
+That supports an **operational same-trajectory branch contrast**, but it does not certify atom-level causal purity: the current 24 pairs bind **0/24 explicit decoding seeds** and **0/24 same-condition same-trajectory replication/noise-floor controls**. Therefore individual `Title/Description/Content` atoms cannot yet be described as purely caused by the reward/reflection label.
+
+Current verdict: `D0B1_OPERATIONAL_CONTRAST_GO_CAUSAL_ATOM_IDENTITY_HOLD`. CBRG may continue only with an operational definition such as `D_tau = Delta(W_success(tau), W_failure(tau))`; “causal residual atom” language remains forbidden unless a later frozen seed/noise-floor control supports it. The next zero-call gate is D0-B1c: compile reproducible branch-contrast units and bind exact per-unit outcome-independent evidence refs. D0-B2 semantic adjudication remains locked. All scientific/provider/GPU/claim-expansion/submission authority remains **false**.
 
 ### Machine binding
 
 This page is not the enforcement surface. The versioned JSON program is bound to `C1_EXECUTABLE_CLOSURE_REVIEWER_GATE_V3` in `research_pipeline.methodology_controls`. The machine gate permits D0 design only when the novelty set is exactly the same-trajectory counterfactual branch residual plus evidence-gated trigger authority; all neutral/metadata, generic core/residual, semantic applicability, query-conditioned reuse, provenance authorization, and success/failure reflection components remain baseline-only. It also requires byte-identical trajectory pairing, outcome-independent claim-bound evidence, receipt-before-authority, fail-closed handling of contradicted/unverifiable evidence, fresh collision clearance before ProblemGate, a zero provider-call D0 budget, and zero downstream authority. The evidence receipt itself must be content-addressed and bind the exact trajectory hash, both branch-memory hashes, residual-claim identity, exact evidence refs/hashes, validity state, extractor/adjudicator versions, and the resulting authority decision; the receipt can never escalate scientific or provider authority.
 
-The machine now registers both the residual-design gate and a second fail-closed D0-B structural-observation gate. A PASS means the contract shape is admissible and the 24-pair receipt structure is reproducibly bindable while semantic authority remains false. It does **not** mean “D0-B passed scientifically,” “423 claims are supported,” or “fresh execution authorized.” Any future artifact that changes semantic-adjudicated claims or nonzero branch authority away from zero without a separately versioned semantic adjudicator fails this structural gate.
+The machine now keeps the historical receipt-envelope audit visible and registers stricter claim-binding and intervention-identifiability gates. It fails closed if packet-level evidence hashing is promoted to claim-level evidence, if a parsed memory atom is renamed a certified residual without an explicit operational contrast identity, if an operational branch contrast is upgraded to atom-level causal purity without seed/noise-floor control, or if semantic/branch authority appears before exact claim evidence is bound. It does **not** mean “D0-B passed scientifically,” “423 claims are supported,” “branch difference equals pure causal effect,” or “fresh execution authorized.”
 
 ### D0-B STOP / MERGE
 
@@ -181,4 +194,4 @@ The primary question is not “does the gate reject bad memory?” It is whether
 - GPU authority: **false**;
 - claim-expansion authority: **false**;
 - submission authority: **false**;
-- next permitted action: **D0-B zero-call semantic evidence-adjudicator design/audit only**; fresh provider execution remains locked.
+- next permitted action: **D0-B1c zero-call operational branch-contrast compiler + exact claim-evidence locator only**; semantic adjudication and fresh provider execution remain locked.
