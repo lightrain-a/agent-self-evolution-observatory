@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis": "second-exact-support-substrate-qualification-tournament",
+  "date": "2026-08-24",
+  "qualification_rule": {
+    "exact_support_requires": [
+      "task/semantic-unit rows are fixed independently of STRI outcomes",
+      "positive support edges have author/released executable or contractual provenance",
+      "zero edges are justified by the released support contract rather than absence from a retrieval/availability list",
+      "the candidate does not use downstream success/failure to define support"
+    ],
+    "analogue_allowed_when": "The released object is an author/expert task-skill selection or relevance graph but omitted edges are not proven unsupported.",
+    "fail_closed": true
+  },
+  "candidates": [
+    {
+      "name": "AgentSkillOS benchmark oracle sets",
+      "paper": "Organizing, Orchestrating, and Benchmarking Agent Skills at Ecosystem Scale",
+      "arxiv": "2603.02176",
+      "source": "https://github.com/ynulihao/AgentSkillOS",
+      "first_party_commit": "c3cfae10ea34a13973c461273ad9c5cc4aa907fe",
+      "released_object": "30 task JSON files with author-specified skills lists; workflow specified mode passes those skill names directly and skips discovery",
+      "positive_edge_provenance": "author-specified expected/oracle skill set",
+      "zero_edge_provenance": "not sufficient: absence from task.skills does not prove inability to support the task",
+      "decision": "QUALIFY_AUTHOR_ORACLE_SET_ANALOGUE_ONLY",
+      "exact_support_certificate_authorized": false,
+      "analogue_artifact": "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json"
+    },
+    {
+      "name": "SWE-Skills-Bench",
+      "paper": "SWE-Skills-Bench: Do Agent Skills Actually Help in Real-World Software Engineering?",
+      "arxiv": "2603.15401",
+      "source": "https://huggingface.co/datasets/GeniusHTX/SWE-Skills-Bench",
+      "released_object": "49 paired records, each binding one skill_id and skill document to one task/repository and deterministic test_code",
+      "positive_edge_provenance": "benchmark pairing identifies the tested skill-task intervention",
+      "zero_edge_provenance": "not sufficient: no released complete 49x49 cross-skill applicability/support matrix; pytest verifies task output, not semantic inability of omitted skills",
+      "decision": "STOP_AS_SECOND_EXACT_SUPPORT_SUBSTRATE",
+      "exact_support_certificate_authorized": false,
+      "reopen_condition": "A released or independently preregistered complete cross-skill applicability/support contract with justified zero edges."
+    },
+    {
+      "name": "SkillLearnBench",
+      "paper": "SkillLearnBench: Benchmarking Continual Learning Methods for Agent Skill Generation on Real-World Tasks",
+      "arxiv": "2604.20087",
+      "source": "https://github.com/cxcscmu/SkillLearnBench",
+      "released_object": "20 skill-dependent tasks / 100 verified instances with task verifiers and task-local human-authored/generated skills",
+      "positive_edge_provenance": "task-local skill dependence and verifier-backed downstream evaluation",
+      "zero_edge_provenance": "not sufficient: no complete all-task x all-skill semantic support relation",
+      "decision": "STOP_AS_SECOND_EXACT_SUPPORT_SUBSTRATE",
+      "exact_support_certificate_authorized": false,
+      "reopen_condition": "A complete author-defined or executable support matrix over the released task and skill pool."
+    },
+    {
+      "name": "SkillsBench task-local skill availability",
+      "source": "https://github.com/benchflow-ai/skillsbench",
+      "released_object": "task-local installed skill directories and incomplete required_skills metadata",
+      "zero_edge_provenance": "not sufficient; 79/87 task metadata/local-availability mismatches in the frozen qualification audit",
+      "decision": "STOP_AS_SECOND_EXACT_SUPPORT_SUBSTRATE",
+      "exact_support_certificate_authorized": false,
+      "existing_artifact": "generated/asset-first-stri-skillsbench-support-qualification-20260824.json"
+    },
+    {
+      "name": "SkillRouter expert relevance graph",
+      "paper": "SkillRouter: Retrieve-and-Rerank Skill Selection for LLM Agents at Scale",
+      "arxiv": "2603.22455",
+      "released_object": "75-query expert task-skill retrieval relevance graph",
+      "positive_edge_provenance": "expert retrieval relevance",
+      "zero_edge_provenance": "relevance exclusion, not executable semantic inability",
+      "decision": "QUALIFY_RELEVANCE_GRAPH_ANALOGUE_ONLY",
+      "exact_support_certificate_authorized": false,
+      "existing_artifact": "generated/asset-first-stri-skillrouter-relevance-analogue-20260824.json"
+    }
+  ],
+  "summary": {
+    "candidates_screened": 5,
+    "new_exact_support_substrates": 0,
+    "new_external_analogues": 1,
+    "exact_support_search_disposition": "NO_SECOND_EXACT_SUPPORT_SUBSTRATE_QUALIFIED",
+    "next_scientific_reopen_if_more_breadth_needed": "Prefer a preregistered multi-task behavioral replication on a first-party released control seam over relabeling relevance/availability as support."
+  },
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_support_annotations": 0,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "gpu_authority": false
+  }
+}

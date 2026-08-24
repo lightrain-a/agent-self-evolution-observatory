@@ -1,0 +1,9 @@
+dataset,endpoint_id,N_mean,B_mean,T_mean,T_minus_N,B_minus_N,T_minus_B
+EIA,eia-future-cutoff::doc_54edb69113f2,1.0,1.0,1.0,0.0,0.0,0.0
+EIA,eia-future-cutoff::doc_6055cf568717,0.5,1.0,1.0,0.5,0.5,0.0
+EIA,eia-future-cutoff::doc_4ead0febfea2,0.0,1.0,1.0,1.0,1.0,0.0
+EIA,eia-future-cutoff::doc_4385d0dddeb8,0.0,1.0,1.0,1.0,1.0,0.0
+BLS,bls-cpi-cutoff::doc_620281aa5553,0.0,1.0,1.0,1.0,1.0,0.0
+BLS,bls-cpi-cutoff::doc_ba7167003f4e,0.5,1.0,1.0,0.5,0.5,0.0
+BLS,bls-cpi-cutoff::doc_f16689211f85,1.0,1.0,1.0,0.0,0.0,0.0
+BLS,bls-cpi-cutoff::doc_21c49e9a6d31,0.0,0.0,1.0,1.0,0.0,1.0

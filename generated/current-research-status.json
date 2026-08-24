@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-24T07:11:06+00:00",
-  "source_revision": "0094baffacb62220d8dc455c86fbb5adc8deeb48",
+  "generated_at": "2026-08-24T08:10:06+00:00",
+  "source_revision": "3d73b9fc612dd39b80559024ad4b881f4bc351b9",
   "as_of_date": "2026-08-24",
   "headline": {
     "paper_ready": 1,
@@ -160,7 +160,7 @@
     "new_gpu_evidence_required": false,
     "paper_quality_v2_passed": true,
     "paper_quality_content_addressed_completion": true,
-    "paper_quality_content_addressed_files": 59,
+    "paper_quality_content_addressed_files": 64,
     "paper_quality_evidence_debt": 0,
     "paper_quality_missing_ids": [],
     "paper_quality_schema_version": "2.1",

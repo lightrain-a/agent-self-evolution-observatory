@@ -325,6 +325,19 @@ class PaperFirstProblemDiscoveryContractTest(unittest.TestCase):
         self.assertIn("convergent-failure-requires-distinct-methods", audit["blockers"])
         self.assertIn("lane-evidence-missing:CONVERGENT_FAILURE:independence_basis", audit["blockers"])
 
+    def test_problem_first_shadow_prior_does_not_change_live_operator_or_authority(self) -> None:
+        state = build_problem_discovery_contract_state()
+        shadow = state["problem_first_shadow"]
+        self.assertEqual(len(shadow["primitives"]), 4)
+        self.assertEqual(sum(shadow["generation_prior"].values()), 120)
+        self.assertTrue(shadow["normalizes_to_existing_live_lanes"])
+        self.assertFalse(shadow["live_discovery_operator_changed"])
+        self.assertEqual(shadow["provider_calls_authorized"], 0)
+        self.assertFalse(shadow["problem_gate_authority"])
+        self.assertFalse(shadow["scientific_authority"])
+        self.assertEqual(state["policy"]["problem_first_shadow_generation_prior"]["method_innovations"], 15)
+        self.assertTrue(state["policy"]["method_complexity_is_not_a_generation_reward"])
+
     def test_saturation_match_hard_blocks_every_lane(self) -> None:
         candidate = valid_candidate("UNEXPLAINED_BOUNDARY")
         candidate["saturation_scan"] = {"checked": True, "matched_patterns": ["typed-epistemic-authority"]}

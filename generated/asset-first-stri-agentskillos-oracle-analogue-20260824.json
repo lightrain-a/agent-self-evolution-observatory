@@ -1,0 +1,200 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis": "agentskillos-author-oracle-set-analogue",
+  "source": {
+    "paper": "Organizing, Orchestrating, and Benchmarking Agent Skills at Ecosystem Scale",
+    "arxiv": "2603.02176",
+    "repo": "https://github.com/ynulihao/AgentSkillOS",
+    "author_commit": "c3cfae10ea34a13973c461273ad9c5cc4aa907fe",
+    "benchmark_readme_sha256": "4b4ff3126313f186dc7217b1214c95dcc118350058324cead69bdcaf319aba6d",
+    "specified_executor_sha256": "5cbd9f9d80748d0873bb68f38fcc2eddbac69e0576be4167e098738a61996102",
+    "task_model_sha256": "b57053c35b373fe0450f5ea70c030c502ace6a57898026e9e9a00fbdd2cb3a41"
+  },
+  "preflight": {
+    "task_count_30": true,
+    "five_categories_six_each": true,
+    "all_tasks_have_nonempty_oracle_skill_list": true,
+    "benchmark_readme_calls_skills_expected_to_retrieve_and_use": true,
+    "specified_mode_passes_task_skills_directly": true,
+    "specified_mode_documented_as_user_specified_skills": true
+  },
+  "task_count": 30,
+  "category_counts": {
+    "data_computation": 6,
+    "document_creation": 6,
+    "motion_video": 6,
+    "visual_creation": 6,
+    "web_interaction": 6
+  },
+  "unique_oracle_skill_names": 19,
+  "oracle_set_size_distribution": {
+    "1": 10,
+    "2": 13,
+    "3": 6,
+    "4": 1
+  },
+  "regimes": [
+    {
+      "regime": "full",
+      "tasks": 30,
+      "skills": 19,
+      "skill_names": [
+        "citation-management",
+        "data-storytelling",
+        "dev-browser",
+        "docx",
+        "firecrawl-scraper",
+        "frontend-design",
+        "generate-image",
+        "latex-posters",
+        "manim",
+        "media-processing",
+        "meme-factory",
+        "pptx",
+        "remotion",
+        "scientific-slides",
+        "scientific-visualization",
+        "scroll-experience",
+        "sympy",
+        "tuning-hyperparameters",
+        "xlsx"
+      ],
+      "multi_skill_tasks": 20,
+      "multi_skill_fraction": 0.6666666666666666,
+      "minimum_oracle_set_size": 1,
+      "maximum_oracle_set_size": 4,
+      "uniform_oracle_set_exposure_ratio": 4.0,
+      "oracle_set_R_star_analogue": 2.5,
+      "optimal_active_skills": 16
+    },
+    {
+      "regime": "data_computation",
+      "tasks": 6,
+      "skills": 7,
+      "skill_names": [
+        "data-storytelling",
+        "docx",
+        "pptx",
+        "scientific-visualization",
+        "sympy",
+        "tuning-hyperparameters",
+        "xlsx"
+      ],
+      "multi_skill_tasks": 3,
+      "multi_skill_fraction": 0.5,
+      "minimum_oracle_set_size": 1,
+      "maximum_oracle_set_size": 4,
+      "uniform_oracle_set_exposure_ratio": 4.0,
+      "oracle_set_R_star_analogue": 2.0,
+      "optimal_active_skills": 4
+    },
+    {
+      "regime": "document_creation",
+      "tasks": 6,
+      "skills": 7,
+      "skill_names": [
+        "citation-management",
+        "dev-browser",
+        "docx",
+        "generate-image",
+        "pptx",
+        "scientific-slides",
+        "scroll-experience"
+      ],
+      "multi_skill_tasks": 4,
+      "multi_skill_fraction": 0.6666666666666666,
+      "minimum_oracle_set_size": 1,
+      "maximum_oracle_set_size": 3,
+      "uniform_oracle_set_exposure_ratio": 3.0,
+      "oracle_set_R_star_analogue": 2.0,
+      "optimal_active_skills": 3
+    },
+    {
+      "regime": "motion_video",
+      "tasks": 6,
+      "skills": 4,
+      "skill_names": [
+        "manim",
+        "remotion",
+        "scientific-slides",
+        "sympy"
+      ],
+      "multi_skill_tasks": 3,
+      "multi_skill_fraction": 0.5,
+      "minimum_oracle_set_size": 1,
+      "maximum_oracle_set_size": 2,
+      "uniform_oracle_set_exposure_ratio": 2.0,
+      "oracle_set_R_star_analogue": 1.0,
+      "optimal_active_skills": 2
+    },
+    {
+      "regime": "visual_creation",
+      "tasks": 6,
+      "skills": 8,
+      "skill_names": [
+        "dev-browser",
+        "docx",
+        "frontend-design",
+        "generate-image",
+        "latex-posters",
+        "media-processing",
+        "meme-factory",
+        "scroll-experience"
+      ],
+      "multi_skill_tasks": 5,
+      "multi_skill_fraction": 0.8333333333333334,
+      "minimum_oracle_set_size": 1,
+      "maximum_oracle_set_size": 3,
+      "uniform_oracle_set_exposure_ratio": 3.0,
+      "oracle_set_R_star_analogue": 1.0,
+      "optimal_active_skills": 2
+    },
+    {
+      "regime": "web_interaction",
+      "tasks": 6,
+      "skills": 7,
+      "skill_names": [
+        "data-storytelling",
+        "dev-browser",
+        "docx",
+        "firecrawl-scraper",
+        "frontend-design",
+        "scientific-visualization",
+        "xlsx"
+      ],
+      "multi_skill_tasks": 5,
+      "multi_skill_fraction": 0.8333333333333334,
+      "minimum_oracle_set_size": 1,
+      "maximum_oracle_set_size": 3,
+      "uniform_oracle_set_exposure_ratio": 3.0,
+      "oracle_set_R_star_analogue": 1.0,
+      "optimal_active_skills": 3
+    }
+  ],
+  "headline": {
+    "tasks": 30,
+    "categories": 5,
+    "unique_oracle_skills": 19,
+    "multi_skill_tasks": 20,
+    "full_uniform_exposure_ratio": 4.0,
+    "full_oracle_set_R_star_analogue": 2.5,
+    "residual_categories": [
+      "data_computation",
+      "document_creation"
+    ],
+    "equalizable_categories": [
+      "motion_video",
+      "visual_creation",
+      "web_interaction"
+    ],
+    "interpretation": "An independent author-specified multi-skill oracle graph contains both residual and exactly equalizable category geometries. Multi-skill prevalence alone does not determine the oracle-set realizability analogue."
+  },
+  "decision": "QUALIFY_AUTHOR_ORACLE_SET_ANALOGUE_ONLY",
+  "scientific_boundary": "AgentSkillOS task.skills is an author-specified/oracle selection set used to bypass discovery, not a complete executable semantic-support relation. Omitted skills are not proven incapable of supporting a task. Therefore this graph is an oracle-set geometry analogue only and cannot serve as a second exact STRI support certificate.",
+  "new_support_annotations": 0,
+  "new_model_calls": 0,
+  "new_gpu_runs": 0,
+  "claim_expansion": false,
+  "scientific_authority": false
+}

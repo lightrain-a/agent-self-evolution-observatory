@@ -97,7 +97,7 @@ ledger_keys = {str(e["key"]) for e in sources.get("entries", [])}
 check("all_cites_in_bib", cite_keys <= bib_keys, str(sorted(cite_keys - bib_keys)))
 check("all_cites_in_ledger", cite_keys <= ledger_keys, str(sorted(cite_keys - ledger_keys)))
 check("bib_entries_have_ledger", bib_keys <= ledger_keys, str(sorted(bib_keys - ledger_keys)))
-check("all_current_entries_cited", len(cite_keys) == 20 and cite_keys == bib_keys == ledger_keys, f"cites={len(cite_keys)} bib={len(bib_keys)} ledger={len(ledger_keys)}")
+check("all_current_entries_cited", len(cite_keys) == 21 and cite_keys == bib_keys == ledger_keys, f"cites={len(cite_keys)} bib={len(bib_keys)} ledger={len(ledger_keys)}")
 check("ledger_zero_authority", sources.get("scientific_authority") is False)
 
 # Stanford-round experiment-enrichment checks: all are offline structural controls on frozen support.

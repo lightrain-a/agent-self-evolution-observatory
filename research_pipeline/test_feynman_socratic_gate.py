@@ -38,6 +38,28 @@ class FeynmanSocraticGateTest(unittest.TestCase):
         self.assertEqual(audit["status"], "REVISE_CERTIFICATE")
         self.assertIn("decisive_observable", audit["missing_fields"])
 
+    def test_problem_insight_certificate_is_shadow_and_does_not_change_live_clearance(self) -> None:
+        candidate = self.candidate()
+        candidate.update({
+            "primary_contribution_type": "insight",
+            "problem_importance": "The failure affects persistent agents across repeated reuse.",
+            "under_explained_observation": "More retained experience can systematically worsen a bounded class of future decisions.",
+            "missing_insight": "Applicability changes across context even when stored experience remains locally correct.",
+            "minimal_decisive_test": "Hold stored content fixed and vary only applicability context.",
+            "minimal_sufficient_intervention": "Apply an applicability check before reuse.",
+            "insight_predictions": "The harm should concentrate where applicability flips and disappear when the check blocks reuse.",
+        })
+        audit = audit_feynman_socratic_certificate(build_feynman_socratic_certificate(candidate))
+        self.assertEqual(audit["status"], "CLEAR_FOR_PROBLEM_GATE_REVIEW")
+        self.assertEqual(audit["problem_insight_shadow"]["status"], "PROBLEM_INSIGHT_SHADOW_COMPLETE")
+        self.assertTrue(audit["problem_insight_shadow"]["insight_dominant_candidate"])
+        self.assertFalse(audit["problem_insight_shadow"]["live_problem_gate_authority"])
+
+    def test_incomplete_problem_insight_shadow_does_not_retroactively_block_legacy_candidate(self) -> None:
+        audit = audit_feynman_socratic_certificate(build_feynman_socratic_certificate(self.candidate()))
+        self.assertEqual(audit["status"], "CLEAR_FOR_PROBLEM_GATE_REVIEW")
+        self.assertEqual(audit["problem_insight_shadow"]["status"], "PROBLEM_INSIGHT_SHADOW_INCOMPLETE")
+
     def test_typed_existing_reduction_emits_warning_not_authority(self) -> None:
         candidate = self.candidate()
         candidate["semantic_reduction_review"] = {

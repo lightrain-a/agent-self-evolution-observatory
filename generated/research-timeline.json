@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-24T07:20:33+00:00",
+  "generated_at": "2026-08-24T08:44:31+00:00",
   "projection_policy": {
     "read_only": true,
     "display_timezone": "Asia/Shanghai",
@@ -14,15 +14,15 @@
     "canonical_entity_bindings_are_read_only": true
   },
   "summary": {
-    "events": 916,
-    "dated_structured_artifacts_projected": 317,
+    "events": 918,
+    "dated_structured_artifacts_projected": 319,
     "runtime_memory_source": "preserved_committed_snapshot",
     "runtime_memory_events": 6,
-    "key_events": 16,
+    "key_events": 18,
     "authority_bearing_scoped_events": 50,
     "canonical_research_bound_events": 245,
     "canonical_experiment_bound_events": 29,
-    "canonical_paper_bound_events": 177,
+    "canonical_paper_bound_events": 179,
     "canonical_research_items_with_events": 61,
     "canonical_papers_with_events": 3,
     "days": 23,
@@ -31,12 +31,12 @@
       "closure": 116,
       "experiment": 162,
       "idea": 154,
-      "paper": 91,
+      "paper": 93,
       "scientific": 2,
       "system": 366
     },
     "date_counts": {
-      "2026-08-24": 24,
+      "2026-08-24": 26,
       "2026-08-23": 79,
       "2026-08-22": 59,
       "2026-08-21": 52,
@@ -62,6 +62,168 @@
     }
   },
   "events": [
+    {
+      "event_id": "d6077345a47675e8",
+      "occurred_at": "2026-08-24T08:44:31+00:00",
+      "time_precision": "exact",
+      "event_class": "paper",
+      "importance": "key",
+      "origin": "artifact_full_history",
+      "research_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "research_label_zh": "E2 · Temporal Skill · R16",
+      "title": "R16 extension appendix finalized on the same E2 scientific contract",
+      "title_zh": "E2 R16：同篇论文扩展附录完成，scientific contract 不变",
+      "state_before": "SUBMISSION_READY",
+      "state_after": "R16_EXTENSION_APPENDIX_SUBMISSION_READY",
+      "summary": {
+        "en": "R16 integrates the extension as an appendix without creating a new PaperState or revising the core scientific contract; the paper remains READY / SUBMISSION_READY / NO_INTERNAL_ACTION.",
+        "zh": "R16 将扩展实验整合为同篇论文附录，没有创建新 PaperState，也没有修改核心 scientific contract；状态保持 READY / SUBMISSION_READY / NO_INTERNAL_ACTION。"
+      },
+      "why": {
+        "en": "Benign-generic and cross-domain results strengthen attribution boundaries; the failed planning spin-off remains a visible negative result.",
+        "zh": "benign-generic 与 cross-domain 结果增强 attribution boundary；失败的 planning spin-off 作为负结果保留。"
+      },
+      "limitation": {
+        "en": "R14 6.0 / Accept remains the latest external review; R16 has not been externally rescored.",
+        "zh": "R14 的 6.0 / Accept 仍是最近一次外审；R16 尚未重新外审。"
+      },
+      "next_action": "Freeze R16 for human submission/review; no additional internal experiment is required.",
+      "next_action_zh": "冻结 R16，进入人工检查/投稿；当前不再需要内部新增实验。",
+      "reopen_condition": "Broaden only under a new scientific contract or a satisfied future reopen condition.",
+      "reopen_condition_zh": "只有未来扩大 claim 或满足明确 reopen condition 时再重开。",
+      "evidence": [
+        {
+          "label": "Claim Audit",
+          "value": "13/13"
+        },
+        {
+          "label": "Paper Preparation",
+          "value": "8/8"
+        },
+        {
+          "label": "PDF",
+          "value": "17 pages; Conclusion p9; References p10"
+        },
+        {
+          "label": "new paper created",
+          "value": "NO"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "read-only extension/paper history",
+        "scope_zh": "只读扩展实验/论文历史；不新增科研、实验、GPU 或投稿授权。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/temporal-skill-r16-ledger-finalization-20260824.json",
+          "sha256": "bded93e6e540adf4cb5282a78f0347a64958e571dd1a122fe3a468b5ed602aaa",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "论文",
+          "href": "selected-paper.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [
+          {
+            "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+            "source_research_item": null,
+            "paper_stage": "SUBMISSION_READY",
+            "scientific_status": "READY",
+            "submission_ready": true
+          }
+        ],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "c98418b8d43d1e83",
+      "occurred_at": "2026-08-24T08:33:15+00:00",
+      "time_precision": "exact",
+      "event_class": "paper",
+      "importance": "key",
+      "origin": "artifact_full_history",
+      "research_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "research_label_zh": "E2 · Temporal Skill · R16 extension",
+      "title": "Temporal extension adjudicated: appendix integration, planning spin-off stopped",
+      "title_zh": "E2 扩展实验裁决：附录吸收，planning 新论文候选停止",
+      "state_before": "SUBMISSION_READY",
+      "state_after": "R16_EXTENSION_ADJUDICATED",
+      "summary": {
+        "en": "Fresh EIA gives N/B/T=.375/1/1, BLS gives .375/.75/1, and real multi-turn TOOL−CONTEXT leaves no residual. Exploratory planning gains on EIA/BLS fail the prospectively frozen Fed falsifier (25% vs 25%), so the planning spin-off is stopped.",
+        "zh": "fresh EIA 的 N/B/T=.375/1/1，BLS=.375/.75/1；真实 multi-turn TOOL−CONTEXT 无 residual。EIA/BLS 上 exploratory planning 增益未通过 outcome 前冻结的 Fed falsifier（25% vs 25%），因此 planning 新论文候选停止。"
+      },
+      "why": {
+        "en": "The extension is routed by evidence rather than by a requirement to create a new paper.",
+        "zh": "按证据分流，而不是为了必须产生下一篇论文。"
+      },
+      "limitation": {
+        "en": "Each new substrate has four endpoints; follow-up evidence is appendix robustness/boundary and does not rewrite the primary claim.",
+        "zh": "每个新 substrate 只有 4 个 endpoint；follow-up 只作为 appendix robustness/boundary，不重写主 claim。"
+      },
+      "next_action": "Integrate EIA/BLS/multi-turn evidence into the same paper appendix; do not create a planning paper.",
+      "next_action_zh": "EIA/BLS/multi-turn 进入同篇论文附录；不创建 planning 新论文。",
+      "reopen_condition": "A new prospectively frozen independent substrate must show a stable planning-over-single-turn residual under the same-information contract.",
+      "reopen_condition_zh": "只有新的 prospectively frozen 独立 substrate 在 same-information contract 下稳定显示 planning>single-turn residual 才重开 planning scientific object。",
+      "evidence": [
+        {
+          "label": "fresh EIA N/B/T",
+          "value": ".375 / 1.00 / 1.00"
+        },
+        {
+          "label": "BLS N/B/T",
+          "value": ".375 / .750 / 1.00"
+        },
+        {
+          "label": "multi-turn",
+          "value": "BASE=CONTEXT=TOOL=4/4; TOOL called 2/4"
+        },
+        {
+          "label": "Fed prospective planning",
+          "value": "25% vs 25%; 1 win each + 2 ties"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "read-only extension/paper history",
+        "scope_zh": "只读扩展实验/论文历史；不新增科研、实验、GPU 或投稿授权。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/temporal-skill-extension-adjudication-20260824.json",
+          "sha256": "feaa586cefc3832473e9bbb69c3e6410c141c971730dbcf0268e7b0a26e5b6f7",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "论文",
+          "href": "selected-paper.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [
+          {
+            "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+            "source_research_item": null,
+            "paper_stage": "SUBMISSION_READY",
+            "scientific_status": "READY",
+            "submission_ready": true
+          }
+        ],
+        "categories": []
+      }
+    },
     {
       "event_id": "03e0556191f01096",
       "occurred_at": "2026-08-24T07:20:33+00:00",

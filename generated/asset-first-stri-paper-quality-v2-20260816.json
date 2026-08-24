@@ -238,8 +238,8 @@
           "N2",
           "N3"
         ],
-        "purpose": "Stress practical package-weight baselines, calibration-to-heldout transfer, retrieval-budget controls, an external expert relevance analogue, support misspecification, exact edit radius, rewiring, target rays, package-mass constraints, and sparse witnesses.",
-        "decision_rule": "Require the Level-1 residual to survive strongest same-information package weighting and no-refit heldout transfer; require SkillRL identity effects to vanish under placebo/quotient or sufficient capacity; keep external relevance labels explicitly separate from executable support."
+        "purpose": "Stress practical package-weight baselines, heldout/cross-validation transfer, retrieval-budget controls, external expert-relevance and author-oracle-set analogues, second-substrate qualification, support misspecification, exact edit radius, rewiring, target rays, package-mass constraints, and sparse witnesses.",
+        "decision_rule": "Require the Level-1 residual to survive strongest same-information package weighting and no-refit heldout transfer; require SkillRL identity effects to vanish under placebo/quotient or sufficient capacity; require external candidate graphs to pass the same fail-closed support gate before any exact certificate, otherwise report them only as typed analogues."
       },
       {
         "id": "AN-UNCERTAINTY",
@@ -463,6 +463,11 @@
           "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv",
           "research_pipeline/asset_first_stri_skillsbench_support_qualification_20260824.py",
           "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.csv",
+          "research_pipeline/asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "research_pipeline/test_asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "generated/asset-first-stri-second-substrate-qualification-20260824.json",
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -527,6 +532,11 @@
           "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv",
           "research_pipeline/asset_first_stri_skillsbench_support_qualification_20260824.py",
           "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.csv",
+          "research_pipeline/asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "research_pipeline/test_asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "generated/asset-first-stri-second-substrate-qualification-20260824.json",
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -580,6 +590,11 @@
           "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv",
           "research_pipeline/asset_first_stri_skillsbench_support_qualification_20260824.py",
           "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.csv",
+          "research_pipeline/asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "research_pipeline/test_asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "generated/asset-first-stri-second-substrate-qualification-20260824.json",
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -633,6 +648,11 @@
           "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv",
           "research_pipeline/asset_first_stri_skillsbench_support_qualification_20260824.py",
           "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.csv",
+          "research_pipeline/asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "research_pipeline/test_asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "generated/asset-first-stri-second-substrate-qualification-20260824.json",
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -686,6 +706,11 @@
           "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv",
           "research_pipeline/asset_first_stri_skillsbench_support_qualification_20260824.py",
           "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.csv",
+          "research_pipeline/asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "research_pipeline/test_asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "generated/asset-first-stri-second-substrate-qualification-20260824.json",
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -764,7 +789,12 @@
           "generated/asset-first-stri-skillsbench-support-qualification-20260824.json",
           "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv",
           "research_pipeline/asset_first_stri_skillsbench_support_qualification_20260824.py",
-          "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py"
+          "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.csv",
+          "research_pipeline/asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "research_pipeline/test_asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "generated/asset-first-stri-second-substrate-qualification-20260824.json"
         ]
       },
       {
@@ -815,7 +845,12 @@
           "generated/asset-first-stri-skillsbench-support-qualification-20260824.json",
           "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv",
           "research_pipeline/asset_first_stri_skillsbench_support_qualification_20260824.py",
-          "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py"
+          "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.csv",
+          "research_pipeline/asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "research_pipeline/test_asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "generated/asset-first-stri-second-substrate-qualification-20260824.json"
         ]
       },
       {
@@ -855,7 +890,12 @@
           "generated/asset-first-stri-skillsbench-support-qualification-20260824.json",
           "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv",
           "research_pipeline/asset_first_stri_skillsbench_support_qualification_20260824.py",
-          "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py"
+          "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+          "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.csv",
+          "research_pipeline/asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "research_pipeline/test_asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+          "generated/asset-first-stri-second-substrate-qualification-20260824.json"
         ]
       },
       {
@@ -1092,7 +1132,7 @@
       "claim_adjudications": 3,
       "completed_visualizations": 4,
       "content_addressed_required": true,
-      "content_addressed_referenced_files": 59
+      "content_addressed_referenced_files": 64
     },
     "claim_ledger": [
       {
@@ -1259,8 +1299,8 @@
       "status": "PASS_CONTENT_ADDRESSED_COMPLETION",
       "blockers": [],
       "summary": {
-        "referenced_files": 59,
-        "registered_digests": 62
+        "referenced_files": 64,
+        "registered_digests": 67
       }
     },
     "policy": {
@@ -1337,6 +1377,11 @@
     "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv",
     "research_pipeline/asset_first_stri_skillsbench_support_qualification_20260824.py",
     "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py",
+    "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json",
+    "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.csv",
+    "research_pipeline/asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+    "research_pipeline/test_asset_first_stri_agentskillos_oracle_analogue_20260824.py",
+    "generated/asset-first-stri-second-substrate-qualification-20260824.json",
     "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
     "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
     "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -1401,6 +1446,11 @@
     "generated/asset-first-stri-skillsbench-support-qualification-20260824.csv": "a481b87116e634d0f40931e014ee94ae02a77b495c2873e04e3967d266cb756e",
     "research_pipeline/asset_first_stri_skillsbench_support_qualification_20260824.py": "f75fdd7f0605eb09beedc9b6788c3d6ebc93f452ffc374f6e85f9923a2b4d64b",
     "research_pipeline/test_asset_first_stri_skillsbench_support_qualification_20260824.py": "99cf1541709b2e3be258596073712c3aad6d394214c06a15fbc0951605aec509",
+    "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.json": "0063490d02519e509407f2307e882aa3fe83c0af4a2e5a3ed6d2defc6a9e2564",
+    "generated/asset-first-stri-agentskillos-oracle-analogue-20260824.csv": "e71dbeae5333d0e14284f50ef377a2239ada71510b5dd9cb2c6823d2700ccec5",
+    "research_pipeline/asset_first_stri_agentskillos_oracle_analogue_20260824.py": "3115385dbb4f6a2a528257d53e88e4dc1d7f98da43af16377b595ae479b062d1",
+    "research_pipeline/test_asset_first_stri_agentskillos_oracle_analogue_20260824.py": "57a3155911014665887cade97d2070640d4ac35bd0bfe7703e69881ea86d5144",
+    "generated/asset-first-stri-second-substrate-qualification-20260824.json": "ac23dfc16d83d09b7ddbb0ee532b456b4f958759bf6b6e15eb29ea21ee78c567",
     "generated/asset-first-stri-released-controller-clone-audit-20260819.json": "fd837d785e66540ec85f14b9d0e8b21d5f00f0292fc6b55c98f90483bcdb58bf",
     "research_pipeline/asset_first_stri_released_controller_clone_audit.py": "516b3dccb75c99ad50095c9a1ca6359636cada02ee8cfb55dec4333c4a00aa6f",
     "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py": "c2d354a584a1845daf323855ac9e2401e5a0938716950250e8b8e3bc2c68f0ac",
@@ -1418,8 +1468,8 @@
     "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json": "c0a7761fde29b4d3e5f2c5dde752cfed2b5fe8693d1c229bb6e01a0971c86df2",
     "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json": "5b5827579df4824dea0be8f62ff7c0e2a1757e1cb81c071006e127ef3ba8437a",
     "generated/asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json": "e4ab9861c8705be4f27abe589d8348c983f4ac2a53d1f17cbd0bd096d7c625d7",
-    "paper_drafts/stri-20260816-narrow-body.tex": "edb1753667acc3e892ca914aa2d72fdfa8dde8feb81b01c70cb40bc7d22b4a05",
-    "paper_drafts/stri-20260816-tables.tex": "26288b84273e48078dba65d5864563021e66e87bdc60ef078dab4a66629e49cb",
+    "paper_drafts/stri-20260816-narrow-body.tex": "68bd853b23d1f2df26769d91e6647dbd229ad371dee9c2230541406478d5d92f",
+    "paper_drafts/stri-20260816-tables.tex": "02cdf8a3a7c6d5a4ab4461fef9bee0cddf2f57662c7ce52a3cdb0f43b7e128be",
     "paper_drafts/figures/stri-overview.pdf": "dcb62917f4394ecc5e486220d9d411d0afc9028f8f11525831efb4c3b41aebf9",
     "paper_drafts/figures/stri-factor2-witnesses.pdf": "ed10fb150579d42027e6bb24a773d3a17bd6fa2cadc845099f54d7772bb1506d",
     "paper_drafts/figures/stri-rstar-boundary.pdf": "b8740cbe01f3d9f536ee318284257eae546d35c5829d5db0b4b764deab5c3a8c",

@@ -6,6 +6,8 @@ import re
 from collections import Counter, defaultdict
 from typing import Any, Iterable
 
+from .research_reasoning_layer import CONTRIBUTION_LAYERS
+
 SCHEMA_VERSION = "1.0"
 
 POLICY: dict[str, Any] = {
@@ -17,6 +19,8 @@ POLICY: dict[str, Any] = {
     "meta_review_explains_disagreement_and_missing_evidence_instead_of_voting": True,
     "discovery_lesson_requires_repeated_resolved_pattern_across_papers": True,
     "one_off_reviewer_comment_cannot_auto_mutate_research_memory": True,
+    "review_objections_are_attributed_to_contribution_layer_when_possible": True,
+    "method_incrementality_objection_does_not_trigger_method_complexification_when_primary_contribution_is_elsewhere": True,
 }
 
 
@@ -49,11 +53,34 @@ def _priority_components(objection: dict[str, Any], action_class: str) -> tuple[
     return impact, validity, cost, score
 
 
+def _objection_contribution_layer(objection: dict[str, Any]) -> str:
+    explicit = str(objection.get("contribution_layer") or "").strip().lower()
+    if explicit in CONTRIBUTION_LAYERS:
+        return explicit
+    text = " ".join(str(objection.get(key) or "").lower() for key in ("category", "text", "concern"))
+    patterns = (
+        ("phenomenon", ("phenomen", "empirical effect", "failure mode")),
+        ("insight", ("insight", "explanation", "causal story")),
+        ("mechanism", ("mechanism", "mediation", "causal mechanism")),
+        ("method", ("method", "incremental", "algorithm", "architecture", "module")),
+        ("evaluation", ("evaluation", "benchmark", "metric")),
+        ("theory", ("theory", "guarantee", "proof")),
+        ("system", ("system", "engineering", "capability")),
+        ("problem", ("motivation", "problem", "importance", "novelty")),
+    )
+    return next((layer for layer, needles in patterns if any(needle in text for needle in needles)), "")
+
+
 def build_reviewer_issue_graph(
     *, paper_id: str, review_receipts: Iterable[dict[str, Any]],
     resolutions: dict[str, dict[str, Any]] | None = None,
+    paper_contribution: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     resolutions = resolutions or {}
+    paper_contribution = paper_contribution or {}
+    primary_contribution = str(paper_contribution.get("primary_contribution_type") or "").strip().lower()
+    if primary_contribution not in CONTRIBUTION_LAYERS:
+        primary_contribution = ""
     nodes: list[dict[str, Any]] = []
     edges: list[dict[str, Any]] = []
     issue_ids: set[str] = set()
@@ -92,6 +119,12 @@ def build_reviewer_issue_graph(
                 resolved = False
             text = str(objection.get("text") or "")
             claim_ids = [str(x) for x in objection.get("claim_ids") or [] if str(x)]
+            attacked_layer = _objection_contribution_layer(objection)
+            repair_focus = (
+                "strengthen-primary-contribution-evidence-not-method-complexity"
+                if attacked_layer == "method" and primary_contribution and primary_contribution != "method"
+                else action_class
+            )
             node = {
                 "node_id": f"issue:{scoped_id}",
                 "node_type": "REVIEWER_ISSUE",
@@ -101,6 +134,10 @@ def build_reviewer_issue_graph(
                 "reviewer_prose_exposed": False,
                 "underlying_concern": str(objection.get("category") or "unknown"),
                 "affected_claim_ids": claim_ids,
+                "attacked_contribution_layer": attacked_layer,
+                "paper_primary_contribution_type": primary_contribution,
+                "repair_focus": repair_focus,
+                "method_complexification_is_default_repair": False,
                 "decision_critical": objection.get("decision_critical") is True,
                 "evidence_state": _key(objection.get("evidence_state") or "unknown"),
                 "action_class": action_class,
@@ -121,6 +158,7 @@ def build_reviewer_issue_graph(
     nodes.sort(key=lambda row: (-float((row.get("priority") or {}).get("value_per_cost") or 0), str(row.get("issue_id") or "")))
     blockers = sorted(set(blockers))
     open_nodes = [row for row in nodes if row.get("status") == "OPEN"]
+    contribution_attacks = Counter(str(row.get("attacked_contribution_layer") or "untyped") for row in nodes)
     return {
         "schema_version": SCHEMA_VERSION,
         "paper_id": str(paper_id),
@@ -135,6 +173,10 @@ def build_reviewer_issue_graph(
             "resolved": len(nodes) - len(open_nodes),
             "decision_critical_open": sum(row.get("decision_critical") is True for row in open_nodes),
             "targeted_experiment_proposals": sum(row.get("experiment_required") is True for row in open_nodes),
+            "contribution_attack_counts": dict(contribution_attacks),
+            "method_objections_redirected_from_complexification": sum(
+                row.get("repair_focus") == "strengthen-primary-contribution-evidence-not-method-complexity" for row in nodes
+            ),
             "experiment_authorized": 0,
             "blockers": len(blockers),
         },

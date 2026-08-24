@@ -1,0 +1,1327 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "artifact_type": "extension-evidence-content-addressed-manifest",
+  "sets": {
+    "historical_benign": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-benign-generic-deepseek",
+      "files": [
+        {
+          "path": "checkpoint.json",
+          "bytes": 898,
+          "sha256": "5517f3490b9ead19855674f683fb07b1a9b39c02523308aa568b406f2968d098"
+        },
+        {
+          "path": "pilot-gate.json",
+          "bytes": 252,
+          "sha256": "bdd30f068d25a6c0c7e535b3f9b309de6c4b764323ba9bdc46a55a33600da4be"
+        },
+        {
+          "path": "raw/000-7a8339c3cf53dbbf.json",
+          "bytes": 1961,
+          "sha256": "5b0da967abb070056a393189e7eb4b79bd3f27c9120a03c04e7c57c17f4dad70"
+        },
+        {
+          "path": "raw/001-86c5650889dd9997.json",
+          "bytes": 4737,
+          "sha256": "1a4c445612288a38e8658538c98ef91194c919e64069aec583cfa6aacf116fbd"
+        },
+        {
+          "path": "raw/002-8e0b066e31582749.json",
+          "bytes": 2158,
+          "sha256": "30b66d41f91e79021f49f3b99299f8100791103909ef409cc2ba8e85cd326ace"
+        },
+        {
+          "path": "raw/012-bb35390e5ea74990.json",
+          "bytes": 2916,
+          "sha256": "b460a49cf786d43e747c5b6ae9b8191086866455f93fa103079c73da1ad633e5"
+        },
+        {
+          "path": "raw/013-160ae0f3247acf53.json",
+          "bytes": 1613,
+          "sha256": "b19aeb90edbdcb0d44287a98542aca80dee3c84acc30e29d16d62e485ede7744"
+        },
+        {
+          "path": "raw/014-1ebd12e936313065.json",
+          "bytes": 1524,
+          "sha256": "45c13387cfb6b0ce64b7ccc7041ae23b61558f416ea3da164c50163b347536a0"
+        },
+        {
+          "path": "raw/060-856a5080cdfb1d05.json",
+          "bytes": 1638,
+          "sha256": "8edbb0b5fac3f3fee0cc98f0f94d0f4a7abe53d06acedc6a76f2789d0773e758"
+        },
+        {
+          "path": "raw/061-0559e00d936cc8fe.json",
+          "bytes": 1435,
+          "sha256": "9ac56a3507afd837575cb9f9a4f17a6bd10c1180de46773aa2e1506fc23df632"
+        },
+        {
+          "path": "raw/062-794472f134a23d9c.json",
+          "bytes": 5937,
+          "sha256": "6738a99e706839af10072b02297004f9d0c8455b113abc774f9d7fa0da16a88d"
+        },
+        {
+          "path": "raw/117-33930ece1bef1e24.json",
+          "bytes": 1761,
+          "sha256": "3e16f192e9896c3e91cde37d247851f72f6f91578138fe0d83e31354d0306f7f"
+        },
+        {
+          "path": "raw/118-1c46f808921dd8c9.json",
+          "bytes": 8853,
+          "sha256": "67e3c62abefbcb40547cc0c6584c07e5ca2d3a5fb2f899e4a7a275422b22977d"
+        },
+        {
+          "path": "raw/119-8d2a3a3046554637.json",
+          "bytes": 1908,
+          "sha256": "e197921b52e2ebcfaca65ce3c118b5b6d55c32c695d263990a38a7143cf358d1"
+        },
+        {
+          "path": "results.csv",
+          "bytes": 12150,
+          "sha256": "647c2abb725e0dead16aeac249a837efe73d0045d3056d02300031536f60317d"
+        },
+        {
+          "path": "results.jsonl",
+          "bytes": 31021,
+          "sha256": "d6d5a5931da5dea99bece8282f58fcbd9cc7747a0052c0e826f00973720a63cc"
+        }
+      ],
+      "file_count": 16,
+      "raw_json_count": 12,
+      "csv_count": 1,
+      "checkpoint_count": 1
+    },
+    "eia_clean": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-eia-future-nonceiling",
+      "files": [
+        {
+          "path": "authorization.json",
+          "bytes": 721,
+          "sha256": "2e5808c6dbafd36798b9f3ec4d85b4279beeef5036b180dab8780c6f5c190bfb"
+        },
+        {
+          "path": "checkpoint.json",
+          "bytes": 889,
+          "sha256": "4376b2de0b95268e5e9e60b29b466eb8221c3f840e2d34521ecce81410ef5b19"
+        },
+        {
+          "path": "endpoints_clean.json",
+          "bytes": 19679,
+          "sha256": "e5a57c426d027144c2c1881f20b6e9384a2069aa7276502846303771c005d130"
+        },
+        {
+          "path": "pilot-gate.json",
+          "bytes": 226,
+          "sha256": "809f5b6642b727760e3926cd30295484ab52a2603dd2eec9e0bca68600768729"
+        },
+        {
+          "path": "plan.json",
+          "bytes": 5073,
+          "sha256": "e6c4172ca844cffc9e972233a5e610c335617e4d7d8d12c0a9e324d233661edf"
+        },
+        {
+          "path": "raw/000-a0439c0097cd2b89.json",
+          "bytes": 1974,
+          "sha256": "3ae2e7d6c449e44c71b2a086398d5939d2249a7d1aa371dbfa7ddd0f07b6a137"
+        },
+        {
+          "path": "raw/001-c7edad1237159215.json",
+          "bytes": 4740,
+          "sha256": "1fd201c8e502ec4aff51db654fc8b557815f678ec7868d68f14921e603a54a62"
+        },
+        {
+          "path": "raw/002-dfa1a29823c59ba0.json",
+          "bytes": 2171,
+          "sha256": "aeb4b68e496109f52b93e333a3c117bef9a830eb5203c4cb931ebebedead0578"
+        },
+        {
+          "path": "raw/003-c2e6a6489b77dac3.json",
+          "bytes": 2056,
+          "sha256": "fed92fbb2577af820a7dbbf48b95c3e792d3f364d9994ffe9c64adffe91c4b13"
+        },
+        {
+          "path": "raw/004-77913827a9d6815e.json",
+          "bytes": 4742,
+          "sha256": "547bf526f83927df5f8061fab636361db79174b5eec9bad60394dfd2a29e9d59"
+        },
+        {
+          "path": "raw/005-e83dfa5cd27ed128.json",
+          "bytes": 2171,
+          "sha256": "2d7971cad40ef135da7afea4ee00ae8b4fcecef39877e1283ac8fcfb21e99ffa"
+        },
+        {
+          "path": "raw/006-7531580d473a04f4.json",
+          "bytes": 2055,
+          "sha256": "4faa359310a3cc0792edd487f1cee030872ed835aa6e8a17c10cef5f6c23e063"
+        },
+        {
+          "path": "raw/007-b816f616dd0dea77.json",
+          "bytes": 4747,
+          "sha256": "4bbd274c0e5a56fd7229eb0965991fc7d0a23d0c683e55062511dd2796b0ddf6"
+        },
+        {
+          "path": "raw/008-043e207069c6fe85.json",
+          "bytes": 2169,
+          "sha256": "8004371ff6332e0a6ee972a1f90cab45ab80b9399bb67c66a425087b7b8961cf"
+        },
+        {
+          "path": "raw/009-727b4c736a4d3633.json",
+          "bytes": 2058,
+          "sha256": "39c5833cabf9c774023deeb6c70c6ffbd1497e8b245010fc4caa4fc0e6d33001"
+        },
+        {
+          "path": "raw/010-fbbd45915994d9f8.json",
+          "bytes": 4721,
+          "sha256": "85be978482b27769a0089f681a48cc20055e4bf69c5ab69cf05e43cc2ef0b1aa"
+        },
+        {
+          "path": "raw/011-26d0a4809627095c.json",
+          "bytes": 2173,
+          "sha256": "f504ac374b88e5bfd15b65dcf696015ade45a2983684a1f6709bf2a2b68adcd3"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_05_28.html",
+          "bytes": 78378,
+          "sha256": "21c6eb4177af419d20563d2c41148c9fe14846a39b2a696c939dbc2438d2251c"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_06_03.html",
+          "bytes": 78378,
+          "sha256": "dc79e87c8b5ee6407359cd527dbe082c575ab430d11f43b324e948914119f1db"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_06_10.html",
+          "bytes": 78362,
+          "sha256": "4f9fff63f3b0ad8b5ff79abb3b60bf53bf7b8d53aeba91fa4a7bff6ac7e76d66"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_06_17.html",
+          "bytes": 78372,
+          "sha256": "ed786fd2f675526c5b95459a8f2fa72b7ef6235aee56dc75173a6320f1329904"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_06_24.html",
+          "bytes": 78372,
+          "sha256": "c217616984fff45f1f6427c7e35c28ff0eb4bbd7a0db76366f313fe54ff3c8cf"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_07_01.html",
+          "bytes": 78371,
+          "sha256": "01a7700b4df19426fce5ef5a428aa51343ab590d829a55d9db46ce7adc20cd64"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_07_08.html",
+          "bytes": 78342,
+          "sha256": "b6884da433e9e99e0102413368f12a330337be3882d3bbe90a1ab7a7db97a172"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_07_15.html",
+          "bytes": 78353,
+          "sha256": "4ca7dd2dc85f3bacaadcb4526fa6cefdf79f430c8a3ba3f54a55a0b05764a122"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_07_22.html",
+          "bytes": 78353,
+          "sha256": "54edb69113f2d0a9d7770c2418bce181acddd6e587a790e553199cd3c09c4a86"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_07_29.html",
+          "bytes": 78353,
+          "sha256": "6055cf5687173110ce5fa7b102690b69833f541e5ac4b222c2789f6b541abb35"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_08_05.html",
+          "bytes": 78354,
+          "sha256": "4ead0febfea2c7b952b5a1b59bdf9e0c281ed4044d2d49858aef430a9b950b81"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_08_12.html",
+          "bytes": 78333,
+          "sha256": "4385d0dddeb8a80c16bcbfae056c12dbf2f04fe7f5cafb9b293f7a7719a35d06"
+        },
+        {
+          "path": "raw_sources/wpsr_2026_08_19.html",
+          "bytes": 78343,
+          "sha256": "167845c1e70e606a48853b5f3cac3f5723f07054cf2c8b7cf130bca17ffa8b2d"
+        },
+        {
+          "path": "repeat-robustness-r1/authorization.json",
+          "bytes": 697,
+          "sha256": "f1f8972798b69b4c4f007b04c1492e127be333db57a8efa6fce5687195125392"
+        },
+        {
+          "path": "repeat-robustness-r1/checkpoint.json",
+          "bytes": 963,
+          "sha256": "1c8a993a4f630897ca5ddc5e3477fdb82f0d801b6a5363eb731a0aa1a872b833"
+        },
+        {
+          "path": "repeat-robustness-r1/plan.json",
+          "bytes": 5011,
+          "sha256": "3d5d4106f08990a29dbe95cda7b7369830deed6fd64e30a05552361f34e1af90"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/000-8238e37b4d015bb3.json",
+          "bytes": 1974,
+          "sha256": "a9b27aea3b2ba732f4b1657368d469554e6b20d1b4e03f93d0adbf311ecab49f"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/001-54e2fe92ff5199d3.json",
+          "bytes": 4740,
+          "sha256": "5c1cdd8e745a9c13ffff2fa3d2be03ce119637d8baf05b09248d89894e9d87c9"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/002-f77ad34ced5c000b.json",
+          "bytes": 2171,
+          "sha256": "a369ad0089ff82a9d9caf9bfe995953ac064dcfe9df405a4e0142979f6a0b934"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/003-2967d5baa43034fe.json",
+          "bytes": 1974,
+          "sha256": "c147544a42b7248f0aa6d10fa7bd6b3a68da530c915f2d8fb5be0f989a6db760"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/004-d3d9a33327b121d3.json",
+          "bytes": 4745,
+          "sha256": "d0ea2a1085d976c0a07b9e960c1b7446d3196328ddb9589525f0e28a66a3b9a0"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/005-d91d3b08ab7aa3c7.json",
+          "bytes": 2170,
+          "sha256": "a2e4d7927ce8b54280e4810db44b5de36e9e3de552c325e1d277963354a3ef9d"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/006-2f23e613510dcbb4.json",
+          "bytes": 2056,
+          "sha256": "d06ae6e76781ec76def24009d9843a70e74aa63b7342e78c6f8f1c0a992b1197"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/007-268cf442730b59a9.json",
+          "bytes": 4750,
+          "sha256": "b39eaf774fece989fbe9ae2c069b6cc45a9b04bcb29e57db0f9d21ec290242d1"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/008-91f890244d6953f3.json",
+          "bytes": 2141,
+          "sha256": "1151fc1ef20541f1a2418840502c6c5881de2258eb8d396745208e2e21ba66b1"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/009-456258560b68aa00.json",
+          "bytes": 2058,
+          "sha256": "97dbfe7a2713ea7cdda9a91f62ddebc4b4c5b66f1df16bbf6f30be210e30a9a5"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/010-808c7cab8111d449.json",
+          "bytes": 4756,
+          "sha256": "8aac919a7c4c8485bcdf40989e979d67184431c869a86284238e1ad547cdd553"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/011-950c51d0612e1ce9.json",
+          "bytes": 2173,
+          "sha256": "7437b3e01282d297c61248b9178501e33a24d2971a0b7623a5cc63f5b14574ca"
+        },
+        {
+          "path": "repeat-robustness-r1/results.csv",
+          "bytes": 14730,
+          "sha256": "ae2b8e1cdb80236d7a2245a1b43e0e2520dea79f569b9b813828f38f48f4d6a9"
+        },
+        {
+          "path": "repeat-robustness-r1/results.jsonl",
+          "bytes": 29004,
+          "sha256": "6c83a34f6dd3966379b59ae5fcbe8fb5af248b6fd00310fc523c480130b7e921"
+        },
+        {
+          "path": "results.csv",
+          "bytes": 14522,
+          "sha256": "7d2928b36e48405cd9f61a36766f5f0f9fcc6d53ba3dcdd5a1a60f60f3be33c8"
+        },
+        {
+          "path": "results.jsonl",
+          "bytes": 29061,
+          "sha256": "aad94a54e02a1bf57ed67e54aba12c22e715c5cdf45dab9b38859b8038be34da"
+        },
+        {
+          "path": "source_manifest_clean.json",
+          "bytes": 5757,
+          "sha256": "4d3cc76ae3b0bcb4cdd52dc7d227e295be961acc45f807a1dfce0d5116e89f1b"
+        },
+        {
+          "path": "stage.json",
+          "bytes": 1090,
+          "sha256": "9010a40556fc735965e7ea98cedfdd75b5bfcd8bd2654c4e75225b10ccaab522"
+        }
+      ],
+      "file_count": 51,
+      "raw_json_count": 24,
+      "csv_count": 2,
+      "checkpoint_count": 2
+    },
+    "eia_repeat": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-eia-future-nonceiling/repeat-robustness-r1",
+      "files": [
+        {
+          "path": "authorization.json",
+          "bytes": 697,
+          "sha256": "f1f8972798b69b4c4f007b04c1492e127be333db57a8efa6fce5687195125392"
+        },
+        {
+          "path": "checkpoint.json",
+          "bytes": 963,
+          "sha256": "1c8a993a4f630897ca5ddc5e3477fdb82f0d801b6a5363eb731a0aa1a872b833"
+        },
+        {
+          "path": "plan.json",
+          "bytes": 5011,
+          "sha256": "3d5d4106f08990a29dbe95cda7b7369830deed6fd64e30a05552361f34e1af90"
+        },
+        {
+          "path": "raw/000-8238e37b4d015bb3.json",
+          "bytes": 1974,
+          "sha256": "a9b27aea3b2ba732f4b1657368d469554e6b20d1b4e03f93d0adbf311ecab49f"
+        },
+        {
+          "path": "raw/001-54e2fe92ff5199d3.json",
+          "bytes": 4740,
+          "sha256": "5c1cdd8e745a9c13ffff2fa3d2be03ce119637d8baf05b09248d89894e9d87c9"
+        },
+        {
+          "path": "raw/002-f77ad34ced5c000b.json",
+          "bytes": 2171,
+          "sha256": "a369ad0089ff82a9d9caf9bfe995953ac064dcfe9df405a4e0142979f6a0b934"
+        },
+        {
+          "path": "raw/003-2967d5baa43034fe.json",
+          "bytes": 1974,
+          "sha256": "c147544a42b7248f0aa6d10fa7bd6b3a68da530c915f2d8fb5be0f989a6db760"
+        },
+        {
+          "path": "raw/004-d3d9a33327b121d3.json",
+          "bytes": 4745,
+          "sha256": "d0ea2a1085d976c0a07b9e960c1b7446d3196328ddb9589525f0e28a66a3b9a0"
+        },
+        {
+          "path": "raw/005-d91d3b08ab7aa3c7.json",
+          "bytes": 2170,
+          "sha256": "a2e4d7927ce8b54280e4810db44b5de36e9e3de552c325e1d277963354a3ef9d"
+        },
+        {
+          "path": "raw/006-2f23e613510dcbb4.json",
+          "bytes": 2056,
+          "sha256": "d06ae6e76781ec76def24009d9843a70e74aa63b7342e78c6f8f1c0a992b1197"
+        },
+        {
+          "path": "raw/007-268cf442730b59a9.json",
+          "bytes": 4750,
+          "sha256": "b39eaf774fece989fbe9ae2c069b6cc45a9b04bcb29e57db0f9d21ec290242d1"
+        },
+        {
+          "path": "raw/008-91f890244d6953f3.json",
+          "bytes": 2141,
+          "sha256": "1151fc1ef20541f1a2418840502c6c5881de2258eb8d396745208e2e21ba66b1"
+        },
+        {
+          "path": "raw/009-456258560b68aa00.json",
+          "bytes": 2058,
+          "sha256": "97dbfe7a2713ea7cdda9a91f62ddebc4b4c5b66f1df16bbf6f30be210e30a9a5"
+        },
+        {
+          "path": "raw/010-808c7cab8111d449.json",
+          "bytes": 4756,
+          "sha256": "8aac919a7c4c8485bcdf40989e979d67184431c869a86284238e1ad547cdd553"
+        },
+        {
+          "path": "raw/011-950c51d0612e1ce9.json",
+          "bytes": 2173,
+          "sha256": "7437b3e01282d297c61248b9178501e33a24d2971a0b7623a5cc63f5b14574ca"
+        },
+        {
+          "path": "results.csv",
+          "bytes": 14730,
+          "sha256": "ae2b8e1cdb80236d7a2245a1b43e0e2520dea79f569b9b813828f38f48f4d6a9"
+        },
+        {
+          "path": "results.jsonl",
+          "bytes": 29004,
+          "sha256": "6c83a34f6dd3966379b59ae5fcbe8fb5af248b6fd00310fc523c480130b7e921"
+        }
+      ],
+      "file_count": 17,
+      "raw_json_count": 12,
+      "csv_count": 1,
+      "checkpoint_count": 1
+    },
+    "bls_cpi": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-bls-cpi-crossdomain",
+      "files": [
+        {
+          "path": "authorization.json",
+          "bytes": 580,
+          "sha256": "7c40be8331836224afb91f756b1cc30b7470db21731d5efb23e2cc74d491fe05"
+        },
+        {
+          "path": "checkpoint.json",
+          "bytes": 882,
+          "sha256": "6aeb34da5a29f762ebfd0ce988d31022940d9bb10c5bfc20e468bc817ec4a898"
+        },
+        {
+          "path": "endpoints.json",
+          "bytes": 19755,
+          "sha256": "88930816dda3c947227d1c9a428751cb3fdbc983b416e108626a9836f18207da"
+        },
+        {
+          "path": "pilot-gate.json",
+          "bytes": 192,
+          "sha256": "91d072632fce2189446eb663d298605fa2798e834dbe724653465ce078405e8f"
+        },
+        {
+          "path": "plan.json",
+          "bytes": 4972,
+          "sha256": "bff912da0bc2278c64181a79632eedbe27fcae6fd1390e1462940d1ce574001f"
+        },
+        {
+          "path": "raw/000-19e650c7cdf1ecb5.json",
+          "bytes": 2134,
+          "sha256": "8c0f5afc1c9119921f6332a87b76153b3d8554c121818d20ca576760c556a497"
+        },
+        {
+          "path": "raw/001-2df95d337ed5b6fd.json",
+          "bytes": 4711,
+          "sha256": "adf52283466ce176715f49bdd85f9c1dd0b8ae03ba3a69064fda3d6e55954d71"
+        },
+        {
+          "path": "raw/002-d6ebd40bedbe6bc7.json",
+          "bytes": 2021,
+          "sha256": "d5a66407f932cf2295708f303617580f53cfe357f17e0e87f57089ead45090fe"
+        },
+        {
+          "path": "raw/003-d4e44f4d78bd2fde.json",
+          "bytes": 4706,
+          "sha256": "7bdccafa211482d3be6d10c8a70eee2ae91c76f703c537dae535af3e5b214215"
+        },
+        {
+          "path": "raw/004-1c103026a7c468f0.json",
+          "bytes": 1937,
+          "sha256": "cc59bc1ccee34d68277846bda5f2f3416647c0fbc4d8fb3f7797a03c969e003f"
+        },
+        {
+          "path": "raw/005-192a761c8110a59c.json",
+          "bytes": 2136,
+          "sha256": "1b9aa552e7365ec69a001c7b0963ddce02301c6ad2c6e76b0eac19ff7a892af9"
+        },
+        {
+          "path": "raw/006-124bcea2bb2291b8.json",
+          "bytes": 4699,
+          "sha256": "79372c7f9aa8478fb0c33d3c1be661d1c5fcf25c638f76b190f2dcd630ff032d"
+        },
+        {
+          "path": "raw/007-8dc4975d878c0e31.json",
+          "bytes": 1935,
+          "sha256": "47069281126fb229c3209c3a2d272163103c6ce4bc454f95f0f4b1f0ac9f451c"
+        },
+        {
+          "path": "raw/008-1e86173872088353.json",
+          "bytes": 2132,
+          "sha256": "a821e78da489a9dd0d17356af98496d58d77377e11322184fcc69b5b7c39b294"
+        },
+        {
+          "path": "raw/009-ee109ab1cc0cae0c.json",
+          "bytes": 2134,
+          "sha256": "d71239461ff590202f514555ace50e8526d95cc54374097d4baaf6ea9fe14ea7"
+        },
+        {
+          "path": "raw/010-137a2dba1135b9c7.json",
+          "bytes": 4779,
+          "sha256": "e30b3a1d3d49c460a2cd01d6b5c22ace10c949deda55cc5bb192de6513b4f3db"
+        },
+        {
+          "path": "raw/011-37548cb2319fc946.json",
+          "bytes": 2019,
+          "sha256": "6a3181e19137f2a197f619971562eef4f69b847dd483c2070ff204c296b73720"
+        },
+        {
+          "path": "repeat-robustness-r1/authorization.json",
+          "bytes": 624,
+          "sha256": "851830c2e3fa7cca129689a50fc19f7c4c7e3cc2a63b389880b1fd0fef72d218"
+        },
+        {
+          "path": "repeat-robustness-r1/checkpoint.json",
+          "bytes": 957,
+          "sha256": "8085f8ab3e42668972d080650bd41bb52d350d79d32f8c14a77598f657764bf0"
+        },
+        {
+          "path": "repeat-robustness-r1/plan.json",
+          "bytes": 4958,
+          "sha256": "832f52571a4421fe7e7be271f2b6c9b553611cb207051a01bc631373f3b39788"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/000-a9a8361960523ad8.json",
+          "bytes": 2136,
+          "sha256": "b8fa18eea340e65a26d84bec2a24212ce8d12a6520c64d49269b6d004531b0d6"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/001-17ae866fe531da62.json",
+          "bytes": 4714,
+          "sha256": "2aa9b9539e2b50a5268e623e48d61f298da72c946718d734df5a81dbd520416c"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/002-8618228d837317d4.json",
+          "bytes": 2021,
+          "sha256": "69a3b1a896f748f855c70c2094a32c4cdb783c7f65c99397977dc271f4d0bdca"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/003-ff53eea1119f42ac.json",
+          "bytes": 4706,
+          "sha256": "c565e2e8b6111b9347b57e1dbe1bc4a4bbb1899cfceec815bb96d54c8c1496d9"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/004-ee8d9c813aec8194.json",
+          "bytes": 2021,
+          "sha256": "9dd62b47b96aa529d3176ef2b1ad0e1ed80bea351336c228a5c90def0396c793"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/005-9d37fa79796a35bc.json",
+          "bytes": 2136,
+          "sha256": "3d5fe17d3f37e6716170ed8b10f1f2a06fac126371194e063961bdb1b9c69e19"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/006-4f21c1d728549c33.json",
+          "bytes": 4699,
+          "sha256": "7247fd19c0194875987a02c88fd524939b1de7231cd41a3dc4413c6685e9e2f8"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/007-36db412ddc8ee953.json",
+          "bytes": 1934,
+          "sha256": "0673e9990006f767dc0010877d44e9de905921fa399b8d1024cf25065cf6594f"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/008-a4a3a618adc92f0a.json",
+          "bytes": 2132,
+          "sha256": "b462a823159907d08fe4d5f134563af97304683f544acc5680f5102142c3866d"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/009-737b3340bf778851.json",
+          "bytes": 2134,
+          "sha256": "f304a9d83ec01c56bae3e2abf8610cfba9457c7a5131738328b7ce7094fe5496"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/010-0e2e6aa40c6b77e9.json",
+          "bytes": 4782,
+          "sha256": "7c76a5a6e5ff8b6810200420bf046de71308e0fea3d14e6ed5d3b036febab020"
+        },
+        {
+          "path": "repeat-robustness-r1/raw/011-577940c3d47e8098.json",
+          "bytes": 2019,
+          "sha256": "5d8b9f39114615d0b8076b2309c2e54f1f604aad59a078a7fcea10407700f5b4"
+        },
+        {
+          "path": "repeat-robustness-r1/results.csv",
+          "bytes": 14527,
+          "sha256": "1f577597a0981f10129fcb30cb7f1524919fabbd8330edda6a8532a058303f98"
+        },
+        {
+          "path": "repeat-robustness-r1/results.jsonl",
+          "bytes": 28706,
+          "sha256": "6fec9163e6185db9a50d506f46c30a64ce5347b3195a4294ea5def973189bc0b"
+        },
+        {
+          "path": "results.csv",
+          "bytes": 14225,
+          "sha256": "4651eaedd39daea1e9f57a771ee0c9d359fd40805c3fcc62dfca4e3239f1b4e2"
+        },
+        {
+          "path": "results.jsonl",
+          "bytes": 28627,
+          "sha256": "ae5f2165e0dc928bc3b070102653e316ab7e1a0614280e686345e0b2eb515b32"
+        },
+        {
+          "path": "source_manifest.json",
+          "bytes": 7628,
+          "sha256": "ae7030736ce2a3a3730d0678e1ec14e4ea5c7a6dabb868c0fea4e5d7a3b12781"
+        }
+      ],
+      "file_count": 37,
+      "raw_json_count": 24,
+      "csv_count": 2,
+      "checkpoint_count": 2
+    },
+    "bls_repeat": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-bls-cpi-crossdomain/repeat-robustness-r1",
+      "files": [
+        {
+          "path": "authorization.json",
+          "bytes": 624,
+          "sha256": "851830c2e3fa7cca129689a50fc19f7c4c7e3cc2a63b389880b1fd0fef72d218"
+        },
+        {
+          "path": "checkpoint.json",
+          "bytes": 957,
+          "sha256": "8085f8ab3e42668972d080650bd41bb52d350d79d32f8c14a77598f657764bf0"
+        },
+        {
+          "path": "plan.json",
+          "bytes": 4958,
+          "sha256": "832f52571a4421fe7e7be271f2b6c9b553611cb207051a01bc631373f3b39788"
+        },
+        {
+          "path": "raw/000-a9a8361960523ad8.json",
+          "bytes": 2136,
+          "sha256": "b8fa18eea340e65a26d84bec2a24212ce8d12a6520c64d49269b6d004531b0d6"
+        },
+        {
+          "path": "raw/001-17ae866fe531da62.json",
+          "bytes": 4714,
+          "sha256": "2aa9b9539e2b50a5268e623e48d61f298da72c946718d734df5a81dbd520416c"
+        },
+        {
+          "path": "raw/002-8618228d837317d4.json",
+          "bytes": 2021,
+          "sha256": "69a3b1a896f748f855c70c2094a32c4cdb783c7f65c99397977dc271f4d0bdca"
+        },
+        {
+          "path": "raw/003-ff53eea1119f42ac.json",
+          "bytes": 4706,
+          "sha256": "c565e2e8b6111b9347b57e1dbe1bc4a4bbb1899cfceec815bb96d54c8c1496d9"
+        },
+        {
+          "path": "raw/004-ee8d9c813aec8194.json",
+          "bytes": 2021,
+          "sha256": "9dd62b47b96aa529d3176ef2b1ad0e1ed80bea351336c228a5c90def0396c793"
+        },
+        {
+          "path": "raw/005-9d37fa79796a35bc.json",
+          "bytes": 2136,
+          "sha256": "3d5fe17d3f37e6716170ed8b10f1f2a06fac126371194e063961bdb1b9c69e19"
+        },
+        {
+          "path": "raw/006-4f21c1d728549c33.json",
+          "bytes": 4699,
+          "sha256": "7247fd19c0194875987a02c88fd524939b1de7231cd41a3dc4413c6685e9e2f8"
+        },
+        {
+          "path": "raw/007-36db412ddc8ee953.json",
+          "bytes": 1934,
+          "sha256": "0673e9990006f767dc0010877d44e9de905921fa399b8d1024cf25065cf6594f"
+        },
+        {
+          "path": "raw/008-a4a3a618adc92f0a.json",
+          "bytes": 2132,
+          "sha256": "b462a823159907d08fe4d5f134563af97304683f544acc5680f5102142c3866d"
+        },
+        {
+          "path": "raw/009-737b3340bf778851.json",
+          "bytes": 2134,
+          "sha256": "f304a9d83ec01c56bae3e2abf8610cfba9457c7a5131738328b7ce7094fe5496"
+        },
+        {
+          "path": "raw/010-0e2e6aa40c6b77e9.json",
+          "bytes": 4782,
+          "sha256": "7c76a5a6e5ff8b6810200420bf046de71308e0fea3d14e6ed5d3b036febab020"
+        },
+        {
+          "path": "raw/011-577940c3d47e8098.json",
+          "bytes": 2019,
+          "sha256": "5d8b9f39114615d0b8076b2309c2e54f1f604aad59a078a7fcea10407700f5b4"
+        },
+        {
+          "path": "results.csv",
+          "bytes": 14527,
+          "sha256": "1f577597a0981f10129fcb30cb7f1524919fabbd8330edda6a8532a058303f98"
+        },
+        {
+          "path": "results.jsonl",
+          "bytes": 28706,
+          "sha256": "6fec9163e6185db9a50d506f46c30a64ce5347b3195a4294ea5def973189bc0b"
+        }
+      ],
+      "file_count": 17,
+      "raw_json_count": 12,
+      "csv_count": 1,
+      "checkpoint_count": 1
+    },
+    "multiturn": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-multiturn-tool-vs-context",
+      "files": [
+        {
+          "path": "authorization.json",
+          "bytes": 626,
+          "sha256": "678a322f6794622628627a8a25fd91de0b2c78a418a78f26ad34488e40b1e7da"
+        },
+        {
+          "path": "checkpoint.json",
+          "bytes": 269,
+          "sha256": "b592ac92f6afe28e4d6d7da090a173b1b07d226fe7ee9b4b492f76f1af017140"
+        },
+        {
+          "path": "plan.json",
+          "bytes": 1706,
+          "sha256": "ce77470e5a3d62874acfd11dc5fb57376e16f98e85a1ae11d3ffa84ebbe456b3"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4385d0dddeb8/BASE-step2.json",
+          "bytes": 1021,
+          "sha256": "8e0274c975fa69718cad98bf4f7ec447b3d4b39e1223e2e3a1fb76db2364d295"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4385d0dddeb8/CONTEXT-step2.json",
+          "bytes": 1090,
+          "sha256": "6cbbc174ed8147b84e19f254e106c5814f36dec91ea17e080d1e2074dd087cdb"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4385d0dddeb8/TOOL-final.json",
+          "bytes": 1246,
+          "sha256": "c8a9e812109e3ea7c5a339043c5bac0ae7eaa193e37aace3a1fb3022ccf93e5f"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4385d0dddeb8/TOOL-step2.json",
+          "bytes": 1214,
+          "sha256": "b3e037aa5d430e354318afd795982369d40e0c8d16f4a48346fb99e0906f0e5d"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4385d0dddeb8/planning-provider.json",
+          "bytes": 1344,
+          "sha256": "f0848c6f60e3da7af6fcd0c5f1dba746bb1c7dbbd482bfcbc0f2552c106175db"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4385d0dddeb8/planning.json",
+          "bytes": 1228,
+          "sha256": "bb95e11b5d4c3d726d2ef99e46f4e761c4e631c81a529da78b652621b263499e"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4ead0febfea2/BASE-step2.json",
+          "bytes": 1020,
+          "sha256": "2d701d56de2c350d0ebd0348b8470759c950b72f6924c90686180ea46ddd890d"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4ead0febfea2/CONTEXT-step2.json",
+          "bytes": 1086,
+          "sha256": "951fa3ee00f99e4c2197704563e7a51532985fd925adcb1f79736aa425fe58a7"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4ead0febfea2/TOOL-final.json",
+          "bytes": 1243,
+          "sha256": "ffbc5a62ea67d4910ece8f7cd0a688a0621ef971ba9ef3d51f3c3a3fe4ed310c"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4ead0febfea2/TOOL-step2.json",
+          "bytes": 1215,
+          "sha256": "4647f30d3ac7cc81840d4a7b7703c432119699bf3ea93cfd09ef711225b35797"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4ead0febfea2/planning-provider.json",
+          "bytes": 1168,
+          "sha256": "e9ae6a52051c70ea08ba80060d451008cf3a6cd85451a7ca0188011e911beee5"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4ead0febfea2/planning.json",
+          "bytes": 1052,
+          "sha256": "cc761be3551254a4d3cb0a25ae1e41911afac6c227954267a8f4f0da31138874"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_54edb69113f2/BASE-step2.json",
+          "bytes": 1011,
+          "sha256": "f1b0ebd6edfd89aa86f7b1cefca81e476961f262ed3e70e6dbf1ef79dd5ef659"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_54edb69113f2/CONTEXT-step2.json",
+          "bytes": 1086,
+          "sha256": "f3c4ea18f15fccacbee081a524479bf660fa15d7e80f5e32e75b5e05c590404b"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_54edb69113f2/TOOL-step2.json",
+          "bytes": 1008,
+          "sha256": "6362f00084e27837f46de7a01e27723f78a793963aa18421bb44a1d310a5cca2"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_54edb69113f2/planning-provider.json",
+          "bytes": 1269,
+          "sha256": "659d2aef7de9199f6d532798f26df1bc1ee3ce9f98b41fc8f4ccd2224368b09d"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_54edb69113f2/planning.json",
+          "bytes": 1153,
+          "sha256": "f3ec82bca04c08e98de795d81ce37069783e348a5a414a7de9581b93c253d454"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_6055cf568717/BASE-step2.json",
+          "bytes": 1020,
+          "sha256": "28ccabddd10d126f405efae8489b643b8cb578fa468a6e4d8d72c6b5ea0d9377"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_6055cf568717/CONTEXT-step2.json",
+          "bytes": 1089,
+          "sha256": "db78e06699fab7c726ea5f5adb0a8f3d6547a6bc7a668970d110121159ec2f48"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_6055cf568717/TOOL-step2.json",
+          "bytes": 1259,
+          "sha256": "0eb124e1f3243ebb9c38168492dfe1aa8dcbbccda968d9f00fbb36e6600e8362"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_6055cf568717/planning-provider.json",
+          "bytes": 1278,
+          "sha256": "76960a0ff94f24ba6d5fd9f368bb280cf818e6312613fdbfc79a80db37ce1af6"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_6055cf568717/planning.json",
+          "bytes": 1162,
+          "sha256": "3bec4936e966589a108eaf31e7a99f36d353fe286180de772cb0af60f3696b48"
+        },
+        {
+          "path": "results.csv",
+          "bytes": 6286,
+          "sha256": "10f44ea75bf1e3e765fae22a861c48efeaf3aeacf7a3d2ecc8804f5407e51a85"
+        }
+      ],
+      "file_count": 26,
+      "raw_json_count": 22,
+      "csv_count": 1,
+      "checkpoint_count": 1
+    },
+    "eia_planning_repeat": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-multiturn-base-repeat-r1",
+      "files": [
+        {
+          "path": "checkpoint.json",
+          "bytes": 148,
+          "sha256": "71e5a3d3d32f95ef1b592f669704b435e255d9aaaf34b2ea2312794db0ae30fa"
+        },
+        {
+          "path": "plan.json",
+          "bytes": 840,
+          "sha256": "1891103d2ddbfc238aab0b65e25c35d2dad736faeca475b91284e443fad81965"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4385d0dddeb8/final.json",
+          "bytes": 927,
+          "sha256": "8eef69eb3b3b26c8de88f6f686bfd4ac68827531f4d5b4a536c9a7d3ef191725"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4385d0dddeb8/planning.json",
+          "bytes": 1052,
+          "sha256": "c1a56edc6e5272b74affee03f2d6f035b289cd5c5dabadcfff3b6b25ed11c6ac"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4ead0febfea2/final.json",
+          "bytes": 992,
+          "sha256": "0cb073d2c14f8b93d158cc11c3e1570dcefdc37c5001c400b9752d6fe7477e2e"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_4ead0febfea2/planning.json",
+          "bytes": 1174,
+          "sha256": "cd2105dffb4ea6c6054aa1fde26ff1f775584eb6bde908aa94dbcc59ab316992"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_54edb69113f2/final.json",
+          "bytes": 926,
+          "sha256": "9541cb4752d78517c092c118078ab8f37588ae4ddb6d77ed551c0c6011870006"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_54edb69113f2/planning.json",
+          "bytes": 1172,
+          "sha256": "4b496220df9a3ae3cb397f96ea6eb73f14c324f5a3a57767d5893533726740fc"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_6055cf568717/final.json",
+          "bytes": 1059,
+          "sha256": "94ed5c96a1202917237495c659a7782c8ab493f2f37965fc5ae17a713dd585e1"
+        },
+        {
+          "path": "raw/eia-future-cutoff__doc_6055cf568717/planning.json",
+          "bytes": 1189,
+          "sha256": "78a7f55596640467142553e97340fd5d5cc5a101d08df0b5121fdebacaef93ee"
+        },
+        {
+          "path": "results.csv",
+          "bytes": 1781,
+          "sha256": "3064f80d21547fa9b74cfc6d7d9f15a843009406b7e4ec67e0f51d6516accb73"
+        }
+      ],
+      "file_count": 11,
+      "raw_json_count": 8,
+      "csv_count": 1,
+      "checkpoint_count": 1
+    },
+    "bls_planning": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-bls-cpi-planning-base",
+      "files": [
+        {
+          "path": "checkpoint.json",
+          "bytes": 145,
+          "sha256": "04bf85b146004271341b1a30b2f44fc0ad4525639ce0f9785204f4d4dd6ded97"
+        },
+        {
+          "path": "plan.json",
+          "bytes": 794,
+          "sha256": "52ef9c03a15ad0e5bfbfe63fddd23293c90dea6638733a1af40082b9d1e24bc8"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_21c49e9a6d31/final.json",
+          "bytes": 910,
+          "sha256": "9e992f30bb37fe3535f95f70b4c93198d2527cceb206363d9553b81d547adf19"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_21c49e9a6d31/planning.json",
+          "bytes": 1160,
+          "sha256": "b9f712cd5a931be09c4d362ebc34f9e29855c41e274b3a428876c6864e9e3864"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_620281aa5553/final.json",
+          "bytes": 911,
+          "sha256": "86072cecfa36cfc4cbf3cbb3c362a9c22139b7a2af94c0108f3d0fd022021739"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_620281aa5553/planning.json",
+          "bytes": 1038,
+          "sha256": "1c940fa01f0e522334f4c5ee77a81292e6dbb0e9101efc0481099469f5b76e7e"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_ba7167003f4e/final.json",
+          "bytes": 911,
+          "sha256": "3bcb9ea9fa39259bbcc5ea800d95176d7c80314d52fed7275020b67e34f216c6"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_ba7167003f4e/planning.json",
+          "bytes": 1058,
+          "sha256": "cf3bce424387b1ed724d4110695a7fe9ba0bef6fc1d48ee60216d8a38707ecc2"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_f16689211f85/final.json",
+          "bytes": 909,
+          "sha256": "919cc5275cf336b99d9f8ab30521822c7af7215c6225e9651ef068e0c14ead67"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_f16689211f85/planning.json",
+          "bytes": 1124,
+          "sha256": "b86a73e8443b656c41c633ce9817fe49a0688e20e51cf8fb1c23d8b27cec7f8f"
+        },
+        {
+          "path": "results.csv",
+          "bytes": 1744,
+          "sha256": "45cb6ad0a3ea5b0b75c43bc04d038de04625bf0ef6ab763a45c36ebfc9baca9b"
+        }
+      ],
+      "file_count": 11,
+      "raw_json_count": 8,
+      "csv_count": 1,
+      "checkpoint_count": 1
+    },
+    "bls_planning_repeat": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-bls-cpi-planning-base-repeat-r1",
+      "files": [
+        {
+          "path": "checkpoint.json",
+          "bytes": 145,
+          "sha256": "04bf85b146004271341b1a30b2f44fc0ad4525639ce0f9785204f4d4dd6ded97"
+        },
+        {
+          "path": "plan.json",
+          "bytes": 831,
+          "sha256": "0da5ff7ef3167e2849e54c549ed8b1cba54ff0c657100c2c49cd86801da87852"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_21c49e9a6d31/final.json",
+          "bytes": 910,
+          "sha256": "9bc23758a1379d3287bcd456c8bdb2c9c88e2410fdffe815d81194626ba44f85"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_21c49e9a6d31/planning.json",
+          "bytes": 1143,
+          "sha256": "23316b633d6752c85016cefb37bb7e3defabf30a4743ce998463b4bb5498fedd"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_620281aa5553/final.json",
+          "bytes": 911,
+          "sha256": "231752c61c247a941b3791ed20cd1c15bbf1d2ff9f2d43d80805998758875e44"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_620281aa5553/planning.json",
+          "bytes": 1052,
+          "sha256": "7c76eee3092248b039580bac0f06ea65e71617830cb1c99a4bd7bbd7dfa3229e"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_ba7167003f4e/final.json",
+          "bytes": 911,
+          "sha256": "f3d8cecb19817fba0def992c1d2324f05cd42680574b2e3ec83a4b90ac94b9c3"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_ba7167003f4e/planning.json",
+          "bytes": 1164,
+          "sha256": "c12b48e3b9ddec96351cf2e29891e3feae68ad140b42a80c6d406c135530620b"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_f16689211f85/final.json",
+          "bytes": 909,
+          "sha256": "093beea848ff26028218c71ddeb1c2cb3e71be87b840bb04d363aaf6223d41a3"
+        },
+        {
+          "path": "raw/bls-cpi-cutoff__doc_f16689211f85/planning.json",
+          "bytes": 1080,
+          "sha256": "4c88ab054e708f985caecfc0a7093ee8b8bbbebde298a64917cf9606b940b3ab"
+        },
+        {
+          "path": "results.csv",
+          "bytes": 1784,
+          "sha256": "8aa712863f1ed5f7319ec5c39b9563804deb28e44d00fa39dcfe89fb9fdadccf"
+        }
+      ],
+      "file_count": 11,
+      "raw_json_count": 8,
+      "csv_count": 1,
+      "checkpoint_count": 1
+    },
+    "fed_fomc": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-fed-fomc-planning-prospective",
+      "files": [
+        {
+          "path": "authorization.json",
+          "bytes": 579,
+          "sha256": "d6b550b9661d22845bf6acff9247f1e73370969959000a19ef09912c96209f6c"
+        },
+        {
+          "path": "checkpoint.json",
+          "bytes": 910,
+          "sha256": "4919f2bc1167c196ec5a5570ba81d136a63ed2103f58f148afb217e1896626f5"
+        },
+        {
+          "path": "endpoints.json",
+          "bytes": 19723,
+          "sha256": "dc08388db8ec10eb7827ab937760151135a1577c986d2771f9181135144289c9"
+        },
+        {
+          "path": "pilot-gate.json",
+          "bytes": 201,
+          "sha256": "fa58c609ce4e99cfc670bf4d0cb8f2ae59e7c919f394f831b352b62562573609"
+        },
+        {
+          "path": "plan.json",
+          "bytes": 2286,
+          "sha256": "7fdcc76f04bb0640684b61ac78d377408a256d32dbf29813b050390207ef98f0"
+        },
+        {
+          "path": "planning-base/checkpoint.json",
+          "bytes": 146,
+          "sha256": "29083d69ff8aae952653df38b7ad340226af51742ad0d33c2be21ce85a42fcd1"
+        },
+        {
+          "path": "planning-base/plan.json",
+          "bytes": 870,
+          "sha256": "1a080d1014647cc1ed9378e09f9a0a1a41a3ec8412d7b81faada274bd62cbc8a"
+        },
+        {
+          "path": "planning-base/raw/fed-fomc-cutoff__doc_0ba933543292/final.json",
+          "bytes": 999,
+          "sha256": "9760202a21bb15aeecdb1642e99e531a1a5f459d78bcc152d3989e8469b66dc3"
+        },
+        {
+          "path": "planning-base/raw/fed-fomc-cutoff__doc_0ba933543292/planning.json",
+          "bytes": 1075,
+          "sha256": "7ea7c8eea8ffbd7b7fc301e8ca2dbfc76551a0fae1440d98e24e6d79c1d3d393"
+        },
+        {
+          "path": "planning-base/raw/fed-fomc-cutoff__doc_317ea9593211/final.json",
+          "bytes": 999,
+          "sha256": "3533a6dc9a126ae901d8e51386a3f26fc90a445122a5f1222a0a818bf0450bd1"
+        },
+        {
+          "path": "planning-base/raw/fed-fomc-cutoff__doc_317ea9593211/planning.json",
+          "bytes": 1052,
+          "sha256": "44a274c8927a9353c787cb8b276e9a6ca76c98e883283265348ca9f139d4d633"
+        },
+        {
+          "path": "planning-base/raw/fed-fomc-cutoff__doc_aecbe8d1f47e/final.json",
+          "bytes": 1044,
+          "sha256": "b7e716d554733791e071d2098754d4ed77bfd3ebdd709c2f6a16d52a92106837"
+        },
+        {
+          "path": "planning-base/raw/fed-fomc-cutoff__doc_aecbe8d1f47e/planning.json",
+          "bytes": 1126,
+          "sha256": "a6cdf2af208942ed3eb6dbe52a324b77c5d1be25c1f0060520240dedb038aca7"
+        },
+        {
+          "path": "planning-base/raw/fed-fomc-cutoff__doc_ce239324ec71/final.json",
+          "bytes": 979,
+          "sha256": "c6e824be6721120a37d42c86a091006a1857789591dc89b172f0f695921d5607"
+        },
+        {
+          "path": "planning-base/raw/fed-fomc-cutoff__doc_ce239324ec71/planning.json",
+          "bytes": 1075,
+          "sha256": "749868518837143cb1cc2c02895754f97718af8d84d91c084eda30df574cbadf"
+        },
+        {
+          "path": "planning-base/results.csv",
+          "bytes": 1843,
+          "sha256": "e510eb1b67ea76984b91ed0b3dffd52e8537865ddeb86b6caca45bfccc8cc0a2"
+        },
+        {
+          "path": "raw/000-475c4b3566f8d10d.json",
+          "bytes": 2035,
+          "sha256": "8e7c7a682de07fd5db020cdd047c946f26485995b7b7cb624acd65878d28c929"
+        },
+        {
+          "path": "raw/001-9d8ea15f4370698b.json",
+          "bytes": 2034,
+          "sha256": "3c5bebcb3f986dc253f4dec6bea711801be3a43ce0101318548177d785449f95"
+        },
+        {
+          "path": "raw/002-98a789c7530fe695.json",
+          "bytes": 1953,
+          "sha256": "6ee61f47350a3aa55044ec01fd16384a0e9658c5ab54458d7e0eb788cc3129a7"
+        },
+        {
+          "path": "raw/003-2df8feafdc05529a.json",
+          "bytes": 2062,
+          "sha256": "7b03dc3835716aab6488ae8763e8b12be1167eb920bb8b72d6333bf834f8a6d0"
+        },
+        {
+          "path": "raw_sources/monetary20250730a.htm",
+          "bytes": 82323,
+          "sha256": "4d148e085eecc9f88fa4f0a07793ccc48f7b4f0119dd8bfa70373e14f69d9166"
+        },
+        {
+          "path": "raw_sources/monetary20250917a.htm",
+          "bytes": 82366,
+          "sha256": "d7a350215138afe68bc47ec716a60846cf510c29d5d32dc6229af19d4838ad5d"
+        },
+        {
+          "path": "raw_sources/monetary20251029a.htm",
+          "bytes": 82538,
+          "sha256": "36218b6fabd026e2567aac1c3332129ed951432d70e23cb2c0a9afd1c6f8a7d9"
+        },
+        {
+          "path": "raw_sources/monetary20251210a.htm",
+          "bytes": 82679,
+          "sha256": "aecbe8d1f47e19a994c63ed45c8947ec84060d8ea03314fd88e406bd574407fe"
+        },
+        {
+          "path": "raw_sources/monetary20260128a.htm",
+          "bytes": 82109,
+          "sha256": "0ba933543292ec0b44a74ecefcbfeb23db173ccfd43ec81dfb9d65b4e0bd0dfb"
+        },
+        {
+          "path": "raw_sources/monetary20260318a.htm",
+          "bytes": 82190,
+          "sha256": "317ea95932119f516d5efa534ae9bc92788ae15dc31981896a89d6541776c8ad"
+        },
+        {
+          "path": "raw_sources/monetary20260429a.htm",
+          "bytes": 82414,
+          "sha256": "ce239324ec71394986b781d73a9cacca500dda3b94f0fd4420eee041b7a56413"
+        },
+        {
+          "path": "raw_sources/monetary20260617a.htm",
+          "bytes": 81083,
+          "sha256": "e55a1366f90121632a38cdfc13623be57b3c3cb2ef3169a1aa4be4d04a14ce7d"
+        },
+        {
+          "path": "results.csv",
+          "bytes": 5096,
+          "sha256": "3c3c455009d26b38320710a0efd91b1200de95235afd41ae2206e89708d276df"
+        },
+        {
+          "path": "results.jsonl",
+          "bytes": 7136,
+          "sha256": "4cf61466a7bf93fbfbb0b7d892cd696a985d0fd664192594643c959768f8a433"
+        },
+        {
+          "path": "source_manifest.json",
+          "bytes": 8918,
+          "sha256": "17ab2fbd087273d5bc6d73d63756b3db7ab89975e6e2bb6709f25f050e0689f8"
+        }
+      ],
+      "file_count": 31,
+      "raw_json_count": 12,
+      "csv_count": 2,
+      "checkpoint_count": 2
+    },
+    "fed_planning": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-fed-fomc-planning-prospective/planning-base",
+      "files": [
+        {
+          "path": "checkpoint.json",
+          "bytes": 146,
+          "sha256": "29083d69ff8aae952653df38b7ad340226af51742ad0d33c2be21ce85a42fcd1"
+        },
+        {
+          "path": "plan.json",
+          "bytes": 870,
+          "sha256": "1a080d1014647cc1ed9378e09f9a0a1a41a3ec8412d7b81faada274bd62cbc8a"
+        },
+        {
+          "path": "raw/fed-fomc-cutoff__doc_0ba933543292/final.json",
+          "bytes": 999,
+          "sha256": "9760202a21bb15aeecdb1642e99e531a1a5f459d78bcc152d3989e8469b66dc3"
+        },
+        {
+          "path": "raw/fed-fomc-cutoff__doc_0ba933543292/planning.json",
+          "bytes": 1075,
+          "sha256": "7ea7c8eea8ffbd7b7fc301e8ca2dbfc76551a0fae1440d98e24e6d79c1d3d393"
+        },
+        {
+          "path": "raw/fed-fomc-cutoff__doc_317ea9593211/final.json",
+          "bytes": 999,
+          "sha256": "3533a6dc9a126ae901d8e51386a3f26fc90a445122a5f1222a0a818bf0450bd1"
+        },
+        {
+          "path": "raw/fed-fomc-cutoff__doc_317ea9593211/planning.json",
+          "bytes": 1052,
+          "sha256": "44a274c8927a9353c787cb8b276e9a6ca76c98e883283265348ca9f139d4d633"
+        },
+        {
+          "path": "raw/fed-fomc-cutoff__doc_aecbe8d1f47e/final.json",
+          "bytes": 1044,
+          "sha256": "b7e716d554733791e071d2098754d4ed77bfd3ebdd709c2f6a16d52a92106837"
+        },
+        {
+          "path": "raw/fed-fomc-cutoff__doc_aecbe8d1f47e/planning.json",
+          "bytes": 1126,
+          "sha256": "a6cdf2af208942ed3eb6dbe52a324b77c5d1be25c1f0060520240dedb038aca7"
+        },
+        {
+          "path": "raw/fed-fomc-cutoff__doc_ce239324ec71/final.json",
+          "bytes": 979,
+          "sha256": "c6e824be6721120a37d42c86a091006a1857789591dc89b172f0f695921d5607"
+        },
+        {
+          "path": "raw/fed-fomc-cutoff__doc_ce239324ec71/planning.json",
+          "bytes": 1075,
+          "sha256": "749868518837143cb1cc2c02895754f97718af8d84d91c084eda30df574cbadf"
+        },
+        {
+          "path": "results.csv",
+          "bytes": 1843,
+          "sha256": "e510eb1b67ea76984b91ed0b3dffd52e8537865ddeb86b6caca45bfccc8cc0a2"
+        }
+      ],
+      "file_count": 11,
+      "raw_json_count": 8,
+      "csv_count": 1,
+      "checkpoint_count": 1
+    },
+    "multiturn_protocol_smoke": {
+      "root": "/data/wyt/agent-self-evolution-observatory/paper-acceptance/source-native-replay/D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK/20260824-extension-multiturn-protocol-smoke/v2",
+      "files": [
+        {
+          "path": "first-safe.json",
+          "bytes": 910,
+          "sha256": "06e97e03d4c8a7e622d1518150a82215bb5d379bb4d16a08ed675e612da22b18"
+        },
+        {
+          "path": "second-safe.json",
+          "bytes": 422,
+          "sha256": "4a765891ea718bbe97b8106fb32b7daf3f16cca2c03284783b218072e644ff59"
+        }
+      ],
+      "file_count": 2,
+      "raw_json_count": 0,
+      "csv_count": 0,
+      "checkpoint_count": 0
+    }
+  },
+  "adjudication_sha256": "feaa586cefc3832473e9bbb69c3e6410c141c971730dbcf0268e7b0a26e5b6f7",
+  "endpoint_summary_sha256": "50a9fb4ee45293621b47245ad288e59468d0b7d0676057731005afcc5674a09b",
+  "provider_route": "Ark Plan /api/plan/v3",
+  "required_resolved_model": "deepseek-v4-pro-260425",
+  "private_credentials_included": false,
+  "scientific_authority": false,
+  "submission_authority": false
+}

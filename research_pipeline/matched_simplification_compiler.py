@@ -1,5 +1,7 @@
 from __future__ import annotations
-from typing import Any
+from typing import Any, Iterable
+
+from .research_reasoning_layer import attribute_simplification
 
 MATCH_DIMENSIONS=("candidate_pool","labels_or_truth","model_calls","environment_calls","tokens","hidden_access","tuning_split")
 COMPLEXITY_LADDER=(
@@ -27,4 +29,26 @@ def compile_matched_simplifications(idea_id:str,mechanism:str,declared_baseline:
   add('direct-edit-reuse','Direct edit-effect reuse','Compare nearest/direct paired edit-effect lookup with zero hidden search and matched source calls.')
  if any(k in text for k in ('controller','predict','regression','classifier','gate')):
   add('mean-or-threshold','Mean / threshold control','Compare calibrated means, fixed thresholds, family shrinkage, and nearest-neighbor decisions.')
- return {'schema_version':'1.1','idea_id':idea_id,'minimum_required_baselines':3,'compiled_baselines':rows,'baseline_count':len(rows),'matched_dimensions':list(MATCH_DIMENSIONS),'complexity_ladder':list(COMPLEXITY_LADDER),'complexity_ladder_policy':{'required_before_gpu':True,'minimum_empirical_lower_tiers':3,'same_information_required':True,'same_budget_required':True,'headroom_rule':'The proposed mechanism must beat the strongest lower-complexity tier on the frozen decision utility; otherwise stop/merge before GPU expansion.','no_headroom_action':'stop_or_merge_before_expensive_transition'},'hidden_outcome_retuning_forbidden':True,'posthoc_baseline_deletion_forbidden':True}
+ return {'schema_version':'1.2','idea_id':idea_id,'minimum_required_baselines':3,'compiled_baselines':rows,'baseline_count':len(rows),'matched_dimensions':list(MATCH_DIMENSIONS),'complexity_ladder':list(COMPLEXITY_LADDER),'complexity_ladder_policy':{'required_before_gpu':True,'minimum_empirical_lower_tiers':3,'same_information_required':True,'same_budget_required':True,'headroom_rule':'The proposed mechanism must beat the strongest lower-complexity tier on the frozen decision utility; otherwise attribute which contribution layer is reproduced before deciding whether to stop, merge, narrow, or pivot.','no_headroom_action':'stop_or_merge_before_expensive_transition','live_economy_semantics_unchanged_during_shadow_validation':True},'simplification_attribution_policy':{'simple_baseline_dominance_only_reduces_reproduced_claim_layers':True,'method_reduction_is_not_whole_paper_reduction':True,'scientific_object_reduction_requires_explicit_problem_phenomenon_insight_or_mechanism_attribution':True,'shadow_only_until_contribution_replay_and_prospective_validation':True,'scientific_authority':False},'hidden_outcome_retuning_forbidden':True,'posthoc_baseline_deletion_forbidden':True}
+
+
+def compile_simplification_attribution(
+    *, idea_id: str, primary_contribution_type: str, claimed_layers: Iterable[str],
+    reproduced_layers: Iterable[str], baseline_ref: str, same_information: bool,
+) -> dict[str, Any]:
+    result = attribute_simplification(
+        primary_contribution_type=primary_contribution_type,
+        claimed_layers=claimed_layers,
+        reproduced_layers=reproduced_layers,
+        baseline_ref=baseline_ref,
+        same_information=same_information,
+    )
+    return {
+        "schema_version": "1.0",
+        "idea_id": str(idea_id),
+        "status": result.get("status"),
+        "attribution": result,
+        "live_economy_decision_mutated": False,
+        "scientific_authority": False,
+        "experiment_authority": False,
+    }

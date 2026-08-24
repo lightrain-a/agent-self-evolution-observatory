@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+import argparse,hashlib,json,sys
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
+from research_pipeline.paper_acceptance import PaperContract,ScientificPaperStatus
+from research_pipeline.paper_acceptance_ledger import _append,_digest,build_paper_ledger_index,load_paper_ledger,validate_paper_ledger
+PID='D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK';CONTRACT='6d992c931f076f805a0aa0bc24edd731b3b668ab37710a7befe313d8c31e0dae';TITLE='Do Temporal Skills Really Repair Agents? An Intervention Audit of Repair and Attribution'
+PDF='e7bc48efde7914ee415936b101f980d7ca885f29288a532b068225b4cf14b0a9';SRC='510d93f3be4fc60c993b4fec3852b2012295ab2031cf70673b434a154aef6aa0';SUP='e2a19cbe6e9bb12fa1696ee5770f0ff33ed4835a25dfb8c26b8bbea54e1acb0a'
+ADJ='feaa586cefc3832473e9bbb69c3e6410c141c971730dbcf0268e7b0a26e5b6f7';EVID='55efc65ab0806a16316ddb8f4a4041f9590220a18662a8e7365804ab9f0d75e2';CA='20a14947dd93158ca9f882feed62113c7c743e8cd88da7c6552ac714b7febd04';VR='32c095f0398ab3c2364545ffebd85f3cb743a0cf988d0ff5eb531e5cf537fa79';PM='968f2a34712092b0001d014434eef39436670e8c7a5d78aa410d00e773e52e66'
+A=lambda x:f'artifact:sha256:{x}'
+def sha(p:Path):return hashlib.sha256(p.read_bytes()).hexdigest()
+def contract(raw):return PaperContract(PID,raw['title'],raw['central_question'],raw['supported_claims'],raw.get('unsupported_claims') or {},tuple(raw.get('limitations') or ()),tuple(raw.get('reopen_conditions') or ()),tuple(raw.get('evidence_refs') or ()),ScientificPaperStatus(raw['scientific_status']))
+def event(root,c,kind,payload):
+ x={'event_type':kind,'schema_version':'1.0','paper_id':PID,'revision':'r16',**payload,'scientific_authority':False,'experiment_authority':False,'gpu_authority':False,'submission_authority':False};x['receipt_sha256']=_digest({k:v for k,v in x.items() if k!='receipt_sha256'});_append(root,c,'temporal-r16-extension',x);return x
+def main():
+ ap=argparse.ArgumentParser();ap.add_argument('--root',type=Path,default=Path('/data/wyt/agent-self-evolution-observatory'));ap.add_argument('--output',type=Path,default=ROOT/'generated/temporal-skill-r16-ledger-finalization-20260824.json');a=ap.parse_args()
+ binds={ROOT/'downloads/E2-Temporal-Skill-r16-20260824.pdf':PDF,ROOT/'downloads/E2-Temporal-Skill-r16-20260824-source.zip':SRC,ROOT/'downloads/E2-Temporal-Skill-r16-20260824-supplement.zip':SUP,ROOT/'generated/temporal-skill-extension-adjudication-20260824.json':ADJ,ROOT/'generated/temporal-skill-extension-evidence-manifest-20260824.json':EVID,ROOT/'generated/temporal-skill-r16-extension-claim-audit-20260824.json':CA,ROOT/'generated/temporal-skill-r16-verification-20260824.json':VR,ROOT/'generated/temporal-skill-r16-package-manifest-20260824.json':PM}
+ for p,h in binds.items():
+  if not p.exists() or sha(p)!=h:raise RuntimeError(f'artifact mismatch {p}')
+ before=load_paper_ledger(a.root,PID);before_sha=_digest(before)
+ if any(e.get('event_type')=='source-native-r16-finalization' for e in before.get('events') or [] if isinstance(e,dict)):
+  errs=validate_paper_ledger(before)
+  if errs:raise RuntimeError('existing R16 ledger invalid: '+';'.join(errs))
+  print(json.dumps({'status':'ALREADY_FINALIZED','contract_sha256':before.get('contract_sha256'),'current_state':before.get('current_state')},indent=2));return
+ if before.get('current_state')!='SUBMISSION_READY' or before.get('scientific_status')!='READY' or before.get('contract_sha256')!=CONTRACT:raise RuntimeError('unexpected pre-R16 canonical state')
+ c=contract(before['contract'])
+ event(a.root,c,'extension-evidence-r16',{'receipt_type':'extension-evidence','artifact_ref':A(ADJ),'evidence_manifest_ref':A(EVID),'decision':'APPENDIX_ROBUSTNESS_AND_BOUNDARY_ONLY','new_scientific_execution':True,'new_scientific_model_calls':114,'protocol_smoke_model_calls':3,'fresh_eia_endpoints':4,'bls_crossdomain_endpoints':4,'fed_prospective_endpoints':4,'benign_generic_eia':'T_EQUALS_B_GREATER_THAN_N','benign_generic_bls':'T_GREATER_OR_EQUAL_B_GREATER_OR_EQUAL_N_MIXED','multiturn_callable_residual':'NONE_OBSERVED','planning_spin_off':'STOP_PROSPECTIVE_FED_NO_EFFECT','claim_expansion':False,'contract_revision':False})
+ event(a.root,c,'claim-audit-r16',{'receipt_type':'claim-audit','pass':True,'checks':13,'passed':13,'blockers':[],'claim_audit_sha256':CA,'artifact_ref':A(CA),'core_claim_changed':False,'extension_appendix_only':True,'contract_revision':False})
+ event(a.root,c,'paper-preparation-r16',{'receipt_type':'paper-preparation','protocol_version':'1.0+r16-extension-appendix','pass':True,'required_gates':8,'passed_gates':8,'gate_pass':{k:True for k in ('hierarchical-rubric','verification-refinement','citation-integrity','visual-story','reproducibility-bundle','agent-native-artifact','reader-simulation','submission-package')},'blockers':[],'paper_pdf_sha256':PDF,'source_zip_sha256':SRC,'supplement_zip_sha256':SUP,'extension_appendix_only':True})
+ event(a.root,c,'submission-readiness-r16',{'receipt_type':'submission-readiness','submission_ready':True,'manuscript_ci_pass':True,'paper_preparation_pass':True,'prebuttal_pass':True,'blockers':[],'paper_pdf_sha256':PDF,'source_zip_sha256':SRC,'supplement_zip_sha256':SUP})
+ event(a.root,c,'submission-readiness-context-r16',{'receipt_type':'submission-readiness-context','artifact_submission_ready':True,'current_state':'SUBMISSION_READY','scientific_status':'READY','support_blocker':'','recommended_immediate_submission':'READY_FOR_HUMAN_SUBMISSION','external_human_submission_authority_required':True,'external_human_submission_authority_required_for_SUBMITTED':True,'paper_pdf_sha256':PDF,'source_zip_sha256':SRC,'supplement_zip_sha256':SUP,'exact_timesage_replication_debt':'ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED','new_experiment_required_for_current_narrow_claim':False,'extension_status':'APPENDIX_INTEGRATED','planning_spin_off':'STOP_PROSPECTIVE_FED_NO_EFFECT','multiturn_new_paper':'STOP_NO_CALLABLE_RESIDUAL'})
+ event(a.root,c,'source-native-r16-finalization',{'receipt_type':'source-native-finalization','artifact_ref':A(PM),'title':TITLE,'paper_pdf_sha256':PDF,'source_zip_sha256':SRC,'supplement_zip_sha256':SUP,'source_native_runtime_valid_rows':2056,'distinct_endpoints':35,'institutional_systems':3,'exact_timesage_replication_debt':'ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED','recommended_immediate_action':'READY_FOR_HUMAN_SUBMISSION','extension_scientific_model_calls':114,'extension_fresh_endpoints':12,'extension_adjudication_ref':A(ADJ),'extension_manifest_ref':A(EVID),'claim_expansion':False,'contract_revision':False})
+ after=load_paper_ledger(a.root,PID);errs=validate_paper_ledger(after)
+ if errs:raise RuntimeError('ledger invalid: '+';'.join(errs))
+ if after.get('contract_sha256')!=CONTRACT or after.get('current_state')!='SUBMISSION_READY' or after.get('scientific_status')!='READY':raise RuntimeError('R16 changed scientific contract/state unexpectedly')
+ pub=next(x for x in build_paper_ledger_index(a.root)['entries'] if x.get('paper_id')==PID)
+ if (pub.get('latest_claim_audit') or {}).get('checks')!=13 or not (pub.get('latest_submission_readiness') or {}).get('submission_ready'):raise RuntimeError('R16 projection stale')
+ result={'schema_version':'1.0','receipt_type':'temporal-r16-canonical-ledger-finalization','paper_id':PID,'status':'FINALIZED_R16_EXTENSION_APPENDIX_SUBMISSION_READY','before_sha256':before_sha,'after_sha256':_digest(after),'contract_sha256_before':CONTRACT,'contract_sha256_after':after.get('contract_sha256'),'contract_unchanged':after.get('contract_sha256')==CONTRACT,'current_state':after.get('current_state'),'scientific_status':after.get('scientific_status'),'new_scientific_execution':True,'extension_scientific_model_calls':114,'new_paper_created':False,'planning_spin_off':'STOP_PROSPECTIVE_FED_NO_EFFECT','submission_authority':False,'scientific_authority':False};result['receipt_sha256']=_digest(result);a.output.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(json.dumps(result,ensure_ascii=False,indent=2))
+if __name__=='__main__':main()

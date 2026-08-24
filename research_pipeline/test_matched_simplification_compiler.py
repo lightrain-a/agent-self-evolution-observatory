@@ -1,6 +1,6 @@
 from __future__ import annotations
 import unittest
-from .matched_simplification_compiler import compile_matched_simplifications
+from .matched_simplification_compiler import compile_matched_simplifications, compile_simplification_attribution
 
 class MatchedSimplificationCompilerTest(unittest.TestCase):
  def test_compiles_domain_specific_and_shallow_controls(self):
@@ -18,5 +18,14 @@ class MatchedSimplificationCompilerTest(unittest.TestCase):
   self.assertEqual(m['complexity_ladder_policy']['minimum_empirical_lower_tiers'],3)
   self.assertEqual(m['complexity_ladder_policy']['no_headroom_action'],'stop_or_merge_before_expensive_transition')
   self.assertTrue(m['hidden_outcome_retuning_forbidden'])
+  self.assertTrue(m['simplification_attribution_policy']['method_reduction_is_not_whole_paper_reduction'])
+  self.assertTrue(m['complexity_ladder_policy']['live_economy_semantics_unchanged_during_shadow_validation'])
+
+ def test_method_tie_can_be_attributed_without_mutating_live_economy_decision(self):
+  s=compile_simplification_attribution(idea_id='x',primary_contribution_type='insight',claimed_layers=['problem','insight','method'],reproduced_layers=['method'],baseline_ref='same-information threshold',same_information=True)
+  self.assertEqual(s['status'],'SECONDARY_OR_METHOD_REDUCTION_ONLY')
+  self.assertEqual(s['attribution']['recommended_paper_effect'],'KEEP_PRIMARY_CONTRIBUTION_REVIEW')
+  self.assertFalse(s['live_economy_decision_mutated'])
+  self.assertFalse(s['scientific_authority'])
 
 if __name__=='__main__': unittest.main()

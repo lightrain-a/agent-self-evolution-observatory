@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r16-package-verification",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r16",
+  "checks": {
+    "pages": 17,
+    "conclusion_page": 9,
+    "references_start_page": 10,
+    "source_zip_independent_rebuild": true,
+    "source_zip_rebuild_text_identical": true,
+    "compile_warning_count": 0,
+    "nonembedded_font_rows": 0,
+    "raster_pages_checked": 17,
+    "raster_border_clipping_flags": 0,
+    "supplement_zip_test": true,
+    "supplement_entries": 1118,
+    "r16_extension_entries": 186,
+    "supplement_raw_json_receipts": 845,
+    "supplement_csv_files": 26,
+    "supplement_checkpoint_files": 17,
+    "r16_new_entry_private_leaks": [],
+    "manuscript_internal_term_hits": [],
+    "pdf_private_path_hits": []
+  },
+  "pass": true,
+  "scientific_authority": false,
+  "submission_authority": false
+}

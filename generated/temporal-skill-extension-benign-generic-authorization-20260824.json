@@ -1,0 +1,31 @@
+{
+  "authorization_sha256": "545427756633f1d14a60a60f577e0f604b3d107a23ddc88a110d6bffa9cd8be3",
+  "authorized_by": "explicit user directive in current conversation",
+  "bound_plan_body_sha256": "cb722717974bb8248d30e3cd918a5ca8930dc7e78bf655c7d4eb4443896b0dea",
+  "bound_stage_contract_sha256": "087945751524c0130ba33b0050ab4ad871506efba4553593963fb7dab56ef754",
+  "bounded_budget": {
+    "full_model_calls_upper_bound": 210,
+    "pilot_model_calls": 12,
+    "reruns_allowed": false,
+    "resume_missing_only": true
+  },
+  "current_r15_contract_may_be_mutated_automatically": false,
+  "execution_authorized": true,
+  "experiment": "E2_EXTENSION_BENIGN_GENERIC",
+  "model_identity": {
+    "requested_model": "deepseek-v4-pro",
+    "required_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "required_resolved_model": "deepseek-v4-pro-260425"
+  },
+  "outcome_driven_selection_authorized": false,
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "provider_spend_authorized": true,
+  "schema_version": "1.0",
+  "scientific_reopen_authorized": true,
+  "scope": [
+    "BENIGN_GENERIC_PILOT",
+    "FRESH_N_B_T_SAME_UNITS",
+    "EXTENSION_EVIDENCE_ONLY"
+  ],
+  "status": "HUMAN_EXECUTION_AUTHORITY_RECORDED"
+}

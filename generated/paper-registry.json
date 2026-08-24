@@ -1,7 +1,7 @@
 {
   "schema_version": "1.6",
-  "generated_at": "2026-08-24T07:22:45+00:00",
-  "source_revision": "9dab8ffea39fe7283dde3b45034f9d27c57a529e",
+  "generated_at": "2026-08-24T08:45:41+00:00",
+  "source_revision": "3095464429708e6f5db40001858a02f0282f990d",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -129,7 +129,7 @@
       "new_gpu_evidence_required": false,
       "paper_quality_v2_passed": true,
       "paper_quality_content_addressed_completion": true,
-      "paper_quality_content_addressed_files": 59,
+      "paper_quality_content_addressed_files": 64,
       "paper_quality_evidence_debt": 0,
       "paper_quality_missing_ids": [],
       "paper_quality_schema_version": "2.1",
@@ -304,7 +304,7 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 58,
+        "events": 62,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
@@ -373,8 +373,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r17-crossval-sparsity",
-        "receipt_sha256": "8d9df2b0e5e44264c51a21cc0d8f2280f5dc0a97ca8f7b768b005efc46780a43",
+        "protocol_version": "1.0+r18-second-substrate-audit",
+        "receipt_sha256": "bcf903a00d7d8b4f28787f7dff51909df49722c68454d39891af0d692ea0991b",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -410,7 +410,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "fd799d29d5ba7275add6455d7c0713a33006115aa51a1390f6c0b200d4966a09",
+        "receipt_sha256": "e122091c2a53e9cc2a3f3c32e0b61c3be0b9976e4243c3836b73c7829662135f",
         "blockers": []
       },
       "latest_transition": {
@@ -1048,7 +1048,7 @@
         "Reopen temporal-retrieval equivalence only with an independently implemented retriever/reranker receiving the same raw candidate evidence."
       ],
       "summary": {
-        "events": 123,
+        "events": 129,
         "allowed_transitions": 24,
         "blocked_transitions": 0,
         "story_search_receipts": 3,
@@ -1088,10 +1088,10 @@
       },
       "latest_claim_audit": {
         "pass": true,
-        "claim_audit_sha256": "6d955f687b0b8efaa6c68dc17110c1812dcb6b9a3d155d284310235d8cd9420b",
+        "claim_audit_sha256": "20a14947dd93158ca9f882feed62113c7c743e8cd88da7c6552ac714b7febd04",
         "blockers": [],
-        "checks": 15,
-        "passed": 15
+        "checks": 13,
+        "passed": 13
       },
       "latest_manuscript_ci": {
         "pass": true,
@@ -1108,8 +1108,8 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r15-stanford-accept-targeted-repair",
-        "receipt_sha256": "d3bab13863fd00596927fa9c164072bcda5e4b8791544bbb0ec6a4d01b2f97db",
+        "protocol_version": "1.0+r16-extension-appendix",
+        "receipt_sha256": "37003e7ec9a1d358f005dd368ad7846d71da818e8b1802478778a3097ac92561",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
@@ -1137,7 +1137,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "41ffc2a954efc541662737e691e5dc235b2081612ba2cc1299f59985164f248a",
+        "receipt_sha256": "edeb30195c6a0f5665f5ac0702ee0b39ac9acee4dc140f06e702420b4c133337",
         "blockers": []
       },
       "source_native_evidence": {
@@ -1146,7 +1146,7 @@
         "institutional_systems": 3,
         "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED",
         "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION",
-        "finalization_sha256": "0759a99bd5ccd4cbe45ae2cf50ad0a227fcc6b362f1059c3f0373fa91a414237"
+        "finalization_sha256": "968f2a34712092b0001d014434eef39436670e8c7a5d78aa410d00e773e52e66"
       },
       "latest_transition": {
         "from": "PREBUTTAL",

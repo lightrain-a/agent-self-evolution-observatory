@@ -1,0 +1,30 @@
+{
+  "bound_plan_body_sha256": "cb722717974bb8248d30e3cd918a5ca8930dc7e78bf655c7d4eb4443896b0dea",
+  "experiment": "E2_EXTENSION_BENIGN_GENERIC",
+  "full": {
+    "model_calls": 210,
+    "requires_pilot_runtime_pass": true
+  },
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "pilot": {
+    "model_calls": 12,
+    "promotion_gate": "runtime/protocol/checkpoint integrity only",
+    "row_keys": [
+      "eia-cutoff::doc_4054808c7b19|r0|N_FRESH",
+      "eia-cutoff::doc_4054808c7b19|r0|B_GENERIC",
+      "eia-cutoff::doc_4054808c7b19|r0|T_FROZEN",
+      "composite-align::doc_cc293f199ada|r0|B_GENERIC",
+      "composite-align::doc_cc293f199ada|r0|T_FROZEN",
+      "composite-align::doc_cc293f199ada|r0|N_FRESH",
+      "composite-ground::doc_1dfccd3a55dd|r0|T_FROZEN",
+      "composite-ground::doc_1dfccd3a55dd|r0|N_FRESH",
+      "composite-ground::doc_1dfccd3a55dd|r0|B_GENERIC",
+      "composite-cutoff::doc_70e1e3d18499|r0|N_FRESH",
+      "composite-cutoff::doc_70e1e3d18499|r0|B_GENERIC",
+      "composite-cutoff::doc_70e1e3d18499|r0|T_FROZEN"
+    ],
+    "scientific_outcomes_used_for_promotion": false
+  },
+  "schema_version": "1.0",
+  "stage_contract_sha256": "087945751524c0130ba33b0050ab4ad871506efba4553593963fb7dab56ef754"
+}

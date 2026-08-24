@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r16",
+  "title": "Do Temporal Skills Really Repair Agents? An Intervention Audit of Repair and Attribution",
+  "artifacts": {
+    "pdf": {
+      "path": "downloads/E2-Temporal-Skill-r16-20260824.pdf",
+      "sha256": "e7bc48efde7914ee415936b101f980d7ca885f29288a532b068225b4cf14b0a9"
+    },
+    "source_zip": {
+      "path": "downloads/E2-Temporal-Skill-r16-20260824-source.zip",
+      "sha256": "510d93f3be4fc60c993b4fec3852b2012295ab2031cf70673b434a154aef6aa0"
+    },
+    "supplement_zip": {
+      "path": "downloads/E2-Temporal-Skill-r16-20260824-supplement.zip",
+      "sha256": "e2a19cbe6e9bb12fa1696ee5770f0ff33ed4835a25dfb8c26b8bbea54e1acb0a"
+    },
+    "extension_adjudication": {
+      "path": "generated/temporal-skill-extension-adjudication-20260824.json",
+      "sha256": "feaa586cefc3832473e9bbb69c3e6410c141c971730dbcf0268e7b0a26e5b6f7"
+    },
+    "extension_manifest": {
+      "path": "generated/temporal-skill-extension-evidence-manifest-20260824.json",
+      "sha256": "55efc65ab0806a16316ddb8f4a4041f9590220a18662a8e7365804ab9f0d75e2"
+    },
+    "claim_audit": {
+      "path": "generated/temporal-skill-r16-extension-claim-audit-20260824.json",
+      "sha256": "20a14947dd93158ca9f882feed62113c7c743e8cd88da7c6552ac714b7febd04"
+    },
+    "verification": {
+      "path": "generated/temporal-skill-r16-verification-20260824.json",
+      "sha256": "32c095f0398ab3c2364545ffebd85f3cb743a0cf988d0ff5eb531e5cf537fa79"
+    }
+  },
+  "core_r15_claim_changed": false,
+  "extension_routing": "appendix robustness/boundary only; planning spin-off STOP after prospective Fed falsifier",
+  "stable_aliases_modified": false,
+  "scientific_authority": false,
+  "submission_authority": false,
+  "verification_pass": true
+}
