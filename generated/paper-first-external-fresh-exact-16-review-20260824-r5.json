@@ -1,0 +1,527 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T04:45:12Z",
+  "run_id": "external-fresh-exact-16-review-20260824-r5",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "selection_projection": {
+    "staging_refresh_root": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r5",
+    "preview_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r5/preview-public.json",
+    "preview_artifact_sha256": "d77e0660e0afdfcb6313aa7b16b653c8529c7f06a80d920fdb1ad91635895987",
+    "private_pool_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r5/data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "private_pool_artifact_sha256": "8ee43c38ad0ac2d70f63080a55d85110721523236eb3d7e0c006e00dc21e56f1",
+    "corpus_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r5/data/corpora/semantic-scholar-corpus.json",
+    "corpus_artifact_sha256": "2d27a6a0e8439be73da947b74cdbe61f1ae1c57ea89f0d559bae28f1d1585b86",
+    "refresh_generated_at": "2026-08-24T04:41:40+00:00",
+    "refresh_status": "READY",
+    "discovery_mode": "arxiv-primary-fallback",
+    "source_retrieval_complete": true,
+    "selected": 32,
+    "verified": 32,
+    "selected_previously_reviewed": 16,
+    "selected_unreviewed": 16,
+    "fulltext_verified": 31,
+    "fetch_errors": 0,
+    "fulltext_fetch_errors": 1,
+    "undercovered_lanes": [],
+    "source_coverage_exhausted": false,
+    "global_source_coverage_exhausted_claim": false,
+    "exact_unreviewed_refs_in_scheduler_order": [
+      "arXiv:2607.19450",
+      "arXiv:2607.19038",
+      "arXiv:2607.18985",
+      "arXiv:2607.19191",
+      "arXiv:2607.18006",
+      "arXiv:2607.17521",
+      "arXiv:2607.17044",
+      "arXiv:2607.17250",
+      "arXiv:2607.16621",
+      "arXiv:2607.16632",
+      "arXiv:2607.16851",
+      "arXiv:2607.16169",
+      "arXiv:2607.22688",
+      "arXiv:2607.15272",
+      "arXiv:2607.14611",
+      "arXiv:2607.13681"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 16,
+    "sources_reviewed": 16,
+    "exact_prior_exposure_zero": 16,
+    "identity_verified": 16,
+    "deep_review": 6,
+    "triage_review": 10,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "fresh_scientific_survivors": 0,
+    "stop_reduction": 4,
+    "support_component_only": 3,
+    "scope_excluded": 9,
+    "watch_reopen_seeds": 1,
+    "source_retrieval_complete": true,
+    "global_source_coverage_exhausted": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "exact_tranche_identity_requires_content_addressed_refresh_projection": true,
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "deep_review_routes_collision_reopen_or_decisive_baseline_cases": true,
+    "triage_is_allowed_only_for_clear_scope_or_component_cases": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "no_emit_is_not_a_scientific_dead_end": true,
+    "global_source_exhaustion_must_not_be_inferred_from_bounded_tranche_completion": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2607.19450",
+      "title": "REGEN: Replay-recycling for Expert-to-Generalist distillation with Offline Reinforcement Learning",
+      "published": "2026-07-21",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state"
+      ],
+      "source_sha256": "2d67507519ad8223500a4c9ceb0d89260be377548f265be01e4e827873e2018f",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_OFFLINE_DISTILLATION",
+      "reduction": [
+        "offline-rl",
+        "replay-recycling",
+        "expert-to-generalist-distillation"
+      ],
+      "note": "REGEN recycles replay data from specialized teacher RL runs to train a generalist with offline RL. It is an efficient distillation/post-training method and does not expose autonomous persistent deployment-time self-modification.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "c811563b1d8a30db41ab23e97c06a5cf070aa595cec8020d2415cfa90bf685c9",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.19038",
+      "title": "FilmWorld: Agentic Novel-to-Film Generation through Dynamic Cinematic World Modeling",
+      "published": "2026-07-21",
+      "lane_keys": [
+        "world_model"
+      ],
+      "source_sha256": "d669d7bb2166a27127aff8a721647bb079858505e7bafd41864e85c223db60af",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_GENERATIVE_WORLD_SIMULATION",
+      "reduction": [
+        "cinematic-world-state-modeling",
+        "multi-agent-content-generation",
+        "state-consistent-rendering"
+      ],
+      "note": "FilmWorld maintains character/entity state while generating a long film from a novel. The evolving state is the simulated narrative world used for content generation, not an agent artifact learning from outcomes across tasks.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "dd49126f6b1bbfab598902e2ac51ef08441b3a25bdd960dc6d003f4f152781cf",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.18985",
+      "title": "Athena-Brain Technical Report: An Efficient Robot Brain for General Intelligence and Embodied Interaction",
+      "published": "2026-07-21",
+      "lane_keys": [
+        "parametric_model_state",
+        "embodied"
+      ],
+      "source_sha256": "f32dab5a247ceb142800563f5e99d2edcca3334987551ba02b95d805ad4221ad",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_FOUNDATION_MODEL_POSTTRAINING",
+      "reduction": [
+        "multi-stage-posttraining",
+        "embodied-expert-training",
+        "model-merge"
+      ],
+      "note": "Athena-Brain-8B is constructed through supervised fine-tuning, reinforcement learning, embodied expert training, and model merging. These are offline parameter-training stages rather than autonomous persistent self-evolution at deployment.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "df0b07f8135f7f69d5840ad59c0463db20e50ea9c40022b94cc1f148f21f0438",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.19191",
+      "title": "ABot-World-0: Infinite Interactive World Rollout on a Single Desktop GPU",
+      "published": "2026-07-21",
+      "lane_keys": [
+        "memory_continual",
+        "world_model",
+        "runtime_deployment"
+      ],
+      "source_sha256": "de362637e4f769d4623cb775154ca5d884b7fd0b410079a285d8d867951a8c17",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_WORLD_MODEL_TRAINING",
+      "reduction": [
+        "action-conditioned-video-world-model",
+        "teacher-student-distillation",
+        "long-horizon-rollout-alignment"
+      ],
+      "note": "ABot-World-0 trains and deploys an action-conditioned video world model with data collection, distillation, long-rollout alignment, and streaming systems optimization. Its reference-character memory is an inference consistency aid; no deployed self-evolving behavioral artifact is isolated.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "27e5e760835bb2aa1468e34bcd64b34b80cb619d45debd6b05a7fae369bb480b",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.18006",
+      "title": "MADA-RL: Multi-Agent Debate-Aware Reinforcement Learning for Parameter-Efficient Reasoning in Compact Models",
+      "published": "2026-07-20",
+      "lane_keys": [
+        "parametric_model_state",
+        "collective",
+        "runtime_deployment"
+      ],
+      "source_sha256": "43a3f6c1c0388c4feae94e5d69564332707b6a0649f623781aa3c67ac6c06213",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_MULTIAGENT_POSTTRAINING",
+      "reduction": [
+        "multi-agent-debate-rl",
+        "counterfactual-critic-baseline",
+        "lora-posttraining"
+      ],
+      "note": "MADA-RL is a parameter-efficient multi-agent debate post-training framework. The specialized generator/critic models are trained offline and then composed at deployment; it is not a persistent autonomous self-evolution loop.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "bc3b0f06a93a039c95755dea32ff74e107e0ba13a7578a76a16ee2f01a5557ba",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.17521",
+      "title": "GeoWorldAD: Geometry World Action Model for Autonomous Driving",
+      "published": "2026-07-20",
+      "lane_keys": [
+        "world_model"
+      ],
+      "source_sha256": "40568d5ff2926cc3f5f33c80f5e8e510566075cdb443272f7ece0c4bcb9f69f1",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_WORLD_MODEL",
+      "reduction": [
+        "geometry-world-action-model",
+        "future-geometry-prediction",
+        "iterative-trajectory-refinement"
+      ],
+      "note": "GeoWorldAD is a learned geometry-grounded world/action model for driving. Its present/future geometry representations support planning but the model does not autonomously update its behavioral artifact across tasks.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "66b404d7a854794a70275b094e12b86869e49fc40b00f185e8e00e441a4f012e",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.17044",
+      "title": "Where Does Agent Reliability Come From? A Cross-Benchmark Decomposition of Verification Loops, Specialist Models, and Scaffolding in a Production Enterprise Agent",
+      "published": "2026-07-19",
+      "lane_keys": [
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "56b18772bd0ed32093d5b8fa2783bd0c2efba0096f0ce20821bd02362d9c495f",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_RELIABILITY_VERIFICATION",
+      "reduction": [
+        "verification-loop-decomposition",
+        "independent-specialist-observer",
+        "scaffolding-and-routing"
+      ],
+      "note": "The Leni study is strong reliability component evidence because it decomposes full-system uplift rather than attributing it all to self-correction. On SpreadsheetBench, scaffolding/prompting account for most uplift and the isolated deterministic verification loop adds about +1.5 points; swapping the specialist observer back to the generating frontier model reduces rescues, consistent with self-assessment bias. The paper explicitly marks the swap as preliminary and lacks a third independent-frontier verifier condition. This supports independent observation, external verification, and architecture-level reliability controls, not a new self-evolution causal state.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "6c10b3f2b8f0ff6e5bcc0f260d8420e13b04b0221220a61762606521ce795358",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.17250",
+      "title": "EvolvingWorld: An Open-Schema Framework for Co-Evolving Role-Play Agents and World Model in Interactive Literary World",
+      "published": "2026-07-19",
+      "lane_keys": [
+        "world_model"
+      ],
+      "source_sha256": "8958bf3b296496af23557f212e62ca375aa9898cde451061703edaba50a49ce1",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_INTERACTIVE_SIMULATION",
+      "reduction": [
+        "persistent-character-state",
+        "world-state-maintenance",
+        "literary-roleplay-training"
+      ],
+      "note": "EvolvingWorld co-updates character and world states inside an interactive literary simulation and trains models on those state-update tasks. This is simulated world/character state evolution, not autonomous improvement of the agent itself from performance feedback.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "26c6b97eb0a85e307d669d8a5b8882508c8e36d17c7e88a9e9870a307ad04818",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.16621",
+      "title": "From Memory to Skills: Evidence-Grounded Co-Evolution Governance for Long-Horizon LLM Agents",
+      "published": "2026-07-18",
+      "lane_keys": [
+        "skill_harness",
+        "memory_continual",
+        "safety_reliability"
+      ],
+      "source_sha256": "942736883b5504b32e1b1de74a8e055c285372ffc02ab5115eff89dde896a6cc",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "hierarchical-experiential-memory",
+        "skill-crystallization",
+        "reflection-weighted-value-backfilling"
+      ],
+      "note": "MSCE organizes traces, procedural policy memory, environmental cognition, and evidence-linked skills, then uses reflection-weighted backfilling and a heuristic policy-gain signal for promotion/revision. Its own paper explicitly states that the gain G is a heuristic rather than a causal effect estimate. Ablations show hierarchy, value calibration, reflection weighting, and skill crystallization each help, while cross-domain initialization improves later performance. These are observable memory abstraction, retrieval, heuristic credit assignment, and skill promotion mechanisms; no matched same-information co-evolution interaction is isolated.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-4674f46501819d1414",
+          "result": "NOT_SATISFIED",
+          "boundary": "The paper does not independently vary memory evolution and skill crystallization under matched content, retrieval, task distribution, supervision, and budget to demonstrate a non-additive held-out interaction beyond expert/knowledge-set quality and allocation."
+        },
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Reflection-weighted failure/success signals and promoted skill edits remain corrective adaptation once trace evidence, supervision, update budget, and evaluation are matched."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "8f0eadf9d8a180debe7e0b73bff0450827eecd62e83531ad95862e8f6e142ebe",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.16632",
+      "title": "CLOSER-Bench: Evaluating Budgeted Cross-Stage Design Closure for Hardware Agents",
+      "published": "2026-07-18",
+      "lane_keys": [
+        "skill_harness",
+        "safety_reliability"
+      ],
+      "source_sha256": "65d2602fdd5b32e8ba6fa60d23a1ae1dfa261903622f11424def4196dcd77d8b",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_CROSS_STAGE_EVALUATION",
+      "reduction": [
+        "cross-stage-design-closure",
+        "anytime-progress-and-tool-cost",
+        "recovery-aware-hardware-agent-evaluation"
+      ],
+      "note": "CLOSER-Bench is a controlled evaluation protocol for cross-stage hardware-agent workflows. It is useful Research-OS evidence for stage-aware recovery, hidden objectives, progress, and tool-cost accounting, but it does not define a new self-evolution mechanism.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "9795013410f84c7a7ad529af4b3ed5daea14b6514bd502975dae52fbb392a878",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.16851",
+      "title": "AgentBrew: Lifelong Knowledge Brewing from Strong Teachers to Weak LLM Agents",
+      "published": "2026-07-18",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state",
+        "safety_reliability"
+      ],
+      "source_sha256": "b126421b739f2f129c0d66357373001423da279e7918dbb1cfa73efa932678fd",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "teacher-to-student-procedural-memory",
+        "failure-triggered-note-distillation",
+        "environment-validated-retrieval"
+      ],
+      "note": "AgentBrew uses a strong teacher only during a brew/training period to convert weak-student failures into structured notes; the same weak student is re-run on the same task to validate notes, and the resulting memory is frozen at test time while the teacher disappears. Ablations confirm memory, Ralph validation, student-aware authoring, and retrieval suppression matter. This is strong teacher-to-student procedural-memory distillation and environment-validated retrieval, but not an irreducible deployment-time self-evolution state under same-information controls.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Failure-triggered teacher notes are corrective supervision; no residual is shown after matching failure evidence, note content, validator budget, memory capacity, retrieval, and weak executor."
+        },
+        {
+          "memory_id": "MEM-SEAR-1ba2b6e8d305dafaad",
+          "result": "NOT_SATISFIED",
+          "boundary": "Skill-scoped retrieval and suppression remain relevance/compatibility/context-selection mechanisms after matching memory content and budget."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "ca2d0cec771e4ecd6e73aa613a6f2fe6574353e58aad366f4b6c793c1acd6c73",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.16169",
+      "title": "When Does Muon Help Agentic Reinforcement Learning?",
+      "published": "2026-07-17",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "ea6b2e0f5a7795d99fcac9cc458e782ece6a3859d10727f65bbc3b012bbda889",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_OPTIMIZER_STUDY",
+      "reduction": [
+        "optimizer-comparison",
+        "effective-step-size",
+        "agentic-rl-posttraining"
+      ],
+      "note": "The Muon study maps an optimizer operating regime for agentic RL post-training and shows RMS-matched controls remove the headline gain. It is an optimization-recipe result rather than a persistent self-evolution mechanism.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "3026457dadfa3134764333d6e9c82382464cd2bcb09570addca2cc89f68fb742",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.22688",
+      "title": "Co-Harness: Co-Evolving Harnesses and Model Weights for LLM Agents",
+      "published": "2026-07-17",
+      "lane_keys": [
+        "skill_harness",
+        "memory_continual",
+        "parametric_model_state",
+        "runtime_deployment",
+        "safety_reliability"
+      ],
+      "source_sha256": "fe6d5bff2c0d4bdc07f82cc5411b7cf2f01ae63c3f6b593ae13a171fae5aa1ca",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION_WATCH",
+      "reduction": [
+        "failure-guided-harness-repair",
+        "trajectory-conditioned-model-sft",
+        "alternating-harness-model-optimization"
+      ],
+      "note": "Co-Harness is the strongest r5 near-boundary source. It alternates validated HarnessCritic patches with model SFT on trajectories generated by the improved harness and reports monotonic gains across two rounds plus a 200+ hour autonomous harness-evolution case study. However its core experiment starts from R0 with an evolved harness and no SFT, then runs full dual-loop rounds; it does not include the matched 2x2 controls needed to independently vary harness evolution and model update (fixed-harness+model-update, evolved-harness+fixed-model, both, neither) at comparable trajectories, supervision, compute, and candidate information. The reported compounding therefore remains compatible with additive/serial scaffold quality, data-quality, and model-adaptation effects rather than an irreducible co-evolution interaction. Preserve as a watch seed.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-4674f46501819d1414",
+          "result": "NOT_SATISFIED",
+          "boundary": "No preregistered matched factorial independently varies harness evolution and model adaptation under comparable task distribution, final harness candidates/content, trajectory information, supervision, compute, and evaluation while showing a repeatable non-additive held-out interaction."
+        },
+        {
+          "memory_id": "MEM-SEAR-eca0cdefae1ce14d2a",
+          "result": "NOT_SATISFIED",
+          "boundary": "Separate round-to-round gains and scaffold/model improvements do not identify a co-evolution interaction unless final scaffold/action-set and adaptation information are matched."
+        }
+      ],
+      "watch_reopen_seed": true,
+      "fulltext_sha256": "beec91d6cff960be0d2141b7bedcd180119a6f40a030e20c79b240cfa502e736",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.15272",
+      "title": "SciDiagramEdit: Learning to Edit Scientific Diagrams from Paper Revisions",
+      "published": "2026-07-16",
+      "lane_keys": [
+        "skill_harness"
+      ],
+      "source_sha256": "3df9ee42f013c4222e733a52dcfeeacc8a318ed1cf9890895d760287bb08c79b",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "demonstration-aware-skill-distillation",
+        "heldout-skill-selection",
+        "corrective-skill-specification-search"
+      ],
+      "note": "SciDiagramEdit iteratively distills execution traces plus author-drawn before/after demonstrations into a portable editing skill specification, scores candidates on a held-out validation split, and retains a best-so-far frontier. The transferred skill helps multiple editor backbones, showing reusable procedural value. Mechanistically this is supervised/demonstration-aware skill search and held-out model selection over explicit skill text, not an irreducible self-evolution state.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-c397541f813c95baa1",
+          "result": "NOT_SATISFIED",
+          "boundary": "Trace and author-demonstration driven skill updates are corrective adaptation once examples, target figures, candidate skill content, judge, update budget, and held-out selection are matched."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "e2464697094d7af1d9b0eeaea17ee86400e96846a003c56dc86985124dd052d1",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.14611",
+      "title": "Bad Memory: Evaluating Prompt Injection Risks from Memory in Agentic Systems",
+      "published": "2026-07-16",
+      "lane_keys": [
+        "memory_continual",
+        "safety_reliability"
+      ],
+      "source_sha256": "2a6f245828f875f5d702dca83a44bf2c038a62feca825a0666a0f61a3951f1f3",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_PERSISTENT_MEMORY_SECURITY",
+      "reduction": [
+        "stored-prompt-injection",
+        "cross-session-persistent-memory-risk",
+        "multi-session-security-probing"
+      ],
+      "note": "Bad Memory directly demonstrates that malicious payloads already present in trusted workspace memory files can influence current and future sessions and sometimes compound across repeated probes. This is important longitudinal safety evidence for persistent-state threat modeling. But the threat model explicitly assumes the payload is already planted and states that how malicious content reaches the memory file is out of scope; it therefore does not identify the self-evolution write mechanism or a new causal primitive beyond persistent exposure/trusted-context prompt injection.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-74df6b2fb0c340b52e",
+          "result": "NOT_SATISFIED",
+          "boundary": "Once the malicious persistent artifact is present, repeated cross-session exposure is representable as a longitudinal treatment/state-history regimen; the source does not vary executable artifact semantics/version under matched history."
+        }
+      ],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "1e046b26b527c1b0d7f5a832f56956fbd1ff3dcdcc357e7839c5d0c796bf03d4",
+      "fulltext_available": true
+    },
+    {
+      "ref": "arXiv:2607.13681",
+      "title": "Towards Spatial Supersensing in the Wild",
+      "published": "2026-07-15",
+      "lane_keys": [
+        "world_model",
+        "safety_reliability"
+      ],
+      "source_sha256": "f353d8985ab176dd14cd2a19989e6635877a3497029f8baf578ced0305ff4783",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_BENCHMARK_ONLY",
+      "reduction": [
+        "long-video-spatial-world-state-benchmark",
+        "viewpoint-change-robustness",
+        "multimodal-evaluation"
+      ],
+      "note": "VSI-Super-Wild is a benchmark for long-horizon spatial world-state reasoning. It measures current model limitations but does not study an autonomous self-evolution transition.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false,
+      "fulltext_sha256": "67ad0b3e4e35774c26fd8c2571dabb19fa8e0871f3bbe66632e6c90f934325c8",
+      "fulltext_available": true
+    }
+  ],
+  "next_action": "Record these 16 exact refs as zero-authority source-review exposure. No source satisfies an exact durable reopen contract, so do not trigger generator/provider/GPU work. Preserve Co-Harness only as a watch seed requiring a matched harness-evolution x model-update factorial and a non-additive same-information residual. Refresh the source scheduler from a new immutable staging copy.",
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
