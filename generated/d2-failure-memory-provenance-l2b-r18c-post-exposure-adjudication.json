@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R18C-POST-EXPOSURE-ADJUDICATION",
+  "recorded_date": "2026-08-24",
+  "status": "POST_EXPOSURE_EVALUATOR_SUPPORT_FAILURE_CONFIRMATORY_ATTEMPT_STOPPED",
+  "role": "FAIL_CLOSED_POST_EXPOSURE_ADJUDICATION",
+  "bindings": {
+    "r15_sha256": "707d2f630ef4a6d40f607ff156348223a424e7a76df96c6c6925747fb66b3c59",
+    "r16_sha256": "f12b18c129c4e65c076b2f811b65a0a505bf618665f63c87fb883c6d4cf72b4b",
+    "executor_manifest_digest": "sha256:5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216",
+    "run_root": "/data/wyt/agent-self-evolution-observatory/runs/b1-l2b-r18c-20260824",
+    "attempts_jsonl_sha256": "ce0d76d235a6124e40856f1f2195a7e9db6746427ba9e22e4d52f61333caa90f",
+    "failure_json_sha256": "4d077639a82ae7b8fba193e3bacb51eb0e67f9aaad31fcb52673254de64dc58e",
+    "summary_info_sha256": "45dae39cfcd8cf35aaec25477d88001af418c2bfcc39aa8fffba5b1969b85651",
+    "step_artifacts": [
+      {
+        "path": "browsergym/2026-08-24_11-53-38_seq000_task166_src163_rep0_STATUS_S/step_0.pkl.gz",
+        "sha256": "76532724b66b01587e07bde52301810cb5e1ec5691d0fdc9f4fa101f9083dee0",
+        "size": 131561
+      },
+      {
+        "path": "browsergym/2026-08-24_11-53-38_seq000_task166_src163_rep0_STATUS_S/step_1.pkl.gz",
+        "sha256": "2a2a11b7d06311b9f37888c6f78e14af3f7ed0c993077ddb7addc080d34e1802",
+        "size": 274
+      }
+    ]
+  },
+  "failure": {
+    "class": "WEBARENA_LLM_EVALUATOR_MODEL_ALIAS_NOT_FOUND_AFTER_AGENT_ACTION",
+    "requested_evaluator_model": "gpt-4-1106-preview",
+    "http_status": 404,
+    "failure_location": "original WebArena StringEvaluator -> llm_ua_match after BrowserGym env.step(action)",
+    "browsergym_n_steps": 1,
+    "terminal_score_valid": false,
+    "cum_reward_must_not_enter_analysis": true,
+    "executor_completion_or_action_exposure_occurred": true,
+    "evaluator_call_attempted": true,
+    "scientific_exposure_occurred": true,
+    "action_content_opened_by_this_adjudication": false
+  },
+  "frozen_policy_application": {
+    "R15_after_scientific_exposure": "no retry, no replacement, no endpoint switch; any unresolved support failure makes the whole confirmatory execution NO_VERDICT_SUPPORT_FAILURE",
+    "R15_confirmatory_requires_all_144": true,
+    "R16_single_confirmatory_attempt": true,
+    "retry_sequence_0_under_R16": false,
+    "task_replacement_under_R16": false,
+    "endpoint_switch_under_R16": false,
+    "remaining_143_episodes_under_current_confirmatory_attempt": false,
+    "single_confirmatory_attempt_consumed": true,
+    "current_R18_confirmatory_execution_stopped": true
+  },
+  "future_support_alias_preflight": {
+    "aliases": {
+      "b1-qwen25-32b-l2b-executor:latest": "5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216",
+      "gpt-4-1106-preview:latest": "5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216",
+      "gpt-4:latest": "5bce411d829007ce344871ae10ea7f02f91d86c932617a7f982e2380bbb1c216"
+    },
+    "all_aliases_manifest_identical": true,
+    "alias_creation_used_model_inference": false,
+    "alias_ready_for_future_reopen_only": true,
+    "alias_does_not_reauthorize_current_R18": true
+  },
+  "adjudication": {
+    "support_failure_is_scientific_negative": false,
+    "current_l2b_scientific_verdict": "NO_VERDICT_POST_EXPOSURE_SUPPORT_FAILURE",
+    "historical_R5_or_bridge_may_rescue": false,
+    "R18c_cum_reward_zero_may_be_treated_as_terminal_score": false,
+    "R18c_step_or_action_artifact_may_enter_confirmatory_analysis": false,
+    "continue_current_144_episode_schedule": false
+  },
+  "reopen_condition": {
+    "new_explicit_scientific_authority_required": true,
+    "new_pre_outcome_execution_contract_required": true,
+    "must_disclose_R18_R18b_R18c_support_failure_chain": true,
+    "must_not_use_exposed_sequence0_artifacts_for_selection_or_threshold_changes": true,
+    "preferred_new_independent_cohort_if_available": true,
+    "same_cohort_restart_is_not_automatically_authorized": true,
+    "evaluator_model_aliases_must_be_preflighted_before_any_new_episode": true
+  },
+  "scientific_verdict": "NO_VERDICT_POST_EXPOSURE_SUPPORT_FAILURE",
+  "scientific_authority": false,
+  "submission_authority": false,
+  "authority": {
+    "current_R18_execution": false,
+    "new_experiment": false,
+    "claim_expansion": false,
+    "l3": false,
+    "threshold_change": false,
+    "submission": false
+  }
+}
