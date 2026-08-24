@@ -54729,7 +54729,7 @@
             "Reopen temporal-retrieval equivalence only with an independently implemented retriever/reranker receiving the same raw candidate evidence."
           ],
           "summary": {
-            "events": 116,
+            "events": 123,
             "allowed_transitions": 24,
             "blocked_transitions": 0,
             "story_search_receipts": 3,
@@ -54769,10 +54769,10 @@
           },
           "latest_claim_audit": {
             "pass": true,
-            "claim_audit_sha256": "ea1a875bd82e70ae49feea7b676920c7c95a3d6ee978370af2e4998a3daa2e23",
+            "claim_audit_sha256": "6d955f687b0b8efaa6c68dc17110c1812dcb6b9a3d155d284310235d8cd9420b",
             "blockers": [],
-            "checks": 13,
-            "passed": 13
+            "checks": 15,
+            "passed": 15
           },
           "latest_manuscript_ci": {
             "pass": true,
@@ -54783,14 +54783,14 @@
           },
           "latest_prebuttal": {
             "pass": true,
-            "decision_critical": 4,
+            "decision_critical": 7,
             "blockers": [],
             "unresolved_decision_critical": 0
           },
           "latest_paper_preparation": {
             "pass": true,
-            "protocol_version": "1.0+r14-intervention-audit",
-            "receipt_sha256": "415430e9ade74febc868de01e340982b72030d98d52d85514a4d0d51217c16c3",
+            "protocol_version": "1.0+r15-stanford-accept-targeted-repair",
+            "receipt_sha256": "d3bab13863fd00596927fa9c164072bcda5e4b8791544bbb0ec6a4d01b2f97db",
             "required_gates": 8,
             "passed_gates": 8,
             "gate_pass": {
@@ -54818,7 +54818,7 @@
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "cd4686cdb926f23421f97830fe15c1df71ba421d721c6df9b46410d4ca983921",
+            "receipt_sha256": "41ffc2a954efc541662737e691e5dc235b2081612ba2cc1299f59985164f248a",
             "blockers": []
           },
           "source_native_evidence": {
@@ -54827,7 +54827,7 @@
             "institutional_systems": 3,
             "exact_timesage_replication_debt": "ACTIVE_EXTERNAL_REPLICATION_DEBT_NOT_SUBSTITUTED",
             "recommended_immediate_action": "READY_FOR_HUMAN_SUBMISSION",
-            "finalization_sha256": "d7cea3b17b4c89ea65e292de1a8730dcaa0f08c93f7fc43121e0f10083bbabfc"
+            "finalization_sha256": "0759a99bd5ccd4cbe45ae2cf50ad0a227fcc6b362f1059c3f0373fa91a414237"
           },
           "latest_transition": {
             "from": "PREBUTTAL",

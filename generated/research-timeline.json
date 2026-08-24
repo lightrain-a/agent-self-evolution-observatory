@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-24T05:43:19.300739+00:00",
+  "generated_at": "2026-08-24T07:20:33+00:00",
   "projection_policy": {
     "read_only": true,
     "display_timezone": "Asia/Shanghai",
@@ -14,15 +14,15 @@
     "canonical_entity_bindings_are_read_only": true
   },
   "summary": {
-    "events": 914,
-    "dated_structured_artifacts_projected": 315,
+    "events": 916,
+    "dated_structured_artifacts_projected": 317,
     "runtime_memory_source": "preserved_committed_snapshot",
     "runtime_memory_events": 6,
-    "key_events": 14,
+    "key_events": 16,
     "authority_bearing_scoped_events": 50,
     "canonical_research_bound_events": 245,
     "canonical_experiment_bound_events": 29,
-    "canonical_paper_bound_events": 175,
+    "canonical_paper_bound_events": 177,
     "canonical_research_items_with_events": 61,
     "canonical_papers_with_events": 3,
     "days": 23,
@@ -31,12 +31,12 @@
       "closure": 116,
       "experiment": 162,
       "idea": 154,
-      "paper": 89,
+      "paper": 91,
       "scientific": 2,
       "system": 366
     },
     "date_counts": {
-      "2026-08-24": 22,
+      "2026-08-24": 24,
       "2026-08-23": 79,
       "2026-08-22": 59,
       "2026-08-21": 52,
@@ -62,6 +62,160 @@
     }
   },
   "events": [
+    {
+      "event_id": "03e0556191f01096",
+      "occurred_at": "2026-08-24T07:20:33+00:00",
+      "time_precision": "exact",
+      "event_class": "paper",
+      "importance": "key",
+      "origin": "artifact_full_history",
+      "research_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "research_label_zh": "E2 · Temporal Skill · R15",
+      "title": "R15 targeted repair complete after external Accept",
+      "title_zh": "E2 R15：Accept 后 targeted repair 已完成",
+      "state_before": "SUBMISSION_READY",
+      "state_after": "R15_TARGETED_REPAIR_COMPLETE",
+      "summary": {
+        "en": "R15 closes the seven external-review questions with paper/existing-data analysis, keeps the scientific contract unchanged, and adds zero new model/provider calls.",
+        "zh": "R15 用文稿与现有数据分析闭合 7 个新外审问题；scientific contract 完全不变，新增模型/provider call 为 0。"
+      },
+      "why": {
+        "en": "The accepted narrow claim does not require score-chasing experiments.",
+        "zh": "当前已获 Accept 的窄 claim 不需要为追分扩实验。"
+      },
+      "limitation": {
+        "en": "Benign-generic, powered non-ceiling, prospective cross-domain, and multi-turn studies remain future scientific-reopen objects.",
+        "zh": "benign generic、powered non-ceiling、prospective cross-domain、multi-turn 仍是未来 scientific-reopen 对象。"
+      },
+      "next_action": "Keep R15 frozen for human submission/signoff.",
+      "next_action_zh": "保持 R15 冻结，进入人工投稿/签字环节。",
+      "reopen_condition": "Broaden only under a new scientific contract.",
+      "reopen_condition_zh": "只有未来扩大 scientific claim 时才以新合同重开。",
+      "evidence": [
+        {
+          "label": "Claim Audit",
+          "value": "15/15"
+        },
+        {
+          "label": "scientific contract",
+          "value": "UNCHANGED"
+        },
+        {
+          "label": "new experiment",
+          "value": "0"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "read-only paper/review history",
+        "scope_zh": "只读论文/外审历史；无科研、实验、GPU 或投稿授权。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/temporal-skill-r15-ledger-finalization-20260824.json",
+          "sha256": "58074a9d2872db1883aa3595c3903bc228d0914ef858393ad10d810e8467cbf4",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "论文",
+          "href": "selected-paper.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [
+          {
+            "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+            "source_research_item": null,
+            "paper_stage": "SUBMISSION_READY",
+            "scientific_status": "READY",
+            "submission_ready": true
+          }
+        ],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "1fcb9804a464bf24",
+      "occurred_at": "2026-08-24T05:53:03.864511+00:00",
+      "time_precision": "exact",
+      "event_class": "paper",
+      "importance": "key",
+      "origin": "artifact_full_history",
+      "research_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+      "research_label_zh": "E2 · Temporal Skill · R14",
+      "title": "Stanford post-repair review: 6.0 / Accept",
+      "title_zh": "E2 R14 Stanford 外审结果：6.0 / Accept",
+      "state_before": "SUBMITTED_FOR_EXTERNAL_REVIEW",
+      "state_after": "EXTERNAL_REVIEW_ACCEPT",
+      "summary": {
+        "en": "The fresh Stanford Agentic Reviewer returns 6.0 / Accept for R14. The score is advisory and not an official ICLR score.",
+        "zh": "R14 新一轮 Stanford Agentic Reviewer 返回 6.0 / Accept；该数值是外部 AI advisory score，不是官方 ICLR 分数。"
+      },
+      "why": {
+        "en": "The reviewer explicitly accepts the four-contrast attribution audit and requests targeted clarification/analysis rather than a new experiment for the current narrow claim.",
+        "zh": "Reviewer 明确认可四 contrast attribution audit；对当前窄 claim 的剩余要求以解释/现有数据分析为主，而非必须新开实验。"
+      },
+      "limitation": {
+        "en": "The review does not grant scientific or submission authority.",
+        "zh": "外审不授予科研或投稿权限。"
+      },
+      "next_action": "Apply paper/analysis-only targeted repair; keep broader benign-generic/non-ceiling experiments future-only.",
+      "next_action_zh": "只做 paper/analysis targeted repair；benign generic / 更多 non-ceiling 等新实验保留 future-only。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "未来扩大 claim 时才按独立 scientific gate 重开。",
+      "evidence": [
+        {
+          "label": "score",
+          "value": "6.0 (non-official)"
+        },
+        {
+          "label": "textual verdict",
+          "value": "Accept"
+        },
+        {
+          "label": "reviewed revision",
+          "value": "R14"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "read-only paper/review history",
+        "scope_zh": "只读论文/外审历史；无科研、实验、GPU 或投稿授权。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/temporal-skill-r14-stanford-review-result-20260824.json",
+          "sha256": "9a0fe9e07677a763e0a5f112cfe4b29257b71f0a0a775bf0169d162ec3d36890",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "论文",
+          "href": "selected-paper.html?paper=D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [
+          {
+            "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+            "source_research_item": null,
+            "paper_stage": "SUBMISSION_READY",
+            "scientific_status": "READY",
+            "submission_ready": true
+          }
+        ],
+        "categories": []
+      }
+    },
     {
       "event_id": "d1193267b7ca0e40",
       "occurred_at": "2026-08-24T05:43:19.300739+00:00",

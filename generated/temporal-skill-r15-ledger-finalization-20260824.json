@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r15-canonical-ledger-finalization",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "status": "FINALIZED_R15_TARGETED_REPAIR_SUBMISSION_READY",
+  "before_sha256": "a83d5bd8190007d160709fbe7746cea3eca79b494e2e3ed0ac923b5e2ffdca87",
+  "after_sha256": "f0e08b270dca3eae82f1c68c81ed06a162a6198e4e3b63597576ff709cfe1fef",
+  "contract_sha256_before": "6d992c931f076f805a0aa0bc24edd731b3b668ab37710a7befe313d8c31e0dae",
+  "contract_sha256_after": "6d992c931f076f805a0aa0bc24edd731b3b668ab37710a7befe313d8c31e0dae",
+  "contract_unchanged": true,
+  "current_state": "SUBMISSION_READY",
+  "scientific_status": "READY",
+  "external_review_textual_verdict": "Accept",
+  "external_review_numeric_nonofficial": 6.0,
+  "new_scientific_execution": false,
+  "new_experiment_now": false,
+  "submission_authority": false,
+  "scientific_authority": false,
+  "receipt_sha256": "4c383390319d9aabe99f93d224455fc828566b6124822cd42556464701300fb1"
+}
