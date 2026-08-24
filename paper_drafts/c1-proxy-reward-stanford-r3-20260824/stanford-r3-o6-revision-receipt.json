@@ -1,10 +1,11 @@
 {
   "artifact_bindings": {
     "diagnostic_sha256": "c86e515ce3f453ac5a96456c51ae31cfdacf76d9bca6f026543e5a8dc8a429b4",
-    "manuscript_qa_sha256": "efc644d291967d3fba43f1cb51ac056d63cc090267eb237f3c6ddcfb01c34fbc",
+    "manuscript_qa_sha256": "27328cbc68264f1c327987d64144704f7b480df9a47e1af094cb53bc6c45b5bd",
     "o5_evidence_sha256": "202a253e9766221c4de727afc9aedb7b4395b4814f15c1f82db0b93c166ae7e8",
     "o6_evidence_sha256": "61cb8af412d49fba39457309b8e221104f5a4441227b8fb652f80fcaac8ddad2",
-    "paper_pdf_sha256": "8d782ebe985407273fbce5e21b71e828df613be8a0f87e05aa0d24402b2ca406"
+    "o6_full_bank_reduction_sha256": "7f6307eb6b309cc802a4974ce7077eb2ab007fa1fd835b66035568676021cbf1",
+    "paper_pdf_sha256": "97341a9814a0b38e111e0c7f3018ff5eb2731ffb03d62b5fc1c9a7d83e9c43ee"
   },
   "base_review": "STANFORD-R2-OBJECTION-MATRIX-20260823",
   "claim_expansion": false,
@@ -116,10 +117,15 @@
       "revision_status": "ADDRESSED_WITH_FRESH_EXECUTION"
     },
     "PROXY-O6": {
-      "boundary": "The write-time state divergence replicates with GLM-5.3 on all four frozen sources, but terminal writer invariance is not established because the preregistered 0.15 practical-effect floor is missed despite p=0.00012 and two cellwise direction reversals. Live WebArena remains environment-blocked and full-memory-bank corruption-mask interaction remains separate future scope, not a rescue of this failed gate.",
+      "boundary": "The write-time state divergence replicates with GLM-5.3 on all four frozen sources, but terminal writer invariance is not established because the preregistered 0.15 practical-effect floor is missed despite p=0.00012 and two cellwise direction reversals. The proposed full-bank corruption-mask interaction sweep is stopped by matched simplification: released ReasoningBank retrieves top-1 from label-invariant task-description embeddings, so only the retrieved source's corruption bit can affect an episode. Source-faithful retrieval-wrapper/live-browser transport remains distinct and environment-blocked rather than being claimed as covered.",
       "evidence": {
         "cells_nonzero_in_both_writers": 6,
+        "corruption_sweep_new_provider_calls": 0,
+        "full_bank_corruption_reduction_status": "STOP_FULL_BANK_CORRUPTION_MASK_INTERACTION_BY_TOP1_LABEL_INVARIANT_RETRIEVAL_REDUCTION",
+        "multi_memory_interaction_identifiable_under_released_mechanism": false,
         "opposite_direction_among_nonzero_both": 2,
+        "released_retriever_threshold": 0.3,
+        "released_retriever_top_k": 1,
         "same_direction_among_nonzero_both": 4,
         "terminal_effect_floor": 0.15,
         "terminal_effect_floor_shortfall": 0.009375,
@@ -131,14 +137,14 @@
         "writer_stage_mean_token_jaccard_distance": 0.737482
       },
       "original_disposition": "REQUIRES_SCIENTIFIC_REOPEN",
-      "revision_status": "PARTIALLY_ADDRESSED_WITH_FRESH_CROSS_WRITER_EXECUTION"
+      "revision_status": "PARTIALLY_ADDRESSED_WITH_CROSS_WRITER_EXECUTION_AND_CORRUPTION_REDUCTION"
     }
   },
   "paper_code": "C1",
   "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
   "paper_only_revision": false,
   "receipt_type": "stanford-r3-targeted-experiment-revision",
-  "revision": "STANFORD-R3-O6-CROSS-WRITER-20260824",
+  "revision": "STANFORD-R3-O6-CROSS-WRITER-AND-CORRUPTION-REDUCTION-20260824",
   "schema_version": "1.0",
   "scientific_authority": false,
   "stanford_r2_score": 6.3,
@@ -161,7 +167,7 @@
         "status": "PASS"
       },
       "E4_robustness_transfer_boundary": {
-        "evidence": "All 16 frozen source-future cells are exposed; a fresh no-memory control locates branches without pseudoreplication; GLM-5.3 reproduces 4/4 write-time divergence but its 256-call terminal replication misses the frozen 0.15 effect floor (0.140625, p=0.00012) and reverses direction in two of six cells nonzero under both writers.",
+        "evidence": "All 16 frozen source-future cells are exposed; a fresh no-memory control locates branches without pseudoreplication; GLM-5.3 reproduces 4/4 write-time divergence but its 256-call terminal replication misses the frozen 0.15 effect floor (0.140625, p=0.00012) and reverses direction in two of six cells nonzero under both writers. A source-code-bound reduction further shows that the released top-1 task-description retriever makes a multi-bit full-bank corruption interaction unidentifiable: nonretrieved mask bits are causally inert.",
         "status": "PASS_FINITE_BOUNDARY"
       },
       "E5_negative_failure_cases": {

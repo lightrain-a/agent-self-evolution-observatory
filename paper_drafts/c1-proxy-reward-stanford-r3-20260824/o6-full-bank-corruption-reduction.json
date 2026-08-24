@@ -1,0 +1,152 @@
+{
+  "artifact_type": "matched-simplification-reduction",
+  "candidate_extension": "end-to-end full-memory-bank corruption-mask replication",
+  "claim_expansion_authority": false,
+  "economy_decision": {
+    "decision": "STOP_BEFORE_PROVIDER_CALLS",
+    "new_provider_calls_authorized": 0,
+    "new_rollouts_authorized": 0,
+    "reason": "A full-bank mask sweep cannot expose interactions among corrupted memories when only one label-invariant-keyed memory is retrieved. Expanding the bank adds source-coverage/generalization, not a new corruption interaction variable."
+  },
+  "experiment_authority": false,
+  "objection_id": "PROXY-O6",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "provider_call_authority": false,
+  "relationship_to_existing_evidence": {
+    "current_fixed_evidence_prompt_byte_equivalent_to_source_reasoningbank_wrapper": false,
+    "f2r1_covers_all_four_source_by_four_future_single_memory_label_contrasts": true,
+    "o5_covers_no_memory_branch_under_current_fixed_evidence_prompt": true,
+    "therefore_existing_outcomes_are_not_claimed_as_source_faithful_end_to_end_retrieval_replay": true,
+    "what_is_reduced": "the scientific rationale for a multi-bit/full-bank corruption-interaction sweep on the released top-1 label-invariant retrieval substrate",
+    "what_remains_distinct": "source-faithful retrieval/interface transport and live-browser continuation; this is a transport/replication question rather than a corruption-interaction question"
+  },
+  "released_mechanism_facts": {
+    "default_retriever_model": "all-MiniLM-L6-v2",
+    "default_similarity_threshold": 0.3,
+    "default_top_k": 1,
+    "injected_memory_count_when_retrieval_succeeds": 1,
+    "retrieval_key": "task_description",
+    "reward_conditioned_memory_document_used_in_retrieval_embedding": false,
+    "reward_label_changes": "memory writer mode and resulting document payload",
+    "reward_label_does_not_change": [
+      "task_id",
+      "task_description retrieval key",
+      "retriever query intent",
+      "retriever top_k",
+      "retriever threshold"
+    ],
+    "source_checks": {
+      "current_fixed_evidence_prompt_is_not_source_wrapper": true,
+      "default_retriever_model_minilm": true,
+      "default_threshold_point_three": true,
+      "default_top_k_one": true,
+      "memory_entry_keeps_task_intent_as_retrieval_key": true,
+      "retrieval_index_uses_task_description_only": true,
+      "retrieval_query_is_current_intent": true,
+      "retrieved_task_description_maps_to_memory_after_retrieval": true,
+      "reward_label_selects_writer_mode": true,
+      "shopping_config_does_not_override_threshold": true,
+      "shopping_config_does_not_override_topk": true,
+      "shopping_config_memory_human_message": true,
+      "shopping_config_reasoningbank": true,
+      "simple_retriever_embeds_documents_not_memory_payload": true,
+      "simple_retriever_topk_threshold": true
+    }
+  },
+  "reopen_only_if": [
+    "the exact target substrate retrieves more than one memory per future episode (top_k > 1 with multiple injected items)",
+    "retrieval keys or embeddings depend on reward-conditioned memory content or label",
+    "reward condition changes bank admission/deletion/membership before retrieval in a way not reducible to a single selected entry",
+    "a compositional memory interface jointly injects multiple corrupted entries"
+  ],
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scope_boundary": {
+    "changing_top_k_or_retrieval_key_to_create_interaction_would_change_substrate": true,
+    "cross_writer_failed_terminal_generalization_gate_unchanged": true,
+    "live_webarena_endpoint_support_debt_unchanged": true,
+    "such_a_change_requires_new_paper_contract_not_targeted_C1_repair": true
+  },
+  "source_bindings": {
+    "current_stage2_runner_sha256": "670db9720b75f88afcab9011bd52738dca4e6fc84970e049752527d17d5a9f39",
+    "f2r1_confirmatory_sha256": "04db52a9c2a1eac28df4213e5041e2f20e8e4b3591d5941f9e6d889a8b8dc2e9",
+    "o5_no_memory_evidence_sha256": "202a253e9766221c4de727afc9aedb7b4395b4814f15c1f82db0b93c166ae7e8",
+    "o6_cross_writer_evidence_sha256": "61cb8af412d49fba39457309b8e221104f5a4441227b8fb652f80fcaac8ddad2",
+    "webarena_aeval_py_sha256": "27c89502802424ddd1b0678d75c42cdcc724a6fdc221edb950a6fad2dbe6946a",
+    "webarena_reasoningbank_memory_py_sha256": "d4f499fe3321571db7f631132b939cf5b9ab121f24d81fa80637df221aad6386",
+    "webarena_reasoningbank_shopping_config_sha256": "b43333db6789ef9f951ad7b2390960e742d3dee098ebbe39a425b625615c088a",
+    "webarena_simple_retriever_py_sha256": "bab30513553a0133ea463f45a0716627bcf099ab34a1ce969581442d42278f13"
+  },
+  "status": "STOP_FULL_BANK_CORRUPTION_MASK_INTERACTION_BY_TOP1_LABEL_INVARIANT_RETRIEVAL_REDUCTION",
+  "symbolic_factorization": {
+    "corruption_masks": 16,
+    "enumeration": [
+      {
+        "all_nonselected_mask_bits_causally_inert_given_retrieval": true,
+        "masks_enumerated": 16,
+        "selected_source": "21",
+        "unique_condition_count": 2,
+        "unique_injected_memory_conditions": [
+          "source=21|label=failure",
+          "source=21|label=success"
+        ]
+      },
+      {
+        "all_nonselected_mask_bits_causally_inert_given_retrieval": true,
+        "masks_enumerated": 16,
+        "selected_source": "22",
+        "unique_condition_count": 2,
+        "unique_injected_memory_conditions": [
+          "source=22|label=failure",
+          "source=22|label=success"
+        ]
+      },
+      {
+        "all_nonselected_mask_bits_causally_inert_given_retrieval": true,
+        "masks_enumerated": 16,
+        "selected_source": "23",
+        "unique_condition_count": 2,
+        "unique_injected_memory_conditions": [
+          "source=23|label=failure",
+          "source=23|label=success"
+        ]
+      },
+      {
+        "all_nonselected_mask_bits_causally_inert_given_retrieval": true,
+        "masks_enumerated": 16,
+        "selected_source": "25",
+        "unique_condition_count": 2,
+        "unique_injected_memory_conditions": [
+          "source=25|label=failure",
+          "source=25|label=success"
+        ]
+      },
+      {
+        "all_mask_bits_causally_inert_given_retrieval": true,
+        "masks_enumerated": 16,
+        "selected_source": null,
+        "unique_condition_count": 1,
+        "unique_injected_memory_conditions": [
+          "no_memory"
+        ]
+      }
+    ],
+    "future_set": [
+      "164",
+      "385",
+      "387",
+      "388"
+    ],
+    "mask_can_change_number_of_retrieved_memories": false,
+    "mask_can_change_retrieval_identity": false,
+    "multi_memory_interaction_identifiable_under_released_top1_mechanism": false,
+    "nonselected_memory_bits_can_affect_injected_prompt": false,
+    "proof_statement": "For any future task f and any top-1 retrieval result R(f)=s*, the released retriever computes R from task-description embeddings that are invariant to the reward corruption mask. The injected memory payload is therefore M[s*, mask[s*]]. All mask bits for sources other than s* are causally inert for that episode. If thresholding returns no source, all mask bits are inert and the episode is no-memory.",
+    "source_set": [
+      "21",
+      "22",
+      "23",
+      "25"
+    ]
+  }
+}

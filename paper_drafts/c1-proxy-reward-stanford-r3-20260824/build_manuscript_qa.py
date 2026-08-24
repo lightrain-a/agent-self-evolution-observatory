@@ -11,6 +11,7 @@ SRC = HERE / "source"
 DIAG = json.loads((HERE / "existing-evidence-diagnostics.json").read_text())
 O5 = json.loads((HERE / "o5-manuscript-evidence.json").read_text())
 O6 = json.loads((HERE / "o6-final-evidence.json").read_text())
+O6_REDUCTION = json.loads((HERE / "o6-full-bank-corruption-reduction.json").read_text())
 
 
 def sha(path: Path) -> str:
@@ -79,6 +80,17 @@ def main() -> None:
         and O6["cross_writer_comparison"]["opposite_direction_among_nonzero_both"] == 2
         and all(x in all_text for x in ["0.737", "0.140625", "0.00012", "0.009375", "two reverse"])
     )
+    checks["o6_full_bank_corruption_reduction"] = (
+        O6_REDUCTION["status"] == "STOP_FULL_BANK_CORRUPTION_MASK_INTERACTION_BY_TOP1_LABEL_INVARIANT_RETRIEVAL_REDUCTION"
+        and O6_REDUCTION["released_mechanism_facts"]["default_top_k"] == 1
+        and abs(O6_REDUCTION["released_mechanism_facts"]["default_similarity_threshold"] - 0.3) < 1e-12
+        and O6_REDUCTION["released_mechanism_facts"]["reward_conditioned_memory_document_used_in_retrieval_embedding"] is False
+        and O6_REDUCTION["symbolic_factorization"]["corruption_masks"] == 16
+        and O6_REDUCTION["symbolic_factorization"]["multi_memory_interaction_identifiable_under_released_top1_mechanism"] is False
+        and O6_REDUCTION["economy_decision"]["new_provider_calls_authorized"] == 0
+        and O6_REDUCTION["relationship_to_existing_evidence"]["current_fixed_evidence_prompt_byte_equivalent_to_source_reasoningbank_wrapper"] is False
+        and all(x in limits for x in ["top-$1$", "threshold 0.3", "all other mask bits are inert", "stop this sweep by matched simplification", "Source-faithful retrieval-wrapper"])
+    )
     checks["semantic_claim_not_expanded"] = "not an embedding" in all_text or "not embedding" in all_text
     checks["interaction_not_predictor"] = "predictive transfer model" in all_text and "84.1\\%" in all_text
     checks["writer_generalization_boundary"] = (
@@ -116,7 +128,7 @@ def main() -> None:
     checks["system_E1_main_comparison"] = checks["terminal_effect_bound"]
     checks["system_E2_simplification_control"] = "0.105" in all_text and "0.0078" in all_text
     checks["system_E3_mechanism_analysis"] = "7 of 12" in all_text and checks["writer_jaccard_bound"] and checks["controlled_structural_diagnostic_bound"]
-    checks["system_E4_robustness_boundary"] = checks["interaction_diagnostic_bound"] and checks["write_terminal_nonmonotonic_diagnostic"] and checks["no_memory_boundary_explicit"] and checks["o5_fresh_no_memory_control"] and checks["o6_cross_writer_boundary"]
+    checks["system_E4_robustness_boundary"] = checks["interaction_diagnostic_bound"] and checks["write_terminal_nonmonotonic_diagnostic"] and checks["no_memory_boundary_explicit"] and checks["o5_fresh_no_memory_control"] and checks["o6_cross_writer_boundary"] and checks["o6_full_bank_corruption_reduction"]
     checks["system_E5_negative_failure"] = all(x in all_text for x in ["0.311", "0.160", "ArkResponseStateError", "zero scientific authority", "0.140625", "below the preregistered 0.15 floor"])
     checks["system_E6_efficiency_cost_scale"] = checks["execution_accounting_complete"] and checks["inference_only_accounting"]
 
@@ -145,7 +157,7 @@ def main() -> None:
     payload = {
         "schema_version": "1.0",
         "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-        "revision": "STANFORD-R3-O6-CROSS-WRITER-20260824",
+        "revision": "STANFORD-R3-O6-CROSS-WRITER-AND-CORRUPTION-REDUCTION-20260824",
         "status": "PASS" if all(checks.values()) else "FAIL",
         "abstract_words_approx": approx_words(abstract),
         "pdf_pages_total": pages,
@@ -156,6 +168,7 @@ def main() -> None:
         "diagnostic_sha256": sha(HERE / "existing-evidence-diagnostics.json"),
         "o5_evidence_sha256": sha(HERE / "o5-manuscript-evidence.json"),
         "o6_evidence_sha256": sha(HERE / "o6-final-evidence.json"),
+        "o6_full_bank_reduction_sha256": sha(HERE / "o6-full-bank-corruption-reduction.json"),
         "paper_pdf_sha256": sha(pdf),
         "main_tex_sha256": sha(SRC / "main.tex"),
         "scientific_authority": False,

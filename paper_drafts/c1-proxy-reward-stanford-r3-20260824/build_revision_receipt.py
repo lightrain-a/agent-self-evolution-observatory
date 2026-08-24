@@ -20,6 +20,7 @@ def main() -> None:
     diag = json.loads((HERE / "existing-evidence-diagnostics.json").read_text())
     o5 = json.loads((HERE / "o5-manuscript-evidence.json").read_text())
     o6 = json.loads((HERE / "o6-final-evidence.json").read_text())
+    o6_reduction = json.loads((HERE / "o6-full-bank-corruption-reduction.json").read_text())
     original = {row["id"]: row for row in paper["objections"]}
     interaction = diag["terminal_heterogeneity"]["two_way_centered_effect_decomposition"]
     write_terminal = diag["terminal_heterogeneity"]["write_to_terminal_magnitude_diagnostic"]
@@ -31,7 +32,7 @@ def main() -> None:
         "receipt_type": "stanford-r3-targeted-experiment-revision",
         "paper_id": PAPER_ID,
         "paper_code": paper["code"],
-        "revision": "STANFORD-R3-O6-CROSS-WRITER-20260824",
+        "revision": "STANFORD-R3-O6-CROSS-WRITER-AND-CORRUPTION-REDUCTION-20260824",
         "base_review": matrix["matrix_id"],
         "stanford_r2_score": paper["r2"]["score"],
         "stanford_r2_verdict": paper["r2"]["verdict"],
@@ -96,7 +97,7 @@ def main() -> None:
             },
             "PROXY-O6": {
                 "original_disposition": original["PROXY-O6"]["d"],
-                "revision_status": "PARTIALLY_ADDRESSED_WITH_FRESH_CROSS_WRITER_EXECUTION",
+                "revision_status": "PARTIALLY_ADDRESSED_WITH_CROSS_WRITER_EXECUTION_AND_CORRUPTION_REDUCTION",
                 "evidence": {
                     "writer_stage_complete_pairs": o6["writer_stage"]["complete_pairs"],
                     "writer_stage_mean_token_jaccard_distance": o6["writer_stage"]["mean_token_jaccard_distance"],
@@ -109,8 +110,13 @@ def main() -> None:
                     "cells_nonzero_in_both_writers": o6["cross_writer_comparison"]["cells_nonzero_in_both_writers"],
                     "same_direction_among_nonzero_both": o6["cross_writer_comparison"]["same_direction_among_nonzero_both"],
                     "opposite_direction_among_nonzero_both": o6["cross_writer_comparison"]["opposite_direction_among_nonzero_both"],
+                    "full_bank_corruption_reduction_status": o6_reduction["status"],
+                    "released_retriever_top_k": o6_reduction["released_mechanism_facts"]["default_top_k"],
+                    "released_retriever_threshold": o6_reduction["released_mechanism_facts"]["default_similarity_threshold"],
+                    "multi_memory_interaction_identifiable_under_released_mechanism": o6_reduction["symbolic_factorization"]["multi_memory_interaction_identifiable_under_released_top1_mechanism"],
+                    "corruption_sweep_new_provider_calls": o6_reduction["economy_decision"]["new_provider_calls_authorized"],
                 },
-                "boundary": "The write-time state divergence replicates with GLM-5.3 on all four frozen sources, but terminal writer invariance is not established because the preregistered 0.15 practical-effect floor is missed despite p=0.00012 and two cellwise direction reversals. Live WebArena remains environment-blocked and full-memory-bank corruption-mask interaction remains separate future scope, not a rescue of this failed gate.",
+                "boundary": "The write-time state divergence replicates with GLM-5.3 on all four frozen sources, but terminal writer invariance is not established because the preregistered 0.15 practical-effect floor is missed despite p=0.00012 and two cellwise direction reversals. The proposed full-bank corruption-mask interaction sweep is stopped by matched simplification: released ReasoningBank retrieves top-1 from label-invariant task-description embeddings, so only the retrieved source's corruption bit can affect an episode. Source-faithful retrieval-wrapper/live-browser transport remains distinct and environment-blocked rather than being claimed as covered.",
             },
         },
         "system_paper_requirements": {
@@ -139,7 +145,7 @@ def main() -> None:
                 },
                 "E4_robustness_transfer_boundary": {
                     "status": "PASS_FINITE_BOUNDARY",
-                    "evidence": "All 16 frozen source-future cells are exposed; a fresh no-memory control locates branches without pseudoreplication; GLM-5.3 reproduces 4/4 write-time divergence but its 256-call terminal replication misses the frozen 0.15 effect floor (0.140625, p=0.00012) and reverses direction in two of six cells nonzero under both writers.",
+                    "evidence": "All 16 frozen source-future cells are exposed; a fresh no-memory control locates branches without pseudoreplication; GLM-5.3 reproduces 4/4 write-time divergence but its 256-call terminal replication misses the frozen 0.15 effect floor (0.140625, p=0.00012) and reverses direction in two of six cells nonzero under both writers. A source-code-bound reduction further shows that the released top-1 task-description retriever makes a multi-bit full-bank corruption interaction unidentifiable: nonretrieved mask bits are causally inert.",
                 },
                 "E5_negative_failure_cases": {
                     "status": "PASS_VISIBLE_NEGATIVES",
@@ -168,6 +174,7 @@ def main() -> None:
             "diagnostic_sha256": sha(HERE / "existing-evidence-diagnostics.json"),
             "o5_evidence_sha256": sha(HERE / "o5-manuscript-evidence.json"),
             "o6_evidence_sha256": sha(HERE / "o6-final-evidence.json"),
+            "o6_full_bank_reduction_sha256": sha(HERE / "o6-full-bank-corruption-reduction.json"),
             "manuscript_qa_sha256": sha(HERE / "manuscript-qa.json"),
             "paper_pdf_sha256": sha(HERE / "paper.pdf"),
         },
