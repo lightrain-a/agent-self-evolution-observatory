@@ -258,14 +258,21 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertTrue(state["policy"]["every_candidate_design_requires_local_gap_test"])
         self.assertGreaterEqual(state["summary"]["systems_reviewed"], 10)
         self.assertGreaterEqual(state["summary"]["adopted"], 15)
-        self.assertEqual(state["summary"]["next_backlog"], 1)
-        self.assertEqual([row["system"] for row in state["next_backlog"]],["SAGE-MHFA"])
-        mhfa=state["next_backlog"][0]["local_gap_test"]
+        self.assertEqual(state["summary"]["next_backlog"], 4)
+        backlog={row["system"]:row for row in state["next_backlog"]}
+        self.assertEqual(set(backlog),{"Replica / Faraday","AHOIS","Notes2Skills","SAGE-MHFA"})
+        self.assertEqual(backlog["Replica / Faraday"]["local_gap_test"]["verdict"],"gap-confirmed-open")
+        self.assertEqual(backlog["AHOIS"]["local_gap_test"]["verdict"],"gap-confirmed-open")
+        self.assertEqual(backlog["Notes2Skills"]["local_gap_test"]["verdict"],"gap-confirmed-open")
+        mhfa=backlog["SAGE-MHFA"]["local_gap_test"]
         self.assertEqual(mhfa["verdict"],"support-insufficient")
         self.assertLess(mhfa["available_individual_failure_assets"],mhfa["minimum_replay_cases"])
         eurek=next(row for row in state["designs"] if row["system"]=="EurekAgent")
         self.assertEqual(eurek["local_gap_test"]["verdict"],"gap-confirmed-and-closed")
         self.assertIn("active experiment authority",eurek["local_gap_test"]["after"])
+        scienceflow=next(row for row in state["designs"] if row["system"]=="ScienceFlow")
+        self.assertEqual(scienceflow["local_gap_test"]["verdict"],"gap-confirmed-and-closed")
+        self.assertIn("HOLD/STOP/MERGED/PAPER_READY",scienceflow["local_gap_test"]["after"])
 
 
 if __name__ == "__main__":

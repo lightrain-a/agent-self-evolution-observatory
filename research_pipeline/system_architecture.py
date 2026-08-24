@@ -169,6 +169,7 @@ COMPONENT_BINDINGS: dict[str, tuple[str, str]] = {
     "Updater prerequisite + derived Research Execution Plan + eight-gate Pre-Experiment Compiler": ("pre-experiment-compiler", "experiment-design"),
     "Pilot registry and result feedback": ("pilot-registry", "scientific-validation"),
     "Experiment diagnosis and atomic repair tree": ("experiment-diagnosis", "scientific-validation"),
+    "Recoverable research execution kernel": ("research-execution-kernel", "runtime-authority"),
     "Unrestricted autonomous code execution tree": ("unrestricted-code-execution", "runtime-authority"),
 }
 

@@ -43,8 +43,11 @@ class ResearchSystemTest(unittest.TestCase):
         return self.sync_discovery_frontier(state)
 
     def test_state_is_valid_and_iclr_first(self) -> None:
+        self.assertEqual(self.state["schema_version"], "1.1")
         self.assertEqual(self.state["target_venue"], "ICLR")
         self.assertEqual(validate_state(self.state), [])
+        missing_kernel=copy.deepcopy(self.state);missing_kernel.pop("research_execution_kernel",None)
+        self.assertTrue(any("research execution kernel" in error for error in validate_state(missing_kernel)))
 
     def test_post_race_triage_is_embedded_zero_authority_and_fail_closed(self) -> None:
         triage=self.state["longitudinal_safety_post_race_triage"]
@@ -419,7 +422,8 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertIn("ARIS meta-optimization pattern + local typed failure semantics", sources)
         self.assertIn("ARIS research wiki pattern + local typed closure", sources)
         self.assertIn("ARIS / ResearchArena / AI-Scientist-v2 / reviewer-decision workflow", sources)
-        self.assertEqual(len(self.state["components"]), 32)
+        self.assertIn("ScienceFlow / AutoResearchEval / EurekAgent / TeLLAgent / Claw AI Lab", sources)
+        self.assertEqual(len(self.state["components"]), 33)
         self.assertIn("Human terminal ledger", sources)
         self.assertIn("P0 retrospective economy review", sources)
         self.assertIn("Web GPT + domestic-model independent consultation", sources)
@@ -437,14 +441,14 @@ class ResearchSystemTest(unittest.TestCase):
         self.assertEqual(architecture["summary"]["reader_stage_extra"], 0)
         self.assertEqual(self.state["summary"]["architecture_reader_chapters"], 10)
         self.assertEqual(architecture["summary"]["functional_layers"], 6)
-        self.assertEqual(architecture["summary"]["assigned_components"], 32)
+        self.assertEqual(architecture["summary"]["assigned_components"], 33)
         self.assertEqual(architecture["summary"]["unassigned_components"], 0)
         self.assertEqual(architecture["summary"]["duplicate_component_keys"], 0)
         self.assertEqual(architecture["summary"]["cross_cutting_controls"], 3)
         self.assertEqual(architecture["summary"]["orphan_cross_cutting_controls"], 0)
         self.assertEqual(self.state["summary"]["methodology_cross_cutting_controls"], 3)
         self.assertEqual(self.state["summary"]["methodology_primary_components_added"], 0)
-        self.assertEqual(len({item["key"] for item in self.state["components"]}), 32)
+        self.assertEqual(len({item["key"] for item in self.state["components"]}), 33)
         self.assertTrue(all(item.get("primary_layer") for item in self.state["components"]))
         self.assertTrue(self.state["research_governance_v2"]["policy"]["paper_novelty_precedes_method_design"])
         self.assertTrue(self.state["research_governance_v2"]["policy"]["method_design_precedes_experiment_plan"])

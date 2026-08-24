@@ -17,6 +17,7 @@ from .evidence_graph import build_evidence_graph
 from .evidence_integrity import build_evidence_integrity_state
 from .paper_quality_gate import POLICY as PAPER_QUALITY_POLICY
 from .experiment_iteration import build_experiment_iteration_state
+from .research_execution_kernel import build_research_execution_kernel_state
 from .experiment_value_scheduler import build_experiment_value_scheduler
 from .external_system_learning import build_external_system_learning_state
 from .failure_asset_library import build_failure_asset_library
@@ -288,6 +289,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
     ai_automation = state["ai_consultation_automation"]["summary"]
     governance = state["research_governance_v2"]
     iteration = state["experiment_iteration"]["summary"]
+    execution_kernel = state["research_execution_kernel"]["summary"]
     repairs = state["repair_queue"]["summary"]
     terminal = state["human_terminal_ideas"]["summary"]
     discovery = state["idea_discovery_v3"]["summary"]
@@ -326,6 +328,7 @@ def _component_manifest(state: dict[str, Any]) -> list[dict[str, Any]]:
         {"source":"AIDE / AI-Scientist-v2 / R&D-Agent / SCION", "component":{"en":"Updater prerequisite + derived Research Execution Plan + eight-gate Pre-Experiment Compiler","zh":"Updater 前置 + 派生 Research Execution Plan + 八门实验启动前编译器"}, "status":"running", "evidence":{"en":f"REP {pre_experiment['research_execution_plans']}/{pre_experiment['compiled_cards']} / updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / launch-ready {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']}","zh":f"REP {pre_experiment['research_execution_plans']}/{pre_experiment['compiled_cards']} / Updater prerequisite {pre_experiment['updater_prerequisite_pass']}/{pre_experiment['compiled_cards']} / 可启动 {pre_experiment['execution_ready']}/{pre_experiment['compiled_cards']}"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Pilot registry and result feedback","zh":"Pilot 注册表与结果回流"}, "status":"running", "evidence":{"en":f"{pilots['phases']} phases / {pilots['valid_result_files']} executed results","zh":f"{pilots['phases']} 个阶段 / {pilots['valid_result_files']} 个已执行结果"}},
         {"source":"AI-Scientist-v2 / AIDE / RD-Agent / ML-Master / AIRA / Agent Laboratory", "component":{"en":"Experiment diagnosis and atomic repair tree","zh":"实验诊断与原子修复树"}, "status":"running", "evidence":{"en":f"{iteration['nodes']} pilot nodes / {iteration['repair_children']} atomic repair children / {iteration['scale_up_allowed']} scale-up","zh":f"{iteration['nodes']} 个 Pilot 节点 / {iteration['repair_children']} 个原子修复子节点 / {iteration['scale_up_allowed']} 个可扩大"}},
+        {"source":"ScienceFlow / AutoResearchEval / EurekAgent / TeLLAgent / Claw AI Lab", "component":{"en":"Recoverable research execution kernel","zh":"可恢复科研执行内核"}, "status":"running", "evidence":{"en":f"{execution_kernel['contracts']} shared contracts / {execution_kernel['legacy_atomic_configs_detected']} legacy atomic configs detected / zero automatic scientific or GPU authority","zh":f"{execution_kernel['contracts']} 个公共合同 / 检测到 {execution_kernel['legacy_atomic_configs_detected']} 份既有 atomic config / 自动科学与 GPU 权限均为 0"}},
         {"source":"AI-Scientist-v2", "component":{"en":"Unrestricted autonomous code execution tree","zh":"不受限制的自主代码执行树"}, "status":"intentionally-disabled", "evidence":{"en":"Only sandboxed/manual experiment execution is allowed; results can still flow back automatically.","zh":"只允许沙箱或人工确认后的实验执行；合法结果仍可自动回流。"}},
     ]
 
@@ -686,6 +689,7 @@ def build_research_system_state() -> dict[str, Any]:
         pre_experiment_cards=formal_cards,
     )
     experiment_iteration = build_experiment_iteration_state()
+    research_execution_kernel = build_research_execution_kernel_state()
     principle_layer = build_principle_layer_state(pre_experiment_compiler.get("cards") or [], experiment_iteration.get("nodes") or [])
     pre_gpu_candidate_gates = build_pre_gpu_candidate_gate_state()
     human_terminal_ideas = build_human_terminal_state()
@@ -800,7 +804,7 @@ def build_research_system_state() -> dict[str, Any]:
         except (OSError, json.JSONDecodeError):
             latest_report = {"status":"invalid", "path":str(latest_report_path)}
     state = {
-        "schema_version":"1.0",
+        "schema_version":"1.1",
         "generated_at":_now(),
         "target_venue":"ICLR",
         "storage":{"data_root":str(storage.data_root), "run_dir":str(storage.run_dir)},
@@ -1111,6 +1115,8 @@ def build_research_system_state() -> dict[str, Any]:
             "experiment_diagnoses":experiment_iteration["summary"]["nodes"],
             "experiment_repair_children":experiment_iteration["summary"]["repair_children"],
             "experiment_scale_up":experiment_iteration["summary"]["scale_up_allowed"],
+            "research_execution_kernel_contracts":research_execution_kernel["summary"]["contracts"],
+            "research_execution_kernel_legacy_atomic_configs":research_execution_kernel["summary"]["legacy_atomic_configs_detected"],
             "principle_certificates_passed":principle_layer["summary"]["certificates_passed"],
             "principle_falsifications":principle_layer["summary"]["principle_falsifications"],
             "protocol_validity_pass":pre_experiment_compiler["summary"]["protocol_validity_pass"],
@@ -1294,6 +1300,7 @@ def build_research_system_state() -> dict[str, Any]:
         "paper_first_premature_method_diagnostics":paper_first_premature_method_diagnostics,
         "pilot_registry":pilot_registry,
         "experiment_iteration":experiment_iteration,
+        "research_execution_kernel":research_execution_kernel,
         "principle_layer":principle_layer,
         "scientific_meta_trace":scientific_meta_trace,
         "scientific_research_graph":scientific_research_graph,
@@ -1697,6 +1704,7 @@ def _health(state: dict[str, Any], corpus: dict[str, Any]) -> dict[str, Any]:
         {"key":"aris-harness-alignment", "pass":state["research_harness_assurance"].get("status")=="PASS_HARNESS_ASSURANCE" and int((state["research_harness_assurance"].get("summary") or {}).get("failed") or 0)==0 and state["research_candidate_portfolio"].get("scientific_authority") is False and int((state["research_candidate_portfolio"].get("summary") or {}).get("automatic_promotions") or 0)==0 and state["search_funnel_telemetry"].get("scientific_authority") is False and state["scientific_research_graph"].get("scientific_authority") is False and (state["scientific_research_graph"].get("policy") or {}).get("experiment_failure_edge_cannot_close_core_principle") is True, "detail":{"assurance":state["research_harness_assurance"].get("summary"),"portfolio":state["research_candidate_portfolio"].get("summary"),"funnel":state["search_funnel_telemetry"].get("summary"),"graph":state["scientific_research_graph"].get("summary")}},
         {"key":"pilot-schema", "pass":state["pilot_registry"]["summary"]["invalid_result_files"] == 0 and state["pilot_registry"]["summary"]["invalid_approval_files"] == 0 and state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"] and state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"], "detail":state["pilot_registry"]["summary"]},
         {"key":"experiment-diagnosis", "pass":state["experiment_iteration"]["summary"]["nodes"] == 4 and state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"], "detail":state["experiment_iteration"]["summary"]},
+        {"key":"research-execution-kernel", "pass":state["research_execution_kernel"].get("status")=="KERNEL_CONTRACTS_INSTALLED" and state["research_execution_kernel"].get("scientific_authority") is False and state["research_execution_kernel"]["summary"].get("contracts")==6 and all(state["research_execution_kernel"]["summary"].get(key)==0 for key in ("automatic_scientific_authority","automatic_experiment_authority","automatic_p0_authority","automatic_gpu_authority")) and state["research_execution_kernel"]["policy"].get("execution_resume_requires_identical_execution_identity") is True and state["research_execution_kernel"]["policy"].get("hold_stop_merge_and_paper_handoff_cannot_be_bypassed_by_state_rollback") is True and state["research_execution_kernel"]["policy"].get("planner_freezes_scientific_contract_executor_only_executes_it") is True and state["research_execution_kernel"]["policy"].get("metacognition_compares_intent_protocol_evidence_and_claim_before_transition") is True, "detail":state["research_execution_kernel"]["summary"]},
         {"key":"mem-xfer-workflow", "pass":not _mem_xfer_semantic_errors(state["mem_xfer_workflow"]), "detail":{"semantic_errors":_mem_xfer_semantic_errors(state["mem_xfer_workflow"]),"support_qualification":state["mem_xfer_workflow"]["support_qualification"]["status"],"full_support":state["mem_xfer_workflow"]["full_support"]["status"],"cpu_gate":state["mem_xfer_workflow"]["support_enriched_analysis"]["status"],"second_model":state["mem_xfer_workflow"]["second_model"]["status"]}},
         {"key":"human-terminal-ledger", "pass":terminal_summary.get("human_parents") == 26 and terminal_summary.get("p0_resolved_lineages") == 26 and terminal_summary.get("drop") == 0 and terminal_summary.get("revived_to_p0") == 7, "detail":terminal_summary},
         {"key":"p0-admission", "pass":state["p0_admission"]["summary"].get("active_p0") == expected_active_p0 and state["p0_admission"]["summary"].get("admitted") == expected_active_p0 and state["p0_admission"]["summary"].get("transitioned_from_p0_ready") == 16 and state["p0_admission"]["summary"].get("revived_from_drop") == 7 and state["p0_admission"]["summary"].get("settings_complete") == expected_active_p0, "detail":state["p0_admission"]["summary"]},
@@ -2306,6 +2314,13 @@ def validate_state(state: dict[str, Any]) -> list[str]:
     if not state["pilot_registry"]["policy"]["p0_execution_requires_pre_experiment_8_of_8"]: errors.append("P0 execution must require an 8/8 Pre-Experiment Card")
     if not state["pilot_registry"]["policy"]["automatic_p0_to_p1_forbidden"]: errors.append("automatic P0-to-P1 escalation must stay forbidden")
     if not state["experiment_iteration"]["policy"]["nonidentifiable_pilot_cannot_update_scientific_belief"]: errors.append("non-identifiable pilots must not update scientific belief")
+    execution_kernel=state.get("research_execution_kernel") or {};kernel_policy=execution_kernel.get("policy") or {};kernel_summary=execution_kernel.get("summary") or {}
+    kernel_required=str(state.get("schema_version") or "1.0")>="1.1" or bool(execution_kernel) or "research_execution_kernel_contracts" in (state.get("summary") or {})
+    if kernel_required:
+        if execution_kernel.get("status")!="KERNEL_CONTRACTS_INSTALLED" or execution_kernel.get("scientific_authority") is not False or kernel_summary.get("contracts")!=6: errors.append("research execution kernel must expose six zero-authority shared contracts")
+        if any(int(kernel_summary.get(key) or 0)!=0 for key in ("automatic_scientific_authority","automatic_experiment_authority","automatic_p0_authority","automatic_gpu_authority")): errors.append("research execution kernel must not grant automatic authority")
+        if kernel_policy.get("execution_resume_requires_identical_execution_identity") is not True or kernel_policy.get("hold_stop_merge_and_paper_handoff_cannot_be_bypassed_by_state_rollback") is not True: errors.append("research execution resume must be identity-bound and cannot bypass scientific reopen gates")
+        if kernel_policy.get("planner_freezes_scientific_contract_executor_only_executes_it") is not True or kernel_policy.get("metacognition_compares_intent_protocol_evidence_and_claim_before_transition") is not True: errors.append("research execution kernel must preserve planner/executor and metacognitive transition boundaries")
     if not state["scientific_meta_trace"]["policy"]["raw_execution_trace_is_not_scientific_state"]: errors.append("raw trace must remain separate from compact scientific state")
     if not state["scientific_meta_trace"]["policy"]["active_scientific_state_is_separate_from_institutional_memory"]: errors.append("active scientific state must remain separate from institutional memory")
     if not state["scientific_meta_trace"]["policy"]["active_scientific_state_never_time_decays"]: errors.append("active scientific authority must never decay as memory")
