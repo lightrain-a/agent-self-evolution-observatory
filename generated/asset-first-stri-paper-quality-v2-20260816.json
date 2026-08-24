@@ -238,8 +238,8 @@
           "N2",
           "N3"
         ],
-        "purpose": "Stress support thresholds, package constraints, singleton witnesses, and taxonomy edits.",
-        "decision_rule": "Report the region over which each conclusion is stable; narrow any claim that depends on one arbitrary setting."
+        "purpose": "Stress support misspecification, exact support-edit radius, degree-preserving rewiring, representation-independent target rays, package-mass constraints, singleton witnesses, and taxonomy edits.",
+        "decision_rule": "Report the region over which each conclusion is stable; narrow any claim that depends on one arbitrary setting or one cherry-picked sparse witness."
       },
       {
         "id": "AN-UNCERTAINTY",
@@ -388,8 +388,8 @@
           "O-FAILURE",
           "O-SENSITIVITY"
         ],
-        "reviewer_question": "Does the diagnosis survive representation edits and subset perturbations, and where is the closed-form witness not applicable?",
-        "takeaway": "Exact-support quotienting removes clone/split nuisance, both witnesses are deletion-robust, and witness absence is visibly typed as inconclusive rather than a negative result.",
+        "reviewer_question": "Is the residual a fragile artifact of one clone example, one sparse witness, uniform q, concentrated package weights, or a few support cells?",
+        "takeaway": "The same frozen support object has a 22-addition/71-deletion exact edit radius, survives 200 degree-preserving rewirings and 22 disjoint sparse witnesses, and remains residual over seven representation-independent target rays and every feasible tested max-share constraint.",
         "quantitative": true,
         "uncertainty_required": true,
         "negative_or_failure_visible": true
@@ -436,6 +436,13 @@
           "generated/asset-first-stri-offline-completion-analysis-20260824.json",
           "research_pipeline/asset_first_stri_offline_completion_analysis_20260824.py",
           "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py",
+          "generated/asset-first-stri-target-null-analysis-20260824.json",
+          "research_pipeline/asset_first_stri_target_null_analysis_20260824.py",
+          "generated/asset-first-stri-witness-peeling-20260824.json",
+          "research_pipeline/asset_first_stri_witness_peeling_20260824.py",
+          "generated/asset-first-stri-support-edit-radius-20260824.json",
+          "research_pipeline/asset_first_stri_support_edit_radius_20260824.py",
+          "research_pipeline/test_asset_first_stri_target_null_analysis_20260824.py",
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -473,6 +480,13 @@
           "generated/asset-first-stri-offline-completion-analysis-20260824.json",
           "research_pipeline/asset_first_stri_offline_completion_analysis_20260824.py",
           "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py",
+          "generated/asset-first-stri-target-null-analysis-20260824.json",
+          "research_pipeline/asset_first_stri_target_null_analysis_20260824.py",
+          "generated/asset-first-stri-witness-peeling-20260824.json",
+          "research_pipeline/asset_first_stri_witness_peeling_20260824.py",
+          "generated/asset-first-stri-support-edit-radius-20260824.json",
+          "research_pipeline/asset_first_stri_support_edit_radius_20260824.py",
+          "research_pipeline/test_asset_first_stri_target_null_analysis_20260824.py",
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -499,6 +513,13 @@
           "generated/asset-first-stri-offline-completion-analysis-20260824.json",
           "research_pipeline/asset_first_stri_offline_completion_analysis_20260824.py",
           "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py",
+          "generated/asset-first-stri-target-null-analysis-20260824.json",
+          "research_pipeline/asset_first_stri_target_null_analysis_20260824.py",
+          "generated/asset-first-stri-witness-peeling-20260824.json",
+          "research_pipeline/asset_first_stri_witness_peeling_20260824.py",
+          "generated/asset-first-stri-support-edit-radius-20260824.json",
+          "research_pipeline/asset_first_stri_support_edit_radius_20260824.py",
+          "research_pipeline/test_asset_first_stri_target_null_analysis_20260824.py",
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -525,6 +546,13 @@
           "generated/asset-first-stri-offline-completion-analysis-20260824.json",
           "research_pipeline/asset_first_stri_offline_completion_analysis_20260824.py",
           "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py",
+          "generated/asset-first-stri-target-null-analysis-20260824.json",
+          "research_pipeline/asset_first_stri_target_null_analysis_20260824.py",
+          "generated/asset-first-stri-witness-peeling-20260824.json",
+          "research_pipeline/asset_first_stri_witness_peeling_20260824.py",
+          "generated/asset-first-stri-support-edit-radius-20260824.json",
+          "research_pipeline/asset_first_stri_support_edit_radius_20260824.py",
+          "research_pipeline/test_asset_first_stri_target_null_analysis_20260824.py",
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -551,6 +579,13 @@
           "generated/asset-first-stri-offline-completion-analysis-20260824.json",
           "research_pipeline/asset_first_stri_offline_completion_analysis_20260824.py",
           "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py",
+          "generated/asset-first-stri-target-null-analysis-20260824.json",
+          "research_pipeline/asset_first_stri_target_null_analysis_20260824.py",
+          "generated/asset-first-stri-witness-peeling-20260824.json",
+          "research_pipeline/asset_first_stri_witness_peeling_20260824.py",
+          "generated/asset-first-stri-support-edit-radius-20260824.json",
+          "research_pipeline/asset_first_stri_support_edit_radius_20260824.py",
+          "research_pipeline/test_asset_first_stri_target_null_analysis_20260824.py",
           "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
           "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
           "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -602,7 +637,14 @@
           "generated/asset-first-stri-reviewer-extensions-20260819.json",
           "generated/asset-first-stri-offline-completion-analysis-20260824.json",
           "research_pipeline/asset_first_stri_offline_completion_analysis_20260824.py",
-          "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py"
+          "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py",
+          "generated/asset-first-stri-target-null-analysis-20260824.json",
+          "research_pipeline/asset_first_stri_target_null_analysis_20260824.py",
+          "generated/asset-first-stri-witness-peeling-20260824.json",
+          "research_pipeline/asset_first_stri_witness_peeling_20260824.py",
+          "generated/asset-first-stri-support-edit-radius-20260824.json",
+          "research_pipeline/asset_first_stri_support_edit_radius_20260824.py",
+          "research_pipeline/test_asset_first_stri_target_null_analysis_20260824.py"
         ]
       },
       {
@@ -626,7 +668,14 @@
           "generated/asset-first-stri-reviewer-extensions-20260819.json",
           "generated/asset-first-stri-offline-completion-analysis-20260824.json",
           "research_pipeline/asset_first_stri_offline_completion_analysis_20260824.py",
-          "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py"
+          "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py",
+          "generated/asset-first-stri-target-null-analysis-20260824.json",
+          "research_pipeline/asset_first_stri_target_null_analysis_20260824.py",
+          "generated/asset-first-stri-witness-peeling-20260824.json",
+          "research_pipeline/asset_first_stri_witness_peeling_20260824.py",
+          "generated/asset-first-stri-support-edit-radius-20260824.json",
+          "research_pipeline/asset_first_stri_support_edit_radius_20260824.py",
+          "research_pipeline/test_asset_first_stri_target_null_analysis_20260824.py"
         ]
       },
       {
@@ -639,7 +688,14 @@
           "generated/asset-first-stri-reviewer-extensions-20260819.json",
           "generated/asset-first-stri-offline-completion-analysis-20260824.json",
           "research_pipeline/asset_first_stri_offline_completion_analysis_20260824.py",
-          "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py"
+          "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py",
+          "generated/asset-first-stri-target-null-analysis-20260824.json",
+          "research_pipeline/asset_first_stri_target_null_analysis_20260824.py",
+          "generated/asset-first-stri-witness-peeling-20260824.json",
+          "research_pipeline/asset_first_stri_witness_peeling_20260824.py",
+          "generated/asset-first-stri-support-edit-radius-20260824.json",
+          "research_pipeline/asset_first_stri_support_edit_radius_20260824.py",
+          "research_pipeline/test_asset_first_stri_target_null_analysis_20260824.py"
         ]
       },
       {
@@ -730,7 +786,9 @@
         ],
         "data_refs": [
           "generated/asset-first-stri-paper-analysis-suite-20260816.json",
-          "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json"
+          "generated/asset-first-stri-target-null-analysis-20260824.json",
+          "generated/asset-first-stri-witness-peeling-20260824.json",
+          "generated/asset-first-stri-support-edit-radius-20260824.json"
         ],
         "script_refs": [
           "paper_drafts/stri-20260816-plot-ablation-robustness.py"
@@ -870,7 +928,7 @@
       "claim_adjudications": 3,
       "completed_visualizations": 4,
       "content_addressed_required": true,
-      "content_addressed_referenced_files": 32
+      "content_addressed_referenced_files": 39
     },
     "claim_ledger": [
       {
@@ -1037,8 +1095,8 @@
       "status": "PASS_CONTENT_ADDRESSED_COMPLETION",
       "blockers": [],
       "summary": {
-        "referenced_files": 32,
-        "registered_digests": 35
+        "referenced_files": 39,
+        "registered_digests": 42
       }
     },
     "policy": {
@@ -1075,7 +1133,7 @@
   "evidence_debt": {
     "missing_or_incomplete_ids": [],
     "priority": [],
-    "interpretation": "Manuscript QA and venue-format QA remain valid mechanical checks, but they cannot establish top-tier scientific completeness. The CPU evidence suite supplies taxonomy perturbation, ruling-out, failure, sensitivity, and finite-snapshot uncertainty analyses; Paper Quality v2.1 passes only when the manuscript itself consumes those artifacts as explicit baseline/ablation/failure/sensitivity evidence and binds reviewer-question-driven visualizations to versioned data, scripts, figures, and captions.",
+    "interpretation": "Manuscript QA and venue-format QA remain valid mechanical checks, but they cannot establish top-tier scientific completeness. The frozen-data evidence suite now includes exact support-edit radii, degree-preserving structural controls, target-ray and package-mass sensitivity, sparse-witness redundancy, taxonomy perturbation, ruling-out, failure, and finite-snapshot uncertainty analyses; Paper Quality v2.1 passes only when the manuscript itself consumes those artifacts and binds reviewer-question-driven visualizations to versioned data, scripts, figures, and captions.",
     "gpu_rescue_required": false,
     "cheap_first": "Prefer CPU/released-artifact taxonomy perturbation, reduction ablations, uncertainty, and sensitivity before reopening any dynamic GPU lane."
   },
@@ -1088,6 +1146,13 @@
     "generated/asset-first-stri-offline-completion-analysis-20260824.json",
     "research_pipeline/asset_first_stri_offline_completion_analysis_20260824.py",
     "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py",
+    "generated/asset-first-stri-target-null-analysis-20260824.json",
+    "research_pipeline/asset_first_stri_target_null_analysis_20260824.py",
+    "generated/asset-first-stri-witness-peeling-20260824.json",
+    "research_pipeline/asset_first_stri_witness_peeling_20260824.py",
+    "generated/asset-first-stri-support-edit-radius-20260824.json",
+    "research_pipeline/asset_first_stri_support_edit_radius_20260824.py",
+    "research_pipeline/test_asset_first_stri_target_null_analysis_20260824.py",
     "generated/asset-first-stri-released-controller-clone-audit-20260819.json",
     "research_pipeline/asset_first_stri_released_controller_clone_audit.py",
     "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py",
@@ -1125,6 +1190,13 @@
     "generated/asset-first-stri-offline-completion-analysis-20260824.json": "9fc5810b37f1eb94323597155e8c4b50d7717e78f0e222e38edcb88a930883f0",
     "research_pipeline/asset_first_stri_offline_completion_analysis_20260824.py": "183ee3f76d50f7dbf2e29ab02a7d1f2f3a9b74459595f316aaf79b04a21304e4",
     "research_pipeline/test_asset_first_stri_offline_completion_analysis_20260824.py": "7a1e94e0a586cf3b17acdf77455a683090f4fa6b888873d826097f26444eac51",
+    "generated/asset-first-stri-target-null-analysis-20260824.json": "1c42a092a05b2bc49e654dcc3de19a64b4b77afe6985447477eff47ff352e462",
+    "research_pipeline/asset_first_stri_target_null_analysis_20260824.py": "5786330e3b5bbe641370b38e3ef5e81a950c9e640cedfbb9cc14b8fb8d3db3bd",
+    "generated/asset-first-stri-witness-peeling-20260824.json": "08ab180e233c967c64e8a59733518468f65e171543d1648db0fc0a74421b99f3",
+    "research_pipeline/asset_first_stri_witness_peeling_20260824.py": "b97d0ef6b0ee0d7e7d30c000a3e5aa66235d5e2a98f0a5e717fd642fcf664375",
+    "generated/asset-first-stri-support-edit-radius-20260824.json": "1152977257c4c298686d91b78ead93e6786fa13819be203732322a1149fbca1a",
+    "research_pipeline/asset_first_stri_support_edit_radius_20260824.py": "23fb8a1f971b7f4855c0a8cd42b916b62e7f77abb2601c5007f2d2dacf7d6680",
+    "research_pipeline/test_asset_first_stri_target_null_analysis_20260824.py": "caf610f03be1b7beb325fe63879ea6a772fa6e4d6e87345753af79c743e8d581",
     "generated/asset-first-stri-released-controller-clone-audit-20260819.json": "fd837d785e66540ec85f14b9d0e8b21d5f00f0292fc6b55c98f90483bcdb58bf",
     "research_pipeline/asset_first_stri_released_controller_clone_audit.py": "516b3dccb75c99ad50095c9a1ca6359636cada02ee8cfb55dec4333c4a00aa6f",
     "research_pipeline/test_asset_first_stri_released_controller_clone_audit.py": "c2d354a584a1845daf323855ac9e2401e5a0938716950250e8b8e3bc2c68f0ac",
@@ -1142,16 +1214,16 @@
     "generated/asset-first-stri-baseline-min-cover-pruning-20260816.json": "c0a7761fde29b4d3e5f2c5dde752cfed2b5fe8693d1c229bb6e01a0971c86df2",
     "generated/asset-first-stri-skillrl-final-policy-p0e-qualified-stop-diagnosis-20260817.json": "5b5827579df4824dea0be8f62ff7c0e2a1757e1cb81c071006e127ef3ba8437a",
     "generated/asset-first-stri-skillrl-final-policy-p0e-principle-disposition-20260817.json": "e4ab9861c8705be4f27abe589d8348c983f4ac2a53d1f17cbd0bd096d7c625d7",
-    "paper_drafts/stri-20260816-narrow-body.tex": "92adf9a4a09345cf5da232b0fb98c321da1e6f24e9e88d7990abe9798e2f614d",
-    "paper_drafts/stri-20260816-tables.tex": "29770a1574e6c00ea890bdf0a57ad3c8ec17b827821fa32a017c8b2d8dafe45f",
+    "paper_drafts/stri-20260816-narrow-body.tex": "a70f4db5f13b5b7e12b0517587b248e93e634892485c4fc2b9f558144c3e9d71",
+    "paper_drafts/stri-20260816-tables.tex": "57c8967bb68e721317135c96f33c9196d8fed726529fbfbfb9c4b3a2e47df7f7",
     "paper_drafts/figures/stri-overview.pdf": "dcb62917f4394ecc5e486220d9d411d0afc9028f8f11525831efb4c3b41aebf9",
     "paper_drafts/figures/stri-factor2-witnesses.pdf": "ed10fb150579d42027e6bb24a773d3a17bd6fa2cadc845099f54d7772bb1506d",
     "paper_drafts/figures/stri-rstar-boundary.pdf": "70225e96d5c2c2a56fafbcf4d713415537e9ee8b93987cabfa4cb8812fa9ac02",
-    "paper_drafts/figures/stri-ablation-robustness.pdf": "5e843e7fe31b25fdbdc17375eab21d85cdabe7d71d0d1cb4982b6ecf5966fd66",
+    "paper_drafts/figures/stri-ablation-robustness.pdf": "e15b04a862cf2aa6773569b7c8b81da3165a6fcbf4e3a172c00388db0d2079af",
     "paper_drafts/stri-20260816-plot-overview.py": "38c672cbdb7afa06de6dfde3faa75bf5beb704bde06b46b9778f845112c7edef",
     "paper_drafts/stri-20260816-plot-witnesses.py": "35e8fe8793f47b46d1ff3efc0a3dff2b67479aa7636dc653f16404979c72dfa3",
     "paper_drafts/stri-20260816-plot-boundary.py": "46fc03a500b09b2bc70fdae24e964e76963e7709fc184c88ebb99834363fde25",
-    "paper_drafts/stri-20260816-plot-ablation-robustness.py": "aeeff9148322c044e3f1c38c2b451c80b4c64ffd02edc3003b1229a2a665fa8b"
+    "paper_drafts/stri-20260816-plot-ablation-robustness.py": "ae0809cf4a247c4b0168372befb447543ce80a4d94fcb3d67fa26262eb9f0155"
   },
   "scientific_authority": false,
   "authority": {

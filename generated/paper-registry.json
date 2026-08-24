@@ -1,7 +1,7 @@
 {
   "schema_version": "1.6",
-  "generated_at": "2026-08-24T04:04:23+00:00",
-  "source_revision": "b568a506613b34e754c4c5d03a7dd2522482184e",
+  "generated_at": "2026-08-24T04:53:41+00:00",
+  "source_revision": "448f2c2473af9286912e8be5d0f94d43c0b1119b",
   "projection_source": "canonical-append-only-paper-ledgers",
   "policy": {
     "paper_registry_is_projection_of_append_only_acceptance_ledgers": true,
@@ -117,8 +117,8 @@
       "claims_total": 3,
       "qa_passed": 60,
       "qa_total": 60,
-      "official_qa_passed": 60,
-      "official_qa_total": 60,
+      "official_qa_passed": 64,
+      "official_qa_total": 64,
       "main_text_pages": 9,
       "main_text_page_limit": 9,
       "supplement_ready": true,
@@ -127,7 +127,7 @@
       "new_gpu_evidence_required": false,
       "paper_quality_v2_passed": true,
       "paper_quality_content_addressed_completion": true,
-      "paper_quality_content_addressed_files": 29,
+      "paper_quality_content_addressed_files": 39,
       "paper_quality_evidence_debt": 0,
       "paper_quality_missing_ids": [],
       "paper_quality_schema_version": "2.1",
@@ -146,7 +146,7 @@
       ],
       "paper_visual_figure_qa": "PASS",
       "paper_visual_new_result_figure": "stri-ablation-robustness",
-      "paper_quality_interpretation": "Manuscript QA and venue-format QA remain valid mechanical checks, but they cannot establish top-tier scientific completeness. The CPU evidence suite supplies taxonomy perturbation, ruling-out, failure, sensitivity, and finite-snapshot uncertainty analyses; Paper Quality v2.1 passes only when the manuscript itself consumes those artifacts as explicit baseline/ablation/failure/sensitivity evidence and binds reviewer-question-driven visualizations to versioned data, scripts, figures, and captions.",
+      "paper_quality_interpretation": "Manuscript QA and venue-format QA remain valid mechanical checks, but they cannot establish top-tier scientific completeness. The frozen-data evidence suite now includes exact support-edit radii, degree-preserving structural controls, target-ray and package-mass sensitivity, sparse-witness redundancy, taxonomy perturbation, ruling-out, failure, and finite-snapshot uncertainty analyses; Paper Quality v2.1 passes only when the manuscript itself consumes those artifacts and binds reviewer-question-driven visualizations to versioned data, scripts, figures, and captions.",
       "cheap_first": "Prefer CPU/released-artifact taxonomy perturbation, reduction ablations, uncertainty, and sensitivity before reopening any dynamic GPU lane.",
       "scientific_authority": false,
       "canonical_problem_gate_added": 0,
@@ -302,7 +302,7 @@
       ],
       "reopen_conditions": [],
       "summary": {
-        "events": 45,
+        "events": 49,
         "allowed_transitions": 8,
         "blocked_transitions": 0,
         "story_search_receipts": 1,
@@ -311,7 +311,8 @@
         "manuscript_ci_receipts": 4,
         "prebuttal_receipts": 1,
         "submission_readiness_receipts": 1,
-        "contract_revisions": 0
+        "contract_revisions": 0,
+        "scientific_reopens": 0
       },
       "latest_story_search": {
         "pass": true,
@@ -370,19 +371,19 @@
       },
       "latest_paper_preparation": {
         "pass": true,
-        "protocol_version": "1.0+r5-supplement-projection",
-        "receipt_sha256": "fea4424178d6060e572e9bddef25376347f10482b20b81b6ead554058ac72bcb",
+        "protocol_version": "1.0+r15-canonical-reconciliation",
+        "receipt_sha256": "70624e8adf38b204bbdd8a27732ce664f65729ed4d14bbe198f11230f822de56",
         "required_gates": 8,
         "passed_gates": 8,
         "gate_pass": {
-          "agent-native-artifact": true,
-          "citation-integrity": true,
           "hierarchical-rubric": true,
-          "reader-simulation": true,
-          "reproducibility-bundle": true,
-          "submission-package": true,
           "verification-refinement": true,
-          "visual-story": true
+          "citation-integrity": true,
+          "visual-story": true,
+          "reproducibility-bundle": true,
+          "agent-native-artifact": true,
+          "reader-simulation": true,
+          "submission-package": true
         },
         "blockers": []
       },
@@ -407,7 +408,7 @@
       },
       "latest_submission_readiness": {
         "submission_ready": true,
-        "receipt_sha256": "ed94c6ed3f030f1310e8a00836ea2cb91aff40a4ad22c4fbb75319569bdf9e90",
+        "receipt_sha256": "b20e475406fc6879181a057442d1aa6e1267e0f96e5e83b25b015fdd41f0b58b",
         "blockers": []
       },
       "latest_transition": {

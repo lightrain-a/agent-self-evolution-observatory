@@ -14,11 +14,11 @@
     "resolved_citations": 19,
     "ai_use_statement_present": true,
     "reproducibility_statement_present": true,
-    "paper_pdf_sha256": "92de85d16bf400818610d63378b9f36dbbf02251f6cc71a7d8102255f8065a1d",
-    "paper_source_zip_sha256": "d0ec6d41915942c509818010efaba8d7629ae060dd4a6dc731a33a53d91a3b82",
-    "anonymous_supplement_zip_sha256": "71b5e4503053802c9d126e615b1d9d7523426421c4e7a35b351277b435041f96",
+    "paper_pdf_sha256": "f60b57fc7909ca753926424bf479f9a442f974ecd70ed74981f25093200361c2",
+    "paper_source_zip_sha256": "d22d0c76a16a6e9009768586ac14a66f7718203f0645be91c9d594c61303a97a",
+    "anonymous_supplement_zip_sha256": "4a28ddc2db92d3f38141ea0496ce6989796ed93e7566b9831c77c2e77c075586",
     "supplement_reproduction": "PASS",
-    "supplement_unit_tests": "32/32 PASS",
+    "supplement_unit_tests": "29/29 PASS",
     "final_independent_review": "READY_TO_SUBMIT",
     "new_gpu_evidence_required_for_current_claim_scope": false,
     "paper_quality_v2": "PASS_MANUSCRIPT_EVIDENCE",
@@ -44,7 +44,12 @@
     "template_binding": "ICLR-AGENT-SELF-EVOLUTION-MANUSCRIPT-V1 v1.0; E1-E6 satisfied; E7 optional satisfied",
     "new_model_calls_for_r6": 0,
     "new_gpu_runs_for_r6": 0,
-    "claim_expansion_for_r6": false
+    "claim_expansion_for_r6": false,
+    "structural_enrichment": "7/7 target rays; 200/200 degree-preserving rewires; 9/9 max-share; 22 disjoint witnesses; exact edit radius 22 additions / 71 deletions",
+    "r15_canonical_reconciliation": true,
+    "claim_expansion_for_r15": false,
+    "new_model_calls_for_r15": 0,
+    "new_gpu_runs_for_r15": 0
   },
   "human_signoff_required": [
     {
@@ -81,9 +86,9 @@
     }
   ],
   "submission_files": {
-    "pdf": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-iclr2027-r6-20260824/paper.pdf",
-    "source_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-iclr2027-r6-20260824/source.zip",
-    "supplement_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-iclr2027-r6-20260824/supplement.zip"
+    "pdf": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/E1-STRI-R15-canonical-final.pdf",
+    "source_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/E1-STRI-R15-canonical-final-source.zip",
+    "supplement_zip": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/E1-STRI-R15-canonical-final-supplement.zip"
   },
   "next_action": "Human-author signoff only. Do not reopen dynamic P0, launch GPU experiments, broaden N1-N3, or restart idea search for this paper unless new independently qualified evidence or a direct collision invalidates the current narrow submission.",
   "scientific_authority": false

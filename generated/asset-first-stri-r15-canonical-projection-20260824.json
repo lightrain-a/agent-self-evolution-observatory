@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "acceptance_paper_id": "STRI-ICLR2027",
+  "revision": "R15",
+  "status": "R15_CANONICAL_PROJECTION_PUBLISHED",
+  "canonical_base": "c021e20d4a78b77b96ff877c4ed3b8e5986b1299",
+  "integration_source_head": "448f2c2473af9286912e8be5d0f94d43c0b1119b",
+  "release_manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/R15-MANIFEST.json",
+  "release_manifest_sha256": "2e6d6731a6b337fa07753a6c5ee9a75f1bfc025d9129f65be53911d8a8119a8e",
+  "stable_hashes": {
+    "pdf": "f60b57fc7909ca753926424bf479f9a442f974ecd70ed74981f25093200361c2",
+    "legacy_pdf": "f60b57fc7909ca753926424bf479f9a442f974ecd70ed74981f25093200361c2",
+    "source_zip": "d22d0c76a16a6e9009768586ac14a66f7718203f0645be91c9d594c61303a97a",
+    "supplement_zip": "4a28ddc2db92d3f38141ea0496ce6989796ed93e7566b9831c77c2e77c075586",
+    "tex": "4875a301f0af5ccef90a961d824db0f52d01e3f10ea4f83188a56dd60b875502"
+  },
+  "qa": {
+    "paper_qa": "97/97 PASS",
+    "official_iclr_qa": "64/64 PASS",
+    "main_text_pages": 9,
+    "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
+    "supplement_reproduction": "PASS",
+    "supplement_unit_tests": "29/29 PASS"
+  },
+  "ledger": {
+    "current_state": "SUBMISSION_READY",
+    "contract_sha256": "30ba1a82ae4547d8e3385f514352da55415b31dcf83b8dabab1f756af34309ad",
+    "gate_clean_submission_ready": true,
+    "paper_preparation_protocol": "1.0+r15-canonical-reconciliation",
+    "primary_next_action": "NO_INTERNAL_ACTION"
+  },
+  "other_paper_rows_preserved": true,
+  "claim_expansion": false,
+  "new_model_calls": 0,
+  "new_gpu_runs": 0,
+  "scientific_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "3544bc4741af4ca2a07a7468465aa00e2216a43ce1af4a8f48e0b5d708b38da4"
+}

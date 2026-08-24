@@ -4,15 +4,15 @@
   "stage": "ICLR2027_ANONYMOUS_SUPPLEMENT_READY",
   "status": "PASS",
   "package": {
-    "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-iclr2027-r6-20260824/supplement.zip",
-    "sha256": "71b5e4503053802c9d126e615b1d9d7523426421c4e7a35b351277b435041f96",
-    "manifest_sha256": "040b4f7ef11934ea3f92882e293650aa9d3f5b287b071c3e8861f12008fb337e",
-    "package_metadata_sha256": "cc2e2f9c6ebc9a3d5ea016ecba9a879f7c6a3ad96fbdfeb3ff8b6f2decd8146e"
+    "path": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/E1-STRI-R15-canonical-final-supplement.zip",
+    "sha256": "4a28ddc2db92d3f38141ea0496ce6989796ed93e7566b9831c77c2e77c075586",
+    "manifest_sha256": "5b19fc0121ba2e81299ce1716b86621269d8bf118388d4679a32f04b590da53e",
+    "package_metadata_sha256": "144407943523b5ce14043c74294f1959074980593d25c8b6a05609dcdee6f1c5"
   },
   "isolated_verification": {
     "fresh_extract_manifest": "PASS",
     "reproduce_py": "PASS",
-    "unit_tests": "32/32 PASS",
+    "unit_tests": "29/29 PASS",
     "binary_identity_path_scan": "PASS",
     "text_identity_path_scan": "PASS",
     "figure_regeneration": "PASS_4_OF_4_FIGURES",
@@ -219,6 +219,18 @@
       "dense_lp_matrix_MiB": 24.25,
       "wall_time_exact_reproduction_required": false,
       "analysis_sha256": "9fc5810b37f1eb94323597155e8c4b50d7717e78f0e222e38edcb88a930883f0"
+    },
+    "structural_enrichment": {
+      "target_rays_residual": "7/7",
+      "degree_preserving_rewires_residual": "200/200",
+      "max_share_constraints_preserving_R_star_2": "9/9",
+      "disjoint_three_row_witnesses": 22,
+      "witness_rows_removed": 66,
+      "witness_tools_spanned": 19,
+      "minimum_additions_to_equalizable": 22,
+      "minimum_deletions_to_equalizable": 71,
+      "new_model_calls": 0,
+      "new_gpu_runs": 0
     }
   },
   "frozen_external_repositories": {

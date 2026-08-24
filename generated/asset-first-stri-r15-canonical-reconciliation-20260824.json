@@ -1,0 +1,121 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "publication_code": "E1",
+  "revision": "R15",
+  "stage": "CANONICAL_RECONCILIATION_CLOSURE",
+  "status": "R15_CANONICAL_RECONCILIATION_READY_FOR_INTEGRATION",
+  "canonical_base": "c021e20d4a78b77b96ff877c4ed3b8e5986b1299",
+  "integration_source_head": "448f2c2473af9286912e8be5d0f94d43c0b1119b",
+  "latest_origin_observed_after_projection": "80928195b7e9c595bec51003633bf1bc80d82fac",
+  "latest_origin_overlap_with_r15_projection": [],
+  "release": {
+    "directory": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824",
+    "manifest": "/data/wyt/agent-self-evolution-observatory/submission-packages/stri-e1-r15-canonical-final-20260824/R15-MANIFEST.json",
+    "manifest_file_sha256": "2e6d6731a6b337fa07753a6c5ee9a75f1bfc025d9129f65be53911d8a8119a8e",
+    "pdf_sha256": "f60b57fc7909ca753926424bf479f9a442f974ecd70ed74981f25093200361c2",
+    "source_zip_sha256": "d22d0c76a16a6e9009768586ac14a66f7718203f0645be91c9d594c61303a97a",
+    "supplement_zip_sha256": "4a28ddc2db92d3f38141ea0496ce6989796ed93e7566b9831c77c2e77c075586",
+    "source_files": 12,
+    "source_isolated_compile": "PASS",
+    "supplement_manifest": "PASS",
+    "supplement_reproduce_py": "PASS",
+    "supplement_unit_tests": "29/29 PASS",
+    "source_text_anonymity": "PASS",
+    "pdf_anonymity": "PASS"
+  },
+  "stable_aliases": {
+    "downloads/E1-STRI.pdf": "f60b57fc7909ca753926424bf479f9a442f974ecd70ed74981f25093200361c2",
+    "downloads/STRI-ICLR2027.pdf": "f60b57fc7909ca753926424bf479f9a442f974ecd70ed74981f25093200361c2",
+    "downloads/STRI-ICLR2027-source.zip": "d22d0c76a16a6e9009768586ac14a66f7718203f0645be91c9d594c61303a97a",
+    "downloads/STRI-ICLR2027-supplement.zip": "4a28ddc2db92d3f38141ea0496ce6989796ed93e7566b9831c77c2e77c075586",
+    "downloads/STRI-ICLR2027.tex": "4875a301f0af5ccef90a961d824db0f52d01e3f10ea4f83188a56dd60b875502"
+  },
+  "qa": {
+    "paper_qa": "97/97 PASS",
+    "official_iclr_qa": "64/64 PASS",
+    "paper_quality": "PASS_MANUSCRIPT_EVIDENCE",
+    "paper_quality_evidence_debt": 0,
+    "main_text_pages": "9/9",
+    "total_pdf_pages": 11,
+    "stri_public_status_tests": "7/7 PASS",
+    "r15_control_plane_tests_excluding_verified_upstream_baseline_debt": "76/76 PASS",
+    "paper_story_v3": "PASS",
+    "structural_package_test": "PASS"
+  },
+  "structural_enrichment_reproduced_from_supplement": {
+    "target_rays_residual": "7/7",
+    "degree_preserving_rewires_residual": "200/200",
+    "max_share_constraints_preserving_R_star_2": "9/9",
+    "disjoint_three_row_witnesses": 22,
+    "witness_rows_removed": 66,
+    "witness_tools_spanned": 19,
+    "minimum_additions_to_equalizable": 22,
+    "minimum_deletions_to_equalizable": 71
+  },
+  "live_acceptance_ledger": {
+    "paper_id": "STRI-ICLR2027",
+    "contract_sha256": "30ba1a82ae4547d8e3385f514352da55415b31dcf83b8dabab1f756af34309ad",
+    "events": 49,
+    "r15_events": [
+      "paper-preparation-r15",
+      "submission-readiness-r15",
+      "submission-readiness-context-r15",
+      "source-native-r15-finalization"
+    ],
+    "current_state": "SUBMISSION_READY",
+    "scientific_status": "READY",
+    "gate_clean_submission_ready": true,
+    "paper_preparation_protocol": "1.0+r15-canonical-reconciliation",
+    "primary_next_action": "NO_INTERNAL_ACTION",
+    "validation_errors": []
+  },
+  "projection_isolation": {
+    "other_four_paper_registry_rows_semantically_preserved": true,
+    "other_four_research_system_ledger_rows_semantically_preserved": true,
+    "current_research_status_changed_paths": [
+      "as_of_date",
+      "generated_at",
+      "leading_paper_track.official_qa_passed",
+      "leading_paper_track.official_qa_total",
+      "leading_paper_track.paper_quality_content_addressed_files",
+      "leading_paper_track.paper_quality_interpretation",
+      "source_revision"
+    ],
+    "research_system_refresh_scope": "STRI asset-first component + STRI PaperAcceptance ledger row only"
+  },
+  "verified_upstream_baseline_debt": [
+    {
+      "scope": "Temporal Skill",
+      "test": "research_pipeline.test_research_item_state.ResearchItemStateTest.test_stri_handoff_and_paper_registry",
+      "origin_main_reproduction": "FAIL",
+      "reason": "test still expects the pre-R13 Temporal title while canonical PaperState title is 'When Do Reusable Temporal Procedures Actually Repair Agents?'",
+      "r15_action": "PRESERVE_AS_UPSTREAM_DEBT_NOT_MODIFIED"
+    },
+    {
+      "scope": "Temporal Skill",
+      "test": "site_smoke_test.py",
+      "origin_main_reproduction": "FAIL",
+      "reason": "smoke contract is stale relative to Temporal R13 source-native evidence (2056 runtime-valid rows)",
+      "r15_action": "PRESERVE_AS_UPSTREAM_DEBT_NOT_MODIFIED"
+    }
+  ],
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "dynamic_qwen3_proposer_reopened": false,
+    "task_utility_claim_added": false,
+    "safety_claim_added": false,
+    "longitudinal_regret_claim_added": false,
+    "validated_repair_claim_added": false,
+    "lp_novelty_claim_added": false
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "gpu": false,
+    "submission": false
+  },
+  "receipt_sha256": "7420bd36573bc91d44f1574f908a446f6986f9fe93e769c40aa025873217f862"
+}

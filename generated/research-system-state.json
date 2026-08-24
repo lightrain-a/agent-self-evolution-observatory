@@ -6526,15 +6526,15 @@
     "paper_first_fresh_phenomenon_ready_problem_review": 0,
     "paper_first_fresh_phenomenon_archived": 0,
     "paper_first_evidence_migration_status": "NOT_RUN",
-    "asset_first_stri_status": "HOLD_ASSET_FIRST_PAPER_NOT_READY",
-    "asset_first_stri_paper_ready": 0,
+    "asset_first_stri_status": "READY_NARROW_ICLR",
+    "asset_first_stri_paper_ready": 1,
     "asset_first_stri_claims_supported": 3,
     "asset_first_stri_claims_total": 3,
     "asset_first_stri_qa_checks_passed": 60,
     "asset_first_stri_qa_checks_total": 60,
-    "asset_first_stri_submission_status": "HOLD_PAPER_QUALITY_V2",
-    "asset_first_stri_official_qa_checks_passed": 60,
-    "asset_first_stri_official_qa_checks_total": 60,
+    "asset_first_stri_submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
+    "asset_first_stri_official_qa_checks_passed": 64,
+    "asset_first_stri_official_qa_checks_total": 64,
     "asset_first_stri_main_text_pages": 9,
     "asset_first_stri_main_text_page_limit": 9,
     "asset_first_stri_supplement_ready": 1,
@@ -6542,7 +6542,7 @@
     "asset_first_stri_paper_quality_v2_passed": 1,
     "asset_first_stri_paper_quality_source_binding": 1,
     "asset_first_stri_paper_quality_content_addressed_completion": 1,
-    "asset_first_stri_paper_quality_content_addressed_files": 29,
+    "asset_first_stri_paper_quality_content_addressed_files": 39,
     "asset_first_stri_paper_quality_evidence_debt": 0,
     "asset_first_stri_main_visualizations": 4,
     "asset_first_stri_canonical_problem_gate_added": 0,
@@ -41370,9 +41370,9 @@
     "paper_id": "STRI",
     "candidate_id": "skill-taxonomy-representation-invariance",
     "title": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
-    "status": "HOLD_ASSET_FIRST_PAPER_NOT_READY",
-    "submission_status": "HOLD_PAPER_QUALITY_V2",
-    "track": "ASSET_FIRST_PAPER_QUALITY_REPAIR",
+    "status": "READY_NARROW_ICLR",
+    "submission_status": "READY_TO_SUBMIT_PENDING_HUMAN_AUTHOR_SIGNOFF_AND_OPENREVIEW",
+    "track": "ASSET_FIRST_PAPER_READY",
     "gates": {
       "final_review": true,
       "claim_coherence": true,
@@ -41385,7 +41385,7 @@
       "paper_quality_content_addressed_completion": true,
       "official_iclr2027_format": true,
       "anonymous_supplement": true,
-      "public_download_assets": false,
+      "public_download_assets": true,
       "openreview_machine_handoff": true
     },
     "claims": {
@@ -41406,13 +41406,13 @@
       }
     },
     "summary": {
-      "paper_ready": 0,
+      "paper_ready": 1,
       "claims_supported": 3,
       "claims_total": 3,
       "qa_checks_passed": 60,
       "qa_checks_total": 60,
-      "official_qa_checks_passed": 60,
-      "official_qa_checks_total": 60,
+      "official_qa_checks_passed": 64,
+      "official_qa_checks_total": 64,
       "main_text_pages": 9,
       "main_text_page_limit": 9,
       "supplement_ready": 1,
@@ -41423,7 +41423,7 @@
       "paper_quality_v2_passed": 1,
       "paper_quality_source_binding": 1,
       "paper_quality_content_addressed_completion": 1,
-      "paper_quality_content_addressed_files": 29,
+      "paper_quality_content_addressed_files": 39,
       "paper_quality_evidence_debt": 0,
       "paper_quality_missing_ids": [],
       "paper_quality_visualizations": 4,
@@ -41485,18 +41485,18 @@
       "title_freezes_at_full_paper_deadline": true,
       "deadline_source_verified_on": "2026-08-20",
       "deadline_human_action": "Use the aligned ICLR 2027 author-facing deadlines: genuine abstract and frozen author membership by 2026-09-18 AoE; full paper and anonymous supplement by 2026-09-25 AoE.",
-      "pdf_sha256": "56a26d51d20a2683e3718d63ba86f047561626b8203d437f7b0ce3da402621c5",
-      "source_zip_sha256": "7b5dbe61e9c76f8226c0f0f3da727afb5455a20ec445e51edf0a3cbf0f92db20",
-      "supplement_zip_sha256": "c0f2ece30cab3a816549acf963f5e0a6351f8a473347f7c424e2186fb5f8172b",
+      "pdf_sha256": "f60b57fc7909ca753926424bf479f9a442f974ecd70ed74981f25093200361c2",
+      "source_zip_sha256": "d22d0c76a16a6e9009768586ac14a66f7718203f0645be91c9d594c61303a97a",
+      "supplement_zip_sha256": "4a28ddc2db92d3f38141ea0496ce6989796ed93e7566b9831c77c2e77c075586",
       "downloads": {
         "tex": "downloads/STRI-ICLR2027.tex",
         "pdf": "downloads/STRI-ICLR2027.pdf",
         "source_zip": "downloads/STRI-ICLR2027-source.zip"
       },
       "download_sha256": {
-        "tex": "3ecb724621e9eb4b1db70bcd009bd73f1b0fedaac8442227675a2f9f3a63be12",
-        "pdf": "0375ea42e2c14f89c81de74900bcebe7135d67eaf0a2faedc1f875bc9f6d11ba",
-        "source_zip": "4fbd8fa3bc6aea0025bca676bb24c81785d415ce39cdef81835315ae6f28e823"
+        "tex": "4875a301f0af5ccef90a961d824db0f52d01e3f10ea4f83188a56dd60b875502",
+        "pdf": "f60b57fc7909ca753926424bf479f9a442f974ecd70ed74981f25093200361c2",
+        "source_zip": "d22d0c76a16a6e9009768586ac14a66f7718203f0645be91c9d594c61303a97a"
       },
       "human_action": "author-list/profile/quota/dual-submission/ethics/AI-use signoff and OpenReview upload only"
     },
@@ -41600,7 +41600,7 @@
       },
       "paper_quality_v2": {
         "path": "generated/asset-first-stri-paper-quality-v2-20260816.json",
-        "sha256": "016855719be9fe3d1a4752727ed2120ef603edf9a1d61def739ce421810bf6e0",
+        "sha256": "b320e6d2cea935280f099bfd3aa71fd3887decd0937542ede09ec7f40dca65cc",
         "present": true
       },
       "current_source_review": {
@@ -41610,22 +41610,22 @@
       },
       "official_final_state": {
         "path": "generated/asset-first-stri-iclr2027-final-state-20260816.json",
-        "sha256": "0d8cd3c5fc07479514d6edeb1df072ae11e94997bc1b70e2e2f66b868ac1ea9b",
+        "sha256": "a74167af31b85265f652d49fb32cece77fbbb076465c2666d5df4c7179bf9812",
         "present": true
       },
       "official_submission_qa": {
         "path": "generated/asset-first-stri-iclr2027-submission-qa-20260816.json",
-        "sha256": "5bd2880a51ad6e598ad0d31dab0d6fa9c3f191ee2e7cabcec9332f09b04aa412",
+        "sha256": "527673a02974fecb3a1f872f4baee74131dfbfdf8ceb67c485b74f4b1c6ee4e8",
         "present": true
       },
       "supplement_state": {
         "path": "generated/asset-first-stri-iclr2027-supplement-state-20260816.json",
-        "sha256": "cb3980260a23838555d9647da6e452dbe180ba48e66cfacb286aa6b9b2cd368d",
+        "sha256": "2fcbd6cbd88c1eb1dac8ef0500243cb516316c3bbfcfe91ed0ae106892ccf840",
         "present": true
       },
       "openreview_readiness": {
         "path": "generated/asset-first-stri-iclr2027-openreview-readiness-20260816.json",
-        "sha256": "abfd7978f4745908908efeda79095c538e00854d3660ad2cd0e02774223ec5c0",
+        "sha256": "ec4e9593b078bc3f6f3693091cec28abd7c6e11ff1e019c6e1374e810ad7b0d3",
         "present": true
       },
       "skillrl_p0e_principle_disposition": {
@@ -54881,7 +54881,7 @@
           ],
           "reopen_conditions": [],
           "summary": {
-            "events": 45,
+            "events": 49,
             "allowed_transitions": 8,
             "blocked_transitions": 0,
             "story_search_receipts": 1,
@@ -54890,7 +54890,8 @@
             "manuscript_ci_receipts": 4,
             "prebuttal_receipts": 1,
             "submission_readiness_receipts": 1,
-            "contract_revisions": 0
+            "contract_revisions": 0,
+            "scientific_reopens": 0
           },
           "latest_story_search": {
             "pass": true,
@@ -54949,19 +54950,19 @@
           },
           "latest_paper_preparation": {
             "pass": true,
-            "protocol_version": "1.0+r5-supplement-projection",
-            "receipt_sha256": "fea4424178d6060e572e9bddef25376347f10482b20b81b6ead554058ac72bcb",
+            "protocol_version": "1.0+r15-canonical-reconciliation",
+            "receipt_sha256": "70624e8adf38b204bbdd8a27732ce664f65729ed4d14bbe198f11230f822de56",
             "required_gates": 8,
             "passed_gates": 8,
             "gate_pass": {
-              "agent-native-artifact": true,
-              "citation-integrity": true,
               "hierarchical-rubric": true,
-              "reader-simulation": true,
-              "reproducibility-bundle": true,
-              "submission-package": true,
               "verification-refinement": true,
-              "visual-story": true
+              "citation-integrity": true,
+              "visual-story": true,
+              "reproducibility-bundle": true,
+              "agent-native-artifact": true,
+              "reader-simulation": true,
+              "submission-package": true
             },
             "blockers": []
           },
@@ -54986,7 +54987,7 @@
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "ed94c6ed3f030f1310e8a00836ea2cb91aff40a4ad22c4fbb75319569bdf9e90",
+            "receipt_sha256": "b20e475406fc6879181a057442d1aa6e1267e0f96e5e83b25b015fdd41f0b58b",
             "blockers": []
           },
           "latest_transition": {
