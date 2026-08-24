@@ -8,7 +8,11 @@ from typing import Any
 
 from .config import StorageSettings
 from .paper_first_primary_evidence import DEFAULT_JSON as PRIMARY_JSON, build_primary_evidence_pool
-from .paper_first_problem_generator import DEFAULT_JSON as GENERATOR_JSON
+from .paper_first_problem_generator import (
+    DEFAULT_JSON as GENERATOR_JSON,
+    _has_current_operator_receipt,
+    _pool_sha,
+)
 from .paper_first_problem_gate_queue import DEFAULT_JSON as QUEUE_JSON
 
 
@@ -22,7 +26,7 @@ def _file_sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _preview_action(public: dict[str, Any]) -> str:
+def _preview_action(public: dict[str, Any], *, current_operator_receipt: bool | None = None) -> str:
     summary = public.get("summary") or {}
     if summary.get("source_retrieval_complete") is not True:
         return "RETRIEVAL_INCOMPLETE_NO_AUTHORITY"
@@ -31,7 +35,11 @@ def _preview_action(public: dict[str, Any]) -> str:
     if int(summary.get("carrier_probe_pending") or 0) > 0:
         return "CARRIER_PROBE_PENDING_ZERO_CALL"
     if summary.get("source_coverage_exhausted") is True:
-        return "SOURCE_COVERAGE_SATURATED_ZERO_CALL"
+        if current_operator_receipt is True:
+            return "SOURCE_COVERAGE_SATURATED_ZERO_CALL"
+        if current_operator_receipt is False:
+            return "SOURCE_COVERAGE_SATURATED_OPERATOR_RECOMPILE_REQUIRED"
+        return "SOURCE_COVERAGE_SATURATED_OPERATOR_RECEIPT_UNKNOWN_NO_AUTHORITY"
     return "NO_LIVE_ACTION_PREVIEW_ONLY"
 
 
@@ -91,13 +99,45 @@ def run_carrier_preview(
                 "now": current,
             }
         )
-        public, _private = build_primary_evidence_pool(**kwargs)
+        public, private_pool = build_primary_evidence_pool(**kwargs)
         summary = public.get("summary") or {}
         carrier = public.get("carrier_probe") or {}
+        generator_state: dict[str, Any] = {}
+        try:
+            loaded = json.loads(Path(generator_state_path).read_text(encoding="utf-8"))
+            if isinstance(loaded, dict):
+                generator_state = loaded
+        except (OSError, json.JSONDecodeError):
+            generator_state = {}
+        portfolio_mode = (generator_state.get("policy") or {}).get("search_portfolio_enabled") is True
+        pool_sha = _pool_sha(private_pool)
+        portable_receipts = [
+            dict(row)
+            for row in ((private_pool.get("source_coverage") or {}).get("portable_review_receipts") or [])
+            if isinstance(row, dict)
+        ]
+        current_operator_receipt = None
+        if summary.get("source_coverage_exhausted") is True:
+            current_operator_receipt = _has_current_operator_receipt(
+                storage,
+                pool_sha,
+                portable_receipts,
+                portfolio=portfolio_mode,
+            )
+        preview_action = _preview_action(public, current_operator_receipt=current_operator_receipt)
         base.update(
             {
                 "status": "PRIVATE_CARRIER_PREVIEW_COMPLETE",
-                "preview_action": _preview_action(public),
+                "preview_action": preview_action,
+                "transaction_preview": {
+                    "source_pool_sha256": pool_sha,
+                    "current_operator_receipt_present": current_operator_receipt,
+                    "portfolio_mode": portfolio_mode,
+                    "zero_call_saturation_eligible": bool(
+                        preview_action == "SOURCE_COVERAGE_SATURATED_ZERO_CALL"
+                    ),
+                    "scientific_authority": False,
+                },
                 "primary_schema_version": str(public.get("schema_version") or ""),
                 "primary_status": str(public.get("status") or ""),
                 "primary_summary": {
@@ -187,6 +227,7 @@ def run_carrier_preview(
         "primary_summary": base.get("primary_summary") or {},
         "carrier_probe": base.get("carrier_probe") or {},
         "selected_evidence": base.get("selected_evidence") or [],
+        "transaction_preview": base.get("transaction_preview") or {},
     }
     digest = hashlib.sha256(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
     base["preview_digest"] = digest

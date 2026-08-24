@@ -9,10 +9,25 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from .config import StorageSettings
-from .paper_first_carrier_preview import run_carrier_preview
+from .paper_first_carrier_preview import _preview_action, run_carrier_preview
 
 
 class PaperFirstCarrierPreviewTest(unittest.TestCase):
+    def test_saturated_preview_requires_current_operator_receipt_for_zero_call_label(self) -> None:
+        public={"summary":{"source_retrieval_complete":True,"unreviewed_lane_linked_sources":0,"carrier_probe_pending":0,"source_coverage_exhausted":True}}
+        self.assertEqual(
+            _preview_action(public,current_operator_receipt=True),
+            "SOURCE_COVERAGE_SATURATED_ZERO_CALL",
+        )
+        self.assertEqual(
+            _preview_action(public,current_operator_receipt=False),
+            "SOURCE_COVERAGE_SATURATED_OPERATOR_RECOMPILE_REQUIRED",
+        )
+        self.assertEqual(
+            _preview_action(public,current_operator_receipt=None),
+            "SOURCE_COVERAGE_SATURATED_OPERATOR_RECEIPT_UNKNOWN_NO_AUTHORITY",
+        )
+
     def storage(self, root: Path) -> StorageSettings:
         return StorageSettings(
             data_root=root / "data",
