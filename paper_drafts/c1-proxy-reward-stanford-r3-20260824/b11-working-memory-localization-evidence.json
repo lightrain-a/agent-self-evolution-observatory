@@ -1,0 +1,76 @@
+{
+  "artifact_type": "b11-working-memory-localization-evidence",
+  "branch_specific_uptake": {
+    "mean_pair_relative_shift": 0.0033469072206773693,
+    "median_shift": 0.0038352161645889282,
+    "negative_tasks": 15,
+    "paired_dz": 0.1479075191935324,
+    "positive_tasks": 21,
+    "posthoc_permutation_p": 0.2051979480205198,
+    "verdict": "NOT_ESTABLISHED_POSTHOC"
+  },
+  "claim_expansion_authority": false,
+  "experiment_authority": true,
+  "generic_common_core_tendency": {
+    "mean_common_centroid_uptake": 0.022332304099109024,
+    "paired_dz": 0.25774477787807437,
+    "posthoc_signflip_p": 0.06639933600663993,
+    "verdict": "SUGGESTIVE_ONLY_NOT_CONFIRMATORY"
+  },
+  "new_rollouts": 0,
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "provider_calls": 0,
+  "role": "Append-only post-hoc process localization after B10. No new provider calls and no claim expansion.",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_synthesis": "The dominant attenuation is already visible in the model-emitted working-memory representation before the first structured action: reward-branch-specific information is weakly internalized, while common-memory uptake is at most suggestive. The small descriptive working-memory-to-action association does not reach terminal outcomes.",
+  "simple_similarity_falsifier": {
+    "input_memory_cosine_distance_mean": 0.1313443730274836,
+    "interpretation": "Input-pair semantic distance is not a useful monotonic explanation for branch uptake or downstream magnitude on the frozen support.",
+    "pearson_distance_vs_first_action_tv": 0.11527436191907425,
+    "pearson_distance_vs_terminal_effect": 0.13652265714695444,
+    "pearson_distance_vs_working_memory_shift": 0.09547663332085542,
+    "range": [
+      0.045279085636138916,
+      0.21760249137878418
+    ]
+  },
+  "source_bindings": {
+    "b10_result_sha256": "e779c19a6a73bdb4b551f0739453a014fe9fc3cafc17cb4fbaa8b70a5137d8e6",
+    "b11_attribution_sha256": "c17ed88b2bfa496f91c4753cbae6d3dcaad5e95b45f794679741fd0fdc4de9e2",
+    "b4_result_sha256": "fb3fef89a38806e9a3b13efd8413b920f81b132390818403f4d5be957f42feeb",
+    "prior_transport_localization_sha256": "89b17623214d429efdefd791cc119b74b5231784815990f6a70f6c725e6598bc"
+  },
+  "status": "B11_WORKING_MEMORY_LOCALIZATION_COMPLETE_STOP",
+  "stop_decision": {
+    "B12_provider_experiment_authorized": false,
+    "forbidden": [
+      "select future tasks by B10 first-action TV",
+      "select tasks by B11 attribution shift",
+      "lower prior practical floors",
+      "model fishing for a positive branch-uptake result"
+    ],
+    "reason": "B11 is post-hoc and does not establish a robust branch-specific pre-action uptake signal. Selecting only B10/B11 positive cells would be outcome-driven support selection.",
+    "reopen_only_if": [
+      "a new branch-specific pre-action observable is frozen before new policy outputs and evaluated on outcome-independent support",
+      "or a representation-preserving common-core versus branch-residual intervention is preregistered on the full frozen support without positive-cell selection"
+    ]
+  },
+  "submission_authority": false,
+  "transport_linkage": {
+    "interpretation": "States with more branch-relative working-memory movement tend descriptively to show more first-action distribution movement, but this does not carry to terminal outcomes.",
+    "leave_one_out_pearson_range": [
+      0.35767864808579375,
+      0.5145252239991214
+    ],
+    "pearson_working_memory_shift_vs_first_action_tv": 0.46437044778212805,
+    "pearson_working_memory_shift_vs_terminal_effect": -0.022965905301220373,
+    "spearman_working_memory_shift_vs_first_action_tv": 0.41853933527826886
+  },
+  "working_memory_observable": {
+    "archived_outputs": 432,
+    "complete_fields": 432,
+    "narrow_recovery": 27,
+    "strict_json": 405
+  }
+}

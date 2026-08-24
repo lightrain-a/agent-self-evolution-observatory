@@ -1,0 +1,435 @@
+{
+  "branch_attribution": {
+    "definition": "cos(output,success_input)-cos(output,failure_input), compared between success- and failure-conditioned outputs",
+    "input_memory_cosine_distance_max": 0.21760249137878418,
+    "input_memory_cosine_distance_mean": 0.1313443730274836,
+    "input_memory_cosine_distance_min": 0.045279085636138916,
+    "leave_one_out_pearson_vs_first_action_tv_max": 0.5145252239991214,
+    "leave_one_out_pearson_vs_first_action_tv_min": 0.35767864808579375,
+    "mean": 0.0033469072206773693,
+    "median": 0.0038352161645889282,
+    "negative_tasks": 15,
+    "paired_dz": 0.1479075191935324,
+    "pearson_input_memory_distance_vs_branch_attribution": 0.09547663332085542,
+    "pearson_input_memory_distance_vs_first_action_tv": 0.11527436191907425,
+    "pearson_input_memory_distance_vs_terminal_absolute_effect": 0.13652265714695444,
+    "pearson_vs_first_action_tv": 0.46437044778212805,
+    "pearson_vs_terminal_absolute_effect": -0.022965905301220373,
+    "positive_tasks": 21,
+    "signflip_p": 0.1890281097189028,
+    "spearman_vs_first_action_tv": 0.41853933527826886,
+    "within_state_label_permutation_p": 0.2051979480205198
+  },
+  "branch_direction_uptake": {
+    "definition": "projection on normalized success-minus-failure direction under success condition minus failure condition",
+    "mean": 0.006805456537727473,
+    "median": 0.00703031406737864,
+    "negative_tasks": 15,
+    "paired_dz": 0.1579490294159691,
+    "positive_tasks": 21,
+    "signflip_p": 0.17341826581734182
+  },
+  "cell_results": [
+    {
+      "branch_attribution_shift": 0.04645010828971863,
+      "branch_direction_uptake": 0.07424180582165718,
+      "common_centroid_uptake": 0.0005050599575042725,
+      "first_action_tv": 0.5,
+      "future_task": 26,
+      "input_memory_cosine_distance": 0.19572514295578003,
+      "selected_source_task": 25,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.0045820120722055435,
+      "branch_direction_uptake": -0.007976988097652793,
+      "common_centroid_uptake": -0.03260829299688339,
+      "first_action_tv": 0.0,
+      "future_task": 124,
+      "input_memory_cosine_distance": 0.16497105360031128,
+      "selected_source_task": 226,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.007254805415868759,
+      "branch_direction_uptake": -0.012630099663510919,
+      "common_centroid_uptake": 0.099361227825284,
+      "first_action_tv": 0.0,
+      "future_task": 126,
+      "input_memory_cosine_distance": 0.16497105360031128,
+      "selected_source_task": 226,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.0008961260318756104,
+      "branch_direction_uptake": -0.0017112428322434425,
+      "common_centroid_uptake": -0.04052110016345978,
+      "first_action_tv": 0.0,
+      "future_task": 142,
+      "input_memory_cosine_distance": 0.13710355758666992,
+      "selected_source_task": 141,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.021442506462335587,
+      "branch_direction_uptake": 0.040948351845145226,
+      "common_centroid_uptake": 0.00592091865837574,
+      "first_action_tv": 0.25,
+      "future_task": 143,
+      "input_memory_cosine_distance": 0.13710355758666992,
+      "selected_source_task": 141,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.042174674570560455,
+      "branch_direction_uptake": -0.08054007589817047,
+      "common_centroid_uptake": 0.060197632759809494,
+      "first_action_tv": 0.0,
+      "future_task": 144,
+      "input_memory_cosine_distance": 0.13710355758666992,
+      "selected_source_task": 141,
+      "terminal_absolute_effect": 0.25
+    },
+    {
+      "branch_attribution_shift": 0.005975417792797089,
+      "branch_direction_uptake": 0.018290051957592368,
+      "common_centroid_uptake": 0.13608752191066742,
+      "first_action_tv": 0.0,
+      "future_task": 147,
+      "input_memory_cosine_distance": 0.05336809158325195,
+      "selected_source_task": 146,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.04110138863325119,
+      "branch_direction_uptake": 0.06230310327373445,
+      "common_centroid_uptake": 0.30130840092897415,
+      "first_action_tv": 0.0,
+      "future_task": 149,
+      "input_memory_cosine_distance": 0.21760249137878418,
+      "selected_source_task": 148,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.019241712987422943,
+      "branch_direction_uptake": -0.03349848976358771,
+      "common_centroid_uptake": -0.053966909646987915,
+      "first_action_tv": 0.0,
+      "future_task": 150,
+      "input_memory_cosine_distance": 0.16497105360031128,
+      "selected_source_task": 226,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.006989102810621262,
+      "branch_direction_uptake": 0.016342483228072524,
+      "common_centroid_uptake": 0.12345480173826218,
+      "first_action_tv": 0.25,
+      "future_task": 164,
+      "input_memory_cosine_distance": 0.09144872426986694,
+      "selected_source_task": 163,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.02563273161649704,
+      "branch_direction_uptake": 0.05993646429851651,
+      "common_centroid_uptake": 0.11578357592225075,
+      "first_action_tv": 0.25,
+      "future_task": 165,
+      "input_memory_cosine_distance": 0.09144872426986694,
+      "selected_source_task": 163,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.025929242372512817,
+      "branch_direction_uptake": 0.06062991777434945,
+      "common_centroid_uptake": 0.01704850047826767,
+      "first_action_tv": 0.25,
+      "future_task": 167,
+      "input_memory_cosine_distance": 0.09144872426986694,
+      "selected_source_task": 163,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.022756196558475494,
+      "branch_direction_uptake": 0.044614143669605255,
+      "common_centroid_uptake": -0.1487847864627838,
+      "first_action_tv": 0.0,
+      "future_task": 190,
+      "input_memory_cosine_distance": 0.13008379936218262,
+      "selected_source_task": 189,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.003544941544532776,
+      "branch_direction_uptake": -0.007613657973706722,
+      "common_centroid_uptake": -0.16250523924827576,
+      "first_action_tv": 0.0,
+      "future_task": 192,
+      "input_memory_cosine_distance": 0.10839599370956421,
+      "selected_source_task": 188,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.007882367819547653,
+      "branch_direction_uptake": -0.013722688890993595,
+      "common_centroid_uptake": 0.06514125689864159,
+      "first_action_tv": 0.0,
+      "future_task": 227,
+      "input_memory_cosine_distance": 0.16497105360031128,
+      "selected_source_task": 226,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.02275736629962921,
+      "branch_direction_uptake": 0.03961897734552622,
+      "common_centroid_uptake": 0.04198046401143074,
+      "first_action_tv": 0.25,
+      "future_task": 228,
+      "input_memory_cosine_distance": 0.16497105360031128,
+      "selected_source_task": 226,
+      "terminal_absolute_effect": 0.5
+    },
+    {
+      "branch_attribution_shift": 0.03866009786725044,
+      "branch_direction_uptake": 0.06730450573377311,
+      "common_centroid_uptake": 0.07886097580194473,
+      "first_action_tv": 0.25,
+      "future_task": 229,
+      "input_memory_cosine_distance": 0.16497105360031128,
+      "selected_source_task": 226,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.0034810304641723633,
+      "branch_direction_uptake": 0.006060211453586817,
+      "common_centroid_uptake": -0.013231981545686722,
+      "first_action_tv": 0.0,
+      "future_task": 230,
+      "input_memory_cosine_distance": 0.16497105360031128,
+      "selected_source_task": 226,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.026508331298828125,
+      "branch_direction_uptake": 0.05643483158200979,
+      "common_centroid_uptake": -0.061603423207998276,
+      "first_action_tv": 0.0,
+      "future_task": 233,
+      "input_memory_cosine_distance": 0.11031609773635864,
+      "selected_source_task": 232,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.02005891129374504,
+      "branch_direction_uptake": 0.034921145997941494,
+      "common_centroid_uptake": -0.0026744455099105835,
+      "first_action_tv": 0.0,
+      "future_task": 279,
+      "input_memory_cosine_distance": 0.16497105360031128,
+      "selected_source_task": 226,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.007735086604952812,
+      "branch_direction_uptake": 0.013466238277032971,
+      "common_centroid_uptake": 0.054074651561677456,
+      "first_action_tv": 0.0,
+      "future_task": 280,
+      "input_memory_cosine_distance": 0.16497105360031128,
+      "selected_source_task": 226,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.005253955721855164,
+      "branch_direction_uptake": -0.013964423560537398,
+      "common_centroid_uptake": 0.047201214358210564,
+      "first_action_tv": 0.25,
+      "future_task": 281,
+      "input_memory_cosine_distance": 0.07077711820602417,
+      "selected_source_task": 225,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.0014972910284996033,
+      "branch_direction_uptake": -0.0026066924910992384,
+      "common_centroid_uptake": 0.006841110065579414,
+      "first_action_tv": 0.0,
+      "future_task": 282,
+      "input_memory_cosine_distance": 0.16497105360031128,
+      "selected_source_task": 226,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.031333595514297485,
+      "branch_direction_uptake": -0.06729595828801394,
+      "common_centroid_uptake": -0.002638407051563263,
+      "first_action_tv": 0.0,
+      "future_task": 319,
+      "input_memory_cosine_distance": 0.10839599370956421,
+      "selected_source_task": 188,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.017195969820022583,
+      "branch_direction_uptake": 0.036932185059413314,
+      "common_centroid_uptake": 0.035524994134902954,
+      "first_action_tv": 0.0,
+      "future_task": 320,
+      "input_memory_cosine_distance": 0.10839599370956421,
+      "selected_source_task": 188,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.000163152813911438,
+      "branch_direction_uptake": -0.000350387766957283,
+      "common_centroid_uptake": -0.015997320413589478,
+      "first_action_tv": 0.0,
+      "future_task": 321,
+      "input_memory_cosine_distance": 0.10839599370956421,
+      "selected_source_task": 188,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.00028424710035324097,
+      "branch_direction_uptake": 0.0006104349158704281,
+      "common_centroid_uptake": 0.015969663858413696,
+      "first_action_tv": 0.0,
+      "future_task": 322,
+      "input_memory_cosine_distance": 0.10839599370956421,
+      "selected_source_task": 188,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.012225747108459473,
+      "branch_direction_uptake": 0.02625759970396757,
+      "common_centroid_uptake": 0.1679651141166687,
+      "first_action_tv": 0.0,
+      "future_task": 323,
+      "input_memory_cosine_distance": 0.10839599370956421,
+      "selected_source_task": 188,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.048721469938755035,
+      "branch_direction_uptake": -0.09304236620664597,
+      "common_centroid_uptake": -0.07681142911314964,
+      "first_action_tv": 0.0,
+      "future_task": 329,
+      "input_memory_cosine_distance": 0.13710355758666992,
+      "selected_source_task": 141,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.005299918353557587,
+      "branch_direction_uptake": 0.010121170431375504,
+      "common_centroid_uptake": -0.019465722143650055,
+      "first_action_tv": 0.0,
+      "future_task": 330,
+      "input_memory_cosine_distance": 0.13710355758666992,
+      "selected_source_task": 141,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.04250326007604599,
+      "branch_direction_uptake": -0.08116761688143015,
+      "common_centroid_uptake": -0.01943986862897873,
+      "first_action_tv": 0.0,
+      "future_task": 331,
+      "input_memory_cosine_distance": 0.13710355758666992,
+      "selected_source_task": 141,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.004189401865005493,
+      "branch_direction_uptake": 0.008000416681170464,
+      "common_centroid_uptake": 0.023524213582277298,
+      "first_action_tv": 0.0,
+      "future_task": 333,
+      "input_memory_cosine_distance": 0.13710355758666992,
+      "selected_source_task": 141,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.02637537568807602,
+      "branch_direction_uptake": -0.05170969944447279,
+      "common_centroid_uptake": 0.11168889328837395,
+      "first_action_tv": 0.0,
+      "future_task": 358,
+      "input_memory_cosine_distance": 0.13008379936218262,
+      "selected_source_task": 189,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.0008840858936309814,
+      "branch_direction_uptake": 0.002937931567430496,
+      "common_centroid_uptake": 0.021277006715536118,
+      "first_action_tv": 0.0,
+      "future_task": 360,
+      "input_memory_cosine_distance": 0.045279085636138916,
+      "selected_source_task": 231,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": 0.013158738613128662,
+      "branch_direction_uptake": 0.04372693970799446,
+      "common_centroid_uptake": -0.023740701377391815,
+      "first_action_tv": 0.0,
+      "future_task": 362,
+      "input_memory_cosine_distance": 0.045279085636138916,
+      "selected_source_task": 231,
+      "terminal_absolute_effect": 0.0
+    },
+    {
+      "branch_attribution_shift": -0.006802225951105356,
+      "branch_direction_uptake": -0.010872087208554149,
+      "common_centroid_uptake": -0.05176462349481881,
+      "first_action_tv": 0.25,
+      "future_task": 384,
+      "input_memory_cosine_distance": 0.19572514295578003,
+      "selected_source_task": 25,
+      "terminal_absolute_effect": 0.0
+    }
+  ],
+  "claim_expansion_authority": false,
+  "common_centroid_uptake": {
+    "definition": "mean similarity to normalized success/failure memory centroid under memory conditions minus no-memory",
+    "mean": 0.022332304099109024,
+    "median": 0.011405386961996555,
+    "negative_tasks": 15,
+    "paired_dz": 0.25774477787807437,
+    "positive_tasks": 21,
+    "signflip_p": 0.06639933600663993
+  },
+  "confirmatory_gate": null,
+  "encoder": {
+    "max_length": 256,
+    "model": "exact cached all-MiniLM-L6-v2",
+    "pooling": "attention-mask mean + L2 normalize",
+    "weights_sha256": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db"
+  },
+  "experiment_authority": true,
+  "experiment_id": "D2-PROXY-B11-WORKING-MEMORY-BRANCH-ATTRIBUTION",
+  "extraction": {
+    "archived_outputs": 432,
+    "complete_fields": 432,
+    "narrow_string_recovery": 27,
+    "other": 0,
+    "strict_json": 405
+  },
+  "new_rollouts": 0,
+  "observable": "Model-emitted current_state.memory before the first structured action on each frozen B10 state.",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "provider_calls": 0,
+  "role": "Post-hoc mechanism localization introduced after B10. No confirmatory gate, provider call, new rollout, or claim-expansion authority.",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "source_bindings": {
+    "b10_contract_sha256": "c2a54c928d74ccb7a153166a02ef0ef7a1504a93b5895952380a95b0277a3436",
+    "b10_result_sha256": "e779c19a6a73bdb4b551f0739453a014fe9fc3cafc17cb4fbaa8b70a5137d8e6",
+    "b4_result_sha256": "fb3fef89a38806e9a3b13efd8413b920f81b132390818403f4d5be957f42feeb",
+    "memory_manifest_sha256": "2880b83c71745f049039c15edb02f731e4f87a44670977b61627143102bee0d1",
+    "weights_sha256": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db"
+  },
+  "status": "B11_POSTHOC_ZERO_PROVIDER_DIAGNOSTIC_COMPLETE"
+}
