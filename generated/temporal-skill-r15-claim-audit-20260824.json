@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r15-claim-audit",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r15",
+  "checks": [
+    {"id":"C01","pass":true,"check":"T-N remains the only net-repair contrast."},
+    {"id":"C02","pass":true,"check":"T-G0 is described only as a same-surface output contrast, not a pure operation effect when G0-N is nonzero."},
+    {"id":"C03","pass":true,"check":"G is explicitly a mechanism-misaligned stress comparator, not a benign or representative generic assistant."},
+    {"id":"C04","pass":true,"check":"G0 is a same-surface no-op placebo and portfolio summaries are not transported into stratum-level neutrality claims."},
+    {"id":"C05","pass":true,"check":"EIA is consistently a post-hoc compatibility probe, not prospective cross-domain confirmation."},
+    {"id":"C06","pass":true,"check":"Rsurf is an exact-output forced-one-answer integration-surface control, not an independent temporal retriever."},
+    {"id":"C07","pass":true,"check":"The +/-10pp threshold is identified as prospectively frozen materiality; no preregistered variance-based power rationale is invented."},
+    {"id":"C08","pass":true,"check":"Post-review power planning is explicitly future-design sensitivity only and cannot upgrade the completed Rsurf result."},
+    {"id":"C09","pass":true,"check":"All 18 Rsurf endpoint residuals and the two opposite-signed non-tie patterns are exposed from frozen existing data."},
+    {"id":"C10","pass":true,"check":"Full-task conjunctive-score sensitivity is reported as a different estimand: grounding unchanged; cutoff/alignment collapse due added orthogonal/exact-form requirements."},
+    {"id":"C11","pass":true,"check":"Minimal causal S/O/Y bookkeeping is explicitly not claimed as full SCM or mediation identification."},
+    {"id":"C12","pass":true,"check":"Multi-turn surface isolation is future design only; no current multi-turn callable-state claim is made."},
+    {"id":"C13","pass":true,"check":"A benign generic-helper arm is kept as an unexecuted future treatment and is not inferred from G or G0."},
+    {"id":"C14","pass":true,"check":"Small-n, ceiling-heavy, non-ceiling unresolved, Kimi grounding downgrade, and TimeSage exact-replication debt remain visible."},
+    {"id":"C15","pass":true,"check":"R15 introduces no new scientific execution, model call, provider call, threshold change, endpoint selection, or outcome-driven rerun."}
+  ],
+  "summary": {"checks":15,"passed":15,"failed":0,"pass":true},
+  "forbidden_claims": [
+    "behaviorally neutral G0 in every load-bearing stratum",
+    "pure operation effect from T-G0 when G0-N is nonzero",
+    "benign generic baseline already executed",
+    "prospective cross-domain confirmation from EIA",
+    "general Rsurf surface equivalence",
+    "adaptive multi-turn callable-state equivalence",
+    "independent temporal-RAG equivalence",
+    "exact TimeSage-EV evaluated-snapshot replication"
+  ],
+  "new_scientific_execution": false,
+  "new_model_calls": 0,
+  "new_provider_calls": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}

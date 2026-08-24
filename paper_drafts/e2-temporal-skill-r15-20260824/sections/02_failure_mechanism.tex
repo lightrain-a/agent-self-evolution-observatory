@@ -1,0 +1,42 @@
+\section{An Intervention Audit of Reusable Procedures}
+\label{sec:mechanism}
+The audit treats a reusable procedure as an intervention rather than a label attached to a successful run. Let endpoint $i$ specify a question $x_i$, evidence package $E_i$, model configuration $M_i$, and family-specific binary outcome $Y_i\in\{0,1\}$. For repeated executions under arm $a$, let $\bar Y_i(a)$ be the repeat mean. Repeats measure execution robustness; endpoints remain the independent scientific units.
+
+\paragraph{Base stress test: N, G, and T.}
+The historical design contains the original agent N, a complexity-matched target-blind \emph{stress helper} G, and the targeted procedure T. G is intentionally mechanism-misaligned rather than a benign or optimal generic assistant; its role is to test whether T-versus-structured-assistance can produce a misleading verdict. We report
+\begin{equation}
+\widehat{\Delta}_{T-N}=\frac{1}{|\mathcal I|}\sum_i\bigl(\bar Y_i(T)-\bar Y_i(N)\bigr),\qquad
+\widehat{\Delta}_{T-G}=\frac{1}{|\mathcal I|}\sum_i\bigl(\bar Y_i(T)-\bar Y_i(G)\bigr).
+\end{equation}
+T--N is the net effect of the targeted intervention relative to the original agent. T--G asks whether it beats the executed target-blind helper. G is not assumed benign, so T$>$G with T$\leq$N is no repair.
+
+\paragraph{Same-surface placebo: G$_0$.}
+G$_0$ executes the same helper-exposure path as T but is information-empty: it reads neither package nor context and returns an empty object. We report
+\begin{equation}
+\widehat{\Delta}_{T-G_0}=\frac{1}{|\mathcal I|}\sum_i\bigl(\bar Y_i(T)-\bar Y_i(G_0)\bigr),\qquad
+\widehat{\Delta}_{G_0-N}=\frac{1}{|\mathcal I|}\sum_i\bigl(\bar Y_i(G_0)-\bar Y_i(N)\bigr).
+\end{equation}
+T--G$_0$ is a \emph{same-surface operation-output contrast}: it asks whether supplying the targeted output changes behavior relative to no operation output under the same exposure surface. G$_0$--N is the corresponding surface/placebo perturbation diagnostic. These quantities obey the observed-mean identity
+\begin{equation}
+\widehat{\Delta}_{T-N}=\widehat{\Delta}_{T-G_0}+\widehat{\Delta}_{G_0-N}.
+\label{eq:decomp}
+\end{equation}
+Equation~\ref{eq:decomp} is a decomposition of contrasts, not a mediation theorem. A minimal causal bookkeeping view has an exposure surface $S$, operation output $O$, and outcome $Y$: N leaves the experimental helper absent, G$_0$ exposes the helper surface with $O=\varnothing$, T exposes the same surface with the frozen targeted output, and R$_{\mathrm{surf}}$ holds that output fixed while changing where it enters the harness. This intervention map clarifies which variable each contrast changes, but it is not a full SCM identification result and makes no mediation claim. When G$_0$--N is nonzero, T--G$_0$ is conditional on a perturbed surface and must not be called a pure operation effect. Accordingly, we classify T--N$>0$ as \emph{net repair}; T--G$_0$ is reported separately as evidence about the output under that surface. Cells with nonzero placebo shift are explicitly labeled surface-interacting rather than operation-attributed.
+
+\paragraph{Integration-surface control: R$_{\mathrm{surf}}$.}
+R$_{\mathrm{surf}}$ runs the exact same frozen operation source on the exact same candidate evidence as T, then materializes the identical operation output inside ordinary context while exposing no callable helper. Thus
+\begin{equation}
+\widehat{\Delta}_{T-R_{\mathrm{surf}}}=\frac{1}{|\mathcal I|}\sum_i\bigl(\bar Y_i(T)-\bar Y_i(R_{\mathrm{surf}})\bigr)
+\end{equation}
+is an integration-surface estimand under the frozen forced one-answer harness. R$_{\mathrm{surf}}$ is deliberately not an independently learned or heuristic temporal retriever. A zero-call parity audit verifies that candidate evidence is preserved, operation-output content is identical, and only where the precomputed output enters the harness changes. The prospectively frozen material threshold is 10 percentage points on the pre-frozen DeepSeek endpoint portfolio. Multi-turn deployments in which a callable helper can be invoked adaptively require a different control.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig1_temporal_skill_causal.pdf}
+\caption{Base three-arm stress test. N anchors the original agent, G is a target-blind mechanism-misaligned stress helper, and T contains the targeted temporal operation. G$_0$ exposes placebo/surface perturbation; R$_{\mathrm{surf}}$ isolates where the same precomputed operation output enters the forced one-answer harness.}
+\label{fig:causal}
+\end{figure}
+
+The audit targets three recurring failure families. \textbf{Cutoff validity} filters evidence by the target information cutoff. \textbf{Release alignment} maps a release to the reporting period represented by its content. \textbf{Exogenous grounding} links a numerical change to first-party documentary evidence available before the cutoff. No targeted procedure contains endpoint-specific answers, gold labels, or fitted values; procedure hashes are frozen before execution and reused on held-out releases.
+
+Three falsifiers follow. First, T$>$G with T$\leq$N is no repair. Second, a positive T--G$_0$ does not by itself establish a pure operation effect when G$_0$--N is nonzero; all three contrasts in Eq.~\ref{eq:decomp} must remain visible. Third, if the integration surface matters under the forced one-answer harness, T should leave a material residual over R$_{\mathrm{surf}}$ when operation output and evidence are held exactly fixed.

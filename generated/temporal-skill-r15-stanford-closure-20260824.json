@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "temporal-r15-stanford-targeted-repair-closure",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "revision": "r15",
+  "source_review": {
+    "service": "Stanford Agentic Reviewer · paperreview.ai",
+    "reviewed_revision": "R14",
+    "numerical_score": 6.0,
+    "numeric_score_is_official_iclr_score": false,
+    "textual_verdict": "Accept",
+    "public_result_ref": "generated/temporal-skill-r14-stanford-review-result-20260824.json"
+  },
+  "decision": "TARGETED_REPAIR_ONLY_NO_SCIENTIFIC_REOPEN",
+  "reason": "The external reviewer recommends acceptance and accepts the R14 attribution-audit thesis. R15 addresses clarification and existing-data requests without expanding the current narrow scientific object.",
+  "question_closure": [
+    {"id":"R14-S1","topic":"+/-10pp materiality margin and power","disposition":"RESOLVED_ANALYSIS_AND_PAPER_ONLY","r15_change":"States that the margin itself was prospectively frozen but no variance-based power rationale was preregistered; adds post-review future-design power planning (portfolio observed SD: n=27 gives ~80.7%; C4 observed SD: n~110 gives ~80.7%).","new_outcomes":false},
+    {"id":"R14-S2","topic":"benign mechanism-agnostic generic helper","disposition":"FUTURE_SCIENTIFIC_REOPEN_ONLY","r15_change":"Clarifies that G is a mechanism-misaligned stress comparator and G0 a same-surface no-op placebo; a new benign generic is a distinct future treatment and is not run for score chasing.","new_outcomes":false},
+    {"id":"R14-S3","topic":"multi-turn adaptive surface isolation","disposition":"RESOLVED_PAPER_ONLY_FUTURE_DESIGN","r15_change":"Adds a prospective multi-turn design sketch with episode-level units, synchronized exact outputs, and separate availability versus placement estimands.","new_outcomes":false},
+    {"id":"R14-S4","topic":"per-endpoint Rsurf residuals and non-tie errors","disposition":"RESOLVED_EXISTING_DATA_ANALYSIS","r15_change":"Publishes all 18 endpoint residuals and analyzes the two opposite-signed non-ties (+50pp and -50pp), each driven by one repeat while the exact operation output remains matched.","new_outcomes":false},
+    {"id":"R14-S5","topic":"alternative family/conjunctive scorers","disposition":"RESOLVED_EXISTING_EVIDENCE","r15_change":"Makes the frozen full-task exact-score trade-off explicit: grounding is unchanged, while cutoff/alignment collapse because the conjunctive score adds orthogonal fields and exact-form requirements; it is a different estimand, not a stricter version of the family scorer.","new_outcomes":false},
+    {"id":"R14-S6","topic":"causal-graph framing","disposition":"RESOLVED_PAPER_ONLY_CONCEPTUAL","r15_change":"Adds minimal S/O/Y intervention bookkeeping and explicitly states that it is not a full SCM or mediation-identification result.","new_outcomes":false},
+    {"id":"R14-S7","topic":"future stratum neutrality and sample size","disposition":"RESOLVED_PAPER_ONLY_FUTURE_PREREGISTRATION","r15_change":"Requires future independent endpoint counts and stopping rules to be frozen before outcomes; forbids adaptive expansion until an equivalence test passes.","new_outcomes":false}
+  ],
+  "current_claim_boundary": {
+    "benign_generic_empirical_comparison": "UNEXECUTED_FUTURE_TREATMENT",
+    "more_non_ceiling_endpoints": "FUTURE_POWERED_REPLICATION_ONLY",
+    "prospective_cross_domain_confirmation": "UNEXECUTED",
+    "multi_turn_callable_advantage": "UNEXECUTED",
+    "independent_temporal_retriever_equivalence": "UNEXECUTED",
+    "exact_timesage_replication": "ACTIVE_EXTERNAL_REPLICATION_DEBT"
+  },
+  "new_scientific_execution": false,
+  "new_model_calls": 0,
+  "new_provider_calls": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}
