@@ -1,0 +1,514 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-24T04:17:35Z",
+  "run_id": "external-fresh-exact-16-review-20260824-r2",
+  "status": "EXTERNAL_FRESH_INTAKE_REVIEWED_ZERO_AUTHORITY",
+  "selection_projection": {
+    "staging_refresh_root": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r2",
+    "preview_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r2/preview-public.json",
+    "preview_artifact_sha256": "f14e771a3ac13f1e6b34ac37a52720c0c37ab64d6d0b37b017b05d558a923cdb",
+    "private_pool_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r2/data/paper-first-problem-discovery/primary-evidence-pool.json",
+    "private_pool_artifact_sha256": "bd3a014d1d028b909c22f65ab261163884812d5584360bd652dd72636c55e8cf",
+    "corpus_artifact": "/data/wyt/agent-self-evolution-observatory/runs/external-fresh-primary-refresh-20260824-r2/data/corpora/semantic-scholar-corpus.json",
+    "corpus_artifact_sha256": "2d27a6a0e8439be73da947b74cdbe61f1ae1c57ea89f0d559bae28f1d1585b86",
+    "refresh_generated_at": "2026-08-24T04:12:01+00:00",
+    "refresh_status": "READY",
+    "discovery_mode": "arxiv-primary-fallback",
+    "source_retrieval_complete": true,
+    "selected": 32,
+    "verified": 32,
+    "selected_previously_reviewed": 16,
+    "selected_unreviewed": 16,
+    "fulltext_verified": 31,
+    "fetch_errors": 0,
+    "fulltext_fetch_errors": 1,
+    "undercovered_lanes": [],
+    "source_coverage_exhausted": false,
+    "global_source_coverage_exhausted_claim": false,
+    "exact_unreviewed_refs_in_scheduler_order": [
+      "arXiv:2608.03609",
+      "arXiv:2608.01619",
+      "arXiv:2608.01679",
+      "arXiv:2608.01851",
+      "arXiv:2608.02713",
+      "arXiv:2608.01604",
+      "arXiv:2608.02515",
+      "arXiv:2608.01772",
+      "arXiv:2608.02005",
+      "arXiv:2608.02391",
+      "arXiv:2608.02143",
+      "arXiv:2608.01127",
+      "arXiv:2608.00382",
+      "arXiv:2608.07548",
+      "arXiv:2608.00677",
+      "arXiv:2608.00533"
+    ]
+  },
+  "summary": {
+    "sources_discovered": 16,
+    "sources_reviewed": 16,
+    "exact_prior_exposure_zero": 16,
+    "identity_verified": 16,
+    "deep_review": 8,
+    "triage_review": 8,
+    "formal_generator_run": false,
+    "provider_model_calls": 0,
+    "paper_problem_emissions": 0,
+    "contradictory_evidence_sufficient": 0,
+    "scientific_reopens": 0,
+    "fresh_scientific_survivors": 0,
+    "stop_reduction": 3,
+    "prior_closest_work_reconciled": 1,
+    "support_component_only": 6,
+    "scope_excluded": 6,
+    "watch_reopen_seeds": 1,
+    "source_retrieval_complete": true,
+    "global_source_coverage_exhausted": false,
+    "old_primary_tranche_mutated": false
+  },
+  "policy": {
+    "exact_tranche_identity_requires_content_addressed_refresh_projection": true,
+    "identity_before_asset": true,
+    "first_party_asset_ownership_required": true,
+    "deep_review_routes_collision_reopen_or_decisive_baseline_cases": true,
+    "triage_is_allowed_only_for_clear_scope_or_component_cases": true,
+    "same_information_reducer_gets_candidate_pre_outcome_observables": true,
+    "contradiction_requires_exact_existing_reopen_contract": true,
+    "review_exposure_is_retrieval_metadata_only": true,
+    "review_exposure_cannot_authorize_or_skip_scientific_gates": true,
+    "review_artifact_must_bind_exact_source_refs": true,
+    "portable_receipt_must_bind_review_artifact_sha256": true,
+    "support_component_is_not_problem_gate_authority": true,
+    "closest_work_owned_mechanism_is_not_a_new_researchitem": true,
+    "no_emit_is_not_a_scientific_dead_end": true,
+    "global_source_exhaustion_must_not_be_inferred_from_bounded_tranche_completion": true
+  },
+  "sources": [
+    {
+      "ref": "arXiv:2608.03609",
+      "title": "Formal Verification of Agentic Systems over Operational Data",
+      "published": "2026-08-04",
+      "lane_keys": [
+        "skill_harness",
+        "runtime_deployment"
+      ],
+      "source_sha256": "bcec45c15ed0cd5331cb8ee91ebd49dcf713cb70712a25ad4096c030c234b30d",
+      "fulltext_sha256": "0af40fb663cf25a338a7c64fea8b1ecd52ae200c7e2dc611298a72101c81db99",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_FORMAL_VERIFICATION",
+      "reduction": [
+        "formal-verification-over-operational-data",
+        "runtime-policy-checking",
+        "evidence-backed-safety-control"
+      ],
+      "note": "This source is useful control-plane evidence for formally checking agent behavior over operational data and execution traces. It strengthens verification/governance components but does not present a persistent self-evolution intervention or a same-information opposite prediction.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.01619",
+      "title": "When Memory Updates but Behavior Does Not: Repairing Implicit Stale Dependencies in Personalized Agent Responses",
+      "published": "2026-08-03",
+      "lane_keys": [
+        "memory_continual"
+      ],
+      "source_sha256": "c392e8ab79576a68a8f682a01a0cec221a5fc50f7dad9a4d5e943a46acca9924",
+      "fulltext_sha256": "34d126489f6b5ed10337ed9e6d0bc7dc72847e090134a6d45267db1605947eb1",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "PRIOR_CLOSEST_WORK_RECONCILED_NO_REOPEN",
+      "reduction": [
+        "state-to-draft-dependency-audit",
+        "provenance-and-chronology-verified-transition-repair",
+        "stale-state-belief-revision"
+      ],
+      "note": "StateAuditor is already canonical closest work for stale dependency/implicit policy adaptation. On STALE, a full-scale matched no-transition control uses the same evidence, adapter, and call budget and reaches .692 versus .736 for VTA, supporting transition machinery in that benchmark; on HorizonBench, however, the matched no-transition control captures most of the gain and a harder authored lifecycle set gives no gain. The source explicitly limits its claim to response repair rather than general-purpose memory updating. This is strong mechanism evidence owned by the closest work, not a new ResearchItem.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-818fe9b7ed57f0f89e",
+          "result": "NOT_SATISFIED",
+          "boundary": "Observable chronology/supersession/conflict semantics remain available to a strongest typed belief-revision/state-transition baseline; no additional hidden self-evolution state is isolated."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.01679",
+      "title": "When Memory Becomes Authority: Benchmarking Authority Collapse at the Memory Consolidation Boundary",
+      "published": "2026-08-03",
+      "lane_keys": [
+        "memory_continual"
+      ],
+      "source_sha256": "bfe355008b4aa63f4c7d4cac98cafebd30227d5a9b3656e9ae7d76261b2a4130",
+      "fulltext_sha256": "fd92013e2490b7412b180653516612aeaeb33701a7392da34c2a82f1ea6d58d4",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_AUTHORITY_PROVENANCE",
+      "reduction": [
+        "source-authority-as-explicit-state",
+        "authority-aware-memory-consolidation",
+        "authorization-preserving-response-control"
+      ],
+      "note": "AuthMem gives unusually clean controlled evidence for an authority/provenance invariant: focal claim and downstream task are held fixed while source authority varies; authority collapse appears in 48/49 evaluated configurations, and persisting predicted authority labels sharply reduces unauthorized actions while preserving benign task success. The treatment itself makes authority an explicit observable state variable and the paper directly owns this failure mode. This strongly validates authority typing/provenance in the Research OS, but does not identify an irreducible self-evolution primitive beyond an authority-aware state/policy baseline given the same source identity and authority metadata.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.01851",
+      "title": "Weights or Skills? A Survey of Robot-Learning Techniques: from Action-Predicting Weights to Robots that Write their Own Skills",
+      "published": "2026-08-03",
+      "lane_keys": [
+        "skill_harness",
+        "memory_continual",
+        "embodied"
+      ],
+      "source_sha256": "bbd1036ec7689cd3997caff7cf2b1fc7e9df445c7467265102463c6df749a52a",
+      "fulltext_sha256": "1ca36c3ddb09a8e1bc060cf4839d285ecca95698f507ec8f50e092b166d9b49c",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_TAXONOMY",
+      "reduction": [
+        "parametric-versus-nonparametric-agent-adaptation-taxonomy",
+        "skills-memory-tools-survey"
+      ],
+      "note": "Weights or Skills? is a survey/taxonomy of agent adaptation surfaces. It is useful for collision mapping and component vocabulary but supplies no new controlled causal object by itself.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.02713",
+      "title": "Quo Vadis, World Modeling?",
+      "published": "2026-08-03",
+      "lane_keys": [
+        "skill_harness",
+        "memory_continual",
+        "world_model"
+      ],
+      "source_sha256": "7a43965c386a97596eb181565b2fbe9d928c713dba236fb1dba8188df7075999",
+      "fulltext_sha256": "108a8b97c30726d6baa5c1eb4ad31f26dba141a93c6fbb033fcd87fc87a53121",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SUPPORT_COMPONENT_ONLY_WORLD_MODEL_TAXONOMY",
+      "reduction": [
+        "world-model-taxonomy",
+        "model-based-agent-control",
+        "simulator-and-reward-model-failure-modes"
+      ],
+      "note": "Quo Vadis, World Modeling? is a world-model perspective/survey that helps map model-based control and simulator limitations. It is background/component evidence, not a new execution-backed longitudinal self-evolution intervention.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.01604",
+      "title": "Post-Training on Office Work Improves Software Engineering: A Behavioral Account of Cross-Domain Transfer",
+      "published": "2026-08-03",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "d4c751645cac92558e2e7402fb37c412ccf4191813550eea1fe7dfb6426bf6e6",
+      "fulltext_sha256": "32b8593cc076f1f33c2feaf1a70f0be32442cf657e7277f2df52c6c8b4cb4253",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "cross-domain-posttraining",
+        "offline-policy-improvement",
+        "software-and-office-task-transfer"
+      ],
+      "note": "Post-Training on Office Work Improves Software Engineering studies offline post-training and cross-domain transfer. The evaluated policy is not autonomously and persistently modifying itself during deployment.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.02515",
+      "title": "LiveMem: Maintaining Memory State Continuity in Long-Running LLM Inference",
+      "published": "2026-08-03",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state"
+      ],
+      "source_sha256": "d6212ab54f5d6c8f27e0f04987cb30861beb4c34d001a922d3f6e21e3e40b0bf",
+      "fulltext_sha256": "0adc77708245feeff9eda41dbaab77b3a4dd27ebdd57135fa4b8b10830b5b715",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SCOPE_EXCLUDED_INTRINSIC_INFERENCE_STATE",
+      "reduction": [
+        "fixed-capacity-recurrent-memory-state",
+        "context-turnover-state-continuity",
+        "memory-oriented-posttraining"
+      ],
+      "note": "LiveMem establishes a useful lifecycle-scale inference abstraction: a fixed-capacity recurrent memory state is updated online as KV context turns over and remains useful after originating tokens are evicted. However this is a learned recurrent hidden-state transition inside continual inference, with the memory branch trained offline; it is not an editable policy/skill/workflow artifact autonomously revised from success/failure evidence across tasks. It is therefore state-continuity evidence, not a scientific reopen of persistent self-evolution.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-74df6b2fb0c340b52e",
+          "result": "NOT_SATISFIED",
+          "boundary": "A recurrent state/exposure history remains representable by an explicit state-history model; no changed executable artifact semantics/version with same pre-outcome history is isolated."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.01772",
+      "title": "FRAMES: Guarded and Dual-Objective Skill Evolution for Agents in Policy-Governed Enterprise Workflows",
+      "published": "2026-08-03",
+      "lane_keys": [
+        "skill_harness"
+      ],
+      "source_sha256": "a4786eb60748d86ea4c687855ffd899e695a9d4ba4be13243b1af2ba34cbc55f",
+      "fulltext_sha256": "a6c453bdb9c4a0d8c61033071341372d0695f7f746200ef24ba178199a75187f",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "multi-objective-skill-search",
+        "pareto-selection-under-accuracy-cost",
+        "consensus-mutation-and-anti-regression"
+      ],
+      "note": "FRAMES evolves enterprise-workflow skills under explicit accuracy/cost and policy constraints using consensus mutation, Pareto selection, and anti-regression guards. These are observable constrained multi-objective optimization and stability/plasticity mechanisms. Component ablations support their engineering value, but no matched same-information structural variable remains once candidate skills, policy constraints, cost/accuracy evidence, regression history, and update budget are supplied to a strongest constrained-selection baseline.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-DISC-96d9445f9dc2dfe39f",
+          "result": "NOT_SATISFIED",
+          "boundary": "Commit/update decisions are expressible by a stability-plasticity/Pareto rule once current gain, retention/regression risk, validity, interaction, and budget are matched."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.02005",
+      "title": "Evolving in the Agent Jungle via History-Informed Opponent Awareness",
+      "published": "2026-08-03",
+      "lane_keys": [
+        "skill_harness",
+        "collective"
+      ],
+      "source_sha256": "24e81c8c257ba75c8e2fe3c81b2a79b563a6d3d04f61ee5d31cebbde0d5d0451",
+      "fulltext_sha256": "840bcffb33d193b80681d0f783f471b03bd01b61555816cdc20d85959a730ab1",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION_WATCH",
+      "reduction": [
+        "nonstationary-game-opponent-modeling",
+        "historical-snapshot-anchored-evaluation",
+        "paired-common-random-number-estimation",
+        "selective-skill-update"
+      ],
+      "note": "OASE is the strongest near-boundary source in r2. Candidate and incumbent skill libraries are compared under the same environment randomness, focal-agent context, and historical opponent snapshot; the archive is frozen within a generation, and paired estimation roughly halves estimator variance in a diagnostic. OASE also reaches lower final equilibrium distance while accepting fewer edits than Reflexion. However the paper explicitly states that causal attribution of final equilibrium improvement to the acceptance gate requires an otherwise-identical no-gate OASE control, and that attributing final improvement to paired variance reduction requires an otherwise-identical unpaired-training control. Historical-opponent anchoring is a standard nonstationary-game/opponent-model device. Preserve as a watch seed, but current evidence does not isolate a nonstationary self-evolution residual.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-2d4248b1b330f6ed6a",
+          "result": "NOT_SATISFIED",
+          "boundary": "No downstream consequence survives a same-information generic distribution-shift/online-adaptation or opponent-modeling baseline with matched compute."
+        },
+        {
+          "memory_id": "MEM-SEAR-4674f46501819d1414",
+          "result": "NOT_SATISFIED",
+          "boundary": "No preregistered matched factorial isolates a non-additive co-evolution interaction beyond opponent distribution, candidate quality, gating, and allocation."
+        },
+        {
+          "memory_id": "MEM-SEAR-d1db6be18a6955ec8c",
+          "result": "NOT_SATISFIED",
+          "boundary": "A strongest nonstationary baseline can observe the same current opponent snapshots, candidate/incumbent outcomes, drift/history, and compute; no opposite ex-ante prediction is shown."
+        }
+      ],
+      "watch_reopen_seed": true
+    },
+    {
+      "ref": "arXiv:2608.02391",
+      "title": "Cooperative Coevolution for Resource-Constrained Agentic LLM Post-Training",
+      "published": "2026-08-03",
+      "lane_keys": [
+        "memory_continual",
+        "parametric_model_state"
+      ],
+      "source_sha256": "3296a0ad272630dc6ac28c30fdd498ee80a6d599efa3158da68c43a6a61483fd",
+      "fulltext_sha256": "7b41c05e3de7e402a69e850e6ddce386fd1840c2c543bcc3e027435d722965cb",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_OFFLINE_EVOLUTIONARY_POSTTRAINING",
+      "reduction": [
+        "cooperative-coevolutionary-search",
+        "resource-constrained-posttraining",
+        "population-based-parameter-or-policy-optimization"
+      ],
+      "note": "CoPES applies cooperative coevolution as an offline/resource-constrained post-training optimization scheme. It is population/evolutionary optimization of a training system, not an autonomous deployment-time persistent self-evolution object.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.02143",
+      "title": "Beyond Solution-Centric Search: Adaptive Inquiry and Knowledge Revision for Autonomous ML Engineering",
+      "published": "2026-08-03",
+      "lane_keys": [
+        "skill_harness",
+        "parametric_model_state",
+        "autonomous_science"
+      ],
+      "source_sha256": "c2d3feedc0530a5b6d3143bf3c876d153db8a11487ce745dec5621dfc1c37eb6",
+      "fulltext_sha256": "fc2c3ce1980009b68de40122e3557ec07db9c93ea665944b1fc760a268506210",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_RESEARCH_OS",
+      "reduction": [
+        "adaptive-scientific-inquiry",
+        "revisable-structured-information-state",
+        "evidence-conditioned-knowledge-revision"
+      ],
+      "note": "Iris is strong Research-OS component evidence: it maintains a revisable information state with scoped/status claims, chooses inquiry actions, retains raw evidence, and updates synthesized knowledge rather than searching only for final solutions. This supports structured epistemic state plus adaptive information-gain scheduling. But the source does not establish a persistent self-evolution variable beyond adaptive scientific search/belief-state management under the same evidence and budget.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-d4864e777593419255",
+          "result": "NOT_SATISFIED",
+          "boundary": "Adaptive inquiry/search remains subject to selection-aware and information-gain explanations unless matched search depth, candidate/inquiry count, evidence budget, verification rule, and evaluation still leave a structural residual."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.01127",
+      "title": "MiniWorld: Democratizing the Training of Video World Models from Scratch",
+      "published": "2026-08-02",
+      "lane_keys": [
+        "world_model",
+        "parametric_model_state",
+        "embodied"
+      ],
+      "source_sha256": "719c258d85fd014affd5b30895c738c47820536898f513cd944136a6f03f7f81",
+      "fulltext_sha256": "14405c6c6378140f7d594e8a2a47bf2ab9e782a5bde25d705fffd536ea439860",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_WORLD_MODEL_TRAINING",
+      "reduction": [
+        "video-world-model-training",
+        "data-and-simulator-scaling",
+        "offline-generative-model-learning"
+      ],
+      "note": "MiniWorld is a training/data recipe for video world models. It improves a learned simulator/model offline rather than studying autonomous persistent agent self-modification.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.00382",
+      "title": "TI-StegoAlign: Channel-Guided Post-Training for Generative Text Steganography under Tokenization Inconsistency",
+      "published": "2026-08-01",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "2376acf1262c10228b8a1e962f2833868f711ce12f5a67d64d222fc8ff1f2703",
+      "fulltext_sha256": "73d067e59dde2034324fb86505d6e8f0cf539389524d7f8260b9ccb8ff4e05c6",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "steganography-alignment",
+        "static-safety-posttraining",
+        "representation-level-regularization"
+      ],
+      "note": "TI-StegoAlign is a static alignment/post-training method. It does not expose a deployment-time self-evolving agent state.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.07548",
+      "title": "SC$^{2}$-WM: A Self-Correcting World Model with Closed-Loop Feedback for Vision-and-Language Navigation in Continuous Environments",
+      "published": "2026-08-01",
+      "lane_keys": [
+        "world_model",
+        "embodied",
+        "safety_reliability"
+      ],
+      "source_sha256": "760ff264cd7d739354466e27d2e7e6d0447e55bb2bba40d9b52700db21edcfe1",
+      "fulltext_sha256": "99ab8aaaf9f50a1a53aea95ffa393a48810a337782fc20f0cd466dfbf3b7d5da",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "STOP_REDUCTION",
+      "reduction": [
+        "closed-loop-world-model-control",
+        "feedback-triggered-test-time-adaptation",
+        "model-predictive-state-correction"
+      ],
+      "note": "SC2-WM performs state-level closed-loop correction and conditionally updates world-model parameters at test time when a foresight-derived discrepancy exceeds a threshold. Its own ablation compares feedback-triggered model correction with fixed-interval adaptation and shows incremental gains. This is a direct instance of mature test-time adaptation/model-predictive closed-loop control; the update is driven by an observable discrepancy/reconstruction signal within navigation episodes, with no same-information self-evolution-specific residual beyond TTA/nonstationary adaptation.",
+      "reopen_contracts_checked": [
+        {
+          "memory_id": "MEM-SEAR-d1db6be18a6955ec8c",
+          "result": "NOT_SATISFIED",
+          "boundary": "The nonstationary/online-adaptation baseline receives the same current latent/foresight discrepancy, observations, update history, and compute; no structurally different ex-ante prediction is shown."
+        }
+      ],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.00677",
+      "title": "OpenART: Scaling Agent Red Teaming via Open-Ended Environment Evolution",
+      "published": "2026-08-01",
+      "lane_keys": [
+        "skill_harness",
+        "parametric_model_state",
+        "runtime_deployment",
+        "safety_reliability"
+      ],
+      "source_sha256": "0c2cbe969cfbf27c6a28981d7a0d971191629404fbf388299499cc3dfcbb2493",
+      "fulltext_sha256": "ab8c2de403eedcf5600e243db297cc39504dc2946a5f3d08ba596f433ce3a79b",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "DEEP_REVIEW",
+      "disposition": "SUPPORT_COMPONENT_ONLY_SAFETY_ENVIRONMENT_EVOLUTION",
+      "reduction": [
+        "controlled-environment-evolution",
+        "black-box-red-team-search",
+        "persistent-attack-surface-state",
+        "fixed-objective-fixed-safety-contract-evaluation"
+      ],
+      "note": "OpenART is strong safety-evaluation component evidence. It keeps benign task objective and hidden safety contract fixed while evolving only target-visible environment state; under matched attack budget, workspace-only evolution reaches 92.5% strict ASR, 10.9 points above instruction-only, and full EMHA reaches 94.7%. Archive and credit-redistribution ablations also matter. The evolving object is the adversarial environment/attacker state rather than the evaluated agent, so this supports longitudinal safety and attack-surface evaluation without scientifically reopening actor self-evolution.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    },
+    {
+      "ref": "arXiv:2608.00533",
+      "title": "Native Multilingual Chain-of-Thought Reasoning in Low-Resource Southeast Asian Languages",
+      "published": "2026-08-01",
+      "lane_keys": [
+        "parametric_model_state"
+      ],
+      "source_sha256": "9b84b9f57420cc147e94236b71d583a3c9f4cc74a8eda996340b47e13433db7b",
+      "fulltext_sha256": "1681d98c8215b5dfcb1ac50e02849b3fc1f26264a701d80ef5f7ae1f3084de4e",
+      "identity_verified": true,
+      "prior_exact_source_review_exposure": 0,
+      "review_depth": "TRIAGE",
+      "disposition": "SCOPE_EXCLUDED_STATIC_POSTTRAINING",
+      "reduction": [
+        "multilingual-chain-of-thought-distillation",
+        "offline-self-correction-data",
+        "static-reasoning-posttraining"
+      ],
+      "note": "OSCD is an offline multilingual reasoning/post-training method. The deployed model is fixed rather than autonomously evolving across tasks.",
+      "reopen_contracts_checked": [],
+      "watch_reopen_seed": false
+    }
+  ],
+  "next_action": "Record these 16 exact refs as zero-authority source-review exposure. No source satisfies an exact durable reopen contract, so do not trigger generator/provider/GPU work. Preserve OASE only as a watch seed requiring no-gate and paired-vs-unpaired causal controls plus a same-information nonstationary-game residual. Refresh the source scheduler from a new immutable staging copy.",
+  "authority": {
+    "scientific_authority": false,
+    "candidate_generation": false,
+    "problem": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  }
+}
