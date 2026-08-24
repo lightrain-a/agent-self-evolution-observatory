@@ -555,12 +555,12 @@
         "verdict": "Weak Reject"
       },
       "read": {
-        "zh": "Round 2 对 L0–L3 与 causal sign unresolved 的判断仍成立。R19 已获得 bounded execution authority；当前在完整 task boundary 停于 28/140 episodes、7/35 independent tasks，未计算任何 interim effect、p-value 或区间。seq26 曾在 STARTED 前遇到 Shopping health-check timeout，0 scientific exposure；冻结合同允许的唯一 exact retry 已消费并完成，R29/R30 将该支持层异常 append-only 绑定。PSMG 仍是 pre-outcome 方法设计，无新增 treatment execution authority。",
-        "en": "Round 2 remains correct about L0-L3 and the unresolved causal sign. R19 has bounded execution authority and is checkpointed at a complete task boundary with 28/140 episodes and 7/35 independent tasks, with no interim effect, p-value, or interval computed. Sequence 26 encountered a Shopping health-check timeout before STARTED with zero scientific exposure; the single exact retry permitted by the frozen contract was consumed and completed, with R29/R30 append-only binding the support event. PSMG remains a pre-outcome method design with no new treatment execution authority."
+        "zh": "Round 2 对 L0–L3 与 causal sign unresolved 的判断仍成立。R19 在 28/140 的完整 task boundary 后进入第 8 个 task，seq28 完成；seq29 随后的首次 Shopping reset 与唯一 exact pre-exposure retry 均在 STARTED 前超时，二者都 0 scientific exposure。按冻结合同，retry 已耗尽，当前 R19 confirmatory attempt 必须 fail-closed STOP；durable partial prefix 为 29/140（7 个完整 task + 1 个不完整 task episode），禁止 interim effect、p-value、区间或 claim 更新。PSMG 仍只是 pre-outcome 方法设计，无新增 treatment execution authority。",
+        "en": "Round 2 remains correct about L0-L3 and the unresolved causal sign. After the complete 28/140 task boundary, R19 entered its eighth task and completed sequence 28. The first Shopping reset for sequence 29 and the single exact pre-exposure retry both timed out before STARTED, each with zero scientific exposure. Under the frozen contract the retry is exhausted, so the current R19 confirmatory attempt must fail closed and STOP. The durable partial prefix is 29/140 (seven complete tasks plus one episode of an incomplete task), with no interim effect, p-value, interval, or claim update permitted. PSMG remains a pre-outcome method design with no new treatment execution authority."
       },
       "next": {
-        "zh": "R19 只允许从 frozen sequence 28 继续；保持 cohort、R17 memory bytes、model manifest、endpoint、预算和统计判据不变。seq26 的 pre-exposure retry 已消费，不得再次 retry。140/140 完整前禁止 effect/p-value/claim 更新。PSMG 仅作为“现象→识别→治理”闭环设计；fresh-unit mitigation experiment 仍需 R19 完整裁决后的独立授权。O6 financial L3 继续独立 support-blocked。",
-        "en": "R19 may resume only from frozen sequence 28 with the cohort, R17 memory bytes, model manifest, endpoint, budgets, and statistical rule unchanged. The sequence-26 pre-exposure retry is consumed and may not be repeated. No effect, p-value, or claim update is allowed before 140/140 completion. PSMG remains a phenomenon-to-identification-to-governance design; a fresh-unit mitigation experiment still requires independent authorization after full R19 adjudication. O6 financial L3 remains independently support-blocked."
+        "zh": "当前 R19 不得从 seq29 或 seq30+ 继续，也不得再 retry。若继续 O5，只能先恢复稳定 support，再建立新的 fresh confirmatory experiment contract、fresh/independent units 与新的 explicit scientific + execution authority；R19 的 29 条 partial outcomes 不得用于选择 task、threshold、endpoint、model 或新样本，也不得与新 confirmatory sample 拼接。PSMG 继续作为“现象→识别→治理”闭环设计，但不能用来 rescue 当前 NO_VERDICT，也不能在没有独立新授权时启动 mitigation treatment。O6 financial L3 仍独立 support-blocked。",
+        "en": "The current R19 attempt may not resume at sequence 29 or sequence 30+, and no further retry is permitted. Further O5 work requires restored stable support, a new fresh confirmatory experiment contract, fresh/independent units, and new explicit scientific plus execution authority. The 29 partial R19 outcomes may not select tasks, thresholds, endpoints, models, or a new sample and may not be pooled into a new confirmatory sample. PSMG remains the phenomenon-to-identification-to-governance closure design, but it cannot rescue the current NO_VERDICT or launch a mitigation treatment without separate new authority. O6 financial L3 remains independently support-blocked."
       },
       "objections": [
         {
@@ -635,13 +635,13 @@
             "en": "Historical R5 (5/10 support stop) and the six-task generic explicit-cue bridge retain their original adjudications and cannot be pooled with later objects. R9–R15 close the native-status, cohort, runtime, live-Shopping, writer/executor, and analysis contracts; R17 uniformly realizes and freezes exact memory bytes for 36/36 sources before downstream outcomes. R18a/R18b are zero-scientific-exposure support failures. R18c fails after an agent action but before a valid native terminal evaluator score because the evaluator hard-coded model alias is absent. Under the R15/R16 post-exposure no-retry and single-attempt rules, R18 must STOP. This is not scientific negative evidence, and cum_reward=0 is not a terminal score."
           },
           "reopen": {
-            "zh": "R19 已作为新的 scientific object 获得 bounded execution authority；不得 retry R18。继续时只能从 frozen sequence 28 恢复，复用 R17 exact memory bytes，不改 task/model/endpoint/threshold/statistics。seq26 的 STARTED 前 support timeout 已按冻结规则消费唯一 exact retry，并由 R29/R30 绑定；不得再次 retry seq26。只有 140/140 valid terminal episodes 完整后才执行冻结的 task-level two-sided sign-flip。",
-            "en": "R19 has bounded execution authority as a new scientific object; R18 remains non-retriable. Execution may resume only from frozen sequence 28, reusing the exact R17 memory bytes with no task/model/endpoint/threshold/statistical change. The sequence-26 pre-STARTED support timeout consumed its single exact retry under the frozen rule and is bound by R29/R30; sequence 26 may not be retried again. The frozen task-level two-sided sign-flip analysis runs only after 140/140 valid terminal episodes."
+            "zh": "R18 不得重试；当前 R19 也已因 seq29 pre-exposure reset support failure 的唯一 exact retry 耗尽而永久停止。继续 O5 只能建立新的 confirmatory experiment：必须先恢复稳定 support，使用 fresh/independent units、预先冻结新的完整 schedule/analysis contract，并重新获得 explicit scientific + experiment/model-call authority。R19 29 条 partial outcomes 不得参与新 cohort、threshold、endpoint、model 或统计方法选择，也不得与新样本拼接。",
+            "en": "R18 remains non-retriable, and the current R19 attempt is now permanently stopped because the single exact retry for the sequence-29 pre-exposure reset support failure was exhausted. Further O5 work must be a new confirmatory experiment: stable support must be restored first, fresh/independent units and a complete new schedule/analysis contract must be frozen prospectively, and new explicit scientific plus experiment/model-call authority must be granted. The 29 partial R19 outcomes may not select a new cohort, threshold, endpoint, model, or statistical method and may not be pooled into the new sample."
           },
           "action": "SCIENTIFIC_REOPEN_REQUIRED",
-          "e": "B1 R22/R29/R30 public execution state: R19 bounded authority valid; 28/140 at complete task boundary; seq26 pre-exposure exact retry consumed and closed; no interim inference; PSMG method frozen pre-outcome",
-          "engineering_reproducibility": "R19_AUTHORIZED_CONFIRMATORY_EXECUTION_IN_PROGRESS_NO_INTERIM_INFERENCE",
-          "scientific_gap": "R19_INCOMPLETE_28_OF_140_NO_INTERIM_VERDICT",
+          "e": "B1 R31/R32 fail-closed stop: R19 29/140 durable partial prefix; seq29 first reset and single exact retry both fail pre-STARTED with zero exposure; retry exhausted; no interim inference",
+          "engineering_reproducibility": "R19_FAIL_CLOSED_STOP_RETRY_EXHAUSTED_NO_INTERIM_INFERENCE",
+          "scientific_gap": "R19_NO_VERDICT_PREOUTCOME_SUPPORT_FAILURE_RETRY_EXHAUSTED_NEW_EXPERIMENT_REQUIRED",
           "historical_auxiliary_bridge": "INCONCLUSIVE_NO_NEGATIVE_AUTHORITY_6_TASKS_144_CALLS_DELTA_0_UNCHANGED",
           "r5_execution": "UNEXECUTED_SUPPORT_FAILURE_5_OF_10_UNCHANGED",
           "pooling": "FORBIDDEN_R5_BRIDGE_R18_R19_ARE_SEPARATE_OBJECTS",
@@ -697,38 +697,48 @@
             "scientific_claim_authority": false,
             "prebenchmark_zero_completion_support_gate_pass": true,
             "two_synthetic_transport_smokes_pass": true,
-            "execution_in_progress": true,
-            "episodes_complete": 28,
+            "execution_in_progress": false,
+            "episodes_complete": 29,
             "complete_independent_tasks": 7,
-            "next_sequence_index": 28,
-            "agent_completions": 483,
+            "next_sequence_index": null,
+            "agent_completions": 513,
             "fuzzy_evaluator_completions": 0,
             "interim_inference": false,
             "sequence26_preexposure_support_failure": true,
             "sequence26_exact_retry_consumed": true,
             "sequence26_additional_retry_permitted": false,
-            "sequence26_retry_receipt": "generated/d2-failure-memory-provenance-l2b-r19-seq026-preexposure-retry-r29.json"
+            "sequence26_retry_receipt": "generated/d2-failure-memory-provenance-l2b-r19-seq026-preexposure-retry-r29.json",
+            "execution_stopped": true,
+            "current_incomplete_task_completed_episodes": 1,
+            "current_attempt_retriable": false,
+            "sequence29_exact_retry_consumed": true,
+            "sequence29_additional_retry_permitted": false,
+            "public_stop_receipt": "generated/d2-failure-memory-provenance-l2b-r19-public-stop-r32.json",
+            "stop_adjudication_receipt": "generated/d2-failure-memory-provenance-l2b-r19-seq029-preexposure-retry-exhaustion-r31.json"
           },
           "execution_status": {
-            "status": "R19_AUTHORIZED_CONFIRMATORY_EXECUTION_IN_PROGRESS_NO_INTERIM_INFERENCE",
-            "episodes_complete": 28,
+            "status": "R19_CONFIRMATORY_EXECUTION_STOPPED_RETRY_EXHAUSTED_NO_VERDICT",
+            "episodes_complete": 29,
             "episodes_expected": 140,
             "complete_independent_tasks": 7,
             "independent_tasks_expected": 35,
-            "next_sequence_index": 28,
-            "agent_completions": 483,
+            "current_incomplete_task_completed_episodes": 1,
+            "last_complete_sequence_index": 28,
+            "agent_completions": 513,
             "agent_completion_budget": 4200,
             "fuzzy_evaluator_completions": 0,
             "fuzzy_evaluator_completion_budget": 600,
             "post_started_failure": false,
             "interim_inference": false,
             "claim_update_allowed": false,
-            "sequence26_exact_retry_consumed": true,
-            "sequence26_additional_retry_permitted": false,
-            "public_execution_status_receipt": "generated/d2-failure-memory-provenance-l2b-public-execution-status-r22.json",
-            "csv_durability_receipt": "generated/d2-failure-memory-provenance-l2b-r19-csv-durability-r30.json",
-            "partial_checkpoint_receipt": "generated/d2-failure-memory-provenance-l2b-r19-partial-checkpoint-r30.json",
-            "retry_adjudication_receipt": "generated/d2-failure-memory-provenance-l2b-r19-seq026-preexposure-retry-r29.json"
+            "sequence29_exact_retry_consumed": true,
+            "sequence29_additional_retry_permitted": false,
+            "current_attempt_retriable": false,
+            "resume_permitted": false,
+            "scientific_verdict": "NO_VERDICT_PREOUTCOME_SUPPORT_FAILURE_RETRY_EXHAUSTED",
+            "public_stop_receipt": "generated/d2-failure-memory-provenance-l2b-r19-public-stop-r32.json",
+            "stop_adjudication_receipt": "generated/d2-failure-memory-provenance-l2b-r19-seq029-preexposure-retry-exhaustion-r31.json",
+            "last_complete_task_boundary_receipt": "generated/d2-failure-memory-provenance-l2b-r19-partial-checkpoint-r30.json"
           },
           "method_closure_plan": {
             "status": "PREOUTCOME_METHOD_DESIGN_FROZEN_NO_NEW_EXECUTION_AUTHORITY",

@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-PUBLIC-STOP-R32",
+  "status": "R19_CONFIRMATORY_EXECUTION_STOPPED_RETRY_EXHAUSTED_NO_VERDICT",
+  "authority": {
+    "bounded_r19_scientific_execution_authority_was_valid": true,
+    "scientific_claim_authority": false,
+    "current_R19_execution_authority_consumed_for_stopped_attempt": true,
+    "r18_retry_authorized": false,
+    "l3_authorized": false,
+    "authority_receipt_sha256": "f7ad4044e80e7fce30e7e63940eebafac6af7af2b7fa08ea38169f797ceb905f"
+  },
+  "last_complete_task_boundary": {
+    "episodes_complete": 28,
+    "complete_independent_tasks": 7,
+    "next_sequence_index_at_boundary": 28,
+    "checkpoint_sha256": "a03c8b8321200cedeafef31089bf3a2be822367c1e6ddec68435de29bf9a90be"
+  },
+  "stopped_partial_prefix": {
+    "episodes_complete": 29,
+    "episodes_expected": 140,
+    "complete_independent_tasks": 7,
+    "current_incomplete_task_completed_episodes": 1,
+    "last_complete_sequence_index": 28,
+    "agent_completions": 513,
+    "agent_completion_budget": 4200,
+    "fuzzy_evaluator_completions": 0,
+    "fuzzy_evaluator_completion_budget": 600,
+    "post_started_failure": false,
+    "in_flight_episode": false
+  },
+  "support_retry_exhaustion": {
+    "failed_sequence_index": 29,
+    "first_attempt_scientific_exposure": false,
+    "exact_retry_scientific_exposure": false,
+    "first_attempt_receipt_sha256": "6ed109898606969797019806dd84d31e23b01e94c501c626e3f1b7386e8c8f21",
+    "exact_retry_attempt_receipt_sha256": "c605c7e7eb1563ce7d951cd8eb9e6c0e38491175bf88b133f84527b1b3a734bf",
+    "exact_retry_consumed": true,
+    "additional_retry_permitted": false,
+    "r31_adjudication_sha256": "78f58f6dfd4a19b851e9c6ba76599be80dde82e49d57e72c6fcba179d12ccbb0"
+  },
+  "interim_policy": {
+    "terminal_scores_exposed_in_projection": false,
+    "task_deltas_computed": false,
+    "effect_mean_computed": false,
+    "p_value_computed": false,
+    "confidence_interval_computed": false,
+    "partial_prefix_confirmatory_analysis_permitted": false,
+    "claim_update_allowed": false,
+    "no_effect_claim_authorized": false
+  },
+  "current_R19": {
+    "execution_stopped": true,
+    "resume_permitted": false,
+    "sequence29_retry_permitted": false,
+    "sequence30_or_later_execution_permitted": false,
+    "current_attempt_retriable": false,
+    "scientific_verdict": "NO_VERDICT_PREOUTCOME_SUPPORT_FAILURE_RETRY_EXHAUSTED",
+    "scientific_negative": false
+  },
+  "future_reopen": {
+    "new_experiment_contract_required": true,
+    "new_explicit_scientific_and_execution_authority_required": true,
+    "support_restoration_required": true,
+    "partial_R19_outcomes_must_not_select_new_design": true,
+    "partial_R19_outcomes_must_not_be_pooled_into_new_confirmatory_sample": true
+  },
+  "method_closure": {
+    "method": "PSMG",
+    "story": "phenomenon -> causal identification -> provenance-separated governance -> bounded validation",
+    "method_design_frozen": true,
+    "new_mitigation_experiment_authorized": false,
+    "effect_claim_authorized": false,
+    "design_receipt_sha256": "4d96dcf98c26785463d9638bc0ce7ae78d76fc874db784bc18348cb0ef4a98f1"
+  },
+  "stanford_o5": {
+    "disposition": "REQUIRES_SCIENTIFIC_REOPEN",
+    "scientific_reopen_status": "R19_STOPPED_SUPPORT_FAILURE_RETRY_EXHAUSTED",
+    "current_verdict": "NO_VERDICT_PREOUTCOME_SUPPORT_FAILURE_RETRY_EXHAUSTED"
+  },
+  "redaction": {
+    "terminal_scores": false,
+    "browser_actions": false,
+    "raw_memory_text": false,
+    "internal_run_paths": false,
+    "authority_source_message": false
+  }
+}
