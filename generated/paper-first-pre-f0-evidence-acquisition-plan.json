@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-24T15:47:58+00:00",
+  "generated_at": "2026-08-25T05:29:56+00:00",
   "run_id": "canonical-pre-f0-20260824T061140Z",
-  "status": "EVIDENCE_WAIT_OR_HOLD",
+  "status": "EVIDENCE_DESIGN_PENDING",
   "policy": {
     "reduction_pending_is_provisional_not_failed": true,
     "exploration_authority_is_separate_from_scientific_claim_authority": true,
@@ -50,16 +50,16 @@
   "summary": {
     "provisional_problem_candidates": 2,
     "design_selected": 2,
-    "design_pending": 0,
+    "design_pending": 1,
     "design_invalid": 0,
     "wait_primary_asset": 0,
     "operationalization_recompile_pending": 0,
-    "operationalization_recompiled": 2,
+    "operationalization_recompiled": 1,
     "operationalization_intrinsic_source_specific": 0,
     "review_pending": 0,
     "review_clear": 0,
     "review_revise": 0,
-    "review_blocked": 2,
+    "review_blocked": 1,
     "substrate_preflight_pending": 0,
     "substrate_ready": 0,
     "substrate_implementation_pending": 0,
@@ -88,7 +88,7 @@
       "priority_rank": 1,
       "selection_basis": "fewest-unresolved-reduction-blockers-then-stable-id",
       "design_selected": true,
-      "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+      "status": "NEEDS_BOUNDED_EVIDENCE_DESIGN",
       "frozen_irreducible_object": "A measurable failure-regime boundary in end-to-end multimodal world construction: after RL raises overall executable 3D construction performance, long underspecified Complex Description and Scene Restatement queries remain below 50% Pass@1. The scientific object is not query difficulty in general, but the transition between queries that can be solved by the trained intent-layout-tool-render-reflect loop and those that fail despite broad 3D-reasoning gains.",
       "frozen_endpoint_headroom_requirement": "To remain paperable beyond a benchmark observation, the candidate needs a prospective pre-outcome feature or controlled intervention that predicts the below-50% basin and separates executable cross-stage binding from long-context, generic underspecification, and spatial-grounding baselines.",
       "frozen_exact_prediction": "After matching prompt length, number of constraints, referential ambiguity, asset count, rubric difficulty, and spatial-quantity demand, Complex Description/Scene Restatement queries will still show lower Pass@1 and a higher concentration of cross-stage intent-to-layout/render binding failures than other VWE-Bench query types; clarifying text alone will not close the gap unless it also resolves executable binding.",
@@ -107,48 +107,8 @@
         "parent_contract_sha256": "",
         "repair_count": 0
       },
-      "design": {
-        "candidate_id": "PORT-010",
-        "changed_variable": "",
-        "source_specificity": "REPRODUCIBLE_FIRST_PARTY",
-        "acquisition_mode": "FIRST_PARTY_SANDBOX",
-        "reproduction_target": "Generate a first-party corpus of 3D scene construction queries spanning Complex Description, Scene Restatement, and control query types (Simple Description, Direct Command), with matched distributions on prompt length, constraint count, referential ambiguity, asset count, rubric difficulty, and spatial-quantity demand. Execute each query through a first-party end-to-end 3D construction pipeline (LLM-based intent parsing, layout generation, tool-based rendering, reflection) and record Pass@1 and stage-specific failure modes.",
-        "independent_truth": "Ground truth is binary Pass@1 determined by whether the constructed 3D scene satisfies the query constraints as verified by automated geometric/semantic checks (e.g., object count, spatial relations, asset usage) plus human spot-checking. Stage-specific failure labels (intent parsing, layout, rendering, binding) are assigned by blinded annotators examining pipeline traces, with adjudication for disagreements. Query type is assigned at generation time and verified by independent raters. No outcome information is used in query generation or matching.",
-        "causal_unit": "One first-party generated query with linked metadata (query type, covariates), pipeline execution trace, Pass@1 outcome, and stage-error annotation.",
-        "observable": "For each query: query type (Complex/Restatement vs control), matched covariates (length, constraints, ambiguity, assets, rubric difficulty, spatial demand), Pass@1 (binary), and dominant failure stage (intent-to-layout/render binding vs other grounding/editing error).",
-        "intervention": "No method intervention. Construct a matched observational contrast: sample Complex/Restatement queries and control queries matched on all covariates, execute both through the identical pipeline, and compare Pass@1 and binding-failure concentration. Optionally, generate clarified versions of Complex/Restatement queries (resolving ambiguity without changing executable binding requirements) as a secondary contrast to test whether clarification alone closes the gap.",
-        "same_information_lock": "Both the candidate contrast and the baseline predictive model see only: query type, prompt length, constraint count, referential ambiguity score, asset count, rubric difficulty score, spatial-quantity demand score, stage-error labels, and Pass@1. No hidden pipeline internals, no outcome-derived features, no extra model calls beyond the single pipeline execution per query.",
-        "matched_baseline_execution": "Fit the strongest same-information baseline (e.g., logistic regression or gradient-boosted trees) using only length, constraint count, ambiguity, asset count, rubric difficulty, spatial-quantity demand, and stage-specific grounding/editing error indicators to predict Pass@1 and binding-failure concentration. Train and evaluate on the same matched units with the same evaluation budget (same train/test split, same cross-validation folds).",
-        "anti_bake_in_controls": [
-          "Generate queries using templates and randomization that do not condition on the predicted outcome; freeze the query manifest and covariate measurements before any pipeline execution.",
-          "Pre-register the matching algorithm (e.g., propensity score matching or exact matching on binned covariates), exclusion rules, and stage-error coding rubric before inspecting any outcomes.",
-          "Use blinded independent annotation of stage-specific failures from pipeline traces, with a held-out adjudication subset (20% of cases) to measure inter-rater reliability.",
-          "Run a negative-control permutation test: shuffle query-type labels within matched strata and re-run the analysis to confirm the pipeline does not manufacture a spurious query-type effect."
-        ],
-        "decision_criteria": {
-          "baseline_reduction_supported": "After matching, query type adds no predictive power for Pass@1 or binding-failure concentration beyond the strongest same-information baseline (e.g., likelihood ratio test p>0.05, or change in AUC <0.02), within the frozen matched sample.",
-          "candidate_residual_survives": "Complex Description/Scene Restatement queries retain a significant excess of lower Pass@1 (e.g., odds ratio <0.7, p<0.05) or higher cross-stage binding-failure concentration (e.g., odds ratio >1.5, p<0.05) after the strongest same-information baseline and all matching controls.",
-          "inconclusive": "First-party query generation fails the equivalence probe (covariate non-overlap, low inter-rater agreement on query type, or trivial/impossible baseline success rate), matched cells are too sparse (<20 units per cell), or stage-error labels are too unreliable (Cohen's kappa <0.6) to separate the candidate from the baseline."
-        },
-        "single_variable_repair_if_inconclusive": "If matched cells are too sparse, increase the number of generated queries per cell (up to the unit cap) while maintaining covariate overlap; if stage-error labels are unreliable, simplify the failure taxonomy to a binary binding-vs-other classification and re-annotate.",
-        "adapter_intent": "A first-party sandbox environment that generates 3D construction queries from parameterized templates, executes them through an LLM-based construction pipeline, verifies outcomes with automated geometric checks, and supports blinded human annotation of failure modes.",
-        "budget": {
-          "max_units": 128,
-          "max_wall_minutes": 90,
-          "max_gpu_hours": 1.0,
-          "max_model_calls": 256
-        },
-        "execution_adapter": "SUBSTRATE_PREFLIGHT_REQUIRED",
-        "frozen_exact_prediction": "After matching prompt length, number of constraints, referential ambiguity, asset count, rubric difficulty, and spatial-quantity demand, Complex Description/Scene Restatement queries will still show lower Pass@1 and a higher concentration of cross-stage intent-to-layout/render binding failures than other VWE-Bench query types; clarifying text alone will not close the gap unless it also resolves executable binding.",
-        "frozen_same_information_baseline": "A matched long-context plus spatial-grounding baseline that uses query length, constraint count, ambiguity, asset count, distance/angle/object-count demands, and stage-specific grounding/editing errors to predict Pass@1.",
-        "frozen_falsifier_expression": "Using released VWE-Bench/VibeWorlding-Gym units, construct a matched comparison: sample Complex Description/Scene Restatement failures and easier-query controls matched on length, constraint count, asset count, rubric difficulty, and spatial-quantity demand; annotate stage-specific errors; optionally generate clarified-query versions. The falsifier is passed if query type no longer predicts Pass@1 or stage-specific binding failure after these controls.",
-        "decision_rule": {
-          "REDUCTION_SUPPORTED": "After matching, query type adds no predictive power for Pass@1 or binding-failure concentration beyond the strongest same-information baseline (e.g., likelihood ratio test p>0.05, or change in AUC <0.02), within the frozen matched sample.",
-          "RESIDUAL_SURVIVES": "Complex Description/Scene Restatement queries retain a significant excess of lower Pass@1 (e.g., odds ratio <0.7, p<0.05) or higher cross-stage binding-failure concentration (e.g., odds ratio >1.5, p<0.05) after the strongest same-information baseline and all matching controls.",
-          "INCONCLUSIVE": "First-party query generation fails the equivalence probe (covariate non-overlap, low inter-rater agreement on query type, or trivial/impossible baseline success rate), matched cells are too sparse (<20 units per cell), or stage-error labels are too unreliable (Cohen's kappa <0.6) to separate the candidate from the baseline."
-        }
-      },
-      "contract_sha256": "ac7bf22ef869765819c925728def06cc35c99d6bf74fdb8c86f82edbc1994e1b",
+      "design": {},
+      "contract_sha256": "",
       "execution_authorized": false,
       "scientific_authority": false,
       "authority": {
@@ -175,150 +135,203 @@
         "candidate_snapshot_sha256": "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3",
         "scientific_authority": false
       },
-      "design_audit": {
-        "passed": true,
-        "errors": []
-      },
-      "design_provenance": {
-        "resolved_model": "kimi-k3",
-        "part": 1,
-        "stage": "operationalization-recompile",
-        "scientific_authority": false
-      },
-      "source_specific_design": {
-        "candidate_id": "PORT-010",
-        "changed_variable": "",
-        "source_specificity": "SOURCE_SPECIFIC_REQUIRED",
-        "acquisition_mode": "PRIMARY_ASSET_REUSE",
-        "reproduction_target": "Materialize the released VWE-Bench/VibeWorlding-Gym query corpus and per-case model/evaluator outcome records as content-addressed units, including query type, prompt text, length, constraint count, referential ambiguity, asset count, rubric difficulty, spatial-quantity demand, Pass@1, and any released stage-specific intent/layout/render failure labels; independently recompute hashes and unit counts against the released corpus rather than reconstructing a synthetic benchmark.",
-        "independent_truth": "Ground truth is the released per-case benchmark metadata and evaluator/model outcome labels, plus independently coded stage-specific failure annotations from the released traces where available; query type and Pass@1 are not defined by the candidate mechanism.",
-        "causal_unit": "One released VWE-Bench evaluation case with linked query metadata, model outcome, and stage-error annotation.",
-        "observable": "For each case: query type, matched covariates, Pass@1, and whether the dominant failure is cross-stage intent-to-layout/render binding versus another stage-specific grounding/editing error.",
-        "intervention": "No method intervention. Construct only a matched observational contrast between Complex Description/Scene Restatement cases and other query-type controls under the frozen matching variables; if released clarified-query variants already exist, score them as an additional released unit, but do not author new clarifications as a proxy.",
-        "same_information_lock": "Both the candidate contrast and the baseline see only the same released fields: prompt length, constraint count, referential ambiguity, asset count, rubric difficulty, spatial-quantity demand, query type, stage-error labels, and Pass@1. No hidden trace, extra model call, or outcome-derived feature is admitted.",
-        "matched_baseline_execution": "Fit the strongest same-information baseline using only length, constraint count, ambiguity, asset count, rubric difficulty, spatial-quantity demand, and stage-specific grounding/editing errors to predict Pass@1 and binding-failure concentration on the same matched units and same evaluation budget.",
-        "anti_bake_in_controls": [
-          "Content-hash every released query/outcome unit before matching and freeze the unit manifest prior to analysis.",
-          "Pre-register the matching variables, exclusion rules, and stage-error coding rubric before inspecting residual associations.",
-          "Use blinded independent annotation of stage-specific failures with a held-out adjudication subset.",
-          "Run a negative-control shuffle of query-type labels within matched strata to confirm the pipeline does not manufacture a query-type effect."
-        ],
-        "decision_criteria": {
-          "baseline_reduction_supported": "After matching, query type adds no predictive power for Pass@1 or binding-failure concentration beyond the strongest same-information baseline, within the frozen matched sample.",
-          "candidate_residual_survives": "Complex Description/Scene Restatement cases retain a significant excess of lower Pass@1 or higher cross-stage binding-failure concentration after the strongest same-information baseline and all matching controls.",
-          "inconclusive": "Released units cannot be materialized with sufficient metadata/outcome linkage, matched cells are too sparse for valid comparison, or stage-error labels are missing or too unreliable to separate the candidate from the baseline."
-        },
-        "single_variable_repair_if_inconclusive": "",
-        "adapter_intent": "A provenance-audited primary-asset replay environment that materializes released benchmark assets, verifies hashes, and performs matched statistical analysis only.",
-        "budget": {
-          "max_units": 128,
-          "max_wall_minutes": 90,
-          "max_gpu_hours": 0.0,
-          "max_model_calls": 0
-        },
-        "execution_adapter": "PRIMARY_ASSET_ONLY",
-        "frozen_exact_prediction": "After matching prompt length, number of constraints, referential ambiguity, asset count, rubric difficulty, and spatial-quantity demand, Complex Description/Scene Restatement queries will still show lower Pass@1 and a higher concentration of cross-stage intent-to-layout/render binding failures than other VWE-Bench query types; clarifying text alone will not close the gap unless it also resolves executable binding.",
-        "frozen_same_information_baseline": "A matched long-context plus spatial-grounding baseline that uses query length, constraint count, ambiguity, asset count, distance/angle/object-count demands, and stage-specific grounding/editing errors to predict Pass@1.",
-        "frozen_falsifier_expression": "Using released VWE-Bench/VibeWorlding-Gym units, construct a matched comparison: sample Complex Description/Scene Restatement failures and easier-query controls matched on length, constraint count, asset count, rubric difficulty, and spatial-quantity demand; annotate stage-specific errors; optionally generate clarified-query versions. The falsifier is passed if query type no longer predicts Pass@1 or stage-specific binding failure after these controls.",
-        "decision_rule": {
-          "REDUCTION_SUPPORTED": "After matching, query type adds no predictive power for Pass@1 or binding-failure concentration beyond the strongest same-information baseline, within the frozen matched sample.",
-          "RESIDUAL_SURVIVES": "Complex Description/Scene Restatement cases retain a significant excess of lower Pass@1 or higher cross-stage binding-failure concentration after the strongest same-information baseline and all matching controls.",
-          "INCONCLUSIVE": "Released units cannot be materialized with sufficient metadata/outcome linkage, matched cells are too sparse for valid comparison, or stage-error labels are missing or too unreliable to separate the candidate from the baseline."
-        }
-      },
       "operationalization_recompile_attempts": 1,
-      "operationalization_recompile_adjudication": {
-        "verdict": "RECOMPILED_FIRST_PARTY",
-        "reason": "The scientific object is a measurable failure-regime boundary in end-to-end 3D world construction where Complex Description/Scene Restatement queries remain below 50% Pass@1 despite overall performance gains. The unavailable VWE-Bench corpus is incidental acquisition provenance; the core phenomenon (query type predicting binding failures after matching on complexity covariates) can be instantiated with first-party queries generated from public 3D scene construction tasks, evaluated with a first-party pipeline, and annotated for stage-specific errors without defining the predicted outcome into the test.",
-        "recompiler_model": "kimi-k3",
-        "part": 1,
-        "scientific_authority": false
-      },
-      "operationalization_recompile_audit": {
-        "passed": true,
-        "errors": []
-      },
-      "original_source_specific_design": {
-        "candidate_id": "PORT-010",
-        "changed_variable": "",
-        "source_specificity": "SOURCE_SPECIFIC_REQUIRED",
-        "acquisition_mode": "PRIMARY_ASSET_REUSE",
-        "reproduction_target": "Materialize the released VWE-Bench/VibeWorlding-Gym query corpus and per-case model/evaluator outcome records as content-addressed units, including query type, prompt text, length, constraint count, referential ambiguity, asset count, rubric difficulty, spatial-quantity demand, Pass@1, and any released stage-specific intent/layout/render failure labels; independently recompute hashes and unit counts against the released corpus rather than reconstructing a synthetic benchmark.",
-        "independent_truth": "Ground truth is the released per-case benchmark metadata and evaluator/model outcome labels, plus independently coded stage-specific failure annotations from the released traces where available; query type and Pass@1 are not defined by the candidate mechanism.",
-        "causal_unit": "One released VWE-Bench evaluation case with linked query metadata, model outcome, and stage-error annotation.",
-        "observable": "For each case: query type, matched covariates, Pass@1, and whether the dominant failure is cross-stage intent-to-layout/render binding versus another stage-specific grounding/editing error.",
-        "intervention": "No method intervention. Construct only a matched observational contrast between Complex Description/Scene Restatement cases and other query-type controls under the frozen matching variables; if released clarified-query variants already exist, score them as an additional released unit, but do not author new clarifications as a proxy.",
-        "same_information_lock": "Both the candidate contrast and the baseline see only the same released fields: prompt length, constraint count, referential ambiguity, asset count, rubric difficulty, spatial-quantity demand, query type, stage-error labels, and Pass@1. No hidden trace, extra model call, or outcome-derived feature is admitted.",
-        "matched_baseline_execution": "Fit the strongest same-information baseline using only length, constraint count, ambiguity, asset count, rubric difficulty, spatial-quantity demand, and stage-specific grounding/editing errors to predict Pass@1 and binding-failure concentration on the same matched units and same evaluation budget.",
-        "anti_bake_in_controls": [
-          "Content-hash every released query/outcome unit before matching and freeze the unit manifest prior to analysis.",
-          "Pre-register the matching variables, exclusion rules, and stage-error coding rubric before inspecting residual associations.",
-          "Use blinded independent annotation of stage-specific failures with a held-out adjudication subset.",
-          "Run a negative-control shuffle of query-type labels within matched strata to confirm the pipeline does not manufacture a query-type effect."
-        ],
-        "decision_criteria": {
-          "baseline_reduction_supported": "After matching, query type adds no predictive power for Pass@1 or binding-failure concentration beyond the strongest same-information baseline, within the frozen matched sample.",
-          "candidate_residual_survives": "Complex Description/Scene Restatement cases retain a significant excess of lower Pass@1 or higher cross-stage binding-failure concentration after the strongest same-information baseline and all matching controls.",
-          "inconclusive": "Released units cannot be materialized with sufficient metadata/outcome linkage, matched cells are too sparse for valid comparison, or stage-error labels are missing or too unreliable to separate the candidate from the baseline."
-        },
-        "single_variable_repair_if_inconclusive": "",
-        "adapter_intent": "A provenance-audited primary-asset replay environment that materializes released benchmark assets, verifies hashes, and performs matched statistical analysis only.",
-        "budget": {
-          "max_units": 128,
-          "max_wall_minutes": 90,
-          "max_gpu_hours": 0.0,
-          "max_model_calls": 0
-        },
-        "execution_adapter": "PRIMARY_ASSET_ONLY",
-        "frozen_exact_prediction": "After matching prompt length, number of constraints, referential ambiguity, asset count, rubric difficulty, and spatial-quantity demand, Complex Description/Scene Restatement queries will still show lower Pass@1 and a higher concentration of cross-stage intent-to-layout/render binding failures than other VWE-Bench query types; clarifying text alone will not close the gap unless it also resolves executable binding.",
-        "frozen_same_information_baseline": "A matched long-context plus spatial-grounding baseline that uses query length, constraint count, ambiguity, asset count, distance/angle/object-count demands, and stage-specific grounding/editing errors to predict Pass@1.",
-        "frozen_falsifier_expression": "Using released VWE-Bench/VibeWorlding-Gym units, construct a matched comparison: sample Complex Description/Scene Restatement failures and easier-query controls matched on length, constraint count, asset count, rubric difficulty, and spatial-quantity demand; annotate stage-specific errors; optionally generate clarified-query versions. The falsifier is passed if query type no longer predicts Pass@1 or stage-specific binding failure after these controls.",
-        "decision_rule": {
-          "REDUCTION_SUPPORTED": "After matching, query type adds no predictive power for Pass@1 or binding-failure concentration beyond the strongest same-information baseline, within the frozen matched sample.",
-          "RESIDUAL_SURVIVES": "Complex Description/Scene Restatement cases retain a significant excess of lower Pass@1 or higher cross-stage binding-failure concentration after the strongest same-information baseline and all matching controls.",
-          "INCONCLUSIVE": "Released units cannot be materialized with sufficient metadata/outcome linkage, matched cells are too sparse for valid comparison, or stage-error labels are missing or too unreliable to separate the candidate from the baseline."
+      "review_feedback": "New content-addressed primary assets may remove the prior bake-in defect. Redesign only against the released schema; remaining missing requirements stay unresolved until separately acquired or authorized.",
+      "primary_asset_release_reopen_history": [
+        {
+          "reopened_at": "2026-08-25T05:29:56+00:00",
+          "prior_status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+          "prior_contract_sha256": "ac7bf22ef869765819c925728def06cc35c99d6bf74fdb8c86f82edbc1994e1b",
+          "prior_design": {
+            "candidate_id": "PORT-010",
+            "changed_variable": "",
+            "source_specificity": "REPRODUCIBLE_FIRST_PARTY",
+            "acquisition_mode": "FIRST_PARTY_SANDBOX",
+            "reproduction_target": "Generate a first-party corpus of 3D scene construction queries spanning Complex Description, Scene Restatement, and control query types (Simple Description, Direct Command), with matched distributions on prompt length, constraint count, referential ambiguity, asset count, rubric difficulty, and spatial-quantity demand. Execute each query through a first-party end-to-end 3D construction pipeline (LLM-based intent parsing, layout generation, tool-based rendering, reflection) and record Pass@1 and stage-specific failure modes.",
+            "independent_truth": "Ground truth is binary Pass@1 determined by whether the constructed 3D scene satisfies the query constraints as verified by automated geometric/semantic checks (e.g., object count, spatial relations, asset usage) plus human spot-checking. Stage-specific failure labels (intent parsing, layout, rendering, binding) are assigned by blinded annotators examining pipeline traces, with adjudication for disagreements. Query type is assigned at generation time and verified by independent raters. No outcome information is used in query generation or matching.",
+            "causal_unit": "One first-party generated query with linked metadata (query type, covariates), pipeline execution trace, Pass@1 outcome, and stage-error annotation.",
+            "observable": "For each query: query type (Complex/Restatement vs control), matched covariates (length, constraints, ambiguity, assets, rubric difficulty, spatial demand), Pass@1 (binary), and dominant failure stage (intent-to-layout/render binding vs other grounding/editing error).",
+            "intervention": "No method intervention. Construct a matched observational contrast: sample Complex/Restatement queries and control queries matched on all covariates, execute both through the identical pipeline, and compare Pass@1 and binding-failure concentration. Optionally, generate clarified versions of Complex/Restatement queries (resolving ambiguity without changing executable binding requirements) as a secondary contrast to test whether clarification alone closes the gap.",
+            "same_information_lock": "Both the candidate contrast and the baseline predictive model see only: query type, prompt length, constraint count, referential ambiguity score, asset count, rubric difficulty score, spatial-quantity demand score, stage-error labels, and Pass@1. No hidden pipeline internals, no outcome-derived features, no extra model calls beyond the single pipeline execution per query.",
+            "matched_baseline_execution": "Fit the strongest same-information baseline (e.g., logistic regression or gradient-boosted trees) using only length, constraint count, ambiguity, asset count, rubric difficulty, spatial-quantity demand, and stage-specific grounding/editing error indicators to predict Pass@1 and binding-failure concentration. Train and evaluate on the same matched units with the same evaluation budget (same train/test split, same cross-validation folds).",
+            "anti_bake_in_controls": [
+              "Generate queries using templates and randomization that do not condition on the predicted outcome; freeze the query manifest and covariate measurements before any pipeline execution.",
+              "Pre-register the matching algorithm (e.g., propensity score matching or exact matching on binned covariates), exclusion rules, and stage-error coding rubric before inspecting any outcomes.",
+              "Use blinded independent annotation of stage-specific failures from pipeline traces, with a held-out adjudication subset (20% of cases) to measure inter-rater reliability.",
+              "Run a negative-control permutation test: shuffle query-type labels within matched strata and re-run the analysis to confirm the pipeline does not manufacture a spurious query-type effect."
+            ],
+            "decision_criteria": {
+              "baseline_reduction_supported": "After matching, query type adds no predictive power for Pass@1 or binding-failure concentration beyond the strongest same-information baseline (e.g., likelihood ratio test p>0.05, or change in AUC <0.02), within the frozen matched sample.",
+              "candidate_residual_survives": "Complex Description/Scene Restatement queries retain a significant excess of lower Pass@1 (e.g., odds ratio <0.7, p<0.05) or higher cross-stage binding-failure concentration (e.g., odds ratio >1.5, p<0.05) after the strongest same-information baseline and all matching controls.",
+              "inconclusive": "First-party query generation fails the equivalence probe (covariate non-overlap, low inter-rater agreement on query type, or trivial/impossible baseline success rate), matched cells are too sparse (<20 units per cell), or stage-error labels are too unreliable (Cohen's kappa <0.6) to separate the candidate from the baseline."
+            },
+            "single_variable_repair_if_inconclusive": "If matched cells are too sparse, increase the number of generated queries per cell (up to the unit cap) while maintaining covariate overlap; if stage-error labels are unreliable, simplify the failure taxonomy to a binary binding-vs-other classification and re-annotate.",
+            "adapter_intent": "A first-party sandbox environment that generates 3D construction queries from parameterized templates, executes them through an LLM-based construction pipeline, verifies outcomes with automated geometric checks, and supports blinded human annotation of failure modes.",
+            "budget": {
+              "max_units": 128,
+              "max_wall_minutes": 90,
+              "max_gpu_hours": 1.0,
+              "max_model_calls": 256
+            },
+            "execution_adapter": "SUBSTRATE_PREFLIGHT_REQUIRED",
+            "frozen_exact_prediction": "After matching prompt length, number of constraints, referential ambiguity, asset count, rubric difficulty, and spatial-quantity demand, Complex Description/Scene Restatement queries will still show lower Pass@1 and a higher concentration of cross-stage intent-to-layout/render binding failures than other VWE-Bench query types; clarifying text alone will not close the gap unless it also resolves executable binding.",
+            "frozen_same_information_baseline": "A matched long-context plus spatial-grounding baseline that uses query length, constraint count, ambiguity, asset count, distance/angle/object-count demands, and stage-specific grounding/editing errors to predict Pass@1.",
+            "frozen_falsifier_expression": "Using released VWE-Bench/VibeWorlding-Gym units, construct a matched comparison: sample Complex Description/Scene Restatement failures and easier-query controls matched on length, constraint count, asset count, rubric difficulty, and spatial-quantity demand; annotate stage-specific errors; optionally generate clarified-query versions. The falsifier is passed if query type no longer predicts Pass@1 or stage-specific binding failure after these controls.",
+            "decision_rule": {
+              "REDUCTION_SUPPORTED": "After matching, query type adds no predictive power for Pass@1 or binding-failure concentration beyond the strongest same-information baseline (e.g., likelihood ratio test p>0.05, or change in AUC <0.02), within the frozen matched sample.",
+              "RESIDUAL_SURVIVES": "Complex Description/Scene Restatement queries retain a significant excess of lower Pass@1 (e.g., odds ratio <0.7, p<0.05) or higher cross-stage binding-failure concentration (e.g., odds ratio >1.5, p<0.05) after the strongest same-information baseline and all matching controls.",
+              "INCONCLUSIVE": "First-party query generation fails the equivalence probe (covariate non-overlap, low inter-rater agreement on query type, or trivial/impossible baseline success rate), matched cells are too sparse (<20 units per cell), or stage-error labels are too unreliable (Cohen's kappa <0.6) to separate the candidate from the baseline."
+            }
+          },
+          "prior_design_provenance": {
+            "resolved_model": "kimi-k3",
+            "part": 1,
+            "stage": "operationalization-recompile",
+            "scientific_authority": false
+          },
+          "prior_evidence_review": {
+            "verdict": "BLOCK_BAKE_IN",
+            "checks": {
+              "independent_truth_valid": false,
+              "scientific_object_preserved": false,
+              "no_mechanism_bake_in": false,
+              "same_information_baseline_valid": true,
+              "falsifier_not_method_evaluation": true,
+              "outcome_semantics_valid": true,
+              "bounded_budget_valid": true,
+              "prior_support_constraint_respected": false,
+              "operationalization_equivalence_valid": false
+            },
+            "reason": "The design replaces the frozen VWE-Bench/VibeWorlding-Gym scientific object with a first-party generated query corpus, which prior_support explicitly identified as unavailable (HOLD_SUPPORT_UNAVAILABLE) and required source-specific units with content hashes for independent matching. The operationalization_recompile removes the VWE-Bench corpus, templates, asset libraries, and author outcome tables as 'provenance artifacts,' but the frozen scientific object is defined by the measurable failure-regime boundary within that specific benchmark's query distribution and evaluation pipeline. Generating new queries from parameterized templates bakes in the candidate's own operationalization of 'Complex Description' and 'Scene Restatement' categories, and the equivalence probe cannot independently verify that first-party queries sample the same population as the frozen VWE-Bench units because the source corpus is unavailable. The independent truth (Pass@1 via automated geometric checks on first-party generated scenes) is not the same frozen truth (VWE-Bench per-case Pass@1 from the released evaluation pipeline). The design therefore cannot obtain independent evidence without defining the result into the test.",
+            "required_revision": "",
+            "reviewer_model": "deepseek-v4-pro-ga-260813",
+            "part": 1,
+            "scientific_authority": false
+          },
+          "prior_operationalization_recompile": {
+            "scientific_object_invariants": [
+              "Query type taxonomy: Complex Description and Scene Restatement versus other query types (e.g., Simple Description, Direct Command) preserved as a categorical variable",
+              "Matching covariates: prompt length, constraint count, referential ambiguity, asset count, rubric difficulty, and spatial-quantity demand measured identically across all units",
+              "Outcome measure: Pass@1 (binary success/failure) on executable 3D scene construction",
+              "Failure mode taxonomy: stage-specific errors including cross-stage intent-to-layout/render binding failures versus other grounding/editing errors",
+              "Contrast structure: Complex/Restatement queries show lower Pass@1 and higher binding-failure concentration than matched controls after covariate adjustment"
+            ],
+            "source_specific_dependencies_removed": [
+              "VWE-Bench released corpus (6,828 queries, 254 evaluation cases)",
+              "VibeWorlding-Gym specific query templates and asset libraries",
+              "Author-released per-case model outcome tables",
+              "Author-provided stage-specific failure labels"
+            ],
+            "why_dependencies_are_not_scientific_object": "The VWE-Bench corpus is a particular sampling of the broader population of 3D world construction queries; the scientific claim is about the relationship between query type, covariates, and failure modes, not about these specific 254 cases. The query templates and asset libraries are implementation details of one particular benchmark instantiation. Author outcome tables and labels are provenance artifacts; the same measurements (Pass@1, stage errors) can be obtained by running a first-party evaluation pipeline on newly generated queries and annotating failures independently. The scientific object is the conditional association structure, not the specific dataset.",
+            "transport_scope": "The recompiled experiment tests the same conditional association (query type predicting Pass@1 and binding failures after matching) using first-party generated queries and evaluation. If the residual survives, it supports the claim that this is a general phenomenon in end-to-end 3D construction systems, not specific to VWE-Bench. If the baseline reduction is supported, it falsifies the claim in this first-party context, which is evidence against generality but does not directly falsify the original VWE-Bench observation without further transport argument.",
+            "equivalence_probe": "Before running the main falsifier, verify that the first-party query generation process produces Complex Description/Scene Restatement queries and control queries that: (1) span overlapping ranges on all matching covariates (length, constraints, ambiguity, assets, rubric difficulty, spatial demand), confirmed by distributional overlap tests (e.g., propensity score overlap, Kolmogorov-Smirnov tests); (2) are rated by blinded human annotators as belonging to the intended query type categories with >80% inter-rater agreement; (3) when submitted to the same 3D construction pipeline, produce a non-trivial baseline success rate (20-80% Pass@1) to ensure the task is neither trivial nor impossible. If any of these checks fail, the first-party operationalization is not faithful to the original scientific object.",
+            "equivalence_failure_action": "return to source-specific wait",
+            "scientific_authority": false
+          },
+          "release_receipt": {
+            "candidate_id": "PORT-010",
+            "candidate_snapshot_sha256": "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3",
+            "blocked_contract_sha256": "ac7bf22ef869765819c925728def06cc35c99d6bf74fdb8c86f82edbc1994e1b",
+            "release_kind": "FIRST_PARTY_PRIMARY_ASSET_DELTA",
+            "authoritative_source": "https://huggingface.co/datasets/usail-hkust/VWE-Bench",
+            "authoritative_revision": "2e152f9f0d082066bb6bc1f8d72809581e664709",
+            "materialized_asset_kind": "VWE-Bench data/test index.json plus 254 per-case query.json metadata units",
+            "materialized_unit_count": 254,
+            "asset_manifest_sha256": "3aacb5154856ad1fd7b92db4c5629e0a314c6c23947ede9409c3499083915fe2",
+            "schema_fields": [
+              "description",
+              "gt_map",
+              "query_category",
+              "query_tag",
+              "query_type",
+              "scene_description",
+              "t4_distractor_type",
+              "t4_expected_clarification",
+              "task_setting",
+              "terrain_hint",
+              "theme",
+              "user_query",
+              "verification_criteria",
+              "verifier_type"
+            ],
+            "newly_independent_variables": [
+              "case_id",
+              "has_image",
+              "query_category",
+              "query_tag",
+              "query_type",
+              "task_setting",
+              "verification_criteria",
+              "verifier_type"
+            ],
+            "remaining_missing_requirements": [
+              "Per-case target-model Pass@1 outcomes are not present in the released query metadata and must be produced later by the original VibeWorlding-Gym main.py -> eval.py pipeline under separate execution authority.",
+              "Stage-specific intent/layout/render binding-failure labels or sufficient original-pipeline traces are not present in the released query metadata; any stage coding must be preregistered and derived independently from later original-pipeline traces.",
+              "Frozen matching covariates such as constraint count, referential ambiguity, rubric difficulty, and spatial-quantity demand are not all direct released fields; their deterministic extraction from released metadata must be preregistered before any outcome inspection."
+            ],
+            "materialization_verified": true,
+            "synthetic_substitute": false,
+            "transport_source": "https://hf-mirror.com/datasets/usail-hkust/VWE-Bench at the same pinned revision; transport mirror only, with official Hugging Face API reporting the identical authoritative revision",
+            "transport_is_authority": false,
+            "reopen_scope": "DESIGN_REVIEW_ONLY",
+            "scientific_authority": false,
+            "execution_authority": false,
+            "receipt_sha256": "1a28718e1931e08828326e19d290e1b98df4bd4271dd22ad2ad98c3e1701901e"
+          },
+          "scientific_authority": false
         }
-      },
-      "operationalization_recompile": {
-        "scientific_object_invariants": [
-          "Query type taxonomy: Complex Description and Scene Restatement versus other query types (e.g., Simple Description, Direct Command) preserved as a categorical variable",
-          "Matching covariates: prompt length, constraint count, referential ambiguity, asset count, rubric difficulty, and spatial-quantity demand measured identically across all units",
-          "Outcome measure: Pass@1 (binary success/failure) on executable 3D scene construction",
-          "Failure mode taxonomy: stage-specific errors including cross-stage intent-to-layout/render binding failures versus other grounding/editing errors",
-          "Contrast structure: Complex/Restatement queries show lower Pass@1 and higher binding-failure concentration than matched controls after covariate adjustment"
+      ],
+      "primary_asset_release_receipt": {
+        "candidate_id": "PORT-010",
+        "candidate_snapshot_sha256": "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3",
+        "blocked_contract_sha256": "ac7bf22ef869765819c925728def06cc35c99d6bf74fdb8c86f82edbc1994e1b",
+        "release_kind": "FIRST_PARTY_PRIMARY_ASSET_DELTA",
+        "authoritative_source": "https://huggingface.co/datasets/usail-hkust/VWE-Bench",
+        "authoritative_revision": "2e152f9f0d082066bb6bc1f8d72809581e664709",
+        "materialized_asset_kind": "VWE-Bench data/test index.json plus 254 per-case query.json metadata units",
+        "materialized_unit_count": 254,
+        "asset_manifest_sha256": "3aacb5154856ad1fd7b92db4c5629e0a314c6c23947ede9409c3499083915fe2",
+        "schema_fields": [
+          "description",
+          "gt_map",
+          "query_category",
+          "query_tag",
+          "query_type",
+          "scene_description",
+          "t4_distractor_type",
+          "t4_expected_clarification",
+          "task_setting",
+          "terrain_hint",
+          "theme",
+          "user_query",
+          "verification_criteria",
+          "verifier_type"
         ],
-        "source_specific_dependencies_removed": [
-          "VWE-Bench released corpus (6,828 queries, 254 evaluation cases)",
-          "VibeWorlding-Gym specific query templates and asset libraries",
-          "Author-released per-case model outcome tables",
-          "Author-provided stage-specific failure labels"
+        "newly_independent_variables": [
+          "case_id",
+          "has_image",
+          "query_category",
+          "query_tag",
+          "query_type",
+          "task_setting",
+          "verification_criteria",
+          "verifier_type"
         ],
-        "why_dependencies_are_not_scientific_object": "The VWE-Bench corpus is a particular sampling of the broader population of 3D world construction queries; the scientific claim is about the relationship between query type, covariates, and failure modes, not about these specific 254 cases. The query templates and asset libraries are implementation details of one particular benchmark instantiation. Author outcome tables and labels are provenance artifacts; the same measurements (Pass@1, stage errors) can be obtained by running a first-party evaluation pipeline on newly generated queries and annotating failures independently. The scientific object is the conditional association structure, not the specific dataset.",
-        "transport_scope": "The recompiled experiment tests the same conditional association (query type predicting Pass@1 and binding failures after matching) using first-party generated queries and evaluation. If the residual survives, it supports the claim that this is a general phenomenon in end-to-end 3D construction systems, not specific to VWE-Bench. If the baseline reduction is supported, it falsifies the claim in this first-party context, which is evidence against generality but does not directly falsify the original VWE-Bench observation without further transport argument.",
-        "equivalence_probe": "Before running the main falsifier, verify that the first-party query generation process produces Complex Description/Scene Restatement queries and control queries that: (1) span overlapping ranges on all matching covariates (length, constraints, ambiguity, assets, rubric difficulty, spatial demand), confirmed by distributional overlap tests (e.g., propensity score overlap, Kolmogorov-Smirnov tests); (2) are rated by blinded human annotators as belonging to the intended query type categories with >80% inter-rater agreement; (3) when submitted to the same 3D construction pipeline, produce a non-trivial baseline success rate (20-80% Pass@1) to ensure the task is neither trivial nor impossible. If any of these checks fail, the first-party operationalization is not faithful to the original scientific object.",
-        "equivalence_failure_action": "return to source-specific wait",
-        "scientific_authority": false
+        "remaining_missing_requirements": [
+          "Per-case target-model Pass@1 outcomes are not present in the released query metadata and must be produced later by the original VibeWorlding-Gym main.py -> eval.py pipeline under separate execution authority.",
+          "Stage-specific intent/layout/render binding-failure labels or sufficient original-pipeline traces are not present in the released query metadata; any stage coding must be preregistered and derived independently from later original-pipeline traces.",
+          "Frozen matching covariates such as constraint count, referential ambiguity, rubric difficulty, and spatial-quantity demand are not all direct released fields; their deterministic extraction from released metadata must be preregistered before any outcome inspection."
+        ],
+        "materialization_verified": true,
+        "synthetic_substitute": false,
+        "transport_source": "https://hf-mirror.com/datasets/usail-hkust/VWE-Bench at the same pinned revision; transport mirror only, with official Hugging Face API reporting the identical authoritative revision",
+        "transport_is_authority": false,
+        "reopen_scope": "DESIGN_REVIEW_ONLY",
+        "scientific_authority": false,
+        "execution_authority": false,
+        "receipt_sha256": "1a28718e1931e08828326e19d290e1b98df4bd4271dd22ad2ad98c3e1701901e"
       },
-      "evidence_review": {
-        "verdict": "BLOCK_BAKE_IN",
-        "checks": {
-          "independent_truth_valid": false,
-          "scientific_object_preserved": false,
-          "no_mechanism_bake_in": false,
-          "same_information_baseline_valid": true,
-          "falsifier_not_method_evaluation": true,
-          "outcome_semantics_valid": true,
-          "bounded_budget_valid": true,
-          "prior_support_constraint_respected": false,
-          "operationalization_equivalence_valid": false
-        },
-        "reason": "The design replaces the frozen VWE-Bench/VibeWorlding-Gym scientific object with a first-party generated query corpus, which prior_support explicitly identified as unavailable (HOLD_SUPPORT_UNAVAILABLE) and required source-specific units with content hashes for independent matching. The operationalization_recompile removes the VWE-Bench corpus, templates, asset libraries, and author outcome tables as 'provenance artifacts,' but the frozen scientific object is defined by the measurable failure-regime boundary within that specific benchmark's query distribution and evaluation pipeline. Generating new queries from parameterized templates bakes in the candidate's own operationalization of 'Complex Description' and 'Scene Restatement' categories, and the equivalence probe cannot independently verify that first-party queries sample the same population as the frozen VWE-Bench units because the source corpus is unavailable. The independent truth (Pass@1 via automated geometric checks on first-party generated scenes) is not the same frozen truth (VWE-Bench per-case Pass@1 from the released evaluation pipeline). The design therefore cannot obtain independent evidence without defining the result into the test.",
-        "required_revision": "",
-        "reviewer_model": "deepseek-v4-pro-ga-260813",
-        "part": 1,
-        "scientific_authority": false
-      },
-      "review_feedback": "The design replaces the frozen VWE-Bench/VibeWorlding-Gym scientific object with a first-party generated query corpus, which prior_support explicitly identified as unavailable (HOLD_SUPPORT_UNAVAILABLE) and required source-specific units with content hashes for independent matching. The operationalization_recompile removes the VWE-Bench corpus, templates, asset libraries, and author outcome tables as 'provenance artifacts,' but the frozen scientific object is defined by the measurable failure-regime boundary within that specific benchmark's query distribution and evaluation pipeline. Generating new queries from parameterized templates bakes in the candidate's own operationalization of 'Complex Description' and 'Scene Restatement' categories, and the equivalence probe cannot independently verify that first-party queries sample the same population as the frozen VWE-Bench units because the source corpus is unavailable. The independent truth (Pass@1 via automated geometric checks on first-party generated scenes) is not the same frozen truth (VWE-Bench per-case Pass@1 from the released evaluation pipeline). The design therefore cannot obtain independent evidence without defining the result into the test."
+      "primary_asset_release_reopen_count": 1
     },
     {
       "candidate_id": "PORT-011",

@@ -13,6 +13,7 @@ from .paper_first_evidence_acquisition import (
     compile_substrate_preflight,
     evidence_design_prompt,
     operationalization_recompile_prompt,
+    reopen_evidence_design_on_primary_asset_release,
     validate_evidence_plan,
 )
 
@@ -153,6 +154,34 @@ class EvidenceAcquisitionTest(unittest.TestCase):
         state=compile_evidence_designs(plan,{"designs":[d]})
         self.assertEqual(state["entries"][0]["status"],"NEEDS_OPERATIONALIZATION_RECOMPILE")
         self.assertFalse(state["entries"][0]["execution_authorized"])
+
+    def test_content_addressed_primary_asset_release_reopens_design_review_only(self):
+        plan=build_provisional_evidence_plan(machine(1));plan["entries"][0]["candidate_snapshot_sha256"]="a"*64
+        designed=compile_evidence_designs(plan,{"designs":[design_for(plan["entries"][0])]},design_model="designer")
+        checks={"independent_truth_valid":True,"scientific_object_preserved":True,"no_mechanism_bake_in":False,"same_information_baseline_valid":True,"falsifier_not_method_evaluation":True,"outcome_semantics_valid":True,"bounded_budget_valid":True,"prior_support_constraint_respected":True,"operationalization_equivalence_valid":True}
+        held=compile_evidence_reviews(designed,{"reviews":[{"candidate_id":"C1","verdict":"BLOCK_BAKE_IN","checks":checks,"reason":"treatment label was generated synthetically","required_revision":""}]},reviewer_model="independent")
+        blocked_contract=held["entries"][0]["contract_sha256"]
+        receipt={"receipts":[{"candidate_id":"C1","candidate_snapshot_sha256":"a"*64,"blocked_contract_sha256":blocked_contract,"release_kind":"FIRST_PARTY_PRIMARY_ASSET_DELTA","authoritative_source":"https://example.org/first-party-dataset","authoritative_revision":"b"*40,"materialized_asset_kind":"released query JSON","materialized_unit_count":254,"asset_manifest_sha256":"c"*64,"schema_fields":["query_type","verifier_type","verification_criteria"],"newly_independent_variables":["query_type"],"remaining_missing_requirements":["per-case target-model outcome"],"materialization_verified":True,"synthetic_substitute":False,"transport_source":"https://mirror.example.org/pinned-revision","transport_is_authority":False,"scientific_authority":False,"execution_authority":False,"reopen_scope":"DESIGN_REVIEW_ONLY"}]}
+        reopened=reopen_evidence_design_on_primary_asset_release(held,receipt);row=reopened["entries"][0]
+        self.assertEqual(row["status"],"NEEDS_BOUNDED_EVIDENCE_DESIGN");self.assertFalse(row["execution_authorized"]);self.assertEqual(reopened["summary"]["execution_ready"],0)
+        self.assertEqual(row["primary_asset_release_receipt"]["remaining_missing_requirements"],["per-case target-model outcome"])
+        prompt,ids=evidence_design_prompt(reopened);self.assertEqual(ids,["C1"]);self.assertIn("DESIGN_REVIEW_ONLY",prompt);self.assertIn("per-case target-model outcome",prompt);self.assertIn("never authorize",prompt)
+        primary=design_for(row,source="SOURCE_SPECIFIC_REQUIRED",mode="PRIMARY_ASSET_REUSE",adapter="PRIMARY_ASSET_ONLY")
+        redesigned=compile_evidence_designs(reopened,{"designs":[primary]},design_model="new-designer");redesigned_row=redesigned["entries"][0]
+        self.assertEqual(redesigned_row["status"],"NEEDS_INDEPENDENT_EVIDENCE_REVIEW");self.assertFalse(redesigned_row["execution_authorized"])
+        self.assertEqual(redesigned_row["design_provenance"]["primary_asset_release_receipt_sha256"],row["primary_asset_release_receipt"]["receipt_sha256"])
+        self.assertEqual(validate_evidence_plan(redesigned),[])
+
+    def test_primary_asset_release_receipt_rejects_authority_or_stale_binding(self):
+        plan=build_provisional_evidence_plan(machine(1));plan["entries"][0]["candidate_snapshot_sha256"]="a"*64
+        designed=compile_evidence_designs(plan,{"designs":[design_for(plan["entries"][0])]},design_model="designer")
+        checks={"independent_truth_valid":True,"scientific_object_preserved":True,"no_mechanism_bake_in":False,"same_information_baseline_valid":True,"falsifier_not_method_evaluation":True,"outcome_semantics_valid":True,"bounded_budget_valid":True,"prior_support_constraint_respected":True,"operationalization_equivalence_valid":True}
+        held=compile_evidence_reviews(designed,{"reviews":[{"candidate_id":"C1","verdict":"BLOCK_BAKE_IN","checks":checks,"reason":"synthetic label","required_revision":""}]},reviewer_model="independent")
+        base={"candidate_id":"C1","candidate_snapshot_sha256":"a"*64,"blocked_contract_sha256":held["entries"][0]["contract_sha256"],"release_kind":"FIRST_PARTY_PRIMARY_ASSET_DELTA","authoritative_source":"https://example.org/first-party-dataset","authoritative_revision":"b"*40,"materialized_asset_kind":"released query JSON","materialized_unit_count":1,"asset_manifest_sha256":"c"*64,"schema_fields":["query_type"],"newly_independent_variables":["query_type"],"remaining_missing_requirements":[],"materialization_verified":True,"synthetic_substitute":False,"transport_source":"https://mirror.example.org/pinned-revision","transport_is_authority":False,"scientific_authority":False,"execution_authority":False,"reopen_scope":"DESIGN_REVIEW_ONLY"}
+        bad=copy.deepcopy(base);bad["execution_authority"]=True
+        with self.assertRaisesRegex(ValueError,"zero-authority"):reopen_evidence_design_on_primary_asset_release(held,{"receipts":[bad]})
+        stale=copy.deepcopy(base);stale["blocked_contract_sha256"]="d"*64
+        with self.assertRaisesRegex(ValueError,"blocked-contract mismatch"):reopen_evidence_design_on_primary_asset_release(held,{"receipts":[stale]})
 
     def test_source_asset_dependency_gets_one_operationalization_recompile(self):
         plan=build_provisional_evidence_plan(machine(1));entry=plan["entries"][0]

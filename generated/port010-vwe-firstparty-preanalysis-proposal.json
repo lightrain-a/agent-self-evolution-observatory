@@ -1,0 +1,2148 @@
+{
+  "schema_version": "port010-vwe-within-source-v1",
+  "generated_at": "2026-08-25T05:40:02+00:00",
+  "status": "PREOUTCOME_MATCHED_DESIGN_PROPOSAL_ONLY",
+  "candidate_id": "PORT-010",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "design_review_authority": false,
+  "outcomes_read": false,
+  "provider_calls_executed": 0,
+  "authority": {
+    "live_problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "gpu": false
+  },
+  "first_party_provenance": {
+    "dataset_url": "https://huggingface.co/datasets/usail-hkust/VWE-Bench",
+    "dataset_revision": "2e152f9f0d082066bb6bc1f8d72809581e664709",
+    "index_sha256": "81d51dc806d428fb73c5efbdcad431a489a46ad0e4ebeab0cf8df58bd8db7682",
+    "query_manifest_sha256": "3aacb5154856ad1fd7b92db4c5629e0a314c6c23947ede9409c3499083915fe2",
+    "source_url": "https://github.com/usail-hkust/VibeWorlding-Gym",
+    "source_revision": "ddb6ff54d34a2483859960743319f5d5e5b33e96",
+    "source_file_sha256s": {
+      "root_eval.py": "b9fbf21f0380a3ec42e2d313b74cfad228223b3c185a0a1a0782400ee1f93019",
+      "verifier_eval.py": "7c1ffa7a7072456675d711509216f1ac2a819070a3c06740cccdc9f5dd97033d",
+      "unverified_verifier.py": "fe34b47bc9fb7f725a2d97024c070de869842a342a5b9e328bba3a2f18b1acd4",
+      "verifier_prompts.py": "9a3f49bf78596e0ae8f70dfb371467f44221e6af05ebcb18981bc2410e4063a1",
+      "main.py": "2c516e589e5cda69146115576e6e1e0286da081cad67b32f9b1fbed96fdd0dab"
+    }
+  },
+  "cohort": {
+    "query_category": "3D world refinement",
+    "verifier_type": "unverified",
+    "target_types": [
+      "Complex description",
+      "Scene restatement"
+    ],
+    "control_types": [
+      "Asset-level edit (fuzzy)",
+      "Scene critique",
+      "Scene guidance"
+    ],
+    "source_group_rule": "exact prefix of first-party index.source_dir before the first literal '___' delimiter",
+    "selection_rule": "retain every target-bearing source group; within those groups retain every refinement+unverified case whose first-party query_type is in TARGET_TYPES or CONTROL_TYPES; no outcome-conditioned dropping or rematching",
+    "cases": 137,
+    "target_cases": 35,
+    "control_cases": 102,
+    "source_groups": 11,
+    "shared_query_schema": [
+      "description",
+      "query_category",
+      "query_tag",
+      "query_type",
+      "theme",
+      "verification_criteria",
+      "verifier_type"
+    ],
+    "cohort_sha256": "f6faaade25fa48b887d47ecb6e0a965ce5bcf8dc261cedcd8c5db8089dd32cae",
+    "group_summary": [
+      {
+        "source_group": "1",
+        "cases": 14,
+        "target": 3,
+        "control": 11,
+        "query_type_counts": {
+          "Asset-level edit (fuzzy)": 6,
+          "Complex description": 2,
+          "Scene critique": 2,
+          "Scene guidance": 3,
+          "Scene restatement": 1
+        }
+      },
+      {
+        "source_group": "7",
+        "cases": 9,
+        "target": 1,
+        "control": 8,
+        "query_type_counts": {
+          "Asset-level edit (fuzzy)": 5,
+          "Complex description": 1,
+          "Scene critique": 2,
+          "Scene guidance": 1
+        }
+      },
+      {
+        "source_group": "15",
+        "cases": 14,
+        "target": 4,
+        "control": 10,
+        "query_type_counts": {
+          "Asset-level edit (fuzzy)": 5,
+          "Complex description": 2,
+          "Scene critique": 2,
+          "Scene guidance": 3,
+          "Scene restatement": 2
+        }
+      },
+      {
+        "source_group": "28",
+        "cases": 13,
+        "target": 3,
+        "control": 10,
+        "query_type_counts": {
+          "Asset-level edit (fuzzy)": 5,
+          "Complex description": 2,
+          "Scene critique": 2,
+          "Scene guidance": 3,
+          "Scene restatement": 1
+        }
+      },
+      {
+        "source_group": "41",
+        "cases": 13,
+        "target": 3,
+        "control": 10,
+        "query_type_counts": {
+          "Asset-level edit (fuzzy)": 6,
+          "Complex description": 1,
+          "Scene critique": 2,
+          "Scene guidance": 2,
+          "Scene restatement": 2
+        }
+      },
+      {
+        "source_group": "219",
+        "cases": 8,
+        "target": 2,
+        "control": 6,
+        "query_type_counts": {
+          "Asset-level edit (fuzzy)": 5,
+          "Complex description": 2,
+          "Scene critique": 1
+        }
+      },
+      {
+        "source_group": "247",
+        "cases": 15,
+        "target": 4,
+        "control": 11,
+        "query_type_counts": {
+          "Asset-level edit (fuzzy)": 6,
+          "Complex description": 2,
+          "Scene critique": 2,
+          "Scene guidance": 3,
+          "Scene restatement": 2
+        }
+      },
+      {
+        "source_group": "263",
+        "cases": 13,
+        "target": 4,
+        "control": 9,
+        "query_type_counts": {
+          "Asset-level edit (fuzzy)": 5,
+          "Complex description": 3,
+          "Scene critique": 1,
+          "Scene guidance": 3,
+          "Scene restatement": 1
+        }
+      },
+      {
+        "source_group": "342",
+        "cases": 11,
+        "target": 4,
+        "control": 7,
+        "query_type_counts": {
+          "Asset-level edit (fuzzy)": 4,
+          "Complex description": 2,
+          "Scene critique": 2,
+          "Scene guidance": 1,
+          "Scene restatement": 2
+        }
+      },
+      {
+        "source_group": "353",
+        "cases": 14,
+        "target": 4,
+        "control": 10,
+        "query_type_counts": {
+          "Asset-level edit (fuzzy)": 5,
+          "Complex description": 2,
+          "Scene critique": 2,
+          "Scene guidance": 3,
+          "Scene restatement": 2
+        }
+      },
+      {
+        "source_group": "359",
+        "cases": 13,
+        "target": 3,
+        "control": 10,
+        "query_type_counts": {
+          "Asset-level edit (fuzzy)": 5,
+          "Complex description": 2,
+          "Scene critique": 2,
+          "Scene guidance": 3,
+          "Scene restatement": 1
+        }
+      }
+    ],
+    "rows": [
+      {
+        "case_id": "007",
+        "source_group": "1",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "73812cfa550b4e65bd210cd7674f06c29cacb714b97c31353128702d50c768bd",
+        "text_features": {
+          "char_count": 35,
+          "utf8_bytes": 105,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "008",
+        "source_group": "1",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "7d7b7870f1d061d840215ed1daa029cee7f58fe9adc85a571e8f31e1ae0a2426",
+        "text_features": {
+          "char_count": 37,
+          "utf8_bytes": 111,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "009",
+        "source_group": "1",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "7a8af7674610289d1c8d44ef074f5969173736187ecbdefbaafc9366501b7a56",
+        "text_features": {
+          "char_count": 28,
+          "utf8_bytes": 84,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "013",
+        "source_group": "1",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "acade3837d45350169901a50d8d870685264c447a504b860364eca42a7faf3a4",
+        "text_features": {
+          "char_count": 44,
+          "utf8_bytes": 132,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 4
+        }
+      },
+      {
+        "case_id": "014",
+        "source_group": "1",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "417bd4fa699883ef55014ce9320721a9d074de62a75bca22cbb24cb523b63881",
+        "text_features": {
+          "char_count": 44,
+          "utf8_bytes": 132,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "015",
+        "source_group": "1",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "1ea7f82b82b0709f025ffc1e2e2352145d071eceac6ced623d5573e7b3a622fd",
+        "text_features": {
+          "char_count": 44,
+          "utf8_bytes": 132,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "016",
+        "source_group": "1",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "719247ff9cd9c69bdde9212cb122bfb51c2a0150b9127c9b29736f11a873544d",
+        "text_features": {
+          "char_count": 30,
+          "utf8_bytes": 90,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "017",
+        "source_group": "1",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "9f93dc80d13fcae1e39e7365298ad885fafc09c546f54c7147c03069d2f3273f",
+        "text_features": {
+          "char_count": 27,
+          "utf8_bytes": 81,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "018",
+        "source_group": "1",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "c92b67044e34499422aa140adc8958d4db50a83fa96e92ce74aab0d031230425",
+        "text_features": {
+          "char_count": 58,
+          "utf8_bytes": 174,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "019",
+        "source_group": "1",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "3948ab67116448334a3c4bad7b10a8496b7215b3a145ad8d8afea7ff3cef2e01",
+        "text_features": {
+          "char_count": 53,
+          "utf8_bytes": 159,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "020",
+        "source_group": "1",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "3d8e19074d151b02d12a6db37ee5607c9bb55c8a42efba4e90a5ac656d86fdb5",
+        "text_features": {
+          "char_count": 43,
+          "utf8_bytes": 129,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "021",
+        "source_group": "1",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "f093f3666d025b9c604f0022345956fcae86db3d48cf44ff06182036ebd44c37",
+        "text_features": {
+          "char_count": 45,
+          "utf8_bytes": 135,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "022",
+        "source_group": "1",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "fd71a3f0491ed7030a6bc50d7028cbcc90fcf26130cc2a3dc28e6d5ae0db26e4",
+        "text_features": {
+          "char_count": 187,
+          "utf8_bytes": 521,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "023",
+        "source_group": "1",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "7ed114714dba2f1bdf0b1e06f191a0402360556f5a2abd063b3a81527e0b42ef",
+        "text_features": {
+          "char_count": 198,
+          "utf8_bytes": 562,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "028",
+        "source_group": "7",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "5d0571c4f7a31309bd5d7c3317588628a4c457be4f7b12d834987df59e5d4267",
+        "text_features": {
+          "char_count": 20,
+          "utf8_bytes": 60,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "029",
+        "source_group": "7",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "6baa97d16f5219223054773f699331f1127fe331ddef9af4876ddee0ef845488",
+        "text_features": {
+          "char_count": 27,
+          "utf8_bytes": 81,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "030",
+        "source_group": "7",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "7ac009e92f14a25377fb8b931290ec817210ddb3b7028f93d87637be024ffc38",
+        "text_features": {
+          "char_count": 15,
+          "utf8_bytes": 45,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "031",
+        "source_group": "7",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "11bb0f94e87c0fee95e9887e001cf59ff5dfbbc599a0d43a96def30d0de5b356",
+        "text_features": {
+          "char_count": 69,
+          "utf8_bytes": 207,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 4
+        }
+      },
+      {
+        "case_id": "032",
+        "source_group": "7",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "11bb0f94e87c0fee95e9887e001cf59ff5dfbbc599a0d43a96def30d0de5b356",
+        "text_features": {
+          "char_count": 69,
+          "utf8_bytes": 207,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 4
+        }
+      },
+      {
+        "case_id": "033",
+        "source_group": "7",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "ad03372cd0f031a6a98e2797d1f1ebf0c4b35a54bd247786a18472e5a2ecaac5",
+        "text_features": {
+          "char_count": 24,
+          "utf8_bytes": 72,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "034",
+        "source_group": "7",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "9ed8bba33e91e3da759875dbe3344b55a972d3671b920d82800ab9b2fc6fcab1",
+        "text_features": {
+          "char_count": 29,
+          "utf8_bytes": 87,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "035",
+        "source_group": "7",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "ccc116d452cbfb68509056c58acaeee70239019df29841351edf06232a590e9a",
+        "text_features": {
+          "char_count": 67,
+          "utf8_bytes": 193,
+          "line_count": 1,
+          "digit_count": 4,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "036",
+        "source_group": "7",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "cdb8190744aace33d71edc28c41c2d44bffe819dbed1894c6d8cd2a6b7f7e76f",
+        "text_features": {
+          "char_count": 179,
+          "utf8_bytes": 481,
+          "line_count": 1,
+          "digit_count": 8,
+          "spatial_lexicon_hits": 6
+        }
+      },
+      {
+        "case_id": "045",
+        "source_group": "15",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "3ed915b124a208da715b07e06d648ea20c35ab6621732d533de258ed9d2f05c3",
+        "text_features": {
+          "char_count": 11,
+          "utf8_bytes": 33,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "046",
+        "source_group": "15",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "6c8bbaf7ec457ba38445e8530dae35da91ef805ee31c43ef4b9bd6ecda752a62",
+        "text_features": {
+          "char_count": 12,
+          "utf8_bytes": 36,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "050",
+        "source_group": "15",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "dd82a34b7d8a6ee2fbb7963ff77059ad6a28365eb81796fc4595980db900d9fe",
+        "text_features": {
+          "char_count": 40,
+          "utf8_bytes": 120,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "051",
+        "source_group": "15",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "61cd8d6291134beb4af586586909a25450ee10b0a241281da3e5eb9d59a98eb0",
+        "text_features": {
+          "char_count": 43,
+          "utf8_bytes": 129,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "052",
+        "source_group": "15",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "61cd8d6291134beb4af586586909a25450ee10b0a241281da3e5eb9d59a98eb0",
+        "text_features": {
+          "char_count": 43,
+          "utf8_bytes": 129,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "053",
+        "source_group": "15",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "cc4c44602d55b4029e9298f6af14568377b12af7873097606fe4e6baa85d7deb",
+        "text_features": {
+          "char_count": 18,
+          "utf8_bytes": 54,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "054",
+        "source_group": "15",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "cc4c44602d55b4029e9298f6af14568377b12af7873097606fe4e6baa85d7deb",
+        "text_features": {
+          "char_count": 18,
+          "utf8_bytes": 54,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "055",
+        "source_group": "15",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "071620ed807eca1a6c60f4f3161b6c95ce9f688d1001b0f15c2538699df65a02",
+        "text_features": {
+          "char_count": 38,
+          "utf8_bytes": 114,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "056",
+        "source_group": "15",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "f059d353b1c06602bacdfced54dc7808d5cc63845f4c8b3b74fe869382466d56",
+        "text_features": {
+          "char_count": 34,
+          "utf8_bytes": 102,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "057",
+        "source_group": "15",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "613980f4bc79a1136193e93f71f7d4f1696aee5e64245da0e48518688f70e4f0",
+        "text_features": {
+          "char_count": 28,
+          "utf8_bytes": 84,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "058",
+        "source_group": "15",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "e605381153fc15e7e432b5975dd24cbe18d93f911a14383eab58af241fd01175",
+        "text_features": {
+          "char_count": 40,
+          "utf8_bytes": 120,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "059",
+        "source_group": "15",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "e605381153fc15e7e432b5975dd24cbe18d93f911a14383eab58af241fd01175",
+        "text_features": {
+          "char_count": 40,
+          "utf8_bytes": 120,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "060",
+        "source_group": "15",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "1a78efae95bdb13e9013045718fc530162a6183e41d344f6835fa1a2c32dc28f",
+        "text_features": {
+          "char_count": 60,
+          "utf8_bytes": 180,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "061",
+        "source_group": "15",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "1a78efae95bdb13e9013045718fc530162a6183e41d344f6835fa1a2c32dc28f",
+        "text_features": {
+          "char_count": 60,
+          "utf8_bytes": 180,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "069",
+        "source_group": "28",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "2df4ed9ebff115a27b97deac415a093a80d2b025c11b70c709605d6106cea761",
+        "text_features": {
+          "char_count": 25,
+          "utf8_bytes": 75,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "070",
+        "source_group": "28",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "ca6eff065f71a799b115bce7baebfb74da457cf551a38fbd12f33b6574b70ae6",
+        "text_features": {
+          "char_count": 28,
+          "utf8_bytes": 84,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "074",
+        "source_group": "28",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "0b089eff685d9100b419a1fdc5980e773cdae3ff641c2a8e38991c0725b4b435",
+        "text_features": {
+          "char_count": 69,
+          "utf8_bytes": 207,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 4
+        }
+      },
+      {
+        "case_id": "075",
+        "source_group": "28",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "1ae32eef458be8b014bc98c781b4830ef2582ab091c858afe7374bd4096a5689",
+        "text_features": {
+          "char_count": 23,
+          "utf8_bytes": 69,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "076",
+        "source_group": "28",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "1ae32eef458be8b014bc98c781b4830ef2582ab091c858afe7374bd4096a5689",
+        "text_features": {
+          "char_count": 23,
+          "utf8_bytes": 69,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "077",
+        "source_group": "28",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "c42ec56e34f9c8783256ab326287feab7f3037c592f9538aee0d7aab06e48179",
+        "text_features": {
+          "char_count": 33,
+          "utf8_bytes": 99,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "078",
+        "source_group": "28",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "5ef17b678550b992a0110426318946d719f46594ce4276917fb0ab0c8b8ad55c",
+        "text_features": {
+          "char_count": 40,
+          "utf8_bytes": 120,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "079",
+        "source_group": "28",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "6b9f5a1042fa6075742209fcf6988c9331cda1448b6338e7f5c756cb8c6641a1",
+        "text_features": {
+          "char_count": 57,
+          "utf8_bytes": 171,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "080",
+        "source_group": "28",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "95d7459193726ce524c928a7551ef7b97d4daa834def1ee68b4ea018a3a9343e",
+        "text_features": {
+          "char_count": 21,
+          "utf8_bytes": 63,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "081",
+        "source_group": "28",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "95d7459193726ce524c928a7551ef7b97d4daa834def1ee68b4ea018a3a9343e",
+        "text_features": {
+          "char_count": 21,
+          "utf8_bytes": 63,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "082",
+        "source_group": "28",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "542360a71ea2d8fe822de4406fd07d86588fb54902d52af42385ae050bbf2cb7",
+        "text_features": {
+          "char_count": 45,
+          "utf8_bytes": 135,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "083",
+        "source_group": "28",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "af68975fe387f5dd377ed5e390e6e4b262dbafb5e7035a3d32172cf90d083a22",
+        "text_features": {
+          "char_count": 120,
+          "utf8_bytes": 360,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 4
+        }
+      },
+      {
+        "case_id": "084",
+        "source_group": "28",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "af68975fe387f5dd377ed5e390e6e4b262dbafb5e7035a3d32172cf90d083a22",
+        "text_features": {
+          "char_count": 120,
+          "utf8_bytes": 360,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 4
+        }
+      },
+      {
+        "case_id": "091",
+        "source_group": "41",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "3ba445559d49940534b0d20e3242c77e1c892d1e23f68795699449fcb5df9644",
+        "text_features": {
+          "char_count": 20,
+          "utf8_bytes": 60,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "092",
+        "source_group": "41",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "5add4087c69da812f33a0da2795eecada32f6df1e68cc37eddd8d60a52d2cafd",
+        "text_features": {
+          "char_count": 19,
+          "utf8_bytes": 57,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "093",
+        "source_group": "41",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "8ee90dd7ae0a2ad6ec34f40c71c172424db1a0700b7feb34071bdef01e711c7b",
+        "text_features": {
+          "char_count": 21,
+          "utf8_bytes": 63,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "097",
+        "source_group": "41",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "d00fdcb85d7653673326ff2189ea12288013af04dfc29bf6a1ff34798fd05e77",
+        "text_features": {
+          "char_count": 47,
+          "utf8_bytes": 141,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "098",
+        "source_group": "41",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "aa373c9d582748c196d05b4e39703fa61940a00bbbf985310444aa69956503c7",
+        "text_features": {
+          "char_count": 15,
+          "utf8_bytes": 45,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "099",
+        "source_group": "41",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "aa373c9d582748c196d05b4e39703fa61940a00bbbf985310444aa69956503c7",
+        "text_features": {
+          "char_count": 15,
+          "utf8_bytes": 45,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "100",
+        "source_group": "41",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "67323620f12312ed7885dc3409bcda24f3c6fb700fe4510bb26b29ce380c3a6c",
+        "text_features": {
+          "char_count": 33,
+          "utf8_bytes": 99,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "101",
+        "source_group": "41",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "e03ea433bd5622b22e5629f9ea894b3e35e42666ca7f2f4038a23e4380df9b11",
+        "text_features": {
+          "char_count": 24,
+          "utf8_bytes": 72,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "102",
+        "source_group": "41",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "161c882fddd282faaf9dd0166e73fd563dd87d83297c70d57de4ff63c8526469",
+        "text_features": {
+          "char_count": 45,
+          "utf8_bytes": 127,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "103",
+        "source_group": "41",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "2e151f01f172d53fae8ed9da17c2c45c1123273669df5cdae8d822f701e99e5b",
+        "text_features": {
+          "char_count": 24,
+          "utf8_bytes": 72,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "104",
+        "source_group": "41",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "2ee2d7bb15411a82238a34a9cc0a5d05ae2cb450c079884ec3577aa068805b65",
+        "text_features": {
+          "char_count": 50,
+          "utf8_bytes": 150,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "105",
+        "source_group": "41",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "6bad677c4411e7947769fa90ee5f9e98d14dbbba24edfa16b6ef1d2f000861fc",
+        "text_features": {
+          "char_count": 43,
+          "utf8_bytes": 129,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "106",
+        "source_group": "41",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "deda072460be62e0140fb1bb41f73f6509fb7e209a632e405fb1d513b1ed532e",
+        "text_features": {
+          "char_count": 126,
+          "utf8_bytes": 338,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "114",
+        "source_group": "219",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "50f5db18b9d511a5c343e163618398e1ab50f17efbf177cc969acc56ed5d70a7",
+        "text_features": {
+          "char_count": 18,
+          "utf8_bytes": 54,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "115",
+        "source_group": "219",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "33e6240e71a0c15f8e11683bdcbb221f9cba30667dec0dd734c6dfc79b4a63a3",
+        "text_features": {
+          "char_count": 23,
+          "utf8_bytes": 69,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "119",
+        "source_group": "219",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "d6d0b53452293ccd67ff56be19b1ba85c6764c78c5e86d050aaa0c03a81fa9b2",
+        "text_features": {
+          "char_count": 33,
+          "utf8_bytes": 99,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "120",
+        "source_group": "219",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "cdc653136eb4c774c68a22425f6c7e493e0fca657256d5550e245bcddbb1c5ef",
+        "text_features": {
+          "char_count": 59,
+          "utf8_bytes": 159,
+          "line_count": 1,
+          "digit_count": 8,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "121",
+        "source_group": "219",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "cdc653136eb4c774c68a22425f6c7e493e0fca657256d5550e245bcddbb1c5ef",
+        "text_features": {
+          "char_count": 59,
+          "utf8_bytes": 159,
+          "line_count": 1,
+          "digit_count": 8,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "122",
+        "source_group": "219",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "a594ff18b71f422818eaad5fc243407c9dc7065045f90d5a3da439963b23c280",
+        "text_features": {
+          "char_count": 29,
+          "utf8_bytes": 87,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "123",
+        "source_group": "219",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "edfacc150492c9714d490dce540a2471b0ac8a072e34885e081e985b012d1d38",
+        "text_features": {
+          "char_count": 105,
+          "utf8_bytes": 309,
+          "line_count": 1,
+          "digit_count": 2,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "124",
+        "source_group": "219",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "edfacc150492c9714d490dce540a2471b0ac8a072e34885e081e985b012d1d38",
+        "text_features": {
+          "char_count": 105,
+          "utf8_bytes": 309,
+          "line_count": 1,
+          "digit_count": 2,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "132",
+        "source_group": "247",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "ffed3ac03fcc2c86f054b355d8cbbac04bffce136d40a09d86d915ec5ed61994",
+        "text_features": {
+          "char_count": 18,
+          "utf8_bytes": 54,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "133",
+        "source_group": "247",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "9eff62df450d6c61216234432d7bc99b8c3817441856091ddf67c60c756e91eb",
+        "text_features": {
+          "char_count": 21,
+          "utf8_bytes": 63,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "134",
+        "source_group": "247",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "d37a1f2d55589d5ab39b23f75249ffc685113fc71f48d9e7ec61d51acf1bed87",
+        "text_features": {
+          "char_count": 14,
+          "utf8_bytes": 42,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "138",
+        "source_group": "247",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "8e16ec1123ebd8342dc742179e80ca90221cc697e1e964ecabe3f02373a40f5d",
+        "text_features": {
+          "char_count": 30,
+          "utf8_bytes": 70,
+          "line_count": 1,
+          "digit_count": 10,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "139",
+        "source_group": "247",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "8e16ec1123ebd8342dc742179e80ca90221cc697e1e964ecabe3f02373a40f5d",
+        "text_features": {
+          "char_count": 30,
+          "utf8_bytes": 70,
+          "line_count": 1,
+          "digit_count": 10,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "140",
+        "source_group": "247",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "8e16ec1123ebd8342dc742179e80ca90221cc697e1e964ecabe3f02373a40f5d",
+        "text_features": {
+          "char_count": 30,
+          "utf8_bytes": 70,
+          "line_count": 1,
+          "digit_count": 10,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "141",
+        "source_group": "247",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "cc00f31296dfe6d39c3223c72f20a5c458e1a3bc31ceef0ba2a79cbdf42a363b",
+        "text_features": {
+          "char_count": 32,
+          "utf8_bytes": 96,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "142",
+        "source_group": "247",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "8eccce9a4055f50cd53f2c46cfc312e4935fd4195394d86c64ad3c69f2565480",
+        "text_features": {
+          "char_count": 25,
+          "utf8_bytes": 75,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "143",
+        "source_group": "247",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "844e416142da30a9ff636d80cabdbd8b2485d6fa0830a74ecda0210e61ec8497",
+        "text_features": {
+          "char_count": 70,
+          "utf8_bytes": 210,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "144",
+        "source_group": "247",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "1a842654126cc64347a589e2474686657689987c4d84cf1647af05e2c8ea07e8",
+        "text_features": {
+          "char_count": 15,
+          "utf8_bytes": 45,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "145",
+        "source_group": "247",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "1a842654126cc64347a589e2474686657689987c4d84cf1647af05e2c8ea07e8",
+        "text_features": {
+          "char_count": 15,
+          "utf8_bytes": 45,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "146",
+        "source_group": "247",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "2ee81a513b139b240f4ea34db76788274eea665a7a9ba9573afd28be01d6cdb1",
+        "text_features": {
+          "char_count": 53,
+          "utf8_bytes": 159,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "147",
+        "source_group": "247",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "2ee81a513b139b240f4ea34db76788274eea665a7a9ba9573afd28be01d6cdb1",
+        "text_features": {
+          "char_count": 53,
+          "utf8_bytes": 159,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "148",
+        "source_group": "247",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "c8b7a0397e31fe7d5a8391734f67a1cf68add4c10947e7662446d8855db4d5b4",
+        "text_features": {
+          "char_count": 63,
+          "utf8_bytes": 189,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "149",
+        "source_group": "247",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "c8b7a0397e31fe7d5a8391734f67a1cf68add4c10947e7662446d8855db4d5b4",
+        "text_features": {
+          "char_count": 63,
+          "utf8_bytes": 189,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "157",
+        "source_group": "263",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "816e6cefe453b91279d5d907f7800f77d81ed99c73937da3676ef72ec47be164",
+        "text_features": {
+          "char_count": 21,
+          "utf8_bytes": 63,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "158",
+        "source_group": "263",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "aa7588930f4ff3e377610e8f50296c17ae8cfb6229e1603a911fd66787dec00b",
+        "text_features": {
+          "char_count": 18,
+          "utf8_bytes": 54,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "162",
+        "source_group": "263",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "b2339c1daeff4d43ff20cb5ae07c146dcda02897d4493671a3868a692b1e200c",
+        "text_features": {
+          "char_count": 27,
+          "utf8_bytes": 81,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "163",
+        "source_group": "263",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "e859936cb393796bbc03d4c8fbd6d52ddb0408ed86f783241267e3c4964c081b",
+        "text_features": {
+          "char_count": 36,
+          "utf8_bytes": 108,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "164",
+        "source_group": "263",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "58e4fa1bbfc701338bb629718921eaf12d2e78a734483ad0d1dd9df77376ee00",
+        "text_features": {
+          "char_count": 43,
+          "utf8_bytes": 129,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "165",
+        "source_group": "263",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "49431d49ae223b73a03827f6571a1ee76f26c4cb985a41152e9db607fcf0ca29",
+        "text_features": {
+          "char_count": 37,
+          "utf8_bytes": 111,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "166",
+        "source_group": "263",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "15eb0060b5e3b134bcef2aaa2370386845635ffcda35335a47bdf448b7523099",
+        "text_features": {
+          "char_count": 39,
+          "utf8_bytes": 117,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "167",
+        "source_group": "263",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "5d86eb67f925885cec0350bee9bfc1c8798d860809642fee62e9d245a26d32e4",
+        "text_features": {
+          "char_count": 39,
+          "utf8_bytes": 117,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "168",
+        "source_group": "263",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "8ebba1fd2f0c6cf6255401d0794141faa26ceebedf001727eb7d5e2551fb140c",
+        "text_features": {
+          "char_count": 31,
+          "utf8_bytes": 93,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "169",
+        "source_group": "263",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "2c8a0a08588f1218f2d589c08c2983e93774cf9b7f890b4ed369e98d0558c1d8",
+        "text_features": {
+          "char_count": 52,
+          "utf8_bytes": 156,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "170",
+        "source_group": "263",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "f1776c6c4bac345b546df30dfd80c13ba905f084b385ee4fb6fd5fee64940c82",
+        "text_features": {
+          "char_count": 124,
+          "utf8_bytes": 372,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "171",
+        "source_group": "263",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "4df529a96e95baa380d3a9b6e46e3fea29036eefe917113381e71150ea2eea4f",
+        "text_features": {
+          "char_count": 58,
+          "utf8_bytes": 174,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "172",
+        "source_group": "263",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "4df529a96e95baa380d3a9b6e46e3fea29036eefe917113381e71150ea2eea4f",
+        "text_features": {
+          "char_count": 58,
+          "utf8_bytes": 174,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "194",
+        "source_group": "342",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "e22019592aca5ce3d23a5bc043d657e4fb19c105b26b7c7089959541f09c70a3",
+        "text_features": {
+          "char_count": 21,
+          "utf8_bytes": 63,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "198",
+        "source_group": "342",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "6fcb00715f5365367f9c4ac15b89d434433d8f9fd313c357aa3873eb46cf9eb8",
+        "text_features": {
+          "char_count": 50,
+          "utf8_bytes": 150,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "199",
+        "source_group": "342",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "0cb272c8c8280f93c6712fe69d4e4b8fefff71566a0f52f3d8ae8cfa90f97991",
+        "text_features": {
+          "char_count": 26,
+          "utf8_bytes": 78,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "200",
+        "source_group": "342",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "0cb272c8c8280f93c6712fe69d4e4b8fefff71566a0f52f3d8ae8cfa90f97991",
+        "text_features": {
+          "char_count": 26,
+          "utf8_bytes": 78,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "201",
+        "source_group": "342",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "c26e974eb96685d8482978984d7bf4175d974becbcbe8db2c6226ef68e4bd7b0",
+        "text_features": {
+          "char_count": 46,
+          "utf8_bytes": 138,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "202",
+        "source_group": "342",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "72f9d8daef094d8d6403b120d29b808f5c75845b77a7f2dc1d231e42d16b577f",
+        "text_features": {
+          "char_count": 32,
+          "utf8_bytes": 96,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "203",
+        "source_group": "342",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "ff47144f579ad43885bae1c33ee5e3bb39863f0ab318bd534e2afe3e6415a3c8",
+        "text_features": {
+          "char_count": 54,
+          "utf8_bytes": 162,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "204",
+        "source_group": "342",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "6bb06e315f8b0c205594598224fa9087763ee74d897df84440f6463e0f9bd395",
+        "text_features": {
+          "char_count": 46,
+          "utf8_bytes": 138,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "205",
+        "source_group": "342",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "d1ab1d3a1e92860efb682119c9b6632dcfe2ea0f95e4d60720f70a1fcff1d962",
+        "text_features": {
+          "char_count": 35,
+          "utf8_bytes": 105,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "206",
+        "source_group": "342",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "bef3fb15b2a4448a09424b1fc7ecd69440c2614d48f3a2eaa80a98606f8f191a",
+        "text_features": {
+          "char_count": 64,
+          "utf8_bytes": 176,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "207",
+        "source_group": "342",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "bef3fb15b2a4448a09424b1fc7ecd69440c2614d48f3a2eaa80a98606f8f191a",
+        "text_features": {
+          "char_count": 64,
+          "utf8_bytes": 176,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "215",
+        "source_group": "353",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "247754020773b9b3b5eec98e6558fb85abf0db9b646058020c1213c768aed766",
+        "text_features": {
+          "char_count": 17,
+          "utf8_bytes": 51,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "216",
+        "source_group": "353",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "450d3f30bde541cf5cc71a2ffe201a582f410d222d8128a4913638b0d88cdcb5",
+        "text_features": {
+          "char_count": 21,
+          "utf8_bytes": 63,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "220",
+        "source_group": "353",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "17877d3208b4c240b17e59177c18192119bdf6b6a5ad8341713f03101d48d88b",
+        "text_features": {
+          "char_count": 33,
+          "utf8_bytes": 99,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 3
+        }
+      },
+      {
+        "case_id": "221",
+        "source_group": "353",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "bb771fdfb1ee4841b403fab4fb08791d871aa37194f37c66d0a541fb67c6eaea",
+        "text_features": {
+          "char_count": 41,
+          "utf8_bytes": 123,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 2
+        }
+      },
+      {
+        "case_id": "222",
+        "source_group": "353",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "3efaa000551d139743174be05edf0690d894837588044ec1a692522d9ee0aa3e",
+        "text_features": {
+          "char_count": 35,
+          "utf8_bytes": 105,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "223",
+        "source_group": "353",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "c15ad8405f55dafddf6fda39bc959c43b6894d2d5dd04b84da16a08e486e8df8",
+        "text_features": {
+          "char_count": 31,
+          "utf8_bytes": 93,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "224",
+        "source_group": "353",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "75bdd74a8e4fdbf325f8b5fd53741bbb7cd42147a94fc327d750ce269749dfbd",
+        "text_features": {
+          "char_count": 35,
+          "utf8_bytes": 105,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "225",
+        "source_group": "353",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "a92bbe5ae560c5c299a8f95909dc35ee53fe1f3abcc906a43d7f82c80916687c",
+        "text_features": {
+          "char_count": 60,
+          "utf8_bytes": 180,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "226",
+        "source_group": "353",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "6e1a0663a0bc4a8f44379785c6e19e0b065463f194f2323462dd91677c70cea4",
+        "text_features": {
+          "char_count": 23,
+          "utf8_bytes": 69,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "227",
+        "source_group": "353",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "6e1a0663a0bc4a8f44379785c6e19e0b065463f194f2323462dd91677c70cea4",
+        "text_features": {
+          "char_count": 23,
+          "utf8_bytes": 69,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "228",
+        "source_group": "353",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "129d737138fd8b648e50bb8a0bdf1e4247f8fe974c1d088782c4d04e0a430448",
+        "text_features": {
+          "char_count": 43,
+          "utf8_bytes": 129,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "229",
+        "source_group": "353",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "9f469de42c851846d5c14a1aa62a09eaaf1947ff8c1d9a3c0325d062ed7ce4a5",
+        "text_features": {
+          "char_count": 31,
+          "utf8_bytes": 93,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 0
+        }
+      },
+      {
+        "case_id": "230",
+        "source_group": "353",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "626b981088ad078fc4e3267a31b7c9103a488ea3994532201a7c2a587b059d53",
+        "text_features": {
+          "char_count": 54,
+          "utf8_bytes": 162,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "231",
+        "source_group": "353",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "626b981088ad078fc4e3267a31b7c9103a488ea3994532201a7c2a587b059d53",
+        "text_features": {
+          "char_count": 54,
+          "utf8_bytes": 162,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "239",
+        "source_group": "359",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "a7ff24f9db12d4a8d2167fce25333e3976f2d0d831a4f4bf57740d1d268ec56e",
+        "text_features": {
+          "char_count": 28,
+          "utf8_bytes": 84,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "240",
+        "source_group": "359",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "c2f20415e53d0b40afcc6703bbb8ca7ba474a908d56294c5d171c443f0806261",
+        "text_features": {
+          "char_count": 23,
+          "utf8_bytes": 69,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "244",
+        "source_group": "359",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "331dcf62e669443b0ff14efca7b889a9c338d691c5f1dabfe5d2867da5b0dccf",
+        "text_features": {
+          "char_count": 35,
+          "utf8_bytes": 105,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "245",
+        "source_group": "359",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "ec456acd0fe532d399f1e7fec1e3873c04703d431ee26a064e74c57bd7922d72",
+        "text_features": {
+          "char_count": 35,
+          "utf8_bytes": 105,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "246",
+        "source_group": "359",
+        "query_type": "Asset-level edit (fuzzy)",
+        "analysis_role": "CONTROL",
+        "query_sha256": "ec456acd0fe532d399f1e7fec1e3873c04703d431ee26a064e74c57bd7922d72",
+        "text_features": {
+          "char_count": 35,
+          "utf8_bytes": 105,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "247",
+        "source_group": "359",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "60e3dfd0e258f4ed98303112419401cc593e23fe24b22f64752fcbc8fe98ee82",
+        "text_features": {
+          "char_count": 13,
+          "utf8_bytes": 39,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "248",
+        "source_group": "359",
+        "query_type": "Scene critique",
+        "analysis_role": "CONTROL",
+        "query_sha256": "60e3dfd0e258f4ed98303112419401cc593e23fe24b22f64752fcbc8fe98ee82",
+        "text_features": {
+          "char_count": 13,
+          "utf8_bytes": 39,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "249",
+        "source_group": "359",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "c661de5e2a74875449d3f43f0e1fd071700b708dd0f0ff09e5f1392205b49e76",
+        "text_features": {
+          "char_count": 34,
+          "utf8_bytes": 102,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "250",
+        "source_group": "359",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "3778aaa5f08c180909a5f29cce63d80a24d237bd3c754d16a1b6e5af505a21c1",
+        "text_features": {
+          "char_count": 42,
+          "utf8_bytes": 126,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "251",
+        "source_group": "359",
+        "query_type": "Scene guidance",
+        "analysis_role": "CONTROL",
+        "query_sha256": "afa3471691c9ef2d492756367538ca70aa35167d4dc8e0f4e0a62134038ad722",
+        "text_features": {
+          "char_count": 32,
+          "utf8_bytes": 96,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "252",
+        "source_group": "359",
+        "query_type": "Scene restatement",
+        "analysis_role": "TARGET",
+        "query_sha256": "efbf6494ec13828180900ef17c9ad1853d56e9ef0a272909194dda4a3bcfcf9d",
+        "text_features": {
+          "char_count": 61,
+          "utf8_bytes": 183,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "253",
+        "source_group": "359",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "72f222d866b88e1c3ca620cdb9091fcd10c3ab61df2b44cd00418cc98e16b608",
+        "text_features": {
+          "char_count": 35,
+          "utf8_bytes": 105,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      },
+      {
+        "case_id": "254",
+        "source_group": "359",
+        "query_type": "Complex description",
+        "analysis_role": "TARGET",
+        "query_sha256": "72f222d866b88e1c3ca620cdb9091fcd10c3ab61df2b44cd00418cc98e16b608",
+        "text_features": {
+          "char_count": 35,
+          "utf8_bytes": 105,
+          "line_count": 1,
+          "digit_count": 0,
+          "spatial_lexicon_hits": 1
+        }
+      }
+    ]
+  },
+  "pre_registered_analysis": {
+    "primary_outcome": "first-party refine-unverified hard_pass / total_reward==1.0 from pinned verifier pipeline",
+    "primary_contrast": "equal-source-group-weighted mean(target hard-pass rate - control hard-pass rate) across the 11 frozen target-bearing source groups",
+    "primary_randomization_falsifier": "within each source_group, permute TARGET/CONTROL labels while preserving the frozen target/control counts; fixed RNG seed 20260825; 100000 Monte Carlo permutations; two-sided p-value with +1 correction",
+    "control_family_falsifier": "repeat target contrast separately against Scene critique+Scene guidance and against Asset-level edit (fuzzy); a residual that appears only versus fuzzy edits does not support a broad complex-description boundary",
+    "control_control_falsifier": "estimate the same within-source contrasts among non-target control query types; if TARGET-vs-CONTROL is not larger than ordinary control-family heterogeneity, return INCONCLUSIVE rather than residual-survives",
+    "surface_sensitivity": "report the frozen direct text features (char_count, utf8_bytes, line_count, digit_count, spatial_lexicon_hits); no outcome-conditioned feature engineering, semantic relabeling, or rematching is allowed",
+    "mechanism_decomposition": {
+      "intent_understanding_failure": "official H3_VU score < 4",
+      "realization_binding_failure": "official H3_VU >= 4 and H3_VR < 4",
+      "geometry_collision_failure": "official H3_VU >= 4 and H3_VR >= 4 and official H4 pass == 0",
+      "other_hard_constraint_failure": "official hard_pass == false after excluding the three ordered categories above; inspect official H1/H2 only, with no new human/model labels"
+    },
+    "stage_label_policy": "use only first-party verifier outputs; do not create new intent/layout/render labels from observed trajectories"
+  },
+  "remaining_gates": [
+    "Kimi/approved design provider must compile or revise this proposal into the canonical evidence contract once provider infrastructure is restored.",
+    "An independent reviewer model distinct from the designer must clear the contract before substrate preflight.",
+    "The exact target agent model, exact unverified judge model, renderer/retrieval services, seeds/retries, and smoke unit cap must be frozen before outcome access.",
+    "No main.py/eval.py outcome-producing execution is authorized by this proposal.",
+    "External single-use human execution authority remains mandatory even after an execution-ready contract is compiled."
+  ],
+  "proposal_sha256": "72591888f33a26643489351dadc79009cd86f5a893b000f778605d8dbfd0e95d"
+}
