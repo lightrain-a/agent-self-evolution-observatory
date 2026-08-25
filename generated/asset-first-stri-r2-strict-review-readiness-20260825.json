@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "stage": "R2_STRICT_NONMODEL_REVIEWER_ATTACK",
+  "decision": "GO_PAPER_ONLY_REPAIR_HOLD_CANONICAL_PROMOTION_PENDING_INDEPENDENT_REVIEW",
+  "independent_model_review_obtained": false,
+  "fresh_kimi_architect_consultation_obtained": true,
+  "fresh_kimi_draft_review_status": "NONVOTING_PROVIDER_STATE_FAILURE",
+  "fresh_deepseek_r2_review_status": "NONVOTING_PROVIDER_STATE_FAILURE",
+  "model_consensus_claimed": false,
+  "overall_assessment": "The R2 draft is materially deeper than R19 because it identifies a post-selection persistent-state mechanism, predicts an exact multiplicity/evidence phase boundary, and closes with an orthogonal 2x2 intervention. Its remaining weakness is external relevance, not missing internal mechanism: natural Skill-SP entry frequency into the fragmentation window is unresolved, and the second-system evidence is structural rather than a second lifecycle-effect replication.",
+  "analysis_only_exception": {
+    "eligible": true,
+    "reason": "The mechanism is localized to released state variables and update gates, the phase law is falsifiable and exactly verified, and the derived intervention changes an actionable engineering decision: aggregate semantic credit before identity-local lifecycle gates and separately audit selection mass. A downstream utility method is not logically required for the mechanism claim.",
+    "scope_cost": "Without endogenous prevalence or a second deterministic lifecycle realization, the paper must remain explicitly about a released mechanism and representation-invariance principle rather than common failure frequency or universal self-evolving-agent behavior."
+  },
+  "decision_critical_objections": [
+    {
+      "id": "R2-O1-NATURAL-PREVALENCE",
+      "severity": "MAJOR_EXTERNAL_VALIDITY",
+      "attack": "The exact mechanism may be reachable in code but rare or absent under endogenous Skill-SP trajectories. The public release omits evolved skills.json and retired ledgers, so frequency cannot be estimated.",
+      "current_evidence": "First-party code path, M=8 threshold, five-round default loop, 8000-record collection target, and three release mirrors establish trigger opportunity but not per-skill evidence-count prevalence.",
+      "paper_only_repair": "State the HOLD in abstract/results/limitations and phrase conclusions as mechanism existence and phase prediction in released Skill-SP, never prevalence.",
+      "new_outcome_experiment_required_to_close_fully": true,
+      "current_routing": "NONFATAL_FOR_ANALYSIS_ONLY_STORY_BUT_BLOCKS_PREVALENCE_CLAIM"
+    },
+    {
+      "id": "R2-O2-GENERIC-IDENTITY-FRAGMENTATION",
+      "severity": "MAJOR_NOVELTY",
+      "attack": "Evidence fragmentation across identifiers is a generic known phenomenon; the paper could be dismissed as applying it to skills with a toy threshold.",
+      "current_evidence": "R2 explicitly absorbs generic identity fragmentation, strategic replication, redundant actions, generic quotient theory, and path dependence. The residual is stage-local: the identifier is simultaneously an action handle, persistent sufficient-statistic container, and lifecycle unit whose gate changes future action availability. Selection is removed in P0, and the exact phase law is executed against released Skill-SP code.",
+      "paper_only_repair": "Keep the general aggregation-before-gate criterion and arbitrary-partition corollary adjacent to the released realization; explicitly say the theorem is elementary and novelty lies in identified lifecycle control plus causal decomposition, not in threshold algebra.",
+      "new_outcome_experiment_required_to_close_fully": false,
+      "current_routing": "SURVIVES_NARROWLY"
+    },
+    {
+      "id": "R2-O3-SKILLSVOTE-STRUCTURAL-ONLY",
+      "severity": "MODERATE_GENERALITY",
+      "attack": "The second system only changes request topology; no downstream editor or lifecycle endpoint is measured, so calling it replication would overstate evidence.",
+      "current_evidence": "The deterministic transformation maps one eight-record semantic context to two four-record contexts solely through skill_linked identity and restores one context after semantic quotienting.",
+      "paper_only_repair": "Call it independent partition-before-update structural corroboration, not effect replication or phase-law replication. Keep the explicit no-updater-call boundary in the main text/table.",
+      "new_outcome_experiment_required_to_close_fully": false,
+      "current_routing": "SCOPED_ANALOGUE_ACCEPTABLE"
+    },
+    {
+      "id": "R2-O4-RSTAR-GRAFT-RISK",
+      "severity": "MODERATE_STORY_COHESION",
+      "attack": "The old R* support-cone paper may feel grafted onto a new credit-fragmentation paper, producing two papers in one rather than one mechanism.",
+      "current_evidence": "The 2x2 design establishes selection and credit as two orthogonal identity surfaces, giving R* a precise role as the general partial-overlap selection-side audit rather than the central novelty.",
+      "paper_only_repair": "Keep R* to one compact section/table in main text; move most weighting baselines, perturbation inventory, solver scaling, and external relevance analogues to supplement.",
+      "new_outcome_experiment_required_to_close_fully": false,
+      "current_routing": "PAPER_STRUCTURE_REPAIR"
+    },
+    {
+      "id": "R2-O5-REPAIR-WITHOUT-UTILITY",
+      "severity": "MODERATE_CLOSURE",
+      "attack": "Quotient selection/credit restore controller endpoints but are not shown to improve downstream task utility.",
+      "current_evidence": "The paper's scientific estimand is representation invariance, not utility. The 2x2 intervention exactly manipulates the diagnosed variables and restores the corresponding canonical semantic endpoints.",
+      "paper_only_repair": "Frame quotient selection and quotient credit as mechanism-level interventions/diagnostic repairs, not a new performance method. State that utility evaluation is outside the supported claim scope.",
+      "new_outcome_experiment_required_to_close_fully": false,
+      "current_routing": "ANALYSIS_ONLY_EXCEPTION"
+    }
+  ],
+  "closed_loop_scorecard": {
+    "surprising_phenomenon": "PASS",
+    "strongest_reduction": "PASS",
+    "stage_local_mechanism": "PASS",
+    "new_ex_ante_prediction": "PASS",
+    "controlled_intervention": "PASS",
+    "orthogonal_channel_decomposition": "PASS",
+    "cross_system_structure": "PASS_SCOPED",
+    "negative_boundary": "PASS",
+    "actionable_engineering_decision": "PASS",
+    "natural_prevalence": "HOLD",
+    "independent_draft_review": "HOLD_PROVIDER_UNAVAILABLE"
+  },
+  "recommended_main_story": "Exact semantic refinement can affect self-evolution twice because identity is used both before action (selection) and after feedback (persistent credit/lifecycle). Skill-SP exposes a deterministic post-selection fragmentation mechanism with an exact phase law; the 2x2 quotient intervention proves the channels are independent; SkillsVote independently corroborates partition-before-update; R19 and prevalence HOLDs define the claim boundary.",
+  "recommended_deletions_from_main": [
+    "most heuristic package-weight baselines after showing uniform already attains R*=2",
+    "full 1387-addition / 366-deletion / 200-rewire robustness inventory",
+    "SkillRouter and AgentSkillOS analogue details",
+    "solver timing/scalability paragraph",
+    "second exact-support substrate tournament details"
+  ],
+  "promotion_rule": "Do not replace canonical R19 yet. R2 may proceed through paper-only claim-level integrity and independent reviewer adjudication. Any natural-prevalence, task-utility, second-system lifecycle-effect, or task-general behavior claim requires separately authorized new evidence.",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

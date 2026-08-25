@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI-R2-DRAFT",
+  "audit_scope": "R2 mechanism-draft load-bearing surface: two-surface formulation, Skill-SP P0/P1, 2x2 decomposition, main selection/cross-system tables, natural-prevalence HOLD, and R19 behavior boundary.",
+  "manifest_ref": "generated/asset-first-stri-r2-manuscript-integrity-manifest-20260825.json",
+  "manifest_sha256": "4b955a4bea0b894891d7c8d1943b0371ca9bc4c168a1c49d758c5325f2a094af",
+  "audit": {
+    "schema_version": "1.0",
+    "status": "PASS_POST_DRAFT_INTEGRITY",
+    "internal_skill_contracts": [
+      "source-evidence-integrity",
+      "evidence-first-manuscript"
+    ],
+    "policy": {
+      "post_draft_integrity_precedes_independent_model_review": true,
+      "deterministic_checks_precede_agentic_review": true,
+      "every_publishable_number_requires_content_addressed_source_binding": true,
+      "every_table_cell_requires_source_field_provenance": true,
+      "citation_existence_metadata_passage_direction_numeric_and_scope_are_distinct_checks": true,
+      "content_inventory_requires_complete_versioned_extraction_receipt": true,
+      "claim_evidence_binding_is_checked_again_after_manuscript_drafting": true,
+      "machine_like_prose_lint_is_editorial_not_ai_detector_evasion": true,
+      "reader_comprehension_requires_first_use_definition_and_component_io_explanation": true,
+      "integrity_audit_cannot_create_evidence_or_authorize_new_experiments": true,
+      "independent_reviewer_cannot_self_resolve_integrity_findings": true,
+      "all_outputs_have_zero_scientific_experiment_gpu_and_submission_authority": true
+    },
+    "manuscript_ref": "paper_drafts/stri-r2-mechanism-20260825/body.tex",
+    "manuscript_sha256": "89c398ec92c392bd4fb108b7b5f2861824e389cd707fb977a44794b964d9de22",
+    "integrity_pass": true,
+    "editorial_pass": true,
+    "pass": true,
+    "hard_blockers": [],
+    "editorial_blockers": [],
+    "prose_lint": {
+      "schema_version": "1.0",
+      "warnings": [],
+      "warning_count": 0,
+      "ai_detector_evasion_goal": false,
+      "scientific_authority": false
+    },
+    "summary": {
+      "facts": 6,
+      "citations": 8,
+      "numbers": 24,
+      "tables": 4,
+      "claims": 7,
+      "hard_blockers": 0,
+      "editorial_blockers": 0,
+      "prose_warnings": 0
+    },
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "gpu_authority": false,
+    "submission_authority": false
+  },
+  "receipt": {
+    "schema_version": "1.0",
+    "receipt_type": "post-draft-integrity",
+    "manuscript_ref": "paper_drafts/stri-r2-mechanism-20260825/body.tex",
+    "manuscript_sha256": "89c398ec92c392bd4fb108b7b5f2861824e389cd707fb977a44794b964d9de22",
+    "integrity_pass": true,
+    "editorial_pass": true,
+    "pass": true,
+    "hard_blockers": [],
+    "editorial_blockers": [],
+    "summary": {
+      "facts": 6,
+      "citations": 8,
+      "numbers": 24,
+      "tables": 4,
+      "claims": 7,
+      "hard_blockers": 0,
+      "editorial_blockers": 0,
+      "prose_warnings": 0
+    },
+    "receipt_sha256": "d01d904617edab50d057d0d92a3e77cb63128326d636170982ee55bffbae6b8b",
+    "prose_lint": {
+      "schema_version": "1.0",
+      "warnings": [],
+      "warning_count": 0,
+      "ai_detector_evasion_goal": false,
+      "scientific_authority": false
+    },
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "gpu_authority": false,
+    "submission_authority": false
+  },
+  "promotion_authority": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

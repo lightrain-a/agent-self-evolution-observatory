@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "role": "STRICT_DRAFT_REVIEW",
+  "requested_model": "kimi-k3",
+  "status": "NONVOTING_PROVIDER_STATE_FAILURE",
+  "provider_receipt": {
+    "code": "ARK_AGENTPLAN_INVALID_SUBSCRIPTION"
+  },
+  "interpretation": "A fresh Kimi review of the completed R2 mechanism draft was attempted once and failed before a scientific review was returned. This is a provider availability failure, not a positive or negative scientific vote. Do not retry automatically and do not treat the earlier Kimi architect consultation as an independent review of this draft.",
+  "fresh_deepseek_r2_status": "NONVOTING_PROVIDER_STATE_FAILURE",
+  "model_consensus_claimed": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

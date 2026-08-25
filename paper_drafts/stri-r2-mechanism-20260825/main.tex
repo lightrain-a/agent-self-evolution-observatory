@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{iclr2027_conference,times}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{xcolor}
+
+\title{Representation-Invariant Skill Evolution:\\Selection Geometry and Credit Fragmentation}
+\author{Anonymous Authors}
+
+\newcommand{\Rstar}{R^*}
+\newcommand{\semclass}{\mathcal{C}}
+\newcommand{\ids}{\mathcal{I}}
+\newcommand{\agg}{\oplus}
+
+\begin{document}
+\maketitle
+\input{body.tex}
+
+\clearpage
+\label{stri-r2:post-main-page}
+
+\subsection*{AI use statement}
+Generative AI tools assisted with hypothesis refinement, literature triage, adversarial critique, analysis-code review, and manuscript editing. All load-bearing R2 numerical claims are computed by deterministic programs over pinned first-party source releases or previously frozen STRI artifacts. A requested fresh DeepSeek R2 critique could not be obtained because the configured provider returned a subscription error; this provider failure is recorded as nonvoting and is not treated as scientific support. AI-assisted outputs were not treated as independent scientific authority. The authors take responsibility for the final claims, code, and presentation.
+
+\subsection*{Reproducibility statement}
+The R2 mechanism experiments replay released controller code without model calls or GPU execution. Skill-SP is pinned to author commit \texttt{bb693c89fee66e1f824d6a777759a49b7a295a83}. The post-selection counterfactual fixes the semantic feedback multiset byte-for-byte, removes selection/retrieval before evidence assignment, and changes only the exact identity partition or semantic aggregation of evidence. The phase audit evaluates 882 deterministic cells and checks every cell against the closed-form boundary. The 2$\times$2 decomposition independently varies semantic handling at selection and credit/lifecycle. The SkillsVote structural analogue is pinned to commit \texttt{55ea783d1818457e21ed12138309d8da7e58ceb8} and executes only the released feedback-to-request transformation; no updater model is called. Natural-prevalence claims are deliberately withheld because released Skill-SP runtime \texttt{skills.json} and retired ledgers are not available.
+
+\bibliography{references}
+\bibliographystyle{iclr2027_conference}
+\end{document}

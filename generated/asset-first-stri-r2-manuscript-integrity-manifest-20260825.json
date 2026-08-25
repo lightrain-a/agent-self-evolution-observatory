@@ -1,0 +1,829 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI-R2-DRAFT",
+  "audit_scope": "R2 mechanism-draft load-bearing surface: two-surface formulation, Skill-SP P0/P1, 2x2 decomposition, main selection/cross-system tables, natural-prevalence HOLD, and R19 behavior boundary.",
+  "manuscript_ref": "paper_drafts/stri-r2-mechanism-20260825/body.tex",
+  "manuscript_sha256": "89c398ec92c392bd4fb108b7b5f2861824e389cd707fb977a44794b964d9de22",
+  "manuscript_text": "\\begin{abstract}\nSelf-evolving agents increasingly store reusable skills as persistent, named objects that are selected, credited, updated, and sometimes retired across rounds. We ask a representation question that precedes optimizer design: if one semantic skill is replaced by several exact-content identities, should the agent's future evolution change? We identify two independent ways in which it can. First, identity-indexed selection can duplicate semantic mass. Second, and more subtly, the same identities can serve as persistent evidence buckets: identical post-selection feedback is fragmented before a nonlinear lifecycle gate. In released Skill Self-Play (Skill-SP) code, eight identical retirement-eligible records retire one canonical skill, while an exact two-way split receives four records per identity and leaves the semantic class active; aggregating credit at the semantic quotient restores the canonical decision. We derive an exact phase law: for a per-identity threshold $M$, balanced $k$-way refinement creates a fragmentation window $M\\le N<kM$ and retirement lag $(k-1)M$, verified with zero mismatches over 882 released-controller configurations. A $2\\times2$ intervention separates selection from credit: quotienting either surface alone leaves the other defect, while quotienting both restores both canonical semantic endpoints. SkillsVote independently exhibits the same partition-before-update request topology. We retain earlier target-realizability analysis as the general partial-overlap selection channel and explicitly bound the result: Skill-SP's evolved runtime states are not released, and a preregistered AutoSkill heldout pilot blocks task-general behavioral claims. The resulting view is that skill identity can be both an action coordinate and a persistent learning-state coordinate; representation-invariant self-evolution requires auditing both.\n\\end{abstract}\n\n\\section{Introduction}\n\nSelf-evolving agents do not merely retrieve instructions. They accumulate execution evidence, revise reusable skills, change what remains available for future tasks, and repeat this process over multiple rounds~\\citep{huang2026skill,xia2026skillrl,liu2026skillsvote,liu2026rethinkskill}. This makes the skill library a persistent control state rather than a static prompt collection. Yet current systems usually attach this state to named skill objects. A skill identifier can determine what is sampled or retrieved, where feedback is stored, which artifact is edited, and whether that artifact survives a lifecycle gate.\n\nThis creates a basic invariance question. Suppose a semantic skill is replaced by two exact-content copies. No capability, support, or feedback information has been added. If identity is only bookkeeping, the semantic evolution of the agent should be unchanged. But exact refinement can change a system twice: identities may be counted separately when allocating \\emph{selection}, and the same identities may partition \\emph{post-selection credit} before a persistent update. We call these two channels \\textbf{selection duplication} and \\textbf{credit fragmentation}.\n\nThe first channel has close conceptual relatives. Replicated arms can alter bandit selection opportunities~\\citep{shin2022replication}, and redundant actions can distort action-level exploration relative to transition-level diversity~\\citep{baram2021redundancy}. Our earlier STRI analysis likewise showed that package identity can alter semantic exposure, and that partial-overlap support can make a desired semantic allocation unrealizable by any same-information package router. That observation, however, is not yet a mechanism of \\emph{self-evolution}: it concerns what the system selects now.\n\nThe central finding of this paper is a post-selection residual. In the released Skill-SP controller, feedback statistics such as attempt count and average predicted difficulty are stored per skill identity, and a pruning rule is applied to each identity before the resulting active library is carried into later self-play rounds~\\citep{huang2026skill}. We remove selection and retrieval entirely and externally provide the same eight semantic feedback records to every counterfactual. One canonical identity accumulates eight attempts and is retired. Under an exact two-way identity refinement, the same records are split $4+4$, neither identity reaches the released threshold $M=8$, and the semantic class remains active. If we aggregate those records at the semantic quotient before applying the same released gate, the canonical retirement decision is restored. Thus the effect does not reduce to clone-sensitive sampling: the identity partition changes persistent state after feedback has already been fixed.\n\nThis mechanism admits a simple law. Let $N$ retirement-eligible records be distributed evenly across $k$ exact identities and let the lifecycle gate require at least $M$ attempts per identity. Canonical and quotient-credit evolution retire the class once $N\\ge M$, while the native refined representation retires all exact identities only at $N\\ge kM$. The representations therefore diverge exactly in\n\\[\nM\\le N<kM,\n\\]\nwith retirement lag $(k-1)M$. We verify the prediction over $k\\in\\{1,\\ldots,6\\}$, $N\\in\\{0,\\ldots,48\\}$, and three feedback-score regimes: 882 released-controller cells with zero analytic mismatches.\n\nA mechanism paper should not stop at a phase diagram. We therefore intervene independently on the two identity surfaces. In a $2\\times2$ design, native selection plus native credit produces both defects; semantic-quotient selection fixes the initial selection mass but not retirement; semantic-quotient credit fixes retirement but not selection; quotienting both restores both canonical semantic endpoints. The decomposition turns a broad slogan---``identity matters''---into two independently manipulable channels.\n\nWe then ask whether partition-before-update is specific to one repository. SkillsVote groups evolvable feedback by the linked skill identity before constructing one edit request and one updater invocation per identity bucket~\\citep{liu2026skillsvote}. With eight semantically identical evidence records, changing only the linked identity from one skill to a $4+4$ exact split changes the released request topology from one eight-record update context to two four-record contexts; semantic quotienting restores one eight-record context. We deliberately stop there: SkillsVote's downstream editor is model-based, so this is cross-system structural corroboration, not a second deterministic lifecycle phase law. Conversely, RethinkSkill provides a strong controlled feedback-dynamics neighbor but evolves one current skill against candidates rather than a parallel library of exact-semantic identities~\\citep{liu2026rethinkskill}.\n\nThese results close a specific loop. The phenomenon is representation-dependent skill evolution; the latent mechanism is identity reuse across selection and persistent credit/lifecycle state; the phase law predicts when post-selection divergence appears; the $2\\times2$ intervention isolates and repairs each channel at its semantic endpoint; and cross-system analysis identifies where the same partition-before-update structure does or does not occur. We also retain negative boundaries. The public Skill-SP release does not include evolved runtime \\texttt{skills.json} or retired ledgers, so endogenous fragmentation prevalence is unresolved. And although an AutoSkill P19 substrate gives one controlled representation-to-retrieval-to-behavior manifestation, a preregistered heldout pilot found 9/9 retrieval-sensitive units but no split-specific behavioral separation in two outcome-blind selected units, so task-general behavioral propagation is not claimed.\n\nOur contributions are:\n\\begin{enumerate}[leftmargin=1.25em,itemsep=2pt,topsep=3pt]\n    \\item We formulate \\textbf{representation-invariant skill evolution} as a two-surface problem: exact semantic refinement should preserve both semantic selection mass and semantic credit/lifecycle state.\n    \\item We identify \\textbf{credit fragmentation} in released Skill-SP code: exact identities partition fixed post-selection evidence before a nonlinear persistent lifecycle gate. For the released threshold mechanism, we derive and exhaustively verify the exact fragmentation window $M\\le N<kM$ and lag $(k-1)M$.\n    \\item We give a \\textbf{$2\\times2$ causal decomposition} showing that selection duplication and credit fragmentation are orthogonal: fixing either alone leaves the other, while quotienting both restores both frozen canonical semantic endpoints.\n    \\item We provide \\textbf{cross-system and failure-boundary evidence}: SkillsVote independently partitions evidence by skill identity before persistent updating; RethinkSkill lacks the parallel-identity structure; natural Skill-SP prevalence remains unresolved; and the AutoSkill heldout STOP prevents a task-general behavior claim.\n\\end{enumerate}\n\n\\begin{figure}[t]\n\\centering\n\\includegraphics[width=0.99\\linewidth]{figures/stri-r2-mechanism-closure.pdf}\n\\caption{Mechanism closure. \\textbf{A:} exact semantic identity refinement can enter the controller through two different surfaces: immediate selection and persistent credit/lifecycle state. \\textbf{B:} in released Skill-SP, identity-local thresholding produces the exact credit-fragmentation window $M\\le N<kM$ for retirement-eligible evidence ($M=8$). \\textbf{C:} the $2\\times2$ intervention separates the channels: quotienting either surface alone leaves the other defect, while quotienting both restores both canonical semantic endpoints.}\n\\label{fig:mechanism-closure}\n\\end{figure}\n\n\\section{Related Work and Reduction Boundaries}\n\n\\paragraph{Self-evolving skill systems.}\nSkill-SP co-evolves task generation and a persistent skill library~\\citep{huang2026skill}; SkillRL recursively evolves a skill library alongside reinforcement learning~\\citep{xia2026skillrl}; SkillsVote couples skill-linked attribution to evidence-gated updates~\\citep{liu2026skillsvote}; and RethinkSkill studies controlled multi-round feedback views with validation-filtered persistent revisions~\\citep{liu2026rethinkskill}. These works establish that skill lifecycle and feedback matter. Our identifying intervention is narrower: hold the semantic feedback multiset fixed, change only its partition across exact-semantic identities, and ask whether the persistent lifecycle endpoint changes.\n\n\\paragraph{Replication, redundant actions, and quotient structure.}\nStrategic replication in bandits shows that duplicate arms can manipulate selection opportunity~\\citep{shin2022replication}; action-redundancy work shows that action multiplicity can misrepresent transition diversity~\\citep{baram2021redundancy}. These explain the immediate selection channel and are not claimed as R2 novelty. Likewise, homomorphism and abstraction theory provide mature language for when a quotient preserves dynamics~\\citep{ravindran2004approximate}. We use quotient commutation only as an organizing criterion. The empirical/theoretical residual is stage-specific: released self-evolving skill state stores evidence per identity and applies a nonlinear lifecycle gate before semantic aggregation, yielding a directly testable multiplicity/evidence phase boundary.\n\n\\paragraph{What is deliberately not claimed.}\nGeneric identity fragmentation, generic path dependence, and the statement that reparameterization can alter learning are broader known phenomena. Our claim is not that fragmentation exists in the abstract. It is that a released self-evolving skill lifecycle instantiates a particular partition-before-gate mechanism whose intervention variable, persistent state, phase law, and repair can be isolated while semantic feedback is held fixed.\n\n\\section{Representation-Invariant Skill Evolution}\n\n\\subsection{Semantic quotient and two control surfaces}\n\nLet $\\ids_t$ be the active skill identities at evolution round $t$, and let $\\pi:\\ids_t\\to\\semclass_t$ map identities to semantic classes. An \\emph{exact refinement} replaces an identity with multiple members that are equivalent for the semantic object under study; the quotient class $c\\in\\semclass_t$ is unchanged.\n\nWe distinguish two places where an implementation may use identity.\n\n\\paragraph{Selection surface.}\nLet $p_t(i)$ be the probability or mass assigned to identity $i$. The semantic selection mass is\n\\begin{equation}\nP_t(c)=\\sum_{i:\\pi(i)=c}p_t(i).\n\\end{equation}\nExact refinement is selection-invariant when $P_t(c)$ is preserved. For partial-overlap skill supports, Section~\\ref{sec:selection-geometry} generalizes this question beyond exact clones.\n\n\\paragraph{Credit/lifecycle surface.}\nAfter a task has produced feedback, identity $i$ stores persistent sufficient state $s_{t,i}\\in\\mathcal{S}$, with semantic aggregation operator $\\agg$. For class $c$ define\n\\begin{equation}\nS_{t,c}=\\mathop{\\agg}_{i:\\pi(i)=c}s_{t,i}.\n\\end{equation}\nLet $g:\\mathcal{S}\\to\\{0,1\\}$ be a lifecycle predicate, where $g(s)=1$ denotes retirement in the running example. If a semantic class disappears only when all refined identities retire, native class retirement is $\\bigwedge_i g(s_i)$, whereas quotient-credit applies $g$ after semantic aggregation.\n\n\\paragraph{Credit-invariance criterion.}\nFor an exact refinement to be lifecycle-invariant at this gate, the two orders must agree:\n\\begin{equation}\n\\label{eq:credit-commute}\ng\\!\\left(\\mathop{\\agg}_{i:\\pi(i)=c}s_i\\right)\n=\\bigwedge_{i:\\pi(i)=c}g(s_i).\n\\end{equation}\nEquation~\\ref{eq:credit-commute} is not presented as a new abstract quotient theorem. It is an audit condition that exposes where a concrete released update fails to descend to semantic classes.\n\n\\subsection{Threshold credit fragmentation}\n\nConsider additive evidence count and a per-identity gate that requires at least $M$ retirement-eligible observations. Let $N$ such observations belong to one semantic class and be balanced across $k$ exact identities.\n\n\\paragraph{Proposition 1 (fragmentation window).}\nCanonical or quotient-credit evolution retires the class iff $N\\ge M$. Native balanced $k$-identity evolution retires the full class iff $N\\ge kM$. Therefore native and quotient decisions diverge exactly for\n\\begin{equation}\n\\label{eq:phase-window}\nM\\le N<kM,\n\\end{equation}\nand the first full-retirement boundary is delayed by $(k-1)M$ observations.\n\n\\paragraph{Reason.}\nThe quotient has one class bucket containing $N$ observations. Native balanced refinement gives each identity at most the evenly assigned share, and all $k$ identities cross a threshold $M$ only once $N\\ge kM$.\n\n\\paragraph{Corollary 1 (arbitrary partitions).}\nFor identity-local evidence states $(s_1,\\ldots,s_k)$ under any mergeable sufficient statistic, a representation defect occurs exactly when the aggregate class state passes the lifecycle gate while at least one identity-local state fails it:\n\\[\ng(s_1\\agg\\cdots\\agg s_k)=1\n\\quad\\text{and}\\quad\n\\exists j:\\ g(s_j)=0.\n\\]\nThus additive statistics alone do not guarantee invariance: nonlinearity enters through applying the lifecycle decision \\emph{before} semantic aggregation. Proposition~1 is the balanced-count specialization that yields a closed-form boundary in the released Skill-SP gate.\n\nThe result is elementary by design. Its role is to convert a qualitative mechanism into an ex-ante phase prediction and to expose the exact ordering operation that an intervention must change.\n\n\\section{Released Mechanism Realization in Skill-SP}\n\n\\subsection{First-party state and update path}\n\nWe pin the Skill-SP author release and inspect the actual self-play update path~\\citep{huang2026skill}. The released library stores per-ID statistics including attempts and average predicted difficulty; the official loop updates these statistics from skill-linked records and then calls \\texttt{prune\\_easy\\_skills}. The default gate uses $M=8$, average $\\hat p$ threshold $0.75$, and too-easy-rate threshold $0.6$. The resulting active library persists into later self-play iterations. Thus identity is concretely both a selectable package and a persistent lifecycle key.\n\n\\subsection{P0: fixed-feedback post-selection counterfactual}\n\nTo isolate credit from selection, we execute no task selection or retrieval. We externally provide eight identical semantic feedback records with $\\hat p=0.9$ to the same released update/pruning functions. Content, support, feedback values, update code, and gate thresholds are fixed.\n\nThe canonical representation contains one focal identity plus one background skill. The exact-refinement arm replaces the focal skill with two exact semantic identities and assigns the same eight records alternately. The quotient-credit arm retains the refined interpretation but aggregates the class evidence onto one representative before applying the same released update/gate, then projects the class lifecycle decision back to the refined members.\n\nThe results are deterministic: canonical attempts are $8$ and the focal class retires; native split attempts are $(4,4)$ and the class stays active; quotient-credit returns to $8$ and retires the class. The semantic feedback hash is identical across arms. After the update, the native split leaves nonzero future focal sampling mass while canonical and quotient-credit leave none. This is the persistent state transition that selection-only explanations cannot express.\n\n\\subsection{P1: phase diagram}\n\nWe next sweep $k=1,\\ldots,6$, $N=0,\\ldots,48$, and $\\hat p\\in\\{0.1,0.5,0.9\\}$ through the released controller, producing 882 cells. The two lower-score regimes never retire unexpectedly. In the retirement-eligible $\\hat p=0.9$ regime, the observed first full-retirement boundaries are\n\\[\n8,16,24,32,40,48\n\\]\nfor $k=1,\\ldots,6$, exactly matching $kM$. Across the entire grid the analytic prediction has zero mismatches. For $k=2$, native and quotient evolution disagree for $N=8,\\ldots,15$; for $k=4$, they disagree for $N=8,\\ldots,31$, as Eq.~\\ref{eq:phase-window} predicts.\n\n\\begin{table}[t]\n\\centering\n\\caption{Released Skill-SP credit-fragmentation phase boundary at the default $M=8$ for retirement-eligible feedback. Quotient-credit remains at the canonical boundary $N=8$ for all $k$.}\n\\label{tab:phase}\n\\small\n\\setlength{\\tabcolsep}{5pt}\n\\begin{tabular}{rrrrrrr}\n\\toprule\n$k$ & 1 & 2 & 3 & 4 & 5 & 6\\\\\n\\midrule\nNative first retirement $N$ & 8 & 16 & 24 & 32 & 40 & 48\\\\\nLag vs. canonical & 0 & 8 & 16 & 24 & 32 & 40\\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\n\\section{Two-Channel Mechanism Decomposition}\n\nA full representation-invariance account must distinguish the immediate selection surface from the persistent credit surface. We therefore construct a factorial controller counterfactual on one focal semantic class and one background class.\n\nThe canonical reference has focal semantic selection probability $1/2$ and, after eight retirement-eligible records, a retired focal class. Exact split2 under native identity normalization raises focal semantic selection to $2/3$. Independently, native per-ID credit splits the eight records $4+4$ and fails to retire the class.\n\n\\begin{table}[t]\n\\centering\n\\caption{Two-channel intervention on an exact two-way refinement. The canonical reference is semantic selection $1/2$ and retired after eight records. Repairing either identity surface alone leaves the other defect.}\n\\label{tab:2x2}\n\\small\n\\setlength{\\tabcolsep}{4pt}\n\\begin{tabular}{llccc}\n\\toprule\nSelection & Credit & Focal mass & Retired? & Both match?\\\\\n\\midrule\nNative & Native & $2/3$ & No & No\\\\\nNative & Quotient & $2/3$ & Yes & No\\\\\nQuotient & Native & $1/2$ & No & No\\\\\nQuotient & Quotient & $1/2$ & Yes & \\textbf{Yes}\\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\nTable~\\ref{tab:2x2} gives the closure intervention. Quotient selection alone restores the canonical selection mass but leaves the lifecycle defect. Quotient credit alone restores retirement but leaves duplicated selection mass. Applying both restores both frozen semantic endpoints. We therefore treat selection duplication and credit fragmentation as two orthogonal identity channels, rather than folding every representation effect into one generic ``taxonomy bias.''\n\n\\section{The General Selection Channel}\n\\label{sec:selection-geometry}\n\nExact identity replication is not the only way selection can depend on representation. With partially overlapping skills, a semantic target may be impossible to realize by any nonnegative package weighting even after exact clones are quotiented. Let $A\\in\\{0,1\\}^{n\\times m}$ be a frozen task--package support matrix, $w\\ge0$ package mass, and $q>0$ a representation-independent target. Package control induces semantic exposure $Aw$. We retain the target-realizability certificate\n\\begin{equation}\n\\Rstar(A;q)=\\min_{w\\ge0,t\\ge1}\\{t:q\\le Aw\\le tq\\}.\n\\end{equation}\nThen $\\Rstar=1$ iff the target lies in the nonnegative support cone; $\\Rstar>1$ rules out every same-information controller whose action is still package mass $w$.\n\nThis channel is intentionally secondary in R2: its job is to generalize selection-side representation failure beyond exact replication. On Skill-SP Level-1, neutral $\\Rstar=2$ on full, calibration, and tool-disjoint heldout matrices. Uniform package mass already attains the exact worst-case optimum, and an eight-fold leave-one-tool-out audit remains at worst-case ratio 2 for uniform and exact $\\Rstar$ weights; NNLS reaches 6.10 in the worst fold. In contrast, Level-3 has $\\Rstar=1$, and a logical compiler domain has 127/128 multi-membership yet $\\Rstar=1$. Thus overlap prevalence is not the mechanism; target realizability is.\n\n\\begin{table}[t]\n\\centering\n\\caption{Selection-side realizability. High overlap is neither necessary nor sufficient for a residual.}\n\\label{tab:selection-boundary}\n\\small\n\\setlength{\\tabcolsep}{4pt}\n\\begin{tabular}{lrrrl}\n\\toprule\nRegime & Covered & Multi & $\\Rstar$ & Outcome\\\\\n\\midrule\nSkill-SP Level-1 & 314 & 183 & 2.0 & Residual\\\\\nL1 heldout & 52 & 38 & 2.0 & Residual\\\\\nSkill-SP Level-3 & 34 & 0 & 1.0 & Equalizable\\\\\nLogical compiler & 128 & 127 & 1.0 & Equalizable\\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\n\\section{Cross-System Structure and Boundaries}\n\n\\subsection{SkillsVote: independent partition-before-update structure}\n\nSkillsVote provides an independent released lifecycle design~\\citep{liu2026skillsvote}. Its feedback-to-evolution transformation groups modifiable subtasks by \\texttt{skill\\_linked}; each identity bucket becomes a separate edit request. The updater iterates over these requests, targets the corresponding persistent working-skill directory, and copies successful edits back to that directory. Its evolution prompt also asks multiple subtasks supporting one improvement to be consolidated within a request.\n\nWe execute only this deterministic request-construction path. We create eight feedback records with identical non-identity semantic fields. With all records linked to one focal identity, the release creates one edit request containing eight records. Relinking four records to each of two exact semantic identities creates two edit requests containing four records each. Mapping the two identities back to one semantic quotient restores one eight-record request. The semantic payload hash after removing \\texttt{skill\\_linked} is identical across all arms.\n\nThis corroborates the architecture-level mechanism---identity partitions evidence before the updater sees it---but it does not replicate Skill-SP's lifecycle phase law. SkillsVote's downstream edit is model-based, and we do not execute it here.\n\n\\begin{table}[t]\n\\centering\n\\caption{Cross-system identity partition before updating. SkillsVote numbers are request topology only; no updater model is called.}\n\\label{tab:crosssystem}\n\\small\n\\begin{tabular}{llll}\n\\toprule\nSystem/arm & Semantic evidence & Identity buckets & Update contexts\\\\\n\\midrule\nSkill-SP canonical & 8 records & 1 & 1 bucket, retires\\\\\nSkill-SP split2 & 8 records & 2 $(4+4)$ & 2 buckets, active\\\\\nSkillsVote canonical & 8 records & 1 & 1 request $(8)$\\\\\nSkillsVote split2 & 8 records & 2 $(4+4)$ & 2 requests $(4,4)$\\\\\nSkillsVote quotient & 8 records & 1 semantic class & 1 request $(8)$\\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}\n\n\\subsection{RethinkSkill: a strong negative structural control}\n\nRethinkSkill studies controlled multi-round feedback dynamics with validation-filtered persistent skill revision~\\citep{liu2026rethinkskill}. It is therefore a stronger neighbor than a static router. However, its released primary evolution state maintains one current skill, candidates, and a validation gate rather than parallel exchangeable identities with separate evidence buckets. This difference matters for identification: RethinkSkill shows that feedback composition and validation shape evolution, while our counterfactual holds feedback content fixed and varies only exact identity partition before a persistent gate.\n\n\\subsection{Natural prevalence remains unresolved}\n\nThe Skill-SP mechanism is not an invented toy update: the released loop writes runtime \\texttt{skill\\_library/skills.json}, updates identity-local statistics before pruning, uses default $M=8$, runs five self-play iterations by default, and targets 8000 total solver records per collection. But runtime \\texttt{skills.json} is gitignored and the public release contains no evolved library or retired ledger; three pinned local release mirrors likewise contain no evolved runtime state. We can therefore support mechanism existence and trigger-opportunity plausibility, not the empirical frequency with which endogenous training enters the fragmentation window.\n\n\\subsection{Behavior: one manifestation, one binding STOP}\n\nAutoSkill supplies a bounded downstream manifestation~\\citep{yang2026autoskill}. In one frozen P19 five-skill library, an exact four-way identity split crowds out a post-checkout skill; the mechanical behavior appears in 6/6 original, 0/6 split, 3/3 ID-placebo, and 3/3 quotient runs (one-sided Fisher $p=0.00108$). Under the split representation, adding the crowded-out post-checkout skill back restores the behavior in 3/3 fresh runs versus 0/3 for a matched cleanup add-back (exact one-sided Fisher $=1/20$). This demonstrates one representation-to-retrieval-to-executed-behavior chain.\n\nWe then attempted an outcome-blind heldout replication and stopped it under a frozen gate. Retrieval-only qualification succeeded on 9/9 units. SHA-256 ranking selected two units from different scenarios/positions before behavior was observed. Across 8/8 valid A/B/C/D fresh executions, neither met the preregistered split-specific action-signature criterion: one had identical signatures in all four arms, and the other had native, split, and ID-placebo agreement but a differing quotient control. No repeat-2 or remaining-seven expansion was authorized. Hence retrieval sensitivity is not sufficient for task-general behavioral propagation.\n\n\\section{Discussion}\n\nThe combined evidence suggests a narrower and more useful interpretation than ``skill names matter.'' A named skill can occupy two distinct coordinates in a self-evolving controller. The \\emph{selection coordinate} determines how much immediate semantic opportunity the class receives; exact duplication and partial-overlap support geometry can distort that mass. The \\emph{credit coordinate} determines where post-selection evidence accumulates and which persistent object is updated or retired. When a nonlinear lifecycle gate is applied before semantically equivalent evidence is recombined, exact refinement can change the future active library even though the feedback stream is unchanged.\n\nThis separation changes the repair logic. A duplication-proof sampler does not repair identity-local credit. Conversely, aggregating credit at the semantic quotient does not correct duplicated selection mass. The $2\\times2$ intervention shows that the corresponding quotient interventions are separately necessary for their frozen endpoints and jointly restore both endpoints in the released Skill-SP realization. This is a mechanism-level repair, not a utility claim: we do not show that quotienting either surface improves downstream task performance.\n\nThe broader design principle is therefore conditional. If skill identity is intended to be representational rather than semantic, every persistent control surface that consumes identity should be audited for quotient consistency. For selection under partial overlap, $\\Rstar$ asks whether the desired semantic target is representable by the package action basis at all. For credit/lifecycle, Eq.~\\ref{eq:credit-commute} asks whether evidence aggregation and the lifecycle gate commute. A system can pass one audit and fail the other.\n\n\\paragraph{Limitations.}\nThe exact phase law is established for one released deterministic lifecycle gate; SkillsVote supplies structural corroboration but not a second phase-law replication. Endogenous Skill-SP prevalence is unresolved because evolved runtime state is not released. The AutoSkill heldout STOP prevents task-general behavioral claims. We establish no population utility, safety, longitudinal regret, or universal self-evolution guarantee. Generic quotient theory, action redundancy, strategic replication, and generic identity fragmentation are not claimed as novel.\n\n\\paragraph{Takeaway.}\nA self-evolving skill identity can be both an action handle and a learning-state handle. Exact semantic refinement is harmless only when the system is invariant at both surfaces. In released Skill-SP, it is not: selection mass and post-selection credit fail through different mechanisms. Separating those mechanisms yields an exact phase prediction, a two-factor intervention, and a concrete criterion for designing representation-invariant skill evolution.\n",
+  "content_inventory": {
+    "facts": 6,
+    "citations": 8,
+    "numbers": 24,
+    "tables": 4,
+    "claims": 7,
+    "extraction_complete": true,
+    "extractor_version": "stri-r2-mechanism-integrity-v1",
+    "extractor_sha256": "51b45a279bf7eba9bdeafa937bc63b3a931bf2daf3476f605326ccf1742afcc3"
+  },
+  "facts": [
+    {
+      "fact_id": "F-SKILLSP-CREDIT",
+      "source_ref": "artifact:generated/asset-first-stri-r2-credit-fragmentation-result-20260825.json",
+      "source_verified": true,
+      "passage_support_verified": true
+    },
+    {
+      "fact_id": "F-PHASE-LAW",
+      "source_ref": "artifact:generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+      "source_verified": true,
+      "passage_support_verified": true
+    },
+    {
+      "fact_id": "F-TWO-CHANNEL",
+      "source_ref": "artifact:generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+      "source_verified": true,
+      "passage_support_verified": true
+    },
+    {
+      "fact_id": "F-SKILLSVOTE-SCOPE",
+      "source_ref": "artifact:generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+      "source_verified": true,
+      "passage_support_verified": true
+    },
+    {
+      "fact_id": "F-PREVALENCE-HOLD",
+      "source_ref": "artifact:generated/asset-first-stri-r2-natural-prevalence-qualification-20260825.json",
+      "source_verified": true,
+      "passage_support_verified": true
+    },
+    {
+      "fact_id": "F-BEHAVIOR-STOP",
+      "source_ref": "artifact:generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json",
+      "source_verified": true,
+      "passage_support_verified": true
+    }
+  ],
+  "citations": [
+    {
+      "citation_id": "huang2026skill",
+      "source_ref": "https://arxiv.org/abs/2607.22529",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "xia2026skillrl",
+      "source_ref": "https://arxiv.org/abs/2602.08234",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "liu2026skillsvote",
+      "source_ref": "https://arxiv.org/abs/2605.18401",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "liu2026rethinkskill",
+      "source_ref": "https://arxiv.org/abs/2608.02636",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "shin2022replication",
+      "source_ref": "https://proceedings.mlr.press/v151/shin22a.html",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "baram2021redundancy",
+      "source_ref": "https://proceedings.mlr.press/v161/baram21a.html",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "ravindran2004approximate",
+      "source_ref": "https://www.cse.iitm.ac.in/~ravi/abstracts/paper_abstracts/",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    },
+    {
+      "citation_id": "yang2026autoskill",
+      "source_ref": "https://arxiv.org/abs/2603.01145",
+      "existence_verified": true,
+      "metadata_identity_verified": true,
+      "passage_support_verified": true,
+      "directionality_verified": true,
+      "scope_verified": true,
+      "contains_numeric_claim": false
+    }
+  ],
+  "numbers": [
+    {
+      "number_id": "N-P0-CANON-ATTEMPTS",
+      "observed_value": 8,
+      "source_value": 8,
+      "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-result-20260825.json",
+      "source_artifact_sha256": "bf68cefff8dfeddcb0673394d987ee8979e44b383d1d378afe29d53fb9df75fb",
+      "source_field": "headline.canonical_attempts"
+    },
+    {
+      "number_id": "N-P0-SPLIT-A",
+      "observed_value": 4,
+      "source_value": 4,
+      "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-result-20260825.json",
+      "source_artifact_sha256": "bf68cefff8dfeddcb0673394d987ee8979e44b383d1d378afe29d53fb9df75fb",
+      "source_field": "headline.split_attempts_per_id.0"
+    },
+    {
+      "number_id": "N-P0-SPLIT-B",
+      "observed_value": 4,
+      "source_value": 4,
+      "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-result-20260825.json",
+      "source_artifact_sha256": "bf68cefff8dfeddcb0673394d987ee8979e44b383d1d378afe29d53fb9df75fb",
+      "source_field": "headline.split_attempts_per_id.1"
+    },
+    {
+      "number_id": "N-MIN-ATTEMPTS",
+      "observed_value": 8,
+      "source_value": 8,
+      "source_artifact": "generated/asset-first-stri-r2-natural-prevalence-qualification-20260825.json",
+      "source_artifact_sha256": "f732c5148b28cefe2675ac4930f874cbe154ec3d091566cb59ec0fe0487b89ce",
+      "source_field": "released_loop.default_prune_min_attempts_per_identity"
+    },
+    {
+      "number_id": "N-P1-CELLS",
+      "observed_value": 882,
+      "source_value": 882,
+      "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+      "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+      "source_field": "grid.cells"
+    },
+    {
+      "number_id": "N-P1-MISMATCH",
+      "observed_value": 0,
+      "source_value": 0,
+      "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+      "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+      "source_field": "headline.analytic_mismatches"
+    },
+    {
+      "number_id": "N-P2-CANON-SEL",
+      "observed_value": 0.5,
+      "source_value": 0.5,
+      "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+      "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+      "source_field": "headline.canonical_focal_selection_probability"
+    },
+    {
+      "number_id": "N-P2-SPLIT-SEL",
+      "observed_value": 0.6666666666666666,
+      "source_value": 0.6666666666666666,
+      "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+      "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+      "source_field": "headline.split_native_focal_selection_probability"
+    },
+    {
+      "number_id": "N-L1-COVERED",
+      "observed_value": 314,
+      "source_value": 314,
+      "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+      "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+      "source_field": "regimes.skillsp_l1_full.covered_rows"
+    },
+    {
+      "number_id": "N-L1-MULTI",
+      "observed_value": 183,
+      "source_value": 183,
+      "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+      "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+      "source_field": "regimes.skillsp_l1_full.multi_membership_rows"
+    },
+    {
+      "number_id": "N-L1-RSTAR",
+      "observed_value": 2.0,
+      "source_value": 2.0,
+      "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+      "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+      "source_field": "regimes.skillsp_l1_full.exact_R_star"
+    },
+    {
+      "number_id": "N-LOO-NNLS",
+      "observed_value": 6.1,
+      "source_value": 6.1,
+      "source_artifact": "generated/asset-first-stri-crossval-sparsity-20260824.json",
+      "source_artifact_sha256": "ceada8d1b84fbdba0943db7b251b94ed4698ca0584314ac6d7d6fcb0f6151918",
+      "source_field": "headline.nnls_heldout_ratio_max"
+    },
+    {
+      "number_id": "N-SV-CANON-REQUESTS",
+      "observed_value": 1,
+      "source_value": 1,
+      "source_artifact": "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+      "source_artifact_sha256": "03411423ac2a9ae896ef12c0be909d5d5e1ca46fe412134883cdfc39ed7dc912",
+      "source_field": "skillsvote.headline.canonical_edit_requests"
+    },
+    {
+      "number_id": "N-SV-SPLIT-REQUESTS",
+      "observed_value": 2,
+      "source_value": 2,
+      "source_artifact": "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+      "source_artifact_sha256": "03411423ac2a9ae896ef12c0be909d5d5e1ca46fe412134883cdfc39ed7dc912",
+      "source_field": "skillsvote.headline.split_edit_requests"
+    },
+    {
+      "number_id": "N-PREV-ROUNDS",
+      "observed_value": 5,
+      "source_value": 5,
+      "source_artifact": "generated/asset-first-stri-r2-natural-prevalence-qualification-20260825.json",
+      "source_artifact_sha256": "f732c5148b28cefe2675ac4930f874cbe154ec3d091566cb59ec0fe0487b89ce",
+      "source_field": "released_loop.default_self_play_iterations"
+    },
+    {
+      "number_id": "N-PREV-DATA",
+      "observed_value": 8000,
+      "source_value": 8000,
+      "source_artifact": "generated/asset-first-stri-r2-natural-prevalence-qualification-20260825.json",
+      "source_artifact_sha256": "f732c5148b28cefe2675ac4930f874cbe154ec3d091566cb59ec0fe0487b89ce",
+      "source_field": "released_loop.default_solver_dataset_target_total_records"
+    },
+    {
+      "number_id": "N-P19-A",
+      "observed_value": 6,
+      "source_value": 6,
+      "source_artifact": "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+      "source_artifact_sha256": "7398ccc8c399396f7a32df55fdc3babfc7a0b00dccc0e7ab6d809416c01cc0bd",
+      "source_field": "groups.A_original.destructive_signature_positive"
+    },
+    {
+      "number_id": "N-P19-B",
+      "observed_value": 0,
+      "source_value": 0,
+      "source_artifact": "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+      "source_artifact_sha256": "7398ccc8c399396f7a32df55fdc3babfc7a0b00dccc0e7ab6d809416c01cc0bd",
+      "source_field": "groups.B_split4.destructive_signature_positive"
+    },
+    {
+      "number_id": "N-P19-C",
+      "observed_value": 3,
+      "source_value": 3,
+      "source_artifact": "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+      "source_artifact_sha256": "7398ccc8c399396f7a32df55fdc3babfc7a0b00dccc0e7ab6d809416c01cc0bd",
+      "source_field": "groups.C_id_placebo.destructive_signature_positive"
+    },
+    {
+      "number_id": "N-P19-D",
+      "observed_value": 3,
+      "source_value": 3,
+      "source_artifact": "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+      "source_artifact_sha256": "7398ccc8c399396f7a32df55fdc3babfc7a0b00dccc0e7ab6d809416c01cc0bd",
+      "source_field": "groups.D_quotient_control.destructive_signature_positive"
+    },
+    {
+      "number_id": "N-MED-E",
+      "observed_value": 3,
+      "source_value": 3,
+      "source_artifact": "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json",
+      "source_artifact_sha256": "472c7270881f38c1e1fd7d571aacf5256095f018c783366206d20cfcfe70c807",
+      "source_field": "groups.E_post_addback.positive"
+    },
+    {
+      "number_id": "N-MED-F",
+      "observed_value": 0,
+      "source_value": 0,
+      "source_artifact": "generated/asset-first-stri-autoskill-p19-mediator-isolation-v2-result-20260819.json",
+      "source_artifact_sha256": "472c7270881f38c1e1fd7d571aacf5256095f018c783366206d20cfcfe70c807",
+      "source_field": "groups.F_cleanup_control.positive"
+    },
+    {
+      "number_id": "N-R19-QUAL",
+      "observed_value": 9,
+      "source_value": 9,
+      "source_artifact": "generated/asset-first-stri-autoskill-multitask-qualification-20260824.json",
+      "source_artifact_sha256": "ec152d0406716d78fe5f2784c1e153d2a1a8891985dc789a8f21b652002e46fb",
+      "source_field": "summary.qualified_units"
+    },
+    {
+      "number_id": "N-R19-RUNS",
+      "observed_value": 8,
+      "source_value": 8,
+      "source_artifact": "generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json",
+      "source_artifact_sha256": "a84c97bd6fc340814087741aa39d46a5864e0527c885c275896b53ec21a5364a",
+      "source_field": "runs_completed"
+    }
+  ],
+  "tables": [
+    {
+      "table_id": "T-phase",
+      "generation_script": {
+        "source_artifact": "research_pipeline/asset_first_stri_r2_credit_fragmentation_phase_20260825.py",
+        "source_artifact_sha256": "a0b613f8857d283b447154f43057c71378ab934ca272b5880eedd65d15116f10"
+      },
+      "cells": [
+        {
+          "observed_value": 8,
+          "source_value": 8,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.1.observed_first_full_retirement_N",
+          "cell_id": "phase-threshold-k1"
+        },
+        {
+          "observed_value": 0,
+          "source_value": 0,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.1.retirement_lag_vs_canonical",
+          "cell_id": "phase-lag-k1"
+        },
+        {
+          "observed_value": 16,
+          "source_value": 16,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.2.observed_first_full_retirement_N",
+          "cell_id": "phase-threshold-k2"
+        },
+        {
+          "observed_value": 8,
+          "source_value": 8,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.2.retirement_lag_vs_canonical",
+          "cell_id": "phase-lag-k2"
+        },
+        {
+          "observed_value": 24,
+          "source_value": 24,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.3.observed_first_full_retirement_N",
+          "cell_id": "phase-threshold-k3"
+        },
+        {
+          "observed_value": 16,
+          "source_value": 16,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.3.retirement_lag_vs_canonical",
+          "cell_id": "phase-lag-k3"
+        },
+        {
+          "observed_value": 32,
+          "source_value": 32,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.4.observed_first_full_retirement_N",
+          "cell_id": "phase-threshold-k4"
+        },
+        {
+          "observed_value": 24,
+          "source_value": 24,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.4.retirement_lag_vs_canonical",
+          "cell_id": "phase-lag-k4"
+        },
+        {
+          "observed_value": 40,
+          "source_value": 40,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.5.observed_first_full_retirement_N",
+          "cell_id": "phase-threshold-k5"
+        },
+        {
+          "observed_value": 32,
+          "source_value": 32,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.5.retirement_lag_vs_canonical",
+          "cell_id": "phase-lag-k5"
+        },
+        {
+          "observed_value": 48,
+          "source_value": 48,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.6.observed_first_full_retirement_N",
+          "cell_id": "phase-threshold-k6"
+        },
+        {
+          "observed_value": 40,
+          "source_value": 40,
+          "source_artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "source_artifact_sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946",
+          "source_field": "headline.by_clone_multiplicity.6.retirement_lag_vs_canonical",
+          "cell_id": "phase-lag-k6"
+        }
+      ]
+    },
+    {
+      "table_id": "T-2x2",
+      "generation_script": {
+        "source_artifact": "research_pipeline/asset_first_stri_r2_selection_credit_decomposition_20260825.py",
+        "source_artifact_sha256": "681b046b977e6888f3abbc85f4d624c62676d455539e6e197417684eb002aa6f"
+      },
+      "cells": [
+        {
+          "observed_value": 0.6666666666666666,
+          "source_value": 0.6666666666666666,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_native__C_native.focal_semantic_selection_probability",
+          "cell_id": "S_native__C_native-mass"
+        },
+        {
+          "observed_value": false,
+          "source_value": false,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_native__C_native.focal_semantic_class_retired_after_feedback",
+          "cell_id": "S_native__C_native-retired"
+        },
+        {
+          "observed_value": false,
+          "source_value": false,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_native__C_native.both_invariance_endpoints_match_canonical",
+          "cell_id": "S_native__C_native-both"
+        },
+        {
+          "observed_value": 0.6666666666666666,
+          "source_value": 0.6666666666666666,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_native__C_quotient.focal_semantic_selection_probability",
+          "cell_id": "S_native__C_quotient-mass"
+        },
+        {
+          "observed_value": true,
+          "source_value": true,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_native__C_quotient.focal_semantic_class_retired_after_feedback",
+          "cell_id": "S_native__C_quotient-retired"
+        },
+        {
+          "observed_value": false,
+          "source_value": false,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_native__C_quotient.both_invariance_endpoints_match_canonical",
+          "cell_id": "S_native__C_quotient-both"
+        },
+        {
+          "observed_value": 0.5,
+          "source_value": 0.5,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_quotient__C_native.focal_semantic_selection_probability",
+          "cell_id": "S_quotient__C_native-mass"
+        },
+        {
+          "observed_value": false,
+          "source_value": false,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_quotient__C_native.focal_semantic_class_retired_after_feedback",
+          "cell_id": "S_quotient__C_native-retired"
+        },
+        {
+          "observed_value": false,
+          "source_value": false,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_quotient__C_native.both_invariance_endpoints_match_canonical",
+          "cell_id": "S_quotient__C_native-both"
+        },
+        {
+          "observed_value": 0.5,
+          "source_value": 0.5,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_quotient__C_quotient.focal_semantic_selection_probability",
+          "cell_id": "S_quotient__C_quotient-mass"
+        },
+        {
+          "observed_value": true,
+          "source_value": true,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_quotient__C_quotient.focal_semantic_class_retired_after_feedback",
+          "cell_id": "S_quotient__C_quotient-retired"
+        },
+        {
+          "observed_value": true,
+          "source_value": true,
+          "source_artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "source_artifact_sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2",
+          "source_field": "cells.S_quotient__C_quotient.both_invariance_endpoints_match_canonical",
+          "cell_id": "S_quotient__C_quotient-both"
+        }
+      ]
+    },
+    {
+      "table_id": "T-selection-boundary",
+      "generation_script": {
+        "source_artifact": "research_pipeline/asset_first_stri_practical_baselines_20260824.py",
+        "source_artifact_sha256": "f11d3647e90e05d6833a2fa759e4377425b6ef4dd4a8a89d5f6449487a7634a5"
+      },
+      "cells": [
+        {
+          "observed_value": 314,
+          "source_value": 314,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.skillsp_l1_full.covered_rows",
+          "cell_id": "l1-covered"
+        },
+        {
+          "observed_value": 183,
+          "source_value": 183,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.skillsp_l1_full.multi_membership_rows",
+          "cell_id": "l1-multi"
+        },
+        {
+          "observed_value": 2.0,
+          "source_value": 2.0,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.skillsp_l1_full.exact_R_star",
+          "cell_id": "l1-rstar"
+        },
+        {
+          "observed_value": 52,
+          "source_value": 52,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.skillsp_l1_heldout.covered_rows",
+          "cell_id": "heldout-covered"
+        },
+        {
+          "observed_value": 38,
+          "source_value": 38,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.skillsp_l1_heldout.multi_membership_rows",
+          "cell_id": "heldout-multi"
+        },
+        {
+          "observed_value": 2.0,
+          "source_value": 2.0,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.skillsp_l1_heldout.exact_R_star",
+          "cell_id": "heldout-rstar"
+        },
+        {
+          "observed_value": 34,
+          "source_value": 34,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.skillsp_l3.covered_rows",
+          "cell_id": "l3-covered"
+        },
+        {
+          "observed_value": 0,
+          "source_value": 0,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.skillsp_l3.multi_membership_rows",
+          "cell_id": "l3-multi"
+        },
+        {
+          "observed_value": 1.0,
+          "source_value": 1.0,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.skillsp_l3.exact_R_star",
+          "cell_id": "l3-rstar"
+        },
+        {
+          "observed_value": 128,
+          "source_value": 128,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.logical_compiler.covered_rows",
+          "cell_id": "logical-covered"
+        },
+        {
+          "observed_value": 127,
+          "source_value": 127,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.logical_compiler.multi_membership_rows",
+          "cell_id": "logical-multi"
+        },
+        {
+          "observed_value": 1.0,
+          "source_value": 1.0,
+          "source_artifact": "generated/asset-first-stri-practical-baselines-20260824.json",
+          "source_artifact_sha256": "d663db2ea28edc19b4126e4c4a6526ffad36b5fceed3a1525e26ba418ea7eb7d",
+          "source_field": "regimes.logical_compiler.exact_R_star",
+          "cell_id": "logical-rstar"
+        }
+      ]
+    },
+    {
+      "table_id": "T-cross-system",
+      "generation_script": {
+        "source_artifact": "research_pipeline/asset_first_stri_r2_second_system_credit_partition_20260825.py",
+        "source_artifact_sha256": "6bf83e29c9ac45a72674bc61dea2b4a686ea0a9e1da62a69251200dadc0fa56b"
+      },
+      "cells": [
+        {
+          "observed_value": 1,
+          "source_value": 1,
+          "source_artifact": "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+          "source_artifact_sha256": "03411423ac2a9ae896ef12c0be909d5d5e1ca46fe412134883cdfc39ed7dc912",
+          "source_field": "skillsvote.headline.canonical_edit_requests",
+          "cell_id": "sv-canon-requests"
+        },
+        {
+          "observed_value": 2,
+          "source_value": 2,
+          "source_artifact": "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+          "source_artifact_sha256": "03411423ac2a9ae896ef12c0be909d5d5e1ca46fe412134883cdfc39ed7dc912",
+          "source_field": "skillsvote.headline.split_edit_requests",
+          "cell_id": "sv-split-requests"
+        },
+        {
+          "observed_value": 1,
+          "source_value": 1,
+          "source_artifact": "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+          "source_artifact_sha256": "03411423ac2a9ae896ef12c0be909d5d5e1ca46fe412134883cdfc39ed7dc912",
+          "source_field": "skillsvote.headline.quotient_edit_requests",
+          "cell_id": "sv-quotient-requests"
+        },
+        {
+          "observed_value": 8,
+          "source_value": 8,
+          "source_artifact": "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+          "source_artifact_sha256": "03411423ac2a9ae896ef12c0be909d5d5e1ca46fe412134883cdfc39ed7dc912",
+          "source_field": "skillsvote.headline.canonical_evidence_per_request.0",
+          "cell_id": "sv-canon-evidence"
+        },
+        {
+          "observed_value": 4,
+          "source_value": 4,
+          "source_artifact": "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+          "source_artifact_sha256": "03411423ac2a9ae896ef12c0be909d5d5e1ca46fe412134883cdfc39ed7dc912",
+          "source_field": "skillsvote.headline.split_evidence_per_request.0",
+          "cell_id": "sv-split-evidence-a"
+        },
+        {
+          "observed_value": 4,
+          "source_value": 4,
+          "source_artifact": "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+          "source_artifact_sha256": "03411423ac2a9ae896ef12c0be909d5d5e1ca46fe412134883cdfc39ed7dc912",
+          "source_field": "skillsvote.headline.split_evidence_per_request.1",
+          "cell_id": "sv-split-evidence-b"
+        },
+        {
+          "observed_value": 8,
+          "source_value": 8,
+          "source_artifact": "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+          "source_artifact_sha256": "03411423ac2a9ae896ef12c0be909d5d5e1ca46fe412134883cdfc39ed7dc912",
+          "source_field": "skillsvote.headline.quotient_evidence_per_request.0",
+          "cell_id": "sv-quotient-evidence"
+        }
+      ]
+    }
+  ],
+  "expected_claim_ids": [
+    "R2-K1-TWO-SURFACES",
+    "R2-K2-CREDIT-FRAGMENTATION",
+    "R2-K3-PHASE-LAW",
+    "R2-K4-ORTHOGONAL-DECOMPOSITION",
+    "R2-K5-SELECTION-GEOMETRY",
+    "R2-K6-CROSS-SYSTEM-SCOPED",
+    "R2-K7-BOUNDARIES"
+  ],
+  "claims": [
+    {
+      "claim_id": "R2-K1-TWO-SURFACES",
+      "statement_ref": "intro+sec:representation-invariant",
+      "evidence_refs": [
+        "generated/asset-first-stri-r2-credit-fragmentation-result-20260825.json",
+        "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+        "generated/asset-first-stri-practical-baselines-20260824.json"
+      ],
+      "supported": true
+    },
+    {
+      "claim_id": "R2-K2-CREDIT-FRAGMENTATION",
+      "statement_ref": "sec:skillsp-p0",
+      "evidence_refs": [
+        "generated/asset-first-stri-r2-credit-fragmentation-result-20260825.json",
+        "research_pipeline/asset_first_stri_r2_credit_fragmentation_theory_20260825.py"
+      ],
+      "supported": true
+    },
+    {
+      "claim_id": "R2-K3-PHASE-LAW",
+      "statement_ref": "prop1+sec:p1",
+      "evidence_refs": [
+        "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+        "research_pipeline/asset_first_stri_r2_credit_fragmentation_theory_20260825.py"
+      ],
+      "supported": true
+    },
+    {
+      "claim_id": "R2-K4-ORTHOGONAL-DECOMPOSITION",
+      "statement_ref": "sec:two-channel",
+      "evidence_refs": [
+        "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json"
+      ],
+      "supported": true
+    },
+    {
+      "claim_id": "R2-K5-SELECTION-GEOMETRY",
+      "statement_ref": "sec:selection-geometry",
+      "evidence_refs": [
+        "generated/asset-first-stri-practical-baselines-20260824.json",
+        "generated/asset-first-stri-crossval-sparsity-20260824.json"
+      ],
+      "supported": true
+    },
+    {
+      "claim_id": "R2-K6-CROSS-SYSTEM-SCOPED",
+      "statement_ref": "sec:SkillsVote",
+      "evidence_refs": [
+        "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json"
+      ],
+      "supported": true
+    },
+    {
+      "claim_id": "R2-K7-BOUNDARIES",
+      "statement_ref": "sec:prevalence+behavior+limitations",
+      "evidence_refs": [
+        "generated/asset-first-stri-r2-natural-prevalence-qualification-20260825.json",
+        "generated/asset-first-stri-autoskill-multitask-qualification-20260824.json",
+        "generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json"
+      ],
+      "supported": true
+    }
+  ],
+  "reader_comprehension": {
+    "terms": [
+      {
+        "term": "selection duplication",
+        "first_use_defined": true
+      },
+      {
+        "term": "credit fragmentation",
+        "first_use_defined": true
+      },
+      {
+        "term": "semantic quotient",
+        "first_use_defined": true
+      },
+      {
+        "term": "R*",
+        "first_use_defined": true
+      }
+    ],
+    "components": [
+      {
+        "component": "selection surface",
+        "input_explained": true,
+        "output_explained": true
+      },
+      {
+        "component": "credit/lifecycle surface",
+        "input_explained": true,
+        "output_explained": true
+      },
+      {
+        "component": "2x2 intervention",
+        "input_explained": true,
+        "output_explained": true
+      }
+    ]
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}
