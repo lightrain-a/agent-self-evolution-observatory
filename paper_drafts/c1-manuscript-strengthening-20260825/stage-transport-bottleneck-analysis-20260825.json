@@ -1,0 +1,156 @@
+{
+  "alternative_explanation_audit": [
+    {
+      "evidence": "20/20 Shopping and 4/4 Reddit reward-conditioned writes diverge; the same-mode control leaves a 0.105 paired excess (p=0.0078).",
+      "id": "A1_NO_PERSISTENT_STATE_INTERVENTION",
+      "meaning": "The native null cannot be explained by the writer simply failing to create branch-specific persistent state.",
+      "status": "INCONSISTENT_WITH_FROZEN_EVIDENCE"
+    },
+    {
+      "evidence": "Forced fixed-evidence exposure yields terminal |Delta|=0.15625 (p=0.00074).",
+      "id": "A2_DOWNSTREAM_POLICY_GLOBALLY_INSENSITIVE_TO_MEMORY_CONTENT",
+      "meaning": "The frozen downstream system can respond to supplied branch-specific memory content under the forced surface; native attenuation is therefore not well summarized as global memory insensitivity.",
+      "status": "WEAKENED_NOT_ELIMINATED"
+    },
+    {
+      "evidence": "Native Shopping records 125 retrieval hits in 172 held-out opportunities while first-action TV is 0.06944 (p=0.5801) with 0/36 modal changes.",
+      "id": "A3_NATIVE_FAILURE_IS_ONLY_RETRIEVAL_ABSENCE",
+      "meaning": "Availability alone does not account for the weak action-level contrast; substantial exposure coexists with weak measured uptake.",
+      "status": "WEAKENED_NOT_ELIMINATED"
+    },
+    {
+      "evidence": "Substantial native exposure coexists with weak first-action distributional change and no modal action changes in 36 matched Shopping targets.",
+      "id": "A4_RETRIEVAL_HIT_IS_A_VALID_SURROGATE_FOR_POLICY_UPTAKE",
+      "meaning": "Retrieval success should be reported as an exposure variable, not counted as evidence that the policy used the retrieved branch-specific content.",
+      "status": "REJECTED_AS_EVALUATION_EQUIVALENCE"
+    },
+    {
+      "evidence": "Shopping has 34/36 zero terminal cells; Reddit has 6/8 zero cells and its two nonzero cells have opposite signs.",
+      "id": "A5_BRANCH_SPECIFIC_MEMORY_HAS_UNIVERSAL_DIRECTIONAL_TERMINAL_TRANSPORT",
+      "meaning": "A single signed harm/benefit coefficient or universal attenuation constant is not supported by the frozen native data.",
+      "status": "NOT_SUPPORTED"
+    },
+    {
+      "evidence": "The frozen pool lacks per-atom decoding-seed binding and same-condition same-trajectory noise-floor replication, and forced/native surfaces are not the same intervention.",
+      "id": "A6_OBSERVED_ATTENUATION_IS_A_CERTIFIED_CAUSAL_MEDIATOR_EFFECT",
+      "meaning": "The paper may localize an operational bottleneck pattern but may not estimate a causal mediation coefficient or atom-level causal purity.",
+      "status": "UNRESOLVED_AND_FORBIDDEN_AS_CLAIM"
+    }
+  ],
+  "analysis_id": "C1-STAGE-TRANSPORT-BOTTLENECK-R2-20260825",
+  "artifact_type": "c1-stage-transport-bottleneck-analysis",
+  "authority": {
+    "claim_expansion": false,
+    "experiment": false,
+    "gpu": false,
+    "provider": false,
+    "scientific": false,
+    "submission": false
+  },
+  "claim_hierarchy": [
+    {
+      "claim": "Reward-conditioned writing creates a reproducible durable state contrast under the frozen same-trajectory controls.",
+      "level": 1,
+      "role": "intervention establishment"
+    },
+    {
+      "claim": "The downstream system has measurable leverage under mechanically supplied branch-specific memory content.",
+      "level": 2,
+      "role": "capacity control"
+    },
+    {
+      "claim": "Under native reuse, substantial exposure does not translate into comparably stable first-action or terminal branch differences; the strongest supported attenuation boundary is after exposure and before stable action uptake.",
+      "level": 3,
+      "role": "main stage-resolved localization"
+    },
+    {
+      "claim": "The native terminal effect is sparse and sign-heterogeneous across domains/tasks, so no universal directional transport coefficient is supported.",
+      "level": 4,
+      "role": "boundary/generalization"
+    }
+  ],
+  "does_not_imply": [
+    "retrieval exposure is policy uptake",
+    "forced fixed-evidence leverage is native end-to-end transport",
+    "the exposure-to-uptake boundary is a causal mediation coefficient",
+    "every branch-specific memory sentence is causally pure",
+    "CBRG has a positive or negative behavioral method effect",
+    "the observed attenuation is universal across writers, models, tasks, or domains"
+  ],
+  "execution": {
+    "new_gpu_runs": 0,
+    "new_scientific_experiments": 0,
+    "new_scientific_provider_calls": 0
+  },
+  "localization": {
+    "claim_strength": "SUPPORTED_OPERATIONAL_LOCALIZATION_NOT_CAUSAL_MEDIATION",
+    "logic": [
+      "A reward-mode intervention robustly creates persistent-state divergence.",
+      "Forced exposure shows nonzero downstream leverage when memory evidence is mechanically supplied.",
+      "Native retrieval exposure remains substantial rather than collapsing to zero.",
+      "The first measured action boundary is weak and does not pass its frozen gate.",
+      "Native terminal transport is sparse, small in Shopping, and sign-heterogeneous across Reddit cells."
+    ],
+    "paper_consequence": "Make the exposure-to-uptake boundary the main mechanism/measurement result; use forced leverage only as a side control that weakens the global-insensitivity alternative.",
+    "verdict": "POST_EXPOSURE_PRE_ACTION_ATTENUATION_IS_THE_STRONGEST_SUPPORTED_OPERATIONAL_LOCALIZATION"
+  },
+  "observed_pattern": {
+    "forced_capacity_control": {
+      "permutation_p": 0.00074,
+      "terminal_abs_delta": 0.15625
+    },
+    "native_exposure": {
+      "rate": 0.7267441860465116,
+      "retrieval_hits": 125,
+      "retrieval_opportunities": 172
+    },
+    "native_first_action": {
+      "modal_changes": "0/36",
+      "p": 0.5801,
+      "tv": 0.06944
+    },
+    "native_terminal_reddit": {
+      "abs_delta": 0.125,
+      "nonzero_signs": "opposite",
+      "p": 0.2253,
+      "write_diverged": "4/4",
+      "zero_cells": "6/8"
+    },
+    "native_terminal_shopping": {
+      "abs_delta": 0.02083,
+      "p": 0.4289,
+      "zero_cells": "34/36"
+    },
+    "write": {
+      "pooled_token_jaccard": 0.673,
+      "same_mode_exact_p": 0.0078,
+      "same_mode_excess": 0.105,
+      "shopping_diverged": "20/20"
+    }
+  },
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "question": "Given a reward-conditioned persistent-state intervention, where does the observable branch contrast stop behaving like native behavioral transport?",
+  "schema_version": "1.0",
+  "scientific_object": {
+    "forbidden_scalarization": "W, exposure rate, first-action TV, and terminal |Delta| live on different scales and must not be divided into a transport-efficiency or mediation coefficient.",
+    "native_chain": [
+      "persistent_write",
+      "retrieval_exposure",
+      "first_action_uptake",
+      "terminal_outcome"
+    ],
+    "side_control": "forced_fixed_evidence_leverage",
+    "why_side_control_not_chain_stage": "Forced fixed-evidence injection bypasses native retrieval/exposure. It probes whether memory content can affect downstream behavior when supplied, not whether the native system transports it."
+  },
+  "source_bindings": [
+    {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-resolved-evidence-reinterpretation.json",
+      "sha256": "02e39f14e99eca61bc687890c1bb501e540d87395c6887f39b125538cae570be"
+    },
+    {
+      "path": "research_pipeline/result_analysis_ledger_20260825.json",
+      "sha256": "aa106470adbe11707ad62d13e698cbe252bf7c7989450d94106c2df086f66c7a"
+    }
+  ],
+  "status": "SUPPORTED_OPERATIONAL_POST_EXPOSURE_ATTENUATION_LOCALIZATION"
+}

@@ -1,34 +1,73 @@
-\section{Stages 2--4: Where Does the Write Effect Survive?}
+\section{Transport Bottleneck Localization}
 \label{sec:variance}
-The write intervention is scientifically interesting only if we distinguish its downstream routes. We therefore evaluate three questions separately: (i) can the paired memories affect behavior when directly supplied; (ii) are branch-specific memories actually exposed under the native memory pipeline; and (iii) once exposed, do they produce detectable policy or terminal differences?
+The write intervention becomes scientifically useful only once alternative explanations for downstream attenuation are separated. We therefore use the frozen evidence in three roles: forced fixed-evidence exposure as a \emph{capacity control}, native retrieval as an \emph{availability measurement}, and first-action/terminal contrasts as \emph{native transport measurements}. This section shows that their joint pattern is more informative than any endpoint alone.
 
-\subsection{Forced injection establishes latent behavioral leverage}
-We first bypass native retrieval and directly inject each paired memory into a fixed future-task packet. This experiment answers a capability question: are the two persistent states behaviorally distinguishable when exposure is forced to one?
+\subsection{Forced injection establishes downstream capacity, not native transport}
+We first bypass native retrieval and directly inject each paired memory into a fixed future-task packet. This asks whether the downstream system can respond to the paired persistent states when the experimenter supplies them.
 
 The original fixed-state probe contains 12 aligned success-memory versus failure-memory rollouts; 7/12 choose different structured next actions. We then freeze all four complete initial F0 source-memory pairs and four future tasks before terminal-policy execution. Every source pair is crossed with every future task, giving 16 cells. The confirmatory run uses eight fresh rollouts per memory condition in every cell, for 256 completed calls. Mean absolute terminal success-rate difference is $0.15625$, above the frozen 0.15 practical floor, and the 100,000-draw within-cell permutation test gives $p=0.00074$.
 
-This positive result is deliberately interpreted as \emph{forced leverage}. The paired states can change downstream outcomes under matched evidence when the experimenter makes them available. The cell effects are heterogeneous: eight cells are zero, six have positive failure-minus-success effects, and two have negative effects. The two largest cells account for 78.2\% of squared-effect mass. Thus even the forced experiment does not support a uniform harmful direction.
+This result weakens the explanation that the downstream system is simply incapable of responding to memory content. It does \emph{not} estimate native transport because exposure is mechanically supplied. The cell effects are also heterogeneous: eight cells are zero, six have positive failure-minus-success effects, and two have negative effects; the two largest cells account for 78.2\% of squared-effect mass. Even under forced exposure, a universal harmful direction is unsupported.
 
-\subsection{Native Shopping retrieval exposes memory but strongly attenuates branch transport}
-We next restore the native memory-bank pathway. After expanding the frozen Shopping memory bank, branch-specific source memories are retrieved on 125 of 172 held-out retrieval opportunities. This rules out the simplest explanation for weak native effects---that the memories never enter future context at all. Exposure is substantial.
+\subsection{Native exposure remains common while action uptake attenuates}
+We next restore the native memory-bank pathway. After expanding the frozen Shopping memory bank, branch-specific source memories are retrieved on 125 of 172 held-out retrieval opportunities, a rate of 0.727. The native null therefore cannot be summarized as ``the memory was never retrieved.''
 
-Despite that exposure, native terminal transport is small. Across the frozen 36 Shopping branch-comparison cells, mean absolute success difference is $0.02083$ with permutation $p=0.4289$; 34/36 cells are exactly zero. The first-action stage is similarly weak: mean total-variation distance between reward branches is $0.06944$ with $p=0.5801$, and 0/36 frozen states change their modal first action. A post-hoc working-memory diagnostic yields branch shift 0.00335 with $p=0.2052$. Together these measurements localize the dominant attenuation after retrieval exposure and before stable policy uptake.
+Despite that exposure, the first measured decision boundary is weak. Across the frozen 36 Shopping branch-comparison states, mean first-action total-variation distance is $0.06944$ with $p=0.5801$, and 0/36 states change their modal first action. A post-hoc working-memory diagnostic yields branch shift 0.00335 with $p=0.2052$. Native terminal transport is also small: mean absolute success difference is $0.02083$ with permutation $p=0.4289$, and 34/36 cells are exactly zero.
 
-This is the central mechanism result. The same reward-conditioned update produces a robust durable-state contrast, and the same paired states have measurable leverage under forced injection, yet native reuse rarely converts the branch-specific difference into a distinct first action or terminal outcome. Persistent-state mutation and behavioral authority are therefore empirically separable.
+The conjunction is the mechanism result. Applying the ordinal rule from Section~\ref{sec:evidence-ladder}, write is \textsc{Supported}, native exposure is \textsc{Observed}, and first-action uptake is the first native stage whose frozen primary test does not support a stable branch contrast. Thus $b^*=\text{first-action uptake}$, which places the strongest supported operational attenuation boundary after exposure and before stable action uptake. Terminal sparsity is downstream corroboration rather than the quantity used to choose the boundary. We do not call this a mediation effect because the stage measurements are not commensurate coefficients and the frozen design lacks the seed/noise-floor controls required for atom-level causal mediation.
 
-\subsection{Outcome-blind control and second-domain replication}
-An outcome-blind structured-memory control produces a small but statistically detectable terminal contrast of $0.04514$ ($p=0.0048$), below the frozen 0.15 practical floor, with 32/36 cells zero. This control is useful because it shows why statistical significance alone is not the scientific endpoint: sparse tiny effects can pass a null test without approaching the magnitude observed under forced branch leverage.
+\begin{table}[t]
+\centering
+\small
+\caption{Stage-evidence ladder. Evidence states preserve the semantics of each measurement instead of forcing heterogeneous quantities onto one scale. The forced arm is a side capacity control and therefore does not enter the native-stage ordering.}
+\label{tab:evidence-ladder}
+\begin{tabular}{@{}p{0.20\linewidth}p{0.22\linewidth}p{0.44\linewidth}@{}}
+\toprule
+Stage & Evidence state & Frozen observation / interpretation \\
+\midrule
+Persistent write & Supported & 20/20 Shopping pairs diverge; stronger same-mode control leaves excess $0.105$, exact $p=0.0078$. \\
+Forced capacity (side control) & Supported & $|\Delta|=0.15625$, $p=0.00074$; supplied memory has downstream leverage but native retrieval is bypassed. \\
+Native exposure & Directly observed & 125/172 held-out opportunities retrieve branch-specific source memory; this is availability, not policy use. \\
+First-action uptake & Not supported & TV $=0.06944$, $p=0.5801$, 0/36 modal changes; this is the first unsupported native stage after observed prerequisites. \\
+Native outcome & Sparse / heterogeneous & Shopping 34/36 zero; Reddit 6/8 zero and the two nonzero signs are opposite. \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-We then repeat the write-versus-native-transport measurement on Reddit. Reward-conditioned writing again diverges in 4/4 paired source memories. Native terminal transport is larger than Shopping in magnitude but remains unresolved and highly sparse: mean absolute success difference is $0.125$ with $p=0.2253$, 6/8 cells are zero, and the two nonzero cells have opposite signs. The cross-domain result therefore supports heterogeneity rather than a universal attenuation constant or uniformly harmful reward-error effect.
+\begin{table}[t]
+\centering
+\small
+\caption{Alternative-explanation audit. The contribution comes from the joint pattern, not from selecting only the positive forced endpoint. ``Weakened'' means the frozen evidence makes the explanation incomplete but does not mathematically eliminate every variant of it.}
+\label{tab:alternative-audit}
+\begin{tabular}{@{}p{0.26\linewidth}p{0.23\linewidth}p{0.38\linewidth}@{}}
+\toprule
+Explanation & Frozen evidence & Disposition \\
+\midrule
+No persistent state intervention & 20/20 Shopping and 4/4 Reddit writes diverge; same-mode excess $=0.105$, $p=0.0078$ & Inconsistent with the observed write-stage intervention. \\
+Downstream policy is globally insensitive to memory & Forced terminal $|\Delta|=0.15625$, $p=0.00074$ & Weakened: supplied branch-specific memory has measurable leverage. \\
+Native null is only retrieval absence & 125/172 native Shopping retrieval hits & Weakened: substantial exposure coexists with weak first-action contrast. \\
+Retrieval hit is a surrogate for policy use & first-action TV $=0.06944$, $p=0.5801$; 0/36 modal changes & Rejected as an evaluation equivalence: availability is not uptake. \\
+Universal directional terminal transport & Shopping 34/36 zero; Reddit 6/8 zero, two nonzero signs opposite & Not supported by the frozen native cells. \\
+Causal mediation has been identified & no per-atom seed binding/noise-floor replication; forced/native surfaces differ & Unresolved and explicitly outside the claim set. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cross-domain boundary: write replication without monotone transport}
+We repeat the write-versus-native-transport measurement on Reddit. Reward-conditioned writing again diverges in 4/4 paired source memories. Native terminal transport is larger than Shopping in magnitude but remains unresolved and highly sparse: mean absolute success difference is $0.125$ with $p=0.2253$, 6/8 cells are zero, and the two nonzero cells have opposite signs. The second domain therefore supports the same structural separation---robust write divergence need not become stable native terminal transport---while rejecting a simple universal attenuation constant or signed harm coefficient.
+
+An outcome-blind structured-memory control gives a complementary warning about endpoint interpretation. It produces a small terminal contrast of $0.04514$ ($p=0.0048$), below the frozen 0.15 practical floor, with 32/36 cells zero. Statistical detectability alone is therefore not the scientific target; a sparse small effect can pass a null test without matching the magnitude or mechanism of forced branch leverage.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/fig4_stage_resolved_transport.pdf}
-\caption{Stage-resolved transport boundary. Reward-conditioned writing is robust, and forced injection demonstrates that paired states can have downstream leverage. Under the native Shopping pipeline, retrieval exposure remains substantial but branch-specific first-action and terminal effects collapse; Reddit again shows sparse, sign-heterogeneous native transport. Values are kept on their native scales and should not be read as a single monotone effect-size axis.}
+\caption{\textbf{Native transport and forced capacity are different experimental surfaces.} The horizontal path is the deployed reuse chain: persistent write $\rightarrow$ native exposure $\rightarrow$ first-action uptake $\rightarrow$ native outcome. The forced fixed-evidence arm bypasses retrieval and is shown as a side capacity control. The strongest supported operational attenuation boundary is after exposure and before stable action uptake; this is not a causal mediation coefficient.}
 \label{fig:stage-transport}
 \end{figure}
 
-\subsection{Why the old one-step interpretation is wrong}
-A one-step story would summarize the 256 forced rollouts as evidence that ``reward error propagates to future behavior.'' The native measurements show why that statement is too coarse. Forced injection estimates the effect conditional on making a particular memory state available; native transport additionally depends on retrieval competition, context composition, and policy uptake. The difference between $0.15625$ forced terminal leverage and $0.02083$ native Shopping terminal transport is therefore not an inconsistency to average away. It identifies where the system filters the update.
+\subsection{Why the one-step reward-to-behavior story fails}
+A one-step interpretation would take the 256 forced rollouts as evidence that ``reward error propagates to future behavior.'' The native measurements show why this is too coarse. Forced injection estimates leverage conditional on making a particular memory state available; native transport additionally depends on retrieval competition, context composition, and policy uptake. The difference between $0.15625$ forced leverage and $0.02083$ native Shopping terminal transport is therefore not a scalar attenuation factor to divide or average. It is evidence that two experimental surfaces answer different questions.
 
-The practical consequence is an evaluation protocol rather than a new memory algorithm. For any persistent update, report at least one state-change metric and one downstream uptake/outcome metric, and localize the first stage where the intervention attenuates, vanishes, or changes sign. This prevents a large representation difference from being mistaken for a large behavioral effect.
+Conversely, looking only at the native endpoint would also lose the mechanism: a $0.02083$ Shopping terminal difference does not tell us that the writer failed, that memory was unavailable, or that the downstream system was globally insensitive. The stage-resolved controls exclude or weaken each of those simpler accounts before the first-action boundary is reached.
+
+The evaluation consequence is concrete. For a persistent update, report at least one state-change metric, one exposure measurement, and one downstream uptake/outcome metric; use a capacity control only if its bypassed stages are explicit. Then localize the first point where evidence for transport weakens, rather than crediting the update with behavioral authority because its representation changed or because a retrieved item appeared in context.

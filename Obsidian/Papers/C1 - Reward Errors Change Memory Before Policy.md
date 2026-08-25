@@ -6,7 +6,7 @@ Latest executable-closure knowledge version: [[C1 - Executable Closure Gate v4 -
 
 ## Current paper thesis
 
-Manuscript strengthening status (2026-08-25): `STAGE_RESOLVED_IDENTIFICATION_MEASUREMENT_R1`. The title/abstract/introduction/mechanism/downstream-results/conclusion have been pivoted away from the old one-step ``reward error -> future behavior'' interpretation. Forced fixed-evidence injection is now labeled **latent leverage**, while native Shopping/Reddit results define the end-to-end transport boundary.
+Manuscript strengthening status (2026-08-25): `STAGE_EVIDENCE_LADDER_R3`. R1 separated the old one-step ``reward error -> future behavior'' interpretation into write/exposure/uptake/outcome. R2 added capacity-versus-native-transport control and a six-alternative explanation audit. R3 makes the localization rule explicit and reproducible: because memory distance, retrieval rate, action TV, and terminal effect are not commensurate, the paper uses an **ordinal stage-evidence ladder** rather than a synthetic attenuation coefficient. Each native stage keeps its valid evidence state (`SUPPORTED`, `DIRECTLY_OBSERVED`, `NOT_SUPPORTED`, or a typed heterogeneous boundary); the first unsupported native stage after supported/observed prerequisites is the operational attenuation boundary. Forced fixed-evidence injection remains a **side capacity/leverage control**, not a native chain stage. On the frozen evidence, the first unsupported native stage is `first-action uptake`, so the supported localization is **after exposure and before stable first-action uptake**, explicitly not causal mediation. Machine-readable analyses: `stage-transport-bottleneck-analysis-20260825.json` and `stage-evidence-ladder-analysis-20260825.json`.
 
 
 The paper separates a persistent-memory error into stages:
@@ -27,20 +27,24 @@ The key result is not simply that reward errors alter text. It is that these sta
 
 The bounded scientific statement is:
 
-> Memory divergence is not behavioral divergence. Reward-conditioned writing is robust; realized branch-specific transport is sparse, stage-dependent, and domain/task dependent.
+> Memory divergence is not behavioral divergence. Reward-conditioned writing is robust; forced exposure shows downstream capacity; native retrieval remains substantial; the first stable measured attenuation appears after exposure and before action uptake; terminal transport is sparse and domain/task dependent.
 
-## Why the current paper still feels unfinished
+## Current paper-depth diagnosis after R3
 
-C1 has moved beyond a shallow phenomenon report, but its current contribution sits between two mature top-tier archetypes:
+C1 should no longer be judged by whether it invents a rescue method. The CBRG route has already STOP/MERGE'd on its qualification contract. The active top-tier archetype is a controlled identification/measurement paper whose depth comes from **localizing a systematically mismeasured scientific object and eliminating simpler explanations**.
 
-1. it is not yet as theoretically/causally deep as a pure mechanism paper such as a causal-mediation or mathematical-mechanism study;
-2. it has not yet converted the diagnosed failure into a tested intervention.
+R3 now has a single tight inference chain plus an explicit localization operator:
 
-Therefore its current **paper-development** state is:
+1. **no-state-intervention** is inconsistent with 20/20 Shopping + 4/4 Reddit write divergence and the stronger same-mode control;
+2. **global downstream memory insensitivity** is weakened by forced terminal leverage $|\Delta|=0.15625$;
+3. **retrieval absence only** is weakened by 125/172 native exposure;
+4. **retrieval = policy uptake** is rejected as an evaluation equivalence by TV=0.06944 and 0/36 modal action changes;
+5. **universal directional transport** is unsupported by Shopping/Reddit sparsity and Reddit sign reversal;
+6. **causal mediation** remains unresolved and is forbidden as a claim because the frozen seed/noise-floor and intervention-surface requirements are not met.
 
-`ANALYSIS_INCOMPLETE_FOR_TOP_TIER -> SOLUTION_CLOSURE_DESIGN`
+Ordinal localization rule: native stage order is `write -> exposure -> first-action uptake -> terminal outcome`. Write is `SUPPORTED`; exposure is `DIRECTLY_OBSERVED`; first-action uptake is `NOT_SUPPORTED_AT_FROZEN_PRIMARY_TEST`; terminal outcome is `SPARSE_HETEROGENEOUS_NOT_UNIVERSALLY_SUPPORTED`. Therefore the first unsupported native stage is first-action uptake. The forced-capacity arm can weaken global-insensitivity alternatives but cannot make a bypassed native stage pass.
 
-This does not downgrade the validity of the existing analysis.
+The remaining paper-development debt is therefore presentation/coverage debt, not an unfilled method slot: make the stage-evidence ladder and alternative-explanation audit visually and narratively central, keep negative boundaries visible, and do not reopen CBRG without its four-part evidence contract.
 
 ## Collision audit: what is NOT the new method
 

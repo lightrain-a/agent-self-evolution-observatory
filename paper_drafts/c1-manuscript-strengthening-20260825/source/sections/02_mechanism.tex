@@ -1,44 +1,82 @@
-\section{A Stage-Resolved Model of Persistent-State Transport}
+\section{Stage-Resolved Memory Transport}
 \label{sec:mechanism}
-Let a task $x$ produce trajectory $\tau$ and let the terminal evaluator emit $r\in\{0,1\}$. A reward-conditioned memory writer constructs
-\begin{equation}
-M_r = G(\tau,r).
-\end{equation}
-In the released ReasoningBank implementation, $r=1$ selects a success-reflection objective and $r=0$ selects a failure-reflection objective. Our paired intervention holds $\tau$ fixed and changes only the selected writer branch. The first estimand is therefore a persistent-state contrast,
-\begin{equation}
-D_M(\tau)=d\!\left(M_1,M_0\right),
-\end{equation}
-where $d$ is a prespecified memory-distance statistic. This quantity answers whether the update surface changes. It does \emph{not} answer whether the changed state is later exposed to the policy or behaviorally consequential.
 
-We therefore decompose downstream transport into three additional stages. For a held-out future state $x'$, let $E_r(x')\in\{0,1\}$ indicate whether branch-specific memory from $M_r$ is retrieved into the future context. Let $A_r(x')$ denote the first structured policy action under that context, and let $Y_r(x')$ denote the terminal task outcome. The stage-specific objects are
-\begin{align}
-T_E &= \Pr(E_r=1),\\
-T_A &= d_A\!\left(P(A\mid M_1,x'),P(A\mid M_0,x')\right),\\
-T_Y &= \left|\mathbb{E}[Y\mid M_1,x']-\mathbb{E}[Y\mid M_0,x']\right|.
-\end{align}
-A large $D_M$ can coexist with a small $T_A$ or $T_Y$ if branch-specific content is rarely retrieved, ignored after retrieval, dominated by the current observation, or behaviorally redundant. This is the core identification point of the paper.
+\subsection{Controlled write intervention}
+Let $\tau$ denote a frozen interaction trajectory before persistent memory construction. We create two writer conditions on the same $\tau$,
+\[
+  r\in\{S,F\}, \qquad m^{(r)} = g(\tau,r),
+\]
+where $g$ is the released memory writer and $S/F$ selects its success- or failure-reflection mode. The operational write contrast is
+\[
+  W(\tau)=d_{\mathrm{mem}}\!\left(m^{(S)},m^{(F)}\right).
+\]
+$W>0$ establishes that the frozen writer produced different persistent states. It does \emph{not} establish that every textual atom is a pure causal effect of the reward bit, because decoding randomness is not separately noise-calibrated at the atom level. We therefore use the same-mode wording control in Section~\ref{sec:prompt-control} to test the stronger alternative that ordinary prompt wording alone explains the observed write divergence.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{figures/fig1_reward_write_channel.pdf}
-\caption{The stage-resolved reward-to-memory transport chain. The source trajectory is fixed while the terminal reward label selects the released reflection writer. The resulting state must then survive retrieval exposure and policy uptake before it can affect terminal outcome. A forced-memory packet bypasses the native exposure stage and therefore measures downstream \emph{leverage}, not native end-to-end transport.}
-\label{fig:write}
-\end{figure}
+\subsection{Native transport is a sequence of distinct observables}
+For a held-out future query $q$, define native retrieval exposure
+\[
+ E_r(q)=\mathbf{1}[\operatorname{Retrieve}(q;\mathcal{M}^{(r)})\neq\varnothing].
+\]
+Exposure is an availability variable: it says that branch-conditioned persistent state reached the policy context. It does not say that the policy used the branch-specific part of that state.
 
-\subsection{Forced leverage versus native transport}
-A direct memory injection and a native memory-bank rollout estimate different quantities. In a forced packet, the experimenter supplies $M_r$ to the policy, so exposure is mechanically set to one. The terminal contrast
-\begin{equation}
-L_Y(x')=\left|\mathbb{E}[Y\mid do(M=M_1),x']-\mathbb{E}[Y\mid do(M=M_0),x']\right|
-\end{equation}
-asks whether the paired states are \emph{capable} of changing behavior under matched evidence. In native reuse, retrieval remains part of the system, and the end-to-end contrast combines exposure and uptake. Consequently, $L_Y>0$ does not imply a large native $T_Y$.
+We therefore measure the first downstream decision boundary separately. Let $p_r^{(1)}(\cdot\mid q)$ be the first-action distribution under branch $r$. The action-level contrast is
+\[
+ U(q)=\operatorname{TV}\!\left(p_S^{(1)}(\cdot\mid q),p_F^{(1)}(\cdot\mid q)\right).
+\]
+Finally, for terminal outcome $y_r(q)$,
+\[
+ O(q)=\left|y_S(q)-y_F(q)\right|.
+\]
+The native scientific object is therefore the ordered observation tuple
+\[
+ \mathcal{T}_{\mathrm{native}}(q)=\big(W, E, U, O\big),
+\]
+not any one component in isolation.
 
-This distinction resolves an apparent contradiction in our experiments. Forced injection produces a substantial terminal contrast, while native Shopping and Reddit transport is sparse. Rather than choosing one result as the ``real'' effect, the stage model treats both as measurements of different links in the same causal chain.
+Crucially, these components are \textbf{not commensurate}. $W$ is a memory-state distance, $E$ is an exposure indicator/rate, $U$ is a distributional action distance, and $O$ is an endpoint contrast. We therefore do not divide them into a scalar ``transport efficiency'' or treat their numerical differences as a mediation decomposition. The order is mechanistic; the scales are not.
 
-\subsection{Attenuation as the mechanism diagnostic}
-For descriptive comparison, define a stage attenuation ratio whenever the upstream denominator is nonzero,
-\begin{equation}
-\alpha_{j\rightarrow k}=\frac{T_k}{T_j}.
-\end{equation}
-We do not interpret this ratio as a universal causal coefficient because the stage metrics use different scales. Its role is diagnostic: it forces the analysis to ask where a large upstream intervention stops being behaviorally expressed. The scientific claim rests on the separately measured stage endpoints and their qualitative ordering, not on a single composite score.
+\subsection{Forced leverage is a capacity control, not a native stage}
+The forced fixed-evidence experiment mechanically supplies paired memory content to the downstream task packet. Let
+\[
+ L_{\mathrm{forced}}(q)=\left|y^{\mathrm{forced},S}(q)-y^{\mathrm{forced},F}(q)\right|.
+\]
+Because native retrieval is bypassed, $L_{\mathrm{forced}}$ is not inserted between $W$ and $E$. It answers a different question: \emph{can} branch-specific memory content affect the downstream system when supplied? Native $(E,U,O)$ asks whether the deployed memory path \emph{does} transport that contrast. This capacity-versus-transport separation is the key control that prevents a weak native endpoint from being summarized as ``memory can never matter.''
 
-The resulting evaluation principle is simple: \emph{do not infer behavioral authority from persistent-state divergence alone}. An update should be characterized at the write, exposure, uptake, and outcome stages separately, with forced-injection tests used only to establish latent leverage when native transport is weak.
+\subsection{An ordinal stage-evidence ladder}
+\label{sec:evidence-ladder}
+The central measurement problem is that $W$, $E$, $U$, and $O$ cannot be compared on one numerical scale. We therefore localize attenuation with an \emph{ordinal evidence ladder} rather than a post-hoc transport coefficient. Let the ordered native stages be
+\[
+  s_1=\text{write},\quad s_2=\text{retrieval exposure},\quad s_3=\text{first-action uptake},\quad s_4=\text{terminal outcome}.
+\]
+For each stage we preserve its native evidence semantics. A stage may be \textsc{Supported} by its frozen inferential test, \textsc{Observed} directly when the claim is descriptive rather than thresholded, or \textsc{Not-Supported} when its frozen primary test does not establish a stable branch contrast. We then define
+\[
+  b^*=\min\{j:\;s_j\text{ is not supported/observed while }s_1,\ldots,s_{j-1}\text{ are supported/observed}\}.
+\]
+This is an ordering rule, not a ratio: no cross-stage units are divided, normalized, or interpreted as mediation mass.
+
+The forced fixed-evidence arm is evaluated separately as a \emph{side capacity condition}. It can weaken the global-insensitivity explanation, but because it bypasses native retrieval it cannot make an otherwise unsupported native stage pass. This prevents the positive forced endpoint from being inserted into the native chain merely because it is statistically strong.
+
+The same ladder can be read as an alternative-explanation audit:
+\begin{align*}
+\textbf{A1: no state intervention} &\Rightarrow W\approx 0,\\
+\textbf{A2: global downstream insensitivity} &\Rightarrow L_{\mathrm{forced}}\approx 0,\\
+\textbf{A3: retrieval absence only} &\Rightarrow E\approx 0,\\
+\textbf{A4: exposure is uptake} &\Rightarrow \text{observed }E\text{ should be accompanied by supported }U,\\
+\textbf{A5: universal directional transport} &\Rightarrow O\text{ should be broadly nonzero with stable sign.}
+\end{align*}
+In our frozen evidence, write is \textsc{Supported}, native exposure is \textsc{Observed}, first-action uptake is \textsc{Not-Supported}, and terminal transport is sparse and sign-heterogeneous. Hence $b^*=s_3$: the strongest supported operational attenuation boundary is \textbf{after exposure and before stable first-action uptake}. The positive forced side control further weakens a global-insensitivity account without changing $b^*$.
+
+This is still not an identified mediator coefficient. A causal mediation statement would additionally require compatible intervention surfaces and a noise/seed design that isolates each branch-specific atom. We do not have that evidence and do not make that claim.
+
+\subsection{Interpretation discipline}
+Three non-implications are load-bearing throughout the paper:
+\[
+  \text{persistent-state divergence}\not\Rightarrow\text{behavioral divergence},
+\]
+\[
+  \text{retrieval exposure}\not\Rightarrow\text{policy uptake},
+\]
+\[
+  \text{forced leverage}\not\equiv\text{native end-to-end transport}.
+\]
+These distinctions also explain why our stopped evidence-gated residual extension is not a negative method result: that extension failed qualification before a behavioral method-effect experiment was authorized. The present paper therefore remains an identification/measurement study of the transport chain.

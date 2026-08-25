@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision_id": "C1-STAGE-RESOLVED-TRANSPORT-BOTTLENECK-R2-20260825",
+  "status": "PAPER_ONLY_BOTTLENECK_LOCALIZATION_STRENGTHENING_COMPLETE",
+  "scientific_route": "IDENTIFICATION_MEASUREMENT",
+  "method_route": "CBRG_CURRENT_EXTENSION_STOP_MERGE",
+  "source_scientific_state": "STAGE_RESOLVED_IDENTIFICATION_MEASUREMENT_PAPER_RETAINED",
+  "new_scientific_execution": false,
+  "analysis_binding": {
+    "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-transport-bottleneck-analysis-20260825.json",
+    "sha256": "10a85adf4181c0b9f97691602eee28b59b918853d36a5735a9ea4fe864bef105",
+    "runner": "paper_drafts/c1-manuscript-strengthening-20260825/analyze_stage_transport_bottleneck.py",
+    "runner_sha256": "654ba859f61a54764cd42672ba072f4315596ffaacd067ce55b629458762f463"
+  },
+  "scientific_deepening": {
+    "r1_object": "write -> retrieval exposure -> first-action uptake -> terminal outcome",
+    "r2_object": "capacity-versus-native-transport bottleneck localization with alternative-explanation audit",
+    "native_chain": [
+      "persistent write",
+      "native retrieval exposure",
+      "first-action uptake",
+      "native terminal outcome"
+    ],
+    "forced_control_role": "side capacity/leverage control that bypasses native retrieval; not a native chain stage",
+    "strongest_supported_localization": "after exposure and before stable first-action uptake",
+    "claim_strength": "SUPPORTED_OPERATIONAL_LOCALIZATION_NOT_CAUSAL_MEDIATION",
+    "forbidden_scalarization": "Memory distance, retrieval rate, first-action TV, and terminal absolute difference are not commensurate and are not divided into a transport-efficiency or mediation coefficient."
+  },
+  "alternative_explanation_audit": [
+    {
+      "explanation": "no persistent state intervention",
+      "disposition": "INCONSISTENT_WITH_FROZEN_EVIDENCE",
+      "evidence": "20/20 Shopping and 4/4 Reddit write divergence plus same-mode paired excess 0.105, p=0.0078"
+    },
+    {
+      "explanation": "downstream policy globally insensitive to memory content",
+      "disposition": "WEAKENED_NOT_ELIMINATED",
+      "evidence": "forced fixed-evidence terminal |Delta|=0.15625, p=0.00074"
+    },
+    {
+      "explanation": "native null is only retrieval absence",
+      "disposition": "WEAKENED_NOT_ELIMINATED",
+      "evidence": "125/172 native Shopping retrieval hits"
+    },
+    {
+      "explanation": "retrieval hit is a valid surrogate for policy uptake",
+      "disposition": "REJECTED_AS_EVALUATION_EQUIVALENCE",
+      "evidence": "first-action TV=0.06944, p=0.5801, 0/36 modal changes"
+    },
+    {
+      "explanation": "universal directional terminal transport",
+      "disposition": "NOT_SUPPORTED",
+      "evidence": "Shopping 34/36 terminal cells zero; Reddit 6/8 zero with opposite signs for the two nonzero cells"
+    },
+    {
+      "explanation": "observed attenuation is a certified causal mediator effect",
+      "disposition": "UNRESOLVED_AND_FORBIDDEN_AS_CLAIM",
+      "evidence": "no per-atom seed/noise-floor certification and forced/native surfaces are not the same intervention"
+    }
+  ],
+  "manuscript_changes": [
+    "abstract rewritten around transport bottleneck rather than four-stage listing",
+    "introduction now motivates competing explanations and capacity-versus-transport separation",
+    "mechanism formalization now separates the native chain from forced capacity and forbids cross-stage scalarization",
+    "results now contain an explicit six-row alternative-explanation audit",
+    "Fig.4 redrawn so forced fixed-evidence capacity is a side control rather than an intermediate native stage",
+    "related work and conclusion now state the operational localization and its causal boundary",
+    "Obsidian C1 page and Paper Story/Reader projections updated to the R2 interpretation"
+  ],
+  "artifacts": {
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r2.pdf",
+      "sha256": "31119526958d1d19ae64e5e379ebc56b7562e342c082dfc715cc1fa0284d52c8",
+      "pages": 13
+    },
+    "source_zip": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r2-source.zip",
+      "sha256": "e04f88ddeabe0c4cd273fdad286e38707c929662181a0d40752c1cec888d113e"
+    },
+    "stage_figure": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/figures/fig4_stage_resolved_transport.pdf",
+      "sha256": "146b7d34cdf7fee206e386104bf43ffdffc7dc7505c990adc7fd38e42ee1815c"
+    }
+  },
+  "pdf_qa": {
+    "latex_undefined_references": 0,
+    "latex_overfull_boxes": 0,
+    "rendered_pages": 13,
+    "raster_edge_risk_pages": 0,
+    "text_bbox_edge_risk_pages": 0,
+    "inspection_boundary": "Raster and text-boundary QA executed on the research host; no direct visual file-transfer channel was available in this session."
+  },
+  "historical_artifact_repair": {
+    "problem": "R1 receipt originally pointed at mutable source/main.pdf, which R2 compilation overwrote.",
+    "repair": "Recovered the exact R1 PDF from commit c918fe45 and froze it as C1-stage-resolved-r1.pdf; R2 is separately frozen as C1-stage-resolved-r2.pdf. source/main.pdf is now treated only as a mutable build target.",
+    "r1_pdf_sha256_preserved": "c311322b8e9750c7e8986c85cea7bd1bfe16bb67079e234b7b11b64a1700b1c0"
+  },
+  "execution": {
+    "new_scientific_provider_calls": 0,
+    "new_gpu_scientific_runs": 0,
+    "new_scientific_experiments": 0,
+    "offline_analysis_and_manuscript_builds_only": true
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "claim_expansion": false,
+    "submission": false
+  }
+}
