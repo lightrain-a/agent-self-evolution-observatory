@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "experiment_id": "STRI-R2-CREDIT-PARTITION-GEOMETRY-P3-20260825",
+  "stage": "MECHANISM_REDESIGN_DETERMINISTIC_P3_CONTRACT",
+  "purpose": "Test whether the threshold credit-fragmentation phase law extends from balanced exact refinements to arbitrary weak compositions of fixed semantic evidence across exact identities.",
+  "frozen_parameters": {
+    "threshold_M": 8,
+    "k_values": [2, 3, 4, 5, 6],
+    "N_min": 8,
+    "N_max": 48,
+    "evidence_regime": "all evidence items retirement-eligible",
+    "partition_family": "all weak integer compositions of N into k identity-local evidence counts"
+  },
+  "frozen_predictions": {
+    "aggregate_class_retires_iff": "N >= M",
+    "native_class_retires_iff": "min_j n_j >= M",
+    "guaranteed_fragmentation_region": "M <= N < kM implies fragmentation for every partition",
+    "partition_dependent_tail": "N >= kM permits both invariant and fragmented partitions",
+    "closed_form_fragmentation_fraction": "1 - C(N-kM+k-1,k-1)/C(N+k-1,k-1) for N>=kM; 1 for M<=N<kM",
+    "balanced_partition_role": "balanced allocation achieves the earliest possible native full retirement at N=kM and is therefore the best-case, not the only, partition"
+  },
+  "pass_gate": {
+    "all_exhaustively_enumerated_cells_match_closed_form": true,
+    "all_cells_in_guaranteed_region_have_fragmentation_fraction_one": true,
+    "at_least_one_partition_dependent_tail_cell_has_fraction_strictly_between_zero_and_one": true
+  },
+  "stop_if": "Any exhaustive weak-composition count disagrees with the frozen closed-form formula or any partition in M<=N<kM is invariant.",
+  "new_model_calls_authorized": 0,
+  "new_agent_runs_authorized": 0,
+  "new_gpu_runs_authorized": 0,
+  "claim_expansion_authorized": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}
