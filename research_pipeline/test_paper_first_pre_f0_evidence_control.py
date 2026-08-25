@@ -99,7 +99,7 @@ class CanonicalPreF0EvidenceControlTest(unittest.TestCase):
                 again.assert_not_called()
 
 
-    def test_primary_asset_release_reopens_only_design_review_without_provider_or_execution_authority(self)->None:
+    def test_metadata_only_primary_asset_release_stays_hold_without_provider_or_execution_authority(self)->None:
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);queue,support,plan,pub,js=inputs(root);prepare(queue_path=queue,support_path=support,plan_path=plan,json_path=pub,js_path=js,max_active=1);private=storage(root/"private")
             first_party=design_payload("PORT-013");d=first_party["designs"][0];d.update({"source_specificity":"REPRODUCIBLE_FIRST_PARTY","acquisition_mode":"FIRST_PARTY_SANDBOX","anti_bake_in_controls":["external truth","frozen units","candidate cannot generate outcomes"]})
@@ -112,12 +112,12 @@ class CanonicalPreF0EvidenceControlTest(unittest.TestCase):
                 review(storage=private,queue_path=queue,support_path=support,plan_path=plan,json_path=pub,js_path=js,model="deepseek-v4-pro")
             held=json.loads(plan.read_text());row=held["entries"][0]
             self.assertEqual(held["status"],"EVIDENCE_WAIT_OR_HOLD");self.assertEqual(row["status"],"HOLD_EVIDENCE_REVIEW_BLOCKED")
-            receipt={"receipts":[{"candidate_id":"PORT-013","candidate_snapshot_sha256":row["candidate_snapshot_sha256"],"blocked_contract_sha256":row["contract_sha256"],"release_kind":"FIRST_PARTY_PRIMARY_ASSET_DELTA","authoritative_source":"https://huggingface.co/datasets/example/primary","authoritative_revision":"1"*40,"materialized_asset_kind":"released query JSON metadata","materialized_unit_count":254,"asset_manifest_sha256":"2"*64,"schema_fields":["query_type","verifier_type","verification_criteria"],"newly_independent_variables":["query_type"],"remaining_missing_requirements":["per-case target-model outcome"],"materialization_verified":True,"synthetic_substitute":False,"transport_source":"https://mirror.example/primary@revision","transport_is_authority":False,"scientific_authority":False,"execution_authority":False,"reopen_scope":"DESIGN_REVIEW_ONLY"}]}
+            receipt={"receipts":[{"candidate_id":"PORT-013","candidate_snapshot_sha256":row["candidate_snapshot_sha256"],"blocked_contract_sha256":row["contract_sha256"],"release_kind":"FIRST_PARTY_PRIMARY_ASSET_DELTA","authoritative_source":"https://huggingface.co/datasets/example/primary","authoritative_revision":"1"*40,"materialized_asset_kind":"released query JSON metadata","materialized_unit_count":254,"asset_manifest_sha256":"2"*64,"schema_fields":["query_type","verifier_type","verification_criteria"],"newly_independent_variables":["query_type"],"remaining_missing_requirements":["per-case target-model outcome"],"required_reopen_components":["query_units","per_case_outcomes"],"materialized_reopen_components":["query_units"],"remaining_reopen_blockers":["per_case_outcomes"],"qualifying_outcome_artifact":False,"materialization_verified":True,"synthetic_substitute":False,"transport_source":"https://mirror.example/primary@revision","transport_is_authority":False,"scientific_authority":False,"execution_authority":False,"reopen_scope":"RELEASE_CHANGE_AUDIT_ONLY"}]}
             with patch("research_pipeline.paper_first_pre_f0_evidence_control._ark_with_provider_receipt") as provider:
                 out=primary_asset_release(receipt_payload=receipt,storage=private,queue_path=queue,support_path=support,plan_path=plan,json_path=pub,js_path=js);provider.assert_not_called()
             reopened=json.loads(plan.read_text());row=reopened["entries"][0]
-            self.assertEqual(reopened["status"],"EVIDENCE_DESIGN_PENDING");self.assertEqual(row["status"],"NEEDS_BOUNDED_EVIDENCE_DESIGN")
-            self.assertFalse(row["execution_authorized"]);self.assertEqual(row["primary_asset_release_receipt"]["reopen_scope"],"DESIGN_REVIEW_ONLY")
+            self.assertEqual(reopened["status"],"EVIDENCE_WAIT_OR_HOLD");self.assertEqual(row["status"],"HOLD_EVIDENCE_REVIEW_BLOCKED")
+            self.assertFalse(row["execution_authorized"]);self.assertEqual(row["primary_asset_release_receipt"]["reopen_scope"],"RELEASE_CHANGE_AUDIT_ONLY")
             self.assertEqual(row["primary_asset_release_receipt"]["remaining_missing_requirements"],["per-case target-model outcome"])
             self.assertEqual(out["last_stage"]["stage"],"primary-asset-release");self.assertEqual(out["last_stage"]["provider_calls_executed"],0);self.assertEqual(validate_public_state(out),[])
 

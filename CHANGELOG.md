@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-26 · Fail-closed primary-release reopen semantics
+
+- Split first-party release handling into `RELEASE_CHANGE_AUDIT_ONLY` versus `DESIGN_REVIEW_ONLY`: a changed upstream revision is now recorded without reopening a scientific HOLD unless the frozen reopen condition is actually satisfied.
+- Added structured reopen-component accounting (`required_reopen_components`, `materialized_reopen_components`, and `remaining_reopen_blockers`) plus zero-authority validation so metadata-only releases cannot silently stand in for missing author-released outcomes.
+- Re-adjudicated PORT-010 against VWE-Bench: 254 released test metadata units remain useful provenance-bearing support, but the missing author-released per-case Pass@1/outcome artifact keeps the prior `BLOCK_BAKE_IN` / `HOLD_EVIDENCE_REVIEW_BLOCKED` contract effective. Self-generated `main.py`/`eval.py` rollouts remain prohibited from being represented as author-released evidence.
+- Preserved the historical erroneous reopen receipt as audit provenance, set effective reopen count to zero, refreshed only the Pre-F0-derived composite projection, and kept provider/GPU/scientific execution authority at zero.
+
 ## 2026-08-17 · Site-wide Chinese-first frontend pass
 
 - Fixed language switching at the shared shell level: brand, sidebar navigation, search placeholder, sidebar note, footer, and the global current-research strip now rerender with the selected language instead of leaving an English shell around Chinese page content.

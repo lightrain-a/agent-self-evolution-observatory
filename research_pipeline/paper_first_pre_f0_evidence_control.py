@@ -52,6 +52,7 @@ POLICY = {
     "design_cannot_authorize_execution": True,
     "independent_review_required_before_substrate_preflight": True,
     "primary_asset_release_reopens_design_review_only": True,
+    "release_change_without_reopen_condition_stays_hold": True,
     "support_hold_is_not_scientific_negative": True,
     "first_party_design_must_preserve_frozen_prediction_baseline_and_falsifier": True,
     "automatic_problem_gate_method_experiment_p0_gpu_authority": False,
@@ -268,11 +269,12 @@ def review(*,storage:StorageSettings|None=None,queue_path:Path=DEFAULT_QUEUE_JSO
 
 
 def primary_asset_release(*,receipt_payload:dict[str,Any],storage:StorageSettings|None=None,queue_path:Path=DEFAULT_QUEUE_JSON,support_path:Path=DEFAULT_SUPPORT_JSON,plan_path:Path=DEFAULT_PLAN_JSON,json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS) -> dict[str,Any]:
-    """Record a content-addressed first-party asset delta and reopen design/review only.
+    """Record a content-addressed first-party asset delta under a fail-closed reopen contract.
 
-    This stage is provider-free and outcome-free. It may remove a provenance
-    blocker, but it never qualifies scientific support, clears independent
-    review, or authorizes evidence execution.
+    This stage is provider-free. A release change whose frozen reopen condition
+    is still unsatisfied is recorded as RELEASE_CHANGE_AUDIT_ONLY and remains
+    HOLD. Only a qualifying receipt may reopen design/review; neither path grants
+    scientific or execution authority.
     """
     storage=storage or StorageSettings.from_env();storage.ensure()
     with _execution_lock(storage):

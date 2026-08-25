@@ -49,6 +49,7 @@ POLICY={
  "research_memory_query_pack_is_zero_authority":True,
  "transient_operational_memory_excluded_from_evidence_design":True,
  "research_memory_query_pack_receipt_required":True,
+ "release_change_without_reopen_condition_stays_hold":True,
  "scientific_authority":False,
 }
 
@@ -358,14 +359,22 @@ def compile_evidence_reviews(plan:dict,payload:dict,*,part:int=1,reviewer_model:
    e["status"]="HOLD_EVIDENCE_REVIEW_BLOCKED";e["review_feedback"]=reason or revision or "independent evidence review did not clear all mandatory checks"
  _promote_deferred(entries);out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"last_review_part":part,"scientific_authority":False,"authority":dict(AUTHORITY)});out["status"]=_plan_status(entries);return out
 
-def reopen_evidence_design_on_primary_asset_release(plan:dict,receipt_payload:dict)->dict:
- """Reopen only the design/review cycle when a new primary-asset release removes a prior provenance blocker.
+def _prior_support_requires_released_outcome(entry:dict)->bool:
+ support=entry.get("prior_support") or {}
+ text=" ".join(str(support.get(key) or "").lower() for key in ("required_unit","reopen_only_if"))
+ return any(token in text for token in ("outcome","pass@1","reward"))
 
- The receipt is zero-authority and content-addressed.  It never marks support as qualified,
- clears independent review, performs substrate preflight, or authorizes evidence execution.
+def reopen_evidence_design_on_primary_asset_release(plan:dict,receipt_payload:dict)->dict:
+ """Audit a primary-asset release and reopen design/review only when its frozen reopen condition is met.
+
+ A release change is not itself a scientific reopen.  RELEASE_CHANGE_AUDIT_ONLY
+ preserves the current wait/hold state.  DESIGN_REVIEW_ONLY is allowed only when
+ the receipt has no remaining reopen blockers and, when the frozen support contract
+ requires released outcomes, the receipt explicitly verifies a qualifying outcome
+ artifact.  Both paths remain zero-authority and cannot authorize execution.
  """
  existing_errors=validate_evidence_plan(plan)
- if existing_errors:raise ValueError("cannot reopen invalid evidence plan:"+";".join(existing_errors))
+ if existing_errors:raise ValueError("cannot audit invalid evidence plan:"+";".join(existing_errors))
  entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set()
  for rec in [x for x in receipt_payload.get("receipts") or [] if isinstance(x,dict)]:
   cid=str(rec.get("candidate_id") or "").strip()
@@ -373,15 +382,15 @@ def reopen_evidence_design_on_primary_asset_release(plan:dict,receipt_payload:di
   seen.add(cid);e=by.get(cid)
   if not e:raise ValueError(f"primary-asset release has no candidate:{cid}")
   prior_status=str(e.get("status") or "")
-  if prior_status not in {"HOLD_EVIDENCE_REVIEW_BLOCKED","WAIT_PRIMARY_ASSET_RELEASE"}:raise ValueError(f"primary-asset release cannot reopen status:{cid}:{prior_status}")
+  if prior_status not in {"HOLD_EVIDENCE_REVIEW_BLOCKED","WAIT_PRIMARY_ASSET_RELEASE"}:raise ValueError(f"primary-asset release cannot audit status:{cid}:{prior_status}")
   prior_review=e.get("evidence_review") or {}
-  if prior_status=="HOLD_EVIDENCE_REVIEW_BLOCKED" and str(prior_review.get("verdict") or "").upper()!="BLOCK_BAKE_IN":raise ValueError(f"primary-asset release can reopen review block only after BLOCK_BAKE_IN:{cid}")
+  if prior_status=="HOLD_EVIDENCE_REVIEW_BLOCKED" and str(prior_review.get("verdict") or "").upper()!="BLOCK_BAKE_IN":raise ValueError(f"primary-asset release can audit review block only after BLOCK_BAKE_IN:{cid}")
   snapshot=str(e.get("candidate_snapshot_sha256") or "").strip().lower();receipt_snapshot=str(rec.get("candidate_snapshot_sha256") or "").strip().lower()
   if not re.fullmatch(r"[0-9a-f]{64}",snapshot) or receipt_snapshot!=snapshot:raise ValueError(f"primary-asset release candidate snapshot mismatch:{cid}")
   prior_contract=str(e.get("contract_sha256") or "").strip().lower();receipt_contract=str(rec.get("blocked_contract_sha256") or "").strip().lower()
   if not re.fullmatch(r"[0-9a-f]{64}",prior_contract) or receipt_contract!=prior_contract:raise ValueError(f"primary-asset release blocked-contract mismatch:{cid}")
   revision=str(rec.get("authoritative_revision") or "").strip().lower();manifest=str(rec.get("asset_manifest_sha256") or "").strip().lower();source=str(rec.get("authoritative_source") or "").strip();kind=_b(rec.get("materialized_asset_kind"),500)
-  fields=sorted({str(x).strip() for x in rec.get("schema_fields") or [] if str(x).strip()});variables=sorted({str(x).strip() for x in rec.get("newly_independent_variables") or [] if str(x).strip()});remaining=[_b(x,900) for x in rec.get("remaining_missing_requirements") or [] if _b(x,900)]
+  fields=sorted({str(x).strip() for x in rec.get("schema_fields") or [] if str(x).strip()});variables=sorted({str(x).strip() for x in rec.get("newly_independent_variables") or [] if str(x).strip()});remaining=[_b(x,900) for x in rec.get("remaining_missing_requirements") or [] if _b(x,900)];required_components=sorted({str(x).strip() for x in rec.get("required_reopen_components") or [] if str(x).strip()});materialized_components=sorted({str(x).strip() for x in rec.get("materialized_reopen_components") or [] if str(x).strip()});reopen_blockers=sorted({str(x).strip() for x in rec.get("remaining_reopen_blockers") or [] if str(x).strip()})
   try:unit_count=int(rec.get("materialized_unit_count"))
   except (TypeError,ValueError):unit_count=0
   if str(rec.get("release_kind") or "").upper()!="FIRST_PARTY_PRIMARY_ASSET_DELTA":raise ValueError(f"invalid primary-asset release kind:{cid}")
@@ -389,18 +398,29 @@ def reopen_evidence_design_on_primary_asset_release(plan:dict,receipt_payload:di
   if unit_count<=0 or not kind or not fields or not variables or not re.fullmatch(r"[0-9a-f]{64}",manifest):raise ValueError(f"primary-asset release requires content-addressed materialized units and schema:{cid}")
   if rec.get("materialization_verified") is not True or rec.get("synthetic_substitute") is not False:raise ValueError(f"primary-asset release must be verified and non-synthetic:{cid}")
   if rec.get("transport_is_authority") is not False or rec.get("scientific_authority") is not False or rec.get("execution_authority") is not False:raise ValueError(f"primary-asset release receipt must remain zero-authority:{cid}")
-  if str(rec.get("reopen_scope") or "").upper()!="DESIGN_REVIEW_ONLY":raise ValueError(f"primary-asset release may reopen design/review only:{cid}")
-  material={"candidate_id":cid,"candidate_snapshot_sha256":snapshot,"blocked_contract_sha256":prior_contract,"release_kind":"FIRST_PARTY_PRIMARY_ASSET_DELTA","authoritative_source":source,"authoritative_revision":revision,"materialized_asset_kind":kind,"materialized_unit_count":unit_count,"asset_manifest_sha256":manifest,"schema_fields":fields,"newly_independent_variables":variables,"remaining_missing_requirements":remaining,"materialization_verified":True,"synthetic_substitute":False,"transport_source":_b(rec.get("transport_source"),1200),"transport_is_authority":False,"reopen_scope":"DESIGN_REVIEW_ONLY","scientific_authority":False,"execution_authority":False}
+  scope=str(rec.get("reopen_scope") or "").upper();qualifying_outcome=rec.get("qualifying_outcome_artifact") is True
+  if scope not in {"DESIGN_REVIEW_ONLY","RELEASE_CHANGE_AUDIT_ONLY"}:raise ValueError(f"invalid primary-asset release scope:{cid}")
+  if required_components:
+   computed_blockers=sorted(set(required_components)-set(materialized_components))
+   if reopen_blockers!=computed_blockers:raise ValueError(f"primary-asset release structured reopen blockers mismatch:{cid}")
+  if scope=="DESIGN_REVIEW_ONLY" and reopen_blockers:raise ValueError(f"primary-asset release still has reopen blockers:{cid}:{','.join(reopen_blockers)}")
+  if scope=="DESIGN_REVIEW_ONLY" and _prior_support_requires_released_outcome(e) and not qualifying_outcome:raise ValueError(f"primary-asset release does not satisfy outcome-bearing reopen condition:{cid}")
+  material={"candidate_id":cid,"candidate_snapshot_sha256":snapshot,"blocked_contract_sha256":prior_contract,"release_kind":"FIRST_PARTY_PRIMARY_ASSET_DELTA","release_change_detected":True,"authoritative_source":source,"authoritative_revision":revision,"materialized_asset_kind":kind,"materialized_unit_count":unit_count,"asset_manifest_sha256":manifest,"schema_fields":fields,"newly_independent_variables":variables,"remaining_missing_requirements":remaining,"required_reopen_components":required_components,"materialized_reopen_components":materialized_components,"remaining_reopen_blockers":reopen_blockers,"qualifying_outcome_artifact":qualifying_outcome,"materialization_verified":True,"synthetic_substitute":False,"transport_source":_b(rec.get("transport_source"),1200),"transport_is_authority":False,"reopen_scope":scope,"scientific_authority":False,"execution_authority":False}
   material["receipt_sha256"]=_sha(material)
   if str((e.get("primary_asset_release_receipt") or {}).get("receipt_sha256") or "")==material["receipt_sha256"]:raise ValueError(f"duplicate primary-asset release receipt:{cid}")
+  e["primary_asset_release_receipt"]=material
+  if scope=="RELEASE_CHANGE_AUDIT_ONLY":
+   history=list(e.get("primary_asset_release_audit_history") or []);history.append({"audited_at":_now(),"preserved_status":prior_status,"preserved_contract_sha256":prior_contract,"release_receipt":material,"reason":"release change did not satisfy the frozen reopen condition; wait/hold is preserved","scientific_authority":False})
+   e["primary_asset_release_audit_history"]=history;e["primary_asset_release_audit_count"]=int(e.get("primary_asset_release_audit_count") or 0)+1;e["release_change_feedback"]="Release change recorded without scientific reopen; frozen wait/hold remains effective until the missing reopen blocker is satisfied.";e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY)
+   continue
   history=list(e.get("primary_asset_release_reopen_history") or []);history.append({"reopened_at":_now(),"prior_status":prior_status,"prior_contract_sha256":prior_contract,"prior_design":json.loads(json.dumps(e.get("design") or {},ensure_ascii=False)),"prior_design_provenance":json.loads(json.dumps(e.get("design_provenance") or {},ensure_ascii=False)),"prior_evidence_review":json.loads(json.dumps(prior_review,ensure_ascii=False)),"prior_operationalization_recompile":json.loads(json.dumps(e.get("operationalization_recompile") or {},ensure_ascii=False)),"release_receipt":material,"scientific_authority":False})
-  e["primary_asset_release_reopen_history"]=history;e["primary_asset_release_receipt"]=material;e["primary_asset_release_reopen_count"]=int(e.get("primary_asset_release_reopen_count") or 0)+1
-  e["status"]="NEEDS_BOUNDED_EVIDENCE_DESIGN";e["design"]={};e["contract_sha256"]="";e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY);e["review_feedback"]="New content-addressed primary assets may remove the prior bake-in defect. Redesign only against the released schema; remaining missing requirements stay unresolved until separately acquired or authorized."
+  e["primary_asset_release_reopen_history"]=history;e["primary_asset_release_reopen_count"]=int(e.get("primary_asset_release_reopen_count") or 0)+1
+  e["status"]="NEEDS_BOUNDED_EVIDENCE_DESIGN";e["design"]={};e["contract_sha256"]="";e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY);e["review_feedback"]="New content-addressed primary assets satisfy the frozen release reopen condition. Redesign only against the released schema; no downstream authority is granted."
   for key in ("design_audit","design_provenance","evidence_review","source_specific_design","original_source_specific_design","operationalization_recompile","operationalization_recompile_adjudication","operationalization_recompile_audit","substrate_preflight","harness_implementation"):
    e.pop(key,None)
  _promote_deferred(entries);out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"scientific_authority":False,"authority":dict(AUTHORITY)});out["status"]=_plan_status(entries)
  errors=validate_evidence_plan(out)
- if errors:raise ValueError("primary-asset release reopen produced invalid evidence plan:"+";".join(errors))
+ if errors:raise ValueError("primary-asset release audit produced invalid evidence plan:"+";".join(errors))
  return out
 
 def build_substrate_preflight_request(plan:dict)->dict:
@@ -503,6 +523,11 @@ def validate_evidence_plan(state:dict)->list[str]:
   release=r.get("primary_asset_release_receipt") or {}
   if release:
    if release.get("scientific_authority") is not False or release.get("execution_authority") is not False or release.get("transport_is_authority") is not False:errors.append("primary-asset-release-authority-leak")
-   if release.get("synthetic_substitute") is not False or str(release.get("reopen_scope") or "")!="DESIGN_REVIEW_ONLY":errors.append("primary-asset-release-scope-invalid")
+   scope=str(release.get("reopen_scope") or "")
+   if release.get("synthetic_substitute") is not False or scope not in {"DESIGN_REVIEW_ONLY","RELEASE_CHANGE_AUDIT_ONLY"}:errors.append("primary-asset-release-scope-invalid")
+   required_components=sorted({str(x).strip() for x in release.get("required_reopen_components") or [] if str(x).strip()});materialized_components=sorted({str(x).strip() for x in release.get("materialized_reopen_components") or [] if str(x).strip()});reopen_blockers=sorted({str(x).strip() for x in release.get("remaining_reopen_blockers") or [] if str(x).strip()})
+   if required_components and reopen_blockers!=sorted(set(required_components)-set(materialized_components)):errors.append("primary-asset-release-structured-reopen-blockers-mismatch")
+   if scope=="DESIGN_REVIEW_ONLY" and reopen_blockers:errors.append("primary-asset-release-reopen-blockers-remain")
+   if scope=="DESIGN_REVIEW_ONLY" and _prior_support_requires_released_outcome(r) and release.get("qualifying_outcome_artifact") is not True:errors.append("primary-asset-release-outcome-reopen-unsatisfied")
    if not re.fullmatch(r"[0-9a-f]{64}",str(release.get("receipt_sha256") or "")) or not re.fullmatch(r"[0-9a-f]{64}",str(release.get("asset_manifest_sha256") or "")):errors.append("primary-asset-release-digest-invalid")
  return sorted(set(errors))
