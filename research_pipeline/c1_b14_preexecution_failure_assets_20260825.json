@@ -1,0 +1,96 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_B14_PREEXECUTION_EXTERNAL_FAILURE_ASSETS",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825",
+  "source_run_root": "private-data://runs/d2-proxy-reward-b14-live-native-transport-20260825",
+  "source_status": "PREEXECUTION_READY_EXCEPT_PROVIDER_SUPPORT",
+  "source_target_sha256": "4670a444387aa91173d54df15a0a88e597ec2ca4624e61bdff50a81bb4d0d4ee",
+  "source_schedule_sha256": "af5f6514f6e4d44704b4a17fc996bba910e6f429a04c2fcbdabdc1d02a0cf37b",
+  "source_preexecution_qa_sha256": "a6e043e037ed3d93b8af4a3cc6cf7df6ce2bfcc9e0bda510d4ed5a20277974e8",
+  "monte_carlo_order_asset": {
+    "signature": "reproducibility:fixed-seed-monte-carlo-traversal-order",
+    "idea_id": "D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825",
+    "diagnosis": "fixed-seed-monte-carlo-traversal-order",
+    "affected_layer": "reproducibility",
+    "reusable_precheck": "Whenever a fixed RNG stream is consumed sequentially across experimental units, freeze statistical traversal order separately from execution order and regression-test the implementation against a content-addressed known result. A scientifically equivalent permutation distribution does not guarantee byte-reproducible Monte Carlo p-values after unit reordering.",
+    "evidence_ref": "private-data://runs/d2-proxy-reward-b14-live-native-transport-20260825/analyzer-regression.json#sha256=7230b1a3ed40deb2901a828b63897d6e1ebafccac1efea8159d79f1cc0b988d4",
+    "does_not_imply": "a scientific effect difference, method failure, core-principle failure, or invalidity of diversity-first execution ordering",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "reproducibility",
+      "experiment_family": "fixed-seed Monte Carlo or permutation inference",
+      "failure_mode": "execution reordering silently changes deterministic RNG consumption and therefore the reported finite Monte Carlo estimate",
+      "required_separation": "execution order versus analysis RNG traversal order"
+    },
+    "reuse_effectiveness": {
+      "reuse_count": 0,
+      "helped_count": 0,
+      "hurt_count": 0,
+      "status": "not-yet-measured"
+    },
+    "superseded_by": "",
+    "last_revalidated": "2026-08-25",
+    "source_decision": "B14_ANALYZER_REGRESSION_PASS_AFTER_ANALYSIS_ORDER_SEPARATION",
+    "source_observation": {
+      "wrong_execution_order_reproduction_p": 0.430166,
+      "canonical_b4_reproduction_p": 0.428866,
+      "canonical_b4_observed_effect": 0.020833,
+      "regression_status": "PASS"
+    },
+    "source_addendum_ref": "private-data://runs/d2-proxy-reward-b14-live-native-transport-20260825/analysis-order-addendum.json#sha256=ed5cca87c2c809393beec89de73b709a43ee6d1ddd185b51b9c95868f7e0fed0",
+    "can_authorize_problem_gate": false,
+    "can_authorize_experiment": false,
+    "can_authorize_provider": false,
+    "scientific_authority": false
+  },
+  "zero_provider_import_asset": {
+    "signature": "operationalization:zero-provider-import-time-credential-coupling",
+    "idea_id": "D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825",
+    "diagnosis": "zero-provider-import-time-credential-coupling",
+    "affected_layer": "operationalization",
+    "reusable_precheck": "A preflight declared zero-provider must not import modules whose top-level initialization constructs credential-bound or network-capable clients. Separate static routability/schema checks from runtime provider construction, record observable provider POSTs explicitly, and fail closed before scientific units if the preflight cannot remain credential-independent.",
+    "evidence_ref": "private-data://runs/d2-proxy-reward-b14-live-native-transport-20260825/substrate-preflight-v1-failure.json#sha256=6d12f02129254fc88acc352754365ea7f1a132af7d77c36068613848c6cc1da1",
+    "does_not_imply": "evaluator support failure, task-substrate failure, provider failure, model failure, or a scientific null",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "operationalization",
+      "experiment_family": "zero-provider environment, evaluator, or substrate qualification",
+      "failure_mode": "import-time construction of a credential-bound client blocks a preflight before any scientific unit or provider POST",
+      "repair_boundary": "static evaluator/schema routability may replace import-time construction only when no outcome or model execution is required"
+    },
+    "reuse_effectiveness": {
+      "reuse_count": 0,
+      "helped_count": 0,
+      "hurt_count": 0,
+      "status": "not-yet-measured"
+    },
+    "superseded_by": "",
+    "last_revalidated": "2026-08-25",
+    "source_decision": "B14_LIVE_SUBSTRATE_PREFLIGHT_V1_LOCAL_IMPORT_FAIL_REPAIRED_BY_ZERO_PROVIDER_V2",
+    "source_observation": {
+      "v1_tasks_attempted": 0,
+      "v1_observable_provider_posts": 0,
+      "v2_tasks_attempted": 36,
+      "v2_tasks_passed": 36,
+      "v2_observable_provider_posts": 0,
+      "v2_model_actions": 0,
+      "v2_scientific_outcomes_evaluated": 0
+    },
+    "repair_evidence_ref": "private-data://runs/d2-proxy-reward-b14-live-native-transport-20260825/substrate-preflight.json#sha256=d5d70215772c75b3e11c4278eab691e46062d0e04000a772c16673cdffaf1ae5",
+    "can_authorize_problem_gate": false,
+    "can_authorize_experiment": false,
+    "can_authorize_provider": false,
+    "scientific_authority": false
+  },
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "provider": false,
+    "p0": false,
+    "gpu": false
+  }
+}

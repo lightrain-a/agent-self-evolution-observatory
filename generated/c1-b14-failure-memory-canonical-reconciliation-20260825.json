@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_B14_FAILURE_MEMORY_CANONICAL_RECONCILIATION",
+  "generated_at": "2026-08-25T15:16:33+00:00",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825",
+  "canonical_base": "3fcf68bf974ed5166b413902493ff0c4e95ddebe",
+  "reconciliation_strategy": "selective zero-authority failure-memory projection onto the checked-in persisted state: append only the two indexed B14 assets/prechecks, insert only their two Wiki FAILURE_ASSET entries, and append only their derived graph nodes/edges; preserve all unrelated discovery/review/scientific state byte-semantics.",
+  "canonical_mechanism": {
+    "index": "research_pipeline/external_failure_assets.json",
+    "loader": "research_pipeline.research_system._load_external_failure_assets",
+    "compiler_argument": "failure_asset_library.additional_assets"
+  },
+  "source": {
+    "path": "research_pipeline/c1_b14_preexecution_failure_assets_20260825.json",
+    "sha256": "af181d51d0bce3ab8e000b2b13f826432539113d300a6edd6acf83e96f69b313",
+    "index_sha256": "cac54016938020d04994f9dd7841d48a43f0bf1788cd6cb59640483c7a050702"
+  },
+  "compiled_assets": [
+    {
+      "signature": "operationalization:zero-provider-import-time-credential-coupling",
+      "affected_layer": "operationalization",
+      "memory_id": "MEM-FAIL-701bf9fdd809641e82",
+      "prompt_eligible": true,
+      "scientific_authority": false
+    },
+    {
+      "signature": "reproducibility:fixed-seed-monte-carlo-traversal-order",
+      "affected_layer": "reproducibility",
+      "memory_id": "MEM-FAIL-4e44b25f6724497959",
+      "prompt_eligible": true,
+      "scientific_authority": false
+    }
+  ],
+  "validation": {
+    "research_system_validation_errors": [],
+    "new_assets_present": [
+      "operationalization:zero-provider-import-time-credential-coupling",
+      "reproducibility:fixed-seed-monte-carlo-traversal-order"
+    ],
+    "new_memory_entries_present": [
+      "operationalization:zero-provider-import-time-credential-coupling",
+      "reproducibility:fixed-seed-monte-carlo-traversal-order"
+    ],
+    "focused_loader_tests": "3/3 PASS",
+    "authority_leak": false,
+    "full_regression_tests": "90/90 PASS",
+    "persisted_validate_state_errors": [],
+    "git_diff_check": "PASS"
+  },
+  "projection_policy": {
+    "checked_in_generated_state_selectively_updated": true,
+    "full_recompiler_not_used_for_projection": true,
+    "reason": "A fresh full build also observes unrelated concurrent review/discovery state. The selective projection was built from the checked-in persisted state and passed validate_state with zero errors.",
+    "before_failure_assets": 10,
+    "after_failure_assets": 12,
+    "before_unique_signatures": 7,
+    "after_unique_signatures": 9,
+    "before_memory_entries": 93,
+    "after_memory_entries": 95,
+    "before_wiki_failure_assets": 7,
+    "after_wiki_failure_assets": 9,
+    "after_skill_candidates": 32,
+    "scientific_research_graph_failure_nodes": 12,
+    "unrelated_state_semantic_diff_forbidden": true
+  },
+  "scientific_state": {
+    "b14_scientific_episodes_executed": 0,
+    "b14_scientific_effect_established": false,
+    "provider_support_stop_preserved": true
+  },
+  "authority": {
+    "scientific_authority": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "provider": false,
+    "p0": false,
+    "gpu": false
+  },
+  "projected_files": {
+    "research_system_state_json": {
+      "path": "generated/research-system-state.json",
+      "sha256": "fa47a44fa6ea452f04be872a6011faaaa1ca1c912dba74e90ca87bfcfa66c82b"
+    },
+    "research_system_state_js": {
+      "path": "generated/research-system-state.js",
+      "sha256": "bde2e637f3aa3063ad97ae496c9700b6f03c0de8be2b1f1dd8b590400236e44a"
+    },
+    "research_memory_wiki_json": {
+      "path": "generated/research-memory-wiki.json",
+      "sha256": "c70f73f10c5237f3a2458a0d0c8254fa168c27a8b220fb714a23b87135d18f47"
+    },
+    "research_memory_wiki_js": {
+      "path": "generated/research-memory-wiki.js",
+      "sha256": "5a1d06c4f2f0e7ca3302635f96ca6d5e78a2585cc13132c46af4e160412849f7"
+    }
+  }
+}

@@ -6808,7 +6808,7 @@
     "meta_trace_unresolved": 2,
     "scientific_research_graph_nodes": 699,
     "scientific_research_graph_edges": 1042,
-    "research_memory_entries": 93,
+    "research_memory_entries": 95,
     "research_memory_certainty_typed": 93,
     "research_memory_skill_candidates": 30,
     "research_memory_contribution_lesson_templates": 2,
@@ -6838,7 +6838,7 @@
     "cross_failure_orthogonal_carriers": 3,
     "cross_failure_orthogonal_survivors": 0,
     "cross_failure_orthogonal_debate_eligible": 0,
-    "failure_assets": 10,
+    "failure_assets": 12,
     "value_scheduler_candidates": 0,
     "research_replay_passed": 8,
     "external_systems_reviewed": 46,
@@ -54019,8 +54019,8 @@
       "referenced_not_duplicated": true
     },
     "summary": {
-      "nodes": 699,
-      "edges": 1042,
+      "nodes": 702,
+      "edges": 1044,
       "node_kinds": {
         "candidate_problem": 3,
         "claim": 87,
@@ -54028,8 +54028,8 @@
         "dataset": 15,
         "domain": 13,
         "experiment": 78,
-        "failure_asset": 10,
-        "idea": 60,
+        "failure_asset": 12,
+        "idea": 61,
         "model": 6,
         "paper": 327,
         "paper-alias": 64,
@@ -54040,7 +54040,7 @@
         "belongs-to": 29,
         "citation": 47,
         "covers-domain": 72,
-        "diagnoses": 10,
+        "diagnoses": 12,
         "evaluates-on": 77,
         "nearest-work": 88,
         "principle_for": 2,
@@ -54055,13 +54055,13 @@
       },
       "base_nodes": 575,
       "base_edges": 952,
-      "overlay_nodes": 124,
-      "new_overlay_nodes": 124,
-      "overlay_edges": 90,
+      "overlay_nodes": 127,
+      "new_overlay_nodes": 127,
+      "overlay_edges": 92,
       "candidate_nodes": 3,
       "experiment_nodes": 78,
       "principle_nodes": 2,
-      "failure_asset_nodes": 10,
+      "failure_asset_nodes": 12,
       "scientific_closure_nodes": 0,
       "principle_closure_edges": 0
     },
@@ -55009,6 +55009,30 @@
         "label": "Harmful persistent updates should induce measurable pre-commit behavioral divergence; a gate can use this signal to avoid harmful commits while retaining useful updates.",
         "belief_state": "unresolved",
         "source": "scientific_meta_trace"
+      },
+      {
+        "id": "failure:aafc34c4600700e6",
+        "kind": "failure_asset",
+        "label": "operationalization:zero-provider-import-time-credential-coupling",
+        "affected_layer": "operationalization",
+        "does_not_imply": "evaluator support failure, task-substrate failure, provider failure, model failure, or a scientific null",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:d0abb62b426aa630",
+        "kind": "failure_asset",
+        "label": "reproducibility:fixed-seed-monte-carlo-traversal-order",
+        "affected_layer": "reproducibility",
+        "does_not_imply": "a scientific effect difference, method failure, core-principle failure, or invalidity of diversity-first execution ordering",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "idea:D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825",
+        "kind": "idea",
+        "label": "D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825",
+        "source": "failure_asset_library"
       }
     ],
     "overlay_edges": [
@@ -55461,6 +55485,16 @@
         "source": "failure:66b801c1f9359fc0",
         "target": "idea:C1-CBRG",
         "relation": "diagnoses"
+      },
+      {
+        "source": "failure:d0abb62b426aa630",
+        "target": "idea:D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:aafc34c4600700e6",
+        "target": "idea:D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825",
+        "relation": "diagnoses"
       }
     ],
     "scientific_authority": false
@@ -55738,7 +55772,7 @@
     "source_manifest": {
       "search_memory_closed_objects": 43,
       "search_memory_hold_objects": 9,
-      "failure_assets": 10,
+      "failure_assets": 12,
       "candidate_portfolio_visible": 3,
       "unresolved_principles": 2,
       "generator_blocked_attempts": 0,
@@ -55748,11 +55782,11 @@
       "result_analysis_lessons": 3
     },
     "summary": {
-      "entries": 93,
+      "entries": 95,
       "search_closures": 41,
       "scientific_closures": 2,
       "holds": 9,
-      "failure_assets": 7,
+      "failure_assets": 9,
       "success_assets": 3,
       "open_questions": 2,
       "repeated_review_blocks": 0,
@@ -55760,9 +55794,9 @@
       "review_lessons": 5,
       "paper_development_guidance": 1,
       "contribution_aware_lesson_templates": 2,
-      "prompt_eligible": 93,
-      "skill_candidates": 30,
-      "certainty_confirmed": 11,
+      "prompt_eligible": 95,
+      "skill_candidates": 32,
+      "certainty_confirmed": 13,
       "certainty_supported": 70,
       "certainty_tentative": 0,
       "certainty_speculative": 0,
@@ -55770,7 +55804,7 @@
       "certainty_not_applicable": 12,
       "transient": 0,
       "recurring_systemic": 16,
-      "scientific": 77
+      "scientific": 79
     },
     "entries": [
       {
@@ -56692,6 +56726,76 @@
         "source_artifact": "failure_asset_library",
         "occurrences": 1,
         "last_revalidated": "2026-08-23",
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0
+        },
+        "scientific_authority": false,
+        "certainty": "CONFIRMED",
+        "certainty_basis": "failure-receipt-backed",
+        "certainty_scope_bound": true,
+        "skill_candidate_eligible": true,
+        "automatic_skill_promotion": false
+      },
+      {
+        "memory_id": "MEM-FAIL-701bf9fdd809641e82",
+        "kind": "FAILURE_ASSET",
+        "title": "operationalization:zero-provider-import-time-credential-coupling",
+        "summary": "evaluator support failure, task-substrate failure, provider failure, model failure, or a scientific null",
+        "candidate_id": "",
+        "scope": "{\"ideas\": [\"D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825\"], \"reuse_scope\": {\"affected_layer\": \"operationalization\", \"experiment_family\": \"zero-provider environment, evaluator, or substrate qualification\", \"failure_mode\": \"import-time construction of a credential-bound client blocks a preflight before any scientific unit or provider POST\", \"repair_boundary\": \"static evaluator/schema routability may replace import-time construction only when no outcome or model execution is required\"}}",
+        "affected_layer": "operationalization",
+        "memory_class": "FAILURE_ASSET",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "",
+        "opposite_search_seed": "",
+        "reusable_precheck": "A preflight declared zero-provider must not import modules whose top-level initialization constructs credential-bound or network-capable clients. Separate static routability/schema checks from runtime provider construction, record observable provider POSTs explicitly, and fail closed before scientific units if the preflight cannot remain credential-independent.",
+        "source_refs": [
+          "private-data://runs/d2-proxy-reward-b14-live-native-transport-20260825/substrate-preflight-v1-failure.json#sha256=6d12f02129254fc88acc352754365ea7f1a132af7d77c36068613848c6cc1da1"
+        ],
+        "source_artifact": "failure_asset_library",
+        "occurrences": 1,
+        "last_revalidated": "2026-08-25",
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0
+        },
+        "scientific_authority": false,
+        "certainty": "CONFIRMED",
+        "certainty_basis": "failure-receipt-backed",
+        "certainty_scope_bound": true,
+        "skill_candidate_eligible": true,
+        "automatic_skill_promotion": false
+      },
+      {
+        "memory_id": "MEM-FAIL-4e44b25f6724497959",
+        "kind": "FAILURE_ASSET",
+        "title": "reproducibility:fixed-seed-monte-carlo-traversal-order",
+        "summary": "a scientific effect difference, method failure, core-principle failure, or invalidity of diversity-first execution ordering",
+        "candidate_id": "",
+        "scope": "{\"ideas\": [\"D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825\"], \"reuse_scope\": {\"affected_layer\": \"reproducibility\", \"experiment_family\": \"fixed-seed Monte Carlo or permutation inference\", \"failure_mode\": \"execution reordering silently changes deterministic RNG consumption and therefore the reported finite Monte Carlo estimate\", \"required_separation\": \"execution order versus analysis RNG traversal order\"}}",
+        "affected_layer": "reproducibility",
+        "memory_class": "FAILURE_ASSET",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "",
+        "opposite_search_seed": "",
+        "reusable_precheck": "Whenever a fixed RNG stream is consumed sequentially across experimental units, freeze statistical traversal order separately from execution order and regression-test the implementation against a content-addressed known result. A scientifically equivalent permutation distribution does not guarantee byte-reproducible Monte Carlo p-values after unit reordering.",
+        "source_refs": [
+          "private-data://runs/d2-proxy-reward-b14-live-native-transport-20260825/analyzer-regression.json#sha256=7230b1a3ed40deb2901a828b63897d6e1ebafccac1efea8159d79f1cc0b988d4"
+        ],
+        "source_artifact": "failure_asset_library",
+        "occurrences": 1,
+        "last_revalidated": "2026-08-25",
         "reuse_effectiveness": {
           "reuse_count": 0,
           "helped_count": 0,
@@ -59008,6 +59112,16 @@
           "detail": "experiment_identifiability:composition-constituent-reference-instability"
         },
         {
+          "code": "failure-asset-not-yet-effectiveness-validated",
+          "memory_id": "MEM-FAIL-701bf9fdd809641e82",
+          "detail": "operationalization:zero-provider-import-time-credential-coupling"
+        },
+        {
+          "code": "failure-asset-not-yet-effectiveness-validated",
+          "memory_id": "MEM-FAIL-4e44b25f6724497959",
+          "detail": "reproducibility:fixed-seed-monte-carlo-traversal-order"
+        },
+        {
           "code": "hold-missing-source-ref",
           "memory_id": "MEM-HOLD-25b692734789d6e35c"
         },
@@ -59026,8 +59140,8 @@
       ],
       "summary": {
         "errors": 0,
-        "warnings": 9,
-        "unconsumed_failure_assets": 4,
+        "warnings": 11,
+        "unconsumed_failure_assets": 6,
         "missing_revalidation_dates": 1
       },
       "scientific_authority": false
@@ -60218,8 +60332,8 @@
       }
     ],
     "summary": {
-      "assets": 10,
-      "unique_signatures": 7,
+      "assets": 12,
+      "unique_signatures": 9,
       "principle_dead_ends": 0,
       "economy_dead_ends": 0,
       "experimental_stops_not_dead_ends": 23
@@ -60473,6 +60587,60 @@
         "source_decision": "STOP_MERGE_CURRENT_CBRG_EXTENSION_RETAIN_MEASUREMENT_PAPER",
         "external_memory_input": true,
         "scientific_authority": false
+      },
+      {
+        "signature": "reproducibility:fixed-seed-monte-carlo-traversal-order",
+        "idea_id": "D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825",
+        "diagnosis": "fixed-seed-monte-carlo-traversal-order",
+        "affected_layer": "reproducibility",
+        "reusable_precheck": "Whenever a fixed RNG stream is consumed sequentially across experimental units, freeze statistical traversal order separately from execution order and regression-test the implementation against a content-addressed known result. A scientifically equivalent permutation distribution does not guarantee byte-reproducible Monte Carlo p-values after unit reordering.",
+        "evidence_ref": "private-data://runs/d2-proxy-reward-b14-live-native-transport-20260825/analyzer-regression.json#sha256=7230b1a3ed40deb2901a828b63897d6e1ebafccac1efea8159d79f1cc0b988d4",
+        "does_not_imply": "a scientific effect difference, method failure, core-principle failure, or invalidity of diversity-first execution ordering",
+        "memory_scope": "institutional-research-memory",
+        "reuse_scope": {
+          "affected_layer": "reproducibility",
+          "experiment_family": "fixed-seed Monte Carlo or permutation inference",
+          "failure_mode": "execution reordering silently changes deterministic RNG consumption and therefore the reported finite Monte Carlo estimate",
+          "required_separation": "execution order versus analysis RNG traversal order"
+        },
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "superseded_by": "",
+        "last_revalidated": "2026-08-25",
+        "source_decision": "B14_ANALYZER_REGRESSION_PASS_AFTER_ANALYSIS_ORDER_SEPARATION",
+        "external_memory_input": true,
+        "scientific_authority": false
+      },
+      {
+        "signature": "operationalization:zero-provider-import-time-credential-coupling",
+        "idea_id": "D2-PROXY-REWARD-B14-LIVE-NATIVE-TRANSPORT-20260825",
+        "diagnosis": "zero-provider-import-time-credential-coupling",
+        "affected_layer": "operationalization",
+        "reusable_precheck": "A preflight declared zero-provider must not import modules whose top-level initialization constructs credential-bound or network-capable clients. Separate static routability/schema checks from runtime provider construction, record observable provider POSTs explicitly, and fail closed before scientific units if the preflight cannot remain credential-independent.",
+        "evidence_ref": "private-data://runs/d2-proxy-reward-b14-live-native-transport-20260825/substrate-preflight-v1-failure.json#sha256=6d12f02129254fc88acc352754365ea7f1a132af7d77c36068613848c6cc1da1",
+        "does_not_imply": "evaluator support failure, task-substrate failure, provider failure, model failure, or a scientific null",
+        "memory_scope": "institutional-research-memory",
+        "reuse_scope": {
+          "affected_layer": "operationalization",
+          "experiment_family": "zero-provider environment, evaluator, or substrate qualification",
+          "failure_mode": "import-time construction of a credential-bound client blocks a preflight before any scientific unit or provider POST",
+          "repair_boundary": "static evaluator/schema routability may replace import-time construction only when no outcome or model execution is required"
+        },
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "superseded_by": "",
+        "last_revalidated": "2026-08-25",
+        "source_decision": "B14_LIVE_SUBSTRATE_PREFLIGHT_V1_LOCAL_IMPORT_FAIL_REPAIRED_BY_ZERO_PROVIDER_V2",
+        "external_memory_input": true,
+        "scientific_authority": false
       }
     ],
     "reusable_prechecks": [
@@ -60558,6 +60726,32 @@
         "signature": "method_realization:evidence-authority-qualification-unavailable",
         "affected_layer": "method_realization",
         "reusable_precheck": "Before a method gates treatment-specific residual content, freeze the validity semantics and independently qualify the evidence adjudicator on pre-outcome support. Locator coverage, semantic similarity, the treatment label, terminal reward, and downstream outcome cannot validate the residual. If no qualified signal exists, STOP/MERGE the current method extension rather than inventing a post-outcome verifier; preserve any independently valid measurement/mechanism result.",
+        "occurrences": 1,
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "revalidation_required_after_scope_change": true
+      },
+      {
+        "signature": "reproducibility:fixed-seed-monte-carlo-traversal-order",
+        "affected_layer": "reproducibility",
+        "reusable_precheck": "Whenever a fixed RNG stream is consumed sequentially across experimental units, freeze statistical traversal order separately from execution order and regression-test the implementation against a content-addressed known result. A scientifically equivalent permutation distribution does not guarantee byte-reproducible Monte Carlo p-values after unit reordering.",
+        "occurrences": 1,
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "revalidation_required_after_scope_change": true
+      },
+      {
+        "signature": "operationalization:zero-provider-import-time-credential-coupling",
+        "affected_layer": "operationalization",
+        "reusable_precheck": "A preflight declared zero-provider must not import modules whose top-level initialization constructs credential-bound or network-capable clients. Separate static routability/schema checks from runtime provider construction, record observable provider POSTs explicitly, and fail closed before scientific units if the preflight cannot remain credential-independent.",
         "occurrences": 1,
         "reuse_effectiveness": {
           "reuse_count": 0,

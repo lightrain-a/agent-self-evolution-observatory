@@ -259,6 +259,30 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertTrue(all(compiled[signature]["external_memory_input"] for signature in expected))
         self.assertTrue(all(compiled[signature]["scientific_authority"] is False for signature in expected))
 
+    def test_canonical_external_failure_asset_index_includes_c1_b14_preexecution_prechecks(self) -> None:
+        from .research_system import _load_external_failure_assets
+
+        assets = _load_external_failure_assets()
+        by_signature = {row["signature"]: row for row in assets}
+        expected_layers = {
+            "reproducibility:fixed-seed-monte-carlo-traversal-order": "reproducibility",
+            "operationalization:zero-provider-import-time-credential-coupling": "operationalization",
+        }
+        self.assertTrue(set(expected_layers).issubset(by_signature))
+        for signature, layer in expected_layers.items():
+            row = by_signature[signature]
+            self.assertFalse(row["scientific_authority"])
+            self.assertEqual(row["affected_layer"], layer)
+            self.assertIn("B14", row["idea_id"])
+            self.assertTrue(row["reusable_precheck"])
+            self.assertEqual(row["last_revalidated"], "2026-08-25")
+            self.assertIn("private-data://runs/d2-proxy-reward-b14-live-native-transport-20260825", row["evidence_ref"])
+        library = build_failure_asset_library({"nodes": []}, {"summary": {}}, additional_assets=assets)
+        compiled = {row["signature"]: row for row in library["assets"]}
+        self.assertTrue(set(expected_layers).issubset(compiled))
+        self.assertTrue(all(compiled[signature]["external_memory_input"] for signature in expected_layers))
+        self.assertTrue(all(compiled[signature]["scientific_authority"] is False for signature in expected_layers))
+
     def test_scienceworld_scope_lesson_is_institutional_asset_not_parent_evidence(self) -> None:
         state = {"nodes": []}
         post_c2 = {

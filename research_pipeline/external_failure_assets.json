@@ -19,6 +19,14 @@
     {
       "source_path": "research_pipeline/v19r003_forced_switch_failure_assets_20260824.json",
       "source_key": "semantic_observability_asset"
+    },
+    {
+      "source_path": "research_pipeline/c1_b14_preexecution_failure_assets_20260825.json",
+      "source_key": "monte_carlo_order_asset"
+    },
+    {
+      "source_path": "research_pipeline/c1_b14_preexecution_failure_assets_20260825.json",
+      "source_key": "zero_provider_import_asset"
     }
   ],
   "scientific_authority": false
