@@ -8,7 +8,7 @@ from unittest.mock import patch
 
 from .candidate_identity import attach_candidate_identity
 from .config import StorageSettings
-from .paper_first_pre_f0_evidence_control import control_snapshot, design, harness_implementation, prepare, recompile_operationalization, review, substrate_preflight, validate_public_state
+from .paper_first_pre_f0_evidence_control import control_snapshot, design, harness_implementation, prepare, primary_asset_release, recompile_operationalization, review, substrate_preflight, validate_public_state
 
 
 def storage(root:Path)->StorageSettings:
@@ -97,6 +97,29 @@ class CanonicalPreF0EvidenceControlTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError,"no operationalization recompile pending"):
                     recompile_operationalization(storage=private,queue_path=queue,support_path=support,plan_path=plan,json_path=pub,js_path=js,model="kimi-k3")
                 again.assert_not_called()
+
+
+    def test_primary_asset_release_reopens_only_design_review_without_provider_or_execution_authority(self)->None:
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);queue,support,plan,pub,js=inputs(root);prepare(queue_path=queue,support_path=support,plan_path=plan,json_path=pub,js_path=js,max_active=1);private=storage(root/"private")
+            first_party=design_payload("PORT-013");d=first_party["designs"][0];d.update({"source_specificity":"REPRODUCIBLE_FIRST_PARTY","acquisition_mode":"FIRST_PARTY_SANDBOX","anti_bake_in_controls":["external truth","frozen units","candidate cannot generate outcomes"]})
+            memory={"purpose":"EXPERIMENT_DESIGN","wiki_sha256":"b"*64,"query_pack_sha256":"c"*64,"selected_memory_ids":[],"summary":{"selected":0},"text":"","scientific_authority":False}
+            with patch("research_pipeline.paper_first_pre_f0_evidence_control._ark_with_provider_receipt",return_value={"text":json.dumps(first_party),"resolved_model":"kimi-k3","transport_attempts":[]}),patch("research_pipeline.paper_first_pre_f0_evidence_control._evidence_memory_pack",return_value=memory):
+                design(storage=private,queue_path=queue,support_path=support,plan_path=plan,json_path=pub,js_path=js,model="kimi-k3")
+            checks={"independent_truth_valid":False,"scientific_object_preserved":False,"no_mechanism_bake_in":False,"same_information_baseline_valid":True,"falsifier_not_method_evaluation":True,"outcome_semantics_valid":True,"bounded_budget_valid":True,"prior_support_constraint_respected":False,"operationalization_equivalence_valid":False}
+            blocked={"reviews":[{"candidate_id":"PORT-013","verdict":"BLOCK_BAKE_IN","checks":checks,"reason":"synthetic treatment label replaces the missing primary asset","required_revision":""}]}
+            with patch("research_pipeline.paper_first_pre_f0_evidence_control._ark_with_provider_receipt",return_value={"text":json.dumps(blocked),"resolved_model":"deepseek-v4-pro","transport_attempts":[]}):
+                review(storage=private,queue_path=queue,support_path=support,plan_path=plan,json_path=pub,js_path=js,model="deepseek-v4-pro")
+            held=json.loads(plan.read_text());row=held["entries"][0]
+            self.assertEqual(held["status"],"EVIDENCE_WAIT_OR_HOLD");self.assertEqual(row["status"],"HOLD_EVIDENCE_REVIEW_BLOCKED")
+            receipt={"receipts":[{"candidate_id":"PORT-013","candidate_snapshot_sha256":row["candidate_snapshot_sha256"],"blocked_contract_sha256":row["contract_sha256"],"release_kind":"FIRST_PARTY_PRIMARY_ASSET_DELTA","authoritative_source":"https://huggingface.co/datasets/example/primary","authoritative_revision":"1"*40,"materialized_asset_kind":"released query JSON metadata","materialized_unit_count":254,"asset_manifest_sha256":"2"*64,"schema_fields":["query_type","verifier_type","verification_criteria"],"newly_independent_variables":["query_type"],"remaining_missing_requirements":["per-case target-model outcome"],"materialization_verified":True,"synthetic_substitute":False,"transport_source":"https://mirror.example/primary@revision","transport_is_authority":False,"scientific_authority":False,"execution_authority":False,"reopen_scope":"DESIGN_REVIEW_ONLY"}]}
+            with patch("research_pipeline.paper_first_pre_f0_evidence_control._ark_with_provider_receipt") as provider:
+                out=primary_asset_release(receipt_payload=receipt,storage=private,queue_path=queue,support_path=support,plan_path=plan,json_path=pub,js_path=js);provider.assert_not_called()
+            reopened=json.loads(plan.read_text());row=reopened["entries"][0]
+            self.assertEqual(reopened["status"],"EVIDENCE_DESIGN_PENDING");self.assertEqual(row["status"],"NEEDS_BOUNDED_EVIDENCE_DESIGN")
+            self.assertFalse(row["execution_authorized"]);self.assertEqual(row["primary_asset_release_receipt"]["reopen_scope"],"DESIGN_REVIEW_ONLY")
+            self.assertEqual(row["primary_asset_release_receipt"]["remaining_missing_requirements"],["per-case target-model outcome"])
+            self.assertEqual(out["last_stage"]["stage"],"primary-asset-release");self.assertEqual(out["last_stage"]["provider_calls_executed"],0);self.assertEqual(validate_public_state(out),[])
 
 
     def test_substrate_preflight_compiles_minimal_harness_without_provider_or_downstream_authority(self)->None:

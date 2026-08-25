@@ -159,7 +159,7 @@ def evidence_design_prompt(plan:dict,*,part:int=1,batch_size:int=2,research_memo
  selected=[r for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("design_selected") is True and r.get("status") in {"NEEDS_BOUNDED_EVIDENCE_DESIGN","BRANCH_REPAIR_READY"}]
  batch=selected[:batch_size]
  if not batch: raise ValueError(f"empty bounded-evidence design batch part={part}")
- compact=[{"candidate_id":r["candidate_id"],"title":r.get("title"),"exact_prediction":r.get("frozen_exact_prediction"),"strongest_same_information_baseline":r.get("frozen_same_information_baseline"),"falsifier_expression":r.get("frozen_falsifier_expression"),"prior_support":r.get("prior_support") or {},"blockers":r.get("blockers") or [],"tree_depth":int((r.get("tree") or {}).get("depth") or 0),"required_single_variable_repair":_b((r.get("branch_repair") or {}).get("changed_variable"),1800),"required_design_revision":_b(r.get("review_feedback"),1800)} for r in batch]
+ compact=[{"candidate_id":r["candidate_id"],"title":r.get("title"),"exact_prediction":r.get("frozen_exact_prediction"),"strongest_same_information_baseline":r.get("frozen_same_information_baseline"),"falsifier_expression":r.get("frozen_falsifier_expression"),"prior_support":r.get("prior_support") or {},"primary_asset_release_receipt":r.get("primary_asset_release_receipt") or {},"blockers":r.get("blockers") or [],"tree_depth":int((r.get("tree") or {}).get("depth") or 0),"required_single_variable_repair":_b((r.get("branch_repair") or {}).get("changed_variable"),1800),"required_design_revision":_b(r.get("review_feedback"),1800)} for r in batch]
  memory_pack=research_memory_query_pack or {"purpose":"EXPERIMENT_DESIGN","selected_memory_ids":[],"text":"","scientific_authority":False}
  prompt=f'''You design bounded scientific evidence acquisition for REDUCTION-PENDING paper problems. This is exploration only, not novelty certification and not method design.
 
@@ -174,6 +174,8 @@ Hard rules:
 - Define exactly three decision criteria. The compiler owns the REDUCTION_SUPPORTED / RESIDUAL_SURVIVES / INCONCLUSIVE labels and maps your criteria to them; RESIDUAL_SURVIVES only returns to semantic + current-source review.
 - An INCONCLUSIVE repair is optional. If you provide one, name exactly one changed variable; leaving it empty means stop/hold on INCONCLUSIVE. If required_single_variable_repair is nonempty, the new branch must change exactly that variable and preserve every other frozen element.
 - If required_design_revision is nonempty, revise only the evidence contract defect named there; do not change the frozen scientific question, prediction, baseline, or falsifier.
+- If primary_asset_release_receipt is nonempty, it is a zero-authority DESIGN_REVIEW_ONLY reopen signal. Use only the content-addressed released schema/variables it actually establishes. It does not satisfy remaining_missing_requirements, does not supply target outcomes unless explicitly present, and never authorizes execution.
+- A primary-asset release must replace any prohibited synthetic treatment/query-type generator with the released independent label/schema. If target outcomes are still missing, specify how the ORIGINAL source evaluator/model pipeline would produce them in a later separately authorized execution; never fabricate or substitute outcome labels.
 - Caps: max_units<={MAX_UNITS}, max_wall_minutes<={MAX_WALL_MIN}, max_gpu_hours<={MAX_GPU_HOURS}, max_model_calls<={MAX_MODEL_CALLS}.
 - HISTORICAL RESEARCH MEMORY is mandatory context. Read every selected item. FAILURE_ASSET supplies a reusable precheck, never a scientific veto; HOLD is reopenable; SUCCESS_ASSET is scope-bound. Do not repeat a recorded failure mode without satisfying its precheck or explaining why the scope differs.
 Allowed acquisition_mode={sorted(MODES)}; source_specificity={sorted(SOURCE_MODES)}. Do not choose a concrete execution adapter: the compiler maps PRIMARY_ASSET_REUSE to PRIMARY_ASSET_ONLY and every first-party mode to SUBSTRATE_PREFLIGHT_REQUIRED.
@@ -241,7 +243,10 @@ def compile_evidence_designs(plan:dict,payload:dict,*,part:int=1,design_model:st
    tree=dict(e.get("tree") or {});tree["parent_contract_sha256"]=str(e.get("contract_sha256") or "");tree["depth"]=int((e.get("branch_repair") or {}).get("next_depth") or int(tree.get("depth") or 0)+1);tree["repair_count"]=int(tree.get("repair_count") or 0)+1;e["tree"]=tree
   e["contract_sha256"]=_sha({"candidate_id":cid,"tree":e.get("tree") or {},"design":e["design"],"policy_version":SCHEMA_VERSION})
   if str(d.get("source_specificity") or "").upper()=="SOURCE_SPECIFIC_REQUIRED":
-   e["source_specific_design"]=json.loads(json.dumps(e["design"],ensure_ascii=False));e["status"]="NEEDS_OPERATIONALIZATION_RECOMPILE" if int(e.get("operationalization_recompile_attempts") or 0)==0 else "WAIT_PRIMARY_ASSET_RELEASE";e["execution_authorized"]=False
+   e["source_specific_design"]=json.loads(json.dumps(e["design"],ensure_ascii=False));release=e.get("primary_asset_release_receipt") or {};release_reopens_review=release.get("reopen_scope")=="DESIGN_REVIEW_ONLY" and release.get("scientific_authority") is False and release.get("execution_authority") is False and release.get("synthetic_substitute") is False and re.fullmatch(r"[0-9a-f]{64}",str(release.get("receipt_sha256") or "")) is not None
+   if release_reopens_review:e["status"]="NEEDS_INDEPENDENT_EVIDENCE_REVIEW";e["design_provenance"]["primary_asset_release_receipt_sha256"]=str(release.get("receipt_sha256") or "")
+   else:e["status"]="NEEDS_OPERATIONALIZATION_RECOMPILE" if int(e.get("operationalization_recompile_attempts") or 0)==0 else "WAIT_PRIMARY_ASSET_RELEASE"
+   e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY)
   else: e["status"]="NEEDS_INDEPENDENT_EVIDENCE_REVIEW";e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY)
  _promote_deferred(entries)
  out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"last_design_part":part,"scientific_authority":False,"authority":dict(AUTHORITY)})
@@ -306,7 +311,7 @@ def compile_operationalization_recompiles(plan:dict,payload:dict,*,part:int=1,re
 def evidence_review_prompt(plan:dict,*,part:int=1,batch_size:int=2)->tuple[str,list[str]]:
  rows=[r for r in plan.get("entries") or [] if isinstance(r,dict) and r.get("status")=="NEEDS_INDEPENDENT_EVIDENCE_REVIEW"][:batch_size]
  if not rows:raise ValueError(f"empty independent evidence-review batch part={part}")
- compact=[{"candidate_id":r.get("candidate_id"),"frozen_irreducible_object":r.get("frozen_irreducible_object"),"frozen_exact_prediction":r.get("frozen_exact_prediction"),"frozen_same_information_baseline":r.get("frozen_same_information_baseline"),"frozen_falsifier_expression":r.get("frozen_falsifier_expression"),"frozen_endpoint_headroom_requirement":r.get("frozen_endpoint_headroom_requirement"),"prior_support":r.get("prior_support") or {},"operationalization_recompile":r.get("operationalization_recompile") or {},"design":r.get("design") or {},"design_model":(r.get("design_provenance") or {}).get("resolved_model","")} for r in rows]
+ compact=[{"candidate_id":r.get("candidate_id"),"frozen_irreducible_object":r.get("frozen_irreducible_object"),"frozen_exact_prediction":r.get("frozen_exact_prediction"),"frozen_same_information_baseline":r.get("frozen_same_information_baseline"),"frozen_falsifier_expression":r.get("frozen_falsifier_expression"),"frozen_endpoint_headroom_requirement":r.get("frozen_endpoint_headroom_requirement"),"prior_support":r.get("prior_support") or {},"primary_asset_release_receipt":r.get("primary_asset_release_receipt") or {},"operationalization_recompile":r.get("operationalization_recompile") or {},"design":r.get("design") or {},"design_model":(r.get("design_provenance") or {}).get("resolved_model","")} for r in rows]
  prompt=f'''You are an independent scientific contract reviewer. Review bounded evidence-acquisition designs only; do not judge paper novelty and do not authorize Method/P0/GPU.
 
 A CLEAR design must satisfy ALL checks:
@@ -318,7 +323,7 @@ A CLEAR design must satisfy ALL checks:
 6. outcome_semantics_valid: baseline_reduction_supported means the strongest same-information baseline EXPLAINS the frozen prediction and therefore the candidate should stop; candidate_residual_survives means the baseline FAILS to explain a replicated distinguishing residual and therefore the candidate returns to semantic/current-source review.
 7. bounded_budget_valid: the contract stays within the frozen bounded-evidence caps and does not hide paper-scale training/search.
 8. prior_support_constraint_respected: if prior_support identified an unavailable source-specific unit, first-party reproduction is CLEAR only when the design preserves the frozen scientific object without manufacturing the missing provenance/latent/lineage/arm by construction.
-9. operationalization_equivalence_valid: if operationalization_recompile is nonempty, every frozen scientific-object invariant and exact-prediction variable survives unchanged, removed dependencies are genuinely acquisition provenance/nuisance, and the equivalence_probe can independently fail before the main falsifier. If no recompile is present, mark this true.
+9. operationalization_equivalence_valid: if operationalization_recompile is nonempty, every frozen scientific-object invariant and exact-prediction variable survives unchanged, removed dependencies are genuinely acquisition provenance/nuisance, and the equivalence_probe can independently fail before the main falsifier. If no recompile is present, mark this true. If primary_asset_release_receipt is nonempty, additionally verify that the redesigned treatment/label is read from the released content-addressed schema rather than regenerated synthetically, and that any remaining missing target outcome is left for the original pipeline under a separate execution gate.
 
 Verdicts: CLEAR_FOR_SUBSTRATE_PREFLIGHT, REVISE, SOURCE_SPECIFIC_REQUIRED, BLOCK_BAKE_IN.
 - CLEAR only if all nine checks are true. CLEAR means only that local substrate feasibility may now be checked; it never authorizes execution by itself.
@@ -352,6 +357,51 @@ def compile_evidence_reviews(plan:dict,payload:dict,*,part:int=1,reviewer_model:
   else:
    e["status"]="HOLD_EVIDENCE_REVIEW_BLOCKED";e["review_feedback"]=reason or revision or "independent evidence review did not clear all mandatory checks"
  _promote_deferred(entries);out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"last_review_part":part,"scientific_authority":False,"authority":dict(AUTHORITY)});out["status"]=_plan_status(entries);return out
+
+def reopen_evidence_design_on_primary_asset_release(plan:dict,receipt_payload:dict)->dict:
+ """Reopen only the design/review cycle when a new primary-asset release removes a prior provenance blocker.
+
+ The receipt is zero-authority and content-addressed.  It never marks support as qualified,
+ clears independent review, performs substrate preflight, or authorizes evidence execution.
+ """
+ existing_errors=validate_evidence_plan(plan)
+ if existing_errors:raise ValueError("cannot reopen invalid evidence plan:"+";".join(existing_errors))
+ entries=[dict(r) for r in plan.get("entries") or [] if isinstance(r,dict)];by={str(r.get("candidate_id") or ""):r for r in entries};seen=set()
+ for rec in [x for x in receipt_payload.get("receipts") or [] if isinstance(x,dict)]:
+  cid=str(rec.get("candidate_id") or "").strip()
+  if not cid or cid in seen:raise ValueError("primary-asset release receipt ids must be nonempty and unique")
+  seen.add(cid);e=by.get(cid)
+  if not e:raise ValueError(f"primary-asset release has no candidate:{cid}")
+  prior_status=str(e.get("status") or "")
+  if prior_status not in {"HOLD_EVIDENCE_REVIEW_BLOCKED","WAIT_PRIMARY_ASSET_RELEASE"}:raise ValueError(f"primary-asset release cannot reopen status:{cid}:{prior_status}")
+  prior_review=e.get("evidence_review") or {}
+  if prior_status=="HOLD_EVIDENCE_REVIEW_BLOCKED" and str(prior_review.get("verdict") or "").upper()!="BLOCK_BAKE_IN":raise ValueError(f"primary-asset release can reopen review block only after BLOCK_BAKE_IN:{cid}")
+  snapshot=str(e.get("candidate_snapshot_sha256") or "").strip().lower();receipt_snapshot=str(rec.get("candidate_snapshot_sha256") or "").strip().lower()
+  if not re.fullmatch(r"[0-9a-f]{64}",snapshot) or receipt_snapshot!=snapshot:raise ValueError(f"primary-asset release candidate snapshot mismatch:{cid}")
+  prior_contract=str(e.get("contract_sha256") or "").strip().lower();receipt_contract=str(rec.get("blocked_contract_sha256") or "").strip().lower()
+  if not re.fullmatch(r"[0-9a-f]{64}",prior_contract) or receipt_contract!=prior_contract:raise ValueError(f"primary-asset release blocked-contract mismatch:{cid}")
+  revision=str(rec.get("authoritative_revision") or "").strip().lower();manifest=str(rec.get("asset_manifest_sha256") or "").strip().lower();source=str(rec.get("authoritative_source") or "").strip();kind=_b(rec.get("materialized_asset_kind"),500)
+  fields=sorted({str(x).strip() for x in rec.get("schema_fields") or [] if str(x).strip()});variables=sorted({str(x).strip() for x in rec.get("newly_independent_variables") or [] if str(x).strip()});remaining=[_b(x,900) for x in rec.get("remaining_missing_requirements") or [] if _b(x,900)]
+  try:unit_count=int(rec.get("materialized_unit_count"))
+  except (TypeError,ValueError):unit_count=0
+  if str(rec.get("release_kind") or "").upper()!="FIRST_PARTY_PRIMARY_ASSET_DELTA":raise ValueError(f"invalid primary-asset release kind:{cid}")
+  if not source.startswith("https://") or not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}",revision):raise ValueError(f"primary-asset release requires authoritative source and immutable revision:{cid}")
+  if unit_count<=0 or not kind or not fields or not variables or not re.fullmatch(r"[0-9a-f]{64}",manifest):raise ValueError(f"primary-asset release requires content-addressed materialized units and schema:{cid}")
+  if rec.get("materialization_verified") is not True or rec.get("synthetic_substitute") is not False:raise ValueError(f"primary-asset release must be verified and non-synthetic:{cid}")
+  if rec.get("transport_is_authority") is not False or rec.get("scientific_authority") is not False or rec.get("execution_authority") is not False:raise ValueError(f"primary-asset release receipt must remain zero-authority:{cid}")
+  if str(rec.get("reopen_scope") or "").upper()!="DESIGN_REVIEW_ONLY":raise ValueError(f"primary-asset release may reopen design/review only:{cid}")
+  material={"candidate_id":cid,"candidate_snapshot_sha256":snapshot,"blocked_contract_sha256":prior_contract,"release_kind":"FIRST_PARTY_PRIMARY_ASSET_DELTA","authoritative_source":source,"authoritative_revision":revision,"materialized_asset_kind":kind,"materialized_unit_count":unit_count,"asset_manifest_sha256":manifest,"schema_fields":fields,"newly_independent_variables":variables,"remaining_missing_requirements":remaining,"materialization_verified":True,"synthetic_substitute":False,"transport_source":_b(rec.get("transport_source"),1200),"transport_is_authority":False,"reopen_scope":"DESIGN_REVIEW_ONLY","scientific_authority":False,"execution_authority":False}
+  material["receipt_sha256"]=_sha(material)
+  if str((e.get("primary_asset_release_receipt") or {}).get("receipt_sha256") or "")==material["receipt_sha256"]:raise ValueError(f"duplicate primary-asset release receipt:{cid}")
+  history=list(e.get("primary_asset_release_reopen_history") or []);history.append({"reopened_at":_now(),"prior_status":prior_status,"prior_contract_sha256":prior_contract,"prior_design":json.loads(json.dumps(e.get("design") or {},ensure_ascii=False)),"prior_design_provenance":json.loads(json.dumps(e.get("design_provenance") or {},ensure_ascii=False)),"prior_evidence_review":json.loads(json.dumps(prior_review,ensure_ascii=False)),"prior_operationalization_recompile":json.loads(json.dumps(e.get("operationalization_recompile") or {},ensure_ascii=False)),"release_receipt":material,"scientific_authority":False})
+  e["primary_asset_release_reopen_history"]=history;e["primary_asset_release_receipt"]=material;e["primary_asset_release_reopen_count"]=int(e.get("primary_asset_release_reopen_count") or 0)+1
+  e["status"]="NEEDS_BOUNDED_EVIDENCE_DESIGN";e["design"]={};e["contract_sha256"]="";e["execution_authorized"]=False;e["authority"]=dict(AUTHORITY);e["review_feedback"]="New content-addressed primary assets may remove the prior bake-in defect. Redesign only against the released schema; remaining missing requirements stay unresolved until separately acquired or authorized."
+  for key in ("design_audit","design_provenance","evidence_review","source_specific_design","original_source_specific_design","operationalization_recompile","operationalization_recompile_adjudication","operationalization_recompile_audit","substrate_preflight","harness_implementation"):
+   e.pop(key,None)
+ _promote_deferred(entries);out=dict(plan);out.update({"generated_at":_now(),"entries":entries,"summary":_summary(entries),"scientific_authority":False,"authority":dict(AUTHORITY)});out["status"]=_plan_status(entries)
+ errors=validate_evidence_plan(out)
+ if errors:raise ValueError("primary-asset release reopen produced invalid evidence plan:"+";".join(errors))
+ return out
 
 def build_substrate_preflight_request(plan:dict)->dict:
  rows=[]
@@ -450,4 +500,9 @@ def validate_evidence_plan(state:dict)->list[str]:
   auth=r.get("authority") or {}
   if any(auth.get(k) is not False for k in ("scientific_claim","live_problem_gate","paper_design","method","p0","full_experiment")): errors.append("entry-downstream-authority-leak")
   if auth.get("bounded_evidence_acquisition") is True and (r.get("status")!="READY_FOR_BOUNDED_EVIDENCE_ACQUISITION" or r.get("execution_authorized") is not True): errors.append("stale-bounded-evidence-authority")
+  release=r.get("primary_asset_release_receipt") or {}
+  if release:
+   if release.get("scientific_authority") is not False or release.get("execution_authority") is not False or release.get("transport_is_authority") is not False:errors.append("primary-asset-release-authority-leak")
+   if release.get("synthetic_substitute") is not False or str(release.get("reopen_scope") or "")!="DESIGN_REVIEW_ONLY":errors.append("primary-asset-release-scope-invalid")
+   if not re.fullmatch(r"[0-9a-f]{64}",str(release.get("receipt_sha256") or "")) or not re.fullmatch(r"[0-9a-f]{64}",str(release.get("asset_manifest_sha256") or "")):errors.append("primary-asset-release-digest-invalid")
  return sorted(set(errors))

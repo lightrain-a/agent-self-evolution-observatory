@@ -21,6 +21,7 @@ from .paper_first_evidence_acquisition import (
     evidence_design_prompt,
     evidence_review_prompt,
     operationalization_recompile_prompt,
+    reopen_evidence_design_on_primary_asset_release,
     validate_evidence_plan,
 )
 from .paper_first_pre_f0_queue import load_pre_f0_queue
@@ -50,6 +51,7 @@ POLICY = {
     "design_model_call_has_zero_scientific_authority": True,
     "design_cannot_authorize_execution": True,
     "independent_review_required_before_substrate_preflight": True,
+    "primary_asset_release_reopens_design_review_only": True,
     "support_hold_is_not_scientific_negative": True,
     "first_party_design_must_preserve_frozen_prediction_baseline_and_falsifier": True,
     "automatic_problem_gate_method_experiment_p0_gpu_authority": False,
@@ -264,6 +266,28 @@ def review(*,storage:StorageSettings|None=None,queue_path:Path=DEFAULT_QUEUE_JSO
         transport=_provider_success_metadata(run_root=run_root,stem="evidence-review-p1",response=res);artifact={"schema_version":SCHEMA_VERSION,"generated_at":_now(),"stage":"evidence-review","input_control_snapshot_sha256":input_control,"input_plan_sha256":str(control.get("plan_sha256") or ""),"candidate_ids":candidate_ids,"candidate_snapshot_sha256s":list(control.get("candidate_snapshot_sha256s") or []),"support_inventory_sha256":str(control.get("support_inventory_sha256") or ""),"design_resolved_model":design_model,"requested_model":requested,"resolved_model":resolved,"raw_sha256":raw_sha,"raw_archived_before_parse":True,**transport,"scientific_authority":False,"authority":dict(AUTHORITY)}
         success_path.write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");plan_path.write_text(json.dumps(compiled,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");output_control=control_snapshot(queue_path=queue_path,support_path=support_path,plan_path=plan_path);public=_public_state(plan=compiled,control=output_control,last_stage=artifact);public["parent_control_snapshot_sha256"]=input_control;_write_public(public,json_path,js_path);return public
 
+
+def primary_asset_release(*,receipt_payload:dict[str,Any],storage:StorageSettings|None=None,queue_path:Path=DEFAULT_QUEUE_JSON,support_path:Path=DEFAULT_SUPPORT_JSON,plan_path:Path=DEFAULT_PLAN_JSON,json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS) -> dict[str,Any]:
+    """Record a content-addressed first-party asset delta and reopen design/review only.
+
+    This stage is provider-free and outcome-free. It may remove a provenance
+    blocker, but it never qualifies scientific support, clears independent
+    review, or authorizes evidence execution.
+    """
+    storage=storage or StorageSettings.from_env();storage.ensure()
+    with _execution_lock(storage):
+        plan=_load(plan_path);control=control_snapshot(queue_path=queue_path,support_path=support_path,plan_path=plan_path)
+        receipts=[r for r in receipt_payload.get("receipts") or [] if isinstance(r,dict)];candidate_ids=[str(r.get("candidate_id") or "") for r in receipts]
+        if not candidate_ids:raise ValueError("canonical Pre-F0 primary-asset release receipt is empty")
+        if str(plan.get("status") or "")!="EVIDENCE_WAIT_OR_HOLD":raise ValueError("canonical Pre-F0 primary-asset release requires a wait/hold plan")
+        input_control=str(control["control_snapshot_sha256"]);run_root=storage.data_root/"paper-first-pre-f0-evidence"/input_control;success_path=run_root/"primary-asset-release.json"
+        if success_path.is_file():raise ValueError("canonical Pre-F0 primary-asset release already completed for this input control")
+        run_root.mkdir(parents=True,exist_ok=True);receipt_path=run_root/"primary-asset-release-receipt.json";receipt_path.write_text(json.dumps(receipt_payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        compiled=reopen_evidence_design_on_primary_asset_release(plan,receipt_payload);errors=validate_evidence_plan(compiled)
+        if errors:raise ValueError("compiled canonical Pre-F0 primary-asset release invalid: "+",".join(errors))
+        artifact={"schema_version":SCHEMA_VERSION,"generated_at":_now(),"stage":"primary-asset-release","input_control_snapshot_sha256":input_control,"input_plan_sha256":str(control.get("plan_sha256") or ""),"candidate_ids":candidate_ids,"candidate_snapshot_sha256s":list(control.get("candidate_snapshot_sha256s") or []),"support_inventory_sha256":str(control.get("support_inventory_sha256") or ""),"receipt_sha256":_sha_path(receipt_path),"provider_calls_executed":0,"gpu_calls_executed":0,"outcome_reads_executed":0,"scientific_authority":False,"authority":dict(AUTHORITY)}
+        success_path.write_text(json.dumps(artifact,ensure_ascii=False,indent=2)+"\n",encoding="utf-8");plan_path.write_text(json.dumps(compiled,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        output_control=control_snapshot(queue_path=queue_path,support_path=support_path,plan_path=plan_path);public=_public_state(plan=compiled,control=output_control,last_stage=artifact);public["parent_control_snapshot_sha256"]=input_control;_write_public(public,json_path,js_path);return public
 
 
 def substrate_preflight(*,receipt_payload:dict[str,Any],storage:StorageSettings|None=None,queue_path:Path=DEFAULT_QUEUE_JSON,support_path:Path=DEFAULT_SUPPORT_JSON,plan_path:Path=DEFAULT_PLAN_JSON,json_path:Path=DEFAULT_JSON,js_path:Path=DEFAULT_JS) -> dict[str,Any]:
