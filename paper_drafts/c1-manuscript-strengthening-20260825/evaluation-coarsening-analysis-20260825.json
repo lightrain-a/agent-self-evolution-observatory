@@ -1,0 +1,179 @@
+{
+  "analysis_conclusion": {
+    "causal_mediation_claim": false,
+    "core": "The contribution of stage resolution is diagnostic disambiguation, not merely finer reporting. Write-only, retrieval-only, native-endpoint-only, and forced-endpoint-only views support mutually different coarse summaries of the same system. The full signature separates state construction, capacity, availability, policy uptake, and native outcome.",
+    "main_localization": "after native retrieval exposure and before stable first-action uptake",
+    "new_method_claim": false,
+    "strongest_new_paper_role": "Use evaluation coarsening as the motivation for the stage-evidence ladder: the ladder is valuable because it prevents observational aliasing between distinct failure surfaces."
+  },
+  "analysis_id": "C1-EVALUATION-COARSENING-R4-20260825",
+  "artifact_type": "c1-evaluation-coarsening-analysis",
+  "authority": {
+    "claim_expansion": false,
+    "experiment": false,
+    "gpu": false,
+    "provider": false,
+    "scientific": false,
+    "submission": false
+  },
+  "coarsened_views": [
+    {
+      "current_evidence": "20/20 Shopping write divergence; same-mode excess=0.105, exact p=0.0078",
+      "miscredit_risk": "credits behavioral authority at the state-construction surface",
+      "naive_conclusion": "The persistent update is strong because reward-conditioned writing reliably changes memory.",
+      "observes": [
+        "persistent_write"
+      ],
+      "view": "write_only",
+      "what_it_cannot_distinguish": [
+        "durable state change that later changes decisions",
+        "durable state change that is retrieved but ignored",
+        "durable state change that is never exposed natively"
+      ]
+    },
+    {
+      "current_evidence": "125/172 held-out retrieval opportunities expose branch-specific source memory (rate=0.727)",
+      "miscredit_risk": "equates availability with policy uptake",
+      "naive_conclusion": "Memory reuse is active because branch-specific memory is frequently retrieved.",
+      "observes": [
+        "native_retrieval_exposure"
+      ],
+      "view": "retrieval_only",
+      "what_it_cannot_distinguish": [
+        "retrieved content that changes the next action",
+        "retrieved content that is present but policy-irrelevant"
+      ]
+    },
+    {
+      "current_evidence": "Shopping |Delta|=0.02083, p=0.4289, 34/36 zero; Reddit |Delta|=0.125, p=0.2253, 6/8 zero, opposite signs",
+      "miscredit_risk": "mistakes an end-to-end null/sparse endpoint for a diagnosis of the failed stage",
+      "naive_conclusion": "Reward-conditioned memory has little or no downstream effect.",
+      "observes": [
+        "native_terminal_outcome"
+      ],
+      "view": "native_endpoint_only",
+      "what_it_cannot_distinguish": [
+        "writer failure",
+        "retrieval failure",
+        "post-retrieval policy filtering",
+        "heterogeneous cancellation or sparse task-local transport"
+      ]
+    },
+    {
+      "current_evidence": "terminal |Delta|=0.15625, p=0.00074",
+      "miscredit_risk": "promotes a bypassed capacity surface into a native end-to-end claim",
+      "naive_conclusion": "Branch-specific memory has a meaningful downstream behavioral effect.",
+      "observes": [
+        "forced_capacity_side_control"
+      ],
+      "view": "forced_endpoint_only",
+      "what_it_cannot_distinguish": [
+        "capacity under supplied memory",
+        "native retrieval-and-policy transport under the deployed path"
+      ]
+    },
+    {
+      "current_evidence": "SUPPORTED / SUPPORTED-SIDE-CONTROL / OBSERVED / NOT-SUPPORTED / SPARSE-HETEROGENEOUS",
+      "diagnostic_gain": "localizes the strongest operational attenuation boundary after exposure and before stable action uptake while preventing write, retrieval, forced, or endpoint surfaces from standing in for one another",
+      "naive_conclusion": "not applicable: the purpose is to preserve apparently conflicting stage evidence rather than collapse it",
+      "observes": [
+        "persistent_write",
+        "forced_capacity_side_control",
+        "native_retrieval_exposure",
+        "native_first_action_uptake",
+        "native_terminal_outcome"
+      ],
+      "view": "stage_resolved_signature",
+      "what_it_distinguishes": [
+        "persistent-state intervention is established",
+        "downstream capacity exists when memory is supplied",
+        "native exposure is substantial",
+        "stable first-action uptake is not supported",
+        "native terminal transport is sparse and sign-heterogeneous"
+      ]
+    }
+  ],
+  "does_not_imply": [
+    "that the stage signature identifies a causal mediator coefficient",
+    "that the current boundary generalizes to all memory systems",
+    "that every coarse evaluation always yields the listed naive conclusion",
+    "that forced and native endpoints are commensurate effect estimates"
+  ],
+  "execution": {
+    "new_gpu_runs": 0,
+    "new_scientific_experiments": 0,
+    "new_scientific_provider_calls": 0
+  },
+  "hypothesis_aliasing_matrix": [
+    {
+      "description": "the reward-conditioned writer fails to create a durable branch-specific state contrast",
+      "forced_endpoint_only": "not identified",
+      "full_signature": "inconsistent with frozen write evidence",
+      "id": "H_WRITE_INERT",
+      "native_endpoint_only": "compatible with a weak endpoint",
+      "retrieval_only": "not identified",
+      "write_only": "testable"
+    },
+    {
+      "description": "the downstream system is globally insensitive to supplied branch-specific memory content",
+      "forced_endpoint_only": "weakened by positive forced leverage",
+      "full_signature": "weakened, not eliminated",
+      "id": "H_GLOBAL_MEMORY_INSENSITIVITY",
+      "native_endpoint_only": "compatible with a weak endpoint",
+      "retrieval_only": "not identified",
+      "write_only": "not identified"
+    },
+    {
+      "description": "native attenuation is primarily because the branch-specific memory never reaches policy context",
+      "forced_endpoint_only": "not identified because retrieval is bypassed",
+      "full_signature": "weakened by 125/172 native exposures",
+      "id": "H_RETRIEVAL_ABSENCE",
+      "native_endpoint_only": "compatible with a weak endpoint",
+      "retrieval_only": "weakened by observed exposure",
+      "write_only": "not identified"
+    },
+    {
+      "description": "retrieval success is a valid surrogate for policy use",
+      "forced_endpoint_only": "not identified",
+      "full_signature": "rejected as an evaluation equivalence by observed exposure plus unsupported first-action contrast",
+      "id": "H_EXPOSURE_EQUALS_UPTAKE",
+      "native_endpoint_only": "not identified",
+      "retrieval_only": "would be incorrectly accepted if exposure were counted as reuse",
+      "write_only": "not identified"
+    },
+    {
+      "description": "reward-conditioned branch memory has a stable signed terminal effect across tasks/domains",
+      "forced_endpoint_only": "not identified for native transport",
+      "full_signature": "not supported: Shopping/Reddit are sparse and the Reddit nonzero signs oppose",
+      "id": "H_UNIVERSAL_DIRECTIONAL_TRANSPORT",
+      "native_endpoint_only": "testable only if cell/domain structure is retained",
+      "retrieval_only": "not identified",
+      "write_only": "not identified"
+    }
+  ],
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "question": "What scientific ambiguity is introduced when persistent-memory evaluation observes only a coarsened subset of the write/exposure/uptake/outcome chain?",
+  "schema_version": "1.0",
+  "source_binding": {
+    "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+    "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+  },
+  "stage_signature": {
+    "forced_capacity_state": "SUPPORTED_SIDE_CONTROL",
+    "interpretation": "The signature preserves logically different evidence surfaces that become contradictory or non-diagnostic when individually projected into a one-number evaluation.",
+    "observed_signature": [
+      "SUPPORTED",
+      "DIRECTLY_OBSERVED",
+      "NOT_SUPPORTED_AT_FROZEN_PRIMARY_TEST",
+      "SPARSE_HETEROGENEOUS_NOT_UNIVERSALLY_SUPPORTED"
+    ],
+    "ordered_native_stages": [
+      "persistent_write",
+      "native_retrieval_exposure",
+      "native_first_action_uptake",
+      "native_terminal_outcome"
+    ],
+    "side_control": "forced_capacity_side_control"
+  },
+  "status": "SUPPORTED_DIAGNOSTIC_VALUE_OF_STAGE_RESOLUTION"
+}

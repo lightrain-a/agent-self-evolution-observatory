@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision_id": "C1-STAGE-SIGNATURE-R4-EVALUATION-COARSENING-20260825",
+  "status": "PAPER_ONLY_R4_EVALUATION_COARSENING_ANALYZED",
+  "scientific_route": "IDENTIFICATION_MEASUREMENT",
+  "method_route": "CBRG_CURRENT_EXTENSION_STOP_MERGE",
+  "new_scientific_execution": false,
+  "scientific_question": "Why can common one-surface evaluations of the same persistent-memory system support apparently conflicting conclusions, and what extra diagnosis is recovered by preserving the write/exposure/uptake/outcome stage signature?",
+  "analysis_binding": {
+    "path": "paper_drafts/c1-manuscript-strengthening-20260825/evaluation-coarsening-analysis-20260825.json",
+    "sha256": "3bab2227a57158df34af3f96e9e39441aba01d32a2e7e5419b50037e316857cd",
+    "runner": "paper_drafts/c1-manuscript-strengthening-20260825/analyze_evaluation_coarsening.py",
+    "runner_sha256": "fdf68f6abf2c0f3b7f699ccae553067fc79af06c6de9073e21c85596c9e3593a"
+  },
+  "frozen_stage_evidence_binding": {
+    "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+    "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+  },
+  "result_analysis_binding": {
+    "path": "research_pipeline/result_analysis_ledger_20260825.json",
+    "sha256": "aa106470adbe11707ad62d13e698cbe252bf7c7989450d94106c2df086f66c7a",
+    "mutated_by_r4": false,
+    "note": "R4 is a paper-level reinterpretation of already frozen evidence; it does not rewrite the historical terminal-result analysis receipt."
+  },
+  "diagnostic_result": {
+    "write_only": "supports a strong persistent-state update summary but cannot establish exposure or behavioral authority",
+    "retrieval_only": "supports active availability/reuse but cannot distinguish availability from policy uptake",
+    "native_endpoint_only": "supports a weak/sparse end-to-end summary but cannot diagnose the failed transport stage",
+    "forced_endpoint_only": "supports downstream capacity under supplied memory but cannot establish native end-to-end transport",
+    "full_stage_signature": "persistent write supported; forced capacity supported; native exposure directly observed; stable first-action uptake not supported; native terminal transport sparse and heterogeneous",
+    "localized_boundary": "after exposure and before stable first-action uptake"
+  },
+  "scientific_interpretation": {
+    "main_gain": "Stage resolution is diagnostically useful because it reduces observational aliasing between state construction, downstream capacity, native availability, policy uptake, and native outcome; it is not merely more detailed reporting.",
+    "why_not_scalar_metric": "The stage observables have different units and intervention surfaces. Diagnostic information comes from which explanations remain compatible, not from dividing stage values into a transport coefficient.",
+    "why_not_causal_mediation": "The frozen design lacks atom-level seed/noise-floor controls and forced/native intervention surfaces are not identical.",
+    "closest_work_boundary_preserved": "R4 does not reclaim generic retrieval-versus-use or lifecycle-stage decomposition as novelty; the residual remains the same-trajectory reward-conditioned intervention plus capacity/native transport diagnosis."
+  },
+  "manuscript_repairs": [
+    "Abstract now motivates the stage ladder through conflicting coarse evaluations of the same frozen system.",
+    "Introduction defines evaluation coarsening and reframes the stage signature as diagnostic disambiguation rather than a finer-grained score.",
+    "Mechanism section formalizes a projection operator Pi_A and categorical stage signature Sigma without introducing a scalar transport coefficient.",
+    "Results explain how write-only, retrieval-only, native-endpoint-only, and forced-endpoint-only summaries are reconciled by the full signature.",
+    "Related Work preserves the R3b novelty demotions while distinguishing the residual contribution from generic lifecycle naming.",
+    "Limitations state that evaluation coarsening is a diagnostic information-loss claim rather than a universal theorem."
+  ],
+  "artifacts": {
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r4.pdf",
+      "sha256": "038eba101755125932891ee085e9ecade46bfcf9752e5c54e3aeef49936e88e5",
+      "pages": 14,
+      "undefined_references": 0,
+      "undefined_citations": 0,
+      "overfull_boxes": 0
+    },
+    "source_zip": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r4-source.zip",
+      "sha256": "b74c0f8840706e4110dc55f30a8b5b9ba76bca4c7b2995c8660a8f1cbaf5994c"
+    }
+  },
+  "execution": {
+    "new_scientific_provider_calls": 0,
+    "new_gpu_scientific_runs": 0,
+    "new_scientific_experiments": 0
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "claim_expansion": false,
+    "submission": false
+  }
+}
