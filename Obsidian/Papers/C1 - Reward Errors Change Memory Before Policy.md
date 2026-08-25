@@ -2,9 +2,12 @@
 
 Tags: #C1 #agent-memory #reward-error #mechanism #ICLR
 
-Latest executable-closure knowledge version: [[C1 - Executable Closure Gate v3 - 2026-08-24]] (`C1-CLOSURE-v3-20260824`). This page keeps the paper-level evidence summary; the versioned page is authoritative for the current method residual and D0 authority boundary.
+Latest executable-closure knowledge version: [[C1 - Executable Closure Gate v4 - 2026-08-25]] (`C1-CLOSURE-v4-20260825`). This page keeps the paper-level evidence summary; the versioned page is authoritative for the current method residual and D0 authority boundary. The active manuscript route is now the stage-resolved identification/measurement story; the stopped CBRG extension is not a claimed method contribution.
 
 ## Current paper thesis
+
+Manuscript strengthening status (2026-08-25): `STAGE_RESOLVED_IDENTIFICATION_MEASUREMENT_R1`. The title/abstract/introduction/mechanism/downstream-results/conclusion have been pivoted away from the old one-step ``reward error -> future behavior'' interpretation. Forced fixed-evidence injection is now labeled **latent leverage**, while native Shopping/Reddit results define the end-to-end transport boundary.
+
 
 The paper separates a persistent-memory error into stages:
 

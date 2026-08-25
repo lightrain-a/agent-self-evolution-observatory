@@ -1,0 +1,123 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision_id": "C1-STAGE-RESOLVED-IDENTIFICATION-MEASUREMENT-R1-20260825",
+  "status": "PAPER_ONLY_STRENGTHENING_COMPLETE_ZERO_NEW_SCIENTIFIC_EXECUTION",
+  "source_base": {
+    "artifact": "downloads/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE-source.zip",
+    "sha256": "5c5e00411d77aaac7e73ae08944365835fb606cd71a83efc29b1aee6b9474c2f"
+  },
+  "old_story": {
+    "title": "Reward Errors Become Persistent State: A Controlled Write-Time Memory Intervention in Self-Improving Agents",
+    "problematic_inference": "The forced fixed-evidence terminal matrix was treated as if it established native end-to-end reward-to-behavior propagation.",
+    "status": "SUPERSEDED_BY_STAGE_RESOLVED_ESTIMAND_SPLIT"
+  },
+  "new_story": {
+    "title": "Memory Divergence Is Not Behavioral Divergence: Stage-Resolved Transport in Self-Improving Agent Memory",
+    "paper_archetype": "identification_measurement",
+    "scientific_object": "stage-resolved persistent-state transport",
+    "transport_chain": [
+      "reward-conditioned durable write",
+      "native retrieval exposure",
+      "policy uptake",
+      "terminal outcome"
+    ],
+    "estimand_split": {
+      "forced_fixed_evidence": "latent behavioral leverage conditional on exposure=1",
+      "native_pipeline": "end-to-end transport through retrieval and policy uptake"
+    },
+    "central_claim": "Persistent-state divergence is not behavioral divergence: reward-conditioned writing is robust, forced leverage is measurable, but native branch-specific policy and outcome transport is sparse, attenuated, and domain/task dependent."
+  },
+  "frozen_evidence": {
+    "shopping_complete_write_pairs": 20,
+    "shopping_write_pairs_diverged": 20,
+    "shopping_pooled_token_jaccard": 0.673,
+    "reward_mode_distance": 0.700,
+    "same_mode_wording_distance": 0.595,
+    "paired_excess": 0.105,
+    "wording_control_exact_p": 0.0078,
+    "forced_terminal_abs_delta": 0.15625,
+    "forced_terminal_permutation_p": 0.00074,
+    "native_shopping_retrieval_hits": 125,
+    "native_shopping_retrieval_opportunities": 172,
+    "native_shopping_first_action_tv": 0.06944,
+    "native_shopping_first_action_p": 0.5801,
+    "native_shopping_modal_action_changes": "0/36",
+    "native_shopping_terminal_abs_delta": 0.02083,
+    "native_shopping_terminal_p": 0.4289,
+    "native_shopping_terminal_zero_cells": "34/36",
+    "reddit_complete_write_pairs": 4,
+    "reddit_write_pairs_diverged": 4,
+    "reddit_native_terminal_abs_delta": 0.125,
+    "reddit_native_terminal_p": 0.2253,
+    "reddit_native_terminal_zero_cells": "6/8",
+    "reddit_nonzero_cell_signs": "opposite"
+  },
+  "claim_hierarchy": [
+    {
+      "claim": "write intervention",
+      "status": "SUPPORTED",
+      "boundary": "Operational reward/reflection-branch persistent-state contrast; not atom-level causal semantic purity."
+    },
+    {
+      "claim": "forced latent leverage",
+      "status": "SUPPORTED",
+      "boundary": "Conditional on mechanically supplied memory exposure; not native transport."
+    },
+    {
+      "claim": "native Shopping branch-specific behavioral transport",
+      "status": "ATTENUATED_UNRESOLVED",
+      "boundary": "First-action and terminal comparisons do not pass their primary statistical gates."
+    },
+    {
+      "claim": "cross-domain native transport",
+      "status": "SPARSE_HETEROGENEOUS",
+      "boundary": "Reddit evidence does not support a universal direction or attenuation constant."
+    },
+    {
+      "claim": "CBRG method extension",
+      "status": "STOP_MERGE_CURRENT_EXTENSION",
+      "boundary": "No qualified outcome-independent semantic validity adjudicator; no behavioral method-effect experiment was authorized."
+    }
+  ],
+  "manuscript_changes": [
+    "title",
+    "abstract",
+    "introduction",
+    "stage-resolved mechanism formalization",
+    "write-stage experiment section",
+    "forced-versus-native downstream experiment section",
+    "related work",
+    "limitations and conclusion",
+    "appendix interpretation boundary",
+    "stage-resolved transport figure",
+    "Paper Story reader layer",
+    "Paper Reader key-contrast card",
+    "page architecture research question",
+    "Obsidian C1 knowledge pointer"
+  ],
+  "artifacts": {
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/main.pdf",
+      "sha256": "c311322b8e9750c7e8986c85cea7bd1bfe16bb67079e234b7b11b64a1700b1c0",
+      "pages": 11
+    },
+    "source_zip": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r1-source.zip",
+      "sha256": "54d0b4d09df4a39594ae99b326d90b2fbd910d8fd7ac6e3f95858058f96f442f"
+    }
+  },
+  "execution": {
+    "new_scientific_provider_calls": 0,
+    "new_gpu_scientific_runs": 0,
+    "new_scientific_experiments": 0,
+    "offline_manuscript_builds_only": true
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "c1-stage-resolved-scientific-evidence-reinterpretation",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision_id": "C1-STAGE-RESOLVED-IDENTIFICATION-MEASUREMENT-R1-20260825",
+  "status": "NEW_INTERPRETATION_OF_FROZEN_EVIDENCE_REQUIRES_PAPER_CONTRACT_REOPEN",
+  "reason": "Later frozen native-pipeline evidence resolves the forced fixed-evidence terminal matrix as a leverage estimand rather than native end-to-end transport. The previous C5 state-consistency requirement and C4 variance-amplification debt therefore overstate or misclassify the current evidence.",
+  "source_bindings": [
+    {
+      "path": "research_pipeline/result_analysis_ledger_20260825.json",
+      "sha256": "aa106470adbe11707ad62d13e698cbe252bf7c7989450d94106c2df086f66c7a",
+      "role": "structured terminal-result analysis and failure-layer disposition"
+    },
+    {
+      "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json",
+      "sha256": "d127ea711288fc6455923198e48bdc9c6674663ad210aca30372256270b31d74",
+      "role": "frozen operational branch-contrast compiler/locator evidence"
+    },
+    {
+      "path": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json",
+      "sha256": "716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc",
+      "role": "CBRG method-extension terminal routing boundary"
+    }
+  ],
+  "observations": {
+    "write_stage": {
+      "shopping_complete_pairs": 20,
+      "shopping_diverged_pairs": 20,
+      "pooled_token_jaccard": 0.673,
+      "same_mode_control": {
+        "reward_mode_distance": 0.700,
+        "wording_distance": 0.595,
+        "paired_excess": 0.105,
+        "exact_p": 0.0078
+      }
+    },
+    "forced_leverage": {
+      "terminal_abs_delta": 0.15625,
+      "permutation_p": 0.00074,
+      "interpretation": "latent downstream leverage conditional on mechanically supplied memory exposure"
+    },
+    "native_shopping": {
+      "retrieval_hits": 125,
+      "retrieval_opportunities": 172,
+      "first_action_tv": 0.06944,
+      "first_action_p": 0.5801,
+      "modal_action_changes": "0/36",
+      "terminal_abs_delta": 0.02083,
+      "terminal_p": 0.4289,
+      "terminal_zero_cells": "34/36"
+    },
+    "native_reddit": {
+      "write_diverged_pairs": "4/4",
+      "terminal_abs_delta": 0.125,
+      "terminal_p": 0.2253,
+      "terminal_zero_cells": "6/8",
+      "nonzero_signs": "opposite"
+    }
+  },
+  "interpretation_changes": [
+    {
+      "old": "Forced fixed-evidence terminal effect is evidence of native end-to-end propagation.",
+      "new": "Forced fixed-evidence terminal effect is a leverage estimand because exposure is mechanically supplied; native transport must be measured separately."
+    },
+    {
+      "old": "Reward reliability is a general state-consistency requirement because altered memory reaches later behavior.",
+      "new": "Reward-conditioned writing is a robust persistent-state intervention, but behavioral authority is stage dependent and cannot be inferred from state divergence."
+    },
+    {
+      "old": "Downstream variance amplification remains experiment debt.",
+      "new": "Native downstream transport has been measured and is sparse/unresolved in Shopping and Reddit; the remaining scientific question is transport localization/generalization, not an unrun generic variance claim."
+    }
+  ],
+  "paper_routing": {
+    "reopen_ready_paper_contract": true,
+    "reset_workflow_to": "PAPER_EVIDENCE",
+    "preserve_old_supported_facts_C1_C2_C3": true,
+    "supersede_old_C5": true,
+    "remove_active_unrefuted_variance_amplification_from_current_story": true,
+    "CBRG_method_extension": "STOP_MERGE_CURRENT_EXTENSION",
+    "measurement_paper": "RETAIN_AND_STRENGTHEN"
+  },
+  "execution": {
+    "new_scientific_provider_calls": 0,
+    "new_gpu_runs": 0,
+    "new_scientific_experiments": 0
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}
