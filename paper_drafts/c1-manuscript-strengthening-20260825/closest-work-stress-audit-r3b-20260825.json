@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "c1-closest-work-stress-audit",
+  "audit_id": "C1-R3B-CLOSEST-WORK-STRESS-20260825",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "status": "TARGETED_COLLISION_AUDIT_PASSED_WITH_NOVELTY_NARROWING",
+  "scope": "targeted current-web stress test of stage-decomposition and retrieval-versus-use claims; not an exhaustive literature review",
+  "sources": [
+    {
+      "title": "Beyond Retrieval: Query-Conditioned Reuse of Long-Horizon Agent Trajectories",
+      "arxiv": "2608.12847",
+      "submitted": "2026-08-13",
+      "url": "https://arxiv.org/abs/2608.12847",
+      "collision": "Explicitly separates retrieval from post-retrieval reuse and evaluates reuse while holding retrieval candidate, target state, model, decoding, and tool budget fixed.",
+      "c1_boundary": "C1 must not claim retrieval-versus-reuse separation itself as novel. The residual object is the same-trajectory reward-conditioned write intervention followed through native exposure, first-action uptake, and endpoint behavior, with forced capacity as a bypassed side control and ordinal localization."
+    },
+    {
+      "title": "A Survey on Long-Term Memory Security in LLM Agents: Attacks, Defenses, and Governance Across the Memory Lifecycle",
+      "arxiv": "2604.16548",
+      "submitted": "2026-04-17",
+      "url": "https://arxiv.org/abs/2604.16548",
+      "collision": "Organizes persistent memory into lifecycle phases including Write, Store, Retrieve, Execute, Share & Propagate, and Forget & Rollback.",
+      "c1_boundary": "C1 must not sell lifecycle partitioning or stage names as novelty. Its contribution must come from the controlled paired intervention, the evidence pattern, and the ordinal first-unsupported-stage localization."
+    }
+  ],
+  "demoted_novelty_claims": [
+    "retrieval and post-retrieval use are distinct",
+    "agent memory should be decomposed into lifecycle stages",
+    "write/retrieve/execute stage naming is itself a new scientific object"
+  ],
+  "surviving_residual": {
+    "scientific_object": "reward-conditioned same-trajectory persistent-state contrast and its stage-resolved native behavioral transport",
+    "intervention": "hold the source trajectory fixed and flip the success/failure writer branch",
+    "side_control": "forced fixed-evidence capacity control that bypasses native retrieval",
+    "native_measurements": [
+      "persistent write contrast",
+      "native retrieval exposure",
+      "first-action uptake",
+      "terminal outcome"
+    ],
+    "localization": "ordinal first-unsupported-native-stage rule preserving stage-specific evidence semantics",
+    "current_boundary": "after exposure and before stable first-action uptake"
+  },
+  "manuscript_requirements": [
+    "Related Work must cite QCR and explicitly disclaim retrieval-versus-reuse novelty.",
+    "Related Work must acknowledge prior memory-lifecycle decompositions and disclaim stage-naming novelty.",
+    "Introduction contribution must name the same-trajectory reward-conditioned intervention rather than generic stage decomposition.",
+    "No abstract/introduction claim may say or imply that C1 is the first work to distinguish retrieval from use."
+  ],
+  "provider_calls_added": 0,
+  "gpu_runs_added": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "claim_expansion_authority": false,
+  "submission_authority": false
+}

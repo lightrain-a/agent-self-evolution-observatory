@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision_id": "C1-STAGE-EVIDENCE-LADDER-R3B-COLLISION-AUDITED-20260825",
+  "status": "PAPER_ONLY_R3B_CLOSEST_WORK_COLLISION_AUDITED",
+  "scientific_route": "IDENTIFICATION_MEASUREMENT",
+  "method_route": "CBRG_CURRENT_EXTENSION_STOP_MERGE",
+  "new_scientific_execution": false,
+  "r3_analysis_binding": {
+    "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+    "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+  },
+  "closest_work_binding": {
+    "path": "paper_drafts/c1-manuscript-strengthening-20260825/closest-work-stress-audit-r3b-20260825.json",
+    "sha256": "bc0abd660f0ae1474dda3e1ef41551beb60efd56bcb65c82d2f73785d5ef5be3",
+    "scope": "targeted current-web stress test, not exhaustive literature review"
+  },
+  "collision_findings": [
+    {
+      "source": "Beyond Retrieval: Query-Conditioned Reuse of Long-Horizon Agent Trajectories",
+      "arxiv": "2608.12847",
+      "collision": "retrieval versus post-retrieval reuse is already an explicit scientific/evaluation object",
+      "disposition": "DEMOTE_GENERIC_RETRIEVAL_VS_USE_NOVELTY"
+    },
+    {
+      "source": "A Survey on Long-Term Memory Security in LLM Agents: Attacks, Defenses, and Governance Across the Memory Lifecycle",
+      "arxiv": "2604.16548",
+      "collision": "write/store/retrieve/execute/propagate lifecycle partitioning already exists",
+      "disposition": "DEMOTE_GENERIC_STAGE_DECOMPOSITION_NOVELTY"
+    }
+  ],
+  "surviving_residual": {
+    "intervention": "same source trajectory held fixed while success/failure writer mode is changed",
+    "persistent_state_object": "paired reward-conditioned branch memories",
+    "side_control": "forced fixed-evidence downstream capacity control",
+    "native_chain": [
+      "persistent write",
+      "native retrieval exposure",
+      "first-action uptake",
+      "terminal outcome"
+    ],
+    "localization_operator": "ordinal first-unsupported-native-stage rule preserving stage-specific evidence semantics",
+    "current_boundary": "after exposure and before stable first-action uptake",
+    "not_claimed": [
+      "first retrieval-versus-use distinction",
+      "first memory lifecycle decomposition",
+      "new generic stage naming",
+      "causal mediation coefficient"
+    ]
+  },
+  "manuscript_repairs": [
+    "Introduction contribution now names the same-trajectory reward-conditioned intervention instead of generic stage decomposition.",
+    "Related Work explicitly cites QCR and disclaims retrieval-versus-reuse novelty.",
+    "Related Work explicitly acknowledges prior memory-lifecycle stage decompositions and disclaims stage-naming novelty.",
+    "A regression test fails if generic retrieval-versus-use or lifecycle-stage novelty reappears in the manuscript."
+  ],
+  "artifacts": {
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r3b.pdf",
+      "sha256": "910b59d9bcfbdad235e09cda16b5cd4a6c96c09e0e18a14f247b94024f0a58d5",
+      "pages": 14
+    },
+    "source_zip": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r3b-source.zip",
+      "sha256": "1b9c466317aba123d4fa8e311e4dfc7e9674709c0c9526b02b24c7f0831ae71e"
+    }
+  },
+  "execution": {
+    "new_scientific_provider_calls": 0,
+    "new_gpu_scientific_runs": 0,
+    "new_scientific_experiments": 0,
+    "web_literature_stress_test_only": true
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "claim_expansion": false,
+    "submission": false
+  }
+}

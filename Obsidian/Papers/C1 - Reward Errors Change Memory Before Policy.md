@@ -6,7 +6,7 @@ Latest executable-closure knowledge version: [[C1 - Executable Closure Gate v4 -
 
 ## Current paper thesis
 
-Manuscript strengthening status (2026-08-25): `STAGE_EVIDENCE_LADDER_R3`. R1 separated the old one-step ``reward error -> future behavior'' interpretation into write/exposure/uptake/outcome. R2 added capacity-versus-native-transport control and a six-alternative explanation audit. R3 makes the localization rule explicit and reproducible: because memory distance, retrieval rate, action TV, and terminal effect are not commensurate, the paper uses an **ordinal stage-evidence ladder** rather than a synthetic attenuation coefficient. Each native stage keeps its valid evidence state (`SUPPORTED`, `DIRECTLY_OBSERVED`, `NOT_SUPPORTED`, or a typed heterogeneous boundary); the first unsupported native stage after supported/observed prerequisites is the operational attenuation boundary. Forced fixed-evidence injection remains a **side capacity/leverage control**, not a native chain stage. On the frozen evidence, the first unsupported native stage is `first-action uptake`, so the supported localization is **after exposure and before stable first-action uptake**, explicitly not causal mediation. Machine-readable analyses: `stage-transport-bottleneck-analysis-20260825.json` and `stage-evidence-ladder-analysis-20260825.json`.
+Manuscript strengthening status (2026-08-25): `STAGE_EVIDENCE_LADDER_R3B_COLLISION_AUDITED`. R1 separated the old one-step ``reward error -> future behavior'' interpretation into write/exposure/uptake/outcome. R2 added capacity-versus-native-transport control and a six-alternative explanation audit. R3 made the localization rule explicit and reproducible: because memory distance, retrieval rate, action TV, and terminal effect are not commensurate, the paper uses an **ordinal stage-evidence ladder** rather than a synthetic attenuation coefficient. Each native stage keeps its valid evidence state (`SUPPORTED`, `DIRECTLY_OBSERVED`, `NOT_SUPPORTED`, or a typed heterogeneous boundary); the first unsupported native stage after supported/observed prerequisites is the operational attenuation boundary. R3b then stress-tested novelty against current closest work: QCR already owns retrieval-versus-post-retrieval reuse as an explicit object, and recent memory-lifecycle work already names write/store/retrieve/execute/propagate stages. Those generic claims are now demoted. The surviving residual is the **same-trajectory reward-conditioned writer intervention + forced-capacity side control + native ordinal localization**. On the frozen evidence, the first unsupported native stage is `first-action uptake`, so the supported localization is **after exposure and before stable first-action uptake**, explicitly not causal mediation. Machine-readable analyses: `stage-transport-bottleneck-analysis-20260825.json`, `stage-evidence-ladder-analysis-20260825.json`, and `closest-work-stress-audit-r3b-20260825.json`.
 
 
 The paper separates a persistent-memory error into stages:
@@ -48,7 +48,8 @@ The remaining paper-development debt is therefore presentation/coverage debt, no
 
 ## Collision audit: what is NOT the new method
 
-- Retrieval vs post-retrieval reuse is already an explicit research object in **Beyond Retrieval / QCR**.
+- Retrieval vs post-retrieval reuse is already an explicit research object in **Beyond Retrieval / QCR**; C1 must not claim this distinction itself as novelty.
+- Memory lifecycle decompositions already separate phases such as **Write / Store / Retrieve / Execute / Propagate / Rollback** in recent long-term-memory security work; C1 must not sell stage naming or lifecycle partitioning as novelty either.
 - Generic provenance-preserving authorization is already covered by **Memory Provenance Laundering / PPMF** and **MutMem**-style authorized mutation.
 - Generic common-root + residual memory representations are already covered by **DeltaMem**.
 - Generic `what happened` vs `how to use it` decomposition is already covered by **Live-Evo**.
@@ -58,6 +59,7 @@ The remaining paper-development debt is therefore presentation/coverage debt, no
 Primary-source anchors for the current collision audit:
 
 - Beyond Retrieval / QCR: https://arxiv.org/abs/2608.12847
+- Long-Term Memory Security lifecycle survey: https://arxiv.org/abs/2604.16548
 - DeltaMem: https://arxiv.org/abs/2606.03083
 - Live-Evo: https://arxiv.org/abs/2602.02369
 - MutMem: https://arxiv.org/abs/2608.02843
