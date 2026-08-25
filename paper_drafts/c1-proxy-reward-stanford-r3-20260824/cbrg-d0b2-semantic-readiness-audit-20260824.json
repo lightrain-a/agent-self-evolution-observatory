@@ -1,0 +1,92 @@
+{
+  "adjudicator_contract": {
+    "allowed_inputs": [
+      "content-addressed operational branch-contrast unit",
+      "content-addressed pre-writer evidence span(s) from the same frozen trajectory"
+    ],
+    "incremental_information_requirement": "A future adjudicator must produce reproducible support/contradiction/unverifiable information not reducible to a monotone transform of locator or semantic similarity on the same frozen support.",
+    "required_capabilities": [
+      "distinguish semantic support from contradiction rather than return only similarity",
+      "return UNVERIFIABLE when evidence is absent or insufficient",
+      "operate without terminal reward, task rubric, downstream outcome, or treatment label as validity evidence",
+      "be frozen/content-addressed and reproducible offline or be an equally deterministic registered rule",
+      "carry an independent C1 qualification receipt before labeling the scientific pool"
+    ],
+    "required_output_states": [
+      "SUPPORTED",
+      "CONTRADICTED",
+      "UNVERIFIABLE"
+    ],
+    "same_information_baselines": [
+      "lexical overlap / exact anchor availability",
+      "MiniLM semantic similarity / applicability",
+      "neutral/metadata memory controls",
+      "generic common-core/residual factorization"
+    ],
+    "unlocated_policy": "The 26 B1c units without a nonzero exact lexical anchor are forced fail-closed and cannot receive imputed support authority. A future B2 adjudicator may only mark them UNVERIFIABLE unless a separately frozen outcome-independent evidence locator is added before adjudication."
+  },
+  "artifact_type": "c1-d0b2-semantic-adjudicator-readiness-audit",
+  "audit_id": "C1-CBRG-D0B2-SEMANTIC-READINESS-V1",
+  "baseline_asset_boundary": {
+    "architecture": [
+      "BertModel"
+    ],
+    "classification": "EMBEDDING_SIMILARITY_BASELINE_ONLY_NOT_A_VALIDITY_ADJUDICATOR",
+    "id2label": null,
+    "label2id": null,
+    "minilm_config_sha256": "953f9c0d463486b10a6871cc2fd59f223b2c70184f49815e7efbcab5d8908b41",
+    "minilm_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b3-expanded-retrieval-exposure-20260824/exact-minilm-l6-v2",
+    "minilm_weights_sha256": "53aa51172d142c89d9012cce15ae4d6cc0ca6895895114379cacb4fab128d9db"
+  },
+  "claim_expansion_authority": false,
+  "decision": "D0B2_READINESS_HOLD_NO_ADMISSIBLE_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL",
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "gpu_runs_added_by_this_audit": 0,
+  "input_binding": {
+    "b1c_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json",
+    "b1c_sha256": "d127ea711288fc6455923198e48bdc9c6674663ad210aca30372256270b31d74",
+    "exact_candidate_anchors": 397,
+    "operational_units": 423,
+    "unlocated_units": 26
+  },
+  "local_asset_audit": {
+    "admissible_qualified_adjudicators": 0,
+    "c1_semantic_qualification_receipts": [],
+    "nli_classifier_candidates": [],
+    "nli_classifier_configs_with_entailment_and_contradiction_labels": 0,
+    "registered_semantic_adjudicator_binding_present": false,
+    "search_roots": [
+      "/home/wyt/.cache/huggingface/hub",
+      "/data/wyt/agent-self-evolution-observatory"
+    ]
+  },
+  "next_permitted_action": "Zero-call qualification/binding work only: bind a frozen entailment/contradiction-capable local classifier or deterministic semantic rule together with an independent pre-outcome C1 qualification receipt, then re-run B2 readiness. If no such validity signal can be qualified without reward/outcome leakage or similarity reduction, STOP/MERGE CBRG and preserve C1 as the stage-resolved identification/measurement paper.",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "provider_call_authority": false,
+  "provider_calls_added_by_this_audit": 0,
+  "readiness_summary": {
+    "contradicted_units": 0,
+    "exact_candidate_anchors_ready": 397,
+    "future_forced_unverifiable_without_new_locator": 26,
+    "gpu_runs": 0,
+    "nonzero_branch_authority_units": 0,
+    "operational_units_ready": 423,
+    "provider_calls": 0,
+    "qualified_semantic_adjudicators_bound": 0,
+    "semantic_validity_adjudicated_units": 0,
+    "supported_units": 0,
+    "unverifiable_units_adjudicated": 0
+  },
+  "reopen_conditions": [
+    "a content-addressed local classifier/rule with explicit SUPPORTED/CONTRADICTED/UNVERIFIABLE semantics is bound",
+    "an independent C1 qualification receipt demonstrates semantic support/contradiction discrimination on pre-outcome evidence",
+    "the adjudicator is shown not to reduce to lexical or embedding similarity/applicability on the same information",
+    "the 26 currently unlocated units remain fail-closed unless a separately frozen outcome-independent locator is added before semantic adjudication"
+  ],
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_interpretation": "B1c makes the operational contrast and candidate evidence locations executable, but the current frozen local stack contains no qualified C1 semantic-validity adjudicator. MiniLM and lexical overlap are explicitly baseline/locator signals and cannot be relabeled as support evidence. Therefore B2 semantic execution is not scientifically admissible in the current zero-call round.",
+  "status": "D0B2_SEMANTIC_ADJUDICATOR_NOT_BOUND_READINESS_HOLD",
+  "submission_authority": false
+}

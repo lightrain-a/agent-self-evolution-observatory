@@ -1,0 +1,4311 @@
+{
+  "artifact_type": "c1-d0b-evidence-receipt-structural-audit",
+  "audit_id": "C1-CBRG-D0B-RECEIPT-STRUCTURE-V1",
+  "claim_boundary": "Zero-call structural feasibility only. This does not establish CBRG effectiveness, branch validity, novelty, mediation, or provider-execution authority.",
+  "claim_expansion_authority": false,
+  "decision": "D0B_STRUCTURAL_GO_SEMANTIC_AUTHORITY_HOLD",
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "gpu_runs": 0,
+  "interpretation": "The frozen 24 same-trajectory source pairs can be bound into content-addressed receipt prototypes that identify exact pre-writer trajectory projections, exact branch memories, deterministic residual-claim identities, and outcome-independent released browser-state evidence. No claim-evidence validity judgment is made here, so no prototype is an authority-bearing evidence receipt.",
+  "next_required_gate": "A separately versioned outcome-independent claim-evidence adjudicator must assign SUPPORTED, CONTRADICTED, or UNVERIFIABLE from the bound pre-writer evidence. Semantic similarity, the injected success/failure label, terminal reward, and downstream outcome are forbidden as validity evidence.",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "provider_call_authority": false,
+  "provider_calls": 0,
+  "receipt_contract": {
+    "binds_branch_memory_sha256": true,
+    "binds_evidence_refs_and_sha256": true,
+    "binds_exact_trajectory_sha256": true,
+    "binds_residual_claim_id": true,
+    "content_addressed": true,
+    "receipt_cannot_grant_provider_or_scientific_authority": true,
+    "receipt_is_required_before_nonzero_branch_authority": true,
+    "records_authority_decision": true,
+    "records_extractor_and_adjudicator_version": true,
+    "records_validity_state": true
+  },
+  "receipts": [
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b4-retrieval-matched-fixed-evidence-20260824/private/memory-manifest/21-failure.md",
+          "sha256": "c9a4793d394b9786db75483231ddc90c1fd5306608c8c8f8bb15e1d2b7c5019d"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b4-retrieval-matched-fixed-evidence-20260824/private/memory-manifest/21-success.md",
+          "sha256": "68fac0d365166e8c2a39a5ce9c1bc46cadcd22851429b412a584e01a9230340a"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "7687e7ef94ab59695f9894af1254aec4f8c27aae871b50e5eec90a3ed213cb33",
+        "released_state_sha256": [
+          "5034889726288ae697b0d7caa43fe3623bbbb3eb349bc940a29533a64ebc1c28",
+          "7bb702805900e84cbadd8154163b9125a385354b7d81bdf4aa12ee07055ae8bb",
+          "890e5ba6e1814d51c2692ed6439d73ae8066a1908b7ca7b7aeeffd61cee44bc7"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 3,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-3a482f1da84c59a100b7aff4",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-5abaf97d94b34099a2cda1df",
+              "text_sha256": "568404d833f7d5b25524df370ae5163e13775f2c0fcfea6cec30bf8551ad9295"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-033797a0110fd8712d01599f",
+              "text_sha256": "6a7753223940ea0d34b141f34a15d205cd86f0a7b703575a78c44952376f54e5"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-a40afb43f3a2e7349242f221",
+              "text_sha256": "59a14d661d69bd45187fbb8007513bca8e961bc5d50d1fb79865baf331aec930"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-41a26a4bfbd2781fbf4f1f73",
+              "text_sha256": "24fa597c4c10ed8a92c729d9953846452ef205601baa3440e85d437beb01677b"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-39b6f540b5e3e0054d5a9d1e",
+              "text_sha256": "14c0d03a8337a35c7abe205fea5a63a658b0ece1fd0b915423402e293b77fc1e"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-a78615f082b506e761a88809",
+              "text_sha256": "4f6ccc45e6681c283b55a8bb3f643a42ce237e1758f15a9d402cd2472d4f490c"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-4fee94d343be144ab5b630e3",
+              "text_sha256": "9c3c1de40c4ae381ce679105767323985c8a7d67571057d990ebe6166f2057e9"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-26383907a2a45213ea7acc84",
+              "text_sha256": "1bbd0641a2cce90ec790348381329c88f43f0b155a3c2fcb812782ae943b22d0"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-21bb4e1b3bc114d353c555f0",
+              "text_sha256": "a3e1a817c383d63a3c911831cdfb236962957a44e06337d840326a0edbfd8068"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-756ee8b41ea153ca9dda44ea",
+              "text_sha256": "f1212526aafd53322305d3d75f9c5850877279bb9a0641365b597763f536d596"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-a340c41de26b5f3147fb2f6f",
+              "text_sha256": "f181719fb60b099369612a55d14ebbe265f4aac015b6a5858d8eb4fb7ac9eed7"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-c653bf5dfab9df9f2676e2ce",
+              "text_sha256": "7b5475523695d464b6bf8185bb8fac4d98005be227e3f01d440ad9f0fa3a0656"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-d44e3788fdc1936a5e06280d",
+              "text_sha256": "150841f6550ea7f4f151c1f2dbf35d0a21e8e6a69963efaddb178f6c5dac5784"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-f90a37ca4e01060df5e06b8a",
+              "text_sha256": "4d14de85253164ffcbb286d7ac8e8a6551dc4d2c33ca0db9535454098a56f0b3"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-52fcda1c2e0d04390ec61bc1",
+              "text_sha256": "1db02b87f9850f485342ed2ecd0e4f940f9dd1033da7e36bacc5a9795d7db81f"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-1a6604aa99412997ab55b53c",
+              "text_sha256": "714c52262d09532636115f19c74ac3795eaf573bb1b973fee5990d18a7e25baf"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-6435ecea5c0c41eed56f9973",
+              "text_sha256": "6fd9734c6b6e43fa69bb124e72545402f767f609f76726e80d96a54bb9226e3b"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-cb028cfa5120844ff8964e80",
+              "text_sha256": "3cc2fdb1ea60134e7d9919732860c6e6f2136c64787cc934c3d78746277ea2f0"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "original_f0",
+      "source_task": 21,
+      "task_prompt_sha256": "d6731879119bac4768abce34000ca69465b2b8bdf9562aed6ccd35f4747fcec6",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "8a68de7db895730221b13253543a58abafc3c07ac0ea5b3e86505a78acccd17b",
+        "pre_writer_trajectory_projection_sha256": "ae610b57e7f1e61ae896ccf69c8fd895f469db18646d4429201f8e0fe0e79a90",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "0697e64ba5a6c805cf0ce929ac1d947d2e884b75073c73ec63ec30f26156acab",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b4-retrieval-matched-fixed-evidence-20260824/private/memory-manifest/22-failure.md",
+          "sha256": "8cdb1c706bf3ffc6fd66ea23d361b1e10b7538bd92e651c9cf81f17aaf426c48"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b4-retrieval-matched-fixed-evidence-20260824/private/memory-manifest/22-success.md",
+          "sha256": "9df109c17c0d79dccf41a5ee85fa34017aa7985b546da3a8a51e697a400dc1e0"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "8669507d35449ef8a451ddee9bf02b4566233ebc9d7bdc6d7b4cfe3459552657",
+        "released_state_sha256": [
+          "2b53f63e811fe38b372ce00c557463a772f22de0187437501e6152b568d7ec32",
+          "b11abcc963db4250de6c0960c6a5c2711f315086bec9065b4205f2c563539e54",
+          "543becf7ee28849c941c44d05e55a84af728e0eeef51d3b8067a702302b08ab6",
+          "7041f9f603c9c0f65a6b783730b08c7ba441d0cfbfac36e36e7b2f5aeeff99c5"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 4,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-9aebf9b894d0f87a46e58dab",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-96a829037f590a2a3e1e31e5",
+              "text_sha256": "b6b5962f0ebbd3c2c46cd3c11b6cea7ed4f3bfe22a8f60f5d6e2f460ce8b5537"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-431cdefd5cc27825bbb2987f",
+              "text_sha256": "050122d66694eb9dc7eb1c1d5b3058b4ee6563c948da7552f2ac625a8150a1bb"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-ba98b747d3d50fabee770e53",
+              "text_sha256": "6991dff43b89e8f7a440b41b1539b0d0f73b0f74a9b14023053ac0aead241f9e"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-a6cf1a4a1db035d371d0eaf2",
+              "text_sha256": "7a861e07eeff106e480932b6f7122eb566fa462b6e211e661d9f3ceebbebb649"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-9bac46bf1f10997b0e71e6a1",
+              "text_sha256": "c85aadb504869b3746330fc6cbd5da6e88be569056388e6fe0decef22b2e0497"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-283983c004d0e2047f0cbd6e",
+              "text_sha256": "5c07d63b20f349d72f15c274624be737586251b0de1bc427a3f3ad30c5a25a10"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-aae9b4a1d2a84fe332584a92",
+              "text_sha256": "f73ed84109627c7cb81c9d34e9c23d6ae3a5a9db433cce2329fc41c8a35d890b"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-a374bcfe0abfb5d42658f69e",
+              "text_sha256": "73ab8df39cff691d4deac27e5d0188228c36a5c6c65eec3dfd471aa5c7d4c99c"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-0671a1ec3029e760f0116b85",
+              "text_sha256": "96c8589d0c9a4b0e9fe4874f61624cc2ecd19c5090de26cedec1e3208eb7aa50"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-8dd2ab0ace13166b3c269059",
+              "text_sha256": "c8519b43aec0449027ed881ca4672ca71fd34f30bc71d01c7ba5f22d0af1b571"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-cc933c3992a2de9c470a21d7",
+              "text_sha256": "be35c6628ad41dc563cf84c7b53e4a8d6c14dfd70a5dc0568fd1a11cb8f1ca09"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-2540b1dc14a28d997e0700dd",
+              "text_sha256": "ae78391a0d48347d6b40a52d244592f2a14e64d3f08f9d739e27cf7992cce195"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-240721096efccac925a013fc",
+              "text_sha256": "acb7f6471576fa1be6b532edb75b59e155a61a3f663dff787d4a7abec8c9b298"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-4868e3a10331027a1d422d4e",
+              "text_sha256": "b54999494cc8ca409422b2db96d8f04df407d60145f9b851f6d7d49fa971c03d"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-9a7962efaf8fd3bb6de6ba31",
+              "text_sha256": "f25cd208f531ce0539b626ee6daaef7580bf7a70c4d5a76367085c8d3896f80b"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-29371bee8e5e07f3f178ecc7",
+              "text_sha256": "90431c78b0173f31f6409eca572c7792784700a5ceb734fc76ebd02848a52249"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-95e7f9c5819e13cf76514308",
+              "text_sha256": "a85469d2d09232d0834bc4e14e6c7ff00ab86b72df05f00554311cc1e97ea331"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-cfd3e4e2cad10ef653decf9c",
+              "text_sha256": "c217869a3fe2a3eaec761db0c6d62915e5d50a933cd964741993050c1c514339"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "original_f0",
+      "source_task": 22,
+      "task_prompt_sha256": "036f789da041039ee7768f16b04c368e353d51728508f371a8accec6d30b05cf",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "81c0191c3b8000caf165ed74c36769e59c49b95d85cad259a9b3d999850e2aaf",
+        "pre_writer_trajectory_projection_sha256": "97c993aae131a8c93a71b1e9d1aafa09ca967686b09e33876df2f8abc03721ee",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "ce3161ff3c47c24a5f96b109162935aa3d8126c47559aca38c6cd3c77c121446",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b4-retrieval-matched-fixed-evidence-20260824/private/memory-manifest/23-failure.md",
+          "sha256": "db744e634aa974903c8a4be97e4e66fa357d302be5603337a6ad7fe5c50f2557"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b4-retrieval-matched-fixed-evidence-20260824/private/memory-manifest/23-success.md",
+          "sha256": "8c036eb3cae7324531fcd39e14772e748119983e1acdde25beb5b8c97d7f05f1"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "b27ba552a8b13a1252078efe527bb5705117d0e726f7063f703d9a5512186e2b",
+        "released_state_sha256": [
+          "7ba56281dc063f9db31b8f07a244416326572b6066801584bcdf9285b42cc2fb",
+          "7ec74adbd6248d3238f614c512a71a9baed821017110853817f2e3f6f983c520",
+          "48d11b89ac6168c057f27927eba8ff44141d27d313a65e36869b83ac15a91248",
+          "174295f404797eb1fc336000e0846339e85425a8cd8b3db49a195021f49b7459",
+          "0eaea803298cb153847167f2c8caca14cd4471971c9cf4aba5ff155657bc8c24",
+          "dba6c819350d81f0e5471783334227c89c8f332d23e2fbd3b22e5d894ca1fd94"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 6,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-e35d803c2dd4cfc07080847f",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-dbf476e70679fb61be186467",
+              "text_sha256": "9a408ca9de975209d7569cea7b6f38bfd5f02dacb7dfac3d1c7f753cc2372eba"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-4d92f8a0c5efceb40b204c63",
+              "text_sha256": "66bd368b2831a106e08cb6291e13a928024eb8ab99e21c118fd64d96424df582"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-f6430d264edec2431048f24b",
+              "text_sha256": "1d43036ea2e98113ca0fbf3fcff9cd85ccd6749eae8d55b870d064a11755f995"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-97cf737edd5c6a95cfd5166c",
+              "text_sha256": "a1fc32801d4755a2bb438e3042a0e4f86c45e961ce15894617e14bfd7d4985e1"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-d09c08faaff3e466dd93bcb3",
+              "text_sha256": "332572941ee72652b5be133f8272d5ad9e1b478f715f6e76a5626b6225728a9f"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-bd78359b3b2d819bac77def4",
+              "text_sha256": "6290b4af38cb76c721a05a38e6e18308ceec7637ac686552303906f9e43ba4d3"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-5d6faca8e189ddf7ff26b8f4",
+              "text_sha256": "1427c2f48730aa19ceb37b19c4ebfcefad4df3f1a0070b6e498782a52c1276b5"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-6a47bf67b0010a65b7a8459b",
+              "text_sha256": "e79948438d57e991526cf8e7a16b251b304ae817aaf16a579e2bab646e4eb26a"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-f4bd9c0cf3ba9a9e4c06923c",
+              "text_sha256": "7d7fa20db8ab8c311d2599b0db6af4ac71571521c852a6738cac4aef6ae85e8b"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-4e9ba7f36be70dd88a0782f1",
+              "text_sha256": "762cdb6486687d446a2fa2aaf0c4c6b2dfc3d1d5d59a726dee7a9c7d754f9adb"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-360e7c10bcc527dee06ca793",
+              "text_sha256": "3e973116e165cdb15bb23a66f1eacfe6977c500c92107a53043bb02eb0b60c3a"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-99899b9d4cd527b23a3ad404",
+              "text_sha256": "df6fb08a6e168e6f6db225eb967a5dfa7e1375260f03e6dd567a8653225ee3d9"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-3649f3a874387cb23c2d9e03",
+              "text_sha256": "117af7bd2316af6cf7adcbcb638df4985e413ee7c45281d8f5c0a9aca46037ec"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-0a4f2bc273ecd8f3ef3759e1",
+              "text_sha256": "b8827a7c930e237a344acd4e3368f3d59204957e34be2a417bd5fb69c28f89e8"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-579e4b962cb3c46c7e5cad84",
+              "text_sha256": "53b6c59d188915e516fc0f0f97fe7fecb4d081bbc94b26523878f4988608e0fc"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-339765554b7dddc4a95eb59c",
+              "text_sha256": "c540b366bc3ccd6fd8f1daa026ed5abd4458835217a4f2528731626cf8567e5c"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-f78a7024529faf1cfcc629ae",
+              "text_sha256": "d730ec668492081d1e9782f601f1135fb6768ea19fb7406aaaf8a0afe655f0c9"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-3f4b89da6ad37eee738fcd00",
+              "text_sha256": "0b8fdb405d2b5101e08bc1d41b5cad7c51d07429b4f21e6deb68ccab15703e3e"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "original_f0",
+      "source_task": 23,
+      "task_prompt_sha256": "3fc171d792ab2815e212431d11fe0833b3bf265c99d08085382661a168fa4aed",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "ec73d064478e5c5464f0ef1bea45c3aa59ef10fec8a400524086adc399e2331f",
+        "pre_writer_trajectory_projection_sha256": "4a2bf2eaefc95c5fba2313d3a5238bb3cb1b892d9548f32b82fc642901981657",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "4471ab8874a465680a66b48fe06b09633785d46fb549195b04d75e1d58646d23",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b4-retrieval-matched-fixed-evidence-20260824/private/memory-manifest/25-failure.md",
+          "sha256": "0d8c7f3d3a9e49c08353d8dd842c58916fb45fb3c260b5252a8544d6b71d8dc5"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b4-retrieval-matched-fixed-evidence-20260824/private/memory-manifest/25-success.md",
+          "sha256": "59e85dbe9802cd79ba7e403318af854ac389a07bb3fadd2f895d265651ef5430"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "bea9beddda3ac37617d395456d53a0c5b63d7d623e8ed4a325f93935c54d69dd",
+        "released_state_sha256": [
+          "5f337f8a60880254a207f5a5994d588762491e8e4138493d37c8520dcd9edbef",
+          "5be4c14152237a3753755f43aab70efd1f95053de49142f5c67e5c0224454ab6",
+          "e6e26499ec2c6bb5a21ab5c408857ddc691e9c5649d8669bbf20b9ff47f998dd"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 3,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-f99943ba31dd442a7959b688",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-57abe1911d35908f5acabaf3",
+              "text_sha256": "0ca62c6b8ba16bb5d5598599810b365785b8446c6b7b1fe4911921a5363531f2"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-cc8f0002e2e7eaa24939e713",
+              "text_sha256": "4beeda6ca4a26231dded182f08926196df0ae86835e03f2ef95e8acac1f13ba1"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-e47060630811df0d511c0933",
+              "text_sha256": "557028b5d274a4f657fbb2ed3dbce8da4f690cbb497adc14f3f08939baf249e2"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-c1748cac7779549893dc19ef",
+              "text_sha256": "777ca288f789e550cce507c50e5fb0b317e9131ebdbbe8f4d85b8aa68b4fa2fe"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-a06f3c893c6108777096dbfd",
+              "text_sha256": "644e7847a9ac492886537ec5c5800703f1159c998cc67eef84770a1ecaa18993"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-eef95f99c9109708a1a82852",
+              "text_sha256": "7a4f2dcaec14d21e19bae189bfd8fd277c6fc581ef31d6857b6416296ceae20d"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-5adc917816258feaf3e6808b",
+              "text_sha256": "4f608da0887090c6dc17a8f5d7e79174d4f2faef8fa7eda1434ce551e3b00e81"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-94876ae2e89b24cd86830e65",
+              "text_sha256": "6f8e2b248136cc9aaf1b3a2d6276dad5b2a08ae414042db468d902766e688450"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-0b0e8a2499d6082a9699c2c4",
+              "text_sha256": "d8a7e25f030fe5b1274002f75fea98808dbcf162b6d8496c1de2441240a85468"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-f2092010a032642f0c51c1aa",
+              "text_sha256": "f1212526aafd53322305d3d75f9c5850877279bb9a0641365b597763f536d596"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-72ad866d1c79a9c677d8d25e",
+              "text_sha256": "331669a9e88e6c7901601f50089b7472c19ea1936d91e9f50782395300d109f2"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-68c88cc80b791a055331f966",
+              "text_sha256": "49540ab0b666ceaf3734999e9d9058cf1f0e7edebb2730209b474d44f58b2bd9"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-41e6aafddc4b0417f89909c0",
+              "text_sha256": "3845aa39b9826dae484db9188d464976aa390a80b30b93a4347c0ae29c25528c"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-d9380032c294cfbfe146de8b",
+              "text_sha256": "4b82fe02cd1f5571b2bc71a1ee7171a17c6f0192fa900a67ccf32cddfa13eeb3"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-2c0b8b02206c63657ff7bdb2",
+              "text_sha256": "cf81cd68dea8a1e868dff89660b07a528df2ff1861e2a68c34b0e58a894f99a9"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-fb9628e8f9bceda3be60a8c6",
+              "text_sha256": "8de09057dcca14155c67970aedcfd2dc601d321755571cb0a9ace3deba8262cf"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-7394d7ff9abb9e2a960b41cf",
+              "text_sha256": "96f473d84a24cfff93f927047710bf42b979a336c22a984d22625cb3c14cd881"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-b929a95f6576af9e2f074ffb",
+              "text_sha256": "a9a81424dd6f4a2aa29cc4f7b4047eafbe5fbe8c15fe28a07072d1271f6b53dd"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "original_f0",
+      "source_task": 25,
+      "task_prompt_sha256": "76881f819986a7154555ab8c5b13c546903d9fc0d3a0a27069a6f7fac63f4b55",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "deaf3124718a8097b76098708a20b9ab484582e9875e7dbb723fc57543696175",
+        "pre_writer_trajectory_projection_sha256": "d66f8cde6fa8c6293e44e09fde0ad85bd02040b15713057df410885f30441793",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "9355929e90fb70ba7b554630fa21b93dfcc0117586a73cae1020782ace41444a",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/bc/bc51cd467c34b2be6c84fdd06993a0f2e5471bf92cc32e731209a5d1589ef621.txt",
+          "sha256": "bc51cd467c34b2be6c84fdd06993a0f2e5471bf92cc32e731209a5d1589ef621"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/95/95ab7239d05c4ff412b95446915e11739895f3d8f880ae8eebf43f5ce8e565db.txt",
+          "sha256": "95ab7239d05c4ff412b95446915e11739895f3d8f880ae8eebf43f5ce8e565db"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "5cbf2e5e1398ae9a45315e8a95cb327308f8e12e4079d2122550a3cd4cb5c690",
+        "released_state_sha256": [
+          "d42d1352478cf9b97796e6996311221f91c0ab73a04c5cbe2cae8cb7b6e79bab",
+          "ba807d2debde46f7c86c21066ca3927962a7d90d5b772812837e352c93fd6407",
+          "4b42699f0b1b576ced13a81e28ae880c0759e1bf3c104d98d27d44a06475e537"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 3,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-f23dc9f9c525f8cdd8e59569",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-190c7583878353b347d851c0",
+              "text_sha256": "ad7854aec9d657b46fa863e241b4d21798e9ddad20f0f57afcc17a1f7e2fa3a8"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-4aba8cb0b59aedfe71bbb66b",
+              "text_sha256": "d3556d0861d87d99f2caa405679c8b164fe0220d6a1ff371d14de38532730f00"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-2436eab8945d2483406502b2",
+              "text_sha256": "76798223033be28739cfd0d6203989dc8e308c184ade9022186ced660ddd4eaf"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-3f83c81730a850aef3ae7241",
+              "text_sha256": "4f4e9e60f6e6965ba67d6105f13970fc22cc7c7bfcbba382d34ccc651f062fb5"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-4ec04e02658085f1004fa3a6",
+              "text_sha256": "d5ef2de1a8fa5808c6d1b60e0b658f2ad2c9101336654ebd2356a67374f3ee9d"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-2123a7c9a52877251e820609",
+              "text_sha256": "8d05ad449b271437a99b8249debc9d7e4e48d33fcfa7f59ca6c909f86a1e2c55"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-5af53e85fae2136079ad1b32",
+              "text_sha256": "cc31cedc0fa309e3c3e14d00f2b0dd2eb52c3771adab15343ad40cccea96822b"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-9ceed6d7730f7bebc97cf703",
+              "text_sha256": "7e3b3ba9f26a2c20c81cd773c2e2586893ce0fc374befb20376329273396ad6c"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-0e6cada841cc84dac3ca91d4",
+              "text_sha256": "ffc5d997ce3d676f0dd30621e33ed0074f16acde609bf228f9e3d878423ce6e7"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-af2801c4ac45773038a252a5",
+              "text_sha256": "4eefaa58d870fc7590cdbd24a801fdc00e3b73902dcb55860701f8c19978b766"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-37bcbd6534b7cd36c5d4badf",
+              "text_sha256": "e22180e7384ad36987c50ea942ef34a77f191d0e8d3add1f31d289613182f25c"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-61c3970020c1aad774133c02",
+              "text_sha256": "7ae93e1628f8b7261cce629f0fcfb3b53513d5fb5d6f00da3088acca61b6c132"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 118,
+      "task_prompt_sha256": "1d25f4ea6ad581caf589a33a1015cfd24e7c5d50d910ba34efeb1b804acb0958",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "8ad1f13e0e6b6033092161b3c67628f90ae1b306a52aac2b90624f072db68865",
+        "pre_writer_trajectory_projection_sha256": "2afbeeb7da8355608148af2a49745463a44458a7c4ad2ec9fe39afb145633e65",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "f5d53ad56bda4c6ba950e17d99ba5702087a451f20de1e761fca44b125c91a14",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/4e/4eeb14bf2da094b76ab1d26affc851c709699f1446a4ba5776e55fcf2bb4357c.txt",
+          "sha256": "4eeb14bf2da094b76ab1d26affc851c709699f1446a4ba5776e55fcf2bb4357c"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/5b/5b40da8cf07d3b3664e8926f42da30a62b0520463ea708c9bf114cab45e6d46c.txt",
+          "sha256": "5b40da8cf07d3b3664e8926f42da30a62b0520463ea708c9bf114cab45e6d46c"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "5d859aa78c507117c9d7536a29d6dabeef4f169aeb817ce94c34aafcaa28eebc",
+        "released_state_sha256": [
+          "bb70c7be4df94a2a7b6d7dbed8d55336da7c733c54f4de87919946f01e77e026",
+          "a40192100b57c1f955617f94eeeb577c0ab1be0409507362c610cf1dfd513758",
+          "21bc5d9cf3a5252c07fe4c64da49fe2054787787352b759038d04c83cbdc0829",
+          "1693f799fd17e89353e712b75d8d7eaa7e5aed0b9a3753bce4a8ed5b9ce192be",
+          "a226601e947f47e5aa44f993867d1d8c5afbfa000820ba8c08cd0aa892d7d8a8"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 5,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-907b65ff81189e99bbcc617c",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-edb6966c3c54232e24cd3866",
+              "text_sha256": "342e43196963d43cd33f902e436fe1cfbe1bd61449653be873fb3107b5fe6bfd"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-56121f4f6c1def47ebfdcd7c",
+              "text_sha256": "59c5443eeef70575b7c19373bfdf0107f32f3ca09ae3a1099823d279f4386e29"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-07d68f1ff3ad642f067c6310",
+              "text_sha256": "65e30104adba810943f076b73b011ff4065c537f0c795529999ed47b4df39b2e"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-8c04001a97b2c807b26b4c46",
+              "text_sha256": "747fdd209fca22e13111d5b79f0f0dbbf41552aeb7b909815b290c9445092d59"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-1c39572e53e206937310147a",
+              "text_sha256": "eee7117741bdc1ed683419c0a837dfc4339c2240530ba1d1817807dad074ef00"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-3194f30d98a22e1d57d7e724",
+              "text_sha256": "b694da068c793c0159f50fa67182b472aa564ac332bb5f903afdfe62ab43218a"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-fb83fe417b425477bb2f0f63",
+              "text_sha256": "f697368b1ea9c4749e1a5cea58e965aae2c6d5021fef43edb7a01aac014c48c7"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-b79b1f70f934074bf537ea95",
+              "text_sha256": "7f27f373750f8213500d5aac39730aa0a6630f4b4836318f18de7f411b394f7d"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-c39fa08428186f7d9c871d22",
+              "text_sha256": "091a8a2b1896baff3311efca205ab42282bf5c039ac91117a3bf789cb46edfaa"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-88ddc73a3d01f1e088f25b24",
+              "text_sha256": "01e2102c2b4b423ac6cd721961f5e42238a3ac8d0f82cf7b2a8172b7c0797faf"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-a312be3b5ab71ab7715f23e4",
+              "text_sha256": "f191bc672d0e3cdec8010406ad31475ab005fb915606b743149f0e48550a7549"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-c51fc29714833265bc270050",
+              "text_sha256": "6c1a501ef61124eb6bc1daad605d4b14ed80bd49dcf75acacfaf06ac45f3d035"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-c3f2cdf0b38ab7c74f9d1a89",
+              "text_sha256": "0bd1f581e1b12579c9920754d3df254e96d101e662fa4def6da08f9e7eb8750c"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-3deda42cc118311011670cfb",
+              "text_sha256": "82af1467f6a01d7011d46d17a251137cf3520f7a0f8e6f54c22c0de608daec95"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-9efb82bfdc800dfef77da98e",
+              "text_sha256": "5d7e098003fe068f7c3a99c716f7c480ce9411970f14ae6cc9ad158e7f792bbb"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-7c110e276150c22f321fe50e",
+              "text_sha256": "4e88c9177f7b6a91c07e9e91f0c6b688911a81c182c3e288da5065ff6816451a"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-abf4a01b6bd2d82b0eb49bc7",
+              "text_sha256": "1c264977662fcdec75606aedab8c62eaa16ab6db46d53bafdcfe190cdb0f8ba5"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-2cc69c821f7ec84221d9bae5",
+              "text_sha256": "6da77e997fdbd7c2c67516c314d652f74fb5a92fcb13ee8a508bcc93ad238d00"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 125,
+      "task_prompt_sha256": "90d72dbe465809c41d56851d5847670705354cd2f84fe4d28b36eb5bcd813d36",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "94931c3836a8c38c8c3df74dbc2ec8d85042da44b825bd3ee75e3535c76ebec7",
+        "pre_writer_trajectory_projection_sha256": "12f67b7eae9136bf81370a1da9b4806b429153b17593acf6584f0b29c9a3e37e",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "770e7d064c3457936a624944a1d4ba1fd6f004d5fb443fb3476e235a3b88ce9c",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/e3/e378066be20a1c0e265359482292390bb47770d4c9a363d73a5ea48d1a976054.txt",
+          "sha256": "e378066be20a1c0e265359482292390bb47770d4c9a363d73a5ea48d1a976054"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/ad/ad22f5f7f8ad83b2009a1b3a9d41e74fd5ba77dc5c2b789244e9cd04b43ccb88.txt",
+          "sha256": "ad22f5f7f8ad83b2009a1b3a9d41e74fd5ba77dc5c2b789244e9cd04b43ccb88"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "6e9db4e065b872d6fff892b6d9252b5e72d69e416590e59aed4616df7c484d20",
+        "released_state_sha256": [
+          "f52f4a53b3614140dbbd61b5a730ac4300dfd2c80cb3a186a82b6ca54d1dfa6c",
+          "d9831a948218761ac3dc4351c5a0a7ac83e2a767e8dd172609342e10e403f57a",
+          "ab3483db791caa83045f3b3a5dccddafb1c1a9fc507050bdce12fbbd0508a2e5",
+          "0debceb8687d48b3ea963568a7914eb29580be1975469900ad682359604215b2",
+          "84428d7d2122e2bc86b8cbc8ca6ce26074abafa7597e462cd64e13e97e76c53c",
+          "dba4cf8c6c7742e633562cf3733c64866a9ed866388509300ad1d6361925f3da",
+          "3cede082395dadbed730e4809c075b2ea06263e5efa20c067e758718993c6046",
+          "13549fa8195dba28ce879e06e7403fc64b9f3242b1f43df2b8399b1da4994409",
+          "02fa9f5232e3ff355e94bf46e5ff847b1cd5cb47f982661b2ee12b9ef6b316c7",
+          "9d6ca60e323405303aacbe3778bcaf97fbcc6b5c0d970dfa134e872b5fc714e1",
+          "a590508a9eb326e222ba48df7db6fcfe481c287423562ec1b9677f6812184f45"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 11,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-eea61238bda49854cec086a8",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-8bb02c0d16bede5b1cf51d5c",
+              "text_sha256": "5eb147735435b496816b50f4dfb8fe5bffccc7f3cfd0d6fcc38f9d5bd5e5088d"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-52eff84dda478b79e482d200",
+              "text_sha256": "cf6ab64d9dda5f0ab6bf5a89d99e34d727e192722a994e35befc2e7d15ed6fcb"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-aa81e067051354f74a6eb43e",
+              "text_sha256": "5aba2b77728bf75d7b7e94326068be10bca15f16a63ebc77e25a54332bfc025a"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-cade597a618fa1670961352e",
+              "text_sha256": "db534f47f45320d86e4afbc13ff7d2b09e1378e77e22370be2f0f352c0a9cd6a"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-21d6ab2db42c6991b799e53d",
+              "text_sha256": "923b0d5b5f16e196e00ebcf187277f986d8b09f709a49554f872116b65a7a62c"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-53a61e2415eabfea88a171a6",
+              "text_sha256": "7eb2ee9b4d470a7d89e4a1a8497d7993730d90579de83696dc748d6c818f062c"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-efa0a91c134b4e9c64f6b51d",
+              "text_sha256": "822855a994f3560f2bb6b56b1085baae8629f3cbd65b9e4554013d956566b5dc"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-9ce1e8f9e6634b1c10773703",
+              "text_sha256": "d8203132fb84cdbc822cffde4599c51c4ff1eb20f6406a01fef9593aeffe7f9f"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-fe8e84ddf830307e8705022f",
+              "text_sha256": "9e9b4f7197af06568f831f8104dd2caa95dfe31508a7476605d4005422d89cab"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-4127b01f9e91ef0e47564e49",
+              "text_sha256": "7415465e291f2dff1640629e0f195a3a90d9af12a7c1548757496a718af2fc36"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-a882199861ec12744a7d8caf",
+              "text_sha256": "d6c1d48de1ed0c7b7d5c8eee3a15f0894c202dcf52009e7314fe319cfe79ee2d"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-eaa684652bbbecf0a20aaf1b",
+              "text_sha256": "d7894379ebad0972c3178a06546381603387442fd81aa8e733a564fe37f3b627"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-217d08cc516f5abdff27680d",
+              "text_sha256": "38ac8103f99647838bcc6911e7fd7b83e26e2f19b6e6a8a7146067669a57562b"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-ba0f74e9ba4f199dce921cde",
+              "text_sha256": "4763edf7b170eebab951a8ee5b874257c01da609cb9db5da3d1738c456949177"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-134970f27a7bf1c4c1e41130",
+              "text_sha256": "f39cad38c60ecbd32822e20ab426774c91109c248ab1b29e1143d2866dbce88b"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-f62082a0026372a620fdc1c7",
+              "text_sha256": "4fcfa684d9db820619f61b0d3da67fbe6705cf088a7f5bdbd15d089ffce9e8bf"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-ede5c25427e164b76df77ae6",
+              "text_sha256": "23d343543e5c20abe2399ba9566c98eaec3e554bbea651f8ad81b6a1ba146891"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-b060c8d77194eb95d080869e",
+              "text_sha256": "125eacd09d19cdac0027104412f8824cd932428c8e6bc63f146f805370ab9b9c"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 141,
+      "task_prompt_sha256": "16e8c6cbc83309a6c6bf7114f9af5b327847da37414b1fb1e5892bc1490c5e9a",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "5637f8622d786394f96ab73a8891e207f184e65ac31b1a7a6bf3c1d44b2f3281",
+        "pre_writer_trajectory_projection_sha256": "aa325aaba4481369c40c67f8bc7573e52ea0b8613e527d5da8dad300a2d88e31",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "c9bfbda69452cc15d9a97d71735b2b5db3fe3328ece6a19e6ed96b8226f4742a",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/b0/b0100d4b9e8408d45820449ce0f3d4b55f142d316161048a2032798ad894f9f9.txt",
+          "sha256": "b0100d4b9e8408d45820449ce0f3d4b55f142d316161048a2032798ad894f9f9"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/78/78e13a4b175800e1e7e2114df020c0ab8eb841cdf95a7fea3e4cc6636c382fb4.txt",
+          "sha256": "78e13a4b175800e1e7e2114df020c0ab8eb841cdf95a7fea3e4cc6636c382fb4"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "948630f5cb50827e0a7a39399e80d0f4f51fb7eb06be38a2bcba1c35f9a599d9",
+        "released_state_sha256": [
+          "b4b129e0be3a8d4d56843c26a8c6f72a5d4129dce146c1af3777a635fbbdcb59",
+          "aeafb3213719024e37ae8b15189e7386e83986230c00e4cd25e86762350e42c4",
+          "e4f15db0eef783c0b3f522653428680980ddc9a2694a30c6d6ed5c9431f93198",
+          "a4457d92982b3186dcab6676fe715c9a6cfd77a858cc85d3df78c61fafab93db",
+          "2c99cfb34199a2a7a06108221945f188e844a1773846678be73ae6906395b70b",
+          "765eed98339fc21452c65d65dc644c991106f2fe827352f8ef85c3f8c09d486b",
+          "e171035a105c72dfe3fa3e58347653fd4e19806058f50ebbdd4bc28bb6f5f435",
+          "af4f7bfe951f32c8b18a94442d92952d79df8b1392ea153e1bbfb608018a944f",
+          "4f34281b40d83fc5b2bdacf28e5f4917a969785eff55aabe3f3b02a731719ecd"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 9,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-dd15769ec11d19b35c6e4fff",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-446e3d6e9929fdcc16a5336e",
+              "text_sha256": "1760e03ecf09f0b69da36ac46f17dbe58365572b579479a819fa3ddfaba94a02"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-4a5c04e6d80adf8cce5aab7c",
+              "text_sha256": "dc49c579dcd94c1bf82c4d9323244e1d75fa5601ba4fadbd57e6121ff7b713b1"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-68a30e6b89945d03d552bac2",
+              "text_sha256": "60a7ccb511da1394cf6cbaaaa9f7fde78a991f39db3d4a3ca239ef1dcd5855e9"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-1cbcbb3096ea72bcb3136f2b",
+              "text_sha256": "a86e6059837693640c11251df226b1dfe4aff066eb207b65519eed4c835999d8"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-3c8ca0bce917239d6f6b8644",
+              "text_sha256": "db7c2ae55312c9163b4884e9efcf34715608afd5305c441657c4f14e03cc4218"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-df60ec4a86a69a4d7950a278",
+              "text_sha256": "9de426b7bbc64ce27ba359669e80a1be5d77e409e9f916030be2e165594a225f"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-febe5372249dec9ec07d171c",
+              "text_sha256": "0b50ea5ff33b7f175f2d04a94ceea2ef9cae905adf3cb90dfc0c89fefd765421"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-ef9dca9cb9e5224025f257f4",
+              "text_sha256": "760b2ab96f3415ebee63b9d038ed8cd80e2a19fa76858f6679faecfc0a479f05"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-922fbfb3b4ae16f70dda81cb",
+              "text_sha256": "c51f567b62454d99fc64293eff3952120b2a0c28d5b4814a46989d01d60adacc"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-370695288325527402f12048",
+              "text_sha256": "614664aef57b38fa341f8ceae82c1f06ee3e8ffad400fe581d4fa0433d8d38a9"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-f2456ed7742f485f7ce55f9b",
+              "text_sha256": "059682add96f5873462620790998308a041d9a58f8ec3d419cbee43e1860090d"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-8df942f888ebb7e655e6af09",
+              "text_sha256": "a1e8ff7274fe4027546521cec5856c87bab3bb953ab636e4c80a603932c83036"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-fd3269e93e0ebf89d4852ffa",
+              "text_sha256": "d0ded4f49c53d63a815b8a342443f2a6e6df5d4152d9a283d02aeb329c3422f5"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-f12d1d8cef5c2df2248f4ccf",
+              "text_sha256": "8ed2f9e0fe85efa5e6ebbdfc205e4f66a33b1719a516a4f2989d489ede25378b"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-5c2c2f7b2cc92945ba993a4c",
+              "text_sha256": "cf28af30393abf641ea0a1983d0592e89cf1a18e96c39add1bbc905ed1e86210"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-aa4047ffd37fedec43d9b7c3",
+              "text_sha256": "81ff8634e92579390c0b0379a6c24003c454c41cf9cd6338686012b6ba09cec3"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-a2b0e27213457c7ed82afb55",
+              "text_sha256": "ec7fe96518a378bcd3d0166553f24867fe139ccc04b50532fc022365586d2103"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-73f4e8e83bf42c62b38ddc95",
+              "text_sha256": "1e51b852e00d52ead033d49245417d0e26c88ed9c1deeb8aeea22737957a5bf4"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 145,
+      "task_prompt_sha256": "a5f246bef6cad5cda3726a7f7e9208fe3985db5bf306878975319c3273e979b9",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "fa0c2baf17806e77ac138bfa43894531336cd93028a3a9ca590c493501645c0f",
+        "pre_writer_trajectory_projection_sha256": "7d55fed41e7d7cb3be0f2abea2075fb880f7a443be3f754df15256a4af5d8f66",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "00b09076c652916953a818e3adac53ade0be675a85f548abaa1b32baa1ccf2f7",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/16/16d4758c3d50207adf1ea3485cdfc523cd57ee3de028e677ebd17b55b0476aa3.txt",
+          "sha256": "16d4758c3d50207adf1ea3485cdfc523cd57ee3de028e677ebd17b55b0476aa3"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/1e/1ec11bdd5158a00babba8fc6158bcb0fe982bffb63b1dc2c1bcce0c2c88047c7.txt",
+          "sha256": "1ec11bdd5158a00babba8fc6158bcb0fe982bffb63b1dc2c1bcce0c2c88047c7"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "4546c5da620622bb9e4b4363b8e0ec402fabba2335d24cd282fe7939bc6e4cdf",
+        "released_state_sha256": [
+          "91123e75dcc8dd126539eef8291fcc3289029632da45d80aa6dd4c870f414ef0",
+          "31480cc6c43320a26a9ae907ccc2d08a40372ae4a3e286a1e3080febc75e12af",
+          "cba4cb4a33fe96622f02c8458a0f66707a34ed9a1b0f84691640e3039049849e",
+          "15bd456e79fe79f9290ec184dafe9c57ab678fcd555dc42d4532850bf436fe94",
+          "02cb6ff8216a25d117d69647299da8868a5fd9cb9ab93a88d81bf0a8b3a6320b"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 5,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-343ff862379dd976f86c75dd",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-0c93ed0ec7a19f5da4aaaa9c",
+              "text_sha256": "e52e88f8c1aabe783e2294fdb4914f6a4f95ed39d7e07fc0e0151079bbc2ae77"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-56691ac85e36f8ef7ca22f48",
+              "text_sha256": "9602ddcf5aaaf73ed37e9487507cd879cfd3d1db2aa3e4129d7671763c74d90d"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-9e1b199255056a92888d0680",
+              "text_sha256": "0544637c32acfc8c14510159248be318a7a5161756cf30da4cce997988488670"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-9bf1d5bbc90b6815af356a2c",
+              "text_sha256": "80b9edf7035832d6e1736b9df8696f0a18a383d523f1efee79f92ea7601ee042"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-0face9e5fdb823bd658e18ed",
+              "text_sha256": "fe280b3f069edbd1b7be1519469326ae7ef7bc7bf32d5ffb842887d2e1a608b1"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-5745a5583211115a035c4f13",
+              "text_sha256": "b6100c76f50f705ed96dfdd474f977ec24230c0ded30fc058f2dc37ed95629f9"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-5226eb0ffd9e15e99118bd14",
+              "text_sha256": "4e0d58dbe71cd368d2653bbee1b4d5f8e323afbc4d845bb87bc976b14659d91d"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-fb120cc31d951c83246139ff",
+              "text_sha256": "516be3154e53be8e5023e5c3376b71b2c0a8bda0d1cd730ecafa75bf7a287015"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-6a96b57ff7b69a7e448d27bf",
+              "text_sha256": "aa3e61d0a4cbb41470ee52b5001b619ce42f21da76c950ac5494a80e86d5cc69"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-f1216da637ec2c79d22dcb65",
+              "text_sha256": "caf3c435a3c04d15fa779c3baed2beaac4aa3f2a0d545ed116c9463fcb696805"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-c46e32e90d0f339c3110b932",
+              "text_sha256": "20693b878a76210bb88259a528c465ffcb8b4f1f36793ad20d63ce79800b029f"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-8546310fb8be9b20f95599ef",
+              "text_sha256": "52efe9d7e390252a259e06a58425595fb033f9714fb69d7691b323f54dbe2c93"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-7e73d28c42bb8267efb4e86a",
+              "text_sha256": "2b9e7cda09c4c460b0dc19c24a0ccff75ec0ab1c81aceb75c4e7968dfc3fe8b1"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-eed021fcaa8bdb3283fdfefe",
+              "text_sha256": "f4f8fd7fb8f06c56d248cbac2e06140e7b62ded0897d3c4b5e839aa9de28a238"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-e15aff8ed7758b4e60c75e7a",
+              "text_sha256": "4355bf2af686088a2cd4c98b3680c183899a571d20ab1a13407db4a6b7b014a6"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-9ca7e79896d7ab161120c9a0",
+              "text_sha256": "547f76f95d31ffd1803e3c90e62b2ae4dd63585354c6eb81d15f8d170576b200"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-0191b17db9cd178729712f2c",
+              "text_sha256": "acc29980bd329b07e8a58dcb76b61ad4e0513cd2baa5ed961239eeb7030e7d4f"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-0131bab7814cfcf636be1055",
+              "text_sha256": "df60ba7e34a33f9dc73a9aed9ff4ad622fca829aadc7bea942bf98cfa8bb6f61"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 146,
+      "task_prompt_sha256": "5f3338c47717ea2099cb9d937af3ee6ab7bd8110fc2213dc5c023959b19b1f47",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "f7daa6644b051e95534d96ce082018c10271348ecc28341c6bf3be09aa76ded9",
+        "pre_writer_trajectory_projection_sha256": "7bbd83dcedbcc01d421b51f5b6ee85dadda380813095da1ef5a3ead4143812c5",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "30a5baadec6d1f43f65a312b527cb43df7b8f68767ead04afd90810bfa96a338",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/25/25ec01af72f2cbb1d2b66293fc682f3aedf782126d52b579076a991a3a369369.txt",
+          "sha256": "25ec01af72f2cbb1d2b66293fc682f3aedf782126d52b579076a991a3a369369"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/6b/6bad21c9a2efd22f712a67a468e60f120baad9157ecd0dcf2e62a56a0e8b6af9.txt",
+          "sha256": "6bad21c9a2efd22f712a67a468e60f120baad9157ecd0dcf2e62a56a0e8b6af9"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "4bf874859f7f5868e0736e4b3095e36cda416caad68073c7524520e6fc9af17e",
+        "released_state_sha256": [
+          "dd0abd546f7a5c072296038735523883e3d6fa9361e550363b6db85d8d509c93",
+          "c0f33527cb829beb32f7a1b9b4c143e1e37c96ed6def9af26cea1886342347f9",
+          "9ba7cfcf2633e12b867b77c37addb0589501b149fb8eade884c84f154071c70c",
+          "f6f1df2b4f0cee64e0a8f64556075ba701a59f8c90eb90bbb396535985d51bdf",
+          "35a3f39fe066095d5b7aaab7affc79840206e396b221671ad936f02f91950a48",
+          "e67455eaf22485f5560f31993a2e177a48e3414c6eaf378935bf6c20425b2509",
+          "8f7f5ff3837bebf820bf476932a14263dc71072f7a323442d72f0645afa3eb98",
+          "65690ef55962a171d2ca9c3b0d31b62692f81283df811bc062fa1ba67d4673af",
+          "9a8524395c024884d29eebb440f0dc70930116dc0267064393f58ea33c929c94",
+          "7430aa64dfc1a813688f0fbe389651eed98cf3694996c082286908412a3a13b6"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 10,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-87db83aa40d355bd015c30eb",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-b53996360522cdad8bd3c105",
+              "text_sha256": "e7fc1dd73108f5e00681157654c7ca50887b741c1dda8f3938b379f177464a38"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-4ff2f68dde9898fc1bd83214",
+              "text_sha256": "03a56352e18a236963968df3c0a28006860804473d91a8694a37bb51356fbf4d"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-f46913cae1bc064919791822",
+              "text_sha256": "7b70e56ee15de0a834930fffc768618f9173e91648872f0f7c27fa6bf85e1ef9"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-4ec1bcf67c14ce64b4a13ea5",
+              "text_sha256": "e5917f654d18e9c3e716fa9a40f98ab937e7de53b39f72570337b5d48cd2f6ba"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-2a47383925305154baf3743a",
+              "text_sha256": "b0c299e6d89587eda498584a9b63182de8ecfaf7af37087aa7e7acb8e777e461"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-c0a1d6bb44949a1b7f9fd8ab",
+              "text_sha256": "fb97139d77948d01df8aa206a065829183614bdad414cb2d63963b73f17094d4"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-59fb485e91e7bc442795409d",
+              "text_sha256": "38d01b9a5c37de2f17ef7c9f4e74e403e31a73587647456f56b0cf5281dff2c0"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-9e9fe9d994b52c035e07b898",
+              "text_sha256": "6bfdf0ef73d728d4060f8aa8f8e68afae4f891f9a7b0b9b209a9c94dd7fc139b"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-9cdaf10db0bc4f6d3f0011e8",
+              "text_sha256": "53b07a087cadea955b5835b0276629220aa21ec471591de3f6e57b762e75c4f1"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-00bd9fdbc881a253eaefeb14",
+              "text_sha256": "c1746571ff6682a5a5ef688b8647b9e6f8180a972fa7558303b08eb54fef2154"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-186b1806cb94955757c33d9a",
+              "text_sha256": "22a820b6cc64cb3d2f9911200b5c0a2754accdecab14d2649eaeeecab833d2a2"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-ebf2c6054b109daa83ccb614",
+              "text_sha256": "6d95630459ad7dfe199ec7eb35a2c8acefb6ff9f1c0cea2952776cdde67ddf31"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-e404c0d630ba1ebac4d9250c",
+              "text_sha256": "a9d5e1749dbe1387e9be1e6fe657fbda9c667dcedcd01d132fc61ecd8887addd"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-97c209808ab82eacc37cd113",
+              "text_sha256": "8c197c42b8360d8a65475f90926c0b1304bca65b1fcc08fe33e9b4b8dc71449d"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-5f4c4e480154416ed4cb8c28",
+              "text_sha256": "7863b28312ad7a5b88161ed0883f5b73dd26d8048c63f53dab914c1b37776cb9"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-0e80a0c120c4889c68082857",
+              "text_sha256": "a713e74a9c24276fdb48c6109d16a59e74cfaaafbe4e6bef258c110aabb6b03c"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-3e10039f06d5ccf65382fbe5",
+              "text_sha256": "e904b983bc07c196d3f13e2b16b4fa251e026f982e8be798ca48f58cefa7b79d"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-bbfa9f3374134a8113dee585",
+              "text_sha256": "9d8b28d2fdaa049b177ae9ad34cc1d7bcd2052e676d4ec16cecd6218c97b147d"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 148,
+      "task_prompt_sha256": "1535f9cb864a727fe6b783eb28aacbb860762283f5e61cea57f41aa20870bcb4",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "95dd7b94ffc5adae1aa8a2ee2c7c0d3f07a1202a6e55ec47686dcd7690f5a06c",
+        "pre_writer_trajectory_projection_sha256": "de1aca20fd93462173686f5905225f4dd3b9ae075061ff75e316d00e46813254",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "0879dff25a606cd97a4404765056764d12f18415b66af612b8543ad67118e132",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/82/8255c1c005ca51869db8a03289040c4c3e29e6808157f20733fc9807b6585e80.txt",
+          "sha256": "8255c1c005ca51869db8a03289040c4c3e29e6808157f20733fc9807b6585e80"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/f8/f8f10a26eb7ec40bdd8dd36ac00a64fb98f106e20fb339807933c7e0807e31fd.txt",
+          "sha256": "f8f10a26eb7ec40bdd8dd36ac00a64fb98f106e20fb339807933c7e0807e31fd"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "d8cf7a5d0f01f1f30da40ac8c95ace1f45e514cfa8ae5ac246705d9dcd33a1d6",
+        "released_state_sha256": [
+          "1c866449e83cd0912f1235fcd4005dd6850357d879e5fadba083387c15320bd5",
+          "58c8430946baaedd062cea6795cce6b5adcc19a763fb71b05a4ab721f7bde72b",
+          "5cc907edacf5e6b6cdfbf6e34f30475e062afa02ecaf54ce69afd8dedf47d392",
+          "fd52831cf52ebb6967f6db173bbe2fec28c3f5a8048273e15bd9c24abde7dc59",
+          "000981c869c614fadb3ff0645f1a9b56ebf3d7c548289d55e912d8a0829f70e0"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 5,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-8824a6f3ed348d6a3e4cfacc",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-87324c12cc19dc0ecf747b9e",
+              "text_sha256": "2034db16fac7d533a902207896b26470f6f799785fee21b6cb650875d3ecb1c0"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-7b41e70ef4b56799ed52f30a",
+              "text_sha256": "f04ad534245b818eb9590fcdb9fef7e10eab51f331858d87cb3a97148d139204"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-40df5fe85ace32035acb043c",
+              "text_sha256": "77f37cdae0c29a89283f6d18c9b8bf73aa3e54a26887dfe60a570236d19a6de2"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-57259c26c9dad9d67833ee08",
+              "text_sha256": "2b65e91280d6b93bb38279a83e1c2167e0bc63e914f005321434d215e0dad039"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-1e3c1b6444cd24a7296d6d5c",
+              "text_sha256": "74653e5108034aed212aa41dea9d07a288c12a25225440ff95a776361b48c3eb"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-c258360b39fa6c228eb2642b",
+              "text_sha256": "580396a3f107b5dd73f185a0634419b46704406bdb105bda32a7cd10e3c5d8dc"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-faa20c6b631e2a08b6e1f6fc",
+              "text_sha256": "7c13b2e3ce1d6674b60ceb262291118e37f20a985d10872d12cde321e5286c80"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-de4f639b669d8f99a805ac2d",
+              "text_sha256": "206688769c9c6064a84d53045fc0c0b08b08fa434d15a1ae133907c5a0b5107e"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-c31e93de970bb254db5448dd",
+              "text_sha256": "b6434231a5c460f47a2db841a92c020f1b30e2f948d456c06ffe730d91904ae2"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-7a93f2d090ea986fd41008a6",
+              "text_sha256": "f508b3580b96247be1371940df04ea5e6042d615c110c8f4514ef10bdb2f7b60"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-07ee5bbcb26805f54dfc68be",
+              "text_sha256": "99d95e2cdba919a3ebdb8dfb5faf96947944deca1cc063e5c69b2d24df5bc561"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-7d9f8cee1fa2c5d101551f89",
+              "text_sha256": "b013a8c253add95b7fb19ab4fbbabbfb21bd39adcdf1d265eb9d855064603ce7"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-69e16fd06dba5b238c0349cb",
+              "text_sha256": "745d4d002e0c5de69703de77864f104eae900b179929a45cd2e7b5f2750b33b7"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-f55b08fc4af8f87163913529",
+              "text_sha256": "62b03db838ae6b6ba79df5d8bec971627685bd1af92507e4ad0b40aac25e537c"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-c32558d645c75f0a891afbb7",
+              "text_sha256": "d6a071bac526af560a9e0c4b2eab718d844b5aa2940d0ca65190522474751419"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-59e45e307a22788c09c35d0a",
+              "text_sha256": "9f0b9024fb752c63cffe7c211e450458480493a1b9e27bbe64170e6c0971eee0"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-87bb5603514cff93328beca2",
+              "text_sha256": "d04b51388e721dd54f8e450db10ef4d61e02b75218f4a9f3827916ebf88c9809"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-be88c8a48bb82c90b45fa9c2",
+              "text_sha256": "a8066a26cc9f2b5ed12d9ef4abae3d85b0d2c6cfe2166e1ac911ec6d6e58374f"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 158,
+      "task_prompt_sha256": "736f8783d0f0d23afbfe01a48d29a3744bc273427648840661ef27f021b8367a",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "fe07a1d3b8d9c12fff6e329a739a7d2e7ed5af2f03160d4552a34df9835aede4",
+        "pre_writer_trajectory_projection_sha256": "2139f7ee3c13126739a31c74d4f896ffed73ded907cc5be64aac907d0e74d6ba",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "63b616cb3b979802370287b72925fd5bbc599685318b46776d251997413a8791",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/e5/e51923633111905a2fc0c39f8b2376b6f43c0188ccb0820d03632e6129732896.txt",
+          "sha256": "e51923633111905a2fc0c39f8b2376b6f43c0188ccb0820d03632e6129732896"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/df/df0adcc82c03dee8513cb7f7fe8c19c0773c75ecbfa799c1935f9627ecf6e5aa.txt",
+          "sha256": "df0adcc82c03dee8513cb7f7fe8c19c0773c75ecbfa799c1935f9627ecf6e5aa"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "ee4f2a2e78316c8641d31e9150b85e2851827f8f06ca94a189817900b8eeee54",
+        "released_state_sha256": [
+          "f107fbb6bab8fa8828fa04cd113721e99d869fb323f00fb368923622c9f5b269",
+          "7970dd078ff31d2b40772ef5c1a06be89b6c5828aeaafcf1e373e0259ccda1ed",
+          "b75df0470b5b1fe25a2dd05890bc4f6db5be1d41c2f13841b70c3ca37a30b330",
+          "9312ab7a2656bf1f7838f435df2e25f227e7c630eadeb84270314ed587abc256",
+          "60d44d0ba1b91e11df8089d595127a528277fa94b67817b22413cd91b9b51681",
+          "9c6c3de9f84222c3f93e7255774af7b1a49c93485b194d63341de9eb2c47668c",
+          "1026cbf2ce8e4321aad11929ef0648518ea4c57a2df1636d42491742fde5a81e",
+          "1825674f73cb71c86f95a6552a568be1be19f7630273bf8f640a39b6880c1d25",
+          "9ffdd63f678e3f9b6aa1d8af872bc3c8fe0112ce219eac2d3bf86459af86300a",
+          "c0005f7f624ffe7c25d05d6a8e2f241cae961075acb71c10ab674524ecff73d8"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 10,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-027ea924265774a1aa93dbf4",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-b457e47790d5cb38a35ccfc1",
+              "text_sha256": "909586ba6b7ec9866e9240ec20e52512db86280d4417617e9b9ca264a98d5a05"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-9bb56d60b431113c07f460c5",
+              "text_sha256": "e4fd2e3553084f855f428a9d9c111ba352a87ddffe0279b3977c63a33a4751f9"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-5474a2995c8f329bc5a5c7a1",
+              "text_sha256": "23d3577e4faf544612e8d8476311a53a5a965bef39d717607213d3dc01e6a4a6"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-b23c71485e49e4f229ceb292",
+              "text_sha256": "a4bccc082a0f8547f7b1ea8b66e180db0873c5ce88af194cb9c2c7b87622d3ee"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-a83c6e8930588bbeb8e81a6c",
+              "text_sha256": "5c5362ea1060cf0daf0f9b775bbbd46821e33e10b46155427a1554c6cb2e9414"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-7731275c8c67cd86086bf3c6",
+              "text_sha256": "9a130523da260f7e525928ad3d631c6857da944880e4872422414989e10f9af3"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-74bda4bc69998d52174e476a",
+              "text_sha256": "83cb5aead302c0c7b74055237353ca7fa60a4f4bee3c85fb338be6a781066bc6"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-deb6aaa3c37d8496f680d642",
+              "text_sha256": "c7470683fbc5de1c96c9f63d8208bedf0d54a32a4326f47c61cfcac2dd9e7940"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-c7a145baacf8f2133cb15bd1",
+              "text_sha256": "23d9b9a04613fd4247d9252688b625d2dc61eebb6a2b0df4cb4d89507a2151f5"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-d7228ea95035711e76a82246",
+              "text_sha256": "5e26389925a372067fffa33ca6f5dcdb5bc24dbbf9cd964307a66809af78ee7a"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-d12804367932bcf11f1b2c90",
+              "text_sha256": "ca241bd8a81d79c8cf60673401e3a0581b3fd6558c86c3445dd7c0057ef07f83"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-c9e71a5efde887dc0258ce14",
+              "text_sha256": "764b1fc5c7c101cb294cb9ba6f87c14edf3a1f75a1225ff268eb3571a18a94f7"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-35014a5e03eab65bdaba8235",
+              "text_sha256": "fc2430b7c8854139e05d5089792c90a4f321ce35c1a6773633078b2609303267"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-77d04d48971a9a648184bccf",
+              "text_sha256": "b7fbcc8905f80c930a475857af3ea578dc640c1c395a4e83fe74d72af2373610"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-9a030c19e88b6d1875f48ad4",
+              "text_sha256": "901a50c6d90439b4400558a9fd8791250ae04488f2d92948696e6d34e0576a49"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-7bbd0dd516e5c5a1dd36ca64",
+              "text_sha256": "db05cdb5e62e578baee5ab1d0785a8801950e2cc006c821a19d967b4ca846e48"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-69e348cdc2c9dd4641a77200",
+              "text_sha256": "eb0a12f454254c323cde96ac7ce562fc055ba5b580260aefdc82116fd4f9e75e"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-90146a59b55f8b202c106e27",
+              "text_sha256": "fed33e434aea7866f59d57d6acc5408cb912445918d79bf066d5c3bb88cc3fe2"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 159,
+      "task_prompt_sha256": "6bd1cdb46b75f6aa398211b915ecdcefbbfef450e685d7e628fdbf391416579e",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "521512caeaa85b17ee6e13aefe3a51fa00b824e63f30767de57b7252518f4615",
+        "pre_writer_trajectory_projection_sha256": "04421a8b76eeb88104d3de225aabadc7da00e8fd9242ec085c7a8f7cab316497",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "1037fa761c59830455cce89a0ed71c2097ea21108b9c03bbd63e9b036651d791",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/dd/dd34a667bd22b3807f5bfceff4c0337341016ba91495b8df1f0de66aa75f89ea.txt",
+          "sha256": "dd34a667bd22b3807f5bfceff4c0337341016ba91495b8df1f0de66aa75f89ea"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/10/10192de9e12b69acc119a58e6c2f40cef6330f1a052baaf80ddff928f835bc14.txt",
+          "sha256": "10192de9e12b69acc119a58e6c2f40cef6330f1a052baaf80ddff928f835bc14"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "75010970fea4d9b35ff4fd94209bfb26dbf3023c80bf6245a074bdae039c29fa",
+        "released_state_sha256": [
+          "1ae6959f33e43b54945f176ae964448eef5f8398b81b518fb1d5be3ad8ff957f",
+          "952e968887b3e1ac886b71d34c0f841ca64b8bad4bbd5c9966ba9e846681d968"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 2,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-ebb76606e273fa406ec60498",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-51b8b0b22c31ee100cdc1b9d",
+              "text_sha256": "9d668aa0deb7f553981c981ca8e496dfaebaaff7a2d712488861bc001990bce2"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-304e6e32d4328a312301a343",
+              "text_sha256": "0d272bb11dd840683c05ccebb550d7afd99a6b6571185c1e320580fa2378fe62"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-b2c52d0b75b535f1df11cb85",
+              "text_sha256": "faec2122f56bd513fdba8b8d06abd309688ce93b935559ec25604304281c4129"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-6b509206fd864605757358a7",
+              "text_sha256": "f80768a7580e2b95300b0f0a0bca2e6c0ff08c1f71f2c449942f252fc741d4d7"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-9f238f9892e3917cf7ebbb60",
+              "text_sha256": "a7c77d2d8ffb36f996dae462781a5b27e69a7c2d3bebcf0f041badb952f7c6c6"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-13fd69906197d75bb59ed0b6",
+              "text_sha256": "a4e624d7c945bd0f8989de4e7c439b58a4c4a3be2a9400a117a826e2a266663f"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-2a23aa0b2c118b980c060da9",
+              "text_sha256": "ee8bdf229e34b8ed23d367d82b2217bacee9866ca311e0234a46f8137bbed1c5"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-4754744ad0e851ea522fe5d6",
+              "text_sha256": "39ea659136e35e636650b3dc40dc1f4be9b487af5a49927ac09baa2b1503a55f"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-56279d8dfbc6098ee64a2ca2",
+              "text_sha256": "9b370025e0c0ac8e90044e2eebcf2a4be40cb4c73d52e25afafb4e1dd3e9e911"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-15bb966e67b4148d8e10ba76",
+              "text_sha256": "fc771081226c07d89b87d179e27845833585b4969ffc5e468964774281c5dc3e"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-73a1c3b03d28a9d2ba68cc04",
+              "text_sha256": "62a33583551d202437a48f2b42b6ae5d2718488358d26b4d20a49679e3970717"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-6868852fe65f8f299b42d1e5",
+              "text_sha256": "fbb076a5ec33cf712bf38d856ab058173e0ff6bfb920202d7b1ec0c3b9382d47"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-8ba2e395a3a910cdb2e8c214",
+              "text_sha256": "4e2531af3625325a72f7132e7edc01a22bc3a0a65a423b62cfbd87865b07bd99"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-8595bd6807b5cce194cf514c",
+              "text_sha256": "d284942586ac18341a14ad16ca6992b0ce6226ad1f8279e1f9067a00d4b0e3a9"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-8854f88e5f6cb4a0794ede78",
+              "text_sha256": "021cafc9ab332df03f4e29d7f16e1fc3b12969452276ffa1b4b55f26d08ff769"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-822de9fa6df1c30aba3e40ed",
+              "text_sha256": "97e899c795a4bd3ad8de84deb3b27fb955cfb7fbc0ec811b716059f16409ca81"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-177256519a3e1db6ce421fb2",
+              "text_sha256": "82c8e61b2a94d2c52f825b7305030f5cdd777710492e6dbd53a2fd5780b19786"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-a3250a2413ff4246098793bf",
+              "text_sha256": "15cb5a5cca94aec599f1422610007caf588acf7b5fa90a4434eed30066682097"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 163,
+      "task_prompt_sha256": "45a4be19716b9ee58cc3a0f01a845b64b80dd312b7f92a8216296e8e38f9ec95",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "64afde31446e99ace07e8e4d84a41a0c90fc31334d60611e132b12bf162dd9fb",
+        "pre_writer_trajectory_projection_sha256": "4be4ccfaf0ccafd112d69cd4385afbf73c30868d328c131e84daab60450d2d67",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "77163fd52d95f30d1c673a2e557d4873bd4b24ecc2f40f1b2cfd6ee6910ffec8",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/40/4060dc820521f1b9d7d5c6a4175497106410def85d0c9bbd8ed1b6fd7d720b88.txt",
+          "sha256": "4060dc820521f1b9d7d5c6a4175497106410def85d0c9bbd8ed1b6fd7d720b88"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/da/daaec8b7b48fbf4edd2aa02caf08fefed8ed16690dfa4a7e74fd0e1d24b4aa8f.txt",
+          "sha256": "daaec8b7b48fbf4edd2aa02caf08fefed8ed16690dfa4a7e74fd0e1d24b4aa8f"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "26206fbda7b98f38358efc25ae652b1f008e5567154153568cd5abd4f1b070a6",
+        "released_state_sha256": [
+          "e135c5497bfaef35d696e007b142447433adb955b1048eff7fed68a3569d3e1a",
+          "6d33d21b411d48ca3d3c0e11fae7a2d2be05587ea4106b8cffab2147eef49925"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 2,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-ea187dc3abe6048a173fe3cb",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-5007aa38b1567d2180865407",
+              "text_sha256": "d1e175b553057a6a4c4e03f6d5498d2407e15cc761c41b3409f89e3b26755062"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-3121c1f31034e19641b59a79",
+              "text_sha256": "3e334acf7f4d00b89b1609b5d43848070dbe2ded933026ae35261474b0605222"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-8a54a70b6cd69ac42108d1dc",
+              "text_sha256": "950084269d53524ba8e144cb8034b3a40067499b132e95c8a1ec2bcc2d95c093"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-9a32d4bfa6b534c95e927d9c",
+              "text_sha256": "30066f6cc992dfcd2017b646bd0bdd4ee1ccd756d4d7787bf91fc0c045378578"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-1acacde57981ce8aac06c985",
+              "text_sha256": "95b110210561296f429b76bffa753b298ac0cbedad536bd58a2ab00e45ec272a"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-27ea8357be70d8ba7d5f3bd3",
+              "text_sha256": "2e177c2a99cf1b13f312e88a8f4aa41a1ad9de9ced72081dad4b41f10b31ddac"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-1c680e75b311c3ed7fe67893",
+              "text_sha256": "af546d8451fd0019d0340f836a02c0ae964b7d42a4ae9a2e6181fc1e36fcbb27"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-9f8456d8655c8a76c6f7efdf",
+              "text_sha256": "434795e7cdfbc71b9c4754a0c4fc5d90a76c7f558121fb4ae0f3801e080e4ff0"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-c284e7cf147c0c4f396c0442",
+              "text_sha256": "172f4bd3fceb5a36cfc53e6635c4fdba93d95d202bb62628c0f8a3bc4cb65cc5"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-eb78d5c669cad78af25a1da1",
+              "text_sha256": "e111b7df5f5d469bf057de8c3d48475359450fe7c345db02f1dde40ec6eadd2f"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-bea8ca1c4db8dbfd65cda57e",
+              "text_sha256": "ca0aac86dc1a58af14789beafa21bac43cdd463361f09d99cf55cb15bd99813d"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-f008faf9e94f22cd3796d172",
+              "text_sha256": "f724825122ee3d701327fa3a0020b84b2266789c1342b75d6f4de0ffe590d39d"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-3a12ca4279d484c721baabef",
+              "text_sha256": "60784c695d1b075de7693b5070378075a7e27f70e4bf80a6792ae105e5bd079d"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-6cf98d1fd6d025cbe0f1a62d",
+              "text_sha256": "eab9d371a6d7ba44f52e4acbf6f7c9d5d913378cef64d06a6a750e5de800ddc7"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-e7503b232f85ac935fd7ba89",
+              "text_sha256": "278b2b15e9e2e1a95ff55c33cbcb157fd4dd43e16ce284c7a440e4c2304bcd96"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-0407f4ea50c8d0df4a16ffb9",
+              "text_sha256": "a3f71832ea1ff365cbca6bcadf0388d9005f95c16ae010482fb1f21a08d51d5f"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-d016a7fb90905327c85cf297",
+              "text_sha256": "dbf7168caea1aa2967203bfd495933c03543fd208d8917dc6a3eeee8b7295e7b"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-4be11558b760079f6bcdb3fe",
+              "text_sha256": "2c6b3b6e53c3a49dc64fe9a7c952a4c00eb3c84c0efe26da965db91b4799047a"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 188,
+      "task_prompt_sha256": "496ef41ccfe303ad179674adacecbbd23b89a6cfce7e7c62c0727ed2569f66e7",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "b15da6a2ca964d1b4ba43ec2af86c8137f64ff6a9835db7a660a6ead66ccf275",
+        "pre_writer_trajectory_projection_sha256": "fc63de01c8e05972198e39dd8e952c9154287ddcd0d052df0e77542818b19a35",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "7badf1f819f877c1e35249e23b0724fee36feb1bc9beb6d91a750c189cba59e5",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/3b/3b515282f3ed43221b52937dd40b2858b715d04fe78b6a7a07c839eab890d0a7.txt",
+          "sha256": "3b515282f3ed43221b52937dd40b2858b715d04fe78b6a7a07c839eab890d0a7"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/dc/dc349e277c7ae66a812d936f6c943cb215f79c3069e4fb5f477e2e87f49cb3f5.txt",
+          "sha256": "dc349e277c7ae66a812d936f6c943cb215f79c3069e4fb5f477e2e87f49cb3f5"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "ce5785bc7865555604646fb57d7d31a3c8650bb3aa98dde50edee3a2479a74e3",
+        "released_state_sha256": [
+          "030f4d87c0ee80795d993877bf9dc9e2f13c840597df2634d0974e6f8575fcfd",
+          "e333d47e6b0c5a709a260ade0646fe7c2eb2f6882a1ab4a8f07c3f13f6c0c6b4"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 2,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-287034efd52f9dfa9fe8fdd2",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-90a9265f4a110ee44274d6bb",
+              "text_sha256": "107fe877292e0104f44b9a249c6f71ef4c802db6a68e695049a84df71888a95f"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-010c08e84c5f7e9f95638a81",
+              "text_sha256": "49014c31493e53ba4599f0e2c8206c15686a57824bd6cf9b43b2cd8d331d86cb"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-00fb4df3b8365cc937736a3c",
+              "text_sha256": "c03b47b3debf616a0d71deb5179b2ca51198ba358319475e1711f3142404af85"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-c8f7b147a2066132386698f0",
+              "text_sha256": "3e993ae88e7d5a3f7f1f5fc61d0d06fa79f658f00cf47d3968824a98b082ce43"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-64602119ea018963a671c881",
+              "text_sha256": "53166bacbb5d5d2c2af5c7ec8db2fa797e32948ea9183dc5ebf7411880ec5b7d"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-7744b29904a9fbb465155e6b",
+              "text_sha256": "574e658453ac86d1c97683c4fe82ce6cca109ee59389377ee89450fb8a6700c1"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-37eaedf3e3ac9e02363a4dfe",
+              "text_sha256": "ff8327ef9e87d16a53c621537a60dd3e87d3cfb9e83f011a1d4fc12d7b7b75d2"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-adb06d1d54ad966562c0629b",
+              "text_sha256": "00362b600d5a2de25e6522e8b2fcfa7fd10cfbee4504af3549c8899d0cd07f08"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-9f1c0c2fbbc0d6904152dbb8",
+              "text_sha256": "4def097deec52b55d59e1df08367daaa04a436ce68e98ff5eaad8bd3bc5d0f7f"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-b6493c4928261715b4be5837",
+              "text_sha256": "4316f70c9fae54f01bddaa1052a9f11f718ca766a0bac51aac967e0900a85c85"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-b834c5d35c9a634f2a1cf86d",
+              "text_sha256": "7c4668cfb2ca1ce47ffea1ff528da5c4f5dc18940e251a8dd0d21cf4a057b0ef"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-1314605043aa36e0509fc2a4",
+              "text_sha256": "a5c19305301ff366f6fd487b838f075e39e5f70a7b6e4217232ca3341155b97a"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-a4e986c231e0c1dc649a4ba0",
+              "text_sha256": "3fe18aa74434b33b2110cb4cae29915f90813e8ae39bd7d4272ef9f99e855dab"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-a6d6b23b33d470e61f0ecd88",
+              "text_sha256": "ef0c6b249885b2daba2c953eb2de900e45cfafc651157fd05d6ab90984538612"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-cdcbed25df293bd4425f1431",
+              "text_sha256": "fafa028017301e1806f38ae306095cd65cc572b2755752b779ace8c33a528d80"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-b83225d7ff7fd3c27c00dfdf",
+              "text_sha256": "fa71a440b6a0df7cf86e70d7d186469aba5e37ee06ad5a4efc5fe10d5e14f86a"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-8bfd3f41cf059e657b896236",
+              "text_sha256": "7c2acb283ae511f9dbadb062eec323d18edfb738de13ff6e1c7f57f86df9ccc4"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-fdfbe79d421ab45396f3684b",
+              "text_sha256": "6f7aedc76020cf1b7f70e9ba5c33326531a6735b53a1abfa6c3a97b17f0600f7"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 189,
+      "task_prompt_sha256": "1dc69b8c0e93d4565747689948ead072013376477f7cbb33bfb44ac0823fcb5e",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "4e9caef3b6baf9d65f764be60fa3505b3241a80622c8028b881ae137a7531823",
+        "pre_writer_trajectory_projection_sha256": "71f502c06b2d3d851bc33b5d08eb9b5035d1befd59852219b679245c6d790427",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "4d3ca66e30a25601cca235bbbdd075292d1c5532d51af055254be9e73b5ba6db",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/c3/c3e68878f69e7f87c61ada1a9af6a425a4c4a0e5279c56115058c48ce933dcfb.txt",
+          "sha256": "c3e68878f69e7f87c61ada1a9af6a425a4c4a0e5279c56115058c48ce933dcfb"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/1d/1d66ec96f63223b8dc75927f4c0a1a7899b92ac8d4d35a874c0244c1f7041d09.txt",
+          "sha256": "1d66ec96f63223b8dc75927f4c0a1a7899b92ac8d4d35a874c0244c1f7041d09"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "548e870dcf118e8c61e14b61eec8941d5315a162b51d27f561593588f5204c93",
+        "released_state_sha256": [
+          "62a918393a4229d7c66d3ce42aeb9a1f398b7f566e58b621f5bd416e6b603049",
+          "5ef063e73a07d253e8ea535fd497ca11ea0082a9bc6a57257eb367e5a7129c9c",
+          "f5b92a940039e76ff0c967f89a43318317ee3b4772106e00820e5f7ffb315638",
+          "5971a77a16c7743c55f9cdf2ec6f96d499e905679d70fde670ba17ef5417f8da",
+          "b273c9119334827b5cd9bb1ca6c684f0c03e332f1b8d6941080a9a01ca53e4c7",
+          "f6867d1f76cf0e0e24a0c770c230d46e31ce6d65257633519143181dd035d0b9",
+          "a08db224e1a5f9f836f7b2165dcceba5062308beb26661d83a126da0f0ee6e08",
+          "afacc01affcb34bbcd96c3740dc6c71b7a4f3585d24e98ba84af83dd8ff8d193",
+          "bcf4d6295bc01eb2d7a894248cff5830b3b2583afe7264b41521f39afd4dc191",
+          "4cf9b0a31057532d6ae504e28300f285b5afad83fb99a7ccecd901c0f2395008",
+          "fc4828c41fffd355c9b01d999a57dc9a2eaa9ca631eececb914632cae4d25701",
+          "c996a7bb8c033fad8b3df1de7753463a54c10512b3afe4d83b798e54e5af3bac",
+          "498bea6267d88c3444bf69b0d71f9e228e20040d04e0ee83cbf336d381463e2d",
+          "2a6e2c7b2aafc968ce50077643ab6b53d09f23a5d2f7f7b3f0efebe59c068e20",
+          "0c6ad79c58f316fb9a377c5a9d15dd625cab31b5b13d56c64bf54e69a34cc99f",
+          "06de95714ca4707467721d9b15a040773f23660ecb4abe5152d816f64244c5ca",
+          "9378ebc650a5e5ddcb19f67bfef45f9bcff534484acd450621c03e15ea998321",
+          "5e826604740b61756a9400d126d426203ad0e413582e6a2d98bf0979f03efa95",
+          "1b7e84f4378235ee0dae7c2b4e9978e5acf7b7e925f167a915f3107932d01a5f",
+          "20696e39c3c93f3517dda0f554ef5a930e62f61a1383abb30a43ca08e1bcacdc",
+          "955952f53312e9f39b6abf1a3259f98197183527653c88ad1b1f06c4f4394196",
+          "7c76a579107665aaaeab5db73518c48e468654d012ed0b91058d97a381e8fbe7",
+          "c132b89cb7b205b3aadaf6550e2a57bba0b9c37cc8b8ec5cbd9b65e4c77fc030",
+          "d00ac9f3d67adeb8f1a55c02ae6d46f77f10aa6ab0e9a9a3dd9536135fe8f9d5",
+          "b48f4d41ec8f987020792e7191ef68313631646d3a39b171ecf7766c19e1ecd5",
+          "d5b7dd82e8210a4eba0e2317169fcb2152f2e78f918f370b064c1873a6879385",
+          "b86a25c10a8d4f330cd006a595884f1143cfb83a496fec0233dc50a49f99d04b",
+          "83a53e6f4e610b1d88280e0206cd4fd75ac691570c25ca487f6f12f4a5159e98",
+          "dafe7a4409f056cbb2fb3d4bdab36e7fbe3d943bb78933da2a276d8bbf1135b0"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 29,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-d4bc2e7c64034447f14eb5e5",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-9438cb79663ae133d0476a7b",
+              "text_sha256": "7a4b7a940788c84bbf4208de398310e727c3755d78bc73472b149da74b394410"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-7840867116b0ca40bc181da2",
+              "text_sha256": "ba9f3feae8648cd2c3ee3d6d3f5ed8066f0cda728725eb8fcb7ae1c47e1d313f"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-e3ba8d788d4f52bdd0555a18",
+              "text_sha256": "ca368c7b766d1102a64c87e6179dcda3733ed6468fc29c22bb0d3342a31cf855"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-690c9225c014d361c77e6226",
+              "text_sha256": "b7fbf21ff33bdf8dfe4b846f42a6f4fc0148908d5be4bbbcad92a58fa9e56290"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-01bc6e4db02a448477936d17",
+              "text_sha256": "a959cf8f5e10953aac6d35d8893580d234bb5ec129006c5a7adb8ac1256acbcb"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-95cfa7d51482f298dff2dfb0",
+              "text_sha256": "bbec6a438fc9120fd154edfb3da11314b614273131353f89b25810223274664c"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-10cd40106a0291ec49546fb6",
+              "text_sha256": "7e0f301013a867acfb47aa13ada1b934d373dd69d33cde57d959c0bee9f62700"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-ad788ad3352dceeeb798ea24",
+              "text_sha256": "5d7a59d95b77f201a93d595cc9f297cc16d6b664e1fa1245eb357be69d8b4740"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-3f7eda90473c1d8045323414",
+              "text_sha256": "a1712cf5ba5ac013a470c2cd6e92f933d7ca8be67f2bb33c5ff3c528ebc25002"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-3ffd351c9fec289afb50b358",
+              "text_sha256": "e27ce956d41bdc39eef6971b341b668136b53c6b12d4bb38fafcb4e45374a902"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-d12c977d805d119cfe6c8a8f",
+              "text_sha256": "8540a4bc55677034b2db35c0ab5a9a12bc9aa7e274f464503f1f164daf4c9649"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-ffde5caac8d8623ab50c7f1c",
+              "text_sha256": "445483c8092ecb1a357f19e652ccedf17f0367e8f9e4cd0dd7e049857fc91b7b"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-91016b457f0a780cd207bfdb",
+              "text_sha256": "79ea1fb687175702f1b56a9b6e7757f227b814a483045b77f1c97193c04fd2db"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-e442103a2e63ed513c735288",
+              "text_sha256": "47e66817dc3880baffc9325c9ad081dca79fb103d433798cb96ed25f8a81831a"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-b363e22aaae31cd320035d85",
+              "text_sha256": "c57e4204a8515700a347574c78e102b25a4fe1f8e7a6787183caf199b2f50ae2"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-9ee6173d5ce33b9415297fb1",
+              "text_sha256": "47b51643fe5a6013867d2abc17b5a1170fc0ac64a2885393c82acb922322d6c2"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-03eeffc2b3bc467532f72ac3",
+              "text_sha256": "b35d4871ad878a01da59651f239f82bf6bf39816e4482d16872f04ba4a29af8f"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-fcbc62a4957ee17e19eb3064",
+              "text_sha256": "9269dd98a8048997eb0d1fdd500f8594da41dbc74846eb4ec71a35ac17b1a003"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 225,
+      "task_prompt_sha256": "68fea4e17493b490fb34991c2d5442fc61295c1d3563b3665226d3297047b96e",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "e5449993c176242cdbd10d0ec7c043eb5369925f061463fd3ed3d441eaaee158",
+        "pre_writer_trajectory_projection_sha256": "9923cb50556bac5f539f3d981ee528c5017dfbc90e7e4b20b463f9d6fed9960f",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "4f028f8d8272378396770edb53b35c3e8c0230dc8efca59ff9ad668a710b258d",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/3e/3e18f433a94f032495d46f2bdd48dc299afd4de8136a5a096604020fd040dbf9.txt",
+          "sha256": "3e18f433a94f032495d46f2bdd48dc299afd4de8136a5a096604020fd040dbf9"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/83/8387a740c76862210fdfea308de8e32b979bb3b36650c2eef85f112749ce553e.txt",
+          "sha256": "8387a740c76862210fdfea308de8e32b979bb3b36650c2eef85f112749ce553e"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "93bd7ebd05ca8c4650ea5f6a9ceececf27e8fa625e5ce5d83848426ac51bb5d4",
+        "released_state_sha256": [
+          "309d1fb05145909fc578a95a528f604be98b8b601ebf9a8b87f4844b5ac93b3b",
+          "e4fc8df34d3289168fa315425b8d4038c25a30afb828a000259494cb7cc661d1",
+          "d1041faf9d11171346a27553aa70c68d73afc90dbdefdf1761f253e0083dc006",
+          "49647c0a0acec7c9824ab65c02a5fc0b0d8bf8be34262f97b87b61382c1636a9",
+          "119c313114da31461f4adadfc296c9e99d78b73c233771f62fb2fa89e4f9f284"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 5,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-4418ed059e4acd04c755b161",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-91f66233b2efbeeec02cdfac",
+              "text_sha256": "ca1888bf536e7ff94cb462f7ce14be319b577bec3bbded31efbc4f11e48a54bb"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-b2067ab92e3dd94bd10c1c04",
+              "text_sha256": "a7b0cd8a0765923666a5935374ef851eaeb3e37cb424908376bee92a03fbdb5d"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-94656cf22136a8ff9eb2db30",
+              "text_sha256": "638508b81758704c397a149d314e29136ae565c8c618fe6e7491ef6f1c3fdc84"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-a10c69e78c6a0464cc51aaee",
+              "text_sha256": "0d8d8a86580cf58cc8c98ebf0f47f784eb7f27542ae04a7a472cfcf2312dada6"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-ff065af790eca521420f98bc",
+              "text_sha256": "03856359c9437122b6cb2b5125a1c1e364dce4d0d42cabcb9fb560a4d7d2e15b"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-925fe93ed27da4f5a4404c08",
+              "text_sha256": "11431b8403e31200c2e7ac7816ede1ddc05f6b990892381730c816f0b317718b"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-877934d91558c9920ef618c7",
+              "text_sha256": "975a06a5887ab07e8cc7c67007bef4a6d4a330f77343d8e2eb18c069b2558458"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-9745c103e956cbf7f078e7fe",
+              "text_sha256": "6644ccaf5511c2510161e1f0b8eb6aca31c29141211bced352997a9c95637bc8"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-84178d028f0a779572f92e0b",
+              "text_sha256": "789e7f0bb3daa0fcdee1675b79bae176a3821a5edda2360ce74992b27fcf2797"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-d0920e1a8757512fe809cceb",
+              "text_sha256": "30c8fa897d7525d100c5776f839781dffab4831f8cac306ba1d04bc14dcdcc64"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-07509938fe860cc4cd5bd6bc",
+              "text_sha256": "832d906db307ad064dfdad99ec8b3874061b181376f375ccee74a57ff2c75a6c"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-cf0ebb39264b527284914054",
+              "text_sha256": "4d129c3ccc26f02fc7fb70d8513f2178a9888ef6fa1b6db67b0c4df3f79b1736"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-4f5db544c837b7e94d9b629e",
+              "text_sha256": "40b07e391d7f9345a40089a5b26c466bc0200aa34de813ea776856336e8d9e49"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-d881e9b9e65dcc31b4a08bc7",
+              "text_sha256": "789d64d704db30e349215796d73cfd61dead10a823ac97d7a53312f8589f4f38"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-2dabebeb2553eda546c8ded6",
+              "text_sha256": "37920f9fa4b498ac3a83f70bb5bb803dae44845a804e55c47122b392a2c53a19"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-04c492a4375f85a0e1629b81",
+              "text_sha256": "4db0d677dea47ec59d63335fbf6171fd84f621a1fbcab862c2201e28cddbbb0e"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-1ce4f5de39ddfbfbb70f90f8",
+              "text_sha256": "dcb4250179bf3c4e7d4f7b3c9d1436dcb2d550e68c95ef0d1ad751dd5b339179"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-d696ba98a0f3fdc1241df1ba",
+              "text_sha256": "933e69ea5796f38216ea77f18a6a1a8f5fa17a20ef75446240337a5bd46dd251"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 226,
+      "task_prompt_sha256": "b2372132dc6e0de0025cd087df5ef66a5546f5fd4a77d58c0f1bd82eaf9013f2",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "c1849ae6d1e1c5ce1b33ec3338aa3381e8446f8f924a739f334cae0e35d13e32",
+        "pre_writer_trajectory_projection_sha256": "ca5d4e4048dd7bc81d52cdeee9ada1e4ab950604219753e27ddc21ca50a040f8",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "8a6d09882c89e7293064a606185517f73f3d3a1907d2de3ccecc286e354ff782",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/7d/7d64866d11c289ed10bbea67ff3ae3a589ba2b6ac8a134d076d7959289f9a06a.txt",
+          "sha256": "7d64866d11c289ed10bbea67ff3ae3a589ba2b6ac8a134d076d7959289f9a06a"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/44/441691c7108251468ad7a93b846974d29e24fb6e7d7629e665619d44b436abb1.txt",
+          "sha256": "441691c7108251468ad7a93b846974d29e24fb6e7d7629e665619d44b436abb1"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "b0b6a554ef4667e5866e3fdbff65c64b8051b1bc2b8ac4624b1b54a99dd35f0c",
+        "released_state_sha256": [
+          "fa19be2e7b831497cb36553aafac2ade890711b68c8f2c2c22542f0663958fe8",
+          "48f2383c847eb4d38cb0fc08ee4e0f60a4b93e127b1ab557665c91e527c26fe3",
+          "d22a901df9197146b3027c9c6f1e900984d64ba88ec3bddde48ce16346c23cc7",
+          "6379549d3ffa1cc77beeed8ee68711fb40aff9b63efef47e51af06bb3c052ba5"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 4,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-21e41f58e94ab121a83b8589",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-e1aec36d5a4ff92af5c88e90",
+              "text_sha256": "3817502c51a41d57d7bc01c29d8f24a00c1379b052b978f64dd59d7ea131bc82"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-4b4d4e075ce7aee5506cb724",
+              "text_sha256": "6c90f434f1d9f94993d2178cfec7eb8812e982901bce1bbaeebb6e76151ddfdc"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-812cfc140e0d0926183e604b",
+              "text_sha256": "d5c6818867fe794952aa8cdd9ca50cc8ef4d19c3ec6092dfdb2b4e46fe9b407b"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-d8cdea9c91d029b2b4808f5c",
+              "text_sha256": "f927c3158d512be8b96365ef128da24c5c94aa72767d785a74ac276e2109497d"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-6430534ff2ede4a67df46e80",
+              "text_sha256": "8ca1556c68bb283157d7cb87484eb1d2d8ec1a5cb7b539110b77d5fd9e483a3f"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-4684d25685c759f0b7237dc3",
+              "text_sha256": "0282150ad57839d36f43eab91dd18f60005198ba7caf515d81f5c9a0cdd6531e"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-1c46660de4918304f2fecde8",
+              "text_sha256": "6bcebafd954e54ad907efd08c564c8bcf4b74935edb0bff949b205d0453931b4"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-bd9abbdbdb7d86babf3afbb2",
+              "text_sha256": "c399180bc46a6f24d81a0db5a3f2119bda451aebfcd5384f3df7dfae5d90f7e3"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-ada3197dd84b17edc314ff6a",
+              "text_sha256": "34b81400b3e40b8765852127cda959cb3e44fc7cf9100f311b58244f5a9010d5"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-2fcab69998906dd1784e504a",
+              "text_sha256": "b64f1814d0810f66ae1162e3a746ec348278bfbfd8d998b156ea1a6d850c7fb7"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-f6e05acd22b5096a515fc7dc",
+              "text_sha256": "57ffe847902a342aaf649633d1ce0466004fa26bcc151e92709b234e944cd310"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-6687bbf10c2791a82485053d",
+              "text_sha256": "8073bf043612c5e9d5b1a64c3456023d7000a4663ddaead668c657f590828529"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-036c988677e86ed95b0fd2ff",
+              "text_sha256": "e9816faed70a0ad2ddafe786145717862932fab02b65a1717b60582d6d3565a1"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-6f5be9c1a75cdc9338e88b01",
+              "text_sha256": "0362abf1bfa5a5ef21da06396e3f9b1d2ddd127abf24b87a27d0bdc45027a70d"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-56e49ed1987c1e544d235730",
+              "text_sha256": "11cee3b0e9be8c8f032cc98517887fe7c5e3a5998b8505e43272c7e0524b4bbc"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-142c0cb20585b2be82d6d13d",
+              "text_sha256": "5df1f87ff5fae8f72fd8742441319a3bfd40ce4586f83b472600face3e9f43d1"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-a28a36ec180432ad2dc82300",
+              "text_sha256": "7f6c210dadc1b90f16ad80f85f82d2af36f1b54ad9a8325b4fe4cdcc4bde24cf"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-94b3690e1247c93e0dcf824e",
+              "text_sha256": "6f3ab0629af90c47c4efd2b7528df9ad526fda049aba51a2d18d374d1cd439de"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 231,
+      "task_prompt_sha256": "f10e64829083a38f45fc73a63fadde544efb0458da2160b2d4d83829e0139219",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "4a5a45b1f2e8fe46fc1c04381ef730cd396fa05f6d3660c989eb6425d7706ce1",
+        "pre_writer_trajectory_projection_sha256": "c8335071c6b2f813a23daa6aeab72a5acf3529f87d8d5e26c93046a72100d5b5",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "949833314956c8a02a01471b279f6ffeb053f13ed123e7261bc484a20b81dea3",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/3c/3c92fc98ee62f140539ed3ba9acf1ca51c7bc3e44d89d27215eadeda73c7b22c.txt",
+          "sha256": "3c92fc98ee62f140539ed3ba9acf1ca51c7bc3e44d89d27215eadeda73c7b22c"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/33/33ba80bc67b74c21152a7580c0a686389ff8695253fb4a5c2606837d8cb56c5e.txt",
+          "sha256": "33ba80bc67b74c21152a7580c0a686389ff8695253fb4a5c2606837d8cb56c5e"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "6ed3166fe03014b53cf6eff4fe02e38cd72f1b79569e20f39a96748b3837c459",
+        "released_state_sha256": [
+          "caf1887786bdc6e54937c68fe2e9b73c656359054c8950c2161f3f81310a9496",
+          "294dceb3a1f7682747d824a4e1124b0470e3bc120ea121e64a48d56989e0329b"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 2,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-d3a89198da33f1ac545e5b20",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-52baaca644d448f74889cc41",
+              "text_sha256": "10ca28ad40f76da9cdd9f5c386408d2823644e67e0462cc95c340c9dc8c993de"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-b12ecb97a72367ae1ed95c7e",
+              "text_sha256": "95039b537a7ab2aaa5977de798c1bdb3c23789a6a391b37a9eb0e32652d3ee2f"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-9d4519a3d2b0843ed47c8272",
+              "text_sha256": "5a8e0da24ab2a3b1fad2e5d90d43571f02b650b49c3fd6b27e8af8fc70b10873"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-20abc2204907251513a61d17",
+              "text_sha256": "4f0de4a35f27f4398557f88483491503a6b0f71855221a7f41a76a56d9ce611c"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-04b9c014b88d45ec0eeea578",
+              "text_sha256": "981bd6009461ecc703ffab0a3f6ce75d099556339a3423728364032762547195"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-987d0fffefec6e68a200e3cf",
+              "text_sha256": "6afbeb45b13a22f4a0c47ac2a4e6497b334e5fce2bea212d22020d6dd558bf1a"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-e3148e297334fc1f75d379a9",
+              "text_sha256": "c24491b20bb050b528e8fad2f84b96cef41df0609863a1e4e4d5f28dd828367b"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-b45d201897b86129e9d7f0f3",
+              "text_sha256": "970b5a15d797ef0b43e15c7320bc9865b8616c2c3e8dc034cffb91d62817562e"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-e32354213cde35a5bbe37c89",
+              "text_sha256": "3c7e7cdbcd7fee60b2634d2e1a8248336daff3a0edb7fce5850947c0ca3848ad"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-6d968369f4019d545c91bc82",
+              "text_sha256": "67a97f7805eb5e15dfaad4ca08977c45b221707d86ecec112d8a25b5c75859e9"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-6e5c388a0b2cfa2ae810b7cc",
+              "text_sha256": "8a1d600691ecb99ee0ce8c849be5275ea1248014eb6944e14ada8da5cec6c03f"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-facd46d4f63a040899860aa8",
+              "text_sha256": "beaf19f2d4f88c6ad34ee656cfe086fb5199dbf0ec98df0c0c679fe896fefaf0"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-c3b5c670c6909e1d58a7a38d",
+              "text_sha256": "dee25b7edfdf2b6f1679b77e2c41dbf889392aabba63a9c3bb41055d8fc2d02e"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-0f80b330628bcc5724784b19",
+              "text_sha256": "c32690832139d78916295345e2014fb8704e679aa32e41c9f9ed0d30e864b84f"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-20f8396c85028906bf6f82a4",
+              "text_sha256": "3288512e4cfdee8a715e3cc211bd306c957da05462e0e7649e095264d239e4de"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-60cfa4d912e9681ac5ef40d4",
+              "text_sha256": "0496e0fb12a61ad26a68a2876bb47b7596dc7db9c8d66f44ef7795858e2277a5"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-027c860302beb971ea77bd6f",
+              "text_sha256": "408b5e1e56e2e1c2533384ae92f4c97b4af3a3e620b752c35f34c5a2c98d5b59"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-2423fb140be879b8e20eae40",
+              "text_sha256": "85db6ff1c62f900060e7cf000b7b017846167cc2a8d5212d344c8555b621303e"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 232,
+      "task_prompt_sha256": "4920d7ba9254b84c7c486dc79ecf8f6da9500ab12e09adfcdca511a147b55957",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "1b5f7e241c07ef300583c69b962c9fc2ab6f2668a0747d82e8d33eed57aa7ba1",
+        "pre_writer_trajectory_projection_sha256": "49669bf86d0f80bd69f5cab6caf1b1df3e8b09d02366ebb0bf58684e254196a2",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "38e6310e96b6fc3c79acafd995b469cac16aa3a35aa3e7fca0a4c89bdcb948b6",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/29/2968aebd50b186a75151f12d1be2f90720377f910d9938b338d27d95e84593f8.txt",
+          "sha256": "2968aebd50b186a75151f12d1be2f90720377f910d9938b338d27d95e84593f8"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/private/raw/c7/c7291f27fd2891f7fb76b1e28cc1f0f7cfa39ddff0493a1ed89a45788058df37.txt",
+          "sha256": "c7291f27fd2891f7fb76b1e28cc1f0f7cfa39ddff0493a1ed89a45788058df37"
+        }
+      },
+      "domain": "shopping",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "df0373b9577d1c3287cf32d17a462850feb43dc3fb79f57c847dca3547a57523",
+        "released_state_sha256": [
+          "c4975755aad04fdd4348e6f269530930c7c90c843c41de19bb2a016999e75a25",
+          "413baf4069faf66473fd91d599e3937501aec8a3c8ff6864dddcfc73fc58c77a"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 2,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-5dabec77b6a2ff952d7ebb49",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-1023c8f5a86c77c6659069df",
+              "text_sha256": "09a1efa36f01d5312fa7732d0023358ae5fe5578c592afbac0fea03f0730c98e"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-7df95d67ae98699a70743b60",
+              "text_sha256": "88d164cff2bb954a3bbd57bd877291688512ffbc0d27c6013713a7dc0548b528"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-9abff0837ab6200a3006046b",
+              "text_sha256": "ebaae1e99db0f9b284b485d860bff6fd193f7fd918a5818ed39875c455e82fb3"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-f03769209eda2c59a4504635",
+              "text_sha256": "f6ff753fe43d52eb77af676480909051a242a5ffbf9107160163b41a1e506e11"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-9c6bd98c2c8a12fa9278128b",
+              "text_sha256": "d6c41fbaed0b2c4575bef878cc7d20f9a1d4354fe659ad44f9adc254d052231d"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-993e76b7e18005992a0352bf",
+              "text_sha256": "de7acaf7979db46f45e21e105329ba8703aa753b3e0fa35fd8141781a585b42d"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-60a35ba50f9886172aaf5535",
+              "text_sha256": "656c5ebdf8f5bcd6acd4e5154de801f2f5cf55dbf65dab32c22ad425001a5ad9"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-3120973a4260190ab2b7101c",
+              "text_sha256": "8d05ff0e5b1a6687c7c2c3b7d021c6de628499ee19e273b857e0d1bd9647aa14"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-ac94a7783a5f65ba91e74c8d",
+              "text_sha256": "6d140e30ed0565177ea32e73f89a67493f666a26c7ff5b42e03abd5f8668ee0f"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-2c6d821cf584fc2d26588e17",
+              "text_sha256": "bd5ebf52b9345f22bf42cf02ceb5d9ae30b000bb2ad9f42d2e5238c46f4d9ca8"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-8d02142047003416ad9f993e",
+              "text_sha256": "21053eb7d0964fed4dc2df8d3fbaf253efefea3edaceda659dac722ca8c23e5b"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-882b11131f25cd55b4ac15e4",
+              "text_sha256": "bfe59148d1ed482b3857ae3d7e8227d30fd54bd5083e7b28f4a2c34f1aaa8681"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-439d64731452c2ab2034a0bf",
+              "text_sha256": "562e52670cdb6f17a1902142da2ff4de180d3eb8e1d05336d482bc03bc024cb2"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-83d9b0d0a65767bc15879e3c",
+              "text_sha256": "9402992ab2cddcad518ec04b72eced616321e85b9f6b70a6d2a9ca52667ecbdb"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-764f8b29bc8389f8ffd21309",
+              "text_sha256": "570c3857f39a66e522ec6e91a4a8c7b3f0cafe26d26ae4d7245816eb8a4735a9"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-c28f61d9dae961a80631bcdd",
+              "text_sha256": "a118fdd01ceffbc20aff36ec997f8b6bb5d5ec084348b66b6663423a908a46cd"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-9e29fae35c0f4afdd37ae102",
+              "text_sha256": "9c1443f79db98d1274c080887613ab9267508f214481f0121471c00980b30d5b"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-e3e58b8e78d5459bc5797c23",
+              "text_sha256": "2ee0015a5c9709e57ae37038d9dc4cc28e1506e98038b00d59c56a9dba334841"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_kind": "b2_r1",
+      "source_task": 260,
+      "task_prompt_sha256": "598bbeab305a0cb2e4a1b56479804af87593e19265b7fd0e61812237094d8246",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "05958c8d651003796e055a094eefe93dfe9dc08ea520447d7e6fad762394ba60",
+        "pre_writer_trajectory_projection_sha256": "05427a7eac87d4b55ab24a9f68c054517058de45b03f1e7e75723658eea1595e",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "1201fe5f52ffb95956f6eb470b16fd1a91026db42c8521ddd6bdd26cef964118",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "canonical-json-string",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b12-crossdomain-qualification-20260824/private/execution-r1/writer/provider-responses/reddit-r1-writer-404-failure.json",
+          "sha256": "31a87b6c111deb93963bb3b96ddf75ab220248a32d2db2d554407ba142610154"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b12-crossdomain-qualification-20260824/private/execution-r1/writer/provider-responses/reddit-r1-writer-404-success.json",
+          "sha256": "0b4c3b41304aff48d9769a0f768610fc4d8604491a95101e8266840e056ca0a6"
+        }
+      },
+      "domain": "reddit",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "f3a7d55c3f37d33b3bb4e85fb1e6ce6ac26801d17b7844af931418ca59969d95",
+        "released_state_sha256": [
+          "6d0e6eb1a9f4c11a40c3f48a2ffb9fd3968298e4ada64c8649de89c2524fb7ae",
+          "1b356a7cb5aea14ef15bda0e7c42fec97099a7224c99270adfab671203f1930d"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 2,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-42241e7d8bcb4c26a4c9cd07",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-ab2d768d36f637530aa3dda6",
+              "text_sha256": "5a99543c0057a505eab7e4723e3f7f1eea160827afb3d1de314f2c4b536fc549"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-5fee147b9a043c6a6593aaf4",
+              "text_sha256": "9e3506a955f124d4b8a7014d163261ed9b0c5e3df3c9fef00e272032d737627c"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-5aa6d4e87afc69949042669d",
+              "text_sha256": "19da000b9ff17fb9b16ba6e6e46350725e2fd2919064b3bb9fb8c236ff57a2e7"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-deefa29862ebd526e056bfa9",
+              "text_sha256": "1f35152c47f0d70439d817106f78313bf8d42ef0ad5f85803f6292acef16b2ba"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-f3b85283310fb53970cc4fef",
+              "text_sha256": "ba79779a494756029388fc7669d0c9b1f87ac5711ec41e2ad4500cb3bae5f25c"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-b961db97b08a966e922c97f9",
+              "text_sha256": "e4ef9c847cc1620bd896e3479844ebd1abbbc4121b60776017e1ee0727a339ea"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-43f868daccef62316ad12e7d",
+              "text_sha256": "e1eabe78aeac2d28b67c11f8f08b8f8738d09b374d2e69c2d23578c6c556fe84"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-4b9a3f235d1f0a0344c1c221",
+              "text_sha256": "c15c0defb536769259cd8de0f1825d3220ed5d02bd446cdc790cf9d0966e3a6a"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-b0ff2524224cf5c7f3438514",
+              "text_sha256": "2e43e1710c8c5dcd23fe90fabfccfcf263b66202f626ba0076ef463c12973683"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-de6f88fd3f21493ad0cf7b50",
+              "text_sha256": "1856a846f5e57543c4cc9c7a746962aff2a622ab18ce445c496830e701b85a63"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-3878e61fb4cc368d8d807ffc",
+              "text_sha256": "2b7b3a943c005a806c5cc4190de01a201d897e3a6cd7985cda3163bb58fb7069"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-972c41bc959000b07aa2112d",
+              "text_sha256": "e78abcc98448c7f735a3f4bf08acdaac747fe6ed08e3777574c831f2a8ec2bbc"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-464868fb1fd5d82161010018",
+              "text_sha256": "55bdcbf11b3c2cd65229782ee1064db41603398fbc2185212bd1b429e062ce91"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-262a0d83c996608dc2436a84",
+              "text_sha256": "72ec937a6f8715e14e4fe42e9d0e587a2dae6ca9a48522f6999cd7cd189d74db"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-cdbd1c8503573eed48dc3698",
+              "text_sha256": "4a1b1a9c8e55cbd624a1467d328c6d8811359642cfa797ef086e18fb44fae16a"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_task": 404,
+      "task_prompt_sha256": "62b1d8e03fe4bbc6872242560ba6ad8fb843d1dcfc6bbb6e0e1aef7ea8d3ab20",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "7bdc4780f71e1914bbde02b26ec409b67787fc0cfe15d6b6d07574008e64b3e1",
+        "pre_writer_trajectory_projection_sha256": "9e88d0e289a898207819476370d58f3fdc25aadca02889f2592a95bb049f28fb",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "ba4fd61016dd9bade28f860330d04ef8124b934be532173eb8d723725f4f27c3",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "utf8-text",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b12-crossdomain-qualification-20260824/private/execution-r1/writer/provider-responses/reddit-r1-writer-405-failure.json",
+          "sha256": "1ae55aa86b760e08a0d3b1018f4c6374076ce30f3c80b5c41c69e4439202e53f"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b12-crossdomain-qualification-20260824/private/execution-r1/writer/provider-responses/reddit-r1-writer-405-success.json",
+          "sha256": "403f5ec7b453184d0048e6eaaffcb4a6c2bbd8c7d0d3526c63e41410a725071c"
+        }
+      },
+      "domain": "reddit",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "17fbc0cc381a956e1ef50a9f6a663601fd61ce851629dda292652e24d6fdaf89",
+        "released_state_sha256": [
+          "4f7e21d89c86b39ef904a15ff18e3542532df99bc6e27068331ca8785247e066",
+          "c42aeb6618039fb20e7aca1596b5edaf201b0d0a328ac8c4bce2e1a7c78da36c",
+          "ee68c9ff4b4c1b68097b9c471838b9477aac50962e3403de6b9c520a864a00f8",
+          "d2aa3f94aa097ab90e585ef8c95340f8958167a98c057c138cdf2d9c0a93ed9e",
+          "14e099347abfbeaaafb405594127cccf33d164eb9140428a89f3b8df0035892e",
+          "f454d1accb163c72728889c2d73de75e7017c683528045a35187699ff4b34f95",
+          "cd7a3f849ca8c5e14cefdf178817af08c9b8a9c2e487a3778a534c4089fa0226"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 7,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-bb8931b2eb84b7175ae35608",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-1f76b725fd8fc313c4677915",
+              "text_sha256": "a0fcca1f95a278a0f2477f6a9caa130a2395b8b8b64782b105334800fe029261"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-583a0f4312a896ad60139bd3",
+              "text_sha256": "bf9ce21ea433fa6311c2fa9237e60e6bf20103bd573f9b1f43c50b64c83efd38"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-bcae6c9d1833bf5fa28a9316",
+              "text_sha256": "c31f98d4b1ecfebece11cc733a99e7966fb7ab1d6736344be39b41a4d02d2839"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-15fec43dc940e7230788f71c",
+              "text_sha256": "11347f19fd385377de37b5b3b1160292085cc6573bbd6b9b1ea5fb52d5fa098a"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-9158c08af6fc16a81129951a",
+              "text_sha256": "7ebd2992c0c0b7cd14a0f2d7c5f1a062279df863be5f6f381cb03b49214e030e"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-2abde7525da96101ffb2e211",
+              "text_sha256": "f5b9fc3fa8f8f4fd0755a5fbd48b410fa2566130421dbeda3a5a87dd1b941448"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-36f9142873336f25dc1a19d0",
+              "text_sha256": "b25168c6b85755d2f26dc2889f463ead23ae494e952ea01ff0d05c5199f8dbc7"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-47e2bcc1a8b4c5f63b757035",
+              "text_sha256": "0c4fb6fac65dc651734128faac4e854ecd21a75dc79fdad9cb6a0f28a44b6729"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-dfa51e8d4ae1008d8970f47b",
+              "text_sha256": "61a9815a1e652842ef5975d0cb5cb48d1b478788b662ee912f27de72d8d95434"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-d81e5c1577ea6087f81d8db0",
+              "text_sha256": "0ddc6903723e785ba2d98348ec2777aa178b79d8ab86bc097577d8717c96206d"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-180e145da7bbe9dedaf9be1d",
+              "text_sha256": "2bded7f6da6491559ec731cbc2adb2659267be5f81fb199f4825f83746fb021e"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-2c464f888baa3ca66cb9bc7b",
+              "text_sha256": "c5984b07dde4f36e8d0e2d89b4871902b3e1f81fe6e5c84b25fe44a738104e3c"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-f3fc4886fffbe5031f474188",
+              "text_sha256": "f31340b4a7af1ca0ee6984db5ec4f41d5b1eeb97a5e152554b2b7559cfdee167"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-4fb219476954d14ebb75b756",
+              "text_sha256": "3f2af6f015234fadfc45f7e0a7c9e2ad82901b95f17b7e877fbba7d674fa73d1"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-b3dc8c0d58a9e8422f21b383",
+              "text_sha256": "0e1399c71e402158c14b4e6106b6bc34639db2fef2e603414f0c1ee1363275d7"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-3b333fba31020837a7f7389c",
+              "text_sha256": "cc9214ca320cdc50f3af0541956d295df731df2d763ac0e2a2839d6427ff08b0"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-652e2c8f67fe14b202e5f17e",
+              "text_sha256": "3e606228618a71ee8a2f172c21042bac7d4ca7b867a18cff895b5c3883b5d1d9"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-1cc628a1a8601d618978a171",
+              "text_sha256": "d04f6e3dc48d4efe98cf6b85f8bf1f473d6ca4d24bf13200662d456e0d896600"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_task": 405,
+      "task_prompt_sha256": "50c4e991d69c44a7ab9002740aefb36674417460adde0c0e23ad78dd56c9f489",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "077ca26f94bb24fc8faf4b2b203dafe9cdac212fb0cbc2bf82f11ed8ff388fa3",
+        "pre_writer_trajectory_projection_sha256": "e42aa200a3c3b704e7cdd47adc8298ed7fede24ef10a3e460c12e1f05e81e6ea",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "759bdf69a95a1c0d630688930b015065c13caeee90d471692e4ea375340c1d7c",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "utf8-text",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b12-crossdomain-qualification-20260824/private/execution-r1/writer/provider-responses/reddit-r1-writer-595-failure.json",
+          "sha256": "69423ab8c5f107dd9fdd447859bc1c89d30536c49e682f6af475296480b136f4"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b12-crossdomain-qualification-20260824/private/execution-r1/writer/provider-responses/reddit-r1-writer-595-success.json",
+          "sha256": "bf39e756deedb459c23ac07353069688810c9b7a69b44bd260536fa80b052d4b"
+        }
+      },
+      "domain": "reddit",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "3158591885fb9e2697d06f688f31083547afb80e538840cd85cb8a4bdf1448a3",
+        "released_state_sha256": [
+          "c14498837879e86695ad5136e1e426e5b25809d2836609fc59813d1ef8477f90",
+          "8312d215bf500ac8c0d649921315a027d7cd99083035ca39a17b4d3bbb6016a6",
+          "b2da14d4c73ede5597f7e7dfd1c04889bebdf7f73d22e3364ebef31c52b1bd15",
+          "1e9497fa52f635d7f9b13040721ed4ed6f2d8c71b5475e49eb0019e1830ee3ed",
+          "07d2923d9a684f11a674a3c82b5b9b32097dee55704ae06c76dcfb8976aacc31"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 5,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-1c2bc8cd29c84006aa55e591",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-8d740557df36521a0e8b8cfe",
+              "text_sha256": "4c8fd17a2fc3842a42b4e5080e6b320cd781d227fb533dc7f74992a017fc651e"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-1f66f28e5a1171d7af34c517",
+              "text_sha256": "8d8f17cfb803a5dec343520ce08fabce19915e0aad85ad6925d7d300b1f2bca3"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-d55c7dbd3429a08b6a607da8",
+              "text_sha256": "9cf8e43058fbea0c44b3f0f3f608336120272de78106442d5bd969d8902e9da2"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-c365c0bd049a97008f8ac776",
+              "text_sha256": "03dd3b3fad3edce379024c9e16450701c9a386d5a1ed177511d15e11beba0bd7"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-6f59538dc0e1d96f48c5ebb0",
+              "text_sha256": "2413c2b2d89ad2105ba21135b2d79251b8576d96edc64d89a5c54541bc708866"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-64d9d30bf9ad95de706ad1f0",
+              "text_sha256": "78fa064dade0f02fe7fbc442b904505b187a4a718ffb090b22cf3c37ef340ef5"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-ad3a96931414cf2019d75caf",
+              "text_sha256": "9fccb0261dc9d347770b5c318b9da47b748a9eda115c9d7048f640300e7df1fe"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-5426b9476018625f5ff0b51b",
+              "text_sha256": "0600c2a3c4e9a0b22095e4f521e0757d0b093a24c80c15dafb72e7c1514d7755"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-7e2d3ab0bcd181ed2b768907",
+              "text_sha256": "420ddd076c05755d2e26b52a2624f4578e206ba35c5e3a0bb7d8d84d144ba38e"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-6567306bccf8aaeeaad5e9b9",
+              "text_sha256": "93806d1a384efe82b59b2c889f90715f37ef68b615aec2b1c53879074a0ded2e"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-b06c72d808b27e098e587498",
+              "text_sha256": "abd48b3717ab93482b10e9a5fd4d9814ac12eecc1e8e301baa35a53505ae5c2e"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-5f6ebac10574686bd6dd772d",
+              "text_sha256": "d060262331cb15e6c90377f935057910ca9d246694891344427a9b3e2e9acf00"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-4b0c1c745e555aaa7307c2cd",
+              "text_sha256": "ef3ddcc2b2784bdc1d31f9432dab850c8eabc56a195666f966921f0c6ab35f1a"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-2b7f47d2a9615baadbfa6539",
+              "text_sha256": "70463610a7faaf186f88065e865cd6a4b9d3a28a5b830c772ea39beeb4028de0"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-8c637535ef5f24ac190edbe3",
+              "text_sha256": "62b75a056cc2e0f0936f9496209ea3df55e9caa5afcde6f7319a275985bdfaa6"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-05c0011ded670d9220f95002",
+              "text_sha256": "b771a2f3cba632fdea8c5ca18466e676b463b1036381f4b9bedbe756d1f01d8d"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-f78adf5916ac9d8f0457a468",
+              "text_sha256": "a38bf84f6d6bd81954c005d9b4e6bdc8fe7fa9d334c1fca5db63f1398f247218"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-6c5ca4536b06a17023726c2c",
+              "text_sha256": "cecced2fcd9b2290f3618f27af6e9842a23e094baa1821e7556d019e90568688"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_task": 595,
+      "task_prompt_sha256": "d461e278b9573235183cb0ef71a24d32d1ee12c358f4a56a0ca8a9e455a4a958",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "91967b154dd483695235d6bd099e1737157e817e9063e92c3fc4972e46e15243",
+        "pre_writer_trajectory_projection_sha256": "cbfe99c60b13ceee4b6b97ed40288106d0d06f1924f1eb4f94df01e397c89cc8",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "cb2e85b37d6d8b7288922ba8536677810c4227fa02f845d292dd581688913219",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "utf8-text",
+        "recomputed_match": true
+      }
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "branch_memories": {
+        "failure": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b12-crossdomain-qualification-20260824/private/execution-r1/writer/provider-responses/reddit-r1-writer-610-failure.json",
+          "sha256": "3a40231775fde683c7424d7acec407585971696151a85f6665e5cb40bc87326d"
+        },
+        "success": {
+          "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b12-crossdomain-qualification-20260824/private/execution-r1/writer/provider-responses/reddit-r1-writer-610-success.json",
+          "sha256": "a08bdbd08bef6273e3e1f0cd9dfb231ec1ca35f9fc1d3d599a23c97a407b3c1d"
+        }
+      },
+      "domain": "reddit",
+      "outcome_independent_evidence": {
+        "released_evidence_sha256": "f828cf5cd26e08a485b3959f5b36f9cfd29500c0220ac2088bfb274b9e3e0834",
+        "released_state_sha256": [
+          "6979c14f71c6077f1a60bd3c98ac8086f5d4a89a8fcec7bfc68268177ec89898",
+          "29b495796e5ebfd19bc2dbbffed473620097ec528df81e658b21a9676dc62d7a",
+          "233f68da5ff2a4b1c2dcc4d98f8772bc4e2350222f536da96b2572092a02e599",
+          "aaa37f59fe6e4b650200500d8eb874605c44c15ab07f250bd2f8881521b0e23b",
+          "13d2e516de1940de951ee0381750d52effe6129bdda435f8dcfa7f1d084292c8"
+        ],
+        "source": "released pre-writer browser-state projection from frozen trajectory",
+        "state_count": 5,
+        "terminal_reward_or_rubric_used_as_evidence": false,
+        "treatment_label_used_as_evidence": false
+      },
+      "provider_call_authority": false,
+      "receipt_prototype_id": "C1-D0B-b86e53c070897431d46864d3",
+      "residual_claim_identity": {
+        "claim_ids_bindable": true,
+        "claims": {
+          "failure": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-d148804968f587fa6312dd00",
+              "text_sha256": "f948c123408a7a7edcdde30566361d8faffd63fc4ab60b88f350732ffebad4e0"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-9f0269d8f00d5d15ef845d61",
+              "text_sha256": "0580a58003a06f1e1128dbe76c35e9d45bbe6df55e9aa4afc6f0306b8d55f3ad"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-70d7eefe5af4334df6d66546",
+              "text_sha256": "54d82c51867d460d82d5cbabeeea4264caf2fd2efe304a07ef7fe673e95f6d0e"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-f47ef304dccd293ccc0beff8",
+              "text_sha256": "cef5150bd42f7e4f69002766c2b1cc5c1e253997544b3e924252be148565612d"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-f01834f641ed8d717450ad8d",
+              "text_sha256": "5e427c65707041f122fbd16f426ac68dcc5a3222054f7441d1b0b6bd7362f5e9"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-de4ce8e89fcedd3e12db7e45",
+              "text_sha256": "d33c49d90db44d474ff662113fb1d54a15323dc6f014282aa3a5613ab5fb67ab"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-5eaab58a5bc6a275aa603168",
+              "text_sha256": "33eb76edfc94b8a74d96a755ac0c56b4223df2f8cf72dc75db55221929ab855e"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-211922596fc039a9f32e827b",
+              "text_sha256": "c12098b518e71deb3bdbce4228d4db3dfd2f6b808a1cc64373cd630d1868fb47"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-703c8661517cf3f21682673d",
+              "text_sha256": "ede6db00dd573dcb4bf02e844027ee57d24df0ddea554348df94b04bfb6c3774"
+            }
+          ],
+          "success": [
+            {
+              "field": "title",
+              "field_index": 0,
+              "residual_claim_id": "C1R-410fdb31afa4327159f72e76",
+              "text_sha256": "dd7b799e3de4124e3054bf0df19fdff0f738549bfeb0db247586e93cb7d68606"
+            },
+            {
+              "field": "description",
+              "field_index": 1,
+              "residual_claim_id": "C1R-d9f7aef371ec29e3b3daf537",
+              "text_sha256": "4596af6a96111fe2270453603170fbd6576329655b0deb03b2af19728c898f8d"
+            },
+            {
+              "field": "content",
+              "field_index": 2,
+              "residual_claim_id": "C1R-1640d04b22e44be312811e24",
+              "text_sha256": "6b04916e045885cb6a5ae731c04890e880e9074eaee47a5fd3c768c4d9e1049c"
+            },
+            {
+              "field": "title",
+              "field_index": 3,
+              "residual_claim_id": "C1R-c8e051e456e628e6b8f151a9",
+              "text_sha256": "1ef8cf7a708bff232f11708b4a733b269bb4351f33ea3a96221f3bba0e18c9f5"
+            },
+            {
+              "field": "description",
+              "field_index": 4,
+              "residual_claim_id": "C1R-019d6a54a2f2152fd1d04705",
+              "text_sha256": "cbb29f741a3eaf6efc5288d5531e4e8cd3d3ce04d96d13133d433b837b9a5470"
+            },
+            {
+              "field": "content",
+              "field_index": 5,
+              "residual_claim_id": "C1R-bfd510cc8a87c627e63c6839",
+              "text_sha256": "ec810533897a25898f6f8cbef7c939c95c58d8ba3e07f1105641a28eb9888833"
+            },
+            {
+              "field": "title",
+              "field_index": 6,
+              "residual_claim_id": "C1R-e68227af7457a0644e97c16f",
+              "text_sha256": "a593b103064e482465b757f9addc705b009a4344e69fee107a684607d4ef10f7"
+            },
+            {
+              "field": "description",
+              "field_index": 7,
+              "residual_claim_id": "C1R-c6650d4657730287c12511d4",
+              "text_sha256": "07166c12e0ce12762290b8be623e96b9dbdac3d6ea46e1521a465eb4fa8ebc06"
+            },
+            {
+              "field": "content",
+              "field_index": 8,
+              "residual_claim_id": "C1R-8564fc8e90b3b6555361287f",
+              "text_sha256": "364ec4c4a52d4f486664f99adfc6a1f6b1c1779959ee5f9659022e148108f1ca"
+            }
+          ]
+        },
+        "parser": "deterministic Title/Description/Content field parser",
+        "semantic_residual_status_not_inferred": true
+      },
+      "scientific_authority": false,
+      "source_task": 610,
+      "task_prompt_sha256": "4d0e3f11481927f754be0e4f4be54674b2549deb4be5d51e3e95df1101aa48c0",
+      "trajectory_lineage": {
+        "full_trajectory_json_sha256": "1815e218b18fad6834838ea0b8723d5ccfd77a9032b2b6f6c979d2e3c4cd4fb7",
+        "pre_writer_trajectory_projection_sha256": "fb828d6c0375d7c2ca0fb1a82622c5bdd2da56351b0dcc9df2d16a7213740b9c",
+        "projection_is_identical_for_success_and_failure_writers": true,
+        "terminal_outcome_fields_excluded_from_projection": [
+          "is_successful",
+          "rubric_results"
+        ]
+      },
+      "validity": {
+        "adjudicator_version": "NONE_STRUCTURAL_AUDIT_ONLY",
+        "allowed_authority_states_after_future_adjudication": [
+          "SUPPORTED",
+          "CONTRADICTED",
+          "UNVERIFIABLE"
+        ],
+        "extractor_version": "C1_D0B_RECEIPT_EXTRACTOR_V1",
+        "state": "UNADJUDICATED_STRUCTURAL_ONLY"
+      },
+      "writer_input": {
+        "action_summary_sha256": "ef3069f59bca5a83a0a2fb781c7fb0182b6faa8f82b2a8b379ba079b3d114dc6",
+        "branch_label_not_part_of_action_summary": true,
+        "hash_mode": "utf8-text",
+        "recomputed_match": true
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "source_bindings": {
+    "b2_contract": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b2-source-expansion-r1-4096-20260824/b2-source-expansion-r1-contract.json",
+      "sha256": "d9deadb844104b6a7ba8af6bae02ca2083fd1048e43d866c9658df8d8d190eac"
+    },
+    "f0": {
+      "path": "/data/wyt/agent-self-evolution-observatory/paper-acceptance-artifacts/D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE/f0-write-channel.json",
+      "sha256": "f2e4f3424faf1e3a9ec7aba7958e538eac457e89308552ef7a9c3d69c6a914f9"
+    },
+    "reddit_parquet": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b12-crossdomain-qualification-20260824/input/wa_awm_shuffle1-reddit_run1.parquet",
+      "sha256": "dadaedf3e9661426e324bdb8804cd0e5748bb29919b6a755eb0ef41fcbd21a19"
+    },
+    "reddit_r1_contract": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b12-crossdomain-qualification-20260824/b12-reddit-r1-contract.json",
+      "sha256": "3e2975923b39d4e47974d568b07e064d7a7415632354d23b5be77044a865a88f"
+    },
+    "shopping_manifest": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b4-retrieval-matched-fixed-evidence-20260824/b4-memory-manifest.json",
+      "sha256": "2880b83c71745f049039c15edb02f731e4f87a44670977b61627143102bee0d1"
+    },
+    "shopping_parquet": {
+      "path": "/home/wyt/code/agent-self-evolution-observatory-discovery-benchmark-20260821/generated/research-data/paper-yield-d5-c01/parquet-cache/wa_awm_shuffle1-shopping_run1.parquet",
+      "sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e"
+    }
+  },
+  "status": "D0B_RECEIPT_STRUCTURE_FEASIBLE_SEMANTIC_VALIDITY_UNADJUDICATED_AUTHORITY_HOLD",
+  "submission_authority": false,
+  "summary": {
+    "contradicted_claims": 0,
+    "nonzero_branch_authority_receipts": 0,
+    "paired_branch_memories_hash_bound": 24,
+    "paired_sources_expected": 24,
+    "paired_sources_structurally_bound": 24,
+    "pre_writer_trajectory_projections_bound": 24,
+    "reddit_pairs_bound": 4,
+    "released_evidence_packets_hash_bound": 24,
+    "residual_claim_ids_bound": 423,
+    "semantic_validity_adjudicated_claims": 0,
+    "shopping_pairs_bound": 20,
+    "structural_complete": true,
+    "supported_claims": 0,
+    "unverifiable_claims": 0,
+    "writer_input_action_summaries_recomputed_and_matched": 24
+  }
+}

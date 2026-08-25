@@ -1,0 +1,576 @@
+{
+  "archetype_assessment": {
+    "analysis_only_top_tier_is_possible": true,
+    "current_c1_assessment": "The stage-resolved finding is scientifically interesting and evidence-rich, but it currently sits between a pure mechanism/theory paper and a mechanism-derived intervention paper. Because the diagnosed authority mismatch naturally exposes a controllable variable, the cheapest next scientific step is a zero-provider intervention-identifiability D0 rather than more same-support rollout volume.",
+    "decorative_complexity_forbidden": true,
+    "new_method_is_not_universally_required": true
+  },
+  "artifact_type": "c1-mechanism-to-intervention-closure-program",
+  "authority": {
+    "claim_expansion_authority": false,
+    "experiment_authority": false,
+    "gpu_authority": false,
+    "provider_call_authority": false,
+    "scientific_authority": false,
+    "submission_authority": false
+  },
+  "candidate_method": {
+    "abbreviation": "CBRG",
+    "definition": {
+      "counterfactual_pair": [
+        "M_S = W_S(tau)",
+        "M_F = W_F(tau)"
+      ],
+      "factorization_baseline_interface": [
+        "C(tau) = Core(M_S, M_F)",
+        "D_S, D_F = OperationalBranchContrast(M_S, M_F); this is a paired branch-difference object, not atom-level causal-purity certification"
+      ],
+      "semantic_applicability_baseline": "a_r(o) = Applicability(o, D_r)",
+      "outcome_independent_evidence_validity": "e_r = EvidenceValidity(D_r, E_tau)",
+      "evidence_gated_trigger_authority": "M_r(tau;o) = C(tau) + G(a_r(o), e_r) * D_r",
+      "hard_constraint": "High semantic applicability cannot grant actionable authority when evidence validity is contradicted or unverifiable; the reward/success/failure label is not evidence for its own residual."
+    },
+    "name": "Counterfactual Branch Residual Gating",
+    "novelty_claim_status": "STOP_MERGED_CURRENT_EXTENSION_REOPEN_ONLY_ON_NEW_QUALIFIED_EVIDENCE",
+    "scientific_residual": "Same-trajectory counterfactual operational branch contrast plus outcome-independent evidence-gated trigger authority over only that contrast. The branch contrast is not an atom-level causal-purity claim without seed/noise-floor control. Neutral/metadata memory, common-core/residual factorization, and semantic applicability are baseline-only components."
+  },
+  "collision_audit": [
+    {
+      "consequence": "Generic query-conditioned reuse or an applicability gate is baseline/collision territory, not C1 novelty.",
+      "covered": "retrieval versus post-retrieval reuse and target-bound applicability/verification support",
+      "work": "Beyond Retrieval / Query-Conditioned Reuse"
+    },
+    {
+      "consequence": "Core-plus-residual representation alone is a representation baseline, not C1 novelty.",
+      "covered": "generalized root/common experience plus incremental residual nodes",
+      "work": "DeltaMem"
+    },
+    {
+      "consequence": "Generic experience/guidance decomposition is not C1 novelty.",
+      "covered": "decoupling what happened from how to use it via experience and guideline banks",
+      "work": "Live-Evo"
+    },
+    {
+      "consequence": "Generic provenance firewall is not C1 novelty.",
+      "covered": "provenance-preserving authorization of memory-triggered actions",
+      "work": "Memory Provenance Laundering / PPMF"
+    },
+    {
+      "consequence": "Signed outcome evidence and mutation authorization are not C1 novelty.",
+      "covered": "authorized mutation plus signed positive/negative outcome evidence",
+      "work": "MutMem"
+    },
+    {
+      "consequence": "Success/failure reflection is the substrate, not a contribution.",
+      "covered": "success/failure-conditioned reflection into reusable memory",
+      "work": "ReasoningBank"
+    }
+  ],
+  "current_revision": "ICLR-C1-EXECUTABLE-CLOSURE-V4-20260825",
+  "method_novelty_residual_reviewer_gate": {
+    "gate_id": "C1_EXECUTABLE_CLOSURE_REVIEWER_GATE_V3",
+    "gate_profile": "C1_EXECUTABLE_CLOSURE_V3",
+    "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+    "baseline_only_component_ids": [
+      "generic-common-core-residual",
+      "neutral-metadata-memory",
+      "provenance-authorization",
+      "query-conditioned-reuse",
+      "semantic-applicability",
+      "success-failure-reflection"
+    ],
+    "baseline_only_components": [
+      "neutral/outcome-blind memory",
+      "generic reward/provenance metadata or metadata-conditioned reuse",
+      "generic common-core/residual factorization",
+      "semantic similarity/applicability gating",
+      "generic query-conditioned reuse",
+      "generic provenance-preserving authorization",
+      "success/failure reflection substrate"
+    ],
+    "proposed_novel_component_ids": [
+      "evidence-gated-trigger-authority",
+      "same-trajectory-counterfactual-branch-residual"
+    ],
+    "proposed_novel_components": [
+      "same-trajectory counterfactual branch residual",
+      "outcome-independent evidence-gated trigger authority over that residual"
+    ],
+    "scientific_residual": {
+      "statement": "Grant actionable authority only to evidence-supported branch-specific residual claims induced by counterfactual success/failure reflections of the same byte-identical trajectory.",
+      "same_information_simple_baseline_named": true,
+      "same_trajectory_counterfactual_pair_required": true,
+      "byte_identical_trajectory_required": true,
+      "incremental_over_baselines_required": true,
+      "fresh_collision_clearance_required": true,
+      "treatment_label_is_not_validity_evidence": true,
+      "semantic_applicability_alone_is_insufficient": true,
+      "outcome_independent_evidence_required": true
+    },
+    "evidence_trigger_contract": {
+      "claim_bound_source_or_trajectory_evidence_required": true,
+      "outcome_independent": true,
+      "treatment_label_forbidden_as_validity_evidence": true,
+      "evidence_receipt_required_before_branch_authority": true,
+      "evidence_receipt_contract": {
+        "content_addressed": true,
+        "binds_exact_trajectory_sha256": true,
+        "binds_branch_memory_sha256": true,
+        "binds_residual_claim_id": true,
+        "binds_evidence_refs_and_sha256": true,
+        "records_validity_state": true,
+        "records_extractor_and_adjudicator_version": true,
+        "records_authority_decision": true,
+        "receipt_is_required_before_nonzero_branch_authority": true,
+        "receipt_cannot_grant_provider_or_scientific_authority": true
+      },
+      "default_withhold_on_contradicted_or_unverifiable": true,
+      "semantic_applicability_role": "ELIGIBILITY_BASELINE_ONLY",
+      "validity_states": [
+        "SUPPORTED",
+        "CONTRADICTED",
+        "UNVERIFIABLE"
+      ],
+      "trigger_authority_status_now": "CONTRACT_ONLY_NO_BRANCH_AUTHORITY",
+      "current_binding_stage": "D0B2_CURRENT_CBRG_EXTENSION_STOP_MERGE_AFTER_BOUNDED_ADJUDICATOR_INVENTORY",
+      "packet_level_evidence_hash_is_not_claim_level_binding": true,
+      "candidate_memory_atom_requires_residual_identity_before_semantic_validity": true,
+      "operational_branch_contrast_is_not_atom_level_causal_purity": true,
+      "causal_residual_language_requires_seed_or_same_condition_noise_floor_control": true,
+      "evidence_locator_similarity_cannot_grant_semantic_support": true,
+      "unlocated_claims_cannot_receive_imputed_evidence_authority": true,
+      "qualified_semantic_adjudicator_required_before_b2_labels": true
+    },
+    "collision_audit_contract": {
+      "status": "COLLISION_AUDITED_CANDIDATE_FRESH_CLEARANCE_REQUIRED_BEFORE_PROBLEMGATE",
+      "exact_residual_claim_status": "CANDIDATE_ONLY_NOT_NOVELTY_CLAIM",
+      "fresh_collision_clearance_required_before_problem_gate": true,
+      "audit_artifact_refs": [
+        "paper_drafts/c1-proxy-reward-stanford-r3-20260824/mechanism-closure-program-20260824.json#collision_audit",
+        "Obsidian/Papers/C1 - Executable Closure Gate v3 - 2026-08-24.md"
+      ]
+    },
+    "d0_contract": {
+      "zero_or_low_cost": true,
+      "outcome_independent_support": true,
+      "provider_call_budget": 0,
+      "provider_execution_authority_after_pass": false,
+      "fresh_experiment_authority_after_pass": false
+    },
+    "required_machine_adjudicator": "research_pipeline.methodology_controls.require_c1_executable_closure_gate",
+    "expected_design_verdict": "D0_DESIGN_ELIGIBLE_ONLY_IF_MACHINE_GATE_PASSES",
+    "authority_after_gate": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
+  },
+  "forbidden_actions": [
+    "increase Shopping rollout depth to chase significance",
+    "add a third domain because its observed effect is larger",
+    "lower the 0.15 terminal or 0.20 process floors",
+    "select known nonzero tasks/sources/templates",
+    "rescue the closed DeepSeek B6 support line",
+    "treat post-hoc working-memory correlation as mediation",
+    "add equations, validators, modules, or model families only to look more top-tier"
+  ],
+  "frozen_existing_evidence": {
+    "b11_scientific_evidence_sha256": "f188806ce9ee23cb956c2fd06fdd62542dba29072421500e49f86cb3120314e8",
+    "b12_crossdomain_evidence_sha256": "08b475dde3be086b2e3461e5941c204f502624bd7112cdda6a5e4ca878c48f3c",
+    "b12_revision_receipt_sha256": "25992d3924f49aad0b3d980fc725f5b8f6ef2e6ec4588b137b9034909d489ad8",
+    "existing_claims_must_not_be_reinterpreted": true,
+    "manuscript_qa_sha256": "f8df9dcbebc066a4c76152cb16db66081642060dc9b957686655f8ec775c29ae"
+  },
+  "future_fresh_experiment_if_D0_passes": {
+    "arms": [
+      "released full reward-conditioned memory",
+      "outcome-blind neutral/metadata baseline",
+      "generic common-core/residual always-on baseline",
+      "same-information semantic applicability baseline",
+      "matched-information query-conditioned reuse baseline",
+      "CBRG: same-trajectory branch residual plus outcome-independent evidence-gated trigger authority",
+      "raw/no-memory controls",
+      "clean-label/oracle upper bound where scientifically valid"
+    ],
+    "authorized_now": false,
+    "method_stop_if": [
+      "neutral/metadata baseline ties CBRG",
+      "generic common-core/residual always-on baseline ties CBRG",
+      "semantic applicability baseline ties CBRG",
+      "matched-information query-conditioned reuse ties CBRG",
+      "robustness comes only from rejecting almost all residuals",
+      "advantage is driven by a previously observed positive cell or one source/template",
+      "clean utility loss exceeds the preregistered non-inferiority margin"
+    ],
+    "primary_metrics": [
+      "clean utility/non-inferiority",
+      "corruption-induced regret",
+      "harmful-update rate",
+      "retained positive-memory utility",
+      "wrong-residual activation rate",
+      "residual activation coverage",
+      "first-action uptake",
+      "calls/tokens/latency",
+      "leave-one-source/template/domain-out robustness"
+    ],
+    "primary_question": "Does outcome-independent evidence-gated authority over same-trajectory counterfactual branch residuals improve the clean-utility versus controlled reward-corruption robustness frontier beyond neutral/metadata, generic common-core/residual, semantic-applicability, and matched query-conditioned same-information baselines?",
+    "support_rule": "fresh or outcome-independent support only; never select B4/B10/B11/B12 positive cells"
+  },
+  "mechanism_diagnosis": {
+    "actionable_variable": "actionable authority granted to reward-branch-specific semantic residuals",
+    "chain": [
+      "reward-conditioned write",
+      "retrieval exposure",
+      "branch-specific policy uptake",
+      "outcome"
+    ],
+    "failure_mode": "A single potentially wrong terminal reward bit has undifferentiated authority over the full actionable persistent-memory rewrite, even though much of the reusable procedural content is branch invariant and the branch residual has sparse future decision relevance.",
+    "finding": "Reward-conditioned writing is robust, while branch-specific native uptake and terminal transport are sparse and domain/task dependent."
+  },
+  "paper_development_state": "STAGE_RESOLVED_IDENTIFICATION_MEASUREMENT_PAPER_RETAINED__CBRG_EXTENSION_STOP_MERGE",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "paper_only_repairs_now": [
+    "add a main-text stage-resolved boundary figure showing forced leverage versus native Shopping/Reddit transport, first-action uptake, and structured-neutral boundary",
+    "restate novelty around undifferentiated reward-conditioned write authority rather than generic retrieval/reuse or provenance",
+    "preserve analysis-only fallback if CBRG D0 or method experiment stops"
+  ],
+  "schema_version": "1.1",
+  "status": "REVISION_ONLY_CBRG_EXTENSION_STOP_MERGE_ZERO_PROVIDER_AUTHORITY",
+  "strongest_simple_baselines": [
+    "outcome-blind neutral/metadata memory",
+    "generic common-core/branch-residual with residual always active",
+    "same-information semantic similarity/applicability gate",
+    "matched-information query-conditioned reuse baseline",
+    "raw trajectory",
+    "no memory"
+  ],
+  "zero_call_D0_A": {
+    "go_only_if": [
+      "residual extraction is stable and nontrivial",
+      "target gate is neither always-on nor always-off",
+      "neutral/core-only and a simple same-information gate do not fully subsume the proposed object",
+      "fresh closest-work scan leaves the exact counterfactual branch-residual object unsolved"
+    ],
+    "gpu_runs": 0,
+    "provider_calls": 0,
+    "questions": [
+      "Can branch-invariant actionable core and branch-specific residual be extracted reproducibly?",
+      "Is the residual smaller and more branch-specific than the full memory rather than a restatement of common procedure?",
+      "Can target applicability vary non-degenerately over the full frozen support without using terminal outcomes?",
+      "Does neutral/core-only memory already capture essentially all actionable content?",
+      "Can residual evidence authority be defined from source/trajectory facts without using the reward bit as evidence?"
+    ],
+    "stop_if": [
+      "neutral/core-only captures essentially all actionable content",
+      "residual extraction is unstable or mostly common procedure",
+      "gate degenerates",
+      "simple similarity/applicability rule subsumes it",
+      "direct current work subsumes the exact intervention"
+    ],
+    "support": "Reuse all archived Shopping and Reddit paired memories and all frozen native targets; do not select known positive downstream cells."
+  },
+  "zero_call_D0_B_contract": {
+    "status": "RECEIPT_ENVELOPE_AUDITED_CLAIM_BINDING_AND_SEMANTIC_VALIDITY_NOT_ADJUDICATED",
+    "subgates": [
+      "D0-B0 receipt-envelope lineage integrity: COMPLETE",
+      "D0-B1a operational same-trajectory branch contrast: GO",
+      "D0-B1b atom-level causal residual purity: HOLD; not required if method remains operationally defined",
+      "D0-B1c operational branch-contrast unit compiler: GO; exact lexical evidence locator: PARTIAL 397/423 with 26 fail-closed unlocated",
+      "D0-B2 semantic adjudicator readiness: HOLD; 0 qualified local adjudicators and 0 C1 qualification receipts; MiniLM/lexical similarity remain baseline-only",
+      "D0-B2 bounded repository adjudicator inventory: EXHAUSTED for the current frozen zero-call closure; 0 external candidates and 0 external qualification receipts",
+      "D0-B2 current CBRG extension: STOP/MERGE; semantic validity execution remains LOCKED and no branch authority is granted",
+      "D0-B3 fresh collision clearance / provider method experiment: NOT REACHED for the stopped current extension; reopen requires new qualified content-addressed evidence"
+    ],
+    "provider_call_budget": 0,
+    "gpu_run_budget": 0,
+    "scientific_provider_calls_added_by_this_revision": 0,
+    "support_rule": "outcome-independent archived/frozen support only; no downstream-positive cell selection",
+    "evidence_object": "claim-bound support/contradiction/unverifiable status for each same-trajectory branch residual",
+    "hard_exclusions": [
+      "reward/success/failure label cannot be evidence for its own residual",
+      "semantic similarity/applicability cannot by itself grant branch authority",
+      "generic metadata tag cannot substitute for claim-bound source/trajectory evidence",
+      "generic common-core/residual factorization cannot count as incremental novelty"
+    ],
+    "questions": [
+      "Can branch-specific residuals be decomposed into auditable claims or rules bound to exact source/trajectory evidence?",
+      "Can evidence support, contradiction, or unverifiable status be determined without terminal-outcome leakage?",
+      "Is the evidence-validity signal non-degenerate across the full frozen support?",
+      "Does evidence validity add incremental information beyond semantic applicability/similarity on the same support?",
+      "Are authority decisions reproducible under deterministic or preregistered extraction rules?",
+      "Does fresh closest-work clearance leave the exact same-trajectory residual plus evidence-trigger authority unsolved?"
+    ],
+    "go_only_if": [
+      "same-trajectory counterfactual branch residual remains the treatment-specific object",
+      "evidence validity is outcome-independent and claim-bound",
+      "treatment label is never self-validating evidence",
+      "semantic applicability alone cannot reproduce authority decisions",
+      "evidence validity adds reproducible incremental information beyond strongest same-information baselines",
+      "fresh collision clearance leaves the exact residual open"
+    ],
+    "stop_or_merge_if": [
+      "neutral/metadata baseline reproduces authority decisions",
+      "generic common-core/residual always-on baseline reproduces authority decisions",
+      "semantic applicability baseline reproduces authority decisions",
+      "evidence validity is a transformed terminal reward label",
+      "evidence cannot be bound to source/trajectory facts without outcome leakage",
+      "gate collapses to nearly always-on or nearly always-off",
+      "current closest work subsumes the exact residual"
+    ],
+    "authority_after_go": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
+  },
+  "zero_call_D0_A_observed": {
+    "common_core_strength_mean": 0.6340268391081029,
+    "decision": "D0-A closes representation/applicability only. Do not authorize provider execution. Demote neutral/metadata, generic core/residual, and semantic applicability-only mechanisms to baselines; require D0-B to test an outcome-independent claim-bound evidence-validity signal such as source/trajectory support/contradiction and its zero-call incremental information beyond those baselines.",
+    "contract_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0-contract-20260824.json",
+    "contract_sha256": "c29aff4f4ae225f9d51ff61f829e005123bfc04a4ab68e7a3fff003dc130a17d",
+    "evidence_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0-evidence-20260824.json",
+    "evidence_sha256": "0e20b5a27093ca0db4f0947cebf174a874e1dcb3d979f87aca9ba48593da38f3",
+    "result_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0-result-20260824.json",
+    "result_sha256": "f88b0bca6efed218467584f8259ea31494086db6754f59cd38388fa14d6795b7",
+    "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/run_cbrg_d0_zero_call.py",
+    "runner_sha256": "1297e583e747838246662822baa0ff02967638d2e539063a202fcb137e982bbd",
+    "multi_target_sources_with_nonzero_applicability_range": "8/9",
+    "provider_calls": 0,
+    "residual_energy_mean": 0.3659731608918972,
+    "status": "D0_A_COMPLETE_REPRESENTATION_FEASIBLE_SEMANTIC_AUTHORITY_INSUFFICIENT_D0_B_CONTRACT_ONLY_PROVIDER_HOLD",
+    "target_branch_applicability_gap_max": 0.07679774269137596,
+    "target_branch_applicability_gap_mean": 0.029987911894073956,
+    "target_max_residual_applicability_mean": 0.1449144732471183,
+    "target_max_residual_applicability_range": [
+      0.0457821524027775,
+      0.2728979651410768
+    ]
+  },
+  "zero_call_D0_B_structural_observed": {
+    "status": "D0B_RECEIPT_STRUCTURE_FEASIBLE_SEMANTIC_VALIDITY_UNADJUDICATED_AUTHORITY_HOLD",
+    "decision": "D0B_STRUCTURAL_GO_SEMANTIC_AUTHORITY_HOLD",
+    "provider_calls": 0,
+    "gpu_runs": 0,
+    "paired_sources_expected": 24,
+    "paired_sources_structurally_bound": 24,
+    "shopping_pairs_bound": 20,
+    "reddit_pairs_bound": 4,
+    "pre_writer_trajectory_projections_bound": 24,
+    "writer_input_action_summaries_recomputed_and_matched": 24,
+    "paired_branch_memories_hash_bound": 24,
+    "released_evidence_packets_hash_bound": 24,
+    "residual_claim_ids_bound": 423,
+    "semantic_validity_adjudicated_claims": 0,
+    "supported_claims": 0,
+    "contradicted_claims": 0,
+    "unverifiable_claims": 0,
+    "nonzero_branch_authority_receipts": 0,
+    "structural_complete": true,
+    "audit_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b-receipt-structural-audit-20260824.json",
+    "audit_sha256": "3f245fb99237c0da8f0ca34cd2c619b2d92bf0dc44245b53319f172e02c921ef",
+    "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b_receipt_structure.py",
+    "runner_sha256": "c58f418bca80242354cf4aedbf0a1e6e15691e5839f7132ddadcae460cd844c0",
+    "interpretation": "Historical v1 receipt-envelope audit: all 24 same-trajectory source pairs bind trajectory lineage, exact branch memories, deterministic memory-atom identities, and a released pre-writer evidence packet. The later v2 correction shows that packet-level evidence hashing is not claim-level evidence binding and these 423 atoms are not yet certified branch residual claims.",
+    "next_required_gate": "Superseded for current readiness by zero_call_D0_B_claim_binding_observed. Do not run a semantic adjudicator until branch-residual identity and exact per-claim evidence refs are content-addressed.",
+    "authority": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
+  },
+  "zero_call_D0_B_claim_binding_observed": {
+    "status": "D0B_RECEIPT_ENVELOPE_COMPLETE_CLAIM_BINDING_HOLD",
+    "decision": "D0B_ENVELOPE_GO_CLAIM_BINDING_HOLD",
+    "provider_calls": 0,
+    "gpu_runs": 0,
+    "receipt_envelopes_expected": 24,
+    "receipt_envelopes_packet_bound": 24,
+    "candidate_memory_atoms": 423,
+    "candidate_memory_atoms_reconstructed": 423,
+    "certified_branch_residual_atoms": 0,
+    "claim_specific_evidence_refs_bound": 0,
+    "claim_level_evidence_receipts": 0,
+    "per_claim_validity_adjudicated_atoms": 0,
+    "nonzero_branch_authority_receipts": 0,
+    "packet_level_evidence_binding": true,
+    "claim_level_evidence_binding": false,
+    "candidate_memory_atom_is_not_yet_a_certified_residual_claim": true,
+    "residual_identity_certified": false,
+    "semantic_validity_adjudicated": false,
+    "evidence_authority_available": false,
+    "treatment_label_used_as_evidence": false,
+    "terminal_reward_or_rubric_used_as_evidence": false,
+    "procedural_marker_atoms_descriptive_only": 335,
+    "generalization_marker_atoms_descriptive_only": 66,
+    "audit_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b-claim-binding-audit-v2-20260824.json",
+    "audit_sha256": "9b6baf480dc7e00f3fd5f52b1669748ed52df26942771a5364a8d65a5adc192e",
+    "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b_claim_binding_v2.py",
+    "runner_sha256": "fe87cc14e479f6d8f2ff747ca66e82defb537f8483dd599709b4ee3ae0fc42b6",
+    "interpretation": "The 24 receipt envelopes are reproducibly content-addressed, but the historical 423 Title/Description/Content atoms lack certified same-trajectory branch-residual membership and exact claim-specific evidence refs. Therefore semantic validity and branch authority remain unavailable.",
+    "next_required_gate": "D0-B1 zero-call residual-identity plus exact claim-specific evidence-locator audit. Only after B1 passes may a separately versioned semantic adjudicator assign SUPPORTED, CONTRADICTED, or UNVERIFIABLE.",
+    "stop_condition": "If residual identity or claim-specific outcome-independent evidence cannot be bound without reward/outcome leakage, STOP/MERGE CBRG and preserve C1 as the stage-resolved identification/measurement paper.",
+    "authority": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
+  },
+  "zero_call_D0_B2_semantic_readiness_observed": {
+    "status": "D0B2_SEMANTIC_ADJUDICATOR_NOT_BOUND_READINESS_HOLD",
+    "decision": "D0B2_READINESS_HOLD_NO_ADMISSIBLE_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL",
+    "operational_units_ready": 423,
+    "exact_candidate_anchors_ready": 397,
+    "future_forced_unverifiable_without_new_locator": 26,
+    "nli_classifier_configs_with_entailment_and_contradiction_labels": 0,
+    "c1_semantic_qualification_receipts": 0,
+    "qualified_semantic_adjudicators_bound": 0,
+    "semantic_validity_adjudicated_units": 0,
+    "supported_units": 0,
+    "contradicted_units": 0,
+    "unverifiable_units_adjudicated": 0,
+    "nonzero_branch_authority_units": 0,
+    "provider_calls": 0,
+    "gpu_runs": 0,
+    "minilm_is_similarity_baseline_only": true,
+    "lexical_locator_is_not_semantic_validity": true,
+    "generic_nli_existence_without_c1_qualification_is_insufficient": true,
+    "treatment_label_used_as_validity_evidence": false,
+    "terminal_reward_or_rubric_used_as_validity_evidence": false,
+    "downstream_outcome_used_as_validity_evidence": false,
+    "audit_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-semantic-readiness-audit-20260824.json",
+    "audit_sha256": "f854b1957d884ba6528cf860b4d39e90689ff580072ad9373505578f1c8052ab",
+    "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b2_semantic_readiness.py",
+    "runner_sha256": "ef20fbc54ec1f8c74c249f389ee97c1096298a03aee073cf873c62d6e1ce0c0a",
+    "interpretation": "B1c has made 423 operational contrast units and 397 exact candidate anchors executable, but the frozen local stack currently contains no qualified C1 semantic-validity adjudicator. No entailment/contradiction-labelled classifier was found in the bounded local model search, no C1 semantic qualification receipt exists, and the frozen MiniLM model is an embedding-only BertModel. Therefore no SUPPORTED/CONTRADICTED/UNVERIFIABLE semantic labels are scientifically admissible in this zero-call round.",
+    "next_permitted_action": "Zero-call qualification/binding work only. Reopen B2 only after binding a content-addressed support/contradiction/unverifiable-capable classifier or deterministic semantic rule together with an independent pre-outcome C1 qualification receipt and a nonreducibility check against similarity/applicability baselines. Otherwise STOP/MERGE CBRG and preserve C1 as the stage-resolved identification/measurement paper.",
+    "authority": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
+  },
+  "zero_call_D0_B2_adjudicator_inventory_closure_observed": {
+    "status": "D0B2_BOUNDED_ADJUDICATOR_INVENTORY_EXHAUSTED_CURRENT_EXTENSION_STOP_MERGE",
+    "decision": "STOP_MERGE_CBRG_EXTENSION_NO_QUALIFIED_OUTCOME_INDEPENDENT_VALIDITY_SIGNAL",
+    "scope": "CURRENT_FROZEN_ZERO_CALL_CBRG_EXTENSION_ONLY",
+    "local_qualified_adjudicators": 0,
+    "repository_admissible_adjudicators": 0,
+    "external_semantic_qualification_receipts": 0,
+    "repository_text_files_scanned": 597,
+    "tri_state_vocabulary_hits": 12,
+    "entailment_contradiction_vocabulary_hits": 6,
+    "provider_calls": 0,
+    "gpu_runs": 0,
+    "cbrg_extension_terminal_state": "STOP_MERGE_CURRENT_EXTENSION",
+    "c1_measurement_paper_state": "RETAIN_STAGE_RESOLVED_IDENTIFICATION_MEASUREMENT",
+    "existing_measurement_evidence_invalidated": false,
+    "scientific_failure_declared": false,
+    "automatic_reopen": false,
+    "generic_nli_or_renamed_baseline_can_reopen": false,
+    "qualified_content_addressed_reopen_evidence_required": true,
+    "audit_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b2-adjudicator-inventory-closure-20260825.json",
+    "audit_sha256": "716b5aeaed83a39af8d52938c8fb98f0832b02477f5f021145457984e54873cc",
+    "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b2_adjudicator_inventory_closure.py",
+    "runner_sha256": "a354ae88093b8b6f2137202f167889532609407bcd97a09d0254ff14c79f1675",
+    "interpretation": "The bounded zero-call closure now covers both the frozen local model inventory and the repository verifier inventory. The repository scan finds only C1 self/gate contract vocabulary hits, with no external executable adjudicator candidate and no external task-specific semantic qualification receipt. Therefore the current CBRG extension is STOP/MERGE. This does not invalidate the stage-resolved C1 measurement evidence and does not declare a C1 scientific failure.",
+    "reopen_rule": "Do not reopen from a generic NLI model, renamed similarity/common-residual baseline, or self-authored post-outcome semantic rule. Reopen only after new content-addressed adjudicator evidence, an independent pre-outcome C1 qualification receipt, non-reducibility against same-information baselines, and fresh collision clearance are all bound.",
+    "authority": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
+  },
+  "zero_call_D0_B1C_operational_contrast_locator_observed": {
+    "status": "D0B1C_OPERATIONAL_CONTRAST_COMPILED_EXACT_LOCATOR_PARTIAL_SEMANTIC_HOLD",
+    "decision": "D0B1C_COMPILER_GO_LOCATOR_PARTIAL_FAIL_CLOSED_D0B2_READY",
+    "provider_calls": 0,
+    "gpu_runs": 0,
+    "paired_sources": 24,
+    "directional_branch_contrast_units": 423,
+    "same_field_opposite_counterpart_units": 423,
+    "units_with_exact_nonzero_lexical_evidence_anchor": 397,
+    "units_without_nonzero_lexical_evidence_anchor": 26,
+    "locator_coverage": 0.9385342789598109,
+    "semantic_validity_adjudicated_units": 0,
+    "supported_units": 0,
+    "contradicted_units": 0,
+    "unverifiable_units": 0,
+    "nonzero_branch_authority_units": 0,
+    "mean_operational_residual_weight": 0.8330570026597419,
+    "mean_best_lexical_anchor_including_zero": 0.1101598770071536,
+    "candidate_evidence_lines_scanned": 58230,
+    "exact_locator_is_not_semantic_support": true,
+    "unlocated_units_remain_fail_closed": true,
+    "treatment_label_used_as_evidence": false,
+    "terminal_reward_or_rubric_used_as_evidence": false,
+    "downstream_outcome_used_as_evidence": false,
+    "audit_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1c-operational-contrast-evidence-locator-20260824.json",
+    "audit_sha256": "d127ea711288fc6455923198e48bdc9c6674663ad210aca30372256270b31d74",
+    "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/compile_cbrg_d0b1c_operational_contrasts.py",
+    "runner_sha256": "a527c539da73bf0d4ad20d25d3bc00c94ba2ffbc9fff25c4eeaa5c27cc8daa04",
+    "interpretation": "All 423 directional operational branch-contrast units are reproducibly compiled against same-field opposite-branch counterparts. Exact nonzero lexical anchors into the same frozen pre-writer browser-state evidence exist for 397/423 units. The remaining 26 are intentionally unlocated rather than assigned similarity-only pseudo-evidence. No semantic validity or branch authority is inferred.",
+    "next_required_gate": "D0-B2 zero-call semantic adjudication. The 26 unlocated units are forced to UNVERIFIABLE; any supported/contradicted decision for the other 397 requires a separately versioned outcome-independent rule and must beat similarity/applicability baselines.",
+    "authority": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
+  },
+  "zero_call_D0_B1_intervention_identifiability_observed": {
+    "status": "D0B1_INTERVENTION_CONTRAST_IDENTIFIABLE_CAUSAL_ATOM_PURITY_HOLD",
+    "decision": "D0B1_OPERATIONAL_CONTRAST_GO_CAUSAL_ATOM_IDENTITY_HOLD",
+    "pairs": 24,
+    "same_pre_writer_trajectory_projection_pairs": 24,
+    "same_resolved_writer_model_within_pair": 24,
+    "temperature_zero_pairs": 24,
+    "branch_memory_content_changed_pairs": 24,
+    "explicit_decoding_seed_bound_pairs": 0,
+    "same_condition_same_trajectory_replication_bound_pairs": 0,
+    "operational_branch_contrast_identifiable": true,
+    "atom_level_causal_residual_purity_certified": false,
+    "f0c_tasks_complete": 8,
+    "f0c_gate_pass": true,
+    "f0c_mean_between_minus_within_delta": 0.104978,
+    "f0c_exact_one_sided_sign_flip_p": 0.007812,
+    "certified_branch_residual_atoms": 0,
+    "claim_specific_evidence_refs_bound": 0,
+    "audit_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b1-intervention-identifiability-audit-20260824.json",
+    "audit_sha256": "6b88cfb1ab9571db8c05714c54e087e77d340576d6df81a6909f4eb7b370eea0",
+    "runner_artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/audit_cbrg_d0b1_intervention_identifiability.py",
+    "runner_sha256": "d0e7239cc66b70dc872deef3fcfed073e96003e0516b1435247dec5d4deccbba",
+    "interpretation": "The same-trajectory S/F writer contrast is operationally identifiable on all 24 frozen pairs: pre-writer trajectory projection is identical, the resolved writer model matches within pair, temperature is zero, and branch-memory content changes in every pair. Existing F0C independently supports an aggregate reward/reflection-mode effect beyond stronger same-mode wording perturbation. However no explicit decoding seed or same-condition same-trajectory replicate is bound for the current 24 pairs, so individual memory atoms cannot yet be called certified causal residuals.",
+    "terminology_rule": "Operational branch-contrast atom / candidate residual is allowed at D0 design level. Atom-level causal residual wording is forbidden until a bound seed or same-condition noise-floor/replication control supports it.",
+    "next_required_gate": "Either operationally define and compile branch-contrast delta units before exact claim-evidence location, or preserve causal-residual wording and preregister future same-condition replication/noise-floor control. Semantic validity remains locked.",
+    "provider_calls_added_by_this_audit": 0,
+    "gpu_runs_added_by_this_audit": 0,
+    "authority": {
+      "scientific": false,
+      "experiment": false,
+      "provider": false,
+      "gpu": false,
+      "claim_expansion": false,
+      "submission": false
+    }
+  }
+}

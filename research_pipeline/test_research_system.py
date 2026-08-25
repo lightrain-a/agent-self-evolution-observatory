@@ -134,6 +134,25 @@ class ResearchSystemTest(unittest.TestCase):
         broken["longitudinal_cross_failure_orthogonal_screen"]["summary"]["debate_eligible"]=1
         self.assertTrue(any("cross-failure orthogonal screen" in error for error in validate_state(broken)))
 
+    def test_result_analysis_is_distilled_into_failure_and_discovery_memory(self) -> None:
+        result=self.state["result_analysis"];summary=result["summary"]
+        self.assertEqual(result["status"],"RESULT_ANALYSIS_DISTILLED")
+        self.assertEqual(summary["analyses"],1)
+        self.assertEqual(summary["terminal_results_analyzed"],1)
+        self.assertEqual(summary["discovery_lessons"],3)
+        self.assertEqual(summary["failure_assets"],1)
+        self.assertEqual(summary["errors"],0)
+        self.assertFalse(result["scientific_authority"])
+        self.assertFalse(any(result["authority"].values()))
+        signatures={row.get("signature") for row in self.state["failure_asset_library"]["assets"]}
+        self.assertIn("method_realization:evidence-authority-qualification-unavailable",signatures)
+        result_lessons=[row for row in self.state["research_memory_wiki"]["entries"] if row.get("kind")=="DISCOVERY_LESSON" and row.get("source_artifact")=="result_analysis_ledger"]
+        self.assertEqual(len(result_lessons),3)
+        self.assertEqual(self.state["research_memory_wiki"]["source_manifest"]["result_analysis_records"],1)
+        self.assertEqual(self.state["research_memory_wiki"]["source_manifest"]["result_analysis_lessons"],3)
+        broken=copy.deepcopy(self.state);broken["result_analysis"]["summary"]["terminal_results_analyzed"]=0
+        self.assertTrue(any("registered terminal results" in error for error in validate_state(broken)))
+
     def test_failure_memory_projection_drift_is_detected(self) -> None:
         broken=copy.deepcopy(self.state)
         library=broken["failure_asset_library"]

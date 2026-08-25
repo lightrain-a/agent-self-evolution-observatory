@@ -1,0 +1,15 @@
+{
+  "schema_version":"1.0",
+  "experiment_id":"C1-CBRG-D0-ZERO-CALL-RESIDUAL-FEASIBILITY",
+  "paper_id":"D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "status":"FROZEN_ZERO_CALL_DIAGNOSTIC_ONLY",
+  "provider_calls":0,
+  "gpu_runs":0,
+  "support":{"shopping_source_pairs":20,"reddit_source_pairs":4,"shopping_native_targets":36,"reddit_native_targets":8,"outcome_driven_selection":false},
+  "atomic_units":"Memory Title, Description, and Content fields parsed deterministically; no manual sentence selection.",
+  "embedding":"exact cached all-MiniLM-L6-v2 mean-pooling + L2 normalization used by the released retrieval audit",
+  "continuous_metrics":{"opposite_branch_explainability":"for each field unit, maximum cosine to any field unit in the opposite reward branch","residual_weight":"1 - opposite_branch_explainability","pair_common_core_strength":"symmetric mean opposite-branch explainability","pair_residual_energy":"symmetric mean residual_weight","target_residual_applicability":"maximum over branch field units of residual_weight * max(0, cosine(unit,target_intent))","neutral_alignment":"Shopping only: semantic alignment of outcome-blind neutral field units to the S/F pair"},
+  "threshold_policy":"No threshold is selected and no binary gate is tuned in D0. Report full continuous distributions and per-source/per-target values.",
+  "decision_authority":"D0 may falsify obvious representation feasibility but cannot authorize provider execution or expand claims. A fresh collision review and separate Problem/Economy contract are required before any method run.",
+  "scientific_authority":false,"experiment_authority":false,"provider_call_authority":false,"claim_expansion_authority":false,"submission_authority":false
+}

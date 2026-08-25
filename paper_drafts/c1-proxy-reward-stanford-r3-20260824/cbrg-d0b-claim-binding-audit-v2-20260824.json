@@ -1,0 +1,294 @@
+{
+  "artifact_type": "c1-d0b-claim-binding-correction-audit",
+  "audit_id": "C1-CBRG-D0B-CLAIM-BINDING-V2",
+  "audit_version": "C1_D0B_CLAIM_BINDING_AUDIT_V2",
+  "binding_semantics": {
+    "candidate_memory_atom_is_not_yet_a_certified_residual_claim": true,
+    "claim_level_evidence_binding": false,
+    "evidence_authority_available": false,
+    "packet_level_evidence_binding": true,
+    "residual_identity_certified": false,
+    "semantic_validity_adjudicated": false,
+    "terminal_reward_or_rubric_used_as_evidence": false,
+    "treatment_label_used_as_evidence": false
+  },
+  "claim_expansion_authority": false,
+  "decision": "D0B_ENVELOPE_GO_CLAIM_BINDING_HOLD",
+  "descriptive_marker_boundary": "Procedural/generalization regex counts are diagnostics of the memory-atom surface only. They are not semantic labels, causal evidence, residual membership, or validity judgments.",
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "gpu_runs": 0,
+  "historical_v1": {
+    "artifact": "paper_drafts/c1-proxy-reward-stanford-r3-20260824/cbrg-d0b-receipt-structural-audit-20260824.json",
+    "interpretation": "Historical v1 establishes content-addressed receipt-envelope lineage only. Its top-level binds_evidence_refs_and_sha256 flag is interpreted as packet-level evidence hashing, not per-claim evidence binding.",
+    "sha256": "3f245fb99237c0da8f0ca34cd2c619b2d92bf0dc44245b53319f172e02c921ef"
+  },
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "provider_call_authority": false,
+  "provider_calls": 0,
+  "receipts": [
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 21
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 22
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 23
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 25
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 12,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 118
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 125
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 141
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 145
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 146
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 148
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 158
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 159
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 163
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 188
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 189
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 225
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 226
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 231
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 232
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "shopping",
+      "packet_level_evidence_bound": true,
+      "source_task": 260
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 15,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "reddit",
+      "packet_level_evidence_bound": true,
+      "source_task": 404
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "reddit",
+      "packet_level_evidence_bound": true,
+      "source_task": 405
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "reddit",
+      "packet_level_evidence_bound": true,
+      "source_task": 595
+    },
+    {
+      "authority_decision": "WITHHOLD_ALL_BRANCH_AUTHORITY",
+      "candidate_memory_atoms": 18,
+      "certified_branch_residual_atoms": 0,
+      "claim_level_evidence_section_present": false,
+      "claim_specific_evidence_refs": 0,
+      "domain": "reddit",
+      "packet_level_evidence_bound": true,
+      "source_task": 610
+    }
+  ],
+  "reviewer_correction": {
+    "forbidden_upgrade": "A packet SHA, field-level atom ID, or semantic-similarity score cannot be interpreted as claim-level evidence validity or branch-specific residual identity.",
+    "problem": "The v1 receipt envelope bound each trajectory and a whole released evidence packet, but did not bind an exact evidence ref to each memory atom and did not certify that each parsed Title/Description/Content atom belongs to the same-trajectory branch residual.",
+    "required_next_gate": "D0-B1 zero-call residual-identity plus claim-specific evidence-locator audit. Only after both are content-addressed may a separately versioned semantic adjudicator assign SUPPORTED/CONTRADICTED/UNVERIFIABLE.",
+    "stop_condition": "If exact residual identity or claim-specific outcome-independent evidence cannot be bound without outcome leakage, stop/merge CBRG and preserve C1 as the stage-resolved identification/measurement paper."
+  },
+  "schema_version": "2.0",
+  "scientific_authority": false,
+  "status": "D0B_RECEIPT_ENVELOPE_COMPLETE_CLAIM_BINDING_HOLD",
+  "submission_authority": false,
+  "summary": {
+    "candidate_memory_atoms": 423,
+    "candidate_memory_atoms_reconstructed": 423,
+    "certified_branch_residual_atoms": 0,
+    "claim_level_evidence_receipts": 0,
+    "claim_specific_evidence_refs_bound": 0,
+    "generalization_marker_atoms_descriptive_only": 66,
+    "nonzero_branch_authority_receipts": 0,
+    "per_claim_validity_adjudicated_atoms": 0,
+    "procedural_marker_atoms_descriptive_only": 335,
+    "receipt_envelopes_expected": 24,
+    "receipt_envelopes_packet_bound": 24
+  }
+}
