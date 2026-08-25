@@ -11,11 +11,13 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 PHASE = ROOT / "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json"
+PARTITION = ROOT / "generated/asset-first-stri-r2-partition-geometry-result-20260825.json"
 DECOMP = ROOT / "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json"
 OUT_PDF = HERE / "figures/stri-r2-mechanism-closure.pdf"
 OUT_PNG = HERE / "figures/stri-r2-mechanism-closure.png"
 
 phase = json.loads(PHASE.read_text())
+partition = json.loads(PARTITION.read_text())
 decomp = json.loads(DECOMP.read_text())
 
 plt.rcParams.update({
@@ -69,28 +71,27 @@ ax_a.text(5.98, 0.18, "identity partitions evidence before gate", ha="center", f
 ax_a.text(-0.02, 3.70, "A", fontsize=11, weight="bold")
 ax_a.set_title("One skill identity can be used on two different control surfaces", pad=2, weight="bold")
 
-# Panel B: exact fragmentation phase law.
-rows = phase["rows"]
-ks = list(range(1, 7))
-Ns = list(range(0, 49))
+# Panel B: arbitrary-partition geometry.  The value is the exact fraction of weak
+# compositions of N evidence items into k identities that fragment under M=8.
+rows = partition["rows"]
+ks = list(range(2, 7))
+Ns = list(range(8, 49))
 mat = np.zeros((len(ks), len(Ns)))
 for r in rows:
-    if abs(float(r["p_hat"]) - 0.9) < 1e-12:
-        mat[int(r["k"])-1, int(r["N"])] = 1.0 if r["representation_divergence_from_canonical"] else 0.0
+    mat[int(r["k"])-2, int(r["N"])-8] = float(r["fragmentation_fraction"])
 im = ax_b.imshow(mat, aspect="auto", origin="lower", interpolation="nearest", cmap="Greys", vmin=0, vmax=1)
-ax_b.set_yticks(np.arange(6), [str(k) for k in ks])
-ax_b.set_xticks([0,8,16,24,32,40,48])
+ax_b.set_yticks(np.arange(len(ks)), [str(k) for k in ks])
+ax_b.set_xticks([0,8,16,24,32,40], ["8","16","24","32","40","48"])
 ax_b.set_xlabel("semantic evidence count $N$")
 ax_b.set_ylabel("exact identity multiplicity $k$")
-ax_b.set_title("B  Credit-fragmentation window ($M=8$)", loc="left", weight="bold")
-for k in ks:
-    ax_b.plot([8-0.5, 8-0.5], [k-1-0.48, k-1+0.48], color="#3b6fb6", lw=1.2)
-    boundary = 8*k
-    if boundary <= 48:
-        ax_b.plot([boundary-0.5, boundary-0.5], [k-1-0.48, k-1+0.48], color="#b24c3f", lw=1.2)
-ax_b.text(9.2, 4.85, "$M\\leq N<kM$", fontsize=8.5, weight="bold", color="#222222")
-ax_b.text(1.0, -0.95, "white: invariant", fontsize=7.0)
-ax_b.text(16.0, -0.95, "dark: native split active while quotient retired", fontsize=7.0)
+ax_b.set_title("B  Arbitrary-partition fragmentation geometry ($M=8$)", loc="left", weight="bold")
+for yi, k in enumerate(ks):
+    boundary_index = 8*k - 8
+    if 0 <= boundary_index < len(Ns):
+        ax_b.plot([boundary_index-0.5, boundary_index-0.5], [yi-0.48, yi+0.48], color="#555555", lw=1.15, ls="--")
+ax_b.text(1.0, 3.68, "$M\\leq N<kM$: 100% fragmented", fontsize=8.0, weight="bold", color="#222222")
+ax_b.text(0.0, -0.82, "light = fewer fragmented partitions", fontsize=6.9)
+ax_b.text(20.0, -0.82, "dark = larger exact fraction", fontsize=6.9)
 
 # Panel C: 2x2 repair decomposition.
 cells = decomp["cells"]

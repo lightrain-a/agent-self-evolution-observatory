@@ -48,7 +48,26 @@ Skill-SP co-evolves task generation and a persistent skill library~\citep{huang2
 Strategic replication in bandits shows that duplicate arms can manipulate selection opportunity~\citep{shin2022replication}; action-redundancy work shows that action multiplicity can misrepresent transition diversity~\citep{baram2021redundancy}. These explain the immediate selection channel and are not claimed as R2 novelty. Likewise, homomorphism and abstraction theory provide mature language for when a quotient preserves dynamics~\citep{ravindran2004approximate}. We use quotient commutation only as an organizing criterion. The empirical/theoretical residual is stage-specific: released self-evolving skill state stores evidence per identity and applies a nonlinear lifecycle gate before semantic aggregation, yielding a directly testable multiplicity/evidence phase boundary.
 
 \paragraph{What is deliberately not claimed.}
-Generic identity fragmentation, generic path dependence, and the statement that reparameterization can alter learning are broader known phenomena. Our claim is not that fragmentation exists in the abstract. It is that a released self-evolving skill lifecycle instantiates a particular partition-before-gate mechanism whose intervention variable, persistent state, phase law, and repair can be isolated while semantic feedback is held fixed.
+Identity fragmentation is already known to bias inference when observations from one underlying entity are split across identifiers~\citep{lin2022identityfragmentation}; generic path dependence and representation-dependent learning are also broader phenomena. Our claim is not that fragmentation exists in the abstract. It is that a released self-evolving skill lifecycle instantiates a particular \emph{partition-before-gate} mechanism: the same skill identity is an action handle and a persistent credit/lifecycle key, so exact semantic refinement can change future action availability even when the post-selection semantic feedback multiset is fixed. The identifying contribution is the stage localization, exact phase law, orthogonal intervention, and persistent-state consequence---not generic identifier fragmentation.
+
+\begin{table}[t]
+\centering
+\caption{Closest-work reduction boundary. Selection-side redundancy is inherited; R2's identifying intervention fixes post-selection semantic feedback and changes only its exact identity partition.}
+\label{tab:reduction}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{p{0.25\linewidth}p{0.67\linewidth}}
+\toprule
+Neighbor & What is absorbed, and what remains to test\\
+\midrule
+Strategic replication~\citep{shin2022replication} & Duplicate arms can change selection opportunity; R2 removes selection and still changes persistent lifecycle under fixed feedback.\\
+Action redundancy~\citep{baram2021redundancy} & Equivalent actions distort action-level control; R2 isolates identity-keyed evidence containers and future active-library state after action.\\
+Identity fragmentation~\citep{lin2022identityfragmentation} & Fragmented identifiers can bias inference; R2 tests partition-before-lifecycle-gate noncommutation, an exact phase law, and a quotient-credit intervention.\\
+RethinkSkill~\citep{liu2026rethinkskill} & Feedback views and validation shape multi-round revision; R2 holds feedback content fixed and changes identity partition alone.\\
+SkillsVote~\citep{liu2026skillsvote} & Skill-linked attribution already governs updates; R2 uses its release only as independent partition-before-updater structural corroboration.\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{Representation-Invariant Skill Evolution}
 
@@ -83,27 +102,32 @@ Equation~\ref{eq:credit-commute} is not presented as a new abstract quotient the
 
 \subsection{Threshold credit fragmentation}
 
-Consider additive evidence count and a per-identity gate that requires at least $M$ retirement-eligible observations. Let $N$ such observations belong to one semantic class and be balanced across $k$ exact identities.
+Consider additive evidence count and a per-identity gate that requires at least $M$ retirement-eligible observations. Let $N$ such observations belong to one semantic class and let $(n_1,\ldots,n_k)$ be \emph{any} weak partition across $k$ exact identities, with $\sum_j n_j=N$.
 
-\paragraph{Proposition 1 (fragmentation window).}
-Canonical or quotient-credit evolution retires the class iff $N\ge M$. Native balanced $k$-identity evolution retires the full class iff $N\ge kM$. Therefore native and quotient decisions diverge exactly for
+\paragraph{Proposition 1 (guaranteed fragmentation region).}
+Canonical or quotient-credit evolution retires the class iff $N\ge M$, while native evolution retires the full class iff $\min_j n_j\ge M$. Hence for every $k$-way partition,
 \begin{equation}
 \label{eq:phase-window}
-M\le N<kM,
+M\le N<kM
 \end{equation}
-and the first full-retirement boundary is delayed by $(k-1)M$ observations.
+implies fragmentation: aggregate class evidence passes the gate, but at least one identity bucket must remain below $M$. A balanced partition is therefore the \emph{best case} for native recovery, attaining the earliest possible full-retirement boundary $N=kM$ and lag $(k-1)M$.
 
-\paragraph{Reason.}
-The quotient has one class bucket containing $N$ observations. Native balanced refinement gives each identity at most the evenly assigned share, and all $k$ identities cross a threshold $M$ only once $N\ge kM$.
+\paragraph{Partition-dependent tail.}
+For $N\ge kM$, invariance becomes allocation-dependent rather than automatic. Among all ordered weak compositions of $N$ into $k$ identities, the exact fraction that remain fragmented is
+\begin{equation}
+\label{eq:partition-fraction}
+F(N,k,M)=1-\frac{\binom{N-kM+k-1}{k-1}}{\binom{N+k-1}{k-1}},
+\end{equation}
+with $F=1$ throughout Eq.~\ref{eq:phase-window}. We use this combinatorial fraction only to characterize partition geometry; it is not a model of endogenous Skill-SP evidence allocation or prevalence.
 
-\paragraph{Corollary 1 (arbitrary partitions).}
+\paragraph{Corollary 1 (general gate).}
 For identity-local evidence states $(s_1,\ldots,s_k)$ under any mergeable sufficient statistic, a representation defect occurs exactly when the aggregate class state passes the lifecycle gate while at least one identity-local state fails it:
 \[
 g(s_1\agg\cdots\agg s_k)=1
 \quad\text{and}\quad
 \exists j:\ g(s_j)=0.
 \]
-Thus additive statistics alone do not guarantee invariance: nonlinearity enters through applying the lifecycle decision \emph{before} semantic aggregation. Proposition~1 is the balanced-count specialization that yields a closed-form boundary in the released Skill-SP gate.
+Thus additive statistics alone do not guarantee invariance: nonlinearity enters through applying the lifecycle decision \emph{before} semantic aggregation. Proposition~1 is the threshold-gate specialization that yields a closed-form guaranteed region and a partition-dependent tail in the released Skill-SP mechanism.
 
 The result is elementary by design. Its role is to convert a qualitative mechanism into an ex-ante phase prediction and to expose the exact ordering operation that an intervention must change.
 
@@ -123,15 +147,15 @@ The results are deterministic: canonical attempts are $8$ and the focal class re
 
 \subsection{P1: phase diagram}
 
-We next sweep $k=1,\ldots,6$, $N=0,\ldots,48$, and $\hat p\in\{0.1,0.5,0.9\}$ through the released controller, producing 882 cells. The two lower-score regimes never retire unexpectedly. In the retirement-eligible $\hat p=0.9$ regime, the observed first full-retirement boundaries are
+We next sweep $k=1,\ldots,6$, $N=0,\ldots,48$, and $\hat p\in\{0.1,0.5,0.9\}$ through the released controller, producing 882 cells. The two lower-score regimes never retire unexpectedly. In the retirement-eligible $\hat p=0.9$ regime, balanced allocation gives observed first full-retirement boundaries
 \[
 8,16,24,32,40,48
 \]
-for $k=1,\ldots,6$, exactly matching $kM$. Across the entire grid the analytic prediction has zero mismatches. For $k=2$, native and quotient evolution disagree for $N=8,\ldots,15$; for $k=4$, they disagree for $N=8,\ldots,31$, as Eq.~\ref{eq:phase-window} predicts.
+for $k=1,\ldots,6$, exactly matching the best-case boundary $kM$. Across the entire grid the analytic prediction has zero mismatches. We then independently count all weak evidence compositions for $k=2,\ldots,6$ and $N=8,\ldots,48$ (205 cells) using dynamic programming and compare with Eq.~\ref{eq:partition-fraction}; there are zero count/formula mismatches and every partition in $M\le N<kM$ fragments. At the first tail point $N=kM$, the combinatorial fragmentation fractions for $k=2,3,4,5,6$ are $0.941$, $0.997$, $0.99985$, $0.999993$, and $>0.999999$, respectively. These are geometry summaries under uniform counting of weak compositions, not empirical frequency estimates.
 
 \begin{table}[t]
 \centering
-\caption{Released Skill-SP credit-fragmentation phase boundary at the default $M=8$ for retirement-eligible feedback. Quotient-credit remains at the canonical boundary $N=8$ for all $k$.}
+\caption{Best-case balanced retirement boundary in released Skill-SP at $M=8$. Proposition~1 is stronger: every partition fragments for $8\le N<8k$; beyond $8k$, fragmentation becomes partition-dependent.}
 \label{tab:phase}
 \small
 \setlength{\tabcolsep}{5pt}

@@ -22,6 +22,7 @@
     "p0": true,
     "p1": true,
     "p2": true,
+    "p3_partition_geometry": true,
     "novelty": true,
     "prevalence_fail_closed": true,
     "second_system_scoped": true,
@@ -29,14 +30,15 @@
   },
   "manuscript": {
     "title_correct": true,
-    "main_pages": 8,
+    "main_pages": 9,
     "main_pages_le_9": true,
-    "total_pages": 9,
+    "total_pages": 11,
     "figure_present": true,
-    "figure_sha256": "d81d55d338851f5e966fe7275c7e3dfce47fab288bd25512d5292f8b1744bf02",
+    "figure_sha256": "67589a81f6ec42a92f4a4f0efd9172d821b47c2dbc8f25e10b5f66f60be1aef5",
     "citation_keys": [
       "baram2021redundancy",
       "huang2026skill",
+      "lin2022identityfragmentation",
       "liu2026rethinkskill",
       "liu2026skillsvote",
       "ravindran2004approximate",
@@ -44,7 +46,7 @@
       "xia2026skillrl",
       "yang2026autoskill"
     ],
-    "citation_count": 8,
+    "citation_count": 9,
     "all_citations_in_bib": true,
     "uncited_new_mechanism_sources_present": true,
     "forbidden_claim_hits": [],
@@ -52,9 +54,9 @@
   },
   "source_binding": {
     "main_sha256": "40a9d5394130dc6aa7d6744b3f2b3442aa16bda71f6522292ed650d59e495712",
-    "body_sha256": "89c398ec92c392bd4fb108b7b5f2861824e389cd707fb977a44794b964d9de22",
-    "references_sha256": "57062d7126d27d6cef6f149ec489fee1f4f8e32cafbd887669a774ee8c0e4d20",
-    "pdf_sha256": "2bff9c5a45d1368072ba454b24fb1001be7d9fcf9b39584464105453cbcd039b",
+    "body_sha256": "5fc6ce929661239afc84597d9aa84cc0ee9a94716e4b78efae949b20c9712072",
+    "references_sha256": "5a65b537e229012fd377145e2d31877618ae6ad35875ca0d5995cbfd10937ecb",
+    "pdf_sha256": "4f2e4f6d6e8371fd5924ae532daf02e4babb04d44a4b9e4c7a78b25024756814",
     "storyboard_sha256": "2601301362bbce234a1f3fa1d0ee48babbfd79375fd73c5342ee7f38d4ddc876",
     "synthesis_sha256": "bd7d864c0253003dad10de06846c52b8ed5236c3d4dfc74a1c10cfed406afc94"
   },
@@ -66,5 +68,5 @@
   "experiment_authority": false,
   "gpu_authority": false,
   "submission_authority": false,
-  "result_canonical_sha256": "00b41075d47da910da77ef05d94cbaefec7606c25e283fe983557c9cb893dcd4"
+  "result_canonical_sha256": "4dc257e17ba2c12fa03402da9a69b3438e607429cf8c38214b21fca01f49241d"
 }

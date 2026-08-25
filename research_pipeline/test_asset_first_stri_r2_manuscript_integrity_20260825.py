@@ -22,12 +22,12 @@ class STRIR2ManuscriptIntegrityTest(unittest.TestCase):
 
     def test_inventory_and_claims_are_bound(self) -> None:
         inv = self.manifest["content_inventory"]
-        self.assertEqual(inv["facts"], 6)
-        self.assertEqual(inv["citations"], 8)
-        self.assertEqual(inv["numbers"], 24)
-        self.assertEqual(inv["tables"], 4)
-        self.assertEqual(inv["claims"], 7)
-        self.assertEqual(len(self.manifest["expected_claim_ids"]), 7)
+        self.assertEqual(inv["facts"], 7)
+        self.assertEqual(inv["citations"], 9)
+        self.assertEqual(inv["numbers"], 27)
+        self.assertEqual(inv["tables"], 5)
+        self.assertEqual(inv["claims"], 8)
+        self.assertEqual(len(self.manifest["expected_claim_ids"]), 8)
         self.assertTrue(all(row["supported"] for row in self.manifest["claims"]))
 
     def test_receipt_has_zero_authority(self) -> None:

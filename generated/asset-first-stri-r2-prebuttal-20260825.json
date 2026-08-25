@@ -1,0 +1,223 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "stage": "R2_PREBUTTAL_AND_CLOSEST_WORK_COLLISION",
+  "decision": "READY_FOR_INDEPENDENT_REVIEW_WITH_ONE_OPEN_EXTERNAL_VALIDITY_HOLD",
+  "evidence_checks": {
+    "p0": true,
+    "p1": true,
+    "p2": true,
+    "p3": true,
+    "novelty": true,
+    "prevalence_hold": true,
+    "second_system_scoped": true,
+    "r19_stop": true,
+    "manuscript_gate": true,
+    "integrity": true
+  },
+  "primary_closest_work": {
+    "identity_fragmentation": {
+      "title": "Frontiers: The Identity Fragmentation Bias",
+      "authors": "Tesary Lin; Sanjog Misra",
+      "venue": "Marketing Science 41(3), 2022",
+      "url": "https://pubsonline.informs.org/doi/10.1287/mksc.2022.1360",
+      "absorbed_claim": "Splitting observations from one underlying entity across identifiers can bias inference; generic identity fragmentation is not novel."
+    },
+    "strategic_replication": {
+      "title": "Multi-armed Bandit Algorithm against Strategic Replication",
+      "authors": "Suho Shin; Seungjoon Lee; Jungseul Ok",
+      "venue": "AISTATS 2022",
+      "url": "https://proceedings.mlr.press/v151/shin22a.html",
+      "absorbed_claim": "Duplicate arms can manipulate selection opportunity; selection duplication is inherited rather than R2 novelty."
+    },
+    "action_redundancy": {
+      "title": "Action Redundancy in Reinforcement Learning",
+      "authors": "Nir Baram; Guy Tennenholtz; Shie Mannor",
+      "venue": "UAI 2021",
+      "url": "https://proceedings.mlr.press/v161/baram21a.html",
+      "absorbed_claim": "Equivalent actions can make action-space multiplicity a poor proxy for transition diversity."
+    },
+    "rethinkskill": {
+      "title": "Rethinking Self-Evolving Agent Skills: Feedback Dynamics over Multiple Rounds",
+      "authors": "Yuxuan Liu et al.",
+      "venue": "arXiv:2608.02636, 2026",
+      "url": "https://arxiv.org/abs/2608.02636",
+      "absorbed_claim": "Feedback composition and validation-filtered multi-round skill revision are already directly studied."
+    },
+    "skillsvote": {
+      "title": "SkillsVote: Lifecycle Governance of Agent Skills from Collection, Recommendation to Evolution",
+      "authors": "Hongyi Liu et al.",
+      "venue": "arXiv:2605.18401, 2026",
+      "url": "https://arxiv.org/abs/2605.18401",
+      "absorbed_claim": "Skill-linked attribution and evidence-gated updates are already lifecycle mechanisms; R2 cannot claim those components as new."
+    },
+    "skillsp": {
+      "title": "Skill Self-Play: Pushing the Frontier of LLM Capability with Co-Evolving Skills",
+      "authors": "Siyuan Huang et al.",
+      "venue": "arXiv:2607.22529, 2026",
+      "url": "https://arxiv.org/abs/2607.22529",
+      "role": "First-party released mechanism realization audited by R2."
+    }
+  },
+  "objections": [
+    {
+      "id": "PB-O1-GENERIC-IDENTITY-FRAGMENTATION",
+      "severity": "MAJOR_NOVELTY",
+      "reviewer_attack": "This is known identity-fragmentation bias applied to a skill library; the threshold math is elementary.",
+      "concede": [
+        "Generic identifier fragmentation is known and is explicitly not claimed as new.",
+        "The abstract quotient/commutation criterion and threshold algebra are elementary and are not solver/theorem novelty by themselves."
+      ],
+      "residual_response": "R2 localizes a released closed-loop control mechanism after selection: the same skill identity is a persistent sufficient-statistic container and lifecycle unit; holding semantic feedback fixed, exact refinement changes future active action availability because identity-local evidence is partitioned before a nonlinear gate. P0 removes the known selection channel, P1/P3 make an ex-ante boundary prediction, and P2 intervenes on selection and credit independently.",
+      "decisive_evidence": [
+        {
+          "path": "generated/asset-first-stri-r2-credit-fragmentation-result-20260825.json",
+          "sha256": "bf68cefff8dfeddcb0673394d987ee8979e44b383d1d378afe29d53fb9df75fb"
+        },
+        {
+          "path": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+          "sha256": "672f55105494b86802bbd4ac42fe46a894acf47abb334f8881f262b1d558c946"
+        },
+        {
+          "path": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2"
+        },
+        {
+          "path": "generated/asset-first-stri-r2-partition-geometry-result-20260825.json",
+          "sha256": "51a6d61a02cecb49ed34714dd58c1b2e2f6247f25cf4dd1688e9c4f6a093457f"
+        },
+        {
+          "path": "generated/asset-first-stri-r2-credit-fragmentation-novelty-reduction-20260825.json",
+          "sha256": "ebb14fd3369e16171e8be9bed3cb4362ff71eed85cceefc6c5a1287e09de095a"
+        }
+      ],
+      "what_would_defeat_r2": "A closest work that studies exact-semantic identity refinement under fixed post-selection feedback and identifies/repairs the same persistent lifecycle noncommutativity, or a failure of P0/P3 under the pinned release.",
+      "needs_new_outcome_experiment": false,
+      "disposition": "SURVIVES_NARROWLY_STAGE_LOCAL_RESIDUAL"
+    },
+    {
+      "id": "PB-O2-THRESHOLD-TOY",
+      "severity": "MAJOR_MECHANISM_DEPTH",
+      "reviewer_attack": "The 8 versus 4+4 example is a hand-picked threshold toy; balanced cloning manufactures the phase law.",
+      "concede": [
+        "Skill-SP's released retirement rule contains a discrete threshold, so the concrete P1 realization is threshold-gated."
+      ],
+      "residual_response": "P3 removes the balanced-allocation dependence. For any weak k-way partition with total retirement-eligible evidence N, every partition fragments throughout M<=N<kM. For N>=kM, fragmentation becomes partition-dependent with an exact stars-and-bars fraction. Dynamic-programming counts match the closed form in all 205 audited (k,N) cells. Balanced allocation is the best-case earliest recovery, not the special case that creates the defect.",
+      "decisive_evidence": [
+        {
+          "path": "generated/asset-first-stri-r2-partition-geometry-result-20260825.json",
+          "sha256": "51a6d61a02cecb49ed34714dd58c1b2e2f6247f25cf4dd1688e9c4f6a093457f"
+        }
+      ],
+      "headline": {
+        "cells": 205,
+        "formula_mismatches": 0,
+        "guaranteed_region_failures": 0,
+        "fragmentation_fraction_at_k2_kM": 0.9411764705882353,
+        "fragmentation_fraction_at_k4_kM": 0.9998472116119175
+      },
+      "what_would_defeat_r2": "Any partition in M<=N<kM for which native and aggregate class lifecycle agree, or any mismatch between exact DP counting and the frozen closed-form expression.",
+      "needs_new_outcome_experiment": false,
+      "disposition": "CLOSED_BY_ARBITRARY_PARTITION_GEOMETRY"
+    },
+    {
+      "id": "PB-O3-RSTAR-GRAFT",
+      "severity": "MODERATE_STORY_COHESION",
+      "reviewer_attack": "The paper splices an old support-cone routing paper onto a new lifecycle-fragmentation paper; R* and credit fragmentation are unrelated contributions.",
+      "concede": [
+        "R* is not the R2 novelty and should not dominate the paper.",
+        "Most old weighting baselines and robustness inventories belong in the supplement."
+      ],
+      "residual_response": "The 2x2 intervention defines the common causal object: identity is consumed at two different stages. R* is the partial-overlap generalization of the pre-action selection surface; credit fragmentation is the post-feedback persistent-state surface. Quotient selection alone repairs only selection, quotient credit alone repairs only lifecycle, and both together restore both canonical semantic endpoints.",
+      "decisive_evidence": [
+        {
+          "path": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2"
+        }
+      ],
+      "what_would_defeat_r2": "If the 2x2 cells failed to separate the surfaces, or if repairing one surface automatically repaired the other, the unified two-surface story would collapse.",
+      "needs_new_outcome_experiment": false,
+      "disposition": "CLOSED_BY_ORTHOGONAL_STAGE_DECOMPOSITION"
+    },
+    {
+      "id": "PB-O4-SKILLSVOTE-ONLY-CODE-ISOMORPHISM",
+      "severity": "MODERATE_GENERALITY",
+      "reviewer_attack": "SkillsVote only gives a code-shape analogy; no second-system lifecycle effect is demonstrated.",
+      "concede": [
+        "Correct: SkillsVote is not a second phase-law or outcome replication.",
+        "No updater model is executed in this audit."
+      ],
+      "residual_response": "The purpose of SkillsVote is narrower: an independent released system also partitions semantically identical evidence by skill identity before an updater. Its first-party transformation maps one 8-record context to two 4-record edit requests under exact identity relabeling and back to one 8-record request under semantic quotienting. This corroborates the architectural precondition while preserving the effect-generalization boundary.",
+      "decisive_evidence": [
+        {
+          "path": "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+          "sha256": "03411423ac2a9ae896ef12c0be909d5d5e1ca46fe412134883cdfc39ed7dc912"
+        }
+      ],
+      "what_would_defeat_r2": "If the first-party feedback-to-update transformation did not key edit contexts by skill identity, or quotient relabeling failed to restore the canonical request topology.",
+      "needs_new_outcome_experiment": false,
+      "disposition": "SCOPED_STRUCTURAL_CORROBORATION_ONLY"
+    },
+    {
+      "id": "PB-O5-NATURAL-PREVALENCE",
+      "severity": "MAJOR_EXTERNAL_VALIDITY",
+      "reviewer_attack": "The mechanism may exist in code but almost never occur during endogenous Skill-SP evolution.",
+      "concede": [
+        "This remains unresolved.",
+        "The public release and three pinned mirrors do not preserve evolved skills.json or retired ledgers, so empirical entry frequency into the fragmentation region cannot be estimated."
+      ],
+      "residual_response": "R2 therefore claims mechanism existence, exact counterfactual behavior, and trigger-opportunity plausibility only. The first-party loop updates identity-local statistics before pruning, uses M=8, and carries the active library across rounds, but no prevalence claim is made.",
+      "decisive_evidence": [
+        {
+          "path": "generated/asset-first-stri-r2-natural-prevalence-qualification-20260825.json",
+          "sha256": "f732c5148b28cefe2675ac4930f874cbe154ec3d091566cb59ec0fe0487b89ce"
+        }
+      ],
+      "what_would_close_fully": "A content-addressed evolved runtime library/retired ledger or a separately preregistered faithful run exposing endogenous per-skill evidence partitions without outcome-driven selection.",
+      "needs_new_outcome_experiment": true,
+      "disposition": "OPEN_HOLD_BLOCKS_PREVALENCE_NOT_MECHANISM_EXISTENCE"
+    },
+    {
+      "id": "PB-O6-REPAIR-WITHOUT-UTILITY",
+      "severity": "MODERATE_CLOSURE",
+      "reviewer_attack": "Quotienting restores internal controller endpoints but is not shown to improve task performance.",
+      "concede": [
+        "No downstream utility improvement is claimed."
+      ],
+      "residual_response": "The scientific estimand is representation invariance. P2 is a mechanism intervention: it changes the diagnosed variables and restores the frozen semantic endpoints. The analysis-only contribution is complete if framed as a mechanism/certificate paper, not a new utility-maximizing method.",
+      "decisive_evidence": [
+        {
+          "path": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+          "sha256": "596d8c094ff0b97bbcbd05d651575b9c3be3d12b9a2e5e589d25e35fa3ef70b2"
+        },
+        {
+          "path": "generated/asset-first-stri-r2-manuscript-gate-20260825.json",
+          "sha256": "b851458bc193077c3c0ecdacff8ab26b7acdf728765c78a87b8ff4bdc70cf46b"
+        },
+        {
+          "path": "generated/asset-first-stri-r2-manuscript-integrity-receipt-20260825.json",
+          "sha256": "1942d3d11d0af8fdc809acf7b9dd6071afbf98bd496ce51ae3734dcd08c92ef0"
+        }
+      ],
+      "what_would_defeat_r2": "If the paper claimed downstream utility or a deployable performance method without evidence, that claim should be rejected; the current draft explicitly does not make it.",
+      "needs_new_outcome_experiment": false,
+      "disposition": "ANALYSIS_ONLY_EXCEPTION_KEEP_SCOPE_NARROW"
+    }
+  ],
+  "summary": {
+    "decision_critical_objections": 6,
+    "paper_only_closed_or_scoped": 5,
+    "requires_new_outcome_or_runtime_evidence": 1,
+    "open_major_hold_ids": [
+      "PB-O5-NATURAL-PREVALENCE"
+    ],
+    "canonical_r19_replacement_authorized": false,
+    "independent_model_review_still_required_for_promotion": true
+  },
+  "claim_boundary": "This packet prepares rebuttal and paper-only repairs. It does not authorize a prevalence claim, downstream utility claim, second-system lifecycle-effect claim, task-general behavior claim, experiment, GPU run, canonical promotion, or submission.",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "result_canonical_sha256": "74145894933b21e45d15077f1a7a40c816f55efa69d1a0ec2e03ac6c422d627b"
+}

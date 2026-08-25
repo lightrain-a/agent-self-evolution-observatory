@@ -19,6 +19,7 @@ OUTPUT_RECEIPT = ROOT / "generated/asset-first-stri-r2-manuscript-integrity-rece
 P0 = "generated/asset-first-stri-r2-credit-fragmentation-result-20260825.json"
 P1 = "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json"
 P2 = "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json"
+P3 = "generated/asset-first-stri-r2-partition-geometry-result-20260825.json"
 PREV = "generated/asset-first-stri-r2-natural-prevalence-qualification-20260825.json"
 SECOND = "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json"
 PRACTICAL = "generated/asset-first-stri-practical-baselines-20260824.json"
@@ -32,6 +33,7 @@ P0_CODE = "research_pipeline/asset_first_stri_r2_credit_fragmentation_20260825.p
 PRACTICAL_CODE = "research_pipeline/asset_first_stri_practical_baselines_20260824.py"
 P1_CODE = "research_pipeline/asset_first_stri_r2_credit_fragmentation_phase_20260825.py"
 P2_CODE = "research_pipeline/asset_first_stri_r2_selection_credit_decomposition_20260825.py"
+P3_CODE = "research_pipeline/asset_first_stri_r2_partition_geometry_20260825.py"
 SECOND_CODE = "research_pipeline/asset_first_stri_r2_second_system_credit_partition_20260825.py"
 
 
@@ -87,7 +89,7 @@ def build_manifest() -> dict[str, Any]:
 
     for marker in [
         "selection duplication", "credit fragmentation", "persistent sufficient state", "Credit-invariance criterion",
-        "Proposition 1 (fragmentation window)", "Corollary 1 (arbitrary partitions)", "882 cells",
+        "Proposition 1 (guaranteed fragmentation region)", "Partition-dependent tail", "Corollary 1 (general gate)", "882 cells", "205 cells",
         "Two-Channel Mechanism Decomposition", "Quotient selection alone", "Quotient credit alone",
         "SkillsVote: independent partition-before-update structure", "Natural prevalence remains unresolved",
         "Retrieval-only qualification succeeded on 9/9 units", "No repeat-2 or remaining-seven expansion was authorized",
@@ -103,6 +105,7 @@ def build_manifest() -> dict[str, Any]:
         "liu2026rethinkskill": "https://arxiv.org/abs/2608.02636",
         "shin2022replication": "https://proceedings.mlr.press/v151/shin22a.html",
         "baram2021redundancy": "https://proceedings.mlr.press/v161/baram21a.html",
+        "lin2022identityfragmentation": "https://pubsonline.informs.org/doi/10.1287/mksc.2022.1360",
         "ravindran2004approximate": "https://www.cse.iitm.ac.in/~ravi/abstracts/paper_abstracts/",
         "yang2026autoskill": "https://arxiv.org/abs/2603.01145",
     }
@@ -129,6 +132,9 @@ def build_manifest() -> dict[str, Any]:
         number("N-MIN-ATTEMPTS", 8, PREV, "released_loop.default_prune_min_attempts_per_identity"),
         number("N-P1-CELLS", 882, P1, "grid.cells"),
         number("N-P1-MISMATCH", 0, P1, "headline.analytic_mismatches"),
+        number("N-P3-CELLS", 205, P3, "grid.cells"),
+        number("N-P3-MISMATCH", 0, P3, "headline.formula_mismatches"),
+        number("N-P3-GUARANTEED-FAIL", 0, P3, "headline.guaranteed_region_failures"),
         number("N-P2-CANON-SEL", 0.5, P2, "headline.canonical_focal_selection_probability"),
         number("N-P2-SPLIT-SEL", 2/3, P2, "headline.split_native_focal_selection_probability"),
         number("N-L1-COVERED", 314, PRACTICAL, "regimes.skillsp_l1_full.covered_rows"),
@@ -194,8 +200,15 @@ def build_manifest() -> dict[str, Any]:
         cell("sv-quotient-evidence", 8, SECOND, "skillsvote.headline.quotient_evidence_per_request.0"),
     ]
 
+    partition_cells = [
+        cell("p3-k2-at-kM", round(float(load(P3)["headline"]["by_clone_multiplicity"]["2"]["fragmentation_fraction_at_kM"]), 3), P3, "headline.by_clone_multiplicity.2.fragmentation_fraction_at_kM", transform=lambda x: round(float(x), 3)),
+        cell("p3-k3-at-kM", round(float(load(P3)["headline"]["by_clone_multiplicity"]["3"]["fragmentation_fraction_at_kM"]), 3), P3, "headline.by_clone_multiplicity.3.fragmentation_fraction_at_kM", transform=lambda x: round(float(x), 3)),
+        cell("p3-k4-at-kM", round(float(load(P3)["headline"]["by_clone_multiplicity"]["4"]["fragmentation_fraction_at_kM"]), 5), P3, "headline.by_clone_multiplicity.4.fragmentation_fraction_at_kM", transform=lambda x: round(float(x), 5)),
+    ]
+
     tables = [
         {"table_id": "T-phase", "generation_script": script_binding(P1_CODE), "cells": phase_cells},
+        {"table_id": "T-partition-geometry", "generation_script": script_binding(P3_CODE), "cells": partition_cells},
         {"table_id": "T-2x2", "generation_script": script_binding(P2_CODE), "cells": decomp_cells},
         {"table_id": "T-selection-boundary", "generation_script": script_binding(PRACTICAL_CODE), "cells": selection_cells},
         {"table_id": "T-cross-system", "generation_script": script_binding(SECOND_CODE), "cells": cross_cells},
@@ -204,6 +217,7 @@ def build_manifest() -> dict[str, Any]:
     facts = [
         {"fact_id":"F-SKILLSP-CREDIT", "source_ref":"artifact:"+P0, "source_verified":load(P0).get("decision")=="PASS_RELEASED_CREDIT_FRAGMENTATION_MECHANISM", "passage_support_verified":True},
         {"fact_id":"F-PHASE-LAW", "source_ref":"artifact:"+P1, "source_verified":load(P1).get("decision")=="PASS_CREDIT_FRAGMENTATION_PHASE_DIAGRAM", "passage_support_verified":True},
+        {"fact_id":"F-PARTITION-GEOMETRY", "source_ref":"artifact:"+P3, "source_verified":load(P3).get("decision")=="PASS_ARBITRARY_PARTITION_GEOMETRY", "passage_support_verified":True},
         {"fact_id":"F-TWO-CHANNEL", "source_ref":"artifact:"+P2, "source_verified":load(P2).get("decision")=="PASS_TWO_CHANNEL_SELECTION_CREDIT_DECOMPOSITION", "passage_support_verified":True},
         {"fact_id":"F-SKILLSVOTE-SCOPE", "source_ref":"artifact:"+SECOND, "source_verified":load(SECOND).get("second_exact_phase_law_replication") is False, "passage_support_verified":True},
         {"fact_id":"F-PREVALENCE-HOLD", "source_ref":"artifact:"+PREV, "source_verified":load(PREV).get("natural_prevalence_established") is False, "passage_support_verified":True},
@@ -213,7 +227,8 @@ def build_manifest() -> dict[str, Any]:
     claims = [
         {"claim_id":"R2-K1-TWO-SURFACES", "statement_ref":"intro+sec:representation-invariant", "evidence_refs":[P0,P2,PRACTICAL], "supported":True},
         {"claim_id":"R2-K2-CREDIT-FRAGMENTATION", "statement_ref":"sec:skillsp-p0", "evidence_refs":[P0,THEORY], "supported":True},
-        {"claim_id":"R2-K3-PHASE-LAW", "statement_ref":"prop1+sec:p1", "evidence_refs":[P1,THEORY], "supported":True},
+        {"claim_id":"R2-K3-PHASE-LAW", "statement_ref":"prop1+sec:p1", "evidence_refs":[P1,P3,THEORY], "supported":True},
+        {"claim_id":"R2-K3B-PARTITION-GEOMETRY", "statement_ref":"eq:partition-fraction+sec:p1", "evidence_refs":[P3,THEORY], "supported":True},
         {"claim_id":"R2-K4-ORTHOGONAL-DECOMPOSITION", "statement_ref":"sec:two-channel", "evidence_refs":[P2], "supported":True},
         {"claim_id":"R2-K5-SELECTION-GEOMETRY", "statement_ref":"sec:selection-geometry", "evidence_refs":[PRACTICAL,CROSSVAL], "supported":True},
         {"claim_id":"R2-K6-CROSS-SYSTEM-SCOPED", "statement_ref":"sec:SkillsVote", "evidence_refs":[SECOND], "supported":True},
@@ -224,7 +239,7 @@ def build_manifest() -> dict[str, Any]:
     return {
         "schema_version":"1.0",
         "paper_id":"E1.STRI-R2-DRAFT",
-        "audit_scope":"R2 mechanism-draft load-bearing surface: two-surface formulation, Skill-SP P0/P1, 2x2 decomposition, main selection/cross-system tables, natural-prevalence HOLD, and R19 behavior boundary.",
+        "audit_scope":"R2 mechanism-draft load-bearing surface: two-surface formulation, Skill-SP P0/P1, arbitrary-partition P3 geometry, 2x2 decomposition, main selection/reduction/cross-system tables, natural-prevalence HOLD, and R19 behavior boundary.",
         "manuscript_ref":str(BODY.relative_to(ROOT)),
         "manuscript_sha256":sha_file(BODY),
         "manuscript_text":body,
