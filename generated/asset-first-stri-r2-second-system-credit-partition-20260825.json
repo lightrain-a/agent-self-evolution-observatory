@@ -1,0 +1,129 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "object_id": "STRI-R2-SECOND-SYSTEM-CREDIT-PARTITION",
+  "stage": "MECHANISM_REDESIGN_SECOND_SYSTEM_QUALIFICATION",
+  "decision": "QUALIFY_SKILLSVOTE_REQUEST_PARTITION_ANALOGUE_ONLY",
+  "second_exact_phase_law_replication": false,
+  "second_structural_partition_before_update_analogue": true,
+  "rethinkskill": {
+    "repo": "https://github.com/HKUST-KnowComp/rethinkskill",
+    "commit": "4138419afc00a1fa3ff0885c0bb1618e18258354",
+    "source_sha256": {
+      "src/rethinkskill/evolution/loop.py": "a40f0298f09d35a915e339f6b9bc1767e3301c684c2c9c1a68cd2c5a2e0dc4da",
+      "src/rethinkskill/evolution/protocol.py": "a5e64a59cbbc6db807bb70968ddfdfcd0bf3670ef04c9afe766e97e824154cff"
+    },
+    "checks": {
+      "single_current_skill_state": true,
+      "single_best_skill_state": true,
+      "candidate_is_one_complete_skill": true,
+      "validation_gate_is_round_candidate_level": true,
+      "no_parallel_skill_identity_bucket_map_in_evolution_state": true
+    },
+    "qualifies_as_identity_partition_realization": false,
+    "disposition": "CLOSEST_WORK_CONTROL_NOT_PARALLEL_IDENTITY_BUCKET_REALIZATION",
+    "reason": "The released primary loop evolves one current skill artifact against candidate validation, rather than maintaining a parallel library of exact-semantic identities with identity-local evidence buckets. It is therefore a strong feedback-dynamics neighbor but not a same-object replication substrate."
+  },
+  "skillsvote": {
+    "repo": "https://github.com/MemTensor/skills-vote",
+    "commit": "55ea783d1818457e21ed12138309d8da7e58ceb8",
+    "source_sha256": {
+      "src/skills_vote/evolve/model.py": "0e454481e08c15f44ed9087d080286d902ea1ad990d206dfeb97d0ade94db110",
+      "src/skills_vote/evolve/codex.py": "253f954bc32ccbd40d21396387144d1f77936f160541865c11bab26656cd43c3",
+      "src/skills_vote/evolve/prompt.py": "bcb36893aa0fcf361f967558c462cfdc2dff8441ec5d18a903283c4064bf2634"
+    },
+    "semantic_feedback_records": 8,
+    "semantic_feedback_sha256": "2ad4c7fa445d2e549201405a83165b81eb00f909a705fd739388c92df0273289",
+    "semantic_payload_hashes_without_skill_link": {
+      "canonical": "2ad4c7fa445d2e549201405a83165b81eb00f909a705fd739388c92df0273289",
+      "split": "2ad4c7fa445d2e549201405a83165b81eb00f909a705fd739388c92df0273289",
+      "quotient": "2ad4c7fa445d2e549201405a83165b81eb00f909a705fd739388c92df0273289"
+    },
+    "structural_checks": {
+      "feedback_grouped_by_skill_linked_identity": true,
+      "one_edit_request_per_identity_bucket": true,
+      "one_updater_invocation_per_request": true,
+      "request_targets_persistent_working_skill_identity": true,
+      "successful_edit_copied_back_to_persistent_library": true,
+      "within_request_evidence_consolidation_expected": true
+    },
+    "arms": {
+      "A_canonical_identity": {
+        "links": {
+          "focal": 8
+        },
+        "requests": [
+          {
+            "target_skill_name": "focal",
+            "subtask_count": 8,
+            "request_dir_name": "edit_request_focal"
+          }
+        ]
+      },
+      "B_split2_identity": {
+        "links": {
+          "focal_a": 4,
+          "focal_b": 4
+        },
+        "requests": [
+          {
+            "target_skill_name": "focal_a",
+            "subtask_count": 4,
+            "request_dir_name": "edit_request_focal_a"
+          },
+          {
+            "target_skill_name": "focal_b",
+            "subtask_count": 4,
+            "request_dir_name": "edit_request_focal_b"
+          }
+        ]
+      },
+      "C_semantic_quotient_link": {
+        "links": {
+          "focal": 8
+        },
+        "requests": [
+          {
+            "target_skill_name": "focal",
+            "subtask_count": 8,
+            "request_dir_name": "edit_request_focal"
+          }
+        ]
+      }
+    },
+    "headline": {
+      "canonical_edit_requests": 1,
+      "split_edit_requests": 2,
+      "quotient_edit_requests": 1,
+      "canonical_evidence_per_request": [
+        8
+      ],
+      "split_evidence_per_request": [
+        4,
+        4
+      ],
+      "quotient_evidence_per_request": [
+        8
+      ]
+    },
+    "counterfactual_pass": true,
+    "mechanism_interpretation": "SkillsVote deterministically partitions evolvable feedback by skill_linked identity before invoking its updater. Exact identity refinement changes one eight-record edit context into two four-record edit contexts even when all non-identity semantic evidence is unchanged; semantic quotienting the links restores one eight-record request. Because the downstream editor is model-based rather than a released deterministic threshold gate, this establishes request-topology fragmentation before persistent update, not a second exact lifecycle phase-law replication."
+  },
+  "cross_system_synthesis": {
+    "shared_structure": "semantic evidence -> identity-keyed partition -> update/lifecycle stage -> persistent skill state",
+    "skillsp_strength": "deterministic per-ID sufficient statistics plus nonlinear pruning gate, exact M<=N<kM phase law, lifecycle divergence",
+    "skillsvote_strength": "independent first-party identity-keyed feedback partition before one updater invocation per identity bucket, with persistent working-skill targets",
+    "what_is_not_shared": "SkillsVote does not expose the same deterministic M-threshold lifecycle gate; RethinkSkill does not expose parallel identity buckets in its primary loop."
+  },
+  "claim_boundary": "Cross-system structural corroboration of partition-before-update only. It does not establish that SkillsVote clone splitting changes edited skill contents, task utility, or a second exact fragmentation phase law; no updater model call is executed.",
+  "next_gate": "Use this as cross-system mechanism-structure evidence in R2 story synthesis. Do not run SkillsVote updater calls unless a separate preregistered counterfactual can define a deterministic downstream endpoint and justify the cost.",
+  "new_model_calls": 0,
+  "new_agent_runs": 0,
+  "new_gpu_runs": 0,
+  "claim_expansion": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "result_canonical_sha256": "258bd6a53de0925c79eb71521bc3ac3dab1f15ec8f1bc4a3de7bcc867793d35e"
+}

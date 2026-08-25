@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "stage": "R2_MECHANISM_PAPER_DESIGN_SYNTHESIS",
+  "decision": "GO_R2_PAPER_ONLY_MECHANISM_REDESIGN_KEEP_R19_CANONICAL_UNTIL_REAUDIT",
+  "scientific_object": "Representation-invariant skill evolution: when semantically equivalent skill identities are also control handles and persistent evidence/lifecycle keys, an exact identity refinement can alter both immediate semantic selection and future skill survival even though capability content and post-selection semantic feedback are unchanged.",
+  "one_sentence_insight": "In a self-evolving skill library, identity can act twice: once when the system selects what to use, and again when it decides where evidence accumulates; exact semantic splitting therefore creates two orthogonal representation channels—selection duplication and credit fragmentation—that require separate quotient interventions.",
+  "why_r2_is_deeper_than_r19": {
+    "r19": "R19 primarily audits static selection/exposure realizability and shows one bounded representation-to-retrieval-to-behavior manifestation.",
+    "r2": "R2 identifies a persistent post-selection update mechanism in released Skill-SP: identical semantic feedback is partitioned across per-ID sufficient-statistic containers before a nonlinear lifecycle gate, changing the future active library. The effect remains after selection/retrieval is removed and has an exact multiplicity/evidence phase law.",
+    "not_a_rename": "The R2 residual makes an ex-ante prediction R19 does not: under fixed semantic feedback, a k-way exact identity refinement delays full semantic-class retirement from N=M to N=kM, producing a fragmentation window M<=N<kM and lag (k-1)M."
+  },
+  "formal_model": {
+    "semantic_quotient": "Let pi map skill identities i to semantic classes c. Exact refinement changes the identity partition while preserving pi-level capability content.",
+    "selection_channel": "Identity probabilities p_t(i) induce semantic selection mass P_t(c)=sum_{i:pi(i)=c} p_t(i). Representation-invariant selection requires P_t(c) to be unchanged by exact refinement. R19 support geometry and R* remain the general package-control audit for this channel.",
+    "credit_state": "Each identity i stores persistent sufficient statistics s_{t,i} in an aggregation space with operator ⊕. The semantic class state is S_{t,c}=⊕_{i:pi(i)=c} s_{t,i}.",
+    "lifecycle_gate": "Let g(s)=1 denote a lifecycle decision such as retirement. Native identity-local evolution retires the semantic class only when every refined identity passes the gate, AND_i g(s_i); semantic quotient-credit applies g after aggregation, g(⊕_i s_i).",
+    "credit_invariance_criterion": "Representation-invariant lifecycle evolution requires g(⊕_i s_i)=AND_i g(s_i) for every exact refinement partition relevant to the semantic class.",
+    "skillsp_phase_law": "For retirement-eligible evidence, additive attempt count, and per-ID threshold M, canonical/quotient retirement occurs at N>=M; a balanced k-way exact refinement fully retires at N>=kM. The fragmentation window is M<=N<kM and retirement lag is (k-1)M.",
+    "organizing_commutation_rule": "At the whole-loop level, semantic projection after update should agree with update after semantic projection. This quotient/commutation statement is used only as an organizing criterion; generic lumpability/homomorphism is not claimed as novelty."
+  },
+  "mechanism_decomposition": {
+    "design": "2x2: selection handling {native, semantic quotient} x credit/lifecycle handling {native per-ID, semantic quotient}.",
+    "canonical_reference": "One focal semantic skill plus one background skill: focal semantic selection probability 1/2; eight easy feedback records retire the focal identity.",
+    "native_native": "Exact split2 gives focal selection probability 2/3 and partitions eight feedback records 4/4, leaving both focal identities active.",
+    "quotient_selection_native_credit": "Selection probability returns to 1/2 but the lifecycle defect remains.",
+    "native_selection_quotient_credit": "Lifecycle decision returns to canonical retirement but the 2/3 immediate selection defect remains.",
+    "quotient_both": "Both semantic selection and lifecycle endpoints match the canonical representation.",
+    "conclusion": "Selection duplication and credit fragmentation are separable causal channels; repairing either alone is insufficient for full representation invariance."
+  },
+  "evidence_map": {
+    "P0_released_credit_counterfactual": {
+      "artifact": "generated/asset-first-stri-r2-credit-fragmentation-result-20260825.json",
+      "decision": "PASS_RELEASED_CREDIT_FRAGMENTATION_MECHANISM",
+      "role": "Mechanism discovery/localization under identical post-selection feedback and zero selection/retrieval."
+    },
+    "P1_phase_diagram": {
+      "artifact": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+      "decision": "PASS_CREDIT_FRAGMENTATION_PHASE_DIAGRAM",
+      "role": "882-cell deterministic phase audit, zero analytic mismatches, exact M<=N<kM law."
+    },
+    "P2_two_channel_decomposition": {
+      "artifact": "generated/asset-first-stri-r2-selection-credit-decomposition-result-20260825.json",
+      "decision": "PASS_TWO_CHANNEL_SELECTION_CREDIT_DECOMPOSITION",
+      "role": "Orthogonal intervention identifying immediate selection and persistent credit channels."
+    },
+    "novelty_reduction": {
+      "artifact": "generated/asset-first-stri-r2-credit-fragmentation-novelty-reduction-20260825.json",
+      "status": "SURVIVES_NARROWLY_AS_STAGE_LOCAL_CREDIT_FRAGMENTATION",
+      "role": "Absorbs generic quotient/lumpability, strategic replication, action redundancy, generic identity fragmentation, representation-dependent optimization, and path-dependence novelty."
+    },
+    "natural_prevalence": {
+      "artifact": "generated/asset-first-stri-r2-natural-prevalence-qualification-20260825.json",
+      "decision": "HOLD_NATURAL_PREVALENCE_UNRESOLVED_RUNTIME_OUTPUT_NOT_RELEASED",
+      "role": "Confirms first-party runtime path/default M=8/5-round loop/8000-record collection scale, but fails closed because evolved skills.json and retired ledgers are not released."
+    },
+    "skillsvote_cross_system_analogue": {
+      "artifact": "generated/asset-first-stri-r2-second-system-credit-partition-20260825.json",
+      "decision": "QUALIFY_SKILLSVOTE_REQUEST_PARTITION_ANALOGUE_ONLY",
+      "role": "Independent first-party structural corroboration: identical semantic evidence maps to 1x8 edit context canonically, 2x4 after exact identity split, and 1x8 after semantic quotient. No updater call; not an exact phase-law replication."
+    },
+    "rethinkskill_control": {
+      "source": "https://github.com/HKUST-KnowComp/rethinkskill",
+      "role": "Strong closest-work negative control: controlled multi-round feedback dynamics and validation gates, but the primary release evolves one current skill rather than parallel identity-local evidence buckets."
+    },
+    "r19_behavior_manifestation": {
+      "artifact": "generated/asset-first-stri-autoskill-p19-stage3-result-20260819.json",
+      "role": "Bounded downstream existence proof only: representation split can reach executed behavior on one P19 substrate."
+    },
+    "r19_behavior_boundary": {
+      "artifact": "generated/asset-first-stri-autoskill-multitask-pilot-stage1-20260824.json",
+      "role": "Binding negative boundary: 9/9 retrieval-sensitive heldout units but preregistered two-unit behavior pilot fails split-specific gate; no task-general behavior claim."
+    }
+  },
+  "iclr_closed_loop_story": [
+    "1. Phenomenon: exact semantic identity refinement changes a released self-evolving controller even though capability content is unchanged; identity is therefore not harmless metadata.",
+    "2. Latent mechanism: the identity is used on two control surfaces—selection mass and persistent evidence/lifecycle state. The second surface survives after selection is mechanically removed.",
+    "3. Mechanism law: per-ID evidence partition before a nonlinear lifecycle gate creates a closed-form fragmentation window M<=N<kM and multiplicity-dependent retirement lag (k-1)M.",
+    "4. Causal decomposition: a 2x2 quotient intervention separates selection duplication from credit fragmentation; fixing one leaves the other, fixing both restores both canonical semantic endpoints.",
+    "5. Cross-system structure: SkillsVote independently partitions evolvable feedback by linked skill identity before updater calls; RethinkSkill provides a close feedback-dynamics control that lacks the parallel-identity structure.",
+    "6. Boundary and consequence: AutoSkill P19 shows one behavioral manifestation, but the R19 heldout STOP and unreleased Skill-SP evolved state forbid claims of task-general behavior or natural prevalence. The paper closes at a representation-invariant control principle, not utility improvement."
+  ],
+  "paper_reorganization": {
+    "promote_to_main": [
+      "Released Skill-SP identity roles: selection handle + persistent evidence bucket + lifecycle unit.",
+      "P0 fixed-feedback credit-fragmentation counterfactual.",
+      "General aggregation-before-gate criterion and Skill-SP M<=N<kM corollary.",
+      "P2 2x2 selection x credit decomposition.",
+      "One compact R* selection-geometry section as the general partial-overlap selection channel.",
+      "SkillsVote request-topology structural analogue and RethinkSkill closest-work contrast.",
+      "AutoSkill P19 as bounded downstream manifestation plus R19 heldout STOP as explicit boundary."
+    ],
+    "demote_to_appendix_or_secondary": [
+      "Most package-weight heuristic baselines after they establish that uniform already attains R*=2.",
+      "Large structural perturbation inventory (1387 additions, 366 deletions, 200 rewires) except one concise robustness summary.",
+      "SkillRouter and AgentSkillOS relevance/oracle analogues.",
+      "Solver timing/scalability details.",
+      "Second exact-support substrate tournament details.",
+      "Semantic-first action-basis escape as a constructive boundary, not the R2 repair."
+    ],
+    "repair_to_feature": "Replace semantic-first as the apparent closing solution with two validated mechanism-level quotient interventions: semantic quotient selection and semantic quotient credit. These are demonstrated to restore the corresponding canonical semantic endpoints in the 2x2 decomposition."
+  },
+  "title_candidates": [
+    "Representation-Invariant Skill Evolution: Selection Geometry and Credit Fragmentation",
+    "Equivalent Skills, Different Futures: Selection and Credit Fragmentation in Self-Evolving Agents",
+    "When Skill Identity Becomes State: Representation Failures in Self-Evolving Skill Libraries"
+  ],
+  "recommended_title": "Representation-Invariant Skill Evolution: Selection Geometry and Credit Fragmentation",
+  "main_contributions_after_redesign": [
+    "A two-surface formulation of representation invariance for skill self-evolution, separating immediate semantic selection from persistent credit/lifecycle state.",
+    "A released first-party post-selection credit-fragmentation mechanism whose exact semantic split changes future skill survival under byte-identical feedback, plus a closed-form multiplicity/evidence phase law.",
+    "A 2x2 intervention showing selection and credit are orthogonal identity channels and that quotienting both restores both canonical semantic endpoints.",
+    "Cross-system structural corroboration in SkillsVote, plus explicit negative/boundary evidence: RethinkSkill lacks parallel identity buckets, Skill-SP natural prevalence is unreleased, and R19 blocks task-general behavior claims."
+  ],
+  "closest_work_positioning": {
+    "rethinkskill": "Studies which feedback views help multi-round persistent skill revision under fixed validation; R2 instead fixes the semantic feedback multiset and changes only exact identity partition before a released lifecycle update.",
+    "skillsvote": "Uses skill-linked trajectory attribution and evidence-gated evolution; R2 contributes the exact-refinement invariance counterfactual and deterministic phase law, while SkillsVote supplies an independent partition-before-update structural analogue.",
+    "strategic_replication_and_action_redundancy": "Absorb selection-duplication novelty; R2 post-selection P0 executes no selection/retrieval.",
+    "lumpability_homomorphism": "Absorb generic quotient/commutation theory; novelty is the identified released state mechanism, exact phase law, and two-channel decomposition.",
+    "identity_fragmentation": "Absorb generic record-fragmentation phenomenon; retain the self-evolving lifecycle residual where the fragmented identifier is simultaneously future action availability."
+  },
+  "open_risks": [
+    "Natural prevalence in endogenous Skill-SP runs is unresolved because runtime skills.json/retired ledgers are gitignored/not released.",
+    "Only Skill-SP supplies an exact deterministic lifecycle phase law; SkillsVote currently supplies request-topology corroboration only.",
+    "No task-utility gain from quotient credit/selection is established.",
+    "R19 heldout behavior STOP forbids task-general behavioral propagation.",
+    "Fresh DeepSeek R2 critique could not be obtained because Ark AgentPlan subscription is invalid; this is a provider failure, not a scientific vote."
+  ],
+  "next_gate": {
+    "allowed": "Paper-only R2 manuscript/storyboard rewrite in an isolated branch, using only frozen P0/P1/P2/cross-system evidence, followed by deterministic claim audit and independent review when a reviewer provider is available.",
+    "not_authorized": [
+      "new LLM/agent/GPU experiment",
+      "natural-prevalence claim",
+      "task-utility claim",
+      "cross-system exact phase-law claim",
+      "task-general behavior claim",
+      "overwriting canonical R19 before R2 manuscript passes full QA and reviewer adjudication"
+    ],
+    "fallback": "If the rewritten story cannot make credit fragmentation central without overstating prevalence/generality, retain canonical R19 and keep R2 as an appendix/future-work mechanism note."
+  },
+  "consultation_status": {
+    "fresh_kimi_r2_architect": "OBTAINED: REDESIGN_PROMISING; demanded persistent update operator and decisive intervention.",
+    "fresh_deepseek_r2_critic": "NOT_OBTAINED: two attempts returned Ark InvalidSubscription; nonvoting support failure.",
+    "model_consensus_claimed": false
+  },
+  "claim_expansion": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

@@ -1,0 +1,238 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "experiment_id": "STRI-R2-SKILLSP-SELECTION-CREDIT-2X2-P2-20260825",
+  "stage": "MECHANISM_REDESIGN_DETERMINISTIC_P2_DECOMPOSITION_RESULT",
+  "decision": "PASS_TWO_CHANNEL_SELECTION_CREDIT_DECOMPOSITION",
+  "pass_gate": true,
+  "contract_sha256": "327273b3f3bb8e3a42b51811e4fdfbe6ce11fdd2c3421b0289428aa53b2b9d3f",
+  "contract_git_commit": "96ff2fcce40dabb817b2c12c3986eb5ca6b51e6a",
+  "novelty_reduction_sha256": "ebb14fd3369e16171e8be9bed3cb4362ff71eed85cceefc6c5a1287e09de095a",
+  "author_release": {
+    "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "source_file": "skill_library/library.py",
+    "source_file_sha256": "8441de35078fc4c70880204c46a06856e99cdde7700ff859097032065e2756e0",
+    "observed_pruning_defaults": {
+      "min_attempts": 8,
+      "avg_p_hat_threshold": 0.75,
+      "too_easy_rate_threshold": 0.6
+    }
+  },
+  "canonical_reference": {
+    "selection": {
+      "mode": "native",
+      "identity_probabilities": {
+        "focal": 0.5,
+        "background": 0.5
+      },
+      "focal_semantic_probability": 0.5,
+      "source_function": "sampling_weights"
+    },
+    "credit": {
+      "mode": "native",
+      "semantic_feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "feedback_records": 8,
+      "pre_prune_stats": {
+        "focal": {
+          "attempts": 8,
+          "consistent": 8,
+          "boundary": 0,
+          "verified": 0,
+          "too_easy": 8,
+          "too_hard": 0,
+          "inconsistent": 0,
+          "avg_p_hat": 0.9000000000000001,
+          "last_updated_iteration": 1
+        }
+      },
+      "retired_focal_ids": [
+        "focal"
+      ],
+      "active_focal_ids": [],
+      "focal_semantic_class_retired": true,
+      "focal_semantic_class_active": false
+    }
+  },
+  "split_factor_realizations": {
+    "native_selection": {
+      "mode": "native",
+      "identity_probabilities": {
+        "focal_a": 0.3333333333333333,
+        "focal_b": 0.3333333333333333,
+        "background": 0.3333333333333333
+      },
+      "focal_semantic_probability": 0.6666666666666666,
+      "source_function": "sampling_weights"
+    },
+    "quotient_selection": {
+      "mode": "quotient",
+      "identity_probabilities": {
+        "focal_a": 0.25,
+        "focal_b": 0.25,
+        "background": 0.5
+      },
+      "focal_semantic_probability": 0.5,
+      "source_function": "sampling_weights on semantic-class representatives + exact mass conservation",
+      "canonical_reference_probability": 0.5
+    },
+    "native_credit": {
+      "mode": "native",
+      "semantic_feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "feedback_records": 8,
+      "pre_prune_stats": {
+        "focal_a": {
+          "attempts": 4,
+          "consistent": 4,
+          "boundary": 0,
+          "verified": 0,
+          "too_easy": 4,
+          "too_hard": 0,
+          "inconsistent": 0,
+          "avg_p_hat": 0.9,
+          "last_updated_iteration": 1
+        },
+        "focal_b": {
+          "attempts": 4,
+          "consistent": 4,
+          "boundary": 0,
+          "verified": 0,
+          "too_easy": 4,
+          "too_hard": 0,
+          "inconsistent": 0,
+          "avg_p_hat": 0.9,
+          "last_updated_iteration": 1
+        }
+      },
+      "retired_focal_ids": [],
+      "active_focal_ids": [
+        "focal_a",
+        "focal_b"
+      ],
+      "focal_semantic_class_retired": false,
+      "focal_semantic_class_active": true
+    },
+    "quotient_credit": {
+      "mode": "quotient",
+      "semantic_feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "feedback_records": 8,
+      "class_representative_stats": {
+        "attempts": 8,
+        "consistent": 8,
+        "boundary": 0,
+        "verified": 0,
+        "too_easy": 8,
+        "too_hard": 0,
+        "inconsistent": 0,
+        "avg_p_hat": 0.9000000000000001,
+        "last_updated_iteration": 1
+      },
+      "projected_retired_focal_ids": [
+        "focal_a",
+        "focal_b"
+      ],
+      "projected_active_focal_ids": [],
+      "focal_semantic_class_retired": true,
+      "focal_semantic_class_active": false,
+      "source_functions": [
+        "update_skill_stats_from_records",
+        "prune_easy_skills"
+      ]
+    }
+  },
+  "cells": {
+    "S_native__C_native": {
+      "selection_mode": "native",
+      "credit_mode": "native",
+      "focal_semantic_selection_probability": 0.6666666666666666,
+      "selection_matches_canonical": false,
+      "focal_semantic_class_retired_after_feedback": false,
+      "post_credit_lifecycle_matches_canonical": false,
+      "feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "both_invariance_endpoints_match_canonical": false
+    },
+    "S_native__C_quotient": {
+      "selection_mode": "native",
+      "credit_mode": "quotient",
+      "focal_semantic_selection_probability": 0.6666666666666666,
+      "selection_matches_canonical": false,
+      "focal_semantic_class_retired_after_feedback": true,
+      "post_credit_lifecycle_matches_canonical": true,
+      "feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "both_invariance_endpoints_match_canonical": false
+    },
+    "S_quotient__C_native": {
+      "selection_mode": "quotient",
+      "credit_mode": "native",
+      "focal_semantic_selection_probability": 0.5,
+      "selection_matches_canonical": true,
+      "focal_semantic_class_retired_after_feedback": false,
+      "post_credit_lifecycle_matches_canonical": false,
+      "feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "both_invariance_endpoints_match_canonical": false
+    },
+    "S_quotient__C_quotient": {
+      "selection_mode": "quotient",
+      "credit_mode": "quotient",
+      "focal_semantic_selection_probability": 0.5,
+      "selection_matches_canonical": true,
+      "focal_semantic_class_retired_after_feedback": true,
+      "post_credit_lifecycle_matches_canonical": true,
+      "feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "both_invariance_endpoints_match_canonical": true
+    }
+  },
+  "headline": {
+    "canonical_focal_selection_probability": 0.5,
+    "split_native_focal_selection_probability": 0.6666666666666666,
+    "split_quotient_focal_selection_probability": 0.5,
+    "canonical_retired_after_eight_feedback": true,
+    "split_native_credit_retired_after_eight_feedback": false,
+    "split_quotient_credit_retired_after_eight_feedback": true,
+    "selection_only_repair_cell": {
+      "selection_mode": "quotient",
+      "credit_mode": "native",
+      "focal_semantic_selection_probability": 0.5,
+      "selection_matches_canonical": true,
+      "focal_semantic_class_retired_after_feedback": false,
+      "post_credit_lifecycle_matches_canonical": false,
+      "feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "both_invariance_endpoints_match_canonical": false
+    },
+    "credit_only_repair_cell": {
+      "selection_mode": "native",
+      "credit_mode": "quotient",
+      "focal_semantic_selection_probability": 0.6666666666666666,
+      "selection_matches_canonical": false,
+      "focal_semantic_class_retired_after_feedback": true,
+      "post_credit_lifecycle_matches_canonical": true,
+      "feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "both_invariance_endpoints_match_canonical": false
+    },
+    "both_repaired_cell": {
+      "selection_mode": "quotient",
+      "credit_mode": "quotient",
+      "focal_semantic_selection_probability": 0.5,
+      "selection_matches_canonical": true,
+      "focal_semantic_class_retired_after_feedback": true,
+      "post_credit_lifecycle_matches_canonical": true,
+      "feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "both_invariance_endpoints_match_canonical": true
+    }
+  },
+  "mechanism_decomposition": {
+    "selection_channel": "Exact identity refinement changes immediate semantic selection mass under released per-ID normalization (0.5 canonical versus 2/3 native split); semantic quotient mass conservation restores 0.5.",
+    "credit_channel": "With selection absent from feedback generation and the same eight semantic feedback values, per-ID evidence partition prevents retirement while semantic quotient-credit restores canonical retirement.",
+    "orthogonality_result": "Fixing selection alone leaves the lifecycle defect; fixing credit alone leaves the immediate selection defect; quotienting both restores both canonical semantic endpoints."
+  },
+  "claim_boundary": "Deterministic two-channel controller decomposition on the released Skill-SP controller. It establishes stage separation, not endogenous prevalence, downstream utility, cross-system generality, or task-general behavioral propagation.",
+  "next_gate": "Paper-design-only R2 story synthesis plus natural-prevalence qualification design. No model/agent/GPU experiment is authorized by this result.",
+  "new_model_calls": 0,
+  "new_agent_runs": 0,
+  "new_gpu_runs": 0,
+  "claim_expansion": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "result_canonical_sha256": "8e856b0dd295edd6f05595a1b3e3ebaf712cd23ffc5cf2bee7def2457f4b01a8"
+}

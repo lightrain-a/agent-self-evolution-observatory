@@ -1,0 +1,198 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "object_id": "STRI-R2-CREDIT-FRAGMENTATION",
+  "stage": "MECHANISM_REDESIGN_NOVELTY_REDUCTION",
+  "status": "SURVIVES_NARROWLY_AS_STAGE_LOCAL_CREDIT_FRAGMENTATION",
+  "scientific_object": "In a self-evolving skill library where a skill identity is simultaneously an action handle, an evidence bucket, and a lifecycle unit, exact semantic refinement can change persistent evolution even after selection is removed: identical semantic evidence is partitioned across identity-local sufficient-statistic containers before a nonlinear lifecycle gate. Representation invariance requires the lifecycle decision to commute with semantic evidence aggregation.",
+  "formal_residual": {
+    "criterion": "g(s_1 ⊕ ... ⊕ s_k) = AND_j g(s_j)",
+    "interpretation": "The left side aggregates evidence at the semantic class before the lifecycle gate; the right side applies the released identity-local lifecycle gate first and then projects identity retirements to the class. A representation defect occurs when they differ.",
+    "threshold_corollary": "For retirement-eligible evidence, additive attempts, and per-ID threshold M, canonical/quotient retirement occurs at N>=M; balanced k-way exact refinement fully retires at N>=kM; the fragmentation window is M<=N<kM and retirement lag is (k-1)M.",
+    "general_partition_corollary": "For an arbitrary exact-identity partition, divergence occurs iff aggregate class evidence passes the lifecycle gate while at least one identity-local evidence bucket fails it.",
+    "not_claimed_as_novel": [
+      "quotient dynamics or lumpability in general",
+      "identity fragmentation as a generic statistical phenomenon",
+      "replication-proof action selection in bandits",
+      "action redundancy in reinforcement learning",
+      "representation-dependent optimization trajectories"
+    ]
+  },
+  "first_party_realization": {
+    "system": "Skill Self-Play (Skill-SP)",
+    "paper": "Skill Self-Play: Pushing the Frontier of LLM Capability with Co-Evolving Skills",
+    "primary_source": "https://arxiv.org/abs/2607.22529",
+    "author_repo": "https://github.com/Qwen-Applications/skill-self-play",
+    "author_commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "released_path": "skill_library/library.py",
+    "official_loop_callsite": "scripts/skill_solver_train.sh -> question_evaluate/upload.py --update_skill_stats --prune_easy_skills",
+    "released_state_mechanism": [
+      "feedback records are grouped by skill_id",
+      "attempts/consistent/too_easy/too_hard/avg_p_hat and related statistics are stored per skill ID",
+      "per-ID statistics affect sampling quality/exploration multipliers",
+      "prune_easy_skills applies min_attempts and difficulty thresholds per ID",
+      "the active skill library is persistent state used by later self-play iterations"
+    ],
+    "default_pruning_gate": {"min_attempts": 8, "avg_p_hat_threshold": 0.75, "too_easy_rate_threshold": 0.6},
+    "natural_prevalence_resolved": false,
+    "natural_prevalence_limitation": "Available release mirrors expose the released loop and initial per-skill stats, but no complete preserved evolved Skill-SP skills.json/retired ledger was found that would establish how frequently endogenous training trajectories enter the fragmentation window."
+  },
+  "deterministic_evidence": {
+    "p0_contract": "generated/asset-first-stri-r2-credit-fragmentation-contract-20260825.json",
+    "p0_result": "generated/asset-first-stri-r2-credit-fragmentation-result-20260825.json",
+    "p0_decision": "PASS_RELEASED_CREDIT_FRAGMENTATION_MECHANISM",
+    "p0_headline": "Eight identical semantic feedback records retire one canonical focal ID; the same eight values split 4/4 across two exact IDs leave the semantic class active; semantic quotient-credit restores the canonical retirement decision. No selection/retrieval is executed before feedback.",
+    "p1_contract": "generated/asset-first-stri-r2-credit-fragmentation-phase-contract-20260825.json",
+    "p1_result": "generated/asset-first-stri-r2-credit-fragmentation-phase-result-20260825.json",
+    "p1_decision": "PASS_CREDIT_FRAGMENTATION_PHASE_DIAGRAM",
+    "p1_grid_cells": 882,
+    "p1_analytic_mismatches": 0,
+    "p1_default_M": 8,
+    "p1_lags_by_k_1_to_6": [0, 8, 16, 24, 32, 40],
+    "theory_code": "research_pipeline/asset_first_stri_r2_credit_fragmentation_theory_20260825.py",
+    "theory_test": "research_pipeline/test_asset_first_stri_r2_credit_fragmentation_theory_20260825.py",
+    "theory_tests": "6/6 PASS",
+    "new_model_calls": 0,
+    "new_agent_runs": 0,
+    "new_gpu_runs": 0
+  },
+  "reduction_matrix": [
+    {
+      "neighbor": "Strategic replication in multi-armed bandits",
+      "primary_source": "https://proceedings.mlr.press/v151/shin22a.html",
+      "what_it_explains": "Replicating equivalent arms can increase an agent's payoff by exploiting the bandit algorithm's exploration/exploitation balance; replication-proof algorithms remove that selection advantage.",
+      "strongest_reduction_attack": "Skill clones simply receive more sampling opportunities.",
+      "same_information_test": "Freeze and externally provide the identical semantic feedback multiset to every representation; execute no selection or retrieval before evidence assignment.",
+      "r2_residual": "P0 still changes the persistent lifecycle decision because evidence is partitioned across per-ID buckets before pruning. The strategic selection advantage is mechanically absent.",
+      "disposition": "RULED_OUT_AS_P0_STAGE_EXPLANATION",
+      "novelty_implication": "Do not claim clone-sensitive sampling as R2 novelty; treat selection duplication as an inherited/known channel."
+    },
+    {
+      "neighbor": "Action redundancy in reinforcement learning",
+      "primary_source": "https://proceedings.mlr.press/v161/baram21a.html",
+      "what_it_explains": "Multiple actions can induce the same transition distribution, so action entropy/selection can overweight redundant actions relative to state-transition diversity.",
+      "strongest_reduction_attack": "Exact skill IDs are just redundant actions.",
+      "same_information_test": "Remove the action-selection stage entirely and intervene after the semantic feedback values are fixed.",
+      "r2_residual": "The observed divergence is a persistent evidence/lifecycle update after fixed feedback, not a difference in selected action or next-state transition.",
+      "disposition": "RULED_OUT_AS_DIRECT_P0_STAGE_EXPLANATION",
+      "novelty_implication": "Do not present exact-skill redundancy itself as new."
+    },
+    {
+      "neighbor": "MDP homomorphism, state abstraction, bisimulation, and lumpability",
+      "primary_source": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/camera-ready-9.pdf",
+      "what_it_explains": "Mature abstraction theory asks when aggregated states/actions preserve model dynamics or decision-relevant properties; general quotient/lumpability formalisms characterize when dynamics descend to an abstract state space.",
+      "strongest_reduction_attack": "The proposed Quotiented Evolution Operator is merely a relabeling of a standard homomorphism/lumpability condition.",
+      "same_information_test": "Separate the abstract quotient criterion from the concrete released update mechanism and require a stage-specific ex-ante phase law plus a first-party counterfactual.",
+      "r2_residual": "The general commuting/quotient equation is fully absorbed and is not claimed as novelty. The surviving contribution is the discovered identity-indexed evidence bucket plus nonlinear lifecycle gate in released self-evolution, its exact fragmentation window, and the semantic-credit intervention.",
+      "disposition": "ABSORBS_GENERAL_QEO_NOT_RELEASED_STAGE_MECHANISM",
+      "novelty_implication": "Never sell quotient existence/commutation alone as a theorem-level novelty."
+    },
+    {
+      "neighbor": "Representation-dependent optimization and implicit bias",
+      "primary_source": "https://proceedings.neurips.cc/paper_files/paper/2022/hash/dfa1106ea7065899b13f2be9da04efb4-Abstract-Conference.html",
+      "what_it_explains": "Equivalent or reparameterized models can follow different gradient trajectories and implicit biases; commuting parametrizations connect gradient flow to mirror descent.",
+      "strongest_reduction_attack": "The future-state difference is just generic reparameterization-dependent learning dynamics.",
+      "same_information_test": "Use a deterministic released controller replay with no gradient, optimizer, learned parameter, or stochastic training trajectory.",
+      "r2_residual": "P0/P1 divergence is generated by sufficient-statistic partition plus a discrete per-ID lifecycle threshold, with a closed-form multiplicity/evidence phase boundary.",
+      "disposition": "RULED_OUT_AS_DIRECT_P0_MECHANISM",
+      "novelty_implication": "Do not use generic 'reparameterization changes learning' as the paper's insight."
+    },
+    {
+      "neighbor": "Identity Fragmentation Bias",
+      "primary_source": "https://pubsonline.informs.org/doi/10.1287/mksc.2022.1360",
+      "what_it_explains": "When one real entity is observed under multiple identifiers, fragmented records can bias inference and the bias can have nontrivial direction and magnitude.",
+      "strongest_reduction_attack": "Credit fragmentation is merely identity fragmentation in another application domain.",
+      "same_information_test": "Require a self-evolving artifact whose identity is simultaneously an action handle, persistent evidence bucket, and lifecycle unit, then show a released nonlinear lifecycle decision changes under exact semantic refinement and affects the next active control library.",
+      "r2_residual": "The abstract fact that identifiers fragment observations is absorbed. The narrower residual is a closed-loop skill-lifecycle mechanism: partition-before-gate changes persistent action availability, with an exact homomorphism criterion, multiplicity-dependent retirement lag, and quotient-credit repair.",
+      "disposition": "CLOSEST_ABSTRACT_NEIGHBOR_SURVIVES_ONLY_WITH_SELF_EVOLVING_LIFECYCLE_RESIDUAL",
+      "novelty_implication": "Never claim generic identity fragmentation/evidence dilution as novel; position the contribution as a representation-invariance failure of persistent skill lifecycle control."
+    },
+    {
+      "neighbor": "P15 PATH-Bench task-order/path-dependence basin",
+      "primary_source": "generated/p15-pathbench-task-order-closure-readjudication-20260824.json",
+      "what_it_explains": "Under fixed skill content/support, changing retrieval/presentation order did not yield a novel residual beyond mature history-conditioned/path-dependence baselines in the closed P15 object.",
+      "strongest_reduction_attack": "The R2 effect is just another generic history/path-dependence effect.",
+      "same_information_test": "Hold feedback sequence/content fixed and remove retrieval/order as an intervention axis; change only exact identity partition of the evidence containers immediately before a released update gate.",
+      "r2_residual": "The ex-ante phase law is stage-local and representation-specific; quotient-credit, not a generic history model, directly restores the canonical lifecycle decision.",
+      "disposition": "DISTINCT_INTERVENTION_OBJECT",
+      "novelty_implication": "Avoid generic hysteresis/path-dependence language and preserve the P15 closure."
+    },
+    {
+      "neighbor": "Internal world-state reconvergence/hysteresis dead-end",
+      "primary_source": "generated/asset-first-skill-taxonomy-representation-invariance-reduction-20260816.json",
+      "what_it_explains": "An earlier reconvergence/hysteresis idea lacked qualified controlled units and was killed rather than upgraded into a mechanism claim.",
+      "strongest_reduction_attack": "R2 merely resurrects a previously killed 'same final state, different path' story.",
+      "same_information_test": "Use a released deterministic update function with an exact identity intervention, a frozen exogenous evidence multiset, and an explicit semantic aggregation control; no world-state reconvergence is required.",
+      "r2_residual": "The mechanism is identified at one lifecycle gate before generic trajectory/hysteresis claims arise.",
+      "disposition": "DISTINCT_STAGE_IDENTIFICATION_PRESERVE_PRIOR_KILL",
+      "novelty_implication": "Do not reopen or cite the old hysteresis object as supporting evidence."
+    },
+    {
+      "neighbor": "SkillOS: learned skill curation for self-evolving agents",
+      "primary_source": "https://arxiv.org/abs/2605.06614",
+      "what_it_explains": "A trainable curator updates a persistent SkillRepo from accumulated experience and learns reuse/refine/create decisions under delayed feedback.",
+      "strongest_reduction_attack": "Persistent skill curation and credit are already a studied self-evolution object.",
+      "same_information_test": "Ask whether exact semantic identity refinement alone, under identical feedback and fixed curator information, is audited for invariance of persistent lifecycle decisions.",
+      "r2_residual": "The published abstract establishes learned curation from accumulated experience, but does not itself identify the exact-identity evidence-partition counterfactual or the aggregation-before-gate invariance criterion.",
+      "disposition": "CLOSE_DOMAIN_NEIGHBOR_NO_DIRECT_ABSORPTION_FOUND",
+      "novelty_implication": "Related work must acknowledge persistent curation; novelty cannot be 'skills receive feedback and evolve'."
+    },
+    {
+      "neighbor": "Rethinking Self-Evolving Agent Skills: Feedback Dynamics over Multiple Rounds",
+      "primary_source": "https://arxiv.org/abs/2608.02636",
+      "what_it_explains": "Controlled multi-round skill evolution varies the feedback shown to the optimizer (success/failure views), studies validation-gated sparse updates, and evaluates persistent skill evolution across benchmarks/models.",
+      "strongest_reduction_attack": "Feedback composition and validation-gated lifecycle dynamics are already analyzed directly.",
+      "same_information_test": "Hold the semantic feedback multiset exactly fixed and vary only the partition of that same evidence across exact-semantic skill identities before a released lifecycle gate.",
+      "r2_residual": "The closest current self-evolution neighbor changes which feedback content/views are available; R2's identifying intervention preserves feedback content and isolates identity partition as the sole changed variable.",
+      "disposition": "STRONGEST_CURRENT_AGENT_MECHANISM_NEIGHBOR_SURVIVES_NARROWLY",
+      "novelty_implication": "R2 must be framed as representation invariance of credit/lifecycle under fixed feedback, not as a general study of feedback dynamics."
+    },
+    {
+      "neighbor": "SkillsVote lifecycle governance",
+      "primary_source": "https://arxiv.org/abs/2605.18401",
+      "what_it_explains": "SkillsVote attributes execution outcomes to skill use, exploration, environment, and result signals and admits reusable discoveries to evidence-gated updates.",
+      "strongest_reduction_attack": "Skill-linked attribution and evidence-gated skill updates are already explicit lifecycle-governance mechanisms.",
+      "same_information_test": "Require an exact-semantic identity split with identical attributed evidence and test whether the evidence gate commutes with class-level aggregation.",
+      "r2_residual": "The published abstract establishes skill-linked outcome attribution and evidence-gated updates but not the exact identity-refinement invariance audit or threshold fragmentation phase law.",
+      "disposition": "CLOSE_LIFECYCLE_NEIGHBOR_NO_DIRECT_ABSORPTION_FOUND",
+      "novelty_implication": "R2 must not claim novelty for skill-linked credit assignment or gated updates themselves."
+    }
+  ],
+  "reduction_summary": {
+    "rows": 10,
+    "fully_absorbed_general_claims": [
+      "generic quotient/lumpability theory",
+      "generic identity fragmentation",
+      "clone-sensitive exploration/selection",
+      "generic action redundancy",
+      "generic representation-dependent optimization trajectory",
+      "generic path dependence/hysteresis"
+    ],
+    "surviving_residual": "Exact semantic identity refinement partitions identical post-selection evidence across persistent skill-local state containers before a nonlinear lifecycle gate, thereby changing the future active skill library; semantic/class-level credit aggregation restores the canonical lifecycle decision.",
+    "why_same_information": "P0/P1 execute no selection/retrieval before feedback, use the identical semantic feedback values, exact focal content/support, the same released functions/defaults, and differ only in identity partition or semantic aggregation of evidence.",
+    "why_mechanistic": "The effect is localized to a named released state variable and update gate, has an exact counterfactual intervention, yields a closed-form phase boundary, and changes the persistent control state used by later self-play rounds.",
+    "why_not_yet_main_story": "Natural prevalence under endogenous Skill-SP trajectories is unresolved; the mechanism has one released system realization; no downstream task-utility consequence or cross-system generality has been established; R19's task-general AutoSkill behavior STOP remains binding."
+  },
+  "gate": {
+    "decision": "GO_ZERO_MODEL_2X2_CONTROLLER_DECOMPOSITION",
+    "allowed_next_step": "Freeze and execute a deterministic 2x2 decomposition of selection handling (native vs semantic quotient) and credit/lifecycle handling (native per-ID vs semantic quotient) using the released Skill-SP controller, to separate the inherited selection-duplication channel from the newly identified post-selection credit-fragmentation channel.",
+    "not_authorized": [
+      "LLM or agent execution",
+      "GPU execution",
+      "new task-utility claims",
+      "cross-system prevalence claims",
+      "task-general behavior claims",
+      "R2 title/manuscript replacement before the decomposition and prevalence gates",
+      "reviving generic QEO, path-dependence, or hysteresis novelty"
+    ],
+    "stop_if": "If a stronger closest work is found that studies exact-semantic identity refinement under identical post-selection feedback and proves/repairs the same persistent lifecycle noncommutativity, or if the 2x2 decomposition cannot isolate a credit-side effect after semantic selection is quotient-corrected, retain canonical R19 and stop R2 redesign."
+  },
+  "source_review_date": "2026-08-25",
+  "fresh_deepseek_r2_review_obtained": false,
+  "fresh_kimi_architect_review_obtained": true,
+  "model_consensus_claimed": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

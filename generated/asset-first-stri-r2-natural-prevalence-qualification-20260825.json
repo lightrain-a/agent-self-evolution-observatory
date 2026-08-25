@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "object_id": "STRI-R2-CREDIT-FRAGMENTATION-NATURAL-PREVALENCE",
+  "stage": "MECHANISM_REDESIGN_NATURAL_PREVALENCE_QUALIFICATION",
+  "decision": "HOLD_NATURAL_PREVALENCE_UNRESOLVED_RUNTIME_OUTPUT_NOT_RELEASED",
+  "pass_code_path_operational": true,
+  "natural_prevalence_established": false,
+  "author_release": {
+    "repo": "https://github.com/Qwen-Applications/skill-self-play",
+    "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "file_sha256": {
+      "library": "8441de35078fc4c70880204c46a06856e99cdde7700ff859097032065e2756e0",
+      "upload": "239b958fa539e7fca0b26b475b619c0181f2f4d279e69e9ec053bb3b503b5ba9",
+      "solver_loop": "e93b61f57ae430cc2f169c7aa5d35d0987151edd716d94d2a372b477daa3aa31",
+      "outer_loop": "6c51f19c9696abe2be236ba058ba24456360e7b965b8fd058de35894a182f54a",
+      "train_launcher": "233610cf323c32b2b95127462cd9ac988b3c83ce026be2d8d4f96e29653b8592",
+      "gitignore": "b8f48949576221cbda83447dbc518f59dfb7ae7b3ee51efcb168be6b22740568"
+    }
+  },
+  "released_loop": {
+    "runtime_library_path": "${STORAGE_PATH}/skill_library/skills.json",
+    "runtime_library_gitignored": true,
+    "retired_archive_default": "${SKILL_SP_LIBRARY_PATH without extension}_retired.jsonl",
+    "default_self_play_iterations": 5,
+    "default_solver_dataset_target_total_records": 8000,
+    "default_prune_min_attempts_per_identity": 8,
+    "stats_updated_before_pruning": true,
+    "stats_are_identity_local": true,
+    "active_library_persists_into_later_iterations": true
+  },
+  "release_inventory": {
+    "tracked_runtime_state_paths": [],
+    "tracked_runtime_state_count": 0,
+    "released_initial_stats_files": 23,
+    "released_initial_stats_with_nonzero_attempts": 0,
+    "local_first_party_mirrors_checked": [
+      {
+        "path": "/data/wyt/agent-self-evolution-observatory/scout-assets/skill-self-play",
+        "present": true,
+        "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+        "evolved_runtime_state_files": [],
+        "evolved_runtime_state_file_count": 0
+      },
+      {
+        "path": "/data/wyt/agent2-asset-first-external/skill-self-play-mechanism-20260824",
+        "present": true,
+        "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+        "evolved_runtime_state_files": [],
+        "evolved_runtime_state_file_count": 0
+      },
+      {
+        "path": "/data/wyt/skill-self-play-agent3-20260816",
+        "present": true,
+        "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+        "evolved_runtime_state_files": [],
+        "evolved_runtime_state_file_count": 0
+      }
+    ]
+  },
+  "opportunity_scale": {
+    "threshold_M": 8,
+    "solver_dataset_target_total_records_per_collection": 8000,
+    "dataset_target_to_threshold_ratio": 1000.0,
+    "interpretation": "The released loop updates identity-local statistics on accepted skill-guided samples and uses M=8, while the default solver dataset target is 8000 total records. This supports that the trigger threshold is small relative to collection scale, but does not reveal the empirical per-skill attempt distribution or fragmentation-window prevalence."
+  },
+  "checks": {
+    "runtime_library_path_declared": true,
+    "runtime_library_ignored_by_git": true,
+    "feedback_stats_updated_in_official_loop": true,
+    "pruning_executed_in_official_loop": true,
+    "per_id_attempts_persisted": true,
+    "per_id_avg_phat_persisted": true,
+    "retired_archive_written": true,
+    "five_iteration_default": true,
+    "default_prune_threshold_is_eight": true,
+    "default_solver_dataset_target_is_8000": true,
+    "no_tracked_evolved_runtime_state": true,
+    "all_released_package_stats_are_initial": true,
+    "no_evolved_runtime_state_in_three_local_release_mirrors": true
+  },
+  "scientific_interpretation": "The first-party Skill-SP release operationalizes exactly the persistent state variables and per-ID pruning gate used by the R2 mechanism, so the mechanism is not an invented toy update rule. However, the public release intentionally gitignores runtime skills.json and does not include evolved skills.json or retired ledgers; three pinned local release mirrors likewise contain no evolved runtime state. Therefore natural entry frequency into M<=N<kM cannot be estimated from released artifacts.",
+  "claim_boundary": "Supports first-party mechanism existence and trigger-opportunity plausibility only. It does not establish endogenous prevalence, downstream utility, cross-system generality, or task-general behavioral propagation.",
+  "next_gate": "Keep R2 as a mechanism candidate with natural prevalence unresolved. Reopen prevalence only with a content-addressed evolved Skill-SP skills.json/retired ledger or a separately preregistered first-party run whose per-skill attempt distribution is frozen before evaluating the R2 phase law.",
+  "new_model_calls": 0,
+  "new_agent_runs": 0,
+  "new_gpu_runs": 0,
+  "claim_expansion": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "result_canonical_sha256": "3ce4fcfe06faaf7e5f6ecd126a02e2b702609f1f89b7fcd292a9087523b42c38"
+}

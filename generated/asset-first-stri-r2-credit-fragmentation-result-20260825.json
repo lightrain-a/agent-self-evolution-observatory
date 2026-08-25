@@ -1,0 +1,191 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "E1.STRI",
+  "experiment_id": "STRI-R2-SKILLSP-CREDIT-FRAGMENTATION-P0-20260825",
+  "stage": "MECHANISM_REDESIGN_DETERMINISTIC_P0_RESULT",
+  "decision": "PASS_RELEASED_CREDIT_FRAGMENTATION_MECHANISM",
+  "pass_gate": true,
+  "contract_sha256": "3a6695c16f8283c3ae87acd0b9b0b21916d6b1cdb5d1352809d24e6e9d3af108",
+  "contract_git_commit": "873a3685066fca11c3bf0853484088e6256e9f81",
+  "author_release": {
+    "repo": "https://github.com/Qwen-Applications/skill-self-play.git",
+    "commit": "bb693c89fee66e1f824d6a777759a49b7a295a83",
+    "source_file": "skill_library/library.py",
+    "source_file_sha256": "8441de35078fc4c70880204c46a06856e99cdde7700ff859097032065e2756e0",
+    "observed_pruning_defaults": {
+      "min_attempts": 8,
+      "avg_p_hat_threshold": 0.75,
+      "too_easy_rate_threshold": 0.6
+    }
+  },
+  "semantic_feedback": {
+    "records": 8,
+    "values": [
+      {
+        "p_hat": 0.9,
+        "consistency": true
+      },
+      {
+        "p_hat": 0.9,
+        "consistency": true
+      },
+      {
+        "p_hat": 0.9,
+        "consistency": true
+      },
+      {
+        "p_hat": 0.9,
+        "consistency": true
+      },
+      {
+        "p_hat": 0.9,
+        "consistency": true
+      },
+      {
+        "p_hat": 0.9,
+        "consistency": true
+      },
+      {
+        "p_hat": 0.9,
+        "consistency": true
+      },
+      {
+        "p_hat": 0.9,
+        "consistency": true
+      }
+    ],
+    "semantic_feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+    "identical_across_arms": true,
+    "selection_or_retrieval_executed_before_feedback": false
+  },
+  "arms": {
+    "A_canonical_native": {
+      "arm": "A_canonical_native",
+      "focal_ids": [
+        "focal"
+      ],
+      "feedback_record_count": 8,
+      "semantic_feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "pre_prune_stats": {
+        "focal": {
+          "attempts": 8,
+          "consistent": 8,
+          "boundary": 0,
+          "verified": 0,
+          "too_easy": 8,
+          "too_hard": 0,
+          "inconsistent": 0,
+          "avg_p_hat": 0.9000000000000001,
+          "last_updated_iteration": 1
+        }
+      },
+      "retired_focal_ids": [
+        "focal"
+      ],
+      "active_focal_ids": [],
+      "focal_semantic_class_active": false,
+      "post_update_focal_native_sampling_probability": 0.0,
+      "library_sha256": "491011743921ce07c4a6eeb2da4c6c94e902fd4539816b6620491035ef38037d"
+    },
+    "B_split2_native": {
+      "arm": "B_split2_native",
+      "focal_ids": [
+        "focal_a",
+        "focal_b"
+      ],
+      "feedback_record_count": 8,
+      "semantic_feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "pre_prune_stats": {
+        "focal_a": {
+          "attempts": 4,
+          "consistent": 4,
+          "boundary": 0,
+          "verified": 0,
+          "too_easy": 4,
+          "too_hard": 0,
+          "inconsistent": 0,
+          "avg_p_hat": 0.9,
+          "last_updated_iteration": 1
+        },
+        "focal_b": {
+          "attempts": 4,
+          "consistent": 4,
+          "boundary": 0,
+          "verified": 0,
+          "too_easy": 4,
+          "too_hard": 0,
+          "inconsistent": 0,
+          "avg_p_hat": 0.9,
+          "last_updated_iteration": 1
+        }
+      },
+      "retired_focal_ids": [],
+      "active_focal_ids": [
+        "focal_a",
+        "focal_b"
+      ],
+      "focal_semantic_class_active": true,
+      "post_update_focal_native_sampling_probability": 0.5464642798145642,
+      "library_sha256": "7986e20e9908a72bb765330a05acb5070bf307cb2e58ecc6d2d61d8c6947a4eb"
+    },
+    "C_split2_quotient_credit": {
+      "arm": "C_split2_quotient_credit",
+      "focal_ids": [
+        "focal_q"
+      ],
+      "feedback_record_count": 8,
+      "semantic_feedback_sha256": "e88a044c6864cf6f29674fa5339df33760932571816fb0549cfed825982f5b12",
+      "pre_prune_stats": {
+        "focal_q": {
+          "attempts": 8,
+          "consistent": 8,
+          "boundary": 0,
+          "verified": 0,
+          "too_easy": 8,
+          "too_hard": 0,
+          "inconsistent": 0,
+          "avg_p_hat": 0.9000000000000001,
+          "last_updated_iteration": 1
+        }
+      },
+      "retired_focal_ids": [
+        "focal_q"
+      ],
+      "active_focal_ids": [],
+      "focal_semantic_class_active": false,
+      "post_update_focal_native_sampling_probability": 0.0,
+      "library_sha256": "491011743921ce07c4a6eeb2da4c6c94e902fd4539816b6620491035ef38037d",
+      "represented_member_ids": [
+        "focal_a",
+        "focal_b"
+      ],
+      "class_representative_id": "focal_q",
+      "projected_active_focal_ids": []
+    }
+  },
+  "headline": {
+    "canonical_attempts": 8,
+    "split_attempts_per_id": [
+      4,
+      4
+    ],
+    "canonical_focal_active_after_prune": false,
+    "split_focal_active_after_prune": true,
+    "quotient_credit_focal_active_after_prune": false,
+    "canonical_future_focal_sampling_probability": 0.0,
+    "split_future_focal_sampling_probability": 0.5464642798145642,
+    "quotient_credit_future_focal_sampling_probability": 0.0
+  },
+  "mechanism_interpretation": "With selection removed and semantic feedback held byte-identical, the released per-ID sufficient-statistic containers and thresholded pruning gate do not commute with exact identity refinement. Evidence fragmentation alone changes the persistent active skill library; quotient-credit restores the canonical class decision.",
+  "claim_boundary": "Deterministic controller-level replay of one released Skill-SP update/pruning mechanism. This does not establish downstream task utility, prevalence under endogenous sampling, cross-system generality, or task-general behavioral propagation.",
+  "next_gate": "Closest-work/reduction audit plus natural released-state prevalence check before any R2 manuscript rewrite or agent/model experiment.",
+  "new_model_calls": 0,
+  "new_agent_runs": 0,
+  "new_gpu_runs": 0,
+  "claim_expansion": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "result_canonical_sha256": "25c574a083b645d703fd5e3a4e5fd74636b4847f70b35c5af0c71838199889f7"
+}
