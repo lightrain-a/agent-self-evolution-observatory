@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-25T19:00:50+00:00",
+  "generated_at": "2026-08-26T18:57:36+00:00",
   "policy": {
     "stage_semantics": "P0 lifecycle entry is distinct from execution authorization",
     "entry_requires": "10/10 admission checks",
@@ -54,7 +54,7 @@
   },
   "economy_gate": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-25T19:00:50+00:00",
+    "generated_at": "2026-08-26T18:57:36+00:00",
     "policy": {
       "schema_version": "1.2",
       "stage_semantics": "resource-economy gate before P0 execution compilation; not a ninth Pre-Experiment gate",
