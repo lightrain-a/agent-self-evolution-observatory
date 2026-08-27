@@ -1,0 +1,38 @@
+{
+  "adjudication": [
+    "Do not reuse historical exact-model qualification for the current DeepSeek release.",
+    "The current resolved identity may provide zero-authority independent scientific consultation if every receipt binds the observed identity.",
+    "Any later scientific execution contract must separately freeze and review the then-current resolved model.",
+    "Kimi requested identity is not assumed; the observed resolved identity is recorded as source of truth."
+  ],
+  "artifact_type": "e2-r17-search-projection-consultation-model-identity-adjudication",
+  "authority": {
+    "consultation": true,
+    "experiment": false,
+    "f0_r4_freeze": false,
+    "gpu": false,
+    "submission": false
+  },
+  "created_at_utc": "2026-08-27T13:32:15+00:00",
+  "current_deepseek_resolved": "deepseek-v4-pro-ga-260813",
+  "historical_deepseek_resolved": "deepseek-v4-pro-260425",
+  "private_credentials_included": false,
+  "qualification_artifact": "generated/e2-r17-search-projection-debate-model-qualification-r2-20260827.json",
+  "qualification_sha256": "56d84ae02d0ad2353abf84f1d0de132fe89e28d1c81a1ba470511decd6092bf1",
+  "release_drift_detected": true,
+  "requested_and_resolved": {
+    "deepseek-v4-pro": {
+      "requested": "deepseek-v4-pro",
+      "resolved": "deepseek-v4-pro-ga-260813",
+      "smoke_status": "FAIL"
+    },
+    "kimi-k3": {
+      "requested": "kimi-k3",
+      "resolved": "kimi-k3",
+      "smoke_status": "PASS"
+    }
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "status": "CONSULTATION_READY_WITH_EXPLICIT_DEEPSEEK_RELEASE_DRIFT"
+}
