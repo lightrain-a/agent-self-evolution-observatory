@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "publication_code": "B1",
+  "compiled_at": "2026-08-27",
+  "status": "FROZEN_DESIGN_HOLD",
+  "scientific_object": {
+    "name": "process-provenance-conditioned marginal memory utility",
+    "question": "After conditioning on actionable memory content and target context, does process provenance contain additional information about downstream marginal utility, through which observable channel can that information affect behavior, and when is it worth using for memory governance?",
+    "non_claims": [
+      "failure-derived memory is inherently low quality",
+      "success-derived memory is inherently trustworthy",
+      "a backend-only relabel can affect an executor that cannot observe it",
+      "the existing L1 writer-mode contrasts identify a provenance-only effect",
+      "PSMG has already improved downstream performance"
+    ]
+  },
+  "identification_ladder": {
+    "L0": "observational process-provenance association; motivation only",
+    "L1": "outcome-conditioned writer-mode bundle under fixed target state; content and register can still change",
+    "L2": "byte-identical actionable memory with an explicit provenance-channel intervention; an unobserved backend-only relabel is an equivalence negative control",
+    "L3": "source-faithful transport on a fresh provenance-bearing substrate"
+  },
+  "estimands": {
+    "marginal_utility": "theta_i(x)=E[Y|do(A_i=1),X=x]-E[Y|do(A_i=0),X=x]",
+    "content_controlled_provenance_gap": "Delta_P(x,c)=E[theta|P=success,C=c,X=x]-E[theta|P=failure,C=c,X=x]",
+    "governance_value_of_information": "V_P=E[max_g E[u(g,theta)|C,X,P]-max_g E[u(g,theta)|C,X]]"
+  },
+  "mechanism_laws": [
+    {
+      "id": "NO_CHANNEL_LAW",
+      "statement": "If neither executor nor governor can observe or use provenance, changing only an unobserved provenance label must not change the behavior distribution; any difference points to an uncontrolled channel or state mismatch."
+    },
+    {
+      "id": "CONTENT_SUFFICIENCY_LAW",
+      "statement": "If marginal utility is conditionally independent of provenance given content and target context, provenance has no incremental decision value and the optimal policy collapses to content-only governance."
+    },
+    {
+      "id": "PROVENANCE_INFORMATION_LAW",
+      "statement": "Provenance matters operationally only when it changes the posterior over marginal utility enough to change an optimal reuse, verification, raw-trace escalation, abstention, or content-only fallback decision."
+    }
+  ],
+  "psmg": {
+    "name": "Provenance-Sensitive Memory Governance",
+    "role": "prospective governance design, not a completed performance claim",
+    "stages": [
+      "CAPTURE: keep actionable content separate from immutable trajectory/evaluator/extractor/transformation lineage",
+      "ESTIMATE: estimate context-conditioned marginal utility with provenance as a shrinkable feature rather than a fixed outcome-quality label",
+      "DECIDE: choose reuse, cautious reuse, verify-then-reuse, raw-trace escalation, abstention, or content-only fallback from expected utility, downside risk, and verification cost",
+      "UPDATE: update contribution estimates only from frozen randomized inclusion/withholding, fixed-context replay, or explicitly modeled bundle interactions",
+      "SAFE_COLLAPSE: shrink provenance influence to zero when support, label reliability, information gain, or transport evidence is inadequate"
+    ]
+  },
+  "experiment_program": {
+    "E0_measurement_qualification": [
+      "provenance-chain integrity through extraction, merge, split, summary, deduplication, and retrieval",
+      "action-semantics plus behavioral information-equivalence audit",
+      "utilization first stage with true, null, reversed, and shuffled memory",
+      "unobserved-label equivalence negative control"
+    ],
+    "E1_association_to_causal_utility": [
+      "separate observed reward/association from randomized or replay-estimated marginal utility",
+      "measure negative-utility success-associated memories and useful failure-derived memories",
+      "report rank and calibration gaps between observational utility and marginal contribution"
+    ],
+    "E2_channel_factorial": [
+      "A0 no memory",
+      "A1 matched content with no visible provenance",
+      "A2 executor-visible provenance only",
+      "A3 governor-visible provenance only",
+      "A4 executor-plus-governor visible provenance",
+      "A5 randomized executor-visible labels",
+      "A6 randomized governor labels",
+      "A7 backend-only relabel equivalence control"
+    ],
+    "E3_regime_law": {
+      "moderators": [
+        "source-target similarity",
+        "raw/distilled/structured representation",
+        "task difficulty",
+        "evaluator reliability",
+        "executor strength",
+        "provenance support",
+        "interaction density",
+        "decision risk"
+      ],
+      "allowed_outcomes": [
+        "PROVENANCE_INFORMATIVE",
+        "CONTENT_SUFFICIENT",
+        "PROVENANCE_CONFOUNDED",
+        "MEMORY_UNUSED",
+        "UNCERTAIN"
+      ]
+    },
+    "E4_psmg_evaluation": {
+      "baselines": [
+        "contribution-aware content-only",
+        "observed-return or Q ranking",
+        "success-only admission",
+        "provenance-only heuristic",
+        "raw-trace verification fallback",
+        "PSMG without shrinkage",
+        "oracle marginal-utility upper bound"
+      ],
+      "metrics": [
+        "terminal utility",
+        "policy regret",
+        "negative-utility reuse rate",
+        "false promotion of negative-utility success memories",
+        "missed useful failure-derived memory rate",
+        "calibration or Brier score",
+        "risk-coverage",
+        "verification and escalation cost",
+        "token, latency, call, and storage cost"
+      ]
+    },
+    "E5_fresh_replication": "Historical R4/R6 and L2 support-stop evidence remain frozen context only and are never pooled into the fresh confirmatory analysis."
+  },
+  "fresh_substrate_gate": [
+    "G1 source outcome provenance comes from an independent environment or evaluator rather than researcher post-labeling",
+    "G2 actionable content can be matched or canonicalized without consulting confirmatory target outcomes",
+    "G3 the intended intervention changes only the declared provenance channel; backend-only relabel is reserved as a negative control",
+    "G4 fresh target tasks are disjoint from historical R19 and the remaining legacy 27 units",
+    "G5 frozen terminal or decisive-action endpoints are replayable under the same evaluator",
+    "G6 independent task, template, or family defines statistical n; seeds and requests are nested repetitions",
+    "G7 matching, exclusion, and support decisions are outcome-blind with respect to confirmatory targets",
+    "G8 manifest, estimands, exclusions, moderators, precision or power rule, and stopping rule are frozen before first confirmatory outcome"
+  ],
+  "historical_evidence_boundary": {
+    "L0": "strong source-bound association remains motivation only",
+    "L1": "writer-mode endpoints remain finite and directionally inconsistent; no provenance-only sign",
+    "L2": "historical exact-information design remains support-stopped at 5/10 with zero calls; this is not a null",
+    "L3": "source-faithful transport debt remains open",
+    "R19": "archived; do not revive to increase experiment count",
+    "legacy_27": "non-confirmatory; do not mine for favorable support"
+  },
+  "literature_boundary_refs": [
+    "arXiv:2606.04990",
+    "arXiv:2607.29167",
+    "arXiv:2606.31270",
+    "arXiv:2608.02636",
+    "arXiv:2608.02843",
+    "arXiv:2601.03192",
+    "arXiv:2502.12110",
+    "repo://paper-story-failure-memory.js"
+  ],
+  "reopen_condition": "Authorize a fresh confirmatory run only after a provenance-bearing substrate passes G1-G8 and the exact channel, content-equivalence contract, utilization first stage, independent inference units, and PSMG evaluation plan are frozen before outcome inspection.",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}
