@@ -115,6 +115,31 @@ def _balanced_selection(metadata: list[dict[str, Any]], *, per_family: int, salt
     return sorted(selected)
 
 
+def _homogeneous_streams(
+    metadata: list[dict[str, Any]],
+    *,
+    role: str,
+    streams_per_family: int,
+    salt: str,
+    prefix: str,
+) -> tuple[dict[str, list[str]], list[str]]:
+    streams: dict[str, list[str]] = {}
+    reserve: list[str] = []
+    for family in FAMILIES:
+        ids = sorted(
+            row["id"]
+            for row in metadata
+            if row["role"] == role and row["primary_failure_family"] == family
+        )
+        required = streams_per_family * 8
+        selected = select_by_hash(ids, count=required, salt=f"{salt}|{family}")
+        reserve.extend(sorted(set(ids) - set(selected)))
+        for index in range(streams_per_family):
+            stream_id = f"{prefix}-{FAMILY_CODES[family]}-{index:02d}"
+            streams[stream_id] = selected[index * 8 : (index + 1) * 8]
+    return streams, sorted(reserve)
+
+
 def _file_rows(output_root: Path) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for path in sorted(output_root.rglob("*")):
@@ -160,16 +185,27 @@ def build_suite(output_root: Path, *, overwrite: bool = False) -> dict[str, Any]
         salt="r17-development-v1",
     )
     calibration = sorted(by_role["e0_calibration"])
-    update_candidates = sorted(by_role["e1_update_candidate"])
-    update = select_by_hash(update_candidates, count=96, salt="r17-e1-update-v1")
-    update_reserve = sorted(set(update_candidates) - set(update))
+    streams, update_reserve = _homogeneous_streams(
+        metadata,
+        role="e1_update_candidate",
+        streams_per_family=2,
+        salt="r17-e1-update-v2",
+        prefix="e1",
+    )
+    update = [task_id for stream_ids in streams.values() for task_id in stream_ids]
     probe = _balanced_selection(
         [row for row in metadata if row["role"] == "e1_heldout_probe_candidate"],
         per_family=3,
-        salt="r17-e1-probe-v1",
+        salt="r17-e1-probe-v2",
     )
-    future = sorted(by_role["e3_future_candidate"])
-    streams = {f"stream_{index:02d}": update[index * 8 : (index + 1) * 8] for index in range(12)}
+    future_streams, future_reserve = _homogeneous_streams(
+        metadata,
+        role="e3_future_candidate",
+        streams_per_family=2,
+        salt="r17-e3-future-v2",
+        prefix="e3",
+    )
+    future = [task_id for stream_ids in future_streams.values() for task_id in stream_ids]
     split_manifest = {
         "schema_version": SCHEMA_VERSION,
         "suite_id": SUITE_ID,
@@ -180,18 +216,22 @@ def build_suite(output_root: Path, *, overwrite: bool = False) -> dict[str, Any]
         "e1_update_streams": streams,
         "e1_update_reserve_integrity_only": update_reserve,
         "e1_common_heldout_probe": probe,
-        "e3_future": future,
+        "e3_future_streams": future_streams,
+        "e3_future_reserve_integrity_only": future_reserve,
         "rules": {
             "development_never_promoted": True,
             "reserve_only_for_preexecution_file_integrity_failure": True,
             "reserve_never_replaces_model_failure_or_bad_outcome": True,
             "e1_probe_never_fed_to_updater": True,
             "e3_future_unseen_until_prediction_freeze": True,
+            "e1_streams_are_single_family": True,
+            "e3_streams_are_single_family": True,
         },
     }
     write_json(output_root / "r17_split_manifest.json", split_manifest)
     train_ids = sorted(set(development + calibration + update + update_reserve))
-    for split_name, ids in (("train", train_ids), ("val", probe), ("test", future)):
+    test_ids = sorted(set(future + future_reserve))
+    for split_name, ids in (("train", train_ids), ("val", probe), ("test", test_ids)):
         write_json(split_root / split_name / "items.json", [{"id": task_id} for task_id in ids])
 
     file_rows = _file_rows(output_root)
@@ -235,16 +275,18 @@ def self_check_suite(output_root: Path) -> dict[str, Any]:
     metadata = json.loads((output_root / "r17_controlled_metadata.json").read_text(encoding="utf-8"))
     split = json.loads((output_root / "r17_split_manifest.json").read_text(encoding="utf-8"))
     ids = [row["id"] for row in records]
-    if len(ids) != 324 or len(ids) != len(set(ids)) or len(metadata) != len(records):
+    if len(ids) != 378 or len(ids) != len(set(ids)) or len(metadata) != len(records):
         raise AssertionError("task or metadata cardinality mismatch")
     update_ids = [task_id for values in split["e1_update_streams"].values() for task_id in values]
+    future_ids = [task_id for values in split["e3_future_streams"].values() for task_id in values]
     role_sets = {
         "development": set(split["development"]),
         "calibration": set(split["e0_calibration"]),
         "update": set(update_ids),
         "reserve": set(split["e1_update_reserve_integrity_only"]),
         "probe": set(split["e1_common_heldout_probe"]),
-        "future": set(split["e3_future"]),
+        "future": set(future_ids),
+        "future_reserve": set(split["e3_future_reserve_integrity_only"]),
     }
     role_names = list(role_sets)
     for index, left in enumerate(role_names):
@@ -253,6 +295,8 @@ def self_check_suite(output_root: Path) -> dict[str, Any]:
                 raise AssertionError(f"split overlap: {left}/{right}")
     if len(update_ids) != 96 or len(split["e1_update_streams"]) != 12:
         raise AssertionError("E1 stream shape mismatch")
+    if len(future_ids) != 96 or len(split["e3_future_streams"]) != 12:
+        raise AssertionError("E3 stream shape mismatch")
     if len(split["e1_common_heldout_probe"]) != 18:
         raise AssertionError("E1 probe shape mismatch")
     for record in records:
@@ -274,6 +318,11 @@ def self_check_suite(output_root: Path) -> dict[str, Any]:
         probe_counts[meta_by_id[task_id]["primary_failure_family"]] += 1
     if set(probe_counts.values()) != {3}:
         raise AssertionError("probe family balance mismatch")
+    for stream_name in ("e1_update_streams", "e3_future_streams"):
+        for stream_id, task_ids in split[stream_name].items():
+            families = {meta_by_id[task_id]["primary_failure_family"] for task_id in task_ids}
+            if len(task_ids) != 8 or len(families) != 1:
+                raise AssertionError(f"non-homogeneous stream: {stream_name}/{stream_id}")
     return {
         "status": "PASS",
         "task_count": len(records),
@@ -282,6 +331,8 @@ def self_check_suite(output_root: Path) -> dict[str, Any]:
         "e1_streams": len(split["e1_update_streams"]),
         "e1_tasks_per_stream": 8,
         "e1_probe_tasks": len(split["e1_common_heldout_probe"]),
-        "e3_future_tasks": len(split["e3_future"]),
+        "e3_streams": len(split["e3_future_streams"]),
+        "e3_tasks_per_stream": 8,
+        "e3_future_tasks": len(future_ids),
         "probe_family_counts": probe_counts,
     }

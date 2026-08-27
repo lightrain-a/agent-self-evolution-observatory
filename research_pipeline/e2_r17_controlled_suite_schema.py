@@ -14,7 +14,7 @@ from typing import Any
 from openpyxl import Workbook
 
 SCHEMA_VERSION = "1.0"
-SUITE_ID = "E2-R17-CONTROLLED-SPREADSHEET-SUITE-V1"
+SUITE_ID = "E2-R17-CONTROLLED-SPREADSHEET-SUITE-V2"
 FAMILIES = (
     "input_output_contract",
     "target_sheet_range",
@@ -51,6 +51,7 @@ BLOCK_ROLES = {
     3: "e1_update_candidate",
     4: "e1_heldout_probe_candidate",
     5: "e3_future_candidate",
+    6: "e3_future_candidate",
 }
 DISTRACTOR_COUNTS = {0: 0, 1: 2, 2: 5}
 

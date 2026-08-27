@@ -30,8 +30,8 @@ class ControlledSpreadsheetSuiteTest(unittest.TestCase):
         cls.temp.cleanup()
 
     def test_cardinality_and_families(self) -> None:
-        self.assertEqual(len(self.records), 324)
-        self.assertEqual(len({row["id"] for row in self.records}), 324)
+        self.assertEqual(len(self.records), 378)
+        self.assertEqual(len({row["id"] for row in self.records}), 378)
         self.assertEqual(set(row["instruction_type"] for row in self.records), set(FAMILIES))
         self.assertEqual(self.check["status"], "PASS")
 
@@ -47,18 +47,29 @@ class ControlledSpreadsheetSuiteTest(unittest.TestCase):
         streams = self.split["e1_update_streams"]
         self.assertEqual(len(streams), 12)
         self.assertTrue(all(len(ids) == 8 for ids in streams.values()))
+        future_streams = self.split["e3_future_streams"]
+        self.assertEqual(len(future_streams), 12)
+        self.assertTrue(all(len(ids) == 8 for ids in future_streams.values()))
         update = {task_id for ids in streams.values() for task_id in ids}
+        future = {task_id for ids in future_streams.values() for task_id in ids}
         groups = [
             set(self.split["development"]),
             set(self.split["e0_calibration"]),
             update,
             set(self.split["e1_update_reserve_integrity_only"]),
             set(self.split["e1_common_heldout_probe"]),
-            set(self.split["e3_future"]),
+            future,
+            set(self.split["e3_future_reserve_integrity_only"]),
         ]
         for index, left in enumerate(groups):
             for right in groups[index + 1 :]:
                 self.assertFalse(left & right)
+
+    def test_streams_are_family_homogeneous(self) -> None:
+        meta = {row["id"]: row for row in self.metadata}
+        for key in ("e1_update_streams", "e3_future_streams"):
+            for task_ids in self.split[key].values():
+                self.assertEqual(len({meta[task_id]["primary_failure_family"] for task_id in task_ids}), 1)
 
     def test_probe_is_family_balanced(self) -> None:
         meta = {row["id"]: row for row in self.metadata}
