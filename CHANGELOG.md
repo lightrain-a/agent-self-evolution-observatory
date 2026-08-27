@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-27 · Effective-HOLD release-watch recovery
+
+- Audited the first-party VibeWorlding-Gym source after a real same-day revision change from `ddb6ff54...` to `ec8bdebf...`. Immutable Git objects show two commits: `LICENSE.md` / `NOTICE.md` were added and the README changed only inside the Citation/licensing section; no outcome-, trajectory-, reward-, result-, or rollout-like artifact was introduced. The release is therefore `RECHECKED_RELEASE_IRRELEVANT`, not scientific reopen evidence.
+- Closed a release-monitor coverage hole for Pre-F0 candidates that initially allowed bounded first-party evidence design but later became source-specific after independent `BLOCK_BAKE_IN`. Release watch and asset recheck now consume the same effective zero-authority support-HOLD population, rather than keying only on the historical `bounded_first_party_evidence_design_allowed` flag.
+- Added a content-addressed `release_watch_contract` bound to candidate snapshot, immutable repository baseline, and required reopen components. PORT-010 now watches VibeWorlding-Gym from `ec8bdebf...`; the remaining frozen reopen component is still `per_case_outcomes`, and a release revision alone cannot qualify support or authorize Problem Gate, method, experiment, P0, GPU, or provider execution.
+- Added an exact-Git source-release audit receipt and replayed the full path `release drift → zero-authority asset recheck → irrelevant-release resolution → HOLD`. The live post-audit watch returns `NO_RELEASE_CHANGE` at the new baseline, while the historical drift replay clears only the recheck task and leaves scientific state unchanged.
+
 ## 2026-08-26 · Fail-closed primary-release reopen semantics
 
 - Split first-party release handling into `RELEASE_CHANGE_AUDIT_ONLY` versus `DESIGN_REVIEW_ONLY`: a changed upstream revision is now recorded without reopening a scientific HOLD unless the frozen reopen condition is actually satisfied.

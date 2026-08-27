@@ -8,7 +8,7 @@ from typing import Any
 
 from .config import StorageSettings
 from .paper_first_search_portfolio_design_adjudication import build_search_portfolio_design_adjudication
-from .paper_first_support_release_watch import load_private_support_release_watch
+from .paper_first_support_release_watch import current_support_holds, load_private_support_release_watch
 
 SCHEMA_VERSION = "1.0"
 QUEUE_STATUS = "AWAIT_ASSET_RECHECK"
@@ -56,22 +56,14 @@ def _support_hold_key(row: dict[str, Any]) -> str:
     return _sha(material)
 
 
-def _current_holds(design_state: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    """Return provenance-keyed unresolved support holds across memory schemas."""
-    memory = design_state.get("shadow_search_memory") or design_state.get("shadow_dead_end_memory") or {}
-    rows = list(memory.get("closed_objects") or memory.get("blocked_objects") or []) + list(memory.get("hold_objects") or [])
+def _current_holds(design_state: dict[str, Any], *, storage: StorageSettings) -> dict[str, dict[str, Any]]:
+    """Return the exact support-HOLD population used by the release watcher."""
     out: dict[str, dict[str, Any]] = {}
-    for row in rows:
-        if not isinstance(row, dict):
+    for row in current_support_holds(design_state, storage=storage):
+        if not isinstance(row, dict) or row.get("scientific_authority") is not False:
             continue
         candidate_id = str(row.get("source_candidate_id") or "")
-        basin = str(row.get("basin") or "")
-        if (
-            candidate_id
-            and str(row.get("disposition") or "") == "HOLD_SUPPORT_UNAVAILABLE"
-            and basin.startswith(("near-miss-terminal-support-hold-", "fresh-phenomenon-support-hold-"))
-            and row.get("dead_end_certified") is not True
-        ):
+        if candidate_id and str(row.get("disposition") or "") == "HOLD_SUPPORT_UNAVAILABLE" and row.get("dead_end_certified") is not True:
             key = _support_hold_key(row)
             out.setdefault(key, dict(row))
     return out
@@ -174,7 +166,7 @@ def build_support_asset_recheck_queue(
         for row in resolution_state.get("resolutions") or []
         if isinstance(row, dict) and str(row.get("candidate_id") or "")
     }
-    holds = _current_holds(design_state)
+    holds = _current_holds(design_state, storage=storage)
     prior_entries: dict[str, dict[str, Any]] = {}
     for row in previous_state.get("entries") or []:
         if not isinstance(row, dict) or row.get("queue_status") != QUEUE_STATUS:

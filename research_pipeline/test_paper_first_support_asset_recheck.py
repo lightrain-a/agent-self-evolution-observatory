@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from .config import StorageSettings
+from .paper_first_support_release_watch import release_watch_contract_sha
 from .paper_first_support_asset_recheck import (
     build_support_asset_recheck_queue,
     public_support_asset_recheck_summary,
@@ -102,6 +103,33 @@ class SupportAssetRecheckQueueTest(unittest.TestCase):
         self.assertEqual(state["entries"][0]["candidate_id"], "FRESH-C1")
         self.assertEqual(state["entries"][0]["source_refs"], ["arXiv:2607.00001"])
         self.assertFalse(state["entries"][0]["scientific_authority"])
+
+    def test_effective_pre_f0_hold_release_change_routes_to_same_asset_recheck_queue(self) -> None:
+        baseline="1"*40;snapshot="3"*64
+        target={"source_ref":"arXiv:2608.15265","url":"https://github.com/usail-hkust/VibeWorlding-Gym","declaration_kind":"FIRST_PARTY_REPOSITORY","baseline_revision":baseline,"scientific_authority":False}
+        contract_sha=release_watch_contract_sha(candidate_id="PORT-010",candidate_snapshot_sha256=snapshot,targets=[target],required_reopen_components=["query_units","per_case_outcomes"])
+        with tempfile.TemporaryDirectory() as td:
+            storage=self.storage(Path(td));storage.site_artifact_dir.mkdir(parents=True,exist_ok=True)
+            preflight={"schema_version":"1.0","run_id":"pre-f0-vwe","support_inventory_sha256":"a"*64,"scientific_authority":False,"authority":{"canonical_generator":False,"canonical_problem_gate":False,"paper_design":False,"method":False,"experiment":False,"p0":False,"gpu":False},"rows":[{
+                "candidate_id":"PORT-010","candidate_snapshot_sha256":snapshot,"disposition":"HOLD_SUPPORT_UNAVAILABLE","scientific_authority":False,
+                "primary_refs":["arXiv:2608.15265"],"required_unit":"VWE query units plus per-case target-model outcomes.","reopen_only_if":"Both frozen release components exist.",
+                "bounded_first_party_evidence_design_allowed":True,"next_route":"BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET",
+            }]}
+            evidence={"scientific_authority":False,"entries":[{"candidate_id":"PORT-010","candidate_snapshot_sha256":snapshot,"status":"HOLD_EVIDENCE_REVIEW_BLOCKED","execution_authorized":False,"scientific_authority":False,"release_watch_contract":{
+                "candidate_id":"PORT-010","candidate_snapshot_sha256":snapshot,"targets":[target],"required_reopen_components":["query_units","per_case_outcomes"],"contract_sha256":contract_sha,"scientific_authority":False,
+            }}]}
+            (storage.site_artifact_dir/"paper-first-pre-f0-problem-falsifier-preflight.json").write_text(__import__("json").dumps(preflight),encoding="utf-8")
+            (storage.site_artifact_dir/"paper-first-pre-f0-evidence-acquisition-plan.json").write_text(__import__("json").dumps(evidence),encoding="utf-8")
+            watch={"rows":[{"candidate_id":"PORT-010","source_ref":"arXiv:2608.15265","url":target["url"],"declaration_kind":"FIRST_PARTY_REPOSITORY","fingerprint":"5"*64,"status":"RECHECK_REQUIRED_RELEASE_CHANGED","scientific_authority":False}],"scientific_authority":False}
+            state=build_support_asset_recheck_queue(storage=storage,watch_state=watch,design_state={"scientific_authority":False},previous_state={},now=datetime(2026,8,27,tzinfo=timezone.utc))
+            digest=state["entries"][0]["latest_trigger_digest"]
+            resolution={"schema_version":"1.0","status":"SUPPORT_ASSET_RESOLUTIONS_RECORDED","scientific_authority":False,"resolutions":[{"candidate_id":"PORT-010","resolved_trigger_digest":digest,"disposition":"RECHECKED_RELEASE_IRRELEVANT","resolution_reason":"The changed source revision contains license/notice changes only and no frozen outcome component.","support_inventory_reaudit_required":False,"support_qualified":False,"generator_reopen_authorized":False,"problem_gate_authorized":False,"scientific_authority":False}]}
+            cleared=build_support_asset_recheck_queue(storage=storage,watch_state={"rows":[],"scientific_authority":False},design_state={"scientific_authority":False},previous_state=state,resolution_state=resolution,now=datetime(2026,8,27,tzinfo=timezone.utc))
+        self.assertEqual(state["status"],"SUPPORT_ASSET_RECHECK_QUEUE_READY");self.assertEqual(state["summary"]["queued"],1)
+        self.assertEqual(state["entries"][0]["candidate_id"],"PORT-010");self.assertFalse(state["entries"][0]["scientific_authority"])
+        self.assertEqual(cleared["status"],"SUPPORT_ASSET_RECHECK_QUEUE_EMPTY")
+        self.assertEqual(cleared["summary"]["resolution_irrelevant_release"],1)
+        self.assertEqual(cleared["summary"]["support_qualified"],0)
 
     def test_release_change_creates_zero_authority_asset_recheck_task(self) -> None:
         with tempfile.TemporaryDirectory() as td:

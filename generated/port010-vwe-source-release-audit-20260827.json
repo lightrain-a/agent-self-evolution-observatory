@@ -1,0 +1,66 @@
+{
+  "schema_version": "port010-source-release-audit-v1",
+  "generated_at": "2026-08-27T13:02:17+00:00",
+  "candidate_id": "PORT-010",
+  "source_repo": "https://github.com/usail-hkust/VibeWorlding-Gym",
+  "baseline_revision": "ddb6ff54d34a2483859960743319f5d5e5b33e96",
+  "observed_revision": "ec8bdebf285fd4f3f2d7e2c00e5324d63ddaa71d",
+  "ahead_by": 2,
+  "commits": [
+    {
+      "sha": "6a260a3c989ea8974110e1fc84cd608f238013c5",
+      "authored_at": "2026-08-27T14:30:17+08:00",
+      "message": "Add files via upload"
+    },
+    {
+      "sha": "ec8bdebf285fd4f3f2d7e2c00e5324d63ddaa71d",
+      "authored_at": "2026-08-27T14:35:11+08:00",
+      "message": "Update README.md"
+    }
+  ],
+  "changed_files": [
+    {
+      "path": "LICENSE.md",
+      "status": "A",
+      "additions": 181,
+      "deletions": 0,
+      "blob_sha": "ae5f52c388b0e08f1036ff65a6a8ca41b4977d6e"
+    },
+    {
+      "path": "NOTICE.md",
+      "status": "A",
+      "additions": 36,
+      "deletions": 0,
+      "blob_sha": "702315c8c7f2cb0020696a7a10ccbf29913118dc"
+    },
+    {
+      "path": "README.md",
+      "status": "M",
+      "additions": 17,
+      "deletions": 0,
+      "blob_sha": "410cffd18a324d2d26c3c40d20bf63102d4f421c"
+    }
+  ],
+  "outcome_artifact_candidate_paths": [],
+  "readme_change_citation_admin_only": true,
+  "admin_only_change": true,
+  "disposition": "RECHECKED_RELEASE_IRRELEVANT",
+  "required_reopen_components": [
+    "query_units",
+    "per_case_outcomes"
+  ],
+  "materialized_reopen_components_from_this_change": [],
+  "remaining_reopen_components": [
+    "per_case_outcomes"
+  ],
+  "qualifying_author_outcome_artifact": false,
+  "support_qualified": false,
+  "generator_reopen_authorized": false,
+  "problem_gate_authorized": false,
+  "method_authorized": false,
+  "experiment_authorized": false,
+  "p0_authorized": false,
+  "gpu_authorized": false,
+  "scientific_authority": false,
+  "audit_sha256": "5da5c47327f7ea2d467e18a5cf35e07c325d5ddec5779725831da35f092750ab"
+}

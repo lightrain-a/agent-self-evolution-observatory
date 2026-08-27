@@ -53,6 +53,33 @@ def _bounded(value: Any, limit: int = 1800) -> str:
     return " ".join(str(value or "").split())[:limit]
 
 
+def release_watch_contract_sha(
+    *,
+    candidate_id: str,
+    candidate_snapshot_sha256: str,
+    targets: list[dict[str, Any]],
+    required_reopen_components: list[str] | tuple[str, ...],
+) -> str:
+    normalized_targets = sorted(
+        ({
+            "source_ref": str(row.get("source_ref") or "").strip(),
+            "url": _clean_url(str(row.get("url") or "")),
+            "declaration_kind": str(row.get("declaration_kind") or "").strip().upper(),
+            "baseline_revision": str(row.get("baseline_revision") or "").strip().lower(),
+            "scientific_authority": False,
+        } for row in targets if isinstance(row, dict)),
+        key=lambda row: (row["source_ref"], row["url"], row["declaration_kind"], row["baseline_revision"]),
+    )
+    material = {
+        "candidate_id": str(candidate_id or "").strip(),
+        "candidate_snapshot_sha256": str(candidate_snapshot_sha256 or "").strip().lower(),
+        "targets": normalized_targets,
+        "required_reopen_components": sorted({str(x).strip() for x in required_reopen_components if str(x).strip()}),
+        "scientific_authority": False,
+    }
+    return _sha(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+
+
 def _terminal_support_holds(design_state: dict[str, Any]) -> list[dict[str, Any]]:
     """Return unresolved terminal support holds across legacy and split memory.
 
@@ -94,9 +121,36 @@ def _load_pre_f0_support_preflight(storage: StorageSettings) -> dict[str, Any]:
     return payload if isinstance(payload, dict) else {}
 
 
+def _load_pre_f0_evidence_plan(storage: StorageSettings) -> dict[str, Any]:
+    path = storage.site_artifact_dir / "paper-first-pre-f0-evidence-acquisition-plan.json"
+    if not path.exists():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    if not isinstance(payload, dict) or payload.get("scientific_authority") is not False:
+        return {}
+    return payload
+
+
 def _pre_f0_support_holds(storage: StorageSettings) -> list[dict[str, Any]]:
-    """Expose only canonical Pre-F0 HOLDs that are explicitly release-change-only."""
+    """Expose canonical Pre-F0 release waits, including evidence-review terminal HOLDs.
+
+    A candidate may have entered Pre-F0 with bounded first-party design allowed and
+    later become source-specific after independent BLOCK_BAKE_IN review.  The release
+    watcher must follow the *effective* evidence state rather than the historical
+    design-eligibility bit; otherwise those terminal HOLDs silently fall out of release
+    monitoring.  The evidence-plan overlay is accepted only when candidate identity,
+    zero authority, and a content-addressed release-watch contract all bind exactly.
+    """
     state = _load_pre_f0_support_preflight(storage)
+    evidence_plan = _load_pre_f0_evidence_plan(storage)
+    evidence_by_id = {
+        str(item.get("candidate_id") or ""): item
+        for item in evidence_plan.get("entries") or []
+        if isinstance(item, dict) and str(item.get("candidate_id") or "")
+    }
     if state.get("scientific_authority") is not False:
         return []
     authority = state.get("authority") or {}
@@ -112,17 +166,48 @@ def _pre_f0_support_holds(storage: StorageSettings) -> list[dict[str, Any]]:
         if not isinstance(row, dict):
             continue
         candidate_id = str(row.get("candidate_id") or "").strip()
-        targets = [dict(target) for target in row.get("release_watch_targets") or [] if isinstance(target, dict)]
         refs = sorted({str(ref).strip() for ref in row.get("primary_refs") or [] if str(ref).strip().startswith("arXiv:")})
+        evidence = evidence_by_id.get(candidate_id) or {}
+        watch_contract = evidence.get("release_watch_contract") or {}
+        contract_targets = [dict(target) for target in watch_contract.get("targets") or [] if isinstance(target, dict)]
+        contract_required = [str(x).strip() for x in watch_contract.get("required_reopen_components") or [] if str(x).strip()]
+        contract_digest = release_watch_contract_sha(
+            candidate_id=candidate_id,
+            candidate_snapshot_sha256=str(evidence.get("candidate_snapshot_sha256") or ""),
+            targets=contract_targets,
+            required_reopen_components=contract_required,
+        ) if evidence and contract_targets else ""
+        effective_hold = bool(
+            evidence
+            and evidence.get("scientific_authority") is False
+            and evidence.get("execution_authorized") is False
+            and str(evidence.get("status") or "") in {"HOLD_EVIDENCE_REVIEW_BLOCKED", "WAIT_PRIMARY_ASSET_RELEASE"}
+            and str(evidence.get("candidate_snapshot_sha256") or "").strip().lower()
+                == str(row.get("candidate_snapshot_sha256") or "").strip().lower()
+            and watch_contract.get("scientific_authority") is False
+            and bool(contract_required)
+            and str(watch_contract.get("contract_sha256") or "").strip().lower() == contract_digest
+        )
+        legacy_release_only = bool(
+            row.get("bounded_first_party_evidence_design_allowed") is False
+            and str(row.get("next_route") or "") == "WAIT_FIRST_PARTY_RELEASE_CHANGE"
+            and str(row.get("support_recheck_mode") or "") == "FIRST_PARTY_RELEASE_CHANGE_ONLY"
+        )
+        targets = [dict(target) for target in row.get("release_watch_targets") or [] if isinstance(target, dict)]
         audit_sha = str(row.get("support_audit_sha256") or "").strip().lower()
+        memory_class = "PRE_F0_RELEASE_CHANGE_ONLY_HOLD"
+        if effective_hold:
+            overlay_targets = contract_targets
+            if overlay_targets:
+                targets = overlay_targets
+                audit_sha = str(watch_contract.get("contract_sha256") or "").strip().lower()
+                memory_class = "PRE_F0_EFFECTIVE_RELEASE_HOLD"
         if (
             not candidate_id
             or candidate_id in seen
             or str(row.get("disposition") or "") != "HOLD_SUPPORT_UNAVAILABLE"
             or row.get("scientific_authority") is not False
-            or row.get("bounded_first_party_evidence_design_allowed") is not False
-            or str(row.get("next_route") or "") != "WAIT_FIRST_PARTY_RELEASE_CHANGE"
-            or str(row.get("support_recheck_mode") or "") != "FIRST_PARTY_RELEASE_CHANGE_ONLY"
+            or not (legacy_release_only or effective_hold)
             or not refs
             or not targets
             or not re.fullmatch(r"[0-9a-f]{64}", audit_sha)
@@ -142,14 +227,15 @@ def _pre_f0_support_holds(storage: StorageSettings) -> list[dict[str, Any]]:
             "evidence_basis": refs,
             "current_source_refs": refs,
             "release_watch_targets": targets,
-            "memory_class": "PRE_F0_RELEASE_CHANGE_ONLY_HOLD",
+            "memory_class": memory_class,
             "dead_end_certified": False,
             "scientific_authority": False,
         })
     return out
 
 
-def _support_holds(design_state: dict[str, Any], *, storage: StorageSettings) -> list[dict[str, Any]]:
+def current_support_holds(design_state: dict[str, Any], *, storage: StorageSettings) -> list[dict[str, Any]]:
+    """Return the zero-authority support-HOLD population used by watch and recheck."""
     rows = _terminal_support_holds(design_state) + _pre_f0_support_holds(storage)
     dedup: dict[tuple[str, str, str], dict[str, Any]] = {}
     for row in rows:
@@ -160,6 +246,10 @@ def _support_holds(design_state: dict[str, Any], *, storage: StorageSettings) ->
         )
         dedup.setdefault(key, row)
     return list(dedup.values())
+
+
+def _support_holds(design_state: dict[str, Any], *, storage: StorageSettings) -> list[dict[str, Any]]:
+    return current_support_holds(design_state, storage=storage)
 
 
 def _arxiv_ids(row: dict[str, Any]) -> list[str]:
@@ -863,6 +953,7 @@ def run_support_release_watch(
             "primary_declaration_refresh_max_per_run": int(max_primary_refreshes),
             "primary_declaration_refresh_cooldown_days": float(primary_refresh_cooldown_days),
             "github_release_fingerprint_ignores_doc_only_churn": True,
+            "revision_bound_targets_recheck_on_any_commit_drift": True,
             "release_surface_fingerprint_version": FINGERPRINT_VERSION,
             "cooldown_days": float(cooldown_days),
         },

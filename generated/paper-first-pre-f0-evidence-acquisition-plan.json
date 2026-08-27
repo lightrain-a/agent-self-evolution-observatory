@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-25T17:51:10+00:00",
+  "generated_at": "2026-08-27T13:03:09+00:00",
   "run_id": "canonical-pre-f0-20260824T061140Z",
   "status": "EVIDENCE_WAIT_OR_HOLD",
   "policy": {
@@ -40,7 +40,8 @@
     "canonical_pre_f0_support_hold_adapter_zero_authority": true,
     "support_qualified_bypasses_evidence_design_adapter": true,
     "release_change_only_hold_remains_waiting": true,
-    "release_change_without_reopen_condition_stays_hold": true
+    "release_change_without_reopen_condition_stays_hold": true,
+    "effective_hold_release_watch_uses_current_reopen_contract": true
   },
   "portfolio": {
     "selection": "bounded-top-k",
@@ -601,7 +602,7 @@
           "scientific_authority": false
         }
       ],
-      "release_change_feedback": "Metadata release is provenance-bearing support, not a qualifying outcome release. PORT-010 remains HOLD; self-generated main.py/eval.py outcomes cannot be represented as author-released evidence.",
+      "release_change_feedback": "VibeWorlding-Gym source revision changed, but the exact Git diff is licensing/citation-only and materializes no frozen reopen component. PORT-010 remains HOLD; future source changes are watched from the new immutable baseline.",
       "release_change_adjudication": {
         "release_change_detected": true,
         "qualifying_author_outcome_artifact": false,
@@ -624,6 +625,76 @@
         "remaining_reopen_components": [
           "per_case_outcomes"
         ]
+      },
+      "release_watch_contract": {
+        "candidate_id": "PORT-010",
+        "candidate_snapshot_sha256": "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3",
+        "targets": [
+          {
+            "source_ref": "arXiv:2608.15265",
+            "url": "https://github.com/usail-hkust/VibeWorlding-Gym",
+            "declaration_kind": "FIRST_PARTY_REPOSITORY",
+            "baseline_revision": "ec8bdebf285fd4f3f2d7e2c00e5324d63ddaa71d",
+            "scientific_authority": false
+          }
+        ],
+        "required_reopen_components": [
+          "query_units",
+          "per_case_outcomes"
+        ],
+        "remaining_reopen_components": [
+          "per_case_outcomes"
+        ],
+        "contract_sha256": "930c32df3fe11e0d67e1ddf35b11dc12d4ed952aa0ffe6cff3edc0435fd3ad9b",
+        "scientific_authority": false
+      },
+      "source_release_audit_count": 1,
+      "source_release_audit_history": [
+        {
+          "audited_at": "2026-08-27T13:02:17+00:00",
+          "audit_artifact": "generated/port010-vwe-source-release-audit-20260827.json",
+          "audit_sha256": "5da5c47327f7ea2d467e18a5cf35e07c325d5ddec5779725831da35f092750ab",
+          "source_repo": "https://github.com/usail-hkust/VibeWorlding-Gym",
+          "baseline_revision": "ddb6ff54d34a2483859960743319f5d5e5b33e96",
+          "observed_revision": "ec8bdebf285fd4f3f2d7e2c00e5324d63ddaa71d",
+          "ahead_by": 2,
+          "changed_paths": [
+            "LICENSE.md",
+            "NOTICE.md",
+            "README.md"
+          ],
+          "outcome_artifact_candidate_paths": [],
+          "disposition": "RECHECKED_RELEASE_IRRELEVANT",
+          "materialized_reopen_components_from_this_change": [],
+          "remaining_reopen_components": [
+            "per_case_outcomes"
+          ],
+          "support_qualified": false,
+          "scientific_reopen_authorized": false,
+          "scientific_authority": false
+        }
+      ],
+      "latest_source_release_adjudication": {
+        "observed_revision": "ec8bdebf285fd4f3f2d7e2c00e5324d63ddaa71d",
+        "disposition": "RECHECKED_RELEASE_IRRELEVANT",
+        "admin_only_change": true,
+        "readme_change_citation_admin_only": true,
+        "outcome_artifact_candidate_paths": [],
+        "required_reopen_components": [
+          "query_units",
+          "per_case_outcomes"
+        ],
+        "materialized_reopen_components": [
+          "query_units"
+        ],
+        "remaining_reopen_components": [
+          "per_case_outcomes"
+        ],
+        "effective_status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+        "execution_authorized": false,
+        "provider_authority": false,
+        "gpu_authority": false,
+        "scientific_authority": false
       }
     },
     {
