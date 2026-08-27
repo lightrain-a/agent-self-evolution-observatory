@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-08-27",
+  "as_of_date": "2026-08-28",
   "projection_policy": {
     "read_only": true,
     "scientific_authority": false,
@@ -413,9 +413,9 @@
   ],
   "week": {
     "start_date": "2026-08-24",
-    "end_date": "2026-08-27",
-    "research_days": 4,
-    "events": 264,
+    "end_date": "2026-08-28",
+    "research_days": 5,
+    "events": 268,
     "substantive_events": 120,
     "key_changes": 2,
     "class_counts": {
@@ -424,7 +424,7 @@
       "experiment": 27,
       "idea": 16,
       "paper": 37,
-      "system": 144
+      "system": 148
     },
     "attention_activity": {
       "B-3": 1,
@@ -455,18 +455,7 @@
         "href": "research-timeline.html"
       },
       {
-        "date": "2026-08-27",
-        "event_class": "closure",
-        "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
-        "title_en": "paper-first-pf1-problem-adjudication",
-        "research_items": [
-          "A-8"
-        ],
-        "papers": [],
-        "href": "research-timeline.html?research=A-8"
-      },
-      {
-        "date": "2026-08-27",
+        "date": "2026-08-28",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · repair-surface-identifiability-under-persistent-agent-updates",
         "title_en": "paper-first-pf2-method-adjudication",
@@ -477,13 +466,24 @@
         "href": "research-timeline.html?research=E-5"
       },
       {
-        "date": "2026-08-27",
+        "date": "2026-08-28",
         "event_class": "closure",
-        "title_zh": "停止 / 关闭裁决 · trajectory-mediated-memory-effect-transport",
-        "title_en": "paper-first-post-c2-adjudication",
+        "title_zh": "停止 / 关闭裁决 · SCG-001",
+        "title_en": "Semantic Commit Gap: persisted self-update versus future enactment",
         "research_items": [],
         "papers": [],
         "href": "research-timeline.html"
+      },
+      {
+        "date": "2026-08-28",
+        "event_class": "closure",
+        "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
+        "title_en": "paper-first-pf1-problem-adjudication",
+        "research_items": [
+          "A-8"
+        ],
+        "papers": [],
+        "href": "research-timeline.html?research=A-8"
       }
     ],
     "timeline_href": "research-timeline.html"
