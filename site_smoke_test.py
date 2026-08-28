@@ -232,7 +232,8 @@ def main() -> None:
         fail("transient operational memory cannot enter research query packs")
     discovery_lessons = [row for row in research_memory.get("entries") or [] if isinstance(row, dict) and row.get("kind") == "DISCOVERY_LESSON"]
     discovery_cycle = json.loads((ROOT / "generated" / "longitudinal-safety-discovery-cycle-20260823.json").read_text(encoding="utf-8"))
-    expected_discovery_lessons = int((discovery_cycle.get("summary") or {}).get("failure_lessons") or 0)
+    memory_sources = research_memory.get("source_manifest") or {}
+    expected_discovery_lessons = int((discovery_cycle.get("summary") or {}).get("failure_lessons") or 0) + int(memory_sources.get("result_analysis_lessons") or 0)
     if expected_discovery_lessons < 19 or int((research_memory.get("summary") or {}).get("discovery_lessons") or 0) != expected_discovery_lessons or len(discovery_lessons) != expected_discovery_lessons:
         fail(f"Research Memory must expose all canonical longitudinal discovery lessons: expected={expected_discovery_lessons} summary={(research_memory.get('summary') or {}).get('discovery_lessons')} rows={len(discovery_lessons)}")
     if any(row.get("scientific_authority") is not False or row.get("principle_update_allowed") is not False for row in discovery_lessons):
@@ -496,7 +497,7 @@ def main() -> None:
     # user questions/actions before exposing internal machine terminology.
     clarity_markers = {
         "data.js": ("集中回答四个具体问题", "统一科研工作区", "每个 ResearchItem"),
-        "content-system-overview.js": ("一个研究方向，怎样才能变成实验，再变成论文", "AI 评审负责找文献撞车", "只有人工负责人可以改变核心科学主张"),
+        "content-system-overview.js": ("一个研究方向，怎样才能变成实验，再变成论文", "AI 负责找撞车和风险", "只有人工负责人可以改变核心科学主张"),
         "system-overview-reader.js": ("先确认异常现象真实存在", "这个最小实验无论成功或失败，都会改变下一步吗", "什么时候才允许说“这个原理走不通”", "终止结论、搜索记忆和历史 snapshot 必须分层读取", "关闭一个 Idea 不会让下一个 Idea 自动晋级"),
         "system-overview-operations.js": ("长实验怎样安全启动、断线后怎样继续", "哪些文件必须留下，才能以后证明当时到底发生了什么"),
         "content-idea-portfolio.js": ("这页不是“看起来不错的 Idea 清单”", "最近一轮问题发现又审查了 41 条草案", "先从 ResearchItem 理解问题和当前结论"),
