@@ -16,6 +16,8 @@ SRC = HERE / "source"
 OUT_PDF = HERE / "C1-stage-resolved-r6-final.pdf"
 OUT_ZIP = HERE / "C1-stage-resolved-r6-final-source.zip"
 OUT_MANIFEST = HERE / "c1-r6-package-manifest-20260828.json"
+SUPPLEMENT = HERE / "C1-stage-resolved-r6-final-supplement.zip"
+SUPPLEMENT_RUNNER = HERE / "package_c1_r6_supplement.py"
 CLAIM_RUNNER = HERE / "run_claim_audit_r6.py"
 CLAIM_AUDIT = HERE / "claim-audit-r6-provenance-seal-20260828.json"
 SENSITIVITY = HERE / "stage-evidence-sensitivity-audit-20260826.json"
@@ -37,6 +39,9 @@ EXPECTED = {
     "claim_audit": "f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c",
     "sensitivity": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba",
     "stage": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa",
+    "pdf": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70",
+    "source_zip": "1b39471799d0ae3efc41b4e42a5b744efc7d82c9e2efce82eeea80dd7085872b",
+    "supplement": "c32ba76812af24c515176810bf67506cadcf46068e3a4c46333e65e68e4bde64",
 }
 
 
@@ -88,6 +93,12 @@ def main() -> None:
             info.external_attr = 0o100644 << 16
             archive.writestr(info, data, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
 
+    if sha(OUT_PDF) != EXPECTED["pdf"] or sha(OUT_ZIP) != EXPECTED["source_zip"]:
+        raise RuntimeError("R6 sealed PDF/source hash drift")
+    run([sys.executable, str(SUPPLEMENT_RUNNER)], cwd=HERE)
+    if not SUPPLEMENT.is_file() or sha(SUPPLEMENT) != EXPECTED["supplement"]:
+        raise RuntimeError("R6 supplement projection hash drift")
+
     source_hashes = {rel: sha(SRC / rel) for rel in sorted(SOURCE_FILES)}
     payload = {
         "schema_version": "1.0",
@@ -104,6 +115,7 @@ def main() -> None:
         "artifacts": {
             "pdf": {"path": str(OUT_PDF.relative_to(ROOT)), "sha256": sha(OUT_PDF)},
             "source_zip": {"path": str(OUT_ZIP.relative_to(ROOT)), "sha256": sha(OUT_ZIP)},
+            "supplement_zip": {"path": str(SUPPLEMENT.relative_to(ROOT)), "sha256": sha(SUPPLEMENT)},
             "claim_audit": {"path": str(CLAIM_AUDIT.relative_to(ROOT)), "sha256": EXPECTED["claim_audit"], "replay": "35/35 PASS", "revision": "R6"},
             "sensitivity_audit": {"path": str(SENSITIVITY.relative_to(ROOT)), "sha256": EXPECTED["sensitivity"]},
             "stage_evidence": {"path": str(STAGE.relative_to(ROOT)), "sha256": EXPECTED["stage"]},

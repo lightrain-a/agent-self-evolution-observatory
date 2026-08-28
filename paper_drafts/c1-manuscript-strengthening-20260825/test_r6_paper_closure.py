@@ -20,6 +20,8 @@ class C1R6PaperClosureTest(unittest.TestCase):
     def test_r6_sealed_artifacts_are_content_addressed(self) -> None:
         self.assertEqual(sha(HERE / "C1-stage-resolved-r6-final.pdf"), "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70")
         self.assertEqual(sha(HERE / "C1-stage-resolved-r6-final-source.zip"), "1b39471799d0ae3efc41b4e42a5b744efc7d82c9e2efce82eeea80dd7085872b")
+        self.assertEqual(sha(HERE / "C1-stage-resolved-r6-final-supplement.zip"), "c32ba76812af24c515176810bf67506cadcf46068e3a4c46333e65e68e4bde64")
+        self.assertEqual(sha(HERE / "c1-r6-package-manifest-20260828.json"), "73d2ec933fa4976f70400dafd17aa0cd9482515c4dd813a012c834822eab875c")
         self.assertEqual((SRC / "main.pdf").read_bytes(), (HERE / "C1-stage-resolved-r6-final.pdf").read_bytes())
 
     def test_claim_audit_is_replayable_and_complete(self) -> None:

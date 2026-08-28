@@ -22,6 +22,10 @@
     "stage_evidence": {
       "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
       "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+    },
+    "supplement_zip": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r6-final-supplement.zip",
+      "sha256": "c32ba76812af24c515176810bf67506cadcf46068e3a4c46333e65e68e4bde64"
     }
   },
   "authority": {
@@ -50,7 +54,7 @@
     "new_scientific_experiments": 0,
     "new_scientific_provider_calls": 0
   },
-  "manifest_sha256": "88754e40233912f2e9b63405f49d9cbe69155f8261f678d934c8450e8d1010cc",
+  "manifest_sha256": "8f55c4e069088cb02e467161a88f4334510509372cbe1390c0d174963d5a48d2",
   "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
   "paper_only_revision": true,
   "revision_id": "C1-STAGE-SIGNATURE-R6-CLAIM-PROVENANCE-SEAL-20260828",

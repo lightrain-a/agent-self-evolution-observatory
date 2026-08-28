@@ -19,6 +19,7 @@ SRC = HERE / "source"
 PDF = HERE / "C1-stage-resolved-r6-final.pdf"
 SOURCE_ZIP = HERE / "C1-stage-resolved-r6-final-source.zip"
 MANIFEST = HERE / "c1-r6-package-manifest-20260828.json"
+SUPPLEMENT = HERE / "C1-stage-resolved-r6-final-supplement.zip"
 PROVENANCE = HERE / "c1-r6-provenance-reconciliation-20260828.json"
 PROVENANCE_RUNNER = HERE / "compile_c1_r6_provenance_reconciliation.py"
 SENSITIVITY = HERE / "stage-evidence-sensitivity-audit-20260826.json"
@@ -32,7 +33,8 @@ SOURCE_DATE_EPOCH = "1787875200"
 EXPECTED = {
     "pdf": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70",
     "source_zip": "1b39471799d0ae3efc41b4e42a5b744efc7d82c9e2efce82eeea80dd7085872b",
-    "manifest_file": "6d0b0b21be4be841c9d1300145cfeaf06d5502a90cb26e8a60e33b434c9c8a76",
+    "manifest_file": "73d2ec933fa4976f70400dafd17aa0cd9482515c4dd813a012c834822eab875c",
+    "supplement": "c32ba76812af24c515176810bf67506cadcf46068e3a4c46333e65e68e4bde64",
     "sensitivity": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba",
     "stage": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa",
     "claim_audit": "f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c",
@@ -79,7 +81,7 @@ def first_meaningful_page_line(pdf: Path, page: int) -> str:
 
 
 def main() -> None:
-    for path in (PDF, SOURCE_ZIP, MANIFEST, PROVENANCE_RUNNER, SENSITIVITY, STAGE, CLAIM_AUDIT, CLAIM_RUNNER, CLAIM_REGISTRY):
+    for path in (PDF, SOURCE_ZIP, MANIFEST, SUPPLEMENT, PROVENANCE_RUNNER, SENSITIVITY, STAGE, CLAIM_AUDIT, CLAIM_RUNNER, CLAIM_REGISTRY):
         if not path.is_file():
             raise RuntimeError(f"missing R6 QA input: {path}")
 
@@ -173,6 +175,7 @@ def main() -> None:
         sha(PDF) == EXPECTED["pdf"]
         and sha(SOURCE_ZIP) == EXPECTED["source_zip"]
         and sha(MANIFEST) == EXPECTED["manifest_file"]
+        and sha(SUPPLEMENT) == EXPECTED["supplement"]
         and sha(SENSITIVITY) == EXPECTED["sensitivity"]
         and sha(STAGE) == EXPECTED["stage"]
         and sha(CLAIM_AUDIT) == EXPECTED["claim_audit"]
@@ -250,6 +253,7 @@ def main() -> None:
             "pdf": {"path": str(PDF.relative_to(ROOT)), "sha256": sha(PDF)},
             "source_zip": {"path": str(SOURCE_ZIP.relative_to(ROOT)), "sha256": sha(SOURCE_ZIP)},
             "package_manifest": {"path": str(MANIFEST.relative_to(ROOT)), "sha256": sha(MANIFEST)},
+            "supplement_zip": {"path": str(SUPPLEMENT.relative_to(ROOT)), "sha256": sha(SUPPLEMENT)},
             "provenance_reconciliation": {"path": str(PROVENANCE.relative_to(ROOT)), "sha256": sha(PROVENANCE)},
             "sensitivity_audit": {"path": str(SENSITIVITY.relative_to(ROOT)), "sha256": sha(SENSITIVITY)},
             "stage_evidence": {"path": str(STAGE.relative_to(ROOT)), "sha256": sha(STAGE)},

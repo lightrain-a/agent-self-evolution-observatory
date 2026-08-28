@@ -18,6 +18,7 @@ R5_RECHECK = HERE / "mock-pc-r4-targeted-repair-recheck-20260826.json"
 R6_PDF = HERE / "C1-stage-resolved-r6-final.pdf"
 R6_ZIP = HERE / "C1-stage-resolved-r6-final-source.zip"
 R6_MANIFEST = HERE / "c1-r6-package-manifest-20260828.json"
+R6_SUPPLEMENT = HERE / "C1-stage-resolved-r6-final-supplement.zip"
 SENSITIVITY = HERE / "stage-evidence-sensitivity-audit-20260826.json"
 CLAIM_AUDIT = HERE / "claim-audit-r6-provenance-seal-20260828.json"
 CLAIM_RUNNER = HERE / "run_claim_audit_r6.py"
@@ -33,7 +34,8 @@ EXPECTED = {
     "claim_audit": "f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c",
     "r6_pdf": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70",
     "r6_zip": "1b39471799d0ae3efc41b4e42a5b744efc7d82c9e2efce82eeea80dd7085872b",
-    "r6_manifest_file": "6d0b0b21be4be841c9d1300145cfeaf06d5502a90cb26e8a60e33b434c9c8a76",
+    "r6_manifest_file": "73d2ec933fa4976f70400dafd17aa0cd9482515c4dd813a012c834822eab875c",
+    "r6_supplement": "c32ba76812af24c515176810bf67506cadcf46068e3a4c46333e65e68e4bde64",
 }
 
 
@@ -67,12 +69,12 @@ def zip_sha_map(path: Path) -> dict[str, str]:
 
 
 def main() -> None:
-    for path in (R5_PDF, R5_ZIP, R5_RECHECK, R6_PDF, R6_ZIP, R6_MANIFEST, SENSITIVITY, CLAIM_AUDIT, CLAIM_RUNNER):
+    for path in (R5_PDF, R5_ZIP, R5_RECHECK, R6_PDF, R6_ZIP, R6_MANIFEST, R6_SUPPLEMENT, SENSITIVITY, CLAIM_AUDIT, CLAIM_RUNNER):
         require(path.is_file(), f"missing provenance input: {path}")
     for key, path in (
         ("r5_pdf", R5_PDF), ("r5_zip", R5_ZIP), ("r5_recheck", R5_RECHECK),
         ("current_sensitivity", SENSITIVITY), ("claim_audit", CLAIM_AUDIT),
-        ("r6_pdf", R6_PDF), ("r6_zip", R6_ZIP), ("r6_manifest_file", R6_MANIFEST),
+        ("r6_pdf", R6_PDF), ("r6_zip", R6_ZIP), ("r6_manifest_file", R6_MANIFEST), ("r6_supplement", R6_SUPPLEMENT),
     ):
         require(sha(path) == EXPECTED[key], f"{key} SHA drift")
 
@@ -117,6 +119,7 @@ def main() -> None:
     artifacts = r6_manifest.get("artifacts") or {}
     require(str((artifacts.get("pdf") or {}).get("sha256") or "") == EXPECTED["r6_pdf"], "R6 manifest PDF binding drift")
     require(str((artifacts.get("source_zip") or {}).get("sha256") or "") == EXPECTED["r6_zip"], "R6 manifest source-ZIP binding drift")
+    require(str((artifacts.get("supplement_zip") or {}).get("sha256") or "") == EXPECTED["r6_supplement"], "R6 manifest supplement binding drift")
     require(str((artifacts.get("claim_audit") or {}).get("sha256") or "") == EXPECTED["claim_audit"], "R6 manifest claim-audit binding drift")
 
     payload = {
@@ -139,6 +142,7 @@ def main() -> None:
             "pdf_sha256": EXPECTED["r6_pdf"],
             "source_zip_sha256": EXPECTED["r6_zip"],
             "package_manifest_file_sha256": EXPECTED["r6_manifest_file"],
+            "supplement_sha256": EXPECTED["r6_supplement"],
             "sensitivity_sha256": EXPECTED["current_sensitivity"],
             "claim_audit_sha256": EXPECTED["claim_audit"],
             "claim_audit_replay": "35/35 PASS",

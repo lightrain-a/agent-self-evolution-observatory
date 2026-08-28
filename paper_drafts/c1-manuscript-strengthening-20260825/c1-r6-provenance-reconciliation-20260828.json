@@ -57,11 +57,12 @@
         "sha256": "24d44350b7c7a3ab21bfb08b67425312c5f03e1aeebb8389f2c4fabb9ad5bc5c"
       }
     ],
-    "package_manifest_file_sha256": "6d0b0b21be4be841c9d1300145cfeaf06d5502a90cb26e8a60e33b434c9c8a76",
+    "package_manifest_file_sha256": "73d2ec933fa4976f70400dafd17aa0cd9482515c4dd813a012c834822eab875c",
     "paper_only_revision": true,
     "pdf_sha256": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70",
     "sensitivity_sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba",
-    "source_zip_sha256": "1b39471799d0ae3efc41b4e42a5b744efc7d82c9e2efce82eeea80dd7085872b"
+    "source_zip_sha256": "1b39471799d0ae3efc41b4e42a5b744efc7d82c9e2efce82eeea80dd7085872b",
+    "supplement_sha256": "c32ba76812af24c515176810bf67506cadcf46068e3a4c46333e65e68e4bde64"
   },
   "contract_sha256": "c6cd6e451dd5a7a610ef89f7b2e4ce3e54a70fb568889c6304c33e66dc50bd0e",
   "historical_r5": {
