@@ -1,0 +1,164 @@
+{
+  "arms": [
+    {
+      "arm": "winner_only",
+      "checks": {
+        "eight_consumed": true,
+        "eight_summaries": true,
+        "evolved": true,
+        "one_new_version": true,
+        "same_acting_scores": true,
+        "skill_content_addressed": true,
+        "ten_updater_calls": true
+      },
+      "skill_post_sha256": "db9d1a450a41f715d02870597a2c226e393693e0f0dc4e2ab92f94bd696e44a0",
+      "stream_sha256": "f76543ca5fc5aa951c0c54f9b62008a9f4061148ef7ebf93c445b9eea45fea95",
+      "update_receipt_sha256": "6db95338dac6832501b32a51eb6dbb589d709c58859e06fc293f561f43c5a864"
+    },
+    {
+      "arm": "precommitted_always",
+      "checks": {
+        "eight_consumed": true,
+        "eight_summaries": true,
+        "evolved": true,
+        "one_new_version": true,
+        "same_acting_scores": true,
+        "skill_content_addressed": true,
+        "ten_updater_calls": true
+      },
+      "skill_post_sha256": "3254eacd6d07966480d210627b929f14ea84f35c5ca1e2bfd3498625be43102a",
+      "stream_sha256": "73c7e6ea0716a3b81345026f0bc0febf606d5e5f424c804ceec30a7fb8aa9e14",
+      "update_receipt_sha256": "eb49fb0f25d1dc025263e7813fdd103eeb7ccf2bede8d103ec7345c194e5ba11"
+    },
+    {
+      "arm": "rejected_witness",
+      "checks": {
+        "eight_consumed": true,
+        "eight_summaries": true,
+        "evolved": true,
+        "one_new_version": true,
+        "same_acting_scores": true,
+        "skill_content_addressed": true,
+        "ten_updater_calls": true
+      },
+      "skill_post_sha256": "b0e917b1106ad165554e29314c9ae3abfb23bd9bd6a080105bf0a55deda2a3c3",
+      "stream_sha256": "86a04231eefdf21b8890cb4aec1f23b3e61fb94c9e8d924119ed3320841c9548",
+      "update_receipt_sha256": "e71fefee664351278cd5805b21c9e675608cca1e4c4afc98feeecbba8802c515"
+    },
+    {
+      "arm": "duplicated_winner",
+      "checks": {
+        "eight_consumed": true,
+        "eight_summaries": true,
+        "evolved": true,
+        "one_new_version": true,
+        "same_acting_scores": true,
+        "skill_content_addressed": true,
+        "ten_updater_calls": true
+      },
+      "skill_post_sha256": "f86ab25d0000ee51edf023aaa5721b9bd7e26502b20128646ecc5b99bf155ba4",
+      "stream_sha256": "4dfc2c1cf506c878d92226c43a52aef8a371e3468c30557d39ae5c8ecbbbca05",
+      "update_receipt_sha256": "8b9668c684bf2971c2c1dfe54e9a02169906dc8e6ada3d49da9116bd0a775f1a"
+    },
+    {
+      "arm": "winner_random_nonwinner",
+      "checks": {
+        "eight_consumed": true,
+        "eight_summaries": true,
+        "evolved": true,
+        "one_new_version": true,
+        "same_acting_scores": true,
+        "skill_content_addressed": true,
+        "ten_updater_calls": true
+      },
+      "skill_post_sha256": "1d588db5eea82e6b8cc8a43a3ad7a7ec1ead1a7a36b38b2f91d7422a9a12cf27",
+      "stream_sha256": "0d0d400918e45f71eb5428769e9c4a24889ec68c5e20986228e6ab4aac1ec984",
+      "update_receipt_sha256": "2822a5895e93dff89b30585135a6e4907a3986ddb45282ce5056e08caaf56679"
+    },
+    {
+      "arm": "skillcat_style_contrast",
+      "checks": {
+        "eight_consumed": true,
+        "eight_summaries": true,
+        "evolved": true,
+        "one_new_version": true,
+        "same_acting_scores": true,
+        "skill_content_addressed": true,
+        "ten_updater_calls": true
+      },
+      "skill_post_sha256": "6248effca5b7ba2ec13582a83dab0444a3cdc79efa8f36be1f88cd9662ef3648",
+      "stream_sha256": "3a2420e4761cfe7f147ca70666a0b7768c5548c22009173c74e52eac1fc0fbf5",
+      "update_receipt_sha256": "81bc89fe87005a91ce6656e3fab7c4f75e4391897f7f8d5f5b4691ff62f9c328"
+    }
+  ],
+  "artifact_type": "e2-r17-cloned-state-first-party-updater-qualification",
+  "authority": {
+    "experiment": false,
+    "gpu": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "global_checks": {
+    "all_arms_pass": true,
+    "duplicate_and_skillcat_packets_are_not_collapsed": true,
+    "four_rescue_and_four_nonrescue_pools": true,
+    "six_isolated_post_states": true,
+    "winner_and_precommitted_diverge_on_rescue_stream": true,
+    "winner_and_rejected_witness_diverge_on_rescue_stream": true
+  },
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "pools": [
+    {
+      "pool_id": "b1fda0cfb5c36ffe8b3c61d1c1255c64709844a231d1257a0b28656c577a99b2",
+      "rescue_event": true,
+      "task_id": "qualification-task-0",
+      "winner_index": 1
+    },
+    {
+      "pool_id": "2677f31b932e26171f884a5f3312f04a9ce8da5b220c1f398fc18f76fa461e5b",
+      "rescue_event": true,
+      "task_id": "qualification-task-1",
+      "winner_index": 1
+    },
+    {
+      "pool_id": "8f36817585e47ebf09cf116163bc2c56bdb22242c6a622b5d3db152c8696b786",
+      "rescue_event": true,
+      "task_id": "qualification-task-2",
+      "winner_index": 1
+    },
+    {
+      "pool_id": "e18d24a013618f432d12b27e3e63406f1d5ec1af68bff1d72ea34a18dd53f28c",
+      "rescue_event": true,
+      "task_id": "qualification-task-3",
+      "winner_index": 1
+    },
+    {
+      "pool_id": "cc25522a0a75d56082a531896926293fe0ee0eff3f9197b95cb816f09ec08bdf",
+      "rescue_event": false,
+      "task_id": "qualification-task-4",
+      "winner_index": 0
+    },
+    {
+      "pool_id": "7bd6843b091a0066b0d6ee118fc73d77857fdd14f115cc7bbf996a39695d760d",
+      "rescue_event": false,
+      "task_id": "qualification-task-5",
+      "winner_index": 0
+    },
+    {
+      "pool_id": "2ec6acd0157e7933ec824515b475dc8234119ae3034568f746b1a60a29674161",
+      "rescue_event": false,
+      "task_id": "qualification-task-6",
+      "winner_index": 0
+    },
+    {
+      "pool_id": "d96021b79b80630a6cc25d03197ae1fad4b2bfb29181a5a8454a0c3481186cff",
+      "rescue_event": false,
+      "task_id": "qualification-task-7",
+      "winner_index": 0
+    }
+  ],
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_outcome": false,
+  "status": "PASS_ZERO_PROVIDER"
+}

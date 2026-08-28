@@ -1,0 +1,102 @@
+{
+  "artifact_type": "e2-r17-f0-r4-preexecution-review-response",
+  "automatic_thinking_compatibility_fallback_allowed": false,
+  "contract_sha256": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+  "created_at_utc": "2026-08-28T03:54:56+00:00",
+  "dossier_file_sha256": {
+    "consultations/e2-r17-public-dataset-and-baseline-audit-20260828.md": "2e86fbdf8b985e9d710043dfeccf964d8fcc17ee2f90a483e41b745c33a21126",
+    "generated/e2-r17-actor-protocol-smoke-20260828.json": "c6be7877dc63c63ae843490504b6cb333deb07f27f5173fcb8d7a8e11645df79",
+    "generated/e2-r17-cloned-state-first-party-updater-qualification-20260828.json": "e26337e1d5c7839248fb227ce763f35a70e2c10648a4aad496dd43f412fc0af4",
+    "generated/e2-r17-current-plan-model-identity-adjudication-20260828.json": "287fdcc4dc193adfac677f417dd382637e6c4b8fe6134377465e10fd5f4fb30b",
+    "generated/e2-r17-e0-pilot-manifest-20260828.json": "e6653ee7cd2d7391b555086adb1a9d2bf660a7df25455f8c0215b35fa85b893f",
+    "generated/e2-r17-f0-r4-frozen-candidate-contract-20260828.json": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+    "generated/e2-r17-search-projection-debate-adjudication-20260827.json": "f743a97e6436c209bb73cabedb51405c56059688202f94f8fb6465374f544c1f"
+  },
+  "expected_resolved_model": "kimi-k3",
+  "experiment_authority": false,
+  "exposed_to_other_review": true,
+  "get_poll_recovery": false,
+  "hidden_provider_retry_used": false,
+  "independent": false,
+  "max_output_tokens": 5000,
+  "missing_required_fields": [],
+  "paper_promotion_authority": false,
+  "parse_valid": true,
+  "poll_count": 0,
+  "prompt_path": "generated/e2-r17-f0-r4-preexecution-review-20260828/round2/kimi-k3-prompt.md",
+  "prompt_sha256": "9aa69acfad938592f90b54c06e4f999ea6a6042c8a1f8a87d09efd4e9e5e5aeb",
+  "provider_generation_attempts": 1,
+  "provider_retry_limit": 0,
+  "provider_status": "completed",
+  "raw_text": "{\n  \"contract_sha256_acknowledged\": \"f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508\",\n  \"other_review_understood\": true,\n  \"final_verdict\": \"GO\",\n  \"agreements\": [\n    \"Both reviews agree the exact-same-pool cloned-state design is identifiable because the K=8 pool is generated once and reused across all six arms, so provider stochasticity affects pool creation but not the cross-arm contrast.\",\n    \"Both reviews agree the mandatory controls are sufficient for the narrow pilot decision: duplicated-winner controls token/context length, random-nonwinner controls generic diversity, precommitted rollout-0 controls for switching to another fixed observation kernel, SkillCAT-style contrast is the strongest direct method reduction, and winner-only is the tied acting/learning default.\",\n    \"Both reviews agree the scientific object is correctly scoped as the serving-induced observation kernel of an external persistent updater, not a broad claim that more compute harms learning or a novel contrastive algorithm.\",\n    \"Both reviews agree the public dataset plan is non-shopping: the controlled suite is mechanism-only and explicitly not a public benchmark, SpreadsheetBench Verified-400 is reserved for later public transport, and SpreadsheetBench 2 cannot be opened to rescue a negative result.\",\n    \"Both reviews agree the n=12 stream-level design with exact one-sided sign-flip test and bootstrap CI is adequate for the E1 decision rule but not for paper-level claims, and the contract explicitly states E1 alone is insufficient.\",\n    \"Both reviews agree no blocking collision with prior work exists because the contract explicitly disclaims novelty for failure utility, success/failure contrast, first divergence, validation-gated editing, and CADP.\"\n  ],\n  \"disagreements\": [\n    \"The other review provides more granular detail on the updater qualification artifact (six isolated post-states, same acting scores, winner/precommitted and winner/rejected-witness divergence on rescue streams) and model identity freezing (resolved deepseek-v4-pro-ga-260813, thinking disabled, temperature 0, retry 0, stop on resolved-id change). My review noted these invariants but less explicitly. This is a difference in emphasis, not substance.\",\n    \"The other review raises a nonblocking point about the random-nonwinner arm not specifying whether the SHA-selected nonwinner is drawn from failed or successful nonwinners. My review did not flag this. I concede this is a minor ambiguity, but the salt and determinism are frozen and it is a control, not the primary estimand.\",\n    \"The other review notes the duplicated-winner arm controls token count but not semantic redundancy effects, then correctly observes the STOP gate on duplicated-winner equivalence addresses this. My review treated the duplicated-winner control as sufficient without this nuance. I concede the nuance but agree it is nonblocking.\"\n  ],\n  \"issues_that_remain_blocking\": [],\n  \"issues_resolved_by_existing_controls\": [\n    \"Provider stochasticity is resolved by freezing the resolved model identity, disabling thinking, setting temperature 0 and retry 0, stopping the tranche on any resolved-id change, and generating the K=8 pool once for reuse across all arms.\",\n    \"Token or context-length confounding is resolved by the duplicated-winner arm with matched packet structure.\",\n    \"Generic diversity confounding is resolved by the random-nonwinner arm with deterministic SHA-selected nonwinner.\",\n    \"The strongest direct method reduction is resolved by including SkillCAT-style contrast as a matched control on the same pools and updater, not as a loose citation.\",\n    \"The alternative fixed observation kernel explanation is resolved by the precommitted rollout-0 arm.\",\n    \"Parser or validation-gate behavior acting as hidden treatment is partially resolved by fixing updater configuration and requiring matched packet structure; the contract also requires one add-record per task and same top-level acting-winner score.\",\n    \"Pseudoreplication is resolved by using the independently evolved eight-task stream-state as the scientific unit with n=12, exact sign-flip test, and explicit no-pseudoreplication language.\",\n    \"Benchmark shopping is resolved by pre-outcome no-shopping rules, integrity reserves that never replace bad model outcomes, and explicit STOP discipline against opening SpreadsheetBench 2 to rescue a negative Verified-400 result.\"\n  ],\n  \"exact_preexecution_conditions\": [\n    \"Run only the 12-task E0 pilot on the predeclared family-balanced subset; do not run E0 full, E1, or any later stage.\",\n    \"Generate the K=8 pool once per task and derive K=1/2/4/8 only from nested prefixes; do not resample across arms.\",\n    \"Freeze the resolved model identity (deepseek-v4-pro-ga-260813), disable thinking, set temperature 0 and retry 0, and stop the tranche on any resolved-id change.\",\n    \"Log every parser rejection, rewrite, truncation, or failed packet assembly as part of treatment in the E0/E1 receipts; do not infer these later.\",\n    \"Predeclare how partial updater acceptance or empty edits will be counted before any updater outcome is visible.\",\n    \"Stop the pilot on zero rescue events or protocol failure; otherwise the predeclared extension rule applies.\",\n    \"Do not replace any task because of model outcome; integrity reserves replace files only after pre-execution integrity failure.\",\n    \"Do not access model outcomes for task selection, family definition, threshold tuning, or any post-outcome adjustment.\",\n    \"Do not open SpreadsheetBench Verified-400 or SpreadsheetBench 2; do not import published scores without exact-harness rerun.\",\n    \"Do not promote development tasks to confirmation; do not change failure-family definitions after actor outcomes are visible.\",\n    \"Report all pairwise control contrasts in E1, not only the primary RW-WIN contrast, to reduce selective emphasis after outcomes exist.\"\n  ],\n  \"e0_pilot_authorization_recommendation\": \"GO\",\n  \"e1_authorization_recommendation\": \"HOLD_UNTIL_E0\",\n  \"paper_claim_authority\": false,\n  \"single_sentence_verdict\": \"Both blind reviews converge that the exact F0-R4 contract is identifiable, falsifiable, and control-complete for the narrow serving-induced observation-kernel mechanism, so only the 12-task E0 pilot is authorized, with E1 strictly conditional on E0 support and integrity and no paper claims permitted.\"\n}",
+  "raw_text_sha256": "5e620a7df296ff75090783b3f6de96ce7c3c910ef6cf458d88119e6ec1b885d5",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "8b87e0755a02cedc0073db327f1f8623941162fbf886230177fb9f64b03112e0",
+  "review": {
+    "agreements": [
+      "Both reviews agree the exact-same-pool cloned-state design is identifiable because the K=8 pool is generated once and reused across all six arms, so provider stochasticity affects pool creation but not the cross-arm contrast.",
+      "Both reviews agree the mandatory controls are sufficient for the narrow pilot decision: duplicated-winner controls token/context length, random-nonwinner controls generic diversity, precommitted rollout-0 controls for switching to another fixed observation kernel, SkillCAT-style contrast is the strongest direct method reduction, and winner-only is the tied acting/learning default.",
+      "Both reviews agree the scientific object is correctly scoped as the serving-induced observation kernel of an external persistent updater, not a broad claim that more compute harms learning or a novel contrastive algorithm.",
+      "Both reviews agree the public dataset plan is non-shopping: the controlled suite is mechanism-only and explicitly not a public benchmark, SpreadsheetBench Verified-400 is reserved for later public transport, and SpreadsheetBench 2 cannot be opened to rescue a negative result.",
+      "Both reviews agree the n=12 stream-level design with exact one-sided sign-flip test and bootstrap CI is adequate for the E1 decision rule but not for paper-level claims, and the contract explicitly states E1 alone is insufficient.",
+      "Both reviews agree no blocking collision with prior work exists because the contract explicitly disclaims novelty for failure utility, success/failure contrast, first divergence, validation-gated editing, and CADP."
+    ],
+    "contract_sha256_acknowledged": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+    "disagreements": [
+      "The other review provides more granular detail on the updater qualification artifact (six isolated post-states, same acting scores, winner/precommitted and winner/rejected-witness divergence on rescue streams) and model identity freezing (resolved deepseek-v4-pro-ga-260813, thinking disabled, temperature 0, retry 0, stop on resolved-id change). My review noted these invariants but less explicitly. This is a difference in emphasis, not substance.",
+      "The other review raises a nonblocking point about the random-nonwinner arm not specifying whether the SHA-selected nonwinner is drawn from failed or successful nonwinners. My review did not flag this. I concede this is a minor ambiguity, but the salt and determinism are frozen and it is a control, not the primary estimand.",
+      "The other review notes the duplicated-winner arm controls token count but not semantic redundancy effects, then correctly observes the STOP gate on duplicated-winner equivalence addresses this. My review treated the duplicated-winner control as sufficient without this nuance. I concede the nuance but agree it is nonblocking."
+    ],
+    "e0_pilot_authorization_recommendation": "GO",
+    "e1_authorization_recommendation": "HOLD_UNTIL_E0",
+    "exact_preexecution_conditions": [
+      "Run only the 12-task E0 pilot on the predeclared family-balanced subset; do not run E0 full, E1, or any later stage.",
+      "Generate the K=8 pool once per task and derive K=1/2/4/8 only from nested prefixes; do not resample across arms.",
+      "Freeze the resolved model identity (deepseek-v4-pro-ga-260813), disable thinking, set temperature 0 and retry 0, and stop the tranche on any resolved-id change.",
+      "Log every parser rejection, rewrite, truncation, or failed packet assembly as part of treatment in the E0/E1 receipts; do not infer these later.",
+      "Predeclare how partial updater acceptance or empty edits will be counted before any updater outcome is visible.",
+      "Stop the pilot on zero rescue events or protocol failure; otherwise the predeclared extension rule applies.",
+      "Do not replace any task because of model outcome; integrity reserves replace files only after pre-execution integrity failure.",
+      "Do not access model outcomes for task selection, family definition, threshold tuning, or any post-outcome adjustment.",
+      "Do not open SpreadsheetBench Verified-400 or SpreadsheetBench 2; do not import published scores without exact-harness rerun.",
+      "Do not promote development tasks to confirmation; do not change failure-family definitions after actor outcomes are visible.",
+      "Report all pairwise control contrasts in E1, not only the primary RW-WIN contrast, to reduce selective emphasis after outcomes exist."
+    ],
+    "final_verdict": "GO",
+    "issues_resolved_by_existing_controls": [
+      "Provider stochasticity is resolved by freezing the resolved model identity, disabling thinking, setting temperature 0 and retry 0, stopping the tranche on any resolved-id change, and generating the K=8 pool once for reuse across all arms.",
+      "Token or context-length confounding is resolved by the duplicated-winner arm with matched packet structure.",
+      "Generic diversity confounding is resolved by the random-nonwinner arm with deterministic SHA-selected nonwinner.",
+      "The strongest direct method reduction is resolved by including SkillCAT-style contrast as a matched control on the same pools and updater, not as a loose citation.",
+      "The alternative fixed observation kernel explanation is resolved by the precommitted rollout-0 arm.",
+      "Parser or validation-gate behavior acting as hidden treatment is partially resolved by fixing updater configuration and requiring matched packet structure; the contract also requires one add-record per task and same top-level acting-winner score.",
+      "Pseudoreplication is resolved by using the independently evolved eight-task stream-state as the scientific unit with n=12, exact sign-flip test, and explicit no-pseudoreplication language.",
+      "Benchmark shopping is resolved by pre-outcome no-shopping rules, integrity reserves that never replace bad model outcomes, and explicit STOP discipline against opening SpreadsheetBench 2 to rescue a negative Verified-400 result."
+    ],
+    "issues_that_remain_blocking": [],
+    "other_review_understood": true,
+    "paper_claim_authority": false,
+    "single_sentence_verdict": "Both blind reviews converge that the exact F0-R4 contract is identifiable, falsifiable, and control-complete for the narrow serving-induced observation-kernel mechanism, so only the 12-task E0 pilot is authorized, with E1 strictly conditional on E0 support and integrity and no paper claims permitted."
+  },
+  "round": 2,
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "submission_authority": false,
+  "temperature": 0,
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 21192,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1338,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 22530
+  }
+}

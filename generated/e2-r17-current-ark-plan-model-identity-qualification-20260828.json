@@ -1,0 +1,79 @@
+{
+  "artifact_type": "e2-r17-current-ark-plan-model-identity-qualification",
+  "authority": {
+    "gpu": false,
+    "paper_promotion": false,
+    "preexecution_consultation": false,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "checks": {
+    "all_protocol_calls_pass": false,
+    "provider_retry_zero": true,
+    "resolved_identities_distinct": false,
+    "route_is_ark_plan": true
+  },
+  "created_at_utc": "2026-08-28T03:05:41+00:00",
+  "default_model": "ark-code-latest",
+  "models": [
+    {
+      "benchmark_data_accessed": false,
+      "checks": {
+        "resolved_model_matches_requested_family": true,
+        "resolved_model_present": true,
+        "text_exact": true
+      },
+      "get_poll_recovery": false,
+      "hidden_provider_retry_used": false,
+      "poll_count": 0,
+      "prompt_sha256": "7bfaf5897d7bbd7f972a67554ee32acc828cd8309e40822dfc05217e987776bf",
+      "provider_generation_attempts": 1,
+      "provider_retry_limit": 0,
+      "provider_status": "completed",
+      "raw_text": "PLAN_OK",
+      "raw_text_sha256": "aa6b4c1b97751f326153c1927c1106bf5a927ec506a8066dfe0dded595992d7c",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "6edc485114043823554f510cb859434abc13978c6593598204faaeb8962c641f",
+      "scientific_outcome": false,
+      "status": "PASS",
+      "usage": {
+        "input_tokens": 106,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 43,
+        "output_tokens_details": {
+          "reasoning_tokens": 39
+        },
+        "total_tokens": 149
+      }
+    },
+    {
+      "benchmark_data_accessed": false,
+      "error_message_sanitized": "Ark retrieve HTTP 404: {'error': {'code': 'ResourceNotFound', 'message': 'Response with id  resp_[REDACTED] not found. Request id: [REDACTED]', 'param': '', 'type': 'NotFound'}}",
+      "error_sha256": "daa0609a4c3e191f597fb4c6b3089aacd619eced3466a0b68227f0c44be02abe",
+      "error_type": "RuntimeError",
+      "hidden_provider_retry_used": false,
+      "initial_response_state": {
+        "incomplete_reason": "length",
+        "requested_model": "kimi-k3",
+        "resolved_model": "kimi-k3",
+        "response_id_sha256": "6ec6361aa4e690ac86186ab21b121abaed565e073b2b0efb951b26e11d0bc45f",
+        "status": "incomplete"
+      },
+      "prompt_sha256": "7bfaf5897d7bbd7f972a67554ee32acc828cd8309e40822dfc05217e987776bf",
+      "provider_generation_attempts": 1,
+      "provider_retry_limit": 0,
+      "requested_model": "kimi-k3",
+      "scientific_outcome": false,
+      "status": "FAIL_PROVIDER_PROTOCOL"
+    }
+  ],
+  "private_credentials_included": false,
+  "raw_response_ids_included": false,
+  "release_drift_policy": "Observed resolved identities are frozen for this review tranche. Historical exact suffixes are not reused as authority. Any later execution tranche must requalify and bind its own observed identities.",
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "status": "HOLD_OR_FAIL"
+}

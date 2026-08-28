@@ -1,0 +1,59 @@
+{
+  "artifact_type": "e2-r17-f0-r4-preexecution-review-round-summary",
+  "contract_sha256": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+  "created_at_utc": "2026-08-28T03:53:33+00:00",
+  "experiment_authority": false,
+  "paper_promotion_authority": false,
+  "provider_retry_limit": 0,
+  "resolved_identity_independence": true,
+  "reviews": [
+    {
+      "artifact": "generated/e2-r17-f0-r4-preexecution-review-20260828/round1/deepseek-v4-pro.json",
+      "artifact_sha256": "921fa19e9337e0a0ede571fce1e376dc475aa83052e2ce281758e4f8177abc56",
+      "parse_valid": true,
+      "raw_text_sha256": "621e455cb8f3a2baa8fe2491d967c689b32e6bbd87016d62a50dad7d643be314",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "status": "COMPLETED",
+      "usage": {
+        "input_tokens": 20157,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 1181,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 21338
+      },
+      "verdict": "GO"
+    },
+    {
+      "artifact": "generated/e2-r17-f0-r4-preexecution-review-20260828/round1/kimi-k3.json",
+      "artifact_sha256": "8dcf1d8168dbc32666fdda884f9a87906da10daf5de249565c89041ffd11c524",
+      "parse_valid": true,
+      "raw_text_sha256": "a35b0048e11b3435824d8ea8e4a394da0b2e4d512421058fa93e41e440a5e20c",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "status": "COMPLETED",
+      "usage": {
+        "input_tokens": 19216,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 906,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 20122
+      },
+      "verdict": "GO"
+    }
+  ],
+  "round": 1,
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "submission_authority": false
+}

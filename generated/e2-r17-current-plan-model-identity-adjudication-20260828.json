@@ -1,0 +1,58 @@
+{
+  "adjudication": "The initial Kimi Auto/default-thinking smokes are retained as explicit incomplete-length protocol failures. The passing Kimi qualification is a separately declared compatibility call with thinking disabled. DeepSeek resolves to the current GA release rather than the historical 260425 suffix. These observed identities are frozen only for the current pre-execution review tranche and must be requalified before any later scientific tranche.",
+  "artifact_type": "e2-r17-current-plan-model-identity-adjudication",
+  "authority": {
+    "gpu": false,
+    "paper_promotion": false,
+    "preexecution_consultation": true,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "checks": {
+    "deepseek_pass": true,
+    "kimi_pass": true,
+    "no_hidden_provider_retry": true,
+    "provider_retry_zero": true,
+    "resolved_identities_distinct": true,
+    "route_is_ark_plan": true
+  },
+  "compatibility_history": [
+    {
+      "path": "generated/e2-r17-current-ark-plan-model-identity-qualification-20260828.json",
+      "sha256": "7df4e1996494ca10f31a5aa43df1b5cf8977ff49b155a14e65a04751a8cb6c0f",
+      "status": "HOLD_OR_FAIL"
+    },
+    {
+      "path": "generated/e2-r17-current-ark-plan-model-identity-qualification-r2-20260828.json",
+      "sha256": "a9bd619a091076f640b99b4b8b9d9dbef49ccc60a9ba65ece1dd7b1764d8244f",
+      "status": "HOLD_OR_FAIL"
+    },
+    {
+      "path": "generated/e2-r17-current-ark-plan-model-identity-qualification-r3-20260828.json",
+      "sha256": "04d4b44f0b21c0d6272dae5ca5695208be6b4251b588dcf9b1eb414cb926f85f",
+      "status": "PASS"
+    }
+  ],
+  "created_at_utc": "2026-08-28T03:11:33+00:00",
+  "private_credentials_included": false,
+  "raw_response_ids_included": false,
+  "requested_and_resolved": {
+    "deepseek-v4-pro": {
+      "requested": "deepseek-v4-pro",
+      "resolved": "deepseek-v4-pro-ga-260813",
+      "source_artifact": "generated/e2-r17-current-ark-plan-model-identity-qualification-20260828.json",
+      "source_artifact_sha256": "7df4e1996494ca10f31a5aa43df1b5cf8977ff49b155a14e65a04751a8cb6c0f",
+      "thinking_requested": null
+    },
+    "kimi-k3": {
+      "requested": "kimi-k3",
+      "resolved": "kimi-k3",
+      "source_artifact": "generated/e2-r17-current-ark-plan-model-identity-qualification-r3-20260828.json",
+      "source_artifact_sha256": "04d4b44f0b21c0d6272dae5ca5695208be6b4251b588dcf9b1eb414cb926f85f",
+      "thinking_requested": "disabled"
+    }
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "status": "PASS_CURRENT_REVIEW_TRANCHE"
+}

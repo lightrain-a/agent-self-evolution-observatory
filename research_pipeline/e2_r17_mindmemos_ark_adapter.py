@@ -1,14 +1,25 @@
 from __future__ import annotations
 
+import hashlib
 import json
-from dataclasses import dataclass, field
+import os
+import re
+from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any, Callable
 
 from research_pipeline.ark_provider import ArkResponseStateError, ArkResponsesClient, ArkSettings
 
 PLAN_BASE_URL = "https://ark.cn-beijing.volces.com/api/plan/v3"
 REQUESTED_MODEL = "deepseek-v4-pro"
+# Historical default retained only for backward-compatible callers. Every new
+# E2-R17 execution tranche must pass its freshly qualified resolved identity.
 REQUIRED_RESOLVED_MODEL = "deepseek-v4-pro-260425"
+
+
+def _sha(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
 def _flatten_messages(messages: list[dict[str, Any]]) -> str:
@@ -17,6 +28,7 @@ def _flatten_messages(messages: list[dict[str, Any]]) -> str:
     This adapter changes transport only. Role boundaries and content are preserved
     explicitly; SkillEvolver prompts, parsers, and update semantics remain first-party.
     """
+
     parts: list[str] = []
     for message in messages:
         role = str(message.get("role") or "user").upper()
@@ -24,6 +36,18 @@ def _flatten_messages(messages: list[dict[str, Any]]) -> str:
         text = content if isinstance(content, str) else json.dumps(content, ensure_ascii=False, sort_keys=True)
         parts.append(f"<{role}>\n{text}\n</{role}>")
     return "\n".join(parts)
+
+
+def _atomic_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp = path.with_suffix(path.suffix + ".tmp")
+    temp.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    os.replace(temp, path)
+
+
+def _safe_task_name(task: str) -> str:
+    cleaned = re.sub(r"[^A-Za-z0-9_.-]+", "-", task).strip("-")
+    return cleaned or "call"
 
 
 @dataclass
@@ -45,23 +69,35 @@ class AdapterChatResponse:
 
 @dataclass
 class CallReceipt:
+    call_index: int
+    created_at_utc: str
     task: str
     attempt: int
     requested_model: str
     resolved_model: str
+    prompt_sha256: str
+    response_sha256: str
     prompt_tokens: int | None
     completion_tokens: int | None
     total_tokens: int | None
     response_id_sha256: str
+    provider_status: str
+    thinking_requested: str | None
+    provider_retry_limit: int
+    message_count: int
     parse_error: str = ""
+    record_path: str | None = None
+    hidden_provider_retry_used: bool = False
 
 
 class MindMemOSArkPlanChatAdapter:
-    """Minimal async MindMemOS ``LLMClient.chat`` adapter over Ark Plan Responses.
+    """Async MindMemOS ``LLMClient.chat`` adapter over Ark Plan Responses.
 
     Provider retries are disabled. Parse-correction attempts are explicit and are
     counted separately because they are part of the frozen SkillEvolver updater
-    policy, not part of the acting compute intervention K.
+    policy, not part of acting compute K. When ``record_dir`` is supplied, every
+    updater call is written atomically with the full prompt and response text;
+    raw provider response identifiers are never persisted.
     """
 
     def __init__(
@@ -71,6 +107,7 @@ class MindMemOSArkPlanChatAdapter:
         requested_model: str = REQUESTED_MODEL,
         required_resolved_model: str = REQUIRED_RESOLVED_MODEL,
         max_parse_attempts: int = 3,
+        record_dir: Path | str | None = None,
     ) -> None:
         raw = settings or ArkSettings.from_env(required=True)
         if raw.base_url.rstrip("/") != PLAN_BASE_URL:
@@ -79,13 +116,14 @@ class MindMemOSArkPlanChatAdapter:
             api_key=raw.api_key,
             base_url=raw.base_url,
             default_model=raw.default_model,
-            timeout_seconds=180.0,
+            timeout_seconds=max(180.0, raw.timeout_seconds),
             max_retries=0,
         )
         self.client = ArkResponsesClient(self.settings)
         self.requested_model = requested_model
         self.required_resolved_model = required_resolved_model
         self.max_parse_attempts = max(1, int(max_parse_attempts))
+        self.record_dir = Path(record_dir) if record_dir is not None else None
         self.receipts: list[CallReceipt] = []
 
     async def chat(
@@ -107,18 +145,24 @@ class MindMemOSArkPlanChatAdapter:
             result = self._respond(prompt, target=target, kwargs=kwargs)
             content = str(result.get("text") or "")
             resolved = str(result.get("resolved_model") or "")
-            if resolved != self.required_resolved_model:
-                raise RuntimeError(f"resolved-model-drift:{resolved}")
             usage = result.get("usage") or {}
             receipt = CallReceipt(
+                call_index=len(self.receipts),
+                created_at_utc=datetime.now(timezone.utc).isoformat(timespec="seconds"),
                 task=task,
                 attempt=attempt,
                 requested_model=target,
                 resolved_model=resolved,
+                prompt_sha256=_sha(prompt),
+                response_sha256=_sha(content),
                 prompt_tokens=usage.get("input_tokens"),
                 completion_tokens=usage.get("output_tokens"),
                 total_tokens=usage.get("total_tokens"),
-                response_id_sha256=self._sha(str(result.get("response_id") or "")),
+                response_id_sha256=_sha(str(result.get("response_id") or "")),
+                provider_status=str(result.get("status") or ""),
+                thinking_requested=result.get("thinking_requested") or kwargs.get("thinking") or "disabled",
+                provider_retry_limit=self.settings.max_retries,
+                message_count=len(convo),
             )
             parsed: Any = None
             if format_parser is not None:
@@ -127,19 +171,43 @@ class MindMemOSArkPlanChatAdapter:
                 except Exception as exc:
                     last_error = exc
                     receipt.parse_error = f"{type(exc).__name__}: {exc}"
+                    self._persist_call(
+                        receipt=receipt,
+                        messages=convo,
+                        prompt=prompt,
+                        content=content,
+                        result=result,
+                        parser_applied=True,
+                        parsed=None,
+                    )
                     self.receipts.append(receipt)
                     if feedback_on_parse_error and attempt + 1 < max_attempts:
                         convo.append({"role": "assistant", "content": content})
-                        convo.append({
-                            "role": "user",
-                            "content": (
-                                "Your previous reply could not be applied:\n"
-                                f"{exc}\n\nFix exactly that problem and resend the COMPLETE corrected output "
-                                "in the same format as before. Do not apologize or add commentary."
-                            ),
-                        })
+                        convo.append(
+                            {
+                                "role": "user",
+                                "content": (
+                                    "Your previous reply could not be applied:\n"
+                                    f"{exc}\n\nFix exactly that problem and resend the COMPLETE corrected output "
+                                    "in the same format as before. Do not apologize or add commentary."
+                                ),
+                            }
+                        )
                     continue
+            self._persist_call(
+                receipt=receipt,
+                messages=convo,
+                prompt=prompt,
+                content=content,
+                result=result,
+                parser_applied=format_parser is not None,
+                parsed=parsed,
+            )
             self.receipts.append(receipt)
+            if resolved != self.required_resolved_model:
+                raise RuntimeError(
+                    f"resolved-model-drift:requested={target};required={self.required_resolved_model};observed={resolved}"
+                )
             return AdapterChatResponse(
                 finish_reason=str(result.get("status") or "completed"),
                 content=content,
@@ -152,20 +220,68 @@ class MindMemOSArkPlanChatAdapter:
                 parsed=parsed,
                 raw_response={
                     "response_id_sha256": receipt.response_id_sha256,
+                    "prompt_sha256": receipt.prompt_sha256,
+                    "response_sha256": receipt.response_sha256,
                     "status": result.get("status"),
                     "thinking_requested": result.get("thinking_requested"),
                     "thinking_effective": result.get("thinking_effective"),
+                    "record_path": receipt.record_path,
                 },
             )
         assert last_error is not None
         raise last_error
+
+    def _persist_call(
+        self,
+        *,
+        receipt: CallReceipt,
+        messages: list[dict[str, Any]],
+        prompt: str,
+        content: str,
+        result: dict[str, Any],
+        parser_applied: bool,
+        parsed: Any,
+    ) -> None:
+        if self.record_dir is None:
+            return
+        filename = f"{receipt.call_index:03d}-{_safe_task_name(receipt.task)}-attempt{receipt.attempt}.json"
+        path = self.record_dir / filename
+        payload = {
+            "schema_version": "1.0",
+            "artifact_type": "e2-r17-mindmemos-updater-provider-call",
+            "created_at_utc": receipt.created_at_utc,
+            "task": receipt.task,
+            "attempt": receipt.attempt,
+            "messages": messages,
+            "prompt": prompt,
+            "prompt_sha256": receipt.prompt_sha256,
+            "response_text": content,
+            "response_sha256": receipt.response_sha256,
+            "requested_model": receipt.requested_model,
+            "resolved_model": receipt.resolved_model,
+            "usage": result.get("usage") or {},
+            "provider_status": result.get("status"),
+            "response_id_sha256": receipt.response_id_sha256,
+            "thinking_requested": result.get("thinking_requested") or receipt.thinking_requested,
+            "thinking_effective": result.get("thinking_effective"),
+            "provider_retry_limit": self.settings.max_retries,
+            "hidden_provider_retry_used": False,
+            "parser_applied": parser_applied,
+            "parse_error": receipt.parse_error,
+            "parsed_type": type(parsed).__name__ if parsed is not None else None,
+            "parsed_sha256": _sha(str(parsed)) if parsed is not None else None,
+            "private_credentials_included": False,
+            "raw_response_id_included": False,
+        }
+        _atomic_json(path, payload)
+        receipt.record_path = str(path.resolve())
 
     def _respond(self, prompt: str, *, target: str, kwargs: dict[str, Any]) -> dict[str, Any]:
         max_output_tokens = int(kwargs.get("max_tokens") or kwargs.get("max_completion_tokens") or 4096)
         temperature = kwargs.get("temperature")
         thinking = kwargs.get("thinking") or "disabled"
         try:
-            return self.client.respond(
+            result = self.client.respond(
                 prompt,
                 model=target,
                 max_output_tokens=max_output_tokens,
@@ -173,6 +289,9 @@ class MindMemOSArkPlanChatAdapter:
                 thinking=thinking,
                 allow_thinking_compatibility_fallback=False,
             )
+            result["thinking_requested"] = thinking
+            result.setdefault("thinking_effective", thinking)
+            return result
         except ArkResponseStateError as exc:
             if not exc.response_id:
                 raise
@@ -188,12 +307,13 @@ class MindMemOSArkPlanChatAdapter:
                 "status": polled.get("status"),
                 "thinking_requested": thinking,
                 "thinking_effective": thinking,
+                "get_poll_recovery": True,
             }
 
-    @staticmethod
-    def _sha(text: str) -> str:
-        import hashlib
-        return hashlib.sha256(text.encode("utf-8")).hexdigest()
-
     def public_receipts(self) -> list[dict[str, Any]]:
-        return [receipt.__dict__.copy() for receipt in self.receipts]
+        return [asdict(receipt) for receipt in self.receipts]
+
+    @property
+    def receipt_bundle_sha256(self) -> str:
+        raw = json.dumps(self.public_receipts(), ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+        return _sha(raw)

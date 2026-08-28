@@ -1,0 +1,300 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import asyncio
+import hashlib
+import json
+import os
+import platform
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from research_pipeline.ark_provider import ArkSettings
+from research_pipeline.config import load_env_file
+from research_pipeline.e2_r17_actor_pool import (
+    ActorRolloutConfig,
+    atomic_json,
+    file_sha256,
+    freeze_nested_pools,
+    run_actor_rollout,
+)
+from research_pipeline.e2_r17_ark_plan_react import ArkPlanReactLLM, PLAN_BASE_URL
+
+
+def load_mindmemos(root: Path) -> tuple[Any, Any]:
+    os.environ.setdefault("LITELLM_LOCAL_MODEL_COST_MAP", "True")
+    source_roots = [root / "src/mindmemos_eval", root / "src/mindmemos_sdk", root / "src/mindmemos"]
+    for source in reversed(source_roots):
+        if str(source) not in sys.path:
+            sys.path.insert(0, str(source))
+    from mindmemos_eval.skills.agents import ReactAgentFactory
+    from mindmemos_eval.skills.envs.spreadsheetbench.env import SpreadsheetBenchEnv
+
+    return ReactAgentFactory, SpreadsheetBenchEnv
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def task_ids_from_args(args: argparse.Namespace, split: dict[str, Any]) -> list[str]:
+    if args.task_id:
+        return [str(value) for value in args.task_id]
+    if args.stream_id:
+        for key in ("e1_update_streams", "e3_future_streams"):
+            if args.stream_id in split.get(key, {}):
+                return [str(value) for value in split[key][args.stream_id]]
+        raise ValueError(f"unknown stream id: {args.stream_id}")
+    if args.lane:
+        value = split.get(args.lane)
+        if not isinstance(value, list):
+            raise ValueError(f"lane is not a task list: {args.lane}")
+        return [str(item) for item in value]
+    raise ValueError("one of --task-id, --stream-id, or --lane is required")
+
+
+def validate_authority(
+    *,
+    mode: str,
+    authorization: Path | None,
+    task_ids: list[str],
+    split: dict[str, Any],
+) -> tuple[dict[str, Any] | None, str | None]:
+    development = {str(item) for item in split.get("development") or []}
+    if mode == "protocol_smoke":
+        if not set(task_ids).issubset(development):
+            raise RuntimeError("protocol smoke may access development tasks only")
+        if authorization is not None:
+            raise RuntimeError("protocol smoke must not borrow scientific authorization")
+        return None, None
+    if authorization is None:
+        raise RuntimeError("scientific actor execution requires --authorization")
+    payload = json.loads(authorization.read_text(encoding="utf-8"))
+    if payload.get("status") not in {"AUTHORIZED_E0", "AUTHORIZED_E1", "AUTHORIZED_PUBLIC_EXTERNALITY"}:
+        raise RuntimeError("authorization artifact does not authorize actor execution")
+    if not payload.get("authority", {}).get("scientific_experiment"):
+        raise RuntimeError("authorization has zero scientific authority")
+    return payload, sha256(authorization)
+
+
+async def main_async(args: argparse.Namespace) -> dict[str, Any]:
+    ReactAgentFactory, SpreadsheetBenchEnv = load_mindmemos(args.mindmemos_root)
+    load_env_file(args.env_file)
+    settings = ArkSettings.from_env(required=True)
+    if settings.base_url.rstrip("/") != PLAN_BASE_URL:
+        raise RuntimeError("E2-R17 actor refuses any non-Ark-Plan route")
+    settings = ArkSettings(
+        api_key=settings.api_key,
+        base_url=settings.base_url,
+        default_model=settings.default_model,
+        timeout_seconds=300,
+        max_retries=0,
+    )
+    identity = json.loads(args.identity.read_text(encoding="utf-8"))
+    if identity.get("status") != "PASS_CURRENT_REVIEW_TRANCHE":
+        raise RuntimeError("current model identity adjudication is not passing")
+    model_row = identity["requested_and_resolved"][args.model]
+    requested_model = str(model_row["requested"])
+    required_resolved = str(model_row["resolved"])
+
+    split_path = args.suite_root / "r17_split_manifest.json"
+    split = json.loads(split_path.read_text(encoding="utf-8"))
+    task_ids = task_ids_from_args(args, split)
+    authorization_payload, authorization_sha = validate_authority(
+        mode=args.mode,
+        authorization=args.authorization,
+        task_ids=task_ids,
+        split=split,
+    )
+    contract_sha = (
+        str(authorization_payload.get("contract_sha256") or "")
+        if authorization_payload is not None
+        else None
+    )
+    metadata_rows = json.loads((args.suite_root / "r17_controlled_metadata.json").read_text(encoding="utf-8"))
+    metadata = {str(row["id"]): row for row in metadata_rows}
+    missing = [task_id for task_id in task_ids if task_id not in metadata]
+    if missing:
+        raise RuntimeError(f"tasks absent from controlled metadata: {missing}")
+
+    env = SpreadsheetBenchEnv(args.suite_root, args.run_root)
+    cases = {case.id: case for case in env.load_cases("all")}
+    mindmemos_commit = __import__("subprocess").check_output(
+        ["git", "-C", str(args.mindmemos_root), "rev-parse", "HEAD"], text=True
+    ).strip()
+    if authorization_payload is not None and mindmemos_commit != authorization_payload.get("mindmemos_commit"):
+        raise RuntimeError("MindMemOS commit drifted after scientific authorization")
+
+    default_skill_source = args.mindmemos_root / "resources/skill_evolve/spreadsheetbench_init_skill/xlsx"
+    skill_source = (args.skill_source or default_skill_source).resolve()
+    skill_md = skill_source / "SKILL.md"
+    if not skill_md.is_file():
+        raise RuntimeError(f"skill source does not contain SKILL.md: {skill_source}")
+    skill_sha = file_sha256(skill_md)
+    updater_receipt_sha: str | None = None
+    if skill_source != default_skill_source.resolve():
+        if args.mode != "e1" or args.updater_receipt is None:
+            raise RuntimeError("a non-initial skill is allowed only for E1 evaluation with --updater-receipt")
+        updater_receipt = json.loads(args.updater_receipt.read_text(encoding="utf-8"))
+        updater_receipt_sha = sha256(args.updater_receipt)
+        if updater_receipt.get("status") != "COMPLETED":
+            raise RuntimeError("updater receipt is not completed")
+        if Path(updater_receipt.get("skill_post_path") or "").resolve() != skill_md.resolve():
+            raise RuntimeError("updater receipt does not bind the supplied skill path")
+        if updater_receipt.get("skill_post_sha256") != skill_sha:
+            raise RuntimeError("updater receipt does not bind the supplied skill content")
+        if updater_receipt.get("contract_sha256") != contract_sha:
+            raise RuntimeError("updater receipt contract SHA differs from evaluation authorization")
+        if updater_receipt.get("authorization_sha256") != authorization_sha:
+            raise RuntimeError("updater receipt authorization SHA differs from evaluation authorization")
+    elif args.updater_receipt is not None:
+        raise RuntimeError("--updater-receipt must not be supplied for the frozen initial skill")
+    evaluator_sources = [
+        args.mindmemos_root / "src/mindmemos_eval/mindmemos_eval/skills/envs/spreadsheetbench/evaluator.py",
+        args.mindmemos_root / "src/mindmemos_eval/mindmemos_eval/skills/envs/spreadsheetbench/env.py",
+    ]
+    semaphore = asyncio.Semaphore(max(1, args.concurrency))
+
+    async def run_unit(task_id: str, rollout_index: int):
+        async with semaphore:
+            adapter = ArkPlanReactLLM(
+                settings=settings,
+                requested_model=requested_model,
+                required_resolved_model=required_resolved,
+                max_output_tokens=args.max_output_tokens,
+                temperature=0,
+                thinking="disabled",
+            )
+            factory = ReactAgentFactory(
+                adapter,
+                max_turns=args.max_turns,
+                skill_sources=[skill_source],
+                python_path=sys.executable,
+            )
+            config = ActorRolloutConfig(
+                requested_model=requested_model,
+                required_resolved_model=required_resolved,
+                max_turns=args.max_turns,
+                skill_source=str(skill_source),
+                skill_pre_sha256=skill_sha,
+                failure_family=str(metadata[task_id]["primary_failure_family"]),
+                experiment_mode=args.mode,
+                contract_sha256=contract_sha,
+                authorization_sha256=authorization_sha,
+            )
+            return await run_actor_rollout(
+                env=env,
+                case=cases[task_id],
+                rollout_index=rollout_index,
+                agent_factory=factory,
+                adapter=adapter,
+                config=config,
+                evaluator_sources=evaluator_sources,
+            )
+
+    task_rows: list[dict[str, Any]] = []
+    prefix_ks = tuple(int(value) for value in args.prefix_ks.split(",") if value.strip())
+    for task_id in task_ids:
+        refs = await asyncio.gather(*(run_unit(task_id, index) for index in range(args.k)))
+        task_dir = args.run_root / "cases" / task_id
+        pools = freeze_nested_pools(task_dir=task_dir, trajectories=refs, prefix_ks=prefix_ks)
+        task_rows.append(
+            {
+                "task_id": task_id,
+                "failure_family": metadata[task_id]["primary_failure_family"],
+                "scores": [ref.score for ref in refs],
+                "provider_calls": sum(
+                    len(json.loads(Path(ref.trajectory_path).read_text(encoding="utf-8"))["adapter_receipts"])
+                    for ref in refs
+                ),
+                "pools": {
+                    str(k): {
+                        "pool_id": pool.pool_id,
+                        "acting_success": pool.acting_success,
+                        "precommitted_success": pool.precommitted_success,
+                        "rescue_event": pool.rescue_event,
+                        "winner_index": pool.winner.rollout_index,
+                    }
+                    for k, pool in pools.items()
+                },
+            }
+        )
+    return {
+        "schema_version": "1.0",
+        "artifact_type": "e2-r17-actor-pool-run-summary",
+        "created_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "status": "COMPLETED",
+        "mode": args.mode,
+        "suite_root": str(args.suite_root),
+        "suite_manifest_sha256": file_sha256(args.suite_root / "suite_manifest.json"),
+        "split_manifest_sha256": file_sha256(split_path),
+        "mindmemos_root": str(args.mindmemos_root),
+        "mindmemos_commit": mindmemos_commit,
+        "identity_artifact": str(args.identity),
+        "identity_artifact_sha256": sha256(args.identity),
+        "requested_model": requested_model,
+        "resolved_model": required_resolved,
+        "provider_retry_limit": 0,
+        "thinking": "disabled",
+        "k": args.k,
+        "prefix_ks": list(prefix_ks),
+        "max_turns": args.max_turns,
+        "python_executable": sys.executable,
+        "python_version": platform.python_version(),
+        "skill_source": str(skill_source),
+        "skill_pre_sha256": skill_sha,
+        "updater_receipt_path": str(args.updater_receipt) if args.updater_receipt else None,
+        "updater_receipt_sha256": updater_receipt_sha,
+        "contract_sha256": contract_sha,
+        "authorization_sha256": authorization_sha,
+        "tasks": task_rows,
+        "scientific_outcome": args.mode != "protocol_smoke",
+        "authority": {
+            "paper_promotion": False,
+            "submission": False,
+        },
+        "private_credentials_included": False,
+        "raw_response_ids_included": False,
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--env-file", type=Path, required=True)
+    parser.add_argument("--suite-root", type=Path, required=True)
+    parser.add_argument("--mindmemos-root", type=Path, required=True)
+    parser.add_argument("--run-root", type=Path, required=True)
+    parser.add_argument("--identity", type=Path, required=True)
+    parser.add_argument("--authorization", type=Path)
+    parser.add_argument("--skill-source", type=Path)
+    parser.add_argument("--updater-receipt", type=Path)
+    parser.add_argument("--mode", choices=("protocol_smoke", "e0", "e1", "public_externality"), required=True)
+    parser.add_argument("--model", choices=("deepseek-v4-pro",), default="deepseek-v4-pro")
+    parser.add_argument("--task-id", action="append")
+    parser.add_argument("--lane")
+    parser.add_argument("--stream-id")
+    parser.add_argument("--k", type=int, default=8)
+    parser.add_argument("--prefix-ks", default="1,2,4,8")
+    parser.add_argument("--max-turns", type=int, default=10)
+    parser.add_argument("--max-output-tokens", type=int, default=4096)
+    parser.add_argument("--concurrency", type=int, default=1)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+
+    if args.k < 1 or args.k > 8:
+        raise SystemExit("K must be in 1..8")
+    summary = asyncio.run(main_async(args))
+    atomic_json(args.output, summary)
+    print(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
