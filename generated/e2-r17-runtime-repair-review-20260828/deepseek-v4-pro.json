@@ -1,0 +1,39 @@
+{
+  "artifact_type": "e2-r17-runtime-repair-technical-review",
+  "created_at_utc": "2026-08-28T04:52:30+00:00",
+  "experiment_authority": false,
+  "private_credentials_included": false,
+  "prompt_sha256": "c81fb468efc968d327241535c8c588f3fab7266b3925166a46d62a40a02860ee",
+  "provider_retry_limit": 0,
+  "raw_response_ids_included": false,
+  "raw_text": "```json\n{\n  \"verdict\": \"PASS\",\n  \"repair_sufficient\": true,\n  \"scientific_contract_changed\": false,\n  \"provenance_preserved\": true,\n  \"runtime_binding_complete\": true,\n  \"remaining_blockers\": [],\n  \"one_sentence_verdict\": \"The repair safely binds the E0 pilot to a frozen full MindMemOS venv with verified hashes, preserves the old authorization as provenance, and leaves the scientific contract unchanged, so reauthorization is technically safe.\"\n}\n```",
+  "raw_text_sha256": "3d3fb4d81607900d23a5cadf278ed0e8f60be7c1ef783f67885d95f9575f38e8",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "resolved_model_matches_current_qualification": true,
+  "review": {
+    "one_sentence_verdict": "The repair safely binds the E0 pilot to a frozen full MindMemOS venv with verified hashes, preserves the old authorization as provenance, and leaves the scientific contract unchanged, so reauthorization is technically safe.",
+    "provenance_preserved": true,
+    "remaining_blockers": [],
+    "repair_sufficient": true,
+    "runtime_binding_complete": true,
+    "scientific_contract_changed": false,
+    "verdict": "PASS"
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "thinking": "disabled",
+  "usage": {
+    "input_tokens": 3900,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 117,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 4017
+  }
+}
