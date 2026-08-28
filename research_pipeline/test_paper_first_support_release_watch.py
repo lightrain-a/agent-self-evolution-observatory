@@ -385,5 +385,153 @@ class SupportReleaseWatchTest(unittest.TestCase):
             self.assertFalse(state["scientific_authority"])
 
 
+    def test_huggingface_dataset_fetcher_uses_official_revision_and_file_manifest(self) -> None:
+        revision = "1" * 40
+        response = SimpleNamespace(
+            status_code=200,
+            json=lambda: {
+                "sha": revision,
+                "siblings": [
+                    {"rfilename": "README.md"},
+                    {"rfilename": "data/rl/train.parquet"},
+                    {"rfilename": "data/test/001/query.json"},
+                ],
+            },
+        )
+        target = {
+            "url": "https://huggingface.co/datasets/usail-hkust/VWE-Bench",
+            "declaration_kind": "FIRST_PARTY_DATASET",
+        }
+        with patch.object(watch.requests, "get", return_value=response) as get:
+            result = watch._default_fetcher(target)
+        self.assertEqual(result["resolved_revision"], revision)
+        self.assertEqual(result["artifact_file_count"], 3)
+        self.assertTrue(result["surface_nonempty"])
+        self.assertEqual(result["fingerprint_version"], watch.FINGERPRINT_VERSION)
+        self.assertEqual(len(result["artifact_path_digest"]), 64)
+        args, kwargs = get.call_args
+        self.assertEqual(args[0], "https://huggingface.co/api/datasets/usail-hkust/VWE-Bench")
+        self.assertEqual(kwargs["params"], {"full": "full"})
+        self.assertTrue(watch._acceptable_release_url(target["url"]))
+        self.assertFalse(watch._acceptable_release_url("https://huggingface.co/usail-hkust/VibeWorlder-8B"))
+
+    def test_effective_pre_f0_hold_watches_huggingface_dataset_revision_without_authority(self) -> None:
+        baseline = "1" * 40
+        changed = "2" * 40
+        snapshot = "3" * 64
+        target = {
+            "source_ref": "arXiv:2608.15265",
+            "url": "https://huggingface.co/datasets/usail-hkust/VWE-Bench",
+            "declaration_kind": "FIRST_PARTY_DATASET",
+            "baseline_revision": baseline,
+            "scientific_authority": False,
+        }
+        contract_sha = release_watch_contract_sha(
+            candidate_id="PORT-010",
+            candidate_snapshot_sha256=snapshot,
+            targets=[target],
+            required_reopen_components=["query_units", "per_case_outcomes"],
+        )
+        with tempfile.TemporaryDirectory() as td:
+            storage = self.storage(Path(td))
+            storage.site_artifact_dir.mkdir(parents=True, exist_ok=True)
+            preflight = {
+                "schema_version": "1.0-shadow",
+                "run_id": "pre-f0-vwe-hf",
+                "scientific_authority": False,
+                "support_inventory_sha256": "a" * 64,
+                "authority": {"canonical_generator": False, "canonical_problem_gate": False, "paper_design": False, "method": False, "experiment": False, "p0": False, "gpu": False},
+                "rows": [{
+                    "candidate_id": "PORT-010",
+                    "candidate_snapshot_sha256": snapshot,
+                    "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+                    "scientific_authority": False,
+                    "primary_refs": ["arXiv:2608.15265"],
+                    "required_unit": "VWE query units plus per-case target-model outcomes.",
+                    "reopen_only_if": "Query units and per-case outcomes are both author-released.",
+                    "bounded_first_party_evidence_design_allowed": True,
+                    "next_route": "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET",
+                }],
+            }
+            evidence = {
+                "scientific_authority": False,
+                "entries": [{
+                    "candidate_id": "PORT-010",
+                    "candidate_snapshot_sha256": snapshot,
+                    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+                    "execution_authorized": False,
+                    "scientific_authority": False,
+                    "release_watch_contract": {
+                        "candidate_id": "PORT-010",
+                        "candidate_snapshot_sha256": snapshot,
+                        "targets": [target],
+                        "required_reopen_components": ["query_units", "per_case_outcomes"],
+                        "contract_sha256": contract_sha,
+                        "scientific_authority": False,
+                    },
+                }],
+            }
+            (storage.site_artifact_dir / "paper-first-pre-f0-problem-falsifier-preflight.json").write_text(__import__("json").dumps(preflight), encoding="utf-8")
+            (storage.site_artifact_dir / "paper-first-pre-f0-evidence-acquisition-plan.json").write_text(__import__("json").dumps(evidence), encoding="utf-8")
+            targets, missing = explicit_release_targets(self.design([]), storage=storage)
+            self.assertEqual(missing, [])
+            self.assertEqual(len(targets), 1)
+            self.assertEqual(targets[0]["declaration_kind"], "FIRST_PARTY_DATASET")
+            self.assertEqual(targets[0]["declaration_context"], "durable-support-audit-first-party-dataset")
+            self.assertEqual(targets[0]["baseline_revision"], baseline)
+            same = run_support_release_watch(
+                storage=storage,
+                design_state=self.design([]),
+                portable_targets_path=Path(td) / "missing-portable.json",
+                fetcher=lambda _: {"status_code": 200, "fingerprint": "c" * 64, "surface_nonempty": True, "artifact_file_count": 300, "resolved_revision": baseline},
+                now=datetime(2026, 8, 28, tzinfo=timezone.utc),
+                write_ledger=False,
+            )
+            drift = run_support_release_watch(
+                storage=storage,
+                design_state=self.design([]),
+                portable_targets_path=Path(td) / "missing-portable.json",
+                fetcher=lambda _: {"status_code": 200, "fingerprint": "d" * 64, "surface_nonempty": True, "artifact_file_count": 301, "resolved_revision": changed},
+                now=datetime(2026, 8, 29, tzinfo=timezone.utc),
+                write_ledger=False,
+            )
+        self.assertEqual(same["rows"][0]["status"], "NO_RELEASE_CHANGE")
+        self.assertEqual(drift["rows"][0]["status"], "RECHECK_REQUIRED_RELEASE_CHANGED")
+        self.assertEqual(same["summary"]["support_qualified"], 0)
+        self.assertEqual(drift["summary"]["support_qualified"], 0)
+        self.assertEqual(drift["summary"]["generator_reopen_authorized"], 0)
+        self.assertEqual(drift["summary"]["problem_gate_authorized"], 0)
+        self.assertFalse(same["scientific_authority"])
+        self.assertFalse(drift["scientific_authority"])
+
+    def test_support_audited_target_kind_must_match_endpoint_type(self) -> None:
+        baseline = "1" * 40
+        snapshot = "3" * 64
+        bad_targets = [
+            {"source_ref": "arXiv:2608.15265", "url": "https://github.com/usail-hkust/VibeWorlding-Gym", "declaration_kind": "FIRST_PARTY_DATASET", "baseline_revision": baseline, "scientific_authority": False},
+            {"source_ref": "arXiv:2608.15265", "url": "https://huggingface.co/datasets/usail-hkust/VWE-Bench", "declaration_kind": "FIRST_PARTY_REPOSITORY", "baseline_revision": baseline, "scientific_authority": False},
+        ]
+        contract_sha = release_watch_contract_sha(
+            candidate_id="PORT-010",
+            candidate_snapshot_sha256=snapshot,
+            targets=bad_targets,
+            required_reopen_components=["query_units", "per_case_outcomes"],
+        )
+        with tempfile.TemporaryDirectory() as td:
+            storage = self.storage(Path(td))
+            storage.site_artifact_dir.mkdir(parents=True, exist_ok=True)
+            preflight = {
+                "schema_version": "1.0-shadow", "run_id": "pre-f0-kind-mismatch", "scientific_authority": False,
+                "support_inventory_sha256": "a" * 64,
+                "authority": {"canonical_generator": False, "canonical_problem_gate": False, "paper_design": False, "method": False, "experiment": False, "p0": False, "gpu": False},
+                "rows": [{"candidate_id": "PORT-010", "candidate_snapshot_sha256": snapshot, "disposition": "HOLD_SUPPORT_UNAVAILABLE", "scientific_authority": False, "primary_refs": ["arXiv:2608.15265"], "required_unit": "outcomes", "reopen_only_if": "author release", "bounded_first_party_evidence_design_allowed": True, "next_route": "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET"}],
+            }
+            evidence = {"scientific_authority": False, "entries": [{"candidate_id": "PORT-010", "candidate_snapshot_sha256": snapshot, "status": "HOLD_EVIDENCE_REVIEW_BLOCKED", "execution_authorized": False, "scientific_authority": False, "release_watch_contract": {"candidate_id": "PORT-010", "candidate_snapshot_sha256": snapshot, "targets": bad_targets, "required_reopen_components": ["query_units", "per_case_outcomes"], "contract_sha256": contract_sha, "scientific_authority": False}}]}
+            (storage.site_artifact_dir / "paper-first-pre-f0-problem-falsifier-preflight.json").write_text(__import__("json").dumps(preflight), encoding="utf-8")
+            (storage.site_artifact_dir / "paper-first-pre-f0-evidence-acquisition-plan.json").write_text(__import__("json").dumps(evidence), encoding="utf-8")
+            targets, _ = explicit_release_targets(self.design([]), storage=storage)
+        self.assertEqual(targets, [])
+
+
 if __name__ == "__main__":
     unittest.main()

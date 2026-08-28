@@ -6,6 +6,13 @@
 - Hardened the metadata parser against a real release-schema trap: LEGO label list order is not always constraint order (rows 121, 127, and 129). Constraint types are therefore bound only through the released `condition_idx`, matching the official evaluator, and extra label metadata are ignored by the construct audit.
 - A current-source collision pass further narrowed the object: LEGO-Eval already reports count-based complexity degradation, GraphDreamer/InstructScene already establish generic graph-structured generation priors, and arXiv:2608.12426 supplies a stronger cross-domain independent-failure/multiplicative null. The surviving candidate is therefore conditional cross-type failure coupling in 3D generation. Any future coupling result must also beat evaluator-dependence controls, including human-curated satisfying scenes and a bounded fresh-state per-constraint evaluation check.
 
+## 2026-08-28 · Make pinned Hugging Face release surface executable
+
+- Closed a projection/runtime mismatch in PORT-010 release monitoring: canonical state already pinned the VWE-Bench Hugging Face dataset, but the live watcher still filtered every non-GitHub support-audited target.
+- Added a strict `FIRST_PARTY_DATASET` endpoint type for canonical `huggingface.co/datasets/<namespace>/<repo>` URLs. The watcher resolves the official dataset-info `sha` plus file manifest into a revision-bound fingerprint; endpoint type and declaration kind must match, and a 40-hex baseline remains mandatory.
+- Verified against the current canonical PORT-010 state that both GitHub VibeWorlding-Gym and Hugging Face VWE-Bench now enter the same content-addressed zero-authority watch contract. Dataset revision drift can request release recheck only; it cannot qualify support, reopen Problem Gate, authorize execution, or release science.
+
+
 ## 2026-08-28 · PORT-010 full first-party release-surface coverage
 
 - Closed the F18/PORT-010 release-watch coverage gap without reopening science: the independently verified Hugging Face `usail-hkust/VWE-Bench` dataset surface is now content-addressed at `1f085b54166a8253d7a42854e2b1c7e1fe8dcceb` alongside the GitHub VibeWorlding-Gym source.

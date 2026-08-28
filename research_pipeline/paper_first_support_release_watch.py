@@ -272,6 +272,18 @@ def _clean_url(url: str) -> str:
     return html.unescape(str(url or "")).rstrip(".,;:)]}")
 
 
+def _huggingface_dataset_id(url: str) -> str | None:
+    parsed = urlparse(url)
+    if parsed.scheme not in {"http", "https"} or parsed.netloc.lower() != "huggingface.co":
+        return None
+    parts = [x for x in parsed.path.strip("/").split("/") if x]
+    if len(parts) != 3 or parts[0].lower() != "datasets":
+        return None
+    if any(part in {".", ".."} for part in parts[1:]):
+        return None
+    return f"{parts[1]}/{parts[2]}"
+
+
 def _acceptable_release_url(url: str) -> bool:
     parsed = urlparse(url)
     host = parsed.netloc.lower()
@@ -283,6 +295,8 @@ def _acceptable_release_url(url: str) -> bool:
         return len(parts) >= 2 and parts[0].lower() not in {"arxiv", "brucemiller"}
     if host.endswith(".github.io") or host == "github.io":
         return bool(path or host != "github.io")
+    if _huggingface_dataset_id(url):
+        return True
     return False
 
 
@@ -336,10 +350,16 @@ def explicit_release_targets(
             url = _clean_url(str(target.get("url") or ""))
             kind = str(target.get("declaration_kind") or "").strip().upper()
             baseline_revision = str(target.get("baseline_revision") or "").strip().lower()
+            valid_kind = kind in {"FIRST_PARTY_REPOSITORY", "FIRST_PARTY_DATASET"}
+            kind_matches_url = (
+                (kind == "FIRST_PARTY_REPOSITORY" and urlparse(url).netloc.lower() == "github.com")
+                or (kind == "FIRST_PARTY_DATASET" and _huggingface_dataset_id(url) is not None)
+            )
             if (
                 source_ref not in refs
                 or not _acceptable_release_url(url)
-                or kind != "FIRST_PARTY_REPOSITORY"
+                or not valid_kind
+                or not kind_matches_url
                 or not re.fullmatch(r"[0-9a-f]{40}", baseline_revision)
                 or target.get("scientific_authority") is not False
             ):
@@ -349,7 +369,11 @@ def explicit_release_targets(
                 "source_ref": source_ref,
                 "url": url,
                 "declaration_kind": kind,
-                "declaration_context": "durable-support-audit-first-party-repository",
+                "declaration_context": (
+                    "durable-support-audit-first-party-dataset"
+                    if kind == "FIRST_PARTY_DATASET"
+                    else "durable-support-audit-first-party-repository"
+                ),
                 "primary_cache_sha256": "",
                 "endpoint_provenance_kind": "SUPPORT_AUDIT",
                 "endpoint_provenance_sha256": str(hold.get("support_audit_sha256") or ""),
@@ -560,6 +584,13 @@ def _merge_portable_release_targets(
     return list(merged.values()), remaining, sum(row.get("portable_target") is True for row in merged.values())
 
 
+def _huggingface_dataset_api(url: str) -> str | None:
+    repo_id = _huggingface_dataset_id(url)
+    if not repo_id:
+        return None
+    return f"https://huggingface.co/api/datasets/{repo_id}"
+
+
 def _github_repo_api(url: str) -> str | None:
     parsed = urlparse(url)
     if parsed.netloc.lower() != "github.com":
@@ -584,8 +615,45 @@ def _is_release_artifact_path(path: str) -> bool:
 
 def _default_fetcher(target: dict[str, Any]) -> dict[str, Any]:
     url = str(target.get("url") or "")
+    hf_api = _huggingface_dataset_api(url)
     api = _github_repo_api(url)
-    headers = {"User-Agent": "Agent-Self-Evolution-Observatory/release-watch", "Accept": "application/vnd.github+json"}
+    headers = {"User-Agent": "Agent-Self-Evolution-Observatory/release-watch", "Accept": "application/json"}
+    if hf_api:
+        response = requests.get(hf_api, timeout=20.0, headers=headers, params={"full": "full"})
+        status = int(response.status_code)
+        if status != 200:
+            material = {"status_code": status, "endpoint": url, "fingerprint_version": FINGERPRINT_VERSION}
+            return {"status_code": status, "fingerprint": _sha(json.dumps(material, sort_keys=True, separators=(",", ":"))), "surface_nonempty": False, "artifact_file_count": 0, "fingerprint_version": FINGERPRINT_VERSION, "resolved_endpoint": hf_api}
+        payload = response.json() or {}
+        resolved_revision = str(payload.get("sha") or "").strip().lower()
+        if not re.fullmatch(r"[0-9a-f]{40}", resolved_revision):
+            raise RuntimeError("huggingface-dataset-revision-invalid")
+        artifacts = sorted(
+            str(row.get("rfilename") or "").strip()
+            for row in payload.get("siblings") or []
+            if isinstance(row, dict) and str(row.get("rfilename") or "").strip()
+        )
+        artifact_digest = _sha("\n".join(artifacts))
+        material = {
+            "status_code": status,
+            "endpoint": url,
+            "resolved_revision": resolved_revision,
+            "artifact_file_count": len(artifacts),
+            "artifact_path_digest": artifact_digest,
+            "fingerprint_version": FINGERPRINT_VERSION,
+        }
+        fingerprint = _sha(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+        return {
+            "status_code": status,
+            "fingerprint": fingerprint,
+            "surface_nonempty": bool(artifacts),
+            "artifact_file_count": len(artifacts),
+            "artifact_path_digest": artifact_digest,
+            "fingerprint_version": FINGERPRINT_VERSION,
+            "resolved_endpoint": hf_api,
+            "resolved_revision": resolved_revision,
+        }
+    headers["Accept"] = "application/vnd.github+json"
     if api:
         response = requests.get(api, timeout=20.0, headers=headers)
         status = int(response.status_code)
@@ -802,6 +870,7 @@ def public_support_release_watch_summary(state: dict[str, Any]) -> dict[str, Any
             "scientific_authority": False,
             "primary_declared_or_support_audited_release_endpoints_only": True,
             "support_audited_pre_f0_repository_targets_allowed": True,
+            "support_audited_pre_f0_first_party_dataset_targets_allowed": True,
             "pre_f0_release_change_only_holds_included": True,
             "related_work_repository_links_are_not_watch_targets": True,
             "release_surface_change_only_requests_recheck": True,
@@ -938,6 +1007,7 @@ def run_support_release_watch(
             "scientific_authority": False,
             "primary_declared_or_support_audited_release_endpoints_only": True,
             "support_audited_pre_f0_repository_targets_allowed": True,
+            "support_audited_pre_f0_first_party_dataset_targets_allowed": True,
             "pre_f0_release_change_only_holds_included": True,
             "related_work_repository_links_are_not_watch_targets": True,
             "release_surface_change_only_requests_recheck": True,
@@ -953,6 +1023,7 @@ def run_support_release_watch(
             "primary_declaration_refresh_max_per_run": int(max_primary_refreshes),
             "primary_declaration_refresh_cooldown_days": float(primary_refresh_cooldown_days),
             "github_release_fingerprint_ignores_doc_only_churn": True,
+            "huggingface_dataset_targets_use_official_revision_and_file_manifest": True,
             "revision_bound_targets_recheck_on_any_commit_drift": True,
             "release_surface_fingerprint_version": FINGERPRINT_VERSION,
             "cooldown_days": float(cooldown_days),
