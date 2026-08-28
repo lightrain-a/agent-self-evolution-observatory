@@ -1,0 +1,490 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TRANSPORT_GUIDED_REPAIR_PILOT_FREEZE",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+  "generated_at": "2026-08-28",
+  "status": "PILOT_PROTOCOL_FROZEN_EXECUTION_LOCKED",
+  "selection": {
+    "selection_input": "B10 contract metadata only: future_task, intent_template_id, selected_source_task and content hashes; no B10 action or terminal outcome enters selection",
+    "rule": "Partition the 36 replayable states by intent_template_id and select exactly one state per template using the lexicographically smallest sha256(SALT|intent_template_id|future_task).",
+    "salt": "C1-TGRP-PILOT-v1",
+    "intent_templates": 13,
+    "pilot_units": 13,
+    "confirmatory_holdout_units": 23,
+    "pilot_ids_sha256": "b6bc5f8465565ea83fd5ee476c9fa4cb7a8d75691d2d55c664a1a9a116e3d032",
+    "holdout_ids_sha256": "d8e9b9c144edfdd82952ca545d805c16b13b71dfe646dec25b9e94be6e1e2c25",
+    "pilot": [
+      {
+        "future_task": 164,
+        "selected_source_task": 163,
+        "intent_template_id": 136,
+        "selection_hash": "126e917e8579630034848632af524c5cdf7c8f848da2a2ab4bc5ff637cc23ec4",
+        "task_prompt_sha256": "45a4be19716b9ee58cc3a0f01a845b64b80dd312b7f92a8216296e8e38f9ec95",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "b95bc27a28c3f9027be62e4312a2d52cdbfdee9c3a8ed3cd11280e1ce6101ffb",
+        "success_memory_wrapper_sha256": "60cdc0bf22c5dcc9df51b8e39f02d0ccaa3d8c595e7b952012a2478b5333d546",
+        "failure_memory_wrapper_sha256": "58a80de3da48f9dbe665cdebf3984934b443669d39bbe7851cbaddca1e06755f"
+      },
+      {
+        "future_task": 329,
+        "selected_source_task": 141,
+        "intent_template_id": 147,
+        "selection_hash": "3c1c2c365ba9e668acb4381b70bcaeb6c04be93be5a88af29921a76755fc7379",
+        "task_prompt_sha256": "3e88dd42ae72c8afadacd015129ccc38da41fa1223b1f52bb26246ab7e00e0e1",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "606491b9939e6ad4c7b2b4fde82969e5162a21de88bf3294456909fc76fff260",
+        "success_memory_wrapper_sha256": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure_memory_wrapper_sha256": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      {
+        "future_task": 150,
+        "selected_source_task": 226,
+        "intent_template_id": 155,
+        "selection_hash": "127737e2fdce61dd48013b4bb755ac7d444860ddf70c13a2907a07185a66625b",
+        "task_prompt_sha256": "4226eb0c24ca02ec29afc21f3c78c1ffa8a272eed1124fe0f020159c82025b29",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "96619d33c47f0365c30eabd0a91c2e12e2d4007880a8005de8b3933ff2521a33",
+        "success_memory_wrapper_sha256": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure_memory_wrapper_sha256": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      {
+        "future_task": 124,
+        "selected_source_task": 226,
+        "intent_template_id": 159,
+        "selection_hash": "3cc4b9952cab40e3b212ce7941221587cfca0db7c7b84768364b801e17df7e72",
+        "task_prompt_sha256": "172b096931d191dbcae373be3c88975036a358054dcfee777a50752e942e16ac",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "8af027575bed02d18469d5b7a41fedee47436fbe491dab40a573fff8f4e2904f",
+        "success_memory_wrapper_sha256": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure_memory_wrapper_sha256": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      {
+        "future_task": 321,
+        "selected_source_task": 188,
+        "intent_template_id": 160,
+        "selection_hash": "1fcaab475fcaf403306e3d5ce2283a18ef68aaa979e4349cf7bf6994bff46b99",
+        "task_prompt_sha256": "353bfeabd0c64d3daa8be9de70a7a46df1e3958ab0caf261a3e3ac5c42dc707a",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "e4d678f401500996d41abe714088e42bd62411c6c8784cfdb0342be9ca145d76",
+        "success_memory_wrapper_sha256": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure_memory_wrapper_sha256": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      {
+        "future_task": 142,
+        "selected_source_task": 141,
+        "intent_template_id": 162,
+        "selection_hash": "7a1264472fea1562551fbd4975075ef488702a241cdb5c59bc1a7aa009d096c5",
+        "task_prompt_sha256": "c830de8969f80a2fdd2be8181d94582f22677a4b921825c10a3bba8bfff31f70",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "aa219bd419f2c6b7e453be6cd068ada2092022771d13f58d13337e5d7e878b1a",
+        "success_memory_wrapper_sha256": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure_memory_wrapper_sha256": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      {
+        "future_task": 279,
+        "selected_source_task": 226,
+        "intent_template_id": 204,
+        "selection_hash": "02d43a8592916e2004e6137c0f8ca27c3bb4219df463b4f3399c96a987c89409",
+        "task_prompt_sha256": "5328ea2e7f962dc493c8fd4c0b687953474b04a25171a461b702e8a5f6e2614e",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "b16e8fa561ed199966e01637d30d2c3d6eeb2a46756a9e0ac597b0af536981fc",
+        "success_memory_wrapper_sha256": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure_memory_wrapper_sha256": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      {
+        "future_task": 360,
+        "selected_source_task": 231,
+        "intent_template_id": 206,
+        "selection_hash": "403252118a49eb101302c00e63a934a08ea5aff7f57c59a68727763de66aa39a",
+        "task_prompt_sha256": "314ef9b879dfe5b2df1184799b939d79ce0ee2899f502210583e21eb545399f3",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "ef7593c3cba044f19cfddafd080417b02f3d99d8501594befb0cacad0d9755b0",
+        "success_memory_wrapper_sha256": "3f1e6348e277024bedaf3863845fee785d6dd971188269d1a9da4b92ac3620cf",
+        "failure_memory_wrapper_sha256": "10687b02671f7f2386e0530e613108b1b9b2c4f39995c712100d0a8931627de4"
+      },
+      {
+        "future_task": 233,
+        "selected_source_task": 232,
+        "intent_template_id": 213,
+        "selection_hash": "589bf02392310fd1a69c1a0bf9df705972554386c5f37af1599f1100ee38813a",
+        "task_prompt_sha256": "96afb45af7ebafd50072f1d8d8e3d3c56a9566b4fc8a0b30a9b57db8892197ed",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "2c5637dfba5e3d216fc05be7c93b1e4c0cc8e9148b70f5aa0164400c5860995e",
+        "success_memory_wrapper_sha256": "83cd5c25841ef851ed6ad3ed951923be399dd3eccda542d98341b3780cfd1541",
+        "failure_memory_wrapper_sha256": "5d21d224984c37b762e17c90869a3f4e0d9ba4b0390db87e6571b07289921914"
+      },
+      {
+        "future_task": 190,
+        "selected_source_task": 189,
+        "intent_template_id": 214,
+        "selection_hash": "487b7501effc9f8aee9f6f9a070127d2bf645333b37240ffeac57efc5778cd97",
+        "task_prompt_sha256": "f5676ecbd916274d6d197996a4245484cd417e33073a3570c6f3cfc3eaef0c79",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "51f7623a50a75de1a8ba37a387561282090318393720731e878b4dccc332ec70",
+        "success_memory_wrapper_sha256": "1c3c631a25a6e6e6f9238b3cbad69449a4bd0d41b074e1615893d48f314ba2c4",
+        "failure_memory_wrapper_sha256": "ae6611d3ddff07f380d581ca17098c1fa7dd8768277a8920ec4e54fa75b4979b"
+      },
+      {
+        "future_task": 26,
+        "selected_source_task": 25,
+        "intent_template_id": 222,
+        "selection_hash": "2cd8dc8d1b7bf18e8b5eb7f517be305783a7c9ea36c3c0543bbef84cbec63b32",
+        "task_prompt_sha256": "3fbb4fdc334675a715905743e22d62bbd2371aab6e22617317de000816bde693",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "b0f72c27a9850432afc3a9cd2e253f5b334eca0e4d25bc0cdcc020c4fbe553ed",
+        "success_memory_wrapper_sha256": "0b8e3b338b9df1163d9304d771003e4db5f869be914723fcac2ea01b14ccb239",
+        "failure_memory_wrapper_sha256": "f1ccb4169b6137789b99524c3bdf5304f8105abd9f711be507a8b3fe2f8a0f63"
+      },
+      {
+        "future_task": 230,
+        "selected_source_task": 226,
+        "intent_template_id": 370,
+        "selection_hash": "18e835152bca71d697b446c3bd070d28c399df20e50d735ab386646db25c4f4a",
+        "task_prompt_sha256": "8843677959449ad283f81bf193bbbd42be57c88e76a871116221cb2bcb87fe75",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "79a8e0c5b5cdd74dd88ae936c9fac2eb7232d7c84b406ca64d1f53419789ea2e",
+        "success_memory_wrapper_sha256": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure_memory_wrapper_sha256": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      {
+        "future_task": 384,
+        "selected_source_task": 25,
+        "intent_template_id": 666,
+        "selection_hash": "3df8c21dd602d1dd5d21c218d9eedb7ffee3f5a5e4c78f618aed11b36100c2a2",
+        "task_prompt_sha256": "94139732f1e35446e24aef6dae138c88fda65d9d71ad1be77b289681e1c3927f",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "5e07ee9f45627c4cf9a9953bca01ef47d06df10e67db33dd88dd0c0b08afc495",
+        "success_memory_wrapper_sha256": "0b8e3b338b9df1163d9304d771003e4db5f869be914723fcac2ea01b14ccb239",
+        "failure_memory_wrapper_sha256": "f1ccb4169b6137789b99524c3bdf5304f8105abd9f711be507a8b3fe2f8a0f63"
+      }
+    ],
+    "confirmatory_holdout": [
+      {
+        "future_task": 126,
+        "selected_source_task": 226,
+        "intent_template_id": 159,
+        "task_prompt_sha256": "c60724d5839cf8f96b3de9e8101439665d06f932865533d22454c3c4980139ab",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "0a6a0a95014b48316902b7cf274659bc030a76380e8226648a92e7faf2a677f5",
+        "success_memory_wrapper_sha256": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure_memory_wrapper_sha256": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      {
+        "future_task": 143,
+        "selected_source_task": 141,
+        "intent_template_id": 162,
+        "task_prompt_sha256": "3cecf2e3c4f88731de94850d588b167e494c514a5fd0525bd92ff139cf16dd50",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "f89588e053c423c0cb83fbb1720a6b5eb640fc7579fb0d762b7deab54010f787",
+        "success_memory_wrapper_sha256": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure_memory_wrapper_sha256": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      {
+        "future_task": 144,
+        "selected_source_task": 141,
+        "intent_template_id": 162,
+        "task_prompt_sha256": "1934e788674155fb95d3bd85a979de4daf638dd14586431b9b47b13eaa70a5ab",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "c650e4fb08f1401d66ce37a4ef81e9747844c5e7ed135253caa844e043dae276",
+        "success_memory_wrapper_sha256": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure_memory_wrapper_sha256": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      {
+        "future_task": 147,
+        "selected_source_task": 146,
+        "intent_template_id": 155,
+        "task_prompt_sha256": "234bb4a5db1a29376f84d55723e3e86726e4ff30c390fa1e302c102c918a1387",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "123c253dc9ca2b66de57718d2ba3bb5367925ba98780499af3b6c0a381b53629",
+        "success_memory_wrapper_sha256": "05001a08e7d3a741b7d15f25fe1ee9974170abc1e9aa2f1dc557c7e54d87aa43",
+        "failure_memory_wrapper_sha256": "6e02856419612840fe2fc27f77b1e21347422cab404e838a57917906c9874b35"
+      },
+      {
+        "future_task": 149,
+        "selected_source_task": 148,
+        "intent_template_id": 155,
+        "task_prompt_sha256": "45487f20f12c88be8a2fc77393453b4dd5c1c8d1cdbbb842e983c3a95fe5982b",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "c71eda48f27d9d2529e4d1896f9cbcbb75a7edcdf518bc4644cdbe8bc9297654",
+        "success_memory_wrapper_sha256": "5d3c9d448d381ad457951b05696d5f80764c4a5a1a7432a80e4a55a7510133c4",
+        "failure_memory_wrapper_sha256": "c9923dabef29de757d2057182f365a53e6a683fc36b77d171f00d0fb7f3443d7"
+      },
+      {
+        "future_task": 165,
+        "selected_source_task": 163,
+        "intent_template_id": 136,
+        "task_prompt_sha256": "45a4be19716b9ee58cc3a0f01a845b64b80dd312b7f92a8216296e8e38f9ec95",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "0426e3e5d8957855a89ec74832e410dcb2b882278ca926f89d5d59de6e8d7275",
+        "success_memory_wrapper_sha256": "60cdc0bf22c5dcc9df51b8e39f02d0ccaa3d8c595e7b952012a2478b5333d546",
+        "failure_memory_wrapper_sha256": "58a80de3da48f9dbe665cdebf3984934b443669d39bbe7851cbaddca1e06755f"
+      },
+      {
+        "future_task": 167,
+        "selected_source_task": 163,
+        "intent_template_id": 136,
+        "task_prompt_sha256": "45a4be19716b9ee58cc3a0f01a845b64b80dd312b7f92a8216296e8e38f9ec95",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "53ac14a493e3ecd18edc7e4fdb5c479ad4069f8a48f283c2cb8574cee0a62709",
+        "success_memory_wrapper_sha256": "60cdc0bf22c5dcc9df51b8e39f02d0ccaa3d8c595e7b952012a2478b5333d546",
+        "failure_memory_wrapper_sha256": "58a80de3da48f9dbe665cdebf3984934b443669d39bbe7851cbaddca1e06755f"
+      },
+      {
+        "future_task": 192,
+        "selected_source_task": 188,
+        "intent_template_id": 214,
+        "task_prompt_sha256": "309452aa5d806e015102c16dbc41ecad61c5c83fd49c29ed7ed996112228b243",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "bc629b1ff88ecd979a1a719f6ba93a2b09c2e2496ed93bb6b8b845257580adcc",
+        "success_memory_wrapper_sha256": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure_memory_wrapper_sha256": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      {
+        "future_task": 227,
+        "selected_source_task": 226,
+        "intent_template_id": 370,
+        "task_prompt_sha256": "9e2fd80094a162fcbe150368575424f9a2ac46007a59d4286cb4b3fcc8527d29",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "10dcf63c253219c735f998e5b2fd04ccd5e16f6c4cedc0767e8b9b42a7ecdfb3",
+        "success_memory_wrapper_sha256": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure_memory_wrapper_sha256": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      {
+        "future_task": 228,
+        "selected_source_task": 226,
+        "intent_template_id": 370,
+        "task_prompt_sha256": "bc1348abd581822ea83a6b10fbf89421aea1bc621bf96677358f6c2f225a62b8",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "6f1f8a624bf90ac4f33b9c5d0e87890a0df5236e1c78ed431c03b9f12ddfa34a",
+        "success_memory_wrapper_sha256": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure_memory_wrapper_sha256": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      {
+        "future_task": 229,
+        "selected_source_task": 226,
+        "intent_template_id": 370,
+        "task_prompt_sha256": "bef0edc533a465534987dc1b4ba4556edf8264663bb2f1ef810c33734c91444e",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "9b732b85037a22b1a15388a7fe8e995264876de50ddbad87bac37ae355aab4eb",
+        "success_memory_wrapper_sha256": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure_memory_wrapper_sha256": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      {
+        "future_task": 280,
+        "selected_source_task": 226,
+        "intent_template_id": 204,
+        "task_prompt_sha256": "df7bc9cca557920be8b9b8abd7d5a7476540f2912c1d553754fc72fa2675c631",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "142e58c3351cb7deedc5640dd55581bae4fcc59f608bdf60205fabae39314d41",
+        "success_memory_wrapper_sha256": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure_memory_wrapper_sha256": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      {
+        "future_task": 281,
+        "selected_source_task": 225,
+        "intent_template_id": 204,
+        "task_prompt_sha256": "f35dea089e35d9f909983fbdf4843858a89d2cfda079c27549678734477954d1",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "bfa4a2a897dc9a8f29971610d8bc70dc2f86d4d341e3fe5a535ff0a208315b19",
+        "success_memory_wrapper_sha256": "e33b23054ba4c1be784a94dd9293a480530622b008c6bbd99020226f79bb9751",
+        "failure_memory_wrapper_sha256": "6e69964089b5bc2d21cab4a009b0b37c2fbdb6a6a5fa447baaa501c63538429b"
+      },
+      {
+        "future_task": 282,
+        "selected_source_task": 226,
+        "intent_template_id": 204,
+        "task_prompt_sha256": "a0ddbd462b6215b65ffc537629be6672b0325ddaffeed20f90a6897aa19f9fac",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "579baa81f8bca50fdeaa8d5fc7abe7fd0a8448bda21d506fb287e0e43292606d",
+        "success_memory_wrapper_sha256": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure_memory_wrapper_sha256": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      {
+        "future_task": 319,
+        "selected_source_task": 188,
+        "intent_template_id": 160,
+        "task_prompt_sha256": "201053b1a4e94c31679c7f8c739d3ccc61831e6c2cf504d5cbf15748c9f51fba",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "7be1fbc4f78a37e72ad7375d998d886d3c89847146cf04e295089a163f96faac",
+        "success_memory_wrapper_sha256": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure_memory_wrapper_sha256": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      {
+        "future_task": 320,
+        "selected_source_task": 188,
+        "intent_template_id": 160,
+        "task_prompt_sha256": "f7efb18b4d711667673459abaf3a1d271bc5e935297aeae719e969ba8c58b361",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "eeb10315550aaae9c828d34d73f65a4e7755a8f8eede700b65b015695dab29be",
+        "success_memory_wrapper_sha256": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure_memory_wrapper_sha256": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      {
+        "future_task": 322,
+        "selected_source_task": 188,
+        "intent_template_id": 160,
+        "task_prompt_sha256": "3493416b28bd59d3c99ac0945636ebc1af868d3729c2011b82ed06ac67a04bb6",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "534a87bb6c6989853ae926343a972f1331249696ab25c4b937ef92d95c8a7049",
+        "success_memory_wrapper_sha256": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure_memory_wrapper_sha256": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      {
+        "future_task": 323,
+        "selected_source_task": 188,
+        "intent_template_id": 160,
+        "task_prompt_sha256": "3895815f01859e06ea9aaf0b81363bd67bac8c5f651ab22501de25206f89d426",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "19211b8290b0ccde669c4843ff1200159c1fa64c64c5b85b7a52fc342754c2fc",
+        "success_memory_wrapper_sha256": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure_memory_wrapper_sha256": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      {
+        "future_task": 330,
+        "selected_source_task": 141,
+        "intent_template_id": 147,
+        "task_prompt_sha256": "7fef495b710ac86d71487a58c8322a15ffd629e1afacaef9d3236ac45024a8e0",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "d9d23c5d60f5ced48e8e9046f0498b83951856d0b0efb3ba5a3c33b2fa984b1f",
+        "success_memory_wrapper_sha256": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure_memory_wrapper_sha256": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      {
+        "future_task": 331,
+        "selected_source_task": 141,
+        "intent_template_id": 147,
+        "task_prompt_sha256": "d926186dd1912471834b4b24e2312c8422babe7f311e66426c43ce8cf140f8a7",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "b83c6843d7164e98b40e489970aafebbae24c5b1ea0cc9d62abab4df197bb5d9",
+        "success_memory_wrapper_sha256": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure_memory_wrapper_sha256": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      {
+        "future_task": 333,
+        "selected_source_task": 141,
+        "intent_template_id": 147,
+        "task_prompt_sha256": "1b6a7d61792ed2d9872525d4ac5bfd8f8a34bdccbb448667ddcf6b33db88c82a",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "c8fceea28ce2a4d8a5917a1363d6fdc95910f4178f4bd7fdb15d063aff062b4e",
+        "success_memory_wrapper_sha256": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure_memory_wrapper_sha256": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      {
+        "future_task": 358,
+        "selected_source_task": 189,
+        "intent_template_id": 206,
+        "task_prompt_sha256": "b800670759a3e9bf1c17878cff59d8e7fb7c3503acb2e4d9903f49c6e7f52d4c",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "56c83de7e28b165ed37206c26a8210dd78d2621b38dcdc3c748fffb348d10548",
+        "success_memory_wrapper_sha256": "1c3c631a25a6e6e6f9238b3cbad69449a4bd0d41b074e1615893d48f314ba2c4",
+        "failure_memory_wrapper_sha256": "ae6611d3ddff07f380d581ca17098c1fa7dd8768277a8920ec4e54fa75b4979b"
+      },
+      {
+        "future_task": 362,
+        "selected_source_task": 231,
+        "intent_template_id": 206,
+        "task_prompt_sha256": "8093c6fead1a813ec459da1a2467ae102e7198c79357fb729c442c2669018dc4",
+        "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+        "current_state_sha256": "4e949d9549a06181f0ddc101b086ba03b5d002a7833433406eebc3fb5250c2f9",
+        "success_memory_wrapper_sha256": "3f1e6348e277024bedaf3863845fee785d6dd971188269d1a9da4b92ac3620cf",
+        "failure_memory_wrapper_sha256": "10687b02671f7f2386e0530e613108b1b9b2c4f39995c712100d0a8931627de4"
+      }
+    ]
+  },
+  "execution_geometry": {
+    "arms": [
+      "A0_NATIVE",
+      "A1_MEMORY_BLIND_DECISION_CHECK",
+      "A2_MEMORY_USE_CHECK"
+    ],
+    "branches": [
+      "success_memory",
+      "failure_memory"
+    ],
+    "rollouts_per_branch_per_arm_per_state": 4,
+    "pilot_provider_calls_if_authorized": 312,
+    "confirmatory_provider_calls_if_later_authorized": 552,
+    "pilot_and_confirmatory_are_disjoint": true,
+    "pilot_never_pooled_into_confirmatory_inference": true
+  },
+  "model": {
+    "requested": "doubao-seed-2.0-mini",
+    "expected_resolved": "doubao-seed-2-0-mini-260215",
+    "temperature": 0.2,
+    "max_output_tokens": 900,
+    "thinking": "disabled",
+    "provider_retries": 0,
+    "substitution_allowed": false
+  },
+  "primary_observable": {
+    "per_state_per_arm": "U_i,a = empirical total-variation distance between success-memory and failure-memory first-action action-signature distributions using four rollouts per branch",
+    "memory_specific_contrast": "D_i = U_i,A2 - U_i,A1",
+    "native_contrast": "N_i = U_i,A2 - U_i,A0",
+    "why_A1_primary_control": "A1 matches the additional decision-check structure while remaining memory-blind; A2-A1 therefore tests memory-specific uptake beyond generic extra decision checking."
+  },
+  "pilot_gate": {
+    "role": "screen identifiability/signal only; not a scientific confirmatory claim",
+    "go_full_if_all": [
+      "all packet and parser realization checks pass with no arm-dependent missingness",
+      "mean(U_A2) >= 0.20, reusing the previously frozen B10 practical first-action TV floor",
+      "mean(D_i) >= 0.10, half of the previously frozen B10 practical TV floor and positive in at least 8 of 13 pilot states",
+      "mean(N_i) > 0",
+      "A1 does not absorb the A2 effect: mean(D_i) must remain >= 0.10"
+    ],
+    "hold_or_stop_if": [
+      "A1 and A2 move similarly",
+      "A2 manipulation is not realized or packet invariance fails",
+      "mean(D_i) < 0.10",
+      "fewer than 8 of 13 pilot states have D_i > 0",
+      "provider/model support changes the frozen model identity or response semantics"
+    ],
+    "pilot_results_forbidden_from_confirmatory_pool": true
+  },
+  "prospective_confirmatory_gate_if_pilot_passes": {
+    "data": "23 frozen holdout states only",
+    "primary_statistic": "mean(D_i) over the 23 holdout states",
+    "practical_margin": 0.1,
+    "absolute_A2_mean_U_floor": 0.2,
+    "test": "one-sided paired sign-flip/randomization test over D_i under arm-label exchange at the state level",
+    "repetitions": 100000,
+    "seed": 20260828,
+    "p_lt": 0.05,
+    "pass_requires": [
+      "mean(D_i) >= 0.10",
+      "mean(U_A2) >= 0.20",
+      "one-sided paired sign-flip p < 0.05",
+      "all upstream packet invariance checks pass",
+      "no outcome-conditioned replacement or top-up"
+    ],
+    "terminal_outcome": "not part of this first-action confirmatory gate; only reopen terminal utility intervention if uptake is first established"
+  },
+  "missingness": {
+    "provider_retries": 0,
+    "replacement_units": false,
+    "top_up_failed_units": false,
+    "arm_dependent_missingness": "HOLD and diagnose; do not impute or replace"
+  },
+  "source_bindings": {
+    "pilot_contract": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/c1-transport-governance-20260828/paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-guided-repair-pilot-contract-20260828.json",
+      "sha256": "38c6cceee240ebb523c226fc370b6a03d6f4080c890c8fb49fec8d86a94488af"
+    },
+    "data_preflight": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/c1-transport-governance-20260828/paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-guided-repair-data-preflight-20260828.json",
+      "sha256": "aff2b75f06847e924d967674c6df870df889baf50cc6beea71e68dc201e92b0a"
+    },
+    "b10_contract": {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b10-native-first-action-transport-20260824/b10-contract.json",
+      "sha256": "c2a54c928d74ccb7a153166a02ef0ef7a1504a93b5895952380a95b0277a3436"
+    }
+  },
+  "scientific_boundary": "The pilot tests whether the stage diagnosis predicts an actionable post-retrieval uptake manipulation. Even a pass does not establish downstream utility, a universal mediator, or a novel utilization algorithm.",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}

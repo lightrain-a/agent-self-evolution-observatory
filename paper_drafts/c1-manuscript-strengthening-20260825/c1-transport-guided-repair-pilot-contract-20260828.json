@@ -1,0 +1,209 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TRANSPORT_GUIDED_REPAIR_PILOT_CONTRACT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+  "generated_at": "2026-08-28",
+  "canonical_base": "fc1a5b0231e08f49329faf5c7e96df24e85670e5",
+  "status": "FROZEN_DESIGN_AWAITING_DATA_REALIZATION_AND_EXPLICIT_EXECUTION_AUTHORITY",
+  "purpose": "Test whether the current post-exposure/pre-uptake evidence localization has actionable engineering value by changing only the policy-integration surface after retrieval while holding the upstream memory and retrieved packet fixed.",
+  "not_a_method_claim": "The treatment is a falsification probe for diagnostic actionability, not a claimed novel memory-utilization algorithm.",
+  "prior_frozen_signature": {
+    "write": "SUPPORTED: 20/20 Shopping pairs diverge; same-mode excess 0.105, p=0.0078",
+    "native_source_item_exposure": "OBSERVED: 125/172 held-out retrieval opportunities",
+    "first_action_uptake": "NOT_SUPPORTED: TV=0.06944, p=0.5801, 0/36 modal changes",
+    "native_terminal": "SPARSE_HETEROGENEOUS: |Delta|=0.02083, p=0.4289, 34/36 zero",
+    "forced_capacity": "SUPPORTED SIDE CONTROL: |Delta|=0.15625, p=0.00074"
+  },
+  "engineering_principle_under_test": {
+    "name": "stage-indexed credit and repair",
+    "credit_rule": [
+      {
+        "stage": "write",
+        "credit": "STATE_CHANGE_ONLY",
+        "meaning": "The update changed persistent state; do not infer retrieval, policy use, or utility."
+      },
+      {
+        "stage": "exposure",
+        "credit": "AVAILABILITY_ONLY",
+        "meaning": "The branch-conditioned source item reached the policy context; do not infer policy use."
+      },
+      {
+        "stage": "uptake",
+        "credit": "BEHAVIORAL_CONTROL",
+        "meaning": "A matched downstream decision contrast is supported; this is the earliest stage at which behavioral self-improvement credit may be considered."
+      },
+      {
+        "stage": "outcome",
+        "credit": "UTILITY_VALIDATION",
+        "meaning": "The behavioral change has a supported downstream utility consequence in the tested regime; sign and heterogeneity remain part of the claim."
+      }
+    ],
+    "repair_rule": "Treat the first unsupported measured native stage after supported/observed prerequisites as a repair hypothesis, not a causal fact. Target that surface with a prospective single-factor intervention while freezing upstream stages; if the predicted stage does not move despite verified intervention realization, the diagnosis has not earned actionable repair authority."
+  },
+  "scientific_question": "Does a post-retrieval policy-integration intervention selectively increase branch-specific first-action uptake when write and retrieved memory content are held fixed, as predicted by the current stage-resolved diagnosis?",
+  "competing_hypotheses": [
+    {
+      "id": "H_ACTIONABLE_UPTAKE_BOUNDARY",
+      "prediction": "A memory-use binding intervention increases the branch-specific first-action contrast relative to both native and wording-placebo controls while the exact retrieved memory packet is identical across prompt arms. If uptake rises, terminal behavior may be tested as the next stage without retroactively changing the diagnosis."
+    },
+    {
+      "id": "H_GENERIC_PROMPT_PERTURBATION",
+      "prediction": "Any extra policy instruction, including a semantics-neutral wording placebo, changes first-action behavior similarly; an apparent gain is prompt sensitivity rather than targeted memory uptake."
+    },
+    {
+      "id": "H_NONACTIONABLE_LOCALIZATION",
+      "prediction": "Even after verified post-retrieval integration manipulation, the treatment-specific first-action contrast does not increase; the existing boundary remains descriptive evidence localization and does not predict a usable repair surface."
+    }
+  ],
+  "design": {
+    "unit": "Frozen Shopping branch-comparison state with a recoverable, content-addressed native retrieved-memory packet and matched success/failure branch inputs.",
+    "selection": "Eligibility is determined only from pre-existing frozen retrieval artifacts and packet integrity, before any new policy output is generated. No selection may use prior or new task outcome, effect magnitude, or action difference.",
+    "required_preexecution_inventory": [
+      "exact 36-state first-action analysis membership",
+      "per-state success/failure branch input packet",
+      "exact retrieved memory packet and ordering for each branch",
+      "query/task identity",
+      "policy model/revision and decoding configuration",
+      "first-action parser/evaluator revision",
+      "content hashes for all frozen inputs"
+    ],
+    "arms": [
+      {
+        "id": "A0_NATIVE",
+        "change": "none",
+        "policy_integration_instruction": "released/native prompt surface"
+      },
+      {
+        "id": "A1_MEMORY_BLIND_DECISION_CHECK",
+        "change": "insert the exact fixed clause after CURRENT BROWSER STATE and before the native action instruction",
+        "clause": "Before choosing the next action, explicitly assess whether the ULTIMATE TASK and CURRENT BROWSER STATE together change which action should be taken. If this check is relevant, incorporate it; otherwise proceed as usual. Do not add explanation.",
+        "purpose": "control generic additional decision-check instruction and salience without mentioning reusable memory"
+      },
+      {
+        "id": "A2_MEMORY_USE_CHECK",
+        "change": "insert the exact fixed clause at the same position as A1",
+        "clause": "Before choosing the next action, explicitly assess whether the REUSABLE MEMORY and CURRENT BROWSER STATE together change which action should be taken. If this check is relevant, incorporate it; otherwise proceed as usual. Do not add explanation.",
+        "purpose": "target the exposure-to-uptake integration surface while matching A1 syntax and decision-check structure"
+      }
+    ],
+    "frozen_across_arms": [
+      "source trajectory",
+      "success/failure writer outputs",
+      "memory bank content",
+      "retriever output",
+      "retrieved packet bytes and order",
+      "query/task state",
+      "policy model and revision",
+      "decoding parameters",
+      "action schema/parser",
+      "terminal evaluator",
+      "sampling/seed policy",
+      "analysis traversal order"
+    ],
+    "forbidden_changes": [
+      "writer prompt or writer model",
+      "memory construction",
+      "retriever, retrieval k, retrieval ranking, or memory order",
+      "task subset after seeing new outcomes",
+      "model/backbone",
+      "reward semantics",
+      "terminal evaluator",
+      "effect threshold after execution"
+    ]
+  },
+  "stage_realization_checks": {
+    "W_invariant": "No writer call is made; use pre-existing content-addressed branch memories.",
+    "E_invariant": "No retriever call is made in the policy experiment; replay the exact frozen retrieved packet byte-for-byte across A0/A1/A2 for each branch.",
+    "U_manipulated_surface": "The only intended treatment variable is policy-side integration instruction A0/A1/A2.",
+    "O_secondary": "Terminal outcome is secondary and must not be used to define or tune the uptake treatment."
+  },
+  "pilot_sequence": {
+    "smoke": {
+      "purpose": "schema/runner/artifact persistence only",
+      "allowed_without_scientific_interpretation": true,
+      "requirements": [
+        "load one eligible frozen state without network/provider execution",
+        "verify A0/A1/A2 packet equality outside the integration clause",
+        "verify per-case output/log paths are append-safe and resume-capable",
+        "verify first-action parser on archived outputs",
+        "write run manifest before any provider/model execution"
+      ]
+    },
+    "pilot": {
+      "purpose": "scientific identifiability and signal check",
+      "execution_status": "NOT_AUTHORIZED_BY_THIS_CONTRACT",
+      "sample_rule": "Freeze a small outcome-blind subset from eligible states using task IDs or a predeclared hash-based selection rule; do not choose cells because prior forced/native effects were large.",
+      "primary_endpoint": "paired change in branch-specific first-action contrast under A2 versus A0 and A1",
+      "secondary_endpoint": "modal first-action branch changes",
+      "terminal_endpoint": "exploratory/secondary until uptake manipulation is realized and adjudicated",
+      "go_full_only_if": [
+        "input packet invariance passes",
+        "A1 memory-blind decision check does not absorb the A2 memory-use-check effect",
+        "A2 manipulation is demonstrably realized",
+        "the first-action observable shows discriminative signal sufficient for an interpretable full test",
+        "per-case artifacts and resume/replay paths are complete",
+        "explicit experiment/provider authority exists"
+      ]
+    },
+    "full": {
+      "execution_status": "LOCKED",
+      "unlock_requires": "qualified pilot plus explicit authority plus frozen inference/power contract"
+    }
+  },
+  "adjudication": {
+    "A2_gt_A0_and_A1_at_U_with_packet_invariance": "SUPPORTS_ACTIONABLE_REPAIR_PREDICTION_AT_UPTAKE; does not yet prove utility improvement",
+    "A2_equals_A1_or_both_move": "GENERIC_DECISION_CHECK_SENSITIVITY_OR_INSUFFICIENT_MEMORY_SPECIFICITY; do not claim targeted uptake repair",
+    "A2_realized_but_U_not_moved": "NARROW current result to descriptive evidence localization; stage diagnosis did not predict an actionable repair on this intervention",
+    "U_moves_but_O_does_not": "boundary shifts downstream for engineering purposes; target action quality/task alignment next rather than more retrieval",
+    "U_and_O_move": "supports diagnosis-guided repair utility on the tested substrate only; requires replication before broad memory-governance claims",
+    "packet_invariance_fails": "INVALID_EXECUTION; no scientific update"
+  },
+  "artifact_persistence_contract": {
+    "before_run": [
+      "git_sha",
+      "contract_sha256",
+      "eligible_state_manifest",
+      "arm templates and hashes",
+      "model/revision",
+      "decoding config",
+      "evaluator/parser revision",
+      "seed/selection rule",
+      "environment summary"
+    ],
+    "during_run": [
+      "per-case request/input hash",
+      "per-case retrieved-packet hash",
+      "arm",
+      "raw output",
+      "parsed first action",
+      "provider/model response metadata",
+      "failure record",
+      "incremental progress/heartbeat",
+      "resume cursor"
+    ],
+    "after_run": [
+      "complete-vs-failed manifest",
+      "paired first-action statistics",
+      "wording-placebo comparison",
+      "heterogeneity by frozen task/state only",
+      "claim update and failure differential diagnosis"
+    ]
+  },
+  "novelty_boundary": {
+    "not_claimed": [
+      "generic retrieval-versus-utilization distinction",
+      "a new post-retrieval reasoning architecture",
+      "generic memory management or RL optimization",
+      "generic active-memory-use benchmark"
+    ],
+    "claimed_if_validated": "A stage-resolved persistent-update diagnosis can be translated into stage-indexed self-improvement credit and can prospectively predict which repair surface should be intervened on while upstream stages remain fixed."
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}

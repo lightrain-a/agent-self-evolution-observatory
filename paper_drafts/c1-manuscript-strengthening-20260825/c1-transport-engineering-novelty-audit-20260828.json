@@ -1,0 +1,133 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TRANSPORT_ENGINEERING_NOVELTY_AUDIT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "generated_at": "2026-08-28",
+  "canonical_base": "fc1a5b0231e08f49329faf5c7e96df24e85670e5",
+  "purpose": "Determine whether the stage-resolved C1 diagnosis can support an engineering consequence without colliding with already-published memory-utilization methods or benchmark contributions.",
+  "frozen_current_object": {
+    "scientific_object": "stage-resolved transport of a controlled persistent-state contrast",
+    "native_chain": [
+      "persistent write",
+      "native retrieval exposure",
+      "first-action uptake",
+      "terminal outcome"
+    ],
+    "side_control": "forced fixed-evidence downstream capacity",
+    "current_signature": "write supported; source-item exposure observed; first-action branch contrast not supported; terminal transport sparse/heterogeneous; forced capacity supported",
+    "claim_boundary": "operational evidence localization only; no causal mediation coefficient and no claim that retrieval-utilization separation itself is novel"
+  },
+  "published_nearest_work": [
+    {
+      "work": "ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory",
+      "venue": "ICLR 2026 Conference",
+      "official_source": "https://proceedings.iclr.cc/",
+      "role_for_c1": "base self-evolving memory substrate / motivation",
+      "overlap": "success/failure-derived persistent reasoning memory and reuse",
+      "residual": "does not make C1's same-trajectory stage-transport identification or stage-indexed credit rule redundant"
+    },
+    {
+      "work": "How Memory Management Impacts LLM Agents: An Empirical Study of Experience-Following Behavior",
+      "venue": "ACL 2026 Long Paper",
+      "anthology_id": "2026.acl-long.27",
+      "doi": "10.18653/v1/2026.acl-long.27",
+      "official_source": "https://aclanthology.org/2026.acl-long.27/",
+      "overlap": "empirical memory dynamics, error propagation, addition/deletion choices, and practical memory-management guidance",
+      "collision_risk": "HIGH if C1 claims generic memory-quality management or future-task evaluation as a new idea",
+      "residual": "C1 intervenes on the same source trajectory and asks how a treatment-induced persistent-state contrast is transported across write/exposure/uptake/outcome surfaces"
+    },
+    {
+      "work": "Mem2ActBench: A Benchmark for Evaluating Long-Term Memory Utilization in Task-Oriented Autonomous Agents",
+      "venue": "ACL 2026 Long Paper",
+      "anthology_id": "2026.acl-long.370",
+      "doi": "10.18653/v1/2026.acl-long.370",
+      "official_source": "https://aclanthology.org/2026.acl-long.370/",
+      "overlap": "retrieving memory is insufficient; active memory application should be measured in task-oriented action execution",
+      "collision_risk": "HIGH if C1 claims retrieval-versus-use as its novelty",
+      "residual": "C1 traces a controlled persistent-state intervention across multiple causal/evaluation surfaces and contrasts native transport with forced downstream capacity"
+    },
+    {
+      "work": "MemCoRL: Alternating Co-Optimization of Memory Retrieval and Utilization via Collaborative Reinforcement Learning",
+      "venue": "ACL 2026 Long Paper",
+      "anthology_id": "2026.acl-long.1804",
+      "doi": "10.18653/v1/2026.acl-long.1804",
+      "official_source": "https://aclanthology.org/2026.acl-long.1804/",
+      "overlap": "explicitly separates retrieval and utilization and optimizes both",
+      "collision_risk": "FATAL if C1 is reframed as a generic retrieval-utilization optimization method",
+      "residual": "C1 may use a utilization-side intervention only as a diagnostic-guided repair probe; method novelty must remain stage-resolved identification/credit, not generic utilization optimization"
+    },
+    {
+      "work": "Chain-of-Memory: Lightweight Memory Construction with Dynamic Evolution for LLM Agents",
+      "venue": "ACL 2026 Long Paper",
+      "anthology_id": "2026.acl-long.534",
+      "doi": "10.18653/v1/2026.acl-long.534",
+      "official_source": "https://aclanthology.org/2026.acl-long.534/",
+      "overlap": "identifies a retrieval-recall versus reasoning-accuracy gap and proposes a stronger utilization mechanism",
+      "collision_risk": "FATAL if C1's engineering contribution is merely better post-retrieval reasoning",
+      "residual": "C1 asks when a controlled self-improvement update has earned behavioral credit and whether its diagnosis predicts the repair surface"
+    },
+    {
+      "work": "Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning",
+      "venue": "ACL 2026 Long Paper",
+      "anthology_id": "2026.acl-long.583",
+      "official_source": "https://aclanthology.org/2026.acl-long.583/",
+      "overlap": "learned memory management and utilization",
+      "collision_risk": "MEDIUM for broad memory-management method claims",
+      "residual": "C1 is a measurement/identification contribution with a bounded diagnostic-guided repair test rather than a learned manager"
+    },
+    {
+      "work": "Controllable Memory Usage: Balancing Anchoring and Innovation in Long-Term Human-Agent Interaction",
+      "venue": "ACL 2026 Long Paper",
+      "anthology_id": "2026.acl-long.670",
+      "doi": "10.18653/v1/2026.acl-long.670",
+      "official_source": "https://aclanthology.org/2026.acl-long.670/",
+      "overlap": "behavioral memory dependence and control of memory reliance",
+      "collision_risk": "MEDIUM if C1 claims generic memory-dependence measurement/control",
+      "residual": "C1 credit is tied to transport of a controlled persistent-state intervention, not user-controlled personalization dependence"
+    },
+    {
+      "work": "Demystifying Deep Search: A Holistic Evaluation with Hint-free Multi-Hop Questions and Factorised Metrics",
+      "venue": "ICLR 2026 Conference",
+      "official_source": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/9a27f07ee41dd59d527062e045c16353-Abstract-Conference.html",
+      "overlap": "factorized diagnosis separates search sufficiency, knowledge utilization, and refusal; an EvidenceLoop baseline then targets diagnosed weaknesses",
+      "role_for_c1": "paper-architecture precedent",
+      "lesson": "for ICLR, diagnosis is substantially stronger when it predicts a concrete intervention or engineering decision rather than stopping at factorized metrics"
+    },
+    {
+      "work": "AMemGym: Interactive Memory Benchmarking for Assistants in Long-Horizon Conversations",
+      "venue": "ICLR 2026 Conference",
+      "official_source": "https://proceedings.iclr.cc/paper_files/paper/2026/hash/0856bc553d3e3b9827e5140d0ad3bf8d-Abstract-Conference.html",
+      "overlap": "diagnostically rich memory evaluation and optimization in an interactive environment",
+      "collision_risk": "LOW-MEDIUM",
+      "residual": "C1 is not a benchmark; its object is controlled transport and stage-specific scientific credit"
+    }
+  ],
+  "adjudication": {
+    "diagnostic_only_current_r7_shape": "VIABLE_BUT_INCOMPLETE_FOR_STRONG_ICLR_STORY",
+    "generic_utilization_method": "REJECT_COLLISION_WITH_MEMCORL_AND_CHAIN_OF_MEMORY",
+    "generic_active_memory_use_claim": "REJECT_COLLISION_WITH_MEM2ACTBENCH",
+    "generic_memory_quality_governance": "REJECT_COLLISION_WITH_XIONG_ET_AL_2026",
+    "selected_residual": "STAGE_INDEXED_BEHAVIORAL_CREDIT_PLUS_DIAGNOSTIC_GUIDED_REPAIR_SELECTION",
+    "selected_residual_scope": "A persistent update receives only the highest stage-specific credit supported by evidence; the first unsupported measured stage generates a repair hypothesis that must be prospectively falsified by a stage-targeted intervention while upstream surfaces are held fixed.",
+    "why_this_is_not_just_more_metrics": "The diagnostic output changes the intervention target: a W+/E-observed/U-not-supported/F+ signature predicts that writer/retrieval work is not the first repair target and instead motivates a controlled post-retrieval policy-integration probe.",
+    "venue_fit": {
+      "ACL": "strong fit if the paper combines controlled transport analysis, published-memory comparisons, and a practical stage-indexed credit/repair consequence",
+      "ICLR": "plausible if the stage signature is shown to predict an actionable repair or boundary, not merely describe where evidence weakens"
+    }
+  },
+  "forbidden_claims": [
+    "retrieval is not utilization is new",
+    "post-retrieval utilization optimization is new",
+    "memory-quality filtering is new",
+    "the current exposure-to-uptake evidence boundary is already a causal repair target",
+    "the proposed repair probe has improved behavior before it is actually executed and adjudicated",
+    "published benchmark/method numbers are directly comparable to C1 unless evaluation protocols are aligned"
+  ],
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}

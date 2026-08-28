@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TRANSPORT_GUIDED_REPAIR_SMOKE_FAILURE_REPAIR",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+  "failed_run": "c1-tgrp-p0-postexposure-uptake-20260828-smoke-v1",
+  "failed_run_receipt_sha256": "8c589b9c43a77a2024aa6de695e6af40f9a239d866a079b761d2653d4140fdee",
+  "expected": "Zero-provider smoke should reconstruct the frozen prompt packet and replay the archived B10 first-action parser before any new model/provider execution.",
+  "observed": "Packet reconstruction passed, but the smoke-local parser assumed an action/name field. Frozen B10 encodes actions as one-key mappings such as {click_element: {index: ...}}, so parser replay stopped at action_signature.",
+  "realization_check": {
+    "scientific_units_executed": 0,
+    "provider_calls": 0,
+    "model_actions": 0,
+    "packet_preflight_previously_passed": true
+  },
+  "leading_failure_layers": [
+    "operationalization"
+  ],
+  "evidence_distinguishing_failure_layer": "The exact archived B10 runner defines the action name as next(iter(action)) and parses click_element from the nested args.index field; the smoke-local parser used a different schema. No scientific treatment was executed.",
+  "single_variable_repair": "Replace only the smoke-local parser with the exact frozen B10 action_signature semantics and regex fallback. Keep data, A0/A1/A2 prompts, model identity, endpoints, and authority unchanged. Rerun as smoke-v2 rather than overwriting smoke-v1.",
+  "what_would_falsify_repair": "If the exact B10 parser semantics still fail to reproduce archived B10 action signatures, stop the smoke and investigate source/artifact drift rather than changing treatment design.",
+  "claim_status_before_after": "unchanged; engineering repair efficacy remains untested",
+  "mainline_status": "execution failure memory only; zero narrative scientific authority",
+  "lesson": "When a smoke replays a frozen evaluator/parser, reuse its exact schema semantics rather than rewriting an intuitively equivalent parser. Parser-schema mismatch is execution failure, not evidence against the scientific repair hypothesis.",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}
