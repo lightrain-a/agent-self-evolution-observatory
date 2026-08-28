@@ -63,6 +63,10 @@
     {
       "source_path": "research_pipeline/formal_goal_policy_contract_failure_assets_20260828.json",
       "source_key": "training_semantics_asset"
+    },
+    {
+      "source_path": "research_pipeline/formal_goal_policy_contract_failure_assets_20260828.json",
+      "source_key": "cross_product_integration_asset"
     }
   ],
   "scientific_authority": false

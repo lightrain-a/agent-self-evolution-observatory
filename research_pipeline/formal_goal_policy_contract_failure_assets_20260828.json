@@ -22,6 +22,26 @@
     "source_decision": "THIRD_POLICY_QUALIFICATION_CONFIRM_HOLD_THREE_FAMILY_MINIMUM_UNCHANGED",
     "scientific_authority": false
   },
+  "cross_product_integration_asset": {
+    "signature": "operationalization:component-coexistence-not-cross-product-integration",
+    "idea_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+    "diagnosis": "component-coexistence-not-cross-product-integration",
+    "affected_layer": "operationalization",
+    "reusable_precheck": "When a framework separately advertises support for an environment/robot and a set of policy adapters, do not infer that every environment x policy cross-product is implemented. Require a pinned public revision containing the explicit cross-product adapter, observation/action mapping, serving path, and benchmark-specific smoke or contract before counting the pair as source-qualified. Capability matrices are not Cartesian-product proofs; an unmarked or generic adapter cannot satisfy a benchmark-specific family admission gate by juxtaposition.",
+    "evidence_ref": "repo:generated/behavior-formal-goal-coupling-third-policy-current-source-recheck-20260828.json#sha256=9d146d5b6fe285b4de8ef96050f067e8a3426bf19c1cf23fd0ff613b1669ecf4",
+    "does_not_imply": "the framework cannot later support the cross-product, or that its generic adapter/environment components are invalid; only that separate component availability is insufficient evidence of an already integrated benchmark path",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "operationalization",
+      "experiment_family": "benchmark/model compatibility and third-family source qualification",
+      "failure_mode": "separately listed environment support and generic model support are combined by inference into a nonexistent benchmark-specific integration contract",
+      "required_preflight": "explicit public cross-product adapter plus benchmark-specific observation/action/serving contract in the pinned revision"
+    },
+    "reuse_effectiveness": {"reuse_count": 0, "helped_count": 0, "hurt_count": 0, "status": "not-yet-measured"},
+    "superseded_by": "",
+    "source_decision": "CURRENT_SOURCE_RECHECK_CONFIRM_HOLD_NO_THIRD_FAMILY",
+    "scientific_authority": false
+  },
   "training_semantics_asset": {
     "signature": "reproducibility:headline-hyperparameters-incomplete-training-contract",
     "idea_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",

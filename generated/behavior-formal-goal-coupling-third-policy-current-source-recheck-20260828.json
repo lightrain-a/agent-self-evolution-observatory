@@ -1,0 +1,77 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-third-policy-current-source-recheck-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+  "status": "HOLD_NO_NEW_SOURCE_QUALIFIED_THIRD_POLICY_FAMILY",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "gpu_authority": false,
+  "policy_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "checked_at": "2026-08-28",
+  "frozen_admission_rule": {
+    "family_independence": "candidate must not be a derivative of any already-admitted policy family",
+    "behavior_interface": "a BEHAVIOR 2026 R1Pro observation/action adapter must already exist in the pinned public revision before outcome access",
+    "training_contract": "a source-pinned training path for the BEHAVIOR 2026 demonstration format must already exist",
+    "serving_contract": "a source-pinned policy serving path compatible with the BEHAVIOR evaluator protocol must already exist",
+    "checkpoint_or_recipe_provenance": "challenge-compatible checkpoint or complete pre-freezable recipe/checkpoint-selection rule must exist",
+    "pass_rule": "all five required; co-listing an environment and a generic policy adapter is not cross-product qualification"
+  },
+  "official_organizer_state": {
+    "source": "BEHAVIOR-1K 2026 baselines documentation",
+    "baseline_families": [
+      "pi0.5/OpenPI",
+      "GR00T N1.7"
+    ],
+    "family_count": 2,
+    "new_third_official_family_found": false,
+    "provided_checkpoint_scope": "turning_on_radio only for both official families"
+  },
+  "candidate_rechecks": [
+    {
+      "candidate": "OpenETA + OpenVLA/OpenVLA-OFT",
+      "family_independence": true,
+      "behavior_environment_support": true,
+      "generic_policy_adapter_listed": true,
+      "public_cross_product_behavior_r1pro_adapter_proven": false,
+      "training_contract_for_behavior_r1pro": false,
+      "serving_contract_for_behavior_r1pro": false,
+      "checkpoint_or_recipe_provenance": false,
+      "verdict": "HOLD",
+      "source_reason": "OpenETA marks BEHAVIOR-1K/R1Pro as adapted, but its policy-adapter entries are unmarked; the project explicitly states unmarked items are not yet adapted. Separate component availability is not evidence that OpenVLA/OpenVLA-OFT is integrated with BEHAVIOR R1Pro."
+    },
+    {
+      "candidate": "OpenRAL independent VLA family",
+      "family_independence": null,
+      "behavior_environment_support": true,
+      "generic_policy_adapter_listed": true,
+      "public_cross_product_behavior_r1pro_adapter_proven": false,
+      "training_contract_for_behavior_r1pro": false,
+      "serving_contract_for_behavior_r1pro": false,
+      "checkpoint_or_recipe_provenance": false,
+      "verdict": "HOLD",
+      "source_reason": "OpenRAL documents the BEHAVIOR/R1Pro compatibility path for the organizer GR00T N1.7 checkpoint; other listed VLA rSkills are validated on other embodiments/environments, not a distinct BEHAVIOR R1Pro family."
+    }
+  ],
+  "adjudication": {
+    "qualified_new_families": 0,
+    "three_family_minimum": 3,
+    "currently_qualified_families": 2,
+    "third_family_gate_pass": false,
+    "phase2_model_load_allowed": false,
+    "training_or_rollout_allowed": false,
+    "port010_reopen_allowed": false
+  },
+  "allowed_next": [
+    "continue current-source watch for a genuinely independent public BEHAVIOR R1Pro policy family",
+    "organizer public-result release watch",
+    "static/data-only readiness maintenance"
+  ],
+  "forbidden_next": [
+    "counting co-listed environment and policy components as an integrated family without an explicit public adapter",
+    "building a new private adapter and retroactively calling it prequalified",
+    "lowering the three-family minimum",
+    "model load, training, rollout, or outcome access"
+  ],
+  "scientific_effect": "none; source-qualification recheck only"
+}

@@ -362,6 +362,7 @@ class ResearchLearningLoopTest(unittest.TestCase):
         expected_layers = {
             "experiment_identifiability:lineage-derived-policy-not-independent-family": "experiment_identifiability",
             "reproducibility:headline-hyperparameters-incomplete-training-contract": "reproducibility",
+            "operationalization:component-coexistence-not-cross-product-integration": "operationalization",
         }
         self.assertTrue(set(expected_layers).issubset(by_signature))
         for signature, layer in expected_layers.items():
