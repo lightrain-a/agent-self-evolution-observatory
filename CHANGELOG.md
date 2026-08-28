@@ -1,3 +1,9 @@
+## 2026-08-28 · F18 ↔ PORT-010 replay/authority contract
+
+- Bound F18 to the current VWE PORT-010 scientific object by candidate snapshot, release-watch contract hash, source revision, and frozen HOLD/BLOCK_BAKE_IN state; candidate id alone is explicitly insufficient because historical PORT-010 objects exist.
+- Added an exact-F0 content-addressed zero-modification reference and a fail-closed replay receipt validator: replay cannot mutate F0, missing/mismatched artifact provenance is rejected, receipts cannot self-authorize or override canonical evidence review, and local rollouts remain prohibited from masquerading as author-released outcomes.
+- Added a system-gate-only regression runner whose PASS state still reports `scientific_release=HOLD` and creates no scientific evidence or execution authority.
+
 # Changelog
 
 ## 2026-08-27 · Effective-HOLD release-watch recovery
