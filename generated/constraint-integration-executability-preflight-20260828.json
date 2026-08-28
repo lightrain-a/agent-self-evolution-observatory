@@ -1,0 +1,196 @@
+{
+  "schema_version": "constraint-integration-executability-preflight-v1",
+  "proposal_id": "CROSS-SUBSTRATE-CONSTRAINT-INTEGRATION-20260828",
+  "status": "ASSET_PARTIAL_RUNTIME_NOT_READY_ZERO_AUTHORITY",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "provider_authority": false,
+  "gpu_authority": false,
+  "generator_admission": "PENDING",
+  "port010_effect": "NONE",
+  "primary_finding": "LEGO-Bench can support an outcome-independent evaluator-coupling negative control with released manually aligned scenes, and LEGO-Eval can in principle use an OpenAI-compatible local model server. However, no source-faithful zero-provider execution path exists for the four published LEGO generation baselines, and the local evaluator runtime/assets are not yet materialized. No experiment is execution-ready.",
+  "aligned_scene_asset": {
+    "dataset": "LEGO-Eval/LEGO_Bench",
+    "dataset_revision": "301e409f34db633c4a4ed13fc4149440dffbcbb4",
+    "official_role": "130 instructions paired with manually aligned 3D scenes",
+    "scene_json_materialized": true,
+    "scene_json_count": 130,
+    "scene_json_bytes": 6873717,
+    "full_data_sha256": "c4cab948b923b522b9ba4991e167e1c5c7d503786f2b2e5c11a64dab89113c21",
+    "scene_hash_root": "a054330773c697041ea6a1aa71a4f5a8d0bdeb82cb5078397b33e6ccc34a4b35",
+    "manifest_artifact": "generated/lego-bench-aligned-scene-json-manifest-20260828.json",
+    "manifest_sha256": "ba12ccc4a4e18520e9aad192c87e47bdc90b2c3bb8ee05a2ddde07de3aa226f0",
+    "all_index_query_pairs_match_full_data": true,
+    "per_case_evaluator_outcomes_read": false,
+    "role_if_authorized": "measurement negative control for evaluator-induced cross-type co-failure",
+    "scientific_authority": false
+  },
+  "lego_eval": {
+    "repository": "https://github.com/gyeomh/LEGO-EVAL",
+    "revision": "35c227c03f5c5434769e00195e0ef2221e22f8b6",
+    "source_hashes": {
+      "setup_requirements_txt": "db92c9e66defae6b178bfd4667cbf8cbb1f986230649d4ed3ee81dcafe4879bb",
+      "evaluation_eval_py": "9e35da9b87da77b5b2e9307ad3b2bf28eecd644dd3362913a23d718da24a0eb9",
+      "evaluation_models_py": "f10a74e8877ac51e5add48631587dba40d266f54c27b24e3a64cd5e90e44efab",
+      "scripts_run_sh": "40051380190495f2dd71342528e9df97cedf51a3df12653901f91526cbd0d127"
+    },
+    "lego_bench_mode_uses_released_constraint_decomposition": true,
+    "constraint_evaluation_is_sequential": true,
+    "previous_constraint_outputs_enter_later_tool_selection": true,
+    "measurement_coupling_risk": "REAL_AND_PRE_REGISTERED",
+    "client_interface": "OpenAI-compatible base_url for LLM/VLM components",
+    "run_script_marks_api_key_none_for_opensource": true,
+    "zero_external_provider_possible_in_principle": true,
+    "zero_external_provider_runtime_ready_now": false,
+    "scientific_authority": false
+  },
+  "local_open_model_candidate": {
+    "model": "Qwen/Qwen3-VL-8B-Instruct",
+    "cache_snapshot": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+    "cache_path": "/data/wyt/vlmmodel/hub/models--Qwen--Qwen3-VL-8B-Instruct",
+    "cache_bytes": 17545908095,
+    "weight_shards_present": 4,
+    "tokenizer_and_preprocessor_present": true,
+    "materialized": true,
+    "role": "candidate local evaluator backend only; exact evaluation-model choice still requires scientific freeze",
+    "does_not_authorize_gpu": true,
+    "scientific_authority": false
+  },
+  "runtime_preflight": {
+    "docker": {
+      "present": true,
+      "version": "29.3.0"
+    },
+    "host_xorg_present": true,
+    "dedicated_lego_xorg_started": false,
+    "examined_conda_envs": [
+      "vlm_fp",
+      "vlm_fp_new",
+      "vlm_fp_231_clone"
+    ],
+    "candidate_env_capabilities": {
+      "torch_transformers_available_in_at_least_one": true,
+      "openai_client_available_in_at_least_one": true,
+      "vllm_available": false,
+      "ai2thor_available": false,
+      "langsmith_available": false
+    },
+    "objathor_holodeck_assets": {
+      "required_version": "2023_09_23",
+      "materialized_on_checked_paths": false
+    },
+    "lego_object_images": {
+      "dataset": "LEGO-Eval/object_images",
+      "revision": "9c03b6e9057556a4e8c6a3b4e03fa9b949ec5069",
+      "official_total_size_gb": 48,
+      "materialized_on_checked_paths": false
+    },
+    "lego_bench_rendered_images": {
+      "official_dataset_total_size_gb": 4.16,
+      "materialized": false,
+      "note": "Only the 130 scene JSON files and full_data.json were materialized for the zero-authority asset check."
+    },
+    "ai2thor": {
+      "python_package_install_reference": "0+8524eadda94df0ab2dbb2ef5a577e4d37c712897",
+      "runtime_thor_commit_from_lego_run_script": "3213d486cd09bcbafce33561997355983bdf8d1a",
+      "materialized_in_examined_envs": false
+    },
+    "status": "NOT_RUNTIME_READY"
+  },
+  "published_generator_baselines": [
+    {
+      "name": "Holodeck",
+      "repository": "https://github.com/allenai/Holodeck",
+      "revision": "362b8ed948b867b69a72f1f9491f4caa88419bfc",
+      "source_faithful_provider_dependency": "OpenAI API; official usage specifies gpt-4o-2024-05-13",
+      "zero_provider_source_faithful_execution": false,
+      "local_model_substitution_is_same_baseline": false
+    },
+    {
+      "name": "LayoutGPT",
+      "repository": "https://github.com/weixi-feng/LayoutGPT",
+      "revision": "fc31954962553e5b65bf267a904a6930d50b1f5e",
+      "source_faithful_provider_dependency": "OpenAI authentication; official 3D command uses llm_type gpt4",
+      "zero_provider_source_faithful_execution": false,
+      "local_model_substitution_is_same_baseline": false
+    },
+    {
+      "name": "I-Design",
+      "repository": "https://github.com/atcelen/IDesign",
+      "revision": "7bc891c72e45f36f6461f5848c3c052723faede4",
+      "source_faithful_provider_dependency": "OAI_CONFIG_LIST with GPT-4/GPT-4-1106-preview/GPT-3.5-turbo-1106; GPT-V evaluator",
+      "zero_provider_source_faithful_execution": false,
+      "local_model_substitution_is_same_baseline": false
+    },
+    {
+      "name": "LayoutVLM",
+      "repository": "https://github.com/sunfanyunn/LayoutVLM",
+      "revision": "85d06b4cd2478551188a0b4a47cd658c85c41315",
+      "source_faithful_provider_dependency": "official main.py invocation requires --openai_api_key",
+      "zero_provider_source_faithful_execution": false,
+      "local_model_substitution_is_same_baseline": false
+    }
+  ],
+  "released_baseline_outcome_status": {
+    "per_case_generated_scene_bundle_identified_in_inspected_official_lego_surfaces": false,
+    "interpretation": "The inspected LEGO-EVAL repository and LEGO_Bench release expose the evaluator, benchmark metadata, manually aligned reference scenes, and reference images; they do not provide a qualifying per-case generated-scene bundle for the four published generator baselines in the inspected surfaces. This is a bounded audit result, not a global impossibility claim.",
+    "consequence": "A source-faithful generator comparison requires either later provider-authorized reruns or a newly discovered content-addressed released output bundle."
+  },
+  "execution_ladder": [
+    {
+      "stage": "A",
+      "name": "asset-only aligned-scene verification",
+      "status": "COMPLETED_ZERO_AUTHORITY",
+      "provider": false,
+      "gpu": false,
+      "scientific_result": false
+    },
+    {
+      "stage": "B",
+      "name": "local LEGO-Eval measurement-negative-control smoke test",
+      "status": "BLOCKED_BY_GENERATOR_ADMISSION_RUNTIME_AND_GPU_AUTHORITY",
+      "provider": false,
+      "gpu": true,
+      "scientific_result": false
+    },
+    {
+      "stage": "C",
+      "name": "full aligned-scene evaluator coupling negative control",
+      "status": "NOT_AUTHORIZED",
+      "provider": false,
+      "gpu": true,
+      "scientific_result": true
+    },
+    {
+      "stage": "D",
+      "name": "published generator baseline reruns",
+      "status": "NOT_AUTHORIZED_PROVIDER_BOUND",
+      "provider": true,
+      "gpu": "method-dependent",
+      "scientific_result": true
+    }
+  ],
+  "next_gate": {
+    "name": "FORMAL_GENERATOR_ADMISSION_AND_INDEPENDENT_REDUCTION_REVIEW",
+    "must_precede_runtime_materialization_for_scientific_execution": true,
+    "after_admission_preferred_order": [
+      "freeze exact local evaluator model/backend and evaluator-order negative-control contract",
+      "materialize LEGO rendered scene images, object_images, Objathor assets, AI2-THOR, and isolated OpenAI-compatible local serving environment",
+      "run a bounded aligned-scene smoke test before any generator baseline",
+      "run the full aligned-scene evaluator-coupling negative control",
+      "only if measurement validity clears, authorize source-faithful generator baselines"
+    ]
+  },
+  "authority": {
+    "canonical_generator": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "local_validation": false,
+    "p0": false,
+    "provider": false,
+    "gpu": false,
+    "scientific": false
+  }
+}

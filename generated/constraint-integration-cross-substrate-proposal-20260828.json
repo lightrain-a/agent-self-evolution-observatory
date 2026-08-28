@@ -79,6 +79,17 @@
     "method_collision": "GraphDreamer and InstructScene already establish scene/semantic graphs as structured 3D generation priors; a generic structured-prompt or scene-graph intervention is not a standalone novelty claim.",
     "scientific_authority": false
   },
+  "executability_preflight": {
+    "artifact": "generated/constraint-integration-executability-preflight-20260828.json",
+    "artifact_sha256": "15cf610915f3d3cd1e144f81207ac240517d0e5969418dd8e13e86b719d49f13",
+    "status": "ASSET_PARTIAL_RUNTIME_NOT_READY_ZERO_AUTHORITY",
+    "aligned_scene_negative_control_input_materialized": true,
+    "local_open_model_candidate_materialized": true,
+    "local_evaluator_runtime_ready": false,
+    "source_faithful_zero_provider_generator_baseline_available": false,
+    "execution_authority": false,
+    "scientific_authority": false
+  },
   "outcome_exposure_control": {
     "per_case_generation_outcomes_read": false,
     "per_case_evaluator_validity_read": false,
