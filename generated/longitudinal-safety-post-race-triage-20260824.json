@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-27T18:55:16+00:00",
+  "generated_at": "2026-08-28T08:16:19+00:00",
   "status": "POST_RACE_REDUCTION_TRIAGE_COMPLETE",
-  "source_cycle_sha256": "42987914623461a4c7f58f6a7c625280537d864e75b45d608e2d25ba2e01675a",
+  "source_cycle_sha256": "a67659fe4e492f519020876a5ed2b427995c88d1fa1a63e97d37a082726c7b1f",
   "policy": {
     "tournament_rank_is_attention_priority_not_scientific_qualification": true,
     "descendant_closure_precedes_cross_lineage_reduction": true,
@@ -415,5 +415,5 @@
     "provider": false,
     "gpu": false
   },
-  "triage_sha256": "1e9ffc851e58d6366b4b36ee6be5aa8936c5be2a7e7ba53d0ceab37e55082a3d"
+  "triage_sha256": "d57970ffb5589414c5edae3e3069a727a84e5f1dd9632f074335c1ed7e35a8ba"
 }

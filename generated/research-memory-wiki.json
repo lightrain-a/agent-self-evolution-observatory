@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-28T07:49:20+00:00",
+  "generated_at": "2026-08-28T08:33:39+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.2",
@@ -51,39 +51,39 @@
   "source_manifest": {
     "search_memory_closed_objects": 43,
     "search_memory_hold_objects": 9,
-    "failure_assets": 12,
+    "failure_assets": 17,
     "candidate_portfolio_visible": 3,
     "unresolved_principles": 2,
     "generator_blocked_attempts": 0,
     "paper_review_ledgers": 5,
-    "discovery_failure_lessons": 20,
+    "discovery_failure_lessons": 22,
     "result_analysis_records": 1,
     "result_analysis_lessons": 3
   },
   "summary": {
-    "entries": 95,
+    "entries": 105,
     "search_closures": 41,
     "scientific_closures": 2,
     "holds": 9,
-    "failure_assets": 9,
+    "failure_assets": 17,
     "success_assets": 3,
     "open_questions": 2,
     "repeated_review_blocks": 0,
-    "discovery_lessons": 23,
+    "discovery_lessons": 25,
     "review_lessons": 5,
     "paper_development_guidance": 1,
     "contribution_aware_lesson_templates": 2,
-    "prompt_eligible": 95,
-    "skill_candidates": 32,
-    "certainty_confirmed": 13,
-    "certainty_supported": 70,
+    "prompt_eligible": 105,
+    "skill_candidates": 42,
+    "certainty_confirmed": 22,
+    "certainty_supported": 71,
     "certainty_tentative": 0,
     "certainty_speculative": 0,
     "certainty_refuted": 0,
     "certainty_not_applicable": 12,
     "transient": 0,
     "recurring_systemic": 16,
-    "scientific": 79
+    "scientific": 89
   },
   "entries": [
     {
@@ -147,6 +147,39 @@
       "automatic_skill_promotion": false
     },
     {
+      "memory_id": "MEM-DISC-104c2dd4e9f4b90ed3",
+      "kind": "DISCOVERY_LESSON",
+      "title": "Process provenance is decision information only through an observable channel",
+      "summary": "A provenance label has no free-standing causal force. If neither the executor nor the memory governor can observe or use provenance, a backend-only relabel should be behaviorally equivalent; any difference first diagnoses an uncontrolled channel or state mismatch. The scientifically useful object is therefore not a fixed success-good/failure-bad sign, but the conditional information that provenance adds about downstream marginal memory utility after actionable content and target context are controlled, together with whether that information changes the optimal governance decision.",
+      "candidate_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "scope": "SCIENTIFIC_REDUCTION",
+      "affected_layer": "causal_identification",
+      "memory_class": "SCIENTIFIC_REDUCTION",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "Reopen a provenance-only causal claim only when the observable channel is frozen, actionable memory is exact-information matched, independent inference units and utilization are established, and a fresh provenance-bearing substrate passes the pre-outcome G1-G8 gate.",
+      "opposite_search_seed": "Search for regimes where provenance changes the posterior over marginal utility enough to alter a reuse/verify/escalate/abstain decision while content, target context, contribution evidence, and budget remain matched.",
+      "reusable_precheck": "Before treating provenance metadata as a causal treatment, write down which component can observe it. If no executor/governor channel exists, reserve the relabel as an equivalence negative control. If a channel exists, compare provenance-aware decisions against a same-information contribution-aware content-only baseline and estimate value of information rather than assuming a quality direction.",
+      "source_refs": [
+        "repo://research_pipeline/b1_process_provenance_governance_design_20260827.json",
+        "repo://paper-story-failure-memory.js",
+        "arXiv:2606.04990",
+        "arXiv:2607.29167",
+        "arXiv:2608.02843"
+      ],
+      "source_artifact": "longitudinal_safety_discovery_cycle",
+      "reuse_effectiveness": {},
+      "scientific_authority": false,
+      "certainty": "SUPPORTED",
+      "certainty_basis": "structured-review-derived",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
       "memory_id": "MEM-DISC-1ed76bd4a2e36f2461",
       "kind": "DISCOVERY_LESSON",
       "title": "Provider/support censoring is not a scientific negative result",
@@ -166,6 +199,39 @@
       "source_refs": [
         "receipt:02d67c2eab80eb15dbf8d3f944bbc2c8e8c3af7bf2f39a41f9a0d8088475fdf2",
         "receipt:a8a970d7f8842d9ba1a5f05fdd7c41844db90dd1455794654301f6478ae4c6d7"
+      ],
+      "source_artifact": "longitudinal_safety_discovery_cycle",
+      "reuse_effectiveness": {},
+      "scientific_authority": false,
+      "certainty": "SUPPORTED",
+      "certainty_basis": "structured-review-derived",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-DISC-20324e960ce47381eb",
+      "kind": "DISCOVERY_LESSON",
+      "title": "Retrieval, utilization, observed reward, and marginal memory utility must be separated",
+      "summary": "A retrieved memory is not necessarily used, and a memory that co-occurs with successful episodes does not necessarily contribute positively. Provenance experiments should first establish a utilization first stage with true/null/reversed/shuffled memory, then estimate marginal utility by randomized inclusion/withholding or fixed-context replay. Only after these stages should provenance be tested as an incremental predictor or governance feature. This prevents retrieval frequency, task baseline, co-retrieval, and selection from being mistaken for contribution.",
+      "candidate_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "scope": "EXPERIMENT_PROTOCOL",
+      "affected_layer": "experiment_design",
+      "memory_class": "EXPERIMENT_PROTOCOL",
+      "durability_class": "recurring-systemic",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "Use the protocol on a new paper or fresh B1 substrate only after the memory-exposure channel, target endpoint, and independent unit are frozen before outcomes; do not reuse historical R19 or the legacy 27 units as fresh confirmation.",
+      "opposite_search_seed": "Look for matched memories with similar retrieval/association statistics but opposite or null intervention-estimated marginal utility, then test which provenance or context variables predict that residual.",
+      "reusable_precheck": "For any memory-mechanism experiment, explicitly record four distinct quantities: retrieved/exposed, behaviorally utilized, observationally associated reward, and intervention-estimated marginal utility. Do not allow one quantity to stand in for another.",
+      "source_refs": [
+        "repo://research_pipeline/b1_process_provenance_governance_design_20260827.json",
+        "repo://paper-story-failure-memory.js",
+        "arXiv:2601.03192",
+        "arXiv:2606.31270",
+        "arXiv:2608.02636"
       ],
       "source_artifact": "longitudinal_safety_discovery_cycle",
       "reuse_effectiveness": {},
@@ -775,6 +841,41 @@
       "automatic_skill_promotion": false
     },
     {
+      "memory_id": "MEM-FAIL-1da4db0dd315f8f4e8",
+      "kind": "FAILURE_ASSET",
+      "title": "experiment_identifiability:proxy-length-and-capability-nonspecificity",
+      "summary": "that official complex-instruction labels cannot be benchmark-diagnostically performance-distinct, or that a formal author-defined goal-coupling representation cannot be identifiable on an untouched substrate",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"PORT-010-E0-EMBODIEDBENCH-20260828\"], \"reuse_scope\": {\"affected_layer\": \"experiment_identifiability\", \"experiment_family\": \"mechanistic interpretation of sparse text-derived or graph-derived observables\", \"failure_mode\": \"observable is not specific to the intended capability and/or remains coupled to a nuisance such as instruction length\", \"required_falsifiers\": \"outcome-blind nuisance noncollapse plus at least one negative capability stratum\"}}",
+      "affected_layer": "experiment_identifiability",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "A proposed mechanism observable must demonstrate outcome-blind specificity against both a nuisance variable and negative capability strata before scientific outcomes are opened. For sparse structural counts, inspect distributional resolution on development data and preregister an endpoint that can distinguish the target construct without later switching between median, mean, or prevalence. If a negative stratum exceeds the target or the observable remains strongly length-coupled, do not interpret downstream outcome differences mechanistically.",
+      "source_refs": [
+        "repo:generated/port010-embodiedbench-e0-adjudication-20260828.json#sha256=0d17ac32e4985f01656021469d33d604b1fd396e267241a3a172c105025dc035"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-28",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
       "memory_id": "MEM-FAIL-1f7691f41a1dcfa103",
       "kind": "FAILURE_ASSET",
       "title": "authority-protocol:authority-provenance-mismatch",
@@ -792,7 +893,7 @@
       "opposite_search_seed": "",
       "reusable_precheck": "require an external content-addressed human authority artifact before paper-first P0 lifecycle or local-validation transitions; a basis string or AI output has zero authority",
       "source_refs": [
-        "private-data://runs/paper-first-p0-20260812"
+        "private-data://external/paper-first-p0-20260812"
       ],
       "source_artifact": "failure_asset_library",
       "occurrences": 1,
@@ -800,6 +901,111 @@
       "reuse_effectiveness": {
         "reuse_count": 1,
         "helped_count": 1,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-2ce50eecd2337130af",
+      "kind": "FAILURE_ASSET",
+      "title": "operationalization:missing-as-zero-estimand-drift",
+      "summary": "the official leaderboard scoring rule is incorrect; it only means leaderboard scoring and complete-execution scientific inference answer different questions",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"SUCC-C-BEHAVIOR2025-PUBLIC-OUTCOME\"], \"reuse_scope\": {\"affected_layer\": \"operationalization\", \"experiment_family\": \"benchmark analyses with incomplete or selectively missing rollout artifacts\", \"failure_mode\": \"competition missing-as-zero rule is reused as if it measured executed-task failure, silently changing the estimand\", \"required_separation\": \"non-attempt/missingness versus observed execution failure\"}}",
+      "affected_layer": "operationalization",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Distinguish benchmark leaderboard missing-value policy from the scientific estimand before outcome access. If the scientific question concerns performance under executed trials, do not convert non-attempted or missing rollouts to failures merely because the competition leaderboard counts missing files as zero. Zero-imputation or attempted-only aggregation after observing incomplete coverage is an estimand change and requires a new exploratory object, not a rescue of the frozen confirmatory analysis.",
+      "source_refs": [
+        "repo:generated/behavior-formal-goal-coupling-2025-public-outcome-adjudication-20260828.json#sha256=8645ec0bf1400bd832f914a1d8fcb95d531b557f2ad1f05296ef279bf97a8c53"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-28",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-3e2becf9494c7fbbcc",
+      "kind": "FAILURE_ASSET",
+      "title": "operationalization:representation-signal-mismatch",
+      "summary": "core-principle failure",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"update-trust-region\"], \"reuse_scope\": {\"affected_layer\": \"operationalization\", \"diagnosis\": \"representation-signal-mismatch\"}}",
+      "affected_layer": "operationalization",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "require synthetic realizability and tiny-real fit for the representation",
+      "source_refs": [
+        "private-data://external/a12"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-4337a94cdc97204076",
+      "kind": "FAILURE_ASSET",
+      "title": "method-realization:matched-simplification-tie",
+      "summary": "core-principle failure",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"outcome-equivalent-trajectory-contrast\"], \"reuse_scope\": {\"affected_layer\": \"method-realization\", \"diagnosis\": \"matched-simplification-tie\"}}",
+      "affected_layer": "method-realization",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "run matched simplification/disagreement mining before scale-up",
+      "source_refs": [
+        "private-data://external/b1"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
         "hurt_count": 0
       },
       "scientific_authority": false,
@@ -845,6 +1051,41 @@
       "automatic_skill_promotion": false
     },
     {
+      "memory_id": "MEM-FAIL-51e6b678cc612ddb1b",
+      "kind": "FAILURE_ASSET",
+      "title": "operationalization:source-schema-semantics-assumption",
+      "summary": "that correcting a schema alias or identifier namespace may retroactively convert a failed frozen construct gate into PASS, or that the EmbodiedBench labels are invalid",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"PORT-010-E0-EMBODIEDBENCH-20260828\"], \"reuse_scope\": {\"affected_layer\": \"operationalization\", \"experiment_family\": \"cross-environment benchmark analyses with heterogeneous source schemas\", \"failure_mode\": \"gate assumes globally uniform label names or globally unique identifiers when the source uses environment-specific aliases or local index namespaces\", \"required_preflight\": \"source schema and identifier semantics must be audited before scientific gate freeze\"}}",
+      "affected_layer": "operationalization",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Before freezing a cross-environment metadata gate, pin and audit the source-level meaning and namespace of every structural field used by the gate, including capability-label aliases and identifier scope. Treat discovered schema/namespace mismatch as a gate-specification error, not a scientific negative, and then test whether the original scientific HOLD remains robust without retroactively changing the frozen primary endpoint.",
+      "source_refs": [
+        "repo:generated/port010-embodiedbench-e0-adjudication-20260828.json#sha256=0d17ac32e4985f01656021469d33d604b1fd396e267241a3a172c105025dc035"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-28",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
       "memory_id": "MEM-FAIL-701bf9fdd809641e82",
       "kind": "FAILURE_ASSET",
       "title": "operationalization:zero-provider-import-time-credential-coupling",
@@ -867,6 +1108,41 @@
       "source_artifact": "failure_asset_library",
       "occurrences": 1,
       "last_revalidated": "2026-08-25",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-73354f681194c97537",
+      "kind": "FAILURE_ASSET",
+      "title": "operationalization:objective-claim-mismatch",
+      "summary": "core-principle failure",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"workflow-generalization-certificate\"], \"reuse_scope\": {\"affected_layer\": \"operationalization\", \"diagnosis\": \"objective-claim-mismatch\"}}",
+      "affected_layer": "operationalization",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "freeze claim-objective-primary-metric alignment before training",
+      "source_refs": [
+        "private-data://external/e1"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "",
       "reuse_effectiveness": {
         "reuse_count": 0,
         "helped_count": 0,
@@ -950,6 +1226,76 @@
       "automatic_skill_promotion": false
     },
     {
+      "memory_id": "MEM-FAIL-8e906eacdc53541225",
+      "kind": "FAILURE_ASSET",
+      "title": "experiment_identifiability:public-outcome-completeness-shortfall",
+      "summary": "formal goal coupling is false, task structure is unrelated to policy performance, or a future complete public/local replication would fail",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"SUCC-C-BEHAVIOR2025-PUBLIC-OUTCOME\"], \"reuse_scope\": {\"affected_layer\": \"experiment_identifiability\", \"experiment_family\": \"secondary analysis of historical multi-policy benchmark outcomes\", \"failure_mode\": \"public outcome artifacts exist but none satisfies the preregistered complete task-by-instance coverage and independent-policy count\", \"required_separation\": \"artifact availability versus scientific outcome identifiability\"}}",
+      "affected_layer": "experiment_identifiability",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Before opening historical public benchmark outcomes for a task-structure analysis, freeze the required task-by-instance coverage and minimum number of independent policies. Audit every candidate artifact against that coverage before scientific statistics. Rich per-rollout public files are not sufficient if no policy supplies a complete outcome matrix for the frozen estimand; do not lower the coverage threshold after seeing the missingness pattern.",
+      "source_refs": [
+        "repo:generated/behavior-formal-goal-coupling-2025-public-outcome-adjudication-20260828.json#sha256=8645ec0bf1400bd832f914a1d8fcb95d531b557f2ad1f05296ef279bf97a8c53"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-28",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-aadf8af8677f08727d",
+      "kind": "FAILURE_ASSET",
+      "title": "experiment:no-label-variation",
+      "summary": "core-principle failure",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"budgeted-evolution-controller\"], \"reuse_scope\": {\"affected_layer\": \"experiment\", \"diagnosis\": \"no-label-variation\"}}",
+      "affected_layer": "experiment",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "measure target entropy/variance before fitting",
+      "source_refs": [
+        "private-data://external/a12"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
       "memory_id": "MEM-FAIL-bc94aa353b90c69c53",
       "kind": "FAILURE_ASSET",
       "title": "operationalization:decision-context-support-mismatch",
@@ -985,39 +1331,6 @@
       "automatic_skill_promotion": false
     },
     {
-      "memory_id": "MEM-FAIL-d2bcf0c820af363095",
-      "kind": "FAILURE_ASSET",
-      "title": "execution:infrastructure-error",
-      "summary": "core-principle failure",
-      "candidate_id": "",
-      "scope": "{\"ideas\": [\"budgeted-evolution-controller\", \"outcome-equivalent-trajectory-contrast\", \"update-trust-region\", \"workflow-generalization-certificate\"], \"reuse_scope\": {\"affected_layer\": \"execution\", \"diagnosis\": \"infrastructure-error\"}}",
-      "affected_layer": "execution",
-      "memory_class": "FAILURE_ASSET",
-      "durability_class": "recurring-systemic",
-      "prompt_eligible": true,
-      "search_closure_certified": false,
-      "scientific_dead_end_certified": false,
-      "principle_update_allowed": false,
-      "reopen_condition": "",
-      "opposite_search_seed": "",
-      "reusable_precheck": "check runtime/provenance/trace readiness before scientific interpretation",
-      "source_refs": [],
-      "source_artifact": "failure_asset_library",
-      "occurrences": 4,
-      "last_revalidated": "",
-      "reuse_effectiveness": {
-        "reuse_count": 0,
-        "helped_count": 0,
-        "hurt_count": 0
-      },
-      "scientific_authority": false,
-      "certainty": "SUPPORTED",
-      "certainty_basis": "structured-failure-asset",
-      "certainty_scope_bound": true,
-      "skill_candidate_eligible": true,
-      "automatic_skill_promotion": false
-    },
-    {
       "memory_id": "MEM-FAIL-d716cf73efa27a067f",
       "kind": "FAILURE_ASSET",
       "title": "method_realization:evidence-authority-qualification-unavailable",
@@ -1040,6 +1353,41 @@
       "source_artifact": "failure_asset_library",
       "occurrences": 1,
       "last_revalidated": "2026-08-25",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-ff2b7c72682548c96c",
+      "kind": "FAILURE_ASSET",
+      "title": "operationalization:outcome-blind-proxy-transfer-failure",
+      "summary": "that the underlying embodied-agent phenomenon is false, that all formal constraint representations fail, that BEHAVIOR-1K or another untouched formal-goal substrate will fail, or any core-principle dead end",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"PORT-010-E0-EMBODIEDBENCH-20260828\"], \"reuse_scope\": {\"affected_layer\": \"operationalization\", \"experiment_family\": \"mechanism studies using researcher-defined proxy representations before outcome access\", \"failure_mode\": \"proxy appears valid on development data but fails an independent outcome-blind construct transfer gate\", \"required_separation\": \"development calibration versus independent construct validation versus scientific outcome access\"}}",
+      "affected_layer": "operationalization",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "When a mechanism depends on a hand-designed proxy, validate the frozen proxy on an independent outcome-blind construct surface before any scientific outcome access. Development-set success is insufficient. If the independent construct gate fails, preserve the failure and stop the confirmatory lane; do not switch the frozen primary endpoint to a post-hoc supporting statistic such as nonzero prevalence.",
+      "source_refs": [
+        "repo:generated/port010-embodiedbench-e0-adjudication-20260828.json#sha256=0d17ac32e4985f01656021469d33d604b1fd396e267241a3a172c105025dc035"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-28",
       "reuse_effectiveness": {
         "reuse_count": 0,
         "helped_count": 0,
@@ -1342,10 +1690,10 @@
       "automatic_skill_promotion": false
     },
     {
-      "memory_id": "MEM-OPEN-29a589216cf210fa68",
+      "memory_id": "MEM-OPEN-23f03920f522ace484",
       "kind": "OPEN_QUESTION",
       "title": "Unresolved principle: persistent-update-drift-governance-v1",
-      "summary": "competence-evidence-file-missing",
+      "summary": "execution-cap-censoring-policy-invalid",
       "candidate_id": "update-trust-region",
       "scope": "persistent-update-drift-governance-v1",
       "affected_layer": "core_principle",
@@ -1356,7 +1704,7 @@
       "scientific_dead_end_certified": false,
       "principle_update_allowed": false,
       "reopen_condition": "Resolve the named uncertainty with new identifiable evidence.",
-      "opposite_search_seed": "competence-evidence-file-missing",
+      "opposite_search_seed": "execution-cap-censoring-policy-invalid",
       "reusable_precheck": "",
       "source_refs": [],
       "source_artifact": "scientific_meta_trace.unresolved_questions",
@@ -1369,10 +1717,10 @@
       "automatic_skill_promotion": false
     },
     {
-      "memory_id": "MEM-OPEN-8b30172b29af989aba",
+      "memory_id": "MEM-OPEN-52c7d1436ae0e29ed0",
       "kind": "OPEN_QUESTION",
       "title": "Unresolved principle: adaptive-update-stopping-v1",
-      "summary": "competence-evidence-file-missing",
+      "summary": "execution-cap-censoring-policy-invalid",
       "candidate_id": "budgeted-evolution-controller",
       "scope": "adaptive-update-stopping-v1",
       "affected_layer": "core_principle",
@@ -1383,7 +1731,7 @@
       "scientific_dead_end_certified": false,
       "principle_update_allowed": false,
       "reopen_condition": "Resolve the named uncertainty with new identifiable evidence.",
-      "opposite_search_seed": "competence-evidence-file-missing",
+      "opposite_search_seed": "execution-cap-censoring-policy-invalid",
       "reusable_precheck": "",
       "source_refs": [],
       "source_artifact": "scientific_meta_trace.unresolved_questions",
@@ -1738,7 +2086,9 @@
           "narrative-repair": 6
         },
         "targeted_experiment_proposals": 0,
-        "claim_expansion_requests_preserved_as_limitations": 0
+        "claim_expansion_requests_preserved_as_limitations": 0,
+        "structured_lesson_receipts": 0,
+        "lesson_codes": []
       },
       "scientific_authority": false,
       "certainty": "SUPPORTED",
@@ -1790,7 +2140,9 @@
           "targeted-experiment": 4
         },
         "targeted_experiment_proposals": 4,
-        "claim_expansion_requests_preserved_as_limitations": 0
+        "claim_expansion_requests_preserved_as_limitations": 0,
+        "structured_lesson_receipts": 0,
+        "lesson_codes": []
       },
       "scientific_authority": false,
       "certainty": "SUPPORTED",
@@ -1909,7 +2261,9 @@
           "preserve-limitation": 2
         },
         "targeted_experiment_proposals": 0,
-        "claim_expansion_requests_preserved_as_limitations": 2
+        "claim_expansion_requests_preserved_as_limitations": 2,
+        "structured_lesson_receipts": 0,
+        "lesson_codes": []
       },
       "scientific_authority": false,
       "certainty": "SUPPORTED",
@@ -1974,7 +2328,9 @@
           "targeted-experiment": 9
         },
         "targeted_experiment_proposals": 9,
-        "claim_expansion_requests_preserved_as_limitations": 6
+        "claim_expansion_requests_preserved_as_limitations": 6,
+        "structured_lesson_receipts": 0,
+        "lesson_codes": []
       },
       "scientific_authority": false,
       "certainty": "SUPPORTED",
@@ -3366,7 +3722,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "521019e45f27aa148d3876e97bcd03363ff7917e21cb7b83bd64d58c35c0ee6c",
+  "wiki_sha256": "8d7e002b1dcd2a683252e826b2f0c35b51ab72ce2c435ad8e1358c5320ab851d",
   "lint": {
     "schema_version": "1.2",
     "status": "PASS",
@@ -3374,8 +3730,43 @@
     "warnings": [
       {
         "code": "failure-asset-not-yet-effectiveness-validated",
+        "memory_id": "MEM-FAIL-1da4db0dd315f8f4e8",
+        "detail": "experiment_identifiability:proxy-length-and-capability-nonspecificity"
+      },
+      {
+        "code": "failure-asset-not-yet-effectiveness-validated",
+        "memory_id": "MEM-FAIL-2ce50eecd2337130af",
+        "detail": "operationalization:missing-as-zero-estimand-drift"
+      },
+      {
+        "code": "failure-asset-not-yet-effectiveness-validated",
+        "memory_id": "MEM-FAIL-3e2becf9494c7fbbcc",
+        "detail": "operationalization:representation-signal-mismatch"
+      },
+      {
+        "code": "durable-failure-memory-missing-revalidation-date",
+        "memory_id": "MEM-FAIL-3e2becf9494c7fbbcc",
+        "detail": "operationalization:representation-signal-mismatch"
+      },
+      {
+        "code": "failure-asset-not-yet-effectiveness-validated",
+        "memory_id": "MEM-FAIL-4337a94cdc97204076",
+        "detail": "method-realization:matched-simplification-tie"
+      },
+      {
+        "code": "durable-failure-memory-missing-revalidation-date",
+        "memory_id": "MEM-FAIL-4337a94cdc97204076",
+        "detail": "method-realization:matched-simplification-tie"
+      },
+      {
+        "code": "failure-asset-not-yet-effectiveness-validated",
         "memory_id": "MEM-FAIL-4e44b25f6724497959",
         "detail": "reproducibility:fixed-seed-monte-carlo-traversal-order"
+      },
+      {
+        "code": "failure-asset-not-yet-effectiveness-validated",
+        "memory_id": "MEM-FAIL-51e6b678cc612ddb1b",
+        "detail": "operationalization:source-schema-semantics-assumption"
       },
       {
         "code": "failure-asset-not-yet-effectiveness-validated",
@@ -3384,23 +3775,43 @@
       },
       {
         "code": "failure-asset-not-yet-effectiveness-validated",
+        "memory_id": "MEM-FAIL-73354f681194c97537",
+        "detail": "operationalization:objective-claim-mismatch"
+      },
+      {
+        "code": "durable-failure-memory-missing-revalidation-date",
+        "memory_id": "MEM-FAIL-73354f681194c97537",
+        "detail": "operationalization:objective-claim-mismatch"
+      },
+      {
+        "code": "failure-asset-not-yet-effectiveness-validated",
         "memory_id": "MEM-FAIL-78733cb49dfe6297da",
         "detail": "operationalization:semantic-action-observability"
       },
       {
         "code": "failure-asset-not-yet-effectiveness-validated",
-        "memory_id": "MEM-FAIL-d2bcf0c820af363095",
-        "detail": "execution:infrastructure-error"
+        "memory_id": "MEM-FAIL-8e906eacdc53541225",
+        "detail": "experiment_identifiability:public-outcome-completeness-shortfall"
+      },
+      {
+        "code": "failure-asset-not-yet-effectiveness-validated",
+        "memory_id": "MEM-FAIL-aadf8af8677f08727d",
+        "detail": "experiment:no-label-variation"
       },
       {
         "code": "durable-failure-memory-missing-revalidation-date",
-        "memory_id": "MEM-FAIL-d2bcf0c820af363095",
-        "detail": "execution:infrastructure-error"
+        "memory_id": "MEM-FAIL-aadf8af8677f08727d",
+        "detail": "experiment:no-label-variation"
       },
       {
         "code": "failure-asset-not-yet-effectiveness-validated",
         "memory_id": "MEM-FAIL-d716cf73efa27a067f",
         "detail": "method_realization:evidence-authority-qualification-unavailable"
+      },
+      {
+        "code": "failure-asset-not-yet-effectiveness-validated",
+        "memory_id": "MEM-FAIL-ff2b7c72682548c96c",
+        "detail": "operationalization:outcome-blind-proxy-transfer-failure"
       },
       {
         "code": "failure-asset-not-yet-effectiveness-validated",
@@ -3426,9 +3837,9 @@
     ],
     "summary": {
       "errors": 0,
-      "warnings": 11,
-      "unconsumed_failure_assets": 6,
-      "missing_revalidation_dates": 1
+      "warnings": 22,
+      "unconsumed_failure_assets": 14,
+      "missing_revalidation_dates": 4
     },
     "scientific_authority": false
   },
@@ -3457,35 +3868,35 @@
     },
     "sampled_memory_ids": [
       "MEM-DISC-087393b9919c0ee1df",
-      "MEM-FAIL-1f7691f41a1dcfa103",
+      "MEM-FAIL-1da4db0dd315f8f4e8",
       "MEM-HOLD-25b692734789d6e35c",
-      "MEM-OPEN-29a589216cf210fa68",
+      "MEM-OPEN-23f03920f522ace484",
       "MEM-PDEV-SENIOR-20260823",
       "MEM-REVI-51e50f3662a5951f52",
       "MEM-SCIE-63da8f6c3c1c818d32",
       "MEM-SEAR-16b145b18dd60e1811",
       "MEM-SUCC-714ad00d4b0ab118be",
       "MEM-DISC-0dbca121608f22c542",
-      "MEM-FAIL-4e44b25f6724497959",
+      "MEM-FAIL-1f7691f41a1dcfa103",
       "MEM-HOLD-2fc3f1e767a7e59794",
-      "MEM-OPEN-8b30172b29af989aba",
+      "MEM-OPEN-52c7d1436ae0e29ed0",
       "MEM-REVI-62370210b4e3a77558",
       "MEM-SCIE-77c61f9dd2885367c0",
       "MEM-SEAR-1ba2b6e8d305dafaad",
       "MEM-SUCC-d4a91b62325176bd03",
-      "MEM-DISC-1ed76bd4a2e36f2461",
-      "MEM-FAIL-701bf9fdd809641e82",
+      "MEM-DISC-104c2dd4e9f4b90ed3",
+      "MEM-FAIL-2ce50eecd2337130af",
       "MEM-HOLD-3d2ca52b06eb1115f3",
       "MEM-REVI-ae1288779c7f4d35fa",
       "MEM-SEAR-1f73ec187b29d80d4b",
       "MEM-SUCC-ff21703f69998ff65c",
-      "MEM-DISC-3e95edd7bafe36fb61",
-      "MEM-FAIL-78733cb49dfe6297da",
+      "MEM-DISC-1ed76bd4a2e36f2461",
+      "MEM-FAIL-3e2becf9494c7fbbcc",
       "MEM-HOLD-452d1a58eea1476812",
       "MEM-REVI-ccb86700ca3f850cdb",
       "MEM-SEAR-2a5a804540732de3fd",
-      "MEM-DISC-4925551d12663512f9",
-      "MEM-FAIL-899e4039e09381303a"
+      "MEM-DISC-20324e960ce47381eb",
+      "MEM-FAIL-4337a94cdc97204076"
     ],
     "automatic_skill_promotions": 0,
     "scientific_authority": false

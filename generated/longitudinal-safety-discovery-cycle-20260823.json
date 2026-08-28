@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-23T17:29:25+00:00",
+  "generated_at": "2026-08-28T07:38:24+00:00",
   "status": "RECORDED_ZERO_SURVIVOR_FAILURE_MEMORY_AND_NEXT_DISCOVERY_POLICY",
   "strategy_version": "failure-race-debate-v1",
   "policy": {
@@ -2805,6 +2805,44 @@
       "reusable_precheck": "For a failure-derived composition idea: (1) preserve the parent decision and type the failure layer; (2) verify stable constituent references and endpoint semantics; (3) run the strongest same-information planning/difficulty/resource/context/grounding reductions before naming a child; (4) if no irreducible pre-outcome observable survives, STOP the child realization and search a different scientific carrier or estimand; (5) do not consume sealed holdouts, change backbone, tune thresholds, or mine favorable outcome subgroups as rescue.",
       "opposite_search_seed": "Search outside the composition/difficulty basin for a different scientific carrier or for a pre-outcome executor variable that changes the predicted sign or magnitude of a constituent-matched composition residual while all mature symbolic, difficulty, graph, resource, context, state-management, grounding, reuse, and budget reducers receive identical information. Require an intervention or independent executable truth before ProblemGate.",
       "scientific_authority": false
+    },
+    {
+      "lesson_id": "LS-B1-PROVENANCE-NO-CHANNEL-VOI",
+      "candidate_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "lesson_type": "SCIENTIFIC_REDUCTION",
+      "affected_layer": "causal_identification",
+      "title": "Process provenance is decision information only through an observable channel",
+      "summary": "A provenance label has no free-standing causal force. If neither the executor nor the memory governor can observe or use provenance, a backend-only relabel should be behaviorally equivalent; any difference first diagnoses an uncontrolled channel or state mismatch. The scientifically useful object is therefore not a fixed success-good/failure-bad sign, but the conditional information that provenance adds about downstream marginal memory utility after actionable content and target context are controlled, together with whether that information changes the optimal governance decision.",
+      "source_refs": [
+        "repo://research_pipeline/b1_process_provenance_governance_design_20260827.json",
+        "repo://paper-story-failure-memory.js",
+        "arXiv:2606.04990",
+        "arXiv:2607.29167",
+        "arXiv:2608.02843"
+      ],
+      "reopen_condition": "Reopen a provenance-only causal claim only when the observable channel is frozen, actionable memory is exact-information matched, independent inference units and utilization are established, and a fresh provenance-bearing substrate passes the pre-outcome G1-G8 gate.",
+      "reusable_precheck": "Before treating provenance metadata as a causal treatment, write down which component can observe it. If no executor/governor channel exists, reserve the relabel as an equivalence negative control. If a channel exists, compare provenance-aware decisions against a same-information contribution-aware content-only baseline and estimate value of information rather than assuming a quality direction.",
+      "opposite_search_seed": "Search for regimes where provenance changes the posterior over marginal utility enough to alter a reuse/verify/escalate/abstain decision while content, target context, contribution evidence, and budget remain matched.",
+      "scientific_authority": false
+    },
+    {
+      "lesson_id": "LS-B1-RETRIEVAL-UTILIZATION-MARGINAL-UTILITY",
+      "candidate_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+      "lesson_type": "EXPERIMENT_PROTOCOL",
+      "affected_layer": "experiment_design",
+      "title": "Retrieval, utilization, observed reward, and marginal memory utility must be separated",
+      "summary": "A retrieved memory is not necessarily used, and a memory that co-occurs with successful episodes does not necessarily contribute positively. Provenance experiments should first establish a utilization first stage with true/null/reversed/shuffled memory, then estimate marginal utility by randomized inclusion/withholding or fixed-context replay. Only after these stages should provenance be tested as an incremental predictor or governance feature. This prevents retrieval frequency, task baseline, co-retrieval, and selection from being mistaken for contribution.",
+      "source_refs": [
+        "repo://research_pipeline/b1_process_provenance_governance_design_20260827.json",
+        "repo://paper-story-failure-memory.js",
+        "arXiv:2601.03192",
+        "arXiv:2606.31270",
+        "arXiv:2608.02636"
+      ],
+      "reopen_condition": "Use the protocol on a new paper or fresh B1 substrate only after the memory-exposure channel, target endpoint, and independent unit are frozen before outcomes; do not reuse historical R19 or the legacy 27 units as fresh confirmation.",
+      "reusable_precheck": "For any memory-mechanism experiment, explicitly record four distinct quantities: retrieved/exposed, behaviorally utilized, observationally associated reward, and intervention-estimated marginal utility. Do not allow one quantity to stand in for another.",
+      "opposite_search_seed": "Look for matched memories with similar retrieval/association statistics but opposite or null intervention-estimated marginal utility, then test which provenance or context variables predict that residual.",
+      "scientific_authority": false
     }
   ],
   "debate_contract": {
@@ -2885,7 +2923,7 @@
   "summary": {
     "historical_generation_records": 119,
     "historical_unique_candidate_ids": 119,
-    "failure_lessons": 20,
+    "failure_lessons": 22,
     "independent_transaction_survivors": 0,
     "ouroboros_anchor_survivors": 0,
     "problem_gate_pass": 0,
@@ -2900,7 +2938,7 @@
     "experiment": false,
     "gpu": false
   },
-  "cycle_sha256": "42987914623461a4c7f58f6a7c625280537d864e75b45d608e2d25ba2e01675a",
+  "cycle_sha256": "a67659fe4e492f519020876a5ed2b427995c88d1fa1a63e97d37a082726c7b1f",
   "lint": {
     "status": "PASS",
     "errors": [],

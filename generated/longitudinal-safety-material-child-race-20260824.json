@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-27T18:55:16+00:00",
+  "generated_at": "2026-08-28T08:17:17+00:00",
   "status": "MATERIAL_CHILD_RACE_ZERO_SURVIVOR",
-  "source_post_race_triage_sha256": "1e9ffc851e58d6366b4b36ee6be5aa8936c5be2a7e7ba53d0ceab37e55082a3d",
+  "source_post_race_triage_sha256": "d57970ffb5589414c5edae3e3069a727a84e5f1dd9632f074335c1ed7e35a8ba",
   "policy": {
     "only_material_child_required_parents_are_mutated": true,
     "child_must_change_scientific_object": true,
@@ -49,7 +49,7 @@
       "reopen_condition": "Require a persistent transition-derived state that yields a post-freeze decision unavailable to a generic same-capacity transition model/planner with identical transition data, uncertainty, goal specification, and budget.",
       "parent_tournament_rank": 2,
       "parent_reopen_condition": "Materialize a different learned object with an independent transition oracle that is never used for generation or acceptance, then give the same oracle labels, state information, capacity, simulator calls, and runtime checks to F-2/direct-shield controls. A held-out decision residual must survive before ProblemGate.",
-      "source_post_race_triage_sha256": "1e9ffc851e58d6366b4b36ee6be5aa8936c5be2a7e7ba53d0ceab37e55082a3d",
+      "source_post_race_triage_sha256": "d57970ffb5589414c5edae3e3069a727a84e5f1dd9632f074335c1ed7e35a8ba",
       "problem_gate_eligible": false,
       "research_item_eligible": false,
       "provider_calls_authorized": 0,
@@ -75,7 +75,7 @@
       "reopen_condition": "Specify a preregistered transport invariant or query family that forces an ex-ante patch/effect prediction outside the same-information conditional generator's representable relation, then test that invariant on unseen versions without target-version optimization.",
       "parent_tournament_rank": 3,
       "parent_reopen_condition": "Define and freeze the persistent post-diagnosis repair/rollback representation, then beat query-seeded ProbDD/PMA plus A-5 state-diff, A-6 group testing, and E-2 paired edit-effect reuse using identical historical faults, intervention budget, observable state, and repair action support. The residual must be in the representation's executable future behavior, not query order or diagnostic accuracy.",
-      "source_post_race_triage_sha256": "1e9ffc851e58d6366b4b36ee6be5aa8936c5be2a7e7ba53d0ceab37e55082a3d",
+      "source_post_race_triage_sha256": "d57970ffb5589414c5edae3e3069a727a84e5f1dd9632f074335c1ed7e35a8ba",
       "problem_gate_eligible": false,
       "research_item_eligible": false,
       "provider_calls_authorized": 0,
@@ -101,7 +101,7 @@
       "reopen_condition": "Require an independently observed correction-state variable that makes two units with identical full correction history, typed effects, environment state, action support, and budget demand different next corrections, or an executable invariant the same-history policy cannot satisfy by construction.",
       "parent_tournament_rank": 4,
       "parent_reopen_condition": "Materialize a preregistered multi-correction interaction state (joint necessity, antagonism, or order dependence) with independent intervention truth, and require a held-out prediction or repair that survives A-4's same-information order-aware risk plus equal-budget repair as well as CausalFlow-derived repairs composed by NSI/SkillGraph under the same intervention budget.",
-      "source_post_race_triage_sha256": "1e9ffc851e58d6366b4b36ee6be5aa8936c5be2a7e7ba53d0ceab37e55082a3d",
+      "source_post_race_triage_sha256": "d57970ffb5589414c5edae3e3069a727a84e5f1dd9632f074335c1ed7e35a8ba",
       "problem_gate_eligible": false,
       "research_item_eligible": false,
       "provider_calls_authorized": 0,
@@ -120,5 +120,5 @@
     "provider": false,
     "gpu": false
   },
-  "race_sha256": "6aafd2d9a75acea31c55615fc195bba51ee540e2381f02c86b4087a1f6204683"
+  "race_sha256": "1b74b93a86cd0baf1ad2e34aab5d663787c4fae4b0b521140efa1d0197923525"
 }
