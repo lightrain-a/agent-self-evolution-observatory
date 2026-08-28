@@ -79,7 +79,7 @@ def validate_code(payload: dict[str, Any]) -> None:
 
 
 def validate_inputs(payload: dict[str, Any], authorization_path: Path) -> None:
-    for key in ("suite_root", "mindmemos_root", "identity_path", "skill_source", "runtime_pydeps"):
+    for key in ("suite_root", "mindmemos_root", "identity_path", "skill_source", "runtime_venv", "runtime_freeze_path"):
         require(Path(payload[key]).exists(), f"authorized path missing: {key}={payload[key]}")
     identity = Path(payload["identity_path"])
     require(sha256(identity) == payload["identity_sha256"], "identity artifact hash drift")
@@ -91,12 +91,15 @@ def validate_inputs(payload: dict[str, Any], authorization_path: Path) -> None:
         sha256(suite_root / "r17_split_manifest.json") == payload["split_manifest_sha256"],
         "split manifest drift",
     )
+    require(sha256(Path(payload["runtime_freeze_path"])) == payload["runtime_freeze_sha256"], "runtime freeze hash drift")
     require(sha256(authorization_path) == payload.get("self_sha256", sha256(authorization_path)), "authorization self hash drift")
 
 
 def build_command(payload: dict[str, Any], authorization_path: Path) -> list[str]:
+    runtime_python = Path(payload["runtime_venv"]) / "bin/python"
+    require(runtime_python.is_file(), f"authorized runtime python missing: {runtime_python}")
     command = [
-        sys.executable,
+        str(runtime_python),
         str(ACTOR_SCRIPT),
         "--env-file",
         str(ROOT / ".env"),
@@ -170,14 +173,25 @@ def main() -> int:
         return 0
 
     env = os.environ.copy()
-    runtime = payload["runtime_pydeps"]
-    env["PYTHONPATH"] = runtime + (os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
+    runtime_venv = Path(payload["runtime_venv"])
+    runtime_python = runtime_venv / "bin/python"
+    env["VIRTUAL_ENV"] = str(runtime_venv)
+    env["PATH"] = str(runtime_venv / "bin") + os.pathsep + env.get("PATH", "")
     import_check = subprocess.run(
-        [sys.executable, "-c", "import openpyxl; assert openpyxl.__version__ == '3.1.5'"],
+        [
+            str(runtime_python),
+            "-c",
+            (
+                "import openpyxl,pydantic; "
+                "assert openpyxl.__version__ == '3.1.5'; "
+                "from mindmemos_eval.skills.agents import ReactAgentFactory; "
+                "from mindmemos_eval.skills.envs.spreadsheetbench.env import SpreadsheetBenchEnv"
+            ),
+        ],
         env=env,
         check=False,
     )
-    require(import_check.returncode == 0, "frozen openpyxl runtime qualification failed")
+    require(import_check.returncode == 0, "frozen full MindMemOS runtime qualification failed")
     command = build_command(payload, authorization)
     result = subprocess.run(command, cwd=ROOT, env=env, check=False)
     require(result.returncode == 0, f"E0 actor runner failed with code {result.returncode}")

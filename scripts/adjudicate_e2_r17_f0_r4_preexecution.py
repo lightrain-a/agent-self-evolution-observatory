@@ -18,10 +18,11 @@ SUITE_QUAL = ROOT / "generated/e2-r17-controlled-suite-v2-mindmemos-qualificatio
 UPDATER_QUAL = ROOT / "generated/e2-r17-cloned-state-first-party-updater-qualification-20260828.json"
 ACTOR_SMOKE = ROOT / "generated/e2-r17-actor-protocol-smoke-20260828.json"
 ROUND_ROOT = ROOT / "generated/e2-r17-f0-r4-preexecution-review-20260828"
-RUNTIME_RECEIPT = ROOT / "generated/e2-r17-runtime-dependency-qualification-20260828.json"
+RUNTIME_RECEIPT = ROOT / "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json"
 ADDENDUM = ROOT / "generated/e2-r17-f0-r4-execution-policy-addendum-20260828.json"
 ADJUDICATION = ROOT / "generated/e2-r17-f0-r4-preexecution-adjudication-20260828.json"
-AUTHORIZATION = ROOT / "generated/e2-r17-e0-pilot-authorization-20260828.json"
+PRIOR_AUTHORIZATION = ROOT / "generated/e2-r17-e0-pilot-authorization-20260828.json"
+AUTHORIZATION = ROOT / "generated/e2-r17-e0-pilot-authorization-r2-20260828.json"
 REQUESTED_MODELS = ("deepseek-v4-pro", "kimi-k3")
 
 
@@ -89,7 +90,10 @@ def validate_inputs() -> dict[str, Any]:
     require(len(smoke.get("tasks") or []) == 1, "actor smoke must contain exactly one development task")
     require(smoke.get("provider_retry_limit") == 0, "actor smoke provider retry drift")
     require(smoke.get("thinking") == "disabled", "actor smoke thinking drift")
-    require(runtime.get("status") == "PASS_ZERO_PROVIDER", "runtime dependency qualification is not passing")
+    require(
+        runtime.get("status") == "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
+        "full MindMemOS runtime dependency qualification is not passing",
+    )
     require(pilot.get("status") == "FROZEN_PRE_OUTCOME", "pilot manifest is not frozen pre-outcome")
     task_ids = [str(value) for value in pilot.get("pilot_task_ids") or []]
     require(len(task_ids) == 12 and len(set(task_ids)) == 12, "pilot manifest must contain 12 unique tasks")
@@ -371,9 +375,16 @@ def write_authorization(state: dict[str, Any]) -> None:
         "concurrency": 4,
         "run_root": str(run_root),
         "summary_path": str(summary_path),
-        "runtime_pydeps": state["runtime"]["runtime_pydeps"],
+        "runtime_venv": state["runtime"]["venv_root"],
+        "runtime_freeze_path": state["runtime"]["freeze_path"],
+        "runtime_freeze_sha256": state["runtime"]["freeze_sha256"],
+        "runtime_uv_lock_path": state["runtime"]["mindmemos_uv_lock_path"],
+        "runtime_uv_lock_sha256": state["runtime"]["mindmemos_uv_lock_sha256"],
         "runtime_receipt_path": str(RUNTIME_RECEIPT.relative_to(ROOT)),
         "runtime_receipt_sha256": sha256(RUNTIME_RECEIPT),
+        "supersedes_authorization_path": str(PRIOR_AUTHORIZATION.relative_to(ROOT)),
+        "supersedes_authorization_sha256": sha256(PRIOR_AUTHORIZATION),
+        "supersession_reason": "The first E0 launch exposed an unqualified system-Python dependency surface (missing pydantic). The scientific contract, task split, model, and hypotheses are unchanged; this r2 authorization binds the repaired frozen MindMemOS venv and its exact freeze/uv.lock hashes.",
         "resume_missing_units_only": True,
         "stop_on_any_protocol_failure": True,
         "stop_on_zero_rescue_events": True,
