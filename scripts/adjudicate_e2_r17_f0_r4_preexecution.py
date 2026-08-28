@@ -19,10 +19,12 @@ UPDATER_QUAL = ROOT / "generated/e2-r17-cloned-state-first-party-updater-qualifi
 ACTOR_SMOKE = ROOT / "generated/e2-r17-actor-protocol-smoke-20260828.json"
 ROUND_ROOT = ROOT / "generated/e2-r17-f0-r4-preexecution-review-20260828"
 RUNTIME_RECEIPT = ROOT / "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json"
+RUNTIME_REPAIR_REVIEW = ROOT / "generated/e2-r17-runtime-repair-review-20260828/summary.json"
+DUPLICATE_CONTAMINATION = ROOT / "generated/e2-r17-e0-pilot-duplicate-launch-contamination-20260828.json"
 ADDENDUM = ROOT / "generated/e2-r17-f0-r4-execution-policy-addendum-20260828.json"
 ADJUDICATION = ROOT / "generated/e2-r17-f0-r4-preexecution-adjudication-20260828.json"
-PRIOR_AUTHORIZATION = ROOT / "generated/e2-r17-e0-pilot-authorization-20260828.json"
-AUTHORIZATION = ROOT / "generated/e2-r17-e0-pilot-authorization-r2-20260828.json"
+PRIOR_AUTHORIZATION = ROOT / "generated/e2-r17-e0-pilot-authorization-r2-20260828.json"
+AUTHORIZATION = ROOT / "generated/e2-r17-e0-pilot-authorization-r3-20260828.json"
 REQUESTED_MODELS = ("deepseek-v4-pro", "kimi-k3")
 
 
@@ -76,6 +78,8 @@ def validate_inputs() -> dict[str, Any]:
     updater = load(UPDATER_QUAL)
     smoke = load(ACTOR_SMOKE)
     runtime = load(RUNTIME_RECEIPT)
+    runtime_review = load(RUNTIME_REPAIR_REVIEW)
+    contamination = load(DUPLICATE_CONTAMINATION)
     round1, round2 = reviews()
     contract_sha = sha256(CONTRACT)
 
@@ -94,6 +98,16 @@ def validate_inputs() -> dict[str, Any]:
         runtime.get("status") == "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
         "full MindMemOS runtime dependency qualification is not passing",
     )
+    require(runtime_review.get("status") == "PASS", "runtime repair dual technical review is not passing")
+    require(
+        (runtime_review.get("authority") or {}).get("write_reauthorization") is True,
+        "runtime repair review does not permit reauthorization",
+    )
+    require(
+        contamination.get("status") == "INVALID_PROTOCOL_CONTAMINATED_OUTCOME_UNREAD",
+        "duplicate-launch contamination receipt missing or status drifted",
+    )
+    require(contamination.get("scientific_outcomes_opened_for_diagnosis") is False, "contaminated outcomes were opened")
     require(pilot.get("status") == "FROZEN_PRE_OUTCOME", "pilot manifest is not frozen pre-outcome")
     task_ids = [str(value) for value in pilot.get("pilot_task_ids") or []]
     require(len(task_ids) == 12 and len(set(task_ids)) == 12, "pilot manifest must contain 12 unique tasks")
@@ -135,6 +149,8 @@ def validate_inputs() -> dict[str, Any]:
         "updater": updater,
         "smoke": smoke,
         "runtime": runtime,
+        "runtime_review": runtime_review,
+        "contamination": contamination,
         "round1": round1,
         "round2": round2,
         "expected_resolved": expected_resolved,
@@ -333,7 +349,7 @@ def write_authorization(state: dict[str, Any]) -> None:
     identity = state["identity"]
     deepseek = identity["requested_and_resolved"]["deepseek-v4-pro"]
     suite_root = Path(state["contract"]["data"]["suite_root"])
-    run_root = Path("/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-20260828")
+    run_root = Path("/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828")
     summary_path = run_root / "e0_pilot_summary.json"
     payload = {
         "schema_version": "1.0",
@@ -382,9 +398,13 @@ def write_authorization(state: dict[str, Any]) -> None:
         "runtime_uv_lock_sha256": state["runtime"]["mindmemos_uv_lock_sha256"],
         "runtime_receipt_path": str(RUNTIME_RECEIPT.relative_to(ROOT)),
         "runtime_receipt_sha256": sha256(RUNTIME_RECEIPT),
+        "runtime_repair_review_path": str(RUNTIME_REPAIR_REVIEW.relative_to(ROOT)),
+        "runtime_repair_review_sha256": sha256(RUNTIME_REPAIR_REVIEW),
+        "prior_contaminated_run_receipt_path": str(DUPLICATE_CONTAMINATION.relative_to(ROOT)),
+        "prior_contaminated_run_receipt_sha256": sha256(DUPLICATE_CONTAMINATION),
         "supersedes_authorization_path": str(PRIOR_AUTHORIZATION.relative_to(ROOT)),
         "supersedes_authorization_sha256": sha256(PRIOR_AUTHORIZATION),
-        "supersession_reason": "The first E0 launch exposed an unqualified system-Python dependency surface (missing pydantic). The scientific contract, task split, model, and hypotheses are unchanged; this r2 authorization binds the repaired frozen MindMemOS venv and its exact freeze/uv.lock hashes.",
+        "supersession_reason": "The r2 launch was duplicated by an upstream MCP 502/retry against one run root and is protocol-contaminated with outcomes deliberately unread. The scientific contract, tasks, model, and hypotheses remain unchanged; r3 uses a fresh run root and launcher-level exclusivity while retaining the repaired frozen MindMemOS runtime.",
         "resume_missing_units_only": True,
         "stop_on_any_protocol_failure": True,
         "stop_on_zero_rescue_events": True,

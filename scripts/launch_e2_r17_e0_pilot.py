@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import fcntl
 import hashlib
 import json
 import os
@@ -33,6 +34,23 @@ def git(*args: str) -> str:
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise RuntimeError(message)
+
+
+def acquire_run_lock(payload: dict[str, Any]):
+    run_root = Path(payload["run_root"])
+    run_root.mkdir(parents=True, exist_ok=True)
+    lock_path = run_root / ".launch.lock"
+    handle = lock_path.open("a+")
+    try:
+        fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError as exc:
+        handle.close()
+        raise RuntimeError(f"another E0 launcher already holds the run lock: {lock_path}") from exc
+    handle.seek(0)
+    handle.truncate(0)
+    handle.write(f"pid={os.getpid()}\n")
+    handle.flush()
+    return handle
 
 
 def validate_authorization(path: Path) -> dict[str, Any]:
@@ -160,6 +178,9 @@ def main() -> int:
     args = parser.parse_args()
     authorization = args.authorization.resolve()
     payload = validate_authorization(authorization)
+    # Keep this file descriptor alive for the entire launch. A second launcher
+    # for the same authorized run root must fail before it can spawn an actor.
+    run_lock = acquire_run_lock(payload)
     # Store the resolved authorization path only in memory; the signed artifact
     # intentionally remains location-independent.
     payload["authorization_path"] = str(authorization)
@@ -170,6 +191,7 @@ def main() -> int:
     if summary_path.exists():
         validate_completed_summary(payload)
         print(json.dumps({"status": "ALREADY_COMPLETED", "summary_path": str(summary_path)}, ensure_ascii=False))
+        run_lock.close()
         return 0
 
     env = os.environ.copy()
@@ -197,6 +219,7 @@ def main() -> int:
     require(result.returncode == 0, f"E0 actor runner failed with code {result.returncode}")
     validate_completed_summary(payload)
     print(json.dumps({"status": "COMPLETED", "summary_path": str(summary_path)}, ensure_ascii=False))
+    run_lock.close()
     return 0
 
 
