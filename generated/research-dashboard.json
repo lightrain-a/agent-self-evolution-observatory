@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-08-28",
+  "as_of_date": "2026-08-29",
   "projection_policy": {
     "read_only": true,
     "scientific_authority": false,
@@ -338,7 +338,7 @@
     {
       "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
       "source_research_item": "",
-      "title": "Reward Errors Become Persistent State: A Controlled Write-Time Memory Intervention in Self-Improving Agents",
+      "title": "Memory Divergence Is Not Behavioral Divergence: Stage-Resolved Transport in Self-Improving Agent Memory",
       "paper_stage": "SUBMISSION_READY",
       "scientific_status": "READY",
       "submission_ready": true,
@@ -413,22 +413,22 @@
   ],
   "week": {
     "start_date": "2026-08-24",
-    "end_date": "2026-08-28",
-    "research_days": 5,
-    "events": 268,
-    "substantive_events": 120,
+    "end_date": "2026-08-29",
+    "research_days": 6,
+    "events": 344,
+    "substantive_events": 155,
     "key_changes": 2,
     "class_counts": {
-      "blocker": 8,
-      "closure": 32,
-      "experiment": 27,
+      "blocker": 30,
+      "closure": 33,
+      "experiment": 38,
       "idea": 16,
-      "paper": 37,
-      "system": 148
+      "paper": 38,
+      "system": 189
     },
     "attention_activity": {
       "B-3": 1,
-      "E-7": 47,
+      "E-7": 67,
       "G-1": 1
     },
     "highlights": [
@@ -455,7 +455,16 @@
         "href": "research-timeline.html"
       },
       {
-        "date": "2026-08-28",
+        "date": "2026-08-29",
+        "event_class": "closure",
+        "title_zh": "停止 / 关闭裁决 · trajectory-mediated-memory-effect-transport",
+        "title_en": "paper-first-post-c2-adjudication",
+        "research_items": [],
+        "papers": [],
+        "href": "research-timeline.html"
+      },
+      {
+        "date": "2026-08-29",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · repair-surface-identifiability-under-persistent-agent-updates",
         "title_en": "paper-first-pf2-method-adjudication",
@@ -466,16 +475,7 @@
         "href": "research-timeline.html?research=E-5"
       },
       {
-        "date": "2026-08-28",
-        "event_class": "closure",
-        "title_zh": "停止 / 关闭裁决 · SCG-001",
-        "title_en": "Semantic Commit Gap: persisted self-update versus future enactment",
-        "research_items": [],
-        "papers": [],
-        "href": "research-timeline.html"
-      },
-      {
-        "date": "2026-08-28",
+        "date": "2026-08-29",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
         "title_en": "paper-first-pf1-problem-adjudication",

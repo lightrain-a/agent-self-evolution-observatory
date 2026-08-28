@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-27T18:55:16+00:00",
+  "generated_at": "2026-08-28T18:58:44+00:00",
   "status": "CROSS_FAILURE_ORTHOGONAL_SCREEN_ZERO_SURVIVOR",
   "scope": "Cross-failure mutation after the ranked historical failure-leaf race and its material children reached zero survivors. This screen deliberately avoids the concurrent state-equivalent-future-divergence line and tests three orthogonal carriers using existing canonical evidence only.",
   "policy": {
