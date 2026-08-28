@@ -45,6 +45,15 @@ class C1R6PaperClosureTest(unittest.TestCase):
         self.assertTrue(row["adjudication"]["scientific_result_changed"] is False)
         self.assertEqual(row["authority"], {"scientific": False, "experiment": False, "provider": False, "gpu": False, "submission": False})
 
+    def test_qa_runner_is_clean_checkout_replayable(self) -> None:
+        runner = (HERE / "compile_c1_r6_paper_qa.py").read_text(encoding="utf-8")
+        self.assertNotIn('text(SRC / "main.log")', runner)
+        self.assertNotIn('text(SRC / "main.aux")', runner)
+        self.assertNotIn('text(SRC / "main.blg")', runner)
+        self.assertIn('text(rebuild_dir / "main.log")', runner)
+        self.assertIn('text(rebuild_dir / "main.aux")', runner)
+        self.assertIn('text(rebuild_dir / "main.blg")', runner)
+
     def test_pdf_qa_is_nine_of_nine_and_rebuild_exact(self) -> None:
         qa = self.load("paper-qa-r6-provenance-reconciled-20260828.json")
         self.assertEqual(qa["status"], "PASS")

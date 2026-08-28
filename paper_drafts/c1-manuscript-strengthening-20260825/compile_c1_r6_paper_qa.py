@@ -92,11 +92,27 @@ def main() -> None:
     if '"status": "REPLAY_PASS"' not in claim_replay:
         raise RuntimeError("R6 claim audit replay is not PASS")
 
+    # Build the sealed source bundle in an isolated temporary directory before
+    # reading TeX sidecars. A clean checkout intentionally contains no main.log,
+    # main.aux, or main.blg, so QA must not inherit state from a prior local build.
+    with tempfile.TemporaryDirectory(prefix="c1-r6-source-rebuild-") as td:
+        rebuild_dir = Path(td)
+        run(["unzip", "-q", str(SOURCE_ZIP), "-d", str(rebuild_dir)])
+        env = dict(os.environ); env["SOURCE_DATE_EPOCH"] = SOURCE_DATE_EPOCH
+        for command in (
+            ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
+            ["bibtex", "main"],
+            ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
+            ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
+        ):
+            run(command, cwd=rebuild_dir, env=env)
+        log = text(rebuild_dir / "main.log")
+        aux = text(rebuild_dir / "main.aux")
+        blg = text(rebuild_dir / "main.blg")
+        rebuild_byte_equal = (rebuild_dir / "main.pdf").read_bytes() == PDF.read_bytes()
+
     sections = "\n".join(text(path) for path in sorted((SRC / "sections").glob("*.tex")))
     lower = sections.lower()
-    log = text(SRC / "main.log")
-    aux = text(SRC / "main.aux")
-    blg = text(SRC / "main.blg")
     sensitivity = json.loads(text(SENSITIVITY))
     stage = json.loads(text(STAGE))
     claim_audit = json.loads(text(CLAIM_AUDIT))
@@ -214,21 +230,7 @@ def main() -> None:
         and "evidence-localization boundary" in lower
     )
 
-    rebuild_byte_equal = False
-    with tempfile.TemporaryDirectory(prefix="c1-r6-source-rebuild-") as td:
-        td_path = Path(td)
-        run(["unzip", "-q", str(SOURCE_ZIP), "-d", str(td_path)])
-        env = dict(os.environ); env["SOURCE_DATE_EPOCH"] = SOURCE_DATE_EPOCH
-        for command in (
-            ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
-            ["bibtex", "main"],
-            ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
-            ["pdflatex", "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
-        ):
-            run(command, cwd=td_path, env=env)
-        rebuilt = td_path / "main.pdf"
-        rebuild_byte_equal = rebuilt.read_bytes() == PDF.read_bytes()
-        artifact_ok = artifact_ok and rebuild_byte_equal
+    artifact_ok = artifact_ok and rebuild_byte_equal
 
     checks = {
         "citation-reference-consistency": citation_ok,
