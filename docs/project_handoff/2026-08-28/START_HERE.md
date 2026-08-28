@@ -3,6 +3,7 @@
 Date: 2026-08-28
 Purpose: canonical migration entry point for moving the research program into a new ChatGPT Project or a new human/agent working context.
 Base revision when this handoff was created: `610b9fe2da9f71f42fdd355bc786095000f91502` (`origin/main` at handoff creation).
+Canonical migration distribution tag after usability hardening: `project-handoff-20260828-v2`.
 
 ## 0. What this package is
 
@@ -36,13 +37,15 @@ Never let a chat summary override a newer canonical artifact.
 Before changing science, code, experiments, or manuscript claims:
 
 1. Read this file.
-2. Read `CURRENT_STATE_RECOVERY.md` and recover the true latest Git revision and latest relevant evidence.
-3. Read `RESEARCH_PORTFOLIO.md` for the stable identity of each research track.
-4. Read `SCIENTIFIC_OPERATING_SYSTEM.md` before authorizing any new experiment.
-5. Read `FAILURE_AND_REPAIR_PLAYBOOK.md` before changing a failed design, threshold, baseline, substrate, or claim.
-6. Read `INFRA_AND_EXECUTION.md` before touching a server or starting a long run.
-7. Read `WRITING_AND_REVIEW.md` before editing a paper or interpreting reviewer feedback.
-8. State explicitly which paper/track is being worked on, the recovered canonical revision, the current scientific gate, the strongest unresolved objection, and the next falsifiable action.
+2. Read `PROJECT_INSTRUCTIONS.md` for the durable project-level operating contract.
+3. Read `CURRENT_STATE_RECOVERY.md` and recover the true latest Git revision and latest relevant evidence.
+4. Read `GLOBAL_RESEARCH_INDEX.md` to route the request to the correct research family, then `RESEARCH_PORTFOLIO.md` for durable track identity.
+5. Read `SCIENTIFIC_OPERATING_SYSTEM.md` before authorizing any new experiment.
+6. Read `FAILURE_AND_REPAIR_PLAYBOOK.md` before changing a failed design, threshold, baseline, substrate, or claim.
+7. Read `INFRA_AND_EXECUTION.md` before touching a server or starting a long run.
+8. Read `WRITING_AND_REVIEW.md` before editing a paper or interpreting reviewer feedback.
+9. Use `MIGRATION_CHECKLIST.md` once when opening a new project and `PAPER_WORKING_SET_TEMPLATE.md` when narrowing to one paper/track.
+10. State explicitly which paper/track is being worked on, the recovered canonical revision, the current scientific gate, the strongest unresolved objection, and the next falsifiable action.
 
 ## 3. Core research philosophy
 
@@ -89,7 +92,7 @@ Recommended three-layer model:
 This directory is the durable and versioned source of truth for cross-project transfer. Changes should be reviewed and committed like code.
 
 ### Layer B — ChatGPT Project files
-Upload a copy of this handoff directory (at minimum `START_HERE.md`, `CURRENT_STATE_RECOVERY.md`, `RESEARCH_PORTFOLIO.md`, and `SCIENTIFIC_OPERATING_SYSTEM.md`) to the new ChatGPT Project. Project chat context is a convenience layer, not canonical authority.
+Upload a copy of this handoff directory (at minimum `START_HERE.md`, `PROJECT_INSTRUCTIONS.md`, `CURRENT_STATE_RECOVERY.md`, `GLOBAL_RESEARCH_INDEX.md`, and `SCIENTIFIC_OPERATING_SYSTEM.md`) to the new ChatGPT Project, or let the new project read the tagged Git package through the approved workspace tool. Project chat context is a convenience layer, not canonical authority.
 
 ### Layer C — Obsidian human navigation
 Maintain a short human-facing index that links to these Git files and records high-level lessons. Do not manually duplicate live experiment state into Obsidian unless it is clearly labeled as a snapshot with revision/date.

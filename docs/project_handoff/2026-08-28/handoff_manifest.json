@@ -1,7 +1,8 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "handoff_date": "2026-08-28",
   "base_revision": "610b9fe2da9f71f42fdd355bc786095000f91502",
+  "distribution_tag": "project-handoff-20260828-v2",
   "purpose": "Cross-ChatGPT-project research context migration without treating chat memory or stale snapshots as canonical state.",
   "canonical_location": "docs/project_handoff/2026-08-28/",
   "trust_order": [
@@ -14,6 +15,7 @@
   ],
   "files": [
     {"path": "START_HERE.md", "role": "entry_point"},
+    {"path": "PROJECT_INSTRUCTIONS.md", "role": "durable_new_project_operating_contract"},
     {"path": "CURRENT_STATE_RECOVERY.md", "role": "live_state_recovery"},
     {"path": "GLOBAL_RESEARCH_INDEX.md", "role": "cross_project_routing_index"},
     {"path": "RESEARCH_PORTFOLIO.md", "role": "detailed_agent_self_evolution_portfolio"},
@@ -22,7 +24,9 @@
     {"path": "INFRA_AND_EXECUTION.md", "role": "server_git_run_conventions"},
     {"path": "WRITING_AND_REVIEW.md", "role": "paper_writing_and_review_protocol"},
     {"path": "WORKING_STYLE_AND_DECISION_RULES.md", "role": "collaboration_and_decision_preferences"},
-    {"path": "NEW_PROJECT_BOOTSTRAP.md", "role": "new_chatgpt_project_bootstrap"}
+    {"path": "MIGRATION_CHECKLIST.md", "role": "cross_project_migration_validation"},
+    {"path": "PAPER_WORKING_SET_TEMPLATE.md", "role": "paper_specific_context_minimization_template"},
+    {"path": "NEW_PROJECT_BOOTSTRAP.md", "role": "copy_paste_new_chatgpt_project_bootstrap"}
   ],
   "excluded": [
     "passwords",
@@ -34,5 +38,6 @@
     "unverified_or_stale_server_endpoints"
   ],
   "live_state_policy": "Recover the exact latest state for the named research object from current Git and admissible artifacts before execution or manuscript claims.",
-  "authority_policy": "Artifact existence, QA PASS, review output, and receipt metadata do not independently grant scientific, experiment, GPU, provider, or submission authority."
+  "authority_policy": "Artifact existence, QA PASS, review output, and receipt metadata do not independently grant scientific, experiment, GPU, provider, or submission authority.",
+  "context_policy": "Use the global handoff only for routing and durable rules; create a compact paper-specific working set for active work."
 }
