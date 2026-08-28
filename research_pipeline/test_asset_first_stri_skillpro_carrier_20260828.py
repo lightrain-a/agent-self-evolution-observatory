@@ -68,6 +68,35 @@ class STRISkillProCarrierArtifactsTest(unittest.TestCase):
             self.assertEqual(boundary["new_model_calls"], 0, filename)
             self.assertEqual(boundary["new_gpu_runs"], 0, filename)
 
+    def test_runtime_preflight_blocks_model_execution_until_environment_is_qualified(self) -> None:
+        preflight = json.loads(
+            (GENERATED / "asset-first-stri-skillpro-p1-runtime-preflight-20260828.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(preflight["decision"], "P1_MODEL_EXECUTION_BLOCKED_RUNTIME_NOT_QUALIFIED")
+        self.assertFalse(preflight["execution_integrity"]["full_author_run_import_ready"])
+        self.assertIn("textarena", preflight["best_existing_python_base"]["missing"])
+        self.assertEqual(preflight["backend_preflight"]["local_backend"]["released_LocalLLM_vllm_tensor_parallel_size"], 4)
+        boundary = preflight["scientific_boundary"]
+        self.assertFalse(boundary["p1_execution_authority"])
+        self.assertFalse(boundary["runtime_install_authority"])
+        self.assertEqual(boundary["new_model_calls"], 0)
+        self.assertEqual(boundary["new_gpu_runs"], 0)
+
+    def test_ace_preaudit_is_candidate_only_until_commit_and_operator_are_pinned(self) -> None:
+        audit = json.loads(
+            (GENERATED / "asset-first-stri-ace-precarrier-audit-20260828.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            audit["decision"],
+            "QUALIFY_ACE_AS_SECONDARY_POSITIVE_CONTROL_CANDIDATE_PENDING_PIN_AND_OPERATOR_AUDIT",
+        )
+        boundary = audit["scientific_boundary"]
+        self.assertFalse(boundary["source_pin_complete"])
+        self.assertFalse(boundary["ace_experiment_authority"])
+        self.assertFalse(boundary["cross_system_generality_authorized"])
+        self.assertEqual(boundary["new_model_calls"], 0)
+        self.assertEqual(boundary["new_gpu_runs"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()

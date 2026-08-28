@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-P1-RUNTIME-PREFLIGHT-20260828",
+  "stage": "RECENT_FLAGSHIP_CARRIER_MODEL_RUNTIME_PREFLIGHT",
+  "date": "2026-08-28",
+  "purpose": "Determine whether the frozen Skill-Pro P1 contract can be executed source-faithfully now, without spending outcome-bearing model calls or silently changing the released runtime.",
+  "frozen_contract": "generated/asset-first-stri-skillpro-p1-p2-contract-20260828.json",
+  "source": {
+    "repository": "https://github.com/Miracle1207/Skill-Pro",
+    "commit": "3be7a9be2d4c024d132efe394d537404eba7e4c8",
+    "archive_sha256": "33c4ba593595cca2bceec28e2c3c1426a158ffe29987f139c6bcc55d4e158bd6"
+  },
+  "released_requirements": {
+    "numpy": ">=1.24,<2.0",
+    "pyyaml": ">=6.0",
+    "torch": ">=2.1,<2.5",
+    "transformers": ">=4.40,<5.0",
+    "vllm": ">=0.4.2",
+    "sentence-transformers": ">=2.6.0",
+    "swanlab": ">=0.3.0",
+    "textarena": ">=0.4.0",
+    "alfworld": ">=0.3.5",
+    "matplotlib": ">=3.7"
+  },
+  "best_existing_python_base": {
+    "path": "/home/wyt/venv_qwen3_compat/bin/python",
+    "python": "3.12.3",
+    "installed_matching_or_compatible": {
+      "torch": "2.3.1+cu121",
+      "numpy": "1.26.4",
+      "transformers": "4.51.3",
+      "pyyaml": "6.0.3"
+    },
+    "missing": [
+      "textarena",
+      "swanlab",
+      "vllm",
+      "sentence-transformers",
+      "alfworld"
+    ],
+    "decision": "PARTIAL_RUNTIME_ONLY"
+  },
+  "backend_preflight": {
+    "remote_backend": {
+      "released_option": "TextArena/OpenRouterAgent for non-local model names",
+      "OPENROUTER_API_KEY_present_in_current_shell": false,
+      "ARK_API_KEY_present_in_current_shell": false,
+      "VOLCENGINE_API_KEY_present_in_current_shell": false,
+      "decision": "NO_CURRENT_REMOTE_PROVIDER_ROUTE"
+    },
+    "local_backend": {
+      "released_LocalLLM_vllm_tensor_parallel_size": 4,
+      "readme_single_gpu_note": "README says set tensor_parallel_size to 1 on a single-GPU machine, but the pinned source currently hardcodes tensor_parallel_size=4 in utils/local_llm.py.",
+      "current_host_visible_gpu_count": 1,
+      "current_host_gpu": "NVIDIA A100-SXM4-80GB",
+      "current_host_snapshot_memory_used_mib": 48775,
+      "current_host_snapshot_utilization_percent": 68,
+      "local_text_models_observed_under_user-owned_common_model_roots": [
+        "/data/wyt/models/Llama-2-7b-hf",
+        "/data/wyt/models/vicuna-7b-v1.5",
+        "/data/wyt/models/vicuna-7b-v1.3",
+        "/data/wyt/models/llemma_7b"
+      ],
+      "decision": "NOT_SOURCE_FAITHFUL_READY_AND_GPU_BUSY_AT_SNAPSHOT"
+    }
+  },
+  "execution_integrity": {
+    "full_author_run_import_ready": false,
+    "reason": "The current best Python environment lacks several released dependencies, while the released local vLLM path assumes tensor_parallel_size=4 and the current host exposes one busy A100. The remote OpenRouter path has no key in the current shell.",
+    "prohibited_shortcuts": [
+      "do not install/patch dependencies into a shared environment and immediately call the result source-faithful without a new runtime receipt",
+      "do not change tensor_parallel_size=4 to 1 and describe the run as an unchanged author runtime; if used, register it as a compatibility adaptation",
+      "do not substitute an old convenient local backbone after observing carrier outcomes",
+      "do not inject credentials from unrelated projects into this runtime without an explicit provider/backend decision",
+      "do not launch on the currently busy GPU without a fresh availability check"
+    ]
+  },
+  "decision": "P1_MODEL_EXECUTION_BLOCKED_RUNTIME_NOT_QUALIFIED",
+  "reopen_conditions": [
+    "Create an isolated Skill-Pro runtime satisfying the pinned requirements, with import smoke tests before any task/model calls.",
+    "Resolve one backend explicitly: either an authorized remote model route or a declared single-GPU compatibility adaptation with frozen model, tokenizer, sampling parameters, and dependency hashes.",
+    "Recheck GPU availability immediately before a local run and bind the device snapshot to the execution receipt.",
+    "Run a zero-outcome smoke on Mastermind environment construction, fixed Skill formatting, and one dry scheduler path before authorizing six real P1 evidence episodes."
+  ],
+  "productive_work_while_blocked": "Continue zero-provider source-level qualification of an independent 2026 flagship carrier/positive control rather than weakening Skill-Pro execution fidelity.",
+  "scientific_boundary": {
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "p1_execution_authority": false,
+    "p2_execution_authority": false,
+    "claim_expansion": false,
+    "runtime_install_authority": false
+  }
+}

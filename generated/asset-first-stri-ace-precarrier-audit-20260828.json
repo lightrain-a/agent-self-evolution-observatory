@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis": "recent-flagship-secondary-carrier-preaudit-ace",
+  "date": "2026-08-28",
+  "purpose": "Screen ACE as an independent ICLR 2026 persistent-artifact carrier/positive-control candidate while Skill-Pro P1 is runtime-blocked. This is source-level qualification only; no ACE experiment is authorized.",
+  "carrier": {
+    "name": "ACE — Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models",
+    "venue": "ICLR 2026",
+    "official_project": "https://ace-agent.github.io/",
+    "official_repository": "https://github.com/ace-agent/ace",
+    "first_public_repo_news": "2025-11",
+    "downstream": "AppWorld plus finance benchmarks"
+  },
+  "official_source_observations": {
+    "persistent_representation": "The playbook is a persistent structured context made of bullet records formatted as [id] helpful=X harmful=Y :: content.",
+    "identity_and_credit": "The official README states each bullet has an ID for tracking and helpful/harmful counts updated by the Reflector; reflector.py returns bullet_tags containing id/tag pairs.",
+    "evolution_loop": "Generator -> Reflector -> Curator; Curator maintains ADD/UPDATE/MERGE/DELETE operations and the playbook persists across adaptation.",
+    "dedup_option": "The official ACE constructor/config exposes use_bulletpoint_analyzer=False by default, threshold=0.90.",
+    "dedup_operator": "When enabled, BulletpointAnalyzer embeds bullet content, groups similar entries, and merges a group into one bullet while summing helpful and harmful counters across members and retaining the first bullet ID.",
+    "dedup_timing": "In ace.py, the optional BulletpointAnalyzer runs after the Curator step and before post-curator generation for that training sample.",
+    "downstream_logs": "Official outputs include bullet_usage_log.jsonl, curator_operations_diff.jsonl, detailed LLM logs, intermediate playbooks, and AppWorld evaluation support."
+  },
+  "stri_relevance": {
+    "why_relevant": [
+      "current-year flagship method with a broad self-improving-context audience",
+      "persistent symbolic IDs and per-ID feedback counters are first-party objects",
+      "exact-content duplicate bullets admit a clean representation refinement intervention",
+      "the optional analyzer explicitly implements a semantic merge that sums additive counters, making ACE unusually useful for distinguishing mere duplicate recognition from state-preserving composition"
+    ],
+    "operator_prediction": "For additive helpful/harmful counters, summing counters before a downstream counter-dependent decision is merge-sufficient. If duplicate identities are allowed to accumulate independent counters before a non-mergeable local decision, representation dependence remains possible. The exact ACE load-bearing decision seam must be pinned before any stronger claim.",
+    "valuable_control": "Compare default analyzer-off behavior with analyzer-on state reunion under an exact-clone intervention, but do not call analyzer-on a native robustness result until the exact ordering relative to the target downstream decision is qualified."
+  },
+  "qualification_gaps": [
+    "The current official repository has not yet been pinned to an exact commit/hash in the research system because remote git/codeload access was transiently failing during this audit.",
+    "No exact curator/pruning decision has yet been identified whose outcome provably depends only on retained per-ID counters and can be tested without LLM semantic confounding.",
+    "The optional analyzer uses embeddings and an LLM merge, so exact-content equivalence must be tested separately from approximate semantic grouping.",
+    "No zero-provider author-operator intervention has been executed yet.",
+    "No AppWorld representation-refinement behavior has been run."
+  ],
+  "decision": "QUALIFY_ACE_AS_SECONDARY_POSITIVE_CONTROL_CANDIDATE_PENDING_PIN_AND_OPERATOR_AUDIT",
+  "next": [
+    "Pin exact official ACE commit and load-bearing source hashes.",
+    "Trace bullet ID -> reflector tag -> counter update -> curator decision -> optional analyzer -> next playbook.",
+    "Find the earliest irreversible or counter-dependent local decision; only then define an ACE-specific merge-sufficiency prediction.",
+    "If no clean deterministic decision exists, use ACE for behavioral/representation-aware corroboration rather than forcing a hard-gate analogue."
+  ],
+  "web_evidence_urls": [
+    "https://ace-agent.github.io/",
+    "https://github.com/ace-agent/ace",
+    "https://github.com/ace-agent/ace/blob/main/ace/core/reflector.py",
+    "https://github.com/ace-agent/ace/blob/main/ace/core/bulletpoint_analyzer.py",
+    "https://github.com/ace-agent/ace/blob/main/ace/ace.py"
+  ],
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "ace_experiment_authority": false,
+    "cross_system_generality_authorized": false,
+    "source_pin_complete": false
+  }
+}
