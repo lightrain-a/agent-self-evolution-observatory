@@ -1,0 +1,870 @@
+{
+  "artifact_type": "c1-r5-replayable-claim-audit",
+  "authority": {
+    "claim_expansion": false,
+    "experiment": false,
+    "gpu": false,
+    "provider": false,
+    "scientific": false,
+    "submission": false
+  },
+  "claims": [
+    {
+      "description": "The source task text and full action history are fixed before the writer call.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "task text and full action history are fixed before the writer is called"
+        ],
+        "required_present": {
+          "task text and full action history are fixed before the writer is called": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/03_f0.tex",
+          "sha256": "ac66fba22eb1adaf987469c76bdd7a4d464a3d2c82bada2d0be98024a0b0400f"
+        }
+      ],
+      "id": "C01",
+      "pass": true
+    },
+    {
+      "description": "The released success/failure writer intervention bundles reflection-instruction and reward/outcome semantics.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "changes the reflection instruction together with the outcome/reward semantics",
+          "bundled protocol contrast"
+        ],
+        "required_present": {
+          "bundled protocol contrast": true,
+          "changes the reflection instruction together with the outcome/reward semantics": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/03a_prompt_control.tex",
+          "sha256": "7306cb33581830ce3bf95a68e139ecb002a5f1866eefe4a073dbc7ac771ec077"
+        }
+      ],
+      "id": "C02",
+      "pass": true
+    },
+    {
+      "description": "The manuscript explicitly forbids interpreting the writer contrast as a pure reward-bit effect.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "bundled writer-protocol contrast, not a pure reward-bit effect"
+        ],
+        "required_present": {
+          "bundled writer-protocol contrast, not a pure reward-bit effect": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/06_limitations_conclusion.tex",
+          "sha256": "85c0feb3e8e12fbd14c7f848ddfdca06da490f855ef87d46fad21cf65e89fbae"
+        }
+      ],
+      "id": "C03",
+      "pass": true
+    },
+    {
+      "description": "The resolved writer model is matched within each paired write contrast.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "resolved writer model is matched within pair"
+        ],
+        "required_present": {
+          "resolved writer model is matched within pair": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/03_f0.tex",
+          "sha256": "ac66fba22eb1adaf987469c76bdd7a4d464a3d2c82bada2d0be98024a0b0400f"
+        }
+      ],
+      "id": "C04",
+      "pass": true
+    },
+    {
+      "description": "The write-stage writer temperature is fixed at zero.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "temperature is zero"
+        ],
+        "required_present": {
+          "temperature is zero": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/03_f0.tex",
+          "sha256": "ac66fba22eb1adaf987469c76bdd7a4d464a3d2c82bada2d0be98024a0b0400f"
+        }
+      ],
+      "id": "C05",
+      "pass": true
+    },
+    {
+      "description": "Shopping write divergence is 20/20 with pooled distance 0.673.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "\"shopping_complete_pairs\": 20",
+          "\"shopping_diverged_pairs\": 20",
+          "\"pooled_token_jaccard\": 0.673"
+        ],
+        "required_present": {
+          "\"pooled_token_jaccard\": 0.673": true,
+          "\"shopping_complete_pairs\": 20": true,
+          "\"shopping_diverged_pairs\": 20": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-resolved-evidence-reinterpretation.json",
+          "sha256": "02e39f14e99eca61bc687890c1bb501e540d87395c6887f39b125538cae570be"
+        }
+      ],
+      "id": "C06",
+      "pass": true
+    },
+    {
+      "description": "The cross-domain write tranche contains four Reddit pairs and the total paired write lineage is 24/24 divergent.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "four Reddit pairs",
+          "24/24 paired source experiences"
+        ],
+        "required_present": {
+          "24/24 paired source experiences": true,
+          "four Reddit pairs": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/03_f0.tex",
+          "sha256": "ac66fba22eb1adaf987469c76bdd7a4d464a3d2c82bada2d0be98024a0b0400f"
+        }
+      ],
+      "id": "C07",
+      "pass": true
+    },
+    {
+      "description": "The same-mode wording control reports excess 0.105 with exact p=0.0078.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "same-mode excess=0.105, exact p=0.0078"
+        ],
+        "required_present": {
+          "same-mode excess=0.105, exact p=0.0078": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+          "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+        }
+      ],
+      "id": "C08",
+      "pass": true
+    },
+    {
+      "description": "The native stage ordering is write, source-item exposure, first-action uptake, then terminal outcome.",
+      "detail": {
+        "actual": [
+          "persistent_write",
+          "native_retrieval_exposure",
+          "native_first_action_uptake",
+          "native_terminal_outcome"
+        ],
+        "expected": [
+          "persistent_write",
+          "native_retrieval_exposure",
+          "native_first_action_uptake",
+          "native_terminal_outcome"
+        ],
+        "json_path": [
+          "scientific_object",
+          "native_order"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+          "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+        }
+      ],
+      "id": "C09",
+      "pass": true
+    },
+    {
+      "description": "Native exposure is defined as retrieval of a branch-conditioned source-memory item into context.",
+      "detail": {
+        "actual": "retrieval of a branch-conditioned source-memory item into native context",
+        "expected": "retrieval of a branch-conditioned source-memory item into native context",
+        "json_path": [
+          "exposure_semantics",
+          "measured_object"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C10",
+      "pass": true
+    },
+    {
+      "description": "Treatment-specific residual exposure is not claimed to be measured.",
+      "detail": {
+        "actual": false,
+        "expected": false,
+        "json_path": [
+          "exposure_semantics",
+          "treatment_specific_residual_exposure_measured"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C11",
+      "pass": true
+    },
+    {
+      "description": "A retrieval event is not treated as a measurement of policy use.",
+      "detail": {
+        "actual": false,
+        "expected": false,
+        "json_path": [
+          "exposure_semantics",
+          "policy_use_measured_by_retrieval_event"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C12",
+      "pass": true
+    },
+    {
+      "description": "Native Shopping retrieval exposure is observed in 125/172 opportunities.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "125/172 held-out retrieval opportunities"
+        ],
+        "required_present": {
+          "125/172 held-out retrieval opportunities": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+          "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+        }
+      ],
+      "id": "C13",
+      "pass": true
+    },
+    {
+      "description": "The frozen first-action contrast is TV=0.06944, p=0.5801, with 0/36 modal changes.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "TV=0.06944, p=0.5801, 0/36 modal action changes"
+        ],
+        "required_present": {
+          "TV=0.06944, p=0.5801, 0/36 modal action changes": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+          "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+        }
+      ],
+      "id": "C14",
+      "pass": true
+    },
+    {
+      "description": "Native terminal transport is sparse and heterogeneous in Shopping and Reddit with the frozen reported statistics.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "Shopping |Delta|=0.02083, p=0.4289, 34/36 zero",
+          "Reddit |Delta|=0.125, p=0.2253, 6/8 zero, opposite signs"
+        ],
+        "required_present": {
+          "Reddit |Delta|=0.125, p=0.2253, 6/8 zero, opposite signs": true,
+          "Shopping |Delta|=0.02083, p=0.4289, 34/36 zero": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+          "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+        }
+      ],
+      "id": "C15",
+      "pass": true
+    },
+    {
+      "description": "The forced capacity side control reports terminal |Delta|=0.15625 and p=0.00074.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "terminal |Delta|=0.15625, p=0.00074"
+        ],
+        "required_present": {
+          "terminal |Delta|=0.15625, p=0.00074": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+          "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+        }
+      ],
+      "id": "C16",
+      "pass": true
+    },
+    {
+      "description": "Forced fixed-evidence is explicitly a side capacity condition rather than a native stage.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "side capacity condition",
+          "cannot make an otherwise unsupported native stage pass"
+        ],
+        "required_present": {
+          "cannot make an otherwise unsupported native stage pass": true,
+          "side capacity condition": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/02_mechanism.tex",
+          "sha256": "07bb628c13a81252a6824b634c5a1c3f884ac345462ac6d65d76023d896c033c"
+        }
+      ],
+      "id": "C17",
+      "pass": true
+    },
+    {
+      "description": "The forced control is recorded as bypassing native retrieval and context composition.",
+      "detail": {
+        "actual": true,
+        "expected": true,
+        "json_path": [
+          "forced_native_boundary",
+          "forced_control_bypasses_native_retrieval_and_context_composition"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C18",
+      "pass": true
+    },
+    {
+      "description": "Forced and native intervention surfaces are not represented as identical.",
+      "detail": {
+        "actual": false,
+        "expected": false,
+        "json_path": [
+          "forced_native_boundary",
+          "intervention_surfaces_identical"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C19",
+      "pass": true
+    },
+    {
+      "description": "The frozen ordinal evidence rule localizes the first unsupported native stage to first-action uptake.",
+      "detail": {
+        "actual": "native_first_action_uptake",
+        "expected": "native_first_action_uptake",
+        "json_path": [
+          "localization",
+          "first_unsupported_native_stage"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+          "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+        }
+      ],
+      "id": "C20",
+      "pass": true
+    },
+    {
+      "description": "Stage tests are explicitly not unit-matched.",
+      "detail": {
+        "actual": false,
+        "expected": false,
+        "json_path": [
+          "identifiability",
+          "ordered_stage_tests_have_matched_units"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C21",
+      "pass": true
+    },
+    {
+      "description": "Stage tests are explicitly not metric-matched.",
+      "detail": {
+        "actual": false,
+        "expected": false,
+        "json_path": [
+          "identifiability",
+          "ordered_stage_tests_have_matched_metrics"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C22",
+      "pass": true
+    },
+    {
+      "description": "Stage tests are explicitly not power-matched.",
+      "detail": {
+        "actual": false,
+        "expected": false,
+        "json_path": [
+          "identifiability",
+          "ordered_stage_tests_have_matched_statistical_power"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C23",
+      "pass": true
+    },
+    {
+      "description": "The sensitivity artifact forbids upgrading operational localization to an identified latent attenuation onset.",
+      "detail": {
+        "actual": false,
+        "expected": false,
+        "json_path": [
+          "identifiability",
+          "latent_causal_attenuation_onset_is_identified"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C24",
+      "pass": true
+    },
+    {
+      "description": "Causal mediation remains unidentified.",
+      "detail": {
+        "actual": false,
+        "expected": false,
+        "json_path": [
+          "identifiability",
+          "causal_mediation_is_identified"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C25",
+      "pass": true
+    },
+    {
+      "description": "Dropping terminal outcome evidence preserves first-action uptake as the boundary.",
+      "detail": {
+        "actual": "native_first_action_uptake",
+        "expected": "native_first_action_uptake",
+        "json_path": [
+          "structural_sensitivity",
+          0,
+          "first_unsupported_measured_native_stage"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C26",
+      "pass": true
+    },
+    {
+      "description": "Dropping Reddit terminal evidence preserves first-action uptake as the Shopping boundary.",
+      "detail": {
+        "actual": "native_first_action_uptake",
+        "expected": "native_first_action_uptake",
+        "json_path": [
+          "structural_sensitivity",
+          1,
+          "first_unsupported_measured_native_stage"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C27",
+      "pass": true
+    },
+    {
+      "description": "Dropping the forced-capacity side control preserves first-action uptake as the native boundary.",
+      "detail": {
+        "actual": "native_first_action_uptake",
+        "expected": "native_first_action_uptake",
+        "json_path": [
+          "structural_sensitivity",
+          2,
+          "first_unsupported_measured_native_stage"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C28",
+      "pass": true
+    },
+    {
+      "description": "Merging exposure and uptake destroys diagnostic resolution.",
+      "detail": {
+        "actual": false,
+        "expected": false,
+        "json_path": [
+          "structural_sensitivity",
+          3,
+          "diagnostic_resolution_preserved"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C29",
+      "pass": true
+    },
+    {
+      "description": "The artifact names exposure-versus-first-action-uptake as the load-bearing measurement distinction.",
+      "detail": {
+        "actual": "native_retrieval_exposure_vs_native_first_action_uptake",
+        "expected": "native_retrieval_exposure_vs_native_first_action_uptake",
+        "json_path": [
+          "measurement_load_bearing",
+          "distinction"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C30",
+      "pass": true
+    },
+    {
+      "description": "The manuscript frames exposure/uptake separation as diagnostic resolution rather than merely adding metrics or reclaiming generic utilization novelty.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "not simply to report more stage metrics",
+          "separation of exposure from uptake",
+          "not our novelty"
+        ],
+        "required_present": {
+          "not our novelty": true,
+          "not simply to report more stage metrics": true,
+          "separation of exposure from uptake": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/04_variance_protocol.tex",
+          "sha256": "1a86739404e827743213a62881b4176b1cb1fab131198ae270b1429136c96737"
+        },
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/05_related.tex",
+          "sha256": "cb04b6fd03051609f93f6926139a232bc5dfa9ec3b4d85b6a74ad895bdcfaf5b"
+        }
+      ],
+      "id": "C31",
+      "pass": true
+    },
+    {
+      "description": "External validity is restricted to the frozen writer/policy configuration and the evaluated Shopping+Reddit substrate.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "External validity is restricted to the frozen released writer/policy configuration and the Shopping+Reddit substrate evaluated here",
+          "other writers, backbones, domains, and memory architectures are untested"
+        ],
+        "required_present": {
+          "External validity is restricted to the frozen released writer/policy configuration and the Shopping+Reddit substrate evaluated here": true,
+          "other writers, backbones, domains, and memory architectures are untested": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/06_limitations_conclusion.tex",
+          "sha256": "85c0feb3e8e12fbd14c7f848ddfdca06da490f855ef87d46fad21cf65e89fbae"
+        }
+      ],
+      "id": "C32",
+      "pass": true
+    },
+    {
+      "description": "The Shopping exposure-to-uptake boundary is not claimed as replicated on Reddit.",
+      "detail": {
+        "actual": false,
+        "expected": false,
+        "json_path": [
+          "cross_domain_boundary",
+          "shopping_exposure_to_uptake_boundary_replicated_on_reddit"
+        ]
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+          "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+        }
+      ],
+      "id": "C33",
+      "pass": true
+    },
+    {
+      "description": "CBRG stopped before behavioral evaluation and is not represented as a validated repair.",
+      "detail": {
+        "forbidden": [],
+        "forbidden_absent": {},
+        "required": [
+          "CBRG extension stopped before behavioral evaluation",
+          "no behavioral repair efficacy is claimed"
+        ],
+        "required_present": {
+          "CBRG extension stopped before behavioral evaluation": true,
+          "no behavioral repair efficacy is claimed": true
+        }
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/06_limitations_conclusion.tex",
+          "sha256": "85c0feb3e8e12fbd14c7f848ddfdca06da490f855ef87d46fad21cf65e89fbae"
+        }
+      ],
+      "id": "C34",
+      "pass": true
+    },
+    {
+      "description": "Decision-critical overclaim phrases are absent from the manuscript.",
+      "detail": {
+        "forbidden": [
+          "true causal bottleneck",
+          "strongest supported operational attenuation boundary",
+          "largest attenuation can occur",
+          "exposure-to-uptake bottleneck",
+          "reddit replicates the shopping evidence boundary",
+          "changes only the reward-conditioned writer branch",
+          "CBRG repair is validated"
+        ],
+        "forbidden_absent": {
+          "CBRG repair is validated": true,
+          "changes only the reward-conditioned writer branch": true,
+          "exposure-to-uptake bottleneck": true,
+          "largest attenuation can occur": true,
+          "reddit replicates the shopping evidence boundary": true,
+          "strongest supported operational attenuation boundary": true,
+          "true causal bottleneck": true
+        },
+        "required": [],
+        "required_present": {}
+      },
+      "evidence": [
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/00_abstract.tex",
+          "sha256": "135fbb6c6014dc3a3bc0b33da9b5bde5f50e8ec28e245a3ebc1faa12f4db54d3"
+        },
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/01_intro.tex",
+          "sha256": "6613991228d15ed8cda13c63ed57b8d5730b031a6f7ca9b667931a5a060d5e9b"
+        },
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/02_mechanism.tex",
+          "sha256": "07bb628c13a81252a6824b634c5a1c3f884ac345462ac6d65d76023d896c033c"
+        },
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/03_f0.tex",
+          "sha256": "ac66fba22eb1adaf987469c76bdd7a4d464a3d2c82bada2d0be98024a0b0400f"
+        },
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/03a_prompt_control.tex",
+          "sha256": "7306cb33581830ce3bf95a68e139ecb002a5f1866eefe4a073dbc7ac771ec077"
+        },
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/04_variance_protocol.tex",
+          "sha256": "1a86739404e827743213a62881b4176b1cb1fab131198ae270b1429136c96737"
+        },
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/05_related.tex",
+          "sha256": "cb04b6fd03051609f93f6926139a232bc5dfa9ec3b4d85b6a74ad895bdcfaf5b"
+        },
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/06_limitations_conclusion.tex",
+          "sha256": "85c0feb3e8e12fbd14c7f848ddfdca06da490f855ef87d46fad21cf65e89fbae"
+        },
+        {
+          "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/07_appendix.tex",
+          "sha256": "24d44350b7c7a3ab21bfb08b67425312c5f03e1aeebb8389f2c4fabb9ad5bc5c"
+        }
+      ],
+      "id": "C35",
+      "pass": true
+    }
+  ],
+  "execution": {
+    "network_required": false,
+    "new_gpu_scientific_runs": 0,
+    "new_scientific_experiments": 0,
+    "new_scientific_provider_calls": 0
+  },
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "provenance": {
+    "inputs": [
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/00_abstract.tex",
+        "sha256": "135fbb6c6014dc3a3bc0b33da9b5bde5f50e8ec28e245a3ebc1faa12f4db54d3"
+      },
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/01_intro.tex",
+        "sha256": "6613991228d15ed8cda13c63ed57b8d5730b031a6f7ca9b667931a5a060d5e9b"
+      },
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/02_mechanism.tex",
+        "sha256": "07bb628c13a81252a6824b634c5a1c3f884ac345462ac6d65d76023d896c033c"
+      },
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/03_f0.tex",
+        "sha256": "ac66fba22eb1adaf987469c76bdd7a4d464a3d2c82bada2d0be98024a0b0400f"
+      },
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/03a_prompt_control.tex",
+        "sha256": "7306cb33581830ce3bf95a68e139ecb002a5f1866eefe4a073dbc7ac771ec077"
+      },
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/04_variance_protocol.tex",
+        "sha256": "1a86739404e827743213a62881b4176b1cb1fab131198ae270b1429136c96737"
+      },
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/05_related.tex",
+        "sha256": "cb04b6fd03051609f93f6926139a232bc5dfa9ec3b4d85b6a74ad895bdcfaf5b"
+      },
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/06_limitations_conclusion.tex",
+        "sha256": "85c0feb3e8e12fbd14c7f848ddfdca06da490f855ef87d46fad21cf65e89fbae"
+      },
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/07_appendix.tex",
+        "sha256": "24d44350b7c7a3ab21bfb08b67425312c5f03e1aeebb8389f2c4fabb9ad5bc5c"
+      },
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+        "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+      },
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+        "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+      },
+      {
+        "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-resolved-evidence-reinterpretation.json",
+        "sha256": "02e39f14e99eca61bc687890c1bb501e540d87395c6887f39b125538cae570be"
+      }
+    ],
+    "registry": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/claim-audit-r6-registry-20260828.json",
+      "sha256": "ad034d2da0bc99af0506aca1686c9adb5e8247875fb10a3de5b63cda1397cfbc"
+    },
+    "runner": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/run_claim_audit_r6.py",
+      "sha256": "51599cc126a5bf35e05f6ac956f4a24d6bd5c774f04458ed045288115d9727ee"
+    },
+    "serialization": "UTF-8 JSON, sort_keys=True, indent=2, trailing newline; no wall-clock fields"
+  },
+  "revision_id": "C1-STAGE-SIGNATURE-R6-CLAIM-PROVENANCE-SEAL-20260828",
+  "schema_version": "1.0",
+  "status": "PASS",
+  "summary": {
+    "claims_failed": 0,
+    "claims_passed": 35,
+    "claims_total": 35
+  }
+}

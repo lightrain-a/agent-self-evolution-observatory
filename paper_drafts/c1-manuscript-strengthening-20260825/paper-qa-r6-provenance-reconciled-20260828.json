@@ -1,0 +1,132 @@
+{
+  "artifact_type": "c1-r6-paper-qa",
+  "authority": {
+    "experiment": false,
+    "gpu": false,
+    "provider": false,
+    "scientific": false,
+    "submission": false
+  },
+  "bindings": {
+    "claim_audit": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/claim-audit-r6-provenance-seal-20260828.json",
+      "sha256": "f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c"
+    },
+    "claim_audit_replay": "{\"claims_failed\": 0, \"claims_passed\": 35, \"claims_total\": 35, \"sha256\": \"f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c\", \"status\": \"REPLAY_PASS\"}",
+    "package_manifest": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-r6-package-manifest-20260828.json",
+      "sha256": "6d0b0b21be4be841c9d1300145cfeaf06d5502a90cb26e8a60e33b434c9c8a76"
+    },
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r6-final.pdf",
+      "sha256": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70"
+    },
+    "provenance_reconciliation": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-r6-provenance-reconciliation-20260828.json",
+      "sha256": "b10a64487f773d1a14d81a9a5d4af03f185df25a1b02660592df9c2c4d64130b"
+    },
+    "sensitivity_audit": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+      "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+    },
+    "source_zip": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r6-final-source.zip",
+      "sha256": "1b39471799d0ae3efc41b4e42a5b744efc7d82c9e2efce82eeea80dd7085872b"
+    },
+    "stage_evidence": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+      "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+    }
+  },
+  "checks": {
+    "anonymity": true,
+    "artifact-hashes": true,
+    "citation-reference-consistency": true,
+    "figure-table-consistency": true,
+    "forbidden-claim-detection": true,
+    "numeric-consistency": true,
+    "page-constraint": true,
+    "rendered-pdf-visual-qa": true,
+    "statement-evidence-binding": true
+  },
+  "execution": {
+    "network_required": false,
+    "new_gpu_scientific_runs": 0,
+    "new_scientific_experiments": 0,
+    "new_scientific_provider_calls": 0
+  },
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision_id": "C1-STAGE-SIGNATURE-R6-CLAIM-PROVENANCE-SEAL-20260828",
+  "schema_version": "1.0",
+  "status": "PASS",
+  "summary": {
+    "checks_passed": 9,
+    "checks_total": 9,
+    "claim_audit_replay_pass": true,
+    "fonts_embedded": true,
+    "main_text_page_limit": 9,
+    "main_text_pages": 9,
+    "overfull_boxes": 0,
+    "provenance_reconciliation_pass": true,
+    "references_start_page": 10,
+    "rendered_pages": 13,
+    "source_rebuild_byte_equal": true,
+    "total_pdf_pages": 13,
+    "undefined_citations": 0,
+    "undefined_references": 0
+  },
+  "visual_sample": [
+    {
+      "page": 1,
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1052
+      ],
+      "size": [
+        850,
+        1100
+      ]
+    },
+    {
+      "page": 9,
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1012
+      ],
+      "size": [
+        850,
+        1100
+      ]
+    },
+    {
+      "page": 10,
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1052
+      ],
+      "size": [
+        850,
+        1100
+      ]
+    },
+    {
+      "page": 13,
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        696,
+        1052
+      ],
+      "size": [
+        850,
+        1100
+      ]
+    }
+  ]
+}

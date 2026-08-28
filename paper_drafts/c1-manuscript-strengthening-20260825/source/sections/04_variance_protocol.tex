@@ -1,6 +1,6 @@
-\section{Transport Bottleneck Localization}
+\section{Stage-Resolved Transport Evidence}
 \label{sec:variance}
-The write intervention becomes scientifically useful only once alternative explanations for downstream attenuation are separated. We therefore use the frozen evidence in three roles: forced fixed-evidence exposure as a \emph{capacity control}, native retrieval as an \emph{availability measurement}, and first-action/terminal contrasts as \emph{native transport measurements}. This section shows that their joint pattern is more informative than any endpoint alone.
+The write intervention becomes scientifically useful only once alternative explanations for weak downstream transport evidence are separated. We therefore use the frozen evidence in three roles: forced fixed-evidence exposure as a \emph{capacity control}, native retrieval as an \emph{availability measurement}, and first-action/terminal contrasts as \emph{native transport measurements}. This section shows that their joint pattern is more informative than any endpoint alone.
 
 \subsection{Forced injection establishes downstream capacity, not native transport}
 We first bypass native retrieval and directly inject each paired memory into a fixed future-task packet. This asks whether the downstream system can respond to the paired persistent states when the experimenter supplies them.
@@ -9,12 +9,14 @@ The original fixed-state probe contains 12 aligned success-memory versus failure
 
 This result weakens the explanation that the downstream system is simply incapable of responding to memory content. It does \emph{not} estimate native transport because exposure is mechanically supplied. The cell effects are also heterogeneous: eight cells are zero, six have positive failure-minus-success effects, and two have negative effects; the two largest cells account for 78.2\% of squared-effect mass. Even under forced exposure, a universal harmful direction is unsupported.
 
-\subsection{Native exposure remains common while action uptake attenuates}
-We next restore the native memory-bank pathway. After expanding the frozen Shopping memory bank, branch-specific source memories are retrieved on 125 of 172 held-out retrieval opportunities, a rate of 0.727. The native null therefore cannot be summarized as ``the memory was never retrieved.''
+\subsection{Native source-item exposure remains common while action uptake is unsupported}
+We next restore the native memory-bank pathway. After expanding the frozen Shopping memory bank, the branch-conditioned source-memory item is retrieved on 125 of 172 held-out retrieval opportunities, a rate of 0.727. This item-level availability measurement does not identify exposure to the treatment-specific residual within the item, but it is sufficient to reject ``the source memory item was never retrieved'' as the sole description of the weak native downstream evidence.
 
 Despite that exposure, the first measured decision boundary is weak. Across the frozen 36 Shopping branch-comparison states, mean first-action total-variation distance is $0.06944$ with $p=0.5801$, and 0/36 states change their modal first action. A post-hoc working-memory diagnostic yields branch shift 0.00335 with $p=0.2052$. Native terminal transport is also small: mean absolute success difference is $0.02083$ with permutation $p=0.4289$, and 34/36 cells are exactly zero.
 
-The conjunction is the mechanism result. Applying the ordinal rule from Section~\ref{sec:evidence-ladder}, write is \textsc{Supported}, native exposure is \textsc{Observed}, and first-action uptake is the first native stage whose frozen primary test does not support a stable branch contrast. Thus $b^*=\text{first-action uptake}$, which places the strongest supported operational attenuation boundary after exposure and before stable action uptake. Terminal sparsity is downstream corroboration rather than the quantity used to choose the boundary. We do not call this a mediation effect because the stage measurements are not commensurate coefficients and the frozen design lacks the seed/noise-floor controls required for atom-level causal mediation.
+The conjunction is the stage-resolved evidence result. Applying the ordinal rule from Section~\ref{sec:evidence-ladder}, write is \textsc{Supported}, native source-item exposure is \textsc{Observed}, and first-action uptake is the first measured native stage whose frozen primary test does not support a stable branch contrast. Thus $b^*=\text{first-action uptake}$ is an \emph{evidence-localization boundary}. Terminal sparsity is downstream corroboration rather than the quantity used to choose the boundary. Because the stage tests differ in units and statistical sensitivity, this does not identify where a latent causal effect physically attenuates; nor is it a mediation effect.
+
+A structural sensitivity audit clarifies what is load-bearing in this localization. Removing terminal outcome evidence, removing the Reddit terminal tranche, or removing the forced-capacity side control leaves the first unsupported measured native stage at first-action uptake. In contrast, merging native exposure with first-action uptake removes the diagnostic resolution needed to distinguish availability from behavioral use. The contribution is therefore not simply to report more stage metrics: for this frozen system, the \emph{separation of exposure from uptake} is the load-bearing measurement that prevents these two explanations from becoming observationally aliased.
 
 \begin{table}[t]
 \centering
@@ -27,41 +29,24 @@ Stage & Evidence state & Frozen observation / interpretation \\
 \midrule
 Persistent write & Supported & 20/20 Shopping pairs diverge; stronger same-mode control leaves excess $0.105$, exact $p=0.0078$. \\
 Forced capacity (side control) & Supported & $|\Delta|=0.15625$, $p=0.00074$; supplied memory has downstream leverage but native retrieval is bypassed. \\
-Native exposure & Directly observed & 125/172 held-out opportunities retrieve branch-specific source memory; this is availability, not policy use. \\
+Native source-item exposure & Directly observed & 125/172 held-out opportunities retrieve the branch-conditioned source-memory item; this is item availability, not treatment-residual exposure or policy use. \\
 First-action uptake & Not supported & TV $=0.06944$, $p=0.5801$, 0/36 modal changes; this is the first unsupported native stage after observed prerequisites. \\
 Native outcome & Sparse / heterogeneous & Shopping 34/36 zero; Reddit 6/8 zero and the two nonzero signs are opposite. \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{table}[t]
-\centering
-\small
-\caption{Alternative-explanation audit. The contribution comes from the joint pattern, not from selecting only the positive forced endpoint. ``Weakened'' means the frozen evidence makes the explanation incomplete but does not mathematically eliminate every variant of it.}
-\label{tab:alternative-audit}
-\begin{tabular}{@{}p{0.26\linewidth}p{0.23\linewidth}p{0.38\linewidth}@{}}
-\toprule
-Explanation & Frozen evidence & Disposition \\
-\midrule
-No persistent state intervention & 20/20 Shopping and 4/4 Reddit writes diverge; same-mode excess $=0.105$, $p=0.0078$ & Inconsistent with the observed write-stage intervention. \\
-Downstream policy is globally insensitive to memory & Forced terminal $|\Delta|=0.15625$, $p=0.00074$ & Weakened: supplied branch-specific memory has measurable leverage. \\
-Native null is only retrieval absence & 125/172 native Shopping retrieval hits & Weakened: substantial exposure coexists with weak first-action contrast. \\
-Retrieval hit is a surrogate for policy use & first-action TV $=0.06944$, $p=0.5801$; 0/36 modal changes & Rejected as an evaluation equivalence: availability is not uptake. \\
-Universal directional terminal transport & Shopping 34/36 zero; Reddit 6/8 zero, two nonzero signs opposite & Not supported by the frozen native cells. \\
-Causal mediation has been identified & no per-atom seed binding/noise-floor replication; forced/native surfaces differ & Unresolved and explicitly outside the claim set. \\
-\bottomrule
-\end{tabular}
-\end{table}
+The full six-hypothesis alternative-explanation audit is reported in Appendix Table~\ref{tab:alternative-audit}; the main-text stage ladder retains the decision-critical evidence states without spending a second full table on the same inference chain.
 
 \subsection{Cross-domain boundary: write replication without monotone transport}
-We repeat the write-versus-native-transport measurement on Reddit. Reward-conditioned writing again diverges in 4/4 paired source memories. Native terminal transport is larger than Shopping in magnitude but remains unresolved and highly sparse: mean absolute success difference is $0.125$ with $p=0.2253$, 6/8 cells are zero, and the two nonzero cells have opposite signs. The second domain therefore supports the same structural separation---robust write divergence need not become stable native terminal transport---while rejecting a simple universal attenuation constant or signed harm coefficient.
+We repeat the write-versus-native-transport measurement on Reddit. Reward-conditioned writing again diverges in 4/4 paired source memories. Native terminal transport is larger than Shopping in magnitude but remains unresolved and highly sparse: mean absolute success difference is $0.125$ with $p=0.2253$, 6/8 cells are zero, and the two nonzero cells have opposite signs. The second domain therefore supports the same coarse structural separation---robust write divergence need not become stable native terminal transport---while rejecting a simple universal attenuation constant or signed harm coefficient. Reddit does not contain the matched native exposure and first-action measurements needed to replicate the Shopping evidence boundary.
 
 An outcome-blind structured-memory control gives a complementary warning about endpoint interpretation. It produces a small terminal contrast of $0.04514$ ($p=0.0048$), below the frozen 0.15 practical floor, with 32/36 cells zero. Statistical detectability alone is therefore not the scientific target; a sparse small effect can pass a null test without matching the magnitude or mechanism of forced branch leverage.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figures/fig4_stage_resolved_transport.pdf}
-\caption{\textbf{Native transport and forced capacity are different experimental surfaces.} The horizontal path is the deployed reuse chain: persistent write $\rightarrow$ native exposure $\rightarrow$ first-action uptake $\rightarrow$ native outcome. The forced fixed-evidence arm bypasses retrieval and is shown as a side capacity control. The strongest supported operational attenuation boundary is after exposure and before stable action uptake; this is not a causal mediation coefficient.}
+\includegraphics[width=\linewidth,trim=4pt 26pt 8pt 80pt,clip]{figures/fig4_stage_resolved_transport.pdf}
+\caption{\textbf{Native transport and forced capacity are different experimental surfaces.} The horizontal path is the deployed reuse chain: persistent write $\rightarrow$ native source-item exposure $\rightarrow$ first-action uptake $\rightarrow$ native outcome. The forced fixed-evidence arm bypasses retrieval and is shown as a side capacity control. On the frozen Shopping tests, first-action uptake is the first unsupported measured native stage after write and item exposure are established; this is an evidence boundary, not a latent causal bottleneck or mediation coefficient.}
 \label{fig:stage-transport}
 \end{figure}
 
@@ -70,4 +55,4 @@ A one-step interpretation would take the 256 forced rollouts as evidence that ``
 
 Conversely, looking only at the native endpoint would also lose the mechanism: a $0.02083$ Shopping terminal difference does not tell us that the writer failed, that memory was unavailable, or that the downstream system was globally insensitive. The stage-resolved controls exclude or weaken each of those simpler accounts before the first-action boundary is reached.
 
-The evaluation consequence is concrete. For a persistent update, report at least one state-change metric, one exposure measurement, and one downstream uptake/outcome metric; use a capacity control only if its bypassed stages are explicit. Then localize the first point where evidence for transport weakens, rather than crediting the update with behavioral authority because its representation changed or because a retrieved item appeared in context.
+The evaluation consequence is concrete. For a persistent update, report at least one state-change metric, one exposure measurement, and one downstream uptake/outcome metric; use a capacity control only if its bypassed stages are explicit. Then report the first measured stage where evidence for transport is no longer supported, while keeping stage-specific power and measurement semantics explicit, rather than crediting the update with behavioral authority because its representation changed or because a retrieved item appeared in context.

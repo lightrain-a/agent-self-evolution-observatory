@@ -1,0 +1,126 @@
+{
+  "artifact_type": "c1-r4-targeted-repair-recheck",
+  "claim_expansion_authority": false,
+  "contract_sha256": "c6cd6e451dd5a7a610ef89f7b2e4ce3e54a70fb568889c6304c33e66dc50bd0e",
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "next_gate": "CLAIM_AUDIT",
+  "objection_resolutions": {
+    "R4-AWARE-CBRG": {
+      "repair_class": "cbrg-boundary-preserved",
+      "status": "RESOLVED_PAPER_ONLY"
+    },
+    "R4-AWARE-COLLISION": {
+      "repair_class": "novelty-boundary",
+      "status": "RESOLVED_PAPER_ONLY"
+    },
+    "R4-AWARE-FORCED": {
+      "repair_class": "forced-native-surface-boundary",
+      "status": "RESOLVED_PAPER_ONLY"
+    },
+    "R4-AWARE-ITEM-VS-RESIDUAL": {
+      "repair_class": "item-exposure-not-residual-exposure",
+      "status": "RESOLVED_PAPER_ONLY"
+    },
+    "R4-AWARE-POWER": {
+      "repair_class": "evidence-localization-not-latent-bottleneck",
+      "status": "RESOLVED_PAPER_ONLY"
+    },
+    "R4-AWARE-REDDIT": {
+      "repair_class": "shopping-specific-action-localization",
+      "status": "RESOLVED_PAPER_ONLY"
+    },
+    "R4-BLIND-CROSSDOMAIN": {
+      "repair_class": "shopping-specific-action-localization",
+      "status": "RESOLVED_PAPER_ONLY"
+    },
+    "R4-BLIND-EVIDENCE-BOUNDARY": {
+      "repair_class": "evidence-localization-not-latent-bottleneck",
+      "status": "RESOLVED_PAPER_ONLY"
+    },
+    "R4-BLIND-EXPOSURE": {
+      "repair_class": "item-exposure-not-residual-exposure",
+      "status": "RESOLVED_PAPER_ONLY"
+    },
+    "R4-BLIND-FORCED-NATIVE": {
+      "repair_class": "forced-native-surface-boundary",
+      "status": "RESOLVED_PAPER_ONLY"
+    },
+    "R4-BLIND-LATENT-BOTTLENECK": {
+      "repair_class": "evidence-localization-not-latent-bottleneck",
+      "status": "PRESERVED_AS_LIMITATION"
+    },
+    "R4-BLIND-NOVELTY": {
+      "repair_class": "novelty-boundary",
+      "status": "RESOLVED_PAPER_ONLY"
+    }
+  },
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "pre_repair_review_binding": {
+    "path": "paper_drafts/c1-manuscript-strengthening-20260825/mock-pc-r4-adversarial-review-20260826.json",
+    "sha256": "0db9ae6b5e8735aba2a49d9c96417b3df93c7ad02c50a714ebb394c4cbe7b824"
+  },
+  "provider_authority": false,
+  "repair_checks": {
+    "causal_mediation_still_forbidden": true,
+    "cbrg_not_reopened": true,
+    "evidence_boundary_not_latent_bottleneck": true,
+    "forced_native_surface_boundary_visible": true,
+    "novelty_boundary_absorbs_current_utilization_work": true,
+    "reddit_boundary_scoped": true,
+    "source_item_exposure_not_residual_exposure": true,
+    "stage_power_noncomparability_visible": true
+  },
+  "repaired_source_bindings": [
+    {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/00_abstract.tex",
+      "sha256": "135fbb6c6014dc3a3bc0b33da9b5bde5f50e8ec28e245a3ebc1faa12f4db54d3"
+    },
+    {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/01_intro.tex",
+      "sha256": "1c9f55b13c88b1f40a2991044d94addf228f1a40ad0748080a487b213a19be4a"
+    },
+    {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/02_mechanism.tex",
+      "sha256": "07bb628c13a81252a6824b634c5a1c3f884ac345462ac6d65d76023d896c033c"
+    },
+    {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/04_variance_protocol.tex",
+      "sha256": "75c52b0552c73cc37eae4ab9f16c936fea2506d1aa69cebfb42e8d3431daabd5"
+    },
+    {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/05_related.tex",
+      "sha256": "f6247cb9a4e986cfe493043d81245a42bf8bcec0ad204835cb55e96082b6b8be"
+    },
+    {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/06_limitations_conclusion.tex",
+      "sha256": "77a80eae82d9150c96590b197429b91cb8ac99eb0dea1b1e1a1ee7eaf4fab8d7"
+    },
+    {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/07_appendix.tex",
+      "sha256": "24d44350b7c7a3ab21bfb08b67425312c5f03e1aeebb8389f2c4fabb9ad5bc5c"
+    },
+    {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/references.bib",
+      "sha256": "ad1bd116809dd5aeac348ebb665c22fec1a540fba53270e02c6efa94f5be5cf9"
+    }
+  ],
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "sensitivity_audit_binding": {
+    "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+    "sha256": "22ffb994b77a32b309da4d0bf945a3b5ad4fe43ce96476b11e5ecb98a1ea9ef0"
+  },
+  "status": "TARGETED_REPAIR_RECHECK_PASS",
+  "submission_authority": false,
+  "summary": {
+    "decision_critical_before": 10,
+    "limitations_preserved": 1,
+    "new_experiments": 0,
+    "new_gpu_scientific_runs": 0,
+    "new_scientific_provider_calls": 0,
+    "paper_only_repairs": 11,
+    "review_objections": 12,
+    "unresolved_decision_critical": 0
+  }
+}

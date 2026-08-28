@@ -98,8 +98,28 @@ For each frozen cell, the confirmatory run estimates paired conditional success 
 If reward-label corruption selects the failure-conditioned memory with probability $q$, the induced between-memory variance equals $q(1-q)\Delta_c^2$ in cell $c$. The exact mean squared conditional effect across all 16 cells is 0.076172. Averaging over cells gives the curve $0.076172q(1-q)$, with value 0.006855 at $q=0.1$, value 0.014282 at $q=0.25$, and value 0.019043 at $q=0.5$. This remains a descriptive plug-in calculation conditional on forced memory exposure; it is not used as the main claim in the revised stage-resolved paper.
 
 \subsection{Native transport audit added after the forced-leverage study}
-The later frozen native-pipeline audit changes the interpretation of the forced matrix. In Shopping, branch-specific source memory is retrieved in 125/172 held-out opportunities after bank expansion, but the mean absolute native terminal success difference is only 0.02083 with permutation $p=0.4289$; 34/36 terminal cells are zero. The corresponding first-action total-variation statistic is 0.06944 with $p=0.5801$, and no frozen state changes its modal first action between reward branches. A post-hoc working-memory branch-shift diagnostic is 0.00335 with $p=0.2052$.
+The later frozen native-pipeline audit changes the interpretation of the forced matrix. In Shopping, the branch-conditioned source-memory item is retrieved in 125/172 held-out opportunities after bank expansion, but the mean absolute native terminal success difference is only 0.02083 with permutation $p=0.4289$; 34/36 terminal cells are zero. The corresponding first-action total-variation statistic is 0.06944 with $p=0.5801$, and no frozen state changes its modal first action between reward branches. A post-hoc working-memory branch-shift diagnostic is 0.00335 with $p=0.2052$.
 
-The cross-domain Reddit audit contains four complete success/failure writes, all of which diverge. Its native terminal mean absolute difference is 0.125 with $p=0.2253$; 6/8 cells are zero and the two nonzero cells have opposite signs. These later measurements are why the main text separates forced capacity from native transport and treats attenuation after exposure as the strongest supported operational boundary rather than a causal mediation result.
+The cross-domain Reddit audit contains four complete success/failure writes, all of which diverge. Its native terminal mean absolute difference is 0.125 with $p=0.2253$; 6/8 cells are zero and the two nonzero cells have opposite signs. These later measurements are why the main text separates forced capacity from native transport and treats first-action uptake as the first unsupported measured Shopping stage after write and source-item exposure, rather than as an identified latent attenuation onset or causal mediation result.
 
 For finite-cell sensitivity, we run a fixed-seed nonparametric bootstrap with 100,000 repetitions, resampling 16 source--future cells with replacement. The percentile 95\% interval for mean absolute effect is $[0.054688,0.273438]$. The corresponding interval for mean squared effect is $[0.010742,0.164062]$, which maps to $[0.002686,0.041016]$ for $V(0.5)$. This bootstrap is descriptive sensitivity to the observed cell composition. The preregistered within-cell permutation test on the 256 confirmatory rollouts supplies the primary significance result.
+
+\subsection{Full alternative-explanation audit}
+\begin{table}[h]
+\centering
+\small
+\caption{Alternative-explanation audit. ``Weakened'' means the frozen evidence makes the explanation incomplete but does not mathematically eliminate every variant of it.}
+\label{tab:alternative-audit}
+\begin{tabular}{@{}p{0.26\linewidth}p{0.23\linewidth}p{0.38\linewidth}@{}}
+\toprule
+Explanation & Frozen evidence & Disposition \\
+\midrule
+No persistent state intervention & 20/20 Shopping and 4/4 Reddit writes diverge; same-mode excess $=0.105$, $p=0.0078$ & Inconsistent with the observed write-stage intervention. \\
+Downstream policy is globally insensitive to memory & Forced terminal $|\Delta|=0.15625$, $p=0.00074$ & Weakened: supplied branch-specific memory has measurable leverage. \\
+Native null is only retrieval absence & 125/172 native Shopping source-item retrieval hits & Weakened: substantial item exposure coexists with weak first-action contrast. \\
+Retrieval hit is a surrogate for policy use & first-action TV $=0.06944$, $p=0.5801$; 0/36 modal changes & Rejected as an evaluation equivalence: item availability is not policy uptake. \\
+Universal directional terminal transport & Shopping 34/36 zero; Reddit 6/8 zero, two nonzero signs opposite & Not supported by the frozen native cells. \\
+Causal mediation has been identified & no per-atom seed binding/noise-floor replication; forced/native surfaces differ & Unresolved and explicitly outside the claim set. \\
+\bottomrule
+\end{tabular}
+\end{table}

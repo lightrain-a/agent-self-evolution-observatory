@@ -1,0 +1,80 @@
+{
+  "adjudication": {
+    "claim_expansion": false,
+    "new_scientific_execution": false,
+    "old_r5_recheck_not_used_as_complete_current_provenance": true,
+    "r5_repair_disposition_retained": true,
+    "scientific_contract_changed": false,
+    "scientific_result_changed": false,
+    "why_r6_is_required": "The sealed R5 PDF/source package predates paper-only source edits and final page-layout repair. R6 re-audits all 35 claims after those edits and seals PDF, source, sensitivity evidence, and claim audit into one deterministic revision."
+  },
+  "artifact_type": "c1-r6-provenance-reconciliation",
+  "authority": {
+    "experiment": false,
+    "gpu": false,
+    "provider": false,
+    "scientific": false,
+    "submission": false
+  },
+  "canonical_r6": {
+    "claim_audit_replay": "35/35 PASS",
+    "claim_audit_sha256": "f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c",
+    "claim_audited_source_bindings": [
+      {
+        "member": "sections/00_abstract.tex",
+        "sha256": "135fbb6c6014dc3a3bc0b33da9b5bde5f50e8ec28e245a3ebc1faa12f4db54d3"
+      },
+      {
+        "member": "sections/01_intro.tex",
+        "sha256": "6613991228d15ed8cda13c63ed57b8d5730b031a6f7ca9b667931a5a060d5e9b"
+      },
+      {
+        "member": "sections/02_mechanism.tex",
+        "sha256": "07bb628c13a81252a6824b634c5a1c3f884ac345462ac6d65d76023d896c033c"
+      },
+      {
+        "member": "sections/03_f0.tex",
+        "sha256": "ac66fba22eb1adaf987469c76bdd7a4d464a3d2c82bada2d0be98024a0b0400f"
+      },
+      {
+        "member": "sections/03a_prompt_control.tex",
+        "sha256": "7306cb33581830ce3bf95a68e139ecb002a5f1866eefe4a073dbc7ac771ec077"
+      },
+      {
+        "member": "sections/04_variance_protocol.tex",
+        "sha256": "1a86739404e827743213a62881b4176b1cb1fab131198ae270b1429136c96737"
+      },
+      {
+        "member": "sections/05_related.tex",
+        "sha256": "cb04b6fd03051609f93f6926139a232bc5dfa9ec3b4d85b6a74ad895bdcfaf5b"
+      },
+      {
+        "member": "sections/06_limitations_conclusion.tex",
+        "sha256": "85c0feb3e8e12fbd14c7f848ddfdca06da490f855ef87d46fad21cf65e89fbae"
+      },
+      {
+        "member": "sections/07_appendix.tex",
+        "sha256": "24d44350b7c7a3ab21bfb08b67425312c5f03e1aeebb8389f2c4fabb9ad5bc5c"
+      }
+    ],
+    "package_manifest_file_sha256": "6d0b0b21be4be841c9d1300145cfeaf06d5502a90cb26e8a60e33b434c9c8a76",
+    "paper_only_revision": true,
+    "pdf_sha256": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70",
+    "sensitivity_sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba",
+    "source_zip_sha256": "1b39471799d0ae3efc41b4e42a5b744efc7d82c9e2efce82eeea80dd7085872b"
+  },
+  "contract_sha256": "c6cd6e451dd5a7a610ef89f7b2e4ce3e54a70fb568889c6304c33e66dc50bd0e",
+  "historical_r5": {
+    "final_claim_audited_revision": false,
+    "historical_bytes_rewritten": false,
+    "pdf_sha256": "b38ed9c4397ad0b475649bbb9c5010304cbc4470d2e3096b28093f107ceb8f96",
+    "repair_disposition_preserved": true,
+    "source_zip_sha256": "05429d5314907c4041ad4cdba5fb8c025cd46f8e5bebe474f57413415ac69c10",
+    "stale_dependency_replayable_in_current_repository": false,
+    "stale_internal_sensitivity_sha256": "22ffb994b77a32b309da4d0bf945a3b5ad4fe43ce96476b11e5ecb98a1ea9ef0",
+    "targeted_repair_recheck_sha256": "4cf54f084d96a9079f46e3008acfd5489b6c478aff67a3421bd69cc5467bb3c5"
+  },
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "schema_version": "1.0",
+  "status": "R5_TO_R6_PROVENANCE_RECONCILED_PASS"
+}
