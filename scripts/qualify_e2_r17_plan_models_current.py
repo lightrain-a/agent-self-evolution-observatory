@@ -87,6 +87,15 @@ def call_once(
                 "incomplete_reason": state.get("incomplete_reason"),
                 "response_id_sha256": sha_text(str(state.get("response_id") or "")),
             }
+            if state.get("status") == "incomplete" and state.get("incomplete_reason") == "length":
+                row.update(
+                    {
+                        "status": "HOLD_OUTPUT_BUDGET",
+                        "resolved_model": state.get("resolved_model"),
+                        "diagnosis": "qualification output budget exhausted before PLAN_OK; no GET recovery attempted",
+                    }
+                )
+                return row
             if not exc.response_id:
                 raise
             polled = client.poll_response(exc.response_id, max_polls=4, interval_seconds=1.0)
@@ -147,9 +156,9 @@ def main() -> int:
     parser.add_argument("--env-file", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--models", nargs="+", choices=REQUESTED_MODELS, default=list(REQUESTED_MODELS))
-    parser.add_argument("--max-output-tokens", type=int, default=64)
+    parser.add_argument("--max-output-tokens", type=int, default=256)
     parser.add_argument("--compatibility-parent", type=Path)
-    parser.add_argument("--thinking", choices=("disabled", "enabled", "none"), default="none")
+    parser.add_argument("--thinking", choices=("disabled", "enabled", "none"), default="disabled")
     args = parser.parse_args()
 
     load_env_file(args.env_file)
