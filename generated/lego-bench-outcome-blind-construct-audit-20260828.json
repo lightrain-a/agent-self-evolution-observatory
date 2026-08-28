@@ -1,0 +1,332 @@
+{
+  "schema_version": "lego-bench-outcome-blind-construct-audit-v1",
+  "status": "CLEAR_FOR_ZERO_AUTHORITY_GENERATOR_REVIEW",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "provider_calls_executed": 0,
+  "gpu_calls_executed": 0,
+  "outcome_exposure": {
+    "per_case_generation_outcomes_read": false,
+    "per_case_evaluator_validity_read": false,
+    "performance_conditioned_selection": false,
+    "published_aggregate_baseline_results_may_be_known": true,
+    "aggregate_results_used_for_construct_selection": false,
+    "consumed_fields": [
+      "instruction",
+      "constraints",
+      "labels.condition_idx",
+      "labels.condition_type"
+    ],
+    "ignored_label_fields": [
+      "condition_reliability",
+      "instructions"
+    ],
+    "label_order_mismatch_rows": [
+      121,
+      127,
+      129
+    ],
+    "label_binding_rule": "condition_idx, matching the official evaluator; list position is never treated as constraint identity"
+  },
+  "source": {
+    "dataset": "LEGO-Eval/LEGO_Bench",
+    "metadata_file": "data/full_data.json",
+    "metadata_sha256": "c4cab948b923b522b9ba4991e167e1c5c7d503786f2b2e5c11a64dab89113c21",
+    "instruction_count": 130,
+    "constraint_count": 1250,
+    "condition_types": [
+      "Floor Layout",
+      "Material Selection",
+      "Object Placement",
+      "Object Selection"
+    ]
+  },
+  "constructs": {
+    "raw_constraint_count": {
+      "definition": "number of released constraints attached to an instruction",
+      "spearman_with_instruction_words": 0.861988,
+      "reject_threshold_abs_rho": 0.7,
+      "disposition": "REJECT_LENGTH_CONFOUNDED",
+      "reason": "constraint count is too tightly coupled to instruction length to serve as the primary structural load variable"
+    },
+    "condition_type_entropy": {
+      "definition": "Shannon entropy in bits over the four released LEGO constraint types",
+      "max_bits": 2.0,
+      "spearman_with_instruction_words": 0.195851,
+      "clear_threshold_abs_rho": 0.35,
+      "condition_type_diversity_spearman_with_instruction_words": 0.438839,
+      "disposition": "CLEAR_FOR_ZERO_AUTHORITY_GENERATOR_REVIEW",
+      "interpretation": "candidate measure of cross-type integration burden; not itself a causal mechanism or scientific result"
+    }
+  },
+  "strict_matched_f0_feasibility": {
+    "selection_uses_outcomes": false,
+    "same_constraint_count": true,
+    "same_analyst_defined_ordinal_metadata_block": true,
+    "max_instruction_word_difference": 10,
+    "min_type_entropy_difference_bits": 0.35,
+    "minimum_pairs_required": 10,
+    "selected_disjoint_pairs": 11,
+    "pairs": [
+      {
+        "low_entropy_index": 103,
+        "high_entropy_index": 113,
+        "constraint_count": 5,
+        "low_words": 49,
+        "high_words": 50,
+        "word_difference": 1,
+        "low_entropy_bits": -0.0,
+        "high_entropy_bits": 1.370951,
+        "entropy_difference_bits": 1.370951,
+        "ordinal_metadata_block": "100-129",
+        "low_type_counts": {
+          "Floor Layout": 5
+        },
+        "high_type_counts": {
+          "Floor Layout": 1,
+          "Object Placement": 1,
+          "Object Selection": 3
+        }
+      },
+      {
+        "low_entropy_index": 102,
+        "high_entropy_index": 107,
+        "constraint_count": 3,
+        "low_words": 32,
+        "high_words": 33,
+        "word_difference": 1,
+        "low_entropy_bits": -0.0,
+        "high_entropy_bits": 0.918296,
+        "entropy_difference_bits": 0.918296,
+        "ordinal_metadata_block": "100-129",
+        "low_type_counts": {
+          "Floor Layout": 3
+        },
+        "high_type_counts": {
+          "Floor Layout": 1,
+          "Material Selection": 2
+        }
+      },
+      {
+        "low_entropy_index": 61,
+        "high_entropy_index": 86,
+        "constraint_count": 12,
+        "low_words": 107,
+        "high_words": 106,
+        "word_difference": 1,
+        "low_entropy_bits": 1.554585,
+        "high_entropy_bits": 1.959148,
+        "entropy_difference_bits": 0.404563,
+        "ordinal_metadata_block": "050-099",
+        "low_type_counts": {
+          "Floor Layout": 5,
+          "Object Placement": 4,
+          "Object Selection": 3
+        },
+        "high_type_counts": {
+          "Floor Layout": 4,
+          "Material Selection": 2,
+          "Object Placement": 3,
+          "Object Selection": 3
+        }
+      },
+      {
+        "low_entropy_index": 58,
+        "high_entropy_index": 53,
+        "constraint_count": 7,
+        "low_words": 82,
+        "high_words": 84,
+        "word_difference": 2,
+        "low_entropy_bits": 1.378783,
+        "high_entropy_bits": 1.950212,
+        "entropy_difference_bits": 0.571429,
+        "ordinal_metadata_block": "050-099",
+        "low_type_counts": {
+          "Floor Layout": 2,
+          "Object Placement": 4,
+          "Object Selection": 1
+        },
+        "high_type_counts": {
+          "Floor Layout": 1,
+          "Material Selection": 2,
+          "Object Placement": 2,
+          "Object Selection": 2
+        }
+      },
+      {
+        "low_entropy_index": 48,
+        "high_entropy_index": 8,
+        "constraint_count": 9,
+        "low_words": 86,
+        "high_words": 84,
+        "word_difference": 2,
+        "low_entropy_bits": 1.446617,
+        "high_entropy_bits": 1.836592,
+        "entropy_difference_bits": 0.389975,
+        "ordinal_metadata_block": "000-049",
+        "low_type_counts": {
+          "Floor Layout": 1,
+          "Material Selection": 1,
+          "Object Placement": 6,
+          "Object Selection": 1
+        },
+        "high_type_counts": {
+          "Floor Layout": 1,
+          "Material Selection": 2,
+          "Object Placement": 4,
+          "Object Selection": 2
+        }
+      },
+      {
+        "low_entropy_index": 100,
+        "high_entropy_index": 108,
+        "constraint_count": 4,
+        "low_words": 36,
+        "high_words": 39,
+        "word_difference": 3,
+        "low_entropy_bits": -0.0,
+        "high_entropy_bits": 0.811278,
+        "entropy_difference_bits": 0.811278,
+        "ordinal_metadata_block": "100-129",
+        "low_type_counts": {
+          "Floor Layout": 4
+        },
+        "high_type_counts": {
+          "Floor Layout": 1,
+          "Material Selection": 3
+        }
+      },
+      {
+        "low_entropy_index": 116,
+        "high_entropy_index": 111,
+        "constraint_count": 5,
+        "low_words": 67,
+        "high_words": 70,
+        "word_difference": 3,
+        "low_entropy_bits": 0.721928,
+        "high_entropy_bits": 1.370951,
+        "entropy_difference_bits": 0.649022,
+        "ordinal_metadata_block": "100-129",
+        "low_type_counts": {
+          "Floor Layout": 1,
+          "Object Placement": 4
+        },
+        "high_type_counts": {
+          "Floor Layout": 1,
+          "Object Placement": 1,
+          "Object Selection": 3
+        }
+      },
+      {
+        "low_entropy_index": 51,
+        "high_entropy_index": 80,
+        "constraint_count": 7,
+        "low_words": 66,
+        "high_words": 62,
+        "word_difference": 4,
+        "low_entropy_bits": 1.378783,
+        "high_entropy_bits": 1.842371,
+        "entropy_difference_bits": 0.463587,
+        "ordinal_metadata_block": "050-099",
+        "low_type_counts": {
+          "Floor Layout": 2,
+          "Object Placement": 4,
+          "Object Selection": 1
+        },
+        "high_type_counts": {
+          "Floor Layout": 1,
+          "Material Selection": 2,
+          "Object Placement": 3,
+          "Object Selection": 1
+        }
+      },
+      {
+        "low_entropy_index": 50,
+        "high_entropy_index": 52,
+        "constraint_count": 7,
+        "low_words": 72,
+        "high_words": 77,
+        "word_difference": 5,
+        "low_entropy_bits": 0.863121,
+        "high_entropy_bits": 1.842371,
+        "entropy_difference_bits": 0.97925,
+        "ordinal_metadata_block": "050-099",
+        "low_type_counts": {
+          "Floor Layout": 2,
+          "Object Placement": 5
+        },
+        "high_type_counts": {
+          "Floor Layout": 1,
+          "Material Selection": 1,
+          "Object Placement": 3,
+          "Object Selection": 2
+        }
+      },
+      {
+        "low_entropy_index": 62,
+        "high_entropy_index": 93,
+        "constraint_count": 6,
+        "low_words": 62,
+        "high_words": 55,
+        "word_difference": 7,
+        "low_entropy_bits": 0.918296,
+        "high_entropy_bits": 1.918296,
+        "entropy_difference_bits": 1.0,
+        "ordinal_metadata_block": "050-099",
+        "low_type_counts": {
+          "Floor Layout": 2,
+          "Object Placement": 4
+        },
+        "high_type_counts": {
+          "Floor Layout": 1,
+          "Material Selection": 2,
+          "Object Placement": 2,
+          "Object Selection": 1
+        }
+      },
+      {
+        "low_entropy_index": 104,
+        "high_entropy_index": 119,
+        "constraint_count": 4,
+        "low_words": 54,
+        "high_words": 44,
+        "word_difference": 10,
+        "low_entropy_bits": -0.0,
+        "high_entropy_bits": 0.811278,
+        "entropy_difference_bits": 0.811278,
+        "ordinal_metadata_block": "100-129",
+        "low_type_counts": {
+          "Floor Layout": 4
+        },
+        "high_type_counts": {
+          "Floor Layout": 1,
+          "Object Placement": 3
+        }
+      }
+    ],
+    "role": "robustness/falsifier panel only; full-sample controlled analysis remains the primary future design if independently authorized"
+  },
+  "full_sample_future_control_set": {
+    "rows": 130,
+    "controls": [
+      "constraint_count",
+      "instruction_word_count",
+      "analyst_defined_ordinal_metadata_block",
+      "four per-type constraint counts",
+      "generator identity"
+    ],
+    "strongest_same_information_null": "additive per-type difficulty model with the same observables and no cross-type interaction term",
+    "candidate_disagreement": "after controlling total load, text length, metadata block, per-type counts, and generator identity, mixed-type integration exhibits a negative interaction/residual associated with higher type entropy"
+  },
+  "authority": {
+    "canonical_generator": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "provider": false,
+    "gpu": false,
+    "scientific": false
+  }
+}

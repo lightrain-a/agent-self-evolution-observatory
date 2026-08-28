@@ -1,0 +1,174 @@
+{
+  "schema_version": "constraint-integration-cross-substrate-proposal-v1",
+  "proposal_id": "CROSS-SUBSTRATE-CONSTRAINT-INTEGRATION-20260828",
+  "status": "ZERO_AUTHORITY_CONSTRUCT_PREFLIGHT_CLEAR_FOR_GENERATOR_REVIEW",
+  "canonical_candidate_id": null,
+  "generator_admission": "PENDING",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "provider_calls_executed": 0,
+  "gpu_calls_executed": 0,
+  "relation_to_port010": {
+    "role": "HYPOTHESIS_SOURCE_ONLY",
+    "source_specific_object_preserved": true,
+    "port010_effective_status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+    "port010_evidence_review": "BLOCK_BAKE_IN",
+    "port010_reopen_effect": false,
+    "vwe_author_outcome_requirement_unchanged": true,
+    "benchmark_replacement_cannot_close_or_reopen_port010": true
+  },
+  "scientific_object": {
+    "title": "Cross-type constraint integration burden in text-guided 3D scene generation",
+    "question": "Holding total constraint count and instruction length fixed, does mixing heterogeneous constraint types create an integration penalty in text-guided 3D scene generation beyond the additive difficulty of the individual constraint types?",
+    "irreducible_object": "A non-additive cross-type integration effect over the four released LEGO-Bench constraint classes. The candidate is not the statement that longer prompts or more constraints are harder; it asks whether simultaneously satisfying heterogeneous Floor Layout, Material Selection, Object Selection, and Object Placement requirements creates a residual failure burden after the same-information additive type-difficulty null is given the identical released metadata.",
+    "exact_ex_ante_prediction": "Within each generator, after controlling instruction word count, total constraint count, analyst-defined metadata block, and flexible additive main effects for the four per-type constraint counts, higher released constraint-type entropy will predict lower official per-constraint Partial Success Rate. The effect must also have the same negative direction in the pre-outcome strict matched-pair panel. If the additive same-information null absorbs the entropy effect, the candidate is falsified.",
+    "strongest_same_information_baseline": "An additive generalized model using the same instruction word count, total constraint count, metadata block, generator identity, and four per-type constraint counts with flexible univariate effects, but no cross-type interaction term.",
+    "prediction_disagreement": "The additive null predicts that performance is explained by the sum of type-specific difficulty and ordinary load/length effects; the candidate predicts an additional negative cross-type integration residual when multiple constraint classes must be satisfied jointly.",
+    "scope_boundary": "This is an independently proposed cross-substrate object. It is not a reproduction of VWE-Bench, not evidence about VWE author outcomes, and not yet a causal mechanism claim."
+  },
+  "substrate": {
+    "primary_benchmark": "LEGO-Bench",
+    "official_evaluator": "LEGO-Eval",
+    "benchmark_unit": "one released natural-language scene instruction with manually decomposed constraints",
+    "instruction_count": 130,
+    "released_constraint_count": 1250,
+    "released_constraint_types": [
+      "Floor Layout",
+      "Material Selection",
+      "Object Placement",
+      "Object Selection"
+    ],
+    "primary_endpoint": "official per-constraint Partial Success Rate",
+    "secondary_endpoint": "Holistic Success Rate",
+    "secondary_endpoint_reason": "Holistic success is a conjunction over all constraints and is therefore expected to have stronger floor/load effects; it cannot be the sole primary endpoint for the integration hypothesis."
+  },
+  "construct_preflight": {
+    "artifact": "generated/lego-bench-outcome-blind-construct-audit-20260828.json",
+    "artifact_sha256": "f8e845bb66d5c3ae897e939bb9877c1ae85e0491955a4d099e45d6f8bd7d868d",
+    "raw_constraint_count": {
+      "spearman_with_instruction_words": 0.861988,
+      "disposition": "REJECT_LENGTH_CONFOUNDED",
+      "may_be_primary_construct": false
+    },
+    "condition_type_entropy": {
+      "definition": "Shannon entropy in bits over the four official released constraint types",
+      "maximum_bits": 2.0,
+      "spearman_with_instruction_words": 0.195851,
+      "preflight_abs_rho_threshold": 0.35,
+      "disposition": "CLEAR_FOR_ZERO_AUTHORITY_GENERATOR_REVIEW",
+      "may_be_considered_by_generator": true,
+      "scientific_result": false
+    },
+    "strict_matched_f0": {
+      "same_total_constraint_count": true,
+      "same_analyst_defined_ordinal_metadata_block": true,
+      "max_instruction_word_difference": 10,
+      "minimum_type_entropy_difference_bits": 0.35,
+      "pre_outcome_disjoint_pair_count": 11,
+      "role": "future bounded robustness/falsifier panel only if independently authorized"
+    },
+    "metadata_parser_note": "Released labels are bound to constraints by condition_idx, matching the official evaluator. Rows 121, 127, and 129 demonstrate that label list order itself is not a valid binding rule."
+  },
+  "outcome_exposure_control": {
+    "per_case_generation_outcomes_read": false,
+    "per_case_evaluator_validity_read": false,
+    "per_case_baseline_scores_read": false,
+    "performance_conditioned_pair_selection": false,
+    "published_aggregate_baseline_results_seen_during_source_survey": true,
+    "published_aggregate_results_used_to_choose_construct_or_pairs": false,
+    "construct_selection_inputs": [
+      "instruction text",
+      "released constraints",
+      "labels.condition_idx",
+      "labels.condition_type"
+    ]
+  },
+  "source_provenance": {
+    "lego_eval_repository": {
+      "url": "https://github.com/gyeomh/LEGO-EVAL",
+      "revision": "35c227c03f5c5434769e00195e0ef2221e22f8b6"
+    },
+    "lego_bench_dataset": {
+      "url": "https://huggingface.co/datasets/LEGO-Eval/LEGO_Bench",
+      "observed_head_revision": "301e409f34db633c4a4ed13fc4149440dffbcbb4",
+      "metadata_path": "data/full_data.json",
+      "metadata_sha256": "c4cab948b923b522b9ba4991e167e1c5c7d503786f2b2e5c11a64dab89113c21",
+      "metadata_transport": "https://hf-mirror.com/datasets/LEGO-Eval/LEGO_Bench/resolve/main/data/full_data.json",
+      "transport_is_authority": false
+    },
+    "mechanism_reference_repositories": [
+      {
+        "name": "InstructScene",
+        "revision": "a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+        "role": "structured scene-graph representation reference; not primary high-load substrate"
+      },
+      {
+        "name": "DiffuScene",
+        "revision": "d78a2890c6b806b61279463b1dbe7701f286a024",
+        "role": "3D-FRONT diffusion reference; text-conditioning regime is not used as the primary complexity-dose substrate"
+      },
+      {
+        "name": "ATISS",
+        "revision": "0909ce0000e52bf1bf300a6a558109f7f8383fd9",
+        "role": "3D-FRONT autoregressive layout reference"
+      },
+      {
+        "name": "LayoutVLM",
+        "revision": "85d06b4cd2478551188a0b4a47cd658c85c41315",
+        "role": "candidate LEGO-Bench generator baseline; execution pinning/dependency audit still required"
+      }
+    ]
+  },
+  "candidate_generator_suite": {
+    "official_lego_comparison_family": [
+      "Holodeck",
+      "LayoutGPT",
+      "I-Design",
+      "LayoutVLM"
+    ],
+    "execution_status": "NOT_AUTHORIZED",
+    "note": "Exact executable revisions, assets, provider/runtime dependencies, and output format compatibility must be frozen by a later substrate preflight. Naming a published comparison method does not authorize its execution."
+  },
+  "future_analysis_contract_if_authorized": {
+    "primary_population": "all 130 released LEGO-Bench instructions for each independently qualified generator",
+    "primary_model": "per-constraint success modeled with generator identity, instruction word count, total constraint count, analyst-defined metadata block, and flexible additive main effects for each of the four per-type counts; test a pre-registered cross-type interaction/entropy term",
+    "robustness_panel": "11 disjoint metadata-only matched pairs frozen before per-case outcomes, exact on total constraint count and metadata block, within 10 instruction words, with at least 0.35-bit type-entropy contrast",
+    "direction_lock": "higher cross-type entropy -> lower Partial Success Rate after controls",
+    "no_outcome_rematching": true,
+    "no_threshold_retuning_after_outcomes": true,
+    "no_generator_dropping_after_outcomes": true
+  },
+  "falsifiers": [
+    "The same-information additive per-type model absorbs the cross-type entropy/interaction effect.",
+    "The pre-outcome strict matched-pair contrast is null or reverses direction without a preregistered explanation.",
+    "The apparent entropy effect disappears after frozen load/length/metadata-block controls.",
+    "The official evaluator cannot provide stable per-constraint outcomes for the qualified generator outputs without changing the scientific object."
+  ],
+  "method_intervention": {
+    "status": "DEFERRED_UNTIL_PROBLEM_GATE",
+    "candidate_only": "flat instruction versus information-equivalent typed/structured constraint representation",
+    "forbidden_now": "Do not design, tune, or run the intervention before formal Generator/ProblemGate admission."
+  },
+  "next_gate": {
+    "name": "FORMAL_GENERATOR_ADMISSION_AND_INDEPENDENT_REDUCTION_REVIEW",
+    "required": true,
+    "requirements": [
+      "bind this proposal to a new canonical generator-run candidate identity rather than reusing PORT-010",
+      "independently test reduction to ordinary length/load difficulty and additive per-type difficulty",
+      "freeze executable baseline revisions and evaluator compatibility before any provider/GPU execution",
+      "preserve the 11-pair pre-outcome panel without outcome-based replacement"
+    ]
+  },
+  "authority": {
+    "canonical_generator": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "local_validation": false,
+    "p0": false,
+    "provider": false,
+    "gpu": false,
+    "scientific": false
+  }
+}

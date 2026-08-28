@@ -1,3 +1,10 @@
+## 2026-08-28 · Outcome-blind cross-substrate constraint-integration proposal
+
+- Preserved the VWE-specific PORT-010 `HOLD_EVIDENCE_REVIEW_BLOCKED / BLOCK_BAKE_IN` object and staged a separate zero-authority LEGO-Bench proposal instead of treating benchmark substitution as a scientific reopen or completion.
+- Rejected raw released constraint count as the primary complexity dose before reading any per-case generator/evaluator outcomes because it is strongly confounded with instruction length (Spearman `rho=0.861988`). The surviving candidate construct is Shannon entropy over the four official LEGO constraint types (`rho=0.195851` with instruction length), interpreted only as a candidate cross-type integration burden pending Generator/ProblemGate review.
+- Froze an outcome-independent robustness panel of 11 disjoint pairs matched exactly on total constraint count and an analyst-defined metadata-order block, within 10 instruction words, with at least 0.35-bit type-entropy contrast. Full-sample future analysis must use the same-information additive per-type difficulty model as the primary null; no outcome rematching, threshold retuning, generator dropping, provider execution, or GPU execution is authorized by this preflight.
+- Hardened the metadata parser against a real release-schema trap: LEGO label list order is not always constraint order (rows 121, 127, and 129). Constraint types are therefore bound only through the released `condition_idx`, matching the official evaluator, and extra label metadata are ignored by the construct audit.
+
 ## 2026-08-28 · PORT-010 full first-party release-surface coverage
 
 - Closed the F18/PORT-010 release-watch coverage gap without reopening science: the independently verified Hugging Face `usail-hkust/VWE-Bench` dataset surface is now content-addressed at `1f085b54166a8253d7a42854e2b1c7e1fe8dcceb` alongside the GitHub VibeWorlding-Gym source.
