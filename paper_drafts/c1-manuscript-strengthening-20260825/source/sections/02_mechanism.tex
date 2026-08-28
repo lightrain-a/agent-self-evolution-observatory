@@ -13,11 +13,11 @@ where $g$ is the released memory writer and $S/F$ selects its success- or failur
 $W>0$ establishes that the frozen writer produced different persistent states. It does \emph{not} establish that every textual atom is a pure causal effect of the reward bit, because decoding randomness is not separately noise-calibrated at the atom level. We therefore use the same-mode wording control in Section~\ref{sec:prompt-control} to test the stronger alternative that ordinary prompt wording alone explains the observed write divergence.
 
 \subsection{Native transport is a sequence of distinct observables}
-For a held-out future query $q$, define native retrieval exposure
+For a held-out future query $q$, define native retrieval exposure at the source-item level,
 \[
- E_r(q)=\mathbf{1}[\operatorname{Retrieve}(q;\mathcal{M}^{(r)})\neq\varnothing].
+ E_r(q)=\mathbf{1}[m^{(r)}\in\operatorname{Retrieve}(q;\mathcal{M}^{(r)})].
 \]
-Exposure is an availability variable: it says that branch-conditioned persistent state reached the policy context. It does not say that the policy used the branch-specific part of that state.
+Exposure is an availability variable: it says that the branch-conditioned source-memory item reached the policy context. It does not identify which treatment-specific content inside that item was read or used by the policy.
 
 We therefore measure the first downstream decision boundary separately. Let $p_r^{(1)}(\cdot\mid q)$ be the first-action distribution under branch $r$. The action-level contrast is
 \[
@@ -46,7 +46,7 @@ Because native retrieval is bypassed, $L_{\mathrm{forced}}$ is not inserted betw
 
 \subsection{An ordinal stage-evidence ladder}
 \label{sec:evidence-ladder}
-The central measurement problem is that $W$, $E$, $U$, and $O$ cannot be compared on one numerical scale. We therefore localize attenuation with an \emph{ordinal evidence ladder} rather than a post-hoc transport coefficient. Let the ordered native stages be
+The central measurement problem is that $W$, $E$, $U$, and $O$ cannot be compared on one numerical scale, and their frozen tests do not have matched sample units or statistical power. We therefore localize an \emph{evidence boundary} with an ordinal ladder rather than a post-hoc transport coefficient or a latent bottleneck estimator. Let the ordered native stages be
 \[
   s_1=\text{write},\quad s_2=\text{retrieval exposure},\quad s_3=\text{first-action uptake},\quad s_4=\text{terminal outcome}.
 \]
@@ -54,7 +54,7 @@ For each stage we preserve its native evidence semantics. A stage may be \textsc
 \[
   b^*=\min\{j:\;s_j\text{ is not supported/observed while }s_1,\ldots,s_{j-1}\text{ are supported/observed}\}.
 \]
-This is an ordering rule, not a ratio: no cross-stage units are divided, normalized, or interpreted as mediation mass.
+This is an ordering rule, not a ratio: no cross-stage units are divided, normalized, or interpreted as mediation mass. Because the stage tests are not power-matched, $b^*$ means ``first unsupported measured stage under the frozen tests,'' not ``the stage where the true causal effect first becomes small.''
 
 The forced fixed-evidence arm is evaluated separately as a \emph{side capacity condition}. It can weaken the global-insensitivity explanation, but because it bypasses native retrieval it cannot make an otherwise unsupported native stage pass. This prevents the positive forced endpoint from being inserted into the native chain merely because it is statistically strong.
 
@@ -66,7 +66,7 @@ The same ladder can be read as an alternative-explanation audit:
 \textbf{A4: exposure is uptake} &\Rightarrow \text{observed }E\text{ should be accompanied by supported }U,\\
 \textbf{A5: universal directional transport} &\Rightarrow O\text{ should be broadly nonzero with stable sign.}
 \end{align*}
-In our frozen evidence, write is \textsc{Supported}, native exposure is \textsc{Observed}, first-action uptake is \textsc{Not-Supported}, and terminal transport is sparse and sign-heterogeneous. Hence $b^*=s_3$: the strongest supported operational attenuation boundary is \textbf{after exposure and before stable first-action uptake}. The positive forced side control further weakens a global-insensitivity account without changing $b^*$.
+In our frozen evidence, write is \textsc{Supported}, native source-item exposure is \textsc{Observed}, first-action uptake is \textsc{Not-Supported}, and terminal transport is sparse and sign-heterogeneous. Hence $b^*=s_3$: \textbf{first-action uptake is the first unsupported measured native stage after write and source-item exposure have been established}. The positive forced side control further weakens a global-insensitivity account without changing $b^*$; it does not identify a native latent attenuation onset.
 
 This is still not an identified mediator coefficient. A causal mediation statement would additionally require compatible intervention surfaces and a noise/seed design that isolates each branch-specific atom. We do not have that evidence and do not make that claim.
 

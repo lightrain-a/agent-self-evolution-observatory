@@ -1,4 +1,4 @@
-\begin{thebibliography}{13}
+\begin{thebibliography}{10}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -9,17 +9,9 @@
 Mohammad Asadolahi, Amir Amini, Samira Talebi, Amirfarhad Farhadi, and Azadeh Zamanifar.
 \newblock Memory reward inflation in self-improving llm agents, 2026.
 
-\bibitem[Lambert et~al.(2024)Lambert, Pyatkin, Morrison, et~al.]{lambert2024rewardbench}
-Nathan Lambert, Valentina Pyatkin, Jacob Morrison, et~al.
-\newblock Rewardbench: Evaluating reward models for language modeling, 2024.
-
-\bibitem[Li et~al.(2026{\natexlab{a}})Li, Bao, Yu, Chen, Zhang, and Zhang]{li2026attrimem}
-Qinfeng Li, Yuntai Bao, Xinyan Yu, Hongze Chen, Wenqi Zhang, and Xuhong Zhang.
-\newblock Attrimem: Attribution-guided process feedback for agent memory learning, 2026{\natexlab{a}}.
-
-\bibitem[Li et~al.(2026{\natexlab{b}})Li, Wang, Zhang, Huang, Zhang, Liu, Yan, and Xu]{li2026qcr}
+\bibitem[Li et~al.(2026)Li, Wang, Zhang, Huang, Zhang, Liu, Yan, and Xu]{li2026qcr}
 Yifei Li, Heng Wang, Lingling Zhang, Muye Huang, Xinyu Zhang, Jiashuai Liu, Hang Yan, and Rongman Xu.
-\newblock Beyond retrieval: Query-conditioned reuse of long-horizon agent trajectories, 2026{\natexlab{b}}.
+\newblock Beyond retrieval: Query-conditioned reuse of long-horizon agent trajectories, 2026.
 
 \bibitem[Lin et~al.(2026)Lin, Hao, Fu, Cui, Chen, Li, Li, and Xiong]{lin2026memorylifecycle}
 Zehao Lin, Xixuan Hao, Renyu Fu, Shaobo Cui, Kai Chen, Chunyu Li, Zhiyu Li, and Feiyu Xiong.
@@ -30,15 +22,9 @@ Siru Ouyang, Jun Yan, I-Hung Hsu, Yanfei Chen, Ke~Jiang, Zifeng Wang, Rujun Han,
 \newblock Reasoningbank: Scaling agent self-evolving with reasoning memory.
 \newblock In \emph{International Conference on Learning Representations}, 2026.
 
-\bibitem[Shinn et~al.(2023)Shinn, Cassano, Berman, et~al.]{shinn2023reflexion}
-Noah Shinn, Federico Cassano, Edward Berman, et~al.
-\newblock Reflexion: Language agents with verbal reinforcement learning.
-\newblock In \emph{Advances in Neural Information Processing Systems}, 2023.
-
-\bibitem[Tan et~al.(2025)Tan, Zhuang, Montgomery, et~al.]{tan2025judgebench}
-Sijun Tan, Siyuan Zhuang, Kyle Montgomery, et~al.
-\newblock Judgebench: A benchmark for evaluating llm-based judges.
-\newblock In \emph{International Conference on Learning Representations}, 2025.
+\bibitem[Shen et~al.(2026)Shen, Li, Zhou, and Hu]{shen2026mem2actbench}
+Yiting Shen, Kun Li, Wei Zhou, and Songlin Hu.
+\newblock Mem2actbench: A benchmark for evaluating long-term memory utilization in task-oriented autonomous agents, 2026.
 
 \bibitem[Wang et~al.(2026)Wang, Hu, Yang, Pan, Li, and Guo]{wang2026planrewardbench}
 Jiaxuan Wang, Yulan Hu, Wenjin Yang, Zheng Pan, Xin Li, and Lan-Zhe Guo.
@@ -48,10 +34,6 @@ Jiaxuan Wang, Yulan Hu, Wenjin Yang, Zheng Pan, Xin Li, and Lan-Zhe Guo.
 Yu~Wang, Ryuichi Takanobu, Zhiqi Liang, Yuzhen Mao, Yuanzhe Hu, Julian McAuley, and Xiaojian Wu.
 \newblock Mem-$\alpha$: Learning memory construction via reinforcement learning, 2025.
 
-\bibitem[Wang et~al.(2024)Wang, Mao, Fried, and Neubig]{wang2024awm}
-Zora~Zhiruo Wang, Jiayuan Mao, Daniel Fried, and Graham Neubig.
-\newblock Agent workflow memory, 2024.
-
 \bibitem[Yang et~al.(2026)Yang, Chen, Zhuang, et~al.]{yang2026romerl}
 Yi~Yang, Zhennan Chen, Yihong Zhuang, et~al.
 \newblock Romerl: Balancing feedback coverage and the memory-reward trap in self-evolving agent memory via reduced-order utility states, 2026.
@@ -59,5 +41,9 @@ Yi~Yang, Zhennan Chen, Yihong Zhuang, et~al.
 \bibitem[Ye et~al.(2026)Ye, Li, Pruksachatkun, Zhang, and Wu]{ye2026fragility}
 Qinyuan Ye, Yu~Li, Yada Pruksachatkun, Jiaxin Zhang, and Chien-Sheng Wu.
 \newblock On the fragility of self-improving agents: Variance, task order, and underspecification, 2026.
+
+\bibitem[Yuan et~al.(2026)Yuan, Su, and Yao]{yuan2026retrievalutilization}
+Boqin Yuan, Yue Su, and Kun Yao.
+\newblock Diagnosing retrieval vs. utilization bottlenecks in llm agent memory, 2026.
 
 \end{thebibliography}

@@ -1,0 +1,290 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "c1-r4-internal-structured-adversarial-review",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "contract_sha256": "c6cd6e451dd5a7a610ef89f7b2e4ce3e54a70fb568889c6304c33e66dc50bd0e",
+  "manuscript_sha256": "038eba101755125932891ee085e9ecade46bfcf9752e5c54e3aeef49936e88e5",
+  "reviewer_independence": "INTERNAL_STRUCTURED_ADVERSARIAL_AUDIT_NOT_EXTERNAL_MODEL_REVIEW",
+  "blind_manuscript_receipt": {
+    "schema_version": "1.0",
+    "receipt_type": "mock-pc-review",
+    "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+    "contract_sha256": "c6cd6e451dd5a7a610ef89f7b2e4ce3e54a70fb568889c6304c33e66dc50bd0e",
+    "mode": "BLIND_MANUSCRIPT",
+    "objections": [
+      {
+        "objection_id": "R4-BLIND-NOVELTY",
+        "category": "novelty",
+        "text": "The manuscript risks presenting stage decomposition or retrieval-versus-use as the contribution even though recent memory evaluation work already studies active utilization and post-retrieval reuse. The irreducible residual must be the same-trajectory reward-conditioned writer intervention plus the diagnostic ambiguity across coarse views.",
+        "decision_critical": true,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C5",
+          "C8",
+          "C9"
+        ]
+      },
+      {
+        "objection_id": "R4-BLIND-EVIDENCE-BOUNDARY",
+        "category": "statistical-identifiability",
+        "text": "The first stage whose primary test is not supported is not necessarily the latent point where transport attenuates: stage metrics, sample units, and test sensitivities differ. Call b* an evidence-localization boundary unless matched-power interventions identify a causal bottleneck.",
+        "decision_critical": true,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C8"
+        ]
+      },
+      {
+        "objection_id": "R4-BLIND-EXPOSURE",
+        "category": "measurement-semantics",
+        "text": "The 125/172 retrieval statistic establishes retrieval of the branch-conditioned source-memory item, not exposure to or use of the reward-specific residual inside that item. Wording that says branch-specific content was exposed overstates the measured variable.",
+        "decision_critical": true,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C8"
+        ]
+      },
+      {
+        "objection_id": "R4-BLIND-FORCED-NATIVE",
+        "category": "intervention-comparability",
+        "text": "Forced fixed-evidence injection and native reuse are different intervention surfaces. The forced positive result can show capacity under supplied context, but it cannot rule out context-dependent native downstream insensitivity or be treated as a missing native stage.",
+        "decision_critical": true,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C7",
+          "C8"
+        ]
+      },
+      {
+        "objection_id": "R4-BLIND-CROSSDOMAIN",
+        "category": "generalization",
+        "text": "Reddit replicates write-versus-terminal separation only; it does not measure Shopping-style native exposure and first-action uptake. The exposure-to-uptake evidence boundary is therefore Shopping-specific on current evidence.",
+        "decision_critical": true,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C9"
+        ]
+      },
+      {
+        "objection_id": "R4-BLIND-LATENT-BOTTLENECK",
+        "category": "claim-boundary",
+        "text": "A claim that the true causal bottleneck is at action uptake would require matched stage interventions/power or mediation evidence not in the frozen contract. Preserve this as a limitation rather than proposing an experiment implicitly.",
+        "decision_critical": false,
+        "evidence_state": "REQUIRES_NEW_CLAIM",
+        "claim_ids": [
+          "C8"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "objection_id": "R4-BLIND-NOVELTY",
+        "action_class": "NARRATIVE_REPAIR",
+        "reason": "Existing admissible evidence should be made legible in the manuscript.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "objection_id": "R4-BLIND-EVIDENCE-BOUNDARY",
+        "action_class": "NARRATIVE_REPAIR",
+        "reason": "Existing admissible evidence should be made legible in the manuscript.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "objection_id": "R4-BLIND-EXPOSURE",
+        "action_class": "NARRATIVE_REPAIR",
+        "reason": "Existing admissible evidence should be made legible in the manuscript.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "objection_id": "R4-BLIND-FORCED-NATIVE",
+        "action_class": "NARRATIVE_REPAIR",
+        "reason": "Existing admissible evidence should be made legible in the manuscript.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "objection_id": "R4-BLIND-CROSSDOMAIN",
+        "action_class": "NARRATIVE_REPAIR",
+        "reason": "Existing admissible evidence should be made legible in the manuscript.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "objection_id": "R4-BLIND-LATENT-BOTTLENECK",
+        "action_class": "PRESERVE_LIMITATION",
+        "reason": "Answering this objection would expand the frozen scientific contract; preserve the limitation unless science is formally reopened.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      }
+    ],
+    "review_sha256": "92b1f8721180a89faa6493bff74f69b19b0162e9c61696cb1bd0d3be9d729e2b",
+    "summary": {
+      "objections": 6,
+      "decision_critical": 5,
+      "targeted_experiment_proposals": 0,
+      "claim_expansion_requests_preserved_as_limitations": 1
+    },
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "gpu_authority": false
+  },
+  "artifact_aware_receipt": {
+    "schema_version": "1.0",
+    "receipt_type": "mock-pc-review",
+    "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+    "contract_sha256": "c6cd6e451dd5a7a610ef89f7b2e4ce3e54a70fb568889c6304c33e66dc50bd0e",
+    "mode": "ARTIFACT_AWARE",
+    "objections": [
+      {
+        "objection_id": "R4-AWARE-COLLISION",
+        "category": "novelty",
+        "text": "Artifact inspection confirms the contribution is not generic lifecycle decomposition. Related Work should explicitly absorb QCR, Mem2ActBench, and retrieval-versus-utilization diagnostics, then state the residual as controlled same-trajectory writer intervention plus coarsening ambiguity on the same frozen update.",
+        "decision_critical": true,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C5",
+          "C8",
+          "C9"
+        ]
+      },
+      {
+        "objection_id": "R4-AWARE-POWER",
+        "category": "statistical-identifiability",
+        "text": "The stage-evidence artifacts preserve heterogeneous evidence semantics but do not equalize statistical power across stages. This supports first-unsupported-evidence localization, not an identified latent attenuation onset.",
+        "decision_critical": true,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C8"
+        ]
+      },
+      {
+        "objection_id": "R4-AWARE-ITEM-VS-RESIDUAL",
+        "category": "measurement-semantics",
+        "text": "Artifact evidence binds retrieval events at the source-memory-item level; no qualified semantic residual exposure variable exists. Manuscript language must distinguish item exposure from treatment-specific residual exposure.",
+        "decision_critical": true,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C8"
+        ]
+      },
+      {
+        "objection_id": "R4-AWARE-FORCED",
+        "category": "intervention-comparability",
+        "text": "The forced matrix is well receipted but deliberately bypasses native retrieval/context composition. Its admissible inference is downstream capacity under supplied evidence, not a direct estimate of native transport or proof that native policy would respond if it attended.",
+        "decision_critical": true,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C7"
+        ]
+      },
+      {
+        "objection_id": "R4-AWARE-REDDIT",
+        "category": "generalization",
+        "text": "The Reddit artifact supports cross-domain write/terminal separation and sign heterogeneity, but contains no matching native exposure/first-action ladder. Keep the action-uptake boundary scoped to Shopping.",
+        "decision_critical": true,
+        "evidence_state": "EXISTING_EVIDENCE",
+        "claim_ids": [
+          "C9"
+        ]
+      },
+      {
+        "objection_id": "R4-AWARE-CBRG",
+        "category": "claim-boundary",
+        "text": "CBRG stopped before behavioral method evaluation; artifact-aware review finds this boundary correctly represented and it must remain outside the paper contribution.",
+        "decision_critical": false,
+        "evidence_state": "FALSE_PREMISE_WITH_EVIDENCE",
+        "claim_ids": [
+          "C5"
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "objection_id": "R4-AWARE-COLLISION",
+        "action_class": "NARRATIVE_REPAIR",
+        "reason": "Existing admissible evidence should be made legible in the manuscript.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "objection_id": "R4-AWARE-POWER",
+        "action_class": "NARRATIVE_REPAIR",
+        "reason": "Existing admissible evidence should be made legible in the manuscript.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "objection_id": "R4-AWARE-ITEM-VS-RESIDUAL",
+        "action_class": "NARRATIVE_REPAIR",
+        "reason": "Existing admissible evidence should be made legible in the manuscript.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "objection_id": "R4-AWARE-FORCED",
+        "action_class": "NARRATIVE_REPAIR",
+        "reason": "Existing admissible evidence should be made legible in the manuscript.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "objection_id": "R4-AWARE-REDDIT",
+        "action_class": "NARRATIVE_REPAIR",
+        "reason": "Existing admissible evidence should be made legible in the manuscript.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      },
+      {
+        "objection_id": "R4-AWARE-CBRG",
+        "action_class": "PREBUTTAL",
+        "reason": "The objection can be answered from already-admissible evidence without changing the claim.",
+        "claim_expansion_authorized": false,
+        "execution_authorized": false,
+        "scientific_authority": false
+      }
+    ],
+    "review_sha256": "269c2d88acd9e03c287e7501b530f444f4a518cd4e6b8acde895cc31839c0d04",
+    "summary": {
+      "objections": 6,
+      "decision_critical": 5,
+      "targeted_experiment_proposals": 0,
+      "claim_expansion_requests_preserved_as_limitations": 0
+    },
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "gpu_authority": false
+  },
+  "overall_pre_repair_disposition": "TARGETED_REPAIR_REQUIRED",
+  "decision_critical_repair_classes": [
+    "novelty-boundary",
+    "evidence-localization-not-latent-bottleneck",
+    "item-exposure-not-residual-exposure",
+    "forced-native-surface-boundary",
+    "Shopping-specific-action-localization"
+  ],
+  "external_primary_collision_refs": [
+    "arXiv:2608.12847",
+    "arXiv:2601.19935",
+    "arXiv:2603.02473"
+  ],
+  "provider_calls_added": 0,
+  "gpu_runs_added": 0,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "claim_expansion_authority": false,
+  "submission_authority": false
+}
