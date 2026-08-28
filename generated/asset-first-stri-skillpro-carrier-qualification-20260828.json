@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "analysis": "recent-flagship-primary-carrier-qualification-skillpro",
+  "date": "2026-08-28",
+  "purpose": "Decide whether Skill-Pro can replace Skill-SP as the primary recent peer-reviewed carrier for STRI's representation-invariant evolution question, without promoting a released-code specialization into a paper-level universal claim.",
+  "carrier_eligibility_rule": {
+    "required": [
+      "2026 flagship peer-reviewed venue",
+      "first-party public implementation",
+      "persistent evolving artifact with explicit identity",
+      "identity participates in an observable learning/evolution seam",
+      "exact-refinement intervention can hold semantic content and evidence fixed",
+      "real downstream benchmark exists in the first-party method",
+      "source pin and replay seam can be frozen before model-level expansion"
+    ],
+    "not_sufficient_alone": [
+      "venue prestige",
+      "recency",
+      "a convenient hard threshold",
+      "selection-only clone sensitivity",
+      "a source-code witness without downstream propagation"
+    ],
+    "fail_closed": true
+  },
+  "carrier": {
+    "name": "Skill-Pro",
+    "paper": "Skill-Pro: Learning Reusable Skills from Experience via Non-Parametric PPO for LLM Agents",
+    "venue": "ICML 2026 Spotlight",
+    "official_repository": "https://github.com/Miracle1207/Skill-Pro",
+    "arxiv": "2602.01869",
+    "role_if_qualified": "primary recent flagship lifecycle/evolution carrier; Skill-SP remains a deterministic mechanistic specialization rather than the paper root"
+  },
+  "source_pin": {
+    "commit": "3be7a9be2d4c024d132efe394d537404eba7e4c8",
+    "archive_sha256": "33c4ba593595cca2bceec28e2c3c1426a158ffe29987f139c6bcc55d4e158bd6",
+    "source_sha256": {
+      "Skills/skill_evolution.py": "134916242f5e7d04c2028478d1f2b46fcd3847905f008ee28a35cedd2e6cc73a",
+      "Skills/skill_pool.py": "243e4108a040dd56cdba7999b64673d670571f015e26afc953325677ed6de461",
+      "run.py": "90f418d6d2934d4743cac6a73c7f92abcfd6ff8b3502b505f598469ceaac7182",
+      "data_structures.py": "c010655a8ea3ec4e56ce114e2cf92c91810426b4eac960ecf28a00564b922b10"
+    },
+    "materialization": "PASS_PINNED_COMMIT_ARCHIVE",
+    "note": "An initial git clone failed on the remote host due to TLS termination; a codeload archive was then fetched and independently pinned to the current main commit returned by git ls-remote. The commit-specific archive matches the earlier main snapshot on all load-bearing files."
+  },
+  "qualified_control_seams": {
+    "identity_schema": "Skill.name is an explicit persistent field; Experience.skill stores skill-name attribution.",
+    "identity_local_evidence": "SkillEvolution stores Experience records in experience_buffer keyed by Skill name.",
+    "released_readiness_specialization": "SkillEvolution defaults to threshold=6 and marks a Skill ready only when len(experience_buffer[sk.name]) >= threshold.",
+    "ordering": "run.py executes Skill Evolution before SkillPool.maintain; native semantic deduplication therefore occurs after the readiness seam.",
+    "native_semantic_dedup": "SkillPool._semantic_dedup_inplace clusters semantic duplicates at cosine threshold 0.95 and keeps a representative, but the audited maintenance path does not pre-merge SkillEvolution evidence buffers.",
+    "selection_surface": "Skill identities are also enumerated/selected separately; this surface must be isolated from the lifecycle experiment rather than mixed into P0/P1."
+  },
+  "p0_evidence": {
+    "independent_projection": {
+      "artifact": "generated/asset-first-stri-skillpro-p0-projection-result-20260828.json",
+      "sha256": "3ae8d112eef93488ac7ab711c8a644a4f69dec5eb38a01e0e9dfd87b98a5fc91",
+      "status": "PASS",
+      "key_result": "At M=6, canonical 6 is ready; exact 3+3 has q=1 and p=0.5, so the semantic class is evidence-sufficient while no identity reaches the released readiness gate. Pre-gate reunion restores readiness; identity-only late dedup does not."
+    },
+    "author_scheduler_probe": {
+      "artifact": "generated/asset-first-stri-skillpro-author-p0b-result-20260828.json",
+      "sha256": "51574d647bcda9f7279a7a4cf5f7c06354e5be6f36630cee334477507d9dc3f3",
+      "status": "PASS_ZERO_PROVIDER_ZERO_GPU",
+      "method_executed": "unchanged pinned SkillEvolution.run_skill_evolution_with_verification scheduler",
+      "stub_boundary": "only evolve and _compute_skill_logprobs were overridden, both after the author's identity distribution and readiness branch",
+      "key_result": "Canonical and ID-placebo reach post-readiness hooks; exact 3+3 returns before either hook; pre-gate quotient reaches the hooks; identity-only reunion after the first local gate still does not."
+    }
+  },
+  "operator_specialization": {
+    "semantic_total": "N = sum_i n_i",
+    "released_threshold": "M = 6",
+    "semantic_progress": "q = N/M",
+    "peak_identity_progress": "p = max_i n_i/M",
+    "quotient_readiness": "1[N >= M]",
+    "native_any_identity_readiness": "1[max_i n_i >= M]",
+    "fragmented_regime": "q >= 1 > p",
+    "canonical_witness": "6",
+    "exact_refinement_witness": "3+3",
+    "scope_warning": "M=6 and q/p are a released-code specialization of the current pinned implementation. They are not asserted as a theorem about the Skill-Pro paper or self-evolving agents in general."
+  },
+  "publication_relevance_judgment": {
+    "why_stronger_than_skill_sp_as_primary": [
+      "peer-reviewed ICML 2026 Spotlight rather than an arXiv-only release",
+      "skill evolution is the paper's central scientific object rather than a peripheral controller detail",
+      "the first-party implementation exposes both persistent skill state and an identity-local evolution seam",
+      "the first-party method has real task environments suitable for downstream propagation tests"
+    ],
+    "why_not_yet_sufficient_for_manuscript_recenter": [
+      "P0 establishes scheduler reachability, not candidate quality or PPO-Gate outcome",
+      "no held-out task-performance consequence has yet been established",
+      "natural prevalence of exact-equivalence fragmentation has not been measured",
+      "cross-system replication on another recent flagship carrier is still required for a broad generality claim"
+    ]
+  },
+  "decision": "QUALIFY_SKILLPRO_AS_PRIMARY_RECENT_FLAGSHIP_CARRIER_FOR_P1_P2_DESIGN",
+  "manuscript_status": "DO_NOT_YET_REPLACE_LOAD_BEARING_EMPIRICAL_STORY",
+  "next_required_evidence": [
+    "P1: frozen real first-party trajectories, identical across attribution arms, through semantic-gradient candidate generation and PPO Gate",
+    "P2: preregistered held-out behavioral replay from the resulting frozen skill pools",
+    "cross-carrier: at least one additional 2026 flagship representation family or a representation-aware positive control"
+  ],
+  "scientific_boundary": {
+    "claim_expansion": false,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "behavioral_claim_authorized": false,
+    "natural_prevalence_claim_authorized": false,
+    "cross_system_generality_authorized": false,
+    "manuscript_primary_carrier_replacement_authorized": false,
+    "p1_model_execution_authorized_by_this_receipt": false,
+    "p2_gpu_execution_authorized_by_this_receipt": false
+  }
+}

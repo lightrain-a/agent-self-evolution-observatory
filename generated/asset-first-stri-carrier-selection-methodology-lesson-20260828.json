@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "lesson_type": "DISCOVERY_LESSON",
+  "date": "2026-08-28",
+  "title": "Choose the scientific primitive first; use recent flagship carriers as qualified realizations",
+  "trigger": "The prior STRI manuscript had a broad representation-invariance theory but a load-bearing lifecycle witness centered on arXiv-only Skill-SP, creating a mismatch between claim breadth and carrier relevance.",
+  "lesson": {
+    "core_rule": "For papers that diagnose or intervene on prior agent methods, define the shared computational primitive and scientific invariant before choosing a carrier. The main empirical carrier should preferably be a recent peer-reviewed flagship realization with public code and a real downstream benchmark; a niche or arXiv-only system may remain as a mechanistic microscope but should not carry broad audience relevance alone.",
+    "carrier_gate": [
+      "recent flagship venue, preferably current-year frontier plus an older mature anchor",
+      "first-party public code",
+      "persistent artifact with observable identity",
+      "single-variable intervention seam",
+      "real downstream endpoint",
+      "source/runtime can be pinned before outcome-bearing execution"
+    ],
+    "operator_rule": "Do not transplant one carrier's formula to another. Derive the representation-sensitive sufficient state from each carrier's actual operator, then test the shared invariant across operator-specific specializations.",
+    "dedup_rule": "Semantic duplicate detection is not equivalent to merge-sufficient state. If evidence is partitioned or irreversibly compressed before semantic reunion, a later deduplication step can recognize equivalence while still being unable to recover the missed learning/evolution decision.",
+    "evidence_ladder": "source audit -> zero-provider deterministic operator witness -> unchanged author scheduler reachability -> real frozen trajectories/model-dependent evolution -> held-out behavioral propagation -> cross-carrier replication",
+    "claim_rule": "A released-code threshold specialization supports mechanism existence only. Broad self-improvement claims require task-level propagation and at least one independent recent flagship representation family or a theory-predicted positive control."
+  },
+  "skillpro_instantiation": {
+    "carrier": "Skill-Pro / ICML 2026 Spotlight",
+    "released_code_witness": "M=6 identity-local experience buffer, canonical 6 versus exact 3+3",
+    "coordinates": "q=N/M, p=max_i n_i/M; evolution-fragmented regime q>=1>p",
+    "native_ordering_observation": "Skill evolution executes before semantic maintenance/dedup in the pinned release",
+    "current_status": "qualified for P1/P2 design after zero-provider P0 and author-scheduler P0b; not yet sufficient to recenter the manuscript"
+  },
+  "anti_patterns": [
+    "choose a carrier only because its threshold makes the theorem easy",
+    "choose a famous carrier whose identity cannot be intervened on cleanly",
+    "relabel metadata/catalog stress as real task-performance evidence",
+    "change carrier, task, alias count, or threshold after seeing outcome-bearing results",
+    "treat a late semantic dedup as proof that earlier identity-local credit is representation-invariant"
+  ],
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "claim_expansion": false
+}

@@ -1,0 +1,183 @@
+{
+  "all_checks_pass": true,
+  "arms": {
+    "canonical": {
+      "actions": [
+        "REFINE_CANDIDATE_ADDED"
+      ],
+      "active_identities": [
+        "skill_c"
+      ],
+      "added_candidate_count": 1,
+      "buffer_counts_after_call": {
+        "skill_c": 0
+      },
+      "evolution_log_count": 1,
+      "evolved_parents": [
+        "skill_c"
+      ],
+      "identity_attribution": [
+        "skill_c",
+        "skill_c",
+        "skill_c",
+        "skill_c",
+        "skill_c",
+        "skill_c"
+      ],
+      "probe_evolve_calls": 1,
+      "probe_logprob_calls": 2,
+      "semantic_evidence_sha256": "78794a8bb3a8eac418b95ba2a20cafb5fcb0ce22f3fa94dadcf879e1add5e23f"
+    },
+    "exact_split_3_plus_3": {
+      "actions": [],
+      "active_identities": [
+        "skill_c_a",
+        "skill_c_b"
+      ],
+      "added_candidate_count": 0,
+      "buffer_counts_after_call": {
+        "skill_c_a": 3,
+        "skill_c_b": 3
+      },
+      "evolution_log_count": 0,
+      "evolved_parents": [],
+      "identity_attribution": [
+        "skill_c_a",
+        "skill_c_a",
+        "skill_c_a",
+        "skill_c_b",
+        "skill_c_b",
+        "skill_c_b"
+      ],
+      "probe_evolve_calls": 0,
+      "probe_logprob_calls": 0,
+      "semantic_evidence_sha256": "78794a8bb3a8eac418b95ba2a20cafb5fcb0ce22f3fa94dadcf879e1add5e23f"
+    },
+    "id_placebo": {
+      "actions": [
+        "REFINE_CANDIDATE_ADDED"
+      ],
+      "active_identities": [
+        "skill_c_renamed"
+      ],
+      "added_candidate_count": 1,
+      "buffer_counts_after_call": {
+        "skill_c_renamed": 0
+      },
+      "evolution_log_count": 1,
+      "evolved_parents": [
+        "skill_c_renamed"
+      ],
+      "identity_attribution": [
+        "skill_c_renamed",
+        "skill_c_renamed",
+        "skill_c_renamed",
+        "skill_c_renamed",
+        "skill_c_renamed",
+        "skill_c_renamed"
+      ],
+      "probe_evolve_calls": 1,
+      "probe_logprob_calls": 2,
+      "semantic_evidence_sha256": "78794a8bb3a8eac418b95ba2a20cafb5fcb0ce22f3fa94dadcf879e1add5e23f"
+    },
+    "late_identity_only_dedup": {
+      "buffer_counts_after_identity_only_dedup": {
+        "skill_c_a": 3,
+        "skill_c_b": 3
+      },
+      "buffer_counts_before_dedup": {
+        "skill_c_a": 3,
+        "skill_c_b": 3
+      },
+      "first_gate_log_count": 0,
+      "probe_evolve_calls": 0,
+      "probe_logprob_calls": 0,
+      "second_gate_after_identity_only_dedup_log_count": 0,
+      "semantic_evidence_sha256": "78794a8bb3a8eac418b95ba2a20cafb5fcb0ce22f3fa94dadcf879e1add5e23f",
+      "surviving_active_identities": [
+        "skill_c_a"
+      ]
+    },
+    "pre_gate_quotient": {
+      "actions": [
+        "REFINE_CANDIDATE_ADDED"
+      ],
+      "active_identities": [
+        "skill_c_a",
+        "skill_c_b"
+      ],
+      "added_candidate_count": 1,
+      "buffer_counts_after_call": {
+        "skill_c_a": 0
+      },
+      "evolution_log_count": 1,
+      "evolved_parents": [
+        "skill_c_a"
+      ],
+      "identity_attribution": [
+        "skill_c_a",
+        "skill_c_a",
+        "skill_c_a",
+        "skill_c_a",
+        "skill_c_a",
+        "skill_c_a"
+      ],
+      "probe_evolve_calls": 1,
+      "probe_logprob_calls": 2,
+      "semantic_evidence_sha256": "78794a8bb3a8eac418b95ba2a20cafb5fcb0ce22f3fa94dadcf879e1add5e23f"
+    }
+  },
+  "carrier": {
+    "archive_sha256": "33c4ba593595cca2bceec28e2c3c1426a158ffe29987f139c6bcc55d4e158bd6",
+    "commit": "3be7a9be2d4c024d132efe394d537404eba7e4c8",
+    "name": "Skill-Pro",
+    "official_repository": "https://github.com/Miracle1207/Skill-Pro",
+    "source_sha256": {
+      "Skills/skill_evolution.py": "134916242f5e7d04c2028478d1f2b46fcd3847905f008ee28a35cedd2e6cc73a",
+      "Skills/skill_pool.py": "243e4108a040dd56cdba7999b64673d670571f015e26afc953325677ed6de461",
+      "data_structures.py": "c010655a8ea3ec4e56ce114e2cf92c91810426b4eac960ecf28a00564b922b10",
+      "run.py": "90f418d6d2934d4743cac6a73c7f92abcfd6ff8b3502b505f598469ceaac7182"
+    },
+    "venue": "ICML 2026 Spotlight"
+  },
+  "checks": {
+    "canonical_reaches_post_readiness_hooks": true,
+    "exact_split_returns_before_post_readiness_hooks": true,
+    "gpu_hidden_for_probe": true,
+    "id_placebo_reaches_post_readiness_hooks": true,
+    "late_identity_only_dedup_still_returns_before_post_readiness_hooks": true,
+    "pre_gate_quotient_restores_author_scheduler_reachability": true,
+    "same_semantic_evidence_across_nonzero_arms": true,
+    "source_hashes_match_frozen_pin": true
+  },
+  "date": "2026-08-28",
+  "execution_contract": {
+    "author_method_executed_unchanged": "Skills.skill_evolution.SkillEvolution.run_skill_evolution_with_verification",
+    "candidate_generation_semantics": "stub only; no candidate-quality or PPO claim is authorized",
+    "gpu_visible": false,
+    "model_calls": 0,
+    "override_location": "post-readiness only: both hooks are reached after the author's Experience.skill distribution and len(buffered_exps) >= threshold branch",
+    "provider_calls": 0,
+    "subclass_overrides": [
+      "evolve",
+      "_compute_skill_logprobs"
+    ]
+  },
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-AUTHOR-SCHEDULER-P0B-20260828",
+  "paper_id": "STRI",
+  "qualified_conclusion": "The unchanged pinned author scheduler itself distinguishes 6 from exact 3+3 identity attribution before any model-dependent candidate-generation hook is reached. Pre-gate semantic reunion restores scheduler reachability; identity-only reunion after the first local gate does not.",
+  "schema_version": "1.0",
+  "scientific_boundary": {
+    "candidate_quality_claim": false,
+    "claim_expansion": false,
+    "cross_system_generality_claim": false,
+    "downstream_behavior_claim": false,
+    "natural_prevalence_claim": false,
+    "new_gpu_runs": 0,
+    "new_model_calls": 0,
+    "p1_authority": false,
+    "p2_authority": false,
+    "ppo_gate_claim": false
+  },
+  "stage": "RECENT_FLAGSHIP_CARRIER_AUTHOR_SCHEDULER_ZERO_PROVIDER_P0B"
+}

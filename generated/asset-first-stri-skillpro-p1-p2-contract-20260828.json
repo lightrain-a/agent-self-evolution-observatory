@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-P1-P2-20260828",
+  "stage": "RECENT_FLAGSHIP_CARRIER_MODEL_AND_BEHAVIOR_REOPEN_CONTRACT",
+  "date": "2026-08-28",
+  "purpose": "Freeze the next Skill-Pro evidence ladder before any new model/provider or downstream task execution: real first-party trajectories -> identity-attribution intervention -> SkillEvolution/PPO Gate -> frozen-pool behavioral replay.",
+  "registration_timing": "Frozen after the zero-provider P0/P0b scheduler witness and before any P1/P2 model or task outcome exists. P0 itself is not relabeled as preregistered.",
+  "preconditions": {
+    "carrier_qualification": "generated/asset-first-stri-skillpro-carrier-qualification-20260828.json",
+    "p0_projection": "generated/asset-first-stri-skillpro-p0-projection-result-20260828.json",
+    "p0_author_scheduler": "generated/asset-first-stri-skillpro-author-p0b-result-20260828.json",
+    "required_status": "all P0/P0b checks PASS on pinned Skill-Pro commit 3be7a9be2d4c024d132efe394d537404eba7e4c8"
+  },
+  "frozen_source": {
+    "repository": "https://github.com/Miracle1207/Skill-Pro",
+    "commit": "3be7a9be2d4c024d132efe394d537404eba7e4c8",
+    "archive_sha256": "33c4ba593595cca2bceec28e2c3c1426a158ffe29987f139c6bcc55d4e158bd6",
+    "no_source_update_after_outcomes": true
+  },
+  "p1a_real_evidence_collection": {
+    "environment": "Mastermind-v0",
+    "environment_role": "fast first-party behavioral substrate; ALFWorld is reserved for confirmatory expansion, not substituted post hoc if Mastermind is negative",
+    "global_seed": 42,
+    "episode_count": 6,
+    "episode_selection": "the first six valid episode attempts in one frozen collection stream after set_seed(42); runtime-invalid attempts invalidate the collection rather than being replaced based on reward",
+    "focal_seed_skill_selection": {
+      "eligible_seed_names_from_pinned_source": [
+        "StructuredCoT",
+        "ReActDecision",
+        "HypothesisElimination",
+        "SelfConsistencyCheck",
+        "ExploreExploitArbitration",
+        "StrategicPlanning"
+      ],
+      "outcome_blind_rule": "select the skill name with lexicographically smallest SHA256(name)",
+      "selected": "HypothesisElimination",
+      "selected_name_sha256": "12172716e321c8844f6ffb356ce6101dfe4b713d109acc1b4f81c42cc0bde953"
+    },
+    "selection_isolation": "force the frozen focal skill semantic content during evidence collection; do not allow native skill-selection multiplicity to contaminate the credit/evolution experiment",
+    "evidence_freeze": [
+      "persist all six Experience records regardless of reward",
+      "hash reward/trajectory/env/transitions while excluding only the later identity-attribution field",
+      "no trajectory editing, filtering, success balancing, or task replacement after outcomes",
+      "all P1 attribution arms consume the same frozen six semantic Experience records"
+    ],
+    "primary_collection_gate": "all six episodes must be runtime-valid and produce nonempty transition traces; otherwise P1 stops as collection-invalid"
+  },
+  "p1b_identity_attribution_intervention": {
+    "released_threshold": 6,
+    "arms": [
+      {
+        "name": "A_canonical",
+        "representation": "one canonical HypothesisElimination identity",
+        "evidence_attribution": "6",
+        "prediction": "reaches candidate-generation/PPO path"
+      },
+      {
+        "name": "B_id_placebo",
+        "representation": "one exact-semantic renamed identity",
+        "evidence_attribution": "6",
+        "prediction": "reaches candidate-generation/PPO path; controls literal name change without multiplicity"
+      },
+      {
+        "name": "C_exact_split",
+        "representation": "two exact-semantic identities differing only in symbolic name",
+        "evidence_attribution": "3+3",
+        "prediction": "returns before candidate-generation/PPO path despite semantic N=6"
+      },
+      {
+        "name": "D_pre_gate_quotient",
+        "representation": "reunite the exact class to the original canonical identity before the released readiness gate",
+        "evidence_attribution": "6 to canonical representative",
+        "prediction": "restores the same scheduler path as A without duplicating evidence"
+      },
+      {
+        "name": "E_late_identity_dedup",
+        "representation": "3+3 first passes the identity-local readiness seam, then one alias is removed without merging evidence buffers",
+        "evidence_attribution": "3+3",
+        "prediction": "does not retroactively restore the missed evolution opportunity"
+      }
+    ],
+    "exact_semantic_equivalence_contract": [
+      "initiation identical",
+      "policy steps identical",
+      "termination identical",
+      "only Skill.name may differ in exact-split/placebo identities",
+      "same frozen semantic Experience hash across A-D and the pre-dedup portion of E",
+      "no full-credit broadcast or evidence duplication"
+    ],
+    "primary_endpoints": [
+      "scheduler reaches candidate-generation hook",
+      "number of candidates actually generated",
+      "PPO-Gate candidate J score and accept/reject decision",
+      "resulting Skill Pool content hash"
+    ],
+    "mechanism_endpoints": [
+      "per-identity experience_buffer counts immediately before readiness",
+      "q=N/6 and p=max_i(n_i)/6",
+      "identity chosen as parent",
+      "whether native maintenance/dedup occurs only after the missed readiness opportunity"
+    ],
+    "no_threshold_tuning_after_outcomes": true,
+    "no_alias_count_tuning_after_outcomes": true
+  },
+  "p1_stochasticity_contract": {
+    "author_sampling_policy": "do not silently change Skill-Pro generation temperature/top-p merely to obtain deterministic or favorable outcomes",
+    "minimum_repeats_if_model_generation_is_stochastic": 3,
+    "paired_seed_rule": "canonical and quotient repetitions must share the same model/harness seed and evidence; split is expected to make zero post-readiness model calls",
+    "report": [
+      "all individual candidate outputs",
+      "all J scores",
+      "acceptance frequency across repeats",
+      "best-worst and mean/std where applicable"
+    ]
+  },
+  "p1_decision_gate": {
+    "pass_for_behavioral_replay": "A and D both reach the model-dependent evolution path on the identical frozen evidence, C reaches neither candidate-generation nor PPO hooks, and at least one paired A/D run produces a valid frozen resulting pool suitable for replay.",
+    "negative_or_inconclusive": "If C unexpectedly reaches the path, evidence hashes differ, or A/D runtime validity cannot be established, stop P2 and diagnose rather than changing threshold, aliases, tasks, or focal skill.",
+    "candidate_quality_not_required_for_mechanism": "P0/P1 can establish representation-dependent evolution opportunity even if generated candidates are rejected by PPO; however P2 requires a real resulting-pool difference and cannot be claimed from scheduler reachability alone."
+  },
+  "p2_behavioral_replay": {
+    "authorized_only_after_p1_gate": true,
+    "primary_environment": "Mastermind-v0 held-out episode stream",
+    "heldout_task_rule": "freeze the next task/episode stream independently of P1 candidate quality and rewards before comparing resulting pools",
+    "conditions": [
+      "canonical resulting pool",
+      "exact-split resulting pool",
+      "pre-gate-quotient resulting pool"
+    ],
+    "minimum_independent_repeats": 3,
+    "primary_behavioral_endpoint": "episode return / task success as defined by the first-party environment",
+    "secondary_endpoints": [
+      "steps to completion",
+      "skill selection/use frequency",
+      "prompt-token overhead",
+      "pool size and semantic-class inventory"
+    ],
+    "required_interpretation": "A behavioral difference must be mediated by the frozen P1 pool difference; aggregate task success alone cannot identify representation fragmentation.",
+    "confirmatory_expansion_if_positive": "pre-register a separate ALFWorld replication; do not substitute ALFWorld for a negative Mastermind result"
+  },
+  "cross_carrier_requirement": {
+    "needed_for_broad_paper_claim": true,
+    "candidate_pool": [
+      "SAGE / ACL 2026 Long",
+      "ACE / ICLR 2026",
+      "MCE / ICML 2026",
+      "Memora / ICML 2026 representation-aware positive control"
+    ],
+    "rule": "choose the next carrier from source-level eligibility and operator fit, not from whether Skill-Pro produces a favorable P2 effect"
+  },
+  "persistence": {
+    "per_run_receipt_required": true,
+    "raw_trajectory_hash_required": true,
+    "raw_candidate_output_required": true,
+    "pool_before_and_after_hash_required": true,
+    "refuse_overwrite_existing_run": true
+  },
+  "scientific_boundary": {
+    "p0_released_code_specialization_is_not_paper_level_universality": true,
+    "natural_prevalence_not_tested": true,
+    "cross_system_generality_not_tested": true,
+    "model_call_authority": false,
+    "gpu_authority": false,
+    "p1_execution_authority": false,
+    "p2_execution_authority": false,
+    "claim_expansion": false
+  },
+  "next_authority_action": "Run a separate runtime/model preflight and independent contract review. Only an explicit follow-on receipt may authorize P1 model calls; P2 remains conditional on the frozen P1 gate."
+}

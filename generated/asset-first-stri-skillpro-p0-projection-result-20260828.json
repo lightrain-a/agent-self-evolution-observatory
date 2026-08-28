@@ -1,0 +1,1236 @@
+{
+  "all_checks_pass": true,
+  "carrier": {
+    "archive_sha256": "33c4ba593595cca2bceec28e2c3c1426a158ffe29987f139c6bcc55d4e158bd6",
+    "commit": "3be7a9be2d4c024d132efe394d537404eba7e4c8",
+    "name": "Skill-Pro",
+    "official_repository": "https://github.com/Miracle1207/Skill-Pro",
+    "paper": "Skill-Pro: Learning Reusable Skills from Experience via Non-Parametric PPO for LLM Agents",
+    "venue": "ICML 2026 Spotlight"
+  },
+  "checks": {
+    "canonical_reaches_identity_local_gate": true,
+    "exact_split_has_no_ready_identity": true,
+    "exact_split_is_q1_p05_fragmented": true,
+    "exact_split_semantically_ready": true,
+    "id_placebo_reaches_identity_local_gate": true,
+    "late_identity_only_dedup_does_not_restore_readiness": true,
+    "pinned_source_contract_matches_projection": true,
+    "pinned_source_hashes_match": true,
+    "pre_gate_quotient_restores_readiness": true,
+    "same_semantic_evidence_across_nonzero_arms": true
+  },
+  "date": "2026-08-28",
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-P0-20260828",
+  "frozen_operator_projection": {
+    "arms": {
+      "canonical": {
+        "active_identities": [
+          "skill_c"
+        ],
+        "coordinates": {
+          "M": 6,
+          "N": 6,
+          "counts": [
+            6
+          ],
+          "native_any_identity_ready": true,
+          "p": 1.0,
+          "q": 1.0,
+          "quotient_ready": true,
+          "regime": "resolved"
+        },
+        "ready_identities": [
+          "skill_c"
+        ],
+        "rows": [
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e00",
+            "reward": 1.0,
+            "skill": "skill_c",
+            "trajectory": "frozen-semantic-trajectory-00",
+            "transitions": [
+              {
+                "action": "action-00",
+                "state": "state-00"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e01",
+            "reward": 1.0,
+            "skill": "skill_c",
+            "trajectory": "frozen-semantic-trajectory-01",
+            "transitions": [
+              {
+                "action": "action-01",
+                "state": "state-01"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e02",
+            "reward": 1.0,
+            "skill": "skill_c",
+            "trajectory": "frozen-semantic-trajectory-02",
+            "transitions": [
+              {
+                "action": "action-02",
+                "state": "state-02"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e03",
+            "reward": 1.0,
+            "skill": "skill_c",
+            "trajectory": "frozen-semantic-trajectory-03",
+            "transitions": [
+              {
+                "action": "action-03",
+                "state": "state-03"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e04",
+            "reward": 1.0,
+            "skill": "skill_c",
+            "trajectory": "frozen-semantic-trajectory-04",
+            "transitions": [
+              {
+                "action": "action-04",
+                "state": "state-04"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e05",
+            "reward": 1.0,
+            "skill": "skill_c",
+            "trajectory": "frozen-semantic-trajectory-05",
+            "transitions": [
+              {
+                "action": "action-05",
+                "state": "state-05"
+              }
+            ]
+          }
+        ],
+        "semantic_evidence_sha256": "78794a8bb3a8eac418b95ba2a20cafb5fcb0ce22f3fa94dadcf879e1add5e23f",
+        "semantic_ready": true
+      },
+      "exact_split": {
+        "active_identities": [
+          "skill_c_a",
+          "skill_c_b"
+        ],
+        "coordinates": {
+          "M": 6,
+          "N": 6,
+          "counts": [
+            3,
+            3
+          ],
+          "native_any_identity_ready": false,
+          "p": 0.5,
+          "q": 1.0,
+          "quotient_ready": true,
+          "regime": "evolution_fragmented"
+        },
+        "ready_identities": [],
+        "rows": [
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e00",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-00",
+            "transitions": [
+              {
+                "action": "action-00",
+                "state": "state-00"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e01",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-01",
+            "transitions": [
+              {
+                "action": "action-01",
+                "state": "state-01"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e02",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-02",
+            "transitions": [
+              {
+                "action": "action-02",
+                "state": "state-02"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e03",
+            "reward": 1.0,
+            "skill": "skill_c_b",
+            "trajectory": "frozen-semantic-trajectory-03",
+            "transitions": [
+              {
+                "action": "action-03",
+                "state": "state-03"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e04",
+            "reward": 1.0,
+            "skill": "skill_c_b",
+            "trajectory": "frozen-semantic-trajectory-04",
+            "transitions": [
+              {
+                "action": "action-04",
+                "state": "state-04"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e05",
+            "reward": 1.0,
+            "skill": "skill_c_b",
+            "trajectory": "frozen-semantic-trajectory-05",
+            "transitions": [
+              {
+                "action": "action-05",
+                "state": "state-05"
+              }
+            ]
+          }
+        ],
+        "semantic_evidence_sha256": "78794a8bb3a8eac418b95ba2a20cafb5fcb0ce22f3fa94dadcf879e1add5e23f",
+        "semantic_ready": true
+      },
+      "id_placebo": {
+        "active_identities": [
+          "skill_c_renamed"
+        ],
+        "coordinates": {
+          "M": 6,
+          "N": 6,
+          "counts": [
+            6
+          ],
+          "native_any_identity_ready": true,
+          "p": 1.0,
+          "q": 1.0,
+          "quotient_ready": true,
+          "regime": "resolved"
+        },
+        "ready_identities": [
+          "skill_c_renamed"
+        ],
+        "rows": [
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e00",
+            "reward": 1.0,
+            "skill": "skill_c_renamed",
+            "trajectory": "frozen-semantic-trajectory-00",
+            "transitions": [
+              {
+                "action": "action-00",
+                "state": "state-00"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e01",
+            "reward": 1.0,
+            "skill": "skill_c_renamed",
+            "trajectory": "frozen-semantic-trajectory-01",
+            "transitions": [
+              {
+                "action": "action-01",
+                "state": "state-01"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e02",
+            "reward": 1.0,
+            "skill": "skill_c_renamed",
+            "trajectory": "frozen-semantic-trajectory-02",
+            "transitions": [
+              {
+                "action": "action-02",
+                "state": "state-02"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e03",
+            "reward": 1.0,
+            "skill": "skill_c_renamed",
+            "trajectory": "frozen-semantic-trajectory-03",
+            "transitions": [
+              {
+                "action": "action-03",
+                "state": "state-03"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e04",
+            "reward": 1.0,
+            "skill": "skill_c_renamed",
+            "trajectory": "frozen-semantic-trajectory-04",
+            "transitions": [
+              {
+                "action": "action-04",
+                "state": "state-04"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e05",
+            "reward": 1.0,
+            "skill": "skill_c_renamed",
+            "trajectory": "frozen-semantic-trajectory-05",
+            "transitions": [
+              {
+                "action": "action-05",
+                "state": "state-05"
+              }
+            ]
+          }
+        ],
+        "semantic_evidence_sha256": "78794a8bb3a8eac418b95ba2a20cafb5fcb0ce22f3fa94dadcf879e1add5e23f",
+        "semantic_ready": true
+      },
+      "late_dedup": {
+        "active_identities_after_dedup": [
+          "skill_c_a"
+        ],
+        "active_identities_before_dedup": [
+          "skill_c_a",
+          "skill_c_b"
+        ],
+        "control_semantics": "negative control: delete an alias after the local gate without merging its evidence buffer",
+        "coordinates": {
+          "M": 6,
+          "N": 6,
+          "counts": [
+            3,
+            3
+          ],
+          "native_any_identity_ready": false,
+          "p": 0.5,
+          "q": 1.0,
+          "quotient_ready": true,
+          "regime": "evolution_fragmented"
+        },
+        "ready_after_identity_only_dedup": [],
+        "ready_before_dedup": [],
+        "rows": [
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e00",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-00",
+            "transitions": [
+              {
+                "action": "action-00",
+                "state": "state-00"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e01",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-01",
+            "transitions": [
+              {
+                "action": "action-01",
+                "state": "state-01"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e02",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-02",
+            "transitions": [
+              {
+                "action": "action-02",
+                "state": "state-02"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e03",
+            "reward": 1.0,
+            "skill": "skill_c_b",
+            "trajectory": "frozen-semantic-trajectory-03",
+            "transitions": [
+              {
+                "action": "action-03",
+                "state": "state-03"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e04",
+            "reward": 1.0,
+            "skill": "skill_c_b",
+            "trajectory": "frozen-semantic-trajectory-04",
+            "transitions": [
+              {
+                "action": "action-04",
+                "state": "state-04"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e05",
+            "reward": 1.0,
+            "skill": "skill_c_b",
+            "trajectory": "frozen-semantic-trajectory-05",
+            "transitions": [
+              {
+                "action": "action-05",
+                "state": "state-05"
+              }
+            ]
+          }
+        ],
+        "semantic_evidence_sha256": "78794a8bb3a8eac418b95ba2a20cafb5fcb0ce22f3fa94dadcf879e1add5e23f",
+        "semantic_ready": true
+      },
+      "pre_gate_quotient": {
+        "active_identities": [
+          "skill_c_a",
+          "skill_c_b"
+        ],
+        "control_semantics": "design control: semantic evidence is reunited before the released identity-local threshold",
+        "coordinates": {
+          "M": 6,
+          "N": 6,
+          "counts": [
+            6,
+            0
+          ],
+          "native_any_identity_ready": true,
+          "p": 1.0,
+          "q": 1.0,
+          "quotient_ready": true,
+          "regime": "resolved"
+        },
+        "ready_identities": [
+          "skill_c_a"
+        ],
+        "rows": [
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e00",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-00",
+            "transitions": [
+              {
+                "action": "action-00",
+                "state": "state-00"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e01",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-01",
+            "transitions": [
+              {
+                "action": "action-01",
+                "state": "state-01"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e02",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-02",
+            "transitions": [
+              {
+                "action": "action-02",
+                "state": "state-02"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e03",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-03",
+            "transitions": [
+              {
+                "action": "action-03",
+                "state": "state-03"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e04",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-04",
+            "transitions": [
+              {
+                "action": "action-04",
+                "state": "state-04"
+              }
+            ]
+          },
+          {
+            "env_name": "stri-skillpro-p0",
+            "evidence_id": "e05",
+            "reward": 1.0,
+            "skill": "skill_c_a",
+            "trajectory": "frozen-semantic-trajectory-05",
+            "transitions": [
+              {
+                "action": "action-05",
+                "state": "state-05"
+              }
+            ]
+          }
+        ],
+        "semantic_evidence_sha256": "78794a8bb3a8eac418b95ba2a20cafb5fcb0ce22f3fa94dadcf879e1add5e23f",
+        "semantic_ready": true
+      },
+      "zero_evidence": {
+        "active_identities": [
+          "skill_c_a",
+          "skill_c_b"
+        ],
+        "coordinates": {
+          "M": 6,
+          "N": 0,
+          "counts": [
+            0,
+            0
+          ],
+          "native_any_identity_ready": false,
+          "p": 0.0,
+          "q": 0.0,
+          "quotient_ready": false,
+          "regime": "under_evidenced"
+        },
+        "ready_identities": [],
+        "rows": [],
+        "semantic_evidence_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "semantic_ready": false
+      }
+    },
+    "frozen_semantic_evidence_sha256": "78794a8bb3a8eac418b95ba2a20cafb5fcb0ce22f3fa94dadcf879e1add5e23f",
+    "threshold": 6
+  },
+  "interpretation": {
+    "not_yet_qualified": "This P0 is a pinned-source static contract audit plus an independent deterministic projection. It is not yet an import-and-execute run of the author's SkillEvolution class, does not execute semantic-gradient candidate generation or the PPO Gate, and does not establish downstream task-performance effects.",
+    "paper_level_boundary": "Treat M=6 and q/p as a released-code specialization, not as a universal property of the Skill-Pro paper or of self-evolving agents generally.",
+    "qualified": "The pinned released source partitions Experience records by Skill name before applying an identity-local readiness threshold. Under the frozen six-record witness, 6 is ready while 3+3 is semantically sufficient but neither identity is ready; pre-gate reunion restores readiness and identity-only late dedup does not."
+  },
+  "next_gate": {
+    "p0b": "Run the unchanged pinned SkillEvolution scheduler in an author-compatible dependency environment, with model-dependent calls stubbed only after the readiness branch, and verify the same arm reachability.",
+    "p1": "Only after P0b passes, freeze real first-party trajectories and run candidate generation plus PPO Gate on matched canonical/split/quotient attribution.",
+    "p2": "Only after P1 passes, evaluate frozen resulting skill pools on a preregistered held-out ALFWorld or Mastermind task set with repeated runs."
+  },
+  "paper_id": "STRI",
+  "partition_geometry": {
+    "cells": [
+      {
+        "N": 0,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 1,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 2,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 3,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 4,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 5,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 6,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 7,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 8,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 9,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 10,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 11,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 12,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 13,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 14,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 15,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 16,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 17,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 18,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 19,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 20,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 21,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 22,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 23,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 24,
+        "evolution_fragmented": 0,
+        "k": 1,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 0,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 1,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 2
+      },
+      {
+        "N": 2,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 3
+      },
+      {
+        "N": 3,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 4
+      },
+      {
+        "N": 4,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 5
+      },
+      {
+        "N": 5,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 6
+      },
+      {
+        "N": 6,
+        "evolution_fragmented": 5,
+        "k": 2,
+        "ordered_weak_compositions": 7
+      },
+      {
+        "N": 7,
+        "evolution_fragmented": 4,
+        "k": 2,
+        "ordered_weak_compositions": 8
+      },
+      {
+        "N": 8,
+        "evolution_fragmented": 3,
+        "k": 2,
+        "ordered_weak_compositions": 9
+      },
+      {
+        "N": 9,
+        "evolution_fragmented": 2,
+        "k": 2,
+        "ordered_weak_compositions": 10
+      },
+      {
+        "N": 10,
+        "evolution_fragmented": 1,
+        "k": 2,
+        "ordered_weak_compositions": 11
+      },
+      {
+        "N": 11,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 12
+      },
+      {
+        "N": 12,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 13
+      },
+      {
+        "N": 13,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 14
+      },
+      {
+        "N": 14,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 15
+      },
+      {
+        "N": 15,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 16
+      },
+      {
+        "N": 16,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 17
+      },
+      {
+        "N": 17,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 18
+      },
+      {
+        "N": 18,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 19
+      },
+      {
+        "N": 19,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 20
+      },
+      {
+        "N": 20,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 21
+      },
+      {
+        "N": 21,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 22
+      },
+      {
+        "N": 22,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 23
+      },
+      {
+        "N": 23,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 24
+      },
+      {
+        "N": 24,
+        "evolution_fragmented": 0,
+        "k": 2,
+        "ordered_weak_compositions": 25
+      },
+      {
+        "N": 0,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 1,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 3
+      },
+      {
+        "N": 2,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 6
+      },
+      {
+        "N": 3,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 10
+      },
+      {
+        "N": 4,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 15
+      },
+      {
+        "N": 5,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 21
+      },
+      {
+        "N": 6,
+        "evolution_fragmented": 25,
+        "k": 3,
+        "ordered_weak_compositions": 28
+      },
+      {
+        "N": 7,
+        "evolution_fragmented": 27,
+        "k": 3,
+        "ordered_weak_compositions": 36
+      },
+      {
+        "N": 8,
+        "evolution_fragmented": 27,
+        "k": 3,
+        "ordered_weak_compositions": 45
+      },
+      {
+        "N": 9,
+        "evolution_fragmented": 25,
+        "k": 3,
+        "ordered_weak_compositions": 55
+      },
+      {
+        "N": 10,
+        "evolution_fragmented": 21,
+        "k": 3,
+        "ordered_weak_compositions": 66
+      },
+      {
+        "N": 11,
+        "evolution_fragmented": 15,
+        "k": 3,
+        "ordered_weak_compositions": 78
+      },
+      {
+        "N": 12,
+        "evolution_fragmented": 10,
+        "k": 3,
+        "ordered_weak_compositions": 91
+      },
+      {
+        "N": 13,
+        "evolution_fragmented": 6,
+        "k": 3,
+        "ordered_weak_compositions": 105
+      },
+      {
+        "N": 14,
+        "evolution_fragmented": 3,
+        "k": 3,
+        "ordered_weak_compositions": 120
+      },
+      {
+        "N": 15,
+        "evolution_fragmented": 1,
+        "k": 3,
+        "ordered_weak_compositions": 136
+      },
+      {
+        "N": 16,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 153
+      },
+      {
+        "N": 17,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 171
+      },
+      {
+        "N": 18,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 190
+      },
+      {
+        "N": 19,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 210
+      },
+      {
+        "N": 20,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 231
+      },
+      {
+        "N": 21,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 253
+      },
+      {
+        "N": 22,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 276
+      },
+      {
+        "N": 23,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 300
+      },
+      {
+        "N": 24,
+        "evolution_fragmented": 0,
+        "k": 3,
+        "ordered_weak_compositions": 325
+      },
+      {
+        "N": 0,
+        "evolution_fragmented": 0,
+        "k": 4,
+        "ordered_weak_compositions": 1
+      },
+      {
+        "N": 1,
+        "evolution_fragmented": 0,
+        "k": 4,
+        "ordered_weak_compositions": 4
+      },
+      {
+        "N": 2,
+        "evolution_fragmented": 0,
+        "k": 4,
+        "ordered_weak_compositions": 10
+      },
+      {
+        "N": 3,
+        "evolution_fragmented": 0,
+        "k": 4,
+        "ordered_weak_compositions": 20
+      },
+      {
+        "N": 4,
+        "evolution_fragmented": 0,
+        "k": 4,
+        "ordered_weak_compositions": 35
+      },
+      {
+        "N": 5,
+        "evolution_fragmented": 0,
+        "k": 4,
+        "ordered_weak_compositions": 56
+      },
+      {
+        "N": 6,
+        "evolution_fragmented": 80,
+        "k": 4,
+        "ordered_weak_compositions": 84
+      },
+      {
+        "N": 7,
+        "evolution_fragmented": 104,
+        "k": 4,
+        "ordered_weak_compositions": 120
+      },
+      {
+        "N": 8,
+        "evolution_fragmented": 125,
+        "k": 4,
+        "ordered_weak_compositions": 165
+      },
+      {
+        "N": 9,
+        "evolution_fragmented": 140,
+        "k": 4,
+        "ordered_weak_compositions": 220
+      },
+      {
+        "N": 10,
+        "evolution_fragmented": 146,
+        "k": 4,
+        "ordered_weak_compositions": 286
+      },
+      {
+        "N": 11,
+        "evolution_fragmented": 140,
+        "k": 4,
+        "ordered_weak_compositions": 364
+      },
+      {
+        "N": 12,
+        "evolution_fragmented": 125,
+        "k": 4,
+        "ordered_weak_compositions": 455
+      },
+      {
+        "N": 13,
+        "evolution_fragmented": 104,
+        "k": 4,
+        "ordered_weak_compositions": 560
+      },
+      {
+        "N": 14,
+        "evolution_fragmented": 80,
+        "k": 4,
+        "ordered_weak_compositions": 680
+      },
+      {
+        "N": 15,
+        "evolution_fragmented": 56,
+        "k": 4,
+        "ordered_weak_compositions": 816
+      },
+      {
+        "N": 16,
+        "evolution_fragmented": 35,
+        "k": 4,
+        "ordered_weak_compositions": 969
+      },
+      {
+        "N": 17,
+        "evolution_fragmented": 20,
+        "k": 4,
+        "ordered_weak_compositions": 1140
+      },
+      {
+        "N": 18,
+        "evolution_fragmented": 10,
+        "k": 4,
+        "ordered_weak_compositions": 1330
+      },
+      {
+        "N": 19,
+        "evolution_fragmented": 4,
+        "k": 4,
+        "ordered_weak_compositions": 1540
+      },
+      {
+        "N": 20,
+        "evolution_fragmented": 1,
+        "k": 4,
+        "ordered_weak_compositions": 1771
+      },
+      {
+        "N": 21,
+        "evolution_fragmented": 0,
+        "k": 4,
+        "ordered_weak_compositions": 2024
+      },
+      {
+        "N": 22,
+        "evolution_fragmented": 0,
+        "k": 4,
+        "ordered_weak_compositions": 2300
+      },
+      {
+        "N": 23,
+        "evolution_fragmented": 0,
+        "k": 4,
+        "ordered_weak_compositions": 2600
+      },
+      {
+        "N": 24,
+        "evolution_fragmented": 0,
+        "k": 4,
+        "ordered_weak_compositions": 2925
+      }
+    ],
+    "evolution_fragmented": 1345,
+    "max_parts": 4,
+    "max_total": 24,
+    "ordered_weak_compositions": 23750,
+    "threshold": 6
+  },
+  "schema_version": "1.0",
+  "scientific_boundary": {
+    "behavioral_claim_authorized": false,
+    "claim_expansion": false,
+    "cross_system_generality_authorized": false,
+    "gpu_authority": false,
+    "manuscript_rewrite_authorized_by_this_receipt": false,
+    "model_call_authority": false,
+    "new_gpu_runs": 0,
+    "new_model_calls": 0
+  },
+  "source_contract_audit": {
+    "all_required_anchors_present": true,
+    "anchors": {
+      "buffer_keyed_by_skill_name_comment": true,
+      "evolution_before_maintenance": true,
+      "experience_identity_field": true,
+      "experience_skill_split": true,
+      "identity_local_append": true,
+      "identity_local_readout": true,
+      "identity_local_threshold": true,
+      "semantic_dedup_threshold_095": true,
+      "skill_name_is_explicit_field": true,
+      "threshold_default_6": true
+    },
+    "archive_sha256": "33c4ba593595cca2bceec28e2c3c1426a158ffe29987f139c6bcc55d4e158bd6",
+    "commit": "3be7a9be2d4c024d132efe394d537404eba7e4c8",
+    "qualified_source_seams": {
+      "distribution_and_readiness": "Skills/skill_evolution.py:386-405",
+      "evolution_before_maintenance": "run.py:132-148",
+      "identity_schema": "data_structures.py:12-27,97-106",
+      "semantic_dedup": "Skills/skill_pool.py:372-380,533-539",
+      "threshold": "Skills/skill_evolution.py:127-137"
+    },
+    "source_root": "/data/wyt/agent-self-evolution-observatory/external/Skill-Pro-3be7a9be2d4c024d132efe394d537404eba7e4c8",
+    "source_sha256": {
+      "Skills/skill_evolution.py": "134916242f5e7d04c2028478d1f2b46fcd3847905f008ee28a35cedd2e6cc73a",
+      "Skills/skill_pool.py": "243e4108a040dd56cdba7999b64673d670571f015e26afc953325677ed6de461",
+      "data_structures.py": "c010655a8ea3ec4e56ce114e2cf92c91810426b4eac960ecf28a00564b922b10",
+      "run.py": "90f418d6d2934d4743cac6a73c7f92abcfd6ff8b3502b505f598469ceaac7182"
+    },
+    "source_sha256_match_frozen_pin": true
+  },
+  "stage": "RECENT_FLAGSHIP_CARRIER_ZERO_PROVIDER_P0"
+}
