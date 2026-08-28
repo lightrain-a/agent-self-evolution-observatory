@@ -27,7 +27,7 @@ EXPECTATIONS = {
     "index": (3, 4, 0, 0),
     "foundations": (2, 3, 2, 0),
     "mechanisms": (3, 3, 1, 0),
-    "system-overview": (10, 11, 17, 0),
+    "system-overview": (10, 11, 18, 0),
     "research-timeline": (0, 0, 0, 0),
     "research-map": (4, 5, 8, 0),
     "research-directions": (3, 4, 1, 0),
