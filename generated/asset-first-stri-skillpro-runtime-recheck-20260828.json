@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-RUNTIME-RECHECK-20260828",
+  "stage": "RECENT_FLAGSHIP_CARRIER_RUNTIME_RECHECK",
+  "date": "2026-08-28",
+  "purpose": "Re-evaluate whether the frozen Skill-Pro P1 can move from runtime-blocked to an explicitly qualified compatibility-adapted execution path without weakening provenance claims.",
+  "source": {
+    "repository": "https://github.com/Miracle1207/Skill-Pro",
+    "commit": "3be7a9be2d4c024d132efe394d537404eba7e4c8"
+  },
+  "current_host_snapshot": {
+    "visible_gpu_count": 1,
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "memory_total_mib": 81920,
+    "memory_used_mib": 14,
+    "utilization_percent": 0,
+    "snapshot_change_from_prior_preflight": "GPU is now idle; the prior occupancy blocker is cleared."
+  },
+  "source_runtime_facts": {
+    "run_py_local_policy": "LocalLLM(... use_vllm=True, vllm_gpu_util=0.75)",
+    "local_llm_tensor_parallel_size": 4,
+    "readme_single_gpu_instruction": "README troubleshooting explicitly instructs users to set tensor_parallel_size to 1 on a single-GPU machine when vLLM fails to load.",
+    "interpretation": "TP=1 is author-documented compatibility adaptation, but it is still a source modification relative to pinned commit and must not be described as unchanged-source execution."
+  },
+  "environment_status": {
+    "shared_venv_qwen3_compat": "Has compatible torch/numpy/transformers but lacks textarena, swanlab, vllm, sentence-transformers, and alfworld; must not be mutated as the scientific runtime.",
+    "existing_stri_vllm_env": "Not suitable: Python 3.11.11, torch 2.11.0, transformers 5.5.4, numpy 2.3.5 and no vllm; violates released version ranges.",
+    "isolated_runtime_required": true
+  },
+  "qualification_result": {
+    "unchanged_source_faithful_path": "BLOCKED_ON_SINGLE_GPU",
+    "author_documented_single_gpu_compatibility_path": "ELIGIBLE_TO_MATERIALIZE",
+    "p1_model_execution_now": "NOT_YET_AUTHORIZED",
+    "reason": "The hardware blocker is gone, but a clean isolated environment plus a content-addressed TP=1 compatibility patch and import/environment dry-smoke receipt are still required before the six real evidence episodes."
+  },
+  "frozen_materialization_plan": [
+    "Create a new isolated Python runtime under /data/wyt; do not mutate shared environments.",
+    "Install dependencies satisfying the pinned requirements and record exact package versions/hashes.",
+    "Create a content-addressed copy/patch changing only LocalLLM tensor_parallel_size 4 -> 1, justified by the first-party README single-GPU instruction.",
+    "Run import smoke for run.py plus TextArena Mastermind-v0 environment construction with zero outcome-bearing model calls.",
+    "Freeze local model path, tokenizer, sampling parameters, device snapshot, patch hash, and semantic-evidence manifest before authorizing P1 collection.",
+    "Label all subsequent results COMPATIBILITY_ADAPTED_AUTHOR_DOCUMENTED, never unchanged-source faithful."
+  ],
+  "decision": "RUNTIME_BLOCKER_NARROWED_TO_ISOLATED_ENV_AND_DOCUMENTED_TP1_ADAPTATION",
+  "scientific_boundary": {
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "p1_execution_authority": false,
+    "p2_execution_authority": false,
+    "claim_expansion": false,
+    "compatibility_adaptation_materialization_authorized": true
+  }
+}

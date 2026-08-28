@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-P1B-PROMPTLOGPROB-MEMORY-20260828",
+  "stage": "P1B_RUNTIME_FAILURE_DIAGNOSIS",
+  "date": "2026-08-28",
+  "failed_run": "/data/wyt/agent-self-evolution-observatory/runs/stri-skillpro-p1b-A_canonical-seed42-u055-mb8-20260828",
+  "observed_before_any_candidate": {
+    "candidate_model_calls": 0,
+    "completed_logprob_calls": 0,
+    "frozen_transition_count": 80,
+    "prompt_token_length_min": 437,
+    "prompt_token_length_mean": 931.475,
+    "prompt_token_length_max": 1727,
+    "prompts_over_2048": 0,
+    "qwen_vocab_size": 152064
+  },
+  "source_diagnosis": "The released vLLM logprob branch asks prompt_logprobs=1 and vLLM 0.6.3 computes token ranks using tensors whose temporary memory scales with prompt tokens times vocabulary. The released max_length argument is not used in this vLLM branch, but no frozen P1a prompt exceeds 2048 here, so truncation is not the cause or the proposed repair.",
+  "frozen_final_execution_shape": {
+    "vllm_gpu_utilization": 0.55,
+    "physical_logprob_microbatch_size": 1,
+    "logical_logprob_vectors": "unchanged: concatenate all 80 per-example outputs in original order",
+    "reason": "microbatch=1 is the minimal possible physical batch and therefore a principled endpoint rather than post-outcome tuning"
+  },
+  "stop_rule": "If the same pre-candidate logprob path still fails at physical microbatch=1, classify the current local vLLM PPO execution path as runtime-incompatible and do not change scientific evidence, model, PPO parameters, or backend after observing any candidate outcome.",
+  "decision": "FINAL_REOPEN_WITH_GPU_UTIL_055_AND_LOGPROB_MICROBATCH_1",
+  "scientific_boundary": {
+    "candidate_quality_observed": false,
+    "ppo_score_observed": false,
+    "claim_expansion": false
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-ACE-STATE-REUNION-CONTRACT-20260828",
+  "stage": "SECONDARY_CARRIER_STATE_REUNION_INTERVENTION_FREEZE",
+  "date": "2026-08-28",
+  "purpose": "Freeze an ACE-specific intervention that separates exact state conservation from reunion timing without mislabeling the released BulletpointAnalyzer as a clean native positive control.",
+  "source": {
+    "repository": "https://github.com/ace-agent/ace.git",
+    "commit": "82709de050e1db6e6ef2f07bcb0393560b94992a",
+    "operator_audit": "generated/asset-first-stri-ace-operator-audit-20260828.json",
+    "load_bearing_hashes": {
+      "ace/ace.py": "70f7af3ff9088498afa8d6939c5e142cd8b0046179516ee336c57586b92ec914",
+      "ace/core/bulletpoint_analyzer.py": "c8348995c2e443a65343efb460939837655521d6962022d29aec1710947be4d2",
+      "playbook_utils.py": "c67943f06cb0ee747be04d0599216e40d6c00e0cdf96ddc6af38fc26143e3a07",
+      "ace/core/curator.py": "a22f7f233761acfb00852914d78112a776274c55bc022738af7defca95897617"
+    }
+  },
+  "zero_provider_probe": {
+    "path": "research_pipeline/asset_first_stri_ace_reunion_probe.py",
+    "sha256": "d1314957dcc145301462c3e422457a167bb2adb742df78a26858dea7e2ee0e82",
+    "result": "generated/asset-first-stri-ace-exact-clone-reunion-p0-result-20260828.json",
+    "result_sha256": "c19fc0481fc3a3f7ae9bf277987e71b240168b3c0132d8989d357ce01fad3bcf"
+  },
+  "scientific_primitive": {
+    "representation_unit": "ACE playbook bullet [id] helpful=h harmful=d :: content",
+    "semantic_equivalence_for_primary_probe": "exact content equality only; no embedding threshold or approximate semantic grouping",
+    "sufficient_state_hypothesis": "For an intervention whose target state is additive credit, exact-clone reunion must preserve content and set helpful=sum_i helpful_i and harmful=sum_i harmful_i mechanically.",
+    "timing_hypothesis": "State-preserving reunion can only protect an operator if reunion occurs before that operator consumes the fragmented state. Post-Curator reunion cannot retroactively change the same Curator decision."
+  },
+  "frozen_exact_clone_witness": {
+    "canonical": "[str-00001] helpful=6 harmful=2 :: Verify all constraints before committing the answer.",
+    "split": [
+      "[str-00001] helpful=3 harmful=1 :: Verify all constraints before committing the answer.",
+      "[str-00002] helpful=3 harmful=1 :: Verify all constraints before committing the answer."
+    ],
+    "identity_placebo": "[str-00999] helpful=6 harmful=2 :: Verify all constraints before committing the answer.",
+    "conservation": {"helpful": 6, "harmful": 2, "semantic_record_count": 1}
+  },
+  "arms": {
+    "A_native_analyzer_off": {
+      "status": "released native control",
+      "state_at_curator": "fragmented 3+3 exact-content bullets",
+      "state_after_curator_before_post_generation": "unchanged by analyzer because analyzer is disabled"
+    },
+    "B_native_analyzer_on": {
+      "status": "released native repair candidate",
+      "state_at_curator": "fragmented 3+3 exact-content bullets",
+      "state_after_curator_before_post_generation": "may be reunited by the released embedding+LLM analyzer",
+      "critical_boundary": "LLM-mediated content and returned counters are not mechanically forced to preserve the programmatically computed sums; this arm is not the primary sufficient-state proof"
+    },
+    "C_stri_deterministic_post_curator_reunion": {
+      "status": "STRI intervention, not native ACE",
+      "state_at_curator": "fragmented 3+3 exact-content bullets",
+      "repair_timing": "after the Curator decision and before post-curator generation",
+      "repair_operator": "keep the first canonical content/ID and mechanically sum h and d; no LLM merge",
+      "prediction": "restores additive state for post-curator generation and future samples but cannot repair the current Curator decision"
+    },
+    "D_stri_deterministic_pre_curator_reunion": {
+      "status": "STRI intervention, not native ACE",
+      "state_at_curator": "one exact canonical-content bullet with h=6,d=2",
+      "repair_timing": "immediately after Reflector counter update and before Curator",
+      "repair_operator": "keep the first canonical content/ID and mechanically sum h and d; no LLM merge",
+      "prediction": "is the theory-matched sufficient-state repair for any Curator effect caused by exact-clone counter fragmentation, while any remaining difference is model/label/content sensitivity rather than lost additive credit"
+    },
+    "E_id_placebo": {
+      "status": "representation label control",
+      "state_at_curator": "one bullet with identical content and h=6,d=2 but a different ID token",
+      "prediction": "tests model-visible ID-token sensitivity separately from multiplicity fragmentation; it is not required to produce identical LLM output"
+    }
+  },
+  "primary_zero_provider_endpoints": [
+    "exact parse/format round-trip for the pinned ACE bullet syntax",
+    "aggregate helpful/harmful conservation under deterministic exact-clone reunion",
+    "canonical and pre-Curator repaired state are identical at the content+credit sufficient-state level",
+    "post-Curator repair leaves the current Curator input fragmented by construction",
+    "no approximate semantic matching and no LLM call are used in the mechanism probe"
+  ],
+  "future_model_endpoint_if_separately_authorized": {
+    "primary": "Curator proposal/output under frozen canonical, split, deterministic pre-Curator reunion, and ID-placebo inputs with matched model/runtime sampling",
+    "secondary": "post-curator generation and next-sample behavior",
+    "claim_rule": "A model-mediated difference can corroborate representation sensitivity, but ACE has no deterministic counter-only decision seam; do not overstate it as a threshold-gate analogue of Skill-Pro."
+  },
+  "decision": "AUTHORIZE_ZERO_PROVIDER_EXACT_CLONE_REUNION_PROBE_ONLY",
+  "scientific_boundary": {
+    "zero_provider_operator_probe_authorized": true,
+    "ace_model_calls_authorized": false,
+    "ace_behavioral_experiment_authorized": false,
+    "native_robustness_claim_authorized": false,
+    "clean_positive_control_claim_authorized": false,
+    "cross_system_generality_authorized": false,
+    "claim_expansion": false
+  }
+}

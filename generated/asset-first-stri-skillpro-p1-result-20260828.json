@@ -1,0 +1,208 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-P1-REAL-EVOLUTION-20260828",
+  "stage": "RECENT_FLAGSHIP_CARRIER_REAL_EVOLUTION_ADJUDICATION",
+  "date": "2026-08-28",
+  "purpose": "Adjudicate the frozen Skill-Pro P1 ladder using six real first-party Mastermind Experiences and the pinned author's real semantic-gradient candidate generation plus PPO verification path under a documented compatibility runtime.",
+  "frozen_inputs": {
+    "contract": "generated/asset-first-stri-skillpro-p1-p2-contract-20260828.json",
+    "p1a_result": "generated/asset-first-stri-skillpro-p1a-result-20260828.json",
+    "p1b_authority": "generated/asset-first-stri-skillpro-p1b-execution-authority-20260828.json",
+    "aggregate_semantic_evidence_sha256": "a1c0070075d1d27a5cc5b7ea3bb3af4e51d6c077f38f132643565c720f4af2a5",
+    "episode_count": 6,
+    "transition_count": 80,
+    "task_baseline": 0.4166666666666667,
+    "focal_skill": "HypothesisElimination"
+  },
+  "runtime_classification": {
+    "status": "COMPATIBILITY_ADAPTED_AUTHOR_RUNTIME",
+    "source_commit": "3be7a9be2d4c024d132efe394d537404eba7e4c8",
+    "model": "/data/wyt/models/indept/Qwen2.5-7B-Instruct",
+    "important_boundary": "This is a carrier-level compatibility execution of the pinned released algorithm, not a reproduction of the original Skill-Pro paper backbone or reported benchmark numbers.",
+    "final_execution_shape": {
+      "tensor_parallel_size": 1,
+      "swap_space_gib": 0,
+      "vllm_gpu_utilization": 0.55,
+      "logical_logprob_batch_size": 80,
+      "physical_logprob_microbatch_size": 1
+    },
+    "pre_candidate_failures_preserved": [
+      {
+        "run": "/data/wyt/agent-self-evolution-observatory/runs/stri-skillpro-p1b-A_canonical-seed42-20260828",
+        "failure_sha256": "24628df811e4c2ee19714822dab289fa65d4f33f5bda71844abc6946fbfa0f40",
+        "candidate_model_calls": 0,
+        "completed_logprob_calls": 0
+      },
+      {
+        "run": "/data/wyt/agent-self-evolution-observatory/runs/stri-skillpro-p1b-A_canonical-seed42-mb8-20260828",
+        "failure_sha256": "0da937ef64a3e1be22a82cf6cf9c9d5aadb447e021106fd3973bcf27ef552f16",
+        "candidate_model_calls": 0,
+        "completed_logprob_calls": 0
+      },
+      {
+        "run": "/data/wyt/agent-self-evolution-observatory/runs/stri-skillpro-p1b-A_canonical-seed42-u055-mb8-20260828",
+        "failure_sha256": "0adaa15629e2b95e67cd028d3c180eaaf2ea3bc610dd661d80a012c719129501",
+        "candidate_model_calls": 0,
+        "completed_logprob_calls": 0
+      }
+    ]
+  },
+  "arms": {
+    "A_canonical": {
+      "identity_counts": [6],
+      "q": 1.0,
+      "p": 1.0,
+      "repeats": [
+        {
+          "seed": 42,
+          "manifest_sha256": "1f164c1a4eebc61c17fe420b0a2c56ab5bf254f0436a9120902323eafabe24e1",
+          "model_calls": 21,
+          "logical_logprob_calls": 4,
+          "candidate": "HypothesisElimination_v1",
+          "best_j": -0.0026651801075786353,
+          "ppo_action": "NONE",
+          "pool_changed": false,
+          "pool_after_sha256": "0ed64b74f28ceef2417505776a6a6f37961d6496dcbf3a1c0b3649479a652d00"
+        },
+        {
+          "seed": 43,
+          "manifest_sha256": "0ddcef32b9167ec4155c78e161d900ed4ffb9765e4d20d2d997952d7f5700b1f",
+          "model_calls": 21,
+          "logical_logprob_calls": 4,
+          "candidate": "HypothesisElimination_v1",
+          "best_j": -0.0026651801075786353,
+          "ppo_action": "NONE",
+          "pool_changed": false,
+          "pool_after_sha256": "0ed64b74f28ceef2417505776a6a6f37961d6496dcbf3a1c0b3649479a652d00"
+        },
+        {
+          "seed": 44,
+          "manifest_sha256": "8140f88f5a5e64c1d02129e9818292283279a83db79969de00d0dc810b89a56f",
+          "model_calls": 21,
+          "logical_logprob_calls": 4,
+          "candidate": "HypothesisElimination_v1",
+          "best_j": -0.0026651801075786353,
+          "ppo_action": "NONE",
+          "pool_changed": false,
+          "pool_after_sha256": "0ed64b74f28ceef2417505776a6a6f37961d6496dcbf3a1c0b3649479a652d00"
+        }
+      ]
+    },
+    "B_id_placebo": {
+      "identity_counts": [6],
+      "manifest_sha256": "a1d4e9b5750aa475af3972643eb175ef9afeb25ca6ef54480e11025588610d77",
+      "model_calls": 21,
+      "logical_logprob_calls": 4,
+      "candidate": "HypothesisElimination_Renamed_v1",
+      "best_j": -0.00698838122189045,
+      "ppo_action": "NONE",
+      "pool_changed": false,
+      "interpretation": "The single renamed identity still passes readiness and executes the real candidate/PPO path, as preregistered. It is not an outcome-invariance placebo because Skill.name is rendered into the model-visible skill prompt; changing the label token can therefore change candidate text and J without identity fragmentation."
+    },
+    "C_exact_split": {
+      "identity_counts": [3, 3],
+      "q": 1.0,
+      "p": 0.5,
+      "manifest_sha256": "31ccb322cea797735ee88e8eabe123eb46cc58a6dfb155069cb6b7a290b2b912",
+      "model_calls": 0,
+      "logical_logprob_calls": 0,
+      "evolution_logs": 0,
+      "buffer_counts_after_scheduler": {"HypothesisElimination_A": 3, "HypothesisElimination_B": 3},
+      "decision": "P1B_SPLIT_RETURNED_BEFORE_MODEL_PATH"
+    },
+    "D_pre_gate_quotient": {
+      "conceptual_pre_reunion_counts": [3, 3],
+      "runtime_post_reunion_counts": [6],
+      "q": 1.0,
+      "p_after_reunion": 1.0,
+      "repeats": [
+        {
+          "seed": 42,
+          "manifest_sha256": "2a6f12cb2433b12135fa9cf1fae3997a3bdf59d9305982d53f76a36afedd3e7a",
+          "model_calls": 21,
+          "logical_logprob_calls": 4,
+          "candidate": "HypothesisElimination_v1",
+          "best_j": -0.0026651801075786353,
+          "ppo_action": "NONE",
+          "pool_changed": false,
+          "pool_after_sha256": "0ed64b74f28ceef2417505776a6a6f37961d6496dcbf3a1c0b3649479a652d00"
+        },
+        {
+          "seed": 43,
+          "manifest_sha256": "791f7c017e43d8e2033ac01df6272c8c41848b7bb17467682983ad74658b541a",
+          "model_calls": 21,
+          "logical_logprob_calls": 4,
+          "candidate": "HypothesisElimination_v1",
+          "best_j": -0.0026651801075786353,
+          "ppo_action": "NONE",
+          "pool_changed": false,
+          "pool_after_sha256": "0ed64b74f28ceef2417505776a6a6f37961d6496dcbf3a1c0b3649479a652d00"
+        },
+        {
+          "seed": 44,
+          "manifest_sha256": "0a3c303bf5f752ad4dc034d1d7227d68e5c4d8200433ebfe40d08d0ce22cab0e",
+          "model_calls": 21,
+          "logical_logprob_calls": 4,
+          "candidate": "HypothesisElimination_v1",
+          "best_j": -0.0026651801075786353,
+          "ppo_action": "NONE",
+          "pool_changed": false,
+          "pool_after_sha256": "0ed64b74f28ceef2417505776a6a6f37961d6496dcbf3a1c0b3649479a652d00"
+        }
+      ]
+    },
+    "E_late_identity_dedup": {
+      "identity_counts_at_first_gate": [3, 3],
+      "manifest_sha256": "6f480962dc203e0dd18a78ecab3c3331f715dc0e16da541fc0b4384bd6fcf2f1",
+      "model_calls": 0,
+      "logical_logprob_calls": 0,
+      "first_scheduler_logs": 0,
+      "buffer_counts_before_second_gate": {"HypothesisElimination_A": 3, "HypothesisElimination_B": 3},
+      "buffer_counts_after_second_gate": {"HypothesisElimination_A": 3, "HypothesisElimination_B": 3},
+      "second_scheduler_logs": 0,
+      "decision": "P1B_LATE_DEDUP_DID_NOT_RESTORE_MISSED_EVOLUTION"
+    }
+  },
+  "paired_computation_equivalence": {
+    "A_vs_D_seed42": {"all_21_model_prompts_and_raw_outputs_exact": true, "all_4_logprob_inputs_and_80_value_vectors_exact": true, "j_exact": true, "pool_hash_exact": true},
+    "A_vs_D_seed43": {"all_21_model_prompts_and_raw_outputs_exact": true, "all_4_logprob_inputs_and_80_value_vectors_exact": true, "j_exact": true, "pool_hash_exact": true},
+    "A_vs_D_seed44": {"all_21_model_prompts_and_raw_outputs_exact": true, "all_4_logprob_inputs_and_80_value_vectors_exact": true, "j_exact": true, "pool_hash_exact": true},
+    "qualified_statement": "Pre-gate quotient reunion restores not merely scheduler reachability but the complete observed candidate-generation and PPO verification computation to the canonical arm on the frozen evidence."
+  },
+  "repeat_determinism_caveat": {
+    "A_model_outputs_exact_across_42_43_44": true,
+    "A_logprob_vectors_exact_across_42_43_44": true,
+    "interpretation": "Three preregistered executions were completed, but they do not constitute three empirically independent stochastic candidate draws in this runtime: the released vLLM engine retains seed=0 and the observed outputs are exactly repeated. Treat them as execution-repeat stability, not stochastic uncertainty estimation."
+  },
+  "adjudication": {
+    "p1_mechanism": "PASS",
+    "p1_qualified_conclusion": "With identical frozen real Experience semantics, exact 3+3 identity fragmentation prevents Skill-Pro from entering its real semantic-gradient/PPO evolution computation, whereas canonical attribution and pre-gate quotient reunion execute that computation. Quotient reunion reproduces the canonical computation exactly in all three registered executions.",
+    "candidate_acceptance": "NEGATIVE",
+    "candidate_acceptance_detail": "All canonical and quotient runs produce best J=-0.0026651801075786353 <= acceptance_margin=0 and are rejected; no evolved candidate is added to the pool.",
+    "p2_behavioral_replay": "BLOCKED_NO_EVOLUTION_PRODUCED_POOL_DIFFERENCE",
+    "why_p2_blocked": "The frozen P2 contract requires a real resulting-pool difference mediated by P1 evolution. Direct representational differences between canonical and split pools are not a substitute for an evolution-produced pool difference.",
+    "manuscript_claim_ceiling": "representation fragmentation changes real evolution computation/opportunity in the qualified Skill-Pro carrier; behavioral propagation is not established"
+  },
+  "prohibited_post_result_repairs": [
+    "do not lower acceptance_margin below 0",
+    "do not switch to wo_ppo to force candidate insertion",
+    "do not change best_of_n or threshold after seeing J",
+    "do not replace the six frozen Experiences",
+    "do not substitute ALFWorld or another model to convert this qualified negative PPO outcome into a behavioral claim"
+  ],
+  "decision": "P1_MECHANISM_PASS_P2_BLOCKED_NO_EVOLUTION_PRODUCED_POOL_DIFFERENCE",
+  "scientific_boundary": {
+    "real_candidate_generation_executed": true,
+    "real_ppo_verification_executed": true,
+    "representation_dependent_real_evolution_computation_established": true,
+    "quotient_repair_full_computation_equivalence_established": true,
+    "candidate_acceptance_established": false,
+    "evolution_produced_pool_difference_established": false,
+    "behavioral_propagation_established": false,
+    "p2_execution_authority": false,
+    "cross_system_generality_authorized": false,
+    "manuscript_primary_carrier_replacement_authorized_by_this_receipt": false,
+    "claim_expansion_beyond_ceiling": false
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-P1B-LOGPROB-OOM-DIAGNOSIS-20260828",
+  "stage": "P1B_RUNTIME_FAILURE_DIAGNOSIS",
+  "date": "2026-08-28",
+  "failed_run": "/data/wyt/agent-self-evolution-observatory/runs/stri-skillpro-p1b-A_canonical-seed42-20260828",
+  "failure": {
+    "location": "first old-skill _compute_skill_logprobs call before any semantic-gradient candidate generation",
+    "batch_size": 80,
+    "error": "CUDA OutOfMemoryError during vLLM model execution; attempted an additional 18.23 GiB with approximately 14.42 GiB free",
+    "candidate_model_call_files": 0,
+    "completed_logprob_call_files": 0,
+    "scientific_outcome_observed": false
+  },
+  "diagnosis": "The released LocalLLM.compute_logprob_batch submits all 80 frozen transitions in one vLLM generate call. The failure is caused by execution batch shape, not insufficient evidence, candidate quality, or the PPO decision.",
+  "frozen_repair": {
+    "type": "compatibility adaptation",
+    "logical_operation": "preserve the same 80 prompt/action pairs and the same released per-example logprob computation, but execute the physical vLLM batch in fixed microbatches of 8 and concatenate results in original order",
+    "microbatch_size": 8,
+    "why_8": "Frozen immediately after the first pre-candidate OOM and before any P1b candidate/J-score outcome. It is conservatively below the failed batch size and leaves the scientific sample set unchanged.",
+    "prohibited": [
+      "do not drop transitions",
+      "do not truncate trajectories beyond the released tokenizer behavior",
+      "do not alter rewards or baseline",
+      "do not reduce best_of_n",
+      "do not change PPO epsilon or acceptance margin"
+    ]
+  },
+  "decision": "REOPEN_P1B_WITH_FIXED_LOGPROB_MICROBATCH_8",
+  "scientific_boundary": {
+    "p1b_scientific_result": false,
+    "candidate_generation_observed": false,
+    "ppo_gate_observed": false,
+    "claim_expansion": false,
+    "failed_run_must_be_preserved": true
+  }
+}

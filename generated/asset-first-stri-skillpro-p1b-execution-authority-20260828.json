@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-P1B-IDENTITY-EVOLUTION-20260828",
+  "stage": "RECENT_FLAGSHIP_CARRIER_REAL_EVOLUTION_EXECUTION_AUTHORITY",
+  "date": "2026-08-28",
+  "prerequisites": {
+    "frozen_contract": "generated/asset-first-stri-skillpro-p1-p2-contract-20260828.json",
+    "p1a_result": "generated/asset-first-stri-skillpro-p1a-result-20260828.json",
+    "required_p1a_decision": "P1A_PASS_SIX_REAL_EXPERIENCES_FROZEN",
+    "frozen_aggregate_semantic_evidence_sha256": "a1c0070075d1d27a5cc5b7ea3bb3af4e51d6c077f38f132643565c720f4af2a5"
+  },
+  "execution_harness": {
+    "path": "research_pipeline/asset_first_stri_skillpro_p1b_run.py",
+    "sha256": "28f9aafedf25a3424521e418a15fd85653551829534129dd235dc8f6e795bc4e"
+  },
+  "runtime": {
+    "source": "/data/wyt/agent-self-evolution-observatory/external/Skill-Pro-3be7a9be-tp1-compat-20260828",
+    "pinned_author_commit": "3be7a9be2d4c024d132efe394d537404eba7e4c8",
+    "python": "/data/wyt/agent-self-evolution-observatory/runtimes/stri-skillpro-p1-py310-20260828/bin/python",
+    "model": "/data/wyt/models/indept/Qwen2.5-7B-Instruct",
+    "runtime_classification": "COMPATIBILITY_ADAPTED_AUTHOR_RUNTIME",
+    "adaptations": [
+      "tensor_parallel_size 4 -> 1, explicitly documented by the author README for single-GPU machines",
+      "vLLM swap_space=0, host-specific compatibility adaptation required by the current pinned-memory limit; model weights and generation sampling parameters remain unchanged",
+      "P1b logprob physical microbatch=1: after larger physical batches OOMed before candidate generation, execute the same released per-example logprob operation one example at a time and concatenate in original order; this is the minimal possible physical batch and no transition is dropped or altered",
+      "P1b vllm_gpu_utilization 0.75 -> 0.55: reduce KV-cache preallocation to leave temporary workspace for prompt-logprob rank tensors; evidence, weights, sampling parameters, and PPO math remain unchanged"
+    ],
+    "failed_pre_candidate_attempt_receipts": [
+      "generated/asset-first-stri-skillpro-p1b-logprob-oom-diagnosis-20260828.json",
+      "generated/asset-first-stri-skillpro-p1b-vllm-headroom-diagnosis-20260828.json",
+      "generated/asset-first-stri-skillpro-p1b-promptlogprob-memory-diagnosis-20260828.json"
+    ]
+  },
+  "frozen_author_parameters": {
+    "threshold": 6,
+    "best_of_n": 3,
+    "acceptance_margin": 0.0,
+    "epsilon": 0.2,
+    "current_iteration": 1,
+    "task_baseline_Mastermind_v0": 0.4166666666666667,
+    "candidate_method": "standard semantic-gradient evolve, ablation_type=none",
+    "build_prompt_fn": "pinned author SkillMDP.build_decision_prompt with MDP_type=SMDP",
+    "local_llm_sampling": {"temperature": 0.6, "top_p": 0.9, "max_tokens": 1024},
+    "vllm_engine_seed": 0
+  },
+  "stochastic_repeats": {
+    "paired_A_D_harness_seeds": [42, 43, 44],
+    "rule": "A_canonical and D_pre_gate_quotient use separate fresh processes with the same harness seed within each pair. The released LocalLLM does not expose a sampling seed; its vLLM engine default seed remains 0 in every fresh process.",
+    "B_id_placebo_seed": 42,
+    "C_and_E": "zero-model-call deterministic scheduler controls"
+  },
+  "identity_arms": {
+    "A_canonical": "All six frozen Experience.skill fields point to HypothesisElimination.",
+    "B_id_placebo": "All six point to one exact-semantic renamed parent HypothesisElimination_Renamed.",
+    "C_exact_split": "Episodes 1-3 point to HypothesisElimination_A and episodes 4-6 to exact-semantic HypothesisElimination_B; neither buffer reaches six.",
+    "D_pre_gate_quotient": "The conceptual 3+3 class is reunited before the author scheduler: one canonical HypothesisElimination parent receives all six evidence records before readiness evaluation.",
+    "E_late_identity_dedup": "The 3+3 scheduler call occurs first; after the missed gate one alias is removed without merging its experience buffer, followed by a second empty-evidence scheduler call to test whether the missed opportunity is restored."
+  },
+  "pool_state_contract": {
+    "seed_pool": "All six pinned first-party seed Skill semantics are materialized without retrieval-embedding initialization because retrieval is outside P1b evolution and the released encoder path is an author-machine absolute path.",
+    "focal_stats": "Reconstruct the stats that author run_episodes_in_env would have produced from the six frozen P1a records before evolution: canonical total frequency=15, total_gain=2.5, avg_gain=1/6, success_count=6, maturity=1. Split arms partition these statistics by the same 3+3 episode attribution.",
+    "non_focal_stats": "maturity=1, otherwise released seed defaults",
+    "candidate_add": "Use the pinned author's SkillEvolution scheduler unchanged; the harness pool add_skill appends the returned candidate but intentionally skips retrieval embedding cache population because retrieval is not invoked in P1b."
+  },
+  "persistence": {
+    "one_run_directory_per_arm_repeat": true,
+    "refuse_overwrite": true,
+    "log_every_model_prompt_and_raw_output": true,
+    "record_pre_and_post_pool_hashes": true,
+    "record_buffer_counts": true,
+    "record_author_evolution_logs": true,
+    "record_identity_free_semantic_hash": true
+  },
+  "authority": {
+    "P1b_model_calls_authorized": true,
+    "authorized_arms": ["A_canonical", "B_id_placebo", "C_exact_split", "D_pre_gate_quotient", "E_late_identity_dedup"],
+    "P2_behavioral_replay_authorized": false,
+    "threshold_tuning": false,
+    "best_of_n_tuning": false,
+    "acceptance_margin_tuning": false,
+    "evidence_replacement": false,
+    "claim_expansion": false
+  },
+  "P2_reopen_condition": "Only if A and D reach real candidate/PPO hooks, C reaches neither, semantic evidence remains identical across arms, and a real resulting-pool difference exists that is suitable for held-out replay."
+}

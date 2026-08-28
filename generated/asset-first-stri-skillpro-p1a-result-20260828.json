@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-P1A-REAL-EVIDENCE-20260828",
+  "stage": "RECENT_FLAGSHIP_CARRIER_REAL_FIRST_PARTY_EVIDENCE_COLLECTION",
+  "date": "2026-08-28",
+  "source_contract": {
+    "carrier": "Skill-Pro",
+    "pinned_commit": "3be7a9be2d4c024d132efe394d537404eba7e4c8",
+    "runtime_qualification": "generated/asset-first-stri-skillpro-p1-runtime-qualification-20260828.json",
+    "execution_authority": "generated/asset-first-stri-skillpro-p1a-execution-authority-20260828.json"
+  },
+  "run": {
+    "path": "/data/wyt/agent-self-evolution-observatory/runs/stri-skillpro-p1a-qwen25-7b-mastermind-seed42-20260828",
+    "manifest_pre_sha256": "9675415d2e17c0da6d93d9862deef7b1dd50ed9c592ca12504a72694ca7c6cec",
+    "manifest_final_sha256": "c88e8080457e9a5539a25e96c0f519c3cc909efc560b335fc1d59f9b05f24d07",
+    "aggregate_semantic_evidence_sha256": "a1c0070075d1d27a5cc5b7ea3bb3af4e51d6c077f38f132643565c720f4af2a5",
+    "environment": "Mastermind-v0",
+    "model": "/data/wyt/models/indept/Qwen2.5-7B-Instruct",
+    "seed": 42,
+    "focal_skill": "HypothesisElimination",
+    "selection_isolation": "Forced focal selection only; the pinned author's SkillMDP.run_single_episode implements environment interaction, termination checking, action generation, reward/close, and Experience construction."
+  },
+  "episodes": [
+    {"episode": 1, "reward": 0.25, "steps": 17, "runtime_valid": true, "semantic_evidence_sha256": "d05c0ed21177abd05a2bf2af19d72d245381900c343c4dfad50c135796358f6d", "file_sha256": "16e2b4159c7de0450e5dc81d475b2729719c980084901d466c1fe392444c5281"},
+    {"episode": 2, "reward": 0.375, "steps": 11, "runtime_valid": true, "semantic_evidence_sha256": "1de84a454a819636ed76cf9b06e29494216d35ff7829487aff5c5aa0ac08f231", "file_sha256": "305cad54727d5d2488fe5c1a17ba78f3cc93c1b8d0145eb730b06ad9d0a79728"},
+    {"episode": 3, "reward": 0.375, "steps": 15, "runtime_valid": true, "semantic_evidence_sha256": "81170e950c7c3ea50190f6b3d07e9feecf9afe2f677ccb93a9b7065ee8183464", "file_sha256": "fc495dce3136ed0d86ae2b3cfa01d0b7fccb4d74f1d55a60e399b5763363913d"},
+    {"episode": 4, "reward": 1.0, "steps": 5, "runtime_valid": true, "semantic_evidence_sha256": "514ab6df645aa42ff32b5927c41724eefd4e7d6d35b8b2d9c60518c57942b8f8", "file_sha256": "0b9bc970477c3f4ffec302660607630d024806556fc36b3df802ed58e35b319e"},
+    {"episode": 5, "reward": 0.25, "steps": 10, "runtime_valid": true, "semantic_evidence_sha256": "4834db1b3d6fcd936e7b9b8406bf53052708de0bef2ea746d78900a47baa1005", "file_sha256": "497b5d1bc127225ccf2bb727c207ae4e193823a2b73bf7e81262c878068aae54"},
+    {"episode": 6, "reward": 0.25, "steps": 22, "runtime_valid": true, "semantic_evidence_sha256": "11f9b811b9d360a081367c729d77ec873ce1ddd9ce7ba6842ab8f54098699f4a", "file_sha256": "0418464c22ad28f52ea0bc13acc7ebe14ac27161824d528097a2ea246fbf4bbf"}
+  ],
+  "aggregate": {
+    "episode_count": 6,
+    "all_runtime_valid": true,
+    "total_transitions": 80,
+    "mean_reward": 0.4166666666666667,
+    "native_first_iteration_task_baseline": 0.4166666666666667,
+    "reconstructed_native_focal_stats_before_evolution": {
+      "frequency": 15,
+      "total_gain": 2.5,
+      "avg_gain": 0.16666666666666666,
+      "success_count": 6,
+      "maturity_after_update_pool_status": 1
+    }
+  },
+  "decision": "P1A_PASS_SIX_REAL_EXPERIENCES_FROZEN",
+  "next_gate": "P1b may consume exactly these six Experience semantics under the frozen canonical / id-placebo / exact-split / pre-gate-quotient / late-dedup identity interventions. No evidence replacement or reward-conditioned filtering is allowed.",
+  "scientific_boundary": {
+    "real_first_party_trajectories_established": true,
+    "candidate_generation_executed": false,
+    "ppo_gate_executed": false,
+    "resulting_pool_effect_established": false,
+    "behavioral_propagation_established": false,
+    "p2_authorized": false,
+    "claim_expansion": false
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-ACE-OPERATOR-AUDIT-20260828",
+  "stage": "RECENT_FLAGSHIP_SECONDARY_CARRIER_EXACT_OPERATOR_AUDIT",
+  "date": "2026-08-28",
+  "purpose": "Pin ACE to exact first-party source and determine whether its optional duplicate analyzer is a clean native representation-invariant positive control, a repair arm, or a too-late/semantically-confounded reunion mechanism.",
+  "source": {
+    "repository": "https://github.com/ace-agent/ace.git",
+    "commit": "82709de050e1db6e6ef2f07bcb0393560b94992a",
+    "remote_head_verified_equal": true,
+    "files": {
+      "ace/ace.py": "70f7af3ff9088498afa8d6939c5e142cd8b0046179516ee336c57586b92ec914",
+      "ace/core/bulletpoint_analyzer.py": "c8348995c2e443a65343efb460939837655521d6962022d29aec1710947be4d2",
+      "playbook_utils.py": "c67943f06cb0ee747be04d0599216e40d6c00e0cdf96ddc6af38fc26143e3a07",
+      "ace/core/curator.py": "a22f7f233761acfb00852914d78112a776274c55bc022738af7defca95897617",
+      "ace/core/generator.py": "4b750a59752bd5bdb24b2f27b80938844d8a7b5d89e86d7d6bb726f3685c25f5",
+      "ace/prompts/curator.py": "eb03d59b3f3593832f730a798199b581ad797acd503c47d1737616c68cf26107",
+      "ace/prompts/generator.py": "b8b12d4a6281ea4c422a2ee0bd919b50580d388027917e8740f82f97eb24eebb"
+    }
+  },
+  "exact_dataflow": [
+    "Generator receives the full playbook text, including per-bullet ID and helpful/harmful counters, and returns bullet_ids used.",
+    "Reflector tags those specific IDs as helpful/harmful/neutral.",
+    "update_bullet_counts deterministically increments only the addressed ID-local counters.",
+    "Curator is then called on the current, already counter-updated playbook.",
+    "Only after Curator returns and applies its operations does optional BulletpointAnalyzer run.",
+    "Post-curator Generator then receives the analyzer output; subsequent samples also inherit that output."
+  ],
+  "operator_findings": {
+    "counter_update": {
+      "type": "deterministic_id_local_additive_update",
+      "helpful_tag": "h_i <- h_i + 1",
+      "harmful_tag": "d_i <- d_i + 1"
+    },
+    "current_curator": {
+      "implemented_operations": "ADD-only in the released application path; UPDATE/MERGE/DELETE are documented as future/TODO in playbook_utils.apply_curator_operations.",
+      "counter_use": "No deterministic threshold/pruning rule over helpful/harmful counters was found. Counters are present in current_playbook text and therefore can influence the Curator LLM semantically.",
+      "irreversible_seam": "The current sample's Curator decision occurs before optional analyzer reunion. Analyzer-on therefore cannot retroactively repair a representation-sensitive Curator decision made in that same sample."
+    },
+    "bulletpoint_analyzer": {
+      "default_enabled": false,
+      "similarity": "content embeddings with cosine threshold (default 0.90)",
+      "group_credit_target": "The merge prompt computes total_helpful=sum_i h_i and total_harmful=sum_i d_i and instructs the LLM to emit those totals.",
+      "critical_integrity_gap": "The code parses helpful/harmful back from the LLM response and trusts those returned integers. It does not overwrite or validate them against the programmatically computed sums. Thus additive credit preservation is requested but not mechanically enforced.",
+      "content_merge": "LLM-generated, so even exact-content duplicate reunion changes the representation through a model-mediated merge unless a separate deterministic exact-clone repair arm is introduced.",
+      "timing": "after Curator, before post-curator generation"
+    },
+    "generator": {
+      "counter_dependence": "Counters are exposed as prompt text rather than consumed by a deterministic local gate. Any behavioral effect of counter reunion is therefore model-mediated."
+    }
+  },
+  "theory_adjudication": {
+    "additive_sufficient_state_principle": "For an operator whose sufficient state is exactly additive credit (sum helpful/harmful), semantic reunion plus exact counter summation before that operator would be merge-sufficient.",
+    "native_ace_result": "The pinned ACE release contains the ingredients for such a repair, but does not implement a clean deterministic sufficient-state-preserving operator end-to-end: reunion is after the current Curator decision, merge content is LLM-mediated, and returned counters are not programmatically forced to equal the sums.",
+    "classification": "STATE_REUNION_REPAIR_PRIMITIVE_PRESENT_NOT_CLEAN_NATIVE_POSITIVE_CONTROL",
+    "paper_value": "ACE remains valuable as a theory-predicted intervention carrier: analyzer-off versus analyzer-on can test whether state reunion helps downstream generation/next-step adaptation, while a deterministic exact-clone count-preserving repair can serve as a sharper mechanism arm if explicitly labeled as our intervention rather than native ACE."
+  },
+  "next_experiment_design": {
+    "native_arm_A": "analyzer-off",
+    "native_arm_B": "analyzer-on, unchanged first-party implementation",
+    "mechanism_arm_C": "deterministic exact-clone reunion that keeps canonical content and programmatically sets h=sum_i h_i, d=sum_i d_i before the selected downstream decision; must be labeled STRI intervention, not native ACE",
+    "identity_placebo": "rename IDs while keeping one-record state and all content/counters fixed",
+    "fragmentation": "split one exact semantic bullet into two IDs while conserving aggregate counters/evidence",
+    "timing_test": "apply reunion before Curator versus released after-Curator analyzer timing to separate merge sufficiency from reunion lateness",
+    "claim_gate": "Do not call ACE intrinsically representation-robust unless a native end-to-end run shows invariance without mechanism-arm modifications."
+  },
+  "decision": "PIN_ACE_AND_DOWNGRADE_FROM_NATIVE_POSITIVE_CONTROL_TO_REPAIR_CARRIER_PENDING_ZERO_PROVIDER_OPERATOR_PROBE",
+  "scientific_boundary": {
+    "source_pin_complete": true,
+    "new_model_calls": 0,
+    "new_gpu_runs": 0,
+    "ace_behavioral_experiment_authority": false,
+    "native_robustness_claim_authorized": false,
+    "cross_system_generality_authorized": false,
+    "mechanism_intervention_design_authorized": true
+  }
+}

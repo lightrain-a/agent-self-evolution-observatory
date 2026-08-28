@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-P1B-VLLM-HEADROOM-DIAGNOSIS-20260828",
+  "stage": "P1B_RUNTIME_FAILURE_DIAGNOSIS",
+  "date": "2026-08-28",
+  "prior_receipt": "generated/asset-first-stri-skillpro-p1b-logprob-oom-diagnosis-20260828.json",
+  "failed_run": "/data/wyt/agent-self-evolution-observatory/runs/stri-skillpro-p1b-A_canonical-seed42-mb8-20260828",
+  "failure": {
+    "location": "first old-skill logprob logical call, first physical microbatch, before any semantic-gradient candidate generation",
+    "logical_batch_size": 80,
+    "physical_microbatch_size": 8,
+    "error": "CUDA OutOfMemoryError; attempted 7.06 GiB with approximately 6.92 GiB free after vLLM cache/model allocations",
+    "candidate_model_call_files": 0,
+    "completed_logprob_call_files": 0,
+    "scientific_outcome_observed": false
+  },
+  "diagnosis": "The remaining blocker is GPU headroom reserved by the released run.py local setting vllm_gpu_util=0.75, not the scientific batch definition. Microbatching alone does not leave enough temporary memory for prompt-logprob rank tensors on this host.",
+  "frozen_repair": {
+    "type": "host-specific compatibility adaptation",
+    "vllm_gpu_utilization": 0.55,
+    "logprob_microbatch_size": 8,
+    "preserved": [
+      "all 80 frozen state/action pairs",
+      "same Qwen2.5-7B-Instruct weights/tokenizer",
+      "temperature=0.6, top_p=0.9, max_tokens=1024 for candidate-generation calls",
+      "same SkillEvolution implementation",
+      "best_of_n=3, epsilon=0.2, acceptance_margin=0.0, baseline=2.5/6"
+    ],
+    "meaning": "Reduce preallocated KV-cache occupancy to leave temporary workspace for the released prompt-logprob computation; do not change model outputs by selecting or filtering evidence."
+  },
+  "decision": "REOPEN_P1B_WITH_VLLM_GPU_UTIL_055_AND_MICROBATCH_8",
+  "scientific_boundary": {
+    "p1b_scientific_result": false,
+    "candidate_generation_observed": false,
+    "ppo_gate_observed": false,
+    "claim_expansion": false,
+    "both_failed_runs_preserved": true
+  }
+}

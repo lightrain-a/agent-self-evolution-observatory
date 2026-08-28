@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "STRI",
+  "experiment_id": "ASSET-FIRST-STRI-SKILLPRO-P1-RUNTIME-QUALIFICATION-20260828",
+  "stage": "RECENT_FLAGSHIP_CARRIER_COMPATIBILITY_RUNTIME_QUALIFICATION",
+  "date": "2026-08-28",
+  "purpose": "Materialize and qualify a content-addressed single-GPU Skill-Pro runtime before any P1 outcome-bearing episode or evolution generation.",
+  "source": {
+    "repository": "https://github.com/Miracle1207/Skill-Pro",
+    "commit": "3be7a9be2d4c024d132efe394d537404eba7e4c8",
+    "source_local_llm_sha256": "908634dea5e8a2d8fdec31f72d813ffa1d4e533781433494e51a3c261483a311"
+  },
+  "compatibility_source_copy": {
+    "path": "/data/wyt/agent-self-evolution-observatory/external/Skill-Pro-3be7a9be-tp1-compat-20260828",
+    "adapted_local_llm_sha256": "db4fe6cf91ff5598e0d40b8965368e6d26c5e45611ee372fb6db91ef41d248ae",
+    "adaptations": [
+      {
+        "change": "tensor_parallel_size=4 -> 1",
+        "status": "AUTHOR_DOCUMENTED_SINGLE_GPU_COMPATIBILITY_ADAPTATION",
+        "justification": "Pinned README troubleshooting explicitly instructs users to set tensor_parallel_size to 1 on a single-GPU machine."
+      },
+      {
+        "change": "add swap_space=0 to vLLM LLM constructor",
+        "status": "HOST_RUNTIME_COMPATIBILITY_ADAPTATION_NOT_FIRST_PARTY_DOCUMENTED",
+        "justification": "The first model-load smoke failed during vLLM CPU KV swap-cache allocation. Host diagnostics showed 1 GiB pinned allocation succeeds while 2 GiB fails with the same CUDA invalid-argument error; vLLM 0.6.3.post1 defaults to 4 GiB CPU swap per GPU. Setting swap_space=0 eliminates only the unused CPU swap cache; the selected model still loaded with 47,413 GPU KV blocks on the 80GB A100."
+      }
+    ],
+    "semantic_runtime_invariants": [
+      "model weights unchanged",
+      "tokenizer unchanged",
+      "dtype unchanged",
+      "vLLM sampling defaults from released LocalLLM unchanged: temperature=0.6, top_p=0.9, max_tokens=1024",
+      "no P1 task outcome observed before these adaptations and model selection were frozen"
+    ],
+    "label_required_for_results": "COMPATIBILITY_ADAPTED_AUTHOR_RUNTIME"
+  },
+  "isolated_environment": {
+    "path": "/data/wyt/agent-self-evolution-observatory/runtimes/stri-skillpro-p1-py310-20260828",
+    "python": "3.10.21",
+    "packages": {
+      "torch": "2.4.0+cu121",
+      "transformers": "4.57.6",
+      "vllm": "0.6.3.post1",
+      "sentence-transformers": "5.7.0",
+      "swanlab": "0.9.8",
+      "textarena": "0.7.4",
+      "alfworld": "0.4.2",
+      "numpy": "1.26.4",
+      "PyYAML": "6.0.3",
+      "matplotlib": "3.10.9"
+    },
+    "requirements_range_check": "PASS",
+    "import_run_py": "PASS",
+    "textarena_mastermind_v0_construct": "PASS"
+  },
+  "model_freeze": {
+    "selection_timing": "Frozen after zero-outcome runtime import/environment qualification and before any P1 episode outcome.",
+    "selection_rule": "Use an already-local, no-download, instruction-tuned approximately-7B model that fits one A100; do not choose a model after observing P1 outcome.",
+    "path": "/data/wyt/models/indept/Qwen2.5-7B-Instruct",
+    "role": "carrier compatibility model; not claimed as the original Skill-Pro paper backbone",
+    "size": "15G local directory",
+    "config_sha256": "7463bb0ea78315365e6c6b74de4e73bbcc8359dfb0c5a737584e077d42c0b03c",
+    "generation_config_sha256": "3a8f9087e486054c8a4a08dae2e5a3ba62e23da212b5b8c08bc42cb983c3459f",
+    "tokenizer_config_sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583",
+    "model_index_sha256": "624bf7c47cd12468fdc16e38a47cf4f19e0415b859a223ba3c027eed2f0e1028",
+    "weight_shards_sha256": [
+      "a1333e6293854747c481288ea83b348226af178dd565c49b6f9495ba1966aba7",
+      "f5d25a2772cb825164a2a2c0fb6d51a87e282abf21e4dd75bc5cfb3cd0ea6185",
+      "8efdec4c1bc12317ae1a38dc42b595ce777738a64deea3fcb8a0a91381bcdfd5",
+      "1a72d403cdf0c1ec3cb7f289f17b394a01e64394c2e9b3c0f94dbce3faf879bd"
+    ],
+    "tokenizer_json_sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+    "vocab_sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges_sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3"
+  },
+  "smoke_history": [
+    {
+      "name": "TP1_DEFAULT_SWAP_MODEL_LOAD",
+      "outcome": "FAIL_BEFORE_GENERATION",
+      "observed": "All four safetensors shards loaded; failure occurred in vLLM CacheEngine CPU swap-cache allocation with CUDA error: invalid argument.",
+      "outcome_bearing_model_generation": false
+    },
+    {
+      "name": "TP1_SWAP0_MODEL_LOAD",
+      "outcome": "PASS",
+      "observed": "vLLM 0.6.3.post1 loaded Qwen2.5-7B-Instruct in bf16, TP=1, max_seq_len=32768, 47,413 GPU blocks, 0 CPU blocks, and completed CUDA graph capture.",
+      "outcome_bearing_model_generation": false
+    }
+  ],
+  "execution_adjudication": {
+    "unchanged_source_faithful_execution": false,
+    "compatibility_adapted_runtime_qualified": true,
+    "six_episode_p1_collection": "ELIGIBLE_AFTER_EXPLICIT_COLLECTION_HARNESS_RECEIPT",
+    "real_evolution_p1b": "NOT_YET_AUTHORIZED",
+    "p2": "NOT_AUTHORIZED",
+    "reason": "Runtime and model are now qualified, but the frozen focal-skill isolation and six-episode persistence harness must be bound before generating task outcomes. Evolution remains gated on a valid frozen six-Experience artifact."
+  },
+  "scientific_boundary": {
+    "new_task_outcomes": 0,
+    "new_outcome_bearing_model_calls": 0,
+    "gpu_runtime_smokes": 2,
+    "p1a_collection_authority": false,
+    "p1b_evolution_authority": false,
+    "p2_execution_authority": false,
+    "claim_expansion": false
+  },
+  "decision": "QUALIFY_COMPATIBILITY_ADAPTED_RUNTIME_AND_REQUIRE_COLLECTION_HARNESS_BINDING_BEFORE_P1A"
+}

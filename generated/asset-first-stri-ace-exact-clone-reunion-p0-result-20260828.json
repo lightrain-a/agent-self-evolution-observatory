@@ -1,0 +1,46 @@
+{
+  "checks": {
+    "id_placebo_id_differs": true,
+    "id_placebo_sufficient_state_matches_canonical": true,
+    "parse_format_roundtrip": true,
+    "repair_exactly_matches_canonical_line": true,
+    "repair_sufficient_state_matches_canonical": true,
+    "split_content_exact": true,
+    "split_harmful_conserved": true,
+    "split_helpful_conserved": true
+  },
+  "decision": "ZERO_PROVIDER_REUNION_OPERATOR_PASS",
+  "experiment_id": "ASSET-FIRST-STRI-ACE-EXACT-CLONE-REUNION-P0-20260828",
+  "paper_id": "STRI",
+  "schema_version": "1.0",
+  "scientific_boundary": {
+    "behavioral_effect_established": false,
+    "claim_expansion": false,
+    "counter_conservation_established": true,
+    "curator_output_invariance_established": false,
+    "native_ace_robustness_established": false,
+    "new_gpu_runs": 0,
+    "new_model_calls": 0,
+    "timing_projection_established": true
+  },
+  "source_commit": "82709de050e1db6e6ef2f07bcb0393560b94992a",
+  "stage": "SECONDARY_CARRIER_ZERO_PROVIDER_STATE_REUNION_PROBE",
+  "timing_projection": {
+    "canonical_curator_input_sha256": "6b5f5071e73c936f1d7022561d0a0cd06029fcc8787a4ede5b1a021b24c84b3f",
+    "deterministic_post_curator_reunion_curator_input_sha256": "6a18db8cbffa81c5e1ab835d9c5eaa2f06cd496a247fc15042c7c73c293748fd",
+    "deterministic_pre_curator_reunion_curator_input_sha256": "6b5f5071e73c936f1d7022561d0a0cd06029fcc8787a4ede5b1a021b24c84b3f",
+    "native_analyzer_off_curator_input_sha256": "6a18db8cbffa81c5e1ab835d9c5eaa2f06cd496a247fc15042c7c73c293748fd",
+    "native_analyzer_on_curator_input_sha256": "6a18db8cbffa81c5e1ab835d9c5eaa2f06cd496a247fc15042c7c73c293748fd",
+    "post_curator_repair_cannot_change_current_curator_input": true,
+    "pre_curator_repair_matches_canonical_input": true
+  },
+  "witness": {
+    "canonical": "[str-00001] helpful=6 harmful=2 :: Verify all constraints before committing the answer.",
+    "deterministic_repair": "[str-00001] helpful=6 harmful=2 :: Verify all constraints before committing the answer.",
+    "id_placebo": "[str-00999] helpful=6 harmful=2 :: Verify all constraints before committing the answer.",
+    "split": [
+      "[str-00001] helpful=3 harmful=1 :: Verify all constraints before committing the answer.",
+      "[str-00002] helpful=3 harmful=1 :: Verify all constraints before committing the answer."
+    ]
+  }
+}
