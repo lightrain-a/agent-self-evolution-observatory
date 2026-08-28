@@ -31,7 +31,7 @@ class C1StageResolvedStoryTest(unittest.TestCase):
 
     def test_receipt_is_zero_execution_and_artifacts_are_content_addressed(self) -> None:
         self.assertEqual(self.receipt["paper_id"], PAPER_ID)
-        self.assertEqual(self.receipt["new_story"]["paper_archetype"], "identification_measurement")
+        self.assertEqual(self.receipt["new_story"]["paper_archetype"], "causal_identification")
         self.assertEqual(self.receipt["execution"]["new_scientific_provider_calls"], 0)
         self.assertEqual(self.receipt["execution"]["new_gpu_scientific_runs"], 0)
         self.assertEqual(self.receipt["execution"]["new_scientific_experiments"], 0)
@@ -61,7 +61,7 @@ class C1StageResolvedStoryTest(unittest.TestCase):
         self.assertIn("opposite signs", combined.lower())
 
     def test_reader_and_story_do_not_revert_to_forced_equals_native_claim(self) -> None:
-        self.assertIn("paper_archetype:\"identification_measurement\"", self.story)
+        self.assertIn("paper_archetype:\"causal_identification\"", self.story)
         self.assertIn("forced leverage", self.story.lower())
         self.assertIn("native transport", self.story.lower())
         self.assertIn("Forced leverage ≠ native transport", self.reader)

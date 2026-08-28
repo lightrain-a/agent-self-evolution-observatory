@@ -14,7 +14,7 @@
   },
   "new_story": {
     "title": "Memory Divergence Is Not Behavioral Divergence: Stage-Resolved Transport in Self-Improving Agent Memory",
-    "paper_archetype": "identification_measurement",
+    "paper_archetype": "causal_identification",
     "scientific_object": "stage-resolved persistent-state transport",
     "transport_chain": [
       "reward-conditioned durable write",
