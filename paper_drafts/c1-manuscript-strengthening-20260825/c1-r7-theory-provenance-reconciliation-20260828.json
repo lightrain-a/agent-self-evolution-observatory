@@ -1,0 +1,73 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_R7_THEORY_PROVENANCE_RECONCILIATION",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "generated_at": "2026-08-28",
+  "canonical_base": "fc1a5b0231e08f49329faf5c7e96df24e85670e5",
+  "branch": "research/c1-transport-governance-20260828",
+  "issue": "The user-supplied C1-stage-resolved-r7.pdf contains a prerequisite-derived 10-state diagnostic-completeness lemma, while the current canonical Git manuscript and all searched C1 worktree sources do not contain that theorem or its verifier. Treating the current Git source as a complete replacement for R7 would therefore regress theoretical depth.",
+  "user_supplied_reading_copy": {
+    "filename": "C1-stage-resolved-r7.pdf",
+    "sha256": "c199e8cb4bed271cb0a5484319462781829401e0ae4319cc9848eb6d6aa839d4",
+    "bytes": 306189,
+    "role": "external reading/reference copy supplied in the current conversation; not itself a canonical Git artifact",
+    "relevant_claim": "Native prerequisite order O=>U=>E=>W plus independent F yields 10 binary diagnostic states; only the full W/E/U/O/F surface basis separates all states."
+  },
+  "repository_search": {
+    "result": "NO_EXISTING_SERVER_SOURCE_WITH_R7_COMPLETENESS_THEOREM_FOUND",
+    "scope": "current canonical repository plus available C1 worktrees on 69",
+    "interpretation": "The theorem must not be silently attributed to current canonical source provenance."
+  },
+  "independent_reconstruction": {
+    "runner": "paper_drafts/c1-manuscript-strengthening-20260825/analyze_c1_prerequisite_diagnostic_completeness.py",
+    "artifact": "paper_drafts/c1-manuscript-strengthening-20260825/c1-prerequisite-diagnostic-completeness-20260828.json",
+    "artifact_sha256": "da9b89d388090f59db6eeba984145145ea6c04de3ba5be43e78f2a6686199752",
+    "content_sha256_without_self": "b3cca3f0e8b0e87a4266401cba5519765cc13e9d05f415db8e5fca76cb41fa16",
+    "method": "Construct the complete prefix-depth class p in {0,1,2,3,4} crossed with F in {0,1}; exhaustively enumerate all 32 observation subsets; compute projection aliases and verify injectivity without using empirical outcomes or model calls.",
+    "verified_result": {
+      "diagnostic_states": 10,
+      "observed_surface_subsets": 32,
+      "unique_injective_subset": [
+        "W",
+        "E",
+        "U",
+        "O",
+        "F"
+      ],
+      "omitting_W_ambiguous_pairs": 2,
+      "omitting_E_ambiguous_pairs": 2,
+      "omitting_U_ambiguous_pairs": 2,
+      "omitting_O_ambiguous_pairs": 2,
+      "omitting_F_ambiguous_pairs": 5
+    },
+    "execution": {
+      "provider_calls": 0,
+      "gpu_runs": 0,
+      "model_actions": 0,
+      "empirical_outcomes_read": 0
+    },
+    "runner_sha256": "86bc2156492fc1dfa2a51ca4ca4d980af8ffb668d9e2850a1f82c86995cd4afc",
+    "test": "paper_drafts/c1-manuscript-strengthening-20260825/test_c1_prerequisite_diagnostic_completeness.py",
+    "test_sha256": "e78462a933beed9c992f62887a58d72b4039c4a97070a813501a6fb055ddb66e",
+    "verification": "6/6 PASS"
+  },
+  "adjudication": {
+    "theorem_status": "DETERMINISTICALLY_RECONSTRUCTED_FOR_PAPER_SPECIFIC_PREREQUISITE_CLASS",
+    "allowed_manuscript_use": "May be reinstated as a paper-specific diagnostic-completeness lemma after its verifier and regression tests are versioned with the manuscript.",
+    "forbidden_upgrade": [
+      "do not claim generic diagnosability mathematics as novel",
+      "do not claim W/E/U/O/F is universally minimal for arbitrary stochastic memory systems",
+      "do not map empirical NOT-SUPPORTED states to literal binary absence",
+      "do not use the theorem to upgrade operational localization into causal mediation"
+    ],
+    "relationship_to_engineering_revision": "The theorem explains why all five observation surfaces are required for diagnosis; the engineering closure explains what to do with the resulting stage signature. They are complementary rather than competing contributions.",
+    "scientific_results_changed": false
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}
