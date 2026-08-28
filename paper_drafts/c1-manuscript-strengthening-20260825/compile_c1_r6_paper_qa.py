@@ -32,11 +32,11 @@ SOURCE_DATE_EPOCH = "1787875200"
 EXPECTED = {
     "pdf": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70",
     "source_zip": "1b39471799d0ae3efc41b4e42a5b744efc7d82c9e2efce82eeea80dd7085872b",
-    "manifest_file": "6d0b0b21be4be841c9d1300145cfeaf06d5502a90cb26e8a60e33b434c9c8a76",
+    "manifest_file": "e969630c51c64cf75e97f435ff386dff6c4d35e711e2b9ec5b5ba1c219eff27f",
     "sensitivity": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba",
     "stage": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa",
-    "claim_audit": "f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c",
-    "claim_runner": "51599cc126a5bf35e05f6ac956f4a24d6bd5c774f04458ed045288115d9727ee",
+    "claim_audit": "715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332",
+    "claim_runner": "7e4bde4dafdecb9d2fa0d39e98e889382dd47661c78ab7d33c997bcad0eb5743",
     "claim_registry": "ad034d2da0bc99af0506aca1686c9adb5e8247875fb10a3de5b63cda1397cfbc",
 }
 
@@ -49,6 +49,7 @@ MANDATORY = (
     "page-constraint",
     "rendered-pdf-visual-qa",
     "artifact-hashes",
+    "claim-audit-cas-replay",
     "statement-evidence-binding",
 )
 
@@ -169,6 +170,21 @@ def main() -> None:
     )
     visual_ok = visual_ok and fonts_embedded
 
+    claim_cas_paths = {
+        "artifact": HERE / "provenance" / "sha256" / f"{EXPECTED['claim_audit']}.json",
+        "runner": HERE / "provenance" / "runners" / "sha256" / f"{EXPECTED['claim_runner']}.py",
+        "registry": HERE / "provenance" / "registries" / "sha256" / f"{EXPECTED['claim_registry']}.json",
+    }
+    claim_cas_ok = (
+        claim_cas_paths["artifact"].is_file()
+        and claim_cas_paths["artifact"].read_bytes() == CLAIM_AUDIT.read_bytes()
+        and claim_cas_paths["runner"].is_file()
+        and claim_cas_paths["runner"].read_bytes() == CLAIM_RUNNER.read_bytes()
+        and claim_cas_paths["registry"].is_file()
+        and claim_cas_paths["registry"].read_bytes() == CLAIM_REGISTRY.read_bytes()
+        and '"status": "REPLAY_PASS"' in claim_replay
+    )
+
     artifact_ok = (
         sha(PDF) == EXPECTED["pdf"]
         and sha(SOURCE_ZIP) == EXPECTED["source_zip"]
@@ -223,6 +239,7 @@ def main() -> None:
         "page-constraint": page_constraint_ok,
         "rendered-pdf-visual-qa": visual_ok,
         "artifact-hashes": artifact_ok,
+        "claim-audit-cas-replay": claim_cas_ok,
         "statement-evidence-binding": statement_ok,
     }
     if set(checks) != set(MANDATORY):
@@ -244,6 +261,7 @@ def main() -> None:
             "rendered_pages": len(visual_rows), "fonts_embedded": fonts_embedded,
             "source_rebuild_byte_equal": rebuild_byte_equal,
             "claim_audit_replay_pass": True,
+            "claim_audit_content_addressed": claim_cas_ok,
             "provenance_reconciliation_pass": True,
         },
         "bindings": {

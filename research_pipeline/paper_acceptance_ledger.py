@@ -356,14 +356,26 @@ def _review_key(value: Any) -> str:
 
 
 def _public_review_learning_signals(row: Mapping[str, Any]) -> dict[str, Any]:
-    """Aggregate Mock-PC structure without exposing reviewer prose or rationale."""
+    """Aggregate structured review signals without exposing reviewer prose or rationale."""
     category_counts: dict[str, int] = {}
     evidence_state_counts: dict[str, int] = {}
     action_class_counts: dict[str, int] = {}
-    review_receipts = decision_critical = targeted = preserved = 0
+    lesson_codes: set[str] = set()
+    lesson_source_refs: set[str] = set()
+    review_receipts = decision_critical = targeted = preserved = structured_lesson_receipts = 0
     contract_sha256 = str(row.get("contract_sha256") or "")
     for event in row.get("events") or []:
-        if not isinstance(event, dict) or event.get("event_type") != "mock-pc-review":
+        if not isinstance(event, dict):
+            continue
+        if event.get("event_type") == "review-learning":
+            receipt = event.get("receipt") or {}
+            if not isinstance(receipt, dict) or str(receipt.get("contract_sha256") or "") != contract_sha256 or not _receipt_hash_valid(receipt):
+                continue
+            structured_lesson_receipts += 1
+            lesson_codes.update(_review_key(code) for code in receipt.get("lesson_codes") or [] if str(code).strip())
+            lesson_source_refs.update(str(ref) for ref in receipt.get("source_refs") or [] if re.fullmatch(r"artifact:sha256:[0-9a-f]{64}", str(ref)))
+            continue
+        if event.get("event_type") != "mock-pc-review":
             continue
         receipt = event.get("receipt") or {}
         if not isinstance(receipt, dict) or str(receipt.get("contract_sha256") or "") != contract_sha256 or not _receipt_hash_valid(receipt):
@@ -387,6 +399,9 @@ def _public_review_learning_signals(row: Mapping[str, Any]) -> dict[str, Any]:
             action_class_counts[action_class] = action_class_counts.get(action_class, 0) + 1
     return {
         "review_receipts": review_receipts,
+        "structured_lesson_receipts": structured_lesson_receipts,
+        "lesson_codes": sorted(lesson_codes),
+        "lesson_source_refs": sorted(lesson_source_refs),
         "decision_critical_objections": decision_critical,
         "category_counts": dict(sorted(category_counts.items())),
         "evidence_state_counts": dict(sorted(evidence_state_counts.items())),
@@ -510,6 +525,15 @@ def _receipt_hash_valid(receipt: Mapping[str, Any]) -> bool:
             "blockers": receipt.get("blockers") or [],
         }
         return str(receipt.get("claim_audit_sha256") or "") == _digest(identity)
+    if receipt_type == "review-learning":
+        identity = {
+            "paper_id": receipt.get("paper_id"),
+            "contract_sha256": receipt.get("contract_sha256"),
+            "lesson_codes": receipt.get("lesson_codes") or [],
+            "source_refs": receipt.get("source_refs") or [],
+            "reviewer_prose_exposed": receipt.get("reviewer_prose_exposed"),
+        }
+        return str(receipt.get("review_learning_sha256") or "") == _digest(identity)
     return False
 
 
@@ -640,6 +664,50 @@ def record_story_search(
 def record_mock_review(root: Path, contract: PaperContract, mode: MockReviewMode,
                        objections: Sequence[ReviewerObjection], actor: str = "mock-pc") -> dict[str, Any]:
     return _append(root, contract, actor, {"event_type": "mock-pc-review", "receipt": build_mock_review_receipt(contract, mode, objections)})
+
+
+def record_review_learning(
+    root: Path,
+    contract: PaperContract,
+    *,
+    lesson_codes: Sequence[str],
+    source_refs: Sequence[str],
+    actor: str = "review-learning",
+) -> dict[str, Any]:
+    codes = sorted({_review_key(code) for code in lesson_codes if str(code).strip()})
+    refs = sorted({str(ref) for ref in source_refs if str(ref).strip()})
+    if not codes:
+        raise ValueError("review-learning requires at least one structured lesson code")
+    if not refs or any(not re.fullmatch(r"artifact:sha256:[0-9a-f]{64}", ref) for ref in refs):
+        raise ValueError("review-learning source refs must be content-addressed artifact:sha256 references")
+    identity = {
+        "paper_id": contract.paper_id,
+        "contract_sha256": paper_contract_digest(contract),
+        "lesson_codes": codes,
+        "source_refs": refs,
+        "reviewer_prose_exposed": False,
+    }
+    receipt = {
+        "schema_version": "1.0",
+        "receipt_type": "review-learning",
+        **identity,
+        "review_learning_sha256": _digest(identity),
+        "scientific_authority": False,
+        "experiment_authority": False,
+        "gpu_authority": False,
+        "submission_authority": False,
+    }
+    existing = load_paper_ledger(root, contract.paper_id)
+    receipt_sha = receipt["review_learning_sha256"]
+    if any(
+        isinstance(event, dict)
+        and event.get("event_type") == "review-learning"
+        and isinstance(event.get("receipt"), dict)
+        and event["receipt"].get("review_learning_sha256") == receipt_sha
+        for event in existing.get("events") or []
+    ):
+        return existing
+    return _append(root, contract, actor, {"event_type": "review-learning", "receipt": receipt})
 
 
 def record_claim_audit(
@@ -873,7 +941,7 @@ def validate_paper_ledger(row: Mapping[str, Any]) -> list[str]:
             simulated_contract = dict(revised) if isinstance(revised, dict) else {}
             simulated_row["contract_sha256"] = simulated_contract_sha256
 
-        if event_type in {"story-search", "mock-pc-review", "claim-audit"}:
+        if event_type in {"story-search", "mock-pc-review", "claim-audit", "review-learning"}:
             receipt = event.get("receipt") or {}
             if not isinstance(receipt, dict) or str(receipt.get("contract_sha256") or "") != simulated_contract_sha256 or not _receipt_hash_valid(receipt):
                 errors.append(f"invalid-content-addressed-receipt:{event_type}")

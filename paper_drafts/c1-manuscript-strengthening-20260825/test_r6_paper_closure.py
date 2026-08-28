@@ -26,7 +26,13 @@ class C1R6PaperClosureTest(unittest.TestCase):
         audit = self.load("claim-audit-r6-provenance-seal-20260828.json")
         self.assertEqual(audit["status"], "PASS")
         self.assertEqual(audit["summary"], {"claims_total": 35, "claims_passed": 35, "claims_failed": 0})
-        self.assertEqual(sha(HERE / "claim-audit-r6-provenance-seal-20260828.json"), "f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c")
+        audit_sha = "715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332"
+        runner_sha = "7e4bde4dafdecb9d2fa0d39e98e889382dd47661c78ab7d33c997bcad0eb5743"
+        registry_sha = "ad034d2da0bc99af0506aca1686c9adb5e8247875fb10a3de5b63cda1397cfbc"
+        self.assertEqual(sha(HERE / "claim-audit-r6-provenance-seal-20260828.json"), audit_sha)
+        self.assertEqual((HERE / "provenance" / "sha256" / f"{audit_sha}.json").read_bytes(), (HERE / "claim-audit-r6-provenance-seal-20260828.json").read_bytes())
+        self.assertEqual((HERE / "provenance" / "runners" / "sha256" / f"{runner_sha}.py").read_bytes(), (HERE / "run_claim_audit_r6.py").read_bytes())
+        self.assertEqual((HERE / "provenance" / "registries" / "sha256" / f"{registry_sha}.json").read_bytes(), (HERE / "claim-audit-r6-registry-20260828.json").read_bytes())
 
     def test_provenance_reconciliation_preserves_history_without_rewriting_it(self) -> None:
         row = self.load("c1-r6-provenance-reconciliation-20260828.json")
@@ -42,8 +48,9 @@ class C1R6PaperClosureTest(unittest.TestCase):
     def test_pdf_qa_is_nine_of_nine_and_rebuild_exact(self) -> None:
         qa = self.load("paper-qa-r6-provenance-reconciled-20260828.json")
         self.assertEqual(qa["status"], "PASS")
-        self.assertEqual((qa.get("summary") or {}).get("checks_passed"), 9)
-        self.assertEqual((qa.get("summary") or {}).get("checks_total"), 9)
+        self.assertEqual((qa.get("summary") or {}).get("checks_passed"), 10)
+        self.assertEqual((qa.get("summary") or {}).get("checks_total"), 10)
+        self.assertTrue((qa.get("summary") or {}).get("claim_audit_content_addressed"))
         self.assertTrue((qa.get("summary") or {}).get("source_rebuild_byte_equal"))
         self.assertEqual((qa.get("summary") or {}).get("main_text_pages"), 9)
         self.assertEqual((qa.get("summary") or {}).get("references_start_page"), 10)

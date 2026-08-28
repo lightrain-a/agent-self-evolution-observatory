@@ -55724,7 +55724,7 @@
   },
   "research_memory_wiki": {
     "schema_version": "1.2",
-    "generated_at": "2026-08-27T18:59:32+00:00",
+    "generated_at": "2026-08-28T07:49:20+00:00",
     "status": "MEMORY_COMPILED",
     "policy": {
       "schema_version": "1.2",
@@ -57524,10 +57524,10 @@
         "automatic_skill_promotion": false
       },
       {
-        "memory_id": "MEM-REVI-b85c3d5a3b7be3dae9",
+        "memory_id": "MEM-REVI-ae1288779c7f4d35fa",
         "kind": "REVIEW_LESSON",
         "title": "Paper review pattern: D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-        "summary": "4 structured Mock-PC receipts contain 10 decision-critical objections. Categories={\"conceptual\": 1, \"empirical\": 2, \"empirical-sufficiency\": 4, \"insufficient-scale\": 1, \"missing-evidence\": 1, \"novelty\": 1, \"overclaiming\": 1, \"scope\": 1, \"scope-of-support-debt\": 1, \"technical-quality\": 1}; evidence_states={\"existing-evidence\": 2, \"false-premise-with-evidence\": 1, \"missing-decisive-evidence\": 9, \"uncertain\": 2}; action_classes={\"human-adjudication\": 2, \"narrative-repair\": 1, \"preserve-limitation\": 6, \"targeted-experiment\": 5}.",
+        "summary": "2 structured Mock-PC receipts contain 10 decision-critical objections. Categories={\"claim-boundary\": 2, \"generalization\": 2, \"intervention-comparability\": 2, \"measurement-semantics\": 2, \"novelty\": 2, \"statistical-identifiability\": 2}; evidence_states={\"existing-evidence\": 10, \"false-premise-with-evidence\": 1, \"requires-new-claim\": 1}; action_classes={\"narrative-repair\": 10, \"prebuttal\": 1, \"preserve-limitation\": 1}. Structured lessons=[measurement-boundary-coarsening-test] For stage-resolved localization, test whether merging adjacent measurements destroys diagnostic resolution before treating their separation as load-bearing. [operational-localization-not-causal-onset] The first unsupported evidence stage localizes where attenuation becomes observable; it does not identify why attenuation occurs or a latent causal onset without matched-power intervention or mediation evidence. [claim-audit-needs-replayable-content-addressed-provenance] Treat a claim-audit PASS as valid only when the registry, runner, output artifact, exact source hashes, deterministic replay, and content-addressed objects are mechanically verified. [bundled-writer-intervention-not-atom-pure] If a writer branch changes both reflection instruction and reward/outcome semantics, do not attribute atom-level effects to the reward bit alone. [scope-stage-boundary-to-measured-substrate] Scope a stage boundary to the writer, backbone, domain, and stage measurements actually observed; cross-domain write/terminal replication does not silently replicate an unmeasured exposure-to-uptake ladder. [stopped-method-no-behavioral-efficacy] A repair or method extension stopped before behavioral evaluation cannot support a behavioral efficacy claim. [method-extension-stop-does-not-negate-measurement-result] A stopped method extension is evidence about method qualification, not a refutation of an already-supported measurement result.",
         "candidate_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
         "scope": "paper-design-and-internal-review",
         "affected_layer": "paper_review",
@@ -57539,40 +57539,47 @@
         "principle_update_allowed": false,
         "reopen_condition": "",
         "opposite_search_seed": "",
-        "reusable_precheck": "Before Paper Design and Mock PC, explicitly check recurring objection categories and evidence states from prior papers. Treat the pattern as a precheck, never as scientific evidence or experiment authorization.",
+        "reusable_precheck": "Before Paper Design and Mock PC, explicitly check recurring objection categories and evidence states from prior papers. Treat the pattern as a precheck, never as scientific evidence or experiment authorization. For stage-resolved localization, test whether merging adjacent measurements destroys diagnostic resolution before treating their separation as load-bearing. The first unsupported evidence stage localizes where attenuation becomes observable; it does not identify why attenuation occurs or a latent causal onset without matched-power intervention or mediation evidence. Treat a claim-audit PASS as valid only when the registry, runner, output artifact, exact source hashes, deterministic replay, and content-addressed objects are mechanically verified. If a writer branch changes both reflection instruction and reward/outcome semantics, do not attribute atom-level effects to the reward bit alone. Scope a stage boundary to the writer, backbone, domain, and stage measurements actually observed; cross-domain write/terminal replication does not silently replicate an unmeasured exposure-to-uptake ladder. A repair or method extension stopped before behavioral evaluation cannot support a behavioral efficacy claim. A stopped method extension is evidence about method qualification, not a refutation of an already-supported measurement result.",
         "source_refs": [
-          "paper-ledger:D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE:mock-pc"
+          "paper-ledger:D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE:mock-pc",
+          "artifact:sha256:0db9ae6b5e8735aba2a49d9c96417b3df93c7ad02c50a714ebb394c4cbe7b824",
+          "artifact:sha256:715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332",
+          "artifact:sha256:f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
         ],
         "source_artifact": "paper_acceptance_ledger.review_learning",
-        "occurrences": 4,
+        "occurrences": 3,
         "review_learning": {
           "decision_critical_objections": 10,
           "category_counts": {
-            "conceptual": 1,
-            "empirical": 2,
-            "empirical-sufficiency": 4,
-            "insufficient-scale": 1,
-            "missing-evidence": 1,
-            "novelty": 1,
-            "overclaiming": 1,
-            "scope": 1,
-            "scope-of-support-debt": 1,
-            "technical-quality": 1
+            "claim-boundary": 2,
+            "generalization": 2,
+            "intervention-comparability": 2,
+            "measurement-semantics": 2,
+            "novelty": 2,
+            "statistical-identifiability": 2
           },
           "evidence_state_counts": {
-            "existing-evidence": 2,
+            "existing-evidence": 10,
             "false-premise-with-evidence": 1,
-            "missing-decisive-evidence": 9,
-            "uncertain": 2
+            "requires-new-claim": 1
           },
           "action_class_counts": {
-            "human-adjudication": 2,
-            "narrative-repair": 1,
-            "preserve-limitation": 6,
-            "targeted-experiment": 5
+            "narrative-repair": 10,
+            "prebuttal": 1,
+            "preserve-limitation": 1
           },
-          "targeted_experiment_proposals": 5,
-          "claim_expansion_requests_preserved_as_limitations": 6
+          "targeted_experiment_proposals": 0,
+          "claim_expansion_requests_preserved_as_limitations": 1,
+          "structured_lesson_receipts": 1,
+          "lesson_codes": [
+            "measurement-boundary-coarsening-test",
+            "operational-localization-not-causal-onset",
+            "claim-audit-needs-replayable-content-addressed-provenance",
+            "bundled-writer-intervention-not-atom-pure",
+            "scope-stage-boundary-to-measured-substrate",
+            "stopped-method-no-behavioral-efficacy",
+            "method-extension-stop-does-not-negate-measurement-result"
+          ]
         },
         "scientific_authority": false,
         "certainty": "SUPPORTED",
@@ -59083,7 +59090,7 @@
       "p0": false,
       "gpu": false
     },
-    "wiki_sha256": "e21219d0140db78a35c1c60fc15e54fc4f14afa65e2de9c01f6cd0a2d2262f7f",
+    "wiki_sha256": "521019e45f27aa148d3876e97bcd03363ff7917e21cb7b83bd64d58c35c0ee6c",
     "lint": {
       "schema_version": "1.2",
       "status": "PASS",
@@ -59193,7 +59200,7 @@
         "MEM-DISC-1ed76bd4a2e36f2461",
         "MEM-FAIL-701bf9fdd809641e82",
         "MEM-HOLD-3d2ca52b06eb1115f3",
-        "MEM-REVI-b85c3d5a3b7be3dae9",
+        "MEM-REVI-ae1288779c7f4d35fa",
         "MEM-SEAR-1f73ec187b29d80d4b",
         "MEM-SUCC-ff21703f69998ff65c",
         "MEM-DISC-3e95edd7bafe36fb61",
@@ -62558,9 +62565,9 @@
         },
         {
           "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-          "title": "Reward Errors Become Persistent State: A Controlled Write-Time Memory Intervention in Self-Improving Agents",
-          "central_question": "Can an erroneous reward label become persistent agent state by changing the memory written from an otherwise identical trajectory, and does that perturbation reach later behavior?",
-          "contract_sha256": "ff6edaa9d93fe289bb84e74937cece3176329925435de8b0c03649f239623ccb",
+          "title": "Memory Divergence Is Not Behavioral Divergence: Stage-Resolved Transport in Self-Improving Agent Memory",
+          "central_question": "When a reward-conditioned writer changes durable memory on an otherwise identical trajectory, how far does that state difference survive native retrieval exposure, policy uptake, and terminal outcome?",
+          "contract_sha256": "c6cd6e451dd5a7a610ef89f7b2e4ce3e54a70fb568889c6304c33e66dc50bd0e",
           "scientific_status": "READY",
           "current_state": "SUBMISSION_READY",
           "gate_clean_submission_ready": true,
@@ -62576,104 +62583,110 @@
             "gpu_authority": false
           },
           "review_learning": {
-            "review_receipts": 4,
+            "review_receipts": 2,
+            "structured_lesson_receipts": 1,
+            "lesson_codes": [
+              "bundled-writer-intervention-not-atom-pure",
+              "claim-audit-needs-replayable-content-addressed-provenance",
+              "measurement-boundary-coarsening-test",
+              "method-extension-stop-does-not-negate-measurement-result",
+              "operational-localization-not-causal-onset",
+              "scope-stage-boundary-to-measured-substrate",
+              "stopped-method-no-behavioral-efficacy"
+            ],
+            "lesson_source_refs": [
+              "artifact:sha256:0db9ae6b5e8735aba2a49d9c96417b3df93c7ad02c50a714ebb394c4cbe7b824",
+              "artifact:sha256:715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332",
+              "artifact:sha256:f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+            ],
             "decision_critical_objections": 10,
             "category_counts": {
-              "conceptual": 1,
-              "empirical": 2,
-              "empirical-sufficiency": 4,
-              "insufficient-scale": 1,
-              "missing-evidence": 1,
-              "novelty": 1,
-              "overclaiming": 1,
-              "scope": 1,
-              "scope-of-support-debt": 1,
-              "technical-quality": 1
+              "claim-boundary": 2,
+              "generalization": 2,
+              "intervention-comparability": 2,
+              "measurement-semantics": 2,
+              "novelty": 2,
+              "statistical-identifiability": 2
             },
             "evidence_state_counts": {
-              "existing-evidence": 2,
+              "existing-evidence": 10,
               "false-premise-with-evidence": 1,
-              "missing-decisive-evidence": 9,
-              "uncertain": 2
+              "requires-new-claim": 1
             },
             "action_class_counts": {
-              "human-adjudication": 2,
-              "narrative-repair": 1,
-              "preserve-limitation": 6,
-              "targeted-experiment": 5
+              "narrative-repair": 10,
+              "prebuttal": 1,
+              "preserve-limitation": 1
             },
-            "targeted_experiment_proposals": 5,
-            "claim_expansion_requests_preserved_as_limitations": 6,
+            "targeted_experiment_proposals": 0,
+            "claim_expansion_requests_preserved_as_limitations": 1,
             "reviewer_prose_exposed": false,
             "scientific_authority": false,
             "experiment_authority": false,
             "gpu_authority": false
           },
-          "supported_claims": 4,
-          "active_unrefuted_claims": 1,
-          "unsupported_claims": 2,
+          "supported_claims": 8,
+          "active_unrefuted_claims": 0,
+          "unsupported_claims": 5,
           "limitations": [
-            "The F0 intervention requests six paired memories. Four pairs return complete outputs in both reward conditions. Two failure-label provider responses terminate as incomplete before assistant text is produced. Their provider response identifiers are archived and GET-only recovery confirms that no text is available. These two cases remain support debt. They do not change the observed 4/4 content-divergence result among complete pairs.",
-            "F0 establishes the reward-to-memory write channel. It does not yet measure the full reward-to-future-outcome effect. Matched future-task injection and run-level corruption experiments remain experiment debt. The manuscript therefore treats downstream variance amplification as an active causal hypothesis grounded by the observed write-channel mechanism.",
-            "The paired intervention uses DeepSeek-V4-Flash as the memory writer. The released ReasoningBank implementation can use other writer models. Replication across memory-writer families remains experiment debt for a model-independent effect-size claim.",
-            "The released trajectories used for F0 come from one WebArena Shopping run. They include both original-success and original-failure episodes, which supports the mechanism across outcome strata. Broader task-family replication remains experiment debt.",
-            "Token-set Jaccard distance measures content divergence at a coarse lexical level. Title-set changes supply an additional structural measure. A semantic representation analysis can further quantify whether reward labels move memories toward distinct strategy clusters.",
-            "Support debt: Two requested F0 failure-label responses remain provider-incomplete after GET-only recovery and are excluded from scientific counts."
+            "The paired writer intervention identifies an operational success-versus-failure branch contrast. The frozen pool lacks explicit decoding-seed binding and same-condition same-trajectory noise-floor replication for atom-level causal-purity claims.",
+            "Forced fixed-evidence injection mechanically supplies memory exposure and therefore measures latent leverage rather than native end-to-end transport.",
+            "Native Shopping branch-specific first-action and terminal contrasts are sparse and do not pass their primary statistical gates; the result localizes attenuation rather than a universal directional effect.",
+            "Reddit provides a second-domain write/transport replication but remains small and sign-heterogeneous; cross-writer, cross-model, and broader task-family generalization remain open.",
+            "Source-faithful live WebArena browser navigation is unavailable in the released environment; native measurements use the frozen supported pathway rather than a newly reconstructed live endpoint.",
+            "The CBRG method extension stopped at method realization because no independently qualified outcome-independent semantic-validity adjudicator was available. No behavioral CBRG method-effect experiment was authorized.",
+            "The two initial failure-label provider responses that terminated before assistant text remain excluded from paired text estimands and preserved as support debt rather than negative examples."
           ],
-          "reopen_conditions": [],
+          "reopen_conditions": [
+            "A method-extension reopen requires a new content-addressed outcome-independent validity adjudicator, an independent task-specific pre-outcome qualification receipt, same-information non-reducibility, and fresh collision clearance.",
+            "A broader behavioral-generalization claim requires new frozen cross-writer or cross-domain native transport evidence with the same stage-resolved estimands."
+          ],
           "summary": {
-            "events": 50,
-            "allowed_transitions": 8,
+            "events": 75,
+            "allowed_transitions": 16,
             "blocked_transitions": 0,
-            "story_search_receipts": 1,
-            "mock_reviews": 4,
-            "claim_audit_receipts": 1,
-            "manuscript_ci_receipts": 4,
-            "prebuttal_receipts": 1,
-            "submission_readiness_receipts": 1,
-            "contract_revisions": 0
+            "story_search_receipts": 2,
+            "mock_reviews": 6,
+            "claim_audit_receipts": 2,
+            "manuscript_ci_receipts": 5,
+            "post_draft_integrity_receipts": 0,
+            "prebuttal_receipts": 2,
+            "submission_readiness_receipts": 2,
+            "contract_revisions": 0,
+            "scientific_reopens": 1
           },
           "latest_story_search": {
             "pass": true,
-            "selected_story_id": "S1-CURRENT-CHAIN",
-            "selected_story_title": "Current mechanism chain",
-            "story_search_sha256": "32885d13b5eb44ae667cb046a46c4694acf25a128e3cfe5ed00855d6e2c090d0",
+            "selected_story_id": "R4-STAGE-SIGNATURE",
+            "selected_story_title": "Stage signature under a controlled writer intervention",
+            "story_search_sha256": "fa7657ceb347689ce184d201847915afc5c15c91e36733551c53709442d343e8",
             "valid_candidates": 3,
-            "paper_design_memory_query_pack_sha256": "",
-            "paper_design_memory_binding_sha256": "",
-            "paper_design_memory_wiki_sha256": "",
-            "paper_design_memory_selected": 0,
-            "paper_design_review_lessons_selected": 0
+            "paper_design_memory_query_pack_sha256": "282f66e23470f61f0933b1f20e117d7c4a3bffd2bf82e8038b291bea256d96d2",
+            "paper_design_memory_binding_sha256": "d82bcbd7a96d0d9567c9a9c3ae9d329333e4d65e1881962674140fd4f3742d85",
+            "paper_design_memory_wiki_sha256": "0162891e251e937e3f51b0523556c620da13ffe1ee3231a0929f8a8f929530e7",
+            "paper_design_memory_selected": 4,
+            "paper_design_review_lessons_selected": 1
           },
           "mock_pc_modes": {
-            "BLIND_MANUSCRIPT": "d9d25dd35e9f58cba1154235620daea2c66b15b8846629874ebc0d5e8016bdf6",
-            "ARTIFACT_AWARE": "9535a18a9463a76d31eb0f42e93fe50c316e9f9c98c18869e58483349495929b"
+            "BLIND_MANUSCRIPT": "92b1f8721180a89faa6493bff74f69b19b0162e9c61696cb1bd0d3be9d729e2b",
+            "ARTIFACT_AWARE": "269c2d88acd9e03c287e7501b530f444f4a518cd4e6b8acde895cc31839c0d04"
           },
           "latest_mock_review": {
-            "mode": "FINAL_MULTI_REVIEW",
-            "review_sha256": "9df2b35dcd1884e138bf0247ffe8a919f20f0aac295b8d84057d4113248544c4",
+            "mode": "ARTIFACT_AWARE",
+            "review_sha256": "269c2d88acd9e03c287e7501b530f444f4a518cd4e6b8acde895cc31839c0d04",
             "summary": {
-              "scores": [
-                7,
-                8,
-                7
-              ],
-              "recommendations": [
-                "weak_accept",
-                "accept",
-                "weak_accept"
-              ],
-              "mean_score": 7.333333333333333,
-              "minimum_score": 7,
-              "decision_critical_blockers": 0
+              "objections": 6,
+              "decision_critical": 5,
+              "targeted_experiment_proposals": 0,
+              "claim_expansion_requests_preserved_as_limitations": 0
             }
           },
           "latest_claim_audit": {
             "pass": true,
-            "claim_audit_sha256": "ec9718bb7535a4d60056bdeb3f5cd25efafb38ee693989ae8d0e577d03611c8b",
+            "claim_audit_sha256": "715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332",
             "blockers": [],
-            "checks": 11,
-            "passed": 11
+            "checks": 35,
+            "passed": 35
           },
           "latest_manuscript_ci": {
             "pass": true,
@@ -62684,25 +62697,25 @@
           },
           "latest_prebuttal": {
             "pass": true,
-            "decision_critical": 7,
+            "decision_critical": 10,
             "blockers": [],
             "unresolved_decision_critical": 0
           },
           "latest_paper_preparation": {
             "pass": true,
-            "protocol_version": "1.0+r5-supplement-projection",
-            "receipt_sha256": "408a4ce7fbb3a0ecf236bb1e0924e3941990050c39fd045091011506951550a2",
+            "protocol_version": "1.0+r6-claim-provenance-seal",
+            "receipt_sha256": "616bed127eed8e665728fa71c67b3566857b2407319fa5e5f6200554f6be7a91",
             "required_gates": 8,
             "passed_gates": 8,
             "gate_pass": {
-              "agent-native-artifact": true,
-              "citation-integrity": true,
               "hierarchical-rubric": true,
-              "reader-simulation": true,
-              "reproducibility-bundle": true,
-              "submission-package": true,
               "verification-refinement": true,
-              "visual-story": true
+              "citation-integrity": true,
+              "visual-story": true,
+              "reproducibility-bundle": true,
+              "agent-native-artifact": true,
+              "reader-simulation": true,
+              "submission-package": true
             },
             "blockers": []
           },
@@ -62714,20 +62727,12 @@
             "external_human_submission_authority_required_for_SUBMITTED": true,
             "c3_c4_evidence_state": "",
             "exact_timesage_replication_debt": "",
-            "post_repair_mock_pc_recommendations": [
-              "weak_accept",
-              "accept",
-              "weak_accept"
-            ],
-            "post_repair_mock_pc_scores": [
-              7,
-              8,
-              7
-            ]
+            "post_repair_mock_pc_recommendations": [],
+            "post_repair_mock_pc_scores": []
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "da0ca50065cd8cccf55553eea101f78ba99128f10813fca7fa696ac8798be2a3",
+            "receipt_sha256": "3feba725405a555fa61b6b8ddfb97e67d6080146c925e6528fbb6ac0d99716e0",
             "blockers": []
           },
           "latest_transition": {
@@ -63312,7 +63317,8 @@
       "invalid": [],
       "scientific_authority": false
     },
-    "ledger_index_source": "generated/paper-registry.json"
+    "ledger_index_source": "generated/paper-registry.json",
+    "control_plane_reconciled_at": "2026-08-28T07:49:20+00:00"
   },
   "human_terminal_ideas": {
     "schema_version": "1.0",

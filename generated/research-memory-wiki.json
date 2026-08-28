@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-27T18:59:32+00:00",
+  "generated_at": "2026-08-28T07:49:20+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.2",
@@ -1800,10 +1800,10 @@
       "automatic_skill_promotion": false
     },
     {
-      "memory_id": "MEM-REVI-b85c3d5a3b7be3dae9",
+      "memory_id": "MEM-REVI-ae1288779c7f4d35fa",
       "kind": "REVIEW_LESSON",
       "title": "Paper review pattern: D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
-      "summary": "4 structured Mock-PC receipts contain 10 decision-critical objections. Categories={\"conceptual\": 1, \"empirical\": 2, \"empirical-sufficiency\": 4, \"insufficient-scale\": 1, \"missing-evidence\": 1, \"novelty\": 1, \"overclaiming\": 1, \"scope\": 1, \"scope-of-support-debt\": 1, \"technical-quality\": 1}; evidence_states={\"existing-evidence\": 2, \"false-premise-with-evidence\": 1, \"missing-decisive-evidence\": 9, \"uncertain\": 2}; action_classes={\"human-adjudication\": 2, \"narrative-repair\": 1, \"preserve-limitation\": 6, \"targeted-experiment\": 5}.",
+      "summary": "2 structured Mock-PC receipts contain 10 decision-critical objections. Categories={\"claim-boundary\": 2, \"generalization\": 2, \"intervention-comparability\": 2, \"measurement-semantics\": 2, \"novelty\": 2, \"statistical-identifiability\": 2}; evidence_states={\"existing-evidence\": 10, \"false-premise-with-evidence\": 1, \"requires-new-claim\": 1}; action_classes={\"narrative-repair\": 10, \"prebuttal\": 1, \"preserve-limitation\": 1}. Structured lessons=[measurement-boundary-coarsening-test] For stage-resolved localization, test whether merging adjacent measurements destroys diagnostic resolution before treating their separation as load-bearing. [operational-localization-not-causal-onset] The first unsupported evidence stage localizes where attenuation becomes observable; it does not identify why attenuation occurs or a latent causal onset without matched-power intervention or mediation evidence. [claim-audit-needs-replayable-content-addressed-provenance] Treat a claim-audit PASS as valid only when the registry, runner, output artifact, exact source hashes, deterministic replay, and content-addressed objects are mechanically verified. [bundled-writer-intervention-not-atom-pure] If a writer branch changes both reflection instruction and reward/outcome semantics, do not attribute atom-level effects to the reward bit alone. [scope-stage-boundary-to-measured-substrate] Scope a stage boundary to the writer, backbone, domain, and stage measurements actually observed; cross-domain write/terminal replication does not silently replicate an unmeasured exposure-to-uptake ladder. [stopped-method-no-behavioral-efficacy] A repair or method extension stopped before behavioral evaluation cannot support a behavioral efficacy claim. [method-extension-stop-does-not-negate-measurement-result] A stopped method extension is evidence about method qualification, not a refutation of an already-supported measurement result.",
       "candidate_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
       "scope": "paper-design-and-internal-review",
       "affected_layer": "paper_review",
@@ -1815,40 +1815,47 @@
       "principle_update_allowed": false,
       "reopen_condition": "",
       "opposite_search_seed": "",
-      "reusable_precheck": "Before Paper Design and Mock PC, explicitly check recurring objection categories and evidence states from prior papers. Treat the pattern as a precheck, never as scientific evidence or experiment authorization.",
+      "reusable_precheck": "Before Paper Design and Mock PC, explicitly check recurring objection categories and evidence states from prior papers. Treat the pattern as a precheck, never as scientific evidence or experiment authorization. For stage-resolved localization, test whether merging adjacent measurements destroys diagnostic resolution before treating their separation as load-bearing. The first unsupported evidence stage localizes where attenuation becomes observable; it does not identify why attenuation occurs or a latent causal onset without matched-power intervention or mediation evidence. Treat a claim-audit PASS as valid only when the registry, runner, output artifact, exact source hashes, deterministic replay, and content-addressed objects are mechanically verified. If a writer branch changes both reflection instruction and reward/outcome semantics, do not attribute atom-level effects to the reward bit alone. Scope a stage boundary to the writer, backbone, domain, and stage measurements actually observed; cross-domain write/terminal replication does not silently replicate an unmeasured exposure-to-uptake ladder. A repair or method extension stopped before behavioral evaluation cannot support a behavioral efficacy claim. A stopped method extension is evidence about method qualification, not a refutation of an already-supported measurement result.",
       "source_refs": [
-        "paper-ledger:D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE:mock-pc"
+        "paper-ledger:D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE:mock-pc",
+        "artifact:sha256:0db9ae6b5e8735aba2a49d9c96417b3df93c7ad02c50a714ebb394c4cbe7b824",
+        "artifact:sha256:715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332",
+        "artifact:sha256:f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
       ],
       "source_artifact": "paper_acceptance_ledger.review_learning",
-      "occurrences": 4,
+      "occurrences": 3,
       "review_learning": {
         "decision_critical_objections": 10,
         "category_counts": {
-          "conceptual": 1,
-          "empirical": 2,
-          "empirical-sufficiency": 4,
-          "insufficient-scale": 1,
-          "missing-evidence": 1,
-          "novelty": 1,
-          "overclaiming": 1,
-          "scope": 1,
-          "scope-of-support-debt": 1,
-          "technical-quality": 1
+          "claim-boundary": 2,
+          "generalization": 2,
+          "intervention-comparability": 2,
+          "measurement-semantics": 2,
+          "novelty": 2,
+          "statistical-identifiability": 2
         },
         "evidence_state_counts": {
-          "existing-evidence": 2,
+          "existing-evidence": 10,
           "false-premise-with-evidence": 1,
-          "missing-decisive-evidence": 9,
-          "uncertain": 2
+          "requires-new-claim": 1
         },
         "action_class_counts": {
-          "human-adjudication": 2,
-          "narrative-repair": 1,
-          "preserve-limitation": 6,
-          "targeted-experiment": 5
+          "narrative-repair": 10,
+          "prebuttal": 1,
+          "preserve-limitation": 1
         },
-        "targeted_experiment_proposals": 5,
-        "claim_expansion_requests_preserved_as_limitations": 6
+        "targeted_experiment_proposals": 0,
+        "claim_expansion_requests_preserved_as_limitations": 1,
+        "structured_lesson_receipts": 1,
+        "lesson_codes": [
+          "measurement-boundary-coarsening-test",
+          "operational-localization-not-causal-onset",
+          "claim-audit-needs-replayable-content-addressed-provenance",
+          "bundled-writer-intervention-not-atom-pure",
+          "scope-stage-boundary-to-measured-substrate",
+          "stopped-method-no-behavioral-efficacy",
+          "method-extension-stop-does-not-negate-measurement-result"
+        ]
       },
       "scientific_authority": false,
       "certainty": "SUPPORTED",
@@ -3359,7 +3366,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "e21219d0140db78a35c1c60fc15e54fc4f14afa65e2de9c01f6cd0a2d2262f7f",
+  "wiki_sha256": "521019e45f27aa148d3876e97bcd03363ff7917e21cb7b83bd64d58c35c0ee6c",
   "lint": {
     "schema_version": "1.2",
     "status": "PASS",
@@ -3469,7 +3476,7 @@
       "MEM-DISC-1ed76bd4a2e36f2461",
       "MEM-FAIL-701bf9fdd809641e82",
       "MEM-HOLD-3d2ca52b06eb1115f3",
-      "MEM-REVI-b85c3d5a3b7be3dae9",
+      "MEM-REVI-ae1288779c7f4d35fa",
       "MEM-SEAR-1f73ec187b29d80d4b",
       "MEM-SUCC-ff21703f69998ff65c",
       "MEM-DISC-3e95edd7bafe36fb61",

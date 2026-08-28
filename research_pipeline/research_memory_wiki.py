@@ -41,6 +41,16 @@ POLICY={
  "method_reduction_without_scientific_object_reduction_is_a_reusable_pivot_pattern":True,
 }
 
+STRUCTURED_REVIEW_LESSON_CODEBOOK={
+ "measurement-boundary-coarsening-test":"For stage-resolved localization, test whether merging adjacent measurements destroys diagnostic resolution before treating their separation as load-bearing.",
+ "operational-localization-not-causal-onset":"The first unsupported evidence stage localizes where attenuation becomes observable; it does not identify why attenuation occurs or a latent causal onset without matched-power intervention or mediation evidence.",
+ "claim-audit-needs-replayable-content-addressed-provenance":"Treat a claim-audit PASS as valid only when the registry, runner, output artifact, exact source hashes, deterministic replay, and content-addressed objects are mechanically verified.",
+ "bundled-writer-intervention-not-atom-pure":"If a writer branch changes both reflection instruction and reward/outcome semantics, do not attribute atom-level effects to the reward bit alone.",
+ "scope-stage-boundary-to-measured-substrate":"Scope a stage boundary to the writer, backbone, domain, and stage measurements actually observed; cross-domain write/terminal replication does not silently replicate an unmeasured exposure-to-uptake ladder.",
+ "stopped-method-no-behavioral-efficacy":"A repair or method extension stopped before behavioral evaluation cannot support a behavioral efficacy claim.",
+ "method-extension-stop-does-not-negate-measurement-result":"A stopped method extension is evidence about method qualification, not a refutation of an already-supported measurement result.",
+}
+
 CONTRIBUTION_AWARE_LESSON_TEMPLATES={
  "COMPLEXITY_FOR_NOVELTY_FAILURE":{
   "trigger":"A simpler same-information intervention preserves the scientific object, while added learned/agentic complexity creates no independent falsifiable prediction.",
@@ -148,12 +158,16 @@ def _review_lessons(paper_ledger_index:dict|None)->list[dict]:
  out=[]
  for row in (paper_ledger_index or {}).get("entries") or []:
   if not isinstance(row,dict):continue
-  learning=row.get("review_learning") or {};receipts=int(learning.get("review_receipts") or 0);critical=int(learning.get("decision_critical_objections") or 0)
-  if receipts<=0:continue
-  paper_id=_t(row.get("paper_id"),160);categories={str(k):int(v or 0) for k,v in (learning.get("category_counts") or {}).items()};evidence={str(k):int(v or 0) for k,v in (learning.get("evidence_state_counts") or {}).items()};actions={str(k):int(v or 0) for k,v in (learning.get("action_class_counts") or {}).items()}
-  durable=receipts>=2 and critical>0;dur="recurring-systemic" if durable else "transient"
+  learning=row.get("review_learning") or {};receipts=int(learning.get("review_receipts") or 0);critical=int(learning.get("decision_critical_objections") or 0);structured=int(learning.get("structured_lesson_receipts") or 0)
+  if receipts<=0 and structured<=0:continue
+  paper_id=_t(row.get("paper_id"),160);categories={str(k):int(v or 0) for k,v in (learning.get("category_counts") or {}).items()};evidence={str(k):int(v or 0) for k,v in (learning.get("evidence_state_counts") or {}).items()};actions={str(k):int(v or 0) for k,v in (learning.get("action_class_counts") or {}).items()};available_codes={str(x) for x in learning.get("lesson_codes") or []};codes=[code for code in STRUCTURED_REVIEW_LESSON_CODEBOOK if code in available_codes];code_lessons=[STRUCTURED_REVIEW_LESSON_CODEBOOK[x] for x in codes]
+  durable=(receipts>=2 and critical>0) or structured>0;dur="recurring-systemic" if durable else "transient"
   summary=f"{receipts} structured Mock-PC receipts contain {critical} decision-critical objections. Categories={json.dumps(categories,sort_keys=True)}; evidence_states={json.dumps(evidence,sort_keys=True)}; action_classes={json.dumps(actions,sort_keys=True)}."
-  out.append({"memory_id":_id("REVIEW_LESSON",paper_id,summary),"kind":"REVIEW_LESSON","title":f"Paper review pattern: {paper_id}","summary":summary,"candidate_id":paper_id,"scope":"paper-design-and-internal-review","affected_layer":"paper_review","memory_class":"PAPER_REVIEW_PATTERN","durability_class":dur,"prompt_eligible":durable,"search_closure_certified":False,"scientific_dead_end_certified":False,"principle_update_allowed":False,"reopen_condition":"","opposite_search_seed":"","reusable_precheck":"Before Paper Design and Mock PC, explicitly check recurring objection categories and evidence states from prior papers. Treat the pattern as a precheck, never as scientific evidence or experiment authorization.","source_refs":[f"paper-ledger:{paper_id}:mock-pc"],"source_artifact":"paper_acceptance_ledger.review_learning","occurrences":receipts,"review_learning":{"decision_critical_objections":critical,"category_counts":categories,"evidence_state_counts":evidence,"action_class_counts":actions,"targeted_experiment_proposals":int(learning.get("targeted_experiment_proposals") or 0),"claim_expansion_requests_preserved_as_limitations":int(learning.get("claim_expansion_requests_preserved_as_limitations") or 0)},"scientific_authority":False})
+  if codes:summary += " Structured lessons=" + " ".join(f"[{code}] {text}" for code,text in zip(codes,code_lessons))
+  precheck="Before Paper Design and Mock PC, explicitly check recurring objection categories and evidence states from prior papers. Treat the pattern as a precheck, never as scientific evidence or experiment authorization."
+  if code_lessons:precheck += " " + " ".join(code_lessons)
+  source_refs=[f"paper-ledger:{paper_id}:mock-pc"]+sorted({str(x) for x in learning.get("lesson_source_refs") or [] if str(x)})
+  out.append({"memory_id":_id("REVIEW_LESSON",paper_id,summary),"kind":"REVIEW_LESSON","title":f"Paper review pattern: {paper_id}","summary":summary,"candidate_id":paper_id,"scope":"paper-design-and-internal-review","affected_layer":"paper_review","memory_class":"PAPER_REVIEW_PATTERN","durability_class":dur,"prompt_eligible":durable,"search_closure_certified":False,"scientific_dead_end_certified":False,"principle_update_allowed":False,"reopen_condition":"","opposite_search_seed":"","reusable_precheck":precheck,"source_refs":source_refs[:10],"source_artifact":"paper_acceptance_ledger.review_learning","occurrences":receipts+structured,"review_learning":{"decision_critical_objections":critical,"category_counts":categories,"evidence_state_counts":evidence,"action_class_counts":actions,"targeted_experiment_proposals":int(learning.get("targeted_experiment_proposals") or 0),"claim_expansion_requests_preserved_as_limitations":int(learning.get("claim_expansion_requests_preserved_as_limitations") or 0),"structured_lesson_receipts":structured,"lesson_codes":codes},"scientific_authority":False})
  return out
 
 def lint_research_memory_wiki(wiki:dict)->dict:

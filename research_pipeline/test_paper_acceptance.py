@@ -38,6 +38,7 @@ from .paper_acceptance_ledger import (
     record_manuscript_ci,
     record_post_draft_integrity,
     record_mock_review,
+    record_review_learning,
     record_story_search,
     record_prebuttal,
     record_submission_readiness,
@@ -611,6 +612,12 @@ class PaperAcceptanceTest(unittest.TestCase):
             objection = ReviewerObjection("R-PRIVATE", "artifact provenance", "PRIVATE REVIEWER PROSE MUST NOT LEAK", True, ObjectionEvidenceState.EXISTING_EVIDENCE, ("C1",))
             record_mock_review(root, contract, MockReviewMode.BLIND_MANUSCRIPT, [objection])
             record_mock_review(root, contract, MockReviewMode.ARTIFACT_AWARE, [objection])
+            lesson_kwargs = {
+                "lesson_codes": ("operational localization not causal onset", "claim audit needs replayable content addressed provenance"),
+                "source_refs": ("artifact:sha256:" + "a" * 64, "artifact:sha256:" + "b" * 64),
+            }
+            record_review_learning(root, contract, **lesson_kwargs)
+            record_review_learning(root, contract, **lesson_kwargs)
             index = build_paper_ledger_index(root)
             entry = index["entries"][0]
             learning = entry["review_learning"]
@@ -618,6 +625,9 @@ class PaperAcceptanceTest(unittest.TestCase):
             self.assertEqual(learning["decision_critical_objections"], 2)
             self.assertEqual(learning["category_counts"], {"artifact-provenance": 2})
             self.assertEqual(learning["action_class_counts"], {"narrative-repair": 2})
+            self.assertEqual(learning["structured_lesson_receipts"], 1)
+            self.assertEqual(learning["lesson_codes"], ["claim-audit-needs-replayable-content-addressed-provenance", "operational-localization-not-causal-onset"])
+            self.assertEqual(learning["lesson_source_refs"], ["artifact:sha256:" + "a" * 64, "artifact:sha256:" + "b" * 64])
             self.assertFalse(learning["reviewer_prose_exposed"])
             self.assertNotIn("PRIVATE REVIEWER PROSE MUST NOT LEAK", str(entry))
             self.assertNotIn("Existing admissible evidence should be made legible", str(entry))

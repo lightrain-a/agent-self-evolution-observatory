@@ -1,0 +1,37 @@
+{
+  "artifact_type": "c1-r6-research-memory-retrieval-verification",
+  "claim_audit_sha256": "715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332",
+  "contract_sha256": "c6cd6e451dd5a7a610ef89f7b2e4ce3e54a70fb568889c6304c33e66dc50bd0e",
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "query_pack_sha256": "fa62c0e90c4389c212e17b97e0701d8e837b8f9de5df4ded3fca04edb949d7b5",
+  "query_selected_memory_ids": [
+    "MEM-PDEV-SENIOR-20260823",
+    "MEM-REVI-ae1288779c7f4d35fa",
+    "MEM-REVI-f60f168c4e0dfb98db",
+    "MEM-FAIL-d716cf73efa27a067f",
+    "MEM-REVI-51e50f3662a5951f52",
+    "MEM-REVI-62370210b4e3a77558"
+  ],
+  "required_phrases_verified": [
+    "merging adjacent measurements destroys diagnostic resolution",
+    "does not identify why attenuation occurs",
+    "content-addressed objects are mechanically verified"
+  ],
+  "research_memory_wiki_sha256": "521019e45f27aa148d3876e97bcd03363ff7917e21cb7b83bd64d58c35c0ee6c",
+  "review_lesson_memory_id": "MEM-REVI-ae1288779c7f4d35fa",
+  "review_lesson_selected": true,
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "structured_lesson_codes": [
+    "bundled-writer-intervention-not-atom-pure",
+    "claim-audit-needs-replayable-content-addressed-provenance",
+    "measurement-boundary-coarsening-test",
+    "method-extension-stop-does-not-negate-measurement-result",
+    "operational-localization-not-causal-onset",
+    "scope-stage-boundary-to-measured-substrate",
+    "stopped-method-no-behavioral-efficacy"
+  ],
+  "submission_authority": false
+}

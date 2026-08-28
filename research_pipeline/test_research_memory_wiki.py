@@ -113,12 +113,12 @@ class ResearchMemoryWikiTest(unittest.TestCase):
 
     def test_structured_mock_pc_patterns_become_zero_authority_paper_design_prechecks(self):
         s,f,m,p,i,g,c=base_inputs()
-        paper_index={"summary":{"papers":1},"entries":[{"paper_id":"PAPER-X","review_learning":{"review_receipts":2,"decision_critical_objections":4,"category_counts":{"artifact-provenance":2,"empirical-sufficiency":2},"evidence_state_counts":{"existing-evidence":2,"missing-decisive-evidence":2},"action_class_counts":{"narrative-repair":2,"targeted-experiment":2},"targeted_experiment_proposals":2,"claim_expansion_requests_preserved_as_limitations":1}}]}
+        paper_index={"summary":{"papers":1},"entries":[{"paper_id":"PAPER-X","review_learning":{"review_receipts":2,"structured_lesson_receipts":1,"lesson_codes":["operational-localization-not-causal-onset","claim-audit-needs-replayable-content-addressed-provenance"],"lesson_source_refs":["artifact:sha256:"+"a"*64],"decision_critical_objections":4,"category_counts":{"artifact-provenance":2,"empirical-sufficiency":2},"evidence_state_counts":{"existing-evidence":2,"missing-decisive-evidence":2},"action_class_counts":{"narrative-repair":2,"targeted-experiment":2},"targeted_experiment_proposals":2,"claim_expansion_requests_preserved_as_limitations":1}}]}
         wiki=build_research_memory_wiki(search_design_state=s,failure_asset_library=f,scientific_meta_trace=m,candidate_portfolio=p,experiment_iteration=i,generator_state=g,claim_ledger=c,paper_ledger_index=paper_index)
         lesson=next(r for r in wiki["entries"] if r["kind"]=="REVIEW_LESSON")
         self.assertEqual(lesson["durability_class"],"recurring-systemic");self.assertTrue(lesson["prompt_eligible"]);self.assertFalse(lesson["scientific_authority"]);self.assertFalse(lesson["principle_update_allowed"])
-        pack=compile_research_memory_query_pack(wiki,purpose="PAPER_DESIGN",context="artifact provenance empirical sufficiency")
-        self.assertIn(lesson["memory_id"],pack["selected_memory_ids"]);self.assertIn("artifact-provenance",pack["text"]);self.assertTrue(pack["policy"]["paper_review_pattern_cannot_authorize_experiments"]);self.assertGreaterEqual(pack["summary"]["review_lessons_selected"],1)
+        pack=compile_research_memory_query_pack(wiki,purpose="PAPER_DESIGN",context="exposure uptake operational localization causal onset claim audit provenance replayable content addressed")
+        self.assertIn(lesson["memory_id"],pack["selected_memory_ids"]);self.assertIn("operational-localization-not-causal-onset",pack["text"]);self.assertIn("deterministic replay",pack["text"]);self.assertIn("artifact:sha256:"+"a"*64,lesson["source_refs"]);self.assertTrue(pack["policy"]["paper_review_pattern_cannot_authorize_experiments"]);self.assertGreaterEqual(pack["summary"]["review_lessons_selected"],1)
         serialized=str(lesson)
         self.assertNotIn("reviewer_text",serialized);self.assertNotIn("action_reason",serialized)
 

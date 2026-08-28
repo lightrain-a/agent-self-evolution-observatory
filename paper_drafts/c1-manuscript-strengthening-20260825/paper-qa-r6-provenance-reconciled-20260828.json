@@ -10,12 +10,12 @@
   "bindings": {
     "claim_audit": {
       "path": "paper_drafts/c1-manuscript-strengthening-20260825/claim-audit-r6-provenance-seal-20260828.json",
-      "sha256": "f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c"
+      "sha256": "715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332"
     },
-    "claim_audit_replay": "{\"claims_failed\": 0, \"claims_passed\": 35, \"claims_total\": 35, \"sha256\": \"f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c\", \"status\": \"REPLAY_PASS\"}",
+    "claim_audit_replay": "{\"cas\": {\"artifact\": \"paper_drafts/c1-manuscript-strengthening-20260825/provenance/sha256/715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332.json\", \"registry\": \"paper_drafts/c1-manuscript-strengthening-20260825/provenance/registries/sha256/ad034d2da0bc99af0506aca1686c9adb5e8247875fb10a3de5b63cda1397cfbc.json\", \"runner\": \"paper_drafts/c1-manuscript-strengthening-20260825/provenance/runners/sha256/7e4bde4dafdecb9d2fa0d39e98e889382dd47661c78ab7d33c997bcad0eb5743.py\"}, \"claims_failed\": 0, \"claims_passed\": 35, \"claims_total\": 35, \"sha256\": \"715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332\", \"status\": \"REPLAY_PASS\"}",
     "package_manifest": {
       "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-r6-package-manifest-20260828.json",
-      "sha256": "6d0b0b21be4be841c9d1300145cfeaf06d5502a90cb26e8a60e33b434c9c8a76"
+      "sha256": "e969630c51c64cf75e97f435ff386dff6c4d35e711e2b9ec5b5ba1c219eff27f"
     },
     "pdf": {
       "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r6-final.pdf",
@@ -23,7 +23,7 @@
     },
     "provenance_reconciliation": {
       "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-r6-provenance-reconciliation-20260828.json",
-      "sha256": "b10a64487f773d1a14d81a9a5d4af03f185df25a1b02660592df9c2c4d64130b"
+      "sha256": "83c0a9264b330f4459f818901c56ec86a3ac2ad50f4e5b280fe52b39a4eb0897"
     },
     "sensitivity_audit": {
       "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
@@ -42,6 +42,7 @@
     "anonymity": true,
     "artifact-hashes": true,
     "citation-reference-consistency": true,
+    "claim-audit-cas-replay": true,
     "figure-table-consistency": true,
     "forbidden-claim-detection": true,
     "numeric-consistency": true,
@@ -60,8 +61,9 @@
   "schema_version": "1.0",
   "status": "PASS",
   "summary": {
-    "checks_passed": 9,
-    "checks_total": 9,
+    "checks_passed": 10,
+    "checks_total": 10,
+    "claim_audit_content_addressed": true,
     "claim_audit_replay_pass": true,
     "fonts_embedded": true,
     "main_text_page_limit": 9,

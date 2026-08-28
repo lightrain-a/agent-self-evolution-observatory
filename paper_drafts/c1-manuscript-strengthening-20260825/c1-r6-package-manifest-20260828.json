@@ -5,7 +5,7 @@
       "path": "paper_drafts/c1-manuscript-strengthening-20260825/claim-audit-r6-provenance-seal-20260828.json",
       "replay": "35/35 PASS",
       "revision": "R6",
-      "sha256": "f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c"
+      "sha256": "715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332"
     },
     "pdf": {
       "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r6-final.pdf",
@@ -50,7 +50,7 @@
     "new_scientific_experiments": 0,
     "new_scientific_provider_calls": 0
   },
-  "manifest_sha256": "88754e40233912f2e9b63405f49d9cbe69155f8261f678d934c8450e8d1010cc",
+  "manifest_sha256": "e78afbbb58bc9b572c95a62ec242748cb81cf5226dd9124225cbd6fb2d2cc8ee",
   "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
   "paper_only_revision": true,
   "revision_id": "C1-STAGE-SIGNATURE-R6-CLAIM-PROVENANCE-SEAL-20260828",

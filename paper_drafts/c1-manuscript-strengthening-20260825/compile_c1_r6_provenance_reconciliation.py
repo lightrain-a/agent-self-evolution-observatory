@@ -30,10 +30,10 @@ EXPECTED = {
     "r5_recheck": "4cf54f084d96a9079f46e3008acfd5489b6c478aff67a3421bd69cc5467bb3c5",
     "stale_sensitivity": "22ffb994b77a32b309da4d0bf945a3b5ad4fe43ce96476b11e5ecb98a1ea9ef0",
     "current_sensitivity": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba",
-    "claim_audit": "f4eeeaef2999dffa70b3cf6139dc0811bbb3d50464bb91d738e1cdc94458290c",
+    "claim_audit": "715721a221a2bfb942fffa43c65aba52f1754ce3d1f99006f13bc32ef4b6e332",
     "r6_pdf": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70",
     "r6_zip": "1b39471799d0ae3efc41b4e42a5b744efc7d82c9e2efce82eeea80dd7085872b",
-    "r6_manifest_file": "6d0b0b21be4be841c9d1300145cfeaf06d5502a90cb26e8a60e33b434c9c8a76",
+    "r6_manifest_file": "e969630c51c64cf75e97f435ff386dff6c4d35e711e2b9ec5b5ba1c219eff27f",
 }
 
 
@@ -87,6 +87,11 @@ def main() -> None:
 
     replay = run([sys.executable, str(CLAIM_RUNNER), "--check"])
     require('"status": "REPLAY_PASS"' in replay, "35/35 claim audit is not replayable")
+    replay_payload = json.loads(replay.strip().splitlines()[-1])
+    claim_cas = replay_payload.get("cas") or {}
+    require(set(claim_cas) == {"artifact", "runner", "registry"}, "claim-audit CAS inventory drift")
+    for key, rel in claim_cas.items():
+        require((ROOT / str(rel)).is_file(), f"missing claim-audit CAS object: {key}={rel}")
     require(claim_audit.get("status") == "PASS", "claim audit status drift")
     require((claim_audit.get("summary") or {}) == {"claims_total": 35, "claims_passed": 35, "claims_failed": 0}, "claim audit summary drift")
 
@@ -142,6 +147,7 @@ def main() -> None:
             "sensitivity_sha256": EXPECTED["current_sensitivity"],
             "claim_audit_sha256": EXPECTED["claim_audit"],
             "claim_audit_replay": "35/35 PASS",
+            "claim_audit_content_addressing": claim_cas,
             "claim_audited_source_bindings": source_rows,
             "paper_only_revision": True,
         },
