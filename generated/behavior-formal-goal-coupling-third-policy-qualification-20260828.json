@@ -1,0 +1,103 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-third-policy-qualification-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+  "status": "HOLD_NO_THIRD_PREOUTCOME_QUALIFIED_POLICY_FAMILY",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "provider_authority": false,
+  "gpu_authority": false,
+  "policy_rollouts_authorized": false,
+  "policy_training_authorized": false,
+  "parent_port010_reopen_authorized": false,
+  "frozen_admission_criteria": {
+    "family_independence": "candidate must not be a Pi0.5/OpenPI derivative or GR00T N1.7 derivative if it is to count as the third policy family",
+    "behavior_interface": "publicly documented path must consume BEHAVIOR 2026 allowed observations and emit actions compatible with the official evaluator/R1Pro or an explicitly frozen supported robot config",
+    "training_contract": "public training/data adapter must support the 2026 challenge dataset or expose a deterministic, preregistrable adapter without outcome-conditioned task selection",
+    "serving_contract": "public serving path must be bridgeable to the official BEHAVIOR websocket evaluator without using privileged evaluation inputs",
+    "checkpoint_or_recipe_provenance": "either a public challenge-compatible checkpoint or a complete source-pinned training recipe whose checkpoint-selection rule can be frozen before outcome access",
+    "all_required": true
+  },
+  "official_policy_families": [
+    {
+      "family": "pi0.5",
+      "role": "OFFICIAL_FAMILY_1",
+      "source": "https://github.com/wensi-ai/openpi/tree/behavior",
+      "observed_revision": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+      "behavior_interface": true,
+      "training_contract": true,
+      "serving_contract": true,
+      "full_100_task_checkpoint_matrix": false
+    },
+    {
+      "family": "GR00T N1.7",
+      "role": "OFFICIAL_FAMILY_2",
+      "source": "https://github.com/wensi-ai/Isaac-GR00T",
+      "observed_revision": "ace36d935b376fbf25cd56371e23877b95407c40",
+      "behavior_interface": true,
+      "training_contract": true,
+      "serving_contract": true,
+      "full_100_task_checkpoint_matrix": false
+    }
+  ],
+  "third_family_candidates": [
+    {
+      "candidate": "BEHAVIOR 2025 winning PiBehavior solution",
+      "source": "https://github.com/IliaLarchenko/behavior-1k-solution",
+      "observed_revision": "ca556f74a455cef7987a2be4537b5ac85cc56dd7",
+      "family_independence": false,
+      "behavior_interface": true,
+      "training_contract": true,
+      "serving_contract": true,
+      "checkpoint_or_recipe_provenance": true,
+      "admission": "REJECT_AS_THIRD_FAMILY",
+      "reason": "the project explicitly states that the policy is based on Pi0.5 and built on OpenPI; its BEHAVIOR engineering completeness does not make it an independent policy family"
+    },
+    {
+      "candidate": "SmolVLA / LeRobot",
+      "source": "https://github.com/huggingface/lerobot",
+      "observed_revision": "bf31dd794ffb4f87380aba3912f64421e8352d3c",
+      "family_independence": true,
+      "behavior_interface": false,
+      "training_contract": "GENERIC_LEROBOT_ONLY",
+      "serving_contract": false,
+      "checkpoint_or_recipe_provenance": "BASE_MODEL_AND_GENERIC_FINETUNING_ONLY",
+      "admission": "HOLD_NOT_BEHAVIOR_INTERFACE_QUALIFIED",
+      "reason": "public SmolVLA documentation provides generic LeRobot fine-tuning but no verified BEHAVIOR 2026 R1Pro observation/action adapter and evaluator-serving contract"
+    },
+    {
+      "candidate": "OpenVLA-OFT",
+      "source": "https://github.com/moojink/openvla-oft",
+      "observed_revision": "e4287e94541f459edc4feabc4e181f537cd569a8",
+      "family_independence": true,
+      "behavior_interface": false,
+      "training_contract": "LIBERO_ALOHA_ONLY_IN_PUBLIC_DOCS",
+      "serving_contract": false,
+      "checkpoint_or_recipe_provenance": "PUBLIC_LIBERO_ALOHA_CHECKPOINTS_ONLY",
+      "admission": "HOLD_NOT_BEHAVIOR_INTERFACE_QUALIFIED",
+      "reason": "public training/evaluation paths target LIBERO and ALOHA; no source-qualified BEHAVIOR 2026 R1Pro adapter/serve contract was found before outcome access"
+    }
+  ],
+  "decision": {
+    "qualified_third_family_count": 0,
+    "required_third_family_count": 1,
+    "three_policy_minimum_may_be_lowered": false,
+    "reason": "the three-family requirement was frozen before outcome access; the absence of a convenient third official baseline is not evidence for reducing the evidentiary requirement",
+    "local_replication_status": "HOLD",
+    "next_gate": "a genuinely independent policy family must acquire a source-pinned BEHAVIOR 2026 interface, training, serving, and checkpoint-selection contract before any policy training or rollout authority is considered"
+  },
+  "allowed_now": [
+    "complete source-pinned training/evaluation contracts for the two official families",
+    "monitor public challenge baselines/results for a new independent family",
+    "qualify a third family using only interface/code/checkpoint provenance",
+    "estimate data/compute requirements without loading scientific outcomes"
+  ],
+  "forbidden_now": [
+    "counting a Pi0.5 derivative as an independent third family",
+    "building a BEHAVIOR adapter for SmolVLA/OpenVLA-OFT and then counting that engineering work as pre-existing independent evidence",
+    "training any candidate",
+    "running policy rollouts",
+    "lowering the three-policy minimum",
+    "selecting the third family after seeing BEHAVIOR outcomes",
+    "PORT-010 reopen"
+  ]
+}

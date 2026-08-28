@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "FORMAL_GOAL_POLICY_QUALIFICATION_AND_TRAINING_CONTRACT_FAILURE_ASSETS",
+  "last_revalidated": "2026-08-28",
+  "family_lineage_asset": {
+    "signature": "experiment_identifiability:lineage-derived-policy-not-independent-family",
+    "idea_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+    "diagnosis": "lineage-derived-policy-not-independent-family",
+    "affected_layer": "experiment_identifiability",
+    "reusable_precheck": "For a cross-policy-family scientific object, define independence from source lineage and provenance before outcome access, not from the amount of downstream architectural or training modification. A candidate explicitly built on an already admitted family remains a within-family derivative unless a preregistered lineage rule says otherwise. Require any benchmark adapter, serving path, training recipe, and checkpoint/recipe provenance used for prequalification to already exist in the pinned public revision; an adapter created later by the research team is new engineering evidence and cannot be relabeled as pre-existing family qualification.",
+    "evidence_ref": "repo:generated/behavior-formal-goal-coupling-third-policy-qualification-20260828.json#sha256=7b4a4e1ab06d48d77504e3322b55611ef7f2372d7f32db47a60b41bee09190ac",
+    "does_not_imply": "a derivative policy is scientifically useless, cannot be evaluated as a within-family robustness variant, or is inferior; it only cannot satisfy an independently preregistered cross-family minimum by lineage relabeling",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "experiment_identifiability",
+      "experiment_family": "cross-model or cross-policy generalization claims requiring independent families",
+      "failure_mode": "engineering novelty or performance is mistaken for independent provenance, inflating the number of independent evidence families",
+      "required_preflight": "source-pinned lineage graph plus pre-existing benchmark interface/serving/training/checkpoint contract before outcome access"
+    },
+    "reuse_effectiveness": {"reuse_count": 0, "helped_count": 0, "hurt_count": 0, "status": "not-yet-measured"},
+    "superseded_by": "",
+    "source_decision": "THIRD_POLICY_QUALIFICATION_CONFIRM_HOLD_THREE_FAMILY_MINIMUM_UNCHANGED",
+    "scientific_authority": false
+  },
+  "training_semantics_asset": {
+    "signature": "reproducibility:headline-hyperparameters-incomplete-training-contract",
+    "idea_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+    "diagnosis": "headline-hyperparameters-incomplete-training-contract",
+    "affected_layer": "reproducibility",
+    "reusable_precheck": "A training command is not a complete scientific training contract merely because seed, batch size, step count, and base checkpoint are frozen. Before compute authority, bind the exact source revision and dependency lock, optimizer and full defaults, LR scheduler and warmup, precision/distributed semantics, data ordering and normalization/transforms, validation behavior, checkpoint retention/save semantics, terminal checkpoint label, and restart/resume behavior. Resolve conflicts among README examples, legacy scripts, challenge-specific wrappers, and library defaults by a preregistered source-precedence rule. Explicitly audit zero-based loop/checkpoint labels to avoid off-by-one scientific units.",
+    "evidence_ref": "repo:generated/behavior-formal-goal-coupling-official-policy-training-contracts-v2-20260828.json#sha256=c01fb452fd18743eccaecad8ce8614ab04d69abc88dab5f59d85b89558e4e4d9",
+    "does_not_imply": "the source baseline implementations are irreproducible or invalid; it means the first researcher-authored contract was incomplete until hidden source defaults and save semantics were content-addressed",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "reproducibility",
+      "experiment_family": "source-faithful model training or fine-tuning replication",
+      "failure_mode": "visible CLI settings are frozen while hidden source/library defaults or checkpoint semantics remain free, enabling silent run-to-run scientific drift",
+      "required_preflight": "exact source + dependency lock + complete train/data/save semantics + terminal-unit rule before model load or optimizer update"
+    },
+    "reuse_effectiveness": {"reuse_count": 0, "helped_count": 0, "hurt_count": 0, "status": "not-yet-measured"},
+    "superseded_by": "",
+    "source_decision": "CONTRACT_V1_REVISE_THEN_V2_PASS_PREFLIGHT_ONLY",
+    "scientific_authority": false
+  },
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "method": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false
+  }
+}

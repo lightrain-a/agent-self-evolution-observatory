@@ -47,6 +47,22 @@
     {
       "source_path": "research_pipeline/behavior_formal_goal_coupling_2025_failure_assets_20260828.json",
       "source_key": "missing_zero_estimand_asset"
+    },
+    {
+      "source_path": "research_pipeline/formal_goal_coupling_source_semantics_failure_assets_20260828.json",
+      "source_key": "runtime_semantics_asset"
+    },
+    {
+      "source_path": "research_pipeline/formal_goal_coupling_source_semantics_failure_assets_20260828.json",
+      "source_key": "independent_substrate_asset"
+    },
+    {
+      "source_path": "research_pipeline/formal_goal_policy_contract_failure_assets_20260828.json",
+      "source_key": "family_lineage_asset"
+    },
+    {
+      "source_path": "research_pipeline/formal_goal_policy_contract_failure_assets_20260828.json",
+      "source_key": "training_semantics_asset"
     }
   ],
   "scientific_authority": false

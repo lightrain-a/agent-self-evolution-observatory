@@ -1,0 +1,66 @@
+{
+  "schema_version": "formal-goal-preflight-memory-transaction-v1",
+  "generated_at": "2026-08-28T21:48:58+08:00",
+  "canonical_base": "a54ac1f5c355ec31e8fcbd39559a7d39a4615447",
+  "status": "MEMORY_TRANSACTION_VALIDATED",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "gpu_authority": false,
+  "new_failure_signatures": [
+    "operationalization:surface-token-semantics-diverge-from-source-runtime",
+    "experiment_identifiability:development-substrate-cannot-self-confirm-structural-repair",
+    "experiment_identifiability:lineage-derived-policy-not-independent-family",
+    "reproducibility:headline-hyperparameters-incomplete-training-contract"
+  ],
+  "source_assets": [
+    {
+      "path": "research_pipeline/formal_goal_coupling_source_semantics_failure_assets_20260828.json",
+      "sha256": "67c4145fe74a21762d9c7ec97a59a574c53eb90151eb3676440e9c07e1c7f66a"
+    },
+    {
+      "path": "research_pipeline/formal_goal_policy_contract_failure_assets_20260828.json",
+      "sha256": "f87c2fd3d9600ab7f1ca5e44c08ff2bd52718f4353a151e65120b61052d9280b"
+    },
+    {
+      "path": "research_pipeline/external_failure_assets.json",
+      "sha256": "bf26163a685287c4180ce1e05cc46775724dd65010ea9f8df71561bf2719bd9f"
+    }
+  ],
+  "projection_method": "incremental public projection from checked-in canonical Research System: preserve all 17 pre-existing canonical failure assets and all non-failure memory entries; add exactly four current external failure assets; recompile only failure-memory and scientific overlay graph; do not import private current experiment-iteration state",
+  "regression": {
+    "targeted_tests": 27,
+    "passed": 27,
+    "failed": 0,
+    "validate_state_errors": 0
+  },
+  "derived_state": {
+    "failure_assets": 21,
+    "unique_failure_signatures": 21,
+    "research_memory_entries": 109,
+    "failure_memory_entries": 21,
+    "prompt_eligible": 109,
+    "certainty_confirmed": 26,
+    "scientific_research_graph_nodes": 716,
+    "scientific_research_graph_edges": 1053
+  },
+  "public_projection_files": [
+    {
+      "path": "generated/research-memory-wiki.json",
+      "sha256": "ffcbce3753248b0497ae1803cbef3b8777dce7a5a87359898b175fd5dc7afa03"
+    },
+    {
+      "path": "generated/research-memory-wiki.js",
+      "sha256": "477b77f30d169c98a8b5f8ccb2d707cde5ffd616a0e1e55bb8c903e5c0409395"
+    },
+    {
+      "path": "generated/research-system-state.json",
+      "sha256": "4f515d713dbc45a5c345d3752252db5d511fee375bf3e165c4a29573e59860cc"
+    },
+    {
+      "path": "generated/research-system-state.js",
+      "sha256": "e57d8ae0a47fc7cd08249d71498cf3ca59cdb1c4a221ae984b8edcbcad8151cd"
+    }
+  ],
+  "authority_note": "institutional memory only; no new scientific result, problem gate, experiment, provider, GPU, model-load, training, or rollout authority is created",
+  "transaction_sha256": "c4de318b362f836317c47702e5d7f3f0368d8d0f931df81494757ed85f537e83"
+}

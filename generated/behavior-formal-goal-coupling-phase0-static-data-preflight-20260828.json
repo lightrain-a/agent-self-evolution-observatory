@@ -1,0 +1,133 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-phase0-static-data-preflight-v1",
+  "generated_at": "2026-08-28T21:19:54+08:00",
+  "object_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+  "status": "PHASE0_STATIC_PASS_PHASE1_DATA_ONLY_ALLOWED_THIRD_FAMILY_HOLD",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "gpu_authority": false,
+  "model_load_authorized": false,
+  "policy_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "authority_source": {
+    "repo_id": "behavior-1k/2026-challenge-demos",
+    "domain": "huggingface.co",
+    "tag": "v3.0",
+    "revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+    "tag_target_matches_main_at_capture": true,
+    "private": false,
+    "gated": false
+  },
+  "metadata_tree": {
+    "file_count": 104,
+    "file_bytes": 5977742,
+    "manifest_sha256": "571640579902cb657dd3f7385345987cf1f1306e3b26e3a0439ad2966f5a0209",
+    "episode_parquet_files": 100,
+    "episode_chunk_indices_contiguous_0_99": true,
+    "one_episode_metadata_file_per_chunk": true,
+    "episode_metadata_bytes": 5903691
+  },
+  "content_verified_top_meta": {
+    "info.json": {
+      "bytes": 8978,
+      "sha256": "24c77f7a984bcee775e666203881a946b11a899f524fbc2405922b2109757874",
+      "git_oid": "3d2fc273b3c61e5fd50881b4c5aa6a8afe1c180c",
+      "git_blob_verified": true
+    },
+    "stats.json": {
+      "bytes": 38473,
+      "sha256": "729da3b4a7a52c387ddbad1f9f641df20cff1329aa624e60eb54ccfbfc5a1df5",
+      "git_oid": "65d4a6b2db0adb4ae9171b0fd582db074394a98a",
+      "git_blob_verified": true
+    },
+    "tasks.jsonl": {
+      "bytes": 22202,
+      "sha256": "8d8222310c3611316c6e5fe822a8dd3c6e552b32bcfddd10870c0672bfb8427c",
+      "git_oid": "24a0a91395c5430dcf8ec7de22da4a7582b6906a",
+      "git_blob_verified": true
+    },
+    "tasks.parquet": {
+      "bytes": 4398,
+      "sha256": "2477455ef214e2348123379c6895549a5a5b5c76dee7b817de174e0d4b226a94",
+      "lfs_sha256": "2477455ef214e2348123379c6895549a5a5b5c76dee7b817de174e0d4b226a94",
+      "lfs_verified": true
+    }
+  },
+  "dataset_schema": {
+    "codebase_version": "v3.0",
+    "robot_type": "R1Pro",
+    "fps": 30,
+    "total_tasks": 100,
+    "total_episodes": 20000,
+    "total_frames": 210916774,
+    "chunks_size": 1000,
+    "action_shape": [
+      23
+    ],
+    "state_shape": [
+      61
+    ],
+    "feature_count": 19,
+    "data_path_template": "data/chunk-{chunk_index:03d}/file-{file_index:03d}.parquet",
+    "video_path_template": "videos/{video_key}/chunk-{chunk_index:03d}/file-{file_index:03d}.mp4"
+  },
+  "task_namespace": {
+    "rows": 100,
+    "unique_indices": 100,
+    "contiguous_0_99": true,
+    "unique_task_names": 100,
+    "tasks_jsonl_sha256": "8d8222310c3611316c6e5fe822a8dd3c6e552b32bcfddd10870c0672bfb8427c"
+  },
+  "policy_contract_compatibility": {
+    "r1pro_robot_type_match": true,
+    "state_dim_61_match": true,
+    "action_dim_23_match": true,
+    "pi05_contract_revision": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+    "groot_contract_revision": "ace36d935b376fbf25cd56371e23877b95407c40",
+    "contract_v2_adjudication_sha256": "11ab7086438e7c9b4d2362db417e688c3371fce1ec4792975727a325dee35db2"
+  },
+  "dependency_lock_verification": {
+    "groot": {
+      "uv_lock_sha256": "ef9488dddc0d5b49855d7df790998b7f6660871d64c411197acea2a8129e7b93",
+      "transformers": "4.57.3",
+      "torch": "2.7.1"
+    },
+    "openpi": {
+      "uv_lock_sha256": "75657cfbac40473237a6eaebc994fe998b249b44a4671d38129af198f00e4ed6",
+      "transformers": "5.5.4",
+      "torch": "2.7.1",
+      "jax": "0.5.3",
+      "optax": "0.2.4",
+      "orbax-checkpoint": "0.11.13",
+      "lerobot": "0.5.2"
+    }
+  },
+  "gates": {
+    "official_exact_revision_captured": true,
+    "metadata_manifest_complete": true,
+    "task_namespace_complete": true,
+    "r1pro_schema_matches_both_policy_contracts": true,
+    "dependency_locks_content_addressed": true,
+    "pass": true
+  },
+  "large_asset_policy": {
+    "full_dataset_size": "~3.26 TB",
+    "full_dataset_download_authorized": false,
+    "video_download_authorized": false,
+    "phase0_downloaded_only_top_meta_bytes": 74051
+  },
+  "allowed_next": [
+    "phase-1 exact-revision data-only smoke on pre-frozen chunk-000/episode 0 without videos or model load"
+  ],
+  "forbidden_next": [
+    "full 3.26 TB materialization",
+    "model checkpoint download/load",
+    "forward/backward/optimizer update",
+    "training",
+    "policy rollout",
+    "success/reward analysis",
+    "third-family threshold relaxation"
+  ],
+  "receipt_sha256": "e63321eb7a1d39e4a8cacb0cce735d034fefbdb22ae7e4a8c61494e38d948441"
+}

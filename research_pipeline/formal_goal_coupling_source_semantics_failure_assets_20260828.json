@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "FORMAL_GOAL_COUPLING_SOURCE_SEMANTICS_FAILURE_ASSETS",
+  "source_decision": "HOLD_SOURCE_SEMANTICS_OPERATIONALIZATION_ERROR_AND_RESET_INDEPENDENT_STRUCTURE_GATE",
+  "last_revalidated": "2026-08-28",
+  "runtime_semantics_asset": {
+    "signature": "operationalization:surface-token-semantics-diverge-from-source-runtime",
+    "idea_id": "SUCC-C-FORMAL-GOAL-COUPLING-V1",
+    "diagnosis": "surface-token-semantics-diverge-from-source-runtime",
+    "affected_layer": "operationalization",
+    "reusable_precheck": "Before assigning semantic types from a benchmark's surface syntax, audit the authoritative parser/evaluator runtime and freeze identifier-resolution precedence from source semantics. A prefix such as '?' must not be treated as sufficient evidence of a quantified variable when the source runtime also uses that spelling for declared grounded instances. Parser success alone is insufficient: compare the research representation against the benchmark's symbol table, scope construction, binder shadowing, and argument-resolution code before interpreting unresolved-symbol counts scientifically.",
+    "evidence_ref": "repo:generated/behavior-formal-goal-coupling-structure-scan-20260828.json#sha256=154a30c941b6d6c78ef70dba88998444e3675fabe32c18288663a2841c642f79",
+    "does_not_imply": "formal goal coupling is false, BEHAVIOR tasks are malformed, or the 957 v1 unresolved-symbol rows are scientific failures; the frozen v1 representation was incompatible with authoritative source semantics",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "operationalization",
+      "experiment_family": "formal benchmark analysis with researcher-defined parsing or representation layers",
+      "failure_mode": "surface token convention is mistaken for semantic type while the authoritative runtime resolves the same token through task-local declared symbols and lexical binders",
+      "required_preflight": "runtime parser/evaluator semantics plus task-local symbol-table and binder-precedence audit before metric freeze"
+    },
+    "reuse_effectiveness": {"reuse_count": 0, "helped_count": 0, "hurt_count": 0, "status": "not-yet-measured"},
+    "superseded_by": "",
+    "source_decision": "V1_STRUCTURE_SCAN_RETAINED_AS_OPERATIONALIZATION_HOLD_NOT_SCIENTIFIC_NEGATIVE",
+    "scientific_authority": false
+  },
+  "independent_substrate_asset": {
+    "signature": "experiment_identifiability:development-substrate-cannot-self-confirm-structural-repair",
+    "idea_id": "SUCC-C-FORMAL-GOAL-COUPLING-V1-1",
+    "diagnosis": "development-substrate-cannot-self-confirm-structural-repair",
+    "affected_layer": "experiment_identifiability",
+    "reusable_precheck": "Once a substrate's structural distributions or failure cases have been inspected to diagnose or repair a representation, demote that substrate to development-only for that structural construct. Freeze the repair before contact with an untouched structure-only substrate and require the independent substrate to pass a content-addressed construct/transfer gate before scientific outcomes are opened. Passing the repaired metric again on the development substrate is necessary regression evidence, not independent confirmation.",
+    "evidence_ref": "repo:generated/behavior-formal-goal-coupling-v1-1-repair-qualification-20260828.json#sha256=a7e5e34aa252f4109e464bf5d4c707cb6216ece80fc9442116beb218f9946d89",
+    "does_not_imply": "the repaired representation cannot later be used in a preregistered outcome analysis on the development substrate; it means that substrate cannot also supply independent structural confirmation after informing the repair",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "experiment_identifiability",
+      "experiment_family": "representation repair after outcome-blind or outcome-free structural inspection",
+      "failure_mode": "the same structural surface is used both to motivate/tune a repair and to claim independent construct confirmation",
+      "required_separation": "development regression versus untouched structural transfer gate versus later outcome association"
+    },
+    "reuse_effectiveness": {"reuse_count": 0, "helped_count": 0, "hurt_count": 0, "status": "not-yet-measured"},
+    "superseded_by": "",
+    "source_decision": "BEHAVIOR_STRUCTURE_DEVELOPMENT_ONLY_AFTER_SEMANTIC_REPAIR_LIBERO_OR_OTHER_UNTOUCHED_STRUCTURE_GATE_REQUIRED",
+    "scientific_authority": false
+  },
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "method": false,
+    "experiment": false,
+    "provider": false,
+    "p0": false,
+    "gpu": false
+  }
+}

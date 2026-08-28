@@ -1,0 +1,158 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-phase1-data-only-preflight-v1",
+  "generated_at": "2026-08-28T21:49:48+08:00",
+  "object_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+  "status": "PHASE1_DATA_ONLY_PASS_MODEL_LOAD_LOCKED_THIRD_FAMILY_HOLD",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "gpu_authority": false,
+  "model_load_authorized": false,
+  "forward_authorized": false,
+  "backward_authorized": false,
+  "optimizer_update_authorized": false,
+  "policy_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "phase0_receipt": {
+    "path": "generated/behavior-formal-goal-coupling-phase0-static-data-preflight-20260828.json",
+    "receipt_sha256": "e63321eb7a1d39e4a8cacb0cce735d034fefbdb22ae7e4a8c61494e38d948441"
+  },
+  "training_contract_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-official-policy-training-contracts-v2-adjudication-20260828.json",
+    "adjudication_sha256": "11ab7086438e7c9b4d2362db417e688c3371fce1ec4792975727a325dee35db2"
+  },
+  "source": {
+    "repo_id": "behavior-1k/2026-challenge-demos",
+    "tag": "v3.0",
+    "revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+    "pre_frozen_task_index": 0,
+    "task_name": "turning_on_radio",
+    "download_videos": false
+  },
+  "parser_runtime": {
+    "host": "69",
+    "python": "3.12.3",
+    "pyarrow": "19.0.1",
+    "role": "data-only parquet parser; no model/training package installed for this smoke",
+    "runtime_scope": "isolated data-only Parquet parser environment",
+    "host_role": "network-reachable data-preflight host; no policy/model runtime used"
+  },
+  "transport": {
+    "primary_authority": "huggingface.co exact revision metadata/LFS hashes",
+    "byte_transport": "hf-mirror.com exact revision for parquet blobs after literal-HF/Xet transport stalls",
+    "transport_is_authority": false,
+    "content_acceptance_rule": "only official Hugging Face LFS SHA-256 and exact byte size may pass"
+  },
+  "episode_metadata": {
+    "path": "meta/episodes/chunk-000/file-000.parquet",
+    "bytes": 59109,
+    "official_lfs_sha256": "e1a572dd714d2ff427e8759b7e181de22f4a999faeeb47c9b3b6ddef6670928e",
+    "sha_verified": true,
+    "rows": 200,
+    "task_index_set": [
+      0
+    ],
+    "episode_index_min": 0,
+    "episode_index_max": 199,
+    "episode_index_unique": 200,
+    "demo_index_min": 0,
+    "demo_index_max": 199,
+    "demo_index_unique": 200,
+    "data_file_indices": [
+      0,
+      1
+    ],
+    "episodes_by_data_file": {
+      "0": 98,
+      "1": 102
+    },
+    "length_sum": 429928,
+    "reward_values_read": false
+  },
+  "frame_shards": [
+    {
+      "path": "data/chunk-000/file-000.parquet",
+      "bytes": 82348636,
+      "official_lfs_sha256": "a4ab7caeab161ab095e695dd6ae3e6ca0419d19022e2ad30a2b5e1bd323574b6",
+      "sha_verified": true,
+      "rows": 229565,
+      "episode_range": [
+        0,
+        97
+      ],
+      "episode_unique": 98,
+      "global_index_range": [
+        0,
+        229564
+      ]
+    },
+    {
+      "path": "data/chunk-000/file-001.parquet",
+      "bytes": 72490793,
+      "official_lfs_sha256": "148b048dfa7c7188c2940c2ce8137504f625e13d8b707e7dddc2ad2bfc17d24b",
+      "sha_verified": true,
+      "rows": 200363,
+      "episode_range": [
+        98,
+        199
+      ],
+      "episode_unique": 102,
+      "global_index_range": [
+        229565,
+        429927
+      ]
+    }
+  ],
+  "frame_schema_audit": {
+    "two_shards_schema_identical": true,
+    "rows_total": 429928,
+    "episode_metadata_length_sum": 429928,
+    "rows_match_episode_metadata": true,
+    "task_index_set": [
+      0
+    ],
+    "episode_coverage_complete_0_199": true,
+    "global_index_contiguous_0_429927": true,
+    "action_list_lengths": [
+      23
+    ],
+    "state_list_lengths": [
+      61
+    ],
+    "reward_column_present": true,
+    "reward_values_read": false
+  },
+  "gates": {
+    "episode_metadata_content_verified": true,
+    "frame_shard_content_verified": true,
+    "frame_schema_identical": true,
+    "metadata_frame_count_exact_match": true,
+    "task_and_episode_index_integrity": true,
+    "r1pro_state_action_dimensions_match_contracts": true,
+    "no_policy_or_reward_values_read": true,
+    "no_model_loaded": true,
+    "pass": true
+  },
+  "support_diagnostics": {
+    "52_literal_hf_xet_frame_transport": "stalled/partial; partial removed after 69 content-verified smoke",
+    "69_mirror_transport": "PASS; content verified against official LFS SHA",
+    "scientific_effect": "none; transport-only support diagnostic"
+  },
+  "third_family_gate": "UNRESOLVED; three-family minimum remains frozen; this phase1 PASS does not authorize phase2",
+  "allowed_next": [
+    "static/source qualification for a genuinely independent third family",
+    "release watch for organizer-published qualifying outcomes",
+    "cost/storage/environment planning that does not load a policy model"
+  ],
+  "forbidden_next": [
+    "model checkpoint download/load for scientific preflight",
+    "forward/backward/optimizer update",
+    "training any policy family",
+    "policy serving on scientific tasks",
+    "policy rollout",
+    "reward/success analysis",
+    "full 3.26 TB demo materialization",
+    "lowering three-family minimum"
+  ],
+  "receipt_sha256": "f2f5dc23dc4d00acd069bca9fc009d17fa1152beb0152ba1ff1f30fea6fb15c0"
+}

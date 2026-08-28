@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-28T08:33:39+00:00",
+  "generated_at": "2026-08-28T13:46:28+00:00",
   "target_venue": "ICLR",
   "storage": {
     "data_root": "private-data:",
@@ -6809,14 +6809,14 @@
     "principle_falsifications": 0,
     "protocol_validity_pass": 4,
     "meta_trace_unresolved": 2,
-    "scientific_research_graph_nodes": 702,
-    "scientific_research_graph_edges": 1044,
-    "research_memory_entries": 105,
-    "research_memory_certainty_typed": 105,
-    "research_memory_skill_candidates": 42,
+    "scientific_research_graph_nodes": 716,
+    "scientific_research_graph_edges": 1053,
+    "research_memory_entries": 109,
+    "research_memory_certainty_typed": 109,
+    "research_memory_skill_candidates": 46,
     "research_memory_contribution_lesson_templates": 2,
     "research_memory_certainty_audit_pass": 1,
-    "research_memory_lint_warnings": 22,
+    "research_memory_lint_warnings": 30,
     "result_analysis_records": 1,
     "result_analysis_terminal_results": 1,
     "result_analysis_discovery_lessons": 3,
@@ -6841,7 +6841,7 @@
     "cross_failure_orthogonal_carriers": 3,
     "cross_failure_orthogonal_survivors": 0,
     "cross_failure_orthogonal_debate_eligible": 0,
-    "failure_assets": 17,
+    "failure_assets": 21,
     "value_scheduler_candidates": 0,
     "research_replay_passed": 8,
     "external_systems_reviewed": 46,
@@ -54022,8 +54022,8 @@
       "referenced_not_duplicated": true
     },
     "summary": {
-      "nodes": 702,
-      "edges": 1044,
+      "nodes": 716,
+      "edges": 1053,
       "node_kinds": {
         "candidate_problem": 3,
         "claim": 87,
@@ -54031,8 +54031,8 @@
         "dataset": 15,
         "domain": 13,
         "experiment": 78,
-        "failure_asset": 12,
-        "idea": 61,
+        "failure_asset": 21,
+        "idea": 66,
         "model": 6,
         "paper": 327,
         "paper-alias": 64,
@@ -54043,7 +54043,7 @@
         "belongs-to": 29,
         "citation": 47,
         "covers-domain": 72,
-        "diagnoses": 12,
+        "diagnoses": 21,
         "evaluates-on": 77,
         "nearest-work": 88,
         "principle_for": 2,
@@ -54058,13 +54058,13 @@
       },
       "base_nodes": 575,
       "base_edges": 952,
-      "overlay_nodes": 127,
-      "new_overlay_nodes": 127,
-      "overlay_edges": 92,
+      "overlay_nodes": 141,
+      "new_overlay_nodes": 141,
+      "overlay_edges": 101,
       "candidate_nodes": 3,
       "experiment_nodes": 78,
       "principle_nodes": 2,
-      "failure_asset_nodes": 12,
+      "failure_asset_nodes": 21,
       "scientific_closure_nodes": 0,
       "principle_closure_edges": 0
     },
@@ -54724,29 +54724,56 @@
         "source": "pilot_registry"
       },
       {
-        "id": "failure:29a8645f1dc119a4",
+        "id": "failure:0b366b3fd6118af1",
         "kind": "failure_asset",
-        "label": "execution:infrastructure-error",
-        "affected_layer": "execution",
-        "does_not_imply": "core-principle failure",
+        "label": "operationalization:surface-token-semantics-diverge-from-source-runtime",
+        "affected_layer": "operationalization",
+        "does_not_imply": "formal goal coupling is false, BEHAVIOR tasks are malformed, or the 957 v1 unresolved-symbol rows are scientific failures; the frozen v1 representation was incompatible with authoritative source semantics",
         "source": "failure_asset_library",
         "scientific_authority": false
       },
       {
-        "id": "failure:34d2176b897f5cfd",
+        "id": "failure:15260ba6d5632265",
         "kind": "failure_asset",
-        "label": "execution:infrastructure-error",
-        "affected_layer": "execution",
-        "does_not_imply": "core-principle failure",
+        "label": "experiment_identifiability:lineage-derived-policy-not-independent-family",
+        "affected_layer": "experiment_identifiability",
+        "does_not_imply": "a derivative policy is scientifically useless, cannot be evaluated as a within-family robustness variant, or is inferior; it only cannot satisfy an independently preregistered cross-family minimum by lineage relabeling",
         "source": "failure_asset_library",
         "scientific_authority": false
       },
       {
-        "id": "failure:39775e5c64ddce05",
+        "id": "failure:19beb54b06e782ee",
         "kind": "failure_asset",
-        "label": "execution:infrastructure-error",
-        "affected_layer": "execution",
-        "does_not_imply": "core-principle failure",
+        "label": "experiment_identifiability:proxy-length-and-capability-nonspecificity",
+        "affected_layer": "experiment_identifiability",
+        "does_not_imply": "that official complex-instruction labels cannot be benchmark-diagnostically performance-distinct, or that a formal author-defined goal-coupling representation cannot be identifiable on an untouched substrate",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:2b928cb93f7dcbca",
+        "kind": "failure_asset",
+        "label": "experiment_identifiability:public-outcome-completeness-shortfall",
+        "affected_layer": "experiment_identifiability",
+        "does_not_imply": "formal goal coupling is false, task structure is unrelated to policy performance, or a future complete public/local replication would fail",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:31e1928c8a7a417c",
+        "kind": "failure_asset",
+        "label": "operationalization:outcome-blind-proxy-transfer-failure",
+        "affected_layer": "operationalization",
+        "does_not_imply": "that the underlying embodied-agent phenomenon is false, that all formal constraint representations fail, that BEHAVIOR-1K or another untouched formal-goal substrate will fail, or any core-principle dead end",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:31fc2a1cdfa0ac11",
+        "kind": "failure_asset",
+        "label": "method_realization:evidence-authority-qualification-unavailable",
+        "affected_layer": "method_realization",
+        "does_not_imply": "method-effect failure, core-principle failure, measurement invalidity, or global impossibility of evidence-gated authority",
         "source": "failure_asset_library",
         "scientific_authority": false
       },
@@ -54760,20 +54787,38 @@
         "scientific_authority": false
       },
       {
+        "id": "failure:3cb602b999272acd",
+        "kind": "failure_asset",
+        "label": "reproducibility:headline-hyperparameters-incomplete-training-contract",
+        "affected_layer": "reproducibility",
+        "does_not_imply": "the source baseline implementations are irreproducible or invalid; it means the first researcher-authored contract was incomplete until hidden source defaults and save semantics were content-addressed",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:41247ce496fb4921",
+        "kind": "failure_asset",
+        "label": "experiment:no-label-variation",
+        "affected_layer": "experiment",
+        "does_not_imply": "core-principle failure",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:44937d6627d84ce0",
+        "kind": "failure_asset",
+        "label": "operationalization:objective-claim-mismatch",
+        "affected_layer": "operationalization",
+        "does_not_imply": "core-principle failure",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
         "id": "failure:47015a4d499b6cd9",
         "kind": "failure_asset",
         "label": "experiment_identifiability:composition-constituent-reference-instability",
         "affected_layer": "experiment_identifiability",
         "does_not_imply": "DeepSeek incapability, absence of all composition effects, memory-coordination failure, or core-principle failure",
-        "source": "failure_asset_library",
-        "scientific_authority": false
-      },
-      {
-        "id": "failure:475ab7f33b9304e7",
-        "kind": "failure_asset",
-        "label": "execution:infrastructure-error",
-        "affected_layer": "execution",
-        "does_not_imply": "core-principle failure",
         "source": "failure_asset_library",
         "scientific_authority": false
       },
@@ -54787,11 +54832,11 @@
         "scientific_authority": false
       },
       {
-        "id": "failure:6989eb9d048303d4",
+        "id": "failure:68d850704eabadf5",
         "kind": "failure_asset",
-        "label": "method_realization:evidence-authority-qualification-unavailable",
-        "affected_layer": "method_realization",
-        "does_not_imply": "method-effect failure, core-principle failure, measurement invalidity, or global impossibility of evidence-gated authority",
+        "label": "operationalization:missing-as-zero-estimand-drift",
+        "affected_layer": "operationalization",
+        "does_not_imply": "the official leaderboard scoring rule is incorrect; it only means leaderboard scoring and complete-execution scientific inference answer different questions",
         "source": "failure_asset_library",
         "scientific_authority": false
       },
@@ -54801,6 +54846,33 @@
         "label": "operationalization:decision-context-support-mismatch",
         "affected_layer": "operationalization",
         "does_not_imply": "method failure, core-principle failure, or rescue of the current ALFWorld memory paper",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:9807919315667692",
+        "kind": "failure_asset",
+        "label": "operationalization:representation-signal-mismatch",
+        "affected_layer": "operationalization",
+        "does_not_imply": "core-principle failure",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:99456354f8ea96a8",
+        "kind": "failure_asset",
+        "label": "method-realization:matched-simplification-tie",
+        "affected_layer": "method-realization",
+        "does_not_imply": "core-principle failure",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:b085c58b24232da4",
+        "kind": "failure_asset",
+        "label": "experiment_identifiability:development-substrate-cannot-self-confirm-structural-repair",
+        "affected_layer": "experiment_identifiability",
+        "does_not_imply": "the repaired representation cannot later be used in a preregistered outcome analysis on the development substrate; it means that substrate cannot also supply independent structural confirmation after informing the repair",
         "source": "failure_asset_library",
         "scientific_authority": false
       },
@@ -54819,6 +54891,15 @@
         "label": "operationalization:zero-provider-import-time-credential-coupling",
         "affected_layer": "operationalization",
         "does_not_imply": "evaluator support failure, task-substrate failure, provider failure, model failure, or a scientific null",
+        "source": "failure_asset_library",
+        "scientific_authority": false
+      },
+      {
+        "id": "failure:db3b1f7a1c983b86",
+        "kind": "failure_asset",
+        "label": "operationalization:source-schema-semantics-assumption",
+        "affected_layer": "operationalization",
+        "does_not_imply": "that correcting a schema alias or identifier namespace may retroactively convert a failed frozen construct gate into PASS, or that the EmbodiedBench labels are invalid",
         "source": "failure_asset_library",
         "scientific_authority": false
       },
@@ -54847,6 +54928,36 @@
         "id": "idea:MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX",
         "kind": "idea",
         "label": "MEMENTO-JOINT-BOUNDARY-CONTROL-ARK-DEEPSEEK-AUX",
+        "source": "failure_asset_library"
+      },
+      {
+        "id": "idea:PORT-010-E0-EMBODIEDBENCH-20260828",
+        "kind": "idea",
+        "label": "PORT-010-E0-EMBODIEDBENCH-20260828",
+        "source": "failure_asset_library"
+      },
+      {
+        "id": "idea:SUCC-C-BEHAVIOR2025-PUBLIC-OUTCOME",
+        "kind": "idea",
+        "label": "SUCC-C-BEHAVIOR2025-PUBLIC-OUTCOME",
+        "source": "failure_asset_library"
+      },
+      {
+        "id": "idea:SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+        "kind": "idea",
+        "label": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+        "source": "failure_asset_library"
+      },
+      {
+        "id": "idea:SUCC-C-FORMAL-GOAL-COUPLING-V1",
+        "kind": "idea",
+        "label": "SUCC-C-FORMAL-GOAL-COUPLING-V1",
+        "source": "failure_asset_library"
+      },
+      {
+        "id": "idea:SUCC-C-FORMAL-GOAL-COUPLING-V1-1",
+        "kind": "idea",
+        "label": "SUCC-C-FORMAL-GOAL-COUPLING-V1-1",
         "source": "failure_asset_library"
       },
       {
@@ -55440,22 +55551,22 @@
         "relation": "tested_by"
       },
       {
-        "source": "failure:29a8645f1dc119a4",
+        "source": "failure:9807919315667692",
         "target": "idea:update-trust-region",
         "relation": "diagnoses"
       },
       {
-        "source": "failure:39775e5c64ddce05",
+        "source": "failure:41247ce496fb4921",
         "target": "idea:budgeted-evolution-controller",
         "relation": "diagnoses"
       },
       {
-        "source": "failure:475ab7f33b9304e7",
+        "source": "failure:99456354f8ea96a8",
         "target": "idea:outcome-equivalent-trajectory-contrast",
         "relation": "diagnoses"
       },
       {
-        "source": "failure:34d2176b897f5cfd",
+        "source": "failure:44937d6627d84ce0",
         "target": "idea:workflow-generalization-certificate",
         "relation": "diagnoses"
       },
@@ -55495,8 +55606,53 @@
         "relation": "diagnoses"
       },
       {
-        "source": "failure:6989eb9d048303d4",
+        "source": "failure:31e1928c8a7a417c",
+        "target": "idea:PORT-010-E0-EMBODIEDBENCH-20260828",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:db3b1f7a1c983b86",
+        "target": "idea:PORT-010-E0-EMBODIEDBENCH-20260828",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:19beb54b06e782ee",
+        "target": "idea:PORT-010-E0-EMBODIEDBENCH-20260828",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:2b928cb93f7dcbca",
+        "target": "idea:SUCC-C-BEHAVIOR2025-PUBLIC-OUTCOME",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:68d850704eabadf5",
+        "target": "idea:SUCC-C-BEHAVIOR2025-PUBLIC-OUTCOME",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:31fc2a1cdfa0ac11",
         "target": "idea:C1-CBRG",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:0b366b3fd6118af1",
+        "target": "idea:SUCC-C-FORMAL-GOAL-COUPLING-V1",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:b085c58b24232da4",
+        "target": "idea:SUCC-C-FORMAL-GOAL-COUPLING-V1-1",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:15260ba6d5632265",
+        "target": "idea:SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+        "relation": "diagnoses"
+      },
+      {
+        "source": "failure:3cb602b999272acd",
+        "target": "idea:SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
         "relation": "diagnoses"
       }
     ],
@@ -55724,7 +55880,7 @@
   },
   "research_memory_wiki": {
     "schema_version": "1.2",
-    "generated_at": "2026-08-28T08:33:39+00:00",
+    "generated_at": "2026-08-28T13:46:27+00:00",
     "status": "MEMORY_COMPILED",
     "policy": {
       "schema_version": "1.2",
@@ -55775,7 +55931,7 @@
     "source_manifest": {
       "search_memory_closed_objects": 43,
       "search_memory_hold_objects": 9,
-      "failure_assets": 17,
+      "failure_assets": 21,
       "candidate_portfolio_visible": 3,
       "unresolved_principles": 2,
       "generator_blocked_attempts": 0,
@@ -55785,11 +55941,11 @@
       "result_analysis_lessons": 3
     },
     "summary": {
-      "entries": 105,
+      "entries": 109,
       "search_closures": 41,
       "scientific_closures": 2,
       "holds": 9,
-      "failure_assets": 17,
+      "failure_assets": 21,
       "success_assets": 3,
       "open_questions": 2,
       "repeated_review_blocks": 0,
@@ -55797,9 +55953,9 @@
       "review_lessons": 5,
       "paper_development_guidance": 1,
       "contribution_aware_lesson_templates": 2,
-      "prompt_eligible": 105,
-      "skill_candidates": 42,
-      "certainty_confirmed": 22,
+      "prompt_eligible": 109,
+      "skill_candidates": 46,
+      "certainty_confirmed": 26,
       "certainty_supported": 71,
       "certainty_tentative": 0,
       "certainty_speculative": 0,
@@ -55807,7 +55963,7 @@
       "certainty_not_applicable": 12,
       "transient": 0,
       "recurring_systemic": 16,
-      "scientific": 89
+      "scientific": 93
     },
     "entries": [
       {
@@ -56740,6 +56896,41 @@
         "automatic_skill_promotion": false
       },
       {
+        "memory_id": "MEM-FAIL-4e137b822da5c5cfed",
+        "kind": "FAILURE_ASSET",
+        "title": "experiment_identifiability:development-substrate-cannot-self-confirm-structural-repair",
+        "summary": "the repaired representation cannot later be used in a preregistered outcome analysis on the development substrate; it means that substrate cannot also supply independent structural confirmation after informing the repair",
+        "candidate_id": "",
+        "scope": "{\"ideas\": [\"SUCC-C-FORMAL-GOAL-COUPLING-V1-1\"], \"reuse_scope\": {\"affected_layer\": \"experiment_identifiability\", \"experiment_family\": \"representation repair after outcome-blind or outcome-free structural inspection\", \"failure_mode\": \"the same structural surface is used both to motivate/tune a repair and to claim independent construct confirmation\", \"required_separation\": \"development regression versus untouched structural transfer gate versus later outcome association\"}}",
+        "affected_layer": "experiment_identifiability",
+        "memory_class": "FAILURE_ASSET",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "",
+        "opposite_search_seed": "",
+        "reusable_precheck": "Once a substrate's structural distributions or failure cases have been inspected to diagnose or repair a representation, demote that substrate to development-only for that structural construct. Freeze the repair before contact with an untouched structure-only substrate and require the independent substrate to pass a content-addressed construct/transfer gate before scientific outcomes are opened. Passing the repaired metric again on the development substrate is necessary regression evidence, not independent confirmation.",
+        "source_refs": [
+          "repo:generated/behavior-formal-goal-coupling-v1-1-repair-qualification-20260828.json#sha256=a7e5e34aa252f4109e464bf5d4c707cb6216ece80fc9442116beb218f9946d89"
+        ],
+        "source_artifact": "failure_asset_library",
+        "occurrences": 1,
+        "last_revalidated": "",
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0
+        },
+        "scientific_authority": false,
+        "certainty": "CONFIRMED",
+        "certainty_basis": "failure-receipt-backed",
+        "certainty_scope_bound": true,
+        "skill_candidate_eligible": true,
+        "automatic_skill_promotion": false
+      },
+      {
         "memory_id": "MEM-FAIL-4e44b25f6724497959",
         "kind": "FAILURE_ASSET",
         "title": "reproducibility:fixed-seed-monte-carlo-traversal-order",
@@ -56797,6 +56988,76 @@
         "source_artifact": "failure_asset_library",
         "occurrences": 1,
         "last_revalidated": "2026-08-28",
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0
+        },
+        "scientific_authority": false,
+        "certainty": "CONFIRMED",
+        "certainty_basis": "failure-receipt-backed",
+        "certainty_scope_bound": true,
+        "skill_candidate_eligible": true,
+        "automatic_skill_promotion": false
+      },
+      {
+        "memory_id": "MEM-FAIL-6b1929c7103050609a",
+        "kind": "FAILURE_ASSET",
+        "title": "experiment_identifiability:lineage-derived-policy-not-independent-family",
+        "summary": "a derivative policy is scientifically useless, cannot be evaluated as a within-family robustness variant, or is inferior; it only cannot satisfy an independently preregistered cross-family minimum by lineage relabeling",
+        "candidate_id": "",
+        "scope": "{\"ideas\": [\"SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION\"], \"reuse_scope\": {\"affected_layer\": \"experiment_identifiability\", \"experiment_family\": \"cross-model or cross-policy generalization claims requiring independent families\", \"failure_mode\": \"engineering novelty or performance is mistaken for independent provenance, inflating the number of independent evidence families\", \"required_preflight\": \"source-pinned lineage graph plus pre-existing benchmark interface/serving/training/checkpoint contract before outcome access\"}}",
+        "affected_layer": "experiment_identifiability",
+        "memory_class": "FAILURE_ASSET",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "",
+        "opposite_search_seed": "",
+        "reusable_precheck": "For a cross-policy-family scientific object, define independence from source lineage and provenance before outcome access, not from the amount of downstream architectural or training modification. A candidate explicitly built on an already admitted family remains a within-family derivative unless a preregistered lineage rule says otherwise. Require any benchmark adapter, serving path, training recipe, and checkpoint/recipe provenance used for prequalification to already exist in the pinned public revision; an adapter created later by the research team is new engineering evidence and cannot be relabeled as pre-existing family qualification.",
+        "source_refs": [
+          "repo:generated/behavior-formal-goal-coupling-third-policy-qualification-20260828.json#sha256=7b4a4e1ab06d48d77504e3322b55611ef7f2372d7f32db47a60b41bee09190ac"
+        ],
+        "source_artifact": "failure_asset_library",
+        "occurrences": 1,
+        "last_revalidated": "",
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0
+        },
+        "scientific_authority": false,
+        "certainty": "CONFIRMED",
+        "certainty_basis": "failure-receipt-backed",
+        "certainty_scope_bound": true,
+        "skill_candidate_eligible": true,
+        "automatic_skill_promotion": false
+      },
+      {
+        "memory_id": "MEM-FAIL-6f2478c3efec8fd6bf",
+        "kind": "FAILURE_ASSET",
+        "title": "reproducibility:headline-hyperparameters-incomplete-training-contract",
+        "summary": "the source baseline implementations are irreproducible or invalid; it means the first researcher-authored contract was incomplete until hidden source defaults and save semantics were content-addressed",
+        "candidate_id": "",
+        "scope": "{\"ideas\": [\"SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION\"], \"reuse_scope\": {\"affected_layer\": \"reproducibility\", \"experiment_family\": \"source-faithful model training or fine-tuning replication\", \"failure_mode\": \"visible CLI settings are frozen while hidden source/library defaults or checkpoint semantics remain free, enabling silent run-to-run scientific drift\", \"required_preflight\": \"exact source + dependency lock + complete train/data/save semantics + terminal-unit rule before model load or optimizer update\"}}",
+        "affected_layer": "reproducibility",
+        "memory_class": "FAILURE_ASSET",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "",
+        "opposite_search_seed": "",
+        "reusable_precheck": "A training command is not a complete scientific training contract merely because seed, batch size, step count, and base checkpoint are frozen. Before compute authority, bind the exact source revision and dependency lock, optimizer and full defaults, LR scheduler and warmup, precision/distributed semantics, data ordering and normalization/transforms, validation behavior, checkpoint retention/save semantics, terminal checkpoint label, and restart/resume behavior. Resolve conflicts among README examples, legacy scripts, challenge-specific wrappers, and library defaults by a preregistered source-precedence rule. Explicitly audit zero-based loop/checkpoint labels to avoid off-by-one scientific units.",
+        "source_refs": [
+          "repo:generated/behavior-formal-goal-coupling-official-policy-training-contracts-v2-20260828.json#sha256=c01fb452fd18743eccaecad8ce8614ab04d69abc88dab5f59d85b89558e4e4d9"
+        ],
+        "source_artifact": "failure_asset_library",
+        "occurrences": 1,
+        "last_revalidated": "",
         "reuse_effectiveness": {
           "reuse_count": 0,
           "helped_count": 0,
@@ -57003,6 +57264,41 @@
         "reusable_precheck": "measure target entropy/variance before fitting",
         "source_refs": [
           "private-data://external/a12"
+        ],
+        "source_artifact": "failure_asset_library",
+        "occurrences": 1,
+        "last_revalidated": "",
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0
+        },
+        "scientific_authority": false,
+        "certainty": "CONFIRMED",
+        "certainty_basis": "failure-receipt-backed",
+        "certainty_scope_bound": true,
+        "skill_candidate_eligible": true,
+        "automatic_skill_promotion": false
+      },
+      {
+        "memory_id": "MEM-FAIL-b2462332cb76c1f991",
+        "kind": "FAILURE_ASSET",
+        "title": "operationalization:surface-token-semantics-diverge-from-source-runtime",
+        "summary": "formal goal coupling is false, BEHAVIOR tasks are malformed, or the 957 v1 unresolved-symbol rows are scientific failures; the frozen v1 representation was incompatible with authoritative source semantics",
+        "candidate_id": "",
+        "scope": "{\"ideas\": [\"SUCC-C-FORMAL-GOAL-COUPLING-V1\"], \"reuse_scope\": {\"affected_layer\": \"operationalization\", \"experiment_family\": \"formal benchmark analysis with researcher-defined parsing or representation layers\", \"failure_mode\": \"surface token convention is mistaken for semantic type while the authoritative runtime resolves the same token through task-local declared symbols and lexical binders\", \"required_preflight\": \"runtime parser/evaluator semantics plus task-local symbol-table and binder-precedence audit before metric freeze\"}}",
+        "affected_layer": "operationalization",
+        "memory_class": "FAILURE_ASSET",
+        "durability_class": "scientific",
+        "prompt_eligible": true,
+        "search_closure_certified": false,
+        "scientific_dead_end_certified": false,
+        "principle_update_allowed": false,
+        "reopen_condition": "",
+        "opposite_search_seed": "",
+        "reusable_precheck": "Before assigning semantic types from a benchmark's surface syntax, audit the authoritative parser/evaluator runtime and freeze identifier-resolution precedence from source semantics. A prefix such as '?' must not be treated as sufficient evidence of a quantified variable when the source runtime also uses that spelling for declared grounded instances. Parser success alone is insufficient: compare the research representation against the benchmark's symbol table, scope construction, binder shadowing, and argument-resolution code before interpreting unresolved-symbol counts scientifically.",
+        "source_refs": [
+          "repo:generated/behavior-formal-goal-coupling-structure-scan-20260828.json#sha256=154a30c941b6d6c78ef70dba88998444e3675fabe32c18288663a2841c642f79"
         ],
         "source_artifact": "failure_asset_library",
         "occurrences": 1,
@@ -59446,7 +59742,7 @@
       "p0": false,
       "gpu": false
     },
-    "wiki_sha256": "8d7e002b1dcd2a683252e826b2f0c35b51ab72ce2c435ad8e1358c5320ab851d",
+    "wiki_sha256": "c98a3a928caa928fde1f40af8940d5d5d5ff9c8e76f47f7d3b357eacc26d75f3",
     "lint": {
       "schema_version": "1.2",
       "status": "PASS",
@@ -59484,6 +59780,16 @@
         },
         {
           "code": "failure-asset-not-yet-effectiveness-validated",
+          "memory_id": "MEM-FAIL-4e137b822da5c5cfed",
+          "detail": "experiment_identifiability:development-substrate-cannot-self-confirm-structural-repair"
+        },
+        {
+          "code": "durable-failure-memory-missing-revalidation-date",
+          "memory_id": "MEM-FAIL-4e137b822da5c5cfed",
+          "detail": "experiment_identifiability:development-substrate-cannot-self-confirm-structural-repair"
+        },
+        {
+          "code": "failure-asset-not-yet-effectiveness-validated",
           "memory_id": "MEM-FAIL-4e44b25f6724497959",
           "detail": "reproducibility:fixed-seed-monte-carlo-traversal-order"
         },
@@ -59491,6 +59797,26 @@
           "code": "failure-asset-not-yet-effectiveness-validated",
           "memory_id": "MEM-FAIL-51e6b678cc612ddb1b",
           "detail": "operationalization:source-schema-semantics-assumption"
+        },
+        {
+          "code": "failure-asset-not-yet-effectiveness-validated",
+          "memory_id": "MEM-FAIL-6b1929c7103050609a",
+          "detail": "experiment_identifiability:lineage-derived-policy-not-independent-family"
+        },
+        {
+          "code": "durable-failure-memory-missing-revalidation-date",
+          "memory_id": "MEM-FAIL-6b1929c7103050609a",
+          "detail": "experiment_identifiability:lineage-derived-policy-not-independent-family"
+        },
+        {
+          "code": "failure-asset-not-yet-effectiveness-validated",
+          "memory_id": "MEM-FAIL-6f2478c3efec8fd6bf",
+          "detail": "reproducibility:headline-hyperparameters-incomplete-training-contract"
+        },
+        {
+          "code": "durable-failure-memory-missing-revalidation-date",
+          "memory_id": "MEM-FAIL-6f2478c3efec8fd6bf",
+          "detail": "reproducibility:headline-hyperparameters-incomplete-training-contract"
         },
         {
           "code": "failure-asset-not-yet-effectiveness-validated",
@@ -59529,6 +59855,16 @@
         },
         {
           "code": "failure-asset-not-yet-effectiveness-validated",
+          "memory_id": "MEM-FAIL-b2462332cb76c1f991",
+          "detail": "operationalization:surface-token-semantics-diverge-from-source-runtime"
+        },
+        {
+          "code": "durable-failure-memory-missing-revalidation-date",
+          "memory_id": "MEM-FAIL-b2462332cb76c1f991",
+          "detail": "operationalization:surface-token-semantics-diverge-from-source-runtime"
+        },
+        {
+          "code": "failure-asset-not-yet-effectiveness-validated",
           "memory_id": "MEM-FAIL-d716cf73efa27a067f",
           "detail": "method_realization:evidence-authority-qualification-unavailable"
         },
@@ -59561,9 +59897,9 @@
       ],
       "summary": {
         "errors": 0,
-        "warnings": 22,
-        "unconsumed_failure_assets": 14,
-        "missing_revalidation_dates": 4
+        "warnings": 30,
+        "unconsumed_failure_assets": 18,
+        "missing_revalidation_dates": 8
       },
       "scientific_authority": false
     },
@@ -60753,8 +61089,8 @@
       }
     ],
     "summary": {
-      "assets": 17,
-      "unique_signatures": 17,
+      "assets": 21,
+      "unique_signatures": 21,
       "principle_dead_ends": 0,
       "economy_dead_ends": 0,
       "experimental_stops_not_dead_ends": 23
@@ -61197,6 +61533,114 @@
         "source_decision": "STOP_MERGE_CURRENT_CBRG_EXTENSION_RETAIN_MEASUREMENT_PAPER",
         "external_memory_input": true,
         "scientific_authority": false
+      },
+      {
+        "signature": "operationalization:surface-token-semantics-diverge-from-source-runtime",
+        "idea_id": "SUCC-C-FORMAL-GOAL-COUPLING-V1",
+        "diagnosis": "surface-token-semantics-diverge-from-source-runtime",
+        "affected_layer": "operationalization",
+        "reusable_precheck": "Before assigning semantic types from a benchmark's surface syntax, audit the authoritative parser/evaluator runtime and freeze identifier-resolution precedence from source semantics. A prefix such as '?' must not be treated as sufficient evidence of a quantified variable when the source runtime also uses that spelling for declared grounded instances. Parser success alone is insufficient: compare the research representation against the benchmark's symbol table, scope construction, binder shadowing, and argument-resolution code before interpreting unresolved-symbol counts scientifically.",
+        "evidence_ref": "repo:generated/behavior-formal-goal-coupling-structure-scan-20260828.json#sha256=154a30c941b6d6c78ef70dba88998444e3675fabe32c18288663a2841c642f79",
+        "does_not_imply": "formal goal coupling is false, BEHAVIOR tasks are malformed, or the 957 v1 unresolved-symbol rows are scientific failures; the frozen v1 representation was incompatible with authoritative source semantics",
+        "memory_scope": "institutional-research-memory",
+        "reuse_scope": {
+          "affected_layer": "operationalization",
+          "experiment_family": "formal benchmark analysis with researcher-defined parsing or representation layers",
+          "failure_mode": "surface token convention is mistaken for semantic type while the authoritative runtime resolves the same token through task-local declared symbols and lexical binders",
+          "required_preflight": "runtime parser/evaluator semantics plus task-local symbol-table and binder-precedence audit before metric freeze"
+        },
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "superseded_by": "",
+        "last_revalidated": "",
+        "source_decision": "V1_STRUCTURE_SCAN_RETAINED_AS_OPERATIONALIZATION_HOLD_NOT_SCIENTIFIC_NEGATIVE",
+        "external_memory_input": true,
+        "scientific_authority": false
+      },
+      {
+        "signature": "experiment_identifiability:development-substrate-cannot-self-confirm-structural-repair",
+        "idea_id": "SUCC-C-FORMAL-GOAL-COUPLING-V1-1",
+        "diagnosis": "development-substrate-cannot-self-confirm-structural-repair",
+        "affected_layer": "experiment_identifiability",
+        "reusable_precheck": "Once a substrate's structural distributions or failure cases have been inspected to diagnose or repair a representation, demote that substrate to development-only for that structural construct. Freeze the repair before contact with an untouched structure-only substrate and require the independent substrate to pass a content-addressed construct/transfer gate before scientific outcomes are opened. Passing the repaired metric again on the development substrate is necessary regression evidence, not independent confirmation.",
+        "evidence_ref": "repo:generated/behavior-formal-goal-coupling-v1-1-repair-qualification-20260828.json#sha256=a7e5e34aa252f4109e464bf5d4c707cb6216ece80fc9442116beb218f9946d89",
+        "does_not_imply": "the repaired representation cannot later be used in a preregistered outcome analysis on the development substrate; it means that substrate cannot also supply independent structural confirmation after informing the repair",
+        "memory_scope": "institutional-research-memory",
+        "reuse_scope": {
+          "affected_layer": "experiment_identifiability",
+          "experiment_family": "representation repair after outcome-blind or outcome-free structural inspection",
+          "failure_mode": "the same structural surface is used both to motivate/tune a repair and to claim independent construct confirmation",
+          "required_separation": "development regression versus untouched structural transfer gate versus later outcome association"
+        },
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "superseded_by": "",
+        "last_revalidated": "",
+        "source_decision": "BEHAVIOR_STRUCTURE_DEVELOPMENT_ONLY_AFTER_SEMANTIC_REPAIR_LIBERO_OR_OTHER_UNTOUCHED_STRUCTURE_GATE_REQUIRED",
+        "external_memory_input": true,
+        "scientific_authority": false
+      },
+      {
+        "signature": "experiment_identifiability:lineage-derived-policy-not-independent-family",
+        "idea_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+        "diagnosis": "lineage-derived-policy-not-independent-family",
+        "affected_layer": "experiment_identifiability",
+        "reusable_precheck": "For a cross-policy-family scientific object, define independence from source lineage and provenance before outcome access, not from the amount of downstream architectural or training modification. A candidate explicitly built on an already admitted family remains a within-family derivative unless a preregistered lineage rule says otherwise. Require any benchmark adapter, serving path, training recipe, and checkpoint/recipe provenance used for prequalification to already exist in the pinned public revision; an adapter created later by the research team is new engineering evidence and cannot be relabeled as pre-existing family qualification.",
+        "evidence_ref": "repo:generated/behavior-formal-goal-coupling-third-policy-qualification-20260828.json#sha256=7b4a4e1ab06d48d77504e3322b55611ef7f2372d7f32db47a60b41bee09190ac",
+        "does_not_imply": "a derivative policy is scientifically useless, cannot be evaluated as a within-family robustness variant, or is inferior; it only cannot satisfy an independently preregistered cross-family minimum by lineage relabeling",
+        "memory_scope": "institutional-research-memory",
+        "reuse_scope": {
+          "affected_layer": "experiment_identifiability",
+          "experiment_family": "cross-model or cross-policy generalization claims requiring independent families",
+          "failure_mode": "engineering novelty or performance is mistaken for independent provenance, inflating the number of independent evidence families",
+          "required_preflight": "source-pinned lineage graph plus pre-existing benchmark interface/serving/training/checkpoint contract before outcome access"
+        },
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "superseded_by": "",
+        "last_revalidated": "",
+        "source_decision": "THIRD_POLICY_QUALIFICATION_CONFIRM_HOLD_THREE_FAMILY_MINIMUM_UNCHANGED",
+        "external_memory_input": true,
+        "scientific_authority": false
+      },
+      {
+        "signature": "reproducibility:headline-hyperparameters-incomplete-training-contract",
+        "idea_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+        "diagnosis": "headline-hyperparameters-incomplete-training-contract",
+        "affected_layer": "reproducibility",
+        "reusable_precheck": "A training command is not a complete scientific training contract merely because seed, batch size, step count, and base checkpoint are frozen. Before compute authority, bind the exact source revision and dependency lock, optimizer and full defaults, LR scheduler and warmup, precision/distributed semantics, data ordering and normalization/transforms, validation behavior, checkpoint retention/save semantics, terminal checkpoint label, and restart/resume behavior. Resolve conflicts among README examples, legacy scripts, challenge-specific wrappers, and library defaults by a preregistered source-precedence rule. Explicitly audit zero-based loop/checkpoint labels to avoid off-by-one scientific units.",
+        "evidence_ref": "repo:generated/behavior-formal-goal-coupling-official-policy-training-contracts-v2-20260828.json#sha256=c01fb452fd18743eccaecad8ce8614ab04d69abc88dab5f59d85b89558e4e4d9",
+        "does_not_imply": "the source baseline implementations are irreproducible or invalid; it means the first researcher-authored contract was incomplete until hidden source defaults and save semantics were content-addressed",
+        "memory_scope": "institutional-research-memory",
+        "reuse_scope": {
+          "affected_layer": "reproducibility",
+          "experiment_family": "source-faithful model training or fine-tuning replication",
+          "failure_mode": "visible CLI settings are frozen while hidden source/library defaults or checkpoint semantics remain free, enabling silent run-to-run scientific drift",
+          "required_preflight": "exact source + dependency lock + complete train/data/save semantics + terminal-unit rule before model load or optimizer update"
+        },
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "superseded_by": "",
+        "last_revalidated": "",
+        "source_decision": "CONTRACT_V1_REVISE_THEN_V2_PASS_PREFLIGHT_ONLY",
+        "external_memory_input": true,
+        "scientific_authority": false
       }
     ],
     "reusable_prechecks": [
@@ -61412,6 +61856,58 @@
         "signature": "method_realization:evidence-authority-qualification-unavailable",
         "affected_layer": "method_realization",
         "reusable_precheck": "Before a method gates treatment-specific residual content, freeze the validity semantics and independently qualify the evidence adjudicator on pre-outcome support. Locator coverage, semantic similarity, the treatment label, terminal reward, and downstream outcome cannot validate the residual. If no qualified signal exists, STOP/MERGE the current method extension rather than inventing a post-outcome verifier; preserve any independently valid measurement/mechanism result.",
+        "occurrences": 1,
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "revalidation_required_after_scope_change": true
+      },
+      {
+        "signature": "operationalization:surface-token-semantics-diverge-from-source-runtime",
+        "affected_layer": "operationalization",
+        "reusable_precheck": "Before assigning semantic types from a benchmark's surface syntax, audit the authoritative parser/evaluator runtime and freeze identifier-resolution precedence from source semantics. A prefix such as '?' must not be treated as sufficient evidence of a quantified variable when the source runtime also uses that spelling for declared grounded instances. Parser success alone is insufficient: compare the research representation against the benchmark's symbol table, scope construction, binder shadowing, and argument-resolution code before interpreting unresolved-symbol counts scientifically.",
+        "occurrences": 1,
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "revalidation_required_after_scope_change": true
+      },
+      {
+        "signature": "experiment_identifiability:development-substrate-cannot-self-confirm-structural-repair",
+        "affected_layer": "experiment_identifiability",
+        "reusable_precheck": "Once a substrate's structural distributions or failure cases have been inspected to diagnose or repair a representation, demote that substrate to development-only for that structural construct. Freeze the repair before contact with an untouched structure-only substrate and require the independent substrate to pass a content-addressed construct/transfer gate before scientific outcomes are opened. Passing the repaired metric again on the development substrate is necessary regression evidence, not independent confirmation.",
+        "occurrences": 1,
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "revalidation_required_after_scope_change": true
+      },
+      {
+        "signature": "experiment_identifiability:lineage-derived-policy-not-independent-family",
+        "affected_layer": "experiment_identifiability",
+        "reusable_precheck": "For a cross-policy-family scientific object, define independence from source lineage and provenance before outcome access, not from the amount of downstream architectural or training modification. A candidate explicitly built on an already admitted family remains a within-family derivative unless a preregistered lineage rule says otherwise. Require any benchmark adapter, serving path, training recipe, and checkpoint/recipe provenance used for prequalification to already exist in the pinned public revision; an adapter created later by the research team is new engineering evidence and cannot be relabeled as pre-existing family qualification.",
+        "occurrences": 1,
+        "reuse_effectiveness": {
+          "reuse_count": 0,
+          "helped_count": 0,
+          "hurt_count": 0,
+          "status": "not-yet-measured"
+        },
+        "revalidation_required_after_scope_change": true
+      },
+      {
+        "signature": "reproducibility:headline-hyperparameters-incomplete-training-contract",
+        "affected_layer": "reproducibility",
+        "reusable_precheck": "A training command is not a complete scientific training contract merely because seed, batch size, step count, and base checkpoint are frozen. Before compute authority, bind the exact source revision and dependency lock, optimizer and full defaults, LR scheduler and warmup, precision/distributed semantics, data ordering and normalization/transforms, validation behavior, checkpoint retention/save semantics, terminal checkpoint label, and restart/resume behavior. Resolve conflicts among README examples, legacy scripts, challenge-specific wrappers, and library defaults by a preregistered source-precedence rule. Explicitly audit zero-based loop/checkpoint labels to avoid off-by-one scientific units.",
         "occurrences": 1,
         "reuse_effectiveness": {
           "reuse_count": 0,

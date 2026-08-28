@@ -1,0 +1,55 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-official-policy-contract-v2-adjudication-v1",
+  "generated_at": "2026-08-28T21:19:54+08:00",
+  "object_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+  "status": "CONTRACT_V2_PASS_PREFLIGHT_ONLY_THIRD_FAMILY_HOLD",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "gpu_authority": false,
+  "policy_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "outcomes_read": false,
+  "contract": {
+    "path": "generated/behavior-formal-goal-coupling-official-policy-training-contracts-v2-20260828.json",
+    "sha256": "c01fb452fd18743eccaecad8ce8614ab04d69abc88dab5f59d85b89558e4e4d9"
+  },
+  "independent_reviews": [
+    {
+      "reviewer": "kimi-k3",
+      "path": "generated/behavior-formal-goal-coupling-official-policy-contract-reviews-v2-20260828/kimi-review.json",
+      "sha256": "448221f52e1871baa642e00c6212d17a8cf24d81c73cdba0d9dbf57bf04b00e0",
+      "verdict": "CONTRACT-PASS-PREFLIGHT-ONLY"
+    },
+    {
+      "reviewer": "deepseek-v4-pro-ga-260813",
+      "path": "generated/behavior-formal-goal-coupling-official-policy-contract-reviews-v2-20260828/deepseek-review.json",
+      "sha256": "7d83d6eaad2da170dbdf305e78940c4f2dce118b407c411737e530136ed0b3c5",
+      "verdict": "CONTRACT-PASS-PREFLIGHT-ONLY"
+    }
+  ],
+  "review_consensus": "2/2 CONTRACT-PASS-PREFLIGHT-ONLY",
+  "resolved_review_caveat": {
+    "groot_uv_lock_sha256": "ef9488dddc0d5b49855d7df790998b7f6660871d64c411197acea2a8129e7b93",
+    "groot_transformers_version": "4.57.3",
+    "openpi_uv_lock_sha256": "75657cfbac40473237a6eaebc994fe998b249b44a4671d38129af198f00e4ed6",
+    "openpi_transformers_version": "5.5.4"
+  },
+  "allowed_now": [
+    "phase-0 static provenance/schema/access checks",
+    "phase-1 data-only parser/schema/normalization-path checks without model load"
+  ],
+  "forbidden_now": [
+    "model load",
+    "forward pass",
+    "backward pass",
+    "optimizer update",
+    "policy training",
+    "policy serving on scientific tasks",
+    "policy rollout",
+    "success/reward outcome analysis",
+    "lowering the three-family minimum"
+  ],
+  "third_family_gate": "UNRESOLVED; zero qualified independent third family; three-family minimum remains frozen",
+  "next_gate": "complete phase-0 and phase-1 data-only receipts; keep phase-2 model-load/no-update locked until third-family qualification and separate authority",
+  "adjudication_sha256": "11ab7086438e7c9b4d2362db417e688c3371fce1ec4792975727a325dee35db2"
+}

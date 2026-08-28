@@ -1,0 +1,99 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-local-replication-readiness-v2",
+  "generated_at": "2026-08-28T21:49:48+08:00",
+  "object_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+  "status": "HOLD_THIRD_FAMILY_PREOUTCOME_QUALIFICATION_PHASE1_READY",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "provider_authority": false,
+  "gpu_authority": false,
+  "model_load_authorized": false,
+  "forward_authorized": false,
+  "backward_authorized": false,
+  "optimizer_update_authorized": false,
+  "policy_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "parent_port010_reopen_authorized": false,
+  "canonical_source_revision": "a54ac1f5c355ec31e8fcbd39559a7d39a4615447",
+  "prior_readiness": {
+    "path": "generated/behavior-formal-goal-coupling-local-replication-readiness-20260828.json",
+    "sha256": "64d95f6b51686efc6c11d1eadaf7fbe6c44afc8f6958dda446a9170fe498dcaf",
+    "status": "HOLD_LOCAL_CROSS_POLICY_REPLICATION_SUBSTRATE_INCOMPLETE"
+  },
+  "public_release_watch": {
+    "path": "generated/behavior-formal-goal-coupling-2026-release-watch-20260828.json",
+    "sha256": "0d068ab389eb054760a6381ab61a4541d85df57f3faa61186cf3acef334def27",
+    "status": "WATCH_STABLE_NO_2026_PUBLIC_RESULT_RELEASE_CHANGE",
+    "triggered": false,
+    "policy_outcome_values_read": false
+  },
+  "third_policy_gate": {
+    "path": "generated/behavior-formal-goal-coupling-third-policy-qualification-20260828.json",
+    "sha256": "7b4a4e1ab06d48d77504e3322b55611ef7f2372d7f32db47a60b41bee09190ac",
+    "status": "HOLD_NO_THIRD_PREOUTCOME_QUALIFIED_POLICY_FAMILY",
+    "qualified_third_family_count": 0,
+    "required_third_family_count": 1,
+    "three_policy_minimum_may_be_lowered": false
+  },
+  "official_two_family_contract": {
+    "path": "generated/behavior-formal-goal-coupling-official-policy-training-contracts-v2-20260828.json",
+    "sha256": "c01fb452fd18743eccaecad8ce8614ab04d69abc88dab5f59d85b89558e4e4d9",
+    "adjudication_path": "generated/behavior-formal-goal-coupling-official-policy-training-contracts-v2-adjudication-20260828.json",
+    "adjudication_sha256": "11ab7086438e7c9b4d2362db417e688c3371fce1ec4792975727a325dee35db2",
+    "review_consensus": "2/2 CONTRACT-PASS-PREFLIGHT-ONLY",
+    "status": "CONTRACT_V2_PASS_PREFLIGHT_ONLY_THIRD_FAMILY_HOLD"
+  },
+  "preflight": {
+    "phase0": {
+      "path": "generated/behavior-formal-goal-coupling-phase0-static-data-preflight-20260828.json",
+      "receipt_sha256": "e63321eb7a1d39e4a8cacb0cce735d034fefbdb22ae7e4a8c61494e38d948441",
+      "status": "PHASE0_STATIC_PASS_PHASE1_DATA_ONLY_ALLOWED_THIRD_FAMILY_HOLD",
+      "pass": true
+    },
+    "phase1": {
+      "path": "generated/behavior-formal-goal-coupling-phase1-data-only-preflight-20260828.json",
+      "receipt_sha256": "f2f5dc23dc4d00acd069bca9fc009d17fa1152beb0152ba1ff1f30fea6fb15c0",
+      "status": "PHASE1_DATA_ONLY_PASS_MODEL_LOAD_LOCKED_THIRD_FAMILY_HOLD",
+      "pass": true,
+      "task_index": 0,
+      "task_name": "turning_on_radio",
+      "reward_values_read": false
+    }
+  },
+  "current_readiness": {
+    "official_families_with_source_pinned_train_serve_contracts": 2,
+    "third_independent_family_qualified": 0,
+    "exact_dataset_revision_pinned": true,
+    "100_task_namespace_verified": true,
+    "r1pro_61_state_23_action_verified": true,
+    "chunk0_200_demo_data_only_consistency_verified": true,
+    "model_load_ready_scientifically": false,
+    "full_matrix_execution_ready_scientifically": false
+  },
+  "large_asset_policy": {
+    "full_3_26tb_demo_materialization_authorized": false,
+    "training_checkpoint_download_authorized": false,
+    "reason": "phase0/phase1 require only exact metadata plus one pre-frozen data-only task smoke; large materialization is deferred until a complete three-family contract and separate execution authority"
+  },
+  "allowed_now": [
+    "watch organizer public outcomes/releases",
+    "qualify a genuinely independent third family from pre-existing public source/interface/training/serving/checkpoint evidence",
+    "storage/cost/environment planning without policy model load",
+    "repeat static integrity checks if source revision changes"
+  ],
+  "forbidden_now": [
+    "count Pi0.5/OpenPI derivatives as an independent third family",
+    "build a new adapter and retroactively call it pre-existing family qualification",
+    "model checkpoint download/load for scientific execution",
+    "forward/backward/optimizer update",
+    "policy training",
+    "policy rollout",
+    "reward/success analysis",
+    "full demo materialization",
+    "lower three-family minimum",
+    "reopen PORT-010"
+  ],
+  "next_gate": "a genuinely independent third family must pass pre-outcome source qualification; after that, a separate independent review plus explicit human execution authority is required before phase2 model-load/no-update or any compute-bearing scientific action",
+  "readiness_sha256": "226d5fc0e387a2f0c9f1d19a7a33f1244f1759301f877bddb26dc607f7a91b1f"
+}

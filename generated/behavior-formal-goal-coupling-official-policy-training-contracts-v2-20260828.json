@@ -1,0 +1,303 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-official-policy-training-contracts-v2",
+  "object_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+  "status": "OFFICIAL_TWO_FAMILY_TRAINING_CONTRACTS_V2_FROZEN_ZERO_EXECUTION_AWAITING_REVIEW",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "gpu_authority": false,
+  "policy_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "outcomes_read": false,
+  "common_evaluation_contract": {
+    "benchmark": "BEHAVIOR 2026 Challenge",
+    "benchmark_tag": "v3.9.2",
+    "benchmark_revision": "b1979916ec1549b10a4e65e630bc6504a9af1b00",
+    "task_count": 100,
+    "public_eval_instances": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "rollouts_per_instance": 1,
+    "allowed_policy_inputs": [
+      "RGB",
+      "depth",
+      "proprioception"
+    ],
+    "primary_official_metric": "BDDL partial goal-predicate satisfaction averaged across 100 tasks",
+    "selection_rule": "no task, instance, checkpoint, seed, or policy unit may be selected or dropped using scientific outcomes",
+    "matrix_requirement": "each admitted policy family must provide one frozen task-specific policy unit for every one of the 100 tasks and complete 10-instance official-evaluator outcomes when execution is later authorized"
+  },
+  "pi05_contract": {
+    "family": "pi0.5",
+    "repo": "https://github.com/wensi-ai/openpi.git",
+    "revision": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+    "source_files": {
+      "src/openpi/training/config.py": "46763413af168cde21084070ef93f2b9b00b9466caa0d09ba3bf2ba8d12222ae",
+      "scripts/b1k/train_b1k.py": "9e1ac351c8f491d0c5307963d11ab07b008548da2bcd29a4670e88622eae6507",
+      "scripts/b1k/train_b1k.sh": "f69e949c25c486835ecb3918962ddd048936a7d17a57f76c1a539efeaa9b65d2",
+      "scripts/b1k/serve_b1k.py": "d3f94888ad4a0be9b9e126cdf9b6c72e5a0aaac49e3d456f3639cb5f992eee51",
+      "src/openpi/configs/robots/b1k.py": "d3d5af8ab4c5eca57cd33cdf81fdbc23dea78aa2cb7932736c8722687d0d1e1c",
+      "src/openpi/training/optimizer.py": "cfb5d6f6aec61fbe961287b4015c652260628a0ed4682a0dbdc271b8e65431fa",
+      "src/openpi/training/data_loader.py": "3818273c09d5fa46d8d5cfe8081c5c16c6bd9bb70fd1f1c1eff73bc0725d50b1",
+      "src/openpi/models/pi0_config.py": "d321858c30b398126035ea2b6da09e1c422eeeebb5ebf8df631daf9dc77647fa",
+      "src/openpi/models/model.py": "0d74bc1d8f4623ac3d8e543710b8bf75f9b95e588a3ebf6127c659e001385cff",
+      "src/openpi/models/pi0.py": "24b32d7c6ed5e409459afa8ca5af96a4dae09c2dcdf48e828907e411f4f12342",
+      "src/openpi/training/checkpoints.py": "9e8782f0171eec4b5623728204f975a976d5f89defa7b317100db6395990dd13"
+    },
+    "base_checkpoint": "gs://openpi-assets/checkpoints/pi05_base/params",
+    "training_unit": "one challenge task dataset per training job; no unreviewed 100-task union training substitution",
+    "seed": 42,
+    "global_batch_size": 64,
+    "batch_basis": "source scripts/b1k/train_b1k.sh explicitly passes --batch_size=64 for the multi-GPU wrapper",
+    "model_action_horizon": 32,
+    "num_train_steps": 50000,
+    "save_interval": 10000,
+    "checkpoint_selection_rule": "use the terminal checkpoint emitted at the frozen 50,000-step training horizon; do not select by validation or later policy outcome",
+    "fresh_run_rule": "new task run uses --overwrite and a unique experiment directory; resume is forbidden for confirmatory training unless a preemption-recovery receipt proves exact state continuation",
+    "serving": {
+      "robot": "b1k/R1Pro",
+      "policy_config": "pi05_b1k",
+      "control_mode": "receding_horizon",
+      "serve_action_horizon": 16,
+      "port": 8000
+    },
+    "task_jobs_if_full_matrix": 100,
+    "gpu_count_per_official_multi_gpu_job": 8,
+    "distributed_training_steps_full_matrix": 5000000,
+    "gpu_step_units_full_matrix": 40000000,
+    "dependency_lock": {
+      "pyproject_sha256": "466ac99d239d361c1104249f0eb0ad30fefa5c8c44c0f162dae0b7a63a45124b",
+      "uv_lock_sha256": "75657cfbac40473237a6eaebc994fe998b249b44a4671d38129af198f00e4ed6"
+    },
+    "optimizer": {
+      "name": "AdamW",
+      "b1": 0.9,
+      "b2": 0.95,
+      "eps": 1e-08,
+      "weight_decay": 1e-10,
+      "clip_gradient_norm": 1.0
+    },
+    "lr_schedule": {
+      "name": "warmup_cosine_decay",
+      "warmup_steps": 1000,
+      "peak_lr": 2.5e-05,
+      "decay_steps": 30000,
+      "end_lr": 2.5e-06
+    },
+    "ema_decay": 0.99,
+    "model_dtype": "bfloat16",
+    "max_token_len": 200,
+    "model_image_resolution": [
+      224,
+      224
+    ],
+    "raw_robot_camera_resolution": [
+      240,
+      240
+    ],
+    "action_dim": 23,
+    "data_semantics": {
+      "shuffle": true,
+      "shuffle_seed": 42,
+      "prompt_from_task": true,
+      "dataset_tolerance_s": 0.0005,
+      "normalization": "z-score (B1K config explicitly sets use_quantile_norm=false)",
+      "delta_action_conversion": "torso and arm groups converted through state-aligned delta mappings; grippers remain endpoint/absolute groups",
+      "num_workers": 8,
+      "validation_during_training": false,
+      "validation_basis": "val_log_interval defaults to null; B1K train loop computes validation only when explicitly enabled"
+    },
+    "distributed_semantics": {
+      "gpu_count": 8,
+      "global_batch_size": 64,
+      "batch_divisibility_required": true,
+      "fsdp_devices": 1,
+      "wrapper": "scripts/b1k/train_b1k.sh"
+    },
+    "checkpoint_semantics": {
+      "loop_iterations": 50000,
+      "source_step_labels": "0..49999",
+      "periodic_save_condition": "step % 10000 == 0 and step > start_step",
+      "terminal_save_condition": "step == num_train_steps - 1",
+      "terminal_checkpoint_source_label": 49999,
+      "orbax_max_to_keep": 1,
+      "keep_period": 5000,
+      "saved_inference_params": "EMA params when EMA is enabled",
+      "selection_rule": "serve the source-emitted terminal checkpoint at step label 49999; never select an intermediate checkpoint using validation, W&B, or policy outcomes"
+    },
+    "preemption_semantics": {
+      "confirmatory_default": "fresh unique output directory with overwrite; no resume",
+      "recovery": "resume allowed only as exact preemption recovery after a content-addressed state receipt proves optimizer/scheduler/RNG/data-loader continuity; recovery cannot alter terminal checkpoint selection"
+    }
+  },
+  "groot_contract": {
+    "family": "GR00T N1.7",
+    "repo": "https://github.com/wensi-ai/Isaac-GR00T.git",
+    "revision": "ace36d935b376fbf25cd56371e23877b95407c40",
+    "source_files": {
+      "gr00t/configs/finetune_config.py": "19f3abfe7fbd5c17f98067827e0af6e974bde8b8e4697bde09de590939f562ba",
+      "scripts/b1k/train_b1k.py": "68700fc184e13d13744a05120fda9227d277c65a6115f6b781ed08bfbe9d00e8",
+      "scripts/b1k/serve_b1k.py": "948796ae411758962cf4be84a58e49ac9f86f231fac9c7e9f6ba59c97ea87519",
+      "examples/b1k/r1pro.py": "a69a2f13f9f488e067f7dc101240259b8677f6062ff04a9a61a2ed92bef8549b",
+      "examples/b1k/r1pro.json": "ca3a2e406472650bee9439ed81a3f4a1531b6fe689cdc1b348d0f260a208e641",
+      "gr00t/configs/training/training_config.py": "53b7a9a5169b418065ed1f5d0116f3cf890bfce4533b0ab4b029fb6d8ec4d0cc",
+      "gr00t/configs/data/data_config.py": "7d8e2308e402d4a2e9bc2b559b93849f5a92d6095f599c79345c665b1e839fcd",
+      "gr00t/experiment/experiment.py": "5ff6517bd9214c483f9b90277cafa3c05127d81b25ce6c40a12ef17e7145e493",
+      "gr00t/experiment/trainer.py": "2678e2a6eedee25daa0888d2ebf40b5c01585b0e4885b6d6f17eca9c74a69e2a",
+      "gr00t/configs/deepspeed/zero2_config.json": "8b0cd28759c69f399c559e906c2f3337db52450a6da61c763e02009a687d42dd"
+    },
+    "base_checkpoint": "nvidia/GR00T-N1.7-3B",
+    "gated_dependency": "nvidia/Cosmos-Reason2-2B",
+    "training_unit": "one challenge task dataset per training job; no unreviewed 100-task union training substitution",
+    "data_seed": 42,
+    "tune_llm": false,
+    "tune_visual": false,
+    "tune_projector": true,
+    "tune_diffusion_model": true,
+    "state_dropout_prob": 0.2,
+    "use_relative_action": true,
+    "global_batch_size": 2048,
+    "gradient_accumulation_steps": 1,
+    "learning_rate": 0.0001,
+    "weight_decay": 1e-05,
+    "warmup_ratio": 0.05,
+    "num_gpus": 8,
+    "dataloader_num_workers": 8,
+    "max_steps": 150000,
+    "save_steps": 1500,
+    "save_total_limit": 5,
+    "decode_only_used_frames": true,
+    "checkpoint_selection_rule": "use the terminal checkpoint emitted at the frozen 150,000-step training horizon; do not select by W&B metric, intermediate checkpoint outcome, or later policy outcome",
+    "fresh_run_rule": "resume_from_checkpoint=false for confirmatory task training; preemption recovery requires an exact state/provenance receipt and may not change the terminal-step selection rule",
+    "serving": {
+      "embodiment_tag": "NEW_EMBODIMENT",
+      "modality_config": "examples/b1k/r1pro.py",
+      "state_dim": 61,
+      "action_dim": 23,
+      "control_mode": "temporal_ensemble",
+      "host": "127.0.0.1",
+      "port": 8000
+    },
+    "task_jobs_if_full_matrix": 100,
+    "gpu_count_per_official_job": 8,
+    "distributed_training_steps_full_matrix": 15000000,
+    "gpu_step_units_full_matrix": 120000000,
+    "dependency_lock": {
+      "pyproject_sha256": "b5ff90198af09ee53a0c2a2dda8dcd0634699dcff3f21f3987858c1932f2aec0",
+      "uv_lock_sha256": "ef9488dddc0d5b49855d7df790998b7f6660871d64c411197acea2a8129e7b93"
+    },
+    "source_precedence_note": "getting_started/b1k.md at the pinned challenge fork is the challenge-specific contract; legacy/I3L sbatch examples using N1.6 or smaller batch are not the B1K 2026 training recipe",
+    "optimizer": {
+      "name": "adamw_torch",
+      "library_defaults": "exact Transformers optimizer defaults are inherited from the pinned dependency lock; do not substitute another AdamW implementation"
+    },
+    "lr_scheduler_type": "cosine",
+    "max_grad_norm": 1.0,
+    "precision": {
+      "bf16": true,
+      "fp16": false,
+      "tf32": true,
+      "backbone_trainable_params_fp32": true,
+      "load_bf16": false
+    },
+    "distributed_semantics": {
+      "gpu_count": 8,
+      "global_batch_size": 2048,
+      "per_device_batch_size": 256,
+      "gradient_accumulation_steps": 1,
+      "deepspeed_stage": 2,
+      "use_ddp": false
+    },
+    "data_semantics": {
+      "seed": 42,
+      "episode_sampling_rate": 0.1,
+      "shard_size": 1024,
+      "num_shards_per_epoch": 100000,
+      "decode_only_used_frames": true,
+      "dataloader_num_workers": 8,
+      "random_rotation_angle": null,
+      "color_jitter_params": null,
+      "extra_augmentation_config": null,
+      "eval_strategy": "no",
+      "gradient_checkpointing": false,
+      "remove_unused_columns": false,
+      "modality": "R1Pro 61-D proprioception / 23-D absolute joint action mapped by examples/b1k/r1pro.py and .json"
+    },
+    "checkpoint_semantics": {
+      "max_optimizer_steps": 150000,
+      "save_steps": 1500,
+      "save_total_limit": 5,
+      "terminal_periodic_checkpoint": "checkpoint-150000 (150000 is exactly divisible by 1500)",
+      "final_model_save": "trainer.save_model() also writes the final model to the output directory after trainer.train()",
+      "selection_rule": "use checkpoint-150000 as the frozen scientific policy unit; do not select best-W&B/intermediate/open-loop checkpoints",
+      "save_best_eval_metric_name": "empty; no best-metric checkpoint callback",
+      "eval_strategy": "no"
+    },
+    "preemption_semantics": {
+      "confirmatory_default": "resume_from_checkpoint=false with unique output directory",
+      "recovery": "exact resume is a separate preemption-recovery path only; any recovered run must preserve source state and terminal checkpoint selection and receive a content-addressed recovery receipt"
+    }
+  },
+  "full_two_family_budget_shape": {
+    "task_specific_training_jobs": 200,
+    "distributed_training_steps": 20000000,
+    "gpu_step_units": 160000000,
+    "scientific_eval_rollouts_after_training_if_authorized": 2000,
+    "note": "gpu_step_units are step x GPU accounting units, not a wall-clock estimate; measured throughput preflight is required before any compute authorization",
+    "lower_bound_note": "step×GPU accounting excludes data preprocessing/normalization, checkpoint I/O, model download/cache, serving startup, retries, preemption recovery, environment build, storage, and evaluation inference; it is not a wall-clock or monetary estimate"
+  },
+  "remaining_blockers": [
+    "no third independent pre-outcome qualified policy family (confirmed by independent Kimi/DeepSeek review)",
+    "no complete organizer-provided 100-task checkpoint matrix; full local replication would require 200 task-specific training jobs for the two official families before adding a third family",
+    "no measured model-training throughput/cost receipt; model-load/update throughput remains deliberately deferred until the third-family and execution gates",
+    "this v2 contract requires independent review; the prior v1 reviewers both returned CONTRACT-REVISE",
+    "no human execution authority"
+  ],
+  "next_gate": "independent review of this v2 source-complete contract; if qualified, only phase-0 static and phase-1 data-only preflight may proceed while third-family HOLD remains. No model load, backward, optimizer update, or policy rollout.",
+  "supersedes": {
+    "artifact": "generated/behavior-formal-goal-coupling-official-policy-training-contracts-20260828.json",
+    "sha256": "187ed58a8ade5dc4a7323ecfce097ddb9d32faa96ac2fb3549fd3122b6cfb055",
+    "reason": "v1 captured headline challenge hyperparameters but omitted source-hidden optimizer/scheduler/precision/data-ordering/dependency-lock and exact terminal-save semantics; both independent reviewers requested revision before preflight-only qualification"
+  },
+  "contract_policy": {
+    "source_precedence": "challenge-specific B1K README/wrapper/config at the pinned revision overrides generic or legacy example scripts in the same repository; exact runtime defaults come from pinned source and dependency lock",
+    "no_outcome_tuning": true,
+    "terminal_checkpoint_only": true,
+    "task_specific_training_is_source_faithful": true,
+    "multitask_union_training_is_new_method_and_not_authorized": true,
+    "third_family_minimum_remains_three": true,
+    "training_or_rollout_authority_from_this_artifact": false
+  },
+  "preflight_contract": {
+    "phase_0_static": [
+      "verify exact repository revisions, source file hashes, dependency-lock hashes, BEHAVIOR tag/revision, and task list digest",
+      "verify 100 task dataset manifests and R1Pro modality/action schemas without reading policy outcomes",
+      "verify base-checkpoint identifiers and access eligibility without downloading full weights when a metadata/auth check suffices"
+    ],
+    "phase_1_data_only_no_model": [
+      "instantiate dataset metadata/parsers and one batch-schema object without model load, optimizer, backward, or update",
+      "verify normalization-statistics path and task-local data transforms; if normalization generation has a standalone source-faithful data-only command, record its hash/output separately",
+      "measure CPU/disk decode throughput only if it requires no policy/model execution"
+    ],
+    "phase_2_model_load_no_update_deferred": [
+      "model-load, forward/backward, optimizer-step, or measured training throughput is not authorized by this contract and remains deferred until the third-family gate and an explicit execution/preflight authority artifact"
+    ],
+    "forbidden": [
+      "optimizer update",
+      "backward pass",
+      "policy rollout",
+      "scientific success/reward read",
+      "hyperparameter tuning",
+      "checkpoint selection by outcome",
+      "lowering the three-family minimum"
+    ]
+  }
+}
