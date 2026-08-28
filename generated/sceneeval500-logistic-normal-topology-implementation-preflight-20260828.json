@@ -1,0 +1,217 @@
+{
+  "schema_version": "sceneeval-logistic-normal-topology-implementation-preflight-v1",
+  "status": "CORE_TOPOLOGY_LIKELIHOOD_SYNTHETIC_PASS",
+  "preregistration_artifact": "generated/sceneeval500-prerequisite-coupling-preregistration-draft-20260828.json",
+  "preregistration_sha256": "269412b2b0ac270de00d1cca60f4e429ca3b48aae5d62359be073a6095abc365",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "outcome_exposure": {
+    "sceneeval_generator_outputs_read": false,
+    "sceneeval_matching_outputs_read": false,
+    "sceneeval_metric_outputs_read": false,
+    "synthetic_outcomes_only": true
+  },
+  "runtime": {
+    "python": "3.10.19",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "required_runtime_on_69": "/home/wyt/anaconda3/bin/python",
+    "new_packages_installed": false
+  },
+  "implementation_contract": {
+    "likelihood": "three-channel binomial logistic-normal marginal likelihood integrated with tensor-product Gauss-Hermite quadrature",
+    "quadrature_order": 7,
+    "N2_parameter_count_for_covariance": 4,
+    "candidate_parameter_count_for_covariance": 6,
+    "candidate_minus_N2_degrees_of_freedom": 2,
+    "N2_covariance": "channel-specific positive scales plus one exchangeable correlation rho in (-0.5,1)",
+    "candidate_covariance": "unrestricted SPD 3x3 covariance through lower-Cholesky parameterization",
+    "nested_subspace": "candidate pair correlations all equal",
+    "fixed_effect_interface": "eta[scene,channel] is supplied as a frozen marginal offset; marginal metadata-calibration implementation remains a separate prerequisite gate"
+  },
+  "synthetic_validation": {
+    "exact_nesting_loglik_absolute_error": 0.0,
+    "exchangeable_null": {
+      "name": "exchangeable_null",
+      "seed": 2026082802,
+      "train_scene_count": 800,
+      "test_scene_count": 400,
+      "true_correlation": [
+        [
+          1.0,
+          0.3,
+          0.3
+        ],
+        [
+          0.3,
+          1.0,
+          0.3
+        ],
+        [
+          0.3,
+          0.3,
+          1.0
+        ]
+      ],
+      "n2": {
+        "success": true,
+        "iterations": 6,
+        "train_log_likelihood": -4855.188911,
+        "test_log_likelihood_q7": -2418.825382,
+        "exchangeable_rho": 0.22259,
+        "fitted_correlation": [
+          [
+            1.0,
+            0.22259,
+            0.22259
+          ],
+          [
+            0.22259,
+            1.0,
+            0.22259
+          ],
+          [
+            0.22259,
+            0.22259,
+            1.0
+          ]
+        ]
+      },
+      "candidate": {
+        "success": true,
+        "iterations": 6,
+        "train_log_likelihood": -4854.90597,
+        "test_log_likelihood_q7": -2419.35516,
+        "test_log_likelihood_q9": -2419.809458,
+        "q7_q9_per_test_scene_difference": 0.00113574,
+        "fitted_correlation": [
+          [
+            1.0,
+            0.195942,
+            0.217944
+          ],
+          [
+            0.195942,
+            1.0,
+            0.25371
+          ],
+          [
+            0.217944,
+            0.25371,
+            1.0
+          ]
+        ],
+        "max_exchangeability_deviation": 0.031178
+      },
+      "heldout_candidate_minus_n2_log_likelihood": -0.529778
+    },
+    "nonexchangeable_alternative": {
+      "name": "nonexchangeable_alternative",
+      "seed": 2026082803,
+      "train_scene_count": 800,
+      "test_scene_count": 400,
+      "true_correlation": [
+        [
+          1.0,
+          0.65,
+          0.05
+        ],
+        [
+          0.65,
+          1.0,
+          0.05
+        ],
+        [
+          0.05,
+          0.05,
+          1.0
+        ]
+      ],
+      "n2": {
+        "success": true,
+        "iterations": 6,
+        "train_log_likelihood": -4797.151516,
+        "test_log_likelihood_q7": -2456.915546,
+        "exchangeable_rho": 0.243895,
+        "fitted_correlation": [
+          [
+            1.0,
+            0.243895,
+            0.243895
+          ],
+          [
+            0.243895,
+            1.0,
+            0.243895
+          ],
+          [
+            0.243895,
+            0.243895,
+            1.0
+          ]
+        ]
+      },
+      "candidate": {
+        "success": true,
+        "iterations": 9,
+        "train_log_likelihood": -4753.14988,
+        "test_log_likelihood_q7": -2432.512178,
+        "test_log_likelihood_q9": -2432.642124,
+        "q7_q9_per_test_scene_difference": 0.00032486,
+        "fitted_correlation": [
+          [
+            1.0,
+            0.709805,
+            0.073921
+          ],
+          [
+            0.709805,
+            1.0,
+            0.015464
+          ],
+          [
+            0.073921,
+            0.015464,
+            1.0
+          ]
+        ],
+        "max_exchangeability_deviation": 0.443408
+      },
+      "heldout_candidate_minus_n2_log_likelihood": 24.403368
+    },
+    "acceptance_rules": {
+      "nesting_error_max": 1e-09,
+      "null_candidate_max_exchangeability_deviation_max": 0.08,
+      "null_heldout_candidate_improvement_max": 1.5,
+      "alternative_candidate_exchangeability_deviation_min": 0.2,
+      "alternative_heldout_candidate_improvement_min": 5.0,
+      "candidate_q7_q9_per_scene_score_difference_max": 0.005
+    }
+  },
+  "remaining_implementation_blockers": [
+    "freeze and synthetic-test the high-dimensional same-information marginal metadata calibration that produces eta offsets inside each training fold",
+    "freeze the scene-level bootstrap/uncertainty and practical-equivalence implementation",
+    "run a measurement-format smoke only after legitimate HSM content access; synthetic topology PASS is not evaluator PASS"
+  ],
+  "does_not_authorize": [
+    "HSM gated-dataset access",
+    "SceneEval semantic provider calls",
+    "P0",
+    "GPU execution",
+    "generator admission",
+    "Problem Gate",
+    "scientific PASS"
+  ],
+  "authority": {
+    "canonical_generator": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "local_validation": false,
+    "p0": false,
+    "provider": false,
+    "gpu": false,
+    "scientific": false
+  }
+}

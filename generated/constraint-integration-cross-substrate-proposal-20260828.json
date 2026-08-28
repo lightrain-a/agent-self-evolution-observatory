@@ -1,7 +1,7 @@
 {
   "schema_version": "constraint-integration-cross-substrate-proposal-v1",
   "proposal_id": "CROSS-SUBSTRATE-CONSTRAINT-INTEGRATION-20260828",
-  "status": "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_MODEL_REVISED_HOLD_IMPLEMENTATION_AND_ACCESS",
+  "status": "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_CORE_IMPLEMENTED_HOLD_CALIBRATION_AND_ACCESS",
   "canonical_candidate_id": null,
   "generator_admission": "PENDING",
   "scientific_authority": false,
@@ -319,10 +319,11 @@
     "forbidden_now": "Do not design/tune an intervention from SceneEval outcomes before the primary problem gate is satisfied."
   },
   "next_gate": {
-    "name": "IMPLEMENTATION_AND_ASSET_ACCESS_PREFLIGHT",
+    "name": "MARGINAL_CALIBRATION_UNCERTAINTY_AND_ASSET_ACCESS_PREFLIGHT",
     "required": true,
     "requirements": [
-      "freeze and synthetic-test the exact N2/candidate mixed-model fitting and scene-level uncertainty implementation before any per-case output read",
+      "freeze and synthetic-test the high-dimensional same-information marginal metadata calibration that produces eta offsets inside each training fold",
+      "freeze and synthetic-test the scene-level bootstrap/uncertainty and practical-equivalence implementation; the core N2/candidate topology likelihood is already synthetic-PASS",
       "preserve the already frozen two-stage prerequisite/downstream contract, metadata composition vocabulary, N0/N1/N2 ladder, 52-pair panel, and power thresholds without outcome-driven changes",
       "bind a new canonical candidate identity only after the independent REVISE gate is fully satisfied; never reuse PORT-010",
       "obtain legitimate HSM gated-dataset access or leave the bounded P0 lane waiting",
@@ -427,6 +428,43 @@
       "official evaluator measurement smoke has not been run",
       "the exact mixed-model implementation/bootstrap code has not yet been frozen and validated on synthetic data",
       "second generator lane remains unqualified for paper-level transport/generalization"
+    ],
+    "scientific_authority": false,
+    "execution_authority": false
+  },
+  "topology_implementation_preflight": {
+    "artifact": "generated/sceneeval500-logistic-normal-topology-implementation-preflight-20260828.json",
+    "artifact_sha256": "4021b01498c5d6f18219fb1b3f34c4a77d2ed217f6dfeaba1a49cd7a83bb9f5a",
+    "status": "CORE_TOPOLOGY_LIKELIHOOD_SYNTHETIC_PASS",
+    "runtime": {
+      "python": "3.10.19",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "required_runtime_on_69": "/home/wyt/anaconda3/bin/python",
+      "new_packages_installed": false
+    },
+    "implementation_contract": {
+      "likelihood": "three-channel binomial logistic-normal marginal likelihood integrated with tensor-product Gauss-Hermite quadrature",
+      "quadrature_order": 7,
+      "N2_parameter_count_for_covariance": 4,
+      "candidate_parameter_count_for_covariance": 6,
+      "candidate_minus_N2_degrees_of_freedom": 2,
+      "N2_covariance": "channel-specific positive scales plus one exchangeable correlation rho in (-0.5,1)",
+      "candidate_covariance": "unrestricted SPD 3x3 covariance through lower-Cholesky parameterization",
+      "nested_subspace": "candidate pair correlations all equal",
+      "fixed_effect_interface": "eta[scene,channel] is supplied as a frozen marginal offset; marginal metadata-calibration implementation remains a separate prerequisite gate"
+    },
+    "synthetic_validation_summary": {
+      "nesting_error": 0.0,
+      "null_heldout_candidate_minus_n2": -0.529778,
+      "null_topology_deviation": 0.031178,
+      "alternative_heldout_candidate_minus_n2": 24.403368,
+      "alternative_topology_deviation": 0.443408
+    },
+    "remaining_implementation_blockers": [
+      "freeze and synthetic-test the high-dimensional same-information marginal metadata calibration that produces eta offsets inside each training fold",
+      "freeze the scene-level bootstrap/uncertainty and practical-equivalence implementation",
+      "run a measurement-format smoke only after legitimate HSM content access; synthetic topology PASS is not evaluator PASS"
     ],
     "scientific_authority": false,
     "execution_authority": false

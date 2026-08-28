@@ -11,6 +11,7 @@ HSM_PREFLIGHT = ROOT / "generated" / "sceneeval500-hsm-released-output-preflight
 HSM_MANIFEST = ROOT / "generated" / "hsm-sceneeval500-release-manifest-20260828.json"
 INDEPENDENT_REVIEW = ROOT / "generated" / "constraint-integration-sceneeval-independent-review-20260828.json"
 PREREG_DRAFT = ROOT / "generated" / "sceneeval500-prerequisite-coupling-preregistration-draft-20260828.json"
+TOPOLOGY_IMPLEMENTATION = ROOT / "generated" / "sceneeval500-logistic-normal-topology-implementation-preflight-20260828.json"
 LEGO_AUDIT = ROOT / "generated" / "lego-bench-outcome-blind-construct-audit-20260828.json"
 LEGO_EXEC = ROOT / "generated" / "constraint-integration-executability-preflight-20260828.json"
 
@@ -19,6 +20,7 @@ EXPECTED_HSM_PREFLIGHT_SHA = "75053aea6c84b467431066edd6b9cf9e898cdf013adbe0c571
 EXPECTED_HSM_MANIFEST_SHA = "6475bdd1c73a4b810f4bb6ee03e65be85567d07e33c04a15dc272360a829cd55"
 EXPECTED_INDEPENDENT_REVIEW_SHA = "cb82ab4531dd1a76f05af2f027f3213ffc06b9e771beb45007a9446a55186862"
 EXPECTED_PREREG_DRAFT_SHA = "269412b2b0ac270de00d1cca60f4e429ca3b48aae5d62359be073a6095abc365"
+EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA = "4021b01498c5d6f18219fb1b3f34c4a77d2ed217f6dfeaba1a49cd7a83bb9f5a"
 EXPECTED_LEGO_AUDIT_SHA = "f8e845bb66d5c3ae897e939bb9877c1ae85e0491955a4d099e45d6f8bd7d868d"
 EXPECTED_LEGO_EXEC_SHA = "15cf610915f3d3cd1e144f81207ac240517d0e5969418dd8e13e86b719d49f13"
 
@@ -39,6 +41,7 @@ def main() -> None:
     require_digest(HSM_MANIFEST, EXPECTED_HSM_MANIFEST_SHA)
     require_digest(INDEPENDENT_REVIEW, EXPECTED_INDEPENDENT_REVIEW_SHA)
     require_digest(PREREG_DRAFT, EXPECTED_PREREG_DRAFT_SHA)
+    require_digest(TOPOLOGY_IMPLEMENTATION, EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA)
     require_digest(LEGO_AUDIT, EXPECTED_LEGO_AUDIT_SHA)
     require_digest(LEGO_EXEC, EXPECTED_LEGO_EXEC_SHA)
 
@@ -47,6 +50,7 @@ def main() -> None:
     hsm = json.loads(HSM_PREFLIGHT.read_text(encoding="utf-8"))
     independent_review = json.loads(INDEPENDENT_REVIEW.read_text(encoding="utf-8"))
     prereg = json.loads(PREREG_DRAFT.read_text(encoding="utf-8"))
+    topology_implementation = json.loads(TOPOLOGY_IMPLEMENTATION.read_text(encoding="utf-8"))
 
     if proposal.get("proposal_id") != "CROSS-SUBSTRATE-CONSTRAINT-INTEGRATION-20260828":
         raise SystemExit("unexpected proposal identity")
@@ -66,8 +70,12 @@ def main() -> None:
         raise SystemExit("SceneEval preregistration draft unexpectedly cleared the formal gate")
     if prereg.get("scientific_authority") is not False or prereg.get("execution_authority") is not False:
         raise SystemExit("SceneEval preregistration draft leaked authority")
+    if topology_implementation.get("status") != "CORE_TOPOLOGY_LIKELIHOOD_SYNTHETIC_PASS":
+        raise SystemExit("SceneEval topology implementation did not pass synthetic validation")
+    if topology_implementation.get("scientific_authority") is not False or topology_implementation.get("execution_authority") is not False:
+        raise SystemExit("SceneEval topology implementation leaked authority")
 
-    proposal["status"] = "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_MODEL_REVISED_HOLD_IMPLEMENTATION_AND_ACCESS"
+    proposal["status"] = "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_CORE_IMPLEMENTED_HOLD_CALIBRATION_AND_ACCESS"
     proposal["canonical_candidate_id"] = None
     proposal["generator_admission"] = "PENDING"
     proposal["scientific_authority"] = False
@@ -184,6 +192,24 @@ def main() -> None:
         "execution_authority": False
     }
 
+    proposal["topology_implementation_preflight"] = {
+        "artifact": str(TOPOLOGY_IMPLEMENTATION.relative_to(ROOT)),
+        "artifact_sha256": EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA,
+        "status": topology_implementation["status"],
+        "runtime": topology_implementation["runtime"],
+        "implementation_contract": topology_implementation["implementation_contract"],
+        "synthetic_validation_summary": {
+            "nesting_error": topology_implementation["synthetic_validation"]["exact_nesting_loglik_absolute_error"],
+            "null_heldout_candidate_minus_n2": topology_implementation["synthetic_validation"]["exchangeable_null"]["heldout_candidate_minus_n2_log_likelihood"],
+            "null_topology_deviation": topology_implementation["synthetic_validation"]["exchangeable_null"]["candidate"]["max_exchangeability_deviation"],
+            "alternative_heldout_candidate_minus_n2": topology_implementation["synthetic_validation"]["nonexchangeable_alternative"]["heldout_candidate_minus_n2_log_likelihood"],
+            "alternative_topology_deviation": topology_implementation["synthetic_validation"]["nonexchangeable_alternative"]["candidate"]["max_exchangeability_deviation"],
+        },
+        "remaining_implementation_blockers": topology_implementation["remaining_implementation_blockers"],
+        "scientific_authority": False,
+        "execution_authority": False
+    }
+
     proposal["executability_preflight"] = {
         "artifact": str(HSM_PREFLIGHT.relative_to(ROOT)),
         "artifact_sha256": EXPECTED_HSM_PREFLIGHT_SHA,
@@ -283,10 +309,11 @@ def main() -> None:
     }
 
     proposal["next_gate"] = {
-        "name": "IMPLEMENTATION_AND_ASSET_ACCESS_PREFLIGHT",
+        "name": "MARGINAL_CALIBRATION_UNCERTAINTY_AND_ASSET_ACCESS_PREFLIGHT",
         "required": True,
         "requirements": [
-            "freeze and synthetic-test the exact N2/candidate mixed-model fitting and scene-level uncertainty implementation before any per-case output read",
+            "freeze and synthetic-test the high-dimensional same-information marginal metadata calibration that produces eta offsets inside each training fold",
+            "freeze and synthetic-test the scene-level bootstrap/uncertainty and practical-equivalence implementation; the core N2/candidate topology likelihood is already synthetic-PASS",
             "preserve the already frozen two-stage prerequisite/downstream contract, metadata composition vocabulary, N0/N1/N2 ladder, 52-pair panel, and power thresholds without outcome-driven changes",
             "bind a new canonical candidate identity only after the independent REVISE gate is fully satisfied; never reuse PORT-010",
             "obtain legitimate HSM gated-dataset access or leave the bounded P0 lane waiting",

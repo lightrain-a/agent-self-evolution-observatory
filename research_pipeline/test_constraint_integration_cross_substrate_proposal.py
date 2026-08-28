@@ -10,6 +10,7 @@ PROPOSAL = ROOT / "generated" / "constraint-integration-cross-substrate-proposal
 SCENEEVAL_AUDIT = ROOT / "generated" / "sceneeval500-outcome-blind-constraint-audit-20260828.json"
 INDEPENDENT_REVIEW = ROOT / "generated" / "constraint-integration-sceneeval-independent-review-20260828.json"
 PREREG_DRAFT = ROOT / "generated" / "sceneeval500-prerequisite-coupling-preregistration-draft-20260828.json"
+TOPOLOGY_IMPLEMENTATION = ROOT / "generated" / "sceneeval500-logistic-normal-topology-implementation-preflight-20260828.json"
 HSM_PREFLIGHT = ROOT / "generated" / "sceneeval500-hsm-released-output-preflight-20260828.json"
 HSM_MANIFEST = ROOT / "generated" / "hsm-sceneeval500-release-manifest-20260828.json"
 COLLISION = ROOT / "generated" / "constraint-integration-current-source-collision-review-20260828.json"
@@ -19,6 +20,7 @@ PLAN = ROOT / "generated" / "paper-first-pre-f0-evidence-acquisition-plan.json"
 EXPECTED_SCENEEVAL_AUDIT_SHA = "a3eaaa0571d51928e70f0094de1d0d4542211de165d1a196135be55df1247e45"
 EXPECTED_REVIEW_SHA = "cb82ab4531dd1a76f05af2f027f3213ffc06b9e771beb45007a9446a55186862"
 EXPECTED_PREREG_SHA = "269412b2b0ac270de00d1cca60f4e429ca3b48aae5d62359be073a6095abc365"
+EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA = "4021b01498c5d6f18219fb1b3f34c4a77d2ed217f6dfeaba1a49cd7a83bb9f5a"
 EXPECTED_HSM_PREFLIGHT_SHA = "75053aea6c84b467431066edd6b9cf9e898cdf013adbe0c571dce16645009348"
 EXPECTED_HSM_MANIFEST_SHA = "6475bdd1c73a4b810f4bb6ee03e65be85567d07e33c04a15dc272360a829cd55"
 EXPECTED_COLLISION_SHA = "05d985e0b526ce36c545e1f6427cb5d3e7646fa3a8d437f5281e632f34aad278"
@@ -35,6 +37,7 @@ class ConstraintIntegrationCrossSubstrateProposalTest(unittest.TestCase):
         self.audit = json.loads(SCENEEVAL_AUDIT.read_text(encoding="utf-8"))
         self.review = json.loads(INDEPENDENT_REVIEW.read_text(encoding="utf-8"))
         self.prereg = json.loads(PREREG_DRAFT.read_text(encoding="utf-8"))
+        self.topology_implementation = json.loads(TOPOLOGY_IMPLEMENTATION.read_text(encoding="utf-8"))
         self.hsm = json.loads(HSM_PREFLIGHT.read_text(encoding="utf-8"))
         self.hsm_manifest = json.loads(HSM_MANIFEST.read_text(encoding="utf-8"))
         self.collision = json.loads(COLLISION.read_text(encoding="utf-8"))
@@ -43,7 +46,7 @@ class ConstraintIntegrationCrossSubstrateProposalTest(unittest.TestCase):
     def test_proposal_is_noncanonical_zero_execution_authority(self) -> None:
         self.assertEqual(
             self.proposal["status"],
-            "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_MODEL_REVISED_HOLD_IMPLEMENTATION_AND_ACCESS",
+            "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_CORE_IMPLEMENTED_HOLD_CALIBRATION_AND_ACCESS",
         )
         self.assertIsNone(self.proposal["canonical_candidate_id"])
         self.assertEqual(self.proposal["generator_admission"], "PENDING")
@@ -179,6 +182,26 @@ class ConstraintIntegrationCrossSubstrateProposalTest(unittest.TestCase):
         self.assertFalse(gates["formal_preregistration_clear"])
         self.assertFalse(self.prereg["scientific_authority"])
         self.assertFalse(self.prereg["execution_authority"])
+
+    def test_topology_likelihood_core_is_synthetic_validated_but_zero_authority(self) -> None:
+        self.assertEqual(sha256_file(TOPOLOGY_IMPLEMENTATION), EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA)
+        artifact = self.topology_implementation
+        self.assertEqual(artifact["status"], "CORE_TOPOLOGY_LIKELIHOOD_SYNTHETIC_PASS")
+        contract = artifact["implementation_contract"]
+        self.assertEqual(contract["N2_parameter_count_for_covariance"], 4)
+        self.assertEqual(contract["candidate_parameter_count_for_covariance"], 6)
+        self.assertEqual(contract["candidate_minus_N2_degrees_of_freedom"], 2)
+        validation = artifact["synthetic_validation"]
+        self.assertEqual(validation["exact_nesting_loglik_absolute_error"], 0.0)
+        self.assertLess(validation["exchangeable_null"]["candidate"]["max_exchangeability_deviation"], 0.08)
+        self.assertLess(validation["exchangeable_null"]["heldout_candidate_minus_n2_log_likelihood"], 1.5)
+        self.assertGreater(validation["nonexchangeable_alternative"]["candidate"]["max_exchangeability_deviation"], 0.20)
+        self.assertGreater(validation["nonexchangeable_alternative"]["heldout_candidate_minus_n2_log_likelihood"], 5.0)
+        self.assertFalse(artifact["scientific_authority"])
+        self.assertFalse(any(artifact["authority"].values()))
+        projected = self.proposal["topology_implementation_preflight"]
+        self.assertEqual(projected["artifact_sha256"], EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA)
+        self.assertFalse(projected["scientific_authority"])
 
     def test_hsm_release_is_complete_but_gated_and_zero_authority(self) -> None:
         self.assertEqual(sha256_file(HSM_PREFLIGHT), EXPECTED_HSM_PREFLIGHT_SHA)
