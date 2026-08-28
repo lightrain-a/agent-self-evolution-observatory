@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_STAGE_RESOLVED_ENGINEERING_THEORY_REVISION_RECEIPT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision_label": "C1-stage-resolved-engineering-r2",
+  "generated_at": "2026-08-28",
+  "canonical_base": "fc1a5b0231e08f49329faf5c7e96df24e85670e5",
+  "branch": "research/c1-transport-governance-20260828",
+  "status": "MANUSCRIPT_ENGINEERING_AND_DIAGNOSTIC_COMPLETENESS_READY_NO_NEW_EMPIRICAL_SCIENCE",
+  "supersedes_branch_artifact": "C1-stage-resolved-engineering-r1.pdf",
+  "supersession_reason": "R1 added the engineering closure but omitted the 10-state prerequisite diagnostic-completeness result present in the user-supplied R7 reading copy. R2 independently reconstructs, verifies, provenance-binds, and reinstates that theorem without changing empirical results.",
+  "r7_reference_copy": {
+    "filename": "C1-stage-resolved-r7.pdf",
+    "sha256": "c199e8cb4bed271cb0a5484319462781829401e0ae4319cc9848eb6d6aa839d4",
+    "bytes": 306189,
+    "canonical_git_authority": false
+  },
+  "theory": {
+    "native_prerequisite_order": "O=>U=>E=>W",
+    "forced_capacity_bit": "F",
+    "diagnostic_states": 10,
+    "surface_subsets_exhaustively_enumerated": 32,
+    "unique_injective_observation_basis": [
+      "W",
+      "E",
+      "U",
+      "O",
+      "F"
+    ],
+    "omit_one_ambiguous_pair_counts": {
+      "W": 2,
+      "E": 2,
+      "U": 2,
+      "O": 2,
+      "F": 5
+    },
+    "theory_test": "6/6 PASS",
+    "scope": "paper-specific binary prerequisite class only; no universal taxonomy or generic mathematical novelty; empirical NOT-SUPPORTED is not literal zero"
+  },
+  "engineering": {
+    "credit_rule": {
+      "W": "state change",
+      "E": "availability",
+      "U": "behavioral control",
+      "O": "utility validation"
+    },
+    "repair_rule": "first unsupported measured stage is a prospective repair hypothesis, not causal mediation",
+    "current_repair_hypothesis": "post-retrieval policy integration under W+/E-observed/U-not-supported/F+ Shopping signature",
+    "repair_efficacy_supported": false,
+    "pilot_status": "PILOT_PROTOCOL_FROZEN_EXECUTION_LOCKED",
+    "pilot_units": 13,
+    "disjoint_confirmatory_holdout_units": 23,
+    "new_model_provider_calls": 0
+  },
+  "literature_boundary": {
+    "published_acl_2026": [
+      "2026.acl-long.27",
+      "2026.acl-long.370",
+      "2026.acl-long.534",
+      "2026.acl-long.1804"
+    ],
+    "forbidden_novelty_upgrade": [
+      "retrieval-versus-use is new",
+      "generic utilization optimization is new",
+      "generic memory-quality management is new"
+    ]
+  },
+  "paper_qa": {
+    "total_pdf_pages": 13,
+    "main_text_through_conclusion_pages": 9,
+    "conclusion_on_page_9": true,
+    "references_begin_page_10": true,
+    "appendix_begins_page_10": true,
+    "latex_undefined_warnings": 0,
+    "latex_overfull_warnings": 0,
+    "bibtex_warnings": 0,
+    "rendered_pages": 13,
+    "render_margin_smoke": "PASS",
+    "fonts_embedded": true,
+    "targeted_regression": "30/30 PASS",
+    "git_diff_check": "PASS"
+  },
+  "scientific_results_changed": false,
+  "claim_boundary": "Operational post-exposure/pre-uptake evidence localization remains unchanged and is not a causal mediation coefficient. The theorem explains diagnostic necessity; the engineering rule maps diagnosis to a prospective intervention; neither grants repair efficacy or broader empirical authority.",
+  "files": {
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-engineering-r2.pdf",
+      "sha256": "1ed94f3621a47ab3e50e98f44f78adc4e6745f5a80b9f9ac75410d03d1d5517d"
+    },
+    "main_tex": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/main.tex",
+      "sha256": "287b703faf37738ca2082417ac36a98990b069b52d79ee767cab61346ae58972"
+    },
+    "abstract": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/00_abstract.tex",
+      "sha256": "c06f1e9ab3d73440e17a36fddcbbbfa804d6ec026d5a543aad4e2778fca9c305"
+    },
+    "intro": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/01_intro.tex",
+      "sha256": "ef4229e500c523fe78f935e3a15dd43a834d0c843cf4cc38a0ef1ed90dad6c83"
+    },
+    "mechanism": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/02_mechanism.tex",
+      "sha256": "9de3799e5797bd223f2cf8507ec9f20aef1dbf257763f9435f8dda6643c7d81e"
+    },
+    "transport_evidence": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/04_variance_protocol.tex",
+      "sha256": "4d51947059fa00f324ecadbb5506617c0ab5e00b1541b0b9adfdf60397522777"
+    },
+    "related_work": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/05_related.tex",
+      "sha256": "3a70c26e4200ad17d2919e07e80b678e6d1a644274f564c2bcb70612ca5594f3"
+    },
+    "limitations_conclusion": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/06_limitations_conclusion.tex",
+      "sha256": "67f65aa254d922024776d9b3e2a6a1d0178c29e4d0cd5c226ee9e46112149923"
+    },
+    "appendix": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/07_appendix.tex",
+      "sha256": "4d456896b066d0d38cf3713b1bb262ac4219d3b24d8f7ac7091369fddc44d5db"
+    },
+    "references": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/references.bib",
+      "sha256": "45c8af41203cc5df706ee553d3838f6a029baeedf4e717657af5b7114d595be1"
+    },
+    "novelty_audit": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-engineering-novelty-audit-20260828.json",
+      "sha256": "2bc51799526b6778ec66ace4c78e278786c08eba5dbf2146bc41b87a6c41b54f"
+    },
+    "pilot_contract": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-guided-repair-pilot-contract-20260828.json",
+      "sha256": "38c6cceee240ebb523c226fc370b6a03d6f4080c890c8fb49fec8d86a94488af"
+    },
+    "data_preflight": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-guided-repair-data-preflight-20260828.json",
+      "sha256": "aff2b75f06847e924d967674c6df870df889baf50cc6beea71e68dc201e92b0a"
+    },
+    "smoke_adjudication": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-guided-repair-smoke-adjudication-20260828.json",
+      "sha256": "ed6971f34bd65edb38f92d2e56cdaf07f7bd782c17dd1a7eec7b204c438db6f1"
+    },
+    "pilot_freeze": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-guided-repair-pilot-freeze-20260828.json",
+      "sha256": "478251986c2e54dabafc2980504693c706515fed5badd4aebc4b20140a23245d"
+    },
+    "theory_runner": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/analyze_c1_prerequisite_diagnostic_completeness.py",
+      "sha256": "86bc2156492fc1dfa2a51ca4ca4d980af8ffb668d9e2850a1f82c86995cd4afc"
+    },
+    "theory_artifact": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-prerequisite-diagnostic-completeness-20260828.json",
+      "sha256": "da9b89d388090f59db6eeba984145145ea6c04de3ba5be43e78f2a6686199752"
+    },
+    "theory_test": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/test_c1_prerequisite_diagnostic_completeness.py",
+      "sha256": "e78462a933beed9c992f62887a58d72b4039c4a97070a813501a6fb055ddb66e"
+    },
+    "r7_theory_reconciliation": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-r7-theory-provenance-reconciliation-20260828.json",
+      "sha256": "a762e33980e0c45ea833b27593f00c0924d4c97e7871bd52615351eea03f61b7"
+    }
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}
