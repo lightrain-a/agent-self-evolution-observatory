@@ -1,0 +1,916 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TRANSPORT_GUIDED_REPAIR_DATA_PREFLIGHT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+  "generated_at": "2026-08-28",
+  "status": "OFFLINE_PACKET_REPLAY_PREFLIGHT_PASS_NO_EXECUTION_AUTHORITY",
+  "source": {
+    "b10_contract_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b10-native-first-action-transport-20260824/b10-contract.json",
+    "b10_contract_sha256": "c2a54c928d74ccb7a153166a02ef0ef7a1504a93b5895952380a95b0277a3436",
+    "b10_result_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b10-native-first-action-transport-20260824/b10-result.json",
+    "b10_result_sha256": "e779c19a6a73bdb4b551f0739453a014fe9fc3cafc17cb4fbaa8b70a5137d8e6",
+    "parquet_path": "/home/wyt/code/agent-self-evolution-observatory-discovery-benchmark-20260821/generated/research-data/paper-yield-d5-c01/parquet-cache/wa_awm_shuffle1-shopping_run1.parquet",
+    "parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e"
+  },
+  "checks": {
+    "frozen_task_units": 36,
+    "unique_future_tasks": 36,
+    "memory_wrappers_verified": 72,
+    "archived_native_prompt_hash_checks": 288,
+    "native_prompt_exact_replay": true,
+    "source_task_alignment": true,
+    "system_task_state_hashes_verified": true,
+    "a1_a2_clause_structure_matched": true,
+    "provider_calls": 0,
+    "model_actions": 0,
+    "new_scientific_outcomes": 0
+  },
+  "decision_check_clauses": {
+    "A1_MEMORY_BLIND_DECISION_CHECK": {
+      "chars": 243,
+      "words": 37,
+      "sha256": "cf0fd54481c26fddde8cdddf29353651d7f04b472ee5a5c81b39aa0f9bb06303"
+    },
+    "A2_MEMORY_USE_CHECK": {
+      "chars": 245,
+      "words": 37,
+      "sha256": "0b570a7883b4a10cc0c6a382d88d9bbde70677caa05a85c59a38c7351684e987"
+    }
+  },
+  "rows": [
+    {
+      "future_task": 26,
+      "selected_source_task": 25,
+      "intent_template_id": 222,
+      "task_prompt_sha256": "3fbb4fdc334675a715905743e22d62bbd2371aab6e22617317de000816bde693",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "b0f72c27a9850432afc3a9cd2e253f5b334eca0e4d25bc0cdcc020c4fbe553ed",
+      "memory_wrapper_sha256": {
+        "success": "0b8e3b338b9df1163d9304d771003e4db5f869be914723fcac2ea01b14ccb239",
+        "failure": "f1ccb4169b6137789b99524c3bdf5304f8105abd9f711be507a8b3fe2f8a0f63"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "b52b7411ba15b07cf35b660f0411645750a5c3530eeb04f21f4f8027202a16c2",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "bfcf89d0ad662bee6ca6b191d1d0397d67b3f73a4f4681eecb3f550cf152458e",
+          "A2_MEMORY_USE_CHECK": "81d7b11662a22d307d9ed39c4f8ab21184eafa5ee4ffc64db32ffdb658ab85b4"
+        },
+        "failure": {
+          "A0_NATIVE": "ee93966b07ab37626d9fd308c4315874b8b0d81d81837be0d9a7a80837a7c5db",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "048683d43ec36bdba7124eb5bdd862f0330fc4b94cd70c63635dabd6f3b75209",
+          "A2_MEMORY_USE_CHECK": "cd284071f03cefbe59019a01d908ffb100f7e7970d56088b0e98ad7f432efffa"
+        }
+      }
+    },
+    {
+      "future_task": 124,
+      "selected_source_task": 226,
+      "intent_template_id": 159,
+      "task_prompt_sha256": "172b096931d191dbcae373be3c88975036a358054dcfee777a50752e942e16ac",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "8af027575bed02d18469d5b7a41fedee47436fbe491dab40a573fff8f4e2904f",
+      "memory_wrapper_sha256": {
+        "success": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "aa8a0f982e84ae4a8e15d1f14187bc43332a20347a53427fa8c3e8ae4e3e9313",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "0a66722fc7d213e02c65813a43fef560263fd82364988cf303c23e5e3af25dcd",
+          "A2_MEMORY_USE_CHECK": "39fdc7b09c36a8144518b24dd5041b81611bb01d214b895f2c3e85b39f37023c"
+        },
+        "failure": {
+          "A0_NATIVE": "597efb1cf335d4051a07efa2dfb01264306c669c77e5b4e68adf310f6961ff62",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "e757c92ec20213041c5b1226e4fec4f193c5067f51ed72eb4677ab1baf40fb67",
+          "A2_MEMORY_USE_CHECK": "dc5911ddc700997d3f49b0a70a5baf771ac6b9ce961e2add891f52ab2aa7c02b"
+        }
+      }
+    },
+    {
+      "future_task": 126,
+      "selected_source_task": 226,
+      "intent_template_id": 159,
+      "task_prompt_sha256": "c60724d5839cf8f96b3de9e8101439665d06f932865533d22454c3c4980139ab",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "0a6a0a95014b48316902b7cf274659bc030a76380e8226648a92e7faf2a677f5",
+      "memory_wrapper_sha256": {
+        "success": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "20ece76e09c9e3bc3858dcafa0e7a4de44adaa88f1fb67167615d7f6de08fb30",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "0cfcd931e60573e36eb5920155d081490817cc0dbea45932edcff1dfa6b6496b",
+          "A2_MEMORY_USE_CHECK": "1fa38726f0614c5a00416412305f79941b79107472127f71d85c93ba707402da"
+        },
+        "failure": {
+          "A0_NATIVE": "15d0d8230d6e1c8825658f7fedf721ba9c2a534074b5044b12d4609602ac01b5",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "95988a7e2a9fb12d74f1888542dcf1c164455e7ad794e6dec25c8a0d04e99a49",
+          "A2_MEMORY_USE_CHECK": "707dc64e3b995914c94b8d34e94305ce7b9ce1c7edcd88525d86524d9ca3d0b7"
+        }
+      }
+    },
+    {
+      "future_task": 142,
+      "selected_source_task": 141,
+      "intent_template_id": 162,
+      "task_prompt_sha256": "c830de8969f80a2fdd2be8181d94582f22677a4b921825c10a3bba8bfff31f70",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "aa219bd419f2c6b7e453be6cd068ada2092022771d13f58d13337e5d7e878b1a",
+      "memory_wrapper_sha256": {
+        "success": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "c49d67f6b3848971bd0ebd9c732c4be16970936dac45271b2dd2ae2a57a2c223",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "28107cb1a241488a07e2c1f833348d754e28186abfd2659a5dba5fe7809fb0a7",
+          "A2_MEMORY_USE_CHECK": "a4f221ba0cef9704b785c9e2a2fe19cb8f57f30f010b9e075b8c1c75579c563f"
+        },
+        "failure": {
+          "A0_NATIVE": "0c52d2f0b48a639030d5b7bf2e73ec8a0ca03e76fe189d8734d2231b5cc5037d",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "c9b9fa292c6a1a0d4d94830081d053ee58e2f26db1116cd5e002e0faca3f8a90",
+          "A2_MEMORY_USE_CHECK": "76167eee61ebb36ec352128773290eaf23130e81bc94d2de85f6b39fd8d78599"
+        }
+      }
+    },
+    {
+      "future_task": 143,
+      "selected_source_task": 141,
+      "intent_template_id": 162,
+      "task_prompt_sha256": "3cecf2e3c4f88731de94850d588b167e494c514a5fd0525bd92ff139cf16dd50",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "f89588e053c423c0cb83fbb1720a6b5eb640fc7579fb0d762b7deab54010f787",
+      "memory_wrapper_sha256": {
+        "success": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "0704af6747a233dd3271bdea731f1d62387459e272580bb418ffbb125b52b95d",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "25813d1215270a116a121d99c24d9d14fa19e2145b2054a1d343402a1b38ebdb",
+          "A2_MEMORY_USE_CHECK": "b351044577136e61cb1aba6c1af1b69b6e17bf7f8afbcf0aaf7b84b0c738362c"
+        },
+        "failure": {
+          "A0_NATIVE": "7ef7fbb8470218c87641c61bad28cf3b237ac1cf644b44de47b32834967ee8c7",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "5e5faf571e1b87a04c04a76e6e639fcf92b91dc60468a44eff194ba49f2c3ffd",
+          "A2_MEMORY_USE_CHECK": "ab511ae1601b7cc20495afb3fb4de3e172b1026c3356691176f290e935a35d03"
+        }
+      }
+    },
+    {
+      "future_task": 144,
+      "selected_source_task": 141,
+      "intent_template_id": 162,
+      "task_prompt_sha256": "1934e788674155fb95d3bd85a979de4daf638dd14586431b9b47b13eaa70a5ab",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "c650e4fb08f1401d66ce37a4ef81e9747844c5e7ed135253caa844e043dae276",
+      "memory_wrapper_sha256": {
+        "success": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "781c1ac886a3d6c1a05acfa054a3261758fba8bedac2b41347be964e696a03a1",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "9ae9c4482cbeb8c554f2f049acde679ad9e12cd4b6db376a41032c328f048860",
+          "A2_MEMORY_USE_CHECK": "04d9f39b404c56af2754c585f1ae1c0b4f292fe8481d38ff8df44bb0735ab1b4"
+        },
+        "failure": {
+          "A0_NATIVE": "ea776bef47fc7304089c8cc9bf50c691bf4962084b2778ccfdf4350d8cda5aec",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "c677c7f3790e7a9b40e5def3d2d6d6906174c861d80db7c480d04582a6618301",
+          "A2_MEMORY_USE_CHECK": "773e436f0e908233238f7c9e535aaa1cd89478eea31a73dcc68d3aa25064d46c"
+        }
+      }
+    },
+    {
+      "future_task": 147,
+      "selected_source_task": 146,
+      "intent_template_id": 155,
+      "task_prompt_sha256": "234bb4a5db1a29376f84d55723e3e86726e4ff30c390fa1e302c102c918a1387",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "123c253dc9ca2b66de57718d2ba3bb5367925ba98780499af3b6c0a381b53629",
+      "memory_wrapper_sha256": {
+        "success": "05001a08e7d3a741b7d15f25fe1ee9974170abc1e9aa2f1dc557c7e54d87aa43",
+        "failure": "6e02856419612840fe2fc27f77b1e21347422cab404e838a57917906c9874b35"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "3238fdd9ce29638f1ca56d512e8960de8f62d6f40aeac82932a3ce35d0eb2f9d",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "54edcdb6ae42d14bfbaaea2192380b7de81eb34fe7e3aef3fc65cb5efd644fee",
+          "A2_MEMORY_USE_CHECK": "3132269b96943e6c22bdffcd4f52b251d985dca4c8b35db7c13e100599ffed73"
+        },
+        "failure": {
+          "A0_NATIVE": "64895c9f255ffb9a0278a114f6a6be2c2e6621fe6278c886b26f598921af8ed9",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "e9803a2dd8650b27687deb9dcec7d46490bb635540de20e3f0f0c74a5619ed31",
+          "A2_MEMORY_USE_CHECK": "ab5ce8e25ee92da451d810fbd988e57c6958f9309095840da986c2013fe93f9b"
+        }
+      }
+    },
+    {
+      "future_task": 149,
+      "selected_source_task": 148,
+      "intent_template_id": 155,
+      "task_prompt_sha256": "45487f20f12c88be8a2fc77393453b4dd5c1c8d1cdbbb842e983c3a95fe5982b",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "c71eda48f27d9d2529e4d1896f9cbcbb75a7edcdf518bc4644cdbe8bc9297654",
+      "memory_wrapper_sha256": {
+        "success": "5d3c9d448d381ad457951b05696d5f80764c4a5a1a7432a80e4a55a7510133c4",
+        "failure": "c9923dabef29de757d2057182f365a53e6a683fc36b77d171f00d0fb7f3443d7"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "4958980ea6e64e01257521feb09a62cf1a2ec1e363ab5bed69690b55c7a61a22",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "d7de89065f725d841970afe1714bd8765313f28ef53ae9a5865e427257ca994e",
+          "A2_MEMORY_USE_CHECK": "796ce73c8501041422293ea230f3fa87c4c802b0601e50f932f3953001dbbcbc"
+        },
+        "failure": {
+          "A0_NATIVE": "0c02e6c9cc0d838809558a7b09f6a3ca3b8872979564e3048341adb4007ce692",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "65bd6f0517ed7cd96c6e49950dd9eebc51eb61897700a79678d933dd29906cd1",
+          "A2_MEMORY_USE_CHECK": "a7465b5bcdc95f82aea6e7bfa2ae38d91f5ff9ace4e3fbe308a0cab2fae3d77c"
+        }
+      }
+    },
+    {
+      "future_task": 150,
+      "selected_source_task": 226,
+      "intent_template_id": 155,
+      "task_prompt_sha256": "4226eb0c24ca02ec29afc21f3c78c1ffa8a272eed1124fe0f020159c82025b29",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "96619d33c47f0365c30eabd0a91c2e12e2d4007880a8005de8b3933ff2521a33",
+      "memory_wrapper_sha256": {
+        "success": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "e5ce72d735730c966b2d9008a818a2e2a3bca6c46bf0f5b2dcbac1dd73da51b0",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "bcc1e30b2402b5ce35d16ff5a4906fd8978b409ce7a9441640801f6f3299720b",
+          "A2_MEMORY_USE_CHECK": "fbed22603bb0f8df124f11d560f8e847f5382baefad06b21067ea7f07c4b6f51"
+        },
+        "failure": {
+          "A0_NATIVE": "d38d40db2bbba61ee4455efe0f4db8bc8b0b6eca31f3713cbc67317e428906db",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "2d2b56633cace09acdde15085fdcc732d50228a3ed56cd2609086459d0ad1e96",
+          "A2_MEMORY_USE_CHECK": "232c0433e816509d69d89645eeedd1c80d1a4a303ee9938c97cb8bbe08630c62"
+        }
+      }
+    },
+    {
+      "future_task": 164,
+      "selected_source_task": 163,
+      "intent_template_id": 136,
+      "task_prompt_sha256": "45a4be19716b9ee58cc3a0f01a845b64b80dd312b7f92a8216296e8e38f9ec95",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "b95bc27a28c3f9027be62e4312a2d52cdbfdee9c3a8ed3cd11280e1ce6101ffb",
+      "memory_wrapper_sha256": {
+        "success": "60cdc0bf22c5dcc9df51b8e39f02d0ccaa3d8c595e7b952012a2478b5333d546",
+        "failure": "58a80de3da48f9dbe665cdebf3984934b443669d39bbe7851cbaddca1e06755f"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "d16d6625ccbdfbdfc4f9f06104335af634a4e0857299eed4cfa33567bf98ee50",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "e20777e56ad11a0714688b6467bc15db73089edb42eed058cd6e9c76507ae52b",
+          "A2_MEMORY_USE_CHECK": "94c866667a3dce2d20756944232b70964e36f21333c1e2e7c9360ebb8661fdf3"
+        },
+        "failure": {
+          "A0_NATIVE": "5d97682244186c5770e66e3eed80c27982301f5e86aee522b937c8ebf879fe04",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "eee1e6d890d5781e408b0359d8e3df91527724c83a21593bd081ee87c5f82858",
+          "A2_MEMORY_USE_CHECK": "817e85791bbd2f66762450ffc6c81794b2ecb66c55279ad92698f94f2b59c186"
+        }
+      }
+    },
+    {
+      "future_task": 165,
+      "selected_source_task": 163,
+      "intent_template_id": 136,
+      "task_prompt_sha256": "45a4be19716b9ee58cc3a0f01a845b64b80dd312b7f92a8216296e8e38f9ec95",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "0426e3e5d8957855a89ec74832e410dcb2b882278ca926f89d5d59de6e8d7275",
+      "memory_wrapper_sha256": {
+        "success": "60cdc0bf22c5dcc9df51b8e39f02d0ccaa3d8c595e7b952012a2478b5333d546",
+        "failure": "58a80de3da48f9dbe665cdebf3984934b443669d39bbe7851cbaddca1e06755f"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "a830b82eee9558ee2b1763568ae7ac3fa2745685c88c23b2a579c685ff3994b8",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "349070edd90917a3b6c8bdb7acaba8a061f7221cf6f87c93f1fe6c0ba525bec7",
+          "A2_MEMORY_USE_CHECK": "598b43ad88504fbce54cabb9c2640dddd7205359a296d186d578e26c128412e7"
+        },
+        "failure": {
+          "A0_NATIVE": "373d7e5a0d8838430b8aff7236b53e78959c9743354a674d740e1cb68808a53f",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "9636fbdad49f924ffc142cff67687d52ab75cc9baf34e9cfaf8f03909fcc7817",
+          "A2_MEMORY_USE_CHECK": "473b6ce400ba4888d770f30402ea464db43c39f928fc5295c9501522459ce9a3"
+        }
+      }
+    },
+    {
+      "future_task": 167,
+      "selected_source_task": 163,
+      "intent_template_id": 136,
+      "task_prompt_sha256": "45a4be19716b9ee58cc3a0f01a845b64b80dd312b7f92a8216296e8e38f9ec95",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "53ac14a493e3ecd18edc7e4fdb5c479ad4069f8a48f283c2cb8574cee0a62709",
+      "memory_wrapper_sha256": {
+        "success": "60cdc0bf22c5dcc9df51b8e39f02d0ccaa3d8c595e7b952012a2478b5333d546",
+        "failure": "58a80de3da48f9dbe665cdebf3984934b443669d39bbe7851cbaddca1e06755f"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "c3720295ba027c6128fbd0f16924b2533b441b8480b9f74efbac57e5a4d6de02",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "c715ea815c3eb57271c67420d783f0ab2af0893b3c6c59e5aa5f218a3370d427",
+          "A2_MEMORY_USE_CHECK": "197fdbafe9b19b3c340a50355be0b7a96729ce2e3eb8b13ff91dad93facf78dc"
+        },
+        "failure": {
+          "A0_NATIVE": "e2f4b615691dd5815ed684f110458e00119493362380ec508e26cf21cbc2416d",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "dd7f1e7a51cf86ec858ea09ead0550aac29666c4e64ffe25d4250abfbf151cf9",
+          "A2_MEMORY_USE_CHECK": "597d41ef5ad99ac355c177e62cf702be42b8b7d63a34741f25e90db4bf71156f"
+        }
+      }
+    },
+    {
+      "future_task": 190,
+      "selected_source_task": 189,
+      "intent_template_id": 214,
+      "task_prompt_sha256": "f5676ecbd916274d6d197996a4245484cd417e33073a3570c6f3cfc3eaef0c79",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "51f7623a50a75de1a8ba37a387561282090318393720731e878b4dccc332ec70",
+      "memory_wrapper_sha256": {
+        "success": "1c3c631a25a6e6e6f9238b3cbad69449a4bd0d41b074e1615893d48f314ba2c4",
+        "failure": "ae6611d3ddff07f380d581ca17098c1fa7dd8768277a8920ec4e54fa75b4979b"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "b0471efb1408dae33fc98e377bb594df02e743fb8661586feeeab367dbc54d75",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "794cd6da85682dc171c1520d25c6c87b586e8e1e8aefbb1e6fb587a2b1f1c428",
+          "A2_MEMORY_USE_CHECK": "e36e0803a0364674a251bde983a03982e9922ea44b7022d901ddeaf3e586497a"
+        },
+        "failure": {
+          "A0_NATIVE": "f6bbd3466da6735706f7d437af57df54c8f9a01b4bf34a3253689222e1adb460",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "a55240fe993fec50f40382618ee2d5f2e09a518cd1ac465122271b74f8b89044",
+          "A2_MEMORY_USE_CHECK": "a1aa3cf0ced0607155ca09f6d11ba937c07e3a625ce464c75f95af77106b8c7d"
+        }
+      }
+    },
+    {
+      "future_task": 192,
+      "selected_source_task": 188,
+      "intent_template_id": 214,
+      "task_prompt_sha256": "309452aa5d806e015102c16dbc41ecad61c5c83fd49c29ed7ed996112228b243",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "bc629b1ff88ecd979a1a719f6ba93a2b09c2e2496ed93bb6b8b845257580adcc",
+      "memory_wrapper_sha256": {
+        "success": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "7109115d21d2d66aa03f58fa7ba3959d4abdca5aba5a7e52f9e0db8543daa418",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "fc4142f3038f123b49f444e5c5400b739d680775d396691d4cbfa61ab56a60a5",
+          "A2_MEMORY_USE_CHECK": "4e1e609685c2093c48e41498114dbab4e74632e410776c393813e691cd7eec96"
+        },
+        "failure": {
+          "A0_NATIVE": "c2c996f01f6c80db94709a9ef0680927e6ecbcd64ab67de533c8aaace310b96a",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "5e5dff1fd948322d4b4df740a7043b1c0a1779e578f7b07cb9df251ce7057785",
+          "A2_MEMORY_USE_CHECK": "aeaa86859b1af3d84be558be78b55461fc90f3a3fb967b2a20e62e8226740aba"
+        }
+      }
+    },
+    {
+      "future_task": 227,
+      "selected_source_task": 226,
+      "intent_template_id": 370,
+      "task_prompt_sha256": "9e2fd80094a162fcbe150368575424f9a2ac46007a59d4286cb4b3fcc8527d29",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "10dcf63c253219c735f998e5b2fd04ccd5e16f6c4cedc0767e8b9b42a7ecdfb3",
+      "memory_wrapper_sha256": {
+        "success": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "00888ccb67011285d71bf687c3e44b57cd6f6bbf570a5074b9cf4cd0cfa48afe",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "91801824efdef2b92d9077a696bced3508c69f53d7645274fd830831773b4c16",
+          "A2_MEMORY_USE_CHECK": "15333e537401c0e339feac5cc9dcd0126f3dfdc7a98f6f85c386f29068102924"
+        },
+        "failure": {
+          "A0_NATIVE": "d4526ae5f9f39be4d5718f0ba67de3c3908c3261d95c7c2f183948b846fcd55e",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "88327c3c0a94e74d76065c3172d2053093ed0867995b04a658d8b8bd15caf96d",
+          "A2_MEMORY_USE_CHECK": "05edd52da70ea011c1617ae015a5e7e23b81d36a923b4aa87a205cdb7f86b5a6"
+        }
+      }
+    },
+    {
+      "future_task": 228,
+      "selected_source_task": 226,
+      "intent_template_id": 370,
+      "task_prompt_sha256": "bc1348abd581822ea83a6b10fbf89421aea1bc621bf96677358f6c2f225a62b8",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "6f1f8a624bf90ac4f33b9c5d0e87890a0df5236e1c78ed431c03b9f12ddfa34a",
+      "memory_wrapper_sha256": {
+        "success": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "dad3b1b65d1f2a35ae4382feba7cfe8c4b45ff23ad1da1144961b79edc0edbab",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "ef5e915c2376c4baba8a6f6ec6d24872595036223719fb1d8ba1a931fe451cb8",
+          "A2_MEMORY_USE_CHECK": "e5c09db72cbf130e4ebca76bcc861f24c9c49d7ed4d716ece0a8921a255d41ac"
+        },
+        "failure": {
+          "A0_NATIVE": "0482a0ec7c185e1e86704ac772f89c968db59c6f64b905fe98650c0c35b0c883",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "296754e4964a02b82eea5aa465a8f9042ac6ca6ef2b7cb8b860f122745d00292",
+          "A2_MEMORY_USE_CHECK": "08ba13d2de9e33fac3779c417db4230fc73d02d20602a692b3014c021894de62"
+        }
+      }
+    },
+    {
+      "future_task": 229,
+      "selected_source_task": 226,
+      "intent_template_id": 370,
+      "task_prompt_sha256": "bef0edc533a465534987dc1b4ba4556edf8264663bb2f1ef810c33734c91444e",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "9b732b85037a22b1a15388a7fe8e995264876de50ddbad87bac37ae355aab4eb",
+      "memory_wrapper_sha256": {
+        "success": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "b5d22f1026ffae29030fd218a4e194cc5816afad8385cbd05d1dfca39611b28e",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "ccbb3fe9234d7232dae3a13e9f2f9f7c7d895fbb7c90a412d75b5c930570e9c5",
+          "A2_MEMORY_USE_CHECK": "239bec5aab53b946913bfb162fa7203ba26931ab27780953e00a03ed6bc80c43"
+        },
+        "failure": {
+          "A0_NATIVE": "c71aea333d5611c73a7286afa3da218c2a2aedec9bf617d40887e0b22de43add",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "56980991483c5adf258462bfc327544c79a7de0649799430ccefc99f624fa6d1",
+          "A2_MEMORY_USE_CHECK": "43a2e7c2448a0ff76f1de1eee0d6c6116acb2b83adff546673d6a471ce17d1cc"
+        }
+      }
+    },
+    {
+      "future_task": 230,
+      "selected_source_task": 226,
+      "intent_template_id": 370,
+      "task_prompt_sha256": "8843677959449ad283f81bf193bbbd42be57c88e76a871116221cb2bcb87fe75",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "79a8e0c5b5cdd74dd88ae936c9fac2eb7232d7c84b406ca64d1f53419789ea2e",
+      "memory_wrapper_sha256": {
+        "success": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "55f8e0c9e921161162c2e493eaf19027ab80214a26b5fd81558ac71a98d7aa4a",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "5bb8de2d25d08a5a867a60ecdfdb84e94c49c415837f3c053d7d8ab95498ddbc",
+          "A2_MEMORY_USE_CHECK": "23d0ddd3b83dfbd062d6e14f3010dca3558205f9dd5e6639647fbec54e63378e"
+        },
+        "failure": {
+          "A0_NATIVE": "2ac5d012e44beac1c14a349155a1e5885056758cd71496e792f9b7797b2df4ea",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "b5306e30ccdfbe9bf91e7536806b7d86e21e8eae824c2191aeadbaf135a78d0d",
+          "A2_MEMORY_USE_CHECK": "8b23423caaab68b703a93d591f705c38fa51e0132008ae4eb15b180b456a9505"
+        }
+      }
+    },
+    {
+      "future_task": 233,
+      "selected_source_task": 232,
+      "intent_template_id": 213,
+      "task_prompt_sha256": "96afb45af7ebafd50072f1d8d8e3d3c56a9566b4fc8a0b30a9b57db8892197ed",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "2c5637dfba5e3d216fc05be7c93b1e4c0cc8e9148b70f5aa0164400c5860995e",
+      "memory_wrapper_sha256": {
+        "success": "83cd5c25841ef851ed6ad3ed951923be399dd3eccda542d98341b3780cfd1541",
+        "failure": "5d21d224984c37b762e17c90869a3f4e0d9ba4b0390db87e6571b07289921914"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "21eed2972ae7226403ce359d084f34d1c79bbcb534dcecab942b24f7e6fd1065",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "e95457af2a0aa131fae041f28003ca677c07863d6b97f7c9bbeb2b00fbf3f86d",
+          "A2_MEMORY_USE_CHECK": "ae6d182522e19c77799d3ccc12e13c082f8f49be32d394d5cae350cabf17dd0b"
+        },
+        "failure": {
+          "A0_NATIVE": "58a6d77f4bec7cc8d93a0695006576e642e760654d5a69b57a7bf6e9e7f33e78",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "52db8d670be4a870450f3f8a524d8d3a0105162c971468556c1153444240e2df",
+          "A2_MEMORY_USE_CHECK": "23001b2f0003f3387e4b3c3f59c19493f525c11be2233db57b09c93d8e08eaf2"
+        }
+      }
+    },
+    {
+      "future_task": 279,
+      "selected_source_task": 226,
+      "intent_template_id": 204,
+      "task_prompt_sha256": "5328ea2e7f962dc493c8fd4c0b687953474b04a25171a461b702e8a5f6e2614e",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "b16e8fa561ed199966e01637d30d2c3d6eeb2a46756a9e0ac597b0af536981fc",
+      "memory_wrapper_sha256": {
+        "success": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "637d11f3e20d0cc6e4d59f85d5151488f3857132e9c187e206cd51235351f402",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "547b6e58b693a804be1321739f8fec79a0aed68c28ed88e586ae659dab1e6f92",
+          "A2_MEMORY_USE_CHECK": "0f1db3aa1aef59c5c6da45f487df6ecba5fb40be633056b57ead7269d710d65e"
+        },
+        "failure": {
+          "A0_NATIVE": "2e0ea72b8a160e3de3617e6b0c46f19f6b4647adb96d790d892b54cc8928481e",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "76ad72087de12f020735aabcf9af277562373a61fee9b8622b1610318c376cba",
+          "A2_MEMORY_USE_CHECK": "9e52e11fdaf559e41b855d679b5ee00d4eb02f8006155b6c5bd50935b4d206fe"
+        }
+      }
+    },
+    {
+      "future_task": 280,
+      "selected_source_task": 226,
+      "intent_template_id": 204,
+      "task_prompt_sha256": "df7bc9cca557920be8b9b8abd7d5a7476540f2912c1d553754fc72fa2675c631",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "142e58c3351cb7deedc5640dd55581bae4fcc59f608bdf60205fabae39314d41",
+      "memory_wrapper_sha256": {
+        "success": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "4909f32be57adbb1c682ef1b67eba1a4c5a9d45f695d241e961e5f4b943e8a44",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "f85790ac4dea209b634ff88155a3692174343d5aa28bf143667408e892ef8cf5",
+          "A2_MEMORY_USE_CHECK": "7cca00e4b8b280ca91cf225416ff8268d44e4c3719da10d06357523281f2d1e6"
+        },
+        "failure": {
+          "A0_NATIVE": "6ac24d5bfefec4ff6e9ba4190bbaf09e57d3d08d40e5d512ddcadcd6211c3165",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "be0115249dc3b462d93819bbfbe66f8e2285a4d88ed22483ff40d306299650bb",
+          "A2_MEMORY_USE_CHECK": "981619fe49b4fdc1bc67686f04f58694cc234177ad5a6bdaaf6cd74ecc6a2790"
+        }
+      }
+    },
+    {
+      "future_task": 281,
+      "selected_source_task": 225,
+      "intent_template_id": 204,
+      "task_prompt_sha256": "f35dea089e35d9f909983fbdf4843858a89d2cfda079c27549678734477954d1",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "bfa4a2a897dc9a8f29971610d8bc70dc2f86d4d341e3fe5a535ff0a208315b19",
+      "memory_wrapper_sha256": {
+        "success": "e33b23054ba4c1be784a94dd9293a480530622b008c6bbd99020226f79bb9751",
+        "failure": "6e69964089b5bc2d21cab4a009b0b37c2fbdb6a6a5fa447baaa501c63538429b"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "fd9ee00271c4dd279b8326adc18921adf087f3b1c4786a747e77e40270b54a6e",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "3b55c06910321e7cadb56e0396499af6853d276b2111fbcd82a1abe2881ab8ce",
+          "A2_MEMORY_USE_CHECK": "905a5db8897a486fd9bb180c48273013bbe4eb81bdff3670a58cca65a9789f2f"
+        },
+        "failure": {
+          "A0_NATIVE": "7729cf30c118fdd3b93a35fb510bcd10b4c5fdbaccf4d1ae3f662297a64b8280",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "1951a9b1c323fd14dfd39ebb84eb18fc3388fb86a9d878d17215da40a08e644c",
+          "A2_MEMORY_USE_CHECK": "fbe1db9b760d4936ffa7e4a63dd04a1fd87baacac5a2a5acc2bf1fe568b1622b"
+        }
+      }
+    },
+    {
+      "future_task": 282,
+      "selected_source_task": 226,
+      "intent_template_id": 204,
+      "task_prompt_sha256": "a0ddbd462b6215b65ffc537629be6672b0325ddaffeed20f90a6897aa19f9fac",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "579baa81f8bca50fdeaa8d5fc7abe7fd0a8448bda21d506fb287e0e43292606d",
+      "memory_wrapper_sha256": {
+        "success": "d53d957706c7c598c5c82dac7aaa2d86db635e89733df0bd8848d064070252c7",
+        "failure": "eb030221b9bef561de01da17e58c5f56d9f9930e220fcdb41b89206ac816a7f9"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "ca9cab65ccca971f9cb8dff18a97155205672773667ae717421be23134ec7418",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "9a360f5e4c02ac9ec57a4f6e6434ae9074117c18312378726fdcb57c3f3e6ce0",
+          "A2_MEMORY_USE_CHECK": "115235113fef6fa7eb2c6536d7be0573c94b52b4e04ecfa11f292fa04c23ee08"
+        },
+        "failure": {
+          "A0_NATIVE": "95ca8a3bb948b618ccf716a7696f0d8131e88c305c1a5d963ebf983cb66fef1d",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "77dcb0c993cfead975d739e9cb1c0fba75523e9ea1086bdf2f48504eeb9b5c51",
+          "A2_MEMORY_USE_CHECK": "c7e893ef0ee0d9e96f93af5e75c097eb3bfe337898f369dbb4b40070627b2fc4"
+        }
+      }
+    },
+    {
+      "future_task": 319,
+      "selected_source_task": 188,
+      "intent_template_id": 160,
+      "task_prompt_sha256": "201053b1a4e94c31679c7f8c739d3ccc61831e6c2cf504d5cbf15748c9f51fba",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "7be1fbc4f78a37e72ad7375d998d886d3c89847146cf04e295089a163f96faac",
+      "memory_wrapper_sha256": {
+        "success": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "de691802cfe28c7ab372756403e58da504284ed3d2282f26e57f3acf72761775",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "8241e63edeea172c8560d0b37011c765004846d3e897b2ef08c760b78b6ff0c0",
+          "A2_MEMORY_USE_CHECK": "8e944ef735de3689eabfcb73380f3fd73a734877387c03c3bd54fafac8ca517b"
+        },
+        "failure": {
+          "A0_NATIVE": "ca5c1a7df75916c42c78db08972dadd6d1697a12c54c3cb158e6cf59eaa231f8",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "fa2bcff60b6b8a9a135a692c66690dd7b5d10773a2886fdf676d8a2a3acb1416",
+          "A2_MEMORY_USE_CHECK": "ce9187f19eab861c2dd97c182df97a16245914e95c27d7cacdc04d90b1020e2f"
+        }
+      }
+    },
+    {
+      "future_task": 320,
+      "selected_source_task": 188,
+      "intent_template_id": 160,
+      "task_prompt_sha256": "f7efb18b4d711667673459abaf3a1d271bc5e935297aeae719e969ba8c58b361",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "eeb10315550aaae9c828d34d73f65a4e7755a8f8eede700b65b015695dab29be",
+      "memory_wrapper_sha256": {
+        "success": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "40e4131ac43a8f99387a740521959c940f7b8665fd5ac5f15eb4535ebe6bd3c3",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "c2d0dad3cbec144d11988f67e55665296e770eb93ac672a2da1f1a8fdebfd04b",
+          "A2_MEMORY_USE_CHECK": "98d7763e8df7b5bb96afcb15c76b8a22bdd9ae782795019445d58e729a8a7799"
+        },
+        "failure": {
+          "A0_NATIVE": "2e13e7a6bb5eb7b01f2d301deff56cb1318255262351488b26f0c60c67e4e352",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "25c9c4e1bb7bac1e4b67e2602f5c8bd7252bd537454e48ada6a701cb57f74bd8",
+          "A2_MEMORY_USE_CHECK": "8d1bbb8d1d5307e601fa53917fa0e3a4b71af03c739926c7d709a180aa9993e6"
+        }
+      }
+    },
+    {
+      "future_task": 321,
+      "selected_source_task": 188,
+      "intent_template_id": 160,
+      "task_prompt_sha256": "353bfeabd0c64d3daa8be9de70a7a46df1e3958ab0caf261a3e3ac5c42dc707a",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "e4d678f401500996d41abe714088e42bd62411c6c8784cfdb0342be9ca145d76",
+      "memory_wrapper_sha256": {
+        "success": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "22e87d4320ea4dfb53b9ce492ec840f0bfaf66a7adaadd28c8569f6c7c410361",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "4184aa89b79b7a2df3c47a14a9cccaa7bb13ab6febb3c4f33c41180bd61bd2b2",
+          "A2_MEMORY_USE_CHECK": "9ac71313a3188fa6a9c9626ead65653bedecfaa05f3928253634dd47c3d38c4b"
+        },
+        "failure": {
+          "A0_NATIVE": "3f1b9b8b671d3da9383778fe680ec0700be7c14f2edd26c34a11aa5610fc5820",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "93b7adecbb9e0c7c46e999ac88557698cc929674f3127b318b9fdcff96092af7",
+          "A2_MEMORY_USE_CHECK": "15a094a6aef9b78e7dc5815b53456ef0e879850c688028a78ba39fcfbe79ed8e"
+        }
+      }
+    },
+    {
+      "future_task": 322,
+      "selected_source_task": 188,
+      "intent_template_id": 160,
+      "task_prompt_sha256": "3493416b28bd59d3c99ac0945636ebc1af868d3729c2011b82ed06ac67a04bb6",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "534a87bb6c6989853ae926343a972f1331249696ab25c4b937ef92d95c8a7049",
+      "memory_wrapper_sha256": {
+        "success": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "6b6f2956c08aa50481bba3cbbe1514b7400d872f73d8f5582181c7984c365d12",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "b485c348af54a7cf6f38ff5bf73699c6700c3a2ea2940aabce76ca4122d99357",
+          "A2_MEMORY_USE_CHECK": "132449c8f25ecf7ec3fbb7767d784b13d4ebd1b460527263e3b427cb3a2512b9"
+        },
+        "failure": {
+          "A0_NATIVE": "428aeae11504589272a1858ea757b8cfa175074872b0b9dd37f990c7dc2643cb",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "4aa5bdb5dc8618d24c77e5406a3a5c424f4e6199c94998b64fe45d8c03c1c9f7",
+          "A2_MEMORY_USE_CHECK": "1118f24984bb300e752c7dbb84882359ff27aff8b52be453e4ab2341e9175e08"
+        }
+      }
+    },
+    {
+      "future_task": 323,
+      "selected_source_task": 188,
+      "intent_template_id": 160,
+      "task_prompt_sha256": "3895815f01859e06ea9aaf0b81363bd67bac8c5f651ab22501de25206f89d426",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "19211b8290b0ccde669c4843ff1200159c1fa64c64c5b85b7a52fc342754c2fc",
+      "memory_wrapper_sha256": {
+        "success": "300e818c6b144f954f6ce5ecf230101c4b6c2e39e4b3ebe8ff78455922c5a144",
+        "failure": "935e49f27c1a1358e52e518e483414b8cf46df387f5eefdeb7229afccf0a31e1"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "1620de72bd1203f5f7d4a8078579d837330594a1d089304980e3aceccbc8e85a",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "c1ba97ea92295408e2b7315cece9e11d577ed957e5b69774a6c49ed7f4570ae2",
+          "A2_MEMORY_USE_CHECK": "c228f5a32e728b3b1e59cd7c1119b39000ad036237bec848a3b532eac4d0ee33"
+        },
+        "failure": {
+          "A0_NATIVE": "565eb2130d2260f3343a70699b662b14bf61d3d62217daee55602bdae47b6889",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "4a01a2dbc0452acbc10a72ce9670e7f4991d5dcb7a2046114c1da2d114e2fbe5",
+          "A2_MEMORY_USE_CHECK": "7762e15a716f020802b3df84a6aedd923bd0871e0d38f6dcda5c139e3c7977e2"
+        }
+      }
+    },
+    {
+      "future_task": 329,
+      "selected_source_task": 141,
+      "intent_template_id": 147,
+      "task_prompt_sha256": "3e88dd42ae72c8afadacd015129ccc38da41fa1223b1f52bb26246ab7e00e0e1",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "606491b9939e6ad4c7b2b4fde82969e5162a21de88bf3294456909fc76fff260",
+      "memory_wrapper_sha256": {
+        "success": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "825684b28b86bdc65331ef069ea6396e3e7cd8760296530e9a8e202dbf6c2fb5",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "324e6042fa4f593cafda92caa666f280c2b17285892cebfc8820693de90f10a5",
+          "A2_MEMORY_USE_CHECK": "6b3d7ec3ffc35300377734231080fad9ccfd15b4667a3ddeb2a8888c4a753e7b"
+        },
+        "failure": {
+          "A0_NATIVE": "966bc3b225cb01f69b8e1cd4eba82bdae6bd2253ebe8ad807a68a2d40ba96c56",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "3f003b238ee32dc06b93d694a13004c99f5941dac53c41ef43f1686c02647c75",
+          "A2_MEMORY_USE_CHECK": "60b476a9dc52c5d8e1231434467ebff8404ce1ce7fa0f6a28bf20fe0a83ac125"
+        }
+      }
+    },
+    {
+      "future_task": 330,
+      "selected_source_task": 141,
+      "intent_template_id": 147,
+      "task_prompt_sha256": "7fef495b710ac86d71487a58c8322a15ffd629e1afacaef9d3236ac45024a8e0",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "d9d23c5d60f5ced48e8e9046f0498b83951856d0b0efb3ba5a3c33b2fa984b1f",
+      "memory_wrapper_sha256": {
+        "success": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "66f3098b6c0d877fe27fb65613472c1b1efe2f510d6ec88be5fc88d294af9944",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "81ca7f5a0ebf36721b26a5026416edce5c79dd7036feb53906097edeb4c50feb",
+          "A2_MEMORY_USE_CHECK": "8d84d6f83363eb698b551f4fe65a7388ef7ff71c31e63de56fe1571c451ae9bd"
+        },
+        "failure": {
+          "A0_NATIVE": "97bc9d76e93e09be794d3fe2bdf95e19b90f79fef17e0279c9d67c14673ab1af",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "ee1157fc7e9fbe97de862030f6b277b6148d3361d9a142cfc9fcaae0dd9d68b0",
+          "A2_MEMORY_USE_CHECK": "88da882ea03982beb8dd3c94ec9aa49f62707c6ab33cdb9127ee65c36682641d"
+        }
+      }
+    },
+    {
+      "future_task": 331,
+      "selected_source_task": 141,
+      "intent_template_id": 147,
+      "task_prompt_sha256": "d926186dd1912471834b4b24e2312c8422babe7f311e66426c43ce8cf140f8a7",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "b83c6843d7164e98b40e489970aafebbae24c5b1ea0cc9d62abab4df197bb5d9",
+      "memory_wrapper_sha256": {
+        "success": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "c2c48af8845337111210332cfacb0af97c69a5f70bf3a2fdda4915fa1c4bf8f8",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "bcd820df3d21a257effc2d37b5a737c6e40e1b7ad6e6a08317a513c6a0e59d0b",
+          "A2_MEMORY_USE_CHECK": "182f49118b5b1447732efbb63ab361a996793667b1dd6e8cd55383d8ee1481ea"
+        },
+        "failure": {
+          "A0_NATIVE": "239a6b15800dce4bf9ef7344e1842656ab7bcbf66ee81f2b68f8cd7f57ce2edf",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "2004d03160bfdc94e18c91b4f3c42017021e970f73b2a653f6ff58808350154e",
+          "A2_MEMORY_USE_CHECK": "63a64f6f1dafcff4a04546051e7472967f2d4fe4d6807eda73534a3aa7cfd9f3"
+        }
+      }
+    },
+    {
+      "future_task": 333,
+      "selected_source_task": 141,
+      "intent_template_id": 147,
+      "task_prompt_sha256": "1b6a7d61792ed2d9872525d4ac5bfd8f8a34bdccbb448667ddcf6b33db88c82a",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "c8fceea28ce2a4d8a5917a1363d6fdc95910f4178f4bd7fdb15d063aff062b4e",
+      "memory_wrapper_sha256": {
+        "success": "ad0c97655d100824fc6c007aff0beb0c4c2836b07b3f701b6e0aea435241058e",
+        "failure": "47e7d83a73e883233f4400c0fbbf180c3908cca65ad8924098ecdbec7618f6d5"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "0e5419291182150a3247e22217eebc7ebde661fc1907c4afad0b9dd5f9613a1b",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "9aedde12164653686371bbedbbea3b31b15d51a0e807e5b1d446dec008d31dcb",
+          "A2_MEMORY_USE_CHECK": "0f57e29239fe3fed66c03145f3b29c7f76ede2b1b9f9cc6e4c897ea58861fc42"
+        },
+        "failure": {
+          "A0_NATIVE": "0dd84b009fb35bc695a94e28a0f3359ed21fbee5d926268f4242cb5c9edcf83b",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "bd1766c1c3436ad670a79f658657358bdcbd7c33e1926242e85d85f6d0d75534",
+          "A2_MEMORY_USE_CHECK": "b5d5d3cd66963ccf5205ad05ea5b83fd4d7324aba94b6d14b4c27af97ea05730"
+        }
+      }
+    },
+    {
+      "future_task": 358,
+      "selected_source_task": 189,
+      "intent_template_id": 206,
+      "task_prompt_sha256": "b800670759a3e9bf1c17878cff59d8e7fb7c3503acb2e4d9903f49c6e7f52d4c",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "56c83de7e28b165ed37206c26a8210dd78d2621b38dcdc3c748fffb348d10548",
+      "memory_wrapper_sha256": {
+        "success": "1c3c631a25a6e6e6f9238b3cbad69449a4bd0d41b074e1615893d48f314ba2c4",
+        "failure": "ae6611d3ddff07f380d581ca17098c1fa7dd8768277a8920ec4e54fa75b4979b"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "cf64681625048fba6024fedbc80554528e42db6b8788cf20f912d586c959bac2",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "22e59f99dec6b41d8faa719b03d2661ecb56a7f5ebe010248c84301d705e764d",
+          "A2_MEMORY_USE_CHECK": "421771677124a749e1fa6b9975877ad546d69b9edd0fdc256918818c1b4f51a4"
+        },
+        "failure": {
+          "A0_NATIVE": "74cef9468f591ff0dd726e39448c3d8e1223edef3c6310294403a09249bd40f5",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "82eeac80e9d54d424bf5cc0194560befdca8c2626333070cfa355cf2b662b39b",
+          "A2_MEMORY_USE_CHECK": "569775cafa307014486a30a0a9bbecca431158efdaa6df4604c5341c3c7a749e"
+        }
+      }
+    },
+    {
+      "future_task": 360,
+      "selected_source_task": 231,
+      "intent_template_id": 206,
+      "task_prompt_sha256": "314ef9b879dfe5b2df1184799b939d79ce0ee2899f502210583e21eb545399f3",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "ef7593c3cba044f19cfddafd080417b02f3d99d8501594befb0cacad0d9755b0",
+      "memory_wrapper_sha256": {
+        "success": "3f1e6348e277024bedaf3863845fee785d6dd971188269d1a9da4b92ac3620cf",
+        "failure": "10687b02671f7f2386e0530e613108b1b9b2c4f39995c712100d0a8931627de4"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "c2ee4bc27dedb32a44f77d52e75aa6ae2b3fa1d0147c413ec7df79bc89b7bca4",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "0386a17a504d2feaf5183acdfae03fd4cee3afc8fba4763777912cea7496eceb",
+          "A2_MEMORY_USE_CHECK": "fb40b43337c54b75a2568b58d26dbe858ef4834526ed6655796dca8efa1f6bee"
+        },
+        "failure": {
+          "A0_NATIVE": "0cf3743fc21e862753162092f6031f991e82af132b897c6a1ae952c9b045a5ce",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "fadc67f084f3790512c96dd7ccee95e84b309455d85de6d186635cf2b7435177",
+          "A2_MEMORY_USE_CHECK": "5c68529e2ed8db2fe222f6486e17d6af424bee3e770a5623fd3a7a62f432df69"
+        }
+      }
+    },
+    {
+      "future_task": 362,
+      "selected_source_task": 231,
+      "intent_template_id": 206,
+      "task_prompt_sha256": "8093c6fead1a813ec459da1a2467ae102e7198c79357fb729c442c2669018dc4",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "4e949d9549a06181f0ddc101b086ba03b5d002a7833433406eebc3fb5250c2f9",
+      "memory_wrapper_sha256": {
+        "success": "3f1e6348e277024bedaf3863845fee785d6dd971188269d1a9da4b92ac3620cf",
+        "failure": "10687b02671f7f2386e0530e613108b1b9b2c4f39995c712100d0a8931627de4"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "f4b764112ea2b807f5a394406983268e95c66c2987b94b2eda80731c103ace0d",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "c887d381b9a334b97d3fe0397f9651ca65ff7ea635102744d83ad02ac7328db4",
+          "A2_MEMORY_USE_CHECK": "b0ae32ce82e8b057d25ce57a42b7ad4943ad628bf89d356bda52729d6592ffe7"
+        },
+        "failure": {
+          "A0_NATIVE": "e0bf95f7eb9cb48cd74bb126a1c2db3c1b54f409c03db21fa80e3166da525515",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "0146da50adcca2f855fcf740a48caf6f5eba559637861c4824d6b9c9ab2e5cbd",
+          "A2_MEMORY_USE_CHECK": "daef576952340e354870f5cf4105f0194a509d35c24dc5011c8f17a6200592d6"
+        }
+      }
+    },
+    {
+      "future_task": 384,
+      "selected_source_task": 25,
+      "intent_template_id": 666,
+      "task_prompt_sha256": "94139732f1e35446e24aef6dae138c88fda65d9d71ad1be77b289681e1c3927f",
+      "system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+      "current_state_sha256": "5e07ee9f45627c4cf9a9953bca01ef47d06df10e67db33dd88dd0c0b08afc495",
+      "memory_wrapper_sha256": {
+        "success": "0b8e3b338b9df1163d9304d771003e4db5f869be914723fcac2ea01b14ccb239",
+        "failure": "f1ccb4169b6137789b99524c3bdf5304f8105abd9f711be507a8b3fe2f8a0f63"
+      },
+      "prompt_sha256": {
+        "success": {
+          "A0_NATIVE": "93461680a090eb65dacc68c37bb33ff27c275f6ba086e7e2250f839dfcd13b21",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "c119762589aaf151bf202990e7f101561866e308703aa9b7fbb2b0b73e37927d",
+          "A2_MEMORY_USE_CHECK": "8bb127ca3193972a33c9074d71189a8c3d9a567f2cbb682f1388c0638c4292f1"
+        },
+        "failure": {
+          "A0_NATIVE": "936a529d7f7d2d0e11dc38b8f248b8215604aa01343eda7e409e87c7b1b2476a",
+          "A1_MEMORY_BLIND_DECISION_CHECK": "a0eab8dd139d24cb0fdba7aac835190729692d1b9dcb5e324c6cf3226057f1f5",
+          "A2_MEMORY_USE_CHECK": "6fe8e85e5266ebbe1129a798bdf2e06d79c00f6ec0207a341df7f535a9ba8c13"
+        }
+      }
+    }
+  ],
+  "scientific_interpretation": "None. This artifact establishes only that the 36 frozen B10 state packets and branch memories can be reconstructed content-addressedly and that A0 native prompts replay the archived request hashes. It does not show that the proposed A2 intervention changes uptake or outcome.",
+  "next_gate": "A zero-provider engineering smoke may build append-safe run manifests and replay the first-action parser on archived outputs. Any new model/provider execution still requires explicit current authority and a qualified pilot contract.",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}

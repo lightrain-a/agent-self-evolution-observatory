@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TRANSPORT_GUIDED_REPAIR_SMOKE_ADJUDICATION",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+  "generated_at": "2026-08-28",
+  "attempt0": {
+    "run_id": "c1-tgrp-p0-postexposure-uptake-20260828-smoke-v1",
+    "status": "STOP_EXECUTION_PARSER_SCHEMA_MISMATCH_ZERO_PROVIDER",
+    "failure_receipt_sha256": "8c589b9c43a77a2024aa6de695e6af40f9a239d866a079b761d2653d4140fdee",
+    "failure_layer": "operationalization",
+    "scientific_update": false
+  },
+  "repair": {
+    "single_variable": "replace smoke-local action parser with the exact frozen B10 action_signature semantics and regex fallback",
+    "unchanged": [
+      "36-state frozen support",
+      "A0/A1/A2 prompt design",
+      "memory wrappers and retrieved packet content",
+      "model identity",
+      "first-action endpoint",
+      "authority state"
+    ]
+  },
+  "attempt1": {
+    "run_id": "c1-tgrp-p0-postexposure-uptake-20260828-smoke-v2",
+    "status": "PASS_ZERO_PROVIDER_ENGINEERING_SMOKE_ONLY",
+    "receipt_sha256": "61c2158bc2d0ef957a0a3e540b3fb1b26d1639d21dd76c9c38070b094d1b2cb2",
+    "manifest_sha256": "1dc4f3ea994153f8439947b8ed5c45c761b6fc332b18f5c1d413a479cc311135",
+    "cases_sha256": "f73e0e964fa74d0f37e9a52262a1ca73058611a37f0b67383ee1ec54029d8050",
+    "progress_sha256": "19a3952dda5d3a9738b0f3978cb3f1e1f5d0202a2eedd82546a29ed8b244d981",
+    "checks": {
+      "frozen_upstream_packet_hashes_verified": true,
+      "native_A0_prompt_exact_replay": true,
+      "A1_A2_identical_outside_decision_check_clause": true,
+      "prompt_packet_cases": 6,
+      "archived_first_action_parser_replays": 12,
+      "archived_parser_matches_frozen_result": true,
+      "append_safe_cases_materialized": true,
+      "progress_and_resume_materialized": true,
+      "provider_calls": 0,
+      "model_actions": 0,
+      "new_scientific_outcomes": 0
+    }
+  },
+  "adjudication": {
+    "smoke_gate": "PASS",
+    "scientific_identifiability": "NOT_YET_TESTED_BY_NEW_INTERVENTION",
+    "pilot_execution": "LOCKED_NO_EXPLICIT_CURRENT_AUTHORITY",
+    "full_execution": "LOCKED",
+    "scientific_claim_update": "NONE",
+    "engineering_claim_update": "Packet replay and parser/persistence infrastructure are sufficient for a future pilot; repair efficacy remains untested."
+  },
+  "next_smallest_action": "Freeze an outcome-blind pilot subset and exact inference rule from the 36 replayable units. Do not execute any new model/provider call until explicit current experiment/provider authority is separately granted.",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}
