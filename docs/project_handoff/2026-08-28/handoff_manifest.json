@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "handoff_date": "2026-08-28",
+  "base_revision": "610b9fe2da9f71f42fdd355bc786095000f91502",
+  "purpose": "Cross-ChatGPT-project research context migration without treating chat memory or stale snapshots as canonical state.",
+  "canonical_location": "docs/project_handoff/2026-08-28/",
+  "trust_order": [
+    "current_git_revision_and_content_addressed_primary_evidence",
+    "validated_machine_readable_canonical_state",
+    "versioned_manifests_claim_ledgers_and_adjudications",
+    "handoff_package",
+    "human_notes",
+    "chat_transcripts_and_model_memory"
+  ],
+  "files": [
+    {"path": "START_HERE.md", "role": "entry_point"},
+    {"path": "CURRENT_STATE_RECOVERY.md", "role": "live_state_recovery"},
+    {"path": "GLOBAL_RESEARCH_INDEX.md", "role": "cross_project_routing_index"},
+    {"path": "RESEARCH_PORTFOLIO.md", "role": "detailed_agent_self_evolution_portfolio"},
+    {"path": "SCIENTIFIC_OPERATING_SYSTEM.md", "role": "scientific_method_and_gates"},
+    {"path": "FAILURE_AND_REPAIR_PLAYBOOK.md", "role": "failure_modes_and_repairs"},
+    {"path": "INFRA_AND_EXECUTION.md", "role": "server_git_run_conventions"},
+    {"path": "WRITING_AND_REVIEW.md", "role": "paper_writing_and_review_protocol"},
+    {"path": "WORKING_STYLE_AND_DECISION_RULES.md", "role": "collaboration_and_decision_preferences"},
+    {"path": "NEW_PROJECT_BOOTSTRAP.md", "role": "new_chatgpt_project_bootstrap"}
+  ],
+  "excluded": [
+    "passwords",
+    "api_keys",
+    "ssh_private_keys",
+    "authentication_cookies",
+    "private_email_credentials",
+    "transient_pids",
+    "unverified_or_stale_server_endpoints"
+  ],
+  "live_state_policy": "Recover the exact latest state for the named research object from current Git and admissible artifacts before execution or manuscript claims.",
+  "authority_policy": "Artifact existence, QA PASS, review output, and receipt metadata do not independently grant scientific, experiment, GPU, provider, or submission authority."
+}
