@@ -40,9 +40,12 @@ class F18Port010ReleaseWatchCoverageFailureTest(unittest.TestCase):
         watch_urls = [x.get("url") for x in row["release_watch_contract"]["targets"]]
         self.assertTrue(dataset_url)
         self.assertEqual(asset["source_state"]["uncovered_first_party_dataset_url"], dataset_url)
-        self.assertNotIn(dataset_url, watch_urls)
-        self.assertFalse(asset["observation"]["dataset_endpoint_present_in_release_watch_contract"])
-        self.assertFalse(asset["observation"]["immutable_dataset_revision_verified_in_this_audit"])
+        self.assertIn(dataset_url, watch_urls)
+        baseline_audits = row.get("release_surface_baseline_audits") or []
+        hf_audit = next(x for x in baseline_audits if x.get("url") == dataset_url)
+        self.assertEqual(hf_audit["baseline_revision"], "1f085b54166a8253d7a42854e2b1c7e1fe8dcceb")
+        self.assertEqual(hf_audit["disposition"], "BASELINE_PINNED_NO_REOPEN")
+        self.assertFalse(hf_audit["qualifying_author_outcome_artifact"])
         self.assertFalse(asset["observation"]["qualifying_per_case_outcome_artifact_verified_in_this_audit"])
         self.assertEqual(row["release_change_adjudication"]["remaining_reopen_components"], ["per_case_outcomes"])
         self.assertFalse(row["release_change_adjudication"]["offline_replay_tier_authorized"])

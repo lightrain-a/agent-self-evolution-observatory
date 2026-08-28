@@ -1,0 +1,43 @@
+{
+  "schema_version": "port010-hf-release-baseline-audit-v1",
+  "audit_sha256": "b495d3378e3a22fe8f90eb6ee32b399e12e1e3f2cce08d6d1f6eaf1c5c734627",
+  "candidate_id": "PORT-010",
+  "candidate_title": "Complex-description boundary in end-to-end 3D world construction",
+  "audited_at": "2026-08-28T04:45:00+00:00",
+  "source_ref": "arXiv:2608.15265",
+  "dataset_url": "https://huggingface.co/datasets/usail-hkust/VWE-Bench",
+  "observed_revision": "1f085b54166a8253d7a42854e2b1c7e1fe8dcceb",
+  "revision_verified": true,
+  "verification_basis": [
+    "official Hugging Face dataset tree reports main at verified commit 1f085b54166a8253d7a42854e2b1c7e1fe8dcceb",
+    "official commit page shows the head change touches README.md only",
+    "official data/test tree exposes case directories rather than author outcome/result artifacts",
+    "official data/rl tree exposes train.parquet and test.parquet as training/evaluation input data, not author-released per-case target-model outcomes"
+  ],
+  "observed_surfaces": {
+    "root": ["data", ".gitattributes", "LICENSE.md", "NOTICE.md", "README.md"],
+    "data": ["assets", "rl", "seed_3dworld", "sft", "sft_parquet_example", "test"],
+    "data_rl": ["test.parquet", "train.parquet"],
+    "data_test_shape": "numbered per-case directories; 001..050 visible on first page with additional files paginated"
+  },
+  "qualifying_author_outcome_artifact": false,
+  "qualifying_original_trajectory_artifact": false,
+  "materialized_reopen_components_from_this_surface": [],
+  "required_reopen_components": ["query_units", "per_case_outcomes"],
+  "materialized_reopen_components": ["query_units"],
+  "remaining_reopen_components": ["per_case_outcomes"],
+  "disposition": "BASELINE_PINNED_NO_REOPEN",
+  "release_scope": "RELEASE_CHANGE_AUDIT_ONLY",
+  "local_rollout_as_author_outcome": "PROHIBITED",
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "provider": false,
+    "p0": false,
+    "gpu": false,
+    "scientific": false
+  }
+}

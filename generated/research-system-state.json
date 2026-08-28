@@ -38809,13 +38809,13 @@
   },
   "paper_first_pre_f0_evidence_acquisition": {
     "schema_version": "1.0",
-    "generated_at": "2026-08-27T13:03:09+00:00",
+    "generated_at": "2026-08-28T04:39:28+00:00",
     "status": "EVIDENCE_WAIT_OR_HOLD",
-    "control_snapshot_sha256": "70c58935c5818bec2ac02cd5138e4ad7cb04e7564106b164b405a1dcaea32422",
+    "control_snapshot_sha256": "b0e2ca2257e24510d7e922062a4f15984b78a09d796188a5e6559444ab1355af",
     "queue_sha256": "f986e15889e0285fd05ee563bda95218979dee61c3e8ae45da6f274afee6f903",
     "support_preflight_sha256": "95867b76083fcbc05fcd072f9e928bf291d413e8dc3cf1ae20d8b800391c944c",
     "support_inventory_sha256": "c8b92c0f5a3bc9891a66013cda8571078ede1402696b06a3ff1e9a0bf59e222c",
-    "plan_sha256": "272e7e049d18b59746e0cb4a2fd03ca8c9048a9d33928eb8f6b3a5a4ce7edfdb",
+    "plan_sha256": "3594967e2e491984e522b4b53c10c0478848ecd34cc2287d718e175360861ebd",
     "candidate_snapshot_sha256s": [
       "17b8b764c71b1ce6de7e9b221e4181043d190f66de2cf0189c6e4452c3970674",
       "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3"
@@ -38865,7 +38865,7 @@
       "full_experiment_authorized": 0
     },
     "last_stage": {
-      "stage": "source-release-audit",
+      "stage": "hf-release-baseline-audit",
       "candidate_ids": [
         "PORT-010"
       ],
@@ -38885,7 +38885,7 @@
       "p0": false,
       "gpu": false
     },
-    "parent_control_snapshot_sha256": "95d6b5f7a6e121cd743a679bdbd10e39d949fe01b0a65fb6410484ed5b1b701d"
+    "parent_control_snapshot_sha256": "70c58935c5818bec2ac02cd5138e4ad7cb04e7564106b164b405a1dcaea32422"
   },
   "paper_first_problem_gate_queue": {
     "schema_version": "2.0",

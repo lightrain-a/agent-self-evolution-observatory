@@ -1,3 +1,9 @@
+## 2026-08-28 · PORT-010 full first-party release-surface coverage
+
+- Closed the F18/PORT-010 release-watch coverage gap without reopening science: the independently verified Hugging Face `usail-hkust/VWE-Bench` dataset surface is now content-addressed at `1f085b54166a8253d7a42854e2b1c7e1fe8dcceb` alongside the GitHub VibeWorlding-Gym source.
+- The dataset audit found query/training assets but no author-released per-case Pass@1/model-evaluator outcomes or sufficient original trajectories. `per_case_outcomes` therefore remains the frozen reopen blocker; provider/GPU/offline-replay/scientific authority remain false and local rollouts cannot stand in for author outcomes.
+- Generalized the F18 binding from a single first-party target to a content-addressed target set. Exact-F0 now hashes the whole source-surface set, so adding or changing a first-party surface changes provenance but cannot silently create scientific authority.
+
 ## 2026-08-28 · F18 ↔ PORT-010 replay/authority contract
 
 - Bound F18 to the current VWE PORT-010 scientific object by candidate snapshot, release-watch contract hash, source revision, and frozen HOLD/BLOCK_BAKE_IN state; candidate id alone is explicitly insufficient because historical PORT-010 objects exist.

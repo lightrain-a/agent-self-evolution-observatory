@@ -43,10 +43,19 @@ def build_binding(plan: dict[str, Any] | None = None) -> dict[str, Any]:
     review = row.get("evidence_review") or {}
     adjudication = row.get("release_change_adjudication") or {}
     watch = row.get("release_watch_contract") or {}
-    targets = watch.get("targets") or []
-    if len(targets) != 1:
-        raise ValueError("PORT-010 release watch must have exactly one frozen first-party target")
-    target = targets[0]
+    targets = [dict(target) for target in watch.get("targets") or [] if isinstance(target, dict)]
+    if not targets:
+        raise ValueError("PORT-010 release watch must have at least one frozen first-party target")
+    normalized_targets = sorted(
+        ({
+            "source_ref": target.get("source_ref"),
+            "url": target.get("url"),
+            "declaration_kind": target.get("declaration_kind"),
+            "baseline_revision": target.get("baseline_revision"),
+        } for target in targets),
+        key=lambda target: (str(target.get("url") or ""), str(target.get("baseline_revision") or "")),
+    )
+    primary_target = next((target for target in targets if target.get("declaration_kind") == "FIRST_PARTY_REPOSITORY"), targets[0])
 
     f0_material = {
         "candidate_id": row.get("candidate_id"),
@@ -55,9 +64,7 @@ def build_binding(plan: dict[str, Any] | None = None) -> dict[str, Any]:
         "status": row.get("status"),
         "evidence_review_verdict": review.get("verdict"),
         "release_watch_contract_sha256": watch.get("contract_sha256"),
-        "source_ref": target.get("source_ref"),
-        "source_url": target.get("url"),
-        "source_revision": target.get("baseline_revision"),
+        "source_targets": normalized_targets,
         "required_reopen_components": adjudication.get("required_reopen_components"),
         "materialized_reopen_components": adjudication.get("materialized_reopen_components"),
         "remaining_reopen_components": adjudication.get("remaining_reopen_components"),
@@ -83,11 +90,20 @@ def build_binding(plan: dict[str, Any] | None = None) -> dict[str, Any]:
             "candidate_snapshot_sha256": watch.get("candidate_snapshot_sha256"),
             "problem_definition": (row.get("source_specific_design") or {}).get("reproduction_target"),
             "source_artifact": {
-                "source_ref": target.get("source_ref"),
-                "url": target.get("url"),
-                "frozen_revision": target.get("baseline_revision"),
+                "source_ref": primary_target.get("source_ref"),
+                "url": primary_target.get("url"),
+                "frozen_revision": primary_target.get("baseline_revision"),
                 "release_watch_contract_sha256": watch.get("contract_sha256"),
             },
+            "source_artifacts": [
+                {
+                    "source_ref": target.get("source_ref"),
+                    "url": target.get("url"),
+                    "declaration_kind": target.get("declaration_kind"),
+                    "frozen_revision": target.get("baseline_revision"),
+                }
+                for target in normalized_targets
+            ],
             "authorization_scope": {
                 "authority_class": adjudication.get("authority_class"),
                 "authority_source": authority_source,
@@ -139,6 +155,17 @@ def validate_binding(binding: dict[str, Any]) -> list[str]:
     for key in ("source_ref", "url", "frozen_revision", "release_watch_contract_sha256"):
         if not str(source.get(key) or "").strip():
             errors.append(f"source artifact provenance missing: {key}")
+    source_artifacts = obj.get("source_artifacts") or []
+    if not isinstance(source_artifacts, list) or not source_artifacts:
+        errors.append("first-party source artifact set missing")
+    else:
+        for index, item in enumerate(source_artifacts):
+            if not isinstance(item, dict):
+                errors.append(f"source_artifacts[{index}] malformed")
+                continue
+            for key in ("source_ref", "url", "declaration_kind", "frozen_revision"):
+                if not str(item.get(key) or "").strip():
+                    errors.append(f"source_artifacts[{index}] provenance missing: {key}")
     if scope.get("authority_class") != ZERO_AUTHORITY_CLASS:
         errors.append("PORT-010 authority class must remain ZERO_AUTHORITY")
     for key in ("offline_replay_tier_authorized", "provider_authority", "gpu_authority", "scientific_execution_authority", "scientific_authority"):

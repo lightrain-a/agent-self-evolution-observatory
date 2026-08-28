@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-27T13:03:09+00:00",
+  "generated_at": "2026-08-28T04:39:28+00:00",
   "run_id": "canonical-pre-f0-20260824T061140Z",
   "status": "EVIDENCE_WAIT_OR_HOLD",
   "policy": {
@@ -41,7 +41,8 @@
     "support_qualified_bypasses_evidence_design_adapter": true,
     "release_change_only_hold_remains_waiting": true,
     "release_change_without_reopen_condition_stays_hold": true,
-    "effective_hold_release_watch_uses_current_reopen_contract": true
+    "effective_hold_release_watch_uses_current_reopen_contract": true,
+    "release_watch_covers_all_verified_first_party_surfaces": true
   },
   "portfolio": {
     "selection": "bounded-top-k",
@@ -602,7 +603,7 @@
           "scientific_authority": false
         }
       ],
-      "release_change_feedback": "VibeWorlding-Gym source revision changed, but the exact Git diff is licensing/citation-only and materializes no frozen reopen component. PORT-010 remains HOLD; future source changes are watched from the new immutable baseline.",
+      "release_change_feedback": "Both declared first-party release surfaces are now content-addressed. The Hugging Face VWE-Bench head is pinned, but the audited dataset surface exposes query/training assets rather than author-released per-case outcomes. PORT-010 therefore remains HOLD; release changes on either surface route only to zero-authority release audit.",
       "release_change_adjudication": {
         "release_change_detected": true,
         "qualifying_author_outcome_artifact": false,
@@ -636,6 +637,13 @@
             "declaration_kind": "FIRST_PARTY_REPOSITORY",
             "baseline_revision": "ec8bdebf285fd4f3f2d7e2c00e5324d63ddaa71d",
             "scientific_authority": false
+          },
+          {
+            "source_ref": "arXiv:2608.15265",
+            "url": "https://huggingface.co/datasets/usail-hkust/VWE-Bench",
+            "declaration_kind": "FIRST_PARTY_DATASET",
+            "baseline_revision": "1f085b54166a8253d7a42854e2b1c7e1fe8dcceb",
+            "scientific_authority": false
           }
         ],
         "required_reopen_components": [
@@ -645,7 +653,7 @@
         "remaining_reopen_components": [
           "per_case_outcomes"
         ],
-        "contract_sha256": "930c32df3fe11e0d67e1ddf35b11dc12d4ed952aa0ffe6cff3edc0435fd3ad9b",
+        "contract_sha256": "b1f2bd10cc67f1bb418fe16aeb15967c895cf03b068c19b1f9e962f62acddfe4",
         "scientific_authority": false
       },
       "source_release_audit_count": 1,
@@ -695,7 +703,22 @@
         "provider_authority": false,
         "gpu_authority": false,
         "scientific_authority": false
-      }
+      },
+      "release_surface_baseline_audits": [
+        {
+          "surface": "HUGGING_FACE_DATASET",
+          "url": "https://huggingface.co/datasets/usail-hkust/VWE-Bench",
+          "baseline_revision": "1f085b54166a8253d7a42854e2b1c7e1fe8dcceb",
+          "audit_artifact": "generated/port010-vwe-hf-release-baseline-audit-20260828.json",
+          "audit_sha256": "b495d3378e3a22fe8f90eb6ee32b399e12e1e3f2cce08d6d1f6eaf1c5c734627",
+          "disposition": "BASELINE_PINNED_NO_REOPEN",
+          "qualifying_author_outcome_artifact": false,
+          "remaining_reopen_components": [
+            "per_case_outcomes"
+          ],
+          "scientific_authority": false
+        }
+      ]
     },
     {
       "candidate_id": "PORT-011",

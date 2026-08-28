@@ -43,6 +43,12 @@ class F18Port010ReplayContractTest(unittest.TestCase):
         self.assertFalse(self.binding["failure"]["may_create_authority"])
         self.assertFalse(self.binding["exact_f0"]["mutation_from_replay_allowed"])
         self.assertEqual(self.binding["scientific_state"]["scientific_release"], "HOLD")
+        source_artifacts = self.binding["research_object"]["source_artifacts"]
+        self.assertEqual(len(source_artifacts), 2)
+        self.assertEqual(
+            {item["declaration_kind"] for item in source_artifacts},
+            {"FIRST_PARTY_REPOSITORY", "FIRST_PARTY_DATASET"},
+        )
 
     def test_replay_pass_preserves_scientific_hold_without_review_pass(self) -> None:
         result = validate_replay_receipt(self.binding, self.good_receipt(), self.artifact_root)
