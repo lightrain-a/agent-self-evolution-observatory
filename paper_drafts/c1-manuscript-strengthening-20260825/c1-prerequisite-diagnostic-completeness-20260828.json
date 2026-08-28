@@ -1,0 +1,1103 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PREREQUISITE_DIAGNOSTIC_COMPLETENESS",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "generated_at": "2026-08-28",
+  "scientific_object": "diagnostic distinguishability induced by the paper's native prerequisite order plus an independent forced-capacity bit",
+  "model": {
+    "coordinates": [
+      "W",
+      "E",
+      "U",
+      "O",
+      "F"
+    ],
+    "native_prerequisite_order": "O => U => E => W",
+    "prefix_depths": 5,
+    "forced_capacity_values": [
+      0,
+      1
+    ],
+    "diagnostic_states": 10,
+    "observed_surface_subsets": 32
+  },
+  "state_table": [
+    {
+      "prefix_depth": 0,
+      "interpretation": "no native branch-specific state",
+      "W": 0,
+      "E": 0,
+      "U": 0,
+      "O": 0,
+      "forced_capacity_variants": [
+        0,
+        1
+      ]
+    },
+    {
+      "prefix_depth": 1,
+      "interpretation": "write only",
+      "W": 1,
+      "E": 0,
+      "U": 0,
+      "O": 0,
+      "forced_capacity_variants": [
+        0,
+        1
+      ]
+    },
+    {
+      "prefix_depth": 2,
+      "interpretation": "written and exposed",
+      "W": 1,
+      "E": 1,
+      "U": 0,
+      "O": 0,
+      "forced_capacity_variants": [
+        0,
+        1
+      ]
+    },
+    {
+      "prefix_depth": 3,
+      "interpretation": "first-action uptake",
+      "W": 1,
+      "E": 1,
+      "U": 1,
+      "O": 0,
+      "forced_capacity_variants": [
+        0,
+        1
+      ]
+    },
+    {
+      "prefix_depth": 4,
+      "interpretation": "terminal transport",
+      "W": 1,
+      "E": 1,
+      "U": 1,
+      "O": 1,
+      "forced_capacity_variants": [
+        0,
+        1
+      ]
+    }
+  ],
+  "result": {
+    "injective_subsets": [
+      [
+        "W",
+        "E",
+        "U",
+        "O",
+        "F"
+      ]
+    ],
+    "unique_minimal_separating_basis": [
+      "W",
+      "E",
+      "U",
+      "O",
+      "F"
+    ],
+    "full_basis_is_unique_injective_subset": true,
+    "omit_one": {
+      "W": {
+        "observed": [
+          "E",
+          "U",
+          "O",
+          "F"
+        ],
+        "ambiguous_pair_count": 2,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p1-f0"
+          ],
+          [
+            "p0-f1",
+            "p1-f1"
+          ]
+        ]
+      },
+      "E": {
+        "observed": [
+          "W",
+          "U",
+          "O",
+          "F"
+        ],
+        "ambiguous_pair_count": 2,
+        "ambiguous_groups": [
+          [
+            "p1-f0",
+            "p2-f0"
+          ],
+          [
+            "p1-f1",
+            "p2-f1"
+          ]
+        ]
+      },
+      "U": {
+        "observed": [
+          "W",
+          "E",
+          "O",
+          "F"
+        ],
+        "ambiguous_pair_count": 2,
+        "ambiguous_groups": [
+          [
+            "p2-f0",
+            "p3-f0"
+          ],
+          [
+            "p2-f1",
+            "p3-f1"
+          ]
+        ]
+      },
+      "O": {
+        "observed": [
+          "W",
+          "E",
+          "U",
+          "F"
+        ],
+        "ambiguous_pair_count": 2,
+        "ambiguous_groups": [
+          [
+            "p3-f0",
+            "p4-f0"
+          ],
+          [
+            "p3-f1",
+            "p4-f1"
+          ]
+        ]
+      },
+      "F": {
+        "observed": [
+          "W",
+          "E",
+          "U",
+          "O"
+        ],
+        "ambiguous_pair_count": 5,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1"
+          ],
+          [
+            "p1-f0",
+            "p1-f1"
+          ],
+          [
+            "p2-f0",
+            "p2-f1"
+          ],
+          [
+            "p3-f0",
+            "p3-f1"
+          ],
+          [
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      }
+    },
+    "all_subsets": [
+      {
+        "observed": [],
+        "size": 0,
+        "injective": false,
+        "distinct_projections": 1,
+        "ambiguous_group_count": 1,
+        "ambiguous_pair_count": 45,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1",
+            "p1-f0",
+            "p1-f1",
+            "p2-f0",
+            "p2-f1",
+            "p3-f0",
+            "p3-f1",
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W"
+        ],
+        "size": 1,
+        "injective": false,
+        "distinct_projections": 2,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 29,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1"
+          ],
+          [
+            "p1-f0",
+            "p1-f1",
+            "p2-f0",
+            "p2-f1",
+            "p3-f0",
+            "p3-f1",
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "E"
+        ],
+        "size": 1,
+        "injective": false,
+        "distinct_projections": 2,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 21,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1",
+            "p1-f0",
+            "p1-f1"
+          ],
+          [
+            "p2-f0",
+            "p2-f1",
+            "p3-f0",
+            "p3-f1",
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "U"
+        ],
+        "size": 1,
+        "injective": false,
+        "distinct_projections": 2,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 21,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1",
+            "p1-f0",
+            "p1-f1",
+            "p2-f0",
+            "p2-f1"
+          ],
+          [
+            "p3-f0",
+            "p3-f1",
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "O"
+        ],
+        "size": 1,
+        "injective": false,
+        "distinct_projections": 2,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 29,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1",
+            "p1-f0",
+            "p1-f1",
+            "p2-f0",
+            "p2-f1",
+            "p3-f0",
+            "p3-f1"
+          ],
+          [
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "F"
+        ],
+        "size": 1,
+        "injective": false,
+        "distinct_projections": 2,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 20,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p1-f0",
+            "p2-f0",
+            "p3-f0",
+            "p4-f0"
+          ],
+          [
+            "p0-f1",
+            "p1-f1",
+            "p2-f1",
+            "p3-f1",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "E"
+        ],
+        "size": 2,
+        "injective": false,
+        "distinct_projections": 3,
+        "ambiguous_group_count": 3,
+        "ambiguous_pair_count": 17,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1"
+          ],
+          [
+            "p1-f0",
+            "p1-f1"
+          ],
+          [
+            "p2-f0",
+            "p2-f1",
+            "p3-f0",
+            "p3-f1",
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "U"
+        ],
+        "size": 2,
+        "injective": false,
+        "distinct_projections": 3,
+        "ambiguous_group_count": 3,
+        "ambiguous_pair_count": 13,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1"
+          ],
+          [
+            "p1-f0",
+            "p1-f1",
+            "p2-f0",
+            "p2-f1"
+          ],
+          [
+            "p3-f0",
+            "p3-f1",
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "O"
+        ],
+        "size": 2,
+        "injective": false,
+        "distinct_projections": 3,
+        "ambiguous_group_count": 3,
+        "ambiguous_pair_count": 17,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1"
+          ],
+          [
+            "p1-f0",
+            "p1-f1",
+            "p2-f0",
+            "p2-f1",
+            "p3-f0",
+            "p3-f1"
+          ],
+          [
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "F"
+        ],
+        "size": 2,
+        "injective": false,
+        "distinct_projections": 4,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 12,
+        "ambiguous_groups": [
+          [
+            "p1-f0",
+            "p2-f0",
+            "p3-f0",
+            "p4-f0"
+          ],
+          [
+            "p1-f1",
+            "p2-f1",
+            "p3-f1",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "E",
+          "U"
+        ],
+        "size": 2,
+        "injective": false,
+        "distinct_projections": 3,
+        "ambiguous_group_count": 3,
+        "ambiguous_pair_count": 13,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1",
+            "p1-f0",
+            "p1-f1"
+          ],
+          [
+            "p2-f0",
+            "p2-f1"
+          ],
+          [
+            "p3-f0",
+            "p3-f1",
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "E",
+          "O"
+        ],
+        "size": 2,
+        "injective": false,
+        "distinct_projections": 3,
+        "ambiguous_group_count": 3,
+        "ambiguous_pair_count": 13,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1",
+            "p1-f0",
+            "p1-f1"
+          ],
+          [
+            "p2-f0",
+            "p2-f1",
+            "p3-f0",
+            "p3-f1"
+          ],
+          [
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "E",
+          "F"
+        ],
+        "size": 2,
+        "injective": false,
+        "distinct_projections": 4,
+        "ambiguous_group_count": 4,
+        "ambiguous_pair_count": 8,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p1-f0"
+          ],
+          [
+            "p0-f1",
+            "p1-f1"
+          ],
+          [
+            "p2-f0",
+            "p3-f0",
+            "p4-f0"
+          ],
+          [
+            "p2-f1",
+            "p3-f1",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "U",
+          "O"
+        ],
+        "size": 2,
+        "injective": false,
+        "distinct_projections": 3,
+        "ambiguous_group_count": 3,
+        "ambiguous_pair_count": 17,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1",
+            "p1-f0",
+            "p1-f1",
+            "p2-f0",
+            "p2-f1"
+          ],
+          [
+            "p3-f0",
+            "p3-f1"
+          ],
+          [
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "U",
+          "F"
+        ],
+        "size": 2,
+        "injective": false,
+        "distinct_projections": 4,
+        "ambiguous_group_count": 4,
+        "ambiguous_pair_count": 8,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p1-f0",
+            "p2-f0"
+          ],
+          [
+            "p0-f1",
+            "p1-f1",
+            "p2-f1"
+          ],
+          [
+            "p3-f0",
+            "p4-f0"
+          ],
+          [
+            "p3-f1",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "O",
+          "F"
+        ],
+        "size": 2,
+        "injective": false,
+        "distinct_projections": 4,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 12,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p1-f0",
+            "p2-f0",
+            "p3-f0"
+          ],
+          [
+            "p0-f1",
+            "p1-f1",
+            "p2-f1",
+            "p3-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "E",
+          "U"
+        ],
+        "size": 3,
+        "injective": false,
+        "distinct_projections": 4,
+        "ambiguous_group_count": 4,
+        "ambiguous_pair_count": 9,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1"
+          ],
+          [
+            "p1-f0",
+            "p1-f1"
+          ],
+          [
+            "p2-f0",
+            "p2-f1"
+          ],
+          [
+            "p3-f0",
+            "p3-f1",
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "E",
+          "O"
+        ],
+        "size": 3,
+        "injective": false,
+        "distinct_projections": 4,
+        "ambiguous_group_count": 4,
+        "ambiguous_pair_count": 9,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1"
+          ],
+          [
+            "p1-f0",
+            "p1-f1"
+          ],
+          [
+            "p2-f0",
+            "p2-f1",
+            "p3-f0",
+            "p3-f1"
+          ],
+          [
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "E",
+          "F"
+        ],
+        "size": 3,
+        "injective": false,
+        "distinct_projections": 6,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 6,
+        "ambiguous_groups": [
+          [
+            "p2-f0",
+            "p3-f0",
+            "p4-f0"
+          ],
+          [
+            "p2-f1",
+            "p3-f1",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "U",
+          "O"
+        ],
+        "size": 3,
+        "injective": false,
+        "distinct_projections": 4,
+        "ambiguous_group_count": 4,
+        "ambiguous_pair_count": 9,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1"
+          ],
+          [
+            "p1-f0",
+            "p1-f1",
+            "p2-f0",
+            "p2-f1"
+          ],
+          [
+            "p3-f0",
+            "p3-f1"
+          ],
+          [
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "U",
+          "F"
+        ],
+        "size": 3,
+        "injective": false,
+        "distinct_projections": 6,
+        "ambiguous_group_count": 4,
+        "ambiguous_pair_count": 4,
+        "ambiguous_groups": [
+          [
+            "p1-f0",
+            "p2-f0"
+          ],
+          [
+            "p1-f1",
+            "p2-f1"
+          ],
+          [
+            "p3-f0",
+            "p4-f0"
+          ],
+          [
+            "p3-f1",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "O",
+          "F"
+        ],
+        "size": 3,
+        "injective": false,
+        "distinct_projections": 6,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 6,
+        "ambiguous_groups": [
+          [
+            "p1-f0",
+            "p2-f0",
+            "p3-f0"
+          ],
+          [
+            "p1-f1",
+            "p2-f1",
+            "p3-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "E",
+          "U",
+          "O"
+        ],
+        "size": 3,
+        "injective": false,
+        "distinct_projections": 4,
+        "ambiguous_group_count": 4,
+        "ambiguous_pair_count": 9,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1",
+            "p1-f0",
+            "p1-f1"
+          ],
+          [
+            "p2-f0",
+            "p2-f1"
+          ],
+          [
+            "p3-f0",
+            "p3-f1"
+          ],
+          [
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "E",
+          "U",
+          "F"
+        ],
+        "size": 3,
+        "injective": false,
+        "distinct_projections": 6,
+        "ambiguous_group_count": 4,
+        "ambiguous_pair_count": 4,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p1-f0"
+          ],
+          [
+            "p0-f1",
+            "p1-f1"
+          ],
+          [
+            "p3-f0",
+            "p4-f0"
+          ],
+          [
+            "p3-f1",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "E",
+          "O",
+          "F"
+        ],
+        "size": 3,
+        "injective": false,
+        "distinct_projections": 6,
+        "ambiguous_group_count": 4,
+        "ambiguous_pair_count": 4,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p1-f0"
+          ],
+          [
+            "p0-f1",
+            "p1-f1"
+          ],
+          [
+            "p2-f0",
+            "p3-f0"
+          ],
+          [
+            "p2-f1",
+            "p3-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "U",
+          "O",
+          "F"
+        ],
+        "size": 3,
+        "injective": false,
+        "distinct_projections": 6,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 6,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p1-f0",
+            "p2-f0"
+          ],
+          [
+            "p0-f1",
+            "p1-f1",
+            "p2-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "E",
+          "U",
+          "O"
+        ],
+        "size": 4,
+        "injective": false,
+        "distinct_projections": 5,
+        "ambiguous_group_count": 5,
+        "ambiguous_pair_count": 5,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p0-f1"
+          ],
+          [
+            "p1-f0",
+            "p1-f1"
+          ],
+          [
+            "p2-f0",
+            "p2-f1"
+          ],
+          [
+            "p3-f0",
+            "p3-f1"
+          ],
+          [
+            "p4-f0",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "E",
+          "U",
+          "F"
+        ],
+        "size": 4,
+        "injective": false,
+        "distinct_projections": 8,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 2,
+        "ambiguous_groups": [
+          [
+            "p3-f0",
+            "p4-f0"
+          ],
+          [
+            "p3-f1",
+            "p4-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "E",
+          "O",
+          "F"
+        ],
+        "size": 4,
+        "injective": false,
+        "distinct_projections": 8,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 2,
+        "ambiguous_groups": [
+          [
+            "p2-f0",
+            "p3-f0"
+          ],
+          [
+            "p2-f1",
+            "p3-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "U",
+          "O",
+          "F"
+        ],
+        "size": 4,
+        "injective": false,
+        "distinct_projections": 8,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 2,
+        "ambiguous_groups": [
+          [
+            "p1-f0",
+            "p2-f0"
+          ],
+          [
+            "p1-f1",
+            "p2-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "E",
+          "U",
+          "O",
+          "F"
+        ],
+        "size": 4,
+        "injective": false,
+        "distinct_projections": 8,
+        "ambiguous_group_count": 2,
+        "ambiguous_pair_count": 2,
+        "ambiguous_groups": [
+          [
+            "p0-f0",
+            "p1-f0"
+          ],
+          [
+            "p0-f1",
+            "p1-f1"
+          ]
+        ]
+      },
+      {
+        "observed": [
+          "W",
+          "E",
+          "U",
+          "O",
+          "F"
+        ],
+        "size": 5,
+        "injective": true,
+        "distinct_projections": 10,
+        "ambiguous_group_count": 0,
+        "ambiguous_pair_count": 0,
+        "ambiguous_groups": []
+      }
+    ]
+  },
+  "lemma": "For the complete 10-state class induced by native prefix depth p in {0,1,2,3,4} and independent forced-capacity F in {0,1}, projection onto observed surfaces A subseteq {W,E,U,O,F} is injective if and only if A is the full five-surface basis.",
+  "proof_sketch": "The full signature is injective. Omitting native coordinate j aliases adjacent prefix depths j-1 and j separately for F=0 and F=1, while omitting F aliases the two capacity states at every prefix depth. Exhaustive enumeration independently verifies all 32 subsets.",
+  "claim_boundary": "This is a paper-specific exact diagnostic-completeness result for the stated binary prerequisite class. It is not a universal taxonomy of stochastic memory mechanisms, and empirical NOT-SUPPORTED evidence is not coerced into literal zero.",
+  "execution": {
+    "provider_calls": 0,
+    "gpu_runs": 0,
+    "model_actions": 0,
+    "scientific_empirical_outcomes_read": 0
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  },
+  "content_sha256_without_self": "b3cca3f0e8b0e87a4266401cba5519765cc13e9d05f415db8e5fca76cb41fa16"
+}
