@@ -1,3 +1,9 @@
+## 2026-08-28 · Portable zero-authority release observations
+
+- Added a content-addressed release-observation receipt for network-isolated execution hosts. The receipt binds candidate snapshot, current release-watch contract digest, source ref, exact endpoint URL/type, and frozen baseline revision; it carries only endpoint revision/fingerprint/file-manifest observations and an all-false authority map.
+- The receiver accepts a receipt only when its complete target binding matches a current support-audited target, rejects stale-contract or self-authorizing receipts, and feeds the observation through the same canonical release-watch decision path used for a local network fetch. A changed revision can therefore request asset recheck but cannot qualify support, reopen Generator/Problem Gate, authorize method/experiment/P0/GPU, or release science.
+- Added an operator bridge with `collect`, `validate`, and `consume` modes. A no-ledger system regression on 69 consumed a synthetic same-revision Hugging Face receipt while fetching GitHub locally and returned a complete two-target `NO_RELEASE_CHANGE` watch with all downstream authority counts still zero; the synthetic receipt was deleted after the check and was not recorded as scientific evidence.
+
 ## 2026-08-28 · Outcome-blind cross-substrate constraint-integration proposal
 
 - Preserved the VWE-specific PORT-010 `HOLD_EVIDENCE_REVIEW_BLOCKED / BLOCK_BAKE_IN` object and staged a separate zero-authority LEGO-Bench proposal instead of treating benchmark substitution as a scientific reopen or completion.

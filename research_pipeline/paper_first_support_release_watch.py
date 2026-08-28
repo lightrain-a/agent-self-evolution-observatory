@@ -28,6 +28,7 @@ PRIMARY_DECLARATION_REFRESH_COOLDOWN_DAYS = 7.0
 MAX_PRIMARY_DECLARATION_REFRESHES = 2
 MAX_PAGE_BYTES = 1_000_000
 PORTABLE_TARGETS_SCHEMA = "1.0"
+PORTABLE_OBSERVATIONS_SCHEMA = "1.0"
 DEFAULT_PORTABLE_TARGETS_JSON = PROJECT_ROOT / "generated" / "paper-first-support-release-targets.json"
 DEFAULT_PORTABLE_TARGETS_JS = PROJECT_ROOT / "generated" / "paper-first-support-release-targets.js"
 
@@ -219,6 +220,7 @@ def _pre_f0_support_holds(storage: StorageSettings) -> list[dict[str, Any]]:
             "source_run_id": run_id,
             "source_stage_manifest_sha256": support_sha,
             "support_audit_sha256": audit_sha,
+            "candidate_snapshot_sha256": str(evidence.get("candidate_snapshot_sha256") or "").strip().lower() if effective_hold else "",
             "basin": "pre-f0-support-hold-" + _sha(f"{candidate_id}\n{run_id}\n{support_sha}")[:16],
             "disposition": "HOLD_SUPPORT_UNAVAILABLE",
             "support_status": "SUPPORT_UNAVAILABLE_FOR_FROZEN_PROBLEM_FALSIFIER",
@@ -377,6 +379,7 @@ def explicit_release_targets(
                 "primary_cache_sha256": "",
                 "endpoint_provenance_kind": "SUPPORT_AUDIT",
                 "endpoint_provenance_sha256": str(hold.get("support_audit_sha256") or ""),
+                "candidate_snapshot_sha256": str(hold.get("candidate_snapshot_sha256") or "").strip().lower(),
                 "baseline_revision": baseline_revision,
                 "required_unit": _bounded(hold.get("required_unit")),
                 "reopen_only_if": _bounded(hold.get("reopen_only_if")),
@@ -582,6 +585,298 @@ def _merge_portable_release_targets(
     targeted = {candidate for candidate, _, _ in merged}
     remaining = [row for row in no_endpoint if str(row.get("candidate_id") or "") not in targeted]
     return list(merged.values()), remaining, sum(row.get("portable_target") is True for row in merged.values())
+
+
+def _portable_observation_target_material(target: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "candidate_id": str(target.get("candidate_id") or "").strip(),
+        "candidate_snapshot_sha256": str(target.get("candidate_snapshot_sha256") or "").strip().lower(),
+        "source_ref": str(target.get("source_ref") or "").strip(),
+        "url": _clean_url(str(target.get("url") or "")),
+        "declaration_kind": str(target.get("declaration_kind") or "").strip().upper(),
+        "baseline_revision": str(target.get("baseline_revision") or "").strip().lower(),
+        "endpoint_provenance_kind": str(target.get("endpoint_provenance_kind") or "").strip().upper(),
+        "endpoint_provenance_sha256": str(target.get("endpoint_provenance_sha256") or "").strip().lower(),
+    }
+
+
+def portable_release_observation_target_binding_sha(target: dict[str, Any]) -> str:
+    material = _portable_observation_target_material(target)
+    return _sha(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+
+
+def _portable_observation_target_errors(target: dict[str, Any]) -> list[str]:
+    material = _portable_observation_target_material(target)
+    errors: list[str] = []
+    if not material["candidate_id"]:
+        errors.append("candidate id missing")
+    if not re.fullmatch(r"[0-9a-f]{64}", material["candidate_snapshot_sha256"]):
+        errors.append("candidate snapshot invalid")
+    if not re.fullmatch(r"arXiv:\d{4}\.\d+", material["source_ref"], flags=re.I):
+        errors.append("source ref invalid")
+    if not _acceptable_release_url(material["url"]):
+        errors.append("release URL invalid")
+    kind = material["declaration_kind"]
+    if kind not in {"FIRST_PARTY_REPOSITORY", "FIRST_PARTY_DATASET"}:
+        errors.append("portable observation requires support-audited first-party target")
+    if kind == "FIRST_PARTY_REPOSITORY" and urlparse(material["url"]).netloc.lower() != "github.com":
+        errors.append("repository kind/URL mismatch")
+    if kind == "FIRST_PARTY_DATASET" and _huggingface_dataset_id(material["url"]) is None:
+        errors.append("dataset kind/URL mismatch")
+    if not re.fullmatch(r"[0-9a-f]{40}", material["baseline_revision"]):
+        errors.append("baseline revision invalid")
+    if material["endpoint_provenance_kind"] != "SUPPORT_AUDIT":
+        errors.append("portable observation requires support-audit contract provenance")
+    if not re.fullmatch(r"[0-9a-f]{64}", material["endpoint_provenance_sha256"]):
+        errors.append("release-watch contract provenance invalid")
+    return errors
+
+
+def build_portable_release_observation_receipt(
+    *,
+    target: dict[str, Any],
+    result: dict[str, Any],
+    checked_at: datetime | None = None,
+) -> dict[str, Any]:
+    target_errors = _portable_observation_target_errors(target)
+    if target_errors:
+        raise ValueError("invalid portable release-observation target: " + ";".join(target_errors))
+    status_code = int(result.get("status_code") or 0)
+    fingerprint = str(result.get("fingerprint") or "").strip().lower()
+    resolved_revision = str(result.get("resolved_revision") or "").strip().lower()
+    fingerprint_version = str(result.get("fingerprint_version") or FINGERPRINT_VERSION).strip()
+    artifact_count_raw = result.get("artifact_file_count")
+    artifact_file_count = int(artifact_count_raw) if artifact_count_raw is not None else None
+    artifact_path_digest = str(result.get("artifact_path_digest") or "").strip().lower()
+    if not re.fullmatch(r"[0-9a-f]{64}", fingerprint):
+        raise ValueError("portable observation fingerprint invalid")
+    if fingerprint_version != FINGERPRINT_VERSION:
+        raise ValueError("portable observation fingerprint version stale")
+    if 200 <= status_code < 300 and not re.fullmatch(r"[0-9a-f]{40}", resolved_revision):
+        raise ValueError("portable observation resolved revision missing")
+    if artifact_path_digest and not re.fullmatch(r"[0-9a-f]{64}", artifact_path_digest):
+        raise ValueError("portable observation artifact path digest invalid")
+    if artifact_file_count is not None and artifact_file_count < 0:
+        raise ValueError("portable observation artifact count invalid")
+    target_material = _portable_observation_target_material(target)
+    observation = {
+        "status_code": status_code,
+        "fingerprint": fingerprint,
+        "surface_nonempty": bool(result.get("surface_nonempty")),
+        "artifact_file_count": artifact_file_count,
+        "artifact_path_digest": artifact_path_digest,
+        "resolved_revision": resolved_revision,
+        "fingerprint_version": fingerprint_version,
+        "checked_at": _now(checked_at).isoformat(),
+    }
+    authority = {
+        "support_qualification": False,
+        "generator_reopen": False,
+        "problem_gate": False,
+        "method": False,
+        "experiment": False,
+        "p0": False,
+        "gpu": False,
+        "scientific": False,
+    }
+    material = {
+        "target_binding": target_material,
+        "target_binding_sha256": portable_release_observation_target_binding_sha(target),
+        "observation": observation,
+        "authority": authority,
+        "scientific_authority": False,
+    }
+    receipt_sha256 = _sha(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+    return {
+        "schema_version": PORTABLE_OBSERVATIONS_SCHEMA,
+        "receipt_kind": "PORTABLE_ZERO_AUTHORITY_RELEASE_OBSERVATION",
+        **material,
+        "receipt_sha256": receipt_sha256,
+    }
+
+
+def validate_portable_release_observation_receipt(receipt: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    if receipt.get("schema_version") != PORTABLE_OBSERVATIONS_SCHEMA or receipt.get("receipt_kind") != "PORTABLE_ZERO_AUTHORITY_RELEASE_OBSERVATION":
+        errors.append("portable release-observation schema/kind invalid")
+    if receipt.get("scientific_authority") is not False:
+        errors.append("portable release observation cannot carry scientific authority")
+    authority = receipt.get("authority") or {}
+    if not isinstance(authority, dict) or not authority or any(value is not False for value in authority.values()):
+        errors.append("portable release observation carries non-zero authority")
+    target = receipt.get("target_binding") or {}
+    errors.extend(_portable_observation_target_errors(target))
+    expected_binding = portable_release_observation_target_binding_sha(target) if isinstance(target, dict) else ""
+    if receipt.get("target_binding_sha256") != expected_binding:
+        errors.append("portable release-observation target binding digest mismatch")
+    observation = receipt.get("observation") or {}
+    if not isinstance(observation, dict):
+        errors.append("portable release observation malformed")
+        observation = {}
+    if not re.fullmatch(r"[0-9a-f]{64}", str(observation.get("fingerprint") or "")):
+        errors.append("portable release-observation fingerprint invalid")
+    if str(observation.get("fingerprint_version") or "") != FINGERPRINT_VERSION:
+        errors.append("portable release-observation fingerprint version invalid")
+    try:
+        status_code = int(observation.get("status_code") or 0)
+    except (TypeError, ValueError):
+        status_code = 0
+        errors.append("portable release-observation HTTP status invalid")
+    resolved = str(observation.get("resolved_revision") or "").strip().lower()
+    if 200 <= status_code < 300 and not re.fullmatch(r"[0-9a-f]{40}", resolved):
+        errors.append("portable release-observation resolved revision invalid")
+    try:
+        datetime.fromisoformat(str(observation.get("checked_at") or "").replace("Z", "+00:00"))
+    except ValueError:
+        errors.append("portable release-observation checked_at invalid")
+    material = {
+        "target_binding": target,
+        "target_binding_sha256": receipt.get("target_binding_sha256"),
+        "observation": observation,
+        "authority": authority,
+        "scientific_authority": False,
+    }
+    expected_receipt = _sha(json.dumps(material, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+    if receipt.get("receipt_sha256") != expected_receipt:
+        errors.append("portable release-observation receipt digest mismatch")
+    forbidden = {"required_unit", "reopen_only_if", "evidence_review", "support_qualified", "scientific_release"}
+    if any(key in receipt for key in forbidden) or any(key in target for key in forbidden) or any(key in observation for key in forbidden):
+        errors.append("portable release-observation leaks or asserts scientific decision fields")
+    return sorted(set(errors))
+
+
+def build_portable_release_observation_manifest(receipts: list[dict[str, Any]]) -> dict[str, Any]:
+    rows = [dict(row) for row in receipts]
+    for row in rows:
+        errors = validate_portable_release_observation_receipt(row)
+        if errors:
+            raise ValueError("invalid portable release observation: " + ";".join(errors))
+    rows.sort(key=lambda row: str(row.get("target_binding_sha256") or ""))
+    bindings = [str(row.get("target_binding_sha256") or "") for row in rows]
+    if len(bindings) != len(set(bindings)):
+        raise ValueError("duplicate portable release-observation target binding")
+    manifest_sha256 = _sha(json.dumps(rows, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+    return {
+        "schema_version": PORTABLE_OBSERVATIONS_SCHEMA,
+        "status": "PORTABLE_ZERO_AUTHORITY_RELEASE_OBSERVATIONS_READY",
+        "manifest_sha256": manifest_sha256,
+        "policy": {
+            "scientific_authority": False,
+            "observations_only_not_support_evidence": True,
+            "receiver_must_match_current_content_addressed_target": True,
+            "receiver_reuses_local_release_watch_decision_logic": True,
+            "receipt_can_only_request_release_recheck": True,
+        },
+        "summary": {"receipts": len(rows)},
+        "receipts": rows,
+        "scientific_authority": False,
+    }
+
+
+def validate_portable_release_observation_manifest(state: dict[str, Any]) -> list[str]:
+    errors: list[str] = []
+    if state.get("schema_version") != PORTABLE_OBSERVATIONS_SCHEMA or state.get("scientific_authority") is not False:
+        errors.append("portable release-observation manifest authority/schema invalid")
+    policy = state.get("policy") or {}
+    if policy.get("scientific_authority") is not False:
+        errors.append("portable release-observation manifest policy authority invalid")
+    rows = [row for row in state.get("receipts") or [] if isinstance(row, dict)]
+    if len(rows) != len(state.get("receipts") or []):
+        errors.append("portable release-observation manifest contains malformed rows")
+    seen: set[str] = set()
+    for row in rows:
+        errors.extend(validate_portable_release_observation_receipt(row))
+        binding = str(row.get("target_binding_sha256") or "")
+        if binding in seen:
+            errors.append("portable release-observation manifest duplicates target binding")
+        seen.add(binding)
+    expected_manifest = _sha(json.dumps(sorted(rows, key=lambda row: str(row.get("target_binding_sha256") or "")), ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+    if state.get("manifest_sha256") != expected_manifest:
+        errors.append("portable release-observation manifest digest mismatch")
+    return sorted(set(errors))
+
+
+def load_portable_release_observation_manifest(path: Path | None) -> dict[str, Any]:
+    if path is None or not path.exists():
+        return {}
+    try:
+        state = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    if not isinstance(state, dict) or validate_portable_release_observation_manifest(state):
+        return {}
+    return state
+
+
+def _portable_observations_for_targets(
+    targets: list[dict[str, Any]],
+    manifest: dict[str, Any],
+) -> tuple[dict[str, dict[str, Any]], int]:
+    current = {
+        portable_release_observation_target_binding_sha(target): target
+        for target in targets
+        if not _portable_observation_target_errors(target)
+    }
+    accepted: dict[str, dict[str, Any]] = {}
+    rejected = 0
+    for receipt in manifest.get("receipts") or []:
+        if not isinstance(receipt, dict) or validate_portable_release_observation_receipt(receipt):
+            rejected += 1
+            continue
+        binding = str(receipt.get("target_binding_sha256") or "")
+        target = current.get(binding)
+        if target is None or _portable_observation_target_material(target) != receipt.get("target_binding"):
+            rejected += 1
+            continue
+        accepted[binding] = receipt
+    return accepted, rejected
+
+
+def collect_portable_release_observation_manifest(
+    *,
+    design_state: dict[str, Any] | None = None,
+    storage: StorageSettings | None = None,
+    fetcher: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
+    now: datetime | None = None,
+) -> dict[str, Any]:
+    storage = storage or StorageSettings.from_env()
+    design_state = design_state if design_state is not None else build_search_portfolio_design_adjudication()
+    targets, _ = explicit_release_targets(design_state, storage=storage)
+    fetch = fetcher or _default_fetcher
+    receipts: list[dict[str, Any]] = []
+    errors: list[dict[str, str]] = []
+    for target in targets:
+        if _portable_observation_target_errors(target):
+            continue
+        try:
+            result = dict(fetch(target))
+            receipts.append(build_portable_release_observation_receipt(target=target, result=result, checked_at=now))
+        except Exception as error:
+            errors.append({
+                "target_binding_sha256": portable_release_observation_target_binding_sha(target),
+                "error": f"{type(error).__name__}:{str(error)[:300]}",
+            })
+    state = build_portable_release_observation_manifest(receipts)
+    state["summary"]["eligible_targets"] = len(receipts) + len(errors)
+    state["summary"]["collection_errors"] = len(errors)
+    state["collection_errors"] = errors
+    return state
+
+
+def write_portable_release_observation_manifest(
+    path: Path,
+    *,
+    design_state: dict[str, Any] | None = None,
+    storage: StorageSettings | None = None,
+    fetcher: Callable[[dict[str, Any]], dict[str, Any]] | None = None,
+    now: datetime | None = None,
+) -> dict[str, Any]:
+    state = collect_portable_release_observation_manifest(design_state=design_state, storage=storage, fetcher=fetcher, now=now)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp = path.with_name(path.name + ".tmp")
+    temp.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temp.replace(path)
+    return state
 
 
 def _huggingface_dataset_api(url: str) -> str | None:
@@ -862,6 +1157,7 @@ def public_support_release_watch_summary(state: dict[str, Any]) -> dict[str, Any
         "provider_errors", "recheck_required", "support_qualified", "generator_reopen_authorized", "problem_gate_authorized",
         "primary_declaration_refresh_checked", "primary_declaration_refresh_changed", "primary_declaration_refresh_skipped_cooldown",
         "primary_declaration_refresh_rate_limited", "primary_declaration_refresh_errors", "portable_release_targets_used",
+        "portable_release_observations_used", "portable_release_observations_rejected", "portable_release_observations_stale",
     )
     return {
         "schema_version": WATCH_SCHEMA,
@@ -883,6 +1179,9 @@ def public_support_release_watch_summary(state: dict[str, Any]) -> dict[str, Any
             "primary_declaration_refresh_cannot_qualify_support": True,
             "portable_release_targets_are_endpoint_handoff_only": True,
             "portable_release_targets_cannot_qualify_support_or_reopen": True,
+            "portable_release_observations_are_zero_authority_endpoint_observations_only": True,
+            "portable_release_observations_must_match_current_content_addressed_target": True,
+            "portable_release_observations_reuse_local_watch_decision_logic": True,
             "public_summary_excludes_urls_refs_required_units_and_private_paths": True,
         },
         "summary": {key: summary[key] for key in safe_summary_keys if key in summary},
@@ -904,6 +1203,7 @@ def run_support_release_watch(
     arxiv_rate_limit_state_path: Path | None = None,
     ledger_path: Path | None = None,
     portable_targets_path: Path = DEFAULT_PORTABLE_TARGETS_JSON,
+    portable_observations_path: Path | None = None,
     write_ledger: bool = True,
 ) -> dict[str, Any]:
     storage = storage or StorageSettings.from_env()
@@ -915,6 +1215,8 @@ def run_support_release_watch(
     targets, no_endpoint = explicit_release_targets(design_state, storage=storage)
     portable_manifest = load_portable_release_target_manifest(portable_targets_path)
     targets, no_endpoint, portable_used = _merge_portable_release_targets(design_state, targets, no_endpoint, portable_manifest)
+    portable_observation_manifest = load_portable_release_observation_manifest(portable_observations_path)
+    portable_observations, portable_observation_rejected = _portable_observations_for_targets(targets, portable_observation_manifest)
     primary_refresh = _refresh_no_endpoint_primary_declarations(
         no_endpoint,
         storage=storage,
@@ -929,15 +1231,29 @@ def run_support_release_watch(
     if primary_refresh["checked"] or primary_refresh["changed"]:
         targets, no_endpoint = explicit_release_targets(design_state, storage=storage)
         targets, no_endpoint, portable_used = _merge_portable_release_targets(design_state, targets, no_endpoint, portable_manifest)
+        portable_observations, portable_observation_rejected = _portable_observations_for_targets(targets, portable_observation_manifest)
     fetch = fetcher or _default_fetcher
     rows: list[dict[str, Any]] = []
     checked = skipped = provider_errors = recheck = 0
+    portable_observation_used = portable_observation_stale = 0
     for target in targets:
         key = _sha(f"{target['candidate_id']}\n{target['url']}")
         previous = observations.get(key) or {}
         previous_checked = str(previous.get("checked_at") or "")
+        target_binding_sha = portable_release_observation_target_binding_sha(target) if not _portable_observation_target_errors(target) else ""
+        portable_receipt = portable_observations.get(target_binding_sha) if target_binding_sha else None
+        if portable_receipt and previous_checked:
+            try:
+                receipt_checked = datetime.fromisoformat(str((portable_receipt.get("observation") or {}).get("checked_at") or "").replace("Z", "+00:00"))
+                prior_checked = datetime.fromisoformat(previous_checked.replace("Z", "+00:00"))
+                if receipt_checked <= prior_checked:
+                    portable_receipt = None
+                    portable_observation_stale += 1
+            except ValueError:
+                portable_receipt = None
+                portable_observation_stale += 1
         cooldown = False
-        if previous_checked and str(previous.get("fingerprint_version") or "") == FINGERPRINT_VERSION:
+        if portable_receipt is None and previous_checked and str(previous.get("fingerprint_version") or "") == FINGERPRINT_VERSION:
             try:
                 cooldown = current - datetime.fromisoformat(previous_checked.replace("Z", "+00:00")) < timedelta(days=max(0.0, cooldown_days))
             except ValueError:
@@ -947,7 +1263,26 @@ def run_support_release_watch(
             rows.append({**target, "status": "SKIPPED_COOLDOWN", "previous_status": previous.get("status"), "scientific_authority": False})
             continue
         try:
-            result = dict(fetch(target))
+            if portable_receipt is not None:
+                portable_observation_used += 1
+                observation = dict(portable_receipt.get("observation") or {})
+                result = {
+                    "status_code": observation.get("status_code"),
+                    "fingerprint": observation.get("fingerprint"),
+                    "surface_nonempty": observation.get("surface_nonempty"),
+                    "artifact_file_count": observation.get("artifact_file_count"),
+                    "artifact_path_digest": observation.get("artifact_path_digest"),
+                    "resolved_revision": observation.get("resolved_revision"),
+                    "fingerprint_version": observation.get("fingerprint_version"),
+                }
+                observation_source = "PORTABLE_ZERO_AUTHORITY_RELEASE_OBSERVATION"
+                observation_checked_at = str(observation.get("checked_at") or current.isoformat())
+                receipt_sha256 = str(portable_receipt.get("receipt_sha256") or "")
+            else:
+                result = dict(fetch(target))
+                observation_source = "LOCAL_RELEASE_WATCH_FETCH"
+                observation_checked_at = current.isoformat()
+                receipt_sha256 = ""
             checked += 1
             status_code = int(result.get("status_code") or 0)
             fingerprint = str(result.get("fingerprint") or "")
@@ -990,10 +1325,12 @@ def run_support_release_watch(
                 "baseline_revision": baseline_revision,
                 "resolved_revision": resolved_revision,
                 "fingerprint_version": result_version,
-                "checked_at": current.isoformat(),
+                "checked_at": observation_checked_at,
+                "observation_source": observation_source,
+                "portable_observation_receipt_sha256": receipt_sha256,
                 "scientific_authority": False,
             }
-            observations[key] = {k: row[k] for k in ("candidate_id", "url", "declaration_kind", "status", "http_status", "fingerprint", "baseline_revision", "resolved_revision", "fingerprint_version", "checked_at", "scientific_authority")}
+            observations[key] = {k: row[k] for k in ("candidate_id", "url", "declaration_kind", "status", "http_status", "fingerprint", "baseline_revision", "resolved_revision", "fingerprint_version", "checked_at", "observation_source", "portable_observation_receipt_sha256", "scientific_authority")}
             rows.append(row)
         except Exception as error:
             provider_errors += 1
@@ -1020,6 +1357,9 @@ def run_support_release_watch(
             "primary_declaration_refresh_cannot_qualify_support": True,
             "portable_release_targets_are_endpoint_handoff_only": True,
             "portable_release_targets_cannot_qualify_support_or_reopen": True,
+            "portable_release_observations_are_zero_authority_endpoint_observations_only": True,
+            "portable_release_observations_must_match_current_content_addressed_target": True,
+            "portable_release_observations_reuse_local_watch_decision_logic": True,
             "primary_declaration_refresh_max_per_run": int(max_primary_refreshes),
             "primary_declaration_refresh_cooldown_days": float(primary_refresh_cooldown_days),
             "github_release_fingerprint_ignores_doc_only_churn": True,
@@ -1045,6 +1385,9 @@ def run_support_release_watch(
             "primary_declaration_refresh_rate_limited": int(primary_refresh["rate_limited"]),
             "primary_declaration_refresh_errors": int(primary_refresh["errors"]),
             "portable_release_targets_used": int(portable_used),
+            "portable_release_observations_used": int(portable_observation_used),
+            "portable_release_observations_rejected": int(portable_observation_rejected),
+            "portable_release_observations_stale": int(portable_observation_stale),
         },
         "rows": rows,
         "scientific_authority": False,

@@ -10,11 +10,15 @@ from unittest.mock import patch
 from . import paper_first_support_release_watch as watch
 from .config import StorageSettings
 from .paper_first_support_release_watch import (
+    build_portable_release_observation_manifest,
+    build_portable_release_observation_receipt,
     build_portable_release_target_manifest,
     explicit_release_targets,
     public_support_release_watch_summary,
     release_watch_contract_sha,
     run_support_release_watch,
+    validate_portable_release_observation_manifest,
+    validate_portable_release_observation_receipt,
     validate_portable_release_target_manifest,
     write_portable_release_target_manifest,
 )
@@ -531,6 +535,220 @@ class SupportReleaseWatchTest(unittest.TestCase):
             (storage.site_artifact_dir / "paper-first-pre-f0-evidence-acquisition-plan.json").write_text(__import__("json").dumps(evidence), encoding="utf-8")
             targets, _ = explicit_release_targets(self.design([]), storage=storage)
         self.assertEqual(targets, [])
+
+
+    def _portable_observation_fixture(self, root: Path, *, baseline: str = "1" * 40, contract_salt: str = ""):
+        storage = self.storage(root)
+        storage.site_artifact_dir.mkdir(parents=True, exist_ok=True)
+        snapshot = "3" * 64
+        target = {
+            "source_ref": "arXiv:2608.15265",
+            "url": "https://huggingface.co/datasets/usail-hkust/VWE-Bench",
+            "declaration_kind": "FIRST_PARTY_DATASET",
+            "baseline_revision": baseline,
+            "scientific_authority": False,
+        }
+        contract_sha = release_watch_contract_sha(
+            candidate_id="PORT-010",
+            candidate_snapshot_sha256=snapshot,
+            targets=[target],
+            required_reopen_components=["query_units", "per_case_outcomes"],
+        )
+        preflight = {
+            "schema_version": "1.0-shadow",
+            "run_id": "pre-f0-portable-observation" + contract_salt,
+            "scientific_authority": False,
+            "support_inventory_sha256": "a" * 64,
+            "authority": {"canonical_generator": False, "canonical_problem_gate": False, "paper_design": False, "method": False, "experiment": False, "p0": False, "gpu": False},
+            "rows": [{
+                "candidate_id": "PORT-010",
+                "candidate_snapshot_sha256": snapshot,
+                "disposition": "HOLD_SUPPORT_UNAVAILABLE",
+                "scientific_authority": False,
+                "primary_refs": ["arXiv:2608.15265"],
+                "required_unit": "VWE query units plus per-case outcomes.",
+                "reopen_only_if": "Both are author-released and content-addressed.",
+                "bounded_first_party_evidence_design_allowed": True,
+                "next_route": "BOUNDED_EVIDENCE_DESIGN_OR_WAIT_PRIMARY_ASSET",
+            }],
+        }
+        evidence = {
+            "scientific_authority": False,
+            "entries": [{
+                "candidate_id": "PORT-010",
+                "candidate_snapshot_sha256": snapshot,
+                "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+                "execution_authorized": False,
+                "scientific_authority": False,
+                "release_watch_contract": {
+                    "candidate_id": "PORT-010",
+                    "candidate_snapshot_sha256": snapshot,
+                    "targets": [target],
+                    "required_reopen_components": ["query_units", "per_case_outcomes"],
+                    "contract_sha256": contract_sha,
+                    "scientific_authority": False,
+                },
+            }],
+        }
+        (storage.site_artifact_dir / "paper-first-pre-f0-problem-falsifier-preflight.json").write_text(__import__("json").dumps(preflight), encoding="utf-8")
+        (storage.site_artifact_dir / "paper-first-pre-f0-evidence-acquisition-plan.json").write_text(__import__("json").dumps(evidence), encoding="utf-8")
+        targets, missing = explicit_release_targets(self.design([]), storage=storage)
+        self.assertEqual(missing, [])
+        self.assertEqual(len(targets), 1)
+        self.assertEqual(targets[0]["candidate_snapshot_sha256"], snapshot)
+        self.assertEqual(targets[0]["endpoint_provenance_sha256"], contract_sha)
+        return storage, targets[0]
+
+    def test_portable_release_observation_same_revision_uses_same_watch_logic_without_network(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            storage, target = self._portable_observation_fixture(root)
+            observed_at = datetime(2026, 8, 28, 2, 0, tzinfo=timezone.utc)
+            receipt = build_portable_release_observation_receipt(
+                target=target,
+                result={
+                    "status_code": 200,
+                    "fingerprint": "b" * 64,
+                    "surface_nonempty": True,
+                    "artifact_file_count": 300,
+                    "artifact_path_digest": "c" * 64,
+                    "resolved_revision": target["baseline_revision"],
+                    "fingerprint_version": watch.FINGERPRINT_VERSION,
+                },
+                checked_at=observed_at,
+            )
+            manifest = build_portable_release_observation_manifest([receipt])
+            manifest_path = root / "portable-observations.json"
+            manifest_path.write_text(__import__("json").dumps(manifest), encoding="utf-8")
+            calls = []
+            def forbidden_fetcher(_):
+                calls.append(True)
+                raise AssertionError("receiver must not refetch a matched portable observation")
+            state = run_support_release_watch(
+                storage=storage,
+                design_state=self.design([]),
+                portable_targets_path=root / "missing-targets.json",
+                portable_observations_path=manifest_path,
+                fetcher=forbidden_fetcher,
+                now=datetime(2026, 8, 28, 3, 0, tzinfo=timezone.utc),
+                write_ledger=False,
+            )
+        self.assertEqual(calls, [])
+        self.assertEqual(state["rows"][0]["status"], "NO_RELEASE_CHANGE")
+        self.assertEqual(state["rows"][0]["observation_source"], "PORTABLE_ZERO_AUTHORITY_RELEASE_OBSERVATION")
+        self.assertEqual(state["rows"][0]["checked_at"], observed_at.isoformat())
+        self.assertEqual(state["summary"]["portable_release_observations_used"], 1)
+        self.assertEqual(state["summary"]["recheck_required"], 0)
+        self.assertEqual(state["summary"]["support_qualified"], 0)
+        self.assertEqual(state["summary"]["problem_gate_authorized"], 0)
+        self.assertFalse(state["scientific_authority"])
+
+    def test_portable_release_observation_revision_drift_requests_recheck_only(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            storage, target = self._portable_observation_fixture(root)
+            receipt = build_portable_release_observation_receipt(
+                target=target,
+                result={
+                    "status_code": 200,
+                    "fingerprint": "d" * 64,
+                    "surface_nonempty": True,
+                    "artifact_file_count": 301,
+                    "artifact_path_digest": "e" * 64,
+                    "resolved_revision": "2" * 40,
+                    "fingerprint_version": watch.FINGERPRINT_VERSION,
+                },
+                checked_at=datetime(2026, 8, 29, tzinfo=timezone.utc),
+            )
+            manifest = build_portable_release_observation_manifest([receipt])
+            manifest_path = root / "portable-observations.json"
+            manifest_path.write_text(__import__("json").dumps(manifest), encoding="utf-8")
+            state = run_support_release_watch(
+                storage=storage,
+                design_state=self.design([]),
+                portable_targets_path=root / "missing-targets.json",
+                portable_observations_path=manifest_path,
+                fetcher=lambda _: (_ for _ in ()).throw(AssertionError("portable observation should be consumed")),
+                now=datetime(2026, 8, 29, 1, 0, tzinfo=timezone.utc),
+                write_ledger=False,
+            )
+        self.assertEqual(state["rows"][0]["status"], "RECHECK_REQUIRED_RELEASE_CHANGED")
+        self.assertEqual(state["summary"]["portable_release_observations_used"], 1)
+        self.assertEqual(state["summary"]["recheck_required"], 1)
+        self.assertEqual(state["summary"]["support_qualified"], 0)
+        self.assertEqual(state["summary"]["generator_reopen_authorized"], 0)
+        self.assertEqual(state["summary"]["problem_gate_authorized"], 0)
+        self.assertFalse(state["scientific_authority"])
+
+    def test_stale_contract_portable_observation_is_rejected_fail_closed(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            storage, target = self._portable_observation_fixture(root)
+            stale_target = dict(target)
+            stale_target["endpoint_provenance_sha256"] = "f" * 64
+            receipt = build_portable_release_observation_receipt(
+                target=stale_target,
+                result={
+                    "status_code": 200,
+                    "fingerprint": "d" * 64,
+                    "surface_nonempty": True,
+                    "artifact_file_count": 301,
+                    "artifact_path_digest": "e" * 64,
+                    "resolved_revision": "2" * 40,
+                    "fingerprint_version": watch.FINGERPRINT_VERSION,
+                },
+                checked_at=datetime(2026, 8, 29, tzinfo=timezone.utc),
+            )
+            manifest = build_portable_release_observation_manifest([receipt])
+            manifest_path = root / "portable-observations.json"
+            manifest_path.write_text(__import__("json").dumps(manifest), encoding="utf-8")
+            state = run_support_release_watch(
+                storage=storage,
+                design_state=self.design([]),
+                portable_targets_path=root / "missing-targets.json",
+                portable_observations_path=manifest_path,
+                fetcher=lambda _: (_ for _ in ()).throw(RuntimeError("network unavailable")),
+                now=datetime(2026, 8, 29, 1, 0, tzinfo=timezone.utc),
+                write_ledger=False,
+            )
+        self.assertEqual(state["summary"]["portable_release_observations_used"], 0)
+        self.assertEqual(state["summary"]["portable_release_observations_rejected"], 1)
+        self.assertEqual(state["summary"]["provider_errors"], 1)
+        self.assertEqual(state["summary"]["recheck_required"], 0)
+        self.assertEqual(state["summary"]["support_qualified"], 0)
+        self.assertEqual(state["rows"][0]["status"], "RELEASE_WATCH_PROVIDER_ERROR")
+        self.assertFalse(state["scientific_authority"])
+
+    def test_portable_release_observation_cannot_self_authorize_or_assert_science(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            _, target = self._portable_observation_fixture(root)
+            receipt = build_portable_release_observation_receipt(
+                target=target,
+                result={
+                    "status_code": 200,
+                    "fingerprint": "b" * 64,
+                    "surface_nonempty": True,
+                    "artifact_file_count": 300,
+                    "resolved_revision": target["baseline_revision"],
+                    "fingerprint_version": watch.FINGERPRINT_VERSION,
+                },
+                checked_at=datetime(2026, 8, 28, tzinfo=timezone.utc),
+            )
+            receipt["authority"]["scientific"] = True
+            receipt["scientific_release"] = "RELEASED"
+            errors = validate_portable_release_observation_receipt(receipt)
+        self.assertTrue(any("non-zero authority" in error for error in errors))
+        self.assertTrue(any("scientific decision fields" in error for error in errors))
+        self.assertTrue(any("receipt digest mismatch" in error for error in errors))
+        manifest_errors = validate_portable_release_observation_manifest({
+            "schema_version": watch.PORTABLE_OBSERVATIONS_SCHEMA,
+            "scientific_authority": False,
+            "policy": {"scientific_authority": False},
+            "receipts": [receipt],
+            "manifest_sha256": "0" * 64,
+        })
+        self.assertTrue(manifest_errors)
 
 
 if __name__ == "__main__":
