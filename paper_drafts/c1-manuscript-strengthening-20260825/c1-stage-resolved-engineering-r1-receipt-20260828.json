@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_STAGE_RESOLVED_ENGINEERING_REVISION_RECEIPT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision_label": "C1-stage-resolved-engineering-r1",
+  "generated_at": "2026-08-28",
+  "canonical_base": "fc1a5b0231e08f49329faf5c7e96df24e85670e5",
+  "branch": "research/c1-transport-governance-20260828",
+  "status": "MANUSCRIPT_ENGINEERING_REVISION_READY_NO_NEW_SCIENCE",
+  "paper_story_update": {
+    "before": "stage-resolved diagnosis establishes that persistent-state divergence and retrieval availability do not imply stable behavioral uptake",
+    "added_engineering_consequence": "stage-indexed credit plus a stage-specific repair map; first unsupported measured stage becomes a prospective repair hypothesis",
+    "current_repair_hypothesis": "post-retrieval policy integration for the frozen W+/E-observed/U-not-supported/F+ Shopping signature",
+    "repair_efficacy_supported": false,
+    "generic_retrieval_vs_utilization_novelty_claimed": false
+  },
+  "literature_boundary": {
+    "acl_2026": [
+      "2026.acl-long.27",
+      "2026.acl-long.370",
+      "2026.acl-long.534",
+      "2026.acl-long.1804"
+    ],
+    "collision_rule": "Do not claim retrieval-versus-use, generic utilization optimization, or generic memory-quality management as C1 novelty."
+  },
+  "paper_qa": {
+    "total_pdf_pages": 13,
+    "conclusion_on_page_9": true,
+    "references_begin_page_9": true,
+    "appendix_begins_page_10": true,
+    "latex_undefined_warnings": 0,
+    "latex_overfull_warnings": 0,
+    "bibtex_warnings": 0,
+    "rendered_pages": 13,
+    "render_margin_smoke": "PASS",
+    "fonts_embedded": true,
+    "targeted_regression": "24/24 PASS",
+    "git_diff_check": "PASS"
+  },
+  "execution_state": {
+    "offline_packet_preflight": "PASS: 36 units, 72 memory wrappers, 288 archived native prompt-hash checks, zero provider calls",
+    "smoke_attempt0": "STOP operationalization parser-schema mismatch; zero provider calls",
+    "smoke_attempt1": "PASS_ZERO_PROVIDER_ENGINEERING_SMOKE_ONLY: 6 prompt packets, 12 archived parser replays, zero provider calls",
+    "pilot_protocol": "FROZEN_EXECUTION_LOCKED: 13 outcome-blind pilot units, 23 disjoint confirmatory holdout units",
+    "pilot_calls_executed": 0,
+    "confirmatory_calls_executed": 0,
+    "new_scientific_outcomes": 0
+  },
+  "scientific_results_changed": false,
+  "claim_boundary": "Operational post-exposure/pre-uptake evidence localization remains unchanged and is not a causal mediation coefficient. Engineering repair is a prospective falsifiable consequence only.",
+  "files": {
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-engineering-r1.pdf",
+      "sha256": "8ff758dc608f4395c0c9a4a5b8ff4684a4580e0fdae6f4ce8c11d1c0fd4ae038"
+    },
+    "main_tex": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/main.tex",
+      "sha256": "287b703faf37738ca2082417ac36a98990b069b52d79ee767cab61346ae58972"
+    },
+    "abstract": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/00_abstract.tex",
+      "sha256": "ce502fdd7c8622a3ae42359c46670ef7efd6afe532752beea06b75cfb78e5084"
+    },
+    "intro": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/01_intro.tex",
+      "sha256": "5cece753a43ddf83d13e703a2ed5ad995580f1943bf0c3a009d7b15e69c5fa15"
+    },
+    "transport_evidence": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/04_variance_protocol.tex",
+      "sha256": "4d51947059fa00f324ecadbb5506617c0ab5e00b1541b0b9adfdf60397522777"
+    },
+    "related_work": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/05_related.tex",
+      "sha256": "3a70c26e4200ad17d2919e07e80b678e6d1a644274f564c2bcb70612ca5594f3"
+    },
+    "limitations_conclusion": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/sections/06_limitations_conclusion.tex",
+      "sha256": "67f65aa254d922024776d9b3e2a6a1d0178c29e4d0cd5c226ee9e46112149923"
+    },
+    "references": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/source/references.bib",
+      "sha256": "45c8af41203cc5df706ee553d3838f6a029baeedf4e717657af5b7114d595be1"
+    },
+    "novelty_audit": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-engineering-novelty-audit-20260828.json",
+      "sha256": "2bc51799526b6778ec66ace4c78e278786c08eba5dbf2146bc41b87a6c41b54f"
+    },
+    "pilot_contract": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-guided-repair-pilot-contract-20260828.json",
+      "sha256": "38c6cceee240ebb523c226fc370b6a03d6f4080c890c8fb49fec8d86a94488af"
+    },
+    "data_preflight": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-guided-repair-data-preflight-20260828.json",
+      "sha256": "aff2b75f06847e924d967674c6df870df889baf50cc6beea71e68dc201e92b0a"
+    },
+    "smoke_failure_repair": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-guided-repair-smoke-failure-repair-20260828.json",
+      "sha256": "9d1392abdc06fd88a9d77707b09966ce79469557783c5557cf4088081e1421ee"
+    },
+    "smoke_adjudication": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-guided-repair-smoke-adjudication-20260828.json",
+      "sha256": "ed6971f34bd65edb38f92d2e56cdaf07f7bd782c17dd1a7eec7b204c438db6f1"
+    },
+    "pilot_freeze": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-transport-guided-repair-pilot-freeze-20260828.json",
+      "sha256": "478251986c2e54dabafc2980504693c706515fed5badd4aebc4b20140a23245d"
+    }
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}
