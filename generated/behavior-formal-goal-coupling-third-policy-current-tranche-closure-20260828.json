@@ -1,0 +1,87 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-third-policy-current-tranche-closure-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+  "status": "SEARCH_CLOSED_CURRENT_PUBLIC_TRANCHE_THIRD_FAMILY_HOLD",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "gpu_authority": false,
+  "policy_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "closure_scope": "current indexed/public source tranche only; not a permanent global claim that no third family can ever exist",
+  "current_family_state": {
+    "required_independent_families": 3,
+    "qualified_families": [
+      "pi0.5/OpenPI",
+      "GR00T N1.7"
+    ],
+    "qualified_family_count": 2,
+    "third_family_gate_pass": false,
+    "phase2_model_load_allowed": false
+  },
+  "family_independence_definition": {
+    "principle": "independence is determined by policy lineage/provenance, not by the amount of downstream modification or performance",
+    "does_not_add_a_family": [
+      "fine-tune of an already admitted policy family",
+      "LoRA/adapter-only derivative of an already admitted policy family",
+      "distillation from an already admitted policy family when the resulting policy is explicitly represented as that family lineage",
+      "head swap or task-specific modification whose primary policy base/weights/architecture remain an admitted family"
+    ],
+    "does_not_automatically_collapse_families": "sharing generic third-party components such as a vision or language encoder does not by itself prove same-family lineage; ambiguous cases require independent provenance review",
+    "admission_requires": [
+      "no declared or source-level derivation from an already admitted policy family sufficient to make it a within-family variant",
+      "public BEHAVIOR 2026 R1Pro observation/action adapter already present in a pinned public revision",
+      "public BEHAVIOR 2026 training contract already present in a pinned public revision",
+      "public serving/evaluator-compatible contract already present in a pinned public revision",
+      "checkpoint or complete recipe/checkpoint-selection provenance that can be frozen before outcome access"
+    ]
+  },
+  "evidence": {
+    "current_source_recheck": "generated/behavior-formal-goal-coupling-third-policy-current-source-recheck-20260828.json#sha256=9d146d5b6fe285b4de8ef96050f067e8a3426bf19c1cf23fd0ff613b1669ecf4",
+    "source_watch_baseline": "generated/behavior-formal-goal-coupling-third-policy-source-baseline-20260828.json#baseline_sha256=d62a6d0d3d3cdbeb92d9ec213d208e174f82ab40c5fa41d60957d9bb37f0eb3b",
+    "source_watch_receipt": "generated/behavior-formal-goal-coupling-third-policy-source-watch-20260828.json#receipt_sha256=31b4a5ae3d8e0024c77cd60032d72035d5c34fae44f1c3d6787da138f18e34c9",
+    "source_watch_initial_status": "WATCH_STABLE_NO_THIRD_POLICY_SOURCE_CHANGE",
+    "official_baseline_count": 2,
+    "openeta_cross_product": "not source-qualified; BEHAVIOR environment is marked adapted while listed policy adapters are unmarked",
+    "openral_cross_product": "BEHAVIOR R1Pro path is documented for organizer GR00T N1.7 only",
+    "allenai_2026_bridge": "issue #114 remains open; existing merged #115 explicitly labels current BEHAVIOR path as 2025-only",
+    "same_family_public_checkpoint": "a public BEHAVIOR 100-task GR00T N1.7 multitask fine-tune exists, but it remains GR00T family and therefore cannot increase family count",
+    "broad_search_result": "no public non-pi/non-GR00T family was found with the full R1Pro adapter + 2026 training + serving + checkpoint/recipe chain"
+  },
+  "independent_reviews": {
+    "kimi": {
+      "verdict": "CONFIRM-CURRENT-TRANCHE-CLOSURE",
+      "path": "generated/behavior-formal-goal-coupling-third-policy-tranche-closure-reviews-20260828/kimi-review.json",
+      "sha256": "87f04f8569b1ea7b2e456d0038abba87020720d089875932a9da28b09cb93a9a"
+    },
+    "deepseek": {
+      "verdict": "CONFIRM-CURRENT-TRANCHE-CLOSURE",
+      "path": "generated/behavior-formal-goal-coupling-third-policy-tranche-closure-reviews-20260828/deepseek-review.json",
+      "sha256": "82a694a695f970e7c42b0dc91a3c05547f3c775337b6385c670e798a2ed69732"
+    }
+  },
+  "reopen_conditions": [
+    "organizer baselines surface adds a genuinely independent third policy family and a source-qualified BEHAVIOR-compatible contract chain",
+    "OpenETA publishes and marks an explicit BEHAVIOR R1Pro cross-product adapter for an independent policy family together with training/serve/checkpoint provenance",
+    "OpenRAL publishes BEHAVIOR R1Pro compatibility for a non-pi/non-GR00T family together with training/serve/checkpoint provenance",
+    "AllenAI issue #114 changes/closes and a named independent policy family separately satisfies action-interface, training, serving, and checkpoint/recipe requirements; protocol bridge alone is insufficient",
+    "a new public repository/checkpoint outside the watched surfaces is discovered that satisfies all frozen admission criteria",
+    "any watched source change triggers zero-authority requalification; source change never auto-admits a family"
+  ],
+  "explicit_non_reopen_events": [
+    "same-family GR00T or pi fine-tunes",
+    "new snapshots of an already admitted family",
+    "generic policy adapter plus generic environment support without an explicit cross-product path",
+    "AllenAI protocol bridge completion without a compatible independent policy contract",
+    "unmerged PR, social claim, or paper without public adapter/training/serving/checkpoint provenance"
+  ],
+  "watch_coverage_limit": {
+    "known_limitation": "the narrow source watch cannot detect a completely new unlinked repository or checkpoint",
+    "mitigation": "perform a low-frequency broad public-source sweep as a search-maintenance action; such a sweep remains zero-authority and may only nominate candidates for the same admission gate",
+    "does_not_weaken_closure": true
+  },
+  "next_state": "WATCH_ONLY_UNTIL_REOPEN_CONDITION",
+  "port010_reopen_authorized": false,
+  "scientific_effect": "none; search-tranche governance only",
+  "closure_sha256": "3f96c3c644e447b0cf13bcd809401c0497492d18f448d009385f6f00b05dcfc1"
+}
