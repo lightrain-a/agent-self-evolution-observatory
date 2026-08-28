@@ -1,0 +1,22 @@
+[
+  {
+    "model": "kimi-k3",
+    "resolved": "kimi-k3",
+    "ok": true,
+    "answer": {
+      "shared_argument_edge_count": 3,
+      "goal_logic_depth": 3,
+      "rationale": "Nodes: ontop(?x,?y), clean(?x), not(covered(?y)). Edges: ontop-clean share ?x; ontop-not(covered) share ?y; clean-not(covered) share none. Depth: forpairs(1) + and(1) + not(1) + leaf(1) = 3."
+    }
+  },
+  {
+    "model": "deepseek-v4-pro",
+    "resolved": "deepseek-v4-pro-ga-260813",
+    "ok": true,
+    "answer": {
+      "shared_argument_edge_count": 2,
+      "goal_logic_depth": 4,
+      "rationale": "Signed leaves: ontop(?x,?y), clean(?x), covered(?y). Edges: ontop-clean share ?x; ontop-covered share ?y; clean-covered share none. Negation adds depth over covered: forpairs=1, and=2, not=3, covered leaf=1 => max depth 4."
+    }
+  }
+]

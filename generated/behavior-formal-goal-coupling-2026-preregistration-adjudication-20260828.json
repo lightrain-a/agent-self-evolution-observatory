@@ -1,0 +1,62 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-2026-preregistration-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-PUBLIC-OUTCOME",
+  "status": "PASS_FOR_RELEASE_WATCH_AND_FUTURE_ONE_SHOT_ADMISSION_NO_CURRENT_RELEASE",
+  "scientific_authority": false,
+  "analysis_authority": false,
+  "provider_authority": false,
+  "gpu_authority": false,
+  "self_run_authorized": false,
+  "parent_port010_reopen_authorized": false,
+  "preregistration_sha256": "07baaabd825a47629073d4231631911303cadb6a33b23d9edd1bb221b832e4f7",
+  "release_baseline_sha256": "852223223ac8304334e50c2b1efb6eedef7b4f71f1c6c9bfe1ae1c91786a5c14",
+  "current_release_state": "all three 2026 public target files are empty at the frozen baseline; no outcome admission can run yet",
+  "final_statistical_resolution": {
+    "primary_model": "P1 additive OLS HC3 Q_bar ~ shared_argument_edge_count + atomic_goal_count",
+    "interaction_primary_rejected": "effect modification was not part of the frozen scientific question and would add unnecessary degrees of freedom",
+    "robustness_rule": "R1 retained: repair/branch exclusion fails robustness on sign flip OR >30% attenuation in abs(beta_edge)",
+    "unique_team_rule": "minimum 3 full policy units remains analysis admission; >=3 unique teams remains required only for broad cross-policy wording"
+  },
+  "review_record": {
+    "kimi_initial": {
+      "path": "generated/behavior-formal-goal-coupling-2026-prereg-reviews-20260828/kimi-review.json",
+      "sha256": "c54d4dc58da9063a00f4440136e37425d73fe601a7324ffdd6925aa4e75016f3",
+      "initial_verdict": "REVISE-BEFORE-ANY-2026-OUTCOME"
+    },
+    "deepseek_initial": {
+      "path": "generated/behavior-formal-goal-coupling-2026-prereg-reviews-20260828/deepseek-review.json",
+      "sha256": "bbc3511e5523a7e3f4232f7c9c78494f25849402444ae8f8f3ff565af454153d",
+      "initial_verdict": "PASS-FOR-RELEASE-WATCH-AND-FUTURE-ONE-SHOT-ADMISSION"
+    },
+    "kimi_tiebreak": {
+      "path": "generated/behavior-formal-goal-coupling-2026-prereg-reviews-20260828/kimi-tiebreak.json",
+      "sha256": "7ad6d3f60e2005b88173a8ef2a5a916db770f7f21b2ea518e1a625fb740b0f18",
+      "primary": "P1",
+      "robustness": "R1",
+      "T1": "PASS"
+    },
+    "deepseek_tiebreak": {
+      "path": "generated/behavior-formal-goal-coupling-2026-prereg-reviews-20260828/deepseek-tiebreak.json",
+      "sha256": "a18396891b77b562a5182714edfb78b313e702a6a221588d64cf51e99d76ac82",
+      "primary": "P1",
+      "robustness": "R1",
+      "T1": "REJECT"
+    }
+  },
+  "future_admission_preconditions": [
+    "watch detects OID/size change in a 2026 target file",
+    "freeze one exact Space revision and all target OIDs/sizes before reading scientific values",
+    "data/README schema OID/size still matches baseline; otherwise zero-outcome preregistration recompile first",
+    "one-shot admission verifies >=3 full policy units using exact 100 tasks, aggregate 100/1000 verified rows, and exact 100 per-task rows each num_episodes=10"
+  ],
+  "forbidden_now": [
+    "opening non-existent/partial future 2026 outcomes",
+    "private submission access",
+    "policy self-runs",
+    "PORT-010 reopen",
+    "using 2025_results as 2026 evidence",
+    "changing primary/falsifiers without a pre-outcome schema-triggered recompile"
+  ],
+  "next_state": "WATCH_2026_PUBLIC_RESULT_RELEASE",
+  "adjudication_sha256": "130323a1ce45e7f832eacf49b6ff8b5d8a332862b8c24e3ffaa65e3acbd1a0b7"
+}

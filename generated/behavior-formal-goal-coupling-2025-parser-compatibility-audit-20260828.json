@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "tasks_compared": 50,
+  "parse_mismatches": [],
+  "warnings": {
+    "wash_a_baseball_cap": [
+      "\\ is not recognized in problem",
+      "\\ is not recognized in problem"
+    ]
+  },
+  "historical_parser_sha256": "113048c035ae21cbcf009105ff4d3ef7fb6f93d4a02f5f1e6477869446335e0f",
+  "current_parser_sha256": "04b19958ea10e3ea4a8d777b0032da78d7d750db930124bfd86f9d04b2e20dfa",
+  "policy_results_read": false,
+  "scientific_authority": false
+}

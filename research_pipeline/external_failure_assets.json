@@ -27,6 +27,26 @@
     {
       "source_path": "research_pipeline/c1_b14_preexecution_failure_assets_20260825.json",
       "source_key": "zero_provider_import_asset"
+    },
+    {
+      "source_path": "research_pipeline/port010_embodiedbench_e0_failure_assets_20260828.json",
+      "source_key": "proxy_transfer_asset"
+    },
+    {
+      "source_path": "research_pipeline/port010_embodiedbench_e0_failure_assets_20260828.json",
+      "source_key": "source_schema_asset"
+    },
+    {
+      "source_path": "research_pipeline/port010_embodiedbench_e0_failure_assets_20260828.json",
+      "source_key": "specificity_asset"
+    },
+    {
+      "source_path": "research_pipeline/behavior_formal_goal_coupling_2025_failure_assets_20260828.json",
+      "source_key": "public_outcome_coverage_asset"
+    },
+    {
+      "source_path": "research_pipeline/behavior_formal_goal_coupling_2025_failure_assets_20260828.json",
+      "source_key": "missing_zero_estimand_asset"
     }
   ],
   "scientific_authority": false

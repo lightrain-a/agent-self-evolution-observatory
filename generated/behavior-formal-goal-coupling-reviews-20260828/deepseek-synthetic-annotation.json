@@ -1,0 +1,107 @@
+{
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "annotations": [
+    {
+      "case_id": "S01_INDEPENDENT_FOUR",
+      "atomic_occurrence_count": 4,
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 1,
+      "quantifier_count": 0,
+      "branch_operator_count": 0
+    },
+    {
+      "case_id": "S02_CHAIN_FOUR",
+      "atomic_occurrence_count": 4,
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 3,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 1,
+      "quantifier_count": 0,
+      "branch_operator_count": 0
+    },
+    {
+      "case_id": "S03_TWO_COMPONENTS",
+      "atomic_occurrence_count": 4,
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 2,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 1,
+      "quantifier_count": 0,
+      "branch_operator_count": 0
+    },
+    {
+      "case_id": "S04_DISJUNCTION_SHARED",
+      "atomic_occurrence_count": 3,
+      "atomic_goal_count": 3,
+      "shared_argument_edge_count": 3,
+      "largest_connected_component_size": 3,
+      "goal_logic_depth": 2,
+      "quantifier_count": 0,
+      "branch_operator_count": 1
+    },
+    {
+      "case_id": "S05_QUANTIFIER_SHARED_WITHIN_SCOPE",
+      "atomic_occurrence_count": 2,
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 3,
+      "quantifier_count": 1,
+      "branch_operator_count": 0
+    },
+    {
+      "case_id": "S06_DISJOINT_QUANTIFIER_SCOPES_SAME_RAW_VAR",
+      "atomic_occurrence_count": 4,
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 2,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 3,
+      "quantifier_count": 2,
+      "branch_operator_count": 0
+    },
+    {
+      "case_id": "S07_NEGATION_AND_DUPLICATE",
+      "atomic_occurrence_count": 3,
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "quantifier_count": 0,
+      "branch_operator_count": 0
+    },
+    {
+      "case_id": "S08_NESTED_LOGIC_DEPTH",
+      "atomic_occurrence_count": 3,
+      "atomic_goal_count": 3,
+      "shared_argument_edge_count": 3,
+      "largest_connected_component_size": 3,
+      "goal_logic_depth": 4,
+      "quantifier_count": 1,
+      "branch_operator_count": 2
+    },
+    {
+      "case_id": "S09_EXACT_COUNT_QUANTIFIER",
+      "atomic_occurrence_count": 2,
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 3,
+      "quantifier_count": 1,
+      "branch_operator_count": 0
+    },
+    {
+      "case_id": "S10_PAIR_QUANTIFIER",
+      "atomic_occurrence_count": 3,
+      "atomic_goal_count": 3,
+      "shared_argument_edge_count": 3,
+      "largest_connected_component_size": 3,
+      "goal_logic_depth": 4,
+      "quantifier_count": 1,
+      "branch_operator_count": 0
+    }
+  ],
+  "scientific_authority": false
+}

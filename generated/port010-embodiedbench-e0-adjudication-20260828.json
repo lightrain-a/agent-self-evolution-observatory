@@ -1,0 +1,422 @@
+{
+  "schema_version": "port010-embodiedbench-e0-adjudication-v1",
+  "generated_at": "2026-08-28T03:53:21+00:00",
+  "candidate_id": "PORT-010",
+  "parent_canonical_disposition": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+  "e0_status": "ROBUST_HOLD_AFTER_E0_CONSTRUCT_FAILURE",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "outcome_access_authorized": false,
+  "outcomes_read": false,
+  "provider_reviews_are_advisory_only": true,
+  "bound_e0_receipt_sha256": "ea1592bbf9e176f1180251c622cdaf5bd33ef25501b4fc41a380c6ece537eec5",
+  "bound_postgate_diagnostic_sha256": "ba47d15fc07e01c09c4efda66b60d9c0102c9e84f1936e0c4f552f69dff032e0",
+  "compiler_sha256": "a618595ed6377d0535d263a45d6b7fc9f05ccfe9a254744dd15776a8dbe68542",
+  "embodiedbench_first_party_material": [
+    {
+      "environment": "EB-Habitat",
+      "repo": "EmbodiedBench/EB-Habitat_trajectory_dataset",
+      "revision": "d391eba8684b0de0c4f37a223e69237c91444209",
+      "filename": "eb-habitat_dataset_multi_step.json",
+      "bytes": 64296884,
+      "sha256": "2cb8965964868c58b3f29fddd91a7fc92919ca9af71ea12ea4e3de702f277c80"
+    },
+    {
+      "environment": "EB-Manipulation",
+      "repo": "EmbodiedBench/EB-Man_trajectory_dataset",
+      "revision": "0d0ecef2891dc06dc4422734cd98e40057438ac7",
+      "filename": "eb-man_dataset_multi_step.json",
+      "bytes": 17808872,
+      "sha256": "7af29d9e82fda46cf125bdae3a689a88de30ed5fb909823905786a78f48389cb"
+    },
+    {
+      "environment": "EB-Navigation",
+      "repo": "EmbodiedBench/EB-Nav_trajectory_dataset",
+      "revision": "c8e0ed66aa62432267ba19f59d87fe9724c18f45",
+      "filename": "eb-nav_dataset_multi_step.json",
+      "bytes": 61267651,
+      "sha256": "c620e62e13e709592c5c5b57d8d38aeea02e7b89d39080033540e4cc46d29014"
+    },
+    {
+      "environment": "EB-ALFRED",
+      "repo": "EmbodiedBench/EB-Alfred_trajectory_dataset",
+      "revision": "720b5f5683b9ecbb9418f8c5998d686cde3a1397",
+      "filename": "eb-alfred_dataset_multi_step.json",
+      "bytes": 77556504,
+      "sha256": "5a618d9332a08f055ba79644bd464368744a657555394b3cb59471b6af32a44c"
+    }
+  ],
+  "development_sources": {
+    "complexbench": {
+      "revision": "749f4575d5dc981182ecaebb8c292b2a61213cf3",
+      "data_final_sha256": "df28e64563efda2ff4c7436d7b8244975352549055949c2ce1005766047c7b09",
+      "records": 1150,
+      "role": "DEVELOPMENT_CALIBRATION_NOT_HOLDOUT"
+    },
+    "complexbench_edit": {
+      "revision": "e5b84742096a240283cc2114c75682297386485d",
+      "two_chain_records": 108,
+      "three_chain_records": 100,
+      "two_chain_sha256": "5a2ca28373fa4508ba5175ef49deb1b050674fc76b3f02110c8a0b4ac1b69a72",
+      "three_chain_sha256": "29c7e818eb52e56927d90dd663644d5dd6a458c754bfb3961a079eb1482fcc1e",
+      "role": "DEVELOPMENT_CHAIN_RECOVERY_NOT_HOLDOUT"
+    }
+  },
+  "metric_audit_trail": [
+    {
+      "metric": "BindingLoad-v1",
+      "disposition": "FAILED_RETIRED",
+      "evidence": {
+        "initial_complexbench_target_spearman": 0.06579195636120584,
+        "token_count_spearman": 0.8194913946228588
+      },
+      "lesson": "shallow lexical marker count did not validate as constraint composition and collapsed toward instruction length"
+    },
+    {
+      "metric": "BindingLoad-v1.1-density",
+      "disposition": "FAILED_PRIMARY_RETIRED_SECONDARY_ONLY",
+      "evidence": {
+        "complexbench_edit_two_chain_median": 10.0,
+        "complexbench_edit_three_chain_median": 9.232954545454547
+      },
+      "lesson": "length normalization reversed the expected chain direction and explicit lexical markers miss implicit dependency"
+    },
+    {
+      "metric": "ConstraintGraph-v2",
+      "disposition": "DEVELOPMENT_PASS_INDEPENDENT_FAIL",
+      "development": {
+        "role": "DEVELOPMENT_CHAIN_RECOVERY_NOT_HOLDOUT",
+        "two_chain_records": 108,
+        "three_chain_records": 100,
+        "two_chain_adjacent_edge_median": 1.0,
+        "three_chain_adjacent_edge_median": 2.0,
+        "two_chain_depth_median": 2.0,
+        "three_chain_depth_median": 3.0,
+        "two_chain_depth_ge_3_rate": 0.17592592592592593,
+        "three_chain_depth_ge_3_rate": 0.82,
+        "depth_ge_3_classification_accuracy": 0.8221153846153846,
+        "development_gate": {
+          "three_edge_median_gt_two": true,
+          "three_depth_median_gt_two": true,
+          "three_depth3_rate_gt_two": true,
+          "depth_ge_3_accuracy_ge_0_75": true
+        }
+      },
+      "independent_embodiedbench_gate": {
+        "complex_edge_median_gt_base_environments": 0,
+        "complex_depth_median_gt_base_environments": 0,
+        "complex_edge_and_depth_jointly_gt_base_environments": 0,
+        "complex_dependency_rate_gt_base_environments_supporting": 3,
+        "required_joint_environments": 3,
+        "directional_construct_support": false,
+        "pooled_abs_graph_edge_token_spearman_lt": 0.5,
+        "per_environment_abs_graph_edge_token_spearman_lt": 0.5,
+        "length_noncollapse": false,
+        "cross_eval_set_metadata_independence": false,
+        "future_outcome_overlap_present": true,
+        "pass": false
+      },
+      "lesson": "cross-clause entity reuse recovered CBE chain depth but did not transfer as the preregistered median edge/depth construct in EmbodiedBench"
+    }
+  ],
+  "independent_metadata_findings": {
+    "rollout_records": 11714,
+    "unique_tasks": 1135,
+    "environment_summary": [
+      {
+        "environment": "EB-ALFRED",
+        "unique_tasks": 307,
+        "models": 11,
+        "eval_set_unique_task_counts": {
+          "base": 52,
+          "common_sense": 51,
+          "complex_instruction": 52,
+          "long_horizon": 50,
+          "spatial": 50,
+          "visual_appearance": 52
+        },
+        "graph_edge_token_spearman": 0.4178461184171726,
+        "complex_adjacent_edge_median": 0.0,
+        "base_adjacent_edge_median": 0.0,
+        "complex_minus_base_edge_median": 0.0,
+        "complex_depth_median": 1.0,
+        "base_depth_median": 1.0,
+        "complex_minus_base_depth_median": 0.0,
+        "complex_dependency_rate": 0.38461538461538464,
+        "base_dependency_rate": 0.0,
+        "complex_minus_base_dependency_rate": 0.38461538461538464,
+        "raw_v1_token_spearman": 0.5400581600266298,
+        "binding_density_token_spearman": 0.17346356737239804
+      },
+      {
+        "environment": "EB-Habitat",
+        "unique_tasks": 300,
+        "models": 11,
+        "eval_set_unique_task_counts": {
+          "base": 50,
+          "common_sense": 50,
+          "complex_instruction": 50,
+          "long_horizon": 50,
+          "spatial_relationship": 50,
+          "visual_appearance": 50
+        },
+        "graph_edge_token_spearman": 0.4728200216266637,
+        "complex_adjacent_edge_median": 0.0,
+        "base_adjacent_edge_median": 0.0,
+        "complex_minus_base_edge_median": 0.0,
+        "complex_depth_median": 1.0,
+        "base_depth_median": 1.0,
+        "complex_minus_base_depth_median": 0.0,
+        "complex_dependency_rate": 0.4,
+        "base_dependency_rate": 0.04,
+        "complex_minus_base_dependency_rate": 0.36000000000000004,
+        "raw_v1_token_spearman": 0.40101211037314655,
+        "binding_density_token_spearman": -0.14441562421955748
+      },
+      {
+        "environment": "EB-Manipulation",
+        "unique_tasks": 228,
+        "models": 8,
+        "eval_set_unique_task_counts": {
+          "base": 48,
+          "common_sense": 48,
+          "complex": 48,
+          "spatial": 48,
+          "visual": 36
+        },
+        "graph_edge_token_spearman": 0.5205397481265988,
+        "complex_adjacent_edge_median": null,
+        "base_adjacent_edge_median": 0.0,
+        "complex_minus_base_edge_median": null,
+        "complex_depth_median": null,
+        "base_depth_median": 1.0,
+        "complex_minus_base_depth_median": null,
+        "complex_dependency_rate": null,
+        "base_dependency_rate": 0.0,
+        "complex_minus_base_dependency_rate": null,
+        "raw_v1_token_spearman": 0.5029491955846737,
+        "binding_density_token_spearman": 0.01678355960505288
+      },
+      {
+        "environment": "EB-Navigation",
+        "unique_tasks": 300,
+        "models": 11,
+        "eval_set_unique_task_counts": {
+          "base": 60,
+          "common_sense": 60,
+          "complex_instruction": 60,
+          "long_horizon": 60,
+          "visual_appearance": 60
+        },
+        "graph_edge_token_spearman": 0.6119892708298498,
+        "complex_adjacent_edge_median": 0.0,
+        "base_adjacent_edge_median": 0.0,
+        "complex_minus_base_edge_median": 0.0,
+        "complex_depth_median": 1.0,
+        "base_depth_median": 1.0,
+        "complex_minus_base_depth_median": 0.0,
+        "complex_dependency_rate": 0.45,
+        "base_dependency_rate": 0.0,
+        "complex_minus_base_dependency_rate": 0.45,
+        "raw_v1_token_spearman": 0.4014374648826473,
+        "binding_density_token_spearman": -0.32506477335271683
+      }
+    ],
+    "gate": {
+      "complex_edge_median_gt_base_environments": 0,
+      "complex_depth_median_gt_base_environments": 0,
+      "complex_edge_and_depth_jointly_gt_base_environments": 0,
+      "complex_dependency_rate_gt_base_environments_supporting": 3,
+      "required_joint_environments": 3,
+      "directional_construct_support": false,
+      "pooled_abs_graph_edge_token_spearman_lt": 0.5,
+      "per_environment_abs_graph_edge_token_spearman_lt": 0.5,
+      "length_noncollapse": false,
+      "cross_eval_set_metadata_independence": false,
+      "future_outcome_overlap_present": true,
+      "pass": false
+    },
+    "postgate_robustness": {
+      "environment_summary": [
+        {
+          "environment": "EB-ALFRED",
+          "base_n": 52,
+          "complex_n": 52,
+          "base_edge_median": 0.0,
+          "complex_edge_median": 0.0,
+          "base_depth_median": 1.0,
+          "complex_depth_median": 1.0,
+          "complex_core_direction_pass": false,
+          "complex_base_graph_token_spearman": 0.5701737251247183
+        },
+        {
+          "environment": "EB-Habitat",
+          "base_n": 50,
+          "complex_n": 50,
+          "base_edge_median": 0.0,
+          "complex_edge_median": 0.0,
+          "base_depth_median": 1.0,
+          "complex_depth_median": 1.0,
+          "complex_core_direction_pass": false,
+          "complex_base_graph_token_spearman": 0.6600114779520532
+        },
+        {
+          "environment": "EB-Manipulation",
+          "base_n": 48,
+          "complex_n": 48,
+          "base_edge_median": 0.0,
+          "complex_edge_median": 1.0,
+          "base_depth_median": 1.0,
+          "complex_depth_median": 2.0,
+          "complex_core_direction_pass": true,
+          "complex_base_graph_token_spearman": 0.6878913555973496
+        },
+        {
+          "environment": "EB-Navigation",
+          "base_n": 60,
+          "complex_n": 60,
+          "base_edge_median": 0.0,
+          "complex_edge_median": 0.0,
+          "base_depth_median": 1.0,
+          "complex_depth_median": 1.0,
+          "complex_core_direction_pass": false,
+          "complex_base_graph_token_spearman": 0.6230078195944941
+        }
+      ],
+      "joint_edge_and_depth_direction_environments": 1,
+      "required_environments": 3,
+      "core_direction_still_fails": true
+    },
+    "postgate_additional_findings": {
+      "navigation_common_sense_dependency_rate": 1.0,
+      "navigation_complex_instruction_dependency_rate": 0.45,
+      "navigation_graph_edge_token_spearman_all_sets": 0.6119892708298498,
+      "exact_cross_eval_set_instruction_collision_pairs": [
+        {
+          "environment": "EB-Navigation",
+          "eval_sets": [
+            "base",
+            "long_horizon"
+          ],
+          "count": 26
+        }
+      ]
+    }
+  },
+  "gate_specification_lessons": [
+    {
+      "issue": "episode_id reused systematically across eval_set namespaces",
+      "disposition": "GATE_SPECIFICATION_ERROR_NOT_SCIENTIFIC_NEGATIVE",
+      "effect": "do not use episode_id cross-set collision as independent-task criterion"
+    },
+    {
+      "issue": "EB-Manipulation uses complex/spatial/visual aliases instead of complex_instruction/spatial_relationship/visual_appearance",
+      "disposition": "SOURCE_SCHEMA_ALIAS_NOT_SCIENTIFIC_NEGATIVE",
+      "effect": "alias-normalized diagnostic only; original E0 receipt remains immutable"
+    },
+    {
+      "issue": "zero-inflated graph feature made medians insensitive despite higher dependency-positive prevalence in several complex subsets",
+      "disposition": "DO_NOT_CHANGE_ENDPOINT_POST_GATE",
+      "lesson": "distributional sparsity/endpoint resolution must be diagnosed on development data before freezing a median-based construct gate"
+    },
+    {
+      "issue": "Navigation common_sense dependency-positive rate exceeded complex_instruction and Navigation graph edges remained correlated with token count",
+      "disposition": "COUNTEREXAMPLE_TO_COMPLEX_SPECIFICITY",
+      "lesson": "entity reuse is not specific enough to serve as a constraint-binding construct across capability strata"
+    }
+  ],
+  "independent_reviews": {
+    "metric_review": [
+      {
+        "path": "generated/port010-embodiedbench-e0-reviews-20260828/kimi-metric-review.json",
+        "sha256": "198e4e5e45d147a52131d6cf07c87bcad20999960166487f46d1a630acdba681",
+        "resolved_model": "kimi-k3",
+        "verdict_line": "**Verdict: HOLD.** Do not access EmbodiedBench success yet. It is legitimate to refine the external construct target from “number of constraint types” to dependency_edges/dependent_points **if** this is documented as a construct-specification correction, not as a search for the best-looking correlation. But v1 should n"
+      },
+      {
+        "path": "generated/port010-embodiedbench-e0-reviews-20260828/deepseek-metric-review.json",
+        "sha256": "f4b293ccb73ab6810d4e6f4522ef8f86a3824b1702dc002cf46c82420c046e4b",
+        "resolved_model": "deepseek-v4-pro-ga-260813",
+        "verdict_line": "**Verdict**: HOLD on outcome access. The current v1 metric is not yet a valid operationalization of the *binding/dependency construct* because it is substantially confounded with length. However, the diagnostic evidence already supports a principled—not arbitrary—reorientation of the calibration target toward dependenc"
+      }
+    ],
+    "pre_projection_v2_freeze_review": [
+      {
+        "path": "generated/port010-embodiedbench-e0-reviews-20260828/kimi-v2-freeze-review.json",
+        "sha256": "ae10b1e2a8e9c977cce76f2f0fec9aa27ab0da62eb8bb6ce6188546b0f10e25b",
+        "resolved_model": "kimi-k3",
+        "verdict_line": "**VERDICT: PASS-FOR-METADATA-PROJECTION**"
+      },
+      {
+        "path": "generated/port010-embodiedbench-e0-reviews-20260828/deepseek-v2-freeze-review.json",
+        "sha256": "1d70cbf0571448336e768ecc151ba943dab7b993767b3ca0eab6919a1be8b715",
+        "resolved_model": "deepseek-v4-pro-ga-260813",
+        "verdict_line": "Verdict: PASS-FOR-METADATA-PROJECTION — with one binding condition stated below."
+      }
+    ],
+    "post_hold_adjudication": [
+      {
+        "path": "generated/port010-embodiedbench-e0-reviews-20260828/kimi-posthold-review.json",
+        "sha256": "d04ec85b0b0740d41c33cd9fb9538ecfe436b109b5011903078d58884abecb6d",
+        "resolved_model": "kimi-k3",
+        "verdict_line": "**Verdict: PORT-010 remains HOLD/STOP for the constraint-binding construct. The E0 receipt must stay immutable; no B/C/D/E action can legally reopen PORT-010 or revise ConstraintGraph-v2 in the confirmatory lane.**"
+      },
+      {
+        "path": "generated/port010-embodiedbench-e0-reviews-20260828/deepseek-posthold-review.json",
+        "sha256": "f71aa0130a97b62c161915e5d3123d4f7176d477ae2966fc16ec20846d941027",
+        "resolved_model": "deepseek-v4-pro-ga-260813",
+        "verdict_line": "**Verdict:** PORT-010 must remain HOLD. Rank: **C ≥ D > B > A > E**. Proceed with C and/or D under new IDs; never reopen PORT-010."
+      }
+    ],
+    "consensus": [
+      "PORT-010 must remain HOLD and its frozen E0 receipt cannot be rescued or revised with EmbodiedBench outcomes.",
+      "Opening success/action_success now for the constraint-binding mechanism is invalid post-hoc outcome fishing.",
+      "Any metadata exploration, fresh-dataset mechanism test, or benchmark-label outcome diagnostic must be a separately registered successor object."
+    ]
+  },
+  "successor_proposals": [
+    {
+      "provisional_key": "SUCC-B-EMBODIEDBENCH-METADATA-SEMANTICS",
+      "status": "PROPOSAL_ONLY_ZERO_OUTCOME",
+      "new_id_required": true,
+      "question": "What structural/textual properties do EmbodiedBench author-defined capability labels encode, independent of model outcomes?",
+      "may_reopen_port010": false
+    },
+    {
+      "provisional_key": "SUCC-C-FORMAL-GOAL-COUPLING",
+      "status": "SOURCE_QUALIFICATION_ONLY",
+      "new_id_required": true,
+      "question": "Does author-defined formal goal coupling predict a stage-resolved embodied failure signature without relying on natural-language proxy labels?",
+      "candidate_substrate": {
+        "name": "BEHAVIOR-1K / BDDL",
+        "qualified_fact_scope": "schema/docs only; task-structure distribution not inspected in this lane",
+        "challenge_tag": "v3.9.2",
+        "challenge_tag_commit": "b1979916ec1549b10a4e65e630bc6504a9af1b00",
+        "why_promising": "BDDL provides first-order-logic object, initial-condition, and compositional goal-condition definitions; formal goal structure is independent of policy outcomes",
+        "next_gate": "freeze formal goal-coupling metrics from BDDL schema before reading task-distribution statistics or policy outcomes"
+      },
+      "may_reopen_port010": false
+    },
+    {
+      "provisional_key": "SUCC-D-EMBODIEDBENCH-LABEL-PERFORMANCE-DIAGNOSTIC",
+      "status": "PREREGISTRATION_REQUIRED_NO_OUTCOME_ACCESS",
+      "new_id_required": true,
+      "question": "Are official EmbodiedBench capability labels performance-distinct after prespecified adjustment for token length, model, environment, and instruction overlap?",
+      "strongest_allowed_claim": "benchmark-label performance distinctiveness only; no constraint-binding mechanism claim",
+      "may_reopen_port010": false
+    }
+  ],
+  "forbidden": [
+    "do not read EmbodiedBench success/action_success under PORT-010",
+    "do not revise ConstraintGraph-v2 from EmbodiedBench metadata or outcomes in the confirmatory lane",
+    "do not use VWE as rescue evidence",
+    "do not represent any future locally generated outcome as author-released evidence"
+  ],
+  "recommended_next": [
+    "preserve PORT-010 HOLD as the authoritative result of this confirmatory lane",
+    "qualify SUCC-C on BEHAVIOR-1K BDDL at schema/formal-structure level without outcomes",
+    "compile a separate SUCC-D preregistration before any EmbodiedBench success access",
+    "optionally retain SUCC-B as metadata-only exploratory characterization"
+  ],
+  "adjudication_sha256": "0d17ac32e4985f01656021469d33d604b1fd396e267241a3a172c105025dc035"
+}

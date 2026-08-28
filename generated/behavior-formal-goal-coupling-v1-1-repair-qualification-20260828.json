@@ -1,0 +1,92 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-v1.1-operationalization-repair-qualification-v1",
+  "provisional_key": "SUCC-C-FORMAL-GOAL-COUPLING",
+  "status": "ALLOW_ONE_POST_GATE_OPERATIONALIZATION_REPAIR_QUALIFICATION",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "policy_result_access_authorized": false,
+  "policy_results_read": false,
+  "parent_candidate_id": "PORT-010",
+  "parent_may_be_reopened": false,
+  "source": {
+    "repo": "https://github.com/StanfordVL/BEHAVIOR-1K",
+    "tag": "v3.9.2",
+    "revision": "b1979916ec1549b10a4e65e630bc6504a9af1b00"
+  },
+  "frozen_pre_scan_qualification": {
+    "path": "generated/behavior-formal-goal-coupling-source-qualification-20260828.json",
+    "qualification_sha256": "db92a910f73f48c749490b71154f664abaab51efb7e3aafbb9628168fa271665",
+    "metric_v1_sha256": "d5b6af81d4be8b2ddd552beacf57d8fd874c2a81b4467025ca7ea27f59f56e73"
+  },
+  "first_structure_scan_hold": {
+    "path": "generated/behavior-formal-goal-coupling-structure-scan-20260828.json",
+    "receipt_sha256": "5e384b76d7c24bc8622d2271567fadca94ce353d0bffa34555ca5caeb2c26132",
+    "status": "STRUCTURE_DISTRIBUTION_HOLD",
+    "failed_gates": [
+      "unbound_variable_tasks_zero"
+    ],
+    "problem_files": 1016
+  },
+  "diagnosis": {
+    "type": "SOURCE_SCHEMA_GROUNDING_INTERPRETATION_BUG",
+    "fact": "BEHAVIOR goal tokens prefix both concrete declared object instances and quantifier variables with ?; v1 treated every non-bound ? token as unbound.",
+    "official_resolution_basis": "official Predicate strips ? and resolves through quantifier scope/object_map; declared :objects identify concrete instances",
+    "does_not_change": [
+      "atomic_leaf_definition",
+      "shared_argument_edge_definition",
+      "deduplication",
+      "logic_depth",
+      "branch_handling",
+      "primary_metrics",
+      "distribution_thresholds"
+    ]
+  },
+  "repair_v1_1": {
+    "metric_path": "research_pipeline/behavior_formal_goal_coupling_v1_1.py",
+    "metric_sha256": "e13200656ca341e5597ad1999b97477dc80d50d19a9e8860d58894a636c66e53",
+    "test_path": "research_pipeline/test_behavior_formal_goal_coupling_v1_1.py",
+    "test_sha256": "866df1a936bb02ff6c11f1af5d12466963215d7069325cd91d1421e3bdd02039",
+    "tests_total": 12,
+    "tests_status": "PASS",
+    "parser_integration_path": "generated/behavior-formal-goal-coupling-v1-1-parser-integration-20260828.json",
+    "parser_integration_sha256": "09b5cd4d509ff5c8ae18abd7d6fadaad3b9e70e5622b7fd1ff23b9e5489ebd18",
+    "parser_integration_status": "PASS",
+    "argument_resolution_precedence": [
+      "currently_bound_quantifier_symbol",
+      "declared_concrete_object_instance",
+      "unbound"
+    ]
+  },
+  "frozen_distribution_gates": {
+    "min_nontrivial_tasks_atomic_goal_count_ge_2": 100,
+    "max_dominant_value_fraction_atomic_goal_count": 0.9,
+    "max_dominant_value_fraction_shared_argument_edge_count": 0.9,
+    "max_abs_spearman_edges_vs_atomic_goal_count": 0.9,
+    "max_branch_bearing_task_fraction": 0.3,
+    "branch_bearing_definition": "branch_operator_count > 0 (or/imply present)",
+    "parser_error_tasks": 0,
+    "unbound_variable_tasks": 0,
+    "decision": "any gate failure => HOLD/STOP before policy outcome access; do not tune metric from task outcomes"
+  },
+  "independent_reviews": {
+    "kimi": {
+      "path": "generated/behavior-formal-goal-coupling-v1-1-repair-reviews-20260828/kimi-review.json",
+      "sha256": "456c49eaf15ed9ac314c735a4f39ed7ff1854264548667684bef5f9578d2522d",
+      "verdict": "ALLOW-ONE-OPERATIONALIZATION-REPAIR-QUALIFICATION"
+    },
+    "deepseek": {
+      "path": "generated/behavior-formal-goal-coupling-v1-1-repair-reviews-20260828/deepseek-review.json",
+      "sha256": "81caf0ac05f90451a0c1b4f8087e311d8b372a5ea82edce961af838c4c4af1e9",
+      "verdict": "ALLOW-ONE-OPERATIONALIZATION-REPAIR-QUALIFICATION"
+    }
+  },
+  "rerun_contract": {
+    "max_v1_1_structure_reruns": 1,
+    "no_further_repairs_from_v1_1_distribution": true,
+    "structure_only": true,
+    "policy_outcomes_remain_closed_even_if_all_gates_pass": true,
+    "post_rerun_independent_review_required": true,
+    "any_gate_failure": "HOLD_STOP_NO_POLICY_OUTCOME_ACCESS"
+  },
+  "qualification_sha256": "a7e5e34aa252f4109e464bf5d4c707cb6216ece80fc9442116beb218f9946d89"
+}

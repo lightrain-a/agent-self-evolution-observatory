@@ -1,0 +1,43 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-v1.1-rerun-compile-v1",
+  "status": "READY_FOR_SINGLE_STRUCTURE_ONLY_REPAIR_RERUN",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "policy_result_access_authorized": false,
+  "policy_results_read": false,
+  "repair_qualification_sha256": "a7e5e34aa252f4109e464bf5d4c707cb6216ece80fc9442116beb218f9946d89",
+  "first_v1_hold_receipt_sha256": "5e384b76d7c24bc8622d2271567fadca94ce353d0bffa34555ca5caeb2c26132",
+  "source": {
+    "revision": "b1979916ec1549b10a4e65e630bc6504a9af1b00",
+    "problem_file_count": 1016,
+    "parser_runtime": "/data/wyt/port010-successor-formal-goal-coupling-20260828/BEHAVIOR-1K-v3.9.2-fresh-sparse/bddl3"
+  },
+  "code": {
+    "original_v1_metric_sha256": "d5b6af81d4be8b2ddd552beacf57d8fd874c2a81b4467025ca7ea27f59f56e73",
+    "v1_1_metric_sha256": "e13200656ca341e5597ad1999b97477dc80d50d19a9e8860d58894a636c66e53",
+    "distribution_gate_sha256": "a5e8d21c0baea9f7d3305061e79af8ee1cd74a5a023b3aa00f41b317a036fba0",
+    "scanner_v1_1_sha256": "10f51e0c3eef5fa5c13fb05b0c45af71fa61723dabfc55742bdf8f514bed1607",
+    "v1_1_test_sha256": "866df1a936bb02ff6c11f1af5d12466963215d7069325cd91d1421e3bdd02039"
+  },
+  "frozen_gates": {
+    "min_nontrivial_tasks_atomic_goal_count_ge_2": 100,
+    "max_dominant_value_fraction_atomic_goal_count": 0.9,
+    "max_dominant_value_fraction_shared_argument_edge_count": 0.9,
+    "max_abs_spearman_edges_vs_atomic_goal_count": 0.9,
+    "max_branch_bearing_task_fraction": 0.3,
+    "branch_bearing_definition": "branch_operator_count > 0 (or/imply present)",
+    "parser_error_tasks": 0,
+    "unbound_variable_tasks": 0,
+    "decision": "any gate failure => HOLD/STOP before policy outcome access; do not tune metric from task outcomes"
+  },
+  "tests": {
+    "v1_1_metric_tests": 12,
+    "distribution_gate_tests": 5,
+    "status": "PASS"
+  },
+  "output": "generated/behavior-formal-goal-coupling-structure-scan-v1-1-20260828.json",
+  "output_must_not_preexist": true,
+  "max_reruns": 1,
+  "no_further_repair_from_distribution": true,
+  "compile_sha256": "cba334652b4acbc3bb564637128964c0bd710872e635efd4f2c77ca56e4746a5"
+}

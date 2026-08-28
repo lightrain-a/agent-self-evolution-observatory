@@ -1,0 +1,79 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-2026-release-baseline-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-PUBLIC-OUTCOME",
+  "status": "BASELINE_NO_2026_PUBLIC_OUTCOME_RELEASE",
+  "scientific_authority": false,
+  "analysis_authority": false,
+  "provider_authority": false,
+  "gpu_authority": false,
+  "policy_outcomes_read": false,
+  "behavior_source": {
+    "repo": "https://github.com/StanfordVL/BEHAVIOR-1K",
+    "tag": "v3.9.2",
+    "revision": "b1979916ec1549b10a4e65e630bc6504a9af1b00",
+    "task_data": {
+      "path": "docs/challenge/task_data.json",
+      "blob_sha": "d607cd8b694b46b7a8c45cec05fe9ee3e3524121",
+      "sha256": "9bea32b2860a36ac11f9425c944c16b260a1b71e649389e0097169b117e4e8e7",
+      "bytes": 45803
+    },
+    "evaluation_doc": {
+      "path": "docs/challenge/evaluation.md",
+      "blob_sha": "8f5ec9f50f3686bf1b69cc4cd7e9542c161fed46",
+      "sha256": "d8eeab47f02b668e5e8a3bf43705f8c513d9b348d86e0e0acda3352ef49feab1",
+      "bytes": 15858
+    },
+    "submission_doc": {
+      "path": "docs/challenge/submission.md",
+      "blob_sha": "d7cfd2415674fb9f17458bed14763b699d0c30a5",
+      "sha256": "8f3393fe4d305fff1e50a4f3608acf91e4235ad8c73994a7591f6f7490801bd7",
+      "bytes": 5758
+    },
+    "challenge100_structure_projection": "generated/behavior-formal-goal-coupling-challenge100-structure-projection-20260828.json",
+    "challenge100_structure_projection_file_sha256": "732982d3880d2556cf49ecbe064f2310c604e1405a8f4671d11bfaf0cdfdea93",
+    "task_ids_sha256": "4bd05a360c92c06d3b9858552a118b8eba004cd392f05cd281a1233d1f18ee96",
+    "task_count": 100
+  },
+  "leaderboard_space": {
+    "repo": "behavior-1k/2026-challenge-leaderboard",
+    "sha": "5822bbe9010fa1c6f60aefb09f7cca435532adc7",
+    "last_modified": "2026-08-25T00:59:33.000Z",
+    "runtime_stage": "RUNNING",
+    "data_files": {
+      "data/submissions.jsonl": {
+        "oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0
+      },
+      "data/results.jsonl": {
+        "oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0
+      },
+      "data/per_task_results.jsonl": {
+        "oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "size": 0
+      },
+      "data/2025_results.jsonl": {
+        "oid": "9b472a6c4bc6ea8964780b1d0e104c10a12a7513",
+        "size": 4222
+      },
+      "data/README.md": {
+        "oid": "3f71bebf539d5d90e209c2b75f52e836203f01ef",
+        "size": 2115
+      }
+    },
+    "2026_target_files": [
+      "data/submissions.jsonl",
+      "data/results.jsonl",
+      "data/per_task_results.jsonl"
+    ],
+    "2026_target_files_all_empty": true,
+    "2025_results_is_not_2026_trigger": true
+  },
+  "release_trigger": {
+    "trigger_only_if": "OID or size changes for at least one 2026 target file relative to this baseline",
+    "non_trigger": "changes only to data/2025_results.jsonl, app, README, portal code, likes, running-agent count, or private submission activity",
+    "trigger_effect": "request new zero-authority source/admission audit only; never authorize scientific outcome analysis by itself"
+  },
+  "next_state": "WATCH_2026_VERIFIED_PUBLIC_RESULT_RELEASE",
+  "baseline_sha256": "852223223ac8304334e50c2b1efb6eedef7b4f71f1c6c9bfe1ae1c91786a5c14"
+}

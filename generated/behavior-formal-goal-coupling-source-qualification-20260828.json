@@ -1,0 +1,154 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-source-qualification-v1",
+  "generated_at": "2026-08-28T04:26:56+00:00",
+  "provisional_key": "SUCC-C-FORMAL-GOAL-COUPLING",
+  "new_canonical_id_required": true,
+  "parent_candidate_id": "PORT-010",
+  "parent_disposition": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+  "may_reopen_parent": false,
+  "status": "SCHEMA_QUALIFIED_SYNTHETIC_GATE_PASS_TASK_DISTRIBUTION_NOT_SCANNED",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "policy_outcome_access_authorized": false,
+  "task_distribution_inspected": false,
+  "policy_outcomes_inspected": false,
+  "scientific_object": "formal goal coupling in independently authored BDDL success conditions: whether shared-object/variable coupling among formal goal predicates defines a reproducible performance-associated regime after separating goal size; not a claim about execution order or planning causality",
+  "source": {
+    "name": "BEHAVIOR-1K / BDDL",
+    "repo": "https://github.com/StanfordVL/BEHAVIOR-1K",
+    "tag": "v3.9.2",
+    "tag_commit": "b1979916ec1549b10a4e65e630bc6504a9af1b00",
+    "schema_files": {
+      "bddl3/docs/activity_definition.md": "4caeccba8068666841eaf6e0781a44e11e6f4d34af469dd011dbe38c22192e40",
+      "bddl3/bddl/parsing.py": "04b19958ea10e3ea4a8d777b0032da78d7d750db930124bfd86f9d04b2e20dfa",
+      "bddl3/bddl/logic_base.py": "9b079058e45fbb1c0f22205fa80cd4a49630a24d05d49957049b7746381db094",
+      "bddl3/bddl/condition_evaluation.py": "e4e7c236f49a871b576666ccada4bc6e31b18c50f25361364de56bd7de013cb8",
+      "OmniGibson/omnigibson/termination_conditions/predicate_goal.py": "af578a68094d065fed64fad240a8ecdb0510365757b61ce0c22df93032c17c15"
+    },
+    "qualified_schema_facts": [
+      ":goal is an author-defined logical success condition over task objects",
+      "standard and/or/not/imply/forall/exists plus BDDL forn/forpairs/fornpairs are first-class goal operators",
+      "parse_problem returns the formal goal_state without requiring policy outcomes",
+      "PredicateGoal checks formal goal-condition satisfaction for task success"
+    ],
+    "forbidden_source_exposure_before_metric_freeze": "no activity-definition distribution statistics or policy outcome/reward/demo analysis occurred before this receipt"
+  },
+  "frozen_metric_hierarchy": {
+    "primary_coupling_predictor": "shared_argument_edge_count",
+    "mandatory_size_companion": "atomic_goal_count",
+    "later_interpretation_rule": "shared_argument_edge_count is never interpreted without conditioning/reporting atomic_goal_count",
+    "confirmatory_structural_descriptors": [
+      "largest_connected_component_size",
+      "goal_logic_depth"
+    ],
+    "secondary_only": [
+      "quantifier_count",
+      "branch_operator_count",
+      "coupling_density",
+      "mean_degree",
+      "atomic_occurrence_count",
+      "duplicate_atomic_occurrences"
+    ],
+    "init_features_in_first_lane": false,
+    "graph_rules": {
+      "nodes": "unique signed atomic leaves after scope-aware alpha-renaming; exact duplicate signed leaves collapse",
+      "edges": "binary undirected edge iff two nodes share a literal grounded argument or the exact same scope-aware bound variable",
+      "quantifiers": "never ground into object-domain instances; disjoint binders are alpha-renamed apart",
+      "negation": "affects signed identity and logical depth but not coupling arguments",
+      "branching": "full-AST conservative graph; or/imply counted separately because alternatives can overapproximate simultaneous constraints",
+      "implicit_top_level_conjunction_depth": "excluded"
+    }
+  },
+  "frozen_distribution_gate_before_policy_outcomes": {
+    "min_nontrivial_tasks_atomic_goal_count_ge_2": 100,
+    "max_dominant_value_fraction_atomic_goal_count": 0.9,
+    "max_dominant_value_fraction_shared_argument_edge_count": 0.9,
+    "max_abs_spearman_edges_vs_atomic_goal_count": 0.9,
+    "max_branch_bearing_task_fraction": 0.3,
+    "branch_bearing_definition": "branch_operator_count > 0 (or/imply present)",
+    "parser_error_tasks": 0,
+    "unbound_variable_tasks": 0,
+    "decision": "any gate failure => HOLD/STOP before policy outcome access; do not tune metric from task outcomes"
+  },
+  "synthetic_gate": {
+    "spec_path": "research_pipeline/behavior_formal_goal_coupling_synthetic_cases_20260828.json",
+    "spec_sha256": "b5936e2b6fa8b999ddf42cfd31a3ea5c5420b23dc6f20a9f991aad46fdf3286f",
+    "metric_code_path": "research_pipeline/behavior_formal_goal_coupling.py",
+    "metric_code_sha256": "d5b6af81d4be8b2ddd552beacf57d8fd874c2a81b4467025ca7ea27f59f56e73",
+    "test_path": "research_pipeline/test_behavior_formal_goal_coupling.py",
+    "test_sha256": "91e8b601208466295d7525cdda66944486665170bc6417f63eac8e8831910211",
+    "frozen_cases": 10,
+    "unit_tests": 9,
+    "unit_test_status": "PASS",
+    "official_parser_integration": {
+      "parser_revision": "b1979916ec1549b10a4e65e630bc6504a9af1b00",
+      "synthetic_cases": [
+        "forall+and",
+        "forpairs+and+not",
+        "forall+imply+or"
+      ],
+      "status": "PASS",
+      "pair_case_result": {
+        "shared_argument_edge_count": 2,
+        "goal_logic_depth": 4
+      }
+    }
+  },
+  "independent_reviews": {
+    "schema_review": [
+      {
+        "model": "kimi-k3",
+        "verdict": "QUALIFY-SCHEMA",
+        "path": "generated/behavior-formal-goal-coupling-reviews-20260828/kimi-schema-review.json",
+        "sha256": "8196278f1d290463178cf7dfd6fa281b1599882fdccd0c0a017ce5b3629ca095"
+      },
+      {
+        "model": "deepseek-v4-pro-ga-260813",
+        "verdict": "QUALIFY-SCHEMA",
+        "path": "generated/behavior-formal-goal-coupling-reviews-20260828/deepseek-schema-review.json",
+        "sha256": "44a2faaa2df1eab62f25ff29a9cd047d3399662fb35fde6a96a0fdb03be2c07d"
+      }
+    ],
+    "metric_synthesis": {
+      "path": "generated/behavior-formal-goal-coupling-reviews-20260828/metric-synthesis-reviews.json",
+      "sha256": "0ee80d2677c80e500fc9c186f6d40037a910aff2223f6c5bed077e93a1a098c7",
+      "kimi_verdict": "FREEZE-FOR-TASK-DISTRIBUTION-SCAN conditional on quantitative branch threshold",
+      "deepseek_verdict": "FREEZE-FOR-TASK-DISTRIBUTION-SCAN",
+      "required_kimi_change_resolved": "branch-bearing fraction HOLD threshold frozen at >0.30 before scan"
+    },
+    "synthetic_annotation": {
+      "kimi_first_pass": "9/10 structurally consistent; S10 output self-inconsistent and not used as formal truth",
+      "deepseek_first_pass": "9/10; S10 corrected after explicit frozen-rule clarification to edges=2/depth=4",
+      "formal_oracle": "frozen metric rules + official parser integration, never AI vote",
+      "files": [
+        {
+          "path": "generated/behavior-formal-goal-coupling-reviews-20260828/kimi-synthetic-annotation.json",
+          "sha256": "e28e96e898c74fd8c8e19ec4feed4df822a2b32bade8e73f08b7df49f6135f93"
+        },
+        {
+          "path": "generated/behavior-formal-goal-coupling-reviews-20260828/deepseek-synthetic-annotation.json",
+          "sha256": "5f99917f4cc192b186f92aa8743bb800b428617c5ef65621f8fe95b1279445ef"
+        },
+        {
+          "path": "generated/behavior-formal-goal-coupling-reviews-20260828/s10-recheck.json",
+          "sha256": "921790a5bbda9fe555813aaa54f0e7996b9af26a20484615bd210f63e92466f3"
+        }
+      ]
+    }
+  },
+  "forbidden_claims": [
+    "formal goal coupling causes execution-order difficulty",
+    "formal goal coupling causes planning depth or policy failure",
+    "any positive successor result rescues or reopens PORT-010",
+    "schema qualification is evidence of a policy-outcome effect"
+  ],
+  "next_gate": "scan exact-revision BDDL activity-definition structure only; compute frozen distribution gates; keep policy outcomes/rewards/demos closed",
+  "authority": {
+    "problem_gate": false,
+    "method": false,
+    "experiment": false,
+    "policy_outcome_access": false,
+    "gpu": false
+  },
+  "qualification_sha256": "db92a910f73f48c749490b71154f664abaab51efb7e3aafbb9628168fa271665"
+}

@@ -1,0 +1,1010 @@
+{
+  "source_task_data_sha256": "9bea32b2860a36ac11f9425c944c16b260a1b71e649389e0097169b117e4e8e7",
+  "task_ids": [
+    "turning_on_radio",
+    "picking_up_trash",
+    "putting_away_Halloween_decorations",
+    "cleaning_up_plates_and_food",
+    "can_meat",
+    "setting_mousetraps",
+    "hiding_Easter_eggs",
+    "picking_up_toys",
+    "rearranging_kitchen_furniture",
+    "putting_up_Christmas_decorations_inside",
+    "set_up_a_coffee_station_in_your_kitchen",
+    "putting_dishes_away_after_cleaning",
+    "preparing_lunch_box",
+    "loading_the_car",
+    "carrying_in_groceries",
+    "bringing_in_wood",
+    "moving_boxes_to_storage",
+    "bringing_water",
+    "tidying_bedroom",
+    "outfit_a_basic_toolbox",
+    "sorting_vegetables",
+    "collecting_childrens_toys",
+    "putting_shoes_on_rack",
+    "boxing_books_up_for_storage",
+    "storing_food",
+    "clearing_food_from_table_into_fridge",
+    "assembling_gift_baskets",
+    "sorting_household_items",
+    "getting_organized_for_work",
+    "clean_up_your_desk",
+    "setting_the_fire",
+    "clean_boxing_gloves",
+    "wash_a_baseball_cap",
+    "wash_dog_toys",
+    "hanging_pictures",
+    "attach_a_camera_to_a_tripod",
+    "clean_a_patio",
+    "clean_a_trumpet",
+    "spraying_for_bugs",
+    "spraying_fruit_trees",
+    "make_microwave_popcorn",
+    "cook_cabbage",
+    "chop_an_onion",
+    "slicing_vegetables",
+    "chopping_wood",
+    "cook_hot_dogs",
+    "cook_bacon",
+    "freeze_pies",
+    "canning_food",
+    "make_pizza",
+    "freeze_fruit",
+    "cook_a_brisket",
+    "sorting_bottles_cans_and_paper",
+    "tidying_living_room",
+    "putting_away_toys",
+    "re_shelving_library_books",
+    "make_rose_centerpieces",
+    "sweeping_garage",
+    "stacking_wood",
+    "organizing_art_supplies",
+    "scrubbing_bathroom_floor",
+    "bringing_paper_to_recycling",
+    "halve_an_egg",
+    "installing_smoke_detectors",
+    "setting_the_table",
+    "unloading_the_car",
+    "turning_out_all_lights_before_sleep",
+    "boxing_food_after_dinner",
+    "cleaning_up_branches_and_twigs",
+    "vacuuming_floors",
+    "thawing_frozen_food",
+    "clean_your_rusty_garden_tools",
+    "cook_a_frozen_pie",
+    "organizing_school_stuff",
+    "carrying_out_garden_furniture",
+    "put_together_a_basic_pruning_kit",
+    "dispose_of_glass",
+    "installing_a_modem",
+    "make_cabinet_doors",
+    "polishing_shoes",
+    "clean_up_broken_glass",
+    "packing_meal_for_delivery",
+    "store_batteries",
+    "store_honey",
+    "tidying_bathroom",
+    "putting_dirty_dishes_in_sink",
+    "make_gift_bags_for_baby_showers",
+    "collecting_aluminum_cans",
+    "rearrange_your_room",
+    "installing_a_fax_machine",
+    "composting_waste",
+    "store_produce",
+    "installing_a_scanner",
+    "clean_a_keyboard",
+    "dispose_of_batteries",
+    "cook_brussels_sprouts",
+    "cook_broccolini",
+    "setup_a_bar_for_a_cocktail_party",
+    "laying_tile_floors",
+    "sorting_books_on_shelf"
+  ],
+  "task_ids_sha256": "4bd05a360c92c06d3b9858552a118b8eba004cd392f05cd281a1233d1f18ee96",
+  "policy_results_read": false,
+  "human_demo_duration_used": false,
+  "rows": [
+    {
+      "activity": "turning_on_radio",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "picking_up_trash",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "putting_away_Halloween_decorations",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 6
+    },
+    {
+      "activity": "cleaning_up_plates_and_food",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 6
+    },
+    {
+      "activity": "can_meat",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 4
+    },
+    {
+      "activity": "setting_mousetraps",
+      "atomic_goal_count": 3,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 4,
+      "branch_operator_count": 1,
+      "quantifier_count": 4
+    },
+    {
+      "activity": "hiding_Easter_eggs",
+      "atomic_goal_count": 3,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 4,
+      "branch_operator_count": 0,
+      "quantifier_count": 3
+    },
+    {
+      "activity": "picking_up_toys",
+      "atomic_goal_count": 3,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 6
+    },
+    {
+      "activity": "rearranging_kitchen_furniture",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 6,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 4,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "putting_up_Christmas_decorations_inside",
+      "atomic_goal_count": 7,
+      "shared_argument_edge_count": 3,
+      "largest_connected_component_size": 3,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 1,
+      "quantifier_count": 9
+    },
+    {
+      "activity": "set_up_a_coffee_station_in_your_kitchen",
+      "atomic_goal_count": 6,
+      "shared_argument_edge_count": 11,
+      "largest_connected_component_size": 6,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "putting_dishes_away_after_cleaning",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 3
+    },
+    {
+      "activity": "preparing_lunch_box",
+      "atomic_goal_count": 5,
+      "shared_argument_edge_count": 6,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "loading_the_car",
+      "atomic_goal_count": 3,
+      "shared_argument_edge_count": 2,
+      "largest_connected_component_size": 3,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "carrying_in_groceries",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "bringing_in_wood",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "moving_boxes_to_storage",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 6,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 1,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "bringing_water",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "tidying_bedroom",
+      "atomic_goal_count": 3,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "outfit_a_basic_toolbox",
+      "atomic_goal_count": 7,
+      "shared_argument_edge_count": 21,
+      "largest_connected_component_size": 7,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "sorting_vegetables",
+      "atomic_goal_count": 5,
+      "shared_argument_edge_count": 2,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 4,
+      "branch_operator_count": 0,
+      "quantifier_count": 8
+    },
+    {
+      "activity": "collecting_childrens_toys",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 6,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 4,
+      "branch_operator_count": 0,
+      "quantifier_count": 5
+    },
+    {
+      "activity": "putting_shoes_on_rack",
+      "atomic_goal_count": 6,
+      "shared_argument_edge_count": 4,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 4,
+      "branch_operator_count": 0,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "boxing_books_up_for_storage",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "storing_food",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 8
+    },
+    {
+      "activity": "clearing_food_from_table_into_fridge",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 3
+    },
+    {
+      "activity": "assembling_gift_baskets",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 4
+    },
+    {
+      "activity": "sorting_household_items",
+      "atomic_goal_count": 7,
+      "shared_argument_edge_count": 6,
+      "largest_connected_component_size": 5,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "getting_organized_for_work",
+      "atomic_goal_count": 10,
+      "shared_argument_edge_count": 19,
+      "largest_connected_component_size": 10,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "clean_up_your_desk",
+      "atomic_goal_count": 8,
+      "shared_argument_edge_count": 8,
+      "largest_connected_component_size": 6,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 3
+    },
+    {
+      "activity": "setting_the_fire",
+      "atomic_goal_count": 5,
+      "shared_argument_edge_count": 4,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "clean_boxing_gloves",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "wash_a_baseball_cap",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "wash_dog_toys",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 2,
+      "largest_connected_component_size": 3,
+      "goal_logic_depth": 4,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "hanging_pictures",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "attach_a_camera_to_a_tripod",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "clean_a_patio",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "clean_a_trumpet",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "spraying_for_bugs",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "spraying_fruit_trees",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "make_microwave_popcorn",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "cook_cabbage",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 3,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "chop_an_onion",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 2,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "slicing_vegetables",
+      "atomic_goal_count": 7,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 3
+    },
+    {
+      "activity": "chopping_wood",
+      "atomic_goal_count": 8,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "cook_hot_dogs",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "cook_bacon",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "freeze_pies",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 3
+    },
+    {
+      "activity": "canning_food",
+      "atomic_goal_count": 9,
+      "shared_argument_edge_count": 9,
+      "largest_connected_component_size": 6,
+      "goal_logic_depth": 4,
+      "branch_operator_count": 0,
+      "quantifier_count": 3
+    },
+    {
+      "activity": "make_pizza",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "freeze_fruit",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 3
+    },
+    {
+      "activity": "cook_a_brisket",
+      "atomic_goal_count": 3,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "sorting_bottles_cans_and_paper",
+      "atomic_goal_count": 12,
+      "shared_argument_edge_count": 24,
+      "largest_connected_component_size": 12,
+      "goal_logic_depth": 5,
+      "branch_operator_count": 0,
+      "quantifier_count": 7
+    },
+    {
+      "activity": "tidying_living_room",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "putting_away_toys",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "re_shelving_library_books",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "make_rose_centerpieces",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 6,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "sweeping_garage",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "stacking_wood",
+      "atomic_goal_count": 6,
+      "shared_argument_edge_count": 15,
+      "largest_connected_component_size": 6,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 1,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "organizing_art_supplies",
+      "atomic_goal_count": 5,
+      "shared_argument_edge_count": 10,
+      "largest_connected_component_size": 5,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "scrubbing_bathroom_floor",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "bringing_paper_to_recycling",
+      "atomic_goal_count": 3,
+      "shared_argument_edge_count": 3,
+      "largest_connected_component_size": 3,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "halve_an_egg",
+      "atomic_goal_count": 5,
+      "shared_argument_edge_count": 3,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "installing_smoke_detectors",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "setting_the_table",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 4
+    },
+    {
+      "activity": "unloading_the_car",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "turning_out_all_lights_before_sleep",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "boxing_food_after_dinner",
+      "atomic_goal_count": 5,
+      "shared_argument_edge_count": 3,
+      "largest_connected_component_size": 3,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "cleaning_up_branches_and_twigs",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "vacuuming_floors",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "thawing_frozen_food",
+      "atomic_goal_count": 9,
+      "shared_argument_edge_count": 7,
+      "largest_connected_component_size": 5,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "clean_your_rusty_garden_tools",
+      "atomic_goal_count": 5,
+      "shared_argument_edge_count": 6,
+      "largest_connected_component_size": 5,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "cook_a_frozen_pie",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "organizing_school_stuff",
+      "atomic_goal_count": 6,
+      "shared_argument_edge_count": 15,
+      "largest_connected_component_size": 6,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "carrying_out_garden_furniture",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "put_together_a_basic_pruning_kit",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 6,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "dispose_of_glass",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "installing_a_modem",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 5,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "make_cabinet_doors",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "polishing_shoes",
+      "atomic_goal_count": 6,
+      "shared_argument_edge_count": 8,
+      "largest_connected_component_size": 5,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "clean_up_broken_glass",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "packing_meal_for_delivery",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "store_batteries",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "store_honey",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "tidying_bathroom",
+      "atomic_goal_count": 4,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "putting_dirty_dishes_in_sink",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "make_gift_bags_for_baby_showers",
+      "atomic_goal_count": 3,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 3
+    },
+    {
+      "activity": "collecting_aluminum_cans",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "rearrange_your_room",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "installing_a_fax_machine",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "composting_waste",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "store_produce",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 4,
+      "branch_operator_count": 0,
+      "quantifier_count": 3
+    },
+    {
+      "activity": "installing_a_scanner",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 1,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "clean_a_keyboard",
+      "atomic_goal_count": 1,
+      "shared_argument_edge_count": 0,
+      "largest_connected_component_size": 1,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 0
+    },
+    {
+      "activity": "dispose_of_batteries",
+      "atomic_goal_count": 2,
+      "shared_argument_edge_count": 1,
+      "largest_connected_component_size": 2,
+      "goal_logic_depth": 2,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "cook_brussels_sprouts",
+      "atomic_goal_count": 5,
+      "shared_argument_edge_count": 4,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 1
+    },
+    {
+      "activity": "cook_broccolini",
+      "atomic_goal_count": 5,
+      "shared_argument_edge_count": 5,
+      "largest_connected_component_size": 5,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 0,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "setup_a_bar_for_a_cocktail_party",
+      "atomic_goal_count": 12,
+      "shared_argument_edge_count": 21,
+      "largest_connected_component_size": 11,
+      "goal_logic_depth": 4,
+      "branch_operator_count": 1,
+      "quantifier_count": 4
+    },
+    {
+      "activity": "laying_tile_floors",
+      "atomic_goal_count": 5,
+      "shared_argument_edge_count": 6,
+      "largest_connected_component_size": 4,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 1,
+      "quantifier_count": 2
+    },
+    {
+      "activity": "sorting_books_on_shelf",
+      "atomic_goal_count": 10,
+      "shared_argument_edge_count": 8,
+      "largest_connected_component_size": 3,
+      "goal_logic_depth": 3,
+      "branch_operator_count": 3,
+      "quantifier_count": 6
+    }
+  ]
+}

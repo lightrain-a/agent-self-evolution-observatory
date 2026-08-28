@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "BEHAVIOR_FORMAL_GOAL_COUPLING_2025_PUBLIC_OUTCOME_FAILURE_ASSETS",
+  "source_adjudication": "generated/behavior-formal-goal-coupling-2025-public-outcome-adjudication-20260828.json#sha256=8645ec0bf1400bd832f914a1d8fcb95d531b557f2ad1f05296ef279bf97a8c53",
+  "public_outcome_coverage_asset": {
+    "signature": "experiment_identifiability:public-outcome-completeness-shortfall",
+    "idea_id": "SUCC-C-BEHAVIOR2025-PUBLIC-OUTCOME",
+    "diagnosis": "public-outcome-completeness-shortfall",
+    "affected_layer": "experiment_identifiability",
+    "reusable_precheck": "Before opening historical public benchmark outcomes for a task-structure analysis, freeze the required task-by-instance coverage and minimum number of independent policies. Audit every candidate artifact against that coverage before scientific statistics. Rich per-rollout public files are not sufficient if no policy supplies a complete outcome matrix for the frozen estimand; do not lower the coverage threshold after seeing the missingness pattern.",
+    "evidence_ref": "repo:generated/behavior-formal-goal-coupling-2025-public-outcome-adjudication-20260828.json#sha256=8645ec0bf1400bd832f914a1d8fcb95d531b557f2ad1f05296ef279bf97a8c53",
+    "does_not_imply": "formal goal coupling is false, task structure is unrelated to policy performance, or a future complete public/local replication would fail",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "experiment_identifiability",
+      "experiment_family": "secondary analysis of historical multi-policy benchmark outcomes",
+      "failure_mode": "public outcome artifacts exist but none satisfies the preregistered complete task-by-instance coverage and independent-policy count",
+      "required_separation": "artifact availability versus scientific outcome identifiability"
+    },
+    "reuse_effectiveness": {"reuse_count": 0, "helped_count": 0, "hurt_count": 0, "status": "not-yet-measured"},
+    "superseded_by": "",
+    "last_revalidated": "2026-08-28",
+    "source_decision": "CLOSE_CONFIRMATORY_PUBLIC_2025_OUTCOME_LANE_COVERAGE_SHORTFALL",
+    "scientific_authority": false
+  },
+  "missing_zero_estimand_asset": {
+    "signature": "operationalization:missing-as-zero-estimand-drift",
+    "idea_id": "SUCC-C-BEHAVIOR2025-PUBLIC-OUTCOME",
+    "diagnosis": "missing-as-zero-estimand-drift",
+    "affected_layer": "operationalization",
+    "reusable_precheck": "Distinguish benchmark leaderboard missing-value policy from the scientific estimand before outcome access. If the scientific question concerns performance under executed trials, do not convert non-attempted or missing rollouts to failures merely because the competition leaderboard counts missing files as zero. Zero-imputation or attempted-only aggregation after observing incomplete coverage is an estimand change and requires a new exploratory object, not a rescue of the frozen confirmatory analysis.",
+    "evidence_ref": "repo:generated/behavior-formal-goal-coupling-2025-public-outcome-adjudication-20260828.json#sha256=8645ec0bf1400bd832f914a1d8fcb95d531b557f2ad1f05296ef279bf97a8c53",
+    "does_not_imply": "the official leaderboard scoring rule is incorrect; it only means leaderboard scoring and complete-execution scientific inference answer different questions",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "operationalization",
+      "experiment_family": "benchmark analyses with incomplete or selectively missing rollout artifacts",
+      "failure_mode": "competition missing-as-zero rule is reused as if it measured executed-task failure, silently changing the estimand",
+      "required_separation": "non-attempt/missingness versus observed execution failure"
+    },
+    "reuse_effectiveness": {"reuse_count": 0, "helped_count": 0, "hurt_count": 0, "status": "not-yet-measured"},
+    "superseded_by": "",
+    "last_revalidated": "2026-08-28",
+    "source_decision": "NO_CONFIRMATORY_RESCUE_VIA_MISSING_ZERO_OR_ATTEMPTED_ONLY_MEANS",
+    "scientific_authority": false
+  },
+  "scientific_authority": false
+}

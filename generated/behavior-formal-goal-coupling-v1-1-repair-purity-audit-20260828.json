@@ -1,0 +1,106 @@
+{
+  "status": "FAIL",
+  "v1_receipt_sha256": "5e384b76d7c24bc8622d2271567fadca94ce353d0bffa34555ca5caeb2c26132",
+  "v1_1_receipt_sha256": "3ad459be0993410ba8ed878775cf08a59c4f247e507380a49d9825cc1a501d1f",
+  "tasks_compared": 1016,
+  "scientific_metric_differences_excluding_unbound": 23,
+  "unbound_task_count_before": 957,
+  "unbound_task_count_after": 0,
+  "metric_v1_1_sha_matches_compile": true,
+  "scanner_v1_1_sha_matches_compile": true,
+  "distribution_gate_sha_matches_compile": true,
+  "policy_results_read": false,
+  "scientific_authority": false,
+  "first_differences": [
+    [
+      [
+        "cleaning_up_refrigerator",
+        "problem0.bddl"
+      ],
+      "shared_argument_edge_count",
+      6,
+      8
+    ],
+    [
+      [
+        "cleaning_up_refrigerator",
+        "problem0.bddl"
+      ],
+      "mean_degree",
+      1.5,
+      2.0
+    ],
+    [
+      [
+        "cleaning_up_refrigerator",
+        "problem0.bddl"
+      ],
+      "coupling_density",
+      0.21428571428571427,
+      0.2857142857142857
+    ],
+    [
+      [
+        "cook_a_frozen_pie",
+        "problem0.bddl"
+      ],
+      "shared_argument_edge_count",
+      0,
+      1
+    ],
+    [
+      [
+        "cook_a_frozen_pie",
+        "problem0.bddl"
+      ],
+      "largest_connected_component_size",
+      1,
+      2
+    ],
+    [
+      [
+        "cook_a_frozen_pie",
+        "problem0.bddl"
+      ],
+      "mean_degree",
+      0.0,
+      1.0
+    ],
+    [
+      [
+        "cook_a_frozen_pie",
+        "problem0.bddl"
+      ],
+      "coupling_density",
+      0.0,
+      1.0
+    ],
+    [
+      [
+        "cook_arepas",
+        "problem0.bddl"
+      ],
+      "shared_argument_edge_count",
+      1,
+      2
+    ],
+    [
+      [
+        "cook_arepas",
+        "problem0.bddl"
+      ],
+      "largest_connected_component_size",
+      2,
+      3
+    ],
+    [
+      [
+        "cook_arepas",
+        "problem0.bddl"
+      ],
+      "mean_degree",
+      0.6666666666666666,
+      1.3333333333333333
+    ]
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-2026-release-watch-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-PUBLIC-OUTCOME",
+  "status": "WATCH_STABLE_NO_2026_PUBLIC_RESULT_RELEASE_CHANGE",
+  "scientific_authority": false,
+  "analysis_authority": false,
+  "provider_authority": false,
+  "gpu_authority": false,
+  "policy_outcome_values_read": false,
+  "baseline_sha256": "852223223ac8304334e50c2b1efb6eedef7b4f71f1c6c9bfe1ae1c91786a5c14",
+  "baseline_space_sha": "5822bbe9010fa1c6f60aefb09f7cca435532adc7",
+  "current_space_sha": "5822bbe9010fa1c6f60aefb09f7cca435532adc7",
+  "current_last_modified": "2026-08-25T00:59:33.000Z",
+  "changed_2026_target_files": [],
+  "ignored_2025_results_changed": false,
+  "triggered": false,
+  "trigger_effect": "zero-authority source/admission recheck only; this watch never authorizes outcome analysis",
+  "receipt_sha256": "294f10c5edd78db559272c63fe8056582d8119384ad9d449bcd6583b48ebb8c6"
+}

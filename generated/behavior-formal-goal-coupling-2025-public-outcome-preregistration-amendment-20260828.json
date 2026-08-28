@@ -1,0 +1,59 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-2025-public-outcome-preregistration-amendment-v1",
+  "object_id": "SUCC-C-BEHAVIOR2025-PUBLIC-OUTCOME",
+  "base_preregistration_sha256": "d17038af921bdf886e8233080b19b1025440724512b3d6a677815ce293eca8b8",
+  "status": "PRE_OUTCOME_AMENDMENT_FROZEN_PASS_FOR_ONE_SHOT_ARTIFACT_ADMISSION",
+  "scientific_authority": false,
+  "policy_outcome_access_authorized_for_analysis": false,
+  "one_shot_schema_coverage_admission_authorized": true,
+  "outcomes_read_before_amendment": false,
+  "unchanged_primary_estimand": "task-level equal-weight Q_bar across all admitted full submissions; n=50 fixed tasks",
+  "heterogeneity_rule": "per-submission slopes remain mandatory corroboration; cross-policy wording requires median beta_edge<0 and >=2/3 beta_edge<0",
+  "single_method_change": {
+    "removed": "within-exact-atomic_goal_count edge permutation falsifier",
+    "replacement": "Freedman-Lane residual permutation falsifier",
+    "procedure": "fit reduced Q_bar~atomic_goal_count; save fitted and residuals; with fixed seed 20260828 perform exactly 10000 permutations of reduced-model residuals across the 50 fixed tasks; reconstruct Q*=fitted+permuted residual; refit full Q*~shared_argument_edge_count+atomic_goal_count; compare observed abs(beta_edge) against two-sided null abs(beta_edge*) distribution",
+    "pass_rule": "observed abs(beta_edge) strictly exceeds empirical 95th percentile of the 10000 null absolute coefficients",
+    "role": "falsifier/robustness test only; HC3 two-sided alpha=.05 remains primary inference"
+  },
+  "review_consensus": {
+    "initial_reviews": {
+      "kimi": {
+        "path": "generated/behavior-formal-goal-coupling-2025-prereg-reviews-20260828/kimi-review.json",
+        "sha256": "4cec68394315cb4bdf91160057523aafb281063cc81b90c42672798efcad26b2",
+        "verdict": "PASS-FOR-ONE-SHOT-ARTIFACT-ADMISSION"
+      },
+      "deepseek": {
+        "path": "generated/behavior-formal-goal-coupling-2025-prereg-reviews-20260828/deepseek-review.json",
+        "sha256": "3219cc54b599a75052c6ed8d5a9f912bc1be23cecd25fc224cf4ec1e4144f1f0",
+        "verdict": "PASS-FOR-ONE-SHOT-ARTIFACT-ADMISSION"
+      }
+    },
+    "tiebreak": {
+      "kimi": {
+        "path": "generated/behavior-formal-goal-coupling-2025-prereg-reviews-20260828/kimi-tiebreak.json",
+        "sha256": "00bff3d2f3aa91c25e22146b617df644fee183f1e1c6d00e82d8fca9a816c6a6",
+        "primary": "P1",
+        "freedman_lane": "PASS"
+      },
+      "deepseek": {
+        "path": "generated/behavior-formal-goal-coupling-2025-prereg-reviews-20260828/deepseek-tiebreak.json",
+        "sha256": "9149ac2985286bbf19addde8b089282b7efcd7a4c9eaf4ce634962aae75cef1b",
+        "primary": "P1",
+        "freedman_lane": "PASS"
+      }
+    }
+  },
+  "all_other_base_rules_unchanged": true,
+  "forbidden_during_admission": [
+    "scientific statistics",
+    "printing/logging q_score or success values",
+    "ranking submissions",
+    "changing candidate set",
+    "manual schema rescue",
+    "policy self-runs",
+    "using hidden or privileged submissions"
+  ],
+  "after_admission": "freeze admitted artifact set and exact extraction schema in a separate receipt; scientific analysis remains forbidden until that receipt passes structural validation",
+  "amendment_sha256": "c9b57fd77a038bb372522f3b78dff057acd7a39f9e2521033ea058cc4c96925c"
+}

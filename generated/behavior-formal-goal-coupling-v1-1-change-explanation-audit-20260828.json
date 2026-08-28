@@ -1,0 +1,162 @@
+{
+  "status": "PASS",
+  "changed_tasks": 6,
+  "changed_metric_cells": 23,
+  "all_changes_explained_by_mixed_ground_spelling": true,
+  "details": [
+    {
+      "activity": "cleaning_up_refrigerator",
+      "differences": {
+        "shared_argument_edge_count": [
+          6,
+          8
+        ],
+        "mean_degree": [
+          1.5,
+          2.0
+        ],
+        "coupling_density": [
+          0.21428571428571427,
+          0.2857142857142857
+        ]
+      },
+      "mixed_concrete_instances": [
+        "stain.n.01_1"
+      ],
+      "binder_instance_collisions": [],
+      "explained_by_mixed_ground_spelling": true
+    },
+    {
+      "activity": "cook_a_frozen_pie",
+      "differences": {
+        "shared_argument_edge_count": [
+          0,
+          1
+        ],
+        "largest_connected_component_size": [
+          1,
+          2
+        ],
+        "mean_degree": [
+          0.0,
+          1.0
+        ],
+        "coupling_density": [
+          0.0,
+          1.0
+        ]
+      },
+      "mixed_concrete_instances": [
+        "apple_pie.n.01_1"
+      ],
+      "binder_instance_collisions": [],
+      "explained_by_mixed_ground_spelling": true
+    },
+    {
+      "activity": "cook_arepas",
+      "differences": {
+        "shared_argument_edge_count": [
+          1,
+          2
+        ],
+        "largest_connected_component_size": [
+          2,
+          3
+        ],
+        "mean_degree": [
+          0.6666666666666666,
+          1.3333333333333333
+        ],
+        "coupling_density": [
+          0.3333333333333333,
+          0.6666666666666666
+        ]
+      },
+      "mixed_concrete_instances": [
+        "griddle.n.01_1"
+      ],
+      "binder_instance_collisions": [],
+      "explained_by_mixed_ground_spelling": true
+    },
+    {
+      "activity": "cook_brussels_sprouts",
+      "differences": {
+        "shared_argument_edge_count": [
+          3,
+          4
+        ],
+        "largest_connected_component_size": [
+          3,
+          4
+        ],
+        "mean_degree": [
+          1.2,
+          1.6
+        ],
+        "coupling_density": [
+          0.3,
+          0.4
+        ]
+      },
+      "mixed_concrete_instances": [
+        "oven.n.01_1"
+      ],
+      "binder_instance_collisions": [],
+      "explained_by_mixed_ground_spelling": true
+    },
+    {
+      "activity": "preserving_fruit",
+      "differences": {
+        "shared_argument_edge_count": [
+          4,
+          5
+        ],
+        "largest_connected_component_size": [
+          4,
+          5
+        ],
+        "mean_degree": [
+          1.6,
+          2.0
+        ],
+        "coupling_density": [
+          0.4,
+          0.5
+        ]
+      },
+      "mixed_concrete_instances": [
+        "sugar_syrup.n.01_1"
+      ],
+      "binder_instance_collisions": [],
+      "explained_by_mixed_ground_spelling": true
+    },
+    {
+      "activity": "sorting_household_items",
+      "differences": {
+        "shared_argument_edge_count": [
+          4,
+          6
+        ],
+        "largest_connected_component_size": [
+          3,
+          5
+        ],
+        "mean_degree": [
+          1.1428571428571428,
+          1.7142857142857142
+        ],
+        "coupling_density": [
+          0.19047619047619047,
+          0.2857142857142857
+        ]
+      },
+      "mixed_concrete_instances": [
+        "sink.n.01_1"
+      ],
+      "binder_instance_collisions": [],
+      "explained_by_mixed_ground_spelling": true
+    }
+  ],
+  "policy_results_read": false,
+  "scientific_authority": false
+}

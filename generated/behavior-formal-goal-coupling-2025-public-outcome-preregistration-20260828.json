@@ -1,0 +1,309 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-2025-public-outcome-preregistration-v1",
+  "object_id": "SUCC-C-BEHAVIOR2025-PUBLIC-OUTCOME",
+  "parent_structural_object": "SUCC-C-FORMAL-GOAL-COUPLING",
+  "parent_port010_reopen_authorized": false,
+  "status": "OUTCOME_PREREGISTRATION_FROZEN_AWAITING_INDEPENDENT_REVIEW",
+  "scientific_authority": false,
+  "policy_outcome_access_authorized": false,
+  "provider_calls_authorized": false,
+  "gpu_authorized": false,
+  "outcomes_read_before_freeze": false,
+  "scientific_question": "Across independently submitted BEHAVIOR 2025 standard-track policies, is author-defined formal goal coupling associated with lower official task Q after conditioning on atomic goal count?",
+  "claim_boundary": {
+    "allowed": "observational cross-policy association between formal goal coupling and official BEHAVIOR task Q within the fixed 2025 challenge task set",
+    "forbidden": [
+      "causal effect of coupling on planning difficulty",
+      "claim about human difficulty",
+      "generalization beyond BEHAVIOR without new validation",
+      "reopening PORT-010",
+      "using 2026 v3.9.2 goal structure for 2025 outcomes"
+    ]
+  },
+  "historical_source": {
+    "challenge_source_commit": "5a231bf368bf6cfb2ea6fcff7232d306cf7b92fd",
+    "goal_blob_stability": "50/50 challenge problem0.bddl blobs identical from 2025-09-01 through 2025-12-06 across bddl->bddl3 path migration",
+    "problem_manifest_sha256": "64161854a53f4c33f9a9feb70b040d7e885dc149bb8c86999aa8d617a02dd539",
+    "structure_projection_path": "generated/behavior-formal-goal-coupling-2025-challenge50-structure-projection-20260828.json",
+    "structure_projection_sha256": "b9be3b9f612feda927a6b48fa6184c1df1bd99a3569b22336e93ce16f941ea79",
+    "structure_projection_file_sha256": "a7998bf018a52f0b48610309bd3ee57db42e7f38eca42fa8ff8fe87ff4a27e61",
+    "parser_compatibility_path": "generated/behavior-formal-goal-coupling-2025-parser-compatibility-audit-20260828.json",
+    "parser_compatibility_file_sha256": "51239ecf424faffff62c39ad69d92a92b9e70e8b928935cec67d9ca112f0ddc5",
+    "historical_docs": {
+      "docs/challenge/task_data.json": {
+        "blob_sha": "edb71037114d41c011cf6e6b45b6ae11fd8a5f56",
+        "sha256": "7a6d2a69b8d8c20f3fe833217e7b0efecbcce36c5124291729fb0de124c92311",
+        "bytes": 25901,
+        "task_ids": [
+          "turning_on_radio",
+          "picking_up_trash",
+          "putting_away_Halloween_decorations",
+          "cleaning_up_plates_and_food",
+          "can_meat",
+          "setting_mousetraps",
+          "hiding_Easter_eggs",
+          "picking_up_toys",
+          "rearranging_kitchen_furniture",
+          "putting_up_Christmas_decorations_inside",
+          "set_up_a_coffee_station_in_your_kitchen",
+          "putting_dishes_away_after_cleaning",
+          "preparing_lunch_box",
+          "loading_the_car",
+          "carrying_in_groceries",
+          "bringing_in_wood",
+          "moving_boxes_to_storage",
+          "bringing_water",
+          "tidying_bedroom",
+          "outfit_a_basic_toolbox",
+          "sorting_vegetables",
+          "collecting_childrens_toys",
+          "putting_shoes_on_rack",
+          "boxing_books_up_for_storage",
+          "storing_food",
+          "clearing_food_from_table_into_fridge",
+          "assembling_gift_baskets",
+          "sorting_household_items",
+          "getting_organized_for_work",
+          "clean_up_your_desk",
+          "setting_the_fire",
+          "clean_boxing_gloves",
+          "wash_a_baseball_cap",
+          "wash_dog_toys",
+          "hanging_pictures",
+          "attach_a_camera_to_a_tripod",
+          "clean_a_patio",
+          "clean_a_trumpet",
+          "spraying_for_bugs",
+          "spraying_fruit_trees",
+          "make_microwave_popcorn",
+          "cook_cabbage",
+          "chop_an_onion",
+          "slicing_vegetables",
+          "chopping_wood",
+          "cook_hot_dogs",
+          "cook_bacon",
+          "freeze_pies",
+          "canning_food",
+          "make_pizza"
+        ],
+        "task_count": 50
+      },
+      "docs/challenge/evaluation.md": {
+        "blob_sha": "0e3790ece7ea7bd8d88476ffa77d35aa84048136",
+        "sha256": "d5010dcaf5bea370a0fbe9002b5fbec0564c8a1e89f75ca99473e4584a125314",
+        "bytes": 12929
+      },
+      "docs/challenge/submission.md": {
+        "blob_sha": "cd70a5e4ff3c4b37195cd3c29627dd307228515e",
+        "sha256": "d4ee1d1af2d868972b1242c7a9ee74af1ba55a5415500cfe09167202f26df75e",
+        "bytes": 4827
+      }
+    },
+    "human_demo_duration_used": false
+  },
+  "structure_diagnostics": {
+    "tasks": 50,
+    "nontrivial_tasks": 38,
+    "edge_size_spearman": 0.6955151162388529,
+    "edge_size_pearson": 0.6780506922941504,
+    "two_predictor_vif": 1.8510043020752998,
+    "vif_threshold": 10.0,
+    "vif_gate_pass": true,
+    "fallback_if_vif_fails": "HOLD before outcomes; do not select a new model after outcome access",
+    "repair_affected_tasks_in_2025_challenge": [
+      "sorting_household_items"
+    ]
+  },
+  "candidate_artifact_snapshot": {
+    "repo_revision": "b1979916ec1549b10a4e65e630bc6504a9af1b00",
+    "path_rule": "docs/challenge_submissions/standard.public.*.json",
+    "hidden_excluded": true,
+    "privileged_excluded": true,
+    "candidate_count": 15,
+    "candidates": [
+      {
+        "path": "docs/challenge_submissions/standard.public.ACT.Xiamen_University.20251116.json",
+        "blob_sha": "873d84bdbf9c763c4432e72e6bdb2ecc157181e7",
+        "bytes": 72442
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.Ahri+EFFL+MLV.Postech .20251117.json",
+        "blob_sha": "f13081aa81f584accdc50b2147bc35481ecb8773",
+        "bytes": 25515
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.Cloud-Data.Cloud_Data_Technology_Co_Ltd.20251116.json",
+        "blob_sha": "dea7165694e991ca9221ac14a0ebf99b998b2e54",
+        "bytes": 25204
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.Comet.NVIDIA_Research.20251117.json",
+        "blob_sha": "4dd817d2d926290dd702dd89a3593465bff0ecc4",
+        "bytes": 66141
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.EntropyMaximum.Independent.20251116.json",
+        "blob_sha": "b60dd7cae5feb1559d667aff530a45a67d96a3c6",
+        "bytes": 25587
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.LYQRobotics.Independent.20251117.json",
+        "blob_sha": "03abded9e7d5a080a216087d0db7367ac4a92c7f",
+        "bytes": 25707
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.Magikid.Magikid.20251116.json",
+        "blob_sha": "05e5199078e167ddacf259854768ac32784557e3",
+        "bytes": 23286
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.Merlin_Labs.Independent.20251117.json",
+        "blob_sha": "11b9eb20d9b1383004add337f7d5ba8d8cb0d6b9",
+        "bytes": 25226
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.RACΞL.CMU.20251116.json",
+        "blob_sha": "a68e4496640875f06fbc2acd5efa6ba0557a44b1",
+        "bytes": 33904
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.RobotSimArk.1.20251116.json",
+        "blob_sha": "ef1e5b8f1639e1e0665b5608daab8838caf13d09",
+        "bytes": 25210
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.Robot_Learning_Collective.Independent.20251114.json",
+        "blob_sha": "2054e86e0b0ae25977d87f5a729dea788ecd8c1d",
+        "bytes": 132682
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.SimpleAI_Robot.Beijing_Simple_AI_Technology_Co_Ltd.20251117.json",
+        "blob_sha": "2c96b08271025d2929f450ab534f5723a4457b01",
+        "bytes": 56978
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.StarVLA.Independent.20251117.json",
+        "blob_sha": "a0d5ae41e06bece094a27a9c0b2a92c413f03caa",
+        "bytes": 33486
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.The_North_Star.Huawei_CRI_EAI_Team.20251116.json",
+        "blob_sha": "83d0a59433861e0662aeece50afe8312ca380b99",
+        "bytes": 50839
+      },
+      {
+        "path": "docs/challenge_submissions/standard.public.tobi.Alzonova.20251117.json",
+        "blob_sha": "e1d5f814d1ad3798608662e1402b303de8ed6d7d",
+        "bytes": 67148
+      }
+    ],
+    "selection_rule": "all 15 fixed candidates enter schema/coverage admission; score/value cannot affect admission or selection"
+  },
+  "artifact_admission": {
+    "required_track": "standard public only",
+    "exact_task_ids": [
+      "turning_on_radio",
+      "picking_up_trash",
+      "putting_away_Halloween_decorations",
+      "cleaning_up_plates_and_food",
+      "can_meat",
+      "setting_mousetraps",
+      "hiding_Easter_eggs",
+      "picking_up_toys",
+      "rearranging_kitchen_furniture",
+      "putting_up_Christmas_decorations_inside",
+      "set_up_a_coffee_station_in_your_kitchen",
+      "putting_dishes_away_after_cleaning",
+      "preparing_lunch_box",
+      "loading_the_car",
+      "carrying_in_groceries",
+      "bringing_in_wood",
+      "moving_boxes_to_storage",
+      "bringing_water",
+      "tidying_bedroom",
+      "outfit_a_basic_toolbox",
+      "sorting_vegetables",
+      "collecting_childrens_toys",
+      "putting_shoes_on_rack",
+      "boxing_books_up_for_storage",
+      "storing_food",
+      "clearing_food_from_table_into_fridge",
+      "assembling_gift_baskets",
+      "sorting_household_items",
+      "getting_organized_for_work",
+      "clean_up_your_desk",
+      "setting_the_fire",
+      "clean_boxing_gloves",
+      "wash_a_baseball_cap",
+      "wash_dog_toys",
+      "hanging_pictures",
+      "attach_a_camera_to_a_tripod",
+      "clean_a_patio",
+      "clean_a_trumpet",
+      "spraying_for_bugs",
+      "spraying_fruit_trees",
+      "make_microwave_popcorn",
+      "cook_cabbage",
+      "chop_an_onion",
+      "slicing_vegetables",
+      "chopping_wood",
+      "cook_hot_dogs",
+      "cook_bacon",
+      "freeze_pies",
+      "canning_food",
+      "make_pizza"
+    ],
+    "task_count": 50,
+    "required_public_instances_per_task": 10,
+    "expected_full_rollouts": 500,
+    "full_coverage_required": true,
+    "accepted_granularity": [
+      "explicit task×instance rollout records with recoverable q_score.final",
+      "exact 50-task aggregates only if artifact explicitly establishes denominator=10 prescribed public rollouts per task and official Q aggregation"
+    ],
+    "task_identity_must_be_explicit_or_deterministically_keyed": true,
+    "aggregate_leaderboard_score_only_is_ineligible": true,
+    "partial_submission_is_ineligible_for_this_scientific_analysis": true,
+    "duplicate_task_instance_records_are_ineligible": true,
+    "q_range": "official Q values must be finite and within [0,1] without clipping or transformation",
+    "model_identity": "artifact must expose an official submission/team identity; checkpoint/revision if present is recorded but absence cannot be imputed",
+    "minimum_independent_full_submissions": 3,
+    "if_fewer_than_minimum": "HOLD broad cross-policy outcome analysis; do not self-run policies to fill the gap",
+    "no_manual_schema_rescue": "if a candidate cannot be mapped by one of the two frozen accepted granularities, mark INELIGIBLE rather than inventing a parser after seeing values"
+  },
+  "primary_analysis": {
+    "unit": "task; n=50 fixed challenge tasks",
+    "task_outcome": "Q_bar_task = equally weighted mean across all admitted full standard-public submissions of each submission’s official task Q averaged over its prescribed 10 public instances",
+    "policy_weighting": "each admitted submission receives equal weight; no weighting by leaderboard rank, score, team, or artifact size",
+    "model": "OLS: Q_bar_task = beta0 + beta_edge*shared_argument_edge_count + beta_size*atomic_goal_count + error",
+    "primary_estimand": "beta_edge conditional on atomic_goal_count",
+    "inference": "HC3 heteroskedasticity-robust standard error; two-sided alpha=0.05; report coefficient and 95% CI",
+    "directional_expectation": "beta_edge < 0, but significance remains two-sided",
+    "no_residualization": true,
+    "no_stepwise_selection": true,
+    "no_transform_search": true
+  },
+  "cross_policy_corroboration": {
+    "per_submission_model": "same OLS on each admitted full submission’s 50 task Q values",
+    "required_for_cross_policy_wording": "median beta_edge < 0 and at least two-thirds of admitted submissions have beta_edge < 0",
+    "if_not_met": "do not claim cross-policy generality even if aggregate primary model is significant"
+  },
+  "falsifiers_and_controls": {
+    "primary_null": "beta_edge 95% CI includes 0 => no support for incremental coupling association",
+    "size_absorption": "full model adjusted R2 must exceed size-only model adjusted R2; otherwise coupling adds no explanatory value",
+    "conditional_permutation": "10,000 permutations with fixed seed 20260828, shuffling edge counts only within exact atomic_goal_count strata; observed absolute beta_edge must exceed 95th percentile of this null to pass this falsifier",
+    "repair_sensitivity": "exclude all repair-affected tasks that are in challenge set (['sorting_household_items']); sign flip or >30% attenuation in |beta_edge| is a failure of repair-robustness",
+    "secondary_structural_metrics": "LCC and goal_logic_depth are confirmatory/descriptive only and can never replace a failed shared_argument_edge_count primary result",
+    "policy_heterogeneity": "cross-policy corroboration rule above is required for broad wording"
+  },
+  "forbidden_before_admission_review": [
+    "opening any challenge_submissions JSON blob",
+    "reading any q_score/success/reward value",
+    "using 2025 or 2026 human demo duration",
+    "changing metric v1.1",
+    "changing artifact candidate set",
+    "changing thresholds/model after outcome values are seen"
+  ],
+  "next_gate": "independent Kimi/DeepSeek review of exact preregistration; only after PASS may a one-shot schema/coverage admission read candidate blobs, and that read must not run scientific statistics until admission set is frozen",
+  "preregistration_sha256": "d17038af921bdf886e8233080b19b1025440724512b3d6a677815ce293eca8b8"
+}

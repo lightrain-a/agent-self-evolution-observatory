@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "text": "1) **P1 ADDITIVE.** The frozen question asks only whether edge count has an *incremental association* with Q beyond size—an additive conditional model directly answers this with minimal researcher degrees of freedom. P2 introduces an effect-modification hypothesis not present in the stated question, adding an unnecessary parameter and a 2-df joint test before outcomes are observed. With no outcome data to motivate nonlinearity, the interaction term represents an exploratory expansion rather than a test of the pre-specified hypothesis. P1 preserves the cleanest interpretation of \"incremental association beyond atomic goal predicates.\"\n\n2) **R1.** The 30% attenuation threshold provides a quantitative stability criterion that guards against fragile point estimates driven by influential subsets, whereas R2’s CI-inclusion rule conflates statistical significance with robustness and may pass unstable estimates in small samples. R1’s dual criteria (sign flip or substantial attenuation) better protect against spurious conclusions when excluding preregistered subgroups. Retaining the attenuation check maintains stricter evidentiary standards without requiring outcome data to implement.\n\n3) **PASS.**\n\n4) **Yes.** All three decisions rely solely on structural diagnostics and pre-outcome design logic; they can be locked now without outcome-contingent goalpost movement.",
+  "scientific_authority": false
+}

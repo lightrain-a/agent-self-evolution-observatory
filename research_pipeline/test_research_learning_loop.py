@@ -283,6 +283,55 @@ class ResearchLearningLoopTest(unittest.TestCase):
         self.assertTrue(all(compiled[signature]["external_memory_input"] for signature in expected_layers))
         self.assertTrue(all(compiled[signature]["scientific_authority"] is False for signature in expected_layers))
 
+    def test_canonical_external_failure_asset_index_includes_port010_embodiedbench_e0_lessons(self) -> None:
+        from .research_system import _load_external_failure_assets
+
+        assets = _load_external_failure_assets()
+        by_signature = {row["signature"]: row for row in assets}
+        expected_layers = {
+            "operationalization:outcome-blind-proxy-transfer-failure": "operationalization",
+            "operationalization:source-schema-semantics-assumption": "operationalization",
+            "experiment_identifiability:proxy-length-and-capability-nonspecificity": "experiment_identifiability",
+        }
+        self.assertTrue(set(expected_layers).issubset(by_signature))
+        for signature, layer in expected_layers.items():
+            row = by_signature[signature]
+            self.assertFalse(row["scientific_authority"])
+            self.assertEqual(row["affected_layer"], layer)
+            self.assertIn("PORT-010-E0", row["idea_id"])
+            self.assertEqual(row["last_revalidated"], "2026-08-28")
+            self.assertIn("port010-embodiedbench-e0-adjudication-20260828.json", row["evidence_ref"])
+            self.assertTrue(row["reusable_precheck"])
+        library = build_failure_asset_library({"nodes": []}, {"summary": {}}, additional_assets=assets)
+        compiled = {row["signature"]: row for row in library["assets"]}
+        self.assertTrue(set(expected_layers).issubset(compiled))
+        self.assertTrue(all(compiled[signature]["external_memory_input"] for signature in expected_layers))
+        self.assertTrue(all(compiled[signature]["scientific_authority"] is False for signature in expected_layers))
+
+    def test_canonical_external_failure_asset_index_includes_behavior_public_outcome_completeness_lessons(self) -> None:
+        from .research_system import _load_external_failure_assets
+
+        assets = _load_external_failure_assets()
+        by_signature = {row["signature"]: row for row in assets}
+        expected_layers = {
+            "experiment_identifiability:public-outcome-completeness-shortfall": "experiment_identifiability",
+            "operationalization:missing-as-zero-estimand-drift": "operationalization",
+        }
+        self.assertTrue(set(expected_layers).issubset(by_signature))
+        for signature, layer in expected_layers.items():
+            row = by_signature[signature]
+            self.assertFalse(row["scientific_authority"])
+            self.assertEqual(row["affected_layer"], layer)
+            self.assertIn("SUCC-C-BEHAVIOR2025", row["idea_id"])
+            self.assertEqual(row["last_revalidated"], "2026-08-28")
+            self.assertIn("behavior-formal-goal-coupling-2025-public-outcome-adjudication-20260828.json", row["evidence_ref"])
+            self.assertTrue(row["reusable_precheck"])
+        library = build_failure_asset_library({"nodes": []}, {"summary": {}}, additional_assets=assets)
+        compiled = {row["signature"]: row for row in library["assets"]}
+        self.assertTrue(set(expected_layers).issubset(compiled))
+        self.assertTrue(all(compiled[signature]["external_memory_input"] for signature in expected_layers))
+        self.assertTrue(all(compiled[signature]["scientific_authority"] is False for signature in expected_layers))
+
     def test_scienceworld_scope_lesson_is_institutional_asset_not_parent_evidence(self) -> None:
         state = {"nodes": []}
         post_c2 = {

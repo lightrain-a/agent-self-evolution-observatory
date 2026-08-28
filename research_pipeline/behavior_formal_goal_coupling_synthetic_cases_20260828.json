@@ -1,0 +1,72 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-synthetic-v1",
+  "status": "FROZEN_BEFORE_BEHAVIOR_TASK_DISTRIBUTION_SCAN",
+  "scientific_authority": false,
+  "rules": {
+    "input_representation": "goal_state is the list of top-level goal clauses returned by the pinned BDDL parse_problem packaging; the list is an implicit top-level conjunction",
+    "implicit_top_level_conjunction_counts_toward_depth": false,
+    "atomic_occurrence_count": "count every atomic predicate occurrence before deduplication",
+    "atomic_goal_count": "count unique signed atomic leaves after scope-aware alpha-renaming; exact duplicate signed leaves collapse",
+    "logical_depth": "atomic leaf depth=1; explicit and/or/not/imply/forall/exists/forn/forpairs/fornpairs each add 1; implicit top-level conjunction adds 0",
+    "coupling_nodes": "the unique signed atomic leaves used for atomic_goal_count",
+    "coupling_edge": "undirected binary edge between two atomic nodes iff they share at least one literal grounded argument or the same scope-aware alpha-renamed bound variable; predicate names and binder category names do not create edges",
+    "negation": "negation changes signed leaf identity and logical depth but not its argument symbols for coupling",
+    "quantifier": "do not expand to domain instances; alpha-rename bound variables by lexical quantifier scope; the same raw variable token in disjoint scopes is not shared",
+    "branching": "primary graph is a conservative full-AST graph across all leaves, including alternatives under or/imply; branch_operator_count is reported separately",
+    "largest_connected_component": "size in atomic nodes; 0 for no atoms",
+    "quantifier_count": "number of forall/exists/forn/forpairs/fornpairs nodes",
+    "branch_operator_count": "number of or/imply nodes"
+  },
+  "cases": [
+    {
+      "id": "S01_INDEPENDENT_FOUR",
+      "goal_state": [["clean", "cup_1"], ["cooked", "potato_1"], ["open", "door_1"], ["inside", "book_1", "drawer_1"]]
+    },
+    {
+      "id": "S02_CHAIN_FOUR",
+      "goal_state": [["ontop", "cup_1", "tray_1"], ["inside", "tray_1", "cabinet_1"], ["nextto", "cabinet_1", "table_1"], ["under", "table_1", "lamp_1"]]
+    },
+    {
+      "id": "S03_TWO_COMPONENTS",
+      "goal_state": [["ontop", "cup_1", "tray_1"], ["clean", "cup_1"], ["inside", "book_1", "drawer_1"], ["closed", "drawer_1"]]
+    },
+    {
+      "id": "S04_DISJUNCTION_SHARED",
+      "goal_state": [["or", ["ontop", "cup_1", "table_1"], ["inside", "cup_1", "cabinet_1"]], ["clean", "cup_1"]]
+    },
+    {
+      "id": "S05_QUANTIFIER_SHARED_WITHIN_SCOPE",
+      "goal_state": [["forall", ["?x", "-", "cup.n.01"], ["and", ["clean", "?x"], ["ontop", "?x", "table_1"]]]]
+    },
+    {
+      "id": "S06_DISJOINT_QUANTIFIER_SCOPES_SAME_RAW_VAR",
+      "goal_state": [
+        ["forall", ["?x", "-", "cup.n.01"], ["and", ["clean", "?x"], ["ontop", "?x", "table_1"]]],
+        ["exists", ["?x", "-", "bowl.n.01"], ["and", ["cooked", "?x"], ["inside", "?x", "cabinet_1"]]]
+      ]
+    },
+    {
+      "id": "S07_NEGATION_AND_DUPLICATE",
+      "goal_state": [["not", ["cooked", "potato_1"]], ["not", ["cooked", "potato_1"]], ["inside", "potato_1", "bowl_1"]]
+    },
+    {
+      "id": "S08_NESTED_LOGIC_DEPTH",
+      "goal_state": [["forall", ["?x", "-", "cup.n.01"], ["imply", ["clean", "?x"], ["or", ["ontop", "?x", "table_1"], ["inside", "?x", "cabinet_1"]]]]]
+    },
+    {
+      "id": "S09_EXACT_COUNT_QUANTIFIER",
+      "goal_state": [["forn", ["2"], ["?x", "-", "apple.n.01"], ["and", ["cooked", "?x"], ["inside", "?x", "bowl_1"]]]]
+    },
+    {
+      "id": "S10_PAIR_QUANTIFIER",
+      "goal_state": [["forpairs", ["?x", "-", "plate.n.01"], ["?y", "-", "table.n.02"], ["and", ["ontop", "?x", "?y"], ["clean", "?x"], ["not", ["covered", "?y"]]]]]
+    }
+  ],
+  "authority": {
+    "problem_gate": false,
+    "experiment": false,
+    "provider": false,
+    "outcome_access": false,
+    "gpu": false
+  }
+}

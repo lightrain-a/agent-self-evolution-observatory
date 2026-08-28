@@ -1,0 +1,76 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-2025-public-outcome-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2025-PUBLIC-OUTCOME",
+  "status": "CLOSE_CONFIRMATORY_PUBLIC_2025_OUTCOME_LANE_COVERAGE_SHORTFALL",
+  "scientific_authority": false,
+  "analysis_authority": false,
+  "provider_authority": false,
+  "gpu_authority": false,
+  "self_run_authorized": false,
+  "parent_port010_reopen_authorized": false,
+  "preregistration_sha256": "d17038af921bdf886e8233080b19b1025440724512b3d6a677815ce293eca8b8",
+  "amendment_sha256": "c9b57fd77a038bb372522f3b78dff057acd7a39f9e2521033ea058cc4c96925c",
+  "admission_receipt_sha256": "173512adc4555269c4d6ddaf1b48b221e3161a8b6abac54029ffbaa03feda6fb",
+  "frozen_requirement": {
+    "full_tasks": 50,
+    "public_instances_per_task": 10,
+    "full_rollouts_per_submission": 500,
+    "minimum_independent_full_submissions": 3
+  },
+  "observed_redacted_coverage": {
+    "candidate_count": 15,
+    "eligible_full_count": 0,
+    "all_candidates_have_public_per_rollout_q_cube": true,
+    "near_complete_candidate": {
+      "identity": "Robot_Learning_Collective official standard.public artifact",
+      "q_rollout_leaves": 476,
+      "task_coverage": 50,
+      "coverage_pattern": "45 tasks×10, 4 tasks×5, 1 task×6"
+    },
+    "q_values_logged": false,
+    "scientific_statistics_executed": false
+  },
+  "adjudication": {
+    "missing_as_zero_forbidden": true,
+    "attempted_only_means_forbidden": true,
+    "coverage_threshold_relaxation_forbidden": true,
+    "reason": "non-attempt/missingness may be policy/resource/strategy dependent; either zero imputation or attempted-only aggregation changes the frozen task-structure-under-complete-execution estimand after coverage exposure",
+    "does_not_imply": [
+      "formal-goal-coupling structure is false",
+      "BEHAVIOR task Q is unrelated to structure",
+      "a complete future public or locally authorized replication would fail",
+      "PORT-010 may reopen"
+    ]
+  },
+  "successor_routes": [
+    {
+      "route": "SEARCH_OTHER_ALREADY_PUBLIC_FULL_BEHAVIOR_ARTIFACT",
+      "authority": "zero-outcome source search only"
+    },
+    {
+      "route": "WATCH_2026_CHALLENGE_FOR_>=3_FULL_STANDARD_PUBLIC_SUBMISSIONS",
+      "authority": "release watch only"
+    },
+    {
+      "route": "NEW_LOCAL_SOURCE_FAITHFUL_POLICY_REPLICATION",
+      "authority": "design/prereg only until separate human execution authority"
+    },
+    {
+      "route": "PARTIAL_2025_EXPLORATORY_DIAGNOSTIC",
+      "authority": "new ID only; never confirmatory rescue; not started"
+    }
+  ],
+  "independent_reviews": {
+    "kimi": {
+      "path": "generated/behavior-formal-goal-coupling-2025-postadmission-reviews-20260828/kimi-review.json",
+      "sha256": "c9c623db9d66591e7544f707838819cf8f8135e4e7e98df8ebd67f3306569cf8",
+      "verdict": "HOLD/CLOSE"
+    },
+    "deepseek": {
+      "path": "generated/behavior-formal-goal-coupling-2025-postadmission-reviews-20260828/deepseek-review.json",
+      "sha256": "9532cc507917e33acc6fdd1ca0c1a5563acbab4f0f5938834110cd6e39018b46",
+      "verdict": "HOLD/CLOSE"
+    }
+  },
+  "adjudication_sha256": "8645ec0bf1400bd832f914a1d8fcb95d531b557f2ad1f05296ef279bf97a8c53"
+}

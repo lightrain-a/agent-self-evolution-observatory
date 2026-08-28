@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "source_revision": "b1979916ec1549b10a4e65e630bc6504a9af1b00",
+  "checks": [
+    {
+      "case": "real_adding_chemicals_to_hot_tub",
+      "source_sha256": "6cbdbde7bbd98aa909d6c829fa1e87f24879b36f71febbc139b10dc64481dbf7",
+      "compiled_conditions": 2,
+      "metrics": {
+        "schema_version": "behavior-formal-goal-coupling-v1.1",
+        "atomic_occurrence_count": 2,
+        "atomic_goal_count": 2,
+        "duplicate_atomic_occurrences": 0,
+        "shared_argument_edge_count": 1,
+        "largest_connected_component_size": 2,
+        "mean_degree": 1.0,
+        "coupling_density": 1.0,
+        "goal_logic_depth": 1,
+        "quantifier_count": 0,
+        "branch_operator_count": 0,
+        "unbound_variable_count": 0
+      }
+    },
+    {
+      "case": "synthetic_mixed_ground_bound",
+      "compiled_conditions": 2,
+      "metrics": {
+        "schema_version": "behavior-formal-goal-coupling-v1.1",
+        "atomic_occurrence_count": 3,
+        "atomic_goal_count": 3,
+        "duplicate_atomic_occurrences": 0,
+        "shared_argument_edge_count": 3,
+        "largest_connected_component_size": 3,
+        "mean_degree": 2.0,
+        "coupling_density": 1.0,
+        "goal_logic_depth": 3,
+        "quantifier_count": 1,
+        "branch_operator_count": 0,
+        "unbound_variable_count": 0
+      }
+    }
+  ],
+  "policy_results_read": false,
+  "scientific_authority": false
+}

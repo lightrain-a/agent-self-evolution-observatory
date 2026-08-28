@@ -1,0 +1,14 @@
+[
+  {
+    "requested": "kimi-k3",
+    "resolved": "kimi-k3",
+    "ok": true,
+    "text": "VERDICT: FREEZE-FOR-TASK-DISTRIBUTION-SCAN.\n\nThe hierarchy is scientifically defensible as a pre-registered measurement framework because it establishes a clear separation between the formal object of study (goal coupling), the primary operationalization (shared argument edges on canonicalized atomic leaves), and necessary controls (size covariates, structural descriptors). By mandating that coupling be interpreted conditional on `atomic_goal_count` and pre-specifying a HOLD threshold for branch-heavy tasks, you mitigate the primary threats to construct validity: confounding by goal complexity and overapproximation of simultaneous constraints in disjunctive structures. The synthetic oracle validation and official parser integration provide sufficient syntactic reliability to proceed to the distribution scan.\n\nNecessary change (exactly one): **Define the branch-heavy HOLD threshold with formal precision before scanning.** Specify the exact graph-theoretic or AST metric (e.g., ratio of disjunctive to conjunctive operators, maximum nesting depth of `or` nodes, or a complexity cutoff on the branch graph) and the quantitative threshold value that will trigger the HOLD. Without this prespecified operationalization, the \"branch-heavy\" criterion remains qualitative and risks post-hoc interpretation during the scan.\n\nAll other elements are sufficiently specified for this phase. The distribution scan may proceed once the HOLD threshold is formally defined."
+  },
+  {
+    "requested": "deepseek-v4-pro",
+    "resolved": "deepseek-v4-pro-ga-260813",
+    "ok": true,
+    "text": "Verdict: FREEZE-FOR-TASK-DISTRIBUTION-SCAN\n\nThe proposed metric hierarchy is scientifically defensible for its stated scope. The primary scientific object—formal goal coupling via shared argument edges on deduplicated, scope-resolved atomic goals—is well-posed, measurable, and appropriately bounded. The mandatory conditioning on atomic_goal_count is the correct safeguard against interpreting edge count as standalone difficulty. The confirmatory and secondary descriptors are reasonable companions without overcommitting to causal claims. The HOLD threshold for branch-heavy tasks is prudently prespecified. The synthetic oracle validation against the official parser resolves the annotation disagreement correctly.\n\nAt most one necessary change: none."
+  }
+]

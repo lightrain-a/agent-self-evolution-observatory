@@ -1,0 +1,26 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-2025-artifact-admission-compile-v1",
+  "status": "READY_FOR_ONE_SHOT_REDACTED_SCHEMA_COVERAGE_ADMISSION",
+  "scientific_authority": false,
+  "scientific_statistics_authorized": false,
+  "base_preregistration_sha256": "d17038af921bdf886e8233080b19b1025440724512b3d6a677815ce293eca8b8",
+  "amendment_sha256": "c9b57fd77a038bb372522f3b78dff057acd7a39f9e2521033ea058cc4c96925c",
+  "candidate_snapshot_digest": "5d168ca587cc5b64b4b3d41c7f6fc74c618dad69b4ca301526ea2f34203945f4",
+  "candidate_count": 15,
+  "admission_parser_path": "research_pipeline/behavior_formal_goal_coupling_2025_artifact_admission.py",
+  "admission_parser_sha256": "7d378217211536018d9cb95892cac9006d57eca75e362d63950b54d12bdf6b6e",
+  "admission_test_path": "research_pipeline/test_behavior_formal_goal_coupling_2025_artifact_admission.py",
+  "admission_test_sha256": "8b5a14d5a2eb85c6e7e5581b46ecf3cc0a1fdf1db27b51f67c371b38b5e24ef8",
+  "admission_tests": 8,
+  "admission_tests_status": "PASS",
+  "output_path": "generated/behavior-formal-goal-coupling-2025-artifact-admission-20260828.json",
+  "output_preexists": false,
+  "read_contract": {
+    "candidate_contents_may_be_opened_once": true,
+    "outcome_values_must_not_be_logged": true,
+    "scientific_statistics_forbidden": true,
+    "manual_schema_rescue_forbidden": true,
+    "minimum_eligible_full_submissions": 3
+  },
+  "compile_sha256": "4e32362d14a58ec72b76b5f9b2bbfcd921168561c741c52d3ebb965a8aa069f1"
+}

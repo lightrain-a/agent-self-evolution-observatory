@@ -1,0 +1,637 @@
+{
+  "schema_version": "behavior-2026-version-compatibility-audit-v1",
+  "status": "PASS_NO_FORMAL_GOAL_DRIFT_V391_TO_V392",
+  "scientific_authority": false,
+  "policy_outcomes_read": false,
+  "v3_9_1_commit": "26f2c7ef7b9cf96bd0414f81e1e751e493762779",
+  "v3_9_2_commit": "b1979916ec1549b10a4e65e630bc6504a9af1b00",
+  "challenge_task_count": 100,
+  "identical_goal_blobs": 100,
+  "changed_goal_blobs": 0,
+  "task_goal_blobs": [
+    {
+      "task": "turning_on_radio",
+      "v3_9_1_blob": "c7683207843dde9c13f4d66da6e57e8a1ed42809",
+      "v3_9_2_blob": "c7683207843dde9c13f4d66da6e57e8a1ed42809",
+      "identical": true
+    },
+    {
+      "task": "picking_up_trash",
+      "v3_9_1_blob": "4565be5bb1cd5a3895b6355b420d72c413c09b2f",
+      "v3_9_2_blob": "4565be5bb1cd5a3895b6355b420d72c413c09b2f",
+      "identical": true
+    },
+    {
+      "task": "putting_away_Halloween_decorations",
+      "v3_9_1_blob": "faf4007c49360e477bd4e454ae11058ba1388020",
+      "v3_9_2_blob": "faf4007c49360e477bd4e454ae11058ba1388020",
+      "identical": true
+    },
+    {
+      "task": "cleaning_up_plates_and_food",
+      "v3_9_1_blob": "11409e8d640e73e25de45c152e0f3bfbd1bdb1f4",
+      "v3_9_2_blob": "11409e8d640e73e25de45c152e0f3bfbd1bdb1f4",
+      "identical": true
+    },
+    {
+      "task": "can_meat",
+      "v3_9_1_blob": "6c558948649602d91d802822bbb8971e8b74416f",
+      "v3_9_2_blob": "6c558948649602d91d802822bbb8971e8b74416f",
+      "identical": true
+    },
+    {
+      "task": "setting_mousetraps",
+      "v3_9_1_blob": "ebb15f74723c825fb2a89baacab2b234be13cd69",
+      "v3_9_2_blob": "ebb15f74723c825fb2a89baacab2b234be13cd69",
+      "identical": true
+    },
+    {
+      "task": "hiding_Easter_eggs",
+      "v3_9_1_blob": "3230b3d3257a2ff01ac9c72be75b77483ca5974d",
+      "v3_9_2_blob": "3230b3d3257a2ff01ac9c72be75b77483ca5974d",
+      "identical": true
+    },
+    {
+      "task": "picking_up_toys",
+      "v3_9_1_blob": "da4bcbc5736ed99858f62f9e18a0cf7cc436888c",
+      "v3_9_2_blob": "da4bcbc5736ed99858f62f9e18a0cf7cc436888c",
+      "identical": true
+    },
+    {
+      "task": "rearranging_kitchen_furniture",
+      "v3_9_1_blob": "2dbb368c204eb6c0665b8af9f1fdfc00160265d9",
+      "v3_9_2_blob": "2dbb368c204eb6c0665b8af9f1fdfc00160265d9",
+      "identical": true
+    },
+    {
+      "task": "putting_up_Christmas_decorations_inside",
+      "v3_9_1_blob": "ec9dd675309048e712d3fe8255b68efd78cd916f",
+      "v3_9_2_blob": "ec9dd675309048e712d3fe8255b68efd78cd916f",
+      "identical": true
+    },
+    {
+      "task": "set_up_a_coffee_station_in_your_kitchen",
+      "v3_9_1_blob": "2f6d0fe045e11a81327f0396ec7a07f24d553715",
+      "v3_9_2_blob": "2f6d0fe045e11a81327f0396ec7a07f24d553715",
+      "identical": true
+    },
+    {
+      "task": "putting_dishes_away_after_cleaning",
+      "v3_9_1_blob": "ce9fe075307b5af81c21267c9b520f4ba96b2f88",
+      "v3_9_2_blob": "ce9fe075307b5af81c21267c9b520f4ba96b2f88",
+      "identical": true
+    },
+    {
+      "task": "preparing_lunch_box",
+      "v3_9_1_blob": "ef6941a8e5dd87b0a7602330397c592e959bc55a",
+      "v3_9_2_blob": "ef6941a8e5dd87b0a7602330397c592e959bc55a",
+      "identical": true
+    },
+    {
+      "task": "loading_the_car",
+      "v3_9_1_blob": "164db6ad645d1dc6ed01b03140df36ecdcbb5810",
+      "v3_9_2_blob": "164db6ad645d1dc6ed01b03140df36ecdcbb5810",
+      "identical": true
+    },
+    {
+      "task": "carrying_in_groceries",
+      "v3_9_1_blob": "3714aba5a1befd1eab55d886522e44382a0bf1c2",
+      "v3_9_2_blob": "3714aba5a1befd1eab55d886522e44382a0bf1c2",
+      "identical": true
+    },
+    {
+      "task": "bringing_in_wood",
+      "v3_9_1_blob": "4d6ee803ffd257e562988ea01e83415626e13cf3",
+      "v3_9_2_blob": "4d6ee803ffd257e562988ea01e83415626e13cf3",
+      "identical": true
+    },
+    {
+      "task": "moving_boxes_to_storage",
+      "v3_9_1_blob": "490d14254599fcf0198375591bee5eccf2afc0ef",
+      "v3_9_2_blob": "490d14254599fcf0198375591bee5eccf2afc0ef",
+      "identical": true
+    },
+    {
+      "task": "bringing_water",
+      "v3_9_1_blob": "faeb072c4310b97d8a7475cf2edde3f756563c98",
+      "v3_9_2_blob": "faeb072c4310b97d8a7475cf2edde3f756563c98",
+      "identical": true
+    },
+    {
+      "task": "tidying_bedroom",
+      "v3_9_1_blob": "cc750a61ab5398c19da92c062fe2a134e8dc0212",
+      "v3_9_2_blob": "cc750a61ab5398c19da92c062fe2a134e8dc0212",
+      "identical": true
+    },
+    {
+      "task": "outfit_a_basic_toolbox",
+      "v3_9_1_blob": "9057db4e5346e697986c989ff11cad53367a140a",
+      "v3_9_2_blob": "9057db4e5346e697986c989ff11cad53367a140a",
+      "identical": true
+    },
+    {
+      "task": "sorting_vegetables",
+      "v3_9_1_blob": "abdab2f9d929dc5f35bb2534d641c2acd908d37b",
+      "v3_9_2_blob": "abdab2f9d929dc5f35bb2534d641c2acd908d37b",
+      "identical": true
+    },
+    {
+      "task": "collecting_childrens_toys",
+      "v3_9_1_blob": "154f6562248a51dec04d62a004d6bcbeea166232",
+      "v3_9_2_blob": "154f6562248a51dec04d62a004d6bcbeea166232",
+      "identical": true
+    },
+    {
+      "task": "putting_shoes_on_rack",
+      "v3_9_1_blob": "5c3833b3516ad4965839ad7ee33b32bcaccd493e",
+      "v3_9_2_blob": "5c3833b3516ad4965839ad7ee33b32bcaccd493e",
+      "identical": true
+    },
+    {
+      "task": "boxing_books_up_for_storage",
+      "v3_9_1_blob": "18ac696facf5eb4fef6a5179261b646e958950e3",
+      "v3_9_2_blob": "18ac696facf5eb4fef6a5179261b646e958950e3",
+      "identical": true
+    },
+    {
+      "task": "storing_food",
+      "v3_9_1_blob": "d07f749c10a073da5bca5d2b2ffef55d4955d0db",
+      "v3_9_2_blob": "d07f749c10a073da5bca5d2b2ffef55d4955d0db",
+      "identical": true
+    },
+    {
+      "task": "clearing_food_from_table_into_fridge",
+      "v3_9_1_blob": "0eb79c04a8a1155ab5f297be2e19b5441e599cf9",
+      "v3_9_2_blob": "0eb79c04a8a1155ab5f297be2e19b5441e599cf9",
+      "identical": true
+    },
+    {
+      "task": "assembling_gift_baskets",
+      "v3_9_1_blob": "ed09207382af73448736159b41a4c3a74b14d613",
+      "v3_9_2_blob": "ed09207382af73448736159b41a4c3a74b14d613",
+      "identical": true
+    },
+    {
+      "task": "sorting_household_items",
+      "v3_9_1_blob": "e0ade5149ec68b92e266312918cdb64fa0be4bb2",
+      "v3_9_2_blob": "e0ade5149ec68b92e266312918cdb64fa0be4bb2",
+      "identical": true
+    },
+    {
+      "task": "getting_organized_for_work",
+      "v3_9_1_blob": "a7e0572fc5e54ce61577e769853a4634757f1a11",
+      "v3_9_2_blob": "a7e0572fc5e54ce61577e769853a4634757f1a11",
+      "identical": true
+    },
+    {
+      "task": "clean_up_your_desk",
+      "v3_9_1_blob": "faeaa13f1d6b969ea67e3f6211cb9eac24b278dd",
+      "v3_9_2_blob": "faeaa13f1d6b969ea67e3f6211cb9eac24b278dd",
+      "identical": true
+    },
+    {
+      "task": "setting_the_fire",
+      "v3_9_1_blob": "08a0219141e26f3cc911535e4df7faa51e686e9d",
+      "v3_9_2_blob": "08a0219141e26f3cc911535e4df7faa51e686e9d",
+      "identical": true
+    },
+    {
+      "task": "clean_boxing_gloves",
+      "v3_9_1_blob": "8a162c401e758645ba3b66304efc4c71215118da",
+      "v3_9_2_blob": "8a162c401e758645ba3b66304efc4c71215118da",
+      "identical": true
+    },
+    {
+      "task": "wash_a_baseball_cap",
+      "v3_9_1_blob": "ccc1855bbe9829adcd4ff4a73f0114db13e68da9",
+      "v3_9_2_blob": "ccc1855bbe9829adcd4ff4a73f0114db13e68da9",
+      "identical": true
+    },
+    {
+      "task": "wash_dog_toys",
+      "v3_9_1_blob": "28d48bfdba04a27274b08f540edc1b1ff99d3cb2",
+      "v3_9_2_blob": "28d48bfdba04a27274b08f540edc1b1ff99d3cb2",
+      "identical": true
+    },
+    {
+      "task": "hanging_pictures",
+      "v3_9_1_blob": "8a6ff14d193b677c8fc52ad5ee08ebcf47eaec62",
+      "v3_9_2_blob": "8a6ff14d193b677c8fc52ad5ee08ebcf47eaec62",
+      "identical": true
+    },
+    {
+      "task": "attach_a_camera_to_a_tripod",
+      "v3_9_1_blob": "8ecf1a00ee07d4b4e3c4270d5bb04ba2051dab57",
+      "v3_9_2_blob": "8ecf1a00ee07d4b4e3c4270d5bb04ba2051dab57",
+      "identical": true
+    },
+    {
+      "task": "clean_a_patio",
+      "v3_9_1_blob": "13b0684721e66fb07cef83a2ef671e268e8c7398",
+      "v3_9_2_blob": "13b0684721e66fb07cef83a2ef671e268e8c7398",
+      "identical": true
+    },
+    {
+      "task": "clean_a_trumpet",
+      "v3_9_1_blob": "c4c02e067cdd1bcbf7285236bab0b9e785abf4d7",
+      "v3_9_2_blob": "c4c02e067cdd1bcbf7285236bab0b9e785abf4d7",
+      "identical": true
+    },
+    {
+      "task": "spraying_for_bugs",
+      "v3_9_1_blob": "b22d3d4348823601e495b10a59e7f251c09758ac",
+      "v3_9_2_blob": "b22d3d4348823601e495b10a59e7f251c09758ac",
+      "identical": true
+    },
+    {
+      "task": "spraying_fruit_trees",
+      "v3_9_1_blob": "3b185a38780be89bd8b6913bc9583aacefd7769f",
+      "v3_9_2_blob": "3b185a38780be89bd8b6913bc9583aacefd7769f",
+      "identical": true
+    },
+    {
+      "task": "make_microwave_popcorn",
+      "v3_9_1_blob": "1becabbe2ef021d22d1b62c10702ccadd5fa5ec8",
+      "v3_9_2_blob": "1becabbe2ef021d22d1b62c10702ccadd5fa5ec8",
+      "identical": true
+    },
+    {
+      "task": "cook_cabbage",
+      "v3_9_1_blob": "18418b38d7734a73a1a04136630d3e9de57e6c8e",
+      "v3_9_2_blob": "18418b38d7734a73a1a04136630d3e9de57e6c8e",
+      "identical": true
+    },
+    {
+      "task": "chop_an_onion",
+      "v3_9_1_blob": "371336955eb787d0fa1010a1f2c057fd6689635b",
+      "v3_9_2_blob": "371336955eb787d0fa1010a1f2c057fd6689635b",
+      "identical": true
+    },
+    {
+      "task": "slicing_vegetables",
+      "v3_9_1_blob": "ce38a0ffc51b7521c1df9f605919d1d025314706",
+      "v3_9_2_blob": "ce38a0ffc51b7521c1df9f605919d1d025314706",
+      "identical": true
+    },
+    {
+      "task": "chopping_wood",
+      "v3_9_1_blob": "9ba65ca69c2278b9c94ed344b43b02e7e4fccfa0",
+      "v3_9_2_blob": "9ba65ca69c2278b9c94ed344b43b02e7e4fccfa0",
+      "identical": true
+    },
+    {
+      "task": "cook_hot_dogs",
+      "v3_9_1_blob": "9e61ab7267f189f8d52a1261c6e060c59cce4eed",
+      "v3_9_2_blob": "9e61ab7267f189f8d52a1261c6e060c59cce4eed",
+      "identical": true
+    },
+    {
+      "task": "cook_bacon",
+      "v3_9_1_blob": "b4a5ef8e63ffcd31350cd7f7f96a44d021c75170",
+      "v3_9_2_blob": "b4a5ef8e63ffcd31350cd7f7f96a44d021c75170",
+      "identical": true
+    },
+    {
+      "task": "freeze_pies",
+      "v3_9_1_blob": "dabc2eeaeda7c517211765584bae3e696e6306e1",
+      "v3_9_2_blob": "dabc2eeaeda7c517211765584bae3e696e6306e1",
+      "identical": true
+    },
+    {
+      "task": "canning_food",
+      "v3_9_1_blob": "adc68b02447d3c4b9e32d17ff9b2cde30bbbb939",
+      "v3_9_2_blob": "adc68b02447d3c4b9e32d17ff9b2cde30bbbb939",
+      "identical": true
+    },
+    {
+      "task": "make_pizza",
+      "v3_9_1_blob": "d86b2c379276b61704c4459111da64d230e424fb",
+      "v3_9_2_blob": "d86b2c379276b61704c4459111da64d230e424fb",
+      "identical": true
+    },
+    {
+      "task": "freeze_fruit",
+      "v3_9_1_blob": "13cb5ca7376113d9c851b4fad05154ff0ffca9ae",
+      "v3_9_2_blob": "13cb5ca7376113d9c851b4fad05154ff0ffca9ae",
+      "identical": true
+    },
+    {
+      "task": "cook_a_brisket",
+      "v3_9_1_blob": "cfdae12dac7bc1ca172241a55b37488ad47d76c1",
+      "v3_9_2_blob": "cfdae12dac7bc1ca172241a55b37488ad47d76c1",
+      "identical": true
+    },
+    {
+      "task": "sorting_bottles_cans_and_paper",
+      "v3_9_1_blob": "2be50628545b33f9b581c370c3485ba0b0eee22f",
+      "v3_9_2_blob": "2be50628545b33f9b581c370c3485ba0b0eee22f",
+      "identical": true
+    },
+    {
+      "task": "tidying_living_room",
+      "v3_9_1_blob": "6cbd2ef13abfa754b7e9f1cd8fc7272da693df62",
+      "v3_9_2_blob": "6cbd2ef13abfa754b7e9f1cd8fc7272da693df62",
+      "identical": true
+    },
+    {
+      "task": "putting_away_toys",
+      "v3_9_1_blob": "e96255f6f80e6f9a05295fc7b855aaaf7f48cf70",
+      "v3_9_2_blob": "e96255f6f80e6f9a05295fc7b855aaaf7f48cf70",
+      "identical": true
+    },
+    {
+      "task": "re_shelving_library_books",
+      "v3_9_1_blob": "0c920ad7e57f7a8a6e3263d9dc55ef87945f6445",
+      "v3_9_2_blob": "0c920ad7e57f7a8a6e3263d9dc55ef87945f6445",
+      "identical": true
+    },
+    {
+      "task": "make_rose_centerpieces",
+      "v3_9_1_blob": "8071ef2040bf0f4ff4c49e2ccab04d0c62414f1f",
+      "v3_9_2_blob": "8071ef2040bf0f4ff4c49e2ccab04d0c62414f1f",
+      "identical": true
+    },
+    {
+      "task": "sweeping_garage",
+      "v3_9_1_blob": "dea28f1cf32d4d235adaa7d3c941575a505315bf",
+      "v3_9_2_blob": "dea28f1cf32d4d235adaa7d3c941575a505315bf",
+      "identical": true
+    },
+    {
+      "task": "stacking_wood",
+      "v3_9_1_blob": "ddf3d07784376828aef54252db6673d5a3836e77",
+      "v3_9_2_blob": "ddf3d07784376828aef54252db6673d5a3836e77",
+      "identical": true
+    },
+    {
+      "task": "organizing_art_supplies",
+      "v3_9_1_blob": "3bb12e6daaf83709e8d51ee181f9a85260a9334e",
+      "v3_9_2_blob": "3bb12e6daaf83709e8d51ee181f9a85260a9334e",
+      "identical": true
+    },
+    {
+      "task": "scrubbing_bathroom_floor",
+      "v3_9_1_blob": "4766d317f9eb5db014508afb20c7668bb7025dad",
+      "v3_9_2_blob": "4766d317f9eb5db014508afb20c7668bb7025dad",
+      "identical": true
+    },
+    {
+      "task": "bringing_paper_to_recycling",
+      "v3_9_1_blob": "5891360d83c56b91dd3c7e5d4e3a9cc1be1db2d3",
+      "v3_9_2_blob": "5891360d83c56b91dd3c7e5d4e3a9cc1be1db2d3",
+      "identical": true
+    },
+    {
+      "task": "halve_an_egg",
+      "v3_9_1_blob": "af7da1288f52d8da544ba41b6b3f1a58305e2f07",
+      "v3_9_2_blob": "af7da1288f52d8da544ba41b6b3f1a58305e2f07",
+      "identical": true
+    },
+    {
+      "task": "installing_smoke_detectors",
+      "v3_9_1_blob": "99d630326808ff3fcf4a19227a985d68c3f8b24b",
+      "v3_9_2_blob": "99d630326808ff3fcf4a19227a985d68c3f8b24b",
+      "identical": true
+    },
+    {
+      "task": "setting_the_table",
+      "v3_9_1_blob": "97a5a87ec66e3dac0b069a533f3325a6dcec5cd0",
+      "v3_9_2_blob": "97a5a87ec66e3dac0b069a533f3325a6dcec5cd0",
+      "identical": true
+    },
+    {
+      "task": "unloading_the_car",
+      "v3_9_1_blob": "32c0487c7702def93d7a1273ac3381af68c3459b",
+      "v3_9_2_blob": "32c0487c7702def93d7a1273ac3381af68c3459b",
+      "identical": true
+    },
+    {
+      "task": "turning_out_all_lights_before_sleep",
+      "v3_9_1_blob": "55c9952038e4e5c40bc95cd8ea7c41926901b084",
+      "v3_9_2_blob": "55c9952038e4e5c40bc95cd8ea7c41926901b084",
+      "identical": true
+    },
+    {
+      "task": "boxing_food_after_dinner",
+      "v3_9_1_blob": "8eef792e52954b04620dfa7db2931211f5f74719",
+      "v3_9_2_blob": "8eef792e52954b04620dfa7db2931211f5f74719",
+      "identical": true
+    },
+    {
+      "task": "cleaning_up_branches_and_twigs",
+      "v3_9_1_blob": "fb6fbdc42c83888a99fa87684b74403e96925dcb",
+      "v3_9_2_blob": "fb6fbdc42c83888a99fa87684b74403e96925dcb",
+      "identical": true
+    },
+    {
+      "task": "vacuuming_floors",
+      "v3_9_1_blob": "d747ade762ea95503342b917edc32ef8ff9ef14f",
+      "v3_9_2_blob": "d747ade762ea95503342b917edc32ef8ff9ef14f",
+      "identical": true
+    },
+    {
+      "task": "thawing_frozen_food",
+      "v3_9_1_blob": "579e76869e320944eae9600cd164527ecca739c6",
+      "v3_9_2_blob": "579e76869e320944eae9600cd164527ecca739c6",
+      "identical": true
+    },
+    {
+      "task": "clean_your_rusty_garden_tools",
+      "v3_9_1_blob": "25799959ca0ffb64ca517bd5b8b8495a556f3da4",
+      "v3_9_2_blob": "25799959ca0ffb64ca517bd5b8b8495a556f3da4",
+      "identical": true
+    },
+    {
+      "task": "cook_a_frozen_pie",
+      "v3_9_1_blob": "8c8743bcfd36d81dd24b5ef4dc4c86258729cc54",
+      "v3_9_2_blob": "8c8743bcfd36d81dd24b5ef4dc4c86258729cc54",
+      "identical": true
+    },
+    {
+      "task": "organizing_school_stuff",
+      "v3_9_1_blob": "be649b76ebc786071c8f9679fed823c5d961968e",
+      "v3_9_2_blob": "be649b76ebc786071c8f9679fed823c5d961968e",
+      "identical": true
+    },
+    {
+      "task": "carrying_out_garden_furniture",
+      "v3_9_1_blob": "058058aa0b2d0e706156f69db7721dc1af652dd2",
+      "v3_9_2_blob": "058058aa0b2d0e706156f69db7721dc1af652dd2",
+      "identical": true
+    },
+    {
+      "task": "put_together_a_basic_pruning_kit",
+      "v3_9_1_blob": "154fbc753c9e6e3890adc79e32d2cca1bea5e03a",
+      "v3_9_2_blob": "154fbc753c9e6e3890adc79e32d2cca1bea5e03a",
+      "identical": true
+    },
+    {
+      "task": "dispose_of_glass",
+      "v3_9_1_blob": "ce6c261738148f05bcc22366ad67ae081437ecfa",
+      "v3_9_2_blob": "ce6c261738148f05bcc22366ad67ae081437ecfa",
+      "identical": true
+    },
+    {
+      "task": "installing_a_modem",
+      "v3_9_1_blob": "065c22c4b3ff964ffa6329176095ef7031c407b8",
+      "v3_9_2_blob": "065c22c4b3ff964ffa6329176095ef7031c407b8",
+      "identical": true
+    },
+    {
+      "task": "make_cabinet_doors",
+      "v3_9_1_blob": "74216ee5a37a9d97e9eb6c33dc39479470a9176c",
+      "v3_9_2_blob": "74216ee5a37a9d97e9eb6c33dc39479470a9176c",
+      "identical": true
+    },
+    {
+      "task": "polishing_shoes",
+      "v3_9_1_blob": "f54240406afd873993b9823e27c2dfa78c905d6a",
+      "v3_9_2_blob": "f54240406afd873993b9823e27c2dfa78c905d6a",
+      "identical": true
+    },
+    {
+      "task": "clean_up_broken_glass",
+      "v3_9_1_blob": "144d46162b098a7842a313870a6ef73ec83a8136",
+      "v3_9_2_blob": "144d46162b098a7842a313870a6ef73ec83a8136",
+      "identical": true
+    },
+    {
+      "task": "packing_meal_for_delivery",
+      "v3_9_1_blob": "d4686c2679603d444023fac8d19c4b14e107aa55",
+      "v3_9_2_blob": "d4686c2679603d444023fac8d19c4b14e107aa55",
+      "identical": true
+    },
+    {
+      "task": "store_batteries",
+      "v3_9_1_blob": "4f71facbc233dd5cf22810acc7c7cbaf17411818",
+      "v3_9_2_blob": "4f71facbc233dd5cf22810acc7c7cbaf17411818",
+      "identical": true
+    },
+    {
+      "task": "store_honey",
+      "v3_9_1_blob": "6ca6153ade4bcd57f3a0e92d5b18f7e3ea78a745",
+      "v3_9_2_blob": "6ca6153ade4bcd57f3a0e92d5b18f7e3ea78a745",
+      "identical": true
+    },
+    {
+      "task": "tidying_bathroom",
+      "v3_9_1_blob": "f2259261ec9924adccdf067b8679cf1a98a37267",
+      "v3_9_2_blob": "f2259261ec9924adccdf067b8679cf1a98a37267",
+      "identical": true
+    },
+    {
+      "task": "putting_dirty_dishes_in_sink",
+      "v3_9_1_blob": "293d946e616c698cd3eb98be7c48b6d6aa15504f",
+      "v3_9_2_blob": "293d946e616c698cd3eb98be7c48b6d6aa15504f",
+      "identical": true
+    },
+    {
+      "task": "make_gift_bags_for_baby_showers",
+      "v3_9_1_blob": "aeb442a63811e21ce05e9309e9f8f338a45528ab",
+      "v3_9_2_blob": "aeb442a63811e21ce05e9309e9f8f338a45528ab",
+      "identical": true
+    },
+    {
+      "task": "collecting_aluminum_cans",
+      "v3_9_1_blob": "99f977843a400b4bf58ebc3cacb27598d9f2bcec",
+      "v3_9_2_blob": "99f977843a400b4bf58ebc3cacb27598d9f2bcec",
+      "identical": true
+    },
+    {
+      "task": "rearrange_your_room",
+      "v3_9_1_blob": "7fe0e34938114ade3b4ea5c85326501d6fb4dab9",
+      "v3_9_2_blob": "7fe0e34938114ade3b4ea5c85326501d6fb4dab9",
+      "identical": true
+    },
+    {
+      "task": "installing_a_fax_machine",
+      "v3_9_1_blob": "2fbd1b9d2405145813258e0daeb0e6d002eebe59",
+      "v3_9_2_blob": "2fbd1b9d2405145813258e0daeb0e6d002eebe59",
+      "identical": true
+    },
+    {
+      "task": "composting_waste",
+      "v3_9_1_blob": "9aca9e255292bf47df46daae7d93c3680dd40324",
+      "v3_9_2_blob": "9aca9e255292bf47df46daae7d93c3680dd40324",
+      "identical": true
+    },
+    {
+      "task": "store_produce",
+      "v3_9_1_blob": "71018e4d4fb820560edcf66f7276ae2b3377922e",
+      "v3_9_2_blob": "71018e4d4fb820560edcf66f7276ae2b3377922e",
+      "identical": true
+    },
+    {
+      "task": "installing_a_scanner",
+      "v3_9_1_blob": "bd16619139b352826be0927ec1ca001bef149143",
+      "v3_9_2_blob": "bd16619139b352826be0927ec1ca001bef149143",
+      "identical": true
+    },
+    {
+      "task": "clean_a_keyboard",
+      "v3_9_1_blob": "702f775f6a84107a49c0d1de9eb4a759bcb5a6f3",
+      "v3_9_2_blob": "702f775f6a84107a49c0d1de9eb4a759bcb5a6f3",
+      "identical": true
+    },
+    {
+      "task": "dispose_of_batteries",
+      "v3_9_1_blob": "f70cc334da5e184999a1eea38a9c643feb52259d",
+      "v3_9_2_blob": "f70cc334da5e184999a1eea38a9c643feb52259d",
+      "identical": true
+    },
+    {
+      "task": "cook_brussels_sprouts",
+      "v3_9_1_blob": "50c4db155a76590620f630ba7c8c69a726573597",
+      "v3_9_2_blob": "50c4db155a76590620f630ba7c8c69a726573597",
+      "identical": true
+    },
+    {
+      "task": "cook_broccolini",
+      "v3_9_1_blob": "e1d404c4f40fd309346b54cf4905c112a46bf404",
+      "v3_9_2_blob": "e1d404c4f40fd309346b54cf4905c112a46bf404",
+      "identical": true
+    },
+    {
+      "task": "setup_a_bar_for_a_cocktail_party",
+      "v3_9_1_blob": "b067aea8343e2132423bdbfef5b97e5f31da46ac",
+      "v3_9_2_blob": "b067aea8343e2132423bdbfef5b97e5f31da46ac",
+      "identical": true
+    },
+    {
+      "task": "laying_tile_floors",
+      "v3_9_1_blob": "6424f1c57018041f7d251d48344ee4daf6899a3e",
+      "v3_9_2_blob": "6424f1c57018041f7d251d48344ee4daf6899a3e",
+      "identical": true
+    },
+    {
+      "task": "sorting_books_on_shelf",
+      "v3_9_1_blob": "ee4d07325e0c1f75609b777744c9331a65a9fb52",
+      "v3_9_2_blob": "ee4d07325e0c1f75609b777744c9331a65a9fb52",
+      "identical": true
+    }
+  ],
+  "docs": {
+    "v3.9.1:docs/challenge/evaluation.md": {
+      "blob_sha": "6242c6071e284247099ef0e0dabe68a268ccc3fb",
+      "sha256": "39c92a3c206d950b4580831c32992dd79374245df9298e0da0b9d468278db260",
+      "bytes": 15858
+    },
+    "v3.9.1:docs/challenge/baselines.md": {
+      "blob_sha": "3c56fb7aa51b62c912eedf9f25a3609f6fac32b9",
+      "sha256": "cdcf6961542ea8dff40e3f8bc69d449a3a641c154a17840244f9cc23ee27e533",
+      "bytes": 13884
+    },
+    "v3.9.2:docs/challenge/evaluation.md": {
+      "blob_sha": "8f5ec9f50f3686bf1b69cc4cd7e9542c161fed46",
+      "sha256": "d8eeab47f02b668e5e8a3bf43705f8c513d9b348d86e0e0acda3352ef49feab1",
+      "bytes": 15858
+    },
+    "v3.9.2:docs/challenge/baselines.md": {
+      "blob_sha": "2ef86077c77f8e1bb1ca1a8b5f1f50c903fcd74f",
+      "sha256": "7603dea596470a109ae1a5415aa35c433bc26a826c3a099c545fe0d9a2705c6c",
+      "bytes": 13884
+    }
+  },
+  "interpretation": "v3.9.2 official tag docs supersede v3.9.1 evaluator setup, while the fixed 100 challenge formal goal definitions are byte-identical across the two tags; the v3.9.2 structure projection is therefore provenance-compatible with the updated evaluator version.",
+  "audit_sha256": "bf5aada4298d91716385f85442ac7806cbf471885b9ab912cea5f9ff5d6e307e"
+}

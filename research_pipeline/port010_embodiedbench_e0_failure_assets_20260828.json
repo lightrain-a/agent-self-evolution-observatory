@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "PORT010_EMBODIEDBENCH_E0_EXTERNAL_FAILURE_ASSETS",
+  "candidate_id": "PORT-010",
+  "source_decision": "ROBUST_HOLD_AFTER_E0_CONSTRUCT_FAILURE",
+  "source_adjudication_ref": "repo:generated/port010-embodiedbench-e0-adjudication-20260828.json#sha256=0d17ac32e4985f01656021469d33d604b1fd396e267241a3a172c105025dc035",
+  "source_e0_receipt_sha256": "ea1592bbf9e176f1180251c622cdaf5bd33ef25501b4fc41a380c6ece537eec5",
+  "source_postgate_diagnostic_sha256": "ba47d15fc07e01c09c4efda66b60d9c0102c9e84f1936e0c4f552f69dff032e0",
+  "outcomes_read": false,
+  "outcome_access_authorized": false,
+  "proxy_transfer_asset": {
+    "signature": "operationalization:outcome-blind-proxy-transfer-failure",
+    "idea_id": "PORT-010-E0-EMBODIEDBENCH-20260828",
+    "diagnosis": "outcome-blind-proxy-transfer-failure",
+    "affected_layer": "operationalization",
+    "reusable_precheck": "When a mechanism depends on a hand-designed proxy, validate the frozen proxy on an independent outcome-blind construct surface before any scientific outcome access. Development-set success is insufficient. If the independent construct gate fails, preserve the failure and stop the confirmatory lane; do not switch the frozen primary endpoint to a post-hoc supporting statistic such as nonzero prevalence.",
+    "evidence_ref": "repo:generated/port010-embodiedbench-e0-adjudication-20260828.json#sha256=0d17ac32e4985f01656021469d33d604b1fd396e267241a3a172c105025dc035",
+    "does_not_imply": "that the underlying embodied-agent phenomenon is false, that all formal constraint representations fail, that BEHAVIOR-1K or another untouched formal-goal substrate will fail, or any core-principle dead end",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "operationalization",
+      "experiment_family": "mechanism studies using researcher-defined proxy representations before outcome access",
+      "failure_mode": "proxy appears valid on development data but fails an independent outcome-blind construct transfer gate",
+      "required_separation": "development calibration versus independent construct validation versus scientific outcome access"
+    },
+    "reuse_effectiveness": {
+      "reuse_count": 0,
+      "helped_count": 0,
+      "hurt_count": 0,
+      "status": "not-yet-measured"
+    },
+    "superseded_by": "",
+    "last_revalidated": "2026-08-28",
+    "source_decision": "ROBUST_HOLD_AFTER_E0_CONSTRUCT_FAILURE",
+    "source_observation": {
+      "binding_load_v1_initial_construct_spearman": 0.06579195636120584,
+      "binding_load_v1_token_spearman": 0.8194913946228588,
+      "binding_load_v1_1_two_chain_median": 10.0,
+      "binding_load_v1_1_three_chain_median": 9.232954545454547,
+      "constraint_graph_v2_development_depth_ge_3_accuracy": 0.8221153846153846,
+      "constraint_graph_v2_independent_joint_direction_environments_after_schema_alias_diagnostic": 1,
+      "constraint_graph_v2_required_joint_direction_environments": 3,
+      "scientific_outcomes_read": 0
+    },
+    "can_authorize_problem_gate": false,
+    "can_authorize_experiment": false,
+    "can_authorize_provider": false,
+    "can_authorize_gpu": false,
+    "scientific_authority": false
+  },
+  "source_schema_asset": {
+    "signature": "operationalization:source-schema-semantics-assumption",
+    "idea_id": "PORT-010-E0-EMBODIEDBENCH-20260828",
+    "diagnosis": "source-schema-semantics-assumption",
+    "affected_layer": "operationalization",
+    "reusable_precheck": "Before freezing a cross-environment metadata gate, pin and audit the source-level meaning and namespace of every structural field used by the gate, including capability-label aliases and identifier scope. Treat discovered schema/namespace mismatch as a gate-specification error, not a scientific negative, and then test whether the original scientific HOLD remains robust without retroactively changing the frozen primary endpoint.",
+    "evidence_ref": "repo:generated/port010-embodiedbench-e0-adjudication-20260828.json#sha256=0d17ac32e4985f01656021469d33d604b1fd396e267241a3a172c105025dc035",
+    "does_not_imply": "that correcting a schema alias or identifier namespace may retroactively convert a failed frozen construct gate into PASS, or that the EmbodiedBench labels are invalid",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "operationalization",
+      "experiment_family": "cross-environment benchmark analyses with heterogeneous source schemas",
+      "failure_mode": "gate assumes globally uniform label names or globally unique identifiers when the source uses environment-specific aliases or local index namespaces",
+      "required_preflight": "source schema and identifier semantics must be audited before scientific gate freeze"
+    },
+    "reuse_effectiveness": {
+      "reuse_count": 0,
+      "helped_count": 0,
+      "hurt_count": 0,
+      "status": "not-yet-measured"
+    },
+    "superseded_by": "",
+    "last_revalidated": "2026-08-28",
+    "source_decision": "POST_GATE_SPECIFICATION_DIAGNOSIS_WITH_ROBUST_HOLD",
+    "source_observation": {
+      "manipulation_complex_label": "complex",
+      "other_environment_complex_label": "complex_instruction",
+      "episode_id_namespace": "reused local index across capability subsets",
+      "navigation_exact_base_long_horizon_instruction_collisions": 26,
+      "robust_hold_after_alias_normalization": true
+    },
+    "can_authorize_problem_gate": false,
+    "can_authorize_experiment": false,
+    "can_authorize_provider": false,
+    "scientific_authority": false
+  },
+  "specificity_asset": {
+    "signature": "experiment_identifiability:proxy-length-and-capability-nonspecificity",
+    "idea_id": "PORT-010-E0-EMBODIEDBENCH-20260828",
+    "diagnosis": "proxy-length-and-capability-nonspecificity",
+    "affected_layer": "experiment_identifiability",
+    "reusable_precheck": "A proposed mechanism observable must demonstrate outcome-blind specificity against both a nuisance variable and negative capability strata before scientific outcomes are opened. For sparse structural counts, inspect distributional resolution on development data and preregister an endpoint that can distinguish the target construct without later switching between median, mean, or prevalence. If a negative stratum exceeds the target or the observable remains strongly length-coupled, do not interpret downstream outcome differences mechanistically.",
+    "evidence_ref": "repo:generated/port010-embodiedbench-e0-adjudication-20260828.json#sha256=0d17ac32e4985f01656021469d33d604b1fd396e267241a3a172c105025dc035",
+    "does_not_imply": "that official complex-instruction labels cannot be benchmark-diagnostically performance-distinct, or that a formal author-defined goal-coupling representation cannot be identifiable on an untouched substrate",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "affected_layer": "experiment_identifiability",
+      "experiment_family": "mechanistic interpretation of sparse text-derived or graph-derived observables",
+      "failure_mode": "observable is not specific to the intended capability and/or remains coupled to a nuisance such as instruction length",
+      "required_falsifiers": "outcome-blind nuisance noncollapse plus at least one negative capability stratum"
+    },
+    "reuse_effectiveness": {
+      "reuse_count": 0,
+      "helped_count": 0,
+      "hurt_count": 0,
+      "status": "not-yet-measured"
+    },
+    "superseded_by": "",
+    "last_revalidated": "2026-08-28",
+    "source_decision": "ROBUST_HOLD_AFTER_E0_CONSTRUCT_FAILURE",
+    "source_observation": {
+      "navigation_graph_edge_token_spearman": 0.6119892708298498,
+      "navigation_common_sense_dependency_positive_rate": 1.0,
+      "navigation_complex_instruction_dependency_positive_rate": 0.45,
+      "habitat_complex_edge_median": 0.0,
+      "alfred_complex_edge_median": 0.0,
+      "navigation_complex_edge_median": 0.0,
+      "posthoc_prevalence_cannot_replace_frozen_median_gate": true
+    },
+    "can_authorize_problem_gate": false,
+    "can_authorize_experiment": false,
+    "can_authorize_provider": false,
+    "scientific_authority": false
+  },
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "provider": false,
+    "p0": false,
+    "gpu": false
+  }
+}

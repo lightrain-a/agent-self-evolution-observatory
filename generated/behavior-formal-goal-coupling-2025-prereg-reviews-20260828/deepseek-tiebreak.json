@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "text": "1. **P1** is the scientifically cleaner primary under full coverage. The task is the natural unit of replication, each task mean is identically constructed from the same full set of submissions, and it directly avoids pseudoreplication. Per-submission slopes remain available as a mandatory heterogeneity check, but they should not be the primary because they weight idiosyncratic policy-level noise equally with task-level signal.\n\n2. **PASS** the Freedman-Lane replacement as specified.\n\n3. **Yes** — these choices can be frozen now without outcome access; they depend only on the design matrix, submission inclusion rules, and analytic procedure, not on observed outcomes.",
+  "scientific_authority": false
+}

@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "text": "1) Choose P1. The scientific question asks for an incremental association of goal coupling conditional on atomic goal count, which P1 estimates directly and transparently. P2 adds an interaction hypothesis not required by the frozen question and consumes additional degrees of freedom before any outcome data exist. P1 keeps the model aligned with the stated estimand and minimizes pre-outcome flexibility.\n\n2) Choose R1. The current rule requires both sign stability and a bounded attenuation threshold (>30%), making it more conservative against robustness failure than merely checking whether the CI overlaps zero. R2 weakens the standard by allowing attenuation up to 100% as long as the CI still excludes zero, which is less protective against fragile estimates. R1 should be retained.\n\n3) REJECT T1. The proposed clarification would impose a new hard gate (>=3 unique teams) for starting cross-policy scientific analysis that was not part of the original admission wording, altering the preregistered conditions after the fact.\n\n4) Yes. These choices can be frozen now because they are based solely on the stated scientific question, model parsimony, and pre-specified robustness logic, without using any outcome data or 2026 q/success values.",
+  "scientific_authority": false
+}
