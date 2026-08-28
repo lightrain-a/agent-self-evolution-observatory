@@ -1,0 +1,353 @@
+{
+  "schema_version": "sceneeval-marginal-calibration-implementation-preflight-v1",
+  "status": "MARGINAL_METADATA_CALIBRATION_SYNTHETIC_PASS",
+  "preregistration_sha256": "269412b2b0ac270de00d1cca60f4e429ca3b48aae5d62359be073a6095abc365",
+  "topology_implementation_sha256": "4021b01498c5d6f18219fb1b3f34c4a77d2ed217f6dfeaba1a49cd7a83bb9f5a",
+  "annotations_sha256": "d770886e249e7be04cc3e183ddd1b9e23c2aa6a7666226b5fe5da17236286ae3",
+  "composition_vocabulary_sha256": "9e5edf20f7d2c5d8152485ea4ef6c5d89cab4fe6eccffea4fad90594f241b39a",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "outcome_exposure": {
+    "sceneeval_generator_outputs_read": false,
+    "sceneeval_matching_outputs_read": false,
+    "sceneeval_metric_outputs_read": false,
+    "synthetic_matching_and_outcomes_only": true
+  },
+  "runtime": {
+    "python": "3.10.19",
+    "numpy": "2.2.6",
+    "scipy": "1.15.3",
+    "required_runtime_on_69": "/home/wyt/anaconda3/bin/python",
+    "new_packages_installed": false
+  },
+  "real_run_contract": {
+    "outer_folds": "five frozen instruction-hash folds",
+    "inner_lambda_folds": "three deterministic instruction-hash folds inside each outer training set",
+    "ridge_lambda_grid": [
+      0.1,
+      1.0,
+      10.0,
+      100.0
+    ],
+    "lambda_selection": "maximize summed inner-validation binomial log likelihood using outer-training data only; deterministic tie favors stronger regularization",
+    "training_offset_crossfit": "after lambda selection every outer-training eta is predicted by an inner model that did not fit that scene",
+    "heldout_offset": "fit one marginal model on all outer-training scenes with selected lambda and predict outer-heldout only",
+    "feature_scaling": "training-split-only; count/load/matching/composition features log1p then standardize; intercept/difficulty dummies unscaled",
+    "metadata_features": "difficulty, words, total/per-channel loads, official matching coverage/not-matched counts, frozen attribute/relation/object-category vocabulary",
+    "candidate_N2_fairness": "N2 and candidate receive identical cross-fitted eta offsets; covariance model cannot alter marginal calibration",
+    "zero_count_policy": "zero prerequisite-eligible cells stay in prerequisite summaries only"
+  },
+  "synthetic_validation": {
+    "seed": 2026082811,
+    "channels": [
+      {
+        "channel": "ObjAttr",
+        "feature_count_including_intercept": 244,
+        "synthetic_eligible_scene_count": 475,
+        "heldout_loglik_improvement_over_intercept": 381.711706,
+        "selected_lambda_counts": {
+          "0.1": 0,
+          "1.0": 0,
+          "10.0": 0,
+          "100.0": 5
+        },
+        "outer_folds": [
+          {
+            "fold": 0,
+            "train_n": 397,
+            "heldout_n": 78,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -5277.215418,
+              "1.0": -2361.651502,
+              "10.0": -933.563154,
+              "100.0": -552.763074
+            },
+            "train_crossfit_ll": -552.763074,
+            "heldout_ll": -109.554852,
+            "intercept_ll": -155.843336,
+            "iterations": 31
+          },
+          {
+            "fold": 1,
+            "train_n": 365,
+            "heldout_n": 110,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -5123.828168,
+              "1.0": -2086.090291,
+              "10.0": -906.046523,
+              "100.0": -564.620877
+            },
+            "train_crossfit_ll": -564.620877,
+            "heldout_ll": -160.767432,
+            "intercept_ll": -263.770041,
+            "iterations": 31
+          },
+          {
+            "fold": 2,
+            "train_n": 392,
+            "heldout_n": 83,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -6108.911475,
+              "1.0": -2426.989596,
+              "10.0": -991.517674,
+              "100.0": -584.025044
+            },
+            "train_crossfit_ll": -584.025044,
+            "heldout_ll": -124.142493,
+            "intercept_ll": -204.230949,
+            "iterations": 32
+          },
+          {
+            "fold": 3,
+            "train_n": 377,
+            "heldout_n": 98,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -5405.070496,
+              "1.0": -2259.745975,
+              "10.0": -879.240275,
+              "100.0": -537.509919
+            },
+            "train_crossfit_ll": -537.509919,
+            "heldout_ll": -174.455153,
+            "intercept_ll": -221.784177,
+            "iterations": 32
+          },
+          {
+            "fold": 4,
+            "train_n": 369,
+            "heldout_n": 106,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -5229.279516,
+              "1.0": -2210.044604,
+              "10.0": -884.12217,
+              "100.0": -540.755825
+            },
+            "train_crossfit_ll": -540.755825,
+            "heldout_ll": -154.051908,
+            "intercept_ll": -259.05504,
+            "iterations": 30
+          }
+        ]
+      },
+      {
+        "channel": "OORel",
+        "feature_count_including_intercept": 200,
+        "synthetic_eligible_scene_count": 470,
+        "heldout_loglik_improvement_over_intercept": 257.520186,
+        "selected_lambda_counts": {
+          "0.1": 0,
+          "1.0": 0,
+          "10.0": 0,
+          "100.0": 5
+        },
+        "outer_folds": [
+          {
+            "fold": 0,
+            "train_n": 396,
+            "heldout_n": 74,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -5058.859746,
+              "1.0": -1808.426074,
+              "10.0": -867.356235,
+              "100.0": -573.227273
+            },
+            "train_crossfit_ll": -573.227273,
+            "heldout_ll": -87.83195,
+            "intercept_ll": -136.970333,
+            "iterations": 27
+          },
+          {
+            "fold": 1,
+            "train_n": 361,
+            "heldout_n": 109,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -4760.911706,
+              "1.0": -1729.542159,
+              "10.0": -772.721328,
+              "100.0": -492.69755
+            },
+            "train_crossfit_ll": -492.69755,
+            "heldout_ll": -171.21537,
+            "intercept_ll": -204.816332,
+            "iterations": 27
+          },
+          {
+            "fold": 2,
+            "train_n": 389,
+            "heldout_n": 81,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -5041.04334,
+              "1.0": -1979.049165,
+              "10.0": -872.024115,
+              "100.0": -537.475701
+            },
+            "train_crossfit_ll": -537.475701,
+            "heldout_ll": -108.209298,
+            "intercept_ll": -162.005313,
+            "iterations": 27
+          },
+          {
+            "fold": 3,
+            "train_n": 372,
+            "heldout_n": 98,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -4978.32956,
+              "1.0": -1835.431055,
+              "10.0": -804.863665,
+              "100.0": -506.104035
+            },
+            "train_crossfit_ll": -506.104035,
+            "heldout_ll": -123.167158,
+            "intercept_ll": -179.519458,
+            "iterations": 28
+          },
+          {
+            "fold": 4,
+            "train_n": 362,
+            "heldout_n": 108,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -4988.596524,
+              "1.0": -2082.746721,
+              "10.0": -911.156006,
+              "100.0": -525.040442
+            },
+            "train_crossfit_ll": -525.040442,
+            "heldout_ll": -133.274277,
+            "intercept_ll": -197.906803,
+            "iterations": 27
+          }
+        ]
+      },
+      {
+        "channel": "OARel",
+        "feature_count_including_intercept": 192,
+        "synthetic_eligible_scene_count": 444,
+        "heldout_loglik_improvement_over_intercept": 150.486251,
+        "selected_lambda_counts": {
+          "0.1": 0,
+          "1.0": 0,
+          "10.0": 0,
+          "100.0": 5
+        },
+        "outer_folds": [
+          {
+            "fold": 0,
+            "train_n": 377,
+            "heldout_n": 67,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -2766.807463,
+              "1.0": -1047.23812,
+              "10.0": -509.821451,
+              "100.0": -356.589787
+            },
+            "train_crossfit_ll": -356.589787,
+            "heldout_ll": -48.64874,
+            "intercept_ll": -82.316092,
+            "iterations": 20
+          },
+          {
+            "fold": 1,
+            "train_n": 338,
+            "heldout_n": 106,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -1992.536965,
+              "1.0": -880.335371,
+              "10.0": -432.329022,
+              "100.0": -306.121579
+            },
+            "train_crossfit_ll": -306.121579,
+            "heldout_ll": -90.52941,
+            "intercept_ll": -120.654739,
+            "iterations": 21
+          },
+          {
+            "fold": 2,
+            "train_n": 367,
+            "heldout_n": 77,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -2255.488537,
+              "1.0": -951.571976,
+              "10.0": -479.680433,
+              "100.0": -328.496136
+            },
+            "train_crossfit_ll": -328.496136,
+            "heldout_ll": -65.750664,
+            "intercept_ll": -82.330844,
+            "iterations": 21
+          },
+          {
+            "fold": 3,
+            "train_n": 345,
+            "heldout_n": 99,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -2015.702562,
+              "1.0": -890.467833,
+              "10.0": -432.200048,
+              "100.0": -296.909375
+            },
+            "train_crossfit_ll": -296.909375,
+            "heldout_ll": -82.598183,
+            "intercept_ll": -115.508231,
+            "iterations": 19
+          },
+          {
+            "fold": 4,
+            "train_n": 349,
+            "heldout_n": 95,
+            "lambda": 100.0,
+            "lambda_scores": {
+              "0.1": -1952.715187,
+              "1.0": -821.68553,
+              "10.0": -405.121572,
+              "100.0": -293.165492
+            },
+            "train_crossfit_ll": -293.165492,
+            "heldout_ll": -83.433145,
+            "intercept_ll": -120.636487,
+            "iterations": 20
+          }
+        ]
+      }
+    ],
+    "acceptance_rule": "each downstream channel improves five-fold heldout binomial log likelihood over outer-training intercept by >10; every optimizer fit succeeds"
+  },
+  "remaining_implementation_blockers": [
+    "freeze and synthetic-test scene-level uncertainty/bootstrap plus practical-equivalence rule",
+    "run real measurement-format smoke only after legitimate HSM gated access"
+  ],
+  "does_not_authorize": [
+    "HSM gated access",
+    "SceneEval semantic provider calls",
+    "P0",
+    "GPU",
+    "generator admission",
+    "Problem Gate",
+    "scientific PASS"
+  ],
+  "authority": {
+    "canonical_generator": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "local_validation": false,
+    "p0": false,
+    "provider": false,
+    "gpu": false,
+    "scientific": false
+  }
+}

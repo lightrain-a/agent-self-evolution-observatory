@@ -12,6 +12,7 @@ HSM_MANIFEST = ROOT / "generated" / "hsm-sceneeval500-release-manifest-20260828.
 INDEPENDENT_REVIEW = ROOT / "generated" / "constraint-integration-sceneeval-independent-review-20260828.json"
 PREREG_DRAFT = ROOT / "generated" / "sceneeval500-prerequisite-coupling-preregistration-draft-20260828.json"
 TOPOLOGY_IMPLEMENTATION = ROOT / "generated" / "sceneeval500-logistic-normal-topology-implementation-preflight-20260828.json"
+MARGINAL_CALIBRATION = ROOT / "generated" / "sceneeval500-marginal-calibration-implementation-preflight-20260828.json"
 LEGO_AUDIT = ROOT / "generated" / "lego-bench-outcome-blind-construct-audit-20260828.json"
 LEGO_EXEC = ROOT / "generated" / "constraint-integration-executability-preflight-20260828.json"
 
@@ -21,6 +22,7 @@ EXPECTED_HSM_MANIFEST_SHA = "6475bdd1c73a4b810f4bb6ee03e65be85567d07e33c04a15dc2
 EXPECTED_INDEPENDENT_REVIEW_SHA = "cb82ab4531dd1a76f05af2f027f3213ffc06b9e771beb45007a9446a55186862"
 EXPECTED_PREREG_DRAFT_SHA = "269412b2b0ac270de00d1cca60f4e429ca3b48aae5d62359be073a6095abc365"
 EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA = "4021b01498c5d6f18219fb1b3f34c4a77d2ed217f6dfeaba1a49cd7a83bb9f5a"
+EXPECTED_MARGINAL_CALIBRATION_SHA = "976870a4946d69222334c7330f7380112d91afd05be75c8e25e6afae34c28fbf"
 EXPECTED_LEGO_AUDIT_SHA = "f8e845bb66d5c3ae897e939bb9877c1ae85e0491955a4d099e45d6f8bd7d868d"
 EXPECTED_LEGO_EXEC_SHA = "15cf610915f3d3cd1e144f81207ac240517d0e5969418dd8e13e86b719d49f13"
 
@@ -42,6 +44,7 @@ def main() -> None:
     require_digest(INDEPENDENT_REVIEW, EXPECTED_INDEPENDENT_REVIEW_SHA)
     require_digest(PREREG_DRAFT, EXPECTED_PREREG_DRAFT_SHA)
     require_digest(TOPOLOGY_IMPLEMENTATION, EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA)
+    require_digest(MARGINAL_CALIBRATION, EXPECTED_MARGINAL_CALIBRATION_SHA)
     require_digest(LEGO_AUDIT, EXPECTED_LEGO_AUDIT_SHA)
     require_digest(LEGO_EXEC, EXPECTED_LEGO_EXEC_SHA)
 
@@ -51,6 +54,7 @@ def main() -> None:
     independent_review = json.loads(INDEPENDENT_REVIEW.read_text(encoding="utf-8"))
     prereg = json.loads(PREREG_DRAFT.read_text(encoding="utf-8"))
     topology_implementation = json.loads(TOPOLOGY_IMPLEMENTATION.read_text(encoding="utf-8"))
+    marginal_calibration = json.loads(MARGINAL_CALIBRATION.read_text(encoding="utf-8"))
 
     if proposal.get("proposal_id") != "CROSS-SUBSTRATE-CONSTRAINT-INTEGRATION-20260828":
         raise SystemExit("unexpected proposal identity")
@@ -74,8 +78,12 @@ def main() -> None:
         raise SystemExit("SceneEval topology implementation did not pass synthetic validation")
     if topology_implementation.get("scientific_authority") is not False or topology_implementation.get("execution_authority") is not False:
         raise SystemExit("SceneEval topology implementation leaked authority")
+    if marginal_calibration.get("status") != "MARGINAL_METADATA_CALIBRATION_SYNTHETIC_PASS":
+        raise SystemExit("SceneEval marginal calibration did not pass synthetic validation")
+    if marginal_calibration.get("scientific_authority") is not False or marginal_calibration.get("execution_authority") is not False:
+        raise SystemExit("SceneEval marginal calibration leaked authority")
 
-    proposal["status"] = "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_CORE_IMPLEMENTED_HOLD_CALIBRATION_AND_ACCESS"
+    proposal["status"] = "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_CALIBRATION_IMPLEMENTED_HOLD_UNCERTAINTY_AND_ACCESS"
     proposal["canonical_candidate_id"] = None
     proposal["generator_admission"] = "PENDING"
     proposal["scientific_authority"] = False
@@ -210,6 +218,27 @@ def main() -> None:
         "execution_authority": False
     }
 
+    proposal["marginal_calibration_preflight"] = {
+        "artifact": str(MARGINAL_CALIBRATION.relative_to(ROOT)),
+        "artifact_sha256": EXPECTED_MARGINAL_CALIBRATION_SHA,
+        "status": marginal_calibration["status"],
+        "runtime": marginal_calibration["runtime"],
+        "real_run_contract": marginal_calibration["real_run_contract"],
+        "synthetic_validation_summary": [
+            {
+                "channel": row["channel"],
+                "feature_count_including_intercept": row["feature_count_including_intercept"],
+                "synthetic_eligible_scene_count": row["synthetic_eligible_scene_count"],
+                "heldout_loglik_improvement_over_intercept": row["heldout_loglik_improvement_over_intercept"],
+                "selected_lambda_counts": row["selected_lambda_counts"],
+            }
+            for row in marginal_calibration["synthetic_validation"]["channels"]
+        ],
+        "remaining_implementation_blockers": marginal_calibration["remaining_implementation_blockers"],
+        "scientific_authority": False,
+        "execution_authority": False
+    }
+
     proposal["executability_preflight"] = {
         "artifact": str(HSM_PREFLIGHT.relative_to(ROOT)),
         "artifact_sha256": EXPECTED_HSM_PREFLIGHT_SHA,
@@ -309,11 +338,10 @@ def main() -> None:
     }
 
     proposal["next_gate"] = {
-        "name": "MARGINAL_CALIBRATION_UNCERTAINTY_AND_ASSET_ACCESS_PREFLIGHT",
+        "name": "UNCERTAINTY_BOOTSTRAP_AND_ASSET_ACCESS_PREFLIGHT",
         "required": True,
         "requirements": [
-            "freeze and synthetic-test the high-dimensional same-information marginal metadata calibration that produces eta offsets inside each training fold",
-            "freeze and synthetic-test the scene-level bootstrap/uncertainty and practical-equivalence implementation; the core N2/candidate topology likelihood is already synthetic-PASS",
+            "freeze and synthetic-test the scene-level bootstrap/uncertainty and practical-equivalence implementation; the core topology likelihood and cross-fitted marginal calibration are already synthetic-PASS",
             "preserve the already frozen two-stage prerequisite/downstream contract, metadata composition vocabulary, N0/N1/N2 ladder, 52-pair panel, and power thresholds without outcome-driven changes",
             "bind a new canonical candidate identity only after the independent REVISE gate is fully satisfied; never reuse PORT-010",
             "obtain legitimate HSM gated-dataset access or leave the bounded P0 lane waiting",

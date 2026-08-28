@@ -11,6 +11,7 @@ SCENEEVAL_AUDIT = ROOT / "generated" / "sceneeval500-outcome-blind-constraint-au
 INDEPENDENT_REVIEW = ROOT / "generated" / "constraint-integration-sceneeval-independent-review-20260828.json"
 PREREG_DRAFT = ROOT / "generated" / "sceneeval500-prerequisite-coupling-preregistration-draft-20260828.json"
 TOPOLOGY_IMPLEMENTATION = ROOT / "generated" / "sceneeval500-logistic-normal-topology-implementation-preflight-20260828.json"
+MARGINAL_CALIBRATION = ROOT / "generated" / "sceneeval500-marginal-calibration-implementation-preflight-20260828.json"
 HSM_PREFLIGHT = ROOT / "generated" / "sceneeval500-hsm-released-output-preflight-20260828.json"
 HSM_MANIFEST = ROOT / "generated" / "hsm-sceneeval500-release-manifest-20260828.json"
 COLLISION = ROOT / "generated" / "constraint-integration-current-source-collision-review-20260828.json"
@@ -21,6 +22,7 @@ EXPECTED_SCENEEVAL_AUDIT_SHA = "a3eaaa0571d51928e70f0094de1d0d4542211de165d1a196
 EXPECTED_REVIEW_SHA = "cb82ab4531dd1a76f05af2f027f3213ffc06b9e771beb45007a9446a55186862"
 EXPECTED_PREREG_SHA = "269412b2b0ac270de00d1cca60f4e429ca3b48aae5d62359be073a6095abc365"
 EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA = "4021b01498c5d6f18219fb1b3f34c4a77d2ed217f6dfeaba1a49cd7a83bb9f5a"
+EXPECTED_MARGINAL_CALIBRATION_SHA = "976870a4946d69222334c7330f7380112d91afd05be75c8e25e6afae34c28fbf"
 EXPECTED_HSM_PREFLIGHT_SHA = "75053aea6c84b467431066edd6b9cf9e898cdf013adbe0c571dce16645009348"
 EXPECTED_HSM_MANIFEST_SHA = "6475bdd1c73a4b810f4bb6ee03e65be85567d07e33c04a15dc272360a829cd55"
 EXPECTED_COLLISION_SHA = "05d985e0b526ce36c545e1f6427cb5d3e7646fa3a8d437f5281e632f34aad278"
@@ -38,6 +40,7 @@ class ConstraintIntegrationCrossSubstrateProposalTest(unittest.TestCase):
         self.review = json.loads(INDEPENDENT_REVIEW.read_text(encoding="utf-8"))
         self.prereg = json.loads(PREREG_DRAFT.read_text(encoding="utf-8"))
         self.topology_implementation = json.loads(TOPOLOGY_IMPLEMENTATION.read_text(encoding="utf-8"))
+        self.marginal_calibration = json.loads(MARGINAL_CALIBRATION.read_text(encoding="utf-8"))
         self.hsm = json.loads(HSM_PREFLIGHT.read_text(encoding="utf-8"))
         self.hsm_manifest = json.loads(HSM_MANIFEST.read_text(encoding="utf-8"))
         self.collision = json.loads(COLLISION.read_text(encoding="utf-8"))
@@ -46,7 +49,7 @@ class ConstraintIntegrationCrossSubstrateProposalTest(unittest.TestCase):
     def test_proposal_is_noncanonical_zero_execution_authority(self) -> None:
         self.assertEqual(
             self.proposal["status"],
-            "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_CORE_IMPLEMENTED_HOLD_CALIBRATION_AND_ACCESS",
+            "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_CALIBRATION_IMPLEMENTED_HOLD_UNCERTAINTY_AND_ACCESS",
         )
         self.assertIsNone(self.proposal["canonical_candidate_id"])
         self.assertEqual(self.proposal["generator_admission"], "PENDING")
@@ -201,6 +204,29 @@ class ConstraintIntegrationCrossSubstrateProposalTest(unittest.TestCase):
         self.assertFalse(any(artifact["authority"].values()))
         projected = self.proposal["topology_implementation_preflight"]
         self.assertEqual(projected["artifact_sha256"], EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA)
+        self.assertFalse(projected["scientific_authority"])
+
+    def test_marginal_calibration_is_cross_fitted_synthetic_pass_but_zero_authority(self) -> None:
+        self.assertEqual(sha256_file(MARGINAL_CALIBRATION), EXPECTED_MARGINAL_CALIBRATION_SHA)
+        artifact = self.marginal_calibration
+        self.assertEqual(artifact["status"], "MARGINAL_METADATA_CALIBRATION_SYNTHETIC_PASS")
+        contract = artifact["real_run_contract"]
+        self.assertIn("five frozen", contract["outer_folds"])
+        self.assertIn("three deterministic", contract["inner_lambda_folds"])
+        self.assertIn("did not fit that scene", contract["training_offset_crossfit"])
+        self.assertIn("identical cross-fitted eta", contract["candidate_N2_fairness"])
+        rows = {row["channel"]: row for row in artifact["synthetic_validation"]["channels"]}
+        self.assertEqual(rows["ObjAttr"]["feature_count_including_intercept"], 244)
+        self.assertEqual(rows["OORel"]["feature_count_including_intercept"], 200)
+        self.assertEqual(rows["OARel"]["feature_count_including_intercept"], 192)
+        self.assertGreater(rows["ObjAttr"]["heldout_loglik_improvement_over_intercept"], 10)
+        self.assertGreater(rows["OORel"]["heldout_loglik_improvement_over_intercept"], 10)
+        self.assertGreater(rows["OARel"]["heldout_loglik_improvement_over_intercept"], 10)
+        self.assertTrue(all(row["selected_lambda_counts"]["100.0"] == 5 for row in rows.values()))
+        self.assertFalse(artifact["scientific_authority"])
+        self.assertFalse(any(artifact["authority"].values()))
+        projected = self.proposal["marginal_calibration_preflight"]
+        self.assertEqual(projected["artifact_sha256"], EXPECTED_MARGINAL_CALIBRATION_SHA)
         self.assertFalse(projected["scientific_authority"])
 
     def test_hsm_release_is_complete_but_gated_and_zero_authority(self) -> None:

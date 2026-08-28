@@ -1,7 +1,7 @@
 {
   "schema_version": "constraint-integration-cross-substrate-proposal-v1",
   "proposal_id": "CROSS-SUBSTRATE-CONSTRAINT-INTEGRATION-20260828",
-  "status": "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_CORE_IMPLEMENTED_HOLD_CALIBRATION_AND_ACCESS",
+  "status": "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_CALIBRATION_IMPLEMENTED_HOLD_UNCERTAINTY_AND_ACCESS",
   "canonical_candidate_id": null,
   "generator_admission": "PENDING",
   "scientific_authority": false,
@@ -319,11 +319,10 @@
     "forbidden_now": "Do not design/tune an intervention from SceneEval outcomes before the primary problem gate is satisfied."
   },
   "next_gate": {
-    "name": "MARGINAL_CALIBRATION_UNCERTAINTY_AND_ASSET_ACCESS_PREFLIGHT",
+    "name": "UNCERTAINTY_BOOTSTRAP_AND_ASSET_ACCESS_PREFLIGHT",
     "required": true,
     "requirements": [
-      "freeze and synthetic-test the high-dimensional same-information marginal metadata calibration that produces eta offsets inside each training fold",
-      "freeze and synthetic-test the scene-level bootstrap/uncertainty and practical-equivalence implementation; the core N2/candidate topology likelihood is already synthetic-PASS",
+      "freeze and synthetic-test the scene-level bootstrap/uncertainty and practical-equivalence implementation; the core topology likelihood and cross-fitted marginal calibration are already synthetic-PASS",
       "preserve the already frozen two-stage prerequisite/downstream contract, metadata composition vocabulary, N0/N1/N2 ladder, 52-pair panel, and power thresholds without outcome-driven changes",
       "bind a new canonical candidate identity only after the independent REVISE gate is fully satisfied; never reuse PORT-010",
       "obtain legitimate HSM gated-dataset access or leave the bounded P0 lane waiting",
@@ -465,6 +464,79 @@
       "freeze and synthetic-test the high-dimensional same-information marginal metadata calibration that produces eta offsets inside each training fold",
       "freeze the scene-level bootstrap/uncertainty and practical-equivalence implementation",
       "run a measurement-format smoke only after legitimate HSM content access; synthetic topology PASS is not evaluator PASS"
+    ],
+    "scientific_authority": false,
+    "execution_authority": false
+  },
+  "marginal_calibration_preflight": {
+    "artifact": "generated/sceneeval500-marginal-calibration-implementation-preflight-20260828.json",
+    "artifact_sha256": "976870a4946d69222334c7330f7380112d91afd05be75c8e25e6afae34c28fbf",
+    "status": "MARGINAL_METADATA_CALIBRATION_SYNTHETIC_PASS",
+    "runtime": {
+      "python": "3.10.19",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "required_runtime_on_69": "/home/wyt/anaconda3/bin/python",
+      "new_packages_installed": false
+    },
+    "real_run_contract": {
+      "outer_folds": "five frozen instruction-hash folds",
+      "inner_lambda_folds": "three deterministic instruction-hash folds inside each outer training set",
+      "ridge_lambda_grid": [
+        0.1,
+        1.0,
+        10.0,
+        100.0
+      ],
+      "lambda_selection": "maximize summed inner-validation binomial log likelihood using outer-training data only; deterministic tie favors stronger regularization",
+      "training_offset_crossfit": "after lambda selection every outer-training eta is predicted by an inner model that did not fit that scene",
+      "heldout_offset": "fit one marginal model on all outer-training scenes with selected lambda and predict outer-heldout only",
+      "feature_scaling": "training-split-only; count/load/matching/composition features log1p then standardize; intercept/difficulty dummies unscaled",
+      "metadata_features": "difficulty, words, total/per-channel loads, official matching coverage/not-matched counts, frozen attribute/relation/object-category vocabulary",
+      "candidate_N2_fairness": "N2 and candidate receive identical cross-fitted eta offsets; covariance model cannot alter marginal calibration",
+      "zero_count_policy": "zero prerequisite-eligible cells stay in prerequisite summaries only"
+    },
+    "synthetic_validation_summary": [
+      {
+        "channel": "ObjAttr",
+        "feature_count_including_intercept": 244,
+        "synthetic_eligible_scene_count": 475,
+        "heldout_loglik_improvement_over_intercept": 381.711706,
+        "selected_lambda_counts": {
+          "0.1": 0,
+          "1.0": 0,
+          "10.0": 0,
+          "100.0": 5
+        }
+      },
+      {
+        "channel": "OORel",
+        "feature_count_including_intercept": 200,
+        "synthetic_eligible_scene_count": 470,
+        "heldout_loglik_improvement_over_intercept": 257.520186,
+        "selected_lambda_counts": {
+          "0.1": 0,
+          "1.0": 0,
+          "10.0": 0,
+          "100.0": 5
+        }
+      },
+      {
+        "channel": "OARel",
+        "feature_count_including_intercept": 192,
+        "synthetic_eligible_scene_count": 444,
+        "heldout_loglik_improvement_over_intercept": 150.486251,
+        "selected_lambda_counts": {
+          "0.1": 0,
+          "1.0": 0,
+          "10.0": 0,
+          "100.0": 5
+        }
+      }
+    ],
+    "remaining_implementation_blockers": [
+      "freeze and synthetic-test scene-level uncertainty/bootstrap plus practical-equivalence rule",
+      "run real measurement-format smoke only after legitimate HSM gated access"
     ],
     "scientific_authority": false,
     "execution_authority": false
