@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "F18_PORT010_RELEASE_WATCH_COVERAGE_FAILURE_ASSET",
+  "failure_id": "F18-PORT010-RELEASE-SURFACE-COVERAGE-20260828",
+  "candidate_id": "PORT-010",
+  "candidate_title": "Complex-description boundary in end-to-end 3D world construction",
+  "diagnosis": "first-party-release-surface-not-content-addressed-in-watch-contract",
+  "affected_layer": "authority-protocol",
+  "source_state": {
+    "preanalysis_path": "generated/port010-vwe-firstparty-preanalysis-proposal.json",
+    "preanalysis_sha256": "6e6b7001ce6fa3612fbdccdb1848504053a418a42ed205a222fd486800132667",
+    "evidence_plan_path": "generated/paper-first-pre-f0-evidence-acquisition-plan.json",
+    "candidate_snapshot_sha256": "533ef2bbd58e2d2cdc3ed3840182ec243cd7382ec5a63d4a1683d6bb68c46fb3",
+    "release_watch_contract_sha256": "930c32df3fe11e0d67e1ddf35b11dc12d4ed952aa0ffe6cff3edc0435fd3ad9b",
+    "watched_urls": [
+      "https://github.com/usail-hkust/VibeWorlding-Gym"
+    ],
+    "uncovered_first_party_dataset_url": "https://huggingface.co/datasets/usail-hkust/VWE-Bench",
+    "current_missing_reopen_component": [
+      "per_case_outcomes"
+    ]
+  },
+  "observation": {
+    "dataset_endpoint_declared_by_frozen_preanalysis": true,
+    "dataset_endpoint_present_in_release_watch_contract": false,
+    "immutable_dataset_revision_verified_in_this_audit": false,
+    "qualifying_per_case_outcome_artifact_verified_in_this_audit": false,
+    "why_not_auto_patch": "Adding an unverified mutable dataset endpoint or guessed revision to a content-addressed release-watch contract would manufacture provenance rather than repair it."
+  },
+  "reusable_precheck": "For source-specific evidence holds, enumerate every first-party artifact surface named by the frozen scientific object (repository, dataset hub, model hub, project page). A surface may enter a release-watch contract only after its endpoint identity and immutable baseline revision/fingerprint are independently verified. Any unpinned surface keeps release qualification fail-closed and cannot be used to infer scientific reopen authority.",
+  "next_action": "Acquire an immutable Hugging Face dataset revision/file manifest independently; compare only author-released files for per-case outcomes/trajectories. If no qualifying outcome artifact exists, preserve HOLD. If a qualifying artifact exists, update the zero-authority release-watch contract and route to release-change evidence review only.",
+  "does_not_imply": "scientific failure of PORT-010, invalidity of VWE-Bench, permission to run local rollouts, or evidence that a new Hugging Face revision contains outcomes",
+  "scientific_authority": false,
+  "authority": {
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "provider": false,
+    "p0": false,
+    "gpu": false,
+    "scientific": false
+  }
+}
