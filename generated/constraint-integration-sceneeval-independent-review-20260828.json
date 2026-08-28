@@ -1,0 +1,142 @@
+{
+  "schema_version": "constraint-integration-sceneeval-independent-review-v1",
+  "status": "REVISE_BEFORE_PREREGISTRATION",
+  "review_scope": "outcome-blind scientific reduction and measurement-identifiability review only",
+  "reviewed_audit_artifact": "generated/sceneeval500-outcome-blind-constraint-audit-20260828.json",
+  "reviewed_audit_sha256": "a3eaaa0571d51928e70f0094de1d0d4542211de165d1a196135be55df1247e45",
+  "per_case_generator_outputs_read_before_review": false,
+  "per_case_sceneeval_metric_outputs_read_before_review": false,
+  "voting_reviews": [
+    {
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "raw_path": "/data/wyt/agent-evolution-paper-first-reviews/constraint-integration-sceneeval-20260828/deepseek-review-v2.json",
+      "raw_sha256": "f166ae730054fdaa06b0225d8fc175f29db7cd07c7365cf727d8592ea4b89a08",
+      "verdict": "REVISE_BEFORE_PREREGISTRATION",
+      "confidence": 0.82,
+      "strongest_null": "N2: calibrated marginal failure probabilities for ObjCount/ObjAttr/OORel/OARel, with explicit evaluator prerequisite conditioning (OORel/OARel fail automatically on missing-object scenes) and exchangeable scene-level frailty, but no residual type-specific interaction beyond shared object-matching and prerequisite structure.",
+      "identifiability": "Partially identifiable. The candidate interaction is identifiable only if (1) the VLM object-matching error process is measured or instrumented separately from downstream relation/attribute checks, (2) prerequisite conditioning is explicit and not inferred from aggregate marginals, and (3) scene-level frailty is exchangeable across generator outputs. With a single HSM generator, type-specific interaction is confounded with generator-specific scene structure; a second generator is required for transportability.",
+      "primary_test": "Held-out likelihood ratio test comparing N2 (calibrated marginals + prerequisite conditioning + exchangeable frailty) against N1 (N2 plus residual type-specific interaction terms among ObjCount/ObjAttr/OORel/OARel), using pre-registered 52 matched pairs and additional held-out scenes, with bootstrap or permutation calibration of the interaction term under N2.",
+      "p0_scope": "Bounded to the single HSM generator. Any claim of general multi-constraint failure independence or multiplicative interaction is valid only for scenes drawn from this generator distribution P0. No inference to natural images, other generators, or unseen scene distributions is licensed without a second generator or external validation set.",
+      "strongest_alternative": "N1: residual type-specific interaction exists beyond prerequisite and matching conditioning, such that OORel/OARel failures are not fully explained by missing-object propagation and shared VLM matching noise; interaction is positive and non-multiplicative for relation-heavy scenes.",
+      "negative_control": "Scenes where all objects are present and matched correctly by the VLM, but relation/attribute queries are still posed; under N2, residual OORel/OARel failures should be independent of ObjCount/ObjAttr failures after conditioning on scene frailty. Any remaining correlation in this subset indicates unmodeled type interaction or evaluator leakage.",
+      "stop_conditions": [
+        "VLM object-matching cannot be measured separately from relation/attribute evaluation",
+        "Prerequisite conditioning cannot be verified from available metadata",
+        "Only one HSM generator is available and no second generator or external scene set can be obtained",
+        "Held-out sample size is insufficient to distinguish N1 from N2 at pre-specified power",
+        "Scene-level frailty is not exchangeable across generator outputs"
+      ],
+      "forbidden_claim": "Any claim that multi-constraint failures are near-independent or multiplicative in general visual reasoning, or that the observed interaction generalizes beyond the single HSM generator P0, without a second generator or external validation.",
+      "required_revision": "Before preregistration: (1) obtain or instrument a second HSM generator or external scene set to bound P0 and test transportability; (2) specify and validate the VLM object-matching measurement protocol separate from relation/attribute checks; (3) pre-register the exact form of prerequisite conditioning and scene-level frailty; (4) define the interaction term and its null distribution under N2; (5) pre-specify power analysis for the held-out likelihood ratio test using the 52 matched pairs as a pilot.",
+      "scientific_authority": false
+    },
+    {
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "raw_path": "/data/wyt/agent-evolution-paper-first-reviews/constraint-integration-sceneeval-20260828/kimi-review.json",
+      "raw_sha256": "a37514a511bab5a3d2d5d9fa888f751c900fd484767082993701175fd1458363",
+      "verdict": "REVISE_BEFORE_PREREGISTRATION",
+      "confidence": 0.85,
+      "strongest_null": "N2: Calibrated marginal failure rates for ObjCount/ObjAttr/OORel/OARel with explicit VLM prerequisite conditioning (ObjAttr auto-fail on missing category; OORel/OARel auto-fail on missing object) and exchangeable scene-level frailty, assuming conditional independence across residual type-specific errors given scene difficulty and matching success.",
+      "identifiability": "NOT currently identifiable from released data. The 52 matched pairs and metadata correlations (rho .940 words, .862 difficulty) establish scene-level difficulty confounding but cannot separate type-specific failure interactions from shared VLM ObjMatching dependency. ObjAttr, OORel, and OARel are structurally coupled through the single GPT-4o matching bottleneck; without access to the gated 500 scenes and raw VLM matching logs, the 'residual interaction' is mathematically indistinguishable from prerequisite failure cascades.",
+      "primary_test": "Held-out comparison of joint failure patterns against N2 predictions using hierarchical Bayesian model with scene-level random effects (frailty) and explicit conditioning on VLM matching success per category/object. Must show significant improvement in posterior predictive checks (e.g., likelihood ratio or Bayes Factor > 10) for type-specific interaction terms over the null of conditional independence given matching state.",
+      "p0_scope": "P0 (single HSM generator) may only bound the maximum achievable joint failure rate under the constraint satisfaction problem (CSE arXiv:2608.12426 multiplicative independence assumption). It cannot identify which specific type-interaction (ObjAttr×OORel vs ObjCount×ObjAttr) drives deviations from N2, nor can it validate VLM-specific failure modes.",
+      "strongest_alternative": "Apparent type-specific interactions are artifacts of the shared VLM ObjMatching dependency: ObjAttr fails when category missing; OORel/OARel fail when object missing. These are not independent residual types but deterministic consequences of a single upstream matching failure. The 'interaction' may simply reflect the probability that GPT-4o fails to match multiple objects in the same scene due to scene-level clutter (frailty), not type-specific interference.",
+      "negative_control": "Synthetic scene perturbation where object categories are preserved but spatial relations are randomized (or vice versa). If the claimed interaction is truly type-specific and not matching-driven, the correlation between ObjAttr and OORel failures should persist when objects are perfectly matched (oracle matching baseline), and disappear when matching is artificially degraded.",
+      "stop_conditions": [
+        "Gated HSM 500 scenes remain inaccessible or cannot be scored with official GPT-4o ObjMatching before preregistration",
+        "Model comparison shows N2 (conditional independence + frailty) fits held-out data within 95% posterior predictive intervals",
+        "Failure correlation between ObjAttr and OORel/OARel disappears when conditioned on oracle (perfect) matching",
+        "52 matched pairs show >90% ceiling/floor effects in failure rates, preventing discrimination of interaction effects",
+        "Second independent generator (non-HSM) cannot be secured to validate generalizability beyond P0 bounds"
+      ],
+      "forbidden_claim": "Any claim of 'residual type-specific failure interaction' or 'synergistic failure modes' between ObjCount/ObjAttr/OORel/OARel that does not explicitly condition on VLM matching success and rule out the shared ObjMatching dependency as the sole causal pathway.",
+      "required_revision": "Secure access to the gated 500 HSM scenes and obtain raw GPT-4o ObjMatching logs (not just final binary success/fail) to construct the prerequisite conditioning variables. Pre-register the hierarchical model with explicit matching-state covariates and scene-level random effects. Add a second procedural generator (distinct from HSM) to test generalizability of the interaction beyond the P0 bound. Define the interaction test specifically as deviation from conditional independence given matching success, not marginal correlation.",
+      "scientific_authority": false
+    }
+  ],
+  "consensus": {
+    "verdict": "REVISE_BEFORE_PREREGISTRATION",
+    "reviewer_count": 2,
+    "confidence_range": [
+      0.82,
+      0.85
+    ],
+    "strongest_null": "N2 prerequisite-aware conditional independence plus exchangeable scene-level frailty/overdispersion; no type-specific downstream interaction",
+    "identifiability": "CONDITIONAL_AFTER_MEASUREMENT_REVISION",
+    "measurement_revision": [
+      "treat shared ObjMatching / ObjCount adequacy as prerequisite and control state rather than a peer cross-type scientific outcome",
+      "restrict primary residual-coupling outcomes to prerequisite-eligible ObjAttr, OORel, and OARel specs",
+      "condition explicitly on official raw matching/prerequisite state and preserve it as a content-addressed measurement artifact",
+      "include scene-level exchangeable frailty/overdispersion before adding type-specific downstream covariance/interaction",
+      "freeze the exact N2-vs-candidate model, held-out criterion, uncertainty calibration, and power/design simulation before reading per-case outcomes"
+    ],
+    "single_generator_scope": "HSM author-released SceneEval-500 output may support only a bounded single-generator P0 after measurement review and legitimate gated access; it cannot support the paper-level cross-generator claim",
+    "paper_level_requirement": "at least one independently qualified second generator lane or external scene set is required before transport/generalization claims",
+    "primary_negative_control": "oracle/independently verified object matching or an equivalent verified-matching subset; coupling that disappears after correct matching is evaluator-induced",
+    "forbidden_interpretation": "naive co-failure among ObjCount/ObjAttr/OORel/OARel cannot be called generator-side integration failure because the official evaluator creates shared matching/prerequisite dependence"
+  },
+  "nonvoting_provider_history": [
+    {
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "disposition": "NONVOTING_INCOMPLETE_REASONING_ONLY",
+      "note": "provider response was incomplete before assistant output after exhausting the requested reasoning budget",
+      "raw_artifact": null
+    },
+    {
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "disposition": "NONVOTING_TRUNCATED_INVALID_JSON",
+      "raw_path": "/data/wyt/agent-evolution-paper-first-reviews/constraint-integration-sceneeval-20260828/deepseek-review.json",
+      "raw_sha256": "cf78023fc06ec2002e822c0735635732c4f873bd1feb7ba9404854f0bfdd5a37"
+    },
+    {
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "disposition": "NONVOTING_INCOMPLETE_REASONING_ONLY",
+      "note": "provider response was incomplete before assistant output when reasoning was not explicitly disabled",
+      "raw_artifact": null
+    },
+    {
+      "requested_model": "kimi-k3",
+      "resolved_model": null,
+      "disposition": "NONVOTING_TRANSPORT_INDETERMINATE",
+      "note": "one remote invocation returned an upstream/connector 502 before an auditable provider response was available; it is not counted as a scientific review",
+      "raw_artifact": null
+    }
+  ],
+  "provider_accounting": {
+    "completed_voting_review_calls": 2,
+    "confirmed_nonvoting_provider_calls": 3,
+    "connector_indeterminate_invocations": 1,
+    "scientific_execution_provider_calls": 0,
+    "gpu_calls": 0,
+    "review_calls_create_scientific_authority": false
+  },
+  "next_gate": {
+    "name": "MEASUREMENT_MODEL_REVISION_AND_POWER_PREFLIGHT",
+    "requirements": [
+      "compile the prerequisite-aware downstream outcome definition",
+      "freeze N0/N1/N2 and the candidate interaction/covariance model before per-case outcome read",
+      "run outcome-blind power/design simulation using only released SceneEval metadata",
+      "obtain legitimate HSM gated access or keep the P0 lane waiting",
+      "qualify a second generator lane before any paper-level cross-generator claim"
+    ]
+  },
+  "scientific_authority": false,
+  "execution_authority": false,
+  "authority": {
+    "canonical_generator": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "local_validation": false,
+    "p0": false,
+    "provider": false,
+    "gpu": false,
+    "scientific": false
+  }
+}

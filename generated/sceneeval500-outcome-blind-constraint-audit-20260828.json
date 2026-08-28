@@ -1,0 +1,1553 @@
+{
+  "schema_version": "sceneeval500-outcome-blind-constraint-audit-v1",
+  "status": "CLEAR_FOR_ZERO_AUTHORITY_GENERATOR_REVIEW",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "provider_calls_executed": 0,
+  "gpu_calls_executed": 0,
+  "outcome_exposure": {
+    "generated_scene_outputs_read": false,
+    "per_case_metric_outputs_read": false,
+    "published_per_case_baseline_scores_read": false,
+    "selection_conditioned_on_generator_performance": false,
+    "consumed_fields": [
+      "ID",
+      "Description",
+      "ObjCount",
+      "ObjAttr",
+      "OORel",
+      "OARel",
+      "Difficulty"
+    ],
+    "note": "Only released prompt/constraint metadata and benchmark-authored difficulty labels are consumed. Difficulty labels are treated as metadata controls, never as generator outcomes."
+  },
+  "source": {
+    "benchmark": "SceneEval-500",
+    "benchmark_release": "SceneEval-500_v250610",
+    "benchmark_release_commit_display": "3b84b5e",
+    "annotations_file": "annotations.csv",
+    "annotations_bytes": 393946,
+    "annotations_sha256": "d770886e249e7be04cc3e183ddd1b9e23c2aa6a7666226b5fe5da17236286ae3",
+    "data_archive_sha256": "2948037f497c81cb2ce8241010c8d93250248217ca9961aa33e59092196b3676",
+    "evaluator_release": "SceneEval_v1.1.1",
+    "evaluator_release_commit_display": "5d999f2",
+    "code_archive_sha256": "0a77ff7daa3bf65c583deb323d5f015f3da3f51c76726fda1d9ee878ab15b579",
+    "instruction_count": 500,
+    "difficulty_counts": {
+      "easy": 150,
+      "medium": 200,
+      "hard": 150
+    },
+    "constraint_channels": [
+      "ObjCount",
+      "ObjAttr",
+      "OORel",
+      "OARel"
+    ],
+    "channel_semantics": {
+      "ObjCount": "object-count requirements",
+      "ObjAttr": "object-attribute requirements",
+      "OORel": "object-object relationship requirements",
+      "OARel": "object-architecture relationship requirements"
+    }
+  },
+  "metadata_structure": {
+    "nonempty_channel_rows": {
+      "ObjCount": 500,
+      "ObjAttr": 475,
+      "OORel": 470,
+      "OARel": 444
+    },
+    "total_explicit_specs": 10465,
+    "per_difficulty": {
+      "easy": {
+        "n": 150,
+        "total_specs": {
+          "min": 2.0,
+          "q1": 8.0,
+          "median": 10.0,
+          "q3": 12.0,
+          "max": 20.0
+        },
+        "instruction_words": {
+          "min": 8.0,
+          "q1": 23.0,
+          "median": 28.0,
+          "q3": 32.0,
+          "max": 52.0
+        },
+        "active_types": {
+          "min": 1.0,
+          "q1": 3.0,
+          "median": 4.0,
+          "q3": 4.0,
+          "max": 4.0
+        },
+        "type_entropy_bits": {
+          "min": -0.0,
+          "q1": 1.530493,
+          "median": 1.739787,
+          "q3": 1.849602,
+          "max": 1.970951
+        }
+      },
+      "medium": {
+        "n": 200,
+        "total_specs": {
+          "min": 5.0,
+          "q1": 14.0,
+          "median": 16.0,
+          "q3": 20.0,
+          "max": 30.0
+        },
+        "instruction_words": {
+          "min": 20.0,
+          "q1": 33.0,
+          "median": 42.0,
+          "q3": 51.0,
+          "max": 74.0
+        },
+        "active_types": {
+          "min": 2.0,
+          "q1": 4.0,
+          "median": 4.0,
+          "q3": 4.0,
+          "max": 4.0
+        },
+        "type_entropy_bits": {
+          "min": 0.99403,
+          "q1": 1.739354,
+          "median": 1.810281,
+          "q3": 1.895573,
+          "max": 1.972647
+        }
+      },
+      "hard": {
+        "n": 150,
+        "total_specs": {
+          "min": 11.0,
+          "q1": 32.0,
+          "median": 37.0,
+          "q3": 43.0,
+          "max": 64.0
+        },
+        "instruction_words": {
+          "min": 25.0,
+          "q1": 75.0,
+          "median": 86.5,
+          "q3": 99.0,
+          "max": 226.0
+        },
+        "active_types": {
+          "min": 3.0,
+          "q1": 4.0,
+          "median": 4.0,
+          "q3": 4.0,
+          "max": 4.0
+        },
+        "type_entropy_bits": {
+          "min": 1.374253,
+          "q1": 1.783271,
+          "median": 1.838938,
+          "q3": 1.87831,
+          "max": 1.971335
+        }
+      }
+    }
+  },
+  "constructs": {
+    "raw_total_spec_count": {
+      "definition": "total semicolon-delimited released requirements across ObjCount, ObjAttr, OORel, and OARel",
+      "spearman_with_instruction_words": 0.939932,
+      "spearman_with_authored_difficulty": 0.861922,
+      "disposition": "DIRECT_DIFFICULTY_LOAD_AXIS_NOT_NOVEL_PRIMARY_OBJECT",
+      "may_be_primary_scientific_object": false
+    },
+    "active_constraint_type_count": {
+      "definition": "number of non-empty released requirement channels among the four SceneEval semantic channels",
+      "spearman_with_instruction_words": 0.420518,
+      "spearman_with_authored_difficulty": 0.33586,
+      "role": "descriptive covariate only",
+      "may_be_primary_scientific_object": false
+    },
+    "constraint_type_entropy": {
+      "definition": "Shannon entropy in bits over the four released per-instruction requirement-channel counts",
+      "maximum_bits": 2.0,
+      "spearman_with_instruction_words": 0.269006,
+      "spearman_with_authored_difficulty": 0.242051,
+      "role": "pre-outcome moderator/stratifier for cross-type coupling residuals; not a standalone complexity law",
+      "disposition": "ORTHOGONAL_ENOUGH_FOR_MATCHED_COUPLING_MODERATOR",
+      "may_be_primary_scientific_object": false
+    },
+    "instruction_words": {
+      "spearman_with_authored_difficulty": 0.839374,
+      "role": "mandatory load control"
+    }
+  },
+  "direct_collision": {
+    "finding": "Benchmark-authored difficulty is already strongly aligned with released requirement count and instruction length, so a result that merely recovers easy/medium/hard degradation or total-spec degradation cannot constitute the cross-substrate contribution.",
+    "surviving_object": "prerequisite-aware residual coupling among downstream semantic requirement channels after controlling marginal type difficulty, total requirement load, instruction length, authored difficulty, generator identity, shared object-matching state, and scene-level generic failure propensity",
+    "strongest_null": "prerequisite-aware conditional independence plus exchangeable scene-level frailty; a plain multiplicative marginal model is only the first null layer"
+  },
+  "measurement_dependency_preflight": {
+    "verified": true,
+    "source_file_sha256": {
+      "main": "5ca010690e74a19f389aa32fa9ed915678cf7089f450010072a73b93e8b4e41b",
+      "obj_count": "dfbb3bc0241142044409908d427fe91891dce49a7c94083626de24fe407ada96",
+      "obj_attribute": "98d73298ac0aef48debb390c088e5f3d6595738e72ab01eea74e09a5bf8c8488",
+      "obj_obj_relationship": "8f9624569add9dac3aa4b71038eb9859cd23c31e6e01472d48d3908143722176",
+      "obj_arch_relationship": "c506289ec5f8f7f28d5832acb013ab81ca82dccd7ca0ea1430f6dcba404b4178",
+      "vlm_config": "e71d83cc33e1ac871569ab781c219c47943632db6a81a0e9ed23f0ae0c03400d"
+    },
+    "checks": {
+      "matching_result_saved_separately": true,
+      "eval_result_exports_matching_per_category": true,
+      "eval_result_exports_not_matched_objects": true,
+      "obj_count_uses_shared_matching": true,
+      "obj_attribute_uses_shared_matching": true,
+      "obj_attribute_missing_category_auto_fails": true,
+      "obj_obj_relation_uses_shared_matching": true,
+      "obj_obj_relation_missing_objects_auto_fail": true,
+      "obj_arch_relation_uses_shared_matching": true,
+      "obj_arch_relation_missing_object_auto_fails": true,
+      "semantic_metric_vlm_is_gpt4o": true,
+      "obj_attribute_resets_vlm": true,
+      "obj_obj_relation_resets_vlm": true,
+      "obj_arch_relation_resets_vlm": true
+    },
+    "shared_prerequisite": "VLM-produced ObjMatchingResults",
+    "dependency_dag": {
+      "ObjCount": "directly computed from shared object matching; prerequisite/control rather than a peer downstream coupling outcome",
+      "ObjAttr": "requires matched object category; missing category deterministically fails before attribute judgment",
+      "OORel": "requires all referenced objects present in shared matching; missing objects deterministically fail before geometric relation check",
+      "OARel": "requires referenced object present in shared matching; missing object deterministically fails before architecture relation check"
+    },
+    "message_history_cross_metric_note": "Semantic metric constructors reset the VLM, so the primary shared dependency is ObjMatching/prerequisite state rather than inherited cross-metric chat history.",
+    "raw_matching_observable": true,
+    "raw_matching_artifacts": [
+      "obj_matching_result.json",
+      "eval_result.json:object_matching_per_category",
+      "eval_result.json:not_matched_objects"
+    ],
+    "official_semantic_vlm": "gpt-4o-2024-08-06",
+    "local_vlm_substitution_is_official_sceneeval": false,
+    "scientific_authority": false
+  },
+  "strict_matched_f0": {
+    "selection_uses_outcomes": false,
+    "same_total_spec_count": true,
+    "same_authored_difficulty": true,
+    "max_instruction_word_difference": 10,
+    "min_type_entropy_difference_bits": 0.35,
+    "selection_rule": "greedy maximum-contrast disjoint pairing sorted by descending entropy difference, then ascending word difference and scene IDs; frozen before any generated-scene or metric output access",
+    "selected_disjoint_pairs": 52,
+    "pairs_by_difficulty": {
+      "easy": 28,
+      "medium": 23,
+      "hard": 1
+    },
+    "pairs": [
+      {
+        "low_entropy_id": 7,
+        "high_entropy_id": 18,
+        "difficulty": "easy",
+        "total_specs": 4,
+        "low_words": 17,
+        "high_words": 19,
+        "word_difference": 2,
+        "low_entropy_bits": -0.0,
+        "high_entropy_bits": 1.5,
+        "entropy_difference_bits": 1.5,
+        "low_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 0,
+          "OORel": 0,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 2,
+          "ObjAttr": 0,
+          "OORel": 1,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 8,
+        "high_entropy_id": 101,
+        "difficulty": "easy",
+        "total_specs": 4,
+        "low_words": 11,
+        "high_words": 14,
+        "word_difference": 3,
+        "low_entropy_bits": -0.0,
+        "high_entropy_bits": 1.5,
+        "entropy_difference_bits": 1.5,
+        "low_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 0,
+          "OORel": 0,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 2,
+          "ObjAttr": 1,
+          "OORel": 1,
+          "OARel": 0
+        }
+      },
+      {
+        "low_entropy_id": 145,
+        "high_entropy_id": 61,
+        "difficulty": "easy",
+        "total_specs": 8,
+        "low_words": 27,
+        "high_words": 26,
+        "word_difference": 1,
+        "low_entropy_bits": 0.954434,
+        "high_entropy_bits": 1.905639,
+        "entropy_difference_bits": 0.951205,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 5,
+          "OORel": 0,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 2,
+          "OORel": 1,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 20,
+        "high_entropy_id": 81,
+        "difficulty": "medium",
+        "total_specs": 11,
+        "low_words": 34,
+        "high_words": 33,
+        "word_difference": 1,
+        "low_entropy_bits": 0.99403,
+        "high_entropy_bits": 1.93626,
+        "entropy_difference_bits": 0.94223,
+        "low_type_counts": {
+          "ObjCount": 6,
+          "ObjAttr": 0,
+          "OORel": 5,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 2,
+          "OORel": 2,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 56,
+        "high_entropy_id": 6,
+        "difficulty": "easy",
+        "total_specs": 6,
+        "low_words": 16,
+        "high_words": 17,
+        "word_difference": 1,
+        "low_entropy_bits": 1.0,
+        "high_entropy_bits": 1.918296,
+        "entropy_difference_bits": 0.918296,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 3,
+          "OORel": 0,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 2,
+          "ObjAttr": 1,
+          "OORel": 2,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 177,
+        "high_entropy_id": 103,
+        "difficulty": "easy",
+        "total_specs": 6,
+        "low_words": 27,
+        "high_words": 21,
+        "word_difference": 6,
+        "low_entropy_bits": 1.0,
+        "high_entropy_bits": 1.918296,
+        "entropy_difference_bits": 0.918296,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 0,
+          "OORel": 0,
+          "OARel": 3
+        },
+        "high_type_counts": {
+          "ObjCount": 2,
+          "ObjAttr": 2,
+          "OORel": 1,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 147,
+        "high_entropy_id": 164,
+        "difficulty": "easy",
+        "total_specs": 12,
+        "low_words": 36,
+        "high_words": 37,
+        "word_difference": 1,
+        "low_entropy_bits": 1.188722,
+        "high_entropy_bits": 1.959148,
+        "entropy_difference_bits": 0.770426,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 8,
+          "OORel": 1,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 3,
+          "OORel": 2,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 27,
+        "high_entropy_id": 33,
+        "difficulty": "medium",
+        "total_specs": 16,
+        "low_words": 45,
+        "high_words": 48,
+        "word_difference": 3,
+        "low_entropy_bits": 1.247556,
+        "high_entropy_bits": 1.954434,
+        "entropy_difference_bits": 0.706878,
+        "low_type_counts": {
+          "ObjCount": 6,
+          "ObjAttr": 1,
+          "OORel": 9,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 3,
+          "OORel": 5,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 0,
+        "high_entropy_id": 102,
+        "difficulty": "easy",
+        "total_specs": 4,
+        "low_words": 16,
+        "high_words": 15,
+        "word_difference": 1,
+        "low_entropy_bits": 0.811278,
+        "high_entropy_bits": 1.5,
+        "entropy_difference_bits": 0.688722,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 0,
+          "OORel": 0,
+          "OARel": 1
+        },
+        "high_type_counts": {
+          "ObjCount": 2,
+          "ObjAttr": 1,
+          "OORel": 0,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 175,
+        "high_entropy_id": 165,
+        "difficulty": "easy",
+        "total_specs": 14,
+        "low_words": 29,
+        "high_words": 37,
+        "word_difference": 8,
+        "low_entropy_bits": 1.198117,
+        "high_entropy_bits": 1.842371,
+        "entropy_difference_bits": 0.644254,
+        "low_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 9,
+          "OORel": 0,
+          "OARel": 1
+        },
+        "high_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 6,
+          "OORel": 2,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 22,
+        "high_entropy_id": 83,
+        "difficulty": "medium",
+        "total_specs": 13,
+        "low_words": 40,
+        "high_words": 33,
+        "word_difference": 7,
+        "low_entropy_bits": 1.31432,
+        "high_entropy_bits": 1.922023,
+        "entropy_difference_bits": 0.607703,
+        "low_type_counts": {
+          "ObjCount": 6,
+          "ObjAttr": 0,
+          "OORel": 6,
+          "OARel": 1
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 3,
+          "OORel": 2,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 186,
+        "high_entropy_id": 119,
+        "difficulty": "easy",
+        "total_specs": 13,
+        "low_words": 34,
+        "high_words": 28,
+        "word_difference": 6,
+        "low_entropy_bits": 1.334679,
+        "high_entropy_bits": 1.922023,
+        "entropy_difference_bits": 0.587344,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 8,
+          "OORel": 2,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 5,
+          "OORel": 3,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 222,
+        "high_entropy_id": 309,
+        "difficulty": "medium",
+        "total_specs": 18,
+        "low_words": 37,
+        "high_words": 33,
+        "word_difference": 4,
+        "low_entropy_bits": 1.382102,
+        "high_entropy_bits": 1.954686,
+        "entropy_difference_bits": 0.572584,
+        "low_type_counts": {
+          "ObjCount": 7,
+          "ObjAttr": 9,
+          "OORel": 2,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 6,
+          "OORel": 4,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 13,
+        "high_entropy_id": 111,
+        "difficulty": "easy",
+        "total_specs": 9,
+        "low_words": 32,
+        "high_words": 31,
+        "word_difference": 1,
+        "low_entropy_bits": 1.351644,
+        "high_entropy_bits": 1.891061,
+        "entropy_difference_bits": 0.539417,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 0,
+          "OORel": 1,
+          "OARel": 5
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 3,
+          "OORel": 2,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 4,
+        "high_entropy_id": 115,
+        "difficulty": "easy",
+        "total_specs": 9,
+        "low_words": 35,
+        "high_words": 31,
+        "word_difference": 4,
+        "low_entropy_bits": 1.351644,
+        "high_entropy_bits": 1.891061,
+        "entropy_difference_bits": 0.539417,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 1,
+          "OORel": 0,
+          "OARel": 5
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 3,
+          "OORel": 1,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 28,
+        "high_entropy_id": 264,
+        "difficulty": "medium",
+        "total_specs": 14,
+        "low_words": 32,
+        "high_words": 36,
+        "word_difference": 4,
+        "low_entropy_bits": 1.43156,
+        "high_entropy_bits": 1.95919,
+        "entropy_difference_bits": 0.52763,
+        "low_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 2,
+          "OORel": 7,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 3,
+          "OORel": 3,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 485,
+        "high_entropy_id": 40,
+        "difficulty": "hard",
+        "total_specs": 27,
+        "low_words": 78,
+        "high_words": 80,
+        "word_difference": 2,
+        "low_entropy_bits": 1.374253,
+        "high_entropy_bits": 1.892771,
+        "entropy_difference_bits": 0.518519,
+        "low_type_counts": {
+          "ObjCount": 14,
+          "ObjAttr": 10,
+          "OORel": 0,
+          "OARel": 3
+        },
+        "high_type_counts": {
+          "ObjCount": 10,
+          "ObjAttr": 7,
+          "OORel": 7,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 132,
+        "high_entropy_id": 107,
+        "difficulty": "easy",
+        "total_specs": 12,
+        "low_words": 22,
+        "high_words": 32,
+        "word_difference": 10,
+        "low_entropy_bits": 1.384432,
+        "high_entropy_bits": 1.887919,
+        "entropy_difference_bits": 0.503487,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 7,
+          "OORel": 2,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 5,
+          "OORel": 2,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 104,
+        "high_entropy_id": 161,
+        "difficulty": "easy",
+        "total_specs": 11,
+        "low_words": 32,
+        "high_words": 34,
+        "word_difference": 2,
+        "low_entropy_bits": 1.435371,
+        "high_entropy_bits": 1.93626,
+        "entropy_difference_bits": 0.500889,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 6,
+          "OORel": 0,
+          "OARel": 2
+        },
+        "high_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 2,
+          "OORel": 2,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 332,
+        "high_entropy_id": 80,
+        "difficulty": "medium",
+        "total_specs": 10,
+        "low_words": 32,
+        "high_words": 31,
+        "word_difference": 1,
+        "low_entropy_bits": 1.360964,
+        "high_entropy_bits": 1.846439,
+        "entropy_difference_bits": 0.485475,
+        "low_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 1,
+          "OORel": 4,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 2,
+          "OORel": 3,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 21,
+        "high_entropy_id": 74,
+        "difficulty": "medium",
+        "total_specs": 10,
+        "low_words": 33,
+        "high_words": 26,
+        "word_difference": 7,
+        "low_entropy_bits": 1.360964,
+        "high_entropy_bits": 1.846439,
+        "entropy_difference_bits": 0.485475,
+        "low_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 0,
+          "OORel": 4,
+          "OARel": 1
+        },
+        "high_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 3,
+          "OORel": 1,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 129,
+        "high_entropy_id": 11,
+        "difficulty": "easy",
+        "total_specs": 10,
+        "low_words": 29,
+        "high_words": 31,
+        "word_difference": 2,
+        "low_entropy_bits": 1.485475,
+        "high_entropy_bits": 1.970951,
+        "entropy_difference_bits": 0.485475,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 5,
+          "OORel": 2,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 3,
+          "OORel": 2,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 230,
+        "high_entropy_id": 267,
+        "difficulty": "medium",
+        "total_specs": 14,
+        "low_words": 32,
+        "high_words": 38,
+        "word_difference": 6,
+        "low_entropy_bits": 1.492614,
+        "high_entropy_bits": 1.95919,
+        "entropy_difference_bits": 0.466576,
+        "low_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 7,
+          "OORel": 3,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 3,
+          "OORel": 3,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 55,
+        "high_entropy_id": 66,
+        "difficulty": "easy",
+        "total_specs": 6,
+        "low_words": 19,
+        "high_words": 19,
+        "word_difference": 0,
+        "low_entropy_bits": 1.459148,
+        "high_entropy_bits": 1.918296,
+        "entropy_difference_bits": 0.459148,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 2,
+          "OORel": 0,
+          "OARel": 1
+        },
+        "high_type_counts": {
+          "ObjCount": 2,
+          "ObjAttr": 2,
+          "OORel": 1,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 333,
+        "high_entropy_id": 359,
+        "difficulty": "medium",
+        "total_specs": 12,
+        "low_words": 44,
+        "high_words": 36,
+        "word_difference": 8,
+        "low_entropy_bits": 1.325011,
+        "high_entropy_bits": 1.784159,
+        "entropy_difference_bits": 0.459148,
+        "low_type_counts": {
+          "ObjCount": 6,
+          "ObjAttr": 1,
+          "OORel": 5,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 2,
+          "OORel": 4,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 185,
+        "high_entropy_id": 128,
+        "difficulty": "easy",
+        "total_specs": 9,
+        "low_words": 22,
+        "high_words": 22,
+        "word_difference": 0,
+        "low_entropy_bits": 1.435521,
+        "high_entropy_bits": 1.891061,
+        "entropy_difference_bits": 0.455541,
+        "low_type_counts": {
+          "ObjCount": 2,
+          "ObjAttr": 5,
+          "OORel": 0,
+          "OARel": 2
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 3,
+          "OORel": 2,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 32,
+        "high_entropy_id": 30,
+        "difficulty": "medium",
+        "total_specs": 11,
+        "low_words": 47,
+        "high_words": 38,
+        "word_difference": 9,
+        "low_entropy_bits": 1.494919,
+        "high_entropy_bits": 1.93626,
+        "entropy_difference_bits": 0.441341,
+        "low_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 0,
+          "OORel": 4,
+          "OARel": 2
+        },
+        "high_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 2,
+          "OORel": 3,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 125,
+        "high_entropy_id": 3,
+        "difficulty": "easy",
+        "total_specs": 10,
+        "low_words": 27,
+        "high_words": 28,
+        "word_difference": 1,
+        "low_entropy_bits": 1.485475,
+        "high_entropy_bits": 1.921928,
+        "entropy_difference_bits": 0.436453,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 5,
+          "OORel": 2,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 2,
+          "OORel": 2,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 24,
+        "high_entropy_id": 306,
+        "difficulty": "medium",
+        "total_specs": 19,
+        "low_words": 52,
+        "high_words": 49,
+        "word_difference": 3,
+        "low_entropy_bits": 1.529428,
+        "high_entropy_bits": 1.94401,
+        "entropy_difference_bits": 0.414581,
+        "low_type_counts": {
+          "ObjCount": 8,
+          "ObjAttr": 7,
+          "OORel": 4,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 6,
+          "ObjAttr": 6,
+          "OORel": 4,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 305,
+        "high_entropy_id": 281,
+        "difficulty": "medium",
+        "total_specs": 19,
+        "low_words": 52,
+        "high_words": 48,
+        "word_difference": 4,
+        "low_entropy_bits": 1.529428,
+        "high_entropy_bits": 1.94401,
+        "entropy_difference_bits": 0.414581,
+        "low_type_counts": {
+          "ObjCount": 7,
+          "ObjAttr": 0,
+          "OORel": 8,
+          "OARel": 4
+        },
+        "high_type_counts": {
+          "ObjCount": 6,
+          "ObjAttr": 6,
+          "OORel": 3,
+          "OARel": 4
+        }
+      },
+      {
+        "low_entropy_id": 197,
+        "high_entropy_id": 65,
+        "difficulty": "easy",
+        "total_specs": 8,
+        "low_words": 23,
+        "high_words": 26,
+        "word_difference": 3,
+        "low_entropy_bits": 1.5,
+        "high_entropy_bits": 1.905639,
+        "entropy_difference_bits": 0.405639,
+        "low_type_counts": {
+          "ObjCount": 2,
+          "ObjAttr": 4,
+          "OORel": 0,
+          "OARel": 2
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 2,
+          "OORel": 1,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 23,
+        "high_entropy_id": 229,
+        "difficulty": "medium",
+        "total_specs": 12,
+        "low_words": 36,
+        "high_words": 33,
+        "word_difference": 3,
+        "low_entropy_bits": 1.384432,
+        "high_entropy_bits": 1.784159,
+        "entropy_difference_bits": 0.399728,
+        "low_type_counts": {
+          "ObjCount": 7,
+          "ObjAttr": 2,
+          "OORel": 3,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 4,
+          "OORel": 2,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 243,
+        "high_entropy_id": 291,
+        "difficulty": "medium",
+        "total_specs": 11,
+        "low_words": 25,
+        "high_words": 25,
+        "word_difference": 0,
+        "low_entropy_bits": 1.539485,
+        "high_entropy_bits": 1.93626,
+        "entropy_difference_bits": 0.396775,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 5,
+          "OORel": 3,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 3,
+          "OORel": 2,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 176,
+        "high_entropy_id": 169,
+        "difficulty": "easy",
+        "total_specs": 11,
+        "low_words": 31,
+        "high_words": 28,
+        "word_difference": 3,
+        "low_entropy_bits": 1.539485,
+        "high_entropy_bits": 1.93626,
+        "entropy_difference_bits": 0.396775,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 5,
+          "OORel": 0,
+          "OARel": 3
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 4,
+          "OORel": 2,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 58,
+        "high_entropy_id": 52,
+        "difficulty": "easy",
+        "total_specs": 7,
+        "low_words": 19,
+        "high_words": 19,
+        "word_difference": 0,
+        "low_entropy_bits": 1.448816,
+        "high_entropy_bits": 1.842371,
+        "entropy_difference_bits": 0.393555,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 3,
+          "OORel": 0,
+          "OARel": 1
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 2,
+          "OORel": 1,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 121,
+        "high_entropy_id": 134,
+        "difficulty": "easy",
+        "total_specs": 7,
+        "low_words": 23,
+        "high_words": 23,
+        "word_difference": 0,
+        "low_entropy_bits": 1.448816,
+        "high_entropy_bits": 1.842371,
+        "entropy_difference_bits": 0.393555,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 1,
+          "OORel": 3,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 2,
+          "ObjAttr": 3,
+          "OORel": 1,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 5,
+        "high_entropy_id": 136,
+        "difficulty": "easy",
+        "total_specs": 7,
+        "low_words": 27,
+        "high_words": 26,
+        "word_difference": 1,
+        "low_entropy_bits": 1.448816,
+        "high_entropy_bits": 1.842371,
+        "entropy_difference_bits": 0.393555,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 1,
+          "OORel": 0,
+          "OARel": 3
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 1,
+          "OORel": 1,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 17,
+        "high_entropy_id": 156,
+        "difficulty": "easy",
+        "total_specs": 7,
+        "low_words": 24,
+        "high_words": 25,
+        "word_difference": 1,
+        "low_entropy_bits": 1.448816,
+        "high_entropy_bits": 1.842371,
+        "entropy_difference_bits": 0.393555,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 0,
+          "OORel": 1,
+          "OARel": 3
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 1,
+          "OORel": 1,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 228,
+        "high_entropy_id": 248,
+        "difficulty": "medium",
+        "total_specs": 14,
+        "low_words": 34,
+        "high_words": 32,
+        "word_difference": 2,
+        "low_entropy_bits": 1.530619,
+        "high_entropy_bits": 1.924174,
+        "entropy_difference_bits": 0.393555,
+        "low_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 6,
+          "OORel": 3,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 3,
+          "OORel": 4,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 327,
+        "high_entropy_id": 70,
+        "difficulty": "medium",
+        "total_specs": 16,
+        "low_words": 43,
+        "high_words": 52,
+        "word_difference": 9,
+        "low_entropy_bits": 1.54618,
+        "high_entropy_bits": 1.923795,
+        "entropy_difference_bits": 0.377615,
+        "low_type_counts": {
+          "ObjCount": 7,
+          "ObjAttr": 4,
+          "OORel": 5,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 5,
+          "OORel": 4,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 257,
+        "high_entropy_id": 307,
+        "difficulty": "medium",
+        "total_specs": 20,
+        "low_words": 39,
+        "high_words": 45,
+        "word_difference": 6,
+        "low_entropy_bits": 1.581291,
+        "high_entropy_bits": 1.958872,
+        "entropy_difference_bits": 0.377581,
+        "low_type_counts": {
+          "ObjCount": 7,
+          "ObjAttr": 7,
+          "OORel": 6,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 7,
+          "ObjAttr": 5,
+          "OORel": 4,
+          "OARel": 4
+        }
+      },
+      {
+        "low_entropy_id": 278,
+        "high_entropy_id": 311,
+        "difficulty": "medium",
+        "total_specs": 19,
+        "low_words": 36,
+        "high_words": 33,
+        "word_difference": 3,
+        "low_entropy_bits": 1.557432,
+        "high_entropy_bits": 1.931295,
+        "entropy_difference_bits": 0.373863,
+        "low_type_counts": {
+          "ObjCount": 6,
+          "ObjAttr": 8,
+          "OORel": 5,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 7,
+          "OORel": 4,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 258,
+        "high_entropy_id": 85,
+        "difficulty": "medium",
+        "total_specs": 13,
+        "low_words": 32,
+        "high_words": 33,
+        "word_difference": 1,
+        "low_entropy_bits": 1.548581,
+        "high_entropy_bits": 1.922023,
+        "entropy_difference_bits": 0.373443,
+        "low_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 5,
+          "OORel": 3,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 3,
+          "OORel": 3,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 232,
+        "high_entropy_id": 259,
+        "difficulty": "medium",
+        "total_specs": 13,
+        "low_words": 31,
+        "high_words": 33,
+        "word_difference": 2,
+        "low_entropy_bits": 1.548581,
+        "high_entropy_bits": 1.922023,
+        "entropy_difference_bits": 0.373443,
+        "low_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 5,
+          "OORel": 3,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 3,
+          "OORel": 3,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 184,
+        "high_entropy_id": 105,
+        "difficulty": "easy",
+        "total_specs": 13,
+        "low_words": 30,
+        "high_words": 34,
+        "word_difference": 4,
+        "low_entropy_bits": 1.457266,
+        "high_entropy_bits": 1.826245,
+        "entropy_difference_bits": 0.368979,
+        "low_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 7,
+          "OORel": 0,
+          "OARel": 3
+        },
+        "high_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 5,
+          "OORel": 3,
+          "OARel": 1
+        }
+      },
+      {
+        "low_entropy_id": 262,
+        "high_entropy_id": 210,
+        "difficulty": "medium",
+        "total_specs": 15,
+        "low_words": 30,
+        "high_words": 33,
+        "word_difference": 3,
+        "low_entropy_bits": 1.565596,
+        "high_entropy_bits": 1.932915,
+        "entropy_difference_bits": 0.367318,
+        "low_type_counts": {
+          "ObjCount": 6,
+          "ObjAttr": 4,
+          "OORel": 5,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 4,
+          "OORel": 4,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 216,
+        "high_entropy_id": 272,
+        "difficulty": "medium",
+        "total_specs": 15,
+        "low_words": 39,
+        "high_words": 45,
+        "word_difference": 6,
+        "low_entropy_bits": 1.565596,
+        "high_entropy_bits": 1.932915,
+        "entropy_difference_bits": 0.367318,
+        "low_type_counts": {
+          "ObjCount": 6,
+          "ObjAttr": 5,
+          "OORel": 4,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 5,
+          "ObjAttr": 4,
+          "OORel": 4,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 62,
+        "high_entropy_id": 174,
+        "difficulty": "easy",
+        "total_specs": 11,
+        "low_words": 26,
+        "high_words": 24,
+        "word_difference": 2,
+        "low_entropy_bits": 1.572624,
+        "high_entropy_bits": 1.93626,
+        "entropy_difference_bits": 0.363636,
+        "low_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 3,
+          "OORel": 4,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 4,
+          "OORel": 2,
+          "OARel": 2
+        }
+      },
+      {
+        "low_entropy_id": 139,
+        "high_entropy_id": 160,
+        "difficulty": "easy",
+        "total_specs": 11,
+        "low_words": 33,
+        "high_words": 35,
+        "word_difference": 2,
+        "low_entropy_bits": 1.572624,
+        "high_entropy_bits": 1.93626,
+        "entropy_difference_bits": 0.363636,
+        "low_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 3,
+          "OORel": 0,
+          "OARel": 4
+        },
+        "high_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 2,
+          "OORel": 2,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 178,
+        "high_entropy_id": 10,
+        "difficulty": "easy",
+        "total_specs": 9,
+        "low_words": 29,
+        "high_words": 28,
+        "word_difference": 1,
+        "low_entropy_bits": 1.530493,
+        "high_entropy_bits": 1.891061,
+        "entropy_difference_bits": 0.360568,
+        "low_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 3,
+          "OORel": 2,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 1,
+          "OORel": 2,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 167,
+        "high_entropy_id": 67,
+        "difficulty": "easy",
+        "total_specs": 9,
+        "low_words": 31,
+        "high_words": 26,
+        "word_difference": 5,
+        "low_entropy_bits": 1.530493,
+        "high_entropy_bits": 1.891061,
+        "entropy_difference_bits": 0.360568,
+        "low_type_counts": {
+          "ObjCount": 4,
+          "ObjAttr": 0,
+          "OORel": 3,
+          "OARel": 2
+        },
+        "high_type_counts": {
+          "ObjCount": 3,
+          "ObjAttr": 2,
+          "OORel": 1,
+          "OARel": 3
+        }
+      },
+      {
+        "low_entropy_id": 357,
+        "high_entropy_id": 71,
+        "difficulty": "medium",
+        "total_specs": 22,
+        "low_words": 53,
+        "high_words": 58,
+        "word_difference": 5,
+        "low_entropy_bits": 1.564405,
+        "high_entropy_bits": 1.919691,
+        "entropy_difference_bits": 0.355286,
+        "low_type_counts": {
+          "ObjCount": 7,
+          "ObjAttr": 9,
+          "OORel": 6,
+          "OARel": 0
+        },
+        "high_type_counts": {
+          "ObjCount": 8,
+          "ObjAttr": 5,
+          "OORel": 6,
+          "OARel": 3
+        }
+      }
+    ],
+    "role": "pre-outcome robustness panel for independent-null residuals; raw success differences alone are not confirmatory"
+  },
+  "future_analysis_contract_if_authorized": {
+    "primary_population": "all 500 SceneEval-500 instructions for every independently qualified generator with official raw object-matching/prerequisite state and per-requirement semantic outcomes",
+    "primary_outcome_channels": [
+      "ObjAttr",
+      "OORel",
+      "OARel"
+    ],
+    "prerequisite_control_channel": "ObjCount / shared ObjMatching state",
+    "outcome_unit": "prerequisite-eligible downstream semantic requirement spec nested within instruction, channel, and generator; missing-prerequisite outcomes are modeled as prerequisite failures, not treated as peer downstream interaction evidence",
+    "null_ladder": {
+      "N0": "calibrated independent downstream marginals using generator identity, authored difficulty, instruction words, total spec count, and per-channel loads",
+      "N1": "N0 plus explicit official shared ObjMatching/prerequisite state for each downstream spec",
+      "N2": "N1 plus exchangeable scene-level latent frailty/overdispersion absorbing generic scene quality; no type-specific downstream covariance/interaction"
+    },
+    "strongest_null_model": "N2 prerequisite-aware conditional independence plus exchangeable scene-level frailty",
+    "candidate_model": "add preregistered type-specific downstream covariance/interaction topology among ObjAttr, OORel, and OARel beyond N2, with identifiability constraints frozen before outcomes",
+    "primary_disagreement_test": "on frozen instruction-grouped held-out folds, the candidate must improve predictive log loss/ELPD over N2 and leave positive preregistered type-specific residual dependence on prerequisite-eligible outcomes",
+    "entropy_moderation_test": "N2 residual coupling is larger at higher pre-outcome constraint-type entropy under frozen load/difficulty controls; secondary only",
+    "held_out_fold_rule": "sha256(SceneEval ID + newline + Description) modulo 5",
+    "held_out_fold_counts": {
+      "0": 102,
+      "1": 104,
+      "2": 99,
+      "3": 75,
+      "4": 120
+    },
+    "held_out_fold_assignment_sha256": "ca40ed17a7ff2c26ca333456a4ef66e764613fc236f03df9f2dbb3c3862d1dbe",
+    "robustness_panel": "the frozen strict_matched_f0 pairs; compare prerequisite-aware N2 residual rather than raw success",
+    "measurement_negative_control": "repeat the downstream residual analysis on an oracle/verified-object-matching subset or otherwise independently verified matching state; coupling that disappears after correct matching is evaluator-induced, not generator-side integration evidence",
+    "no_outcome_rematching": true,
+    "no_threshold_retuning_after_outcomes": true,
+    "no_generator_dropping_after_outcomes": true,
+    "no_metric_channel_dropping_after_outcomes": true
+  },
+  "falsifiers": [
+    "The prerequisite-aware N2 null matches held-out downstream failure behavior within the preregistered uncertainty criterion.",
+    "Any apparent downstream cross-type coupling disappears after explicit shared ObjMatching/prerequisite conditioning or exchangeable scene-level frailty.",
+    "The interaction advantage exists only under one evaluator implementation or disappears on an oracle/verified-matching negative control.",
+    "The frozen matched panel fails to show the preregistered entropy moderation of N2 residuals."
+  ],
+  "authority": {
+    "canonical_generator": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "local_validation": false,
+    "p0": false,
+    "provider": false,
+    "gpu": false,
+    "scientific": false
+  }
+}

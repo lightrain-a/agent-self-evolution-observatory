@@ -7,13 +7,22 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PROPOSAL = ROOT / "generated" / "constraint-integration-cross-substrate-proposal-20260828.json"
-AUDIT = ROOT / "generated" / "lego-bench-outcome-blind-construct-audit-20260828.json"
+SCENEEVAL_AUDIT = ROOT / "generated" / "sceneeval500-outcome-blind-constraint-audit-20260828.json"
+INDEPENDENT_REVIEW = ROOT / "generated" / "constraint-integration-sceneeval-independent-review-20260828.json"
+PREREG_DRAFT = ROOT / "generated" / "sceneeval500-prerequisite-coupling-preregistration-draft-20260828.json"
+HSM_PREFLIGHT = ROOT / "generated" / "sceneeval500-hsm-released-output-preflight-20260828.json"
+HSM_MANIFEST = ROOT / "generated" / "hsm-sceneeval500-release-manifest-20260828.json"
 COLLISION = ROOT / "generated" / "constraint-integration-current-source-collision-review-20260828.json"
+LEGO_AUDIT = ROOT / "generated" / "lego-bench-outcome-blind-construct-audit-20260828.json"
 PLAN = ROOT / "generated" / "paper-first-pre-f0-evidence-acquisition-plan.json"
 
-EXPECTED_AUDIT_SHA256 = "f8e845bb66d5c3ae897e939bb9877c1ae85e0491955a4d099e45d6f8bd7d868d"
-EXPECTED_COLLISION_SHA256 = "05d985e0b526ce36c545e1f6427cb5d3e7646fa3a8d437f5281e632f34aad278"
-EXPECTED_METADATA_SHA256 = "c4cab948b923b522b9ba4991e167e1c5c7d503786f2b2e5c11a64dab89113c21"
+EXPECTED_SCENEEVAL_AUDIT_SHA = "a3eaaa0571d51928e70f0094de1d0d4542211de165d1a196135be55df1247e45"
+EXPECTED_REVIEW_SHA = "cb82ab4531dd1a76f05af2f027f3213ffc06b9e771beb45007a9446a55186862"
+EXPECTED_PREREG_SHA = "269412b2b0ac270de00d1cca60f4e429ca3b48aae5d62359be073a6095abc365"
+EXPECTED_HSM_PREFLIGHT_SHA = "75053aea6c84b467431066edd6b9cf9e898cdf013adbe0c571dce16645009348"
+EXPECTED_HSM_MANIFEST_SHA = "6475bdd1c73a4b810f4bb6ee03e65be85567d07e33c04a15dc272360a829cd55"
+EXPECTED_COLLISION_SHA = "05d985e0b526ce36c545e1f6427cb5d3e7646fa3a8d437f5281e632f34aad278"
+EXPECTED_LEGO_AUDIT_SHA = "f8e845bb66d5c3ae897e939bb9877c1ae85e0491955a4d099e45d6f8bd7d868d"
 
 
 def sha256_file(path: Path) -> str:
@@ -23,21 +32,35 @@ def sha256_file(path: Path) -> str:
 class ConstraintIntegrationCrossSubstrateProposalTest(unittest.TestCase):
     def setUp(self) -> None:
         self.proposal = json.loads(PROPOSAL.read_text(encoding="utf-8"))
-        self.audit = json.loads(AUDIT.read_text(encoding="utf-8"))
+        self.audit = json.loads(SCENEEVAL_AUDIT.read_text(encoding="utf-8"))
+        self.review = json.loads(INDEPENDENT_REVIEW.read_text(encoding="utf-8"))
+        self.prereg = json.loads(PREREG_DRAFT.read_text(encoding="utf-8"))
+        self.hsm = json.loads(HSM_PREFLIGHT.read_text(encoding="utf-8"))
+        self.hsm_manifest = json.loads(HSM_MANIFEST.read_text(encoding="utf-8"))
         self.collision = json.loads(COLLISION.read_text(encoding="utf-8"))
         self.plan = json.loads(PLAN.read_text(encoding="utf-8"))
 
-    def test_proposal_is_noncanonical_zero_authority(self) -> None:
+    def test_proposal_is_noncanonical_zero_execution_authority(self) -> None:
+        self.assertEqual(
+            self.proposal["status"],
+            "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_MODEL_REVISED_HOLD_IMPLEMENTATION_AND_ACCESS",
+        )
         self.assertIsNone(self.proposal["canonical_candidate_id"])
         self.assertEqual(self.proposal["generator_admission"], "PENDING")
         self.assertFalse(self.proposal["scientific_authority"])
         self.assertFalse(self.proposal["execution_authority"])
-        self.assertEqual(self.proposal["provider_calls_executed"], 0)
+        self.assertEqual(self.proposal["provider_calls_executed"], 5)
+        self.assertEqual(self.proposal["review_provider_completed_voting_calls"], 2)
+        self.assertEqual(self.proposal["review_provider_nonvoting_confirmed_calls"], 3)
+        self.assertEqual(self.proposal["review_connector_indeterminate_invocations"], 1)
+        self.assertEqual(self.proposal["scientific_execution_provider_calls"], 0)
         self.assertEqual(self.proposal["gpu_calls_executed"], 0)
-        self.assertTrue(self.proposal["authority"])
         self.assertFalse(any(self.proposal["authority"].values()))
         self.assertEqual(self.proposal["candidate_generator_suite"]["execution_status"], "NOT_AUTHORIZED")
-        self.assertEqual(self.proposal["method_intervention"]["status"], "DEFERRED_UNTIL_PROBLEM_GATE")
+        self.assertEqual(
+            self.proposal["method_intervention"]["status"],
+            "DEFERRED_UNTIL_PREREGISTRATION_REVIEW_AND_PRIMARY_COUPLING_PASS",
+        )
 
     def test_port010_hold_is_not_replaced_or_reopened(self) -> None:
         relation = self.proposal["relation_to_port010"]
@@ -68,78 +91,119 @@ class ConstraintIntegrationCrossSubstrateProposalTest(unittest.TestCase):
         ):
             self.assertFalse(adjudication[key])
 
-    def test_construct_audit_is_content_addressed_and_outcome_blind_at_case_level(self) -> None:
-        self.assertEqual(sha256_file(AUDIT), EXPECTED_AUDIT_SHA256)
-        self.assertEqual(self.proposal["construct_preflight"]["artifact_sha256"], EXPECTED_AUDIT_SHA256)
-        self.assertEqual(self.audit["source"]["metadata_sha256"], EXPECTED_METADATA_SHA256)
-        self.assertEqual(
-            self.proposal["source_provenance"]["lego_bench_dataset"]["metadata_sha256"],
-            EXPECTED_METADATA_SHA256,
-        )
-        exposure = self.proposal["outcome_exposure_control"]
-        self.assertFalse(exposure["per_case_generation_outcomes_read"])
-        self.assertFalse(exposure["per_case_evaluator_validity_read"])
-        self.assertFalse(exposure["per_case_baseline_scores_read"])
-        self.assertFalse(exposure["performance_conditioned_pair_selection"])
-        self.assertTrue(exposure["published_aggregate_baseline_results_seen_during_source_survey"])
-        self.assertFalse(exposure["published_aggregate_results_used_to_choose_construct_or_pairs"])
+    def test_sceneeval_construct_is_content_addressed_outcome_blind_and_count_collision_is_rejected(self) -> None:
+        self.assertEqual(sha256_file(SCENEEVAL_AUDIT), EXPECTED_SCENEEVAL_AUDIT_SHA)
+        construct = self.proposal["construct_preflight"]
+        self.assertEqual(construct["artifact_sha256"], EXPECTED_SCENEEVAL_AUDIT_SHA)
+        self.assertEqual(self.audit["source"]["instruction_count"], 500)
+        self.assertEqual(self.audit["source"]["difficulty_counts"], {"easy": 150, "medium": 200, "hard": 150})
+        exposure = self.audit["outcome_exposure"]
+        self.assertFalse(exposure["generated_scene_outputs_read"])
+        self.assertFalse(exposure["per_case_metric_outputs_read"])
+        self.assertFalse(exposure["published_per_case_baseline_scores_read"])
+        self.assertFalse(exposure["selection_conditioned_on_generator_performance"])
+        raw = self.audit["constructs"]["raw_total_spec_count"]
+        self.assertEqual(raw["disposition"], "DIRECT_DIFFICULTY_LOAD_AXIS_NOT_NOVEL_PRIMARY_OBJECT")
+        self.assertAlmostEqual(raw["spearman_with_instruction_words"], 0.939932, places=6)
+        self.assertAlmostEqual(raw["spearman_with_authored_difficulty"], 0.861922, places=6)
+        entropy = self.audit["constructs"]["constraint_type_entropy"]
+        self.assertAlmostEqual(entropy["spearman_with_instruction_words"], 0.269006, places=6)
+        self.assertFalse(entropy["may_be_primary_scientific_object"])
 
-    def test_current_source_collision_forces_conditional_independence_null(self) -> None:
-        self.assertEqual(sha256_file(COLLISION), EXPECTED_COLLISION_SHA256)
-        review = self.proposal["current_source_collision_review"]
-        self.assertEqual(review["artifact_sha256"], EXPECTED_COLLISION_SHA256)
-        self.assertEqual(review["status"], "SURVIVING_GAP_NARROWED")
+    def test_sceneeval_measurement_dependency_dag_is_explicit(self) -> None:
+        measurement = self.audit["measurement_dependency_preflight"]
+        self.assertTrue(measurement["verified"])
+        self.assertTrue(measurement["raw_matching_observable"])
+        self.assertEqual(measurement["official_semantic_vlm"], "gpt-4o-2024-08-06")
+        self.assertFalse(measurement["local_vlm_substitution_is_official_sceneeval"])
+        self.assertTrue(all(measurement["checks"].values()))
+        self.assertIn("prerequisite/control", measurement["dependency_dag"]["ObjCount"])
+        future = self.audit["future_analysis_contract_if_authorized"]
+        self.assertEqual(future["primary_outcome_channels"], ["ObjAttr", "OORel", "OARel"])
+        self.assertIn("ObjCount", future["prerequisite_control_channel"])
+        self.assertIn("N2", future["null_ladder"])
+        self.assertIn("scene-level latent frailty", future["null_ladder"]["N2"])
+
+    def test_strict_sceneeval_panel_is_frozen_before_outcomes(self) -> None:
+        panel = self.audit["strict_matched_f0"]
+        self.assertFalse(panel["selection_uses_outcomes"])
+        self.assertTrue(panel["same_total_spec_count"])
+        self.assertTrue(panel["same_authored_difficulty"])
+        self.assertEqual(panel["max_instruction_word_difference"], 10)
+        self.assertEqual(panel["min_type_entropy_difference_bits"], 0.35)
+        self.assertEqual(panel["selected_disjoint_pairs"], 52)
+        seen: set[int] = set()
+        for pair in panel["pairs"]:
+            self.assertLessEqual(pair["word_difference"], 10)
+            self.assertGreaterEqual(pair["entropy_difference_bits"], 0.35)
+            self.assertNotIn(pair["low_entropy_id"], seen)
+            self.assertNotIn(pair["high_entropy_id"], seen)
+            seen.update({pair["low_entropy_id"], pair["high_entropy_id"]})
+
+    def test_independent_review_requires_revision_and_records_provider_failures(self) -> None:
+        self.assertEqual(sha256_file(INDEPENDENT_REVIEW), EXPECTED_REVIEW_SHA)
+        self.assertEqual(self.review["status"], "REVISE_BEFORE_PREREGISTRATION")
+        self.assertEqual(len(self.review["voting_reviews"]), 2)
+        self.assertTrue(all(row["verdict"] == "REVISE_BEFORE_PREREGISTRATION" for row in self.review["voting_reviews"]))
+        self.assertEqual(self.review["consensus"]["identifiability"], "CONDITIONAL_AFTER_MEASUREMENT_REVISION")
+        accounting = self.review["provider_accounting"]
+        self.assertEqual(accounting["completed_voting_review_calls"], 2)
+        self.assertEqual(accounting["confirmed_nonvoting_provider_calls"], 3)
+        self.assertEqual(accounting["scientific_execution_provider_calls"], 0)
+        self.assertEqual(len(self.review["nonvoting_provider_history"]), 4)
+        self.assertFalse(self.review["scientific_authority"])
+        self.assertFalse(any(self.review["authority"].values()))
+
+    def test_preregistration_draft_freezes_n2_and_power_but_does_not_clear_execution(self) -> None:
+        self.assertEqual(sha256_file(PREREG_DRAFT), EXPECTED_PREREG_SHA)
+        model = self.prereg["nested_model_contract"]
+        self.assertIn("exchangeable correlation matrix", model["N2_strongest_null"])
+        self.assertIn("unstructured 3x3 correlation matrix", model["candidate"])
+        self.assertIn("exactly two nonexchangeability degrees of freedom", model["nesting"])
+        self.assertEqual(
+            self.prereg["measurement_contract"]["stage_D_downstream"]["primary_channels"],
+            ["ObjAttr", "OORel", "OARel"],
+        )
+        self.assertEqual(self.prereg["annotation_availability"]["annotated_all_three_scene_count"], 402)
+        interpretation = self.prereg["power_design_preflight"]["design_interpretation"]
+        self.assertIn("at least 350", interpretation["confirmatory_sensitivity_target"])
+        row = next(
+            item
+            for item in self.prereg["power_design_preflight"]["worst_case_summary"]
+            if item["complete_case_scene_count"] == 350 and item["one_pair_topology_increment"] == 0.2
+        )
+        self.assertGreaterEqual(row["worst_case_power_across_base_correlations"], 0.8)
+        gates = self.prereg["gates_after_this_preflight"]
+        self.assertTrue(gates["model_revision_satisfied"])
+        self.assertTrue(gates["power_preflight_satisfied"])
+        self.assertFalse(gates["formal_preregistration_clear"])
+        self.assertFalse(self.prereg["scientific_authority"])
+        self.assertFalse(self.prereg["execution_authority"])
+
+    def test_hsm_release_is_complete_but_gated_and_zero_authority(self) -> None:
+        self.assertEqual(sha256_file(HSM_PREFLIGHT), EXPECTED_HSM_PREFLIGHT_SHA)
+        self.assertEqual(sha256_file(HSM_MANIFEST), EXPECTED_HSM_MANIFEST_SHA)
+        self.assertEqual(self.hsm["status"], "COMPLETE_RELEASE_MANIFEST_GATED_CONTENT_WAIT")
+        self.assertEqual(self.hsm_manifest["file_count"], 500)
+        self.assertEqual(self.hsm_manifest["dataset_revision"], "a6cd11fa39d56804ea3c4de38a4ab27c74d9edfb")
+        ids = [int(row["path"].split("scene_")[1].split(".json")[0]) for row in self.hsm_manifest["files"]]
+        self.assertEqual(ids, list(range(500)))
+        self.assertFalse(self.hsm["access_probe"]["generated_scene_content_accessible_from_current_69_identity"])
+        self.assertEqual(self.hsm["access_probe"]["http_status_for_pinned_scene_0_resolve"], 403)
+        self.assertFalse(self.hsm["scientific_authority"])
+        self.assertFalse(any(self.hsm["authority"].values()))
+
+    def test_current_source_collision_and_secondary_lego_are_preserved(self) -> None:
+        self.assertEqual(sha256_file(COLLISION), EXPECTED_COLLISION_SHA)
+        self.assertEqual(sha256_file(LEGO_AUDIT), EXPECTED_LEGO_AUDIT_SHA)
         roles = {row["role"] for row in self.collision["sources"]}
         self.assertIn("DIRECT_BENCHMARK_COLLISION", roles)
         self.assertIn("CROSS_DOMAIN_STRONG_NULL", roles)
         self.assertIn("GENERIC_METHOD_COLLISION", roles)
-        gap = self.collision["surviving_scientific_gap"]
-        self.assertEqual(gap["strongest_null"], "conditional independent-failure / multiplicative-accumulation model")
-        self.assertIn("moderator", gap["entropy_role"])
-        obj = self.proposal["scientific_object"]
-        self.assertIn("conditional-independent", obj["strongest_same_information_baseline"])
-        self.assertIn("multiplicative", obj["prediction_disagreement"])
-        future = self.proposal["future_analysis_contract_if_authorized"]
-        self.assertEqual(len(future["measurement_negative_controls"]), 2)
-        self.assertFalse(self.collision["scientific_authority"])
-        self.assertFalse(any(self.collision["authority"].values()))
-
-    def test_raw_count_is_rejected_and_entropy_construct_only_advances_to_review(self) -> None:
-        raw = self.audit["constructs"]["raw_constraint_count"]
-        entropy = self.audit["constructs"]["condition_type_entropy"]
-        self.assertEqual(raw["disposition"], "REJECT_LENGTH_CONFOUNDED")
-        self.assertGreaterEqual(abs(raw["spearman_with_instruction_words"]), raw["reject_threshold_abs_rho"])
-        self.assertEqual(entropy["disposition"], "CLEAR_FOR_ZERO_AUTHORITY_GENERATOR_REVIEW")
-        self.assertLess(abs(entropy["spearman_with_instruction_words"]), entropy["clear_threshold_abs_rho"])
-        self.assertFalse(self.audit["scientific_authority"])
-        self.assertFalse(self.audit["execution_authority"])
-
-    def test_strict_f0_panel_is_pre_outcome_and_sufficient_for_bounded_falsifier(self) -> None:
-        panel = self.audit["strict_matched_f0_feasibility"]
-        self.assertFalse(panel["selection_uses_outcomes"])
-        self.assertTrue(panel["same_constraint_count"])
-        self.assertTrue(panel["same_analyst_defined_ordinal_metadata_block"])
-        self.assertEqual(panel["max_instruction_word_difference"], 10)
-        self.assertEqual(panel["min_type_entropy_difference_bits"], 0.35)
-        self.assertEqual(panel["selected_disjoint_pairs"], 11)
-        self.assertGreaterEqual(panel["selected_disjoint_pairs"], panel["minimum_pairs_required"])
-        seen: set[int] = set()
-        for pair in panel["pairs"]:
-            self.assertGreater(pair["constraint_count"], 0)
-            self.assertLessEqual(pair["word_difference"], 10)
-            self.assertGreaterEqual(pair["entropy_difference_bits"], 0.35)
-            self.assertNotIn(pair["low_entropy_index"], seen)
-            self.assertNotIn(pair["high_entropy_index"], seen)
-            seen.update({pair["low_entropy_index"], pair["high_entropy_index"]})
-
-    def test_label_binding_uses_condition_idx_not_list_order(self) -> None:
-        exposure = self.audit["outcome_exposure"]
-        self.assertEqual(exposure["label_order_mismatch_rows"], [121, 127, 129])
-        self.assertIn("condition_idx", exposure["label_binding_rule"])
-        self.assertEqual(
-            exposure["consumed_fields"],
-            ["instruction", "constraints", "labels.condition_idx", "labels.condition_type"],
-        )
+        secondary = {row["name"]: row for row in self.proposal["secondary_substrates"]}
+        self.assertEqual(secondary["LEGO-Bench"]["status"], "CONSTRUCT_CLEAR_RUNTIME_NOT_READY")
+        self.assertIn("InstructScene / 3D-FRONT", secondary)
+        self.assertIn("prerequisite-aware", self.proposal["current_source_collision_review"]["surviving_primary_object"])
 
 
 if __name__ == "__main__":

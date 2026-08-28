@@ -1,12 +1,12 @@
 {
   "schema_version": "constraint-integration-cross-substrate-proposal-v1",
   "proposal_id": "CROSS-SUBSTRATE-CONSTRAINT-INTEGRATION-20260828",
-  "status": "ZERO_AUTHORITY_CONSTRUCT_PREFLIGHT_CLEAR_FOR_GENERATOR_REVIEW",
+  "status": "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_MODEL_REVISED_HOLD_IMPLEMENTATION_AND_ACCESS",
   "canonical_candidate_id": null,
   "generator_admission": "PENDING",
   "scientific_authority": false,
   "execution_authority": false,
-  "provider_calls_executed": 0,
+  "provider_calls_executed": 5,
   "gpu_calls_executed": 0,
   "relation_to_port010": {
     "role": "HYPOTHESIS_SOURCE_ONLY",
@@ -19,56 +19,134 @@
   },
   "scientific_object": {
     "title": "Cross-type constraint failure coupling in text-guided 3D scene generation",
-    "question": "After conditioning on ordinary instruction load and each constraint type's marginal difficulty, are constraint failures in a generated 3D scene still conditionally dependent across types, or is the apparent collapse explained by independent multiplicative accumulation?",
-    "irreducible_object": "A generator-side cross-type failure-coupling residual over the four released LEGO-Bench constraint classes. The object is not that longer prompts, more constraints, or particular constraint classes are harder. It asks whether Floor Layout, Material Selection, Object Selection, and Object Placement failures co-occur beyond a same-information conditional-independent model that already receives generator identity, instruction length, total constraint count, metadata block, and flexible per-type difficulty terms.",
-    "exact_ex_ante_prediction": "On held-out instructions, a preregistered cross-type interaction model will improve prediction of joint constraint failures over the conditional-independent null, and observed cross-type joint-failure probability will exceed the null expectation from calibrated marginal failure probabilities. The excess coupling should be larger in higher constraint-type-entropy instructions. If conditional independence explains held-out joint/holistic failure once the frozen controls are applied, the candidate is falsified.",
-    "strongest_same_information_baseline": "A conditional-independent Bernoulli model using the identical generator identity, instruction word count, total constraint count, analyst-defined metadata block, and flexible additive main effects for each of the four per-type constraint counts to estimate each constraint's marginal failure probability; joint failure and holistic success are then predicted by multiplicative composition with no cross-type interaction.",
-    "prediction_disagreement": "The conditional-independent null predicts that the dramatic holistic collapse follows from multiplicative accumulation of marginal constraint failures. The candidate predicts positive excess cross-type co-failure and held-out predictive value from interaction terms after those same marginals and load controls are supplied.",
-    "scope_boundary": "This is an independently proposed cross-substrate object. It is not a reproduction of VWE-Bench, not evidence about VWE author outcomes, and not yet a causal mechanism claim. Constraint-type entropy is a moderator of coupling burden, not the scientific object itself."
+    "question": "After conditioning on ordinary instruction load and each semantic requirement type's marginal difficulty, are requirement failures within one generated 3D scene still conditionally dependent across types, or is apparent collapse explained by independent multiplicative accumulation?",
+    "irreducible_object": "A prerequisite-aware generator/evaluator-system residual: after separating the shared ObjMatching prerequisite stage, do downstream Object Attribute, Object-Object Relationship, and Object-Architecture Relationship failures exhibit type-specific dependence beyond ordinary load, calibrated marginal difficulty, and exchangeable scene-level generic failure propensity? Object Count is matching-derived and therefore a prerequisite/control channel, not a fourth peer downstream outcome.",
+    "exact_ex_ante_prediction": "On frozen instruction-grouped held-out folds, a preregistered nonexchangeable downstream coupling model over prerequisite-eligible ObjAttr/OORel/OARel outcomes will improve predictive log loss/ELPD over N2: the same-information prerequisite-aware conditional-independent model plus exchangeable scene-level frailty/overdispersion. Residual type-specific dependence must survive verified matching/prerequisite conditioning; larger residual under higher pre-outcome type entropy is secondary.",
+    "strongest_same_information_baseline": "N2: calibrated downstream marginals with generator identity, authored difficulty, instruction words, total/per-type loads and official matching/prerequisite state, plus exchangeable scene-level frailty/overdispersion and no type-specific downstream covariance/interaction.",
+    "prediction_disagreement": "N2 predicts that after shared matching prerequisites and generic scene quality are accounted for, remaining downstream failures are conditionally independent across semantic types. The candidate predicts reproducible nonexchangeable type-specific residual dependence beyond N2.",
+    "scope_boundary": "This is an independently proposed cross-substrate object. It is not a reproduction, completion, or reopen of VWE-specific PORT-010; it is not yet a causal representation-mechanism claim. Type entropy is a frozen moderator of coupling burden, not the primary scientific object."
   },
   "substrate": {
-    "primary_benchmark": "LEGO-Bench",
-    "official_evaluator": "LEGO-Eval",
-    "benchmark_unit": "one released natural-language scene instruction with manually decomposed constraints",
-    "instruction_count": 130,
-    "released_constraint_count": 1250,
+    "primary_benchmark": "SceneEval-500",
+    "primary_release": "SceneEval-500_v250610",
+    "official_evaluator": "SceneEval",
+    "evaluator_release": "SceneEval_v1.1.1",
+    "benchmark_unit": "one released natural-language scene description with explicit typed semantic requirement annotations",
+    "instruction_count": 500,
+    "authored_difficulty_counts": {
+      "easy": 150,
+      "medium": 200,
+      "hard": 150
+    },
     "released_constraint_types": [
-      "Floor Layout",
-      "Material Selection",
-      "Object Placement",
-      "Object Selection"
+      "ObjCount",
+      "ObjAttr",
+      "OORel",
+      "OARel"
     ],
-    "primary_endpoint": "official per-constraint Partial Success Rate",
-    "secondary_endpoint": "Holistic Success Rate",
-    "secondary_endpoint_reason": "Holistic success is a conjunction over all constraints and is therefore expected to have stronger floor/load effects; it cannot be the sole primary endpoint for the integration hypothesis."
+    "released_constraint_type_meanings": {
+      "ObjCount": "Object Count",
+      "ObjAttr": "Object Attribute",
+      "OORel": "Object-Object Relationship",
+      "OARel": "Object-Architecture Relationship"
+    },
+    "primary_endpoint": "binary validity of prerequisite-eligible ObjAttr/OORel/OARel requirements under a frozen evaluator lane; ObjCount/shared matching is prerequisite/control state",
+    "secondary_endpoints": [
+      "per-channel success rate",
+      "scene-level all-requirements success",
+      "SceneEval non-VLM physical metrics as orthogonal diagnostics only"
+    ],
+    "why_primary_now": "SceneEval-500 exposes 500 complete typed prompt annotations and a multi-generator evaluation adapter, providing substantially more pre-outcome structure than the 130-instruction LEGO substrate while preserving a same-information conditional-independence null."
   },
   "construct_preflight": {
-    "artifact": "generated/lego-bench-outcome-blind-construct-audit-20260828.json",
-    "artifact_sha256": "f8e845bb66d5c3ae897e939bb9877c1ae85e0491955a4d099e45d6f8bd7d868d",
-    "raw_constraint_count": {
-      "spearman_with_instruction_words": 0.861988,
-      "disposition": "REJECT_LENGTH_CONFOUNDED",
-      "may_be_primary_construct": false
+    "artifact": "generated/sceneeval500-outcome-blind-constraint-audit-20260828.json",
+    "artifact_sha256": "a3eaaa0571d51928e70f0094de1d0d4542211de165d1a196135be55df1247e45",
+    "status": "CLEAR_FOR_ZERO_AUTHORITY_GENERATOR_REVIEW",
+    "raw_total_spec_count": {
+      "definition": "total semicolon-delimited released requirements across ObjCount, ObjAttr, OORel, and OARel",
+      "spearman_with_instruction_words": 0.939932,
+      "spearman_with_authored_difficulty": 0.861922,
+      "disposition": "DIRECT_DIFFICULTY_LOAD_AXIS_NOT_NOVEL_PRIMARY_OBJECT",
+      "may_be_primary_scientific_object": false
     },
-    "condition_type_entropy": {
-      "definition": "Shannon entropy in bits over the four official released constraint types",
+    "constraint_type_entropy": {
+      "definition": "Shannon entropy in bits over the four released per-instruction requirement-channel counts",
       "maximum_bits": 2.0,
-      "spearman_with_instruction_words": 0.195851,
-      "preflight_abs_rho_threshold": 0.35,
-      "disposition": "CLEAR_FOR_ZERO_AUTHORITY_GENERATOR_REVIEW",
-      "role": "pre-outcome moderator/stratifier for future coupling residuals, not a standalone complexity law",
-      "may_be_primary_scientific_object": false,
-      "scientific_result": false
+      "spearman_with_instruction_words": 0.269006,
+      "spearman_with_authored_difficulty": 0.242051,
+      "role": "pre-outcome moderator/stratifier for cross-type coupling residuals; not a standalone complexity law",
+      "disposition": "ORTHOGONAL_ENOUGH_FOR_MATCHED_COUPLING_MODERATOR",
+      "may_be_primary_scientific_object": false
+    },
+    "instruction_words": {
+      "spearman_with_authored_difficulty": 0.839374,
+      "role": "mandatory load control"
     },
     "strict_matched_f0": {
-      "same_total_constraint_count": true,
-      "same_analyst_defined_ordinal_metadata_block": true,
+      "selection_uses_outcomes": false,
+      "same_total_spec_count": true,
+      "same_authored_difficulty": true,
       "max_instruction_word_difference": 10,
-      "minimum_type_entropy_difference_bits": 0.35,
-      "pre_outcome_disjoint_pair_count": 11,
-      "role": "future bounded robustness/falsifier panel only if independently authorized"
+      "min_type_entropy_difference_bits": 0.35,
+      "selection_rule": "greedy maximum-contrast disjoint pairing sorted by descending entropy difference, then ascending word difference and scene IDs; frozen before any generated-scene or metric output access",
+      "selected_disjoint_pairs": 52,
+      "pairs_by_difficulty": {
+        "easy": 28,
+        "medium": 23,
+        "hard": 1
+      },
+      "role": "pre-outcome robustness panel for independent-null residuals; raw success differences alone are not confirmatory"
     },
-    "metadata_parser_note": "Released labels are bound to constraints by condition_idx, matching the official evaluator. Rows 121, 127, and 129 demonstrate that label list order itself is not a valid binding rule."
+    "direct_collision": {
+      "finding": "Benchmark-authored difficulty is already strongly aligned with released requirement count and instruction length, so a result that merely recovers easy/medium/hard degradation or total-spec degradation cannot constitute the cross-substrate contribution.",
+      "surviving_object": "prerequisite-aware residual coupling among downstream semantic requirement channels after controlling marginal type difficulty, total requirement load, instruction length, authored difficulty, generator identity, shared object-matching state, and scene-level generic failure propensity",
+      "strongest_null": "prerequisite-aware conditional independence plus exchangeable scene-level frailty; a plain multiplicative marginal model is only the first null layer"
+    },
+    "measurement_dependency_preflight": {
+      "verified": true,
+      "source_file_sha256": {
+        "main": "5ca010690e74a19f389aa32fa9ed915678cf7089f450010072a73b93e8b4e41b",
+        "obj_count": "dfbb3bc0241142044409908d427fe91891dce49a7c94083626de24fe407ada96",
+        "obj_attribute": "98d73298ac0aef48debb390c088e5f3d6595738e72ab01eea74e09a5bf8c8488",
+        "obj_obj_relationship": "8f9624569add9dac3aa4b71038eb9859cd23c31e6e01472d48d3908143722176",
+        "obj_arch_relationship": "c506289ec5f8f7f28d5832acb013ab81ca82dccd7ca0ea1430f6dcba404b4178",
+        "vlm_config": "e71d83cc33e1ac871569ab781c219c47943632db6a81a0e9ed23f0ae0c03400d"
+      },
+      "checks": {
+        "matching_result_saved_separately": true,
+        "eval_result_exports_matching_per_category": true,
+        "eval_result_exports_not_matched_objects": true,
+        "obj_count_uses_shared_matching": true,
+        "obj_attribute_uses_shared_matching": true,
+        "obj_attribute_missing_category_auto_fails": true,
+        "obj_obj_relation_uses_shared_matching": true,
+        "obj_obj_relation_missing_objects_auto_fail": true,
+        "obj_arch_relation_uses_shared_matching": true,
+        "obj_arch_relation_missing_object_auto_fails": true,
+        "semantic_metric_vlm_is_gpt4o": true,
+        "obj_attribute_resets_vlm": true,
+        "obj_obj_relation_resets_vlm": true,
+        "obj_arch_relation_resets_vlm": true
+      },
+      "shared_prerequisite": "VLM-produced ObjMatchingResults",
+      "dependency_dag": {
+        "ObjCount": "directly computed from shared object matching; prerequisite/control rather than a peer downstream coupling outcome",
+        "ObjAttr": "requires matched object category; missing category deterministically fails before attribute judgment",
+        "OORel": "requires all referenced objects present in shared matching; missing objects deterministically fail before geometric relation check",
+        "OARel": "requires referenced object present in shared matching; missing object deterministically fails before architecture relation check"
+      },
+      "message_history_cross_metric_note": "Semantic metric constructors reset the VLM, so the primary shared dependency is ObjMatching/prerequisite state rather than inherited cross-metric chat history.",
+      "raw_matching_observable": true,
+      "raw_matching_artifacts": [
+        "obj_matching_result.json",
+        "eval_result.json:object_matching_per_category",
+        "eval_result.json:not_matched_objects"
+      ],
+      "official_semantic_vlm": "gpt-4o-2024-08-06",
+      "local_vlm_substitution_is_official_sceneeval": false,
+      "scientific_authority": false
+    },
+    "scientific_result": false
   },
   "current_source_collision_review": {
     "artifact": "generated/constraint-integration-current-source-collision-review-20260828.json",
@@ -77,32 +155,42 @@
     "direct_collision": "LEGO-Eval already reports constraint-count complexity groups and per-type Partial Success Rate, so count-based degradation and type-specific average difficulty are not candidate contributions.",
     "cross_domain_strong_null": "arXiv:2608.12426 reports approximately independent multiplicative constraint-failure accumulation in LLM instruction following; the 3D candidate must demonstrate residual coupling rather than assume it.",
     "method_collision": "GraphDreamer and InstructScene already establish scene/semantic graphs as structured 3D generation priors; a generic structured-prompt or scene-graph intervention is not a standalone novelty claim.",
-    "scientific_authority": false
+    "scientific_authority": false,
+    "sceneeval_direct_collision": "SceneEval-500 already supplies author-defined easy/medium/hard difficulty and its metadata audit shows total explicit requirement count and instruction length strongly track that axis. Therefore difficulty/count degradation is treated as prior benchmark structure, not a new contribution.",
+    "surviving_primary_object": "prerequisite-aware downstream semantic failure coupling beyond N2: same-information conditional independence plus exchangeable scene-level frailty"
   },
   "executability_preflight": {
-    "artifact": "generated/constraint-integration-executability-preflight-20260828.json",
-    "artifact_sha256": "15cf610915f3d3cd1e144f81207ac240517d0e5969418dd8e13e86b719d49f13",
-    "status": "ASSET_PARTIAL_RUNTIME_NOT_READY_ZERO_AUTHORITY",
-    "aligned_scene_negative_control_input_materialized": true,
-    "local_open_model_candidate_materialized": true,
-    "local_evaluator_runtime_ready": false,
-    "source_faithful_zero_provider_generator_baseline_available": false,
+    "artifact": "generated/sceneeval500-hsm-released-output-preflight-20260828.json",
+    "artifact_sha256": "75053aea6c84b467431066edd6b9cf9e898cdf013adbe0c571dce16645009348",
+    "status": "COMPLETE_RELEASE_MANIFEST_GATED_CONTENT_WAIT",
+    "author_released_full_generator_output_identified": true,
+    "generator": "HSM",
+    "released_scene_count": 500,
+    "release_manifest_artifact": "generated/hsm-sceneeval500-release-manifest-20260828.json",
+    "release_manifest_sha256": "6475bdd1c73a4b810f4bb6ee03e65be85567d07e33c04a15dc272360a829cd55",
+    "current_69_content_access": "BLOCKED_BY_ORDINARY_HUGGINGFACE_GATED_ACCESS_403",
+    "official_semantic_evaluator_provider_bound": true,
+    "official_semantic_evaluator_model": "gpt-4o-2024-08-06",
+    "local_qwen_substitution_is_official_metric": false,
     "execution_authority": false,
     "scientific_authority": false
   },
   "outcome_exposure_control": {
-    "per_case_generation_outcomes_read": false,
-    "per_case_evaluator_validity_read": false,
+    "per_case_generation_outputs_read": false,
+    "per_case_sceneeval_metric_outputs_read": false,
     "per_case_baseline_scores_read": false,
     "performance_conditioned_pair_selection": false,
     "published_aggregate_baseline_results_seen_during_source_survey": true,
     "published_aggregate_results_used_to_choose_construct_or_pairs": false,
     "construct_selection_inputs": [
-      "instruction text",
-      "released constraints",
-      "labels.condition_idx",
-      "labels.condition_type"
-    ]
+      "SceneEval Description",
+      "SceneEval ObjCount",
+      "SceneEval ObjAttr",
+      "SceneEval OORel",
+      "SceneEval OARel",
+      "SceneEval benchmark-authored Difficulty"
+    ],
+    "legacy_lego_construct_was_also_outcome_blind": true
   },
   "source_provenance": {
     "lego_eval_repository": {
@@ -138,56 +226,109 @@
         "revision": "85d06b4cd2478551188a0b4a47cd658c85c41315",
         "role": "candidate LEGO-Bench generator baseline; execution pinning/dependency audit still required"
       }
-    ]
+    ],
+    "sceneeval": {
+      "repository": "https://github.com/3dlg-hcvc/SceneEval",
+      "evaluator_release": "SceneEval_v1.1.1",
+      "evaluator_release_commit_display": "5d999f2",
+      "code_archive_sha256": "0a77ff7daa3bf65c583deb323d5f015f3da3f51c76726fda1d9ee878ab15b579",
+      "benchmark_release": "SceneEval-500_v250610",
+      "benchmark_release_commit_display": "3b84b5e",
+      "data_archive_sha256": "2948037f497c81cb2ce8241010c8d93250248217ca9961aa33e59092196b3676",
+      "annotations_sha256": "d770886e249e7be04cc3e183ddd1b9e23c2aa6a7666226b5fe5da17236286ae3"
+    },
+    "hsm_released_sceneeval_outputs": {
+      "dataset": "https://huggingface.co/datasets/3dlg-hcvc/hsm",
+      "dataset_revision": "a6cd11fa39d56804ea3c4de38a4ab27c74d9edfb",
+      "generated_scenes_commit": "e46f6712fa9286c4166b9422aa7750217a17504e",
+      "manifest_sha256": "6475bdd1c73a4b810f4bb6ee03e65be85567d07e33c04a15dc272360a829cd55",
+      "file_oid_size_root_sha256": "9c933a4ef81dd59bad25bd107bb6dee6de098e17eca2db2de83d391841cda196",
+      "scene_count": 500,
+      "access_status": "GATED_WAIT_AUTHORIZED_IDENTITY",
+      "scientific_authority": false
+    }
   },
   "candidate_generator_suite": {
-    "official_lego_comparison_family": [
-      "Holodeck",
+    "primary_released_output_lane": {
+      "method": "HSM",
+      "scene_count": 500,
+      "generator_rerun_required": false,
+      "content_status": "WAIT_GATED_DATASET_ACCESS",
+      "role": "first generator lane because author-released full SceneEval-500 outputs avoid generator rerun confounding"
+    },
+    "sceneeval_supported_method_families_for_later_extension": [
+      "ATISS",
+      "DiffuScene",
+      "InstructScene",
       "LayoutGPT",
-      "I-Design",
-      "LayoutVLM"
+      "Holodeck",
+      "LayoutVLM",
+      "HSM"
     ],
     "execution_status": "NOT_AUTHORIZED",
-    "note": "Exact executable revisions, assets, provider/runtime dependencies, and output format compatibility must be frozen by a later substrate preflight. Naming a published comparison method does not authorize its execution."
+    "note": "The complete HSM release manifest qualifies a promising no-generator-rerun lane but does not authorize access, evaluation, provider calls, GPU execution, or scientific interpretation. Other generators require separate source-faithful output/rerun qualification."
   },
   "future_analysis_contract_if_authorized": {
-    "primary_population": "all 130 released LEGO-Bench instructions for each independently qualified generator, with one binary validity outcome per released constraint",
-    "strongest_null_model": "fit marginal constraint-failure probabilities using generator identity, instruction word count, total constraint count, analyst-defined metadata block, constraint type, and flexible additive per-type load terms; compose marginals independently to predict within-instruction joint failures and Holistic Success",
-    "candidate_model": "add preregistered cross-type interaction terms to the same-information null and evaluate only on instruction-grouped held-out folds",
-    "primary_disagreement_test": "cross-type interaction model must improve held-out predictive log loss over the independent null and the observed cross-type co-failure residual must be positive relative to the product of calibrated marginal failure probabilities",
-    "entropy_moderation_test": "the independent-null residual should be larger for higher released constraint-type entropy after the frozen load/length controls",
-    "robustness_panel": "11 disjoint metadata-only matched pairs frozen before per-case outcomes, exact on total constraint count and metadata block, within 10 instruction words, with at least 0.35-bit type-entropy contrast; compare independent-null residual rather than raw success alone",
-    "measurement_negative_controls": [
-      "estimate evaluator-only cross-type coupling on the released human-curated scenes that were constructed to satisfy their instructions",
-      "where executable, re-evaluate a bounded subset with each constraint isolated in fresh evaluator state rather than inheriting previous constraint outputs; coupling that exists only under sequential evaluator context is measurement coupling, not generator coupling"
+    "primary_population": "all 500 SceneEval-500 instructions for every independently qualified generator with official raw object-matching/prerequisite state and per-requirement semantic outcomes",
+    "primary_outcome_channels": [
+      "ObjAttr",
+      "OORel",
+      "OARel"
     ],
-    "direction_lock": "positive excess cross-type co-failure beyond the calibrated conditional-independent null, with larger excess under higher type entropy",
+    "prerequisite_control_channel": "ObjCount / shared ObjMatching state",
+    "outcome_unit": "prerequisite-eligible downstream semantic requirement spec nested within instruction, channel, and generator; missing-prerequisite outcomes are modeled as prerequisite failures, not treated as peer downstream interaction evidence",
+    "null_ladder": {
+      "N0": "calibrated independent downstream marginals using generator identity, authored difficulty, instruction words, total spec count, and per-channel loads",
+      "N1": "N0 plus explicit official shared ObjMatching/prerequisite state for each downstream spec",
+      "N2": "N1 plus exchangeable scene-level latent frailty/overdispersion absorbing generic scene quality; no type-specific downstream covariance/interaction"
+    },
+    "strongest_null_model": "N2 prerequisite-aware conditional independence plus exchangeable scene-level frailty",
+    "candidate_model": "add preregistered type-specific downstream covariance/interaction topology among ObjAttr, OORel, and OARel beyond N2, with identifiability constraints frozen before outcomes",
+    "primary_disagreement_test": "on frozen instruction-grouped held-out folds, the candidate must improve predictive log loss/ELPD over N2 and leave positive preregistered type-specific residual dependence on prerequisite-eligible outcomes",
+    "entropy_moderation_test": "N2 residual coupling is larger at higher pre-outcome constraint-type entropy under frozen load/difficulty controls; secondary only",
+    "held_out_fold_rule": "sha256(SceneEval ID + newline + Description) modulo 5",
+    "held_out_fold_counts": {
+      "0": 102,
+      "1": 104,
+      "2": 99,
+      "3": 75,
+      "4": 120
+    },
+    "held_out_fold_assignment_sha256": "ca40ed17a7ff2c26ca333456a4ef66e764613fc236f03df9f2dbb3c3862d1dbe",
+    "robustness_panel": "the frozen strict_matched_f0 pairs; compare prerequisite-aware N2 residual rather than raw success",
+    "measurement_negative_control": "repeat the downstream residual analysis on an oracle/verified-object-matching subset or otherwise independently verified matching state; coupling that disappears after correct matching is evaluator-induced, not generator-side integration evidence",
     "no_outcome_rematching": true,
     "no_threshold_retuning_after_outcomes": true,
     "no_generator_dropping_after_outcomes": true,
-    "no_pair_selection_after_outcomes": true
+    "no_metric_channel_dropping_after_outcomes": true,
+    "evaluator_lane_rule": "Official SceneEval semantic results must use the frozen official evaluator/model contract; any independently qualified local evaluator must be named and reported as a separate evaluator variant and may not be aliased to official SceneEval scores.",
+    "initial_generator_lane": "HSM author-released 500-scene bundle after legitimate gated access; no generator rerun in the initial bounded P0 lane. A second independently qualified generator is mandatory before paper-level transport/generalization claims."
   },
   "falsifiers": [
-    "The conditional-independent multiplicative model predicts held-out joint failures/Holistic Success as well as the interaction model within the preregistered uncertainty criterion.",
-    "Cross-type co-failure residuals are null/negative or are fully explained by marginal type difficulty, load, length, generator identity, and metadata block.",
-    "Any apparent coupling is reproduced on human-curated satisfying scenes or disappears when constraints are evaluated in isolated fresh evaluator state, indicating evaluator-induced dependence rather than generator-side coupling.",
-    "The pre-outcome entropy-matched robustness panel does not show the preregistered increase in independent-null residual at higher type entropy.",
-    "The official evaluator cannot provide stable per-constraint outcomes for the qualified generator outputs without changing the scientific object."
+    "The prerequisite-aware N2 null matches held-out downstream failure behavior within the preregistered uncertainty criterion.",
+    "Any apparent downstream cross-type coupling disappears after explicit shared ObjMatching/prerequisite conditioning or exchangeable scene-level frailty.",
+    "The interaction advantage exists only under one evaluator implementation or disappears on an oracle/verified-matching negative control.",
+    "The frozen matched panel fails to show the preregistered entropy moderation of N2 residuals.",
+    "The effect is present only for HSM and does not survive a preregistered second generator lane once one becomes independently executable.",
+    "The semantic evaluator cannot expose stable per-requirement outcomes without model-specific mapping artifacts dominating the residual."
   ],
   "method_intervention": {
-    "status": "DEFERRED_UNTIL_PROBLEM_GATE",
-    "candidate_only": "an information-equivalent typed/structured representation would be admissible only if it specifically reduces the preregistered cross-type coupling residual rather than merely improving average Success Rate",
-    "prior_art_boundary": "scene-graph/semantic-graph conditioning is already established by GraphDreamer and InstructScene, so generic graph conditioning cannot be claimed as the new method contribution",
-    "forbidden_now": "Do not design, tune, or run the intervention before formal Generator/ProblemGate admission."
+    "status": "DEFERRED_UNTIL_PREREGISTRATION_REVIEW_AND_PRIMARY_COUPLING_PASS",
+    "candidate_only": "information-equivalent typed/structured representation intervention, evaluated by whether it specifically reduces the frozen cross-type coupling residual rather than merely improving mean score",
+    "prior_art_boundary": "GraphDreamer and InstructScene already establish graph/semantic-graph conditioning; generic graph conditioning is not a standalone novelty claim.",
+    "forbidden_now": "Do not design/tune an intervention from SceneEval outcomes before the primary problem gate is satisfied."
   },
   "next_gate": {
-    "name": "FORMAL_GENERATOR_ADMISSION_AND_INDEPENDENT_REDUCTION_REVIEW",
+    "name": "IMPLEMENTATION_AND_ASSET_ACCESS_PREFLIGHT",
     "required": true,
     "requirements": [
-      "bind this proposal to a new canonical generator-run candidate identity rather than reusing PORT-010",
-      "independently test reduction to ordinary length/load difficulty, additive per-type difficulty, and the conditional-independent multiplicative null",
-      "freeze executable baseline revisions and evaluator compatibility before any provider/GPU execution",
-      "preserve the 11-pair pre-outcome panel without outcome-based replacement"
+      "freeze and synthetic-test the exact N2/candidate mixed-model fitting and scene-level uncertainty implementation before any per-case output read",
+      "preserve the already frozen two-stage prerequisite/downstream contract, metadata composition vocabulary, N0/N1/N2 ladder, 52-pair panel, and power thresholds without outcome-driven changes",
+      "bind a new canonical candidate identity only after the independent REVISE gate is fully satisfied; never reuse PORT-010",
+      "obtain legitimate HSM gated-dataset access or leave the bounded P0 lane waiting",
+      "freeze official GPT-4o evaluator versus separately named local-evaluator lanes before reading per-case semantic outcomes",
+      "qualify a second generator lane before any paper-level cross-generator/transport claim",
+      "preserve the 52-pair outcome-blind SceneEval matched panel without outcome-based replacement"
     ]
   },
   "authority": {
@@ -201,5 +342,93 @@
     "provider": false,
     "gpu": false,
     "scientific": false
+  },
+  "secondary_substrates": [
+    {
+      "name": "LEGO-Bench",
+      "role": "secondary cross-substrate replication after primary SceneEval measurement validity clears",
+      "construct_artifact": "generated/lego-bench-outcome-blind-construct-audit-20260828.json",
+      "construct_artifact_sha256": "f8e845bb66d5c3ae897e939bb9877c1ae85e0491955a4d099e45d6f8bd7d868d",
+      "execution_artifact": "generated/constraint-integration-executability-preflight-20260828.json",
+      "execution_artifact_sha256": "15cf610915f3d3cd1e144f81207ac240517d0e5969418dd8e13e86b719d49f13",
+      "status": "CONSTRUCT_CLEAR_RUNTIME_NOT_READY",
+      "scientific_authority": false
+    },
+    {
+      "name": "InstructScene / 3D-FRONT",
+      "role": "structured-representation mechanism reference and later intervention/baseline substrate; generic scene-graph conditioning is prior art, not the claimed contribution",
+      "repository_revision": "a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+      "status": "SOURCE_PINNED_DATA_AND_TWO_STAGE_CHECKPOINT_EXECUTION_NOT_YET_FROZEN",
+      "scientific_authority": false
+    }
+  ],
+  "review_provider_completed_voting_calls": 2,
+  "review_provider_nonvoting_confirmed_calls": 3,
+  "review_connector_indeterminate_invocations": 1,
+  "scientific_execution_provider_calls": 0,
+  "independent_reduction_review": {
+    "artifact": "generated/constraint-integration-sceneeval-independent-review-20260828.json",
+    "artifact_sha256": "cb82ab4531dd1a76f05af2f027f3213ffc06b9e771beb45007a9446a55186862",
+    "status": "REVISE_BEFORE_PREREGISTRATION",
+    "voting_reviewer_count": 2,
+    "consensus": {
+      "verdict": "REVISE_BEFORE_PREREGISTRATION",
+      "reviewer_count": 2,
+      "confidence_range": [
+        0.82,
+        0.85
+      ],
+      "strongest_null": "N2 prerequisite-aware conditional independence plus exchangeable scene-level frailty/overdispersion; no type-specific downstream interaction",
+      "identifiability": "CONDITIONAL_AFTER_MEASUREMENT_REVISION",
+      "measurement_revision": [
+        "treat shared ObjMatching / ObjCount adequacy as prerequisite and control state rather than a peer cross-type scientific outcome",
+        "restrict primary residual-coupling outcomes to prerequisite-eligible ObjAttr, OORel, and OARel specs",
+        "condition explicitly on official raw matching/prerequisite state and preserve it as a content-addressed measurement artifact",
+        "include scene-level exchangeable frailty/overdispersion before adding type-specific downstream covariance/interaction",
+        "freeze the exact N2-vs-candidate model, held-out criterion, uncertainty calibration, and power/design simulation before reading per-case outcomes"
+      ],
+      "single_generator_scope": "HSM author-released SceneEval-500 output may support only a bounded single-generator P0 after measurement review and legitimate gated access; it cannot support the paper-level cross-generator claim",
+      "paper_level_requirement": "at least one independently qualified second generator lane or external scene set is required before transport/generalization claims",
+      "primary_negative_control": "oracle/independently verified object matching or an equivalent verified-matching subset; coupling that disappears after correct matching is evaluator-induced",
+      "forbidden_interpretation": "naive co-failure among ObjCount/ObjAttr/OORel/OARel cannot be called generator-side integration failure because the official evaluator creates shared matching/prerequisite dependence"
+    },
+    "provider_accounting": {
+      "completed_voting_review_calls": 2,
+      "confirmed_nonvoting_provider_calls": 3,
+      "connector_indeterminate_invocations": 1,
+      "scientific_execution_provider_calls": 0,
+      "gpu_calls": 0,
+      "review_calls_create_scientific_authority": false
+    },
+    "scientific_authority": false,
+    "execution_authority": false
+  },
+  "measurement_model_revision": {
+    "artifact": "generated/sceneeval500-prerequisite-coupling-preregistration-draft-20260828.json",
+    "artifact_sha256": "269412b2b0ac270de00d1cca60f4e429ca3b48aae5d62359be073a6095abc365",
+    "status": "MODEL_REVISION_COMPILED_POWER_PREFLIGHT_ONLY",
+    "primary_channels": [
+      "ObjAttr",
+      "OORel",
+      "OARel"
+    ],
+    "prerequisite_control": "matching-derived prerequisite/control and secondary diagnostic; never a peer primary downstream coupling outcome",
+    "strongest_null": "N1 plus a three-channel logistic-normal scene residual u_i with channel-specific latent scales D=diag(s_Attr,s_OOR,s_OAR) and an exchangeable correlation matrix R_eq(rho), where all three off-diagonal correlations equal the same nuisance rho. This absorbs arbitrary-strength generic shared scene frailty while allowing channel-specific overdispersion, but forbids type-specific correlation topology.",
+    "candidate_model": "same fixed effects and channel-specific latent scales as N2, but replace R_eq(rho) with one positive-semidefinite unstructured 3x3 correlation matrix R_unstructured. The scientific disagreement is nonexchangeability: the three pairwise correlations need not be equal.",
+    "annotated_all_three_scene_count": 402,
+    "power_design_interpretation": {
+      "confirmatory_sensitivity_target": "at least 350 scenes jointly prerequisite-eligible across ObjAttr/OORel/OARel gives >=80% simulated worst-case sensitivity to a 0.20 one-pair latent residual-correlation topology increment under this conservative complete-case proxy",
+      "below_350_complete_cases": "do not reinterpret a null result as independence; remain underpowered for the frozen moderate topology increment and retain HOLD/INCONCLUSIVE unless the preregistered full joint model has independently justified power",
+      "small_effect_warning": "the design is not powered to treat failure to detect 0.10-0.15 residual-correlation increments as evidence for conditional independence"
+    },
+    "formal_preregistration_clear": false,
+    "remaining_blockers": [
+      "HSM scene contents remain gated/unmaterialized on the current server identity",
+      "official evaluator measurement smoke has not been run",
+      "the exact mixed-model implementation/bootstrap code has not yet been frozen and validated on synthetic data",
+      "second generator lane remains unqualified for paper-level transport/generalization"
+    ],
+    "scientific_authority": false,
+    "execution_authority": false
   }
 }

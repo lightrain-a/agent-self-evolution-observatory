@@ -1,0 +1,103 @@
+{
+  "schema_version": "sceneeval500-hsm-released-output-preflight-v1",
+  "status": "COMPLETE_RELEASE_MANIFEST_GATED_CONTENT_WAIT",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "provider_authority": false,
+  "gpu_authority": false,
+  "relation_to_port010": "NONE; this is a separate cross-substrate confirmatory object and cannot reopen or close PORT-010",
+  "generator_output_surface": {
+    "method": "HSM",
+    "dataset": "3dlg-hcvc/hsm",
+    "dataset_url": "https://huggingface.co/datasets/3dlg-hcvc/hsm",
+    "dataset_revision": "a6cd11fa39d56804ea3c4de38a4ab27c74d9edfb",
+    "generated_scenes_commit": "e46f6712fa9286c4166b9422aa7750217a17504e",
+    "generated_scene_count": 500,
+    "scene_id_coverage": "0..499 complete",
+    "generated_scene_total_bytes": 13191706,
+    "file_oid_size_root_sha256": "9c933a4ef81dd59bad25bd107bb6dee6de098e17eca2db2de83d391841cda196",
+    "manifest_artifact": "generated/hsm-sceneeval500-release-manifest-20260828.json",
+    "manifest_sha256": "6475bdd1c73a4b810f4bb6ee03e65be85567d07e33c04a15dc272360a829cd55",
+    "release_role": "author-released complete SceneEval-500 generated-scene bundle; candidate zero-generator-rerun input for evaluation once access is legitimately granted",
+    "per_case_metric_outputs_in_manifest": false,
+    "scientific_authority": false
+  },
+  "access_probe": {
+    "official_metadata_manifest_accessible": true,
+    "generated_scene_content_accessible_from_current_69_identity": false,
+    "http_status_for_pinned_scene_0_resolve": 403,
+    "reason": "The Hugging Face dataset is gated and the current 69 identity is not on the authorized list.",
+    "required_action": "Obtain ordinary Hugging Face gated-dataset approval/acknowledgement with an authorized identity. Do not bypass the gate or substitute scraped copies.",
+    "gated_access_is_scientific_authority": false
+  },
+  "outcome_exposure": {
+    "generated_scene_json_contents_read": false,
+    "sceneeval_per_case_metric_outputs_read": false,
+    "performance_based_scene_selection": false,
+    "release_manifest_only": true
+  },
+  "sceneeval_evaluator_contract": {
+    "release": "SceneEval_v1.1.1",
+    "semantic_constraint_metrics": [
+      "ObjCountMetric",
+      "ObjAttributeMetric",
+      "ObjObjRelationshipMetric",
+      "ObjArchRelationshipMetric"
+    ],
+    "semantic_metrics_require_vlm": true,
+    "official_release_vlm_backend": "GPT",
+    "official_release_model_name": "gpt-4o-2024-08-06",
+    "local_qwen_substitution_is_official_sceneeval_score": false,
+    "local_evaluator_lane_if_later_validated": "REPORT_AS_SEPARATE_EVALUATOR_VARIANT; never alias to official SceneEval metric",
+    "non_vlm_metrics_do_not_supply_required_cross_type_semantic_outcomes": true
+  },
+  "execution_ladder": [
+    {
+      "stage": "S0",
+      "name": "outcome-blind SceneEval metadata construct audit",
+      "status": "COMPLETE_ZERO_AUTHORITY",
+      "provider": false,
+      "gpu": false
+    },
+    {
+      "stage": "S1",
+      "name": "materialize author-released HSM 500-scene bundle after legitimate gated access",
+      "status": "WAIT_GATED_DATASET_ACCESS",
+      "provider": false,
+      "gpu": false
+    },
+    {
+      "stage": "S2",
+      "name": "bounded evaluator validity smoke test on frozen scene subset",
+      "status": "NOT_AUTHORIZED",
+      "provider": "official evaluator requires GPT-4o unless a separately named local evaluator is independently qualified",
+      "gpu": "local-evaluator variant only"
+    },
+    {
+      "stage": "S3",
+      "name": "full HSM SceneEval-500 per-requirement evaluation",
+      "status": "NOT_AUTHORIZED",
+      "provider": "official lane provider-bound",
+      "gpu": "local-evaluator variant only"
+    },
+    {
+      "stage": "S4",
+      "name": "cross-generator confirmatory extension",
+      "status": "NOT_AUTHORIZED",
+      "provider": "method/evaluator dependent",
+      "gpu": "method dependent"
+    }
+  ],
+  "authority": {
+    "canonical_generator": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "local_validation": false,
+    "p0": false,
+    "provider": false,
+    "gpu": false,
+    "scientific": false
+  }
+}
