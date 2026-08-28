@@ -8,9 +8,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 PROPOSAL = ROOT / "generated" / "constraint-integration-cross-substrate-proposal-20260828.json"
 AUDIT = ROOT / "generated" / "lego-bench-outcome-blind-construct-audit-20260828.json"
+COLLISION = ROOT / "generated" / "constraint-integration-current-source-collision-review-20260828.json"
 PLAN = ROOT / "generated" / "paper-first-pre-f0-evidence-acquisition-plan.json"
 
 EXPECTED_AUDIT_SHA256 = "f8e845bb66d5c3ae897e939bb9877c1ae85e0491955a4d099e45d6f8bd7d868d"
+EXPECTED_COLLISION_SHA256 = "05d985e0b526ce36c545e1f6427cb5d3e7646fa3a8d437f5281e632f34aad278"
 EXPECTED_METADATA_SHA256 = "c4cab948b923b522b9ba4991e167e1c5c7d503786f2b2e5c11a64dab89113c21"
 
 
@@ -22,6 +24,7 @@ class ConstraintIntegrationCrossSubstrateProposalTest(unittest.TestCase):
     def setUp(self) -> None:
         self.proposal = json.loads(PROPOSAL.read_text(encoding="utf-8"))
         self.audit = json.loads(AUDIT.read_text(encoding="utf-8"))
+        self.collision = json.loads(COLLISION.read_text(encoding="utf-8"))
         self.plan = json.loads(PLAN.read_text(encoding="utf-8"))
 
     def test_proposal_is_noncanonical_zero_authority(self) -> None:
@@ -80,6 +83,26 @@ class ConstraintIntegrationCrossSubstrateProposalTest(unittest.TestCase):
         self.assertFalse(exposure["performance_conditioned_pair_selection"])
         self.assertTrue(exposure["published_aggregate_baseline_results_seen_during_source_survey"])
         self.assertFalse(exposure["published_aggregate_results_used_to_choose_construct_or_pairs"])
+
+    def test_current_source_collision_forces_conditional_independence_null(self) -> None:
+        self.assertEqual(sha256_file(COLLISION), EXPECTED_COLLISION_SHA256)
+        review = self.proposal["current_source_collision_review"]
+        self.assertEqual(review["artifact_sha256"], EXPECTED_COLLISION_SHA256)
+        self.assertEqual(review["status"], "SURVIVING_GAP_NARROWED")
+        roles = {row["role"] for row in self.collision["sources"]}
+        self.assertIn("DIRECT_BENCHMARK_COLLISION", roles)
+        self.assertIn("CROSS_DOMAIN_STRONG_NULL", roles)
+        self.assertIn("GENERIC_METHOD_COLLISION", roles)
+        gap = self.collision["surviving_scientific_gap"]
+        self.assertEqual(gap["strongest_null"], "conditional independent-failure / multiplicative-accumulation model")
+        self.assertIn("moderator", gap["entropy_role"])
+        obj = self.proposal["scientific_object"]
+        self.assertIn("conditional-independent", obj["strongest_same_information_baseline"])
+        self.assertIn("multiplicative", obj["prediction_disagreement"])
+        future = self.proposal["future_analysis_contract_if_authorized"]
+        self.assertEqual(len(future["measurement_negative_controls"]), 2)
+        self.assertFalse(self.collision["scientific_authority"])
+        self.assertFalse(any(self.collision["authority"].values()))
 
     def test_raw_count_is_rejected_and_entropy_construct_only_advances_to_review(self) -> None:
         raw = self.audit["constructs"]["raw_constraint_count"]

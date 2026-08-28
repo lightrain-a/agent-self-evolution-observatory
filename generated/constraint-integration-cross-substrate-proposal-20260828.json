@@ -18,13 +18,13 @@
     "benchmark_replacement_cannot_close_or_reopen_port010": true
   },
   "scientific_object": {
-    "title": "Cross-type constraint integration burden in text-guided 3D scene generation",
-    "question": "Holding total constraint count and instruction length fixed, does mixing heterogeneous constraint types create an integration penalty in text-guided 3D scene generation beyond the additive difficulty of the individual constraint types?",
-    "irreducible_object": "A non-additive cross-type integration effect over the four released LEGO-Bench constraint classes. The candidate is not the statement that longer prompts or more constraints are harder; it asks whether simultaneously satisfying heterogeneous Floor Layout, Material Selection, Object Selection, and Object Placement requirements creates a residual failure burden after the same-information additive type-difficulty null is given the identical released metadata.",
-    "exact_ex_ante_prediction": "Within each generator, after controlling instruction word count, total constraint count, analyst-defined metadata block, and flexible additive main effects for the four per-type constraint counts, higher released constraint-type entropy will predict lower official per-constraint Partial Success Rate. The effect must also have the same negative direction in the pre-outcome strict matched-pair panel. If the additive same-information null absorbs the entropy effect, the candidate is falsified.",
-    "strongest_same_information_baseline": "An additive generalized model using the same instruction word count, total constraint count, metadata block, generator identity, and four per-type constraint counts with flexible univariate effects, but no cross-type interaction term.",
-    "prediction_disagreement": "The additive null predicts that performance is explained by the sum of type-specific difficulty and ordinary load/length effects; the candidate predicts an additional negative cross-type integration residual when multiple constraint classes must be satisfied jointly.",
-    "scope_boundary": "This is an independently proposed cross-substrate object. It is not a reproduction of VWE-Bench, not evidence about VWE author outcomes, and not yet a causal mechanism claim."
+    "title": "Cross-type constraint failure coupling in text-guided 3D scene generation",
+    "question": "After conditioning on ordinary instruction load and each constraint type's marginal difficulty, are constraint failures in a generated 3D scene still conditionally dependent across types, or is the apparent collapse explained by independent multiplicative accumulation?",
+    "irreducible_object": "A generator-side cross-type failure-coupling residual over the four released LEGO-Bench constraint classes. The object is not that longer prompts, more constraints, or particular constraint classes are harder. It asks whether Floor Layout, Material Selection, Object Selection, and Object Placement failures co-occur beyond a same-information conditional-independent model that already receives generator identity, instruction length, total constraint count, metadata block, and flexible per-type difficulty terms.",
+    "exact_ex_ante_prediction": "On held-out instructions, a preregistered cross-type interaction model will improve prediction of joint constraint failures over the conditional-independent null, and observed cross-type joint-failure probability will exceed the null expectation from calibrated marginal failure probabilities. The excess coupling should be larger in higher constraint-type-entropy instructions. If conditional independence explains held-out joint/holistic failure once the frozen controls are applied, the candidate is falsified.",
+    "strongest_same_information_baseline": "A conditional-independent Bernoulli model using the identical generator identity, instruction word count, total constraint count, analyst-defined metadata block, and flexible additive main effects for each of the four per-type constraint counts to estimate each constraint's marginal failure probability; joint failure and holistic success are then predicted by multiplicative composition with no cross-type interaction.",
+    "prediction_disagreement": "The conditional-independent null predicts that the dramatic holistic collapse follows from multiplicative accumulation of marginal constraint failures. The candidate predicts positive excess cross-type co-failure and held-out predictive value from interaction terms after those same marginals and load controls are supplied.",
+    "scope_boundary": "This is an independently proposed cross-substrate object. It is not a reproduction of VWE-Bench, not evidence about VWE author outcomes, and not yet a causal mechanism claim. Constraint-type entropy is a moderator of coupling burden, not the scientific object itself."
   },
   "substrate": {
     "primary_benchmark": "LEGO-Bench",
@@ -56,7 +56,8 @@
       "spearman_with_instruction_words": 0.195851,
       "preflight_abs_rho_threshold": 0.35,
       "disposition": "CLEAR_FOR_ZERO_AUTHORITY_GENERATOR_REVIEW",
-      "may_be_considered_by_generator": true,
+      "role": "pre-outcome moderator/stratifier for future coupling residuals, not a standalone complexity law",
+      "may_be_primary_scientific_object": false,
       "scientific_result": false
     },
     "strict_matched_f0": {
@@ -68,6 +69,15 @@
       "role": "future bounded robustness/falsifier panel only if independently authorized"
     },
     "metadata_parser_note": "Released labels are bound to constraints by condition_idx, matching the official evaluator. Rows 121, 127, and 129 demonstrate that label list order itself is not a valid binding rule."
+  },
+  "current_source_collision_review": {
+    "artifact": "generated/constraint-integration-current-source-collision-review-20260828.json",
+    "artifact_sha256": "05d985e0b526ce36c545e1f6427cb5d3e7646fa3a8d437f5281e632f34aad278",
+    "status": "SURVIVING_GAP_NARROWED",
+    "direct_collision": "LEGO-Eval already reports constraint-count complexity groups and per-type Partial Success Rate, so count-based degradation and type-specific average difficulty are not candidate contributions.",
+    "cross_domain_strong_null": "arXiv:2608.12426 reports approximately independent multiplicative constraint-failure accumulation in LLM instruction following; the 3D candidate must demonstrate residual coupling rather than assume it.",
+    "method_collision": "GraphDreamer and InstructScene already establish scene/semantic graphs as structured 3D generation priors; a generic structured-prompt or scene-graph intervention is not a standalone novelty claim.",
+    "scientific_authority": false
   },
   "outcome_exposure_control": {
     "per_case_generation_outcomes_read": false,
@@ -130,23 +140,33 @@
     "note": "Exact executable revisions, assets, provider/runtime dependencies, and output format compatibility must be frozen by a later substrate preflight. Naming a published comparison method does not authorize its execution."
   },
   "future_analysis_contract_if_authorized": {
-    "primary_population": "all 130 released LEGO-Bench instructions for each independently qualified generator",
-    "primary_model": "per-constraint success modeled with generator identity, instruction word count, total constraint count, analyst-defined metadata block, and flexible additive main effects for each of the four per-type counts; test a pre-registered cross-type interaction/entropy term",
-    "robustness_panel": "11 disjoint metadata-only matched pairs frozen before per-case outcomes, exact on total constraint count and metadata block, within 10 instruction words, with at least 0.35-bit type-entropy contrast",
-    "direction_lock": "higher cross-type entropy -> lower Partial Success Rate after controls",
+    "primary_population": "all 130 released LEGO-Bench instructions for each independently qualified generator, with one binary validity outcome per released constraint",
+    "strongest_null_model": "fit marginal constraint-failure probabilities using generator identity, instruction word count, total constraint count, analyst-defined metadata block, constraint type, and flexible additive per-type load terms; compose marginals independently to predict within-instruction joint failures and Holistic Success",
+    "candidate_model": "add preregistered cross-type interaction terms to the same-information null and evaluate only on instruction-grouped held-out folds",
+    "primary_disagreement_test": "cross-type interaction model must improve held-out predictive log loss over the independent null and the observed cross-type co-failure residual must be positive relative to the product of calibrated marginal failure probabilities",
+    "entropy_moderation_test": "the independent-null residual should be larger for higher released constraint-type entropy after the frozen load/length controls",
+    "robustness_panel": "11 disjoint metadata-only matched pairs frozen before per-case outcomes, exact on total constraint count and metadata block, within 10 instruction words, with at least 0.35-bit type-entropy contrast; compare independent-null residual rather than raw success alone",
+    "measurement_negative_controls": [
+      "estimate evaluator-only cross-type coupling on the released human-curated scenes that were constructed to satisfy their instructions",
+      "where executable, re-evaluate a bounded subset with each constraint isolated in fresh evaluator state rather than inheriting previous constraint outputs; coupling that exists only under sequential evaluator context is measurement coupling, not generator coupling"
+    ],
+    "direction_lock": "positive excess cross-type co-failure beyond the calibrated conditional-independent null, with larger excess under higher type entropy",
     "no_outcome_rematching": true,
     "no_threshold_retuning_after_outcomes": true,
-    "no_generator_dropping_after_outcomes": true
+    "no_generator_dropping_after_outcomes": true,
+    "no_pair_selection_after_outcomes": true
   },
   "falsifiers": [
-    "The same-information additive per-type model absorbs the cross-type entropy/interaction effect.",
-    "The pre-outcome strict matched-pair contrast is null or reverses direction without a preregistered explanation.",
-    "The apparent entropy effect disappears after frozen load/length/metadata-block controls.",
+    "The conditional-independent multiplicative model predicts held-out joint failures/Holistic Success as well as the interaction model within the preregistered uncertainty criterion.",
+    "Cross-type co-failure residuals are null/negative or are fully explained by marginal type difficulty, load, length, generator identity, and metadata block.",
+    "Any apparent coupling is reproduced on human-curated satisfying scenes or disappears when constraints are evaluated in isolated fresh evaluator state, indicating evaluator-induced dependence rather than generator-side coupling.",
+    "The pre-outcome entropy-matched robustness panel does not show the preregistered increase in independent-null residual at higher type entropy.",
     "The official evaluator cannot provide stable per-constraint outcomes for the qualified generator outputs without changing the scientific object."
   ],
   "method_intervention": {
     "status": "DEFERRED_UNTIL_PROBLEM_GATE",
-    "candidate_only": "flat instruction versus information-equivalent typed/structured constraint representation",
+    "candidate_only": "an information-equivalent typed/structured representation would be admissible only if it specifically reduces the preregistered cross-type coupling residual rather than merely improving average Success Rate",
+    "prior_art_boundary": "scene-graph/semantic-graph conditioning is already established by GraphDreamer and InstructScene, so generic graph conditioning cannot be claimed as the new method contribution",
     "forbidden_now": "Do not design, tune, or run the intervention before formal Generator/ProblemGate admission."
   },
   "next_gate": {
@@ -154,7 +174,7 @@
     "required": true,
     "requirements": [
       "bind this proposal to a new canonical generator-run candidate identity rather than reusing PORT-010",
-      "independently test reduction to ordinary length/load difficulty and additive per-type difficulty",
+      "independently test reduction to ordinary length/load difficulty, additive per-type difficulty, and the conditional-independent multiplicative null",
       "freeze executable baseline revisions and evaluator compatibility before any provider/GPU execution",
       "preserve the 11-pair pre-outcome panel without outcome-based replacement"
     ]

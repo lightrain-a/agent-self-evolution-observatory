@@ -1,0 +1,63 @@
+{
+  "schema_version": "constraint-integration-current-source-collision-review-v1",
+  "review_date": "2026-08-28",
+  "status": "SURVIVING_GAP_NARROWED",
+  "scientific_authority": false,
+  "provider_or_gpu_authority": false,
+  "review_scope_note": "This is a bounded current-source collision review, not an exhaustive proof of novelty.",
+  "sources": [
+    {
+      "ref": "arXiv:2511.03001",
+      "title": "LEGO-Eval: Towards Fine-Grained Evaluation on Synthesizing 3D Embodied Environments with Tool Augmentation",
+      "role": "DIRECT_BENCHMARK_COLLISION",
+      "finding": "LEGO-Eval already studies instruction complexity by released constraint count and reports Holistic Success Rate across simple (2-7), moderate (8-12), and complex (>12) groups. It also reports Partial Success Rate by the four constraint types.",
+      "implication": "A paper whose contribution is merely 'more LEGO constraints cause lower success' is directly collided and must be rejected. Per-type mean difficulty is also not a new contribution."
+    },
+    {
+      "ref": "arXiv:2608.12426",
+      "title": "Large Language Models Can Follow Instructions, But Not Many at Once: Phase Transitions in Compositional Constraint Satisfaction",
+      "role": "CROSS_DOMAIN_STRONG_NULL",
+      "finding": "In deterministic-verifier LLM instruction following, compositional degradation is reported to be largely explained by multiplicative accumulation of approximately independent constraint failures, with structural constraints degrading faster than lexical constraints.",
+      "implication": "The 3D candidate must not assume pairwise interference. Conditional independence / multiplicative accumulation is the strongest conceptual null; a 3D-specific claim survives only if cross-type failure coupling remains after matched load, length, generator, and per-type difficulty controls."
+    },
+    {
+      "ref": "arXiv:2312.00093",
+      "title": "GraphDreamer: Compositional 3D Scene Synthesis from Scene Graphs",
+      "role": "GENERIC_METHOD_COLLISION",
+      "finding": "GraphDreamer explicitly motivates scene graphs as a structured representation for complex multi-object text-to-3D descriptions and relationships.",
+      "implication": "A generic claim that scene graphs help complex 3D prompts is not a sufficient method contribution. Any later structured intervention must specifically reduce the preregistered coupling residual under same-information controls."
+    },
+    {
+      "ref": "ICLR:2024:InstructScene",
+      "title": "InstructScene: Instruction-Driven 3D Indoor Scene Synthesis with Semantic Graph Prior",
+      "role": "GENERIC_METHOD_COLLISION",
+      "finding": "InstructScene already uses a semantic graph prior to improve controllability in instruction-driven indoor scene synthesis.",
+      "implication": "Semantic-graph conditioning is prior art and can serve only as a mechanism reference/baseline unless a new causal role is isolated."
+    }
+  ],
+  "rejected_theses": [
+    "constraint count alone is a novel complexity law on LEGO-Bench",
+    "different LEGO constraint types have different average difficulty",
+    "scene graphs generally help complex 3D generation"
+  ],
+  "surviving_scientific_gap": {
+    "name": "conditional cross-type failure coupling in 3D scene synthesis",
+    "question": "After conditioning on generator identity, instruction length, total constraint count, and flexible additive difficulty for each released constraint type, do per-constraint failures remain dependent across types within the same 3D scene instruction?",
+    "strongest_null": "conditional independent-failure / multiplicative-accumulation model",
+    "candidate_signal": "positive excess cross-type joint-failure probability or residual dependence, especially for execution-linked type pairs such as Object Selection-Object Placement and Floor Layout-Object Placement",
+    "entropy_role": "constraint-type entropy is a preregistered moderator/stratifier for coupling burden, not the scientific object by itself",
+    "novelty_status": "NOT_FOUND_IN_REVIEWED_PRIMARY_SCOPE",
+    "novelty_caveat": "Requires independent formal source review before canonical Generator/ProblemGate admission."
+  },
+  "authority": {
+    "canonical_generator": false,
+    "problem_gate": false,
+    "paper_design": false,
+    "method": false,
+    "experiment": false,
+    "p0": false,
+    "provider": false,
+    "gpu": false,
+    "scientific": false
+  }
+}
