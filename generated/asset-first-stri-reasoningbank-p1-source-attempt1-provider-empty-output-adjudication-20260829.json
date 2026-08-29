@@ -1,0 +1,76 @@
+{
+  "code_bindings_after_repair": {
+    "research_pipeline/asset_first_stri_reasoningbank_p1.py": "fb157c8b5f3d17903177e32b2d94e01aa6de1186ba112852c9a34695be6cbed9",
+    "research_pipeline/asset_first_stri_reasoningbank_p1_core.py": "1bbcc69640ae7ffd9868b7d91d8b1b6f3e9197bc08954597c4274a792b3700e7",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1.py": "175150329c632532bbf1b27ea0c997449aefb66b9215c53f29bbc6c4408532fb"
+  },
+  "created_at_utc": "2026-08-29T15:45:28Z",
+  "decision": "SOURCE_ATTEMPT1_INVALID_PROVIDER_EMPTY_OUTPUT_PILOT_GATE_CLOSED",
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-SOURCE-ATTEMPT1-ADJUDICATION-20260829",
+  "invalid_attempt": {
+    "behavior_actions_completed_before_failure": 3,
+    "empty_response": {
+      "output_text_length": 0,
+      "output_tokens": 1430,
+      "reasoning_tokens": 1430,
+      "status": "completed"
+    },
+    "failure": {
+      "next_request_error": "MissingParameter input.content",
+      "next_request_http_status": 400,
+      "provider_failure_layer": true
+    },
+    "induced_memory_artifact": "generated/asset-first-stri-reasoningbank-p1-source-memory-provider-empty-output-invalid-attempt1-20260829.json",
+    "induced_memory_artifact_sha256": "aa2e3b847f93d56d00c357120e4cfce438295085579744cfb62a7f1d41287be7",
+    "induced_memory_treatment_eligible": false,
+    "run_artifact": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/source-sympy__sympy-13798-provider-empty-output-invalid-attempt1/run.json",
+    "run_artifact_sha256": "7f8a0cdab2208fcd7e163cac523220cbe00bed4cbe30f76b8fedb8855bbd3bfa"
+  },
+  "live_synthetic_probe": {
+    "credential_material_present": false,
+    "model": "deepseek-v4-pro-ga-260813",
+    "multi_turn": {
+      "http_status": 200,
+      "output_schema": [
+        "reasoning",
+        "message/output_text"
+      ],
+      "output_text_nonempty": true,
+      "status": "completed"
+    },
+    "single_string": {
+      "http_status": 200,
+      "output_text_nonempty": true
+    },
+    "two_messages": {
+      "http_status": 200,
+      "output_text_nonempty": true
+    }
+  },
+  "payload_sha256": "6b271cfc485dfe49f7efef6b4cf1bd82848b92b9e41e9708b6d1f5a299307191",
+  "repair": {
+    "empty_assistant_output": "record a format_error event but do not replay a provider-illegal zero-length assistant content item",
+    "memory_induction_guard": "provider, provider_identity, and implementation failures stop source induction before judge or memory induction",
+    "model_provider_and_sampling_parameters_changed": false
+  },
+  "retry_authorization": {
+    "attempt_count_authorized": 1,
+    "full_p1": false,
+    "pilot_before_valid_source_memory": false,
+    "replacement_source_case_forbidden": true,
+    "same_source_case_only": "sympy__sympy-13798"
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "attempt1_evaluator_outcome_observed": true,
+    "attempt1_resolved": false,
+    "attempt1_scientifically_valid": false,
+    "repair_selected_from_provider_empty-output_and_http-400_signals": true,
+    "retry_is_not_fully_outcome_blind_and_must_be_disclosed": true,
+    "treatment_selection_from_attempt1_forbidden": true
+  },
+  "tests": {
+    "passed": 29,
+    "result": "PASS"
+  }
+}

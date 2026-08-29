@@ -172,6 +172,16 @@ def render_messages(task: str, selected_memory: str = "") -> list[dict[str, str]
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
+def append_nonempty_assistant_message(
+    messages: list[dict[str, str]], content: str,
+) -> bool:
+    """Keep provider-illegal empty assistant content out of replayed history."""
+    if not content:
+        return False
+    messages.append({"role": "assistant", "content": content})
+    return True
+
+
 def safe_model_receipt(result: dict[str, Any]) -> dict[str, Any]:
     return {
         "status": result.get("status"),
@@ -305,14 +315,17 @@ def execute_agent(
                 exit_status = "ProviderIdentityDrift"
                 break
             content = str(receipt["text"])
-            messages.append({"role": "assistant", "content": content})
+            assistant_message_recorded = append_nonempty_assistant_message(messages, content)
             parsed = FORMAT_RE.findall(content)
             if len(parsed) != 1:
                 visible = Template(config["agent"]["format_error_template"]).render(actions=parsed)
                 messages.append({"role": "user", "content": visible})
                 actions.append({
                     "step": call_count, "type": "format_error",
-                    "candidate_action_count": len(parsed), "model_visible_observation": visible,
+                    "candidate_action_count": len(parsed),
+                    "assistant_output_empty": not assistant_message_recorded,
+                    "provider_status": receipt["status"],
+                    "model_visible_observation": visible,
                 })
                 continue
             action = parsed[0].strip()

@@ -60,6 +60,13 @@ def call_role(
     return request, receipt
 
 
+def source_failure_blocks_induction(source_payload: dict[str, Any]) -> bool:
+    failure = source_payload.get("failure") or {}
+    return failure.get("failure_layer") in {
+        "provider", "provider_identity", "implementation",
+    }
+
+
 def source_induction(output_dir: Path) -> dict[str, Any]:
     verification = verify_frozen_inputs()
     fixture = [row for row in load_fixtures() if row["role"] == "source_induction"][0]
@@ -77,6 +84,12 @@ def source_induction(output_dir: Path) -> dict[str, Any]:
         return {
             "decision": "SOURCE_INDUCTION_RUNTIME_HOLD",
             "source_run": source_result, "scientific_outcome_authorized": False,
+        }
+    if source_failure_blocks_induction(source_payload):
+        return {
+            "decision": "SOURCE_INDUCTION_IMPLEMENTATION_HOLD",
+            "source_run": source_result, "scientific_outcome_authorized": False,
+            "memory_induction_executed": False,
         }
     task = fixture["model_visible"]["problem_statement"]
     trajectory_text = "\n".join(

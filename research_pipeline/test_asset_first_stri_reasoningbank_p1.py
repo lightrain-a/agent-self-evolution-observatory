@@ -4,7 +4,10 @@ import json
 import unittest
 from pathlib import Path
 
-from research_pipeline.asset_first_stri_reasoningbank_p1 import treatment_cases
+from research_pipeline.asset_first_stri_reasoningbank_p1 import (
+    source_failure_blocks_induction,
+    treatment_cases,
+)
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
     BASE_STATE_RULE,
     FIXTURE_PATH,
@@ -12,6 +15,7 @@ from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
     PID_NAMESPACE,
     load_config,
     render_messages,
+    append_nonempty_assistant_message,
     verify_frozen_inputs,
 )
 from research_pipeline.asset_first_stri_reasoningbank_p1_eval import (
@@ -31,6 +35,18 @@ class ReasoningBankP1FrozenRuntimeTest(unittest.TestCase):
         self.assertEqual(config["model"]["model_kwargs"]["temperature"], 0.0)
         self.assertEqual(PID_NAMESPACE, "host")
         self.assertEqual(BASE_STATE_RULE, "exact_or_clean_tree_equivalent_descendant")
+
+    def test_empty_provider_output_is_not_replayed_as_illegal_assistant_content(self) -> None:
+        messages = [{"role": "user", "content": "continue"}]
+        self.assertFalse(append_nonempty_assistant_message(messages, ""))
+        self.assertEqual(messages, [{"role": "user", "content": "continue"}])
+        self.assertTrue(append_nonempty_assistant_message(messages, "visible"))
+        self.assertEqual(messages[-1], {"role": "assistant", "content": "visible"})
+
+    def test_provider_and_implementation_failures_block_source_induction(self) -> None:
+        for layer in ("provider", "provider_identity", "implementation"):
+            self.assertTrue(source_failure_blocks_induction({"failure": {"failure_layer": layer}}))
+        self.assertFalse(source_failure_blocks_induction({"failure": None}))
 
     def test_memory_is_appended_to_official_system_message_only(self) -> None:
         without = render_messages("task")
