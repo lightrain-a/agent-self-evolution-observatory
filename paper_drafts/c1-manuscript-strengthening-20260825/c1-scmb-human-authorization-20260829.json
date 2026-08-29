@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_SCMB_PILOT_HUMAN_EXECUTION_AUTHORIZATION",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-SCMB-P0-FRESH-UPTAKE-20260829",
+  "recorded_at": "2026-08-29",
+  "authorization_basis": "After discussing a lightweight State-Conditioned Memory Binding proof-of-concept on genuinely fresh states, the human user explicitly replied '可以，你做吧'.",
+  "authorized": {
+    "zero_provider_design_preflight_and_tests": true,
+    "one_provider_model_support_requalification": true,
+    "fresh_12_state_binder_generation": true,
+    "fresh_12_state_first_action_pilot": true,
+    "pilot_analysis_and_failure_differential": true,
+    "research_memory_writeback": true,
+    "task_scoped_commit_and_push": true
+  },
+  "not_authorized": {
+    "old_13_state_prompt_tuning": true,
+    "old_23_state_holdout_consumption": true,
+    "fresh_19_state_confirmatory": true,
+    "terminal_outcome_experiment": true,
+    "new_backbone": true,
+    "new_dataset": true,
+    "gpu_experiment": true,
+    "submission": true
+  },
+  "authority": {
+    "pilot_binder_provider": true,
+    "pilot_policy_provider": true,
+    "confirmatory": false,
+    "gpu": false,
+    "submission": false
+  }
+}
