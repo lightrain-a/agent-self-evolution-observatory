@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-RUNTIME-ACQUISITION-REPAIR-20260829",
+  "created_at_utc": "2026-08-29T14:33:20Z",
+  "status": "PRE_OUTCOME_TREATMENT_PRESERVING_RUNTIME_REPAIR",
+  "observed_failures": [
+    {
+      "layer": "rootless_runtime",
+      "failure": "Default RootlessKit state directory was already locked by an unrelated live Docker daemon.",
+      "repair": "Use /run/user/1006/e1-reasoningbank-rootless-state and the E1-only Docker socket.",
+      "unrelated_daemon_or_container_modified": false
+    },
+    {
+      "layer": "registry_transport",
+      "failure": "Docker pull through RootlessKit transferred the first layer too slowly to qualify the three-image runtime.",
+      "repair": "Use docker.1ms.run through host-side Skopeo/HTTPS, cache unique OCI blobs, verify every blob by its declared SHA-256, then import into the same isolated E1 daemon.",
+      "partial_docker_pull_cancelled": true,
+      "task_image_changed": false
+    }
+  ],
+  "frozen_acquisition": {
+    "mirror": "https://docker.1ms.run",
+    "script": "research_pipeline/asset_first_stri_swebench_mirror_acquire.py",
+    "script_sha256": "e2232a502823861dd024029f8dd1e6874e7eeff5dfeb2f22d679970037ceaf34",
+    "workers": 8,
+    "skopeo_version": "1.13.3",
+    "skopeo_deb_sha256": "d908a86538f6d4bc49ea9c7423e5fb279a5c8cfc1f9bc7bd505f8bfe25d29be3",
+    "containers_common_deb_sha256": "dae82b120f8a1b429c0a63a2ccd2ff3c91563f97e2188b1fbaf78ba76f7fb89c",
+    "image_platform_manifest_digests": {
+      "sympy__sympy-13798": "sha256:4111da8b069bc23cc67ef24f2f433f82601518941052faebd3c4a621d3748cd6",
+      "pytest-dev__pytest-5631": "sha256:22a1a81b8e937a1ff52cef4f38bf59e6a8baa0648ef3b115e6206bfc5c5de68f",
+      "sympy__sympy-17318": "sha256:4d18e6a31fb1d68a8232f3c78a5a4c97e9c7a2d001765dcc90f228cef4b4e39f"
+    },
+    "verification_rule": "Manifest bytes and every config/layer blob must hash to the frozen OCI digest before import."
+  },
+  "scientific_change_audit": {
+    "scientific_treatment_changed": false,
+    "population_changed": false,
+    "metric_changed": false,
+    "hypothesis_changed": false,
+    "representation_changed": false,
+    "operator_changed": false,
+    "provider_or_model_changed": false,
+    "sampling_changed": false
+  },
+  "scientific_boundary": {
+    "source_induction_executed": false,
+    "p1_task_outcome_observed": false,
+    "runtime_repair_has_scientific_authority": false
+  },
+  "next_gate": "All three images must import and pass exact digest/base-commit non-outcome qualification."
+}
