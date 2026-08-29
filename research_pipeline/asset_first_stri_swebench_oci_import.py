@@ -102,16 +102,31 @@ def assemble(spec: dict) -> dict:
 
 
 def import_one(spec: dict) -> dict:
+    digest_ref = f"{spec['repo']}@sha256:{spec['digest']}"
+    inspected = run([
+        "docker", "image", "inspect", digest_ref,
+        "--format", "{{json .RepoDigests}} {{.Architecture}} {{.Id}}",
+    ], timeout=60)
+    if inspected["returncode"] == 0 and f"sha256:{spec['digest']}" in inspected["output"]:
+        return {
+            "label": spec["label"], "digest_ref": digest_ref,
+            "status": "verified-existing", "inspect": inspected, "pass": True,
+        }
     assembled = assemble(spec)
     source = f"oci:{assembled['layout']}:{spec['tag']}"
     tagged = f"{spec['repo']}:{spec['tag']}"
-    copied = run([
+    archive = LAYOUT_ROOT / f"{spec['label']}.docker-archive.tar"
+    archive.unlink(missing_ok=True)
+    archived = run([
         str(SKOPEO), "--policy", str(POLICY), "copy",
-        "--override-arch", "amd64", source, f"docker-daemon:{tagged}",
+        "--override-arch", "amd64", source,
+        f"docker-archive:{archive}:{tagged}",
     ])
-    if copied["returncode"] != 0:
-        raise RuntimeError(f"skopeo import failed: {copied['output'][-2000:]}")
-    digest_ref = f"{spec['repo']}@sha256:{spec['digest']}"
+    if archived["returncode"] != 0:
+        raise RuntimeError(f"docker archive build failed: {archived['output'][-2000:]}")
+    loaded = run(["docker", "load", "-i", str(archive)])
+    if loaded["returncode"] != 0:
+        raise RuntimeError(f"docker load failed: {loaded['output'][-2000:]}")
     pulled = run(["docker", "pull", digest_ref], timeout=600)
     if pulled["returncode"] != 0:
         raise RuntimeError(f"digest attachment failed: {pulled['output'][-2000:]}")
@@ -124,8 +139,10 @@ def import_one(spec: dict) -> dict:
     return {
         "label": spec["label"], "source": source, "tagged": tagged,
         "digest_ref": digest_ref, "assembled": assembled,
-        "skopeo_copy": copied, "digest_pull": pulled, "inspect": inspected,
-        "pass": True,
+        "archive": str(archive), "archive_sha256": digest(archive),
+        "archive_build": archived, "docker_load": loaded,
+        "digest_pull": pulled, "inspect": inspected,
+        "status": "imported-and-verified", "pass": True,
     }
 
 
