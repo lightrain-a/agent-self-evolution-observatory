@@ -196,12 +196,48 @@ class ReasoningBankArkLiveArtifactTest(unittest.TestCase):
         self.assertFalse(final["next_authorized_stage"]["memory_induction_execution"])
         self.assertFalse(final["next_authorized_stage"]["p1_behavioral_execution"])
 
+    def test_deepseek_failure_repair_chain_and_final_contract(self) -> None:
+        q1 = self.load(
+            "asset-first-stri-reasoningbank-deepseek-provider-qualification-result-20260829.json"
+        )
+        q1b = self.load(
+            "asset-first-stri-reasoningbank-deepseek-direct-causal-result-20260829.json"
+        )
+        final = self.load(
+            "asset-first-stri-reasoningbank-deepseek-provider-final-adjudication-20260829.json"
+        )
+        self.assertEqual(q1["decision"], "ARK_DEEPSEEK_PRO_BACKEND_NOT_QUALIFIED")
+        self.assertTrue(q1["checks"]["all_requests_succeeded"])
+        self.assertFalse(q1["checks"]["causal_tool_result_consumed"])
+        self.assertEqual(
+            q1b["decision"], "ARK_DEEPSEEK_PRO_DIRECT_CAUSAL_QUALIFIED"
+        )
+        self.assertTrue(all(q1b["checks"].values()))
+        self.assertEqual(
+            final["decision"],
+            "ARK_DEEPSEEK_PRO_BACKEND_QUALIFIED_WITH_DIRECT_VERSION_AND_UNSEEDED_PAIRED_REPEATS",
+        )
+        backend = final["frozen_backend"]
+        self.assertEqual(backend["requested_model"], "deepseek-v4-pro-ga-260813")
+        self.assertEqual(backend["resolved_model"], "deepseek-v4-pro-ga-260813")
+        self.assertEqual(backend["behavior"]["temperature"], 0.0)
+        self.assertEqual(backend["memory_induction"]["temperature"], 1.0)
+        self.assertEqual(backend["judge"]["temperature"], 0.0)
+        self.assertEqual(backend["retrieval_top_k"], 1)
+        self.assertEqual(backend["workers"], 1)
+        self.assertFalse(final["next_authorized_stage"]["memory_induction_execution"])
+        self.assertFalse(final["next_authorized_stage"]["p1_behavioral_execution"])
+
     def test_live_artifacts_do_not_serialize_api_key_field(self) -> None:
         names = (
             "asset-first-stri-reasoningbank-ark-provider-qualification-result-20260829.json",
             "asset-first-stri-reasoningbank-ark-provider-identity-resolution-result-20260829.json",
             "asset-first-stri-reasoningbank-ark-tool-continuation-causal-result-20260829.json",
             "asset-first-stri-reasoningbank-ark-provider-final-adjudication-20260829.json",
+            "asset-first-stri-reasoningbank-deepseek-provider-qualification-result-20260829.json",
+            "asset-first-stri-reasoningbank-deepseek-provider-qualification-adjudication-20260829.json",
+            "asset-first-stri-reasoningbank-deepseek-direct-causal-result-20260829.json",
+            "asset-first-stri-reasoningbank-deepseek-provider-final-adjudication-20260829.json",
         )
         def visit(value):
             if isinstance(value, dict):

@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-29T13:46:00+00:00",
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-DEEPSEEK-FINAL-20260829",
+  "decision": "ARK_DEEPSEEK_PRO_BACKEND_QUALIFIED_WITH_DIRECT_VERSION_AND_UNSEEDED_PAIRED_REPEATS",
+  "evidence_chain": [
+    {
+      "experiment_id": "E1-STRI-REASONINGBANK-ARK-DEEPSEEK-Q1-20260829",
+      "decision": "ARK_DEEPSEEK_PRO_BACKEND_NOT_QUALIFIED",
+      "role": "Establish broad protocol and paper-parameter support; localize alias identity and insufficient causal evidence.",
+      "result": "generated/asset-first-stri-reasoningbank-deepseek-provider-qualification-result-20260829.json",
+      "result_sha256": "b58acae28cdf05af6bf8024f37956487398cc3373618a20e7e797901f62d6524"
+    },
+    {
+      "experiment_id": "E1-STRI-REASONINGBANK-ARK-DEEPSEEK-Q1B-20260829",
+      "decision": "ARK_DEEPSEEK_PRO_DIRECT_CAUSAL_QUALIFIED",
+      "role": "Confirm direct version identity and causal consumption of a zero-argument tool result.",
+      "result": "generated/asset-first-stri-reasoningbank-deepseek-direct-causal-result-20260829.json",
+      "result_sha256": "ccca0e75ab1c38805351e9ed96ec59a598c528a69d4fc00031bac79ce27dbf99"
+    }
+  ],
+  "frozen_backend": {
+    "provider": "Ark Plan API",
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "requested_model": "deepseek-v4-pro-ga-260813",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "behavior": {
+      "temperature": 0.0,
+      "max_output_tokens": "omitted",
+      "seed": "omitted",
+      "top_p": "omitted"
+    },
+    "memory_induction": {
+      "temperature": 1.0,
+      "max_output_tokens": 65536,
+      "seed": "omitted",
+      "top_p": "omitted"
+    },
+    "judge": {
+      "temperature": 0.0,
+      "max_output_tokens": 65536,
+      "seed": "omitted",
+      "top_p": "omitted",
+      "structured_output": "strict JSON schema"
+    },
+    "retrieval_top_k": 1,
+    "workers": 1,
+    "environment_timeout_seconds": 60
+  },
+  "paper_alignment": {
+    "source": "official google-research/reasoning-bank repository at ed80611788292ea739f1effd31f16c53823b8a0d",
+    "configuration_artifact": "generated/asset-first-stri-reasoningbank-deepseek-paper-alignment-20260829.json",
+    "provider_boundary": "The original ReasoningBank evaluation uses Gemini 2.5 Flash. This experiment preserves the public architecture and role-specific configuration while replacing the provider with Ark DeepSeek-Pro; it is not an original-provider reproduction."
+  },
+  "selection_integrity": {
+    "user_requested_deepseek_pro_before_p1_outcomes": true,
+    "p1_task_outcome_observed_before_selection": false,
+    "memory_induction_executed_before_selection": false,
+    "previous_qualified_doubao_backend_preserved_in_history": true,
+    "previous_qualified_doubao_backend_selected_for_p1": false
+  },
+  "qualification": {
+    "all_q1_requests_succeeded": true,
+    "system_messages_supported": true,
+    "multiturn_supported": true,
+    "tool_calls_supported": true,
+    "function_result_continuation_causally_supported": true,
+    "memory_induction_parameters_supported": true,
+    "judge_parameters_and_json_schema_supported": true,
+    "usage_present": true,
+    "credential_material_present": false,
+    "seeded_independence_claim_authorized": false
+  },
+  "next_authorized_stage": {
+    "memory_provenance_contract": true,
+    "source_eval_split_freeze": true,
+    "memory_induction_execution": false,
+    "p1_behavioral_execution": false,
+    "authorization_condition": "Freeze disjoint source/evaluation tasks, memory provenance, treatments, R0-R4, failure handling, and pilot rule before any induction or behavioral request."
+  }
+}

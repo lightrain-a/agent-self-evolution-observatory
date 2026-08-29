@@ -1,0 +1,83 @@
+{
+  "causal_observable": "Recover a frozen value that first becomes model-visible in the function_call_output of a zero-argument tool.",
+  "checks": {
+    "all_requests_succeeded": true,
+    "direct_model_identity": true,
+    "frozen_value_absent_before_tool_result": true,
+    "post_call_frozen_value_recovered": true,
+    "single_zero_argument_tool_call": true,
+    "usage_present": true
+  },
+  "contract": "generated/asset-first-stri-reasoningbank-deepseek-direct-causal-contract-20260829.json",
+  "created_at_utc": "2026-08-29T13:39:48+00:00",
+  "decision": "ARK_DEEPSEEK_PRO_DIRECT_CAUSAL_QUALIFIED",
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-DEEPSEEK-Q1B-20260829",
+  "frozen_value_sha256": "9f1867ad5eda23648a35d5498f84203fa2af7377da37b43d3bdc31d994448eb1",
+  "provider_role": "ReasoningBank architecture + Ark DeepSeek-Pro compatibility backend",
+  "receipts": [
+    {
+      "credential_material_present": false,
+      "function_calls": [
+        {
+          "arguments": "{}",
+          "call_id_sha256": "9de96f73371a6d63b0b1c0c6dbebdd52e56e2d4466a897d6616c77679a2329dd",
+          "name": "fetch_frozen_value"
+        }
+      ],
+      "label": "tool_call",
+      "ok": true,
+      "requested_model": "deepseek-v4-pro-ga-260813",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "35e62250e40568f7dfd220048c180de628a5cbc3036139715197003d9b9a58ac",
+      "status": "completed",
+      "text": "",
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "usage": {
+        "input_tokens": 408,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 53,
+        "output_tokens_details": {
+          "reasoning_tokens": 23
+        },
+        "total_tokens": 461
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "tool_result_continuation",
+      "ok": true,
+      "requested_model": "deepseek-v4-pro-ga-260813",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "50d42ef109e7f31b12944874f699a19aa865eb67321044cb2156a0082d244c28",
+      "status": "completed",
+      "text": "The frozen_value is `DEEPSEEK_TOOL_ONLY_VALUE_8429`.",
+      "text_sha256": "5d712187af879eae6020866401dcfde1988745cc6be69f386966630090cde2bd",
+      "usage": {
+        "input_tokens": 177,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 81,
+        "output_tokens_details": {
+          "reasoning_tokens": 62
+        },
+        "total_tokens": 258
+      }
+    }
+  ],
+  "resource_accounting": {
+    "gpu_seconds": 0,
+    "provider_requests_attempted": 2
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "behavioral_claim_authorized": false,
+    "full_p1_authorized": false,
+    "memory_induction_executed": false,
+    "p1_outcome_observed": false,
+    "provider_semantics_only": true
+  }
+}
