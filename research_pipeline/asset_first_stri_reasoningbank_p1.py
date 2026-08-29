@@ -11,6 +11,7 @@ from typing import Any
 
 from research_pipeline.asset_first_stri_reasoningbank_ark_provider import ArkCompatibilityError
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
+    BASE_STATE_RULE,
     BASE_URL,
     DOCKER_HOST,
     MAX_RETRIES,
@@ -288,7 +289,8 @@ def qualify_runtime(output: Path) -> dict[str, Any]:
         "rows": rows,
         "checks": {
             "all_images_present_by_fixed_digest": all(row["pass"] for row in rows),
-            "all_base_commits_exact": all(row["pass"] for row in rows),
+            "all_base_states_exact_or_tree_equivalent": all(row["pass"] for row in rows),
+            "base_state_rule": BASE_STATE_RULE,
             "no_task_test_or_evaluator_executed": True,
             "separate_docker_daemon": True,
             "pid_namespace": PID_NAMESPACE,

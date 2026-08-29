@@ -6,6 +6,7 @@ from pathlib import Path
 
 from research_pipeline.asset_first_stri_reasoningbank_p1 import treatment_cases
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
+    BASE_STATE_RULE,
     FIXTURE_PATH,
     MEMORY_PREFIX,
     PID_NAMESPACE,
@@ -29,6 +30,7 @@ class ReasoningBankP1FrozenRuntimeTest(unittest.TestCase):
         self.assertEqual(config["environment"]["timeout"], 60)
         self.assertEqual(config["model"]["model_kwargs"]["temperature"], 0.0)
         self.assertEqual(PID_NAMESPACE, "host")
+        self.assertEqual(BASE_STATE_RULE, "exact_or_clean_tree_equivalent_descendant")
 
     def test_memory_is_appended_to_official_system_message_only(self) -> None:
         without = render_messages("task")

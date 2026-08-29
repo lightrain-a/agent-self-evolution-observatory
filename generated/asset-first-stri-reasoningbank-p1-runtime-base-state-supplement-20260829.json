@@ -1,0 +1,75 @@
+{
+  "base_state_rule": "exact_or_clean_tree_equivalent_descendant",
+  "code_bindings": {
+    "research_pipeline/asset_first_stri_reasoningbank_p1.py": "5aae5fbc8c3d955933af7405f5942e3aa81861144cbffdc07d0dbe002597b7c3",
+    "research_pipeline/asset_first_stri_reasoningbank_p1_core.py": "dd1b47f6b3ce9297e34654ee8b6556cbef497026671b816c43884388f0af9f50",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1.py": "81845a3b3e53aa9ec83a58d6932762b612e05dc5365bf7ffd30ffdd771d455de"
+  },
+  "created_at_utc": "2026-08-29T15:36:50Z",
+  "decision": "P1_OFFICIAL_IMAGE_BASE_STATE_RULE_CORRECTED_BEFORE_OUTCOME",
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-RUNTIME-BASE-STATE-SUPPLEMENT-20260829",
+  "finding": {
+    "classification": "qualification_invariant_correction",
+    "original_invariant": "container HEAD equals dataset base_commit",
+    "original_invariant_status": "too_strict_for_official_prebuilt_images",
+    "replacement_invariant": "container HEAD equals base_commit OR is a clean descendant with identical repository tree"
+  },
+  "official_support": {
+    "source": "https://github.com/swe-bench/SWE-bench/blob/main/CHANGELOG.md",
+    "source_entry": "SWE-bench 3.0.0 (2025-01-13), #353 Clean diff after setup"
+  },
+  "payload_sha256": "7710e448dc3b21206cfbb403aeadc3b1caa9d245edcf76818bd0a5a76e9c1ebf",
+  "prior_evidence_retained": {
+    "pid_namespace_repair_commit": "204234d0",
+    "pid_repair_runtime_hold": "generated/asset-first-stri-reasoningbank-p1-runtime-qualification-pid-repair-result-20260829.json",
+    "pid_repair_runtime_hold_sha256": "eab042f64e302d447f105f55c27b6c1f1067813f82c71db327aaeb55460f5eb4"
+  },
+  "probe_rows": [
+    {
+      "base_commit": "7121bdf1facdd90d05b6994b4c2e5b2865a4638a",
+      "base_commit_object_type": "commit",
+      "base_is_ancestor_of_head": true,
+      "head": "a5cf054ae1cd4f369900fc59b30e42e4afc7b4ce",
+      "head_commit_subject": "SWE-bench",
+      "instance_id": "sympy__sympy-13798",
+      "tree_diff_file_count": 0,
+      "working_tree_status_count": 0
+    },
+    {
+      "base_commit": "cb828ebe70b4fa35cd5f9a7ee024272237eab351",
+      "base_commit_object_type": "commit",
+      "base_is_ancestor_of_head": true,
+      "head": "3135b375dba2cde350b58ce6689981470636f9ee",
+      "instance_id": "pytest-dev__pytest-5631",
+      "tree_diff_file_count": 0,
+      "working_tree_status_count": 0
+    },
+    {
+      "base_commit": "d4e0231b08147337745dcf601e62de7eefe2fb2d",
+      "base_commit_object_type": "commit",
+      "base_is_ancestor_of_head": true,
+      "head": "52a25b5e54c4b24d52d410d4ff977b9665b1ae21",
+      "instance_id": "sympy__sympy-17318",
+      "tree_diff_file_count": 0,
+      "working_tree_status_count": 0
+    }
+  ],
+  "runtime_action": {
+    "git_reset_performed": false,
+    "official_image_head_preserved": true,
+    "qualification_only": true
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "agent_behavior_executed": false,
+    "downstream_p1_outcome_observed": false,
+    "evaluator_executed": false,
+    "gold_patch_observed": false,
+    "source_induction_executed": false,
+    "task_test_executed": false
+  },
+  "tests": {
+    "passed": 27,
+    "result": "PASS"
+  }
+}

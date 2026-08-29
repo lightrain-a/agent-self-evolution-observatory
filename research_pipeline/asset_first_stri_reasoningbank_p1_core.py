@@ -50,6 +50,7 @@ MODEL = "deepseek-v4-pro-ga-260813"
 BASE_URL = "https://ark.cn-beijing.volces.com/api/plan/v3"
 DOCKER_HOST = "unix:///run/user/1006/e1-reasoningbank-docker.sock"
 PID_NAMESPACE = "host"
+BASE_STATE_RULE = "exact_or_clean_tree_equivalent_descendant"
 STEP_LIMIT = 250
 COMMAND_TIMEOUT_SECONDS = 60
 EVALUATOR_TIMEOUT_SECONDS = 1800
@@ -223,10 +224,25 @@ class DockerRun:
         started = run_host(["docker", "start", self.name], timeout=60, docker=True)
         if started["returncode"] != 0:
             raise RuntimeError(f"docker start failed: {started['output'][-800:]}")
-        head = self.exec("git rev-parse HEAD", timeout=30)
-        if head["returncode"] != 0 or head["output"].strip() != self.base_commit:
-            raise RuntimeError(f"base commit mismatch: {head['output'].strip()}")
-        return {"image_inspect": inspect, "base_commit_receipt": head}
+        if not re.fullmatch(r"[0-9a-f]{40}", self.base_commit):
+            raise RuntimeError("invalid frozen base commit")
+        base_state = self.exec(
+            "git rev-parse HEAD && "
+            f"git cat-file -e {self.base_commit}^{{commit}} && "
+            f"git merge-base --is-ancestor {self.base_commit} HEAD && "
+            f"git diff --quiet {self.base_commit}..HEAD && "
+            "test -z \"$(git status --porcelain=v1)\"",
+            timeout=30,
+        )
+        if base_state["returncode"] != 0:
+            raise RuntimeError(
+                "base state is not an exact or clean tree-equivalent descendant: "
+                f"{base_state['output'].strip()}"
+            )
+        base_state["expected_base_commit"] = self.base_commit
+        base_state["observed_head"] = base_state["output"].strip()
+        base_state["rule"] = BASE_STATE_RULE
+        return {"image_inspect": inspect, "base_commit_receipt": base_state}
 
     def exec(self, action: str, *, timeout: int | float = COMMAND_TIMEOUT_SECONDS) -> dict[str, Any]:
         return run_host([
@@ -355,6 +371,7 @@ def execute_agent(
         "runtime": {
             "docker_host": DOCKER_HOST, "image": fixture["image_pull_reference"],
             "platform": "linux/amd64", "pid_namespace": PID_NAMESPACE,
+            "base_state_rule": BASE_STATE_RULE,
             "environment_timeout_seconds": COMMAND_TIMEOUT_SECONDS,
             "step_limit": STEP_LIMIT,
             "cost_limit_usd": "official=3.0; not enforceable under Ark Plan",

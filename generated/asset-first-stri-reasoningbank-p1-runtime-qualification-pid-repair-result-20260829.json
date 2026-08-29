@@ -1,0 +1,91 @@
+{
+  "checks": {
+    "all_base_commits_exact": false,
+    "all_images_present_by_fixed_digest": false,
+    "no_task_test_or_evaluator_executed": true,
+    "pid_namespace": "host",
+    "separate_docker_daemon": true
+  },
+  "created_at_utc": "2026-08-29T15:32:16+00:00",
+  "decision": "P1_RUNTIME_HOLD",
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-RUNTIME-QUALIFICATION-20260829",
+  "frozen_input_verification": {
+    "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/agents/default.py": {
+      "actual": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c",
+      "expected": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c",
+      "pass": true
+    },
+    "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/config/extra/swebench.yaml": {
+      "actual": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "expected": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "pass": true
+    },
+    "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/instruction.py": {
+      "actual": "08e11fbeac1ba9e20d1dafb20728be24194b56bdfea33f05f6a1220ae2cc9bae",
+      "expected": "08e11fbeac1ba9e20d1dafb20728be24194b56bdfea33f05f6a1220ae2cc9bae",
+      "pass": true
+    },
+    "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/memory_management.py": {
+      "actual": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955",
+      "expected": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955",
+      "pass": true
+    },
+    "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/run/extra/swebench.py": {
+      "actual": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951",
+      "expected": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951",
+      "pass": true
+    },
+    "/data/wyt/agent-self-evolution-observatory/worktrees/e1-stri-reasoningbank-p1-20260829/generated/asset-first-stri-reasoningbank-p1-retrieval-certificate-result-20260829.json": {
+      "actual": "b22f79d91e419a010e7e58e658feee424832fe091b506363269c6082e9549f34",
+      "expected": "b22f79d91e419a010e7e58e658feee424832fe091b506363269c6082e9549f34",
+      "pass": true
+    },
+    "/data/wyt/agent-self-evolution-observatory/worktrees/e1-stri-reasoningbank-p1-20260829/generated/asset-first-stri-reasoningbank-p1-task-fixtures-20260829.json": {
+      "actual": "adfa5aca503e3d8d07f4c5e0f86a03da6a58ffedf91ba9d1e9623ae8915d4114",
+      "expected": "adfa5aca503e3d8d07f4c5e0f86a03da6a58ffedf91ba9d1e9623ae8915d4114",
+      "pass": true
+    },
+    "/data/wyt/agent-self-evolution-observatory/worktrees/e1-stri-reasoningbank-p1-20260829/generated/asset-first-stri-reasoningbank-paper-config-correction-20260829.json": {
+      "actual": "ffff870b0bf874c65afb20464ec705cad61ef80712f893b5bc4e195d2480a071",
+      "expected": "ffff870b0bf874c65afb20464ec705cad61ef80712f893b5bc4e195d2480a071",
+      "pass": true
+    },
+    "fixture_visibility": {
+      "pass": true
+    },
+    "official_commit": {
+      "actual": "ed80611788292ea739f1effd31f16c53823b8a0d",
+      "expected": "ed80611788292ea739f1effd31f16c53823b8a0d",
+      "pass": true
+    }
+  },
+  "payload_sha256": "90fc8fd7fab6e8450eabe39ce030bdf87f540ce3491f1849016bd823b9344b03",
+  "rows": [
+    {
+      "error_type": "RuntimeError",
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-13798@sha256:4111da8b069bc23cc67ef24f2f433f82601518941052faebd3c4a621d3748cd6",
+      "instance_id": "sympy__sympy-13798",
+      "message": "base commit mismatch: a5cf054ae1cd4f369900fc59b30e42e4afc7b4ce",
+      "pass": false
+    },
+    {
+      "error_type": "RuntimeError",
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5631@sha256:22a1a81b8e937a1ff52cef4f38bf59e6a8baa0648ef3b115e6206bfc5c5de68f",
+      "instance_id": "pytest-dev__pytest-5631",
+      "message": "base commit mismatch: 3135b375dba2cde350b58ce6689981470636f9ee",
+      "pass": false
+    },
+    {
+      "error_type": "RuntimeError",
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-17318@sha256:4d18e6a31fb1d68a8232f3c78a5a4c97e9c7a2d001765dcc90f228cef4b4e39f",
+      "instance_id": "sympy__sympy-17318",
+      "message": "base commit mismatch: 52a25b5e54c4b24d52d410d4ff977b9665b1ae21",
+      "pass": false
+    }
+  ],
+  "schema_version": 1,
+  "scientific_boundary": {
+    "p1_task_outcome_observed": false,
+    "source_induction_executed": false
+  }
+}
