@@ -1,0 +1,55 @@
+{
+  "calls": [
+    {
+      "credential_material_present": false,
+      "error_type": "ArkEmbeddingError",
+      "label": "batch_a_a_b",
+      "ok": false,
+      "response_body_sha256": "9ba5d1c39f512ae0eb7c7a0a30ce2efbb81a8ff1aa0181ee0a2903a35b9cc22c",
+      "status_code": 404
+    },
+    {
+      "credential_material_present": false,
+      "error_type": "ArkEmbeddingError",
+      "label": "repeat_a",
+      "ok": false,
+      "response_body_sha256": "2a23d69cb901b5dad343f96a7193cc2ed2356c77529aa9e39101215df1b63ae5",
+      "status_code": 404
+    }
+  ],
+  "checks": {
+    "all_requests_succeeded": false,
+    "all_vectors_finite": true,
+    "distinct_text_not_exact": false,
+    "one_stable_dimension": false,
+    "requested_model_exact": true,
+    "same_input_repeat_exact": false,
+    "same_input_same_batch_exact": false,
+    "self_cosine_one": false,
+    "stable_nonempty_resolved_model": false,
+    "usage_present": true
+  },
+  "contract": "generated/asset-first-stri-reasoningbank-ark-plan-embedding-qualification-contract-20260829.json",
+  "created_at_utc": "2026-08-29T14:00:18+00:00",
+  "decision": "ARK_PLAN_EMBEDDING_BACKEND_NOT_QUALIFIED",
+  "dimensions": [],
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-EMBED-Q1B-20260829",
+  "resolved_models": [],
+  "schema_version": 1,
+  "scientific_boundary": {
+    "memory_induction_executed": false,
+    "model_unchanged": true,
+    "p1_task_outcome_observed": false,
+    "provider_semantics_only": true,
+    "retrieval_rank_observed": false,
+    "single_variable_from_q1": "endpoint path"
+  },
+  "settings": {
+    "configured": true,
+    "max_retries": 2,
+    "model": "doubao-embedding-large-text-250515",
+    "secret_value_exported": false,
+    "timeout_seconds": 120.0,
+    "url": "https://ark.cn-beijing.volces.com/api/plan/v3/embeddings"
+  }
+}

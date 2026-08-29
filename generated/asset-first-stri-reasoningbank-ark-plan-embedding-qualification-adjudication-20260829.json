@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-29T14:05:00+00:00",
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-EMBED-Q1B-20260829",
+  "result": "generated/asset-first-stri-reasoningbank-ark-plan-embedding-qualification-result-20260829.json",
+  "result_sha256": "670efdbb040ad2f5e9b26a6ed7ee645d15e0b8e3907d69c74d46b250185b6211",
+  "decision": "ARK_PLAN_EMBEDDING_PATH_NOT_IMPLEMENTED",
+  "failure_classification": [
+    "provider endpoint compatibility"
+  ],
+  "observations": {
+    "requests_attempted": 2,
+    "http_statuses": [404, 404],
+    "embedding_vectors_returned": 0,
+    "credential_material_exposed": false
+  },
+  "scientific_interpretation": {
+    "retrieval_mechanism_negative": false,
+    "p1_behavior_negative": false,
+    "reason": "The Plan credential is accepted by Plan Responses, but the candidate Plan embeddings route does not exist."
+  },
+  "authorized_follow_up": {
+    "external_embedding_request": false,
+    "treatment_preserving_certificate": "With one eligible canonical source case, top-1 selection is independent of embedding scores for A/B/C/E. For D, duplicate the selected source case query/embedding across the two intervention cases; the scores are exactly tied for every query vector, and the official stable descending sort selects the preregistered first case. This partially evaluates the unchanged official ranking without inventing a surrogate scorer.",
+    "new_experiment_required": true,
+    "p1_outcome_basis": false
+  }
+}
