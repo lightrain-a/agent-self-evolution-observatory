@@ -67,6 +67,18 @@
     {
       "source_path": "research_pipeline/formal_goal_policy_contract_failure_assets_20260828.json",
       "source_key": "cross_product_integration_asset"
+    },
+    {
+      "source_path": "research_pipeline/c1_tgrp_pilot_failure_assets_20260829.json",
+      "source_key": "pilot_actionability_asset"
+    },
+    {
+      "source_path": "research_pipeline/c1_tgrp_pilot_failure_assets_20260829.json",
+      "source_key": "paper_version_asset"
+    },
+    {
+      "source_path": "research_pipeline/c1_tgrp_pilot_failure_assets_20260829.json",
+      "source_key": "worktree_env_asset"
     }
   ],
   "scientific_authority": false

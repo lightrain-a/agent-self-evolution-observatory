@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TGRP_PILOT_CLOSURE",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+  "closed_at": "2026-08-29",
+  "status": "PILOT_HOLD_OR_STOP_DO_NOT_RUN_CURRENT_CONFIRMATORY",
+  "design_base": "fc1a5b0231e08f49329faf5c7e96df24e85670e5",
+  "execution_base": "9e77edf0c7cca2c3928525619993c31bf3f80e23",
+  "execution_git_sha": "9a6438c9e4e594b173bd78252be734659ba0024b",
+  "experiment_branch": "experiment/c1-tgrp-pilot-20260829",
+  "run_root": "private-data://runs/c1-tgrp-p0-postexposure-uptake-20260829-pilot-v1",
+  "execution": {
+    "expected_scientific_provider_calls": 312,
+    "completed_scientific_provider_calls": 312,
+    "failed_cases": 0,
+    "missing_cases": 0,
+    "provider_completed_status": "312/312",
+    "model_drift_cases": 0,
+    "prompt_hash_mismatch_cases": 0,
+    "parse_recovered_cases": 4,
+    "confirmatory_holdout_new_calls": 0,
+    "confirmatory_full_executed": false
+  },
+  "frozen_gate_result": {
+    "mean_U_A0": 0.09615384615384616,
+    "mean_U_A1": 0.09615384615384616,
+    "mean_U_A2": 0.09615384615384616,
+    "mean_D_A2_minus_A1": 0.0,
+    "mean_N_A2_minus_A0": 0.0,
+    "D_positive_states": 3,
+    "D_negative_states": 2,
+    "D_zero_states": 8,
+    "N_positive_states": 1,
+    "N_negative_states": 1,
+    "N_zero_states": 11,
+    "D_bootstrap_95_ci": [-0.11538461538461539, 0.09615384615384616],
+    "N_bootstrap_95_ci": [-0.057692307692307696, 0.057692307692307696],
+    "mean_U_A2_ge_0_20": false,
+    "mean_D_ge_0_10": false,
+    "D_positive_at_least_8_of_13": false,
+    "mean_N_gt_0": false,
+    "pilot_gate_pass": false,
+    "thresholds_changed": false
+  },
+  "adjudication": {
+    "execution_failure": false,
+    "packet_invariance": "PASS",
+    "treatment_delivery": "PASS_AT_PROMPT_SURFACE",
+    "generic_decision_check_explanation_at_aggregate_gate": "NOT_PRIMARY; mean A1-A0=0 and mean A2-A0=0, although sparse cell-level instruction sensitivity exists",
+    "repair_actionability": "NOT_SUPPORTED_BY_QUALIFIED_PILOT",
+    "strongest_interpretation": "The simple explicit memory-use check occasionally perturbs actions but does not selectively increase success-versus-failure memory branch uptake relative to the matched memory-blind control or native policy surface.",
+    "confirmatory_decision": "DO_NOT_RUN_CURRENT_23_STATE_CONFIRMATORY"
+  },
+  "scientific_boundary": {
+    "preserved": [
+      "the frozen W/E/U/O stage measurements",
+      "operational post-exposure/pre-uptake evidence localization",
+      "the independent paper-specific 10-state diagnostic-completeness result",
+      "stage-indexed evaluation credit as a policy for what evidence may justify"
+    ],
+    "narrowed_or_falsified": [
+      "the hypothesis that the first unsupported measured stage directly predicts an effective repair under this simple explicit memory-use-check realization",
+      "any current claim that post-retrieval policy integration has been empirically repaired"
+    ],
+    "new_boundary": "A diagnostic boundary can identify where evidence weakens without identifying the intervention that will repair that stage. Repair actionability requires an additional prospectively qualified intervention test."
+  },
+  "artifacts": {
+    "run_manifest_sha256": "15877f6f820bc6c1e6cd6495672c38b1ddcca1fcbe19dd9788bf316d18178c03",
+    "schedule_sha256": "573588dca8c84e1b99c3bf42859ba70b9004f49aa2e4678ccad6f3e9b2f85eda",
+    "per_state_csv_sha256": "fc138e2e93624606ef247c4aae2e2d51b6aacfd4e3276a68721771b5f1c14d9a",
+    "pilot_analysis_sha256": "1c474a96cbdc9803455d49417148a5812cac73f78bd6531730a95fb440b09e43",
+    "failure_differential_sha256": "458faba482373f351c434c751114a65a0d09b177624b6da06e240e26c747efa6",
+    "claim_update": "paper_drafts/c1-manuscript-strengthening-20260825/c1-tgrp-pilot-claim-update-20260829.json",
+    "failure_memory": "research_pipeline/c1_tgrp_pilot_failure_assets_20260829.json"
+  },
+  "reopen_condition": "Do not tune stronger prompt variants on the 13 pilot states or consume the sealed 23-state holdout for the same treatment family after seeing this pilot. Reopen repair actionability only as a separately registered object with a mechanistically distinct intervention justified independently of these outcomes and frozen with a matched control before new outcome access.",
+  "next_action": "Derive a new paper revision from sealed source-r7 that records the negative actionability boundary; do not run the current 23-state confirmatory full.",
+  "authority": {
+    "scientific_claim_expansion": false,
+    "current_confirmatory_full": false,
+    "new_repair_experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TGRP_PILOT_CLAIM_UPDATE",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+  "generated_at": "2026-08-29",
+  "execution_git_sha": "9a6438c9e4e594b173bd78252be734659ba0024b",
+  "run_id": "c1-tgrp-p0-postexposure-uptake-20260829-pilot-v1",
+  "evidence": {
+    "run_manifest_sha256": "15877f6f820bc6c1e6cd6495672c38b1ddcca1fcbe19dd9788bf316d18178c03",
+    "schedule_sha256": "573588dca8c84e1b99c3bf42859ba70b9004f49aa2e4678ccad6f3e9b2f85eda",
+    "per_state_csv_sha256": "fc138e2e93624606ef247c4aae2e2d51b6aacfd4e3276a68721771b5f1c14d9a",
+    "pilot_analysis_sha256": "1c474a96cbdc9803455d49417148a5812cac73f78bd6531730a95fb440b09e43",
+    "failure_differential_sha256": "458faba482373f351c434c751114a65a0d09b177624b6da06e240e26c747efa6"
+  },
+  "execution_quality": {
+    "expected_cases": 312,
+    "complete_cases": 312,
+    "failed_cases": 0,
+    "missing_cases": 0,
+    "provider_status": "312/312 completed",
+    "model_drift_cases": 0,
+    "prompt_hash_mismatch_cases": 0,
+    "packet_invariance": "PASS",
+    "parse_recovered_cases": 4,
+    "confirmatory_holdout_touched": false
+  },
+  "primary_result": {
+    "status": "PILOT_HOLD_OR_STOP",
+    "mean_U_A0": 0.09615384615384616,
+    "mean_U_A1": 0.09615384615384616,
+    "mean_U_A2": 0.09615384615384616,
+    "mean_D_A2_minus_A1": 0.0,
+    "mean_N_A2_minus_A0": 0.0,
+    "D_positive": "3/13",
+    "D_negative": "2/13",
+    "D_zero": "8/13",
+    "N_positive": "1/13",
+    "N_negative": "1/13",
+    "N_zero": "11/13",
+    "D_bootstrap_95_ci": [-0.11538461538461539, 0.09615384615384616],
+    "N_bootstrap_95_ci": [-0.057692307692307696, 0.057692307692307696],
+    "gate_pass": false,
+    "thresholds_changed": false
+  },
+  "secondary_diagnosis": {
+    "A2_vs_A0_success_branch_mean_action_TV": 0.057692307692307696,
+    "A2_vs_A0_failure_branch_mean_action_TV": 0.038461538461538464,
+    "A1_vs_A0_success_branch_mean_action_TV": 0.019230769230769232,
+    "A1_vs_A0_failure_branch_mean_action_TV": 0.11538461538461539,
+    "A2_vs_A1_success_branch_mean_action_TV": 0.038461538461538464,
+    "A2_vs_A1_failure_branch_mean_action_TV": 0.11538461538461539,
+    "A2_vs_A0_modal_set_changes_success": "1/13",
+    "A2_vs_A0_modal_set_changes_failure": "1/13",
+    "interpretation": "The A2 prompt was delivered exactly and can perturb action distributions in a few cells, but the perturbations are sparse, bidirectional and not selectively aligned with success-versus-failure memory branch divergence. The qualified pilot therefore does not support a systematic memory-specific uptake repair."
+  },
+  "claim_updates": [
+    {
+      "claim": "Stage-resolved operational localization: first-action uptake is the first unsupported measured native stage after write and source-item exposure in the frozen Shopping evidence.",
+      "prior_status": "SUPPORTED_OPERATIONAL_LOCALIZATION",
+      "new_status": "PRESERVED_UNCHANGED",
+      "reason": "The pilot tests a new repair actionability hypothesis and does not alter the frozen W/E/U/O observations or their stage-local evidence rules."
+    },
+    {
+      "claim": "Prerequisite-class diagnostic completeness for the paper-specific 10-state binary class requires the full W/E/U/O/F observation basis.",
+      "prior_status": "INDEPENDENTLY_VERIFIED_THEORY_EVIDENCE",
+      "new_status": "PRESERVED_UNCHANGED",
+      "reason": "The pilot is empirical repair testing and cannot falsify the exhaustive combinatorial separation result."
+    },
+    {
+      "claim": "Stage-indexed credit: write supports only state-change credit, exposure only availability credit, uptake is required for behavioral-control credit, and outcome evidence is required for utility validation.",
+      "prior_status": "ENGINEERING_EVALUATION_PRINCIPLE",
+      "new_status": "PRESERVED_AS_EVALUATION_POLICY_NOT_REPAIR_EFFICACY",
+      "reason": "The negative pilot reinforces the need not to grant behavioral credit at write/exposure, but it does not validate any particular repair algorithm."
+    },
+    {
+      "claim": "The first unsupported measured stage predicts an effective repair surface under a simple explicit memory-use integration intervention.",
+      "prior_status": "PROSPECTIVE_FALSIFIABLE_HYPOTHESIS",
+      "new_status": "NOT_SUPPORTED_BY_QUALIFIED_PILOT",
+      "reason": "A2 did not increase branch-specific first-action uptake relative to the matched A1 control or native A0: mean D=0, mean N=0, only 3/13 D_i>0."
+    },
+    {
+      "claim": "Post-retrieval policy integration is the effective repair for the current C1 system.",
+      "prior_status": "NOT_YET_CLAIMED",
+      "new_status": "FORBIDDEN_AS_CURRENT_CLAIM",
+      "reason": "The tested minimal use-side realization did not earn actionability; operational localization cannot be promoted into causal repair prescription."
+    },
+    {
+      "claim": "23-state confirmatory full should be executed for the current A2 treatment.",
+      "prior_status": "LOCKED_PENDING_PILOT",
+      "new_status": "DO_NOT_AUTHORIZE_CURRENT_CONFIRMATORY",
+      "reason": "Pilot gate failed prospectively with no execution failure."
+    }
+  ],
+  "scientific_belief_update": {
+    "decrease": "Belief that a simple explicit memory-use decision check can unlock the observed post-exposure/pre-uptake gap or that stage localization alone predicts a directly effective repair.",
+    "preserve": "Belief that write, source-item exposure, first-action uptake and outcome are distinct evaluation surfaces and that coarse evaluation aliases different failure explanations.",
+    "new_boundary": "Diagnosis identifies where evidence weakens; it does not by itself identify what intervention will repair that stage. Engineering actionability requires an additional prospectively qualified stage-targeted intervention test."
+  },
+  "reopen_condition": "Do not search stronger prompt variants on the 13 pilot or 23 sealed holdout states. Reopen repair actionability only with a mechanistically distinct, independently motivated post-retrieval intervention whose treatment is frozen before new outcomes and whose matched generic control preserves the same upstream packet. A future object must not reuse this pilot as tuning data for the same confirmatory holdout.",
+  "paper_implication": "The next version should be derived from sealed source-r7 and report this pilot as a negative engineering-boundary result: stage diagnosis guides what surface to interrogate, but the tested minimal use-side repair did not selectively increase uptake. Do not overwrite R6 or sealed R7 and do not claim a new utilization method.",
+  "authority": {
+    "confirmatory_full": false,
+    "new_repair_experiment": false,
+    "submission": false
+  }
+}
