@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0B-20260829",
+  "adjudicated_at_utc": "2026-08-29T00:00:00Z",
+  "preregistration_commit": "c5c3b4bbb89e6d1632fa2644a344586d46b9cb2b",
+  "receipts": {
+    "contract": {
+      "path": "generated/asset-first-stri-reasoningbank-ark-provider-identity-resolution-contract-20260829.json",
+      "sha256": "d55faf34ca0e581cc6b97de8f26684001178cc1fd7480e46764dc1587e254b90"
+    },
+    "result": {
+      "path": "generated/asset-first-stri-reasoningbank-ark-provider-identity-resolution-result-20260829.json",
+      "sha256": "fad4426050536dea7418caf4101a16e920f712379e66feba001b0c6551f34004"
+    }
+  },
+  "decision": "ARK_DIRECT_MODEL_NOT_QUALIFIED",
+  "observed": {
+    "provider_requests": 4,
+    "all_requests_succeeded": true,
+    "requested_model": "doubao-seed-evolving",
+    "resolved_model": "doubao-seed-evolving",
+    "model_identity_exact": true,
+    "basic_exact": true,
+    "multiturn_exact": true,
+    "tool_call_exact": true,
+    "tool_continuation_text": "The probe value **731** has been recorded successfully.",
+    "tool_continuation_exact_phrase": false
+  },
+  "failure_differential": {
+    "layer": "qualification observable / continuation formulation",
+    "implementation_failure": false,
+    "provider_transport_failure": false,
+    "provider_tool_continuation_failure": false,
+    "model_identity_failure": false,
+    "agent_semantics_failure": "unresolved",
+    "qualified_mechanism_negative": false,
+    "reason": "The continuation produced a valid assistant response referring to the recorded value but violated an unnecessary exact-phrase criterion. Because 731 appeared before the tool result, this probe cannot identify causal consumption of the returned tool state."
+  },
+  "lesson": "A tool-continuation qualification must introduce a post-call nonce absent from all prior model-visible state; stylistic exact-match compliance is not the decision-relevant observable.",
+  "next_action": {
+    "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0C-20260829",
+    "single_variable": "Replace the non-identifiable exact phrase observable with recovery of a fresh nonce that exists only in function_call_output.",
+    "endpoint_changed": false,
+    "model_changed": false,
+    "adapter_changed": false,
+    "tool_schema_changed": false,
+    "e1_treatment_changed": false
+  },
+  "scientific_boundary": {
+    "p1_outcome_observed": false,
+    "memory_induction_executed": false,
+    "p1_behavioral_execution_authorized": false,
+    "full_p1_authorized": false,
+    "claim_expansion": false
+  },
+  "credential_security": {
+    "secret_value_recorded": false,
+    "secret_value_printed": false,
+    "secret_value_committed": false
+  }
+}

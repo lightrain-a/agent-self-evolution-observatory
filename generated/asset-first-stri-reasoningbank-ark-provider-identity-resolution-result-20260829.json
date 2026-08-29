@@ -1,0 +1,144 @@
+{
+  "checks": {
+    "all_requested_model_direct": true,
+    "all_requests_succeeded": true,
+    "all_resolved_model_direct": true,
+    "basic_exact": true,
+    "continuation_exact": false,
+    "multiturn_exact": true,
+    "tool_exact": true,
+    "usage_present": true
+  },
+  "contract": "generated/asset-first-stri-reasoningbank-ark-provider-identity-resolution-contract-20260829.json",
+  "created_at_utc": "2026-08-29T13:26:54+00:00",
+  "decision": "ARK_DIRECT_MODEL_NOT_QUALIFIED",
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0B-20260829",
+  "provider_role": "ReasoningBank architecture + compatibility-adapted Ark backend",
+  "receipts": [
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "basic_direct",
+      "ok": true,
+      "requested_model": "doubao-seed-evolving",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "733d61964ffaa65cfe002b95dc993761bfca88ab4a5c9b8f3c4f9ac3dd036495",
+      "status": "completed",
+      "text": "DIRECT_MODEL_OK",
+      "text_sha256": "de3a329f8c643a5851357d43789fd0529da3cc4b69bce076060c01e5f3f2e13a",
+      "usage": {
+        "input_tokens": 45,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 3,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 48
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "multiturn_direct",
+      "ok": true,
+      "requested_model": "doubao-seed-evolving",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "5076e8d14ffec1a618f57b913b5da127358c49e50e4a19351f2fcb6a68720825",
+      "status": "completed",
+      "text": "DIRECT_731",
+      "text_sha256": "8ca5f2cd9b73261bbe3d15abbebdbbd5830f8343595c45c03d0369149473ae05",
+      "usage": {
+        "input_tokens": 72,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 5,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [
+        {
+          "arguments": "{\"value\": 731}",
+          "call_id_sha256": "5757aa41029e6f4fa4c370032a9389f5b0dae7e44ab6cd52d93736e079bd5623",
+          "name": "record_probe"
+        }
+      ],
+      "label": "tool_direct",
+      "ok": true,
+      "requested_model": "doubao-seed-evolving",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "b41146456595821892cf56d07efd45cf4b224da5e6d124a850b1e9ad4e6aa41a",
+      "status": "completed",
+      "text": "",
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "usage": {
+        "input_tokens": 495,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 35,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 530
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "tool_continuation_direct",
+      "ok": true,
+      "requested_model": "doubao-seed-evolving",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "23e13963764430161d6655523608ec03de376d57b8b37c3425603f1ea4f7f3a1",
+      "status": "completed",
+      "text": "The probe value **731** has been recorded successfully.",
+      "text_sha256": "b16ad710bb647c9869d0906157b613d41a4cc178736cbc786d64a4cf734cde12",
+      "usage": {
+        "input_tokens": 112,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 39,
+        "output_tokens_details": {
+          "reasoning_tokens": 26
+        },
+        "total_tokens": 151
+      }
+    }
+  ],
+  "resource_accounting": {
+    "gpu_seconds": 0,
+    "provider_requests_attempted": 4
+  },
+  "sampling_contract": {
+    "independent_seeded_repeats": false,
+    "repeats": "paired same-backend repeated executions",
+    "seed": null,
+    "temperature": 0
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "behavioral_claim_authorized": false,
+    "full_p1_authorized": false,
+    "memory_induction_executed": false,
+    "p1_outcome_observed": false
+  },
+  "settings": {
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "configured": true,
+    "max_retries": 2,
+    "model": "doubao-seed-evolving",
+    "secret_file": "/home/wyt/code/agent-self-evolution-observatory/.env",
+    "secret_value_exported": false,
+    "timeout_seconds": 120.0
+  },
+  "single_variable_repair": "Pin provider-resolved model directly; all other adapter and probe semantics unchanged."
+}
