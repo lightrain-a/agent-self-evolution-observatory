@@ -61,6 +61,37 @@
     "status": "P1_BEHAVIOR_HOLD_MISSING_FIRST_PARTY_MEMORY_ARTIFACT_AND_ENVIRONMENT",
     "attribution": "Infrastructure/evidence availability hold, not a scientific negative."
   },
+  "runtime_preflight_69": {
+    "preflight_class": "read-only; no credential values read and no model process started",
+    "environment_variables_present": {
+      "OPENAI_API_KEY": false,
+      "GOOGLE_CLOUD_PROJECT": false,
+      "GOOGLE_CLOUD_LOCATION": false,
+      "GOOGLE_GENAI_USE_VERTEXAI": false
+    },
+    "commands_present": {
+      "docker": true,
+      "gcloud": true,
+      "nvidia-smi": true,
+      "sb-cli": false
+    },
+    "default_python_modules_present": {
+      "google": false,
+      "vertexai": false,
+      "torch": false,
+      "transformers": false,
+      "minisweagent": false,
+      "browsergym": false
+    },
+    "docker_daemon_qualified": false,
+    "gpu_snapshot": {
+      "count": 1,
+      "model": "NVIDIA A100-SXM4-80GB",
+      "memory_total_mib": 81920,
+      "memory_used_mib": 11431
+    },
+    "decision": "BEHAVIOR_RUNTIME_NOT_QUALIFIED_CREDENTIALS_DEPENDENCIES_AND_DOCKER_HARNESS_MISSING"
+  },
   "resource_accounting": {
     "provider_model_calls": 0,
     "gpu_seconds": 0
