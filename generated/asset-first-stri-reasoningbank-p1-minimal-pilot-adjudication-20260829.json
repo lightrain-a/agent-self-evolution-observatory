@@ -1,0 +1,1013 @@
+{
+  "adjudicated_at_utc": "2026-08-29T17:33:53+00:00",
+  "adjudication_id": "E1-STRI-REASONINGBANK-P1-MINIMAL-PILOT-ADJUDICATION-20260829",
+  "bindings": {
+    "frozen_official_agent_path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/agents/default.py",
+    "frozen_official_agent_sha256": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c",
+    "minimal_pilot_contract": "generated/asset-first-stri-reasoningbank-p1-minimal-pilot-contract-20260829.json",
+    "minimal_pilot_contract_file_sha256": "827917e0dda5911e64514e7a227a1f3f6c9541fc75af4d380fa623c6ad943560",
+    "minimal_pilot_index": "generated/asset-first-stri-reasoningbank-p1-minimal-pilot-index-20260829.json",
+    "minimal_pilot_index_file_sha256": "23c562b4b8156f35b72912ee5677114b7e7c54556552d966ed0cedb15b871185",
+    "repair_code": "research_pipeline/asset_first_stri_reasoningbank_p1_core.py",
+    "repair_code_sha256": "85d0a9fc8e25049a041998ed3fe5d1053d047888d13f8deadca1454e128fb26f",
+    "treatment_manifest": "generated/asset-first-stri-reasoningbank-p1-treatment-manifest-20260829.json",
+    "treatment_manifest_file_sha256": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7"
+  },
+  "comparisons": {
+    "pytest-dev__pytest-5631": {
+      "A_vs_B": {
+        "R0_selected_memory_equal": true,
+        "R1_first_request_byte_equal": true,
+        "R2_equal_excluding_timestamps": false,
+        "R3_equal_under_preregistered_canonicalization": false,
+        "R4_equal": true,
+        "arms": [
+          "A",
+          "B"
+        ],
+        "exit_status_equal": true,
+        "first_model_visible_divergence": "R2",
+        "resolved_equal": true
+      },
+      "A_vs_C": {
+        "R0_selected_memory_equal": false,
+        "R1_first_request_byte_equal": false,
+        "R2_equal_excluding_timestamps": false,
+        "R3_equal_under_preregistered_canonicalization": false,
+        "R4_equal": true,
+        "arms": [
+          "A",
+          "C"
+        ],
+        "exit_status_equal": true,
+        "first_model_visible_divergence": "R0_SELECTED_MEMORY",
+        "resolved_equal": true
+      },
+      "A_vs_D": {
+        "R0_selected_memory_equal": false,
+        "R1_first_request_byte_equal": false,
+        "R2_equal_excluding_timestamps": false,
+        "R3_equal_under_preregistered_canonicalization": false,
+        "R4_equal": true,
+        "arms": [
+          "A",
+          "D"
+        ],
+        "exit_status_equal": true,
+        "first_model_visible_divergence": "R0_SELECTED_MEMORY",
+        "resolved_equal": true
+      },
+      "A_vs_E": {
+        "R0_selected_memory_equal": true,
+        "R1_first_request_byte_equal": true,
+        "R2_equal_excluding_timestamps": false,
+        "R3_equal_under_preregistered_canonicalization": false,
+        "R4_equal": true,
+        "arms": [
+          "A",
+          "E"
+        ],
+        "exit_status_equal": true,
+        "first_model_visible_divergence": "R2",
+        "resolved_equal": true
+      },
+      "B_vs_E": {
+        "R0_selected_memory_equal": true,
+        "R1_first_request_byte_equal": true,
+        "R2_equal_excluding_timestamps": false,
+        "R3_equal_under_preregistered_canonicalization": false,
+        "R4_equal": true,
+        "arms": [
+          "B",
+          "E"
+        ],
+        "exit_status_equal": true,
+        "first_model_visible_divergence": "R2",
+        "resolved_equal": true
+      }
+    },
+    "sympy__sympy-17318": {
+      "A_vs_B": {
+        "R0_selected_memory_equal": true,
+        "R1_first_request_byte_equal": true,
+        "R2_equal_excluding_timestamps": false,
+        "R3_equal_under_preregistered_canonicalization": false,
+        "R4_equal": true,
+        "arms": [
+          "A",
+          "B"
+        ],
+        "exit_status_equal": true,
+        "first_model_visible_divergence": "R2",
+        "resolved_equal": true
+      },
+      "A_vs_C": {
+        "R0_selected_memory_equal": false,
+        "R1_first_request_byte_equal": false,
+        "R2_equal_excluding_timestamps": false,
+        "R3_equal_under_preregistered_canonicalization": false,
+        "R4_equal": true,
+        "arms": [
+          "A",
+          "C"
+        ],
+        "exit_status_equal": true,
+        "first_model_visible_divergence": "R0_SELECTED_MEMORY",
+        "resolved_equal": true
+      },
+      "A_vs_D": {
+        "R0_selected_memory_equal": false,
+        "R1_first_request_byte_equal": false,
+        "R2_equal_excluding_timestamps": false,
+        "R3_equal_under_preregistered_canonicalization": false,
+        "R4_equal": true,
+        "arms": [
+          "A",
+          "D"
+        ],
+        "exit_status_equal": false,
+        "first_model_visible_divergence": "R0_SELECTED_MEMORY",
+        "resolved_equal": true
+      },
+      "A_vs_E": {
+        "R0_selected_memory_equal": true,
+        "R1_first_request_byte_equal": true,
+        "R2_equal_excluding_timestamps": false,
+        "R3_equal_under_preregistered_canonicalization": false,
+        "R4_equal": true,
+        "arms": [
+          "A",
+          "E"
+        ],
+        "exit_status_equal": false,
+        "first_model_visible_divergence": "R2",
+        "resolved_equal": true
+      },
+      "B_vs_E": {
+        "R0_selected_memory_equal": true,
+        "R1_first_request_byte_equal": true,
+        "R2_equal_excluding_timestamps": false,
+        "R3_equal_under_preregistered_canonicalization": false,
+        "R4_equal": true,
+        "arms": [
+          "B",
+          "E"
+        ],
+        "exit_status_equal": false,
+        "first_model_visible_divergence": "R2",
+        "resolved_equal": true
+      }
+    }
+  },
+  "credential_material_present": false,
+  "decision": "P1_MINIMAL_PILOT_EXECUTION_COMPLETE_IMPLEMENTATION_UNQUALIFIED_FULL_P1_HOLD",
+  "descriptive_outcomes": {
+    "all_runs": {
+      "persisted": 10,
+      "planned": 10,
+      "provider_failures": 3,
+      "resolved": 5,
+      "submitted": 7,
+      "valid_evaluators": 10
+    },
+    "by_instance": {
+      "pytest-dev__pytest-5631": {
+        "all_five_R4_outcomes_equal": true,
+        "provider_failure_count": 0,
+        "resolved_count": 5,
+        "submitted_count": 5,
+        "valid_evaluator_count": 5
+      },
+      "sympy__sympy-17318": {
+        "all_five_R4_outcomes_equal": true,
+        "provider_failure_count": 3,
+        "resolved_count": 0,
+        "submitted_count": 2,
+        "valid_evaluator_count": 5
+      }
+    },
+    "model_visible_equivalence": {
+      "A_B_first_R1_equal_on_both_tasks": true,
+      "A_B_first_behavioral_decision_equal_on_any_task": false,
+      "B_E_first_R1_equal_on_both_tasks": true,
+      "B_E_first_behavioral_decision_equal_on_any_task": false
+    }
+  },
+  "execution_complete": true,
+  "failure_adjudication": {
+    "affected_runs": [
+      "pilot-sympy__sympy-17318-A",
+      "pilot-sympy__sympy-17318-B",
+      "pilot-sympy__sympy-17318-C"
+    ],
+    "causal_chain_confirmed_from_persisted_runs_and_frozen_source": true,
+    "failure_layer": "implementation_compatibility_layer",
+    "not_attributed_to": [
+      "hf-mirror acquisition",
+      "fixed OCI image digest",
+      "resolved DeepSeek-Pro identity",
+      "SWE-bench evaluator validity",
+      "ReasoningBank scientific mechanism"
+    ],
+    "observed_chain": [
+      "shell action exceeded the frozen 60-second environment timeout",
+      "compatibility harness rendered a blank timeout observation because YAML omitted an official AgentConfig default",
+      "the next serialized request contained a blank user content item",
+      "Ark rejected that request with HTTP 400 MissingParameter input.content"
+    ],
+    "observed_terminal_provider_failure_count": 3
+  },
+  "full_p1_authorized": false,
+  "implementation_qualified": false,
+  "next_authority": {
+    "automatic_retry": "FORBIDDEN",
+    "full_p1": "HOLD",
+    "paper_result_claim": "HOLD",
+    "possible_future_action": "A new independently preregistered qualification pilot may use the repaired harness but cannot replace or relabel these ten runs.",
+    "replacement_task": "FORBIDDEN"
+  },
+  "payload_sha256": "5286ed5c0d374ab9dd85fa773673c68fd80cc4eed6cadf63dcf287871a11a021",
+  "qualification_checks": {
+    "A_B_selected_memory_and_first_R1_equal_per_task": true,
+    "B_E_selected_memory_and_first_R1_equal_per_task": true,
+    "all_10_planned_runs_persisted_without_replacement": true,
+    "all_evaluator_outputs_valid": true,
+    "all_index_file_sha256_values_valid": true,
+    "all_run_payload_sha256_values_valid": true,
+    "evaluator_only_content_absent_from_model_requests": true,
+    "fresh_base_state_receipts_valid": true,
+    "index_payload_sha256_valid": true,
+    "no_blank_model_visible_message_content": false,
+    "no_terminal_provider_or_implementation_failure": false,
+    "resolved_model_exact_for_all_completed_provider_responses": true,
+    "treatments_match_frozen_manifest": true
+  },
+  "repair_receipt": {
+    "historical_run_artifacts_changed": false,
+    "model_or_sampling_changed": false,
+    "official_default_template_sha256": "5fd18b425739d068ca54e908d38e04c3eb35c79da1d0a9f9fa921f4473f6a531",
+    "qualification_restored": false,
+    "repair": "Load frozen official AgentConfig.timeout_template when YAML omits it and reject an empty rendered timeout observation.",
+    "rerun_performed": false,
+    "source_or_evaluation_cases_changed": false,
+    "status": "CODE_REPAIRED_WITHOUT_RETROSPECTIVE_REQUALIFICATION",
+    "test": "ReasoningBankP1FrozenRuntimeTest.test_timeout_uses_nonempty_frozen_agent_default_when_yaml_omits_it",
+    "treatment_changed": false
+  },
+  "reruns_or_replacements_performed": false,
+  "run_summaries": [
+    {
+      "R0": {
+        "eligible_case_count": 1,
+        "selected_case": "sympy__sympy-13798",
+        "selected_memory_sha256": "2f0241f1b46019d0bcf72317ebe6ff0561ef2241370aff4d04683af392290041",
+        "state_sha256": "6094b0bc5e6ea7c87da86d7cd60594e823ffb84b04a6592016c5154b3968752a",
+        "top_k": 1
+      },
+      "R1": {
+        "blank_content_positions": [],
+        "first_request_sha256": "0dc135fb2d28ca74fec756e5526e9b01ac5a4abbb8387fc8fb20cc1161d4d5ba",
+        "request_count": 13
+      },
+      "R2": {
+        "action_sha256": "d357d359919061d3a027981b5e8a1de9153ea72deb7b59a71fa0791c3f9e2e45",
+        "observation_sha256": "9ec7d543ed508450bc640fced59a2cdd4fbad11372664f26ab39afcc9c9bdd9c",
+        "returncode": 0,
+        "state_sha256": "5e9217cbd24ee76a11f2e9d48d0e443d786c75e2d81f2f96032cf61bec26efee",
+        "timed_out": false,
+        "type": "shell"
+      },
+      "R3": {
+        "action_count": 13,
+        "all_resolved_models_exact": true,
+        "empty_response_text_steps": [],
+        "format_error_count": 0,
+        "response_count": 13,
+        "shell_action_count": 13,
+        "timed_out_steps": [],
+        "trajectory_sha256": "c8f46b3a6f4f0f6c8ad79e9076651d96b9c84cf8776749fd440d79773b9edee5"
+      },
+      "R4": {
+        "all_fail_to_pass": true,
+        "all_pass_to_pass": true,
+        "outcome_sha256": "9c9ee9bf9822d411dd04d1e82903558f3df79bbc99a97ff8f2f200abecc9479e",
+        "resolved": true,
+        "status_map_sha256": "cc3a0147704c0d5e4da564b89a28b2d0bb99e2b38694ff17441e88c4a8f65edb",
+        "valid": true
+      },
+      "arm": "A",
+      "artifact": {
+        "file_sha256": "4d421ceaebe770182f4d01424066be65c0fbefcc4f8aaa2ef920cec902a52aab",
+        "file_sha256_valid": true,
+        "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-pytest-dev__pytest-5631-A/run.json",
+        "payload_sha256": "ab8b66ec4dcaa1c3f39d7abe156b50f92a999984a4ee422e456056d192675f10",
+        "payload_sha256_valid": true
+      },
+      "exit_status": "Submitted",
+      "failure": null,
+      "instance_id": "pytest-dev__pytest-5631",
+      "resource_accounting": {
+        "input_tokens": 75925,
+        "model_calls": 13,
+        "output_tokens": 4658,
+        "provider_transport_attempts": 13
+      },
+      "run_id": "pilot-pytest-dev__pytest-5631-A",
+      "runtime_checks": {
+        "base_state_valid": true,
+        "pid_namespace": "host",
+        "platform": "linux/amd64"
+      },
+      "scientific_boundary": {
+        "evaluator_script_model_visible": false,
+        "gold_patch_model_visible": false,
+        "test_patch_model_visible": false
+      }
+    },
+    {
+      "R0": {
+        "eligible_case_count": 1,
+        "selected_case": "sympy__sympy-13798",
+        "selected_memory_sha256": "2f0241f1b46019d0bcf72317ebe6ff0561ef2241370aff4d04683af392290041",
+        "state_sha256": "1dbf10edf2710e256968d01fa64edcbb7df65a3dd92ca5b4511232dcd1f01a00",
+        "top_k": 1
+      },
+      "R1": {
+        "blank_content_positions": [],
+        "first_request_sha256": "0dc135fb2d28ca74fec756e5526e9b01ac5a4abbb8387fc8fb20cc1161d4d5ba",
+        "request_count": 15
+      },
+      "R2": {
+        "action_sha256": "04541d7829966e12e34fe6c2ea638dfdee1bff6ca8c08a1a6c96cb6cab075751",
+        "observation_sha256": "20b5a98f0482570a52a5da9241f9f8a456a7d7eadfb0e6d3f6524bab092dcb97",
+        "returncode": 0,
+        "state_sha256": "ccd510f22f790ba88392ae6c66df477d4aff3a97a22ae6bea341503848a3e0f1",
+        "timed_out": false,
+        "type": "shell"
+      },
+      "R3": {
+        "action_count": 15,
+        "all_resolved_models_exact": true,
+        "empty_response_text_steps": [],
+        "format_error_count": 0,
+        "response_count": 15,
+        "shell_action_count": 15,
+        "timed_out_steps": [],
+        "trajectory_sha256": "26a852d543d0eb7444b6ea86e99b0e00a3cb5803e37f524c2bab7297883c4748"
+      },
+      "R4": {
+        "all_fail_to_pass": true,
+        "all_pass_to_pass": true,
+        "outcome_sha256": "9c9ee9bf9822d411dd04d1e82903558f3df79bbc99a97ff8f2f200abecc9479e",
+        "resolved": true,
+        "status_map_sha256": "cc3a0147704c0d5e4da564b89a28b2d0bb99e2b38694ff17441e88c4a8f65edb",
+        "valid": true
+      },
+      "arm": "B",
+      "artifact": {
+        "file_sha256": "4325b764b81a921afc3a28064b8ed7a7884c71f239db4bf2cf0508f34196cb6b",
+        "file_sha256_valid": true,
+        "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-pytest-dev__pytest-5631-B/run.json",
+        "payload_sha256": "b9481189fad434cb916156da88af8a05f1c2fcf226645f70ff772b6a0fb4abc5",
+        "payload_sha256_valid": true
+      },
+      "exit_status": "Submitted",
+      "failure": null,
+      "instance_id": "pytest-dev__pytest-5631",
+      "resource_accounting": {
+        "input_tokens": 68547,
+        "model_calls": 15,
+        "output_tokens": 5425,
+        "provider_transport_attempts": 15
+      },
+      "run_id": "pilot-pytest-dev__pytest-5631-B",
+      "runtime_checks": {
+        "base_state_valid": true,
+        "pid_namespace": "host",
+        "platform": "linux/amd64"
+      },
+      "scientific_boundary": {
+        "evaluator_script_model_visible": false,
+        "gold_patch_model_visible": false,
+        "test_patch_model_visible": false
+      }
+    },
+    {
+      "R0": {
+        "eligible_case_count": 1,
+        "selected_case": "sympy__sympy-13798",
+        "selected_memory_sha256": "cbd9014f1d5f4309799dc5c36ede30daa71e2d0f23b60e69c0b50be41a594c77",
+        "state_sha256": "04c815b16d2d0f5e863470390d7298657f3560385eea036f98b6fbe2539c4b43",
+        "top_k": 1
+      },
+      "R1": {
+        "blank_content_positions": [],
+        "first_request_sha256": "4801d44d69e63c839439dfbe24256218fc984da7fde25405a7f32e1df517d987",
+        "request_count": 16
+      },
+      "R2": {
+        "action_sha256": "f0d760c5addb908e7c053f9564d54261cc0565d1d2b2fd2980ca575853e378f9",
+        "observation_sha256": "145c13564593aa0389a82dac28def26762cada6a64bcaf0f2462fc7f3b44d748",
+        "returncode": 0,
+        "state_sha256": "f232bb1acc4dc9bba25f8e3dd406da1a3e098fc9fab4eb4a0f2434ad5d101ecd",
+        "timed_out": false,
+        "type": "shell"
+      },
+      "R3": {
+        "action_count": 16,
+        "all_resolved_models_exact": true,
+        "empty_response_text_steps": [],
+        "format_error_count": 0,
+        "response_count": 16,
+        "shell_action_count": 16,
+        "timed_out_steps": [],
+        "trajectory_sha256": "a3af9a9c31934c102a3ebab7902a9827cc4e645b6e717fc8e969e8f8296629ff"
+      },
+      "R4": {
+        "all_fail_to_pass": true,
+        "all_pass_to_pass": true,
+        "outcome_sha256": "9c9ee9bf9822d411dd04d1e82903558f3df79bbc99a97ff8f2f200abecc9479e",
+        "resolved": true,
+        "status_map_sha256": "cc3a0147704c0d5e4da564b89a28b2d0bb99e2b38694ff17441e88c4a8f65edb",
+        "valid": true
+      },
+      "arm": "C",
+      "artifact": {
+        "file_sha256": "ae42a1bccea93db89c1a06dcda99ff28f866a64942cf56b40560581e80e56e43",
+        "file_sha256_valid": true,
+        "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-pytest-dev__pytest-5631-C/run.json",
+        "payload_sha256": "953cb4c8264ba3c60d21a0cfb129ae68d0195b9eb8fa7e30157e78e00327cf32",
+        "payload_sha256_valid": true
+      },
+      "exit_status": "Submitted",
+      "failure": null,
+      "instance_id": "pytest-dev__pytest-5631",
+      "resource_accounting": {
+        "input_tokens": 126383,
+        "model_calls": 16,
+        "output_tokens": 4186,
+        "provider_transport_attempts": 16
+      },
+      "run_id": "pilot-pytest-dev__pytest-5631-C",
+      "runtime_checks": {
+        "base_state_valid": true,
+        "pid_namespace": "host",
+        "platform": "linux/amd64"
+      },
+      "scientific_boundary": {
+        "evaluator_script_model_visible": false,
+        "gold_patch_model_visible": false,
+        "test_patch_model_visible": false
+      }
+    },
+    {
+      "R0": {
+        "eligible_case_count": 2,
+        "selected_case": "sympy__sympy-13798::cross-1",
+        "selected_memory_sha256": "05f4afe0b61207313fec240a53d288af31d9e5d697a78b13bcce17372816f9bf",
+        "state_sha256": "047fa9e7d69af1d455ac465816ae84d5e7234166420a29f9e3ce3aacf0873083",
+        "top_k": 1
+      },
+      "R1": {
+        "blank_content_positions": [],
+        "first_request_sha256": "e04959feb2f18cf82d43e2aa6a707e9fe2bbaa04ecc7f3c388ab7ebc25ed8b09",
+        "request_count": 14
+      },
+      "R2": {
+        "action_sha256": "5a647a3c6e44dfbfc963e7bd67703e7a933a2b841957c180cf1f2dea49989140",
+        "observation_sha256": "2e5a1dd8dd12a4176fb714912ef78ed23f75114ad33ba3fcde006863bf485e1f",
+        "returncode": 0,
+        "state_sha256": "428867ea61fea3fe79ec2aa04495511cfb7a585b1aa8248dbb3cb4aa6cad7541",
+        "timed_out": false,
+        "type": "shell"
+      },
+      "R3": {
+        "action_count": 14,
+        "all_resolved_models_exact": true,
+        "empty_response_text_steps": [],
+        "format_error_count": 2,
+        "response_count": 14,
+        "shell_action_count": 12,
+        "timed_out_steps": [],
+        "trajectory_sha256": "c3f4b08da854923bea0635f13a993a7efb4a13bda12dece40fb7087021440579"
+      },
+      "R4": {
+        "all_fail_to_pass": true,
+        "all_pass_to_pass": true,
+        "outcome_sha256": "9c9ee9bf9822d411dd04d1e82903558f3df79bbc99a97ff8f2f200abecc9479e",
+        "resolved": true,
+        "status_map_sha256": "cc3a0147704c0d5e4da564b89a28b2d0bb99e2b38694ff17441e88c4a8f65edb",
+        "valid": true
+      },
+      "arm": "D",
+      "artifact": {
+        "file_sha256": "57d41e336d3ae025d4a72f890c6719bdb898af64a7e37eed00a7c0ad8574264f",
+        "file_sha256_valid": true,
+        "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-pytest-dev__pytest-5631-D/run.json",
+        "payload_sha256": "8254b492e603915a0c05e422576aa59a6dec5c6caf244273b6cef828677cc76b",
+        "payload_sha256_valid": true
+      },
+      "exit_status": "Submitted",
+      "failure": null,
+      "instance_id": "pytest-dev__pytest-5631",
+      "resource_accounting": {
+        "input_tokens": 81532,
+        "model_calls": 14,
+        "output_tokens": 5037,
+        "provider_transport_attempts": 14
+      },
+      "run_id": "pilot-pytest-dev__pytest-5631-D",
+      "runtime_checks": {
+        "base_state_valid": true,
+        "pid_namespace": "host",
+        "platform": "linux/amd64"
+      },
+      "scientific_boundary": {
+        "evaluator_script_model_visible": false,
+        "gold_patch_model_visible": false,
+        "test_patch_model_visible": false
+      }
+    },
+    {
+      "R0": {
+        "eligible_case_count": 1,
+        "selected_case": "sympy__sympy-13798::case-id-placebo",
+        "selected_memory_sha256": "2f0241f1b46019d0bcf72317ebe6ff0561ef2241370aff4d04683af392290041",
+        "state_sha256": "b475629a1a9fdff39a3d32c5bcfe449f9cceeb226919355e2a7d32fc22d49196",
+        "top_k": 1
+      },
+      "R1": {
+        "blank_content_positions": [],
+        "first_request_sha256": "0dc135fb2d28ca74fec756e5526e9b01ac5a4abbb8387fc8fb20cc1161d4d5ba",
+        "request_count": 15
+      },
+      "R2": {
+        "action_sha256": "307a110076459c9567004704f2ce3238725ad204dbc2a12f0553ab0824bdd081",
+        "observation_sha256": "3d4353d25888413c9df8b169a034637e6984da03e0d9800c4a5afbbef5b81598",
+        "returncode": 0,
+        "state_sha256": "25d32ed9602f51bf2969341a703a2fe46dd24585cf2661a50361967bec073fe2",
+        "timed_out": false,
+        "type": "shell"
+      },
+      "R3": {
+        "action_count": 15,
+        "all_resolved_models_exact": true,
+        "empty_response_text_steps": [],
+        "format_error_count": 0,
+        "response_count": 15,
+        "shell_action_count": 15,
+        "timed_out_steps": [],
+        "trajectory_sha256": "fa474899149c173a0fd8be5a10ce551cf1436b4cf72ace064b69f8905bd51039"
+      },
+      "R4": {
+        "all_fail_to_pass": true,
+        "all_pass_to_pass": true,
+        "outcome_sha256": "9c9ee9bf9822d411dd04d1e82903558f3df79bbc99a97ff8f2f200abecc9479e",
+        "resolved": true,
+        "status_map_sha256": "cc3a0147704c0d5e4da564b89a28b2d0bb99e2b38694ff17441e88c4a8f65edb",
+        "valid": true
+      },
+      "arm": "E",
+      "artifact": {
+        "file_sha256": "35460a8b55fa619ff6cde597e2626466cbf1cacac8dbc2779f9c386dd6def1ad",
+        "file_sha256_valid": true,
+        "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-pytest-dev__pytest-5631-E/run.json",
+        "payload_sha256": "f59e27f5985e2dbf3ffd8e95f56eac36101e41912b1b90ae532c5afd97fb8ceb",
+        "payload_sha256_valid": true
+      },
+      "exit_status": "Submitted",
+      "failure": null,
+      "instance_id": "pytest-dev__pytest-5631",
+      "resource_accounting": {
+        "input_tokens": 113848,
+        "model_calls": 15,
+        "output_tokens": 5730,
+        "provider_transport_attempts": 15
+      },
+      "run_id": "pilot-pytest-dev__pytest-5631-E",
+      "runtime_checks": {
+        "base_state_valid": true,
+        "pid_namespace": "host",
+        "platform": "linux/amd64"
+      },
+      "scientific_boundary": {
+        "evaluator_script_model_visible": false,
+        "gold_patch_model_visible": false,
+        "test_patch_model_visible": false
+      }
+    },
+    {
+      "R0": {
+        "eligible_case_count": 1,
+        "selected_case": "sympy__sympy-13798",
+        "selected_memory_sha256": "2f0241f1b46019d0bcf72317ebe6ff0561ef2241370aff4d04683af392290041",
+        "state_sha256": "6094b0bc5e6ea7c87da86d7cd60594e823ffb84b04a6592016c5154b3968752a",
+        "top_k": 1
+      },
+      "R1": {
+        "blank_content_positions": [
+          {
+            "message_index": 70,
+            "request_index": 36,
+            "role": "user"
+          }
+        ],
+        "first_request_sha256": "347fba810fed7d9357b32a193d57bd9c90f330f919cb492116a28700b8998722",
+        "request_count": 36
+      },
+      "R2": {
+        "action_sha256": "686087c943fdd4c8d90c913a3a2838c668625dc4951764a77ec65e6109636128",
+        "observation_sha256": "9f31e1079b1973b5c81e76be6987178b74238d12fff58f4b08b6d00ef40a7dc2",
+        "returncode": 0,
+        "state_sha256": "25a9f33a8b2960b1ef6803f033dfdf6ad04d8d3e23056870abf008afecb328b8",
+        "timed_out": false,
+        "type": "shell"
+      },
+      "R3": {
+        "action_count": 35,
+        "all_resolved_models_exact": true,
+        "empty_response_text_steps": [
+          6
+        ],
+        "format_error_count": 14,
+        "response_count": 35,
+        "shell_action_count": 21,
+        "timed_out_steps": [
+          35
+        ],
+        "trajectory_sha256": "8f65c317014411927be5320350ac4809382c175d01890964b2eff98279fa64d5"
+      },
+      "R4": {
+        "all_fail_to_pass": false,
+        "all_pass_to_pass": true,
+        "outcome_sha256": "ca150dfe6c99f23237f33bdfc75e4477b013b1edd1924fd27a0aff9d8caf4bbc",
+        "resolved": false,
+        "status_map_sha256": "4e5019a568d3ae4f38128aad24eb48ac9aa83da7da4e63c25702eae0ede9fd80",
+        "valid": true
+      },
+      "arm": "A",
+      "artifact": {
+        "file_sha256": "4e46c130618804b8b067a8e9117804048b68825b83c17766ca59b52810225884",
+        "file_sha256_valid": true,
+        "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-sympy__sympy-17318-A/run.json",
+        "payload_sha256": "5162475664eea1ddfef4844cd8b34759fc44d66321879c02a81a4fcc6aea43a0",
+        "payload_sha256_valid": true
+      },
+      "exit_status": "ArkCompatibilityError",
+      "failure": {
+        "credential_material_present": false,
+        "error_type": "ArkCompatibilityError",
+        "failure_layer": "provider",
+        "provider_error_code": "MissingParameter",
+        "provider_error_param": "input.content",
+        "provider_error_type": "BadRequest",
+        "status_code": 400
+      },
+      "instance_id": "sympy__sympy-17318",
+      "resource_accounting": {
+        "input_tokens": 492112,
+        "model_calls": 35,
+        "output_tokens": 45402,
+        "provider_transport_attempts": 35
+      },
+      "run_id": "pilot-sympy__sympy-17318-A",
+      "runtime_checks": {
+        "base_state_valid": true,
+        "pid_namespace": "host",
+        "platform": "linux/amd64"
+      },
+      "scientific_boundary": {
+        "evaluator_script_model_visible": false,
+        "gold_patch_model_visible": false,
+        "test_patch_model_visible": false
+      }
+    },
+    {
+      "R0": {
+        "eligible_case_count": 1,
+        "selected_case": "sympy__sympy-13798",
+        "selected_memory_sha256": "2f0241f1b46019d0bcf72317ebe6ff0561ef2241370aff4d04683af392290041",
+        "state_sha256": "1dbf10edf2710e256968d01fa64edcbb7df65a3dd92ca5b4511232dcd1f01a00",
+        "top_k": 1
+      },
+      "R1": {
+        "blank_content_positions": [
+          {
+            "message_index": 51,
+            "request_index": 26,
+            "role": "user"
+          }
+        ],
+        "first_request_sha256": "347fba810fed7d9357b32a193d57bd9c90f330f919cb492116a28700b8998722",
+        "request_count": 26
+      },
+      "R2": {
+        "action_sha256": "14c36fac6443851102be90fea283ff40f55cb3815557c186fc0144d93e7372b7",
+        "observation_sha256": "2fb7d57b038fdf97ff88fa410067eba56a49e84124b2c5c82056b53c81a5f915",
+        "returncode": 0,
+        "state_sha256": "f4344c7082992f323f25abf2ce7c0c8d3ff2396ba120fc7aee7547f840590691",
+        "timed_out": false,
+        "type": "shell"
+      },
+      "R3": {
+        "action_count": 25,
+        "all_resolved_models_exact": true,
+        "empty_response_text_steps": [],
+        "format_error_count": 7,
+        "response_count": 25,
+        "shell_action_count": 18,
+        "timed_out_steps": [
+          25
+        ],
+        "trajectory_sha256": "727b4cf4d055522115637e266d2fbcbdf2f3e69cb3151631aea2bebab1019185"
+      },
+      "R4": {
+        "all_fail_to_pass": false,
+        "all_pass_to_pass": true,
+        "outcome_sha256": "ca150dfe6c99f23237f33bdfc75e4477b013b1edd1924fd27a0aff9d8caf4bbc",
+        "resolved": false,
+        "status_map_sha256": "4e5019a568d3ae4f38128aad24eb48ac9aa83da7da4e63c25702eae0ede9fd80",
+        "valid": true
+      },
+      "arm": "B",
+      "artifact": {
+        "file_sha256": "f9be3537383ea29c29f20991de75f4a45bce27525a0ee7d6e0e87d28c60272ed",
+        "file_sha256_valid": true,
+        "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-sympy__sympy-17318-B/run.json",
+        "payload_sha256": "62141973573d321521a6b72c4797077aff79d5d480506970a526976fc3306cf1",
+        "payload_sha256_valid": true
+      },
+      "exit_status": "ArkCompatibilityError",
+      "failure": {
+        "credential_material_present": false,
+        "error_type": "ArkCompatibilityError",
+        "failure_layer": "provider",
+        "provider_error_code": "MissingParameter",
+        "provider_error_param": "input.content",
+        "provider_error_type": "BadRequest",
+        "status_code": 400
+      },
+      "instance_id": "sympy__sympy-17318",
+      "resource_accounting": {
+        "input_tokens": 323795,
+        "model_calls": 25,
+        "output_tokens": 27546,
+        "provider_transport_attempts": 25
+      },
+      "run_id": "pilot-sympy__sympy-17318-B",
+      "runtime_checks": {
+        "base_state_valid": true,
+        "pid_namespace": "host",
+        "platform": "linux/amd64"
+      },
+      "scientific_boundary": {
+        "evaluator_script_model_visible": false,
+        "gold_patch_model_visible": false,
+        "test_patch_model_visible": false
+      }
+    },
+    {
+      "R0": {
+        "eligible_case_count": 1,
+        "selected_case": "sympy__sympy-13798",
+        "selected_memory_sha256": "cbd9014f1d5f4309799dc5c36ede30daa71e2d0f23b60e69c0b50be41a594c77",
+        "state_sha256": "04c815b16d2d0f5e863470390d7298657f3560385eea036f98b6fbe2539c4b43",
+        "top_k": 1
+      },
+      "R1": {
+        "blank_content_positions": [
+          {
+            "message_index": 109,
+            "request_index": 55,
+            "role": "user"
+          }
+        ],
+        "first_request_sha256": "15f02ecbb0c625e5b941a4160c5022ab7c56d94c1aa12372c0dd2789e413b5e0",
+        "request_count": 55
+      },
+      "R2": {
+        "action_sha256": "e3f9703a619514eea040fdce11bdf2298ddd7bb6890ac84e0361f15d782dc73d",
+        "observation_sha256": "11e514ab9a67e5b260cc4b48f52d21cc7d8f9d90c37405514947fb2bdd5a451f",
+        "returncode": 0,
+        "state_sha256": "1cb1bd4e25aad51db7af761fe2d536fe088ed1b7dde9d9f9531bb45592590710",
+        "timed_out": false,
+        "type": "shell"
+      },
+      "R3": {
+        "action_count": 54,
+        "all_resolved_models_exact": true,
+        "empty_response_text_steps": [],
+        "format_error_count": 16,
+        "response_count": 54,
+        "shell_action_count": 38,
+        "timed_out_steps": [
+          54
+        ],
+        "trajectory_sha256": "f63a78015483604e21c1990c08e03c3abeabc27033d41072d041b627ffe67022"
+      },
+      "R4": {
+        "all_fail_to_pass": false,
+        "all_pass_to_pass": true,
+        "outcome_sha256": "ca150dfe6c99f23237f33bdfc75e4477b013b1edd1924fd27a0aff9d8caf4bbc",
+        "resolved": false,
+        "status_map_sha256": "4e5019a568d3ae4f38128aad24eb48ac9aa83da7da4e63c25702eae0ede9fd80",
+        "valid": true
+      },
+      "arm": "C",
+      "artifact": {
+        "file_sha256": "48be433076cb49712917b732018af9812414ce1a2c933faf722548f22827f0a0",
+        "file_sha256_valid": true,
+        "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-sympy__sympy-17318-C/run.json",
+        "payload_sha256": "f4720eba13d92a422982a847c7dc4458cae0d408de2ae590b14af4054e9d9861",
+        "payload_sha256_valid": true
+      },
+      "exit_status": "ArkCompatibilityError",
+      "failure": {
+        "credential_material_present": false,
+        "error_type": "ArkCompatibilityError",
+        "failure_layer": "provider",
+        "provider_error_code": "MissingParameter",
+        "provider_error_param": "input.content",
+        "provider_error_type": "BadRequest",
+        "status_code": 400
+      },
+      "instance_id": "sympy__sympy-17318",
+      "resource_accounting": {
+        "input_tokens": 957392,
+        "model_calls": 54,
+        "output_tokens": 99370,
+        "provider_transport_attempts": 54
+      },
+      "run_id": "pilot-sympy__sympy-17318-C",
+      "runtime_checks": {
+        "base_state_valid": true,
+        "pid_namespace": "host",
+        "platform": "linux/amd64"
+      },
+      "scientific_boundary": {
+        "evaluator_script_model_visible": false,
+        "gold_patch_model_visible": false,
+        "test_patch_model_visible": false
+      }
+    },
+    {
+      "R0": {
+        "eligible_case_count": 2,
+        "selected_case": "sympy__sympy-13798::cross-1",
+        "selected_memory_sha256": "05f4afe0b61207313fec240a53d288af31d9e5d697a78b13bcce17372816f9bf",
+        "state_sha256": "047fa9e7d69af1d455ac465816ae84d5e7234166420a29f9e3ce3aacf0873083",
+        "top_k": 1
+      },
+      "R1": {
+        "blank_content_positions": [],
+        "first_request_sha256": "72d09ea0b0c48e1bb0f6269055a1a752dff8c441918acd5ed4361e7a4f013c7e",
+        "request_count": 41
+      },
+      "R2": {
+        "action_sha256": "64f510b7a0f51fdf2cc12fa068ace9cd713833684ab5e21e2ec2edabee0926a5",
+        "observation_sha256": "0a3e0180fd551407dfcf4961a578e197e22afb57ed09fc9534890035018202f4",
+        "returncode": 0,
+        "state_sha256": "8516b592fb514acd48248323f2a4b564baf5451836ce6e5bec7a1e5a2069e9cd",
+        "timed_out": false,
+        "type": "shell"
+      },
+      "R3": {
+        "action_count": 41,
+        "all_resolved_models_exact": true,
+        "empty_response_text_steps": [],
+        "format_error_count": 0,
+        "response_count": 41,
+        "shell_action_count": 41,
+        "timed_out_steps": [],
+        "trajectory_sha256": "f18ad86561284ef443a5bbfde860d505528606752aa8aa95e155c86f538734b4"
+      },
+      "R4": {
+        "all_fail_to_pass": false,
+        "all_pass_to_pass": true,
+        "outcome_sha256": "ca150dfe6c99f23237f33bdfc75e4477b013b1edd1924fd27a0aff9d8caf4bbc",
+        "resolved": false,
+        "status_map_sha256": "4e5019a568d3ae4f38128aad24eb48ac9aa83da7da4e63c25702eae0ede9fd80",
+        "valid": true
+      },
+      "arm": "D",
+      "artifact": {
+        "file_sha256": "cd8e801b01a0fa04fe7eb3fa588df4563f575dd0d8065289baa870bfba68a6d9",
+        "file_sha256_valid": true,
+        "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-sympy__sympy-17318-D/run.json",
+        "payload_sha256": "bc624c3d55f9fd468ac84a3cc009a7cc998280dd92712de169bb1af8a2ae608c",
+        "payload_sha256_valid": true
+      },
+      "exit_status": "Submitted",
+      "failure": null,
+      "instance_id": "sympy__sympy-17318",
+      "resource_accounting": {
+        "input_tokens": 715731,
+        "model_calls": 41,
+        "output_tokens": 49020,
+        "provider_transport_attempts": 41
+      },
+      "run_id": "pilot-sympy__sympy-17318-D",
+      "runtime_checks": {
+        "base_state_valid": true,
+        "pid_namespace": "host",
+        "platform": "linux/amd64"
+      },
+      "scientific_boundary": {
+        "evaluator_script_model_visible": false,
+        "gold_patch_model_visible": false,
+        "test_patch_model_visible": false
+      }
+    },
+    {
+      "R0": {
+        "eligible_case_count": 1,
+        "selected_case": "sympy__sympy-13798::case-id-placebo",
+        "selected_memory_sha256": "2f0241f1b46019d0bcf72317ebe6ff0561ef2241370aff4d04683af392290041",
+        "state_sha256": "b475629a1a9fdff39a3d32c5bcfe449f9cceeb226919355e2a7d32fc22d49196",
+        "top_k": 1
+      },
+      "R1": {
+        "blank_content_positions": [],
+        "first_request_sha256": "347fba810fed7d9357b32a193d57bd9c90f330f919cb492116a28700b8998722",
+        "request_count": 36
+      },
+      "R2": {
+        "action_sha256": "1dd6d5ae40baad5929de609a4385ca966876388a4062d9dfa2a10fda590338be",
+        "observation_sha256": "824e81c2c052ec15ced98f4f4f88e1801656acfcd404fd2a6f1235c649ec1f79",
+        "returncode": 0,
+        "state_sha256": "d14081d0217c9222545b00bfef9a1901ec17a088ac2c0fbc4715a5b6b74fd0b1",
+        "timed_out": false,
+        "type": "shell"
+      },
+      "R3": {
+        "action_count": 36,
+        "all_resolved_models_exact": true,
+        "empty_response_text_steps": [],
+        "format_error_count": 12,
+        "response_count": 36,
+        "shell_action_count": 24,
+        "timed_out_steps": [],
+        "trajectory_sha256": "2ecb8b12d0e6a47c88d889ac831dc85e2a902f55bd4a39b6fc2410ee0b3c5bc2"
+      },
+      "R4": {
+        "all_fail_to_pass": false,
+        "all_pass_to_pass": true,
+        "outcome_sha256": "ca150dfe6c99f23237f33bdfc75e4477b013b1edd1924fd27a0aff9d8caf4bbc",
+        "resolved": false,
+        "status_map_sha256": "4e5019a568d3ae4f38128aad24eb48ac9aa83da7da4e63c25702eae0ede9fd80",
+        "valid": true
+      },
+      "arm": "E",
+      "artifact": {
+        "file_sha256": "b96b732006afd29949006b7f8f97ac05942c64e2753080e5c15aff7fed1bfd62",
+        "file_sha256_valid": true,
+        "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-sympy__sympy-17318-E/run.json",
+        "payload_sha256": "fe3ae07c8525a78ba2c268956a9386f7fef76f6bf7e49ac9792ef83f19d4407b",
+        "payload_sha256_valid": true
+      },
+      "exit_status": "Submitted",
+      "failure": null,
+      "instance_id": "sympy__sympy-17318",
+      "resource_accounting": {
+        "input_tokens": 519008,
+        "model_calls": 36,
+        "output_tokens": 43426,
+        "provider_transport_attempts": 36
+      },
+      "run_id": "pilot-sympy__sympy-17318-E",
+      "runtime_checks": {
+        "base_state_valid": true,
+        "pid_namespace": "host",
+        "platform": "linux/amd64"
+      },
+      "scientific_boundary": {
+        "evaluator_script_model_visible": false,
+        "gold_patch_model_visible": false,
+        "test_patch_model_visible": false
+      }
+    }
+  ],
+  "schema_version": 1,
+  "scientific_interpretation": {
+    "B_E_exit_difference_is_instability_evidence_not_case_id_effect": true,
+    "D_is_not_a_performance_advantage": true,
+    "authorized_descriptive_observations": [
+      "A/B and B/E selected memory and first serialized request are equal on both tasks.",
+      "Those equal first requests diverge at R2 on both tasks under unseeded execution.",
+      "All five pytest arms resolve; all five sympy arms remain unresolved.",
+      "The observed ten-run sample has no R4 treatment difference."
+    ],
+    "claim_ceiling": "The fixed DeepSeek-Pro pilot confirms R1 reunion/placebo equivalence and immediate stochastic R2 divergence, but no population claim.",
+    "why_no_mechanism_claim": "Three sympy arms terminated through a compatibility-layer timeout-observation bug, making the global pilot implementation-unqualified."
+  },
+  "scientific_population_claim_authorized": false,
+  "treatment_checks": {
+    "A_B_selected_memory_equal": true,
+    "B_E_selected_memory_equal": true,
+    "C_is_B_item_order_reversal": true,
+    "D_is_preregistered_top1_first_fragment": true,
+    "five_R0_treatment_hashes_distinct": true,
+    "manifest_payload_sha256_valid": true,
+    "run_R0_and_selected_memory_match_manifest": true
+  }
+}
