@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0C-20260829",
+  "title": "Causal function-result continuation qualification",
+  "registered_at_utc": "2026-08-29T00:00:00Z",
+  "registration_timing": "Before Q0C provider requests",
+  "prerequisite": {
+    "q0b_adjudication": {
+      "path": "generated/asset-first-stri-reasoningbank-ark-provider-identity-resolution-adjudication-20260829.json",
+      "sha256": "9a3048992e9be14859cac601d520e058e21135c4a5d80472e1a7361e6b17498c"
+    },
+    "localized_failure": "The prior exact phrase was stylistic and the value 731 was already visible before the tool result, so causal continuation remained unidentifiable."
+  },
+  "single_variable_repair": {
+    "changed": "Tool result contains harmless nonce TOOL_ONLY_NONCE_913 that is absent from instructions, user input and function-call arguments.",
+    "unchanged": [
+      "endpoint",
+      "direct model",
+      "adapter",
+      "tool schema",
+      "temperature",
+      "seed omission",
+      "previous_response_id continuation"
+    ],
+    "outcome_rule": "Continuation must contain the fresh nonce; exact surrounding prose is not load-bearing."
+  },
+  "frozen_backend": {
+    "endpoint": "https://ark.cn-beijing.volces.com/api/plan/v3/responses",
+    "model": "doubao-seed-evolving",
+    "temperature": 0,
+    "seed": null
+  },
+  "runner": {
+    "path": "research_pipeline/asset_first_stri_reasoningbank_ark_tool_continuation_causal.py",
+    "sha256": "f8d4aec2505a5df2012c964f9d51a8124341ca0528f946f62ba3bc51b37fd247"
+  },
+  "decision_rule": {
+    "pass": "Two requests succeed with exact direct model identity, one function call, nonce absent before function result, nonce present afterward, and usage metadata present.",
+    "pass_label": "ARK_CAUSAL_TOOL_CONTINUATION_QUALIFIED",
+    "fail_label": "ARK_CAUSAL_TOOL_CONTINUATION_NOT_QUALIFIED"
+  },
+  "resource_budget": {
+    "maximum_provider_requests": 2,
+    "gpu_seconds": 0
+  },
+  "authority": {
+    "q0c_execution": true,
+    "provider_qualification_if_passes": true,
+    "memory_induction": false,
+    "p1_behavioral_execution": false,
+    "full_p1": false,
+    "claim_expansion": false
+  },
+  "security": "The nonce is public and harmless; credentials remain in the canonical ignored .env and are never serialized."
+}
