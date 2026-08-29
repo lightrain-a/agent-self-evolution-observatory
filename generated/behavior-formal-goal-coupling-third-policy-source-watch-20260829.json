@@ -1,0 +1,46 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-third-policy-watch-v1.1",
+  "object_id": "SUCC-C-BEHAVIOR2026-LOCAL-REPLICATION",
+  "status": "WATCH_STABLE_NO_THIRD_POLICY_SOURCE_CHANGE",
+  "scientific_authority": false,
+  "execution_authority": false,
+  "gpu_authority": false,
+  "policy_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "baseline_sha256": "d62a6d0d3d3cdbeb92d9ec213d208e174f82ab40c5fa41d60957d9bb37f0eb3b",
+  "changed_surfaces": [],
+  "triggered": false,
+  "recheck_required": false,
+  "watch_complete": true,
+  "transport_errors": [],
+  "current_surfaces": {
+    "behavior_baselines": {
+      "url": "https://raw.githubusercontent.com/StanfordVL/BEHAVIOR-1K/main/docs/challenge/baselines.md",
+      "transport_url": "https://raw.githubusercontent.com/StanfordVL/BEHAVIOR-1K/main/docs/challenge/baselines.md",
+      "bytes": 13884,
+      "sha256": "7603dea596470a109ae1a5415aa35c433bc26a826c3a099c545fe0d9a2705c6c"
+    },
+    "openeta_readme": {
+      "url": "https://raw.githubusercontent.com/OpenMOSS/OpenETA/main/README.md",
+      "transport_url": "https://raw.githubusercontent.com/OpenMOSS/OpenETA/main/README.md",
+      "bytes": 13087,
+      "sha256": "f02c39c82b73cef762d64d61a15220ceb7dffdd4e9115d6551e0fc68eb3a4ecb"
+    },
+    "openral_vla_compatibility": {
+      "url": "https://raw.githubusercontent.com/OpenRAL/openral/master/docs/reference/vla_compatibility.md",
+      "transport_url": "https://raw.githubusercontent.com/OpenRAL/openral/master/docs/reference/vla_compatibility.md",
+      "bytes": 31928,
+      "sha256": "bbf89b52afd7e4560b1b681a9daa1f6b9f1f639a7586ecc42ae3d612efc2f09a"
+    },
+    "allenai_behavior2026_bridge_issue": {
+      "url": "https://api.github.com/repos/allenai/vla-evaluation-harness/issues/114",
+      "state": "open",
+      "updated_at": "2026-08-10T11:38:09Z",
+      "closed_at": null,
+      "html_url": "https://github.com/allenai/vla-evaluation-harness/issues/114"
+    }
+  },
+  "trigger_effect": "zero-authority third-family source requalification only; never grants phase2/model/training/rollout/outcome authority",
+  "receipt_sha256": "900f6f8183f3c5a21066745507bdae21e0791afa60d46ebedc478bfd97b3c5ee"
+}

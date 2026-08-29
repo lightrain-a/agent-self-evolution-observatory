@@ -97,6 +97,21 @@ class BehaviorFormalGoalCouplingPreflightReceiptsTest(unittest.TestCase):
         self.assertFalse(row["parent_port010_reopen_authorized"])
         self.assertIn("reopen condition", row["reopen_gate"])
 
+    def test_current_third_policy_watch_is_complete_stable_and_zero_authority(self) -> None:
+        row = load("behavior-formal-goal-coupling-third-policy-source-watch-20260829.json")
+        self.assertEqual(row["status"], "WATCH_STABLE_NO_THIRD_POLICY_SOURCE_CHANGE")
+        self.assertTrue(row["watch_complete"])
+        self.assertEqual(row["transport_errors"], [])
+        self.assertFalse(row["triggered"])
+        self.assertFalse(row["recheck_required"])
+        self.assertEqual(row["changed_surfaces"], [])
+        self.assertFalse(row["scientific_authority"])
+        self.assertFalse(row["execution_authority"])
+        self.assertFalse(row["gpu_authority"])
+        self.assertFalse(row["policy_training_authorized"])
+        self.assertFalse(row["policy_rollouts_authorized"])
+        self.assertFalse(row["policy_outcomes_read"])
+
     def test_phase1_data_only_receipt_closes_chunk0_without_outcomes(self) -> None:
         row = load("behavior-formal-goal-coupling-phase1-data-only-preflight-20260828.json")
         phase0 = load("behavior-formal-goal-coupling-phase0-static-data-preflight-20260828.json")

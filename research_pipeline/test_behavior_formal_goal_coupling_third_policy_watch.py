@@ -25,6 +25,36 @@ class ThirdPolicyWatchTest(unittest.TestCase):
         self.assertFalse(result["gpu_authority"])
         self.assertFalse(result["policy_outcomes_read"])
 
+    def test_transport_failure_is_incomplete_hold_not_false_stable(self) -> None:
+        current = copy.deepcopy(self.current)
+        current.pop("openral_vla_compatibility")
+        result = evaluate_change(
+            self.baseline,
+            current,
+            [{"surface": "openral_vla_compatibility", "error": "timeout"}],
+        )
+        self.assertEqual(result["status"], "WATCH_INCOMPLETE_SOURCE_TRANSPORT_HOLD")
+        self.assertFalse(result["triggered"])
+        self.assertFalse(result["recheck_required"])
+        self.assertFalse(result["watch_complete"])
+        self.assertEqual(result["transport_errors"][0]["surface"], "openral_vla_compatibility")
+        self.assertFalse(result["execution_authority"])
+        self.assertFalse(result["policy_outcomes_read"])
+
+    def test_detected_change_still_rechecks_if_another_surface_transport_fails(self) -> None:
+        current = copy.deepcopy(self.current)
+        current["openeta_readme"]["sha256"] = "0" * 64
+        current.pop("openral_vla_compatibility")
+        result = evaluate_change(
+            self.baseline,
+            current,
+            [{"surface": "openral_vla_compatibility", "error": "timeout"}],
+        )
+        self.assertEqual(result["status"], "RECHECK_REQUIRED_THIRD_POLICY_SOURCE_CHANGE")
+        self.assertTrue(result["triggered"])
+        self.assertFalse(result["watch_complete"])
+        self.assertFalse(result["execution_authority"])
+
     def test_content_hash_change_triggers_recheck_only(self) -> None:
         current = copy.deepcopy(self.current)
         current["openeta_readme"]["sha256"] = "0" * 64
