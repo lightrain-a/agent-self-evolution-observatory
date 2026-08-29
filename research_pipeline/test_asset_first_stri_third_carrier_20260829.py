@@ -85,6 +85,12 @@ class STRIReasoningBankThirdCarrierTest(unittest.TestCase):
             adjudication["source_release_audit"]["status"],
             "P1_BEHAVIOR_HOLD_MISSING_FIRST_PARTY_MEMORY_ARTIFACT_AND_ENVIRONMENT",
         )
+        runtime = adjudication["runtime_preflight_69"]
+        self.assertFalse(any(runtime["environment_variables_present"].values()))
+        self.assertFalse(runtime["docker_daemon_qualified"])
+        self.assertFalse(runtime["commands_present"]["sb-cli"])
+        self.assertFalse(any(runtime["default_python_modules_present"].values()))
+        self.assertEqual(runtime["gpu_snapshot"]["count"], 1)
         self.assertFalse(adjudication["next_gate"]["full_benchmark_authorized"])
         self.assertFalse(adjudication["next_gate"]["gpu_run_authorized"])
         self.assertFalse(adjudication["next_gate"]["provider_calls_authorized"])
