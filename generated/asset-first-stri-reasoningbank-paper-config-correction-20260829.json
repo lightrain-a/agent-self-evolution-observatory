@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "artifact_id": "E1-STRI-REASONINGBANK-PAPER-CONFIG-CORRECTION-20260829",
+  "created_at_utc": "2026-08-29T14:12:00Z",
+  "status": "PRE_OUTCOME_CORRECTION_FROZEN",
+  "corrects_artifact": {
+    "path": "generated/asset-first-stri-reasoningbank-deepseek-paper-alignment-20260829.json",
+    "sha256": "51f25c973bfc4c8c2e661bac8f87a4bded8e887d0c9c3540b7d1ed3036fbf09a"
+  },
+  "reason": "The earlier alignment record cited mini.yaml. The official SWE-Bench runner resolves the extra/swebench.yaml configuration and its run.sh CLI overrides only the model to Gemini 2.5 Flash. This correction is frozen before source induction or any P1 task outcome.",
+  "scientific_boundary": {
+    "p1_task_outcome_observed": false,
+    "source_induction_executed": false,
+    "treatment_result_observed": false,
+    "historical_artifact_preserved_unmodified": true
+  },
+  "official_source": {
+    "repository": "https://github.com/google-research/reasoning-bank",
+    "commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "run_script": {
+      "path": "SWE-Bench/run.sh",
+      "sha256": "122b5db0d7ed33647ac1728734d6138808cfd1624ad240b1c49cddcc1d4ab897",
+      "cli_model_override": "gemini-2.5-flash",
+      "subset": "verified",
+      "split": "test",
+      "workers": 1
+    },
+    "effective_config": {
+      "path": "third_party/src/minisweagent/config/extra/swebench.yaml",
+      "sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "agent_step_limit": 250,
+      "agent_cost_limit_usd": 3.0,
+      "environment_cwd": "/testbed",
+      "environment_timeout_seconds": 60,
+      "environment_class": "docker",
+      "model_temperature": 0.0,
+      "model_max_output_tokens": "not explicitly set"
+    },
+    "agent_control_flow": {
+      "path": "third_party/src/minisweagent/agents/default.py",
+      "sha256": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c",
+      "action_parser": "exactly one fenced bash block matched by regex",
+      "submission_markers": [
+        "MINI_SWE_AGENT_FINAL_OUTPUT",
+        "COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT"
+      ]
+    },
+    "memory_induction": {
+      "path": "third_party/src/minisweagent/memory/induce_memory.py",
+      "sha256": "7e72fd27cbe3878d743c8135ee809b81d084c0c71ab4ec5f258638876a9ce3c6",
+      "temperature": 1.0,
+      "max_output_tokens": 65536,
+      "serialization": "response.text.split('\\n\\n')"
+    },
+    "retrieval": {
+      "path": "third_party/src/minisweagent/memory/memory_management.py",
+      "sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955",
+      "top_k": 1,
+      "score_sort": "Python stable descending sort"
+    },
+    "judge": {
+      "path": "third_party/src/minisweagent/run/extra/swebench.py",
+      "sha256": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951",
+      "temperature": 0.0,
+      "max_output_tokens": 65536,
+      "output_rule": "lowercase response contains success"
+    }
+  },
+  "frozen_deepseek_compatibility": {
+    "provider": "Volcengine Ark Plan Responses API",
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "requested_model": "deepseek-v4-pro-ga-260813",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "behavior_temperature": 0.0,
+    "behavior_max_output_tokens": "omitted",
+    "memory_induction_temperature": 1.0,
+    "memory_induction_max_output_tokens": 65536,
+    "judge_temperature": 0.0,
+    "judge_max_output_tokens": 65536,
+    "step_limit": 250,
+    "workers": 1,
+    "retrieval_top_k": 1,
+    "environment_timeout_seconds": 60,
+    "seed": "omitted",
+    "top_p": "omitted",
+    "cost_limit_compatibility": {
+      "official_value_usd": 3.0,
+      "ark_plan_exposes_per_response_dollar_cost": false,
+      "enforcement": "not enforceable without inventing a tariff",
+      "preserved_controls": [
+        "step_limit=250",
+        "provider usage receipts",
+        "single-worker execution"
+      ],
+      "claim": "one disclosed provider-accounting mismatch; no synthetic dollar conversion"
+    }
+  },
+  "comparability_statement": "All directly portable official role and runtime parameters are aligned. The model/provider and dollar-cost enforcement are disclosed compatibility differences; this is not an original-provider reproduction.",
+  "claim_ceiling": "Evidence is limited to the ReasoningBank public architecture under the fixed Ark DeepSeek-Pro compatibility backend."
+}
