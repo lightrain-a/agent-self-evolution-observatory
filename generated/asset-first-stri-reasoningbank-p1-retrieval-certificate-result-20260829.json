@@ -1,0 +1,52 @@
+{
+  "checks": {
+    "a_b_c_e_one_case_top1_invariant": true,
+    "d_cloned_case_scores_tied_by_construction": true,
+    "d_stable_tie_selects_first_case": true,
+    "official_commit_matches": true,
+    "official_descending_stable_sort_present": true,
+    "official_top_n_slice_present": true,
+    "selection_source_hash_matches": true,
+    "top_k_one": true
+  },
+  "claim_ceiling": "Identifies selected-case membership for the frozen one-source P1 design without estimating semantic relevance or absolute retrieval scores. It does not qualify Ark embeddings or general multi-case retrieval.",
+  "contract": "generated/asset-first-stri-reasoningbank-p1-retrieval-certificate-contract-20260829.json",
+  "created_at_utc": "2026-08-29T14:04:31+00:00",
+  "decision": "P1_TOP1_SELECTION_IDENTIFIED_WITHOUT_EXTERNAL_EMBEDDING",
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-RETRIEVAL-CERT-20260829",
+  "intervention": {
+    "A_B_C_E": "Exactly one eligible source case; top-1 selects it for every finite similarity score.",
+    "D": "Split the selected source case into two ordered case records, clone the source query and cached embedding identity into both records, place fragment-1 first, and keep official top-1. Equal vectors imply equal cosine scores for every evaluation query; Python's registered stable descending sort selects fragment-1.",
+    "ranking_formula_changed": false,
+    "semantic_evidence_changed": false,
+    "surrogate_embedding_model_used": false,
+    "top_k_changed": false
+  },
+  "official_source": {
+    "commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "selection_path": "third_party/src/minisweagent/memory/memory_management.py",
+    "selection_sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955"
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "behavioral_claim_authorized": false,
+    "memory_induction_executed": false,
+    "p1_task_outcome_observed": false,
+    "provider_calls": 0
+  },
+  "symbolic_score_observable": {
+    "A_B_C_E_selected_case": {
+      "-0.9": "source-case",
+      "0.0": "source-case",
+      "0.4": "source-case",
+      "1.0": "source-case"
+    },
+    "D_selected_case_under_equal_scores": {
+      "-0.9": "source-case::fragment-1",
+      "0.0": "source-case::fragment-1",
+      "0.4": "source-case::fragment-1",
+      "1.0": "source-case::fragment-1"
+    },
+    "score_values_are_proof_witnesses_not_runtime_embeddings": true
+  }
+}
