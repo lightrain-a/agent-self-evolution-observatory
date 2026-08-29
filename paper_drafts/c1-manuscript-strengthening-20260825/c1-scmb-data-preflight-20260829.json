@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_SCMB_DATA_PREFLIGHT",
+  "status": "PASS_ZERO_PROVIDER_FRESH_PACKET_PREFLIGHT",
+  "checks": {
+    "fresh_pool": 86,
+    "template_representatives": 31,
+    "pilot_units": 12,
+    "holdout_units": 19,
+    "old36_overlap": 0,
+    "pilot_unique_templates": 12,
+    "pilot_unique_sources": 9,
+    "all_wrappers_hash_verified": true,
+    "all_step1_states_materialized": true,
+    "provider_calls": 0
+  },
+  "source_bindings": {
+    "b3_sha256": "a5e39a817cdadc9b4edae4edba0c9c90068f1cd9d083e4c3a70bdfad32871440",
+    "b4_manifest_sha256": "2880b83c71745f049039c15edb02f731e4f87a44670977b61627143102bee0d1",
+    "b10_contract_sha256": "c2a54c928d74ccb7a153166a02ef0ef7a1504a93b5895952380a95b0277a3436",
+    "parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e"
+  },
+  "authority": {
+    "pilot_binder_provider": true,
+    "pilot_policy_provider": true,
+    "confirmatory": false,
+    "gpu": false,
+    "submission": false
+  }
+}

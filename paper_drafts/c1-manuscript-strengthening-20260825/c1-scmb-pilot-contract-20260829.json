@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_SCMB_PILOT_CONTRACT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-SCMB-P0-FRESH-UPTAKE-20260829",
+  "status": "FROZEN_DESIGN_AUTHORIZED_PILOT_ONLY",
+  "purpose": "Test whether a deliberately lightweight state-conditioned memory adapter yields a modest but memory-specific increase in first-action uptake on fresh states after a simple explicit-use reminder failed. This is proof-of-concept repair validation, not method novelty.",
+  "literature_boundary": {
+    "not_novel_method": true,
+    "nearest_work": [
+      "SAMem (Findings ACL 2026): state-aware memory",
+      "QCR (arXiv 2608.12847): target-bound reuse"
+    ],
+    "claim_if_positive": "Stage-resolved diagnosis can select a mechanism-aligned repair family that produces a modest prospective uptake gain; state-conditioned adaptation itself is not claimed novel."
+  },
+  "arms": {
+    "A0_NATIVE": "raw retrieved memory only",
+    "A1_MEMORY_ONLY_ADAPTER": "binder rewrites the same retrieved memory into one concise procedural action note without seeing target task/state",
+    "A2_STATE_CONDITIONED_BINDING": "binder sees the same retrieved memory plus target task/current state and emits one concise current-state action implication"
+  },
+  "binder": {
+    "model": "doubao-seed-2.0-mini",
+    "expected_resolved": "doubao-seed-2-0-mini-260215",
+    "temperature": 0.0,
+    "max_output_tokens": 180,
+    "thinking": "disabled",
+    "retries": 0,
+    "A1_instruction": "Convert the reusable memory into one concise procedural note for a browser agent. Do not use or infer any target task or target state. Preserve only reusable action guidance. Output one sentence, at most 60 words, with no explanation.",
+    "A2_instruction": "Given the reusable memory, the ultimate task, and the current browser state, produce one concise current-state action implication. Use the memory only when relevant, do not invent facts, and state what the agent should prioritize next. Output one sentence, at most 60 words, with no explanation."
+  },
+  "policy": {
+    "model": "doubao-seed-2.0-mini",
+    "expected_resolved": "doubao-seed-2-0-mini-260215",
+    "temperature": 0.2,
+    "max_output_tokens": 900,
+    "thinking": "disabled",
+    "retries": 0,
+    "rollouts_per_branch_per_arm_per_state": 6
+  },
+  "primary": {
+    "U": "empirical TV between success-memory and failure-memory first-action signature distributions within each state/arm",
+    "D": "U_A2 - U_A1",
+    "N": "U_A2 - U_A0",
+    "pilot_gate": [
+      "all 12 fresh states complete with packet/model/parser invariance",
+      "mean(D) >= 0.05",
+      "D>0 in at least 6/12 states",
+      "mean(N) > 0",
+      "mean(U_A2) > mean(U_A1) and mean(U_A0)"
+    ],
+    "interpretation": "pilot signal only; no confirmatory p-value and no terminal utility claim"
+  },
+  "forbidden": [
+    "use any of prior 36 states",
+    "touch the prior sealed 23-state holdout",
+    "tune binder prompts after new outcomes",
+    "change threshold after execution",
+    "claim SCMB/SAMem/QCR-style state adaptation as novel",
+    "run terminal outcome or full confirmatory automatically"
+  ],
+  "authority": {
+    "pilot_binder_provider": true,
+    "pilot_policy_provider": true,
+    "confirmatory": false,
+    "gpu": false,
+    "submission": false
+  }
+}

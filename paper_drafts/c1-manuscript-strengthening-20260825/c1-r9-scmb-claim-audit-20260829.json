@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_R9_SCMB_CLAIM_AUDIT",
+  "status": "PASS",
+  "summary": {
+    "claims_total": 8,
+    "claims_passed": 8,
+    "claims_failed": 0
+  },
+  "claims": [
+    {
+      "id": "R9-C1",
+      "claim": "The SCMB pilot uses 12 fresh states selected from 86 retrieval-hit trajectory-available states after excluding all prior 36 states; 19 fresh template representatives remain untouched.",
+      "status": "PASS",
+      "evidence": [
+        "freeze",
+        "preflight"
+      ]
+    },
+    {
+      "id": "R9-C2",
+      "claim": "All 48 binder calls and 432 first-action policy calls complete with no model drift, old36 calls, or fresh-holdout calls.",
+      "status": "PASS",
+      "evidence": [
+        "verification",
+        "closure"
+      ]
+    },
+    {
+      "id": "R9-C3",
+      "claim": "Mean uptake is 0.125 native, 0.0833 memory-only adaptation, and 0.2083 state-conditioned binding.",
+      "status": "PASS",
+      "evidence": [
+        "verification"
+      ]
+    },
+    {
+      "id": "R9-C4",
+      "claim": "Mean D=A2-A1 is 0.125 and mean N=A2-A0 is 0.0833.",
+      "status": "PASS",
+      "evidence": [
+        "verification"
+      ]
+    },
+    {
+      "id": "R9-C5",
+      "claim": "The preregistered general-repair consistency gate fails because D is positive in only 3/12 states (4 negative, 5 zero).",
+      "status": "PASS",
+      "evidence": [
+        "verification",
+        "closure"
+      ]
+    },
+    {
+      "id": "R9-C6",
+      "claim": "A descriptive state bootstrap interval for mean D is [-0.0833, 0.375], and the top three squared D values contribute 90.9% of squared effect mass.",
+      "status": "PASS",
+      "evidence": [
+        "verification"
+      ]
+    },
+    {
+      "id": "R9-C7",
+      "claim": "The paper describes SCMB as a heterogeneous proof-of-concept opening, not a universal repair or novel memory architecture.",
+      "status": "PASS",
+      "evidence": [
+        "paper_manifest",
+        "pdf"
+      ]
+    },
+    {
+      "id": "R9-C8",
+      "claim": "No confirmatory or terminal-outcome authority is granted by R9.",
+      "status": "PASS",
+      "evidence": [
+        "closure",
+        "paper_manifest"
+      ]
+    }
+  ],
+  "evidence": {
+    "freeze": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-scmb-pilot-freeze-20260829.json",
+      "sha256": "e4d6c29fd2406ac2e226c969856ccfc3eba8de15ebacfdf0e04954df1670025f"
+    },
+    "preflight": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-scmb-data-preflight-20260829.json",
+      "sha256": "096ca41f2cb0b30815618044b76268ad70b2b2505d0de18f12477485223729b2"
+    },
+    "support": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-scmb-provider-support-20260829.json",
+      "sha256": "540f671bd929efd1d884ab2c8ec3c2e2f2fe6e91ca2a17d9ad0c23d7b3817dea"
+    },
+    "verification": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-scmb-independent-verification-20260829.json",
+      "sha256": "86ab35239a20f1cc7396f1916015b6d208ceaabecd8a67ec869323cc2ef5b772"
+    },
+    "closure": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-scmb-pilot-closure-20260829.json",
+      "sha256": "5a254528ffbf8792784e272d846dd048ff2ff8e7ed3b87b441edc26cdd9c2b02"
+    },
+    "paper_manifest": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-r9-scmb-package-manifest-20260829.json",
+      "sha256": "794181b08f04076d6b77d54ea747e59acd40e3279576305bc6760085e8ff4fc5"
+    },
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r9-state-binding.pdf",
+      "sha256": "04297b75e2cc8554d078228f8821c1d3a58420fd5976491cf8748da06b54392e"
+    }
+  },
+  "authority": {
+    "confirmatory": false,
+    "terminal_outcome": false,
+    "submission": false
+  }
+}

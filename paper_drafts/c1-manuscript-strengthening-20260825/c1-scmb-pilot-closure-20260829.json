@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_SCMB_PILOT_CLOSURE",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-SCMB-P0-FRESH-UPTAKE-20260829",
+  "status": "HETEROGENEOUS_PROOF_OF_CONCEPT_SIGNAL_GENERAL_REPAIR_NOT_QUALIFIED",
+  "scientific_question": "Can a mechanism-aligned state-conditioned adaptation of already-retrieved memory produce a modest prospective first-action uptake increase after a simple explicit-use reminder failed?",
+  "execution": {
+    "fresh_pool": 86,
+    "fresh_intent_templates": 31,
+    "pilot_states": 12,
+    "fresh_template_holdout_states": 19,
+    "binder_calls": 48,
+    "policy_calls": 432,
+    "failed_calls": 0,
+    "old_36_state_calls": 0,
+    "fresh_19_holdout_calls": 0,
+    "model_drift": 0
+  },
+  "primary_result": {
+    "mean_U_native_A0": 0.125,
+    "mean_U_memory_only_A1": 0.08333333333333333,
+    "mean_U_state_conditioned_A2": 0.20833333333333334,
+    "mean_D_A2_minus_A1": 0.125,
+    "mean_N_A2_minus_A0": 0.08333333333333333,
+    "D_positive": "3/12",
+    "D_negative": "4/12",
+    "D_zero": "5/12",
+    "descriptive_bootstrap_95_ci_D": [-0.08333333333333331, 0.375],
+    "top3_squared_D_mass_fraction": 0.909090909090909,
+    "pre_registered_gate_pass": false,
+    "failed_gate_component": "D_i > 0 in at least 6/12 states"
+  },
+  "interpretation": {
+    "supported": "State-conditioned binding produces a higher aggregate branch-specific first-action uptake than native reuse and a memory-only adapter on this fresh pilot, showing that a mechanism-aligned transformation can reopen the diagnosed exposure-to-uptake path in some states.",
+    "not_supported": "A broadly consistent or universal repair. The effect is sparse and sign-heterogeneous and does not pass the frozen cross-state consistency gate.",
+    "why_useful_for_paper": "The engineering section now has a bounded proof of concept: a simple salience reminder fails, whereas state-conditioned adaptation has a nonzero aggregate transport opening. The main novelty remains problem formulation, stage-resolved diagnosis, and diagnostic completeness rather than method performance.",
+    "novelty_boundary": "State-aware memory is already published work (e.g. SAMem, Findings ACL 2026); this adapter is intentionally used as a diagnostic validation probe and is not claimed as a new memory architecture."
+  },
+  "quality_boundaries": {
+    "binder_format_noncompliance": "One A2 binder output (task 47 success branch) exceeds the requested 60-word format; that state has zero uptake in all arms and does not drive the positive aggregate cells.",
+    "posthoc_note_divergence_correlation": 0.7250058272854362,
+    "posthoc_note_divergence_status": "hypothesis generation only; not used to reopen the untouched holdout"
+  },
+  "paper_revision": {
+    "revision": "R9-state-binding",
+    "pdf": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r9-state-binding.pdf",
+    "pdf_sha256": "04297b75e2cc8554d078228f8821c1d3a58420fd5976491cf8748da06b54392e",
+    "source_zip": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r9-state-binding-source.zip",
+    "source_zip_sha256": "4f3e89353f587d3682f7d61ac0b87c5a2a035d081c9de3c4b34bde3ec3370519",
+    "claim_style": "heterogeneous proof-of-concept opening; not general repair pass"
+  },
+  "reopen_condition": "Do not tune SCMB prompts or an applicability threshold on the 12 pilot states and then consume the 19-state holdout. A future confirmatory test requires a separately frozen applicability rule justified independently of policy outcomes and explicit new authority.",
+  "authority": {
+    "fresh_19_confirmatory": false,
+    "terminal_outcome": false,
+    "new_backbone": false,
+    "submission": false
+  }
+}
