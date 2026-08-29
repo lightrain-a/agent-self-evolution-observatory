@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TGRP_PROVIDER_SUPPORT_ENV_BINDING_FAILURE",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+  "generated_at": "2026-08-29",
+  "failure_layer": "operationalization",
+  "failure_type": "ISOLATED_WORKTREE_DOES_NOT_CONTAIN_GIT_IGNORED_PROVIDER_ENV",
+  "observation": "ArkSettings.from_env resolved the worktree-local ignored .env path, where no ARK_API_KEY is present. The frozen historical B10 contract binds provider_env_file to /home/wyt/code/agent-self-evolution-observatory/.env.",
+  "provider_posts": 0,
+  "model_actions": 0,
+  "scientific_outcomes": 0,
+  "does_not_imply": [
+    "provider subscription failure",
+    "credential invalidity",
+    "model-resolution failure",
+    "pilot failure",
+    "scientific principle failure"
+  ],
+  "single_variable_repair": "Load the same canonical Git-ignored provider env path already bound by the frozen B10 contract before constructing ArkSettings; never print or persist credential values.",
+  "credential_content_persisted": false,
+  "authorization_consumed": false,
+  "authority": {
+    "confirmatory_full": false,
+    "submission": false
+  }
+}

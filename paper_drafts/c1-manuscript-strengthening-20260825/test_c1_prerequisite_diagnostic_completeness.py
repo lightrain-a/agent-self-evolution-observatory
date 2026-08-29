@@ -52,19 +52,13 @@ class C1PrerequisiteDiagnosticCompletenessTest(unittest.TestCase):
         self.assertEqual(self.data["execution"]["scientific_empirical_outcomes_read"], 0)
         self.assertFalse(any(self.data["authority"].values()))
 
-    def test_manuscript_reinstates_theorem_without_universalizing_it(self) -> None:
-        mechanism = (HERE / "source" / "sections" / "02_mechanism.tex").read_text(encoding="utf-8")
-        appendix = (HERE / "source" / "sections" / "07_appendix.tex").read_text(encoding="utf-8")
-        abstract = (HERE / "source" / "sections" / "00_abstract.tex").read_text(encoding="utf-8")
-        joined = "\n".join((mechanism, appendix, abstract))
-        self.assertIn("O\\Rightarrow U\\Rightarrow E\\Rightarrow W", joined)
-        self.assertIn("complete 10-state class", mechanism)
-        self.assertIn("2^5=32", mechanism)
-        self.assertIn("unique separating basis", mechanism)
-        self.assertIn("paper-specific diagnostic-completeness result", mechanism)
-        self.assertIn("Not-Supported", mechanism)
-        self.assertIn("diagnostic-prefix-class", appendix)
-        self.assertNotIn("universal minimal basis for arbitrary stochastic memory systems", mechanism.lower())
+    def test_theory_remains_evidence_only_until_next_versioned_paper_revision(self) -> None:
+        reconciliation = json.loads((HERE / "c1-r7-engineering-version-reconciliation-20260829.json").read_text(encoding="utf-8"))
+        self.assertIn("revoked from current narrative authority", reconciliation["narrative_authority"]["C1-stage-resolved-engineering-r2.pdf"])
+        self.assertIn("independently verified theory evidence", reconciliation["narrative_authority"]["c1-prerequisite-diagnostic-completeness-20260828.json"])
+        self.assertEqual(reconciliation["narrative_authority"]["source-r7/"], "latest canonical paper source on the execution base")
+        self.assertFalse(reconciliation["pilot_boundary"]["paper_update_before_pilot_result"])
+        self.assertFalse(reconciliation["pilot_boundary"]["confirmatory_full_authorized"])
 
 
 if __name__ == "__main__":

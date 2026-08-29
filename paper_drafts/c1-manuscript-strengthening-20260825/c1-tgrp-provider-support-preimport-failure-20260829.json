@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TGRP_PROVIDER_SUPPORT_PREIMPORT_FAILURE",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+  "generated_at": "2026-08-29",
+  "failure_layer": "operationalization",
+  "failure_type": "PYTHON_REPO_ROOT_NOT_ON_SYS_PATH",
+  "observation": "The support-requalification script terminated at import of research_pipeline before ArkSettings or ArkResponsesClient could be constructed.",
+  "provider_posts": 0,
+  "model_actions": 0,
+  "scientific_outcomes": 0,
+  "does_not_imply": [
+    "provider support failure",
+    "subscription failure",
+    "model-resolution failure",
+    "pilot failure",
+    "scientific principle failure"
+  ],
+  "single_variable_repair": "Insert the repository root on sys.path before importing research_pipeline. Do not change the support probe, requested model, expected resolved model, retry policy, thinking mode, or provider configuration.",
+  "authorization_consumed": false,
+  "authority": {
+    "confirmatory_full": false,
+    "submission": false
+  }
+}

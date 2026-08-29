@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TGRP_PILOT_HUMAN_EXECUTION_AUTHORIZATION",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+  "recorded_at": "2026-08-29",
+  "execution_base": "9e77edf0c7cca2c3928525619993c31bf3f80e23",
+  "experiment_branch": "experiment/c1-tgrp-pilot-20260829",
+  "authorization_basis": "The human user explicitly replied '继续' after receiving the complete frozen execution plan that limited authority to provider/model support requalification plus the 13-state pilot, analysis, system learning, commit and push, while keeping the 23-state confirmatory full locked.",
+  "authorized": {
+    "zero_provider_regression_preflight_smoke": true,
+    "one_current_provider_model_support_requalification": true,
+    "pilot_13_state_scientific_execution_if_support_passes": true,
+    "pilot_analysis_and_failure_differential": true,
+    "research_os_learning_writeback": true,
+    "task_scoped_commit_and_push": true
+  },
+  "not_authorized": {
+    "confirmatory_23_state_full": true,
+    "new_backbone": true,
+    "new_dataset": true,
+    "gpu_full_experiment": true,
+    "writer_change": true,
+    "retriever_change": true,
+    "reward_change": true,
+    "threshold_change": true,
+    "evaluator_change": true,
+    "CBRG_reopen": true,
+    "submission": true
+  },
+  "frozen_model": {
+    "requested": "doubao-seed-2.0-mini",
+    "expected_resolved": "doubao-seed-2-0-mini-260215",
+    "temperature": 0.2,
+    "max_output_tokens": 900,
+    "thinking": "disabled",
+    "provider_retries": 0,
+    "substitution_allowed": false
+  },
+  "authority": {
+    "experiment_pilot": true,
+    "provider_support_requalification": true,
+    "provider_pilot": true,
+    "gpu": false,
+    "confirmatory_full": false,
+    "submission": false
+  }
+}

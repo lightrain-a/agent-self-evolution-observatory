@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_R7_ENGINEERING_VERSION_RECONCILIATION",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "generated_at": "2026-08-29",
+  "execution_base": "9e77edf0c7cca2c3928525619993c31bf3f80e23",
+  "experiment_branch": "experiment/c1-tgrp-pilot-20260829",
+  "failure": {
+    "layer": "reproducibility_versioning",
+    "type": "R6_SOURCE_MUTATED_WHILE_R7_REQUIRES_R6_IMMUTABILITY",
+    "trigger": "R7 paper-closure regression test_r6_source_and_replay_remain_immutable failed after projecting the older engineering commits onto current origin/main.",
+    "scientific_update": false,
+    "experiment_update": false,
+    "provider_calls": 0,
+    "gpu_runs": 0
+  },
+  "repair": {
+    "single_variable": "Restore paper_drafts/c1-manuscript-strengthening-20260825/source/ exactly from current origin/main and keep R7 as the latest paper source in source-r7/.",
+    "r6_source_restored": true,
+    "r6_main_pdf_sha256": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70",
+    "r6_final_pdf_sha256": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70",
+    "r7_source_path": "paper_drafts/c1-manuscript-strengthening-20260825/source-r7",
+    "r7_contract_sha256": "c6cd6e451dd5a7a610ef89f7b2e4ce3e54a70fb568889c6304c33e66dc50bd0e"
+  },
+  "narrative_authority": {
+    "C1-stage-resolved-engineering-r1.pdf": "revoked from current narrative authority; historical intermediate paper artifact only",
+    "C1-stage-resolved-engineering-r2.pdf": "revoked from current narrative authority; historical intermediate paper artifact only",
+    "source/ engineering edits": "reverted to preserve R6 immutability",
+    "source-r7/": "latest canonical paper source on the execution base",
+    "c1-prerequisite-diagnostic-completeness-20260828.json": "retained as independently verified theory evidence; paper reintegration deferred to a future versioned paper revision rather than mutating R6/R7 in place",
+    "c1-transport-guided-repair-pilot-contract-20260828.json": "retained as a prospective experiment design because its estimand and execution inputs bind frozen B10 artifacts rather than the superseded TeX source"
+  },
+  "pilot_boundary": {
+    "pilot_may_proceed_after_r7_and_targeted_QA_pass": true,
+    "paper_update_before_pilot_result": false,
+    "paper_update_target_after_adjudication": "new version derived from source-r7, never overwrite R6 or sealed R7",
+    "confirmatory_full_authorized": false
+  },
+  "lesson": "When a newer paper-only revision is sealed in a separate source tree, later engineering or theory work must branch from that paper identity or remain evidence-only. Never project an older paper-source patch onto an immutable historical source merely because Git cherry-pick is conflict-free.",
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  }
+}
