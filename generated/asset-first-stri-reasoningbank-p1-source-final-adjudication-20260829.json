@@ -1,0 +1,43 @@
+{
+  "created_at_utc": "2026-08-29T15:58:02Z",
+  "decision": "SOURCE_MEMORY_FROZEN_P1_TREATMENT_ELIGIBLE_WITH_JUDGE_EVALUATOR_DISCORDANCE",
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-SOURCE-FINAL-ADJUDICATION-20260829",
+  "payload_sha256": "bfd29109ebe0e97bb3c9d93a5f80e1454acec30b50ecc40146540720bf784f1e",
+  "qualified_source": {
+    "agent_exit_status": "Submitted",
+    "behavior_actions": 32,
+    "behavior_model_calls": 32,
+    "evaluator_valid": true,
+    "failure": null,
+    "instance_id": "sympy__sympy-13798",
+    "memory_artifact": "generated/asset-first-stri-reasoningbank-p1-source-memory-20260829.json",
+    "memory_artifact_sha256": "0451d0346ab5df749df6c1f1d1ea3abbcde3f913958149be9671fce1bfbf2239",
+    "memory_item_count_nonempty": 3,
+    "run_artifact": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/source-sympy__sympy-13798/run.json",
+    "run_artifact_sha256": "8de287a4c64437186e9f92856248c7aed95a1e162f90a8e1c9da9b380d73cbf7"
+  },
+  "retry_disclosure": {
+    "attempt1_adjudication": "generated/asset-first-stri-reasoningbank-p1-source-attempt1-provider-empty-output-adjudication-20260829.json",
+    "attempt1_adjudication_sha256": "2597e0fc64d63f1e567f98166915892e79ebf6f0fb54f7d5d5c245b3606b6d76",
+    "attempt1_outcome_was_observed": true,
+    "attempt1_scientifically_invalid": true,
+    "attempt2_same_source_case": true,
+    "replacement_case_used": false
+  },
+  "schema_version": 1,
+  "scientific_interpretation": {
+    "discordance": true,
+    "judge_status": "success",
+    "memory_instruction_selected": "SUCCESSFUL_SI",
+    "official_swebench_resolved": false,
+    "statement": "The source memory is protocol-valid under ReasoningBank's judge-driven induction rule, but the source patch is an official SWE-bench negative outcome."
+  },
+  "treatment_gate": {
+    "full_p1_authorized": false,
+    "minimal_pilot_authorized": true,
+    "nonempty_memory_items_required": 2,
+    "nonempty_memory_items_observed": 3,
+    "treatment_manifest": "generated/asset-first-stri-reasoningbank-p1-treatment-manifest-20260829.json",
+    "treatment_manifest_sha256": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7"
+  }
+}
