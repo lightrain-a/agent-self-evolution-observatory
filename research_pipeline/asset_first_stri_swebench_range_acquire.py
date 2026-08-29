@@ -17,9 +17,9 @@ import requests
 
 BASE = "https://docker.1ms.run"
 CACHE = Path("/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256")
-CHUNK_ROOT = Path("/data/wyt/e1-stri-reasoningbank-runtime/oci-range-chunks")
-CHUNK_SIZE = 16 * 1024 * 1024
-WORKERS = 24
+CHUNK_ROOT = Path("/data/wyt/e1-stri-reasoningbank-runtime/oci-range-chunks-4m")
+CHUNK_SIZE = 4 * 1024 * 1024
+WORKERS = 4
 SPECS = (
     ("swebench/sweb.eval.x86_64.sympy_1776_sympy-13798", Path("/data/wyt/e1-source-platform-manifest-skopeo.json")),
     ("swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5631", Path("/data/wyt/e1-pytest-platform-manifest-skopeo.json")),
@@ -62,14 +62,16 @@ def get_url(repo: str, digest: str) -> str:
     return response.headers["location"]
 
 
-def fetch_chunk(url: str, target: Path, start: int, end: int) -> dict:
+def fetch_chunk(repo: str, digest: str, target: Path, start: int, end: int) -> dict:
     expected = end - start + 1
     if target.exists() and target.stat().st_size == expected:
         return {"status": "existing", "bytes": expected}
     for attempt in range(1, 7):
         try:
             response = requests.get(
-                url, headers={"Range": f"bytes={start}-{end}"}, timeout=(20, 60)
+                get_url(repo, digest),
+                headers={"Range": f"bytes={start}-{end}"},
+                timeout=(10, 15),
             )
             if response.status_code != 206:
                 raise RuntimeError(f"range status {response.status_code}")
@@ -82,7 +84,7 @@ def fetch_chunk(url: str, target: Path, start: int, end: int) -> dict:
         except Exception as error:
             if attempt == 6:
                 raise
-            time.sleep(min(2 ** attempt, 15))
+            time.sleep(min(attempt, 3))
     raise AssertionError("unreachable")
 
 
@@ -112,7 +114,6 @@ def main() -> None:
     jobs = {}
     with ThreadPoolExecutor(max_workers=WORKERS) as pool:
         for digest, item in pending.items():
-            url = get_url(item["repo"], digest)
             chunk_dir = CHUNK_ROOT / digest[7:]
             chunk_dir.mkdir(parents=True, exist_ok=True)
             count = math.ceil(item["size"] / CHUNK_SIZE)
@@ -120,7 +121,9 @@ def main() -> None:
                 start = index * CHUNK_SIZE
                 end = min(item["size"], start + CHUNK_SIZE) - 1
                 target = chunk_dir / f"{index:05d}.part"
-                future = pool.submit(fetch_chunk, url, target, start, end)
+                future = pool.submit(
+                    fetch_chunk, item["repo"], digest, target, start, end
+                )
                 jobs[future] = (digest, index, count)
         completed = 0
         for future in as_completed(jobs):
