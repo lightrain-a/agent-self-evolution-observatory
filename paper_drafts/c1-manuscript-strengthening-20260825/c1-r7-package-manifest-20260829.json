@@ -1,0 +1,85 @@
+{
+  "artifact_type": "c1-r7-paper-only-package-manifest",
+  "artifacts": {
+    "claim_audit": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/claim-audit-r7-provenance-seal-20260829.json",
+      "replay": "35/35 PASS",
+      "revision": "R7",
+      "sha256": "baad7e26fa297412c3959bb58d2df5bdd04d3de52d1175f6b0ea5e14d8caf4cf"
+    },
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r7-review-repair.pdf",
+      "sha256": "a5ce511a11a7781ca5374e0f54f7830454927874ca8dc6112c87e6106ab20167"
+    },
+    "sensitivity_audit": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-sensitivity-audit-20260826.json",
+      "sha256": "f1bc7555674d1a7c363d05054cf55ffc686e148cf4f5b1fc24bf7a4002b55bba"
+    },
+    "source_zip": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r7-review-repair-source.zip",
+      "sha256": "91af2cd961a0633b31e2ba38fb1e3f2abcf6db4013dd44977d7b1d2cf8fcc76e"
+    },
+    "stage_evidence": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/stage-evidence-ladder-analysis-20260825.json",
+      "sha256": "d3c5341d1d6064cac5b7f8164c72af77433ef10d79d35338806f0784be49effa"
+    }
+  },
+  "authority": {
+    "experiment": false,
+    "gpu": false,
+    "provider": false,
+    "scientific": false,
+    "submission": false
+  },
+  "build": {
+    "latex_sequence": [
+      "pdflatex",
+      "bibtex",
+      "pdflatex",
+      "pdflatex"
+    ],
+    "source_date_epoch": "1787961600",
+    "source_zip_files": 21,
+    "source_zip_fixed_timestamp": "2026-08-29T00:00:00Z"
+  },
+  "claim_expansion": false,
+  "contract_sha256": "c6cd6e451dd5a7a610ef89f7b2e4ce3e54a70fb568889c6304c33e66dc50bd0e",
+  "execution": {
+    "network_required": false,
+    "new_gpu_scientific_runs": 0,
+    "new_scientific_experiments": 0,
+    "new_scientific_provider_calls": 0
+  },
+  "manifest_sha256": "a083c8fc4f3c93b305a580e99fb5d1927019fb15cc3df9e44dc52e122ec2225a",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "paper_only_revision": true,
+  "revision_id": "C1-STAGE-SIGNATURE-R7-STANFORD-REVIEW-REPAIR-20260829",
+  "schema_version": "1.0",
+  "scientific_contract_changed": false,
+  "scientific_results_changed": false,
+  "source_files": {
+    "build_figures.py": "a74d39306132358e7636f85d2a40c643d458d532f519b5c392ef3a6b5be2f363",
+    "build_stage_transport_figure.py": "1181a489d89bb449b826b6c375e469a56c592cf6dfde980e02c3129fc7c2ae66",
+    "fancyhdr.sty": "261be63f0ab516458d86db3a65d16605534b962da14614e53b7a800120eaf3ed",
+    "figures/fig1_reward_write_channel.pdf": "388be913fcda99f0b41c87c9e6d1a729a0cde581c21a194666c3583ce44e9594",
+    "figures/fig2_write_and_prompt_control.pdf": "635f3dc1aff731f14b7e80be3b395291bd38a3308eb7de9fce2afd9d02bd9fb4",
+    "figures/fig3_downstream_variance.pdf": "40db8665f49aaab7f3dadd05f25576124ba57637498585c6cd1e88ac32ee7b4c",
+    "figures/fig4_stage_resolved_transport.pdf": "146b7d34cdf7fee206e386104bf43ffdffc7dc7505c990adc7fd38e42ee1815c",
+    "iclr2027_conference.bst": "ac16470ac4252807bdebd224e0f6554d9c238dd4cc791c245bdc3eb6da43d6e3",
+    "iclr2027_conference.sty": "797deef41724e93761426ac0cbcca46279a91cc650dd1f0ce76a4f08d2098ea6",
+    "main.tex": "287b703faf37738ca2082417ac36a98990b069b52d79ee767cab61346ae58972",
+    "natbib.sty": "dbba2c7c2cd7a9a732d572d371a7968f4b0dd1bc6592b102a5a45871a92071e3",
+    "references.bib": "ad1bd116809dd5aeac348ebb665c22fec1a540fba53270e02c6efa94f5be5cf9",
+    "sections/00_abstract.tex": "135fbb6c6014dc3a3bc0b33da9b5bde5f50e8ec28e245a3ebc1faa12f4db54d3",
+    "sections/01_intro.tex": "562ced1e128dd511f23fc5ca868d46d63cff9baf10997fc7d84c522b847f599b",
+    "sections/02_mechanism.tex": "5e8b47448fdec6ea40cc3313de9e25736df4ceccbe36e81ffafbb80343ac155d",
+    "sections/03_f0.tex": "ac66fba22eb1adaf987469c76bdd7a4d464a3d2c82bada2d0be98024a0b0400f",
+    "sections/03a_prompt_control.tex": "7306cb33581830ce3bf95a68e139ecb002a5f1866eefe4a073dbc7ac771ec077",
+    "sections/04_variance_protocol.tex": "216ba65396f5ce29e5b939838e35acc2d6393258383d17d26c681c03cb5fce24",
+    "sections/05_related.tex": "b24fec58e157b93335149be09cbcf4a7d572743bfbed61ad28768cfc678daedd",
+    "sections/06_limitations_conclusion.tex": "9daa4b63e5db4c5d55028617e88e9a982d0cd2cb12046ab994baaaf8e0993f09",
+    "sections/07_appendix.tex": "24d44350b7c7a3ab21bfb08b67425312c5f03e1aeebb8389f2c4fabb9ad5bc5c"
+  },
+  "status": "R7_PAPER_ONLY_REVIEW_REPAIR_PACKAGE_SEALED",
+  "title": "Memory Divergence Is Not Behavioral Divergence: Stage-Resolved Transport in Self-Improving Agent Memory"
+}

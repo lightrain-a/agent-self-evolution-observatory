@@ -1,0 +1,288 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision_id": "C1-STAGE-SIGNATURE-R7-STANFORD-REVIEW-REPAIR-20260829",
+  "claims": [
+    {
+      "id": "C01",
+      "description": "The source task text and full action history are fixed before the writer call.",
+      "kind": "text",
+      "source": "source-r7/sections/03_f0.tex",
+      "required": ["task text and full action history are fixed before the writer is called"]
+    },
+    {
+      "id": "C02",
+      "description": "The released success/failure writer intervention bundles reflection-instruction and reward/outcome semantics.",
+      "kind": "text",
+      "source": "source-r7/sections/03a_prompt_control.tex",
+      "required": ["changes the reflection instruction together with the outcome/reward semantics", "bundled protocol contrast"]
+    },
+    {
+      "id": "C03",
+      "description": "The manuscript explicitly forbids interpreting the writer contrast as a pure reward-bit effect.",
+      "kind": "text",
+      "source": "source-r7/sections/06_limitations_conclusion.tex",
+      "required": ["bundled writer-protocol contrast, not a pure reward-bit effect"]
+    },
+    {
+      "id": "C04",
+      "description": "The resolved writer model is matched within each paired write contrast.",
+      "kind": "text",
+      "source": "source-r7/sections/03_f0.tex",
+      "required": ["resolved writer model is matched within pair"]
+    },
+    {
+      "id": "C05",
+      "description": "The write-stage writer temperature is fixed at zero.",
+      "kind": "text",
+      "source": "source-r7/sections/03_f0.tex",
+      "required": ["temperature is zero"]
+    },
+    {
+      "id": "C06",
+      "description": "Shopping write divergence is 20/20 with pooled distance 0.673.",
+      "kind": "text",
+      "source": "stage-resolved-evidence-reinterpretation.json",
+      "required": ["\"shopping_complete_pairs\": 20", "\"shopping_diverged_pairs\": 20", "\"pooled_token_jaccard\": 0.673"]
+    },
+    {
+      "id": "C07",
+      "description": "The cross-domain write tranche contains four Reddit pairs and the total paired write lineage is 24/24 divergent.",
+      "kind": "text",
+      "source": "source-r7/sections/03_f0.tex",
+      "required": ["four Reddit pairs", "24/24 paired source experiences"]
+    },
+    {
+      "id": "C08",
+      "description": "The same-mode wording control reports excess 0.105 with exact p=0.0078.",
+      "kind": "text",
+      "source": "stage-evidence-ladder-analysis-20260825.json",
+      "required": ["same-mode excess=0.105, exact p=0.0078"]
+    },
+    {
+      "id": "C09",
+      "description": "The native stage ordering is write, source-item exposure, first-action uptake, then terminal outcome.",
+      "kind": "json_eq",
+      "source": "stage-evidence-ladder-analysis-20260825.json",
+      "json_path": ["scientific_object", "native_order"],
+      "expected": ["persistent_write", "native_retrieval_exposure", "native_first_action_uptake", "native_terminal_outcome"]
+    },
+    {
+      "id": "C10",
+      "description": "Native exposure is defined as retrieval of a branch-conditioned source-memory item into context.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["exposure_semantics", "measured_object"],
+      "expected": "retrieval of a branch-conditioned source-memory item into native context"
+    },
+    {
+      "id": "C11",
+      "description": "Treatment-specific residual exposure is not claimed to be measured.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["exposure_semantics", "treatment_specific_residual_exposure_measured"],
+      "expected": false
+    },
+    {
+      "id": "C12",
+      "description": "A retrieval event is not treated as a measurement of policy use.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["exposure_semantics", "policy_use_measured_by_retrieval_event"],
+      "expected": false
+    },
+    {
+      "id": "C13",
+      "description": "Native Shopping retrieval exposure is observed in 125/172 opportunities.",
+      "kind": "text",
+      "source": "stage-evidence-ladder-analysis-20260825.json",
+      "required": ["125/172 held-out retrieval opportunities"]
+    },
+    {
+      "id": "C14",
+      "description": "The frozen first-action contrast is TV=0.06944, p=0.5801, with 0/36 modal changes.",
+      "kind": "text",
+      "source": "stage-evidence-ladder-analysis-20260825.json",
+      "required": ["TV=0.06944, p=0.5801, 0/36 modal action changes"]
+    },
+    {
+      "id": "C15",
+      "description": "Native terminal transport is sparse and heterogeneous in Shopping and Reddit with the frozen reported statistics.",
+      "kind": "text",
+      "source": "stage-evidence-ladder-analysis-20260825.json",
+      "required": ["Shopping |Delta|=0.02083, p=0.4289, 34/36 zero", "Reddit |Delta|=0.125, p=0.2253, 6/8 zero, opposite signs"]
+    },
+    {
+      "id": "C16",
+      "description": "The forced capacity side control reports terminal |Delta|=0.15625 and p=0.00074.",
+      "kind": "text",
+      "source": "stage-evidence-ladder-analysis-20260825.json",
+      "required": ["terminal |Delta|=0.15625, p=0.00074"]
+    },
+    {
+      "id": "C17",
+      "description": "Forced fixed-evidence is explicitly a side capacity condition rather than a native stage.",
+      "kind": "text",
+      "source": "source-r7/sections/02_mechanism.tex",
+      "required": ["side capacity condition", "cannot make an otherwise unsupported native stage pass"]
+    },
+    {
+      "id": "C18",
+      "description": "The forced control is recorded as bypassing native retrieval and context composition.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["forced_native_boundary", "forced_control_bypasses_native_retrieval_and_context_composition"],
+      "expected": true
+    },
+    {
+      "id": "C19",
+      "description": "Forced and native intervention surfaces are not represented as identical.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["forced_native_boundary", "intervention_surfaces_identical"],
+      "expected": false
+    },
+    {
+      "id": "C20",
+      "description": "The frozen ordinal evidence rule localizes the first unsupported native stage to first-action uptake.",
+      "kind": "json_eq",
+      "source": "stage-evidence-ladder-analysis-20260825.json",
+      "json_path": ["localization", "first_unsupported_native_stage"],
+      "expected": "native_first_action_uptake"
+    },
+    {
+      "id": "C21",
+      "description": "Stage tests are explicitly not unit-matched.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["identifiability", "ordered_stage_tests_have_matched_units"],
+      "expected": false
+    },
+    {
+      "id": "C22",
+      "description": "Stage tests are explicitly not metric-matched.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["identifiability", "ordered_stage_tests_have_matched_metrics"],
+      "expected": false
+    },
+    {
+      "id": "C23",
+      "description": "Stage tests are explicitly not power-matched.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["identifiability", "ordered_stage_tests_have_matched_statistical_power"],
+      "expected": false
+    },
+    {
+      "id": "C24",
+      "description": "The sensitivity artifact forbids upgrading operational localization to an identified latent attenuation onset.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["identifiability", "latent_causal_attenuation_onset_is_identified"],
+      "expected": false
+    },
+    {
+      "id": "C25",
+      "description": "Causal mediation remains unidentified.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["identifiability", "causal_mediation_is_identified"],
+      "expected": false
+    },
+    {
+      "id": "C26",
+      "description": "Dropping terminal outcome evidence preserves first-action uptake as the boundary.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["structural_sensitivity", 0, "first_unsupported_measured_native_stage"],
+      "expected": "native_first_action_uptake"
+    },
+    {
+      "id": "C27",
+      "description": "Dropping Reddit terminal evidence preserves first-action uptake as the Shopping boundary.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["structural_sensitivity", 1, "first_unsupported_measured_native_stage"],
+      "expected": "native_first_action_uptake"
+    },
+    {
+      "id": "C28",
+      "description": "Dropping the forced-capacity side control preserves first-action uptake as the native boundary.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["structural_sensitivity", 2, "first_unsupported_measured_native_stage"],
+      "expected": "native_first_action_uptake"
+    },
+    {
+      "id": "C29",
+      "description": "Merging exposure and uptake destroys diagnostic resolution.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["structural_sensitivity", 3, "diagnostic_resolution_preserved"],
+      "expected": false
+    },
+    {
+      "id": "C30",
+      "description": "The artifact names exposure-versus-first-action-uptake as the load-bearing measurement distinction.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["measurement_load_bearing", "distinction"],
+      "expected": "native_retrieval_exposure_vs_native_first_action_uptake"
+    },
+    {
+      "id": "C31",
+      "description": "The manuscript frames exposure/uptake separation as diagnostic resolution rather than merely adding metrics or reclaiming generic utilization novelty.",
+      "kind": "text",
+      "sources": ["source-r7/sections/04_variance_protocol.tex", "source-r7/sections/05_related.tex"],
+      "required": ["not simply to report more stage metrics", "separation of exposure from uptake", "not our novelty"]
+    },
+    {
+      "id": "C32",
+      "description": "External validity is restricted to the frozen writer/policy configuration and the evaluated Shopping+Reddit substrate.",
+      "kind": "text",
+      "source": "source-r7/sections/06_limitations_conclusion.tex",
+      "required": ["External validity is restricted to the frozen released writer/policy configuration and the Shopping+Reddit substrate evaluated here", "other writers, backbones, domains, and memory architectures are untested"]
+    },
+    {
+      "id": "C33",
+      "description": "The Shopping exposure-to-uptake boundary is not claimed as replicated on Reddit.",
+      "kind": "json_eq",
+      "source": "stage-evidence-sensitivity-audit-20260826.json",
+      "json_path": ["cross_domain_boundary", "shopping_exposure_to_uptake_boundary_replicated_on_reddit"],
+      "expected": false
+    },
+    {
+      "id": "C34",
+      "description": "CBRG stopped before behavioral evaluation and is not represented as a validated repair.",
+      "kind": "text",
+      "source": "source-r7/sections/06_limitations_conclusion.tex",
+      "required": ["CBRG extension stopped before behavioral evaluation", "no behavioral repair efficacy is claimed"]
+    },
+    {
+      "id": "C35",
+      "description": "Decision-critical overclaim phrases are absent from the manuscript.",
+      "kind": "text",
+      "sources": [
+        "source-r7/sections/00_abstract.tex",
+        "source-r7/sections/01_intro.tex",
+        "source-r7/sections/02_mechanism.tex",
+        "source-r7/sections/03_f0.tex",
+        "source-r7/sections/03a_prompt_control.tex",
+        "source-r7/sections/04_variance_protocol.tex",
+        "source-r7/sections/05_related.tex",
+        "source-r7/sections/06_limitations_conclusion.tex",
+        "source-r7/sections/07_appendix.tex"
+      ],
+      "forbidden": [
+        "true causal bottleneck",
+        "strongest supported operational attenuation boundary",
+        "largest attenuation can occur",
+        "exposure-to-uptake bottleneck",
+        "reddit replicates the shopping evidence boundary",
+        "changes only the reward-conditioned writer branch",
+        "CBRG repair is validated"
+      ]
+    }
+  ]
+}

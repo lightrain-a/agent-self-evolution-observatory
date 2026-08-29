@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "c1-r7-external-review-paper-only-repair",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision_id": "C1-STAGE-SIGNATURE-R7-STANFORD-REVIEW-REPAIR-20260829",
+  "source_revision": "R6",
+  "review_service": "Stanford Agentic Reviewer · paperreview.ai",
+  "review_type": "external_advisory_ai_review",
+  "review_result_sha256": "d6381b8751e332714384fd7bc1a7099f8b741300af79ab71e9109f49a7ed39a3",
+  "advisory_numerical_score": 5.8,
+  "official_conference_score": false,
+  "overall_assessment": "Core measurement contribution is viewed positively, with acceptance recommended contingent on clarifications and modest extensions where feasible.",
+  "paper_only_repairs": [
+    "Distinguish source-item exposure from the stronger notion of treatment-residual exposure.",
+    "Define the 36 Shopping branch-comparison states and the support of the first-action total-variation comparison more explicitly.",
+    "State that first-action uptake is the first unsupported measured native stage, not the causal onset of attenuation and not proof that later policy surfaces cannot differ.",
+    "Add explicit multiplicity interpretation: stage-local tests are not searched as a family and the boundary is not selected by the smallest p-value.",
+    "Clarify write, exposure, uptake, and capacity terminology and strengthen the related-work distinction around intervention-preserving transport rather than lifecycle naming.",
+    "Preserve the limitation that the frozen logs do not identify which branch-differentiating content is consumed downstream."
+  ],
+  "deferred_review_requests_requiring_scientific_reopen": [
+    "Second backbone or alternate memory/retrieval architecture.",
+    "Alternative retrieval top-k or ranker settings.",
+    "Treatment-residual masking, attribution, or matched readout interventions.",
+    "Same-condition stochastic noise-floor replication.",
+    "New later-step or tool-sequence behavioral experiments beyond the frozen evidence."
+  ],
+  "scientific_contract_changed": false,
+  "scientific_results_changed": false,
+  "claim_expansion": false,
+  "new_scientific_experiments": 0,
+  "new_scientific_provider_calls": 0,
+  "new_gpu_scientific_runs": 0,
+  "r6_history_rewritten": false,
+  "r7_source_separated_from_r6": true,
+  "artifacts": {
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r7-review-repair.pdf",
+      "sha256": "a5ce511a11a7781ca5374e0f54f7830454927874ca8dc6112c87e6106ab20167"
+    },
+    "source_zip": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r7-review-repair-source.zip",
+      "sha256": "91af2cd961a0633b31e2ba38fb1e3f2abcf6db4013dd44977d7b1d2cf8fcc76e"
+    },
+    "claim_audit": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/claim-audit-r7-provenance-seal-20260829.json",
+      "sha256": "baad7e26fa297412c3959bb58d2df5bdd04d3de52d1175f6b0ea5e14d8caf4cf",
+      "status": "35/35 REPLAY_PASS"
+    }
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "claim_expansion": false,
+    "official_submission": false
+  }
+}
