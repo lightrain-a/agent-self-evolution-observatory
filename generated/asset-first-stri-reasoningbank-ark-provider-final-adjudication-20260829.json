@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "artifact_id": "E1-STRI-REASONINGBANK-ARK-FINAL-QUALIFICATION-20260829",
+  "adjudicated_at_utc": "2026-08-29T00:00:00Z",
+  "provider_role": "ReasoningBank architecture + compatibility-adapted Ark backend",
+  "decision": "ARK_BACKEND_QUALIFIED_WITH_DIRECT_MODEL_AND_UNSEEDED_PAIRED_REPEATS",
+  "evidence_chain": [
+    {
+      "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0-20260829",
+      "result_sha256": "898021f0848877e9b77c4b279a78e4cb50e42f4595f7549e780883c1f5907b66",
+      "adjudication_sha256": "4ad4a5b2eebae6261b3c76f9c87357c198770d9777d16da7b64f955be57687f3",
+      "decision": "NOT_QUALIFIED_ALIAS_IDENTITY_MISMATCH",
+      "lesson": "Project alias ark-code-latest resolved consistently to doubao-seed-evolving."
+    },
+    {
+      "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0B-20260829",
+      "result_sha256": "fad4426050536dea7418caf4101a16e920f712379e66feba001b0c6551f34004",
+      "adjudication_sha256": "9a3048992e9be14859cac601d520e058e21135c4a5d80472e1a7361e6b17498c",
+      "decision": "NOT_QUALIFIED_NONIDENTIFIABLE_EXACT_CONTINUATION",
+      "lesson": "Exact stylistic continuation is not the agent-semantic observable; the initial value was already visible."
+    },
+    {
+      "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0C-20260829",
+      "contract_sha256": "d3474b0fa2d8e7c7df7310522c2917ae8480c28bece8be55fc0a1811b1ec01c9",
+      "result_sha256": "856f1f0833d783b3642c3d6f3b30a02bb2338a5c5716e02bbc59c1dc2bef630d",
+      "decision": "ARK_CAUSAL_TOOL_CONTINUATION_QUALIFIED",
+      "lesson": "A nonce first introduced in function_call_output was recovered downstream."
+    }
+  ],
+  "frozen_backend": {
+    "endpoint": "https://ark.cn-beijing.volces.com/api/plan/v3/responses",
+    "requested_model": "doubao-seed-evolving",
+    "resolved_model": "doubao-seed-evolving",
+    "temperature": 0,
+    "top_p": "omitted",
+    "seed": "omitted",
+    "repeats": "paired same-backend repeated executions",
+    "timeout_seconds": 120,
+    "max_retries": 2,
+    "response_storage": true
+  },
+  "supported_semantics": [
+    "instructions/system message",
+    "user message",
+    "structured multi-turn history",
+    "function schema",
+    "function-call parsing",
+    "causal function-result continuation",
+    "max_output_tokens",
+    "temperature",
+    "top_p",
+    "stop",
+    "JSON schema structured output",
+    "usage metadata",
+    "provider-reported concrete model identity",
+    "retry of identical body on transport/server failure"
+  ],
+  "limited_or_unsupported_semantics": [
+    {
+      "item": "ark-code-latest as an exact model identity",
+      "classification": "alias_not_concrete_identity",
+      "p1_action": "pin doubao-seed-evolving directly"
+    },
+    {
+      "item": "seed",
+      "classification": "accepted_but_not_empirically_honored_or_reproducible",
+      "evidence": "Same seed 42 produced different output in two executions.",
+      "p1_action": "omit seed and prohibit independent-seeded-repeat wording"
+    },
+    {
+      "item": "temperature=0 determinism",
+      "classification": "two probe outputs equal but universal determinism not established",
+      "p1_action": "record every repeated execution and compare actual serialized requests"
+    }
+  ],
+  "treatment_preservation": {
+    "memory_schema_changed": false,
+    "memory_grouping_changed": false,
+    "case_identity_changed": false,
+    "top_k_changed": false,
+    "retrieval_ranking_changed": false,
+    "memory_formatting_changed": false,
+    "benchmark_changed": false,
+    "p1_task_outcome_observed": false
+  },
+  "next_authorized_stage": {
+    "memory_provenance_contract": true,
+    "source_eval_split_freeze": true,
+    "leakage_guard": true,
+    "memory_induction_execution": false,
+    "p1_behavioral_execution": false,
+    "full_p1": false
+  },
+  "claim_allowed": "The direct Ark backend is qualified to preserve the message and tool interaction semantics required for a compatibility-adapted ReasoningBank experiment.",
+  "claim_forbidden": [
+    "Original ReasoningBank benchmark reproduction",
+    "Independent seeded stochastic repeats",
+    "Any ReasoningBank behavioral robustness or performance claim"
+  ],
+  "credential_security": {
+    "secret_value_recorded": false,
+    "secret_value_printed": false,
+    "secret_value_committed": false
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "causal_observable": "Recover a nonce that first becomes model-visible in function_call_output.",
+  "checks": {
+    "all_requests_succeeded": true,
+    "direct_model_identity": true,
+    "nonce_absent_before_tool_result": true,
+    "post_call_nonce_recovered": true,
+    "single_tool_call": true,
+    "usage_present": true
+  },
+  "contract": "generated/asset-first-stri-reasoningbank-ark-tool-continuation-causal-contract-20260829.json",
+  "created_at_utc": "2026-08-29T13:29:25+00:00",
+  "decision": "ARK_CAUSAL_TOOL_CONTINUATION_QUALIFIED",
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0C-20260829",
+  "nonce_is_harmless_public_probe": true,
+  "nonce_sha256": "99ef0196c5f5a0c7f16586f894f43a8e153e07aede04668155dc25f7fbb8f6f5",
+  "provider_role": "ReasoningBank architecture + compatibility-adapted Ark backend",
+  "receipts": [
+    {
+      "credential_material_present": false,
+      "function_calls": [
+        {
+          "arguments": "{\"value\": 731}",
+          "call_id_sha256": "926b85a2b95a496442d23ab96a2cc5353a08a178ca4eeded719c37252c3a413d",
+          "name": "record_probe"
+        }
+      ],
+      "label": "tool_call",
+      "ok": true,
+      "requested_model": "doubao-seed-evolving",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "029738e54f8faaaa53ae89ef32254f64ea02fcf3a50d37e08d545a0070e8f1b4",
+      "status": "completed",
+      "text": "",
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "usage": {
+        "input_tokens": 521,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 35,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 556
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "tool_result_continuation",
+      "ok": true,
+      "requested_model": "doubao-seed-evolving",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "254704ac5c15762aed5bcbedf0fe2e08ffd08118160d0a8093bc52274ef4464b",
+      "status": "completed",
+      "text": "The probe has been recorded with value **731**. The continuation nonce is `TOOL_ONLY_NONCE_913`.",
+      "text_sha256": "3f138bee0ac33efb57278302d4a2b2ca3e850f8a8f840d6fc31f444817fdb644",
+      "usage": {
+        "input_tokens": 131,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 86,
+        "output_tokens_details": {
+          "reasoning_tokens": 56
+        },
+        "total_tokens": 217
+      }
+    }
+  ],
+  "resource_accounting": {
+    "gpu_seconds": 0,
+    "provider_requests_attempted": 2
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "behavioral_claim_authorized": false,
+    "full_p1_authorized": false,
+    "memory_induction_executed": false,
+    "p1_outcome_observed": false,
+    "provider_semantics_only": true
+  }
+}

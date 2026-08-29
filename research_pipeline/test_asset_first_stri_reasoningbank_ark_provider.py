@@ -154,5 +154,60 @@ class ReasoningBankArkProviderTest(unittest.TestCase):
         self.assertEqual(normalized["function_calls"][0]["arguments"], '{"value":731}')
 
 
+class ReasoningBankArkLiveArtifactTest(unittest.TestCase):
+    ROOT = __import__("pathlib").Path(__file__).resolve().parents[1]
+    GENERATED = ROOT / "generated"
+
+    def load(self, name: str) -> dict:
+        return __import__("json").loads((self.GENERATED / name).read_text(encoding="utf-8"))
+
+    def test_failure_repair_chain_is_preserved(self) -> None:
+        q0 = self.load("asset-first-stri-reasoningbank-ark-provider-qualification-result-20260829.json")
+        q0b = self.load("asset-first-stri-reasoningbank-ark-provider-identity-resolution-result-20260829.json")
+        q0c = self.load("asset-first-stri-reasoningbank-ark-tool-continuation-causal-result-20260829.json")
+        self.assertEqual(q0["decision"], "ARK_BACKEND_NOT_YET_QUALIFIED_LOCALIZE_AND_REPAIR")
+        self.assertTrue(all(row["ok"] for row in q0["receipts"]))
+        self.assertFalse(q0["required_semantics"]["provider_model_identifier"])
+        self.assertFalse(q0["seed_semantics"]["same_seed_equal"])
+        self.assertFalse(q0["seed_semantics"]["claim_independent_seeded_repeats_authorized"])
+        self.assertEqual(q0b["decision"], "ARK_DIRECT_MODEL_NOT_QUALIFIED")
+        self.assertTrue(q0b["checks"]["all_resolved_model_direct"])
+        self.assertFalse(q0b["checks"]["continuation_exact"])
+        self.assertEqual(q0c["decision"], "ARK_CAUSAL_TOOL_CONTINUATION_QUALIFIED")
+        self.assertTrue(all(q0c["checks"].values()))
+
+    def test_final_backend_contract_is_direct_and_unseeded(self) -> None:
+        final = self.load("asset-first-stri-reasoningbank-ark-provider-final-adjudication-20260829.json")
+        self.assertEqual(
+            final["decision"],
+            "ARK_BACKEND_QUALIFIED_WITH_DIRECT_MODEL_AND_UNSEEDED_PAIRED_REPEATS",
+        )
+        backend = final["frozen_backend"]
+        self.assertEqual(backend["requested_model"], "doubao-seed-evolving")
+        self.assertEqual(backend["resolved_model"], "doubao-seed-evolving")
+        self.assertEqual(backend["temperature"], 0)
+        self.assertEqual(backend["seed"], "omitted")
+        self.assertFalse(final["next_authorized_stage"]["memory_induction_execution"])
+        self.assertFalse(final["next_authorized_stage"]["p1_behavioral_execution"])
+
+    def test_live_artifacts_do_not_serialize_api_key_field(self) -> None:
+        names = (
+            "asset-first-stri-reasoningbank-ark-provider-qualification-result-20260829.json",
+            "asset-first-stri-reasoningbank-ark-provider-identity-resolution-result-20260829.json",
+            "asset-first-stri-reasoningbank-ark-tool-continuation-causal-result-20260829.json",
+            "asset-first-stri-reasoningbank-ark-provider-final-adjudication-20260829.json",
+        )
+        def visit(value):
+            if isinstance(value, dict):
+                for key, child in value.items():
+                    self.assertNotEqual(key.lower(), "api_key")
+                    visit(child)
+            elif isinstance(value, list):
+                for child in value:
+                    visit(child)
+        for name in names:
+            visit(self.load(name))
+
+
 if __name__ == "__main__":
     unittest.main()
