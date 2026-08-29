@@ -1,0 +1,119 @@
+{
+  "authorization": {
+    "full_p1": false,
+    "minimal_pilot_after_runtime_qualification": true,
+    "source_induction_after_runtime_qualification": true
+  },
+  "code_bindings": {
+    "research_pipeline/asset_first_stri_reasoningbank_p1.py": "496d95876bfc992fbd2d33724157bf21addd140adaaafe6d72757db25bb68b93",
+    "research_pipeline/asset_first_stri_reasoningbank_p1_core.py": "c3e078bc887b701ed26749a8520a4b4da9962a84ea66a300a1872f1d8c2df7b7",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1.py": "ec87312795e017976afe714dfd59ae03736efe87e95c5ab132f841fc3ca7fbf9"
+  },
+  "created_at_utc": "2026-08-29T15:30:25Z",
+  "decision": "P1_PID_NAMESPACE_RUNTIME_REPAIR_FROZEN_BEFORE_OUTCOME",
+  "diagnosis": {
+    "kernel": {
+      "apparmor_restrict_unprivileged_userns": 1,
+      "max_user_namespaces": 513737,
+      "unprivileged_userns_clone": 1
+    },
+    "root_cause_class": "host_rootless_user_namespace_proc_mount_restriction",
+    "technical_source": "https://ubuntu.com/blog/ubuntu-23-10-restricted-unprivileged-user-namespaces"
+  },
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-RUNTIME-PID-NAMESPACE-REPAIR-20260829",
+  "frozen_runtime_repair": {
+    "container_create_addition": [
+      "--pid",
+      "host"
+    ],
+    "docker_host": "unix:///run/user/1006/e1-reasoningbank-docker.sock",
+    "fresh_container_per_run": true,
+    "pid_namespace": "host",
+    "uniform_for_source_and_arms": [
+      "SOURCE_NO_MEMORY",
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ]
+  },
+  "image_supply_chain": {
+    "blob_cache_receipt_sha256": "a704275970441c7288d751793ffafde894f73f0a8a6905b1048a4628f9acc8a1",
+    "fixed_manifest_digests": [
+      "sha256:4111da8b069bc23cc67ef24f2f433f82601518941052faebd3c4a621d3748cd6",
+      "sha256:22a1a81b8e937a1ff52cef4f38bf59e6a8baa0648ef3b115e6206bfc5c5de68f",
+      "sha256:4d18e6a31fb1d68a8232f3c78a5a4c97e9c7a2d001765dcc90f228cef4b4e39f"
+    ],
+    "import_receipt_sha256": "5dfb146c6eabf42ae5b5c5af03d0b331f0f934e2302dbda391d7277b5eaeffcc",
+    "mirror": "docker.1ms.run",
+    "verification": "each manifest and each of 19 unique config/layer blobs independently SHA-256 verified before import"
+  },
+  "invariants": {
+    "base_commit_unchanged": true,
+    "evaluator_unchanged": true,
+    "fresh_filesystem_per_run": true,
+    "image_digest_unchanged": true,
+    "model_and_provider_parameters_unchanged": true,
+    "no_apparmor_or_seccomp_relaxation": true,
+    "official_prompt_and_step_limit_unchanged": true,
+    "source_eval_disjointness_unchanged": true,
+    "task_population_unchanged": true,
+    "treatment_content_and_order_unchanged": true
+  },
+  "payload_sha256": "0608b91a2fbc2b529e07c9f4b2b0c44c3a352256be102c34af70eca12b38b403",
+  "prior_evidence_retained": {
+    "minimal_pilot_contract": "generated/asset-first-stri-reasoningbank-p1-minimal-pilot-contract-20260829.json",
+    "minimal_pilot_contract_sha256": "827917e0dda5911e64514e7a227a1f3f6c9541fc75af4d380fa623c6ad943560",
+    "prior_runtime_hold": "generated/asset-first-stri-reasoningbank-p1-runtime-qualification-result-20260829.json",
+    "prior_runtime_hold_sha256": "33b0a9870f68950d525c4f0af1a7ca0ed3e42b77d14b427bf170b73486687a0b"
+  },
+  "probe_evidence": [
+    {
+      "configuration": [
+        "--security-opt",
+        "apparmor=unconfined"
+      ],
+      "result": "FAIL",
+      "terminal_error": "error mounting proc to rootfs at /proc: operation not permitted"
+    },
+    {
+      "configuration": [
+        "--security-opt",
+        "apparmor=unconfined",
+        "--security-opt",
+        "seccomp=unconfined"
+      ],
+      "result": "FAIL",
+      "terminal_error": "error mounting proc to rootfs at /proc: operation not permitted"
+    },
+    {
+      "configuration": [
+        "--pid",
+        "host"
+      ],
+      "container_exec_true": "PASS",
+      "container_start": "PASS",
+      "fixed_image_manifest_digest": "sha256:4111da8b069bc23cc67ef24f2f433f82601518941052faebd3c4a621d3748cd6",
+      "result": "PASS"
+    }
+  ],
+  "repair_scope": {
+    "changed": "PID namespace isolation only",
+    "interpretation_limit": "The pilot is a compatibility-adapted ReasoningBank execution, not a bit-identical reproduction of the official Docker namespace topology.",
+    "not_changed": "scientific treatment, task population, model-visible requests, metrics, evaluator, image filesystem, ordering, or stopping rules"
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "downstream_p1_outcome_observed": false,
+    "pilot_task_outcome_observed": false,
+    "repair_selected_from_non_outcome_start_and_exec_true_probes_only": true,
+    "source_induction_executed": false,
+    "source_task_test_or_evaluator_executed": false
+  },
+  "tests": {
+    "command": "python -m unittest research_pipeline.test_asset_first_stri_reasoningbank_p1 research_pipeline.test_asset_first_stri_reasoningbank_ark_provider research_pipeline.test_asset_first_stri_third_carrier_20260829 -v",
+    "passed": 27,
+    "result": "PASS"
+  }
+}

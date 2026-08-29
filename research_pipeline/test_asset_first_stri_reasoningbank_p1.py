@@ -8,6 +8,7 @@ from research_pipeline.asset_first_stri_reasoningbank_p1 import treatment_cases
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
     FIXTURE_PATH,
     MEMORY_PREFIX,
+    PID_NAMESPACE,
     load_config,
     render_messages,
     verify_frozen_inputs,
@@ -27,6 +28,7 @@ class ReasoningBankP1FrozenRuntimeTest(unittest.TestCase):
         self.assertEqual(float(config["agent"]["cost_limit"]), 3.0)
         self.assertEqual(config["environment"]["timeout"], 60)
         self.assertEqual(config["model"]["model_kwargs"]["temperature"], 0.0)
+        self.assertEqual(PID_NAMESPACE, "host")
 
     def test_memory_is_appended_to_official_system_message_only(self) -> None:
         without = render_messages("task")

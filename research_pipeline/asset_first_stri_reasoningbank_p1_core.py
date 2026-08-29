@@ -49,6 +49,7 @@ EXPECTED_HASHES = {
 MODEL = "deepseek-v4-pro-ga-260813"
 BASE_URL = "https://ark.cn-beijing.volces.com/api/plan/v3"
 DOCKER_HOST = "unix:///run/user/1006/e1-reasoningbank-docker.sock"
+PID_NAMESPACE = "host"
 STEP_LIMIT = 250
 COMMAND_TIMEOUT_SECONDS = 60
 EVALUATOR_TIMEOUT_SECONDS = 1800
@@ -212,7 +213,8 @@ class DockerRun:
         if inspect["returncode"] != 0:
             raise RuntimeError(f"frozen image unavailable: {self.image}")
         created = run_host([
-            "docker", "create", "--platform", "linux/amd64", "--name", self.name,
+            "docker", "create", "--platform", "linux/amd64",
+            "--pid", PID_NAMESPACE, "--name", self.name,
             "--entrypoint", "sleep", self.image, "infinity",
         ], timeout=60, docker=True)
         if created["returncode"] != 0:
@@ -352,7 +354,8 @@ def execute_agent(
         },
         "runtime": {
             "docker_host": DOCKER_HOST, "image": fixture["image_pull_reference"],
-            "platform": "linux/amd64", "environment_timeout_seconds": COMMAND_TIMEOUT_SECONDS,
+            "platform": "linux/amd64", "pid_namespace": PID_NAMESPACE,
+            "environment_timeout_seconds": COMMAND_TIMEOUT_SECONDS,
             "step_limit": STEP_LIMIT,
             "cost_limit_usd": "official=3.0; not enforceable under Ark Plan",
             "receipt": runtime_receipt,

@@ -16,6 +16,7 @@ from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
     MAX_RETRIES,
     MODEL,
     OFFICIAL_COMMIT,
+    PID_NAMESPACE,
     RETRIEVAL_CERT_PATH,
     ROOT,
     DockerRun,
@@ -290,6 +291,7 @@ def qualify_runtime(output: Path) -> dict[str, Any]:
             "all_base_commits_exact": all(row["pass"] for row in rows),
             "no_task_test_or_evaluator_executed": True,
             "separate_docker_daemon": True,
+            "pid_namespace": PID_NAMESPACE,
         },
         "decision": decision,
         "scientific_boundary": {
