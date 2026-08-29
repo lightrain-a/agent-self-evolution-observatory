@@ -1,0 +1,61 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-2026-release-watch-v1.2",
+  "object_id": "SUCC-C-BEHAVIOR2026-PUBLIC-OUTCOME",
+  "status": "WATCH_STABLE_NO_2026_PUBLIC_RESULT_RELEASE_CHANGE",
+  "scientific_authority": false,
+  "analysis_authority": false,
+  "provider_authority": false,
+  "gpu_authority": false,
+  "policy_outcome_values_read": false,
+  "baseline_sha256": "852223223ac8304334e50c2b1efb6eedef7b4f71f1c6c9bfe1ae1c91786a5c14",
+  "baseline_space_sha": "5822bbe9010fa1c6f60aefb09f7cca435532adc7",
+  "current_space_sha": "5822bbe9010fa1c6f60aefb09f7cca435532adc7",
+  "current_last_modified": null,
+  "transport": {
+    "mode": "hf-mirror-fixed-revision",
+    "authority": "Hugging Face Space content mirrored transport",
+    "revision_source": "X-Repo-Commit from resolve/main",
+    "fixed_revision_tree": true,
+    "content_verification": {
+      "data/README.md": {
+        "bytes": 2115,
+        "sha256": "43ba6a7c570a5c834741b93f28bd3dbba02a8da5c1b6209d84bbf508bf694a95",
+        "git_blob_oid": "3f71bebf539d5d90e209c2b75f52e836203f01ef",
+        "tree_oid_match": true,
+        "outcome_values_read": false
+      },
+      "data/submissions.jsonl": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "git_blob_oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "tree_oid_match": true,
+        "content_downloaded": true,
+        "outcome_values_read": false
+      },
+      "data/results.jsonl": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "git_blob_oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "tree_oid_match": true,
+        "content_downloaded": true,
+        "outcome_values_read": false
+      },
+      "data/per_task_results.jsonl": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "git_blob_oid": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "tree_oid_match": true,
+        "content_downloaded": true,
+        "outcome_values_read": false
+      }
+    },
+    "nonempty_outcome_content_downloaded": false
+  },
+  "changed_2026_target_files": [],
+  "ignored_2025_results_changed": false,
+  "public_schema_changed": false,
+  "triggered": false,
+  "recheck_required": false,
+  "trigger_effect": "zero-authority source/preregistration/admission recheck only; this watch never authorizes outcome analysis",
+  "receipt_sha256": "302499d8f64ff61404879cb9afe1f39a090f3ab33738658b206b15a3c29091ee"
+}

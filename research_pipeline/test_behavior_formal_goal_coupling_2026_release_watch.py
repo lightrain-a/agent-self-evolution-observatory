@@ -4,8 +4,17 @@ import copy
 import json
 import unittest
 from pathlib import Path
+from unittest import mock
 
-from .behavior_formal_goal_coupling_2026_release_watch import TARGET_FILES, evaluate_release_change
+from .behavior_formal_goal_coupling_2026_release_watch import (
+    EMPTY_GIT_BLOB_OID,
+    EMPTY_SHA256,
+    SCHEMA_FILE,
+    TARGET_FILES,
+    _git_blob_oid,
+    _verify_fixed_revision_mirror,
+    evaluate_release_change,
+)
 
 
 class BehaviorFormalGoalCoupling2026ReleaseWatchTest(unittest.TestCase):
@@ -64,6 +73,42 @@ class BehaviorFormalGoalCoupling2026ReleaseWatchTest(unittest.TestCase):
         self.assertFalse(result["triggered"])
         self.assertFalse(result["recheck_required"])
         self.assertEqual(result["current_space_sha"], "a" * 40)
+
+    def test_git_blob_oid_matches_git_empty_blob(self) -> None:
+        self.assertEqual(_git_blob_oid(b""), EMPTY_GIT_BLOB_OID)
+        self.assertEqual(EMPTY_SHA256, "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855")
+
+    def test_fixed_revision_verification_does_not_download_nonempty_outcomes(self) -> None:
+        schema = b"schema bytes\n"
+        files = {
+            SCHEMA_FILE: {"exists": True, "size": len(schema), "oid": _git_blob_oid(schema)},
+            TARGET_FILES[0]: {"exists": True, "size": 7, "oid": "a" * 40},
+            TARGET_FILES[1]: {"exists": True, "size": 0, "oid": EMPTY_GIT_BLOB_OID},
+            TARGET_FILES[2]: {"exists": True, "size": 0, "oid": EMPTY_GIT_BLOB_OID},
+        }
+        downloads: list[str] = []
+
+        def fake_download(url: str) -> bytes:
+            downloads.append(url)
+            if SCHEMA_FILE in url:
+                return schema
+            return b""
+
+        with mock.patch(
+            "research_pipeline.behavior_formal_goal_coupling_2026_release_watch._download_bytes",
+            side_effect=fake_download,
+        ):
+            verified = _verify_fixed_revision_mirror("b" * 40, files)
+
+        self.assertFalse(verified[TARGET_FILES[0]]["content_downloaded"])
+        self.assertEqual(
+            verified[TARGET_FILES[0]]["verification"],
+            "deferred_nonempty_outcome_content_recheck_required",
+        )
+        self.assertFalse(verified[TARGET_FILES[0]]["outcome_values_read"])
+        self.assertEqual(sum(TARGET_FILES[0] in url for url in downloads), 0)
+        self.assertEqual(verified[TARGET_FILES[1]]["sha256"], EMPTY_SHA256)
+        self.assertTrue(verified[SCHEMA_FILE]["tree_oid_match"])
 
 
 if __name__ == "__main__":
