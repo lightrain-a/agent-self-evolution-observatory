@@ -1,0 +1,156 @@
+{
+  "completed_runs": [
+    {
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "4d421ceaebe770182f4d01424066be65c0fbefcc4f8aaa2ef920cec902a52aab",
+      "instance_id": "pytest-dev__pytest-5631",
+      "model": "deepseek-v4-pro-ga-260813",
+      "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-pytest-dev__pytest-5631-A/run.json",
+      "resolved": true,
+      "run_id": "pilot-pytest-dev__pytest-5631-A"
+    },
+    {
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "4325b764b81a921afc3a28064b8ed7a7884c71f239db4bf2cf0508f34196cb6b",
+      "instance_id": "pytest-dev__pytest-5631",
+      "model": "deepseek-v4-pro-ga-260813",
+      "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-pytest-dev__pytest-5631-B/run.json",
+      "resolved": true,
+      "run_id": "pilot-pytest-dev__pytest-5631-B"
+    },
+    {
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "ae42a1bccea93db89c1a06dcda99ff28f866a64942cf56b40560581e80e56e43",
+      "instance_id": "pytest-dev__pytest-5631",
+      "model": "deepseek-v4-pro-ga-260813",
+      "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-pytest-dev__pytest-5631-C/run.json",
+      "resolved": true,
+      "run_id": "pilot-pytest-dev__pytest-5631-C"
+    },
+    {
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "57d41e336d3ae025d4a72f890c6719bdb898af64a7e37eed00a7c0ad8574264f",
+      "instance_id": "pytest-dev__pytest-5631",
+      "model": "deepseek-v4-pro-ga-260813",
+      "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-pytest-dev__pytest-5631-D/run.json",
+      "resolved": true,
+      "run_id": "pilot-pytest-dev__pytest-5631-D"
+    },
+    {
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "35460a8b55fa619ff6cde597e2626466cbf1cacac8dbc2779f9c386dd6def1ad",
+      "instance_id": "pytest-dev__pytest-5631",
+      "model": "deepseek-v4-pro-ga-260813",
+      "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-pytest-dev__pytest-5631-E/run.json",
+      "resolved": true,
+      "run_id": "pilot-pytest-dev__pytest-5631-E"
+    },
+    {
+      "exit_status": "ArkCompatibilityError",
+      "failure": {
+        "credential_material_present": false,
+        "detail": {
+          "error": {
+            "code": "MissingParameter",
+            "message": "The request failed because it is missing `input.content` parameter. Request id: 0217880205354574bf1de078d3c9f56d53aa0b4387efdeb291c23",
+            "param": "input.content",
+            "type": "BadRequest"
+          }
+        },
+        "error_type": "ArkCompatibilityError",
+        "failure_layer": "provider",
+        "message": "Ark HTTP 400",
+        "status_code": 400
+      },
+      "file_sha256": "4e46c130618804b8b067a8e9117804048b68825b83c17766ca59b52810225884",
+      "instance_id": "sympy__sympy-17318",
+      "model": "deepseek-v4-pro-ga-260813",
+      "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-sympy__sympy-17318-A/run.json",
+      "resolved": false,
+      "run_id": "pilot-sympy__sympy-17318-A"
+    },
+    {
+      "exit_status": "ArkCompatibilityError",
+      "failure": {
+        "credential_material_present": false,
+        "detail": {
+          "error": {
+            "code": "MissingParameter",
+            "message": "The request failed because it is missing `input.content` parameter. Request id: 02178802108468231c26a7cf9ea611aa30972127acb80175cbd4b",
+            "param": "input.content",
+            "type": "BadRequest"
+          }
+        },
+        "error_type": "ArkCompatibilityError",
+        "failure_layer": "provider",
+        "message": "Ark HTTP 400",
+        "status_code": 400
+      },
+      "file_sha256": "f9be3537383ea29c29f20991de75f4a45bce27525a0ee7d6e0e87d28c60272ed",
+      "instance_id": "sympy__sympy-17318",
+      "model": "deepseek-v4-pro-ga-260813",
+      "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-sympy__sympy-17318-B/run.json",
+      "resolved": false,
+      "run_id": "pilot-sympy__sympy-17318-B"
+    },
+    {
+      "exit_status": "ArkCompatibilityError",
+      "failure": {
+        "credential_material_present": false,
+        "detail": {
+          "error": {
+            "code": "MissingParameter",
+            "message": "The request failed because it is missing `input.content` parameter. Request id: 021788022682687668004fc1d5fde2a506b4986f050f7e87ee44a",
+            "param": "input.content",
+            "type": "BadRequest"
+          }
+        },
+        "error_type": "ArkCompatibilityError",
+        "failure_layer": "provider",
+        "message": "Ark HTTP 400",
+        "status_code": 400
+      },
+      "file_sha256": "48be433076cb49712917b732018af9812414ce1a2c933faf722548f22827f0a0",
+      "instance_id": "sympy__sympy-17318",
+      "model": "deepseek-v4-pro-ga-260813",
+      "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-sympy__sympy-17318-C/run.json",
+      "resolved": false,
+      "run_id": "pilot-sympy__sympy-17318-C"
+    },
+    {
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "cd8e801b01a0fa04fe7eb3fa588df4563f575dd0d8065289baa870bfba68a6d9",
+      "instance_id": "sympy__sympy-17318",
+      "model": "deepseek-v4-pro-ga-260813",
+      "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-sympy__sympy-17318-D/run.json",
+      "resolved": false,
+      "run_id": "pilot-sympy__sympy-17318-D"
+    },
+    {
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "b96b732006afd29949006b7f8f97ac05942c64e2753080e5c15aff7fed1bfd62",
+      "instance_id": "sympy__sympy-17318",
+      "model": "deepseek-v4-pro-ga-260813",
+      "path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/pilot-sympy__sympy-17318-E/run.json",
+      "resolved": false,
+      "run_id": "pilot-sympy__sympy-17318-E"
+    }
+  ],
+  "created_at_utc": "2026-08-29T17:23:14+00:00",
+  "credential_material_present": false,
+  "execution_complete": true,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-MINIMAL-PILOT-20260829",
+  "ordered_execution": "evaluation-case order then A/B/C/D/E",
+  "payload_sha256": "9b22c1a8385289d9a1d3ab975349fc0241097383981e0c30d3a6e8446c50d018",
+  "planned_run_count": 10,
+  "schema_version": 1,
+  "treatment_manifest": "generated/asset-first-stri-reasoningbank-p1-treatment-manifest-20260829.json",
+  "treatment_manifest_sha256": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7"
+}
