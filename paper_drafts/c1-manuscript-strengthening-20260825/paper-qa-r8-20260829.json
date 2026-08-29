@@ -1,0 +1,178 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_R8_PAPER_QA",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision": "R8",
+  "status": "PASS",
+  "checks": {
+    "claim_audit_replay": "26/26 PASS",
+    "total_pdf_pages": 12,
+    "main_text_with_conclusion_within_9_pages": true,
+    "references_begin_page_8": true,
+    "appendix_begins_page_8_after_references": true,
+    "appendix_continues_page_9": true,
+    "latex_undefined_or_overfull_warnings": 0,
+    "bibtex_warnings": 0,
+    "rendered_pages": 12,
+    "render_margin_smoke": "PASS",
+    "fonts_embedded": true
+  },
+  "render_bboxes": [
+    {
+      "page": 1,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1052
+      ]
+    },
+    {
+      "page": 2,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1052
+      ]
+    },
+    {
+      "page": 3,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1016
+      ]
+    },
+    {
+      "page": 4,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1052
+      ]
+    },
+    {
+      "page": 5,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1048
+      ]
+    },
+    {
+      "page": 6,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1048
+      ]
+    },
+    {
+      "page": 7,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1052
+      ]
+    },
+    {
+      "page": 8,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1012
+      ]
+    },
+    {
+      "page": 9,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1012
+      ]
+    },
+    {
+      "page": 10,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1052
+      ]
+    },
+    {
+      "page": 11,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1052
+      ]
+    },
+    {
+      "page": 12,
+      "size": [
+        850,
+        1100
+      ],
+      "sampled_nonwhite_bbox": [
+        104,
+        40,
+        700,
+        1052
+      ]
+    }
+  ]
+}
