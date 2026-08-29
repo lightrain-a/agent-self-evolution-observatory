@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-29T14:08:00+00:00",
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-RETRIEVAL-CERT-20260829",
+  "status": "PREREGISTERED_BEFORE_CERTIFICATE_EXECUTION_AND_BEFORE_P1_OUTCOMES",
+  "purpose": "Partially evaluate the unchanged official top-1 operator for the frozen one-source treatment design after both authorized Ark embedding routes failed before inference.",
+  "official_operator": {
+    "commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "selection_sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955",
+    "ranking": "descending cosine score",
+    "tie_break": "stable input order",
+    "top_k": 1
+  },
+  "registered_construction": {
+    "A_B_C_E": "One eligible case, hence top-1 selection is score-independent.",
+    "D": "Create two ordered cross-case fragments with cloned source query and cached embedding identity. Their scores are equal for every evaluation query; stable sort selects the first fragment case.",
+    "surrogate_embedding_model": "forbidden",
+    "absolute_score_claim": "forbidden"
+  },
+  "decision_rule": {
+    "pass": "Pinned source and operator patterns match; one-case selection is invariant; cloned D scores tie by construction; stable top-1 selects the first D case.",
+    "fail": "Any pinned-source, operator, one-case, equality, stable-sort, or top-k check fails."
+  },
+  "frozen_artifacts": {
+    "runner": {
+      "path": "research_pipeline/asset_first_stri_reasoningbank_p1_retrieval_certificate.py",
+      "sha256": "5e58f4f2910f9d61b97659d188610fda69d755a74ba035ea5eedc984ffc3c45c"
+    },
+    "fixtures": {
+      "path": "generated/asset-first-stri-reasoningbank-p1-task-fixtures-20260829.json",
+      "sha256": "adfa5aca503e3d8d07f4c5e0f86a03da6a58ffedf91ba9d1e9623ae8915d4114"
+    },
+    "fixture_extractor": {
+      "path": "research_pipeline/asset_first_stri_reasoningbank_p1_fixtures.py",
+      "sha256": "172d25de1430048f477260742128796ad250d473195a6dd827f524d87c499267"
+    }
+  },
+  "scientific_boundary": {
+    "memory_induction_executed": false,
+    "p1_task_outcome_observed": false,
+    "treatment_changed": false,
+    "retrieval_relevance_claim_authorized": false
+  }
+}
