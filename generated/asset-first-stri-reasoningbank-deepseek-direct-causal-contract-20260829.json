@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-29T13:43:00+00:00",
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-DEEPSEEK-Q1B-20260829",
+  "status": "PREREGISTERED_BEFORE_LIVE_REQUEST",
+  "purpose": "Confirm the stable versioned DeepSeek-Pro identity directly and establish causal function-result continuation after Q1 did not recover its post-call nonce.",
+  "fixed_provider": {
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "requested_model": "deepseek-v4-pro-ga-260813",
+    "expected_resolved_model": "deepseek-v4-pro-ga-260813",
+    "role": "ReasoningBank architecture + Ark DeepSeek-Pro compatibility backend"
+  },
+  "probe": {
+    "behavior_temperature": 0.0,
+    "max_output_tokens": "omitted",
+    "seed": "omitted",
+    "top_p": "omitted",
+    "tool_name": "fetch_frozen_value",
+    "tool_arguments": {},
+    "external_result_field": "frozen_value",
+    "causal_rule": "The frozen value must be absent from all pre-result model-visible material and present in the continuation text."
+  },
+  "decision_rule": {
+    "pass": "Both calls succeed; requested and resolved identities equal deepseek-v4-pro-ga-260813; exactly one zero-argument fetch_frozen_value call occurs; the post-call-only frozen value appears in the continuation; usage is present.",
+    "fail": "Any required request, identity, tool-call, causal-recovery, or usage check fails."
+  },
+  "frozen_artifacts": {
+    "runner": {
+      "path": "research_pipeline/asset_first_stri_reasoningbank_deepseek_direct_causal.py",
+      "sha256": "b30ade56d508a0c03e4fa5194bb3817cb6ec83e87cdc945eddf747f492e38920"
+    },
+    "adapter": {
+      "path": "research_pipeline/asset_first_stri_reasoningbank_ark_provider.py",
+      "sha256": "fb4809db198746a21aded3471d02df189db80fa5eb59029167a237c9b345e05e"
+    },
+    "q1_result": {
+      "path": "generated/asset-first-stri-reasoningbank-deepseek-provider-qualification-result-20260829.json",
+      "sha256": "b58acae28cdf05af6bf8024f37956487398cc3373618a20e7e797901f62d6524"
+    },
+    "q1_adjudication": {
+      "path": "generated/asset-first-stri-reasoningbank-deepseek-provider-qualification-adjudication-20260829.json",
+      "sha256": "c1c0231e0582732a5ec25f2bb19e78a48ba3e010a14d9fbcd104743c925cc588"
+    }
+  },
+  "scientific_boundary": {
+    "new_experiment_id": true,
+    "model_family_changed": false,
+    "direct_version_only": true,
+    "memory_induction_executed": false,
+    "p1_task_outcome_observed": false,
+    "case_identity_changed": false,
+    "treatment_semantics_changed": false
+  }
+}
