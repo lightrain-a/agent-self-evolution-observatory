@@ -1,0 +1,54 @@
+{
+  "calls": [
+    {
+      "credential_material_present": false,
+      "error_type": "ArkEmbeddingError",
+      "label": "batch_a_a_b",
+      "ok": false,
+      "response_body_sha256": "5153f64ff687ec7c83c64125fabaac19f0ced6cb959fc772cf7361f927594e12",
+      "status_code": 401
+    },
+    {
+      "credential_material_present": false,
+      "error_type": "ArkEmbeddingError",
+      "label": "repeat_a",
+      "ok": false,
+      "response_body_sha256": "3774ddf4f1e5f203b2521ed5ede59e274ef83387f84914ea83965a3422fe3554",
+      "status_code": 401
+    }
+  ],
+  "checks": {
+    "all_requests_succeeded": false,
+    "all_vectors_finite": true,
+    "distinct_text_not_exact": false,
+    "one_stable_dimension": false,
+    "requested_model_exact": true,
+    "same_input_repeat_exact": false,
+    "same_input_same_batch_exact": false,
+    "self_cosine_one": false,
+    "stable_nonempty_resolved_model": false,
+    "usage_present": true
+  },
+  "contract": "generated/asset-first-stri-reasoningbank-ark-embedding-qualification-contract-20260829.json",
+  "created_at_utc": "2026-08-29T13:58:24+00:00",
+  "decision": "ARK_EMBEDDING_BACKEND_NOT_QUALIFIED",
+  "dimensions": [],
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-EMBED-Q1-20260829",
+  "resolved_models": [],
+  "schema_version": 1,
+  "scientific_boundary": {
+    "behavioral_claim_authorized": false,
+    "memory_induction_executed": false,
+    "p1_task_outcome_observed": false,
+    "provider_semantics_only": true,
+    "retrieval_rank_observed": false
+  },
+  "settings": {
+    "configured": true,
+    "max_retries": 2,
+    "model": "doubao-embedding-large-text-250515",
+    "secret_value_exported": false,
+    "timeout_seconds": 120.0,
+    "url": "https://ark.cn-beijing.volces.com/api/v3/embeddings"
+  }
+}

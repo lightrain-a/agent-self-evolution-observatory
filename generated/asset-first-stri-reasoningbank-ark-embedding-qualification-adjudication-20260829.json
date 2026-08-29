@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-29T14:01:00+00:00",
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-EMBED-Q1-20260829",
+  "result": "generated/asset-first-stri-reasoningbank-ark-embedding-qualification-result-20260829.json",
+  "result_sha256": "304a3614c08fd379f303d04ba6cb0c8885a7d617fb67a7167490e8b0dc77a206",
+  "decision": "ARK_STANDARD_EMBEDDING_ENDPOINT_NOT_QUALIFIED",
+  "failure_classification": [
+    "authentication",
+    "provider endpoint scope"
+  ],
+  "observations": {
+    "configured_secret_present": true,
+    "requests_attempted": 2,
+    "http_statuses": [401, 401],
+    "embedding_vectors_returned": 0,
+    "credential_material_exposed": false
+  },
+  "scientific_interpretation": {
+    "retrieval_mechanism_negative": false,
+    "p1_behavior_negative": false,
+    "reason": "The existing authorized credential is known to qualify on Ark Plan Responses but was rejected before inference by the standard embeddings endpoint."
+  },
+  "authorized_follow_up": {
+    "new_experiment_required": true,
+    "single_variable": "endpoint path",
+    "requested_model_unchanged": "doubao-embedding-large-text-250515",
+    "candidate": "https://ark.cn-beijing.volces.com/api/plan/v3/embeddings",
+    "p1_outcome_basis": false
+  }
+}
