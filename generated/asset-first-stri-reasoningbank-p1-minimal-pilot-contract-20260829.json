@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-MINIMAL-PILOT-20260829",
+  "artifact_type": "prospective_behavioral_preregistration",
+  "created_at_utc": "2026-08-29T14:25:30Z",
+  "status": "FROZEN_BEFORE_SOURCE_INDUCTION_AND_P1_OUTCOMES",
+  "scientific_question": "Does ReasoningBank's native reunion of fragments inside one selected case propagate to equivalent model-visible state and coding behavior, while cross-case top-1 partition and within-case ordering remain behavioral representation boundaries?",
+  "selection_and_outcome_blinding": {
+    "user_selected_deepseek_pro_before_any_p1_outcome": true,
+    "source_induction_executed": false,
+    "source_task_outcome_observed": false,
+    "pilot_task_outcome_observed": false,
+    "treatment_outcome_observed": false,
+    "source_or_evaluation_replacement_after_outcome_forbidden": true
+  },
+  "source_pins": {
+    "reasoningbank_repository": "https://github.com/google-research/reasoning-bank",
+    "reasoningbank_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "swebench_verified_dataset": "SWE-bench/SWE-bench_Verified",
+    "dataset_revision": "78f471bf655a3137b2e8a75af1501690ec009ec3",
+    "dataset_parquet_sha256": "030cfd7f2a704c4c0226e7f104c725a3b41230b1d3517f9c915ad7ea5be3fa25",
+    "split_artifact": {
+      "path": "generated/asset-first-stri-reasoningbank-p1-source-eval-split-20260829.json",
+      "sha256": "f8c494b2251a0fd156b6207037fae3a1db5fb5022b82c510964a89eb322a7bbb"
+    },
+    "fixture_artifact": {
+      "path": "generated/asset-first-stri-reasoningbank-p1-task-fixtures-20260829.json",
+      "sha256": "adfa5aca503e3d8d07f4c5e0f86a03da6a58ffedf91ba9d1e9623ae8915d4114"
+    },
+    "retrieval_certificate": {
+      "path": "generated/asset-first-stri-reasoningbank-p1-retrieval-certificate-result-20260829.json",
+      "sha256": "b22f79d91e419a010e7e58e658feee424832fe091b506363269c6082e9549f34"
+    },
+    "paper_config_correction": {
+      "path": "generated/asset-first-stri-reasoningbank-paper-config-correction-20260829.json",
+      "sha256": "ffff870b0bf874c65afb20464ec705cad61ef80712f893b5bc4e195d2480a071"
+    }
+  },
+  "implementation_pins": {
+    "research_pipeline/asset_first_stri_reasoningbank_ark_provider.py": "69e17ab5a02289d66e6a13fed13c32005380411fe341cf201b187bbdf39ec8e9",
+    "research_pipeline/asset_first_stri_reasoningbank_p1_core.py": "e9d26d6f58eada4f746cae6c89a741458145c625d8f84bc758af1ab2615cda88",
+    "research_pipeline/asset_first_stri_reasoningbank_p1_eval.py": "043183fc27a700b066ab088c96bcc3a13251fa73e9925f0023c8f64f4117a4a7",
+    "research_pipeline/asset_first_stri_reasoningbank_p1.py": "3268734031b196358a9aee479ce451f681d24833792b6a65c68ad9459ebe8325",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1.py": "229ca6fd8a99178d7c700528742fca95a830ff2a122a66e2c5fdb305305e06bd"
+  },
+  "backend": {
+    "provider": "Volcengine Ark Plan Responses API",
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "requested_model": "deepseek-v4-pro-ga-260813",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "behavior": {
+      "temperature": 0.0,
+      "max_output_tokens": "omitted",
+      "seed": "omitted",
+      "top_p": "omitted"
+    },
+    "judge": {
+      "temperature": 0.0,
+      "max_output_tokens": 65536,
+      "seed": "omitted",
+      "top_p": "omitted",
+      "prompt_and_contains-success_parser": "exact official SWE-Bench ReasoningBank path"
+    },
+    "memory_induction": {
+      "temperature": 1.0,
+      "max_output_tokens": 65536,
+      "seed": "omitted",
+      "top_p": "omitted",
+      "system_instruction": "exact SUCCESSFUL_SI or FAILED_SI from pinned official source",
+      "extractor": "raw response text split on two consecutive newline characters"
+    },
+    "retry_policy": {
+      "provider_max_retries": 2,
+      "retry_only": "transport exception or HTTP 5xx",
+      "identical_request_body": true
+    },
+    "repeat_label": "ordered unseeded paired executions; not independent stochastic replicates"
+  },
+  "official_parameter_alignment": {
+    "workers": 1,
+    "retrieval_top_k": 1,
+    "agent_step_limit": 250,
+    "environment_timeout_seconds": 60,
+    "evaluator_timeout_seconds": 1800,
+    "environment_cwd": "/testbed",
+    "environment_class": "fresh Docker container per arm and task",
+    "action_parser": "exactly one fenced bash block using the official regex",
+    "submission_marker": "COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT or MINI_SWE_AGENT_FINAL_OUTPUT",
+    "cost_limit": {
+      "official_usd": 3.0,
+      "ark_plan_dollar_cost_available": false,
+      "enforced": false,
+      "reason": "No provider-returned dollar cost and no invented tariff conversion.",
+      "resource_receipts": "provider input/output tokens, model calls, transport attempts"
+    }
+  },
+  "task_population": {
+    "selection_rule": "ascending SHA-256(instance_id), tie by instance_id",
+    "source_cases": [
+      {
+        "rank": 0,
+        "instance_id": "sympy__sympy-13798",
+        "image_amd64_manifest_digest": "sha256:4111da8b069bc23cc67ef24f2f433f82601518941052faebd3c4a621d3748cd6"
+      }
+    ],
+    "minimal_pilot_evaluation_cases": [
+      {
+        "rank": 1,
+        "instance_id": "pytest-dev__pytest-5631",
+        "image_amd64_manifest_digest": "sha256:22a1a81b8e937a1ff52cef4f38bf59e6a8baa0648ef3b115e6206bfc5c5de68f"
+      },
+      {
+        "rank": 2,
+        "instance_id": "sympy__sympy-17318",
+        "image_amd64_manifest_digest": "sha256:4d18e6a31fb1d68a8232f3c78a5a4c97e9c7a2d001765dcc90f228cef4b4e39f"
+      }
+    ],
+    "source_eval_disjoint": true,
+    "gold_patch_content_absent_from_persisted_fixtures": true,
+    "evaluator_only_fields_never_model_visible": true
+  },
+  "memory_provenance": {
+    "class": "prospectively self-induced first-party-pipeline memory",
+    "source_agent_memory": "none",
+    "source_judge": "official LLM judge prompt and contains-success rule",
+    "extractor_instruction": "official success/failure instruction selected only by the frozen judge",
+    "memory_schema": {
+      "task_id": "source instance ID",
+      "query": "source problem statement",
+      "memory_items": "exact nonempty blocks from official raw split",
+      "status": "judge success or fail"
+    },
+    "eligibility_rule": "At least two nonempty split blocks are required to realize fragmentation treatments.",
+    "ineligible_action": "Persist source outcome and memory, stop P1 as treatment-ineligible, and do not replace the source case.",
+    "downstream_mutation_forbidden": true
+  },
+  "treatments": {
+    "shared_semantic_evidence": "All nonempty split blocks of the single frozen source memory.",
+    "A": "One source case with one canonical item equal to all blocks joined by two newlines.",
+    "B": "The same source case with the same blocks stored as separate memory_items; official post-selection join reconstructs A exactly.",
+    "C": "The same source case and blocks in reverse order.",
+    "D": "Two case IDs with cloned source query and embedding identity; the preregistered first case holds block 1 and the second holds all remaining blocks. Equal scores plus stable top-1 select only case 1.",
+    "E": "Same case content and block order as B, with only a non-rendered case-ID alias.",
+    "treatment_manifest_timing": "Construct and content-address immediately after source induction, before any held-out pilot request.",
+    "ordered_execution": "For each evaluation task in rank order: A, B, C, D, E.",
+    "fresh_container_each_run": true,
+    "session_reuse_across_arms": false
+  },
+  "propagation_ladder": {
+    "R0": "Eligible cases, score-identification certificate, stable ordering, selected case, selected memory, and hashes.",
+    "R1": "Exact first serialized provider request containing the final system message, user message, memory text, and all model-visible state.",
+    "R2": "First parsed behavioral decision: format-error event or first shell action, plus first observation.",
+    "R3": "Complete serialized requests, model outputs, messages, actions, raw observations, return codes, timeouts, and retries. Equality canonicalization excludes timestamps, response identifiers, usage, and container names.",
+    "R4": "SWE-bench pass-and-fail evaluator validity, per-test statuses, and resolved boolean.",
+    "primary_comparisons": [
+      "A versus B",
+      "A versus D",
+      "A versus E"
+    ],
+    "secondary_comparison": "A versus C order boundary"
+  },
+  "preregistered_predictions": {
+    "A_vs_B": {
+      "R0": "equal",
+      "R1": "equal",
+      "R2_R3_R4": "predicted equivalent under native within-case reunion; an observed difference first triggers the frozen failure differential"
+    },
+    "A_vs_E": {
+      "R0_selected_memory": "equal",
+      "R1": "equal",
+      "R2_R3_R4": "placebo equivalence predicted"
+    },
+    "A_vs_C": {
+      "R0_selected_memory": "different order",
+      "R1": "different",
+      "interpretation": "order-sensitivity boundary probe, not placebo"
+    },
+    "A_vs_D": {
+      "R0_selected_memory": "different because top-1 retains only the preregistered first cross-case fragment",
+      "R1": "different",
+      "R2_R4": "may propagate or attenuate; the first convergence/divergence level is the endpoint"
+    }
+  },
+  "minimal_pilot_rule": {
+    "planned_runs": 10,
+    "qualified_execution_requires": [
+      "all three fixed images available by exact amd64 manifest digest before task execution",
+      "all 10 planned runs persisted without replacement",
+      "required resolved model exact for every provider response",
+      "fresh container and exact base commit for every run",
+      "valid SWE-bench evaluator markers and parsed status for every run",
+      "no evaluator-only content in any R1 request",
+      "A and B R0 selected memory and first R1 request are byte-identical within each evaluation task",
+      "B and E model-visible memory and first R1 request are byte-identical within each evaluation task"
+    ],
+    "scientific_negative_does_not_fail_qualification": true,
+    "full_p1_authorization": "Only a fully qualified minimal execution authorizes a separately preregistered full population. A negative behavioral result still qualifies if implementation checks pass.",
+    "implementation_failure_action": "Persist failure, diagnose, and if a treatment-preserving repair is possible create a new repair receipt; do not silently rerun or replace a task."
+  },
+  "failure_differential": [
+    "backend nondeterminism under unseeded paired execution",
+    "provider retry divergence",
+    "session or container contamination",
+    "tool or environment nondeterminism",
+    "hidden timestamps or serialization drift",
+    "action-parser or prompt-construction implementation bug",
+    "evaluator invalidity"
+  ],
+  "outcome_discipline": {
+    "forbidden_rescues": [
+      "change top-k",
+      "change source or evaluation task",
+      "regenerate memory after downstream outcome",
+      "change model or sampling",
+      "delete failed run",
+      "redefine success",
+      "select favorable cases"
+    ],
+    "negative_results_preserved": true,
+    "failure_layer_must_be_distinguished_from_scientific_mechanism": true
+  },
+  "claim_ceiling": {
+    "allowed_if_supported": "Under the fixed Ark DeepSeek-Pro compatibility backend, the ReasoningBank within-case reunion mechanism preserves downstream state or behavior up to the empirically observed propagation level.",
+    "forbidden": [
+      "original ReasoningBank benchmark reproduction",
+      "Gemini or Claude behavior claim",
+      "universal representation invariance",
+      "independent stochastic repeat claim",
+      "performance degradation when only pre-terminal behavior differs"
+    ]
+  },
+  "authorization": {
+    "runtime_qualification": true,
+    "source_induction_after_runtime_qualification": true,
+    "treatment_manifest_after_eligible_source_memory": true,
+    "minimal_pilot_after_treatment_manifest": true,
+    "full_p1": false
+  }
+}

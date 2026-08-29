@@ -94,6 +94,16 @@ class ReasoningBankArkProviderTest(unittest.TestCase):
         self.assertEqual(body["thinking"], {"type": "disabled"})
         self.assertEqual(body["max_output_tokens"], 19)
         self.assertEqual(result["text"], "OK")
+        self.assertEqual(result["raw_text"], "OK")
+
+    def test_raw_text_preserves_memory_induction_split_boundaries(self) -> None:
+        payload = success_payload()
+        payload["output"][0]["content"][0]["text"] = "  first\n\nsecond  "
+        session = FakeSession([FakeResponse(200, payload)])
+        client = ArkReasoningBankClient(settings(), session=session)
+        result = client.create_response(input_items="probe")
+        self.assertEqual(result["text"], "first\n\nsecond")
+        self.assertEqual(result["raw_text"], "  first\n\nsecond  ")
 
     def test_none_max_output_tokens_omits_provider_parameter(self) -> None:
         session = FakeSession([FakeResponse(200, success_payload())])
@@ -127,9 +137,10 @@ class ReasoningBankArkProviderTest(unittest.TestCase):
             ]
         )
         client = ArkReasoningBankClient(settings(max_retries=1), session=session)
-        client.create_response(input_items="probe")
+        result = client.create_response(input_items="probe")
         self.assertEqual(len(session.requests), 2)
         self.assertEqual(session.requests[0]["json"], session.requests[1]["json"])
+        self.assertEqual(result["transport_attempts"], 2)
 
     def test_client_error_is_not_retried_and_safe_receipt_has_no_key(self) -> None:
         session = FakeSession([FakeResponse(400, {"error": {"message": "unsupported"}})])

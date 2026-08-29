@@ -91,7 +91,7 @@ class ArkReasoningBankClient:
         )
 
     @staticmethod
-    def output_text(payload: dict[str, Any]) -> str:
+    def output_text_raw(payload: dict[str, Any]) -> str:
         chunks: list[str] = []
         for item in payload.get("output") or []:
             if not isinstance(item, dict) or item.get("type") != "message":
@@ -101,7 +101,12 @@ class ArkReasoningBankClient:
                     value = str(part.get("text") or "")
                     if value:
                         chunks.append(value)
-        return "\n".join(chunks).strip()
+        return "\n".join(chunks)
+
+    @classmethod
+    def output_text(cls, payload: dict[str, Any]) -> str:
+        """Compatibility view retained for existing callers and receipts."""
+        return cls.output_text_raw(payload).strip()
 
     @staticmethod
     def function_calls(payload: dict[str, Any]) -> list[dict[str, Any]]:
@@ -119,6 +124,7 @@ class ArkReasoningBankClient:
             "requested_model": requested_model,
             "resolved_model": str(payload.get("model") or requested_model),
             "text": cls.output_text(payload),
+            "raw_text": cls.output_text_raw(payload),
             "function_calls": cls.function_calls(payload),
             "usage": payload.get("usage") or {},
             "incomplete_details": payload.get("incomplete_details") or {},
@@ -213,7 +219,9 @@ class ArkReasoningBankClient:
                     "Ark returned non-JSON success response",
                     status_code=response.status_code,
                 ) from error
-            return self.normalize(payload, requested_model)
+            normalized = self.normalize(payload, requested_model)
+            normalized["transport_attempts"] = attempts + 1
+            return normalized
 
     def continue_function_call(
         self,
