@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_TGRP_PROVIDER_SUPPORT_REQUALIFICATION",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+  "generated_at": "2026-08-29T12:26:39.557564+00:00",
+  "execution_base": "9e77edf0c7cca2c3928525619993c31bf3f80e23",
+  "experiment_branch": "experiment/c1-tgrp-pilot-20260829",
+  "probe_is_scientific_task": false,
+  "probe_prompt_sha256": "38ce6b90383ceaf0c234b8d5fb084719137ba361ddb4cd8d397aed8d5324382f",
+  "requested_model": "doubao-seed-2.0-mini",
+  "expected_resolved_model": "doubao-seed-2-0-mini-260215",
+  "temperature": 0.0,
+  "max_output_tokens": 64,
+  "thinking": "disabled",
+  "provider_retries": 0,
+  "substitution_allowed": false,
+  "provider": {
+    "configured": true,
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "default_model": "ark-code-latest",
+    "timeout_seconds": 180.0,
+    "max_retries": 0,
+    "api_key_in_output": false
+  },
+  "authority_ref": "c1-tgrp-pilot-human-authorization-20260829.json",
+  "status": "SUPPORT_PASS",
+  "provider_post_attempted": true,
+  "provider_posts": 1,
+  "checks": {
+    "provider_configured": true,
+    "response_object_returned": true,
+    "assistant_text_present": true,
+    "requested_model_exact": true,
+    "resolved_model_exact": true,
+    "thinking_fallback_absent": true,
+    "status_present": true
+  },
+  "response": {
+    "response_id": "resp_0217880063996720990cb8fd451095e55bc9ba984701cdbe0b3b4",
+    "status": "completed",
+    "requested_model": "doubao-seed-2.0-mini",
+    "resolved_model": "doubao-seed-2-0-mini-260215",
+    "thinking_requested": "disabled",
+    "thinking_effective": "disabled",
+    "thinking_compatibility_fallback": false,
+    "text_sha256": "a2542670074ea3e0c6876ad6d0f75e2dc933461c6b765c0c5fab376a498215b8",
+    "text_chars": 13,
+    "usage": {
+      "input_tokens": 75,
+      "output_tokens": 3,
+      "total_tokens": 78,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    }
+  },
+  "scientific_outcomes": 0,
+  "next_gate": "Pilot execution allowed only if status=SUPPORT_PASS; confirmatory full remains locked."
+}

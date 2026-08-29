@@ -1,15 +1,21 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{10}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Liu et~al.(2026)Liu, Xu, Diao, Zhang, Li, and Zhang]{liu2026memcorl}
-Yuewen Liu, Peng Xu, Muxi Diao, Anyi Zhang, Yang Li, and Yutong Zhang.
-\newblock Memcorl: Alternating co-optimization of memory retrieval and utilization via collaborative reinforcement learning.
-\newblock In \emph{Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pp.\  38912--38924, 2026.
-\newblock \doi{10.18653/v1/2026.acl-long.1804}.
+\bibitem[Asadolahi et~al.(2026)Asadolahi, Amini, Talebi, Farhadi, and Zamanifar]{asadolahi2026inflation}
+Mohammad Asadolahi, Amir Amini, Samira Talebi, Amirfarhad Farhadi, and Azadeh Zamanifar.
+\newblock Memory reward inflation in self-improving llm agents, 2026.
+
+\bibitem[Li et~al.(2026)Li, Wang, Zhang, Huang, Zhang, Liu, Yan, and Xu]{li2026qcr}
+Yifei Li, Heng Wang, Lingling Zhang, Muye Huang, Xinyu Zhang, Jiashuai Liu, Hang Yan, and Rongman Xu.
+\newblock Beyond retrieval: Query-conditioned reuse of long-horizon agent trajectories, 2026.
+
+\bibitem[Lin et~al.(2026)Lin, Hao, Fu, Cui, Chen, Li, Li, and Xiong]{lin2026memorylifecycle}
+Zehao Lin, Xixuan Hao, Renyu Fu, Shaobo Cui, Kai Chen, Chunyu Li, Zhiyu Li, and Feiyu Xiong.
+\newblock A survey on long-term memory security in llm agents: Attacks, defenses, and governance across the memory lifecycle, 2026.
 
 \bibitem[Ouyang et~al.(2026)Ouyang, Yan, Hsu, Chen, Jiang, Wang, Han, Le, Daruki, Tang, Tirumalashetty, Lee, Rofouei, Lin, Han, Lee, and Pfister]{ouyang2026reasoningbank}
 Siru Ouyang, Jun Yan, I-Hung Hsu, Yanfei Chen, Ke~Jiang, Zifeng Wang, Rujun Han, Long~T. Le, Samira Daruki, Xiangru Tang, Vishy Tirumalashetty, George Lee, Mahsan Rofouei, Hangfei Lin, Jiawei Han, Chen-Yu Lee, and Tomas Pfister.
@@ -18,20 +24,26 @@ Siru Ouyang, Jun Yan, I-Hung Hsu, Yanfei Chen, Ke~Jiang, Zifeng Wang, Rujun Han,
 
 \bibitem[Shen et~al.(2026)Shen, Li, Zhou, and Hu]{shen2026mem2actbench}
 Yiting Shen, Kun Li, Wei Zhou, and Songlin Hu.
-\newblock Mem2actbench: A benchmark for evaluating long-term memory utilization in task-oriented autonomous agents.
-\newblock In \emph{Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pp.\  8173--8190, 2026.
-\newblock \doi{10.18653/v1/2026.acl-long.370}.
+\newblock Mem2actbench: A benchmark for evaluating long-term memory utilization in task-oriented autonomous agents, 2026.
 
-\bibitem[Xiong et~al.(2026)Xiong, Lin, Xie, He, Liu, Tang, Lakkaraju, and Xiang]{xiong2026memorymanagement}
-Zidi Xiong, Yuping Lin, Wenya Xie, Pengfei He, Zirui Liu, Jiliang Tang, Himabindu Lakkaraju, and Zhen Xiang.
-\newblock How memory management impacts llm agents: An empirical study of experience-following behavior.
-\newblock In \emph{Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pp.\  623--645, 2026.
-\newblock \doi{10.18653/v1/2026.acl-long.27}.
+\bibitem[Wang et~al.(2026)Wang, Hu, Yang, Pan, Li, and Guo]{wang2026planrewardbench}
+Jiaxuan Wang, Yulan Hu, Wenjin Yang, Zheng Pan, Xin Li, and Lan-Zhe Guo.
+\newblock Aligning agents via planning: A benchmark for trajectory-level reward modeling, 2026.
 
-\bibitem[Xu et~al.(2026)Xu, Xu, Xueyun, Huang, Chen, Yunfan, and Shen]{xu2026chainofmemory}
-Xiucheng Xu, Bingbing Xu, Tian Xueyun, Zihe Huang, Rongxin Chen, Li~Yunfan, and Huawei Shen.
-\newblock Chain-of-memory: Lightweight memory construction with dynamic evolution for llm agents.
-\newblock In \emph{Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)}, pp.\  11618--11631, 2026.
-\newblock \doi{10.18653/v1/2026.acl-long.534}.
+\bibitem[Wang et~al.(2025)Wang, Takanobu, Liang, Mao, Hu, McAuley, and Wu]{wang2025memalpha}
+Yu~Wang, Ryuichi Takanobu, Zhiqi Liang, Yuzhen Mao, Yuanzhe Hu, Julian McAuley, and Xiaojian Wu.
+\newblock Mem-$\alpha$: Learning memory construction via reinforcement learning, 2025.
+
+\bibitem[Yang et~al.(2026)Yang, Chen, Zhuang, et~al.]{yang2026romerl}
+Yi~Yang, Zhennan Chen, Yihong Zhuang, et~al.
+\newblock Romerl: Balancing feedback coverage and the memory-reward trap in self-evolving agent memory via reduced-order utility states, 2026.
+
+\bibitem[Ye et~al.(2026)Ye, Li, Pruksachatkun, Zhang, and Wu]{ye2026fragility}
+Qinyuan Ye, Yu~Li, Yada Pruksachatkun, Jiaxin Zhang, and Chien-Sheng Wu.
+\newblock On the fragility of self-improving agents: Variance, task order, and underspecification, 2026.
+
+\bibitem[Yuan et~al.(2026)Yuan, Su, and Yao]{yuan2026retrievalutilization}
+Boqin Yuan, Yue Su, and Kun Yao.
+\newblock Diagnosing retrieval vs. utilization bottlenecks in llm agent memory, 2026.
 
 \end{thebibliography}

@@ -80,16 +80,19 @@ class StageTransportBottleneckAnalysisTest(unittest.TestCase):
         self.assertEqual(receipt["execution"]["new_scientific_experiments"], 0)
 
     def test_manuscript_preserves_capacity_transport_and_localization_boundaries(self) -> None:
-        source = HERE / "source" / "sections"
+        source_root = HERE / "source-r7"
+        source = source_root / "sections"
         mechanism = (source / "02_mechanism.tex").read_text(encoding="utf-8")
         results = (source / "04_variance_protocol.tex").read_text(encoding="utf-8")
         conclusion = (source / "06_limitations_conclusion.tex").read_text(encoding="utf-8")
-        figure_script = (HERE / "source" / "build_stage_transport_figure.py").read_text(encoding="utf-8")
+        figure_script = (source_root / "build_stage_transport_figure.py").read_text(encoding="utf-8")
         joined = "\n".join((mechanism, results, conclusion))
         self.assertIn("Forced leverage is a capacity control, not a native stage", mechanism)
         self.assertIn("after exposure and before stable action uptake", joined)
+        self.assertIn("first unsupported measured native stage", joined)
         self.assertIn("not a causal mediation coefficient", joined)
         self.assertIn("Retrieval hit is a surrogate for policy use", results)
+        self.assertIn("treatment-residual exposure", joined)
         self.assertIn("bypasses native retrieval", figure_script)
         self.assertNotIn("FORCED LEVERAGE", figure_script)
         self.assertIn("FORCED CAPACITY CONTROL", figure_script)

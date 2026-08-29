@@ -52,30 +52,6 @@ Mean & & 0.700 & 0.595 & 0.105 \\
 \end{tabular}
 \end{table}
 
-\section{Prerequisite Diagnostic-Completeness Details}
-\label{sec:diagnostic-completeness-details}
-The diagnostic class is derived from the stated native prerequisite order rather than from hand-selected failure archetypes. Table~\ref{tab:diagnostic-prefix-class} lists the five native prefix depths; each occurs with both $F=0$ and $F=1$, giving 10 states. Exhaustive enumeration over all 32 subsets of $\{W,E,U,O,F\}$ finds exactly one injective projection: the full five-surface basis. Omitting $W$, $E$, $U$, or $O$ creates two ambiguous adjacent-prefix pairs, one for each forced-capacity value; omitting $F$ creates five ambiguous pairs, one at every prefix depth.
-
-\begin{table}[h]
-\centering
-\caption{Native prefix class used by the diagnostic-completeness result. Each row has both $F=0$ and $F=1$.}
-\label{tab:diagnostic-prefix-class}
-\small
-\begin{tabular}{clcccc}
-\toprule
-$p$ & Interpretation & $W$ & $E$ & $U$ & $O$ \\
-\midrule
-0 & no native branch-specific state & 0 & 0 & 0 & 0 \\
-1 & write only & 1 & 0 & 0 & 0 \\
-2 & written and exposed & 1 & 1 & 0 & 0 \\
-3 & first-action uptake & 1 & 1 & 1 & 0 \\
-4 & terminal transport & 1 & 1 & 1 & 1 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The result is exact only for this binary prerequisite class. It does not assert that empirical \textsc{Not-Supported} evidence equals literal absence, nor that the same five coordinates form a universal minimal basis for arbitrary stochastic memory systems.
-
 \section{Downstream Confirmatory Details}
 \subsection{Fixed-state action distributions}
 The distributional action stress test retains all four intervention states from the action-reach experiment and uses eight rollouts per memory condition. The per-state success-memory versus failure-memory TV distances are 0.625 for task 22 and 0.375 for task 23. They are 0.125 for task 24 and 0.250 for task 26. Their mean is 0.34375. The frozen 100,000-draw permutation audit gives $p=0.310527$.
