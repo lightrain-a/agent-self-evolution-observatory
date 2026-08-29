@@ -1,0 +1,81 @@
+{
+  "checks": {
+    "all_image_digests_frozen": true,
+    "pilot_eval_count": 2,
+    "source_count": 1,
+    "source_eval_disjoint": true
+  },
+  "created_at_utc": "2026-08-29T13:55:15+00:00",
+  "dataset": {
+    "download_channel": "hf-mirror.com fixed revision",
+    "id": "SWE-bench/SWE-bench_Verified",
+    "official_identity": "SWE-bench Verified",
+    "parquet_sha256": "030cfd7f2a704c4c0226e7f104c725a3b41230b1d3517f9c915ad7ea5be3fa25",
+    "revision": "78f471bf655a3137b2e8a75af1501690ec009ec3",
+    "row_count": 500,
+    "split": "test",
+    "subset": "verified"
+  },
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-SPLIT-20260829",
+  "held_out_pilot_cases": [
+    {
+      "base_commit": "cb828ebe70b4fa35cd5f9a7ee024272237eab351",
+      "environment_setup_commit": "c2f762460f4c42547de906d53ea498dd499ea837",
+      "full_dataset_record_sha256": "03c6f4153f46f0671fe0c581c37a4195a42fb8ecf836d555c7805ec5c7e26451",
+      "image_amd64_manifest_digest": "sha256:22a1a81b8e937a1ff52cef4f38bf59e6a8baa0648ef3b115e6206bfc5c5de68f",
+      "image_index_digest": "sha256:c76510e12a1765211e064f6e8de09e51ac0f7839f60d72305b374e004308b6a1",
+      "image_tag_from_dataset": "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5631:latest",
+      "instance_id": "pytest-dev__pytest-5631",
+      "instance_id_sha256": "00b799312770d8837b3c94bb535a969bdf759d83c2ac334f1d3b278af96410af",
+      "model_visible_task_fields_sha256": "23825f46220e3dfe2a96356c9b4a64883bdb933db0b998a498ff6fa322affe4f",
+      "repo": "pytest-dev/pytest",
+      "role": "held_out_pilot_evaluation",
+      "sha256_rank": 1
+    },
+    {
+      "base_commit": "d4e0231b08147337745dcf601e62de7eefe2fb2d",
+      "environment_setup_commit": "70381f282f2d9d039da860e391fe51649df2779d",
+      "full_dataset_record_sha256": "601a1cfeda4c1069425757a4dfe81111e2b7cd86dc8c094b1ac9fb33f6648ebe",
+      "image_amd64_manifest_digest": "sha256:4d18e6a31fb1d68a8232f3c78a5a4c97e9c7a2d001765dcc90f228cef4b4e39f",
+      "image_index_digest": "sha256:dac5e27382a309b8dd1e6bc6aa4fe4dc3cb8c8384c6d5d516ea4c18e08fa06fd",
+      "image_tag_from_dataset": "swebench/sweb.eval.x86_64.sympy_1776_sympy-17318:latest",
+      "instance_id": "sympy__sympy-17318",
+      "instance_id_sha256": "00d509ec7b12de1513e2141b9b9202ef5ad0a05ba340202345966463280ab142",
+      "model_visible_task_fields_sha256": "25273b7c842b6bcce7f2adfba8b33cbee7c6de2b1eed6ec491832c6399d0d498",
+      "repo": "sympy/sympy",
+      "role": "held_out_pilot_evaluation",
+      "sha256_rank": 2
+    }
+  ],
+  "schema_version": 1,
+  "scientific_boundary": {
+    "full_population_authorized": false,
+    "memory_induction_executed": false,
+    "p1_behavior_executed": false,
+    "task_outcome_observed": false
+  },
+  "selection_rule": {
+    "definition": "Sort all 500 instance IDs by SHA-256(instance_id) ascending, break the impossible hash tie by instance_id ascending; rank 0 is the sole source case and ranks 1-2 are the held-out minimal-pilot cases.",
+    "failed_evaluation_policy": "Preserve every failed arm/case artifact and do not replace the case.",
+    "failed_source_policy": "Preserve the failed source artifact and do not replace the source case.",
+    "replacement_sampling": "forbidden",
+    "uses_gold_patch": false,
+    "uses_task_outcome": false
+  },
+  "source_cases": [
+    {
+      "base_commit": "7121bdf1facdd90d05b6994b4c2e5b2865a4638a",
+      "environment_setup_commit": "ec9e3c0436fbff934fa84e22bf07f1b3ef5bfac3",
+      "full_dataset_record_sha256": "f8a5f41d290da9048ad928c018c45a5433abc20bfb4febc2e9523978fa607dd9",
+      "image_amd64_manifest_digest": "sha256:4111da8b069bc23cc67ef24f2f433f82601518941052faebd3c4a621d3748cd6",
+      "image_index_digest": "sha256:c4a643ffd7be41525c113d0fb9a1c1e8d655e4cca30def373fbac04188cc91f1",
+      "image_tag_from_dataset": "swebench/sweb.eval.x86_64.sympy_1776_sympy-13798:latest",
+      "instance_id": "sympy__sympy-13798",
+      "instance_id_sha256": "005d181554cd9a8954185420a605a6b3d9124cc9af1f410fd98bab2e76cbd5e3",
+      "model_visible_task_fields_sha256": "13c76760992e139dfd7a09d81452b01cf2c680a95e3dacbd535eec337da05d6c",
+      "repo": "sympy/sympy",
+      "role": "source_induction",
+      "sha256_rank": 0
+    }
+  ]
+}

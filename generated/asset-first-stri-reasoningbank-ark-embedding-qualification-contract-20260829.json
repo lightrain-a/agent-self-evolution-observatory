@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-29T13:58:00+00:00",
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-EMBED-Q1-20260829",
+  "status": "PREREGISTERED_BEFORE_LIVE_EMBEDDING_REQUEST",
+  "purpose": "Qualify a thin Ark text-embedding provider substitution while preserving ReasoningBank cosine ranking, cached case embeddings, stable descending sort, and top-1 retrieval.",
+  "provider": {
+    "url": "https://ark.cn-beijing.volces.com/api/v3/embeddings",
+    "requested_model": "doubao-embedding-large-text-250515",
+    "credential_source": "existing canonical Ark secret mechanism",
+    "credential_export_forbidden": true
+  },
+  "probes": [
+    "one batch containing duplicate text A, duplicate text A, and distinct text B",
+    "one repeated request for text A"
+  ],
+  "decision_rule": {
+    "pass": "Both requests succeed; provider identity is stable and nonempty; every vector has one positive stable dimension and finite values; duplicate vectors match exactly within and across requests; the distinct text differs; self cosine is one; usage is present.",
+    "fail": "Any request, identity, dimension, finiteness, duplicate consistency, distinctness, cosine, or usage check fails."
+  },
+  "retrieval_invariants": {
+    "similarity": "cosine after L2 normalization",
+    "ranking": "descending score with stable input-order tie break",
+    "top_k": 1,
+    "case_schema_changed": false,
+    "memory_grouping_changed": false,
+    "memory_format_changed": false,
+    "treatment_changed": false
+  },
+  "frozen_artifacts": {
+    "adapter": {
+      "path": "research_pipeline/asset_first_stri_reasoningbank_ark_embedding.py",
+      "sha256": "66481bd6f97b0dbeaf0da7c711847a1541b23a977c6191e9c105778f1693a573"
+    },
+    "runner": {
+      "path": "research_pipeline/asset_first_stri_reasoningbank_ark_embedding_qualification.py",
+      "sha256": "781d36cb94337a7bf34a12228925a1f4e7f3987f98e0e71dc0f842d919ffd2cd"
+    },
+    "source_eval_split": {
+      "path": "generated/asset-first-stri-reasoningbank-p1-source-eval-split-20260829.json",
+      "sha256": "f8c494b2251a0fd156b6207037fae3a1db5fb5022b82c510964a89eb322a7bbb"
+    }
+  },
+  "scientific_boundary": {
+    "memory_induction_executed": false,
+    "p1_task_outcome_observed": false,
+    "retrieval_rank_observed": false,
+    "model_selection_outcome_based": false
+  }
+}
