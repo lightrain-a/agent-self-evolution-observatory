@@ -1,0 +1,278 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_R8_CLAIM_AUDIT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision": "R8",
+  "status": "PASS",
+  "summary": {
+    "claims_total": 26,
+    "claims_passed": 26,
+    "claims_failed": 0
+  },
+  "checks": [
+    {
+      "id": "R8-C01",
+      "description": "R6 sealed PDF remains immutable.",
+      "pass": true,
+      "detail": {
+        "sha256": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70",
+        "expected": "c71fec522756ebceed75dff8fd168f178bd7d843e5d33f992fc1f5d6b96f4d70"
+      }
+    },
+    {
+      "id": "R8-C02",
+      "description": "R7 sealed PDF and source zip remain immutable.",
+      "pass": true,
+      "detail": {
+        "pdf_sha256": "a5ce511a11a7781ca5374e0f54f7830454927874ca8dc6112c87e6106ab20167",
+        "source_zip_sha256": "91af2cd961a0633b31e2ba38fb1e3f2abcf6db4013dd44977d7b1d2cf8fcc76e"
+      }
+    },
+    {
+      "id": "R8-C03",
+      "description": "R8 is a separate source tree derived from R7 rather than an overwrite.",
+      "pass": true,
+      "detail": {
+        "source_r8_exists": true,
+        "source_r7_exists": true,
+        "main_tex_same_scaffold": true
+      }
+    },
+    {
+      "id": "R8-C04",
+      "description": "Same-trajectory writer intervention remains a bundled success/failure writer-branch contrast, not a pure reward-bit effect.",
+      "pass": true,
+      "detail": {
+        "bundled_writer_boundary_present": true
+      }
+    },
+    {
+      "id": "R8-C05",
+      "description": "Frozen write-stage evidence remains 20/20 Shopping, 4/4 Reddit, with same-mode excess 0.105 and p=0.0078.",
+      "pass": true,
+      "detail": {
+        "required": [
+          "20/20",
+          "4/4",
+          "0.105",
+          "0.0078"
+        ]
+      }
+    },
+    {
+      "id": "R8-C06",
+      "description": "Frozen source-item exposure remains 125/172 and is not promoted to policy uptake.",
+      "pass": true,
+      "detail": {
+        "source_item_exposure": "125/172"
+      }
+    },
+    {
+      "id": "R8-C07",
+      "description": "Frozen first-action evidence remains TV=0.06944, p=0.5801, 0/36 modal changes.",
+      "pass": true,
+      "detail": {
+        "required": [
+          "0.06944",
+          "0.5801",
+          "0/36"
+        ]
+      }
+    },
+    {
+      "id": "R8-C08",
+      "description": "Frozen Shopping terminal evidence remains |Delta|=0.02083, p=0.4289, 34/36 zero.",
+      "pass": true,
+      "detail": {
+        "required": [
+          "0.02083",
+          "0.4289",
+          "34/36"
+        ]
+      }
+    },
+    {
+      "id": "R8-C09",
+      "description": "Frozen Reddit boundary remains |Delta|=0.125, p=0.2253, 6/8 zero with opposite nonzero signs.",
+      "pass": true,
+      "detail": {
+        "required": [
+          "0.125",
+          "0.2253",
+          "6/8",
+          "opposite signs"
+        ]
+      }
+    },
+    {
+      "id": "R8-C10",
+      "description": "Forced-capacity side control remains |Delta|=0.15625, p=0.00074 and is not native transport.",
+      "pass": true,
+      "detail": {
+        "forced_abs_delta": 0.15625,
+        "p": 0.00074
+      }
+    },
+    {
+      "id": "R8-C11",
+      "description": "Prerequisite diagnostic class remains 10 states over W/E/U/O/F with 32 observed-surface subsets.",
+      "pass": true,
+      "detail": {
+        "states": 10,
+        "subsets": 32
+      }
+    },
+    {
+      "id": "R8-C12",
+      "description": "Only full W/E/U/O/F is injective over the stated 10-state class.",
+      "pass": true,
+      "detail": {
+        "injective_subsets": [
+          [
+            "W",
+            "E",
+            "U",
+            "O",
+            "F"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "R8-C13",
+      "description": "Pilot sample is the frozen 13-state outcome-blind subset and 23-state holdout remains sealed.",
+      "pass": true,
+      "detail": {
+        "pilot": 13,
+        "holdout": 23,
+        "holdout_new_calls": 0
+      }
+    },
+    {
+      "id": "R8-C14",
+      "description": "Pilot execution completed 312/312 cases with zero failed or missing cases.",
+      "pass": true,
+      "detail": {
+        "expected_cases": 312,
+        "complete_cases": 312,
+        "failed_cases": 0,
+        "missing_cases": 0
+      }
+    },
+    {
+      "id": "R8-C15",
+      "description": "Pilot model identity is exact with zero model or prompt-hash drift and packet invariance PASS.",
+      "pass": true,
+      "detail": {
+        "model_drift_cases": [],
+        "prompt_hash_mismatch_cases": [],
+        "packet_invariance": "PASS"
+      }
+    },
+    {
+      "id": "R8-C16",
+      "description": "Pilot mean U_A0, U_A1, U_A2 are all 0.09615384615384616.",
+      "pass": true,
+      "detail": {
+        "mean_U_A0": 0.09615384615384616,
+        "mean_U_A1": 0.09615384615384616,
+        "mean_U_A2": 0.09615384615384616
+      }
+    },
+    {
+      "id": "R8-C17",
+      "description": "Pilot mean D=A2-A1 and N=A2-A0 are both exactly 0.0.",
+      "pass": true,
+      "detail": {
+        "D": 0.0,
+        "N": 0.0
+      }
+    },
+    {
+      "id": "R8-C18",
+      "description": "Pilot D signs are 3 positive, 2 negative, 8 zero across 13 states.",
+      "pass": true,
+      "detail": {
+        "positive": 3,
+        "negative": 2,
+        "zero": 8
+      }
+    },
+    {
+      "id": "R8-C19",
+      "description": "Pilot descriptive bootstrap 95% CI for mean D is [-0.11538461538461539, 0.09615384615384616].",
+      "pass": true,
+      "detail": {
+        "ci": [
+          -0.11538461538461539,
+          0.09615384615384616
+        ]
+      }
+    },
+    {
+      "id": "R8-C20",
+      "description": "All frozen pilot gates fail without threshold changes; current 23-state confirmatory is not run.",
+      "pass": true,
+      "detail": {
+        "gate_pass": false,
+        "thresholds_unchanged": true,
+        "confirmatory_full_executed": false
+      }
+    },
+    {
+      "id": "R8-C21",
+      "description": "R8 reports the pilot as a negative/unsupported repair pilot, not confirmatory falsification.",
+      "pass": true,
+      "detail": {
+        "negative_pilot_language": true,
+        "forbidden_confirmatory_falsification_absent": true
+      }
+    },
+    {
+      "id": "R8-C22",
+      "description": "R8 preserves operational localization and diagnostic completeness separately from repair actionability.",
+      "pass": true,
+      "detail": {
+        "separation_present": true
+      }
+    },
+    {
+      "id": "R8-C23",
+      "description": "R8 forbids current claims that post-retrieval policy integration is an empirically effective repair.",
+      "pass": true,
+      "detail": {
+        "effective_repair_not_claimed": true
+      }
+    },
+    {
+      "id": "R8-C24",
+      "description": "R8 does not claim retrieval-versus-use or generic utilization optimization as novelty.",
+      "pass": true,
+      "detail": {
+        "novelty_boundary_present": true
+      }
+    },
+    {
+      "id": "R8-C25",
+      "description": "R8 states treatment delivery does not establish internal cognitive compliance.",
+      "pass": true,
+      "detail": {
+        "delivery_vs_compliance_boundary": "treatment/delivery + not internal cognitive compliance"
+      }
+    },
+    {
+      "id": "R8-C26",
+      "description": "R8 conclusion preserves the boundary: state divergence is not behavioral authority; availability is not use; diagnosis is not repair.",
+      "pass": true,
+      "detail": {
+        "conclusion_boundary": true
+      }
+    }
+  ],
+  "authority": {
+    "scientific_claim_expansion": false,
+    "confirmatory_full": false,
+    "new_repair_experiment": false,
+    "submission": false
+  }
+}
