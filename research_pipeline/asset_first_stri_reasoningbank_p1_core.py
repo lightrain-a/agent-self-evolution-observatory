@@ -159,6 +159,31 @@ def load_instructions() -> dict[str, str]:
     return result
 
 
+def load_agent_default(field: str) -> Any:
+    """Read an AgentConfig default from the frozen official implementation."""
+    tree = ast.parse(AGENT_PATH.read_text(encoding="utf-8"))
+    for node in tree.body:
+        if not isinstance(node, ast.ClassDef) or node.name != "AgentConfig":
+            continue
+        for item in node.body:
+            if (
+                isinstance(item, ast.AnnAssign)
+                and isinstance(item.target, ast.Name)
+                and item.target.id == field
+                and item.value is not None
+            ):
+                return ast.literal_eval(item.value)
+    raise RuntimeError(f"official AgentConfig default not found: {field}")
+
+
+def render_timeout_observation(config: dict[str, Any], action: str, output: str) -> str:
+    template = config["agent"].get("timeout_template") or load_agent_default("timeout_template")
+    visible = Template(template).render(action={"action": action}, output=output)
+    if not visible.strip():
+        raise RuntimeError("official timeout observation rendered empty")
+    return visible
+
+
 def load_fixtures() -> list[dict[str, Any]]:
     return json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))["fixtures"]
 
@@ -339,9 +364,7 @@ def execute_agent(
             }
             actions.append(row)
             if output["timed_out"]:
-                visible = Template(config["agent"].get("timeout_template", "")).render(
-                    action={"action": action}, output=output["output"]
-                )
+                visible = render_timeout_observation(config, action, output["output"])
                 row["model_visible_observation"] = visible
                 messages.append({"role": "user", "content": visible})
                 continue

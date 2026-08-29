@@ -13,8 +13,10 @@ from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
     FIXTURE_PATH,
     MEMORY_PREFIX,
     PID_NAMESPACE,
+    load_agent_default,
     load_config,
     render_messages,
+    render_timeout_observation,
     append_nonempty_assistant_message,
     verify_frozen_inputs,
 )
@@ -47,6 +49,17 @@ class ReasoningBankP1FrozenRuntimeTest(unittest.TestCase):
         for layer in ("provider", "provider_identity", "implementation"):
             self.assertTrue(source_failure_blocks_induction({"failure": {"failure_layer": layer}}))
         self.assertFalse(source_failure_blocks_induction({"failure": None}))
+
+    def test_timeout_uses_nonempty_frozen_agent_default_when_yaml_omits_it(self) -> None:
+        config = load_config()
+        self.assertNotIn("timeout_template", config["agent"])
+        official = load_agent_default("timeout_template")
+        visible = render_timeout_observation(config, "sleep 61", "partial output")
+        self.assertEqual(visible, __import__("jinja2").Template(official).render(
+            action={"action": "sleep 61"}, output="partial output"
+        ))
+        self.assertIn("timed out and has been killed", visible)
+        self.assertTrue(visible.strip())
 
     def test_memory_is_appended_to_official_system_message_only(self) -> None:
         without = render_messages("task")
