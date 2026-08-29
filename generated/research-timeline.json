@@ -1,6 +1,6 @@
 {
   "schema_version": "1.1",
-  "generated_at": "2026-08-28T19:03:06+00:00",
+  "generated_at": "2026-08-29T18:54:19+00:00",
   "projection_policy": {
     "read_only": true,
     "display_timezone": "Asia/Shanghai",
@@ -14,8 +14,8 @@
     "canonical_entity_bindings_are_read_only": true
   },
   "summary": {
-    "events": 1192,
-    "dated_structured_artifacts_projected": 509,
+    "events": 1196,
+    "dated_structured_artifacts_projected": 511,
     "runtime_memory_source": "preserved_committed_snapshot",
     "runtime_memory_events": 6,
     "key_events": 14,
@@ -25,18 +25,19 @@
     "canonical_paper_bound_events": 309,
     "canonical_research_items_with_events": 61,
     "canonical_papers_with_events": 4,
-    "days": 28,
+    "days": 29,
     "class_counts": {
       "blocker": 50,
       "closure": 128,
       "experiment": 192,
       "idea": 157,
-      "paper": 123,
+      "paper": 124,
       "scientific": 2,
-      "system": 540
+      "system": 543
     },
     "date_counts": {
-      "2026-08-29": 39,
+      "2026-08-30": 39,
+      "2026-08-29": 4,
       "2026-08-28": 79,
       "2026-08-27": 4,
       "2026-08-26": 1,
@@ -68,93 +69,8 @@
   },
   "events": [
     {
-      "event_id": "5d343494e01edffc",
-      "occurred_at": "2026-08-28T19:03:06+00:00",
-      "time_precision": "exact",
-      "event_class": "idea",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "research-items",
-      "research_label_zh": "research-items",
-      "title": "research-items",
-      "title_zh": "Idea / 问题发现记录 · research-items",
-      "state_before": "",
-      "state_after": "ARTIFACT_RECORDED",
-      "summary": {
-        "en": "Structured artifact recorded: research-items.json.",
-        "zh": "Idea / 问题发现记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "",
-      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "ARTIFACT_RECORDED"
-        },
-        {
-          "label": "categories 数量",
-          "value": "7"
-        },
-        {
-          "label": "research_items",
-          "value": "88"
-        },
-        {
-          "label": "experiment_records",
-          "value": "30"
-        },
-        {
-          "label": "portfolio_experiment_contexts",
-          "value": "3"
-        },
-        {
-          "label": "evidence_contexts",
-          "value": "2"
-        },
-        {
-          "label": "portfolio_objects",
-          "value": "93"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/research-items.json",
-          "sha256": "90e3dbdd73744c051a57cf4d82b5097f6f412998ff3ee36622f626145310215d",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "研究方向",
-          "href": "paper-ideas.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "4ec9b4c899799acf",
-      "occurred_at": "2026-08-28T19:03:06+00:00",
+      "event_id": "943473f16dba9023",
+      "occurred_at": "2026-08-29T18:54:19+00:00",
       "time_precision": "exact",
       "event_class": "system",
       "importance": "detail",
@@ -220,7 +136,7 @@
       "sources": [
         {
           "path": "generated/paper-registry.json",
-          "sha256": "53c25d8a35c16083c2dd59ef45c1ffa2146b8ddf4c52ee48264b26e5b3f21fd9",
+          "sha256": "4823f446147a3c54c60a3ccfbcd8a1ab7ccabd6f34addf2b2ef629a52fa5d011",
           "public": true
         }
       ],
@@ -238,8 +154,93 @@
       }
     },
     {
-      "event_id": "f5059665440d914e",
-      "occurred_at": "2026-08-28T19:02:59+00:00",
+      "event_id": "39767ec30cb5f637",
+      "occurred_at": "2026-08-29T18:54:19+00:00",
+      "time_precision": "exact",
+      "event_class": "idea",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "research-items",
+      "research_label_zh": "research-items",
+      "title": "research-items",
+      "title_zh": "Idea / 问题发现记录 · research-items",
+      "state_before": "",
+      "state_after": "ARTIFACT_RECORDED",
+      "summary": {
+        "en": "Structured artifact recorded: research-items.json.",
+        "zh": "Idea / 问题发现记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "ARTIFACT_RECORDED"
+        },
+        {
+          "label": "categories 数量",
+          "value": "7"
+        },
+        {
+          "label": "research_items",
+          "value": "88"
+        },
+        {
+          "label": "experiment_records",
+          "value": "30"
+        },
+        {
+          "label": "portfolio_experiment_contexts",
+          "value": "3"
+        },
+        {
+          "label": "evidence_contexts",
+          "value": "2"
+        },
+        {
+          "label": "portfolio_objects",
+          "value": "93"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/research-items.json",
+          "sha256": "7778df14fc5b3709186fa9fd1b12d475ca383433d47a65b585a862387c025616",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "研究方向",
+          "href": "paper-ideas.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "fdb3c76e8455deef",
+      "occurred_at": "2026-08-29T18:54:13+00:00",
       "time_precision": "exact",
       "event_class": "idea",
       "importance": "detail",
@@ -305,7 +306,7 @@
       "sources": [
         {
           "path": "generated/research-system-state.json",
-          "sha256": "6368f4628e98168fce75f97bda38c3b8a2e1637e82964221b32a9cae8bfa4a1c",
+          "sha256": "8654703fb2020baf80895345986b1585c71a3090461c6783d81184c583ccf539",
           "public": true
         }
       ],
@@ -323,8 +324,77 @@
       }
     },
     {
-      "event_id": "bc953c2536a6db71",
-      "occurred_at": "2026-08-28T19:02:59+00:00",
+      "event_id": "4d6be60027c1f234",
+      "occurred_at": "2026-08-29T18:54:13+00:00",
+      "time_precision": "exact",
+      "event_class": "idea",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "research-governance-v2",
+      "research_label_zh": "research-governance-v2",
+      "title": "research-governance-v2",
+      "title_zh": "Idea / 问题发现记录 · research-governance-v2",
+      "state_before": "",
+      "state_after": "ARTIFACT_RECORDED",
+      "summary": {
+        "en": "Structured artifact recorded: research-governance-v2.json.",
+        "zh": "Idea / 问题发现记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "ARTIFACT_RECORDED"
+        },
+        {
+          "label": "paper_first_macro_stages 数量",
+          "value": "21"
+        },
+        {
+          "label": "stages 数量",
+          "value": "7"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/research-governance-v2.json",
+          "sha256": "e658385c39f75ba666a4997e2ceb7dca1af70a9ae9586be0a00c3a8f9e02e940",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "研究方向",
+          "href": "paper-ideas.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "20b4dbeec3e8f066",
+      "occurred_at": "2026-08-29T18:54:13+00:00",
       "time_precision": "exact",
       "event_class": "idea",
       "importance": "detail",
@@ -390,7 +460,7 @@
       "sources": [
         {
           "path": "generated/research-memory-wiki.json",
-          "sha256": "ff0bbca147885715b11e5e83fe91210d08415145352f20ce8def47a35f62b39b",
+          "sha256": "721db447a2c02a7d7a0cf9b133cb7649af40cfbe50b305d40ce86800392c1b9a",
           "public": true
         }
       ],
@@ -408,905 +478,8 @@
       }
     },
     {
-      "event_id": "040d25c0afe15ccd",
-      "occurred_at": "2026-08-28T19:02:59+00:00",
-      "time_precision": "exact",
-      "event_class": "idea",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "research-governance-v2",
-      "research_label_zh": "research-governance-v2",
-      "title": "research-governance-v2",
-      "title_zh": "Idea / 问题发现记录 · research-governance-v2",
-      "state_before": "",
-      "state_after": "ARTIFACT_RECORDED",
-      "summary": {
-        "en": "Structured artifact recorded: research-governance-v2.json.",
-        "zh": "Idea / 问题发现记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "",
-      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "ARTIFACT_RECORDED"
-        },
-        {
-          "label": "paper_first_macro_stages 数量",
-          "value": "21"
-        },
-        {
-          "label": "stages 数量",
-          "value": "7"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/research-governance-v2.json",
-          "sha256": "949d75da25e83483e716861e472d5c22279a0fbec79706cb032b6d87d9150677",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "研究方向",
-          "href": "paper-ideas.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "dc47f05700f346d0",
-      "occurred_at": "2026-08-28T18:58:45+00:00",
-      "time_precision": "exact",
-      "event_class": "idea",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "paper-first-fresh-phenomenon-portfolio-20260817",
-      "research_label_zh": "paper-first-fresh-phenomenon-portfolio-20260817",
-      "title": "paper-first-fresh-phenomenon-portfolio-20260817",
-      "title_zh": "Idea / 问题发现记录 · paper-first-fresh-phenomenon-portfolio-20260817",
-      "state_before": "",
-      "state_after": "NO_ACTIVE_F0",
-      "summary": {
-        "en": "Structured artifact recorded: paper-first-fresh-phenomenon-portfolio-20260817.json.",
-        "zh": "Idea / 问题发现记录已生成或更新。当前状态：NO_ACTIVE_F0。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "",
-      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "NO_ACTIVE_F0"
-        },
-        {
-          "label": "candidates",
-          "value": "6"
-        },
-        {
-          "label": "active_f0",
-          "value": "0"
-        },
-        {
-          "label": "design_ready_f0",
-          "value": "0"
-        },
-        {
-          "label": "scout_asset",
-          "value": "0"
-        },
-        {
-          "label": "hold_support",
-          "value": "0"
-        },
-        {
-          "label": "hold_execution",
-          "value": "0"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/paper-first-fresh-phenomenon-portfolio-20260817.json",
-          "sha256": "ef6c7af534a1a5e68a66c070e0f57c638b7b82ce5c7f81a658ec83cbc0aa5ae7",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "研究方向",
-          "href": "paper-ideas.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "a1cd71cf1cefbc3b",
-      "occurred_at": "2026-08-28T18:58:45+00:00",
-      "time_precision": "exact",
-      "event_class": "closure",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "trajectory-mediated-memory-effect-transport",
-      "research_label_zh": "trajectory-mediated-memory-effect-transport",
-      "title": "paper-first-post-c2-adjudication",
-      "title_zh": "停止 / 关闭裁决 · trajectory-mediated-memory-effect-transport",
-      "state_before": "",
-      "state_after": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
-      "summary": {
-        "en": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
-        "zh": "停止 / 关闭裁决已生成或更新。当前状态：已停止 / 关闭。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "Archive the current controlled-mediator paper formulation. If a genuinely new paper problem is proposed from the surviving phenomenon or the ScienceWorld decision-context lesson, restart at fresh novelty/collision review, method design, and experiment blueprint; do not treat it as C2 repair.",
-      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/paper-first-post-c2-adjudication.json",
-          "sha256": "1becd8e013c290644fe300330cd88469adbd6f84ef90c1d6e15adca292ea494e",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "研究方向",
-          "href": "paper-ideas.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "9a14c1663f532cb6",
-      "occurred_at": "2026-08-28T18:58:45+00:00",
-      "time_precision": "exact",
-      "event_class": "blocker",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "paper-first-sp15-identifiability-support",
-      "research_label_zh": "paper-first-sp15-identifiability-support",
-      "title": "paper-first-sp15-identifiability-support",
-      "title_zh": "暂缓 / 阻断记录 · paper-first-sp15-identifiability-support",
-      "state_before": "",
-      "state_after": "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT",
-      "summary": {
-        "en": "Current evidence strongly supports a real retrieval/decomposition/coverage phenomenon, but the revised thesis needs a stronger unit than current audited benchmarks expose. Zero directly supported query-level identifiability units were found. This is a support failure for the revised formulation, not evidence that such ambiguity never exists.",
-        "zh": "暂缓 / 阻断记录已生成或更新。当前状态：暂缓，等待条件满足。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "Current evidence strongly supports a real retrieval/decomposition/coverage phenomenon, but the revised thesis needs a stronger unit than current audited benchmarks expose. Zero directly supported query-level identifiability units were found. This is a support failure for the revised formulation, not evidence that such ambiguity never exists.",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "Do not design a method. Obtain or construct a provenance-audited matched ambiguity resource with nonzero query-level identifiability units, or return SP-15 to problem search/revision. A future revival must beat generic partial-identification, selective-prediction, and clarification baselines under the same information.",
-      "next_action_zh": "等待缺失证据、运行条件或上游门槛满足；不能把暂缓状态当成已成立结论。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT"
-        },
-        {
-          "label": "primary_or_author_releases_audited",
-          "value": "5"
-        },
-        {
-          "label": "phenomenon_support_sources",
-          "value": "5"
-        },
-        {
-          "label": "query_level_identifiability_units",
-          "value": "0"
-        },
-        {
-          "label": "released_r3_test_queries",
-          "value": "5696"
-        },
-        {
-          "label": "released_r3_exact_duplicate_queries",
-          "value": "0"
-        },
-        {
-          "label": "near_equivalent_candidates",
-          "value": "190"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/paper-first-sp15-identifiability-support.json",
-          "sha256": "8c60092420aa18b416dce5fb98194b4628035a5f433d9a52bbbf73be16077210",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "研究方向",
-          "href": "paper-ideas.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "660f7e258bd638b6",
-      "occurred_at": "2026-08-28T18:58:45+00:00",
-      "time_precision": "exact",
-      "event_class": "system",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "ai-consultation-clinic",
-      "research_label_zh": "ai-consultation-clinic",
-      "title": "ai-consultation-clinic",
-      "title_zh": "系统与治理记录 · ai-consultation-clinic",
-      "state_before": "",
-      "state_after": "ARTIFACT_RECORDED",
-      "summary": {
-        "en": "Structured artifact recorded: ai-consultation-clinic.json.",
-        "zh": "系统与治理记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "",
-      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "ARTIFACT_RECORDED"
-        },
-        {
-          "label": "checkpoints",
-          "value": "5"
-        },
-        {
-          "label": "pre_gpu_checkpoints",
-          "value": "3"
-        },
-        {
-          "label": "post_screen_checkpoints",
-          "value": "1"
-        },
-        {
-          "label": "pre_scale_checkpoints",
-          "value": "1"
-        },
-        {
-          "label": "ai_authoritative_checkpoints",
-          "value": "0"
-        },
-        {
-          "label": "all_findings_require_structured_disposition",
-          "value": "True"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/ai-consultation-clinic.json",
-          "sha256": "fb10fa8a1ff74beb8a27d2e5eb57200975723e85a5174fb069d05b839baff6e2",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "科研系统",
-          "href": "system-overview.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "0dc7affaaf48374b",
-      "occurred_at": "2026-08-28T18:58:45+00:00",
-      "time_precision": "exact",
-      "event_class": "idea",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "paper-first-search-portfolio-design-adjudication",
-      "research_label_zh": "paper-first-search-portfolio-design-adjudication",
-      "title": "paper-first-search-portfolio-design-adjudication",
-      "title_zh": "Idea / 问题发现记录 · paper-first-search-portfolio-design-adjudication",
-      "state_before": "",
-      "state_after": "ARTIFACT_RECORDED",
-      "summary": {
-        "en": "Use these outcomes only as zero-authority shadow-search feedback. Do not design a method, compile an Experiment Blueprint, mutate the canonical Problem-Gate queue, start P0, or use GPU for either candidate.",
-        "zh": "Idea / 问题发现记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "Use these outcomes only as zero-authority shadow-search feedback. Do not design a method, compile an Experiment Blueprint, mutate the canonical Problem-Gate queue, start P0, or use GPU for either candidate.",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "Use these outcomes only as zero-authority shadow-search feedback. Do not design a method, compile an Experiment Blueprint, mutate the canonical Problem-Gate queue, start P0, or use GPU for either candidate.",
-      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "ARTIFACT_RECORDED"
-        },
-        {
-          "label": "reviewed",
-          "value": "2"
-        },
-        {
-          "label": "advance_to_method_design",
-          "value": "0"
-        },
-        {
-          "label": "revise_paper_problem",
-          "value": "1"
-        },
-        {
-          "label": "stop_standalone",
-          "value": "1"
-        },
-        {
-          "label": "support_inventory_required",
-          "value": "1"
-        },
-        {
-          "label": "shadow_dead_end_objects",
-          "value": "2"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/paper-first-search-portfolio-design-adjudication.json",
-          "sha256": "3287176005201abb67ff1d34716a68c0b4553b1c20150699d608794fde29ccd3",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "研究方向",
-          "href": "paper-ideas.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "e5190de3987eba14",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
-      "time_precision": "exact",
-      "event_class": "closure",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "repair-surface-identifiability-under-persistent-agent-updates",
-      "research_label_zh": "repair-surface-identifiability-under-persistent-agent-updates",
-      "title": "paper-first-pf2-method-adjudication",
-      "title_zh": "停止 / 关闭裁决 · repair-surface-identifiability-under-persistent-agent-updates",
-      "state_before": "",
-      "state_after": "STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL",
-      "summary": {
-        "en": "RSIC's IDENTIFIED/UNIDENTIFIABLE/PROBE_MORE states are currently in one-to-one correspondence with generic partial identification and set-refinement over the same compatible model set, repair-surface hypotheses, intervention table, and probe outcomes. The agent-surface semantics do not yet create an irreducible inference object or guarantee.",
-        "zh": "停止 / 关闭裁决已生成或更新。当前状态：已停止 / 关闭。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "RSIC's IDENTIFIED/UNIDENTIFIABLE/PROBE_MORE states are currently in one-to-one correspondence with generic partial identification and set-refinement over the same compatible model set, repair-surface hypotheses, intervention table, and probe outcomes. The agent-surface semantics do not yet create an irreducible inference object or guarantee.",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "Archive PF-2 current method thesis and move paper-first effort to the next unresolved problem boundary. PF-1 evolvability-debt is next; no PF-2 experiment blueprint or local validation may be compiled.",
-      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL"
-        },
-        {
-          "label": "what_is_closed 数量",
-          "value": "4"
-        },
-        {
-          "label": "revival_requirements 数量",
-          "value": "3"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/paper-first-pf2-method-adjudication.json",
-          "sha256": "8ae772ce88add254c1e91ef34e3c4c16d1b9504a4e455d6729c55abe1bb47fb3",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "研究方向",
-          "href": "paper-ideas.html"
-        },
-        {
-          "label": "ResearchItem E-5",
-          "href": "paper-ideas.html?research=E-5#canonical-group-e"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [
-          {
-            "code": "E-5",
-            "id": "PF-2",
-            "category": "E",
-            "title_zh": "持久更新的修复表面可辨识性",
-            "title_en": "Repair-Surface Identifiability under Persistent Updates",
-            "scientific_state": "STOPPED"
-          }
-        ],
-        "experiments": [],
-        "papers": [],
-        "categories": [
-          "E"
-        ]
-      }
-    },
-    {
-      "event_id": "cd00fbb5789ba03a",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
-      "time_precision": "exact",
-      "event_class": "closure",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "evolvability-debt-under-persistent-agent-updates",
-      "research_label_zh": "evolvability-debt-under-persistent-agent-updates",
-      "title": "paper-first-pf1-problem-adjudication",
-      "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
-      "state_before": "",
-      "state_after": "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT",
-      "summary": {
-        "en": "After successively narrowing PF-1 from generic future learnability to fixed-evolver state compatibility and finally to discrete artifact reachable-set/search-geometry effects, the remaining claim is still expressible using established plasticity, meta-learning, evolvability, and representation/search-locality concepts. The only residual distinction is the agent-artifact domain.",
-        "zh": "停止 / 关闭裁决已生成或更新。当前状态：已合并，不再独立推进。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "After successively narrowing PF-1 from generic future learnability to fixed-evolver state compatibility and finally to discrete artifact reachable-set/search-geometry effects, the remaining claim is still expressible using established plasticity, meta-learning, evolvability, and representation/search-locality concepts. The only residual distinction is the agent-artifact domain.",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "Archive PF-1 standalone. Continue paper-first review with unresolved PF-3/PF-5/PF-7 rather than attempting another PF-1 terminology or substrate rescue.",
-      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT"
-        },
-        {
-          "label": "failed_novelty_escape_routes 数量",
-          "value": "4"
-        },
-        {
-          "label": "primary_collisions 数量",
-          "value": "10"
-        },
-        {
-          "label": "what_is_closed 数量",
-          "value": "5"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/paper-first-pf1-problem-adjudication.json",
-          "sha256": "a905b109bf87e6809f76993d0531aa4a839ccf5940d935422c5127e9d7925c17",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "研究方向",
-          "href": "paper-ideas.html"
-        },
-        {
-          "label": "ResearchItem A-8",
-          "href": "paper-ideas.html?research=A-8#canonical-group-a"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [
-          {
-            "code": "A-8",
-            "id": "PF-1",
-            "category": "A",
-            "title_zh": "固定进化器下的未来可学习性审计",
-            "title_en": "Future-Learnability Audit under a Frozen Evolver",
-            "scientific_state": "STOPPED"
-          }
-        ],
-        "experiments": [],
-        "papers": [],
-        "categories": [
-          "A"
-        ]
-      }
-    },
-    {
-      "event_id": "ad088e7825a93f1d",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
-      "time_precision": "exact",
-      "event_class": "closure",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "longitudinal-cross-failure-orthogonal-screen-20260824",
-      "research_label_zh": "longitudinal-cross-failure-orthogonal-screen-20260824",
-      "title": "longitudinal-cross-failure-orthogonal-screen-20260824",
-      "title_zh": "停止 / 关闭裁决 · longitudinal-cross-failure-orthogonal-screen-20260824",
-      "state_before": "",
-      "state_after": "CROSS_FAILURE_ORTHOGONAL_SCREEN_ZERO_SURVIVOR",
-      "summary": {
-        "en": "Do not mutate these three carriers by adding another score, graph encoding, clause language, or weaker baseline. The current failure-memory cross-product is saturated under same-information reduction. Move to bounded fresh-source discovery for a genuinely new pre-outcome observable/intervention, while keeping P15 closed. Any fresh survivor must first pass source grounding and exact mature reduction before Debate or ProblemGate.",
-        "zh": "停止 / 关闭裁决已生成或更新。当前状态：已停止 / 关闭。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "Do not mutate these three carriers by adding another score, graph encoding, clause language, or weaker baseline. The current failure-memory cross-product is saturated under same-information reduction. Move to bounded fresh-source discovery for a genuinely new pre-outcome observable/intervention, while keeping P15 closed. Any fresh survivor must first pass source grounding and exact mature reduction before Debate or ProblemGate.",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "Do not mutate these three carriers by adding another score, graph encoding, clause language, or weaker baseline. The current failure-memory cross-product is saturated under same-information reduction. Move to bounded fresh-source discovery for a genuinely new pre-outcome observable/intervention, while keeping P15 closed. Any fresh survivor must first pass source grounding and exact mature reduction before Debate or ProblemGate.",
-      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "CROSS_FAILURE_ORTHOGONAL_SCREEN_ZERO_SURVIVOR"
-        },
-        {
-          "label": "source_refs 数量",
-          "value": "8"
-        },
-        {
-          "label": "carriers 数量",
-          "value": "3"
-        },
-        {
-          "label": "cross_failure_carriers",
-          "value": "3"
-        },
-        {
-          "label": "reduced_before_debate",
-          "value": "3"
-        },
-        {
-          "label": "survivors",
-          "value": "0"
-        },
-        {
-          "label": "debate_eligible",
-          "value": "0"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/longitudinal-cross-failure-orthogonal-screen-20260824.json",
-          "sha256": "530c68b321e0b35b1f6a0994b25da8b2a10335daedd9c2b44d8e912fda4eaf08",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "研究方向",
-          "href": "paper-ideas.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "9f94f76fced69479",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
-      "time_precision": "exact",
-      "event_class": "idea",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "paper-first-pf357-problem-adjudication",
-      "research_label_zh": "paper-first-pf357-problem-adjudication",
-      "title": "paper-first-pf357-problem-adjudication",
-      "title_zh": "Idea / 问题发现记录 · paper-first-pf357-problem-adjudication",
-      "state_before": "",
-      "state_after": "ARTIFACT_RECORDED",
-      "summary": {
-        "en": "The nine-item Paper-first incubation batch is now fully adjudicated. Do not create experiments from this batch. Return to fresh problem discovery using the strengthened collision/same-information rules and reuse these three merged controls in the research system.",
-        "zh": "Idea / 问题发现记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "The nine-item Paper-first incubation batch is now fully adjudicated. Do not create experiments from this batch. Return to fresh problem discovery using the strengthened collision/same-information rules and reuse these three merged controls in the research system.",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "The nine-item Paper-first incubation batch is now fully adjudicated. Do not create experiments from this batch. Return to fresh problem discovery using the strengthened collision/same-information rules and reuse these three merged controls in the research system.",
-      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "ARTIFACT_RECORDED"
-        },
-        {
-          "label": "reviewed",
-          "value": "3"
-        },
-        {
-          "label": "stopped_standalone",
-          "value": "3"
-        },
-        {
-          "label": "paper_design_authorized",
-          "value": "0"
-        },
-        {
-          "label": "local_validation_authorized",
-          "value": "0"
-        },
-        {
-          "label": "p0_authorized",
-          "value": "0"
-        },
-        {
-          "label": "rows 数量",
-          "value": "3"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/paper-first-pf357-problem-adjudication.json",
-          "sha256": "71cd412448390e7263189c5b6cf6e8d9d1edb7de3e8bd8a86aab05e728161c4e",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "研究方向",
-          "href": "paper-ideas.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "9a378c788939d3c9",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
-      "time_precision": "exact",
-      "event_class": "system",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "paper-first-design-adjudication",
-      "research_label_zh": "paper-first-design-adjudication",
-      "title": "paper-first-design-adjudication",
-      "title_zh": "系统与治理记录 · paper-first-design-adjudication",
-      "state_before": "",
-      "state_after": "ARTIFACT_RECORDED",
-      "summary": {
-        "en": "Design and red-team one irreducible PF-2 method against generic same-information routing/CATE baselines. In parallel revise PF-1 problem wording and rerun collision review. Do not run local validation for any PF candidate.",
-        "zh": "系统与治理记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "Design and red-team one irreducible PF-2 method against generic same-information routing/CATE baselines. In parallel revise PF-1 problem wording and rerun collision review. Do not run local validation for any PF candidate.",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "Design and red-team one irreducible PF-2 method against generic same-information routing/CATE baselines. In parallel revise PF-1 problem wording and rerun collision review. Do not run local validation for any PF candidate.",
-      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "ARTIFACT_RECORDED"
-        },
-        {
-          "label": "reviewed",
-          "value": "4"
-        },
-        {
-          "label": "advance_to_method_design",
-          "value": "1"
-        },
-        {
-          "label": "revise_paper_problem",
-          "value": "1"
-        },
-        {
-          "label": "merge_as_cross_cutting_invariant",
-          "value": "1"
-        },
-        {
-          "label": "stop_standalone_merge_risk_axis",
-          "value": "1"
-        },
-        {
-          "label": "local_validation_authorized",
-          "value": "0"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/paper-first-design-adjudication.json",
-          "sha256": "37bda14e3ff9fbe0c6ff9449cafa50d5ba4e1e0bb2c798393ab88228b6441af3",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "科研系统",
-          "href": "system-overview.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "9379e7703efa2425",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
+      "event_id": "f368053646225c0f",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
       "time_precision": "exact",
       "event_class": "system",
       "importance": "detail",
@@ -1372,7 +545,7 @@
       "sources": [
         {
           "path": "generated/longitudinal-safety-material-child-race-20260824.json",
-          "sha256": "be8f11afe130b25a839da3ca0edc5060301608b5b5b3569f95a89e73e2b67769",
+          "sha256": "62b7dbc3ede629f73ce073c1338a4108d693c9b7a5b882e2241171a1f3e5653f",
           "public": true
         }
       ],
@@ -1390,8 +563,323 @@
       }
     },
     {
-      "event_id": "8f1e5a09b4b7c56f",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
+      "event_id": "e1f73801c4856246",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "closure",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "trajectory-mediated-memory-effect-transport",
+      "research_label_zh": "trajectory-mediated-memory-effect-transport",
+      "title": "paper-first-post-c2-adjudication",
+      "title_zh": "停止 / 关闭裁决 · trajectory-mediated-memory-effect-transport",
+      "state_before": "",
+      "state_after": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM",
+      "summary": {
+        "en": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
+        "zh": "停止 / 关闭裁决已生成或更新。当前状态：已停止 / 关闭。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "All ten strict C2 units are execution-valid and the full pre-divergence policy decision context is reproducible, yet only 2/10 controlled action contrasts are nonzero and the preregistered same-memory cross-context sign reversal is absent. The earliest-divergent-action controlled-mediator mechanism is therefore unsupported by its local falsifier.",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "Archive the current controlled-mediator paper formulation. If a genuinely new paper problem is proposed from the surviving phenomenon or the ScienceWorld decision-context lesson, restart at fresh novelty/collision review, method design, and experiment blueprint; do not treat it as C2 repair.",
+      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "STOP_CURRENT_CONTROLLED_MEDIATOR_PAPER_MECHANISM"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/paper-first-post-c2-adjudication.json",
+          "sha256": "ca443883fe1fee3c152be29fe3374c6980d878edf9b8660ce704ec2d273c9ef1",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "研究方向",
+          "href": "paper-ideas.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "bd850d50507ad9cc",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "system",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "paper-first-design-adjudication",
+      "research_label_zh": "paper-first-design-adjudication",
+      "title": "paper-first-design-adjudication",
+      "title_zh": "系统与治理记录 · paper-first-design-adjudication",
+      "state_before": "",
+      "state_after": "ARTIFACT_RECORDED",
+      "summary": {
+        "en": "Design and red-team one irreducible PF-2 method against generic same-information routing/CATE baselines. In parallel revise PF-1 problem wording and rerun collision review. Do not run local validation for any PF candidate.",
+        "zh": "系统与治理记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "Design and red-team one irreducible PF-2 method against generic same-information routing/CATE baselines. In parallel revise PF-1 problem wording and rerun collision review. Do not run local validation for any PF candidate.",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "Design and red-team one irreducible PF-2 method against generic same-information routing/CATE baselines. In parallel revise PF-1 problem wording and rerun collision review. Do not run local validation for any PF candidate.",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "ARTIFACT_RECORDED"
+        },
+        {
+          "label": "reviewed",
+          "value": "4"
+        },
+        {
+          "label": "advance_to_method_design",
+          "value": "1"
+        },
+        {
+          "label": "revise_paper_problem",
+          "value": "1"
+        },
+        {
+          "label": "merge_as_cross_cutting_invariant",
+          "value": "1"
+        },
+        {
+          "label": "stop_standalone_merge_risk_axis",
+          "value": "1"
+        },
+        {
+          "label": "local_validation_authorized",
+          "value": "0"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/paper-first-design-adjudication.json",
+          "sha256": "24dc1ae6d88800c7031bd342cf7d0aa6ebb862906fd0272a2b81d156ea1c9f55",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "科研系统",
+          "href": "system-overview.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "bbc0dc793403f6b3",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "closure",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "repair-surface-identifiability-under-persistent-agent-updates",
+      "research_label_zh": "repair-surface-identifiability-under-persistent-agent-updates",
+      "title": "paper-first-pf2-method-adjudication",
+      "title_zh": "停止 / 关闭裁决 · repair-surface-identifiability-under-persistent-agent-updates",
+      "state_before": "",
+      "state_after": "STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL",
+      "summary": {
+        "en": "RSIC's IDENTIFIED/UNIDENTIFIABLE/PROBE_MORE states are currently in one-to-one correspondence with generic partial identification and set-refinement over the same compatible model set, repair-surface hypotheses, intervention table, and probe outcomes. The agent-surface semantics do not yet create an irreducible inference object or guarantee.",
+        "zh": "停止 / 关闭裁决已生成或更新。当前状态：已停止 / 关闭。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "RSIC's IDENTIFIED/UNIDENTIFIABLE/PROBE_MORE states are currently in one-to-one correspondence with generic partial identification and set-refinement over the same compatible model set, repair-surface hypotheses, intervention table, and probe outcomes. The agent-surface semantics do not yet create an irreducible inference object or guarantee.",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "Archive PF-2 current method thesis and move paper-first effort to the next unresolved problem boundary. PF-1 evolvability-debt is next; no PF-2 experiment blueprint or local validation may be compiled.",
+      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "STOP_CURRENT_RSIC_METHOD_THESIS_KEEP_PROBLEM_PROTOCOL"
+        },
+        {
+          "label": "what_is_closed 数量",
+          "value": "4"
+        },
+        {
+          "label": "revival_requirements 数量",
+          "value": "3"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/paper-first-pf2-method-adjudication.json",
+          "sha256": "b19626ad6eff5235c3b5151bb30f0a140e59e101c2c1545122850e26a230d30a",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "研究方向",
+          "href": "paper-ideas.html"
+        },
+        {
+          "label": "ResearchItem E-5",
+          "href": "paper-ideas.html?research=E-5#canonical-group-e"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [
+          {
+            "code": "E-5",
+            "id": "PF-2",
+            "category": "E",
+            "title_zh": "持久更新的修复表面可辨识性",
+            "title_en": "Repair-Surface Identifiability under Persistent Updates",
+            "scientific_state": "STOPPED"
+          }
+        ],
+        "experiments": [],
+        "papers": [],
+        "categories": [
+          "E"
+        ]
+      }
+    },
+    {
+      "event_id": "b99c51b52d92180e",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "idea",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "paper-first-pf357-problem-adjudication",
+      "research_label_zh": "paper-first-pf357-problem-adjudication",
+      "title": "paper-first-pf357-problem-adjudication",
+      "title_zh": "Idea / 问题发现记录 · paper-first-pf357-problem-adjudication",
+      "state_before": "",
+      "state_after": "ARTIFACT_RECORDED",
+      "summary": {
+        "en": "The nine-item Paper-first incubation batch is now fully adjudicated. Do not create experiments from this batch. Return to fresh problem discovery using the strengthened collision/same-information rules and reuse these three merged controls in the research system.",
+        "zh": "Idea / 问题发现记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "The nine-item Paper-first incubation batch is now fully adjudicated. Do not create experiments from this batch. Return to fresh problem discovery using the strengthened collision/same-information rules and reuse these three merged controls in the research system.",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "The nine-item Paper-first incubation batch is now fully adjudicated. Do not create experiments from this batch. Return to fresh problem discovery using the strengthened collision/same-information rules and reuse these three merged controls in the research system.",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "ARTIFACT_RECORDED"
+        },
+        {
+          "label": "reviewed",
+          "value": "3"
+        },
+        {
+          "label": "stopped_standalone",
+          "value": "3"
+        },
+        {
+          "label": "paper_design_authorized",
+          "value": "0"
+        },
+        {
+          "label": "local_validation_authorized",
+          "value": "0"
+        },
+        {
+          "label": "p0_authorized",
+          "value": "0"
+        },
+        {
+          "label": "rows 数量",
+          "value": "3"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/paper-first-pf357-problem-adjudication.json",
+          "sha256": "8477d8dcdbaec3e6194044357fd1460224d5962bbc5332394ac9177e48bd6490",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "研究方向",
+          "href": "paper-ideas.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "b5cffc278bc48aa5",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
       "time_precision": "exact",
       "event_class": "blocker",
       "importance": "detail",
@@ -1457,7 +945,7 @@
       "sources": [
         {
           "path": "generated/ai4ai-strategy-reopen-contradiction-screen-20260824.json",
-          "sha256": "a9a72e54ed4e0e4ce2f3abfd83f1659aab7aeb9c4712d4e9c28aad0cdc254997",
+          "sha256": "32c188c7231180cbf6112619311d844dafb5cdf50ebf0346da63158f4ee570b4",
           "public": true
         }
       ],
@@ -1475,307 +963,149 @@
       }
     },
     {
-      "event_id": "7a799c74c4781b3b",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
-      "time_precision": "exact",
-      "event_class": "system",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "longitudinal-safety-post-race-triage-20260824",
-      "research_label_zh": "longitudinal-safety-post-race-triage-20260824",
-      "title": "longitudinal-safety-post-race-triage-20260824",
-      "title_zh": "系统与治理记录 · longitudinal-safety-post-race-triage-20260824",
-      "state_before": "",
-      "state_after": "POST_RACE_REDUCTION_TRIAGE_COMPLETE",
-      "summary": {
-        "en": "Do not resurrect any of the nine ranked historical leaves as a current ResearchItem. Use the three MATERIAL_CHILD_REQUIRED reviewer vectors only as mutation prompts; any child must change the scientific object and pass its listed same-information reductions before debate or ProblemGate. Resume DEFER rows only through their existing canonical object.",
-        "zh": "系统与治理记录已生成或更新。当前状态：POST_RACE_REDUCTION_TRIAGE_COMPLETE。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "Do not resurrect any of the nine ranked historical leaves as a current ResearchItem. Use the three MATERIAL_CHILD_REQUIRED reviewer vectors only as mutation prompts; any child must change the scientific object and pass its listed same-information reductions before debate or ProblemGate. Resume DEFER rows only through their existing canonical object.",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "Do not resurrect any of the nine ranked historical leaves as a current ResearchItem. Use the three MATERIAL_CHILD_REQUIRED reviewer vectors only as mutation prompts; any child must change the scientific object and pass its listed same-information reductions before debate or ProblemGate. Resume DEFER rows only through their existing canonical object.",
-      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "POST_RACE_REDUCTION_TRIAGE_COMPLETE"
-        },
-        {
-          "label": "ranked_failure_leaves",
-          "value": "9"
-        },
-        {
-          "label": "triaged",
-          "value": "9"
-        },
-        {
-          "label": "current_post_race_survivors",
-          "value": "0"
-        },
-        {
-          "label": "material_child_required",
-          "value": "3"
-        },
-        {
-          "label": "deferred_to_existing_object",
-          "value": "3"
-        },
-        {
-          "label": "stopped_by_mature_reduction",
-          "value": "3"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/longitudinal-safety-post-race-triage-20260824.json",
-          "sha256": "736b90d561f7c9a9945880ec5814089bd99556f8abd3bfe297ef804ba8975bd1",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "科研系统",
-          "href": "system-overview.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "44e916668d8a1dc2",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
-      "time_precision": "exact",
-      "event_class": "blocker",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "PA-05-SKILL-VALIDATION-TRANSFER",
-      "research_label_zh": "PA-05-SKILL-VALIDATION-TRANSFER",
-      "title": "paper-first-skill-validation-transfer-scout-20260817",
-      "title_zh": "暂缓 / 阻断记录 · PA-05-SKILL-VALIDATION-TRANSFER",
-      "state_before": "",
-      "state_after": "DESIGN_READY_EXECUTION_ENV_HOLD",
-      "summary": {
-        "en": "Structured artifact recorded: paper-first-skill-validation-transfer-scout-20260817.json.",
-        "zh": "暂缓 / 阻断记录已生成或更新。当前状态：通过 / 就绪。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "",
-      "next_action_zh": "等待缺失证据、运行条件或上游门槛满足；不能把暂缓状态当成已成立结论。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "DESIGN_READY_EXECUTION_ENV_HOLD"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/paper-first-skill-validation-transfer-scout-20260817.json",
-          "sha256": "a8b79b4c06c119b7d404970a55f74df51e9c52ebb209f3182b2f0e1115de55f8",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "研究方向",
-          "href": "paper-ideas.html"
-        },
-        {
-          "label": "ResearchItem C-8",
-          "href": "paper-ideas.html?research=C-8#canonical-group-c"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [
-          {
-            "code": "C-8",
-            "id": "PA-05-SKILL-VALIDATION-TRANSFER",
-            "category": "C",
-            "title_zh": "Local skill-validation ranking versus shifted deployment is a model-selection-under-distribution-shift object unless a skill-specific structural residual survives",
-            "title_en": "Local skill-validation ranking versus shifted deployment is a model-selection-under-distribution-shift object unless a skill-specific structural residual survives",
-            "scientific_state": "STOPPED"
-          }
-        ],
-        "experiments": [],
-        "papers": [],
-        "categories": [
-          "C"
-        ]
-      }
-    },
-    {
-      "event_id": "1e96bd1bb29edeb2",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
-      "time_precision": "exact",
-      "event_class": "system",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "paper-first-fresh-saturation",
-      "research_label_zh": "paper-first-fresh-saturation",
-      "title": "paper-first-fresh-saturation",
-      "title_zh": "系统与治理记录 · paper-first-fresh-saturation",
-      "state_before": "",
-      "state_after": "NO_FRESH_SURVIVOR_CURRENT_SCAN",
-      "summary": {
-        "en": "When source coverage is exhausted, keep the live weekly transaction at zero calls until new freshness/relevance-qualified lane-grounded evidence changes the content-addressed pool. Use Search Portfolio only for shadow breadth exploration; no shadow result can create a live candidate, Paper Design eligibility, Method, Experiment, P0, or GPU authority.",
-        "zh": "系统与治理记录已生成或更新。当前状态：NO_FRESH_SURVIVOR_CURRENT_SCAN。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "When source coverage is exhausted, keep the live weekly transaction at zero calls until new freshness/relevance-qualified lane-grounded evidence changes the content-addressed pool. Use Search Portfolio only for shadow breadth exploration; no shadow result can create a live candidate, Paper Design eligibility, Method, Experiment, P0, or GPU authority.",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "When source coverage is exhausted, keep the live weekly transaction at zero calls until new freshness/relevance-qualified lane-grounded evidence changes the content-addressed pool. Use Search Portfolio only for shadow breadth exploration; no shadow result can create a live candidate, Paper Design eligibility, Method, Experiment, P0, or GPU authority.",
-      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "NO_FRESH_SURVIVOR_CURRENT_SCAN"
-        },
-        {
-          "label": "drafts_reviewed",
-          "value": "41"
-        },
-        {
-          "label": "survivors",
-          "value": "0"
-        },
-        {
-          "label": "stopped",
-          "value": "41"
-        },
-        {
-          "label": "reduction_patterns",
-          "value": "34"
-        },
-        {
-          "label": "local_validation_authorized",
-          "value": "0"
-        },
-        {
-          "label": "p0_authorized",
-          "value": "0"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/paper-first-fresh-saturation.json",
-          "sha256": "5df0e4b8462f1208e72126033c5fa75eea939662b40a090536396a634b8a9876",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "科研系统",
-          "href": "system-overview.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "1535105b051bcfbb",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
+      "event_id": "b4bbc8088021fb0a",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
       "time_precision": "exact",
       "event_class": "closure",
       "importance": "detail",
       "origin": "artifact_full_history",
-      "research_id": "SCG-001",
-      "research_label_zh": "SCG-001",
-      "title": "Semantic Commit Gap: persisted self-update versus future enactment",
-      "title_zh": "停止 / 关闭裁决 · SCG-001",
+      "research_id": "evolvability-debt-under-persistent-agent-updates",
+      "research_label_zh": "evolvability-debt-under-persistent-agent-updates",
+      "title": "paper-first-pf1-problem-adjudication",
+      "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
       "state_before": "",
-      "state_after": "STOP_CURRENT_FORMULATION_MATURE_LIFECYCLE_REDUCTION",
+      "state_after": "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT",
       "summary": {
-        "en": "Structured artifact recorded: semantic-commit-gap-collision-20260824.json.",
-        "zh": "停止 / 关闭裁决已生成或更新。当前状态：已停止 / 关闭。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+        "en": "After successively narrowing PF-1 from generic future learnability to fixed-evolver state compatibility and finally to discrete artifact reachable-set/search-geometry effects, the remaining claim is still expressible using established plasticity, meta-learning, evolvability, and representation/search-locality concepts. The only residual distinction is the agent-artifact domain.",
+        "zh": "停止 / 关闭裁决已生成或更新。当前状态：已合并，不再独立推进。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
       },
       "why": {
-        "en": "",
+        "en": "After successively narrowing PF-1 from generic future learnability to fixed-evolver state compatibility and finally to discrete artifact reachable-set/search-geometry effects, the remaining claim is still expressible using established plasticity, meta-learning, evolvability, and representation/search-locality concepts. The only residual distinction is the agent-artifact domain.",
         "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
       },
       "limitation": {
         "en": "This full-history projection does not create scientific authority beyond the source artifact.",
         "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
       },
-      "next_action": "",
+      "next_action": "Archive PF-1 standalone. Continue paper-first review with unresolved PF-3/PF-5/PF-7 rather than attempting another PF-1 terminology or substrate rescue.",
       "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
       "reopen_condition": "",
       "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
       "evidence": [
         {
           "label": "原始状态码",
-          "value": "STOP_CURRENT_FORMULATION_MATURE_LIFECYCLE_REDUCTION"
+          "value": "STOP_PF1_STANDALONE_PROBLEM_MERGE_EVOLVABILITY_AUDIT"
         },
         {
-          "label": "four_stage_decomposition 数量",
+          "label": "failed_novelty_escape_routes 数量",
           "value": "4"
         },
         {
-          "label": "closest_work 数量",
-          "value": "8"
+          "label": "primary_collisions 数量",
+          "value": "10"
         },
         {
-          "label": "stages",
-          "value": "4"
+          "label": "what_is_closed 数量",
+          "value": "5"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/paper-first-pf1-problem-adjudication.json",
+          "sha256": "a84bb0dfab2d906db6bc077f4dea27c3f0c6d0bcfd8bcb3f09d586837c1e07ac",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "研究方向",
+          "href": "paper-ideas.html"
         },
         {
-          "label": "current_scientific_object_survives",
+          "label": "ResearchItem A-8",
+          "href": "paper-ideas.html?research=A-8#canonical-group-a"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [
+          {
+            "code": "A-8",
+            "id": "PF-1",
+            "category": "A",
+            "title_zh": "固定进化器下的未来可学习性审计",
+            "title_en": "Future-Learnability Audit under a Frozen Evolver",
+            "scientific_state": "STOPPED"
+          }
+        ],
+        "experiments": [],
+        "papers": [],
+        "categories": [
+          "A"
+        ]
+      }
+    },
+    {
+      "event_id": "aed6f8e0adca1a99",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "idea",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "paper-first-fresh-phenomenon-portfolio-20260817",
+      "research_label_zh": "paper-first-fresh-phenomenon-portfolio-20260817",
+      "title": "paper-first-fresh-phenomenon-portfolio-20260817",
+      "title_zh": "Idea / 问题发现记录 · paper-first-fresh-phenomenon-portfolio-20260817",
+      "state_before": "",
+      "state_after": "NO_ACTIVE_F0",
+      "summary": {
+        "en": "Structured artifact recorded: paper-first-fresh-phenomenon-portfolio-20260817.json.",
+        "zh": "Idea / 问题发现记录已生成或更新。当前状态：NO_ACTIVE_F0。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "NO_ACTIVE_F0"
+        },
+        {
+          "label": "candidates",
+          "value": "6"
+        },
+        {
+          "label": "active_f0",
           "value": "0"
         },
         {
-          "label": "problem_gate_eligible",
+          "label": "design_ready_f0",
           "value": "0"
         },
         {
-          "label": "research_item_eligible",
+          "label": "scout_asset",
+          "value": "0"
+        },
+        {
+          "label": "hold_support",
+          "value": "0"
+        },
+        {
+          "label": "hold_execution",
           "value": "0"
         }
       ],
@@ -1787,8 +1117,8 @@
       },
       "sources": [
         {
-          "path": "generated/semantic-commit-gap-collision-20260824.json",
-          "sha256": "ecaacb36083a99ad39221664ea61a1f45e3a7c348419a88c39a90fecf402fa5e",
+          "path": "generated/paper-first-fresh-phenomenon-portfolio-20260817.json",
+          "sha256": "1202b084acab4251827243def6584a8e5e356bdc9d1888ee06905adc52094ea2",
           "public": true
         }
       ],
@@ -1806,8 +1136,93 @@
       }
     },
     {
-      "event_id": "063ed4153c924031",
-      "occurred_at": "2026-08-28T18:58:44+00:00",
+      "event_id": "922eed2529950eb9",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "closure",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "longitudinal-cross-failure-orthogonal-screen-20260824",
+      "research_label_zh": "longitudinal-cross-failure-orthogonal-screen-20260824",
+      "title": "longitudinal-cross-failure-orthogonal-screen-20260824",
+      "title_zh": "停止 / 关闭裁决 · longitudinal-cross-failure-orthogonal-screen-20260824",
+      "state_before": "",
+      "state_after": "CROSS_FAILURE_ORTHOGONAL_SCREEN_ZERO_SURVIVOR",
+      "summary": {
+        "en": "Do not mutate these three carriers by adding another score, graph encoding, clause language, or weaker baseline. The current failure-memory cross-product is saturated under same-information reduction. Move to bounded fresh-source discovery for a genuinely new pre-outcome observable/intervention, while keeping P15 closed. Any fresh survivor must first pass source grounding and exact mature reduction before Debate or ProblemGate.",
+        "zh": "停止 / 关闭裁决已生成或更新。当前状态：已停止 / 关闭。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "Do not mutate these three carriers by adding another score, graph encoding, clause language, or weaker baseline. The current failure-memory cross-product is saturated under same-information reduction. Move to bounded fresh-source discovery for a genuinely new pre-outcome observable/intervention, while keeping P15 closed. Any fresh survivor must first pass source grounding and exact mature reduction before Debate or ProblemGate.",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "Do not mutate these three carriers by adding another score, graph encoding, clause language, or weaker baseline. The current failure-memory cross-product is saturated under same-information reduction. Move to bounded fresh-source discovery for a genuinely new pre-outcome observable/intervention, while keeping P15 closed. Any fresh survivor must first pass source grounding and exact mature reduction before Debate or ProblemGate.",
+      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "CROSS_FAILURE_ORTHOGONAL_SCREEN_ZERO_SURVIVOR"
+        },
+        {
+          "label": "source_refs 数量",
+          "value": "8"
+        },
+        {
+          "label": "carriers 数量",
+          "value": "3"
+        },
+        {
+          "label": "cross_failure_carriers",
+          "value": "3"
+        },
+        {
+          "label": "reduced_before_debate",
+          "value": "3"
+        },
+        {
+          "label": "survivors",
+          "value": "0"
+        },
+        {
+          "label": "debate_eligible",
+          "value": "0"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/longitudinal-cross-failure-orthogonal-screen-20260824.json",
+          "sha256": "e2d349cbf24f2b1b273c75cad6eb6216c88b4059527308d1db6c108fbe52df7b",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "研究方向",
+          "href": "paper-ideas.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "9105e672e2a06637",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
       "time_precision": "exact",
       "event_class": "experiment",
       "importance": "detail",
@@ -1873,7 +1288,7 @@
       "sources": [
         {
           "path": "generated/p0-admission-state.json",
-          "sha256": "779e1c191d1187fc94a0aaa0f7e950cbbdb3d93c8d03cf57acb7eb67e8313438",
+          "sha256": "895c7bb33c8dabb8ec17460151f7fdbb718af3556f4e75629fe775666883706b",
           "public": true
         }
       ],
@@ -1891,8 +1306,594 @@
       }
     },
     {
-      "event_id": "e03a574773755558",
-      "occurred_at": "2026-08-28T18:54:32+00:00",
+      "event_id": "8f699a817275bdc4",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "blocker",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "paper-first-sp15-identifiability-support",
+      "research_label_zh": "paper-first-sp15-identifiability-support",
+      "title": "paper-first-sp15-identifiability-support",
+      "title_zh": "暂缓 / 阻断记录 · paper-first-sp15-identifiability-support",
+      "state_before": "",
+      "state_after": "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT",
+      "summary": {
+        "en": "Current evidence strongly supports a real retrieval/decomposition/coverage phenomenon, but the revised thesis needs a stronger unit than current audited benchmarks expose. Zero directly supported query-level identifiability units were found. This is a support failure for the revised formulation, not evidence that such ambiguity never exists.",
+        "zh": "暂缓 / 阻断记录已生成或更新。当前状态：暂缓，等待条件满足。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "Current evidence strongly supports a real retrieval/decomposition/coverage phenomenon, but the revised thesis needs a stronger unit than current audited benchmarks expose. Zero directly supported query-level identifiability units were found. This is a support failure for the revised formulation, not evidence that such ambiguity never exists.",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "Do not design a method. Obtain or construct a provenance-audited matched ambiguity resource with nonzero query-level identifiability units, or return SP-15 to problem search/revision. A future revival must beat generic partial-identification, selective-prediction, and clarification baselines under the same information.",
+      "next_action_zh": "等待缺失证据、运行条件或上游门槛满足；不能把暂缓状态当成已成立结论。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "HOLD_SP15_REVISED_PROBLEM_NO_IDENTIFIABILITY_UNIT"
+        },
+        {
+          "label": "primary_or_author_releases_audited",
+          "value": "5"
+        },
+        {
+          "label": "phenomenon_support_sources",
+          "value": "5"
+        },
+        {
+          "label": "query_level_identifiability_units",
+          "value": "0"
+        },
+        {
+          "label": "released_r3_test_queries",
+          "value": "5696"
+        },
+        {
+          "label": "released_r3_exact_duplicate_queries",
+          "value": "0"
+        },
+        {
+          "label": "near_equivalent_candidates",
+          "value": "190"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/paper-first-sp15-identifiability-support.json",
+          "sha256": "371b7aef36ac8c77e9591df1a3727031ecafd271a37389a5715fa9e49da04a3c",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "研究方向",
+          "href": "paper-ideas.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "8abdeb8320a83867",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "blocker",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "PA-05-SKILL-VALIDATION-TRANSFER",
+      "research_label_zh": "PA-05-SKILL-VALIDATION-TRANSFER",
+      "title": "paper-first-skill-validation-transfer-scout-20260817",
+      "title_zh": "暂缓 / 阻断记录 · PA-05-SKILL-VALIDATION-TRANSFER",
+      "state_before": "",
+      "state_after": "DESIGN_READY_EXECUTION_ENV_HOLD",
+      "summary": {
+        "en": "Structured artifact recorded: paper-first-skill-validation-transfer-scout-20260817.json.",
+        "zh": "暂缓 / 阻断记录已生成或更新。当前状态：通过 / 就绪。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "",
+      "next_action_zh": "等待缺失证据、运行条件或上游门槛满足；不能把暂缓状态当成已成立结论。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "DESIGN_READY_EXECUTION_ENV_HOLD"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/paper-first-skill-validation-transfer-scout-20260817.json",
+          "sha256": "401f64c4138a1f01d69e391253643bd0db30310f1497ee3778d60122c13c96e4",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "研究方向",
+          "href": "paper-ideas.html"
+        },
+        {
+          "label": "ResearchItem C-8",
+          "href": "paper-ideas.html?research=C-8#canonical-group-c"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [
+          {
+            "code": "C-8",
+            "id": "PA-05-SKILL-VALIDATION-TRANSFER",
+            "category": "C",
+            "title_zh": "Local skill-validation ranking versus shifted deployment is a model-selection-under-distribution-shift object unless a skill-specific structural residual survives",
+            "title_en": "Local skill-validation ranking versus shifted deployment is a model-selection-under-distribution-shift object unless a skill-specific structural residual survives",
+            "scientific_state": "STOPPED"
+          }
+        ],
+        "experiments": [],
+        "papers": [],
+        "categories": [
+          "C"
+        ]
+      }
+    },
+    {
+      "event_id": "682d605b85cca0eb",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "closure",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "SCG-001",
+      "research_label_zh": "SCG-001",
+      "title": "Semantic Commit Gap: persisted self-update versus future enactment",
+      "title_zh": "停止 / 关闭裁决 · SCG-001",
+      "state_before": "",
+      "state_after": "STOP_CURRENT_FORMULATION_MATURE_LIFECYCLE_REDUCTION",
+      "summary": {
+        "en": "Structured artifact recorded: semantic-commit-gap-collision-20260824.json.",
+        "zh": "停止 / 关闭裁决已生成或更新。当前状态：已停止 / 关闭。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "",
+      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "STOP_CURRENT_FORMULATION_MATURE_LIFECYCLE_REDUCTION"
+        },
+        {
+          "label": "four_stage_decomposition 数量",
+          "value": "4"
+        },
+        {
+          "label": "closest_work 数量",
+          "value": "8"
+        },
+        {
+          "label": "stages",
+          "value": "4"
+        },
+        {
+          "label": "current_scientific_object_survives",
+          "value": "0"
+        },
+        {
+          "label": "problem_gate_eligible",
+          "value": "0"
+        },
+        {
+          "label": "research_item_eligible",
+          "value": "0"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/semantic-commit-gap-collision-20260824.json",
+          "sha256": "059123a0fa9fbf1c89378da80435a931ef5ce9ade9fa956c5ba7b62eb67c2f54",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "研究方向",
+          "href": "paper-ideas.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "5bb398f8b3bb3b56",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "system",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "ai-consultation-clinic",
+      "research_label_zh": "ai-consultation-clinic",
+      "title": "ai-consultation-clinic",
+      "title_zh": "系统与治理记录 · ai-consultation-clinic",
+      "state_before": "",
+      "state_after": "ARTIFACT_RECORDED",
+      "summary": {
+        "en": "Structured artifact recorded: ai-consultation-clinic.json.",
+        "zh": "系统与治理记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "ARTIFACT_RECORDED"
+        },
+        {
+          "label": "checkpoints",
+          "value": "5"
+        },
+        {
+          "label": "pre_gpu_checkpoints",
+          "value": "3"
+        },
+        {
+          "label": "post_screen_checkpoints",
+          "value": "1"
+        },
+        {
+          "label": "pre_scale_checkpoints",
+          "value": "1"
+        },
+        {
+          "label": "ai_authoritative_checkpoints",
+          "value": "0"
+        },
+        {
+          "label": "all_findings_require_structured_disposition",
+          "value": "True"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/ai-consultation-clinic.json",
+          "sha256": "0141b5e8690312452e8c8fbb0e1f7b26329dbdf8a6663f0d4fae638b6417b084",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "科研系统",
+          "href": "system-overview.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "515bfebb8ec54d06",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "system",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "longitudinal-safety-post-race-triage-20260824",
+      "research_label_zh": "longitudinal-safety-post-race-triage-20260824",
+      "title": "longitudinal-safety-post-race-triage-20260824",
+      "title_zh": "系统与治理记录 · longitudinal-safety-post-race-triage-20260824",
+      "state_before": "",
+      "state_after": "POST_RACE_REDUCTION_TRIAGE_COMPLETE",
+      "summary": {
+        "en": "Do not resurrect any of the nine ranked historical leaves as a current ResearchItem. Use the three MATERIAL_CHILD_REQUIRED reviewer vectors only as mutation prompts; any child must change the scientific object and pass its listed same-information reductions before debate or ProblemGate. Resume DEFER rows only through their existing canonical object.",
+        "zh": "系统与治理记录已生成或更新。当前状态：POST_RACE_REDUCTION_TRIAGE_COMPLETE。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "Do not resurrect any of the nine ranked historical leaves as a current ResearchItem. Use the three MATERIAL_CHILD_REQUIRED reviewer vectors only as mutation prompts; any child must change the scientific object and pass its listed same-information reductions before debate or ProblemGate. Resume DEFER rows only through their existing canonical object.",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "Do not resurrect any of the nine ranked historical leaves as a current ResearchItem. Use the three MATERIAL_CHILD_REQUIRED reviewer vectors only as mutation prompts; any child must change the scientific object and pass its listed same-information reductions before debate or ProblemGate. Resume DEFER rows only through their existing canonical object.",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "POST_RACE_REDUCTION_TRIAGE_COMPLETE"
+        },
+        {
+          "label": "ranked_failure_leaves",
+          "value": "9"
+        },
+        {
+          "label": "triaged",
+          "value": "9"
+        },
+        {
+          "label": "current_post_race_survivors",
+          "value": "0"
+        },
+        {
+          "label": "material_child_required",
+          "value": "3"
+        },
+        {
+          "label": "deferred_to_existing_object",
+          "value": "3"
+        },
+        {
+          "label": "stopped_by_mature_reduction",
+          "value": "3"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/longitudinal-safety-post-race-triage-20260824.json",
+          "sha256": "062fbde0b18d9d5989517416d0ceffee6733e5279446d24a1e0eb973cf12da27",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "科研系统",
+          "href": "system-overview.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "44b0e165a832c7c9",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "system",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "paper-first-fresh-saturation",
+      "research_label_zh": "paper-first-fresh-saturation",
+      "title": "paper-first-fresh-saturation",
+      "title_zh": "系统与治理记录 · paper-first-fresh-saturation",
+      "state_before": "",
+      "state_after": "NO_FRESH_SURVIVOR_CURRENT_SCAN",
+      "summary": {
+        "en": "When source coverage is exhausted, keep the live weekly transaction at zero calls until new freshness/relevance-qualified lane-grounded evidence changes the content-addressed pool. Use Search Portfolio only for shadow breadth exploration; no shadow result can create a live candidate, Paper Design eligibility, Method, Experiment, P0, or GPU authority.",
+        "zh": "系统与治理记录已生成或更新。当前状态：NO_FRESH_SURVIVOR_CURRENT_SCAN。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "When source coverage is exhausted, keep the live weekly transaction at zero calls until new freshness/relevance-qualified lane-grounded evidence changes the content-addressed pool. Use Search Portfolio only for shadow breadth exploration; no shadow result can create a live candidate, Paper Design eligibility, Method, Experiment, P0, or GPU authority.",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "When source coverage is exhausted, keep the live weekly transaction at zero calls until new freshness/relevance-qualified lane-grounded evidence changes the content-addressed pool. Use Search Portfolio only for shadow breadth exploration; no shadow result can create a live candidate, Paper Design eligibility, Method, Experiment, P0, or GPU authority.",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "NO_FRESH_SURVIVOR_CURRENT_SCAN"
+        },
+        {
+          "label": "drafts_reviewed",
+          "value": "41"
+        },
+        {
+          "label": "survivors",
+          "value": "0"
+        },
+        {
+          "label": "stopped",
+          "value": "41"
+        },
+        {
+          "label": "reduction_patterns",
+          "value": "34"
+        },
+        {
+          "label": "local_validation_authorized",
+          "value": "0"
+        },
+        {
+          "label": "p0_authorized",
+          "value": "0"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/paper-first-fresh-saturation.json",
+          "sha256": "a4697fd4ce7ef9591d1f1f0d498979406f4880133ae29420b7d8f3253af0b650",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "科研系统",
+          "href": "system-overview.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "11ae5934f05cc18d",
+      "occurred_at": "2026-08-29T18:49:58+00:00",
+      "time_precision": "exact",
+      "event_class": "idea",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "paper-first-search-portfolio-design-adjudication",
+      "research_label_zh": "paper-first-search-portfolio-design-adjudication",
+      "title": "paper-first-search-portfolio-design-adjudication",
+      "title_zh": "Idea / 问题发现记录 · paper-first-search-portfolio-design-adjudication",
+      "state_before": "",
+      "state_after": "ARTIFACT_RECORDED",
+      "summary": {
+        "en": "Use these outcomes only as zero-authority shadow-search feedback. Do not design a method, compile an Experiment Blueprint, mutate the canonical Problem-Gate queue, start P0, or use GPU for either candidate.",
+        "zh": "Idea / 问题发现记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "Use these outcomes only as zero-authority shadow-search feedback. Do not design a method, compile an Experiment Blueprint, mutate the canonical Problem-Gate queue, start P0, or use GPU for either candidate.",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "Use these outcomes only as zero-authority shadow-search feedback. Do not design a method, compile an Experiment Blueprint, mutate the canonical Problem-Gate queue, start P0, or use GPU for either candidate.",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "ARTIFACT_RECORDED"
+        },
+        {
+          "label": "reviewed",
+          "value": "2"
+        },
+        {
+          "label": "advance_to_method_design",
+          "value": "0"
+        },
+        {
+          "label": "revise_paper_problem",
+          "value": "1"
+        },
+        {
+          "label": "stop_standalone",
+          "value": "1"
+        },
+        {
+          "label": "support_inventory_required",
+          "value": "1"
+        },
+        {
+          "label": "shadow_dead_end_objects",
+          "value": "2"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/paper-first-search-portfolio-design-adjudication.json",
+          "sha256": "77d87f16fdee660222d8772dbc14e66a7c733e65919b2fb20af00f70ac2b8717",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "研究方向",
+          "href": "paper-ideas.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "d6a2b93d5a884b9c",
+      "occurred_at": "2026-08-29T18:45:45+00:00",
       "time_precision": "exact",
       "event_class": "closure",
       "importance": "detail",
@@ -1929,7 +1930,7 @@
       "sources": [
         {
           "path": "generated/p0-a6-cpu.json",
-          "sha256": "d4dfabd6a5e717ad49a2e47f30e040050fe1bf5647b4493476d0e85d17fd69ca",
+          "sha256": "bfd920ae8c25e2a63063f0e1d13cb4622cffcf25cd3481f2b3b130a8cbbdb8a3",
           "public": true
         }
       ],
@@ -1969,8 +1970,8 @@
       }
     },
     {
-      "event_id": "7f479cb7545b930d",
-      "occurred_at": "2026-08-28T18:54:32+00:00",
+      "event_id": "74c3876c69cac38e",
+      "occurred_at": "2026-08-29T18:45:45+00:00",
       "time_precision": "exact",
       "event_class": "closure",
       "importance": "detail",
@@ -2040,7 +2041,7 @@
       "sources": [
         {
           "path": "generated/p0-b10-cpu.json",
-          "sha256": "1ae04204b3246d5bd0b2248ef64475807d8d6203b1f01d00bc9db1090d0a9065",
+          "sha256": "45b34f17ea57c04352bca0d89419438af074cf94bdd549a9f0fdb94177600a16",
           "public": true
         }
       ],
@@ -2080,8 +2081,85 @@
       }
     },
     {
-      "event_id": "af381cc87aa586a7",
-      "occurred_at": "2026-08-28T18:54:24+00:00",
+      "event_id": "a1c28804e949d44a",
+      "occurred_at": "2026-08-29T18:45:37+00:00",
+      "time_precision": "exact",
+      "event_class": "experiment",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "p0-realizability-suite",
+      "research_label_zh": "p0-realizability-suite",
+      "title": "p0-realizability-suite",
+      "title_zh": "实验与验证记录 · p0-realizability-suite",
+      "state_before": "",
+      "state_after": "ARTIFACT_RECORDED",
+      "summary": {
+        "en": "Structured artifact recorded: p0-realizability-suite.json.",
+        "zh": "实验与验证记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "ARTIFACT_RECORDED"
+        },
+        {
+          "label": "audited",
+          "value": "14"
+        },
+        {
+          "label": "synthetic_pass",
+          "value": "14"
+        },
+        {
+          "label": "synthetic_fail",
+          "value": "0"
+        },
+        {
+          "label": "rows 数量",
+          "value": "14"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/p0-realizability-suite.json",
+          "sha256": "c04ee8c0e96af912cc169766d947ccab69ce09535fb712304da059ada52daaea",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "实验",
+          "href": "experiments.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "7c0b1d7d89f928bc",
+      "occurred_at": "2026-08-29T18:45:37+00:00",
       "time_precision": "exact",
       "event_class": "idea",
       "importance": "detail",
@@ -2147,7 +2225,7 @@
       "sources": [
         {
           "path": "generated/human-terminal-idea-state.json",
-          "sha256": "485f2859e027f19f2559a0746cd428a381df6bbbfc87bc651dee68a91142174a",
+          "sha256": "6b2695201b07da7d3d510b952f2ced32ddf15e24bfc25728d6b72f9d20f3f2fc",
           "public": true
         }
       ],
@@ -2165,85 +2243,8 @@
       }
     },
     {
-      "event_id": "9633161ce32e524f",
-      "occurred_at": "2026-08-28T18:54:24+00:00",
-      "time_precision": "exact",
-      "event_class": "experiment",
-      "importance": "detail",
-      "origin": "artifact_full_history",
-      "research_id": "p0-realizability-suite",
-      "research_label_zh": "p0-realizability-suite",
-      "title": "p0-realizability-suite",
-      "title_zh": "实验与验证记录 · p0-realizability-suite",
-      "state_before": "",
-      "state_after": "ARTIFACT_RECORDED",
-      "summary": {
-        "en": "Structured artifact recorded: p0-realizability-suite.json.",
-        "zh": "实验与验证记录已生成或更新。当前状态：已记录。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
-      },
-      "why": {
-        "en": "",
-        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
-      },
-      "limitation": {
-        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
-        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
-      },
-      "next_action": "",
-      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
-      "evidence": [
-        {
-          "label": "原始状态码",
-          "value": "ARTIFACT_RECORDED"
-        },
-        {
-          "label": "audited",
-          "value": "14"
-        },
-        {
-          "label": "synthetic_pass",
-          "value": "14"
-        },
-        {
-          "label": "synthetic_fail",
-          "value": "0"
-        },
-        {
-          "label": "rows 数量",
-          "value": "14"
-        }
-      ],
-      "authority": {
-        "scientific": false,
-        "scope": "full-history artifact projection only",
-        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/p0-realizability-suite.json",
-          "sha256": "182c8b92a1e2b64ca3111247f6aeb269e0a8aedc61e459b06da4d2700cbaabe7",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "实验",
-          "href": "experiments.html"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [],
-        "experiments": [],
-        "papers": [],
-        "categories": []
-      }
-    },
-    {
-      "event_id": "75075b1227d49687",
-      "occurred_at": "2026-08-28T18:54:24+00:00",
+      "event_id": "5b39e0e6f68d0354",
+      "occurred_at": "2026-08-29T18:45:37+00:00",
       "time_precision": "exact",
       "event_class": "experiment",
       "importance": "detail",
@@ -2309,7 +2310,7 @@
       "sources": [
         {
           "path": "generated/p0-revived-batch-f0.json",
-          "sha256": "aa72cb75a341f0b0eae74e49da15faad0f79a5f883e0901c51ad0c94f02856f0",
+          "sha256": "336e73a9aea71a420e2a5def2ff0a3a85db2fd2b33002ae22e73db82085b52bf",
           "public": true
         }
       ],
@@ -2327,8 +2328,8 @@
       }
     },
     {
-      "event_id": "d0df1831ce54bc14",
-      "occurred_at": "2026-08-28T18:50:11+00:00",
+      "event_id": "6b91757181f75b61",
+      "occurred_at": "2026-08-29T18:41:23+00:00",
       "time_precision": "exact",
       "event_class": "closure",
       "importance": "detail",
@@ -2398,7 +2399,7 @@
       "sources": [
         {
           "path": "generated/p0-e4-permission-cpu.json",
-          "sha256": "796d44ddfa9500e2f9f60d74ccac7110de3bb09b00814a8a288f3eb3006055ae",
+          "sha256": "20f5e46f156f0f4ccc99b7a90c3664033b86eab555ac5c699ee492c7f09e7ffb",
           "public": true
         }
       ],
@@ -2438,21 +2439,21 @@
       }
     },
     {
-      "event_id": "d33c1b9cd9a4496b",
-      "occurred_at": "2026-08-28T18:50:08+00:00",
+      "event_id": "db8d869ad0d71344",
+      "occurred_at": "2026-08-29T18:41:20+00:00",
       "time_precision": "exact",
       "event_class": "closure",
       "importance": "detail",
       "origin": "artifact",
-      "research_id": "C-2",
-      "research_label_zh": "C-2",
-      "title": "CPU 3x3 actor/evaluator anchor P0 with independent external truth",
-      "title_zh": "P0 实验裁决 · C-2",
+      "research_id": "B-6",
+      "research_label_zh": "B-6",
+      "title": "CPU longitudinal reuse P0 with frozen 20% activation audit and independent ON/OFF utility truth",
+      "title_zh": "P0 实验裁决 · B-6",
       "state_before": "",
-      "state_after": "STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT",
+      "state_after": "STOP_RECENCY_FREQUENCY_POLICY_DOMINATES",
       "summary": {
-        "en": "Keep cross-version matrices only as diagnostics; merge evaluator repair into simple frozen-anchor calibration and do not spend GPU on standalone C-2.",
-        "zh": "该 P0 记录给出了明确决策：STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT。展开查看原始指标、下一步和权限边界。"
+        "en": "Retain only a simple cache/revalidation policy; the learned utility-hazard model adds no future-reuse decision value.",
+        "zh": "该 P0 记录给出了明确决策：STOP_RECENCY_FREQUENCY_POLICY_DOMINATES。展开查看原始指标、下一步和权限边界。"
       },
       "why": {
         "en": "",
@@ -2462,7 +2463,7 @@
         "en": "",
         "zh": ""
       },
-      "next_action": "Keep cross-version matrices only as diagnostics; merge evaluator repair into simple frozen-anchor calibration and do not spend GPU on standalone C-2.",
+      "next_action": "Retain only a simple cache/revalidation policy; the learned utility-hazard model adds no future-reuse decision value.",
       "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
       "reopen_condition": "",
       "reopen_condition_zh": "",
@@ -2475,8 +2476,8 @@
       },
       "sources": [
         {
-          "path": "generated/p0-c2-evaluator-cpu.json",
-          "sha256": "aa0a53bf279592a10deaa2906721c7375d560492216ad335730737453bba4c6a",
+          "path": "generated/p0-b6-memory-utility-cpu.json",
+          "sha256": "0ee71ff3ceeb9f1f316ac8b4a32e34a4dc5bcedf65f3a8ef76d1fdaa7caf7580",
           "public": true
         }
       ],
@@ -2486,116 +2487,38 @@
           "href": "experiments.html"
         },
         {
-          "label": "ResearchItem C-2",
-          "href": "paper-ideas.html?research=C-2#canonical-group-c"
+          "label": "ResearchItem B-6",
+          "href": "paper-ideas.html?research=B-6#canonical-group-b"
         }
       ],
       "canonical_refs": {
         "research_items": [
           {
-            "code": "C-2",
-            "id": "evaluator-coadaptation-guard",
-            "category": "C",
-            "title_zh": "跨版本 Rubric 干预修复",
-            "title_en": "Cross-Version Rubric Intervention Repair",
+            "code": "B-6",
+            "id": "memory-half-life",
+            "category": "B",
+            "title_zh": "复用机会驱动的记忆效用复验",
+            "title_en": "Reuse-Opportunity Memory Utility Revalidation",
             "scientific_state": "STOPPED"
           }
         ],
         "experiments": [
           {
-            "experiment_id": "EXP-C-2-P0",
-            "research_item_code": "C-2",
+            "experiment_id": "EXP-B-6-P0",
+            "research_item_code": "B-6",
             "portfolio_code": "",
             "status": "STOPPED"
           }
         ],
         "papers": [],
         "categories": [
-          "C"
+          "B"
         ]
       }
     },
     {
-      "event_id": "c6cfc4dec5969b6a",
-      "occurred_at": "2026-08-28T18:50:08+00:00",
-      "time_precision": "exact",
-      "event_class": "closure",
-      "importance": "detail",
-      "origin": "artifact",
-      "research_id": "D-1",
-      "research_label_zh": "D-1",
-      "title": "CPU verifier-grounded curriculum P0; proposer is frozen and independent hidden boundaries are never used in minimization/selection",
-      "title_zh": "P0 实验裁决 · D-1",
-      "state_before": "",
-      "state_after": "STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT",
-      "summary": {
-        "en": "Keep verifier counterexamples but drop per-example 1-minimality as a standalone curriculum variable; merge into generic counterexample learning.",
-        "zh": "该 P0 记录给出了明确决策：STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT。展开查看原始指标、下一步和权限边界。"
-      },
-      "why": {
-        "en": "",
-        "zh": "该事件直接来自已有 P0 结构化记录；时间轴只做投影，不重新裁决。"
-      },
-      "limitation": {
-        "en": "",
-        "zh": ""
-      },
-      "next_action": "Keep verifier counterexamples but drop per-example 1-minimality as a standalone curriculum variable; merge into generic counterexample learning.",
-      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "",
-      "evidence": [],
-      "authority": {
-        "scientific": true,
-        "scope": "existing P0 decision artifact",
-        "scope_zh": "沿用原 P0 记录的已有裁决范围；时间轴不会重新授权实验或 GPU。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/p0-d1-minimal-curriculum-cpu.json",
-          "sha256": "0d3c2db50f90ff094a03e988586d2a941dbe2ecf5f9922ca00c958c006602714",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "experiments",
-          "href": "experiments.html"
-        },
-        {
-          "label": "ResearchItem D-1",
-          "href": "paper-ideas.html?research=D-1#canonical-group-d"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [
-          {
-            "code": "D-1",
-            "id": "counterexample-generating-curriculum",
-            "category": "D",
-            "title_zh": "1-Minimal 边界反例课程",
-            "title_en": "1-Minimal Boundary-Counterexample Curriculum",
-            "scientific_state": "STOPPED"
-          }
-        ],
-        "experiments": [
-          {
-            "experiment_id": "EXP-D-1-P0",
-            "research_item_code": "D-1",
-            "portfolio_code": "",
-            "status": "STOPPED"
-          }
-        ],
-        "papers": [],
-        "categories": [
-          "D"
-        ]
-      }
-    },
-    {
-      "event_id": "95854a47d560311c",
-      "occurred_at": "2026-08-28T18:50:08+00:00",
+      "event_id": "accbaf76d8c03100",
+      "occurred_at": "2026-08-29T18:41:20+00:00",
       "time_precision": "exact",
       "event_class": "closure",
       "importance": "detail",
@@ -2645,7 +2568,7 @@
       "sources": [
         {
           "path": "generated/p0-e3-stateful.json",
-          "sha256": "93ac513430eee9b0559b3aaa11ebec742ecbce1574aa82f9d01fdc91014b8144",
+          "sha256": "d8d276bfd7b28c7b061d310c954c268bddd558b742c196971a7e6f670caed936",
           "public": true
         }
       ],
@@ -2685,21 +2608,21 @@
       }
     },
     {
-      "event_id": "5f69c88f4e9c48ae",
-      "occurred_at": "2026-08-28T18:50:08+00:00",
+      "event_id": "3017568a247b4a41",
+      "occurred_at": "2026-08-29T18:41:20+00:00",
       "time_precision": "exact",
       "event_class": "closure",
       "importance": "detail",
       "origin": "artifact",
-      "research_id": "B-6",
-      "research_label_zh": "B-6",
-      "title": "CPU longitudinal reuse P0 with frozen 20% activation audit and independent ON/OFF utility truth",
-      "title_zh": "P0 实验裁决 · B-6",
+      "research_id": "C-2",
+      "research_label_zh": "C-2",
+      "title": "CPU 3x3 actor/evaluator anchor P0 with independent external truth",
+      "title_zh": "P0 实验裁决 · C-2",
       "state_before": "",
-      "state_after": "STOP_RECENCY_FREQUENCY_POLICY_DOMINATES",
+      "state_after": "STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT",
       "summary": {
-        "en": "Retain only a simple cache/revalidation policy; the learned utility-hazard model adds no future-reuse decision value.",
-        "zh": "该 P0 记录给出了明确决策：STOP_RECENCY_FREQUENCY_POLICY_DOMINATES。展开查看原始指标、下一步和权限边界。"
+        "en": "Keep cross-version matrices only as diagnostics; merge evaluator repair into simple frozen-anchor calibration and do not spend GPU on standalone C-2.",
+        "zh": "该 P0 记录给出了明确决策：STOP_SIMPLE_ANCHOR_RESIDUAL_CALIBRATION_EQUIVALENT。展开查看原始指标、下一步和权限边界。"
       },
       "why": {
         "en": "",
@@ -2709,7 +2632,7 @@
         "en": "",
         "zh": ""
       },
-      "next_action": "Retain only a simple cache/revalidation policy; the learned utility-hazard model adds no future-reuse decision value.",
+      "next_action": "Keep cross-version matrices only as diagnostics; merge evaluator repair into simple frozen-anchor calibration and do not spend GPU on standalone C-2.",
       "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
       "reopen_condition": "",
       "reopen_condition_zh": "",
@@ -2722,8 +2645,8 @@
       },
       "sources": [
         {
-          "path": "generated/p0-b6-memory-utility-cpu.json",
-          "sha256": "a785484d509988dda658ca0377d1a2c981b52cb4355a1a66837c3903ee2ff725",
+          "path": "generated/p0-c2-evaluator-cpu.json",
+          "sha256": "3f0b3c571b56765392eb380c45a381eedc87ff63a911c5bda37adbaeb3ed31f3",
           "public": true
         }
       ],
@@ -2733,38 +2656,116 @@
           "href": "experiments.html"
         },
         {
-          "label": "ResearchItem B-6",
-          "href": "paper-ideas.html?research=B-6#canonical-group-b"
+          "label": "ResearchItem C-2",
+          "href": "paper-ideas.html?research=C-2#canonical-group-c"
         }
       ],
       "canonical_refs": {
         "research_items": [
           {
-            "code": "B-6",
-            "id": "memory-half-life",
-            "category": "B",
-            "title_zh": "复用机会驱动的记忆效用复验",
-            "title_en": "Reuse-Opportunity Memory Utility Revalidation",
+            "code": "C-2",
+            "id": "evaluator-coadaptation-guard",
+            "category": "C",
+            "title_zh": "跨版本 Rubric 干预修复",
+            "title_en": "Cross-Version Rubric Intervention Repair",
             "scientific_state": "STOPPED"
           }
         ],
         "experiments": [
           {
-            "experiment_id": "EXP-B-6-P0",
-            "research_item_code": "B-6",
+            "experiment_id": "EXP-C-2-P0",
+            "research_item_code": "C-2",
             "portfolio_code": "",
             "status": "STOPPED"
           }
         ],
         "papers": [],
         "categories": [
-          "B"
+          "C"
         ]
       }
     },
     {
-      "event_id": "17f2a8063f6a2549",
-      "occurred_at": "2026-08-28T18:50:08+00:00",
+      "event_id": "082048576ab9d950",
+      "occurred_at": "2026-08-29T18:41:20+00:00",
+      "time_precision": "exact",
+      "event_class": "closure",
+      "importance": "detail",
+      "origin": "artifact",
+      "research_id": "D-1",
+      "research_label_zh": "D-1",
+      "title": "CPU verifier-grounded curriculum P0; proposer is frozen and independent hidden boundaries are never used in minimization/selection",
+      "title_zh": "P0 实验裁决 · D-1",
+      "state_before": "",
+      "state_after": "STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT",
+      "summary": {
+        "en": "Keep verifier counterexamples but drop per-example 1-minimality as a standalone curriculum variable; merge into generic counterexample learning.",
+        "zh": "该 P0 记录给出了明确决策：STOP_MATCHED_INTERSECTION_FILTER_EQUIVALENT。展开查看原始指标、下一步和权限边界。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该事件直接来自已有 P0 结构化记录；时间轴只做投影，不重新裁决。"
+      },
+      "limitation": {
+        "en": "",
+        "zh": ""
+      },
+      "next_action": "Keep verifier counterexamples but drop per-example 1-minimality as a standalone curriculum variable; merge into generic counterexample learning.",
+      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "",
+      "evidence": [],
+      "authority": {
+        "scientific": true,
+        "scope": "existing P0 decision artifact",
+        "scope_zh": "沿用原 P0 记录的已有裁决范围；时间轴不会重新授权实验或 GPU。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/p0-d1-minimal-curriculum-cpu.json",
+          "sha256": "21d0c6f93b0b55335d1577c2853cc61075a66356028c88658f5d2007cbdcbfa7",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "experiments",
+          "href": "experiments.html"
+        },
+        {
+          "label": "ResearchItem D-1",
+          "href": "paper-ideas.html?research=D-1#canonical-group-d"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [
+          {
+            "code": "D-1",
+            "id": "counterexample-generating-curriculum",
+            "category": "D",
+            "title_zh": "1-Minimal 边界反例课程",
+            "title_en": "1-Minimal Boundary-Counterexample Curriculum",
+            "scientific_state": "STOPPED"
+          }
+        ],
+        "experiments": [
+          {
+            "experiment_id": "EXP-D-1-P0",
+            "research_item_code": "D-1",
+            "portfolio_code": "",
+            "status": "STOPPED"
+          }
+        ],
+        "papers": [],
+        "categories": [
+          "D"
+        ]
+      }
+    },
+    {
+      "event_id": "05ea130c83af31f9",
+      "occurred_at": "2026-08-29T18:41:20+00:00",
       "time_precision": "exact",
       "event_class": "closure",
       "importance": "detail",
@@ -2834,7 +2835,7 @@
       "sources": [
         {
           "path": "generated/p0-e2-workflow-cpu.json",
-          "sha256": "9664c4a6d499435b99731076cf813b1a857307848d49148e311a98a6125fbfa5",
+          "sha256": "3c76ef9b227cff4433de322d16a7ba72cdd13e808f9cdb56637a02e5ce961919",
           "public": true
         }
       ],
@@ -2874,8 +2875,255 @@
       }
     },
     {
-      "event_id": "8ff6af7d7426d852",
-      "occurred_at": "2026-08-28T18:50:07+00:00",
+      "event_id": "f4456cba303c8093",
+      "occurred_at": "2026-08-29T18:41:19+00:00",
+      "time_precision": "exact",
+      "event_class": "closure",
+      "importance": "detail",
+      "origin": "artifact",
+      "research_id": "A-7",
+      "research_label_zh": "A-7",
+      "title": "CPU same-state four-action P0 with programmatic counterfactual truth; no candidate regeneration",
+      "title_zh": "P0 实验裁决 · A-7",
+      "state_before": "",
+      "state_after": "STOP_MATCHED_SHALLOW_RULE_EQUIVALENT",
+      "summary": {
+        "en": "Merge A-7 into A-2 as a simple same-state counterfactual decision rule; do not spend GPU on a standalone learned-controller paper.",
+        "zh": "该 P0 记录给出了明确决策：STOP_MATCHED_SHALLOW_RULE_EQUIVALENT。展开查看原始指标、下一步和权限边界。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该事件直接来自已有 P0 结构化记录；时间轴只做投影，不重新裁决。"
+      },
+      "limitation": {
+        "en": "",
+        "zh": ""
+      },
+      "next_action": "Merge A-7 into A-2 as a simple same-state counterfactual decision rule; do not spend GPU on a standalone learned-controller paper.",
+      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "",
+      "evidence": [],
+      "authority": {
+        "scientific": true,
+        "scope": "existing P0 decision artifact",
+        "scope_zh": "沿用原 P0 记录的已有裁决范围；时间轴不会重新授权实验或 GPU。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/p0-a7-counterfactual-cpu.json",
+          "sha256": "3e3965e464a5f868da8aecc89b7111db5e228e0c08aaf344f1dbc94468689c6f",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "experiments",
+          "href": "experiments.html"
+        },
+        {
+          "label": "ResearchItem A-7",
+          "href": "paper-ideas.html?research=A-7#canonical-group-a"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [
+          {
+            "code": "A-7",
+            "id": "counterfactual-evolution-decision-controller",
+            "category": "A",
+            "title_zh": "反事实进化决策控制器",
+            "title_en": "Counterfactual Evolution Decision Controller",
+            "scientific_state": "STOPPED"
+          }
+        ],
+        "experiments": [
+          {
+            "experiment_id": "EXP-A-7-P0",
+            "research_item_code": "A-7",
+            "portfolio_code": "",
+            "status": "STOPPED"
+          }
+        ],
+        "papers": [],
+        "categories": [
+          "A"
+        ]
+      }
+    },
+    {
+      "event_id": "a2b1e92c056d1ce8",
+      "occurred_at": "2026-08-29T18:41:19+00:00",
+      "time_precision": "exact",
+      "event_class": "closure",
+      "importance": "detail",
+      "origin": "artifact",
+      "research_id": "A-5",
+      "research_label_zh": "A-5",
+      "title": "CPU rollback-equivalence P0 on a 40-update typed stream with 12 frozen rollback queries",
+      "title_zh": "P0 实验裁决 · A-5",
+      "state_before": "",
+      "state_after": "STOP_MATCHED_GENERIC_STATE_DIFF_DOMINATES",
+      "summary": {
+        "en": "Merge A-5 into generic version/history infrastructure; do not spend GPU on a standalone semantic-compaction method.",
+        "zh": "该 P0 记录给出了明确决策：STOP_MATCHED_GENERIC_STATE_DIFF_DOMINATES。展开查看原始指标、下一步和权限边界。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该事件直接来自已有 P0 结构化记录；时间轴只做投影，不重新裁决。"
+      },
+      "limitation": {
+        "en": "",
+        "zh": ""
+      },
+      "next_action": "Merge A-5 into generic version/history infrastructure; do not spend GPU on a standalone semantic-compaction method.",
+      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "",
+      "evidence": [],
+      "authority": {
+        "scientific": true,
+        "scope": "existing P0 decision artifact",
+        "scope_zh": "沿用原 P0 记录的已有裁决范围；时间轴不会重新授权实验或 GPU。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/p0-a5-history-cpu.json",
+          "sha256": "adaeb5e4269409ca3fab25ebeca06984a5f6b038b62fd7cc26a5a7f25cfdc43b",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "experiments",
+          "href": "experiments.html"
+        },
+        {
+          "label": "ResearchItem A-5",
+          "href": "paper-ideas.html?research=A-5#canonical-group-a"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [
+          {
+            "code": "A-5",
+            "id": "lineage-aware-rollback",
+            "category": "A",
+            "title_zh": "回滚等价的更新历史压缩",
+            "title_en": "Rollback-Equivalent Update-History Compaction",
+            "scientific_state": "STOPPED"
+          }
+        ],
+        "experiments": [
+          {
+            "experiment_id": "EXP-A-5-P0",
+            "research_item_code": "A-5",
+            "portfolio_code": "",
+            "status": "STOPPED"
+          }
+        ],
+        "papers": [],
+        "categories": [
+          "A"
+        ]
+      }
+    },
+    {
+      "event_id": "8911d4f805be58a6",
+      "occurred_at": "2026-08-29T18:41:19+00:00",
+      "time_precision": "exact",
+      "event_class": "closure",
+      "importance": "detail",
+      "origin": "artifact",
+      "research_id": "B-5",
+      "research_label_zh": "B-5",
+      "title": "CPU applicability-gate P0 with frozen predicate vocabulary, old-positive protection, hidden boundaries, and independent programmatic truth",
+      "title_zh": "P0 实验裁决 · B-5",
+      "state_before": "",
+      "state_after": "STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT",
+      "summary": {
+        "en": "Merge B-5 into a standard compact precondition/ILP learner; monotone counterexample specialization adds no independent boundary-generalization value.",
+        "zh": "该 P0 记录给出了明确决策：STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT。展开查看原始指标、下一步和权限边界。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该事件直接来自已有 P0 结构化记录；时间轴只做投影，不重新裁决。"
+      },
+      "limitation": {
+        "en": "",
+        "zh": ""
+      },
+      "next_action": "Merge B-5 into a standard compact precondition/ILP learner; monotone counterexample specialization adds no independent boundary-generalization value.",
+      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "",
+      "evidence": [
+        {
+          "label": "monotone_true_gate_recovery",
+          "value": "0.8333333333333334"
+        },
+        {
+          "label": "ilp_true_gate_recovery",
+          "value": "0.8333333333333334"
+        },
+        {
+          "label": "exact_gate_agreement",
+          "value": "1.0"
+        }
+      ],
+      "authority": {
+        "scientific": true,
+        "scope": "existing P0 decision artifact",
+        "scope_zh": "沿用原 P0 记录的已有裁决范围；时间轴不会重新授权实验或 GPU。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/p0-b5-applicability-cpu.json",
+          "sha256": "57e923431ed2c9b63af3b15e24716e2a66e224c57030ceeac419d0caa8940acc",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "experiments",
+          "href": "experiments.html"
+        },
+        {
+          "label": "ResearchItem B-5",
+          "href": "paper-ideas.html?research=B-5#canonical-group-b"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [
+          {
+            "code": "B-5",
+            "id": "local-counterexample-memory-repair",
+            "category": "B",
+            "title_zh": "最小单调适用边界修复",
+            "title_en": "Minimal Monotone Applicability Repair",
+            "scientific_state": "STOPPED"
+          }
+        ],
+        "experiments": [
+          {
+            "experiment_id": "EXP-B-5-P0",
+            "research_item_code": "B-5",
+            "portfolio_code": "",
+            "status": "STOPPED"
+          }
+        ],
+        "papers": [],
+        "categories": [
+          "B"
+        ]
+      }
+    },
+    {
+      "event_id": "60082001cefd2bf2",
+      "occurred_at": "2026-08-29T18:41:19+00:00",
       "time_precision": "exact",
       "event_class": "system",
       "importance": "detail",
@@ -2945,7 +3193,7 @@
       "sources": [
         {
           "path": "generated/p0-b3-interference-cpu.json",
-          "sha256": "0a20929c958b6d0eeee5da6c267476f7403b5e071536ffc032654465bd09aeaf",
+          "sha256": "e1e96aeb6dd7e107b583224d1c215222717d458c67bd5fca1805a8fbee3a598f",
           "public": true
         }
       ],
@@ -2978,255 +3226,8 @@
       }
     },
     {
-      "event_id": "4c9c47e5d00e5385",
-      "occurred_at": "2026-08-28T18:50:07+00:00",
-      "time_precision": "exact",
-      "event_class": "closure",
-      "importance": "detail",
-      "origin": "artifact",
-      "research_id": "A-7",
-      "research_label_zh": "A-7",
-      "title": "CPU same-state four-action P0 with programmatic counterfactual truth; no candidate regeneration",
-      "title_zh": "P0 实验裁决 · A-7",
-      "state_before": "",
-      "state_after": "STOP_MATCHED_SHALLOW_RULE_EQUIVALENT",
-      "summary": {
-        "en": "Merge A-7 into A-2 as a simple same-state counterfactual decision rule; do not spend GPU on a standalone learned-controller paper.",
-        "zh": "该 P0 记录给出了明确决策：STOP_MATCHED_SHALLOW_RULE_EQUIVALENT。展开查看原始指标、下一步和权限边界。"
-      },
-      "why": {
-        "en": "",
-        "zh": "该事件直接来自已有 P0 结构化记录；时间轴只做投影，不重新裁决。"
-      },
-      "limitation": {
-        "en": "",
-        "zh": ""
-      },
-      "next_action": "Merge A-7 into A-2 as a simple same-state counterfactual decision rule; do not spend GPU on a standalone learned-controller paper.",
-      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "",
-      "evidence": [],
-      "authority": {
-        "scientific": true,
-        "scope": "existing P0 decision artifact",
-        "scope_zh": "沿用原 P0 记录的已有裁决范围；时间轴不会重新授权实验或 GPU。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/p0-a7-counterfactual-cpu.json",
-          "sha256": "7e1a4bb4219a410f118221da91d29d800273cf53b430989f8fb44419a416c6b3",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "experiments",
-          "href": "experiments.html"
-        },
-        {
-          "label": "ResearchItem A-7",
-          "href": "paper-ideas.html?research=A-7#canonical-group-a"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [
-          {
-            "code": "A-7",
-            "id": "counterfactual-evolution-decision-controller",
-            "category": "A",
-            "title_zh": "反事实进化决策控制器",
-            "title_en": "Counterfactual Evolution Decision Controller",
-            "scientific_state": "STOPPED"
-          }
-        ],
-        "experiments": [
-          {
-            "experiment_id": "EXP-A-7-P0",
-            "research_item_code": "A-7",
-            "portfolio_code": "",
-            "status": "STOPPED"
-          }
-        ],
-        "papers": [],
-        "categories": [
-          "A"
-        ]
-      }
-    },
-    {
-      "event_id": "3d8aba9f7e638702",
-      "occurred_at": "2026-08-28T18:50:07+00:00",
-      "time_precision": "exact",
-      "event_class": "closure",
-      "importance": "detail",
-      "origin": "artifact",
-      "research_id": "A-5",
-      "research_label_zh": "A-5",
-      "title": "CPU rollback-equivalence P0 on a 40-update typed stream with 12 frozen rollback queries",
-      "title_zh": "P0 实验裁决 · A-5",
-      "state_before": "",
-      "state_after": "STOP_MATCHED_GENERIC_STATE_DIFF_DOMINATES",
-      "summary": {
-        "en": "Merge A-5 into generic version/history infrastructure; do not spend GPU on a standalone semantic-compaction method.",
-        "zh": "该 P0 记录给出了明确决策：STOP_MATCHED_GENERIC_STATE_DIFF_DOMINATES。展开查看原始指标、下一步和权限边界。"
-      },
-      "why": {
-        "en": "",
-        "zh": "该事件直接来自已有 P0 结构化记录；时间轴只做投影，不重新裁决。"
-      },
-      "limitation": {
-        "en": "",
-        "zh": ""
-      },
-      "next_action": "Merge A-5 into generic version/history infrastructure; do not spend GPU on a standalone semantic-compaction method.",
-      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "",
-      "evidence": [],
-      "authority": {
-        "scientific": true,
-        "scope": "existing P0 decision artifact",
-        "scope_zh": "沿用原 P0 记录的已有裁决范围；时间轴不会重新授权实验或 GPU。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/p0-a5-history-cpu.json",
-          "sha256": "502de84f1f67c20b6daa6cfd1a7a1ff4db24fd3c57599b2b849d64cfd3b39751",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "experiments",
-          "href": "experiments.html"
-        },
-        {
-          "label": "ResearchItem A-5",
-          "href": "paper-ideas.html?research=A-5#canonical-group-a"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [
-          {
-            "code": "A-5",
-            "id": "lineage-aware-rollback",
-            "category": "A",
-            "title_zh": "回滚等价的更新历史压缩",
-            "title_en": "Rollback-Equivalent Update-History Compaction",
-            "scientific_state": "STOPPED"
-          }
-        ],
-        "experiments": [
-          {
-            "experiment_id": "EXP-A-5-P0",
-            "research_item_code": "A-5",
-            "portfolio_code": "",
-            "status": "STOPPED"
-          }
-        ],
-        "papers": [],
-        "categories": [
-          "A"
-        ]
-      }
-    },
-    {
-      "event_id": "21673992f174fd8c",
-      "occurred_at": "2026-08-28T18:50:07+00:00",
-      "time_precision": "exact",
-      "event_class": "closure",
-      "importance": "detail",
-      "origin": "artifact",
-      "research_id": "B-5",
-      "research_label_zh": "B-5",
-      "title": "CPU applicability-gate P0 with frozen predicate vocabulary, old-positive protection, hidden boundaries, and independent programmatic truth",
-      "title_zh": "P0 实验裁决 · B-5",
-      "state_before": "",
-      "state_after": "STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT",
-      "summary": {
-        "en": "Merge B-5 into a standard compact precondition/ILP learner; monotone counterexample specialization adds no independent boundary-generalization value.",
-        "zh": "该 P0 记录给出了明确决策：STOP_COMPLEXITY_MATCHED_ILP_EQUIVALENT。展开查看原始指标、下一步和权限边界。"
-      },
-      "why": {
-        "en": "",
-        "zh": "该事件直接来自已有 P0 结构化记录；时间轴只做投影，不重新裁决。"
-      },
-      "limitation": {
-        "en": "",
-        "zh": ""
-      },
-      "next_action": "Merge B-5 into a standard compact precondition/ILP learner; monotone counterexample specialization adds no independent boundary-generalization value.",
-      "next_action_zh": "当前路线不继续推进；只有满足原 artifact 记录的新证据或重开条件时才恢复。",
-      "reopen_condition": "",
-      "reopen_condition_zh": "",
-      "evidence": [
-        {
-          "label": "monotone_true_gate_recovery",
-          "value": "0.8333333333333334"
-        },
-        {
-          "label": "ilp_true_gate_recovery",
-          "value": "0.8333333333333334"
-        },
-        {
-          "label": "exact_gate_agreement",
-          "value": "1.0"
-        }
-      ],
-      "authority": {
-        "scientific": true,
-        "scope": "existing P0 decision artifact",
-        "scope_zh": "沿用原 P0 记录的已有裁决范围；时间轴不会重新授权实验或 GPU。",
-        "projection_can_change_state": false
-      },
-      "sources": [
-        {
-          "path": "generated/p0-b5-applicability-cpu.json",
-          "sha256": "43ad915f97c228d343e2b5f268d3b518230eae5747b99ea07dc176d5da036299",
-          "public": true
-        }
-      ],
-      "links": [
-        {
-          "label": "experiments",
-          "href": "experiments.html"
-        },
-        {
-          "label": "ResearchItem B-5",
-          "href": "paper-ideas.html?research=B-5#canonical-group-b"
-        }
-      ],
-      "canonical_refs": {
-        "research_items": [
-          {
-            "code": "B-5",
-            "id": "local-counterexample-memory-repair",
-            "category": "B",
-            "title_zh": "最小单调适用边界修复",
-            "title_en": "Minimal Monotone Applicability Repair",
-            "scientific_state": "STOPPED"
-          }
-        ],
-        "experiments": [
-          {
-            "experiment_id": "EXP-B-5-P0",
-            "research_item_code": "B-5",
-            "portfolio_code": "",
-            "status": "STOPPED"
-          }
-        ],
-        "papers": [],
-        "categories": [
-          "B"
-        ]
-      }
-    },
-    {
-      "event_id": "0eda14b6ef3f03fb",
-      "occurred_at": "2026-08-28T18:50:07+00:00",
+      "event_id": "58126647a6b6828a",
+      "occurred_at": "2026-08-29T18:41:19+00:00",
       "time_precision": "exact",
       "event_class": "closure",
       "importance": "detail",
@@ -3296,7 +3297,7 @@
       "sources": [
         {
           "path": "generated/p0-a4-composition-cpu.json",
-          "sha256": "a5f6fabdc699d6e463eb4695f0cf8ac4dc024878fdf79a1516c3fda2839dc014",
+          "sha256": "e96a8e071ea0314135aa5960c8f7ac1cb6b458d838ae9df06ced1cdefe758182",
           "public": true
         }
       ],
@@ -3336,8 +3337,8 @@
       }
     },
     {
-      "event_id": "d27ec4a489fbeb60",
-      "occurred_at": "2026-08-28T18:24:49+00:00",
+      "event_id": "656ea7d3818d6ac9",
+      "occurred_at": "2026-08-29T18:16:43+00:00",
       "time_precision": "exact",
       "event_class": "paper",
       "importance": "detail",
@@ -3403,7 +3404,7 @@
       "sources": [
         {
           "path": "generated/paper-first-paper-design-backlog.json",
-          "sha256": "17c6a91873a45310f158f3cc48b87d864fbdf0aa362b2832803d454fe5e59977",
+          "sha256": "2fa23fccafb59c045e06096af00ec1a8377fe24bb057b03793af7cc153e6f044",
           "public": true
         }
       ],
@@ -3413,6 +3414,248 @@
           "href": "selected-paper.html"
         }
       ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "6d3dc54a84278512",
+      "occurred_at": "2026-08-29T14:36:39+00:00",
+      "time_precision": "exact",
+      "event_class": "system",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "behavior-formal-goal-coupling-third-policy-source-watch-20260829",
+      "research_label_zh": "behavior-formal-goal-coupling-third-policy-source-watch-20260829",
+      "title": "behavior-formal-goal-coupling-third-policy-source-watch-20260829",
+      "title_zh": "系统与治理记录 · behavior-formal-goal-coupling-third-policy-source-watch-20260829",
+      "state_before": "",
+      "state_after": "WATCH_STABLE_NO_THIRD_POLICY_SOURCE_CHANGE",
+      "summary": {
+        "en": "Structured artifact recorded: behavior-formal-goal-coupling-third-policy-source-watch-20260829.json.",
+        "zh": "系统与治理记录已生成或更新。当前状态：WATCH_STABLE_NO_THIRD_POLICY_SOURCE_CHANGE。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "WATCH_STABLE_NO_THIRD_POLICY_SOURCE_CHANGE"
+        },
+        {
+          "label": "changed_surfaces 数量",
+          "value": "0"
+        },
+        {
+          "label": "transport_errors 数量",
+          "value": "0"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/behavior-formal-goal-coupling-third-policy-source-watch-20260829.json",
+          "sha256": "14352e29ae773be9912c4552cb017c54b9ae22bef294844340cf7a3bcdd51736",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "科研系统",
+          "href": "system-overview.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "da17e0af44da6dd5",
+      "occurred_at": "2026-08-29T14:10:10+00:00",
+      "time_precision": "exact",
+      "event_class": "system",
+      "importance": "detail",
+      "origin": "artifact_full_history",
+      "research_id": "behavior-formal-goal-coupling-2026-release-watch-20260829",
+      "research_label_zh": "behavior-formal-goal-coupling-2026-release-watch-20260829",
+      "title": "behavior-formal-goal-coupling-2026-release-watch-20260829",
+      "title_zh": "系统与治理记录 · behavior-formal-goal-coupling-2026-release-watch-20260829",
+      "state_before": "",
+      "state_after": "WATCH_STABLE_NO_2026_PUBLIC_RESULT_RELEASE_CHANGE",
+      "summary": {
+        "en": "Structured artifact recorded: behavior-formal-goal-coupling-2026-release-watch-20260829.json.",
+        "zh": "系统与治理记录已生成或更新。当前状态：WATCH_STABLE_NO_2026_PUBLIC_RESULT_RELEASE_CHANGE。这条记录用于补齐完整研究历史，原始技术状态码仍保留用于审计。"
+      },
+      "why": {
+        "en": "",
+        "zh": "该条目直接来自现有结构化科研记录；中文视图优先展示阶段含义，英文技术原文与状态码保留用于精确审计。"
+      },
+      "limitation": {
+        "en": "This full-history projection does not create scientific authority beyond the source artifact.",
+        "zh": "这是完整历史投影，不会因为被加入时间轴而增加科研权限，也不会把工程/运行失败自动改写成科学失败。"
+      },
+      "next_action": "",
+      "next_action_zh": "保留该条结构化记录，供后续时间追踪、审计和状态对齐使用。",
+      "reopen_condition": "",
+      "reopen_condition_zh": "若原记录包含明确重开条件，以原记录为准；没有明确条件时，不根据时间轴自动重开。",
+      "evidence": [
+        {
+          "label": "原始状态码",
+          "value": "WATCH_STABLE_NO_2026_PUBLIC_RESULT_RELEASE_CHANGE"
+        },
+        {
+          "label": "changed_2026_target_files 数量",
+          "value": "0"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "full-history artifact projection only",
+        "scope_zh": "完整历史只读投影；不新增方法、实验、P0、GPU 或论文主张权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [
+        {
+          "path": "generated/behavior-formal-goal-coupling-2026-release-watch-20260829.json",
+          "sha256": "9d31cafe66c2bde115371fab1cd1e4f25ac382f69b3e8893433a4cc84d976332",
+          "public": true
+        }
+      ],
+      "links": [
+        {
+          "label": "科研系统",
+          "href": "system-overview.html"
+        }
+      ],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "b98357c7cdba9f4e",
+      "occurred_at": "2026-08-29T11:52:23+00:00",
+      "time_precision": "exact",
+      "event_class": "paper",
+      "importance": "detail",
+      "origin": "git_relevant_history",
+      "research_id": "Git research history",
+      "research_label_zh": "代码 / 系统工作记录",
+      "title": "Revise C1 after external review",
+      "title_zh": "论文 / 评审相关提交：Revise C1 after external review",
+      "state_before": "",
+      "state_after": "COMMIT_RECORDED",
+      "summary": {
+        "en": "Repository commit 9e77edf0 recorded: Revise C1 after external review",
+        "zh": "北京时间记录到一次与论文 / 评审有关的真实仓库提交 9e77edf0：Revise C1 after external review。它用于把科研对象的变化和随后发生的系统实现更新放在同一时间线上。"
+      },
+      "why": {
+        "en": "Included as a concrete implementation/history event so research ideas and subsequent system changes can be read in temporal order.",
+        "zh": "该提交作为真实实现时间点进入时间轴，用来帮助判断某个 Idea、证据或裁决之后，系统为何发生了相应改动。"
+      },
+      "limitation": {
+        "en": "A repository commit is engineering evidence, not scientific authority.",
+        "zh": "Git 提交只能证明工程 / 系统工作发生过，不能单独证明科研主张成立。"
+      },
+      "next_action": "",
+      "next_action_zh": "",
+      "reopen_condition": "",
+      "reopen_condition_zh": "",
+      "evidence": [
+        {
+          "label": "提交",
+          "value": "9e77edf0c7cc"
+        },
+        {
+          "label": "原始提交说明",
+          "value": "Revise C1 after external review"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "repository history only",
+        "scope_zh": "代码与系统历史记录，无科研权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [],
+      "links": [],
+      "canonical_refs": {
+        "research_items": [],
+        "experiments": [],
+        "papers": [],
+        "categories": []
+      }
+    },
+    {
+      "event_id": "49775cb356ccfacc",
+      "occurred_at": "2026-08-28T19:03:23+00:00",
+      "time_precision": "exact",
+      "event_class": "system",
+      "importance": "detail",
+      "origin": "git_relevant_history",
+      "research_id": "Git research history",
+      "research_label_zh": "代码 / 系统工作记录",
+      "title": "Automated daily research state update 2026-08-28",
+      "title_zh": "系统建设里程碑：Automated daily research state update 2026-08-28",
+      "state_before": "",
+      "state_after": "COMMIT_RECORDED",
+      "summary": {
+        "en": "Repository commit eac12bea recorded: Automated daily research state update 2026-08-28",
+        "zh": "北京时间记录到一次与系统 / 流程更新有关的真实仓库提交 eac12bea：Automated daily research state update 2026-08-28。它用于把科研对象的变化和随后发生的系统实现更新放在同一时间线上。"
+      },
+      "why": {
+        "en": "Included as a concrete implementation/history event so research ideas and subsequent system changes can be read in temporal order.",
+        "zh": "该提交作为真实实现时间点进入时间轴，用来帮助判断某个 Idea、证据或裁决之后，系统为何发生了相应改动。"
+      },
+      "limitation": {
+        "en": "A repository commit is engineering evidence, not scientific authority.",
+        "zh": "Git 提交只能证明工程 / 系统工作发生过，不能单独证明科研主张成立。"
+      },
+      "next_action": "",
+      "next_action_zh": "",
+      "reopen_condition": "",
+      "reopen_condition_zh": "",
+      "evidence": [
+        {
+          "label": "提交",
+          "value": "eac12beaa78d"
+        },
+        {
+          "label": "原始提交说明",
+          "value": "Automated daily research state update 2026-08-28"
+        }
+      ],
+      "authority": {
+        "scientific": false,
+        "scope": "repository history only",
+        "scope_zh": "代码与系统历史记录，无科研权限。",
+        "projection_can_change_state": false
+      },
+      "sources": [],
+      "links": [],
       "canonical_refs": {
         "research_items": [],
         "experiments": [],

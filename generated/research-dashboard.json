@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-08-29",
+  "as_of_date": "2026-08-30",
   "projection_policy": {
     "read_only": true,
     "scientific_authority": false,
@@ -413,18 +413,18 @@
   ],
   "week": {
     "start_date": "2026-08-24",
-    "end_date": "2026-08-29",
-    "research_days": 6,
-    "events": 344,
-    "substantive_events": 155,
+    "end_date": "2026-08-30",
+    "research_days": 7,
+    "events": 348,
+    "substantive_events": 156,
     "key_changes": 2,
     "class_counts": {
       "blocker": 30,
       "closure": 33,
       "experiment": 38,
       "idea": 16,
-      "paper": 38,
-      "system": 189
+      "paper": 39,
+      "system": 192
     },
     "attention_activity": {
       "B-3": 1,
@@ -455,7 +455,7 @@
         "href": "research-timeline.html"
       },
       {
-        "date": "2026-08-29",
+        "date": "2026-08-30",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · trajectory-mediated-memory-effect-transport",
         "title_en": "paper-first-post-c2-adjudication",
@@ -464,7 +464,7 @@
         "href": "research-timeline.html"
       },
       {
-        "date": "2026-08-29",
+        "date": "2026-08-30",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · repair-surface-identifiability-under-persistent-agent-updates",
         "title_en": "paper-first-pf2-method-adjudication",
@@ -475,7 +475,7 @@
         "href": "research-timeline.html?research=E-5"
       },
       {
-        "date": "2026-08-29",
+        "date": "2026-08-30",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
         "title_en": "paper-first-pf1-problem-adjudication",

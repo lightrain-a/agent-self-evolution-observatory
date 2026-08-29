@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-28T18:58:45+00:00",
+  "generated_at": "2026-08-29T18:49:58+00:00",
   "support_id": "sp15-query-only-identifiability-support-20260814",
   "paper_problem_id": "SP-15",
   "revised_claim": "Under fixed query-only inference and a fixed skill library, a minimally sufficient skill set may be observationally non-identifiable when multiple task semantics compatible with the same available query require incompatible sufficient sets.",
