@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-P0-20260829",
+  "title": "ReasoningBank native within-case memory reunion operator probe",
+  "registered_at_utc": "2026-08-29T00:00:00Z",
+  "registration_timing": "Before result execution",
+  "qualification_artifact": "generated/asset-first-stri-third-carrier-qualification-20260829.json",
+  "source": {
+    "repository": "https://github.com/google-research/reasoning-bank",
+    "commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "archive_sha256": "d85d169c84f82782cefc50044adc192ab1d28956f36e177de0bf213d48298e09",
+    "file_sha256": {
+      "third_party/src/minisweagent/memory/induce_memory.py": "7e72fd27cbe3878d743c8135ee809b81d084c0c71ab4ec5f258638876a9ce3c6",
+      "third_party/src/minisweagent/memory/memory_management.py": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955",
+      "third_party/src/minisweagent/run/extra/swebench.py": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951",
+      "third_party/src/minisweagent/agents/default.py": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c"
+    }
+  },
+  "harness": {
+    "path": "research_pipeline/asset_first_stri_reasoningbank_native_reunion_probe.py",
+    "sha256": "6188732b0e7fa6d9897bb51c36abcb15632fbf8742bcf00cdf33726b29df05b8"
+  },
+  "hypothesis": "ReasoningBank natively reunites a semantically identical partition of memory items when the fragments remain nested under the same already-selected case, before the first agent decision.",
+  "falsifiable_prediction": "A monolithic [M1 + blank line + M2] memory_items entry and split [M1, M2] entries under the same selected case produce byte-identical selected_memory and identical first system-message hashes.",
+  "arms": {
+    "A": "Canonical monolithic item under case-A.",
+    "B": "Same content split into two items under case-A.",
+    "C": "Same case and fragments as B, reversed order; expected to differ and localize the order boundary.",
+    "D": "Fragments split across case-A and case-B with frozen top-1 selecting case-A; expected to differ and localize the case boundary.",
+    "E": "Same items as B under an alias task_id after selection; expected identical because task_id is not rendered."
+  },
+  "decision_rule": {
+    "pass": "All pinned-source checks pass; A equals B at selected_memory and first-system-message levels; C and D differ; E equals B.",
+    "pass_label": "NATIVE_WITHIN_CASE_REUNION_PASS_CASE_BOUNDARY_LOCALIZED",
+    "fail_label": "IMPLEMENTATION_OR_SOURCE_DRIFT_REQUIRES_DIAGNOSIS"
+  },
+  "resource_budget": {
+    "provider_model_calls": 0,
+    "gpu_seconds": 0
+  },
+  "prohibited_changes": [
+    "Do not change the witness, arm definitions, hashes, source commit, or decision rule after observing output.",
+    "Do not infer behavioral equivalence or performance improvement from an operator-level pass.",
+    "Do not launch provider or GPU evaluation under this contract."
+  ],
+  "claim_ceiling": "Native pre-decision reunion within one selected case only; not cross-case, order, behavior, success-rate, or performance robustness."
+}

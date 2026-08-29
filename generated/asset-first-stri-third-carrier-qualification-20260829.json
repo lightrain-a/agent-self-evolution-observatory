@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "artifact_id": "E1-STRI-THIRD-CARRIER-QUALIFICATION-20260829",
+  "created_at_utc": "2026-08-29T00:00:00Z",
+  "registration_timing": "before ReasoningBank P0 outcome",
+  "selection_policy": {
+    "venue_requirement": "Published/accepted at a recent top conference with public first-party code.",
+    "intervention_requirement": "A non-tautological representation-identity intervention must enter the native execution path before behavior.",
+    "compute_policy": "Run deterministic source/operator qualification before any provider or GPU experiment.",
+    "outcome_shopping_prohibited": true
+  },
+  "candidates": [
+    {
+      "name": "SAGE",
+      "publication": {
+        "venue": "ACL 2026 Long",
+        "url": "https://aclanthology.org/2026.acl-long.69/"
+      },
+      "code": {
+        "url": "https://github.com/amazon-science/SAGE",
+        "commit": "3c9244e82244abb1adc5467ee601a03ba0f433a0",
+        "archive_sha256": "24b892bbb30f29cae8d6d9c317870a090cfd3d230dfc4229241fde05d21d3398"
+      },
+      "status": "REJECT_NATIVE_ROBUST_CARRIER_FORMULATION_MISMATCH",
+      "evidence": [
+        "Training initializes skill_libraries as empty per batch; the library is not the persistent learned state across batches.",
+        "Evaluation stores functions in an append-only list and retrieves by skill name with first-match semantics, so later same-name updates can be shadowed."
+      ],
+      "permitted_use": "Structural comparator for formulation mismatch; not a native robustness carrier."
+    },
+    {
+      "name": "Dynamic Cheatsheet",
+      "publication": {
+        "venue": "EACL 2026 Long",
+        "url": "https://aclanthology.org/2026.eacl-long.333/"
+      },
+      "code": {
+        "url": "https://github.com/suzgunmirac/dynamic-cheatsheet",
+        "commit": "5cfe3c37e8e52b1d858d0f3df46e7f17c50991b9",
+        "archive_sha256": "691e68315a04e47fc96b796a0df9c307c6ce944761f6577bf41317d4bf754173"
+      },
+      "status": "REJECT_THIRD_CARRIER_NO_IDENTITY_SEAM_USE_AS_STRUCTURAL_COMPARATOR",
+      "evidence": [
+        "The cumulative implementation maintains one monolithic cheatsheet string.",
+        "The curator consumes the whole prior string and returns the next whole string, leaving no observable item-identity intervention with a single-variable native path."
+      ],
+      "permitted_use": "Structural comparator for an identity-free state representation."
+    },
+    {
+      "name": "ReasoningBank",
+      "publication": {
+        "venue": "ICLR 2026",
+        "url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/980ea04d23d1f6908964eba2a74afe45-Paper-Conference.pdf"
+      },
+      "code": {
+        "url": "https://github.com/google-research/reasoning-bank",
+        "commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+        "archive_sha256": "d85d169c84f82782cefc50044adc192ab1d28956f36e177de0bf213d48298e09"
+      },
+      "status": "QUALIFY_FOR_ZERO_PROVIDER_NATIVE_WITHIN_CASE_REUNION_PROBE_ONLY",
+      "evidence": [
+        "Induction produces multiple memory items and persists them under one task/case record.",
+        "Retrieval selects whole case records; the rollout flattens each selected case's memory_items and joins them before agent.run.",
+        "DefaultAgent injects selected_memory into the first system message before the first model decision."
+      ],
+      "risk_boundary": "Case-level top-n selection can expose fragmentation across case identities; item order remains observable.",
+      "authorized_next_step": "Deterministic frozen-witness P0 only; no provider calls, GPU work, or behavior claim."
+    }
+  ],
+  "selected_candidate": "ReasoningBank",
+  "manuscript_policy": "Do not modify the E1 main claim unless a separately registered behavioral propagation test passes."
+}
