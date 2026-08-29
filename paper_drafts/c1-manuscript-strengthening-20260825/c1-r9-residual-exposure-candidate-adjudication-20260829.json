@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_R9_RESIDUAL_EXPOSURE_CANDIDATE_ADJUDICATION",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "parent_revision": "C1-stage-resolved-r8-negative-repair",
+  "parent_git_sha": "a6fc80e3e175149102bf93d0646643f5926e9fa6",
+  "generated_at": "2026-08-29",
+  "status": "HOLD_CANDIDATE_REPRESENTATION_NOT_QUALIFIED",
+  "motivation": {
+    "r8_negative_pilot": "The qualified 13-state A0/A1/A2 pilot completed 312/312 calls with packet invariance and no model drift, but mean U_A0=U_A1=U_A2=0.0961538, mean D=A2-A1=0, mean N=A2-A0=0, and only 3/13 D_i>0. The simple explicit memory-use check therefore did not earn repair actionability.",
+    "remaining_measurement_gap": "The frozen 125/172 exposure statistic certifies source-item availability, not consumption or salience of the branch-differentiating residual inside that item.",
+    "review_alignment": "The external R7 review explicitly asked that source-item exposure be distinguished from treatment-residual exposure and listed treatment-residual masking/attribution/readout as requiring a separate scientific reopen."
+  },
+  "candidate_scientific_question": "Does the current source-item exposure measurement overstate effective treatment exposure because success/failure branch-specific residual content is diluted, unaligned, or not separately accessible at the policy surface?",
+  "candidate_not_a_repair_claim": "This candidate is a measurement/identification extension. It must not be framed as a stronger memory prompt or as a new generic utilization method.",
+  "collision_audit": [
+    {
+      "work": "Mem2ActBench: A Benchmark for Evaluating Long-Term Memory Utilization in Task-Oriented Autonomous Agents",
+      "venue": "ACL 2026 Long Paper",
+      "official_url": "https://aclanthology.org/2026.acl-long.370/",
+      "overlap": "Active memory application to action execution rather than fact recall.",
+      "boundary": "C1 cannot claim that active use or retrieval-versus-use is new."
+    },
+    {
+      "work": "MemCoRL: Alternating Co-Optimization of Memory Retrieval and Utilization via Collaborative Reinforcement Learning",
+      "venue": "ACL 2026 Long Paper",
+      "official_url": "https://aclanthology.org/2026.acl-long.1804/",
+      "overlap": "Explicit retrieval/utilization separation and utilization optimization.",
+      "boundary": "A new generic utilization optimizer is outside C1's residual and would collide with published work."
+    },
+    {
+      "work": "Chain-of-Memory: Lightweight Memory Construction with Dynamic Evolution for LLM Agents",
+      "venue": "ACL 2026 Long Paper",
+      "official_url": "https://aclanthology.org/2026.acl-long.534/",
+      "overlap": "Post-retrieval organization of retrieved evidence into coherent inference paths and pruning of irrelevant context.",
+      "boundary": "A residual representation cannot simply be relabeled as sophisticated utilization or context pruning."
+    },
+    {
+      "work": "Beyond Retrieval: Query-Conditioned Reuse of Long-Horizon Agent Trajectories",
+      "venue": "arXiv 2026 preprint",
+      "official_url": "https://arxiv.org/abs/2608.12847",
+      "overlap": "Keeps candidate retrieval and target state fixed while changing target-bound support delivered after retrieval.",
+      "boundary": "A target-bound note or reuse-format contribution would collide conceptually even though this is not the selected published-baseline lane."
+    },
+    {
+      "work": "Reliable Post-Retrieval Assembly for Agent Memory: Separating Evidence Extraction from Policy Execution",
+      "venue": "arXiv 2026 preprint",
+      "official_url": "https://arxiv.org/abs/2606.01435",
+      "overlap": "Separates evidence extraction from final policy execution after retrieval.",
+      "boundary": "C1 should not claim generic extraction-versus-execution separation as novel; any residual readout must remain tied to the controlled success/failure treatment contrast."
+    }
+  ],
+  "operationalization_preflight": {
+    "artifact": "c1-r9-residual-alignment-preflight-20260829.json",
+    "method": "Outcome-blind lexical token-set Jaccard matching between parsed Title/Description/Content items in each success/failure native-wrapper pair, with exhaustive maximum-weight matching over the small item sets.",
+    "source_pairs": 20,
+    "memory_objects": 40,
+    "matched_item_pairs": 58,
+    "structural_asymmetry": "source task 118 has 3 success items versus 1 failure item",
+    "mean_pair_matched_jaccard": 0.2326608652054719,
+    "median_pair_matched_jaccard": 0.20748530584035507,
+    "threshold_sensitivity": {
+      "0.15_fully_aligned_pairs": "14/20",
+      "0.20_fully_aligned_pairs": "6/20",
+      "0.30_fully_aligned_pairs": "3/20",
+      "0.35_fully_aligned_pairs": "0/20",
+      "0.50_matched_items_above_threshold": "0/58"
+    },
+    "verdict": "HOLD_REPRESENTATION_NOT_IDENTIFIED"
+  },
+  "failure_differential": {
+    "active_layer": "representation_operationalization",
+    "not_execution_failure": true,
+    "not_retrieval_failure": true,
+    "not_principle_failure": true,
+    "interpretation": "The desired scientific object (branch-specific residual access) is meaningful, but the currently available deterministic lexical decomposition is not sufficiently stable to define treatment versus common-core content without introducing a tunable representation choice."
+  },
+  "forbidden_actions": [
+    "Do not select a Jaccard threshold after examining downstream action or terminal outcomes.",
+    "Do not search stronger A2 prompt variants on the 13 negative pilot states.",
+    "Do not consume the sealed 23-state holdout to tune a residual representation.",
+    "Do not use an embedding or LLM semantic matcher and then choose its threshold by downstream effect.",
+    "Do not reframe the R8 negative pilot as evidence that post-retrieval utilization is globally impossible."
+  ],
+  "paper_implication": {
+    "current_r8": "RETAIN_AS_ACTIVE_PAPER_REVISION",
+    "r9_candidate": "DO_NOT_MERGE_INTO_PAPER_WHILE_HOLD",
+    "reason": "R8 already supplies a complete diagnosis-to-engineering boundary: stage resolution identifies evidential credit and the surface to interrogate, while the qualified negative pilot shows that this does not automatically identify a successful intervention. An unqualified residual representation would weaken rather than strengthen that story."
+  },
+  "reopen_paths": [
+    {
+      "id": "R9A_INDEPENDENT_RESIDUAL_REPRESENTATION",
+      "requirement": "Qualify a residual representation independently of downstream outcomes, with a pre-frozen semantic or structural matching rule, matched deletion/salience control, and fresh evaluation units."
+    },
+    {
+      "id": "R9B_PUBLISHED_UTILIZATION_CARRIER",
+      "requirement": "If broader engineering actionability is still required, formulate a separate carrier study around a published utilization mechanism or benchmark without claiming method novelty, using a new substrate and its own preregistered treatment/control geometry rather than the sealed C1 holdout."
+    }
+  ],
+  "next_smallest_action": "Do not execute a new repair experiment. Run the residual-alignment preflight tests, record this HOLD as a reusable representation/operationalization failure asset, and keep R8 as the current manuscript while deciding whether external validation/generalization is more valuable than reopening repair actionability.",
+  "execution": {
+    "provider_calls": 0,
+    "gpu_runs": 0,
+    "new_model_actions": 0,
+    "new_downstream_outcomes_read": 0,
+    "confirmatory_holdout_consumed": false
+  },
+  "authority": {
+    "scientific_claim_expansion": false,
+    "new_repair_experiment": false,
+    "provider": false,
+    "gpu": false,
+    "confirmatory_full": false,
+    "submission": false
+  }
+}

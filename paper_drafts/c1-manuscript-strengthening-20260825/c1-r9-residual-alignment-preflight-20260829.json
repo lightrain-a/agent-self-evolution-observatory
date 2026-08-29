@@ -1,0 +1,372 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_R9_RESIDUAL_ALIGNMENT_PREFLIGHT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "parent_revision": "R8_NEGATIVE_REPAIR_BOUNDARY",
+  "status": "HOLD_REPRESENTATION_NOT_IDENTIFIED",
+  "question": "Can the 20 frozen success/failure memory pairs support a deterministic lexical decomposition into a stable shared core and branch-specific residual without outcome-informed threshold tuning?",
+  "source_manifest": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b4-retrieval-matched-fixed-evidence-20260824/b4-memory-manifest.json",
+  "source_pairs": 20,
+  "parsed_memory_objects": 40,
+  "matched_item_pairs": 58,
+  "structural_asymmetry_pairs": [
+    118
+  ],
+  "summary": {
+    "mean_of_pair_mean_matched_jaccard": 0.2326608652054719,
+    "median_of_pair_mean_matched_jaccard": 0.20748530584035507,
+    "min_pair_mean_matched_jaccard": 0.14538573875923275,
+    "max_pair_mean_matched_jaccard": 0.37684506846760096
+  },
+  "threshold_sweep": [
+    {
+      "threshold": 0.15,
+      "source_pairs_fully_aligned": 14,
+      "source_pairs_total": 20,
+      "matched_items_above_threshold": 52,
+      "matched_items_total": 58
+    },
+    {
+      "threshold": 0.2,
+      "source_pairs_fully_aligned": 6,
+      "source_pairs_total": 20,
+      "matched_items_above_threshold": 35,
+      "matched_items_total": 58
+    },
+    {
+      "threshold": 0.25,
+      "source_pairs_fully_aligned": 4,
+      "source_pairs_total": 20,
+      "matched_items_above_threshold": 21,
+      "matched_items_total": 58
+    },
+    {
+      "threshold": 0.3,
+      "source_pairs_fully_aligned": 3,
+      "source_pairs_total": 20,
+      "matched_items_above_threshold": 11,
+      "matched_items_total": 58
+    },
+    {
+      "threshold": 0.35,
+      "source_pairs_fully_aligned": 0,
+      "source_pairs_total": 20,
+      "matched_items_above_threshold": 5,
+      "matched_items_total": 58
+    },
+    {
+      "threshold": 0.4,
+      "source_pairs_fully_aligned": 0,
+      "source_pairs_total": 20,
+      "matched_items_above_threshold": 4,
+      "matched_items_total": 58
+    },
+    {
+      "threshold": 0.5,
+      "source_pairs_fully_aligned": 0,
+      "source_pairs_total": 20,
+      "matched_items_above_threshold": 0,
+      "matched_items_total": 58
+    }
+  ],
+  "rows": [
+    {
+      "source_task": 21,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.1780821917808219,
+        0.20930232558139536,
+        0.16883116883116883
+      ],
+      "mean_matched_jaccard": 0.18540522873112872,
+      "min_matched_jaccard": 0.16883116883116883,
+      "max_matched_jaccard": 0.20930232558139536
+    },
+    {
+      "source_task": 22,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.20512820512820512,
+        0.24444444444444444,
+        0.11764705882352941
+      ],
+      "mean_matched_jaccard": 0.18907323613205965,
+      "min_matched_jaccard": 0.11764705882352941,
+      "max_matched_jaccard": 0.24444444444444444
+    },
+    {
+      "source_task": 23,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.20481927710843373,
+        0.1566265060240964,
+        0.08888888888888889
+      ],
+      "mean_matched_jaccard": 0.15011155734047302,
+      "min_matched_jaccard": 0.08888888888888889,
+      "max_matched_jaccard": 0.20481927710843373
+    },
+    {
+      "source_task": 25,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.15384615384615385,
+        0.11363636363636363,
+        0.1686746987951807
+      ],
+      "mean_matched_jaccard": 0.14538573875923275,
+      "min_matched_jaccard": 0.11363636363636363,
+      "max_matched_jaccard": 0.1686746987951807
+    },
+    {
+      "source_task": 118,
+      "success_items": 3,
+      "failure_items": 1,
+      "matched_items": 1,
+      "matched_jaccards": [
+        0.2833333333333333
+      ],
+      "mean_matched_jaccard": 0.2833333333333333,
+      "min_matched_jaccard": 0.2833333333333333,
+      "max_matched_jaccard": 0.2833333333333333
+    },
+    {
+      "source_task": 125,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.20481927710843373,
+        0.225,
+        0.1590909090909091
+      ],
+      "mean_matched_jaccard": 0.19630339539978095,
+      "min_matched_jaccard": 0.1590909090909091,
+      "max_matched_jaccard": 0.225
+    },
+    {
+      "source_task": 141,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.2571428571428571,
+        0.19230769230769232,
+        0.2564102564102564
+      ],
+      "mean_matched_jaccard": 0.23528693528693526,
+      "min_matched_jaccard": 0.19230769230769232,
+      "max_matched_jaccard": 0.2571428571428571
+    },
+    {
+      "source_task": 145,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.18421052631578946,
+        0.3,
+        0.3728813559322034
+      ],
+      "mean_matched_jaccard": 0.28569729408266425,
+      "min_matched_jaccard": 0.18421052631578946,
+      "max_matched_jaccard": 0.3728813559322034
+    },
+    {
+      "source_task": 146,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.4032258064516129,
+        0.32432432432432434,
+        0.40298507462686567
+      ],
+      "mean_matched_jaccard": 0.37684506846760096,
+      "min_matched_jaccard": 0.32432432432432434,
+      "max_matched_jaccard": 0.4032258064516129
+    },
+    {
+      "source_task": 148,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.2833333333333333,
+        0.20270270270270271,
+        0.22666666666666666
+      ],
+      "mean_matched_jaccard": 0.23756756756756756,
+      "min_matched_jaccard": 0.20270270270270271,
+      "max_matched_jaccard": 0.2833333333333333
+    },
+    {
+      "source_task": 158,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.25,
+        0.25287356321839083,
+        0.19767441860465115
+      ],
+      "mean_matched_jaccard": 0.233515993941014,
+      "min_matched_jaccard": 0.19767441860465115,
+      "max_matched_jaccard": 0.25287356321839083
+    },
+    {
+      "source_task": 159,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.10526315789473684,
+        0.1717171717171717,
+        0.24444444444444444
+      ],
+      "mean_matched_jaccard": 0.17380825801878433,
+      "min_matched_jaccard": 0.10526315789473684,
+      "max_matched_jaccard": 0.24444444444444444
+    },
+    {
+      "source_task": 163,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.20833333333333334,
+        0.26744186046511625,
+        0.17045454545454544
+      ],
+      "mean_matched_jaccard": 0.21540991308433166,
+      "min_matched_jaccard": 0.17045454545454544,
+      "max_matched_jaccard": 0.26744186046511625
+    },
+    {
+      "source_task": 188,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.23529411764705882,
+        0.16666666666666666,
+        0.19672131147540983
+      ],
+      "mean_matched_jaccard": 0.19956069859637846,
+      "min_matched_jaccard": 0.16666666666666666,
+      "max_matched_jaccard": 0.23529411764705882
+    },
+    {
+      "source_task": 189,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.15151515151515152,
+        0.2698412698412698,
+        0.17142857142857143
+      ],
+      "mean_matched_jaccard": 0.19759499759499757,
+      "min_matched_jaccard": 0.15151515151515152,
+      "max_matched_jaccard": 0.2698412698412698
+    },
+    {
+      "source_task": 225,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.34328358208955223,
+        0.43548387096774194,
+        0.3013698630136986
+      ],
+      "mean_matched_jaccard": 0.3600457720236643,
+      "min_matched_jaccard": 0.3013698630136986,
+      "max_matched_jaccard": 0.43548387096774194
+    },
+    {
+      "source_task": 226,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.12941176470588237,
+        0.21951219512195122,
+        0.18518518518518517
+      ],
+      "mean_matched_jaccard": 0.17803638167100624,
+      "min_matched_jaccard": 0.12941176470588237,
+      "max_matched_jaccard": 0.21951219512195122
+    },
+    {
+      "source_task": 231,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.3333333333333333,
+        0.47058823529411764,
+        0.32
+      ],
+      "mean_matched_jaccard": 0.374640522875817,
+      "min_matched_jaccard": 0.32,
+      "max_matched_jaccard": 0.47058823529411764
+    },
+    {
+      "source_task": 232,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.29310344827586204,
+        0.29310344827586204,
+        0.2153846153846154
+      ],
+      "mean_matched_jaccard": 0.2671971706454465,
+      "min_matched_jaccard": 0.2153846153846154,
+      "max_matched_jaccard": 0.29310344827586204
+    },
+    {
+      "source_task": 260,
+      "success_items": 3,
+      "failure_items": 3,
+      "matched_items": 3,
+      "matched_jaccards": [
+        0.21212121212121213,
+        0.0958904109589041,
+        0.19718309859154928
+      ],
+      "mean_matched_jaccard": 0.16839824055722183,
+      "min_matched_jaccard": 0.0958904109589041,
+      "max_matched_jaccard": 0.21212121212121213
+    }
+  ],
+  "adjudication": {
+    "failure_layer": "representation_operationalization",
+    "scientific_principle_update": "NONE",
+    "reason": "Lexical item alignment is moderate and threshold-sensitive, with one 3-item versus 1-item pair. Any shared-core/residual split would currently add an outcome-sensitive representation degree of freedom unless an independent operationalization is qualified first.",
+    "forbidden_next_step": "Do not choose a lexical similarity threshold by looking at downstream action or outcome effects, and do not consume the sealed 23-state confirmatory holdout to tune a residual representation.",
+    "reopen_condition": "A residual-exposure object may reopen only after an independently justified and frozen residual representation is qualified without downstream outcome access, with a matched deletion/salience control and fresh evaluation units."
+  },
+  "execution": {
+    "provider_calls": 0,
+    "model_actions": 0,
+    "new_outcomes_read": 0,
+    "sealed_23_state_holdout_consumed": false
+  },
+  "authority": {
+    "new_repair_experiment": false,
+    "provider": false,
+    "gpu": false,
+    "confirmatory_full": false,
+    "submission": false
+  }
+}

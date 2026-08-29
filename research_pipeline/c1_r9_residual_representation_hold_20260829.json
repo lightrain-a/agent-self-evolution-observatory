@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_R9_RESIDUAL_REPRESENTATION_HOLD_FAILURE_ASSET",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "generated_at": "2026-08-29",
+  "status": "HOLD_REPRESENTATION_NOT_IDENTIFIED_ZERO_EXECUTION",
+  "failure_layer": "representation_operationalization",
+  "scientific_context": {
+    "parent_revision": "C1-stage-resolved-r8-negative-repair",
+    "parent_git_sha": "a6fc80e3e175149102bf93d0646643f5926e9fa6",
+    "surviving_claim": "Source-item exposure and treatment-residual exposure are not equivalent; the R8 negative prompt-level repair does not resolve whether branch-differentiating residual content is separately accessible or consumed downstream.",
+    "candidate_question": "Can success/failure memory pairs be decomposed outcome-blindly into a stable shared core and branch-specific residual suitable for a matched residual-access intervention?"
+  },
+  "observed_preflight": {
+    "source_pairs": 20,
+    "memory_objects": 40,
+    "matched_item_pairs": 58,
+    "mean_pair_matched_jaccard": 0.2326608652054719,
+    "median_pair_matched_jaccard": 0.20748530584035507,
+    "structural_asymmetry_pairs": [118],
+    "fully_aligned_pairs_by_threshold": {
+      "0.15": 14,
+      "0.20": 6,
+      "0.25": 4,
+      "0.30": 3,
+      "0.35": 0,
+      "0.40": 0,
+      "0.50": 0
+    }
+  },
+  "diagnosis": {
+    "what_failed": "A simple deterministic lexical item-alignment operationalization does not define a robust shared-core/residual split across the frozen memory pairs.",
+    "what_did_not_fail": [
+      "the R8 W/E/U/O measurements",
+      "the 10-state diagnostic-completeness theorem",
+      "the operational post-exposure/pre-uptake localization",
+      "the possibility that treatment-residual access is scientifically relevant"
+    ],
+    "why_not_rescue": "Choosing a lexical threshold, semantic matcher, or masking rule after viewing downstream effects would convert representation choice into outcome shopping and destroy identifiability."
+  },
+  "reusable_rule": "When a proposed causal/diagnostic extension depends on an intermediate representation (for example, treatment residual, semantic core, causal atom, or evidence-bearing span), qualify that representation independently of downstream outcomes before authorizing intervention. Do not tune the representation to maximize the later effect.",
+  "forbidden_repair": [
+    "threshold tuning on the 13 negative pilot states",
+    "representation tuning on the sealed 23-state holdout",
+    "stronger prompt search in the failed A2 treatment family",
+    "claiming semantic residual validity from lexical similarity alone"
+  ],
+  "reopen_condition": "Reopen only with an independently motivated, pre-frozen residual representation plus a matched deletion/salience control and fresh evaluation units, or with a separately registered published-utilization carrier study on a new substrate. No downstream outcome may be used to choose the representation.",
+  "source_bindings": {
+    "runner": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/analyze_c1_r9_residual_alignment_preflight.py",
+      "sha256": "6af3c5a697f37f97992a148bcc042459477e386558185e4a1e6af49fdba42be9"
+    },
+    "preflight": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-r9-residual-alignment-preflight-20260829.json",
+      "sha256": "c9537a7240a936f3ec3fff8a899f160523a30207bab68975900d48b49975991f"
+    },
+    "adjudication": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-r9-residual-exposure-candidate-adjudication-20260829.json",
+      "sha256": "900bdf7fee6d4ccd83045107f0a94640c4144ec47509b2da60298c3068dab893"
+    },
+    "test": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/test_c1_r9_residual_alignment_preflight.py",
+      "sha256": "19a0fc3948c468a89c64ac45c9d0c11250e58e36f01b3999d40d373caa502c36"
+    }
+  },
+  "execution": {
+    "provider_calls": 0,
+    "gpu_runs": 0,
+    "model_actions": 0,
+    "new_downstream_outcomes_read": 0,
+    "sealed_23_state_holdout_consumed": false
+  },
+  "paper_effect": "NONE. Keep R8 as the active manuscript; this is a stopped candidate and a reusable research-process asset, not paper evidence.",
+  "authority": {
+    "scientific_claim_expansion": false,
+    "new_repair_experiment": false,
+    "provider": false,
+    "gpu": false,
+    "confirmatory_full": false,
+    "submission": false
+  }
+}
