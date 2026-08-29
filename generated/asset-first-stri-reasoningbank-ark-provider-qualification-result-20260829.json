@@ -1,0 +1,393 @@
+{
+  "contract": "generated/asset-first-stri-reasoningbank-ark-provider-qualification-contract-20260829.json",
+  "created_at_utc": "2026-08-29T13:23:47+00:00",
+  "decision": "ARK_BACKEND_NOT_YET_QUALIFIED_LOCALIZE_AND_REPAIR",
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0-20260829",
+  "model_selection_rule": "Project-default authorized coding/agent model frozen before P1 outcome.",
+  "parameter_semantics": {
+    "seed_42_a": "accepted_by_provider",
+    "stop": "accepted_by_provider",
+    "structured_json": "accepted_by_provider",
+    "temperature": "accepted_by_provider",
+    "top_p": "accepted_by_provider"
+  },
+  "provider_role": "ReasoningBank architecture + compatibility-adapted Ark backend",
+  "receipts": [
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "basic_chat",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "c108ceb6e449b868ae9a897d67fd1cbd7c22444e9adef54a52d36455be4a600c",
+      "status": "completed",
+      "text": "BASIC_OK",
+      "text_sha256": "055f9dc2fdb1fd6d66c693ff9e4add3b537d723b83e8aa685df0736f3c950ebe",
+      "usage": {
+        "input_tokens": 51,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 3,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 54
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "system_user",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "de6a04cc35767211955963900186085c90523e41c9f49a07ca5bbc34e08fd9b7",
+      "status": "completed",
+      "text": "SYSTEM_USER_OK",
+      "text_sha256": "f1894366dfd69ea114a7457475805db302952f51719dd17ea68abbbaf846bba9",
+      "usage": {
+        "input_tokens": 51,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 4,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 55
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "multi_turn_history",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "9500bf44da4c66d7e6283659ff4d56071e8cbe55bd061d5304a1c7b5e4f0198e",
+      "status": "completed",
+      "text": "MULTI_TURN_731",
+      "text_sha256": "42a4758b02bc99b7a7839d093893a580bacd24f84ac426912b082958c143e75e",
+      "usage": {
+        "input_tokens": 79,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 9,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 88
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [
+        {
+          "arguments": "{\"value\": 731}",
+          "arguments_sha256": "d834a2209e838bf2610e2570382d1b13e59aa75c24699a9eff1dc9144f54b555",
+          "call_id_sha256": "bcef8cf649d00d69f4076032d936f93e43a37c9e8d63c80f2ccea21126ccf877",
+          "name": "record_probe",
+          "type": "function_call"
+        }
+      ],
+      "label": "tool_call",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "b2d12d4217cc9da412024561bc686a60d57217bc7a9de205c16a9ebc306df3bf",
+      "status": "completed",
+      "text": "",
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "usage": {
+        "input_tokens": 500,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 35,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 535
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "temperature",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "66d12ab5879a7098461d360a20bf12c0fb7bcc661efebe2c2e5717ab234bcfc8",
+      "status": "completed",
+      "text": "TEMPERATURE_OK",
+      "text_sha256": "fc6eb4030a5fd1b5d4a8ae332f6c0414ceb463824fc6f57a6e090e6d03ea783a",
+      "usage": {
+        "input_tokens": 52,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 5,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 57
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "top_p",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "bf6cb3835ba1b32a52d473d95a8368b7596d6b51147d9928e98af3285e443ebc",
+      "status": "completed",
+      "text": "TOP_P_OK",
+      "text_sha256": "715120bf287d55f5c4c81791d01a3db1c5e6d3fef3b9fed16c515133c569e7b0",
+      "usage": {
+        "input_tokens": 51,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 3,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 54
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "seed_42_a",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "2f99f27cff19bc282b973f621fc2c9829e4a86a01c33f5d6030fab502218cc0e",
+      "status": "completed",
+      "text": "gamma",
+      "text_sha256": "be9d587defa1f0c09ef49eb17e206983a5f8f8289e4281860bd0ee5a19592c67",
+      "usage": {
+        "input_tokens": 59,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 1,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 60
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "seed_42_b",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "9a732315896c05a8923f1abb652a200791fb7c73e1f29b017f8efbd348957d13",
+      "status": "completed",
+      "text": "beta",
+      "text_sha256": "f44e64e75f3948e9f73f8dfa94721c4ce8cbb4f265c4790c702b2d41cfbf2753",
+      "usage": {
+        "input_tokens": 59,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 1,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 60
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "seed_43",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "c3e6a16c24b46fa84c02fb2d756bdb22ccb1e9e9211773c47076861498c116be",
+      "status": "completed",
+      "text": "alpha",
+      "text_sha256": "8ed3f6ad685b959ead7022518e1af76cd816f8e8ec7ccdda1ed4018e8f2223f8",
+      "usage": {
+        "input_tokens": 59,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 1,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 60
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "repeat_no_seed_a",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "977030d905341c3bfc837ab5b9f7fc6655f12a0ce02b68ceaff5acf40e818075",
+      "status": "completed",
+      "text": "Green",
+      "text_sha256": "d486dfbd5fb578340bccbdd0a662527eab38550648d5f44517e5ac71b8824703",
+      "usage": {
+        "input_tokens": 59,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 1,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 60
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "repeat_no_seed_b",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "3454bb65ec6cbbc17b8bc2e3d7f0bbc941df19cec4baac36654303abecac0efb",
+      "status": "completed",
+      "text": "Green",
+      "text_sha256": "d486dfbd5fb578340bccbdd0a662527eab38550648d5f44517e5ac71b8824703",
+      "usage": {
+        "input_tokens": 59,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 1,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 60
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "stop",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "f683c1ee585beb3c6ab01520a2a74dfc97a6aeb8afcc2c6e06b4ff5f764799d2",
+      "status": "completed",
+      "text": "I can't provide you with relevant help. You can start other topics, and I will try my best to understand your needs and help you.",
+      "text_sha256": "0779dea0ee593ba7eec345735df6947829c787b18ff752ce51250e3c4061224b",
+      "usage": {
+        "input_tokens": 56,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 29,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 85
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "structured_json",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "61e0217fb449a3e63048f142a7f558220e42dc1e6c781d75be47c5959b66f488",
+      "status": "completed",
+      "text": "{\"ok\":true,\"value\":731}",
+      "text_sha256": "8740f201bc7de209440bc41a641a2974175b1878fa837be416c9241a959f00ea",
+      "usage": {
+        "input_tokens": 222,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 11,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 233
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "tool_result_continuation",
+      "ok": true,
+      "requested_model": "ark-code-latest",
+      "resolved_model": "doubao-seed-evolving",
+      "response_id_sha256": "8c69a01fcfa2c9fed26d2a5fe843d451d33712d2c19fccd1755556d78df333a7",
+      "status": "completed",
+      "text": "TOOL_CONTINUATION_OK",
+      "text_sha256": "940e5da326ba6176eab3d8b763eeedecd318b0afebe1b0bffab265317c7ff297",
+      "usage": {
+        "input_tokens": 115,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 77,
+        "output_tokens_details": {
+          "reasoning_tokens": 71
+        },
+        "total_tokens": 192
+      }
+    }
+  ],
+  "repeat_semantics": {
+    "classification": "paired_same_backend_repeated_execution",
+    "determinism_claim_authorized": false,
+    "temperature_zero_outputs_equal": true
+  },
+  "required_semantics": {
+    "basic_chat": true,
+    "endpoint_reachable": true,
+    "exact_model_frozen": true,
+    "max_output_tokens": true,
+    "multi_turn_history": true,
+    "provider_model_identifier": false,
+    "retry_configured": true,
+    "system_user": true,
+    "timeout_configured": true,
+    "tool_call_parsing": true,
+    "tool_result_continuation": true,
+    "usage_metadata": true
+  },
+  "resource_accounting": {
+    "gpu_seconds": 0,
+    "provider_requests_attempted": 14
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "behavioral_claim_authorized": false,
+    "full_p1_authorized": false,
+    "memory_or_retrieval_semantics_changed": false,
+    "original_reasoningbank_reproduction": false,
+    "p1_treatment_outcome_observed": false
+  },
+  "seed_semantics": {
+    "claim_independent_seeded_repeats_authorized": false,
+    "classification": "accepted_empirically_unresolved",
+    "different_seed_differs": true,
+    "same_seed_equal": false
+  },
+  "settings": {
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "configured": true,
+    "max_retries": 2,
+    "model": "ark-code-latest",
+    "secret_file": "/home/wyt/code/agent-self-evolution-observatory/.env",
+    "secret_value_exported": false,
+    "timeout_seconds": 120.0
+  }
+}

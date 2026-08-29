@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0-20260829",
+  "adjudicated_at_utc": "2026-08-29T00:00:00Z",
+  "preregistration_commit": "74bc86ea69645cfa6861d31fd679d607d9ae7ddf",
+  "receipts": {
+    "contract": {
+      "path": "generated/asset-first-stri-reasoningbank-ark-provider-qualification-contract-20260829.json",
+      "sha256": "9cb37325052b202a4bb1d27f23742b0288d687bcd8d6641dd8337880d56a130c"
+    },
+    "result": {
+      "path": "generated/asset-first-stri-reasoningbank-ark-provider-qualification-result-20260829.json",
+      "sha256": "898021f0848877e9b77c4b279a78e4cb50e42f4595f7549e780883c1f5907b66"
+    }
+  },
+  "decision": "ARK_BACKEND_NOT_YET_QUALIFIED_LOCALIZE_AND_REPAIR",
+  "observed": {
+    "provider_requests": 14,
+    "successful_http_and_parse": 14,
+    "failed_http_or_parse": 0,
+    "requested_model": "ark-code-latest",
+    "resolved_model": "doubao-seed-evolving",
+    "resolved_model_consistent_across_successful_receipts": true,
+    "text_system_multiturn_tool_call_tool_continuation_usage": true,
+    "temperature_top_p_stop_json_schema_accepted": true,
+    "same_seed_42_outputs_equal": false,
+    "different_seed_outputs_differ": true,
+    "temperature_zero_no_seed_outputs_equal": true
+  },
+  "failure_differential": {
+    "layer": "provider model identity / alias resolution",
+    "implementation_failure": false,
+    "authentication_failure": false,
+    "transport_failure": false,
+    "agent_semantics_failure": false,
+    "qualified_mechanism_negative": false,
+    "root_cause": "The project-default alias ark-code-latest is accepted but the provider reports the concrete resolved model doubao-seed-evolving. The preregistered equality check was intentionally strict and therefore failed.",
+    "scientific_treatment_changed": false
+  },
+  "seed_lesson": {
+    "classification": "SEED_ACCEPTED_BUT_NOT_EMPIRICALLY_HONORED_OR_REPRODUCIBLE",
+    "independent_seeded_repeats_authorized": false,
+    "permitted_wording": "paired same-backend repeated executions",
+    "prohibited_wording": "independent seeded stochastic replicates"
+  },
+  "repair": {
+    "next_experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0B-20260829",
+    "single_variable": "Replace alias-equality identity condition with direct pin to provider-resolved doubao-seed-evolving; keep endpoint, adapter, prompts, tools, sampling and resource budget fixed.",
+    "outcome_basis": "Provider metadata only; no E1 treatment or task outcome has been observed.",
+    "rerun_scope": "Basic, system/multi-turn, tool call, tool continuation and provider identity only."
+  },
+  "scientific_boundary": {
+    "p1_outcome_observed": false,
+    "memory_induction_executed": false,
+    "p1_behavioral_execution_authorized": false,
+    "full_p1_authorized": false,
+    "claim_expansion": false
+  },
+  "credential_security": {
+    "secret_value_recorded": false,
+    "secret_value_printed": false,
+    "secret_value_committed": false
+  }
+}
