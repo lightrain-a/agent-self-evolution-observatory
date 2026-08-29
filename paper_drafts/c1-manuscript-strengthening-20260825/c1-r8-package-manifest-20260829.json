@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "c1-r8-negative-repair-pilot-package-manifest",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision_id": "C1-STAGE-RESOLVED-R8-NEGATIVE-REPAIR-PILOT-20260829",
+  "title": "Memory Divergence Is Not Behavioral Divergence: Stage-Resolved Transport in Self-Improving Agent Memory",
+  "status": "R8_NEGATIVE_REPAIR_PILOT_PAPER_PACKAGE_SEALED",
+  "source_base_revision": "R7",
+  "source_base_pdf_sha256": "a5ce511a11a7781ca5374e0f54f7830454927874ca8dc6112c87e6106ab20167",
+  "source_base_zip_sha256": "91af2cd961a0633b31e2ba38fb1e3f2abcf6db4013dd44977d7b1d2cf8fcc76e",
+  "scientific_results_changed": true,
+  "scientific_contract_changed": false,
+  "claim_expansion": false,
+  "claim_narrowing": true,
+  "new_scientific_evidence": {
+    "experiment_id": "C1-TGRP-P0-POSTEXPOSURE-UPTAKE-20260828",
+    "pilot_calls_complete": 312,
+    "pilot_failed_cases": 0,
+    "pilot_gate_pass": false,
+    "repair_actionability": "NOT_SUPPORTED_BY_QUALIFIED_PILOT",
+    "confirmatory_full_executed": false,
+    "confirmatory_holdout_new_calls": 0,
+    "claim_update_status": "PILOT_HOLD_OR_STOP"
+  },
+  "execution": {
+    "scientific_pilot_provider_calls": 312,
+    "paper_build_provider_calls": 0,
+    "new_gpu_scientific_runs": 0,
+    "confirmatory_provider_calls": 0
+  },
+  "build": {
+    "latex_sequence": [
+      "pdflatex",
+      "bibtex",
+      "pdflatex",
+      "pdflatex"
+    ],
+    "source_date_epoch": "1787961600",
+    "source_zip_files": 21,
+    "source_zip_fixed_timestamp": "2026-08-29T00:00:00Z"
+  },
+  "artifacts": {
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r8-negative-repair.pdf",
+      "sha256": "271ceab8b74555bbd891740c963dd9af71c29cb039f218a842f13a57c435bec6"
+    },
+    "source_zip": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r8-negative-repair-source.zip",
+      "sha256": "95771a4c4efeae7f37a0a10ba030c216f5137d467a5af174907f2d9556894f81"
+    },
+    "claim_audit": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/claim-audit-r8-provenance-seal-20260829.json",
+      "sha256": "e910240ebeb5ebd93f0ab2ee46778199099c95a3222fe3039edb22d998de8c43",
+      "replay": "26/26 PASS"
+    },
+    "paper_qa": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/paper-qa-r8-20260829.json",
+      "sha256": "917dbab94812882a651a833b4c122721862a44646dc91e82e851a0e6393f9490"
+    },
+    "pilot_closure": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-tgrp-pilot-closure-20260829.json",
+      "sha256": "0cedd813692171e3e459d1648bbfbc3ae9fd312720f77c9d1a9040e63922db9e"
+    },
+    "pilot_claim_update": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-tgrp-pilot-claim-update-20260829.json",
+      "sha256": "12f487cb2b04569a42cbb0574abc7811865c44a34a5ba52fa7f10dece793d1b8"
+    },
+    "theory": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-prerequisite-diagnostic-completeness-20260828.json",
+      "sha256": "da9b89d388090f59db6eeba984145145ea6c04de3ba5be43e78f2a6686199752"
+    }
+  },
+  "source_files": {
+    "build_figures.py": "a74d39306132358e7636f85d2a40c643d458d532f519b5c392ef3a6b5be2f363",
+    "build_stage_transport_figure.py": "835c7b5c07f044bb3852a3ae037dfcfa431473522431c2aad114265802e52bdb",
+    "fancyhdr.sty": "261be63f0ab516458d86db3a65d16605534b962da14614e53b7a800120eaf3ed",
+    "figures/fig1_reward_write_channel.pdf": "388be913fcda99f0b41c87c9e6d1a729a0cde581c21a194666c3583ce44e9594",
+    "figures/fig2_write_and_prompt_control.pdf": "635f3dc1aff731f14b7e80be3b395291bd38a3308eb7de9fce2afd9d02bd9fb4",
+    "figures/fig3_downstream_variance.pdf": "40db8665f49aaab7f3dadd05f25576124ba57637498585c6cd1e88ac32ee7b4c",
+    "figures/fig4_stage_resolved_transport.pdf": "912ae34da866a7f91221af80a6da3e7a79fa9ff351c33db57ed60764d4ee1415",
+    "iclr2027_conference.bst": "ac16470ac4252807bdebd224e0f6554d9c238dd4cc791c245bdc3eb6da43d6e3",
+    "iclr2027_conference.sty": "797deef41724e93761426ac0cbcca46279a91cc650dd1f0ce76a4f08d2098ea6",
+    "main.tex": "287b703faf37738ca2082417ac36a98990b069b52d79ee767cab61346ae58972",
+    "natbib.sty": "dbba2c7c2cd7a9a732d572d371a7968f4b0dd1bc6592b102a5a45871a92071e3",
+    "references.bib": "45c8af41203cc5df706ee553d3838f6a029baeedf4e717657af5b7114d595be1",
+    "sections/00_abstract.tex": "27c3a12de066ef76b2b8a43307b6c1d82322919986a77bcfca33bb6460963e0b",
+    "sections/01_intro.tex": "a66d415c4373dbdc2785f9157886364bcfa44a4c44a8a338b1f7dc5eb181a9c4",
+    "sections/02_mechanism.tex": "d1432821bf78df255206ef6fe81e6284772fa7727477f13fa64eb9a6710db926",
+    "sections/03_f0.tex": "ac66fba22eb1adaf987469c76bdd7a4d464a3d2c82bada2d0be98024a0b0400f",
+    "sections/03a_prompt_control.tex": "7306cb33581830ce3bf95a68e139ecb002a5f1866eefe4a073dbc7ac771ec077",
+    "sections/04_variance_protocol.tex": "f938439bdea08ba6006b51c646c01aee077dacb6b2ece39d232e1391417c72f1",
+    "sections/05_related.tex": "7885684d707bcc1a4b4aec2f795985653ee55b7f3061dc2ab6014b70efe7a2b1",
+    "sections/06_limitations_conclusion.tex": "25b1b3d019606d300a8f96f93176476cf84305c8dce07823cf68ffc2302fe610",
+    "sections/07_appendix.tex": "398f3e4641159a275cf6bd5e66246d9b03e13b472aa253174ce0bf7735c7bc89"
+  },
+  "paper_boundary": "R8 preserves the W/E/U/O/F diagnostic result and operational post-exposure/pre-uptake localization, while adding the qualified negative pilot boundary: the tested explicit memory-use-check realization does not support diagnosis-guided repair actionability. The pilot is not confirmatory evidence and does not justify a broader repair-impossibility claim.",
+  "authority": {
+    "scientific_claim_expansion": false,
+    "confirmatory_full": false,
+    "new_repair_experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  },
+  "manifest_content_sha256_without_self": "bdb658420c725a09dc7722f90ac8eb45d6077e45b74d16e1c8479536ef2f3149"
+}

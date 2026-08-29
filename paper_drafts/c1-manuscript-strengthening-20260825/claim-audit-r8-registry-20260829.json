@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "revision": "R8",
+  "checks": [
+    {"id": "R8-C01", "description": "R6 sealed PDF remains immutable."},
+    {"id": "R8-C02", "description": "R7 sealed PDF and source zip remain immutable."},
+    {"id": "R8-C03", "description": "R8 is a separate source tree derived from R7 rather than an overwrite."},
+    {"id": "R8-C04", "description": "Same-trajectory writer intervention remains a bundled success/failure writer-branch contrast, not a pure reward-bit effect."},
+    {"id": "R8-C05", "description": "Frozen write-stage evidence remains 20/20 Shopping, 4/4 Reddit, with same-mode excess 0.105 and p=0.0078."},
+    {"id": "R8-C06", "description": "Frozen source-item exposure remains 125/172 and is not promoted to policy uptake."},
+    {"id": "R8-C07", "description": "Frozen first-action evidence remains TV=0.06944, p=0.5801, 0/36 modal changes."},
+    {"id": "R8-C08", "description": "Frozen Shopping terminal evidence remains |Delta|=0.02083, p=0.4289, 34/36 zero."},
+    {"id": "R8-C09", "description": "Frozen Reddit boundary remains |Delta|=0.125, p=0.2253, 6/8 zero with opposite nonzero signs."},
+    {"id": "R8-C10", "description": "Forced-capacity side control remains |Delta|=0.15625, p=0.00074 and is not native transport."},
+    {"id": "R8-C11", "description": "Prerequisite diagnostic class remains 10 states over W/E/U/O/F with 32 observed-surface subsets."},
+    {"id": "R8-C12", "description": "Only full W/E/U/O/F is injective over the stated 10-state class."},
+    {"id": "R8-C13", "description": "Pilot sample is the frozen 13-state outcome-blind subset and 23-state holdout remains sealed."},
+    {"id": "R8-C14", "description": "Pilot execution completed 312/312 cases with zero failed or missing cases."},
+    {"id": "R8-C15", "description": "Pilot model identity is exact with zero model or prompt-hash drift and packet invariance PASS."},
+    {"id": "R8-C16", "description": "Pilot mean U_A0, U_A1, U_A2 are all 0.09615384615384616."},
+    {"id": "R8-C17", "description": "Pilot mean D=A2-A1 and N=A2-A0 are both exactly 0.0."},
+    {"id": "R8-C18", "description": "Pilot D signs are 3 positive, 2 negative, 8 zero across 13 states."},
+    {"id": "R8-C19", "description": "Pilot descriptive bootstrap 95% CI for mean D is [-0.11538461538461539, 0.09615384615384616]."},
+    {"id": "R8-C20", "description": "All frozen pilot gates fail without threshold changes; current 23-state confirmatory is not run."},
+    {"id": "R8-C21", "description": "R8 reports the pilot as a negative/unsupported repair pilot, not confirmatory falsification."},
+    {"id": "R8-C22", "description": "R8 preserves operational localization and diagnostic completeness separately from repair actionability."},
+    {"id": "R8-C23", "description": "R8 forbids current claims that post-retrieval policy integration is an empirically effective repair."},
+    {"id": "R8-C24", "description": "R8 does not claim retrieval-versus-use or generic utilization optimization as novelty."},
+    {"id": "R8-C25", "description": "R8 states treatment delivery does not establish internal cognitive compliance."},
+    {"id": "R8-C26", "description": "R8 conclusion preserves the boundary: state divergence is not behavioral authority; availability is not use; diagnosis is not repair."}
+  ]
+}
