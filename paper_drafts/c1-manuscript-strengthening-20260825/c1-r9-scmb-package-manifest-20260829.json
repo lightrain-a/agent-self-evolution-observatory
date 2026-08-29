@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_R9_SCMB_PACKAGE",
+  "revision": "R9-state-binding",
+  "status": "READY_HETEROGENEOUS_PROOF_OF_CONCEPT_NOT_GENERAL_REPAIR",
+  "scientific_results_changed": true,
+  "result_boundary": "State-conditioned binding raises mean first-action uptake on a fresh 12-state pilot relative to native and memory-only controls, but the preregistered cross-state consistency gate fails; treat as heterogeneous proof-of-concept, not universal repair or method novelty.",
+  "paper_qa": {
+    "pages": 14,
+    "conclusion_on_page9": true,
+    "references_on_page9": true,
+    "appendix_on_page10": true,
+    "undefined_or_overfull_warnings": 0,
+    "bibtex_warnings": 0,
+    "fonts_embedded": true,
+    "scmb_independent_verification": "REPRODUCED_HETEROGENEOUS_AGGREGATE_SIGNAL_GATE_FAILS"
+  },
+  "files": {
+    "pdf": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r9-state-binding.pdf",
+      "sha256": "04297b75e2cc8554d078228f8821c1d3a58420fd5976491cf8748da06b54392e"
+    },
+    "source_zip": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/C1-stage-resolved-r9-state-binding-source.zip",
+      "sha256": "4f3e89353f587d3682f7d61ac0b87c5a2a035d081c9de3c4b34bde3ec3370519"
+    },
+    "scmb_verification": {
+      "path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-scmb-independent-verification-20260829.json",
+      "sha256": "86ab35239a20f1cc7396f1916015b6d208ceaabecd8a67ec869323cc2ef5b772"
+    }
+  },
+  "authority": {
+    "confirmatory": false,
+    "terminal_outcome": false,
+    "submission": false
+  }
+}

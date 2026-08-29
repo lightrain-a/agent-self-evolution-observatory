@@ -1,0 +1,220 @@
+\section{F0 Reproduction Details}
+\subsection{Released trajectory sample}
+The F0 sample uses six task IDs from the released AWM shuffle-seed-42 Shopping parquet: 21 through 25, plus 47. The deterministic sampler selects the lowest task IDs with parseable trajectory records within each original-outcome stratum. Original failures are 21 through 22 plus 24. Original successes are 23 plus 25 and 47.
+
+\subsection{Memory construction intervention}
+Each released trajectory is summarized into an action trace. The same trace is inserted into two prompts. One prompt contains the released ReasoningBank success-reflection system instruction. The paired prompt contains the released failure-reflection system instruction. The task prompt stays fixed. The writer model stays fixed. Temperature stays at zero. The raw provider output is archived before metric computation.
+
+\subsection{Pair-level F0 results}
+\begin{table}[h]
+\centering
+\caption{Complete paired interventions.}
+\small
+\begin{tabular}{lccc}
+\toprule
+Task & Original outcome & Content changed & Token distance \\
+\midrule
+21 & failure & yes & 0.691489 \\
+22 & failure & yes & 0.708108 \\
+23 & success & yes & 0.769953 \\
+25 & success & yes & 0.769608 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The extracted memory-item title set changes for every complete pair. The mean token-set Jaccard distance is 0.734789. A deterministic post-ready strategy-slot audit maps the frozen titles into navigation, pagination/coverage, query expansion, semantic matching, evidence capture, extraction, and verification/completeness. All four complete pairs change their slot set. The slot-set Jaccard distances are 0.571, 0.400, 0.500, and 0.500 for tasks 21, 22, 23, and 25, respectively, with mean 0.493. This is a structural diagnostic over frozen titles, not an embedding-based semantic claim.
+
+Provider failures for task 24 and task 47 are excluded from the paired analysis. Both are failure-label calls with \texttt{ArkResponseStateError}; neither produces assistant text or a raw memory SHA. Private response identifiers are retained and GET-only recovery finds no text. The four completed failure-label calls produce 777, 852, 1,113, and 1,296 output tokens. These receipts distinguish provider response-state failures from a later memory-parser rejection, while leaving arm-dependent completion bias unresolved.
+
+\section{Prompt-Perturbation Control Details}
+The control set is disjoint from the F0 requests. Each fresh trajectory is written under both released reward modes. One semantic-preserving rewording is also evaluated within each mode. Table~\ref{tab:prompt-control-full} reports the paired distances used in the frozen sign-flip test.
+
+\begin{table}[h]
+\centering
+\caption{Full fresh prompt-perturbation control. Between is the released success-versus-failure memory distance; Within averages the two same-mode rewording distances.}
+\label{tab:prompt-control-full}
+\scriptsize
+\begin{tabular}{lcrrr}
+\toprule
+Task & Original outcome & Between & Within & $B_i-W_i$ \\
+\midrule
+26  & failure & 0.726 & 0.662 & 0.065 \\
+50  & failure & 0.668 & 0.599 & 0.069 \\
+51  & failure & 0.776 & 0.534 & 0.242 \\
+96  & failure & 0.682 & 0.549 & 0.134 \\
+48  & success & 0.716 & 0.656 & 0.059 \\
+49  & success & 0.573 & 0.594 & -0.022 \\
+117 & success & 0.703 & 0.593 & 0.110 \\
+126 & success & 0.755 & 0.572 & 0.182 \\
+\midrule
+Mean & & 0.700 & 0.595 & 0.105 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Downstream Confirmatory Details}
+\subsection{Fixed-state action distributions}
+The distributional action stress test retains all four intervention states from the action-reach experiment and uses eight rollouts per memory condition. The per-state success-memory versus failure-memory TV distances are 0.625 for task 22 and 0.375 for task 23. They are 0.125 for task 24 and 0.250 for task 26. Their mean is 0.34375. The frozen 100,000-draw permutation audit gives $p=0.310527$.
+
+\subsection{Frozen terminal matrix}
+The terminal confirmatory experiment reuses every complete F0 pair and every future task frozen for the earlier fixed-evidence run. Source-memory tasks form $\{21,22,23,25\}$. Future tasks form $\{164,385,387,388\}$. The design therefore contains 16 source--future cells. Each cell receives eight fresh success-memory rollouts and eight fresh failure-memory rollouts. The policy model is Doubao Seed 2.0 Mini at temperature 0.2. All 256 requested calls complete with zero provider failures.
+
+The primary statistic is the mean across cells of the absolute difference between success-memory and failure-memory terminal benchmark success rates. The support gate is frozen before calls at an effect floor of 0.15 together with a within-cell permutation $p<0.05$. The permutation audit uses 100,000 draws with seed 20260822. The observed statistic is 0.15625 and the audit gives $p=0.00074$.
+
+\begin{table}[h]
+\centering
+\caption{F2R1 confirmatory terminal success rates. S denotes success-label memory and F denotes failure-label memory.}
+\label{tab:f2r1-cells}
+\scriptsize
+\begin{tabular}{ccccc}
+\toprule
+Source & Future & S rate & F rate & $|\Delta|$ \\
+\midrule
+21 & 164 & 1.000 & 1.000 & 0.000 \\
+21 & 385 & 0.000 & 0.250 & 0.250 \\
+21 & 387 & 0.125 & 0.250 & 0.125 \\
+21 & 388 & 1.000 & 0.625 & 0.375 \\
+22 & 164 & 1.000 & 1.000 & 0.000 \\
+22 & 385 & 0.000 & 0.125 & 0.125 \\
+22 & 387 & 0.125 & 0.000 & 0.125 \\
+22 & 388 & 0.250 & 1.000 & 0.750 \\
+23 & 164 & 1.000 & 1.000 & 0.000 \\
+23 & 385 & 0.000 & 0.000 & 0.000 \\
+23 & 387 & 0.125 & 0.250 & 0.125 \\
+23 & 388 & 1.000 & 1.000 & 0.000 \\
+25 & 164 & 1.000 & 1.000 & 0.000 \\
+25 & 385 & 0.000 & 0.000 & 0.000 \\
+25 & 387 & 0.125 & 0.750 & 0.625 \\
+25 & 388 & 1.000 & 1.000 & 0.000 \\
+\midrule
+\multicolumn{4}{r}{Mean absolute difference} & 0.15625 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Heterogeneity and corruption-rate decomposition}
+For each frozen cell, the confirmatory run estimates paired conditional success probabilities. Eight of the 16 cells have zero observed success-rate contrast. Six have positive failure-memory minus success-memory effects and two have negative effects. The largest squared effects occur at source/future pairs 22/388 and 25/387; together they contribute 78.2051\% of the total squared-effect mass. This sign and magnitude heterogeneity is why the revised paper treats the experiment as a forced-leverage measurement rather than a uniform directional effect or a native end-to-end transport estimate.
+
+If reward-label corruption selects the failure-conditioned memory with probability $q$, the induced between-memory variance equals $q(1-q)\Delta_c^2$ in cell $c$. The exact mean squared conditional effect across all 16 cells is 0.076172. Averaging over cells gives the curve $0.076172q(1-q)$, with value 0.006855 at $q=0.1$, value 0.014282 at $q=0.25$, and value 0.019043 at $q=0.5$. This remains a descriptive plug-in calculation conditional on forced memory exposure; it is not used as the main claim in the revised stage-resolved paper.
+
+\subsection{Native transport audit added after the forced-leverage study}
+The later frozen native-pipeline audit changes the interpretation of the forced matrix. In Shopping, the branch-conditioned source-memory item is retrieved in 125/172 held-out opportunities after bank expansion, but the mean absolute native terminal success difference is only 0.02083 with permutation $p=0.4289$; 34/36 terminal cells are zero. The corresponding first-action total-variation statistic is 0.06944 with $p=0.5801$, and no frozen state changes its modal first action between reward branches. A post-hoc working-memory branch-shift diagnostic is 0.00335 with $p=0.2052$.
+
+The cross-domain Reddit audit contains four complete success/failure writes, all of which diverge. Its native terminal mean absolute difference is 0.125 with $p=0.2253$; 6/8 cells are zero and the two nonzero cells have opposite signs. These later measurements are why the main text separates forced capacity from native transport and treats first-action uptake as the first unsupported measured Shopping stage after write and source-item exposure, rather than as an identified latent attenuation onset or causal mediation result.
+
+For finite-cell sensitivity, we run a fixed-seed nonparametric bootstrap with 100,000 repetitions, resampling 16 source--future cells with replacement. The percentile 95\% interval for mean absolute effect is $[0.054688,0.273438]$. The corresponding interval for mean squared effect is $[0.010742,0.164062]$, which maps to $[0.002686,0.041016]$ for $V(0.5)$. This bootstrap is descriptive sensitivity to the observed cell composition. The preregistered within-cell permutation test on the 256 confirmatory rollouts supplies the primary significance result.
+
+\subsection{Full alternative-explanation audit}
+\begin{table}[h]
+\centering
+\small
+\caption{Alternative-explanation audit. ``Weakened'' means the frozen evidence makes the explanation incomplete but does not mathematically eliminate every variant of it.}
+\label{tab:alternative-audit}
+\begin{tabular}{@{}p{0.26\linewidth}p{0.23\linewidth}p{0.38\linewidth}@{}}
+\toprule
+Explanation & Frozen evidence & Disposition \\
+\midrule
+No persistent state intervention & 20/20 Shopping and 4/4 Reddit writes diverge; same-mode excess $=0.105$, $p=0.0078$ & Inconsistent with the observed write-stage intervention. \\
+Downstream policy is globally insensitive to memory & Forced terminal $|\Delta|=0.15625$, $p=0.00074$ & Weakened: supplied branch-specific memory has measurable leverage. \\
+Native null is only retrieval absence & 125/172 native Shopping source-item retrieval hits & Weakened: substantial item exposure coexists with weak first-action contrast. \\
+Retrieval hit is a surrogate for policy use & first-action TV $=0.06944$, $p=0.5801$; 0/36 modal changes & Rejected as an evaluation equivalence: item availability is not policy uptake. \\
+Universal directional terminal transport & Shopping 34/36 zero; Reddit 6/8 zero, two nonzero signs opposite & Not supported by the frozen native cells. \\
+Causal mediation has been identified & no per-atom seed binding/noise-floor replication; forced/native surfaces differ & Unresolved and explicitly outside the claim set. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Prerequisite Diagnostic State Class}
+\label{sec:diagnostic-prefix-class}
+The native prerequisite order $O\Rightarrow U\Rightarrow E\Rightarrow W$ permits five binary prefix depths. Crossing each with forced-capacity bit $F\in\{0,1\}$ yields the 10-state class used in Section~\ref{sec:diagnostic-completeness}.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Native prefix states; each row occurs with both $F=0$ and $F=1$.}
+\label{tab:diagnostic-prefix-class}
+\begin{tabular}{clcccc}
+\toprule
+Depth & Interpretation & $W$ & $E$ & $U$ & $O$ \\
+\midrule
+0 & no native branch-specific state & 0 & 0 & 0 & 0 \\
+1 & write only & 1 & 0 & 0 & 0 \\
+2 & written and source-item exposed & 1 & 1 & 0 & 0 \\
+3 & first-action uptake & 1 & 1 & 1 & 0 \\
+4 & terminal transport & 1 & 1 & 1 & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+A deterministic content-addressed verifier enumerates all 32 subsets of $\{W,E,U,O,F\}$. Only the full set is injective over all 10 states. Omitting $W,E,U,$ or $O$ aliases two adjacent-prefix pairs (one at each fixed $F$); omitting $F$ aliases five pairs. This is exact for the stated binary prerequisite class only. It does not convert empirical \textsc{Not-Supported} evidence into zero or claim universal diagnostic optimality for arbitrary stochastic memory systems.
+
+\section{Prospective Repair Pilot Details}
+\label{sec:repair-pilot-details}
+The pilot is selected outcome-blind from the 36 replayable Shopping states: states are partitioned by intent-template ID and exactly one state per template is chosen by the lexicographically smallest SHA256 of a frozen salt, template ID, and task ID. The 13 selected states and the remaining 23-state confirmatory holdout are disjoint; the holdout receives no new $A1/A2$ calls after pilot outcomes are observed.
+
+All arms reuse byte-identical upstream branch memories and task-state packets. $A0$ uses native prompting. $A1$ adds a memory-blind check asking whether the ultimate task and current browser state change the next action. $A2$ adds a syntax-matched check asking whether reusable memory and current browser state change the next action. Each arm receives four rollouts for each success/failure memory branch per state. The primary memory-specific contrast is $D_i=U_{i,A2}-U_{i,A1}$; $N_i=U_{i,A2}-U_{i,A0}$ is secondary. The gate is frozen before execution: mean $U_{A2}\ge0.20$, mean $D\ge0.10$, $D_i>0$ in at least 8/13 states, and mean $N>0$.
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Full 13-state repair pilot. $D=A2-A1$ and $N=A2-A0$ are first-action TV contrasts.}
+\label{tab:repair-pilot-full}
+\begin{tabular}{rrrrrrr}
+\toprule
+Task & Template & Source & $U_{A0}$ & $U_{A1}$ & $U_{A2}$ & $D$ / $N$ \\
+\midrule
+164 & 136 & 163 & .50 & .25 & .50 & +.25 / .00 \\
+329 & 147 & 141 & .00 & .00 & .00 & .00 / .00 \\
+150 & 155 & 226 & .25 & .00 & .25 & +.25 / .00 \\
+124 & 159 & 226 & .00 & .00 & .00 & .00 / .00 \\
+321 & 160 & 188 & .00 & .00 & .00 & .00 / .00 \\
+142 & 162 & 141 & .00 & .50 & .00 & -.50 / .00 \\
+279 & 204 & 226 & .50 & .25 & .25 & .00 / -.25 \\
+360 & 206 & 231 & .00 & .00 & .00 & .00 / .00 \\
+233 & 213 & 232 & .00 & .00 & .00 & .00 / .00 \\
+190 & 214 & 189 & .00 & .00 & .00 & .00 / .00 \\
+26  & 222 & 25  & .00 & .00 & .00 & .00 / .00 \\
+230 & 370 & 226 & .00 & .25 & .00 & -.25 / .00 \\
+384 & 666 & 25  & .00 & .00 & .25 & +.25 / +.25 \\
+\midrule
+Mean & & & .096 & .096 & .096 & .000 / .000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All 312 requests complete, with zero model-identity or prompt-hash drift and no arm-dependent missingness; four responses require the frozen parser's regex fallback. $D_i$ is positive in 3 states, negative in 2, and zero in 8; the descriptive bootstrap 95\% interval for mean $D$ is $[-0.115,0.096]$. The pilot therefore stops the current treatment before confirmatory scaling. Exact prompt delivery verifies treatment realization at the input surface, not internal cognitive compliance; the supported conclusion is only that this simple explicit memory-use-check realization does not selectively increase branch-specific uptake.
+
+\section{Fresh State-Conditioned Binding Pilot}
+\label{sec:scmb-pilot-details}
+To avoid reusing either the 13-state prompt pilot or its sealed 23-state holdout, the state-conditioned pilot starts from 86 additional Shopping states that have released trajectories and a retrieval hit under the frozen expanded bank. These 86 states span 31 fresh intent templates. We select one state per template by a frozen hash rule and then choose 12 pilot states by a second frozen hash; the remaining 19 template representatives receive no binder or policy calls after pilot outcomes are observed. The 12 pilot states cover nine selected source memories.
+
+The binder uses the frozen Doubao Seed 2.0 Mini model at temperature zero. $A1$ receives only the retrieved memory and rewrites it into one concise procedural note. $A2$ receives the same memory together with the target task and current browser state and emits one concise current-state action implication. The policy model, retrieved raw memory, state packet, decoding, and action parser are otherwise unchanged. The policy receives six rollouts per success/failure branch and arm, for 432 action calls after 48 binder calls. All calls complete without model drift; the prior 36 states and the 19 fresh holdouts receive zero calls.
+
+\begin{table}[h]
+\centering
+\scriptsize
+\caption{Fresh 12-state state-conditioned binding pilot. $A1$ is memory-only adaptation; $A2$ is state-conditioned binding.}
+\label{tab:scmb-pilot-full}
+\begin{tabular}{rrrrrrr}
+\toprule
+Task & Template & Source & $U_{A0}$ & $U_{A1}$ & $U_{A2}$ & $D$ / $N$ \\
+\midrule
+794 & 191 & 188 & .000 & .000 & .000 & .000 / .000 \\
+161 & 171 & 159 & .667 & .167 & 1.000 & +.833 / +.333 \\
+336 & 169 & 232 & .000 & .000 & .000 & .000 / .000 \\
+531 & 154 & 188 & .000 & .167 & .000 & -.167 / .000 \\
+276 & 212 & 158 & .333 & .000 & .500 & +.500 / +.167 \\
+586 & 194 & 141 & .167 & .000 & 1.000 & +1.000 / +.833 \\
+235 & 213 & 232 & .000 & .000 & .000 & .000 / .000 \\
+286 & 207 & 158 & .167 & .167 & .000 & -.167 / -.167 \\
+432 & 145 & 226 & .167 & .333 & .000 & -.333 / -.167 \\
+359 & 206 & 231 & .000 & .000 & .000 & .000 / .000 \\
+47  & 197 & 189 & .000 & .000 & .000 & .000 / .000 \\
+326 & 208 & 25  & .000 & .167 & .000 & -.167 / .000 \\
+\midrule
+Mean & & & .125 & .083 & .208 & +.125 / +.083 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The preregistered pilot signal requires mean $D\ge0.05$, mean $N>0$, $U_{A2}$ above both controls, and $D_i>0$ in at least 6/12 states. The first three conditions pass, but only 3/12 states have positive $D_i$ (4 negative, 5 zero), so the overall gate fails. A descriptive state bootstrap gives mean-$D$ 95\% interval $[-0.083,0.375]$, and the three largest squared $D_i$ values account for 90.9\% of squared effect mass. A post-hoc lexical divergence between success- and failure-branch $A2$ notes correlates with $D_i$ at $r=0.725$; this is hypothesis generation only and is not used to reopen the untouched holdout.

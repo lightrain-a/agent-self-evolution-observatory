@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_SCMB_INDEPENDENT_VERIFICATION",
+  "status": "REPRODUCED_HETEROGENEOUS_AGGREGATE_SIGNAL_GATE_FAILS",
+  "cases": 432,
+  "binder_calls": 48,
+  "means": {
+    "U_A0_NATIVE": 0.125,
+    "U_A1_MEMORY_ONLY_ADAPTER": 0.08333333333333333,
+    "U_A2_STATE_CONDITIONED_BINDING": 0.20833333333333334,
+    "D": 0.125,
+    "N": 0.08333333333333333
+  },
+  "D_signs": {
+    "positive": 3,
+    "negative": 4,
+    "zero": 5
+  },
+  "D_bootstrap_95_ci": [
+    -0.08333333333333331,
+    0.375
+  ],
+  "top3_squared_D_mass_fraction": 0.909090909090909,
+  "posthoc_A2_branch_note_divergence_correlation_with_D": 0.7250058272854362,
+  "binder_format_noncompliance": [
+    {
+      "future_task": 47,
+      "branch": "success",
+      "word_count": 97
+    }
+  ],
+  "binder_noncompliance_drives_positive_cell": false,
+  "old36_calls": 0,
+  "fresh_holdout_calls": 0,
+  "claim_boundary": "Aggregate uptake is higher under state-conditioned binding, but the pre-registered cross-state consistency gate fails. Treat as heterogeneous proof-of-concept signal, not validated general repair. The note-divergence correlation is post-hoc hypothesis generation only."
+}
