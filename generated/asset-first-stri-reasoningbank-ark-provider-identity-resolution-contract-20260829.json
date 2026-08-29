@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0B-20260829",
+  "title": "Direct provider-resolved Ark model identity qualification",
+  "registered_at_utc": "2026-08-29T00:00:00Z",
+  "registration_timing": "Before Q0B provider requests",
+  "prerequisite": {
+    "q0_result": {
+      "path": "generated/asset-first-stri-reasoningbank-ark-provider-qualification-result-20260829.json",
+      "sha256": "898021f0848877e9b77c4b279a78e4cb50e42f4595f7549e780883c1f5907b66"
+    },
+    "q0_adjudication": {
+      "path": "generated/asset-first-stri-reasoningbank-ark-provider-qualification-adjudication-20260829.json",
+      "sha256": "4ad4a5b2eebae6261b3c76f9c87357c198770d9777d16da7b64f955be57687f3"
+    },
+    "q0_failure_layer": "provider model identity / alias resolution"
+  },
+  "single_variable_repair": {
+    "before": "Request project-default alias ark-code-latest and require resolved_model==alias.",
+    "after": "Request provider-reported concrete model doubao-seed-evolving and require resolved_model==requested_model.",
+    "basis": "Provider metadata from 14/14 successful Q0 receipts; no E1 task, treatment or behavior outcome.",
+    "endpoint_changed": false,
+    "adapter_changed": false,
+    "prompt_semantics_changed": false,
+    "tool_semantics_changed": false,
+    "memory_semantics_changed": false,
+    "retrieval_semantics_changed": false
+  },
+  "frozen_backend": {
+    "endpoint": "https://ark.cn-beijing.volces.com/api/plan/v3/responses",
+    "requested_model": "doubao-seed-evolving",
+    "expected_resolved_model": "doubao-seed-evolving",
+    "temperature": 0,
+    "seed": null,
+    "repeat_label": "paired same-backend repeated execution"
+  },
+  "runner": {
+    "path": "research_pipeline/asset_first_stri_reasoningbank_ark_identity_resolution.py",
+    "sha256": "0cb0cc64911505e7932e090ae40815df0e77efca82b3c9baea6c271dcbe720e3"
+  },
+  "probes": [
+    "basic direct model",
+    "structured multi-turn direct model",
+    "function call direct model",
+    "function-result continuation direct model"
+  ],
+  "decision_rule": {
+    "pass": "All requests succeed; every requested and resolved model is doubao-seed-evolving; exact basic/multi-turn/tool/continuation checks and usage checks pass.",
+    "pass_label": "ARK_DIRECT_MODEL_QUALIFIED_FOR_REASONINGBANK_AGENT_SEMANTICS",
+    "fail_label": "ARK_DIRECT_MODEL_NOT_QUALIFIED"
+  },
+  "resource_budget": {
+    "maximum_provider_requests": 4,
+    "gpu_seconds": 0
+  },
+  "authority": {
+    "q0b_execution": true,
+    "memory_induction": false,
+    "p1_behavioral_execution": false,
+    "full_p1": false,
+    "claim_expansion": false
+  },
+  "security": "Load canonical ignored .env read-only; never serialize or print credential values."
+}
