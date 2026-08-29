@@ -1,0 +1,118 @@
+{
+  "arms": {
+    "A_monolithic_same_case": {
+      "first_system_message_sha256": "824948c95bd1cd4111abac4e1f160a0d4a443d00793154cd2022b9787e050b7c",
+      "memory_item_count": 1,
+      "selected_case_ids": [
+        "case-A"
+      ],
+      "selected_memory": "# Memory Item 1\n## Title Verify preconditions\n## Description Check repository state before editing.\n## Content Inspect the current state and validate assumptions before applying a change.\n\n# Memory Item 2\n## Title Test the smallest change\n## Description Exercise the narrowest relevant regression.\n## Content Run the focused test first, then widen validation only if it passes.",
+      "selected_memory_sha256": "bd16ad7e100e61d39bf2eec2e791f3bafff0b7ddd7ae1b6c450170bc9bd9d0dd"
+    },
+    "B_split_same_case": {
+      "first_system_message_sha256": "824948c95bd1cd4111abac4e1f160a0d4a443d00793154cd2022b9787e050b7c",
+      "memory_item_count": 2,
+      "selected_case_ids": [
+        "case-A"
+      ],
+      "selected_memory": "# Memory Item 1\n## Title Verify preconditions\n## Description Check repository state before editing.\n## Content Inspect the current state and validate assumptions before applying a change.\n\n# Memory Item 2\n## Title Test the smallest change\n## Description Exercise the narrowest relevant regression.\n## Content Run the focused test first, then widen validation only if it passes.",
+      "selected_memory_sha256": "bd16ad7e100e61d39bf2eec2e791f3bafff0b7ddd7ae1b6c450170bc9bd9d0dd"
+    },
+    "C_split_same_case_reordered": {
+      "first_system_message_sha256": "d7bc6ad036d704efce7e1d2a4636f40249f4af9e1a592b4cf15e209620935c24",
+      "memory_item_count": 2,
+      "selected_case_ids": [
+        "case-A"
+      ],
+      "selected_memory": "# Memory Item 2\n## Title Test the smallest change\n## Description Exercise the narrowest relevant regression.\n## Content Run the focused test first, then widen validation only if it passes.\n\n# Memory Item 1\n## Title Verify preconditions\n## Description Check repository state before editing.\n## Content Inspect the current state and validate assumptions before applying a change.",
+      "selected_memory_sha256": "5ced57e829baaffef98c0e72e7dcbc335e49b8f8c44560684fcc6b558ae528ac"
+    },
+    "D_split_cross_case_top1": {
+      "first_system_message_sha256": "feba639ba771c229871870072483cb8c6abde0d426235f9bf21dbb32fa9961bb",
+      "memory_item_count": 1,
+      "selected_case_ids": [
+        "case-A"
+      ],
+      "selected_memory": "# Memory Item 1\n## Title Verify preconditions\n## Description Check repository state before editing.\n## Content Inspect the current state and validate assumptions before applying a change.",
+      "selected_memory_sha256": "1e1fb190d4acb17d99c179061adf312b317ac8e2dba24415241a3a602315547e"
+    },
+    "E_case_id_placebo": {
+      "first_system_message_sha256": "824948c95bd1cd4111abac4e1f160a0d4a443d00793154cd2022b9787e050b7c",
+      "memory_item_count": 2,
+      "selected_case_ids": [
+        "case-ALIAS"
+      ],
+      "selected_memory": "# Memory Item 1\n## Title Verify preconditions\n## Description Check repository state before editing.\n## Content Inspect the current state and validate assumptions before applying a change.\n\n# Memory Item 2\n## Title Test the smallest change\n## Description Exercise the narrowest relevant regression.\n## Content Run the focused test first, then widen validation only if it passes.",
+      "selected_memory_sha256": "bd16ad7e100e61d39bf2eec2e791f3bafff0b7ddd7ae1b6c450170bc9bd9d0dd"
+    }
+  },
+  "claim_ceiling": "Supports native pre-decision reunion for semantically identical item partitions nested inside one already-selected case. It does not establish cross-case invariance, order invariance, behavioral equivalence, task success, or performance improvement.",
+  "contract": "generated/asset-first-stri-reasoningbank-native-reunion-contract-20260829.json",
+  "created_at_utc": "2026-08-29T00:00:00Z",
+  "decision": "NATIVE_WITHIN_CASE_REUNION_PASS_CASE_BOUNDARY_LOCALIZED",
+  "execution_class": "zero-provider deterministic source/operator probe",
+  "experiment_id": "E1-STRI-REASONINGBANK-P0-20260829",
+  "failure_differential": {
+    "implementation_failure": false,
+    "localized_boundary": "ReasoningBank reunites item fragmentation only after a case has been selected; cross-case fragmentation remains exposed to case-level top-n truncation, and item order is observable.",
+    "scientific_negative": false
+  },
+  "frozen_witness": {
+    "M1": "# Memory Item 1\n## Title Verify preconditions\n## Description Check repository state before editing.\n## Content Inspect the current state and validate assumptions before applying a change.",
+    "M2": "# Memory Item 2\n## Title Test the smallest change\n## Description Exercise the narrowest relevant regression.\n## Content Run the focused test first, then widen validation only if it passes."
+  },
+  "gpu_seconds": 0,
+  "next_authorized_action": "Audit availability of first-party per-case memory artifacts and runnable evaluation environment. Do not start model or GPU evaluation without a separately frozen contract.",
+  "observations": {
+    "A_equals_B_first_system_message": true,
+    "A_equals_B_selected_memory": true,
+    "C_order_boundary_changes_prompt": true,
+    "D_case_boundary_top1_drops_fragment": true,
+    "E_case_id_not_rendered_after_selection": true
+  },
+  "provider_model_calls": 0,
+  "schema_version": 1,
+  "source": {
+    "commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "expected_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "files": {
+      "agent": {
+        "expected_sha256": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c",
+        "hash_matches": true,
+        "path": "third_party/src/minisweagent/agents/default.py",
+        "sha256": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c"
+      },
+      "induction": {
+        "expected_sha256": "7e72fd27cbe3878d743c8135ee809b81d084c0c71ab4ec5f258638876a9ce3c6",
+        "hash_matches": true,
+        "path": "third_party/src/minisweagent/memory/induce_memory.py",
+        "sha256": "7e72fd27cbe3878d743c8135ee809b81d084c0c71ab4ec5f258638876a9ce3c6"
+      },
+      "rollout": {
+        "expected_sha256": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951",
+        "hash_matches": true,
+        "path": "third_party/src/minisweagent/run/extra/swebench.py",
+        "sha256": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951"
+      },
+      "selection": {
+        "expected_sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955",
+        "hash_matches": true,
+        "path": "third_party/src/minisweagent/memory/memory_management.py",
+        "sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955"
+      }
+    },
+    "repository": "https://github.com/google-research/reasoning-bank",
+    "root": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026"
+  },
+  "static_checks": {
+    "agent_injects_memory_before_first_step": true,
+    "all_source_hashes_match": true,
+    "induction_persists_memory_items": true,
+    "induction_persists_task_id": true,
+    "induction_splits_on_blank_line": true,
+    "pinned_commit_matches": true,
+    "rollout_flattens_items_within_case": true,
+    "rollout_passes_memory_before_agent_run": true,
+    "selection_returns_whole_case": true
+  }
+}

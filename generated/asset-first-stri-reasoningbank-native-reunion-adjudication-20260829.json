@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-P0-20260829",
+  "adjudicated_at_utc": "2026-08-29T00:00:00Z",
+  "preregistration_commit": "b7be5b6a208189eddc1b7b92ff36e4112a2d5586",
+  "receipts": {
+    "qualification": {
+      "path": "generated/asset-first-stri-third-carrier-qualification-20260829.json",
+      "sha256": "6f812038fc289d6176ffdbef8ef37f90a2d20868ba0b195c3dd345fdc6359c82"
+    },
+    "contract": {
+      "path": "generated/asset-first-stri-reasoningbank-native-reunion-contract-20260829.json",
+      "sha256": "a1ce238690b8d654285dfb1952eb6e031f6619bbce703a5b79482562c916d754"
+    },
+    "harness": {
+      "path": "research_pipeline/asset_first_stri_reasoningbank_native_reunion_probe.py",
+      "sha256": "6188732b0e7fa6d9897bb51c36abcb15632fbf8742bcf00cdf33726b29df05b8"
+    },
+    "result": {
+      "path": "generated/asset-first-stri-reasoningbank-native-reunion-p0-result-20260829.json",
+      "sha256": "bca88f6c43b1c15a79e4fdb1363bc1d990631cf84ab60e7bd1b845fc4f843bb2"
+    }
+  },
+  "decision": "NATIVE_WITHIN_CASE_REUNION_PASS_CASE_BOUNDARY_LOCALIZED",
+  "preregistered_rule_satisfied": {
+    "pinned_source_checks_pass": true,
+    "A_equals_B_selected_memory": true,
+    "A_equals_B_first_system_message": true,
+    "C_localizes_order_boundary": true,
+    "D_localizes_case_top1_boundary": true,
+    "E_confirms_post_selection_case_id_placebo": true
+  },
+  "failure_differential": {
+    "implementation_failure": false,
+    "scientific_negative": false,
+    "localized_scientific_boundary": "The native reunion applies within one already-selected case. It does not protect fragments split across case identities from top-n selection and does not erase item order.",
+    "previous_carrier_contrast": {
+      "Skill-Pro": "Representation fragmentation changed real candidate-generation opportunity, but no accepted evolution produced a pool difference, so behavioral replay was blocked.",
+      "ACE": "An exact-clone repair primitive exists before the analyzer but after the current Curator decision, so it is not a clean native positive control.",
+      "ReasoningBank": "The native nested representation itself reunites within-case item partitions before the first decision; this is a conditional positive control at the operator level."
+    }
+  },
+  "belief_update": {
+    "before": "A third recent public carrier might expose either another identity-sensitive failure or a native repair boundary.",
+    "after": "ReasoningBank provides a source-grounded conditional positive control: item partition is neutralized inside a selected case, while case partition and order remain causally visible.",
+    "claim_expansion": false,
+    "behavioral_propagation_established": false,
+    "manuscript_main_claim_change_authorized": false
+  },
+  "source_release_audit": {
+    "repository_file_count_at_max_depth_4": 65,
+    "released_memory_jsonl_or_memory_result_files": 0,
+    "only_released_json_csv_parquet_observed": [
+      "third_party/webarena/test.raw.json"
+    ],
+    "readme_requirements": [
+      "OpenAI API key for GPT or Google Cloud/Vertex authentication for Gemini and Claude.",
+      "Configured WebArena Docker/browsergym stack for WebArena.",
+      "VertexAI configuration and mini-swe-agent/SWE-bench evaluation tooling for SWE-Bench."
+    ],
+    "status": "P1_BEHAVIOR_HOLD_MISSING_FIRST_PARTY_MEMORY_ARTIFACT_AND_ENVIRONMENT",
+    "attribution": "Infrastructure/evidence availability hold, not a scientific negative."
+  },
+  "resource_accounting": {
+    "provider_model_calls": 0,
+    "gpu_seconds": 0
+  },
+  "next_gate": {
+    "required_before_behavior_test": [
+      "A first-party per-case memory artifact or a separately registered procedure to induce a frozen memory bank.",
+      "A qualified WebArena or SWE-Bench environment with provider/backend and evaluator pinned.",
+      "A new outcome-blind contract fixing tasks, arms, seeds, endpoint, and failure attribution."
+    ],
+    "full_benchmark_authorized": false,
+    "gpu_run_authorized": false,
+    "provider_calls_authorized": false
+  },
+  "manuscript_action": "No main-text claim expansion. Preserve this as an experimental receipt for a future conditional positive-control appendix after behavioral propagation is tested."
+}
