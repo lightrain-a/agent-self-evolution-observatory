@@ -1,0 +1,67 @@
+{
+  "artifact_type": "e2-r17-experiment-plan-v1-independent-review-summary",
+  "authority": {
+    "e0_full_calls": false,
+    "e1_calls": false,
+    "paper_promotion": false,
+    "planning_revision": true,
+    "runtime_pilot": false,
+    "submission": false
+  },
+  "created_at_utc": "2026-08-28T07:33:14+00:00",
+  "identity_qualification_sha256": "f91d1c516dcdae64c17de92999c4ad1950e9631b2ed0033ae3e333af676019ec",
+  "plan_sha256": "928ae3e9eac9259dba47d08cca3d91309f2bedb4692d597b89806f0313625549",
+  "provider_retry_limit": 0,
+  "resolved_identity_independence": true,
+  "reviews": [
+    {
+      "artifact": "generated/e2-r17-experiment-plan-v1-review-20260828/deepseek-v4-pro.json",
+      "artifact_sha256": "2986dd5b1147de8d9dead614f6bbddec381b1fd30a970c063cbdc9005f322446",
+      "e0_full_extension_recommendation": "REVIEW_SEPARATE_CONTRACT",
+      "parse_valid": true,
+      "pilot_recommendation_after_v2": "ALLOW_OUTCOME_BLIND_RUNTIME_PILOTS",
+      "raw_text_sha256": "7de8bec6d2ed3ea6239ee7c48f88db09a646e42f6978799e4e0681f1615395b7",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "status": "COMPLETED",
+      "usage": {
+        "input_tokens": 34620,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 2307,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 36927
+      },
+      "verdict": "REVISE_BEFORE_ANY_PILOT"
+    },
+    {
+      "artifact": "generated/e2-r17-experiment-plan-v1-review-20260828/kimi-k3.json",
+      "artifact_sha256": "b416159e2067c3fd90020ffeb57c57bfa19ce555fd66d0ce70e37bfb1a06130c",
+      "e0_full_extension_recommendation": "REVIEW_SEPARATE_CONTRACT",
+      "parse_valid": true,
+      "pilot_recommendation_after_v2": "ALLOW_OUTCOME_BLIND_RUNTIME_PILOTS",
+      "raw_text_sha256": "b8ad2f059617a2dddf66b49f01ef99a44f3b57d1959d9b450488f6b6a71219e9",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "status": "COMPLETED",
+      "usage": {
+        "input_tokens": 33175,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 2282,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 35457
+      },
+      "verdict": "REVISE_BEFORE_ANY_PILOT"
+    }
+  ],
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "status": "COMPLETED"
+}

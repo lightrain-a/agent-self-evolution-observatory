@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-e1-b-transition-runtime-pilot-adjudication",
+  "date": "2026-08-29",
+  "status": "PASS_UPDATE_TO_NONINITIAL_SKILL_EVALUATION_HANDOFF_ONLY",
+  "contract": {
+    "path": "generated/e2-r17-e1-b-transition-runtime-pilot-contract-20260829.json",
+    "sha256": "f39d53fc9e83ad04e9cb2d73a01224ec8859bc8f3ce4d69ffc57050d8ece2ecd"
+  },
+  "authorization": {
+    "path": "generated/e2-r17-e1-b-transition-runtime-pilot-authorization-20260829.json",
+    "sha256": "f6d5cccdb2e8d3a03fe498acfbd3bef692af40cfb270661e0f348c753dffa376"
+  },
+  "run": {
+    "root": "/data/wyt/e2-r17-search-projection/runtime-pilots/e1-b-transition-v1-20260829",
+    "summary": "/data/wyt/e2-r17-search-projection/runtime-pilots/e1-b-transition-v1-20260829/summary/transition_runtime_pilot_summary.json",
+    "summary_sha256": "9f073da468c0cdfe036686ade09503197cba05b886d4c885acb5286ed375e961",
+    "evaluation_summary_sha256": "8e263a2573bd718e45c341c9cd6b11f30464dd4f1d1990e477735730962ba339"
+  },
+  "handoff_integrity": {
+    "updater_causal_purity_mode": "arm_blinded_selected_evidence",
+    "arm_metadata_visible_in_updater_transcript": false,
+    "updater_score_semantics": "selected_evidence_trajectory",
+    "updater_summaries": 8,
+    "updater_consumed_records": 8,
+    "actor_loaded_skill_sha_matches_update_receipt": true,
+    "actor_loaded_updater_receipt_sha_matches_transition_summary": true,
+    "actor_k": 1,
+    "actor_task_id": "r17-b0-agj-p4",
+    "actor_requested_model": "deepseek-v4-pro",
+    "actor_resolved_model": "deepseek-v4-pro-ga-260813",
+    "actor_provider_retry_limit": 0,
+    "actor_thinking": "disabled",
+    "verifier_pipeline_completed": true
+  },
+  "budget": {
+    "total_claimed": 16,
+    "total_limit": 20,
+    "updater_claimed": 10,
+    "actor_rollout_claimed": 6,
+    "per_unit_limit": 10,
+    "pre_io_claiming": true,
+    "claims_never_released": true
+  },
+  "scientific_boundary": {
+    "e1_common_heldout_accessed": false,
+    "heldout_evaluation_calls": 0,
+    "mrw_executed": false,
+    "negative_control_inference_performed": false,
+    "scientific_effectiveness_evaluated": false,
+    "development_task_outcome_used_for_promotion": false,
+    "paper_claim_authority": false
+  },
+  "interpretation": "The receipt/content-addressed handoff from the dedicated updater runtime to the independently frozen actor/evaluator runtime is operational. A learned noninitial SKILL.md can be loaded only with its matching updater receipt and then completed by the fixed K=1 SpreadsheetBench actor/verifier path. The development-task score is not interpreted. This PASS is runtime/provenance evidence only and provides no evidence that WIN-A/WIN-B are behaviorally equivalent or that MRW improves future skill.",
+  "next_gate": "FREEZE_AND_DUAL_REVIEW_E1_B_WIN_A_WIN_B_NEGATIVE_CONTROL_FULL_CONTRACT",
+  "authority": {
+    "prepare_e1_b_negative_control_full_contract": true,
+    "execute_e1_b_negative_control": false,
+    "mrw_causal_comparison": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

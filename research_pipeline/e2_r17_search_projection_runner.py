@@ -17,6 +17,7 @@ class ProjectionName(StrEnum):
     WINNER_ONLY = "winner_only"
     PRECOMMITTED_ALWAYS = "precommitted_always"
     REJECTED_WITNESS = "rejected_witness"
+    MIXED_REJECTED_WITNESS = "mixed_rejected_witness"
     DUPLICATED_WINNER = "duplicated_winner"
     WINNER_RANDOM_NONWINNER = "winner_random_nonwinner"
     SKILLCAT_STYLE_CONTRAST = "skillcat_style_contrast"
@@ -39,6 +40,11 @@ class TrajectoryRef:
     evidence_tokens: int
     technical_status: str = "COMPLETED"
     failure_code: str | None = None
+    provider_budget_unit_id: str | None = None
+    provider_budget_claim_count: int = 0
+    provider_budget_claim_bundle_sha256: str | None = None
+    provider_budget_unit_claimed_after: int | None = None
+    provider_budget_total_claimed_after: int | None = None
 
     def validate(self) -> None:
         if self.rollout_index < 0:
@@ -49,6 +55,18 @@ class TrajectoryRef:
             raise ValueError("evidence_tokens must be non-negative")
         if self.technical_status != "COMPLETED":
             raise ValueError("technical-incomplete trajectories cannot enter a frozen pool")
+        if self.provider_budget_claim_count < 0:
+            raise ValueError("provider_budget_claim_count must be non-negative")
+        if self.provider_budget_claim_count:
+            if not self.provider_budget_unit_id:
+                raise ValueError("provider_budget_unit_id is required when budget claims are present")
+            if self.provider_budget_unit_claimed_after is None or self.provider_budget_unit_claimed_after < self.provider_budget_claim_count:
+                raise ValueError("provider_budget_unit_claimed_after must cover this rollout's claims")
+            if self.provider_budget_total_claimed_after is None or self.provider_budget_total_claimed_after < self.provider_budget_unit_claimed_after:
+                raise ValueError("provider_budget_total_claimed_after must cover the unit claim count")
+            digest = self.provider_budget_claim_bundle_sha256 or ""
+            if len(digest) != 64 or any(char not in "0123456789abcdef" for char in digest):
+                raise ValueError("provider_budget_claim_bundle_sha256 must be a lowercase SHA-256 hex digest")
         for name in (
             "trajectory_sha256",
             "input_sha256",
@@ -152,6 +170,24 @@ class SearchPool:
     def rescue_censoring_mass(self) -> float:
         return float(self.rescue_event)
 
+    @property
+    def mixed_pool(self) -> bool:
+        scores = {trajectory.score for trajectory in self.trajectories}
+        return scores == {0.0, 1.0}
+
+    @property
+    def first_failed_nonwinner(self) -> TrajectoryRef:
+        if not self.mixed_pool:
+            raise ValueError("a failed non-winner exists only on mixed pools")
+        failures = [
+            trajectory
+            for trajectory in self.trajectories
+            if trajectory.score == 0.0 and trajectory.rollout_index != self.winner.rollout_index
+        ]
+        if not failures:
+            raise ValueError("mixed pool does not contain a failed non-winner")
+        return min(failures, key=lambda row: row.rollout_index)
+
 
 @dataclass(frozen=True)
 class EvidenceSlot:
@@ -227,6 +263,11 @@ def project(
         role = "precommitted_rejected_failure" if pool.rescue_event else "served_winner_outside_rescue"
         slots = (_slot(role, selected),)
         salt = None
+    elif projection is ProjectionName.MIXED_REJECTED_WITNESS:
+        selected = pool.first_failed_nonwinner if pool.mixed_pool else winner
+        role = "first_failed_nonwinner" if pool.mixed_pool else "served_winner_outside_mixed_pool"
+        slots = (_slot(role, selected),)
+        salt = None
     elif projection is ProjectionName.DUPLICATED_WINNER:
         slots = (_slot("served_winner_slot_1", winner), _slot("served_winner_slot_2", winner))
         salt = None
@@ -281,6 +322,12 @@ def validate_packet(pool: SearchPool, packet: ProjectionPacket) -> None:
             raise ValueError("Rejected-Witness violates its event-gated precommitment")
         if pool.rescue_event and not (packet.slots[0].score == 0.0 and pool.winner.score == 1.0):
             raise ValueError("Rejected-Witness must expose a rejected failure only on rescue events")
+    if packet.projection is ProjectionName.MIXED_REJECTED_WITNESS:
+        expected = pool.first_failed_nonwinner if pool.mixed_pool else pool.winner
+        if packet.selected_indices != (expected.rollout_index,):
+            raise ValueError("Mixed-Rejected-Witness violates its deterministic mixed-pool rule")
+        if pool.mixed_pool and packet.slots[0].score != 0.0:
+            raise ValueError("Mixed-Rejected-Witness must expose a failed non-winner on mixed pools")
     if packet.projection is ProjectionName.DUPLICATED_WINNER:
         expected = (pool.winner.rollout_index, pool.winner.rollout_index)
         if packet.selected_indices != expected:
@@ -350,6 +397,23 @@ def project_stream(
     )
 
 
+def validate_mixed_cloned_pair(pool: SearchPool, winner_packet: ProjectionPacket, witness_packet: ProjectionPacket) -> None:
+    validate_packet(pool, winner_packet)
+    validate_packet(pool, witness_packet)
+    if winner_packet.projection is not ProjectionName.WINNER_ONLY:
+        raise ValueError("first packet must be winner-only")
+    if witness_packet.projection is not ProjectionName.MIXED_REJECTED_WITNESS:
+        raise ValueError("second packet must be Mixed-Rejected-Witness")
+    if winner_packet.pool_id != witness_packet.pool_id:
+        raise ValueError("cloned pair does not use the exact same pool")
+    if winner_packet.acting_winner_sha256 != witness_packet.acting_winner_sha256:
+        raise ValueError("acting winner differs between cloned arms")
+    if not pool.mixed_pool and winner_packet.selected_indices != witness_packet.selected_indices:
+        raise ValueError("g_MRW must equal g_WIN outside the mixed-pool event")
+    if pool.mixed_pool and winner_packet.selected_indices == witness_packet.selected_indices:
+        raise ValueError("g_MRW must differ from g_WIN on the mixed-pool event")
+
+
 def validate_cloned_streams(winner: StreamProjection, witness: StreamProjection) -> None:
     if winner.stream_id != witness.stream_id or winner.initial_skill_sha256 != witness.initial_skill_sha256:
         raise ValueError("cloned streams are not cloned from the same unit")
@@ -361,6 +425,19 @@ def validate_cloned_streams(winner: StreamProjection, witness: StreamProjection)
         raise ValueError("cloned streams do not share exact pool IDs")
     for pool, win_packet, rw_packet in zip(winner.pools, winner.packets, witness.packets):
         validate_primary_cloned_pair(pool, win_packet, rw_packet)
+
+
+def validate_mixed_cloned_streams(winner: StreamProjection, witness: StreamProjection) -> None:
+    if winner.stream_id != witness.stream_id or winner.initial_skill_sha256 != witness.initial_skill_sha256:
+        raise ValueError("cloned streams are not cloned from the same unit")
+    if winner.projection is not ProjectionName.WINNER_ONLY:
+        raise ValueError("winner stream projection mismatch")
+    if witness.projection is not ProjectionName.MIXED_REJECTED_WITNESS:
+        raise ValueError("mixed-witness stream projection mismatch")
+    if [pool.pool_id for pool in winner.pools] != [pool.pool_id for pool in witness.pools]:
+        raise ValueError("cloned streams do not share exact pool IDs")
+    for pool, win_packet, rw_packet in zip(winner.pools, winner.packets, witness.packets):
+        validate_mixed_cloned_pair(pool, win_packet, rw_packet)
 
 
 def write_stream_receipt(path: Path, stream: StreamProjection) -> None:

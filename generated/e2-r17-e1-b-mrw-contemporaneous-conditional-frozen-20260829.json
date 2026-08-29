@@ -1,0 +1,350 @@
+{
+  "actor": {
+    "concurrency_per_probe": 1,
+    "k": 1,
+    "max_output_tokens": 4096,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "actor_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
+    "role": "actor_evaluator",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "arm_order": {
+    "evaluation_pair_order": "SHA256(E2-R17-E1B-MRW-EVAL-PAIR-ORDER-v1|stream_id|task_id|arm)",
+    "purpose": "make time/order nuisance shared across contemporaneous WIN-C and MRW without outcome-dependent randomization",
+    "update_order": "SHA256(E2-R17-E1B-MRW-UPDATE-ORDER-v1|stream_id|arm)"
+  },
+  "arms": [
+    "win_c",
+    "mrw"
+  ],
+  "artifact_type": "e2-r17-e1-b-mrw-contemporaneous-full-contract",
+  "authority": {
+    "dual_preexecution_review": true,
+    "execute_mrw": false,
+    "execute_win_c": false,
+    "paper_promotion": false,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "bound_code": {
+    "actor_runner": {
+      "path": "scripts/run_e2_r17_actor_pool.py",
+      "sha256": "20a81fbe06f3839cd17babfdb021407368493da61610bca33aae33df8d31ec14"
+    },
+    "actor_runtime_validator": {
+      "path": "scripts/run_e2_r17_e1_a_pool_support.py",
+      "sha256": "24ea070b08399d48af99294615a508874f851af941f5bb0efabe341b0854617d"
+    },
+    "analysis": {
+      "path": "scripts/analyze_e2_r17_e1_b_mrw_contemporaneous.py",
+      "sha256": "6b1407a21aa95cc9f83a23e0deb7cb2a925a1d4b872b9f93c23188a4e9642ee3"
+    },
+    "provider_budget": {
+      "path": "research_pipeline/e2_r17_provider_budget.py",
+      "sha256": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444"
+    },
+    "provider_runtime_helpers": {
+      "path": "scripts/run_e2_r17_v31_provider_runtime_pilot.py",
+      "sha256": "533f11ba2bfc85aa6fcea8bc1b9502a039cd7770055010a8838b78bb8b6041d5"
+    },
+    "renderer": {
+      "path": "research_pipeline/e2_r17_evidence_window_v2.py",
+      "sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7"
+    },
+    "runner": {
+      "path": "scripts/run_e2_r17_e1_b_mrw_contemporaneous_full.py",
+      "sha256": "27b5a54cb3d5c562fed69c4d6c67ad3bc6923cef0c51d5baa30defc925637af0"
+    },
+    "updater_adapter": {
+      "path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+      "sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8"
+    },
+    "updater_wrapper": {
+      "path": "research_pipeline/e2_r17_mindmemos_updater.py",
+      "sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d"
+    }
+  },
+  "budget": {
+    "claim_before_provider_io": true,
+    "claims_never_released": true,
+    "hard_max_provider_calls_structural": 4560,
+    "max_provider_calls_per_state": 190,
+    "max_provider_calls_per_unit": 10,
+    "planning_basis": "E1-A observed mean 5.5104 actor calls/rollout plus exact 10 updater calls/state; planning only, never a ceiling relaxation",
+    "planning_expected_actor_tokens": 7155016,
+    "planning_expected_provider_calls": 2621,
+    "planning_expected_updater_tokens": 724864,
+    "state_structure": "10 updater + 18 heldout rollouts x <=10 actor calls; 24 states total",
+    "states": 24
+  },
+  "checkpoint": {
+    "exclusive_lock": ".exclusive.lock",
+    "partial_ambiguous_unit_auto_rerun": false,
+    "persist_each_heldout_probe_immediately": true,
+    "preserve_lock_on_failure": true,
+    "resume_completed_units_only_after_sha_revalidation": true,
+    "state_eval_manifest": "states/<stream>/<arm>/checkpoints/completed_eval_tasks.jsonl",
+    "state_update_checkpoint": "states/<stream>/<arm>/checkpoints/update_completed.json",
+    "stream_manifest": "checkpoints/completed_streams.jsonl"
+  },
+  "conditional_freeze_note": "Scientific/runtime/statistical semantics are frozen before negative-control outcome adjudication. Final executable freeze may only fill the fields explicitly allowed by conditional_freeze_policy.",
+  "conditional_freeze_policy": {
+    "allowed_after_negative_control_pass": [
+      "fill negative_control_gate.sha256 with exact PASS adjudication SHA",
+      "fresh model-identity qualification/adjudication and fill model_identity paths/SHAs",
+      "add dual preexecution review metadata",
+      "change status from conditional draft to frozen"
+    ],
+    "forbidden_after_negative_control_result": [
+      "change streams/tasks/K/heldout probes",
+      "change WIN-C/MRW treatment semantics",
+      "change renderer/updater/actor runtimes or budgets absent a separately adjudicated technical invalidity",
+      "change statistical estimand/test/margins/seeds/decision order",
+      "reuse historical WIN-A/WIN-B as primary control"
+    ]
+  },
+  "date": "2026-08-29",
+  "e1_a_pool_root": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828",
+  "e1_a_support": {
+    "path": "generated/e2-r17-e1-a-pool-support-v2-1-adjudication-20260828.json",
+    "required_status": "PASS_E1_A_SUPPORT_READY_FOR_SEPARATE_E1_B_CONTRACT",
+    "sha256": "b2c611285c20377d77af7ea62448c6fee0d5973cd657687f6dde7f7fce6be6d7"
+  },
+  "env_file": ".env",
+  "forbidden": [
+    "execution unless the preregistered WIN-A/WIN-B equivalence gate is formally PASS",
+    "using WIN-A/WIN-B in the primary MRW estimand or primary decision rule",
+    "task/model/K/renderer/failure-taxonomy/heldout-probe replacement based on any observed outcome",
+    "changing alpha/equivalence margin/sign-flip/bootstrap/decision order after any WIN-C or MRW score exists",
+    "automatic rerun after ambiguous provider calls",
+    "paper/frontend/submission promotion from runner output alone"
+  ],
+  "freeze_note": "All execution/scientific/statistical fields are unchanged from the dual-reviewed draft; only status and review-binding metadata are added.",
+  "heldout": {
+    "evaluation_k": 1,
+    "never_fed_to_updater": true,
+    "source_split": "e1_common_heldout_probe",
+    "task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ]
+  },
+  "initial_skill": {
+    "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+    "sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+  },
+  "mindmemos": {
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e"
+    },
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817"
+  },
+  "model_identity": {
+    "freeze_policy": "Only these four identity-binding fields plus the negative-control gate SHA may be filled after the gate passes; no scientific/runtime/statistical field may change.",
+    "path": "PENDING_FRESH_AFTER_NEGATIVE_CONTROL_PASS",
+    "qualification_path": "PENDING_FRESH_AFTER_NEGATIVE_CONTROL_PASS",
+    "qualification_sha256": "PENDING_FRESH_AFTER_NEGATIVE_CONTROL_PASS",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "sha256": "PENDING_FRESH_AFTER_NEGATIVE_CONTROL_PASS"
+  },
+  "negative_control_gate": {
+    "if_not_pass": "MRW_REMAINS_UNAUTHORIZED_AND_THIS_DRAFT_IS_NEVER_EXECUTABLE",
+    "path": "generated/e2-r17-e1-b-negative-control-adjudication-20260829.json",
+    "required_status": "PASS_NEGATIVE_CONTROL_EQUIVALENCE_READY_FOR_MRW_CONTRACT",
+    "sha256": "PENDING_ONLY_IF_PREREGISTERED_EQUIVALENCE_PASSES"
+  },
+  "parents": {
+    "e1_a_support": {
+      "path": "generated/e2-r17-e1-a-pool-support-v2-1-adjudication-20260828.json",
+      "sha256": "b2c611285c20377d77af7ea62448c6fee0d5973cd657687f6dde7f7fce6be6d7"
+    },
+    "failure_registry": {
+      "path": "generated/e2-r17-failure-differential-registry-v3-20260829.json",
+      "sha256": "5f44cc4a43e0aa94a84f42b1fc8c752b2a9d396dfde54144afff2e1aacfd59a6"
+    },
+    "failure_registry_preoutcome": {
+      "path": "generated/e2-r17-failure-differential-registry-v5-20260829.json",
+      "sha256": "d76cac19385853e6373ee72c73baec44f96167ed59ad7b859d1d10e443f15e4e"
+    },
+    "preoutcome_control_design_review": {
+      "path": "generated/e2-r17-mrw-control-design-review-20260829/summary.json",
+      "sha256": "d46e2911e04bf3d5feb25273a439c62eacc340b2a90c992fc87e37dc1b5c1655"
+    },
+    "provider_runtime": {
+      "path": "generated/e2-r17-v31-provider-runtime-pilot-v2-adjudication-20260829.json",
+      "sha256": "8be8a4596ffef8e3702f8e422ed4dd2c55b7fc1f97573b125f30096d64f60424"
+    },
+    "transition_runtime": {
+      "path": "generated/e2-r17-e1-b-transition-runtime-pilot-adjudication-20260829.json",
+      "sha256": "75e19d67b1cdb0e65a28a1f2943e223629c27cfcb2b0b562bbca8d32ee988185"
+    }
+  },
+  "purpose": "Conditional exact-same-pool causal test of mixed-rejected-witness learning projection versus a fresh contemporaneous WIN-C control. This draft was frozen before the WIN-A/WIN-B negative-control outcome was adjudicated.",
+  "renderer": {
+    "arm_metadata_visible": false,
+    "exact_final_retokenized_parity_required": true,
+    "final_block_cap_tokens": 3072,
+    "padding": false,
+    "path": "research_pipeline/e2_r17_evidence_window_v2.py",
+    "sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7",
+    "tokenizer_encoding": "cl100k_base",
+    "tokenizer_package": "tiktoken",
+    "tokenizer_version": "0.11.0"
+  },
+  "review_binding": {
+    "conditional_contract_review_path": "generated/e2-r17-mrw-conditional-contract-review-20260829/summary.json",
+    "conditional_contract_review_sha256": "761ba4133a493c2a4e8d963d7c9a27726c43d10f0aad6d6fc2a6d5939ff39607",
+    "conditional_freeze_recommendations": {
+      "deepseek-v4-pro": "ALLOW_CONDITIONAL_DRAFT_FREEZE_ONLY",
+      "kimi-k3": "ALLOW_CONDITIONAL_DRAFT_FREEZE_ONLY"
+    },
+    "mrw_authority": false,
+    "negative_control_outcome_used": false,
+    "paper_claim_authority": false,
+    "preferred_options": {
+      "deepseek-v4-pro": "B_FRESH_CONTEMPORANEOUS_WIN_C",
+      "kimi-k3": "B_FRESH_CONTEMPORANEOUS_WIN_C"
+    },
+    "preoutcome_design_review_path": "generated/e2-r17-mrw-control-design-review-20260829/summary.json",
+    "preoutcome_design_review_sha256": "d46e2911e04bf3d5feb25273a439c62eacc340b2a90c992fc87e37dc1b5c1655"
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/e1-b-mrw-contemporaneous-v1-20260829",
+  "schema_version": "1.0",
+  "scientific_units": {
+    "arms": [
+      "win_c",
+      "mrw"
+    ],
+    "heldout_probes_are_repeated_measurements": true,
+    "heldout_probes_per_state": 18,
+    "heldout_rollout_units": 432,
+    "independent_unit": "stream-level contemporaneous learned-state pair",
+    "learned_states": 24,
+    "paired_streams": 12,
+    "update_tasks_per_stream": 8
+  },
+  "statistics": {
+    "alpha": 0.05,
+    "bootstrap": {
+      "interval": "95%",
+      "paired_stream_resampling": true,
+      "reps": 100000,
+      "seed": 1718
+    },
+    "decision_order": [
+      "GO only if superiority passes and practical-equivalence fails",
+      "STOP_MRW_PRACTICALLY_NULL if TOST equivalence passes",
+      "STOP_MRW_HARMFUL if negative-direction exact test passes",
+      "otherwise HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS"
+    ],
+    "difference": "D_s=J_s(MRW)-J_s(WIN-C)",
+    "endpoint": "J_s(arm)=mean binary success over the same 18 heldout K=1 probes",
+    "harm": "mean D_s<0 and exact one-sided negative sign-flip p<=.05, provided practical-equivalence does not pass",
+    "historical_win_a_win_b_in_primary": false,
+    "missing_invalid_rule": "No stream/task exclusion, substitution, imputation, or favorable-subset analysis. Any incomplete/invalid stream blocks confirmatory inference until the technical state is separately adjudicated; ambiguous provider work is never auto-rerun.",
+    "n_pairs": 12,
+    "practical_null": {
+      "equivalence_margin": 0.05555555555555555,
+      "paired_tost": "90% paired-mean t interval strictly within [-1/18,+1/18]",
+      "priority_over_statistical_superiority": true
+    },
+    "primary_estimand": "mean_s D_s over 12 stream-level pairs",
+    "primary_superiority": "exact one-sided sign-flip test over all 2^12 sign assignments; mean D_s > 0; p<=.05; 95% paired-bootstrap lower bound >0; and practical-equivalence must NOT pass"
+  },
+  "status": "CONDITIONALLY_FROZEN_AWAIT_NEGATIVE_CONTROL",
+  "streams": [
+    "e1-agj-00",
+    "e1-agj-01",
+    "e1-fmv-00",
+    "e1-fmv-01",
+    "e1-ioc-00",
+    "e1-ioc-01",
+    "e1-msp-00",
+    "e1-msp-01",
+    "e1-ska-00",
+    "e1-ska-01",
+    "e1-tsr-00",
+    "e1-tsr-01"
+  ],
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "treatment": {
+    "historical_win_a_win_b_role": "secondary bridge/stability evidence only; excluded from primary estimand and decision rule",
+    "mrw": "fresh contemporaneous V3.1 arm-blinded mixed-rejected-witness evidence; on nonmixed pools identical to winner evidence; on mixed pools deterministic first failed nonwinner",
+    "primary_control": "win_c",
+    "same_exact_search_pools": true,
+    "same_heldout_probes": true,
+    "same_initial_skill": true,
+    "same_served_winner": true,
+    "same_updater_config": true,
+    "win_c": "fresh contemporaneous V3.1 arm-blinded matched-window winner evidence for all eight exact pools"
+  },
+  "updater": {
+    "adapter_path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+    "adapter_sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8",
+    "batch_size": 8,
+    "first_party": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "max_parse_attempts": 1,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "score_semantics": "selected_evidence_trajectory",
+    "temperature": 0.0,
+    "thinking": "disabled",
+    "transcript_max_chars": 100000,
+    "wrapper_path": "research_pipeline/e2_r17_mindmemos_updater.py",
+    "wrapper_sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d"
+  },
+  "updater_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv.freeze.txt",
+    "freeze_sha256": "80cd6fdd8eb672e41252c099766fd171a5a7a4b90c284d87da87d09f0d559731",
+    "litellm_local_model_cost_map": true,
+    "post_lock_compatibility_override": {
+      "disclosed": true,
+      "package": "tiktoken",
+      "reason": "pre-frozen V3.1 ExactMatchedEvidenceBlockRenderer compatibility",
+      "version": "0.11.0"
+    },
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+    "qualification_path": "generated/e2-r17-updater-runtime-qualification-20260829.json",
+    "qualification_sha256": "f2319815cdcd7caf248c498c470720d4e3f6c9b5e579fad59914df687cdf5b6d",
+    "required_entrypoint": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_UPDATER_RUNTIME",
+    "role": "persistent_skill_updater",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv"
+  }
+}

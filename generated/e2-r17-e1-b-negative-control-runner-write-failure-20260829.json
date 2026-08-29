@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-failure-receipt",
+  "failure_id": "R17-F011-RUNNER-WRITE-TRANSPORT-LIMIT",
+  "date": "2026-08-29",
+  "stage": "E1-B negative-control runner implementation",
+  "terminal_status": "ARTIFACT_WRITE_NOT_CREATED",
+  "classification": ["IMPLEMENTATION"],
+  "symptom": "The first MCP-Yu atomic write of the full negative-control runner failed with spawn ENAMETOOLONG before the remote file was created.",
+  "root_cause": "Tool/transport command-size limit for one very large file-write payload, not a defect in the scientific experiment or remote runtime.",
+  "provider_calls": 0,
+  "scientific_endpoint_reached": false,
+  "scientific_data_observed_for_effectiveness": false,
+  "contamination": "NONE",
+  "repair": "Write the exact runner implementation in bounded atomic chunks using a continuation sentinel; do not relax scientific checks to reduce payload size.",
+  "scientific_belief_update": "NONE",
+  "reusable_rule": "Artifact-generation transport limits are implementation failures. Split large source writes while preserving the designed protocol; never simplify scientific invariants merely to satisfy a tool payload limit."
+}

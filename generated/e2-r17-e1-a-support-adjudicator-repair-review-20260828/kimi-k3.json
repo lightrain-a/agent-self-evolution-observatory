@@ -1,0 +1,76 @@
+{
+  "artifact_type": "e2-r17-v3-1-independent-review",
+  "created_at_utc": "2026-08-28T15:27:32+00:00",
+  "dossier_file_sha256": {
+    "frozen_authorization": "743836932a1aa08391ec7699f925097a17c01e94a0ad7d0470f25a367247d8dd",
+    "frozen_contract": "f2919d201f03a0166d6255240378efd14d45bc7f8a3269bff5b78fcccb6d1d21",
+    "original_adjudicator": "9972296dfc140a3cbd29bc6f475dddb46822353a1f9ae56b5f5b243c13b722ea",
+    "prior_runtime_repair_review": "00b4f63ad34c729be2b60ca216d59cbe57b0ec98b2a0117dc59151bfa40f1ddc",
+    "repair_artifact": "e632988b3ebf39588caaaa7b9b425b869e6d06656353506ef0c8782b5ca33d50",
+    "repaired_adjudicator": "cc5d43828179bbdcc932a3194140cb798ccfb9b6d60bda6a44090ae4983601a6",
+    "review_identity": "08982d439f46bea48b73d1dc09d7af1504eda5ba725738bcf4d785a2fa32fa54"
+  },
+  "expected_resolved_model": "kimi-k3",
+  "experiment_authority": false,
+  "exposed_to_other_review": false,
+  "get_poll_recovery": false,
+  "hidden_provider_retry_used": false,
+  "independent": true,
+  "max_output_tokens": 4000,
+  "missing_required_fields": [],
+  "paper_promotion_authority": false,
+  "parse_valid": true,
+  "poll_count": 0,
+  "prompt_path": "generated/e2-r17-e1-a-support-adjudicator-repair-review-20260828/kimi-k3-prompt.md",
+  "prompt_sha256": "007d0c7c11832783ae935202f270ce81bca841737ae8f5222f60c2144fc20743",
+  "provider_generation_attempts": 1,
+  "provider_retry_limit": 0,
+  "provider_status": "completed",
+  "raw_text": "{\n  \"repair_sha256_acknowledged\": \"e632988b3ebf39588caaaa7b9b425b869e6d06656353506ef0c8782b5ca33d50\",\n  \"verdict\": \"PASS_TO_REPAIRED_SUPPORT_ADJUDICATION\",\n  \"zero_parse_bug_assessment\": \"The bug is real and sufficient. In Python, `0 or -1` evaluates to `-1` because integer 0 is falsy. The original expression `int(summary.get('updater_calls') or -1) == 0` therefore maps a legitimate `updater_calls: 0` to -1, causing the precondition to fail with 'E1-A must contain zero updater calls' before any support computation. This fully explains the failure without consulting any support outcome.\",\n  \"delta_scope_assessment\": \"The only difference between original and repaired file is the single precondition line: `int(summary.get(\\\"updater_calls\\\") or -1) == 0` replaced by `summary.get(\\\"updater_calls\\\") is not None and int(summary[\\\"updater_calls\\\"]) == 0`. All other code is byte-identical: mixed-pool recomputation loop, per-stream exposure logic, family support counting, threshold comparisons, trajectory SHA validation, PASS/STOP status determination, payload construction, and authority logic are unchanged.\",\n  \"post_outcome_selection_risk_assessment\": \"The repair is acceptably outcome-independent. The repair artifact explicitly records that no support statistics were exposed to the operator before the repair decision, no mixed/exposed/family counts were read, and no thresholds, task sets, or pool sets were changed. The repair cannot alter any support statistic because the change is confined to the updater_calls precondition parse, which is upstream of and disjoint from all support computation. The only plausible p-hacking path would be if the operator had inspected support values before deciding to repair; the dossier explicitly attests this did not happen, and the repair's mechanical nature (a pure Python falsy-zero parse fix) provides no degree of freedom to tune toward a desired support outcome.\",\n  \"support_logic_unchanged_assessment\": \"Confirmed unchanged. The mixed-pool recomputation from exact frozen pools, per-stream mixed counting, per-family mixed counting, exposed-stream derivation, threshold comparisons (mixed>=24, exposed>=8, per-stream>=2, families>=4), hard-gate and family-gate flag consistency checks, trajectory SHA revalidation, and PASS/STOP status logic are all byte-identical between original and repaired files.\",\n  \"authority_boundary_assessment\": \"The repair artifact correctly sets all authority flags to false: no authority to run the repaired adjudicator, execute E1-B, promote to paper, or submit. The repaired adjudicator itself retains the original authority logic: prepare_e1_b_contract is gated on hard_pass, execute_e1_b is always False, provider_runtime_pilot is False, paper_promotion is False, submission is False. E1-B remains HOLD regardless of adjudication outcome.\",\n  \"remaining_blockers\": [],\n  \"nonblocking_notes\": [\n    \"The repaired file uses `summary.get(\\\"updater_calls\\\") is not None` which correctly distinguishes missing key (None) from legitimate zero. A missing key is rejected, zero is accepted, and nonzero values are rejected, preserving the E1-A no-updater invariant.\",\n    \"The zero_outcome_tests in the repair artifact confirm: zero accepted, one rejected, missing rejected, module import passes.\",\n    \"The original adjudicator file remains untouched at its original SHA, preserving the audit trail.\",\n    \"The repair artifact's SHA-256 (e632988b...) is acknowledged as the exact bound artifact under review.\"\n  ],\n  \"mechanical_pilot_recommendation\": \"HOLD\",\n  \"provider_runtime_pilot_recommendation\": \"HOLD\",\n  \"e1_a_recommendation\": \"ALLOW_REPAIRED_SUPPORT_ADJUDICATION_ONLY\",\n  \"e1_b_recommendation\": \"HOLD\",\n  \"paper_claim_authority\": false,\n  \"single_sentence_verdict\": \"The one-line falsy-zero parse fix is mechanically correct, outcome-independent, and preserves all support computation and authority boundaries; the repaired adjudicator may run once on the frozen E1-A summary to produce the predeclared support PASS/STOP decision, with E1-B remaining HOLD regardless.\"\n}",
+  "raw_text_sha256": "a9c0097c9a1c76970ee2bff062e778e33a1b7d974e87179756e324931daac2ee",
+  "repair_sha256": "e632988b3ebf39588caaaa7b9b425b869e6d06656353506ef0c8782b5ca33d50",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "d4fc470d401c9ea10fc4d1dea476273c31c57457db9a50132b30fc1c2ed43ce9",
+  "review": {
+    "authority_boundary_assessment": "The repair artifact correctly sets all authority flags to false: no authority to run the repaired adjudicator, execute E1-B, promote to paper, or submit. The repaired adjudicator itself retains the original authority logic: prepare_e1_b_contract is gated on hard_pass, execute_e1_b is always False, provider_runtime_pilot is False, paper_promotion is False, submission is False. E1-B remains HOLD regardless of adjudication outcome.",
+    "delta_scope_assessment": "The only difference between original and repaired file is the single precondition line: `int(summary.get(\"updater_calls\") or -1) == 0` replaced by `summary.get(\"updater_calls\") is not None and int(summary[\"updater_calls\"]) == 0`. All other code is byte-identical: mixed-pool recomputation loop, per-stream exposure logic, family support counting, threshold comparisons, trajectory SHA validation, PASS/STOP status determination, payload construction, and authority logic are unchanged.",
+    "e1_a_recommendation": "ALLOW_REPAIRED_SUPPORT_ADJUDICATION_ONLY",
+    "e1_b_recommendation": "HOLD",
+    "mechanical_pilot_recommendation": "HOLD",
+    "nonblocking_notes": [
+      "The repaired file uses `summary.get(\"updater_calls\") is not None` which correctly distinguishes missing key (None) from legitimate zero. A missing key is rejected, zero is accepted, and nonzero values are rejected, preserving the E1-A no-updater invariant.",
+      "The zero_outcome_tests in the repair artifact confirm: zero accepted, one rejected, missing rejected, module import passes.",
+      "The original adjudicator file remains untouched at its original SHA, preserving the audit trail.",
+      "The repair artifact's SHA-256 (e632988b...) is acknowledged as the exact bound artifact under review."
+    ],
+    "paper_claim_authority": false,
+    "post_outcome_selection_risk_assessment": "The repair is acceptably outcome-independent. The repair artifact explicitly records that no support statistics were exposed to the operator before the repair decision, no mixed/exposed/family counts were read, and no thresholds, task sets, or pool sets were changed. The repair cannot alter any support statistic because the change is confined to the updater_calls precondition parse, which is upstream of and disjoint from all support computation. The only plausible p-hacking path would be if the operator had inspected support values before deciding to repair; the dossier explicitly attests this did not happen, and the repair's mechanical nature (a pure Python falsy-zero parse fix) provides no degree of freedom to tune toward a desired support outcome.",
+    "provider_runtime_pilot_recommendation": "HOLD",
+    "remaining_blockers": [],
+    "repair_sha256_acknowledged": "e632988b3ebf39588caaaa7b9b425b869e6d06656353506ef0c8782b5ca33d50",
+    "single_sentence_verdict": "The one-line falsy-zero parse fix is mechanically correct, outcome-independent, and preserves all support computation and authority boundaries; the repaired adjudicator may run once on the frozen E1-A summary to produce the predeclared support PASS/STOP decision, with E1-B remaining HOLD regardless.",
+    "support_logic_unchanged_assessment": "Confirmed unchanged. The mixed-pool recomputation from exact frozen pools, per-stream mixed counting, per-family mixed counting, exposed-stream derivation, threshold comparisons (mixed>=24, exposed>=8, per-stream>=2, families>=4), hard-gate and family-gate flag consistency checks, trajectory SHA revalidation, and PASS/STOP status logic are all byte-identical between original and repaired files.",
+    "verdict": "PASS_TO_REPAIRED_SUPPORT_ADJUDICATION",
+    "zero_parse_bug_assessment": "The bug is real and sufficient. In Python, `0 or -1` evaluates to `-1` because integer 0 is falsy. The original expression `int(summary.get('updater_calls') or -1) == 0` therefore maps a legitimate `updater_calls: 0` to -1, causing the precondition to fail with 'E1-A must contain zero updater calls' before any support computation. This fully explains the failure without consulting any support outcome."
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "submission_authority": false,
+  "temperature": 0,
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 14146,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 912,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 15058
+  }
+}

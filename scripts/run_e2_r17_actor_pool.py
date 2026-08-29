@@ -26,6 +26,7 @@ from research_pipeline.e2_r17_actor_pool import (
     run_actor_rollout,
 )
 from research_pipeline.e2_r17_ark_plan_react import ArkPlanReactLLM, PLAN_BASE_URL
+from research_pipeline.e2_r17_provider_budget import ProviderBudgetLedger
 
 
 def load_mindmemos(root: Path) -> tuple[Any, Any]:
@@ -66,6 +67,7 @@ def validate_authority(
     authorization: Path | None,
     task_ids: list[str],
     split: dict[str, Any],
+    k: int,
 ) -> tuple[dict[str, Any] | None, str | None]:
     development = {str(item) for item in split.get("development") or []}
     if mode == "protocol_smoke":
@@ -81,6 +83,23 @@ def validate_authority(
         raise RuntimeError("authorization artifact does not authorize actor execution")
     if not payload.get("authority", {}).get("scientific_experiment"):
         raise RuntimeError("authorization has zero scientific authority")
+
+    # New scoped authorizations fail closed. Historical artifacts without an
+    # execution_scope remain readable/replayable, but any E1-A/E1-B tranche
+    # minted after this guard must bind the exact mode, task IDs and K it grants.
+    scope = payload.get("execution_scope")
+    if scope is not None:
+        allowed_modes = {str(value) for value in scope.get("allowed_modes") or []}
+        if not allowed_modes or mode not in allowed_modes:
+            raise RuntimeError(f"authorization does not allow mode={mode}")
+        allowed_tasks = {str(value) for value in scope.get("allowed_task_ids") or []}
+        if not allowed_tasks or not set(task_ids).issubset(allowed_tasks):
+            raise RuntimeError("authorization does not allow one or more requested task IDs")
+        exact_k = scope.get("exact_k")
+        if exact_k is not None and int(exact_k) != int(k):
+            raise RuntimeError(f"authorization requires exact K={exact_k}, requested K={k}")
+        if scope.get("allow_noninitial_skill") is False and payload.get("authority", {}).get("e1_b"):
+            raise RuntimeError("authorization scope is internally inconsistent about non-initial skills")
     return payload, sha256(authorization)
 
 
@@ -112,12 +131,51 @@ async def main_async(args: argparse.Namespace) -> dict[str, Any]:
         authorization=args.authorization,
         task_ids=task_ids,
         split=split,
+        k=args.k,
     )
     contract_sha = (
         str(authorization_payload.get("contract_sha256") or "")
         if authorization_payload is not None
         else None
     )
+    provider_budget_ledger: ProviderBudgetLedger | None = None
+    budget_args_present = any(
+        value is not None
+        for value in (args.provider_budget_ledger, args.provider_total_call_limit, args.provider_per_unit_call_limit)
+    )
+    if budget_args_present:
+        if authorization_payload is None or not authorization_sha or not contract_sha:
+            raise RuntimeError("provider budget ledger is allowed only for a bound scientific authorization")
+        if args.provider_budget_ledger is None or args.provider_total_call_limit is None or args.provider_per_unit_call_limit is None:
+            raise RuntimeError("provider budget ledger path, total limit and per-unit limit must be supplied together")
+        provider_budget_ledger = ProviderBudgetLedger(
+            path=args.provider_budget_ledger,
+            contract_sha256=contract_sha,
+            authorization_sha256=authorization_sha,
+            total_limit=int(args.provider_total_call_limit),
+            per_unit_limit=int(args.provider_per_unit_call_limit),
+            allow_create=not args.provider_budget_ledger.exists(),
+        )
+    if authorization_payload is not None:
+        scope = authorization_payload.get("execution_scope") or {}
+        provider_budget_scope = scope.get("provider_budget") or {}
+        if provider_budget_scope.get("required") is True:
+            if provider_budget_ledger is None:
+                raise RuntimeError("authorization requires a fail-closed provider budget ledger")
+            if int(provider_budget_scope.get("total_limit")) != int(args.provider_total_call_limit):
+                raise RuntimeError("authorization provider total-call limit drift")
+            if int(provider_budget_scope.get("per_unit_limit")) != int(args.provider_per_unit_call_limit):
+                raise RuntimeError("authorization provider per-unit limit drift")
+        expected_resolved = scope.get("required_resolved_model")
+        if expected_resolved and str(expected_resolved) != required_resolved:
+            raise RuntimeError("authorization resolved-model identity drift")
+        expected_identity_sha = scope.get("identity_artifact_sha256")
+        if expected_identity_sha and sha256(args.identity) != expected_identity_sha:
+            raise RuntimeError("authorization model-identity artifact drift")
+        if scope.get("max_turns") is not None and int(scope["max_turns"]) != int(args.max_turns):
+            raise RuntimeError("authorization max_turns drift")
+        if scope.get("max_output_tokens") is not None and int(scope["max_output_tokens"]) != int(args.max_output_tokens):
+            raise RuntimeError("authorization max_output_tokens drift")
     metadata_rows = json.loads((args.suite_root / "r17_controlled_metadata.json").read_text(encoding="utf-8"))
     metadata = {str(row["id"]): row for row in metadata_rows}
     missing = [task_id for task_id in task_ids if task_id not in metadata]
@@ -131,6 +189,14 @@ async def main_async(args: argparse.Namespace) -> dict[str, Any]:
     ).strip()
     if authorization_payload is not None and mindmemos_commit != authorization_payload.get("mindmemos_commit"):
         raise RuntimeError("MindMemOS commit drifted after scientific authorization")
+    if authorization_payload is not None:
+        scope = authorization_payload.get("execution_scope") or {}
+        expected_suite_sha = scope.get("suite_manifest_sha256")
+        expected_split_sha = scope.get("split_manifest_sha256")
+        if expected_suite_sha and file_sha256(args.suite_root / "suite_manifest.json") != expected_suite_sha:
+            raise RuntimeError("suite manifest drifted after scientific authorization")
+        if expected_split_sha and file_sha256(split_path) != expected_split_sha:
+            raise RuntimeError("split manifest drifted after scientific authorization")
 
     default_skill_source = args.mindmemos_root / "resources/skill_evolve/spreadsheetbench_init_skill/xlsx"
     skill_source = (args.skill_source or default_skill_source).resolve()
@@ -138,6 +204,10 @@ async def main_async(args: argparse.Namespace) -> dict[str, Any]:
     if not skill_md.is_file():
         raise RuntimeError(f"skill source does not contain SKILL.md: {skill_source}")
     skill_sha = file_sha256(skill_md)
+    if authorization_payload is not None:
+        required_skill_sha = (authorization_payload.get("execution_scope") or {}).get("required_skill_pre_sha256")
+        if required_skill_sha and skill_sha != required_skill_sha:
+            raise RuntimeError("skill pre-state drifted after scientific authorization")
     updater_receipt_sha: str | None = None
     if skill_source != default_skill_source.resolve():
         if args.mode != "e1" or args.updater_receipt is None:
@@ -171,6 +241,8 @@ async def main_async(args: argparse.Namespace) -> dict[str, Any]:
                 max_output_tokens=args.max_output_tokens,
                 temperature=0,
                 thinking="disabled",
+                provider_budget_ledger=provider_budget_ledger,
+                provider_budget_unit_id=(f"{task_id}/rollout_{rollout_index}" if provider_budget_ledger is not None else None),
             )
             factory = ReactAgentFactory(
                 adapter,
@@ -254,6 +326,7 @@ async def main_async(args: argparse.Namespace) -> dict[str, Any]:
         "updater_receipt_sha256": updater_receipt_sha,
         "contract_sha256": contract_sha,
         "authorization_sha256": authorization_sha,
+        "provider_budget": provider_budget_ledger.snapshot().to_dict() if provider_budget_ledger is not None else None,
         "tasks": task_rows,
         "scientific_outcome": args.mode != "protocol_smoke",
         "authority": {
@@ -285,6 +358,9 @@ def main() -> int:
     parser.add_argument("--max-turns", type=int, default=10)
     parser.add_argument("--max-output-tokens", type=int, default=4096)
     parser.add_argument("--concurrency", type=int, default=1)
+    parser.add_argument("--provider-budget-ledger", type=Path)
+    parser.add_argument("--provider-total-call-limit", type=int)
+    parser.add_argument("--provider-per-unit-call-limit", type=int)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 

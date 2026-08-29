@@ -14,6 +14,8 @@ from research_pipeline.e2_r17_search_projection_runner import (
     project,
     project_stream,
     validate_cloned_streams,
+    validate_mixed_cloned_pair,
+    validate_mixed_cloned_streams,
     validate_primary_cloned_pair,
     write_stream_receipt,
 )
@@ -69,6 +71,29 @@ class SearchProjectionRunnerTest(unittest.TestCase):
             validate_primary_cloned_pair(p, win, rw)
             self.assertEqual(win.selected_indices, rw.selected_indices)
 
+    def test_mixed_rejected_witness_differs_on_any_mixed_pool(self) -> None:
+        cases = (
+            ("rescue", [0, 1, 0, 1], 0),
+            ("rollout0_success", [1, 0, 1, 0], 1),
+        )
+        for name, scores, expected_failure_index in cases:
+            p = pool(name, scores)
+            self.assertTrue(p.mixed_pool)
+            win = project(p, ProjectionName.WINNER_ONLY)
+            mrw = project(p, ProjectionName.MIXED_REJECTED_WITNESS)
+            validate_mixed_cloned_pair(p, win, mrw)
+            self.assertEqual(mrw.selected_indices, (expected_failure_index,))
+            self.assertEqual(mrw.slots[0].score, 0.0)
+            self.assertNotEqual(win.selected_indices, mrw.selected_indices)
+
+        for name, scores in (("all_success", [1, 1, 1, 1]), ("all_fail", [0, 0, 0, 0])):
+            p = pool(name, scores)
+            self.assertFalse(p.mixed_pool)
+            win = project(p, ProjectionName.WINNER_ONLY)
+            mrw = project(p, ProjectionName.MIXED_REJECTED_WITNESS)
+            validate_mixed_cloned_pair(p, win, mrw)
+            self.assertEqual(win.selected_indices, mrw.selected_indices)
+
     def test_precommitted_always_is_not_relabelled_no_censoring(self) -> None:
         p = pool("pre", [1, 0, 1, 0])
         pre = project(p, ProjectionName.PRECOMMITTED_ALWAYS)
@@ -123,6 +148,28 @@ class SearchProjectionRunnerTest(unittest.TestCase):
             path = Path(temp) / "receipt.json"
             write_stream_receipt(path, witness)
             self.assertTrue(path.exists())
+
+    def test_mixed_cloned_streams_share_exact_eight_pools(self) -> None:
+        initial_skill = digest("skill")
+        pools = [
+            pool(f"mixed-stream-task-{index}", [1, 0, 1, 1, 0, 1, 1, 1])
+            for index in range(8)
+        ]
+        winner = project_stream(
+            stream_id="mixed_stream_00",
+            initial_skill_sha256=initial_skill,
+            pools=pools,
+            projection=ProjectionName.WINNER_ONLY,
+        )
+        witness = project_stream(
+            stream_id="mixed_stream_00",
+            initial_skill_sha256=initial_skill,
+            pools=pools,
+            projection=ProjectionName.MIXED_REJECTED_WITNESS,
+        )
+        validate_mixed_cloned_streams(winner, witness)
+        self.assertTrue(all(pool_.mixed_pool for pool_ in pools))
+        self.assertTrue(all(packet.slots[0].score == 0.0 for packet in witness.packets))
 
     def test_pool_jsonl_roundtrip_is_content_addressed(self) -> None:
         original = [pool("roundtrip-a", [0, 1]), pool("roundtrip-b", [1, 0])]

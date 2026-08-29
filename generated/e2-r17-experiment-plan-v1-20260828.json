@@ -1,0 +1,339 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-experiment-plan-v1",
+  "created_at_utc": "2026-08-28T07:45:00+00:00",
+  "status": "V1_REQUIRES_DUAL_REVIEW_AND_RUNTIME_PILOTS",
+  "working_title": "When Better Search Teaches Less: Serving-Induced Observation Kernels in Self-Evolving Agents",
+  "scientific_question": "When a self-evolving agent generates a best-of-K search pool, does coupling the acting selector to winner-only learning censor reusable failed evidence and make the acting-optimal trajectory learning-suboptimal?",
+  "scientific_object": "SERVING_INDUCED_OBSERVATION_KERNEL_FOR_PERSISTENT_SKILL_LEARNING",
+  "story": {
+    "acting_projection": "Serve the highest-verifier trajectory from the generated pool.",
+    "learning_projection": "Choose which content-addressed evidence from that same pool reaches the persistent updater.",
+    "central_claim": "On precommitted rescue events, winner-only serving removes exactly the failed witness that rollout-0 would have exposed; if that witness has positive reusable diagnostic value, changing only the learning projection changes future frozen skill.",
+    "minimal_method": "Act from the winner; on a frozen rescue event learn from the precommitted rejected witness, otherwise learn from the winner.",
+    "nonclaims": [
+      "more compute inherently harms learning",
+      "failures are newly discovered to be useful",
+      "success/failure contrast or first divergence is novel",
+      "the iid reference curve is an empirical law",
+      "Rejected-Witness is necessarily more complex than existing contrastive skill methods"
+    ]
+  },
+  "current_evidence": {
+    "e0_summary_sha256": "533abf55359360bd408a4878235d24b5192d77f2471f0676bb8b10d570ad0366",
+    "independent_analysis": "generated/e2-r17-e0-pilot-analysis-20260828.json",
+    "canonical_parallel_analysis": "generated/e2-r17-e0-analysis-20260828.json",
+    "decision": "HOLD_FOR_PREDECLARED_E0_FULL",
+    "success_at_k": {"1": 0.9166666666666666, "2": 0.9166666666666666, "4": 1.0, "8": 1.0},
+    "rescue_tasks_k8": 1,
+    "rescue_families_k8": 1,
+    "identity": "A_K-A_1 = V_pre(K)-V_winner(K) = Gamma_K holds exactly on the frozen pools",
+    "e1_authorized": false
+  },
+  "hypotheses": {
+    "H0_support": "The frozen 54-task calibration lane contains at least six precommitted rescue tasks spanning at least three mutually exclusive failure families.",
+    "H1_causal": "Under identical initial skill, exact K=8 pool, acting winner, updater, budget, and held-out probes, Rejected-Witness yields higher future frozen K=1 success than Winner-only.",
+    "H1_controls": "The primary gain is not reproduced by duplicated-winner token matching or deterministic random-nonwinner diversity; SkillCAT-style contrast determines whether the minimal witness is sufficient or a richer contrast is needed.",
+    "H2_public": "The simplest mechanism-qualified projection improves average frozen K=1 success over Winner-only on public benchmarks across qualified executor backbones.",
+    "H3_prediction": "Pre-outcome family-level censoring mass times cloned diagnostic value predicts held-out effect sign, family rank, K ordering, and preregistered null cells.",
+    "H4_longitudinal": "High-K online acting can rise while Winner-only frozen skill lags; a history-preserving learning projection reduces that divergence over multiple rounds.",
+    "H5_topology": "At matched actor-call budget, learning projection explains the persistent-skill difference more directly than parallel versus sequential search topology."
+  },
+  "global_design_rules": {
+    "sequence": [
+      "Pilot",
+      "Protocol Audit",
+      "Scientific Identifiability Qualification",
+      "Freeze Full Contract",
+      "Full Run",
+      "Integrity Audit",
+      "Statistical Analysis",
+      "Belief Update"
+    ],
+    "pilot_is_not_effect_selection": true,
+    "full_contract_is_immutable_after_outcomes": true,
+    "models_selected_only_by_protocol_validity_headroom_stability_and_cost": true,
+    "no_task_replacement_for_model_outcome": true,
+    "no_benchmark_shopping": true,
+    "same_pool_reused_across_projection_arms_when_scientifically_possible": true,
+    "actor_and_updater_roles_separate": true,
+    "core_updater_frozen_before_executor_matrix": true,
+    "resolved_model_drift_stops_tranche": true,
+    "provider_retry_limit": 0,
+    "thinking": "disabled",
+    "temperature": 0,
+    "credentials_in_public_artifacts": false
+  },
+  "model_plan": {
+    "source": "generated/e2-r17-baseline-model-choice-audit-20260828.json",
+    "core_candidates_before_pilot": [
+      {"role": "weak_open", "model": "Qwen3.5-4B", "status": "PILOT_REQUIRED"},
+      {"role": "common_open", "model": "exact available Qwen3.5-35B-A3B or Qwen3.6-35B-A3B", "status": "AVAILABILITY_AND_PILOT_REQUIRED"},
+      {"role": "strong_api", "model": "deepseek-v4-pro -> deepseek-v4-pro-ga-260813", "status": "E0_QUALIFIED_REQUALIFY_EACH_TRANCHE"},
+      {"role": "second_api_family", "model": "kimi-k3", "status": "PILOT_REQUIRED"}
+    ],
+    "executor_target": ">=4 qualified models and >=2 model families for the public core matrix",
+    "core_updater_v1": "deepseek-v4-pro -> deepseek-v4-pro-ga-260813",
+    "updater_robustness": "One second qualified updater only after E1 GO; no full actor x updater cross-product.",
+    "model_pilot": {
+      "development_tasks": 12,
+      "primary_run": "K=1 on all 12 fixed development tasks",
+      "search_smoke": "K=4 nested prefixes on four predeclared tasks",
+      "promotion_checks": {
+        "task_loading_rate": 1.0,
+        "resolved_identity_stability": 1.0,
+        "tool_call_parse_rate_min": 0.95,
+        "artifact_write_rate_min": 0.90,
+        "verifier_completion_rate_min": 0.95,
+        "technical_failure_rate_max": 0.05,
+        "k1_headroom_rule": "Neither all-zero nor all-one on the 12 fixed tasks; used only to reject structurally uninformative capability regimes, never to select larger R17 gain.",
+        "resume_replay_check": "Interrupt one predeclared technical smoke unit and verify missing-unit-only resume without repeating completed provider calls."
+      }
+    }
+  },
+  "baseline_plan": {
+    "fidelity_tiers": {
+      "official_core": ["MindMemOS", "RethinkSkill"],
+      "official_extended": ["SkillOpt", "SkillEvolBench"],
+      "paper_spec_reconstruction": ["SkillCAT-style contrast", "Branch2Skill-style branch evidence"],
+      "context_not_direct_baseline": ["TSR"]
+    },
+    "e1_arms": [
+      "Winner-only",
+      "Precommitted rollout-0",
+      "Rejected-Witness",
+      "Duplicated Winner",
+      "Random Nonwinner",
+      "SkillCAT-style contrast"
+    ],
+    "public_core_methods": [
+      "Winner-only",
+      "Rejected-Witness",
+      "Full Pool",
+      "Final simplest R17 method; replace with Precommitted or SkillCAT-style if identical to Rejected-Witness"
+    ],
+    "public_extended_methods": [
+      "Initial Skill",
+      "No Skill",
+      "Precommitted rollout-0",
+      "Duplicated Winner",
+      "Random Nonwinner",
+      "RethinkSkill Normal/Fail-only/Success-only",
+      "SkillOpt official implementation",
+      "SkillCAT-style reconstruction",
+      "Branch2Skill-style reconstruction"
+    ],
+    "baseline_pilot": {
+      "development_tasks": 8,
+      "qualified_executor_count": 1,
+      "gate": "Implementation fidelity, input-information parity, actor/update budget accounting, valid artifacts, common verifier, checkpoint/resume, and source-label accuracy. No method-effect threshold is allowed."
+    }
+  },
+  "stages": {
+    "S0_E0_full_support": {
+      "purpose": "Complete the already frozen support qualification before any updater intervention.",
+      "benchmark": "Controlled Spreadsheet Suite V2",
+      "tasks": 54,
+      "completed_tasks": 12,
+      "extension_tasks": 42,
+      "search_k": 8,
+      "nested_prefixes": [1, 2, 4, 8],
+      "updater": null,
+      "verifier": "Frozen deterministic binary workbook verifier",
+      "scientific_unit": "Task-level exact nested search pool",
+      "primary_metrics": ["Success@K", "A_K-A_1", "mixed-pool rate", "rescue-event rate", "V_pre-V_winner", "failure-family coverage"],
+      "full_gate": {"rescue_tasks_min": 6, "rescue_families_min": 3},
+      "go": "All integrity checks pass and the 54-task combined result meets both support thresholds.",
+      "stop": "Protocol failure or insufficient frozen rescue support. Do not open public benchmarks or alter taxonomy to rescue the mechanism on this substrate.",
+      "execution": "Run only missing units from the 42-task extension; never rerun the completed 12 tasks."
+    },
+    "E1_causal_identification": {
+      "entry": "S0 GO plus a new content-addressed full contract and authorization.",
+      "benchmark": "Controlled Spreadsheet Suite V2",
+      "pool_tasks": 96,
+      "streams": 12,
+      "tasks_per_stream": 8,
+      "search_k": 8,
+      "arms": 6,
+      "heldout_probes_per_state": 18,
+      "evaluation_k": 1,
+      "actor": "Frozen DeepSeek V4-Pro executor in the primary identification run",
+      "updater": "Pinned MindMemOS SkillEvolver, DeepSeek V4-Pro, exact config and initial skill SHA",
+      "verifier": "Frozen deterministic binary workbook verifier",
+      "scientific_unit": "One independently evolved eight-task cloned stream-state",
+      "primary_estimand": "Delta_s = J_s(Rejected-Witness)-J_s(Winner-only)",
+      "statistics": {
+        "summary": "Mean paired stream-level Delta_s",
+        "test": "Exact one-sided 2^12 sign-flip test",
+        "ci": "95% percentile bootstrap over 12 streams, 10000 draws",
+        "secondary": ["RW-Duplicate", "RW-RandomNonwinner", "SkillCAT-style-Winner", "Precommitted-Winner", "Delta versus rescue count"],
+        "no_pseudoreplication": true
+      },
+      "support_gate": {"rescue_task_packets_min": 8, "exposed_streams_min": 6, "drop_streams": false},
+      "go": "Provenance passes; mean RW-Winner > 0; one-sided p <= 0.05; 95% CI lower > 0; duplicated winner does not reproduce the gain.",
+      "downgrade": [
+        "Random Nonwinner matches RW => generic diversity explanation",
+        "SkillCAT-style dominates => retain prior contrast method and narrow R17 to mechanism",
+        "RW is sufficient => delete any more complex CADP label"
+      ],
+      "stop": "No reproducible directional difference under exact same-pool cloned states, duplicated-winner equivalence, post-outcome witness selection, or any cloned invariant failure."
+    },
+    "E2_public_effectiveness": {
+      "entry": "E1 GO only.",
+      "primary_benchmark": {
+        "name": "SpreadsheetBench Verified-400",
+        "hashes": {
+          "archive": "10ef893dd29cb13ab97143ea787e68cdc9574a13873ab9a54e50b31dc03fc949",
+          "dataset_json": "bcecaa89a005bd4e3bbe98da150a86e8062c27f262e575d5e47bd9861b3525e7"
+        },
+        "preoutcome_split_v1": {
+          "runtime_development": 16,
+          "evolution": 160,
+          "validation": 24,
+          "test": 200,
+          "rule": "Deterministic content-hash split, stratified only by released metadata/instruction type; exact IDs frozen before any candidate-model outcome."
+        },
+        "one_step_public_design": {
+          "evolution_streams": 20,
+          "tasks_per_stream": 8,
+          "test_tasks_per_stream": 10,
+          "test_coverage": 200,
+          "validation_tasks_per_candidate_state": 8,
+          "search_k": 8,
+          "pool_sharing": "All projection arms for a model/stream use the exact same initial skill, pool, and acting winner.",
+          "rationale": "Preserves the central one-step causal object on a public benchmark; repeated path-dependent evolution is reserved for E4."
+        }
+      },
+      "secondary_benchmark": {
+        "name": "SkillEvolBench",
+        "design": "Use the official 30 environment-by-skill-family cells; T1-T3 are acquisition and T4-T6 frozen K=1 evaluation. Generate nested K pools for acquisition, keep pools common across projection arms, and use the native updater only after adapter Pilot.",
+        "scientific_unit": "Environment-by-latent-skill cell (n=30)",
+        "adapter_gate": "Official validators, harness identity, tool artifacts, acquisition/evaluation separation, and missing-unit resume must pass before any full run."
+      },
+      "models": ">=4 Pilot-qualified executors across >=2 families",
+      "methods": "Four core methods on all models; extended baseline matrix on one weak/common and one strong representative executor.",
+      "primary_metric": "Average frozen K=1 success rate",
+      "statistics": {
+        "primary_unit_verified": "20 paired stream-state blocks; compute each block's mean over its ten test tasks before inference",
+        "ci": "Paired hierarchical bootstrap over stream blocks, stratified by model; report model-specific 95% CIs and paired Delta versus Winner-only",
+        "cross_model": "Report descriptive mean, range, and model-stratified bootstrap; do not treat four models as a large-n significance test",
+        "replication": "One primary frozen partition for all four models; two additional provider/order replications on two representative models, clustered rather than counted as independent tasks."
+      },
+      "go": "The qualified simplest method has positive paired gain over Winner-only on the primary public benchmark, no material safe/valid-task regression, and directionally consistent support on the secondary benchmark or a predeclared bounded transport statement.",
+      "hold": "Primary positive but model/benchmark heterogeneity prevents a general claim; report the bounded regime without adding a rescue benchmark.",
+      "stop": "Primary public transport is null/negative under the frozen design; do not open SpreadsheetBench 2 as rescue."
+    },
+    "E3_prospective_prediction": {
+      "entry": "E1 GO; calibration and confirmatory IDs frozen before confirmatory outcomes are opened.",
+      "calibration": "Estimate c_z(K), delta_z, and Lambda_K only from development/calibration cloned units.",
+      "frozen_predictions": ["effect sign", "failure-family rank", "K ordering", "null cells"],
+      "confirmatory_design_v1": "Use a disjoint controlled-suite reserve with six mutually exclusive families and nested K={1,2,4,8}; exact stream/cell counts finalized in V3 after outcome-blind support simulation, never after effect results.",
+      "metrics": ["sign accuracy", "Spearman rank correlation", "calibration slope/intercept", "absolute prediction error", "null-cell false-positive rate"],
+      "go": "Predeclared sign and rank predictions pass their frozen thresholds and calibration is not contradicted by held-out cells.",
+      "stop": "Prediction only fits observed/calibration data or fails sign/rank/null-cell tests; delete predictive-theory claim regardless of public method gain."
+    },
+    "E4_multi_round": {
+      "entry": "E1 and E2 GO; separate full contract.",
+      "arms": ["L/L", "H/Winner", "H/Precommitted", "H/Rejected", "H/Final simplest method"],
+      "pilot": "Two rounds on two fixed development streams; runtime and state/checkpoint qualification only.",
+      "full_v1": {"independent_streams": 8, "rounds": 5, "tasks_per_round": 8, "common_frozen_probe_tasks_per_round": 24},
+      "metrics": ["online R_t", "frozen J_t", "R_t-J_t divergence", "accepted/rejected patch rate", "skill interference", "cumulative cost"],
+      "statistics": "Paired stream-level trajectories with simultaneous confidence bands; report first-round causal effect separately from later path-dependent divergence.",
+      "go": "Winner-only shows a reproducible online/frozen divergence and the history-preserving projection reduces it without current-acting degradation.",
+      "stop": "No longitudinal divergence or repair after the one-step mechanism qualified; do not rewrite the one-step result as a longitudinal claim."
+    },
+    "E5_topology_external_validation": {
+      "entry": "E1-E4 support the central chain.",
+      "topology_factorial": {
+        "factor_A": ["parallel best-of-8", "sequential refinement with matched eight actor calls"],
+        "factor_B": ["winner/final-only learning", "history-preserving final method"],
+        "primary_unit": "Independent cloned stream-state",
+        "pilot": "Two streams, one update, outcome-blind runtime qualification",
+        "full_v1": "Eight streams per cell, common K=1 probes"
+      },
+      "optional_benchmark": "SpreadsheetBench 2 only after Verified-400 GO and a pre-outcome subset/evaluator contract; visualization remains secondary because it changes the evaluator substrate.",
+      "purpose": "Separate learning projection from compute amount/topology; no universal claim that parallel search is harmful."
+    }
+  },
+  "checkpoint_contract": {
+    "principle": "unit-complete -> immediately persist -> atomic checkpoint",
+    "raw_immutable": true,
+    "summary_rebuildable": true,
+    "exclusive_lock": true,
+    "resume_missing_units_only": true,
+    "layers": {
+      "raw": ["rollout trajectory", "provider receipt hashes", "output artifact", "verifier", "pool", "projection packet", "updater input/output", "skill pre/post", "frozen evaluation"],
+      "checkpoints": ["completed_units.jsonl", "missing_units.json", "failed_units.jsonl", "lock metadata"],
+      "summary": ["integrity report", "per-unit table", "statistics", "belief update", "GO/HOLD/STOP"]
+    },
+    "rollout_fields": ["task_id", "benchmark", "split", "requested/resolved model", "rollout index", "seed", "K", "input/prompt/skill SHA", "raw trajectory", "tool calls", "output SHA", "verifier", "receipt hash", "tokens", "wall time", "technical status"],
+    "pool_fields": ["pool_id", "task_id", "exact rollout hashes", "winner index/score", "nested prefix pools", "mixed flag", "rescue flag"],
+    "projection_fields": ["rule", "source pool SHA", "selected indices", "evidence packet SHA", "token count"],
+    "update_fields": ["skill_pre/post and SHAs", "updater input/receipt", "candidate patch SHA", "validation", "accept/reject"],
+    "timeout_rule": "After MCP 502, message timeout, or SSH disconnect, inspect process, lock, completed manifest, checkpoint, and summary before any launch; duplicate launch is forbidden."
+  },
+  "budget": {
+    "empirical_rate_source": "E0-r3: 96 actor rollouts, 566 provider calls, 1711693 total tokens",
+    "empirical_actor_rate": {"provider_calls_per_rollout": 5.895833333333333, "tokens_per_rollout": 17830.135416666668},
+    "S0_extension_estimate": {"actor_rollouts": 336, "provider_calls": 1981, "actor_tokens": 5990926, "gpu": "none for Ark actor; CPU workbook execution on 69"},
+    "E1_estimate": {
+      "pool_actor_rollouts": 768,
+      "frozen_eval_rollouts": 1296,
+      "actor_rollouts_total": 2064,
+      "actor_provider_calls_estimate": 12169,
+      "actor_tokens_estimate": 36801400,
+      "updater_units": 72,
+      "updater_calls": 720,
+      "updater_tokens": "Freeze from live updater Pilot; do not extrapolate from the zero-provider mock receipt.",
+      "gpu": "none for Ark actor/updater; CPU workbook execution on 69"
+    },
+    "E2_verified_core_primary_partition_formula": {
+      "pool_rollouts": "M * 160 * 8, shared across methods within each one-step stream",
+      "update_calls": "M * 20 streams * C core methods * 10 MindMemOS updater calls",
+      "validation_and_test_rollouts": "M * 20 * C * (8 validation + 10 test)",
+      "example_M4_C4": {"pool_rollouts": 5120, "updater_calls": 3200, "validation_and_test_rollouts": 5760},
+      "replications": "Additional complete replications are limited to two representative models and budgeted only after Pilot token/latency measurements."
+    },
+    "E2_skill_evolbench_formula": {
+      "acquisition_rollouts": "M * 30 cells * 3 acquisition tasks * K",
+      "evaluation_rollouts": "M * 30 * C * 3 frozen evaluation tasks",
+      "example_M4_C4_K8": {"acquisition_rollouts": 2880, "evaluation_rollouts": 1440},
+      "updater_budget": "Native-updater calls and tokens frozen after adapter Pilot."
+    },
+    "open_model_gpu_plan": {
+      "Qwen3.5-4B": "60 or 52 for Pilot; exact serving engine and GPU binding recorded",
+      "Qwen_sparse_35B": "232 A100 preferred, or qualified tensor-parallel deployment on 52; availability and tool-use Pilot required",
+      "DeepSeek_and_Kimi": "Ark API from 69; no local GPU claim"
+    },
+    "cost_rule": "No monetary estimate is published until per-model input/output token prices and live Pilot receipts are bound to the full contract. Calls and tokens are the primary auditable budget."
+  },
+  "manuscript_integration": {
+    "live_branch": true,
+    "sequence": [
+      "E0 -> Mechanism Calibration",
+      "E1 -> Causal Identification",
+      "E2 -> Public Main Results and baseline comparison",
+      "E3 -> Prospective Mechanism Prediction",
+      "E4 -> Longitudinal Evolution",
+      "E5 -> Topology and external validity"
+    ],
+    "no_hand_copied_numbers": true,
+    "every_table_figure_binds_data_analysis_script_figure_script_sha": true
+  },
+  "review_required": {
+    "reviewers": ["kimi-k3", "deepseek-v4-pro"],
+    "questions": ["model selection", "baseline fairness", "benchmark roles", "Pilot nonselection", "sample size", "statistics", "checkpoint/recovery", "cost", "decisive STOP experiments"],
+    "next_version": "V2 addresses only verdict-changing issues; runtime Pilot then freezes V3 full contracts."
+  },
+  "authority": {
+    "planning": true,
+    "dual_review": true,
+    "outcome_blind_runtime_pilots": false,
+    "S0_full_calls": false,
+    "E1_calls": false,
+    "public_full_calls": false,
+    "paper_promotion": false,
+    "frontend_promotion": false,
+    "submission": false
+  }
+}

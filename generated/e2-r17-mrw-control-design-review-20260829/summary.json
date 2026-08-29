@@ -1,0 +1,23 @@
+{
+  "all_completed": true,
+  "artifact_type": "e2-r17-mrw-control-design-dual-review",
+  "created_at_utc": "2026-08-29T13:49:51+00:00",
+  "design_path": "consultations/e2-r17-mrw-control-design-preoutcome-20260829.md",
+  "design_sha256": "3ed60473756a93b058acd03a999ccbd934825f293032f04ec55e56142a9037d4",
+  "mrw_authority": false,
+  "negative_control_outcome_used": false,
+  "paper_claim_authority": false,
+  "preferred_options": {
+    "deepseek-v4-pro": "B_FRESH_CONTEMPORANEOUS_WIN_C",
+    "kimi-k3": "B_FRESH_CONTEMPORANEOUS_WIN_C"
+  },
+  "resolved_models": {
+    "deepseek-v4-pro": "deepseek-v4-pro-ga-260813",
+    "kimi-k3": "kimi-k3"
+  },
+  "schema_version": "1.0",
+  "statuses": {
+    "deepseek-v4-pro": "COMPLETED",
+    "kimi-k3": "COMPLETED"
+  }
+}

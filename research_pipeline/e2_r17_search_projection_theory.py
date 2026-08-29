@@ -32,6 +32,24 @@ class ContinuousProjectionStats:
     integrated_threshold_censoring: float
 
 
+@dataclass(frozen=True)
+class BinaryEvidenceStats:
+    """Evidence quantities induced by best-of-K winner selection.
+
+    Binary outcomes use 1=success and 0=failure. The acting selector serves a
+    successful trajectory whenever one exists. `winner_failure_visibility`
+    measures the probability that winner-only learning observes failure.
+    `pool_failure_availability` measures whether the generated pool contains any
+    failed trajectory, and `mixed_pool_mass` measures whether the same pool
+    contains both success and failure evidence.
+    """
+
+    acting_success: float
+    winner_failure_visibility: float
+    pool_failure_availability: float
+    mixed_pool_mass: float
+
+
 def _validate_distribution(items: Iterable[tuple[Sequence[float], float]]) -> list[tuple[tuple[float, ...], float]]:
     rows = [(tuple(float(v) for v in outcome), float(probability)) for outcome, probability in items]
     if not rows:
@@ -74,12 +92,71 @@ def binary_projection_stats(joint: Mapping[BinaryOutcome, float]) -> BinaryProje
     )
 
 
+def binary_evidence_stats(joint: Mapping[BinaryOutcome, float]) -> BinaryEvidenceStats:
+    """Compute winner-visible and pool-available failure evidence exactly.
+
+    No independence or exchangeability is assumed. For nested pools, the
+    pointwise events imply that acting success and mixed-pool support are
+    non-decreasing with K, while winner-visible failure is non-increasing.
+    """
+    rows = _validate_distribution(joint.items())
+    if any(any(value not in (0.0, 1.0) for value in outcome) for outcome, _ in rows):
+        raise ValueError("binary outcomes must contain only zero or one")
+
+    acting = sum((max(outcome) == 1.0) * probability for outcome, probability in rows)
+    winner_failure = sum((max(outcome) == 0.0) * probability for outcome, probability in rows)
+    pool_failure = sum((min(outcome) == 0.0) * probability for outcome, probability in rows)
+    mixed = sum(
+        (min(outcome) == 0.0 and max(outcome) == 1.0) * probability
+        for outcome, probability in rows
+    )
+    return BinaryEvidenceStats(
+        acting_success=acting,
+        winner_failure_visibility=winner_failure,
+        pool_failure_availability=pool_failure,
+        mixed_pool_mass=mixed,
+    )
+
+
 def gamma_iid(p: float, k: int) -> float:
     if not 0.0 <= p <= 1.0:
         raise ValueError("p must lie in [0, 1]")
     if k < 1:
         raise ValueError("k must be positive")
     return (1.0 - p) - (1.0 - p) ** k
+
+
+def winner_failure_iid(p: float, k: int) -> float:
+    if not 0.0 <= p <= 1.0:
+        raise ValueError("p must lie in [0, 1]")
+    if k < 1:
+        raise ValueError("k must be positive")
+    return (1.0 - p) ** k
+
+
+def pool_failure_iid(p: float, k: int) -> float:
+    if not 0.0 <= p <= 1.0:
+        raise ValueError("p must lie in [0, 1]")
+    if k < 1:
+        raise ValueError("k must be positive")
+    return 1.0 - p**k
+
+
+def mixed_pool_iid(p: float, k: int) -> float:
+    if not 0.0 <= p <= 1.0:
+        raise ValueError("p must lie in [0, 1]")
+    if k < 1:
+        raise ValueError("k must be positive")
+    return 1.0 - p**k - (1.0 - p) ** k
+
+
+def hidden_failed_branch_count_iid(p: float, k: int) -> float:
+    """Expected failed branches omitted when the served winner succeeds."""
+    if not 0.0 <= p <= 1.0:
+        raise ValueError("p must lie in [0, 1]")
+    if k < 1:
+        raise ValueError("k must be positive")
+    return k * ((1.0 - p) - (1.0 - p) ** k)
 
 
 def p_star(k: int) -> float:
@@ -103,7 +180,6 @@ def continuous_projection_stats(
 
     acting_gain = sum((max(outcome) - outcome[0]) * probability for outcome, probability in rows)
     integrated = sum(
-        # Measure of {t in [0,1]: r_0 < t <= max_i r_i}.
         max(0.0, max(outcome) - outcome[0]) * probability
         for outcome, probability in rows
     )

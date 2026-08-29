@@ -1,0 +1,99 @@
+{
+  "artifact_type": "e2-r17-theory-correction-mixed-pool",
+  "schema_version": "1.0",
+  "date": "2026-08-28",
+  "status": "THEORY_CORRECTION_BEFORE_E1",
+  "authority": {
+    "planning_and_theory": true,
+    "retroactive_e0_rewrite": false,
+    "e1_scientific_experiment": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "historical_e0": {
+    "summary_sha256": "533abf55359360bd408a4878235d24b5192d77f2471f0676bb8b10d570ad0366",
+    "historical_decision": "HOLD",
+    "historical_gate": "at least 6 rescue tasks and >=3 families",
+    "historical_decision_preserved": true
+  },
+  "correction": {
+    "old_support_event": "precommitted rescue event: rollout0 fails and at least one later rollout succeeds",
+    "new_e1_support_event": "mixed pool: at least one success and at least one failure in the exact generated K-pool",
+    "why": "Rescue censoring exactly identifies acting gain relative to rollout0, but a failure-aware learning projection can differ from winner-only on any mixed pool, including pools where rollout0 itself succeeds.",
+    "old_gate_status_for_future_e1": "SUPERSEDED",
+    "retroactive_change_to_e0_receipts": false
+  },
+  "theory": {
+    "rescue_identity": "A_K-A_1=P(Y_1=0,max_i Y_i=1)=V_pre(K)-V_winner(K)",
+    "iid_rescue_mass": "Gamma_K(p)=(1-p)-(1-p)^K",
+    "mixed_support": "M_K=P(min_i Y_i=0,max_i Y_i=1)",
+    "iid_mixed_support": "M_K(p)=1-p^K-(1-p)^K",
+    "iid_winner_failure": "W_K(p)=(1-p)^K",
+    "iid_pool_failure_availability": "F_K(p)=1-p^K",
+    "iid_hidden_failed_branch_count": "H_K(p)=K[(1-p)-(1-p)^K]",
+    "nested_pool_monotonicity_without_iid": {
+      "acting_success_A_K": "nondecreasing",
+      "winner_visible_failure_W_K": "nonincreasing",
+      "pool_failure_availability_F_K": "nondecreasing",
+      "mixed_pool_support_M_K": "nondecreasing"
+    },
+    "asymptotic_iid_fixed_p_in_0_1": {
+      "A_K": "->1",
+      "W_K": "->0",
+      "F_K": "->1",
+      "M_K": "->1"
+    }
+  },
+  "primary_projection_candidate": {
+    "name": "mixed_rejected_witness",
+    "acting_projection": "unchanged exact served winner",
+    "learning_projection_on_nonmixed_pool": "same one-slot served winner as winner-only",
+    "learning_projection_on_mixed_pool": "lowest-rollout-index failed nonwinner, deterministically precommitted",
+    "extra_actor_calls": 0,
+    "evidence_slot_count_vs_winner": "1 vs 1",
+    "reason": "maximally clean exact-same-pool causal contrast without giving the treatment extra trajectories or extra actor compute"
+  },
+  "learning_factorization": {
+    "equation": "Delta_K=M_K*delta_K",
+    "delta_definition": "E[J(U(S,g_MRW(T_1:K)))-J(U(S,g_WIN(T_1:K))) | mixed pool]",
+    "delta_positive_assumed": false,
+    "delta_zero_interpretation": "evidence shielding exists but is learning-irrelevant; central mechanism STOP",
+    "delta_negative_interpretation": "failed witness harms future skill; proposed repair rejected"
+  },
+  "frozen_e0_reinterpretation": {
+    "k": 8,
+    "acting_success": "12/12",
+    "winner_visible_failure": "0/12",
+    "mixed_pools": "8/12",
+    "rescue_events": "1/12",
+    "hidden_failed_nonwinner_trajectories": 16,
+    "mixed_failure_families": "5/6",
+    "conclusion": "The old rescue identity has sparse support, but the mixed-gated learning treatment has materially larger observed support."
+  },
+  "preliminary_v2_support_gate_for_review": {
+    "streams": 12,
+    "tasks_per_stream": 8,
+    "k": 8,
+    "freeze_all_pools_before_any_updater_call": true,
+    "minimum_mixed_pools": "24/96",
+    "minimum_exposed_streams": "8/12 streams with >=2 mixed pools",
+    "minimum_failure_family_coverage": "4/6",
+    "task_or_pool_replacement_after_support_observation": false,
+    "failure_action": "STOP_BEFORE_UPDATER_AND_REDRAFT_UNDER_NEW_PROTOCOL"
+  },
+  "current_scientific_state": {
+    "search_induced_visibility_shift": "SUPPORTED",
+    "exact_rescue_identity": "SUPPORTED",
+    "mixed_pool_compute_shielding_law": "THEORETICALLY_ESTABLISHED_E0_CONSISTENT",
+    "positive_diagnostic_value_delta_K": "UNKNOWN",
+    "winner_only_learning_regret": "UNKNOWN",
+    "final_repair_method": "UNDECIDED"
+  },
+  "implementation": {
+    "theory_module": "research_pipeline/e2_r17_search_projection_theory.py",
+    "runner_module": "research_pipeline/e2_r17_search_projection_runner.py",
+    "new_projection_enum": "MIXED_REJECTED_WITNESS",
+    "old_REJECTED_WITNESS_semantics_preserved": true,
+    "targeted_tests_passed": 20
+  }
+}

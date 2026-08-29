@@ -89,7 +89,24 @@ async def run_actor_rollout(
     ref_path = workdir / "r17_trajectory_ref.json"
     raw_path = workdir / "r17_trajectory.json"
     if ref_path.exists():
-        return _load_ref(ref_path)
+        ref = _load_ref(ref_path)
+        ledger = getattr(adapter, "provider_budget_ledger", None)
+        unit_id = getattr(adapter, "provider_budget_unit_id", None)
+        if ref.provider_budget_claim_count:
+            if ledger is None or not unit_id:
+                raise RuntimeError("budgeted trajectory ref cannot be reused without its bound provider budget ledger")
+            if ref.provider_budget_unit_id != str(unit_id):
+                raise RuntimeError("budgeted trajectory ref unit id drift on resume")
+            snapshot = ledger.snapshot()
+            observed = int(snapshot.unit_claimed.get(str(unit_id), 0))
+            if observed != int(ref.provider_budget_unit_claimed_after or -1):
+                raise RuntimeError(
+                    f"provider budget ledger/ref drift on resume: unit={unit_id}; "
+                    f"ledger={observed}; ref={ref.provider_budget_unit_claimed_after}"
+                )
+            if snapshot.total_claimed < int(ref.provider_budget_total_claimed_after or -1):
+                raise RuntimeError("provider budget total counter regressed below completed trajectory ref")
+        return ref
     quarantined = _quarantine_partial(workdir)
     workdir.mkdir(parents=True, exist_ok=True)
     env.setup_case(case, workdir)
@@ -131,6 +148,7 @@ async def run_actor_rollout(
             "error": technical_error,
             "quarantined_previous_partial": str(quarantined) if quarantined else None,
             "adapter_receipts": adapter.public_receipts(),
+            "provider_budget_claims": adapter.public_budget_claims() if hasattr(adapter, "public_budget_claims") else [],
             "provider_retry_limit": 0,
             "scientific_outcome": False,
         }
@@ -143,6 +161,9 @@ async def run_actor_rollout(
     receipts = adapter.public_receipts()
     if not receipts:
         raise RuntimeError("actor rollout completed without provider receipts")
+    budget_claims = adapter.public_budget_claims() if hasattr(adapter, "public_budget_claims") else []
+    if getattr(adapter, "provider_budget_ledger", None) is not None and len(budget_claims) != len(receipts):
+        raise RuntimeError("successful budgeted rollout must bind exactly one pre-I/O budget claim per provider receipt")
     observed = {str(row.get("resolved_model") or "") for row in receipts}
     if observed != {config.required_resolved_model}:
         raise RuntimeError(f"actor rollout contains resolved-model drift: {sorted(observed)}")
@@ -169,6 +190,8 @@ async def run_actor_rollout(
         "resolved_model": config.required_resolved_model,
         "adapter_receipts": receipts,
         "adapter_receipt_bundle_sha256": adapter.receipt_bundle_sha256,
+        "provider_budget_claims": budget_claims,
+        "provider_budget_claim_bundle_sha256": canonical_sha256(budget_claims) if budget_claims else None,
         "provider_retry_limit": 0,
         "hidden_provider_retry_used": False,
         "started_at": started_at,
@@ -198,6 +221,11 @@ async def run_actor_rollout(
         evidence_tokens=sum(int(row.get("total_tokens") or 0) for row in receipts),
         technical_status="COMPLETED",
         failure_code=config.failure_family if float(score) < 1.0 else None,
+        provider_budget_unit_id=(str(budget_claims[-1]["unit_id"]) if budget_claims else None),
+        provider_budget_claim_count=len(budget_claims),
+        provider_budget_claim_bundle_sha256=(canonical_sha256(budget_claims) if budget_claims else None),
+        provider_budget_unit_claimed_after=(int(budget_claims[-1]["unit_call_index"]) if budget_claims else None),
+        provider_budget_total_claimed_after=(int(budget_claims[-1]["total_claimed_after"]) if budget_claims else None),
     )
     ref.validate()
     atomic_json(ref_path, asdict(ref))

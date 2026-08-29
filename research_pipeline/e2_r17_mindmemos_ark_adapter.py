@@ -4,12 +4,14 @@ import hashlib
 import json
 import os
 import re
+import time
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable
 
 from research_pipeline.ark_provider import ArkResponseStateError, ArkResponsesClient, ArkSettings
+from research_pipeline.e2_r17_provider_budget import ProviderBudgetClaim, ProviderBudgetLedger
 
 PLAN_BASE_URL = "https://ark.cn-beijing.volces.com/api/plan/v3"
 REQUESTED_MODEL = "deepseek-v4-pro"
@@ -83,11 +85,16 @@ class CallReceipt:
     response_id_sha256: str
     provider_status: str
     thinking_requested: str | None
+    temperature_requested: float
     provider_retry_limit: int
     message_count: int
+    wall_time_seconds: float
     parse_error: str = ""
     record_path: str | None = None
     hidden_provider_retry_used: bool = False
+    provider_budget_claim_id: int | None = None
+    provider_budget_unit_call_index: int | None = None
+    provider_budget_total_claimed_after: int | None = None
 
 
 class MindMemOSArkPlanChatAdapter:
@@ -108,6 +115,8 @@ class MindMemOSArkPlanChatAdapter:
         required_resolved_model: str = REQUIRED_RESOLVED_MODEL,
         max_parse_attempts: int = 3,
         record_dir: Path | str | None = None,
+        provider_budget_ledger: ProviderBudgetLedger | None = None,
+        provider_budget_unit_id: str | None = None,
     ) -> None:
         raw = settings or ArkSettings.from_env(required=True)
         if raw.base_url.rstrip("/") != PLAN_BASE_URL:
@@ -124,6 +133,11 @@ class MindMemOSArkPlanChatAdapter:
         self.required_resolved_model = required_resolved_model
         self.max_parse_attempts = max(1, int(max_parse_attempts))
         self.record_dir = Path(record_dir) if record_dir is not None else None
+        if (provider_budget_ledger is None) != (provider_budget_unit_id is None):
+            raise ValueError("provider budget ledger and unit id must be supplied together")
+        self.provider_budget_ledger = provider_budget_ledger
+        self.provider_budget_unit_id = str(provider_budget_unit_id) if provider_budget_unit_id is not None else None
+        self.provider_budget_claims: list[ProviderBudgetClaim] = []
         self.receipts: list[CallReceipt] = []
 
     async def chat(
@@ -142,7 +156,9 @@ class MindMemOSArkPlanChatAdapter:
         last_error: Exception | None = None
         for attempt in range(max_attempts):
             prompt = _flatten_messages(convo)
+            started = time.monotonic()
             result = self._respond(prompt, target=target, kwargs=kwargs)
+            wall_time_seconds = time.monotonic() - started
             content = str(result.get("text") or "")
             resolved = str(result.get("resolved_model") or "")
             usage = result.get("usage") or {}
@@ -161,8 +177,13 @@ class MindMemOSArkPlanChatAdapter:
                 response_id_sha256=_sha(str(result.get("response_id") or "")),
                 provider_status=str(result.get("status") or ""),
                 thinking_requested=result.get("thinking_requested") or kwargs.get("thinking") or "disabled",
+                temperature_requested=float(result.get("temperature_requested", 0.0)),
                 provider_retry_limit=self.settings.max_retries,
                 message_count=len(convo),
+                wall_time_seconds=wall_time_seconds,
+                provider_budget_claim_id=result.get("provider_budget_claim_id"),
+                provider_budget_unit_call_index=result.get("provider_budget_unit_call_index"),
+                provider_budget_total_claimed_after=result.get("provider_budget_total_claimed_after"),
             )
             parsed: Any = None
             if format_parser is not None:
@@ -264,8 +285,13 @@ class MindMemOSArkPlanChatAdapter:
             "response_id_sha256": receipt.response_id_sha256,
             "thinking_requested": result.get("thinking_requested") or receipt.thinking_requested,
             "thinking_effective": result.get("thinking_effective"),
+            "temperature_requested": receipt.temperature_requested,
             "provider_retry_limit": self.settings.max_retries,
             "hidden_provider_retry_used": False,
+            "wall_time_seconds": receipt.wall_time_seconds,
+            "provider_budget_claim_id": receipt.provider_budget_claim_id,
+            "provider_budget_unit_call_index": receipt.provider_budget_unit_call_index,
+            "provider_budget_total_claimed_after": receipt.provider_budget_total_claimed_after,
             "parser_applied": parser_applied,
             "parse_error": receipt.parse_error,
             "parsed_type": type(parsed).__name__ if parsed is not None else None,
@@ -277,8 +303,19 @@ class MindMemOSArkPlanChatAdapter:
         receipt.record_path = str(path.resolve())
 
     def _respond(self, prompt: str, *, target: str, kwargs: dict[str, Any]) -> dict[str, Any]:
+        budget_claim: ProviderBudgetClaim | None = None
+        if self.provider_budget_ledger is not None:
+            assert self.provider_budget_unit_id is not None
+            budget_claim = self.provider_budget_ledger.claim(self.provider_budget_unit_id)
+            self.provider_budget_claims.append(budget_claim)
         max_output_tokens = int(kwargs.get("max_tokens") or kwargs.get("max_completion_tokens") or 4096)
         temperature = kwargs.get("temperature")
+        if temperature is None:
+            # SkillEvolver's first-party summary/patch calls do not currently pass
+            # an explicit temperature. Future E2-R17 causal tranches freeze that
+            # otherwise provider-defined default to zero; historical receipts are
+            # never regenerated under this rule.
+            temperature = 0.0
         thinking = kwargs.get("thinking") or "disabled"
         try:
             result = self.client.respond(
@@ -290,7 +327,12 @@ class MindMemOSArkPlanChatAdapter:
                 allow_thinking_compatibility_fallback=False,
             )
             result["thinking_requested"] = thinking
+            result["temperature_requested"] = float(temperature)
             result.setdefault("thinking_effective", thinking)
+            if budget_claim is not None:
+                result["provider_budget_claim_id"] = budget_claim.claim_id
+                result["provider_budget_unit_call_index"] = budget_claim.unit_call_index
+                result["provider_budget_total_claimed_after"] = budget_claim.total_claimed_after
             return result
         except ArkResponseStateError as exc:
             if not exc.response_id:
@@ -298,7 +340,7 @@ class MindMemOSArkPlanChatAdapter:
             polled = self.client.poll_response(exc.response_id, max_polls=3, interval_seconds=1.0)
             if not polled.get("text"):
                 raise
-            return {
+            result = {
                 "requested_model": target,
                 "resolved_model": polled.get("resolved_model"),
                 "text": polled.get("text"),
@@ -309,9 +351,17 @@ class MindMemOSArkPlanChatAdapter:
                 "thinking_effective": thinking,
                 "get_poll_recovery": True,
             }
+            if budget_claim is not None:
+                result["provider_budget_claim_id"] = budget_claim.claim_id
+                result["provider_budget_unit_call_index"] = budget_claim.unit_call_index
+                result["provider_budget_total_claimed_after"] = budget_claim.total_claimed_after
+            return result
 
     def public_receipts(self) -> list[dict[str, Any]]:
         return [asdict(receipt) for receipt in self.receipts]
+
+    def public_budget_claims(self) -> list[dict[str, Any]]:
+        return [claim.to_dict() for claim in self.provider_budget_claims]
 
     @property
     def receipt_bundle_sha256(self) -> str:

@@ -1,0 +1,66 @@
+{
+  "artifact_type": "e2-r17-mrw-control-design-independent-review",
+  "created_at_utc": "2026-08-29T13:49:02+00:00",
+  "design_sha256": "3ed60473756a93b058acd03a999ccbd934825f293032f04ec55e56142a9037d4",
+  "expected_resolved_model": "deepseek-v4-pro-ga-260813",
+  "exposed_to_other_review": false,
+  "independent": true,
+  "missing_required_fields": [],
+  "paper_claim_authority": false,
+  "provider_retry_limit": 0,
+  "raw_text_sha256": "22901e5e3938e5aa16442dc4224647affffa31bc29d431b592bb6d9640ecf05e",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "0088d2f016471424058a2be372b26eb92d3391f165fa9355dbe9fc558ce73e19",
+  "review": {
+    "causal_identification_assessment": "Option B provides the stronger causal identification because it removes the temporal placement confound entirely. Under Option A, any observed D_s = J_s(MRW) - C_s could be explained by provider/model/service drift between the WIN-A/WIN-B collection window and the later MRW collection window, even with identical resolved model IDs. The treatment (mixed-rejected-witness projection) would be perfectly collinear with time, making the causal contrast unidentifiable under the standard assumption of no unmeasured time-varying confounding. Option B breaks this collinearity by interleaving WIN-C and MRW within the same tranche, so the only systematic difference between arms is the projection treatment. This is the design a top-conference reviewer would demand for a causal claim about a learning algorithm rather than a claim about a particular hosted service at a particular time.",
+    "cost_benefit_assessment": "Option B approximately doubles the post-negative-control learned states from 12 to 24 and adds one full winner-control update plus 18 K=1 held-out evaluations per stream. This cost is modest relative to the inferential risk it eliminates. A top-conference rejection or a fatal causal-identification critique would be far more expensive than the additional compute. The cost is justified because the entire MRW claim rests on the contrast between the projection treatment and the winner-only control; if that contrast is confounded by time, the experiment is uninterpretable regardless of how much was saved.",
+    "design_sha256_acknowledged": "3ed60473756a93b058acd03a999ccbd934825f293032f04ec55e56142a9037d4",
+    "historical_control_usage": "Under Option B, WIN-A and WIN-B should be used only as secondary bridge/stability evidence. They can characterize the baseline winner-evidence distribution, support the negative-control equivalence claim, and provide a sanity check that WIN-C falls within the historical range. They must not enter the primary estimand or the primary decision rule, because pooling them with WIN-C would reintroduce the temporal confound and change the estimand from a contemporaneous paired contrast to a mixed-tranche contrast.",
+    "negative_control_fail_policy": "MRW_REMAINS_UNAUTHORIZED",
+    "nonblocking_notes": [
+      "If the negative control fails equivalence, MRW remains unauthorized and neither Option A nor Option B may proceed.",
+      "WIN-A and WIN-B may still be reported as historical stability evidence under Option B, but they must be clearly labeled as non-primary.",
+      "The stream-level paired analysis is preferred over pooling all evaluations because it respects the within-stream correlation induced by shared initial conditions and pools."
+    ],
+    "paper_claim_authority": false,
+    "preferred_option": "B_FRESH_CONTEMPORANEOUS_WIN_C",
+    "primary_decision_rule": "Let D̄ be the mean of D_s over the 12 streams and let SE(D̄) be its standard error computed from the 12 stream-level differences. Pre-register: (1) STOP if D̄ ≤ 0 or if the one-sided test of D̄ > 0 fails to reject at the pre-specified alpha; (2) HOLD if D̄ > 0 but the confidence interval includes zero or the effect size is below the pre-specified minimum meaningful threshold; (3) GO only if D̄ > 0, the one-sided test rejects at alpha, and the lower confidence bound exceeds the pre-specified minimum meaningful threshold. No decision may use WIN-A or WIN-B in the primary contrast.",
+    "primary_estimand": "For each stream s, the primary estimand is the within-stream paired difference D_s = J_s(MRW) - J_s(WIN-C), where J_s(·) is the held-out K=1 evaluation score for stream s under the specified treatment, with WIN-C and MRW generated from the same initial skill, same exact pools, same updater configuration, and interleaved/hash-balanced update and evaluation order within the same post-negative-control tranche. The population estimand is the mean of D_s over the 12 streams, with the stream as the unit of analysis.",
+    "remaining_blockers": [
+      {
+        "exact_repair": "Define a deterministic hash-based schedule per stream that assigns each update step and each held-out evaluation to WIN-C or MRW in alternating or randomly permuted order, with the seed fixed in the preregistration, and require that both arms experience the same wall-clock distribution of provider calls.",
+        "issue": "The interleaving/hash-balancing procedure for WIN-C vs MRW update order and held-out evaluation order must be specified exactly and frozen before any post-negative-control outcomes are generated.",
+        "priority": "P0"
+      },
+      {
+        "exact_repair": "Pre-specify the alpha (e.g., 0.05) and the minimum meaningful D̄ threshold in the same units as J_s(·), justified from the WIN-A/WIN-B variability or prior effect sizes, before any MRW or WIN-C outcome is observed.",
+        "issue": "The minimum meaningful effect threshold and the alpha level for the primary one-sided test are not yet frozen.",
+        "priority": "P0"
+      },
+      {
+        "exact_repair": "Freeze a cloning procedure that produces byte-identical initial states for WIN-C and MRW from the same frozen E1-A pools and initial skill, with the only subsequent difference being the projection treatment applied to MRW.",
+        "issue": "The exact procedure for generating WIN-C and MRW initial states from the same initial skill and exact pools must be specified to guarantee identical starting conditions.",
+        "priority": "P1"
+      }
+    ],
+    "single_sentence_recommendation": "Run a fresh contemporaneous WIN-C interleaved with MRW after the negative-control equivalence gate passes, use the within-stream paired difference J_s(MRW) - J_s(WIN-C) as the sole primary estimand, and retain WIN-A/WIN-B only as secondary bridge/stability evidence.",
+    "temporal_drift_assessment": "Temporal drift is a material confound, not a theoretical nuisance. Hosted provider behavior, evaluation service characteristics, and even the effective serving path can shift over wall-clock time due to routing changes, load balancing, model server updates, or silent configuration changes that do not alter the advertised model ID. The negative-control equivalence gate, if passed, only establishes that WIN-A and WIN-B were exchangeable at their collection time; it says nothing about whether the later MRW tranche would be exchangeable with that earlier tranche. Therefore the equivalence gate cannot license the historical-control contrast in Option A. Option B is the only design that makes drift orthogonal to treatment assignment."
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 1417,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1436,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 2853
+  }
+}

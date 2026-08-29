@@ -6,11 +6,16 @@ import random
 import unittest
 
 from research_pipeline.e2_r17_search_projection_theory import (
+    binary_evidence_stats,
     binary_projection_stats,
     continuous_projection_stats,
     gamma_iid,
     gated_projection_factorization,
+    hidden_failed_branch_count_iid,
+    mixed_pool_iid,
     p_star,
+    pool_failure_iid,
+    winner_failure_iid,
 )
 
 
@@ -35,8 +40,69 @@ class SearchProjectionTheoryTest(unittest.TestCase):
                     atom: math.prod(p if value else 1 - p for value in atom)
                     for atom in atoms
                 }
-                stats = binary_projection_stats(joint)
-                self.assertAlmostEqual(stats.rescue_censoring_mass, gamma_iid(p, k), places=12)
+                projection = binary_projection_stats(joint)
+                evidence = binary_evidence_stats(joint)
+                self.assertAlmostEqual(projection.rescue_censoring_mass, gamma_iid(p, k), places=12)
+                self.assertAlmostEqual(evidence.winner_failure_visibility, winner_failure_iid(p, k), places=12)
+                self.assertAlmostEqual(evidence.pool_failure_availability, pool_failure_iid(p, k), places=12)
+                self.assertAlmostEqual(evidence.mixed_pool_mass, mixed_pool_iid(p, k), places=12)
+
+    def test_nested_pool_monotonicity_without_iid(self) -> None:
+        rng = random.Random(20260828)
+        for full_k in range(2, 7):
+            atoms = list(itertools.product((0, 1), repeat=full_k))
+            for _ in range(50):
+                weights = [rng.expovariate(1.0) for _ in atoms]
+                total = sum(weights)
+                full_joint = {atom: weight / total for atom, weight in zip(atoms, weights)}
+                prefix_stats = []
+                for k in range(1, full_k + 1):
+                    prefix_joint: dict[tuple[int, ...], float] = {}
+                    for atom, probability in full_joint.items():
+                        prefix = atom[:k]
+                        prefix_joint[prefix] = prefix_joint.get(prefix, 0.0) + probability
+                    prefix_stats.append(binary_evidence_stats(prefix_joint))
+
+                for previous, current in zip(prefix_stats, prefix_stats[1:]):
+                    self.assertLessEqual(previous.acting_success, current.acting_success + 1e-12)
+                    self.assertGreaterEqual(
+                        previous.winner_failure_visibility + 1e-12,
+                        current.winner_failure_visibility,
+                    )
+                    self.assertLessEqual(
+                        previous.pool_failure_availability,
+                        current.pool_failure_availability + 1e-12,
+                    )
+                    self.assertLessEqual(previous.mixed_pool_mass, current.mixed_pool_mass + 1e-12)
+
+    def test_mixed_pool_mass_is_distinct_from_rescue_mass(self) -> None:
+        joint = {
+            (1, 0, 1): 0.40,
+            (0, 1, 1): 0.10,
+            (1, 1, 1): 0.30,
+            (0, 0, 0): 0.20,
+        }
+        projection = binary_projection_stats(joint)
+        evidence = binary_evidence_stats(joint)
+        self.assertAlmostEqual(projection.rescue_censoring_mass, 0.10)
+        self.assertAlmostEqual(evidence.mixed_pool_mass, 0.50)
+        self.assertGreater(evidence.mixed_pool_mass, projection.rescue_censoring_mass)
+
+    def test_iid_hidden_failed_branch_count(self) -> None:
+        for k in (2, 4, 8):
+            for p in (0.1, 0.25, 0.5, 0.75, 0.9):
+                expected = 0.0
+                for successes in range(k + 1):
+                    probability = math.comb(k, successes) * p**successes * (1 - p) ** (k - successes)
+                    if successes > 0:
+                        expected += (k - successes) * probability
+                self.assertAlmostEqual(expected, hidden_failed_branch_count_iid(p, k), places=12)
+
+    def test_mixed_pool_iid_peaks_at_half(self) -> None:
+        for k in (2, 4, 8, 16):
+            center = mixed_pool_iid(0.5, k)
+            for p in (0.05, 0.1, 0.25, 0.4, 0.6, 0.75, 0.9, 0.95):
+                self.assertGreaterEqual(center + 1e-12, mixed_pool_iid(p, k))
 
     def test_p_star_is_interior_maximum(self) -> None:
         for k in (2, 3, 4, 8, 16):

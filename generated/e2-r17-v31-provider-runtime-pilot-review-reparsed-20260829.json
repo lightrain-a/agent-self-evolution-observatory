@@ -1,0 +1,63 @@
+{
+  "artifact_type": "e2-r17-v31-provider-runtime-pilot-review-reparse-adjudication",
+  "authority": {
+    "execute_e1_b": false,
+    "paper_promotion": false,
+    "prepare_provider_runtime_pilot_authorization": true,
+    "submission": false
+  },
+  "created_at_utc": "2026-08-29T10:43:15+00:00",
+  "draft_contract_path": "generated/e2-r17-v31-provider-runtime-pilot-draft-contract-20260828.json",
+  "draft_contract_sha256": "b7340add5392667551ab6838f6acf32876bec8b3d75bcd1a82fdfdcacb7254a1",
+  "failure_classification": "IMPLEMENTATION/REVIEW_HARNESS_SCHEMA_VALIDATION",
+  "original_fail_schema_preserved": true,
+  "provider_generation_calls": 0,
+  "provider_review_harness_path": "scripts/run_e2_r17_v31_provider_runtime_pilot_review.py",
+  "provider_review_harness_sha256": "f38570580a159859c42e610af94844b26aa4ec9edb54ffb23762b264d2bbf45c",
+  "reused_exact_model_outputs": true,
+  "review_harness_path": "scripts/run_e2_r17_v3_1_review.py",
+  "review_harness_sha256": "ef74d0fd83f5059aecf427902e260e38561a1c4f6083cd0fde402242708884af",
+  "rows": {
+    "deepseek-v4-pro": {
+      "e1_b_recommendation": "HOLD",
+      "original_missing_required_fields": [
+        "repair_sha256_acknowledged_exact"
+      ],
+      "original_status": "FAIL_SCHEMA",
+      "paper_claim_authority": false,
+      "provider_runtime_pilot_recommendation": "ALLOW_SEPARATE_FROZEN_PROVIDER_RUNTIME_PILOT_AUTHORIZATION",
+      "raw_text_sha256": "c5933c12bf695d5b5f10defff356156ee7beeba62cd207a9c7a996776169ed52",
+      "remaining_blockers": [],
+      "reparsed_missing_required_fields": [],
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "resolved_model_matches_qualification": true,
+      "single_sentence_verdict": "The provider-runtime Pilot is outcome-blind, arm-blinded, token-parity-enforced, budget-fail-closed, checkpoint-safe, and scientifically bounded, with no P0/P1 blockers, so it may proceed only under a separately minted SHA-bound provider-runtime Pilot authorization while E1-B remains HOLD and paper claims remain false.",
+      "source_path": "generated/e2-r17-v31-provider-runtime-pilot-review-20260828/deepseek-v4-pro.json",
+      "source_sha256": "2da6ce2e12b9d969bfa9b4f48986eb1fc5e169ca3995efaef4a221570a45cb42",
+      "valid_after_harness_repair": true,
+      "verdict": "PASS_TO_SEPARATELY_AUTHORIZED_PROVIDER_RUNTIME_PILOT"
+    },
+    "kimi-k3": {
+      "e1_b_recommendation": "HOLD",
+      "original_missing_required_fields": [
+        "repair_sha256_acknowledged_exact"
+      ],
+      "original_status": "FAIL_SCHEMA",
+      "paper_claim_authority": false,
+      "provider_runtime_pilot_recommendation": "ALLOW_SEPARATE_FROZEN_PROVIDER_RUNTIME_PILOT_AUTHORIZATION",
+      "raw_text_sha256": "eb24f00087bbe94079d7ae50b2b9a16469944028ca8852a689236860f44a7398",
+      "remaining_blockers": [],
+      "reparsed_missing_required_fields": [],
+      "resolved_model": "kimi-k3",
+      "resolved_model_matches_qualification": true,
+      "single_sentence_verdict": "The reviewed V3.1 provider-runtime Pilot is outcome-blind, arm-blinded, budgeted, checkpoint-safe, and runtime/measurability-only, so it may proceed only under a separate frozen provider-runtime authorization while E1-B remains on HOLD.",
+      "source_path": "generated/e2-r17-v31-provider-runtime-pilot-review-20260828/kimi-k3.json",
+      "source_sha256": "510de90e6cb078b775fba552e4fa4c0681de33416acd988eacb5682937036e6c",
+      "valid_after_harness_repair": true,
+      "verdict": "PASS_TO_SEPARATELY_AUTHORIZED_PROVIDER_RUNTIME_PILOT"
+    }
+  },
+  "schema_version": "1.0",
+  "scientific_belief_update": "NONE; the original model content was valid and the failure was local schema validation only.",
+  "status": "PASS_REPARSED_EXISTING_REVIEWS"
+}

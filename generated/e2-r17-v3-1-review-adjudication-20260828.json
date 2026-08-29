@@ -1,0 +1,66 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-1-review-adjudication",
+  "date": "2026-08-28",
+  "status": "PASS_TO_FRESH_ZERO_PROVIDER_MECHANICAL_PILOT_ONLY",
+  "repair": {
+    "path": "generated/e2-r17-v3-1-causal-purity-repair-20260828.json",
+    "sha256": "2b4589d704037c9dd781c4091d03b12dddf727b6d7a7aad765dc7536863a6880"
+  },
+  "draft_contract": {
+    "path": "generated/e2-r17-v3-1-mechanical-pilot-draft-contract-20260828.json",
+    "sha256": "385727188a3dbe8cedfbd29f2832f69e0599d250e8bf51e85b04de048fd817da"
+  },
+  "reviews": {
+    "deepseek-v4-pro": {
+      "path": "generated/e2-r17-v3-1-review-20260828/deepseek-v4-pro.json",
+      "sha256": "df9b420d9865e40bd4f4e510cfb1f0a7812ad027bd4de4467b6bd81e89846190",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "verdict": "PASS_TO_FRESH_ZERO_PROVIDER_MECHANICAL_PILOT",
+      "mechanical_pilot_recommendation": "ALLOW_FRESH_ZERO_PROVIDER_MECHANICAL_PILOT",
+      "remaining_blockers": []
+    },
+    "kimi-k3": {
+      "path": "generated/e2-r17-v3-1-review-20260828/kimi-k3.json",
+      "sha256": "16b278cab907ee8ed3453d1d6827dc962ce9fd0565df1ac8d66520594166f512",
+      "resolved_model": "kimi-k3",
+      "verdict": "PASS_TO_FRESH_ZERO_PROVIDER_MECHANICAL_PILOT",
+      "mechanical_pilot_recommendation": "ALLOW_FRESH_ZERO_PROVIDER_MECHANICAL_PILOT",
+      "remaining_blockers": []
+    },
+    "summary": {
+      "path": "generated/e2-r17-v3-1-review-20260828/summary.json",
+      "sha256": "467c5da64da1309a420a9ad62a1df1c1fee0f5c80a1d1b3c6513d8f8bc9e12d3"
+    }
+  },
+  "adjudicated_findings": {
+    "stream_level_theory": "PASS: task-level Delta=M*delta is not promoted as an exact law for the eight-task nonlinear updater; R_s is support/dose and D_s is the paired stream endpoint.",
+    "selected_evidence_score": "PASS: selected trajectory verifier score is part of the learning evidence record and corrects the legacy false-label bug; served acting score remains fixed provenance.",
+    "arm_blinding": "PASS at pinned MindMemOS source SHA: model-visible transcript is constructed from payload.messages; r17_* provenance fields do not enter prompts.",
+    "token_parity": "PASS design: actual final re-tokenized parity, no padding, deterministic largest common reachable length.",
+    "source_budget_gap": "NONBLOCKING: up to one source-token difference is acceptable because final updater-visible token count is exactly matched and the difference is disclosed.",
+    "downstream_truncation": "PASS design if transcript_max_chars is frozen >=100000 and every unit is asserted below the bound.",
+    "novelty_boundary": "DEFENSIBLE_BUT_NARROW: generic failure-learning novelty remains forbidden; candidate novelty is exact-same-pool selection-induced learning-evidence shift and future-skill consequence."
+  },
+  "required_execution_conditions": [
+    "fresh run root distinct from failed V3 root",
+    "historical 12 E0 K=8 pools only",
+    "tiktoken==0.11.0 and cl100k_base",
+    "pinned renderer/updater/MindMemOS SHAs",
+    "zero provider calls",
+    "zero new actor rollouts",
+    "no held-out future-skill evaluation",
+    "unit-complete atomic receipt and SHA-validated missing-unit resume",
+    "no scientific-effect interpretation"
+  ],
+  "authority": {
+    "fresh_zero_provider_mechanical_pilot": true,
+    "provider_runtime_pilot": false,
+    "e1_a": false,
+    "e1_b": false,
+    "scientific_effectiveness": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "next_after_pilot_if_pass": "SEPARATE_PROVIDER_RUNTIME_OR_E1_A_PREEXECUTION_CONTRACT_REVIEW; NO AUTOMATIC AUTHORITY INHERITANCE"
+}

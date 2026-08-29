@@ -1,0 +1,33 @@
+{
+  "all_allow_fresh_zero_provider_mechanical_pilot": true,
+  "all_completed": true,
+  "artifact_type": "e2-r17-v3-1-dual-review-summary",
+  "created_at_utc": "2026-08-28T13:11:04+00:00",
+  "experiment_authority": false,
+  "exposed_to_other_review": false,
+  "independent": true,
+  "mechanical_pilot_recommendations": {
+    "deepseek-v4-pro": "ALLOW_FRESH_ZERO_PROVIDER_MECHANICAL_PILOT",
+    "kimi-k3": "ALLOW_FRESH_ZERO_PROVIDER_MECHANICAL_PILOT"
+  },
+  "paper_claim_authority": false,
+  "repair_sha256": "2b4589d704037c9dd781c4091d03b12dddf727b6d7a7aad765dc7536863a6880",
+  "resolved_models": {
+    "deepseek-v4-pro": "deepseek-v4-pro-ga-260813",
+    "kimi-k3": "kimi-k3"
+  },
+  "reviewers": [
+    "deepseek-v4-pro",
+    "kimi-k3"
+  ],
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "statuses": {
+    "deepseek-v4-pro": "COMPLETED",
+    "kimi-k3": "COMPLETED"
+  },
+  "verdicts": {
+    "deepseek-v4-pro": "PASS_TO_FRESH_ZERO_PROVIDER_MECHANICAL_PILOT",
+    "kimi-k3": "PASS_TO_FRESH_ZERO_PROVIDER_MECHANICAL_PILOT"
+  }
+}

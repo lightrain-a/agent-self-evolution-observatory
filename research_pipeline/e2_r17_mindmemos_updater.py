@@ -134,6 +134,88 @@ def render_projection_packet(
 
 
 @dataclass(frozen=True)
+class BlindedEvidenceUnit:
+    """One pre-rendered learner-visible evidence unit for the V3.1 causal path.
+
+    Projection/arm identity and source provenance remain available to the experiment
+    receipt, but ``evidence_text`` is the only trajectory text placed in the
+    first-party MindMemOS add-record ``messages`` field. ``source_score`` is the
+    verifier score of that selected evidence trajectory, not the served acting
+    winner score.
+    """
+
+    task_id: str
+    pool_id: str
+    acting_winner_sha256: str
+    source_rollout_index: int
+    source_trajectory_sha256: str
+    source_score: float
+    evidence_text: str
+    evidence_sha256: str
+    evidence_tokens: int
+
+    def validate(self) -> None:
+        if not self.task_id or not self.pool_id:
+            raise ValueError("blinded evidence must bind task_id and pool_id")
+        if self.source_rollout_index < 0:
+            raise ValueError("source_rollout_index must be nonnegative")
+        if sha_text(self.evidence_text) != self.evidence_sha256:
+            raise ValueError("blinded evidence SHA mismatch")
+        if self.evidence_tokens <= 0:
+            raise ValueError("blinded evidence token count must be positive")
+
+
+def build_blinded_add_record_payload(
+    *,
+    unit: BlindedEvidenceUnit,
+    pool: SearchPool,
+    project_id: str,
+    task_completed_at: str,
+    initial_skill_sha256: str,
+    root_version_id: str,
+    projection_label: str,
+) -> dict[str, Any]:
+    """Build the first-party add-record payload for V3.1 without treatment-label leakage.
+
+    At pinned MindMemOS commit 9049182..., ``SkillEvolver`` constructs the LLM
+    transcript from ``payload['messages']`` and obtains the scored-patch label from
+    ``payload['score']``. The ``r17_*`` fields below are provenance-only and are
+    intentionally absent from model-visible messages.
+    """
+    unit.validate()
+    pool.validate()
+    if unit.task_id != pool.task_id or unit.pool_id != pool.pool_id:
+        raise ValueError("blinded evidence task/pool binding mismatch")
+    if unit.acting_winner_sha256 != pool.winner.trajectory_sha256:
+        raise ValueError("blinded evidence acting-winner provenance mismatch")
+    return {
+        "project_id": project_id,
+        "task_completed_at": task_completed_at,
+        "messages": [{"role": "user", "content": unit.evidence_text}],
+        "score": float(unit.source_score),
+        "task_id": pool.task_id,
+        "skill_bindings": [
+            {
+                "name": "xlsx",
+                "content_hash": initial_skill_sha256,
+                "version_id": root_version_id,
+                "usage": "injected",
+            }
+        ],
+        "r17_projection": projection_label,
+        "r17_rendered_packet_sha256": unit.evidence_sha256,
+        "r17_pool_id": pool.pool_id,
+        "r17_rescue_event": pool.rescue_event,
+        "r17_acting_score": pool.acting_success,
+        "r17_acting_winner_sha256": unit.acting_winner_sha256,
+        "r17_source_rollout_index": unit.source_rollout_index,
+        "r17_source_trajectory_sha256": unit.source_trajectory_sha256,
+        "r17_selected_evidence_score": float(unit.source_score),
+        "r17_evidence_tokens": int(unit.evidence_tokens),
+    }
+
+
+@dataclass(frozen=True)
 class ProjectionUpdateResult:
     stream_id: str
     projection: str
@@ -163,8 +245,16 @@ async def run_projection_update(
     authorization_sha256: str,
     slot_char_budget: int = 6000,
     transcript_max_chars: int = 16000,
+    blinded_evidence_units: Sequence[BlindedEvidenceUnit] | None = None,
 ) -> ProjectionUpdateResult:
-    """Run one cloned MindMemOS SkillEvolver update from eight projected task packets."""
+    """Run one cloned MindMemOS SkillEvolver update from eight projected task packets.
+
+    ``blinded_evidence_units`` activates the V3.1 causal-purity path. In that mode
+    the first-party updater receives only the pre-rendered arm-blinded evidence
+    text plus the selected evidence trajectory's verifier score. Acting winner,
+    projection label, rollout index and SHA provenance remain database/receipt
+    metadata and are not placed in the model-visible transcript.
+    """
 
     if len(stream.packets) != 8 or len(pools) != 8:
         raise ValueError("one E2-R17 update unit must contain exactly eight task pools")
@@ -204,10 +294,42 @@ async def run_projection_update(
 
     packet_rows: list[dict[str, Any]] = []
     rendered_packets: list[tuple[str, dict[str, Any]]] = []
-    for pool, packet in zip(pools, stream.packets):
-        text, metadata = render_projection_packet(pool, packet, slot_char_budget=slot_char_budget)
-        rendered_packets.append((text, metadata))
-        packet_rows.append(metadata)
+    blinded_rows: list[BlindedEvidenceUnit] | None = None
+    if blinded_evidence_units is not None:
+        blinded_rows = list(blinded_evidence_units)
+        if len(blinded_rows) != len(pools):
+            raise ValueError("blinded evidence cardinality must match the eight exact pools")
+        for pool, unit in zip(pools, blinded_rows):
+            unit.validate()
+            if unit.task_id != pool.task_id or unit.pool_id != pool.pool_id:
+                raise ValueError("blinded evidence task/pool binding mismatch")
+            if unit.acting_winner_sha256 != pool.winner.trajectory_sha256:
+                raise ValueError("blinded evidence acting-winner provenance mismatch")
+            if len(f"[user] {unit.evidence_text}") > transcript_max_chars:
+                raise ValueError("blinded evidence would be silently truncated by first-party transcript renderer")
+            metadata = {
+                "packet_sha256": sha_text(unit.evidence_text),
+                "projection": str(stream.projection),
+                "pool_id": unit.pool_id,
+                "task_id": unit.task_id,
+                "acting_score": pool.acting_success,
+                "acting_winner_sha256": unit.acting_winner_sha256,
+                "source_rollout_index": unit.source_rollout_index,
+                "source_trajectory_sha256": unit.source_trajectory_sha256,
+                "source_score": unit.source_score,
+                "rendered_packet_sha256": unit.evidence_sha256,
+                "rendered_packet_chars": len(unit.evidence_text),
+                "rendered_packet_tokens": unit.evidence_tokens,
+                "arm_metadata_visible": False,
+                "score_semantics": "selected_evidence_trajectory",
+            }
+            rendered_packets.append((unit.evidence_text, metadata))
+            packet_rows.append(metadata)
+    else:
+        for pool, packet in zip(pools, stream.packets):
+            text, metadata = render_projection_packet(pool, packet, slot_char_budget=slot_char_budget)
+            rendered_packets.append((text, metadata))
+            packet_rows.append(metadata)
 
     client = AsyncQdrantClient(":memory:")
     qdrant_cfg = QdrantConfig(
@@ -238,31 +360,48 @@ async def run_projection_update(
     )
     base_time = datetime(2026, 8, 28, tzinfo=UTC)
     for index, ((packet_text, packet_meta), pool) in enumerate(zip(rendered_packets, pools)):
+        selected_score = (
+            float(blinded_rows[index].source_score)
+            if blinded_rows is not None
+            else float(pool.acting_success)
+        )
+        if blinded_rows is not None:
+            payload = build_blinded_add_record_payload(
+                unit=blinded_rows[index],
+                pool=pool,
+                project_id=project_id,
+                task_completed_at=(base_time + timedelta(minutes=index)).isoformat(),
+                initial_skill_sha256=stream.initial_skill_sha256,
+                root_version_id=root.version_id,
+                projection_label=str(stream.projection),
+            )
+            if float(payload["score"]) != selected_score:
+                raise AssertionError("V3.1 selected-evidence score serialization drift")
+        else:
+            payload = {
+                "project_id": project_id,
+                "task_completed_at": (base_time + timedelta(minutes=index)).isoformat(),
+                "messages": [{"role": "user", "content": packet_text}],
+                "score": selected_score,
+                "task_id": pool.task_id,
+                "skill_bindings": [
+                    {
+                        "name": "xlsx",
+                        "content_hash": stream.initial_skill_sha256,
+                        "version_id": root.version_id,
+                        "usage": "injected",
+                    }
+                ],
+                "r17_projection": str(stream.projection),
+                "r17_projection_packet_sha256": packet_meta["packet_sha256"],
+                "r17_rendered_packet_sha256": packet_meta["rendered_packet_sha256"],
+                "r17_pool_id": pool.pool_id,
+                "r17_rescue_event": pool.rescue_event,
+            }
         await qdrant.upsert_add_record(
             AddRecordPoint(
                 add_record_id=_trace_uuid(stream.stream_id, str(stream.projection), pool.task_id),
-                payload={
-                    "project_id": project_id,
-                    "task_completed_at": (base_time + timedelta(minutes=index)).isoformat(),
-                    "messages": [{"role": "user", "content": packet_text}],
-                    # Acting outcome is deliberately constant across cloned arms;
-                    # projected evidence differs only inside the transcript packet.
-                    "score": pool.acting_success,
-                    "task_id": pool.task_id,
-                    "skill_bindings": [
-                        {
-                            "name": "xlsx",
-                            "content_hash": stream.initial_skill_sha256,
-                            "version_id": root.version_id,
-                            "usage": "injected",
-                        }
-                    ],
-                    "r17_projection": str(stream.projection),
-                    "r17_projection_packet_sha256": packet_meta["packet_sha256"],
-                    "r17_rendered_packet_sha256": packet_meta["rendered_packet_sha256"],
-                    "r17_pool_id": pool.pool_id,
-                    "r17_rescue_event": pool.rescue_event,
-                },
+                payload=payload,
             )
         )
 
@@ -353,6 +492,9 @@ async def run_projection_update(
             "authorization_sha256": authorization_sha256,
             "provider_retry_limit": 0,
             "hidden_provider_retry_used": False,
+            "causal_purity_mode": "arm_blinded_selected_evidence" if blinded_rows is not None else "legacy_projection_packet",
+            "updater_visible_score_semantics": "selected_evidence_trajectory" if blinded_rows is not None else "served_acting_outcome_legacy",
+            "arm_metadata_visible_in_transcript": False if blinded_rows is not None else True,
             "private_credentials_included": False,
             "raw_response_ids_included": False,
         }
@@ -375,6 +517,8 @@ async def run_projection_update(
 
 
 __all__ = [
+    "BlindedEvidenceUnit",
+    "build_blinded_add_record_payload",
     "ProjectionUpdateResult",
     "render_projection_packet",
     "render_trajectory_evidence",

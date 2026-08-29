@@ -1,0 +1,379 @@
+{
+  "artifact_type": "e2-r17-failure-differential-registry",
+  "current_scientific_state": {
+    "central_mechanism": "OPEN_NOT_YET_ADJUDICATED",
+    "e0_censoring_existence": "SUPPORTED_ON_CONTROLLED_PILOT",
+    "e1_a_treatment_support": "PASS_STRONG_SUPPORT_78_OF_96_MIXED_12_OF_12_STREAMS_6_OF_6_FAMILIES",
+    "e1_b_mrw_causal_effect": "UNKNOWN_AND_UNAUTHORIZED_UNTIL_NEGATIVE_CONTROL_EQUIVALENCE_PASS",
+    "e1_b_negative_control": "AUTHORIZED_FULL_NOT_EXECUTED",
+    "provider_runtime_pilot": "PASS_RUNTIME_MEASURABILITY_ONLY"
+  },
+  "date": "2026-08-29",
+  "entries": [
+    {
+      "classification": [
+        "MEASUREMENT_ANALYSIS",
+        "PROTOCOL_CAUSAL_PURITY"
+      ],
+      "contamination": "NONE",
+      "failure_id": "R17-F001-V3-BPE-PARITY",
+      "preserved_artifacts": [
+        {
+          "path": "generated/e2-r17-v3-runtime-pilot-failure-adjudication-20260828.json",
+          "sha256": "fec66715370144f4b8c72c7afd32520f9f990ef466f988c0d77cf3a954aefcef"
+        }
+      ],
+      "provider_calls": 0,
+      "repair_or_stop": "New V3.1 ExactMatchedEvidenceBlockRenderer matches the actual final re-tokenized evidence block, uses deterministic no-padding search, and preserves old failed V3 root/contract.",
+      "rerun_policy": "PERMITTED_ONLY_UNDER_NEW_V3_1_CONTRACT_AND_FRESH_ROOT",
+      "reusable_rule": "Fairness budgets must bind the exact model-visible representation after all rendering/transformation steps, not an upstream proxy count.",
+      "root_cause": "BPE can create a new merge at the splice boundary; equal selected source-token counts do not imply equal final rendered token counts.",
+      "scientific_belief_update": "NONE",
+      "scientific_data_observed_for_effectiveness": false,
+      "scientific_endpoint_reached": false,
+      "stage": "V3 mechanical runtime pilot",
+      "symptom": "Nominally equal source-token slices re-tokenized to unequal final provider-visible lengths after head/tail decoding and concatenation.",
+      "terminal_status": "FAIL_MECHANICAL_TOKEN_PARITY"
+    },
+    {
+      "classification": [
+        "PROTOCOL_CAUSAL_PURITY"
+      ],
+      "contamination": "Legacy path is disqualified from causal interpretation; historical artifacts remain non-authoritative for E1.",
+      "failure_id": "R17-F002-LEGACY-PROJECTION-LEAK",
+      "preserved_artifacts": [
+        {
+          "path": "consultations/e2-r17-v3-1-causal-purity-repair-20260828.md",
+          "sha256": "94490232790ec78cdcb5773b49bb9fcb509ca18b8cc5cc2842216d0becb25521"
+        }
+      ],
+      "provider_calls": 0,
+      "repair_or_stop": "V3.1 BlindedEvidenceUnit exposes only selected evidence text in messages, stores selected trajectory verifier score as the learner outcome, and keeps acting/projection provenance in audit-only r17_* fields.",
+      "rerun_policy": "PERMITTED_ONLY_ON_V3_1_BLINDED_PATH",
+      "reusable_rule": "For same-pool causal interventions, provenance required for audit must be kept out of model-visible treatment unless it is itself a predeclared treatment variable.",
+      "root_cause": "Acting provenance and learner-visible evidence semantics were not separated in the original wrapper.",
+      "scientific_belief_update": "NONE; old path was causally invalid.",
+      "scientific_data_observed_for_effectiveness": false,
+      "scientific_endpoint_reached": false,
+      "stage": "V3 causal-purity audit",
+      "symptom": "Legacy updater packet exposed PROJECTION/ROLE/rollout/provenance labels and could attach the served winner score to a failed MRW transcript.",
+      "terminal_status": "LEGACY_PATH_INVALID_FOR_CAUSAL_E1"
+    },
+    {
+      "classification": [
+        "IMPLEMENTATION"
+      ],
+      "contamination": "NONE",
+      "failure_id": "R17-F003-E1A-BUDGET-POSTHOC",
+      "preserved_artifacts": [
+        {
+          "path": "research_pipeline/e2_r17_provider_budget.py",
+          "sha256": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444"
+        }
+      ],
+      "provider_calls": 0,
+      "repair_or_stop": "SQLite BEGIN IMMEDIATE ledger claims budget before provider I/O, binds contract+authorization, never releases ambiguous claims, and fail-closes before the 11th per-unit or 7681st total call.",
+      "rerun_policy": "PERMITTED_AFTER_BOUND_GUARD_TESTS_AND_NEW_AUTHORIZATION",
+      "reusable_rule": "A scientific provider-call ceiling is a pre-I/O safety invariant, not a post-hoc statistic.",
+      "root_cause": "Budget accounting was observational instead of transactional.",
+      "scientific_belief_update": "NONE",
+      "scientific_data_observed_for_effectiveness": false,
+      "scientific_endpoint_reached": false,
+      "stage": "E1-A pre-execution review",
+      "symptom": "The declared 10-call per-rollout / 7680-call total ceiling was checked after execution or delegated to an unbound runtime rather than enforced before provider I/O.",
+      "terminal_status": "HOLD_PRECALL_BUDGET_GUARD_MISSING"
+    },
+    {
+      "classification": [
+        "RUNTIME_INFRA",
+        "IMPLEMENTATION"
+      ],
+      "contamination": "NONE; zero budget claims and zero completed rollout refs.",
+      "failure_id": "R17-F004-E1A-AMBIENT-PYTHON",
+      "preserved_artifacts": [
+        {
+          "path": "generated/e2-r17-e1-a-v2-runtime-failure-adjudication-20260828.json",
+          "sha256": "3ad8b73ce13f8b5bc0e51f109a8e910e0894656d3bdd94f10290126a3388a399"
+        },
+        {
+          "path": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-20260828/.exclusive.lock",
+          "sha256": null
+        },
+        {
+          "path": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-20260828/checkpoints/failures/e1-agj-00.json",
+          "sha256": null
+        }
+      ],
+      "provider_calls": 0,
+      "repair_or_stop": "V2.1 binds exact actor venv/bin/python, VIRTUAL_ENV/PATH, runtime freeze SHA and qualification SHA before spawning any actor.",
+      "rerun_policy": "PERMITTED_UNDER_NEW_V2_1_CONTRACT_AND_FRESH_ROOT; FAILED_V2_ROOT_NOT_REUSED",
+      "reusable_rule": "Runtime qualification must be executable-binding, not merely package-list provenance.",
+      "root_cause": "E1-A orchestrator launched the actor with ambient /usr/bin/python3 instead of the previously qualified frozen actor/evaluator venv.",
+      "scientific_belief_update": "NONE",
+      "scientific_data_observed_for_effectiveness": false,
+      "scientific_endpoint_reached": false,
+      "stage": "E1-A V2 pool-support execution",
+      "symptom": "MindMemOS import failed with ModuleNotFoundError: pydantic before any rollout/provider call.",
+      "terminal_status": "TECHNICAL_FAILURE_BEFORE_FIRST_ROLLOUT"
+    },
+    {
+      "classification": [
+        "MEASUREMENT_ANALYSIS",
+        "IMPLEMENTATION"
+      ],
+      "contamination": "Frozen 96 pools remained intact; thresholds/data were not changed.",
+      "failure_id": "R17-F005-SUPPORT-ZERO-FALSY",
+      "preserved_artifacts": [
+        {
+          "path": "generated/e2-r17-e1-a-support-adjudicator-zero-parse-repair-20260828.json",
+          "sha256": "e632988b3ebf39588caaaa7b9b425b869e6d06656353506ef0c8782b5ca33d50"
+        },
+        {
+          "path": "scripts/adjudicate_e2_r17_e1_a_pool_support_v2.py",
+          "sha256": "cc5d43828179bbdcc932a3194140cb798ccfb9b6d60bda6a44090ae4983601a6"
+        }
+      ],
+      "provider_calls": 0,
+      "repair_or_stop": "Versioned adjudicator v2 changes only zero/missing parsing; the repair was independently reviewed before adjudicating the same frozen 96-pool artifact.",
+      "rerun_policy": "REPARSE_SAME_FROZEN_ARTIFACT_ONLY; NO_NEW_ROLLOUTS",
+      "reusable_rule": "Scientific counters where zero is meaningful must distinguish absent/null from zero explicitly; never use truthiness as missingness.",
+      "root_cause": "Python falsy semantics incorrectly treated a meaningful zero as missing.",
+      "scientific_belief_update": "NONE until repaired adjudicator reached the support endpoint.",
+      "scientific_data_observed_for_effectiveness": false,
+      "scientific_endpoint_reached": false,
+      "stage": "E1-A post-run support adjudication",
+      "symptom": "A valid updater_calls=0 summary was parsed as -1 by int(summary.get('updater_calls') or -1).",
+      "terminal_status": "ADJUDICATOR_MECHANICAL_FAILURE"
+    },
+    {
+      "classification": [
+        "IMPLEMENTATION"
+      ],
+      "contamination": "NONE; exact raw reviewer outputs were preserved and reparsed.",
+      "failure_id": "R17-F006-REVIEW-ACK-SCHEMA",
+      "preserved_artifacts": [
+        {
+          "path": "generated/e2-r17-v31-provider-runtime-pilot-review-reparsed-20260829.json",
+          "sha256": "c7ae640e240975da32d50b1e63322ed49c481ed20f8735b71da67f7366728656"
+        },
+        {
+          "path": "research_pipeline/test_e2_r17_review_harness_ack.py",
+          "sha256": "3a985b963402f53137051aafa8007df44c6cc736dedf1e45cdd6ee8c2e901f78"
+        },
+        {
+          "path": "scripts/adjudicate_e2_r17_v31_provider_runtime_pilot_review_reparse.py",
+          "sha256": "618a2610281492b20c7ec0c763c255413a5f1f1bbd21463ed5085118f18a5cd0"
+        }
+      ],
+      "provider_calls": "2 original reviewer generations; 0 additional calls for repair/re-adjudication",
+      "repair_or_stop": "Shared validator now discovers active schema fields ending in _sha256_acknowledged, validates each exact SHA, remains backward-compatible, and fail-closes on wrong/missing acknowledgements. Existing model outputs were zero-provider reparsed.",
+      "rerun_policy": "NO_NEW_REVIEWER_CALL_REQUIRED_WHEN_RAW_OUTPUT_IS_SEMANTICALLY_COMPLETE",
+      "reusable_rule": "Keep model generation and local schema adjudication as separate evidence layers; a parser failure does not erase a valid raw review.",
+      "root_cause": "Review-harness validation hard-coded one historical acknowledgement field name instead of validating the acknowledgement field declared by the active schema.",
+      "scientific_belief_update": "NONE",
+      "scientific_data_observed_for_effectiveness": false,
+      "scientific_endpoint_reached": false,
+      "stage": "V3.1 provider-runtime Pilot independent review",
+      "symptom": "Both Kimi and DeepSeek returned complete PASS reviews, but the shared local validator required the historical repair_sha256_acknowledged field while the new schema defined draft_contract_sha256_acknowledged.",
+      "terminal_status": "LOCAL_FAIL_SCHEMA_WITH_VALID_MODEL_CONTENT"
+    },
+    {
+      "classification": [
+        "IMPLEMENTATION"
+      ],
+      "contamination": "NONE",
+      "failure_id": "R17-F007-REPARSE-IMPORT-PATH",
+      "preserved_artifacts": [
+        {
+          "path": "scripts/adjudicate_e2_r17_v31_provider_runtime_pilot_review_reparse.py",
+          "sha256": "618a2610281492b20c7ec0c763c255413a5f1f1bbd21463ed5085118f18a5cd0"
+        }
+      ],
+      "provider_calls": 0,
+      "repair_or_stop": "Added explicit ROOT insertion before importing sibling scripts; successful second invocation reused the same raw reviews.",
+      "rerun_policy": "PERMITTED_ZERO_PROVIDER_REPARSE",
+      "reusable_rule": "Standalone adjudication scripts must prove their own import-path reproducibility before being treated as evidence processors.",
+      "root_cause": "Launcher omitted the standard repository-root import binding used by other R17 scripts.",
+      "scientific_belief_update": "NONE",
+      "scientific_data_observed_for_effectiveness": false,
+      "scientific_endpoint_reached": false,
+      "stage": "Zero-provider review re-adjudication utility",
+      "symptom": "Direct execution of the new reparse script initially failed before reading review data because repo root was not inserted into sys.path.",
+      "terminal_status": "SCRIPT_IMPORT_FAILURE_THEN_REPAIRED"
+    },
+    {
+      "classification": [
+        "RUNTIME_INFRA",
+        "IMPLEMENTATION"
+      ],
+      "contamination": "NONE; provider Pilot run root remained fresh.",
+      "failure_id": "R17-F008-UPDATER-RUNTIME-COVERAGE",
+      "preserved_artifacts": [
+        {
+          "path": "/data/wyt/e2-r17-search-projection/runtime-qualifications/updater-runtime-zero-provider-20260829.json",
+          "sha256": "9d2f4e3525a04a55128e3592f44531226962084613adf1bca17f0f96f7d521a9"
+        },
+        {
+          "path": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv.freeze.txt",
+          "sha256": "80cd6fdd8eb672e41252c099766fd171a5a7a4b90c284d87da87d09f0d559731"
+        }
+      ],
+      "provider_calls": 0,
+      "repair_or_stop": "Created a dedicated updater runtime from pinned MindMemOS uv.lock/package, then explicitly applied the predeclared R17 renderer compatibility override tiktoken==0.11.0; first-party SkillEvolver import and zero-provider six-arm updater qualification pass under this dedicated runtime.",
+      "rerun_policy": "PROVIDER_RUNTIME_PILOT_MAY_BE_REDESIGNED_ONLY_WITH_DEDICATED_UPDATER_RUNTIME_BOUND_IN_NEW_CONTRACT",
+      "reusable_rule": "Runtime qualification is role-specific and must import/exercise the exact scientific entrypoint; actor/evaluator qualification never authorizes updater execution.",
+      "root_cause": "The existing runtime qualification covered the actor/evaluator entrypoints, not the persistent-updater dependency closure. The provider-runtime Pilot inherited a role-inappropriate runtime assumption.",
+      "scientific_belief_update": "NONE",
+      "scientific_data_observed_for_effectiveness": false,
+      "scientific_endpoint_reached": false,
+      "stage": "V3.1 provider-runtime Pilot preflight",
+      "symptom": "The actor/evaluator venv could import mindmemos_eval but failed importing first-party mindmemos.pipelines.skill.evolution.SkillEvolver because omegaconf was absent.",
+      "terminal_status": "HOLD_PROVIDER_RUNTIME_PILOT_BEFORE_PROVIDER_CALL"
+    },
+    {
+      "classification": [
+        "IMPLEMENTATION"
+      ],
+      "contamination": "NONE",
+      "failure_id": "R17-F009-PREFLIGHT-SOURCE-BINDING",
+      "preserved_artifacts": [],
+      "provider_calls": 0,
+      "repair_or_stop": "Repeated the check with the exact three source roots bound; that authoritative preflight then exposed the real missing omegaconf dependency in the actor venv.",
+      "rerun_policy": "DIAGNOSTIC_RECHECK_PERMITTED_WITH_EXECUTION-FAITHFUL_BINDING",
+      "reusable_rule": "A preflight that does not reproduce the execution binding is diagnostic noise and must not authorize or block science by itself.",
+      "root_cause": "The diagnostic preflight did not mirror the actual execution environment/source binding.",
+      "scientific_belief_update": "NONE",
+      "scientific_data_observed_for_effectiveness": false,
+      "scientific_endpoint_reached": false,
+      "stage": "Updater runtime diagnosis",
+      "symptom": "An initial manual updater import check could not find mindmemos because it did not reproduce the runner's source-tree sys.path binding.",
+      "terminal_status": "NONAUTHORITATIVE_PREFLIGHT_MISMATCH"
+    },
+    {
+      "classification": [
+        "IMPLEMENTATION"
+      ],
+      "contamination": "NONE; explicit follow-up showed no runner process, no run root and no lock.",
+      "failure_id": "R17-F010-PROCESS-GUARD-SELF-MATCH",
+      "preserved_artifacts": [
+        {
+          "path": "generated/e2-r17-v31-provider-runtime-pilot-v2-launch-guard-failure-20260829.json",
+          "sha256": "6ffea48d9fb8cd660cc96b3f213c7a515f2b1bb0e3b8a241dae5092e05b7167a"
+        }
+      ],
+      "provider_calls": 0,
+      "repair_or_stop": "Use separate process inspection plus run-root/lock/checkpoint state; after zero-state verification the exact same frozen contract was launched once.",
+      "rerun_policy": "SINGLE_LAUNCH_PERMITTED_AFTER_ZERO_STATE_VERIFICATION",
+      "reusable_rule": "Duplicate-launch guards must be resistant to self-match; content-addressed run-root/lock/checkpoint state is stronger than naive full-command pgrep.",
+      "root_cause": "The search pattern was present in the guard process command line itself.",
+      "scientific_belief_update": "NONE",
+      "scientific_data_observed_for_effectiveness": false,
+      "scientific_endpoint_reached": false,
+      "stage": "V3.1 provider-runtime Pilot V2 launch preflight",
+      "symptom": "A naive pgrep -af duplicate-launch guard matched the current shell command and falsely reported ALREADY_RUNNING.",
+      "terminal_status": "LAUNCH_NOT_ATTEMPTED_FALSE_ALREADY_RUNNING"
+    },
+    {
+      "classification": [
+        "IMPLEMENTATION"
+      ],
+      "contamination": "NONE",
+      "failure_id": "R17-F011-RUNNER-WRITE-TRANSPORT-LIMIT",
+      "preserved_artifacts": [
+        {
+          "path": "generated/e2-r17-e1-b-negative-control-runner-write-failure-20260829.json",
+          "sha256": "5fa4cf51566e6eee58b870618efba60e77a918802efb79335b7724e97802b2f9"
+        }
+      ],
+      "provider_calls": 0,
+      "repair_or_stop": "Write the same runner in bounded chunks; keep all protocol checks.",
+      "rerun_policy": "SOURCE_ARTIFACT_WRITE_PERMITTED_IN_BOUNDED_CHUNKS",
+      "reusable_rule": "Tool payload limits are implementation failures; split artifact writes rather than deleting scientific checks.",
+      "root_cause": "Tool/transport command-size limit, not experiment/runtime failure.",
+      "scientific_belief_update": "NONE",
+      "scientific_data_observed_for_effectiveness": false,
+      "scientific_endpoint_reached": false,
+      "stage": "E1-B negative-control runner implementation",
+      "symptom": "One oversized remote atomic source-write failed with spawn ENAMETOOLONG before creating the runner file.",
+      "terminal_status": "ARTIFACT_WRITE_NOT_CREATED"
+    }
+  ],
+  "permanent_rules": [
+    "A technical, runtime, protocol, or measurement failure that occurs before a valid scientific endpoint produces no scientific belief update about the mechanism.",
+    "The failed artifact, failed run root, stale lock, raw model response, and negative result are preserved when available; repair occurs under a new version/contract/root rather than overwriting history.",
+    "A protocol-invalid result cannot be counted as a scientific negative or positive.",
+    "A valid primary scientific negative cannot later be relabeled as implementation failure without new concrete evidence showing protocol invalidity that existed at execution time.",
+    "A SCIENTIFIC_MECHANISM failure triggers the predeclared STOP/HOLD rule; additional benchmarks, models, task substitution, threshold changes, or favorable subsets cannot rescue the central causal claim.",
+    "Every rerun must state the failure classification, exact repair delta, why rerun is scientifically permissible, and which scientific variables remain unchanged.",
+    "Reviewer/parser/harness failures preserve exact raw model output separately from local validation status; reparsing existing output is preferred to paying for a new model call when semantics were already complete.",
+    "Runtime qualification is role-specific: actor/evaluator, updater, and public-baseline harnesses must each import and exercise the exact execution entrypoint under their exact frozen runtime. Qualification of one role never implies qualification of another.",
+    "A preflight is authoritative only if it reproduces the actual source-path binding, environment variables, executable, and entrypoint used by the scientific runner.",
+    "Any dependency override applied after a lockfile-derived environment is explicit, versioned, hash-bound, justified, and requalified; it must never be described as lock-native.",
+    "Success is also terminal evidence: completed runs must record protocol integrity, endpoint reached, scientific interpretation authority, and next gate rather than merely disappearing into a summary file."
+  ],
+  "purpose": "Every R17 execution attempt must terminate as a valid success or as an explicitly classified failure. Technical/protocol/measurement failures are separated from qualified scientific-mechanism failures so that repairs cannot silently rewrite scientific evidence and scientific negatives cannot be laundered into engineering bugs.",
+  "qualified_successes": [
+    {
+      "evidence": {
+        "path": "generated/e2-r17-v31-provider-runtime-pilot-v2-adjudication-20260829.json",
+        "sha256": "8be8a4596ffef8e3702f8e422ed4dd2c55b7fc1f97573b125f30096d64f60424"
+      },
+      "heldout_evaluation_calls": 0,
+      "lesson": "Dedicated role-specific updater runtime repaired R17-F008; real first-party SkillEvolver consumed WIN-A/WIN-B/MRW under V3.1 blinding and exact budget accounting without runtime/parse failure.",
+      "parse_error_calls": 0,
+      "provider_calls": 30,
+      "scientific_effectiveness_evaluated": false,
+      "stage": "V3.1 hosted provider-runtime Pilot V2",
+      "status": "PASS_PROVIDER_RUNTIME_MEASURABILITY_ONLY_E1B_STILL_UNAUTHORIZED",
+      "success_id": "R17-S001-PROVIDER-RUNTIME-V2"
+    },
+    {
+      "evidence": {
+        "path": "generated/e2-r17-e1-b-transition-runtime-pilot-adjudication-20260829.json",
+        "sha256": "75e19d67b1cdb0e65a28a1f2943e223629c27cfcb2b0b562bbca8d32ee988185"
+      },
+      "heldout_evaluation_calls": 0,
+      "lesson": "Receipt/content-addressed learned skill can cross from dedicated updater runtime into frozen actor/evaluator runtime and complete K=1 verifier execution; this removes the final runtime handoff blocker before full WIN-A/WIN-B negative control.",
+      "provider_calls": 16,
+      "scientific_effectiveness_evaluated": false,
+      "stage": "E1-B update-to-noninitial-skill transition runtime Pilot",
+      "status": "PASS_UPDATE_TO_NONINITIAL_SKILL_EVALUATION_HANDOFF_ONLY",
+      "success_id": "R17-S002-E1B-TRANSITION-HANDOFF"
+    },
+    {
+      "evidence": [
+        {
+          "path": "generated/e2-r17-e1-b-negative-control-review-20260829/summary.json",
+          "sha256": "f278d530857eff2a5fd3337417d38b50ea537a13dc1b2f4d17d042ee06a34a64"
+        },
+        {
+          "path": "generated/e2-r17-e1-b-negative-control-full-contract-20260829.json",
+          "sha256": "6c84a98d5987e40bde26a41f18cb6cd68f3e7d2ffb0ede69d176128185782c03"
+        },
+        {
+          "path": "generated/e2-r17-e1-b-negative-control-full-authorization-20260829.json",
+          "sha256": "e62770ac9531001c2c4adf1fade5b617498c26e1bae8dedb108967c7a698d8a4"
+        }
+      ],
+      "lesson": "Both independent reviewers accepted the identical-treatment nuisance-control design and predeclared paired-equivalence statistics; zero-provider preflight revalidated all 96 E1-A pools, 12 stream pairs, 18 heldout probes, role-specific runtimes, hard budgets and frozen analysis constants before any A/B outcome exists.",
+      "provider_calls": 0,
+      "scientific_outcome_observed": false,
+      "stage": "E1-B WIN-A/WIN-B full negative-control dual review + zero-provider preflight",
+      "status": "PASS_AUTHORIZED_NOT_EXECUTED",
+      "success_id": "R17-S003-E1B-NC-PREEXECUTION-GATE"
+    }
+  ],
+  "schema_version": "1.3",
+  "status": "ACTIVE_CANONICAL_FAILURE_LEDGER_FOR_R17_WORKTREE",
+  "supersedes": {
+    "path": "generated/e2-r17-failure-differential-registry-v3-20260829.json",
+    "sha256": "5f44cc4a43e0aa94a84f42b1fc8c752b2a9d396dfde54144afff2e1aacfd59a6"
+  },
+  "taxonomy": {
+    "IMPLEMENTATION": "Local code, launcher, parser, review harness, checkpoint, or accounting defect before a valid scientific endpoint.",
+    "MEASUREMENT_ANALYSIS": "Estimator, renderer, token/accounting, or adjudicator failure that invalidates the intended measurement without establishing a scientific negative.",
+    "PROTOCOL_CAUSAL_PURITY": "A design or dataflow defect that changes or leaks treatment, invalidating causal interpretation even if code runs.",
+    "RUNTIME_INFRA": "Environment/dependency/role-runtime or provider-route failure that prevents the frozen scientific procedure from reaching its endpoint.",
+    "SCIENTIFIC_MECHANISM": "A protocol-valid, fully qualified primary experiment reaches its endpoint and rejects/equates/harms the central mechanism under the frozen decision rule. This class triggers scientific STOP unless a predeclared scope limitation applies."
+  }
+}

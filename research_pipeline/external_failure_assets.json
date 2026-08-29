@@ -19,6 +19,42 @@
     {
       "source_path": "research_pipeline/v19r003_forced_switch_failure_assets_20260824.json",
       "source_key": "semantic_observability_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "final_visible_budget_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "causal_provenance_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "provider_budget_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "role_runtime_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "zero_missing_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "review_layer_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "execution_faithful_preflight_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "duplicate_launch_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "negative_control_identifiability_asset"
     }
   ],
   "scientific_authority": false

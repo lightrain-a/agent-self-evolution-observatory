@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from typing import Any
 
 from research_pipeline.ark_provider import ArkResponseStateError, ArkResponsesClient, ArkSettings
+from research_pipeline.e2_r17_provider_budget import ProviderBudgetClaim, ProviderBudgetLedger
 
 PLAN_BASE_URL = "https://ark.cn-beijing.volces.com/api/plan/v3"
 
@@ -97,6 +98,9 @@ class ArkPlanReactReceipt:
     get_poll_recovery: bool
     provider_retry_limit: int
     hidden_provider_retry_used: bool = False
+    provider_budget_claim_id: int | None = None
+    provider_budget_unit_call_index: int | None = None
+    provider_budget_total_claimed_after: int | None = None
 
 
 class ArkPlanReactLLM:
@@ -118,6 +122,8 @@ class ArkPlanReactLLM:
         max_output_tokens: int = 4096,
         temperature: float | None = 0,
         thinking: str | None = "disabled",
+        provider_budget_ledger: ProviderBudgetLedger | None = None,
+        provider_budget_unit_id: str | None = None,
     ) -> None:
         raw = settings or ArkSettings.from_env(required=True)
         if raw.base_url.rstrip("/") != PLAN_BASE_URL:
@@ -135,6 +141,11 @@ class ArkPlanReactLLM:
         self.max_output_tokens = int(max_output_tokens)
         self.temperature = temperature
         self.thinking = thinking
+        if (provider_budget_ledger is None) != (provider_budget_unit_id is None):
+            raise ValueError("provider budget ledger and unit id must be supplied together")
+        self.provider_budget_ledger = provider_budget_ledger
+        self.provider_budget_unit_id = str(provider_budget_unit_id) if provider_budget_unit_id is not None else None
+        self.provider_budget_claims: list[ProviderBudgetClaim] = []
         self.receipts: list[ArkPlanReactReceipt] = []
 
     async def __call__(
@@ -171,6 +182,11 @@ class ArkPlanReactLLM:
         return message
 
     def _respond(self, prompt: str, tools: list[dict[str, Any]]) -> dict[str, Any]:
+        budget_claim: ProviderBudgetClaim | None = None
+        if self.provider_budget_ledger is not None:
+            assert self.provider_budget_unit_id is not None
+            budget_claim = self.provider_budget_ledger.claim(self.provider_budget_unit_id)
+            self.provider_budget_claims.append(budget_claim)
         try:
             result = self.client.respond(
                 prompt,
@@ -221,12 +237,18 @@ class ArkPlanReactLLM:
             thinking_requested=self.thinking,
             get_poll_recovery=bool(result.get("get_poll_recovery", False)),
             provider_retry_limit=self.settings.max_retries,
+            provider_budget_claim_id=budget_claim.claim_id if budget_claim else None,
+            provider_budget_unit_call_index=budget_claim.unit_call_index if budget_claim else None,
+            provider_budget_total_claimed_after=budget_claim.total_claimed_after if budget_claim else None,
         )
         self.receipts.append(receipt)
         return result
 
     def public_receipts(self) -> list[dict[str, Any]]:
         return [asdict(receipt) for receipt in self.receipts]
+
+    def public_budget_claims(self) -> list[dict[str, Any]]:
+        return [claim.to_dict() for claim in self.provider_budget_claims]
 
     @property
     def receipt_bundle_sha256(self) -> str:

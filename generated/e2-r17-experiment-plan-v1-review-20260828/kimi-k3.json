@@ -1,0 +1,157 @@
+{
+  "artifact_type": "e2-r17-experiment-plan-v1-independent-review",
+  "created_at_utc": "2026-08-28T07:31:55+00:00",
+  "dossier_file_sha256": {
+    "consultations/e2-r17-baseline-model-choice-audit-20260828.md": "5e4130ccd2e65348fc6248868261f4fa95b8e70d0aa7e7a155291821de755ab6",
+    "consultations/e2-r17-experiment-plan-v1-20260828.md": "43f48dc83acc72b19d2f5c97360a92d6e0744c953992a399d0a143ec510b5d29",
+    "consultations/e2-r17-public-dataset-and-baseline-audit-20260828.md": "2e86fbdf8b985e9d710043dfeccf964d8fcc17ee2f90a483e41b745c33a21126",
+    "generated/e2-r17-baseline-model-choice-audit-20260828.json": "b51884d00892cb7bc9e21209fb279d62597326a028b28f7a248207771eb58268",
+    "generated/e2-r17-e0-analysis-20260828.json": "7989970ec4307c21c49b87ce37bf2cf516be99cfa1c27961743be2c7220ffe58",
+    "generated/e2-r17-e0-go-hold-stop-20260828.json": "51afaadf7e48a892cd196a638437e0185800c4dd0d283340210a5436f1c1c529",
+    "generated/e2-r17-e0-pilot-analysis-20260828.json": "b4f81751b63a12af66a196ec1c0cab075d441dad1cd2642a5283bb83f211436d",
+    "generated/e2-r17-experiment-plan-v1-20260828.json": "928ae3e9eac9259dba47d08cca3d91309f2bedb4692d597b89806f0313625549",
+    "generated/e2-r17-experiment-plan-v1-model-identity-qualification-20260828.json": "f91d1c516dcdae64c17de92999c4ad1950e9631b2ed0033ae3e333af676019ec",
+    "generated/e2-r17-f0-r4-frozen-candidate-contract-20260828.json": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508"
+  },
+  "expected_resolved_model": "kimi-k3",
+  "experiment_authority": false,
+  "exposed_to_other_review": false,
+  "get_poll_recovery": false,
+  "hidden_provider_retry_used": false,
+  "independent": true,
+  "max_output_tokens": 6500,
+  "missing_required_fields": [],
+  "paper_promotion_authority": false,
+  "parse_valid": true,
+  "plan_sha256": "928ae3e9eac9259dba47d08cca3d91309f2bedb4692d597b89806f0313625549",
+  "poll_count": 0,
+  "prompt_path": "generated/e2-r17-experiment-plan-v1-review-20260828/kimi-k3-prompt.md",
+  "prompt_sha256": "30783a847d2a7905b6ccba3d2d4e38cdf3138d56b9455d1879a45f5ec6a22e5f",
+  "provider_generation_attempts": 1,
+  "provider_retry_limit": 0,
+  "provider_status": "completed",
+  "raw_text": "{\n  \"plan_sha256_acknowledged\": \"928ae3e9eac9259dba47d08cca3d91309f2bedb4692d597b89806f0313625549\",\n  \"verdict\": \"REVISE_BEFORE_ANY_PILOT\",\n  \"scientific_chain_coherent\": true,\n  \"pilot_is_outcome_blind\": true,\n  \"e0_hold_respected\": true,\n  \"model_selection_assessment\": \"The model logic is mostly sound: weak/common/strong/family-diversity axes follow the baseline audit, and the plan explicitly forbids choosing models by R17 gain. The main defect is that the common-open role is still not pinned to one exact release before Pilot, which leaves a small but real selection opening. DeepSeek as the frozen updater is defensible because it is already qualified and role separation is preserved, but it is also mildly confounded with executor identity in the primary identification run; that must be labeled as a limitation and later stress-tested with one second updater only after E1 GO.\",\n  \"baseline_fidelity_assessment\": \"The labels are broadly fair. MindMemOS, RethinkSkill, SkillOpt, and SkillEvolBench are treated as official implementations; SkillCAT-style and Branch2Skill-style are correctly demoted to paper-spec reconstructions, and TSR is context rather than a direct baseline. The fairness risk is not mislabeling but budget parity: V2 must force reconstruction arms to match update calls, context/token budget, validation access, and actor-call accounting exactly, otherwise the contrast arms are not decisive controls.\",\n  \"benchmark_and_split_assessment\": \"The Verified-400 16/160/24/200 split is defensible and non-shopping because it is deterministic, content-hash based, stratified only by released metadata, and frozen before outcomes. The one-step 20-stream design is scientifically compatible with the same-pool object and does estimate a public one-step transport effect, but it does not by itself estimate broad public effectiveness across repeated evolution; V2 should phrase the claim as one-step public transport only. SkillEvolBench is acceptable only as secondary external validation after adapter qualification; because it uses a native updater and a different harness, it cannot be treated as a second exact-same-pool causal test.\",\n  \"sample_size_and_statistics_assessment\": \"The statistical skeleton is mostly valid: E1 uses the stream-state as the unit, the exact sign-flip test matches n=12, and the public design correctly avoids counting 200 test tasks as independent learned skills. The blocking issue is power and support: 12 streams with an all-or-nothing support gate can be underpowered and can fail structurally even when the mechanism is real. V2 must add an outcome-blind power/support simulation and predeclare a deterministic short-fallback rule for unexposed streams; otherwise the decisive test may be uninformative rather than negative.\",\n  \"checkpoint_and_resume_assessment\": \"Checkpointing is strong at the unit level: raw immutability, atomic checkpoints, missing-unit-only resume, and explicit timeout inspection are all appropriate. The remaining gap is cross-stage idempotency: V2 should bind pool-freeze, projection-freeze, update-freeze, and evaluation-freeze checkpoints to a single stream-state manifest so that a later resume cannot accidentally regenerate a pool, reselect a witness, or duplicate provider calls after a partial failure.\",\n  \"budget_and_matrix_assessment\": \"The budget is realistic enough to scope S0 and E1 because it is grounded in measured E0 actor rates, and the refusal to invent monetary cost is correct. The hidden multiplicative cost is E2: pools are shared across methods, but updates, validation, and test evaluations multiply by models x methods x streams, and the two extra provider/order replications add another large factor. V2 should publish a hard ceiling table for actor calls, updater calls, tokens, wall time, and replication triggers before any Pilot is allowed.\",\n  \"decisive_experiment_and_stop_assessment\": \"The STOP chain is mostly decisive: S0 insufficient support stops the substrate, E1 null or duplicated-winner equivalence stops the mechanism, E2 null stops public transport, E3 failure deletes prediction, and E4 failure blocks longitudinal claims. The movable parts are the E1 support gate and the E2 'directionally consistent support' language on the secondary benchmark; V2 must make those thresholds numeric and immutable so a near-miss cannot be reclassified after the fact.\",\n  \"fatal_or_blocking_issues\": [\n    {\n      \"priority\": \"P0\",\n      \"issue\": \"E1 support and power are not yet shown to be adequate under the frozen 12-stream design.\",\n      \"why_blocking\": \"If fewer than six streams are exposed or rescue packets are concentrated in too few streams, the exact sign-flip test can become structurally uninformative; that would turn a real mechanism into an underpowered null rather than a decisive answer.\",\n      \"exact_v2_repair\": \"Add an outcome-blind simulation using only frozen E0/task-structure assumptions to estimate rescue exposure, stream exposure, and minimum detectable effect for n=12; predeclare the exact fallback if support is marginal, including whether the design stops, enlarges only the support lane, or proceeds with a clearly labeled underpowered analysis.\"\n    },\n    {\n      \"priority\": \"P0\",\n      \"issue\": \"The common-open executor role is still not pinned to one exact model release before Pilot.\",\n      \"why_blocking\": \"Leaving 'Qwen3.5-35B-A3B or Qwen3.6-35B-A3B' unresolved permits post hoc model-name selection after availability friction or early runtime behavior is observed, which weakens the claim that the matrix was frozen independently of outcomes.\",\n      \"exact_v2_repair\": \"Choose one exact release string before any Pilot, record the availability rule that selected it, and forbid substitution except for a predeclared outage criterion applied before any benchmark outcome is seen.\"\n    },\n    {\n      \"priority\": \"P0\",\n      \"issue\": \"The public-benchmark estimand is slightly overclaimed relative to the one-step design.\",\n      \"why_blocking\": \"The 20-stream Verified-400 design estimates one-step transport of the same-pool mechanism, not general public effectiveness across repeated evolution; if the manuscript language drifts, the public result will be asked to support a broader claim than the design can bear.\",\n      \"exact_v2_repair\": \"Rewrite H2 and the E2 objective to claim only one-step public transport under frozen K=1 evaluation, and reserve any multi-round public claim for E4 with its own contract.\"\n    },\n    {\n      \"priority\": \"P0\",\n      \"issue\": \"The E2 budget still hides a multiplicative replication and evaluation factor.\",\n      \"why_blocking\": \"The core matrix is affordable only if pool sharing is preserved and replications are tightly capped; without hard ceilings, the public stage can expand beyond the intended scope after Pilot receipts arrive.\",\n      \"exact_v2_repair\": \"Publish a V2 ceiling table for actor calls, updater calls, validation/test rollouts, tokens, and wall time for the primary partition and for each allowed replication, with an explicit rule that any overrun triggers scope reduction rather than silent expansion.\"\n    }\n  ],\n  \"required_v2_changes\": [\n    {\n      \"priority\": \"P0\",\n      \"target\": \"E1 support gate and power analysis\",\n      \"change\": \"Add an outcome-blind support/power simulation and a deterministic rule for marginal support or unexposed streams.\",\n      \"verdict_relevance\": \"Determines whether E1 is a decisive causal test or an underpowered screen.\"\n    },\n    {\n      \"priority\": \"P0\",\n      \"target\": \"Model matrix freeze\",\n      \"change\": \"Pin the exact common-open Qwen release before Pilot and freeze the substitution rule.\",\n      \"verdict_relevance\": \"Removes the remaining model cherry-picking opening.\"\n    },\n    {\n      \"priority\": \"P0\",\n      \"target\": \"E2 claim wording\",\n      \"change\": \"Narrow the public hypothesis to one-step transport and move repeated-evolution claims to E4 only.\",\n      \"verdict_relevance\": \"Prevents the public benchmark from being asked to prove more than the design estimates.\"\n    },\n    {\n      \"priority\": \"P0\",\n      \"target\": \"Budget ceilings\",\n      \"change\": \"Bind hard call/token/time ceilings for E2 primary and replication runs before Pilot.\",\n      \"verdict_relevance\": \"Keeps the public matrix from expanding silently after partial results.\"\n    },\n    {\n      \"priority\": \"P1\",\n      \"target\": \"Baseline parity controls\",\n      \"change\": \"Require exact parity of updater calls, context/token budget, validation access, and actor-call accounting for SkillCAT-style and Branch2Skill-style reconstructions.\",\n      \"verdict_relevance\": \"Protects the fairness of the strongest control arms.\"\n    },\n    {\n      \"priority\": \"P1\",\n      \"target\": \"SkillEvolBench role\",\n      \"change\": \"State explicitly that SkillEvolBench is secondary external validation only, not a second same-pool causal identification lane.\",\n      \"verdict_relevance\": \"Prevents benchmark-role drift across stages.\"\n    },\n    {\n      \"priority\": \"P1\",\n      \"target\": \"Checkpoint manifests\",\n      \"change\": \"Bind each stream-state to one immutable manifest covering pool, projection, update, and evaluation checkpoints.\",\n      \"verdict_relevance\": \"Reduces the risk of duplicate provider calls or regenerated pools during resume.\"\n    },\n    {\n      \"priority\": \"P2\",\n      \"target\": \"Updater limitation\",\n      \"change\": \"Label DeepSeek-as-updater as a limitation in the primary run and defer the second-updater robustness check until after E1 GO.\",\n      \"verdict_relevance\": \"Clarifies the confound without expanding the matrix prematurely.\"\n    }\n  ],\n  \"nonblocking_improvements\": [\n    \"Report model-specific public CIs before any cross-model descriptive average.\",\n    \"Publish the exact deterministic split IDs for Verified-400 in V2 rather than only the rule.\",\n    \"Add a one-line limitation that the controlled suite is not public external validity evidence.\"\n  ],\n  \"pilot_recommendation_after_v2\": \"ALLOW_OUTCOME_BLIND_RUNTIME_PILOTS\",\n  \"e0_full_extension_recommendation\": \"REVIEW_SEPARATE_CONTRACT\",\n  \"e1_recommendation\": \"HOLD_UNTIL_E0_FULL_AND_V3\",\n  \"paper_claim_authority\": false,\n  \"single_sentence_verdict\": \"The central chain is coherent and the E0 HOLD is respected, but V1 must tighten E1 power/support, freeze the exact common-open model, narrow the public claim to one-step transport, and cap the E2 budget before any outcome-blind runtime Pilots are allowed.\"\n}",
+  "raw_text_sha256": "b8ad2f059617a2dddf66b49f01ef99a44f3b57d1959d9b450488f6b6a71219e9",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "75cea6b32d9600e78503ce2d114f903cfbd3900b946c886770fc3f4cb17d4bf7",
+  "review": {
+    "baseline_fidelity_assessment": "The labels are broadly fair. MindMemOS, RethinkSkill, SkillOpt, and SkillEvolBench are treated as official implementations; SkillCAT-style and Branch2Skill-style are correctly demoted to paper-spec reconstructions, and TSR is context rather than a direct baseline. The fairness risk is not mislabeling but budget parity: V2 must force reconstruction arms to match update calls, context/token budget, validation access, and actor-call accounting exactly, otherwise the contrast arms are not decisive controls.",
+    "benchmark_and_split_assessment": "The Verified-400 16/160/24/200 split is defensible and non-shopping because it is deterministic, content-hash based, stratified only by released metadata, and frozen before outcomes. The one-step 20-stream design is scientifically compatible with the same-pool object and does estimate a public one-step transport effect, but it does not by itself estimate broad public effectiveness across repeated evolution; V2 should phrase the claim as one-step public transport only. SkillEvolBench is acceptable only as secondary external validation after adapter qualification; because it uses a native updater and a different harness, it cannot be treated as a second exact-same-pool causal test.",
+    "budget_and_matrix_assessment": "The budget is realistic enough to scope S0 and E1 because it is grounded in measured E0 actor rates, and the refusal to invent monetary cost is correct. The hidden multiplicative cost is E2: pools are shared across methods, but updates, validation, and test evaluations multiply by models x methods x streams, and the two extra provider/order replications add another large factor. V2 should publish a hard ceiling table for actor calls, updater calls, tokens, wall time, and replication triggers before any Pilot is allowed.",
+    "checkpoint_and_resume_assessment": "Checkpointing is strong at the unit level: raw immutability, atomic checkpoints, missing-unit-only resume, and explicit timeout inspection are all appropriate. The remaining gap is cross-stage idempotency: V2 should bind pool-freeze, projection-freeze, update-freeze, and evaluation-freeze checkpoints to a single stream-state manifest so that a later resume cannot accidentally regenerate a pool, reselect a witness, or duplicate provider calls after a partial failure.",
+    "decisive_experiment_and_stop_assessment": "The STOP chain is mostly decisive: S0 insufficient support stops the substrate, E1 null or duplicated-winner equivalence stops the mechanism, E2 null stops public transport, E3 failure deletes prediction, and E4 failure blocks longitudinal claims. The movable parts are the E1 support gate and the E2 'directionally consistent support' language on the secondary benchmark; V2 must make those thresholds numeric and immutable so a near-miss cannot be reclassified after the fact.",
+    "e0_full_extension_recommendation": "REVIEW_SEPARATE_CONTRACT",
+    "e0_hold_respected": true,
+    "e1_recommendation": "HOLD_UNTIL_E0_FULL_AND_V3",
+    "fatal_or_blocking_issues": [
+      {
+        "exact_v2_repair": "Add an outcome-blind simulation using only frozen E0/task-structure assumptions to estimate rescue exposure, stream exposure, and minimum detectable effect for n=12; predeclare the exact fallback if support is marginal, including whether the design stops, enlarges only the support lane, or proceeds with a clearly labeled underpowered analysis.",
+        "issue": "E1 support and power are not yet shown to be adequate under the frozen 12-stream design.",
+        "priority": "P0",
+        "why_blocking": "If fewer than six streams are exposed or rescue packets are concentrated in too few streams, the exact sign-flip test can become structurally uninformative; that would turn a real mechanism into an underpowered null rather than a decisive answer."
+      },
+      {
+        "exact_v2_repair": "Choose one exact release string before any Pilot, record the availability rule that selected it, and forbid substitution except for a predeclared outage criterion applied before any benchmark outcome is seen.",
+        "issue": "The common-open executor role is still not pinned to one exact model release before Pilot.",
+        "priority": "P0",
+        "why_blocking": "Leaving 'Qwen3.5-35B-A3B or Qwen3.6-35B-A3B' unresolved permits post hoc model-name selection after availability friction or early runtime behavior is observed, which weakens the claim that the matrix was frozen independently of outcomes."
+      },
+      {
+        "exact_v2_repair": "Rewrite H2 and the E2 objective to claim only one-step public transport under frozen K=1 evaluation, and reserve any multi-round public claim for E4 with its own contract.",
+        "issue": "The public-benchmark estimand is slightly overclaimed relative to the one-step design.",
+        "priority": "P0",
+        "why_blocking": "The 20-stream Verified-400 design estimates one-step transport of the same-pool mechanism, not general public effectiveness across repeated evolution; if the manuscript language drifts, the public result will be asked to support a broader claim than the design can bear."
+      },
+      {
+        "exact_v2_repair": "Publish a V2 ceiling table for actor calls, updater calls, validation/test rollouts, tokens, and wall time for the primary partition and for each allowed replication, with an explicit rule that any overrun triggers scope reduction rather than silent expansion.",
+        "issue": "The E2 budget still hides a multiplicative replication and evaluation factor.",
+        "priority": "P0",
+        "why_blocking": "The core matrix is affordable only if pool sharing is preserved and replications are tightly capped; without hard ceilings, the public stage can expand beyond the intended scope after Pilot receipts arrive."
+      }
+    ],
+    "model_selection_assessment": "The model logic is mostly sound: weak/common/strong/family-diversity axes follow the baseline audit, and the plan explicitly forbids choosing models by R17 gain. The main defect is that the common-open role is still not pinned to one exact release before Pilot, which leaves a small but real selection opening. DeepSeek as the frozen updater is defensible because it is already qualified and role separation is preserved, but it is also mildly confounded with executor identity in the primary identification run; that must be labeled as a limitation and later stress-tested with one second updater only after E1 GO.",
+    "nonblocking_improvements": [
+      "Report model-specific public CIs before any cross-model descriptive average.",
+      "Publish the exact deterministic split IDs for Verified-400 in V2 rather than only the rule.",
+      "Add a one-line limitation that the controlled suite is not public external validity evidence."
+    ],
+    "paper_claim_authority": false,
+    "pilot_is_outcome_blind": true,
+    "pilot_recommendation_after_v2": "ALLOW_OUTCOME_BLIND_RUNTIME_PILOTS",
+    "plan_sha256_acknowledged": "928ae3e9eac9259dba47d08cca3d91309f2bedb4692d597b89806f0313625549",
+    "required_v2_changes": [
+      {
+        "change": "Add an outcome-blind support/power simulation and a deterministic rule for marginal support or unexposed streams.",
+        "priority": "P0",
+        "target": "E1 support gate and power analysis",
+        "verdict_relevance": "Determines whether E1 is a decisive causal test or an underpowered screen."
+      },
+      {
+        "change": "Pin the exact common-open Qwen release before Pilot and freeze the substitution rule.",
+        "priority": "P0",
+        "target": "Model matrix freeze",
+        "verdict_relevance": "Removes the remaining model cherry-picking opening."
+      },
+      {
+        "change": "Narrow the public hypothesis to one-step transport and move repeated-evolution claims to E4 only.",
+        "priority": "P0",
+        "target": "E2 claim wording",
+        "verdict_relevance": "Prevents the public benchmark from being asked to prove more than the design estimates."
+      },
+      {
+        "change": "Bind hard call/token/time ceilings for E2 primary and replication runs before Pilot.",
+        "priority": "P0",
+        "target": "Budget ceilings",
+        "verdict_relevance": "Keeps the public matrix from expanding silently after partial results."
+      },
+      {
+        "change": "Require exact parity of updater calls, context/token budget, validation access, and actor-call accounting for SkillCAT-style and Branch2Skill-style reconstructions.",
+        "priority": "P1",
+        "target": "Baseline parity controls",
+        "verdict_relevance": "Protects the fairness of the strongest control arms."
+      },
+      {
+        "change": "State explicitly that SkillEvolBench is secondary external validation only, not a second same-pool causal identification lane.",
+        "priority": "P1",
+        "target": "SkillEvolBench role",
+        "verdict_relevance": "Prevents benchmark-role drift across stages."
+      },
+      {
+        "change": "Bind each stream-state to one immutable manifest covering pool, projection, update, and evaluation checkpoints.",
+        "priority": "P1",
+        "target": "Checkpoint manifests",
+        "verdict_relevance": "Reduces the risk of duplicate provider calls or regenerated pools during resume."
+      },
+      {
+        "change": "Label DeepSeek-as-updater as a limitation in the primary run and defer the second-updater robustness check until after E1 GO.",
+        "priority": "P2",
+        "target": "Updater limitation",
+        "verdict_relevance": "Clarifies the confound without expanding the matrix prematurely."
+      }
+    ],
+    "sample_size_and_statistics_assessment": "The statistical skeleton is mostly valid: E1 uses the stream-state as the unit, the exact sign-flip test matches n=12, and the public design correctly avoids counting 200 test tasks as independent learned skills. The blocking issue is power and support: 12 streams with an all-or-nothing support gate can be underpowered and can fail structurally even when the mechanism is real. V2 must add an outcome-blind power/support simulation and predeclare a deterministic short-fallback rule for unexposed streams; otherwise the decisive test may be uninformative rather than negative.",
+    "scientific_chain_coherent": true,
+    "single_sentence_verdict": "The central chain is coherent and the E0 HOLD is respected, but V1 must tighten E1 power/support, freeze the exact common-open model, narrow the public claim to one-step transport, and cap the E2 budget before any outcome-blind runtime Pilots are allowed.",
+    "verdict": "REVISE_BEFORE_ANY_PILOT"
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "submission_authority": false,
+  "temperature": 0,
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 33175,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 2282,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 35457
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "all_allow_conditional_freeze_after_negative_control_pass": true,
+  "artifact_type": "e2-r17-mrw-conditional-contract-dual-review",
+  "conditional_freeze_recommendations": {
+    "deepseek-v4-pro": "ALLOW_CONDITIONAL_DRAFT_FREEZE_ONLY",
+    "kimi-k3": "ALLOW_CONDITIONAL_DRAFT_FREEZE_ONLY"
+  },
+  "created_at_utc": "2026-08-29T13:56:40+00:00",
+  "draft_contract_sha256": "3520bd3e1d7e912e349bfea0d0a48fbe03e05b874064c0e494e704f3564fe04b",
+  "mrw_execution_authority": false,
+  "negative_control_outcome_used": false,
+  "paper_claim_authority": false,
+  "schema_version": "1.0",
+  "statuses": {
+    "deepseek-v4-pro": "COMPLETED",
+    "kimi-k3": "COMPLETED"
+  },
+  "verdicts": {
+    "deepseek-v4-pro": "PASS_TO_CONDITIONAL_FREEZE_AFTER_NEGATIVE_CONTROL_PASS",
+    "kimi-k3": "PASS_TO_CONDITIONAL_FREEZE_AFTER_NEGATIVE_CONTROL_PASS"
+  }
+}
