@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_SCMB_PROVIDER_SUPPORT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-SCMB-P0-FRESH-UPTAKE-20260829",
+  "generated_at": "2026-08-29T15:00:18.979379+00:00",
+  "execution_base": "0abfa2167dba405be6f23087aec3ae9019d4a6ca",
+  "git_sha": "e8734d163f80325fa5cc7a52591e3ba5c2e39a1e",
+  "probe_is_scientific": false,
+  "prompt_sha256": "2604146949a91bc610aabc8727a9044a5b9420bedcf2423df223d9f95fdf4e61",
+  "requested_model": "doubao-seed-2.0-mini",
+  "expected_resolved": "doubao-seed-2-0-mini-260215",
+  "provider": {
+    "configured": true,
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "default_model": "ark-code-latest",
+    "timeout_seconds": 180,
+    "max_retries": 0,
+    "api_key_in_output": false
+  },
+  "status": "SUPPORT_PASS",
+  "checks": {
+    "text": true,
+    "requested": true,
+    "resolved": true,
+    "no_fallback": true,
+    "status": true
+  },
+  "response": {
+    "response_id": "resp_021788015619081cb43b51ad7a6f2b3d703638489b11c0384aa84",
+    "status": "completed",
+    "resolved_model": "doubao-seed-2-0-mini-260215",
+    "text_sha256": "f6cad390672513b23bdb0abf3d005f0bab7c373cf423c11153a131333755731d",
+    "usage": {
+      "input_tokens": 59,
+      "output_tokens": 5,
+      "total_tokens": 64,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      }
+    }
+  },
+  "provider_posts": 1,
+  "scientific_outcomes": 0
+}

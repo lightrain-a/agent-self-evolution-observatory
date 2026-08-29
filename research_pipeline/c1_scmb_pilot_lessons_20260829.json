@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "asset_kind": "C1_SCMB_PILOT_LEARNING_ASSET",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-SCMB-P0-FRESH-UPTAKE-20260829",
+  "status": "POSITIVE_RESIDUAL_ASSET_WITH_HETEROGENEITY_BOUNDARY",
+  "lessons": [
+    "A stage-local diagnosis should not be converted directly into a repair prescription: the earlier explicit-use reminder failed even though the uptake boundary was correctly localized.",
+    "A mechanism-aligned state-conditioned transformation can increase aggregate first-action transport relative to both native and memory-only controls, but the effect can be concentrated in a small subset of states.",
+    "For proof-of-concept engineering validation, a modest aggregate gain is informative only when the paper preserves the preregistered consistency failure and does not relabel the pilot as a general repair pass.",
+    "Existing state-aware memory work means the adapter itself is not the novelty; its role is to test whether the diagnosis selects the right repair family.",
+    "Do not tune an applicability gate on the observed 12-state policy outcomes and consume the sealed 19-state holdout. Applicability must be justified by an independent pre-outcome observable before reopen."
+  ],
+  "scientific_belief_update": {
+    "increase": "Belief that the post-exposure/pre-uptake diagnosis has engineering relevance at the repair-family level: state-conditioned binding changes aggregate branch-specific uptake whereas a salience reminder does not.",
+    "decrease": "Belief that a single state-binding transformation is a broadly consistent repair across tasks.",
+    "preserve": "The W/E/U/O/F diagnostic-completeness result and the operational stage boundary remain independent of repair performance."
+  },
+  "reopen_condition": "A new applicability-gated confirmatory object may use the 19 fresh template holdouts only if its gate is frozen from independent pre-outcome theory/evidence, not chosen to explain the observed pilot D_i values, and explicit authority is granted.",
+  "authority": {
+    "confirmatory": false,
+    "provider": false,
+    "submission": false
+  }
+}

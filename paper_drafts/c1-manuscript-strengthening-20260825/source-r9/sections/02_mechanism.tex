@@ -1,0 +1,59 @@
+\section{Stage-Resolved Memory Transport}
+\label{sec:mechanism}
+
+\subsection{Controlled write intervention and native observables}
+Let $\tau$ be a frozen interaction trajectory before memory construction. We create two writer conditions
+\[
+ r\in\{S,F\},\qquad m^{(r)}=g(\tau,r),\qquad W(\tau)=d_{\mathrm{mem}}(m^{(S)},m^{(F)}),
+\]
+where $S/F$ selects the released success- or failure-reflection branch. $W>0$ establishes an operational persistent-state contrast, not atom-level causal purity of every generated sentence; decoding-seed/noise-floor replication is unavailable, and the branch jointly changes reflection instruction and outcome/reward semantics. Section~\ref{sec:prompt-control} therefore tests a stronger generic-wording reduction.
+
+For a matched held-out future-task state $q$, native source-item exposure is
+\[
+ E_r(q)=\mathbf{1}[m^{(r)}\in\operatorname{Retrieve}(q;\mathcal{M}^{(r)})].
+\]
+This proves that the branch-conditioned source item reached policy context. It is weaker than \emph{treatment-residual exposure}: the frozen logs do not show that the branch-differentiating content itself was represented or consumed downstream. Let $p_r^{(1)}(\cdot\mid q)$ be the empirical distribution over normalized first structured actions for the same matched future-task state; its support is the union of actions observed in the two branches. We measure
+\[
+ U(q)=\operatorname{TV}(p_S^{(1)}(\cdot\mid q),p_F^{(1)}(\cdot\mid q)),\qquad
+ O(q)=|y_S(q)-y_F(q)|.
+\]
+A \emph{branch-comparison state} is one matched future-task state evaluated under paired success/failure memories while non-memory task state is fixed; the 36 Shopping states are 36 such units, not 36 independent source trajectories. The native object is therefore $(W,E,U,O)$, whose components are ordered but not commensurate.
+
+\subsection{Forced capacity is a side control}
+The forced fixed-evidence arm mechanically supplies branch-specific memory and measures
+\[
+ L_{\mathrm{forced}}(q)=|y^{\mathrm{forced},S}(q)-y^{\mathrm{forced},F}(q)|.
+\]
+It bypasses native retrieval and therefore is not inserted between $W$ and $E$. A positive $F$ weakens global downstream-insensitivity explanations; it cannot make an unsupported native stage pass.
+
+\subsection{Diagnostic completeness from the prerequisite class}
+\label{sec:diagnostic-completeness}
+Let $\mathcal{B}=\{W,E,U,O,F\}$ with native prerequisite order
+\[
+ O\Rightarrow U\Rightarrow E\Rightarrow W.
+\]
+A prerequisite-consistent binary diagnostic state has native prefix depth $p\in\{0,1,2,3,4\}$ and forced-capacity bit $f\in\{0,1\}$:
+\[
+ v(p,f)=\big(\mathbf{1}[p\ge1],\mathbf{1}[p\ge2],\mathbf{1}[p\ge3],\mathbf{1}[p\ge4],f\big).
+\]
+Thus the experiment induces exactly 10 idealized states. For observed surfaces $A\subseteq\mathcal{B}$, let $\Pi_A$ retain only coordinates in $A$.
+
+\paragraph{Prerequisite-class diagnostic completeness.} $\Pi_A$ is injective over all 10 states iff $A=\mathcal{B}$. The full basis is injective. If any native coordinate is omitted, its two adjacent prefix depths alias separately for $F=0$ and $F=1$; if $F$ is omitted, $(p,0)$ and $(p,1)$ alias for all five depths. Exhaustive enumeration of all $2^5=32$ surface subsets verifies that $W/E/U/O/F$ is the unique separating basis for this class (Appendix~\ref{sec:diagnostic-prefix-class}). This is a paper-specific identifiability result, not a universal memory taxonomy or generic separating-set novelty, and empirical \textsc{Not-Supported} evidence is never coerced into literal zero.
+
+\subsection{Ordinal stage evidence and interpretation}
+\label{sec:evidence-ladder}
+Because $W$, exposure rate, first-action TV, and terminal $|\Delta|$ have different units, samples, and test sensitivities, we do not construct a scalar transport coefficient. Let native stages be $s_1=W,s_2=E,s_3=U,s_4=O$. Each retains its own state---\textsc{Supported}, directly \textsc{Observed}, or \textsc{Not-Supported}---and we report
+\[
+ b^*=\min\{j:s_j\text{ is not supported/observed while }s_1,\ldots,s_{j-1}\text{ are supported/observed}\}.
+\]
+This operator localizes the first unsupported \emph{measured} stage; it does not estimate where a latent causal effect physically attenuates. Stage-local tests are not searched for the smallest $p$-value and do not form an omnibus ``at least one stage is significant'' claim, so multiplicity is not used post hoc to select $b^*$.
+
+The current evidence gives supported write, observed source-item exposure, unsupported first-action uptake, and sparse/sign-heterogeneous outcomes, hence $b^*=U$. Three distinctions are load-bearing:
+\[
+\begin{aligned}
+\text{state divergence} &\not\Rightarrow \text{behavioral divergence},\\
+\text{source-item exposure} &\not\Rightarrow \text{policy uptake},\\
+\text{forced capacity} &\not\equiv \text{native transport}.
+\end{aligned}
+\]
+They support a stage-indexed credit rule: $W$ can justify state-change credit, $E$ availability credit, a supported $U$ behavioral-control credit, and outcome evidence utility validation. Crucially, this rule governs \emph{what evidence may justify}; it does not imply that the first unsupported stage already identifies a successful repair. Section~\ref{sec:repair-pilot} tests that stronger engineering prediction prospectively.

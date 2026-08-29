@@ -1,0 +1,56 @@
+\section{Stage-Resolved Transport Evidence}
+\label{sec:variance}
+We combine forced supply, native source-item exposure, first-action uptake, and terminal outcomes because each rules on a different failure explanation.
+
+\subsection{Forced supply establishes downstream capacity}
+We first bypass native retrieval and directly inject paired memories into fixed future-task packets. Four complete initial source-memory pairs are crossed with four frozen future tasks, with eight fresh rollouts per memory condition in each of 16 cells (256 completed calls). Mean absolute terminal success-rate difference is $0.15625$, above the frozen 0.15 practical floor, with a 100,000-draw within-cell permutation $p=0.00074$. Thus the downstream system can respond to supplied branch-specific memory. This is capacity, not native transport: eight cells are zero and the signed effects are heterogeneous, so even forced supply does not support a universal harmful direction.
+
+\subsection{Native exposure is common while first-action uptake is unsupported}
+Restoring the native memory-bank path, the branch-conditioned source item is retrieved in 125/172 held-out Shopping opportunities (0.727). This is \emph{source-item exposure}, not treatment-residual exposure: retrieval proves the carrier item entered context, not that its branch-differentiating content was consumed. The native null therefore cannot be summarized as ``the source memory was never retrieved.''
+
+Across 36 matched Shopping branch-comparison states, mean first-action TV is $0.06944$ with $p=0.5801$, and 0/36 states change their modal first structured action. This is deliberately an early decision probe; it does not rule out later tool-sequence or plan-level differences. Native terminal transport is also small: mean absolute success difference is $0.02083$ ($p=0.4289$), with 34/36 cells exactly zero. Hence first-action uptake is the first unsupported \emph{measured} native stage after supported write and observed source-item exposure. This is an evidence-localization boundary, not a causal onset or mediation coefficient. Removing terminal evidence, Reddit, or the forced side control leaves this boundary unchanged; merging exposure with uptake destroys the distinction.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Stage evidence. The forced arm is a side capacity control, not a native stage.}
+\label{tab:evidence-ladder}
+\begin{tabular}{@{}p{0.19\linewidth}p{0.20\linewidth}p{0.48\linewidth}@{}}
+\toprule
+Stage & Evidence state & Frozen observation / interpretation \\
+\midrule
+Write & Supported & 20/20 Shopping pairs diverge; same-mode excess $0.105$, $p=0.0078$. \\
+Forced capacity & Supported & $|\Delta|=0.15625$, $p=0.00074$; downstream leverage under supplied memory. \\
+Source-item exposure & Observed & 125/172 retrieval hits; availability, not residual consumption or use. \\
+First-action uptake & Not supported & TV $=0.06944$, $p=0.5801$, 0/36 modal changes. \\
+Native outcome & Sparse / heterogeneous & Shopping 34/36 zero; Reddit 6/8 zero with opposite signs in the two nonzero cells. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Cross-domain and endpoint boundaries}
+On Reddit, reward-conditioned writing diverges in 4/4 source pairs, but native terminal $|\Delta|=0.125$ remains unresolved ($p=0.2253$): 6/8 cells are zero and the two nonzero effects have opposite signs. Reddit therefore supports the separation between write divergence and stable native outcome transport, not the Shopping first-action boundary because matched exposure/action measurements are unavailable. An outcome-blind structured-memory control likewise yields a statistically detectable but small terminal contrast ($0.04514$, $p=0.0048$), below the frozen 0.15 practical floor with 32/36 zero cells. Statistical detectability alone is not behavioral authority.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig4_stage_resolved_transport.pdf}
+\caption{\textbf{Native transport and forced capacity are different surfaces.} Write and source-item exposure are established, while first-action uptake is the first unsupported measured native stage. Forced capacity remains a bypass control.}
+\label{fig:stage-transport}
+\end{figure}
+
+\subsection{Prospective repair test: diagnosis is not a prescription}
+\label{sec:repair-pilot}
+The stage signature $W^+/E^{\mathrm{obs}}/U^{\mathrm{ns}}/F^+$ suggests that post-retrieval policy integration is the next surface to \emph{probe}; it does not imply a successful repair. We prospectively freeze 13 pilot states---one outcome-blind selection per intent template from the 36 replayable states---and seal the remaining 23 states as an untouched confirmatory holdout. Upstream task state, success/failure memories, retrieved packet bytes/order, model identity, decoding, and first-action parser are fixed. We compare native prompting ($A0$), a memory-blind extra decision check ($A1$), and a syntax-matched explicit check asking whether reusable memory should change the next action ($A2$). Each state receives four rollouts per branch and arm, for 312 calls; all 312 complete with no model, packet, or prompt-hash drift.
+
+The preregistered pilot requires mean $U_{A2}\ge0.20$, mean $D=U_{A2}-U_{A1}\ge0.10$, $D>0$ in at least 8/13 states, and mean $N=U_{A2}-U_{A0}>0$. It fails without threshold changes: mean $U_{A0}=U_{A1}=U_{A2}=0.09615$, mean $D=0$, mean $N=0$, and $D$ is positive in 3/13 states, negative in 2/13, and zero in 8/13 (descriptive bootstrap 95\% CI for mean $D$: $[-0.115,0.096]$). The explicit memory-use check occasionally perturbs actions, but not in a systematic branch-specific direction. Per the frozen rule, the 23-state confirmatory experiment is not run.
+
+This negative result separates three claims that are easy to conflate. The stage-resolved observations and diagnostic-completeness result remain intact; the stage-indexed credit rule still says that write/exposure cannot earn behavioral credit; but the stronger hypothesis that localization plus an explicit-use reminder is itself a repair is not supported. \textbf{Diagnosis identifies where evidence weakens; salience alone does not repair that stage.} Appendix~\ref{sec:repair-pilot-details} reports the pilot design and per-state outcomes.
+
+\subsection{Mechanism-aligned proof of concept: state-conditioned binding}
+We next ask a narrower question on a disjoint fresh state set: whether adapting retrieved memory to the \emph{current state}, rather than merely reminding the policy that memory exists, can reopen first-action transport. We intentionally do not claim this adapter as method novelty; state-aware memory and target-conditioned reuse are established design families. From 86 retrieval-hit Shopping states with available released trajectories that exclude all previous 36 branch-comparison states, we select one state per fresh intent template by a frozen hash rule, then freeze 12 pilot states and 19 untouched template holdouts. The policy experiment never reads terminal outcomes.
+
+For each branch memory we compare: $A0$, the native retrieved memory; $A1$, a memory-only adapter that rewrites the same memory into a concise procedural note without target task/state; and $A2$, a state-conditioned binder that sees the same memory, target task, and current browser state and emits one concise current-state action implication. The binder is frozen before policy rollouts and uses the same resolved model at temperature zero; the acting policy remains unchanged at temperature 0.2. Each state receives six first-action rollouts per branch and arm. All 48 binder calls and all 432 policy calls complete with no model drift and no use of the 19-state holdout.
+
+Mean branch-specific uptake is $U_{A0}=0.125$, $U_{A1}=0.0833$, and $U_{A2}=0.2083$. Thus the state-conditioned arm shows an aggregate increase of $0.125$ over the memory-only adapter and $0.0833$ over native reuse. This is not a general repair pass: the preregistered pilot also required $D_i=U_{i,A2}-U_{i,A1}>0$ in at least 6/12 states, whereas only 3/12 are positive, 4/12 are negative, and 5/12 are zero. A descriptive state bootstrap for mean $D$ gives 95\% interval $[-0.083,0.375]$, and the three largest squared $D_i$ values contribute 90.9\% of squared effect mass. One binder output also violates the requested 60-word format, although that state has zero uptake in all three arms and does not drive the positive cells.
+
+The engineering conclusion is therefore deliberately modest: \textbf{state-conditioned binding can open the diagnosed exposure-to-uptake transport path in a subset of fresh states, but the effect is heterogeneous and does not earn universal repair authority.} The contrast with the failed explicit-use reminder matters more than the mean gain itself: simply increasing memory salience does not move uptake, while a mechanism-aligned state-binding transformation can. We leave the fresh 19-template holdout untouched rather than tuning an applicability gate after observing this pilot.
