@@ -1,0 +1,57 @@
+{
+  "blob_verification": {
+    "all_sha256_verified": true,
+    "external_receipt_sha256": "a704275970441c7288d751793ffafde894f73f0a8a6905b1048a4628f9acc8a1",
+    "unique_blob_bytes": 1851436768,
+    "unique_blob_count": 19,
+    "worker_count": 8
+  },
+  "created_at_utc": "2026-08-29T15:39:00Z",
+  "decision": "ALL_FIXED_DIGEST_IMAGES_ACQUIRED_VERIFIED_IMPORTED_AND_RUNTIME_QUALIFIED",
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-RUNTIME-ACQUISITION-RESULT-20260829",
+  "images": [
+    {
+      "architecture": "amd64",
+      "config_digest": "sha256:65f1ecb5aab733a055d8b05eede06d388454e2c7ef9a145807888a53fe1cef76",
+      "instance_id": "sympy__sympy-13798",
+      "manifest_digest": "sha256:4111da8b069bc23cc67ef24f2f433f82601518941052faebd3c4a621d3748cd6",
+      "runtime_qualified": true
+    },
+    {
+      "architecture": "amd64",
+      "config_digest": "sha256:608deb6a7d2ad981ff78c5efe40a61a86cc3bd5ad8c76b225e5a4b7318a48b1e",
+      "instance_id": "pytest-dev__pytest-5631",
+      "manifest_digest": "sha256:22a1a81b8e937a1ff52cef4f38bf59e6a8baa0648ef3b115e6206bfc5c5de68f",
+      "runtime_qualified": true
+    },
+    {
+      "architecture": "amd64",
+      "config_digest": "sha256:6ab2a7ead49c4168a9ac145bb257918d33c50c6bbdd8f98fc80d98f1c0672a83",
+      "instance_id": "sympy__sympy-17318",
+      "manifest_digest": "sha256:4d18e6a31fb1d68a8232f3c78a5a4c97e9c7a2d001765dcc90f228cef4b4e39f",
+      "runtime_qualified": true
+    }
+  ],
+  "import_verification": {
+    "all_imported_by_exact_digest": true,
+    "docker_host": "unix:///run/user/1006/e1-reasoningbank-docker.sock",
+    "external_receipt_sha256": "5dfb146c6eabf42ae5b5c5af03d0b331f0f934e2302dbda391d7277b5eaeffcc"
+  },
+  "mirror": "https://docker.1ms.run",
+  "payload_sha256": "49dd9f65cb585fe3efa11f3f2e75bf792a0dc7e26623def5d9bad99103ae35a6",
+  "runtime_qualification": {
+    "base_state_rule": "exact_or_clean_tree_equivalent_descendant",
+    "pid_namespace": "host",
+    "result_artifact": "generated/asset-first-stri-reasoningbank-p1-runtime-qualification-final-result-20260829.json",
+    "result_artifact_sha256": "a10c1614de4c9faf189c239bd057cf8b18facb8a0db19ec19c4f348d3dbd3f66",
+    "rows_passed": 3,
+    "rows_total": 3
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "agent_behavior_executed": false,
+    "evaluator_executed": false,
+    "source_induction_executed": false,
+    "task_test_executed": false
+  }
+}
