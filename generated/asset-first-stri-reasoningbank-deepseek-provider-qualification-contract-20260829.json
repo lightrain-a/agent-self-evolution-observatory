@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-DEEPSEEK-Q1-20260829",
+  "title": "Role-aligned Ark DeepSeek-Pro provider qualification",
+  "registered_at_utc": "2026-08-29T00:00:00Z",
+  "registration_timing": "Before any deepseek-v4-pro provider request and before all ReasoningBank P1 outcomes",
+  "starting_origin_main": "9e77edf0c7cca2c3928525619993c31bf3f80e23",
+  "user_selection_override": {
+    "requested_backend": "deepseek-v4-pro",
+    "timing": "Before memory induction and P1 behavior",
+    "outcome_shopping": false,
+    "prior_backend": "doubao-seed-evolving",
+    "prior_qualification_preserved": true,
+    "prior_backend_selected_for_p1": false
+  },
+  "paper_alignment": {
+    "path": "generated/asset-first-stri-reasoningbank-deepseek-paper-alignment-20260829.json",
+    "sha256": "51f25c973bfc4c8c2e661bac8f87a4bded8e887d0c9c3540b7d1ed3036fbf09a",
+    "original_reasoningbank_model": "gemini-2.5-flash",
+    "disclosure": "ReasoningBank architecture + Ark DeepSeek-Pro compatibility backend"
+  },
+  "implementation": {
+    "adapter": {
+      "path": "research_pipeline/asset_first_stri_reasoningbank_ark_provider.py",
+      "sha256": "fb4809db198746a21aded3471d02df189db80fa5eb59029167a237c9b345e05e"
+    },
+    "runner": {
+      "path": "research_pipeline/asset_first_stri_reasoningbank_deepseek_qualification.py",
+      "sha256": "b69ba5f2749f8c9f88444acf40e50f8c02fc33063b64f350119a447f6fa631ec"
+    },
+    "test": {
+      "path": "research_pipeline/test_asset_first_stri_reasoningbank_ark_provider.py",
+      "sha256": "5d3c1f05aafe0f03339c2161f3e5c63704143de69feef34c5ee64ca6fc3a0a08"
+    }
+  },
+  "frozen_provider": {
+    "endpoint": "https://ark.cn-beijing.volces.com/api/plan/v3/responses",
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model_rule": "Require one stable non-empty provider-returned identity across every successful qualification call. If it differs from the alias, register a direct-identity confirmation before memory induction.",
+    "seed": "omitted",
+    "top_p": "omitted",
+    "response_storage": true,
+    "timeout_seconds": 120,
+    "max_retries": 2
+  },
+  "role_parameters": {
+    "behavior": {
+      "temperature": 0,
+      "max_output_tokens": "omitted",
+      "basis": "ReasoningBank mini.yaml"
+    },
+    "memory_induction": {
+      "temperature": 1,
+      "max_output_tokens": 65536,
+      "basis": "ReasoningBank induce_memory.py / swebench.py"
+    },
+    "judge": {
+      "temperature": 0,
+      "max_output_tokens": 65536,
+      "basis": "ReasoningBank swebench.py"
+    },
+    "workers": 1,
+    "retrieval_top_k": 1,
+    "environment_command_timeout_seconds": 60
+  },
+  "probes": [
+    "behavior system+user at temperature 0",
+    "behavior multi-turn at temperature 0",
+    "function call at temperature 0",
+    "causal function-result continuation with post-call nonce",
+    "memory induction role at temperature 1 and 65536 output cap",
+    "judge role at temperature 0, 65536 output cap and JSON schema",
+    "two identical behavior calls at temperature 0"
+  ],
+  "decision_rule": {
+    "pass_exact": "All semantic checks pass and requested_model==resolved_model==deepseek-v4-pro.",
+    "pass_alias": "All semantic checks pass with one stable different resolved ID; direct identity confirmation required before memory induction.",
+    "fail": "Any required semantic, role-parameter, tool-continuation, usage or identity-stability check fails."
+  },
+  "sampling_claim": {
+    "equal_temperature_zero_pair": "Does not authorize universal determinism.",
+    "independent_seeded_repeats_authorized": false,
+    "repeat_label": "paired same-backend repeated execution"
+  },
+  "resource_budget": {
+    "maximum_provider_requests": 8,
+    "gpu_seconds": 0
+  },
+  "treatment_invariants": {
+    "memory_schema_changed": false,
+    "memory_grouping_changed": false,
+    "case_identity_changed": false,
+    "top_k_changed": false,
+    "retrieval_ranking_changed": false,
+    "memory_formatting_changed": false,
+    "benchmark_changed": false,
+    "source_eval_split_changed": false
+  },
+  "authority": {
+    "deepseek_provider_qualification": true,
+    "memory_induction": false,
+    "p1_behavioral_execution": false,
+    "full_p1": false,
+    "claim_expansion": false
+  },
+  "credential_security": "Canonical ignored .env remains read-only; API key is never printed, serialized, hashed, committed or reported."
+}

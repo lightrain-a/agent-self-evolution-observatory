@@ -95,6 +95,12 @@ class ReasoningBankArkProviderTest(unittest.TestCase):
         self.assertEqual(body["max_output_tokens"], 19)
         self.assertEqual(result["text"], "OK")
 
+    def test_none_max_output_tokens_omits_provider_parameter(self) -> None:
+        session = FakeSession([FakeResponse(200, success_payload())])
+        client = ArkReasoningBankClient(settings(), session=session)
+        client.create_response(input_items="probe", max_output_tokens=None)
+        self.assertNotIn("max_output_tokens", session.requests[0]["json"])
+
     def test_function_result_continuation_preserves_call_identity(self) -> None:
         session = FakeSession([FakeResponse(200, success_payload())])
         client = ArkReasoningBankClient(settings(), session=session)

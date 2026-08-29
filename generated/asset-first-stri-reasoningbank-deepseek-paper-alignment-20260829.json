@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "artifact_id": "E1-STRI-REASONINGBANK-DEEPSEEK-PAPER-ALIGNMENT-20260829",
+  "created_at_utc": "2026-08-29T00:00:00Z",
+  "user_requested_backend_change": "Switch the P1 compatibility backend to DeepSeek Pro before any ReasoningBank P1 task outcome.",
+  "no_p1_outcome_observed": true,
+  "evidence": {
+    "reasoningbank_publication": "https://proceedings.iclr.cc/paper_files/paper/2026/file/980ea04d23d1f6908964eba2a74afe45-Paper-Conference.pdf",
+    "reasoningbank_official_code": "https://github.com/google-research/reasoning-bank",
+    "reasoningbank_official_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "google_summary": "https://research.google/blog/reasoningbank-enabling-agents-to-learn-from-experience/",
+    "recent_deepseek_context": [
+      {
+        "publication": "PaCoRe, ACL 2026 Long",
+        "url": "https://aclanthology.org/2026.acl-long.1253/",
+        "relevance": "Uses DeepSeek-V3.1-Terminus as a current reasoning/coding comparator; supports recognizability, not ReasoningBank reproduction."
+      },
+      {
+        "publication": "CodeHacker, ACL 2026 Long",
+        "url": "https://aclanthology.org/2026.acl-long.108/",
+        "relevance": "Describes DeepSeek-family models as commonly used for code generation/program reasoning; supports broad audience familiarity only."
+      },
+      {
+        "publication": "ReasoningBank, ICLR 2026",
+        "url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/980ea04d23d1f6908964eba2a74afe45-Paper-Conference.pdf",
+        "relevance": "Original main evaluations use Gemini-2.5-Flash, so Ark DeepSeek-Pro must be disclosed as compatibility-adapted."
+      }
+    ]
+  },
+  "pinned_source_files": {
+    "SWE-Bench/run.sh": "122b5db0d7ed33647ac1728734d6138808cfd1624ad240b1c49cddcc1d4ab897",
+    "third_party/src/minisweagent/config/mini.yaml": "9837cdecaa6eb477fb90e1a2749157e7ee420ca83deefc71bb671d61894fa0cf",
+    "third_party/src/minisweagent/run/extra/swebench.py": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951",
+    "third_party/src/minisweagent/memory/induce_memory.py": "7e72fd27cbe3878d743c8135ee809b81d084c0c71ab4ec5f258638876a9ce3c6",
+    "third_party/src/minisweagent/memory/memory_management.py": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955"
+  },
+  "original_reasoningbank_configuration": {
+    "behavior_model": "gemini-2.5-flash",
+    "benchmark": "SWE-Bench Verified test",
+    "workers": 1,
+    "retrieval_top_k": 1,
+    "behavior_temperature": 0,
+    "behavior_max_output_tokens": "provider/default; not explicitly set in mini.yaml",
+    "memory_induction_temperature": 1,
+    "memory_induction_max_output_tokens": 65536,
+    "judge_temperature": 0,
+    "judge_max_output_tokens": 65536,
+    "environment_command_timeout_seconds": 60,
+    "cost_limit": 3,
+    "seed": "not configured"
+  },
+  "frozen_compatibility_configuration": {
+    "provider": "Volcengine Ark Plan Responses API",
+    "requested_model": "deepseek-v4-pro",
+    "exact_resolved_model": "to be frozen from provider metadata before P1",
+    "behavior_temperature": 0,
+    "behavior_max_output_tokens": "omitted to follow official agent config",
+    "memory_induction_temperature": 1,
+    "memory_induction_max_output_tokens": 65536,
+    "judge_temperature": 0,
+    "judge_max_output_tokens": 65536,
+    "workers": 1,
+    "retrieval_top_k": 1,
+    "environment_command_timeout_seconds": 60,
+    "seed": "omitted",
+    "top_p": "omitted",
+    "repeat_label": "paired same-backend repeated execution"
+  },
+  "comparability_statement": "Parameters with explicit official values are matched by role. Provider/model family is intentionally changed and disclosed; this is not an original-provider reproduction.",
+  "claim_ceiling": "Any evidence applies only to ReasoningBank architecture with the Ark DeepSeek-Pro compatibility backend."
+}

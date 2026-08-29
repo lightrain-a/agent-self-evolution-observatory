@@ -144,7 +144,7 @@ class ArkReasoningBankClient:
         input_items: str | list[dict[str, Any]],
         instructions: str | None = None,
         model: str | None = None,
-        max_output_tokens: int = 512,
+        max_output_tokens: int | None = 512,
         temperature: float | None = None,
         top_p: float | None = None,
         seed: int | None = None,
@@ -160,8 +160,9 @@ class ArkReasoningBankClient:
         body: dict[str, Any] = {
             "model": requested_model,
             "input": input_items,
-            "max_output_tokens": max_output_tokens,
         }
+        if max_output_tokens is not None:
+            body["max_output_tokens"] = max_output_tokens
         optional = {
             "instructions": instructions,
             "temperature": temperature,
