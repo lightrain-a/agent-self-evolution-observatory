@@ -1,0 +1,158 @@
+from __future__ import annotations
+
+import unittest
+from unittest.mock import patch
+
+from research_pipeline.asset_first_stri_reasoningbank_ark_provider import (
+    ArkCompatibilityError,
+    ArkReasoningBankClient,
+    ArkReasoningBankSettings,
+)
+
+
+class FakeResponse:
+    def __init__(self, status_code: int, payload: dict) -> None:
+        self.status_code = status_code
+        self._payload = payload
+        self.text = ""
+
+    def json(self) -> dict:
+        return self._payload
+
+
+class FakeSession:
+    def __init__(self, responses: list[FakeResponse]) -> None:
+        self.headers: dict[str, str] = {}
+        self.responses = list(responses)
+        self.requests: list[dict] = []
+
+    def post(self, endpoint: str, *, json: dict, timeout: float) -> FakeResponse:
+        self.requests.append({"endpoint": endpoint, "json": json, "timeout": timeout})
+        return self.responses.pop(0)
+
+
+def settings(**kwargs) -> ArkReasoningBankSettings:
+    base = {
+        "api_key": "SECRET_SENTINEL",
+        "base_url": "https://ark.example/api/plan/v3",
+        "model": "ark-code-latest",
+        "timeout_seconds": 7.0,
+        "max_retries": 0,
+    }
+    base.update(kwargs)
+    return ArkReasoningBankSettings(**base)
+
+
+def success_payload() -> dict:
+    return {
+        "id": "resp-secret-receipt",
+        "status": "completed",
+        "model": "ark-code-latest",
+        "output": [
+            {
+                "type": "message",
+                "content": [{"type": "output_text", "text": "OK"}],
+            }
+        ],
+        "usage": {"input_tokens": 3, "output_tokens": 1},
+    }
+
+
+class ReasoningBankArkProviderTest(unittest.TestCase):
+    def test_safe_summary_never_exports_key(self) -> None:
+        summary = settings().safe_summary()
+        self.assertTrue(summary["configured"])
+        self.assertNotIn("api_key", summary)
+        self.assertNotIn("SECRET_SENTINEL", str(summary))
+        self.assertFalse(summary["secret_value_exported"])
+
+    def test_structured_messages_and_sampling_fields_are_forwarded_without_semantic_rewrite(self) -> None:
+        session = FakeSession([FakeResponse(200, success_payload())])
+        client = ArkReasoningBankClient(settings(), session=session)
+        messages = [
+            {"role": "user", "content": "first"},
+            {"role": "assistant", "content": "second"},
+            {"role": "user", "content": "third"},
+        ]
+        result = client.create_response(
+            input_items=messages,
+            instructions="system",
+            temperature=0.2,
+            top_p=0.8,
+            seed=42,
+            stop=["END"],
+            max_output_tokens=19,
+            thinking="disabled",
+        )
+        body = session.requests[0]["json"]
+        self.assertEqual(body["input"], messages)
+        self.assertEqual(body["instructions"], "system")
+        self.assertEqual(body["temperature"], 0.2)
+        self.assertEqual(body["top_p"], 0.8)
+        self.assertEqual(body["seed"], 42)
+        self.assertEqual(body["stop"], ["END"])
+        self.assertEqual(body["thinking"], {"type": "disabled"})
+        self.assertEqual(body["max_output_tokens"], 19)
+        self.assertEqual(result["text"], "OK")
+
+    def test_function_result_continuation_preserves_call_identity(self) -> None:
+        session = FakeSession([FakeResponse(200, success_payload())])
+        client = ArkReasoningBankClient(settings(), session=session)
+        client.continue_function_call(
+            previous_response_id="response-1",
+            call_id="call-1",
+            output='{"recorded":731}',
+            instructions="finish",
+        )
+        body = session.requests[0]["json"]
+        self.assertEqual(body["previous_response_id"], "response-1")
+        self.assertEqual(
+            body["input"],
+            [{"type": "function_call_output", "call_id": "call-1", "output": '{"recorded":731}'}],
+        )
+        self.assertTrue(body["store"])
+
+    @patch("research_pipeline.asset_first_stri_reasoningbank_ark_provider.time.sleep", return_value=None)
+    def test_retry_reuses_identical_body_only_for_server_failure(self, _sleep) -> None:
+        session = FakeSession(
+            [
+                FakeResponse(503, {"error": {"message": "temporary"}}),
+                FakeResponse(200, success_payload()),
+            ]
+        )
+        client = ArkReasoningBankClient(settings(max_retries=1), session=session)
+        client.create_response(input_items="probe")
+        self.assertEqual(len(session.requests), 2)
+        self.assertEqual(session.requests[0]["json"], session.requests[1]["json"])
+
+    def test_client_error_is_not_retried_and_safe_receipt_has_no_key(self) -> None:
+        session = FakeSession([FakeResponse(400, {"error": {"message": "unsupported"}})])
+        client = ArkReasoningBankClient(settings(max_retries=2), session=session)
+        with self.assertRaises(ArkCompatibilityError) as caught:
+            client.create_response(input_items="probe", seed=42)
+        receipt = caught.exception.safe_receipt()
+        self.assertEqual(len(session.requests), 1)
+        self.assertEqual(receipt["status_code"], 400)
+        self.assertNotIn("SECRET_SENTINEL", str(receipt))
+        self.assertFalse(receipt["credential_material_present"])
+
+    def test_function_call_parser_keeps_provider_arguments_verbatim(self) -> None:
+        payload = {
+            "id": "r",
+            "model": "ark-code-latest",
+            "status": "completed",
+            "output": [
+                {
+                    "type": "function_call",
+                    "call_id": "call-7",
+                    "name": "record_probe",
+                    "arguments": '{"value":731}',
+                }
+            ],
+        }
+        normalized = ArkReasoningBankClient.normalize(payload, "ark-code-latest")
+        self.assertEqual(normalized["function_calls"][0]["arguments"], '{"value":731}')
+
+
+if __name__ == "__main__":
+    unittest.main()

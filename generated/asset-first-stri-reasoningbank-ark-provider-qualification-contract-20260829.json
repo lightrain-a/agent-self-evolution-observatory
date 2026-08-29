@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-Q0-20260829",
+  "title": "Ark Responses semantic qualification for ReasoningBank P1",
+  "registered_at_utc": "2026-08-29T00:00:00Z",
+  "registration_timing": "Before any Ark request under this experiment ID",
+  "starting_origin_main": "9e77edf0c7cca2c3928525619993c31bf3f80e23",
+  "branch": "research/e1-stri-reasoningbank-p1-20260829",
+  "provider_role": "ReasoningBank architecture + compatibility-adapted Ark backend",
+  "original_reasoningbank_reproduction": false,
+  "model_selection": {
+    "rule": "Use the project's pre-existing authorized default coding/agent endpoint before any E1 treatment outcome.",
+    "endpoint": "https://ark.cn-beijing.volces.com/api/plan/v3/responses",
+    "model": "ark-code-latest",
+    "credential_source": "ignored canonical .env with mode 600",
+    "credential_value_recorded": false,
+    "fallback_model_authorized": false
+  },
+  "official_protocol_references": [
+    "https://docs.volcengine.com/docs/82379/1569618",
+    "https://docs.volcengine.com/docs/82379/1958524?lang=zh",
+    "https://www.volcengine.com/docs/82379/2123288"
+  ],
+  "pinned_implementation": {
+    "adapter": {
+      "path": "research_pipeline/asset_first_stri_reasoningbank_ark_provider.py",
+      "sha256": "6951395da938c175d7a191ff2ea72104a190c2afb4aadb91e635041c05865700"
+    },
+    "runner": {
+      "path": "research_pipeline/asset_first_stri_reasoningbank_ark_qualification.py",
+      "sha256": "aebc0c2511bf97bd42d12119df7f038f4ef24f210232ea2722e5638095238213"
+    },
+    "offline_test": {
+      "path": "research_pipeline/test_asset_first_stri_reasoningbank_ark_provider.py",
+      "sha256": "8e67d9a0141baa7d48ea9f6f62e4ee7a833c14e6b829c77d097a0418635a022c"
+    }
+  },
+  "qualification_matrix": [
+    "endpoint reachable",
+    "exact requested and returned model",
+    "basic text completion",
+    "instructions/system plus user message",
+    "structured multi-turn history",
+    "function schema acceptance",
+    "function-call parsing",
+    "function-result continuation through previous_response_id",
+    "max_output_tokens",
+    "timeout",
+    "retry with identical request body",
+    "usage metadata",
+    "temperature",
+    "top_p",
+    "seed",
+    "same-seed repeated execution",
+    "different-seed execution",
+    "temperature-zero repeated execution",
+    "stop",
+    "JSON-schema structured output"
+  ],
+  "required_for_agent_semantics": [
+    "endpoint_reachable",
+    "exact_model_frozen",
+    "basic_chat",
+    "system_user",
+    "multi_turn_history",
+    "tool_call_parsing",
+    "tool_result_continuation",
+    "usage_metadata",
+    "provider_model_identifier",
+    "max_output_tokens",
+    "timeout_configured",
+    "retry_configured"
+  ],
+  "parameter_classification": [
+    "accepted_by_provider",
+    "unsupported_or_rejected",
+    "unresolved_transport_or_provider_failure"
+  ],
+  "seed_rule": {
+    "same_seed_equal_and_different_seed_differs": "Still empirically unresolved; do not claim independent seeded repeats from three samples.",
+    "rejected": "Classify seed unsupported; use paired same-backend repeated execution.",
+    "independent_seeded_repeats_authorized": false
+  },
+  "outcome_rule": {
+    "qualified": "All required agent semantics pass. Unsupported optional sampling/format parameters are frozen out of P1.",
+    "not_qualified": "Localize provider versus adapter failure, repair only compatibility code, re-hash, and register a new qualification ID before rerun."
+  },
+  "resource_budget": {
+    "maximum_provider_requests": 14,
+    "gpu_seconds": 0
+  },
+  "treatment_invariants": {
+    "memory_schema_changed": false,
+    "memory_grouping_changed": false,
+    "case_identity_changed": false,
+    "top_k_changed": false,
+    "retrieval_ranking_changed": false,
+    "memory_formatting_changed": false,
+    "p1_task_selection_observed": false,
+    "p1_outcome_observed": false
+  },
+  "authority": {
+    "credential_use_authorized": true,
+    "provider_qualification_authorized": true,
+    "memory_induction_authorized": false,
+    "p1_behavioral_execution_authorized": false,
+    "full_p1_authorized": false,
+    "paper_claim_expansion_authorized": false
+  },
+  "security": [
+    "Never print, commit, serialize, hash, or report the Ark API key.",
+    "Artifacts may contain only configured=true and non-secret endpoint/model settings.",
+    "Response IDs are stored only as SHA-256 digests."
+  ]
+}
