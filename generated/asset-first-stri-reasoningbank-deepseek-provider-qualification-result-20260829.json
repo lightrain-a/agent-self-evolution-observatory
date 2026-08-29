@@ -1,0 +1,255 @@
+{
+  "alignment": "generated/asset-first-stri-reasoningbank-deepseek-paper-alignment-20260829.json",
+  "checks": {
+    "all_requested_deepseek_pro": true,
+    "all_requests_succeeded": true,
+    "behavior_multiturn_exact": true,
+    "behavior_system_user_exact": true,
+    "causal_tool_result_consumed": false,
+    "judge_temperature_zero_json_schema": true,
+    "memory_induction_temperature_one": true,
+    "nonce_absent_before_tool_result": true,
+    "single_tool_call": true,
+    "stable_nonempty_resolved_model": true,
+    "usage_present": true
+  },
+  "contract": "generated/asset-first-stri-reasoningbank-deepseek-provider-qualification-contract-20260829.json",
+  "created_at_utc": "2026-08-29T13:37:12+00:00",
+  "decision": "ARK_DEEPSEEK_PRO_BACKEND_NOT_QUALIFIED",
+  "experiment_id": "E1-STRI-REASONINGBANK-ARK-DEEPSEEK-Q1-20260829",
+  "provider_role": "ReasoningBank architecture + Ark DeepSeek-Pro compatibility backend",
+  "receipts": [
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "behavior_basic",
+      "ok": true,
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "d37f90663f2fa8850ff2aa5a6b92f72470cc192e3a97cdce1e77b54dada68830",
+      "role": "behavior",
+      "status": "completed",
+      "text": "DEEPSEEK_BEHAVIOR_OK",
+      "text_sha256": "c1f1a25916269878dd018596cddb4c21a157b1cb5b47921668e6ced0635929b5",
+      "usage": {
+        "input_tokens": 102,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 73,
+        "output_tokens_details": {
+          "reasoning_tokens": 62
+        },
+        "total_tokens": 175
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "behavior_multiturn",
+      "ok": true,
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "d7be277fbc1b48ba57e8dad3f274a1dfc3d98465a5f999053e7918edf099566d",
+      "role": "behavior",
+      "status": "completed",
+      "text": "DEEPSEEK_MULTI_617",
+      "text_sha256": "a1228349cca37bada2b025c3ed9a11265a412a8fdaa27c03934811702fc0cf2a",
+      "usage": {
+        "input_tokens": 121,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 26,
+        "output_tokens_details": {
+          "reasoning_tokens": 16
+        },
+        "total_tokens": 147
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [
+        {
+          "arguments": "{\"value\": 617}",
+          "call_id_sha256": "eb306d0d5f574a6b47659a318ff327822a8075bb4cce8734e97f50d5c551f68c",
+          "name": "record_probe"
+        }
+      ],
+      "label": "tool_call",
+      "ok": true,
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "9c56daba1659b60a77e1a2522a322d58d1404042e7c3802fd8c87cea71366d5a",
+      "role": "behavior",
+      "status": "completed",
+      "text": "",
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "usage": {
+        "input_tokens": 395,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 69,
+        "output_tokens_details": {
+          "reasoning_tokens": 24
+        },
+        "total_tokens": 464
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "memory_induction",
+      "ok": true,
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "13834fa1a98ebce4764ab930377f62b718c9e02332b1d73284c3f77c43fe2052",
+      "role": "memory_induction",
+      "status": "completed",
+      "text": "DEEPSEEK_INDUCTION_TEMP1_OK",
+      "text_sha256": "f6f45c0dfb5d234d3392e634c6fca7b64e3955f6cb1a13ee5038e011fe227ecc",
+      "usage": {
+        "input_tokens": 103,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 32,
+        "output_tokens_details": {
+          "reasoning_tokens": 20
+        },
+        "total_tokens": 135
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "judge",
+      "ok": true,
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "94256bcb5a249b78f89f48521865ba5f8ea256098facfe1a5901d31def240f9a",
+      "role": "judge",
+      "status": "completed",
+      "text": "{\"success\": true}",
+      "text_sha256": "f1ea07a1e51a389c8de07120ae5c2e432e9dd8f4fbd6f92489f185b0523a3fd4",
+      "usage": {
+        "input_tokens": 239,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 49,
+        "output_tokens_details": {
+          "reasoning_tokens": 43
+        },
+        "total_tokens": 288
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "behavior_repeat_a",
+      "ok": true,
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "ae8c26d6025e6af773bfcffad77390614912d9fcef6fd8951c4caee7859a6b4b",
+      "role": "behavior_repeat",
+      "status": "completed",
+      "text": "blue",
+      "text_sha256": "16477688c0e00699c6cfa4497a3612d7e83c532062b64b250fed8908128ed548",
+      "usage": {
+        "input_tokens": 97,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 54,
+        "output_tokens_details": {
+          "reasoning_tokens": 52
+        },
+        "total_tokens": 151
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "behavior_repeat_b",
+      "ok": true,
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "7e3975c7ade7b43469657d4731d7ab3b68e5a3f89b044a5e8431adcd1f389e7e",
+      "role": "behavior_repeat",
+      "status": "completed",
+      "text": "blue",
+      "text_sha256": "16477688c0e00699c6cfa4497a3612d7e83c532062b64b250fed8908128ed548",
+      "usage": {
+        "input_tokens": 97,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 28,
+        "output_tokens_details": {
+          "reasoning_tokens": 26
+        },
+        "total_tokens": 125
+      }
+    },
+    {
+      "credential_material_present": false,
+      "function_calls": [],
+      "label": "tool_continuation",
+      "ok": true,
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "c7f35e70f3467c227b9a2ab7fd0a5768f4595085c61a6cbc59b4d3cbd29d72bc",
+      "role": "behavior",
+      "status": "completed",
+      "text": "Recorded value 617 successfully.",
+      "text_sha256": "d37b04e921e9234bcd6b0452e9799714e803f614311c8a529b40c252e6ccb777",
+      "usage": {
+        "input_tokens": 174,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 93,
+        "output_tokens_details": {
+          "reasoning_tokens": 85
+        },
+        "total_tokens": 267
+      }
+    }
+  ],
+  "resolved_models": [
+    "deepseek-v4-pro-ga-260813"
+  ],
+  "resource_accounting": {
+    "gpu_seconds": 0,
+    "provider_requests_attempted": 8
+  },
+  "sampling": {
+    "behavior_repeat_outputs_equal": true,
+    "behavior_temperature": 0.0,
+    "determinism_claim_authorized": false,
+    "judge_temperature": 0.0,
+    "memory_induction_temperature": 1.0,
+    "repeat_label": "paired same-backend repeated execution",
+    "seed": "omitted",
+    "top_p": "omitted"
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "behavioral_claim_authorized": false,
+    "full_p1_authorized": false,
+    "memory_induction_executed": false,
+    "p1_task_outcome_observed": false,
+    "reasoningbank_original_provider_reproduction": false
+  },
+  "settings": {
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "configured": true,
+    "max_retries": 2,
+    "model": "deepseek-v4-pro",
+    "secret_file": "/home/wyt/code/agent-self-evolution-observatory/.env",
+    "secret_value_exported": false,
+    "timeout_seconds": 120.0
+  }
+}
