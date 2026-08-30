@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "asset_kind": "C1_PACTA_V11_SCHEMA_REPAIR_FAILURE_ASSET",
+  "asset": {
+    "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+    "experiment_id": "C1-PACTA-V11-FRESH-7TEMPLATE-UPTAKE-20260830",
+    "status": "STOP_PROJECTION_REALIZATION",
+    "signature": "operationalization:pacta-scientific-projection-cardinality-and-gate-realization",
+    "idea_id": "c1-pacta-v11",
+    "diagnosis": "projection-interface-realization-mismatch",
+    "affected_layer": "operationalization",
+    "reusable_precheck": "Separate action-tool affordances from native policy/output instructions, then qualify exact one-action realization on synthetic fixtures before scientific execution.",
+    "evidence_ref": "paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-v11-pilot-closure-20260830.json",
+    "does_not_imply": "PACTA mechanism failure, generic structured-action-projection failure, first-action uptake failure, or terminal utility failure",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "component": "LLM action projector",
+      "interface": "tool affordance schema",
+      "affected_layer": "operationalization"
+    },
+    "reuse_effectiveness": {
+      "reuse_count": 1,
+      "helped_count": 1,
+      "hurt_count": 0,
+      "status": "repaired-native-envelope-but-did-not-guarantee-scientific-one-action-realization"
+    },
+    "superseded_by": "",
+    "last_revalidated": "2026-08-30",
+    "source_decision": "STOP_PROJECTION_REALIZATION",
+    "layer_type": "SCIENTIFIC_PROJECTION_CARDINALITY_AND_GATE_REALIZATION",
+    "scope": "PACTA-v1.1 single-variable schema-extraction revision and its fresh seven-template Pilot only.",
+    "lineage": {
+      "PACTA_v1": "interface failure; separate INVALID_UNQUALIFIED_EXECUTION",
+      "PACTA_v11": "single-variable ACTION_SCHEMA_EXTRACTION repair"
+    },
+    "schema_repair": {
+      "synthetic_qualification": "40/40",
+      "scientific_top_level_envelope": "28/28 action+next_goal; 0/28 current_state",
+      "scientific_strict_one_action": "27/28",
+      "original_interface_failure_repaired": true
+    },
+    "gate_realization": {
+      "open": "0/7",
+      "closed": "7/7",
+      "qualified": false
+    },
+    "policy_result": {
+      "scb_calls": 0,
+      "policy_calls": 0,
+      "U_authorized": false,
+      "D_gate_authorized": false
+    },
+    "downstream": {
+      "confirmatory_executed": false,
+      "terminal_executed": false
+    },
+    "failure_differential": {
+      "execution": false,
+      "provider": false,
+      "synthetic_schema_qualification": false,
+      "scientific_projection_cardinality": true,
+      "projection_instability_states": 2,
+      "gate_degeneracy": true,
+      "measurement": false,
+      "generic_action_projection": "not tested",
+      "counterfactual_gate_mechanism": "not qualified",
+      "terminal_utility": "not tested"
+    },
+    "scientific_belief_update": {
+      "increase": "Tool-affordance extraction repairs inherited native response-envelope contamination.",
+      "decrease": "Synthetic schema fixtures alone do not establish one-action realization on full scientific packets.",
+      "withhold": "PACTA mechanism, SAP benefit, uptake, and utility remain untested."
+    },
+    "claim_authority": {
+      "scientific_pass": false,
+      "method_qualified": false,
+      "negative_mechanism_result": false,
+      "active_manuscript": "R9",
+      "R10_authorized": false
+    },
+    "institutional_lesson": "Passing a native system instruction as an action schema can cause the projector to follow a stronger inherited response envelope. Action-schema qualification must separate tool affordance specification from policy/output instructions before scientific execution.",
+    "adaptation_novelty_lesson": "An existing method adapted from problem A must not be relabeled as novelty for problem B. Novelty must reside in the additional mechanism required by the adaptation failure.",
+    "reopen_condition": "Do not tune or resume PACTA-v1.1. A further method revision or independent-carrier design requires explicit new human authorization.",
+    "evidence_paths": {
+      "closure": "paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-v11-pilot-closure-20260830.json",
+      "qualification_run": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-v11-q0-schema-20260830-v1",
+      "pilot_run": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-v11-p0-fresh-7template-20260830-v1"
+    },
+    "scientific_authority": false
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V11_CLAIM_AUDIT",
+  "experiment_id": "C1-PACTA-V11-FRESH-7TEMPLATE-UPTAKE-20260830",
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "PACTA-V11-C01",
+      "claim": "PACTA-v1 remains a separate invalid/unqualified interface execution; its 6 Pilot states, 13 sealed states, and 18 partial policy responses are excluded from v1.1 effect analysis.",
+      "pass": true
+    },
+    {
+      "id": "PACTA-V11-C02",
+      "claim": "PACTA-v1.1 changed only deterministic ACTION SCHEMA extraction; P0/P1, the Gate, canonicalization, arms, models, rollouts, and thresholds remained frozen.",
+      "pass": true
+    },
+    {
+      "id": "PACTA-V11-C03",
+      "claim": "The non-scientific schema qualification passed 40/40 exact outputs with zero model drift and zero thinking fallback.",
+      "pass": true
+    },
+    {
+      "id": "PACTA-V11-C04",
+      "claim": "The seven Pilot states were outcome-blind hash minima, one from each of seven untouched templates: 353, 238, 272, 653, 440, 792, and 264.",
+      "pass": true
+    },
+    {
+      "id": "PACTA-V11-C05",
+      "claim": "The original inherited current_state response-envelope failure was repaired: all 28 scientific projections had exactly the top-level fields action and next_goal, and none had current_state.",
+      "pass": true
+    },
+    {
+      "id": "PACTA-V11-C06",
+      "claim": "Strict scientific projection realization was 27/28 because task 238 success/P0 emitted two actions; policy execution therefore stopped before SCB or policy calls.",
+      "pass": true
+    },
+    {
+      "id": "PACTA-V11-C07",
+      "claim": "The observed strict Gate geometry was 0/7 open and 7/7 closed; this is a non-qualifying degenerate geometry, not evidence of a PACTA mechanism effect.",
+      "pass": true
+    },
+    {
+      "id": "PACTA-V11-C08",
+      "claim": "No U, A3-minus-A2, A3-minus-A1, A2-minus-A1, or A2-minus-A0 estimate is authorized.",
+      "pass": true
+    },
+    {
+      "id": "PACTA-V11-C09",
+      "claim": "No same-substrate confirmatory or terminal evaluation was executed.",
+      "pass": true
+    },
+    {
+      "id": "PACTA-V11-C10",
+      "claim": "PACTA-v1.1 is not qualified, is not a negative mechanism result, creates no R10, and R9 remains the active manuscript.",
+      "pass": true
+    }
+  ],
+  "summary": {
+    "claims_total": 10,
+    "claims_passed": 10,
+    "claims_failed": 0
+  },
+  "authority": {
+    "PACTA_effectiveness": false,
+    "SAP_effectiveness": false,
+    "selective_transport": false,
+    "terminal_utility": false,
+    "R10": false
+  }
+}
