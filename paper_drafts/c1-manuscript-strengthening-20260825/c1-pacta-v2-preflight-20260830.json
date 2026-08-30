@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V2_ZERO_PROVIDER_PREFLIGHT",
+  "status": "PASS_ZERO_PROVIDER_FRESH_PACKET_PREFLIGHT",
+  "checks": {
+    "candidate_states": 16,
+    "candidate_templates": 6,
+    "pilot_states": 6,
+    "pilot_templates": 6,
+    "historical_sample_overlap": 0,
+    "trajectory_available": "16/16",
+    "retrieval_threshold_hit": "16/16",
+    "wrapper_hashes_verified": "32/32",
+    "task_state_system_hashes_materialized": "16/16",
+    "prior_PACTA_outputs": 0,
+    "prior_SCMB_outputs": 0,
+    "selection_outcome_blind": true
+  }
+}
