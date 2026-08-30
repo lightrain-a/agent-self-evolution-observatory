@@ -1,0 +1,285 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V11_PILOT_CLOSURE",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-PACTA-V11-FRESH-7TEMPLATE-UPTAKE-20260830",
+  "status": "STOP_PROJECTION_REALIZATION",
+  "lineage": {
+    "PACTA_v1": {
+      "status": "INVALID_UNQUALIFIED_EXECUTION",
+      "specific_status": "HOLD_GATE_DEGENERATE_PROJECTION_SCHEMA_NOT_REALIZED",
+      "interpretation": "interface failure, not a negative PACTA mechanism result",
+      "pilot_states": [
+        313,
+        376,
+        368,
+        512,
+        300,
+        191
+      ],
+      "sealed_confirmatory_states": [
+        510,
+        117,
+        24,
+        332,
+        656,
+        240,
+        166,
+        263,
+        273,
+        793,
+        351,
+        96,
+        439
+      ],
+      "partial_policy_responses_excluded": 18,
+      "artifacts_modified": false
+    },
+    "PACTA_v11": {
+      "status": "SINGLE_VARIABLE_ACTION_SCHEMA_EXTRACTION_REPAIR",
+      "scientific_object_changed": false,
+      "frozen_elements_unchanged": [
+        "P0 wording",
+        "P1 wording",
+        "gate definition",
+        "canonical action comparison",
+        "A0/A1/A2/A3 semantics",
+        "policy model",
+        "temperature",
+        "rollouts",
+        "scientific thresholds"
+      ]
+    }
+  },
+  "provenance": {
+    "origin_main_sha": "4356c31ba3074b2ea823f1e4200a55347bdea58b",
+    "execution_git_sha": "60f654a3979d214525235fe5df30a85613d86f02",
+    "branch": "experiment/c1-pacta-v11-20260830",
+    "schema_qualification_run": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-v11-q0-schema-20260830-v1",
+    "pilot_run": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-v11-p0-fresh-7template-20260830-v1"
+  },
+  "repair": {
+    "only_variable": "ACTION_SCHEMA_EXTRACTION",
+    "source_system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+    "action_schema_sha256": "360e954e171e4a1d3bbcb5f11cf011827fb625334c0e20791cc64a7983200b50",
+    "hashes_persisted_separately": true,
+    "extracted_tools": 11,
+    "forbidden_system_content_in_action_schema": false,
+    "P0_sha256": "d4f1f4aeafac058b83930499ea10a2db0b70db9f5a76131fcd4ff8e0486de295",
+    "P1_sha256": "cfe5f1957da06a674d7c90e4c7e7753505482c7f17de9ecd28191e4fd3c44caf"
+  },
+  "zero_science_schema_qualification": {
+    "status": "SCHEMA_QUALIFICATION_PASS",
+    "scientific_states_used": 0,
+    "fixtures": 20,
+    "calls": 40,
+    "exact_schema_pass": "40/40",
+    "model_drift": 0,
+    "thinking_fallback": 0,
+    "result_sha256": "3a1172f592aec871aa6d8145866bc4a32505373031a5843d5760d339f5f73c64"
+  },
+  "prospective_pool": {
+    "states": 23,
+    "templates": 7,
+    "trajectory_available": "23/23",
+    "retrieval_threshold_hit": "23/23",
+    "wrapper_hashes_verified": "46/46",
+    "task_state_system_hashes_materialized": "23/23",
+    "prior_PACTA_policy_or_projection_outputs": 0,
+    "prior_SCMB_scientific_outputs_for_selected_tasks": 0,
+    "prior_v1_overlap": 0,
+    "selection_outcome_blind": true,
+    "pilot": [
+      {
+        "intent_template_id": 137,
+        "future_task": 353
+      },
+      {
+        "intent_template_id": 138,
+        "future_task": 238
+      },
+      {
+        "intent_template_id": 139,
+        "future_task": 272
+      },
+      {
+        "intent_template_id": 153,
+        "future_task": 653
+      },
+      {
+        "intent_template_id": 156,
+        "future_task": 440
+      },
+      {
+        "intent_template_id": 172,
+        "future_task": 792
+      },
+      {
+        "intent_template_id": 211,
+        "future_task": 264
+      }
+    ],
+    "unused_states_outcomes_read": false
+  },
+  "pilot": {
+    "planned_geometry": {
+      "states": 7,
+      "arms": 4,
+      "branches": 2,
+      "rollouts": 6,
+      "policy_calls": 336,
+      "projection_calls": 28
+    },
+    "execution": {
+      "projection_calls": 28,
+      "scb_calls": 0,
+      "policy_calls": 0
+    },
+    "model": {
+      "requested": "doubao-seed-2.0-mini",
+      "resolved": "doubao-seed-2-0-mini-260215",
+      "model_drift": 0,
+      "thinking_fallback": 0
+    },
+    "projection_realization": {
+      "exact_top_level_action_next_goal": "28/28",
+      "current_state_field": "0/28",
+      "exactly_one_action": "27/28",
+      "strict_exact_schema": "27/28",
+      "failure_states": [
+        238
+      ],
+      "failure_case": "task-238 success P0",
+      "failure_reason": "projection must contain exactly one action",
+      "observed_actions": [
+        "input_text(index=6,text=PS4 accessories)",
+        "click_element(index=7)"
+      ],
+      "original_v1_inherited_response_envelope_repaired": true
+    },
+    "gate_geometry": {
+      "status": "NON_QUALIFYING_OBSERVED_GEOMETRY",
+      "open": "0/7",
+      "closed": "7/7",
+      "open_ids": [],
+      "states": [
+        {
+          "future_task": 353,
+          "projection_complete": true,
+          "stableS": true,
+          "stableF": false,
+          "contrast": true,
+          "G": false
+        },
+        {
+          "future_task": 238,
+          "projection_complete": false,
+          "stableS": false,
+          "stableF": false,
+          "contrast": false,
+          "G": false
+        },
+        {
+          "future_task": 272,
+          "projection_complete": true,
+          "stableS": true,
+          "stableF": true,
+          "contrast": false,
+          "G": false
+        },
+        {
+          "future_task": 653,
+          "projection_complete": true,
+          "stableS": true,
+          "stableF": true,
+          "contrast": false,
+          "G": false
+        },
+        {
+          "future_task": 440,
+          "projection_complete": true,
+          "stableS": true,
+          "stableF": true,
+          "contrast": false,
+          "G": false
+        },
+        {
+          "future_task": 792,
+          "projection_complete": true,
+          "stableS": true,
+          "stableF": true,
+          "contrast": false,
+          "G": false
+        },
+        {
+          "future_task": 264,
+          "projection_complete": true,
+          "stableS": true,
+          "stableF": true,
+          "contrast": false,
+          "G": false
+        }
+      ],
+      "frozen_gate_requirement": "2/7 <= G-open <= 6/7",
+      "verdict": "HOLD_GATE_DEGENERATE_IF_REALIZATION_WERE_OTHERWISE_QUALIFIED"
+    },
+    "U": {
+      "A0_NATIVE": null,
+      "A1_SCB": null,
+      "A2_SAP_ALWAYS": null,
+      "A3_PACTA": null,
+      "A3_minus_A2": null,
+      "A3_minus_A1": null,
+      "A2_minus_A1": null,
+      "A2_minus_A0": null,
+      "reason": "Policy geometry was not started after frozen projection-realization and gate-geometry stops."
+    },
+    "verdict": "PACTA_V11_NOT_QUALIFIED",
+    "interpretation": "Operationalization and gate-realization stop; no PACTA mechanism effect was tested."
+  },
+  "confirmatory": {
+    "executed": false,
+    "status": "NOT_AUTHORIZED_BY_PILOT_STOP",
+    "mean_D_gate": null,
+    "p_value": null
+  },
+  "terminal": {
+    "executed": false,
+    "status": "NOT_RUN_PER_AUTHORITY",
+    "task_success_effect": null
+  },
+  "failure_differential": {
+    "execution": false,
+    "provider": false,
+    "zero_science_schema_qualification": false,
+    "original_inherited_response_envelope": false,
+    "scientific_projection_cardinality_realization": true,
+    "projection_instability_states": 2,
+    "gate_degeneracy": true,
+    "measurement": false,
+    "generic_action_projection": "not tested",
+    "counterfactual_gate_mechanism": "not qualified",
+    "terminal_utility": "not tested",
+    "strongest_competing_explanation": "Synthetic fixtures did not expose the scientific packet's tendency to combine a search-box input and search-button click into two immediate actions; the single-variable schema extraction fixed envelope inheritance but did not guarantee one-action realization on scientific inputs."
+  },
+  "scientific_belief_update": {
+    "increase": "Separating tool affordances from native policy/output instructions repairs the original inherited response-envelope failure.",
+    "decrease": "A 40/40 synthetic schema qualification was insufficient to guarantee strict one-action realization on full scientific packets.",
+    "observation": "Within the six projection-complete states, five had stable success and failure projections but no feedback-specific action contrast; task 353 had contrast but failed failure-branch cross-rendering stability.",
+    "withhold": "No evidence for PACTA selective transport, generic SAP benefit, first-action uptake, or terminal utility."
+  },
+  "claim_authority": {
+    "method_status": "PACTA_V11_NOT_QUALIFIED",
+    "negative_mechanism_result": false,
+    "preliminary_mechanism_signal": false,
+    "selective_transport_improvement_claim": false,
+    "utility_improvement_claim": false,
+    "active_manuscript": "R9",
+    "R10_created": false
+  },
+  "institutional_lessons": [
+    "Passing a native system instruction as an action schema can cause the projector to follow a stronger inherited response envelope. Action-schema qualification must separate tool affordance specification from policy/output instructions before scientific execution.",
+    "An existing method adapted from problem A must not be relabeled as novelty for problem B. Novelty must reside in the additional mechanism required by the adaptation failure."
+  ],
+  "reopen_condition": "STOP. Do not tune or resume PACTA-v1.1, reuse its seven Pilot states, run same-substrate confirmatory, or run terminal. Any further revision or independent-carrier design requires new human authorization."
+}

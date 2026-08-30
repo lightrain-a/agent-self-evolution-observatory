@@ -202,7 +202,30 @@ def _load_external_failure_assets(path: Path = EXTERNAL_FAILURE_ASSETS_JSON) -> 
             raise ValueError(f"external failure asset source missing object key {key}: {source}")
         if row.get("scientific_authority") is not False:
             raise ValueError("external failure assets must explicitly have zero scientific authority")
-        rows.append(dict(row))
+        normalized = dict(row)
+        # Preserve legacy zero-authority assets byte-for-byte at source while
+        # projecting them into the canonical failure-memory interface.
+        layer = str(
+            normalized.get("affected_layer")
+            or normalized.get("layer_type")
+            or "external-negative"
+        ).strip().lower().replace("_", "-").replace(" ", "-")
+        diagnosis = str(
+            normalized.get("diagnosis")
+            or normalized.get("status")
+            or "external-negative"
+        ).strip().lower().replace("_", "-").replace(" ", "-")
+        normalized.setdefault("signature", f"{layer}:{diagnosis}")
+        normalized.setdefault("affected_layer", layer)
+        normalized.setdefault(
+            "reusable_precheck",
+            str(
+                normalized.get("institutional_lesson")
+                or normalized.get("reopen_condition")
+                or "Review the scope-bound external failure asset before reuse."
+            ),
+        )
+        rows.append(normalized)
     return rows
 
 
