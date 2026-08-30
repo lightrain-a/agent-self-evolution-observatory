@@ -1,0 +1,112 @@
+{
+  "backend": {
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "behavior_temperature": 0.0,
+    "environment_timeout_seconds": 60,
+    "max_output_tokens": "omitted",
+    "max_retries": 2,
+    "model": "deepseek-v4-pro-ga-260813",
+    "seed": "omitted",
+    "step_limit": 250,
+    "top_p": "omitted",
+    "workers": 1
+  },
+  "bindings": {
+    "image_manifests": [
+      {
+        "amd64_manifest": "generated/asset-first-stri-reasoningbank-p1-q2-image-manifests-20260830/django16100-amd64.json",
+        "amd64_manifest_sha256": "sha256:07524a702c042e0baa5725c35e2e1ae8c8f50a221682b5bf21ff26438fc46fdd",
+        "index_manifest": "generated/asset-first-stri-reasoningbank-p1-q2-image-manifests-20260830/django16100-index.json",
+        "index_manifest_sha256": "sha256:768b2dd7ecee6c437c64441966687c4a1597230169c7c929e14374660a2ecdab",
+        "label": "django16100"
+      },
+      {
+        "amd64_manifest": "generated/asset-first-stri-reasoningbank-p1-q2-image-manifests-20260830/sympy18211-amd64.json",
+        "amd64_manifest_sha256": "sha256:c92da16cfc8ba1c304c3fd0bf991aba569cc5eaa99a85fb3953c60f09de2c7ca",
+        "index_manifest": "generated/asset-first-stri-reasoningbank-p1-q2-image-manifests-20260830/sympy18211-index.json",
+        "index_manifest_sha256": "sha256:5b03a01d5871b1f8148add41dcd69240b064ed3df13b8347a6e2baa10b20da86",
+        "label": "sympy18211"
+      }
+    ],
+    "official_reasoningbank_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "prior_adjudication": "generated/asset-first-stri-reasoningbank-p1-minimal-pilot-adjudication-20260829.json",
+    "prior_adjudication_sha256": "c4f8f83eb7d3724325e9e047b3cffa3f0e7fb4d5a82a82aa23a70984b0ff554a",
+    "q2_fixtures": "generated/asset-first-stri-reasoningbank-p1-q2-task-fixtures-20260830.json",
+    "q2_fixtures_sha256": "972c841ab9c6dd5a0feaf2e8b6169b3397d46b5143ecd014a515accb0ac360fa",
+    "source_memory": "generated/asset-first-stri-reasoningbank-p1-source-memory-20260829.json",
+    "source_memory_sha256": "0451d0346ab5df749df6c1f1d1ea3abbcde3f913958149be9671fce1bfbf2239",
+    "treatment_manifest": "generated/asset-first-stri-reasoningbank-p1-treatment-manifest-20260829.json",
+    "treatment_manifest_sha256": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7"
+  },
+  "created_at_utc": "2026-08-30T09:10:36+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q2-QUALIFICATION-20260830",
+  "outcome_discipline": {
+    "failed_q2_runs_preserved": true,
+    "no_parameter_or_task_change_after_any_q2_outcome": true,
+    "old_ten_runs_immutable": true
+  },
+  "payload_sha256": "bf51888963d93769209cd3ed93e6b4a1dbf61228766cda6be7ed6d0d6c495409",
+  "purpose": "Prospectively qualify the repaired compatibility harness on fresh disjoint tasks; never replace, relabel, or retrospectively qualify the original ten runs.",
+  "qualification": {
+    "full_p1_execution_authorized": false,
+    "negative_task_outcome_does_not_fail_qualification": true,
+    "pass_opens_only_a_separate_full-P1 planning gate": true,
+    "planned_runs": 10,
+    "requires": [
+      "all two images present by exact amd64 manifest digest",
+      "all ten runs persisted once without replacement",
+      "no provider, provider-identity, runtime, or implementation failure",
+      "no blank model-visible message content",
+      "all completed responses resolve to the exact frozen model",
+      "valid SWE-bench evaluator output for every run",
+      "A/B and B/E selected memory plus first R1 request equal per task"
+    ]
+  },
+  "runtime": {
+    "base_state_rule": "exact_or_clean_tree_equivalent_descendant",
+    "dataset_mirror": "hf-mirror.com",
+    "image_mirror": "docker.1ms.run",
+    "pid_namespace": "host",
+    "platform": "linux/amd64"
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "full_population_authorized": false,
+    "paper_result_claim_authorized": false,
+    "q2_task_outcome_observed": false
+  },
+  "selection": {
+    "automatic_retry": "forbidden",
+    "instance_ids": [
+      "django__django-16100",
+      "sympy__sympy-18211"
+    ],
+    "ranks": [
+      3,
+      4
+    ],
+    "replacement_sampling": "forbidden",
+    "uses_gold_patch": false,
+    "uses_task_outcome": false
+  },
+  "treatments": {
+    "arms": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ],
+    "fresh_container_each_run": true,
+    "ordered_execution": "rank 3 A/B/C/D/E then rank 4 A/B/C/D/E",
+    "session_reuse_across_arms": false,
+    "treatment_sha256": {
+      "A": "6094b0bc5e6ea7c87da86d7cd60594e823ffb84b04a6592016c5154b3968752a",
+      "B": "1dbf10edf2710e256968d01fa64edcbb7df65a3dd92ca5b4511232dcd1f01a00",
+      "C": "04c815b16d2d0f5e863470390d7298657f3560385eea036f98b6fbe2539c4b43",
+      "D": "047fa9e7d69af1d455ac465816ae84d5e7234166420a29f9e3ce3aacf0873083",
+      "E": "b475629a1a9fdff39a3d32c5bcfe449f9cceeb226919355e2a7d32fc22d49196"
+    }
+  }
+}
