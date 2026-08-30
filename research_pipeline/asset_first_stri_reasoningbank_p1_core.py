@@ -235,6 +235,7 @@ class DockerRun:
     image: str
     base_commit: str
     run_id: str
+    exact_base: bool = False
 
     def __post_init__(self) -> None:
         suffix = re.sub(r"[^a-z0-9_.-]+", "-", self.run_id.lower())[-70:]
@@ -261,22 +262,64 @@ class DockerRun:
             raise RuntimeError(f"docker start failed: {started['output'][-800:]}")
         if not re.fullmatch(r"[0-9a-f]{40}", self.base_commit):
             raise RuntimeError("invalid frozen base commit")
-        base_state = self.exec(
-            "git rev-parse HEAD && "
-            f"git cat-file -e {self.base_commit}^{{commit}} && "
-            f"git merge-base --is-ancestor {self.base_commit} HEAD && "
-            f"git diff --quiet {self.base_commit}..HEAD && "
-            "test -z \"$(git status --porcelain=v1)\"",
-            timeout=30,
-        )
-        if base_state["returncode"] != 0:
-            raise RuntimeError(
-                "base state is not an exact or clean tree-equivalent descendant: "
-                f"{base_state['output'].strip()}"
+        if self.exact_base:
+            pre_normalization = self.exec(
+                "git rev-parse HEAD && "
+                f"git cat-file -e {self.base_commit}^{{commit}} && "
+                f"git merge-base --is-ancestor {self.base_commit} HEAD && "
+                "test -z \"$(git status --porcelain=v1 --untracked-files=all)\"",
+                timeout=30,
             )
+            if pre_normalization["returncode"] != 0:
+                raise RuntimeError(
+                    "Q4 exact-base normalization precondition failed: "
+                    f"{pre_normalization['output'].strip()}"
+                )
+            normalization = self.exec(
+                f"git reset --hard {self.base_commit}",
+                timeout=30,
+            )
+            if normalization["returncode"] != 0:
+                raise RuntimeError(
+                    "Q4 exact-base normalization action failed: "
+                    f"{normalization['output'].strip()}"
+                )
+            base_state = self.exec(
+                f'test "$(git rev-parse HEAD)" = "{self.base_commit}" && '
+                "test -z \"$(git status --porcelain=v1 --untracked-files=all)\" && "
+                "git rev-parse HEAD",
+                timeout=30,
+            )
+            if base_state["returncode"] != 0:
+                raise RuntimeError(
+                    "Q4 exact-base normalization postcondition failed: "
+                    f"{base_state['output'].strip()}"
+                )
+            base_state["pre_normalization"] = pre_normalization
+            base_state["normalization"] = normalization
+            base_state["normalization_action"] = (
+                "git reset --hard <frozen expected base commit>"
+            )
+            base_state["git_clean_invoked"] = False
+            rule = "exact_base_after_preregistered_hard_reset"
+        else:
+            base_state = self.exec(
+                "git rev-parse HEAD && "
+                f"git cat-file -e {self.base_commit}^{{commit}} && "
+                f"git merge-base --is-ancestor {self.base_commit} HEAD && "
+                f"git diff --quiet {self.base_commit}..HEAD && "
+                "test -z \"$(git status --porcelain=v1)\"",
+                timeout=30,
+            )
+            if base_state["returncode"] != 0:
+                raise RuntimeError(
+                    "base state is not an exact or clean tree-equivalent descendant: "
+                    f"{base_state['output'].strip()}"
+                )
+            rule = BASE_STATE_RULE
         base_state["expected_base_commit"] = self.base_commit
         base_state["observed_head"] = base_state["output"].strip()
-        base_state["rule"] = BASE_STATE_RULE
+        base_state["rule"] = rule
         return {"image_inspect": inspect, "base_commit_receipt": base_state}
 
     def exec(self, action: str, *, timeout: int | float = COMMAND_TIMEOUT_SECONDS) -> dict[str, Any]:
@@ -295,13 +338,17 @@ class DockerRun:
 
 def execute_agent(
     fixture: dict[str, Any], *, selected_memory: str, run_id: str,
+    exact_base: bool = False,
 ) -> tuple[dict[str, Any], DockerRun]:
     task = fixture["model_visible"]["problem_statement"]
     config = load_config()
     messages = render_messages(task, selected_memory)
     client = make_client()
     container = DockerRun(
-        fixture["image_pull_reference"], fixture["model_visible"]["base_commit"], run_id
+        fixture["image_pull_reference"],
+        fixture["model_visible"]["base_commit"],
+        run_id,
+        exact_base=exact_base,
     )
     runtime_receipt = container.start()
     requests: list[dict[str, Any]] = []

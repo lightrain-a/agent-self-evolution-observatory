@@ -159,12 +159,15 @@ def evaluate(container: DockerRun, fixture: dict[str, Any]) -> dict[str, Any]:
 
 def run_case(
     fixture: dict[str, Any], *, selected_memory: str, run_id: str,
-    output_dir: Path, r0: dict[str, Any],
+    output_dir: Path, r0: dict[str, Any], exact_base: bool = False,
 ) -> dict[str, Any]:
     container: DockerRun | None = None
     try:
         trajectory, container = execute_agent(
-            fixture, selected_memory=selected_memory, run_id=run_id
+            fixture,
+            selected_memory=selected_memory,
+            run_id=run_id,
+            exact_base=exact_base,
         )
         trajectory["R0_representation_retrieval_state"] = copy.deepcopy(r0)
         trajectory["R4_terminal_outcome"] = evaluate(container, fixture)
