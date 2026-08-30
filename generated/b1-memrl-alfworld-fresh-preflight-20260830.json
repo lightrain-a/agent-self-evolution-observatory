@@ -1,0 +1,413 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "publication_code": "B1",
+  "generated_at": "2026-08-30T13:00:29+00:00",
+  "status": "FRESH_SUBSTRATE_G1_G8_PREFLIGHT_PASS",
+  "carrier": {
+    "name": "MemRL ALFWorld episodic-memory carrier",
+    "role": "fresh confirmatory carrier only; not the novelty source or a source-faithful ReasoningBank replication",
+    "memrl_repo": "https://github.com/MemTensor/MemRL.git",
+    "memrl_revision": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "memrl_revision_expected": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "memrl_agent_path": "memrl/agent/memp_agent.py",
+    "memrl_agent_sha256": "1ac4d639428986d779288469ab92950aa5e2ba00ba0089af173076872e31537a",
+    "reasoningbank_reference_revision": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "alfworld_data_root": "/data/wyt/agent-self-evolution-observatory/alfworld",
+    "train_game_count": 3553,
+    "valid_unseen_game_count": 134
+  },
+  "executor": {
+    "model_path": "/data/wyt/models/indept/Qwen2.5-7B",
+    "model_artifact_sha256": {
+      "config.json": "267ce68584c5f24c3b267d934db2de68dd21d1ca677fb78ed809eb60067f7642",
+      "tokenizer.json": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539",
+      "model.safetensors.index.json": "624bf7c47cd12468fdc16e38a47cf4f19e0415b859a223ba3c027eed2f0e1028"
+    },
+    "policy": "local Qwen2.5-7B deterministic admissible-command policy",
+    "policy_mode": "react-family",
+    "generation_sampling": false,
+    "max_steps": 30,
+    "automatic_model_switch": false
+  },
+  "intervention": {
+    "memory_body_rule": "raw source trajectory is frozen once and reused byte-identically across every arm for a target pair",
+    "success_header": "--- SUCCESSFUL MEMORIES (Examples to follow) ---",
+    "failure_header": "--- FAILED MEMORIES (Examples to avoid or learn from) ---",
+    "hidden_header": "--- MEMORY (source outcome hidden) ---",
+    "arms": {
+      "A0_NO_MEMORY": "no memory",
+      "A1_CONTENT_ONLY": "same memory body, source outcome hidden",
+      "A2_TRUTHFUL_VISIBLE_PROVENANCE": "same memory body, true source outcome header visible to executor",
+      "A5_FLIPPED_VISIBLE_PROVENANCE": "same memory body, source outcome header flipped while body stays identical",
+      "A7_BACKEND_ONLY_LABEL": "true provenance recorded in receipt only; executor bytes identical to A1"
+    },
+    "prompt_probe": {
+      "A0_NO_MEMORY": {
+        "success_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "failure_source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "A1_CONTENT_ONLY": {
+        "success_source_sha256": "083e6f4a9fa7622b54e4b6a44939c88374e68be1f94fdc3b8a902ec6f7bc6222",
+        "failure_source_sha256": "083e6f4a9fa7622b54e4b6a44939c88374e68be1f94fdc3b8a902ec6f7bc6222"
+      },
+      "A2_TRUTHFUL_VISIBLE_PROVENANCE": {
+        "success_source_sha256": "b0b500705378474cc36df9e4893c20c63832b06cbf4398425cccc11650ad4d0d",
+        "failure_source_sha256": "cfdc8af62533426c029a01a8c79407b526ae1f630d8da8d0b891f053a6213553"
+      },
+      "A5_FLIPPED_VISIBLE_PROVENANCE": {
+        "success_source_sha256": "cfdc8af62533426c029a01a8c79407b526ae1f630d8da8d0b891f053a6213553",
+        "failure_source_sha256": "b0b500705378474cc36df9e4893c20c63832b06cbf4398425cccc11650ad4d0d"
+      },
+      "A7_BACKEND_ONLY_LABEL": {
+        "success_source_sha256": "083e6f4a9fa7622b54e4b6a44939c88374e68be1f94fdc3b8a902ec6f7bc6222",
+        "failure_source_sha256": "083e6f4a9fa7622b54e4b6a44939c88374e68be1f94fdc3b8a902ec6f7bc6222"
+      }
+    },
+    "backend_only_equals_content_only": true
+  },
+  "task_partition": {
+    "selection_rule": "sort gamefile path within each of six ALFWorld families before any source or target outcome; source=train first 4/family; pilot=valid_unseen first 1/family; confirmatory=valid_unseen next 2/family",
+    "source_pool": [
+      {
+        "family": "pick_and_place",
+        "relative_gamefile": "pick_and_place_simple-AlarmClock-None-Desk-307/trial_T20190907_072303_146844/game.tw-pddl",
+        "gamefile_sha256": "cd63b09deffaa199397e7db912691763fccaf73c7f5db9318afa055c298e5888"
+      },
+      {
+        "family": "pick_and_place",
+        "relative_gamefile": "pick_and_place_simple-AlarmClock-None-Desk-307/trial_T20190907_072329_828593/game.tw-pddl",
+        "gamefile_sha256": "a7c7c32f5e55b621eca379a9ca2dd8191992413daa2eb4c714aa1a70494ad3bc"
+      },
+      {
+        "family": "pick_and_place",
+        "relative_gamefile": "pick_and_place_simple-AlarmClock-None-Desk-310/trial_T20190908_002100_024659/game.tw-pddl",
+        "gamefile_sha256": "7227467f04f9c4bffbf07b06ac6938118d6ccacb83c8fad4fdca39b314f6a404"
+      },
+      {
+        "family": "pick_and_place",
+        "relative_gamefile": "pick_and_place_simple-AlarmClock-None-Desk-310/trial_T20190908_002122_419694/game.tw-pddl",
+        "gamefile_sha256": "22a0f2858441b183caa0952cfe44af25027c782bbfde8c1c3f30ae650593c227"
+      },
+      {
+        "family": "pick_clean_then_place",
+        "relative_gamefile": "pick_clean_then_place_in_recep-Apple-None-DiningTable-19/trial_T20190907_230021_185388/game.tw-pddl",
+        "gamefile_sha256": "353f22a6fc8a6116a5ae97da5eefb25722091a6767f94ad6e32418e419b23acc"
+      },
+      {
+        "family": "pick_clean_then_place",
+        "relative_gamefile": "pick_clean_then_place_in_recep-Apple-None-DiningTable-19/trial_T20190907_230051_730842/game.tw-pddl",
+        "gamefile_sha256": "a360f6d9ab1bbd7990c05ff9257bc8037dc3ce3978156eb3c4f57d5aa3dd9b30"
+      },
+      {
+        "family": "pick_clean_then_place",
+        "relative_gamefile": "pick_clean_then_place_in_recep-Apple-None-DiningTable-19/trial_T20190907_230119_276827/game.tw-pddl",
+        "gamefile_sha256": "0f1e97a715e69841b42b2e2239dc84245d0d2ddb2ca3e46c01b7d7162948efa5"
+      },
+      {
+        "family": "pick_clean_then_place",
+        "relative_gamefile": "pick_clean_then_place_in_recep-Apple-None-DiningTable-21/trial_T20190907_210509_111805/game.tw-pddl",
+        "gamefile_sha256": "aa645294a7db762e83416e856d1d1f13c19255fd3c59ddd0e6555a1de8314deb"
+      },
+      {
+        "family": "pick_heat_then_place",
+        "relative_gamefile": "pick_heat_then_place_in_recep-Apple-None-CounterTop-2/trial_T20190908_112534_364453/game.tw-pddl",
+        "gamefile_sha256": "0a7ff3f112f426f3a1ba5d68cbfa39f1ce1e2a7045dfff7a9be603ae32a1f721"
+      },
+      {
+        "family": "pick_heat_then_place",
+        "relative_gamefile": "pick_heat_then_place_in_recep-Apple-None-CounterTop-2/trial_T20190908_112607_841503/game.tw-pddl",
+        "gamefile_sha256": "3ddb3f6a9d200c070f22e082a334dc1921a7e3a9bb0f170a8a148ee46bbacb7c"
+      },
+      {
+        "family": "pick_heat_then_place",
+        "relative_gamefile": "pick_heat_then_place_in_recep-Apple-None-CounterTop-30/trial_T20190908_103606_028358/game.tw-pddl",
+        "gamefile_sha256": "419ef42dc0d3c9c55e2323eb343995aea05749b92f911bb051c22c2075a65e9b"
+      },
+      {
+        "family": "pick_heat_then_place",
+        "relative_gamefile": "pick_heat_then_place_in_recep-Apple-None-CounterTop-30/trial_T20190908_103716_185977/game.tw-pddl",
+        "gamefile_sha256": "fedd231c1a434fc023d2de15253ed0cf54059e6c643bcb4fadebc24e71945089"
+      },
+      {
+        "family": "pick_cool_then_place",
+        "relative_gamefile": "pick_cool_then_place_in_recep-Apple-None-CounterTop-14/trial_T20190909_044958_536304/game.tw-pddl",
+        "gamefile_sha256": "a17ccc0e78131b950e2c1e5e64ab36eadb4e2752588a1e2283717902d8c61667"
+      },
+      {
+        "family": "pick_cool_then_place",
+        "relative_gamefile": "pick_cool_then_place_in_recep-Apple-None-CounterTop-14/trial_T20190909_045026_110157/game.tw-pddl",
+        "gamefile_sha256": "f4a1e3558065805022bb093f769749969672effdfc624bf1d1b1df9e5d74ddb7"
+      },
+      {
+        "family": "pick_cool_then_place",
+        "relative_gamefile": "pick_cool_then_place_in_recep-Apple-None-CounterTop-27/trial_T20190909_083734_958133/game.tw-pddl",
+        "gamefile_sha256": "c5547daf34f816b6208c6ca6b6ca6fe7a1bd72fe956f61a3118cb7fb98dc74e6"
+      },
+      {
+        "family": "pick_cool_then_place",
+        "relative_gamefile": "pick_cool_then_place_in_recep-Apple-None-CounterTop-27/trial_T20190909_083822_290392/game.tw-pddl",
+        "gamefile_sha256": "3d5d0183ea38b600dfdee85ba6125bc3d32f7d0e3e07f76805c4e1d29090a9c6"
+      },
+      {
+        "family": "look_at_obj_in_light",
+        "relative_gamefile": "look_at_obj_in_light-AlarmClock-None-DeskLamp-301/trial_T20190907_174127_043461/game.tw-pddl",
+        "gamefile_sha256": "0cd491b45779b42b41308e0bc2d75e1c7f72423e8e12a022f55e9757b5fd558e"
+      },
+      {
+        "family": "look_at_obj_in_light",
+        "relative_gamefile": "look_at_obj_in_light-AlarmClock-None-DeskLamp-301/trial_T20190907_174142_375532/game.tw-pddl",
+        "gamefile_sha256": "5ca6b498a810475c68965aa708aa554d5ae8dce33be3a5e03625bc779236a28d"
+      },
+      {
+        "family": "look_at_obj_in_light",
+        "relative_gamefile": "look_at_obj_in_light-AlarmClock-None-DeskLamp-301/trial_T20190907_174157_650656/game.tw-pddl",
+        "gamefile_sha256": "e6001b6648ae0ea7e64aea0cc488b710a8d6797ecc1378578c0c6ba1b86dd396"
+      },
+      {
+        "family": "look_at_obj_in_light",
+        "relative_gamefile": "look_at_obj_in_light-AlarmClock-None-DeskLamp-302/trial_T20190908_192756_298295/game.tw-pddl",
+        "gamefile_sha256": "187e24d79c423e62bbaa74ad4a0e2cf7a942660c68704b7d10c68164627285e2"
+      },
+      {
+        "family": "pick_two_obj_and_place",
+        "relative_gamefile": "pick_two_obj_and_place-AlarmClock-None-Desk-304/trial_T20190907_215326_695860/game.tw-pddl",
+        "gamefile_sha256": "2648fab024cfc67fca6f9884f0e58e56ad13ff43f04a5db613de7270172f6d21"
+      },
+      {
+        "family": "pick_two_obj_and_place",
+        "relative_gamefile": "pick_two_obj_and_place-AlarmClock-None-Desk-304/trial_T20190910_021303_108559/game.tw-pddl",
+        "gamefile_sha256": "fddab004c8212bf2dddf245495d2d52136948d68264ca8f69f06e78986c685aa"
+      },
+      {
+        "family": "pick_two_obj_and_place",
+        "relative_gamefile": "pick_two_obj_and_place-AlarmClock-None-Desk-304/trial_T20190910_105949_580836/game.tw-pddl",
+        "gamefile_sha256": "91048260e670c9dac2600ed9cdf0b3e811edc0ae93638ed73d2b5d805b5c98d2"
+      },
+      {
+        "family": "pick_two_obj_and_place",
+        "relative_gamefile": "pick_two_obj_and_place-AlarmClock-None-Desk-307/trial_T20190907_013652_494441/game.tw-pddl",
+        "gamefile_sha256": "e08bccbb5f7c7a8bf7e377c63cbcdab2d0df0d3a75c351b8a631424586711f55"
+      }
+    ],
+    "pilot_targets": [
+      {
+        "family": "pick_and_place",
+        "relative_gamefile": "pick_and_place_simple-Mug-None-Desk-308/trial_T20190908_125200_737896/game.tw-pddl",
+        "gamefile_sha256": "376f66848df8a84e0082b03925171dde6e7122eef5c52cc87ce33c95f45bfcef"
+      },
+      {
+        "family": "pick_clean_then_place",
+        "relative_gamefile": "pick_clean_then_place_in_recep-Bowl-None-Cabinet-10/trial_T20190909_061130_844814/game.tw-pddl",
+        "gamefile_sha256": "a340bbd8d45a242ce47d9b804fcf47446f0332eaa4f7394f5b6c541c9972c6ab"
+      },
+      {
+        "family": "pick_heat_then_place",
+        "relative_gamefile": "pick_heat_then_place_in_recep-Apple-None-Fridge-10/trial_T20190906_182259_116320/game.tw-pddl",
+        "gamefile_sha256": "628da36dec02d2c0634da12af9aa8f733e1dd23a32c4ae288cb2685f38e7c8fc"
+      },
+      {
+        "family": "pick_cool_then_place",
+        "relative_gamefile": "pick_cool_then_place_in_recep-Bread-None-CounterTop-10/trial_T20190908_091747_866951/game.tw-pddl",
+        "gamefile_sha256": "d5569bc3d48e979536f96ffba172d23b473b205041ce947292263a70e95258f6"
+      },
+      {
+        "family": "look_at_obj_in_light",
+        "relative_gamefile": "look_at_obj_in_light-AlarmClock-None-DeskLamp-308/trial_T20190908_222917_366542/game.tw-pddl",
+        "gamefile_sha256": "bb716346aae19db5e71c97c913b8c3be5ae92a2d06fec10dd383b345d7a26359"
+      },
+      {
+        "family": "pick_two_obj_and_place",
+        "relative_gamefile": "pick_two_obj_and_place-CD-None-Safe-308/trial_T20190907_050942_897916/game.tw-pddl",
+        "gamefile_sha256": "2a437313dc4ca919fe4f134b40dc995f43ebb6336d008117390c77617454c452"
+      }
+    ],
+    "confirmatory_targets": [
+      {
+        "family": "pick_and_place",
+        "relative_gamefile": "pick_and_place_simple-Mug-None-Desk-308/trial_T20190909_203041_433487/game.tw-pddl",
+        "gamefile_sha256": "fa8c20409ded7b0023814b81763b95b36745bf9a4286fdcad98e00148339d84f"
+      },
+      {
+        "family": "pick_and_place",
+        "relative_gamefile": "pick_and_place_simple-Mug-None-Desk-308/trial_T20190909_210238_431966/game.tw-pddl",
+        "gamefile_sha256": "47399a799d0d61a5cd4130f180f621eb61de048324692a137efe0953ceae9f29"
+      },
+      {
+        "family": "pick_clean_then_place",
+        "relative_gamefile": "pick_clean_then_place_in_recep-Bowl-None-Cabinet-10/trial_T20190909_061158_110530/game.tw-pddl",
+        "gamefile_sha256": "592dd234aad8e9abaddd21c5ed9ecbddeed078aa84de3c067c4c02d952e5fd2f"
+      },
+      {
+        "family": "pick_clean_then_place",
+        "relative_gamefile": "pick_clean_then_place_in_recep-Bowl-None-Cabinet-10/trial_T20190909_061232_368489/game.tw-pddl",
+        "gamefile_sha256": "4580f117b995c17b68a8744c49897b6197f98e254b0a2ee687b30f5729065714"
+      },
+      {
+        "family": "pick_heat_then_place",
+        "relative_gamefile": "pick_heat_then_place_in_recep-Apple-None-Fridge-10/trial_T20190906_182353_418140/game.tw-pddl",
+        "gamefile_sha256": "14989cd488fb32a82e14f6f66677d698121cc7847bd95196c999c2af03e7bc10"
+      },
+      {
+        "family": "pick_heat_then_place",
+        "relative_gamefile": "pick_heat_then_place_in_recep-Apple-None-Fridge-10/trial_T20190906_182435_622538/game.tw-pddl",
+        "gamefile_sha256": "defddc4e5f510ef68c5972df31fbce22a2a7e9424acbe1377b749daa131d6d03"
+      },
+      {
+        "family": "pick_cool_then_place",
+        "relative_gamefile": "pick_cool_then_place_in_recep-Bread-None-CounterTop-10/trial_T20190908_091811_414150/game.tw-pddl",
+        "gamefile_sha256": "9852a9513eafdb2acd34b49d19b17d91fda819f8a0f9095f0c167a0c179e9052"
+      },
+      {
+        "family": "pick_cool_then_place",
+        "relative_gamefile": "pick_cool_then_place_in_recep-Bread-None-CounterTop-10/trial_T20190908_091835_825830/game.tw-pddl",
+        "gamefile_sha256": "e9e843bda09758241b6dadd045aa79376244a24144f363de57d9ddc488131972"
+      },
+      {
+        "family": "look_at_obj_in_light",
+        "relative_gamefile": "look_at_obj_in_light-AlarmClock-None-DeskLamp-308/trial_T20190908_222933_607649/game.tw-pddl",
+        "gamefile_sha256": "e2a83540ea9e452559eac3bca2fd5613d115d7957f007d748be893fd0c541698"
+      },
+      {
+        "family": "look_at_obj_in_light",
+        "relative_gamefile": "look_at_obj_in_light-AlarmClock-None-DeskLamp-308/trial_T20190908_222951_616606/game.tw-pddl",
+        "gamefile_sha256": "c759dcb9a67b7e72405595db7eb7c136e66fdeca5169a97e4e925a9fd0951a42"
+      },
+      {
+        "family": "pick_two_obj_and_place",
+        "relative_gamefile": "pick_two_obj_and_place-CD-None-Safe-308/trial_T20190907_051013_060265/game.tw-pddl",
+        "gamefile_sha256": "80bddef1cc036e41a459750ebecd368bf6eef71788ffc1e410580d185a843d0a"
+      },
+      {
+        "family": "pick_two_obj_and_place",
+        "relative_gamefile": "pick_two_obj_and_place-CD-None-Safe-308/trial_T20190907_051056_585414/game.tw-pddl",
+        "gamefile_sha256": "41b83872881dda417ce81fe9c72ad18ce70fd57fc8479f78972197ed346c22a4"
+      }
+    ],
+    "source_n": 24,
+    "pilot_target_n": 6,
+    "confirmatory_target_n": 12,
+    "family_counts_source": {
+      "pick_and_place": 4,
+      "pick_clean_then_place": 4,
+      "pick_heat_then_place": 4,
+      "pick_cool_then_place": 4,
+      "look_at_obj_in_light": 4,
+      "pick_two_obj_and_place": 4
+    },
+    "family_counts_pilot": {
+      "pick_and_place": 1,
+      "pick_clean_then_place": 1,
+      "pick_heat_then_place": 1,
+      "pick_cool_then_place": 1,
+      "look_at_obj_in_light": 1,
+      "pick_two_obj_and_place": 1
+    },
+    "family_counts_confirmatory": {
+      "pick_and_place": 2,
+      "pick_clean_then_place": 2,
+      "pick_heat_then_place": 2,
+      "pick_cool_then_place": 2,
+      "look_at_obj_in_light": 2,
+      "pick_two_obj_and_place": 2
+    },
+    "all_partitions_disjoint": true
+  },
+  "estimands": {
+    "primary": "paired target-task terminal success contrast between truthful visible provenance and flipped visible provenance under byte-identical memory body",
+    "first_stage": "paired first-action change rate under memory exposure versus no-memory and truthful versus flipped provenance",
+    "memory_marginal_utility": "paired terminal success difference A1_CONTENT_ONLY - A0_NO_MEMORY for the same target task and frozen memory body",
+    "visible_provenance_increment": "paired terminal success difference A2_TRUTHFUL_VISIBLE_PROVENANCE - A1_CONTENT_ONLY",
+    "label_directionality": "paired terminal success difference A2_TRUTHFUL_VISIBLE_PROVENANCE - A5_FLIPPED_VISIBLE_PROVENANCE",
+    "no_channel_negative_control": "A7_BACKEND_ONLY_LABEL executor prompt hash and deterministic rollout must equal A1_CONTENT_ONLY under the same target/memory pair"
+  },
+  "statistics": {
+    "independent_unit": "ALFWorld gamefile/task",
+    "requests_or_repeated_model_calls_are_nested_not_n": true,
+    "pilot_n": 6,
+    "confirmatory_n": 12,
+    "primary_test": "exact paired discordance/sign test over target-game terminal success; report all discordant counts and exact interval",
+    "first_stage_test": "exact paired rate over first actions; descriptive gate only, not terminal scientific authority",
+    "no_optional_stopping_on_effect_size": true
+  },
+  "source_acquisition_gate": {
+    "ordered_source_pool_is_frozen": true,
+    "initial_batch": 6,
+    "extension_batch": 6,
+    "maximum_sources": 24,
+    "minimum_environment_success_sources": 2,
+    "minimum_environment_failure_sources": 2,
+    "stopping_rule": "execute sources in frozen order in batches of 6; stop source acquisition after a completed batch once at least 2 environment-success and 2 environment-failure trajectories exist, otherwise continue until all 24 are exhausted",
+    "source_outcome_may_control_source_support_only": true,
+    "source_outcome_cannot_change_pilot_or_confirmatory_target_membership": true,
+    "if_support_not_met_after_24": "HOLD_SOURCE_PROVENANCE_SUPPORT; do not invent expert/corrupted trajectories post hoc"
+  },
+  "pilot_gate": {
+    "purpose": "execution + utilization qualification only; pilot targets are excluded from confirmatory analysis",
+    "requirements": [
+      "source pool contains at least one environment-success and one environment-failure trajectory before target execution",
+      "all five intervention arms render with frozen body hashes",
+      "A1 and A7 executor prompt bytes are identical for every pilot pair",
+      "no fatal runtime/provider/model error",
+      "at least one pilot target shows memory utilization at first action or later action sequence relative to A0; otherwise HOLD_MEMORY_UNUSED"
+    ],
+    "pilot_outcomes_cannot_change_confirmatory_target_membership": true
+  },
+  "confirmatory_gate": {
+    "launch_only_after_pilot_pass": true,
+    "target_membership_already_frozen": true,
+    "no_task_replacement_after_first_confirmatory_outcome": true,
+    "pre_exposure_support_failure_may_be_retried_once_only_if_executor_prompt_was_not_sent": true,
+    "post_exposure_failure_is_retained_and_never_replaced": true,
+    "all_arms_and_all_target_tasks_are_reported": true
+  },
+  "gates": {
+    "G1": {
+      "pass": true,
+      "evidence": "ALFWorld environment reward/won supplies source and target outcome truth; provenance is not researcher post-labeling."
+    },
+    "G2": {
+      "pass": true,
+      "evidence": "Target pair reuses one frozen raw trajectory memory body; content matching is byte identity and requires no target outcome."
+    },
+    "G3": {
+      "pass": true,
+      "evidence": "MemRL pinned code natively exposes success/failure memory headers; treatment changes only this declared executor-visible header. A7 keeps provenance backend-only."
+    },
+    "G4": {
+      "pass": true,
+      "evidence": "Source=train and targets=valid_unseen; pilot and confirmatory target files are disjoint and the entire substrate is disjoint from historical B1 WebArena R19/legacy units."
+    },
+    "G5": {
+      "pass": true,
+      "evidence": "Pinned ALFWorld game.tw-pddl files replay under one frozen environment evaluator; reset->admissible-command->step smoke passed before model execution."
+    },
+    "G6": {
+      "pass": true,
+      "evidence": "Statistical n is target gamefile. Model calls/steps are repeated observations within task, not independent units."
+    },
+    "G7": {
+      "pass": true,
+      "evidence": "Source/pilot/confirmatory partitions are deterministic path/family selections frozen before target outcomes."
+    },
+    "G8": {
+      "pass": true,
+      "evidence": "This content-addressed manifest freezes carrier/model revisions, arms, task membership, endpoints, exclusions, statistics, pilot/confirmatory promotion and stopping rules before first target rollout."
+    }
+  },
+  "historical_boundary": {
+    "r19_not_resumed": true,
+    "historical_r19_or_legacy_units_pooled": false,
+    "old_webarena_support_failure_is_not_scientific_negative": true,
+    "old_stanford_review_is_diagnostic_only": true
+  },
+  "authority": {
+    "scientific": false,
+    "paper": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  },
+  "manifest_sha256": "52ba5113fe6ba7a4fd51aca7d17cde86e4b4a8a8f8bb77691b0a6b4d83f87315"
+}
