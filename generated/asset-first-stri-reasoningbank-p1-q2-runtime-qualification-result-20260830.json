@@ -1,0 +1,201 @@
+{
+  "acquisition_file": "generated/asset-first-stri-reasoningbank-p1-q2-runtime-acquisition-result-20260830.json",
+  "acquisition_file_sha256": "3569efab6c4405c692fd0a4478173a4d1429bbcdc00c516cf8cbe9e3d49ed458",
+  "checks": {
+    "all_base_states_exact_or_tree_equivalent": true,
+    "all_images_present_by_fixed_digest": true,
+    "base_state_rule": "exact_or_clean_tree_equivalent_descendant",
+    "fresh_container_per_probe": true,
+    "no_task_test_or_evaluator_executed": true,
+    "pid_namespace": "host",
+    "separate_docker_daemon": true
+  },
+  "created_at_utc": "2026-08-30T10:06:18+00:00",
+  "credential_material_present": false,
+  "decision": "P1_Q2_RUNTIME_QUALIFIED",
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q2-RUNTIME-QUALIFICATION-20260830",
+  "frozen_input_verification": {
+    "fixed_image_acquisition": {
+      "file_sha256": "3569efab6c4405c692fd0a4478173a4d1429bbcdc00c516cf8cbe9e3d49ed458",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-minimal-pilot-adjudication-20260829.json": {
+      "actual": "c4f8f83eb7d3724325e9e047b3cffa3f0e7fb4d5a82a82aa23a70984b0ff554a",
+      "expected": "c4f8f83eb7d3724325e9e047b3cffa3f0e7fb4d5a82a82aa23a70984b0ff554a",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q2-qualification-contract-20260830.json": {
+      "actual": "3e655e5cc82498beae4fbf020c4b07c31db01116a30237634c4f22159d8ab276",
+      "expected": "3e655e5cc82498beae4fbf020c4b07c31db01116a30237634c4f22159d8ab276",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q2-task-fixtures-20260830.json": {
+      "actual": "972c841ab9c6dd5a0feaf2e8b6169b3397d46b5143ecd014a515accb0ac360fa",
+      "expected": "972c841ab9c6dd5a0feaf2e8b6169b3397d46b5143ecd014a515accb0ac360fa",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-source-memory-20260829.json": {
+      "actual": "0451d0346ab5df749df6c1f1d1ea3abbcde3f913958149be9671fce1bfbf2239",
+      "expected": "0451d0346ab5df749df6c1f1d1ea3abbcde3f913958149be9671fce1bfbf2239",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-treatment-manifest-20260829.json": {
+      "actual": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7",
+      "expected": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7",
+      "pass": true
+    },
+    "p1_frozen_inputs": {
+      "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/agents/default.py": {
+        "actual": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c",
+        "expected": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c",
+        "pass": true
+      },
+      "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/config/extra/swebench.yaml": {
+        "actual": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+        "expected": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+        "pass": true
+      },
+      "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/instruction.py": {
+        "actual": "08e11fbeac1ba9e20d1dafb20728be24194b56bdfea33f05f6a1220ae2cc9bae",
+        "expected": "08e11fbeac1ba9e20d1dafb20728be24194b56bdfea33f05f6a1220ae2cc9bae",
+        "pass": true
+      },
+      "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/memory_management.py": {
+        "actual": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955",
+        "expected": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955",
+        "pass": true
+      },
+      "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/run/extra/swebench.py": {
+        "actual": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951",
+        "expected": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951",
+        "pass": true
+      },
+      "/data/wyt/agent-self-evolution-observatory/worktrees/e1-stri-reasoningbank-p1-20260829/generated/asset-first-stri-reasoningbank-p1-retrieval-certificate-result-20260829.json": {
+        "actual": "b22f79d91e419a010e7e58e658feee424832fe091b506363269c6082e9549f34",
+        "expected": "b22f79d91e419a010e7e58e658feee424832fe091b506363269c6082e9549f34",
+        "pass": true
+      },
+      "/data/wyt/agent-self-evolution-observatory/worktrees/e1-stri-reasoningbank-p1-20260829/generated/asset-first-stri-reasoningbank-p1-task-fixtures-20260829.json": {
+        "actual": "adfa5aca503e3d8d07f4c5e0f86a03da6a58ffedf91ba9d1e9623ae8915d4114",
+        "expected": "adfa5aca503e3d8d07f4c5e0f86a03da6a58ffedf91ba9d1e9623ae8915d4114",
+        "pass": true
+      },
+      "/data/wyt/agent-self-evolution-observatory/worktrees/e1-stri-reasoningbank-p1-20260829/generated/asset-first-stri-reasoningbank-paper-config-correction-20260829.json": {
+        "actual": "ffff870b0bf874c65afb20464ec705cad61ef80712f893b5bc4e195d2480a071",
+        "expected": "ffff870b0bf874c65afb20464ec705cad61ef80712f893b5bc4e195d2480a071",
+        "pass": true
+      },
+      "fixture_visibility": {
+        "pass": true
+      },
+      "official_commit": {
+        "actual": "ed80611788292ea739f1effd31f16c53823b8a0d",
+        "expected": "ed80611788292ea739f1effd31f16c53823b8a0d",
+        "pass": true
+      }
+    },
+    "preoutcome_contract": {
+      "pass": true
+    },
+    "q2_identity_order": {
+      "actual": [
+        [
+          3,
+          "django__django-16100"
+        ],
+        [
+          4,
+          "sympy__sympy-18211"
+        ]
+      ],
+      "expected": [
+        [
+          3,
+          "django__django-16100"
+        ],
+        [
+          4,
+          "sympy__sympy-18211"
+        ]
+      ],
+      "pass": true
+    },
+    "treatment_hashes": {
+      "pass": true
+    }
+  },
+  "payload_sha256": "f494fcf67394c3d74823b9a7e7344bf26ff53f71ba6a1e6d74e973727abfc8d9",
+  "rows": [
+    {
+      "expected_manifest_digest": "sha256:07524a702c042e0baa5725c35e2e1ae8c8f50a221682b5bf21ff26438fc46fdd",
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-16100@sha256:07524a702c042e0baa5725c35e2e1ae8c8f50a221682b5bf21ff26438fc46fdd",
+      "instance_id": "django__django-16100",
+      "non_outcome_probe": {
+        "finished_at_utc": "2026-08-30T10:06:03+00:00",
+        "output": "",
+        "returncode": 0,
+        "started_at_utc": "2026-08-30T10:06:01+00:00",
+        "timed_out": false
+      },
+      "pass": true,
+      "selection_rank": 3,
+      "start": {
+        "base_commit_receipt": {
+          "expected_base_commit": "c6350d594c359151ee17b0c4f354bb44f28ff69e",
+          "finished_at_utc": "2026-08-30T10:06:01+00:00",
+          "observed_head": "d441dd2df18ef4087149ee098e810a1d4ae8dcf5",
+          "output": "d441dd2df18ef4087149ee098e810a1d4ae8dcf5\n",
+          "returncode": 0,
+          "rule": "exact_or_clean_tree_equivalent_descendant",
+          "started_at_utc": "2026-08-30T10:05:50+00:00",
+          "timed_out": false
+        },
+        "image_inspect": {
+          "finished_at_utc": "2026-08-30T10:05:46+00:00",
+          "output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-16100@sha256:07524a702c042e0baa5725c35e2e1ae8c8f50a221682b5bf21ff26438fc46fdd\"] amd64\n",
+          "returncode": 0,
+          "started_at_utc": "2026-08-30T10:05:46+00:00",
+          "timed_out": false
+        }
+      }
+    },
+    {
+      "expected_manifest_digest": "sha256:c92da16cfc8ba1c304c3fd0bf991aba569cc5eaa99a85fb3953c60f09de2c7ca",
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-18211@sha256:c92da16cfc8ba1c304c3fd0bf991aba569cc5eaa99a85fb3953c60f09de2c7ca",
+      "instance_id": "sympy__sympy-18211",
+      "non_outcome_probe": {
+        "finished_at_utc": "2026-08-30T10:06:16+00:00",
+        "output": "",
+        "returncode": 0,
+        "started_at_utc": "2026-08-30T10:06:14+00:00",
+        "timed_out": false
+      },
+      "pass": true,
+      "selection_rank": 4,
+      "start": {
+        "base_commit_receipt": {
+          "expected_base_commit": "b4f1aa3540fe68d078d76e78ba59d022dd6df39f",
+          "finished_at_utc": "2026-08-30T10:06:14+00:00",
+          "observed_head": "a67400b0355750318a6912f48063b7fee0984fb6",
+          "output": "a67400b0355750318a6912f48063b7fee0984fb6\n",
+          "returncode": 0,
+          "rule": "exact_or_clean_tree_equivalent_descendant",
+          "started_at_utc": "2026-08-30T10:06:09+00:00",
+          "timed_out": false
+        },
+        "image_inspect": {
+          "finished_at_utc": "2026-08-30T10:06:06+00:00",
+          "output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-18211@sha256:c92da16cfc8ba1c304c3fd0bf991aba569cc5eaa99a85fb3953c60f09de2c7ca\"] amd64\n",
+          "returncode": 0,
+          "started_at_utc": "2026-08-30T10:06:06+00:00",
+          "timed_out": false
+        }
+      }
+    }
+  ],
+  "schema_version": 1,
+  "scientific_boundary": {
+    "full_p1_execution_authorized": false,
+    "q2_task_outcome_observed": false
+  }
+}
