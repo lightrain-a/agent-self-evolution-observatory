@@ -1,0 +1,126 @@
+{
+  "all_blobs_sha256_verified": true,
+  "all_images_imported_by_exact_digest": true,
+  "created_at_utc": "2026-08-30T14:16:54+00:00",
+  "credential_material_present": false,
+  "decision": "P1_Q3_FIXED_IMAGES_READY",
+  "download_rows": [
+    {
+      "digest": "sha256:079027039e9d5fa1677dd462c60fd9240097243a87ff8a124fffbd16f909c266",
+      "size": 420170791,
+      "status": "verified-existing"
+    },
+    {
+      "digest": "sha256:0ddda5039dab8b2772d0f65857071df489438384259b8fabd0a7882656cf8ca0",
+      "size": 164,
+      "status": "verified-existing"
+    },
+    {
+      "digest": "sha256:149149b5261404c99f27bab3f8af82f28d0e16a648e666883f25f86c75830091",
+      "size": 189,
+      "status": "downloaded-and-verified"
+    },
+    {
+      "digest": "sha256:15126600180c2d3e03404dae726ce56bc79f17b5fcca557ee985ece177dbe221",
+      "size": 400550907,
+      "status": "downloaded-and-verified"
+    },
+    {
+      "digest": "sha256:3127fb08c1f03832a420f311b41c7a77893896beeac1be7f496062e8546addd8",
+      "size": 90721195,
+      "status": "downloaded-and-verified"
+    },
+    {
+      "digest": "sha256:38503a94e4a7753c54a6f2c3a0162a55dd7e727c507b50a94c298b1e748f8093",
+      "size": 38757513,
+      "status": "downloaded-and-verified"
+    },
+    {
+      "digest": "sha256:39a945af8df2ad9343f141c82355d3f2c4b576d432eda34c460d630607462b60",
+      "size": 29736517,
+      "status": "verified-existing"
+    },
+    {
+      "digest": "sha256:407de719c2d3bde9e1d31481e451ac465ef6cdcf90f48b446b000dd907979233",
+      "size": 21565,
+      "status": "verified-existing"
+    },
+    {
+      "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "size": 32,
+      "status": "verified-existing"
+    },
+    {
+      "digest": "sha256:53752545c9b26814a5dadb2ac5d26e71ee039f17d72ee04fbc55e8e14a42966e",
+      "size": 4313,
+      "status": "verified-existing"
+    },
+    {
+      "digest": "sha256:57d8c8824f066b69f765fab96e977938bf8e785700abf524bcc68ca7b1740e6a",
+      "size": 189,
+      "status": "downloaded-and-verified"
+    },
+    {
+      "digest": "sha256:b00f0898ade11ff6f487ac872cd8623213992d8f10ee41a5d798949892f8c01c",
+      "size": 401972471,
+      "status": "downloaded-and-verified"
+    },
+    {
+      "digest": "sha256:d379dcc96158e93133a465d02a206e554e948a48c38d19a17e18fcced167b933",
+      "size": 4215,
+      "status": "downloaded-and-verified"
+    },
+    {
+      "digest": "sha256:f32226dd5f0099b4bf536032897757226f230a17d77c87b147c84201d5bc1436",
+      "size": 4210,
+      "status": "downloaded-and-verified"
+    },
+    {
+      "digest": "sha256:fd3f01088aa854fa99907bd918d9bc8146064c2f452aae3e07d61a6244ca9968",
+      "size": 210296452,
+      "status": "verified-existing"
+    }
+  ],
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q3-ACQUISITION-20260830",
+  "failures": [],
+  "import_rows": [
+    {
+      "archive": "/data/wyt/e1-stri-reasoningbank-runtime/q3-oci-layouts/sphinx9230.docker-archive.tar",
+      "archive_sha256": "efd608aeb9396bf0912613057dcafaee7b520567d8e6751b7955673d45c4498c",
+      "digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "inspect_output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1\"] amd64 sha256:d379dcc96158e93133a465d02a206e554e948a48c38d19a17e18fcced167b933\n",
+      "label": "sphinx9230",
+      "pass": true,
+      "status": "imported-and-verified"
+    },
+    {
+      "archive": "/data/wyt/e1-stri-reasoningbank-runtime/q3-oci-layouts/django11880.docker-archive.tar",
+      "archive_sha256": "3c1438eafc1c6ed1bfd39d8680761fbcdea9c519f5775772409969e17cf3676d",
+      "digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-11880@sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+      "inspect_output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-11880@sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c\"] amd64 sha256:f32226dd5f0099b4bf536032897757226f230a17d77c87b147c84201d5bc1436\n",
+      "label": "django11880",
+      "pass": true,
+      "status": "imported-and-verified"
+    }
+  ],
+  "manifest_bindings": [
+    {
+      "label": "sphinx9230",
+      "manifest": "generated/asset-first-stri-reasoningbank-p1-q3-image-manifests-20260830/sphinx9230-amd64.json",
+      "manifest_sha256": "sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1"
+    },
+    {
+      "label": "django11880",
+      "manifest": "generated/asset-first-stri-reasoningbank-p1-q3-image-manifests-20260830/django11880-amd64.json",
+      "manifest_sha256": "sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c"
+    }
+  ],
+  "mirror": "docker.1ms.run",
+  "payload_sha256": "bdaac491e759a22d29052aa85be8b5efe5f54392725af1cc5f5774159c27d1f0",
+  "schema_version": 1,
+  "scientific_boundary": {
+    "q3_task_outcome_observed": false
+  },
+  "unique_blob_bytes": 1592240723,
+  "unique_blob_count": 15
+}
