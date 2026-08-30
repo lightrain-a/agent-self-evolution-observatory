@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_HUMAN_AUTHORITY",
+  "source": "human author message dated 2026-08-30",
+  "authorized": [
+    "novelty audit",
+    "offline preflight",
+    "support requalification",
+    "6-state pilot",
+    "13-state confirmatory iff pilot frozen gate passes",
+    "bounded terminal iff confirmatory and evaluator qualification pass",
+    "analysis",
+    "Research OS writeback",
+    "branch commit and push"
+  ],
+  "not_authorized": [
+    "backbone change",
+    "dataset change",
+    "outcome-based sample replacement",
+    "threshold tuning",
+    "second method family",
+    "GPU training",
+    "merge main",
+    "submission"
+  ]
+}

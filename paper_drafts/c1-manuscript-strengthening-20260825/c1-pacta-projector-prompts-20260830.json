@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_PROJECTOR_PROMPTS",
+  "status": "FROZEN_BEFORE_PROJECTOR_OR_POLICY_OUTPUT",
+  "method": {
+    "name": "PACTA",
+    "expansion": "Paired Action-Contrast Transport Authority",
+    "development_label": "CAST"
+  },
+  "model": {
+    "requested": "doubao-seed-2.0-mini",
+    "expected_resolved": "doubao-seed-2-0-mini-260215",
+    "temperature": 0.0,
+    "thinking": "disabled",
+    "retries": 0,
+    "substitution": false
+  },
+  "input_fields": [
+    "REUSABLE MEMORY",
+    "ULTIMATE TASK",
+    "CURRENT BROWSER STATE",
+    "ACTION SCHEMA"
+  ],
+  "output_observable": "canonicalized action[0] only; next_goal and rationale are excluded from the gate",
+  "P0": {
+    "instruction": "Given the reusable memory, ultimate task, exact current browser state, and action schema, return the single immediate structured action that the memory most directly supports now. Use the memory only when it is relevant to this state. Do not invent unavailable facts.",
+    "template": "Given the reusable memory, ultimate task, exact current browser state, and action schema, return the single immediate structured action that the memory most directly supports now. Use the memory only when it is relevant to this state. Do not invent unavailable facts.\n\nReturn exactly one JSON object with this shape and no prose:\n{\n  \"action\": [\n    {\n      \"<tool_name>\": {\n        \"<argument>\": \"<value>\"\n      }\n    }\n  ],\n  \"next_goal\": \"<=20 words\"\n}\n\nREUSABLE MEMORY:\n{memory}\n\nULTIMATE TASK:\n{task}\n\nCURRENT BROWSER STATE:\n{state}\n\nACTION SCHEMA:\n{action_schema}\n",
+    "template_sha256": "d4f1f4aeafac058b83930499ea10a2db0b70db9f5a76131fcd4ff8e0486de295"
+  },
+  "P1": {
+    "instruction": "Determine the one immediate structured browser action implied by the reusable memory for this exact task and state under the supplied action schema. Ignore guidance that is not currently applicable. Do not assume facts absent from the state.",
+    "template": "Determine the one immediate structured browser action implied by the reusable memory for this exact task and state under the supplied action schema. Ignore guidance that is not currently applicable. Do not assume facts absent from the state.\n\nReturn exactly one JSON object with this shape and no prose:\n{\n  \"action\": [\n    {\n      \"<tool_name>\": {\n        \"<argument>\": \"<value>\"\n      }\n    }\n  ],\n  \"next_goal\": \"<=20 words\"\n}\n\nREUSABLE MEMORY:\n{memory}\n\nULTIMATE TASK:\n{task}\n\nCURRENT BROWSER STATE:\n{state}\n\nACTION SCHEMA:\n{action_schema}\n",
+    "template_sha256": "cfe5f1957da06a674d7c90e4c7e7753505482c7f17de9ecd28191e4fd3c44caf"
+  }
+}
