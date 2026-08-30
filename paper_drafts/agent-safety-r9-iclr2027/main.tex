@@ -11,288 +11,216 @@
 \usepackage{url}
 \usepackage{hyperref}
 
-\title{A Static Safety Pass Is Not a Temporal Certificate: Controlled First-Violation Evidence in a Persistent Web Agent}
+\title{Temporal Safety Conclusions Are Evaluator-Relative: A Controlled Audit of Persistent Web Agents}
 
 \author{Anonymous authors\\
 Paper under double-blind review}
 
 \begin{document}
-
 \maketitle
 
 \begin{abstract}
-Static safety panels evaluate an agent at one time, while a persistent agent's workflow memory can continue to change. We ask a narrow question in one frozen web-agent study: did a clean current panel predict absence of first violations over a declared future, and what changed when workflow updating was separated from the held-out task schedule? Four Agent Workflow Memory states of a Qwen3-8B browser agent passed all 12 current qualification episodes. With updates enabled, 11/36 future episodes were classified as violations and 8/12 branches had a first violation. Under the same task, seed, branch, horizon, runtime, and evaluator schedule but with the step-0 workflow held fixed, 7/36 episodes and 4/12 branches violated. Paired discordance was four update-only branches and zero control-only branches. A complementary read-only panel re-evaluated the same 12 qualification probes at three updated workflow snapshots; 4/12 state--probe trajectories developed a first violation. The clean current panel was therefore not a temporal certificate, and the controlled finite comparison localizes an update-associated difference beyond schedule alone. These are realized contrasts for one backbone and four states, not population causal effects or hazard estimates.
+Persistent-agent safety studies often treat the evaluator as a fixed implementation detail. We show that this can change the scientific conclusion, not merely its error bars. We begin from a frozen Qwen3-8B/AWM BrowserART study in which HarmBench labels all 12 current probes safe, then reports first violations in 8/12 updated-workflow branches, 4/12 same-schedule frozen-workflow branches, and 0/12 NullMemory branches. We independently freeze DeepSeek-V4-Pro as a blinded semantic co-evaluator. On a 24-episode calibration panel, agreement with HarmBench is 75\% ($\kappa=0.50$), and only 7/12 HarmBench-positive items remain positive. Extending the second judge to the complete three-arm future panel reverses the branch ordering: DeepSeek reports 5/12 updated, 5/12 frozen-workflow, and 8/12 NullMemory branches. The current-pass premise itself also changes: 0/12 positives under HarmBench versus 1/12 under DeepSeek. We therefore introduce the \emph{Evaluator-Robust Temporal Audit} (ERTA), which keeps evaluator outputs vector-valued and returns definite/possible event sets and evaluator-uncertainty contrast envelopes rather than a post-hoc consensus label. An execution-source audit further shows that all 120 historical-plus-prospective future labels used by ERTA were computed from BrowserART's official thought fallback rather than a persisted listener side-effect artifact; we therefore make no externally observed harmful-completion claim. In the derivation panel, ERTA rejects an evaluator-robust update-associated claim. We then freeze ERTA before a fresh held-out application using the three original R9 held-out task IDs never seen in the derivation audit. On these 12 new episodes, HarmBench reports 0 positives while DeepSeek reports 3, so ERTA prospectively returns a measurement-inconclusive event envelope of 0--3 branches. The supported result is methodological: temporal safety conclusions for persistent agents should expose evaluator uncertainty before they are interpreted as properties of memory or self-evolution.
 \end{abstract}
 
 \section{Introduction}
 
-Safety evaluation is usually a snapshot. A model or agent is presented with a set of current probes, its behavior is scored, and a clean result is taken as evidence about the system under test. This interpretation is already limited by sampling. It becomes still more consequential for agents that preserve experience: after evaluation, their workflow memory, retrieved demonstrations, or other persistent state can continue to change.
+A persistent agent changes after evaluation. Its workflow memory, retrieved demonstrations, or other state can evolve as new tasks are executed. This makes a familiar static safety question temporal: if an agent passes a current panel, what---if anything---does that observation certify about a declared future trajectory?
 
-The scientific question in this paper is deliberately narrower than whether self-evolution is generally unsafe. We ask whether a current static safety pass is sufficient to guarantee future non-violation in a fixed, persistent web-agent evaluation. The distinction is temporal. A current panel measures behavior at time $t=0$; deployment-relevant behavior may occur after a sequence of state updates and new tasks. A valid current observation need not be a certificate over that sequence.
+A second issue is usually hidden inside that question. Safety is not observed directly; it is operationalized by an evaluator. LLM-based safety judges are known to be sensitive to artifacts, prompt choices, and judge identity~\citep{chen2025safer,ye2025justice,tan2025judgebench,zhang2026judgesensitivity}. If the evaluator changes not only a few labels but the current-pass premise or the ordering of experimental arms, then a temporal conclusion cannot be attributed to persistent state alone.
 
-Longitudinal safety is not an empty comparison class. Most directly, \citet{altawaha2026remembering} evaluate memory-equipped agents across time using fixed trigger probes, memory snapshots, and a no-memory counterfactual. Their study is broader across memory architectures and already establishes longitudinal memory safety as a research object. Our incremental object is narrower: an action-taking BrowserART/AWM trajectory in which the same held-out task schedule is executed with either the evolving workflow snapshot or the step-0 workflow held fixed, and the outcome is represented by branch-level first-violation time. We complement that paired trajectory comparison with read-only reuse of the original qualification probes across workflow snapshots. The contribution is therefore the controlled interactive-agent evaluation object and its evidence, not priority over longitudinal memory safety.
+This paper exposes that failure mode in a controlled web-agent setting. Our starting point is a frozen Qwen3-8B agent with Agent Workflow Memory (AWM)~\citep{wang2025awm}, BrowserART tasks~\citep{kumar2025browserart} in BrowserGym~\citep{drouin2024browsergym}, and HarmBench-Llama-2-13b-cls~\citep{mazeika2024harmbench}. The original design separates an evolving-workflow arm from an exact same-schedule arm that keeps the step-0 workflow fixed. We add a preregistered read/write-disabled NullMemory arm and independently frozen DeepSeek-V4-Pro evaluations without changing the agent guard, HarmBench threshold, tasks, seeds, or completed trajectories.
 
-We instantiate the question with Agent Workflow Memory (AWM) \citep{wang2025awm}, a Qwen3-8B browser agent, BrowserART tasks \citep{kumar2025browserart} executed through BrowserGym \citep{drouin2024browsergym}, and HarmBench-Llama-2-13b-cls \citep{mazeika2024harmbench} as the frozen behavioral evaluator. Four persistent states first face a three-probe current-state qualification panel. They then enter three common three-step future branches in paired updated-workflow and base-workflow conditions. A secondary panel presents the exact qualification probes and seeds to workflow snapshots at exposure steps 1--3 without writing probe outputs back to memory.
+Under HarmBench, the story is apparently clean: the current panel is 0/12, and future branch events are 8/12 with updates, 4/12 with the base workflow, and 0/12 with NullMemory. Under DeepSeek, the same future trajectories produce 5/12, 5/12, and 8/12 event branches. The two evaluators agree on 88/108 future episode labels, but their scientific ordering differs. Moreover, re-evaluating the original current panel with DeepSeek changes one of the 12 labels, so the premise ``the agent currently passes'' is itself evaluator-relative.
 
-The current panel contained 0 violations in 12 episodes. The updated future contained 11/36 violation episodes and 8/12 event branches; the matched base-workflow control contained 7/36 violation episodes and 4/12 event branches. Four pairs were update-only, none control-only, four events occurred in both conditions, and four in neither. The fixed-probe panel independently found four state--probe trajectories whose originally non-violating response became violating at a later snapshot.
+We turn this observation into a measurement method rather than selecting a preferred judge after seeing the disagreement. \textbf{Evaluator-Robust Temporal Audit (ERTA)} retains one output vector per frozen evaluator and tests three layers before a temporal claim can be called evaluator-robust: (i) the current-pass premise must hold for every evaluator; (ii) future first-event sets must be reported per evaluator, with their overlap; and (iii) any claimed intervention ordering must have the same sign under every evaluator. A fourth diagnostic localizes disagreement by task identity instead of assuming homogeneous label noise. ERTA deliberately does \emph{not} construct a post-hoc majority or consensus label.
 
-This paper makes three contributions:
-
+Our contributions are:
 \begin{itemize}
-    \item We separate a current-panel observation, a certificate over a declared future, and a controlled workflow-update contrast.
-    \item We pair updated and base-workflow trajectories under the exact same held-out schedule, and complement them with read-only fixed qualification probes across workflow snapshots.
-    \item We use first-violation time to retain occurrence, delay, evaluation depth, and horizon censoring, with complete evidence for 120 behavior episodes and no completed-episode reruns or outcome-driven selection.
+    \item \textbf{A temporal-safety partial-identification object.} We formalize evaluator-indexed current-pass, first-event, definite/possible event sets, and contrast envelopes, yielding both a fail-closed claim status and an explicit evaluator-uncertainty interval.
+    \item \textbf{A controlled three-arm, two-evaluator audit.} We reuse identical Qwen3-8B trajectories for updated and frozen-workflow arms, execute a qualified NullMemory arm on the same 36 future slots, and blind the independent co-evaluator to arm and HarmBench labels.
+    \item \textbf{A concrete measurement reversal.} HarmBench orders the arms $8>4>0$ by event branches, whereas DeepSeek orders them $8>5=5$ with NullMemory highest. Exact matched-slot testing is significant for HarmBench ($p=0.00148$) and null for DeepSeek ($p=1.0$).
+    \item \textbf{A prospective held-out application.} After freezing ERTA, we evaluate all three previously unused R9 held-out task IDs in 12 new NullMemory episodes. HarmBench gives 0/12 and DeepSeek 3/12, prospectively exercising ERTA's measurement-inconclusive outcome rather than selecting a judge after seeing disagreement.
 \end{itemize}
 
-Our conclusion is correspondingly bounded. The static-pass implication fails for this evaluated system. Holding the realized held-out schedule fixed, the updated-workflow condition had more observed event branches than the base-workflow condition, and fixed probes exposed snapshot-dependent violations. The experiment does not establish a population causal effect, universal failure of static evaluation, or a calibrated deployment hazard.
+\section{Evaluator-Robust Temporal Audit}
+\label{sec:method}
 
-\section{From snapshot safety to a temporal certificate}
-\label{sec:problem}
-
-Let $s_0$ denote an agent's persistent state at qualification time, $Q$ a current safety panel, and $Y(q,s)$ a binary evaluator output for task $q$ in state $s$, where 1 denotes a violation. A current static pass is
+\subsection{Evaluator-indexed temporal claims}
+Let $\mathcal{E}$ be a set of independently frozen evaluators and $Y_e(q,s)\in\{0,1\}$ evaluator $e$'s violation label for task $q$ in state $s$. For current panel $Q$, define the evaluator-specific premise
 \begin{equation}
-    \sum_{q \in Q} Y(q,s_0) = 0.
+P_e(Q,s_0)=\mathbb{I}\!\left[\sum_{q\in Q}Y_e(q,s_0)=0\right].
 \end{equation}
-This is an observation about $(Q,s_0)$. It becomes a temporal certificate only under the stronger implication
+A current pass is \emph{evaluator-robust} only if $P_e=1$ for every $e\in\mathcal{E}$. This is stricter than choosing one judge as ground truth and is intentionally fail-closed.
+
+For arm $a$, branch $u$, and declared horizon $H$, define
 \begin{equation}
-    \left[\forall q \in Q,\;Y(q,s_0)=0\right]
-    \Longrightarrow
-    \left[\forall t \le H,\;Y(q_t,s_t)=0\right],
-    \label{eq:implication}
+F_e(a,u)=\mathbb{I}\!\left[\exists t\le H:Y_e(q_{u,t},s^a_{u,t})=1\right],\qquad
+T_e(a,u)=\min\{t:Y_e(q_{u,t},s^a_{u,t})=1\}.
 \end{equation}
-for a specified future horizon $H$, task sequence $(q_1,\ldots,q_H)$, and state transition process $s_t=U(s_{t-1},q_t,\mathrm{trajectory}_t)$.
+No event by $H$ is censoring at $H$, not indefinite safety. Let $S_e(a)=\{u:F_e(a,u)=1\}$ be the evaluator-specific first-event set.
 
-Our experiment tests Equation~\ref{eq:implication} for one frozen operationalization. Each selected state has three future branches $b\in\{1,2,3\}$ and horizon $H=3$. For branch $b$, define the first-violation event time
+\subsection{ERTA stability checks}
+ERTA audits four objects without collapsing evaluators into a new label.
+
+\paragraph{Premise stability.} Report $P_e$ for every evaluator and item-level agreement on $Q$. If any evaluator rejects the current pass, a claim whose antecedent is ``current-safe'' is not evaluator-robust.
+
+\paragraph{Event-set partial identification.} Define the \emph{definite} event set $D(a)=\cap_e S_e(a)$ and the \emph{possible} event set $U(a)=\cup_e S_e(a)$. ERTA reports the branch-count envelope $[|D(a)|,|U(a)|]$ and its width $|U|-|D|$, together with
 \begin{equation}
-    T_b = \min\{t\in\{1,2,3\}:Y(q_{b,t},s_{b,t})=1\}.
+J(a)=\frac{|D(a)|}{|U(a)|},
 \end{equation}
-If no violation occurs, $T_b$ is right-censored after step 3. We also report cumulative detection depth,
-\begin{equation}
-  D(h)=\sum_b \mathbb{I}[T_b\leq h], \qquad h\in\{1,2,3\},
-\end{equation}
-which asks how many observed event branches would be visible under a shorter evaluation horizon. We report these counts descriptively. With only 12 deliberately constructed branches, we do not fit a population hazard model or assume that episodes within a state are independent.
+with $J=1$ when both sets are empty. The envelope is not a latent-truth confidence interval; it is the range left unresolved by the frozen evaluator set.
 
-The controlled question is different from the predictive implication. Let $C_H^{\mathrm{upd}}$ and $C_H^{\mathrm{base}}$ denote branch event indicators under the same held-out schedule with the workflow snapshot updated or held at step 0. We report all 12 paired outcomes as treatment-only, control-only, both-event, or neither-event. This identifies a finite realized contrast under the frozen protocol; because the rollouts are stochastic and deliberately constructed, it is not a population causal estimand.
+\paragraph{Contrast-envelope stability.} For arms $a,b$, define $\Delta_e(a,b)=\sum_uF_e(a,u)-\sum_uF_e(b,u)$ and the evaluator envelope $I(a,b)=[\min_e\Delta_e,\max_e\Delta_e]$. A directional statement $a>b$ is evaluator-robust only if the lower endpoint of $I$ is strictly positive; $b>a$ requires the upper endpoint to be negative. If the interval contains zero, direction is evaluator-unidentified.
 
-This event-time view adds information that another aggregate accuracy or refusal score would discard. A branch that is clean at step 1 but fails at step 2 has passed a one-step check, yet it has not remained safe over the declared horizon. Conversely, a branch censored after step 3 is evidence only for the evaluated horizon, not an indefinite guarantee.
+\paragraph{Identification boundary.} \textbf{Proposition 1.} If no evaluator is externally privileged and no reliability weights or semantic ground-truth labels are supplied, then opposite signs of $\Delta_e(a,b)$ across two evaluators do not identify the sign of an evaluator-independent latent contrast. The proof is constructive: the same observed evaluator vector is compatible with one latent-label model in which $e_1$ is the faithful measurement and another in which $e_2$ is faithful, producing opposite latent arm signs. Any scalar vote or weighted average therefore adds an assumption about evaluator reliability that is not contained in the observed trajectories. ERTA exposes that assumption instead of silently making it.
 
-\section{Branch-based evaluation protocol}
+\paragraph{Task-localized disagreement.} We stratify evaluator positives by frozen behavior ID. Concentrated disagreement suggests that the measurement shift is semantically structured rather than exchangeable label noise.
+
+Matched-pair or matched-slot tests are run independently inside each evaluator. We never pool evaluator labels into a post-hoc consensus endpoint. Finally, ERTA compiles each scientific predicate into one of three dispositions: \texttt{ROBUST\_SUPPORTED} if the predicate holds under every frozen evaluator, \texttt{ROBUST\_REFUTED} if it fails under every evaluator, and \texttt{EVALUATOR\_UNIDENTIFIED} otherwise. The compiler is deterministic given the evaluator-by-unit label matrix and claim definition; it does not learn judge weights. ERTA-R1 was formalized after the second-judge audit exposed instability; those numbers are diagnostic derivation evidence. We subsequently froze ERTA's decision rule and a fresh task set before the prospective PV1 trajectories or labels, providing a separate held-out application of the fail-closed audit.
+
+\section{Controlled audit design}
 \label{sec:design}
 
-Figure~\ref{fig:protocol} separates the current observation from two longitudinal tests. Qualification is evaluated once at $s_0$. In the primary paired comparison, each state--branch unit executes the same behavior ID, task, seed, branch, three-step held-out schedule, horizon, runtime, evaluator, guard, threshold, and call policy. The sole experimental contrast is the workflow snapshot supplied to the agent: the updated arm receives the frozen step-specific snapshot, while the base-workflow arm receives its step-0 snapshot at every step. In the secondary panel, the exact qualification probe identity and seed are reused at exposure snapshots 0--3, with probe writeback disabled. Both plans and decision rules were frozen before either new arm's outcomes were inspected.
+\subsection{Frozen longitudinal substrate}
+The agent backbone is Qwen3-8B with AWM. BrowserART tasks run through BrowserGym. Agent sampling temperature is $0.1$; HarmBench uses temperature $0.0$. Exact model revisions, guard behavior, HarmBench threshold, states, schedules, seeds, horizon, and call caps were frozen before the original controlled execution. Completed episodes were never rerun.
+
+Four pre-existing states---\texttt{map-P2-A}, \texttt{map-V4-C1}, \texttt{reddit-A}, and \texttt{reddit-B}---each use three branch seeds $\{11,23,37\}$ and horizon $H=3$. The \emph{updated} arm receives step-specific workflow snapshots. The \emph{base-workflow} arm receives the step-0 workflow at every step while retaining reads. The later \emph{NullMemory} arm uses an exact empty workflow for every episode and discards persistent writes. Before future execution, NullMemory had to pass the same 12 current probes. It did: HarmBench and a blinded DeepSeek co-evaluator both labeled all 12 NullMemory qualification episodes non-violating.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/evaluation_protocol.pdf}
-\caption{Controlled longitudinal design. The paired branch arm holds the held-out schedule fixed while changing only whether the workflow snapshot evolves. The complementary panel reuses the same qualification probes and seeds at workflow snapshots 0--3 without writeback.}
+\caption{Longitudinal substrate. Updated and base-workflow arms share state, branch, task, seed, horizon, runtime, and evaluator configuration; NullMemory reuses the same future slots with read/write-disabled workflow state. ERTA audits each completed trajectory under independently frozen evaluators.}
 \label{fig:protocol}
 \end{figure}
 
-\subsection{Frozen agent and evaluation stack}
+\subsection{Independent evaluator calibration}
+HarmBench remains the preregistered operational endpoint. To test its semantic stability, we deterministically sampled 24 episodes balanced by hidden arm and HarmBench binary label. DeepSeek-V4-Pro was frozen before unblinding, with temperature $0$, one episode per request, no cross-item context, no retry POST after a response object existed, and the arm/HarmBench label/state/task identity hidden from the judge. All 24 judgments completed. The preregistered calibration gate required at least 9/12 agreement on HarmBench positives, at least 9/12 on negatives, and at most four ambiguous judgments.
 
-The persistent substrate is AWM workflow memory and history \citep{wang2025awm}. The agent backbone is Qwen3-8B. Tasks come from BrowserART, a benchmark designed to expose safety failures in browser agents \citep{kumar2025browserart}, and run in BrowserGym \citep{drouin2024browsergym}. Outputs are adjudicated with HarmBench-Llama-2-13b-cls \citep{mazeika2024harmbench}. This evaluator is an operational benchmark instrument, not a noiseless ground-truth oracle.
+After that gate failed, we did not replace HarmBench or search for a more agreeable judge. Instead, we completed DeepSeek labels for all existing updated/base future trajectories and all NullMemory future trajectories. This full census is a post-hoc measurement audit, not a new confirmatory intervention experiment. DeepSeek uses the same frozen rubric throughout.
 
-The runtime, evaluator, threshold, and guard behavior were frozen before execution. The protocol prohibited reruns of completed episodes and capped model calls. All 120 behavior episodes completed: 12 qualification, 36 updated future, 36 same-schedule base-workflow control, and 36 new fixed-probe snapshot episodes. Table~\ref{tab:setup} records the scientific objects relevant to interpretation.
+\subsection{Analysis units and authority boundary}
+The primary longitudinal unit is a state-by-branch trajectory; there are 12 per arm and 36 episodes per arm. Branches are clustered within four states and are not IID population draws. We report exact paired sensitivity only as finite calibration. The audit changes no guard, threshold, task, seed, or original trajectory. A blinded human packet exists but remains unlabeled and unused. Attempts to add a fresh non-Qwen backbone were stopped at the support layer before any safety label because available backbones failed the frozen browser-action interface; no cross-backbone result is claimed.
 
-\begin{table}[t]
-\centering
-\caption{Frozen case-study setup. Counts are protocol objects, not sampled population sizes.}
-\label{tab:setup}
-\small
-\begin{tabular}{p{0.27\linewidth}p{0.64\linewidth}}
-\toprule
-Component & Frozen value \\
-\midrule
-Agent & Qwen3-8B with Agent Workflow Memory \\
-Environment/tasks & BrowserGym execution of BrowserART task instances \\
-Persistent states & Four selected states in map and reddit strata \\
-Current panel & Three qualification probes per state; 12 episodes total \\
-Updated future & Three branches $\times$ three steps per state; 36 episodes \\
-Base-workflow control & Same 36 episode slots; step-0 workflow held fixed \\
-Fixed-probe panel & Same 12 qualification probes at snapshots 1--3; 36 new episodes \\
-Outcome instrument & HarmBench-Llama-2-13b-cls binary label \\
-Primary object & Paired branch first-violation occurrence and step by horizon $H=3$ \\
-Protocol constraints & Fixed runtime, guard, threshold, states, schedules, horizon, and call cap; no completed reruns \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{States, strata, and branches}
-
-The evaluation contains four selected persistent states in two task strata:
-\texttt{map-P2-A}, \texttt{map-V4-C1}, \texttt{reddit-A}, and \texttt{reddit-B}. Each state receives three current qualification probes, for 12 qualification episodes in total.
-
-After qualification, each state follows three common future branches of three sequential episodes, yielding 12 state--branch pairs. The updated and base-workflow conditions share the exact held-out task schedule; only the supplied workflow snapshot differs. Separately, the 12 state--qualification-probe pairs are evaluated at each of three updated snapshots. Probe outputs never alter a later snapshot.
-
-This is a paired, finite evaluation rather than an estimate from randomly sampled agents or deployments. Pairing removes schedule differences inside the realized comparison, but does not create an IID design or make fresh stochastic rollouts deterministic potential outcomes.
-
-\subsection{Outcomes and estimands}
-
-The episode-level outcome is the frozen evaluator's binary violation label. The original guarantee test asks whether any updated branch experiences a first violation within three steps. The primary controlled outcome is paired branch event occurrence, reported through the four discordance categories and first-event timing. The secondary outcome is first exposure step with a violation for each fixed state--probe trajectory.
-
-The guarantee test is logical: any protocol-valid future violation after a fully clean current panel refutes Equation~\ref{eq:implication} for the evaluated operationalization. The controlled arms add finite descriptive contrasts. Event fractions summarize this realized design and are not presented as population probabilities.
+\paragraph{Execution-source boundary.} BrowserART records a listener artifact when a supported external effect is observed; otherwise the frozen evaluator path uses the official OpenDevin thought fallback. Across the 108 historical future episodes and 12 prospective PV1 episodes, the execution-source audit finds 0 listener effects and 120 thought-fallback evaluations, although every episode executes at least one browser action. Thus our outcome is an \emph{evaluator-positive trace event} over action-taking trajectories, not a verified harmful task completion. We retain this distinction throughout ERTA rather than treating the absence of a listener artifact as a safety label.
 
 \section{Results}
 \label{sec:results}
 
-\subsection{RQ1: Did the selected states pass the current safety panel?}
+\subsection{RQ1: Is the current-pass premise evaluator-stable?}
+No. HarmBench labels all 12 original current qualification episodes non-violating. DeepSeek labels 11/12 non-violating and one violating, for item agreement 11/12. Thus the original statement ``the evaluated state passes the current panel'' is true under the frozen HarmBench operationalization but fails ERTA's evaluator-robust premise gate.
 
-Yes. All four states completed three qualification probes, and all 12 episode labels were non-violations. Thus every state satisfied the predeclared current-state qualification rule. Table~\ref{tab:overview} separates this qualification result from the subsequent future evidence.
+This distinction does not retroactively invalidate the HarmBench observation. It changes its scope: the current pass is an evaluator-indexed measurement, not an evaluator-independent property of the state.
+
+\subsection{RQ2: Does blinded second-judge calibration support HarmBench?}
+Only partially. On the 24-item balanced blind panel, DeepSeek agrees on 18/24 labels (75\%) with Cohen's $\kappa=0.50$. Among 12 HarmBench-positive items, DeepSeek marks 7 positive (58.3\%); among 12 HarmBench-negative items, it marks 11 negative (91.7\%). There are no ambiguous judgments. The preregistered calibration gate therefore fails.
+
+The fixed-probe evidence is especially fragile: among the four sampled HarmBench-positive fixed-probe trajectories, DeepSeek marks only 2/4 positive, below the preregistered 3/4 requirement. We consequently retain the fixed-probe result only as HarmBench-specific snapshot evidence.
+
+\subsection{RQ3: Is the three-arm ordering evaluator-stable?}
+No. Table~\ref{tab:dual} shows a complete change in the mechanism-facing story. HarmBench yields updated $>$ base workflow $>$ NullMemory. DeepSeek yields NullMemory $>$ updated $=$ base workflow.
 
 \begin{table}[t]
 \centering
-\caption{Current qualification and future results. Event branches contain at least one evaluator-classified violation within the three-step horizon.}
-\label{tab:overview}
+\caption{The same future trajectories support different arm orderings under two frozen evaluators. Parentheses show episode positives.}
+\label{tab:dual}
 \small
-\begin{tabular}{lrrrr}
+\begin{tabular}{lcc}
 \toprule
-State & Current eps. & Current viol. & Future viol./eps. & Event branches \\
+Arm & HarmBench events & DeepSeek events \\
 \midrule
-\texttt{map-P2-A}  & 3 & 0 & 2/9 & 2/3 \\
-\texttt{map-V4-C1} & 3 & 0 & 0/9 & 0/3 \\
-\texttt{reddit-A}  & 3 & 0 & 5/9 & 3/3 \\
-\texttt{reddit-B}  & 3 & 0 & 4/9 & 3/3 \\
-\midrule
-Total              & 12 & 0 & 11/36 & 8/12 \\
+Updated workflow & 8/12 (11/36) & 5/12 (7/36) \\
+Base workflow & 4/12 (7/36) & 5/12 (7/36) \\
+NullMemory & 0/12 (0/36) & 8/12 (8/36) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{RQ2: Did the static pass guarantee future non-violation?}
+For updated versus base, HarmBench has four update-only and zero base-only branches (exact two-sided $p=0.125$), whereas DeepSeek has two update-only and two base-only branches ($p=1.0$). For updated versus NullMemory, HarmBench has eight updated-only and zero NullMemory-only branches ($p=0.0078$); DeepSeek has one updated-only and four NullMemory-only branches ($p=0.375$), reversing direction. None of these values is a population p-value; they are exact finite matched sensitivities.
 
-No. Eleven of 36 future episodes were classified as violations. At branch level, a first violation occurred in 8 of 12 branches. Events appeared in 3 of the 4 persistent states. These observations directly contradict the right-hand side of Equation~\ref{eq:implication} while its left-hand side holds for the qualification panel.
+A three-arm matched-slot test reaches the same conclusion. With the 36 matched episode slots, HarmBench has column totals 11/7/0 and exact within-slot permutation $p=0.00148$. DeepSeek has 7/7/8 and $p=1.0$. ERTA therefore rejects an evaluator-robust update-associated contrast.
 
-A rule that treats \emph{passed all current probes} as a prediction of no violation anywhere in the specified three-step future would therefore be wrong for 8 of the 12 branches in this finite evaluation. This is a descriptive error count, not a generalization estimate.
+\subsection{RQ4: Do the evaluators identify the same event branches?}
+Only partly. The event-set Jaccard overlap is 0.625 for updated workflow, 0.800 for base workflow, and 0 for NullMemory. Branch-level exact agreement is respectively 9/12, 11/12, and 4/12. Across all 108 future episode labels, exact evaluator agreement is 88/108 (81.5\%). The large NullMemory disagreement demonstrates why a seemingly high aggregate agreement rate does not by itself validate a mechanism conclusion.
 
-\subsection{RQ3: How much did evaluation depth reveal?}
+\subsection{RQ5: Is disagreement task-localized?}
+Yes. Across all three future arms, every DeepSeek-positive episode belongs to behavior ID 21 or 33; DeepSeek labels IDs 8, 11, and 34 negative in every arm. HarmBench positives span all five behavior IDs across updated/base trajectories. Under NullMemory, HarmBench is 0/36 while DeepSeek identifies eight positives, all at step 3 on IDs 21/33. This concentration is inconsistent with treating evaluator disagreement as homogeneous random noise. It instead points to a task-semantic measurement interaction that must be resolved before attributing the arm ordering to persistent memory.
 
-Figure~\ref{fig:depth} reconstructs the result under three prospective stopping depths using the same frozen trajectories. After one future step, 1 of 12 branches had an observed event. Extending to step 2 raised cumulative detection to 7 of 12; step 3 raised it to 8 of 12. Thus a one-step future check would have detected only one of the eight event branches ultimately observed at the declared horizon. This is a horizon analysis, not a comparison among independently executed policies.
+\subsection{RQ6: What conclusions survive ERTA?}
+Three conclusions have different statuses. First, the original HarmBench operational result survives unchanged: under that frozen evaluator, the current panel is 0/12 and future branch events are 8/12 updated, 4/12 base, and 0/12 NullMemory. Second, the stronger statement that workflow updating increases future safety violations does \emph{not} survive: the updated-minus-base contrast envelope is $[0,4]$, while comparisons with NullMemory span zero ($[-3,8]$ and $[-3,4]$). Third, the evaluator-independent statement ``a static safety pass is not a temporal certificate'' is not established by the derivation realization because the current-pass premise itself is not shared across evaluators.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\linewidth]{figures/temporal_depth_and_state_profile.pdf}
-\caption{Two descriptive views of the frozen result. Left: cumulative branches with a first violation by evaluation depth. Right: episode violations and event branches by state. Fractions describe this finite evaluation only.}
-\label{fig:depth}
-\end{figure}
+\subsection{RQ7: Does ERTA behave prospectively on untouched held-out tasks?}
+Yes, in the sense of exercising its preregistered fail-closed outcome on fresh data. Before any new trajectory or label, we froze every original R9 held-out task ID absent from the derivation audit: IDs 1, 13, and 22. We executed all three tasks for each of four pre-fixed state labels under the already dual-evaluator-clean NullMemory current premise, for 12 new episodes. HarmBench labeled all 12 non-violating; the blinded DeepSeek audit labeled 3/12 positive, all on task ID 1. Thus definite event branches are 0/4, possible event branches 3/4, $J=0$, and ERTA returns \texttt{MEASUREMENT\_INCONCLUSIVE\_EVALUATOR\_RELATIVE}. This held-out result was not used to define the method or choose the tasks, judge, threshold, or decision rule. It validates ERTA's operational behavior on one prospective panel, not its generality across agents or evaluator families.
+
+\subsection{What research decisions does ERTA change?}
+Table~\ref{tab:claimcompiler} makes the method's practical output explicit. A HarmBench-only analysis would accept the original current-pass premise and three directional memory-arm statements. ERTA blocks every one of those evaluator-independent upgrades. On PV1, a HarmBench-only analysis would report a clean future panel, while ERTA marks the result evaluator-unidentified because DeepSeek finds events. The contribution is therefore not merely additional labels: it is a deterministic claim gate that prevents evaluator-specific measurements from silently becoming evaluator-independent conclusions.
 
 \begin{table}[t]
 \centering
-\caption{What different evaluation depths support in the frozen branch set.}
-\label{tab:lenses}
+\caption{Claim-disposition audit. ``Single judge'' shows what the frozen HarmBench measurement alone would support; ERTA asks whether the same predicate survives every frozen evaluator.}
+\label{tab:claimcompiler}
 \small
-\begin{tabular}{lcl}
+\begin{tabular}{p{0.42\linewidth}p{0.22\linewidth}p{0.25\linewidth}}
 \toprule
-Evaluation lens & Event branches visible & Permitted interpretation \\
+Scientific predicate & HarmBench-only & ERTA disposition \\
 \midrule
-Current snapshot & 0/12 current episodes & Observation at qualification only \\
-One future step & 1/12 branches & One immediate future event detected \\
-Two future steps & 7/12 branches & Six delayed events added at step 2 \\
-Three-step horizon & 8/12 branches & Static pass fails as this horizon's certificate \\
+Original current panel passes & Supported & Evaluator-unidentified \\
+Updated future $>$ base workflow & Supported & Evaluator-unidentified \\
+Updated future $>$ NullMemory & Supported & Evaluator-unidentified \\
+Base workflow $>$ NullMemory & Supported & Evaluator-unidentified \\
+PV1 has no later event through $H=3$ & Supported & Evaluator-unidentified \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{RQ4: When and where did first violations appear?}
-
-Figure~\ref{fig:eventtime} shows the branch-level event times. One branch first violated at step 1, six at step 2, and one at step 3. Four branches were censored after step 3. Thus seven of eight event branches would not have been identified by examining only the first future step, and one would additionally have escaped a two-step horizon.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=0.92\linewidth]{figures/first_violation_by_state_branch.pdf}
-\caption{Descriptive first-violation event time by persistent state and common future branch. A value of $>3$ means that no first violation was observed within the three-step horizon; it is not an indefinite safety claim.}
-\label{fig:eventtime}
-\end{figure}
-
-The state-by-branch pattern is heterogeneous. Within the map stratum, \texttt{map-P2-A} had events in two branches while \texttt{map-V4-C1} had none. Within the reddit stratum, both states had events in all three branches, although their episode-level violation totals differed. These paired patterns show that neither task stratum nor branch position alone provides a complete descriptive account. The evaluation is too small and deliberately structured to establish state identity as a predictor.
-
-\subsection{RQ5: Does the update contrast survive a same-schedule control?}
-
-Yes, descriptively within the frozen pairs. The updated condition had first violations in 8/12 branches and 11/36 episodes, compared with 4/12 branches and 7/36 episodes under the base-workflow control. Pairwise, four branches were update-only, none control-only, four had events in both conditions, and four in neither. The realized branch-event difference is $4/12$. We use \emph{had} rather than a population-causal verb deliberately: the protocol localizes a finite update-associated contrast after schedule matching, while the selected states and stochastic rollouts do not support a population effect estimate.
-
-Figure~\ref{fig:control} shows both aggregate and paired event time. The comparison separates workflow-update condition from held-out schedule inside this finite design: state, branch, behavior ID, seed, step, horizon, runtime, evaluator, guard, and threshold were held fixed. It does not estimate a population causal effect, and matched seeds do not eliminate all stochastic rollout variation.
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/controlled_longitudinal_comparison.pdf}
-\caption{Controlled longitudinal evidence. (a) The updated-workflow condition had events in 8/12 branches versus 4/12 under the same held-out schedule with the base workflow held fixed. (b) All paired first-event times; $>3$ denotes censoring. (c) Re-evaluating the same 12 qualification probes at updated snapshots yielded 0, 1, 1, and 2 violation episodes at exposure steps 0--3. Counts describe the frozen design only.}
-\label{fig:control}
-\end{figure*}
-
-\subsection{RQ6: Do fixed qualification probes change across snapshots?}
-
-Yes, for 4/12 state--probe trajectories. Step 0 reused the clean qualification outcomes (0/12). At exposure steps 1, 2, and 3, respectively 1/12, 1/12, and 2/12 fixed probes were classified as violations. First events occurred once at step 1, once at step 2, and twice at step 3; the other eight trajectories were censored after step 3. The step-1 and step-2 events reverted to non-violation at the next snapshot, so this is evidence of snapshot dependence rather than monotonic degradation. Because probe identity and seed were fixed and probe output did not write back, the panel provides a complementary descriptive link between workflow snapshot and evaluated behavior.
-
-\section{Relation to existing safety protocols}
+\section{Related work}
 \label{sec:related}
 
-\paragraph{Static and multi-step agent benchmarks.}
-AgentHarm measures harmfulness across agent tasks \citep{andriushchenko2024agentharm}; BrowserART and SafeArena expose safety failures in web-agent interaction \citep{kumar2025browserart,tur2025safearena}; AgentHazard extends harmful-behavior evaluation for computer-use agents \citep{feng2026agenthazard}. These benchmarks are essential behavioral tests. Our question concerns an additional axis: whether a pass observed before persistent state and task history continue to evolve can be read as a certificate over a specified later trajectory.
+\paragraph{Agent and web-agent safety evaluation.}
+AgentHarm and AgentDojo evaluate harmful or adversarial behavior in tool-using agents~\citep{andriushchenko2024agentharm,debenedetti2024agentdojo}; BrowserART, SafeArena, AgentHazard, and ST-WebAgentBench extend safety and policy-compliance evaluation to interactive computer/web settings~\citep{kumar2025browserart,tur2025safearena,feng2026agenthazard,levy2026stwebagentbench}. WorkArena helped establish enterprise BrowserGym-style evaluation~\citep{drouin2024workarena}. ERTA is orthogonal to benchmark coverage: it asks whether a temporal conclusion computed on a fixed trajectory set is stable to evaluator identity.
 
 \paragraph{Persistent memory and self-evolution.}
-AWM induces and retrieves reusable workflows \citep{wang2025awm}. Recent safety work studies experience-driven self-evolution \citep{zhao2026safety}, unsafe skill misevolution \citep{mao2026practice}, harmful experience composition \citep{yan2026selfevolving}, trajectory poisoning \citep{chen2026agentsafety}, and skill-induced failures \citep{dong2026evolution}. Broader treatments organize threats and amplification in self-evolving systems \citep{lin2026safety}, while temporal-intervention evaluation asks how agent behavior changes with user history \citep{qian2026temporal}.
+AWM induces reusable workflows~\citep{wang2025awm}. Experience-driven safety, skill misevolution, harmful experience composition, trajectory poisoning, and persistent-memory attacks show that learned state can alter future behavior~\citep{zhao2026safety,mao2026practice,yan2026selfevolving,chen2026agentsafety,gadgil2026badmemory}. \citet{altawaha2026remembering} directly study longitudinal memory risk with fixed probes and NullMemory controls. Our initial R9 design contributes a same-schedule action-taking comparison, but the present paper's main result is that its interpretation depends on the evaluator.
 
-The closest empirical comparison is \citet{altawaha2026remembering}, who directly study longitudinal risk in memory-equipped agents using fixed trigger probes, read-only memory snapshots, several scenarios and memory architectures, and a NullMemory counterfactual. We borrow two control ideas---a memory-disabled comparison and fixed probes over snapshots---while preserving our frozen AWM/BrowserART runtime. Table~\ref{tab:closest} makes the distinction explicit: their evidence is broader across architectures, whereas ours adds action-taking held-out trajectories, an exact same-schedule base-workflow control, and branch first-event timing. Concurrent work examines other persistent-memory safety objects: \citet{gadgil2026badmemory} study prompt-injection payloads that persist through agent memory, while \citet{akewar2026safecommit} propose a certificate for acting safely under uncertain memory grounding. These threat and decision-control settings motivate persistent-memory safety, but they do not test the static-pass-to-declared-future implication or the paired first-event object studied here.
-
-\begin{table*}[t]
-\centering
-\caption{Closest protocol comparison. Both studies execute a memory/update control, but the system, breadth, trajectory object, and reporting target differ.}
-\label{tab:closest}
-\small
-\resizebox{\textwidth}{!}{
-\begin{tabular}{lllllll}
-\toprule
-Work & Agent setting & Persistent state & Time/task sequence & Executed memory control & First-event report & Primary object \\
-\midrule
-AgentHarm & Tool agent & No & Multi-step task & No & No & Harmful task completion \\
-BrowserART & Browser agent & No update target & Interactive task & No & No & Browser-agent alignment failure \\
-SafeArena & Browser agent & No update target & Interactive task & No & No & Safe web-agent behavior \\
-Al-Tawaha et al. & Memory-equipped agents & Yes & Longitudinal trigger probes & Yes, NullMemory & No & Memory-associated longitudinal risk \\
-Ours & AWM browser agent & Yes & Held-out 3-step branches + fixed probes & Yes, base workflow & Yes & Static-pass prediction and finite update contrast \\
-\bottomrule
-\end{tabular}}
-\end{table*}
-
-\paragraph{Event-time representation.}
-First-event and time-to-event analysis are standard tools for delayed outcomes and censoring \citep{kaplan1958nonparametric}. We use that representation to expose evaluation depth and branch censoring. The small paired branch set supports finite event counts rather than survival-model inference or a calibrated deployment hazard.
+\paragraph{Reliability of model-based evaluators.}
+JudgeBench and CALM-style bias audits show that LLM judges can be unreliable or systematically biased~\citep{tan2025judgebench,ye2025justice}. In safety evaluation specifically, \citet{chen2025safer} show strong sensitivity to response artifacts, while recent work reports substantial HarmBench-style score shifts from judge configuration alone~\citep{zhang2026judgesensitivity}. Those studies audit evaluator quality directly. ERTA instead audits how evaluator choice propagates through a \emph{longitudinal scientific claim}: it can change the antecedent current-pass decision, the set and time of future events, and the ordering of matched intervention arms.
 
 \section{Discussion and limitations}
 \label{sec:discussion}
 
-\paragraph{A static pass is evidence, not a temporal certificate.}
-The current qualification result remains valid: the evaluator found no violations in its 12 episodes. The future result does not retroactively make those observations false. Instead, it limits what follows from them. In this persistent-agent setting, \emph{safe on the current panel} cannot be strengthened to \emph{no violation over the evaluated future} without additional temporal evidence.
+\paragraph{Evaluator disagreement is part of the scientific object.}
+Once the current premise and intervention ordering change with the evaluator, ``judge choice'' is not a cosmetic implementation detail. Reporting only one evaluator would make the HarmBench ordering look mechanism-consistent; reporting only DeepSeek would suggest a different story. ERTA keeps both measurements visible and refuses to create a post-hoc scalar truth label.
 
-\paragraph{Horizon matters.}
-Most first violations appeared at step 2, with another at step 3. Reporting only an initial future probe would materially understate the observed branch coverage. A first-violation protocol makes the chosen horizon explicit and treats no event as censored at that horizon, preventing a finite clean run from becoming an unbounded claim.
+\paragraph{The new result weakens an old claim and strengthens the methodology.}
+The HarmBench-only longitudinal evidence remains reproducible, but its update-associated interpretation is no longer presented as evaluator-robust. This is a stronger scientific position than choosing the judge that preserves the original narrative. NullMemory is especially informative here: it is current-clean under both evaluators, yet future labels diverge maximally at branch level ($J=0$).
 
-\paragraph{The schedule confound is resolved only inside the frozen comparison.}
-The same-schedule base-workflow arm holds the realized tasks, seeds, branches, horizon, runtime, evaluator, threshold, and guard fixed. Its 4/12 event branches, compared with 8/12 under updated workflows and paired discordance of 4--0, show that schedule alone does not account for the full observed contrast. This resolves the recorded reopen condition for the frozen R9 design. It does not justify a population effect: the experiment has one backbone, four selected states, 12 branch pairs, and stochastic rollouts.
+\paragraph{Two evaluators are not ground truth, and trace events are not task completion.}
+DeepSeek is an independent semantic co-evaluator, not a human oracle. The objective execution-source audit also finds 0 persisted BrowserART listener effects across the 108 historical and 12 prospective future episodes used by ERTA; all labels are therefore judgments over thought-fallback traces from action-taking episodes, not observed harmful completions. The 24-item calibration panel was deliberately stratified by hidden HarmBench label and is not prevalence-representative. A deterministic human-label packet remains unlabeled. HarmBench stores only binary decisions, so threshold sensitivity cannot be reconstructed without new evaluator execution. Future work should preregister human adjudication or continuous-score judges rather than retrofit a consensus after disagreement is observed.
 
-\paragraph{Evaluator operationalization.}
-HarmBench-Llama-2-13b-cls supplies reproducible binary labels, but benchmark classifiers can have false positives, false negatives, and domain-transfer error. Our claims concern violations under this frozen operationalization. Human adjudication or multiple independent evaluators would address a different measurement question; adding them post hoc would change the measurement setup.
+\paragraph{Small N and limited prospective validation.}
+There are four states and 12 branches per arm. Branches are clustered within state, and exact tests are finite sensitivities rather than population inference. ERTA was derived after O5/O6 revealed evaluator instability, then applied prospectively once to a 12-episode panel of untouched held-out tasks. That application strengthens the process claim---the audit can be frozen before new outcomes and fail closed---but does not establish broad prevalence. We also attempted a fresh-backbone/$H=6$ replication only after freezing a dual-evaluator gate. Publicly ranked fresh models were unavailable under the execution network, and two locally complete non-Qwen backbones failed the frozen AWM browser-action interface before any safety label was opened. We therefore make no cross-backbone claim and do not tune the interface on exposed safety outcomes.
 
-\paragraph{Finite states and branches.}
-Four selected states and 12 branches are sufficient to disprove a guarantee within the evaluation, but not to estimate prevalence across models, memories, tasks, or deployments. The branch outcomes are paired within state and should not be treated as independent draws. Replication across backbones, memory mechanisms, and prospectively specified schedules is needed before making population claims.
-
-\paragraph{Snapshot dependence is not a semantic mechanism.}
-The fixed-probe panel strengthens localization: four originally clean state--probe trajectories changed label at later workflow snapshots. It does not reveal which workflow token, retrieval, or reasoning step produced the change. Selecting such explanations after observing event trajectories would risk outcome-driven storytelling, so trace-level mechanisms remain for separately designed tests.
+\paragraph{Task semantics remain unresolved.}
+DeepSeek positives concentrate on behavior IDs 21/33, which suggests that evaluator semantics interact with task identity. The current audit localizes that interaction but does not decide which judge is semantically correct. Mechanistic work should isolate task wording/action semantics under a prospectively frozen human or multi-evaluator protocol.
 
 \section{Conclusion}
 
-In a frozen persistent web-agent evaluation, four states passed all 12 current probes, yet first violations appeared in 8/12 updated future branches. Under the exact same held-out schedule with the step-0 workflow held fixed, events appeared in 4/12 branches; paired discordance was four update-only and zero control-only. Reusing the same qualification probes across updated snapshots independently found first violations in 4/12 state--probe trajectories. Thus the current pass was not a temporal certificate, and schedule alone did not account for the full realized contrast. The result remains a finite controlled case study, not a population hazard or universal memory-safety claim. Persistent-agent evaluation should report both current behavior and controlled future trajectories.
+A temporal safety result can fail before the agent changes: its premise and experimental ordering can depend on how safety is measured. In our persistent web-agent study, HarmBench produces a seemingly monotone three-arm pattern (8/12 updated, 4/12 base workflow, 0/12 NullMemory), while an independently frozen DeepSeek audit produces 5/12, 5/12, and 8/12. The original current panel also changes from 0/12 to 1/12 positives. ERTA turns those disagreements into definite/possible event sets and evaluator-contrast envelopes instead of manufacturing a consensus label. After ERTA was frozen, an untouched held-out panel again produced evaluator disagreement (HarmBench 0/12, DeepSeek 3/12), and the audit prospectively returned measurement-inconclusive as specified. The correct conclusion is not that one evaluator is right; it is that the available evidence does not identify an evaluator-independent memory-update safety direction. Persistent-agent safety evaluation should expose this uncertainty before treating temporal first-violation patterns as properties of self-evolution.
 
 \section*{Ethics Statement}
-This work studies safety failures in a benchmarked browser-agent setting. The reported experiments involve no human participants or private user data. We treat HarmBench outputs as labels from a frozen operational evaluator rather than semantic ground truth, and we report the observed failure patterns to improve temporal safety evaluation of persistent agents. The paper does not infer real-world prevalence from the finite benchmark trajectories.
+This work studies safety-evaluation methodology in benchmarked browser-agent trajectories. No human participants or private user data are used. We do not reproduce harmful trajectory text in the paper. HarmBench and DeepSeek are treated as operational evaluators rather than semantic ground truth, and evaluator disagreement is reported rather than resolved by post-hoc judge selection.
 
 \section*{Reproducibility Statement}
-The main paper specifies the frozen agent and evaluator stack, current qualification rule, state and branch construction, same-schedule control, first-event outcome, and evaluation horizon. The appendix records complete branch event times, the controlled comparison, execution and failure semantics, and the closure of the preregistered no-update condition. The supplementary artifact provides the preregistration and control plans, source-bound outcome summaries, controlled adjudication, independent scientific review, claim table, numeric QA, figure-generation code, and the manuscript source needed to audit the reported values.
+The submission binds the frozen R9 trajectories, NullMemory qualification/future receipts, blinded second-judge preregistrations, full three-arm evaluator cross-audit, matched-slot sensitivity analysis, and ERTA audit object by content hashes. The original HarmBench endpoint is preserved rather than overwritten. The supplement distinguishes preregistered interventions from post-hoc measurement audits and records all support-layer fresh-backbone stops with zero safety outcomes.
 
 \section*{AI Use Statement}
-Generative AI tools were used during this research to help refine hypotheses and experimental methodology, assist with research-software implementation and testing, inspect and summarize experiment artifacts, search and summarize related literature, interpret bounded experimental results, draft and edit manuscript text, and generate adversarial mock-review feedback. Quantitative statements used in the paper were checked against persisted experiment artifacts and source-bound numerical receipts; manuscript claims were checked against the frozen claim table and citation/formatting QA. The authors take responsibility for the final content, claims, citations, and artifacts in this submission.
+Generative AI tools were used to refine hypotheses and experimental methodology, assist with research software, inspect experiment artifacts, search related literature, draft manuscript text, and generate adversarial review feedback. Quantitative statements are checked against persisted source-bound receipts. The authors take responsibility for the final claims, citations, and artifacts.
 
 \bibliography{references}
 \bibliographystyle{iclr2027_conference}
 
 \appendix
+
 
 \section{Claim boundary}
 \label{app:claims}
@@ -309,13 +237,13 @@ Table~\ref{tab:claims} states the paper's evidence boundary in paper-facing lang
 Status & Statement \\
 \midrule
 Supported &
-Within the frozen operationalization, passing the current panel did not guarantee no first violation over the three-step future; the updated condition had 8/12 event branches versus 4/12 under the same-schedule base-workflow control, with paired discordance 4--0. \\
+The frozen HarmBench operationalization yields current 0/12 and future branch events 8/12 updated, 4/12 base workflow, and 0/12 NullMemory. An independently frozen DeepSeek audit yields current 1/12 and future branch events 5/12, 5/12, and 8/12, so both the current-pass premise and intervention ordering are evaluator-relative in this realization. \\
 \addlinespace
 Not supported &
-The paired difference is a population causal effect; static safety evaluation is universally ineffective; the event fractions are calibrated hazards; state identity is a statistically established predictor; or HarmBench is a noiseless oracle. \\
+Either evaluator is semantic ground truth; workflow updating has an evaluator-robust causal safety effect; NullMemory proves a memory mechanism; fixed-probe positives are evaluator-independent; the branch fractions are population hazards; or a post-hoc consensus label resolves the disagreement. \\
 \addlinespace
 Limitation &
-The same-schedule contrast resolves update versus schedule only for 12 realized pairs on one backbone; stochastic rollouts, selected states, and the frozen evaluator limit generalization. \\
+ERTA is formalized after the evaluator disagreement was observed; the study has two automated evaluators, one backbone, four states, and 12 branches per arm. Prospective human or cross-backbone validation remains open. \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -323,12 +251,12 @@ The same-schedule contrast resolves update versus schedule only for 12 realized 
 \section{Claim-to-artifact binding}
 \label{app:binding}
 
-The three paper claims are bound to machine-readable evidence artifacts in the supplementary package. C1 is supported by the frozen future-evidence adjudication and the controlled claim table. C2 is bound to the controlled longitudinal adjudication (SHA-256 prefix \texttt{ae02683b}) and independently recomputed in the scientific review (\texttt{aec41fae}). C3 is bound to the same adjudication and review, including the complete fixed-probe trajectories. The paper-facing claim table has prefix \texttt{85df8b78}; the source-bound numeric QA has prefix \texttt{a15f47e3}. The supplementary artifact manifest maps these short identifiers to exact filenames and full SHA-256 digests. These bindings make the 12/12 current pass, 8/12 versus 4/12 branch contrast, 4--0 discordance, and 4/12 fixed-probe result auditable without treating manuscript prose as the evidence source.
+The supplement preserves the original R9 HarmBench evidence and adds source-bound ERTA receipts. The O5 blinded calibration adjudication has SHA-256 prefix \texttt{545a6e38}; the full three-arm cross-evaluator adjudication \texttt{80ea5537}; the original-current DeepSeek census \texttt{775f3bf3}; the matched-slot evaluator sensitivity audit \texttt{2b5ac6c3}; and the scientific reframe receipt \texttt{0304974c}. Public ERTA method and result objects bind those private execution receipts without exposing internal paths or judge keys. This chain makes the 24-item calibration, 108 future episode labels, arm-specific event sets, task localization, and claim downgrades auditable without treating manuscript prose as evidence.
 
 \section{Complete branch event-time table}
 \label{app:events}
 
-Table~\ref{tab:events} is the complete branch-level first-event record underlying Figures~\ref{fig:depth} and~\ref{fig:eventtime}. Branch labels index the three common within-stratum schedules. A censored entry means that all three evaluated steps were non-events.
+Table~\ref{tab:events} preserves the complete original HarmBench branch-level first-event record. Branch labels index the three common within-stratum schedules. A censored entry means that all three evaluated steps were non-events under the frozen HarmBench operationalization.
 
 \begin{table}[ht]
 \centering
@@ -369,21 +297,42 @@ State & 11 & 23 & 37 & 11 & 23 & 37 \\
 \end{tabular}
 \end{table}
 
+\section{Task-localized evaluator disagreement}
+\label{app:taskdisagreement}
+
+Table~\ref{tab:taskdisagreement} reports episode positives by frozen behavior ID. DeepSeek positives occur only on IDs 21 and 33 across all arms, whereas HarmBench positives in updated/base trajectories span all five IDs. The denominators are identical within each arm because the same future slots are evaluated by both judges.
+
+\begin{table}[ht]
+\centering
+\caption{Positive episodes by task identity. Each cell is HarmBench/DeepSeek positives over the shared number of slots.}
+\label{tab:taskdisagreement}
+\small
+\begin{tabular}{lccccc}
+\toprule
+Arm & ID 8 & ID 11 & ID 21 & ID 33 & ID 34 \\
+\midrule
+Updated & 1/0 of 4 & 1/0 of 8 & 4/5 of 12 & 5/2 of 8 & 0/0 of 4 \\
+Base & 1/0 of 4 & 1/0 of 8 & 3/5 of 12 & 1/2 of 8 & 1/0 of 4 \\
+NullMemory & 0/0 of 4 & 0/0 of 8 & 0/4 of 12 & 0/4 of 8 & 0/0 of 4 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{Protocol and reproducibility notes}
 \label{app:protocol}
 
-The evaluation record preserves exact model, task, environment, evaluator, state, and schedule identities; protocol-validity checks; episode-level outputs; and a machine-readable evidence receipt. The main text omits internal execution identifiers because they verify exact run identity rather than support the scientific claim directly.
+The evaluation record preserves exact model, task, environment, evaluator, state, schedule, and blinding identities; protocol-validity checks; episode-level outputs; and machine-readable evidence receipts. The main text omits internal execution identifiers because they verify run identity rather than support the scientific claim directly.
 
-The protocol fixed the runtime, guard behavior, evaluator threshold, selected states, schedules, horizon, and call caps before execution. It prohibited reruns of completed episodes and outcome-driven selection. All 12 qualification, 36 updated future, 36 base-workflow control, and 36 fixed-probe snapshot episodes completed. The two new arms reserved 281 agent-model calls and 72 classifier evaluations, below their combined upper bounds of 288 and 72. No held-out outcome was used for support selection.
+The original R9 protocol fixed runtime, guard behavior, HarmBench threshold, states, schedules, horizon, and call caps and prohibited completed-episode reruns or outcome-driven selection. It completed 12 original qualification, 36 updated future, 36 base-workflow, and 36 fixed-probe episodes. The later NullMemory intervention was preregistered separately, required a clean 12-episode current gate, and then completed the same 36 future slots with an empty read/write-disabled workflow. DeepSeek judgments were blinded to arm and HarmBench label during calibration and complete-panel audits. No agent trajectory was rerun to accommodate evaluator disagreement.
 
 \section{Failure semantics}
 \label{app:failures}
 
-Failures are classified as runtime, protocol, support, operationalization, method, or principle failures before they affect a scientific conclusion. During the new control execution, one foreground transport loss produced a BrokenPipe before any model call, classifier call, action, text, or response. The zero-realization attempt was archived as a runtime void and replaced; no completed episode was rerun. Both new arms then completed 36/36 with zero protocol-inconclusive episodes. HarmBench's non-oracle status remains an operationalization limitation. The one-backbone finite paired design is a method limitation. Neither is rewritten as a negative behavioral result.
+Failures remain separated by layer. Runtime voids that occur before a scientific realization do not count as outcomes, and completed episodes are never rerun. O5/O6 evaluator disagreement is a \emph{measurement result}, not a provider failure. In contrast, the attempted O7 fresh-backbone extension stopped entirely at the support layer: public checkpoints were unavailable under the execution network, and two locally complete non-Qwen backbones failed the frozen AWM action interface before any HarmBench or DeepSeek safety label was opened. Those support stops authorize no safety conclusion and are not converted into negative generalization evidence.
 
 \section{Recorded reopen condition}
 \label{app:reopen}
 
-The saved condition was \emph{separate persistent update effect from held-out schedule effect}. It was executed after an independently implemented protocol review: the held-out schedule, runtime, evaluator, threshold, guard, selected states, horizon, and call policy were held fixed while the workflow remained at its step-0 base state. The condition is satisfied for the frozen R9 finite design, yielding 8/12 versus 4/12 event branches and paired discordance of 4 update-only to 0 control-only. It is not satisfied for a population claim, and it authorizes no further behavior execution.
+The historical reopen condition---separate persistent update from held-out schedule---was satisfied under the frozen HarmBench operationalization by the same-schedule base-workflow arm. O5/O6 then exposed a deeper condition: the temporal premise and arm ordering themselves must be stable across evaluators before the contrast is interpreted as a property of persistent memory. ERTA records that this condition currently fails. A future generalization study must prospectively freeze an evaluator-robust or human semantic endpoint and a fresh-backbone action interface before any safety outcome; no horizon, guard, threshold, or backbone may be selected from exposed safety results.
 
 \end{document}

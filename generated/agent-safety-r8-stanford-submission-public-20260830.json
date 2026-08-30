@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "service": "https://paperreview.ai/",
+  "review_service": "Stanford Agentic Reviewer",
+  "review_round": "G1-R8-ERTA-prebuttal-external-review",
+  "venue": "ICLR",
+  "paper_id": "AGENT-SAFETY-R9",
+  "title": "Temporal Safety Conclusions Are Evaluator-Relative: A Controlled Audit of Persistent Web Agents",
+  "pdf_sha256": "77d746801d41298e588882821218b2654392243af0c3e9e8a85054212bc17fe0",
+  "pdf_bytes": 234040,
+  "token_fingerprint_sha256_16": "d560549eaae16d22",
+  "message": "Paper uploaded successfully. You will receive an email when the review is ready.",
+  "submitted_at_utc": "2026-08-30T09:03:12.728657+00:00",
+  "status": "SUBMITTED",
+  "paper_gate_context": {
+    "scientific_status": "READY",
+    "paper_stage": "PREBUTTAL",
+    "submission_ready": false,
+    "blocking_on": "HUMAN_SEMANTIC_LABEL_EVIDENCE_REQUIRED"
+  },
+  "authority": {
+    "read_only_external_review": true,
+    "scientific_authority": false,
+    "paper_state_authority": false,
+    "official_submission_authority": false
+  },
+  "email_private": true,
+  "review_token_private": true,
+  "review_result_status": "PENDING",
+  "interpretation": "G1 r8 was submitted for advisory Stanford Agentic Reviewer feedback while canonical PaperState remains PREBUTTAL/HOLD on human semantic label evidence. This external review has no scientific or submission authority."
+}
