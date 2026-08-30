@@ -1,0 +1,126 @@
+{
+  "backend": {
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "behavior_temperature": 0.0,
+    "environment_timeout_seconds": 60,
+    "max_output_tokens": "omitted",
+    "max_retries": 2,
+    "model": "deepseek-v4-pro-ga-260813",
+    "seed": "omitted",
+    "step_limit": 250,
+    "top_p": "omitted",
+    "workers": 1
+  },
+  "bindings": {
+    "image_manifests": [
+      {
+        "amd64_manifest": "generated/asset-first-stri-reasoningbank-p1-q3-image-manifests-20260830/sphinx9230-amd64.json",
+        "amd64_manifest_sha256": "sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+        "index_manifest": "generated/asset-first-stri-reasoningbank-p1-q3-image-manifests-20260830/sphinx9230-index.json",
+        "index_manifest_sha256": "sha256:2a18fa57b69c646bf0e1916f1df157a62de80ca8b55325738f9c9eeff9c38c86",
+        "label": "sphinx9230"
+      },
+      {
+        "amd64_manifest": "generated/asset-first-stri-reasoningbank-p1-q3-image-manifests-20260830/django11880-amd64.json",
+        "amd64_manifest_sha256": "sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+        "index_manifest": "generated/asset-first-stri-reasoningbank-p1-q3-image-manifests-20260830/django11880-index.json",
+        "index_manifest_sha256": "sha256:ce0c7fd75b0fe8d24632c627359c5e2bc1a4922843d889870931f80f2f98c311",
+        "label": "django11880"
+      }
+    ],
+    "official_parser_source": {
+      "parse_log_django": {
+        "official_callable": "parse_log_django",
+        "source_sha256": "3a4f69dccc4e44725c9e3580a323c131bafc434aed3b333126154469a41c5872"
+      },
+      "parse_log_sphinx": {
+        "official_callable": "parse_log_pytest_v2",
+        "source_sha256": "d3f4c2ef28b0005fd76df82beb06fb899aa77ae27a775273cc8579524fe8371d"
+      }
+    },
+    "official_reasoningbank_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "prior_adjudication": "generated/asset-first-stri-reasoningbank-p1-q2-adjudication-20260830.json",
+    "prior_adjudication_sha256": "019cba107a4251a8791ab4b2edae8a916b48f55776fec98180b0ea914c8413bc",
+    "q3_fixtures": "generated/asset-first-stri-reasoningbank-p1-q3-task-fixtures-20260830.json",
+    "q3_fixtures_sha256": "b35c9b7a798b371818b25774c129d77c74f7dc90217b3f54f7e4e1d474d15519",
+    "source_memory": "generated/asset-first-stri-reasoningbank-p1-source-memory-20260829.json",
+    "source_memory_sha256": "0451d0346ab5df749df6c1f1d1ea3abbcde3f913958149be9671fce1bfbf2239",
+    "swebench_wheel_sha256": "b7f0416a1e686eca22c2f749b5f816685a202835032f6683080e2b53545bbb62",
+    "treatment_manifest": "generated/asset-first-stri-reasoningbank-p1-treatment-manifest-20260829.json",
+    "treatment_manifest_sha256": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7"
+  },
+  "created_at_utc": "2026-08-30T13:14:52+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q3-QUALIFICATION-20260830",
+  "outcome_discipline": {
+    "failed_q2_runs_preserved": true,
+    "no_parameter_or_task_change_after_any_q3_outcome": true,
+    "old_ten_runs_immutable": true,
+    "parser_implementation_only_after_q3_preregistration": true,
+    "q2_runs_immutable": true
+  },
+  "payload_sha256": "dda3652a7f261099e2608ff576bde2bf2123e80d5df4aad2e91415855f9a8ace",
+  "purpose": "Prospectively qualify an official SWE-bench 5.0.2 parser expansion on fresh disjoint tasks; preserve Q2 as negative evidence and never treat Q3 as a retry.",
+  "qualification": {
+    "full_p1_execution_authorized": false,
+    "negative_task_outcome_does_not_fail_qualification": true,
+    "pass_opens_only_a_separate_full-P1 planning gate": true,
+    "planned_runs": 10,
+    "requires": [
+      "all two images present by exact amd64 manifest digest",
+      "all ten runs persisted once without replacement",
+      "no provider, provider-identity, runtime, or implementation failure",
+      "no blank model-visible message content",
+      "all completed responses resolve to the exact frozen model",
+      "valid SWE-bench evaluator output for every run",
+      "official parser conformance for parse_log_sphinx and parse_log_django",
+      "A/B and B/E selected memory plus first R1 request equal per task"
+    ]
+  },
+  "runtime": {
+    "base_state_rule": "exact_or_clean_tree_equivalent_descendant",
+    "dataset_mirror": "hf-mirror.com",
+    "image_mirror": "docker.1ms.run",
+    "pid_namespace": "host",
+    "platform": "linux/amd64"
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "full_population_authorized": false,
+    "paper_result_claim_authorized": false,
+    "q3_task_outcome_observed": false
+  },
+  "selection": {
+    "automatic_retry": "forbidden",
+    "instance_ids": [
+      "sphinx-doc__sphinx-9230",
+      "django__django-11880"
+    ],
+    "ranks": [
+      5,
+      6
+    ],
+    "replacement_sampling": "forbidden",
+    "uses_gold_patch": false,
+    "uses_task_outcome": false
+  },
+  "treatments": {
+    "arms": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ],
+    "fresh_container_each_run": true,
+    "ordered_execution": "rank 5 A/B/C/D/E then rank 6 A/B/C/D/E",
+    "session_reuse_across_arms": false,
+    "treatment_sha256": {
+      "A": "6094b0bc5e6ea7c87da86d7cd60594e823ffb84b04a6592016c5154b3968752a",
+      "B": "1dbf10edf2710e256968d01fa64edcbb7df65a3dd92ca5b4511232dcd1f01a00",
+      "C": "04c815b16d2d0f5e863470390d7298657f3560385eea036f98b6fbe2539c4b43",
+      "D": "047fa9e7d69af1d455ac465816ae84d5e7234166420a29f9e3ce3aacf0873083",
+      "E": "b475629a1a9fdff39a3d32c5bcfe449f9cceeb226919355e2a7d32fc22d49196"
+    }
+  }
+}
