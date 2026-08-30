@@ -13,6 +13,7 @@ INDEPENDENT_REVIEW = ROOT / "generated" / "constraint-integration-sceneeval-inde
 PREREG_DRAFT = ROOT / "generated" / "sceneeval500-prerequisite-coupling-preregistration-draft-20260828.json"
 TOPOLOGY_IMPLEMENTATION = ROOT / "generated" / "sceneeval500-logistic-normal-topology-implementation-preflight-20260828.json"
 MARGINAL_CALIBRATION = ROOT / "generated" / "sceneeval500-marginal-calibration-implementation-preflight-20260828.json"
+UNCERTAINTY_PREFLIGHT = ROOT / "generated" / "sceneeval500-uncertainty-practical-equivalence-preflight-20260830.json"
 LEGO_AUDIT = ROOT / "generated" / "lego-bench-outcome-blind-construct-audit-20260828.json"
 LEGO_EXEC = ROOT / "generated" / "constraint-integration-executability-preflight-20260828.json"
 
@@ -23,6 +24,7 @@ EXPECTED_INDEPENDENT_REVIEW_SHA = "cb82ab4531dd1a76f05af2f027f3213ffc06b9e771beb
 EXPECTED_PREREG_DRAFT_SHA = "269412b2b0ac270de00d1cca60f4e429ca3b48aae5d62359be073a6095abc365"
 EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA = "4021b01498c5d6f18219fb1b3f34c4a77d2ed217f6dfeaba1a49cd7a83bb9f5a"
 EXPECTED_MARGINAL_CALIBRATION_SHA = "976870a4946d69222334c7330f7380112d91afd05be75c8e25e6afae34c28fbf"
+EXPECTED_UNCERTAINTY_PREFLIGHT_SHA = "12629d0bededf015fce9ea7071f5390462a551becd5ffd633266353f721eefd8"
 EXPECTED_LEGO_AUDIT_SHA = "f8e845bb66d5c3ae897e939bb9877c1ae85e0491955a4d099e45d6f8bd7d868d"
 EXPECTED_LEGO_EXEC_SHA = "15cf610915f3d3cd1e144f81207ac240517d0e5969418dd8e13e86b719d49f13"
 
@@ -45,6 +47,7 @@ def main() -> None:
     require_digest(PREREG_DRAFT, EXPECTED_PREREG_DRAFT_SHA)
     require_digest(TOPOLOGY_IMPLEMENTATION, EXPECTED_TOPOLOGY_IMPLEMENTATION_SHA)
     require_digest(MARGINAL_CALIBRATION, EXPECTED_MARGINAL_CALIBRATION_SHA)
+    require_digest(UNCERTAINTY_PREFLIGHT, EXPECTED_UNCERTAINTY_PREFLIGHT_SHA)
     require_digest(LEGO_AUDIT, EXPECTED_LEGO_AUDIT_SHA)
     require_digest(LEGO_EXEC, EXPECTED_LEGO_EXEC_SHA)
 
@@ -55,6 +58,7 @@ def main() -> None:
     prereg = json.loads(PREREG_DRAFT.read_text(encoding="utf-8"))
     topology_implementation = json.loads(TOPOLOGY_IMPLEMENTATION.read_text(encoding="utf-8"))
     marginal_calibration = json.loads(MARGINAL_CALIBRATION.read_text(encoding="utf-8"))
+    uncertainty_preflight = json.loads(UNCERTAINTY_PREFLIGHT.read_text(encoding="utf-8"))
 
     if proposal.get("proposal_id") != "CROSS-SUBSTRATE-CONSTRAINT-INTEGRATION-20260828":
         raise SystemExit("unexpected proposal identity")
@@ -82,8 +86,12 @@ def main() -> None:
         raise SystemExit("SceneEval marginal calibration did not pass synthetic validation")
     if marginal_calibration.get("scientific_authority") is not False or marginal_calibration.get("execution_authority") is not False:
         raise SystemExit("SceneEval marginal calibration leaked authority")
+    if uncertainty_preflight.get("status") != "UNCERTAINTY_AND_PRACTICAL_EQUIVALENCE_SYNTHETIC_PASS":
+        raise SystemExit("SceneEval uncertainty decision rule did not pass synthetic validation")
+    if uncertainty_preflight.get("scientific_authority") is not False or uncertainty_preflight.get("execution_authority") is not False:
+        raise SystemExit("SceneEval uncertainty decision rule leaked authority")
 
-    proposal["status"] = "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_CALIBRATION_IMPLEMENTED_HOLD_UNCERTAINTY_AND_ACCESS"
+    proposal["status"] = "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_STATISTICS_IMPLEMENTED_HOLD_ACCESS_AND_MEASUREMENT"
     proposal["canonical_candidate_id"] = None
     proposal["generator_admission"] = "PENDING"
     proposal["scientific_authority"] = False
@@ -195,7 +203,11 @@ def main() -> None:
         "annotated_all_three_scene_count": prereg["annotation_availability"]["annotated_all_three_scene_count"],
         "power_design_interpretation": prereg["power_design_preflight"]["design_interpretation"],
         "formal_preregistration_clear": False,
-        "remaining_blockers": prereg_gates["why_not_clear"],
+        "remaining_blockers": [
+            "HSM scene contents remain gated/unmaterialized on the current server identity",
+            "official evaluator measurement-format smoke has not been run",
+            "second generator lane remains unqualified for paper-level transport/generalization",
+        ],
         "scientific_authority": False,
         "execution_authority": False
     }
@@ -237,6 +249,25 @@ def main() -> None:
         "remaining_implementation_blockers": marginal_calibration["remaining_implementation_blockers"],
         "scientific_authority": False,
         "execution_authority": False
+    }
+
+    proposal["uncertainty_decision_preflight"] = {
+        "artifact": str(UNCERTAINTY_PREFLIGHT.relative_to(ROOT)),
+        "artifact_sha256": EXPECTED_UNCERTAINTY_PREFLIGHT_SHA,
+        "status": uncertainty_preflight["status"],
+        "runtime": uncertainty_preflight["runtime"],
+        "frozen_real_analysis_decision_rule": uncertainty_preflight["frozen_real_analysis_decision_rule"],
+        "synthetic_validation_summary": {
+            "exchangeable_null_decision": uncertainty_preflight["synthetic_validation"]["exchangeable_null"]["decision"],
+            "exchangeable_null_predictive": uncertainty_preflight["synthetic_validation"]["exchangeable_null"]["predictive_uncertainty"],
+            "exchangeable_null_topology_deviation": uncertainty_preflight["synthetic_validation"]["exchangeable_null"]["full_fit_topology_deviation"],
+            "alternative_decision": uncertainty_preflight["synthetic_validation"]["strong_nonexchangeable_alternative"]["decision"],
+            "alternative_predictive": uncertainty_preflight["synthetic_validation"]["strong_nonexchangeable_alternative"]["predictive_uncertainty"],
+            "alternative_topology_deviation": uncertainty_preflight["synthetic_validation"]["strong_nonexchangeable_alternative"]["full_fit_topology_deviation"],
+        },
+        "remaining_blockers": uncertainty_preflight["remaining_blockers"],
+        "scientific_authority": False,
+        "execution_authority": False,
     }
 
     proposal["executability_preflight"] = {
@@ -318,6 +349,7 @@ def main() -> None:
     }
 
     proposal["future_analysis_contract_if_authorized"] = sceneeval["future_analysis_contract_if_authorized"]
+    proposal["future_analysis_contract_if_authorized"]["frozen_uncertainty_decision_rule"] = uncertainty_preflight["frozen_real_analysis_decision_rule"]
     proposal["future_analysis_contract_if_authorized"]["evaluator_lane_rule"] = (
         "Official SceneEval semantic results must use the frozen official evaluator/model contract; any independently qualified local evaluator must be named and reported as a separate evaluator variant and may not be aliased to official SceneEval scores."
     )
@@ -338,14 +370,14 @@ def main() -> None:
     }
 
     proposal["next_gate"] = {
-        "name": "UNCERTAINTY_BOOTSTRAP_AND_ASSET_ACCESS_PREFLIGHT",
+        "name": "ASSET_ACCESS_AND_EVALUATOR_SMOKE_PREFLIGHT",
         "required": True,
         "requirements": [
-            "freeze and synthetic-test the scene-level bootstrap/uncertainty and practical-equivalence implementation; the core topology likelihood and cross-fitted marginal calibration are already synthetic-PASS",
-            "preserve the already frozen two-stage prerequisite/downstream contract, metadata composition vocabulary, N0/N1/N2 ladder, 52-pair panel, and power thresholds without outcome-driven changes",
-            "bind a new canonical candidate identity only after the independent REVISE gate is fully satisfied; never reuse PORT-010",
-            "obtain legitimate HSM gated-dataset access or leave the bounded P0 lane waiting",
+            "preserve the now frozen topology likelihood, cross-fitted marginal calibration, paired scene-bootstrap uncertainty rule, 0.10 practical-equivalence region, two-stage prerequisite/downstream contract, metadata composition vocabulary, N0/N1/N2 ladder, 52-pair panel, and power thresholds without outcome-driven changes",
+            "obtain legitimate HSM gated-dataset access or leave the bounded P0 lane waiting; do not bypass Hugging Face license/access control",
+            "run only a measurement-format/evaluator smoke that proves raw object-matching/prerequisite state and per-requirement outputs can be preserved under the frozen evaluator lane before any scientific outcome interpretation",
             "freeze official GPT-4o evaluator versus separately named local-evaluator lanes before reading per-case semantic outcomes",
+            "bind a new canonical candidate identity only after the prior independent REVISE conditions and the measurement/access gate are satisfied; never reuse PORT-010",
             "qualify a second generator lane before any paper-level cross-generator/transport claim",
             "preserve the 52-pair outcome-blind SceneEval matched panel without outcome-based replacement"
         ]

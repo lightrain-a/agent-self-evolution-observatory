@@ -1,7 +1,7 @@
 {
   "schema_version": "constraint-integration-cross-substrate-proposal-v1",
   "proposal_id": "CROSS-SUBSTRATE-CONSTRAINT-INTEGRATION-20260828",
-  "status": "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_CALIBRATION_IMPLEMENTED_HOLD_UNCERTAINTY_AND_ACCESS",
+  "status": "ZERO_EXECUTION_AUTHORITY_SCENEEVAL_STATISTICS_IMPLEMENTED_HOLD_ACCESS_AND_MEASUREMENT",
   "canonical_candidate_id": null,
   "generator_admission": "PENDING",
   "scientific_authority": false,
@@ -301,6 +301,36 @@
     "no_threshold_retuning_after_outcomes": true,
     "no_generator_dropping_after_outcomes": true,
     "no_metric_channel_dropping_after_outcomes": true,
+    "frozen_uncertainty_decision_rule": {
+      "unit": "scene; all downstream requirements from one SceneEval instruction stay in the same cluster",
+      "prediction": "five frozen instruction-hash folds; N2 and candidate are fit only on each outer training fold, and every scene contributes exactly one held-out joint log-score difference",
+      "uncertainty": "paired nonparametric scene-cluster bootstrap over the complete vector of out-of-fold candidate-minus-N2 scene log-score differences",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 2026083017,
+      "confidence_level": 0.95,
+      "support_predictive_rule": "95% paired scene-bootstrap interval lower bound for mean held-out candidate-minus-N2 ELPD per scene must be > 0",
+      "stop_predictive_rule": "95% paired scene-bootstrap interval upper bound <= 0 means N2 is predictively equivalent or better for this candidate",
+      "otherwise_predictive_rule": "if the interval crosses 0, retain HOLD/INCONCLUSIVE; do not call independence",
+      "practical_topology_statistic": "max absolute deviation of the three fitted candidate latent residual correlations from their common mean",
+      "practical_equivalence_region": {
+        "max_exchangeability_deviation_leq": 0.1,
+        "derivation": "outcome-blind power design warned that one-pair increments of 0.10-0.15 are too small for independence claims; a one-pair increment delta=0.15 maps to max deviation 2*delta/3=0.10, so <=0.10 is frozen as practically exchangeable",
+        "cannot_be_reestimated_from_hsm_outcomes": true
+      },
+      "minimum_joint_prerequisite_eligible_scene_count": 350,
+      "joint_support_rule": "only if scene count >=350, predictive CI lower >0, and full-data candidate topology deviation >0.10; this is a future problem-evidence decision rule, not execution authority",
+      "decision_precedence": [
+        "underpowered availability -> HOLD",
+        "predictive CI upper <=0 -> STOP candidate",
+        "topology deviation <=0.10 -> STOP candidate as practically exchangeable",
+        "predictive CI lower >0 and topology deviation >0.10 -> candidate problem evidence may pass the frozen rule after all measurement/access gates",
+        "otherwise -> HOLD predictive uncertainty"
+      ],
+      "individual_pair_correlations": "secondary only after the joint rule passes",
+      "no_outcome_threshold_retuning": true,
+      "no_scene_reclustering": true,
+      "no_fold_reassignment": true
+    },
     "evaluator_lane_rule": "Official SceneEval semantic results must use the frozen official evaluator/model contract; any independently qualified local evaluator must be named and reported as a separate evaluator variant and may not be aliased to official SceneEval scores.",
     "initial_generator_lane": "HSM author-released 500-scene bundle after legitimate gated access; no generator rerun in the initial bounded P0 lane. A second independently qualified generator is mandatory before paper-level transport/generalization claims."
   },
@@ -319,14 +349,14 @@
     "forbidden_now": "Do not design/tune an intervention from SceneEval outcomes before the primary problem gate is satisfied."
   },
   "next_gate": {
-    "name": "UNCERTAINTY_BOOTSTRAP_AND_ASSET_ACCESS_PREFLIGHT",
+    "name": "ASSET_ACCESS_AND_EVALUATOR_SMOKE_PREFLIGHT",
     "required": true,
     "requirements": [
-      "freeze and synthetic-test the scene-level bootstrap/uncertainty and practical-equivalence implementation; the core topology likelihood and cross-fitted marginal calibration are already synthetic-PASS",
-      "preserve the already frozen two-stage prerequisite/downstream contract, metadata composition vocabulary, N0/N1/N2 ladder, 52-pair panel, and power thresholds without outcome-driven changes",
-      "bind a new canonical candidate identity only after the independent REVISE gate is fully satisfied; never reuse PORT-010",
-      "obtain legitimate HSM gated-dataset access or leave the bounded P0 lane waiting",
+      "preserve the now frozen topology likelihood, cross-fitted marginal calibration, paired scene-bootstrap uncertainty rule, 0.10 practical-equivalence region, two-stage prerequisite/downstream contract, metadata composition vocabulary, N0/N1/N2 ladder, 52-pair panel, and power thresholds without outcome-driven changes",
+      "obtain legitimate HSM gated-dataset access or leave the bounded P0 lane waiting; do not bypass Hugging Face license/access control",
+      "run only a measurement-format/evaluator smoke that proves raw object-matching/prerequisite state and per-requirement outputs can be preserved under the frozen evaluator lane before any scientific outcome interpretation",
       "freeze official GPT-4o evaluator versus separately named local-evaluator lanes before reading per-case semantic outcomes",
+      "bind a new canonical candidate identity only after the prior independent REVISE conditions and the measurement/access gate are satisfied; never reuse PORT-010",
       "qualify a second generator lane before any paper-level cross-generator/transport claim",
       "preserve the 52-pair outcome-blind SceneEval matched panel without outcome-based replacement"
     ]
@@ -424,8 +454,7 @@
     "formal_preregistration_clear": false,
     "remaining_blockers": [
       "HSM scene contents remain gated/unmaterialized on the current server identity",
-      "official evaluator measurement smoke has not been run",
-      "the exact mixed-model implementation/bootstrap code has not yet been frozen and validated on synthetic data",
+      "official evaluator measurement-format smoke has not been run",
       "second generator lane remains unqualified for paper-level transport/generalization"
     ],
     "scientific_authority": false,
@@ -537,6 +566,77 @@
     "remaining_implementation_blockers": [
       "freeze and synthetic-test scene-level uncertainty/bootstrap plus practical-equivalence rule",
       "run real measurement-format smoke only after legitimate HSM gated access"
+    ],
+    "scientific_authority": false,
+    "execution_authority": false
+  },
+  "uncertainty_decision_preflight": {
+    "artifact": "generated/sceneeval500-uncertainty-practical-equivalence-preflight-20260830.json",
+    "artifact_sha256": "12629d0bededf015fce9ea7071f5390462a551becd5ffd633266353f721eefd8",
+    "status": "UNCERTAINTY_AND_PRACTICAL_EQUIVALENCE_SYNTHETIC_PASS",
+    "runtime": {
+      "python": "3.10.19",
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "required_runtime_on_69": "/home/wyt/anaconda3/bin/python",
+      "new_packages_installed": false
+    },
+    "frozen_real_analysis_decision_rule": {
+      "unit": "scene; all downstream requirements from one SceneEval instruction stay in the same cluster",
+      "prediction": "five frozen instruction-hash folds; N2 and candidate are fit only on each outer training fold, and every scene contributes exactly one held-out joint log-score difference",
+      "uncertainty": "paired nonparametric scene-cluster bootstrap over the complete vector of out-of-fold candidate-minus-N2 scene log-score differences",
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 2026083017,
+      "confidence_level": 0.95,
+      "support_predictive_rule": "95% paired scene-bootstrap interval lower bound for mean held-out candidate-minus-N2 ELPD per scene must be > 0",
+      "stop_predictive_rule": "95% paired scene-bootstrap interval upper bound <= 0 means N2 is predictively equivalent or better for this candidate",
+      "otherwise_predictive_rule": "if the interval crosses 0, retain HOLD/INCONCLUSIVE; do not call independence",
+      "practical_topology_statistic": "max absolute deviation of the three fitted candidate latent residual correlations from their common mean",
+      "practical_equivalence_region": {
+        "max_exchangeability_deviation_leq": 0.1,
+        "derivation": "outcome-blind power design warned that one-pair increments of 0.10-0.15 are too small for independence claims; a one-pair increment delta=0.15 maps to max deviation 2*delta/3=0.10, so <=0.10 is frozen as practically exchangeable",
+        "cannot_be_reestimated_from_hsm_outcomes": true
+      },
+      "minimum_joint_prerequisite_eligible_scene_count": 350,
+      "joint_support_rule": "only if scene count >=350, predictive CI lower >0, and full-data candidate topology deviation >0.10; this is a future problem-evidence decision rule, not execution authority",
+      "decision_precedence": [
+        "underpowered availability -> HOLD",
+        "predictive CI upper <=0 -> STOP candidate",
+        "topology deviation <=0.10 -> STOP candidate as practically exchangeable",
+        "predictive CI lower >0 and topology deviation >0.10 -> candidate problem evidence may pass the frozen rule after all measurement/access gates",
+        "otherwise -> HOLD predictive uncertainty"
+      ],
+      "individual_pair_correlations": "secondary only after the joint rule passes",
+      "no_outcome_threshold_retuning": true,
+      "no_scene_reclustering": true,
+      "no_fold_reassignment": true
+    },
+    "synthetic_validation_summary": {
+      "exchangeable_null_decision": "STOP_N2_PREDICTIVELY_EQUIVALENT_OR_BETTER",
+      "exchangeable_null_predictive": {
+        "mean_elpd_gain_per_scene": -0.00372107,
+        "median_elpd_gain_per_scene": -0.00071819,
+        "ci95_lower": -0.00735968,
+        "ci95_upper": -3.814e-05,
+        "total_elpd_gain": -1.48842827
+      },
+      "exchangeable_null_topology_deviation": 0.02853584,
+      "alternative_decision": "SYNTHETIC_SUPPORT_RULE_TRIGGERED_NO_SCIENTIFIC_AUTHORITY",
+      "alternative_predictive": {
+        "mean_elpd_gain_per_scene": 0.02674072,
+        "median_elpd_gain_per_scene": 0.02683834,
+        "ci95_lower": 0.00313952,
+        "ci95_upper": 0.05051839,
+        "total_elpd_gain": 10.69628842
+      },
+      "alternative_topology_deviation": 0.30400551
+    },
+    "remaining_blockers": [
+      "legitimate gated access to the author-released HSM SceneEval-500 scene bundle",
+      "measurement-format/evaluator smoke while preserving raw object-matching/prerequisite state",
+      "freeze official GPT-4o evaluator lane versus any separately named local evaluator lane before per-case semantic outcomes",
+      "independent second-generator qualification before paper-level transport/generalization",
+      "new canonical candidate identity remains unbound until the prior independent REVISE gate and access/measurement gates are satisfied"
     ],
     "scientific_authority": false,
     "execution_authority": false
