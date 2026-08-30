@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V11_METHOD_SAMPLE_STATISTICS_FREEZE",
+  "status": "FROZEN_BEFORE_SCHEMA_QUALIFICATION",
+  "origin_main_sha": "4356c31ba3074b2ea823f1e4200a55347bdea58b",
+  "base_v1_commit": "2db89933528811d0db9185eb405b0866475d3228",
+  "prompt_hashes": {
+    "P0": "d4f1f4aeafac058b83930499ea10a2db0b70db9f5a76131fcd4ff8e0486de295",
+    "P1": "cfe5f1957da06a674d7c90e4c7e7753505482c7f17de9ecd28191e4fd3c44caf"
+  },
+  "action_schema_sha256": "360e954e171e4a1d3bbcb5f11cf011827fb625334c0e20791cc64a7983200b50",
+  "pilot_ids": [
+    353,
+    238,
+    272,
+    653,
+    440,
+    792,
+    264
+  ],
+  "algorithm_unchanged_except_action_schema_extraction": true,
+  "statistics_frozen": true,
+  "provider_identity_frozen": true,
+  "sample_frozen": true
+}
