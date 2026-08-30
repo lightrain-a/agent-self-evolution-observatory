@@ -1,0 +1,151 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V2_PILOT_CLOSURE",
+  "experiment_id": "C1-PACTA-V2-DOWNSTREAM-POLICY-SHADOW-PILOT-20260830",
+  "status": "STOP_FINAL_POLICY_MEASUREMENT_PARSER_FAILURE",
+  "lineage": {
+    "PACTA_v1": "INVALID_UNQUALIFIED_INTERFACE_EXECUTION; preserved and excluded",
+    "PACTA_v11": "OPERATIONALIZATION_AND_GATE_REALIZATION_STOP; preserved and excluded",
+    "PACTA_v2": "new policy-surface shadow calibration scientific object",
+    "historical_partial_policy_responses_excluded": true
+  },
+  "provenance": {
+    "origin_main_sha": "6039d60c485c50ceac2b1234cd3505c1901b0259",
+    "execution_git_sha": "d1b1f809b1e3e8bd4a20bb0e206093d1a7a6644c",
+    "branch": "experiment/c1-pacta-v2-20260830",
+    "run": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-v2-p0-shadow-policy-20260830-v1"
+  },
+  "novelty_audit": {
+    "verdict": "PASS_NOVEL_RESIDUAL",
+    "fatal_collision_found": false,
+    "closest_collision": "InfoPO",
+    "claim_boundary": "same-trajectory outcome-flipped writer twins plus replicated downstream-policy action distributions, within-condition stochasticity calibration, and factual SCB transport only when replicated cross-feedback divergence exceeds within-branch noise"
+  },
+  "fresh_pool": {
+    "states": 16,
+    "templates": 6,
+    "trajectory_available": "16/16",
+    "retrieval_threshold_hit": "16/16",
+    "writer_wrapper_hashes_verified": "32/32",
+    "prior_PACTA_outputs": 0,
+    "prior_SCMB_outputs": 0,
+    "pilot_selection_outcome_blind": true,
+    "pilot_ids": [352, 239, 271, 437, 506, 261],
+    "unused_state_outcomes_read": false
+  },
+  "model_support": {
+    "status": "SUPPORT_PASS",
+    "requested": "doubao-seed-2.0-mini",
+    "resolved": "doubao-seed-2-0-mini-260215",
+    "thinking": "disabled",
+    "fallback": false,
+    "schema_parse": true
+  },
+  "binder": {
+    "implementation": "exact R9 SCMB binder family",
+    "calls": 12,
+    "expected": 12,
+    "complete": true,
+    "temperature": 0.0,
+    "model_drift": 0,
+    "frozen_before_shadow": true
+  },
+  "shadow": {
+    "schedule_frozen_before_output": true,
+    "planned_calls": 144,
+    "completed_calls": 144,
+    "failed_calls": 0,
+    "parser_recovery_calls": 3,
+    "model_drift": 0,
+    "missingness": 0,
+    "input_hash_failure": 0,
+    "realization": "PASS_144_OF_144"
+  },
+  "gate": {
+    "definition": "G = min(TV(S1,F1), TV(S2,F2)) > max(TV(S1,S2), TV(F1,F2))",
+    "epsilon_or_tuned_threshold": null,
+    "open": "3/6",
+    "closed": "3/6",
+    "open_ids": [271, 506, 261],
+    "closed_ids": [352, 239, 437],
+    "geometry_verdict": "PASS_NON_DEGENERATE",
+    "states": [
+      {"future_task":352,"B1":0.0,"B2":0.0,"WS":0.0,"WF":0.0,"G":false},
+      {"future_task":239,"B1":0.0,"B2":0.33333333333333337,"WS":0.16666666666666669,"WF":0.16666666666666663,"G":false},
+      {"future_task":271,"B1":1.0,"B2":1.0,"WS":0.33333333333333337,"WF":0.0,"G":true},
+      {"future_task":437,"B1":0.0,"B2":0.0,"WS":0.0,"WF":0.0,"G":false},
+      {"future_task":506,"B1":1.0,"B2":1.0,"WS":0.16666666666666669,"WF":0.16666666666666663,"G":true},
+      {"future_task":261,"B1":1.0,"B2":1.0,"WS":0.0,"WF":0.0,"G":true}
+    ]
+  },
+  "rate_matched_random_gate": {
+    "ranking_frozen_before_shadow_output": true,
+    "ranking": [437, 261, 271, 506, 352, 239],
+    "K": 3,
+    "open_ids": [437, 261, 271]
+  },
+  "final_policy": {
+    "schedule_frozen_before_output": true,
+    "planned_calls": 288,
+    "complete_calls": 60,
+    "failed_calls": 1,
+    "unattempted_calls": 227,
+    "stop_case": "task-261__A0_NATIVE__branch-success__r6",
+    "stop_order": 61,
+    "failure_type": "JSONDecodeError",
+    "failure": "Expecting ',' delimiter: line 1 column 518 (char 517)",
+    "provider_returned_before_parse_failure": true,
+    "retry_topup_imputation_replacement": 0,
+    "partial_complete_responses_excluded_from_effect_analysis": 60,
+    "failed_response_raw_text_and_provider_metadata_persisted": false,
+    "logging_gap": "The runner caught the parser exception after provider return but did not retain the already-returned raw text/metadata in the failure artifact.",
+    "realization": "FAIL_COMPLETE_288_NOT_REALIZED"
+  },
+  "effects": {
+    "U_A0_NATIVE": null,
+    "U_A1_SCB_ALWAYS": null,
+    "U_A2_RANDOM_RATE_MATCHED": null,
+    "U_A3_PACTA_V2": null,
+    "primary_mean_A3_minus_A2": null,
+    "A3_minus_A1": null,
+    "A3_minus_A0": null,
+    "M_open_minus_M_closed": null,
+    "reason": "The pre-registered 288-call final-policy packet was incomplete; no partial-arm or partial-state effect estimate is authorized."
+  },
+  "pilot_gate": {
+    "verdict": "NOT_EVALUABLE_FINAL_POLICY_REALIZATION_FAILURE",
+    "scientific_pass": false,
+    "negative_mechanism_result": false
+  },
+  "failure_differential": {
+    "execution_orchestration": false,
+    "provider_support": false,
+    "binder": false,
+    "shadow_realization": false,
+    "gate_degeneracy": false,
+    "final_policy_parser_measurement": true,
+    "generic_SCB_transport": "not evaluated",
+    "paired_noise_calibrated_gate_mechanism": "not evaluated",
+    "terminal_utility": "not tested",
+    "strongest_competing_explanation": "No behavioral effect estimate exists: an incomplete final-policy packet, not observed A3-versus-A2 performance, determines the stop."
+  },
+  "scientific_belief_update": {
+    "increase": "At the downstream policy surface, replicated cross-feedback divergence exceeded within-branch stochasticity on 3 of 6 fresh templates, producing a non-degenerate gate.",
+    "decrease": "The frozen final-policy measurement interface did not realize its complete packet under a strict no-retry contract.",
+    "withhold": "No claim about PACTA-v2 selective transport gain, SCB benefit, task utility, or external validity."
+  },
+  "claim_authority": {
+    "method_status": "PACTA_V2_NOT_QUALIFIED_FINAL_EFFECT_UNMEASURED",
+    "gate_realization_claim": true,
+    "preliminary_mechanism_effect_signal": false,
+    "selective_transport_improvement_claim": false,
+    "utility_improvement_claim": false,
+    "active_manuscript": "R9",
+    "R10_created": false
+  },
+  "institutional_lessons": [
+    "When the scientific claim concerns behavioral transport, a standalone semantic projector may be a poor proxy for the downstream policy. Counterfactual actionability should be measured at the policy surface itself and separated from same-condition stochasticity.",
+    "A provider response must be persisted before parsing so that a parser failure remains auditable without a retry; strict no-retry experiments cannot recover a discarded raw response."
+  ],
+  "reopen_condition": "STOP. Do not retry, top up, replace, or resume this Pilot; do not run terminal or same-substrate confirmatory. Any new measurement execution or independent carrier requires new human authorization."
+}

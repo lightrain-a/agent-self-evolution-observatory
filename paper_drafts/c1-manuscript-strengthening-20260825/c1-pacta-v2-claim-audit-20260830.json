@@ -1,0 +1,22 @@
+{
+  "schema_version":"1.0",
+  "artifact_kind":"C1_PACTA_V2_CLAIM_AUDIT",
+  "status":"PASS_CLAIM_BOUNDARIES",
+  "checks":[
+    {"claim":"PACTA-v1 and v1.1 remain separate historical invalid/unqualified executions","pass":true},
+    {"claim":"novelty is limited to the full paired policy-surface noise-calibrated transport signature","pass":true},
+    {"claim":"fresh six-template split and random ranking were frozen outcome-blind","pass":true},
+    {"claim":"144/144 shadow calls support only non-degenerate gate realization","pass":true},
+    {"claim":"60 complete final responses and one parser failure are excluded from effect estimation","pass":true},
+    {"claim":"no PACTA-v2 selective-transport improvement is asserted","pass":true},
+    {"claim":"no task-utility, external-validity, confirmatory, terminal, or R10 claim is asserted","pass":true},
+    {"claim":"R9 remains the active manuscript","pass":true}
+  ],
+  "authority":{
+    "gate_realization":true,
+    "method_effect":false,
+    "task_utility":false,
+    "external_validity":false,
+    "R10":false
+  }
+}
