@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_CAST_HOLDOUT_REALLOCATION_AMENDMENT",
+  "method_frozen_name": "PACTA",
+  "status": "AUTHORIZED_REALLOCATION_OF_ZERO-OUTCOME_STATES",
+  "historical_object": "SCMB confirmatory",
+  "historical_status": "closed after the R9 pilot failed its cross-state consistency gate",
+  "new_object": "mechanistically distinct PACTA prospective pilot and sealed confirmatory",
+  "state_count": 19,
+  "state_ids": [
+    510,
+    24,
+    166,
+    656,
+    351,
+    96,
+    117,
+    191,
+    273,
+    332,
+    263,
+    368,
+    512,
+    300,
+    439,
+    240,
+    793,
+    376,
+    313
+  ],
+  "verified_new_scmb_policy_outcomes": 0,
+  "prohibitions": [
+    "do not modify R9",
+    "do not call these states SCMB confirmatory",
+    "do not use PACTA pilot outcomes to change the sealed confirmatory design"
+  ],
+  "authorized_at": "2026-08-30T12:50:54.769761+00:00"
+}

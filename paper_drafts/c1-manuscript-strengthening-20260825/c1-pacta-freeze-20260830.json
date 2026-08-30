@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_METHOD_AND_SAMPLE_FREEZE",
+  "status": "FROZEN_BEFORE_ANY_PACTA_PROVIDER_CALL",
+  "novelty_audit_sha256": "1e861217a554f90d710794e2af8fd791f1c513030c06168e19db704d3d1f19a0",
+  "r9_freeze_sha256": "e4d6c29fd2406ac2e226c969856ccfc3eba8de15ebacfdf0e04954df1670025f",
+  "r9_closure_sha256": "5a254528ffbf8792784e272d846dd048ff2ff8e7ed3b87b441edc26cdd9c2b02",
+  "prompt_hashes": {
+    "P0": "d4f1f4aeafac058b83930499ea10a2db0b70db9f5a76131fcd4ff8e0486de295",
+    "P1": "cfe5f1957da06a674d7c90e4c7e7753505482c7f17de9ecd28191e4fd3c44caf"
+  },
+  "split": {
+    "salt": "C1-CAST-SPLIT-v1",
+    "pilot_ids": [
+      313,
+      376,
+      368,
+      512,
+      300,
+      191
+    ],
+    "confirmatory_ids": [
+      510,
+      117,
+      24,
+      332,
+      656,
+      240,
+      166,
+      263,
+      273,
+      793,
+      351,
+      96,
+      439
+    ]
+  },
+  "algorithm_frozen": true,
+  "statistics_frozen": true,
+  "provider_identity_frozen": true,
+  "action_canonicalization_frozen": true
+}
