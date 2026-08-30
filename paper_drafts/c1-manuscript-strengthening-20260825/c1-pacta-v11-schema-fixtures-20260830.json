@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V11_SYNTHETIC_SCHEMA_FIXTURES",
+  "status": "FROZEN_NON_SCIENTIFIC_BEFORE_PROVIDER_CALLS",
+  "scientific_state_used": false,
+  "expected_calls": 40,
+  "fixtures": [
+    {
+      "fixture_id": "synthetic-01-click-search",
+      "non_scientific": true,
+      "memory": "When a search button is visible, click it.",
+      "task": "Open the product search.",
+      "state": "[7]<button>Search</button>"
+    },
+    {
+      "fixture_id": "synthetic-02-click-reviews",
+      "non_scientific": true,
+      "memory": "Open the Reviews tab before reading reviews.",
+      "task": "Inspect product reviews.",
+      "state": "[14]<a>Reviews</a>"
+    },
+    {
+      "fixture_id": "synthetic-03-click-cart",
+      "non_scientific": true,
+      "memory": "Use the Add to Cart button for the chosen item.",
+      "task": "Add the selected item.",
+      "state": "[22]<button>Add to Cart</button>"
+    },
+    {
+      "fixture_id": "synthetic-04-click-next",
+      "non_scientific": true,
+      "memory": "Use the Next button to continue pagination.",
+      "task": "Open the next results page.",
+      "state": "[31]<button>Next</button>"
+    },
+    {
+      "fixture_id": "synthetic-05-input-query",
+      "non_scientific": true,
+      "memory": "Type the requested product name into the search field.",
+      "task": "Search for a blue mug.",
+      "state": "[5]<input>Search products</input>"
+    },
+    {
+      "fixture_id": "synthetic-06-input-email",
+      "non_scientific": true,
+      "memory": "Enter the supplied email in the email field.",
+      "task": "Enter alex@example.com.",
+      "state": "[8]<input>Email</input>"
+    },
+    {
+      "fixture_id": "synthetic-07-input-quantity",
+      "non_scientific": true,
+      "memory": "Replace the quantity field with the requested value.",
+      "task": "Set quantity to 3.",
+      "state": "[11]<input>Quantity</input>"
+    },
+    {
+      "fixture_id": "synthetic-08-input-name",
+      "non_scientific": true,
+      "memory": "Fill the recipient name in the visible input.",
+      "task": "Enter recipient name Kai.",
+      "state": "[3]<input>Recipient name</input>"
+    },
+    {
+      "fixture_id": "synthetic-09-extract-names",
+      "non_scientific": true,
+      "memory": "Use content extraction for dense result text.",
+      "task": "Extract all visible product names.",
+      "state": "Product grid with many non-interactive cards."
+    },
+    {
+      "fixture_id": "synthetic-10-extract-prices",
+      "non_scientific": true,
+      "memory": "Use content extraction to collect prices from the page.",
+      "task": "Extract product names and prices.",
+      "state": "Dense catalog page with price text."
+    },
+    {
+      "fixture_id": "synthetic-11-extract-reviews",
+      "non_scientific": true,
+      "memory": "Extract review authors and matching snippets.",
+      "task": "Collect reviews mentioning fingerprints.",
+      "state": "Reviews page with many review blocks."
+    },
+    {
+      "fixture_id": "synthetic-12-send-enter",
+      "non_scientific": true,
+      "memory": "After filling a search box, send the Enter key.",
+      "task": "Submit the current search.",
+      "state": "Search input is focused and contains blue mug."
+    },
+    {
+      "fixture_id": "synthetic-13-send-escape",
+      "non_scientific": true,
+      "memory": "Close the current popup by sending Escape.",
+      "task": "Dismiss the popup.",
+      "state": "A modal dialog is open."
+    },
+    {
+      "fixture_id": "synthetic-14-dropdown-color",
+      "non_scientific": true,
+      "memory": "Select the requested color from the dropdown.",
+      "task": "Choose White.",
+      "state": "[18]<select>Color</select>"
+    },
+    {
+      "fixture_id": "synthetic-15-dropdown-size",
+      "non_scientific": true,
+      "memory": "Select the requested size from the dropdown.",
+      "task": "Choose Large.",
+      "state": "[19]<select>Size</select>"
+    },
+    {
+      "fixture_id": "synthetic-16-go-back",
+      "non_scientific": true,
+      "memory": "Return to the previous browser page when the current page is wrong.",
+      "task": "Return to previous results.",
+      "state": "Current page is an unrelated product detail."
+    },
+    {
+      "fixture_id": "synthetic-17-go-url",
+      "non_scientific": true,
+      "memory": "Navigate directly to the supplied allowed URL.",
+      "task": "Open the store home page.",
+      "state": "Current page is blank."
+    },
+    {
+      "fixture_id": "synthetic-18-scroll",
+      "non_scientific": true,
+      "memory": "Scroll down when more results are below the viewport.",
+      "task": "Continue inspecting results.",
+      "state": "Bottom of visible viewport; more items exist below."
+    },
+    {
+      "fixture_id": "synthetic-19-wait",
+      "non_scientific": true,
+      "memory": "Wait briefly when the page is still loading.",
+      "task": "Allow the results to finish loading.",
+      "state": "Loading indicator is visible."
+    },
+    {
+      "fixture_id": "synthetic-20-done",
+      "non_scientific": true,
+      "memory": "When the requested information is already visible and collected, finish successfully.",
+      "task": "Return the collected answer.",
+      "state": "All requested product names have been collected."
+    }
+  ]
+}

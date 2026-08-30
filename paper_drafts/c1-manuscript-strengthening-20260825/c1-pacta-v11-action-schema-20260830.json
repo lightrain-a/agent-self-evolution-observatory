@@ -1,0 +1,296 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V11_ACTION_SCHEMA",
+  "status": "DETERMINISTIC_MINIMAL_AFFORDANCE_SCHEMA_FROZEN",
+  "single_variable_repair": "ACTION_SCHEMA_EXTRACTION",
+  "projector_schema": {
+    "tools": {
+      "click_element": {
+        "additionalProperties": false,
+        "arguments": {
+          "index": {
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "index"
+        ]
+      },
+      "done": {
+        "additionalProperties": false,
+        "arguments": {
+          "success": {
+            "type": "boolean"
+          },
+          "text": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "success",
+          "text"
+        ]
+      },
+      "extract_content": {
+        "additionalProperties": false,
+        "arguments": {
+          "goal": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "goal"
+        ]
+      },
+      "go_back": {
+        "additionalProperties": false,
+        "arguments": {},
+        "required": []
+      },
+      "go_to_url": {
+        "additionalProperties": false,
+        "arguments": {
+          "url": {
+            "format": "uri",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ]
+      },
+      "input_text": {
+        "additionalProperties": false,
+        "arguments": {
+          "index": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "index",
+          "text"
+        ]
+      },
+      "scroll_down": {
+        "additionalProperties": false,
+        "arguments": {
+          "amount": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": []
+      },
+      "select_dropdown_option": {
+        "additionalProperties": false,
+        "arguments": {
+          "index": {
+            "minimum": 0,
+            "type": "integer"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "index",
+          "text"
+        ]
+      },
+      "send_keys": {
+        "additionalProperties": false,
+        "arguments": {
+          "keys": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "keys"
+        ]
+      },
+      "switch_tab": {
+        "additionalProperties": false,
+        "arguments": {
+          "page_id": {
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "page_id"
+        ]
+      },
+      "wait": {
+        "additionalProperties": false,
+        "arguments": {
+          "seconds": {
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "seconds"
+        ]
+      }
+    }
+  },
+  "projector_schema_canonical_json": "{\"tools\":{\"click_element\":{\"additionalProperties\":false,\"arguments\":{\"index\":{\"minimum\":0,\"type\":\"integer\"}},\"required\":[\"index\"]},\"done\":{\"additionalProperties\":false,\"arguments\":{\"success\":{\"type\":\"boolean\"},\"text\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"success\",\"text\"]},\"extract_content\":{\"additionalProperties\":false,\"arguments\":{\"goal\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"goal\"]},\"go_back\":{\"additionalProperties\":false,\"arguments\":{},\"required\":[]},\"go_to_url\":{\"additionalProperties\":false,\"arguments\":{\"url\":{\"format\":\"uri\",\"type\":\"string\"}},\"required\":[\"url\"]},\"input_text\":{\"additionalProperties\":false,\"arguments\":{\"index\":{\"minimum\":0,\"type\":\"integer\"},\"text\":{\"type\":\"string\"}},\"required\":[\"index\",\"text\"]},\"scroll_down\":{\"additionalProperties\":false,\"arguments\":{\"amount\":{\"minimum\":1,\"type\":\"integer\"}},\"required\":[]},\"select_dropdown_option\":{\"additionalProperties\":false,\"arguments\":{\"index\":{\"minimum\":0,\"type\":\"integer\"},\"text\":{\"type\":\"string\"}},\"required\":[\"index\",\"text\"]},\"send_keys\":{\"additionalProperties\":false,\"arguments\":{\"keys\":{\"minLength\":1,\"type\":\"string\"}},\"required\":[\"keys\"]},\"switch_tab\":{\"additionalProperties\":false,\"arguments\":{\"page_id\":{\"minimum\":0,\"type\":\"integer\"}},\"required\":[\"page_id\"]},\"wait\":{\"additionalProperties\":false,\"arguments\":{\"seconds\":{\"minimum\":1,\"type\":\"integer\"}},\"required\":[\"seconds\"]}}}",
+  "action_schema_sha256": "360e954e171e4a1d3bbcb5f11cf011827fb625334c0e20791cc64a7983200b50",
+  "source_system_instruction_sha256": "c34f1c7f3bae473b2e0d17c37781663a37ab12922b044796fe8ab6c43b3dc172",
+  "separate_hashes_required": true,
+  "forbidden_content_absent": [
+    "current_state response envelope",
+    "native output-format instructions",
+    "memory instructions",
+    "task-solving instructions",
+    "reasoning instructions",
+    "next_goal envelope requirements",
+    "other system prose"
+  ],
+  "native_inventory_evidence_excluding_23_candidate_tasks": {
+    "pool_tasks_excluded": [
+      238,
+      239,
+      241,
+      242,
+      261,
+      262,
+      264,
+      269,
+      270,
+      271,
+      272,
+      352,
+      353,
+      354,
+      355,
+      436,
+      437,
+      438,
+      440,
+      506,
+      508,
+      653,
+      792
+    ],
+    "observed_calls": 1517,
+    "tool_counts": {
+      "click_element": 852,
+      "done": 175,
+      "extract_content": 169,
+      "go_back": 6,
+      "go_to_url": 2,
+      "input_text": 177,
+      "scroll_down": 8,
+      "select_dropdown_option": 32,
+      "send_keys": 78,
+      "switch_tab": 8,
+      "wait": 10
+    },
+    "argument_type_profiles": {
+      "click_element": [
+        {
+          "arguments": {
+            "index": "int"
+          },
+          "count": 852
+        }
+      ],
+      "done": [
+        {
+          "arguments": {
+            "success": "bool",
+            "text": "str"
+          },
+          "count": 175
+        }
+      ],
+      "extract_content": [
+        {
+          "arguments": {
+            "goal": "str"
+          },
+          "count": 169
+        }
+      ],
+      "go_back": [
+        {
+          "arguments": {},
+          "count": 6
+        }
+      ],
+      "go_to_url": [
+        {
+          "arguments": {
+            "url": "str"
+          },
+          "count": 2
+        }
+      ],
+      "input_text": [
+        {
+          "arguments": {
+            "index": "int",
+            "text": "str"
+          },
+          "count": 177
+        }
+      ],
+      "scroll_down": [
+        {
+          "arguments": {},
+          "count": 1
+        },
+        {
+          "arguments": {
+            "amount": "int"
+          },
+          "count": 7
+        }
+      ],
+      "select_dropdown_option": [
+        {
+          "arguments": {
+            "index": "int",
+            "text": "str"
+          },
+          "count": 32
+        }
+      ],
+      "send_keys": [
+        {
+          "arguments": {
+            "keys": "str"
+          },
+          "count": 78
+        }
+      ],
+      "switch_tab": [
+        {
+          "arguments": {
+            "page_id": "int"
+          },
+          "count": 8
+        }
+      ],
+      "wait": [
+        {
+          "arguments": {
+            "seconds": "int"
+          },
+          "count": 10
+        }
+      ]
+    }
+  },
+  "extraction_module_path": "/data/wyt/agent-self-evolution-observatory/worktrees/c1-pacta-v11-20260830/paper_drafts/c1-manuscript-strengthening-20260825/c1_pacta_v11_action_schema.py",
+  "extraction_module_sha256": "8357b3bc0c5a6f38d8171d33648a01b16b8ce44a876446213d20929929ae5c81"
+}

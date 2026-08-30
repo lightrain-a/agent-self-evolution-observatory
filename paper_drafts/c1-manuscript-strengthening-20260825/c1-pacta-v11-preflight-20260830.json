@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V11_ZERO_PROVIDER_PREFLIGHT",
+  "status": "PASS_ZERO_PROVIDER_FRESH_PACKET_PREFLIGHT",
+  "checks": {
+    "candidate_states": 23,
+    "candidate_templates": 7,
+    "pilot_states": 7,
+    "pilot_templates": 7,
+    "v1_sample_overlap": 0,
+    "trajectory_available": "23/23",
+    "retrieval_threshold_hit": "23/23",
+    "memory_wrappers_hash_verified": "46/46",
+    "task_state_system_hashes_materialized": "23/23",
+    "system_schema_hashes_separate": true,
+    "prior_PACTA_projection_or_policy_outputs": 0,
+    "prior_SCMB_scientific_outputs": 0,
+    "provider_calls": 0,
+    "unused_state_outcomes_accessed": 0
+  },
+  "source_bindings": {
+    "B3_sha256": "a5e39a817cdadc9b4edae4edba0c9c90068f1cd9d083e4c3a70bdfad32871440",
+    "B4_sha256": "2880b83c71745f049039c15edb02f731e4f87a44670977b61627143102bee0d1",
+    "B10_sha256": "c2a54c928d74ccb7a153166a02ef0ef7a1504a93b5895952380a95b0277a3436",
+    "parquet_sha256": "fc9b0011d384403f21534529da0397ca2aabf29fcb30c2dbb5a3c01c30b1387e",
+    "v1_closure_sha256": "dce1f5026740433836acf455b1231cf2ec2de94b1f0b4983210358a30f43a075"
+  }
+}
