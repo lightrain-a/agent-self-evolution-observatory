@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_CLAIM_AUDIT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-PACTA-P0-20260830",
+  "status": "PASS",
+  "summary": {
+    "claims_total": 10,
+    "claims_passed": 10,
+    "claims_failed": 0
+  },
+  "checks": [
+    {
+      "id": "PACTA-C01",
+      "pass": true,
+      "claim": "The literature audit supports only the narrow joint mechanism residual, not generic state-aware, decision-aware, counterfactual, or memory-action-gap novelty."
+    },
+    {
+      "id": "PACTA-C02",
+      "pass": true,
+      "claim": "CAST was renamed PACTA because of an acronym/name collision; the scientific object was unchanged."
+    },
+    {
+      "id": "PACTA-C03",
+      "pass": true,
+      "claim": "Provider support passed with exact requested/resolved identity, no fallback, disabled thinking, and zero model drift."
+    },
+    {
+      "id": "PACTA-C04",
+      "pass": true,
+      "claim": "The Pilot failed the frozen projection-realization and gate-geometry requirements: 0/24 exact-schema projections and G=0/6."
+    },
+    {
+      "id": "PACTA-C05",
+      "pass": true,
+      "claim": "No U or A3-minus-A2 estimate is authorized from the incomplete policy geometry."
+    },
+    {
+      "id": "PACTA-C06",
+      "pass": true,
+      "claim": "The observed failure is projection schema/interface formulation; cross-rendering instability is not identifiable and the counterfactual gate mechanism was not qualified."
+    },
+    {
+      "id": "PACTA-C07",
+      "pass": true,
+      "claim": "The thirteen-state confirmatory was not executed and its outcomes remain unobserved."
+    },
+    {
+      "id": "PACTA-C08",
+      "pass": true,
+      "claim": "Terminal evaluation remained locked; no selective-transport or utility-improvement claim is authorized."
+    },
+    {
+      "id": "PACTA-C09",
+      "pass": true,
+      "claim": "PACTA is a not-qualified candidate and R9 remains the active manuscript; no R10 was created."
+    },
+    {
+      "id": "PACTA-C10",
+      "pass": true,
+      "claim": "Any reopen must be a separately frozen revision with non-scientific action-schema qualification and a new prospective sample."
+    }
+  ],
+  "authority": {
+    "scientific_claim_expansion": false,
+    "confirmatory": false,
+    "terminal": false,
+    "R10": false,
+    "submission": false
+  }
+}

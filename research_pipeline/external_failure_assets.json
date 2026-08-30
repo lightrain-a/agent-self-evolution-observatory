@@ -67,6 +67,10 @@
     {
       "source_path": "research_pipeline/formal_goal_policy_contract_failure_assets_20260828.json",
       "source_key": "cross_product_integration_asset"
+    },
+    {
+      "source_path": "research_pipeline/c1_pacta_pilot_failure_asset_20260830.json",
+      "source_key": "asset"
     }
   ],
   "scientific_authority": false
