@@ -1,0 +1,187 @@
+{
+  "authorization": {
+    "full_p1_execution_authorized": false,
+    "paper_result_claim_authorized": false,
+    "q4_model_execution_authorized_only_after_runtime_pass": true,
+    "q4_runtime_qualification_authorized": true
+  },
+  "backend": {
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "behavior_temperature": 0.0,
+    "environment_timeout_seconds": 60,
+    "max_output_tokens": "omitted",
+    "max_retries": 2,
+    "model": "deepseek-v4-pro-ga-260813",
+    "seed": "omitted",
+    "step_limit": 250,
+    "top_p": "omitted",
+    "workers": 1
+  },
+  "bindings": {
+    "official_reasoningbank_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "q3_contract": "generated/asset-first-stri-reasoningbank-p1-q3-qualification-contract-20260830.json",
+    "q3_contract_sha256": "a203da329f05e50c64aefd495e39d971b1865eb8816839be1c0dffd0f939cf79",
+    "q3_fixed_image_acquisition": "generated/asset-first-stri-reasoningbank-p1-q3-runtime-acquisition-result-20260830.json",
+    "q3_fixed_image_acquisition_sha256": "b500b1a4a7d9561cbf0c0f2901c71469171ff70a92615bf98ab1144ed3d595ff",
+    "q3_fixtures": "generated/asset-first-stri-reasoningbank-p1-q3-task-fixtures-20260830.json",
+    "q3_fixtures_sha256": "b35c9b7a798b371818b25774c129d77c74f7dc90217b3f54f7e4e1d474d15519",
+    "q3_parser_qualification": "generated/asset-first-stri-reasoningbank-p1-q3-parser-qualification-20260830.json",
+    "q3_parser_qualification_sha256": "b4bec669fb87160b251c123947d9dd8c3819f0c03c2e729aaa4c83c5670d6eca",
+    "q3_runtime_hold": "generated/asset-first-stri-reasoningbank-p1-q3-runtime-qualification-result-20260830.json",
+    "q3_runtime_hold_sha256": "41646106382f7acda2564d74410ec537bc61c606cfe2155bc3e95b9a9c2bd949",
+    "source_memory": "generated/asset-first-stri-reasoningbank-p1-source-memory-20260829.json",
+    "source_memory_sha256": "0451d0346ab5df749df6c1f1d1ea3abbcde3f913958149be9671fce1bfbf2239",
+    "treatment_manifest": "generated/asset-first-stri-reasoningbank-p1-treatment-manifest-20260829.json",
+    "treatment_manifest_sha256": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7"
+  },
+  "created_at_utc": "2026-08-30T14:29:49+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q4-BASE-NORMALIZATION-20260830",
+  "outcome_discipline": {
+    "no_parameter_or_task_change_after_any_q4_task_outcome": true,
+    "q1_q2_q3_artifacts_immutable": true,
+    "q3_model_run_count": 0,
+    "q3_runtime_hold_preserved": true,
+    "q3_task_outcome_observed": false,
+    "q4_contract_frozen_before_runtime_implementation": true
+  },
+  "payload_sha256": "b57ce469b894f5785de0ee8e74570106a5202cbe52abbe088ed986fdf4c9f89d",
+  "preoutcome_input_verification": {
+    "generated/asset-first-stri-reasoningbank-p1-q3-parser-qualification-20260830.json": {
+      "actual": "b4bec669fb87160b251c123947d9dd8c3819f0c03c2e729aaa4c83c5670d6eca",
+      "expected": "b4bec669fb87160b251c123947d9dd8c3819f0c03c2e729aaa4c83c5670d6eca",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q3-qualification-contract-20260830.json": {
+      "actual": "a203da329f05e50c64aefd495e39d971b1865eb8816839be1c0dffd0f939cf79",
+      "expected": "a203da329f05e50c64aefd495e39d971b1865eb8816839be1c0dffd0f939cf79",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q3-runtime-acquisition-result-20260830.json": {
+      "actual": "b500b1a4a7d9561cbf0c0f2901c71469171ff70a92615bf98ab1144ed3d595ff",
+      "expected": "b500b1a4a7d9561cbf0c0f2901c71469171ff70a92615bf98ab1144ed3d595ff",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q3-runtime-qualification-result-20260830.json": {
+      "actual": "41646106382f7acda2564d74410ec537bc61c606cfe2155bc3e95b9a9c2bd949",
+      "expected": "41646106382f7acda2564d74410ec537bc61c606cfe2155bc3e95b9a9c2bd949",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q3-task-fixtures-20260830.json": {
+      "actual": "b35c9b7a798b371818b25774c129d77c74f7dc90217b3f54f7e4e1d474d15519",
+      "expected": "b35c9b7a798b371818b25774c129d77c74f7dc90217b3f54f7e4e1d474d15519",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-source-memory-20260829.json": {
+      "actual": "0451d0346ab5df749df6c1f1d1ea3abbcde3f913958149be9671fce1bfbf2239",
+      "expected": "0451d0346ab5df749df6c1f1d1ea3abbcde3f913958149be9671fce1bfbf2239",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-treatment-manifest-20260829.json": {
+      "actual": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7",
+      "expected": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7",
+      "pass": true
+    },
+    "no_q3_model_execution_artifacts": {
+      "pass": true
+    },
+    "q3_runtime_hold_was_outcome_blind": {
+      "pass": true
+    },
+    "same_unrun_q3_identities": {
+      "actual": [
+        [
+          5,
+          "sphinx-doc__sphinx-9230"
+        ],
+        [
+          6,
+          "django__django-11880"
+        ]
+      ],
+      "expected": [
+        [
+          5,
+          "sphinx-doc__sphinx-9230"
+        ],
+        [
+          6,
+          "django__django-11880"
+        ]
+      ],
+      "pass": true
+    }
+  },
+  "purpose": "Prospectively qualify an exact-base runtime normalization after the outcome-blind Q3 runtime gate rejected an image-builder descendant. Q3 remains HOLD; Q4 reuses the same still-unrun fixed tasks and images.",
+  "qualification": {
+    "full_p1_execution_authorized": false,
+    "negative_task_outcome_does_not_fail_qualification": true,
+    "pass_opens_only_a_separate_full-P1 planning gate": true,
+    "planned_runs": 10,
+    "requires": [
+      "outcome-blind Q4 runtime normalization qualifies both fixed images once",
+      "all ten model runs persist once in frozen order without replacement",
+      "no provider, provider-identity, runtime, or implementation failure",
+      "no blank model-visible message content",
+      "all completed responses resolve to the exact frozen model",
+      "valid SWE-bench evaluator output for every run",
+      "official parser conformance remains exact",
+      "A/B and B/E selected memory plus first R1 request equal per task"
+    ]
+  },
+  "runtime_normalization": {
+    "action": "git reset --hard <frozen expected base commit>",
+    "applies_to_every_q4_container": true,
+    "failure_policy": "HOLD without model call; no automatic retry or replacement",
+    "git_clean_invoked": false,
+    "image_identity": "exact frozen amd64 manifest digest",
+    "pid_namespace": "host",
+    "platform": "linux/amd64",
+    "postconditions": [
+      "HEAD equals the frozen expected base commit",
+      "worktree and index remain clean",
+      "image digest and installed environment remain unchanged"
+    ],
+    "preconditions": [
+      "frozen expected base commit object exists in /testbed",
+      "frozen expected base commit is an ancestor of initial HEAD",
+      "initial /testbed worktree and index are clean",
+      "no task test, evaluator, model request, or task outcome has occurred"
+    ]
+  },
+  "schema_version": 1,
+  "selection": {
+    "automatic_model_run_retry": "forbidden",
+    "instance_ids": [
+      "sphinx-doc__sphinx-9230",
+      "django__django-11880"
+    ],
+    "ranks": [
+      5,
+      6
+    ],
+    "replacement_sampling": "forbidden",
+    "same_still_unrun_q3_tasks": true,
+    "uses_gold_patch": false,
+    "uses_task_outcome": false
+  },
+  "treatments": {
+    "arms": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ],
+    "fresh_container_each_run": true,
+    "ordered_execution": "rank 5 A/B/C/D/E then rank 6 A/B/C/D/E",
+    "session_reuse_across_arms": false,
+    "treatment_sha256": {
+      "A": "6094b0bc5e6ea7c87da86d7cd60594e823ffb84b04a6592016c5154b3968752a",
+      "B": "1dbf10edf2710e256968d01fa64edcbb7df65a3dd92ca5b4511232dcd1f01a00",
+      "C": "04c815b16d2d0f5e863470390d7298657f3560385eea036f98b6fbe2539c4b43",
+      "D": "047fa9e7d69af1d455ac465816ae84d5e7234166420a29f9e3ce3aacf0873083",
+      "E": "b475629a1a9fdff39a3d32c5bcfe449f9cceeb226919355e2a7d32fc22d49196"
+    }
+  }
+}
