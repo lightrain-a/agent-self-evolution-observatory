@@ -1,0 +1,2866 @@
+{
+  "schema_version": "relational-constraint-capacity-construct-qualification-v2",
+  "generated_at": "2026-08-30T18:20:00+00:00",
+  "object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "canonical_candidate_id": null,
+  "status": "PRE_F0_HOLD_ASSET_AND_CONSTRUCT_QUALIFICATION",
+  "base_pre_f0_artifact": {
+    "path": "generated/relational-constraint-capacity-pre-f0-20260830.json",
+    "sha256": "7fedadef0553f2b564e4d7b12ab75666134a356be2ba51e4c16a259f5efcdc5a"
+  },
+  "construct_qualification_v2": {
+    "verdict": "PASS",
+    "scope": "Outcome-blind qualification of the construct, endpoint hierarchy, design identifiability, and analysis preregistration only.",
+    "scientific_outcomes_observed": 0,
+    "source_audit": {
+      "repository_commit": "a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+      "predicate_source_sha256": "a4fff5947dd082b9335f0ddcb21b16e74769fc5d99bcb971f01f1934290a5181",
+      "text_encoder_source_sha256": "494b07b33ec478e8c627bde82e0baaf08e08aa9560944535bf48e7e359af1310",
+      "evaluator_source_sha256": "ea6f532d12a7d511902e6e72d84e0c9e61ddee8b632061b518327bc8956753cd",
+      "text_encoder": "openai/clip-vit-base-patch32",
+      "model_max_length": 77,
+      "truncation_in_official_code": true
+    },
+    "official_predicate_families": {
+      "vertical": [
+        "above",
+        "below"
+      ],
+      "horizontal": [
+        "left of",
+        "right of"
+      ],
+      "depth": [
+        "in front of",
+        "behind"
+      ],
+      "close_horizontal": [
+        "closely left of",
+        "closely right of"
+      ],
+      "close_depth": [
+        "closely in front of",
+        "closely behind"
+      ]
+    },
+    "relation_type_balanced_nested_permutations": {
+      "relation_count_levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "permutation_count": 10,
+      "construction": "five cyclic family rotations crossed with two inverse-direction phases; each dose is the prefix of its permutation",
+      "nested_prefix_check": true,
+      "balance_audit": {
+        "by_relation_count": {
+          "1": {
+            "family_counts": {
+              "close_depth": 2,
+              "close_horizontal": 2,
+              "depth": 2,
+              "horizontal": 2,
+              "vertical": 2
+            },
+            "family_max_minus_min": 0,
+            "direction_pair_abs_differences": {
+              "vertical": 0,
+              "horizontal": 0,
+              "depth": 0,
+              "close_horizontal": 0,
+              "close_depth": 0
+            },
+            "pass": true
+          },
+          "2": {
+            "family_counts": {
+              "close_depth": 4,
+              "close_horizontal": 4,
+              "depth": 4,
+              "horizontal": 4,
+              "vertical": 4
+            },
+            "family_max_minus_min": 0,
+            "direction_pair_abs_differences": {
+              "vertical": 0,
+              "horizontal": 0,
+              "depth": 0,
+              "close_horizontal": 0,
+              "close_depth": 0
+            },
+            "pass": true
+          },
+          "3": {
+            "family_counts": {
+              "close_depth": 6,
+              "close_horizontal": 6,
+              "depth": 6,
+              "horizontal": 6,
+              "vertical": 6
+            },
+            "family_max_minus_min": 0,
+            "direction_pair_abs_differences": {
+              "vertical": 0,
+              "horizontal": 0,
+              "depth": 0,
+              "close_horizontal": 0,
+              "close_depth": 0
+            },
+            "pass": true
+          },
+          "4": {
+            "family_counts": {
+              "close_depth": 8,
+              "close_horizontal": 8,
+              "depth": 8,
+              "horizontal": 8,
+              "vertical": 8
+            },
+            "family_max_minus_min": 0,
+            "direction_pair_abs_differences": {
+              "vertical": 0,
+              "horizontal": 0,
+              "depth": 0,
+              "close_horizontal": 0,
+              "close_depth": 0
+            },
+            "pass": true
+          },
+          "5": {
+            "family_counts": {
+              "close_depth": 10,
+              "close_horizontal": 10,
+              "depth": 10,
+              "horizontal": 10,
+              "vertical": 10
+            },
+            "family_max_minus_min": 0,
+            "direction_pair_abs_differences": {
+              "vertical": 0,
+              "horizontal": 0,
+              "depth": 0,
+              "close_horizontal": 0,
+              "close_depth": 0
+            },
+            "pass": true
+          }
+        },
+        "pass": true
+      },
+      "permutations": [
+        {
+          "permutation_id": "rotation-0-phase-0",
+          "rotation": 0,
+          "direction_phase": 0,
+          "relations": [
+            {
+              "relation_slot_id": "vertical:0",
+              "family": "vertical",
+              "predicate": "above",
+              "subject_slot": "vertical_subject",
+              "object_slot": "vertical_object",
+              "addition_position": 1
+            },
+            {
+              "relation_slot_id": "horizontal:0",
+              "family": "horizontal",
+              "predicate": "left of",
+              "subject_slot": "horizontal_subject",
+              "object_slot": "horizontal_object",
+              "addition_position": 2
+            },
+            {
+              "relation_slot_id": "depth:0",
+              "family": "depth",
+              "predicate": "in front of",
+              "subject_slot": "depth_subject",
+              "object_slot": "depth_object",
+              "addition_position": 3
+            },
+            {
+              "relation_slot_id": "close_horizontal:0",
+              "family": "close_horizontal",
+              "predicate": "closely left of",
+              "subject_slot": "close_horizontal_subject",
+              "object_slot": "close_horizontal_object",
+              "addition_position": 4
+            },
+            {
+              "relation_slot_id": "close_depth:0",
+              "family": "close_depth",
+              "predicate": "closely in front of",
+              "subject_slot": "close_depth_subject",
+              "object_slot": "close_depth_object",
+              "addition_position": 5
+            }
+          ]
+        },
+        {
+          "permutation_id": "rotation-0-phase-1",
+          "rotation": 0,
+          "direction_phase": 1,
+          "relations": [
+            {
+              "relation_slot_id": "vertical:1",
+              "family": "vertical",
+              "predicate": "below",
+              "subject_slot": "vertical_subject",
+              "object_slot": "vertical_object",
+              "addition_position": 1
+            },
+            {
+              "relation_slot_id": "horizontal:1",
+              "family": "horizontal",
+              "predicate": "right of",
+              "subject_slot": "horizontal_subject",
+              "object_slot": "horizontal_object",
+              "addition_position": 2
+            },
+            {
+              "relation_slot_id": "depth:1",
+              "family": "depth",
+              "predicate": "behind",
+              "subject_slot": "depth_subject",
+              "object_slot": "depth_object",
+              "addition_position": 3
+            },
+            {
+              "relation_slot_id": "close_horizontal:1",
+              "family": "close_horizontal",
+              "predicate": "closely right of",
+              "subject_slot": "close_horizontal_subject",
+              "object_slot": "close_horizontal_object",
+              "addition_position": 4
+            },
+            {
+              "relation_slot_id": "close_depth:1",
+              "family": "close_depth",
+              "predicate": "closely behind",
+              "subject_slot": "close_depth_subject",
+              "object_slot": "close_depth_object",
+              "addition_position": 5
+            }
+          ]
+        },
+        {
+          "permutation_id": "rotation-1-phase-0",
+          "rotation": 1,
+          "direction_phase": 0,
+          "relations": [
+            {
+              "relation_slot_id": "horizontal:0",
+              "family": "horizontal",
+              "predicate": "left of",
+              "subject_slot": "horizontal_subject",
+              "object_slot": "horizontal_object",
+              "addition_position": 1
+            },
+            {
+              "relation_slot_id": "depth:0",
+              "family": "depth",
+              "predicate": "in front of",
+              "subject_slot": "depth_subject",
+              "object_slot": "depth_object",
+              "addition_position": 2
+            },
+            {
+              "relation_slot_id": "close_horizontal:0",
+              "family": "close_horizontal",
+              "predicate": "closely left of",
+              "subject_slot": "close_horizontal_subject",
+              "object_slot": "close_horizontal_object",
+              "addition_position": 3
+            },
+            {
+              "relation_slot_id": "close_depth:0",
+              "family": "close_depth",
+              "predicate": "closely in front of",
+              "subject_slot": "close_depth_subject",
+              "object_slot": "close_depth_object",
+              "addition_position": 4
+            },
+            {
+              "relation_slot_id": "vertical:0",
+              "family": "vertical",
+              "predicate": "above",
+              "subject_slot": "vertical_subject",
+              "object_slot": "vertical_object",
+              "addition_position": 5
+            }
+          ]
+        },
+        {
+          "permutation_id": "rotation-1-phase-1",
+          "rotation": 1,
+          "direction_phase": 1,
+          "relations": [
+            {
+              "relation_slot_id": "horizontal:1",
+              "family": "horizontal",
+              "predicate": "right of",
+              "subject_slot": "horizontal_subject",
+              "object_slot": "horizontal_object",
+              "addition_position": 1
+            },
+            {
+              "relation_slot_id": "depth:1",
+              "family": "depth",
+              "predicate": "behind",
+              "subject_slot": "depth_subject",
+              "object_slot": "depth_object",
+              "addition_position": 2
+            },
+            {
+              "relation_slot_id": "close_horizontal:1",
+              "family": "close_horizontal",
+              "predicate": "closely right of",
+              "subject_slot": "close_horizontal_subject",
+              "object_slot": "close_horizontal_object",
+              "addition_position": 3
+            },
+            {
+              "relation_slot_id": "close_depth:1",
+              "family": "close_depth",
+              "predicate": "closely behind",
+              "subject_slot": "close_depth_subject",
+              "object_slot": "close_depth_object",
+              "addition_position": 4
+            },
+            {
+              "relation_slot_id": "vertical:1",
+              "family": "vertical",
+              "predicate": "below",
+              "subject_slot": "vertical_subject",
+              "object_slot": "vertical_object",
+              "addition_position": 5
+            }
+          ]
+        },
+        {
+          "permutation_id": "rotation-2-phase-0",
+          "rotation": 2,
+          "direction_phase": 0,
+          "relations": [
+            {
+              "relation_slot_id": "depth:0",
+              "family": "depth",
+              "predicate": "in front of",
+              "subject_slot": "depth_subject",
+              "object_slot": "depth_object",
+              "addition_position": 1
+            },
+            {
+              "relation_slot_id": "close_horizontal:0",
+              "family": "close_horizontal",
+              "predicate": "closely left of",
+              "subject_slot": "close_horizontal_subject",
+              "object_slot": "close_horizontal_object",
+              "addition_position": 2
+            },
+            {
+              "relation_slot_id": "close_depth:0",
+              "family": "close_depth",
+              "predicate": "closely in front of",
+              "subject_slot": "close_depth_subject",
+              "object_slot": "close_depth_object",
+              "addition_position": 3
+            },
+            {
+              "relation_slot_id": "vertical:0",
+              "family": "vertical",
+              "predicate": "above",
+              "subject_slot": "vertical_subject",
+              "object_slot": "vertical_object",
+              "addition_position": 4
+            },
+            {
+              "relation_slot_id": "horizontal:0",
+              "family": "horizontal",
+              "predicate": "left of",
+              "subject_slot": "horizontal_subject",
+              "object_slot": "horizontal_object",
+              "addition_position": 5
+            }
+          ]
+        },
+        {
+          "permutation_id": "rotation-2-phase-1",
+          "rotation": 2,
+          "direction_phase": 1,
+          "relations": [
+            {
+              "relation_slot_id": "depth:1",
+              "family": "depth",
+              "predicate": "behind",
+              "subject_slot": "depth_subject",
+              "object_slot": "depth_object",
+              "addition_position": 1
+            },
+            {
+              "relation_slot_id": "close_horizontal:1",
+              "family": "close_horizontal",
+              "predicate": "closely right of",
+              "subject_slot": "close_horizontal_subject",
+              "object_slot": "close_horizontal_object",
+              "addition_position": 2
+            },
+            {
+              "relation_slot_id": "close_depth:1",
+              "family": "close_depth",
+              "predicate": "closely behind",
+              "subject_slot": "close_depth_subject",
+              "object_slot": "close_depth_object",
+              "addition_position": 3
+            },
+            {
+              "relation_slot_id": "vertical:1",
+              "family": "vertical",
+              "predicate": "below",
+              "subject_slot": "vertical_subject",
+              "object_slot": "vertical_object",
+              "addition_position": 4
+            },
+            {
+              "relation_slot_id": "horizontal:1",
+              "family": "horizontal",
+              "predicate": "right of",
+              "subject_slot": "horizontal_subject",
+              "object_slot": "horizontal_object",
+              "addition_position": 5
+            }
+          ]
+        },
+        {
+          "permutation_id": "rotation-3-phase-0",
+          "rotation": 3,
+          "direction_phase": 0,
+          "relations": [
+            {
+              "relation_slot_id": "close_horizontal:0",
+              "family": "close_horizontal",
+              "predicate": "closely left of",
+              "subject_slot": "close_horizontal_subject",
+              "object_slot": "close_horizontal_object",
+              "addition_position": 1
+            },
+            {
+              "relation_slot_id": "close_depth:0",
+              "family": "close_depth",
+              "predicate": "closely in front of",
+              "subject_slot": "close_depth_subject",
+              "object_slot": "close_depth_object",
+              "addition_position": 2
+            },
+            {
+              "relation_slot_id": "vertical:0",
+              "family": "vertical",
+              "predicate": "above",
+              "subject_slot": "vertical_subject",
+              "object_slot": "vertical_object",
+              "addition_position": 3
+            },
+            {
+              "relation_slot_id": "horizontal:0",
+              "family": "horizontal",
+              "predicate": "left of",
+              "subject_slot": "horizontal_subject",
+              "object_slot": "horizontal_object",
+              "addition_position": 4
+            },
+            {
+              "relation_slot_id": "depth:0",
+              "family": "depth",
+              "predicate": "in front of",
+              "subject_slot": "depth_subject",
+              "object_slot": "depth_object",
+              "addition_position": 5
+            }
+          ]
+        },
+        {
+          "permutation_id": "rotation-3-phase-1",
+          "rotation": 3,
+          "direction_phase": 1,
+          "relations": [
+            {
+              "relation_slot_id": "close_horizontal:1",
+              "family": "close_horizontal",
+              "predicate": "closely right of",
+              "subject_slot": "close_horizontal_subject",
+              "object_slot": "close_horizontal_object",
+              "addition_position": 1
+            },
+            {
+              "relation_slot_id": "close_depth:1",
+              "family": "close_depth",
+              "predicate": "closely behind",
+              "subject_slot": "close_depth_subject",
+              "object_slot": "close_depth_object",
+              "addition_position": 2
+            },
+            {
+              "relation_slot_id": "vertical:1",
+              "family": "vertical",
+              "predicate": "below",
+              "subject_slot": "vertical_subject",
+              "object_slot": "vertical_object",
+              "addition_position": 3
+            },
+            {
+              "relation_slot_id": "horizontal:1",
+              "family": "horizontal",
+              "predicate": "right of",
+              "subject_slot": "horizontal_subject",
+              "object_slot": "horizontal_object",
+              "addition_position": 4
+            },
+            {
+              "relation_slot_id": "depth:1",
+              "family": "depth",
+              "predicate": "behind",
+              "subject_slot": "depth_subject",
+              "object_slot": "depth_object",
+              "addition_position": 5
+            }
+          ]
+        },
+        {
+          "permutation_id": "rotation-4-phase-0",
+          "rotation": 4,
+          "direction_phase": 0,
+          "relations": [
+            {
+              "relation_slot_id": "close_depth:0",
+              "family": "close_depth",
+              "predicate": "closely in front of",
+              "subject_slot": "close_depth_subject",
+              "object_slot": "close_depth_object",
+              "addition_position": 1
+            },
+            {
+              "relation_slot_id": "vertical:0",
+              "family": "vertical",
+              "predicate": "above",
+              "subject_slot": "vertical_subject",
+              "object_slot": "vertical_object",
+              "addition_position": 2
+            },
+            {
+              "relation_slot_id": "horizontal:0",
+              "family": "horizontal",
+              "predicate": "left of",
+              "subject_slot": "horizontal_subject",
+              "object_slot": "horizontal_object",
+              "addition_position": 3
+            },
+            {
+              "relation_slot_id": "depth:0",
+              "family": "depth",
+              "predicate": "in front of",
+              "subject_slot": "depth_subject",
+              "object_slot": "depth_object",
+              "addition_position": 4
+            },
+            {
+              "relation_slot_id": "close_horizontal:0",
+              "family": "close_horizontal",
+              "predicate": "closely left of",
+              "subject_slot": "close_horizontal_subject",
+              "object_slot": "close_horizontal_object",
+              "addition_position": 5
+            }
+          ]
+        },
+        {
+          "permutation_id": "rotation-4-phase-1",
+          "rotation": 4,
+          "direction_phase": 1,
+          "relations": [
+            {
+              "relation_slot_id": "close_depth:1",
+              "family": "close_depth",
+              "predicate": "closely behind",
+              "subject_slot": "close_depth_subject",
+              "object_slot": "close_depth_object",
+              "addition_position": 1
+            },
+            {
+              "relation_slot_id": "vertical:1",
+              "family": "vertical",
+              "predicate": "below",
+              "subject_slot": "vertical_subject",
+              "object_slot": "vertical_object",
+              "addition_position": 2
+            },
+            {
+              "relation_slot_id": "horizontal:1",
+              "family": "horizontal",
+              "predicate": "right of",
+              "subject_slot": "horizontal_subject",
+              "object_slot": "horizontal_object",
+              "addition_position": 3
+            },
+            {
+              "relation_slot_id": "depth:1",
+              "family": "depth",
+              "predicate": "behind",
+              "subject_slot": "depth_subject",
+              "object_slot": "depth_object",
+              "addition_position": 4
+            },
+            {
+              "relation_slot_id": "close_horizontal:1",
+              "family": "close_horizontal",
+              "predicate": "closely right of",
+              "subject_slot": "close_horizontal_subject",
+              "object_slot": "close_horizontal_object",
+              "addition_position": 5
+            }
+          ]
+        }
+      ]
+    },
+    "length_disentanglement": {
+      "design": "Every permutation and relation-count dose is crossed with both exact CLIP-token target arms.",
+      "target_clip_tokens_including_special": [
+        52,
+        68
+      ],
+      "encoder_max_length": 77,
+      "headroom_tokens": 9,
+      "no_truncation_gate": "Materialized prompts must tokenize to exactly the assigned target with openai/clip-vit-base-patch32 and must retain EOS before position 77.",
+      "semantic_identity_gate": "The two length arms must compile to the identical ordered instructed relation triplets; only preregistered meaning-preserving relation templates and non-relational discourse wrappers may differ.",
+      "wrapper_sensitivity": "Use two counterbalanced wrapper banks; report their interaction and do not interpret beta_length as a universal pure-token law if wrapper heterogeneity is detected.",
+      "materialization_fail_closed": "Any object name or template that cannot reach both targets without relation loss, truncation, or a new spatial/attribute constraint is excluded before outcomes.",
+      "factorial_audit": {
+        "cell_replications": {
+          "r1_t52": 10,
+          "r1_t68": 10,
+          "r2_t52": 10,
+          "r2_t68": 10,
+          "r3_t52": 10,
+          "r3_t68": 10,
+          "r4_t52": 10,
+          "r4_t68": 10,
+          "r5_t52": 10,
+          "r5_t68": 10
+        },
+        "complete_factorial": true,
+        "equal_replication": true,
+        "pearson_relation_count_vs_target_tokens": 0.0,
+        "absolute_correlation_gate": 0.05,
+        "pass": true
+      },
+      "design_cells": [
+        {
+          "design_cell_id": "rotation-0-phase-0-r1-t52",
+          "permutation_id": "rotation-0-phase-0",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "vertical:0"
+          ],
+          "relation_families": [
+            "vertical"
+          ],
+          "predicates": [
+            "above"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-0-r1-t68",
+          "permutation_id": "rotation-0-phase-0",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "vertical:0"
+          ],
+          "relation_families": [
+            "vertical"
+          ],
+          "predicates": [
+            "above"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-0-r2-t52",
+          "permutation_id": "rotation-0-phase-0",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "vertical:0",
+            "horizontal:0"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "above",
+            "left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-0-r2-t68",
+          "permutation_id": "rotation-0-phase-0",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "vertical:0",
+            "horizontal:0"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "above",
+            "left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-0-r3-t52",
+          "permutation_id": "rotation-0-phase-0",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "vertical:0",
+            "horizontal:0",
+            "depth:0"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "above",
+            "left of",
+            "in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-0-r3-t68",
+          "permutation_id": "rotation-0-phase-0",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "vertical:0",
+            "horizontal:0",
+            "depth:0"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "above",
+            "left of",
+            "in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-0-r4-t52",
+          "permutation_id": "rotation-0-phase-0",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "vertical:0",
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "above",
+            "left of",
+            "in front of",
+            "closely left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-0-r4-t68",
+          "permutation_id": "rotation-0-phase-0",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "vertical:0",
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "above",
+            "left of",
+            "in front of",
+            "closely left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-0-r5-t52",
+          "permutation_id": "rotation-0-phase-0",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "vertical:0",
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "above",
+            "left of",
+            "in front of",
+            "closely left of",
+            "closely in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-0-r5-t68",
+          "permutation_id": "rotation-0-phase-0",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "vertical:0",
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "above",
+            "left of",
+            "in front of",
+            "closely left of",
+            "closely in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-1-r1-t52",
+          "permutation_id": "rotation-0-phase-1",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "vertical:1"
+          ],
+          "relation_families": [
+            "vertical"
+          ],
+          "predicates": [
+            "below"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-1-r1-t68",
+          "permutation_id": "rotation-0-phase-1",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "vertical:1"
+          ],
+          "relation_families": [
+            "vertical"
+          ],
+          "predicates": [
+            "below"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-1-r2-t52",
+          "permutation_id": "rotation-0-phase-1",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "vertical:1",
+            "horizontal:1"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "below",
+            "right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-1-r2-t68",
+          "permutation_id": "rotation-0-phase-1",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "vertical:1",
+            "horizontal:1"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "below",
+            "right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-1-r3-t52",
+          "permutation_id": "rotation-0-phase-1",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "vertical:1",
+            "horizontal:1",
+            "depth:1"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "below",
+            "right of",
+            "behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-1-r3-t68",
+          "permutation_id": "rotation-0-phase-1",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "vertical:1",
+            "horizontal:1",
+            "depth:1"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "below",
+            "right of",
+            "behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-1-r4-t52",
+          "permutation_id": "rotation-0-phase-1",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "vertical:1",
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "below",
+            "right of",
+            "behind",
+            "closely right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-1-r4-t68",
+          "permutation_id": "rotation-0-phase-1",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "vertical:1",
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "below",
+            "right of",
+            "behind",
+            "closely right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-1-r5-t52",
+          "permutation_id": "rotation-0-phase-1",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "vertical:1",
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "below",
+            "right of",
+            "behind",
+            "closely right of",
+            "closely behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-0-phase-1-r5-t68",
+          "permutation_id": "rotation-0-phase-1",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "vertical:1",
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1"
+          ],
+          "relation_families": [
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "below",
+            "right of",
+            "behind",
+            "closely right of",
+            "closely behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-0-r1-t52",
+          "permutation_id": "rotation-1-phase-0",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "horizontal:0"
+          ],
+          "relation_families": [
+            "horizontal"
+          ],
+          "predicates": [
+            "left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-0-r1-t68",
+          "permutation_id": "rotation-1-phase-0",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "horizontal:0"
+          ],
+          "relation_families": [
+            "horizontal"
+          ],
+          "predicates": [
+            "left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-0-r2-t52",
+          "permutation_id": "rotation-1-phase-0",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "horizontal:0",
+            "depth:0"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "left of",
+            "in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-0-r2-t68",
+          "permutation_id": "rotation-1-phase-0",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "horizontal:0",
+            "depth:0"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "left of",
+            "in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-0-r3-t52",
+          "permutation_id": "rotation-1-phase-0",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "left of",
+            "in front of",
+            "closely left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-0-r3-t68",
+          "permutation_id": "rotation-1-phase-0",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "left of",
+            "in front of",
+            "closely left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-0-r4-t52",
+          "permutation_id": "rotation-1-phase-0",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "left of",
+            "in front of",
+            "closely left of",
+            "closely in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-0-r4-t68",
+          "permutation_id": "rotation-1-phase-0",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "left of",
+            "in front of",
+            "closely left of",
+            "closely in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-0-r5-t52",
+          "permutation_id": "rotation-1-phase-0",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "left of",
+            "in front of",
+            "closely left of",
+            "closely in front of",
+            "above"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-0-r5-t68",
+          "permutation_id": "rotation-1-phase-0",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "left of",
+            "in front of",
+            "closely left of",
+            "closely in front of",
+            "above"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-1-r1-t52",
+          "permutation_id": "rotation-1-phase-1",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "horizontal:1"
+          ],
+          "relation_families": [
+            "horizontal"
+          ],
+          "predicates": [
+            "right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-1-r1-t68",
+          "permutation_id": "rotation-1-phase-1",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "horizontal:1"
+          ],
+          "relation_families": [
+            "horizontal"
+          ],
+          "predicates": [
+            "right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-1-r2-t52",
+          "permutation_id": "rotation-1-phase-1",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "horizontal:1",
+            "depth:1"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "right of",
+            "behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-1-r2-t68",
+          "permutation_id": "rotation-1-phase-1",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "horizontal:1",
+            "depth:1"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "right of",
+            "behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-1-r3-t52",
+          "permutation_id": "rotation-1-phase-1",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "right of",
+            "behind",
+            "closely right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-1-r3-t68",
+          "permutation_id": "rotation-1-phase-1",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "right of",
+            "behind",
+            "closely right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-1-r4-t52",
+          "permutation_id": "rotation-1-phase-1",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "right of",
+            "behind",
+            "closely right of",
+            "closely behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-1-r4-t68",
+          "permutation_id": "rotation-1-phase-1",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "right of",
+            "behind",
+            "closely right of",
+            "closely behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-1-r5-t52",
+          "permutation_id": "rotation-1-phase-1",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "right of",
+            "behind",
+            "closely right of",
+            "closely behind",
+            "below"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-1-phase-1-r5-t68",
+          "permutation_id": "rotation-1-phase-1",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1"
+          ],
+          "relation_families": [
+            "horizontal",
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "right of",
+            "behind",
+            "closely right of",
+            "closely behind",
+            "below"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-0-r1-t52",
+          "permutation_id": "rotation-2-phase-0",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "depth:0"
+          ],
+          "relation_families": [
+            "depth"
+          ],
+          "predicates": [
+            "in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-0-r1-t68",
+          "permutation_id": "rotation-2-phase-0",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "depth:0"
+          ],
+          "relation_families": [
+            "depth"
+          ],
+          "predicates": [
+            "in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-0-r2-t52",
+          "permutation_id": "rotation-2-phase-0",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "depth:0",
+            "close_horizontal:0"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "in front of",
+            "closely left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-0-r2-t68",
+          "permutation_id": "rotation-2-phase-0",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "depth:0",
+            "close_horizontal:0"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "in front of",
+            "closely left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-0-r3-t52",
+          "permutation_id": "rotation-2-phase-0",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "in front of",
+            "closely left of",
+            "closely in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-0-r3-t68",
+          "permutation_id": "rotation-2-phase-0",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "in front of",
+            "closely left of",
+            "closely in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-0-r4-t52",
+          "permutation_id": "rotation-2-phase-0",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "in front of",
+            "closely left of",
+            "closely in front of",
+            "above"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-0-r4-t68",
+          "permutation_id": "rotation-2-phase-0",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "in front of",
+            "closely left of",
+            "closely in front of",
+            "above"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-0-r5-t52",
+          "permutation_id": "rotation-2-phase-0",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "in front of",
+            "closely left of",
+            "closely in front of",
+            "above",
+            "left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-0-r5-t68",
+          "permutation_id": "rotation-2-phase-0",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "depth:0",
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "in front of",
+            "closely left of",
+            "closely in front of",
+            "above",
+            "left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-1-r1-t52",
+          "permutation_id": "rotation-2-phase-1",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "depth:1"
+          ],
+          "relation_families": [
+            "depth"
+          ],
+          "predicates": [
+            "behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-1-r1-t68",
+          "permutation_id": "rotation-2-phase-1",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "depth:1"
+          ],
+          "relation_families": [
+            "depth"
+          ],
+          "predicates": [
+            "behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-1-r2-t52",
+          "permutation_id": "rotation-2-phase-1",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "depth:1",
+            "close_horizontal:1"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "behind",
+            "closely right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-1-r2-t68",
+          "permutation_id": "rotation-2-phase-1",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "depth:1",
+            "close_horizontal:1"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "behind",
+            "closely right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-1-r3-t52",
+          "permutation_id": "rotation-2-phase-1",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "behind",
+            "closely right of",
+            "closely behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-1-r3-t68",
+          "permutation_id": "rotation-2-phase-1",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "behind",
+            "closely right of",
+            "closely behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-1-r4-t52",
+          "permutation_id": "rotation-2-phase-1",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "behind",
+            "closely right of",
+            "closely behind",
+            "below"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-1-r4-t68",
+          "permutation_id": "rotation-2-phase-1",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "behind",
+            "closely right of",
+            "closely behind",
+            "below"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-1-r5-t52",
+          "permutation_id": "rotation-2-phase-1",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "behind",
+            "closely right of",
+            "closely behind",
+            "below",
+            "right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-2-phase-1-r5-t68",
+          "permutation_id": "rotation-2-phase-1",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "depth:1",
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1"
+          ],
+          "relation_families": [
+            "depth",
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "behind",
+            "closely right of",
+            "closely behind",
+            "below",
+            "right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-0-r1-t52",
+          "permutation_id": "rotation-3-phase-0",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_horizontal:0"
+          ],
+          "relation_families": [
+            "close_horizontal"
+          ],
+          "predicates": [
+            "closely left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-0-r1-t68",
+          "permutation_id": "rotation-3-phase-0",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_horizontal:0"
+          ],
+          "relation_families": [
+            "close_horizontal"
+          ],
+          "predicates": [
+            "closely left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-0-r2-t52",
+          "permutation_id": "rotation-3-phase-0",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_horizontal:0",
+            "close_depth:0"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "closely left of",
+            "closely in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-0-r2-t68",
+          "permutation_id": "rotation-3-phase-0",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_horizontal:0",
+            "close_depth:0"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "closely left of",
+            "closely in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-0-r3-t52",
+          "permutation_id": "rotation-3-phase-0",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "closely left of",
+            "closely in front of",
+            "above"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-0-r3-t68",
+          "permutation_id": "rotation-3-phase-0",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "closely left of",
+            "closely in front of",
+            "above"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-0-r4-t52",
+          "permutation_id": "rotation-3-phase-0",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "closely left of",
+            "closely in front of",
+            "above",
+            "left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-0-r4-t68",
+          "permutation_id": "rotation-3-phase-0",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "closely left of",
+            "closely in front of",
+            "above",
+            "left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-0-r5-t52",
+          "permutation_id": "rotation-3-phase-0",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0",
+            "depth:0"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "closely left of",
+            "closely in front of",
+            "above",
+            "left of",
+            "in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-0-r5-t68",
+          "permutation_id": "rotation-3-phase-0",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_horizontal:0",
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0",
+            "depth:0"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "closely left of",
+            "closely in front of",
+            "above",
+            "left of",
+            "in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-1-r1-t52",
+          "permutation_id": "rotation-3-phase-1",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_horizontal:1"
+          ],
+          "relation_families": [
+            "close_horizontal"
+          ],
+          "predicates": [
+            "closely right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-1-r1-t68",
+          "permutation_id": "rotation-3-phase-1",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_horizontal:1"
+          ],
+          "relation_families": [
+            "close_horizontal"
+          ],
+          "predicates": [
+            "closely right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-1-r2-t52",
+          "permutation_id": "rotation-3-phase-1",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_horizontal:1",
+            "close_depth:1"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "closely right of",
+            "closely behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-1-r2-t68",
+          "permutation_id": "rotation-3-phase-1",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_horizontal:1",
+            "close_depth:1"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth"
+          ],
+          "predicates": [
+            "closely right of",
+            "closely behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-1-r3-t52",
+          "permutation_id": "rotation-3-phase-1",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "closely right of",
+            "closely behind",
+            "below"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-1-r3-t68",
+          "permutation_id": "rotation-3-phase-1",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "closely right of",
+            "closely behind",
+            "below"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-1-r4-t52",
+          "permutation_id": "rotation-3-phase-1",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "closely right of",
+            "closely behind",
+            "below",
+            "right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-1-r4-t68",
+          "permutation_id": "rotation-3-phase-1",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "closely right of",
+            "closely behind",
+            "below",
+            "right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-1-r5-t52",
+          "permutation_id": "rotation-3-phase-1",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1",
+            "depth:1"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "closely right of",
+            "closely behind",
+            "below",
+            "right of",
+            "behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-3-phase-1-r5-t68",
+          "permutation_id": "rotation-3-phase-1",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_horizontal:1",
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1",
+            "depth:1"
+          ],
+          "relation_families": [
+            "close_horizontal",
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "closely right of",
+            "closely behind",
+            "below",
+            "right of",
+            "behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-0-r1-t52",
+          "permutation_id": "rotation-4-phase-0",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_depth:0"
+          ],
+          "relation_families": [
+            "close_depth"
+          ],
+          "predicates": [
+            "closely in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-0-r1-t68",
+          "permutation_id": "rotation-4-phase-0",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_depth:0"
+          ],
+          "relation_families": [
+            "close_depth"
+          ],
+          "predicates": [
+            "closely in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-0-r2-t52",
+          "permutation_id": "rotation-4-phase-0",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_depth:0",
+            "vertical:0"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "closely in front of",
+            "above"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-0-r2-t68",
+          "permutation_id": "rotation-4-phase-0",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_depth:0",
+            "vertical:0"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "closely in front of",
+            "above"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-0-r3-t52",
+          "permutation_id": "rotation-4-phase-0",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "closely in front of",
+            "above",
+            "left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-0-r3-t68",
+          "permutation_id": "rotation-4-phase-0",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "closely in front of",
+            "above",
+            "left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-0-r4-t52",
+          "permutation_id": "rotation-4-phase-0",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0",
+            "depth:0"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "closely in front of",
+            "above",
+            "left of",
+            "in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-0-r4-t68",
+          "permutation_id": "rotation-4-phase-0",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0",
+            "depth:0"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "closely in front of",
+            "above",
+            "left of",
+            "in front of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-0-r5-t52",
+          "permutation_id": "rotation-4-phase-0",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "closely in front of",
+            "above",
+            "left of",
+            "in front of",
+            "closely left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-0-r5-t68",
+          "permutation_id": "rotation-4-phase-0",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_depth:0",
+            "vertical:0",
+            "horizontal:0",
+            "depth:0",
+            "close_horizontal:0"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "closely in front of",
+            "above",
+            "left of",
+            "in front of",
+            "closely left of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-1-r1-t52",
+          "permutation_id": "rotation-4-phase-1",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_depth:1"
+          ],
+          "relation_families": [
+            "close_depth"
+          ],
+          "predicates": [
+            "closely behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-1-r1-t68",
+          "permutation_id": "rotation-4-phase-1",
+          "relation_count": 1,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_depth:1"
+          ],
+          "relation_families": [
+            "close_depth"
+          ],
+          "predicates": [
+            "closely behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-1-r2-t52",
+          "permutation_id": "rotation-4-phase-1",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_depth:1",
+            "vertical:1"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "closely behind",
+            "below"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-1-r2-t68",
+          "permutation_id": "rotation-4-phase-1",
+          "relation_count": 2,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_depth:1",
+            "vertical:1"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical"
+          ],
+          "predicates": [
+            "closely behind",
+            "below"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-1-r3-t52",
+          "permutation_id": "rotation-4-phase-1",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "closely behind",
+            "below",
+            "right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-1-r3-t68",
+          "permutation_id": "rotation-4-phase-1",
+          "relation_count": 3,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal"
+          ],
+          "predicates": [
+            "closely behind",
+            "below",
+            "right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-1-r4-t52",
+          "permutation_id": "rotation-4-phase-1",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1",
+            "depth:1"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "closely behind",
+            "below",
+            "right of",
+            "behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-1-r4-t68",
+          "permutation_id": "rotation-4-phase-1",
+          "relation_count": 4,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1",
+            "depth:1"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth"
+          ],
+          "predicates": [
+            "closely behind",
+            "below",
+            "right of",
+            "behind"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-1-r5-t52",
+          "permutation_id": "rotation-4-phase-1",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 52,
+          "relation_slot_ids": [
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "closely behind",
+            "below",
+            "right of",
+            "behind",
+            "closely right of"
+          ]
+        },
+        {
+          "design_cell_id": "rotation-4-phase-1-r5-t68",
+          "permutation_id": "rotation-4-phase-1",
+          "relation_count": 5,
+          "target_clip_tokens_including_special": 68,
+          "relation_slot_ids": [
+            "close_depth:1",
+            "vertical:1",
+            "horizontal:1",
+            "depth:1",
+            "close_horizontal:1"
+          ],
+          "relation_families": [
+            "close_depth",
+            "vertical",
+            "horizontal",
+            "depth",
+            "close_horizontal"
+          ],
+          "predicates": [
+            "closely behind",
+            "below",
+            "right of",
+            "behind",
+            "closely right of"
+          ]
+        }
+      ]
+    },
+    "endpoint_freeze": {
+      "primary": {
+        "name": "relation_level_iRecall",
+        "unit": "one instructed relation triplet",
+        "record": "satisfied in {0,1}",
+        "aggregation": "sum(satisfied) / number of instructed relation triplets; preserve one row per triplet before any scene aggregation",
+        "matching": "official InstructScene exact relation occurrence evaluator; the easy closely-collapsed score is diagnostic only"
+      },
+      "secondary": {
+        "name": "exact_all_success",
+        "unit": "scene-generation case",
+        "record": "1 iff every instructed relation triplet is satisfied"
+      },
+      "diagnostic_only": [
+        "easy iRecall",
+        "scene-graph iRecall",
+        "object coverage",
+        "collision/physical validity",
+        "generation failure",
+        "runtime failure"
+      ],
+      "hierarchy_change_after_outcomes_forbidden": true
+    },
+    "analysis_preregistration": {
+      "population": "all qualified materialized base scenes, seeds, permutations, doses, and both length arms; failures remain rows under the frozen failure policy",
+      "primary_model": {
+        "family": "binomial logistic mixed-effects model",
+        "outcome": "relation-level satisfied",
+        "formula": "satisfied ~ relation_count_c * clip_token_count_c + relation_family + direction_phase + addition_position_c + wrapper_bank + relation_count_c:wrapper_bank + (1 + relation_count_c | base_scene_id) + (1 | base_scene_id:relation_triplet_id) + (1 | seed)",
+        "primary_estimand": "average marginal relation-count contrast at each preregistered dose, averaged over token targets, relation families, directions, wrappers, base scenes, and seeds",
+        "text_length_estimand": "average marginal contrast 68 versus 52 CLIP tokens at each dose",
+        "simultaneous_effect_requirement": "relation-count and realized token-length terms remain in the same fitted model regardless of individual significance"
+      },
+      "secondary_model": {
+        "family": "binomial logistic mixed-effects model",
+        "outcome": "exact_all_success",
+        "formula": "exact_all_success ~ relation_count_c * clip_token_count_c + direction_phase + wrapper_bank + (1 + relation_count_c | base_scene_id) + (1 | seed)",
+        "multiplicity": "secondary endpoint is interpreted only after the primary hierarchy; no substitution for relation-level iRecall"
+      },
+      "boundary_modeling_after_primary": {
+        "candidate_models": [
+          "smooth logistic dose response",
+          "piecewise logistic",
+          "segmented/change-point logistic"
+        ],
+        "selection": "grouped cross-validation by base_scene_id; breakpoint claim requires out-of-sample improvement and stable scene-cluster bootstrap interval",
+        "no_breakpoint_policy": "report smooth capacity degradation and do not claim a boundary"
+      },
+      "design_diagnostics_before_outcomes": {
+        "absolute_count_length_correlation_max": 0.05,
+        "all_factorial_cells_present": true,
+        "equal_replication_required": true,
+        "family_max_minus_min_at_each_dose": 0,
+        "direction_pair_abs_difference_at_each_dose": 0,
+        "no_truncation_required": true,
+        "same_relation_triplets_across_length_arms": true
+      },
+      "missingness_and_failure": "No complete-case deletion for generation/evaluator failures. Fit the relation model with failure-coded unsatisfied relations as primary and repeat with failures separated as a sensitivity analysis."
+    }
+  },
+  "dual_key_progression": {
+    "construct_qualification_v2": "PASS",
+    "non_scientific_execution_smoke": "NOT_RUN",
+    "proposal_gate": "CLOSED_REQUIRES_BOTH_PASS",
+    "if_both_pass_only": [
+      "propose confirmation of 3D-FRONT/3D-FUTURE license acceptance",
+      "propose official two-stage InstructScene training GPU authority"
+    ],
+    "proposal_is_not_authority": true
+  },
+  "unofficial_checkpoint_policy": {
+    "allowed_scope": "NON_SCIENTIFIC_EXECUTION_SMOKE",
+    "case_count_min": 3,
+    "case_count_max": 10,
+    "pipeline_components": [
+      "inference",
+      "evaluator",
+      "checkpoint writer",
+      "resume/idempotency"
+    ],
+    "scientific_evidence_eligible": false,
+    "p1_projection_forbidden": true,
+    "may_qualify_official_reproduction": false
+  },
+  "relation_to_port010": {
+    "candidate_id": "PORT-010",
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+    "evidence_review": "BLOCK_BAKE_IN",
+    "remaining_reopen_components": [
+      "per_case_outcomes"
+    ],
+    "offline_replay_tier_authorized": false,
+    "provider_authority": false,
+    "gpu_authority": false,
+    "scientific_execution_authority": false,
+    "changed_by_this_object": false
+  },
+  "authority": {
+    "provider": false,
+    "gpu": false,
+    "scientific_execution": false,
+    "p1": false,
+    "official_training": false,
+    "data_license_acceptance_inferred": false
+  },
+  "scientific_authority": false,
+  "execution_authority": false
+}
