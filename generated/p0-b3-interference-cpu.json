@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-29T18:41:19+00:00",
+  "generated_at": "2026-08-30T18:42:23+00:00",
   "idea_id": "retrieval-interference-auditor",
   "code": "B-3",
   "scientific_role": "synthetic mechanism screening only; cannot establish that real memory co-retrieval interference exists",

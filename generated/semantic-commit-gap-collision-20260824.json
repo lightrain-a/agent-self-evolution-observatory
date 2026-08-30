@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-29T18:49:58+00:00",
+  "generated_at": "2026-08-30T18:51:00+00:00",
   "candidate_id": "SCG-001",
   "title": "Semantic Commit Gap: persisted self-update versus future enactment",
   "status": "STOP_CURRENT_FORMULATION_MATURE_LIFECYCLE_REDUCTION",

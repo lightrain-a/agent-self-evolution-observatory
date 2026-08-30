@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-08-30",
+  "as_of_date": "2026-08-31",
   "projection_policy": {
     "read_only": true,
     "scientific_authority": false,
@@ -412,50 +412,27 @@
     }
   ],
   "week": {
-    "start_date": "2026-08-24",
-    "end_date": "2026-08-30",
-    "research_days": 7,
-    "events": 348,
-    "substantive_events": 156,
-    "key_changes": 2,
+    "start_date": "2026-08-31",
+    "end_date": "2026-08-31",
+    "research_days": 1,
+    "events": 47,
+    "substantive_events": 36,
+    "key_changes": 0,
     "class_counts": {
-      "blocker": 30,
-      "closure": 33,
-      "experiment": 38,
-      "idea": 16,
-      "paper": 39,
-      "system": 192
+      "blocker": 4,
+      "closure": 17,
+      "experiment": 5,
+      "idea": 8,
+      "paper": 2,
+      "system": 11
     },
     "attention_activity": {
       "B-3": 1,
-      "E-7": 67,
-      "G-1": 1
+      "E-7": 1
     },
     "highlights": [
       {
-        "date": "2026-08-24",
-        "event_class": "paper",
-        "title_zh": "STRI 当前投稿状态快照",
-        "title_en": "Self-Evolution Should Not Depend on How Skills Are Split: An Exact Certificate for Skill-Taxonomy Representation Invariance",
-        "research_items": [
-          "E-7"
-        ],
-        "papers": [
-          "STRI"
-        ],
-        "href": "research-timeline.html?paper=STRI"
-      },
-      {
-        "date": "2026-08-24",
-        "event_class": "idea",
-        "title_zh": "Canonical 双漏斗 Idea 发现状态快照",
-        "title_en": "Canonical double-funnel discovery snapshot",
-        "research_items": [],
-        "papers": [],
-        "href": "research-timeline.html"
-      },
-      {
-        "date": "2026-08-30",
+        "date": "2026-08-31",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · trajectory-mediated-memory-effect-transport",
         "title_en": "paper-first-post-c2-adjudication",
@@ -464,7 +441,18 @@
         "href": "research-timeline.html"
       },
       {
-        "date": "2026-08-30",
+        "date": "2026-08-31",
+        "event_class": "closure",
+        "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
+        "title_en": "paper-first-pf1-problem-adjudication",
+        "research_items": [
+          "A-8"
+        ],
+        "papers": [],
+        "href": "research-timeline.html?research=A-8"
+      },
+      {
+        "date": "2026-08-31",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · repair-surface-identifiability-under-persistent-agent-updates",
         "title_en": "paper-first-pf2-method-adjudication",
@@ -475,15 +463,26 @@
         "href": "research-timeline.html?research=E-5"
       },
       {
-        "date": "2026-08-30",
+        "date": "2026-08-31",
         "event_class": "closure",
-        "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
-        "title_en": "paper-first-pf1-problem-adjudication",
+        "title_zh": "P0 实验裁决 · P0-B10-TYPED-MEMORY-ORDER",
+        "title_en": "P0-B10-TYPED-MEMORY-ORDER",
         "research_items": [
-          "A-8"
+          "B-10"
         ],
         "papers": [],
-        "href": "research-timeline.html?research=A-8"
+        "href": "research-timeline.html?research=B-10"
+      },
+      {
+        "date": "2026-08-31",
+        "event_class": "closure",
+        "title_zh": "P0 实验裁决 · P0-A6-ACTIVE-CAUSAL-MINIMAL-ROLLBACK",
+        "title_en": "P0-A6-ACTIVE-CAUSAL-MINIMAL-ROLLBACK",
+        "research_items": [
+          "A-6"
+        ],
+        "papers": [],
+        "href": "research-timeline.html?research=A-6"
       }
     ],
     "timeline_href": "research-timeline.html"

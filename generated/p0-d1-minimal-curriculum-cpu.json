@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-29T18:41:20+00:00",
+  "generated_at": "2026-08-30T18:42:23+00:00",
   "idea_id": "counterexample-generating-curriculum",
   "code": "D-1",
   "scientific_role": "CPU verifier-grounded curriculum P0; proposer is frozen and independent hidden boundaries are never used in minimization/selection",
