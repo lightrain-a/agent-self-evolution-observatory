@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_FROZEN_CONTRACT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-PACTA-FRESH-UPTAKE-20260830",
+  "status": "FROZEN_BEFORE_PROVIDER_SUPPORT_AND_SCIENTIFIC_CALLS",
+  "story_boundary": "persistent memory difference obtains behavioral authority only after write, native exposure, and first-action uptake are separated; localization is post-exposure/pre-uptake and is not causal mediation",
+  "adaptation_gap": "state relevance does not imply that a feedback-induced memory difference is action-discriminative in the current state",
+  "method": {
+    "name": "PACTA",
+    "expansion": "Paired Action-Contrast Transport Authority",
+    "development_label": "CAST",
+    "components": [
+      "state-action projection",
+      "same-trajectory outcome-flipped shadow twin",
+      "Stable Counterfactual Action-Contrast Gate"
+    ],
+    "gate": "stableS AND stableF AND canonical(P0_success) != canonical(P0_failure)",
+    "closed_behavior": "raw factual/native memory only; memory is not suppressed",
+    "open_behavior": "raw factual memory plus the factual P0 structured action implication",
+    "canonicalization": "json.dumps(action[0], sort_keys=True, separators=(\",\", \":\"), ensure_ascii=False)"
+  },
+  "arms": {
+    "A0_NATIVE": "raw retrieved memory only with the native policy prompt",
+    "A1_SCB": "exact R9 state-conditioned binder instruction and implementation family",
+    "A2_SAP_ALWAYS": "raw memory plus factual P0 structured action implication whenever P0 parses; otherwise native fallback",
+    "A3_PACTA": "identical to A2 when the frozen stable counterfactual action-contrast gate opens; otherwise identical to A0"
+  },
+  "scb_baseline": {
+    "instruction": "Given the reusable memory, the ultimate task, and the current browser state, produce one concise current-state action implication. Use the memory only when relevant, do not invent facts, and state what the agent should prioritize next. Output one sentence, at most 60 words, with no explanation.",
+    "model": "doubao-seed-2.0-mini",
+    "expected_resolved": "doubao-seed-2-0-mini-260215",
+    "temperature": 0.0,
+    "max_output_tokens": 180,
+    "thinking": "disabled",
+    "retries": 0
+  },
+  "projector": {
+    "requested": "doubao-seed-2.0-mini",
+    "expected_resolved": "doubao-seed-2-0-mini-260215",
+    "temperature": 0.0,
+    "thinking": "disabled",
+    "retries": 0,
+    "substitution": false
+  },
+  "policy": {
+    "requested": "doubao-seed-2.0-mini",
+    "expected_resolved": "doubao-seed-2-0-mini-260215",
+    "temperature": 0.2,
+    "max_output_tokens": 900,
+    "thinking": "disabled",
+    "retries": 0,
+    "substitution": false,
+    "rollouts_per_branch_arm_state": 6
+  },
+  "observable": {
+    "U": "empirical TV between success-memory and failure-memory frozen-B10 first-action signature distributions within state and arm",
+    "B10_contract_path": "/data/wyt/agent-self-evolution-observatory/runs/d2-proxy-reward-b10-native-first-action-transport-20260824/b10-contract.json",
+    "B10_contract_sha256": "c2a54c928d74ccb7a153166a02ef0ef7a1504a93b5895952380a95b0277a3436",
+    "B10_runner_sha256": "87214f92c2a11ea9ff139535ca6d7d272680ec5ed7da8b86880475bbb66cb98a",
+    "projector_gate_observable": "full canonical action object; never rationale or next_goal"
+  },
+  "contrasts": {
+    "primary": "D_gate_i = U_A3_PACTA - U_A2_SAP_ALWAYS",
+    "secondary_scb": "U_A3_PACTA - U_A1_SCB",
+    "secondary_native": "U_A3_PACTA - U_A0_NATIVE"
+  },
+  "pilot_gate": {
+    "state_packets_invariant": "6/6",
+    "model_drift": 0,
+    "max_projection_failure_states": 1,
+    "gate_open_min": 2,
+    "gate_open_max": 5,
+    "gate_open_mean_D_gate_min": 0.05,
+    "gate_open_positive_fraction_min": 0.5,
+    "overall_mean_A3_minus_A0_strictly_positive": true,
+    "parse_or_fallback_advantage_forbidden": true
+  },
+  "confirmatory_gate": {
+    "states": 13,
+    "primary_mean_D_gate_min": 0.05,
+    "test": "one-sided paired sign-flip/randomization",
+    "repetitions": 100000,
+    "seed": 20260830,
+    "p_lt": 0.05,
+    "mean_A3_gt_mean_A0": true,
+    "gate_open_mean_D_gate_gt": 0.0
+  },
+  "terminal_unlock": "only after confirmatory first-action PASS and evaluator-path qualification for every confirmatory state",
+  "forbidden": [
+    "old B10 36 states",
+    "TGRP 13-state pilot",
+    "SCMB 12-state pilot",
+    "gate tuning",
+    "projector wording tuning",
+    "canonicalization tuning",
+    "threshold tuning",
+    "model substitution",
+    "sample replacement",
+    "terminal inspection before first-action confirmation",
+    "R8/R9 modification"
+  ]
+}
