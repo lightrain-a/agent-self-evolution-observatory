@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V2_CURRENT_LITERATURE_COLLISION_AUDIT",
+  "audit_date": "2026-08-30",
+  "verdict": "PASS_NOVEL_RESIDUAL",
+  "fatal_collision_test": "same-trajectory outcome-flipped writer twins + downstream policy action-distribution divergence + same-condition policy stochasticity calibration + factual SCB transport only when cross-feedback signal exceeds within-condition noise",
+  "fatal_collision_found": false,
+  "residual_claim": "PACTA-v2 uses same-trajectory success/failure writer twins as a shadow intervention at the downstream policy surface, repeats each condition to estimate within-condition action stochasticity, and grants the factual branch additional state-conditioned transport authority only when replicated cross-feedback divergence exceeds both within-branch noise estimates.",
+  "claims_explicitly_excluded": [
+    "state-aware or current-state-aligned memory is new",
+    "retrieval and utilization differ is new",
+    "generic retrieval-utilization optimization is new",
+    "generic post-retrieval reasoning is new",
+    "generic learned memory management is new",
+    "the Memory-Action Gap or decision-time presentation gating is new",
+    "generic action-aware memory scoring or gating is new",
+    "generic counterfactual actionable memory is new",
+    "generic feedback-conditioned next-action distribution shift is new",
+    "generic shadow-policy analysis or stochastic action uncertainty is new"
+  ],
+  "closest_collision": {
+    "work": "InfoPO: Information-Driven Policy Optimization for User-Centric Agents",
+    "url": "https://arxiv.org/abs/2603.00656",
+    "overlap": "Compares a policy's subsequent action likelihood with factual feedback versus a masked-feedback counterfactual.",
+    "residual_difference": "InfoPO scores realized next-action tokens by teacher-forced likelihood to remove autoregressive stochastic variation and uses the score for RL credit assignment. It does not construct same-trajectory outcome-flipped reusable memories, estimate cross-feedback empirical action TV against two within-branch TV noise controls, or use that comparison to selectively add the factual SCB at inference."
+  },
+  "works": [
+    {"work":"SAMem","url":"https://aclanthology.org/2026.findings-acl.722/","collision":"current-state alignment and state-aware memory","joint_signature":false},
+    {"work":"Mem2ActBench","url":"https://aclanthology.org/2026.acl-long.370/","collision":"proactive memory utilization in tool actions","joint_signature":false},
+    {"work":"MemCoRL","url":"https://aclanthology.org/2026.acl-long.1804/","collision":"generic retrieval-utilization co-optimization","joint_signature":false},
+    {"work":"Chain-of-Memory","url":"https://aclanthology.org/2026.acl-long.534/","collision":"post-retrieval memory organization and utilization","joint_signature":false},
+    {"work":"Memory-R1","url":"https://aclanthology.org/2026.acl-long.583/","collision":"learned memory manager and utilization agent","joint_signature":false},
+    {"work":"MemArbiter","url":"https://arxiv.org/abs/2608.02113","collision":"Memory-Action Gap, decision-time arbitration, temporal presentation gate","joint_signature":false},
+    {"work":"Decision-Aware Memory Cards","url":"https://arxiv.org/abs/2606.08151","collision":"decision-time action-aware context scoring","joint_signature":false},
+    {"work":"ActMem","url":"https://arxiv.org/abs/2603.00026","collision":"counterfactual reasoning and actionable memory","joint_signature":false},
+    {"work":"QCR","url":"https://arxiv.org/abs/2608.12847","collision":"post-retrieval reuse bottleneck and target-bound notes","joint_signature":false},
+    {"work":"MemPrism","url":"https://arxiv.org/abs/2608.06745","collision":"task-conditioned relational memory views","joint_signature":false},
+    {"work":"InfoPO","url":"https://arxiv.org/abs/2603.00656","collision":"feedback-conditioned next-action distribution shift","joint_signature":false}
+  ],
+  "searches": [
+    "same-trajectory success failure memory action distribution LLM agent",
+    "within-condition stochasticity memory gate policy action",
+    "noise-calibrated memory gating action distribution",
+    "counterfactual policy sensitivity memory gate action distribution",
+    "outcome-flipped memory LLM action",
+    "success/failure memory pair action gate LLM agent"
+  ],
+  "decision_rule": "Any source implementing the full fatal-collision signature forces STOP_FATAL_COLLISION before provider execution.",
+  "provider_calls_before_audit": 0,
+  "status": "PASS_NOVEL_RESIDUAL"
+}
