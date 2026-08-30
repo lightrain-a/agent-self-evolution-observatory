@@ -1,0 +1,76 @@
+{
+  "schema_version": "1.0",
+  "asset_kind": "C1_PACTA_PILOT_FAILURE_ASSET",
+  "asset": {
+    "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+    "experiment_id": "C1-PACTA-P0-20260830",
+    "status": "HOLD_GATE_DEGENERATE_PROJECTION_SCHEMA_NOT_REALIZED",
+    "layer_type": "PROJECTION_SCHEMA_AND_GATE_REALIZATION",
+    "scope": "The frozen six-state PACTA Pilot only; no authority over the sealed confirmatory states.",
+    "adaptation_gap": "State relevance is not feedback-specific behavioral authority.",
+    "novelty_audit": {
+      "verdict": "PASS_NOVEL_RESIDUAL",
+      "method_name": "PACTA",
+      "development_name_rejected": "CAST",
+      "residual": "Paired same-trajectory outcome-flipped writer twins are projected into the current action space, and factual extra transport is granted only when their action contrast is stable across frozen renderings."
+    },
+    "exact_mechanism": {
+      "gate": "stableS AND stableF AND contrast",
+      "open": "raw factual memory plus factual P0 structured action implication",
+      "closed": "raw factual/native memory only",
+      "primary_component_comparison": "A3_PACTA minus A2_SAP_ALWAYS"
+    },
+    "gate_realization": {
+      "projection_calls": 24,
+      "exact_schema_successes": 0,
+      "projection_failure_states": "6/6",
+      "stableS": "0/6",
+      "stableF": "0/6",
+      "gate_open": "0/6",
+      "gate_closed": "6/6"
+    },
+    "pilot_result": {
+      "verdict": "PILOT_HOLD_OR_STOP",
+      "U_estimates_authorized": false,
+      "reason": "The projection schema and gate geometry failed irreversibly before complete policy geometry."
+    },
+    "confirmatory_result": {
+      "executed": false,
+      "sealed_states_observed": 0
+    },
+    "terminal_result": {
+      "executed": false,
+      "status": "LOCKED"
+    },
+    "failure_differential": {
+      "execution": false,
+      "provider": false,
+      "projection_schema": true,
+      "projection_instability": "not identifiable",
+      "gate_degeneracy": true,
+      "measurement": false,
+      "generic_action_projection": "not tested",
+      "counterfactual_gate_mechanism": "not qualified",
+      "terminal_utility": "not tested"
+    },
+    "scientific_belief_update": {
+      "preserve": "The narrow mechanism remains distinct under the completed collision audit.",
+      "decrease": "Belief that the present prompt/interface realizes the intended gate observable.",
+      "withhold": "No evidence was obtained for selective transport or terminal utility."
+    },
+    "claim_authority": {
+      "scientific_pass": false,
+      "method_qualified": false,
+      "active_manuscript": "R9",
+      "R10_authorized": false
+    },
+    "institutional_lesson": "An existing method adapted from problem A must not be relabeled as novelty for problem B. Novelty must reside in the additional mechanism required by the adaptation failure.",
+    "reopen_condition": "Do not tune or resume the frozen study. A separately frozen revision must first qualify action-schema extraction on non-scientific fixtures and then use a new prospective sample.",
+    "evidence_paths": {
+      "closure": "paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-pilot-closure-20260830.json",
+      "pilot_run": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-p0-20260830-pilot-v1",
+      "confirmatory_run": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-c1-20260830-confirmatory-v1"
+    },
+    "scientific_authority": false
+  }
+}

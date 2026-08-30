@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_PILOT_CLOSURE",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "experiment_id": "C1-PACTA-P0-20260830",
+  "method": {
+    "name": "PACTA",
+    "expanded_name": "Paired Action-Contrast Transport Authority",
+    "development_label": "CAST",
+    "rename_reason": "The CAST acronym collided with prior counterfactual-action work; the scientific object was not changed.",
+    "adaptation_gap": "Current-state relevance does not establish feedback-specific behavioral authority.",
+    "mechanism": "Use same-trajectory outcome-flipped success/failure writer twins as factual and shadow references; project both into the current action schema under two frozen renderings; grant the factual branch additional structured transport only when both branches are stable and action-contrasting."
+  },
+  "provenance": {
+    "origin_main_sha": "4356c31ba3074b2ea823f1e4200a55347bdea58b",
+    "execution_git_sha": "70e29a40ad252c3fbe85c48bc93a717b1e638785",
+    "branch": "experiment/c1-cast-20260830",
+    "pilot_run": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-p0-20260830-pilot-v1",
+    "confirmatory_run": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-c1-20260830-confirmatory-v1"
+  },
+  "novelty_audit": {
+    "verdict": "PASS_NOVEL_RESIDUAL",
+    "name_verdict": "RENAME_CAST_TO_PACTA",
+    "claim_boundary": "Novelty is limited to paired same-trajectory outcome-flipped writer twins, current-state action projection, cross-rendering stability, action contrast, and factual-only additional transport authority."
+  },
+  "support_requalification": {
+    "status": "SUPPORT_PASS",
+    "requested_model": "doubao-seed-2.0-mini",
+    "resolved_model": "doubao-seed-2-0-mini-260215",
+    "thinking": "disabled",
+    "fallback": false,
+    "model_drift": 0
+  },
+  "split": {
+    "pilot": [313, 376, 368, 512, 300, 191],
+    "confirmatory": [510, 117, 24, 332, 656, 240, 166, 263, 273, 793, 351, 96, 439],
+    "confirmatory_outcomes_observed": 0
+  },
+  "pilot": {
+    "status": "PILOT_HOLD_OR_STOP",
+    "specific_status": "HOLD_GATE_DEGENERATE_PROJECTION_SCHEMA_NOT_REALIZED",
+    "state_packets_invariant": "6/6",
+    "projection_calls": 24,
+    "projection_exact_schema_successes": 0,
+    "projection_failure_states": 6,
+    "stable_success_states": 0,
+    "stable_failure_states": 0,
+    "gate_open": 0,
+    "gate_closed": 6,
+    "scb_calls_completed": 12,
+    "policy_calls_completed_before_early_stop": 18,
+    "policy_calls_planned": 288,
+    "early_stop_reason": "The frozen projection-failure and gate-geometry conditions were already irreversibly failed; further policy calls could not change the Pilot verdict.",
+    "U": {
+      "A0_NATIVE": null,
+      "A1_SCB": null,
+      "A2_SAP_ALWAYS": null,
+      "A3_PACTA": null,
+      "A3_minus_A2": null,
+      "reason": "Complete policy geometry was not consumed after irreversible pre-policy gate failure; partial responses have no scientific U authority."
+    }
+  },
+  "confirmatory": {
+    "executed": false,
+    "status": "SEALED_NOT_EXECUTED_AFTER_PILOT_HOLD_GATE_DEGENERATE",
+    "mean_D_gate": null,
+    "p_value": null
+  },
+  "terminal": {
+    "executed": false,
+    "status": "LOCKED",
+    "task_success_effect": null
+  },
+  "failure_differential": {
+    "primary": "projection schema / interface formulation",
+    "execution_failure": false,
+    "provider_failure": false,
+    "projection_schema_failure": true,
+    "projection_instability": "not identifiable",
+    "gate_degeneracy": true,
+    "measurement_failure": false,
+    "generic_action_projection": "not tested",
+    "counterfactual_gate_mechanism": "not qualified",
+    "terminal_utility": "not tested",
+    "strongest_competing_explanation": "The ACTION SCHEMA field carried the full native browser system instruction, including a stronger native response envelope; the projector followed that nested contract and emitted current_state plus action rather than action plus next_goal."
+  },
+  "claim_authority": {
+    "method_status": "PACTA_CANDIDATE_NOT_QUALIFIED",
+    "active_manuscript": "R9",
+    "R10_created": false,
+    "utility_improvement_claim": false,
+    "selective_transport_improvement_claim": false
+  },
+  "reopen_conditions": [
+    "Do not edit or resume this frozen study.",
+    "Any future attempt must be a separately frozen method revision.",
+    "Qualify action-schema extraction on non-scientific fixtures before any scientific state.",
+    "Use a new prospective sample, not the six observed Pilot states or the thirteen states sealed for this failed design."
+  ]
+}
