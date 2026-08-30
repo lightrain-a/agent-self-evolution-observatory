@@ -1,0 +1,154 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_CAST_NOVELTY_COLLISION_AUDIT",
+  "paper_id": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+  "candidate_method": {
+    "development_label": "CAST",
+    "frozen_name": "PACTA",
+    "expansion": "Paired Action-Contrast Transport Authority",
+    "renaming_reason": "CAST has a relevant name collision with counterfactual-action VLA methods; the scientific object is unchanged.",
+    "scientific_object": "feedback-conditioned behavioral transport authority",
+    "frozen_novelty_residual": "Use a paired same-trajectory, outcome-flipped writer counterfactual as a shadow reference; project both memories into the current action space; grant the factual memory extra transport authority only when the feedback-induced action contrast is stable across frozen projector renderings."
+  },
+  "audit_date_utc": "2026-08-30",
+  "audit_timing": "completed before any PACTA provider call, projector output, policy output, or outcome access",
+  "search_scope": {
+    "required_queries": [
+      "same-trajectory success/failure writer",
+      "outcome-flipped memory",
+      "counterfactual memory pair",
+      "current-state action projection",
+      "action disagreement",
+      "action-contrast gate",
+      "feedback-conditioned memory gating",
+      "shadow memory",
+      "transport authority"
+    ],
+    "name_collision": {
+      "development_name": "CAST",
+      "collision_found": true,
+      "collisions": [
+        {
+          "work": "CAST: Counterfactual Labels Improve Instruction Following in Vision-Language-Action Models",
+          "url": "https://arxiv.org/abs/2508.13446",
+          "domain_relevance": "counterfactual action and VLA"
+        },
+        {
+          "work": "Counterfactual Augmentation with Synthetic Trajectories (CAST)",
+          "url": "https://cast-vla.github.io/",
+          "domain_relevance": "counterfactual trajectories and robotics"
+        }
+      ],
+      "resolution": "Rename the candidate to PACTA without changing its mechanism or scientific object."
+    },
+    "sources": [
+      {
+        "work": "SAMem: State-Aware Memory as a Fine-Grained Memory for LLM Agents in Decision-Making",
+        "venue": "Findings of ACL 2026",
+        "url": "https://aclanthology.org/2026.findings-acl.722/",
+        "doi": "10.18653/v1/2026.findings-acl.722",
+        "covered": ["state-aware memory", "current-state alignment"],
+        "not_found": ["same-trajectory outcome-flipped writer twins", "stable action-disagreement transport gate"],
+        "claim_exclusion": "CAST must not claim state-conditioned memory as novel."
+      },
+      {
+        "work": "Mem2ActBench: A Benchmark for Evaluating Long-Term Memory Utilization in Task-Oriented Autonomous Agents",
+        "venue": "ACL 2026 Long",
+        "url": "https://aclanthology.org/2026.acl-long.370/",
+        "doi": "10.18653/v1/2026.acl-long.370",
+        "covered": ["retrieval-to-utilization gap", "memory-dependent tool actions"],
+        "not_found": ["paired outcome-flipped writer counterfactual gate"],
+        "claim_exclusion": "CAST must not claim that retrieval differs from utilization as novel."
+      },
+      {
+        "work": "MemCoRL: Alternating Co-Optimization of Memory Retrieval and Utilization via Collaborative Reinforcement Learning",
+        "venue": "ACL 2026 Long",
+        "url": "https://aclanthology.org/2026.acl-long.1804/",
+        "covered": ["joint retrieval-utilization optimization"],
+        "not_found": ["same-trajectory outcome-flipped shadow action projection"],
+        "claim_exclusion": "CAST must not claim generic retrieval-utilization optimization."
+      },
+      {
+        "work": "Chain-of-Memory: Lightweight Memory Construction with Dynamic Evolution for LLM Agents",
+        "venue": "ACL 2026 Long",
+        "url": "https://aclanthology.org/2026.acl-long.534/",
+        "doi": "10.18653/v1/2026.acl-long.534",
+        "covered": ["post-retrieval memory organization and utilization"],
+        "not_found": ["feedback-conditioned paired shadow action gate"],
+        "claim_exclusion": "CAST must not claim generic post-retrieval reasoning or utilization."
+      },
+      {
+        "work": "Memory-R1: Enhancing Large Language Model Agents to Manage and Utilize Memories via Reinforcement Learning",
+        "venue": "ACL 2026 Long",
+        "url": "https://aclanthology.org/2026.acl-long.583/",
+        "doi": "10.18653/v1/2026.acl-long.583",
+        "covered": ["learned memory manager", "learned utilization"],
+        "not_found": ["frozen same-trajectory outcome-flip action-contrast gate"],
+        "claim_exclusion": "CAST must not claim a generic learned memory manager."
+      },
+      {
+        "work": "MemArbiter: Decision-Time Memory Arbitration for Long-Horizon LLM Agents",
+        "venue": "arXiv 2608.02113",
+        "url": "https://arxiv.org/abs/2608.02113",
+        "covered": ["Memory-Action Gap framing", "decision-time arbitration", "temporal presentation gate"],
+        "not_found": ["same-source writer outcome flip as shadow reference", "stable cross-rendering action disagreement"],
+        "claim_exclusion": "CAST must not claim the Memory-Action Gap or generic presentation gating as novel."
+      },
+      {
+        "work": "Decision-Aware Memory Cards: Counterfactual-Inspired Context Selection and Compression for Tool-Using LLM Agents",
+        "venue": "arXiv 2606.08151",
+        "url": "https://arxiv.org/abs/2606.08151",
+        "covered": ["action shift", "outcome uplift", "decision-aware context scoring"],
+        "not_found": ["same-trajectory outcome-flipped writer twins projected to the current action schema", "cross-rendering stability requirement"],
+        "claim_exclusion": "CAST must not claim generic action-aware memory scoring or gating."
+      },
+      {
+        "work": "ActMem: Bridging the Gap Between Memory Retrieval and Reasoning in LLM Agents",
+        "venue": "arXiv 2603.00026",
+        "url": "https://arxiv.org/abs/2603.00026",
+        "covered": ["counterfactual reasoning", "actionable memory", "causal-semantic graph"],
+        "not_found": ["paired same-trajectory outcome-flipped writer shadow", "stable action-disagreement transport authority"],
+        "claim_exclusion": "CAST must not claim generic counterfactual actionable memory."
+      },
+      {
+        "work": "Towards Autonomous Memory Agents",
+        "venue": "arXiv 2602.22406",
+        "url": "https://arxiv.org/abs/2602.22406",
+        "covered": ["success-memory extraction", "failure-memory correction against a separate correct reference trajectory", "utility-aware retrieval"],
+        "not_found": ["same trajectory rendered by success/failure outcome-flipped writers", "current-state twin action projection", "action-disagreement gate"],
+        "claim_exclusion": "CAST must distinguish its paired writer counterfactual from generic success/failure memory extraction."
+      },
+      {
+        "work": "HiMPO: Hindsight-Informed Memory Policy Optimization for Less-Entangled Credit in Long-Horizon Agents",
+        "venue": "arXiv 2606.16285",
+        "url": "https://arxiv.org/abs/2606.16285",
+        "covered": ["same pre-write state memory replacement counterfactual", "outcome-conditioned hindsight relevance gate", "memory-write credit assignment"],
+        "not_found": ["same-source success/failure outcome-flipped writer twins", "current-state structured action projection", "cross-rendering action stability", "decision-time extra transport authority"],
+        "claim_exclusion": "CAST must distinguish decision-time behavioral transport from training-time memory-write credit."
+      }
+    ]
+  },
+  "fatal_collision_test": {
+    "required_joint_signature": [
+      "same source trajectory",
+      "success/failure outcome-flipped writer memories",
+      "current-state action-schema projection of both memories",
+      "action disagreement used as the decision signal",
+      "stability across frozen semantically equivalent projector renderings",
+      "only factual branch receives extra transport authority"
+    ],
+    "matching_prior_work_found": false
+  },
+  "verdict": "PASS_NOVEL_RESIDUAL",
+  "name_verdict": "RENAME_CAST_TO_PACTA",
+  "allowed_claim": "PACTA uses the paired writer counterfactual induced from the same source trajectory as a shadow reference to determine whether feedback-conditioned memory divergence remains stably action-discriminative in the current state before granting additional transport authority.",
+  "forbidden_claims": [
+    "first Memory-Action Gap",
+    "first state-aware memory",
+    "first decision-aware memory gate",
+    "first counterfactual actionable memory",
+    "first retrieval-utilization method",
+    "causal mediation"
+  ],
+  "boundary": "This audit supports only a narrow mechanism residual. It does not establish effectiveness, utility, or empirical novelty without prospective validation."
+}
