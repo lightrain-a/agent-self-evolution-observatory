@@ -1,0 +1,41 @@
+{
+  "R0_representation_retrieval_state": {
+    "arm": "A",
+    "eligible_cases": [
+      {
+        "memory_items": [
+          "# Memory Item 1\n## Title Locate hard-coded lookup tables when a user option rejects values\n## Description Search for the option name across source files and inspect the initialization code to find a fixed lookup table causing the restriction.\n## Content Use `grep -R \"<option_name>\"` to locate all references, then read the printer/class `__init__` and docstring around those lines. A direct `table[setting]` lookup is often the source of a `KeyError` for unsupported values.\n\n# Memory Item 2\n## Title Use `dict.get` fallback to support arbitrary values while preserving backward compatibility\n## Description Replace direct table indexing with `dict.get(value, value)` so predefined aliases still work and unrecognized user-provided strings are passed through unchanged.\n## Content Apply the fallback to every derived setting that consumes the option, including secondary/fallback values such as number separators. Also update documentation to state that arbitrary values are now accepted.\n\n# Memory Item 3\n## Title Manually verify changes when the test runner is unavailable\n## Description If `pytest` is not installed, import the existing test module and run relevant test functions directly, then add targeted assertions for the new behavior.\n## Content Run direct import and call test functions, then assert existing known outputs and new edge cases involving the custom value. Finish with `git diff --check` to ensure formatting is clean."
+        ],
+        "query": "latex() and mul_symbol\nThe `latex()` pretty-printing function accepts a `mul_symbol` kwarg that must be one of four choices. I would like to be able to supply my own choice which is not in the list. Specifically, I want the multiplication symbol to be `\\,` (i.e., a thin space). This is what I mean\r\n```\r\n>>> latex(3*x**2*y)\r\n'3 \\\\, x^{2} \\\\, y' # I typed the thin spaces in after the fact\r\n```\r\n\r\nThin spaces are used by sympy to separate differentials from integrands in integrals.\r\n```\r\n>>> latex(Integral(2*x**2*y, x))\r\n'\\\\int 2 x^{2} y\\\\, dx' # This thin space is sympy's current behavior\r\n```\r\n\r\nIs there a reason why the user cannot supply the `mul_symbol` of their choosing? Or are the 4 choices a historical artifact? I'm willing to attempt making a PR to allow `mul_symbol` to be arbitrary (and backwards-compatible) if such a PR would be considered.\n",
+        "task_id": "sympy__sympy-13798"
+      }
+    ],
+    "ordering": [
+      "sympy__sympy-13798"
+    ],
+    "retrieval_certificate": "generated/asset-first-stri-reasoningbank-p1-retrieval-certificate-result-20260829.json",
+    "retrieval_scores": {
+      "all_eligible_scores_equal": false,
+      "numeric_score_observed": false,
+      "selection_identified_without_score": true,
+      "tie_resolution": "single eligible case"
+    },
+    "selected_case": "sympy__sympy-13798",
+    "selected_memory": "# Memory Item 1\n## Title Locate hard-coded lookup tables when a user option rejects values\n## Description Search for the option name across source files and inspect the initialization code to find a fixed lookup table causing the restriction.\n## Content Use `grep -R \"<option_name>\"` to locate all references, then read the printer/class `__init__` and docstring around those lines. A direct `table[setting]` lookup is often the source of a `KeyError` for unsupported values.\n\n# Memory Item 2\n## Title Use `dict.get` fallback to support arbitrary values while preserving backward compatibility\n## Description Replace direct table indexing with `dict.get(value, value)` so predefined aliases still work and unrecognized user-provided strings are passed through unchanged.\n## Content Apply the fallback to every derived setting that consumes the option, including secondary/fallback values such as number separators. Also update documentation to state that arbitrary values are now accepted.\n\n# Memory Item 3\n## Title Manually verify changes when the test runner is unavailable\n## Description If `pytest` is not installed, import the existing test module and run relevant test functions directly, then add targeted assertions for the new behavior.\n## Content Run direct import and call test functions, then assert existing known outputs and new edge cases involving the custom value. Finish with `git diff --check` to ensure formatting is clean.",
+    "selected_memory_sha256": "2f0241f1b46019d0bcf72317ebe6ff0561ef2241370aff4d04683af392290041",
+    "top_k": 1
+  },
+  "created_at_utc": "2026-08-30T10:16:29+00:00",
+  "credential_material_present": false,
+  "execution_status": "IMPLEMENTATION_FAILURE",
+  "failure": {
+    "error_type": "RuntimeError",
+    "failure_layer": "runtime",
+    "message": "unsupported frozen parser parse_log_django"
+  },
+  "instance_id": "django__django-16100",
+  "payload_sha256": "400a55384584c619389fe929034851ff9002d0e73285eeb2715db86f3677cb89",
+  "run_id": "q2-django__django-16100-A",
+  "schema_version": 1,
+  "scientific_outcome_authorized": false
+}

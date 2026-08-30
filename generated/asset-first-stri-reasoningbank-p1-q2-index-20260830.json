@@ -1,0 +1,394 @@
+{
+  "automatic_retry": "forbidden",
+  "completed_run_count": 10,
+  "completed_runs": [
+    {
+      "arm": "A",
+      "attempt_count": 1,
+      "exit_status": "IMPLEMENTATION_FAILURE",
+      "failure": {
+        "error_type": "RuntimeError",
+        "failure_layer": "runtime",
+        "message": "unsupported frozen parser parse_log_django"
+      },
+      "file_sha256": "650691c42021e6194b6a4af1bb1c6a3d9a40b99535787361bf210472c1a08614",
+      "instance_id": "django__django-16100",
+      "model": "deepseek-v4-pro-ga-260813",
+      "ordinal": 1,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q2-runs-20260830/q2-django__django-16100-A/run.json",
+      "resolved": null,
+      "run_id": "q2-django__django-16100-A",
+      "selection_rank": 3,
+      "treatment_sha256": "6094b0bc5e6ea7c87da86d7cd60594e823ffb84b04a6592016c5154b3968752a"
+    },
+    {
+      "arm": "B",
+      "attempt_count": 1,
+      "exit_status": "IMPLEMENTATION_FAILURE",
+      "failure": {
+        "error_type": "RuntimeError",
+        "failure_layer": "runtime",
+        "message": "unsupported frozen parser parse_log_django"
+      },
+      "file_sha256": "c6dcc23b198c6aa1ce1956286e2ff9cb9f35bcd4a76f4f56c66230f61c34b899",
+      "instance_id": "django__django-16100",
+      "model": "deepseek-v4-pro-ga-260813",
+      "ordinal": 2,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q2-runs-20260830/q2-django__django-16100-B/run.json",
+      "resolved": null,
+      "run_id": "q2-django__django-16100-B",
+      "selection_rank": 3,
+      "treatment_sha256": "1dbf10edf2710e256968d01fa64edcbb7df65a3dd92ca5b4511232dcd1f01a00"
+    },
+    {
+      "arm": "C",
+      "attempt_count": 1,
+      "exit_status": "IMPLEMENTATION_FAILURE",
+      "failure": {
+        "error_type": "RuntimeError",
+        "failure_layer": "runtime",
+        "message": "unsupported frozen parser parse_log_django"
+      },
+      "file_sha256": "7dc168caecb3a18c39a94a88fde9666d1cad34c6f5f2d36ab84778685491ec43",
+      "instance_id": "django__django-16100",
+      "model": "deepseek-v4-pro-ga-260813",
+      "ordinal": 3,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q2-runs-20260830/q2-django__django-16100-C/run.json",
+      "resolved": null,
+      "run_id": "q2-django__django-16100-C",
+      "selection_rank": 3,
+      "treatment_sha256": "04c815b16d2d0f5e863470390d7298657f3560385eea036f98b6fbe2539c4b43"
+    },
+    {
+      "arm": "D",
+      "attempt_count": 1,
+      "exit_status": "IMPLEMENTATION_FAILURE",
+      "failure": {
+        "error_type": "RuntimeError",
+        "failure_layer": "runtime",
+        "message": "unsupported frozen parser parse_log_django"
+      },
+      "file_sha256": "1d66b2317c0fcddc18a417a2354fb4efc66116f6c486ced98e9e251cc9d7b1cd",
+      "instance_id": "django__django-16100",
+      "model": "deepseek-v4-pro-ga-260813",
+      "ordinal": 4,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q2-runs-20260830/q2-django__django-16100-D/run.json",
+      "resolved": null,
+      "run_id": "q2-django__django-16100-D",
+      "selection_rank": 3,
+      "treatment_sha256": "047fa9e7d69af1d455ac465816ae84d5e7234166420a29f9e3ce3aacf0873083"
+    },
+    {
+      "arm": "E",
+      "attempt_count": 1,
+      "exit_status": "IMPLEMENTATION_FAILURE",
+      "failure": {
+        "error_type": "RuntimeError",
+        "failure_layer": "runtime",
+        "message": "unsupported frozen parser parse_log_django"
+      },
+      "file_sha256": "e858df2261b1633ebd9f742b4974f9bdbf8075fc4b11b5626995f463b8d99331",
+      "instance_id": "django__django-16100",
+      "model": "deepseek-v4-pro-ga-260813",
+      "ordinal": 5,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q2-runs-20260830/q2-django__django-16100-E/run.json",
+      "resolved": null,
+      "run_id": "q2-django__django-16100-E",
+      "selection_rank": 3,
+      "treatment_sha256": "b475629a1a9fdff39a3d32c5bcfe449f9cceeb226919355e2a7d32fc22d49196"
+    },
+    {
+      "arm": "A",
+      "attempt_count": 1,
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "6a78d5be6b445bd8129039943ccf32814cba6eebc5c131e1c8fb3f5980543fda",
+      "instance_id": "sympy__sympy-18211",
+      "model": "deepseek-v4-pro-ga-260813",
+      "ordinal": 6,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q2-runs-20260830/q2-sympy__sympy-18211-A/run.json",
+      "resolved": true,
+      "run_id": "q2-sympy__sympy-18211-A",
+      "selection_rank": 4,
+      "treatment_sha256": "6094b0bc5e6ea7c87da86d7cd60594e823ffb84b04a6592016c5154b3968752a"
+    },
+    {
+      "arm": "B",
+      "attempt_count": 1,
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "db56801278787046fb6cba853b2a5cdbc5ac54b92c1faca089a0083ade50834b",
+      "instance_id": "sympy__sympy-18211",
+      "model": "deepseek-v4-pro-ga-260813",
+      "ordinal": 7,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q2-runs-20260830/q2-sympy__sympy-18211-B/run.json",
+      "resolved": true,
+      "run_id": "q2-sympy__sympy-18211-B",
+      "selection_rank": 4,
+      "treatment_sha256": "1dbf10edf2710e256968d01fa64edcbb7df65a3dd92ca5b4511232dcd1f01a00"
+    },
+    {
+      "arm": "C",
+      "attempt_count": 1,
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "0ac7b60ff6bdad9410140e4967892d7ce5ef47c107a167534cbfc2c1fb90bf75",
+      "instance_id": "sympy__sympy-18211",
+      "model": "deepseek-v4-pro-ga-260813",
+      "ordinal": 8,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q2-runs-20260830/q2-sympy__sympy-18211-C/run.json",
+      "resolved": false,
+      "run_id": "q2-sympy__sympy-18211-C",
+      "selection_rank": 4,
+      "treatment_sha256": "04c815b16d2d0f5e863470390d7298657f3560385eea036f98b6fbe2539c4b43"
+    },
+    {
+      "arm": "D",
+      "attempt_count": 1,
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "185052ece0fd74575e59d7453dc47824bddda2279cc5aa1c9f77df3063fcaa0a",
+      "instance_id": "sympy__sympy-18211",
+      "model": "deepseek-v4-pro-ga-260813",
+      "ordinal": 9,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q2-runs-20260830/q2-sympy__sympy-18211-D/run.json",
+      "resolved": false,
+      "run_id": "q2-sympy__sympy-18211-D",
+      "selection_rank": 4,
+      "treatment_sha256": "047fa9e7d69af1d455ac465816ae84d5e7234166420a29f9e3ce3aacf0873083"
+    },
+    {
+      "arm": "E",
+      "attempt_count": 1,
+      "exit_status": "Submitted",
+      "failure": null,
+      "file_sha256": "def5beee94f09ff1090e6005012937b0391dbfc5ab0a074ec85dec524d63d4d2",
+      "instance_id": "sympy__sympy-18211",
+      "model": "deepseek-v4-pro-ga-260813",
+      "ordinal": 10,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q2-runs-20260830/q2-sympy__sympy-18211-E/run.json",
+      "resolved": false,
+      "run_id": "q2-sympy__sympy-18211-E",
+      "selection_rank": 4,
+      "treatment_sha256": "b475629a1a9fdff39a3d32c5bcfe449f9cceeb226919355e2a7d32fc22d49196"
+    }
+  ],
+  "contract": "generated/asset-first-stri-reasoningbank-p1-q2-qualification-contract-20260830.json",
+  "contract_sha256": "3e655e5cc82498beae4fbf020c4b07c31db01116a30237634c4f22159d8ab276",
+  "created_at_utc": "2026-08-30T12:57:12+00:00",
+  "credential_material_present": false,
+  "execution_complete": true,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q2-QUALIFICATION-20260830",
+  "fixtures": "generated/asset-first-stri-reasoningbank-p1-q2-task-fixtures-20260830.json",
+  "fixtures_sha256": "972c841ab9c6dd5a0feaf2e8b6169b3397d46b5143ecd014a515accb0ac360fa",
+  "model": "deepseek-v4-pro-ga-260813",
+  "ordered_execution": "rank 3 A/B/C/D/E then rank 4 A/B/C/D/E",
+  "payload_sha256": "9c6a7a7848aa3ca0c632e6793d5c4d584ed63539bad291d746e5177e2e049149",
+  "planned_cases": [
+    {
+      "arm": "A",
+      "instance_id": "django__django-16100",
+      "run_id": "q2-django__django-16100-A",
+      "selection_rank": 3
+    },
+    {
+      "arm": "B",
+      "instance_id": "django__django-16100",
+      "run_id": "q2-django__django-16100-B",
+      "selection_rank": 3
+    },
+    {
+      "arm": "C",
+      "instance_id": "django__django-16100",
+      "run_id": "q2-django__django-16100-C",
+      "selection_rank": 3
+    },
+    {
+      "arm": "D",
+      "instance_id": "django__django-16100",
+      "run_id": "q2-django__django-16100-D",
+      "selection_rank": 3
+    },
+    {
+      "arm": "E",
+      "instance_id": "django__django-16100",
+      "run_id": "q2-django__django-16100-E",
+      "selection_rank": 3
+    },
+    {
+      "arm": "A",
+      "instance_id": "sympy__sympy-18211",
+      "run_id": "q2-sympy__sympy-18211-A",
+      "selection_rank": 4
+    },
+    {
+      "arm": "B",
+      "instance_id": "sympy__sympy-18211",
+      "run_id": "q2-sympy__sympy-18211-B",
+      "selection_rank": 4
+    },
+    {
+      "arm": "C",
+      "instance_id": "sympy__sympy-18211",
+      "run_id": "q2-sympy__sympy-18211-C",
+      "selection_rank": 4
+    },
+    {
+      "arm": "D",
+      "instance_id": "sympy__sympy-18211",
+      "run_id": "q2-sympy__sympy-18211-D",
+      "selection_rank": 4
+    },
+    {
+      "arm": "E",
+      "instance_id": "sympy__sympy-18211",
+      "run_id": "q2-sympy__sympy-18211-E",
+      "selection_rank": 4
+    }
+  ],
+  "planned_run_count": 10,
+  "replacement_sampling": "forbidden",
+  "run_journal": [
+    {
+      "arm": "A",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-30T10:16:32+00:00",
+      "instance_id": "django__django-16100",
+      "ordinal": 1,
+      "run_file_sha256": "650691c42021e6194b6a4af1bb1c6a3d9a40b99535787361bf210472c1a08614",
+      "run_id": "q2-django__django-16100-A",
+      "selection_rank": 3,
+      "started_at_utc": "2026-08-30T10:07:25+00:00",
+      "status": "persisted",
+      "treatment_sha256": "6094b0bc5e6ea7c87da86d7cd60594e823ffb84b04a6592016c5154b3968752a"
+    },
+    {
+      "arm": "B",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-30T10:28:32+00:00",
+      "instance_id": "django__django-16100",
+      "ordinal": 2,
+      "run_file_sha256": "c6dcc23b198c6aa1ce1956286e2ff9cb9f35bcd4a76f4f56c66230f61c34b899",
+      "run_id": "q2-django__django-16100-B",
+      "selection_rank": 3,
+      "started_at_utc": "2026-08-30T10:16:32+00:00",
+      "status": "persisted",
+      "treatment_sha256": "1dbf10edf2710e256968d01fa64edcbb7df65a3dd92ca5b4511232dcd1f01a00"
+    },
+    {
+      "arm": "C",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-30T10:40:09+00:00",
+      "instance_id": "django__django-16100",
+      "ordinal": 3,
+      "run_file_sha256": "7dc168caecb3a18c39a94a88fde9666d1cad34c6f5f2d36ab84778685491ec43",
+      "run_id": "q2-django__django-16100-C",
+      "selection_rank": 3,
+      "started_at_utc": "2026-08-30T10:28:32+00:00",
+      "status": "persisted",
+      "treatment_sha256": "04c815b16d2d0f5e863470390d7298657f3560385eea036f98b6fbe2539c4b43"
+    },
+    {
+      "arm": "D",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-30T10:45:08+00:00",
+      "instance_id": "django__django-16100",
+      "ordinal": 4,
+      "run_file_sha256": "1d66b2317c0fcddc18a417a2354fb4efc66116f6c486ced98e9e251cc9d7b1cd",
+      "run_id": "q2-django__django-16100-D",
+      "selection_rank": 3,
+      "started_at_utc": "2026-08-30T10:40:09+00:00",
+      "status": "persisted",
+      "treatment_sha256": "047fa9e7d69af1d455ac465816ae84d5e7234166420a29f9e3ce3aacf0873083"
+    },
+    {
+      "arm": "E",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-30T11:03:05+00:00",
+      "instance_id": "django__django-16100",
+      "ordinal": 5,
+      "run_file_sha256": "e858df2261b1633ebd9f742b4974f9bdbf8075fc4b11b5626995f463b8d99331",
+      "run_id": "q2-django__django-16100-E",
+      "selection_rank": 3,
+      "started_at_utc": "2026-08-30T10:45:08+00:00",
+      "status": "persisted",
+      "treatment_sha256": "b475629a1a9fdff39a3d32c5bcfe449f9cceeb226919355e2a7d32fc22d49196"
+    },
+    {
+      "arm": "A",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-30T11:20:06+00:00",
+      "instance_id": "sympy__sympy-18211",
+      "ordinal": 6,
+      "run_file_sha256": "6a78d5be6b445bd8129039943ccf32814cba6eebc5c131e1c8fb3f5980543fda",
+      "run_id": "q2-sympy__sympy-18211-A",
+      "selection_rank": 4,
+      "started_at_utc": "2026-08-30T11:03:05+00:00",
+      "status": "persisted",
+      "treatment_sha256": "6094b0bc5e6ea7c87da86d7cd60594e823ffb84b04a6592016c5154b3968752a"
+    },
+    {
+      "arm": "B",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-30T11:42:50+00:00",
+      "instance_id": "sympy__sympy-18211",
+      "ordinal": 7,
+      "run_file_sha256": "db56801278787046fb6cba853b2a5cdbc5ac54b92c1faca089a0083ade50834b",
+      "run_id": "q2-sympy__sympy-18211-B",
+      "selection_rank": 4,
+      "started_at_utc": "2026-08-30T11:20:06+00:00",
+      "status": "persisted",
+      "treatment_sha256": "1dbf10edf2710e256968d01fa64edcbb7df65a3dd92ca5b4511232dcd1f01a00"
+    },
+    {
+      "arm": "C",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-30T12:00:29+00:00",
+      "instance_id": "sympy__sympy-18211",
+      "ordinal": 8,
+      "run_file_sha256": "0ac7b60ff6bdad9410140e4967892d7ce5ef47c107a167534cbfc2c1fb90bf75",
+      "run_id": "q2-sympy__sympy-18211-C",
+      "selection_rank": 4,
+      "started_at_utc": "2026-08-30T11:42:51+00:00",
+      "status": "persisted",
+      "treatment_sha256": "04c815b16d2d0f5e863470390d7298657f3560385eea036f98b6fbe2539c4b43"
+    },
+    {
+      "arm": "D",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-30T12:26:21+00:00",
+      "instance_id": "sympy__sympy-18211",
+      "ordinal": 9,
+      "run_file_sha256": "185052ece0fd74575e59d7453dc47824bddda2279cc5aa1c9f77df3063fcaa0a",
+      "run_id": "q2-sympy__sympy-18211-D",
+      "selection_rank": 4,
+      "started_at_utc": "2026-08-30T12:00:29+00:00",
+      "status": "persisted",
+      "treatment_sha256": "047fa9e7d69af1d455ac465816ae84d5e7234166420a29f9e3ce3aacf0873083"
+    },
+    {
+      "arm": "E",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-30T12:57:12+00:00",
+      "instance_id": "sympy__sympy-18211",
+      "ordinal": 10,
+      "run_file_sha256": "def5beee94f09ff1090e6005012937b0391dbfc5ab0a074ec85dec524d63d4d2",
+      "run_id": "q2-sympy__sympy-18211-E",
+      "selection_rank": 4,
+      "started_at_utc": "2026-08-30T12:26:21+00:00",
+      "status": "persisted",
+      "treatment_sha256": "b475629a1a9fdff39a3d32c5bcfe449f9cceeb226919355e2a7d32fc22d49196"
+    }
+  ],
+  "runtime_qualification": "generated/asset-first-stri-reasoningbank-p1-q2-runtime-qualification-result-20260830.json",
+  "runtime_qualification_sha256": "fa8b9f3765eddde42871f9e9fd8a9135ac600a86e16a909926f23d96c9c421e4",
+  "schema_version": 1,
+  "scientific_boundary": {
+    "full_p1_execution_authorized": false,
+    "old_ten_runs_immutable": true,
+    "paper_result_claim_authorized": false
+  },
+  "started_run_count": 10,
+  "treatment_manifest": "generated/asset-first-stri-reasoningbank-p1-treatment-manifest-20260829.json",
+  "treatment_manifest_sha256": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7"
+}
