@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V2_RANDOM_GATE_RANKING",
+  "status": "FROZEN_BEFORE_SHADOW_OUTPUT",
+  "salt": "C1-PACTA-V2-RANDOM-GATE-v1",
+  "ranking": [
+    {
+      "rank": 1,
+      "future_task": 437,
+      "intent_template_id": 156,
+      "sha256": "122d7bc3f976682a1e5398f2e2610f01e1cbf7363b1af20f2befde538a13afe2"
+    },
+    {
+      "rank": 2,
+      "future_task": 261,
+      "intent_template_id": 211,
+      "sha256": "1b211d2e582c50311f1a507a2ecc9e6b65eba248b37823b5e5b6a09d4a6043e3"
+    },
+    {
+      "rank": 3,
+      "future_task": 271,
+      "intent_template_id": 139,
+      "sha256": "46ffe7153558dbe6bdf9efafdeda910b4adc1e043b1a7358d43ee4e20e8c5a58"
+    },
+    {
+      "rank": 4,
+      "future_task": 506,
+      "intent_template_id": 172,
+      "sha256": "6f58d1c3fd02288bdd719773c37614428d7168effa6d70692c1acddf531c34a1"
+    },
+    {
+      "rank": 5,
+      "future_task": 352,
+      "intent_template_id": 137,
+      "sha256": "bb37731026dcc34af8cf585ace6d67beb52df88d3a47b28531019420aef16b72"
+    },
+    {
+      "rank": 6,
+      "future_task": 239,
+      "intent_template_id": 138,
+      "sha256": "ece9f4d84cfdf684113d30e03a12b4a79367d91c79941ef9dc8b2dce5d4a6979"
+    }
+  ],
+  "K": "not known until frozen PACTA-v2 shadow gate geometry is realized"
+}

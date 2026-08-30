@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V2_METHOD_SAMPLE_STATISTICS_FREEZE",
+  "status": "FROZEN_BEFORE_SUPPORT_OR_SCIENTIFIC_PROVIDER_CALLS",
+  "origin_main_sha": "6039d60c485c50ceac2b1234cd3505c1901b0259",
+  "design_parent_sha": "fd2fc1a7b61473ed02f22cae568bb16dddc46de8",
+  "pilot_ids": [
+    352,
+    239,
+    271,
+    437,
+    506,
+    261
+  ],
+  "shadow_schedule_geometry": "6 states x 2 branches x 2 blocks x 6 samples = 144",
+  "final_schedule_geometry": "6 states x 4 arms x 2 branches x 6 samples = 288 if and only if gate non-degenerate",
+  "binder_frozen_before_shadow": true,
+  "shadow_schedule_frozen_before_shadow_output": true,
+  "random_ranking_frozen_before_shadow_output": true,
+  "statistics_frozen": true,
+  "provider_identity_frozen": true,
+  "no_retries_topup_imputation_replacement": true
+}
