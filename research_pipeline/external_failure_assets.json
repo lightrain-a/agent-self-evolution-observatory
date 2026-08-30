@@ -55,6 +55,10 @@
     {
       "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
       "source_key": "negative_control_identifiability_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "evaluator_qualification_asset"
     }
   ],
   "scientific_authority": false

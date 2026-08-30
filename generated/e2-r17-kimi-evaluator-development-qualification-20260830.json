@@ -1,0 +1,475 @@
+{
+  "artifact_type": "e2-r17-kimi-evaluator-development-qualification",
+  "authority": {
+    "execute_mrw": false,
+    "execute_scientific_negative_control": false,
+    "freeze_kimi_negative_control_protocol": false,
+    "paper_promotion": false
+  },
+  "central_mechanism_adjudicated": false,
+  "created_at_utc": "2026-08-30T10:21:03+00:00",
+  "decision": {
+    "all_provider_calls_completed": false,
+    "endpoint_stability": true,
+    "exactly_stable_task_count": 6,
+    "multi_task_competence": true,
+    "nondegenerate_headroom": false,
+    "repeats_per_task": 3,
+    "status": "FAIL_HOSTED_EVALUATOR_DEVELOPMENT_QUALIFICATION",
+    "successful_task_count": 6,
+    "task_count": 6,
+    "total_successes": 18
+  },
+  "historical_hold_reinterpreted": false,
+  "identity": {
+    "path": "generated/e2-r17-kimi-evaluator-model-identity-qualification-20260830.json",
+    "requested_model": "kimi-k3",
+    "resolved_model": "kimi-k3",
+    "sha256": "3dd8d8ae6f1ddb8f7d33e673d08c1bcc03444a2c796dda4b7e5e0ca6ef54b898"
+  },
+  "private_credentials_included": false,
+  "provider_budget": {
+    "authorization_sha256": "3dd8d8ae6f1ddb8f7d33e673d08c1bcc03444a2c796dda4b7e5e0ca6ef54b898",
+    "contract_sha256": "d1fcedc8e008fb442f92b16626447f2ddc5283e0e003e2a74d07882a72c85235",
+    "ledger_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/provider_budget.sqlite3",
+    "per_unit_limit": 10,
+    "total_claimed": 102,
+    "total_limit": 180,
+    "unit_claimed": {
+      "r17-b0-agj-p4/repeat_0": 6,
+      "r17-b0-agj-p4/repeat_1": 4,
+      "r17-b0-agj-p4/repeat_2": 7,
+      "r17-b0-fmv-p1/repeat_0": 6,
+      "r17-b0-fmv-p1/repeat_1": 4,
+      "r17-b0-fmv-p1/repeat_2": 4,
+      "r17-b0-ioc-p3/repeat_0": 6,
+      "r17-b0-ioc-p3/repeat_1": 9,
+      "r17-b0-ioc-p3/repeat_2": 5,
+      "r17-b0-msp-p3/repeat_0": 6,
+      "r17-b0-msp-p3/repeat_1": 10,
+      "r17-b0-msp-p3/repeat_2": 4,
+      "r17-b0-ska-p3/repeat_0": 6,
+      "r17-b0-ska-p3/repeat_1": 5,
+      "r17-b0-ska-p3/repeat_2": 5,
+      "r17-b0-tsr-p3/repeat_0": 5,
+      "r17-b0-tsr-p3/repeat_1": 6,
+      "r17-b0-tsr-p3/repeat_2": 4
+    }
+  },
+  "qualification_spec": {
+    "artifact_type": "e2-r17-kimi-evaluator-development-qualification-spec",
+    "decision_rule": {
+      "all_provider_calls_completed": true,
+      "pooled_successes_strictly_between_zero_and_eighteen": true,
+      "required_exactly_stable_tasks": 5,
+      "required_successful_tasks": 2
+    },
+    "identity_sha256": "3dd8d8ae6f1ddb8f7d33e673d08c1bcc03444a2c796dda4b7e5e0ca6ef54b898",
+    "initial_skill_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb",
+    "max_output_tokens": 4096,
+    "max_turns": 10,
+    "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "model": "kimi-k3",
+    "provider_retry_limit": 0,
+    "repeats": 3,
+    "resolved_model": "kimi-k3",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4",
+    "task_ids": [
+      "r17-b0-agj-p4",
+      "r17-b0-fmv-p1",
+      "r17-b0-ioc-p3",
+      "r17-b0-msp-p3",
+      "r17-b0-ska-p3",
+      "r17-b0-tsr-p3"
+    ],
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "qualification_spec_sha256": "d1fcedc8e008fb442f92b16626447f2ddc5283e0e003e2a74d07882a72c85235",
+  "raw_response_ids_included": false,
+  "runtime": {
+    "bound_code": {
+      "actor_adapter": {
+        "path": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/research_pipeline/e2_r17_ark_plan_react.py",
+        "sha256": "7a7a9c40774429ac3c9a7c8c003bbc46628a6ef574bd481e628668894e803fba"
+      },
+      "actor_rollout": {
+        "path": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/research_pipeline/e2_r17_actor_pool.py",
+        "sha256": "ade5f605f32056b7797dbcbcb7b3e839b9c18dce1c0f287f609d86cee3463ef4"
+      },
+      "qualification_decision": {
+        "path": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/research_pipeline/e2_r17_evaluator_qualification.py",
+        "sha256": "e18f9690ec5012e5a134c3c98080204c591c681cd98d8186900a7ef7a72f4301"
+      },
+      "qualification_runner": {
+        "path": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/scripts/run_e2_r17_kimi_evaluator_qualification.py",
+        "sha256": "83f0d15742631fe680a24bd3c802df59a3848e3a6e10b351850f489d7a6481e8"
+      }
+    },
+    "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "mindmemos_root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "python_version": "3.12.3"
+  },
+  "schema_version": "1.0",
+  "scientific_outcome": false,
+  "selection_rule": "Before outcomes, use the first lexicographic development task from each of the six controlled task families and exactly three task-major repeats.",
+  "status": "FAIL_HOSTED_EVALUATOR_DEVELOPMENT_QUALIFICATION",
+  "tasks": [
+    {
+      "exactly_stable": true,
+      "failure_family": "aggregation_join",
+      "repeats": [
+        {
+          "provider_calls": 6,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 0,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-agj-p4/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "b7b1f8892b23030e483d63c5ccbda20f08b62fbe203e8ea3ce9046de4825b587",
+          "trajectory_sha256": "ae1746f736b55c449049c667c9daf54af3fb65f04edd3060f1378acf4a497a49"
+        },
+        {
+          "provider_calls": 4,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 1,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-agj-p4/rollout_1/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "dd234afdc9f1e3779b35481fda005d6725ad8e38d0fdac53ae980a4dc9258800",
+          "trajectory_sha256": "c5177fefc9d8e212029b699f5deac7da2c9b7a8a8044b42fe060854d54aea051"
+        },
+        {
+          "provider_calls": 7,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 2,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-agj-p4/rollout_2/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "117e866fa206ba4d3813d3ee520f9272cec342bf81a6c13ad2e553a6b28798fd",
+          "trajectory_sha256": "0da54cbd7bbd9b235d2c4fb7e9c9559149361bcc1044bfd89be7cb1daea77168"
+        }
+      ],
+      "scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "task_id": "r17-b0-agj-p4"
+    },
+    {
+      "exactly_stable": true,
+      "failure_family": "formula_materialization",
+      "repeats": [
+        {
+          "provider_calls": 6,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 0,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-fmv-p1/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "a49357517a6b86df16a3ac14644b7ab4cee84e349f3087064a3c3735e9b19d85",
+          "trajectory_sha256": "3b8fe3fa69df6f5ec3efe623ffb17bc942327ba7261b8e6cc9761aa3b3e7b72b"
+        },
+        {
+          "provider_calls": 4,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 1,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-fmv-p1/rollout_1/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "787d62f4741a3d2e24f715853f6f040f689e586b2bf9b8054061dfc60ee08246",
+          "trajectory_sha256": "b14a2e1bd5b3ac693ca63a91f4f49d776c0ef934fba164ce6e910ccc317607ae"
+        },
+        {
+          "provider_calls": 4,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 2,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-fmv-p1/rollout_2/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "ae4f9d163badeae35467ca9a26e646050d26fcfd8ce42a994bcd80671a70af74",
+          "trajectory_sha256": "a3ee1a93472652e23563c81601c1b6bb6bb8b6518a59765f400afe4205cc6870"
+        }
+      ],
+      "scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "task_id": "r17-b0-fmv-p1"
+    },
+    {
+      "exactly_stable": true,
+      "failure_family": "input_output_contract",
+      "repeats": [
+        {
+          "provider_calls": 6,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 0,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-ioc-p3/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "2254704b092dbcca0547e46483314cb5d5dae95f4fdaad6e03331a4aaa046474",
+          "trajectory_sha256": "fb07661c19ecf36f12bce3573b6e4a764d24ee730575388d3bdc87e1f8714cb3"
+        },
+        {
+          "provider_calls": 9,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "incomplete"
+          ],
+          "repeat": 1,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-ioc-p3/rollout_1/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "6682139465bfe49ef0bbec9956ac1b0f5d64fe7254f18674723d466288f60455",
+          "trajectory_sha256": "ed84970b14b142cba23ec656e5921226bd30cc48a8bb7ad452f64e8530ba7eb8"
+        },
+        {
+          "provider_calls": 5,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 2,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-ioc-p3/rollout_2/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "4f88d48011ed667b77911682bd206ac4101fb3004d8fb76854574bdab72af97f",
+          "trajectory_sha256": "c6027eace033f1711489915b4098df469469160f0baeb01d49e97b97a591bc0c"
+        }
+      ],
+      "scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "task_id": "r17-b0-ioc-p3"
+    },
+    {
+      "exactly_stable": true,
+      "failure_family": "multi_step_pipeline",
+      "repeats": [
+        {
+          "provider_calls": 6,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 0,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-msp-p3/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "30e721a9321aaa8ebbadcb5e6591100af663a64fd6c65cebc65bd572857f444a",
+          "trajectory_sha256": "a0fea4cbd69306fa3c020ab40bfbf4723906c87d4a7cdb54f588c1de3c38ba32"
+        },
+        {
+          "provider_calls": 10,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 1,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-msp-p3/rollout_1/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "652a4edf10e7c0dc8b9bd833410251cded010e1c22508cfa8a15110d65c112ed",
+          "trajectory_sha256": "2b8620ab79be95535607424709f204f3bcba9dcf00f463d7d575155939fe8a51"
+        },
+        {
+          "provider_calls": 4,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 2,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-msp-p3/rollout_2/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "353f9e1066f198338106b55363f67627e5dda6f0ee0cc4cc07318c1765286d2a",
+          "trajectory_sha256": "a38354eb073407b32d56364186d886429ec859daff38dadc1ed58123a1fc9191"
+        }
+      ],
+      "scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "task_id": "r17-b0-msp-p3"
+    },
+    {
+      "exactly_stable": true,
+      "failure_family": "schema_key_alignment",
+      "repeats": [
+        {
+          "provider_calls": 6,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 0,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-ska-p3/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "4718b0592cb7ee5b259c854b5ce988f0741f7cfac14ab43b3d31076bafe4b7f8",
+          "trajectory_sha256": "ecd531e212e4744d7cdf2bd4e9c63098a10d82b2e25253e24f9d964dafaa4c03"
+        },
+        {
+          "provider_calls": 5,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 1,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-ska-p3/rollout_1/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "bb2eb5f2f4139d64aa4b27ab1bd31df610097bb6bd60528f3f8af17d2d55968b",
+          "trajectory_sha256": "42fc1ce53d6829f3868d119835a84e3f976ba2c2846ed318ea6a1d2bec4e4d30"
+        },
+        {
+          "provider_calls": 5,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 2,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-ska-p3/rollout_2/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "af354194ee072a1e67a467024ae0b19324c100937c94ef259f4afc8c93c38838",
+          "trajectory_sha256": "b548bebce6720a918c8c0e7c583fe5d597cc596230d6f000c713fa05fb319435"
+        }
+      ],
+      "scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "task_id": "r17-b0-ska-p3"
+    },
+    {
+      "exactly_stable": true,
+      "failure_family": "target_sheet_range",
+      "repeats": [
+        {
+          "provider_calls": 5,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 0,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-tsr-p3/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "7babeba23cfe263230982957b19f82c7f4b9cfbdf79f0f60b42f1caa28692168",
+          "trajectory_sha256": "3534035bb940f0a5242b8814ff55a2f144df845a9e1a1eaf4ca43768184d7611"
+        },
+        {
+          "provider_calls": 6,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 1,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-tsr-p3/rollout_1/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "64f6c3a41fb9a5e49c8f413a66a9ecbd2c3e9706322c1a5acb9beabd8201060b",
+          "trajectory_sha256": "128322804d4416ffcf83d2c2544614d82900f6b3e31c53c3881475ab85051169"
+        },
+        {
+          "provider_calls": 4,
+          "provider_statuses": [
+            "completed",
+            "completed",
+            "completed",
+            "completed"
+          ],
+          "repeat": 2,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/kimi-k3-evaluator-qualification-20260830/cases-run/cases/r17-b0-tsr-p3/rollout_2/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "d5c20cc949a3a12c83c5287c1523f306c1672fe2dd8aeab84d08c1e3ba3d3a27",
+          "trajectory_sha256": "9918752a6ed27fe75cf5d8ca7aea4d173b719b6b485a6eae254471e1ad757d66"
+        }
+      ],
+      "scores": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "task_id": "r17-b0-tsr-p3"
+    }
+  ]
+}

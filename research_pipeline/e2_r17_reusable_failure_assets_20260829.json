@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
   "source_registry": {
-    "path": "generated/e2-r17-failure-differential-registry-v7-20260829.json",
-    "role": "R17 terminal attempt ledger through E1-B negative-control HOLD; these institutional assets are only the cross-project reusable policy projection"
+    "path": "generated/e2-r17-failure-differential-registry-v8-20260830.json",
+    "role": "R17 terminal attempt ledger through local and hosted replacement-evaluator development qualification; institutional assets remain zero-authority"
   },
   "final_visible_budget_asset": {
     "signature": "measurement:final-model-visible-budget-not-upstream-proxy",
@@ -155,6 +155,31 @@
     "superseded_by": "",
     "last_revalidated": "2026-08-29",
     "source_decision": "HOLD_UPDATER_OR_EVALUATOR_STOCHASTICITY",
+    "scientific_authority": false
+  },
+  "evaluator_qualification_asset": {
+    "signature": "measurement:evaluator-qualification-needs-competence-headroom-and-completion",
+    "idea_id": "E2-R17",
+    "diagnosis": "replacement-evaluator-floor-or-ceiling-saturation",
+    "affected_layer": "measurement",
+    "reusable_precheck": "Before a replacement evaluator sees heldout data, freeze a development sample and require multi-task competence, nondegenerate pooled headroom, repeat stability, and completed provider states. Canonicalize only outcome-irrelevant transport entropy before the test. Fail closed at either 0% or 100% saturation and do not retune tasks or shop models after outcomes.",
+    "evidence_ref": "generated/e2-r17-failure-differential-registry-v8-20260830.json#R17-F014-LOCAL-QWEN3-EVALUATOR-FLOOR,#R17-F015-KIMI-EVALUATOR-CEILING",
+    "does_not_imply": "central-mechanism failure, historical negative-control invalidity, or permission to access heldout data with an unqualified evaluator",
+    "memory_scope": "institutional-research-memory",
+    "reuse_scope": {
+      "diagnosis": "evaluator-qualification-resolution-failure",
+      "affected_layer": "measurement",
+      "applies_to": "agent benchmarks and stochastic evaluator substitutions"
+    },
+    "reuse_effectiveness": {
+      "reuse_count": 0,
+      "helped_count": 0,
+      "hurt_count": 0,
+      "status": "newly-recorded-policy-not-yet-reused"
+    },
+    "superseded_by": "",
+    "last_revalidated": "2026-08-30",
+    "source_decision": "STOP_EVALUATOR_SWITCH_BRANCH",
     "scientific_authority": false
   },
   "scientific_authority": false
