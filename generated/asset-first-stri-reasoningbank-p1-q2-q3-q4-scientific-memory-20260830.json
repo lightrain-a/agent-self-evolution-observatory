@@ -1,0 +1,36 @@
+{
+  "canonical_lesson": "implementation/operationalization failure -> no scientific belief update -> prospective repaired qualification",
+  "created_at_utc": "2026-08-30T16:04:56+00:00",
+  "credential_material_present": false,
+  "experiment_authority": false,
+  "failure_differential_sha256": "31aafa3e0fee9c51d9d09ab30b465c67cb36d73abf22fcb4cf368667da7ca608",
+  "memory_id": "E1-STRI-REASONINGBANK-Q2-Q3-Q4-FAILURE-DIFFERENTIAL-20260830",
+  "payload_sha256": "147649e78415df6ecfcd789ae4fb8a29264a1d424f364b6f36b8aa9cc01d83e3",
+  "reusable_decision_rule": "Do not update belief in STRI propagation until provider, runtime, parser, evaluator, artifact, and treatment invariants all qualify.",
+  "schema_version": 1,
+  "scientific_authority": false,
+  "sequence": [
+    {
+      "event": "Unsupported Django parser caused implementation disqualification.",
+      "evidence_sha256": "019cba107a4251a8791ab4b2edae8a916b48f55776fec98180b0ea914c8413bc",
+      "scientific_disposition": "Evidence preserved; no mechanism conclusion.",
+      "stage": "Q2"
+    },
+    {
+      "contract_sha256": "a203da329f05e50c64aefd495e39d971b1865eb8816839be1c0dffd0f939cf79",
+      "event": "Runtime stopped before model outcome because the base-state tree-equivalence rule rejected an image-builder descendant.",
+      "runtime_hold_sha256": "41646106382f7acda2564d74410ec537bc61c606cfe2155bc3e95b9a9c2bd949",
+      "scientific_disposition": "Q3 did not constitute a mechanism negative and caused no scientific belief update.",
+      "stage": "Q3"
+    },
+    {
+      "adjudication_sha256": "c3fe8f239a4128f89ed8c851cc0af8d061aec02333a60c4c9f397f3027908b26",
+      "contract_sha256": "20fdd28863a5904c4f929d45e445ffa425c8e0d88fb93260030c9b7ce956a57e",
+      "event": "The outcome-blind exact-base repair completed exactly once; evaluator log verbosity still blocked implementation qualification.",
+      "index_sha256": "f6ce4e4a345fa8e105ddca934faa1c85af14b039497768ebef1bd0222409a0bf",
+      "runtime_qualification_sha256": "cfeafc8152a86111f1197045ed210e488b4f59d58f243a7c2fe1ae40f05ed7ed",
+      "scientific_disposition": "Q4 is implementation-unqualified; task outcomes are descriptive and Full-P1 remains unauthorized.",
+      "stage": "Q4"
+    }
+  ]
+}

@@ -1,0 +1,338 @@
+{
+  "authorization": {
+    "full_p1_execution_authorized": false,
+    "full_p1_preregistration_authorized": false,
+    "paper_result_claim_authorized": false,
+    "q5_replay_execution_authorized": false,
+    "q5_replay_runner_implementation_authorized": true
+  },
+  "bindings": {
+    "fixtures_sha256": "b35c9b7a798b371818b25774c129d77c74f7dc90217b3f54f7e4e1d474d15519",
+    "official_swebench_wheel_sha256": "b7f0416a1e686eca22c2f749b5f816685a202835032f6683080e2b53545bbb62",
+    "parser_qualification_sha256": "b4bec669fb87160b251c123947d9dd8c3819f0c03c2e729aaa4c83c5670d6eca",
+    "q4_adjudication_sha256": "c3fe8f239a4128f89ed8c851cc0af8d061aec02333a60c4c9f397f3027908b26",
+    "q4_artifact_manifest_sha256": "1b624785066a7ae56f5f8f90c26696962a0ead70af5c7e38927be03a8e1a6923",
+    "q4_failure_differential_sha256": "31aafa3e0fee9c51d9d09ab30b465c67cb36d73abf22fcb4cf368667da7ca608",
+    "scientific_memory_sha256": "7433bf5a876edbb6a6b1335cacb56be279d2fb740aa502e8f32645dc901b3d5d",
+    "treatment_manifest_sha256": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7"
+  },
+  "claim_boundary": {
+    "full_p1_execution_authorized": false,
+    "full_p1_planning_gate_open": false,
+    "q5_is_implementation_qualification_only": true,
+    "r0_r1_r2_r3_behavioral_claim_authorized": false,
+    "r4_performance_claim_authorized": false
+  },
+  "created_at_utc": "2026-08-30T16:05:01+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q5-EVALUATOR-VERBOSITY-REPAIR-20260830",
+  "frozen_replay_sources": [
+    {
+      "arm": "A",
+      "base_commit": "567ff22716ac258b9edd2c1711d766b440ac0b11",
+      "evaluator_script_changed": true,
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "image_amd64_manifest_digest": "sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "log_parser": "parse_log_sphinx",
+      "model_calls_authorized": false,
+      "ordinal": 1,
+      "original_eval_script_sha256": "8553eefebbdaefe08ffe48c6db4675cf25f8658222e29e39b561e3fcc68f150e",
+      "repaired_eval_script_sha256": "201697de6693ce004e0fd87a1eb22935c6074164c52a31ef5b3b94f4d0c5becd",
+      "selection_rank": 5,
+      "source_patch_sha256": "24d6ec070eb6620b4c79efb8cf1fcda3c8d64da0aa430779d796b90d1ee37ef4",
+      "source_run_id": "q4-sphinx-doc__sphinx-9230-A",
+      "source_run_path": "generated/asset-first-stri-reasoningbank-p1-q4-runs-20260830/q4-sphinx-doc__sphinx-9230-A/run.json",
+      "source_run_sha256": "b1607cf4179cc1557a10cb2cd431b1d5beecb9953b6d9c517dd259b22150ec0d",
+      "task_sha256": "e814405fe0885a2284bec4dfdf1efa5bd0386117d02410e9ad0ec98c0e1712ab"
+    },
+    {
+      "arm": "B",
+      "base_commit": "567ff22716ac258b9edd2c1711d766b440ac0b11",
+      "evaluator_script_changed": true,
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "image_amd64_manifest_digest": "sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "log_parser": "parse_log_sphinx",
+      "model_calls_authorized": false,
+      "ordinal": 2,
+      "original_eval_script_sha256": "8553eefebbdaefe08ffe48c6db4675cf25f8658222e29e39b561e3fcc68f150e",
+      "repaired_eval_script_sha256": "201697de6693ce004e0fd87a1eb22935c6074164c52a31ef5b3b94f4d0c5becd",
+      "selection_rank": 5,
+      "source_patch_sha256": "24d6ec070eb6620b4c79efb8cf1fcda3c8d64da0aa430779d796b90d1ee37ef4",
+      "source_run_id": "q4-sphinx-doc__sphinx-9230-B",
+      "source_run_path": "generated/asset-first-stri-reasoningbank-p1-q4-runs-20260830/q4-sphinx-doc__sphinx-9230-B/run.json",
+      "source_run_sha256": "ea738577cf1b244cf0a888f0687635986f2050bd8b978fd47f79b404e537b19c",
+      "task_sha256": "e814405fe0885a2284bec4dfdf1efa5bd0386117d02410e9ad0ec98c0e1712ab"
+    },
+    {
+      "arm": "C",
+      "base_commit": "567ff22716ac258b9edd2c1711d766b440ac0b11",
+      "evaluator_script_changed": true,
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "image_amd64_manifest_digest": "sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "log_parser": "parse_log_sphinx",
+      "model_calls_authorized": false,
+      "ordinal": 3,
+      "original_eval_script_sha256": "8553eefebbdaefe08ffe48c6db4675cf25f8658222e29e39b561e3fcc68f150e",
+      "repaired_eval_script_sha256": "201697de6693ce004e0fd87a1eb22935c6074164c52a31ef5b3b94f4d0c5becd",
+      "selection_rank": 5,
+      "source_patch_sha256": "24d6ec070eb6620b4c79efb8cf1fcda3c8d64da0aa430779d796b90d1ee37ef4",
+      "source_run_id": "q4-sphinx-doc__sphinx-9230-C",
+      "source_run_path": "generated/asset-first-stri-reasoningbank-p1-q4-runs-20260830/q4-sphinx-doc__sphinx-9230-C/run.json",
+      "source_run_sha256": "ba051d5ea235fb3dbb97b3ec1326830db0f1afe7e6550bfdd70d47b2178819a5",
+      "task_sha256": "e814405fe0885a2284bec4dfdf1efa5bd0386117d02410e9ad0ec98c0e1712ab"
+    },
+    {
+      "arm": "D",
+      "base_commit": "567ff22716ac258b9edd2c1711d766b440ac0b11",
+      "evaluator_script_changed": true,
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "image_amd64_manifest_digest": "sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "log_parser": "parse_log_sphinx",
+      "model_calls_authorized": false,
+      "ordinal": 4,
+      "original_eval_script_sha256": "8553eefebbdaefe08ffe48c6db4675cf25f8658222e29e39b561e3fcc68f150e",
+      "repaired_eval_script_sha256": "201697de6693ce004e0fd87a1eb22935c6074164c52a31ef5b3b94f4d0c5becd",
+      "selection_rank": 5,
+      "source_patch_sha256": "24d6ec070eb6620b4c79efb8cf1fcda3c8d64da0aa430779d796b90d1ee37ef4",
+      "source_run_id": "q4-sphinx-doc__sphinx-9230-D",
+      "source_run_path": "generated/asset-first-stri-reasoningbank-p1-q4-runs-20260830/q4-sphinx-doc__sphinx-9230-D/run.json",
+      "source_run_sha256": "33a6c71447c74d1b448fa3e3ff3d8b5d41859bdb94700c3c25de9a64902446d6",
+      "task_sha256": "e814405fe0885a2284bec4dfdf1efa5bd0386117d02410e9ad0ec98c0e1712ab"
+    },
+    {
+      "arm": "E",
+      "base_commit": "567ff22716ac258b9edd2c1711d766b440ac0b11",
+      "evaluator_script_changed": true,
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "image_amd64_manifest_digest": "sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "log_parser": "parse_log_sphinx",
+      "model_calls_authorized": false,
+      "ordinal": 5,
+      "original_eval_script_sha256": "8553eefebbdaefe08ffe48c6db4675cf25f8658222e29e39b561e3fcc68f150e",
+      "repaired_eval_script_sha256": "201697de6693ce004e0fd87a1eb22935c6074164c52a31ef5b3b94f4d0c5becd",
+      "selection_rank": 5,
+      "source_patch_sha256": "24d6ec070eb6620b4c79efb8cf1fcda3c8d64da0aa430779d796b90d1ee37ef4",
+      "source_run_id": "q4-sphinx-doc__sphinx-9230-E",
+      "source_run_path": "generated/asset-first-stri-reasoningbank-p1-q4-runs-20260830/q4-sphinx-doc__sphinx-9230-E/run.json",
+      "source_run_sha256": "afc1c15caf5113e096ad27c619f1098cf327ca3bf2c534a91004ac1ccb948f97",
+      "task_sha256": "e814405fe0885a2284bec4dfdf1efa5bd0386117d02410e9ad0ec98c0e1712ab"
+    },
+    {
+      "arm": "A",
+      "base_commit": "06909fe084f87a65459a83bd69d7cdbe4fce9a7c",
+      "evaluator_script_changed": false,
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-11880@sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+      "image_amd64_manifest_digest": "sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+      "instance_id": "django__django-11880",
+      "log_parser": "parse_log_django",
+      "model_calls_authorized": false,
+      "ordinal": 6,
+      "original_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+      "repaired_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+      "selection_rank": 6,
+      "source_patch_sha256": "019c53ab3ecb78ceeb386f79592d5f19633512e3863b5213566c90baf7e3038d",
+      "source_run_id": "q4-django__django-11880-A",
+      "source_run_path": "generated/asset-first-stri-reasoningbank-p1-q4-runs-20260830/q4-django__django-11880-A/run.json",
+      "source_run_sha256": "7b0b8682aa9e1229ae24c0b4811739f97f2a9368b33061fe61b55d075888a49f",
+      "task_sha256": "e602e90dd73a70f9faf006238dfda2347f4aa08bb29365ae2611b3ea92f3eff4"
+    },
+    {
+      "arm": "B",
+      "base_commit": "06909fe084f87a65459a83bd69d7cdbe4fce9a7c",
+      "evaluator_script_changed": false,
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-11880@sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+      "image_amd64_manifest_digest": "sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+      "instance_id": "django__django-11880",
+      "log_parser": "parse_log_django",
+      "model_calls_authorized": false,
+      "ordinal": 7,
+      "original_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+      "repaired_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+      "selection_rank": 6,
+      "source_patch_sha256": "ca05eec3eb386b0fc23a410e444c26143e55f5ed671e0b3e9621dcf4b6440df5",
+      "source_run_id": "q4-django__django-11880-B",
+      "source_run_path": "generated/asset-first-stri-reasoningbank-p1-q4-runs-20260830/q4-django__django-11880-B/run.json",
+      "source_run_sha256": "aa9d745c6634665df9d9e332cb56f9465aefec233f3b77ec7db8a5c8f5f762ed",
+      "task_sha256": "e602e90dd73a70f9faf006238dfda2347f4aa08bb29365ae2611b3ea92f3eff4"
+    },
+    {
+      "arm": "C",
+      "base_commit": "06909fe084f87a65459a83bd69d7cdbe4fce9a7c",
+      "evaluator_script_changed": false,
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-11880@sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+      "image_amd64_manifest_digest": "sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+      "instance_id": "django__django-11880",
+      "log_parser": "parse_log_django",
+      "model_calls_authorized": false,
+      "ordinal": 8,
+      "original_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+      "repaired_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+      "selection_rank": 6,
+      "source_patch_sha256": "ca05eec3eb386b0fc23a410e444c26143e55f5ed671e0b3e9621dcf4b6440df5",
+      "source_run_id": "q4-django__django-11880-C",
+      "source_run_path": "generated/asset-first-stri-reasoningbank-p1-q4-runs-20260830/q4-django__django-11880-C/run.json",
+      "source_run_sha256": "8988237cf83b2433bc10276730e58c1d017bf241f7de084d5b23698cb9918a2c",
+      "task_sha256": "e602e90dd73a70f9faf006238dfda2347f4aa08bb29365ae2611b3ea92f3eff4"
+    },
+    {
+      "arm": "D",
+      "base_commit": "06909fe084f87a65459a83bd69d7cdbe4fce9a7c",
+      "evaluator_script_changed": false,
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-11880@sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+      "image_amd64_manifest_digest": "sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+      "instance_id": "django__django-11880",
+      "log_parser": "parse_log_django",
+      "model_calls_authorized": false,
+      "ordinal": 9,
+      "original_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+      "repaired_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+      "selection_rank": 6,
+      "source_patch_sha256": "019c53ab3ecb78ceeb386f79592d5f19633512e3863b5213566c90baf7e3038d",
+      "source_run_id": "q4-django__django-11880-D",
+      "source_run_path": "generated/asset-first-stri-reasoningbank-p1-q4-runs-20260830/q4-django__django-11880-D/run.json",
+      "source_run_sha256": "009629dd7632b0cb66c366eb331df21a68ca5e49667d550f70d587fa087cc080",
+      "task_sha256": "e602e90dd73a70f9faf006238dfda2347f4aa08bb29365ae2611b3ea92f3eff4"
+    },
+    {
+      "arm": "E",
+      "base_commit": "06909fe084f87a65459a83bd69d7cdbe4fce9a7c",
+      "evaluator_script_changed": false,
+      "image": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-11880@sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+      "image_amd64_manifest_digest": "sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+      "instance_id": "django__django-11880",
+      "log_parser": "parse_log_django",
+      "model_calls_authorized": false,
+      "ordinal": 10,
+      "original_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+      "repaired_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+      "selection_rank": 6,
+      "source_patch_sha256": "ca05eec3eb386b0fc23a410e444c26143e55f5ed671e0b3e9621dcf4b6440df5",
+      "source_run_id": "q4-django__django-11880-E",
+      "source_run_path": "generated/asset-first-stri-reasoningbank-p1-q4-runs-20260830/q4-django__django-11880-E/run.json",
+      "source_run_sha256": "196b127087c594e0dbaa41615579e7e647d85c9fb01712e85f283582a12e011b",
+      "task_sha256": "e602e90dd73a70f9faf006238dfda2347f4aa08bb29365ae2611b3ea92f3eff4"
+    }
+  ],
+  "payload_sha256": "acbd62121c93d5710547b338ce7996104ebbbc6129376c1c519c00f665192bec",
+  "population": {
+    "arms": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E"
+    ],
+    "automatic_retry": "forbidden",
+    "instance_ids": [
+      "sphinx-doc__sphinx-9230",
+      "django__django-11880"
+    ],
+    "order": "rank 5 A/B/C/D/E then rank 6 A/B/C/D/E",
+    "ranks": [
+      5,
+      6
+    ],
+    "replacement_sampling": "forbidden",
+    "replay_unit_count": 10,
+    "source_selection": "all ten frozen Q4 runs in index order",
+    "task_count": 2
+  },
+  "preoutcome_verification": {
+    "generated/asset-first-stri-reasoningbank-p1-q2-adjudication-20260830.json": {
+      "actual": "019cba107a4251a8791ab4b2edae8a916b48f55776fec98180b0ea914c8413bc",
+      "expected": "019cba107a4251a8791ab4b2edae8a916b48f55776fec98180b0ea914c8413bc",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q3-parser-qualification-20260830.json": {
+      "actual": "b4bec669fb87160b251c123947d9dd8c3819f0c03c2e729aaa4c83c5670d6eca",
+      "expected": "b4bec669fb87160b251c123947d9dd8c3819f0c03c2e729aaa4c83c5670d6eca",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q3-qualification-contract-20260830.json": {
+      "actual": "a203da329f05e50c64aefd495e39d971b1865eb8816839be1c0dffd0f939cf79",
+      "expected": "a203da329f05e50c64aefd495e39d971b1865eb8816839be1c0dffd0f939cf79",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q3-runtime-qualification-result-20260830.json": {
+      "actual": "41646106382f7acda2564d74410ec537bc61c606cfe2155bc3e95b9a9c2bd949",
+      "expected": "41646106382f7acda2564d74410ec537bc61c606cfe2155bc3e95b9a9c2bd949",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q3-task-fixtures-20260830.json": {
+      "actual": "b35c9b7a798b371818b25774c129d77c74f7dc90217b3f54f7e4e1d474d15519",
+      "expected": "b35c9b7a798b371818b25774c129d77c74f7dc90217b3f54f7e4e1d474d15519",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q4-adjudication-20260830.json": {
+      "actual": "c3fe8f239a4128f89ed8c851cc0af8d061aec02333a60c4c9f397f3027908b26",
+      "expected": "c3fe8f239a4128f89ed8c851cc0af8d061aec02333a60c4c9f397f3027908b26",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q4-base-normalization-contract-20260830.json": {
+      "actual": "20fdd28863a5904c4f929d45e445ffa425c8e0d88fb93260030c9b7ce956a57e",
+      "expected": "20fdd28863a5904c4f929d45e445ffa425c8e0d88fb93260030c9b7ce956a57e",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q4-index-20260830.json": {
+      "actual": "f6ce4e4a345fa8e105ddca934faa1c85af14b039497768ebef1bd0222409a0bf",
+      "expected": "f6ce4e4a345fa8e105ddca934faa1c85af14b039497768ebef1bd0222409a0bf",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q4-runtime-qualification-result-20260830.json": {
+      "actual": "cfeafc8152a86111f1197045ed210e488b4f59d58f243a7c2fe1ae40f05ed7ed",
+      "expected": "cfeafc8152a86111f1197045ed210e488b4f59d58f243a7c2fe1ae40f05ed7ed",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-treatment-manifest-20260829.json": {
+      "actual": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7",
+      "expected": "35b5f8dab0606ca930a237a6248c9b0aac8a5b6f5564e3ba57217a34dfd92ad7",
+      "pass": true
+    },
+    "q4_adjudication_hold": {
+      "pass": true
+    },
+    "q4_terminal_exactly_once": {
+      "pass": true
+    }
+  },
+  "purpose": "Prospectively qualify one evaluator-only repair without rerunning Q4, calling the model, changing tasks, treatments, patches, or using task success to select the repair.",
+  "qualification": {
+    "mechanism_claim_authorized": false,
+    "negative_task_outcome_does_not_fail_qualification": true,
+    "primary": "all ten replays yield valid official-parser evaluator output",
+    "q4_reclassification_forbidden": true,
+    "secondary": [
+      "all run, patch, fixture, image, and base hashes remain exact",
+      "Sphinx official status maps are nonempty",
+      "Django implementation validity is unchanged"
+    ]
+  },
+  "replay_protocol": {
+    "apply_exact_q4_result_patch": true,
+    "apply_frozen_test_patch": true,
+    "attempt_count": 1,
+    "exact_base_normalization_same_as_q4": true,
+    "failure_policy": "HOLD; no retry, replacement, or Q4 reclassification",
+    "fresh_exact_digest_container_per_replay": true,
+    "official_parser": "SWE-bench 5.0.2 SHA-frozen parse_log callable",
+    "persist_raw_output_and_status_map": true,
+    "stopping_rule": "execute all ten once unless an integrity precondition fails"
+  },
+  "schema_version": 1,
+  "single_variable_repair": {
+    "after": "tox --current-env -epy39 -v -- -rA tests/test_domain_py.py",
+    "before": "tox --current-env -epy39 -v -- tests/test_domain_py.py",
+    "django_eval_script_byte_identical": true,
+    "model_calls": 0,
+    "model_patch_byte_identical_to_q4": true,
+    "model_visible_requests_reused_not_reissued": true,
+    "provider_calls": 0,
+    "scope": "Sphinx eval_script only",
+    "variable": "Sphinx evaluator pytest report verbosity"
+  }
+}
