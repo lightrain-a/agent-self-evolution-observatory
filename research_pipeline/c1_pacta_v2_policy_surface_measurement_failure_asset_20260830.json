@@ -1,0 +1,58 @@
+{
+  "schema_version":"1.0",
+  "asset_kind":"C1_PACTA_V2_POLICY_SURFACE_MEASUREMENT_FAILURE_ASSET",
+  "asset":{
+    "paper_id":"D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE",
+    "experiment_id":"C1-PACTA-V2-DOWNSTREAM-POLICY-SHADOW-PILOT-20260830",
+    "status":"STOP_FINAL_POLICY_MEASUREMENT_PARSER_FAILURE",
+    "signature":"measurement:pacta-v2-provider-response-before-parse-persistence",
+    "idea_id":"c1-pacta-v2",
+    "diagnosis":"final-policy-parser-realization-and-response-persistence-gap",
+    "affected_layer":"measurement",
+    "evidence_ref":"paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-v2-pilot-closure-20260830.json",
+    "does_not_imply":"PACTA-v2 gate mechanism failure, SCB transport failure, task-utility failure, or external-validity failure",
+    "memory_scope":"institutional-research-memory",
+    "scope":"PACTA-v2 fresh six-template policy-surface Pilot only",
+    "lineage":{
+      "PACTA_v1":"interface failure; separate and excluded",
+      "PACTA_v11":"projection operationalization/gate realization stop; separate and excluded",
+      "PACTA_v2":"policy-surface stochasticity-calibrated revision"
+    },
+    "realization":{
+      "binder":"12/12",
+      "shadow":"144/144",
+      "gate":"3/6 open; non-degenerate",
+      "final_policy":"60 complete + 1 parser failure of 288 planned",
+      "partial_responses_excluded":true
+    },
+    "failure_differential":{
+      "execution_orchestration":false,
+      "provider_support":false,
+      "binder":false,
+      "shadow_realization":false,
+      "gate_degeneracy":false,
+      "final_policy_parser_measurement":true,
+      "generic_SCB_transport":"not evaluated",
+      "paired_noise_calibrated_gate_mechanism":"not evaluated",
+      "terminal_utility":"not tested"
+    },
+    "scientific_belief_update":{
+      "increase":"Replicated downstream-policy action distributions yielded a non-degenerate 3/6 gate on fresh templates.",
+      "decrease":"The complete final-policy measurement packet did not realize under the strict no-retry contract.",
+      "withhold":"No PACTA-v2 effect, utility, confirmatory, or external-validity claim."
+    },
+    "claim_authority":{
+      "scientific_pass":false,
+      "gate_realization_claim":true,
+      "method_effect":false,
+      "negative_mechanism_result":false,
+      "active_manuscript":"R9",
+      "R10_authorized":false
+    },
+    "institutional_lesson":"When the scientific claim concerns behavioral transport, a standalone semantic projector may be a poor proxy for the downstream policy. Counterfactual actionability should be measured at the policy surface itself and separated from same-condition stochasticity.",
+    "measurement_lesson":"Persist a provider response and its model metadata before parsing. Under a strict no-retry contract, parser failure must remain auditable without reissuing the scientific request.",
+    "reusable_precheck":"Use a write-before-parse response journal and inject malformed-response fixtures to verify that raw text, response ID, model identity, prompt hash, and parser error all survive atomically.",
+    "reopen_condition":"Do not retry or resume this Pilot. Any new measurement run or independent carrier requires explicit human authorization.",
+    "scientific_authority":false
+  }
+}

@@ -126,6 +126,7 @@ def execute_cases(client,rows,folder,kind,expected):
   if path.exists():
    artifact=load(path); require(artifact["status"]=="complete" and artifact["prompt_sha256"]==row["prompt_sha256"],f"{kind} resume drift {row['case_id']}")
    continue
+  response=None; text=""
   try:
    response,text=legacy.provider_call(client,row["prompt"],900,0.2); signature,goal,recovered=legacy.parse_policy_output(text)
    artifact={k:v for k,v in row.items() if k!="prompt"}
@@ -133,6 +134,8 @@ def execute_cases(client,rows,folder,kind,expected):
                     "next_goal_sha256":sha_text(goal) if goal else "","parse_recovered":recovered,**call_record(response,text)})
   except Exception as exc:
    artifact={k:v for k,v in row.items() if k!="prompt"}
+   if response is not None:
+    artifact.update(call_record(response,text))
    artifact.update({"schema_version":"1.0","artifact_kind":kind,"status":"failed","failure_type":type(exc).__name__,"failure":str(exc)[:2000],"completed_at":now()})
   dump(path,artifact)
   completed=len(list((RUN/folder).glob("*.json")))
