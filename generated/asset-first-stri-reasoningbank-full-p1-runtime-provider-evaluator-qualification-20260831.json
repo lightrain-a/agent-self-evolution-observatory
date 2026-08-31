@@ -1,0 +1,273 @@
+{
+  "acquisition_sha256": "3a08ca5376e05ddfb32c83c5db806f511290b3efc459ad4d8578dd327e4d23eb",
+  "created_at_utc": "2026-08-31T09:30:34+00:00",
+  "credential_material_present": false,
+  "decision": "FULL_P1_RUNTIME_PROVIDER_EVALUATOR_QUALIFIED",
+  "execution_authorized": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-FULL-P1-RUNTIME-PROVIDER-EVALUATOR-QUALIFICATION-20260831",
+  "parser_evaluator_qualification": {
+    "every_attempt_count_one": true,
+    "every_evaluator_valid": true,
+    "every_implementation_valid": true,
+    "negative_or_positive_task_outcome_ignored": true,
+    "parser_families": [
+      "parse_log_django",
+      "parse_log_sphinx"
+    ],
+    "pass": true,
+    "q10_index_sha256": "faf047da587b7daa0be16c703dabe01d14c7149441c62d2279be26cd75cf8a72",
+    "qualified_run_count": 10
+  },
+  "payload_sha256": "18fe2df62649486e66eefe42fba9b68f39898efa3ed5076f27e81ff6db7e5130",
+  "provider_qualification": {
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "configured": true,
+    "frozen_model": "deepseek-v4-pro-ga-260813",
+    "historical_exact_provider_receipt_path": "generated/asset-first-stri-reasoningbank-p1-runs-20260829/source-sympy__sympy-13798/run.json",
+    "historical_exact_provider_receipt_sha256": "8de287a4c64437186e9f92856248c7aed95a1e162f90a8e1c9da9b380d73cbf7",
+    "historical_resolved_models": [
+      "deepseek-v4-pro-ga-260813"
+    ],
+    "historical_response_count": 32,
+    "live_model_call_for_qualification": false,
+    "max_retries": 2,
+    "pass": true,
+    "request_timeout_seconds": 120.0,
+    "secret_value_exported": false
+  },
+  "q10_adjudication": {
+    "decision": "P1_Q10_RUNTIME_RECONCILIATION_QUALIFIED_FULL_P1_PLANNING_GATE_OPEN_EXECUTION_UNAUTHORIZED",
+    "implementation_qualified": true,
+    "sha256": "a92d394ee90ee6d1b5c65ca3deb17c9311649757a1e053ed94cc7c025b0f89c9"
+  },
+  "q10_fault_gate": {
+    "decision": "Q10_DETERMINISTIC_FAULT_GATE_PASS",
+    "pass": true,
+    "sha256": "21deda0aaa883d11a58d7553f4f3217d7694c461ef23e7be48da897e9cf83554",
+    "test_count": 10
+  },
+  "runtime_preflight": {
+    "failures": [],
+    "pass": true,
+    "policy": "one non-scientific start per frozen image; no model or evaluator calls",
+    "row_count": 8,
+    "rows": [
+      {
+        "attempt_count": 1,
+        "base_state_rule": "exact_base_after_preregistered_hard_reset",
+        "cleanup_receipt": {
+          "accepted": true,
+          "cleanup_invoked": true,
+          "container_name": "e1-rb-full-p1-preflight-rank-007-88e391b8",
+          "reconciliation_receipt_finalized_before_cleanup": true,
+          "returncode": 0,
+          "timed_out": false
+        },
+        "client_start_invocations": 1,
+        "evaluator_calls": 0,
+        "image_amd64_manifest_digest": "sha256:505a1ddf221a3f814648afba808f88eb05cdb03a606b2cf78185d001422d6412",
+        "instance_id": "django__django-13809",
+        "model_calls": 0,
+        "observed_head": "bef6f7584280f1cc80e5e2d80b7ad073a93d26ec",
+        "reconciliation_invoked": false,
+        "second_start_invoked": false,
+        "selection_rank": 7,
+        "start_accepted": true
+      },
+      {
+        "attempt_count": 1,
+        "base_state_rule": "exact_base_after_preregistered_hard_reset",
+        "cleanup_receipt": {
+          "accepted": true,
+          "cleanup_invoked": true,
+          "container_name": "e1-rb-full-p1-preflight-rank-008-1cba142e",
+          "reconciliation_receipt_finalized_before_cleanup": true,
+          "returncode": 0,
+          "timed_out": false
+        },
+        "client_start_invocations": 1,
+        "evaluator_calls": 0,
+        "image_amd64_manifest_digest": "sha256:cd95eb83c40d5738a534d6210a485345fffc9cf653c2c5995b4395d202ff0eb4",
+        "instance_id": "django__django-11740",
+        "model_calls": 0,
+        "observed_head": "003bb34b218adb23d1a7e67932a6ba9b3c4dcc81",
+        "reconciliation_invoked": false,
+        "second_start_invoked": false,
+        "selection_rank": 8,
+        "start_accepted": true
+      },
+      {
+        "attempt_count": 1,
+        "base_state_rule": "exact_base_after_preregistered_hard_reset",
+        "cleanup_receipt": {
+          "accepted": true,
+          "cleanup_invoked": true,
+          "container_name": "e1-rb-full-p1-preflight-rank-009-80a96199",
+          "reconciliation_receipt_finalized_before_cleanup": true,
+          "returncode": 0,
+          "timed_out": false
+        },
+        "client_start_invocations": 1,
+        "evaluator_calls": 0,
+        "image_amd64_manifest_digest": "sha256:f81a013b2cd280eb464bc2104c5818bb22820f9634f03c4a5a6d3e2873defe33",
+        "instance_id": "django__django-15315",
+        "model_calls": 0,
+        "observed_head": "652c68ffeebd510a6f59e1b56b3e007d07683ad8",
+        "reconciliation_invoked": false,
+        "second_start_invoked": false,
+        "selection_rank": 9,
+        "start_accepted": true
+      },
+      {
+        "attempt_count": 1,
+        "base_state_rule": "exact_base_after_preregistered_hard_reset",
+        "cleanup_receipt": {
+          "accepted": true,
+          "cleanup_invoked": true,
+          "container_name": "e1-rb-full-p1-preflight-rank-011-e6c196a0",
+          "reconciliation_receipt_finalized_before_cleanup": true,
+          "returncode": 0,
+          "timed_out": false
+        },
+        "client_start_invocations": 1,
+        "evaluator_calls": 0,
+        "image_amd64_manifest_digest": "sha256:4b07f5b55b6506cc56d140418ccf83902fd3234141906b9c2c23baf55e886dc8",
+        "instance_id": "django__django-15731",
+        "model_calls": 0,
+        "observed_head": "93cedc82f29076c824d476354527af1150888e4f",
+        "reconciliation_invoked": false,
+        "second_start_invoked": false,
+        "selection_rank": 11,
+        "start_accepted": true
+      },
+      {
+        "attempt_count": 1,
+        "base_state_rule": "exact_base_after_preregistered_hard_reset",
+        "cleanup_receipt": {
+          "accepted": true,
+          "cleanup_invoked": true,
+          "container_name": "e1-rb-full-p1-preflight-rank-012-1e4117b4",
+          "reconciliation_receipt_finalized_before_cleanup": true,
+          "returncode": 0,
+          "timed_out": false
+        },
+        "client_start_invocations": 1,
+        "evaluator_calls": 0,
+        "image_amd64_manifest_digest": "sha256:674eab0bce68e359a0913f77ca80873a95e952906939c92a253dfb74af837719",
+        "instance_id": "django__django-16454",
+        "model_calls": 0,
+        "observed_head": "1250483ebf73f7a82ff820b94092c63ce4238264",
+        "reconciliation_invoked": false,
+        "second_start_invoked": false,
+        "selection_rank": 12,
+        "start_accepted": true
+      },
+      {
+        "attempt_count": 1,
+        "base_state_rule": "exact_base_after_preregistered_hard_reset",
+        "cleanup_receipt": {
+          "accepted": true,
+          "cleanup_invoked": true,
+          "container_name": "e1-rb-full-p1-preflight-rank-013-e847c782",
+          "reconciliation_receipt_finalized_before_cleanup": true,
+          "returncode": 0,
+          "timed_out": false
+        },
+        "client_start_invocations": 1,
+        "evaluator_calls": 0,
+        "image_amd64_manifest_digest": "sha256:f029159b39942836a8c09738bda245bfea9d197e1b94f23e3eeaf576e3008600",
+        "instance_id": "django__django-14787",
+        "model_calls": 0,
+        "observed_head": "004b4620f6f4ad87261e149898940f2dcd5757ef",
+        "reconciliation_invoked": false,
+        "second_start_invoked": false,
+        "selection_rank": 13,
+        "start_accepted": true
+      },
+      {
+        "attempt_count": 1,
+        "base_state_rule": "exact_base_after_preregistered_hard_reset",
+        "cleanup_receipt": {
+          "accepted": true,
+          "cleanup_invoked": true,
+          "container_name": "e1-rb-full-p1-preflight-rank-014-76340ed9",
+          "reconciliation_receipt_finalized_before_cleanup": true,
+          "returncode": 0,
+          "timed_out": false
+        },
+        "client_start_invocations": 1,
+        "evaluator_calls": 0,
+        "image_amd64_manifest_digest": "sha256:4558875a03b7b70f7a93941b74af6284e420326993fe003bbb843edc6ada909c",
+        "instance_id": "sphinx-doc__sphinx-9711",
+        "model_calls": 0,
+        "observed_head": "81a4fd973d4cfcb25d01a7b0be62cdb28f82406d",
+        "reconciliation_invoked": false,
+        "second_start_invoked": false,
+        "selection_rank": 14,
+        "start_accepted": true
+      },
+      {
+        "attempt_count": 1,
+        "base_state_rule": "exact_base_after_preregistered_hard_reset",
+        "cleanup_receipt": {
+          "accepted": true,
+          "cleanup_invoked": true,
+          "container_name": "e1-rb-full-p1-preflight-rank-019-ef495aa6",
+          "reconciliation_receipt_finalized_before_cleanup": true,
+          "returncode": 0,
+          "timed_out": false
+        },
+        "client_start_invocations": 1,
+        "evaluator_calls": 0,
+        "image_amd64_manifest_digest": "sha256:a067cc9cec81ba8be9799c03da7a3355fdcd1f10477142052f3477ce8b33057d",
+        "instance_id": "django__django-15695",
+        "model_calls": 0,
+        "observed_head": "647480166bfe7532e8c471fef0146e3a17e6c0c9",
+        "reconciliation_invoked": false,
+        "second_start_invoked": false,
+        "selection_rank": 19,
+        "start_accepted": true
+      }
+    ]
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "evaluator_calls": 0,
+    "model_calls": 0,
+    "qualification_is_not_scientific_evidence": true,
+    "task_outcomes_observed": false,
+    "task_problem_statements_rendered": false
+  },
+  "static_input_checks": {
+    "generated/asset-first-stri-reasoningbank-full-p1-behavioral-propagation-preregistration-20260831.json": {
+      "actual": "af8e9efb53ad5df5e846329b289ce791bc8ffe7c581f810c0ade1067d09fe7dd",
+      "expected": "af8e9efb53ad5df5e846329b289ce791bc8ffe7c581f810c0ade1067d09fe7dd",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-full-p1-population-and-image-freeze-20260831.json": {
+      "actual": "6ca2a6831e01db63961db3d5c337c17ee790755046c68bbcb6c056e136d8bbe8",
+      "expected": "6ca2a6831e01db63961db3d5c337c17ee790755046c68bbcb6c056e136d8bbe8",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q10-adjudication-20260831.json": {
+      "actual": "a92d394ee90ee6d1b5c65ca3deb17c9311649757a1e053ed94cc7c025b0f89c9",
+      "expected": "a92d394ee90ee6d1b5c65ca3deb17c9311649757a1e053ed94cc7c025b0f89c9",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q10-fault-tests-20260831.json": {
+      "actual": "21deda0aaa883d11a58d7553f4f3217d7694c461ef23e7be48da897e9cf83554",
+      "expected": "21deda0aaa883d11a58d7553f4f3217d7694c461ef23e7be48da897e9cf83554",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-q10-index-20260831.json": {
+      "actual": "faf047da587b7daa0be16c703dabe01d14c7149441c62d2279be26cd75cf8a72",
+      "expected": "faf047da587b7daa0be16c703dabe01d14c7149441c62d2279be26cd75cf8a72",
+      "pass": true
+    },
+    "generated/asset-first-stri-reasoningbank-p1-runs-20260829/source-sympy__sympy-13798/run.json": {
+      "actual": "8de287a4c64437186e9f92856248c7aed95a1e162f90a8e1c9da9b380d73cbf7",
+      "expected": "8de287a4c64437186e9f92856248c7aed95a1e162f90a8e1c9da9b380d73cbf7",
+      "pass": true
+    }
+  }
+}
