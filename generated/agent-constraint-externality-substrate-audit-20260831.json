@@ -1,0 +1,197 @@
+{
+  "schema_version": "agent-constraint-externality-substrate-audit-v1",
+  "generated_at": "2026-08-31T15:38:17+08:00",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "canonical_base_sha": "c8e8c24698e08ce7b25787617fdf739d2bff304e",
+  "policy": {
+    "benchmark_availability_is_not_qualification": true,
+    "primary_identification_precedes_external_validity": true,
+    "benchmark_modification_must_be_labeled_derived": true,
+    "current_repository_lineage_must_be_distinguished_from_old_publication": true,
+    "no_scientific_outcomes_used": true
+  },
+  "criteria": {
+    "1": "multiple explicit constraints/policies/prerequisites",
+    "2": "constraint interaction definable outcome-blind",
+    "3": "real shared mutable state",
+    "4": "persistent benign update can survive across episode/task boundary",
+    "5": "update target can be named before post-update outcome",
+    "6": "pre/post collateral change can be measured",
+    "7": "matched independent/chain/hub interaction structures constructible",
+    "8": "target gain separable from non-target regression",
+    "9": "programmatic evaluator",
+    "10": "intermediate/final state inspectable",
+    "11": "collateral damage detectable beyond terminal success",
+    "12": "environment snapshot/reset",
+    "13": "per-constraint evaluation possible",
+    "14": "evaluator deterministic/replayable",
+    "15": "backbone fixable",
+    "16": "harness fixable",
+    "17": "update mechanism fixable",
+    "18": "task/constraint count controllable",
+    "19": "prompt length/task difficulty matchable",
+    "20": "update size controllable",
+    "21": "outcome-blind matched task generation possible",
+    "22": "official code",
+    "23": "released data/tasks",
+    "24": "exact revision pinnable",
+    "25": "license sufficiently clear for static/preflight use",
+    "26": "environment locally executable in principle",
+    "27": "not dependent on live web",
+    "28": "not intrinsically dependent on expensive proprietary APIs",
+    "29": "state reset reliable enough for causal design",
+    "30": "historical/reference trajectories or solutions available",
+    "31": "formal top-venue publication",
+    "32": "broad current agent-community relevance",
+    "33": "mechanism can generalize beyond benchmark-specific trick",
+    "34": "primary effect can be identified without benchmark leaderboard semantics"
+  },
+  "rating_legend": {
+    "STRONG": "native or directly supported by released benchmark/environment",
+    "PARTIAL": "possible with a bounded extension or has an identified qualification risk",
+    "WEAK": "not naturally supported or creates a major causal-identification problem"
+  },
+  "matrix": [
+    {
+      "name": "AppWorld + AppWorld-UL semantics",
+      "strong": [1,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,26,27,29,31,32,33,34],
+      "partial": [4,25,28,30],
+      "weak": [],
+      "verdict": "PRIMARY_CANDIDATE",
+      "publication": "AppWorld: ACL 2024 Long Paper; AppWorld-UL: ICML 2026",
+      "executable": "YES_FOR_STATIC_AND_NON_SCIENTIFIC_PREFLIGHT; SCIENTIFIC_EXECUTION_NOT_AUTHORIZED",
+      "why": "Released multi-app databases, task generators, database checkpoint/revert, and state-based unit tests already support expected-state and unexpected-state checks. AppWorld-UL adds natural ambiguity, confirmation, infeasibility, and constraint semantics.",
+      "critical_risk": "Persistent self-update is not native. The public repository also notes protected bundle components under a different license, so exact data/bundle terms must be re-audited before execution.",
+      "required_modification": "Create AppWorld-Externality as an explicitly benchmark-derived controlled train/dev substrate. The only cross-episode persistent state is one content-addressed agent-side procedural repair artifact; all constraint and edge definitions are compiled before model outcomes. Do not claim official AppWorld leaderboard identity."
+    },
+    {
+      "name": "ToolSandbox",
+      "strong": [1,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,26,27,29,31,33,34],
+      "partial": [4,25,28,30,32],
+      "weak": [],
+      "verdict": "SECONDARY_VALIDATION",
+      "publication": "Findings of NAACL 2025",
+      "executable": "YES_FOR_STATIC_AND_NON_SCIENTIFIC_PREFLIGHT; SCIENTIFIC_EXECUTION_NOT_AUTHORIZED",
+      "why": "Native world-state snapshots plus Milestone DAG evaluation make prerequisite topology and intermediate-state evaluation unusually explicit.",
+      "critical_risk": "Narrower application world, built-in user-simulator variation, and a custom Apple source license reduce the attractiveness of making it the sole primary substrate.",
+      "required_modification": "Add one agent-side persistent procedural repair layer and construct matched scenario variants from the released scenario schema; keep user-simulator variation outside the primary causal contrast where possible."
+    },
+    {
+      "name": "WorkArena++ on BrowserGym",
+      "strong": [1,2,3,5,6,7,8,9,10,13,15,16,17,18,19,20,21,22,23,24,25,30,31,32,33,34],
+      "partial": [4,11,12,14,26,27,28,29],
+      "weak": [],
+      "verdict": "SECONDARY_VALIDATION",
+      "publication": "NeurIPS 2024 Datasets and Benchmarks Track",
+      "executable": "YES_IN_PRINCIPLE; ENVIRONMENT_QUALIFICATION_REQUIRED; SCIENTIFIC_EXECUTION_NOT_AUTHORIZED",
+      "why": "WorkArena++ is explicitly compositional, with validated subtasks and fixed configurations in realistic enterprise workflows, making chain and hub dependencies natural.",
+      "critical_risk": "Browser perception, ServiceNow deployment state, UI variation, and reset fidelity can be confounded with update externality.",
+      "required_modification": "Use only after the primary mechanism contract is frozen; externalize one persistent procedural repair state and map subtask validators to constraint predicates."
+    },
+    {
+      "name": "tau3-bench current implementation / original tau-bench lineage",
+      "strong": [1,2,3,5,6,8,9,10,15,16,17,20,22,23,24,25,26,27,29,31,32,33,34],
+      "partial": [4,7,11,12,13,14,18,19,21,28,30],
+      "weak": [],
+      "verdict": "REFERENCE_ONLY",
+      "publication": "Original tau-bench: ICLR 2025; current tau3-bench: living 2026 successor implementation with separately released components",
+      "executable": "YES_IN_PRINCIPLE; NOT_PRIMARY",
+      "why": "Customer-service policies, state-changing APIs, and database outcomes are attractive, but current repository lineage has moved beyond the original ICLR 2025 benchmark and per-constraint topology is not a native evaluation object.",
+      "critical_risk": "User-simulator/protocol variability plus versioned grading changes complicate a first causal identification.",
+      "required_modification": "Pin current tau3 code/data separately from the ICLR 2025 publication identity and add preregistered per-constraint environment assertions before any scientific use."
+    },
+    {
+      "name": "SkillLearnBench",
+      "strong": [4,5,6,8,9,13,14,15,16,17,20,22,23,24,25,29,30,31,32,33,34],
+      "partial": [1,2,7,10,11,12,18,19,21,26,27,28],
+      "weak": [3],
+      "verdict": "REFERENCE_ONLY",
+      "publication": "COLM 2026 accepted/forthcoming as of 2026-08-31",
+      "executable": "YES_IN_PRINCIPLE; SOME_TASKS_REQUIRE_EXTERNAL_CREDENTIALS/APIS; NOT_PRIMARY",
+      "why": "It is a close continual-skill benchmark with deterministic verifiers and persistent skill generation, but heterogeneous tasks do not provide a naturally randomized shared-state constraint graph.",
+      "critical_risk": "Forcing independent/chain/hub topology onto unrelated tasks would turn the mechanism into a benchmark-specific construction artifact.",
+      "required_modification": "Reserve for post-mechanism validation of the already-frozen procedural update surface."
+    },
+    {
+      "name": "WebArena-Verified",
+      "strong": [5,6,9,10,14,15,16,17,20,22,23,24,25,27,29,32,34],
+      "partial": [1,2,3,8,11,12,13,18,19,21,26,28,30,31,33],
+      "weak": [4,7],
+      "verdict": "REFERENCE_ONLY",
+      "publication": "Verified browser benchmark release; not used as the primary formal-publication anchor here",
+      "executable": "YES_IN_PRINCIPLE; NOT_PRIMARY",
+      "why": "Deterministic browser evaluation is useful for robustness checks, but persistent self-update and controllable constraint topology are not native constructs.",
+      "critical_risk": "Topology would have to be retrofitted rather than generated from the benchmark semantics.",
+      "required_modification": "Use only as later browser robustness validation."
+    },
+    {
+      "name": "OSWorld / OSWorld-Verified",
+      "strong": [3,5,6,9,10,12,15,16,17,22,23,24,25,31,32,33,34],
+      "partial": [1,2,8,11,13,14,18,19,20,21,26,27,28,29,30],
+      "weak": [4,7],
+      "verdict": "REJECT_AS_PRIMARY",
+      "publication": "NeurIPS 2024 Datasets and Benchmarks Track; OSWorld-Verified is a later benchmark revision",
+      "executable": "YES_BUT_HEAVY; NOT_PRIMARY",
+      "why": "Excellent real-world external validity but GUI grounding, VM state, application drift, and visual perception can mimic or hide update externality.",
+      "critical_risk": "Causal mechanism failure cannot be cleanly separated from GUI/environment failure in a first experiment.",
+      "required_modification": "Reserve for late external validation only if the mechanism survives in a controlled substrate."
+    },
+    {
+      "name": "BrowserGym framework",
+      "strong": [12,14,15,16,17,18,20,21,22,24,25,26,27,29,32,33,34],
+      "partial": [1,2,3,5,6,7,8,9,10,11,13,19,23,28,30,31],
+      "weak": [4],
+      "verdict": "REFERENCE_ONLY",
+      "publication": "Execution/evaluation framework in the ServiceNow browser-agent ecosystem",
+      "executable": "YES_AS_FRAMEWORK; NOT_A_PRIMARY_SCIENTIFIC_SUBSTRATE",
+      "why": "Useful harness, but not one canonical environment with a constraint ontology.",
+      "critical_risk": "Framework-level behavior could be mistakenly presented as a benchmark result.",
+      "required_modification": "Use only as a harness around a separately selected browser substrate."
+    }
+  ],
+  "ranking": [
+    {
+      "rank": 1,
+      "name": "AppWorld + AppWorld-UL semantics",
+      "verdict": "PRIMARY",
+      "critical_advantage": "Native database-state evaluator, checkpoint/revert, collateral-damage tests, and a public task-generator extension path.",
+      "critical_risk": "Persistent update is an extension; exact bundle/data license and derived task-family semantics must be re-audited before execution.",
+      "required_modification": "AppWorld-Externality benchmark-derived controlled train/dev substrate."
+    },
+    {
+      "rank": 2,
+      "name": "ToolSandbox",
+      "verdict": "SECONDARY_VALIDATION",
+      "critical_advantage": "Native Milestone DAG and per-turn state snapshots make dependency topology exceptionally explicit.",
+      "critical_risk": "Narrower world, user-simulator variation, and custom Apple source license.",
+      "required_modification": "Agent-side persistent procedural repair plus matched scenario topology variants."
+    },
+    {
+      "rank": 3,
+      "name": "WorkArena++ on BrowserGym",
+      "verdict": "SECONDARY_VALIDATION",
+      "critical_advantage": "Validated compositional enterprise subtasks naturally realize prerequisite/workflow structure.",
+      "critical_risk": "Browser/UI/ServiceNow reset and grounding noise can mask update externality.",
+      "required_modification": "Freeze primary mechanism first; use subtask validators and a persistent procedural layer."
+    }
+  ],
+  "selected": {
+    "name": "AppWorld-Externality",
+    "classification": "BENCHMARK-DERIVED_CONTROLLED_SUBSTRATE",
+    "parent": "AppWorld ACL 2024; AppWorld-UL ICML 2026 is a constraint-semantics reference",
+    "leaderboard_identity": "NOT_APPWORLD_LEADERBOARD",
+    "persistent_update_native": false,
+    "persistent_update_extension": "One agent-side content-addressed procedural repair artifact persists while each environment replay returns to its frozen initial state.",
+    "why_selected": [
+      "State-based unit tests can expose newly violated non-target obligations rather than only terminal success.",
+      "Database checkpoint/revert supports exact before/after replay from a frozen initial task state.",
+      "Task generators expose setup, validation solution, evaluation, and metadata, enabling outcome-blind matched task-family construction on released train/dev material.",
+      "Nine simulated apps and 100+ database tables provide natural shared-state and shared-API dependencies without live-web drift.",
+      "ACL 2024 AppWorld plus ICML 2026 AppWorld-UL provide broad current agent audience and natural constraint/confirmation semantics."
+    ],
+    "scientific_execution_authorized": false
+  },
+  "scientific_outcomes_observed": 0,
+  "provider_calls": 0,
+  "gpu_runs": 0
+}

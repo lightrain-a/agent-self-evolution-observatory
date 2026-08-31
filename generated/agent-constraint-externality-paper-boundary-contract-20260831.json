@@ -1,0 +1,36 @@
+{
+  "schema_version": "agent-constraint-externality-paper-boundary-contract-v1",
+  "generated_at": "2026-08-31T15:38:17+08:00",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "boundary_status": "PASS",
+  "agent_object": "SELF_UPDATE_TO_BEHAVIORAL_EXTERNALITY",
+  "three_d_object": "RELATIONAL_COMPLEXITY_TO_GENERATION_FAILURE",
+  "forbidden_as_agent_core": [
+    "3D-FRONT",
+    "3D-FUTURE",
+    "spatial relation graph",
+    "InstructScene",
+    "SceneNAT",
+    "ATISS",
+    "DiffuScene",
+    "Text-to-Semantic-Graph-to-3D-Scene",
+    "oracle spatial relation graph",
+    "relation-level iRecall"
+  ],
+  "must_not_share": [
+    "primary dataset",
+    "primary model",
+    "main result table",
+    "primary figure",
+    "primary metric",
+    "decisive intervention",
+    "principal claim"
+  ],
+  "only_allowed_high_level_intuition": "raw count may not equal effective structural complexity",
+  "three_d_empirical_evidence_role": "FORBIDDEN_AS_PRIMARY_AGENT_EVIDENCE",
+  "agent_primary_dataset": "AppWorld-derived controlled task families if future execution is separately authorized",
+  "agent_primary_metric": "target repair gain plus collateral regression/update externality at per-constraint level",
+  "agent_decisive_intervention": "same frozen procedural repair across outcome-blind matched constraint-topology contexts",
+  "shared_scientific_authority": false,
+  "authority_namespace": "AGENT-CONSTRAINT-EXTERNALITY-20260831"
+}

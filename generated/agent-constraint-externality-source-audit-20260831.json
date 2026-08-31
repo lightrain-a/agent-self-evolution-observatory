@@ -1,0 +1,154 @@
+{
+  "schema_version": "agent-constraint-externality-source-audit-v1",
+  "generated_at": "2026-08-31T15:38:17+08:00",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "audit_date": "2026-08-31",
+  "repository_probe": "git ls-remote plus no-checkout static license/README/schema inspection on server 69",
+  "sources": [
+    {
+      "id": "APPWORLD-ACL24",
+      "name": "AppWorld",
+      "publication_status": "FORMALLY_PUBLISHED",
+      "venue": "ACL 2024 Long Papers",
+      "doi": "10.18653/v1/2024.acl-long.850",
+      "publication_url": "https://aclanthology.org/2024.acl-long.850/",
+      "project_url": "https://appworld.dev/",
+      "repo_url": "https://github.com/StonyBrookNLP/appworld.git",
+      "repo_sha": "a072b7a86e7c1d5b1d7175659d750ebb9b79f10a",
+      "repo_license": "Apache-2.0 for the public repository; README states protected source bundles use a slightly different license",
+      "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "static_capabilities": [
+        "9 simulated apps",
+        "457 APIs",
+        "100+ database tables",
+        "state-based unit tests",
+        "unexpected-state/collateral-damage checks",
+        "task generator framework",
+        "database checkpoint and revert",
+        "online single-task evaluation"
+      ],
+      "execution_note": "Before scientific execution, verify exact license/data terms for downloaded or decrypted bundles and restrict controlled construction to legally usable released material."
+    },
+    {
+      "id": "APPWORLD-UL-ICML26",
+      "name": "AppWorld-UL",
+      "publication_status": "FORMALLY_PUBLISHED",
+      "venue": "ICML 2026",
+      "openreview_id": "cUXV9vtDXd",
+      "publication_url": "https://openreview.net/forum?id=cUXV9vtDXd",
+      "project_url": "https://appworld.dev/appworld-ul/",
+      "repo_url": "https://github.com/StonyBrookNLP/appworld.git",
+      "repo_sha": "a072b7a86e7c1d5b1d7175659d750ebb9b79f10a",
+      "role": "Constraint, confirmation, ambiguity, and infeasibility semantics reference; primary causal identification need not use the LLM user simulator."
+    },
+    {
+      "id": "TOOLSANDBOX-NAACL25",
+      "name": "ToolSandbox",
+      "publication_status": "FORMALLY_PUBLISHED",
+      "venue": "Findings of NAACL 2025",
+      "doi": "10.18653/v1/2025.findings-naacl.65",
+      "publication_url": "https://aclanthology.org/2025.findings-naacl.65/",
+      "repo_url": "https://github.com/apple/ToolSandbox.git",
+      "repo_sha": "165848b9a78cead7ca7fe7c89c688b58e6501219",
+      "repo_license": "Apple sample-code license with custom permissive terms; not represented here as an OSI license",
+      "license_sha256": "2283d5566b38210fbfb9fcb06619f1d0a8101bff9df974ea8afc3393508e9015",
+      "static_capabilities": [
+        "stateful tool execution",
+        "implicit state dependencies",
+        "complete state snapshot at every turn",
+        "Milestone DAG evaluation",
+        "intermediate and final milestones"
+      ]
+    },
+    {
+      "id": "WORKARENA-PLUSPLUS-NIPS24",
+      "name": "WorkArena++",
+      "publication_status": "FORMALLY_PUBLISHED",
+      "venue": "NeurIPS 2024 Datasets and Benchmarks Track",
+      "doi": "10.52202/079017-0195",
+      "publication_url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/0b82662b6c32e887bb252a74d8cb2d5e-Abstract-Datasets_and_Benchmarks_Track.html",
+      "repo_url": "https://github.com/ServiceNow/WorkArena.git",
+      "repo_sha": "a772230a94cf1caf4166b8ead3983f3b3786455b",
+      "repo_license": "Apache-2.0",
+      "license_sha256": "b192c58991e8ff585cc574615d40e74185404d4b96c1109d423071ab1367344b",
+      "static_capabilities": [
+        "682 realistic workflows",
+        "compositional task classes",
+        "validated subtasks",
+        "fixed subtask configurations",
+        "ground-truth observation/action trace generation mechanism"
+      ]
+    },
+    {
+      "id": "BROWSERGYM-CURRENT",
+      "name": "BrowserGym",
+      "publication_status": "FRAMEWORK",
+      "repo_url": "https://github.com/ServiceNow/BrowserGym.git",
+      "repo_sha": "9e779f087de9a65668b6974d11f9ce9816026e96",
+      "repo_license": "Apache-2.0",
+      "license_sha256": "b192c58991e8ff585cc574615d40e74185404d4b96c1109d423071ab1367344b"
+    },
+    {
+      "id": "TAU-BENCH-ICLR25-TAU3-CURRENT",
+      "name": "tau-bench lineage / current tau3-bench implementation",
+      "publication_status": "MIXED_LINEAGE",
+      "venue": "Original tau-bench: ICLR 2025",
+      "openreview_id": "roNSXZpUDN",
+      "publication_url": "https://openreview.net/forum?id=roNSXZpUDN",
+      "current_project_url": "https://taubench.com/",
+      "repo_url": "https://github.com/sierra-research/tau2-bench.git",
+      "repo_sha": "a2c024725189473d2d7cea3a5cfdbcc67478e41f",
+      "repo_license": "MIT",
+      "license_sha256": "e67c5aa0074dfcaefd3c3a1aedb94cb539234aecd15d5a972574e3200e6252fe",
+      "freshness_note": "The old tau-bench task repository is no longer the current task source. The current tau2-bench repository identifies tau3-bench as the active successor; do not attribute every 2026 tau3 component to the ICLR 2025 paper."
+    },
+    {
+      "id": "OSWORLD-NIPS24",
+      "name": "OSWorld",
+      "publication_status": "FORMALLY_PUBLISHED",
+      "venue": "NeurIPS 2024 Datasets and Benchmarks Track",
+      "doi": "10.52202/079017-1650",
+      "publication_url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/5d413e48f84dc61244b6be550f1cd8f5-Abstract-Datasets_and_Benchmarks_Track.html",
+      "repo_url": "https://github.com/xlang-ai/OSWorld.git",
+      "repo_sha": "fc31a9049664292fcb35d6e501ee1dc839f2cf6d",
+      "repo_license": "Apache-2.0",
+      "license_sha256": "a8d1d88a0f9cce3cdbff73b03a80dc5e5d69e3ba2443946c268815a550c9e0ec",
+      "freshness_note": "Current repository directs users to OSWorld-Verified for revised benchmark signals; primary mechanism use is still rejected due GUI/VM confounds."
+    },
+    {
+      "id": "WEBARENA-VERIFIED",
+      "name": "WebArena-Verified",
+      "publication_status": "VERIFIED_BENCHMARK_RELEASE",
+      "repo_url": "https://github.com/ServiceNow/webarena-verified.git",
+      "repo_sha": "6473f72db5dcefc97b5725b59e734504edc28a21",
+      "repo_license": "Apache-2.0",
+      "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "id": "SKILLLEARNBENCH-COLM26",
+      "name": "SkillLearnBench",
+      "publication_status": "ACCEPTED_FOR_COLM_2026_AS_OF_AUDIT_DATE",
+      "venue": "COLM 2026",
+      "arxiv_id": "2604.20087",
+      "project_url": "https://cxcscmu.github.io/SkillLearnBench/",
+      "repo_url": "https://github.com/cxcscmu/SkillLearnBench.git",
+      "repo_sha": "a0da045a8bf64b8a8ff20730c4d6ef10dc4e2c5b",
+      "repo_license": "MIT",
+      "license_sha256": "d4a5e863f521c0fe405a0d94271be34740539f9dfa973c99ab883a771f7fa622",
+      "role": "External-validity and continual-skill collision reference, not primary topology substrate."
+    },
+    {
+      "id": "SKILLFLOW-2026",
+      "name": "SkillFlow",
+      "publication_status": "ARXIV_ONLY_IN_THIS_AUDIT",
+      "arxiv_id": "2604.17308",
+      "repo_url": "https://github.com/ZhangZi-a/SkillFlow.git",
+      "repo_sha": "7b49ff5a7e26cd7706e959bfa0dba4746d18440d",
+      "role": "Longitudinal persistent-skill collision reference."
+    }
+  ],
+  "hash_policy": "Repository SHA and locally inspected license SHA-256 identify the audited static source snapshot; they are not scientific-result provenance.",
+  "scientific_outcomes_observed": 0,
+  "provider_calls": 0,
+  "gpu_runs": 0
+}

@@ -1,0 +1,149 @@
+{
+  "schema_version": "agent-constraint-externality-novelty-audit-v1",
+  "generated_at": "2026-08-31T15:38:17+08:00",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "audit_scope": "Bounded current-source audit centered on 2024-2026 self-evolving/continual/memory/skill/workflow agents, update interference/forgetting, skill-induced harm, persistent-agent evaluation, and topology/coupling terminology. Official proceedings are used when available and arXiv-only status is kept explicit.",
+  "internal_collision_matrix": [
+    {
+      "our_claim": "Topology/coupling of non-target constraints predicts propagation of a frozen local update.",
+      "existing_local_object": "update-surface-router / PF-2 Repair-Surface Identifiability under Persistent Updates",
+      "collision_type": "DIRECT_IF_SURFACES_ARE_COMPARED",
+      "residual_novelty": "Fix exactly one update surface and study effect propagation over constraints, not surface choice.",
+      "required_distinction": "Primary mechanism experiment may not compare memory vs prompt vs workflow or route updates among surfaces."
+    },
+    {
+      "our_claim": "A valid local repair can cause non-target behavioral regression.",
+      "existing_local_object": "semantic-commit-gap-collision-20260824",
+      "collision_type": "MATURE_LIFECYCLE_REDUCTION",
+      "residual_novelty": "Begin only after persisted-artifact validity and executor exposure/uptake are observable; explain the distribution of effects across a predeclared constraint graph.",
+      "required_distinction": "Persistence, semantic validity, retrieval/exposure, and uptake are inclusion controls, not the paper contribution."
+    },
+    {
+      "our_claim": "Interaction structure matters for harmful effects.",
+      "existing_local_object": "B-3 Co-Retrieval Interaction Exclusion Graph",
+      "collision_type": "PARTIAL_GRAPH_INTERACTION",
+      "residual_novelty": "Nodes here are task constraints/obligations and edges are environment-resource/prerequisite dependencies; one local update is the exposure.",
+      "required_distinction": "Do not turn the paper into pairwise memory co-retrieval detection or an exclusion-graph method."
+    },
+    {
+      "our_claim": "Future harm can follow experience persistence.",
+      "existing_local_object": "F-3 Residual-State Effect Admission",
+      "collision_type": "PARTIAL_FUTURE_HARM",
+      "residual_novelty": "No admission/write-selection claim. Measure whether topology predicts where a fixed already-persisted benign update changes previously correct behavior.",
+      "required_distinction": "Do not learn an admission score or choose write/summarize/quarantine in the primary paper."
+    },
+    {
+      "our_claim": "Self-evolution can alter future safety behavior.",
+      "existing_local_object": "AGENT-SAFETY-R9 Temporal Safety Conclusions Are Evaluator-Relative",
+      "collision_type": "ADJACENT_TEMPORAL_SAFETY",
+      "residual_novelty": "Current object is not evaluator-relative temporal safety; it is constraint-graph-conditioned externality after a target repair.",
+      "required_distinction": "No temporal-hazard/evaluator-relative principal claim and no reuse of the R9 primary substrate/evidence."
+    },
+    {
+      "our_claim": "Memory/state changes may not map uniformly to behavior.",
+      "existing_local_object": "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE / C1",
+      "collision_type": "ADJACENT_STAGE_TRANSPORT",
+      "residual_novelty": "Current object tests a structural moderator of behavioral externality, not proxy reward or stage-local transport attenuation.",
+      "required_distinction": "Do not reuse C1 outcomes or claim generic memory divergence."
+    },
+    {
+      "our_claim": "A local repair should be regression-checked before commit.",
+      "existing_local_object": "controlled-intervention / intervention-certified correction commit-gate family",
+      "collision_type": "METHOD_LEVEL_COLLISION_IF_PREMATURE",
+      "residual_novelty": "Regression checking may appear only as a mechanism-derived method hypothesis after the coupling mechanism passes.",
+      "required_distinction": "Pre-F0 contribution is mechanism identification, not a generic post-update test gate."
+    }
+  ],
+  "external_collision_matrix": [
+    {
+      "work": "Your Agent May Misevolve: Emergent Risks in Self-evolving LLM Agents",
+      "status": "ICLR 2026",
+      "source_id": "ICLR-2026-10010580",
+      "url": "https://iclr.cc/virtual/2026/poster/10010580",
+      "collision": "BROAD_DIRECT_TOPIC_COLLISION",
+      "already_covers": "Unintended/harmful consequences across model, memory, tool, and workflow evolution pathways.",
+      "residual": "Novelty cannot be that self-evolution has side effects. It must be the causal structural law relating a benign local update to outcome-blind constraint coupling/distance under matched count, magnitude, surface, difficulty, backbone, and harness."
+    },
+    {
+      "work": "Agent-Dice: Disentangling Knowledge Updates via Geometric Consensus for Agent Continual Learning",
+      "status": "Findings of ACL 2026",
+      "source_id": "2026.findings-acl.908",
+      "url": "https://aclanthology.org/2026.findings-acl.908/",
+      "collision": "GENERIC_FORGETTING_AND_UPDATE_INTERFERENCE",
+      "already_covers": "Agent continual-learning stability-plasticity and conflicting/shared parameter updates via gradient geometry.",
+      "residual": "The primary update here is non-parametric and fixed; the moderator is external constraint/resource topology and graph distance rather than gradient directional conflict."
+    },
+    {
+      "work": "Agent Skills Can Be Harmful: An Empirical Study of Skill-Induced Failures in LLM Agents",
+      "status": "ARXIV_ONLY_AS_OF_AUDIT",
+      "source_id": "arXiv:2608.11888",
+      "url": "https://arxiv.org/abs/2608.11888",
+      "collision": "CLOSE_PAIRED_HARM_ATTRIBUTION",
+      "already_covers": "Paired skill-guided versus no-skill/semantically matched runs to attribute functional and efficiency regressions.",
+      "residual": "Do not claim novelty for paired harm attribution. The decisive variable must be a predeclared constraint graph and same-update topology manipulation with distance-resolved non-target regression."
+    },
+    {
+      "work": "Practice Makes Unsafe: Skill Misevolution in Self-Improving LLM Agents",
+      "status": "ARXIV_ONLY_AS_OF_AUDIT",
+      "source_id": "arXiv:2608.12851",
+      "url": "https://arxiv.org/abs/2608.12851",
+      "collision": "PERSISTENT_SKILL_LIFECYCLE_AND_FRESH_SESSION_HARM",
+      "already_covers": "Persistent skill authoring, retrieval, reuse, and fresh-session harm after unsafe/compromised experience.",
+      "residual": "Use benign target-scoped repair and require structural coupling prediction rather than unsafe-content contamination or lifecycle attribution."
+    },
+    {
+      "work": "SkillLearnBench: Benchmarking Continual Learning Methods for Agent Skill Generation on Real-World Tasks",
+      "status": "COLM 2026 ACCEPTED",
+      "source_id": "arXiv:2604.20087 / COLM26 project",
+      "url": "https://cxcscmu.github.io/SkillLearnBench/",
+      "collision": "CONTINUAL_SKILL_BENCHMARK",
+      "already_covers": "Skill generation from experience, self/teacher feedback, trajectory and outcome evaluation, including recursive-drift observations.",
+      "residual": "No claim that continual skill learning is new; constraint topology is not a native manipulated variable there."
+    },
+    {
+      "work": "SkillFlow",
+      "status": "ARXIV_ONLY_AS_OF_AUDIT",
+      "source_id": "arXiv:2604.17308",
+      "url": "https://arxiv.org/abs/2604.17308",
+      "collision": "LONGITUDINAL_PERSISTENT_SKILL_PATCHES",
+      "already_covers": "Persistent skill patches and cross-task workflow learning/failure modes.",
+      "residual": "Topology-conditioned propagation remains distinct only if the same update and matched task family isolate structural exposure."
+    },
+    {
+      "work": "Diversity Collapse in Multi-Agent LLM Systems: Structural Coupling and Collective Failure in Open-Ended Idea Generation",
+      "status": "Findings of ACL 2026",
+      "source_id": "2026.findings-acl.13",
+      "url": "https://aclanthology.org/2026.findings-acl.13/",
+      "collision": "TERMINOLOGY_AND_TOPOLOGY_ADJACENCY",
+      "already_covers": "Communication topology/structural coupling among multiple agents causing diversity collapse.",
+      "residual": "Avoid generic structural-coupling novelty. Here graph nodes are constraints within one self-evolving-agent task family, the intervention is one local self-update, and the outcome is target-vs-non-target behavioral change."
+    },
+    {
+      "work": "AppWorld",
+      "status": "ACL 2024",
+      "source_id": "2024.acl-long.850",
+      "url": "https://aclanthology.org/2024.acl-long.850/",
+      "collision": "EVALUATOR_CONSTRUCT_ADJACENCY",
+      "already_covers": "State-based unit tests that detect unexpected environment changes/collateral damage within an agent task.",
+      "residual": "Do not relabel AppWorld collateral-damage scoring as self-evolution evidence. The new construct is a before/after change attributable to one persistent local agent update and decomposed by constraint coupling."
+    }
+  ],
+  "direct_collision_search_adjudication": {
+    "question": "Has prior work directly tested whether the same target-local self-update causes different non-target regression as a function of an outcome-blind constraint-interaction topology or graph distance while controlling update magnitude, count, difficulty, surface, backbone, and harness?",
+    "result": "NO_DIRECT_COLLISION_LOCATED_IN_BOUNDED_AUDIT",
+    "caveat": "This is a bounded novelty audit, not proof that no such work exists. Broad side-effect, forgetting, persistent-skill-harm, paired-harm-attribution, and topology-adjacent collisions are already present and materially narrow the claim.",
+    "required_principal_claim": "Under one fixed persistent update surface, test whether predeclared constraint coupling causally moderates collateral behavioral change from the same benign local repair after matched count, update magnitude, task difficulty, backbone, and harness controls.",
+    "forbidden_novelty_claims": [
+      "self-evolution can be harmful",
+      "skills can hurt performance",
+      "catastrophic forgetting occurs in agents",
+      "topology matters in AI systems",
+      "post-update regression testing is useful"
+    ]
+  },
+  "internal_verdict": "PASS_WITH_HARD_BOUNDARY",
+  "external_verdict": "PASS_WITH_NARROWING",
+  "scientific_outcomes_observed": 0,
+  "provider_calls": 0,
+  "gpu_runs": 0
+}

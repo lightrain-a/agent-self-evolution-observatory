@@ -1,0 +1,280 @@
+{
+  "schema_version": "agent-constraint-externality-pre-f0-v1",
+  "generated_at": "2026-08-31T15:38:17+08:00",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "authority_namespace": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "canonical_base_sha": "c8e8c24698e08ce7b25787617fdf739d2bff304e",
+  "worktree_branch": "research/agent-constraint-externality-20260831",
+  "status": "PRE_F0_AGENT_CHILD_PASS_PROPOSAL_ONLY",
+  "scientific_object": {
+    "working_title": "Local Repairs, Non-Local Effects: Constraint-Coupled Externalities in Self-Evolving Agents",
+    "question": "When a self-evolving agent performs a local benign repair, what determines whether that repair remains local or causes unintended behavioral changes elsewhere?",
+    "testable_question": "With one update surface, backbone, harness, target repair, update artifact, constraint count, and matched pre-update difficulty held fixed, does an outcome-blind constraint-interaction topology causally change the probability that previously satisfied non-target constraints become violated?",
+    "mechanism_candidate": "CONSTRAINT_COUPLING_EXTERNALITY",
+    "claim_stage": "HYPOTHESIS_ONLY",
+    "paper_story_sentence": "We test whether constraint coupling explains collateral effects of local self-updates.",
+    "forbidden_claim": "We discover constraint coupling causes global interference."
+  },
+  "constructs": {
+    "constraint": {
+      "definition": "A semantic task obligation or invariant compiled before agent execution into a programmatically evaluable predicate phi_j over AppWorld initial/final database state and, only where required, declared trajectory/interaction state. Multiple raw assertions that implement one obligation must be grouped into one ConstraintSpec rather than counted as independent constraints.",
+      "required_fields": [
+        "constraint_id",
+        "semantic_obligation",
+        "predicate_ref",
+        "resources_read",
+        "resources_written",
+        "tools_or_apis",
+        "prerequisites",
+        "source_generator",
+        "visibility_to_agent"
+      ],
+      "outcome_blind": true
+    },
+    "interaction_edge": {
+      "definition": "An edge between c_j and c_k is declared before model outcomes when their static ConstraintSpecs share a causal resource or explicit prerequisite: overlapping mutable database entity/table/field, a state-changing API with overlapping resource footprint, or a directed temporal/read-after-write prerequisite. Semantic similarity alone and observed co-failure never create an edge.",
+      "edge_types": [
+        "SHARED_MUTABLE_STATE",
+        "SHARED_STATE_CHANGING_API_RESOURCE",
+        "TEMPORAL_PREREQUISITE",
+        "READ_AFTER_WRITE_DEPENDENCY"
+      ],
+      "forbidden_edge_sources": [
+        "post-update co-failure",
+        "model trajectory similarity",
+        "embedding similarity alone",
+        "terminal outcome correlation"
+      ],
+      "directed_where_semantic": true
+    },
+    "graph_statistics": [
+      "target degree",
+      "max degree",
+      "target betweenness",
+      "shortest-path distance from target",
+      "connected-component size",
+      "shared mutable-state count",
+      "shared state-changing API count",
+      "temporal dependency depth",
+      "affected closure size"
+    ],
+    "local_benign_update": {
+      "primary_surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE",
+      "definition": "One content-addressed, reversible agent-side procedural rule generated from the target failure slice and target ConstraintSpec only. The updater may not see non-target outcomes or topology labels. Benign means target-scoped intent/content, not that future effects are assumed safe or beneficial.",
+      "scope_controls": [
+        "single artifact",
+        "append/apply atomically",
+        "removable without altering base agent",
+        "exact bytes reused inside same-update pairs",
+        "fixed injection position",
+        "fixed retrieval/exposure rule",
+        "target-only updater input",
+        "no non-target outcome access"
+      ],
+      "magnitude_fields": [
+        "byte_length",
+        "fixed-tokenizer token_count",
+        "procedural_clause_count"
+      ]
+    },
+    "update_target": "The unique preregistered target ConstraintSpec c_i supplied to the updater. A scientific unit is eligible only under preregistered pre-update criteria; no post-update result can change target identity."
+  },
+  "metrics": {
+    "constraint_state": "phi_j(A,m,w) in {0,1}",
+    "eligible_non_target_set": "S_i = {j != i : phi_j(pre-update)=1}",
+    "target_repair_gain": "TRG_i = phi_i(update replay) - phi_i(no-update counterfactual replay), aggregated only under the preregistered estimator.",
+    "collateral_regression_rate": "CRR_i = sum_{j in S_i} 1[phi_j(update replay)=0] / |S_i|.",
+    "spontaneous_regression_control": "CRR0_i uses an otherwise identical no-update reset/replay; update-attributable externality is CRR_i - CRR0_i.",
+    "update_externality": "UE_i = CRR_update_i - CRR_no_update_i. Negative values are retained rather than clipped.",
+    "propagation_profile": "P(d) = Pr(non-target regression | shortest-path distance(target,j)=d, baseline satisfied), with shared-resource exposure reported alongside distance.",
+    "global_task_success": "SECONDARY_ONLY",
+    "per_case_per_constraint_required": true
+  },
+  "topology_contract": {
+    "independent": "Same constraint count; target and non-target obligations use disjoint mutable resources and no prerequisite path.",
+    "chain": "Directed prerequisite/read-after-write sequence c1 -> c2 -> ... using benchmark-semantic dependencies.",
+    "hub": "Target or a fixed central obligation shares a real state/API dependency with multiple non-target obligations.",
+    "cycle": "NOT_PRIMARY; allowed only if an actual benchmark workflow has a semantically valid directed cycle before outcomes.",
+    "outcome_blind_generation": true,
+    "count_matched": true
+  },
+  "competing_hypotheses": [
+    {
+      "id": "H1",
+      "name": "UPDATE_MAGNITUDE",
+      "prediction": "Larger update artifacts explain collateral regression; with exact same-update pairing or magnitude matching, topology effect should vanish."
+    },
+    {
+      "id": "H2",
+      "name": "CONSTRAINT_COUNT",
+      "prediction": "Number of obligations, not their interaction structure, explains regression; at fixed count topology contributes no residual effect."
+    },
+    {
+      "id": "H3",
+      "name": "TASK_DIFFICULTY",
+      "prediction": "Harder tasks both trigger repair and regress more; after preregistered baseline-difficulty matching topology effect vanishes."
+    },
+    {
+      "id": "H4",
+      "name": "UPDATE_SURFACE",
+      "prediction": "A particular update surface may be intrinsically risky. The primary experiment cannot test this by switching surfaces; the surface is frozen and this remains a later generalization hypothesis."
+    },
+    {
+      "id": "H5",
+      "name": "CONSTRAINT_COUPLING_EXTERNALITY",
+      "prediction": "After fixing count, update bytes/magnitude, pre-update difficulty, backbone, harness, and update surface, graph coupling to the target still predicts newly violated non-target constraints; regression risk should decline with target-graph distance or increase with shared-resource exposure."
+    },
+    {
+      "id": "H6",
+      "name": "CAPABILITY_MASKING",
+      "prediction": "A stronger executor may suppress observed regressions through compensation, while a weak executor may create floor effects; capability must be prequalified on a disjoint calibration split and cannot be changed after decisive outcomes."
+    }
+  ],
+  "decisive_experiment": {
+    "name": "MATCHED_LOCAL_REPAIR_EXTERNALITY",
+    "substrate": "AppWorld-Externality (benchmark-derived controlled train/dev task family; not official leaderboard)",
+    "unit": "A repair family r contains one frozen source failure, one frozen candidate update u_r, and matched composite probe worlds whose target obligation is held fixed while non-target coupling is assigned outcome-blind.",
+    "same_update_design": [
+      "Use a target-only or target-isolated repair-source episode to create exactly one failure slice and candidate u_r before any post-update probe outcomes are opened.",
+      "Freeze u_r by SHA-256; identical bytes, injection position, retrieval/exposure rule, backbone, and harness are reused in every topology arm for that repair family.",
+      "Generate independent/chain/hub composite probes from task-generator metadata before model outcomes, matching constraint count, instruction-template budget, difficulty stratum, app/tool budget, and target obligation.",
+      "Run frozen pre-update probes from checkpointed initial state to establish target/non-target baseline constraint vector under preregistered eligibility rules.",
+      "For each eligible probe, reset to the exact initial state and run a no-update counterfactual replay; separately reset and run the update replay.",
+      "Measure target gain, per-constraint new violations, update-attributable externality, and graph-distance/shared-resource propagation. Keep all zero/negative target gains; do not select updates by post-update success."
+    ],
+    "primary_estimand": "Within-repair-family difference in update-attributable non-target regression between coupled and independent topology arms, with the exact same u_r. A hierarchical constraint-level model may estimate beta_coupling while repair-family effects absorb update-specific variance.",
+    "required_controls": [
+      "same backbone",
+      "same model/version/decoding",
+      "same harness",
+      "same tools",
+      "same update mechanism",
+      "same update surface",
+      "same candidate update within paired family",
+      "same constraint count",
+      "matched instruction length",
+      "matched pre-update difficulty under disjoint calibration rules",
+      "same reset snapshot within a probe",
+      "no-update replay",
+      "outcome-blind topology assignment"
+    ],
+    "not_allowed": [
+      "choose u_r after seeing collateral outcomes",
+      "drop zero-gain or harmful updates after post-update observation",
+      "change update surface across primary arms",
+      "change model because an effect is weak",
+      "use terminal success as the only endpoint"
+    ]
+  },
+  "causal_language_rule": "Correlation of observed graph statistics with regression is diagnostic. Causal propagation language is allowed only for the preregistered topology manipulation/randomized-isomorphic matched construction; where regression occurs is not by itself why regression occurs.",
+  "falsification": {
+    "H5_clear_falsifiers": [
+      "In same-update matched pairs, coupled and independent arms have no practically meaningful difference under the preregistered equivalence/non-inferiority region, and graph distance has no ordered relationship with regression.",
+      "Any apparent topology effect disappears when exact shared mutable-resource exposure is held fixed, showing that the chosen graph label adds no mechanism beyond a simpler exposure count.",
+      "Update magnitude, constraint count, or pre-update difficulty explains the effect while beta_coupling is null under preregistered controls.",
+      "Graph-disconnected constraints regress at the same update-attributable rate as graph-near constraints across repair families."
+    ],
+    "if_H5_fails": "Do not create Coupling-Aware Update Scoping as a contribution. Adjudicate mechanism failure and either reformulate around the surviving competing explanation or stop."
+  },
+  "capability_masking": {
+    "rule": "Backbone choice occurs only after substrate qualification and from a disjoint capability-calibration protocol. The decisive causal contrast stays within one fixed backbone.",
+    "floor_rule": "If the chosen model cannot satisfy enough non-target baseline constraints or cannot execute core AppWorld tasks on the disjoint qualification split, declare capability floor and do not infer absence or presence of coupling.",
+    "ceiling_rule": "If the chosen model almost never produces target failures or compensates all perturbations on the disjoint qualification split, move to a preregistered harder stratum or alternate predeclared backbone before opening decisive outcomes; never switch after seeing the topology estimate.",
+    "validation_model": "A second capability level is external-validity validation only after the primary mechanism decision."
+  },
+  "mechanism_derived_method_hypothesis": {
+    "name": "COUPLING_AWARE_UPDATE_SCOPING",
+    "status": "HYPOTHESIS_ONLY_NOT_A_CONTRIBUTION",
+    "pipeline": "Failure -> Candidate Update -> Constraint Dependency Graph -> Affected Closure -> Scoped Update -> Counterfactual Regression Check -> Commit/Reject",
+    "activation_condition": "Only after qualified evidence supports H5."
+  },
+  "pre_f0_questions": {
+    "1_best_substrate": "AppWorld-Externality, a controlled extension of AppWorld train/dev with AppWorld-UL semantics as reference.",
+    "2_why_better": "It uniquely combines realistic multi-app state, controllable local databases, checkpoints, task generators, collateral-damage unit tests, and strong audience relevance.",
+    "3_longitudinal_persistent_update": "Not native; identifiable by an explicit agent-side procedural artifact that persists while each world replay is reset. This extension is part of the scientific contract.",
+    "4_true_constraint": "A semantic obligation/invariant compiled to a programmatic predicate, not an arbitrary raw assertion count.",
+    "5_edge_definition": "Static shared mutable resource, shared state-changing API resource, or prerequisite dependency only; never outcome-derived.",
+    "6_outcome_blind_topology": "Yes, via task-generator/evaluator metadata and pre-generated matched task families before model execution.",
+    "7_local_benign_update": "One target-only, content-addressed, reversible procedural repair note with no non-target outcome or topology access.",
+    "8_update_target": "One preregistered target ConstraintSpec c_i that defines updater input and target gain.",
+    "9_programmatic_collateral": "Baseline-satisfied non-target predicates that newly fail on update replay, differenced against a no-update reset replay.",
+    "10_same_update_possible": "Yes, by generating u_r once per repair-source episode and reusing exact bytes across matched topology probes.",
+    "11_vs_magnitude": "Exact same-update pairs make update byte/token/clause magnitude identical; remaining across-family magnitude is a covariate or stratum, not the topology intervention.",
+    "12_vs_forgetting": "The prediction is target-centered and graph-structured: regression risk varies with predeclared coupling/distance from a targeted local update. Generic old-task decline without this structure does not support H5.",
+    "13_model_strength": "Use disjoint capability calibration, predeclared floor/ceiling rules, one primary backbone for identification, and one later validation backbone.",
+    "14_external_collision": "Broad misevolution, forgetting, continual-skill, and skill-harm collisions exist; no direct same-update constraint-topology test was located in the bounded audit. Claim must remain narrow.",
+    "15_internal_collision": "Surface routing, admission, lifecycle uptake, memory interaction, temporal safety, and proxy-reward objects are explicitly excluded from the principal claim.",
+    "16_falsifier": "No topology/distance residual in same-update matched arms after controls, or collapse to a simpler shared-resource exposure/count explanation, falsifies H5."
+  },
+  "gates": {
+    "A_INTERNAL_NOVELTY_RESIDUAL": {"status": "PASS", "note": "Passes only with fixed update surface and post-validity/uptake starting boundary."},
+    "B_EXTERNAL_NOVELTY_RESIDUAL": {"status": "PASS", "note": "No direct collision located in bounded audit; broad side-effect/forgetting/skill-harm claims are forbidden."},
+    "C_QUALIFIED_AGENT_SUBSTRATE": {"status": "PASS", "note": "AppWorld engine/evaluator qualifies; persistent-update experiment requires explicitly labeled benchmark-derived controlled extension."},
+    "D_PERSISTENT_UPDATE_IDENTIFIABLE": {"status": "PASS", "note": "One agent-side procedural artifact persists; environment state is reset."},
+    "E_CONSTRAINT_GRAPH_IDENTIFIABLE": {"status": "PASS", "note": "ConstraintSpec compiler plus static resource/prerequisite edges."},
+    "F_COLLATERAL_OUTCOME_PROGRAMMATIC": {"status": "PASS", "note": "Per-constraint evaluator predicates plus no-update replay."},
+    "G_UPDATE_TARGET_IDENTIFIABLE": {"status": "PASS", "note": "Unique target ConstraintSpec before post-update outcomes."},
+    "H_UPDATE_MAGNITUDE_CONTROL_IDENTIFIABLE": {"status": "PASS", "note": "Exact same artifact bytes within decisive pair; token/byte/clause fields across families."},
+    "I_GENERIC_FORGETTING_DISTINGUISHABLE": {"status": "PASS", "note": "Requires target-centered graph-distance/coupling prediction, not aggregate old-task decline."},
+    "J_CAPABILITY_MASKING_RULES_DEFINED": {"status": "PASS", "note": "Disjoint calibration and frozen model after outcome opening."},
+    "K_DECISIVE_EXPERIMENT_IDENTIFIABLE": {"status": "PASS", "note": "Same-update matched topology plus no-update counterfactual reset/replay."},
+    "L_3D_PAPER_BOUNDARY_PASS": {"status": "PASS", "note": "Independent dataset, model, metric, intervention, evidence, and principal claim contract."},
+    "M_AUTHORITY_ZERO": {"status": "PASS", "note": "No provider, GPU, P0/P1, method, or scientific execution authority granted."},
+    "N_NO_SCIENTIFIC_OUTCOME_USED": {"status": "PASS", "note": "Only literature facts and static source/schema inspection were used."}
+  },
+  "paper_story_hypothesis_level": [
+    "Self-evolving agents increasingly retain and reuse experience.",
+    "Existing evaluation often emphasizes whether adaptation improves later performance.",
+    "A target-local repair may also alter behavior beyond its intended target.",
+    "Raw update size or constraint count need not identify this interference.",
+    "We test whether structural coupling among constraints predicts update externality.",
+    "A controlled realistic substrate separates target gain from collateral regression.",
+    "The decisive design reuses the same candidate update across matched interaction contexts.",
+    "Propagation is decomposed by graph distance and shared-resource exposure.",
+    "A coupling-aware scoping method is considered only if the mechanism survives.",
+    "If unsupported, the mechanism is falsified or reformulated rather than forced into a method claim."
+  ],
+  "figure_table_schema": {
+    "Figure1": "local repair -> target behavior plus possible collateral propagation; conceptual only",
+    "Figure2": "constraint graph examples: independent / chain / hub; no result values",
+    "Figure3": "same-update matched-local-repair externality design with reset/no-update control",
+    "Figure4": "reserved result schema: externality versus graph distance/coupling; empty until authorized outcomes exist",
+    "MainTable": "reserved schema: target gain plus collateral regression across qualified models/substrates; empty until authorized outcomes exist",
+    "Ablation": "reserved schema: magnitude / count / topology / capability",
+    "MethodFigure": "FORBIDDEN_UNTIL_MECHANISM_PASS"
+  },
+  "authority": {
+    "provider": false,
+    "gpu": false,
+    "scientific_execution": false,
+    "p0": false,
+    "p1": false,
+    "method": false,
+    "paper_claim": false
+  },
+  "artifact_policy": {
+    "scientific_outcomes_observed": 0,
+    "scientific_provider_calls": 0,
+    "scientific_gpu_runs": 0,
+    "no_unrelated_trajectory_reuse": true,
+    "no_3d_evidence_projection": true,
+    "per_case_per_constraint_append_only_required_for_future_execution": true,
+    "content_addressed_update_required_for_future_execution": true
+  },
+  "stop_reopen_conditions": {
+    "stop_or_reformulate_if": [
+      "Direct prior work is found that already identifies the same same-update topology mechanism.",
+      "Constraint edges cannot be defined without outcomes.",
+      "Same-update topology manipulation cannot be made without changing target repair semantics.",
+      "Per-constraint evaluator cannot separate new non-target violations from terminal failure.",
+      "Apparent topology reduces completely to count, magnitude, difficulty, or a simpler shared-resource exposure explanation under preregistered controls."
+    ],
+    "reopen_execution_discussion_only_after": [
+      "Pre-F0 artifact/test integrity holds on the live canonical.",
+      "AppWorld exact data/bundle license and revision are verified.",
+      "Constraint compiler produces outcome-blind matched families in static/non-scientific preflight.",
+      "Backbone capability qualification protocol is frozen.",
+      "Explicit separate provider/GPU/scientific execution authority is granted."
+    ]
+  }
+}
