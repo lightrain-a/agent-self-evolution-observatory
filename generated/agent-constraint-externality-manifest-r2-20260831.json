@@ -1,0 +1,51 @@
+{
+  "schema_version": "agent-constraint-externality-manifest-r2-v1",
+  "generated_at": "2026-08-31T16:24:17+08:00",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "live_canonical_sha_at_start": "4da10aa7a8d2c2acdd0a8fbe2bbca6e48ff7d83b",
+  "role": "R2 red-team continuation manifest; base Pre-F0 artifacts remain immutable and this addendum supersedes them only where explicitly conflicting.",
+  "files": {
+    "generated/agent-constraint-externality-pre-f0-20260831.json": {
+      "sha256": "f91cc3121827c03952e9df6a36c4ceb5db76000434368f3e940bee12a494712d",
+      "bytes": 20947
+    },
+    "generated/agent-constraint-externality-substrate-audit-20260831.json": {
+      "sha256": "cda3330565017f6f8b4ae9e7e9dda3f174896d9607a470639474fe86d4552206",
+      "bytes": 12903
+    },
+    "generated/agent-constraint-externality-source-audit-20260831.json": {
+      "sha256": "3d97b4cf7e02aa94638e032d048229b04d9e8aebb81a3ee98f74d8f26a394ce3",
+      "bytes": 7603
+    },
+    "generated/agent-constraint-externality-novelty-audit-20260831.json": {
+      "sha256": "9e3d0650da35b4d08713283d136cc402db63ab3736638f4312ddb47100e9289e",
+      "bytes": 10632
+    },
+    "generated/agent-constraint-externality-paper-boundary-contract-20260831.json": {
+      "sha256": "4f47cf5bf32c29266b0af6007dcdea0cb2b263898dbd4634c52eb47ad71bf87e",
+      "bytes": 1445
+    },
+    "generated/agent-constraint-externality-pre-f0-redteam-r2-20260831.json": {
+      "sha256": "f313c21e40101c5304d62300bc2390012a2b9c95d31d24773b52aadbe0ddc7cf",
+      "bytes": 13181
+    },
+    "research_pipeline/test_agent_constraint_externality_pre_f0.py": {
+      "sha256": "7bf8f420de551a3c89965bd983bd0edfb326bce200293c4b4072dfe2bae5090f",
+      "bytes": 11373
+    },
+    "research_pipeline/test_agent_constraint_externality_redteam_r2.py": {
+      "sha256": "86dc9be0be1b07fc11245319e50ace32fe934348ffbc2238d9df3891202d36b0",
+      "bytes": 6043
+    }
+  },
+  "scientific_outcomes_observed": 0,
+  "authority": {
+    "provider": false,
+    "gpu": false,
+    "scientific_execution": false,
+    "p0": false,
+    "p1": false,
+    "method": false,
+    "paper_claim": false
+  }
+}

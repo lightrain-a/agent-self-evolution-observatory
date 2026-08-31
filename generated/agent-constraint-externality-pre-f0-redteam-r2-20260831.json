@@ -1,0 +1,225 @@
+{
+  "schema_version": "agent-constraint-externality-pre-f0-redteam-r2-v1",
+  "generated_at": "2026-08-31T16:20:00+08:00",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "live_canonical_sha_at_start": "4da10aa7a8d2c2acdd0a8fbe2bbca6e48ff7d83b",
+  "supersedes_where_conflicting": [
+    "the first-pass novelty breadth in generated/agent-constraint-externality-novelty-audit-20260831.json",
+    "any interpretation that collateral regression itself is novel",
+    "any interpretation that same-update means the full topology-arm world state is literally identical"
+  ],
+  "retained_gate": "PRE_F0_AGENT_CHILD_PASS_PROPOSAL_ONLY",
+  "authority": {
+    "provider": false,
+    "gpu": false,
+    "scientific_execution": false,
+    "p0": false,
+    "p1": false,
+    "method": false,
+    "paper_claim": false
+  },
+  "scientific_outcomes_observed": 0,
+  "static_source_reverification": {
+    "AppWorld": {
+      "repo_sha": "a072b7a86e7c1d5b1d7175659d750ebb9b79f10a",
+      "witnesses": [
+        {
+          "path": "guides/developing_new_task_generators.md",
+          "sha256": "d4f4fbb21d1ce7ef4260f47d95fab415fe0322f6349fce1a9f1aacbc0fd4470a"
+        },
+        {
+          "path": "src/appworld/evaluator.py",
+          "sha256": "bde9deb3b1e6ac0fa9819013729c0e817a97c90f579108fa032a90bba0ca51cb"
+        },
+        {
+          "path": "src/appworld/environment.py",
+          "sha256": "6f01aa53fbb29c1aac751c766c55af438ce5a612048c36671dbb8e877ee955ac"
+        }
+      ],
+      "supports": [
+        "task-generator setup uses task-local forked database state",
+        "evaluation compares start/end database state and checks expected plus no unexpected changes",
+        "TestTracker preserves requirement-level pass/fail details",
+        "environment exposes save_state/load_state checkpoints"
+      ],
+      "extension_boundary": "Semantic ConstraintSpec grouping and a persistent cross-episode procedural self-update are not native AppWorld leaderboard constructs; they remain an explicitly benchmark-derived controlled extension.",
+      "license_boundary": "Public portion is Apache-2.0. The audited README states protected task/app/API-specific bundles are Apache-2.0 with an added requirement that public redistribution of protected material or derivatives remain encrypted. Exact downloaded bundle/data revision must be rechecked before execution."
+    },
+    "ToolSandbox": {
+      "repo_sha": "165848b9a78cead7ca7fe7c89c688b58e6501219",
+      "witnesses": [
+        {
+          "path": "tool_sandbox/common/scenario.py",
+          "sha256": "95ca3ec161a8a66d98bfb1e00516a99c9f849f91bf10933e2d08aeb601543eb9"
+        },
+        {
+          "path": "README.md",
+          "sha256": "0e5cfb9077769e2dcbe74dbfc8b8fac8314d8a213ab34364ab6b2ecaf47d8fe8"
+        }
+      ],
+      "supports": [
+        "explicit initial world state",
+        "complete state snapshot every turn",
+        "stateful tools with implicit dependencies",
+        "Milestone DAG with directional dependency/order edges"
+      ]
+    },
+    "WorkArena++": {
+      "repo_sha": "a772230a94cf1caf4166b8ead3983f3b3786455b",
+      "witnesses": [
+        {
+          "path": "src/browsergym/workarena/tasks/compositional/base.py",
+          "sha256": "7886617e904ebd9beb942d97ecf49b63fec9ac82ee7b361ef8d4730d31021e29"
+        },
+        {
+          "path": "README.md",
+          "sha256": "834a48f0346036a0fc591a36f9eb6f513b44a2777a66afa0917f28fc63f29334"
+        }
+      ],
+      "supports": [
+        "fixed compositional configurations from atomic subtasks",
+        "shared credentials across subtasks",
+        "subtask-level validation",
+        "documented environment reset"
+      ]
+    }
+  },
+  "external_novelty_redteam": [
+    {
+      "work": "RECAP: Regression Evaluation for Continual Adaptation of Prompts",
+      "status": "arXiv:2606.06698 v3; no peer-reviewed venue located as of 2026-08-31",
+      "url": "https://arxiv.org/abs/2606.06698",
+      "collision": "NEAR_DIRECT_EVALUATION_CONSTRUCT_COLLISION",
+      "already_covers": "constraint-level continual adaptation, forgetting/regression, and collateral damage defined over non-target constraint types after a target operation",
+      "required_narrowing": "Collateral regression is not a novelty claim. Residual novelty must be stateful same-update structural moderation by outcome-blind mutable-resource/prerequisite coupling or graph distance."
+    },
+    {
+      "work": "Agent Skills Can Be Harmful: An Empirical Study of Skill-Induced Failures in LLM Agents",
+      "status": "arXiv:2608.11888",
+      "url": "https://www.microsoft.com/en-us/research/publication/agent-skills-can-be-harmful-an-empirical-study-of-skill-induced-failures-in-llm-agents/",
+      "collision": "PAIRED_HARM_ATTRIBUTION_COLLISION",
+      "already_covers": "paired skill-guided versus no-skill or semantically matched references to attribute functional and efficiency regressions",
+      "required_narrowing": "Paired attribution that a persistent skill can cause regression is not novel; topology/distance with one frozen update is the residual."
+    },
+    {
+      "work": "Self-Evolving Agents as Dynamic Graph Transformation: A Survey and New Perspective",
+      "status": "arXiv:2608.18104 preprint",
+      "url": "https://arxiv.org/abs/2608.18104",
+      "collision": "CONCEPTUAL_PROPAGATION_GRAPH_COLLISION",
+      "already_covers": "the generic claim that a local self-evolution update may propagate through dependent memories, tools, skills, workflows, or other components",
+      "required_narrowing": "Do not claim local-update propagation or dynamic-graph framing as new. The graph here must be task obligations/invariants connected by real environment resource/prerequisite dependencies and tested empirically."
+    },
+    {
+      "work": "Harness Updating Is Not Harness Benefit: Disentangling Evolution Capabilities in Self-Evolving LLM Agents",
+      "status": "arXiv:2605.30621 preprint",
+      "url": "https://arxiv.org/abs/2605.30621",
+      "collision": "CAPABILITY_MASKING_COLLISION",
+      "already_covers": "non-monotonic ability of different-capability backbones to benefit from persistent harness updates",
+      "required_narrowing": "Capability masking is a preregistered control and later validation axis, not the contribution."
+    },
+    {
+      "work": "ReasoningBank / Dynamic Cheatsheet / MUSE / Mem2Evolve",
+      "status": "ICLR 2026 / EACL 2026 / Findings ACL 2026 / ACL 2026",
+      "urls": [
+        "https://openreview.net/pdf/24a0425aa87cfcd0ba7344bbf5e11cdfe9e497f4.pdf",
+        "https://aclanthology.org/2026.eacl-long.333/",
+        "https://aclanthology.org/2026.findings-acl.1522/",
+        "https://aclanthology.org/2026.acl-long.952/"
+      ],
+      "collision": "PERSISTENT_SELF_EVOLUTION_AND_CROSS_TASK_REUSE_COLLISION",
+      "already_covers": "persistent reasoning/memory updates, post-execution experience distillation, and cross-task reuse/improvement",
+      "required_narrowing": "Persistent self-update and aggregate future gain are background, not novelty."
+    }
+  ],
+  "direct_collision_adjudication": {
+    "result": "NO_DIRECT_SAME_UPDATE_STATEFUL_CONSTRAINT_TOPOLOGY_COLLISION_LOCATED_IN_BOUNDED_AUDIT",
+    "caveat": "This is a bounded audit, not proof of absence.",
+    "residual_principal_claim": "In a stateful agent environment, test whether predeclared mutable-resource/prerequisite coupling among task obligations moderates the causal effect of one exact target-local persistent repair on previously satisfied non-target obligations, beyond no-update drift, update magnitude, constraint count, pre-update difficulty, update surface, backbone, and harness.",
+    "forbidden_novelty_claims": [
+      "constraint-level collateral damage is new",
+      "paired attribution of skill-induced regressions is new",
+      "local self-updates can propagate through dependency graphs is new",
+      "persistent evolving memory is new",
+      "capability can mask update benefit is new"
+    ]
+  },
+  "internal_collision_addendum": [
+    {
+      "existing_local_object": "feedback-to-write-coupling-topology",
+      "collision": "graph language plus causal routing adjacency",
+      "distinction": "that object graphs feedback channels to update surfaces; this object freezes one surface/update and graphs downstream task obligations/resources"
+    },
+    {
+      "existing_local_object": "compositional-update-compatibility / Typed Update-Interaction Rule Registry",
+      "collision": "interaction structure among multiple updates",
+      "distinction": "this object uses exactly one update; no multi-update composition, precedence, no-good clauses, or repair compiler"
+    },
+    {
+      "existing_local_object": "memory-interaction-clause-learner / B-3 interaction family",
+      "collision": "memory graph adjacency",
+      "distinction": "nodes here are task obligations with programmatic environment-resource/prerequisite edges, not memory items or co-retrieval interactions"
+    }
+  ],
+  "substrate_adjudication_r2": {
+    "rank_1": {
+      "name": "AppWorld-Externality",
+      "verdict": "PRIMARY",
+      "why": "Best balance of forkable stateful multi-app worlds, task-generator control, requirement-level state evaluation, explicit unexpected-change checks, checkpoint replay, and broad agent relevance.",
+      "critical_risk": "persistent self-update and semantic ConstraintSpec grouping are benchmark-derived extensions; exact protected data/bundle revision and license must be verified before scientific execution"
+    },
+    "rank_2": {
+      "name": "ToolSandbox",
+      "verdict": "SECONDARY_VALIDATION",
+      "why": "Native state snapshots and Milestone DAG give unusually clean dependency structure.",
+      "critical_risk": "Milestone ordering alone is not causal resource coupling; environment is narrower and user-simulator effects may dominate."
+    },
+    "rank_3": {
+      "name": "WorkArena++ on BrowserGym",
+      "verdict": "SECONDARY_VALIDATION",
+      "why": "Natural enterprise composition with fixed subtasks and per-subtask validation.",
+      "critical_risk": "browser/UI/ServiceNow reset and grounding noise can confound the primary causal contrast."
+    },
+    "reference_only": {
+      "name": "RECAP",
+      "why": "Closest metric/protocol collision but not a realistic shared-mutable-state tool environment and no outcome-blind independent/chain/hub resource topology is native."
+    }
+  },
+  "identification_corrections": {
+    "same_update": "EXACT_UPDATE_ARTIFACT + MATCHED_TOPOLOGY_CONTEXT, not literal same full world state across topology arms",
+    "primary_structural_variable": "predeclared mutable-resource/prerequisite exposure; independent/chain/hub motif labels are secondary summaries",
+    "simpler_mechanism_falsifier": "if shared mutable-resource exposure count absorbs motif/distance effects, reject or reformulate the richer topology mechanism",
+    "self_evolution_definition": "candidate update must be automatically generated from the agent/evolver own target failure evidence, persisted into later tasks, exposed by a frozen rule, and never human-edited after generation",
+    "collateral_metric_status": "outcome construct only; not a novelty contribution after RECAP"
+  },
+  "gate_addendum": {
+    "A_INTERNAL_NOVELTY_RESIDUAL": "PASS_WITH_HARDER_BOUNDARY",
+    "B_EXTERNAL_NOVELTY_RESIDUAL": "PASS_WITH_STRONG_NARROWING",
+    "C_QUALIFIED_AGENT_SUBSTRATE": "PASS_PROPOSAL_ONLY_AFTER_STATIC_SOURCE_REVERIFICATION",
+    "D_PERSISTENT_UPDATE_IDENTIFIABLE": "PASS_AS_EXPLICIT_NON_NATIVE_EXTENSION",
+    "K_DECISIVE_EXPERIMENT_IDENTIFIABLE": "PASS_EXACT_UPDATE_MATCHED_CONTEXT_NOT_LITERAL_SAME_WORLD",
+    "L_3D_PAPER_BOUNDARY_PASS": "PASS",
+    "M_AUTHORITY_ZERO": "PASS",
+    "N_NO_SCIENTIFIC_OUTCOME_USED": "PASS"
+  },
+  "execution_reopen_conditions": [
+    "static constraint compiler emits outcome-blind ConstraintSpec and edge records from pinned AppWorld task/evaluator metadata",
+    "topology-arm diff proves invariant target obligation, target resource footprint, update bytes/exposure, count, and matched budgets while enumerating every non-target context difference",
+    "exact downloaded AppWorld data/bundle revision and license/redistribution obligations are pinned",
+    "disjoint capability floor/ceiling calibration protocol is frozen before decisive outcomes",
+    "separate provider/GPU/scientific execution authority is explicitly granted"
+  ],
+  "verdict": "PRE_F0_AGENT_CHILD_PASS_PROPOSAL_ONLY",
+  "registry_adjudication": {
+    "checked": [
+      "generated/paper-registry.json",
+      "generated/research-system-state.json"
+    ],
+    "paper_registry_direct_entry": false,
+    "research_system_exact_object_id_entry": false,
+    "paper_registry_policy": "append-only accepted-paper ledger projection; cannot grant research/experiment/submission authority",
+    "pre_f0_convention": "candidate/object evidence may persist as versioned zero-authority artifacts without becoming a mature paper-registry row",
+    "decision": "NO_REGISTRY_SCHEMA_MUTATION_AT_PRE_F0",
+    "independent_scientific_authority_namespace": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "collision_scan_completed": true
+  }
+}
