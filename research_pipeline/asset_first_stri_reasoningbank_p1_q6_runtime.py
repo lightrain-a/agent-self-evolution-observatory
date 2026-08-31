@@ -17,11 +17,16 @@ class ReconciledDockerRun(DockerRun):
 
     ACK_CONTRACT_SHA256 = Q6_CONTRACT_SHA256
     INSPECT_TIMEOUT_SECONDS = 30
+    START_TIMEOUT_SECONDS = 60
 
     def _finish_exact_base_start(
         self, image_inspect: dict[str, Any], reconciliation: dict[str, Any],
     ) -> dict[str, Any]:
-        started = run_host(["docker", "start", self.name], timeout=60, docker=True)
+        started = run_host(
+            ["docker", "start", self.name],
+            timeout=self.START_TIMEOUT_SECONDS,
+            docker=True,
+        )
         if started["returncode"] != 0:
             raise RuntimeError(f"docker start failed: {started['output'][-800:]}")
         if not self.exact_base:
