@@ -38,6 +38,10 @@ class RelationalTopologyStagePreF0Test(unittest.TestCase):
         manifest = self.load("manifest.json")
         self.assertEqual(manifest["artifact_count"], 19)
         self.assertEqual(manifest["scientific_gpu_runs"], 0)
+        self.assertRegex(manifest["compiler_source_git_sha"], r"^[0-9a-f]{40}$")
+        self.assertRegex(manifest["config_sha256"], r"^[0-9a-f]{64}$")
+        self.assertEqual(manifest["dataset_revision"],
+                         "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED")
         for name, expected in manifest["artifact_sha256"].items():
             got = hashlib.sha256((self.out / name).read_bytes()).hexdigest()
             self.assertEqual(got, expected, name)
