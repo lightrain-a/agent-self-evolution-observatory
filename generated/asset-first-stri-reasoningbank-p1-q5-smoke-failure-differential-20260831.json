@@ -1,0 +1,56 @@
+{
+  "classification": {
+    "artifact_integrity": false,
+    "base_state_normalization": false,
+    "environment": false,
+    "evaluator": false,
+    "genuine_non_implementation_issue": false,
+    "implementation_runtime": true,
+    "parser": false,
+    "primary_failure_class": "DOCKER_CREATE_ACK_TIMEOUT_WITH_EXACT_SIDE_EFFECT",
+    "provider": false,
+    "treatment_invariant_failure": false
+  },
+  "created_at_utc": "2026-08-31T03:56:25+00:00",
+  "credential_material_present": false,
+  "evaluator_started": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q5-SMOKE-FAILURE-DIFFERENTIAL-20260831",
+  "failed_container_receipt": {
+    "cmd": [
+      "infinity"
+    ],
+    "container_id": "f5d084b4cd918ee8c9caac933485255b2309b18a68670ee66b1ca51e424948c2",
+    "created": "2026-08-31T03:52:57.078389584Z",
+    "entrypoint": [
+      "sleep"
+    ],
+    "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+    "name": "/e1-rb-q5-nonscientific-evaluator-verbosity-smoke-737300f7",
+    "pid_mode": "host",
+    "state": {
+      "Dead": false,
+      "Error": "",
+      "ExitCode": 0,
+      "FinishedAt": "0001-01-01T00:00:00Z",
+      "OOMKilled": false,
+      "Paused": false,
+      "Pid": 0,
+      "Restarting": false,
+      "Running": false,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "Status": "created"
+    }
+  },
+  "failure_stage": "fresh container creation acknowledgement",
+  "model_calls": 0,
+  "payload_sha256": "5426753528b76bed376adc82c73c79eaa5c72521e27c8d2cac0e5be9843be9e7",
+  "provider_calls": 0,
+  "q5_contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+  "q5_execution_authorized": false,
+  "q5_replay_executed": false,
+  "q5_smoke_sha256": "0cbccd9edaeecb970727e6eeed6eef80c9c2ab046658831ec303a03bd3866345",
+  "schema_version": 1,
+  "scientific_belief_update": "none",
+  "source_patch_applied": false,
+  "test_patch_applied": false
+}

@@ -1,0 +1,20 @@
+{
+  "contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+  "created_at_utc": "2026-08-31T03:53:56+00:00",
+  "credential_material_present": false,
+  "decision": "Q5_EVALUATOR_VERBOSITY_SMOKE_HOLD",
+  "experiment_id": "NON_SCIENTIFIC_EVALUATOR_VERBOSITY_SMOKE-20260831",
+  "failure": {
+    "error_type": "RuntimeError",
+    "message": "docker create failed: "
+  },
+  "mechanism_authority": false,
+  "model_calls": 0,
+  "paper_authority": false,
+  "pass": false,
+  "payload_sha256": "c7847ac5964bf6b0d39e3417364dcc9e44e00df4e349bf0b664b6fa5a98c0b72",
+  "provider_calls": 0,
+  "schema_version": 1,
+  "scientific_authority": false,
+  "task_outcome_authority": false
+}

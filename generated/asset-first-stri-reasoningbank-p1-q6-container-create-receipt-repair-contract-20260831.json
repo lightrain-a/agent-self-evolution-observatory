@@ -1,0 +1,44 @@
+{
+  "authorization": {
+    "full_p1_execution_authorized": false,
+    "paper_result_claim_authorized": false,
+    "q5_replay_execution_authorized": false,
+    "q6_repair_implementation_authorized": true,
+    "q6_smoke_execution_authorized": true
+  },
+  "automatic_retry": "forbidden",
+  "bindings": {
+    "q5_contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+    "q5_failed_smoke_sha256": "0cbccd9edaeecb970727e6eeed6eef80c9c2ab046658831ec303a03bd3866345",
+    "q5_smoke_failure_differential_sha256": "14d2074b208835fba39a69976edd4797e5d0dbde7871f20e27dccebf3ef11442"
+  },
+  "created_at_utc": "2026-08-31T03:56:25+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q6-CONTAINER-CREATE-RECEIPT-REPAIR-20260831",
+  "payload_sha256": "8cf97279d7397fc7a0c342fea62e0e08f37f9b152f77ede0f355b4306f7622b1",
+  "purpose": "Prospectively repair only Docker create acknowledgement reconciliation before repeating a non-scientific evaluator-interface smoke.",
+  "qualification": {
+    "all_Q5_S1_through_S6_checks_required": true,
+    "reconciled_create_receipt_required": true,
+    "repeat_non_scientific_smoke": true,
+    "same_repaired_command": "tox --current-env -epy39 -v -- -rA tests/test_domain_py.py::test_function_signatures",
+    "same_smoke_test": "tests/test_domain_py.py::test_function_signatures",
+    "task_success_not_required": true
+  },
+  "replacement_sampling": "forbidden",
+  "schema_version": 1,
+  "scientific_belief_update": "none",
+  "single_variable_repair": {
+    "after": "on docker-create timeout only, inspect the unique generated name and accept only an exact Created container with frozen image, sleep entrypoint, infinity command, and host PID mode",
+    "before": "any nonzero/timeout docker-create receipt raises even when the exact unique container side effect exists",
+    "docker_create_command_unchanged": true,
+    "evaluator_command_unchanged_from_q5": true,
+    "model_calls": 0,
+    "parser_unchanged": true,
+    "patches_unchanged": true,
+    "provider_calls": 0,
+    "sphinx_reporting_repair_unchanged": true,
+    "task_population_unchanged": true,
+    "variable": "Docker create acknowledgement reconciliation"
+  }
+}
