@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<title>G1 24条人工语义标注</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#191b1f;--muted:#68707a;--border:#dfe3e8;--accent:#2c5cc5;--ok:#1f7a46;--warn:#a65a00}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.55}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.96);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}header b{font-size:18px}.pill{padding:4px 9px;border:1px solid var(--border);border-radius:999px;background:#fff;font-size:13px}.progress{font-weight:700}
+main{max-width:1180px;margin:18px auto;padding:0 18px 80px}.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 1px 2px rgba(0,0,0,.03)}.notice{border-left:5px solid var(--warn);background:#fffaf3}.task{font-size:18px;font-weight:700;padding:12px 14px;background:#f2f6ff;border-radius:10px}.muted{color:var(--muted)}
+pre{white-space:pre-wrap;word-break:break-word;background:#f7f8fa;border:1px solid var(--border);border-radius:9px;padding:12px;font-size:13px;max-height:350px;overflow:auto}.step{border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin:9px 0;background:#fbfcfd}.step h4{margin:0 0 7px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}button{appearance:none;border:1px solid var(--border);background:white;border-radius:10px;padding:10px 12px;font-size:15px;cursor:pointer}button:hover{border-color:#9aa6b2}button.selected{border-color:var(--accent);box-shadow:0 0 0 2px rgba(44,92,197,.16);background:#f2f6ff;font-weight:700}button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}button.good{background:var(--ok);color:#fff;border-color:var(--ok)}button:disabled{opacity:.45;cursor:not-allowed}
+input[type=text],textarea,select{border:1px solid var(--border);border-radius:9px;padding:9px 10px;font-size:15px;background:#fff}input[type=text]{min-width:260px}textarea{width:100%;min-height:76px}nav{display:flex;gap:8px;flex-wrap:wrap}.navnum{width:42px;padding:7px 0;font-size:13px}.navnum.done{background:#edf8f1;border-color:#9bc9ac}.navnum.current{outline:2px solid var(--accent)}details summary{cursor:pointer;font-weight:700}.attest label{display:block;margin:7px 0}.kbd{font-family:ui-monospace,monospace;border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:1px 5px;background:#fff}.danger{color:#a12c2c;font-weight:700}
+@media(max-width:760px){.grid{grid-template-columns:1fr}header{position:static}}
+</style>
+</head>
+<body>
+<header><b>G1 / AGENT-SAFETY-R9 人工盲评（全中文辅助版 v2）</b><span class="pill">共 24 条</span><span class="pill">盲评包校验：2603fd70…efa4a</span><span id="progress" class="progress"></span></header>
+<main>
+<div class="card notice"><b>重要：</b>本页默认可见内容均已中文化。中文任务、中文操作解释和中文智能体文本只用于降低阅读成本，<b>不是机器标签，也不是隐藏基准真值</b>。最终判断仍应依据当前条目的可见操作轨迹；遇到语义边界时，可以展开原始英文证据核对。页面不包含私有解盲密钥、实验分组、机器评估标签、状态标识、回合标识或行为标识。</div>
+<div class="card"><div class="row"><label>标注角色 <select id="role"><option value="">请选择</option><option value="RATER_A">标注者 A</option><option value="RATER_B">标注者 B</option></select></label><label>匿名编号 <input id="raterId" type="text" placeholder="例如：标注者甲-01"></label><button id="importBtn">导入已有答卷</button><input id="importFile" type="file" accept="application/json" hidden></div><p class="muted">两位标注者必须独立完成。第一轮冻结前不要互看答案。进度按“角色 + 匿名编号”保存在当前浏览器本地。</p></div>
+<div class="card"><nav id="nav"></nav></div>
+<section id="item"></section>
+<div class="card row"><button id="prev">← 上一条</button><button id="next" class="primary">下一条 →</button><span class="muted">快捷键：<span class="kbd">1</span>/<span class="kbd">2</span>/<span class="kbd">3</span> 选择主标签；<span class="kbd">4</span>/<span class="kbd">5</span>/<span class="kbd">6</span> 选择高/中/低置信度；<span class="kbd">←</span>/<span class="kbd">→</span> 切换条目。</span></div>
+<div class="card attest"><h3>完成声明</h3><label><input type="checkbox" data-att="human_reviewer"> 我是真实人工标注者。</label><label><input type="checkbox" data-att="independent_first_pass"> 这是独立第一轮标注。</label><label><input type="checkbox" data-att="no_ai_assistance_for_labels"> 我没有使用任何人工智能工具来判断或复核标签。</label><label><input type="checkbox" data-att="did_not_view_private_key_or_machine_labels"> 我没有查看私有解盲密钥或机器标签。</label><label><input type="checkbox" data-att="did_not_discuss_labels_with_other_first_pass_rater_before_freeze"> 在本答卷冻结前，我没有与另一位第一轮标注者讨论答案。</label><label><input type="checkbox" data-att="all_24_items_labeled_without_replacement"> 我完成了全部 24 条，没有替换任何样本。</label><div class="row" style="margin-top:14px"><button id="exportBtn" class="good">导出最终答卷文件</button><span id="exportStatus" class="muted"></span></div></div>
+</main>
+<script src="g1-human-label-data-2603fd70.js"></script>
+<script src="g1-human-label-zh-v2-2603fd70.js"></script>
+<script src="g1-human-label-app-v2-20260831.js"></script>
+</body></html>

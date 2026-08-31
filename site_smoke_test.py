@@ -31,6 +31,10 @@ UTILITY_PAGES = {
         "scripts": ["g1-human-label-data-2603fd70.js", "g1-human-label-app-20260831.js"],
         "robots": "noindex,nofollow,noarchive",
     },
+    "g1-human-label-cn-v2-20260831-2603fd70.html": {
+        "scripts": ["g1-human-label-data-2603fd70.js", "g1-human-label-zh-v2-2603fd70.js", "g1-human-label-app-v2-20260831.js"],
+        "robots": "noindex,nofollow,noarchive",
+    },
 }
 
 REDIRECT_PAGES = {
@@ -297,7 +301,10 @@ def main() -> None:
         scripts = re.findall(r'<script\s+src="([^"]+)"', text)
         if scripts != spec["scripts"]:
             fail(f"{filename} utility scripts drifted: {scripts}")
-        if "private key" not in text.lower() or "machine" not in text.lower():
+        lower = text.lower()
+        key_warning = "private key" in lower or "私有解盲密钥" in text
+        machine_warning = "machine" in lower or "机器标签" in text or "机器评估标签" in text
+        if not key_warning or not machine_warning:
             fail(f"{filename} must keep its blinding warning visible")
 
     referenced_scripts: set[str] = set()
