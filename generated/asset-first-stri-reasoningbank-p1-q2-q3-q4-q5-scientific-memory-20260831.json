@@ -1,0 +1,46 @@
+{
+  "bindings": {
+    "q4_adjudication_sha256": "c3fe8f239a4128f89ed8c851cc0af8d061aec02333a60c4c9f397f3027908b26",
+    "q4_failure_differential_sha256": "31aafa3e0fee9c51d9d09ab30b465c67cb36d73abf22fcb4cf368667da7ca608",
+    "q4_scientific_memory_sha256": "7433bf5a876edbb6a6b1335cacb56be279d2fb740aa502e8f32645dc901b3d5d",
+    "q5_adjudication_sha256": "39721690bdcfea975681494d791e0e99146a2e926321ae2ca96a3b6a7fa0b8d0",
+    "q5_authority_sha256": "56023442130efd367279d09d87eb208500ce20703a8e73f7c4dba049f77f767e",
+    "q5_contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+    "q5_failure_differential_sha256": "0590bfebfda68889684a4d270b686a72eefb23b39d80db6ecf288e34e69ff503",
+    "q5_index_sha256": "16e188146e651c13cd41c9b97ceffff5f29b5937928894bfbfb4e136204c777e",
+    "q5_smoke_sha256": "50685527c8fbef42e242a285d2f12f484ed17cedde9a6916c5ca6bd04a74087a"
+  },
+  "canonical_lesson": "implementation/operationalization failure -> no scientific belief update -> prospective repaired qualification",
+  "created_at_utc": "2026-08-31T04:58:47+00:00",
+  "credential_material_present": false,
+  "evaluator_specific_lesson": "A benchmark command may terminate successfully and report aggregate test success while remaining scientifically unusable when the official evaluator requires per-test status records hidden by the selected verbosity.",
+  "experiment_authority": false,
+  "memory_id": "E1-STRI-REASONINGBANK-Q2-Q3-Q4-Q5-FAILURE-DIFFERENTIAL-20260831",
+  "operational_lessons": [
+    "returncode 0 is not sufficient evaluator qualification",
+    "parser equivalence cannot repair missing observability",
+    "evaluator logging is part of the measurement contract",
+    "observability-only changes can be valid prospective implementation repairs when test semantics remain invariant"
+  ],
+  "payload_sha256": "a5f863eaed9b5cc7159d709add23cbb5df36e0679c1e7ed32964c2c928832ca2",
+  "schema_version": 1,
+  "scientific_authority": false,
+  "sequence": [
+    {
+      "disposition": "implementation failure; no scientific conclusion",
+      "stage": "Q2"
+    },
+    {
+      "disposition": "stopped before model outcome; no scientific conclusion",
+      "stage": "Q3"
+    },
+    {
+      "disposition": "evaluator output unparseable; no scientific conclusion",
+      "stage": "Q4"
+    },
+    {
+      "disposition": "prospective repair failed; no scientific conclusion",
+      "stage": "Q5"
+    }
+  ]
+}
