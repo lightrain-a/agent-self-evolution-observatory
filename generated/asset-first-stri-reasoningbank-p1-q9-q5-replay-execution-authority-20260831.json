@@ -1,0 +1,33 @@
+{
+  "attempt_count": 1,
+  "automatic_retry": "forbidden",
+  "checks": {
+    "model_provider_unreachable": true,
+    "no_frozen_artifact_drift": true,
+    "no_outcome_dependent_selection": true,
+    "no_treatment_input_or_patch_change": true,
+    "official_parser_exact": true,
+    "q4_sources_exact": true,
+    "q5_contract_exact": true,
+    "q5_evaluator_change_still_exact": true,
+    "q5_failed_smoke_and_differential_preserved": true,
+    "q9_contract_exact": true,
+    "q9_single_runtime_variable_exact": true,
+    "q9_smoke_pass": true
+  },
+  "created_at_utc": "2026-08-31T04:27:21+00:00",
+  "credential_material_present": false,
+  "decision": "P1_Q9_RUNTIME_AND_EVALUATOR_QUALIFIED_Q5_REPLAY_AUTHORIZED",
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q9-Q5-REPLAY-AUTHORITY-20260831",
+  "full_p1_execution_authorized": false,
+  "model_calls": 0,
+  "paper_result_claim_authorized": false,
+  "payload_sha256": "682963ecf8fd982b75fe2e1733a744ea005a86a661e080cdccb35f8f6b95784e",
+  "provider_calls": 0,
+  "q5_contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+  "q5_replay_execution_authorized": true,
+  "q9_contract_sha256": "5779bd037811c6446610eb31b6b7f73f8110993f5ad0f112902523477ee0158b",
+  "q9_smoke_sha256": "50685527c8fbef42e242a285d2f12f484ed17cedde9a6916c5ca6bd04a74087a",
+  "replacement_sampling": "forbidden",
+  "schema_version": 1
+}

@@ -1,0 +1,169 @@
+{
+  "checks": {
+    "S1_per_test_result_lines": true,
+    "S2_official_status_map_nonempty": true,
+    "S3_official_local_parser_exact": true,
+    "S4_only_reporting_verbosity_changed": true,
+    "S5_no_model_or_provider_call": true,
+    "S6_evaluator_terminated_normally": true,
+    "S7_container_create_receipt_qualified": true,
+    "exact_base_normalization": true,
+    "fresh_exact_digest_container": true
+  },
+  "command": "tox --current-env -epy39 -v -- -rA tests/test_domain_py.py::test_function_signatures",
+  "command_sha256": "faa6b597eea1e224cada38704435bbd9bc9aa1b7fec497ccdbd1b95e7f07a741",
+  "created_at_utc": "2026-08-31T04:25:56+00:00",
+  "credential_material_present": false,
+  "decision": "Q9_RUNTIME_AND_EVALUATOR_SMOKE_PASS",
+  "execution": {
+    "finished_at_utc": "2026-08-31T04:25:49+00:00",
+    "output": "py39: commands[0]> python -X dev -m pytest --durations 25 -rA tests/test_domain_py.py::test_function_signatures\n\u001b[1m============================= test session starts ==============================\u001b[0m\nplatform linux -- Python 3.9.20, pytest-8.3.3, pluggy-1.5.0\ncachedir: .tox/py39/.pytest_cache\nlibraries: Sphinx-4.1.0, docutils-0.17.1\nbase tempdir: /tmp/pytest-of-root/pytest-0\nrootdir: /testbed\nconfigfile: setup.cfg\nplugins: cov-5.0.0\ncollected 1 item\n\ntests/test_domain_py.py \u001b[32m.\u001b[0m\u001b[33m                                                [100%]\u001b[0m\n\n\u001b[33m=============================== warnings summary ===============================\u001b[0m\nsphinx/util/docutils.py:44\n  /testbed/sphinx/util/docutils.py:44: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.\n    __version_info__ = tuple(LooseVersion(docutils.__version__).version)\n\nsphinx/highlighting.py:67\n  /testbed/sphinx/highlighting.py:67: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.\n    if tuple(LooseVersion(pygmentsversion).version) <= (2, 7, 4):\n\nsphinx/registry.py:24\n  /testbed/sphinx/registry.py:24: DeprecationWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html\n    from pkg_resources import iter_entry_points\n\n../opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pkg_resources/__init__.py:3154\n../opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pkg_resources/__init__.py:3154\n../opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pkg_resources/__init__.py:3154\n../opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pkg_resources/__init__.py:3154\n  /opt/miniconda3/envs/testbed/lib/python3.9/site-packages/pkg_resources/__init__.py:3154: DeprecationWarning: Deprecated call to `pkg_resources.declare_namespace('sphinxcontrib')`.\n  Implementing implicit namespace packages (as specified in PEP 420) is preferred to `pkg_resources.declare_namespace`. See https://setuptools.pypa.io/en/latest/references/keywords.html#keyword-namespace-packages\n    declare_namespace(pkg)\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n==================================== PASSES ====================================\n============================= slowest 25 durations =============================\n0.01s call     tests/test_domain_py.py::test_function_signatures\n0.01s setup    tests/test_domain_py.py::test_function_signatures\n\n(1 durations < 0.005s hidden.  Use -vv to show these durations.)\n\u001b[36m\u001b[1m=========================== short test summary info ============================\u001b[0m\n\u001b[32mPASSED\u001b[0m tests/test_domain_py.py::\u001b[1mtest_function_signatures\u001b[0m\n\u001b[33m======================== \u001b[32m1 passed\u001b[0m, \u001b[33m\u001b[1m7 warnings\u001b[0m\u001b[33m in 1.36s\u001b[0m\u001b[33m =========================\u001b[0m\npy39: exit 0 (10.33 seconds) /testbed> python -X dev -m pytest --durations 25 -rA tests/test_domain_py.py::test_function_signatures pid=2111096\n  py39: OK (10.83=setup[0.50]+cmd[10.33] seconds)\n  congratulations :) (12.72 seconds)\n",
+    "returncode": 0,
+    "started_at_utc": "2026-08-31T04:25:16+00:00",
+    "timed_out": false
+  },
+  "experiment_id": "NON_SCIENTIFIC_Q9_EVALUATOR_VERBOSITY_SMOKE-20260831",
+  "fixture": {
+    "base_commit": "567ff22716ac258b9edd2c1711d766b440ac0b11",
+    "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+    "image_digest": "sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+    "instance_id": "sphinx-doc__sphinx-9230",
+    "selected_test": "tests/test_domain_py.py::test_function_signatures",
+    "source_patch_applied": false,
+    "test_patch_applied": false
+  },
+  "install": {
+    "finished_at_utc": "2026-08-31T04:25:16+00:00",
+    "output": "Obtaining file:///testbed\n  Preparing metadata (setup.py): started\n  Preparing metadata (setup.py): finished with status 'done'\nRequirement already satisfied: sphinxcontrib-applehelp in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (1.0.4)\nRequirement already satisfied: sphinxcontrib-devhelp in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (1.0.2)\nRequirement already satisfied: sphinxcontrib-jsmath in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (1.0.1)\nRequirement already satisfied: sphinxcontrib-htmlhelp in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (2.0.1)\nRequirement already satisfied: sphinxcontrib-serializinghtml in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (1.1.5)\nRequirement already satisfied: sphinxcontrib-qthelp in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (1.0.3)\nRequirement already satisfied: Jinja2>=2.3 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (2.11.3)\nRequirement already satisfied: Pygments>=2.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (2.18.0)\nRequirement already satisfied: docutils<0.18,>=0.14 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (0.17.1)\nRequirement already satisfied: snowballstemmer>=1.1 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (2.2.0)\nRequirement already satisfied: babel>=1.3 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (2.16.0)\nRequirement already satisfied: alabaster<0.8,>=0.7 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (0.7.11)\nRequirement already satisfied: imagesize in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (1.4.1)\nRequirement already satisfied: requests>=2.5.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (2.32.3)\nRequirement already satisfied: setuptools in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (75.1.0)\nRequirement already satisfied: packaging in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (24.1)\nRequirement already satisfied: pytest in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (8.3.3)\nRequirement already satisfied: pytest-cov in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (5.0.0)\nRequirement already satisfied: html5lib in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (1.1)\nRequirement already satisfied: cython in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Sphinx==4.1.0.dev20260831) (3.0.11)\nRequirement already satisfied: MarkupSafe>=0.23 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from Jinja2>=2.3->Sphinx==4.1.0.dev20260831) (2.0.1)\nRequirement already satisfied: charset-normalizer<4,>=2 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from requests>=2.5.0->Sphinx==4.1.0.dev20260831) (3.4.0)\nRequirement already satisfied: idna<4,>=2.5 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from requests>=2.5.0->Sphinx==4.1.0.dev20260831) (3.10)\nRequirement already satisfied: urllib3<3,>=1.21.1 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from requests>=2.5.0->Sphinx==4.1.0.dev20260831) (2.2.3)\nRequirement already satisfied: certifi>=2017.4.17 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from requests>=2.5.0->Sphinx==4.1.0.dev20260831) (2024.8.30)\nRequirement already satisfied: six>=1.9 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from html5lib->Sphinx==4.1.0.dev20260831) (1.16.0)\nRequirement already satisfied: webencodings in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from html5lib->Sphinx==4.1.0.dev20260831) (0.5.1)\nRequirement already satisfied: iniconfig in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest->Sphinx==4.1.0.dev20260831) (2.0.0)\nRequirement already satisfied: pluggy<2,>=1.5 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest->Sphinx==4.1.0.dev20260831) (1.5.0)\nRequirement already satisfied: exceptiongroup>=1.0.0rc8 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest->Sphinx==4.1.0.dev20260831) (1.2.2)\nRequirement already satisfied: tomli>=1 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest->Sphinx==4.1.0.dev20260831) (2.0.2)\nRequirement already satisfied: coverage>=5.2.1 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from coverage[toml]>=5.2.1->pytest-cov->Sphinx==4.1.0.dev20260831) (7.6.4)\nInstalling collected packages: Sphinx\n  Attempting uninstall: Sphinx\n    Found existing installation: Sphinx 4.1.0.dev20260813\n    Uninstalling Sphinx-4.1.0.dev20260813:\n      Successfully uninstalled Sphinx-4.1.0.dev20260813\n  Running setup.py develop for Sphinx\n  DEPRECATION: Legacy editable install of Sphinx[test]==4.1.0.dev20260831 from file:///testbed (setup.py develop) is deprecated. pip 25.0 will enforce this behaviour change. A possible replacement is to add a pyproject.toml or enable --use-pep517, and use setuptools >= 64. If the resulting installation is not behaving as expected, try using --config-settings editable_mode=compat. Please consult the setuptools documentation for more information. Discussion can be found at https://github.com/pypa/pip/issues/11457\nSuccessfully installed Sphinx\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n",
+    "returncode": 0,
+    "started_at_utc": "2026-08-31T04:24:55+00:00",
+    "timed_out": false
+  },
+  "local_status_map": {
+    "tests/test_domain_py.py::test_function_signatures": "PASSED"
+  },
+  "mechanism_authority": false,
+  "model_calls": 0,
+  "official_status_map": {
+    "tests/test_domain_py.py::test_function_signatures": "PASSED"
+  },
+  "paper_authority": false,
+  "pass": true,
+  "payload_sha256": "c3b42f7fe249b9365088dc103fea032d1f7e7a84d29bbf8259b87fcc798eb539",
+  "provider_calls": 0,
+  "q5_contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+  "q8_smoke_failure_differential_sha256": "b0972ba0a1a02367ecd9ea6de353c96c4ace8bf1bd88f8041bb1c93c904db569",
+  "q9_contract_sha256": "5779bd037811c6446610eb31b6b7f73f8110993f5ad0f112902523477ee0158b",
+  "runtime_start": {
+    "base_commit_receipt": {
+      "expected_base_commit": "567ff22716ac258b9edd2c1711d766b440ac0b11",
+      "finished_at_utc": "2026-08-31T04:24:50+00:00",
+      "git_clean_invoked": false,
+      "normalization": {
+        "finished_at_utc": "2026-08-31T04:24:48+00:00",
+        "output": "HEAD is now at 567ff2271 Merge pull request #9231 from tk0miya/9217_manpage_section_directory\n",
+        "returncode": 0,
+        "started_at_utc": "2026-08-31T04:24:42+00:00",
+        "timed_out": false
+      },
+      "normalization_action": "git reset --hard <frozen expected base commit>",
+      "observed_head": "567ff22716ac258b9edd2c1711d766b440ac0b11",
+      "output": "567ff22716ac258b9edd2c1711d766b440ac0b11\n",
+      "pre_normalization": {
+        "finished_at_utc": "2026-08-31T04:24:42+00:00",
+        "output": "9d03141cdd2e80b948a5a100c27e59896fcdb94c\n",
+        "returncode": 0,
+        "started_at_utc": "2026-08-31T04:24:35+00:00",
+        "timed_out": false
+      },
+      "returncode": 0,
+      "rule": "exact_base_after_preregistered_hard_reset",
+      "started_at_utc": "2026-08-31T04:24:48+00:00",
+      "timed_out": false
+    },
+    "image_inspect": {
+      "finished_at_utc": "2026-08-31T04:23:53+00:00",
+      "output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1\"] amd64\n",
+      "returncode": 0,
+      "started_at_utc": "2026-08-31T04:23:52+00:00",
+      "timed_out": false
+    },
+    "q6_create_acknowledgement": {
+      "contract_sha256": "5779bd037811c6446610eb31b6b7f73f8110993f5ad0f112902523477ee0158b",
+      "normal_create_receipt_accepted": true,
+      "repair_invoked": false
+    }
+  },
+  "schema_version": 1,
+  "scientific_authority": false,
+  "task_outcome_authority": false,
+  "verification": {
+    "contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+    "official_swebench_wheel_sha256": "b7f0416a1e686eca22c2f749b5f816685a202835032f6683080e2b53545bbb62",
+    "pass": true,
+    "q4_adjudication_sha256": "c3fe8f239a4128f89ed8c851cc0af8d061aec02333a60c4c9f397f3027908b26",
+    "q4_index_sha256": "f6ce4e4a345fa8e105ddca934faa1c85af14b039497768ebef1bd0222409a0bf",
+    "source_checks": [
+      {
+        "actual_sha256": "b1607cf4179cc1557a10cb2cd431b1d5beecb9953b6d9c517dd259b22150ec0d",
+        "expected_sha256": "b1607cf4179cc1557a10cb2cd431b1d5beecb9953b6d9c517dd259b22150ec0d",
+        "pass": true,
+        "source_run_id": "q4-sphinx-doc__sphinx-9230-A"
+      },
+      {
+        "actual_sha256": "ea738577cf1b244cf0a888f0687635986f2050bd8b978fd47f79b404e537b19c",
+        "expected_sha256": "ea738577cf1b244cf0a888f0687635986f2050bd8b978fd47f79b404e537b19c",
+        "pass": true,
+        "source_run_id": "q4-sphinx-doc__sphinx-9230-B"
+      },
+      {
+        "actual_sha256": "ba051d5ea235fb3dbb97b3ec1326830db0f1afe7e6550bfdd70d47b2178819a5",
+        "expected_sha256": "ba051d5ea235fb3dbb97b3ec1326830db0f1afe7e6550bfdd70d47b2178819a5",
+        "pass": true,
+        "source_run_id": "q4-sphinx-doc__sphinx-9230-C"
+      },
+      {
+        "actual_sha256": "33a6c71447c74d1b448fa3e3ff3d8b5d41859bdb94700c3c25de9a64902446d6",
+        "expected_sha256": "33a6c71447c74d1b448fa3e3ff3d8b5d41859bdb94700c3c25de9a64902446d6",
+        "pass": true,
+        "source_run_id": "q4-sphinx-doc__sphinx-9230-D"
+      },
+      {
+        "actual_sha256": "afc1c15caf5113e096ad27c619f1098cf327ca3bf2c534a91004ac1ccb948f97",
+        "expected_sha256": "afc1c15caf5113e096ad27c619f1098cf327ca3bf2c534a91004ac1ccb948f97",
+        "pass": true,
+        "source_run_id": "q4-sphinx-doc__sphinx-9230-E"
+      },
+      {
+        "actual_sha256": "7b0b8682aa9e1229ae24c0b4811739f97f2a9368b33061fe61b55d075888a49f",
+        "expected_sha256": "7b0b8682aa9e1229ae24c0b4811739f97f2a9368b33061fe61b55d075888a49f",
+        "pass": true,
+        "source_run_id": "q4-django__django-11880-A"
+      },
+      {
+        "actual_sha256": "aa9d745c6634665df9d9e332cb56f9465aefec233f3b77ec7db8a5c8f5f762ed",
+        "expected_sha256": "aa9d745c6634665df9d9e332cb56f9465aefec233f3b77ec7db8a5c8f5f762ed",
+        "pass": true,
+        "source_run_id": "q4-django__django-11880-B"
+      },
+      {
+        "actual_sha256": "8988237cf83b2433bc10276730e58c1d017bf241f7de084d5b23698cb9918a2c",
+        "expected_sha256": "8988237cf83b2433bc10276730e58c1d017bf241f7de084d5b23698cb9918a2c",
+        "pass": true,
+        "source_run_id": "q4-django__django-11880-C"
+      },
+      {
+        "actual_sha256": "009629dd7632b0cb66c366eb331df21a68ca5e49667d550f70d587fa087cc080",
+        "expected_sha256": "009629dd7632b0cb66c366eb331df21a68ca5e49667d550f70d587fa087cc080",
+        "pass": true,
+        "source_run_id": "q4-django__django-11880-D"
+      },
+      {
+        "actual_sha256": "196b127087c594e0dbaa41615579e7e647d85c9fb01712e85f283582a12e011b",
+        "expected_sha256": "196b127087c594e0dbaa41615579e7e647d85c9fb01712e85f283582a12e011b",
+        "pass": true,
+        "source_run_id": "q4-django__django-11880-E"
+      }
+    ]
+  }
+}
