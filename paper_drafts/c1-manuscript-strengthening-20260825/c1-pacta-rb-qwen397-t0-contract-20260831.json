@@ -1,0 +1,111 @@
+{
+  "carrier_files": {
+    "agent": {
+      "expected_sha256": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c",
+      "pass": true,
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/agents/default.py",
+      "sha256": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c"
+    },
+    "config": {
+      "expected_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "pass": true,
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/config/extra/swebench.yaml",
+      "sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41"
+    },
+    "retrieval": {
+      "expected_sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955",
+      "pass": true,
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/memory_management.py",
+      "sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955"
+    },
+    "runner": {
+      "expected_sha256": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951",
+      "pass": true,
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/run/extra/swebench.py",
+      "sha256": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951"
+    },
+    "writer": {
+      "expected_sha256": "08e11fbeac1ba9e20d1dafb20728be24194b56bdfea33f05f6a1220ae2cc9bae",
+      "pass": true,
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/instruction.py",
+      "sha256": "08e11fbeac1ba9e20d1dafb20728be24194b56bdfea33f05f6a1220ae2cc9bae"
+    }
+  },
+  "created_at_utc": "2026-08-31T15:31:57+00:00",
+  "enable_thinking": false,
+  "experiment_id": "C1-PACTA-RB-QWEN397-T0-20260831-v1",
+  "fixed_pairs": [
+    {
+      "future": "pydata__xarray-4356",
+      "source": "pydata__xarray-4966"
+    },
+    {
+      "future": "scikit-learn__scikit-learn-10908",
+      "source": "scikit-learn__scikit-learn-14496"
+    },
+    {
+      "future": "psf__requests-1724",
+      "source": "psf__requests-1766"
+    },
+    {
+      "future": "matplotlib__matplotlib-25960",
+      "source": "matplotlib__matplotlib-24627"
+    },
+    {
+      "future": "sphinx-doc__sphinx-7748",
+      "source": "sphinx-doc__sphinx-8593"
+    },
+    {
+      "future": "mwaskom__seaborn-3069",
+      "source": "mwaskom__seaborn-3187"
+    },
+    {
+      "future": "sympy__sympy-18189",
+      "source": "sympy__sympy-15599"
+    },
+    {
+      "future": "astropy__astropy-14096",
+      "source": "astropy__astropy-7166"
+    },
+    {
+      "future": "django__django-11400",
+      "source": "django__django-13449"
+    },
+    {
+      "future": "pylint-dev__pylint-8898",
+      "source": "pylint-dev__pylint-7080"
+    },
+    {
+      "future": "pytest-dev__pytest-5809",
+      "source": "pytest-dev__pytest-5840"
+    }
+  ],
+  "forbidden": [
+    "writer",
+    "binder",
+    "shadow",
+    "gate",
+    "random_gate",
+    "final",
+    "future_policy",
+    "future_evaluator",
+    "other_model",
+    "R10"
+  ],
+  "logical_attempts_per_source": 1,
+  "official_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+  "output_token_budget": 512,
+  "payload_sha256": "c77201a58801d67bf1f9c5880e03b52b29bfe008090e5989d7fa663257bd2b71",
+  "provider_binding_sha256": "0a538aa4ca3e24a3ad025d647d01c0b8b0c97f36749d8e549f42ca797e6fb100",
+  "provider_retries": 0,
+  "qualification_result_sha256": "71873bea7325ff9e35ded143d9fb6cc28a3cd98d93d472d82e2fabc2877947fe",
+  "replacement": false,
+  "requested_model": "qwen3.5-397b-a17b",
+  "resolved_model": "qwen3.5-397b-a17b",
+  "schema_version": 1,
+  "selected_memory": "",
+  "source_acquisition_contract_sha256": "674ef26c882bbfaaa7b261c64aaa50e322db7c882194df88461a3af4cb1fda50",
+  "status": "FROZEN_BEFORE_SOURCE_POLICY",
+  "temperature": 0.0,
+  "top_up": false
+}

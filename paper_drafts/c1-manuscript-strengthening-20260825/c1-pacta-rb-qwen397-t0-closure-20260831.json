@@ -1,0 +1,22 @@
+{
+  "PACTA_mechanism_update": "NONE",
+  "active_manuscript": "R9",
+  "binder_calls": 0,
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "created_at_utc": "2026-08-31T15:31:57+00:00",
+  "experiment_id": "C1-PACTA-RB-QWEN397-T0-20260831-v1",
+  "failure_layer": "fresh runtime/container substrate support before source-policy calls",
+  "final_measurement_calls": 0,
+  "future_task_executions": 0,
+  "payload_sha256": "b38ca4620c811a7564143a2b310cee5e495db55071555a9dddaae511727acae4",
+  "provider_qualification": "PASS",
+  "schema_version": 1,
+  "shadow_calls": 0,
+  "source_logical_attempts": "0/11",
+  "source_runtime_preflight": "0/11",
+  "status": "HOLD_FRESH_RUNTIME_SUPPORT_INSUFFICIENT",
+  "strongest_failure_differential": "Qwen397 provider/action interface qualified, but none of the fixed SWE-bench source images is locally available; no source trajectory or PACTA mechanism call was made.",
+  "trajectory_backed_valid": 0,
+  "valid_repositories": 0,
+  "writer_calls": 0
+}

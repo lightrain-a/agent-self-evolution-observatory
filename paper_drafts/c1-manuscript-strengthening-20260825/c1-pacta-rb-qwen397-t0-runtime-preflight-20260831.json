@@ -1,0 +1,376 @@
+{
+  "carrier": {
+    "agent": {
+      "expected_sha256": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c",
+      "pass": true,
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/agents/default.py",
+      "sha256": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c"
+    },
+    "config": {
+      "expected_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "pass": true,
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/config/extra/swebench.yaml",
+      "sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41"
+    },
+    "retrieval": {
+      "expected_sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955",
+      "pass": true,
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/memory_management.py",
+      "sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955"
+    },
+    "runner": {
+      "expected_sha256": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951",
+      "pass": true,
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/run/extra/swebench.py",
+      "sha256": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951"
+    },
+    "writer": {
+      "expected_sha256": "08e11fbeac1ba9e20d1dafb20728be24194b56bdfea33f05f6a1220ae2cc9bae",
+      "pass": true,
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/instruction.py",
+      "sha256": "08e11fbeac1ba9e20d1dafb20728be24194b56bdfea33f05f6a1220ae2cc9bae"
+    }
+  },
+  "created_at_utc": "2026-08-31T15:31:57+00:00",
+  "experiment_id": "C1-PACTA-RB-QWEN397-T0-20260831-v1",
+  "future_task_executions": 0,
+  "payload_sha256": "bcbc55c9b37411fa202be21dbeedec497b78f2e5071dfff0713376cdeaa3fac9",
+  "rows": [
+    {
+      "future_task_id": "pydata__xarray-4356",
+      "future_task_sha256": "45eae8de9d15e25d24a44a925c8abe59036ea87382e3c37e60e620e30b2ff0ff",
+      "invalid_reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+      "official_config_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "preflight_valid": false,
+      "repository": "pydata/xarray",
+      "runtime": {
+        "base_commit_pass": false,
+        "container_start_pass": false,
+        "image_available": false,
+        "image_digest": null,
+        "image_reference": "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966:latest",
+        "reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+        "runtime_executable_pass": false,
+        "working_tree_equivalent": false
+      },
+      "source_task_id": "pydata__xarray-4966",
+      "source_task_sha256": "2ec61276a1a4afebd955dd7404328821ff6626c57ad13b69003d78eb3939e957",
+      "static": {
+        "base_commit": "37522e991a32ee3c0ad1a5ff8afe8e3eb1885550",
+        "future_task_hash_pass": true,
+        "prior_pacta_response_artifacts": [],
+        "prior_scientific_output_absent": true,
+        "repository_identity": "pydata/xarray",
+        "source_future_disjoint": true,
+        "source_task_hash_pass": true
+      },
+      "unit_id": "pydata__xarray-4966=>pydata__xarray-4356"
+    },
+    {
+      "future_task_id": "scikit-learn__scikit-learn-10908",
+      "future_task_sha256": "706f3719994e3076d30e5aeafcaa86f8ce95666d705c8eb5127779336e4d88ae",
+      "invalid_reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+      "official_config_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "preflight_valid": false,
+      "repository": "scikit-learn/scikit-learn",
+      "runtime": {
+        "base_commit_pass": false,
+        "container_start_pass": false,
+        "image_available": false,
+        "image_digest": null,
+        "image_reference": "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496:latest",
+        "reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+        "runtime_executable_pass": false,
+        "working_tree_equivalent": false
+      },
+      "source_task_id": "scikit-learn__scikit-learn-14496",
+      "source_task_sha256": "7860d59abe6e6a85ed92cbc43c7b632982164bc89105df4df399793154bb15df",
+      "static": {
+        "base_commit": "d49a6f13af2f22228d430ac64ac2b518937800d0",
+        "future_task_hash_pass": true,
+        "prior_pacta_response_artifacts": [],
+        "prior_scientific_output_absent": true,
+        "repository_identity": "scikit-learn/scikit-learn",
+        "source_future_disjoint": true,
+        "source_task_hash_pass": true
+      },
+      "unit_id": "scikit-learn__scikit-learn-14496=>scikit-learn__scikit-learn-10908"
+    },
+    {
+      "future_task_id": "psf__requests-1724",
+      "future_task_sha256": "eacde5d201658474274cce4558b5d2b8ae74d9fcc2ad6ddc76aaf003b2160b8a",
+      "invalid_reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+      "official_config_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "preflight_valid": false,
+      "repository": "psf/requests",
+      "runtime": {
+        "base_commit_pass": false,
+        "container_start_pass": false,
+        "image_available": false,
+        "image_digest": null,
+        "image_reference": "swebench/sweb.eval.x86_64.psf_1776_requests-1766:latest",
+        "reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+        "runtime_executable_pass": false,
+        "working_tree_equivalent": false
+      },
+      "source_task_id": "psf__requests-1766",
+      "source_task_sha256": "90d541e87a05a5135b7ee242c82702e5cad1e2cae9e5571fcbc032d7d6d80682",
+      "static": {
+        "base_commit": "847735553aeda6e6633f2b32e14ba14ba86887a4",
+        "future_task_hash_pass": true,
+        "prior_pacta_response_artifacts": [],
+        "prior_scientific_output_absent": true,
+        "repository_identity": "psf/requests",
+        "source_future_disjoint": true,
+        "source_task_hash_pass": true
+      },
+      "unit_id": "psf__requests-1766=>psf__requests-1724"
+    },
+    {
+      "future_task_id": "matplotlib__matplotlib-25960",
+      "future_task_sha256": "97c83d815bdd983310f81c7c5141e2ec1e2347a25140e90dab10dcb54f87e630",
+      "invalid_reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+      "official_config_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "preflight_valid": false,
+      "repository": "matplotlib/matplotlib",
+      "runtime": {
+        "base_commit_pass": false,
+        "container_start_pass": false,
+        "image_available": false,
+        "image_digest": null,
+        "image_reference": "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627:latest",
+        "reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+        "runtime_executable_pass": false,
+        "working_tree_equivalent": false
+      },
+      "source_task_id": "matplotlib__matplotlib-24627",
+      "source_task_sha256": "7d9e2b69794435ee2ed448b97c45250b028de009950f7b9982cc81114eb400fd",
+      "static": {
+        "base_commit": "9d22ab09d52d279b125d8770967569de070913b2",
+        "future_task_hash_pass": true,
+        "prior_pacta_response_artifacts": [],
+        "prior_scientific_output_absent": true,
+        "repository_identity": "matplotlib/matplotlib",
+        "source_future_disjoint": true,
+        "source_task_hash_pass": true
+      },
+      "unit_id": "matplotlib__matplotlib-24627=>matplotlib__matplotlib-25960"
+    },
+    {
+      "future_task_id": "sphinx-doc__sphinx-7748",
+      "future_task_sha256": "8d2fa20fad9e7875f1cfb475ed77cbdea0daee392ce09045da39a7468b6e1c99",
+      "invalid_reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+      "official_config_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "preflight_valid": false,
+      "repository": "sphinx-doc/sphinx",
+      "runtime": {
+        "base_commit_pass": false,
+        "container_start_pass": false,
+        "image_available": false,
+        "image_digest": null,
+        "image_reference": "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593:latest",
+        "reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+        "runtime_executable_pass": false,
+        "working_tree_equivalent": false
+      },
+      "source_task_id": "sphinx-doc__sphinx-8593",
+      "source_task_sha256": "d7a0b222ecda2268846b70d86cee54c8162748aacb047519b2e657c3c18dc962",
+      "static": {
+        "base_commit": "07983a5a8704ad91ae855218ecbda1c8598200ca",
+        "future_task_hash_pass": true,
+        "prior_pacta_response_artifacts": [],
+        "prior_scientific_output_absent": true,
+        "repository_identity": "sphinx-doc/sphinx",
+        "source_future_disjoint": true,
+        "source_task_hash_pass": true
+      },
+      "unit_id": "sphinx-doc__sphinx-8593=>sphinx-doc__sphinx-7748"
+    },
+    {
+      "future_task_id": "mwaskom__seaborn-3069",
+      "future_task_sha256": "739f9b2e6297497555d4d850e066137b282ad7c5bbcdee814e957ef0f81a9b1e",
+      "invalid_reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+      "official_config_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "preflight_valid": false,
+      "repository": "mwaskom/seaborn",
+      "runtime": {
+        "base_commit_pass": false,
+        "container_start_pass": false,
+        "image_available": false,
+        "image_digest": null,
+        "image_reference": "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187:latest",
+        "reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+        "runtime_executable_pass": false,
+        "working_tree_equivalent": false
+      },
+      "source_task_id": "mwaskom__seaborn-3187",
+      "source_task_sha256": "72157e71b5c0ed5d58d66a7eeb30ed7b2fb237374183b9ebee200f5d58abd77b",
+      "static": {
+        "base_commit": "22cdfb0c93f8ec78492d87edb810f10cb7f57a31",
+        "future_task_hash_pass": true,
+        "prior_pacta_response_artifacts": [],
+        "prior_scientific_output_absent": true,
+        "repository_identity": "mwaskom/seaborn",
+        "source_future_disjoint": true,
+        "source_task_hash_pass": true
+      },
+      "unit_id": "mwaskom__seaborn-3187=>mwaskom__seaborn-3069"
+    },
+    {
+      "future_task_id": "sympy__sympy-18189",
+      "future_task_sha256": "7c3dbee591c8248e8411469c75edcf733756664c61dac40611ba50a9dab45cae",
+      "invalid_reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+      "official_config_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "preflight_valid": false,
+      "repository": "sympy/sympy",
+      "runtime": {
+        "base_commit_pass": false,
+        "container_start_pass": false,
+        "image_available": false,
+        "image_digest": null,
+        "image_reference": "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599:latest",
+        "reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+        "runtime_executable_pass": false,
+        "working_tree_equivalent": false
+      },
+      "source_task_id": "sympy__sympy-15599",
+      "source_task_sha256": "cf4081c50e2bce78ef90503152dbf7f94f2f8cf0323ee9cd68cf0e3a60835d6e",
+      "static": {
+        "base_commit": "5e17a90c19f7eecfa10c1ab872648ae7e2131323",
+        "future_task_hash_pass": true,
+        "prior_pacta_response_artifacts": [],
+        "prior_scientific_output_absent": true,
+        "repository_identity": "sympy/sympy",
+        "source_future_disjoint": true,
+        "source_task_hash_pass": true
+      },
+      "unit_id": "sympy__sympy-15599=>sympy__sympy-18189"
+    },
+    {
+      "future_task_id": "astropy__astropy-14096",
+      "future_task_sha256": "938971021e89cd882f6ea33d61202fe7aa0091d7be4748b100ddc7e164db90cd",
+      "invalid_reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+      "official_config_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "preflight_valid": false,
+      "repository": "astropy/astropy",
+      "runtime": {
+        "base_commit_pass": false,
+        "container_start_pass": false,
+        "image_available": false,
+        "image_digest": null,
+        "image_reference": "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166:latest",
+        "reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+        "runtime_executable_pass": false,
+        "working_tree_equivalent": false
+      },
+      "source_task_id": "astropy__astropy-7166",
+      "source_task_sha256": "70c79d6da0284ce81f9e951dbab5c77d94bf8a27cd156f54169b424d75d11e43",
+      "static": {
+        "base_commit": "26d147868f8a891a6009a25cd6a8576d2e1bd747",
+        "future_task_hash_pass": true,
+        "prior_pacta_response_artifacts": [],
+        "prior_scientific_output_absent": true,
+        "repository_identity": "astropy/astropy",
+        "source_future_disjoint": true,
+        "source_task_hash_pass": true
+      },
+      "unit_id": "astropy__astropy-7166=>astropy__astropy-14096"
+    },
+    {
+      "future_task_id": "django__django-11400",
+      "future_task_sha256": "3add264d5b3fc0e287b7bfe3c5b1179263d4a811de6caeb2a739b918bb049a21",
+      "invalid_reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+      "official_config_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "preflight_valid": false,
+      "repository": "django/django",
+      "runtime": {
+        "base_commit_pass": false,
+        "container_start_pass": false,
+        "image_available": false,
+        "image_digest": null,
+        "image_reference": "swebench/sweb.eval.x86_64.django_1776_django-13449:latest",
+        "reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+        "runtime_executable_pass": false,
+        "working_tree_equivalent": false
+      },
+      "source_task_id": "django__django-13449",
+      "source_task_sha256": "b082782316bb4c8f2899f9f31d81edd84d4ded60ed7627073f56014db30da0d9",
+      "static": {
+        "base_commit": "2a55431a5678af52f669ffe7dff3dd0bd21727f8",
+        "future_task_hash_pass": true,
+        "prior_pacta_response_artifacts": [],
+        "prior_scientific_output_absent": true,
+        "repository_identity": "django/django",
+        "source_future_disjoint": true,
+        "source_task_hash_pass": true
+      },
+      "unit_id": "django__django-13449=>django__django-11400"
+    },
+    {
+      "future_task_id": "pylint-dev__pylint-8898",
+      "future_task_sha256": "fe9420583d351e0e81a7cbc876fef18b386ba1d375bcfb031830f3885d4f4347",
+      "invalid_reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+      "official_config_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "preflight_valid": false,
+      "repository": "pylint-dev/pylint",
+      "runtime": {
+        "base_commit_pass": false,
+        "container_start_pass": false,
+        "image_available": false,
+        "image_digest": null,
+        "image_reference": "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080:latest",
+        "reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+        "runtime_executable_pass": false,
+        "working_tree_equivalent": false
+      },
+      "source_task_id": "pylint-dev__pylint-7080",
+      "source_task_sha256": "82319497af035b3cdcd4ee71b5fccd578074989dfa157dc54ecc5bf8ea76ceab",
+      "static": {
+        "base_commit": "3c5eca2ded3dd2b59ebaf23eb289453b5d2930f0",
+        "future_task_hash_pass": true,
+        "prior_pacta_response_artifacts": [],
+        "prior_scientific_output_absent": true,
+        "repository_identity": "pylint-dev/pylint",
+        "source_future_disjoint": true,
+        "source_task_hash_pass": true
+      },
+      "unit_id": "pylint-dev__pylint-7080=>pylint-dev__pylint-8898"
+    },
+    {
+      "future_task_id": "pytest-dev__pytest-5809",
+      "future_task_sha256": "22a2be85d2560116244c4051221d1ab5109fa7476651aac4e4ee8e26e4b8e6f1",
+      "invalid_reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+      "official_config_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+      "preflight_valid": false,
+      "repository": "pytest-dev/pytest",
+      "runtime": {
+        "base_commit_pass": false,
+        "container_start_pass": false,
+        "image_available": false,
+        "image_digest": null,
+        "image_reference": "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840:latest",
+        "reason": "local SWE-bench image unavailable; no pull/substitution authorized",
+        "runtime_executable_pass": false,
+        "working_tree_equivalent": false
+      },
+      "source_task_id": "pytest-dev__pytest-5840",
+      "source_task_sha256": "20d9cc3dd4114c8bc9f5eb76bb16d3c50ff8826b8c106119be6c3cf4ed01f398",
+      "static": {
+        "base_commit": "73c5b7f4b11a81e971f7d1bb18072e06a87060f4",
+        "future_task_hash_pass": true,
+        "prior_pacta_response_artifacts": [],
+        "prior_scientific_output_absent": true,
+        "repository_identity": "pytest-dev/pytest",
+        "source_future_disjoint": true,
+        "source_task_hash_pass": true
+      },
+      "unit_id": "pytest-dev__pytest-5840=>pytest-dev__pytest-5809"
+    }
+  ],
+  "schema_version": 1,
+  "source_model_calls": 0,
+  "status": "HOLD_FRESH_RUNTIME_SUPPORT_INSUFFICIENT",
+  "total_source_units": 11,
+  "valid_source_units": 0,
+  "writer_calls": 0
+}
