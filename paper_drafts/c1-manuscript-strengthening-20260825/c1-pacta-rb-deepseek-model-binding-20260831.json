@@ -1,0 +1,21 @@
+{
+  "case_id": "budget-900__fixture-01",
+  "created_at_utc": "2026-08-31T04:54:04+00:00",
+  "expected_requested_model": "deepseek-v4-pro",
+  "expected_resolved_model": "deepseek-v4-pro-260425",
+  "experiment_id": "C1-PACTA-RB-DEEPSEEK-P0-20260831",
+  "fallback_attempted": false,
+  "payload_sha256": "a7c7cd70a0957a0d2b2ed6a9ad30f29c913ee460c4d5dfd99c26d709131757d0",
+  "provider_status": "completed",
+  "raw_response_persisted_before_parse": true,
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "response_artifact": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-deepseek-q0-20260831-v1/responses/budget-900__fixture-01.json",
+  "response_artifact_sha256": "ea7bbf4e99c91fe1b0201bd7031c6d75950307f4d7eab9bfe4abd5098d6e896e",
+  "schema_version": 1,
+  "scientific_provider_calls": 0,
+  "status": "STOP_MODEL_BINDING",
+  "substitution_attempted": false,
+  "thinking_compatibility_fallback": false,
+  "thinking_requested": "disabled"
+}

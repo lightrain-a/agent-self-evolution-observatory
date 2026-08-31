@@ -1,0 +1,23 @@
+{
+  "active_manuscript": "R9",
+  "asset_id": "c1-pacta-rb-deepseek-model-binding-stop-20260831",
+  "belief_update": "No update to PACTA mechanism; failure occurred before action-availability or scientific execution.",
+  "claim_authority": "No DeepSeek/ReasoningBank PACTA effect claim.",
+  "created_at_utc": "2026-08-31T04:54:04+00:00",
+  "decision": "STOP_MODEL_BINDING",
+  "lessons": [
+    "A requested model alias is not sufficient scientific identity; the resolved dated deployment must match the frozen contract.",
+    "Carrier qualification, model realization, writer-twin realization, gate realization, and selection effect are separate claim layers.",
+    "Shopping remains closed; ReasoningBank was an independent carrier attempt, not a Shopping rescue.",
+    "Same-model writer/binder/shadow/final reduces cross-model confounding only when the exact model binding is realized.",
+    "An existing method adapted from problem A must not be relabeled as novelty for problem B; novelty resides in the additional mechanism required by the adaptation failure."
+  ],
+  "payload_sha256": "a42c920c5882e42b03d03cd731c6ef5cd5ab4bef9e7f868c77ecb8acc934b47f",
+  "reopen_conditions": [
+    "exact requested/resolved identity available",
+    "new human authorization",
+    "new prospective run root; never resume this stopped run"
+  ],
+  "schema_version": 1,
+  "scientific_object": "PACTA-v2 on independent ReasoningBank carrier with exact DeepSeek V4 Pro binding"
+}

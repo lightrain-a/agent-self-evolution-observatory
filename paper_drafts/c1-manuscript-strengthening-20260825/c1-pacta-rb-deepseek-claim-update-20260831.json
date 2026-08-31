@@ -1,0 +1,19 @@
+{
+  "PACTA_method_claim_authority": "NO_NEW_SCIENTIFIC_EVIDENCE",
+  "R10_created": false,
+  "active_manuscript": "R9",
+  "carrier_qualification": "pre-provider infrastructure PASS",
+  "created_at_utc": "2026-08-31T04:54:04+00:00",
+  "experiment_id": "C1-PACTA-RB-DEEPSEEK-P0-20260831",
+  "gate_realization": "NOT_RUN",
+  "larger_deepseek_only_confirmation_warranted": false,
+  "measurement": "NOT_RUN",
+  "model_realization": "FAIL exact resolved identity",
+  "novelty": "NOVELTY_RESIDUAL_INHERITED_CARRIER_CLEAR",
+  "payload_sha256": "95778d32fa93f04caa3b19732ba4138bc32b7046d57f8bc2d7ca10327e75971e",
+  "reopen_condition": "human author supplies a provider route that resolves exactly to deepseek-v4-pro-260425 and separately authorizes a new prospective run",
+  "schema_version": 1,
+  "selection_effect": "NOT_RUN",
+  "verdict": "STOP_MODEL_BINDING",
+  "writer_twin_realization": "NOT_RUN"
+}

@@ -1,0 +1,19 @@
+{
+  "action_availability_adjudicated": false,
+  "budget_ladder": [
+    900,
+    1200,
+    1600,
+    2048
+  ],
+  "created_at_utc": "2026-08-31T04:54:04+00:00",
+  "experiment_id": "C1-PACTA-RB-DEEPSEEK-P0-20260831",
+  "no_rescue": true,
+  "payload_sha256": "2853d97b5a71273f5af45dc5650131124a423677c1fc76bba786b60b74360405",
+  "qualification_fixture_calls_returned": 1,
+  "schema_version": 1,
+  "scientific_provider_calls": 0,
+  "selected_scientific_max_output_tokens": null,
+  "status": "NOT_RUN_DUE_STOP_MODEL_BINDING",
+  "stop_precedence": "exact model binding precedes action availability"
+}
