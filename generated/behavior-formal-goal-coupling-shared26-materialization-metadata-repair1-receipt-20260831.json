@@ -1,0 +1,756 @@
+{
+  "authority_sha256": "9379a5b0d0ccd8d5fa288327a8a1f764e511828ba5a389395712f0086b0474c9",
+  "completed_this_invocation": 1,
+  "dataset_revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+  "destination_root": "/data/wyt/behavior-2026-shared26-v3.0",
+  "finalized_verified_bytes": 5977742,
+  "finalized_verified_file_count": 104,
+  "gpu_used": false,
+  "materialization_manifest_sha256": "9ee70726fb70750b23053e2358d3d42d4089238cd0bd52e5b74329279e961df4",
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "partial_files_are_evidence": false,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "processed_this_invocation": 104,
+  "records_this_invocation": [
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-000/file-000.parquet",
+      "sha256": "e1a572dd714d2ff427e8759b7e181de22f4a999faeeb47c9b3b6ddef6670928e",
+      "size": 59109,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-001/file-000.parquet",
+      "sha256": "d1d13ffa59b1b77346a62c14d69b87c8a6d4f8c024741da618a72f9e216d8138",
+      "size": 58904,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-002/file-000.parquet",
+      "sha256": "6b6bc66e85cc871c149471c84cb2b3ef5bf10b24be50335c7e5b46eaa6219d72",
+      "size": 59197,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-003/file-000.parquet",
+      "sha256": "c3611ec14c103758d2a15ab90f07f6d163228dfa1df02b48f1987de67d95150e",
+      "size": 59045,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-004/file-000.parquet",
+      "sha256": "9f8bfbae8a5630101e590dc4f7cfc610ab1a9f105557703adcf4a9f22c5910b4",
+      "size": 58882,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-005/file-000.parquet",
+      "sha256": "0fdf1c32aa92b1d739c03fd616782c32ad118e362afefc532d70d3d66b26fd27",
+      "size": 59249,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-006/file-000.parquet",
+      "sha256": "98c02ed971dc22d6b2dd501047fa9b96995d81936fe3a0b2f782a2dbb512be03",
+      "size": 58539,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-007/file-000.parquet",
+      "sha256": "e26d4107087d4185d6f2b8c2da9040ea45d6a641244da6fef5bae7abb1ba4941",
+      "size": 59062,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-008/file-000.parquet",
+      "sha256": "80c2ec3648ae467102e6ae1ec87ffab8373a7b9a8a69839225dbca2f5f5702be",
+      "size": 59255,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-009/file-000.parquet",
+      "sha256": "f483519584a8d62467402f77f02e1203255bb609107eedd06849250a5085842d",
+      "size": 58513,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-010/file-000.parquet",
+      "sha256": "6d10d16c7e2c502f4e4acd252e486917ec940af7e434a01dd16fb40581716610",
+      "size": 59244,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-011/file-000.parquet",
+      "sha256": "1dff7fd3c6fe406813e7eabd0706f08af67e1f0b4380ed7c82131b2521b4e331",
+      "size": 59043,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-012/file-000.parquet",
+      "sha256": "91b53e17956ce772f0daf4bed78793799b663edb0c2c84fcb708ea99465b1855",
+      "size": 59219,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-013/file-000.parquet",
+      "sha256": "2d9c5b744a7d84778029b05f556b2cce9f6f01c50c1145b60162c24f4d70af25",
+      "size": 59148,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-014/file-000.parquet",
+      "sha256": "5ecff84c3b48ba9d20744621c96c22e2362c0ccbd57fc3bd385df764c2127fb3",
+      "size": 59250,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-015/file-000.parquet",
+      "sha256": "f9a8ccb48bdae3b9455600e888e46ea9e469ee0a5d459cc86deea65e40a05b21",
+      "size": 58785,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-016/file-000.parquet",
+      "sha256": "c0d2234b285dbc04e3e3122311e8cc82729119052f18552ee16b28bf1f073f09",
+      "size": 59387,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-017/file-000.parquet",
+      "sha256": "49aa76abd26114ff7f0073b3806b30a0b764e19f0aa8bbd24bf052055f6f999d",
+      "size": 59160,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-018/file-000.parquet",
+      "sha256": "5c1be73a9429763654c5fac68775748597fbad66922f0588a3f9556878c16ea8",
+      "size": 59043,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-019/file-000.parquet",
+      "sha256": "945dea5cfcbfe899dfd112ec8f17aa6876093948a37859862cf2002cb128e236",
+      "size": 58987,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-020/file-000.parquet",
+      "sha256": "d796ee4d09cc5c74bdd67e95359b5156d088ee3c5e6ad4773b57f6fa4ca52a94",
+      "size": 58141,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-021/file-000.parquet",
+      "sha256": "53e721e685f15d5228744bfaadcb8f467991a356fc7086a435fdc29e43ac91a4",
+      "size": 59121,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-022/file-000.parquet",
+      "sha256": "dc6733a58c5ed77278f48e9725b36864b3dd7ff3187bb8f2284755786e3889c3",
+      "size": 59244,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-023/file-000.parquet",
+      "sha256": "b53ac8fd764c17dbbdf17b9ad5db5de5a6f6ae9f97e79ea77e38dec0fc8444cb",
+      "size": 59427,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-024/file-000.parquet",
+      "sha256": "b9c89a1b2a204adb60029c54effd43b4907ae7d960429518be7ec1c1d1eb8846",
+      "size": 59066,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-025/file-000.parquet",
+      "sha256": "e83a59055e4a0e64bf6443c43b32b5356a6b5706d1a2a0d8763dc710d37fe3aa",
+      "size": 58878,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-026/file-000.parquet",
+      "sha256": "3fcc061b1a6c9174393773d05b9c2a576b9447ca800ed68f66c07407ef86cb20",
+      "size": 58681,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-027/file-000.parquet",
+      "sha256": "b85ce46de9148d3caa042f0b2c45396a6572b72cd2472ee96fd26ad49a0bb26b",
+      "size": 58913,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-028/file-000.parquet",
+      "sha256": "b49bc51081c65a19b028b9ac62806892e5aa1eaf8269a5d710ff2d5167c7faf7",
+      "size": 59308,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-029/file-000.parquet",
+      "sha256": "6335af0983c416cc7b3d116953a0fbcc05710374ad945a369ddcddcd50a63c7c",
+      "size": 59040,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-030/file-000.parquet",
+      "sha256": "ccddc82b0b51ebf5ad2de63a77a52cc59fb5693dec64b204e30fe3e00661283e",
+      "size": 59031,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-031/file-000.parquet",
+      "sha256": "5b3fcfe9329ee81b174bdce8fb811a22068d33380ebec100ac21488b3eac3e38",
+      "size": 59126,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-032/file-000.parquet",
+      "sha256": "7bdd50261d18a5cd027d27f9c2430777c990550ace4bb81e22899d5fd8ad7343",
+      "size": 59104,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-033/file-000.parquet",
+      "sha256": "e089f1bc4742e904fbcd9a9349e17594d1ac24fd82977223cd03c3c4b0c70647",
+      "size": 59065,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-034/file-000.parquet",
+      "sha256": "794e8acd6877bf5c997ea5c006ed411f40ff550ae30f1012ebd1797eaa5f7bbe",
+      "size": 58990,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-035/file-000.parquet",
+      "sha256": "19ea794e2b6f7c884a916560b6975025e58287724c74ebcbebb0506d2066409e",
+      "size": 59090,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-036/file-000.parquet",
+      "sha256": "020e360a1cfcac41105c0dbdd3ba57e8385f0b21b79b2b716faf8b6961f3202d",
+      "size": 58087,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-037/file-000.parquet",
+      "sha256": "704a57826823f1c362591162408aeebef9ee8c7af11130813005887f371c424c",
+      "size": 58884,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-038/file-000.parquet",
+      "sha256": "6ba98e9b953e39a8f05775d5d87f3bf5fe2df384442162f76f88616040442a1c",
+      "size": 58592,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-039/file-000.parquet",
+      "sha256": "b70c787e1943c04c642ad664b7b42d9cb4977cfc3855b16f3a41f367b2cabb10",
+      "size": 58587,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-040/file-000.parquet",
+      "sha256": "798c25ab7cc4ea14fa76a92a98e99e51343aff4ba06738f868929b507693aa55",
+      "size": 59331,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-041/file-000.parquet",
+      "sha256": "03e7119d6d8124c70ec5b6da81d21c07f42bce7ef67b59e677a9252054730b22",
+      "size": 59023,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-042/file-000.parquet",
+      "sha256": "5af5d194d2e36c60f7581a280e372878154965ab18a11ac9df4565d7f1d867d2",
+      "size": 59290,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-043/file-000.parquet",
+      "sha256": "a982cad6f245ad31570719abdbe918b59ede389391284fd670b63794fe2c9564",
+      "size": 59031,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-044/file-000.parquet",
+      "sha256": "bfbd5c6a44a9ccc0dcabc608b955f6b41e4c9474a2c718be36e86d23638b982e",
+      "size": 58443,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-045/file-000.parquet",
+      "sha256": "2d1c554199e48b053e9cd33e155a94c16d7af7b50a5ad8a1999f1a5a0fd09272",
+      "size": 59012,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-046/file-000.parquet",
+      "sha256": "e0ecd843e1ed46d685e3e656aea475ef4bbc5ce9022913571f8434443aaaf5c2",
+      "size": 59235,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-047/file-000.parquet",
+      "sha256": "dcd0c2c6adb8e6df3cf69d2f40da9eeefe7b13b64ca44c7472c739a9855c57cc",
+      "size": 59187,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-048/file-000.parquet",
+      "sha256": "cdf70503de457d86973ecafdad6b31b522a3115d210835f0b067c2140319d2cc",
+      "size": 59104,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-049/file-000.parquet",
+      "sha256": "93e80e591d1cc3aae10e5f1af6886166c7c6d2b978de6810631fe398d2c1d9b6",
+      "size": 58930,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-050/file-000.parquet",
+      "sha256": "a470a5020c6de2fa2269b7f179350d327675867bee63402236bf9ba2b960ef15",
+      "size": 59159,
+      "state": "downloaded-and-verified"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-051/file-000.parquet",
+      "sha256": "30bb7525fab1438501fbfb0ec5ce8293389bd0cd26118cdd9c67b4cb71acdb11",
+      "size": 58943,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-052/file-000.parquet",
+      "sha256": "3135f12e5c9b1488ad23d8bc33d58cc5da6287ae12b28112fba31b591f6fd979",
+      "size": 59082,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-053/file-000.parquet",
+      "sha256": "77b418f3daa54bc2fba67979d7e8ad4a92ddce579744d34f8dd3e198922c48df",
+      "size": 59097,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-054/file-000.parquet",
+      "sha256": "6880337878f65b730f8408ade711392c77b7f2b40adeab54e7e1ce1b90a75f98",
+      "size": 58630,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-055/file-000.parquet",
+      "sha256": "428e8374060ae8ad5e05d82d0c4305c035937c02f4eb9bea33a595ed6c8df90c",
+      "size": 59101,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-056/file-000.parquet",
+      "sha256": "cc8abaff9502588919ce9ad347dcfa7880385a2d81a9db20cede804ca0bce71f",
+      "size": 58857,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-057/file-000.parquet",
+      "sha256": "99cf19c7ecdf62be09207b2ab8f87a6621b7fae48cfbe08a444ddc76ce60b10d",
+      "size": 60119,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-058/file-000.parquet",
+      "sha256": "e70bd2db88a42fb748cc732c3f9ca331b9ca6b8f63e9f350567858d7a04f978b",
+      "size": 58630,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-059/file-000.parquet",
+      "sha256": "ce3aa801a1223612f5f606575a6ab5b5d0be70acbefcd42f2ba723a77dd61886",
+      "size": 59076,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-060/file-000.parquet",
+      "sha256": "d7e0363ef04001e22ba70a7bc2b83d47f96e5b9ced4d01e689cea4573aa80035",
+      "size": 59347,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-061/file-000.parquet",
+      "sha256": "a282ee3a7f4e4260cbaa4e80637a048a3c518e9f99197e0798d34d8ad7f00404",
+      "size": 58505,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-062/file-000.parquet",
+      "sha256": "988c9af1e5039f729f5de1555bd68a3ad1a46afcc170cc5df05a0d8bb39a668a",
+      "size": 59010,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-063/file-000.parquet",
+      "sha256": "9c008c0ae49037f52f1a33a6ab05a9fb764aa995b576a06159d8502c7e022bd2",
+      "size": 59401,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-064/file-000.parquet",
+      "sha256": "ccaeb20d1cd565c1e316e363c1114ea0628d4605c6776a50c86de36d19712aec",
+      "size": 58881,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-065/file-000.parquet",
+      "sha256": "2e01e7b278d66e4fb259a7b1145a219014c5cf6312b2126cbb0ca0640ebc5a9c",
+      "size": 59210,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-066/file-000.parquet",
+      "sha256": "10fe6df64dd41d708fe7141f631be737a04a445cccef96ba498669e1bd03000b",
+      "size": 59369,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-067/file-000.parquet",
+      "sha256": "b82b5ef486f527801a2f812b2cbbaf7f40f8c59988b51b3eaf874de15951d8be",
+      "size": 59281,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-068/file-000.parquet",
+      "sha256": "fb21148d27996b229c7ff0d26b0a4761e0732b8b0a2bc34ea976d6f7c6fa2a1e",
+      "size": 58445,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-069/file-000.parquet",
+      "sha256": "cdb1edbe22656aaf22a8b00ab36f7e34bb40df93de585fd0f0d8b73dd9685e88",
+      "size": 59113,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-070/file-000.parquet",
+      "sha256": "c5a5f2b4830cb6292c33c1fc29eb357d68154ebbd3208d271901e880138eb3d4",
+      "size": 59012,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-071/file-000.parquet",
+      "sha256": "f0d42040da4c1e321b137d3469b757c91a0b69c49370872ccc950f4eace6cd41",
+      "size": 58971,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-072/file-000.parquet",
+      "sha256": "34357c3068f6d8cc871c65a56490b1b0d40f75bddd3854e6126c19452f5b59b8",
+      "size": 59073,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-073/file-000.parquet",
+      "sha256": "f15e99a0217490b6adf98b78f373191d9144e5bc3fa8f081f1f212310d6f2113",
+      "size": 59207,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-074/file-000.parquet",
+      "sha256": "52333e89438ec374ada37c6bbbbce22720cac8b4b80235099e71110646dd88ba",
+      "size": 58423,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-075/file-000.parquet",
+      "sha256": "bb67efd2c084fdad5aff70e98d68c3fa786fc872ce9dd5c05061cda1754504d4",
+      "size": 59589,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-076/file-000.parquet",
+      "sha256": "bb26a58f77129597b6d8db88b88e0b0e8ebfa11a36bfb6eeb8b59d449a814ce1",
+      "size": 58718,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-077/file-000.parquet",
+      "sha256": "f7526a2634c761a23dbdd928447697b3f70d6e4a3ed5f4a2ba0a9d0b3d784425",
+      "size": 59319,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-078/file-000.parquet",
+      "sha256": "9fc47ced984cfa482922e9802b06213fb6fc69ff1414b840145121b65c394087",
+      "size": 59055,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-079/file-000.parquet",
+      "sha256": "58a46f01ca598f6cb1b6190605ef206bc9da06b5eb975245e8f18efbaa3ae0e1",
+      "size": 58715,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-080/file-000.parquet",
+      "sha256": "1752d12ccc09d4dc39f6a453ed0ecb3e19e960acec1fd8eb2d61bda7a5d35cae",
+      "size": 58708,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-081/file-000.parquet",
+      "sha256": "1cd8735a39daceb9c5ddfca3281b1f824b5dc8dcf627a66b237080d8a4f7a6dc",
+      "size": 58703,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-082/file-000.parquet",
+      "sha256": "331e8c4dd6a415188b808068fc2cf7976357d44acf553e75395d84de49570c1c",
+      "size": 59025,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-083/file-000.parquet",
+      "sha256": "70e23a159102b8f844fedf161ec65664782a9b4e08d2e7cd6e5b2a66f2d0f67c",
+      "size": 59166,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-084/file-000.parquet",
+      "sha256": "8a83685fb17afb0d4459d4acac22c58cf8d3ed49d86599805fed97a4c2e9bd22",
+      "size": 59268,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-085/file-000.parquet",
+      "sha256": "264da6a15c406d5a69154b045e6cb53d0900dc791ec79751a0b45a4266878674",
+      "size": 58978,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-086/file-000.parquet",
+      "sha256": "30d5746ab236eeb956e26a5d88c4a35bda59c1bb7be91112a3e3a068dc19f9cd",
+      "size": 59076,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-087/file-000.parquet",
+      "sha256": "6d7f0d165d6e49c4143f2a82c4516f37ca0cf65527dc17e2ce0bcb8024715ea7",
+      "size": 58811,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-088/file-000.parquet",
+      "sha256": "fe29b77b20812fc8244fb76d4d351934c1bf22ad3ffa2e112963cc76f26044b8",
+      "size": 58978,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-089/file-000.parquet",
+      "sha256": "2c40cec6a39ed90a030efdbe8c6d262eb6da474fe1c6811e7cd7d4c1823f74fc",
+      "size": 59508,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-090/file-000.parquet",
+      "sha256": "9443b0e2dc908de70710b4aa5d77c3ea702aaf64eb8589cf3a36e5cca3a133f3",
+      "size": 59453,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-091/file-000.parquet",
+      "sha256": "467908b75b518ab04c2903cd6fb9b5fc93d6d9e8259722fab48d6d9cbe9ec1bb",
+      "size": 58932,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-092/file-000.parquet",
+      "sha256": "2f3353679081709f49cf6b9338a0f72e880780c1fc4e690f2c533b455cddf4a5",
+      "size": 59322,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-093/file-000.parquet",
+      "sha256": "ab13f4be6562616012a2d5033aa1be601ad74cd13d43a88e44805dd98d508bf2",
+      "size": 59449,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-094/file-000.parquet",
+      "sha256": "e941caa1b17c6280083e05123ccc914e1c037a400a0c88bcbc70691534f4e391",
+      "size": 59555,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-095/file-000.parquet",
+      "sha256": "a8d00b4f42fa644adda19f1f9300f84a14b1d351d2716e76b8b7c6049816a13c",
+      "size": 58687,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-096/file-000.parquet",
+      "sha256": "696741b45315700ff929eb19ecdbe9ba02a16d2a4b5532eb406f25b7e7c890f5",
+      "size": 58857,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-097/file-000.parquet",
+      "sha256": "530d9cda21b0f5b735c01f0ae55f3d9ededd3e4f78fcb750c1f48a27f2be9b79",
+      "size": 58919,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-098/file-000.parquet",
+      "sha256": "f957028f718faf2bfa88c4f5f03d6cb1fad1670b5ba1e958ef0c12b56e07b633",
+      "size": 59650,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/episodes/chunk-099/file-000.parquet",
+      "sha256": "c6c8dd9c8335ef0610e0ecc57b8cf789a7cdf3551a48bcc55dfca357ff7e3fce",
+      "size": 59326,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/info.json",
+      "sha256": "24c77f7a984bcee775e666203881a946b11a899f524fbc2405922b2109757874",
+      "size": 8978,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/stats.json",
+      "sha256": "729da3b4a7a52c387ddbad1f9f641df20cff1329aa624e60eb54ccfbfc5a1df5",
+      "size": 38473,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/tasks.jsonl",
+      "sha256": "8d8222310c3611316c6e5fe822a8dd3c6e552b32bcfddd10870c0672bfb8427c",
+      "size": 22202,
+      "state": "verified-existing"
+    },
+    {
+      "kind": "metadata",
+      "path": "meta/tasks.parquet",
+      "sha256": "2477455ef214e2348123379c6895549a5a5b5c76dee7b817de174e0d4b226a94",
+      "size": 4398,
+      "state": "verified-existing"
+    }
+  ],
+  "remaining_file_count": 0,
+  "requested_scope_file_count": 104,
+  "schema_version": "behavior-formal-goal-coupling-shared26-materialization-receipt-v1",
+  "scope": "metadata",
+  "single_writer_lock_path": "/data/wyt/.behavior-2026-shared26-v3.0.materialization.lock",
+  "status": "MATERIALIZATION_SCOPE_COMPLETE",
+  "training_started": false,
+  "transported_bytes_this_invocation": 59159,
+  "verified_existing_this_invocation": 103
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "METADATA_TRANSPORT_REPAIR_PASS_104_OF_104",
+  "scientific_effect": "NONE",
+  "policy_outcomes_read": false,
+  "model_loaded": false,
+  "gpu_used": false,
+  "training_started": false,
+  "source_hold": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-metadata-transport-race-hold-20260831.json",
+    "sha256": "029e473193e92f25f5b5c29ac8f42e43e5190115b1aad9c9349428c635790738"
+  },
+  "repair_runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_materialize.py",
+    "sha256": "a8c4ab53f3b7ba3b762dad110bf80ecc5010de35501432538b1a48885ae46f72",
+    "single_change": "root-level nonblocking exclusive flock around each materializer invocation"
+  },
+  "quarantine": {
+    "source_path": "/data/wyt/behavior-2026-shared26-v3.0/meta/episodes/chunk-050/file-000.parquet",
+    "quarantine_path": "/data/wyt/behavior-2026-shared26-v3.0.transport-quarantine/20260831-postverify-race/meta/episodes/chunk-050/file-000.parquet.corrupt-35772784",
+    "corrupt_size_bytes": 106030,
+    "corrupt_sha256": "35772784a8ada3d9eaa22ce55ec19f6607f2e20060d7f6fe3fbfd8d43146a23c",
+    "preserved": true
+  },
+  "repair_receipt": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-materialization-metadata-repair1-receipt-20260831.json",
+    "sha256": "4a186359c70af3c3104930b718f74f11a6c5cd6780c5c48fb496a22b439eab80",
+    "verified_existing_files": 103,
+    "redownloaded_files": 1,
+    "redownloaded_bytes": 59159,
+    "finalized_verified_files": 104,
+    "finalized_verified_bytes": 5977742,
+    "remaining_files": 0,
+    "partial_files": 0
+  },
+  "decision": "ALLOW_FROZEN_PAYLOAD_MATERIALIZATION_UNDER_EXISTING_BOUNDED_HUMAN_AUTHORITY",
+  "still_forbidden": [
+    "model checkpoint weight download",
+    "model load",
+    "forward/backward/optimizer update",
+    "GPU execution",
+    "policy training",
+    "policy rollout",
+    "policy outcome read"
+  ]
+}
