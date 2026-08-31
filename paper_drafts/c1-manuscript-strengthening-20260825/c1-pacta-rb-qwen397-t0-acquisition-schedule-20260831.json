@@ -1,0 +1,16 @@
+{
+  "created_at_utc": "2026-08-31T15:31:57+00:00",
+  "experiment_id": "C1-PACTA-RB-QWEN397-T0-20260831-v1",
+  "future_task_executions": 0,
+  "outcome_blind": true,
+  "payload_sha256": "4e871d0661b51ab2317019708f2c3ae1b3464c455969b3954bb9c8ec67aeecf7",
+  "replacement": false,
+  "schedule": [],
+  "scheduled_count": 0,
+  "schema_version": 1,
+  "selection": "all preflight-valid units; no six-unit selection",
+  "source_model_calls": 0,
+  "status": "NOT_REALIZED_RUNTIME_SUPPORT_INSUFFICIENT",
+  "top_up": false,
+  "writer_calls": 0
+}
