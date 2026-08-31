@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "asset": {
+    "asset_id": "C1-PACTA-V21-FIRST-ACTION-AVAILABILITY-FAILURE-20260831",
+    "title": "Write-before-parse preserves auditability but cannot recover an un-emitted action",
+    "layer": "measurement",
+    "scope": "first-action measurement under fixed native envelope and output budget",
+    "observed": "PACTA-v2.1 passed 636-output replay qualification and completed a fresh non-degenerate shadow gate, then stopped after 49 complete final responses when one status=incomplete response exhausted 900 output tokens before emitting any action key.",
+    "institutional_lesson": "Write-before-parse makes a failed response auditable but cannot identify a first action that the provider never emitted. First-action measurement qualification must cover output-budget and envelope-ordering availability, not only parser recovery, before scientific execution.",
+    "required_lineage_note": "PACTA-v2 lost final measurement because the response was not persisted before strict parsing. PACTA-v2.1 repaired only measurement robustness with write-before-parse and deterministic first-action recovery; measurement robustness repair is not mechanism tuning.",
+    "precheck": [
+      "Persist provider response identity, status, model metadata, usage, raw bytes, and prompt/raw hashes before parsing.",
+      "Qualify malformed-envelope recovery and negative fail-closed cases.",
+      "Also qualify that the action is emitted before the frozen output limit across representative envelope lengths.",
+      "If the provider returns incomplete before an action exists, fail closed and do not retry or infer from current_state/next_goal."
+    ],
+    "does_not_imply": [
+      "PACTA selection is ineffective.",
+      "PACTA selection is effective.",
+      "The non-degenerate shadow gate predicts final-policy benefit.",
+      "The fixed Shopping substrate should be retried."
+    ],
+    "scientific_authority": false,
+    "provider_authority": false,
+    "reopen_condition": "No PACTA-v2.2 on Shopping. A future experiment requires explicit human authorization and an independent carrier with prequalified first-action availability."
+  }
+}

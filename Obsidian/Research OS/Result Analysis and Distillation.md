@@ -88,6 +88,12 @@ Do not:
 - let a method-extension STOP erase an independently supported phenomenon/measurement paper;
 - store a Failure Asset without `does_not_imply` and a reopen/precheck boundary.
 
+## First-action measurement availability
+
+PACTA-v2 and v2.1 expose a narrower measurement invariant: **parser robustness != action availability**. PACTA-v2 lost a returned response because raw output was not persisted before strict envelope parsing. PACTA-v2.1 repaired that single layer with write-before-parse and deterministic first-action-only recovery; this measurement robustness repair is not mechanism tuning.
+
+The repair made the next failure auditable: a fixed-budget provider response returned `incomplete` after spending the entire output budget on `current_state`, before emitting any `action` key. The correct result is fail-closed missingness, not semantic inference from `current_state` or `next_goal`, not retry/top-up, and not a negative PACTA effect. Qualification for a first-action estimand must therefore test both malformed-envelope recovery and representative action-before-budget availability.
+
 ## Machine binding
 
 `research_pipeline.result_analysis` is the zero-authority compiler for this contract.
