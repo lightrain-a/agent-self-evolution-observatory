@@ -25,7 +25,7 @@ from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
 POPULATION = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-population-and-image-freeze-20260831.json"
 PREREGISTRATION = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-behavioral-propagation-preregistration-20260831.json"
 TREATMENTS = ROOT / "generated/asset-first-stri-reasoningbank-p1-treatment-manifest-20260829.json"
-ACQUISITION = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-runtime-acquisition-result-20260831.json"
+ACQUISITION = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-runtime-acquisition-repair-result-20260831.json"
 AUTHORITY = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-execution-authority-20260831.json"
 RUN_DIR = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-runs-20260831"
 INDEX = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-index-20260831.json"
@@ -79,7 +79,8 @@ def verify_inputs() -> dict[str, Any]:
         "path": str(ACQUISITION.relative_to(ROOT)),
         "actual": sha256_file(ACQUISITION),
         "pass": (
-            acquisition["decision"] == "FULL_P1_EXACT_IMAGES_READY"
+            acquisition["decision"]
+            == "FULL_P1_EXACT_IMAGES_READY_AFTER_SINGLE_CHANNEL_REPAIR"
             and acquisition["all_blobs_sha256_verified"] is True
             and acquisition["all_images_imported_by_exact_digest"] is True
             and acquisition["scientific_boundary"]["task_outcomes_observed"] is False
