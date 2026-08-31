@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V21_PILOT_CLOSURE",
+  "status": "STOP_PACTA_ON_SHOPPING",
+  "reason": "STOP_MEASUREMENT_FAILURE",
+  "execution_git_sha": "9103aeade8e5ee228d58208ca9e46a95139d43a0",
+  "origin_main_sha": "47a8ba35966149bfa6e205304b17c21af72d0804",
+  "run_root": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-v21-p0-measurement-repair-20260831-v1",
+  "lineage": {
+    "PACTA_v2": "Method and non-degenerate gate were realized, but final measurement was lost because the provider response was not persisted before strict envelope parsing.",
+    "PACTA_v21": "Single-layer measurement repair only: write-before-parse plus deterministic first-action-only recovery.",
+    "mechanism_changed": false,
+    "measurement_robustness_repair_is_mechanism_tuning": false,
+    "v2_artifacts_modified": false,
+    "v2_responses_used_for_v21_effect_estimation": 0
+  },
+  "qualification": {
+    "status": "PASS_MEASUREMENT_QUALIFICATION",
+    "scientific_provider_calls": 0,
+    "archived_raw_replay": "636/636 legacy signatures matched",
+    "B10_signature_only_outputs": 432,
+    "positive_malformed_envelope_fixtures": "5/5 recovered",
+    "negative_fixtures": "5/5 failed closed",
+    "write_before_parse_failure_injection": "PASS: raw response and response ID retained",
+    "action_schema_sha256": "360e954e171e4a1d3bbcb5f11cf011827fb625334c0e20791cc64a7983200b50"
+  },
+  "support": {
+    "status": "SUPPORT_PASS",
+    "requested_model": "doubao-seed-2.0-mini",
+    "resolved_model": "doubao-seed-2-0-mini-260215",
+    "thinking_compatibility_fallback": false,
+    "schema_parse_pass": true,
+    "non_scientific_attempt_1_incident_recorded": true
+  },
+  "fresh_pool": {
+    "pilot_ids": [354, 242, 270, 438, 508, 262],
+    "templates": [137, 138, 139, 156, 172, 211],
+    "selection_salt": "C1-PACTA-V21-PILOT-v1",
+    "prior_scmb_or_pacta_response_artifacts": 0,
+    "v2_sample_overlap": 0
+  },
+  "binder": {
+    "completed_calls": 12,
+    "failed_calls": 0,
+    "model_drift": 0
+  },
+  "shadow": {
+    "completed_calls": 144,
+    "failed_calls": 0,
+    "strict_full_envelope": 143,
+    "first_action_only_recovery": 1,
+    "model_drift": 0,
+    "used_in_final_U": false
+  },
+  "gate": {
+    "definition": "min(B1,B2) > max(WS,WF)",
+    "open_count": 2,
+    "closed_count": 4,
+    "open_ids": [242, 270],
+    "closed_ids": [354, 438, 508, 262],
+    "geometry_verdict": "PASS_NON_DEGENERATE"
+  },
+  "rate_matched_random_gate": {
+    "K": 2,
+    "open_ids": [262, 438],
+    "ranking_salt": "C1-PACTA-V21-RANDOM-GATE-v1",
+    "ranking_frozen_before_shadow": true
+  },
+  "final_policy": {
+    "planned_calls": 288,
+    "complete_calls": 49,
+    "failed_calls": 1,
+    "unattempted_calls": 238,
+    "retry_topup_imputation_replacement": 0,
+    "failed_case_id": "task-242__A2_RANDOM_RATE_MATCHED__branch-failure__r4",
+    "failure_type": "FirstActionParseError",
+    "failure_message": "recovery found no action list",
+    "provider_status": "incomplete",
+    "response_id": "resp_02178814873326755f48989dd9b25108c9006ab2514b489f9c5df",
+    "raw_response_retained": true,
+    "raw_response_sha256": "fa6f5d0ba7cc21f959aa5e11bd43e35ddd41666ba1cd1bf90c9714e88a41c3f0",
+    "raw_response_length": 3250,
+    "output_tokens": 900,
+    "action_key_present": false,
+    "first_action_identifiable": false,
+    "completed_parser_modes": {
+      "strict_full_envelope": 47,
+      "first_action_only_recovery": 2
+    },
+    "model_drift": 0
+  },
+  "effects": {
+    "U_A0_NATIVE": null,
+    "U_A1_SCB_ALWAYS": null,
+    "U_A2_RATE_MATCHED_RANDOM": null,
+    "U_A3_PACTA": null,
+    "mean_D_select": null,
+    "positive_D_select_states": null,
+    "negative_D_select_states": null,
+    "mean_A3_minus_A0": null,
+    "mean_A3_minus_A1": null,
+    "reason": "The frozen 288-call final-policy estimand is incomplete; 49 complete and one failed response cannot be used or topped up."
+  },
+  "failure_differential": {
+    "execution": false,
+    "provider_identity": false,
+    "binder": false,
+    "shadow_realization": false,
+    "gate_degeneracy": false,
+    "measurement": true,
+    "paired_noise_calibrated_gate_mechanism": "NOT_ADJUDICATED",
+    "terminal_utility": "NOT_TESTED",
+    "strongest_competing_explanation": "The provider exhausted the frozen 900-token budget while emitting a long current_state analysis and returned status=incomplete before any action key. The deterministic parser correctly failed closed because no first action existed to recover."
+  },
+  "scientific_belief_update": "PACTA-v2.1 validates the auditability repair and again realizes a non-degenerate gate, but it does not identify the final first-action effect. This is not evidence for or against the PACTA selection criterion.",
+  "claim_authority": {
+    "novelty_residual": "historical PASS inherited from v2; no new mechanism claim",
+    "gate_realization_claim": true,
+    "measurement_repair_auditability_claim": true,
+    "preliminary_mechanism_effect_signal": false,
+    "selection_criterion_supported": false,
+    "selection_criterion_negative": false,
+    "utility_improvement_claim": false,
+    "active_manuscript": "R9",
+    "R10_authorized": false
+  },
+  "reopen_condition": "STOP PACTA on Shopping. Do not create v2.2, resume, retry, top up, replace, impute, run terminal, or run same-substrate confirmatory. Any future PACTA experiment requires new human authorization and an independent second carrier; it is not a continuation of this sample."
+}

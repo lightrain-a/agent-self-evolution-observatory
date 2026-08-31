@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V21_CLAIM_AUDIT",
+  "status": "PASS_CLAIM_BOUNDARIES",
+  "pilot_status": "STOP_PACTA_ON_SHOPPING",
+  "checks": {
+    "v2_historical_artifacts_unchanged": true,
+    "v2_responses_excluded_from_v21_effect": true,
+    "fresh_v21_sample_used": true,
+    "method_unchanged_from_v2": true,
+    "measurement_repair_not_relabeled_as_mechanism_novelty": true,
+    "gate_non_degenerate_reported": true,
+    "incomplete_final_policy_not_analyzed": true,
+    "partial_49_plus_1_responses_not_used_for_effect": true,
+    "no_retry_topup_replacement_imputation": true,
+    "PACTA_mechanism_effect_withheld": true,
+    "utility_claim_withheld": true,
+    "R9_remains_active": true,
+    "R10_not_created": true
+  },
+  "allowed_claims": [
+    "The measurement qualification passed its archived replay, synthetic recovery, fail-closed, and write-before-parse tests.",
+    "PACTA-v2.1 completed 12 binder and 144 shadow calls and realized a non-degenerate 2/6 gate.",
+    "Write-before-parse preserved the failed final response, provider ID, metadata, and hashes.",
+    "The final PACTA-v2.1 first-action estimand remains unidentified."
+  ],
+  "forbidden_claims": [
+    "PACTA improves selective behavioral transport.",
+    "PACTA is negative or unsupported under a qualified complete final-policy test.",
+    "A3 beats or fails to beat the rate-matched random gate.",
+    "PACTA improves task utility.",
+    "The measurement repair changes or tunes the PACTA-v2 mechanism."
+  ],
+  "active_manuscript": "R9"
+}
