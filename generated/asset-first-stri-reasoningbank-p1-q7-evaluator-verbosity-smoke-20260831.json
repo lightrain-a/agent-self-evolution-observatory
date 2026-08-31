@@ -1,0 +1,19 @@
+{
+  "created_at_utc": "2026-08-31T04:12:31+00:00",
+  "credential_material_present": false,
+  "decision": "Q7_RUNTIME_AND_EVALUATOR_SMOKE_HOLD",
+  "experiment_id": "NON_SCIENTIFIC_Q7_EVALUATOR_VERBOSITY_SMOKE-20260831",
+  "failure": {
+    "error_type": "RuntimeError",
+    "message": "docker start failed: "
+  },
+  "model_calls": 0,
+  "pass": false,
+  "payload_sha256": "fab6d1db83bc549a5f0df9521d01a6fbaa45f577c1ecf577b861e463fcb297c8",
+  "provider_calls": 0,
+  "q5_contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+  "q7_contract_sha256": "4794b712a5f4dd66511b1c37d221bc19d893c9b3e2745089c150e0095b94e5e8",
+  "schema_version": 1,
+  "scientific_authority": false,
+  "task_outcome_authority": false
+}
