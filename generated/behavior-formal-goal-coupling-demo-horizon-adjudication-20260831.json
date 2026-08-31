@@ -1,0 +1,34 @@
+{
+  "does_not_imply": [
+    "formal goal coupling is irrelevant to policy performance",
+    "coupling has no causal role in agent difficulty",
+    "the 2026 public-Q object failed",
+    "the two-family direct-policy panel failed",
+    "the three-family gate may be lowered",
+    "PORT-010 may reopen"
+  ],
+  "generated_at": "2026-08-31T11:37:00+08:00",
+  "next_route": "NEW_DISTINCT_TWO_OFFICIAL_FAMILY_STRICT_MATCHED_POLICY_PANEL",
+  "object_id": "SUCC-C-BEHAVIOR2026-DEMO-HORIZON",
+  "preregistration_v1_1": {
+    "path": "generated/behavior-formal-goal-coupling-demo-horizon-preregistration-v1-1-20260831.json",
+    "sha256": "055398628a9e1bead28045b804a8acc7c4f85b4b640663de31e5d38a9a8fccf1"
+  },
+  "result": {
+    "beta_edge": -0.009792957356752403,
+    "matched_pairs": 16,
+    "n_tasks": 98,
+    "pair_negative": 7,
+    "pair_positive": 9,
+    "path": "generated/behavior-formal-goal-coupling-demo-horizon-result-v1-1-20260831.json",
+    "permutation_p_two_sided": 0.5342746572534275,
+    "permutations": 100000,
+    "primary_pass": false,
+    "sha256": "0c23f7905036275cdd141e99b3de7acaa498601daa2377a88793968ad5b33a39"
+  },
+  "schema_version": "behavior-formal-goal-coupling-demo-horizon-adjudication-v1",
+  "scientific_authority": false,
+  "scientific_interpretation": "Within fresh task 2..99, formal shared-argument goal coupling is not associated with longer successful human demonstration horizons after exact atomic-goal-count fixed effects under the frozen test.",
+  "status": "CLOSE_SIMPLE_HUMAN_HORIZON_MEDIATOR_NOT_SUPPORTED",
+  "use_in_paper": "negative mechanism/control evidence only: it argues against reducing any later policy-performance association to a trivial human-demo-horizon explanation"
+}

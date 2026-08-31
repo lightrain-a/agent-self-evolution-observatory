@@ -1,0 +1,40 @@
+{
+  "forbidden_assets_accessed": false,
+  "frame_video_state_action_values_read": false,
+  "generated_at": "2026-08-31T11:37:00+08:00",
+  "gpu_used": false,
+  "model_loaded": false,
+  "object_id": "SUCC-C-BEHAVIOR2026-DEMO-HORIZON",
+  "policy_outcomes_read": false,
+  "reward_values_read": false,
+  "runtime": {
+    "model_runtime_used": false,
+    "numpy_required": false,
+    "pyarrow": "19.0.1",
+    "python": "3.12.3"
+  },
+  "schema_version": "behavior-formal-goal-coupling-demo-horizon-metadata-acquisition-v1",
+  "scientific_authority": false,
+  "source": {
+    "repo": "behavior-1k/2026-challenge-demos",
+    "revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+    "tag": "v3.0"
+  },
+  "status": "TASK_1_99_METADATA_BYTES_VERIFIED_TASK_2_99_V1_1_ANALYZED",
+  "transport": "hf-mirror fixed-revision byte transport; Git/LFS pointers are identity authority",
+  "value_access": {
+    "task0_downloaded_for_this_lane": false,
+    "v1_1_fresh_task_count": 98,
+    "v1_1_fresh_task_indices": "2..99",
+    "v1_touched_task_indices": [
+      1
+    ]
+  },
+  "verified_manifest": {
+    "all_verified": true,
+    "file_count": 99,
+    "sha256": "35d0e4373db0f94148d910d8913051a35801b7d4b939b8181f959332706ae09e",
+    "task_indices": "1..99",
+    "total_bytes": 5844582
+  }
+}
