@@ -1,0 +1,71 @@
+{
+  "collision": {
+    "complete_joint_signature_found": false,
+    "hits": {},
+    "search_terms": [
+      "min(B1",
+      "max(WS",
+      "rate-matched",
+      "rate_matched",
+      "shadow-policy",
+      "shadow policy",
+      "within-condition"
+    ],
+    "verdict": "NOVELTY_RESIDUAL_INHERITED_CARRIER_CLEAR"
+  },
+  "created_at_utc": "2026-08-31T04:51:20+00:00",
+  "dataset": {
+    "path": "/data/wyt/agent-self-evolution-observatory/external/stri-swebench-verified-78f471bf655a3137b2e8a75af1501690ec009ec3/data/test-00000-of-00001.parquet",
+    "rows": 500,
+    "sha256": "030cfd7f2a704c4c0226e7f104c725a3b41230b1d3517f9c915ad7ea5be3fa25"
+  },
+  "design_git_sha": "47a8ba35966149bfa6e205304b17c21af72d0804",
+  "experiment_id": "C1-PACTA-RB-DEEPSEEK-P0-20260831",
+  "four_hard_conditions": {
+    "A": "official SUCCESSFUL_SI and FAILED_SI on identical one-step native trace bytes; bundled writer-branch intervention",
+    "B": "at least six byte-distinct memory pairs before binder",
+    "C": "direct official selected_memory injection at identical position for both branches",
+    "D": {
+      "canonical": "strip captured command",
+      "llm_judge": false,
+      "regex": "```bash\\n(.*?)\\n```",
+      "surface": "exactly one fenced bash command"
+    }
+  },
+  "live_origin_main": "47a8ba35966149bfa6e205304b17c21af72d0804",
+  "official_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+  "official_files": {
+    "agent": {
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/agents/default.py",
+      "sha256": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c"
+    },
+    "config": {
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/config/extra/swebench.yaml",
+      "sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41"
+    },
+    "retrieval": {
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/memory_management.py",
+      "sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955"
+    },
+    "runner": {
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/run/extra/swebench.py",
+      "sha256": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951"
+    },
+    "writer": {
+      "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/instruction.py",
+      "sha256": "08e11fbeac1ba9e20d1dafb20728be24194b56bdfea33f05f6a1220ae2cc9bae"
+    }
+  },
+  "payload_sha256": "5ddafbc402282298005437f46eba5bd6a58f7938483aee1c337ffb91c6d2688a",
+  "schema_version": 1,
+  "selected_carrier": "SWE-bench Verified / official MiniSWEAgent",
+  "selection_basis": [
+    "implementation completeness",
+    "official provenance",
+    "existing shortest parser",
+    "fresh support",
+    "deterministic replayability"
+  ],
+  "source_trajectory_scope": "one-step native policy trace; no environment execution, evaluator, gold patch, terminal, or full trajectory",
+  "verdict": "C1_PACTA_RB_DEEPSEEK_CARRIER_QUALIFICATION_PRE_PROVIDER_PASS"
+}

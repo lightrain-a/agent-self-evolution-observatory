@@ -1,0 +1,77 @@
+{
+  "active_manuscript": "R9",
+  "arms": {
+    "A0": "native raw memory",
+    "A1": "SCB always",
+    "A2": "rate-matched random SCB",
+    "A3": "PACTA-selected SCB"
+  },
+  "created_at_utc": "2026-08-31T04:51:20+00:00",
+  "experiment_id": "C1-PACTA-RB-DEEPSEEK-P0-20260831",
+  "final": {
+    "calls": 288,
+    "fresh": true,
+    "temperature": 0.2
+  },
+  "locked": [
+    "terminal",
+    "second model",
+    "same-carrier confirmatory",
+    "R10"
+  ],
+  "method": "PACTA-v2 unchanged; carrier adaptation only",
+  "model": {
+    "all_roles_same": true,
+    "expected_resolved": "deepseek-v4-pro-260425",
+    "requested": "deepseek-v4-pro",
+    "retries": 0,
+    "substitution": false,
+    "thinking": "disabled"
+  },
+  "payload_sha256": "0d7dd343f47f7d77425955793fc500c19f6c9230c9fa134dd4e30134c434e457",
+  "persistence": "atomic fsync provider record before first-command parse",
+  "primary": {
+    "contrast": "A3-A2",
+    "thresholds": [
+      "mean>=0.05",
+      "positive>negative",
+      "A3-A0>0",
+      "A3-A1>=0"
+    ]
+  },
+  "qualification": {
+    "budget_ladder": [
+      900,
+      1200,
+      1600,
+      2048
+    ],
+    "fixtures": 12,
+    "rule": "smallest budget with 12/12 completed+parsed, no drift/fallback"
+  },
+  "random_gate": {
+    "ranking": "SHA256('C1-PACTA-RB-DEEPSEEK-RANDOM-v1'|unit_id)",
+    "rate_matched": true
+  },
+  "scb": {
+    "instruction": "Given the reusable memory, the ultimate software-engineering task, and the current decision context, produce one concise current-state action implication. Use the memory only when relevant, do not invent facts, and state what the agent should prioritize next. Output one sentence, at most 60 words, with no explanation.",
+    "max_output_tokens": 180,
+    "temperature": 0.0
+  },
+  "schema_version": 1,
+  "shadow": {
+    "blocks": 2,
+    "branches": 2,
+    "calls": 144,
+    "gate": "min(B1,B2) > max(WS,WF)",
+    "geometry": "2..5 open",
+    "replicates": 6,
+    "temperature": 0.2
+  },
+  "shopping": "STOP_PACTA_ON_SHOPPING",
+  "writer": {
+    "official_branches_only": true,
+    "same_trajectory_bytes": true,
+    "temperature": 0.2
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "SCB_instruction_sha256": "0e76422dac435c466b0ebd169be3e7ee78b2a1aaa050fe6fd288bec4ead1da7e",
+  "budget_ladder": [
+    900,
+    1200,
+    1600,
+    2048
+  ],
+  "carrier_sha256": "5ddafbc402282298005437f46eba5bd6a58f7938483aee1c337ffb91c6d2688a",
+  "contract_sha256": "0d7dd343f47f7d77425955793fc500c19f6c9230c9fa134dd4e30134c434e457",
+  "created_at_utc": "2026-08-31T04:51:20+00:00",
+  "design_git_sha": "47a8ba35966149bfa6e205304b17c21af72d0804",
+  "experiment_id": "C1-PACTA-RB-DEEPSEEK-P0-20260831",
+  "first_action_regex_sha256": "e091949695ab4cf7c4e626fff2c2c877d6b72615506c6c8753950fc21ab59417",
+  "fresh_pool_sha256": "e5477d7a1f1b811d2ceb482919f1bc320382e0e382672443ac328357e0d7a05f",
+  "live_origin_main": "47a8ba35966149bfa6e205304b17c21af72d0804",
+  "no_provider_output_observed": true,
+  "official_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+  "payload_sha256": "99645cd6d5dd89687ec8d6198b1c3743781cfabb099066ad5cc883e8269376ae",
+  "random_gate_ranking": [
+    {
+      "rank": "44d7d053a073bae362ad1fbe7c81d9c1b3767648221aa1fe794efb48a24fe5e5",
+      "unit_id": "django__django-13449=>django__django-11400"
+    },
+    {
+      "rank": "61139d4e2719fe45d5d8a2bc869faa52b58ada2ad762b791fbec71cfd4b91da9",
+      "unit_id": "pylint-dev__pylint-7080=>pylint-dev__pylint-8898"
+    },
+    {
+      "rank": "6297c29fbe543daf9122036f3fada245321d9e32a2f1397fe3a418126f737897",
+      "unit_id": "sphinx-doc__sphinx-8593=>sphinx-doc__sphinx-7748"
+    },
+    {
+      "rank": "68e3e663a2cdc24c39fdf3a0d7f7c508180a90f532f97283d9792eabe40a4f50",
+      "unit_id": "astropy__astropy-7166=>astropy__astropy-14096"
+    },
+    {
+      "rank": "7d1c22e91fb5466b91d596768a7ffb586b6d7c7db0eb113818849505197a7ccb",
+      "unit_id": "sympy__sympy-15599=>sympy__sympy-18189"
+    },
+    {
+      "rank": "8c776ca3006debb590d63c8a15fe10c2c067febb3d97fce84ea1c40781907346",
+      "unit_id": "pydata__xarray-4966=>pydata__xarray-4356"
+    },
+    {
+      "rank": "92f38ece9c60fa3cecd80882966ca31561a99df017c42213b1191a8ed9ab7c2e",
+      "unit_id": "matplotlib__matplotlib-24627=>matplotlib__matplotlib-25960"
+    },
+    {
+      "rank": "c150751d794f757407eb8adcfc8d8786a1fd1688548735f4165094944cfad851",
+      "unit_id": "pytest-dev__pytest-5840=>pytest-dev__pytest-5809"
+    },
+    {
+      "rank": "c977382aca65c5d17e171de07fc88130b46d6543c015c87f3e45dcf11d048cf9",
+      "unit_id": "scikit-learn__scikit-learn-14496=>scikit-learn__scikit-learn-10908"
+    },
+    {
+      "rank": "d052a297119744e196b190c86541e9fbbc86813d30a702d2671f410c8fc3a0b4",
+      "unit_id": "mwaskom__seaborn-3187=>mwaskom__seaborn-3069"
+    },
+    {
+      "rank": "eb876515b8bc8b4b3caff1e6109594da0ed24243aab6d04013212678d61a96a5",
+      "unit_id": "psf__requests-1766=>psf__requests-1724"
+    }
+  ],
+  "schema_version": 1,
+  "scientific_budget": "PENDING_QUALIFICATION",
+  "selection_rule": "one deterministic source/future pair per repository using frozen SHA salts; candidates ranked by SHA256('C1-PACTA-RB-DEEPSEEK-P0-v1'|unit_id); select first six with byte-distinct official writer twins"
+}
