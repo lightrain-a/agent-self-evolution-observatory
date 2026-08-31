@@ -1,0 +1,32 @@
+{
+  "compiler_source_git_sha": "c9b8883a618448de0e5743ea307af8d6021d932a",
+  "compiler_source_git_tree": "5f05f93cb574207a88c9c712c51f1ee44596718f",
+  "config_sha256": "e0d68fa08c8bcdf496f1c261ee945924ea2b5f74277a9b054b26fd95bb414b41",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "exact_all_success": "1 iff every instructed relation is satisfied; otherwise 0",
+  "generated_at": "2026-08-31T12:00:00+00:00",
+  "missingness": "no post-generation complete-case deletion; failures contribute zero",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "observables": {
+    "end_to_end_relation_iRecall": {
+      "denominator": "all instructed relations",
+      "failure": "generation/evaluator failure is unsatisfied",
+      "numerator": "instructed relations satisfied in generated scene"
+    },
+    "graph_to_scene_relation_retention": {
+      "denominator": "all evaluable relations in input graph",
+      "failure": "generation/evaluator failure is unsatisfied",
+      "numerator": "input-graph relations satisfied in generated scene"
+    },
+    "text_to_graph_relation_recall": {
+      "denominator": "all instructed relations in eligible aligned cases",
+      "failure": "prediction failure is not recalled",
+      "numerator": "instructed relations exactly present in eligible aligned predicted graph"
+    }
+  },
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "primary": "relation_level_iRecall",
+  "primary_exclusion": "tokenizer_truncated == true",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-pre-f0-v1",
+  "secondary": "exact_all_success"
+}
