@@ -1,0 +1,130 @@
+{
+  "bindings": {
+    "payload_manifest_sha256": "927e9b648fb46d682450c424dde4afbc815fcda2a17351bd0b22e5f725337979",
+    "preregistration_sha256": "483235155b6fec941969a4a766cbe15e50f2807b06828e625942f3d731d0e231",
+    "source_qualification_sha256": "cda384bf9944c4ef6271a31d0d618d22abc27a0dbdbe700266ab656c6b9497e4",
+    "subset_qualification_sha256": "da1e5abab701e3a5ab150e3abc530043ddf5f01a4b91efd7f094293a27354bf4"
+  },
+  "execution_authority": false,
+  "files": [
+    {
+      "content_sha256": "7d06d0da7baf0873016f2172fd2df5478f52a92e1c90e94ce2585e10f170e249",
+      "content_size_bytes": 2147,
+      "git_blob_sha1": "c435ae135b5416de0a26d5ce67c9953c17d2ca35",
+      "path": "checkpoint-238000/config.json",
+      "storage": "inline-git-blob"
+    },
+    {
+      "content_sha256": "c8af3d61fe9ca5508c4a5b9e8be6ad4d0d1eb2c68cec76620ea089b894a3ee22",
+      "content_size_bytes": 2226,
+      "git_blob_sha1": "9a5b40fe7cd0266bec65666448a0afb51bbe1138",
+      "path": "checkpoint-238000/embodiment_id.json",
+      "storage": "inline-git-blob"
+    },
+    {
+      "content_sha256": "a492784c4d6f6ea17946d6ffbdb007760d65147004a5bc2ee8b1a34133005aac",
+      "content_size_bytes": 5845,
+      "git_blob_sha1": "4e508c6c405be0bf0a9581c1f8322e994f66afde",
+      "path": "checkpoint-238000/experiment_cfg/conf.yaml",
+      "storage": "inline-git-blob"
+    },
+    {
+      "content_sha256": "1b9b8f541d55801cec39c480fbfeb4eb1708e82e0d7e2c69ba35aea790d06106",
+      "content_size_bytes": 5809,
+      "git_blob_sha1": "fc48423ee2b6431db5e969dc050ee760e9b790cc",
+      "path": "checkpoint-238000/experiment_cfg/config.yaml",
+      "storage": "inline-git-blob"
+    },
+    {
+      "content_sha256": "66e9493400671e22f80664e01a0961e3a69c6bf9a490d32d3aeb37481f54fdaf",
+      "content_size_bytes": 76330,
+      "git_blob_sha1": "77c51beaa16296607f0057170c2a628dd8ecfba1",
+      "path": "checkpoint-238000/experiment_cfg/dataset_statistics.json",
+      "storage": "inline-git-blob"
+    },
+    {
+      "content_sha256": "ee01ded3e8d98c1cfc8e37f227afe21dfbca11d8aaa56cffef4ae0ad51dea217",
+      "content_size_bytes": 1512,
+      "git_blob_sha1": "cf3bcfd0587735699df9c097b9bcdd148070e997",
+      "path": "checkpoint-238000/experiment_cfg/final_model_config.json",
+      "storage": "inline-git-blob"
+    },
+    {
+      "content_sha256": "84fd2bd5e7a1f61c4e33094766f91786a55415aea96ea29f3dcdc10777be1793",
+      "content_size_bytes": 2550940,
+      "git_blob_sha1": "3f316b88953b53ff387aeb66e1cdeb14a7f77ab8",
+      "path": "checkpoint-238000/experiment_cfg/final_processor_config.json",
+      "storage": "inline-git-blob"
+    },
+    {
+      "git_blob_sha1": "205bb66f27346eec4c5e25d07e2a46dad6440fe0",
+      "lfs_oid_sha256": "3eb85a770b0a6d4b66810e5005ac99066d25ca975939c73b7ce4a006438d98b6",
+      "path": "checkpoint-238000/model-00001-of-00002.safetensors",
+      "payload_size_bytes": 4990519232,
+      "storage": "git-lfs"
+    },
+    {
+      "git_blob_sha1": "d241587fbf435af33a913b91cab0cbb3e6d779d4",
+      "lfs_oid_sha256": "eb667619bd5b0e7b978d50ddb72aa0e46fd51f55252218dc59c5fe8c01847c3b",
+      "path": "checkpoint-238000/model-00002-of-00002.safetensors",
+      "payload_size_bytes": 1919980184,
+      "storage": "git-lfs"
+    },
+    {
+      "content_sha256": "407804ea5a62f4f8823f48811ae0edbb82fac101e9cf4d7273e6e2f692bb4d59",
+      "content_size_bytes": 104985,
+      "git_blob_sha1": "4761851d9515098ac203474f61221a26cd3a98b6",
+      "path": "checkpoint-238000/model.safetensors.index.json",
+      "storage": "inline-git-blob"
+    },
+    {
+      "content_sha256": "9716f939961fd410ebb41b1995498315784f9da89c6643e7c2beaaa29056b910",
+      "content_size_bytes": 29045,
+      "git_blob_sha1": "d4bc10908562b05aef98eb69956b2616d74ce10d",
+      "path": "checkpoint-238000/processor_config.json",
+      "storage": "inline-git-blob"
+    },
+    {
+      "content_sha256": "203d0fff5d3043f3ce49a82e89c2e41b63a5a17580d41258435a0439a5edd4b2",
+      "content_size_bytes": 4369423,
+      "git_blob_sha1": "fd5357e6b8f594b349f49ebfc9b006c8ff3c740a",
+      "path": "checkpoint-238000/statistics.json",
+      "storage": "inline-git-blob"
+    },
+    {
+      "content_sha256": "5f07ab996d2ef9c6e15b5b5c9460d7e642fc9113c7adfbb93e7dc772803b5b0a",
+      "content_size_bytes": 45,
+      "git_blob_sha1": "2b3c76bb0fa038f9d4d1b95d799a86b8dbb34747",
+      "path": "checkpoint-238000/wandb_config.json",
+      "storage": "inline-git-blob"
+    }
+  ],
+  "gpu_authority": false,
+  "model_load_authorized": false,
+  "next_gate": "freeze the pi0.5 shared-subset config patch and zero-update config/data-loader smoke; no model load or optimizer update",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "policy_outcomes_read": false,
+  "schema_version": "behavior-formal-goal-coupling-shared-multitask-groot-checkpoint-manifest-v1",
+  "scientific_authority": false,
+  "source": {
+    "checkpoint": "checkpoint-238000",
+    "model_card_terminal_marker_verified": true,
+    "readme_git_blob_sha1": "365c67df8c264795f5b500d53564ff757cacedd4",
+    "readme_sha256": "568d962a096aaed6a429b45dc61a6319fc57cfa4124083a1e2425866fff826b1",
+    "repo_id": "kmy17518/gr00t-n1.7-b1k-multitask",
+    "revision": "5831e9dc0ec1212e9aaa3d96c8e27d2548718a82",
+    "selection_rule": "terminal/final checkpoint frozen before any local policy outcome; late-snapshot shopping forbidden"
+  },
+  "status": "PUBLIC_GROOT_TERMINAL_CHECKPOINT_CONTENT_ADDRESSED_ZERO_WEIGHT_DOWNLOAD",
+  "summary": {
+    "checkpoint_manifest_sha256": "e89f2fb97ce7998aeb7adf64d468b05a595b9d2d3f95826a1ed3f6176df1f4ad",
+    "file_count": 13,
+    "inline_bytes": 7148307,
+    "inline_file_count": 11,
+    "lfs_file_count": 2,
+    "lfs_payload_bytes": 6910499416,
+    "lfs_payload_gib": 6.435904107987881
+  },
+  "weight_payload_bytes_downloaded": 0,
+  "weight_payload_download_authorized": false
+}
