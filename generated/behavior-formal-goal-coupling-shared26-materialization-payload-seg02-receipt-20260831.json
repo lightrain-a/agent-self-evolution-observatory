@@ -1,0 +1,392 @@
+{
+  "authority_sha256": "9379a5b0d0ccd8d5fa288327a8a1f764e511828ba5a389395712f0086b0474c9",
+  "base_runner_sha256": "a8c4ab53f3b7ba3b762dad110bf80ecc5010de35501432538b1a48885ae46f72",
+  "completed_or_resumed_this_invocation": 0,
+  "dataset_revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+  "errors": [],
+  "gpu_used": false,
+  "internal_transport_workers": 4,
+  "materialization_manifest_sha256": "9ee70726fb70750b23053e2358d3d42d4089238cd0bd52e5b74329279e961df4",
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "partial_file_count": 0,
+  "partial_files_are_evidence": false,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "records": [
+    {
+      "path": "data/chunk-014/file-009.parquet",
+      "sha256": "d6c15a0c61fce11e4cc631b17681950d11379eebe2d25d3a86d1b392c1255cd1",
+      "size": 78972844,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-014/file-010.parquet",
+      "sha256": "284ac7279e41d8038ebb497e47b3e64db1c1903788ed9d32a4fe67c3bad90d83",
+      "size": 79719328,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-014/file-011.parquet",
+      "sha256": "861b2c171051bf5b76c32d7b328443a1e65c332a56568c17e5c418451c2d2a9c",
+      "size": 81897685,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-014/file-012.parquet",
+      "sha256": "da4ec4e31a68f34a0afbe3f49e67751ea3591e8c223dd7440dbcf2bfca1f6055",
+      "size": 72084761,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-017/file-000.parquet",
+      "sha256": "cf9b79bd3155033c36f36d62738ed7d33774c2165598682a55deed0d7bd5f4c4",
+      "size": 81711037,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-017/file-001.parquet",
+      "sha256": "83ecf980a4ca759072098e045611f3d58d55000b9274d3b70695bfb3d63458e8",
+      "size": 80443097,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-017/file-002.parquet",
+      "sha256": "5d92c876cd9ac32d0ca7f61bcc4b807ab6e6034d2807cee280f90d15f8a6dd49",
+      "size": 81195935,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-017/file-003.parquet",
+      "sha256": "2f173c6166cb6bc9c42ca5328ccef8ec2b94b56fee101553d60a52eb13959ee5",
+      "size": 78665978,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-017/file-004.parquet",
+      "sha256": "683395dd2cd057d503af99ec6c9ce0667c68bf911d94c73d5d40fbc2e89e549d",
+      "size": 79666146,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-017/file-005.parquet",
+      "sha256": "82936e3e3ad4ffb9c92161c569f058b9ec63857d805cb64b3f3c2c6ad706dffb",
+      "size": 81393505,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-017/file-006.parquet",
+      "sha256": "9ad8cbc549a618dd4b15f3d2441af49c83c02accc1bde051c2f1f6ed67e982de",
+      "size": 80545490,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-017/file-007.parquet",
+      "sha256": "2b24b1651dc4a020625651877b30e487a9c54a759792642802d1b988517acbeb",
+      "size": 78642179,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-017/file-008.parquet",
+      "sha256": "928462d7e3c88e9519fb6419e82c7b07690634a6f022d31387767c8fe3e81807",
+      "size": 35598447,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-033/file-000.parquet",
+      "sha256": "abf7a9cf9d3f729e17d9c66e54838b30b27208fb1debaf7bc384abffdf5a4545",
+      "size": 80527686,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-033/file-001.parquet",
+      "sha256": "cd1a602d546a2e3a4c4e3792ebdbd3b1ddf94ca988444ba125c9384bf4dfd1bd",
+      "size": 79510292,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-033/file-002.parquet",
+      "sha256": "eff75c38a02c6b075343b5531ddd10d3aa94eb5b917b63948584c4c94e23f806",
+      "size": 80892033,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-033/file-003.parquet",
+      "sha256": "eb2dcccaf368500bad24bae8e0bf32069032b91cd4b2b73bbf15753f24d96168",
+      "size": 82593750,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-033/file-004.parquet",
+      "sha256": "6e659e3616ccb54feb388e878d653e0772f017c52f88fd5b1af591d596792808",
+      "size": 81746018,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-033/file-005.parquet",
+      "sha256": "b3fdd6e75c72745d2d1aeeedc5ebea718f64240a4030c0b20c4f069ac8dda82b",
+      "size": 81974343,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-033/file-006.parquet",
+      "sha256": "a84f0a5397aae5f30d6a56b7780102e057f53d0181761db32561d79ec48adb8b",
+      "size": 83579893,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-033/file-007.parquet",
+      "sha256": "8a7226a806c3a8226af4f8157e3ebfc3858e35d92ff3990643c2095eb14527c0",
+      "size": 81601674,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-033/file-008.parquet",
+      "sha256": "5436af09f925ac805b44d9675fabb9da5523b657af06a9f82387baf793820bef",
+      "size": 81697031,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-033/file-009.parquet",
+      "sha256": "7a54b5d905513a5853d1fc2857a110aeff0dc59b17c1dd84373199f6b5f11f96",
+      "size": 81344258,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-033/file-010.parquet",
+      "sha256": "8e480484445dcd20d6a266a30a05dedf5aca14aef2bd7347f0e82ea676a2ab9d",
+      "size": 14365251,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-000.parquet",
+      "sha256": "f1376293c49ce80d6c7b6f2d4a73189e6193a55b3906fe3b8ed51606e7225086",
+      "size": 80485619,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-001.parquet",
+      "sha256": "60e72c0bee04ad75ff929b3f391716b434488d1fdf5d5a149f6626349ff7ea62",
+      "size": 80845338,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-002.parquet",
+      "sha256": "800cef7582721174108372b88a1791e9b47ff3e512ddb5ba3be3a4e45c56017d",
+      "size": 82465163,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-003.parquet",
+      "sha256": "d0116d198554caf5c69135cf50c89bbe76ad41acba6478c7e09d62db1a9dc8e5",
+      "size": 83013588,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-004.parquet",
+      "sha256": "0276dc07f8e529fa129d7d635e753c9b2c40203fed77fe903bd50f5c9da8b35f",
+      "size": 79033584,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-005.parquet",
+      "sha256": "1d59ccfe69a0edb30a3affcc5cb6a1be4f5214bb8aaf4943aad87740d210e63b",
+      "size": 82794497,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-006.parquet",
+      "sha256": "e2b544cc5b5e73809a68f335a21c66c31dfd83b33345bbc6378ee25b791c01ad",
+      "size": 79148704,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-007.parquet",
+      "sha256": "f92285812554f68cd72c080ba74b090ed314f51a63d9d4d9ac3c833e85776584",
+      "size": 81994511,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-008.parquet",
+      "sha256": "859924937e40c3447b18fff363d06010ea292950b9780de25a78f4c608e6b417",
+      "size": 81156447,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-009.parquet",
+      "sha256": "cbede9fec9d9a5dd0b043759c97c1d4a8930c2ec139efe5bb856c3a9f210c52e",
+      "size": 83823353,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-010.parquet",
+      "sha256": "2bfc94613f5747ddb9ed13ab4c39609869e138ebd2c58a436505eef46dd8a37c",
+      "size": 82263007,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-011.parquet",
+      "sha256": "3e1304d9112bafe2f9a74a5b1f90b27f85f2b01ee31dbd3c6fa9c5fde6bddf91",
+      "size": 78784811,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-041/file-012.parquet",
+      "sha256": "4009e64541b4fa70370c7c653325d4188d6b6ea8a63803309e92d0c367e3fb33",
+      "size": 71827505,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-042/file-000.parquet",
+      "sha256": "f13a1b5495f4a6017af58d020a49b8b74411da296f967f7828922e27fa9dc77d",
+      "size": 81400020,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-042/file-001.parquet",
+      "sha256": "e103dc3aeef431f23dfa9ef8b1cdf266ef1fa820162c276e346af1bd2c86bfad",
+      "size": 80961619,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-042/file-002.parquet",
+      "sha256": "49e49b167ce17b0e6a4f3fba76345785c064e7a39385606e621662a67bfc0e01",
+      "size": 81252256,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-042/file-003.parquet",
+      "sha256": "10b54ac3491762f3cd65cfb641db4fede1dc0cbd96fbf009246c84b0bfe9ef46",
+      "size": 80535191,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-042/file-004.parquet",
+      "sha256": "96fe693e35bdd6a48ddc03f927e3ac8afe9c18038756dfb3c13bc553eb6aeb2a",
+      "size": 82298142,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-042/file-005.parquet",
+      "sha256": "cd3eaaec1d5d38420603aa144090771520fc79fc4cf27b857c03ae4f5a3ad491",
+      "size": 59274175,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-046/file-000.parquet",
+      "sha256": "22dd44b2cec99c8e0af90b9513f5fe7410bab43797612cea3c4c006e5fded0b8",
+      "size": 80631019,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-046/file-001.parquet",
+      "sha256": "001f556fd84d11cb7a7bd7822d4399bcd2656d9523d6b3069a45d31c916cb655",
+      "size": 81168312,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-046/file-002.parquet",
+      "sha256": "856da7493ad6bb615b90cbdacd265c66900744df9e5cfb68ca96b09afe9985c9",
+      "size": 83212137,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-046/file-003.parquet",
+      "sha256": "6511b83e65d518846c4d43803d1b16a0cd70e171f46ad7e98a07c5217510bb45",
+      "size": 80216133,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-046/file-004.parquet",
+      "sha256": "7fa756da57bc7081bd3d53193e5071b629a754e4f585142a72fdbd51a45dd2f2",
+      "size": 81133963,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-046/file-005.parquet",
+      "sha256": "cc3aaf00e30ba3d91c717a9497a6486cde7af859be3724a6e7cb6b195b5abde6",
+      "size": 81591626,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    },
+    {
+      "path": "data/chunk-046/file-006.parquet",
+      "sha256": "7b92aaf6402fe60c097246df2755bd921e928f59019f8c8bd469283d69cf9917",
+      "size": 70034288,
+      "state": "verified-existing",
+      "transported_bytes": 0
+    }
+  ],
+  "remaining_file_count": 0,
+  "schema_version": "behavior-formal-goal-coupling-shared26-payload-segment-receipt-v1",
+  "segment": {
+    "bytes": 3891713669,
+    "file_count": 50,
+    "first_path": "data/chunk-014/file-009.parquet",
+    "gib": 3.62444079387933,
+    "last_path": "data/chunk-046/file-006.parquet",
+    "segment_id": "S02",
+    "segment_path_oid_size_sha256": "9bd78b758a1446e2e507bea747e44f725b40dcc9ef9d41fbae146f9dfe27aeca",
+    "start_index": 50,
+    "stop_index_exclusive": 100
+  },
+  "segment_id": "S02",
+  "segment_plan_sha256": "1ad14491dbbcbff289bdaada9bcd02c64ff271a7374e4e9bcdff28c8d11d493a",
+  "single_writer_lock_path": "/data/wyt/.behavior-2026-shared26-v3.0.materialization.lock",
+  "status": "PAYLOAD_SEGMENT_COMPLETE",
+  "training_started": false,
+  "transported_bytes_this_invocation": 0,
+  "verification_semantics": "each record returned only after exact per-file size+SHA-256 verification while the exclusive root lock is held; no redundant segment-end rehash; one final whole-materialization rehash seal remains required",
+  "verified_bytes": 3891713669,
+  "verified_existing_this_invocation": 50,
+  "verified_file_count": 50
+}
