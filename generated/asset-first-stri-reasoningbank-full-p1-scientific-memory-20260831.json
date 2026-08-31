@@ -1,0 +1,20 @@
+{
+  "adjudication_sha256": "b0d4eb79b27be7e4779bddb7a585b55e7edcaac618646743c0c7dc52552ba44b",
+  "created_at_utc": "2026-08-31T15:16:20+00:00",
+  "credential_material_present": false,
+  "decision": "FULL_P1_SCIENTIFIC_MEMORY_DEPOSITED",
+  "experiment_id": "E1-STRI-REASONINGBANK-FULL-P1-SCIENTIFIC-MEMORY-20260831",
+  "failure_differential_lesson": "implementation/operationalization failure -> no scientific belief update -> prospective repaired qualification",
+  "payload_sha256": "a14bce9a45fe973020f9c27cb1f0604e3306632ea15f540ac794428ed2d9a982",
+  "reuse_rule": "When a run stops before a valid model-visible behavior or has invalid implementation/evaluation, classify the failure layer first; do not update the scientific mechanism belief from that run.",
+  "schema_version": 1,
+  "sequence": [
+    "Q2 evidence preserved",
+    "Q3 stopped before model outcome because its runtime base-state rule was overly strict",
+    "Q3 therefore was not a mechanism negative",
+    "Q4 was an outcome-blind implementation repair",
+    "Q5-Q10 prospectively localized and repaired evaluator/runtime acknowledgement semantics without treatment redesign",
+    "Full-P1 was separately preregistered and separately authorized only after qualification"
+  ],
+  "task_outcomes_preserved_descriptively": true
+}

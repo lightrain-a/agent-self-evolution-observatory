@@ -1,0 +1,512 @@
+{
+  "artifact_manifest": "generated/asset-first-stri-reasoningbank-full-p1-artifact-manifest-20260831.json",
+  "artifact_manifest_sha256": "e106eee5c054bcfec6cf2a4b577a0d679f6672447ee3eb22ee94ca0f1434a3c3",
+  "checks": {
+    "all_R1_R3_observables_present": true,
+    "all_evaluators_valid": false,
+    "all_run_hashes_match": true,
+    "all_runtime_receipts_exact": true,
+    "attempt_counts_exactly_one": true,
+    "counts_exact": true,
+    "credential_material_absent": true,
+    "every_journal_item_persisted": true,
+    "execution_authority_exact": true,
+    "execution_complete": true,
+    "frozen_order_preserved": true,
+    "no_implementation_failures": false,
+    "no_replacement_no_retry": true,
+    "preregistration_exact": true
+  },
+  "claim_boundary": {
+    "R2_R3_mechanism_does_not_require_R4_difference": true,
+    "absence_of_significance_is_not_equivalence": true,
+    "generalization_beyond_frozen_population_authorized": false,
+    "implementation_qualification_is_not_scientific_evidence": true,
+    "negative_R4_outcomes_do_not_invalidate_implementation": true,
+    "paper_claim_authorized": false,
+    "population": "eight prospectively frozen unseen SWE-bench Verified tasks in Q10-qualified Django/Sphinx parser families",
+    "primary_contrasts": [
+      "A_vs_B",
+      "A_vs_D"
+    ],
+    "secondary_contrasts": [
+      "A_vs_E",
+      "A_vs_C"
+    ]
+  },
+  "created_at_utc": "2026-08-31T15:16:20+00:00",
+  "credential_material_present": false,
+  "decision": "FULL_P1_BEHAVIORAL_PROPAGATION_ADJUDICATION_HOLD",
+  "descriptive_task_outcomes": [
+    {
+      "arm": "A",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-13809",
+      "model_calls": 31,
+      "resolved": true,
+      "selection_rank": 7
+    },
+    {
+      "arm": "B",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-13809",
+      "model_calls": 30,
+      "resolved": true,
+      "selection_rank": 7
+    },
+    {
+      "arm": "C",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-13809",
+      "model_calls": 52,
+      "resolved": true,
+      "selection_rank": 7
+    },
+    {
+      "arm": "D",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-13809",
+      "model_calls": 33,
+      "resolved": true,
+      "selection_rank": 7
+    },
+    {
+      "arm": "E",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-13809",
+      "model_calls": 63,
+      "resolved": true,
+      "selection_rank": 7
+    },
+    {
+      "arm": "A",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-11740",
+      "model_calls": 33,
+      "resolved": true,
+      "selection_rank": 8
+    },
+    {
+      "arm": "B",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-11740",
+      "model_calls": 30,
+      "resolved": true,
+      "selection_rank": 8
+    },
+    {
+      "arm": "C",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-11740",
+      "model_calls": 34,
+      "resolved": true,
+      "selection_rank": 8
+    },
+    {
+      "arm": "D",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-11740",
+      "model_calls": 36,
+      "resolved": true,
+      "selection_rank": 8
+    },
+    {
+      "arm": "E",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-11740",
+      "model_calls": 25,
+      "resolved": true,
+      "selection_rank": 8
+    },
+    {
+      "arm": "A",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-15315",
+      "model_calls": 9,
+      "resolved": false,
+      "selection_rank": 9
+    },
+    {
+      "arm": "B",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-15315",
+      "model_calls": 12,
+      "resolved": true,
+      "selection_rank": 9
+    },
+    {
+      "arm": "C",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-15315",
+      "model_calls": 11,
+      "resolved": true,
+      "selection_rank": 9
+    },
+    {
+      "arm": "D",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-15315",
+      "model_calls": 28,
+      "resolved": true,
+      "selection_rank": 9
+    },
+    {
+      "arm": "E",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-15315",
+      "model_calls": 30,
+      "resolved": true,
+      "selection_rank": 9
+    },
+    {
+      "arm": "A",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-15731",
+      "model_calls": 13,
+      "resolved": true,
+      "selection_rank": 11
+    },
+    {
+      "arm": "B",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-15731",
+      "model_calls": 6,
+      "resolved": true,
+      "selection_rank": 11
+    },
+    {
+      "arm": "C",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-15731",
+      "model_calls": 8,
+      "resolved": true,
+      "selection_rank": 11
+    },
+    {
+      "arm": "D",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-15731",
+      "model_calls": 18,
+      "resolved": true,
+      "selection_rank": 11
+    },
+    {
+      "arm": "E",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-15731",
+      "model_calls": 15,
+      "resolved": true,
+      "selection_rank": 11
+    },
+    {
+      "arm": "A",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-16454",
+      "model_calls": 26,
+      "resolved": true,
+      "selection_rank": 12
+    },
+    {
+      "arm": "B",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-16454",
+      "model_calls": 21,
+      "resolved": true,
+      "selection_rank": 12
+    },
+    {
+      "arm": "C",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-16454",
+      "model_calls": 24,
+      "resolved": true,
+      "selection_rank": 12
+    },
+    {
+      "arm": "D",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-16454",
+      "model_calls": 30,
+      "resolved": true,
+      "selection_rank": 12
+    },
+    {
+      "arm": "E",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-16454",
+      "model_calls": 15,
+      "resolved": true,
+      "selection_rank": 12
+    },
+    {
+      "arm": "A",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-14787",
+      "model_calls": 16,
+      "resolved": true,
+      "selection_rank": 13
+    },
+    {
+      "arm": "B",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-14787",
+      "model_calls": 37,
+      "resolved": true,
+      "selection_rank": 13
+    },
+    {
+      "arm": "C",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-14787",
+      "model_calls": 19,
+      "resolved": true,
+      "selection_rank": 13
+    },
+    {
+      "arm": "D",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-14787",
+      "model_calls": 18,
+      "resolved": true,
+      "selection_rank": 13
+    },
+    {
+      "arm": "E",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-14787",
+      "model_calls": 14,
+      "resolved": true,
+      "selection_rank": 13
+    },
+    {
+      "arm": "A",
+      "evaluator_valid": false,
+      "exit_status": "Submitted",
+      "instance_id": "sphinx-doc__sphinx-9711",
+      "model_calls": 33,
+      "resolved": false,
+      "selection_rank": 14
+    },
+    {
+      "arm": "B",
+      "evaluator_valid": false,
+      "exit_status": "Submitted",
+      "instance_id": "sphinx-doc__sphinx-9711",
+      "model_calls": 24,
+      "resolved": false,
+      "selection_rank": 14
+    },
+    {
+      "arm": "C",
+      "evaluator_valid": false,
+      "exit_status": "Submitted",
+      "instance_id": "sphinx-doc__sphinx-9711",
+      "model_calls": 24,
+      "resolved": false,
+      "selection_rank": 14
+    },
+    {
+      "arm": "D",
+      "evaluator_valid": false,
+      "exit_status": "Submitted",
+      "instance_id": "sphinx-doc__sphinx-9711",
+      "model_calls": 19,
+      "resolved": false,
+      "selection_rank": 14
+    },
+    {
+      "arm": "E",
+      "evaluator_valid": false,
+      "exit_status": "Submitted",
+      "instance_id": "sphinx-doc__sphinx-9711",
+      "model_calls": 35,
+      "resolved": false,
+      "selection_rank": 14
+    },
+    {
+      "arm": "A",
+      "evaluator_valid": true,
+      "exit_status": "Submitted",
+      "instance_id": "django__django-15695",
+      "model_calls": 71,
+      "resolved": false,
+      "selection_rank": 19
+    },
+    {
+      "arm": "B",
+      "evaluator_valid": true,
+      "exit_status": "ArkCompatibilityError",
+      "instance_id": "django__django-15695",
+      "model_calls": 19,
+      "resolved": false,
+      "selection_rank": 19
+    },
+    {
+      "arm": "C",
+      "evaluator_valid": true,
+      "exit_status": "ArkCompatibilityError",
+      "instance_id": "django__django-15695",
+      "model_calls": 4,
+      "resolved": false,
+      "selection_rank": 19
+    },
+    {
+      "arm": "D",
+      "evaluator_valid": true,
+      "exit_status": "ArkCompatibilityError",
+      "instance_id": "django__django-15695",
+      "model_calls": 0,
+      "resolved": false,
+      "selection_rank": 19
+    },
+    {
+      "arm": "E",
+      "evaluator_valid": true,
+      "exit_status": "ArkCompatibilityError",
+      "instance_id": "django__django-15695",
+      "model_calls": 0,
+      "resolved": false,
+      "selection_rank": 19
+    }
+  ],
+  "experiment_id": "E1-STRI-REASONINGBANK-FULL-P1-ADJUDICATION-20260831",
+  "implementation_failures": [
+    {
+      "arm": "B",
+      "execution_status": "TERMINAL_PERSISTED",
+      "failure": {
+        "credential_material_present": false,
+        "detail": {
+          "error": {
+            "code": "AccountQuotaExceeded",
+            "message": "You have exceeded the 5-hour usage quota. It will reset at 2026-08-31 21:47:48 +0800 CST. We recommend upgrading your plan for more quota, or waiting for the reset. Request id: 021788182415711035772df07ab2d666278dcdeb9c281b2b3da94",
+            "param": "",
+            "type": "TooManyRequests"
+          }
+        },
+        "error_type": "ArkCompatibilityError",
+        "failure_layer": "provider",
+        "message": "Ark HTTP 429",
+        "status_code": 429
+      },
+      "instance_id": "django__django-15695"
+    },
+    {
+      "arm": "C",
+      "execution_status": "TERMINAL_PERSISTED",
+      "failure": {
+        "credential_material_present": false,
+        "detail": {
+          "error": {
+            "code": "AccountQuotaExceeded",
+            "message": "You have exceeded the 5-hour usage quota. It will reset at 2026-08-31 21:47:48 +0800 CST. We recommend upgrading your plan for more quota, or waiting for the reset. Request id: 0217881824438352d60f60bba313662d1f7bb8a224af9f4ca90d2",
+            "param": "",
+            "type": "TooManyRequests"
+          }
+        },
+        "error_type": "ArkCompatibilityError",
+        "failure_layer": "provider",
+        "message": "Ark HTTP 429",
+        "status_code": 429
+      },
+      "instance_id": "django__django-15695"
+    },
+    {
+      "arm": "D",
+      "execution_status": "TERMINAL_PERSISTED",
+      "failure": {
+        "credential_material_present": false,
+        "detail": {
+          "error": {
+            "code": "AccountQuotaExceeded",
+            "message": "You have exceeded the 5-hour usage quota. It will reset at 2026-08-31 21:47:48 +0800 CST. We recommend upgrading your plan for more quota, or waiting for the reset. Request id: 02178818245691243b85dfdabac66aff760e23d27beea5999067d",
+            "param": "",
+            "type": "TooManyRequests"
+          }
+        },
+        "error_type": "ArkCompatibilityError",
+        "failure_layer": "provider",
+        "message": "Ark HTTP 429",
+        "status_code": 429
+      },
+      "instance_id": "django__django-15695"
+    },
+    {
+      "arm": "E",
+      "execution_status": "TERMINAL_PERSISTED",
+      "failure": {
+        "credential_material_present": false,
+        "detail": {
+          "error": {
+            "code": "AccountQuotaExceeded",
+            "message": "You have exceeded the 5-hour usage quota. It will reset at 2026-08-31 21:47:48 +0800 CST. We recommend upgrading your plan for more quota, or waiting for the reset. Request id: 02178818247025629a69b00e37f9b7feeeb938de1ddf73233e8d0",
+            "param": "",
+            "type": "TooManyRequests"
+          }
+        },
+        "error_type": "ArkCompatibilityError",
+        "failure_layer": "provider",
+        "message": "Ark HTTP 429",
+        "status_code": 429
+      },
+      "instance_id": "django__django-15695"
+    }
+  ],
+  "integrity_pass": false,
+  "invalid_evaluators": [
+    {
+      "arm": "A",
+      "instance_id": "sphinx-doc__sphinx-9711"
+    },
+    {
+      "arm": "B",
+      "instance_id": "sphinx-doc__sphinx-9711"
+    },
+    {
+      "arm": "C",
+      "instance_id": "sphinx-doc__sphinx-9711"
+    },
+    {
+      "arm": "D",
+      "instance_id": "sphinx-doc__sphinx-9711"
+    },
+    {
+      "arm": "E",
+      "instance_id": "sphinx-doc__sphinx-9711"
+    }
+  ],
+  "paired_analyses": {},
+  "payload_sha256": "ff0856971078348d2d8b5d5de260d022f8d728bb76e52d9a8197b548915fc598",
+  "runtime_invalid": [],
+  "schema_version": 1
+}
