@@ -1,0 +1,16 @@
+{
+  "D_select": null,
+  "U": null,
+  "binder": "0/12",
+  "created_at_utc": "2026-08-31T08:12:30+00:00",
+  "effect_concentration": null,
+  "experiment_id": "C1-PACTA-RB-QWEN35-397B-P0-20260831",
+  "final": "0/288",
+  "payload_sha256": "b36220ed2d8780eabc783a66ba9fcb6e150a6accc4727725cbe0fdd1a21a95e7",
+  "schema_version": 1,
+  "second_model_executed": false,
+  "shadow": "0/144",
+  "status": "NOT_EXECUTED",
+  "terminal_executed": false,
+  "writer": "0/12"
+}
