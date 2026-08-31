@@ -1,0 +1,390 @@
+{
+  "all_blobs_sha256_verified": true,
+  "all_descriptor_rows": [
+    {
+      "actual_sha256": "0579f22ab677d4c076278018e4ea1e550eb6eef9d65ae20f0731103d7dc976e7",
+      "digest": "sha256:0579f22ab677d4c076278018e4ea1e550eb6eef9d65ae20f0731103d7dc976e7",
+      "pass": true,
+      "size": 4211
+    },
+    {
+      "actual_sha256": "079027039e9d5fa1677dd462c60fd9240097243a87ff8a124fffbd16f909c266",
+      "digest": "sha256:079027039e9d5fa1677dd462c60fd9240097243a87ff8a124fffbd16f909c266",
+      "pass": true,
+      "size": 420170791
+    },
+    {
+      "actual_sha256": "0800eedafb9e1f04419d17d0c54fb7f2c766338e6718d9fba5b12dd7920337df",
+      "digest": "sha256:0800eedafb9e1f04419d17d0c54fb7f2c766338e6718d9fba5b12dd7920337df",
+      "pass": true,
+      "size": 4215
+    },
+    {
+      "actual_sha256": "0ddda5039dab8b2772d0f65857071df489438384259b8fabd0a7882656cf8ca0",
+      "digest": "sha256:0ddda5039dab8b2772d0f65857071df489438384259b8fabd0a7882656cf8ca0",
+      "pass": true,
+      "size": 164
+    },
+    {
+      "actual_sha256": "131377ec8bc239f2e2ad4ab16e9499044845e3467768cc6976d914cb8300a5ab",
+      "digest": "sha256:131377ec8bc239f2e2ad4ab16e9499044845e3467768cc6976d914cb8300a5ab",
+      "pass": true,
+      "size": 104393964
+    },
+    {
+      "actual_sha256": "149149b5261404c99f27bab3f8af82f28d0e16a648e666883f25f86c75830091",
+      "digest": "sha256:149149b5261404c99f27bab3f8af82f28d0e16a648e666883f25f86c75830091",
+      "pass": true,
+      "size": 189
+    },
+    {
+      "actual_sha256": "15126600180c2d3e03404dae726ce56bc79f17b5fcca557ee985ece177dbe221",
+      "digest": "sha256:15126600180c2d3e03404dae726ce56bc79f17b5fcca557ee985ece177dbe221",
+      "pass": true,
+      "size": 400550907
+    },
+    {
+      "actual_sha256": "21a080cb89789fe2ace968841dfed1fbeae1eac9178a7d1d23c0465019e250c2",
+      "digest": "sha256:21a080cb89789fe2ace968841dfed1fbeae1eac9178a7d1d23c0465019e250c2",
+      "pass": true,
+      "size": 449034808
+    },
+    {
+      "actual_sha256": "223d732012f056ecc8a0bbb73014b08d452f33bcc16e1a33f82b41d300592f6a",
+      "digest": "sha256:223d732012f056ecc8a0bbb73014b08d452f33bcc16e1a33f82b41d300592f6a",
+      "pass": true,
+      "size": 4214
+    },
+    {
+      "actual_sha256": "260d0bc4094eaa07e56de14430ab504e4587aff2d2212baad025186ec001471d",
+      "digest": "sha256:260d0bc4094eaa07e56de14430ab504e4587aff2d2212baad025186ec001471d",
+      "pass": true,
+      "size": 98714281
+    },
+    {
+      "actual_sha256": "2e07d3afc906495f955de922f5b8a8743c294cd36683036e08fce71a5ae6c593",
+      "digest": "sha256:2e07d3afc906495f955de922f5b8a8743c294cd36683036e08fce71a5ae6c593",
+      "pass": true,
+      "size": 4215
+    },
+    {
+      "actual_sha256": "39a945af8df2ad9343f141c82355d3f2c4b576d432eda34c460d630607462b60",
+      "digest": "sha256:39a945af8df2ad9343f141c82355d3f2c4b576d432eda34c460d630607462b60",
+      "pass": true,
+      "size": 29736517
+    },
+    {
+      "actual_sha256": "3d473160e8e53b487164b03e8f911a724fd2b97c2c7f5aeaf5ee89adfb8517e4",
+      "digest": "sha256:3d473160e8e53b487164b03e8f911a724fd2b97c2c7f5aeaf5ee89adfb8517e4",
+      "pass": true,
+      "size": 163
+    },
+    {
+      "actual_sha256": "405c963e909844f43db644653872def0bee6bb66a8915d5faa79f15b29c34680",
+      "digest": "sha256:405c963e909844f43db644653872def0bee6bb66a8915d5faa79f15b29c34680",
+      "pass": true,
+      "size": 4210
+    },
+    {
+      "actual_sha256": "407de719c2d3bde9e1d31481e451ac465ef6cdcf90f48b446b000dd907979233",
+      "digest": "sha256:407de719c2d3bde9e1d31481e451ac465ef6cdcf90f48b446b000dd907979233",
+      "pass": true,
+      "size": 21565
+    },
+    {
+      "actual_sha256": "446b89d0246a87665c0ec6fba131ec3ec5420515f16bd29476877977a8bf3382",
+      "digest": "sha256:446b89d0246a87665c0ec6fba131ec3ec5420515f16bd29476877977a8bf3382",
+      "pass": true,
+      "size": 90733752
+    },
+    {
+      "actual_sha256": "4906419bdb7b7e4839cebd5026b2bdabb74febcc0ca994e64f762ab1a115df93",
+      "digest": "sha256:4906419bdb7b7e4839cebd5026b2bdabb74febcc0ca994e64f762ab1a115df93",
+      "pass": true,
+      "size": 96108392
+    },
+    {
+      "actual_sha256": "4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "pass": true,
+      "size": 32
+    },
+    {
+      "actual_sha256": "53752545c9b26814a5dadb2ac5d26e71ee039f17d72ee04fbc55e8e14a42966e",
+      "digest": "sha256:53752545c9b26814a5dadb2ac5d26e71ee039f17d72ee04fbc55e8e14a42966e",
+      "pass": true,
+      "size": 4313
+    },
+    {
+      "actual_sha256": "5518014e5e43c88daa12357debf61fb82e4d78310d7c75c7ca8ba7502b828e5b",
+      "digest": "sha256:5518014e5e43c88daa12357debf61fb82e4d78310d7c75c7ca8ba7502b828e5b",
+      "pass": true,
+      "size": 190
+    },
+    {
+      "actual_sha256": "565109e7a112ddc8b05ea0a041abfa76b831a60be775d3230ab08e59ec6bd560",
+      "digest": "sha256:565109e7a112ddc8b05ea0a041abfa76b831a60be775d3230ab08e59ec6bd560",
+      "pass": true,
+      "size": 4215
+    },
+    {
+      "actual_sha256": "57d8c8824f066b69f765fab96e977938bf8e785700abf524bcc68ca7b1740e6a",
+      "digest": "sha256:57d8c8824f066b69f765fab96e977938bf8e785700abf524bcc68ca7b1740e6a",
+      "pass": true,
+      "size": 189
+    },
+    {
+      "actual_sha256": "59429e645740f69edd72298c216d91a8efa59915e93065bfe712fea9134164ec",
+      "digest": "sha256:59429e645740f69edd72298c216d91a8efa59915e93065bfe712fea9134164ec",
+      "pass": true,
+      "size": 41396752
+    },
+    {
+      "actual_sha256": "6a99d82d9a891196945ba11ebc320a1bf85bfc1187b4e4d4cfe4154b5644e3de",
+      "digest": "sha256:6a99d82d9a891196945ba11ebc320a1bf85bfc1187b4e4d4cfe4154b5644e3de",
+      "pass": true,
+      "size": 4308
+    },
+    {
+      "actual_sha256": "7997621f6f5718180ee41c1792883561728ca133e4e0ec21774c971bec8af342",
+      "digest": "sha256:7997621f6f5718180ee41c1792883561728ca133e4e0ec21774c971bec8af342",
+      "pass": true,
+      "size": 189
+    },
+    {
+      "actual_sha256": "7a13365a6c7b7b36335ff21844747a73a50b1fc011c63e840e8c50ce4cdbc927",
+      "digest": "sha256:7a13365a6c7b7b36335ff21844747a73a50b1fc011c63e840e8c50ce4cdbc927",
+      "pass": true,
+      "size": 435475002
+    },
+    {
+      "actual_sha256": "7d46deda440ab6108994059ea5bd9e9cef0cc8afe060a3401ad921387388de97",
+      "digest": "sha256:7d46deda440ab6108994059ea5bd9e9cef0cc8afe060a3401ad921387388de97",
+      "pass": true,
+      "size": 190
+    },
+    {
+      "actual_sha256": "7e15a8d91bcbbf2f4c1275eae189bacfc78601ca492335b64144c859b0c0fd35",
+      "digest": "sha256:7e15a8d91bcbbf2f4c1275eae189bacfc78601ca492335b64144c859b0c0fd35",
+      "pass": true,
+      "size": 189
+    },
+    {
+      "actual_sha256": "8c1ac7827e9081a5c9478024089b0026334074dc179f0976da36382b981a7078",
+      "digest": "sha256:8c1ac7827e9081a5c9478024089b0026334074dc179f0976da36382b981a7078",
+      "pass": true,
+      "size": 102822175
+    },
+    {
+      "actual_sha256": "8e381f2d3b66b0585a5afe53926c9e85d5b8681fe675bd05aa14b5dd64b39671",
+      "digest": "sha256:8e381f2d3b66b0585a5afe53926c9e85d5b8681fe675bd05aa14b5dd64b39671",
+      "pass": true,
+      "size": 4214
+    },
+    {
+      "actual_sha256": "90046bcf0aab9c523973ff07859cb84058dbaac249b5d3b77122aaacd56e73bc",
+      "digest": "sha256:90046bcf0aab9c523973ff07859cb84058dbaac249b5d3b77122aaacd56e73bc",
+      "pass": true,
+      "size": 103220401
+    },
+    {
+      "actual_sha256": "a4d326e88417b9b4a3363dfabc9de79b87be8ce1cba4f09c1893df8147cbe669",
+      "digest": "sha256:a4d326e88417b9b4a3363dfabc9de79b87be8ce1cba4f09c1893df8147cbe669",
+      "pass": true,
+      "size": 210294821
+    },
+    {
+      "actual_sha256": "ac7756917c6714c127c9ecf98074801233eee3400c00153aa1c13b91151b7f70",
+      "digest": "sha256:ac7756917c6714c127c9ecf98074801233eee3400c00153aa1c13b91151b7f70",
+      "pass": true,
+      "size": 476296665
+    },
+    {
+      "actual_sha256": "b00f0898ade11ff6f487ac872cd8623213992d8f10ee41a5d798949892f8c01c",
+      "digest": "sha256:b00f0898ade11ff6f487ac872cd8623213992d8f10ee41a5d798949892f8c01c",
+      "pass": true,
+      "size": 401972471
+    },
+    {
+      "actual_sha256": "cbcbbf535047ef3fcca4c4ce5e7d0fb4266d6b4a234e1fd749bcb873d1057da9",
+      "digest": "sha256:cbcbbf535047ef3fcca4c4ce5e7d0fb4266d6b4a234e1fd749bcb873d1057da9",
+      "pass": true,
+      "size": 449317619
+    },
+    {
+      "actual_sha256": "ce8c3f289670ac50768dd38f1a637af814260baf2a016def2427952745388a85",
+      "digest": "sha256:ce8c3f289670ac50768dd38f1a637af814260baf2a016def2427952745388a85",
+      "pass": true,
+      "size": 4209
+    },
+    {
+      "actual_sha256": "d07e7f5cb3eb9bc05af4042e06ff23bc67fd825fe4615d36a7c1cfbe561c80f4",
+      "digest": "sha256:d07e7f5cb3eb9bc05af4042e06ff23bc67fd825fe4615d36a7c1cfbe561c80f4",
+      "pass": true,
+      "size": 21559
+    },
+    {
+      "actual_sha256": "f539da53be7091458a949cfa720f1518b540421c06a378e1210bcf454473fbe0",
+      "digest": "sha256:f539da53be7091458a949cfa720f1518b540421c06a378e1210bcf454473fbe0",
+      "pass": true,
+      "size": 99452105
+    },
+    {
+      "actual_sha256": "fd3f01088aa854fa99907bd918d9bc8146064c2f452aae3e07d61a6244ca9968",
+      "digest": "sha256:fd3f01088aa854fa99907bd918d9bc8146064c2f452aae3e07d61a6244ca9968",
+      "pass": true,
+      "size": 210296452
+    },
+    {
+      "actual_sha256": "fd7a87c0b95ba9470ab5b292bee0cde8f8f4b91a5c9755052c1b36b06f71c7d3",
+      "digest": "sha256:fd7a87c0b95ba9470ab5b292bee0cde8f8f4b91a5c9755052c1b36b06f71c7d3",
+      "pass": true,
+      "size": 420167964
+    }
+  ],
+  "all_images_imported_by_exact_digest": true,
+  "contract": "generated/asset-first-stri-reasoningbank-full-p1-acquisition-repair-contract-20260831.json",
+  "contract_sha256": "f9794dd404ab9e8f16495156a0f8f6d4e99e941013e1c28eee368e540ddf3779",
+  "created_at_utc": "2026-08-31T08:39:28+00:00",
+  "credential_material_present": false,
+  "decision": "FULL_P1_EXACT_IMAGES_READY_AFTER_SINGLE_CHANNEL_REPAIR",
+  "experiment_id": "E1-STRI-REASONINGBANK-FULL-P1-ACQUISITION-REPAIR-RESULT-20260831",
+  "failures": [],
+  "import_rows": [
+    {
+      "architecture_amd64_visible": true,
+      "archive": "/data/wyt/e1-stri-reasoningbank-runtime/full-p1-oci-layouts/rank-007.docker-archive.tar",
+      "archive_sha256": "be1673e1d468dfca842451b4e3dced30c6ad49031f87dc645f392b6449786e77",
+      "digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-13809@sha256:505a1ddf221a3f814648afba808f88eb05cdb03a606b2cf78185d001422d6412",
+      "exact_manifest_digest_visible": true,
+      "inspect_output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-13809@sha256:505a1ddf221a3f814648afba808f88eb05cdb03a606b2cf78185d001422d6412\"] amd64 sha256:8e381f2d3b66b0585a5afe53926c9e85d5b8681fe675bd05aa14b5dd64b39671\n",
+      "instance_id": "django__django-13809",
+      "pass": true,
+      "selection_rank": 7,
+      "status": "imported-and-verified"
+    },
+    {
+      "architecture_amd64_visible": true,
+      "archive": "/data/wyt/e1-stri-reasoningbank-runtime/full-p1-oci-layouts/rank-008.docker-archive.tar",
+      "archive_sha256": "4dbfb3b7edc42d04b68874dabe05310f5122924fddd9c4043b124b0d325ce0f6",
+      "digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-11740@sha256:cd95eb83c40d5738a534d6210a485345fffc9cf653c2c5995b4395d202ff0eb4",
+      "exact_manifest_digest_visible": true,
+      "inspect_output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-11740@sha256:cd95eb83c40d5738a534d6210a485345fffc9cf653c2c5995b4395d202ff0eb4\"] amd64 sha256:405c963e909844f43db644653872def0bee6bb66a8915d5faa79f15b29c34680\n",
+      "instance_id": "django__django-11740",
+      "pass": true,
+      "selection_rank": 8,
+      "status": "imported-and-verified"
+    },
+    {
+      "architecture_amd64_visible": true,
+      "archive": "/data/wyt/e1-stri-reasoningbank-runtime/full-p1-oci-layouts/rank-009.docker-archive.tar",
+      "archive_sha256": "5becf345139ea113f24c820cd06b9789f1c4b3d47cf576de2360e2c65a83e8de",
+      "digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-15315@sha256:f81a013b2cd280eb464bc2104c5818bb22820f9634f03c4a5a6d3e2873defe33",
+      "exact_manifest_digest_visible": true,
+      "inspect_output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-15315@sha256:f81a013b2cd280eb464bc2104c5818bb22820f9634f03c4a5a6d3e2873defe33\"] amd64 sha256:2e07d3afc906495f955de922f5b8a8743c294cd36683036e08fce71a5ae6c593\n",
+      "instance_id": "django__django-15315",
+      "pass": true,
+      "selection_rank": 9,
+      "status": "imported-and-verified"
+    },
+    {
+      "architecture_amd64_visible": true,
+      "archive": "/data/wyt/e1-stri-reasoningbank-runtime/full-p1-oci-layouts/rank-011.docker-archive.tar",
+      "archive_sha256": "c5719909a65f882b31e683300497c0ff2df03983813f2283f46aca9cc22cabb9",
+      "digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-15731@sha256:4b07f5b55b6506cc56d140418ccf83902fd3234141906b9c2c23baf55e886dc8",
+      "exact_manifest_digest_visible": true,
+      "inspect_output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-15731@sha256:4b07f5b55b6506cc56d140418ccf83902fd3234141906b9c2c23baf55e886dc8\"] amd64 sha256:223d732012f056ecc8a0bbb73014b08d452f33bcc16e1a33f82b41d300592f6a\n",
+      "instance_id": "django__django-15731",
+      "pass": true,
+      "selection_rank": 11,
+      "status": "imported-and-verified"
+    },
+    {
+      "architecture_amd64_visible": true,
+      "archive": "/data/wyt/e1-stri-reasoningbank-runtime/full-p1-oci-layouts/rank-012.docker-archive.tar",
+      "archive_sha256": "4735e301f28cc8d6c491555ba38c2336b5530b74b349e5ec921772eea9839306",
+      "digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-16454@sha256:674eab0bce68e359a0913f77ca80873a95e952906939c92a253dfb74af837719",
+      "exact_manifest_digest_visible": true,
+      "inspect_output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-16454@sha256:674eab0bce68e359a0913f77ca80873a95e952906939c92a253dfb74af837719\"] amd64 sha256:565109e7a112ddc8b05ea0a041abfa76b831a60be775d3230ab08e59ec6bd560\n",
+      "instance_id": "django__django-16454",
+      "pass": true,
+      "selection_rank": 12,
+      "status": "imported-and-verified"
+    },
+    {
+      "architecture_amd64_visible": true,
+      "archive": "/data/wyt/e1-stri-reasoningbank-runtime/full-p1-oci-layouts/rank-013.docker-archive.tar",
+      "archive_sha256": "2581228adb7ac7158fdcd83a3490add5ef833f21f335eab873a9021ea5549871",
+      "digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14787@sha256:f029159b39942836a8c09738bda245bfea9d197e1b94f23e3eeaf576e3008600",
+      "exact_manifest_digest_visible": true,
+      "inspect_output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14787@sha256:f029159b39942836a8c09738bda245bfea9d197e1b94f23e3eeaf576e3008600\"] amd64 sha256:ce8c3f289670ac50768dd38f1a637af814260baf2a016def2427952745388a85\n",
+      "instance_id": "django__django-14787",
+      "pass": true,
+      "selection_rank": 13,
+      "status": "imported-and-verified"
+    },
+    {
+      "architecture_amd64_visible": true,
+      "archive": "/data/wyt/e1-stri-reasoningbank-runtime/full-p1-oci-layouts/rank-014.docker-archive.tar",
+      "archive_sha256": "ea442f9f25f410aabde3484fc6dfc80da5175ba2b71325c20541723de02e9229",
+      "digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9711@sha256:4558875a03b7b70f7a93941b74af6284e420326993fe003bbb843edc6ada909c",
+      "exact_manifest_digest_visible": true,
+      "inspect_output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9711@sha256:4558875a03b7b70f7a93941b74af6284e420326993fe003bbb843edc6ada909c\"] amd64 sha256:0800eedafb9e1f04419d17d0c54fb7f2c766338e6718d9fba5b12dd7920337df\n",
+      "instance_id": "sphinx-doc__sphinx-9711",
+      "pass": true,
+      "selection_rank": 14,
+      "status": "imported-and-verified"
+    },
+    {
+      "architecture_amd64_visible": true,
+      "archive": "/data/wyt/e1-stri-reasoningbank-runtime/full-p1-oci-layouts/rank-019.docker-archive.tar",
+      "archive_sha256": "7d61e943e000148ba3c053ec25ab0c830904082013251afcd2989e023dc5be39",
+      "digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-15695@sha256:a067cc9cec81ba8be9799c03da7a3355fdcd1f10477142052f3477ce8b33057d",
+      "exact_manifest_digest_visible": true,
+      "inspect_output": "[\"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-15695@sha256:a067cc9cec81ba8be9799c03da7a3355fdcd1f10477142052f3477ce8b33057d\"] amd64 sha256:0579f22ab677d4c076278018e4ea1e550eb6eef9d65ae20f0731103d7dc976e7\n",
+      "instance_id": "django__django-15695",
+      "pass": true,
+      "selection_rank": 19,
+      "status": "imported-and-verified"
+    }
+  ],
+  "payload_sha256": "a5a0c1a2a7d01df5bd93b08f4209d80846f6ba7f1ba005dbd58690a07522a3c4",
+  "repair_receipt": {
+    "digest": "sha256:90046bcf0aab9c523973ff07859cb84058dbaac249b5d3b77122aaacd56e73bc",
+    "sha256_verified": true,
+    "size": 103220401,
+    "status": "downloaded-from-docker.1panel.live-and-verified"
+  },
+  "runtime_image_references": {
+    "django__django-11740": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-11740@sha256:cd95eb83c40d5738a534d6210a485345fffc9cf653c2c5995b4395d202ff0eb4",
+    "django__django-13809": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-13809@sha256:505a1ddf221a3f814648afba808f88eb05cdb03a606b2cf78185d001422d6412",
+    "django__django-14787": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14787@sha256:f029159b39942836a8c09738bda245bfea9d197e1b94f23e3eeaf576e3008600",
+    "django__django-15315": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-15315@sha256:f81a013b2cd280eb464bc2104c5818bb22820f9634f03c4a5a6d3e2873defe33",
+    "django__django-15695": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-15695@sha256:a067cc9cec81ba8be9799c03da7a3355fdcd1f10477142052f3477ce8b33057d",
+    "django__django-15731": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-15731@sha256:4b07f5b55b6506cc56d140418ccf83902fd3234141906b9c2c23baf55e886dc8",
+    "django__django-16454": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-16454@sha256:674eab0bce68e359a0913f77ca80873a95e952906939c92a253dfb74af837719",
+    "sphinx-doc__sphinx-9711": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9711@sha256:4558875a03b7b70f7a93941b74af6284e420326993fe003bbb843edc6ada909c"
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "behavioral_execution_authorized": false,
+    "evaluator_calls": 0,
+    "model_calls": 0,
+    "task_outcomes_observed": false
+  },
+  "single_changed_variable": {
+    "blob_digest_changed": false,
+    "blob_size_changed": false,
+    "from": "https://docker.1ms.run",
+    "manifest_digest_changed": false,
+    "provider_model_changed": false,
+    "runtime_semantics_changed": false,
+    "sampling_changed": false,
+    "task_changed": false,
+    "to": "https://docker.1panel.live",
+    "treatment_changed": false,
+    "variable": "OCI blob acquisition channel for the sole unavailable blob"
+  },
+  "unique_blob_bytes": 4640242782,
+  "unique_blob_count": 40
+}
