@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/data/wyt/agent-self-evolution-observatory/runtimes/c1-webarena-live-py312/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "research_pipeline/test_asset_first_stri_reasoningbank_full_p1.py",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1_q10_runtime.py",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1_q10_stack.py"
+  ],
+  "created_at_utc": "2026-08-31T06:52:30+00:00",
+  "credential_material_present": false,
+  "decision": "FULL_P1_TARGETED_TEST_GATE_PASS",
+  "evaluator_calls": 0,
+  "experiment_id": "E1-STRI-REASONINGBANK-FULL-P1-TARGETED-TEST-GATE-20260831",
+  "model_calls": 0,
+  "modules": [
+    "research_pipeline/test_asset_first_stri_reasoningbank_full_p1.py",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1_q10_runtime.py",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1_q10_stack.py"
+  ],
+  "output": "....................                                                  [100%]\n20 passed, 3 subtests passed in 6.16s\n",
+  "pass": true,
+  "payload_sha256": "5c84cbe1adefd94a5e572a938810cd27579625f09fb0e93b6b5e09602adb163c",
+  "returncode": 0,
+  "schema_version": 1,
+  "task_outcomes_observed": false
+}
