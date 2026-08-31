@@ -1,0 +1,75 @@
+{
+  "bindings": {
+    "failed_acquisition": "generated/asset-first-stri-reasoningbank-full-p1-runtime-acquisition-result-20260831.json",
+    "failed_acquisition_sha256": "7edaa23c18ac3463b2d0498ee42752186b3a4dc922cc3f49bf951a4dba6a1857",
+    "population": "generated/asset-first-stri-reasoningbank-full-p1-population-and-image-freeze-20260831.json",
+    "population_sha256": "6ca2a6831e01db63961db3d5c337c17ee790755046c68bbcb6c056e136d8bbe8",
+    "rank19_manifest": "generated/asset-first-stri-reasoningbank-full-p1-image-manifests-20260831/019-django-django-15695-amd64.json",
+    "rank19_manifest_sha256": "a067cc9cec81ba8be9799c03da7a3355fdcd1f10477142052f3477ce8b33057d"
+  },
+  "capability_probe": {
+    "alternative_manifest_amd64_digest": "sha256:a067cc9cec81ba8be9799c03da7a3355fdcd1f10477142052f3477ce8b33057d",
+    "blob_response_content_length": 103220401,
+    "blob_response_docker_content_digest": "sha256:90046bcf0aab9c523973ff07859cb84058dbaac249b5d3b77122aaacd56e73bc",
+    "blob_response_status": 200,
+    "expected_manifest_amd64_digest": "sha256:a067cc9cec81ba8be9799c03da7a3355fdcd1f10477142052f3477ce8b33057d",
+    "probe_persisted_blob": false
+  },
+  "created_at_utc": "2026-08-31T07:15:58+00:00",
+  "credential_material_present": false,
+  "decision": "FULL_P1_ACQUISITION_SINGLE_VARIABLE_REPAIR_AUTHORIZED",
+  "experiment_id": "E1-STRI-REASONINGBANK-FULL-P1-ACQUISITION-REPAIR-20260831",
+  "failure_differential": {
+    "affected_instance_id": "django__django-15695",
+    "affected_selection_rank": 19,
+    "classification": "external mirror repository blob availability",
+    "evaluator_calls": 0,
+    "failed_channel": "docker.1ms.run",
+    "failed_digest": "sha256:90046bcf0aab9c523973ff07859cb84058dbaac249b5d3b77122aaacd56e73bc",
+    "failed_size": 103220401,
+    "http_status": 404,
+    "model_calls": 0,
+    "task_outcomes_observed": false
+  },
+  "failure_policy": {
+    "automatic_repair_rerun": false,
+    "behavioral_execution_remains_unauthorized": true,
+    "digest_substitution": false,
+    "image_replacement": false,
+    "repair_failure_decision": "FULL_P1_ACQUISITION_REPAIR_HOLD",
+    "task_replacement": false
+  },
+  "payload_sha256": "e7d3cdccc1aa9bc69c2f971699c5f56a7729fdb7f691151046984fbf11f61441",
+  "repair_action": {
+    "acquisition_invocation_count": 1,
+    "downloader_internal_max_tries": 10,
+    "import_all_8_images_by_exact_frozen_manifest_digest": true,
+    "missing_blob_digest": "sha256:90046bcf0aab9c523973ff07859cb84058dbaac249b5d3b77122aaacd56e73bc",
+    "missing_blob_size": 103220401,
+    "run_evaluator": false,
+    "run_model": false,
+    "sha256_verification_required": true,
+    "source_url": "https://docker.1panel.live/v2/swebench/sweb.eval.x86_64.django_1776_django-15695/blobs/sha256:90046bcf0aab9c523973ff07859cb84058dbaac249b5d3b77122aaacd56e73bc",
+    "verify_all_40_frozen_descriptors_after_repair": true
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "behavioral_execution_authorized": false,
+    "paper_claim_authorized": false,
+    "qualification_or_repair_is_not_scientific_evidence": true,
+    "task_outcomes_observed": false
+  },
+  "single_changed_variable": {
+    "blob_digest_changed": false,
+    "blob_size_changed": false,
+    "from": "https://docker.1ms.run",
+    "manifest_digest_changed": false,
+    "provider_model_changed": false,
+    "runtime_semantics_changed": false,
+    "sampling_changed": false,
+    "task_changed": false,
+    "to": "https://docker.1panel.live",
+    "treatment_changed": false,
+    "variable": "OCI blob acquisition channel for the sole unavailable blob"
+  }
+}
