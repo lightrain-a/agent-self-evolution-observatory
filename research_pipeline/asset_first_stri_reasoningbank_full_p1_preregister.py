@@ -338,7 +338,7 @@ def preregister(output: Path = OUTPUT) -> dict[str, Any]:
             "all_semantic_hashes_frozen": all(row["selected_memory_sha256"] for row in units),
             "no_replacement": True,
             "no_run_level_retry": True,
-            "task_outcomes_observed": False,
+            "task_outcomes_unobserved": True,
             "execution_unauthorized": True,
         },
         "credential_material_present": False,
