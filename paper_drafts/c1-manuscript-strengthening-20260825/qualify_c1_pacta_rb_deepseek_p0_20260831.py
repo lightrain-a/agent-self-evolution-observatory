@@ -68,8 +68,15 @@ def main():
       "provider_returned_at_utc":now(),"persisted_before_parse":True}
     dump(path,record)
     if r.get("requested_model")!=REQ or r.get("resolved_model")!=RES:
-     binding={"status":"STOP_MODEL_BINDING","requested_model":r.get("requested_model"),"resolved_model":r.get("resolved_model"),"case_id":cid}
-     dump(PAPER/"c1-pacta-rb-deepseek-model-binding-20260831.json",binding);raise RuntimeError("STOP_MODEL_BINDING")
+     binding={"schema_version":1,"experiment_id":"C1-PACTA-RB-DEEPSEEK-P0-20260831","created_at_utc":now(),
+      "status":"STOP_MODEL_BINDING","expected_requested_model":REQ,"expected_resolved_model":RES,
+      "requested_model":r.get("requested_model"),"resolved_model":r.get("resolved_model"),"case_id":cid,
+      "response_artifact":str(path),"response_artifact_sha256":hashlib.sha256(path.read_bytes()).hexdigest(),
+      "scientific_provider_calls":0,"substitution_attempted":False}
+     dump(PAPER/"c1-pacta-rb-deepseek-model-binding-20260831.json",binding)
+     manifest.update({"status":"STOP_MODEL_BINDING","stop_case_id":cid,"actual_resolved_model":r.get("resolved_model"),"completed_at_utc":now()})
+     dump(Q0/"manifest.json",manifest)
+     raise RuntimeError("STOP_MODEL_BINDING")
     action=parse(raw);record["parse_status"]="PASS";record["first_action"]=action;record["first_action_sha256"]=sha(action);dump(path,record)
     row={"case_id":cid,"pass":r.get("status")=="completed","status":r.get("status"),"action_sha256":sha(action),"resolved_model":r.get("resolved_model")}
    except RuntimeError:raise
