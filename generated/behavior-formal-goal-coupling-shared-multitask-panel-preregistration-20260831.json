@@ -1,0 +1,549 @@
+{
+  "allowed_now": [
+    "source-only and metadata-only qualification",
+    "exact LFS payload budget/manifest computation without payload download",
+    "GR00T repository metadata/OID freeze without weight download",
+    "compile/test pi0.5 child configuration without model load"
+  ],
+  "bindings": {
+    "demo_horizon_result_sha256": "0c23f7905036275cdd141e99b3de7acaa498601daa2377a88793968ad5b33a39",
+    "parent_preregistration_sha256": "0738573af073aafd9a14f220f5f729d85adb16593cfc73043abf71e7f74f2327",
+    "source_qualification_sha256": "cda384bf9944c4ef6271a31d0d618d22abc27a0dbdbe700266ab656c6b9497e4",
+    "subset_qualification_sha256": "da1e5abab701e3a5ab150e3abc530043ddf5f01a4b91efd7f094293a27354bf4"
+  },
+  "claim_boundary": {
+    "allowed_if_supported": "narrow two-family shared-checkpoint association on the frozen 13-pair/26-task panel",
+    "forbidden": [
+      "three-family or broad cross-policy generalization",
+      "projection to the task-specific strict parent",
+      "lowering or reopening the frozen three-family confirmatory gate",
+      "PORT-010 reopening",
+      "causal wording"
+    ]
+  },
+  "dataset_subset": {
+    "episode_count": 5200,
+    "episode_indices_sha256": "0a10d07f216ac51f8cb0c3d2c1be07aaeb543e64070dd6c3cea235d49ab84b17",
+    "repo_id": "behavior-1k/2026-challenge-demos",
+    "revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+    "selection_rule": "all 200 official public demonstrations for each of the 26 outcome-blind structure-selected tasks; no dropping/replacement",
+    "task_count": 26,
+    "task_rows": [
+      {
+        "activity": "rearranging_kitchen_furniture",
+        "episode_count": 200,
+        "episode_index_max": 1799,
+        "episode_index_min": 1600,
+        "metadata_sha256": "80c2ec3648ae467102e6ae1ec87ffab8373a7b9a8a69839225dbca2f5f5702be",
+        "task_index": 8
+      },
+      {
+        "activity": "set_up_a_coffee_station_in_your_kitchen",
+        "episode_count": 200,
+        "episode_index_max": 2199,
+        "episode_index_min": 2000,
+        "metadata_sha256": "6d10d16c7e2c502f4e4acd252e486917ec940af7e434a01dd16fb40581716610",
+        "task_index": 10
+      },
+      {
+        "activity": "preparing_lunch_box",
+        "episode_count": 200,
+        "episode_index_max": 2599,
+        "episode_index_min": 2400,
+        "metadata_sha256": "91b53e17956ce772f0daf4bed78793799b663edb0c2c84fcb708ea99465b1855",
+        "task_index": 12
+      },
+      {
+        "activity": "loading_the_car",
+        "episode_count": 200,
+        "episode_index_max": 2799,
+        "episode_index_min": 2600,
+        "metadata_sha256": "2d9c5b744a7d84778029b05f556b2cce9f6f01c50c1145b60162c24f4d70af25",
+        "task_index": 13
+      },
+      {
+        "activity": "carrying_in_groceries",
+        "episode_count": 200,
+        "episode_index_max": 2999,
+        "episode_index_min": 2800,
+        "metadata_sha256": "5ecff84c3b48ba9d20744621c96c22e2362c0ccbd57fc3bd385df764c2127fb3",
+        "task_index": 14
+      },
+      {
+        "activity": "bringing_water",
+        "episode_count": 200,
+        "episode_index_max": 3599,
+        "episode_index_min": 3400,
+        "metadata_sha256": "49aa76abd26114ff7f0073b3806b30a0b764e19f0aa8bbd24bf052055f6f999d",
+        "task_index": 17
+      },
+      {
+        "activity": "wash_dog_toys",
+        "episode_count": 200,
+        "episode_index_max": 6799,
+        "episode_index_min": 6600,
+        "metadata_sha256": "e089f1bc4742e904fbcd9a9349e17594d1ac24fd82977223cd03c3c4b0c70647",
+        "task_index": 33
+      },
+      {
+        "activity": "cook_cabbage",
+        "episode_count": 200,
+        "episode_index_max": 8399,
+        "episode_index_min": 8200,
+        "metadata_sha256": "03e7119d6d8124c70ec5b6da81d21c07f42bce7ef67b59e677a9252054730b22",
+        "task_index": 41
+      },
+      {
+        "activity": "chop_an_onion",
+        "episode_count": 200,
+        "episode_index_max": 8599,
+        "episode_index_min": 8400,
+        "metadata_sha256": "5af5d194d2e36c60f7581a280e372878154965ab18a11ac9df4565d7f1d867d2",
+        "task_index": 42
+      },
+      {
+        "activity": "cook_bacon",
+        "episode_count": 200,
+        "episode_index_max": 9399,
+        "episode_index_min": 9200,
+        "metadata_sha256": "e0ecd843e1ed46d685e3e656aea475ef4bbc5ce9022913571f8434443aaaf5c2",
+        "task_index": 46
+      },
+      {
+        "activity": "cook_a_brisket",
+        "episode_count": 200,
+        "episode_index_max": 10399,
+        "episode_index_min": 10200,
+        "metadata_sha256": "30bb7525fab1438501fbfb0ec5ce8293389bd0cd26118cdd9c67b4cb71acdb11",
+        "task_index": 51
+      },
+      {
+        "activity": "make_rose_centerpieces",
+        "episode_count": 200,
+        "episode_index_max": 11399,
+        "episode_index_min": 11200,
+        "metadata_sha256": "cc8abaff9502588919ce9ad347dcfa7880385a2d81a9db20cede804ca0bce71f",
+        "task_index": 56
+      },
+      {
+        "activity": "organizing_art_supplies",
+        "episode_count": 200,
+        "episode_index_max": 11999,
+        "episode_index_min": 11800,
+        "metadata_sha256": "ce3aa801a1223612f5f606575a6ab5b5d0be70acbefcd42f2ba723a77dd61886",
+        "task_index": 59
+      },
+      {
+        "activity": "halve_an_egg",
+        "episode_count": 200,
+        "episode_index_max": 12599,
+        "episode_index_min": 12400,
+        "metadata_sha256": "988c9af1e5039f729f5de1555bd68a3ad1a46afcc170cc5df05a0d8bb39a668a",
+        "task_index": 62
+      },
+      {
+        "activity": "unloading_the_car",
+        "episode_count": 200,
+        "episode_index_max": 13199,
+        "episode_index_min": 13000,
+        "metadata_sha256": "2e01e7b278d66e4fb259a7b1145a219014c5cf6312b2126cbb0ca0640ebc5a9c",
+        "task_index": 65
+      },
+      {
+        "activity": "boxing_food_after_dinner",
+        "episode_count": 200,
+        "episode_index_max": 13599,
+        "episode_index_min": 13400,
+        "metadata_sha256": "b82b5ef486f527801a2f812b2cbbaf7f40f8c59988b51b3eaf874de15951d8be",
+        "task_index": 67
+      },
+      {
+        "activity": "cleaning_up_branches_and_twigs",
+        "episode_count": 200,
+        "episode_index_max": 13799,
+        "episode_index_min": 13600,
+        "metadata_sha256": "fb21148d27996b229c7ff0d26b0a4761e0732b8b0a2bc34ea976d6f7c6fa2a1e",
+        "task_index": 68
+      },
+      {
+        "activity": "organizing_school_stuff",
+        "episode_count": 200,
+        "episode_index_max": 14799,
+        "episode_index_min": 14600,
+        "metadata_sha256": "f15e99a0217490b6adf98b78f373191d9144e5bc3fa8f081f1f212310d6f2113",
+        "task_index": 73
+      },
+      {
+        "activity": "carrying_out_garden_furniture",
+        "episode_count": 200,
+        "episode_index_max": 14999,
+        "episode_index_min": 14800,
+        "metadata_sha256": "52333e89438ec374ada37c6bbbbce22720cac8b4b80235099e71110646dd88ba",
+        "task_index": 74
+      },
+      {
+        "activity": "installing_a_modem",
+        "episode_count": 200,
+        "episode_index_max": 15599,
+        "episode_index_min": 15400,
+        "metadata_sha256": "f7526a2634c761a23dbdd928447697b3f70d6e4a3ed5f4a2ba0a9d0b3d784425",
+        "task_index": 77
+      },
+      {
+        "activity": "packing_meal_for_delivery",
+        "episode_count": 200,
+        "episode_index_max": 16399,
+        "episode_index_min": 16200,
+        "metadata_sha256": "1cd8735a39daceb9c5ddfca3281b1f824b5dc8dcf627a66b237080d8a4f7a6dc",
+        "task_index": 81
+      },
+      {
+        "activity": "tidying_bathroom",
+        "episode_count": 200,
+        "episode_index_max": 16999,
+        "episode_index_min": 16800,
+        "metadata_sha256": "8a83685fb17afb0d4459d4acac22c58cf8d3ed49d86599805fed97a4c2e9bd22",
+        "task_index": 84
+      },
+      {
+        "activity": "putting_dirty_dishes_in_sink",
+        "episode_count": 200,
+        "episode_index_max": 17199,
+        "episode_index_min": 17000,
+        "metadata_sha256": "264da6a15c406d5a69154b045e6cb53d0900dc791ec79751a0b45a4266878674",
+        "task_index": 85
+      },
+      {
+        "activity": "rearrange_your_room",
+        "episode_count": 200,
+        "episode_index_max": 17799,
+        "episode_index_min": 17600,
+        "metadata_sha256": "fe29b77b20812fc8244fb76d4d351934c1bf22ad3ffa2e112963cc76f26044b8",
+        "task_index": 88
+      },
+      {
+        "activity": "installing_a_fax_machine",
+        "episode_count": 200,
+        "episode_index_max": 17999,
+        "episode_index_min": 17800,
+        "metadata_sha256": "2c40cec6a39ed90a030efdbe8c6d262eb6da474fe1c6811e7cd7d4c1823f74fc",
+        "task_index": 89
+      },
+      {
+        "activity": "dispose_of_batteries",
+        "episode_count": 200,
+        "episode_index_max": 18999,
+        "episode_index_min": 18800,
+        "metadata_sha256": "e941caa1b17c6280083e05123ccc914e1c037a400a0c88bcbc70691534f4e391",
+        "task_index": 94
+      }
+    ]
+  },
+  "execution_authority": false,
+  "forbidden_now": [
+    "policy model download/load",
+    "forward/backward pass",
+    "optimizer update",
+    "policy rollout",
+    "policy success/Q/reward read",
+    "changing task/pair selection using future performance",
+    "using this child as evidence that the old three-family gate passed"
+  ],
+  "gpu_authority": false,
+  "model_load_authorized": false,
+  "negative_control": {
+    "artifact": "generated/behavior-formal-goal-coupling-demo-horizon-result-v1-1-20260831.json",
+    "frozen_result": "DEMO_HORIZON_PRIMARY_NOT_SUPPORTED",
+    "sha256": "0c23f7905036275cdd141e99b3de7acaa498601daa2377a88793968ad5b33a39",
+    "use": "interpretive negative control only; never a covariate, exclusion rule, or rescue analysis"
+  },
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "panel": {
+    "families": [
+      "pi0.5",
+      "GR00T N1.7"
+    ],
+    "pair_count": 13,
+    "pairing_rule": "greedy non-overlap using frozen structure only; exact atomic_goal_count, branch_operator_count, goal_logic_depth, and quantifier_count; require unequal shared_argument_edge_count; rank by edge gap then deterministic lexical/index ties",
+    "pairs": [
+      {
+        "atomic_goal_count": 5,
+        "branch_operator_count": 0,
+        "edge_gap": 7,
+        "goal_logic_depth": 1,
+        "high_activity": "organizing_art_supplies",
+        "high_edge": 10,
+        "high_task_index": 59,
+        "low_activity": "halve_an_egg",
+        "low_edge": 3,
+        "low_task_index": 62,
+        "pair_id": 1,
+        "quantifier_count": 0
+      },
+      {
+        "atomic_goal_count": 4,
+        "branch_operator_count": 0,
+        "edge_gap": 6,
+        "goal_logic_depth": 1,
+        "high_activity": "make_rose_centerpieces",
+        "high_edge": 6,
+        "high_task_index": 56,
+        "low_activity": "tidying_bathroom",
+        "low_edge": 0,
+        "low_task_index": 84,
+        "pair_id": 2,
+        "quantifier_count": 0
+      },
+      {
+        "atomic_goal_count": 4,
+        "branch_operator_count": 0,
+        "edge_gap": 4,
+        "goal_logic_depth": 4,
+        "high_activity": "rearranging_kitchen_furniture",
+        "high_edge": 6,
+        "high_task_index": 8,
+        "low_activity": "wash_dog_toys",
+        "low_edge": 2,
+        "low_task_index": 33,
+        "pair_id": 3,
+        "quantifier_count": 1
+      },
+      {
+        "atomic_goal_count": 6,
+        "branch_operator_count": 0,
+        "edge_gap": 4,
+        "goal_logic_depth": 1,
+        "high_activity": "organizing_school_stuff",
+        "high_edge": 15,
+        "high_task_index": 73,
+        "low_activity": "set_up_a_coffee_station_in_your_kitchen",
+        "low_edge": 11,
+        "low_task_index": 10,
+        "pair_id": 4,
+        "quantifier_count": 0
+      },
+      {
+        "atomic_goal_count": 4,
+        "branch_operator_count": 0,
+        "edge_gap": 4,
+        "goal_logic_depth": 3,
+        "high_activity": "installing_a_modem",
+        "high_edge": 5,
+        "high_task_index": 77,
+        "low_activity": "carrying_in_groceries",
+        "low_edge": 1,
+        "low_task_index": 14,
+        "pair_id": 5,
+        "quantifier_count": 1
+      },
+      {
+        "atomic_goal_count": 5,
+        "branch_operator_count": 0,
+        "edge_gap": 3,
+        "goal_logic_depth": 2,
+        "high_activity": "preparing_lunch_box",
+        "high_edge": 6,
+        "high_task_index": 12,
+        "low_activity": "boxing_food_after_dinner",
+        "low_edge": 3,
+        "low_task_index": 67,
+        "pair_id": 6,
+        "quantifier_count": 1
+      },
+      {
+        "atomic_goal_count": 2,
+        "branch_operator_count": 0,
+        "edge_gap": 1,
+        "goal_logic_depth": 2,
+        "high_activity": "unloading_the_car",
+        "high_edge": 1,
+        "high_task_index": 65,
+        "low_activity": "rearrange_your_room",
+        "low_edge": 0,
+        "low_task_index": 88,
+        "pair_id": 7,
+        "quantifier_count": 2
+      },
+      {
+        "atomic_goal_count": 2,
+        "branch_operator_count": 0,
+        "edge_gap": 1,
+        "goal_logic_depth": 2,
+        "high_activity": "putting_dirty_dishes_in_sink",
+        "high_edge": 1,
+        "high_task_index": 85,
+        "low_activity": "packing_meal_for_delivery",
+        "low_edge": 0,
+        "low_task_index": 81,
+        "pair_id": 8,
+        "quantifier_count": 2
+      },
+      {
+        "atomic_goal_count": 2,
+        "branch_operator_count": 0,
+        "edge_gap": 1,
+        "goal_logic_depth": 2,
+        "high_activity": "installing_a_fax_machine",
+        "high_edge": 1,
+        "high_task_index": 89,
+        "low_activity": "cook_bacon",
+        "low_edge": 0,
+        "low_task_index": 46,
+        "pair_id": 9,
+        "quantifier_count": 1
+      },
+      {
+        "atomic_goal_count": 3,
+        "branch_operator_count": 0,
+        "edge_gap": 1,
+        "goal_logic_depth": 1,
+        "high_activity": "loading_the_car",
+        "high_edge": 2,
+        "high_task_index": 13,
+        "low_activity": "cook_a_brisket",
+        "low_edge": 1,
+        "low_task_index": 51,
+        "pair_id": 10,
+        "quantifier_count": 0
+      },
+      {
+        "atomic_goal_count": 4,
+        "branch_operator_count": 0,
+        "edge_gap": 1,
+        "goal_logic_depth": 1,
+        "high_activity": "cook_cabbage",
+        "high_edge": 3,
+        "high_task_index": 41,
+        "low_activity": "chop_an_onion",
+        "low_edge": 2,
+        "low_task_index": 42,
+        "pair_id": 11,
+        "quantifier_count": 0
+      },
+      {
+        "atomic_goal_count": 2,
+        "branch_operator_count": 0,
+        "edge_gap": 1,
+        "goal_logic_depth": 2,
+        "high_activity": "dispose_of_batteries",
+        "high_edge": 1,
+        "high_task_index": 94,
+        "low_activity": "carrying_out_garden_furniture",
+        "low_edge": 0,
+        "low_task_index": 74,
+        "pair_id": 12,
+        "quantifier_count": 1
+      },
+      {
+        "atomic_goal_count": 2,
+        "branch_operator_count": 0,
+        "edge_gap": 1,
+        "goal_logic_depth": 2,
+        "high_activity": "cleaning_up_branches_and_twigs",
+        "high_edge": 1,
+        "high_task_index": 68,
+        "low_activity": "bringing_water",
+        "low_edge": 0,
+        "low_task_index": 17,
+        "pair_id": 13,
+        "quantifier_count": 1
+      }
+    ],
+    "selection_outcome_blind": true,
+    "task_count": 26,
+    "task_indices": [
+      8,
+      10,
+      12,
+      13,
+      14,
+      17,
+      33,
+      41,
+      42,
+      46,
+      51,
+      56,
+      59,
+      62,
+      65,
+      67,
+      68,
+      73,
+      74,
+      77,
+      81,
+      84,
+      85,
+      88,
+      89,
+      94
+    ],
+    "task_replacement_forbidden": true
+  },
+  "parent_object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-STRICT-MATCHED-PANEL",
+  "policy_outcomes_read": false,
+  "policy_rollouts_authorized": false,
+  "policy_training_authorized": false,
+  "policy_units": {
+    "GR00T N1.7": {
+      "checkpoint": "checkpoint-238000",
+      "content_address_status": "PENDING_EXACT_HF_REVISION_AND_REQUIRED_FILE_OID_SIZE_FREEZE",
+      "lineage": "same admitted GR00T N1.7 family; never counted as a third family",
+      "public_repo_id": "kmy17518/gr00t-n1.7-b1k-multitask",
+      "role": "ONE_PUBLIC_SHARED_100_TASK_CHECKPOINT_EVALUATED_ON_FROZEN_26_TASK_PANEL",
+      "selection_reason": "freeze the public model-card terminal/final snapshot before any local policy evaluation; no late-snapshot shopping",
+      "training_jobs": 0
+    },
+    "pi0.5": {
+      "action_horizon": 32,
+      "base_checkpoint": "gs://openpi-assets/checkpoints/pi05_base/params",
+      "batch_size": 64,
+      "checkpoint_selection": "terminal source label 49999 only",
+      "config_change_only": true,
+      "dataset": "official combined BEHAVIOR 2026 LeRobot v3 dataset restricted to the frozen 5200 episodes",
+      "model_or_training_loop_change": false,
+      "normalization": "source B1K z-score statistics computed over exactly the same 5200-episode subset and frozen before model update",
+      "num_train_steps": 50000,
+      "repo_revision": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+      "role": "ONE_SHARED_26_TASK_PROSPECTIVE_CHECKPOINT",
+      "seed": 42,
+      "training_jobs": 1
+    }
+  },
+  "pre_execution_gates": [
+    "exact selected data/video LFS path+OID+size manifest",
+    "exact content-addressed freeze of public GR00T terminal checkpoint",
+    "pi0.5 26-task configuration patch hash and zero-update config/data-loader smoke",
+    "pi0.5 selected-subset normalization artifact hash",
+    "single-A100 model-load/memory preflight if separately authorized",
+    "explicit execution authority before optimizer update or policy rollout"
+  ],
+  "primary_analysis": {
+    "alpha": 0.05,
+    "corroboration": "median within-family pair contrast < 0 separately for pi0.5 and GR00T N1.7",
+    "direction_required": "primary mean < 0",
+    "exact_test": "two-sided sign-flip randomization over all 2^13 = 8192 pair-label assignments",
+    "no_checkpoint_shopping": true,
+    "no_covariate_search": true,
+    "no_pair_dropping": true,
+    "no_pair_weighting": true,
+    "no_task_replacement": true,
+    "pair_contrast_per_family": "Q(high-coupling) - Q(low-coupling)",
+    "pair_contrast_primary": "mean of the pi0.5 and GR00T pair contrasts for each pair",
+    "primary_statistic": "mean of the 13 two-family pair contrasts",
+    "support_rule": "primary mean < 0 AND exact two-sided p < 0.05 AND both family medians < 0",
+    "task_score": "official evaluator Q averaged over exactly public instances 0..9 for each task/policy unit"
+  },
+  "resource_reduction": {
+    "GR00T_reuses_public_checkpoint": true,
+    "evaluation_rollouts_if_later_authorized": 520,
+    "shared_child_training_jobs": 1,
+    "task_specific_parent_training_jobs": 52,
+    "training_job_reduction": 51
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared-multitask-panel-preregistration-v1",
+  "scientific_authority": false,
+  "scientific_question": "Within two frozen shared multi-task VLA policy units, is official BEHAVIOR task Q lower on the higher-coupling member of exact structure-matched task pairs?",
+  "status": "PREREGISTERED_SHARED_CHILD_PAYLOAD_MANIFEST_HOLD"
+}

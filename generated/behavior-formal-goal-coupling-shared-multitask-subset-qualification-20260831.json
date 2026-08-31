@@ -1,0 +1,241 @@
+{
+  "dataset": {
+    "repo_id": "behavior-1k/2026-challenge-demos",
+    "revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2"
+  },
+  "episode_count": 5200,
+  "episode_indices_sha256": "0a10d07f216ac51f8cb0c3d2c1be07aaeb543e64070dd6c3cea235d49ab84b17",
+  "execution_authority": false,
+  "explicitly_not_read": [
+    "length",
+    "reward/success/done",
+    "policy outcomes"
+  ],
+  "gpu_authority": false,
+  "metadata_columns_read": [
+    "episode_index",
+    "task_index",
+    "tasks"
+  ],
+  "model_load_authorized": false,
+  "next_gate": "derive an exact selected data/video LFS path+OID+size manifest before any payload materialization",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "parent_preregistration_sha256": "0738573af073aafd9a14f220f5f729d85adb16593cfc73043abf71e7f74f2327",
+  "payload_materialization_authorized": false,
+  "policy_outcomes_read": false,
+  "schema_version": "behavior-formal-goal-coupling-shared-multitask-subset-qualification-v1",
+  "scientific_authority": false,
+  "selection_outcome_blind": true,
+  "status": "EPISODE_SUBSET_METADATA_QUALIFIED_PAYLOAD_MANIFEST_HOLD",
+  "task_count": 26,
+  "task_rows": [
+    {
+      "activity": "rearranging_kitchen_furniture",
+      "episode_count": 200,
+      "episode_index_max": 1799,
+      "episode_index_min": 1600,
+      "metadata_sha256": "80c2ec3648ae467102e6ae1ec87ffab8373a7b9a8a69839225dbca2f5f5702be",
+      "task_index": 8
+    },
+    {
+      "activity": "set_up_a_coffee_station_in_your_kitchen",
+      "episode_count": 200,
+      "episode_index_max": 2199,
+      "episode_index_min": 2000,
+      "metadata_sha256": "6d10d16c7e2c502f4e4acd252e486917ec940af7e434a01dd16fb40581716610",
+      "task_index": 10
+    },
+    {
+      "activity": "preparing_lunch_box",
+      "episode_count": 200,
+      "episode_index_max": 2599,
+      "episode_index_min": 2400,
+      "metadata_sha256": "91b53e17956ce772f0daf4bed78793799b663edb0c2c84fcb708ea99465b1855",
+      "task_index": 12
+    },
+    {
+      "activity": "loading_the_car",
+      "episode_count": 200,
+      "episode_index_max": 2799,
+      "episode_index_min": 2600,
+      "metadata_sha256": "2d9c5b744a7d84778029b05f556b2cce9f6f01c50c1145b60162c24f4d70af25",
+      "task_index": 13
+    },
+    {
+      "activity": "carrying_in_groceries",
+      "episode_count": 200,
+      "episode_index_max": 2999,
+      "episode_index_min": 2800,
+      "metadata_sha256": "5ecff84c3b48ba9d20744621c96c22e2362c0ccbd57fc3bd385df764c2127fb3",
+      "task_index": 14
+    },
+    {
+      "activity": "bringing_water",
+      "episode_count": 200,
+      "episode_index_max": 3599,
+      "episode_index_min": 3400,
+      "metadata_sha256": "49aa76abd26114ff7f0073b3806b30a0b764e19f0aa8bbd24bf052055f6f999d",
+      "task_index": 17
+    },
+    {
+      "activity": "wash_dog_toys",
+      "episode_count": 200,
+      "episode_index_max": 6799,
+      "episode_index_min": 6600,
+      "metadata_sha256": "e089f1bc4742e904fbcd9a9349e17594d1ac24fd82977223cd03c3c4b0c70647",
+      "task_index": 33
+    },
+    {
+      "activity": "cook_cabbage",
+      "episode_count": 200,
+      "episode_index_max": 8399,
+      "episode_index_min": 8200,
+      "metadata_sha256": "03e7119d6d8124c70ec5b6da81d21c07f42bce7ef67b59e677a9252054730b22",
+      "task_index": 41
+    },
+    {
+      "activity": "chop_an_onion",
+      "episode_count": 200,
+      "episode_index_max": 8599,
+      "episode_index_min": 8400,
+      "metadata_sha256": "5af5d194d2e36c60f7581a280e372878154965ab18a11ac9df4565d7f1d867d2",
+      "task_index": 42
+    },
+    {
+      "activity": "cook_bacon",
+      "episode_count": 200,
+      "episode_index_max": 9399,
+      "episode_index_min": 9200,
+      "metadata_sha256": "e0ecd843e1ed46d685e3e656aea475ef4bbc5ce9022913571f8434443aaaf5c2",
+      "task_index": 46
+    },
+    {
+      "activity": "cook_a_brisket",
+      "episode_count": 200,
+      "episode_index_max": 10399,
+      "episode_index_min": 10200,
+      "metadata_sha256": "30bb7525fab1438501fbfb0ec5ce8293389bd0cd26118cdd9c67b4cb71acdb11",
+      "task_index": 51
+    },
+    {
+      "activity": "make_rose_centerpieces",
+      "episode_count": 200,
+      "episode_index_max": 11399,
+      "episode_index_min": 11200,
+      "metadata_sha256": "cc8abaff9502588919ce9ad347dcfa7880385a2d81a9db20cede804ca0bce71f",
+      "task_index": 56
+    },
+    {
+      "activity": "organizing_art_supplies",
+      "episode_count": 200,
+      "episode_index_max": 11999,
+      "episode_index_min": 11800,
+      "metadata_sha256": "ce3aa801a1223612f5f606575a6ab5b5d0be70acbefcd42f2ba723a77dd61886",
+      "task_index": 59
+    },
+    {
+      "activity": "halve_an_egg",
+      "episode_count": 200,
+      "episode_index_max": 12599,
+      "episode_index_min": 12400,
+      "metadata_sha256": "988c9af1e5039f729f5de1555bd68a3ad1a46afcc170cc5df05a0d8bb39a668a",
+      "task_index": 62
+    },
+    {
+      "activity": "unloading_the_car",
+      "episode_count": 200,
+      "episode_index_max": 13199,
+      "episode_index_min": 13000,
+      "metadata_sha256": "2e01e7b278d66e4fb259a7b1145a219014c5cf6312b2126cbb0ca0640ebc5a9c",
+      "task_index": 65
+    },
+    {
+      "activity": "boxing_food_after_dinner",
+      "episode_count": 200,
+      "episode_index_max": 13599,
+      "episode_index_min": 13400,
+      "metadata_sha256": "b82b5ef486f527801a2f812b2cbbaf7f40f8c59988b51b3eaf874de15951d8be",
+      "task_index": 67
+    },
+    {
+      "activity": "cleaning_up_branches_and_twigs",
+      "episode_count": 200,
+      "episode_index_max": 13799,
+      "episode_index_min": 13600,
+      "metadata_sha256": "fb21148d27996b229c7ff0d26b0a4761e0732b8b0a2bc34ea976d6f7c6fa2a1e",
+      "task_index": 68
+    },
+    {
+      "activity": "organizing_school_stuff",
+      "episode_count": 200,
+      "episode_index_max": 14799,
+      "episode_index_min": 14600,
+      "metadata_sha256": "f15e99a0217490b6adf98b78f373191d9144e5bc3fa8f081f1f212310d6f2113",
+      "task_index": 73
+    },
+    {
+      "activity": "carrying_out_garden_furniture",
+      "episode_count": 200,
+      "episode_index_max": 14999,
+      "episode_index_min": 14800,
+      "metadata_sha256": "52333e89438ec374ada37c6bbbbce22720cac8b4b80235099e71110646dd88ba",
+      "task_index": 74
+    },
+    {
+      "activity": "installing_a_modem",
+      "episode_count": 200,
+      "episode_index_max": 15599,
+      "episode_index_min": 15400,
+      "metadata_sha256": "f7526a2634c761a23dbdd928447697b3f70d6e4a3ed5f4a2ba0a9d0b3d784425",
+      "task_index": 77
+    },
+    {
+      "activity": "packing_meal_for_delivery",
+      "episode_count": 200,
+      "episode_index_max": 16399,
+      "episode_index_min": 16200,
+      "metadata_sha256": "1cd8735a39daceb9c5ddfca3281b1f824b5dc8dcf627a66b237080d8a4f7a6dc",
+      "task_index": 81
+    },
+    {
+      "activity": "tidying_bathroom",
+      "episode_count": 200,
+      "episode_index_max": 16999,
+      "episode_index_min": 16800,
+      "metadata_sha256": "8a83685fb17afb0d4459d4acac22c58cf8d3ed49d86599805fed97a4c2e9bd22",
+      "task_index": 84
+    },
+    {
+      "activity": "putting_dirty_dishes_in_sink",
+      "episode_count": 200,
+      "episode_index_max": 17199,
+      "episode_index_min": 17000,
+      "metadata_sha256": "264da6a15c406d5a69154b045e6cb53d0900dc791ec79751a0b45a4266878674",
+      "task_index": 85
+    },
+    {
+      "activity": "rearrange_your_room",
+      "episode_count": 200,
+      "episode_index_max": 17799,
+      "episode_index_min": 17600,
+      "metadata_sha256": "fe29b77b20812fc8244fb76d4d351934c1bf22ad3ffa2e112963cc76f26044b8",
+      "task_index": 88
+    },
+    {
+      "activity": "installing_a_fax_machine",
+      "episode_count": 200,
+      "episode_index_max": 17999,
+      "episode_index_min": 17800,
+      "metadata_sha256": "2c40cec6a39ed90a030efdbe8c6d262eb6da474fe1c6811e7cd7d4c1823f74fc",
+      "task_index": 89
+    },
+    {
+      "activity": "dispose_of_batteries",
+      "episode_count": 200,
+      "episode_index_max": 18999,
+      "episode_index_min": 18800,
+      "metadata_sha256": "e941caa1b17c6280083e05123ccc914e1c037a400a0c88bcbc70691534f4e391",
+      "task_index": 94
+    }
+  ]
+}

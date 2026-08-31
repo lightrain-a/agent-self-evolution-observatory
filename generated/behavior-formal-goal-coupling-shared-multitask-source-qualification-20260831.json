@@ -1,0 +1,64 @@
+{
+  "dataset": {
+    "layout": "one official LeRobot v3 dataset containing all 100 challenge tasks",
+    "repo_id": "behavior-1k/2026-challenge-demos",
+    "revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2"
+  },
+  "execution_authority": false,
+  "gpu_authority": false,
+  "lerobot": {
+    "episode_subset_semantics": "Pinned LeRobotDataset accepts an explicit episodes list, retains full dataset metadata/task mapping, and passes the subset to DatasetReader before selective file loading.",
+    "multi_dataset_wrapper_required": false,
+    "revision": "c43f58116b975ae79af62714e1417b38facd4e37",
+    "source_hashes_verified_on_independent_source_audit_host": {
+      "src/lerobot/datasets/lerobot_dataset.py": "e3817ee2beb81d763afe77cdf8867d3fb3ff57b1fd8ceaee1384cd5ee8b39b82",
+      "src/lerobot/datasets/multi_dataset.py": "022b41031bd10d98747fd909336ec79ea94135375fa82c90eb1d2cb5e8774fd6"
+    }
+  },
+  "method_change_boundary": {
+    "exact_parent_replication": false,
+    "only_scientific_change": "train one shared pi0.5 checkpoint on the frozen 26-task subset instead of 26 task-specific pi0.5 checkpoints",
+    "unchanged": [
+      "pi0.5 base model/checkpoint",
+      "B1K R1Pro observation/action transforms",
+      "optimizer and learning-rate schedule",
+      "seed 42",
+      "batch size 64",
+      "50000 update horizon",
+      "terminal checkpoint selection",
+      "official evaluator and public instances 0..9"
+    ]
+  },
+  "model_load_authorized": false,
+  "next_gate": "qualify the outcome-blind 5200-episode subset and freeze the child preregistration",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "openpi": {
+    "revision": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+    "semantic_gates": {
+      "b1k_loader_forwards_dataset_kwargs": true,
+      "b1k_loader_uses_lerobot_metadata": true,
+      "dataset_kwargs_exposed": true,
+      "device_count_not_hardcoded": true,
+      "lerobot_exact_revision_locked": true,
+      "norm_stats_reuses_b1k_dataset": true,
+      "single_a100_full_finetune_documented": true
+    },
+    "source_hashes": {
+      "README.md": "567fc57766bd736664f50126cab8145af4071ca16cc5e238f2b11e369169c3b5",
+      "docs/b1k.md": "d984a4bed60f7c50b05caebb662e4c148fc95601cd1dd176c8ea2cff18e40adf",
+      "scripts/b1k/train_b1k.py": "9e1ac351c8f491d0c5307963d11ab07b008548da2bcd29a4670e88622eae6507",
+      "scripts/compute_norm_stats.py": "af3d46e40af8162ea11d942fe5010b5fe33fff7639cc1e5ab317fc22efb09655",
+      "src/openpi/training/config.py": "46763413af168cde21084070ef93f2b9b00b9466caa0d09ba3bf2ba8d12222ae",
+      "src/openpi/training/data_loader.py": "3818273c09d5fa46d8d5cfe8081c5c16c6bd9bb70fd1f1c1eff73bc0725d50b1",
+      "src/openpi/training/lerobot_compat.py": "0e51b404471b26e5f0e139e46971e34fadf1eaa08844a7dc9e990058fd81970b",
+      "uv.lock": "75657cfbac40473237a6eaebc994fe998b249b44a4671d38129af198f00e4ed6"
+    },
+    "source_native_capability": "B1K DataConfig forwards dataset constructor kwargs; B1K normalization uses the same dataset path; training data parallelism is sized from visible JAX devices. A child may therefore select a frozen episode subset by configuration without changing the model, optimizer, transforms, or training loop."
+  },
+  "policy_outcomes_read": false,
+  "policy_rollouts_authorized": false,
+  "policy_training_authorized": false,
+  "schema_version": "behavior-formal-goal-coupling-shared-multitask-source-qualification-v1",
+  "scientific_authority": false,
+  "status": "SOURCE_QUALIFIED_SHARED_CHILD_PREFLIGHT_ONLY"
+}
