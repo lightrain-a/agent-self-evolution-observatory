@@ -1,0 +1,39 @@
+{
+  "compiler_source_git_sha": "c9b8883a618448de0e5743ea307af8d6021d932a",
+  "compiler_source_git_tree": "5f05f93cb574207a88c9c712c51f1ee44596718f",
+  "config_sha256": "e0d68fa08c8bcdf496f1c261ee945924ea2b5f74277a9b054b26fd95bb414b41",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "decisive_experiment": "MATCHED_SUPPORT_TOPOLOGY_RESPONSE_SURFACE_WITH_SAME_DECODER_ORACLE_GRAPH",
+  "exact_question": "What makes relationally complex 3D scene instructions difficult when raw relation count, surface length, training support, and relation composition are controlled, and at which generation stage does the attenuation emerge?",
+  "figures": [
+    "count × tokens × support × topology response surface",
+    "within-count topology contrasts",
+    "three-observable stage waterfall",
+    "paired predicted-graph versus oracle-graph intervention"
+  ],
+  "forbidden_overlap": [
+    "Agent paper",
+    "self-evolution contribution",
+    "PORT-010 evidence"
+  ],
+  "generated_at": "2026-08-31T12:00:00+00:00",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "paper": "independent 3D scene-generation paper",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "rejected_claims": [
+    "more relations imply lower iRecall as novelty",
+    "relation-aware model wins at high count as novelty",
+    "another ATISS/DiffuScene/InstructScene count curve",
+    "3-6 decline proves intrinsic capacity",
+    "mandatory scalar breakpoint C*",
+    "where attenuation occurs equals why"
+  ],
+  "results": "EMPTY_PRE_F0_NO_SCIENTIFIC_OUTCOMES",
+  "retained_claims": [
+    "exact-token separation from relation count",
+    "matched training-support crossover",
+    "fixed-count/fixed-length topology sensitivity",
+    "same-decoder predicted-versus-oracle graph localization"
+  ],
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-pre-f0-v1"
+}
