@@ -1,0 +1,31 @@
+{
+  "command": [
+    "/data/wyt/agent-self-evolution-observatory/runtimes/c1-webarena-live-py312/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "research_pipeline/test_asset_first_stri_reasoningbank_full_p1.py",
+    "research_pipeline/test_asset_first_stri_reasoningbank_full_p1_adjudicate.py",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1_q10_runtime.py",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1_q10_stack.py"
+  ],
+  "created_at_utc": "2026-08-31T07:22:46+00:00",
+  "credential_material_present": false,
+  "decision": "FULL_P1_TARGETED_TEST_GATE_V2_PASS",
+  "evaluator_calls": 0,
+  "experiment_id": "E1-STRI-REASONINGBANK-FULL-P1-TARGETED-TEST-GATE-V2-20260831",
+  "model_calls": 0,
+  "modules": [
+    "research_pipeline/test_asset_first_stri_reasoningbank_full_p1.py",
+    "research_pipeline/test_asset_first_stri_reasoningbank_full_p1_adjudicate.py",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1_q10_runtime.py",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1_q10_stack.py"
+  ],
+  "output": "........................                                              [100%]\n24 passed, 3 subtests passed in 33.37s\n",
+  "pass": true,
+  "payload_sha256": "f6e63f8a7b636b0129f0d9232219e9ee23464ec01b55bd40bdf6c91aaeae859c",
+  "reason": "Post-HOLD gate covers the unchanged-digest single-channel acquisition repair binding plus runner, Q10 runtime, and outcome-blind adjudicator.",
+  "returncode": 0,
+  "schema_version": 1,
+  "task_outcomes_observed": false
+}
