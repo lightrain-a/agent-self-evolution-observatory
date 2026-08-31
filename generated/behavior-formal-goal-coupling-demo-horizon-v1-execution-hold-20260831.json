@@ -1,0 +1,50 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-demo-horizon-v1-execution-hold-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-DEMO-HORIZON",
+  "status": "HOLD_SCHEMA_OPERATIONALIZATION_GLOBAL_EPISODE_INDEX",
+  "generated_at": "2026-08-31T11:34:01+08:00",
+  "scientific_authority": false,
+  "primary_statistic_computed": false,
+  "result_artifact_created": false,
+  "policy_outcomes_read": false,
+  "model_loaded": false,
+  "gpu_used": false,
+  "frozen_preregistration": {
+    "path": "generated/behavior-formal-goal-coupling-demo-horizon-preregistration-20260831.json",
+    "sha256": "ea8a694c209f1524cc9d6f09fc33f0ad053c5f334221d802bc525bd27f20584a"
+  },
+  "frozen_analysis_script": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_demo_horizon.py",
+    "sha256": "1b3eeda4ded4a114f40d6e9fe12637ee46a465cc581f1bbfeaac2fe4c5c0d164"
+  },
+  "failure": {
+    "layer": "operationalization",
+    "failed_precondition": "episode_index was preregistered as local 0..199 within every per-task parquet",
+    "observed_non_outcome_schema_fact": "task 1 contains 200 unique contiguous episode_index values 200..399 and task_index set {1}; prior task-0 Phase1 receipt contains episode_index 0..199 and task_index set {0}",
+    "interpretation": "BEHAVIOR LeRobot episode_index is global across task chunks, not local within each chunk",
+    "scientific_interpretation": "no mechanism or association result was obtained"
+  },
+  "exposure_accounting": {
+    "task_0": "previously exposed before v1 preregistration and already excluded",
+    "task_1": "v1 execution loaded task-1 episode_index/task_index/length columns before failing the local-index assertion; no length values or aggregate statistics were emitted, but task 1 is conservatively treated as exposed for any repair",
+    "repair_fresh_task_indices_if_authorized": "2..99 only"
+  },
+  "single_variable_repair_boundary": {
+    "allowed": "replace local episode_index==0..199 assertion by 200 unique contiguous global episode indices with exact task_index binding; exclude task 1 in addition to task 0",
+    "must_remain_frozen": [
+      "human-demo median-horizon outcome definition",
+      "log transform",
+      "shared_argument_edge_count predictor",
+      "exact atomic_goal_count fixed effects",
+      "100000 within-goal-count permutations",
+      "seed 20260831",
+      "two-sided alpha 0.05",
+      "positive beta direction requirement",
+      "matched-pair selection algorithm",
+      "no policy outcomes/model/GPU",
+      "no PORT-010 reopen",
+      "no lowering of the three-family gate"
+    ]
+  },
+  "next_status": "ELIGIBLE_FOR_ONE_SOURCE_SEMANTICS_V1_1_PREREGISTRATION_BEFORE_TASK_2_99_VALUE_ACCESS"
+}
