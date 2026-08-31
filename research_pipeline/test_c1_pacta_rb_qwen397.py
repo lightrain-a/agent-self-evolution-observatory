@@ -2,9 +2,10 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import pytest
-from research_pipeline.c1_pacta_rb_qwen397 import (atomic_json,build_final_schedule,build_shadow_schedule,
- choose_budget,discover_qwen397,freeze_model_binding,gate,parse_first_decision,pilot_split,
- rate_matched_random,sha256_file,validate_fresh_pool,writer_twins_valid)
+from research_pipeline.c1_pacta_rb_qwen397 import (assert_t0_stage,atomic_bytes,atomic_json,
+ build_final_schedule,build_shadow_schedule,choose_budget,discover_qwen397,freeze_model_binding,
+ gate,parse_first_decision,persist_before_parse,pilot_split,rate_matched_random,
+ render_writer_input,sha256_file,t0_validity,validate_fresh_pool,writer_twins_valid)
 ROOT=Path(__file__).resolve().parents[1];PAPER=ROOT/"paper_drafts/c1-manuscript-strengthening-20260825"
 def units(n=6):
  return [{"unit_id":f"repo{i}__source=>repo{i}__future","task_family":f"repo{i}","source_trajectory_path":None,
@@ -34,7 +35,12 @@ def test_action_budget_fails_if_no_full_cell():
  with pytest.raises(ValueError):choose_budget({})
 def test_freshness_requires_real_content_addressed_trajectory(tmp_path):
  u=units(1)[0];assert validate_fresh_pool([u])["valid_unit_count"]==0
- p=tmp_path/"trajectory.json";p.write_text("{}");u["source_trajectory_path"]=str(p);u["source_trajectory_sha256"]=sha256_file(p)
+ p=tmp_path/"trajectory.json";p.write_text("{}")
+ w=tmp_path/"writer_input_trajectory.txt";w.write_text("user\nassistant")
+ u.update({"source_trajectory_path":str(p),"source_trajectory_sha256":sha256_file(p),
+  "writer_input_trajectory_path":str(w),"writer_input_trajectory_sha256":sha256_file(w),
+  "native_trajectory_executed":True,"model_call_count":1,"all_raw_responses_persisted":True,
+  "model_drift":False,"provider_packet_drift":False,"instrumentation_corruption":False})
  assert validate_fresh_pool([u])["valid_unit_count"]==1;u["prior_reasoningbank_scientific_output"]=True
  assert validate_fresh_pool([u])["valid_unit_count"]==0
 def test_pilot_split_refuses_planned_ids_without_trajectories():
@@ -64,3 +70,58 @@ def test_claim_authority_closes_before_science():
  assert closure["status"]=="HOLD_FRESH_SUPPORT_INSUFFICIENT"
  assert closure["scientific_tokens"]=={"estimated_cost":0,"input":0,"output":0}
  assert claim["status"]=="NO_NEW_SCIENTIFIC_EVIDENCE" and claim["active_manuscript"]=="R9"
+
+def test_raw_response_is_persisted_before_parser_failure(tmp_path):
+ path=tmp_path/"response.raw";seen=[]
+ def failing(raw):
+  seen.append(path.is_file() and path.read_bytes()==raw)
+  raise ValueError("parse failure")
+ with pytest.raises(ValueError):persist_before_parse(b"not-json",path,failing)
+ assert seen==[True] and path.is_file()
+
+def test_response_sha_change_detected(tmp_path):
+ path=tmp_path/"response.raw";first=atomic_bytes(path,b"first");second=atomic_bytes(path,b"second")
+ assert first!=second and sha256_file(path)==second
+
+def test_missing_writer_input_path_or_hash_is_not_writer_ready(tmp_path):
+ p=tmp_path/"trajectory.json";p.write_text("{}")
+ unit={"source_trajectory_path":str(p),"source_trajectory_sha256":sha256_file(p),
+  "native_trajectory_executed":True,"model_call_count":1,"all_raw_responses_persisted":True}
+ assert t0_validity(unit)[0] is False
+
+def test_task_success_is_not_required_for_t0_validity(tmp_path):
+ p=tmp_path/"trajectory.json";p.write_text("{}")
+ w=tmp_path/"writer.txt";w.write_text("exact native rendering")
+ unit={"source_trajectory_path":str(p),"source_trajectory_sha256":sha256_file(p),
+  "writer_input_trajectory_path":str(w),"writer_input_trajectory_sha256":sha256_file(w),
+  "native_trajectory_executed":True,"model_call_count":1,"all_raw_responses_persisted":True,
+  "model_drift":False,"provider_packet_drift":False,"instrumentation_corruption":False,
+  "task_success":False}
+ assert t0_validity(unit)==(True,"pass")
+
+def test_provider_identity_drift_invalidates_t0(tmp_path):
+ p=tmp_path/"trajectory.json";p.write_text("{}")
+ w=tmp_path/"writer.txt";w.write_text("rendering")
+ unit={"source_trajectory_path":str(p),"source_trajectory_sha256":sha256_file(p),
+  "writer_input_trajectory_path":str(w),"writer_input_trajectory_sha256":sha256_file(w),
+  "native_trajectory_executed":True,"model_call_count":1,"all_raw_responses_persisted":True,
+  "model_drift":True,"provider_packet_drift":False,"instrumentation_corruption":False}
+ assert t0_validity(unit)==(False,"provider identity drift")
+
+def test_official_writer_rendering_joins_non_system_in_order():
+ messages=[{"role":"system","content":"hidden"},{"role":"user","content":"query"},
+  {"role":"assistant","content":"action"},{"role":"user","content":"observation"}]
+ assert render_writer_input(messages)=="query\naction\nobservation"
+
+def test_t0_cannot_reach_writer_binder_shadow_final_or_future():
+ for stage in ("writer","binder","shadow","gate","random_gate","final","future_policy"):
+  with pytest.raises(PermissionError):assert_t0_stage(stage)
+ assert_t0_stage("source_policy")
+
+def test_q0_and_t0_scripts_freeze_no_retry_no_replacement_and_old_roots():
+ q0=(ROOT/"research_pipeline/run_c1_pacta_rb_qwen397_q0_20260831.py").read_text()
+ t0=(ROOT/"research_pipeline/run_c1_pacta_rb_qwen397_t0_20260831.py").read_text()
+ assert "provider_retries\":0" in q0.replace(" ","")
+ assert "OLD_Q0" in t0 and "OLD_P0" in t0
+ assert '"replacement":False' in t0.replace(" ","") and '"top_up":False' in t0.replace(" ","")
+ assert "future_task_executions\":0" in t0.replace(" ","")
