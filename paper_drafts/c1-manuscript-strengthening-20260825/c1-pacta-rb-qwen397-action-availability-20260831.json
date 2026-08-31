@@ -1,0 +1,16 @@
+{
+  "budget_ladder": [
+    512,
+    1024,
+    2048,
+    4096
+  ],
+  "calls": 0,
+  "created_at_utc": "2026-08-31T08:12:30+00:00",
+  "experiment_id": "C1-PACTA-RB-QWEN35-397B-P0-20260831",
+  "fixtures_planned": 20,
+  "frozen_scientific_max_output_tokens": null,
+  "payload_sha256": "795678f4f5da4568f2b031e88698b010a7a9be974ee1fb172f51701a27f43522",
+  "schema_version": 1,
+  "status": "NOT_RUN_DUE_HOLD_FRESH_SUPPORT_INSUFFICIENT"
+}
