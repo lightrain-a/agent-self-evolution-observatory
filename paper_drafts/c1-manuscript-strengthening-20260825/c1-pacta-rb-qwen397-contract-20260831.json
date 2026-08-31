@@ -1,0 +1,82 @@
+{
+  "action_qualification": {
+    "budget_ladder": [
+      512,
+      1024,
+      2048,
+      4096
+    ],
+    "fixtures": 20,
+    "pass": "20/20 at smallest budget"
+  },
+  "created_at_utc": "2026-08-31T08:12:30+00:00",
+  "documented_endpoints": {
+    "base": "https://api.aa.com.cn/api/v1",
+    "chat": "POST /chat/completions",
+    "docs": "https://api-doc.aa.com.cn/zh/docs/api",
+    "models": "GET /models"
+  },
+  "experiment_id": "C1-PACTA-RB-QWEN35-397B-P0-20260831",
+  "final": {
+    "calls": 288,
+    "temperature": 0.2
+  },
+  "imputation": false,
+  "locked": [
+    "terminal",
+    "Qwen3.5-122B",
+    "Qwen3.5-27B",
+    "Qwen3-235B",
+    "DeepSeek",
+    "second carrier",
+    "R10"
+  ],
+  "model_binding": {
+    "discovery": true,
+    "fallback": false,
+    "other_models_locked": true,
+    "prefer_fixed_snapshot": true,
+    "probes": 3,
+    "stable_alias_allowed_if_only_option": true
+  },
+  "payload_sha256": "1dcf809ebcfaa5a3cd0645841ba25b0b27f3d40d7b88b2f9d087f677fed65361",
+  "primary": "U_A3_PACTA - U_A2_RATE_MATCHED_RANDOM",
+  "provider": "典名词元 AA/OpenAI-compatible",
+  "random_gate": {
+    "rate_matched": true,
+    "salt": "C1-PACTA-RB-QWEN35-397B-RANDOM-v1"
+  },
+  "replacement": false,
+  "retries": 0,
+  "scb": {
+    "browser_wording_removed": true,
+    "calls": 12,
+    "temperature": 0
+  },
+  "schema_version": 1,
+  "shadow": {
+    "calls": 144,
+    "gate": "min(B1,B2) > max(WS,WF)",
+    "nondegenerate": "2..5/6",
+    "temperature": 0.2
+  },
+  "status": "FROZEN_PRE_SCIENCE",
+  "target_model_family": "Qwen3.5-397B-A17B",
+  "thinking": "prefer enable_thinking=false; record actual behavior",
+  "thresholds": {
+    "A3_A0_gt_0": true,
+    "A3_A1_ge_0": true,
+    "mean": 0.05,
+    "positive_gt_negative": true
+  },
+  "token_hard_caps": {
+    "scientific_input": 5000000,
+    "scientific_output": 500000
+  },
+  "top_up": false,
+  "writer": {
+    "calls": 12,
+    "official_success_failure_branches_only": true,
+    "temperature": 0
+  }
+}

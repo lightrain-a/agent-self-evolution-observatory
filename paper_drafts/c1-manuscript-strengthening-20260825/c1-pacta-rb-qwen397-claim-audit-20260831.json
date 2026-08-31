@@ -1,0 +1,18 @@
+{
+  "PACTA_mechanism_update": "NONE",
+  "R10": false,
+  "active_manuscript": "R9",
+  "carrier_implementation": "PASS",
+  "created_at_utc": "2026-08-31T08:12:30+00:00",
+  "experiment_id": "C1-PACTA-RB-QWEN35-397B-P0-20260831",
+  "failure_layer": "fresh source-trajectory provenance / carrier input realization",
+  "gate_realization": "NOT_RUN",
+  "measurement": "NOT_RUN",
+  "payload_sha256": "1b6f3edd2e8470f97cfda7c1a67260c9dc45465b8d61fd82a0abcda7da2142fc",
+  "provider_realization": "NOT_TESTED",
+  "reopen_condition": "Provide at least six fresh, independently sourced, content-addressed native ReasoningBank trajectories, or separately authorize prospective source-trajectory acquisition before a new run.",
+  "schema_version": 1,
+  "selection_effect": "NOT_RUN",
+  "status": "NO_NEW_SCIENTIFIC_EVIDENCE",
+  "writer_realization": "NOT_RUN"
+}

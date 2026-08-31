@@ -1,0 +1,10 @@
+{
+  "calls": "0/144",
+  "created_at_utc": "2026-08-31T08:12:30+00:00",
+  "experiment_id": "C1-PACTA-RB-QWEN35-397B-P0-20260831",
+  "gate": null,
+  "payload_sha256": "34cb6f6532dcc2763d25330691be10dfae465570268bf90f85db05d81b3775cb",
+  "per_unit": [],
+  "schema_version": 1,
+  "status": "NOT_RUN"
+}

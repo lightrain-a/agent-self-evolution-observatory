@@ -1,0 +1,69 @@
+{
+  "candidate_hash_order": [
+    {
+      "rank": "0aa72bfc18fb1df2e38bc5d6deef11c1e2218afb901db36f6c424a62011b5c69",
+      "unit_id": "sphinx-doc__sphinx-8593=>sphinx-doc__sphinx-7748"
+    },
+    {
+      "rank": "2fdd3faea277458ab7d0a9e1e853da031e41e863d4db22bef8f81bb471e2cad1",
+      "unit_id": "django__django-13449=>django__django-11400"
+    },
+    {
+      "rank": "393625ec4043b59214de0c3f7de2196b72ce0be94c87ba4065c76e7a7e920db8",
+      "unit_id": "pylint-dev__pylint-7080=>pylint-dev__pylint-8898"
+    },
+    {
+      "rank": "4fb60213c39fb27fa348123ff36a010bd3b5011ff3f6ba992f2e3f75a1d5182d",
+      "unit_id": "mwaskom__seaborn-3187=>mwaskom__seaborn-3069"
+    },
+    {
+      "rank": "5af38869d7b692e4944edd1e323b44ad07f0e926d5ad7ec0afb63c3be9f1e221",
+      "unit_id": "psf__requests-1766=>psf__requests-1724"
+    },
+    {
+      "rank": "a6e103279e9294d8933eeee4af8e5e277517e5ea40af6b972f0fa659fc435651",
+      "unit_id": "pydata__xarray-4966=>pydata__xarray-4356"
+    },
+    {
+      "rank": "ab85a4f55eb5e6b0fd30719c069f615acb355510e645a214111b5b9c3230519a",
+      "unit_id": "astropy__astropy-7166=>astropy__astropy-14096"
+    },
+    {
+      "rank": "b964dab17f3db42d98b93e4256b87e803ccb313569dbbb0f196906924458277d",
+      "unit_id": "pytest-dev__pytest-5840=>pytest-dev__pytest-5809"
+    },
+    {
+      "rank": "bc08e61ebf3fb439a46ce0001269fef241235a36f4c0b182b052baf188601744",
+      "unit_id": "sympy__sympy-15599=>sympy__sympy-18189"
+    },
+    {
+      "rank": "c679cc048b7d13a67d67ad55cbe213f893e5e0bed240df8bfb41dc345a18b7b3",
+      "unit_id": "scikit-learn__scikit-learn-14496=>scikit-learn__scikit-learn-10908"
+    },
+    {
+      "rank": "c7f16ca9b54253eb147b75df493380b40b350af89412b95b1d830382d758ca0c",
+      "unit_id": "matplotlib__matplotlib-24627=>matplotlib__matplotlib-25960"
+    }
+  ],
+  "created_at_utc": "2026-08-31T08:12:30+00:00",
+  "experiment_id": "C1-PACTA-RB-QWEN35-397B-P0-20260831",
+  "payload_sha256": "bc67943a827a5eeec74d79bf0184a71469ee560cb979510fc55a3c5bc18e0950",
+  "pilot": [],
+  "reason": "zero trajectory-backed eligible units; selection is not realized",
+  "schema_version": 1,
+  "sealed": [
+    "pydata__xarray-4966=>pydata__xarray-4356",
+    "scikit-learn__scikit-learn-14496=>scikit-learn__scikit-learn-10908",
+    "psf__requests-1766=>psf__requests-1724",
+    "matplotlib__matplotlib-24627=>matplotlib__matplotlib-25960",
+    "sphinx-doc__sphinx-8593=>sphinx-doc__sphinx-7748",
+    "mwaskom__seaborn-3187=>mwaskom__seaborn-3069",
+    "sympy__sympy-15599=>sympy__sympy-18189",
+    "astropy__astropy-7166=>astropy__astropy-14096",
+    "django__django-13449=>django__django-11400",
+    "pylint-dev__pylint-7080=>pylint-dev__pylint-8898",
+    "pytest-dev__pytest-5840=>pytest-dev__pytest-5809"
+  ],
+  "selection_salt": "C1-PACTA-RB-QWEN35-397B-P0-v1",
+  "status": "NOT_REALIZED_FRESH_SUPPORT_INSUFFICIENT"
+}
