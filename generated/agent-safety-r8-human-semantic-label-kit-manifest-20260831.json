@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "AGENT-SAFETY-R9",
+  "receipt_type": "human-semantic-label-execution-kit-manifest",
+  "status": "MACHINE_PREPARATION_COMPLETE_HUMAN_LABELS_PENDING",
+  "recorded_date": "2026-08-31",
+  "frozen_source": {
+    "blind_packet_sha256": "2603fd7043761ad75ff3dafddf2845bee209eefc8d70bc1899b9dc6c1feefa4a",
+    "blind_packet_items": 24,
+    "private_key_sha256": "915393fef5cff43eb91b6b5d523ff1a257f1b1b0ee18e236c922de1539842006",
+    "source_journals_exact_hash_recovery": "PASS",
+    "packet_validation": "24/24 blind IDs and key IDs exact match; 0 item-level hidden-key leaks",
+    "packet_regeneration_performed": false,
+    "private_key_opened_during_kit_preparation": false
+  },
+  "tracked_kit": [
+    {
+      "path": "generated/agent-safety-r8-human-semantic-label-analysis-prereg-20260831.json",
+      "sha256": "8544615916e6a32e5f68cd12cc53910574fbc1a5b03caf56f5feb27df6235a98",
+      "role": "pre-unblinding analysis freeze"
+    },
+    {
+      "path": "generated/agent-safety-r8-human-rater-instructions-20260831.md",
+      "sha256": "50966bd4ee79dd303a703804d378cdbf89ee9d5a8918dc441a325cf9e7ca4023",
+      "role": "human-only blinded rater instructions"
+    },
+    {
+      "path": "generated/agent-safety-r8-human-label-response-template-20260831.json",
+      "sha256": "a0fce503f37a1176d70a6fcb45a771b707e2d2c7984b2a09a4874a62f235292f",
+      "role": "unlabeled S01-S24 response template"
+    },
+    {
+      "path": "research_pipeline/agent_safety_r8_human_semantic.py",
+      "sha256": "3f3ae3fd2e7a102470d9007b11c8125f3a061a0f61971bd80a86016a8d4910f6",
+      "role": "validation, A/B comparison, conflict-only adjudication, blinded finalization"
+    },
+    {
+      "path": "research_pipeline/test_agent_safety_r8_human_semantic.py",
+      "sha256": "4a53e6decd113fbc2a9976ba341a746e5379375e4f6e36486e5eab0e54694f4d",
+      "role": "stdlib regression tests"
+    },
+    {
+      "path": "scripts/validate_agent_safety_r8_human_semantic_labels.py",
+      "sha256": "8c6a1a88198cffa573f5be302c8acc1142e0590f228c85c7b0a82a1642dac1b3",
+      "role": "operator CLI"
+    }
+  ],
+  "private_coordination": {
+    "private_storage_id": "human-authority/g1-agent-safety-r9-human-semantic-20260831",
+    "permissions": "directories 0700; files 0600",
+    "coordination_sha256": "65219cd125e2f9beaf6c8709f67e75631f2937c282a841467c48b6d7c31174e2",
+    "rater_a_blank_response_sha256": "bfec39921ddc6e45298faf367b2d61a3a012d37f6d39f48aaa18c9aeb6858dde",
+    "rater_b_blank_response_sha256": "9c4f407dfb40578b3544156d43f8076b6d69c1477d1644dac47f2177e6982d57",
+    "labels_present": 0,
+    "private_key_copied_to_69": false,
+    "blind_packet_copied_to_69": false
+  },
+  "validator_guards": [
+    "exactly S01-S24 in order",
+    "three frozen primary labels only",
+    "HIGH/MEDIUM/LOW confidence only",
+    "insufficient_context requires OTHER_OR_DRIFT + LOW",
+    "hidden arm/evaluator/state/episode metadata keys rejected",
+    "all human-independence attestations must be true",
+    "RATER_A and RATER_B identities must differ",
+    "third adjudication required only for A/B primary-label disagreements",
+    "third adjudicator identity must differ from A/B",
+    "blind finalization explicitly records private_key_opened=false",
+    "private generated outputs written mode 0600"
+  ],
+  "qa": {
+    "json_parse": "PASS",
+    "python_compile": "PASS",
+    "human_semantic_regression_tests": "6/6 PASS",
+    "synthetic_conflict_and_adjudication_dry_run": "PASS",
+    "paper_acceptance_tests": "36/36 PASS"
+  },
+  "network_note": {
+    "69_to_host52_port22_at_preparation_time": "TIMEOUT",
+    "scientific_effect": "NONE",
+    "rerun_or_packet_regeneration_triggered": false
+  },
+  "state_effect": {
+    "scientific_status": "READY",
+    "paper_stage": "PREBUTTAL",
+    "submission_ready": false,
+    "blocking_on": "HUMAN_SEMANTIC_LABEL_EVIDENCE_REQUIRED",
+    "gate_change": "NONE"
+  },
+  "next_action": "Two independent human raters complete S01-S24 from the exact frozen blind packet. Validate and compare both frozen responses before generating any third-adjudicator packet or opening the private key.",
+  "authority": {
+    "scientific_authority": false,
+    "experiment_authority": false,
+    "gpu_authority": false,
+    "submission_authority": false,
+    "human_label_authority": false
+  }
+}

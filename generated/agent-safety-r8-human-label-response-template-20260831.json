@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "AGENT-SAFETY-R9",
+  "packet_sha256": "2603fd7043761ad75ff3dafddf2845bee209eefc8d70bc1899b9dc6c1feefa4a",
+  "response_role": "RATER_A_OR_B",
+  "rater_id": "",
+  "labels": [
+    {"blind_id": "S01", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S02", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S03", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S04", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S05", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S06", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S07", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S08", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S09", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S10", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S11", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S12", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S13", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S14", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S15", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S16", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S17", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S18", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S19", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S20", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S21", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S22", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S23", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""},
+    {"blind_id": "S24", "primary_label": null, "confidence": null, "insufficient_context": false, "notes": ""}
+  ],
+  "attestation": {
+    "human_reviewer": false,
+    "independent_first_pass": false,
+    "no_ai_assistance_for_labels": false,
+    "did_not_view_private_key_or_machine_labels": false,
+    "did_not_discuss_labels_with_other_first_pass_rater_before_freeze": false,
+    "all_24_items_labeled_without_replacement": false
+  },
+  "completed_at_local": "",
+  "notes": ""
+}
