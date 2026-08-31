@@ -301,6 +301,9 @@ def main()->None:
  hashes={n:sha(args.output_dir/n) for n in sorted(artifacts)}
  manifest={"schema_version":"relational-topology-stage-3d-manifest-v1","object_id":OBJECT,
   "parent_object_id":PARENT,"run_id":RUN,"generated_at":CREATED,"verdict":adj["verdict"],
+  "compiler_source_git_sha":adj["compiler_source_git_sha"],
+  "compiler_source_git_tree":adj["compiler_source_git_tree"],
+  "dataset_revision":adj["dataset_revision"],"config_sha256":adj["config_sha256"],
   "artifact_sha256":hashes,"artifact_count":len(hashes),"scientific_gpu_runs":0,"scientific_outcomes":0}
  write(args.output_dir/"manifest.json",manifest); hashes["manifest.json"]=sha(args.output_dir/"manifest.json")
  (args.output_dir/"ARTIFACT_SHA256SUMS").write_text(
