@@ -1,0 +1,41 @@
+{
+  "authorization": {
+    "full_p1_execution_authorized": false,
+    "q5_replay_execution_authorized": false,
+    "q7_repair_implementation_authorized": true,
+    "q7_smoke_execution_authorized": true
+  },
+  "automatic_retry": "forbidden",
+  "bindings": {
+    "q5_contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+    "q6_contract_sha256": "3c3a368070869eb30585c435c47122c41932a41db07c8d53db1404cdfed3c155",
+    "q6_failed_smoke_sha256": "e09a6b47f649c9a22837ecac1f06ed497486e6f8617c1036c550c3f695742ae3",
+    "q6_failure_differential_sha256": "8a20fb0b0f592d3bb539a6e9a4ef0b6aea81796e171bc591ae22bcb353a013f9"
+  },
+  "created_at_utc": "2026-08-31T04:05:56+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q7-CREATE-ACK-GRACE-20260831",
+  "payload_sha256": "43925e717c4ad94ec77ddc1164e5c35a0517ae4df3fe0e935f70133496324614",
+  "purpose": "Qualify a bounded read-only acknowledgement grace without reissuing docker create.",
+  "qualification": {
+    "Q6_S7_required": true,
+    "all_Q5_S1_through_S6_checks_required": true,
+    "repeat_non_scientific_smoke": true,
+    "task_success_not_required": true
+  },
+  "replacement_sampling": "forbidden",
+  "schema_version": 1,
+  "scientific_belief_update": "none",
+  "single_variable_repair": {
+    "after_seconds": 180,
+    "before_seconds": 30,
+    "docker_create_command_unchanged": true,
+    "docker_create_reissued": false,
+    "evaluator_command_unchanged": true,
+    "exact_side_effect_predicate_unchanged": true,
+    "model_calls": 0,
+    "provider_calls": 0,
+    "task_population_patches_parser_unchanged": true,
+    "variable": "post-create exact-side-effect inspect timeout"
+  }
+}

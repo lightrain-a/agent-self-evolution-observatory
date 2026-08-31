@@ -1,0 +1,54 @@
+{
+  "classification": {
+    "artifact_integrity": false,
+    "environment": false,
+    "evaluator": false,
+    "implementation_runtime": true,
+    "parser": false,
+    "primary_failure_class": "DOCKER_INSPECT_ACK_WINDOW_TOO_SHORT",
+    "provider": false
+  },
+  "created_at_utc": "2026-08-31T04:05:56+00:00",
+  "credential_material_present": false,
+  "delayed_exact_side_effect": {
+    "cmd": [
+      "infinity"
+    ],
+    "container_id": "479185720bd9617f2bc9f786246baf22dd2a4074cf0a92f64ef5b82049842ae0",
+    "created": "2026-08-31T04:02:53.361396995Z",
+    "entrypoint": [
+      "sleep"
+    ],
+    "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+    "name": "/e1-rb-q6-nonscientific-evaluator-verbosity-smoke-d7bcc924",
+    "pid_mode": "host",
+    "state": {
+      "Dead": false,
+      "Error": "",
+      "ExitCode": 0,
+      "FinishedAt": "0001-01-01T00:00:00Z",
+      "OOMKilled": false,
+      "Paused": false,
+      "Pid": 0,
+      "Restarting": false,
+      "Running": false,
+      "StartedAt": "0001-01-01T00:00:00Z",
+      "Status": "created"
+    }
+  },
+  "docker_create_reissued": false,
+  "evaluator_started": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q6-SMOKE-FAILURE-DIFFERENTIAL-20260831",
+  "failure_stage": "post-create exact-side-effect inspection acknowledgement",
+  "model_calls": 0,
+  "payload_sha256": "a7811bde575892b430cad097fd68964242108ffdae4909504ce4b279bf1d19ee",
+  "provider_calls": 0,
+  "q5_contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+  "q5_replay_executed": false,
+  "q6_contract_sha256": "3c3a368070869eb30585c435c47122c41932a41db07c8d53db1404cdfed3c155",
+  "q6_smoke_sha256": "e09a6b47f649c9a22837ecac1f06ed497486e6f8617c1036c550c3f695742ae3",
+  "schema_version": 1,
+  "scientific_belief_update": "none",
+  "source_patch_applied": false,
+  "test_patch_applied": false
+}
