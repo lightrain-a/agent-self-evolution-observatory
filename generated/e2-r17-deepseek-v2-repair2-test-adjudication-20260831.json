@@ -1,0 +1,27 @@
+{
+  "artifact_type": "e2-r17-deepseek-v2-repair2-test-adjudication",
+  "created_at_utc": "2026-08-31T04:11:25+00:00",
+  "logical_test_count": 8,
+  "provider_calls": 0,
+  "real_prefix_revalidation_test_count": 1,
+  "schema_version": "1.0",
+  "scientific_scores_read": false,
+  "status": "PASS_REPAIR2_TESTS_9_OF_9",
+  "test_d_log_path": "/data/wyt/e2-r17-search-projection/repair2-test-d-20260831.log",
+  "test_d_log_sha256": "e56f11172ae2ebdb97508ea3bc9f8e0dd5dfa29e6128eab603b2c56e9429a69d",
+  "test_source_path": "research_pipeline/test_e2_r17_deepseek_v2_repair2.py",
+  "test_source_sha256": "1735ac87979afc83092a0ce0e5851761197a530c53d91fd6c2392c73332cd1b3",
+  "tests": {
+    "A": "PASS_FIRST_ATTEMPT_10_CALLS",
+    "B": "PASS_ONE_EXPLICIT_CORRECTION_11_CALLS_EXACT_ERROR_FEEDBACK",
+    "C": "PASS_SECOND_FAILURE_STOPS_NO_THIRD_ATTEMPT",
+    "D": "PASS_REAL_14_PAIR_504_HELDOUT_SHA_REVALIDATION_ZERO_PROVIDER",
+    "E": "PASS_PARTIAL_STATE_QUARANTINED",
+    "F": "PASS_QUARANTINE_EXCLUDED",
+    "G": "PASS_INCOMPLETE_PAIR_INVALID",
+    "H": "PASS_EXACT_48_AND_FOUR_PER_STREAM",
+    "I": "PASS_NO_SCORE_BASED_INHERITANCE"
+  },
+  "total_fail": 0,
+  "total_pass": 9
+}

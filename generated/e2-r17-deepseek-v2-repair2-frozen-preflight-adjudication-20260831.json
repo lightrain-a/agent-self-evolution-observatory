@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-deepseek-v2-repair2-frozen-preflight-adjudication",
+  "created_at_utc": "2026-08-31T04:33:35+00:00",
+  "status": "PASS_FROZEN_REPAIR2_READY_FOR_SEPARATE_EXECUTION",
+  "stage": "frozen",
+  "contract": {
+    "path": "generated/e2-r17-deepseek-v2-repair2-contract-20260831.json",
+    "sha256": "9e38bdbfc71186e3e58587169d8c619bff4ae24de4145fefafa63e49a6f148a3"
+  },
+  "authorization": {
+    "path": "generated/e2-r17-deepseek-v2-repair2-authorization-20260831.json",
+    "sha256": "9643a0a30d0acc4f32607b217701b368a895b2fe1e86a0aa84da24aa0a80898b",
+    "status": "AUTHORIZED_E2_R17_DEEPSEEK_V2_REPAIR2"
+  },
+  "reviewed_draft": {
+    "path": "generated/e2-r17-deepseek-v2-repair2-draft-contract-20260831.json",
+    "sha256": "999498499649f873f1f0eff32593d9d2a2c788f843f0484af77cf8868ce89e26"
+  },
+  "dual_review": {
+    "path": "generated/e2-r17-deepseek-v2-repair2-review-20260831/summary.json",
+    "sha256": "d5ec1abdf52e0631c971fce56c24dd25032279ff5d0eefb1b7d5a797d2d83b24",
+    "all_pass_to_separately_authorized_repair2": true,
+    "blockers": []
+  },
+  "cardinality": {
+    "streams": 12,
+    "replicates_per_stream": 4,
+    "valid_pairs": 48,
+    "learned_states": 96,
+    "heldout_rollouts": 1728,
+    "inherited_pairs": 14,
+    "fresh_pairs": 34
+  },
+  "repair_controls": {
+    "quarantine_status": "TECHNICAL_QUARANTINE_UPDATER_PATCH_APPLY_FAILURE",
+    "max_parse_attempts": 2,
+    "max_provider_calls_per_unit": 11,
+    "max_provider_calls_per_state": 191,
+    "actor_max_turns": 10
+  },
+  "runtime": {
+    "updater_python": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+    "actor_python": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python"
+  },
+  "execution_state": {
+    "repair2_run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-20260831",
+    "run_root_absent": true,
+    "provider_calls": 0,
+    "scientific_outcomes": 0,
+    "full_runner_started": false,
+    "analyzer_started": false
+  },
+  "preflight_log": {
+    "path": "/data/wyt/e2-r17-search-projection/repair2-frozen-preflight-20260831.log",
+    "sha256": "7c6a0873afa59bc87ff7c37cfcf18f11945a890ea513d64c08a1570ef4ac46aa"
+  },
+  "exit_sidecar": {
+    "path": "/data/wyt/e2-r17-search-projection/repair2-frozen-preflight-20260831.exit",
+    "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "exit_code": 0
+  },
+  "monitoring_note": "A stale pre-launch exit sidecar was observed and explicitly ignored. The current wrapper later overwrote it after the current preflight completed; PASS is established by the refreshed timestamp, current log content, exit code 0, and disappearance of both wrapper and child PIDs.",
+  "authority_boundary": {
+    "paper_claim_authority": false,
+    "second_backbone_authority": false,
+    "public_benchmark_authority": false,
+    "scientific_result_inference": false
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "artifact_type": "e2-r17-current-ark-plan-model-identity-qualification",
+  "authority": {
+    "gpu": false,
+    "paper_promotion": false,
+    "preexecution_consultation": true,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "checks": {
+    "all_protocol_calls_pass": true,
+    "provider_retry_zero": true,
+    "resolved_identities_distinct": true,
+    "route_is_ark_plan": true
+  },
+  "compatibility_parent": null,
+  "created_at_utc": "2026-08-31T04:07:17+00:00",
+  "default_model": "ark-code-latest",
+  "models": [
+    {
+      "benchmark_data_accessed": false,
+      "checks": {
+        "resolved_model_matches_requested_family": true,
+        "resolved_model_present": true,
+        "text_exact": true
+      },
+      "get_poll_recovery": false,
+      "hidden_provider_retry_used": false,
+      "max_output_tokens": 512,
+      "poll_count": 0,
+      "prompt_sha256": "7bfaf5897d7bbd7f972a67554ee32acc828cd8309e40822dfc05217e987776bf",
+      "provider_generation_attempts": 1,
+      "provider_retry_limit": 0,
+      "provider_status": "completed",
+      "raw_text": "PLAN_OK",
+      "raw_text_sha256": "aa6b4c1b97751f326153c1927c1106bf5a927ec506a8066dfe0dded595992d7c",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "response_id_sha256": "fb3ba1d199c60d455ae07059015f754d6eeb320f3461d0d68e005be7e6b12a83",
+      "scientific_outcome": false,
+      "status": "PASS",
+      "thinking_requested": "disabled",
+      "usage": {
+        "input_tokens": 41,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 13,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 54
+      }
+    }
+  ],
+  "private_credentials_included": false,
+  "raw_response_ids_included": false,
+  "release_drift_policy": "Observed resolved identities are frozen for this review tranche. Historical exact suffixes are not reused as authority. Any later execution tranche must requalify and bind its own observed identities.",
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "status": "PASS"
+}

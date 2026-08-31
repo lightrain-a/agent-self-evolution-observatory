@@ -1,0 +1,112 @@
+{
+  "artifact_type": "e2-r17-deepseek-v2-replicated-paired-repair1-authorization",
+  "authority": {
+    "deepseek_v2": true,
+    "e1_b": true,
+    "frontend_promotion": false,
+    "mrw_causal_comparison": true,
+    "paper_promotion": false,
+    "scientific_experiment": true,
+    "second_backbone": false,
+    "submission": false
+  },
+  "contract_path": "generated/e2-r17-deepseek-v2-replicated-paired-repair1-contract-20260830.json",
+  "contract_sha256": "a4ce14dea5c5b0ab5509d97a072013a9924b592ae18c049b05d4edf707201f80",
+  "date": "2026-08-30",
+  "execution_scope": {
+    "allow_noninitial_skill": true,
+    "allowed_modes": [
+      "e1"
+    ],
+    "allowed_task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "env_file": ".env",
+    "exact_k": 1,
+    "frozen_arms": [
+      "win_c",
+      "mrw"
+    ],
+    "frozen_heldout_task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "frozen_stream_ids": [
+      "e1-agj-00",
+      "e1-agj-01",
+      "e1-fmv-00",
+      "e1-fmv-01",
+      "e1-ioc-00",
+      "e1-ioc-01",
+      "e1-msp-00",
+      "e1-msp-01",
+      "e1-ska-00",
+      "e1-ska-01",
+      "e1-tsr-00",
+      "e1-tsr-01"
+    ],
+    "identity_artifact_sha256": "15e9e194e4c4e5ff3197f6ab8cbb30423e8e12f647d6a04db36f4c0a7153b53b",
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "provider_budget": {
+      "per_unit_limit": 10,
+      "required": true,
+      "total_limit": 190
+    },
+    "replicates_per_stream": 4,
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "interpretation_boundary": "Authorized only for DeepSeek V2 replicated contemporaneous WIN-C vs MRW on the frozen controlled substrate. GPT/Kimi/Qwen scientific execution, public benchmarks, paper promotion and submission remain unauthorized.",
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "private_credentials_included": false,
+  "raw_response_ids_included": false,
+  "repair_lineage": {
+    "execution_blocker_path": "generated/e2-r17-deepseek-v2-execution-blocker-20260830.json",
+    "execution_blocker_sha256": "fd84dd43718508151050f5e7c872ebf2dfbd453e8ccfae41b1e30081f986d22a",
+    "parent_authorization_path": "generated/e2-r17-deepseek-v2-replicated-paired-full-authorization-20260830.json",
+    "parent_authorization_sha256": "fbe5c0ce0b033c0bebc10d5f9b14230c740b838da5dbf33ea676c9f54a809ac4",
+    "provider_calls_before_repair": 0,
+    "repair_review_summary_sha256": "75b3d9007aeff0451bc5a53312bb4dfc0edad8b41031c799c6217f33b96de497",
+    "repaired_contract_draft_sha256": "ad9c4b2f00a7e05db12641d6da418987d468b00c9a5ad97d8d3f05f6fb6bea59",
+    "scientific_outcomes_before_repair": 0
+  },
+  "review_summary_path": "generated/e2-r17-deepseek-v2-repair1-review-20260830/summary.json",
+  "review_summary_sha256": "75b3d9007aeff0451bc5a53312bb4dfc0edad8b41031c799c6217f33b96de497",
+  "schema_version": "1.0",
+  "status": "AUTHORIZED_E1"
+}
