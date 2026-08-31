@@ -1,0 +1,97 @@
+{
+  "A3_A0": null,
+  "A3_A1": null,
+  "M_closed": null,
+  "M_open": null,
+  "Qwen122_replication_warranted": false,
+  "U_A0": null,
+  "U_A1": null,
+  "U_A2": null,
+  "U_A3": null,
+  "action_qualification": "NOT_RUN",
+  "active_manuscript": "R9",
+  "binder": "0/12",
+  "carrier_provenance": {
+    "action_interface": {
+      "canonicalization": "strip exact captured UTF-8 command",
+      "llm_judge": false,
+      "parser_pattern": "```bash\\n(.*?)\\n```",
+      "surface": "one exactly fenced bash command"
+    },
+    "carrier": "ReasoningBank + SWE-bench Verified + official MiniSWEAgent",
+    "created_at_utc": "2026-08-31T08:12:30+00:00",
+    "experiment_id": "C1-PACTA-RB-QWEN35-397B-P0-20260831",
+    "implementation_files": {
+      "agent": {
+        "expected_sha256": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c",
+        "pass": true,
+        "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/agents/default.py",
+        "sha256": "428a78335cbfb365ba8e6622effc8959104f08e8f32068727625bcb296da756c"
+      },
+      "config": {
+        "expected_sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41",
+        "pass": true,
+        "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/config/extra/swebench.yaml",
+        "sha256": "d8bcea20ceb4798a99661074535abd7ba7c188bd4cbc7bd2505eb7c48e54ea41"
+      },
+      "retrieval": {
+        "expected_sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955",
+        "pass": true,
+        "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/memory_management.py",
+        "sha256": "fe71285a878920d501013ab86b58ef12c9c08071ee0e690061774d5ff5588955"
+      },
+      "runner": {
+        "expected_sha256": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951",
+        "pass": true,
+        "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/run/extra/swebench.py",
+        "sha256": "8365112cd2dd2f3dbd74eff611b5d166530c6ddac4b09b674ae384da96531951"
+      },
+      "writer": {
+        "expected_sha256": "08e11fbeac1ba9e20d1dafb20728be24194b56bdfea33f05f6a1220ae2cc9bae",
+        "pass": true,
+        "path": "/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026/third_party/src/minisweagent/memory/instruction.py",
+        "sha256": "08e11fbeac1ba9e20d1dafb20728be24194b56bdfea33f05f6a1220ae2cc9bae"
+      }
+    },
+    "official_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "previous_c1_scientific_response_artifacts": 0,
+    "schema_version": 1,
+    "status": "CARRIER_INTEGRITY_PASS",
+    "substantive_drift": false
+  },
+  "claim_authority": "PACTA UNCHANGED; provenance failure before provider/science",
+  "created_at_utc": "2026-08-31T08:12:30+00:00",
+  "effect_concentration": null,
+  "execution_sha": "4da10aa7a8d2c2acdd0a8fbe2bbca6e48ff7d83b",
+  "experiment_id": "C1-PACTA-RB-QWEN35-397B-P0-20260831",
+  "final": "0/288",
+  "fresh_pool": {
+    "candidates": 11,
+    "repositories": 11,
+    "trajectory_backed": 0
+  },
+  "gate": null,
+  "live_origin_main": "4da10aa7a8d2c2acdd0a8fbe2bbca6e48ff7d83b",
+  "mean_A3_A2": null,
+  "model_binding": null,
+  "models_discovered": null,
+  "payload_sha256": "657549dc41393c64e3d9b3a7e77fa8216835971e089912a4c563cc9149134b87",
+  "pilot_units": [],
+  "pilot_verdict": "NOT_EXECUTED",
+  "provider_endpoint": "https://api.aa.com.cn/api/v1",
+  "random_gate": null,
+  "schema_version": 1,
+  "scientific_output_budget": null,
+  "scientific_tokens": {
+    "estimated_cost": 0,
+    "input": 0,
+    "output": 0
+  },
+  "sealed_count": 11,
+  "shadow": "0/144",
+  "signs": null,
+  "status": "HOLD_FRESH_SUPPORT_INSUFFICIENT",
+  "strongest_competing_explanation": "The prior 11-unit inventory counted planned task pairs as if native source trajectories already existed.",
+  "thinking_mode": null,
+  "writer": "0/12"
+}

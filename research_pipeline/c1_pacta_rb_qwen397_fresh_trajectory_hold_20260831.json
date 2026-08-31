@@ -1,0 +1,22 @@
+{
+  "active_manuscript": "R9",
+  "asset_id": "c1-pacta-rb-qwen397-fresh-trajectory-hold-20260831",
+  "belief_update": "No PACTA update; stopped before provider or scientific outcome access.",
+  "created_at_utc": "2026-08-31T08:12:30+00:00",
+  "decision": "HOLD_FRESH_SUPPORT_INSUFFICIENT",
+  "lessons": [
+    "A fresh task pair is not a trajectory-backed ReasoningBank unit.",
+    "Writer validity requires persisted native trajectory bytes and hash before outcome-conditioned writer calls.",
+    "Moving from DeepSeek to Qwen397 was prospectively frozen before any Qwen outcome; no model shopping occurred.",
+    "Action-before-budget remains mandatory but was not reached.",
+    "Qwen397 remains the first planned backbone; Qwen122/27 remain locked.",
+    "Rate-matched random gating remains the strongest final control."
+  ],
+  "payload_sha256": "c2eda41161a5da3ea6ce34f06f41584f209c4c68cec07051bc7acc3fff9bea36",
+  "reopen_conditions": [
+    "six fresh content-addressed native trajectories",
+    "new prospective run",
+    "human authorization for trajectory acquisition if needed"
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,18 @@
+{
+  "chat_endpoint": "/chat/completions",
+  "created_at_utc": "2026-08-31T08:12:30+00:00",
+  "credential_configured": false,
+  "credential_environment_key": "AA_API_KEY",
+  "documented_base_url": "https://api.aa.com.cn/api/v1",
+  "experiment_id": "C1-PACTA-RB-QWEN35-397B-P0-20260831",
+  "identity_probe_calls": 0,
+  "models_discovery_calls": 0,
+  "models_endpoint": "/models",
+  "payload_sha256": "0fe78e184bef687bf2fdb6606e648a2249faa95d2d99ac31ee35b505d411727b",
+  "provider": "典名词元 AA/OpenAI-compatible",
+  "requested_model": null,
+  "resolved_model": null,
+  "schema_version": 1,
+  "scientific_provider_calls": 0,
+  "status": "NOT_RUN_DUE_HOLD_FRESH_SUPPORT_INSUFFICIENT"
+}
