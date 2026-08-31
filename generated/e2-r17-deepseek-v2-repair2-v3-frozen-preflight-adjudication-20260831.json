@@ -1,0 +1,284 @@
+{
+  "active_v3_processes": 0,
+  "actual_actor_authorization_path": {
+    "expected": 36,
+    "passed": 36,
+    "provider_calls": 0,
+    "provider_claims": 0,
+    "results": [
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-agj-p2"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-agj-p3"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-agj-p8"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-fmv-p1"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-fmv-p2"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-fmv-p8"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ioc-p1"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ioc-p4"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ioc-p6"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-msp-p0"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-msp-p7"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-msp-p8"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p4"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p5"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p8"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p0"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p6"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p8"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-agj-p2"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-agj-p3"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-agj-p8"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-fmv-p1"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-fmv-p2"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-fmv-p8"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ioc-p1"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ioc-p4"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ioc-p6"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-msp-p0"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-msp-p7"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-msp-p8"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p4"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p5"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p8"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p0"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p6"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p8"
+      }
+    ]
+  },
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-deepseek-v2-repair2-v3-frozen-preflight-adjudication",
+  "authority": {
+    "launch_v3": false,
+    "read_partial_effect": false,
+    "run_analyzer": false
+  },
+  "authorization_sha256": "7aa826db915b40840fb54ca2c269a23c4f74807bae74fd99285eac6875ee5b74",
+  "contract_sha256": "312e970520794c564b23a9717f4c40d4baeb0674619da334c8fcc20ee95fc045",
+  "created_at_utc": "2026-08-31T07:20:51+00:00",
+  "inherited_pairs": 15,
+  "partial_effect_read": false,
+  "provider_io": false,
+  "remaining_fresh_pairs": 33,
+  "remaining_heldout_units": 1188,
+  "remaining_new_learned_states": 66,
+  "repair1_inherited_pairs": 14,
+  "repair2_m1_recovered_pairs": 1,
+  "run_root_absent": true,
+  "schema_version": "1.0",
+  "status": "PREFLIGHT_PASS_REPAIR2_CONTINUATION_V3"
+}
