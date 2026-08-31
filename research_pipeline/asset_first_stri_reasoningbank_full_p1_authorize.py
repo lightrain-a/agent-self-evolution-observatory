@@ -16,16 +16,16 @@ from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
 
 PREREGISTRATION = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-behavioral-propagation-preregistration-20260831.json"
 POPULATION = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-population-and-image-freeze-20260831.json"
-ACQUISITION = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-runtime-acquisition-result-20260831.json"
+ACQUISITION = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-runtime-acquisition-repair-result-20260831.json"
 QUALIFICATION = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-runtime-provider-evaluator-qualification-20260831.json"
-TEST_GATE = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-targeted-test-gate-20260831.json"
+TEST_GATE = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-targeted-test-gate-v2-20260831.json"
 RUNNER = ROOT / "research_pipeline/asset_first_stri_reasoningbank_full_p1_runner.py"
 OUTPUT = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-execution-authority-20260831.json"
 INDEX = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-index-20260831.json"
 RUN_DIR = ROOT / "generated/asset-first-stri-reasoningbank-full-p1-runs-20260831"
 EXPECTED_PREREGISTRATION_SHA256 = "af8e9efb53ad5df5e846329b289ce791bc8ffe7c581f810c0ade1067d09fe7dd"
 EXPECTED_POPULATION_SHA256 = "6ca2a6831e01db63961db3d5c337c17ee790755046c68bbcb6c056e136d8bbe8"
-EXPECTED_TEST_GATE_SHA256 = "5149077ee086cde2a20a9563f33e8f4785d93dd582b6b44ab1c7d864142b3e4d"
+EXPECTED_TEST_GATE_SHA256 = "57cf41b3624dfeeeb825efa0ad9dd7c33e9c0d7d4e77485ad7c3d2b61bb5aff9"
 
 
 def load(path: Path) -> dict[str, Any]:
@@ -50,7 +50,8 @@ def authorize(output: Path = OUTPUT) -> dict[str, Any]:
         ),
         "population_exact": sha256_file(POPULATION) == EXPECTED_POPULATION_SHA256,
         "images_exact_and_ready": (
-            acquisition["decision"] == "FULL_P1_EXACT_IMAGES_READY"
+            acquisition["decision"]
+            == "FULL_P1_EXACT_IMAGES_READY_AFTER_SINGLE_CHANNEL_REPAIR"
             and acquisition["all_blobs_sha256_verified"] is True
             and acquisition["all_images_imported_by_exact_digest"] is True
             and acquisition["scientific_boundary"]["task_outcomes_observed"] is False
@@ -66,7 +67,7 @@ def authorize(output: Path = OUTPUT) -> dict[str, Any]:
         ),
         "targeted_tests_exact_and_passed": (
             sha256_file(TEST_GATE) == EXPECTED_TEST_GATE_SHA256
-            and test_gate["decision"] == "FULL_P1_TARGETED_TEST_GATE_PASS"
+            and test_gate["decision"] == "FULL_P1_TARGETED_TEST_GATE_V2_PASS"
             and test_gate["pass"] is True
         ),
         "runner_frozen": RUNNER.exists(),
