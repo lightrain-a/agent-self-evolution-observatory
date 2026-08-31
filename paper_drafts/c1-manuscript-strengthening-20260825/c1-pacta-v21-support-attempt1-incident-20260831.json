@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V21_NON_SCIENTIFIC_SUPPORT_INCIDENT",
+  "status": "SUPPORT_ATTEMPT_1_LOCAL_BOOKKEEPING_FAILURE",
+  "stage": "non-scientific provider support probe",
+  "scientific_state_used": false,
+  "scientific_policy_call": false,
+  "provider_call_returned": true,
+  "response_persisted": false,
+  "response_id_available": false,
+  "raw_response_available": false,
+  "failure_type": "AttributeError",
+  "failure": "The support script referenced legacy.sha_text after provider return; that helper did not exist.",
+  "scientific_effect": "none",
+  "repair": "Precompute prompt SHA with hashlib before the next non-scientific support call.",
+  "provider_retries_scientific": 0,
+  "note": "This incident is outside the fresh scientific sample and does not modify PACTA-v2 mechanism or v2.1 measurement parser."
+}

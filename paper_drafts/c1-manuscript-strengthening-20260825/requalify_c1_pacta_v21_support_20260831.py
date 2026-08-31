@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import subprocess
 import sys
@@ -38,14 +39,14 @@ def main() -> int:
         "NON-SCIENTIFIC PROVIDER SUPPORT PROBE. Return exactly this JSON object and no prose:\n"
         '{"current_state":{"next_goal":"Wait for the synthetic page."},"action":[{"wait":{"seconds":1}}]}'
     )
-    client, summary = legacy.client()
-    response, raw = legacy.provider_call(client, prompt, 120, 0.2)
     path = RUN / "model-support.json"
     request = {
-        "case_id": "non-scientific-model-support",
+        "case_id": "non-scientific-model-support-attempt-2",
         "artifact_kind": "C1_PACTA_V21_NON_SCIENTIFIC_MODEL_SUPPORT",
-        "prompt_sha256": legacy.sha_text(prompt),
+        "prompt_sha256": hashlib.sha256(prompt.encode("utf-8")).hexdigest(),
     }
+    client, summary = legacy.client()
+    response, raw = legacy.provider_call(client, prompt, 120, 0.2)
     journal_provider_response(path, request, response, raw)
     row = parse_journaled_response(path)
     passed = (
