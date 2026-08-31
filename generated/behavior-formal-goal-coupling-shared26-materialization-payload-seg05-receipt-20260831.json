@@ -1,0 +1,392 @@
+{
+  "authority_sha256": "9379a5b0d0ccd8d5fa288327a8a1f764e511828ba5a389395712f0086b0474c9",
+  "base_runner_sha256": "a8c4ab53f3b7ba3b762dad110bf80ecc5010de35501432538b1a48885ae46f72",
+  "completed_or_resumed_this_invocation": 50,
+  "dataset_revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+  "errors": [],
+  "gpu_used": false,
+  "internal_transport_workers": 4,
+  "materialization_manifest_sha256": "9ee70726fb70750b23053e2358d3d42d4089238cd0bd52e5b74329279e961df4",
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "partial_file_count": 0,
+  "partial_files_are_evidence": false,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "records": [
+    {
+      "path": "data/chunk-085/file-005.parquet",
+      "sha256": "f1e39871698784a4e877ff80c2bb55498ff443825f2ef5672078da2de1423384",
+      "size": 80781001,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 80781001
+    },
+    {
+      "path": "data/chunk-085/file-006.parquet",
+      "sha256": "fbacbe204bf2dafeed1d47316e1fbb89ab8d95224d76857b85182a0204cfda9d",
+      "size": 80293021,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 80293021
+    },
+    {
+      "path": "data/chunk-085/file-007.parquet",
+      "sha256": "8d7e0eaf9491d7b5b5cb652031d98cd00fb980d7dcbb843ddfc8bd886bab367c",
+      "size": 77213784,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 77213784
+    },
+    {
+      "path": "data/chunk-085/file-008.parquet",
+      "sha256": "1c3abef9459f0f00499171b93a25e3f081598b433de5fe283a75f7923045523f",
+      "size": 78429871,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 78429871
+    },
+    {
+      "path": "data/chunk-085/file-009.parquet",
+      "sha256": "fc7be4fe39f56503af73f82b5e5bc2476cea0117325f37a51ffdf86df8c41eed",
+      "size": 76574083,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 76574083
+    },
+    {
+      "path": "data/chunk-085/file-010.parquet",
+      "sha256": "a6cc4d5b88974e55998a5c6d17637e15f4c6aa0fe60bcaa88397b7bf1b2e7e16",
+      "size": 23344074,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 23344074
+    },
+    {
+      "path": "data/chunk-088/file-000.parquet",
+      "sha256": "d69a04e8c870df832b54375076615054e8a6ed61c351b64d322ad618eb95e5f0",
+      "size": 77656141,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 77656141
+    },
+    {
+      "path": "data/chunk-088/file-001.parquet",
+      "sha256": "36dca4a0ed76e876bb96afdf74a099b65220eccf265c344e431fdc928c69d885",
+      "size": 80530528,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 80530528
+    },
+    {
+      "path": "data/chunk-088/file-002.parquet",
+      "sha256": "7fed3a0f8bcfde396b293a09540b7186acf9187d1a5cd355f01219960e01cbf0",
+      "size": 79641175,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 79641175
+    },
+    {
+      "path": "data/chunk-088/file-003.parquet",
+      "sha256": "ae741f6daef789e83b76b70b406c2e0a10c5fd4913ca55917ba764e581aa8710",
+      "size": 79626628,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 79626628
+    },
+    {
+      "path": "data/chunk-088/file-004.parquet",
+      "sha256": "0b07f60cd02d7f6a8a825558ca64d02b31121fb498887d90a13e585a1ffd1b8c",
+      "size": 77355888,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 77355888
+    },
+    {
+      "path": "data/chunk-088/file-005.parquet",
+      "sha256": "6bb347819e228323e04ce419255277987edf09a45105f6ec7c5b570493946448",
+      "size": 77509654,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 77509654
+    },
+    {
+      "path": "data/chunk-088/file-006.parquet",
+      "sha256": "a9f59aad4c9623b64622b573bee82523dbfacf9b1f8d6457471a921a1b2ff7a5",
+      "size": 79203567,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 79203567
+    },
+    {
+      "path": "data/chunk-088/file-007.parquet",
+      "sha256": "0793259020b5697aa9823a5822e58465f298075094d21370318c5c6775c5945c",
+      "size": 80178828,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 80178828
+    },
+    {
+      "path": "data/chunk-088/file-008.parquet",
+      "sha256": "2f190c0b58727316a78f0da726b7dbe711eb672dd83bc986d9c5f6dec082c43c",
+      "size": 80579928,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 80579928
+    },
+    {
+      "path": "data/chunk-088/file-009.parquet",
+      "sha256": "252025fe560af700f1aab16e25089d6281d2d0bdc539c2aa409e4a86792f29ff",
+      "size": 78276109,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 78276109
+    },
+    {
+      "path": "data/chunk-088/file-010.parquet",
+      "sha256": "aabcf8864b0b2d35f2cf40a598e63ca56a8c19c94e2638a65ceee761edc4f072",
+      "size": 77191350,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 77191350
+    },
+    {
+      "path": "data/chunk-089/file-000.parquet",
+      "sha256": "6b711f88ffcae373b04366376254dfacce836004bd3323a55c943d968da6e993",
+      "size": 79769317,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 79769317
+    },
+    {
+      "path": "data/chunk-089/file-001.parquet",
+      "sha256": "674fdc6039068937b3272581f16b4f5ab5196602b1308c47ca8898bb9abe60ac",
+      "size": 79798515,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 79798515
+    },
+    {
+      "path": "data/chunk-089/file-002.parquet",
+      "sha256": "0c4e9b576c660aaaa5dce89313824041d75dc1dd2cbcd627a5ed569fff8db75d",
+      "size": 79877879,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 79877879
+    },
+    {
+      "path": "data/chunk-089/file-003.parquet",
+      "sha256": "1b7775d0f70fd87d211cda077c7b5297a3dd5fbf59b03bbd1cbd24aed4117921",
+      "size": 29626871,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 29626871
+    },
+    {
+      "path": "data/chunk-094/file-000.parquet",
+      "sha256": "a36dff135b1313c748cb53df41d4c76735cbd442659c3724da446ccaa89c4fa9",
+      "size": 77955786,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 77955786
+    },
+    {
+      "path": "data/chunk-094/file-001.parquet",
+      "sha256": "db4d0b79a1612c3053fc04044d623cbf9d5e4a80e1ec6aefaa68d0cfdd06929f",
+      "size": 77886951,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 77886951
+    },
+    {
+      "path": "data/chunk-094/file-002.parquet",
+      "sha256": "f0d0baa333f23de31d7fe2a804e51c2d5c17645fbde2dada02bf86064fd75164",
+      "size": 78767991,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 78767991
+    },
+    {
+      "path": "data/chunk-094/file-003.parquet",
+      "sha256": "2557d174a2fba8e2715eafdc5a8f76dd2e90c421cce9349492cb2cfd185d169b",
+      "size": 78980245,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 78980245
+    },
+    {
+      "path": "data/chunk-094/file-004.parquet",
+      "sha256": "0642e103c5d2c37fd33097138dd3d8113d9fdb9ce3d26e56968a5a5a7bce95bf",
+      "size": 80279127,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 80279127
+    },
+    {
+      "path": "data/chunk-094/file-005.parquet",
+      "sha256": "266bb7155411b8aa1c7f1dc10512f2f5802de114334b7f46106b0b8a2247311b",
+      "size": 79520749,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 79520749
+    },
+    {
+      "path": "data/chunk-094/file-006.parquet",
+      "sha256": "5d09a0fcf46a364004541e9653953fc46f4aed78dac1ed5ed98fae7b6930f9ee",
+      "size": 78674864,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 78674864
+    },
+    {
+      "path": "data/chunk-094/file-007.parquet",
+      "sha256": "75d3653310f09dbaa135337c4e4e63086bbf6792e9a24499bc6aa2ed8c6e7333",
+      "size": 78658703,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 78658703
+    },
+    {
+      "path": "data/chunk-094/file-008.parquet",
+      "sha256": "de156d254957f5c08e1a2ed1fabeff5b7cf286ad61cd57d70d3fe97760882269",
+      "size": 77298384,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 77298384
+    },
+    {
+      "path": "data/chunk-094/file-009.parquet",
+      "sha256": "d8a994d6a7e6e1ebacb61936bde1e539383ed80a033c8d2bedc1f7016a60d259",
+      "size": 81327552,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 81327552
+    },
+    {
+      "path": "data/chunk-094/file-010.parquet",
+      "sha256": "36717afaa35960a4a3545ff339c6e24b0ae215dca3be81cad50a8157dd1644de",
+      "size": 79854177,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 79854177
+    },
+    {
+      "path": "data/chunk-094/file-011.parquet",
+      "sha256": "1c6c53b37069d7d6877c8a3dbe0037941a66a98c9727c0dca23f73a6ef7cfad9",
+      "size": 76575531,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 76575531
+    },
+    {
+      "path": "data/chunk-094/file-012.parquet",
+      "sha256": "dde0235d782cd304bdac482f72a78d30844cb1a81293bbcc39f926a3e760aa07",
+      "size": 19304837,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 19304837
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-008/file-000.mp4",
+      "sha256": "fcc8f980b814fe02846285df71c9975d25eec82b797a201c10d08600180cb8c1",
+      "size": 199625687,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 199625687
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-008/file-001.mp4",
+      "sha256": "e3ba22bee6b4ab11767b52bd34ad081affe56217137c37c0b95c6ee9ed878952",
+      "size": 196515208,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 196515208
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-008/file-002.mp4",
+      "sha256": "6cb6667a51db8ec100a025661dace037f15cb92915ef92b149e27af4b3b58f16",
+      "size": 203860110,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 203860110
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-008/file-003.mp4",
+      "sha256": "ffd2ad66c72f2e9c37d9f51f405115a58f4df5fb207150c34a88ec8ba2d940bd",
+      "size": 202910468,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 202910468
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-008/file-004.mp4",
+      "sha256": "fabd4bcb602b27b10354b4cdea094f46b3b06fbd5253205671a59dcad1e5986d",
+      "size": 209431190,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 209431190
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-008/file-005.mp4",
+      "sha256": "840bc1b47f504e15984faa774886f608ff0f1afd6dffdaf0d0332b901ef14a6c",
+      "size": 203151034,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 203151034
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-008/file-006.mp4",
+      "sha256": "1c8dd046a8c7c193fa60d18d82e560a47e6f7e1625d8b615a50cc3239304b407",
+      "size": 204541238,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 204541238
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-008/file-007.mp4",
+      "sha256": "0990a4712d7d219d16ffa28973860d4fcc3e241f035c2c597bb8468db1b7fc12",
+      "size": 205645028,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 205645028
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-008/file-008.mp4",
+      "sha256": "1674cc26fd1f55dd4bbba304bc52097cd9c6c0f4aa9dcebd353b8207d9e5a308",
+      "size": 33422961,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 33422961
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-010/file-000.mp4",
+      "sha256": "e76f216679523167db90d2fade911db379772ec164a5a1694320a056952a1c92",
+      "size": 206802076,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 206802076
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-010/file-001.mp4",
+      "sha256": "df097d9c8db4bb4d1b6b5218fd5b0a0b1d33596c2060a9f6bb4456bc3d432402",
+      "size": 208456001,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 208456001
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-010/file-002.mp4",
+      "sha256": "3ee81745b701651ca20ac80a34139991defc30a4ac4534d87c6382b860f45312",
+      "size": 206688973,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 206688973
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-010/file-003.mp4",
+      "sha256": "377fb02c854588e044241e4720fcf409598612e9d65a08564ce34e3faeba7be1",
+      "size": 205360849,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 205360849
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-010/file-004.mp4",
+      "sha256": "3ec710591d718c395be792c625504c207d81d55ca3b7e172c83b6ee6d2a8fa1a",
+      "size": 29198729,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 29198729
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-012/file-000.mp4",
+      "sha256": "15c4bcd13401c7e8d46429fe692857cdb8b03159e55490b49e14a5c4f40fbbbc",
+      "size": 201778047,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 201778047
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-012/file-001.mp4",
+      "sha256": "4f5d26491b8654e44db5f80e7168487259e237115f6e308f21f84c86ae3ec6cc",
+      "size": 206520549,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 206520549
+    }
+  ],
+  "remaining_file_count": 0,
+  "schema_version": "behavior-formal-goal-coupling-shared26-payload-segment-receipt-v1",
+  "segment": {
+    "bytes": 5442451257,
+    "file_count": 50,
+    "first_path": "data/chunk-085/file-005.parquet",
+    "gib": 5.068677716888487,
+    "last_path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-012/file-001.mp4",
+    "segment_id": "S05",
+    "segment_path_oid_size_sha256": "0f1ce1e672453cb568359709a72e1acb9111fca1cba880993876f0b68d97c650",
+    "start_index": 200,
+    "stop_index_exclusive": 250
+  },
+  "segment_id": "S05",
+  "segment_plan_sha256": "1ad14491dbbcbff289bdaada9bcd02c64ff271a7374e4e9bcdff28c8d11d493a",
+  "single_writer_lock_path": "/data/wyt/.behavior-2026-shared26-v3.0.materialization.lock",
+  "status": "PAYLOAD_SEGMENT_COMPLETE",
+  "training_started": false,
+  "transported_bytes_this_invocation": 5442451257,
+  "verification_semantics": "each record returned only after exact per-file size+SHA-256 verification while the exclusive root lock is held; no redundant segment-end rehash; one final whole-materialization rehash seal remains required",
+  "verified_bytes": 5442451257,
+  "verified_existing_this_invocation": 0,
+  "verified_file_count": 50
+}
