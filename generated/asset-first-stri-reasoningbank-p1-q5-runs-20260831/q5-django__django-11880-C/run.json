@@ -1,0 +1,38 @@
+{
+  "arm": "C",
+  "attempt_count": 1,
+  "created_at_utc": "2026-08-31T04:49:03+00:00",
+  "credential_material_present": false,
+  "failure": {
+    "error_type": "RuntimeError",
+    "message": "docker start failed: "
+  },
+  "implementation_valid": false,
+  "instance_id": "django__django-11880",
+  "model_calls": 0,
+  "payload_sha256": "2be7476e2ce399fd924f2f4576bdbebd18bebcd0c47dfb631989299dbb0f7c65",
+  "provider_calls": 0,
+  "run_id": "q5-django__django-11880-C",
+  "schema_version": 1,
+  "selection_rank": 6,
+  "source_q4": {
+    "arm": "C",
+    "base_commit": "06909fe084f87a65459a83bd69d7cdbe4fce9a7c",
+    "evaluator_script_changed": false,
+    "image": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-11880@sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+    "image_amd64_manifest_digest": "sha256:4488d53c0526d3a4e679753beb3501d70253a1f687274ef9c2ed07e7225dde6c",
+    "instance_id": "django__django-11880",
+    "log_parser": "parse_log_django",
+    "model_calls_authorized": false,
+    "ordinal": 8,
+    "original_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+    "repaired_eval_script_sha256": "0a13a4050a93f35666a81edd205146b85b990623a6ca7bb960943732214531ea",
+    "selection_rank": 6,
+    "source_patch_sha256": "ca05eec3eb386b0fc23a410e444c26143e55f5ed671e0b3e9621dcf4b6440df5",
+    "source_run_id": "q4-django__django-11880-C",
+    "source_run_path": "generated/asset-first-stri-reasoningbank-p1-q4-runs-20260830/q4-django__django-11880-C/run.json",
+    "source_run_sha256": "8988237cf83b2433bc10276730e58c1d017bf241f7de084d5b23698cb9918a2c",
+    "task_sha256": "e602e90dd73a70f9faf006238dfda2347f4aa08bb29365ae2611b3ea92f3eff4"
+  },
+  "task_outcome_affects_qualification": false
+}

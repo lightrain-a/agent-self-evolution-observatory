@@ -1,0 +1,326 @@
+{
+  "attempt_count": 1,
+  "automatic_retry": "forbidden",
+  "completed_run_count": 10,
+  "completed_runs": [
+    {
+      "arm": "A",
+      "attempt_count": 1,
+      "file_sha256": "65c2e65ba26166e37269e195750e4caf3dcc91673dfd5eb904c0e500dc13f82a",
+      "implementation_valid": true,
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "ordinal": 1,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q5-runs-20260831/q5-sphinx-doc__sphinx-9230-A/run.json",
+      "resolved": true,
+      "run_id": "q5-sphinx-doc__sphinx-9230-A",
+      "selection_rank": 5
+    },
+    {
+      "arm": "B",
+      "attempt_count": 1,
+      "file_sha256": "23fd9269437fa5f30c8696176e392c6cce3133175fb51475e63892814e2261a8",
+      "implementation_valid": true,
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "ordinal": 2,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q5-runs-20260831/q5-sphinx-doc__sphinx-9230-B/run.json",
+      "resolved": true,
+      "run_id": "q5-sphinx-doc__sphinx-9230-B",
+      "selection_rank": 5
+    },
+    {
+      "arm": "C",
+      "attempt_count": 1,
+      "file_sha256": "6bc11b148b17659c9304c655cacccb328d5b595b674e777b7fccd75894557524",
+      "implementation_valid": true,
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "ordinal": 3,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q5-runs-20260831/q5-sphinx-doc__sphinx-9230-C/run.json",
+      "resolved": true,
+      "run_id": "q5-sphinx-doc__sphinx-9230-C",
+      "selection_rank": 5
+    },
+    {
+      "arm": "D",
+      "attempt_count": 1,
+      "file_sha256": "4550680fe35a3e5911c89f75820bc86d08327e636309f5de1da7629ccb9056d6",
+      "implementation_valid": true,
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "ordinal": 4,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q5-runs-20260831/q5-sphinx-doc__sphinx-9230-D/run.json",
+      "resolved": true,
+      "run_id": "q5-sphinx-doc__sphinx-9230-D",
+      "selection_rank": 5
+    },
+    {
+      "arm": "E",
+      "attempt_count": 1,
+      "file_sha256": "d9a5916377d955ac631e5a2524dc5cb165a52409b1e4ddb7be3846221c887f5b",
+      "implementation_valid": true,
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "ordinal": 5,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q5-runs-20260831/q5-sphinx-doc__sphinx-9230-E/run.json",
+      "resolved": true,
+      "run_id": "q5-sphinx-doc__sphinx-9230-E",
+      "selection_rank": 5
+    },
+    {
+      "arm": "A",
+      "attempt_count": 1,
+      "file_sha256": "2cc766d0549793776c2315d8c53e051e5e2550ddee6e7b3dc7282dc440d19b80",
+      "implementation_valid": true,
+      "instance_id": "django__django-11880",
+      "ordinal": 6,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q5-runs-20260831/q5-django__django-11880-A/run.json",
+      "resolved": true,
+      "run_id": "q5-django__django-11880-A",
+      "selection_rank": 6
+    },
+    {
+      "arm": "B",
+      "attempt_count": 1,
+      "file_sha256": "f4046831c26783c5175e5854b478d460f0c420c2840168e58eb1c7ab0f5e6933",
+      "implementation_valid": true,
+      "instance_id": "django__django-11880",
+      "ordinal": 7,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q5-runs-20260831/q5-django__django-11880-B/run.json",
+      "resolved": true,
+      "run_id": "q5-django__django-11880-B",
+      "selection_rank": 6
+    },
+    {
+      "arm": "C",
+      "attempt_count": 1,
+      "file_sha256": "52ea5d213141f7a3fff54f6d9c21dc9c27fda58ccd90554bb929c1dfb7c5a523",
+      "implementation_valid": false,
+      "instance_id": "django__django-11880",
+      "ordinal": 8,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q5-runs-20260831/q5-django__django-11880-C/run.json",
+      "resolved": null,
+      "run_id": "q5-django__django-11880-C",
+      "selection_rank": 6
+    },
+    {
+      "arm": "D",
+      "attempt_count": 1,
+      "file_sha256": "96a8cad10d57055bf6b9347d92087d21eb293d67e044139ca4ef005967033841",
+      "implementation_valid": true,
+      "instance_id": "django__django-11880",
+      "ordinal": 9,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q5-runs-20260831/q5-django__django-11880-D/run.json",
+      "resolved": true,
+      "run_id": "q5-django__django-11880-D",
+      "selection_rank": 6
+    },
+    {
+      "arm": "E",
+      "attempt_count": 1,
+      "file_sha256": "0ef885e31e7de1a30bd2f5536c05ef5ffbf694e6cf31e75c59ddf52b39e621c4",
+      "implementation_valid": true,
+      "instance_id": "django__django-11880",
+      "ordinal": 10,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q5-runs-20260831/q5-django__django-11880-E/run.json",
+      "resolved": true,
+      "run_id": "q5-django__django-11880-E",
+      "selection_rank": 6
+    }
+  ],
+  "contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+  "created_at_utc": "2026-08-31T04:55:35+00:00",
+  "credential_material_present": false,
+  "execution_authority_sha256": "56023442130efd367279d09d87eb208500ce20703a8e73f7c4dba049f77f767e",
+  "execution_complete": true,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q5-REPLAY-20260831",
+  "full_p1_execution_authorized": false,
+  "model_calls": 0,
+  "payload_sha256": "7e199743f4c051a6d3b1dbab6f3ce39a4dcea9f8f59db9707d3cb51874e548b0",
+  "planned_order": [
+    [
+      5,
+      "sphinx-doc__sphinx-9230",
+      "A"
+    ],
+    [
+      5,
+      "sphinx-doc__sphinx-9230",
+      "B"
+    ],
+    [
+      5,
+      "sphinx-doc__sphinx-9230",
+      "C"
+    ],
+    [
+      5,
+      "sphinx-doc__sphinx-9230",
+      "D"
+    ],
+    [
+      5,
+      "sphinx-doc__sphinx-9230",
+      "E"
+    ],
+    [
+      6,
+      "django__django-11880",
+      "A"
+    ],
+    [
+      6,
+      "django__django-11880",
+      "B"
+    ],
+    [
+      6,
+      "django__django-11880",
+      "C"
+    ],
+    [
+      6,
+      "django__django-11880",
+      "D"
+    ],
+    [
+      6,
+      "django__django-11880",
+      "E"
+    ]
+  ],
+  "planned_run_count": 10,
+  "provider_calls": 0,
+  "replacement_sampling": "forbidden",
+  "run_journal": [
+    {
+      "arm": "A",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-31T04:31:19+00:00",
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "ordinal": 1,
+      "run_file_sha256": "65c2e65ba26166e37269e195750e4caf3dcc91673dfd5eb904c0e500dc13f82a",
+      "run_id": "q5-sphinx-doc__sphinx-9230-A",
+      "selection_rank": 5,
+      "source_run_sha256": "b1607cf4179cc1557a10cb2cd431b1d5beecb9953b6d9c517dd259b22150ec0d",
+      "started_at_utc": "2026-08-31T04:28:00+00:00",
+      "status": "persisted"
+    },
+    {
+      "arm": "B",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-31T04:33:44+00:00",
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "ordinal": 2,
+      "run_file_sha256": "23fd9269437fa5f30c8696176e392c6cce3133175fb51475e63892814e2261a8",
+      "run_id": "q5-sphinx-doc__sphinx-9230-B",
+      "selection_rank": 5,
+      "source_run_sha256": "ea738577cf1b244cf0a888f0687635986f2050bd8b978fd47f79b404e537b19c",
+      "started_at_utc": "2026-08-31T04:31:19+00:00",
+      "status": "persisted"
+    },
+    {
+      "arm": "C",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-31T04:36:02+00:00",
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "ordinal": 3,
+      "run_file_sha256": "6bc11b148b17659c9304c655cacccb328d5b595b674e777b7fccd75894557524",
+      "run_id": "q5-sphinx-doc__sphinx-9230-C",
+      "selection_rank": 5,
+      "source_run_sha256": "ba051d5ea235fb3dbb97b3ec1326830db0f1afe7e6550bfdd70d47b2178819a5",
+      "started_at_utc": "2026-08-31T04:33:44+00:00",
+      "status": "persisted"
+    },
+    {
+      "arm": "D",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-31T04:38:39+00:00",
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "ordinal": 4,
+      "run_file_sha256": "4550680fe35a3e5911c89f75820bc86d08327e636309f5de1da7629ccb9056d6",
+      "run_id": "q5-sphinx-doc__sphinx-9230-D",
+      "selection_rank": 5,
+      "source_run_sha256": "33a6c71447c74d1b448fa3e3ff3d8b5d41859bdb94700c3c25de9a64902446d6",
+      "started_at_utc": "2026-08-31T04:36:02+00:00",
+      "status": "persisted"
+    },
+    {
+      "arm": "E",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-31T04:40:52+00:00",
+      "instance_id": "sphinx-doc__sphinx-9230",
+      "ordinal": 5,
+      "run_file_sha256": "d9a5916377d955ac631e5a2524dc5cb165a52409b1e4ddb7be3846221c887f5b",
+      "run_id": "q5-sphinx-doc__sphinx-9230-E",
+      "selection_rank": 5,
+      "source_run_sha256": "afc1c15caf5113e096ad27c619f1098cf327ca3bf2c534a91004ac1ccb948f97",
+      "started_at_utc": "2026-08-31T04:38:39+00:00",
+      "status": "persisted"
+    },
+    {
+      "arm": "A",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-31T04:44:18+00:00",
+      "instance_id": "django__django-11880",
+      "ordinal": 6,
+      "run_file_sha256": "2cc766d0549793776c2315d8c53e051e5e2550ddee6e7b3dc7282dc440d19b80",
+      "run_id": "q5-django__django-11880-A",
+      "selection_rank": 6,
+      "source_run_sha256": "7b0b8682aa9e1229ae24c0b4811739f97f2a9368b33061fe61b55d075888a49f",
+      "started_at_utc": "2026-08-31T04:40:52+00:00",
+      "status": "persisted"
+    },
+    {
+      "arm": "B",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-31T04:47:32+00:00",
+      "instance_id": "django__django-11880",
+      "ordinal": 7,
+      "run_file_sha256": "f4046831c26783c5175e5854b478d460f0c420c2840168e58eb1c7ab0f5e6933",
+      "run_id": "q5-django__django-11880-B",
+      "selection_rank": 6,
+      "source_run_sha256": "aa9d745c6634665df9d9e332cb56f9465aefec233f3b77ec7db8a5c8f5f762ed",
+      "started_at_utc": "2026-08-31T04:44:18+00:00",
+      "status": "persisted"
+    },
+    {
+      "arm": "C",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-31T04:49:03+00:00",
+      "instance_id": "django__django-11880",
+      "ordinal": 8,
+      "run_file_sha256": "52ea5d213141f7a3fff54f6d9c21dc9c27fda58ccd90554bb929c1dfb7c5a523",
+      "run_id": "q5-django__django-11880-C",
+      "selection_rank": 6,
+      "source_run_sha256": "8988237cf83b2433bc10276730e58c1d017bf241f7de084d5b23698cb9918a2c",
+      "started_at_utc": "2026-08-31T04:47:32+00:00",
+      "status": "persisted"
+    },
+    {
+      "arm": "D",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-31T04:52:18+00:00",
+      "instance_id": "django__django-11880",
+      "ordinal": 9,
+      "run_file_sha256": "96a8cad10d57055bf6b9347d92087d21eb293d67e044139ca4ef005967033841",
+      "run_id": "q5-django__django-11880-D",
+      "selection_rank": 6,
+      "source_run_sha256": "009629dd7632b0cb66c366eb331df21a68ca5e49667d550f70d587fa087cc080",
+      "started_at_utc": "2026-08-31T04:49:04+00:00",
+      "status": "persisted"
+    },
+    {
+      "arm": "E",
+      "attempt_count": 1,
+      "completed_at_utc": "2026-08-31T04:55:35+00:00",
+      "instance_id": "django__django-11880",
+      "ordinal": 10,
+      "run_file_sha256": "0ef885e31e7de1a30bd2f5536c05ef5ffbf694e6cf31e75c59ddf52b39e621c4",
+      "run_id": "q5-django__django-11880-E",
+      "selection_rank": 6,
+      "source_run_sha256": "196b127087c594e0dbaa41615579e7e647d85c9fb01712e85f283582a12e011b",
+      "started_at_utc": "2026-08-31T04:52:18+00:00",
+      "status": "persisted"
+    }
+  ],
+  "schema_version": 1,
+  "smoke_sha256": "50685527c8fbef42e242a285d2f12f484ed17cedde9a6916c5ca6bd04a74087a",
+  "started_run_count": 10
+}
