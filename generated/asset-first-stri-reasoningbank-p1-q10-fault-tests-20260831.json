@@ -1,0 +1,74 @@
+{
+  "cases": [
+    {
+      "case": "T1",
+      "pass": true,
+      "test_id": "test_t1_normal_success"
+    },
+    {
+      "case": "T2",
+      "pass": true,
+      "test_id": "test_t2_timeout_daemon_running"
+    },
+    {
+      "case": "T3",
+      "pass": true,
+      "test_id": "test_t3_timeout_daemon_created_holds"
+    },
+    {
+      "case": "T4",
+      "pass": true,
+      "test_id": "test_t4_timeout_daemon_exited_holds"
+    },
+    {
+      "case": "T5",
+      "pass": true,
+      "test_id": "test_t5_timeout_daemon_restarting_holds"
+    },
+    {
+      "case": "T6",
+      "pass": true,
+      "test_id": "test_t6_wrong_container_identity_holds"
+    },
+    {
+      "case": "T7",
+      "pass": true,
+      "test_id": "test_t7_wrong_image_pid_or_command_holds"
+    },
+    {
+      "case": "T8",
+      "pass": true,
+      "test_id": "test_t8_explicit_error_is_hard_failure_without_reconciliation"
+    },
+    {
+      "case": "T9",
+      "pass": true,
+      "test_id": "test_t9_reconciliation_inspect_timeout_holds_without_retry"
+    },
+    {
+      "case": "T10",
+      "pass": true,
+      "test_id": "test_t10_cleanup_after_receipt_finalization"
+    }
+  ],
+  "cleanup_after_receipt_finalization_tested": true,
+  "created_at_utc": "2026-08-31T05:49:59+00:00",
+  "credential_material_present": false,
+  "decision": "Q10_DETERMINISTIC_FAULT_GATE_PASS",
+  "errors": [],
+  "expected_test_ids_exact": true,
+  "experiment_id": "NON_SCIENTIFIC_Q10_DETERMINISTIC_FAULT_GATE-20260831",
+  "failures": [],
+  "model_calls": 0,
+  "pass": true,
+  "payload_sha256": "c981ade6f5bdcb51f56d86bd87b509452997b537bc4bc905424f3dff3e241c89",
+  "provider_calls": 0,
+  "q10_contract_sha256": "bc4781ce0188d899af3b1a491b51f30467e6c655c7f8d3074b919a043b2878bd",
+  "schema_version": 1,
+  "scientific_authority": false,
+  "second_start_forbidden": true,
+  "start_invocation_invariant": 1,
+  "task_outcome_authority": false,
+  "test_count": 10,
+  "test_module": "research_pipeline.test_asset_first_stri_reasoningbank_p1_q10_runtime"
+}
