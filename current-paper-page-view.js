@@ -32,11 +32,18 @@
     const download=reg.publication_identity?.pdf||reg.downloads?.pdf||"";
     return `<div class="cpp-registry-note"><b>${isZh()?"Canonical PaperRegistry":"Canonical PaperRegistry"}</b><p>${E(reg.publication_identity?.label_zh&&isZh()?reg.publication_identity.label_zh:(reg.publication_identity?.label_en||paper.code))} · ${E(reg.paper_stage||reg.current_state||"")} · scientific ${E(reg.scientific_status||"")}</p><div class="cpp-actions"><a href="selected-paper.html?paper=${encodeURIComponent(reg.paper_id)}">${isZh()?"打开技术/审计总览":"Open technical/audit view"}</a>${download?`<a href="${E(download)}">${isZh()?"论文 PDF":"Paper PDF"}</a>`:""}</div></div>`;
   };
+  const orderMark=(n)=>["①","②","③","④","⑤","⑥","⑦","⑧","⑨"][Number(n)-1]||String(n||"");
+  window.renderCurrentPaperShelf=(opts={})=>{
+    const data=window.CURRENT_PAPER_PAGES||{}, current=opts.current||"";
+    const rows=(data.order||[]).map(id=>[id,data.papers?.[id]]).filter(([,paper])=>paper);
+    return `<section class="cpp-shelf panel" id="current-paper-pages"><div class="cpp-shelf-head"><div><div class="cpp-section-kicker">${isZh()?"当前论文组合":"CURRENT PAPER PORTFOLIO"}</div><h2 data-toc="false">${isZh()?"九篇论文 / scientific object，一篇一个阅读页":"Nine papers / scientific objects, one reader page each"}</h2><p>${isZh()?"①–⑤ 是正式 PaperRegistry；⑥–⑨ 明确保留为工作论文或独立 scientific object，不伪造 E3 / G2 等正式编号。":"①–⑤ are formal PaperRegistry entries. ⑥–⑨ remain explicitly working papers or independent scientific objects; no publication codes are invented."}</p></div><a class="link-btn" href="selected-paper.html">${isZh()?"正式 PaperRegistry 总账 →":"Formal PaperRegistry ledger →"}</a></div><div class="cpp-shelf-grid">${rows.map(([id,paper])=>{const reg=registryPaper(paper);const state=paper.displayState||(reg?(reg.paper_stage||reg.current_state||"PaperRegistry"):(paper.kind==="scientific-object"?"PRE-F0":"WORKING"));return `<a class="cpp-shelf-card ${id===current?"active":""}" href="${E(paper.href)}"><span>${orderMark(paper.order)}</span><div><small>${E(paper.code)} · ${E(kindLabel(paper))}</small><b>${E(T(paper.short))}</b><p>${E(T(paper.title))}</p></div><em>${E(state)}</em></a>`;}).join("")}</div></section>`;
+  };
   window.renderCurrentPaperPage=(pageId)=>{
     const paper=window.CURRENT_PAPER_PAGES?.papers?.[pageId];
     if(!paper) return `<div class="empty">Paper page unavailable.</div>`;
     const reg=registryPaper(paper);
     return `<main class="cpp-page" data-paper-order="${paper.order}">
+      ${window.renderCurrentPaperShelf({current:pageId})}
       <header class="cpp-hero">
         <div class="cpp-hero-top"><span class="cpp-index">${String(paper.order).padStart(2,"0")}</span><div class="cpp-badges">${statusBadge(paper,reg)}</div></div>
         <div class="eyebrow">${E(T(paper.area))}</div>

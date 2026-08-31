@@ -414,6 +414,21 @@ def main() -> None:
             fail(f"{filename} is missing its paper-specific shell or shared stylesheet")
     if paper_page_data.count("registryPaperId:null") != 4:
         fail("exactly four current paper pages must remain explicitly outside PaperRegistry")
+    current_paper_view_source = (ROOT / "current-paper-page-view.js").read_text(encoding="utf-8")
+    if "renderCurrentPaperShelf" not in current_paper_view_source or "Nine papers / scientific objects" not in current_paper_view_source:
+        fail("current-paper reader must expose the nine-paper shelf as a shared navigation surface")
+    for filename in ("research-map.html", "paper-ideas.html"):
+        scripts = canonical_scripts.get(filename, [])
+        html = (ROOT / filename).read_text(encoding="utf-8")
+        if not all(name in scripts for name in ("current-paper-pages-data.js", "current-paper-page-view.js")):
+            fail(f"{filename} must load the shared current-paper portfolio projection")
+        if not (scripts.index("current-paper-pages-data.js") < scripts.index("current-paper-page-view.js") < scripts.index("app.js")):
+            fail(f"{filename} current-paper shelf script order is invalid")
+        if 'href="current-paper-pages.css"' not in html:
+            fail(f"{filename} must load current-paper-pages.css for the shared paper shelf")
+    app_source_for_paper_shelf = (ROOT / "app.js").read_text(encoding="utf-8")
+    if "renderCurrentPaperShelf" not in map_view_source or "renderCurrentPaperShelf" not in app_source_for_paper_shelf:
+        fail("both research-map and Research Portfolio must render the shared nine-paper shelf")
 
     selected_scripts_list = canonical_scripts.get("selected-paper.html", [])
     if not all(name in selected_scripts_list for name in ("generated/research-items.js", "generated/paper-registry.js")) or selected_scripts_list.index("generated/research-items.js") > selected_scripts_list.index("app.js") or selected_scripts_list.index("generated/paper-registry.js") > selected_scripts_list.index("app.js"):

@@ -34,7 +34,7 @@ const LANGUAGE_STORAGE_KEY = "agent-evolution-language";
 const LEGACY_SCOPED_LANGUAGE_KEYS = {"research-timeline":"research-timeline-language","research-map":"research-map-language","research-directions":"research-directions-language"};
 const legacyScopedLanguage = localStorage.getItem(LEGACY_SCOPED_LANGUAGE_KEYS[pageId] || "") || "";
 const storedLanguage = localStorage.getItem(LANGUAGE_STORAGE_KEY) || "";
-const pageDefaultLanguage = pageId === "research-timeline" ? "zh" : "en";
+const pageDefaultLanguage = (pageId === "research-timeline" || /^paper-(?:e1|g1|c1|e2|b1|a|b|agent-constraint|3d)$/.test(pageId)) ? "zh" : "en";
 let language = storedLanguage || legacyScopedLanguage || pageDefaultLanguage;
 if (!storedLanguage && legacyScopedLanguage) localStorage.setItem(LANGUAGE_STORAGE_KEY, legacyScopedLanguage);
 else if (!storedLanguage && !legacyScopedLanguage && pageId === "research-timeline") localStorage.setItem(LANGUAGE_STORAGE_KEY, pageDefaultLanguage);
@@ -3542,7 +3542,8 @@ function renderIdeaPortfolio(config) {
   const groups=canonicalIdeaGroups(), parents=canonicalParentRows(), independent=canonicalIndependentRows();
   const inventory=canonicalInventorySummary(groups,parents,independent);
   const currentAccounting=window.renderCurrentResearchPortfolio?window.renderCurrentResearchPortfolio({includeClosed:false,ideasPage:true,inventory,hideBriefingHero:true}):"";
-  return `${renderPortfolioDecisionConsole(config,inventory)}${renderCanonicalIdeaLedger(groups,parents,independent,inventory,currentAccounting)}`;
+  const papers=window.renderCurrentPaperShelf?window.renderCurrentPaperShelf({}):"";
+  return `${papers}${renderPortfolioDecisionConsole(config,inventory)}${renderCanonicalIdeaLedger(groups,parents,independent,inventory,currentAccounting)}`;
 }
 function renderIdeaRanking(config) {
   return `${pageHeader(config)}${(config.sections || []).map(renderSection).join("")}${renderIdeaRankingPanels()}`;
