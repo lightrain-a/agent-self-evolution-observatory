@@ -1,0 +1,29 @@
+{
+  "appworld_ul_authorized": false,
+  "blocker": "ARK_API_KEY is absent from the configured ignored server environment.",
+  "capability_contract_frozen": true,
+  "compiler_pass_conditions_all_true": true,
+  "compiler_verdict": "PRE_F0_5_PASS",
+  "execution_override": {
+    "max_retries": 0,
+    "note": "Frozen protocol overrides provider default for scientific calls."
+  },
+  "f0_contract_frozen": true,
+  "f0_executed": false,
+  "f0_outcomes_observed": 0,
+  "generated_at": "2026-08-31T19:45:00+08:00",
+  "next_authorized_action": "CONFIGURE_PROVIDER_CREDENTIAL_THEN_RERUN_READINESS",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "p1_authorized": false,
+  "provider": {
+    "api_key_in_output": false,
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "configured": false,
+    "default_model": "ark-code-latest",
+    "max_retries": 2,
+    "timeout_seconds": 120.0
+  },
+  "schema_version": "agent-constraint-externality-f0-readiness-v1",
+  "status": "CAPABILITY_CALIBRATION_BLOCKED_PROVIDER_NOT_CONFIGURED",
+  "tool_sandbox_authorized": false
+}

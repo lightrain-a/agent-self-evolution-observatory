@@ -1,0 +1,35 @@
+{
+  "allowed_edge_types": [
+    "PREREQUISITE_DEPENDENCY",
+    "READ_AFTER_WRITE_DEPENDENCY",
+    "SHARED_MUTABLE_STATE",
+    "SHARED_STATE_CHANGING_API_RESOURCE",
+    "TEMPORAL_DEPENDENCY"
+  ],
+  "compiler_id": "APPWORLD-CONSTRAINT-COMPILER-V1",
+  "evaluator_only_topology_change_forbidden": true,
+  "forbidden_edge_sources": [
+    "embedding_similarity",
+    "llm_semantic_relatedness",
+    "observed_co_failure",
+    "observed_regression",
+    "post_hoc_graph_edit"
+  ],
+  "generated_at": "2026-08-31T19:30:00+08:00",
+  "gpu_authority": false,
+  "instruction_matching": [
+    "UTF8_BYTE_LENGTH",
+    "WHITESPACE_WORD_COUNT"
+  ],
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "outcome_read_authority": false,
+  "primary_structural_variable": "MUTABLE_RESOURCE_OR_PREREQUISITE_EXPOSURE",
+  "primary_update_surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE",
+  "protected_material_policy": "Exact text, field bindings, fixtures, and evaluators stay encrypted.",
+  "provider_authority": false,
+  "schema_version": "appworld-constraint-compiler-contract-v1",
+  "scientific_episode_authority": false,
+  "stage": "PRE_F0_5_STATIC_COMPILER",
+  "structural_context_intervention": "AGENT_VISIBLE_MATCHED_NON_TARGET_OBLIGATION_BINDING",
+  "topology_claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT"
+}

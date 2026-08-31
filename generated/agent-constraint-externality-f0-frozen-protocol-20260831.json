@@ -1,0 +1,128 @@
+{
+  "adjudication": {
+    "mechanism_fail": "Uptake passes but mean UE_HIGH-UE_INDEPENDENT <= 0 and no ordered exposure direction remains.",
+    "mechanism_support": "At least 6 eligible families, positive mean target repair gain, mean within-family UE_HIGH-UE_INDEPENDENT >= 0.05, and the ordered exposure direction holds in at least two thirds of eligible families.",
+    "no_significance_claim_from_f0": true,
+    "otherwise": "F0_INCONCLUSIVE_STOP_OR_REVISE_WITHOUT_P1",
+    "uptake_fail": "Fewer than 6 eligible repair families or mean target repair gain is not positive."
+  },
+  "backbone": "FROZEN_FROM_CAPABILITY_CALIBRATION_BEFORE_F0",
+  "exactly_once": {
+    "append_only_ledger": true,
+    "application_retry": false,
+    "completion_appended_after_provider_call": true,
+    "dispatch_recorded_before_provider_call": true,
+    "duplicate_key_is_fatal": true,
+    "failed_or_partial_episode_retained": true,
+    "provider_max_retries": 0,
+    "retry_or_replacement_forbidden": true,
+    "unique_episode_key_fields": [
+      "family_id",
+      "arm",
+      "branch",
+      "seed"
+    ]
+  },
+  "family_count": 8,
+  "family_ids": [
+    "ACE-FG-01",
+    "ACE-FG-02",
+    "ACE-FG-03",
+    "ACE-FG-04",
+    "ACE-TNF-01",
+    "ACE-TNF-02",
+    "ACE-TNF-03",
+    "ACE-TNF-04"
+  ],
+  "generated_at": "2026-08-31T19:45:00+08:00",
+  "gpu_runs": 0,
+  "harness": "APPWORLD_FUNCTION_CALLING_V1",
+  "metrics": {
+    "collateral_regression_rate": "NEWLY_FAILED_BASELINE_SATISFIED_NON_TARGETS_DIVIDED_BY_ELIGIBLE_NON_TARGETS",
+    "negative_values_retained": true,
+    "per_constraint_rows_required": true,
+    "primary_contrast": "UE_HIGH_MINUS_UE_INDEPENDENT_WITHIN_REPAIR_FAMILY",
+    "secondary_ordered_contrast": "UE_INDEPENDENT_LE_UE_LOW_LE_UE_HIGH",
+    "target_repair_gain": "TARGET_UPDATE_MINUS_NO_UPDATE",
+    "update_attributable_externality": "CRR_UPDATE_MINUS_CRR_NO_UPDATE"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "post_f0_authority": {
+    "appworld_ul_only_after": "F0_AND_TOOLSANDBOX_MECHANISM_SUPPORT",
+    "full_p1": false,
+    "method_claim": false,
+    "multi_backbone": false,
+    "paper_claim": false,
+    "toolsandbox_only_after": "F0_MECHANISM_SUPPORT",
+    "workarena": false
+  },
+  "probe_phase": {
+    "actual_episode_formula": "eligible_repair_family_count * 3 arms * 2 branches * 3 seeds",
+    "arms": [
+      "INDEPENDENT",
+      "LOW",
+      "HIGH"
+    ],
+    "branch_order": {
+      "balanced_pair_rule": "Parity zero runs NO_UPDATE first; parity one runs UPDATE first.",
+      "key_fields": [
+        "family_id",
+        "arm",
+        "seed"
+      ],
+      "method": "SHA256_PARITY",
+      "salt": "ACE-F0-BRANCH-ORDER-20260831-V1"
+    },
+    "branches": [
+      "NO_UPDATE",
+      "UPDATE"
+    ],
+    "partial_effects_readable_during_execution": false,
+    "planned_episode_envelope": 144,
+    "repeats": 3,
+    "reset_snapshot_before_every_replay": true,
+    "same_update_bytes_across_all_arms_and_update_replays": true,
+    "seeds": [
+      1201,
+      1202,
+      1203
+    ]
+  },
+  "provider_calls": 0,
+  "schema_version": "agent-constraint-externality-f0-protocol-v1",
+  "scientific_outcomes_observed": 0,
+  "source_phase": {
+    "candidate_generation": "Same frozen backbone generates one procedural repair note automatically from target failure only.",
+    "episodes": 8,
+    "failure_or_success_retention": "Retain every source result; never replace a family. Only a preregistered target failure can yield a repair artifact.",
+    "forbidden_updater_input": [
+      "NON_TARGET_OUTCOMES",
+      "TOPOLOGY_LABEL",
+      "COUPLING_LEVEL",
+      "ARM_ASSIGNMENT",
+      "F0_EFFECT"
+    ],
+    "freeze_fields": [
+      "sha256",
+      "exact_bytes",
+      "byte_length",
+      "fixed_tokenizer_token_count",
+      "procedural_clause_count",
+      "injection_position",
+      "exposure_rule"
+    ],
+    "human_edit_after_generation": false,
+    "maximum_eligible_repair_families": 8,
+    "minimum_eligible_repair_families": 6,
+    "one_target_isolated_episode_per_family": true,
+    "updater_input": [
+      "TARGET_CONSTRAINT_SPEC",
+      "TARGET_TASK_INSTRUCTION",
+      "TARGET_FAILURE_SLICE",
+      "TARGET_TOOL_TRAJECTORY"
+    ]
+  },
+  "split_is_disjoint_from_capability": true,
+  "stage": "F0_FROZEN_NOT_EXECUTED",
+  "update_surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE"
+}

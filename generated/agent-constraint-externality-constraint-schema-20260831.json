@@ -1,0 +1,18 @@
+{
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "outcome_blind": true,
+  "protected_full_instances": "agent-constraint-externality-appworld-pre-f0_5-protected-20260831.bundle",
+  "raw_assertion_is_scientific_constraint": false,
+  "required_fields": [
+    "constraint_id",
+    "role",
+    "semantic_description",
+    "evaluator_binding",
+    "affected_entities",
+    "read_resources",
+    "write_resources",
+    "prerequisite_resources"
+  ],
+  "schema_version": "appworld-constraint-spec-schema-v1",
+  "semantic_grouping_rule": "One independently interpretable obligation may bind several raw checks."
+}

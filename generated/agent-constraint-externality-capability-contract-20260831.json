@@ -1,0 +1,48 @@
+{
+  "all_candidates_fail_disposition": "CAPABILITY_CALIBRATION_FAIL_STOP",
+  "candidate_isolation": "Each rejected candidate uses only this disjoint split; no F0 family outcome is readable before backbone freeze.",
+  "ceiling_disposition": "TRY_NEXT_PREDECLARED_CANDIDATE_OR_HARDER_PREDECLARED_STRATUM",
+  "episodes_per_candidate": 8,
+  "execution": {
+    "append_only_ledger": true,
+    "application_retry": false,
+    "no_episode_replacement": true,
+    "provider": "ARK_RESPONSES_API",
+    "provider_max_retries": 0,
+    "temperature": 0,
+    "tool_interaction_cap": 12
+  },
+  "family_count": 4,
+  "family_ids": [
+    "ACE-FG-05",
+    "ACE-FG-06",
+    "ACE-TNF-05",
+    "ACE-TNF-06"
+  ],
+  "family_split_rule": "FIXED_BEFORE_ANY_PROVIDER_CALL",
+  "floor_disposition": "TRY_NEXT_PREDECLARED_CANDIDATE_OR_STOP",
+  "generated_at": "2026-08-31T19:45:00+08:00",
+  "gpu_runs": 0,
+  "maximum_candidate_count": 3,
+  "maximum_episode_envelope": 24,
+  "model_selection_order": [
+    "doubao-seed-2.0-lite",
+    "deepseek-v4-flash",
+    "deepseek-v4-pro"
+  ],
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "outcome_status": "NOT_EXECUTED",
+  "provider_calls": 0,
+  "qualification_rules": {
+    "baseline_non_target_preservation_rate_min": 0.85,
+    "target_success_rate_max": 0.875,
+    "target_success_rate_min": 0.5,
+    "tool_loop_completion_rate_min": 0.75,
+    "zero_malformed_function_calls_required": true
+  },
+  "repeats_per_family": 2,
+  "schema_version": "agent-constraint-externality-capability-calibration-v1",
+  "scientific_outcomes_observed": 0,
+  "selection_rule": "FIRST_CANDIDATE_MEETING_ALL_FLOOR_AND_CEILING_RULES",
+  "stage": "DISJOINT_CAPABILITY_CALIBRATION"
+}

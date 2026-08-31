@@ -1,0 +1,16 @@
+{
+  "edge_types": [
+    "PREREQUISITE_DEPENDENCY",
+    "READ_AFTER_WRITE_DEPENDENCY",
+    "SHARED_MUTABLE_STATE",
+    "SHARED_STATE_CHANGING_API_RESOURCE",
+    "TEMPORAL_DEPENDENCY"
+  ],
+  "edge_witness_required": true,
+  "motif_status": "SECONDARY_SUMMARY_ONLY",
+  "node_type": "SCIENTIFIC_CONSTRAINT",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "outcome_blind": true,
+  "primary_variable": "SHARED_MUTABLE_RESOURCE_OR_PREREQUISITE_EXPOSURE_COUNT",
+  "schema_version": "appworld-resource-graph-schema-v1"
+}

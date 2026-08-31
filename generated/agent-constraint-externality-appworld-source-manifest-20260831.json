@@ -1,0 +1,29 @@
+{
+  "appworld_repo_sha": "a072b7a86e7c1d5b1d7175659d750ebb9b79f10a",
+  "base_db_sha256": {
+    "file_system": "6073413135b14fff3ea3a289574d04d9815ea257ebbc3083db25eb97b634846a",
+    "gmail": "069221ea55688e2e454840ac4915b7920848be1958ec2a8d45e0743f7bc48cef",
+    "simple_note": "58bfe70a5272be257a07bac3508d17c1d657c431c9628038c21a7e955e9827ed",
+    "todoist": "5470d42bbc9ba39467b279ac2eab62b1978efa3b48d116274438d7031f54fdbb"
+  },
+  "data_version": "0.2.0",
+  "data_version_sha256": "911fc0c48cb0c70601db5775a9bef1b740dc4cc9f9b46389b9f0563fe7eb94d7",
+  "generated_at": "2026-08-31T19:30:00+08:00",
+  "license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "protected_bundle_sha256": {
+    "generate/.source/data.bundle": "42c2a3c929c60cc891c94e8924d8ce39c2ffd779bd51ca819b26944483de6106",
+    "generate/.source/tasks.bundle": "471f225cf4d85db1ba61d24e2fef881afb68f4f9ca0b8bf76cde712745d60433",
+    "src/appworld/.source/apps.bundle": "88d21fc526c1655bb3eee4adfca78ccac793921e4506f28f734ecdb19af77a62",
+    "src/appworld/.source/tests.bundle": "04aa898cb015c53468c355d5ded662757c5234835a4de5cf4f7d7947bef159ec"
+  },
+  "protected_compiler_bundle": {
+    "path": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-20260831.bundle",
+    "plaintext_spec_sha256": "4eec67e0d843ec48e7c91d535bf9d72ec2416f343b6c712bac031456d7affb8e",
+    "replay": "Decrypt locally with pinned AppWorld; never redistribute extracted plaintext.",
+    "sha256": "53ae510e09ab9bce09a735046ef921e1a1d5fde4044a8a50f2763a2fd7d69cb6"
+  },
+  "public_redistribution_boundary": "Protected AppWorld material and detailed derivatives remain encrypted.",
+  "schema_version": "appworld-constraint-source-revision-manifest-v1",
+  "scientific_outcomes_observed": 0
+}

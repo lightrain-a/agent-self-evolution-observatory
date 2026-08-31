@@ -1,0 +1,565 @@
+{
+  "classification": "BENCHMARK_DERIVED_CONTROLLED_EXTENSION",
+  "compiler_id": "APPWORLD-CONSTRAINT-COMPILER-V1",
+  "families": [
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-FG-01-high": "1fa3306bbc172a808b9e37d322804fc4d0620794aab19ce5f995d4a83c8a70ca",
+        "ACE-FG-01-independent": "dabf7f0f723c6d2cfe29898e5582d55ed6f5708e3ad128e59ef0cb06c83da13b",
+        "ACE-FG-01-low": "08b4f44a2499de9f73c9a3bbb42cb98526ea3f57f78110c24b9e00e26afe22b3"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-FG-01-high": "f151412e5069bdcc9b271fc3c3613238b0fe567529e94dd49a31c3579ecc255c",
+        "ACE-FG-01-independent": "5e1a28d8446c19e6a0c038ea3ad14a092f75a53705b77f1df1be433397ccb886",
+        "ACE-FG-01-low": "6bb8440770104d0a1b100e9b206d2844a5b493f1dc88fe9d2e34a4ceedc0ecdd"
+      },
+      "family_id": "ACE-FG-01",
+      "graph_sha256_by_arm": {
+        "ACE-FG-01-high": "d231924cdc3f49e29ede939852dd497128fd24373d9ca16d8c7f34c3cab404cc",
+        "ACE-FG-01-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-FG-01-low": "2b1e4e3790b5d4d35a1c4a7b63a66a1ce5ed8708fef891570137c44fecb4e891"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "0df8f8eb2eaeac239c893480ac874adaa0e13805dfd743ae2847ddd82303751b",
+      "instruction_byte_length": 258,
+      "instruction_word_count": 23,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "e2894a13235b5085d9c9261ee4f026a68a3540f0df4447d0ed490f9de5995394",
+      "target_instruction_sha256": "3ac37d3b3e9b030aad207321cd4fb6ad0ae643f8c0aff4c0033d3572dccd6b9a",
+      "target_resource_footprint_sha256": "f488107ec47b54f26920bce3bd44989d080e73322e4d065615cc34d6f569b499",
+      "target_semantics_sha256": "991e1060e7b0ec6bf8f24f17d1277956d34462445a6a3439df3a3cd147a2340d",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-FG-02-high": "92a0484e50599e1a783d3f56b093bf2d6dbc011ae01fa11eb88fa0ae44fa833c",
+        "ACE-FG-02-independent": "ff6136b7c77c688393dd8e84f586a8ca4716eb105cfed566c6095aa6e94c6e0d",
+        "ACE-FG-02-low": "48372314525fdfe081c12d311f3281173e29cef19e417f4524c43f9575e91070"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-FG-02-high": "4bd734134f23908745bdbef157c0bacae14de17a8c0b0560fec1e2be420dac17",
+        "ACE-FG-02-independent": "ca7abec904b8fd8d8f2b37d7f6b495641b3516adf49fd216d3582b55795f0007",
+        "ACE-FG-02-low": "7b7cc12b21a30a3b312824e79e74da919dcda46c5bec83016654eacc21dc6dab"
+      },
+      "family_id": "ACE-FG-02",
+      "graph_sha256_by_arm": {
+        "ACE-FG-02-high": "bce5b11529eca6891d96577d6b1ee6f2275ef5e71cd0dc0724e32fae326201a2",
+        "ACE-FG-02-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-FG-02-low": "8e0afab3c31bd81c35d6f10f20692ff2b722fd7ce70009c25c75ddc1ff1b1fab"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "66c54d74437d21053b296014e94cfda8de97a1b874b17492ad712517474bd3d3",
+      "instruction_byte_length": 258,
+      "instruction_word_count": 23,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "a4b04ce0ac4d7ee5b018a484be077d23293b4feec2b2750d5dd73d39b82c3032",
+      "target_instruction_sha256": "5d1a0c3ce1df790c28d59a831233f4d2f1274c9048e535dab5f1ae9175f10764",
+      "target_resource_footprint_sha256": "04e1d082fefb88313ef7377148d075955e51d1c9c295ab1a17f7d0bfada18f14",
+      "target_semantics_sha256": "991e1060e7b0ec6bf8f24f17d1277956d34462445a6a3439df3a3cd147a2340d",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-FG-03-high": "dfc6e1c09084593d3e194712b42afc58718835cbaabd76f5b7d562c73e6758d4",
+        "ACE-FG-03-independent": "ca7ee49f1c01518b97c38689942c926e1d1f6225f91a718aeecb806eb631e25d",
+        "ACE-FG-03-low": "9633bc7e7abe6b062111d096d6e99767cc37f5f843c80c8a35be96614d947ad0"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-FG-03-high": "2518fda4513eb68a35271f99944ef554b635ef332e5c54468364b3099be6eae3",
+        "ACE-FG-03-independent": "7a3fe3e5eb3b133d100de3ace0d720d062575c394737dcd2e228bc4aae0907ca",
+        "ACE-FG-03-low": "8d5d68e71337ae7299a7e5e318cc30035f6c6e471823cd18062dac80d6783136"
+      },
+      "family_id": "ACE-FG-03",
+      "graph_sha256_by_arm": {
+        "ACE-FG-03-high": "62df092e47690a0d0bd541f9437874d3c8eccf41e148746403b697c92f20bee4",
+        "ACE-FG-03-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-FG-03-low": "64f359a89c96c878e793ff0365ff14ac7ca3634a4bcf7cfe73de5fa09295a87d"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "0163b7364d111b6c91847e4a2f3e1686be878c1131534554a6e11c16875f58db",
+      "instruction_byte_length": 258,
+      "instruction_word_count": 23,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "df00bea52e0bbebdf6573cf97e9619a37d5e5f8243cf04bbccae513c33694f7a",
+      "target_instruction_sha256": "f9570026266bbb5d7353cd518f8bf61e1662550e70e337cee9090183cb923f5e",
+      "target_resource_footprint_sha256": "3083b27e59238dc66d9bf8486d686cd9818b06ad1c12e1ca6323f83c1e846cab",
+      "target_semantics_sha256": "991e1060e7b0ec6bf8f24f17d1277956d34462445a6a3439df3a3cd147a2340d",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-FG-04-high": "8767e7da535e0790a6868b2fdb4c5230bcdd25bb7ff1aa77ebfa4df33d8f500c",
+        "ACE-FG-04-independent": "619cf69b953c0bacd98513be7ea42115458f52ce6cad3b2ec5feca49a9d4524e",
+        "ACE-FG-04-low": "32bb337f76c6fa207b7d57fc4ec419f76b44cb61d983cd16b921a2ce56ca81a7"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-FG-04-high": "1e13d960ec55da7bb0d971ecb6538aab87909fb962544f425b575f02a137cc5c",
+        "ACE-FG-04-independent": "d96d3b3eafcf909e50b7db7920be326bfbc949b96d8733bd8409405ff11981bf",
+        "ACE-FG-04-low": "80f01ad7ddad462cf34ffdedf09c5269de7f7609336f60bd4b360b7e9599dc80"
+      },
+      "family_id": "ACE-FG-04",
+      "graph_sha256_by_arm": {
+        "ACE-FG-04-high": "10ddc0a0df8d3f634c0c6168f22d5c44e30d96d8e6e95eedc0ecb682a7759a25",
+        "ACE-FG-04-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-FG-04-low": "a34c12a318ac6a7c727020f33e0dcc89e8295f9ff00d0b922443d27b2399db23"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "fa1296858d27b88679bd78781c8f2feef0d0fcb4b5720ad19f0b3c7a46f2a209",
+      "instruction_byte_length": 258,
+      "instruction_word_count": 23,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "312648b93097e185a4dc5b39395a90cd3d274dad569f9eac3869ed0f09648411",
+      "target_instruction_sha256": "1eeb3ce7eab46549be316fc1fee330261b5c1b173a1b9fc4583d62162b6fbfd0",
+      "target_resource_footprint_sha256": "1b582c860aea8e16ce742fb4001491e2270df5076d1db8e733a483258a23dea1",
+      "target_semantics_sha256": "991e1060e7b0ec6bf8f24f17d1277956d34462445a6a3439df3a3cd147a2340d",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-FG-05-high": "05babb99cf936183458996cfed19e6224b834f74ae0ee536a8870c59705a070c",
+        "ACE-FG-05-independent": "97f9d7278d8e7eb0110314d4d19ba8621d4720722bf940414ebb881e199f0d0c",
+        "ACE-FG-05-low": "d7b5fe243f32e28c9b799d78f43c32aca422b98233f2e769ae4c092221ce0f9f"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-FG-05-high": "b65fbfc63fbbbb1883f7ad17138e02ddde62c26549613e13dfbe783dad796a34",
+        "ACE-FG-05-independent": "1b8eb2da5d88197fbaa61c846966168273e77976877a4958e026f0c396ecd2ee",
+        "ACE-FG-05-low": "adffca9cc2e90f79228a4b7ba492091cefe78286ef7233f82833a8315c6fc3fc"
+      },
+      "family_id": "ACE-FG-05",
+      "graph_sha256_by_arm": {
+        "ACE-FG-05-high": "f72bf8da2ab3833c65b4486d8297c557a8345aed2147f886f9a429e5669cb021",
+        "ACE-FG-05-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-FG-05-low": "d69ac1dc1ae426c282851c07ceab48cd9697964b6cd7563f35ef6537eb25c9a8"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "d0d9e54d762d715c948aa2575b4b72e24d2ebe5ca10b19a16fe1a1f4802fd921",
+      "instruction_byte_length": 258,
+      "instruction_word_count": 23,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "4a80f3540a44d955623887995f784e5c254146f57f3901b767aa0d22120a72b4",
+      "target_instruction_sha256": "b91374b5b7c346efad89f148c34a3f6c104d08292ed2f9ea825c423598677e35",
+      "target_resource_footprint_sha256": "8ad8fb64362d76c8f9709459eef15be29019b6c44a00b54459146290c5bd5d12",
+      "target_semantics_sha256": "991e1060e7b0ec6bf8f24f17d1277956d34462445a6a3439df3a3cd147a2340d",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-FG-06-high": "0a545c7e2e2e7892f26e38bb05b67e8bb79611d6eb1e97e276875534ec92bea6",
+        "ACE-FG-06-independent": "68524505b7d7db99f85c40fb1b650c2265c3ab86c2599ff81215471f226a891e",
+        "ACE-FG-06-low": "61ffbea895665ee0d1938079ca616fcd52cb383ad30e8c747b8d393e72e5293a"
+      },
+      "category": "FILE_GMAIL",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-FG-06-high": "c0324829aa23285e25da627bab359708337145531ce0824d27fc5c2d92e57f75",
+        "ACE-FG-06-independent": "44e87bb520b4fd1251f893028a1b11dce2c3649bc528b5eb472523a59938366f",
+        "ACE-FG-06-low": "f4d46bddc36c91d6ebded20e5c8020177ca8ccb69309164bd8c6534b28d403f0"
+      },
+      "family_id": "ACE-FG-06",
+      "graph_sha256_by_arm": {
+        "ACE-FG-06-high": "b9c36b915d9ce1934edcb8ad35ff84e72b1efdf0898c62cb06334392c8e83f4a",
+        "ACE-FG-06-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-FG-06-low": "14887abf5f770816fac826885e92ce52ef82e07f2e195c124d09e3b315e099ef"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "ba10866eb425781c058ea39096be9a77cd3c4e8a0a237d00101e5598baa7e452",
+      "instruction_byte_length": 258,
+      "instruction_word_count": 23,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "c315f891a2e93381278315ebf639bf918cc356ea9d9b361107bd8e71a50802f6",
+      "target_instruction_sha256": "ba36a46175f48836ef74b0272db71a9063f91c5c475b9de39fd460efca882bd8",
+      "target_resource_footprint_sha256": "b69b6eb42243be079d0dbc611665e09fa446200687496bef5fca2ec2483a51ec",
+      "target_semantics_sha256": "991e1060e7b0ec6bf8f24f17d1277956d34462445a6a3439df3a3cd147a2340d",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-TNF-01-high": "ca0f3e4e1e1c4b2d00cfab9c765e7b0cc79a2e9ffd6c69e28eca29b90ac58d1e",
+        "ACE-TNF-01-independent": "6b300df0ed8ba2dc5b629c33fa47e71f808aac6a5882debf27274f1423a7b917",
+        "ACE-TNF-01-low": "50d98fcb1147d8b73d3a6032d57adefd528fd2237095ef1966e7d4a8f36452b5"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-TNF-01-high": "9749a4c3c8cc015fd94867ee488ef4a99f5b0152be131cd6f6d8d474b2505d55",
+        "ACE-TNF-01-independent": "ba1aaf686967398faeeb0cf186e9e4fce186754153e8c5933cd5808703a36424",
+        "ACE-TNF-01-low": "fbb72a6e6ef5c119ef01ff614413961f233d1cc29b411499baffedbbe43fd74b"
+      },
+      "family_id": "ACE-TNF-01",
+      "graph_sha256_by_arm": {
+        "ACE-TNF-01-high": "c285d987cd484323bf55a0ca4ca5895cf67ccecf02be0588467202f8efe58f9c",
+        "ACE-TNF-01-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-TNF-01-low": "618f10df6792808eb488789ae648e6218083464e0111b2c114291fcb4292b26d"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "dc0efd1f977231b17672526f2c5d77f3497a06667dabc9acad63e0c17d3ee416",
+      "instruction_byte_length": 190,
+      "instruction_word_count": 25,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "58b8203183437e94e301c899b7f73091770128f7fa1c881676918fbd4f039f81",
+      "target_instruction_sha256": "4441fa754f2fe686e02edfcfbb2cb3f7ebc4f5100041ec19362312ee08832765",
+      "target_resource_footprint_sha256": "0a61fe063a059f16fc662fb560b13e81e8424d28efaa6be4a0f914489b39c19d",
+      "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-TNF-02-high": "963999a5f10241d78aa7013f5722da625779c0be0395a7f0d047c252f1336e0c",
+        "ACE-TNF-02-independent": "a5cb006715ede66a347b6249e08281821464a091bca27e1adf45db7a4c54883b",
+        "ACE-TNF-02-low": "c79a7234b34dba458cba21af930ba287a59935b1ffa39bc82c8045c2f1096dae"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-TNF-02-high": "3e9432527fc7e442799f405b06bdddb658cec46a0e91705a31b2ddf63143af09",
+        "ACE-TNF-02-independent": "bef8693c3d5e544ea51cfd62358735f88add358823bcf0e5a6eeffe7ef4a13a4",
+        "ACE-TNF-02-low": "6c88cbdac134a31a426815d422fd7f44f084b73ba30b4bbf39929216734402eb"
+      },
+      "family_id": "ACE-TNF-02",
+      "graph_sha256_by_arm": {
+        "ACE-TNF-02-high": "b98d655424c2297f1cca2c2bbf73c10740ac3546fa998b84d7e9fc6f9f89701d",
+        "ACE-TNF-02-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-TNF-02-low": "c05bfadc20aebd88dfdf36c43411f2ea96f3737102df873cfd17b230182ffb16"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "de5938c10e34195359911810520e8d6bb60c922389d610954e85ebe6563ca9d6",
+      "instruction_byte_length": 190,
+      "instruction_word_count": 25,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "8a41d93d21a65ef36a042d9e0df2f16286080c55a76bd7e819a1587c8988c4fe",
+      "target_instruction_sha256": "d132eee428099a69fca4a42886ec5dfc6e52c8dfcd7c50dbc683af6d08393bcf",
+      "target_resource_footprint_sha256": "fe9d0aaf2e403b7e61abc58cf45077fa9ababfb1e72168f9072970b4cee98d27",
+      "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-TNF-03-high": "f96fd87bf1a520f67f6611f7696420755c25ddae5246e2df7b8e7552f6844120",
+        "ACE-TNF-03-independent": "ebbdfdef15d77bedc10709448d9c1d7912c08b83d394e662c8262f5a956f5e94",
+        "ACE-TNF-03-low": "c7409fe342b0d2599589fc85248f31504bf6c18d839053c71b3f07948296af76"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-TNF-03-high": "8d7b7080df6999a345f239980395c02af90e0535c6232a338e5910db36c41ea7",
+        "ACE-TNF-03-independent": "6b9220bf3d53c6b9a82dc3e53fbb7dea79c0f67e8e8d1e224fc1669424bbf679",
+        "ACE-TNF-03-low": "9fba60af625d86252bbd973ccaa1d032c48000bef633364febf644fcf0abcc30"
+      },
+      "family_id": "ACE-TNF-03",
+      "graph_sha256_by_arm": {
+        "ACE-TNF-03-high": "a6f7098d9ff1da5eac9c133aafbc5a0f05209199c8f003a4369d5383ed80b168",
+        "ACE-TNF-03-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-TNF-03-low": "4a91a8d79a67c3452a3770075052b36e788705c172499afa66225df6501ed1f5"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "908529243b92c708f8dd505c1c3f98dcb2be7c53c697fcd9af93534b8497fd7c",
+      "instruction_byte_length": 190,
+      "instruction_word_count": 25,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "48617ae4cc91fb2027eb1ba84f46f2083cd87d6c0abf2c5b2474b89c877cdaf1",
+      "target_instruction_sha256": "044a2d6e399e1379ecbe9793dfad909dfb770339d08835a62e7c6a75310d6655",
+      "target_resource_footprint_sha256": "b8f88a0fe5915d48cfe0cea661f0e9a811c10c2392efd6943c1014697c1cac6f",
+      "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-TNF-04-high": "093e784efe5e5867eed01e2dcc9727b884a3f60d7928140c12ff2ea02ae6d696",
+        "ACE-TNF-04-independent": "60a2b77e84de3924d108ea49a0b91a767f864b3cb08e26f45029bc5bc4c9163c",
+        "ACE-TNF-04-low": "c88eae802b6282806d391235f253e4468d65f28f6f8d70af587ba8595b97809a"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-TNF-04-high": "a5729dc2269d48e6528b0dfcd81a3bd871d972eef4c06d7dc5041de68438d053",
+        "ACE-TNF-04-independent": "16549b532400a06768f793cc496345282ba7e3afd5083bfab1b3f536ac819a7e",
+        "ACE-TNF-04-low": "064f1a6059e13d1d4512e7f81004fc0fc9f903d3239095485d2e377352879fcf"
+      },
+      "family_id": "ACE-TNF-04",
+      "graph_sha256_by_arm": {
+        "ACE-TNF-04-high": "1f534c94f1cd8bee83eabf5e2492b114478fbe933c5f66d818caf5acd3ffea8b",
+        "ACE-TNF-04-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-TNF-04-low": "e5163ab2146f5eced3ccc66d9446ada292b5d71630630b8e54baed10db526cf4"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "919f6746983199065bb9053701a46bc1d62e0da150e915ba87c4933c62f91f9a",
+      "instruction_byte_length": 190,
+      "instruction_word_count": 25,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "39af01a3466c020cd1037d7a83461e0771f3f92a2312c39c21205cf77425aad8",
+      "target_instruction_sha256": "c7de91c2a056d359fde331ad4f9b8214ece1fbbe4622808678791e47c169f7b9",
+      "target_resource_footprint_sha256": "694873acd133b92d1a17a33ff510ca7fcc5e3e106663bb7b3df8cd36245408b7",
+      "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-TNF-05-high": "f61a5401a17207d31cd5022f7201079590b54726300eb222c77e35cfb08799c5",
+        "ACE-TNF-05-independent": "4328a7d3d399bc43869e2dce35d248d33840f3ce9b9ff0f41ac2b608968d86a8",
+        "ACE-TNF-05-low": "6f92fb4af647a71c5f62bf467c5f5fbe86b59d5e605664b6a05a055c8351c48c"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-TNF-05-high": "9405af3c77befcb67eff6a98f0e0622e5a0e1a2d269e3eeecee3d981586b7fd9",
+        "ACE-TNF-05-independent": "93f865c1850825c1e422d2247c767a1f7fd8d7e6d1b27c1742898c081129e25b",
+        "ACE-TNF-05-low": "c239522686026c9a2cd6fadd4908a12d8f140d20452ac353668df8d3f3512a79"
+      },
+      "family_id": "ACE-TNF-05",
+      "graph_sha256_by_arm": {
+        "ACE-TNF-05-high": "ce11a93d670aa368714b54e0f257ab110107342993cfe9ac88f70de0ae0654da",
+        "ACE-TNF-05-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-TNF-05-low": "4896df6bb9f5de08db1fa7cc5c9166ecbcb1e11b853aeb47bc1603fed8db3e21"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "2b55f275fe7b27951138756e57137957f91b7a6a1fca119e19c938c075b76a6f",
+      "instruction_byte_length": 190,
+      "instruction_word_count": 25,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "b93651071bd87c4b58a6424d385afd19e85acd4a3cf083634ccecd5594afb0b7",
+      "target_instruction_sha256": "3421ccee4eddc57d5968c9fb0bf25ac3c6019b372aa72fd48d4606b9143cbefc",
+      "target_resource_footprint_sha256": "25efb82a5edc6b04ab32f594de16c9b7a9abcba6a73c47bb699284fc861cce55",
+      "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    },
+    {
+      "arm_count": 3,
+      "arm_instruction_sha256_by_arm": {
+        "ACE-TNF-06-high": "7c725e153a42ba7ba2059109816675c17f4bf489616c1e7535a62b258fb2fd2d",
+        "ACE-TNF-06-independent": "946da2001fa58865e320a3459fe1f2e56faa6a508a1ed945d7c4b65dadd586a1",
+        "ACE-TNF-06-low": "4d07c3cd0bc8170e5ae1dd1662ab79c881388c0efcf52dd520f0848e523d89ef"
+      },
+      "category": "TODO_NOTE_FILE",
+      "constraint_count": 3,
+      "coupling_levels": [
+        "INDEPENDENT",
+        "LOW",
+        "HIGH"
+      ],
+      "evaluator_sha256_by_arm": {
+        "ACE-TNF-06-high": "1474d2cd0b4bc87629d02ac2fcaf38e33b8e24aa65797ef2fb5f6e18153027de",
+        "ACE-TNF-06-independent": "5c876548bf4e58549406fa2c45a176f7ad7c635e73f6ebffe9ccb162c29c6561",
+        "ACE-TNF-06-low": "30323c2bbf4be446d9a798aed44f216bde7935e4127a0626a836462a31ce147f"
+      },
+      "family_id": "ACE-TNF-06",
+      "graph_sha256_by_arm": {
+        "ACE-TNF-06-high": "6abc9e8d8d7ca2295db6bdb4ca25e66af0d5610413c26ef9d969a8712249d64d",
+        "ACE-TNF-06-independent": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "ACE-TNF-06-low": "e3f78b85995c43dcea0a2c81af714d2c1c6eda2fd913e4cc2d7336af9428a54c"
+      },
+      "initial_non_target_constraints_satisfied": true,
+      "initial_snapshot_sha256": "d1dbf20dffa715de29d500f9e5215ab45394ef0f681cdf5c2e98339a85f6a7e9",
+      "instruction_byte_length": 190,
+      "instruction_word_count": 25,
+      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "residual_confounds": [
+        "non_target_entity_identity",
+        "resource_role_salience",
+        "lexical_content_pairing"
+      ],
+      "shared_resource_exposure": {
+        "HIGH": 2,
+        "INDEPENDENT": 0,
+        "LOW": 1
+      },
+      "target_constraint_id_sha256": "ab4fdeb5df46b43f89989b5422876e2feb299dc09983f9d7d03f8d83868f41fb",
+      "target_instruction_sha256": "00ca6f3a11dc81b47ffe9da80d2ac21dd82d113a29c2c930992f5757cd43c9d7",
+      "target_resource_footprint_sha256": "3785171c6e0705cf73559d1311b55ed3e4486ed86b73161fb1406210e9b29ac5",
+      "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
+      "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
+    }
+  ],
+  "family_count": 12,
+  "generated_at": "2026-08-31T19:30:00+08:00",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "protected_detail_bundle": "agent-constraint-externality-appworld-pre-f0_5-protected-20260831.bundle",
+  "protected_detail_bundle_sha256": "53ae510e09ab9bce09a735046ef921e1a1d5fde4044a8a50f2763a2fd7d69cb6",
+  "schema_version": "appworld-constraint-matched-family-manifest-v1",
+  "scientific_outcomes_observed": 0
+}
