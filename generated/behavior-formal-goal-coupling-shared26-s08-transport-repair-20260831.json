@@ -1,0 +1,44 @@
+{
+  "authority_sha256": "9379a5b0d0ccd8d5fa288327a8a1f764e511828ba5a389395712f0086b0474c9",
+  "diagnosis": "69 hf-mirror curl transport was pathologically slow under an unbounded --max-time=0 invocation; the partial file is non-evidence and the parent segment fail-closed before scientific execution.",
+  "frozen_file": {
+    "lfs_oid_sha256": "ff610011f8354fada22493ba7f744fe39771a3e26d7a50f64dd040f1dd4fa222",
+    "lfs_size_bytes": 209405998,
+    "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-073/file-009.mp4"
+  },
+  "generated_at": "2026-08-31T17:21:16+08:00",
+  "gpu_used": false,
+  "materialization_manifest_sha256": "9ee70726fb70750b23053e2358d3d42d4089238cd0bd52e5b74329279e961df4",
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "original_hold": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-materialization-payload-seg08-receipt-20260831.json",
+    "sha256": "2f1379f9d640f9334f8bf48c1064d818a61ecb1568464bbe4268a381c83063fb",
+    "status": "PAYLOAD_SEGMENT_TRANSPORT_HOLD"
+  },
+  "path_oid_size_manifest_changed": false,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "repair": {
+    "client": "huggingface_hub hf CLI with hf_xet high-performance transport",
+    "dataset_revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+    "endpoint": "https://hf-mirror.com",
+    "finalization": "full verified relay bytes replaced only the non-evidence .part, then the unchanged original single-writer materializer reverified exact SHA/size and atomically finalized S08",
+    "local_relay_size_sha_verified": true,
+    "relay_host": "222.20.126.67",
+    "remote_relay_size_sha_verified": true
+  },
+  "repair_receipt": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-materialization-payload-seg08-repair1-receipt-20260831.json",
+    "sha256": "f6c13d19d0b63bf5791f1c6a67882b7f6965fa4108301a15035bc5c67d8512df",
+    "status": "PAYLOAD_SEGMENT_COMPLETE"
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-transport-repair-v1",
+  "scientific_contract_changed": false,
+  "segment_id": "S08",
+  "segment_plan_sha256": "1ad14491dbbcbff289bdaada9bcd02c64ff271a7374e4e9bcdff28c8d11d493a",
+  "status": "TRANSPORT_REPAIR_PASS_S08_HF_XET_RELAY",
+  "task_or_episode_selection_changed": false,
+  "training_started": false
+}
