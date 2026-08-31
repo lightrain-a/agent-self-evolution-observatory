@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-08-31",
+  "as_of_date": "2026-09-01",
   "projection_policy": {
     "read_only": true,
     "scientific_authority": false,
@@ -413,26 +413,26 @@
   ],
   "week": {
     "start_date": "2026-08-31",
-    "end_date": "2026-08-31",
-    "research_days": 1,
-    "events": 47,
-    "substantive_events": 36,
+    "end_date": "2026-09-01",
+    "research_days": 2,
+    "events": 116,
+    "substantive_events": 58,
     "key_changes": 0,
     "class_counts": {
-      "blocker": 4,
+      "blocker": 13,
       "closure": 17,
-      "experiment": 5,
-      "idea": 8,
+      "experiment": 17,
+      "idea": 9,
       "paper": 2,
-      "system": 11
+      "system": 58
     },
     "attention_activity": {
       "B-3": 1,
-      "E-7": 1
+      "E-7": 42
     },
     "highlights": [
       {
-        "date": "2026-08-31",
+        "date": "2026-09-01",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · trajectory-mediated-memory-effect-transport",
         "title_en": "paper-first-post-c2-adjudication",
@@ -441,7 +441,7 @@
         "href": "research-timeline.html"
       },
       {
-        "date": "2026-08-31",
+        "date": "2026-09-01",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
         "title_en": "paper-first-pf1-problem-adjudication",
@@ -452,7 +452,7 @@
         "href": "research-timeline.html?research=A-8"
       },
       {
-        "date": "2026-08-31",
+        "date": "2026-09-01",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · repair-surface-identifiability-under-persistent-agent-updates",
         "title_en": "paper-first-pf2-method-adjudication",
@@ -463,18 +463,7 @@
         "href": "research-timeline.html?research=E-5"
       },
       {
-        "date": "2026-08-31",
-        "event_class": "closure",
-        "title_zh": "P0 实验裁决 · P0-B10-TYPED-MEMORY-ORDER",
-        "title_en": "P0-B10-TYPED-MEMORY-ORDER",
-        "research_items": [
-          "B-10"
-        ],
-        "papers": [],
-        "href": "research-timeline.html?research=B-10"
-      },
-      {
-        "date": "2026-08-31",
+        "date": "2026-09-01",
         "event_class": "closure",
         "title_zh": "P0 实验裁决 · P0-A6-ACTIVE-CAUSAL-MINIMAL-ROLLBACK",
         "title_en": "P0-A6-ACTIVE-CAUSAL-MINIMAL-ROLLBACK",
@@ -483,6 +472,17 @@
         ],
         "papers": [],
         "href": "research-timeline.html?research=A-6"
+      },
+      {
+        "date": "2026-09-01",
+        "event_class": "closure",
+        "title_zh": "P0 实验裁决 · P0-B10-TYPED-MEMORY-ORDER",
+        "title_en": "P0-B10-TYPED-MEMORY-ORDER",
+        "research_items": [
+          "B-10"
+        ],
+        "papers": [],
+        "href": "research-timeline.html?research=B-10"
       }
     ],
     "timeline_href": "research-timeline.html"
