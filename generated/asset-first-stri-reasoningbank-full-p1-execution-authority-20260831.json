@@ -1,0 +1,55 @@
+{
+  "authorized_action": {
+    "attempt_count_each": 1,
+    "authority_consumed_by_first_index_creation": true,
+    "automatic_retry": false,
+    "command": "python -m research_pipeline.asset_first_stri_reasoningbank_full_p1_runner",
+    "invocation_count": 1,
+    "manual_retry": false,
+    "order": "selection_rank ascending; within rank A/B/C/D/E",
+    "planned_run_count": 40,
+    "replacement_sampling": false
+  },
+  "bindings": {
+    "acquisition": "generated/asset-first-stri-reasoningbank-full-p1-runtime-acquisition-repair-result-20260831.json",
+    "acquisition_sha256": "3a08ca5376e05ddfb32c83c5db806f511290b3efc459ad4d8578dd327e4d23eb",
+    "model": "deepseek-v4-pro-ga-260813",
+    "population": "generated/asset-first-stri-reasoningbank-full-p1-population-and-image-freeze-20260831.json",
+    "population_sha256": "6ca2a6831e01db63961db3d5c337c17ee790755046c68bbcb6c056e136d8bbe8",
+    "preregistration": "generated/asset-first-stri-reasoningbank-full-p1-behavioral-propagation-preregistration-20260831.json",
+    "preregistration_sha256": "af8e9efb53ad5df5e846329b289ce791bc8ffe7c581f810c0ade1067d09fe7dd",
+    "qualification": "generated/asset-first-stri-reasoningbank-full-p1-runtime-provider-evaluator-qualification-20260831.json",
+    "qualification_sha256": "3eaf29384a192b8958b1162addc4a6545484558812a21dd5b590659c6bbd41b5",
+    "runner": "research_pipeline/asset_first_stri_reasoningbank_full_p1_runner.py",
+    "runner_sha256": "44675211fe69fad09427fc8cd9d555bce6307f8c5760c535c3bcc05771c9b73b",
+    "targeted_test_gate": "generated/asset-first-stri-reasoningbank-full-p1-targeted-test-gate-v2-20260831.json",
+    "targeted_test_gate_sha256": "57cf41b3624dfeeeb825efa0ad9dd7c33e9c0d7d4e77485ad7c3d2b61bb5aff9"
+  },
+  "checks": {
+    "all_attempt_counts_one": true,
+    "execution_has_not_started": true,
+    "frozen_unit_count_exact": true,
+    "images_exact_and_ready": true,
+    "no_retry_no_replacement": true,
+    "population_exact": true,
+    "preregistration_exact_and_execution_unauthorized": true,
+    "provider_model_exact": true,
+    "runner_frozen": true,
+    "runtime_provider_evaluator_qualified": true,
+    "targeted_tests_exact_and_passed": true
+  },
+  "claim_boundary": {
+    "R2_R3_result_requires_R4_difference": false,
+    "authority_is_not_a_scientific_result": true,
+    "authority_permits_execution_only": true,
+    "paper_claim_authorized": false
+  },
+  "created_at_utc": "2026-08-31T09:31:20+00:00",
+  "credential_material_present": false,
+  "decision": "FULL_P1_BEHAVIORAL_EXECUTION_AUTHORIZED",
+  "execution_authorized": true,
+  "experiment_id": "E1-STRI-REASONINGBANK-FULL-P1-EXECUTION-AUTHORITY-20260831",
+  "failure_rule": "A failed or interrupted behavioral unit remains the sole terminal record for that frozen unit. Do not rerun, replace, or issue another authority without a new prospective protocol outside this Full-P1 execution.",
+  "payload_sha256": "890df463a3834c729f96ffc5ab50a5f8a2d276f68fcca92eb63c06fca18c9085",
+  "schema_version": 1
+}
