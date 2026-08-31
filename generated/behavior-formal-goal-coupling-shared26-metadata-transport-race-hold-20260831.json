@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "HOLD_METADATA_POST_VERIFY_FINAL_MUTATION_SINGLE_WRITER_REPAIR_REQUIRED",
+  "scientific_authority": false,
+  "scientific_effect": "NONE",
+  "policy_outcomes_read": false,
+  "model_loaded": false,
+  "gpu_used": false,
+  "training_started": false,
+  "materialization_scope": "runtime metadata only",
+  "materialization_receipt_path": "generated/behavior-formal-goal-coupling-shared26-materialization-metadata-receipt-20260831.json",
+  "materialization_receipt_sha256": "b1036779c6af4ae2aabaa52bebfcef1e33d0e1e63c2bb03d801e796e81f3baa3",
+  "runner_sha256_before_repair": "5b6977ed4549dee7bb95d9afeb5f1f0542914209afefce6f1a6c2c6ed02854cd",
+  "receipt_summary": {
+    "requested_files": 104,
+    "receipt_verified_files": 103,
+    "receipt_remaining_files": 1,
+    "physical_files_present": 104,
+    "partial_files_present": 0
+  },
+  "mismatch": {
+    "path": "meta/episodes/chunk-050/file-000.parquet",
+    "frozen_size_bytes": 59159,
+    "frozen_sha256": "a470a5020c6de2fa2269b7f179350d327675867bee63402236bf9ba2b960ef15",
+    "observed_final_size_bytes": 106030,
+    "observed_final_sha256": "35772784a8ada3d9eaa22ce55ec19f6607f2e20060d7f6fe3fbfd8d43146a23c",
+    "receipt_state_for_path": "downloaded-and-verified",
+    "source_pointer_recheck": "PASS_SAME_FROZEN_SIZE_AND_SHA256",
+    "mirror_head_recheck": "PASS_SAME_FROZEN_SIZE_SHA256_AND_REPO_COMMIT"
+  },
+  "diagnosis": {
+    "layer": "transport_concurrency",
+    "confirmed_fact": "A file recorded as verified before finalization was later observed with different size and SHA-256 while the frozen source pointer remained unchanged.",
+    "most_plausible_mechanism": "overlapping materializer writers sharing the same .part/final inode during upstream 502/SSH-reset conditions",
+    "mechanism_certainty": "LIKELY_NOT_PROVEN",
+    "does_not_imply": [
+      "dataset source drift",
+      "scientific outcome contamination",
+      "task or episode selection failure",
+      "permission to replace scientific units",
+      "permission to start model or GPU execution"
+    ]
+  },
+  "allowed_repair": {
+    "single_change": "add root-level exclusive single-writer locking to the materializer",
+    "quarantine_exact_mismatched_final": true,
+    "redownload_only_mismatched_file": true,
+    "reuse_other_103_exactly_verified_files": true,
+    "transport_retry_authority_source": "generated/behavior-formal-goal-coupling-shared26-payload-materialization-authority-20260831.json",
+    "scientific_contract_changes": false
+  },
+  "forbidden": [
+    "redesigning the dataset subset",
+    "changing expected SHA-256 or size to accept the observed corrupted file",
+    "deleting the mismatch without preserving a quarantine copy",
+    "starting payload/model/GPU/training/rollout before metadata returns 104/104 verified"
+  ]
+}

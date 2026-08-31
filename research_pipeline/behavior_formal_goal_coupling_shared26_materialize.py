@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import fcntl
 import hashlib
 import json
 import os
@@ -8,6 +9,7 @@ import shutil
 import subprocess
 import tempfile
 import urllib.parse
+from contextlib import contextmanager
 from pathlib import Path
 
 OBJECT_ID = "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL"
@@ -16,6 +18,29 @@ DATASET_REVISION = "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2"
 MATERIALIZATION_MANIFEST_SHA256 = "9ee70726fb70750b23053e2358d3d42d4089238cd0bd52e5b74329279e961df4"
 AUTHORITY_SHA256 = "9379a5b0d0ccd8d5fa288327a8a1f764e511828ba5a389395712f0086b0474c9"
 HF_MIRROR = "https://hf-mirror.com"
+
+
+@contextmanager
+def exclusive_materialization_lock(destination_root: Path):
+    destination_root.parent.mkdir(parents=True, exist_ok=True)
+    lock_path = destination_root.parent / f".{destination_root.name}.materialization.lock"
+    lock_file = lock_path.open("a+")
+    try:
+        try:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as exc:
+            raise RuntimeError(f"another materializer already holds the single-writer lock: {lock_path}") from exc
+        lock_file.seek(0)
+        lock_file.truncate()
+        lock_file.write(f"pid={os.getpid()}\n")
+        lock_file.flush()
+        os.fsync(lock_file.fileno())
+        yield lock_path
+    finally:
+        try:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
+        finally:
+            lock_file.close()
 
 
 def sha256_file(path: Path) -> str:
@@ -261,10 +286,13 @@ def main() -> int:
     parser.add_argument("--max-files", type=int)
     parser.add_argument("--max-bytes", type=int)
     args = parser.parse_args()
-    receipt = materialize(
-        args.manifest, args.authority, args.git_repo, args.destination_root, args.receipt,
-        scope=args.scope, max_files=args.max_files, max_bytes=args.max_bytes,
-    )
+    with exclusive_materialization_lock(args.destination_root) as lock_path:
+        receipt = materialize(
+            args.manifest, args.authority, args.git_repo, args.destination_root, args.receipt,
+            scope=args.scope, max_files=args.max_files, max_bytes=args.max_bytes,
+        )
+    receipt["single_writer_lock_path"] = str(lock_path)
+    args.receipt.write_text(json.dumps(receipt, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({k: receipt[k] for k in [
         "status", "scope", "processed_this_invocation", "completed_this_invocation",
         "transported_bytes_this_invocation", "finalized_verified_file_count",
