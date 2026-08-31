@@ -24,6 +24,15 @@ CANONICAL_PAGES = {
     "paper-ideas.html": "paper-ideas",
     "experiments.html": "experiments",
     "selected-paper.html": "selected-paper",
+    "paper-e1.html": "paper-e1",
+    "paper-g1.html": "paper-g1",
+    "paper-c1.html": "paper-c1",
+    "paper-e2.html": "paper-e2",
+    "paper-b1.html": "paper-b1",
+    "paper-a.html": "paper-a",
+    "paper-b.html": "paper-b",
+    "paper-agent-constraint.html": "paper-agent-constraint",
+    "paper-3d.html": "paper-3d",
     "bibliography.html": "bibliography",
 }
 UTILITY_PAGES = {
@@ -86,6 +95,7 @@ REQUIRED_STATIC = [
     "content-system-overview.js", "system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
     "research-timeline.html", "research-timeline-view.js", "research-timeline.css", "generated/research-timeline.js", "generated/research-timeline.json", "generated/research-dashboard.js", "generated/research-dashboard.json",
     "research-map.html", "research-map-view.js", "research-map.css", "research-landscape-data.js",
+    "current-paper-pages-data.js", "current-paper-page-view.js", "current-paper-pages.css",
     "idea-lab.css",
     "current-research-status-view.js", "generated/current-research-status.json", "generated/current-research-status.js",
     "generated/pre-researchitem-candidates.json", "generated/pre-researchitem-candidates.js",
@@ -376,6 +386,35 @@ def main() -> None:
     directions_scripts = canonical_scripts.get("research-directions.html", [])
     if "generated/research-items.js" not in directions_scripts or directions_scripts.index("generated/research-items.js") > directions_scripts.index("app.js"):
         fail("research-directions must load canonical ResearchItem state before app.js for the D1-D10 ↔ A-G crosswalk")
+    paper_page_contract = [
+        ("paper-e1.html", "paper-e1", "E1"),
+        ("paper-g1.html", "paper-g1", "G1"),
+        ("paper-c1.html", "paper-c1", "C1"),
+        ("paper-e2.html", "paper-e2", "E2"),
+        ("paper-b1.html", "paper-b1", "B1"),
+        ("paper-a.html", "paper-a", "Paper A"),
+        ("paper-b.html", "paper-b", "Paper B"),
+        ("paper-agent-constraint.html", "paper-agent-constraint", "Agent-New"),
+        ("paper-3d.html", "paper-3d", "3D-New"),
+    ]
+    paper_page_data = (ROOT / "current-paper-pages-data.js").read_text(encoding="utf-8")
+    if "reader_facing_projection_only:true" not in paper_page_data or "cannot_grant_scientific_authority:true" not in paper_page_data or "formal_registry_codes_are_never_invented:true" not in paper_page_data:
+        fail("current paper pages must remain a zero-authority reader-facing projection")
+    expected_paper_order = '["paper-e1","paper-g1","paper-c1","paper-e2","paper-b1","paper-a","paper-b","paper-agent-constraint","paper-3d"]'
+    if expected_paper_order not in paper_page_data:
+        fail("current paper page order must remain E1, G1, C1, E2, B1, Paper A, Paper B, Agent-New, 3D-New")
+    for filename, page_key, display_code in paper_page_contract:
+        html = (ROOT / filename).read_text(encoding="utf-8")
+        scripts = canonical_scripts.get(filename, [])
+        if not all(name in scripts for name in ("generated/paper-registry.js", "current-paper-pages-data.js", "current-paper-page-view.js")):
+            fail(f"{filename} must load PaperRegistry plus the current-paper data/view projection")
+        if not (scripts.index("generated/paper-registry.js") < scripts.index("current-paper-pages-data.js") < scripts.index("current-paper-page-view.js") < scripts.index("app.js")):
+            fail(f"{filename} current-paper script order is invalid")
+        if 'href="current-paper-pages.css"' not in html or f'body data-page="{page_key}"' not in html or display_code not in html:
+            fail(f"{filename} is missing its paper-specific shell or shared stylesheet")
+    if paper_page_data.count("registryPaperId:null") != 4:
+        fail("exactly four current paper pages must remain explicitly outside PaperRegistry")
+
     selected_scripts_list = canonical_scripts.get("selected-paper.html", [])
     if not all(name in selected_scripts_list for name in ("generated/research-items.js", "generated/paper-registry.js")) or selected_scripts_list.index("generated/research-items.js") > selected_scripts_list.index("app.js") or selected_scripts_list.index("generated/paper-registry.js") > selected_scripts_list.index("app.js"):
         fail("selected-paper must load canonical ResearchItem/PaperRegistry state before app.js")

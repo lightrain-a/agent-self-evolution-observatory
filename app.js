@@ -4582,6 +4582,7 @@ function renderPage() {
   else if (pageId === "system-overview") root.innerHTML = window.renderSystemOverview ? window.renderSystemOverview(config) : renderMergedHub(config);
   else if (pageId === "research-timeline") root.innerHTML = window.renderResearchTimeline ? window.renderResearchTimeline(config) : `${pageHeader(config)}<div class="empty">Research timeline unavailable.</div>`;
   else if (pageId === "selected-paper") root.innerHTML = window.renderSelectedPaperWorkspace ? window.renderSelectedPaperWorkspace(config) : renderMergedHub(config);
+  else if (config.renderMode === "current-paper") root.innerHTML = window.renderCurrentPaperPage ? window.renderCurrentPaperPage(pageId, config) : `${pageHeader(config)}<div class="empty">Current paper page unavailable.</div>`;
   else if (config.renderMode === "field-matrix") root.innerHTML = renderFieldMatrixHub(config);
   else if (config.renderMode === "merged-hub") root.innerHTML = renderMergedHub(config);
   else if (pageId === "research-directions") root.innerHTML = renderDirectionMap(config);

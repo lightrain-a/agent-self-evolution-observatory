@@ -18,7 +18,7 @@ The site follows the same research-observatory framework as the LLM Distillation
 - a separate next-paper workspace;
 - explicit QA and coverage protocols.
 
-The public information architecture now contains **10 canonical pages** and **19 compatibility redirects** for historical URLs. Every canonical page uses a page-specific semantic hierarchy rather than a flat list:
+The public information architecture now contains **20 canonical pages** and **21 compatibility redirects** for historical URLs. Every canonical page uses a page-specific semantic hierarchy rather than a flat list:
 
 ```text
 H1 · canonical page
@@ -248,7 +248,7 @@ python3 hierarchy_smoke_test.py
 
 The checks cover:
 
-- 10 canonical pages and 19 compatibility redirects;
+- 20 canonical pages and 21 compatibility redirects;
 - navigation targets, merged content groups, redirect anchors, and the page-specific chapter configuration;
 - all 34 bilingual Idea reasoning records and their six mandatory argument fields;
 - the ICLR-first evidence pipeline, eight mechanism tracks, seven reviewer dimensions, twenty-six R1 passes, complete 26/26 Oracle/web-GPT review coverage, the 4 PASS / 10 REVISE / 12 BLOCK R2 distribution, and the separate 24-candidate internet-inspired expansion with 11/11 external reviews and a 1 PASS / 7 REVISE / 3 BLOCK verdict distribution;
@@ -261,7 +261,7 @@ The checks cover:
 - missing URLs and unresolved topic-page citations;
 - venue-tier ranking configuration, the dated citation snapshot, four ranking modes, and all 24 bilingual top-paper analyses;
 - dynamic catalog loading, three bibliography maps, sorting, filters, URL state, and pagination;
-- exact H2/H3/H4 and nested-TOC counts for all ten canonical pages;
+- exact H2/H3/H4 and nested-TOC contracts for canonical pages, including the nine paper-specific reader pages;
 - history and direction figures, including twenty literature citations inside the bilingual direction SVG and thirty linked evidence cards on the page;
 - merged hub rendering, linked resources, legacy redirects, and mobile navigation.
 

@@ -185,7 +185,7 @@ def main() -> None:
               consoleLinks: [...document.querySelectorAll('.home-research-console a')].map(x=>x.getAttribute('href')||'')
             };""",
         )
-        require(home["nav"] == 10, f"expected 10 primary navigation targets after consolidating the field atlas, got {home['nav']}")
+        require(home["nav"] == 19, f"expected 19 primary navigation targets after adding nine current-paper pages, got {home['nav']}")
         require(home["stats"] == 4 and home["routeCards"] == 9 and home["hero"] == 1 and home["heroActions"] == 4 and home["ruleSteps"] == 4 and home["routeGroups"] == 3 and home["legacyFramework"] == 0, f"home compact portal layout is incomplete or duplicated: {home}")
         require(not home["figure"] and home["distribution"] == 0, "home should route readers instead of duplicating the field-history figure or literature distribution")
         require(home["missing"] == 0, "home contains unresolved citations")
@@ -824,7 +824,10 @@ def main() -> None:
         canonical_frontend_pages = (
             "/index.html", "/foundations.html", "/mechanisms.html",
             "/system-overview.html", "/research-map.html", "/research-timeline.html", "/research-directions.html",
-            "/paper-ideas.html", "/experiments.html", "/selected-paper.html", "/bibliography.html",
+            "/paper-ideas.html", "/experiments.html", "/selected-paper.html",
+            "/paper-e1.html", "/paper-g1.html", "/paper-c1.html", "/paper-e2.html", "/paper-b1.html",
+            "/paper-a.html", "/paper-b.html", "/paper-agent-constraint.html", "/paper-3d.html",
+            "/bibliography.html",
         )
         execute(session_id, "localStorage.setItem('agent-evolution-language','zh');")
         request("POST", f"/session/{session_id}/window/rect", {"width": 1440, "height": 1000, "x": 0, "y": 0})
