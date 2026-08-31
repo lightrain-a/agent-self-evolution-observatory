@@ -26,6 +26,13 @@ CANONICAL_PAGES = {
     "selected-paper.html": "selected-paper",
     "bibliography.html": "bibliography",
 }
+UTILITY_PAGES = {
+    "g1-human-label-20260831-2603fd70.html": {
+        "scripts": ["g1-human-label-data-2603fd70.js", "g1-human-label-app-20260831.js"],
+        "robots": "noindex,nofollow,noarchive",
+    },
+}
+
 REDIRECT_PAGES = {
     "taxonomy.html": "foundations.html#group-taxonomy",
     "model-improvement.html": "mechanisms.html#field-model-parameters",
@@ -278,9 +285,20 @@ def main() -> None:
             fail(f"Pages exclusion config is missing {marker}")
 
     html_files = {path.name for path in ROOT.glob("*.html") if path.name != "404.html"}
-    expected = set(CANONICAL_PAGES) | set(REDIRECT_PAGES)
+    expected = set(CANONICAL_PAGES) | set(REDIRECT_PAGES) | set(UTILITY_PAGES)
     if html_files != expected:
         fail(f"HTML set mismatch; missing={sorted(expected-html_files)}, extra={sorted(html_files-expected)}")
+
+    for filename, spec in UTILITY_PAGES.items():
+        text = (ROOT / filename).read_text(encoding="utf-8")
+        robots = re.search(r'<meta\s+name="robots"\s+content="([^"]+)"', text)
+        if not robots or robots.group(1) != spec["robots"]:
+            fail(f"{filename} must remain a noindex utility page")
+        scripts = re.findall(r'<script\s+src="([^"]+)"', text)
+        if scripts != spec["scripts"]:
+            fail(f"{filename} utility scripts drifted: {scripts}")
+        if "private key" not in text.lower() or "machine" not in text.lower():
+            fail(f"{filename} must keep its blinding warning visible")
 
     referenced_scripts: set[str] = set()
     canonical_scripts: dict[str, list[str]] = {}
