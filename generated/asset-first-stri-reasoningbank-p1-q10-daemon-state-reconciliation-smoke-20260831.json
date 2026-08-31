@@ -1,0 +1,328 @@
+{
+  "checks": {
+    "cleanup_after_receipt_finalization": true,
+    "contract_exact": true,
+    "docker_exec_works": true,
+    "exact_base_normalization": true,
+    "exact_create_configuration": true,
+    "exact_image_and_digest": true,
+    "fault_injection_gate_pass": true,
+    "model_provider_calls_zero": true,
+    "no_scientific_or_task_outcome_authority": true,
+    "normal_or_reconciled_exact_running_state": true,
+    "q4_q5_q9_history_exact": true,
+    "q5_source_artifacts_exact": true,
+    "receipt_complete": true,
+    "second_start_forbidden_observed": true,
+    "start_invoked_exactly_once": true
+  },
+  "cleanup_receipt": {
+    "accepted": true,
+    "cleanup_invoked": true,
+    "container_name": "e1-rb-q10-nonscientific-daemon-state-reconciliation-smoke-6ff74863",
+    "reconciliation_receipt_finalized_before_cleanup": true,
+    "returncode": 0,
+    "timed_out": false
+  },
+  "created_at_utc": "2026-08-31T05:52:41+00:00",
+  "credential_material_present": false,
+  "decision": "Q10_DAEMON_STATE_RECONCILIATION_SMOKE_PASS",
+  "docker_exec_probe": {
+    "finished_at_utc": "2026-08-31T05:52:39+00:00",
+    "output": "Q10_DAEMON_STATE_RECONCILIATION_EXEC_OK",
+    "returncode": 0,
+    "started_at_utc": "2026-08-31T05:52:36+00:00",
+    "timed_out": false
+  },
+  "exact_base_probe": {
+    "finished_at_utc": "2026-08-31T05:52:36+00:00",
+    "output": "567ff22716ac258b9edd2c1711d766b440ac0b11\n",
+    "returncode": 0,
+    "started_at_utc": "2026-08-31T05:52:33+00:00",
+    "timed_out": false
+  },
+  "experiment_id": "NON_SCIENTIFIC_Q10_DAEMON_STATE_RECONCILIATION_SMOKE-20260831",
+  "failure": null,
+  "fault_gate_sha256": "21deda0aaa883d11a58d7553f4f3217d7694c461ef23e7be48da897e9cf83554",
+  "fixture": {
+    "base_commit": "567ff22716ac258b9edd2c1711d766b440ac0b11",
+    "image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+    "image_digest": "sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+    "instance_id": "sphinx-doc__sphinx-9230",
+    "source_patch_applied": false,
+    "test_patch_applied": false
+  },
+  "mechanism_authority": false,
+  "model_calls": 0,
+  "paper_authority": false,
+  "pass": true,
+  "payload_sha256": "33e82ccd32d588a252d8e98b1b0a21b5736f450b99aa372740bf0834c975ebf8",
+  "provider_calls": 0,
+  "q10_contract_sha256": "bc4781ce0188d899af3b1a491b51f30467e6c655c7f8d3074b919a043b2878bd",
+  "runtime_start": {
+    "base_commit_receipt": {
+      "expected_base_commit": "567ff22716ac258b9edd2c1711d766b440ac0b11",
+      "finished_at_utc": "2026-08-31T05:52:33+00:00",
+      "git_clean_invoked": false,
+      "normalization": {
+        "finished_at_utc": "2026-08-31T05:52:30+00:00",
+        "output": "HEAD is now at 567ff2271 Merge pull request #9231 from tk0miya/9217_manpage_section_directory\n",
+        "returncode": 0,
+        "started_at_utc": "2026-08-31T05:52:25+00:00",
+        "timed_out": false
+      },
+      "normalization_action": "git reset --hard <frozen expected base commit>",
+      "observed_head": "567ff22716ac258b9edd2c1711d766b440ac0b11",
+      "output": "567ff22716ac258b9edd2c1711d766b440ac0b11\n",
+      "pre_normalization": {
+        "finished_at_utc": "2026-08-31T05:52:25+00:00",
+        "output": "9d03141cdd2e80b948a5a100c27e59896fcdb94c\n",
+        "returncode": 0,
+        "started_at_utc": "2026-08-31T05:52:17+00:00",
+        "timed_out": false
+      },
+      "returncode": 0,
+      "rule": "exact_base_after_preregistered_hard_reset",
+      "started_at_utc": "2026-08-31T05:52:30+00:00",
+      "timed_out": false
+    },
+    "image_inspect": {
+      "finished_at_utc": "2026-08-31T05:52:12+00:00",
+      "output": "[\n    {\n        \"Id\": \"sha256:d379dcc96158e93133a465d02a206e554e948a48c38d19a17e18fcced167b933\",\n        \"RepoTags\": [\n            \"docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230:e1q3fixed-036fb501\"\n        ],\n        \"RepoDigests\": [\n            \"docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1\"\n        ],\n        \"Comment\": \"buildkit.dockerfile.v0\",\n        \"Created\": \"2026-08-13T03:53:28.481216107Z\",\n        \"Config\": {\n            \"Env\": [\n                \"PATH=/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"TZ=Etc/UTC\"\n            ],\n            \"Cmd\": [\n                \"/bin/bash\"\n            ],\n            \"WorkingDir\": \"/testbed/\",\n            \"Labels\": {\n                \"org.opencontainers.image.version\": \"22.04\"\n            }\n        },\n        \"Architecture\": \"amd64\",\n        \"Os\": \"linux\",\n        \"Size\": 2811016760,\n        \"GraphDriver\": {\n            \"Data\": {\n                \"LowerDir\": \"/data/wyt/rootless-docker24/overlay2/bff6f53583b58bf6c0b317ebceb615933d38e2a43eaa84e99a9413f62e50654e/diff:/data/wyt/rootless-docker24/overlay2/d00c053e50c8ae9a4d517b2d2bfc05128a2ced2972eb1761a9527dc98798437a/diff:/data/wyt/rootless-docker24/overlay2/7365f2e6671df91a352ae47747f2808d7702fc162273c32da73ce5a3376b606d/diff:/data/wyt/rootless-docker24/overlay2/c1eff5144d13cb538e520720810ade4d8aad8de132a88313e0b4108f90013fb6/diff:/data/wyt/rootless-docker24/overlay2/d627d60d80a3d87f0c651b9b2777253de9107e2c70590faa82937d321d971b1b/diff:/data/wyt/rootless-docker24/overlay2/ed45c3c1f5428b3003a2282f174b40662eff5aeccdff5a02ab215f696730de87/diff:/data/wyt/rootless-docker24/overlay2/d590be0134b931d943d7818ff6595f85ab23d5e948d4ba2c73f799ac9f40ffab/diff:/data/wyt/rootless-docker24/overlay2/387a15feaf4f2ddd79b8a667e40a54ad3f9935ed6d89f510e68e04a1c7d12fea/diff:/data/wyt/rootless-docker24/overlay2/4bb6aec75beee95ec35e955925b0372f18b537015d2d8c730f87ee9bd81ae1b9/diff\",\n                \"MergedDir\": \"/data/wyt/rootless-docker24/overlay2/48979d9bad1b4d69edd0d8cacbb836dfb9f35cb60fe632bca31320f38a8dc511/merged\",\n                \"UpperDir\": \"/data/wyt/rootless-docker24/overlay2/48979d9bad1b4d69edd0d8cacbb836dfb9f35cb60fe632bca31320f38a8dc511/diff\",\n                \"WorkDir\": \"/data/wyt/rootless-docker24/overlay2/48979d9bad1b4d69edd0d8cacbb836dfb9f35cb60fe632bca31320f38a8dc511/work\"\n            },\n            \"Name\": \"overlay2\"\n        },\n        \"RootFS\": {\n            \"Type\": \"layers\",\n            \"Layers\": [\n                \"sha256:beb59027b96ddbf30ac9c80b527668fe7011f4f553fe83f5e59199e9a84fb5ca\",\n                \"sha256:24df650e8ccc41451cf4f7113e09420f7ec00ca9ae41e8be09c60bc467cdf4fe\",\n                \"sha256:098cb03ec50e1bd1637b7db5e2696a4d1dc3f1c3811adbbe444f43f631f2e7fd\",\n                \"sha256:fc3a8fa12509a555b3cea8d1f7457c0837ab8360be78e7a380294e09f96fe2f2\",\n                \"sha256:a3540f5c375c231bc054e7472d0de5a6d8fe5c96b92948f7655914860647fb54\",\n                \"sha256:f3684f1a85d5159913e2c41a55a86947882302421241b14b57583633bfc31873\",\n                \"sha256:3469b42ce1ac55c209bfd25927c21eb684548d55c4628155e7730e67aa976250\",\n                \"sha256:229dd92b8b9bd5e33383abbdedbf0e121bec9801ce9c7af17dd51e75e81b6658\",\n                \"sha256:fb2ea1c2fdec731a376d010072c1b3b3fbad25913c77d963070fa5df05683ffe\",\n                \"sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef\"\n            ]\n        },\n        \"Metadata\": {\n            \"LastTagTime\": \"0001-01-01T00:00:00Z\"\n        }\n    }\n]\n",
+      "returncode": 0,
+      "started_at_utc": "2026-08-31T05:52:11+00:00",
+      "timed_out": false
+    },
+    "q10_start_reconciliation": {
+      "acceptance_rule": "normal_client_acknowledgement_with_exact_post_start_state",
+      "accepted": true,
+      "client_output": "e1-rb-q10-nonscientific-daemon-state-reconciliation-smoke-6ff74863\n",
+      "client_returncode": 0,
+      "client_start_invocations": 1,
+      "client_timed_out": false,
+      "container_id": "1015da2a80614bdbe177e1c81b565d4653d3938bbcb6917d0d4b4d29375f5957",
+      "container_name": "/e1-rb-q10-nonscientific-daemon-state-reconciliation-smoke-6ff74863",
+      "contract_sha256": "bc4781ce0188d899af3b1a491b51f30467e6c655c7f8d3074b919a043b2878bd",
+      "daemon_dead": false,
+      "daemon_pid": 2275237,
+      "daemon_restarting": false,
+      "daemon_running": true,
+      "daemon_status": "running",
+      "docker_inspect_invoked": true,
+      "docker_inspect_receipt": {
+        "output_sha256_recorded_elsewhere": false,
+        "returncode": 0,
+        "timed_out": false
+      },
+      "exact_identity_verified": true,
+      "exact_running_state_verified": true,
+      "expected_image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "expected_image_digest": "sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "expected_pid_mode": "host",
+      "observed_cmd": [
+        "infinity"
+      ],
+      "observed_entrypoint": [
+        "sleep"
+      ],
+      "observed_image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+      "observed_image_digests": [
+        "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1"
+      ],
+      "observed_pid_mode": "host",
+      "receipt_finalized": true,
+      "reconciliation_invoked": false,
+      "restart_count": 0,
+      "second_start_invoked": false
+    },
+    "q6_create_acknowledgement": {
+      "accepted": true,
+      "client_create_invocations": 1,
+      "client_output": "1015da2a80614bdbe177e1c81b565d4653d3938bbcb6917d0d4b4d29375f5957\n",
+      "client_returncode": 0,
+      "client_timed_out": false,
+      "container_id": "1015da2a80614bdbe177e1c81b565d4653d3938bbcb6917d0d4b4d29375f5957",
+      "contract_sha256": "5779bd037811c6446610eb31b6b7f73f8110993f5ad0f112902523477ee0158b",
+      "normal_create_receipt_accepted": true,
+      "repair_invoked": false,
+      "second_create_invoked": false
+    }
+  },
+  "schema_version": 1,
+  "scientific_authority": false,
+  "start_reconciliation_receipt": {
+    "acceptance_rule": "normal_client_acknowledgement_with_exact_post_start_state",
+    "accepted": true,
+    "client_output": "e1-rb-q10-nonscientific-daemon-state-reconciliation-smoke-6ff74863\n",
+    "client_returncode": 0,
+    "client_start_invocations": 1,
+    "client_timed_out": false,
+    "container_id": "1015da2a80614bdbe177e1c81b565d4653d3938bbcb6917d0d4b4d29375f5957",
+    "container_name": "/e1-rb-q10-nonscientific-daemon-state-reconciliation-smoke-6ff74863",
+    "contract_sha256": "bc4781ce0188d899af3b1a491b51f30467e6c655c7f8d3074b919a043b2878bd",
+    "daemon_dead": false,
+    "daemon_pid": 2275237,
+    "daemon_restarting": false,
+    "daemon_running": true,
+    "daemon_status": "running",
+    "docker_inspect_invoked": true,
+    "docker_inspect_receipt": {
+      "output_sha256_recorded_elsewhere": false,
+      "returncode": 0,
+      "timed_out": false
+    },
+    "exact_identity_verified": true,
+    "exact_running_state_verified": true,
+    "expected_image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+    "expected_image_digest": "sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+    "expected_pid_mode": "host",
+    "observed_cmd": [
+      "infinity"
+    ],
+    "observed_entrypoint": [
+      "sleep"
+    ],
+    "observed_image": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1",
+    "observed_image_digests": [
+      "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-9230@sha256:036fb5014ef0054831e7218af5addb8957f527fe4a01bf6d4b6e1eebfdd4fca1"
+    ],
+    "observed_pid_mode": "host",
+    "receipt_finalized": true,
+    "reconciliation_invoked": false,
+    "restart_count": 0,
+    "second_start_invoked": false
+  },
+  "task_outcome_authority": false,
+  "verification": {
+    "history": {
+      "generated/asset-first-stri-reasoningbank-p1-q2-q3-q4-q5-scientific-memory-20260831.json": {
+        "actual": "6a33edff017b283f464d5340514cad91cd4a0e1fcb17c92c3d2849507a02a687",
+        "expected": "6a33edff017b283f464d5340514cad91cd4a0e1fcb17c92c3d2849507a02a687",
+        "pass": true
+      },
+      "generated/asset-first-stri-reasoningbank-p1-q4-index-20260830.json": {
+        "actual": "f6ce4e4a345fa8e105ddca934faa1c85af14b039497768ebef1bd0222409a0bf",
+        "expected": "f6ce4e4a345fa8e105ddca934faa1c85af14b039497768ebef1bd0222409a0bf",
+        "pass": true
+      },
+      "generated/asset-first-stri-reasoningbank-p1-q5-adjudication-20260831.json": {
+        "actual": "39721690bdcfea975681494d791e0e99146a2e926321ae2ca96a3b6a7fa0b8d0",
+        "expected": "39721690bdcfea975681494d791e0e99146a2e926321ae2ca96a3b6a7fa0b8d0",
+        "pass": true
+      },
+      "generated/asset-first-stri-reasoningbank-p1-q5-artifact-manifest-20260831.json": {
+        "actual": "27ab58ee8966c99f659db914a592dbf1e7075c2d05970249fadb302b9c1e777c",
+        "expected": "27ab58ee8966c99f659db914a592dbf1e7075c2d05970249fadb302b9c1e777c",
+        "pass": true
+      },
+      "generated/asset-first-stri-reasoningbank-p1-q5-evaluator-verbosity-repair-contract-20260830.json": {
+        "actual": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+        "expected": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+        "pass": true
+      },
+      "generated/asset-first-stri-reasoningbank-p1-q5-failure-differential-20260831.json": {
+        "actual": "0590bfebfda68889684a4d270b686a72eefb23b39d80db6ecf288e34e69ff503",
+        "expected": "0590bfebfda68889684a4d270b686a72eefb23b39d80db6ecf288e34e69ff503",
+        "pass": true
+      },
+      "generated/asset-first-stri-reasoningbank-p1-q5-index-20260831.json": {
+        "actual": "16e188146e651c13cd41c9b97ceffff5f29b5937928894bfbfb4e136204c777e",
+        "expected": "16e188146e651c13cd41c9b97ceffff5f29b5937928894bfbfb4e136204c777e",
+        "pass": true
+      },
+      "generated/asset-first-stri-reasoningbank-p1-q9-evaluator-verbosity-smoke-20260831.json": {
+        "actual": "50685527c8fbef42e242a285d2f12f484ed17cedde9a6916c5ca6bd04a74087a",
+        "expected": "50685527c8fbef42e242a285d2f12f484ed17cedde9a6916c5ca6bd04a74087a",
+        "pass": true
+      },
+      "generated/asset-first-stri-reasoningbank-p1-q9-q5-replay-execution-authority-20260831.json": {
+        "actual": "56023442130efd367279d09d87eb208500ce20703a8e73f7c4dba049f77f767e",
+        "expected": "56023442130efd367279d09d87eb208500ce20703a8e73f7c4dba049f77f767e",
+        "pass": true
+      },
+      "generated/asset-first-stri-reasoningbank-p1-q9-start-ack-grace-contract-20260831.json": {
+        "actual": "5779bd037811c6446610eb31b6b7f73f8110993f5ad0f112902523477ee0158b",
+        "expected": "5779bd037811c6446610eb31b6b7f73f8110993f5ad0f112902523477ee0158b",
+        "pass": true
+      },
+      "q4_q5_immutable_terminal_history": {
+        "pass": true
+      },
+      "q5_hold_preserved": {
+        "pass": true
+      },
+      "q9_history_preserved": {
+        "pass": true
+      }
+    },
+    "q5_sources": {
+      "contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+      "official_swebench_wheel_sha256": "b7f0416a1e686eca22c2f749b5f816685a202835032f6683080e2b53545bbb62",
+      "pass": true,
+      "q4_adjudication_sha256": "c3fe8f239a4128f89ed8c851cc0af8d061aec02333a60c4c9f397f3027908b26",
+      "q4_index_sha256": "f6ce4e4a345fa8e105ddca934faa1c85af14b039497768ebef1bd0222409a0bf",
+      "source_checks": [
+        {
+          "actual_sha256": "b1607cf4179cc1557a10cb2cd431b1d5beecb9953b6d9c517dd259b22150ec0d",
+          "expected_sha256": "b1607cf4179cc1557a10cb2cd431b1d5beecb9953b6d9c517dd259b22150ec0d",
+          "pass": true,
+          "source_run_id": "q4-sphinx-doc__sphinx-9230-A"
+        },
+        {
+          "actual_sha256": "ea738577cf1b244cf0a888f0687635986f2050bd8b978fd47f79b404e537b19c",
+          "expected_sha256": "ea738577cf1b244cf0a888f0687635986f2050bd8b978fd47f79b404e537b19c",
+          "pass": true,
+          "source_run_id": "q4-sphinx-doc__sphinx-9230-B"
+        },
+        {
+          "actual_sha256": "ba051d5ea235fb3dbb97b3ec1326830db0f1afe7e6550bfdd70d47b2178819a5",
+          "expected_sha256": "ba051d5ea235fb3dbb97b3ec1326830db0f1afe7e6550bfdd70d47b2178819a5",
+          "pass": true,
+          "source_run_id": "q4-sphinx-doc__sphinx-9230-C"
+        },
+        {
+          "actual_sha256": "33a6c71447c74d1b448fa3e3ff3d8b5d41859bdb94700c3c25de9a64902446d6",
+          "expected_sha256": "33a6c71447c74d1b448fa3e3ff3d8b5d41859bdb94700c3c25de9a64902446d6",
+          "pass": true,
+          "source_run_id": "q4-sphinx-doc__sphinx-9230-D"
+        },
+        {
+          "actual_sha256": "afc1c15caf5113e096ad27c619f1098cf327ca3bf2c534a91004ac1ccb948f97",
+          "expected_sha256": "afc1c15caf5113e096ad27c619f1098cf327ca3bf2c534a91004ac1ccb948f97",
+          "pass": true,
+          "source_run_id": "q4-sphinx-doc__sphinx-9230-E"
+        },
+        {
+          "actual_sha256": "7b0b8682aa9e1229ae24c0b4811739f97f2a9368b33061fe61b55d075888a49f",
+          "expected_sha256": "7b0b8682aa9e1229ae24c0b4811739f97f2a9368b33061fe61b55d075888a49f",
+          "pass": true,
+          "source_run_id": "q4-django__django-11880-A"
+        },
+        {
+          "actual_sha256": "aa9d745c6634665df9d9e332cb56f9465aefec233f3b77ec7db8a5c8f5f762ed",
+          "expected_sha256": "aa9d745c6634665df9d9e332cb56f9465aefec233f3b77ec7db8a5c8f5f762ed",
+          "pass": true,
+          "source_run_id": "q4-django__django-11880-B"
+        },
+        {
+          "actual_sha256": "8988237cf83b2433bc10276730e58c1d017bf241f7de084d5b23698cb9918a2c",
+          "expected_sha256": "8988237cf83b2433bc10276730e58c1d017bf241f7de084d5b23698cb9918a2c",
+          "pass": true,
+          "source_run_id": "q4-django__django-11880-C"
+        },
+        {
+          "actual_sha256": "009629dd7632b0cb66c366eb331df21a68ca5e49667d550f70d587fa087cc080",
+          "expected_sha256": "009629dd7632b0cb66c366eb331df21a68ca5e49667d550f70d587fa087cc080",
+          "pass": true,
+          "source_run_id": "q4-django__django-11880-D"
+        },
+        {
+          "actual_sha256": "196b127087c594e0dbaa41615579e7e647d85c9fb01712e85f283582a12e011b",
+          "expected_sha256": "196b127087c594e0dbaa41615579e7e647d85c9fb01712e85f283582a12e011b",
+          "pass": true,
+          "source_run_id": "q4-django__django-11880-E"
+        }
+      ]
+    }
+  }
+}
