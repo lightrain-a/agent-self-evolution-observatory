@@ -1,0 +1,467 @@
+{
+  "allowed_while_host_shape_hold": [
+    "selected-task LFS pointer/size manifest qualification",
+    "dependency/environment build without model load",
+    "checkpoint availability/authentication metadata check without model load",
+    "evaluator protocol/schema dry run on synthetic/non-scientific fixtures",
+    "resolve an authorized source-faithful 8-GPU execution host"
+  ],
+  "dataset": {
+    "all_selected_tasks_have_frame_data": true,
+    "all_selected_tasks_have_six_video_features": true,
+    "large_asset_bytes_not_downloaded_by_this_preflight": true,
+    "repo": "behavior-1k/2026-challenge-demos",
+    "revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+    "static_tree_only": true,
+    "task_asset_rows": [
+      {
+        "data_file_count": 9,
+        "static_asset_pass": true,
+        "task_index": 8,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 93
+      },
+      {
+        "data_file_count": 6,
+        "static_asset_pass": true,
+        "task_index": 10,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 78
+      },
+      {
+        "data_file_count": 8,
+        "static_asset_pass": true,
+        "task_index": 12,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 95
+      },
+      {
+        "data_file_count": 18,
+        "static_asset_pass": true,
+        "task_index": 13,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 298
+      },
+      {
+        "data_file_count": 13,
+        "static_asset_pass": true,
+        "task_index": 14,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 191
+      },
+      {
+        "data_file_count": 9,
+        "static_asset_pass": true,
+        "task_index": 17,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 122
+      },
+      {
+        "data_file_count": 11,
+        "static_asset_pass": true,
+        "task_index": 33,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 110
+      },
+      {
+        "data_file_count": 13,
+        "static_asset_pass": true,
+        "task_index": 41,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 182
+      },
+      {
+        "data_file_count": 6,
+        "static_asset_pass": true,
+        "task_index": 42,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 60
+      },
+      {
+        "data_file_count": 7,
+        "static_asset_pass": true,
+        "task_index": 46,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 82
+      },
+      {
+        "data_file_count": 7,
+        "static_asset_pass": true,
+        "task_index": 51,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 80
+      },
+      {
+        "data_file_count": 4,
+        "static_asset_pass": true,
+        "task_index": 56,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 61
+      },
+      {
+        "data_file_count": 6,
+        "static_asset_pass": true,
+        "task_index": 59,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 67
+      },
+      {
+        "data_file_count": 6,
+        "static_asset_pass": true,
+        "task_index": 62,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 75
+      },
+      {
+        "data_file_count": 10,
+        "static_asset_pass": true,
+        "task_index": 65,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 112
+      },
+      {
+        "data_file_count": 6,
+        "static_asset_pass": true,
+        "task_index": 67,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 83
+      },
+      {
+        "data_file_count": 11,
+        "static_asset_pass": true,
+        "task_index": 68,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 388
+      },
+      {
+        "data_file_count": 13,
+        "static_asset_pass": true,
+        "task_index": 73,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 166
+      },
+      {
+        "data_file_count": 10,
+        "static_asset_pass": true,
+        "task_index": 74,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 306
+      },
+      {
+        "data_file_count": 2,
+        "static_asset_pass": true,
+        "task_index": 77,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 41
+      },
+      {
+        "data_file_count": 8,
+        "static_asset_pass": true,
+        "task_index": 81,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 283
+      },
+      {
+        "data_file_count": 12,
+        "static_asset_pass": true,
+        "task_index": 84,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 149
+      },
+      {
+        "data_file_count": 11,
+        "static_asset_pass": true,
+        "task_index": 85,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 214
+      },
+      {
+        "data_file_count": 11,
+        "static_asset_pass": true,
+        "task_index": 88,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 189
+      },
+      {
+        "data_file_count": 4,
+        "static_asset_pass": true,
+        "task_index": 89,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 38
+      },
+      {
+        "data_file_count": 13,
+        "static_asset_pass": true,
+        "task_index": 94,
+        "video_feature_count": 6,
+        "video_features": [
+          "observation.depth_linear.left_realsense_link_camera_0",
+          "observation.depth_linear.right_realsense_link_camera_0",
+          "observation.depth_linear.zed_link_camera_0",
+          "observation.rgb.left_realsense_link_camera_0",
+          "observation.rgb.right_realsense_link_camera_0",
+          "observation.rgb.zed_link_camera_0"
+        ],
+        "video_file_count": 115
+      }
+    ],
+    "task_count": 26
+  },
+  "execution_authority": false,
+  "generated_at": "2026-08-31T11:55:00+08:00",
+  "gpu_authority": false,
+  "multigpu_host": {
+    "next_required_action": "resolve an authorized >=8-GPU host and re-run hardware/runtime preflight without changing the scientific contract",
+    "reason": "No eligible 8-GPU host was verified in this preflight; do not infer one from historical server labels.",
+    "verified_eligible_8_gpu_host": false
+  },
+  "next_status_if_host_qualified": "READY_FOR_SEPARATE_EXECUTION_AUTHORITY_ADJUDICATION_ONLY",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-STRICT-MATCHED-PANEL",
+  "preregistration": {
+    "path": "generated/behavior-formal-goal-coupling-two-family-strict-panel-preregistration-20260831.json",
+    "sha256": "0738573af073aafd9a14f220f5f729d85adb16593cfc73043abf71e7f74f2327"
+  },
+  "schema_version": "behavior-formal-goal-coupling-two-family-static-execution-preflight-v1",
+  "scientific_actions_performed": {
+    "backward_pass": false,
+    "forward_pass": false,
+    "model_loaded": false,
+    "optimizer_step": false,
+    "policy_q_read": false,
+    "reward_read": false,
+    "scientific_rollout_started": false,
+    "training_started": false
+  },
+  "scientific_authority": false,
+  "server_69_observation": {
+    "data_filesystem_available": "8.1T",
+    "data_filesystem_total": "15T",
+    "data_filesystem_used": "5.7T",
+    "gpu_count": 1,
+    "gpu_memory_mib": 81920,
+    "gpu_model": "NVIDIA A100-SXM4-80GB",
+    "source_faithful_training_host_shape": "FAIL_1_GPU_VS_REQUIRED_8",
+    "storage_preflight": "PASS"
+  },
+  "status": "STATIC_DATA_PASS_TRAINING_HOST_SHAPE_HOLD",
+  "training_shape": {
+    "GR00T N1.7": {
+      "gpus_per_job_required": 8,
+      "jobs": 26,
+      "steps_per_job": 150000
+    },
+    "pi0.5": {
+      "gpus_per_job_required": 8,
+      "jobs": 26,
+      "steps_per_job": 50000
+    },
+    "single_gpu_or_gradient_accumulation_substitution_authorized": false,
+    "source_faithful_8_gpu_shape_is_frozen": true,
+    "total_jobs": 52
+  },
+  "unchanged_parent_constraints": {
+    "2026_public_outcome_watch": "UNCHANGED_WATCH",
+    "PORT_010": "NO_REOPEN_AUTHORITY",
+    "three_family_local_replication_gate": "UNCHANGED_HOLD_2_OF_3"
+  }
+}
