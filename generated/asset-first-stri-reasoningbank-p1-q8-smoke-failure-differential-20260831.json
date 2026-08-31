@@ -1,0 +1,22 @@
+{
+  "classification": {
+    "implementation_runtime": true,
+    "primary_failure_class": "DOCKER_START_ACK_WINDOW_180S_TOO_SHORT"
+  },
+  "created_at_utc": "2026-08-31T04:21:58+00:00",
+  "credential_material_present": false,
+  "evaluator_started": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q8-SMOKE-FAILURE-DIFFERENTIAL-20260831",
+  "failure_stage": "docker start acknowledgement",
+  "model_calls": 0,
+  "payload_sha256": "850e5e94724e0abde7a0e02def2881a860bfc310f5eb06c21dc2986f3f2b67af",
+  "provider_calls": 0,
+  "q5_contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+  "q8_contract_sha256": "7d3046b26245f612e96807574903249b6550caacd5fa7b3156aba51e57ed0d81",
+  "q8_smoke_sha256": "343754795a67c013ca05e8367c1b22e1bf0cb0a778e3145840ce5fa48edc2f7e",
+  "schema_version": 1,
+  "scientific_belief_update": "none",
+  "source_patch_applied": false,
+  "start_timeout_seconds": 180,
+  "test_patch_applied": false
+}

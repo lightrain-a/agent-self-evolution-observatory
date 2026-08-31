@@ -1,0 +1,37 @@
+{
+  "authorization": {
+    "full_p1_execution_authorized": false,
+    "q5_replay_execution_authorized": false,
+    "q9_repair_implementation_authorized": true,
+    "q9_smoke_execution_authorized": true
+  },
+  "automatic_retry": "forbidden",
+  "bindings": {
+    "q5_contract_sha256": "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f",
+    "q8_contract_sha256": "7d3046b26245f612e96807574903249b6550caacd5fa7b3156aba51e57ed0d81",
+    "q8_failed_smoke_sha256": "343754795a67c013ca05e8367c1b22e1bf0cb0a778e3145840ce5fa48edc2f7e",
+    "q8_failure_differential_sha256": "b0972ba0a1a02367ecd9ea6de353c96c4ace8bf1bd88f8041bb1c93c904db569"
+  },
+  "created_at_utc": "2026-08-31T04:21:58+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q9-START-ACK-GRACE-20260831",
+  "payload_sha256": "ba1a28f7bd5471ea0ac70718bc0897324a85400c2578ff1006b2e058071bdee0",
+  "qualification": {
+    "all_prior_smoke_checks_required": true,
+    "repeat_non_scientific_smoke": true,
+    "task_success_not_required": true
+  },
+  "replacement_sampling": "forbidden",
+  "schema_version": 1,
+  "scientific_belief_update": "none",
+  "single_variable_repair": {
+    "after_seconds": 600,
+    "before_seconds": 180,
+    "docker_create_and_inspect_unchanged": true,
+    "evaluator_command_unchanged": true,
+    "model_calls": 0,
+    "provider_calls": 0,
+    "task_population_patches_parser_unchanged": true,
+    "variable": "docker start acknowledgement timeout"
+  }
+}
