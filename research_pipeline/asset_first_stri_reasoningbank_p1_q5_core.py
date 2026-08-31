@@ -7,7 +7,7 @@ import copy
 from typing import Any
 
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
-    ROOT, DockerRun, sha256_file, sha256_text,
+    ROOT, sha256_file, sha256_text,
 )
 from research_pipeline.asset_first_stri_reasoningbank_p1_eval import (
     evaluate, parse_django, parse_pytest_v2,
@@ -18,6 +18,9 @@ from research_pipeline.asset_first_stri_reasoningbank_p1_q3_parser_qualification
 from research_pipeline.asset_first_stri_reasoningbank_p1_q5_prepare import (
     CONTRACT, FIXTURES, Q4_ADJUDICATION, Q4_INDEX, SPHINX_AFTER, SPHINX_BEFORE,
     load_payload,
+)
+from research_pipeline.asset_first_stri_reasoningbank_p1_q6_runtime import (
+    ReconciledDockerRun,
 )
 
 CONTRACT_SHA256 = "972aab1ce256a759fc20e5762ab4ef05254e8abdbdb65f9c417c8eef7f30700f"
@@ -121,7 +124,7 @@ def image_digest_visible(start: dict[str, Any], expected: str) -> bool:
     return expected in (start.get("image_inspect") or {}).get("output", "")
 
 
-def apply_patch(container: DockerRun, patch: str) -> dict[str, Any]:
+def apply_patch(container: ReconciledDockerRun, patch: str) -> dict[str, Any]:
     encoded = base64.b64encode(patch.encode("utf-8")).decode("ascii")
     return container.exec(
         f"printf %s {encoded} | base64 -d | git apply --binary -", timeout=60
@@ -147,7 +150,7 @@ def replay_one(
     repaired = repaired_fixture(fixture)
     original_script = fixture["evaluator_only"]["eval_script"]
     repaired_script = repaired["evaluator_only"]["eval_script"]
-    container = DockerRun(
+    container = ReconciledDockerRun(
         fixture["image_pull_reference"], source["base_commit"], run_id, exact_base=True
     )
     try:

@@ -17,7 +17,7 @@ from research_pipeline.asset_first_stri_reasoningbank_p1_q5_core import (
 from research_pipeline.asset_first_stri_reasoningbank_p1_q5_prepare import (
     CONTRACT, load_payload,
 )
-from research_pipeline.asset_first_stri_reasoningbank_p1_q5_smoke import (
+from research_pipeline.asset_first_stri_reasoningbank_p1_q6_smoke import (
     AUTHORITY, SMOKE,
 )
 
@@ -62,10 +62,11 @@ def run_q5(
     verify_q5_contract()
     authority = load_payload(AUTHORITY)
     if not (
-        authority["decision"] == "P1_Q5_REPLAY_EXECUTION_AUTHORIZED"
+        authority["decision"]
+        == "P1_Q6_RUNTIME_AND_EVALUATOR_QUALIFIED_Q5_REPLAY_AUTHORIZED"
         and authority["q5_replay_execution_authorized"] is True
-        and authority["contract_sha256"] == CONTRACT_SHA256
-        and authority["smoke_sha256"] == sha256_file(SMOKE)
+        and authority["q5_contract_sha256"] == CONTRACT_SHA256
+        and authority["q6_smoke_sha256"] == sha256_file(SMOKE)
         and all(authority["checks"].values())
     ):
         raise RuntimeError("Q5 replay execution authority is closed")
