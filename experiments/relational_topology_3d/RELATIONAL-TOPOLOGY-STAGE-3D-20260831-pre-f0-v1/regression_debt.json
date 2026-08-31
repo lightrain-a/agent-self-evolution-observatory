@@ -1,18 +1,18 @@
 {
   "authority_impact": "SCOPED_NON_BLOCKING_DEBT",
-  "base_sha": "ade999d47c90f83f3c9b98c2dba969a6f4076e35",
+  "base_sha": "45359640b9f22416b2fd4ac673972988db87cb02",
   "blocking_incidents": [],
   "classification_rule": "exact module dependency-chain classification; child/authority/registry/replay incidents block",
-  "compiler_source_git_sha": "c9b8883a618448de0e5743ea307af8d6021d932a",
-  "compiler_source_git_tree": "5f05f93cb574207a88c9c712c51f1ee44596718f",
+  "compiler_source_git_sha": "d61262f08a5a7a82e8ccfc0c35efa57e09f6c609",
+  "compiler_source_git_tree": "f54821ba2982714de38f01c54a1f67fcd6cdd5f4",
   "config_sha256": "e0d68fa08c8bcdf496f1c261ee945924ea2b5f74277a9b054b26fd95bb414b41",
   "counts": {
-    "errors": 27,
+    "errors": 29,
     "failures": 1,
     "skips": 3
   },
   "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
-  "duration_seconds": 380.268,
+  "duration_seconds": 349.747,
   "generated_at": "2026-08-31T12:00:00+00:00",
   "incidents": [
     {
@@ -50,6 +50,18 @@
       "kind": "ERROR",
       "root_cause": "MISSING_OPTIONAL_SCIPY",
       "test": "research_pipeline.test_asset_first_stri_practical_baselines_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_practical_baselines_20260824)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_reasoningbank_full_p1 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reasoningbank_full_p1)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_reasoningbank_full_p1_adjudicate (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reasoningbank_full_p1_adjudicate)"
     },
     {
       "classification": "UNRELATED_LEGACY_DEBT",
@@ -184,7 +196,7 @@
       "test": "test_proposal_is_noncanonical_zero_execution_authority (research_pipeline.test_constraint_integration_cross_substrate_proposal.ConstraintIntegrationCrossSubstrateProposalTest.test_proposal_is_noncanonical_zero_execution_authority)"
     }
   ],
-  "log_sha256": "2ffb54e41e058d8521a273308b95f06cc0d148b2524371c341923a5f1745b80b",
+  "log_sha256": "365b1aed0ce7ec639cd107a38791d103733a0422bdf27f99a9819f559361e2de",
   "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
   "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
   "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-pre-f0-v1",
@@ -194,5 +206,5 @@
     "unrelated_debt_was_recorded_not_repaired": true
   },
   "status": "COMPLETE",
-  "tests": 1852
+  "tests": 1924
 }

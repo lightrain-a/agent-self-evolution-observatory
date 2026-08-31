@@ -1,8 +1,8 @@
 {
   "allowed_only_after_authority": "50-100 step NON_SCIENTIFIC_RESOURCE_PREFLIGHT",
   "authority": false,
-  "compiler_source_git_sha": "c9b8883a618448de0e5743ea307af8d6021d932a",
-  "compiler_source_git_tree": "5f05f93cb574207a88c9c712c51f1ee44596718f",
+  "compiler_source_git_sha": "d61262f08a5a7a82e8ccfc0c35efa57e09f6c609",
+  "compiler_source_git_tree": "f54821ba2982714de38f01c54a1f67fcd6cdd5f4",
   "config_sha256": "e0d68fa08c8bcdf496f1c261ee945924ea2b5f74277a9b054b26fd95bb414b41",
   "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
   "devices": [
