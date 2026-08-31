@@ -18,7 +18,7 @@ from research_pipeline.asset_first_stri_reasoningbank_p1_q5_prepare import (
     Q4_ADJUDICATION, Q4_INDEX, load_payload,
 )
 from research_pipeline.asset_first_stri_reasoningbank_p1_q5_runner import INDEX
-from research_pipeline.asset_first_stri_reasoningbank_p1_q6_smoke import (
+from research_pipeline.asset_first_stri_reasoningbank_p1_q7_smoke import (
     AUTHORITY, SMOKE,
 )
 

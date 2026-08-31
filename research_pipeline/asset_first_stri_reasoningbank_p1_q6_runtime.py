@@ -15,6 +15,9 @@ Q6_CONTRACT_SHA256 = "3c3a368070869eb30585c435c47122c41932a41db07c8d53db1404cdfe
 class ReconciledDockerRun(DockerRun):
     """Accept only an exact Created side effect after docker-create timeout."""
 
+    ACK_CONTRACT_SHA256 = Q6_CONTRACT_SHA256
+    INSPECT_TIMEOUT_SECONDS = 30
+
     def _finish_exact_base_start(
         self, image_inspect: dict[str, Any], reconciliation: dict[str, Any],
     ) -> dict[str, Any]:
@@ -73,7 +76,7 @@ class ReconciledDockerRun(DockerRun):
             result["q6_create_acknowledgement"] = {
                 "repair_invoked": False,
                 "normal_create_receipt_accepted": True,
-                "contract_sha256": Q6_CONTRACT_SHA256,
+                "contract_sha256": self.ACK_CONTRACT_SHA256,
             }
             return result
         except RuntimeError as error:
@@ -85,7 +88,11 @@ class ReconciledDockerRun(DockerRun):
             timeout=30,
             docker=True,
         )
-        inspected = run_host(["docker", "inspect", self.name], timeout=30, docker=True)
+        inspected = run_host(
+            ["docker", "inspect", self.name],
+            timeout=self.INSPECT_TIMEOUT_SECONDS,
+            docker=True,
+        )
         if image_inspect["returncode"] != 0 or inspected["returncode"] != 0:
             raise RuntimeError("Q6 docker-create timeout had no inspectable side effect")
         record = json.loads(inspected["output"])[0]
@@ -113,6 +120,6 @@ class ReconciledDockerRun(DockerRun):
             "cmd": record["Config"]["Cmd"],
             "pid_mode": record["HostConfig"]["PidMode"],
             "exact_side_effect_verified": True,
-            "contract_sha256": Q6_CONTRACT_SHA256,
+            "contract_sha256": self.ACK_CONTRACT_SHA256,
         }
         return self._finish_exact_base_start(image_inspect, reconciliation)
