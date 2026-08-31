@@ -1,0 +1,39 @@
+{
+  "bindings": {
+    "q10_adjudication_sha256": "a92d394ee90ee6d1b5c65ca3deb17c9311649757a1e053ed94cc7c025b0f89c9",
+    "q10_authority_sha256": "cf95b585a07201a5897b29a0320a35bfdcd0e613d8ffcc8ac071a58d4754a6fd",
+    "q10_contract_sha256": "bc4781ce0188d899af3b1a491b51f30467e6c655c7f8d3074b919a043b2878bd",
+    "q10_failure_differential_sha256": "d5339b61824ae03259c153751d2f04c8335349a1f1495d99924614056357ee59",
+    "q10_fault_gate_sha256": "21deda0aaa883d11a58d7553f4f3217d7694c461ef23e7be48da897e9cf83554",
+    "q10_index_sha256": "faf047da587b7daa0be16c703dabe01d14c7149441c62d2279be26cd75cf8a72",
+    "q10_smoke_sha256": "60a491b2847ad9074fd1131e704737511a43fd560605d400535be57390da7088",
+    "q5_scientific_memory_sha256": "6a33edff017b283f464d5340514cad91cd4a0e1fcb17c92c3d2849507a02a687"
+  },
+  "canonical_lesson": "implementation/operationalization failure -> no scientific belief update -> prospective repaired qualification",
+  "created_at_utc": "2026-08-31T06:27:29+00:00",
+  "credential_material_present": false,
+  "experiment_authority": false,
+  "memory_id": "E1-STRI-REASONINGBANK-Q2-Q3-Q4-Q5-Q10-FAILURE-DIFFERENTIAL-20260831",
+  "payload_sha256": "576f14293353e1e040f827d046ef6a694bade640becaff797a0e31af90de49b6",
+  "reconciliation_lesson": "A remote/container operation may have completed even when the client acknowledgement fails. Exactly-once scientific execution therefore requires side-effect reconciliation, not blind retries.",
+  "schema_version": 1,
+  "scientific_authority": false,
+  "sequence": [
+    {
+      "disposition": "evaluator observability failure; no scientific belief update",
+      "stage": "Q4"
+    },
+    {
+      "disposition": "observability repaired; one Docker start acknowledgement failure; no scientific belief update",
+      "stage": "Q5"
+    },
+    {
+      "disposition": "bounded acknowledgement-window qualification history; timeout magnitude alone was insufficient",
+      "stage": "Q6-Q9"
+    },
+    {
+      "disposition": "prospective daemon-side start reconciliation qualified",
+      "stage": "Q10"
+    }
+  ]
+}

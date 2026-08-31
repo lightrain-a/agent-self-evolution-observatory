@@ -1,0 +1,18 @@
+{
+  "classification": {
+    "failure_present": false,
+    "primary_failure_layer": null
+  },
+  "created_at_utc": "2026-08-31T06:27:29+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q10-FAILURE-DIFFERENTIAL-20260831",
+  "failed_runs": [],
+  "implementation_qualified": true,
+  "payload_sha256": "9969a566f79a910dddfab9ebdf5d1cf1a60a42606507254c9e756aa6362117b9",
+  "q10_adjudication_sha256": "a92d394ee90ee6d1b5c65ca3deb17c9311649757a1e053ed94cc7c025b0f89c9",
+  "q10_artifact_manifest_sha256": "75895fbb1dd180a0691df598d299c92bd59dbeeca53992d9e5f130b1fff7f79f",
+  "q4_q5_preserved_unchanged": true,
+  "schema_version": 1,
+  "scientific_belief_update": "none",
+  "task_outcomes_used_for_classification": false
+}

@@ -1,0 +1,117 @@
+{
+  "adjudication_sha256": "a92d394ee90ee6d1b5c65ca3deb17c9311649757a1e053ed94cc7c025b0f89c9",
+  "all_artifacts_sha256_verified": true,
+  "artifact_count": 15,
+  "artifacts": [
+    {
+      "bytes": 21795,
+      "hash_matches": true,
+      "index_expected_sha256": null,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-docker-start-reconciliation-contract-20260831.json",
+      "sha256": "bc4781ce0188d899af3b1a491b51f30467e6c655c7f8d3074b919a043b2878bd"
+    },
+    {
+      "bytes": 1999,
+      "hash_matches": true,
+      "index_expected_sha256": null,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-fault-tests-20260831.json",
+      "sha256": "21deda0aaa883d11a58d7553f4f3217d7694c461ef23e7be48da897e9cf83554"
+    },
+    {
+      "bytes": 18788,
+      "hash_matches": true,
+      "index_expected_sha256": null,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-daemon-state-reconciliation-smoke-20260831.json",
+      "sha256": "60a491b2847ad9074fd1131e704737511a43fd560605d400535be57390da7088"
+    },
+    {
+      "bytes": 1858,
+      "hash_matches": true,
+      "index_expected_sha256": null,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-replay-execution-authority-20260831.json",
+      "sha256": "cf95b585a07201a5897b29a0320a35bfdcd0e613d8ffcc8ac071a58d4754a6fd"
+    },
+    {
+      "bytes": 12874,
+      "hash_matches": true,
+      "index_expected_sha256": null,
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-index-20260831.json",
+      "sha256": "faf047da587b7daa0be16c703dabe01d14c7149441c62d2279be26cd75cf8a72"
+    },
+    {
+      "bytes": 93909,
+      "hash_matches": true,
+      "index_expected_sha256": "94454c4a80b951510f478f41f7ce2f23f9251b09583927af84b095d524a863c8",
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-runs-20260831/q10-sphinx-doc__sphinx-9230-A/run.json",
+      "sha256": "94454c4a80b951510f478f41f7ce2f23f9251b09583927af84b095d524a863c8"
+    },
+    {
+      "bytes": 93869,
+      "hash_matches": true,
+      "index_expected_sha256": "49d370611399e400c751453e66e673dd98f8a6d548b9ef733c70575c516bd0ca",
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-runs-20260831/q10-sphinx-doc__sphinx-9230-B/run.json",
+      "sha256": "49d370611399e400c751453e66e673dd98f8a6d548b9ef733c70575c516bd0ca"
+    },
+    {
+      "bytes": 93835,
+      "hash_matches": true,
+      "index_expected_sha256": "3c864d7c39e4c16de1dc381e1336edaaa60a126c2b03161eb102bbc8fabb72b2",
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-runs-20260831/q10-sphinx-doc__sphinx-9230-C/run.json",
+      "sha256": "3c864d7c39e4c16de1dc381e1336edaaa60a126c2b03161eb102bbc8fabb72b2"
+    },
+    {
+      "bytes": 93892,
+      "hash_matches": true,
+      "index_expected_sha256": "1e3aa088972c452189521d76b0ad7acf0a4de93654168d5f5f7febdf815f5e6b",
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-runs-20260831/q10-sphinx-doc__sphinx-9230-D/run.json",
+      "sha256": "1e3aa088972c452189521d76b0ad7acf0a4de93654168d5f5f7febdf815f5e6b"
+    },
+    {
+      "bytes": 93933,
+      "hash_matches": true,
+      "index_expected_sha256": "d9e1fb626d1d1553bd1b7e4b2af30965be68af5bd3fb471233227fa29f2c1337",
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-runs-20260831/q10-sphinx-doc__sphinx-9230-E/run.json",
+      "sha256": "d9e1fb626d1d1553bd1b7e4b2af30965be68af5bd3fb471233227fa29f2c1337"
+    },
+    {
+      "bytes": 91339,
+      "hash_matches": true,
+      "index_expected_sha256": "b78d5c7024e30dc6b0c7830a733bfa7b3ade182d82ddb2d5b31753a71d1dd3be",
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-runs-20260831/q10-django__django-11880-A/run.json",
+      "sha256": "b78d5c7024e30dc6b0c7830a733bfa7b3ade182d82ddb2d5b31753a71d1dd3be"
+    },
+    {
+      "bytes": 91192,
+      "hash_matches": true,
+      "index_expected_sha256": "0416da3808ac5c4645836db76d6ec10121d4b88796020158f87915148da9915c",
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-runs-20260831/q10-django__django-11880-B/run.json",
+      "sha256": "0416da3808ac5c4645836db76d6ec10121d4b88796020158f87915148da9915c"
+    },
+    {
+      "bytes": 91192,
+      "hash_matches": true,
+      "index_expected_sha256": "453ba0072105894b7d1307f2d43b2b8036fef494d3b63c5484c30f56cc9bd4e1",
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-runs-20260831/q10-django__django-11880-C/run.json",
+      "sha256": "453ba0072105894b7d1307f2d43b2b8036fef494d3b63c5484c30f56cc9bd4e1"
+    },
+    {
+      "bytes": 91160,
+      "hash_matches": true,
+      "index_expected_sha256": "c885138abc369c3f16e6237f02715932f54baed46f29c02f7ef533c53d95b8db",
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-runs-20260831/q10-django__django-11880-D/run.json",
+      "sha256": "c885138abc369c3f16e6237f02715932f54baed46f29c02f7ef533c53d95b8db"
+    },
+    {
+      "bytes": 91193,
+      "hash_matches": true,
+      "index_expected_sha256": "cc40ecbecd51bb2a74832fddb11da7d52c1480d36d67d828ba1b36bf6816d6e3",
+      "path": "generated/asset-first-stri-reasoningbank-p1-q10-runs-20260831/q10-django__django-11880-E/run.json",
+      "sha256": "cc40ecbecd51bb2a74832fddb11da7d52c1480d36d67d828ba1b36bf6816d6e3"
+    }
+  ],
+  "created_at_utc": "2026-08-31T06:27:29+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-P1-Q10-ARTIFACT-MANIFEST-20260831",
+  "payload_sha256": "4e8c277ca08ae0c0eebac54442d9e2ff2fb18dccd1046137b3c355408a83c6c9",
+  "schema_version": 1
+}
