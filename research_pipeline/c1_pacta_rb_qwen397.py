@@ -3,7 +3,7 @@ from __future__ import annotations
 import hashlib,json,os,re,tempfile,urllib.error,urllib.request
 from collections import Counter
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 AA_BASE_URL="https://api.aa.com.cn/api/v1"
 MODEL_FAMILY="qwen3.5-397b-a17b"
@@ -21,13 +21,12 @@ def sha256_file(path:Path)->str:
 def canonical(value:Any)->str:
  return json.dumps(value,ensure_ascii=False,sort_keys=True,separators=(",",":"))
 
-def atomic_json(path:Path,payload:dict[str,Any])->None:
+def atomic_bytes(path:Path,data:bytes)->str:
  path.parent.mkdir(parents=True,exist_ok=True)
- body=dict(payload);body["payload_sha256"]=sha256_text(canonical(payload))
  fd,name=tempfile.mkstemp(prefix=path.name+".",suffix=".tmp",dir=path.parent)
  try:
-  with os.fdopen(fd,"w",encoding="utf-8") as h:
-   json.dump(body,h,ensure_ascii=False,indent=2,sort_keys=True);h.write("\n");h.flush();os.fsync(h.fileno())
+  with os.fdopen(fd,"wb") as h:
+   h.write(data);h.flush();os.fsync(h.fileno())
   os.replace(name,path)
   dfd=os.open(path.parent,os.O_RDONLY)
   try:os.fsync(dfd)
@@ -36,6 +35,19 @@ def atomic_json(path:Path,payload:dict[str,Any])->None:
   try:os.unlink(name)
   except FileNotFoundError:pass
   raise
+ return hashlib.sha256(data).hexdigest()
+
+def atomic_json(path:Path,payload:dict[str,Any])->None:
+ body=dict(payload);body["payload_sha256"]=sha256_text(canonical(payload))
+ atomic_bytes(path,(json.dumps(body,ensure_ascii=False,indent=2,sort_keys=True)+"\n").encode("utf-8"))
+
+def persist_before_parse(raw:bytes,path:Path,parser:Callable[[bytes],Any])->tuple[Any,str]:
+ digest=atomic_bytes(path,raw)
+ parsed=parser(raw)
+ return parsed,digest
+
+def parse_json_bytes(raw:bytes)->Any:
+ return json.loads(raw.decode("utf-8"))
 
 class AAProvider:
  def __init__(self,api_key:str|None=None,base_url:str=AA_BASE_URL,timeout:float=180):
@@ -90,13 +102,35 @@ def choose_budget(rows_by_budget:dict[int,list[dict[str,Any]]])->int:
    return budget
  raise ValueError("STOP_ACTION_BEFORE_BUDGET")
 
+def render_writer_input(messages:list[dict[str,Any]])->str:
+ return "\n".join(str(m["content"]) for m in messages if m.get("role")!="system")
+
 def trajectory_backed(unit:dict[str,Any])->tuple[bool,str]:
- path=unit.get("source_trajectory_path");expected=unit.get("source_trajectory_sha256")
- if not path or not expected:return False,"missing trajectory path/hash"
- p=Path(path)
- if not p.is_file():return False,"trajectory file absent"
- if sha256_file(p)!=expected:return False,"trajectory hash mismatch"
+ checks=(
+  ("source_trajectory_path","source_trajectory_sha256","trajectory"),
+  ("writer_input_trajectory_path","writer_input_trajectory_sha256","writer input"),
+ )
+ for path_key,hash_key,label in checks:
+  path=unit.get(path_key);expected=unit.get(hash_key)
+  if not path or not expected:return False,f"missing {label} path/hash"
+  p=Path(path)
+  if not p.is_file():return False,f"{label} file absent"
+  if sha256_file(p)!=expected:return False,f"{label} hash mismatch"
+ if not unit.get("native_trajectory_executed"):return False,"native trajectory not executed"
+ if int(unit.get("model_call_count") or 0)<1:return False,"no real model interaction"
+ if not unit.get("all_raw_responses_persisted"):return False,"raw response provenance incomplete"
+ if unit.get("model_drift"):return False,"provider identity drift"
+ if unit.get("provider_packet_drift"):return False,"provider packet drift"
+ if unit.get("instrumentation_corruption"):return False,"instrumentation corruption"
  return True,"pass"
+
+def t0_validity(unit:dict[str,Any])->tuple[bool,str]:
+ """Task success is metadata, never an input to support validity."""
+ return trajectory_backed(unit)
+
+FORBIDDEN_T0_STAGES=("writer","binder","shadow","gate","random_gate","final","future_policy")
+def assert_t0_stage(stage:str)->None:
+ if stage in FORBIDDEN_T0_STAGES:raise PermissionError(f"T0 cannot reach {stage}")
 
 def validate_fresh_pool(units:list[dict[str,Any]])->dict[str,Any]:
  rows=[]
