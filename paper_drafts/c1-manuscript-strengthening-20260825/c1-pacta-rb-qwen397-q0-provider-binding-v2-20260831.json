@@ -1,0 +1,115 @@
+{
+  "created_at_utc": "2026-08-31T15:30:30+00:00",
+  "enable_thinking_request": false,
+  "enable_thinking_status": "accepted_and_frozen",
+  "endpoint": "https://api.aa.com.cn/api/v1/chat/completions",
+  "experiment_id": "C1-PACTA-RB-QWEN397-Q0-20260831-v2",
+  "identity_pass": true,
+  "identity_probes": [
+    {
+      "enable_thinking_requested": false,
+      "exact_text_pass": true,
+      "label": "identity-1",
+      "persisted_before_parse": true,
+      "probe": 1,
+      "request_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-q0-20260831-v2/raw/0002-identity-1.request.json",
+      "request_sha256": "eb80c53d99d43424172a916cc7b3d4a762ae6e42f1f5b94a4d15b02a89324e08",
+      "requested_model": "qwen3.5-397b-a17b",
+      "resolved_model": "qwen3.5-397b-a17b",
+      "response_bytes": 450,
+      "response_id": "chatcmpl-003dbb1a-cb88-9d83-bb46-2de3881cf92b",
+      "response_model": "qwen3.5-397b-a17b",
+      "response_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-q0-20260831-v2/raw/0002-identity-1.response.json",
+      "response_sha256": "fa9bf0f92e93b73b405c024bc970fa4e1f20e1646ac763b674abd8c70358ee50",
+      "status_code": 200,
+      "thinking_parameter_accepted": true,
+      "timestamp_utc": "2026-08-31T15:30:26+00:00",
+      "transport_attempt_count": 1,
+      "usage": {
+        "completion_tokens": 13,
+        "completion_tokens_details": {
+          "text_tokens": 13
+        },
+        "prompt_tokens": 41,
+        "prompt_tokens_details": {
+          "text_tokens": 41
+        },
+        "total_tokens": 54
+      }
+    },
+    {
+      "enable_thinking_requested": false,
+      "exact_text_pass": true,
+      "label": "identity-2",
+      "persisted_before_parse": true,
+      "probe": 2,
+      "request_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-q0-20260831-v2/raw/0003-identity-2.request.json",
+      "request_sha256": "cb87d0e1d70e26e5c1518e7e5a77ece8f702d7a68337c8e9b1fa15f3858f38c6",
+      "requested_model": "qwen3.5-397b-a17b",
+      "resolved_model": "qwen3.5-397b-a17b",
+      "response_bytes": 450,
+      "response_id": "chatcmpl-9392c2ba-93a6-999f-a2d8-4c8168fa8e9c",
+      "response_model": "qwen3.5-397b-a17b",
+      "response_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-q0-20260831-v2/raw/0003-identity-2.response.json",
+      "response_sha256": "6dc06db019c83a06439e269babf83fbe1bd43e75493a6e5f8fbb140aba53933e",
+      "status_code": 200,
+      "thinking_parameter_accepted": true,
+      "timestamp_utc": "2026-08-31T15:30:27+00:00",
+      "transport_attempt_count": 1,
+      "usage": {
+        "completion_tokens": 13,
+        "completion_tokens_details": {
+          "text_tokens": 13
+        },
+        "prompt_tokens": 41,
+        "prompt_tokens_details": {
+          "text_tokens": 41
+        },
+        "total_tokens": 54
+      }
+    },
+    {
+      "enable_thinking_requested": false,
+      "exact_text_pass": true,
+      "label": "identity-3",
+      "persisted_before_parse": true,
+      "probe": 3,
+      "request_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-q0-20260831-v2/raw/0004-identity-3.request.json",
+      "request_sha256": "2457d456794aa6900f8f950030e7dc16ff4feb66514fe2901bfaea9ad32c19d6",
+      "requested_model": "qwen3.5-397b-a17b",
+      "resolved_model": "qwen3.5-397b-a17b",
+      "response_bytes": 450,
+      "response_id": "chatcmpl-5f6cbce8-359f-91bb-854a-c9d8fc76c88e",
+      "response_model": "qwen3.5-397b-a17b",
+      "response_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-q0-20260831-v2/raw/0004-identity-3.response.json",
+      "response_sha256": "673f63a2c0481291d2bd7aaac682aa73d8f99503040c2a8b5aadf5880ca84ce5",
+      "status_code": 200,
+      "thinking_parameter_accepted": true,
+      "timestamp_utc": "2026-08-31T15:30:30+00:00",
+      "transport_attempt_count": 1,
+      "usage": {
+        "completion_tokens": 13,
+        "completion_tokens_details": {
+          "text_tokens": 13
+        },
+        "prompt_tokens": 41,
+        "prompt_tokens_details": {
+          "text_tokens": 41
+        },
+        "total_tokens": 54
+      }
+    }
+  ],
+  "internal_reasoning_absence_claimed": false,
+  "models_endpoint": "https://api.aa.com.cn/api/v1/models",
+  "models_raw_response_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-q0-20260831-v2/raw/0001-models.response.json",
+  "models_raw_response_sha256": "3b34810f19b14e05d4c17ac381b2ee7f59b77b775a87bcf0ffda35f2b7fc9e0d",
+  "payload_sha256": "424f53c9ac4ad584afdcf6aec1d45b8da114085b0ff2e4a44ab93c50840a7af5",
+  "provider": "典名词元 AA/OpenAI-compatible",
+  "provider_retries": 0,
+  "requested_model": "qwen3.5-397b-a17b",
+  "resolved_model": "qwen3.5-397b-a17b",
+  "response_model": "qwen3.5-397b-a17b",
+  "schema_version": 1,
+  "substitution": false
+}

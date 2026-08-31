@@ -1,0 +1,32 @@
+{
+  "binder_calls": 0,
+  "created_at_utc": "2026-08-31T15:31:35+00:00",
+  "decision": "Q0_PROVIDER_ACTION_INTERFACE_QUALIFIED",
+  "enable_thinking_status": "request parameter accepted and frozen",
+  "experiment_id": "C1-PACTA-RB-QWEN397-Q0-20260831-v2",
+  "final_measurement_calls": 0,
+  "frozen_output_token_budget": 512,
+  "identity_pass": true,
+  "identity_probes": "3/3",
+  "payload_sha256": "ab909ea74606648c648a54905a4421be937ffe2a79f5abff568f3eff52f7bf4f",
+  "requested_model": "qwen3.5-397b-a17b",
+  "resolved_model": "qwen3.5-397b-a17b",
+  "rung_results": [
+    {
+      "budget": 512,
+      "passed": 20,
+      "qualification_pass": true,
+      "total": 20
+    }
+  ],
+  "schema_version": 1,
+  "scientific_calls": 0,
+  "shadow_calls": 0,
+  "usage": {
+    "estimated_cost": null,
+    "input_tokens": 25676,
+    "output_tokens": 1163,
+    "provider_calls": 24
+  },
+  "writer_calls": 0
+}

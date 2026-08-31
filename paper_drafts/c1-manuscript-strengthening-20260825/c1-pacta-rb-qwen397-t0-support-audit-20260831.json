@@ -1,0 +1,18 @@
+{
+  "N_preflight_valid": 0,
+  "N_valid_repository": 0,
+  "N_valid_trajectory": 0,
+  "active_manuscript": "R9",
+  "binder_calls": 0,
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "created_at_utc": "2026-08-31T15:31:57+00:00",
+  "experiment_id": "C1-PACTA-RB-QWEN397-T0-20260831-v1",
+  "final_measurement_calls": 0,
+  "full_6_plus_5_design_recoverable": false,
+  "payload_sha256": "1d1d29062827f50a53032520544fe5b96c22744d4e4788a1cb8c99531b8ae6f2",
+  "schema_version": 1,
+  "shadow_calls": 0,
+  "source_logical_attempts": 0,
+  "status": "HOLD_FRESH_RUNTIME_SUPPORT_INSUFFICIENT",
+  "writer_calls": 0
+}

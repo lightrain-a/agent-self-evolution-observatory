@@ -1,0 +1,26 @@
+{
+  "active_manuscript": "R9",
+  "asset_id": "c1-pacta-rb-qwen397-t0-source-trajectory-acquisition-20260831",
+  "belief_update": "No PACTA mechanism update; stopped before source-policy calls.",
+  "call_counts": {
+    "binder": 0,
+    "final": 0,
+    "future_task": 0,
+    "shadow": 0,
+    "source_policy": 0,
+    "writer": 0
+  },
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "created_at_utc": "2026-08-31T15:31:57+00:00",
+  "decision": "HOLD_FRESH_RUNTIME_SUPPORT_INSUFFICIENT",
+  "lessons": [
+    "A planned native source ID is not a native source trajectory. A writer-ready experience requires persisted trajectory bytes, an exact rendering contract, and content-addressed provenance.",
+    "ReasoningBank exposes native SUCCESSFUL_SI and FAILED_SI induction instructions over the same Query + Trajectory input. PACTA may use them as a controlled writer-branch intervention, but this must not be described as ReasoningBank's natural branch selection or as pure reward-bit causality.",
+    "Runtime/container support is distinct from provider/action-interface support and from PACTA mechanism evidence."
+  ],
+  "payload_sha256": "da9dcbb74ae03102ca65a94c759e247838f1b13a44bdd1bf128e004c2d8647fb",
+  "reopen_conditions": [
+    "Provide at least six of the fixed eleven exact SWE-bench source images with audited digests and base commits, then obtain new human authorization for T0 acquisition."
+  ],
+  "schema_version": 1
+}
