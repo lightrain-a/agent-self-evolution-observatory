@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V21_ZERO_PROVIDER_PREFLIGHT",
+  "status": "PASS",
+  "checks": {
+    "candidate_states": 10,
+    "templates": 6,
+    "pilot_states": 6,
+    "v2_sample_overlap": 0,
+    "prior_scmb_or_pacta_outputs": 0,
+    "trajectory_available": "10/10",
+    "retrieval_threshold_hit": "10/10",
+    "wrapper_hashes_verified": "20/20",
+    "selection_recomputed": [
+      354,
+      242,
+      270,
+      438,
+      508,
+      262
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V21_FREEZE",
+  "status": "FROZEN_BEFORE_QUALIFICATION_OR_PROVIDER_CALLS",
+  "origin_main_sha": "47a8ba35966149bfa6e205304b17c21af72d0804",
+  "design_parent_sha": "ca3752f48aa157d657404b7e491acbc54f648f8b",
+  "pilot_ids": [
+    354,
+    242,
+    270,
+    438,
+    508,
+    262
+  ],
+  "method_identical_to_v2": true,
+  "single_changed_layer": "measurement robustness",
+  "qualification_required": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-v21-q0-measurement-20260831-v1/qualification.json",
+  "no_retry_topup_replacement_imputation": true
+}

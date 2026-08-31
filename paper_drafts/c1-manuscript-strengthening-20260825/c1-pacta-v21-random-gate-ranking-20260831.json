@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "artifact_kind": "C1_PACTA_V21_RANDOM_GATE_RANKING",
+  "status": "FROZEN_BEFORE_SHADOW_OUTPUT",
+  "salt": "C1-PACTA-V21-RANDOM-GATE-v1",
+  "ranking": [
+    {
+      "rank": 1,
+      "future_task": 262,
+      "intent_template_id": 211,
+      "sha256": "20119924678f9259b0c44262a719f110f5e7159351351a7f6f4bf12fa5c24c98"
+    },
+    {
+      "rank": 2,
+      "future_task": 438,
+      "intent_template_id": 156,
+      "sha256": "31cf2a48ce1ef91489a1450e19f6f299dd508766b0b6d454697df3a150366b93"
+    },
+    {
+      "rank": 3,
+      "future_task": 270,
+      "intent_template_id": 139,
+      "sha256": "337c17e258dd5eda024acdf95c64f00037979c004b1f26c84ce144998d1d8870"
+    },
+    {
+      "rank": 4,
+      "future_task": 508,
+      "intent_template_id": 172,
+      "sha256": "41d318898719f3fd4f7b74caf8bc10a170b28dbe2ada122e9f15eea94f6a7ea6"
+    },
+    {
+      "rank": 5,
+      "future_task": 242,
+      "intent_template_id": 138,
+      "sha256": "72226116edf87c2945d269db2e75d978a987b63d21b266f968aa5d2ea86e0503"
+    },
+    {
+      "rank": 6,
+      "future_task": 354,
+      "intent_template_id": 137,
+      "sha256": "fae0721a8c1159c98638fadd5c4e1e35196085b4432cbcbc870851c1bd8dc9ee"
+    }
+  ],
+  "K": "realized after complete shadow calibration"
+}
