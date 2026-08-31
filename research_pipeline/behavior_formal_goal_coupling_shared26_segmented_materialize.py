@@ -121,18 +121,19 @@ def materialize_segment(
                 except Exception as exc:
                     errors.append({"path": row["path"], "error": f"{type(exc).__name__}: {exc}"})
 
-        verified_rows = []
-        for row in rows:
-            destination = safe_destination(destination_root, row["path"])
-            if verify_file(destination, int(row["lfs_size_bytes"]), row["lfs_oid_sha256"]):
-                verified_rows.append(row)
-        verified_bytes = sum(int(row["lfs_size_bytes"]) for row in verified_rows)
+        # Every successful _one() result is emitted only after exact size+SHA-256 verification.
+        # Because the root-level exclusive lock is held across the whole segment, no second
+        # materializer can mutate a finalized file between per-file verification and receipt
+        # creation. Avoid a redundant second full-segment rehash here; a single final whole-
+        # materialization seal is required after all segments complete.
+        verified_records = records
+        verified_bytes = sum(int(row["size"]) for row in verified_records)
         part_files = [
             str(safe_destination(destination_root, row["path"]).with_name(Path(row["path"]).name + ".part"))
             for row in rows
             if safe_destination(destination_root, row["path"]).with_name(Path(row["path"]).name + ".part").exists()
         ]
-        status = "PAYLOAD_SEGMENT_COMPLETE" if len(verified_rows) == len(rows) and not errors else "PAYLOAD_SEGMENT_TRANSPORT_HOLD"
+        status = "PAYLOAD_SEGMENT_COMPLETE" if len(verified_records) == len(rows) and not errors else "PAYLOAD_SEGMENT_TRANSPORT_HOLD"
         receipt = {
             "schema_version": "behavior-formal-goal-coupling-shared26-payload-segment-receipt-v1",
             "object_id": OBJECT_ID,
@@ -146,9 +147,10 @@ def materialize_segment(
             "single_writer_lock_path": str(lock_path),
             "internal_transport_workers": MAX_WORKERS,
             "segment": segment,
-            "verified_file_count": len(verified_rows),
+            "verified_file_count": len(verified_records),
             "verified_bytes": verified_bytes,
-            "remaining_file_count": len(rows) - len(verified_rows),
+            "remaining_file_count": len(rows) - len(verified_records),
+            "verification_semantics": "each record returned only after exact per-file size+SHA-256 verification while the exclusive root lock is held; no redundant segment-end rehash; one final whole-materialization rehash seal remains required",
             "transported_bytes_this_invocation": sum(int(row["transported_bytes"]) for row in records),
             "verified_existing_this_invocation": sum(row["state"] == "verified-existing" for row in records),
             "completed_or_resumed_this_invocation": sum(row["state"] != "verified-existing" for row in records),
