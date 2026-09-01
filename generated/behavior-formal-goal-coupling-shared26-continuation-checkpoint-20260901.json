@@ -1,0 +1,43 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_at": "2026-09-01T12:30:46+08:00",
+  "canonical_closed_state": {
+    "origin_main_sha": "e1a9b76a232b8e167a5b09c535f7670e63894607",
+    "last_closed_segment": "S08",
+    "s01_s07": "PAYLOAD_SEGMENT_COMPLETE",
+    "s08_initial": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
+    "s08_repair1": "PAYLOAD_SEGMENT_COMPLETE",
+    "next_segment": "S09"
+  },
+  "active_execution_observation_at_record_time": {
+    "worktree": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-continuation-20260831",
+    "branch": "research/formal-goal-continuation-20260831",
+    "branch_head_before_s09_receipt": "f7d9e961",
+    "segment": "S09",
+    "actor_pid_observed": 1436019,
+    "single_writer_lock": "/data/wyt/.behavior-2026-shared26-v3.0.materialization.lock",
+    "receipt_path": "generated/behavior-formal-goal-coupling-shared26-materialization-payload-seg09-receipt-20260901.json",
+    "receipt_present_at_record_time": false,
+    "progress_observed_without_scientific_read": {
+      "finalized_files": 5,
+      "partial_files": 4,
+      "not_started_files": 36,
+      "segment_file_count": 45
+    }
+  },
+  "resume_protocol": [
+    "Do not trust the recorded PID as durable truth.",
+    "Before any S09 action, inspect the single-writer lock holder, actor process, S09 receipt, finalized files, and partial files.",
+    "If an S09 actor still owns the lock, do not restart, terminate, or duplicate it merely because SSH/tool transport returned an error.",
+    "If the actor exited and a receipt exists, adjudicate that receipt before any further transport action.",
+    "If the actor exited without a receipt, verify frozen finalized files and partial bytes against the existing manifest before using only the already-authorized resumable transport path.",
+    "Never rerun S01-S08; they are already content-addressed closed segments.",
+    "No model/checkpoint weight download, model load, GPU execution, training, policy rollout, policy outcome read, task replacement, episode replacement, or claim expansion is authorized by this checkpoint."
+  ],
+  "scientific_authority": false,
+  "execution_authority_created_by_this_checkpoint": false,
+  "policy_outcomes_read": false,
+  "model_loaded": false,
+  "gpu_used": false
+}
