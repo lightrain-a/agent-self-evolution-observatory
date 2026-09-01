@@ -108,7 +108,10 @@ def run_plan(*, experiment_id: str, stage: str, contract_path: Path,
                       "instance_id": unit["instance_id"], "arm": unit["arm"],
                       "attempt_count": 1, "state": "DISPATCHED_BEFORE_ANY_SIDE_EFFECT"}))
         row = rows[unit["instance_id"]]
-        qualification = json.loads((ROOT / unit["qualification_receipt"]).read_text())
+        qualification_path = ROOT / unit["qualification_receipt"]
+        if sha256_file(qualification_path) != unit["qualification_receipt_sha256"]:
+            raise RuntimeError("behavioral qualification receipt drift")
+        qualification = json.loads(qualification_path.read_text())
         image = qualification["task_receipt"]["image_manifest"]["image_pull_reference"]
         memory = memory_for_arm(bank_by_task, retrievals[unit["instance_id"]], unit["arm"])
         result = execute_behavioral_unit(
