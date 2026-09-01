@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T10:58:36Z",
+  "experiment_id": "C1-PACTA-RB-QWEN397-T05R3-SMOKE-20260901",
+  "status": "PREREGISTERED_BEFORE_PROVIDER_CALL",
+  "canonical_origin_main_at_execution_boundary": "7bd13063eb45350bd26bd2eb84d94da8988cbe5c",
+  "implementation_freeze_sha": "e114adf26669e0181c0f43cc1b0bfc58f3b4053b",
+  "prior_smokes": [
+    {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05r-images-rootful-20260901-v1/rootful-synthetic-smoke.json",
+      "sha256": "a52c3004a37bbd04a16eb21fb8f42972242639254917766d727c6a3e20c6ba3f",
+      "status": "STOP_T0_MULTISTEP_RUNTIME_UNQUALIFIED",
+      "role": "contradictory synthetic-task diagnostic",
+      "immutable": true
+    },
+    {
+      "path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05r2-smoke-20260901-v1/rootful-synthetic-smoke.json",
+      "sha256": "e8bb16b056c04ec617f416e9aefed0e07e3f8ea841bdf6fd1ff862f6d5c2edc1",
+      "status": "STOP_T0_MULTISTEP_RUNTIME_UNQUALIFIED",
+      "role": "repaired-task eight-step termination diagnostic",
+      "immutable": true,
+      "source_tasks_consumed": 0
+    }
+  ],
+  "single_variable_repair": {
+    "changed": "synthetic smoke step ceiling only: 8 -> 16",
+    "unchanged": {
+      "synthetic_task": "Create runtime_smoke_marker.py, verify exact QWEN397_T0_RUNTIME_SMOKE_OK output, inspect the diff, then complete",
+      "requested_model": "qwen3.5-397b-a17b",
+      "resolved_model": "qwen3.5-397b-a17b",
+      "enable_thinking": false,
+      "max_completion_tokens": 512,
+      "temperature": 0.0,
+      "provider_retries": 0,
+      "rootful_docker_host": "unix:///var/run/docker.sock",
+      "action_parser": "exactly one fenced bash block",
+      "exact_base_normalization": true
+    },
+    "rationale": "The repaired task was fully realized by step 8 and the final observed action staged its exact change; the arbitrary eight-step qualification ceiling, not the task, provider, parser, or runtime, remained the only unqualified layer. Sixteen steps is a bounded final qualification ceiling and remains far below the official 250-step MiniSWEAgent execution limit."
+  },
+  "pass_gate": {
+    "minimum_model_actions": 2,
+    "maximum_model_actions": 16,
+    "completion_command_required": true,
+    "marker_file_required": true,
+    "marker_output_exact": "QWEN397_T0_RUNTIME_SMOKE_OK",
+    "staged_diff_exactly": "runtime_smoke_marker.py",
+    "all_action_returncodes_zero": true,
+    "all_raw_requests_and_responses_persisted": true,
+    "model_identity_drift": 0
+  },
+  "stop_rule": "If this 16-step non-scientific smoke does not pass, STOP_T0_MULTISTEP_RUNTIME_UNQUALIFIED_FINAL and do not expand or retune the smoke again.",
+  "scientific_boundary": {
+    "non_scientific": true,
+    "scientific_outcome_access_before_repair": false,
+    "source_tasks_consumed_before_repair": 0,
+    "source_trajectory_execution_authorized_only_after_pass": true,
+    "writer_authorized": false,
+    "binder_authorized": false,
+    "shadow_authorized": false,
+    "gate_authorized": false,
+    "final_measurement_authorized": false,
+    "future_task_execution_authorized": false,
+    "active_manuscript": "R9"
+  }
+}

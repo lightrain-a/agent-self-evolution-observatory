@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T10:58:36Z",
+  "experiment_id": "C1-PACTA-RB-QWEN397-T05R2-SMOKE-20260901",
+  "status": "STOP_T0_MULTISTEP_RUNTIME_UNQUALIFIED",
+  "authoritative_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05r2-smoke-20260901-v1/rootful-synthetic-smoke.json",
+  "authoritative_sha256": "e8bb16b056c04ec617f416e9aefed0e07e3f8ea841bdf6fd1ff862f6d5c2edc1",
+  "provider_calls": 8,
+  "source_tasks_consumed": 0,
+  "all_action_returncodes_zero": true,
+  "model_identity_stable": true,
+  "raw_persistence_complete": true,
+  "observed_actions": [
+    "ls -la",
+    "find . -name runtime_smoke_marker.py",
+    "create runtime_smoke_marker.py",
+    "cat runtime_smoke_marker.py",
+    "python runtime_smoke_marker.py",
+    "git diff runtime_smoke_marker.py",
+    "git status runtime_smoke_marker.py",
+    "git add runtime_smoke_marker.py && git diff --cached"
+  ],
+  "failure_differential": "The repaired synthetic task itself was successfully realized: the marker was created, executed with the exact required output, inspected, and staged. The frozen eight-step qualification ceiling ended immediately before the separate completion-command action. No source task or PACTA outcome was accessed.",
+  "scientific_boundary": {
+    "non_scientific": true,
+    "writer_calls": 0,
+    "binder_calls": 0,
+    "shadow_calls": 0,
+    "final_measurement_calls": 0,
+    "future_task_executions": 0,
+    "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+    "active_manuscript": "R9"
+  },
+  "reopen_condition": "A new prospective non-scientific epoch may change only the arbitrary synthetic-smoke step ceiling while preserving the repaired task and every scientific treatment variable. If the bounded final qualification still fails, stop without further ceiling expansion."
+}
