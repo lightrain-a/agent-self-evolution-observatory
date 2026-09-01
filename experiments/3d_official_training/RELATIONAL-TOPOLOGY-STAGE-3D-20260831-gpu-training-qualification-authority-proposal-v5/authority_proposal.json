@@ -1,0 +1,123 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-gpu-training-qualification-authority-proposal-v5",
+  "generated_at": "2026-09-01T20:36:13+08:00",
+  "state": "GPU_TRAINING_QUALIFICATION_AUTHORITY_PROPOSAL_ONLY",
+  "proposal": {
+    "requested_authority": "GPU_TRAINING_QUALIFICATION_AUTHORITY",
+    "authority_requested": true,
+    "authority_granted": false,
+    "request_reason": "All licensed real-corpus materialization, matching, zero-truncation, balance, and deterministic replay prerequisites required before the GPU qualification gate have passed.",
+    "scope_if_granted": {
+      "classification": "NON_SCIENTIFIC_OFFICIAL_TRAINING_RESOURCE_AND_REPLAY_QUALIFICATION",
+      "purpose": "Qualify the frozen official InstructScene training path, GPU resource envelope, finite-loss/gradient behavior, checkpoint persistence, and exact resume before any official scientific training authority is considered.",
+      "allowed_scope": "50-100 optimizer steps per required component",
+      "required_components": [
+        "BEDROOM-SG2SC-SHARED",
+        "SGP-12",
+        "SGP-14"
+      ],
+      "required_measurements": [
+        "GPU_model",
+        "CUDA",
+        "driver",
+        "PyTorch",
+        "precision",
+        "batch_size",
+        "gradient_accumulation",
+        "peak_allocated_VRAM",
+        "peak_reserved_VRAM",
+        "step_time",
+        "samples_per_second",
+        "CPU_RAM",
+        "disk_write_rate",
+        "checkpoint_size",
+        "loss_finite",
+        "grad_finite",
+        "OOM",
+        "NaN_Inf",
+        "dataloader_failures"
+      ],
+      "selection_rule": "peak_vram + throughput + resume_stability",
+      "scientific_outcomes": 0,
+      "outcomes_enter_p1": false
+    },
+    "prohibited_even_if_this_proposal_is_approved": [
+      "official confirmatory training",
+      "P1 execution or P1 outcome admission",
+      "scientific effect estimation",
+      "reading qualification loss as a paper result",
+      "parameter sweeps beyond the frozen qualification scope",
+      "changing SUPPORT-12 or SUPPORT-14 corpus membership",
+      "changing relation selection or surface realization",
+      "resampling scenes excluded by the zero-truncation gate",
+      "changing the frozen tokenizer revision",
+      "changing PORT-010 status"
+    ],
+    "pre_run_requirement_if_authority_is_later_granted": "Recheck SceneNAT novelty/release drift immediately before the first GPU qualification run, as frozen by v2 novelty_watch.json. A material drift closes this authority until adjudicated."
+  },
+  "prerequisites": {
+    "license_confirmed_v2": {
+      "path": "experiments/3d_official_training/RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-license-confirmed-v2/adjudication.json",
+      "sha256": "b9d4a5e17a2fd32494b1cd62772079afd625d5e5e15131e08c1c6236c1a272ba",
+      "verdict": "LICENSE_CONFIRMED_MATERIALIZATION_AUTHORIZED"
+    },
+    "real_corpus_qualification_v3": {
+      "path": "experiments/3d_official_training/RELATIONAL-TOPOLOGY-STAGE-3D-20260831-real-corpus-qualification-v3/adjudication.json",
+      "sha256": "613807893eb9d24a490df2d4b28cef9ef14dd684deb95cfe0829600727d9eef0",
+      "verdict": "PASS_REAL_MATCHED_CORPUS_QUALIFIED_GPU_QUALIFICATION_PROPOSABLE",
+      "eligible_scenes": 3060,
+      "rows_per_regime": 12240,
+      "zero_clip_truncation": true,
+      "replay_byte_identical": true
+    },
+    "real_corpus_balance_v4": {
+      "path": "experiments/3d_official_training/RELATIONAL-TOPOLOGY-STAGE-3D-20260831-real-corpus-balance-qualification-v4/adjudication.json",
+      "sha256": "1cd60686cba3b11e363f5ce973a67b19306ff105b213cc31a753ac16ebb8e56c",
+      "verdict": "PASS_REAL_CORPUS_BALANCE_QUALIFIED_GPU_QUALIFICATION_PROPOSABLE",
+      "common_support_topology_distribution_balance": true,
+      "shared_slots_0_1_topology_exact": true,
+      "scene_object_strata_exact": true
+    }
+  },
+  "frozen_real_inputs": {
+    "dataset_revision": "c8cf0bd282699d56a7940ac588ea5e961b1260cb",
+    "instructscene_repo_sha": "a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+    "scenenat_repo_sha": "542b82ff0cda4e0350575ca8f1cd5d147529130c",
+    "bedroom_split_sha256": "f8f144f2380668b7db999d1b21b0331ade27b72f7e4892b43da068559ffb6d79",
+    "clip_tokenizer": "openai/clip-vit-base-patch32",
+    "clip_tokenizer_revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+    "clip_max_tokens": 77,
+    "corpus_jsonl_sha256": {
+      "IS-SUPPORT-12": "9884b2afd58e05ed0eb80864154765e55551e5f77632d4fbd6308d0af50dd58b",
+      "IS-SUPPORT-14": "51e9e6011250970c660d91c75843919f55192b800423d8ad59a2cfb5c08c4b05"
+    },
+    "eligible_scene_pool_sha256": "40da5528402087f97bcd5d704d914a3d4eca65a083b66fffca6be92fd452ea89",
+    "excluded_candidate_sha256": "6d70e64811041401374fa6e791eb652265d97727a0f4772e1b169a909dac4df8"
+  },
+  "canonical_lineage_at_proposal": {
+    "origin_main_sha": "e3e60c7de5c4dd55bfe96fe1ea9365b4e0140d7c",
+    "real_corpus_qualification_commit_at_proposal": "1a4feb54aced9f89f3175919e08fedc4e4a12456",
+    "integration_status": "PROPOSAL_BRANCH_AHEAD_OF_CANONICAL_MAIN_PENDING_FAST_FORWARD_INTEGRATION"
+  },
+  "current_authority": {
+    "data_license_confirmed": true,
+    "data_materialization_authority": true,
+    "gpu_training_qualification_authority": false,
+    "gpu_authority": false,
+    "official_training": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "scientific_gpu_runs": 0,
+    "scientific_outcomes": 0,
+    "provider_calls": 0
+  },
+  "port_010": {
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+    "evidence_review": "BLOCK_BAKE_IN",
+    "changed": false
+  },
+  "decision_required": "EXPLICIT_GPU_TRAINING_QUALIFICATION_AUTHORITY_GRANT",
+  "next_gate": "AWAIT_GPU_TRAINING_QUALIFICATION_AUTHORITY_DECISION"
+}
