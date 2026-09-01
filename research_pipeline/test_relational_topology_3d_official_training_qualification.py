@@ -114,7 +114,7 @@ class OfficialTrainingQualificationArtifactTest(unittest.TestCase):
 
     def test_manifest_and_parent_content_addresses(self) -> None:
         manifest = self.load("manifest.json")
-        self.assertEqual(manifest["artifact_count"], 25)
+        self.assertEqual(manifest["artifact_count"], 27)
         self.assertEqual(manifest["verdict"], "HOLD_USER_LICENSE_CONFIRMATION")
         self.assertEqual(manifest["scientific_gpu_runs"], 0)
         self.assertEqual(manifest["scientific_outcomes"], 0)
@@ -193,6 +193,13 @@ class OfficialTrainingQualificationArtifactTest(unittest.TestCase):
         ledger = self.load("exactly_once_ledger.json")
         self.assertEqual(ledger["status"], "EMPTY_NO_TRAINING_RUN")
         self.assertEqual(ledger["run_claims"], [])
+        self.assertIn("authority_receipt", ledger["required_run_fields"])
+        persistence = self.load("training_persistence_schema.json")
+        self.assertIn("checkpoint_manifest.jsonl", persistence["required_paths"])
+        self.assertTrue(persistence["incremental_persistence_required"])
+        taxonomy = self.load("failure_taxonomy.json")
+        self.assertIn("RESUME_FAILURE", taxonomy["classes"])
+        self.assertFalse(taxonomy["scientific_mechanism_update_allowed"])
         reproduction = self.load("reproduction_preregistration.json")
         self.assertIn("reference_iRecall", reproduction["bands"]
                       ["relation_level_iRecall_lower"])
