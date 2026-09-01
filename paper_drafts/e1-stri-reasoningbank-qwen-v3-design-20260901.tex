@@ -1,0 +1,84 @@
+% Pre-result E1/STRI ReasoningBank Qwen experiment section.
+% This file contains design prose only. Populate result language after adjudication.
+
+\subsection{Behavioral propagation through a ReasoningBank representation boundary}
+\label{sec:reasoningbank-qwen}
+
+The three studied carriers expose different locations at which representation can
+matter. Skill-Pro places an identity-local readiness gate before evolution, so
+fragmentation is predicted to prevent otherwise sufficient evidence from reaching
+that gate. ACE can merge fragmented evidence, but only a merge that precedes the
+consuming operator can repair the boundary. ReasoningBank provides the complementary
+positive control: fragments stored within one retrieved case are reunited before
+policy consumption, whereas evidence split across cases can remain separated by
+top-1 retrieval. We test the latter boundary without changing the semantic items
+from which the representations are constructed.
+
+\paragraph{Prospective task-specific memory.}
+We construct one frozen memory bank from disjoint SWE-bench Verified source tasks.
+The fixed policy runs once on every source task, preserving successful, failed, and
+timed-out trajectories. The official ReasoningBank extraction procedure turns each
+trajectory into reusable memory items; a deterministic quarter of source tasks is
+then reviewed by an independent model for trajectory fidelity, unsupported claims,
+test-information leakage, and lesson plausibility. Evaluation tasks retrieve their
+top-ranked memory through one fixed embedding and retrieval path. This design makes
+memory task-specific through retrieval rather than hand selection, and neither
+retrieval relevance nor source success is used to filter the confirmatory sample.
+
+\paragraph{Representations and controls.}
+For each evaluation task, treatment A presents the retrieved items as one canonical
+case. Treatment D partitions the same underlying items across cases before the
+top-1 consumption boundary; it therefore exposes only the first partition to the
+policy. Treatment N supplies no ReasoningBank memory and serves as a secondary
+uptake diagnostic. Two zero-provider controls localize the intervention: within-case
+fragmentation (B) and a case-identifier placebo (E) must serialize to the exact same
+complete model request as A, while D must serialize differently. B and E are
+structural controls rather than repeated behavioral arms because byte-identical
+requests target the same policy distribution.
+
+\paragraph{Population and repeated trials.}
+Repositories and tasks are selected by deterministic hash order after historical
+exclusions and evaluator qualification, without policy outcomes. Source,
+calibration, pilot, and confirmatory tasks are permanently disjoint. The
+confirmatory population contains 24 structurally qualified tasks drawn from a
+multi-repository design. For each task we execute six planned trials in each of
+A, D, and N. These are repeated samples, not retries: every scheduled unit is
+attempted once, failed units remain missing, and tasks are never replaced. A frozen
+six-round schedule balances arms across early, middle, and late execution positions.
+
+\paragraph{Primary behavioral endpoint.}
+The final patch is mapped to an \emph{EditTargetSet}. A Python diff hunk is assigned
+to its nearest enclosing function, asynchronous function, or class in the frozen
+base-tree AST; unresolved Python hunks use a module/file atom, and non-Python hunks
+use a file atom. Jaccard distance between these sets measures edit-target behavior,
+not semantic patch equivalence. For task $i$, let $A_i$ and $D_i$ denote its valid
+signatures and define
+\[
+T_i =
+2\,\overline d(A_i,D_i)
+-\overline d(A_i,A_i')
+-\overline d(D_i,D_i').
+\]
+Thus the cross-arm distance is evaluated relative to within-arm stochastic
+dispersion. The global statistic is the mean $T_i$ across tasks with at least four
+valid A and four valid D trials. Inference uses 100,000 within-task label
+permutations, preserving observed arm sizes, and a 100,000-replicate bootstrap that
+resamples tasks rather than trajectories.
+
+\paragraph{Secondary localization.}
+The same statistic compares A with N to test whether retrieved memory changes the
+behavior distribution at all. Deterministic secondary observables cover the first
+action, modified files, exact patch identity, edit targets, tool use, test execution,
+trajectory length, and submission state. Official SWE-bench evaluation supplies
+per-task repeated-trial resolution proportions; paired task-level analysis keeps
+terminal performance distinct from behavioral propagation. Retrieval relevance is
+frozen before policy calls, and the preselected high-relevance half is reported only
+as secondary sensitivity evidence.
+
+\paragraph{Interpretation.}
+A positive A--D result supports propagation from the cross-case boundary to the
+distribution of edit-target behavior under this frozen ReasoningBank and Qwen
+configuration. A behavioral shift with no detectable terminal difference localizes
+attenuation between trajectory and task resolution. If no behavioral separation is
+detected, the conclusion remains bounded by the pilot-qualified precision range;
+the structural R1 boundary is not reinterpreted as behavioral equivalence.
