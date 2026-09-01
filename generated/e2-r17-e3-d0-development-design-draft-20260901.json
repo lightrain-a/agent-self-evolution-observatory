@@ -1,0 +1,78 @@
+{
+  "artifact_type": "e2-r17-e3-d0-development-design-draft",
+  "authority": {
+    "analyze_v2_by_family": false,
+    "compute_development_mixed_support": false,
+    "compute_family_coefficients": false,
+    "compute_loso_diagnostics": false,
+    "confirmatory_execution": false,
+    "gpu": false,
+    "heldout_evaluation": false,
+    "new_search_pool_acquisition": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "second_backbone": false,
+    "submission": false,
+    "updater": false
+  },
+  "created_date": "2026-09-01",
+  "current_gate": "D0_DRAFT_AWAITING_INDEPENDENT_PREOUTCOME_RULE_REVIEW",
+  "development_streams": [
+    "e1-agj-00",
+    "e1-agj-01",
+    "e1-fmv-00",
+    "e1-fmv-01",
+    "e1-ioc-00",
+    "e1-ioc-01",
+    "e1-msp-00",
+    "e1-msp-01",
+    "e1-ska-00",
+    "e1-ska-01",
+    "e1-tsr-00",
+    "e1-tsr-01"
+  ],
+  "estimator": {
+    "family": "delta_hat_z = sum_{s in S_z}(m_s * D_s) / sum_{s in S_z}(m_s^2)",
+    "family_partition_fixed": [
+      "agj",
+      "fmv",
+      "ioc",
+      "msp",
+      "ska",
+      "tsr"
+    ],
+    "family_streams": 2,
+    "fit_unit": "stream",
+    "intercept": false,
+    "m_s": "mixed_pool_count_at_K8 / 8 from frozen pre-treatment search pools",
+    "no_clipping": true,
+    "no_family_deletion": true,
+    "no_hyperparameter_search": true,
+    "no_regularization": true,
+    "pooled": "delta_hat_pool = sum_s(m_s * D_s) / sum_s(m_s^2)",
+    "zero_support_fallback": "mark family DEVELOPMENT_UNIDENTIFIED_ZERO_SUPPORT and use pooled coefficient for future family prediction"
+  },
+  "historical_bindings": {
+    "e3_p0_substrate_audit_path": "generated/e2-r17-e3-p0-substrate-audit-20260901.json",
+    "e3_p0_substrate_audit_sha256": "c31e5e1404c7ee6a23fef6c0f8cb78d8c6c35dee6cbe5f94c6699b8dbd745f18",
+    "e3_proposal_path": "generated/e2-r17-e3-family-wise-prospective-prediction-proposal-20260901.json",
+    "e3_proposal_sha256": "d50f76c2812e25d3d550b4756e010f1dd402e3b08819b6270c15e9e61c73fbdb",
+    "mixed_pool_theory_path": "consultations/e2-r17-theory-correction-mixed-pool-20260828.md",
+    "mixed_pool_theory_sha256": "9a45b28c33081a88e7453a9b3a608736e7b60e4ddcdde559d981321156a2f0db",
+    "v2_scientific_adjudication_path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-scientific-adjudication-20260901.json",
+    "v2_scientific_adjudication_sha256": "1a71d0c32536c65987dc960d1f1f4cf40a41127f3f9cfe30d3fe73295ce9268a"
+  },
+  "loso_diagnostic": {
+    "development_only": true,
+    "loss": "squared_error",
+    "no_stream_deletion": true,
+    "stream_improvement": "G_s=(D_s-D_hat_pool_minus_s)^2-(D_s-D_hat_family_minus_s)^2"
+  },
+  "next_allowed_action": "INDEPENDENT_REVIEW_AND_FREEZE_D0_DESIGN_ADEQUACY_RULE_NO_D0_EXECUTION",
+  "proposal_path": "consultations/e2-r17-e3-d0-development-design-draft-20260901.md",
+  "schema_version": "1.0",
+  "scientific_object": "E2-R17-E3-D0-DEVELOPMENT-CALIBRATION-20260901",
+  "status": "DRAFT_ZERO_AUTHORITY_AWAITING_INDEPENDENT_REVIEW",
+  "v2_confirmatory_status_preserved": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS"
+}
