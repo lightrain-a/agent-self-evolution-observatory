@@ -1,0 +1,64 @@
+{
+  "child_config_cpu_probe": {
+    "action_horizon": 32,
+    "batch_size": 64,
+    "dataset_root": "/data/wyt/behavior-2026-shared26-v3.0",
+    "episode_count": 5200,
+    "episode_max": 18999,
+    "episode_min": 1600,
+    "jax_devices": [
+      "TFRT_CPU_0"
+    ],
+    "jax_platforms": [
+      "cpu"
+    ],
+    "name": "pi05_b1k_shared26_frozen",
+    "num_train_steps": 50000,
+    "prompt_from_task": true,
+    "repo_id": "b1k_shared26_frozen",
+    "seed": 42,
+    "torch_cuda_available": false,
+    "use_quantile_norm": false
+  },
+  "child_config_patch_provenance_sha256": "b70fff483a49fdb371150d3c17d32f940b2b9fd0e1e2d863d7a5dcaa486efec2",
+  "environment_root": "/data/wyt/formal-goal-shared26-openpi-env-20260901",
+  "frozen_lerobot_dataset_source_sha256": "e3817ee2beb81d763afe77cdf8867d3fb3ff57b1fd8ceaee1384cd5ee8b39b82",
+  "generated_at": "2026-09-01T21:35:39+08:00",
+  "gpu_used": false,
+  "initial_sync": {
+    "log_sha256": "9f0dcd649d5219d12acdaed5f11051e2fd9b872f6a3463438e752a691b4c695e",
+    "reason": "nvidia-cudnn-cu12 wheel extraction/download timed out under default 30s HTTP timeout",
+    "status": "TRANSPORT_TIMEOUT_HOLD"
+  },
+  "key_package_versions": {
+    "jax": "0.5.3",
+    "lerobot": "0.5.2",
+    "numpy": "1.26.4",
+    "pyarrow": "24.0.0",
+    "torch": "2.7.1+cu128",
+    "transformers": "5.5.4"
+  },
+  "lerobot_dataset_source_path": "/data/wyt/formal-goal-shared26-openpi-env-20260901/lib/python3.11/site-packages/lerobot/datasets/lerobot_dataset.py",
+  "lerobot_dataset_source_sha256": "e3817ee2beb81d763afe77cdf8867d3fb3ff57b1fd8ceaee1384cd5ee8b39b82",
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "next_gate": "CPU_ONLY_NORMALIZATION_ON_EXACT_5200_EPISODE_SUBSET",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "openpi_child_revision": "7945b3e3a3d847e0236788939b54a90d5898c054",
+  "openpi_parent_revision": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "pyproject_sha256": "466ac99d239d361c1104249f0eb0ad30fefa5c8c44c0f162dae0b7a63a45124b",
+  "python_version": "Python 3.11.16",
+  "repair1_sync": {
+    "change": "UV_HTTP_TIMEOUT=300 only; same env root and uv --frozen lock",
+    "log_sha256": "3e1d979d7a4d76e15c44c981adb619e3ea1c37914df52a42169b0476f458f1cd",
+    "status": "PASS_SAME_FROZEN_LOCK"
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-openpi-environment-qualification-v1",
+  "scientific_authority": false,
+  "status": "OPENPI_ENVIRONMENT_AND_CHILD_CONFIG_QUALIFIED_CPU_ONLY",
+  "training_started": false,
+  "uv_lock_sha256": "75657cfbac40473237a6eaebc994fe998b249b44a4671d38129af198f00e4ed6",
+  "uv_version": "uv 0.12.7 (x86_64-unknown-linux-gnu)"
+}
