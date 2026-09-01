@@ -1,0 +1,108 @@
+{
+  "artifact_type": "e2-r17-deepseek-v2-repair2-continuation-v2-authorization",
+  "authority": {
+    "analyzer": false,
+    "deepseek_v2": true,
+    "gpt_scientific_execution": false,
+    "kimi_scientific_execution": false,
+    "mrw_causal_comparison": true,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "qwen_scientific_execution": false,
+    "repair2_continuation_v2": true,
+    "scientific_experiment": true
+  },
+  "contract_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-deepseek-v2-pia1-recovery-v2-20260901/generated/e2-r17-deepseek-v2-repair2-continuation-v2-contract-20260901.json",
+  "contract_sha256": "09709a4e93b091a6fd6850e153a509f16c8f086953b2ecc581090fba8f148509",
+  "created_at_utc": "2026-09-01T08:37:53+00:00",
+  "execution_scope": {
+    "allow_noninitial_skill": true,
+    "allowed_modes": [
+      "e1"
+    ],
+    "allowed_task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "completed_unit_replay": false,
+    "continuation_version": "repair2_continuation_v2",
+    "exact_k": 1,
+    "exactly_once": true,
+    "global_lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-deepseek-v2-repair2-global-v1.json",
+    "identity_artifact_sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "partial_effect_read": false,
+    "provider_budget": {
+      "per_unit_limit": 11,
+      "required": true,
+      "total_limit": 191
+    },
+    "remaining_units": [
+      "e1-msp-01/rep1",
+      "e1-msp-01/rep2",
+      "e1-msp-01/rep3",
+      "e1-ska-00/rep0",
+      "e1-ska-00/rep1",
+      "e1-ska-00/rep2",
+      "e1-ska-00/rep3",
+      "e1-ska-01/rep0",
+      "e1-ska-01/rep1",
+      "e1-ska-01/rep2",
+      "e1-ska-01/rep3",
+      "e1-tsr-00/rep0",
+      "e1-tsr-00/rep1",
+      "e1-tsr-00/rep2",
+      "e1-tsr-00/rep3",
+      "e1-tsr-01/rep0",
+      "e1-tsr-01/rep1",
+      "e1-tsr-01/rep2",
+      "e1-tsr-01/rep3"
+    ],
+    "replicates_per_stream": 4,
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "pair29_recovery": {
+    "pass_path": "generated/e2-r17-deepseek-v2-repair2-pair29-recovery-m1-pass-20260901.json",
+    "pass_sha256": "30f73cf6bd165bcccfe354c3b3df6e6692c5b7355ac725c68ceeb2378110897d",
+    "recovered_valid_pair_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-pair29-recovery-m1-20260901/summary/recovered_valid_pair.json",
+    "recovered_valid_pair_sha256": "4cc05a1ead12f252488b79a201a474299e6fbcc8e4916f3e6d5f4a6ab80c0ce9",
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-pair29-recovery-m1-20260901"
+  },
+  "pia1": {
+    "canonical_lineage": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-pia1-canonical-v3-lineage-20260901.json",
+      "sha256": "0c13358cc76653e624bf0359254540a743569c0e121a09bf1b1ec50cc383e955"
+    },
+    "duplicate_quarantine": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-pia1-permanent-v1-quarantine-20260901.json",
+      "sha256": "f5e20a7bf91324b413d72494f768d12c2728f552fea4e230716f5f5701abb4bc"
+    },
+    "pia_adjudication": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-pia1-adjudication-20260901.json",
+      "sha256": "f9e81a195b000711a04950a93f0559ab61b33bf403fde18966b02defe7bdbae5"
+    }
+  },
+  "provider_retry_limit": 0,
+  "schema_version": "1.0",
+  "status": "AUTHORIZED_E2_R17_DEEPSEEK_V2_REPAIR2_CONTINUATION_V2"
+}

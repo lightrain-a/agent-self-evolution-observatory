@@ -1,0 +1,487 @@
+{
+  "actor": {
+    "concurrency_per_probe": 1,
+    "k": 1,
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "actor_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
+    "role": "actor_evaluator",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "artifact_type": "e2-r17-deepseek-v2-repair2-continuation-v2-contract",
+  "authority": {
+    "analyzer": false,
+    "execute_deepseek_v2": false,
+    "gpt_scientific_execution": false,
+    "kimi_scientific_execution": false,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "qwen_scientific_execution": false,
+    "repair2_continuation_v2": false,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "bound_code": {
+    "actor_runner_v2": {
+      "path": "scripts/run_e2_r17_actor_pool_repair2_continuation_v2.py",
+      "sha256": "64087869e2e98e0825054669de4ee5dfb138d1d577005c97d3f85942f77a4e0c"
+    },
+    "preflight_v2": {
+      "path": "scripts/preflight_e2_r17_deepseek_v2_repair2_continuation_v2.py",
+      "sha256": "41f6b33fbddcf4e3ba634bc97c5bb5025c8abae2a3da9c51fbe5bf5b56184f00"
+    },
+    "provider_budget": {
+      "path": "research_pipeline/e2_r17_provider_budget.py",
+      "sha256": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444"
+    },
+    "renderer": {
+      "path": "research_pipeline/e2_r17_evidence_window_v2.py",
+      "sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7"
+    },
+    "runner_v2": {
+      "path": "scripts/run_e2_r17_deepseek_v2_repair2_continuation_v2.py",
+      "sha256": "75caec90c7623a8aed59f62c397322bb0aed5be8c6cc62aad3a7ef09c3e13c0d"
+    },
+    "updater_adapter": {
+      "path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+      "sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8"
+    },
+    "updater_wrapper": {
+      "path": "research_pipeline/e2_r17_mindmemos_updater.py",
+      "sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d"
+    }
+  },
+  "budget": {
+    "actor_structural_max_calls_per_state": 180,
+    "claim_before_provider_io": true,
+    "claims_never_released": true,
+    "hard_max_provider_calls_structural": 7258,
+    "max_provider_calls_per_state": 191,
+    "max_provider_calls_per_unit": 11,
+    "planning_note": "V1 call rates are planning references only; hard ceiling is structural and symmetric across arms.",
+    "states": 38,
+    "updater_correction_max_calls": 11,
+    "updater_nominal_calls": 10
+  },
+  "checkpoint": {
+    "completed_replicates": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/checkpoints/completed_replicates.jsonl",
+    "fail_closed": true,
+    "resume_policy": "same V3 run root only; never replay a completed provider unit",
+    "valid_replicates": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/checkpoints/valid_replicates.jsonl"
+  },
+  "compatibility_manifest": {
+    "path": "generated/e2-r17-deepseek-v2-repair2-v3-compatibility-manifest-20260831.json",
+    "required_status": "PASS_REPAIR2_V3_PREFIX_COMPATIBILITY_15_COMPLETE_PAIRS",
+    "sha256": "bcaf077e1160b6b11491f5547e8964cedccaa3ce8725d257f791a0e368ce596a"
+  },
+  "continuation_state": {
+    "before_v3": {
+      "heldout_units": 540,
+      "learned_states": 30,
+      "paired_units": 15
+    },
+    "remaining": {
+      "fresh_pairs": 33,
+      "heldout_units": 1188,
+      "new_learned_states": 66
+    },
+    "terminal": {
+      "heldout_units": 1728,
+      "learned_states": 96,
+      "paired_units": 48
+    }
+  },
+  "created_at_utc": "2026-09-01T08:37:53+00:00",
+  "date": "2026-09-01",
+  "e1_a_pool_root": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828",
+  "e1_a_support": {
+    "path": "generated/e2-r17-e1-a-pool-support-v2-1-adjudication-20260828.json",
+    "required_status": "PASS_E1_A_SUPPORT_READY_FOR_SEPARATE_E1_B_CONTRACT",
+    "sha256": "b2c611285c20377d77af7ea62448c6fee0d5973cd657687f6dde7f7fce6be6d7"
+  },
+  "env_file": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env",
+  "exactly_once": {
+    "authorized_runs": 1,
+    "automatic_retry": false,
+    "completed_unit_replay": false,
+    "global_lineage_lease_required": true,
+    "replacement_sampling": false
+  },
+  "execution_plan": {
+    "completed_unit_replay": false,
+    "final_heldout_units": 1728,
+    "final_learned_states": 96,
+    "final_pairs": 48,
+    "inherited_pairs": 29,
+    "new_heldout_units": 684,
+    "new_learned_states": 38,
+    "partial_effect_read": false,
+    "remaining_pairs": 19
+  },
+  "forbidden": [
+    "GPT execution",
+    "GPT/Kimi/Qwen scientific execution",
+    "Kimi scientific execution",
+    "Qwen scientific execution",
+    "Repair1 relaunch or resume",
+    "change sample, model, prompt, K, tasks, arms, metric, or statistics",
+    "changing verifier",
+    "deleting streams/replicates based on score",
+    "directory-discovered inheritance",
+    "margin widening",
+    "operator semantic patch",
+    "paper promotion or submission",
+    "public benchmark execution",
+    "public benchmark execution before DeepSeek V2 GO",
+    "read any 15/48 partial effect",
+    "replay 14 Repair1 inherited pairs",
+    "replay the M1 recovered pair",
+    "restart parent Repair2",
+    "result-driven K/task/model changes",
+    "run analyzer before 48/48 integrity completion",
+    "score-based inheritance",
+    "second scientific backbone",
+    "single-arm resume",
+    "third parse/apply attempt",
+    "use quarantined Repair1 learned state",
+    "using V1 WIN-A/WIN-B as primary control"
+  ],
+  "global_lineage_lease": {
+    "acquire": "O_EXCL_BEFORE_RUN_ROOT_AND_PROVIDER_IO",
+    "path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-deepseek-v2-repair2-global-v1.json",
+    "persistent_terminal_seal": true
+  },
+  "heldout": {
+    "evaluation_k": 1,
+    "never_fed_to_updater": true,
+    "source_split": "e1_common_heldout_probe",
+    "task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ]
+  },
+  "inheritance_policy": {
+    "fresh_v3_pairs": 33,
+    "frozen_prefix_pairs": 15,
+    "outcome_blind": true,
+    "partial_effect_read": false,
+    "repair1_inherited_pairs": 14,
+    "repair2_m1_recovered_pairs": 1,
+    "scientific_scores_read": false
+  },
+  "initial_skill": {
+    "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+    "sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+  },
+  "lineage_inheritance_manifest": {
+    "path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-inheritance-29-20260901.json",
+    "sha256": "31c277a59e337623498c5db9efeccd4e5f9e54f2aa6244658d25d0edbb6144c7"
+  },
+  "mindmemos": {
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e"
+    },
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817"
+  },
+  "model_identity": {
+    "fresh_max_output_tokens_smoke": 8192,
+    "path": "generated/e2-r17-deepseek-v2-repair2-model-identity-adjudication-20260831.json",
+    "provider_retry_limit": 0,
+    "qualification_path": "generated/e2-r17-deepseek-v2-repair2-deepseek-identity-qualification-20260831.json",
+    "qualification_sha256": "6f7305554f710ce56d07e86cbc786ab5d4618327f5b6c0161c7259067cae59ac",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "thinking": "disabled"
+  },
+  "pair29_recovery": {
+    "pass_path": "generated/e2-r17-deepseek-v2-repair2-pair29-recovery-m1-pass-20260901.json",
+    "pass_sha256": "30f73cf6bd165bcccfe354c3b3df6e6692c5b7355ac725c68ceeb2378110897d",
+    "recovered_valid_pair_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-pair29-recovery-m1-20260901/summary/recovered_valid_pair.json",
+    "recovered_valid_pair_sha256": "4cc05a1ead12f252488b79a201a474299e6fbcc8e4916f3e6d5f4a6ab80c0ce9",
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-pair29-recovery-m1-20260901"
+  },
+  "pia1": {
+    "canonical_lineage": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-pia1-canonical-v3-lineage-20260901.json",
+      "sha256": "0c13358cc76653e624bf0359254540a743569c0e121a09bf1b1ec50cc383e955"
+    },
+    "duplicate_quarantine": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-pia1-permanent-v1-quarantine-20260901.json",
+      "sha256": "f5e20a7bf91324b413d72494f768d12c2728f552fea4e230716f5f5701abb4bc"
+    },
+    "pia_adjudication": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-pia1-adjudication-20260901.json",
+      "sha256": "f9e81a195b000711a04950a93f0559ab61b33bf403fde18966b02defe7bdbae5"
+    }
+  },
+  "protocol_memo": {
+    "path": "consultations/e2-r17-deepseek-v2-protocol-20260830.md",
+    "sha256": "546981b691fda58a700d2b3c5af458eace92391810080d2b531c5ae111cf0300"
+  },
+  "protocol_v2_correction": {
+    "path": "consultations/e2-r17-api-backbone-verifier-design-correction-20260830.md",
+    "sha256": "8dc373ad86d09da993a3bc8e34926b267c48ff75d31a4cf4e6772de2a54d493f"
+  },
+  "protocol_version": "repair2-continuation-v3",
+  "purpose": "Finish exactly the 19-pair unexecuted suffix of the canonical original Repair2 design after PIA-1 and pair29 measurement recovery.",
+  "remaining_set_manifest": {
+    "path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-remaining-19-20260901.json",
+    "sha256": "e2ce8efc99b360d2b28a11532c59d2c2190270ea99b588e38cc4d32532522251"
+  },
+  "remaining_units": [
+    "e1-msp-01/rep1",
+    "e1-msp-01/rep2",
+    "e1-msp-01/rep3",
+    "e1-ska-00/rep0",
+    "e1-ska-00/rep1",
+    "e1-ska-00/rep2",
+    "e1-ska-00/rep3",
+    "e1-ska-01/rep0",
+    "e1-ska-01/rep1",
+    "e1-ska-01/rep2",
+    "e1-ska-01/rep3",
+    "e1-tsr-00/rep0",
+    "e1-tsr-00/rep1",
+    "e1-tsr-00/rep2",
+    "e1-tsr-00/rep3",
+    "e1-tsr-01/rep0",
+    "e1-tsr-01/rep1",
+    "e1-tsr-01/rep2",
+    "e1-tsr-01/rep3"
+  ],
+  "renderer": {
+    "arm_metadata_visible": false,
+    "exact_final_retokenized_parity_required": true,
+    "final_block_cap_tokens": 3072,
+    "padding": false,
+    "path": "research_pipeline/e2_r17_evidence_window_v2.py",
+    "sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7",
+    "tokenizer_encoding": "cl100k_base",
+    "tokenizer_package": "tiktoken",
+    "tokenizer_version": "0.11.0"
+  },
+  "repair1_parent": {
+    "authorization_path": "generated/e2-r17-deepseek-v2-replicated-paired-repair1-authorization-20260830.json",
+    "authorization_sha256": "8301fa9d96768a86c802c06fbe04a02be552c5fa68195f709011b73c83b8dac5",
+    "completed_pairs": 14,
+    "contract_path": "generated/e2-r17-deepseek-v2-replicated-paired-repair1-contract-20260830.json",
+    "contract_sha256": "a4ce14dea5c5b0ab5509d97a072013a9924b592ae18c049b05d4edf707201f80",
+    "heldout_units": 504,
+    "learned_states": 28,
+    "scientific_scores_read": false,
+    "terminal_state": "STOP_AND_ADJUDICATE_UPDATER_PATCH_APPLY_FAILURE"
+  },
+  "repair2_m1_parent": {
+    "authorization_path": "generated/e2-r17-deepseek-v2-repair2-m1-single-use-authorization-20260831.json",
+    "authorization_sha256": "4d16c65ba3c6c345e8104bc75885589ed574632744ec8479e81de01bb808ca0f",
+    "contract_path": "generated/e2-r17-deepseek-v2-repair2-m1-measurement-contract-v2-20260831.json",
+    "contract_sha256": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+    "heldout_units": 36,
+    "learned_states": 2,
+    "partial_effect_read": false,
+    "pass_path": "generated/e2-r17-deepseek-v2-repair2-m1-measurement-recovery-pass-adjudication-20260831.json",
+    "pass_sha256": "a2a342d3db397e90743762bb697476467047429b9350645ab6b592ca67cf82aa",
+    "recovered_pairs": 1,
+    "updater_calls": 0
+  },
+  "repair2_stopped_parent": {
+    "authorization_path": "generated/e2-r17-deepseek-v2-repair2-authorization-20260831.json",
+    "authorization_sha256": "9643a0a30d0acc4f32607b217701b368a895b2fe1e86a0aa84da24aa0a80898b",
+    "contract_path": "generated/e2-r17-deepseek-v2-repair2-contract-20260831.json",
+    "contract_sha256": "9e38bdbfc71186e3e58587169d8c619bff4ae24de4145fefafa63e49a6f148a3",
+    "fresh_learned_states_recovered_by_m1": 2,
+    "restart_forbidden": true,
+    "terminal_state": "STOP_AND_ADJUDICATE_ACTOR_AUTHORIZATION_STATUS_SCHEMA_MISMATCH",
+    "updater_calls_sealed": 20
+  },
+  "repair_lineage": {
+    "all_scientific_variables_unchanged": true,
+    "parent_contract_path": "generated/e2-r17-deepseek-v2-replicated-paired-repair1-contract-20260830.json",
+    "parent_contract_sha256": "a4ce14dea5c5b0ab5509d97a072013a9924b592ae18c049b05d4edf707201f80",
+    "repair_type": "single-variable explicit parse/apply correction policy"
+  },
+  "replication": {
+    "approx_90pct_ci_halfwidth_at_null": 0.03605,
+    "approx_power_at_delta_1_over_18_alpha_0_05": 0.828,
+    "learned_states": 96,
+    "nuisance_sd": 0.13905713715032014,
+    "paired_replicate_units": 48,
+    "replicates_per_stream": 4,
+    "sample_size_prior_source": "V1 identical-treatment nuisance SD only",
+    "scientific_independent_units": 12,
+    "unit_definition": "D_s is the mean of four independent contemporaneous replicate differences within stream s"
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v2-20260901",
+  "runtime_reliability": {
+    "cannot_filter_primary_estimand": true,
+    "repair1_mrw_patch_apply_failure_count": 1,
+    "report_by_arm": [
+      "attempt0_success_count",
+      "correction_required_count",
+      "correction_success_count",
+      "correction_failure_count"
+    ],
+    "secondary_only": true
+  },
+  "schema_version": "2.0",
+  "statistics": {
+    "alpha": 0.05,
+    "bootstrap": {
+      "interval": "95% paired stream bootstrap",
+      "reps": 100000,
+      "seed": 1718
+    },
+    "decision_priority": [
+      "TOST equivalence -> STOP_MRW_PRACTICALLY_NULL",
+      "otherwise positive sign-flip p<=.05 + bootstrap lower>0 -> GO",
+      "otherwise significant negative sign-flip -> STOP_MRW_HARMFUL",
+      "otherwise HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS"
+    ],
+    "epsilon": 0.05555555555555555,
+    "no_probe_or_replicate_pseudoreplication": true,
+    "practical_null": "paired TOST; 90% t-CI strictly inside [-1/18,+1/18]",
+    "primary_estimand": "Delta=mean_s D_s over 12 frozen streams",
+    "primary_test": "exact one-sided sign-flip over 2^12 stream effects",
+    "replicate_effect": "d_sr=J_sr(MRW)-J_sr(WIN-C)",
+    "replicates_per_stream": 4,
+    "stream_effect": "D_s=mean_r d_sr"
+  },
+  "status": "FROZEN_E2_R17_DEEPSEEK_V2_REPAIR2_CONTINUATION_V2",
+  "streams": [
+    "e1-agj-00",
+    "e1-agj-01",
+    "e1-fmv-00",
+    "e1-fmv-01",
+    "e1-ioc-00",
+    "e1-ioc-01",
+    "e1-msp-00",
+    "e1-msp-01",
+    "e1-ska-00",
+    "e1-ska-01",
+    "e1-tsr-00",
+    "e1-tsr-01"
+  ],
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "superseding_failure_analysis": {
+    "path": "generated/e2-r17-deepseek-v2-repair1-updater-patch-apply-failure-20260831.json",
+    "sha256": "c21ce2ef3fb4f4573c3f6f45cab8842fbb75dab8d61d256ee3985f24932b38fa"
+  },
+  "technical_quarantine": {
+    "path": "generated/e2-r17-deepseek-v2-repair1-technical-quarantine-20260831.json",
+    "required_status": "TECHNICAL_QUARANTINE_UPDATER_PATCH_APPLY_FAILURE",
+    "sha256": "1908a3dfc472f835c204f7f9d5a66a9ee4b37093adb09a8d0c0f297b4b1abd7a"
+  },
+  "time_balance": {
+    "contemporaneous_pairing_required": true,
+    "evaluation_order": "SHA256(E2-R17-DEEPSEEK-V2-EVAL-PAIR-ORDER-v1|stream|replicate|task|arm)",
+    "update_order": "SHA256(E2-R17-DEEPSEEK-V2-UPDATE-ORDER-v1|stream|replicate|arm)"
+  },
+  "treatment": {
+    "arms": [
+      "win_c",
+      "mrw"
+    ],
+    "historical_win_a_win_b_excluded_from_primary_estimand": true,
+    "mrw": "V3.1 arm-blinded deterministic first failed nonwinner on mixed pools and exact WIN-C evidence on nonmixed pools",
+    "same_deterministic_workbook_verifier": true,
+    "same_exact_search_pools": true,
+    "same_heldout_probes": true,
+    "same_initial_skill": true,
+    "same_served_winner": true,
+    "same_updater_config": true,
+    "win_c": "V3.1 arm-blinded matched-window winner evidence"
+  },
+  "updater": {
+    "adapter_path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+    "adapter_sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8",
+    "batch_size": 8,
+    "correction_policy": "Only after skill_patch_apply attempt0 deterministic parse/apply failure: feed the exact error and complete prior response to the same model; attempt1 is visible, claimed, receipted; failure stops; no attempt2.",
+    "first_party": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "max_correction_attempts": 1,
+    "max_parse_attempts": 2,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "score_semantics": "selected_evidence_trajectory",
+    "temperature": 0,
+    "thinking": "disabled",
+    "transcript_max_chars": 100000,
+    "wrapper_path": "research_pipeline/e2_r17_mindmemos_updater.py",
+    "wrapper_sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d"
+  },
+  "updater_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv.freeze.txt",
+    "freeze_sha256": "80cd6fdd8eb672e41252c099766fd171a5a7a4b90c284d87da87d09f0d559731",
+    "litellm_local_model_cost_map": true,
+    "post_lock_compatibility_override": {
+      "disclosed": true,
+      "package": "tiktoken",
+      "reason": "pre-frozen V3.1 ExactMatchedEvidenceBlockRenderer compatibility",
+      "version": "0.11.0"
+    },
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+    "qualification_path": "generated/e2-r17-updater-runtime-qualification-20260829.json",
+    "qualification_sha256": "f2319815cdcd7caf248c498c470720d4e3f6c9b5e579fad59914df687cdf5b6d",
+    "required_entrypoint": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_UPDATER_RUNTIME",
+    "role": "persistent_skill_updater",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv"
+  },
+  "v1_identifiability_hold": {
+    "mrw_outcomes_observed_in_v1": false,
+    "paired_nuisance_sd": 0.13905713715032014,
+    "path": "generated/e2-r17-e1-b-negative-control-adjudication-20260829.json",
+    "required_status": "HOLD_UPDATER_OR_EVALUATOR_STOCHASTICITY",
+    "scientific_role": "preserved V1 scientific-identifiability result and nuisance-SD prior only; never a V2 control arm",
+    "sha256": "758d7514518216c6913d623b9175f237a35a63c4f2f523fa24a3097d07515a2e"
+  },
+  "valid_replicate_manifest": {
+    "allowed_sources": [
+      "repair1_inherited",
+      "repair2_m1_recovered",
+      "repair2_v3_fresh",
+      "repair2_v3_pair29_recovered",
+      "repair2_continuation_v2_fresh"
+    ],
+    "directory_discovery_forbidden": true,
+    "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v2-20260901/checkpoints/valid_replicates.jsonl",
+    "required_per_stream": 4,
+    "required_rows": 48
+  }
+}
