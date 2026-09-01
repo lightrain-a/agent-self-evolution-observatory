@@ -251,6 +251,13 @@ class ArkReasoningBankClient:
                     status_code=response.status_code,
                 ) from error
             normalized = self.normalize(payload, requested_model)
+            headers = getattr(response, "headers", {}) or {}
+            normalized["response_headers"] = {
+                str(key).lower(): str(value)
+                for key, value in headers.items()
+                if str(key).lower().startswith(("x-ratelimit-", "x-usage-", "x-quota-"))
+                or str(key).lower() == "retry-after"
+            }
             normalized["transport_attempts"] = attempts + 1
             return normalized
 
