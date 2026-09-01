@@ -21,6 +21,8 @@ K_Q1 = 20
 Q0_RESULT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q0-result-20260901.json"
 CONTRACT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-contract-20260901.json"
 OUTPUT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-result-20260901.json"
+INDEX = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-index-20260901.json"
+RECEIPT_DIR = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-receipts-20260901"
 EXPECTED_CONTRACT_SHA256 = "PENDING"
 FENCE = chr(96) * 3
 FIXED_PROMPT = (
@@ -133,6 +135,31 @@ def make_client() -> ArkReasoningBankClient:
         timeout_seconds=120.0, max_retries=0))
 
 
+def receipt_path(planned: dict[str, Any]) -> Path:
+    return RECEIPT_DIR / f"{int(planned['ordinal']):02d}-{planned['trial_id']}.json"
+
+
+def index_payload(contract: dict[str, Any], receipts: list[dict[str, Any]],
+                  inflight: dict[str, Any] | None = None) -> dict[str, Any]:
+    return {
+        "schema_version": 1, "experiment_id": EXPERIMENT_ID,
+        "stage": "Q1_QWEN_BACKEND_STOCHASTICITY_QUALIFICATION",
+        "created_at_utc": utcnow(), "contract_sha256": sha256_file(CONTRACT),
+        "planned_count": K_Q1, "completed_count": len(receipts),
+        "journal_record_count": len(receipts), "inflight": inflight,
+        "execution_complete": len(receipts) == K_Q1,
+        "journal": [{
+            "ordinal": row["ordinal"], "trial_id": row["trial_id"],
+            "attempt_count": row["attempt_count"], "status": row["status"],
+            "persisted": True, "receipt_sha256": sha256_file(receipt_path(row)),
+        } for row in receipts],
+        "checks": {"every_attempt_count_one": all(row["attempt_count"] == 1 for row in receipts),
+                   "no_retry": True, "no_replacement": True,
+                   "frozen_order_prefix": True},
+        "credential_material_present": False,
+    }
+
+
 def execute(output: Path = OUTPUT) -> dict[str, Any]:
     if output.exists():
         raise RuntimeError("refusing duplicate Q1 execution")
@@ -143,8 +170,33 @@ def execute(output: Path = OUTPUT) -> dict[str, Any]:
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     if contract["q0_result_sha256"] != sha256_file(Q0_RESULT):
         raise RuntimeError("Q1 Q0 binding drift")
-    request, client, receipts = dict(contract["request"]), make_client(), []
+    RECEIPT_DIR.mkdir(parents=True, exist_ok=True)
+    receipts: list[dict[str, Any]] = []
+    missing_seen = False
     for planned in contract["trial_plan"]:
+        path = receipt_path(planned)
+        if not path.exists():
+            missing_seen = True
+            continue
+        if missing_seen:
+            raise RuntimeError("Q1 receipts are not a frozen-order prefix")
+        row = json.loads(path.read_text(encoding="utf-8"))
+        if row["trial_id"] != planned["trial_id"] or row["attempt_count"] != 1:
+            raise RuntimeError("Q1 receipt identity/attempt drift")
+        receipts.append(row)
+    if INDEX.exists():
+        prior = json.loads(INDEX.read_text(encoding="utf-8"))
+        inflight = prior.get("inflight")
+        if inflight:
+            planned = contract["trial_plan"][int(inflight["ordinal"]) - 1]
+            if not receipt_path(planned).exists():
+                raise RuntimeError("Q1_AMBIGUOUS_INFLIGHT_HOLD: refusing duplicate trial")
+    write_json(INDEX, index_payload(contract, receipts))
+    request, client = dict(contract["request"]), make_client()
+    for planned in contract["trial_plan"][len(receipts):]:
+        write_json(INDEX, index_payload(contract, receipts, {
+            "ordinal": planned["ordinal"], "trial_id": planned["trial_id"],
+            "attempt_count": 1, "state": "DISPATCHED_BEFORE_PROVIDER_CALL"}))
         started = time.monotonic()
         try:
             response = client.create_response(
@@ -162,6 +214,7 @@ def execute(output: Path = OUTPUT) -> dict[str, Any]:
                 "requested_model": response.get("requested_model"),
                 "resolved_model": response.get("resolved_model"),
                 "usage": response.get("usage") or {},
+                "safe_rate_quota_headers": response.get("response_headers") or {},
                 "transport_attempts": response.get("transport_attempts"),
                 "latency_seconds": round(time.monotonic() - started, 6),
                 "credential_material_present": False,
@@ -174,7 +227,21 @@ def execute(output: Path = OUTPUT) -> dict[str, Any]:
                 "latency_seconds": round(time.monotonic() - started, 6),
                 "credential_material_present": False,
             }
-        receipts.append(row)
+        target = receipt_path(planned)
+        if target.exists():
+            raise RuntimeError("refusing to overwrite Q1 receipt")
+        write_json(target, row)
+        receipts.append(json.loads(target.read_text(encoding="utf-8")))
+        write_json(INDEX, index_payload(contract, receipts))
+        print(json.dumps({"ordinal": planned["ordinal"], "trial_id": planned["trial_id"],
+                          "status": row["status"], "completed": len(receipts)},
+                         sort_keys=True), flush=True)
+        if row["status"] != "SUCCESS":
+            break
+    if len(receipts) != K_Q1:
+        return {"decision": "Q1_PROVIDER_HOLD_REMAINING_TRIALS_UNTOUCHED",
+                "backend_classification": "UNQUALIFIED", "execution_complete": False,
+                "completed_count": len(receipts), "index_sha256": sha256_file(INDEX)}
     successful = [r for r in receipts if r["status"] == "SUCCESS"]
     valid = [r for r in successful if r["normalized_action"]["parse_valid"]]
     response_hashes = sorted({r["response_sha256"] for r in successful})
@@ -195,7 +262,7 @@ def execute(output: Path = OUTPUT) -> dict[str, Any]:
         "created_at_utc": utcnow(), "decision": decision,
         "contract_path": str(CONTRACT.relative_to(ROOT)),
         "contract_sha256": sha256_file(CONTRACT),
-        "q0_result_sha256": sha256_file(Q0_RESULT),
+        "q0_result_sha256": sha256_file(Q0_RESULT), "index_sha256": sha256_file(INDEX),
         "request_sha256": contract["request_sha256"], "K_Q1": K_Q1,
         "receipt_count": len(receipts), "successful_count": len(successful),
         "parse_valid_count": len(valid),
