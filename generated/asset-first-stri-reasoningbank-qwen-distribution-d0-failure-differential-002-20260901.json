@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "created_at_utc": "2026-09-01T07:45:00Z",
+  "stage": "D0_ZERO_MODEL_EVALUATOR_QUALIFICATION",
+  "hypothesis_or_qualification_goal": "Prospectively qualify fresh SWE-bench Verified task evaluator/runtime substrate without policy-model calls.",
+  "observed_failure": "For ordinal 2 (astropy__astropy-8707), docker create acknowledgement timed out and the immediate inherited inspect reconciliation also failed. A later independent read-only daemon inspection found the exact intended container side effect in created/not-running state.",
+  "failure_layer": "environment",
+  "root_cause": "Transient Docker client/daemon acknowledgement and inspection transport failure; the create side effect occurred exactly once but was not observed inside the original acknowledgement window.",
+  "scientific_belief_update": "none",
+  "repair_allowed": true,
+  "repair_scope": "Verify the exact orphan identity/configuration, remove only that never-started container, then resume the same untouched ordinal 2 from the frozen schedule. No evaluator, provider, model, or behavioral call occurred.",
+  "prohibited_repairs": [
+    "mark task unqualified",
+    "replace task",
+    "change task order",
+    "rerun completed ordinal 1",
+    "change evaluator or image",
+    "count infrastructure acknowledgement as a scientific trial"
+  ],
+  "artifact_refs": {
+    "live_index": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-index-20260901.json",
+    "image_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-image-manifests-20260901/002-astropy-astropy-8707-amd64.receipt.json",
+    "exact_container_id": "d22854265767590452770e1e5a0ee653168b2fb86921697c282688afe41fe371",
+    "exact_container_name": "e1-rb-qwen-d0-002-astropy__astropy-8707-dbed6dfa"
+  },
+  "reconciliation": {
+    "observed_state": "created",
+    "observed_running": false,
+    "exact_image_digest": "sha256:c6531e6e77ca7f257057f793cf38fc84427cd36fd93d136c21aef2a6e0e8df6d",
+    "entrypoint": [
+      "sleep"
+    ],
+    "cmd": [
+      "infinity"
+    ],
+    "pid_mode": "host",
+    "evaluator_started": false,
+    "model_calls": 0,
+    "provider_calls": 0,
+    "behavioral_outcomes_observed": false,
+    "exact_orphan_removed": true,
+    "post_removal_inspect_absent": true
+  },
+  "authorized_next_action": "resume same untouched qualification unit",
+  "credential_material_present": false,
+  "payload_sha256": "687d48b33d46e4be0a10b14f58a51a01e8056a8ef125a2322fce7be3feca5094"
+}

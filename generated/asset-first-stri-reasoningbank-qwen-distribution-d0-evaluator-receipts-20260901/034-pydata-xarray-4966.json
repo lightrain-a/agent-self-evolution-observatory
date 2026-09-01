@@ -1,0 +1,323 @@
+{
+  "behavioral_outcomes_observed": false,
+  "checks": {
+    "all_fail_to_pass": true,
+    "all_pass_to_pass": true,
+    "architecture_amd64": true,
+    "base_commit_exact": true,
+    "container_cleanup_accepted": true,
+    "eval_script_available": true,
+    "evaluator_cleanup_diff_exact": true,
+    "evaluator_not_timed_out": true,
+    "evaluator_returncode_zero": true,
+    "gold_patch_applied": true,
+    "gold_patch_sha_exact": true,
+    "gold_state_observable_before_eval": true,
+    "image_digest_exact": true,
+    "official_parser_family_supported": true,
+    "post_eval_state_observable": true,
+    "status_map_nonempty": true,
+    "task_identity_exact": true,
+    "test_output_markers_valid": true,
+    "test_patch_available": true
+  },
+  "container_cleanup_receipt": {
+    "accepted": true,
+    "cleanup_invoked": true,
+    "container_name": "e1-rb-qwen-d0-034-pydata__xarray-4966-892508fd",
+    "reconciliation_receipt_finalized_before_cleanup": true,
+    "returncode": 0,
+    "timed_out": false
+  },
+  "created_at_utc": "2026-09-01T09:11:13+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "finished_at_utc": "2026-09-01T09:12:44+00:00",
+  "gold_patch_model_visible": false,
+  "instance_id": "pydata__xarray-4966",
+  "model_calls": 0,
+  "ordinal": 34,
+  "payload_sha256": "009c5fac967433e34f64ae660f8eb2d4888e260e4a412efc25d2ceb47d74496f",
+  "provider_calls": 0,
+  "qualification_attempt_count": 1,
+  "qualification_status": "QUALIFIED",
+  "qualified": true,
+  "repo": "pydata/xarray",
+  "repo_hash_rank": 3,
+  "runtime_receipt": {
+    "base_commit_receipt": {
+      "expected_base_commit": "37522e991a32ee3c0ad1a5ff8afe8e3eb1885550",
+      "finished_at_utc": "2026-09-01T09:11:51+00:00",
+      "git_clean_invoked": false,
+      "normalization": {
+        "finished_at_utc": "2026-09-01T09:11:51+00:00",
+        "output": "HEAD is now at 37522e99 Support for dask.graph_manipulation (#4965)\n",
+        "returncode": 0,
+        "started_at_utc": "2026-09-01T09:11:50+00:00",
+        "timed_out": false
+      },
+      "normalization_action": "git reset --hard <frozen expected base commit>",
+      "observed_head": "37522e991a32ee3c0ad1a5ff8afe8e3eb1885550",
+      "output": "37522e991a32ee3c0ad1a5ff8afe8e3eb1885550\n",
+      "pre_normalization": {
+        "finished_at_utc": "2026-09-01T09:11:50+00:00",
+        "output": "006540f42498f78cca113289ed0fa3f3711c7c72\n",
+        "returncode": 0,
+        "started_at_utc": "2026-09-01T09:11:47+00:00",
+        "timed_out": false
+      },
+      "returncode": 0,
+      "rule": "exact_base_after_preregistered_hard_reset",
+      "started_at_utc": "2026-09-01T09:11:51+00:00",
+      "timed_out": false
+    },
+    "image_inspect": {
+      "finished_at_utc": "2026-09-01T09:11:13+00:00",
+      "output": "[\n    {\n        \"Id\": \"sha256:8031b0afcc4b54bb3e24f14ad85a1ea1629e27837e43ca557c23c904a9bf3c3b\",\n        \"RepoTags\": [\n            \"docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-4966:t05fixed-445adac04fe8\",\n            \"swebench/sweb.eval.x86_64.pydata_1776_xarray-4966:latest\"\n        ],\n        \"RepoDigests\": [\n            \"docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-4966@sha256:445adac04fe8ac03a165c2e91adc1cfb3f41c20bdfa977ca195698c23d1876e5\"\n        ],\n        \"Comment\": \"buildkit.dockerfile.v0\",\n        \"Created\": \"2026-08-13T02:59:01.372437314Z\",\n        \"Config\": {\n            \"Env\": [\n                \"PATH=/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"TZ=Etc/UTC\"\n            ],\n            \"Cmd\": [\n                \"/bin/bash\"\n            ],\n            \"WorkingDir\": \"/testbed/\",\n            \"Labels\": {\n                \"org.opencontainers.image.version\": \"22.04\"\n            }\n        },\n        \"Architecture\": \"amd64\",\n        \"Os\": \"linux\",\n        \"Size\": 5101838760,\n        \"GraphDriver\": {\n            \"Data\": {\n                \"LowerDir\": \"/data/wyt/rootless-docker24/overlay2/e1581ca1e930062d42c24bd43007e7d680905b733a10cf53c805beec928310d0/diff:/data/wyt/rootless-docker24/overlay2/6d278279fffca2277621e32e4264346a22769b185d1ca2a2f82575da37281f0b/diff:/data/wyt/rootless-docker24/overlay2/9fd52ad9e3df1bb275e30e26744523005b4eee86b1888b0082c131a09807a89f/diff:/data/wyt/rootless-docker24/overlay2/c1eff5144d13cb538e520720810ade4d8aad8de132a88313e0b4108f90013fb6/diff:/data/wyt/rootless-docker24/overlay2/d627d60d80a3d87f0c651b9b2777253de9107e2c70590faa82937d321d971b1b/diff:/data/wyt/rootless-docker24/overlay2/ed45c3c1f5428b3003a2282f174b40662eff5aeccdff5a02ab215f696730de87/diff:/data/wyt/rootless-docker24/overlay2/d590be0134b931d943d7818ff6595f85ab23d5e948d4ba2c73f799ac9f40ffab/diff:/data/wyt/rootless-docker24/overlay2/387a15feaf4f2ddd79b8a667e40a54ad3f9935ed6d89f510e68e04a1c7d12fea/diff:/data/wyt/rootless-docker24/overlay2/4bb6aec75beee95ec35e955925b0372f18b537015d2d8c730f87ee9bd81ae1b9/diff\",\n                \"MergedDir\": \"/data/wyt/rootless-docker24/overlay2/737e2763de2bb2b6ece7c0b68f0d97527d8a7b391c602156e5162265f5d18605/merged\",\n                \"UpperDir\": \"/data/wyt/rootless-docker24/overlay2/737e2763de2bb2b6ece7c0b68f0d97527d8a7b391c602156e5162265f5d18605/diff\",\n                \"WorkDir\": \"/data/wyt/rootless-docker24/overlay2/737e2763de2bb2b6ece7c0b68f0d97527d8a7b391c602156e5162265f5d18605/work\"\n            },\n            \"Name\": \"overlay2\"\n        },\n        \"RootFS\": {\n            \"Type\": \"layers\",\n            \"Layers\": [\n                \"sha256:beb59027b96ddbf30ac9c80b527668fe7011f4f553fe83f5e59199e9a84fb5ca\",\n                \"sha256:24df650e8ccc41451cf4f7113e09420f7ec00ca9ae41e8be09c60bc467cdf4fe\",\n                \"sha256:098cb03ec50e1bd1637b7db5e2696a4d1dc3f1c3811adbbe444f43f631f2e7fd\",\n                \"sha256:fc3a8fa12509a555b3cea8d1f7457c0837ab8360be78e7a380294e09f96fe2f2\",\n                \"sha256:a3540f5c375c231bc054e7472d0de5a6d8fe5c96b92948f7655914860647fb54\",\n                \"sha256:f3684f1a85d5159913e2c41a55a86947882302421241b14b57583633bfc31873\",\n                \"sha256:46447afe72a169ea1b2424c7940e79f7ee9f6be65ea9cb3855b23827b82283e4\",\n                \"sha256:3dee919d9834afe72ac660bb6cd091a9ae53c75b7139fb17e0f6f6baeda8de21\",\n                \"sha256:464e60ad3c974a84a5225c471225ac810d5b346300ca8a4cbe36bc68d2b04fdd\",\n                \"sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef\"\n            ]\n        },\n        \"Metadata\": {\n            \"LastTagTime\": \"2026-09-01T15:45:34.824698998+08:00\"\n        }\n    }\n]\n",
+      "returncode": 0,
+      "started_at_utc": "2026-09-01T09:11:13+00:00",
+      "timed_out": false
+    },
+    "q10_start_reconciliation": {
+      "acceptance_rule": "normal_client_acknowledgement_with_exact_post_start_state",
+      "accepted": true,
+      "client_output": "e1-rb-qwen-d0-034-pydata__xarray-4966-892508fd\n",
+      "client_returncode": 0,
+      "client_start_invocations": 1,
+      "client_timed_out": false,
+      "container_id": "e34526b442d48354d35efa9658d0f10f1b9d896a3a951c6007f1051dde1bbbdc",
+      "container_name": "/e1-rb-qwen-d0-034-pydata__xarray-4966-892508fd",
+      "contract_sha256": "bc4781ce0188d899af3b1a491b51f30467e6c655c7f8d3074b919a043b2878bd",
+      "daemon_dead": false,
+      "daemon_pid": 3060102,
+      "daemon_restarting": false,
+      "daemon_running": true,
+      "daemon_status": "running",
+      "docker_inspect_invoked": true,
+      "docker_inspect_receipt": {
+        "output_sha256_recorded_elsewhere": false,
+        "returncode": 0,
+        "timed_out": false
+      },
+      "exact_identity_verified": true,
+      "exact_running_state_verified": true,
+      "expected_image": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-4966@sha256:445adac04fe8ac03a165c2e91adc1cfb3f41c20bdfa977ca195698c23d1876e5",
+      "expected_image_digest": "sha256:445adac04fe8ac03a165c2e91adc1cfb3f41c20bdfa977ca195698c23d1876e5",
+      "expected_pid_mode": "host",
+      "observed_cmd": [
+        "infinity"
+      ],
+      "observed_entrypoint": [
+        "sleep"
+      ],
+      "observed_image": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-4966@sha256:445adac04fe8ac03a165c2e91adc1cfb3f41c20bdfa977ca195698c23d1876e5",
+      "observed_image_digests": [
+        "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-4966@sha256:445adac04fe8ac03a165c2e91adc1cfb3f41c20bdfa977ca195698c23d1876e5"
+      ],
+      "observed_pid_mode": "host",
+      "receipt_finalized": true,
+      "reconciliation_invoked": false,
+      "restart_count": 0,
+      "second_start_invoked": false
+    },
+    "q6_create_acknowledgement": {
+      "accepted": true,
+      "client_create_invocations": 1,
+      "client_output": "e34526b442d48354d35efa9658d0f10f1b9d896a3a951c6007f1051dde1bbbdc\n",
+      "client_returncode": 0,
+      "client_timed_out": false,
+      "container_id": "e34526b442d48354d35efa9658d0f10f1b9d896a3a951c6007f1051dde1bbbdc",
+      "contract_sha256": "5779bd037811c6446610eb31b6b7f73f8110993f5ad0f112902523477ee0158b",
+      "normal_create_receipt_accepted": true,
+      "repair_invoked": false,
+      "second_create_invoked": false
+    }
+  },
+  "schema_version": 1,
+  "stage": "D0_ZERO_MODEL_EVALUATOR_QUALIFICATION",
+  "task_hash_rank_within_repo": 12,
+  "task_receipt": {
+    "FAIL_TO_PASS": {
+      "xarray/tests/test_coding.py::test_decode_signed_from_unsigned[1]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_signed_from_unsigned[2]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_signed_from_unsigned[4]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_signed_from_unsigned[8]": "PASSED"
+    },
+    "PASS_TO_PASS": {
+      "xarray/tests/test_coding.py::test_CFMaskCoder_decode": "PASSED",
+      "xarray/tests/test_coding.py::test_CFMaskCoder_decode_dask": "PASSED",
+      "xarray/tests/test_coding.py::test_CFMaskCoder_encode_missing_fill_values_conflict[numeric-with-dtype]": "PASSED",
+      "xarray/tests/test_coding.py::test_CFMaskCoder_encode_missing_fill_values_conflict[numeric-without-dtype]": "PASSED",
+      "xarray/tests/test_coding.py::test_CFMaskCoder_encode_missing_fill_values_conflict[times-with-dtype]": "PASSED",
+      "xarray/tests/test_coding.py::test_CFMaskCoder_missing_value": "PASSED",
+      "xarray/tests/test_coding.py::test_coder_roundtrip": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_unsigned_from_signed[1]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_unsigned_from_signed[2]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_unsigned_from_signed[4]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_unsigned_from_signed[8]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[f2]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[f4]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[i1]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[i2]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[u1]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[u2]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_offset_as_list[0.1-10]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_offset_as_list[0.1-scale_factor1]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_offset_as_list[add_offset1-10]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_offset_as_list[add_offset1-scale_factor1]": "PASSED"
+    },
+    "base_commit": "37522e991a32ee3c0ad1a5ff8afe8e3eb1885550",
+    "eval_script_sha256": "81153d80a494e7a6e103a0d3dc5868221b5448d1e77e9c05cf93e65d68a5f319",
+    "eval_type": "pass_and_fail",
+    "evaluator_returncode": 0,
+    "evaluator_timed_out": false,
+    "gold_patch_content_persisted_in_receipt": false,
+    "gold_patch_sha256": "cb53386602c86509ce13becf894477b5ecc93235cbb5ea8a80d0cdec3397d9be",
+    "image_manifest": {
+      "architecture": "amd64",
+      "config_digest": "sha256:8031b0afcc4b54bb3e24f14ad85a1ea1629e27837e43ca557c23c904a9bf3c3b",
+      "credential_material_present": false,
+      "download_repo": "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966",
+      "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-4966@sha256:445adac04fe8ac03a165c2e91adc1cfb3f41c20bdfa977ca195698c23d1876e5",
+      "instance_id": "pydata__xarray-4966",
+      "layer_bytes": 2050302340,
+      "layer_count": 10,
+      "manifest_digest": "sha256:445adac04fe8ac03a165c2e91adc1cfb3f41c20bdfa977ca195698c23d1876e5",
+      "manifest_file_sha256": "445adac04fe8ac03a165c2e91adc1cfb3f41c20bdfa977ca195698c23d1876e5",
+      "manifest_media_type": "application/vnd.oci.image.manifest.v1+json",
+      "manifest_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-image-manifests-20260901/034-pydata-xarray-4966-amd64.json",
+      "manifest_size": 2200,
+      "mirror_base": "https://docker.1ms.run",
+      "mirror_repo": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-4966",
+      "os": "linux",
+      "payload_sha256": "19103c53aca9bef75e5142317b29580d3e8d885d346116193803655870d2e933"
+    },
+    "image_runtime": {
+      "all_blobs_sha256_verified": true,
+      "architecture": "amd64",
+      "architecture_amd64_visible": true,
+      "download_rows": [
+        {
+          "digest": "sha256:079027039e9d5fa1677dd462c60fd9240097243a87ff8a124fffbd16f909c266",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 420170791,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:0ddda5039dab8b2772d0f65857071df489438384259b8fabd0a7882656cf8ca0",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 164,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:39a945af8df2ad9343f141c82355d3f2c4b576d432eda34c460d630607462b60",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 29736517,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:407de719c2d3bde9e1d31481e451ac465ef6cdcf90f48b446b000dd907979233",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 21565,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 32,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:53752545c9b26814a5dadb2ac5d26e71ee039f17d72ee04fbc55e8e14a42966e",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 4313,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:568850deb3ab3295526675ae987f50f2f304332deab1c69cb2968365032bb986",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 1375825524,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:8031b0afcc4b54bb3e24f14ad85a1ea1629e27837e43ca557c23c904a9bf3c3b",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 4214,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:84afce840a98b42233a648267d9c1fb6fa402b466eb500fb309d641921838f49",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 190,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:c723ce7a64bff72fc95b9aa9420de055d16dfa544b1f25c765e6b0e20ceb5309",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 14246792,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:fd3f01088aa854fa99907bd918d9bc8146064c2f452aae3e07d61a6244ca9968",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 210296452,
+          "status": "verified-existing"
+        }
+      ],
+      "exact_digest_visible": true,
+      "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-4966@sha256:445adac04fe8ac03a165c2e91adc1cfb3f41c20bdfa977ca195698c23d1876e5",
+      "import_archive_sha256": null,
+      "import_status": "verified-existing",
+      "manifest_digest": "sha256:445adac04fe8ac03a165c2e91adc1cfb3f41c20bdfa977ca195698c23d1876e5",
+      "temporary_import_archive_removed": false
+    },
+    "image_tag": "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966:latest",
+    "log_parser": "parse_log_xarray",
+    "model_visible_task_sha256": "af6aacf3c0f1b8028d4a0b32886878906c6c94c950f886674df63e65c3c3caad",
+    "post_evaluator_state_sha256": "1d34c7b6c7f8c753afe3fd5da58c1c0193bea5050352692ea19779d33a729c71",
+    "pre_evaluator_gold_state_sha256": "1d34c7b6c7f8c753afe3fd5da58c1c0193bea5050352692ea19779d33a729c71",
+    "raw_evaluator_log_model_visible": false,
+    "raw_evaluator_log_path": "/data/wyt/e1-stri-reasoningbank-runtime/qwen-distribution-v3/d0-evaluator-raw-logs/034-pydata-xarray-4966.log",
+    "raw_evaluator_log_sha256": "7b8a95e346297eb36bc70fe30615414798efc099ec038571b27fc4d49f6910c9",
+    "status_map": {
+      "xarray/tests/test_coding.py::test_CFMaskCoder_decode": "PASSED",
+      "xarray/tests/test_coding.py::test_CFMaskCoder_decode_dask": "PASSED",
+      "xarray/tests/test_coding.py::test_CFMaskCoder_encode_missing_fill_values_conflict[numeric-with-dtype]": "PASSED",
+      "xarray/tests/test_coding.py::test_CFMaskCoder_encode_missing_fill_values_conflict[numeric-without-dtype]": "PASSED",
+      "xarray/tests/test_coding.py::test_CFMaskCoder_encode_missing_fill_values_conflict[times-with-dtype]": "PASSED",
+      "xarray/tests/test_coding.py::test_CFMaskCoder_missing_value": "PASSED",
+      "xarray/tests/test_coding.py::test_coder_roundtrip": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_signed_from_unsigned[1]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_signed_from_unsigned[2]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_signed_from_unsigned[4]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_signed_from_unsigned[8]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_unsigned_from_signed[1]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_unsigned_from_signed[2]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_unsigned_from_signed[4]": "PASSED",
+      "xarray/tests/test_coding.py::test_decode_unsigned_from_signed[8]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[f2]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[f4]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[i1]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[i2]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[u1]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_converts_to_float32[u2]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_offset_as_list[0.1-10]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_offset_as_list[0.1-scale_factor1]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_offset_as_list[add_offset1-10]": "PASSED",
+      "xarray/tests/test_coding.py::test_scaling_offset_as_list[add_offset1-scale_factor1]": "PASSED"
+    },
+    "test_patch_available": true,
+    "test_patch_sha256": "edfb2b5cb581062533dcd9053aeac1e09b71a3ba93764abbb39b9716e87c6cdd"
+  }
+}

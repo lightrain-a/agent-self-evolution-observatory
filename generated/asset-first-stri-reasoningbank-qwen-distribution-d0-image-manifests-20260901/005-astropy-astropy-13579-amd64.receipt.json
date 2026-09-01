@@ -1,0 +1,19 @@
+{
+  "architecture": "amd64",
+  "config_digest": "sha256:62d1a79236c822e6632a7de6d3c35b1670efd7fa5432057c33a0c4dbd73681b0",
+  "credential_material_present": false,
+  "download_repo": "swebench/sweb.eval.x86_64.astropy_1776_astropy-13579",
+  "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.astropy_1776_astropy-13579@sha256:3a4b8059992d3eed81046bd4b3bd3450993a237a909c2298ce69b59bb5b9c863",
+  "instance_id": "astropy__astropy-13579",
+  "layer_bytes": 1134305276,
+  "layer_count": 10,
+  "manifest_digest": "sha256:3a4b8059992d3eed81046bd4b3bd3450993a237a909c2298ce69b59bb5b9c863",
+  "manifest_file_sha256": "3a4b8059992d3eed81046bd4b3bd3450993a237a909c2298ce69b59bb5b9c863",
+  "manifest_media_type": "application/vnd.oci.image.manifest.v1+json",
+  "manifest_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-image-manifests-20260901/005-astropy-astropy-13579-amd64.json",
+  "manifest_size": 2199,
+  "mirror_base": "https://docker.1ms.run",
+  "mirror_repo": "docker.1ms.run/swebench/sweb.eval.x86_64.astropy_1776_astropy-13579",
+  "os": "linux",
+  "payload_sha256": "adf1654cf805c345c6b3e93aebe5acf9df68fba62d0e4f5efa9e0626b788dc3e"
+}

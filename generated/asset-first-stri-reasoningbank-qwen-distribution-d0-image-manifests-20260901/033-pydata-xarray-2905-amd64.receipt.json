@@ -1,0 +1,19 @@
+{
+  "architecture": "amd64",
+  "config_digest": "sha256:92c9ca93a247d4f85f199c87ba7f807e881385853ea571b43a4697f8f85c4196",
+  "credential_material_present": false,
+  "download_repo": "swebench/sweb.eval.x86_64.pydata_1776_xarray-2905",
+  "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-2905@sha256:1fb7fb411d115d06cf2f34fde3b6f8a33427f2d6f36e1ab8df3b1b977195bd61",
+  "instance_id": "pydata__xarray-2905",
+  "layer_bytes": 2050050366,
+  "layer_count": 10,
+  "manifest_digest": "sha256:1fb7fb411d115d06cf2f34fde3b6f8a33427f2d6f36e1ab8df3b1b977195bd61",
+  "manifest_file_sha256": "1fb7fb411d115d06cf2f34fde3b6f8a33427f2d6f36e1ab8df3b1b977195bd61",
+  "manifest_media_type": "application/vnd.oci.image.manifest.v1+json",
+  "manifest_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-image-manifests-20260901/033-pydata-xarray-2905-amd64.json",
+  "manifest_size": 2200,
+  "mirror_base": "https://docker.1ms.run",
+  "mirror_repo": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-2905",
+  "os": "linux",
+  "payload_sha256": "3cf8afe4fe936dd7fe4a52c02df3fc47220ab859a247e45d0e93f4bc2597052b"
+}
