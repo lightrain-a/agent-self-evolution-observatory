@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T11:35:00Z",
+  "experiment": "C1-PACTA-RB-QWEN397-T0-v5",
+  "status": "STOP_SOURCE_TRAJECTORY_OUTPUT_BUDGET_UNQUALIFIED",
+  "source_task_id": "pydata__xarray-4966",
+  "source_task_consumed": true,
+  "source_task_reusable": false,
+  "source_trajectory_valid_for_writer": false,
+  "reason": "The exactly-once source episode reached a provider rate_limit_exceeded HTTP 400 at step 129 after extensive response truncation under the frozen 512-token completion ceiling. Provider failure is not a native agent terminal outcome and therefore this trajectory is not writer-ready.",
+  "provider": {
+    "requested_model": "qwen3.5-397b-a17b",
+    "resolved_model": "qwen3.5-397b-a17b",
+    "model_drift": 0,
+    "responses_persisted": 129,
+    "successful_json_responses": 128,
+    "http_400_step": 129,
+    "http_400_error_code": "rate_limit_exceeded",
+    "http_400_response_sha256": "69fe30202ee97b8ac417c87ea9cb53b67e78a3c1d78e199537aef632def63df1",
+    "request_129_sha256": "c852241744bb2f6f0d934a9b6e561612950c36ae572bfb0629eb55a6d9adba28",
+    "successful_usage": {
+      "prompt_tokens": 5447312,
+      "completion_tokens": 62846
+    },
+    "finish_reason_counts": {
+      "stop": 9,
+      "length": 119
+    }
+  },
+  "trajectory": {
+    "source_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v5/source-pydata__xarray-4966/source_trajectory.json",
+    "source_trajectory_sha256": "a9cba007e306b07353d09759815cb29a3027e9f76ae3ce559a3a181d196afaac",
+    "writer_input_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v5/source-pydata__xarray-4966/writer_input_trajectory.txt",
+    "writer_input_trajectory_sha256": "a4f9174535e6da23a751468cdc94401b20d76f5c79ab964db3bde0567f78fef4",
+    "journal_events": 130,
+    "executed_observations": 9,
+    "run_json_created": false
+  },
+  "frozen_v5": {
+    "contract_sha256": "592d5ec5691d4be3cb1d0ff96026a166600ad4a1fb5abe60df69d838fa461ca6",
+    "schedule_sha256": "cb49731669b1d42ff2806fdaa200cf5460a4767b0ce4a8e32c85673dac6ccf9a",
+    "source_execution_git_sha": "7272cc3dda5360a1c0c0d7ce7288e356cf1ef02a"
+  },
+  "failure_differential": {
+    "supported": [
+      "rootful Docker substrate",
+      "exact-digest image binding",
+      "exact-base normalization",
+      "Qwen397 identity stability",
+      "write-before-parse persistence",
+      "MiniSWEAgent environment loop"
+    ],
+    "failed": [
+      "512-token completion budget as a full source-trajectory action budget",
+      "provider availability after the truncation-amplified 128-call episode"
+    ],
+    "not_evidence_for": [
+      "PACTA negative",
+      "SCB negative",
+      "ReasoningBank mechanism negative",
+      "Qwen397 first-decision negative"
+    ]
+  },
+  "next_authorized_direction": "Prospectively qualify a separate full-source-trajectory output budget on non-scientific long-action MiniSWEAgent fixtures. Keep PACTA first-decision measurement budget frozen at 512. Do not rerun pydata__xarray-4966.",
+  "remaining_untouched_source_units": 10,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_measurement_calls": 0,
+  "future_task_executions": 0,
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "active_manuscript": "R9"
+}
