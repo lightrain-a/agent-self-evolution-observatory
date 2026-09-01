@@ -10,12 +10,12 @@ from typing import Any, Mapping
 
 from jinja2 import Template
 
-from research_pipeline.asset_first_stri_reasoningbank_ark_provider import (
-    ArkCompatibilityError, ArkReasoningBankClient, ArkReasoningBankSettings,
-    CANONICAL_SECRET_FILE,
+from research_pipeline.asset_first_stri_reasoningbank_qwen_provider import (
+    DIANMING_BASE_URL, DIANMING_SECRET_FILE, QwenChatClient, QwenChatSettings,
+    QwenProviderError,
 )
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
-    BASE_URL, COMMAND_TIMEOUT_SECONDS, EVALUATOR_TIMEOUT_SECONDS, FORMAT_RE,
+    COMMAND_TIMEOUT_SECONDS, EVALUATOR_TIMEOUT_SECONDS, FORMAT_RE,
     ROOT, STEP_LIMIT, canonical_json, load_config, render_messages,
     render_timeout_observation, sha256_text, utcnow,
 )
@@ -33,6 +33,7 @@ from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_behavior
 )
 
 MODEL = "qwen3-coder-next"
+BASE_URL = DIANMING_BASE_URL
 
 
 def model_visible_task_sha256(row: Mapping[str, Any]) -> str:
@@ -46,22 +47,23 @@ def model_visible_task_sha256(row: Mapping[str, Any]) -> str:
     return sha256_text(canonical_json(visible))
 
 
-def make_client(*, timeout_seconds: float = 120.0) -> ArkReasoningBankClient:
-    base = ArkReasoningBankSettings.from_env_file(CANONICAL_SECRET_FILE)
-    if base.base_url.rstrip("/") != BASE_URL:
-        raise RuntimeError("Qwen provider base URL drift")
-    return ArkReasoningBankClient(ArkReasoningBankSettings(
+def make_client(*, timeout_seconds: float = 120.0) -> QwenChatClient:
+    base = QwenChatSettings.from_env_file(DIANMING_SECRET_FILE)
+    if base.base_url.rstrip("/") != BASE_URL or base.model != MODEL:
+        raise RuntimeError("Qwen provider base URL/model drift")
+    return QwenChatClient(QwenChatSettings(
         api_key=base.api_key, base_url=BASE_URL, model=MODEL,
         timeout_seconds=timeout_seconds, max_retries=0))
 
 
 def request_body(messages: list[dict[str, str]], sampling: Mapping[str, Any]) -> dict[str, Any]:
     body: dict[str, Any] = {
-        "model": MODEL, "input": copy.deepcopy(messages),
+        "model": MODEL, "messages": copy.deepcopy(messages),
         "temperature": float(sampling["temperature"]),
         "top_p": float(sampling["top_p"]),
-        "max_output_tokens": int(sampling["max_output_tokens"]),
-        "store": True,
+        "max_completion_tokens": int(sampling["max_output_tokens"]),
+        "n": 1,
+        "stream": False,
     }
     if isinstance(sampling.get("top_k"), int):
         body["top_k"] = int(sampling["top_k"])
@@ -97,7 +99,7 @@ def modified_files_from_status(status_output: str) -> list[str]:
 def execute_trajectory(*, row: Mapping[str, Any], image_pull_reference: str,
                        selected_memory: str, run_id: str,
                        sampling: Mapping[str, Any],
-                       client: ArkReasoningBankClient | None = None,
+                       client: QwenChatClient | None = None,
                        container: QualificationDockerRun | None = None) -> tuple[dict[str, Any], QualificationDockerRun]:
     task = str(row["problem_statement"])
     base_commit = str(row["base_commit"])
@@ -122,11 +124,13 @@ def execute_trajectory(*, row: Mapping[str, Any], image_pull_reference: str,
         call_started = time.monotonic()
         try:
             response = policy.create_response(
-                input_items=request["input"], model=request["model"],
+                input_items=request["messages"], model=request["model"],
                 temperature=request["temperature"], top_p=request["top_p"],
                 top_k=request.get("top_k"),
-                max_output_tokens=request["max_output_tokens"], store=True)
-        except ArkCompatibilityError as error:
+                max_output_tokens=request["max_completion_tokens"])
+            if response.get("actual_request_sha256") != sha256_text(canonical_json(request)):
+                raise RuntimeError("Qwen actual Chat request hash drift")
+        except QwenProviderError as error:
             failure = {
                 "failure_layer": "provider", "error_type": type(error).__name__,
                 "safe_receipt": error.safe_receipt(),
@@ -209,7 +213,7 @@ def execute_trajectory(*, row: Mapping[str, Any], image_pull_reference: str,
         "provider": {
             "base_url": BASE_URL, "requested_model": MODEL,
             "sampling": dict(sampling), "max_retries": 0,
-            "streaming": False, "seed": "omitted",
+            "streaming": False, "n": 1, "seed": "omitted",
         },
         "runtime_receipt": runtime,
         "messages": messages, "requests": requests, "responses": responses,

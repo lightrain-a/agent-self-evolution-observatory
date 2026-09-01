@@ -44,8 +44,8 @@ def test_q0_and_pin_gates(tmp_path, monkeypatch):
 def test_provider_failure_persists_once_and_stops_future_trials(tmp_path, monkeypatch):
     q0_path = tmp_path / "q0.json"
     q0_path.write_text(json.dumps({"decision": "Q0_QWEN3_CODER_NEXT_PROVIDER_QUALIFIED"}))
-    request = {"input": [], "model": q1.MODEL, "max_output_tokens": 1,
-               "temperature": 1.0, "top_p": .95, "store": True}
+    request = {"messages": [], "model": q1.MODEL, "max_completion_tokens": 1,
+               "temperature": 1.0, "top_p": .95, "n": 1, "stream": False}
     trial_plan = [{"ordinal": i, "trial_id": f"Q1-{i:02d}", "attempt_count": 1}
                   for i in range(1, q1.K_Q1 + 1)]
     contract_path = tmp_path / "contract.json"
@@ -64,7 +64,7 @@ def test_provider_failure_persists_once_and_stops_future_trials(tmp_path, monkey
     class FailingClient:
         def create_response(self, **kwargs):
             calls.append(kwargs)
-            raise q1.ArkCompatibilityError("safe provider failure", status_code=503)
+            raise q1.QwenProviderError("safe provider failure", status_code=503)
 
     monkeypatch.setattr(q1, "make_client", lambda: FailingClient())
     result = q1.execute(tmp_path / "result.json")
