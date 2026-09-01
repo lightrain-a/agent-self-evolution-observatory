@@ -1,0 +1,115 @@
+{
+  "acceleration_scope": {
+    "compute_population_mean_and_std_over_exact_source_multiset": true,
+    "q01_q99": "null/omitted because use_quantile_norm=false and pinned z-score Normalize never reads quantiles",
+    "read_same_frozen_parquet_bytes": true,
+    "skip_rgb_decode_only": true,
+    "use_exact_frozen_5200_episode_order": true,
+    "use_same_32_step_end_padding": true,
+    "use_same_R1Pro_state_extraction": true,
+    "use_same_mapped_delta_action_semantics": true
+  },
+  "failure_rule": "Any real-data state/action mismatch -> HOLD; do not run full normalization or tune tolerance.",
+  "fast_norm_path": "research_pipeline/behavior_formal_goal_coupling_shared26_fast_norm.py",
+  "fast_norm_sha256": "dc1c884759e248ded7d5eec607551e814772f0fd2f63737a9782426f3d68a921",
+  "frozen_sample_qualification_path": "generated/behavior-formal-goal-coupling-shared26-pi05-rgb-sample-qualification-repair2-20260901.json",
+  "frozen_sample_qualification_sha256": "104cce8aa2c505492c2bf7e0d646ca4fea4aafcae53fd25469c81df32ff421b0",
+  "full_normalization_authorized_only_if_real_equivalence_passes": true,
+  "full_normalization_output_root": "/data/wyt/behavior-formal-goal-shared26-norm-v1",
+  "generated_at": "2026-09-01T22:21:27+08:00",
+  "gpu_used": false,
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "motivation": "Pinned compute_norm_stats decodes all RGB images although its RunningStats accumulates only state and actions. On 50,852,705 selected frames this decode is operationally unnecessary for z-score statistics.",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "real_equivalence_gate": {
+    "comparison_samples": 52,
+    "coverage": "first and last frame of first selected episode for each of 26 tasks",
+    "environment": [
+      "HF_HUB_OFFLINE=1",
+      "CUDA_VISIBLE_DEVICES=",
+      "JAX_PLATFORMS=cpu"
+    ],
+    "last_frame_exercises_end_padding": true,
+    "required_max_actions_abs_difference": 0.0,
+    "required_max_state_abs_difference": 0.0
+  },
+  "real_equivalence_path": "research_pipeline/behavior_formal_goal_coupling_shared26_fast_norm_equivalence.py",
+  "real_equivalence_sha256": "6572b5410aaed019527475ebc405e7c3d14a429c894f4daf8d169f4b47c0670a",
+  "schema_version": "behavior-formal-goal-coupling-shared26-fast-norm-preregistration-v1",
+  "scientific_authority": false,
+  "source_semantics": {
+    "action_horizon": 32,
+    "action_vector_count": 1627285504,
+    "action_width": 23,
+    "dataset_frame_count": 50852705,
+    "delta_mappings": [
+      [
+        [
+          3,
+          4,
+          5,
+          6
+        ],
+        [
+          3,
+          4,
+          5,
+          6
+        ]
+      ],
+      [
+        [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ],
+        [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13
+        ]
+      ],
+      [
+        [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
+        [
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ]
+      ]
+    ],
+    "included_start_count": 50852672,
+    "source_batch_size": 64,
+    "source_drop_last": true,
+    "state_width": 23,
+    "trailing_start_frames_dropped": 33
+  },
+  "status": "PREREGISTERED_SOURCE_EQUIVALENT_ZSCORE_ACCELERATION_ZERO_EXECUTION",
+  "synthetic_test_path": "research_pipeline/test_behavior_formal_goal_coupling_shared26_fast_norm.py",
+  "synthetic_test_result": "2/2 PASS",
+  "synthetic_test_sha256": "688caa2e23baf154fec736a21246e742f1e935bae7644890da009813d46ca478",
+  "training_started": false
+}
