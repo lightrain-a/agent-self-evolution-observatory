@@ -1,0 +1,67 @@
+{
+  "artifact_type": "e2-r17-v31-provider-runtime-pilot-authorization",
+  "authority": {
+    "e1_b": false,
+    "frontend_promotion": false,
+    "heldout_future_skill_evaluation": false,
+    "paper_promotion": false,
+    "provider_runtime_pilot": true,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "contract_path": "generated/e2-r17-v31-provider-runtime-pilot-v2-contract-20260829.json",
+  "contract_sha256": "98467e1a22fa5fabb0947c83b5295085f4866424993190fa4af2f4f5d91b99aa",
+  "date": "2026-08-29",
+  "execution_scope": {
+    "arms": [
+      "win_a",
+      "win_b",
+      "mrw"
+    ],
+    "heldout_evaluation": false,
+    "historical_pool_sha256": [
+      "3872f2b33f11130aeed073e46650c7d6c4a13c256632252a7102ea81c8492c0c",
+      "1afa7d56dca0b3b04ab4c494e05c43ad49f6015e928cf8348a61af81eb753813",
+      "2b852fc1f2f41cc68e1869ce3f11f552ca176e63fd1121a528fa4361ade7e989",
+      "945fde93b9812ceb750cace1140bb383eb59a2f1ae2fa966dc7723fe1ebd9d03",
+      "5a5c6bc214b05fc807387cf32766aa6f0f42617af04ac24e0b9993d431169bdc",
+      "7e5f613d500b2be2b40d42d4124b12213ee989619f0b6f464649522b194645df",
+      "10d950ffdad2dce1957c9bac73f5f4e4816db47cff40bc4177ab4f8930f8834e",
+      "18ce3604f249ecbbddab21dd39b9f9db67861c41cb97cd7866dbf5c5e9d1355c"
+    ],
+    "historical_pool_task_ids": [
+      "r17-b1-agj-p1",
+      "r17-b1-agj-p4",
+      "r17-b1-fmv-p4",
+      "r17-b1-fmv-p8",
+      "r17-b1-ioc-p2",
+      "r17-b1-ioc-p5",
+      "r17-b1-msp-p0",
+      "r17-b1-msp-p2"
+    ],
+    "learned_skill_quality_comparison": false,
+    "max_provider_calls": 30,
+    "max_provider_calls_per_arm": 10,
+    "new_actor_rollouts": false,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "required_updater_entrypoint": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "runtime_freeze_sha256": "80cd6fdd8eb672e41252c099766fd171a5a7a4b90c284d87da87d09f0d559731",
+    "runtime_python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+    "runtime_qualification_sha256": "f2319815cdcd7caf248c498c470720d4e3f6c9b5e579fad59914df687cdf5b6d",
+    "temperature": 0.0,
+    "thinking": "disabled"
+  },
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "model_identity_path": "generated/e2-r17-v31-provider-pilot-v2-model-identity-adjudication-20260829.json",
+  "model_identity_sha256": "7c0874547387bb2c9a3aaf13f8fb1ac0dccd555caf78ec2d8e040740642957ea",
+  "private_credentials_included": false,
+  "raw_response_ids_included": false,
+  "review_summary_path": "generated/e2-r17-v31-provider-runtime-pilot-v2-review-20260829/summary.json",
+  "review_summary_sha256": "edb8f403e58f5b37f92190397890ae144565786244b63b5f979d01e26d946419",
+  "run_root": "/data/wyt/e2-r17-search-projection/runtime-pilots/v31-provider-updater-v2-20260829",
+  "schema_version": "1.0",
+  "scientific_boundary": "RUNTIME_AND_MEASURABILITY_ONLY; no method-effect inference, no future-skill comparison, no E1-B authority.",
+  "status": "AUTHORIZED_PROVIDER_RUNTIME_PILOT"
+}

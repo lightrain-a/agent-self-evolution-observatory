@@ -1,0 +1,56 @@
+{
+  "artifact_type": "e2-r17-mrw-conditional-contract-independent-review",
+  "created_at_utc": "2026-08-29T13:55:57+00:00",
+  "draft_contract_sha256": "3520bd3e1d7e912e349bfea0d0a48fbe03e05b874064c0e494e704f3564fe04b",
+  "expected_resolved_model": "deepseek-v4-pro-ga-260813",
+  "exposed_to_other_review": false,
+  "independent": true,
+  "missing_required_fields": [],
+  "mrw_execution_authority": false,
+  "paper_claim_authority": false,
+  "provider_retry_limit": 0,
+  "raw_text_sha256": "6b320297002991629558b3afcde5d8a76fa9870b8cfbc8903b26ca226e99eec0",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "eccea806ae4e27aceddcc3cb897f52af93413fe7d4124194c8607898461bce8a",
+  "review": {
+    "conditional_freeze_recommendation": "ALLOW_CONDITIONAL_DRAFT_FREEZE_ONLY",
+    "contemporaneous_control_assessment": "The contract binds a fresh contemporaneous WIN-C arm as the sole primary control, with the same initial skill, same exact eight E1-A pools per stream, same served acting winner, same updater/executor/probes/runtimes/budgets, and arm-blinded V3.1 evidence. The runner constructs win_units and mrw_units from the same frozen pools via evidence_units(), maps win_c to ProjectionName.WINNER_ONLY and mrw to ProjectionName.MIXED_REJECTED_WITNESS, and records primary_control='fresh_contemporaneous_win_c'. Historical WIN-A/WIN-B is explicitly excluded from the primary estimand and decision rule. This satisfies the contemporaneous-control requirement.",
+    "draft_contract_sha256_acknowledged": "3520bd3e1d7e912e349bfea0d0a48fbe03e05b874064c0e494e704f3564fe04b",
+    "hash_balanced_schedule_assessment": "The runner implements ordered_arms() using SHA256(salt|stream_id|task_id|arm) for both update order and per-probe evaluation order, with fixed salts UPDATE_ORDER_SALT and EVAL_ORDER_SALT. Both arms within a stream share the same update order salt and the same per-task evaluation order salt, so time/order nuisance is balanced across WIN-C and MRW without outcome-dependent randomization. The salts differ from the negative-control salts, which is appropriate for a separate tranche.",
+    "historical_win_ab_role_assessment": "Historical WIN-A/WIN-B is bound only as secondary bridge/stability evidence. The contract sets historical_win_a_win_b_in_primary=false, the treatment field declares the role as secondary only, and the analysis payload records historical_win_a_win_b_role as secondary and excluded from the primary estimand and decision rule. The negative-control WIN-A/WIN-B run is a separate identifiability gate, not a primary control. This is correct.",
+    "missing_invalid_unit_assessment": "The contract's missing_invalid_rule forbids stream/task exclusion, substitution, imputation, or favorable-subset analysis, and requires any incomplete/invalid stream to block confirmatory inference until separate technical adjudication. The runner fail-closes on partial ambiguous updates/evaluations (no auto-rerun), preserves locks on failure, and requires the full heldout set for both arms before writing a stream summary. The analysis requires exactly 12 pairs and the full 18-task heldout set per arm, with SHA revalidation of every summary, trajectory ref, and trajectory. This is consistent.",
+    "mrw_execution_authority": false,
+    "negative_control_fail_policy": "MRW_REMAINS_UNAUTHORIZED",
+    "negative_control_gate_sequencing_assessment": "The contract status is DRAFT_CONDITIONAL_ON_NEGATIVE_CONTROL_PASS, with negative_control_gate.sha256 PENDING_ONLY_IF_PREREGISTERED_EQUIVALENCE_PASSES and if_not_pass='MRW_REMAINS_UNAUTHORIZED_AND_THIS_DRAFT_IS_NEVER_EXECUTABLE'. The runner's validate_contract_auth() requires the contract status to be FROZEN_E1_B_MRW_CONTEMPORANEOUS_FULL, requires the gate artifact SHA to match, and requires the gate payload status to be PASS_NEGATIVE_CONTROL_EQUIVALENCE_READY_FOR_MRW_CONTRACT before any execution. The analysis also re-verifies the gate. The negative-control full run is still executing and its outcome is not available, so the conditional freeze is the correct pre-outcome state.",
+    "nonblocking_notes": [
+      "The runner requires the contract status to be FROZEN_E1_B_MRW_CONTEMPORANEOUS_FULL, so the conditional draft cannot be executed until the freeze step fills the negative-control gate SHA and model identity fields after a PASS; this is the intended sequencing.",
+      "The analysis returns exit code 3 for STOP_* and 4 for HOLD, which is a reasonable local convention but has no scientific authority by itself; the adjudication payload is the authoritative artifact.",
+      "The exact sign-flip p-value uses a 1e-15 tolerance for tie handling, which is acceptable for 2^12=4096 discrete assignments."
+    ],
+    "paper_claim_authority": false,
+    "practical_null_precedence_assessment": "Practical-null TOST with epsilon=1/18 is implemented as the 90% paired-mean t interval strictly within [-1/18,+1/18], using the correct t-critical value for df=11 (1.7958848187036691). The analysis sets equivalent = tost_low > -EPSILON and tost_high < EPSILON, and superiority/harmful both require 'not equivalent'. The decision order in the contract lists GO only if superiority passes and practical-equivalence fails, with STOP_MRW_PRACTICALLY_NULL taking priority. This matches the failure-registry permanent rule that practical-null equivalence has priority over method GO.",
+    "remaining_blockers": [],
+    "runtime_budget_checkpoint_assessment": "The runner validates the dedicated updater runtime executable, the actor runtime, all bound code SHAs, suite/split manifests, E1-A support artifact, MindMemOS commit cleanliness, model identity, Ark-Plan route, and initial skill SHA before acquiring the exclusive lock. Budgets are enforced per state via ProviderBudgetLedger with total_limit=190 and per_unit_limit=10, claim-before-I/O, and no release of ambiguous claims. Checkpoints persist each heldout probe immediately, resume only after SHA revalidation, and preserve locks on failure. The structural hard max of 4560 calls and 24 states is consistent with the planning basis.",
+    "same_pool_treatment_purity_assessment": "load_stream_pools() verifies each of the eight pools per stream by SHA against the E1-A support artifact and requires k==8. The same pools list is passed to both arms. The treatment semantics are enforced through the projection name (WINNER_ONLY vs MIXED_REJECTED_WITNESS) and the arm-blinded evidence units, with causal_purity_mode='arm_blinded_selected_evidence' and arm_metadata_visible_in_transcript=False verified on update receipts. On nonmixed pools MRW evidence equals WIN evidence by construction of the blinded evidence units; on mixed pools the deterministic first failed nonwinner is exposed. This is coherent with the intended design.",
+    "single_sentence_verdict": "The conditional MRW contemporaneous contract, runner, analysis, and failure-registry rules are internally coherent and correctly gate MRW execution behind a separate preregistered negative-control equivalence PASS, with practical-null TOST precedence over small-but-significant superiority properly enforced.",
+    "statistical_decision_logic_assessment": "The analysis computes D_s=J_s(MRW)-J_s(WIN-C) per stream, then applies the exact one-sided sign-flip test over all 2^12 sign assignments for both positive and negative directions, a 95% paired bootstrap with fixed seed 1718 and 100000 reps, and a 90% paired t interval for TOST. The decision order is internally coherent: superiority requires mean>0, positive sign-flip p<=0.05, bootstrap lower bound>0, AND not equivalent; harmful requires mean<0, negative sign-flip p<=0.05, AND not equivalent; equivalence takes precedence over both; otherwise HOLD. The small-but-significant conflict identified in R17-F013 is correctly repaired: a TOST-equivalent positive effect cannot be GO.",
+    "verdict": "PASS_TO_CONDITIONAL_FREEZE_AFTER_NEGATIVE_CONTROL_PASS"
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 28800,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1710,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 30510
+  }
+}

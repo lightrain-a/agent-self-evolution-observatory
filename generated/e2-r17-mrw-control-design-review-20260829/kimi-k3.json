@@ -1,0 +1,71 @@
+{
+  "artifact_type": "e2-r17-mrw-control-design-independent-review",
+  "created_at_utc": "2026-08-29T13:49:51+00:00",
+  "design_sha256": "3ed60473756a93b058acd03a999ccbd934825f293032f04ec55e56142a9037d4",
+  "expected_resolved_model": "kimi-k3",
+  "exposed_to_other_review": false,
+  "independent": true,
+  "missing_required_fields": [],
+  "paper_claim_authority": false,
+  "provider_retry_limit": 0,
+  "raw_text_sha256": "9aa9b86d2805a1d9146b85e1e493287043659149702c70f88bbde838e10f0836",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "618e887d558fbdae0be9025f9fffbee8bca268b5bf75eabc03132b69be6c5d2d",
+  "review": {
+    "causal_identification_assessment": "Option B provides the strongest causal identification because MRW and WIN-C are generated from the same frozen initial skill, exact pools, updater configuration, executor, held-out probes, renderer, and budgets, with update and evaluation order interleaved/hash-balanced in the same post-gate tranche. This makes the paired contrast J_s(MRW)-J_s(WIN-C) interpretable as the effect of the mixed-rejected-witness projection under shared contemporaneous hosted-provider conditions. Option A remains interpretable only under an additional no-material-drift assumption between the WIN-A/WIN-B collection window and the later MRW window; the negative-control equivalence gate qualifies WIN-A versus WIN-B but cannot certify that future MRW calls occur under unchanged service conditions.",
+    "cost_benefit_assessment": "Option B adds approximately 12 learned winner-control states and 12 additional 18-probe K=1 evaluations, doubling post-gate learned-state execution from 12 to 24. That cost is material but modest relative to the inferential risk of having the entire treatment arm collected in a later hosted-service tranche than the control arm. Because the MRW experiment is the central causal claim, the additional WIN-C run is justified by substantially improved reviewer robustness and a cleaner estimand; Option A's savings do not compensate for the avoidable drift objection.",
+    "design_sha256_acknowledged": "3ed60473756a93b058acd03a999ccbd934825f293032f04ec55e56142a9037d4",
+    "historical_control_usage": "WIN-A/WIN-B should not be pooled into the primary control if Option B is adopted. Their equivalence-gated role is to validate the stability of the identical-treatment winner-control pipeline and to serve as secondary bridge/stability evidence connecting the fresh WIN-C tranche to the earlier V3.1 winner-evidence runs. They may be reported descriptively and used in sensitivity analyses, but the primary causal contrast must remain MRW versus contemporaneous WIN-C.",
+    "negative_control_fail_policy": "MRW_REMAINS_UNAUTHORIZED",
+    "nonblocking_notes": [
+      "If Option A had been forced by budget, the preregistered mean of WIN-A/WIN-B would be preferable to WIN-A alone because it preserves the same winner-only estimand while reducing control-side sampling noise; averaging identical-treatment replicates changes the control estimator's precision, not the target estimand.",
+      "Option B should still report a bridge comparison among WIN-A, WIN-B, and WIN-C to characterize tranche stability, but that comparison must not alter the primary MRW versus WIN-C contrast.",
+      "All claims should remain limited to the frozen streams, tasks, probes, model, renderer, updater, and budgets; no generalization beyond the measured paired projection effect is authorized."
+    ],
+    "paper_claim_authority": false,
+    "preferred_option": "B_FRESH_CONTEMPORANEOUS_WIN_C",
+    "primary_decision_rule": "Before any MRW outcomes exist, freeze a one-sided confirmatory paired test of H0: Delta <= 0 versus H1: Delta > 0 at alpha = 0.05, using a preregistered paired permutation or paired t procedure across the 12 stream-level D_s values with the exact multiple-comparison/error-control rule fixed in advance. STOP for the confirmatory claim if the preregistered test does not reject H0 or if any frozen validity gate fails; HOLD if execution, provenance, balancing, renderer, probe, or budget integrity is incomplete or adjudication is not blinded. A positive result supports only the paired contemporaneous projection effect and does not authorize broader paper claims beyond that estimand.",
+    "primary_estimand": "For each stream s, freeze D_s = J_s(MRW_s) - J_s(WIN-C_s), where J_s is the fixed held-out 18-probe K=1 evaluation score under the frozen renderer and budgets. The primary estimand is the mean paired effect across the 12 frozen streams, Delta = (1/12) * sum_s D_s, equivalently the stream-level average treatment effect of the mixed-rejected-witness projection relative to a contemporaneous winner-only control under the same initial skill, exact pools, updater implementation/configuration, executor, probes, renderer, and budgets.",
+    "remaining_blockers": [
+      {
+        "exact_repair": "Do not create, execute, score, or inspect MRW until the frozen WIN-A/WIN-B equivalence gate is formally recorded as PASS under the preregistered margin; if it fails, stop MRW permanently for this design cycle.",
+        "issue": "The negative-control equivalence gate has not yet been adjudicated, so MRW remains unauthorized.",
+        "priority": "P0"
+      },
+      {
+        "exact_repair": "Before execution, freeze the hash seed, interleaving schedule, update-order balancing, held-out evaluation-order balancing, retry policy, timeout policy, and provenance logging for WIN-C versus MRW across all 12 streams.",
+        "issue": "Option B requires a frozen contemporaneous execution protocol so that WIN-C and MRW are actually paired rather than merely collected nearby in time.",
+        "priority": "P0"
+      },
+      {
+        "exact_repair": "Preregister the exact paired test, alpha, one-sided hypothesis, handling of failed or invalid streams, missing-data rule, and STOP/HOLD adjudication criteria before any WIN-C or MRW score is opened.",
+        "issue": "The primary inferential rule must be fixed before MRW outcomes exist to avoid analytic degrees of freedom.",
+        "priority": "P0"
+      },
+      {
+        "exact_repair": "Label WIN-A/WIN-B in the analysis plan as secondary bridge/stability evidence only, with any pooling or cross-tranche sensitivity analysis explicitly non-confirmatory.",
+        "issue": "Historical WIN-A/WIN-B could be misused as an additional primary control after results are known.",
+        "priority": "P1"
+      }
+    ],
+    "single_sentence_recommendation": "Conditional only on a preregistered negative-control equivalence PASS, choose Option B and freeze MRW versus contemporaneous WIN-C as the sole primary paired control, with WIN-A/WIN-B retained strictly as secondary bridge and stability evidence.",
+    "temporal_drift_assessment": "Hosted-provider temporal drift is a material confound even when the resolved model ID is unchanged, because routing, infrastructure, safety layers, decoding behavior, latency-dependent truncation, evaluator availability, and other hidden service updates can shift outcomes. The drift risk is asymmetric in Option A: all control observations precede all MRW observations, so any monotone or tranche-level service change is aliased directly with the projection treatment. Option B does not eliminate drift, but interleaving and hash-balancing convert much of the tranche-level drift into shared nuisance variation rather than a systematic treatment-control difference."
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 1383,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1372,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 2755
+  }
+}

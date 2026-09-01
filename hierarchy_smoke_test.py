@@ -177,7 +177,7 @@ def main() -> None:
             nav_contract = execute(session_id, """const groups=[...document.querySelectorAll('.sidebar .nav > details.nav-group')].map(d=>({title:(d.querySelector('summary span')?.textContent||'').trim(),open:d.open,links:[...d.querySelectorAll('a.nav-level2')].map(a=>[(a.textContent||'').trim(),a.getAttribute('href')||''])})); const literature=groups.find(g=>g.links.some(x=>x[1]==='bibliography.html'))||null; return {lang:document.documentElement.lang,groups,literatureOpen:!!literature?.open,roleTerm:(document.body.textContent||'').includes('师兄')};""")
             if nav_contract.get("lang") != "zh-CN":
                 raise AssertionError(f"{page}: shared sidebar language state drifted: {nav_contract}")
-            if [group.get("title") for group in nav_contract.get("groups", [])] != ["开始阅读", "领域图谱", "当前科研", "文献"]:
+            if [group.get("title") for group in nav_contract.get("groups", [])] != ["开始阅读", "领域图谱", "当前科研", "参考文献"]:
                 raise AssertionError(f"{page}: sidebar group names drifted: {nav_contract}")
             expected_group_links = [
                 [("研究站首页", "index.html"), ("研究时间轴", "research-timeline.html"), ("科研系统", "system-overview.html")],
@@ -188,8 +188,8 @@ def main() -> None:
             actual_group_links = [[tuple(link) for link in group.get("links", [])] for group in nav_contract.get("groups", [])]
             if actual_group_links != expected_group_links:
                 raise AssertionError(f"{page}: sidebar group membership/order drifted: {actual_group_links}")
-            if not nav_contract.get("literatureOpen"):
-                raise AssertionError(f"{page}: Literature navigation group must remain default-open")
+            if any(group.get("open") for group in nav_contract.get("groups", [])):
+                raise AssertionError(f"{page}: all four sidebar groups must load collapsed by default: {nav_contract}")
             if nav_contract.get("roleTerm"):
                 raise AssertionError(f"{page}: public page still renders the forbidden role-specific label")
             current_sidebar = tuple((group.get("title"), tuple(tuple(link) for link in group.get("links", []))) for group in nav_contract.get("groups", []))

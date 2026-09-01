@@ -1,0 +1,81 @@
+{
+  "artifact_type": "e2-r17-v3-1-independent-review",
+  "created_at_utc": "2026-08-31T05:44:46+00:00",
+  "dossier_file_sha256": {
+    "m1_actor": "8261645a7d2864635e3985002328c7610e46e38fcd15dbe50bf688c8348ca583",
+    "m1_actual_actor_path_preflight": "53cc759052b2d5f7748095a590ef0e5414a151fb8f1a44d6e13c9577b8b882c0",
+    "m1_contract": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+    "m1_orchestrator": "d48b0f1c47522baba023d7ee02d59992fc5f2646c576f0648e2dcb3cf8850eda",
+    "m1_preflight_authorization": "5bc344de83a81333658c1e029df9e8943b8427d31c036967f69325d4dfe929eb",
+    "m1_tests": "305259d88bed9eb82c29f55b76f6e4abe56ddca315012503b82faaac25882a80",
+    "m1_v1_failure_adjudication": "69049777197cc04365876575d9a3705830819524ca68bfb0213d163b243ecb49",
+    "model_identity": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "parent_execution_blocker": "4b8ef1b7f4986bb9abd6e4309a7f254e35b1cbe135fe34af9eefbbdb51554816",
+    "parent_repair2_authorization": "9643a0a30d0acc4f32607b217701b368a895b2fe1e86a0aa84da24aa0a80898b",
+    "parent_repair2_contract": "9e38bdbfc71186e3e58587169d8c619bff4ae24de4145fefafa63e49a6f148a3",
+    "parent_stop_diagnosis": "b0e551279ad1e86e992ea01633ef8ec098922d2d3472377ff9981491fedab900"
+  },
+  "expected_resolved_model": "deepseek-v4-pro-ga-260813",
+  "experiment_authority": false,
+  "exposed_to_other_review": false,
+  "get_poll_recovery": false,
+  "hidden_provider_retry_used": false,
+  "independent": true,
+  "max_output_tokens": 5000,
+  "missing_required_fields": [
+    "preflight_sha256_acknowledged_exact"
+  ],
+  "paper_promotion_authority": false,
+  "parse_valid": false,
+  "poll_count": 0,
+  "prompt_path": "generated/e2-r17-deepseek-v2-repair2-m1-review-20260831/deepseek-v4-pro-prompt.md",
+  "prompt_sha256": "0b3c26cce1ed3b631979b406c4ae24c272fb9722ed1d1ee6e7ad32ac3782f335",
+  "provider_generation_attempts": 1,
+  "provider_retry_limit": 0,
+  "provider_status": "completed",
+  "raw_text": "```json\n{\n  \"contract_sha256_acknowledged\": \"1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983\",\n  \"preflight_sha256_acknowledged\": \"53cc759052b2d5f7748095a590ef0e5414a151fb8f1a44d6e13c9577b8b882c0\",\n  \"verdict\": \"PASS_TO_SINGLE_USE_M1_AUTHORIZATION\",\n  \"measurement_only_authority_assessment\": \"M1 contract and preflight authorization both bind measurement_only=true, updater=false, analyzer=false, paper_promotion=false, submission=false, public_benchmark=false. Contract binds new_updater_calls=0, replayed_updater_calls=0, measurement_states=2, heldout_evaluations=36, partial_effect_read=false. The versioned actor rejects any authorization whose status is not PREFLIGHT_ONLY or AUTHORIZED M1, and rejects the historical Repair2 authorization. No measurement-only authority defect.\",\n  \"cross_authorization_provenance_assessment\": \"Child authorization binds its own contract path/SHA and parent Repair2 contract 9e38... and authorization 9643.... The actor and orchestrator both verify each parent updater receipt's contract_sha256 and authorization_sha256 equal the parent provenance values, and verify receipt skill_post_path/SHA bind the supplied learned state. No receipt rewriting or ordinary AUTHORIZED_E1 aliasing is possible because the versioned actor only accepts M1 status strings. Parent provenance is intact.\",\n  \"actual_actor_path_assessment\": \"The bound actual-path preflight artifact reports PASS_ACTUAL_ACTOR_AUTHORIZATION_PATH_PREFLIGHT_36_OF_36 with 36 units, provider_claims=0, provider_calls=0, partial_effect_read=false, and every unit STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO. The actor code stops before provider I/O only after validating authority, task/K/model, identity, suite/split manifest, MindMemOS commit, learned-state SHA, parent updater receipt path/SHA/contract/auth provenance, and zero-claim provider ledger. The orchestrator enforces the same checks and requires 36/36 before execution.\",\n  \"provider_budget_assessment\": \"Contract and authorization bind actor-only total_limit=180 per learned state and per_unit_limit=10. The actor requires a fail-closed ProviderBudgetLedger bound to contract and authorization SHAs, and the preflight path requires a zero-claim ledger. The orchestrator creates one ledger per learned state with total 180 and per-unit 10, and classifies any post-claim failure as AMBIGUOUS_PROVIDER_UNIT_NO_RETRY. Updater authority remains zero. Budget binding is exact.\",\n  \"v1_local_repair_assessment\": \"V1 failure adjudication is OUTCOME_BLIND_PRE_PROVIDER_IMPLEMENTATION_REPAIR_ELIGIBLE with provider_claims=0, provider_calls=0, scientific_outcomes=0, partial_effect_read=false. Cause is the absent relative ignored .env in the isolated worktree. V2 changes only env_file to the exact absolute historical ignored .env path; all scientific variables, learned-state provenance, task/K/model, and budget remain frozen. No scientific variable was altered.\",\n  \"exactly_once_assessment\": \"Execution run_root is new and distinct from parent Repair2 run_root. The orchestrator requires the run root not to exist, creates it, acquires an O_EXCL exclusive lock, and writes a run-start receipt before provider I/O. Parent Repair2 root, lock, failure artifacts, 20 updater calls, and two learned states are not modified or resumed. exactly_once.execution=true and automatic_retry=false are enforced.\",\n  \"no_partial_effect_assessment\": \"Contract, authorization, preflight artifact, actor, and orchestrator all bind partial_effect_read=false. The actor summary withholds scores from the measurement summary (scores_withheld_from_measurement_summary=true), and the orchestrator requires the task payload to contain only task_id, failure_family, scores_withheld flag, provider_calls, and pools. No analyzer is run and no scientific conclusion is produced.\",\n  \"remaining_blockers\": [],\n  \"nonblocking_notes\": [\n    \"The M1 authorization status string AUTHORIZED_E2_R17_DEEPSEEK_V2_REPAIR2_M1_MEASUREMENT_ONLY is distinct from the historical Repair2 status, so the versioned actor cannot be confused by the parent authorization.\",\n    \"The preflight artifact's authorization_sha256 (5bc344de...) differs from the preflight authorization artifact's own SHA because it records the authorization file hash at preflight time; this is consistent with the bound preflight artifact and does not indicate drift.\"\n  ],\n  \"execution_recommendation\": \"ALLOW_SINGLE_USE_M1_AUTHORIZATION\",\n  \"paper_claim_authority\": false,\n  \"single_sentence_verdict\": \"The M1 measurement-only recovery is fail-closed, provenance-bound, exactly-once, and preflighted 36/36 with zero provider claims, so it may authorize only the 36 heldout measurements and seal REPAIR2_M1_MEASUREMENT_RECOVERY_PASS without analysis.\"\n}\n```",
+  "raw_text_sha256": "da9550b35897c3d382fc92c63c9b1f63668d516437e1d72dff2fba79b95082a1",
+  "repair_sha256": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "de068c36578879e4f55c8f4a243de968161463a0f095fd1e3e0ec628e689d627",
+  "review": {
+    "actual_actor_path_assessment": "The bound actual-path preflight artifact reports PASS_ACTUAL_ACTOR_AUTHORIZATION_PATH_PREFLIGHT_36_OF_36 with 36 units, provider_claims=0, provider_calls=0, partial_effect_read=false, and every unit STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO. The actor code stops before provider I/O only after validating authority, task/K/model, identity, suite/split manifest, MindMemOS commit, learned-state SHA, parent updater receipt path/SHA/contract/auth provenance, and zero-claim provider ledger. The orchestrator enforces the same checks and requires 36/36 before execution.",
+    "contract_sha256_acknowledged": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+    "cross_authorization_provenance_assessment": "Child authorization binds its own contract path/SHA and parent Repair2 contract 9e38... and authorization 9643.... The actor and orchestrator both verify each parent updater receipt's contract_sha256 and authorization_sha256 equal the parent provenance values, and verify receipt skill_post_path/SHA bind the supplied learned state. No receipt rewriting or ordinary AUTHORIZED_E1 aliasing is possible because the versioned actor only accepts M1 status strings. Parent provenance is intact.",
+    "exactly_once_assessment": "Execution run_root is new and distinct from parent Repair2 run_root. The orchestrator requires the run root not to exist, creates it, acquires an O_EXCL exclusive lock, and writes a run-start receipt before provider I/O. Parent Repair2 root, lock, failure artifacts, 20 updater calls, and two learned states are not modified or resumed. exactly_once.execution=true and automatic_retry=false are enforced.",
+    "execution_recommendation": "ALLOW_SINGLE_USE_M1_AUTHORIZATION",
+    "measurement_only_authority_assessment": "M1 contract and preflight authorization both bind measurement_only=true, updater=false, analyzer=false, paper_promotion=false, submission=false, public_benchmark=false. Contract binds new_updater_calls=0, replayed_updater_calls=0, measurement_states=2, heldout_evaluations=36, partial_effect_read=false. The versioned actor rejects any authorization whose status is not PREFLIGHT_ONLY or AUTHORIZED M1, and rejects the historical Repair2 authorization. No measurement-only authority defect.",
+    "no_partial_effect_assessment": "Contract, authorization, preflight artifact, actor, and orchestrator all bind partial_effect_read=false. The actor summary withholds scores from the measurement summary (scores_withheld_from_measurement_summary=true), and the orchestrator requires the task payload to contain only task_id, failure_family, scores_withheld flag, provider_calls, and pools. No analyzer is run and no scientific conclusion is produced.",
+    "nonblocking_notes": [
+      "The M1 authorization status string AUTHORIZED_E2_R17_DEEPSEEK_V2_REPAIR2_M1_MEASUREMENT_ONLY is distinct from the historical Repair2 status, so the versioned actor cannot be confused by the parent authorization.",
+      "The preflight artifact's authorization_sha256 (5bc344de...) differs from the preflight authorization artifact's own SHA because it records the authorization file hash at preflight time; this is consistent with the bound preflight artifact and does not indicate drift."
+    ],
+    "paper_claim_authority": false,
+    "preflight_sha256_acknowledged": "53cc759052b2d5f7748095a590ef0e5414a151fb8f1a44d6e13c9577b8b882c0",
+    "provider_budget_assessment": "Contract and authorization bind actor-only total_limit=180 per learned state and per_unit_limit=10. The actor requires a fail-closed ProviderBudgetLedger bound to contract and authorization SHAs, and the preflight path requires a zero-claim ledger. The orchestrator creates one ledger per learned state with total 180 and per-unit 10, and classifies any post-claim failure as AMBIGUOUS_PROVIDER_UNIT_NO_RETRY. Updater authority remains zero. Budget binding is exact.",
+    "remaining_blockers": [],
+    "single_sentence_verdict": "The M1 measurement-only recovery is fail-closed, provenance-bound, exactly-once, and preflighted 36/36 with zero provider claims, so it may authorize only the 36 heldout measurements and seal REPAIR2_M1_MEASUREMENT_RECOVERY_PASS without analysis.",
+    "v1_local_repair_assessment": "V1 failure adjudication is OUTCOME_BLIND_PRE_PROVIDER_IMPLEMENTATION_REPAIR_ELIGIBLE with provider_claims=0, provider_calls=0, scientific_outcomes=0, partial_effect_read=false. Cause is the absent relative ignored .env in the isolated worktree. V2 changes only env_file to the exact absolute historical ignored .env path; all scientific variables, learned-state provenance, task/K/model, and budget remain frozen. No scientific variable was altered.",
+    "verdict": "PASS_TO_SINGLE_USE_M1_AUTHORIZATION"
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "FAIL_SCHEMA",
+  "submission_authority": false,
+  "temperature": 0,
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 40052,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1171,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 41223
+  }
+}

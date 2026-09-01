@@ -1,0 +1,29 @@
+{
+  "all_allow_runtime_pilot": false,
+  "all_completed": true,
+  "artifact_type": "e2-r17-experiment-plan-v2-dual-review-summary",
+  "created_at_utc": "2026-08-28T08:59:01+00:00",
+  "experiment_authority": false,
+  "exposed_to_other_review": false,
+  "independent": true,
+  "paper_claim_authority": false,
+  "plan_sha256": "b1a0224117f161ead9fccefa2c22a0f01dfa1d9e72ca1e98107418f21e3e04c5",
+  "resolved_models": {
+    "deepseek-v4-pro": "deepseek-v4-pro-ga-260813",
+    "kimi-k3": "kimi-k3"
+  },
+  "reviewers": [
+    "deepseek-v4-pro",
+    "kimi-k3"
+  ],
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "statuses": {
+    "deepseek-v4-pro": "COMPLETED",
+    "kimi-k3": "COMPLETED"
+  },
+  "verdicts": {
+    "deepseek-v4-pro": "PASS_TO_OUTCOME_BLIND_RUNTIME_PILOT",
+    "kimi-k3": "PASS_TO_OUTCOME_BLIND_RUNTIME_PILOT"
+  }
+}

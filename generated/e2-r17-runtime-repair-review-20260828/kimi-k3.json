@@ -1,0 +1,39 @@
+{
+  "artifact_type": "e2-r17-runtime-repair-technical-review",
+  "created_at_utc": "2026-08-28T04:52:36+00:00",
+  "experiment_authority": false,
+  "private_credentials_included": false,
+  "prompt_sha256": "c81fb468efc968d327241535c8c588f3fab7266b3925166a46d62a40a02860ee",
+  "provider_retry_limit": 0,
+  "raw_response_ids_included": false,
+  "raw_text": "{\n  \"verdict\": \"PASS\",\n  \"repair_sufficient\": true,\n  \"scientific_contract_changed\": false,\n  \"provenance_preserved\": true,\n  \"runtime_binding_complete\": true,\n  \"remaining_blockers\": [],\n  \"one_sentence_verdict\": \"The repair safely fixes the zero-provider launch failure by binding the pilot to a frozen, fully qualified MindMemOS venv with verified freeze/uv.lock hashes, preserving the failed authorization as provenance, preflighting the previously missing imports, and leaving the scientific contract, task split, models, and search parameters unchanged.\"\n}",
+  "raw_text_sha256": "fbf6f0e86c27027a906f5f8cc00314959da6f66c2fbd291bf76bf0377270fd2c",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "resolved_model_matches_current_qualification": true,
+  "review": {
+    "one_sentence_verdict": "The repair safely fixes the zero-provider launch failure by binding the pilot to a frozen, fully qualified MindMemOS venv with verified freeze/uv.lock hashes, preserving the failed authorization as provenance, preflighting the previously missing imports, and leaving the scientific contract, task split, models, and search parameters unchanged.",
+    "provenance_preserved": true,
+    "remaining_blockers": [],
+    "repair_sufficient": true,
+    "runtime_binding_complete": true,
+    "scientific_contract_changed": false,
+    "verdict": "PASS"
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "thinking": "disabled",
+  "usage": {
+    "input_tokens": 3562,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 133,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 3695
+  }
+}

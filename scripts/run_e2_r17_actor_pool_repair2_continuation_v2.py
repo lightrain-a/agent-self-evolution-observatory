@@ -1,0 +1,409 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import asyncio
+import hashlib
+import json
+import os
+import platform
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from research_pipeline.ark_provider import ArkSettings
+from research_pipeline.config import load_env_file
+from research_pipeline.e2_r17_actor_pool import (
+    ActorRolloutConfig,
+    atomic_json,
+    file_sha256,
+    freeze_nested_pools,
+    run_actor_rollout,
+)
+from research_pipeline.e2_r17_ark_plan_react import ArkPlanReactLLM, PLAN_BASE_URL
+from research_pipeline.e2_r17_provider_budget import ProviderBudgetLedger
+
+
+def load_mindmemos(root: Path) -> tuple[Any, Any]:
+    os.environ.setdefault("LITELLM_LOCAL_MODEL_COST_MAP", "True")
+    source_roots = [root / "src/mindmemos_eval", root / "src/mindmemos_sdk", root / "src/mindmemos"]
+    for source in reversed(source_roots):
+        if str(source) not in sys.path:
+            sys.path.insert(0, str(source))
+    from mindmemos_eval.skills.agents import ReactAgentFactory
+    from mindmemos_eval.skills.envs.spreadsheetbench.env import SpreadsheetBenchEnv
+
+    return ReactAgentFactory, SpreadsheetBenchEnv
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def task_ids_from_args(args: argparse.Namespace, split: dict[str, Any]) -> list[str]:
+    if args.task_id:
+        return [str(value) for value in args.task_id]
+    if args.stream_id:
+        for key in ("e1_update_streams", "e3_future_streams"):
+            if args.stream_id in split.get(key, {}):
+                return [str(value) for value in split[key][args.stream_id]]
+        raise ValueError(f"unknown stream id: {args.stream_id}")
+    if args.lane:
+        value = split.get(args.lane)
+        if not isinstance(value, list):
+            raise ValueError(f"lane is not a task list: {args.lane}")
+        return [str(item) for item in value]
+    raise ValueError("one of --task-id, --stream-id, or --lane is required")
+
+
+def validate_authority(
+    *,
+    mode: str,
+    authorization: Path | None,
+    task_ids: list[str],
+    split: dict[str, Any],
+    k: int,
+) -> tuple[dict[str, Any] | None, str | None]:
+    development = {str(item) for item in split.get("development") or []}
+    if mode == "protocol_smoke":
+        if not set(task_ids).issubset(development):
+            raise RuntimeError("protocol smoke may access development tasks only")
+        if authorization is not None:
+            raise RuntimeError("protocol smoke must not borrow scientific authorization")
+        return None, None
+    if authorization is None:
+        raise RuntimeError("scientific actor execution requires --authorization")
+    payload = json.loads(authorization.read_text(encoding="utf-8"))
+    if payload.get("status") != "AUTHORIZED_E2_R17_DEEPSEEK_V2_REPAIR2_CONTINUATION_V2":
+        raise RuntimeError("authorization artifact is not a Repair2 Continuation V3 authorization")
+    authority = payload.get("authority") or {}
+    if authority.get("scientific_experiment") is not True or authority.get("repair2_continuation_v2") is not True:
+        raise RuntimeError("authorization has no Repair2 Continuation V2 scientific authority")
+    if authority.get("analyzer") is not False or authority.get("paper_promotion") is not False:
+        raise RuntimeError("V2 execution authorization must forbid analyzer and paper authority")
+
+    # V3 is always scope-bound and fails closed on every actor dimension.
+    scope = payload.get("execution_scope")
+    if not isinstance(scope, dict):
+        raise RuntimeError("V3 authorization requires an execution_scope")
+    if scope.get("continuation_version") != "repair2_continuation_v2":
+        raise RuntimeError("V2 authorization continuation version drift")
+    if scope.get("allow_noninitial_skill") is not True:
+        raise RuntimeError("V3 authorization must explicitly allow bound learned skills")
+    if scope is not None:
+        allowed_modes = {str(value) for value in scope.get("allowed_modes") or []}
+        if not allowed_modes or mode not in allowed_modes:
+            raise RuntimeError(f"authorization does not allow mode={mode}")
+        allowed_tasks = {str(value) for value in scope.get("allowed_task_ids") or []}
+        if not allowed_tasks or not set(task_ids).issubset(allowed_tasks):
+            raise RuntimeError("authorization does not allow one or more requested task IDs")
+        exact_k = scope.get("exact_k")
+        if exact_k is not None and int(exact_k) != int(k):
+            raise RuntimeError(f"authorization requires exact K={exact_k}, requested K={k}")
+        if scope.get("allow_noninitial_skill") is False and payload.get("authority", {}).get("e1_b"):
+            raise RuntimeError("authorization scope is internally inconsistent about non-initial skills")
+    return payload, sha256(authorization)
+
+
+async def main_async(args: argparse.Namespace) -> dict[str, Any]:
+    ReactAgentFactory, SpreadsheetBenchEnv = load_mindmemos(args.mindmemos_root)
+    load_env_file(args.env_file)
+    settings = ArkSettings.from_env(required=True)
+    if settings.base_url.rstrip("/") != PLAN_BASE_URL:
+        raise RuntimeError("E2-R17 actor refuses any non-Ark-Plan route")
+    settings = ArkSettings(
+        api_key=settings.api_key,
+        base_url=settings.base_url,
+        default_model=settings.default_model,
+        timeout_seconds=300,
+        max_retries=0,
+    )
+    identity = json.loads(args.identity.read_text(encoding="utf-8"))
+    if identity.get("status") != "PASS_CURRENT_REVIEW_TRANCHE":
+        raise RuntimeError("current model identity adjudication is not passing")
+    model_row = identity["requested_and_resolved"][args.model]
+    requested_model = str(model_row["requested"])
+    required_resolved = str(model_row["resolved"])
+
+    split_path = args.suite_root / "r17_split_manifest.json"
+    split = json.loads(split_path.read_text(encoding="utf-8"))
+    task_ids = task_ids_from_args(args, split)
+    authorization_payload, authorization_sha = validate_authority(
+        mode=args.mode,
+        authorization=args.authorization,
+        task_ids=task_ids,
+        split=split,
+        k=args.k,
+    )
+    contract_sha = (
+        str(authorization_payload.get("contract_sha256") or "")
+        if authorization_payload is not None
+        else None
+    )
+    provider_budget_ledger: ProviderBudgetLedger | None = None
+    budget_args_present = any(
+        value is not None
+        for value in (args.provider_budget_ledger, args.provider_total_call_limit, args.provider_per_unit_call_limit)
+    )
+    if budget_args_present:
+        if authorization_payload is None or not authorization_sha or not contract_sha:
+            raise RuntimeError("provider budget ledger is allowed only for a bound scientific authorization")
+        if args.provider_budget_ledger is None or args.provider_total_call_limit is None or args.provider_per_unit_call_limit is None:
+            raise RuntimeError("provider budget ledger path, total limit and per-unit limit must be supplied together")
+        provider_budget_ledger = ProviderBudgetLedger(
+            path=args.provider_budget_ledger,
+            contract_sha256=contract_sha,
+            authorization_sha256=authorization_sha,
+            total_limit=int(args.provider_total_call_limit),
+            per_unit_limit=int(args.provider_per_unit_call_limit),
+            allow_create=not args.provider_budget_ledger.exists(),
+        )
+    if authorization_payload is not None:
+        scope = authorization_payload.get("execution_scope") or {}
+        provider_budget_scope = scope.get("provider_budget") or {}
+        if provider_budget_scope.get("required") is True:
+            if provider_budget_ledger is None:
+                raise RuntimeError("authorization requires a fail-closed provider budget ledger")
+            if int(provider_budget_scope.get("total_limit")) != int(args.provider_total_call_limit):
+                raise RuntimeError("authorization provider total-call limit drift")
+            if int(provider_budget_scope.get("per_unit_limit")) != int(args.provider_per_unit_call_limit):
+                raise RuntimeError("authorization provider per-unit limit drift")
+        expected_resolved = scope.get("required_resolved_model")
+        if expected_resolved and str(expected_resolved) != required_resolved:
+            raise RuntimeError("authorization resolved-model identity drift")
+        expected_identity_sha = scope.get("identity_artifact_sha256")
+        if expected_identity_sha and sha256(args.identity) != expected_identity_sha:
+            raise RuntimeError("authorization model-identity artifact drift")
+        if scope.get("max_turns") is not None and int(scope["max_turns"]) != int(args.max_turns):
+            raise RuntimeError("authorization max_turns drift")
+        if scope.get("max_output_tokens") is not None and int(scope["max_output_tokens"]) != int(args.max_output_tokens):
+            raise RuntimeError("authorization max_output_tokens drift")
+    metadata_rows = json.loads((args.suite_root / "r17_controlled_metadata.json").read_text(encoding="utf-8"))
+    metadata = {str(row["id"]): row for row in metadata_rows}
+    missing = [task_id for task_id in task_ids if task_id not in metadata]
+    if missing:
+        raise RuntimeError(f"tasks absent from controlled metadata: {missing}")
+
+    env = SpreadsheetBenchEnv(args.suite_root, args.run_root)
+    cases = {case.id: case for case in env.load_cases("all")}
+    mindmemos_commit = __import__("subprocess").check_output(
+        ["git", "-C", str(args.mindmemos_root), "rev-parse", "HEAD"], text=True
+    ).strip()
+    if authorization_payload is not None and mindmemos_commit != authorization_payload.get("mindmemos_commit"):
+        raise RuntimeError("MindMemOS commit drifted after scientific authorization")
+    if authorization_payload is not None:
+        scope = authorization_payload.get("execution_scope") or {}
+        expected_suite_sha = scope.get("suite_manifest_sha256")
+        expected_split_sha = scope.get("split_manifest_sha256")
+        if expected_suite_sha and file_sha256(args.suite_root / "suite_manifest.json") != expected_suite_sha:
+            raise RuntimeError("suite manifest drifted after scientific authorization")
+        if expected_split_sha and file_sha256(split_path) != expected_split_sha:
+            raise RuntimeError("split manifest drifted after scientific authorization")
+
+    default_skill_source = args.mindmemos_root / "resources/skill_evolve/spreadsheetbench_init_skill/xlsx"
+    skill_source = (args.skill_source or default_skill_source).resolve()
+    skill_md = skill_source / "SKILL.md"
+    if not skill_md.is_file():
+        raise RuntimeError(f"skill source does not contain SKILL.md: {skill_source}")
+    skill_sha = file_sha256(skill_md)
+    if authorization_payload is not None:
+        required_skill_sha = (authorization_payload.get("execution_scope") or {}).get("required_skill_pre_sha256")
+        if required_skill_sha and skill_sha != required_skill_sha:
+            raise RuntimeError("skill pre-state drifted after scientific authorization")
+    updater_receipt_sha: str | None = None
+    if skill_source != default_skill_source.resolve():
+        if args.mode != "e1" or args.updater_receipt is None:
+            raise RuntimeError("a non-initial skill is allowed only for E1 evaluation with --updater-receipt")
+        updater_receipt = json.loads(args.updater_receipt.read_text(encoding="utf-8"))
+        updater_receipt_sha = sha256(args.updater_receipt)
+        if updater_receipt.get("status") != "COMPLETED":
+            raise RuntimeError("updater receipt is not completed")
+        if Path(updater_receipt.get("skill_post_path") or "").resolve() != skill_md.resolve():
+            raise RuntimeError("updater receipt does not bind the supplied skill path")
+        if updater_receipt.get("skill_post_sha256") != skill_sha:
+            raise RuntimeError("updater receipt does not bind the supplied skill content")
+        if updater_receipt.get("contract_sha256") != contract_sha:
+            raise RuntimeError("updater receipt contract SHA differs from evaluation authorization")
+        if updater_receipt.get("authorization_sha256") != authorization_sha:
+            raise RuntimeError("updater receipt authorization SHA differs from evaluation authorization")
+    elif args.updater_receipt is not None:
+        raise RuntimeError("--updater-receipt must not be supplied for the frozen initial skill")
+    evaluator_sources = [
+        args.mindmemos_root / "src/mindmemos_eval/mindmemos_eval/skills/envs/spreadsheetbench/evaluator.py",
+        args.mindmemos_root / "src/mindmemos_eval/mindmemos_eval/skills/envs/spreadsheetbench/env.py",
+    ]
+    if args.stop_before_provider_io:
+        snapshot = provider_budget_ledger.snapshot() if provider_budget_ledger is not None else None
+        if snapshot is None or snapshot.total_claimed != 0:
+            raise RuntimeError("V3 pre-provider stop requires a bound zero-claim provider ledger")
+        return {
+            "schema_version": "1.0",
+            "artifact_type": "e2-r17-repair2-continuation-v2-actual-actor-authorization-path-preflight-unit",
+            "created_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+            "mode": args.mode,
+            "task_ids": task_ids,
+            "k": args.k,
+            "requested_model": requested_model,
+            "resolved_model": required_resolved,
+            "skill_source": str(skill_source),
+            "skill_pre_sha256": skill_sha,
+            "updater_receipt_path": str(args.updater_receipt),
+            "updater_receipt_sha256": updater_receipt_sha,
+            "contract_sha256": contract_sha,
+            "authorization_sha256": authorization_sha,
+            "provider_claims": 0,
+            "provider_calls": 0,
+            "provider_budget": snapshot.to_dict(),
+            "scientific_outcome": False,
+        }
+    semaphore = asyncio.Semaphore(max(1, args.concurrency))
+
+    async def run_unit(task_id: str, rollout_index: int):
+        async with semaphore:
+            adapter = ArkPlanReactLLM(
+                settings=settings,
+                requested_model=requested_model,
+                required_resolved_model=required_resolved,
+                max_output_tokens=args.max_output_tokens,
+                temperature=0,
+                thinking="disabled",
+                provider_budget_ledger=provider_budget_ledger,
+                provider_budget_unit_id=(f"{task_id}/rollout_{rollout_index}" if provider_budget_ledger is not None else None),
+            )
+            factory = ReactAgentFactory(
+                adapter,
+                max_turns=args.max_turns,
+                skill_sources=[skill_source],
+                python_path=sys.executable,
+            )
+            config = ActorRolloutConfig(
+                requested_model=requested_model,
+                required_resolved_model=required_resolved,
+                max_turns=args.max_turns,
+                skill_source=str(skill_source),
+                skill_pre_sha256=skill_sha,
+                failure_family=str(metadata[task_id]["primary_failure_family"]),
+                experiment_mode=args.mode,
+                contract_sha256=contract_sha,
+                authorization_sha256=authorization_sha,
+            )
+            return await run_actor_rollout(
+                env=env,
+                case=cases[task_id],
+                rollout_index=rollout_index,
+                agent_factory=factory,
+                adapter=adapter,
+                config=config,
+                evaluator_sources=evaluator_sources,
+            )
+
+    task_rows: list[dict[str, Any]] = []
+    prefix_ks = tuple(int(value) for value in args.prefix_ks.split(",") if value.strip())
+    for task_id in task_ids:
+        refs = await asyncio.gather(*(run_unit(task_id, index) for index in range(args.k)))
+        task_dir = args.run_root / "cases" / task_id
+        pools = freeze_nested_pools(task_dir=task_dir, trajectories=refs, prefix_ks=prefix_ks)
+        task_rows.append(
+            {
+                "task_id": task_id,
+                "failure_family": metadata[task_id]["primary_failure_family"],
+                "scores": [ref.score for ref in refs],
+                "provider_calls": sum(
+                    len(json.loads(Path(ref.trajectory_path).read_text(encoding="utf-8"))["adapter_receipts"])
+                    for ref in refs
+                ),
+                "pools": {
+                    str(k): {
+                        "pool_id": pool.pool_id,
+                        "acting_success": pool.acting_success,
+                        "precommitted_success": pool.precommitted_success,
+                        "rescue_event": pool.rescue_event,
+                        "winner_index": pool.winner.rollout_index,
+                    }
+                    for k, pool in pools.items()
+                },
+            }
+        )
+    return {
+        "schema_version": "1.0",
+        "artifact_type": "e2-r17-actor-pool-run-summary",
+        "created_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "status": "COMPLETED",
+        "mode": args.mode,
+        "suite_root": str(args.suite_root),
+        "suite_manifest_sha256": file_sha256(args.suite_root / "suite_manifest.json"),
+        "split_manifest_sha256": file_sha256(split_path),
+        "mindmemos_root": str(args.mindmemos_root),
+        "mindmemos_commit": mindmemos_commit,
+        "identity_artifact": str(args.identity),
+        "identity_artifact_sha256": sha256(args.identity),
+        "requested_model": requested_model,
+        "resolved_model": required_resolved,
+        "provider_retry_limit": 0,
+        "thinking": "disabled",
+        "k": args.k,
+        "prefix_ks": list(prefix_ks),
+        "max_turns": args.max_turns,
+        "python_executable": sys.executable,
+        "python_version": platform.python_version(),
+        "skill_source": str(skill_source),
+        "skill_pre_sha256": skill_sha,
+        "updater_receipt_path": str(args.updater_receipt) if args.updater_receipt else None,
+        "updater_receipt_sha256": updater_receipt_sha,
+        "contract_sha256": contract_sha,
+        "authorization_sha256": authorization_sha,
+        "provider_budget": provider_budget_ledger.snapshot().to_dict() if provider_budget_ledger is not None else None,
+        "tasks": task_rows,
+        "scientific_outcome": args.mode != "protocol_smoke",
+        "authority": {
+            "paper_promotion": False,
+            "submission": False,
+        },
+        "private_credentials_included": False,
+        "raw_response_ids_included": False,
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--env-file", type=Path, required=True)
+    parser.add_argument("--suite-root", type=Path, required=True)
+    parser.add_argument("--mindmemos-root", type=Path, required=True)
+    parser.add_argument("--run-root", type=Path, required=True)
+    parser.add_argument("--identity", type=Path, required=True)
+    parser.add_argument("--authorization", type=Path)
+    parser.add_argument("--skill-source", type=Path)
+    parser.add_argument("--updater-receipt", type=Path)
+    parser.add_argument("--mode", choices=("protocol_smoke", "e0", "e1", "public_externality"), required=True)
+    parser.add_argument("--model", choices=("deepseek-v4-pro",), default="deepseek-v4-pro")
+    parser.add_argument("--task-id", action="append")
+    parser.add_argument("--lane")
+    parser.add_argument("--stream-id")
+    parser.add_argument("--k", type=int, default=8)
+    parser.add_argument("--prefix-ks", default="1,2,4,8")
+    parser.add_argument("--max-turns", type=int, default=10)
+    parser.add_argument("--max-output-tokens", type=int, default=4096)
+    parser.add_argument("--concurrency", type=int, default=1)
+    parser.add_argument("--provider-budget-ledger", type=Path)
+    parser.add_argument("--provider-total-call-limit", type=int)
+    parser.add_argument("--provider-per-unit-call-limit", type=int)
+    parser.add_argument("--stop-before-provider-io", action="store_true")
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+
+    if args.k < 1 or args.k > 8:
+        raise SystemExit("K must be in 1..8")
+    summary = asyncio.run(main_async(args))
+    atomic_json(args.output, summary)
+    print(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

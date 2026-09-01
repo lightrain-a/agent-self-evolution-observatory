@@ -1,0 +1,151 @@
+{
+  "artifact_type": "e2-r17-e0-pilot-manifest",
+  "authority": {
+    "gpu": false,
+    "paper_promotion": false,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "checks": {
+    "calibration_count": true,
+    "development_disjoint": true,
+    "equal_family_size": true,
+    "heldout_probe_disjoint": true,
+    "pilot_and_extension_disjoint": true,
+    "pilot_is_family_balanced": true,
+    "pilot_union_extension_is_calibration": true,
+    "six_families": true
+  },
+  "created_at_utc": "2026-08-28T03:35:15+00:00",
+  "extension_task_ids": [
+    "r17-b1-agj-p0",
+    "r17-b1-agj-p2",
+    "r17-b1-agj-p3",
+    "r17-b1-agj-p5",
+    "r17-b1-agj-p6",
+    "r17-b1-agj-p7",
+    "r17-b1-agj-p8",
+    "r17-b1-fmv-p0",
+    "r17-b1-fmv-p1",
+    "r17-b1-fmv-p2",
+    "r17-b1-fmv-p3",
+    "r17-b1-fmv-p5",
+    "r17-b1-fmv-p6",
+    "r17-b1-fmv-p7",
+    "r17-b1-ioc-p0",
+    "r17-b1-ioc-p1",
+    "r17-b1-ioc-p3",
+    "r17-b1-ioc-p4",
+    "r17-b1-ioc-p6",
+    "r17-b1-ioc-p7",
+    "r17-b1-ioc-p8",
+    "r17-b1-msp-p1",
+    "r17-b1-msp-p3",
+    "r17-b1-msp-p4",
+    "r17-b1-msp-p5",
+    "r17-b1-msp-p6",
+    "r17-b1-msp-p7",
+    "r17-b1-msp-p8",
+    "r17-b1-ska-p1",
+    "r17-b1-ska-p2",
+    "r17-b1-ska-p3",
+    "r17-b1-ska-p5",
+    "r17-b1-ska-p6",
+    "r17-b1-ska-p7",
+    "r17-b1-ska-p8",
+    "r17-b1-tsr-p0",
+    "r17-b1-tsr-p1",
+    "r17-b1-tsr-p2",
+    "r17-b1-tsr-p3",
+    "r17-b1-tsr-p4",
+    "r17-b1-tsr-p5",
+    "r17-b1-tsr-p6"
+  ],
+  "metadata_sha256": "12d6eb876e2a230e7990be3e61fed108d45f6ddec00bac5c9b88585a04111b04",
+  "model_outcomes_accessed": false,
+  "pilot_by_family": {
+    "aggregation_join": [
+      {
+        "selection_rank_sha256": "575f1af8736494c67dd34fa3d43757c57d76e6cd3b2b357b55a944bedc461165",
+        "task_id": "r17-b1-agj-p1"
+      },
+      {
+        "selection_rank_sha256": "79e7fcee2248f63f8a12897622cecb62153d75d8b82366705ee39fb14876171a",
+        "task_id": "r17-b1-agj-p4"
+      }
+    ],
+    "formula_materialization": [
+      {
+        "selection_rank_sha256": "0438614000eedff764c7a7826635161a8a68836223802d42e3fdc10f40cf8c01",
+        "task_id": "r17-b1-fmv-p4"
+      },
+      {
+        "selection_rank_sha256": "18d15b0a37bb103d68b511d6701682de12b751d2d1dfdaa697bcbbbb44111620",
+        "task_id": "r17-b1-fmv-p8"
+      }
+    ],
+    "input_output_contract": [
+      {
+        "selection_rank_sha256": "01f662daa4158b0345b969b25c8e7eab604d65a0c6cab6362e7968010f4458b1",
+        "task_id": "r17-b1-ioc-p5"
+      },
+      {
+        "selection_rank_sha256": "186c4bc06301b368a1566cd8f3f42de0c2c1d094df0321777e02eb709a09ca50",
+        "task_id": "r17-b1-ioc-p2"
+      }
+    ],
+    "multi_step_pipeline": [
+      {
+        "selection_rank_sha256": "1aa1c4c90d1cebd768d81f7b89afdc0b2d84b403060ae27d4323528655a631bc",
+        "task_id": "r17-b1-msp-p2"
+      },
+      {
+        "selection_rank_sha256": "21d2a96e6ee0532c97a0a2bfa1b0bd5cf3b580076104115a353023923f6736a7",
+        "task_id": "r17-b1-msp-p0"
+      }
+    ],
+    "schema_key_alignment": [
+      {
+        "selection_rank_sha256": "10e316fad174ee3f5c58d7e146d584b06fb998ee5fcb23ec4c526fae1189fd30",
+        "task_id": "r17-b1-ska-p0"
+      },
+      {
+        "selection_rank_sha256": "13ca403f4902cfdd876be81d4ba6ffe31a53adcbc596f397385d05f3b530dd1c",
+        "task_id": "r17-b1-ska-p4"
+      }
+    ],
+    "target_sheet_range": [
+      {
+        "selection_rank_sha256": "238718bae8f8e3250269a73a436f518fb104be3dd3b307c6feeb48594912d88b",
+        "task_id": "r17-b1-tsr-p8"
+      },
+      {
+        "selection_rank_sha256": "2539506ed1001020392c6f50e764eb6d4b54528cd8ebf7ecd575a4a26cb0037e",
+        "task_id": "r17-b1-tsr-p7"
+      }
+    ]
+  },
+  "pilot_execution_rule": "Run all selected tasks at K=8 and derive K=1/2/4/8 only from nested prefixes. The pilot may qualify runtime, rescue support, and pool-law measurement, but no task may be replaced because of model outcome.",
+  "pilot_task_ids": [
+    "r17-b1-agj-p1",
+    "r17-b1-agj-p4",
+    "r17-b1-fmv-p4",
+    "r17-b1-fmv-p8",
+    "r17-b1-ioc-p5",
+    "r17-b1-ioc-p2",
+    "r17-b1-msp-p2",
+    "r17-b1-msp-p0",
+    "r17-b1-ska-p0",
+    "r17-b1-ska-p4",
+    "r17-b1-tsr-p8",
+    "r17-b1-tsr-p7"
+  ],
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "selection_algorithm": "sort by SHA256(E2-R17-E0-PILOT-FAMILY-BALANCED-v1|task_id), then take 2 per family",
+  "selection_is_outcome_blind": true,
+  "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+  "status": "FROZEN_PRE_OUTCOME",
+  "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4",
+  "suite_root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2"
+}

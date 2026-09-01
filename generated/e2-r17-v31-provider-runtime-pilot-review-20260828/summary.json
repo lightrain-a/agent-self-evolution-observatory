@@ -1,0 +1,21 @@
+{
+  "all_allow_separate_provider_runtime_pilot_authorization": false,
+  "artifact_type": "e2-r17-v31-provider-runtime-pilot-dual-review",
+  "created_at_utc": "2026-08-28T15:41:51+00:00",
+  "draft_contract_sha256": "b7340add5392667551ab6838f6acf32876bec8b3d75bcd1a82fdfdcacb7254a1",
+  "e1_b_authority": false,
+  "exposed_to_other_review": false,
+  "independent": true,
+  "paper_claim_authority": false,
+  "resolved_models": {
+    "deepseek-v4-pro": "deepseek-v4-pro-ga-260813",
+    "kimi-k3": "kimi-k3"
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "statuses": {
+    "deepseek-v4-pro": "FAIL_SCHEMA",
+    "kimi-k3": "FAIL_SCHEMA"
+  },
+  "verdicts": {}
+}

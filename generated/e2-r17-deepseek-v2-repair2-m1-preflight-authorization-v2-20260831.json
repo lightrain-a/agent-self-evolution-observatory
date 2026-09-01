@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-deepseek-v2-repair2-m1-preflight-only-authorization",
+  "date": "2026-08-31",
+  "status": "PREFLIGHT_ONLY_E2_R17_DEEPSEEK_V2_REPAIR2_M1",
+  "authority": {
+    "measurement_only": true,
+    "scientific_experiment": false,
+    "updater": false,
+    "analyzer": false,
+    "paper_promotion": false,
+    "submission": false,
+    "public_benchmark": false,
+    "gpt_scientific_execution": false,
+    "kimi_scientific_execution": false,
+    "qwen_scientific_execution": false
+  },
+  "contract_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-deepseek-v2-repair2-m1-20260831/generated/e2-r17-deepseek-v2-repair2-m1-measurement-contract-v2-20260831.json",
+  "contract_sha256": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+  "parent_repair2_provenance": {
+    "contract_path": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/generated/e2-r17-deepseek-v2-repair2-contract-20260831.json",
+    "contract_sha256": "9e38bdbfc71186e3e58587169d8c619bff4ae24de4145fefafa63e49a6f148a3",
+    "authorization_path": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/generated/e2-r17-deepseek-v2-repair2-authorization-20260831.json",
+    "authorization_sha256": "9643a0a30d0acc4f32607b217701b368a895b2fe1e86a0aa84da24aa0a80898b",
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-20260831",
+    "immutable": true
+  },
+  "execution_scope": {
+    "measurement_child": "E2-R17-DEEPSEEK-V2-REPAIR2-M1",
+    "allowed_modes": [
+      "e1"
+    ],
+    "allowed_task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "exact_k": 1,
+    "allow_noninitial_skill": true,
+    "max_turns": 10,
+    "max_output_tokens": 8192,
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "identity_artifact_sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "learned_states": [
+      {
+        "stream_id": "e1-fmv-01",
+        "execution_stream_id": "e1-fmv-01::rep2",
+        "replicate": 2,
+        "arm": "win_c",
+        "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-20260831/states/e1-fmv-01/replicate_2/win_c/update/skill_post/SKILL.md",
+        "skill_post_sha256": "0585978bbf04e997a92ec12ab2c76e290a60060151f5a2a239298ec54d838b8b",
+        "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-20260831/states/e1-fmv-01/replicate_2/win_c/update/update_receipt.json",
+        "update_receipt_sha256": "2a1d731e36f8a616b4225e79930f00343cdb88a6df506d6be81d91d14269da53",
+        "update_completed_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-20260831/states/e1-fmv-01/replicate_2/win_c/checkpoints/update_completed.json",
+        "update_completed_sha256": "fb32336c875f16f0035c9e09041cb8fdf8bd897b815fca9cc69d2c5a75eedf25"
+      },
+      {
+        "stream_id": "e1-fmv-01",
+        "execution_stream_id": "e1-fmv-01::rep2",
+        "replicate": 2,
+        "arm": "mrw",
+        "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-20260831/states/e1-fmv-01/replicate_2/mrw/update/skill_post/SKILL.md",
+        "skill_post_sha256": "14542d89876cb25ee791ad2593651c721945818f5456a01839d5e1c6a122c52b",
+        "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-20260831/states/e1-fmv-01/replicate_2/mrw/update/update_receipt.json",
+        "update_receipt_sha256": "8ce7bc0f79a684637190d7e53a1ab213788c19d5b1cd075fba9eb6aa50490e11",
+        "update_completed_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-20260831/states/e1-fmv-01/replicate_2/mrw/checkpoints/update_completed.json",
+        "update_completed_sha256": "81b623a4c8c84ee57fdec5df885a91e6e0e39e777940597b9eb22c27945898e5"
+      }
+    ],
+    "provider_budget": {
+      "required": true,
+      "total_limit": 180,
+      "per_unit_limit": 10
+    }
+  },
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "interpretation_boundary": "Preflight only. Must stop after the production M1 actor has validated child authority, exact task/K/model, learned-state SHA, parent updater provenance, and provider-budget binding, immediately before provider I/O. No scientific execution authority."
+}

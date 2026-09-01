@@ -1,0 +1,88 @@
+{
+  "artifact_type": "e2-r17-f0-r4-execution-policy-addendum",
+  "authority": {
+    "e0_full": false,
+    "e0_pilot": false,
+    "e1": false,
+    "front_end_claim": false,
+    "gpu": false,
+    "paper_promotion": false,
+    "public_externality": false,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "contract_path": "generated/e2-r17-f0-r4-frozen-candidate-contract-20260828.json",
+  "contract_sha256": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+  "created_at_utc": "2026-08-28T04:01:21+00:00",
+  "e0_protocol_failure_definition": [
+    "any task outside the exact 12-task authorization allowlist or any outcome-driven replacement",
+    "suite, split, initial-skill, MindMemOS, identity, authorization, or authorized-code hash drift",
+    "non-Plan route, provider retry above zero, thinking not disabled, temperature drift, or resolved-model drift",
+    "missing, duplicated, technically incomplete, or non-content-addressed rollout among indices 0..7",
+    "case setup, tool execution, evaluator, workbook, provider-response, or trajectory serialization exception",
+    "within-pool mismatch in task, input, prompt, initial skill, verifier, requested model, or resolved model",
+    "failure to derive K=1/2/4/8 from exact prefixes of the one generated K=8 pool",
+    "missing provider receipt, unhashed raw provider response identifier, or credential material in a public artifact",
+    "summary task order, K, prefix, contract, authorization, or model identity mismatch"
+  ],
+  "e0_rescue_definition": "At K=8, rollout-0 has deterministic verifier score 0 and at least one rollout in the same exact pool has score 1; equivalently precommitted_success=0 and acting_success=1.",
+  "e0_stop_and_extension": {
+    "extension": "Only when the 12-task pilot completes with at least one rescue event may the predeclared remaining 42 E0-calibration tasks be considered; a separate post-pilot adjudication is required before E0-full.",
+    "no_task_replacement": true,
+    "resume": "Resume only missing rollout units whose content-addressed receipt is absent; never rerun a completed unit for a better outcome.",
+    "stop": "STOP the tranche on any protocol failure or zero K=8 rescue events across all 12 pilot tasks."
+  },
+  "future_e1_accounting_frozen_before_e0_outcomes": {
+    "empty_or_unchanged_skill": "A completed first-party updater call that mints the required version but leaves SKILL.md content unchanged is a valid zero-effect scientific outcome, not a protocol failure.",
+    "no_version_or_incomplete_batch": "Failure to mint exactly one version from exactly eight consumed task packets is a protocol failure and cannot be reclassified as a null scientific result.",
+    "pairwise_reporting": [
+      "Rejected-Witness minus Winner-only",
+      "Rejected-Witness minus Duplicated-Winner",
+      "Rejected-Witness minus Random-Nonwinner",
+      "SkillCAT-style contrast minus Winner-only",
+      "Precommitted rollout-0 minus Winner-only",
+      "all remaining preregistered arm pairs as descriptive estimates"
+    ],
+    "parser_or_validation_events": "Every parse error, corrective attempt, validation rejection, truncation, failed packet rendering, and updater call is logged in the arm receipt; retry remains zero at the provider layer."
+  },
+  "private_credentials_included": false,
+  "random_nonwinner_semantics": {
+    "candidate_set": "all trajectories in the exact pool except the acting winner, regardless of whether a nonwinner has score 0 or a tied score 1",
+    "implementation_path": "research_pipeline/e2_r17_search_projection_runner.py",
+    "implementation_sha256": "5cd5caf1b382a2378959ccbcdab8965e67f6b596033cb2a9a00bbe565ccaed4f",
+    "interpretation": "generic within-pool diversity control, not a rejected-failure control",
+    "salt": "e2-r17-r4-random-nonwinner-v1",
+    "selection": "index SHA256(randomization_salt|pool_id) modulo candidate count"
+  },
+  "raw_response_ids_included": false,
+  "review_sources": [
+    {
+      "path": "generated/e2-r17-f0-r4-preexecution-review-20260828/round1/deepseek-v4-pro.json",
+      "requested_model": "deepseek-v4-pro",
+      "round": 1,
+      "sha256": "921fa19e9337e0a0ede571fce1e376dc475aa83052e2ce281758e4f8177abc56"
+    },
+    {
+      "path": "generated/e2-r17-f0-r4-preexecution-review-20260828/round1/kimi-k3.json",
+      "requested_model": "kimi-k3",
+      "round": 1,
+      "sha256": "8dcf1d8168dbc32666fdda884f9a87906da10daf5de249565c89041ffd11c524"
+    },
+    {
+      "path": "generated/e2-r17-f0-r4-preexecution-review-20260828/round2/deepseek-v4-pro.json",
+      "requested_model": "deepseek-v4-pro",
+      "round": 2,
+      "sha256": "a1fc5bc79c232c6d78e12334fce09ec2ab5f6206b0489fa6d86e1eb14cc9715d"
+    },
+    {
+      "path": "generated/e2-r17-f0-r4-preexecution-review-20260828/round2/kimi-k3.json",
+      "requested_model": "kimi-k3",
+      "round": 2,
+      "sha256": "1ad951530fb7537abd9ec12cb8ab874d47277e1bdb1876d5d0039a06aa6cf00a"
+    }
+  ],
+  "role": "Clarifies runtime accounting and launch scope without changing the scientific object, estimand, task split, arms, hypotheses, or decision thresholds in the reviewed contract.",
+  "schema_version": "1.0",
+  "scientific_contract_mutated": false,
+  "status": "FROZEN_NONSCIENTIFIC_EXECUTION_POLICY"
+}

@@ -1,0 +1,39 @@
+{
+  "archive": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v1.tar",
+  "archive_sha256": "b928633b4388c93fdfba2992853b0c64ad124cc004b5993ce9f93f12898da056",
+  "artifact_type": "e2-r17-controlled-spreadsheet-suite-build-receipt",
+  "authority": {
+    "f0_r4_freeze": false,
+    "gpu": false,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "benchmark_outcomes_accessed": false,
+  "created_at_utc": "2026-08-27T14:09:17+00:00",
+  "dataset_sha256": "063edbffced0a587e024a7319df268cd5bf40656bfdaee2c3ddb535df03db268",
+  "output_root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v1",
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_outcome": false,
+  "self_check": {
+    "dataset_sha256": "063edbffced0a587e024a7319df268cd5bf40656bfdaee2c3ddb535df03db268",
+    "e0_calibration_tasks": 54,
+    "e1_probe_tasks": 18,
+    "e1_streams": 12,
+    "e1_tasks_per_stream": 8,
+    "e3_future_tasks": 54,
+    "probe_family_counts": {
+      "aggregation_join": 3,
+      "formula_materialization": 3,
+      "input_output_contract": 3,
+      "multi_step_pipeline": 3,
+      "schema_key_alignment": 3,
+      "target_sheet_range": 3
+    },
+    "status": "PASS",
+    "task_count": 324
+  },
+  "status": "PASS_ZERO_PROVIDER",
+  "suite_manifest": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v1/suite_manifest.json",
+  "suite_manifest_sha256": "d407ab6fc2ced9f6e536cc14819020e61b77c1594bcbe46c8ed890e58bbbdd9d"
+}

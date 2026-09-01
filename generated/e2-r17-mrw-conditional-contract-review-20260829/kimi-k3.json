@@ -1,0 +1,57 @@
+{
+  "artifact_type": "e2-r17-mrw-conditional-contract-independent-review",
+  "created_at_utc": "2026-08-29T13:56:40+00:00",
+  "draft_contract_sha256": "3520bd3e1d7e912e349bfea0d0a48fbe03e05b874064c0e494e704f3564fe04b",
+  "expected_resolved_model": "kimi-k3",
+  "exposed_to_other_review": false,
+  "independent": true,
+  "missing_required_fields": [],
+  "mrw_execution_authority": false,
+  "paper_claim_authority": false,
+  "provider_retry_limit": 0,
+  "raw_text_sha256": "f31f8d8138a34e380f21fd544a85ecc5b2417f33faa0341be4d6b4ac8765311e",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "cf73c47fc2063d85aab55527e9d937bb958eec28c20dc793ab732d6b50e6d09f",
+  "review": {
+    "conditional_freeze_recommendation": "ALLOW_CONDITIONAL_DRAFT_FREEZE_ONLY",
+    "contemporaneous_control_assessment": "PASS: WIN-C is a fresh contemporaneous control, not a historical surrogate. The contract and runner create 12 paired streams, execute both win_c and mrw learned states per stream, use the same 8 frozen E1-A pools per stream, same initial skill, same 18 heldout probes, same updater/actor runtimes, and same provider budget structure. Historical WIN-A/WIN-B is explicitly excluded from the primary estimand.",
+    "draft_contract_sha256_acknowledged": "3520bd3e1d7e912e349bfea0d0a48fbe03e05b874064c0e494e704f3564fe04b",
+    "hash_balanced_schedule_assessment": "PASS: Update order is deterministic hash order SHA256(E2-R17-E1B-MRW-UPDATE-ORDER-v1|stream_id|arm), and heldout evaluation pair order is SHA256(E2-R17-E1B-MRW-EVAL-PAIR-ORDER-v1|stream_id|task_id|arm). The runner implements these salts exactly and applies order per stream/task without outcome-dependent randomization.",
+    "historical_win_ab_role_assessment": "PASS: Historical WIN-A/WIN-B is used only as the separate negative-control/bridge stability layer and is explicitly excluded from the primary MRW estimand and decision rule. The contemporaneous primary comparison is strictly MRW versus fresh WIN-C.",
+    "missing_invalid_unit_assessment": "PASS: The contract and runner prohibit stream/task dropping, substitution, imputation, favorable-subset analysis, and automatic rerun after ambiguous provider work. Partial update or evaluation directories raise technical failure, checkpoints are SHA-revalidated before resume, and the analysis requires the exact full heldout set for all 12 streams and both arms before inference.",
+    "mrw_execution_authority": false,
+    "negative_control_fail_policy": "MRW_REMAINS_UNAUTHORIZED",
+    "negative_control_gate_sequencing_assessment": "PASS: The MRW draft is conditional only. The runner refuses execution unless the contract is later frozen, separately authorized, and the negative-control gate artifact exists with the exact preregistered PASS status and SHA. The analysis also rechecks the same gate. If the WIN-A/WIN-B negative control does not PASS, MRW remains unauthorized.",
+    "nonblocking_notes": [
+      "The conditional draft correctly leaves model_identity and negative-control gate SHA fields pending; these are the only post-gate fills allowed besides review metadata and status.",
+      "The runner's evidence payload contains the string mrw_provider_execution_authorized=true; in context this records authorization for the frozen MRW tranche after gate validation, not present execution authority.",
+      "The analysis exit code is 0 only for GO and nonzero for STOP/HOLD; this is an operational convention and does not alter the scientific decision payload.",
+      "The negative-control full run is still executing and no WIN-A/WIN-B outcome was used in this review."
+    ],
+    "paper_claim_authority": false,
+    "practical_null_precedence_assessment": "PASS: Practical-null precedence is explicit and correctly implemented. If the 90% paired-mean t interval lies strictly within [-1/18,+1/18], equivalent=true; superiority is forced false and the decision branch returns STOP_MRW_PRACTICALLY_NULL before harm or HOLD. Thus a small-but-significant positive effect cannot be promoted as GO.",
+    "remaining_blockers": [],
+    "runtime_budget_checkpoint_assessment": "PASS: Role-specific updater and actor runtimes are independently qualified and hash-bound; bound code SHAs are revalidated; provider budget claims are made before provider I/O through the SQLite ledger; per-state and per-unit ceilings match the contract; checkpoints persist each unit and preserve partial ambiguous state without auto-rerun.",
+    "same_pool_treatment_purity_assessment": "PASS: The runner loads the exact same frozen pool objects for both arms, generates win_units and mrw_units from those same pools, and binds arm treatment only through ProjectionName.WINNER_ONLY versus ProjectionName.MIXED_REJECTED_WITNESS. The V3.1 blinded-evidence path is required, arm metadata is not model-visible, and completed update receipts are revalidated for causal_purity_mode=arm_blinded_selected_evidence and arm_metadata_visible_in_transcript=false.",
+    "single_sentence_verdict": "The conditional MRW contemporaneous-control design, runner, repaired analysis logic, and freeze policy are internally coherent and may proceed only to conditional draft freeze, with MRW execution remaining unauthorized unless the separate preregistered WIN-A/WIN-B negative-control equivalence adjudication later returns PASS.",
+    "statistical_decision_logic_assessment": "PASS: The analysis implements the frozen estimand D_s=J_s(MRW)-J_s(WIN-C) over exactly 12 stream-level pairs, exact one-sided sign-flip tests over all 2^12 assignments, paired bootstrap 95% CI with fixed seed/reps, and a paired 90% t interval for TOST. GO requires mean>0, positive sign-flip p<=.05, bootstrap lower>0, and non-equivalence. Harm requires mean<0 and negative sign-flip p<=.05 while not equivalent. Otherwise HOLD. The prior conflict recorded in R17-F013 has been repaired in the current analysis SHA.",
+    "verdict": "PASS_TO_CONDITIONAL_FREEZE_AFTER_NEGATIVE_CONTROL_PASS"
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 26236,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1165,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 27401
+  }
+}

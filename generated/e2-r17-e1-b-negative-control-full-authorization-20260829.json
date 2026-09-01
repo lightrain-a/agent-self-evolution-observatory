@@ -1,0 +1,101 @@
+{
+  "artifact_type": "e2-r17-e1-b-negative-control-full-authorization",
+  "authority": {
+    "e1_a": false,
+    "e1_b": true,
+    "e1_b_negative_control": true,
+    "frontend_promotion": false,
+    "mrw_causal_comparison": false,
+    "paper_promotion": false,
+    "rb_agg": false,
+    "scientific_experiment": true,
+    "submission": false
+  },
+  "contract_path": "generated/e2-r17-e1-b-negative-control-full-contract-20260829.json",
+  "contract_sha256": "6c84a98d5987e40bde26a41f18cb6cd68f3e7d2ffb0ede69d176128185782c03",
+  "date": "2026-08-29",
+  "execution_scope": {
+    "allow_noninitial_skill": true,
+    "allowed_modes": [
+      "e1"
+    ],
+    "allowed_task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "exact_k": 1,
+    "frozen_arms": [
+      "win_a",
+      "win_b"
+    ],
+    "frozen_heldout_task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "frozen_stream_ids": [
+      "e1-agj-00",
+      "e1-agj-01",
+      "e1-fmv-00",
+      "e1-fmv-01",
+      "e1-ioc-00",
+      "e1-ioc-01",
+      "e1-msp-00",
+      "e1-msp-01",
+      "e1-ska-00",
+      "e1-ska-01",
+      "e1-tsr-00",
+      "e1-tsr-01"
+    ],
+    "identity_artifact_sha256": "6ebc6ee7edb67b78a7aae910b87a158d81232477f676b42e15ee9c6449432746",
+    "max_output_tokens": 4096,
+    "max_turns": 10,
+    "provider_budget": {
+      "per_unit_limit": 10,
+      "required": true,
+      "total_limit": 190
+    },
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "interpretation_boundary": "Authorized only for identical-treatment WIN-A/WIN-B nuisance-control execution and its separately bound equivalence analysis. MRW/RB-AGG/method-effect/paper claims remain unauthorized.",
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "private_credentials_included": false,
+  "raw_response_ids_included": false,
+  "review_summary_path": "generated/e2-r17-e1-b-negative-control-review-20260829/summary.json",
+  "review_summary_sha256": "f278d530857eff2a5fd3337417d38b50ea537a13dc1b2f4d17d042ee06a34a64",
+  "schema_version": "1.0",
+  "status": "AUTHORIZED_E1"
+}

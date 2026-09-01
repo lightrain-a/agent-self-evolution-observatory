@@ -1,0 +1,22 @@
+diff --git a/src/openpi/training/config.py b/src/openpi/training/config.py
+index 6aae564..d93d98e 100644
+--- a/src/openpi/training/config.py
++++ b/src/openpi/training/config.py
+@@ -778,13 +778,16 @@ _CONFIGS = [
+         name="pi05_b1k_shared26_frozen",
+         model=pi0_config.Pi0Config(action_horizon=32, pi05=True),
+         data=LeRobotB1KDataConfig(
+-            repo_id="b1k_shared26_frozen",
++            repo_id="behavior-1k/2026-challenge-demos",
++            assets=AssetsConfig(asset_id="b1k_shared26_frozen"),
+             base_config=DataConfig(
+                 data_cls=_lerobot_compat.LeRobotDataset,
+                 dataset_root="/data/wyt/behavior-2026-shared26-v3.0",
+                 prompt_from_task=True,
+                 dataset_kwargs={
+                     "tolerance_s": 5e-4,
++                    "revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
++                    "download_videos": False,
+                     "episodes": [
+                         episode
+                         for task_index in (

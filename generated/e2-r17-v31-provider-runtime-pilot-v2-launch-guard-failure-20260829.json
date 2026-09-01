@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-failure-receipt",
+  "failure_id": "R17-F010-PROCESS-GUARD-SELF-MATCH",
+  "date": "2026-08-29",
+  "stage": "V3.1 provider-runtime Pilot V2 launcher preflight",
+  "terminal_status": "LAUNCH_NOT_ATTEMPTED_FALSE_ALREADY_RUNNING",
+  "classification": ["IMPLEMENTATION"],
+  "symptom": "The first detached-launch guard used pgrep -af with a pattern embedded in the current shell command and returned ALREADY_RUNNING although no provider-runtime runner process, run root, or lock existed.",
+  "root_cause": "The process-detection guard could self-match its invoking shell command rather than an already-running scientific runner.",
+  "provider_calls": 0,
+  "scientific_endpoint_reached": false,
+  "scientific_data_observed_for_effectiveness": false,
+  "contamination": "NONE; follow-up inspection found zero matching runner processes, no run root, and no exclusive lock.",
+  "repair": "Do not rely on that self-matching pgrep guard. Require a separate real-process inspection plus run-root/lock check before the single launch. The scientific contract, authorization, pools, arms, runtime, model, and budgets remain unchanged.",
+  "rerun_policy": "LAUNCH_PERMITTED_ONCE_AFTER_ZERO-STATE_VERIFICATION",
+  "scientific_belief_update": "NONE",
+  "reusable_rule": "Process guards used to prevent duplicate scientific launches must themselves be tested against self-match; run-root/lock/checkpoint state is stronger evidence than a naive full-command pgrep pattern.",
+  "authority": {
+    "provider_runtime_pilot": false,
+    "e1_b": false,
+    "paper_promotion": false
+  }
+}

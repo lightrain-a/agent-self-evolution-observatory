@@ -1,0 +1,41 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-deepseek-v2-repair2-v3-execution-interruption-audit",
+  "authority": {
+    "build_continuation_manifests": true,
+    "provider_io": false
+  },
+  "boundary_assertions": {
+    "NO_AMBIGUOUS_COMPLETION": true,
+    "NO_PARTIAL_HELDOUT_UNIT": true,
+    "NO_PARTIAL_LEARNED_STATE": true,
+    "NO_PARTIAL_PROVIDER_CLAIM": true
+  },
+  "classification": "FAIL_CLOSED_HOST_SHUTDOWN_AT_CLEAN_HELDOUT_TASK_BOUNDARY",
+  "completed_pairs": 17,
+  "created_at_utc": "2026-08-31T10:06:12+00:00",
+  "current_boot_id": "c9e261f1b8154cdb9a44de696743d7f2",
+  "failure_json": 0,
+  "filesystem": {
+    "free_bytes": 8698791448576,
+    "free_inodes": 480115683
+  },
+  "full_summary_absent": true,
+  "heldout_units": 636,
+  "learned_states": 36,
+  "old_actor_alive": false,
+  "old_runner_alive": false,
+  "old_runner_pid": 2439745,
+  "oom_evidence": false,
+  "partial_effect_read": false,
+  "prior_boot_id": "3fa98da61cec4b0fb65749ced2e6e51d",
+  "provider_claims": 609,
+  "provider_worker_alive": false,
+  "python_exception_evidence": false,
+  "root_cause": "HOST_SHUTDOWN_DURING_EXECUTION",
+  "schema_version": "1.0",
+  "shutdown_evidence_sha256": "9e77db8e5d67a473a91d28a0d25448d37cd7703b748cbd60af24055cfc2d790d",
+  "stale_lock_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/.exclusive.lock",
+  "stale_lock_sha256": "3d43b95bcb06809e4d1aa73e797feb790c05ea53d051fe9eb6de1a0c509cb151",
+  "status": "PASS_CONTINUATION_BOUNDARY_PROVEN"
+}

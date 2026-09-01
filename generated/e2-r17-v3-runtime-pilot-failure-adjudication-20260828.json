@@ -1,0 +1,37 @@
+{
+  "artifact_type": "e2-r17-v3-runtime-pilot-failure-adjudication",
+  "schema_version": "1.0",
+  "date": "2026-08-28",
+  "status": "FAIL_MECHANICAL_TOKEN_PARITY",
+  "contract": "generated/e2-r17-v3-runtime-pilot-contract-20260828.json",
+  "run_root": "/data/wyt/e2-r17-search-projection/runtime-pilots/v3-mechanical-20260828",
+  "provider_calls": 0,
+  "new_actor_rollouts": 0,
+  "scientific_effectiveness_evaluated": false,
+  "completed_units_before_failure": 3,
+  "completed_unit_receipts_preserved": true,
+  "failed_unit": "r17-b1-fmv-p8",
+  "failure": {
+    "check": "re-encode rendered WIN/MRW text and require exact token parity",
+    "winner_rollout_index": 0,
+    "mrw_rollout_index": 2,
+    "winner_raw_tokens": 2775,
+    "mrw_raw_tokens": 2026,
+    "nominal_selected_tokens_each": 2026,
+    "winner_reencoded_tokens": 2025,
+    "mrw_reencoded_tokens": 2026,
+    "difference": -1,
+    "cause": "Decoding separately selected head/tail token slices and concatenating them can create a new BPE merge at the splice boundary; nominal selected-token equality therefore does not imply equality of the actual text re-tokenized by the provider tokenizer."
+  },
+  "contract_behavior": "The frozen V3 Pilot correctly failed instead of weakening the parity check. The V3 renderer policy is not modified under the same contract.",
+  "additional_causal_purity_finding": "The legacy projection-packet renderer exposes arm-specific PROJECTION/ROLE/rollout metadata to the updater. Even with matched source tokens, those labels are an avoidable treatment cue. V3.1 must blind arm/projection metadata from updater-visible text while retaining it in provenance receipts.",
+  "next_step": "Create a new V3.1 renderer/protocol that matches the entire updater-visible evidence block by actual re-tokenized count, with deterministic no-padding search, then independently review and rerun a fresh mechanical Pilot root.",
+  "authority": {
+    "v3_runtime_pilot_retry_under_same_contract": false,
+    "v3_1_design_work": true,
+    "provider_runtime_pilot": false,
+    "e1_a": false,
+    "e1_b": false,
+    "paper_promotion": false
+  }
+}

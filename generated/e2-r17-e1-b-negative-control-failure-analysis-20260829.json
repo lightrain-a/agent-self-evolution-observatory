@@ -1,0 +1,134 @@
+{
+  "artifact_type": "e2-r17-e1-b-negative-control-failure-analysis",
+  "schema_version": "1.0",
+  "date": "2026-08-29",
+  "status": "TERMINAL_DIAGNOSTIC_IDENTIFIABILITY_HOLD",
+  "scientific_authority": {
+    "central_mechanism_adjudication": false,
+    "execute_mrw": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "failure_classification": [
+    "SCIENTIFIC_IDENTIFIABILITY"
+  ],
+  "evidence": {
+    "contract": {
+      "path": "generated/e2-r17-e1-b-negative-control-full-contract-20260829.json",
+      "sha256": "6c84a98d5987e40bde26a41f18cb6cd68f3e7d2ffb0ede69d176128185782c03"
+    },
+    "authorization": {
+      "path": "generated/e2-r17-e1-b-negative-control-full-authorization-20260829.json",
+      "sha256": "e62770ac9531001c2c4adf1fade5b617498c26e1bae8dedb108967c7a698d8a4"
+    },
+    "run_summary": {
+      "path": "/data/wyt/e2-r17-search-projection/runs/e1-b-negative-control-v1-20260829/summary/e1_b_negative_control_full_summary.json",
+      "sha256": "b1a7a18e41527eb7cd5405ba86af4780632228afcd4d64b64ec058dfa4a2ca98"
+    },
+    "adjudication": {
+      "path": "generated/e2-r17-e1-b-negative-control-adjudication-20260829.json",
+      "sha256": "758d7514518216c6913d623b9175f237a35a63c4f2f523fa24a3097d07515a2e"
+    },
+    "terminal_registry": {
+      "path": "generated/e2-r17-failure-differential-registry-v7-20260829.json",
+      "sha256": "b2b8aaffc2a1f3c9fd0c55a1961a4a119e684f8bb972853c5201e07992498c27"
+    }
+  },
+  "protocol_integrity": {
+    "stream_pairs": 12,
+    "learned_states": 24,
+    "heldout_rollout_units": 432,
+    "completed_streams": 12,
+    "completed_learned_states": 24,
+    "completed_heldout_rollout_units": 432,
+    "technical_failure_artifacts": 0,
+    "mrw_executed": false,
+    "contract_and_authorization_hashes_matched": true,
+    "provider_retry_limit": 0,
+    "hidden_provider_retries": 0
+  },
+  "primary_result": {
+    "difference": "N_s=J_s(WIN-B)-J_s(WIN-A)",
+    "independent_unit": "12 paired stream-level learned states",
+    "mean_difference": -0.02314814814814814,
+    "sd_difference": 0.13905713715032014,
+    "equivalence_margin": 0.05555555555555555,
+    "paired_t_90_ci": [
+      -0.09523916316034,
+      0.04894286686404373
+    ],
+    "paired_tost_equivalence_pass": false,
+    "bootstrap_90_ci": [
+      -0.08796296296296295,
+      0.04166666666666666
+    ],
+    "bootstrap_reps": 100000,
+    "bootstrap_seed": 1717,
+    "terminal_status": "HOLD_UPDATER_OR_EVALUATOR_STOCHASTICITY"
+  },
+  "posthoc_zero_provider_differential": {
+    "authority": "diagnostic_only",
+    "new_provider_calls": 0,
+    "same_stream_sha_pairs": 12,
+    "same_initial_skill_sha_pairs": 12,
+    "same_first_eight_updater_summary_prompt_bundle_pairs": 12,
+    "same_final_skill_sha_pairs": 6,
+    "different_final_skill_sha_pairs": 6,
+    "same_final_skill_pairs_with_nonzero_heldout_difference": 6,
+    "same_final_skill_pair_max_absolute_difference": 0.2222222222222222,
+    "interpretation": [
+      "Updater-side byte variation is present because 6 of 12 identical-treatment clone pairs produced different final skill SHA-256 values.",
+      "Evaluator/actor-side variation is directly present because all 6 pairs with byte-identical final skill SHA-256 values still produced nonzero held-out success differences, as large as 4/18.",
+      "The frozen design varies updater calls and evaluator calls together, so it cannot estimate their separate variance components or attribute the HOLD to only one component.",
+      "The diagnostic does not change the preregistered 12-pair TOST gate and cannot authorize MRW."
+    ]
+  },
+  "call_token_cost_accounting": {
+    "provider_claims_total": 2739,
+    "updater_provider_calls": 240,
+    "heldout_evaluator_provider_calls": 2499,
+    "input_or_prompt_tokens": 8214076,
+    "output_or_completion_tokens": 580638,
+    "total_tokens": 8794714,
+    "provider_receipts_with_cost_field": 0,
+    "cost_usd": null,
+    "cost_note": "The frozen receipts contain token usage but no billed-price field; no post-hoc monetary estimate is treated as observed cost.",
+    "evaluation_provider_status_completed": 2495,
+    "evaluation_provider_status_incomplete": 4,
+    "incomplete_note": "Four evaluator responses reached the 4096 output-token limit without hidden retry; all corresponding rollout endpoints, artifacts, and verifier scores completed, so the frozen runner did not classify them as technical failures."
+  },
+  "failure_differential": {
+    "implementation": {
+      "status": "NOT_SUPPORTED_AS_ROOT_CAUSE",
+      "evidence": "All frozen units completed with content-addressed manifests and no failure artifact; contract/authorization bindings matched."
+    },
+    "runtime_infrastructure": {
+      "status": "NOT_A_TERMINAL_FAILURE",
+      "evidence": "Hosted latency varied and one monitoring MCP call failed, but the locked remote process continued and all endpoints completed without relaunch."
+    },
+    "measurement_analysis": {
+      "status": "VALID_PRIMARY_ANALYSIS",
+      "evidence": "The analyzer used 12 paired streams as independent units, the frozen 1/18 margin, paired TOST, and the predeclared 100000-replicate bootstrap robustness analysis."
+    },
+    "protocol_causal_purity": {
+      "status": "PASS_FOR_NEGATIVE_CONTROL_ENDPOINT",
+      "evidence": "WIN-A/WIN-B shared the frozen byte-identical winner treatment; MRW was never executed."
+    },
+    "scientific_identifiability": {
+      "status": "TERMINAL_HOLD",
+      "evidence": "Identical-treatment nuisance variation was not shown equivalent within the fixed practical margin."
+    },
+    "scientific_mechanism": {
+      "status": "NOT_ADJUDICATED",
+      "evidence": "No MRW effectiveness endpoint was executed or observed."
+    }
+  },
+  "next_authorized_step": {
+    "current_protocol": "STOP",
+    "mrw": "FORBIDDEN",
+    "public_benchmark_expansion": "FORBIDDEN",
+    "automatic_rerun": "FORBIDDEN",
+    "future_work": "A future attempt requires a new versioned nuisance-control protocol with an independently justified single-variable intervention that isolates evaluator or updater variability before any renewed MRW authorization."
+  },
+  "reusable_rule": "When an identical-treatment negative control fails equivalence, retain the central mechanism as unknown, block causal execution, and separate directly observed nuisance layers using only outcome-independent or zero-provider diagnostics. Do not relabel the result as implementation failure or rescue it by changing margins, subsets, models, or benchmarks."
+}

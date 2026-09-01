@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-kimi-evaluator-development-qualification-failure-analysis",
+  "date": "2026-08-30",
+  "status": "FAIL_HOSTED_EVALUATOR_DEVELOPMENT_QUALIFICATION",
+  "classification": [
+    "MEASUREMENT_ANALYSIS",
+    "RUNTIME_INFRA"
+  ],
+  "stage": "replacement actor/evaluator development qualification before any heldout access",
+  "selection_rule": "Before outcomes, use the first lexicographic development task from each of six controlled families and exactly three task-major repeats.",
+  "frozen_decision_rule": {
+    "task_count": 6,
+    "repeats_per_task": 3,
+    "pooled_successes_strictly_between_zero_and_eighteen": true,
+    "required_successful_tasks": 2,
+    "required_exactly_stable_tasks": 5,
+    "all_provider_calls_completed": true
+  },
+  "observed": {
+    "task_ids": [
+      "r17-b0-agj-p4",
+      "r17-b0-fmv-p1",
+      "r17-b0-ioc-p3",
+      "r17-b0-msp-p3",
+      "r17-b0-ska-p3",
+      "r17-b0-tsr-p3"
+    ],
+    "scores_by_task": {
+      "r17-b0-agj-p4": [1, 1, 1],
+      "r17-b0-fmv-p1": [1, 1, 1],
+      "r17-b0-ioc-p3": [1, 1, 1],
+      "r17-b0-msp-p3": [1, 1, 1],
+      "r17-b0-ska-p3": [1, 1, 1],
+      "r17-b0-tsr-p3": [1, 1, 1]
+    },
+    "pooled_successes": 18,
+    "successful_task_count": 6,
+    "exactly_stable_task_count": 6,
+    "provider_calls": 102,
+    "provider_status_counts": {
+      "completed": 101,
+      "incomplete": 1
+    },
+    "incomplete_detail": {
+      "task_id": "r17-b0-ioc-p3",
+      "repeat": 1,
+      "call_index": 8,
+      "output_tokens": 4096,
+      "provider_status": "incomplete",
+      "rollout_finished": true,
+      "endpoint_score": 1
+    },
+    "technical_failure_files": 0
+  },
+  "failed_criteria": {
+    "nondegenerate_headroom": false,
+    "all_provider_calls_completed": false
+  },
+  "passed_criteria": {
+    "multi_task_competence": true,
+    "endpoint_stability": true
+  },
+  "diagnosis": "Kimi-K3 is perfectly stable on the fixed development sample but saturates it at 18/18, so the sample provides no difficulty headroom for a nuisance-equivalence evaluator. One terminal response also reached the 4096-token cap and was provider-incomplete. A successful workbook does not waive either frozen qualification criterion.",
+  "cross_candidate_diagnosis": "The exact local Qwen3-8B candidate failed at the opposite floor (0/6 tasks), while Kimi-K3 failed at the ceiling (18/18 rollouts). Neither candidate satisfies the pre-outcome competence-plus-headroom qualification gate.",
+  "stop_rule_applied": {
+    "heldout_accessed": false,
+    "scientific_negative_control_executed": false,
+    "updater_executed": false,
+    "mrw_executed": false,
+    "rerun_same_candidate": false,
+    "task_replacement": false,
+    "model_shopping": false,
+    "margin_change": false,
+    "action": "STOP_EVALUATOR_SWITCH_BRANCH"
+  },
+  "scientific_interpretation": {
+    "central_search_projection_mechanism": "UNKNOWN_UNCHANGED",
+    "historical_negative_control_hold": "PRESERVED",
+    "mrw_authorized": false,
+    "paper_claim_authority": false
+  },
+  "provider_budget": {
+    "claimed": 102,
+    "limit": 180,
+    "per_rollout_limit": 10,
+    "claim_before_io": true,
+    "hidden_provider_retries": 0
+  },
+  "evidence": [
+    {
+      "path": "generated/e2-r17-kimi-evaluator-development-qualification-20260830.json",
+      "sha256": "2c2e04b7819a0dcac095ea980d00d14832b4332a52ceb35d6c9cac9db8f4cbcf"
+    },
+    {
+      "path": "generated/e2-r17-kimi-evaluator-model-identity-qualification-20260830.json",
+      "sha256": "3dd8d8ae6f1ddb8f7d33e673d08c1bcc03444a2c796dda4b7e5e0ca6ef54b898"
+    },
+    {
+      "path": "generated/e2-r17-local-qwen3-evaluator-qualification-failure-analysis-20260830.json",
+      "sha256": "6bcc65c7184ad8ff631fc1b53505865a2ce7a527a47271b5aa41786bf6317c56"
+    }
+  ],
+  "raw_response_ids_included": false,
+  "private_credentials_included": false
+}

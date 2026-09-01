@@ -1,0 +1,161 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-f0-assets-provenance-and-semantic-supersession",
+  "created_at_utc": "2026-08-27T13:18:12Z",
+  "branch": "research/e2-r17-compute-shielding-20260825",
+  "branch_head_before_commit": "217994440e9c630592be8f0b708b56e4ad799f65",
+  "origin_main_observed": "272db497",
+  "status": "HISTORICAL_R3_ASSETS_PRESERVED_R4_NOT_EXECUTABLE",
+  "purpose": "Preserve the previously untracked, zero-scientific-outcome F0/R3 implementation and qualification chain without silently treating its obsolete Compute-Shielding semantics as the executable Search-Projection-Censoring R4 design.",
+  "inspection": {
+    "all_files_read": true,
+    "json_documents_valid": 7,
+    "historical_runner_unit_tests": {
+      "passed": 7,
+      "failed": 0,
+      "scope": "historical R3 routing semantics only"
+    },
+    "python_compile_pass": true,
+    "scientific_provider_outcomes_present": false,
+    "benchmark_outcomes_accessed_by_adapter_smoke": false
+  },
+  "preserved_assets": [
+    {
+      "path": "consultations/e2-r17-compute-shielding-research-decision-20260825.md",
+      "sha256": "2c5488857a6d68e4ff4ef8bd0caa8bad55ca5f0eb47a5df614b8602614c5ea48",
+      "role": "historical research decision chain",
+      "disposition": "preserve unchanged; superseded scientific object"
+    },
+    {
+      "path": "generated/e2-r17-compute-shielding-f0-contract-20260825.json",
+      "sha256": "abc12d0514bbd35ddcf3ad797597f80e5cc4ad70038232c317f268d6c54bb9d9",
+      "role": "original max-turns F0 contract",
+      "disposition": "preserve unchanged; explicitly superseded by F0-R2"
+    },
+    {
+      "path": "generated/e2-r17-compute-shielding-f0-contract-r2-20260825.json",
+      "sha256": "988d57f6cfaa5104efeeb1ec19bc3a25bdd518c607cf5035208546a3a8598e81",
+      "role": "best-of-K pre-outcome F0-R2 contract",
+      "disposition": "preserve unchanged; design ancestor only"
+    },
+    {
+      "path": "generated/e2-r17-compute-shielding-f0-qualification-20260825.json",
+      "sha256": "a6e670b5de86684e78cda7fad38b6a7c447a77f71154ec9044580630a55526a5",
+      "role": "max-turns interface qualification",
+      "disposition": "preserve as substrate/runtime evidence; not an R4 mechanism qualification"
+    },
+    {
+      "path": "generated/e2-r17-compute-shielding-f0-r3-gate-20260825.json",
+      "sha256": "6a928a246795e52df0bedafc4e49136db9ffff7854a725af239af564dc843943",
+      "role": "historical R3 gate",
+      "disposition": "preserve unchanged; remains non-authoritative and semantically superseded"
+    },
+    {
+      "path": "generated/e2-r17-compute-shielding-failure-unverifiable-substrate-commit-20260825.json",
+      "sha256": "4c887f719ef3e57ef64a834299687979e61b467a95a0ba315a5c48c5095a333b",
+      "role": "failure asset for unverifiable shallow-clone commit",
+      "disposition": "retain as active prevention asset"
+    },
+    {
+      "path": "generated/e2-r17-mindmemos-ark-adapter-qualification-20260825.json",
+      "sha256": "4b5363cd5228a55b0bd081372888d7b71ac4dc5c86693500f57d25d83285618f",
+      "role": "historical Ark Plan protocol smoke",
+      "disposition": "preserve; provider availability must be rechecked"
+    },
+    {
+      "path": "generated/e2-r17-mindmemos-substrate-qualification-20260825.json",
+      "sha256": "d49c50284e9b1c8086d8d46369c07afa15623c9c19460afbb64fd64dafc1a0a9",
+      "role": "MindMemOS/SpreadsheetBench first-party substrate qualification",
+      "disposition": "retain as reusable static qualification subject to freshness recheck"
+    },
+    {
+      "path": "research_pipeline/e2_r17_compute_shielding_f0_qualification.py",
+      "sha256": "d6e87f240b4e7af5adf15d21505c32136e56fa7d20bdea983daf9bf7d9162d89",
+      "role": "historical max-turns qualification runner",
+      "disposition": "preserve unchanged; not used to authorize R4"
+    },
+    {
+      "path": "research_pipeline/e2_r17_compute_shielding_runner.py",
+      "sha256": "430ea756fb03a1c2b853e7266b2ad3394f2f7bb4ed61a21f7c9be8e87982306a",
+      "role": "historical four-arm routing semantics",
+      "disposition": "preserve unchanged; prohibited as R4 runner"
+    },
+    {
+      "path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+      "sha256": "c8b105859cfe632b03bb8a3df35a53177f7cf22589cd09fd670f044c2faa7e80",
+      "role": "Ark Plan transport adapter",
+      "disposition": "retain as transport component after model-identity requalification"
+    },
+    {
+      "path": "research_pipeline/test_e2_r17_compute_shielding_runner.py",
+      "sha256": "7d1c2e9eaf053a621455568b801d7438cd1a81de350cf1ac388ca5ee7917b40b",
+      "role": "historical runner tests",
+      "disposition": "preserve as regression for superseded semantics"
+    },
+    {
+      "path": "scripts/build_e2_r17_compute_shielding_f0_r3_gate.py",
+      "sha256": "4b2ffcff652c36a6c96f18982ee6d33a81ee7687bf6ce788af678c0ced108b62",
+      "role": "historical R3 gate builder",
+      "disposition": "preserve unchanged; do not regenerate R4 from it"
+    },
+    {
+      "path": "scripts/qualify_e2_r17_mindmemos_ark_adapter.py",
+      "sha256": "6e2538affde374ade7997d00730214111cc614553385e8a15cb48307b5c34ce9",
+      "role": "DeepSeek Ark Plan protocol qualifier",
+      "disposition": "retain; extend separately for blind multi-model consultation receipts"
+    },
+    {
+      "path": "scripts/qualify_e2_r17_mindmemos_substrate.py",
+      "sha256": "3af8f1609dc7c3b0b50a9a0c06c160b1dc3567fe713c18d96d5fe6d079fb387f",
+      "role": "first-party substrate qualifier",
+      "disposition": "retain for freshness requalification"
+    }
+  ],
+  "semantic_adjudication": {
+    "surviving_scientific_object": "Search-Projection Censoring",
+    "r3_object": "generic Compute Shielding",
+    "r3_to_r4_change_is_pre_outcome": true,
+    "material_conflicts": [
+      {
+        "issue": "shadow projection identity",
+        "r2_contract": "pre-designated rollout_0 from the same high-K pool",
+        "r3_gate_and_runner": "independently executed K=1 shadow",
+        "r4_design": "precommitted rollout_0 from the exact same K-pool",
+        "adjudication": "R3 gate/runner cannot implement the R4 same-pool causal intervention. A new runner and contract are required."
+      },
+      {
+        "issue": "rejected failure availability",
+        "r3_runner": "nonselected high-K failures are forbidden from updater input; hardmine can only duplicate a selected all-fail trajectory",
+        "r4_design": "a frozen-rule nonserved rejected witness is an explicit learning projection and simple baseline",
+        "adjudication": "Historical hardmine is not the R4 Rejected-Witness arm and must not be relabeled."
+      },
+      {
+        "issue": "headline variable",
+        "r3": "compute amount",
+        "r4": "acting versus learning projection of a shared search object",
+        "adjudication": "Static substrate/provider/checkpoint evidence may be reused, but R3 causal and promotion rules do not authorize R4."
+      }
+    ],
+    "latest_design_artifacts": [
+      "consultations/e2-r17-search-projection-censoring-literature-synthesis-20260825.md",
+      "generated/e2-r17-search-projection-f0-r4-design-20260825.json"
+    ],
+    "latest_design_status": "DESIGN_ONLY_NOT_EXECUTION_AUTHORITY",
+    "r16_unchanged": true
+  },
+  "next_required_steps": [
+    "current primary-source collision review",
+    "blind Kimi and DeepSeek round-1 scientific debate with exact receipts",
+    "cross-exposed round-2 attack",
+    "single-object round-3 convergence and paper-PC round-4 red team",
+    "explicit R4 executable contract and pre-execution review",
+    "new same-pool projection runner and tests"
+  ],
+  "authority": {
+    "scientific_provider_experiment": false,
+    "gpu_execution": false,
+    "r16_mutation": false,
+    "paper_reframe": false,
+    "submission": false
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "artifact_type": "e2-r17-actor-pool-run-summary",
+  "authority": {
+    "paper_promotion": false,
+    "submission": false
+  },
+  "authorization_sha256": null,
+  "contract_sha256": null,
+  "created_at_utc": "2026-08-28T03:17:19+00:00",
+  "identity_artifact": "generated/e2-r17-current-plan-model-identity-adjudication-20260828.json",
+  "identity_artifact_sha256": "287fdcc4dc193adfac677f417dd382637e6c4b8fe6134377465e10fd5f4fb30b",
+  "k": 1,
+  "max_turns": 10,
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "mindmemos_root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+  "mode": "protocol_smoke",
+  "prefix_ks": [
+    1
+  ],
+  "private_credentials_included": false,
+  "provider_retry_limit": 0,
+  "raw_response_ids_included": false,
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "schema_version": "1.0",
+  "scientific_outcome": false,
+  "skill_pre_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb",
+  "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+  "status": "COMPLETED",
+  "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4",
+  "suite_root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+  "tasks": [
+    {
+      "failure_family": "input_output_contract",
+      "pools": {
+        "1": {
+          "acting_success": 1.0,
+          "pool_id": "8f32860ef52ea6208e1923b133805723982eb8d61ea0b04b804badf34f22e875",
+          "precommitted_success": 1.0,
+          "rescue_event": false,
+          "winner_index": 0
+        }
+      },
+      "provider_calls": 7,
+      "scores": [
+        1.0
+      ],
+      "task_id": "r17-b0-ioc-p3"
+    }
+  ],
+  "thinking": "disabled"
+}

@@ -1,0 +1,264 @@
+{
+  "artifact_type": "e2-r17-experiment-plan-v3",
+  "schema_version": "1.0",
+  "date": "2026-08-28",
+  "status": "V3_DUAL_REVIEW_REQUIRED_BEFORE_RUNTIME_PILOT",
+  "scientific_authority": false,
+  "supersedes_for_future_execution": "e2-r17-experiment-plan-v2",
+  "preserves_history": true,
+  "central_question": "Does best-of-K acting selection change the updater-visible evidence distribution on an exact frozen search pool so that winner-only learning is suboptimal for future frozen skill?",
+  "novelty_boundary": {
+    "published_collision": "ReasoningBank/MaTTS (ICLR 2026)",
+    "cannot_claim": [
+      "failed trajectories can improve memory",
+      "successful and failed trajectories can be aggregated for learning",
+      "test-time scaling creates additional learning signal",
+      "memory and test-time scaling can be combined"
+    ],
+    "candidate_claims": [
+      "exact same-pool separation of acting projection and learning projection",
+      "compute-shielding evidence law as K changes",
+      "budget-matched causal learning-projection intervention",
+      "prospective regime prediction before confirmatory outcomes"
+    ],
+    "abstract_regime_law_requires_e3": true
+  },
+  "theory": {
+    "rescue_identity": "A_K-A_1=P(Y_1=0,max_i Y_i=1)=V_pre(K)-V_winner(K)",
+    "iid_rescue_mass": "Gamma_K(p)=(1-p)-(1-p)^K",
+    "mixed_support": "M_K=P(any success AND any failure)",
+    "iid_mixed_support": "M_K=1-p^K-(1-p)^K",
+    "nested_pool_no_iid_monotonicity": {
+      "acting_success": "nondecreasing",
+      "winner_visible_failure": "nonincreasing",
+      "full_pool_failure_availability": "nondecreasing",
+      "mixed_pool_support": "nondecreasing"
+    },
+    "learning_factorization": "Delta_K=M_K*delta_K",
+    "delta_positive_assumed": false
+  },
+  "historical_e0": {
+    "summary_sha256": "533abf55359360bd408a4878235d24b5192d77f2471f0676bb8b10d570ad0366",
+    "historical_decision": "HOLD",
+    "rewritten": false,
+    "k8": {
+      "acting_success": "12/12",
+      "mixed_pools": "8/12",
+      "rescue_events": "1/12",
+      "winner_visible_failures": "0/12",
+      "hidden_failed_nonwinners": 16,
+      "failure_family_support": "5/6"
+    },
+    "old_rescue_quota_extension_authorized": false
+  },
+  "controlled_split": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4",
+    "outcome_blind": true,
+    "failure_families": 6,
+    "streams_per_family": 2,
+    "e1_streams": 12,
+    "tasks_per_stream": 8,
+    "update_tasks": 96,
+    "common_heldout_probes": 18
+  },
+  "e1_a_pool_support": {
+    "k": 8,
+    "actor_rollouts": 768,
+    "updater_calls": 0,
+    "freeze_all_96_pools_before_gate": true,
+    "hard_gate": {
+      "mixed_pool_count_minimum": "24/96",
+      "exposed_stream_minimum": "8/12 streams",
+      "mixed_pools_per_exposed_stream_minimum": "2/8",
+      "protocol_integrity": "100%",
+      "completed_unit_sha_revalidation": true,
+      "rounding_or_waiver": false,
+      "task_or_pool_replacement_after_support": false
+    },
+    "borderline_examples_are_failures": ["23/96", "7/12 exposed streams", "one mixed pool in an otherwise exposed stream"],
+    "family_generalization_qualification": {
+      "minimum_supported_families": "4/6",
+      "controls_primary_e1_authorization": false,
+      "if_failed": "pooled E1 may proceed if hard gate passes, but family-generalization and E3 family-ranking claims are blocked"
+    }
+  },
+  "evidence_renderer": {
+    "implementation": "research_pipeline/e2_r17_evidence_window.py",
+    "tokenizer_package": "tiktoken",
+    "tokenizer_version": "0.11.0",
+    "encoding": "cl100k_base",
+    "cap_tokens": 3072,
+    "canonical_evidence": "non-system user/assistant/tool messages plus verifier score/message; provenance/provider metadata excluded",
+    "pair_budget": "min(3072, raw_tokens(WIN), raw_tokens(MRW))",
+    "truncation": "first one-third plus final two-thirds tokens",
+    "padding": false,
+    "exact_pair_token_parity_required": true,
+    "dependency_or_version_drift": "FAIL_PILOT",
+    "policy_selection_after_pilot": false
+  },
+  "e1_b_arms": {
+    "WIN_A": {
+      "role": "primary control",
+      "source_trajectories_per_task": 1,
+      "projection": "served winner"
+    },
+    "WIN_B": {
+      "role": "identical-treatment updater stochasticity negative control",
+      "source_trajectories_per_task": 1,
+      "projection": "byte-identical updater input to WIN_A before provider calls"
+    },
+    "MRW": {
+      "role": "primary causal intervention",
+      "source_trajectories_per_task": 1,
+      "projection": "served winner on nonmixed pool; deterministic lowest-index failed nonwinner on mixed pool",
+      "extra_actor_calls": 0
+    },
+    "RB_AGG": {
+      "role": "predeclared ReasoningBank collision diagnostic",
+      "runs_regardless_of_mrw_go_hold": true,
+      "label": "ReasoningBank-style same-pool aggregation",
+      "official_source_faithful_reproduction": false,
+      "requires_semantic_runtime_pilot": true
+    }
+  },
+  "updater": {
+    "substrate": "MindMemOS SkillEvolver",
+    "batch_tasks": 8,
+    "provider_retry": 0,
+    "thinking": "disabled",
+    "default_temperature_if_first_party_omits": 0.0,
+    "resolved_model_must_be_requalified_per_execution_tranche": true,
+    "parse_corrections": "explicit and counted",
+    "historical_receipts_regenerated": false
+  },
+  "evaluation": {
+    "probes_per_stream": 18,
+    "k": 1,
+    "same_probes_all_arms": true,
+    "independent_causal_units": 12,
+    "probe_rows_independent_units": false,
+    "endpoint": "per-stream mean held-out success"
+  },
+  "statistics": {
+    "equivalence_margin_absolute": "1/18 = 0.0555555556",
+    "negative_control_first": {
+      "contrast": "WIN_B-WIN_A",
+      "test": "paired TOST alpha=0.05",
+      "operational_ci": "90% paired-mean t CI entirely within [-1/18,+1/18]",
+      "bootstrap_robustness": "90% paired bootstrap",
+      "failure": "HOLD_UPDATER_STOCHASTICITY"
+    },
+    "primary_superiority": {
+      "contrast": "MRW-WIN_A",
+      "test": "exact one-sided sign-flip over all 4096 within-pair sign assignments",
+      "alpha": 0.05,
+      "paired_bootstrap": "10000 draws, 95% CI",
+      "go": "negative-control equivalence AND mean>0 AND exact p<=0.05 AND bootstrap lower>0 AND integrity pass"
+    },
+    "qualified_null": {
+      "test": "paired TOST alpha=0.05",
+      "margin": "+/-1/18",
+      "equivalent": "STOP_MRW_PRACTICALLY_NULL",
+      "significantly_negative": "STOP_MRW_HARMFUL",
+      "neither_superior_nor_equivalent": "HOLD_UNDERPOWERED_OR_HETEROGENEOUS"
+    },
+    "power_disclosure": {
+      "paired_units": 12,
+      "one_sided_alpha": 0.05,
+      "target_power": 0.8,
+      "paired_t_standardized_effect_required_approx": 0.7664,
+      "equal_magnitude_sign_reference": "10/12 positive pairs required for one-sided sign probability below .05"
+    }
+  },
+  "collision_interpretation": {
+    "MRW_superior_RB_superior": "hidden search evidence has learning consequence; test minimal witness vs richer aggregation practical equivalence",
+    "MRW_superior_RB_null": "minimal failed witness specifically useful under this updater; diagnose aggregation dilution",
+    "MRW_null_RB_superior": "reject minimal witness as final repair; aggregation-sensitive effect overlaps ReasoningBank more strongly; narrow novelty",
+    "MRW_equivalent_RB_equivalent": "central learning-consequence mechanism STOP on this substrate",
+    "MRW_negative": "failed-witness repair rejected"
+  },
+  "published_baselines": {
+    "headline": [
+      "ReasoningBank/MaTTS — ICLR 2026",
+      "PolySkill — ICLR 2026",
+      "ACE — ICLR 2026",
+      "Agent Workflow Memory — ICML 2025"
+    ],
+    "extended": ["SAGE — ACL 2026 Long"],
+    "arxiv_only_not_headline": ["SkillCAT", "Branch2Skill", "SkillOpt", "RethinkSkill", "TSR"]
+  },
+  "external_lanes": {
+    "source_faithful": {
+      "model_substitution_allowed_under_source_faithful_label": false,
+      "current_credential_state": "Ark configured; Google/OpenAI/Anthropic/SambaNova not configured on 69",
+      "unavailable_at_submission_disclosure": "report unified rerun only and explicitly state source-model route was unavailable; never call it exact reproduction"
+    },
+    "unified_rerun": {
+      "direct_method_ranking_allowed": true,
+      "minimum_models_for_cross_model_claim": 2,
+      "prefer_minimum_model_families": 2,
+      "single_model_fallback": "report single-model result without robustness claim",
+      "model_selection_uses_r17_gain": false
+    }
+  },
+  "public_benchmarks_after_e1_go": {
+    "primary": "WebArena",
+    "secondary": "AppWorld",
+    "additional": "SpreadsheetBench Verified-400 if budget permits"
+  },
+  "later_stages": {
+    "e3": "prospective K/family prediction frozen before future outcomes; failure deletes regime-law claims",
+    "e4": "multi-round persistent evolution separating online acting from frozen-skill value",
+    "e5": "parallel-vs-sequential topology x winner/history-preserving learning"
+  },
+  "runtime_pilot": {
+    "authorized_by_this_plan": false,
+    "outcome_blind_effectiveness": true,
+    "must_validate": [
+      "exact tiktoken dependency and matched-window parity",
+      "no system/provenance evidence leakage",
+      "MRW changes projection only on mixed pools",
+      "WIN_A/WIN_B byte-identical updater input before provider calls",
+      "temperature=0/retry=0/thinking disabled receipts",
+      "RB_AGG source-pool provenance and evidence accounting",
+      "updater calls/tokens/latency/parse corrections for budget only",
+      "SHA revalidation and missing-unit resume",
+      "no model or method selection from R17 effectiveness"
+    ]
+  },
+  "checkpoint_policy": {
+    "immediate_persist": ["rollout", "prefix and K pools", "projection", "matched-window receipt", "updater", "held-out evaluation"],
+    "raw_immutable": true,
+    "summary_rebuildable": true,
+    "resume_rehashes_completed_units": true,
+    "sha_mismatch": "QUARANTINE_AND_STOP",
+    "missing_unit_resume_only": true,
+    "blind_relaunch_after_502_timeout": false
+  },
+  "budget": {
+    "full_scientific_run_authorized": false,
+    "known_e1_a_rollouts": 768,
+    "must_be_measured_in_runtime_pilot": [
+      "actor calls and tokens per rollout",
+      "updater calls and tokens per stream/arm",
+      "parse-correction rate",
+      "held-out evaluation calls/tokens",
+      "wall time",
+      "hard budget ceiling"
+    ]
+  },
+  "current_state": {
+    "theory_tests": "PASS",
+    "mixed_projection_tests": "PASS",
+    "evidence_renderer_static_tests": "PASS",
+    "updater_temperature_default_tests": "PASS",
+    "targeted_tests_passed_total_at_v3_write": 29,
+    "runtime_pilot": "NOT_AUTHORIZED",
+    "e1_a": "NOT_AUTHORIZED",
+    "e1_b": "NOT_AUTHORIZED",
+    "public_full_runs": "NOT_AUTHORIZED"
+  },
+  "next_gate": "independent Kimi K3 + DeepSeek V4-Pro review of exact V3 before any outcome-blind runtime Pilot"
+}

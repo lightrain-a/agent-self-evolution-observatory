@@ -1,0 +1,31 @@
+{
+  "all_pass_to_separately_authorized_repair2": true,
+  "artifact_type": "e2-r17-deepseek-v2-repair2-dual-review",
+  "created_at_utc": "2026-08-31T04:15:37+00:00",
+  "draft_contract_sha256": "999498499649f873f1f0eff32593d9d2a2c788f843f0484af77cf8868ce89e26",
+  "paper_claim_authority": false,
+  "remaining_blockers": {
+    "deepseek-v4-pro": [],
+    "kimi-k3": []
+  },
+  "resolved_models": {
+    "deepseek-v4-pro": "deepseek-v4-pro-ga-260813",
+    "kimi-k3": "kimi-k3"
+  },
+  "reviewers_only": [
+    "deepseek-v4-pro",
+    "kimi-k3"
+  ],
+  "schema_version": "1.0",
+  "scientific_backbone": "deepseek-v4-pro only",
+  "second_backbone_authority": false,
+  "statuses": {
+    "deepseek-v4-pro": "COMPLETED",
+    "kimi-k3": "COMPLETED"
+  },
+  "stop_repair2_inheritance": false,
+  "verdicts": {
+    "deepseek-v4-pro": "PASS_TO_SEPARATELY_AUTHORIZED_REPAIR2",
+    "kimi-k3": "PASS_TO_SEPARATELY_AUTHORIZED_REPAIR2"
+  }
+}

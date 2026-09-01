@@ -1,0 +1,162 @@
+{
+  "artifact_type": "e2-r17-deepseek-v2-repair1-technical-quarantine",
+  "created_at_utc": "2026-08-31T03:45:10+00:00",
+  "disposition": "PRESERVE; EXCLUDE FROM VALID MANIFEST; REPAIR2 FRESH-RUNS BOTH ARMS",
+  "failed_arm": "mrw",
+  "failed_call": {
+    "attempt": 0,
+    "parse_error": "SkillEditError: edit #0: line 12 does not match 'old_string_prefix', so the line number is likely off. Line 12 is actually '```python', but you gave '```python from openpyxl import load_workbook'. Re-read the N| gutter and fix the line number.",
+    "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/update/provider_calls/009-skill_patch_apply-attempt0.json",
+    "prompt_sha256": "4e6385428dcffcd6f434e92d37ccc0e93e787e0271e431e9106fb90dbd632241",
+    "provider_status": "completed",
+    "response_sha256": "f0e9c07ad4791ff1d58f897639dda318d924a375ef43ca80584fc786c5ae152c",
+    "sha256": "00a2b668f3298e97bb3477df97c8ef4ffb5cd8db117f7b3475214f579863054a",
+    "task": "skill_patch_apply",
+    "total_tokens": 2353
+  },
+  "heldout_evaluation_units": 0,
+  "ledger": {
+    "authorization_sha256": "8301fa9d96768a86c802c06fbe04a02be552c5fa68195f709011b73c83b8dac5",
+    "contract_sha256": "a4ce14dea5c5b0ab5509d97a072013a9924b592ae18c049b05d4edf707201f80",
+    "max_unit_claimed": 10,
+    "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/checkpoints/provider_budget.sqlite3",
+    "sha256": "bafca24700c9a3e7cdd529995ce57c243e719b1a8e464041b7e9215a76100c4c",
+    "total_claimed": 10,
+    "unit_claimed": {
+      "e1-fmv-01/rep2/mrw/update": 10
+    }
+  },
+  "operator_semantic_patch_authorized": false,
+  "paired_win_c_started": false,
+  "provider_call_receipts": [
+    {
+      "attempt": 0,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/update/provider_calls/000-skill_trajectory_summary-attempt0.json",
+      "prompt_sha256": "7068350d8ca97b9a93952305b55d70ead279d9983e26eda65e5ca3b4de594f67",
+      "provider_status": "completed",
+      "response_sha256": "db63ff8bde845c2f5d1c1d635c70a2ddf1ab7299314ff29abd65c011adf4e092",
+      "sha256": "1d262309d61b5e870ecb131cbea4c2f17f4feeab59738aff48d160634b578271",
+      "task": "skill_trajectory_summary",
+      "total_tokens": 2094
+    },
+    {
+      "attempt": 0,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/update/provider_calls/001-skill_trajectory_summary-attempt0.json",
+      "prompt_sha256": "c56ded56f3b51afab70b610e9eff7d05cbd73729fb6acdbe6746210cd5602428",
+      "provider_status": "completed",
+      "response_sha256": "bfae48b0c6635fbbf367e8de3d29ecb27abe3bcb4b48db76e7308026af5ff590",
+      "sha256": "3d73f6b6f662da23ce0f92d01bb955f6285e261bae817694d8f7c29503567138",
+      "task": "skill_trajectory_summary",
+      "total_tokens": 1738
+    },
+    {
+      "attempt": 0,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/update/provider_calls/002-skill_trajectory_summary-attempt0.json",
+      "prompt_sha256": "a01c112ddf3ad1df4e5c8eb5bb7a6c83d61e4dd5dddfbdc4ca253d7ae804e6f9",
+      "provider_status": "completed",
+      "response_sha256": "a6cb4d7f2d8c6ee3ffcef8535bdf3a4495b6b4530de71cd94ec89ba3efb4d2a5",
+      "sha256": "9cb60abbc833467fc565de7c55e7545167539ac48e5a484d95b6b48bf4a15b91",
+      "task": "skill_trajectory_summary",
+      "total_tokens": 3907
+    },
+    {
+      "attempt": 0,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/update/provider_calls/003-skill_trajectory_summary-attempt0.json",
+      "prompt_sha256": "42c4f457d06eee8794885c2001e60372ca01f8de8ec6bf143d650d77d09d8c55",
+      "provider_status": "completed",
+      "response_sha256": "63af3101af99a387ab0d9246fec4fdaf3940b3bac370364a3d213195cdd4feca",
+      "sha256": "f706d38ce58e5dab310fa94432ad6560321b645dc38dea5b139f5568b3fa008d",
+      "task": "skill_trajectory_summary",
+      "total_tokens": 2063
+    },
+    {
+      "attempt": 0,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/update/provider_calls/004-skill_trajectory_summary-attempt0.json",
+      "prompt_sha256": "1b41d7a985151d8f6fcd281b533bc0d27bf89de3ebdec5c2085197fe29c10282",
+      "provider_status": "completed",
+      "response_sha256": "4e2b563894afad8f0deee67d5b9d81a1c5649d9cda8f1a95f4b00f37cf7f4545",
+      "sha256": "933f3c6d80a86f724958ab7b5e1f138bda5ed7bd25996cfe4af0ba4e4ba30ca1",
+      "task": "skill_trajectory_summary",
+      "total_tokens": 1992
+    },
+    {
+      "attempt": 0,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/update/provider_calls/005-skill_trajectory_summary-attempt0.json",
+      "prompt_sha256": "afbfd136d5399b9504e9cfe974b1cdfc43eb4995e3ab79384247be9ace141c3a",
+      "provider_status": "completed",
+      "response_sha256": "a0cb79770809bf680e9bb4a51024adda81c8e882dfccf0234fb3b13546a1a437",
+      "sha256": "78bcf82f50382d662b9d8ab13a056207d6dfa39467f2b472ab88bb0498fb988a",
+      "task": "skill_trajectory_summary",
+      "total_tokens": 3714
+    },
+    {
+      "attempt": 0,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/update/provider_calls/006-skill_trajectory_summary-attempt0.json",
+      "prompt_sha256": "3210bf3a6e21a41775f499b53c89f0f4050b8a7b0572a2b873bcc5adfeaa2ace",
+      "provider_status": "completed",
+      "response_sha256": "33ab3994b56835de85a6e4ab82d78eaea7b6b790d436e983b6f0c5e4ab190e9a",
+      "sha256": "2ccaf1236a26097bff2646ebc3c1e8e9734306aa81bcb4d558348093e9b8ad95",
+      "task": "skill_trajectory_summary",
+      "total_tokens": 3573
+    },
+    {
+      "attempt": 0,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/update/provider_calls/007-skill_trajectory_summary-attempt0.json",
+      "prompt_sha256": "fcfca75330677aa51e90278820ea9f327eb3be78aaf121fb55ba126d455b6561",
+      "provider_status": "completed",
+      "response_sha256": "c1fdd99c00edae95d70c1bc878317cd85536b0924ac295d1a2da55ef75d3ac74",
+      "sha256": "eb5b7a65d3a09128fb00db56df857f6d9cd3b0593a0881467aac05e279254bbe",
+      "task": "skill_trajectory_summary",
+      "total_tokens": 1672
+    },
+    {
+      "attempt": 0,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/update/provider_calls/008-skill_patch_propose-attempt0.json",
+      "prompt_sha256": "17fd5dc3f0010f0de831047ca4ab68f295bab3198f80e656a65984b4962c3e4b",
+      "provider_status": "completed",
+      "response_sha256": "c907c24931d081337b259fb857f616f446dcbb5940eddee9a65baacca4a04458",
+      "sha256": "fcbdef40e1148d00bf5424eb89165b5d1695db9d12a9a29a4fbba86c370f11c0",
+      "task": "skill_patch_propose",
+      "total_tokens": 4189
+    },
+    {
+      "attempt": 0,
+      "parse_error": "SkillEditError: edit #0: line 12 does not match 'old_string_prefix', so the line number is likely off. Line 12 is actually '```python', but you gave '```python from openpyxl import load_workbook'. Re-read the N| gutter and fix the line number.",
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw/update/provider_calls/009-skill_patch_apply-attempt0.json",
+      "prompt_sha256": "4e6385428dcffcd6f434e92d37ccc0e93e787e0271e431e9106fb90dbd632241",
+      "provider_status": "completed",
+      "response_sha256": "f0e9c07ad4791ff1d58f897639dda318d924a375ef43ca80584fc786c5ae152c",
+      "sha256": "00a2b668f3298e97bb3477df97c8ef4ffb5cd8db117f7b3475214f579863054a",
+      "task": "skill_patch_apply",
+      "total_tokens": 2353
+    }
+  ],
+  "provider_calls": 10,
+  "provider_response_ambiguity": false,
+  "provider_statuses_completed": 10,
+  "provider_tokens": 27295,
+  "repair1_authorization_sha256": "8301fa9d96768a86c802c06fbe04a02be552c5fa68195f709011b73c83b8dac5",
+  "repair1_contract_sha256": "a4ce14dea5c5b0ab5509d97a072013a9924b592ae18c049b05d4edf707201f80",
+  "replicate_id": 2,
+  "schema_version": "1.0",
+  "scientific_belief_update": "NONE",
+  "scientific_endpoint_reached": false,
+  "scientific_pair_outcome_exists": false,
+  "scientific_scores_read": false,
+  "single_arm_resume_authorized": false,
+  "skill_post_exists": false,
+  "state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830/states/e1-fmv-01/replicate_2/mrw",
+  "status": "TECHNICAL_QUARANTINE_UPDATER_PATCH_APPLY_FAILURE",
+  "stream_id": "e1-fmv-01",
+  "unit_id": "e1-fmv-01/rep2",
+  "update_completed_exists": false
+}

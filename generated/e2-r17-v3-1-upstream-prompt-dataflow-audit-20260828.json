@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-1-upstream-prompt-dataflow-audit",
+  "date": "2026-08-28",
+  "status": "PASS_SOURCE_BOUND_CAUSAL_PURITY_PATH",
+  "scientific_authority": false,
+  "provider_calls": 0,
+  "new_actor_rollouts": 0,
+  "mindmemos": {
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "remote": "https://github.com/mindscale-noah/MindMemOS.git",
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "checkout_clean_observed": true,
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c"
+    }
+  },
+  "source_findings": {
+    "candidate_transcript_source": "record.payload.messages only",
+    "candidate_score_source": "record.payload.score",
+    "candidate_task_id_source": "record.payload.task_id but not interpolated into trajectory-summary prompt",
+    "transcript_renderer": "renders message role/content only",
+    "summary_prompt": "common SUMMARY_SYSTEM plus skill_name and rendered transcript",
+    "patch_prompt": "generated summaries plus stored scores; scored prompt treats scores as primary outcome signal",
+    "r17_provenance_fields_model_visible": false
+  },
+  "v3_legacy_bug": {
+    "present": true,
+    "description": "Legacy R17 updater assigned pool.acting_success to payload.score even when MRW selected a failed trajectory, while MindMemOS scored patch semantics interpret this score as the selected session outcome.",
+    "scientific_effectiveness_evaluated_under_bug": false
+  },
+  "v3_1_repair": {
+    "updater_file_sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d",
+    "test_file_sha256": "874fc99106e2f85f67180f4962f50b50ad2d921c8ba5ad8fad54fb12f62ded9f",
+    "messages_semantics": "arm-blinded selected evidence only",
+    "score_semantics": "selected evidence trajectory verifier score",
+    "acting_outcome_semantics": "retained only as common provenance across cloned arms",
+    "projection_and_provenance_semantics": "retained outside messages in r17_* audit fields",
+    "downstream_truncation_rule": "pre-provider assertion required; transcript_max_chars must be frozen to at least 100000 for V3.1 qualification"
+  },
+  "tests": {
+    "v3_1_updater_unit_tests": "4/4 PASS",
+    "search_projection_runner_and_theory_regression": "20/20 PASS",
+    "python_compile": "PASS"
+  },
+  "authority": {
+    "v3_1_design": true,
+    "independent_review": true,
+    "fresh_zero_provider_mechanical_pilot": false,
+    "provider_runtime_pilot": false,
+    "e1_a": false,
+    "e1_b": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

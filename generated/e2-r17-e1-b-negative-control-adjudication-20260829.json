@@ -1,0 +1,139 @@
+{
+  "alpha": 0.05,
+  "artifact_type": "e2-r17-e1-b-negative-control-adjudication",
+  "authority": {
+    "execute_mrw": false,
+    "paper_promotion": false,
+    "prepare_mrw_contract": false,
+    "submission": false
+  },
+  "authorization_sha256": "e62770ac9531001c2c4adf1fade5b617498c26e1bae8dedb108967c7a698d8a4",
+  "bootstrap": {
+    "ci": [
+      -0.08796296296296295,
+      0.04166666666666666
+    ],
+    "controls_primary_gate": false,
+    "interval": "90% paired bootstrap robustness",
+    "reps": 100000,
+    "seed": 1717
+  },
+  "central_mechanism_adjudicated": false,
+  "contract_sha256": "6c84a98d5987e40bde26a41f18cb6cd68f3e7d2ffb0ede69d176128185782c03",
+  "created_at_utc": "2026-08-29T15:27:26+00:00",
+  "difference_definition": "J_s(WIN-B)-J_s(WIN-A)",
+  "epsilon": 0.05555555555555555,
+  "interpretation": "Identical-treatment variability is not demonstrated equivalent within the preregistered margin. MRW remains unauthorized; this is a nuisance-control HOLD, not evidence for or against the R17 mechanism.",
+  "mean_difference": -0.02314814814814814,
+  "n_pairs": 12,
+  "paired_t_90_ci": [
+    -0.09523916316034,
+    0.04894286686404373
+  ],
+  "paired_tost_equivalence_pass": false,
+  "per_stream": [
+    {
+      "difference_win_b_minus_win_a": -0.2222222222222222,
+      "j_win_a": 1.0,
+      "j_win_b": 0.7777777777777778,
+      "stream_id": "e1-agj-00",
+      "win_a_successes": 18,
+      "win_b_successes": 14
+    },
+    {
+      "difference_win_b_minus_win_a": -0.11111111111111105,
+      "j_win_a": 0.8888888888888888,
+      "j_win_b": 0.7777777777777778,
+      "stream_id": "e1-agj-01",
+      "win_a_successes": 16,
+      "win_b_successes": 14
+    },
+    {
+      "difference_win_b_minus_win_a": 0.11111111111111116,
+      "j_win_a": 0.6666666666666666,
+      "j_win_b": 0.7777777777777778,
+      "stream_id": "e1-fmv-00",
+      "win_a_successes": 12,
+      "win_b_successes": 14
+    },
+    {
+      "difference_win_b_minus_win_a": -0.05555555555555558,
+      "j_win_a": 0.8333333333333334,
+      "j_win_b": 0.7777777777777778,
+      "stream_id": "e1-fmv-01",
+      "win_a_successes": 15,
+      "win_b_successes": 14
+    },
+    {
+      "difference_win_b_minus_win_a": 0.05555555555555558,
+      "j_win_a": 0.7777777777777778,
+      "j_win_b": 0.8333333333333334,
+      "stream_id": "e1-ioc-00",
+      "win_a_successes": 14,
+      "win_b_successes": 15
+    },
+    {
+      "difference_win_b_minus_win_a": -0.05555555555555558,
+      "j_win_a": 0.7777777777777778,
+      "j_win_b": 0.7222222222222222,
+      "stream_id": "e1-ioc-01",
+      "win_a_successes": 14,
+      "win_b_successes": 13
+    },
+    {
+      "difference_win_b_minus_win_a": 0.05555555555555558,
+      "j_win_a": 0.8888888888888888,
+      "j_win_b": 0.9444444444444444,
+      "stream_id": "e1-msp-00",
+      "win_a_successes": 16,
+      "win_b_successes": 17
+    },
+    {
+      "difference_win_b_minus_win_a": 0.05555555555555558,
+      "j_win_a": 0.7222222222222222,
+      "j_win_b": 0.7777777777777778,
+      "stream_id": "e1-msp-01",
+      "win_a_successes": 13,
+      "win_b_successes": 14
+    },
+    {
+      "difference_win_b_minus_win_a": 0.05555555555555547,
+      "j_win_a": 0.8333333333333334,
+      "j_win_b": 0.8888888888888888,
+      "stream_id": "e1-ska-00",
+      "win_a_successes": 15,
+      "win_b_successes": 16
+    },
+    {
+      "difference_win_b_minus_win_a": -0.16666666666666663,
+      "j_win_a": 0.8888888888888888,
+      "j_win_b": 0.7222222222222222,
+      "stream_id": "e1-ska-01",
+      "win_a_successes": 16,
+      "win_b_successes": 13
+    },
+    {
+      "difference_win_b_minus_win_a": -0.2222222222222222,
+      "j_win_a": 0.8888888888888888,
+      "j_win_b": 0.6666666666666666,
+      "stream_id": "e1-tsr-00",
+      "win_a_successes": 16,
+      "win_b_successes": 12
+    },
+    {
+      "difference_win_b_minus_win_a": 0.2222222222222222,
+      "j_win_a": 0.6666666666666666,
+      "j_win_b": 0.8888888888888888,
+      "stream_id": "e1-tsr-01",
+      "win_a_successes": 12,
+      "win_b_successes": 16
+    }
+  ],
+  "run_summary_path": "/data/wyt/e2-r17-search-projection/runs/e1-b-negative-control-v1-20260829/summary/e1_b_negative_control_full_summary.json",
+  "run_summary_sha256": "b1a7a18e41527eb7cd5405ba86af4780632228afcd4d64b64ec058dfa4a2ca98",
+  "schema_version": "1.0",
+  "scientific_unit": "12 paired stream-level learned states; 18 probes are repeated measurements, not 216 independent units per arm",
+  "sd_difference": 0.13905713715032014,
+  "status": "HOLD_UPDATER_OR_EVALUATOR_STOCHASTICITY",
+  "t_critical_0_95_df11": 1.7958848187036691
+}

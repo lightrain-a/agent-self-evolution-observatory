@@ -1,0 +1,39 @@
+{
+  "artifact_type": "e2-r17-e0-go-hold-stop",
+  "schema_version": "1.0",
+  "created_at_utc": "2026-08-28T08:23:21.819922+00:00",
+  "analysis_path": "generated/e2-r17-e0-analysis-20260828.json",
+  "source_summary_sha256": "533abf55359360bd408a4878235d24b5192d77f2471f0676bb8b10d570ad0366",
+  "frozen_contract_sha256": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+  "decision": "HOLD",
+  "mechanism_signal": "NONZERO",
+  "E1_support_gate": {
+    "required": {
+      "rescue_tasks": 6,
+      "failure_families": 3
+    },
+    "observed": {
+      "rescue_tasks": 1,
+      "failure_families": 1
+    },
+    "pass": false
+  },
+  "reason": "Nonzero rescue/censoring signal is present, but the frozen E1 support threshold is not met.",
+  "forbidden_while_hold": [
+    "launch E1 updater intervention",
+    "promote an E1 causal claim",
+    "select support tasks by downstream projection outcome",
+    "rerun or replace the completed E0-r3 outcome"
+  ],
+  "allowed_while_hold": [
+    "experiment-plan drafting/review",
+    "primary-source baseline/model audit",
+    "outcome-blind model and baseline runtime qualification",
+    "separately reviewed and frozen support-qualification design"
+  ],
+  "authority": {
+    "scientific_experiment_E1": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

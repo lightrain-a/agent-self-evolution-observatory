@@ -1,0 +1,165 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-e1-a-pool-support-contract",
+  "date": "2026-08-28",
+  "status": "DRAFT_PENDING_INDEPENDENT_PREEXECUTION_REVIEW",
+  "scientific_role": "PRE_TREATMENT_SUPPORT_AND_POOL_FREEZE_ONLY",
+  "parents": {
+    "v3_plan": {
+      "path": "generated/e2-r17-experiment-plan-v3-20260828.json",
+      "sha256": "b1a0224117f161ead9fccefa2c22a0f01dfa1d9e72ca1e98107418f21e3e04c5"
+    },
+    "v3_1_mechanical_adjudication": {
+      "path": "generated/e2-r17-v3-1-mechanical-pilot-adjudication-20260828.json",
+      "sha256": "9b02d870f808c5f61e42b87b9bf09c8028192207267ef56bf65f40fa988b3a10",
+      "status": "PASS_MECHANICAL_ONLY_NO_E1_AUTHORITY"
+    }
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-20260828",
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "metadata_sha256": "12d6eb876e2a230e7990be3e61fed108d45f6ddec00bac5c9b88585a04111b04",
+    "split_is_outcome_blind": true,
+    "task_replacement_after_support_observation": false
+  },
+  "streams": [
+    "e1-agj-00",
+    "e1-agj-01",
+    "e1-fmv-00",
+    "e1-fmv-01",
+    "e1-ioc-00",
+    "e1-ioc-01",
+    "e1-msp-00",
+    "e1-msp-01",
+    "e1-ska-00",
+    "e1-ska-01",
+    "e1-tsr-00",
+    "e1-tsr-01"
+  ],
+  "scientific_units": {
+    "streams": 12,
+    "tasks_per_stream": 8,
+    "unique_update_tasks": 96,
+    "search_k": 8,
+    "actor_rollouts": 768,
+    "nested_prefixes": [1, 2, 4, 8],
+    "updater_calls": 0,
+    "heldout_future_skill_evaluations": 0
+  },
+  "actor": {
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "max_turns": 10,
+    "max_output_tokens": 4096,
+    "temperature": 0,
+    "thinking": "disabled",
+    "provider_retry_limit": 0,
+    "concurrency": 4,
+    "search_topology": "parallel_best_of_k"
+  },
+  "model_identity": {
+    "path": "generated/e2-r17-e1-a-model-identity-adjudication-20260828.json",
+    "sha256": "602d8e8cb7544700e2ce74e5915d54069930fb483a522f9d397d2883b9f39b7c",
+    "status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "qualification_path": "generated/e2-r17-e1-a-model-identity-qualification-20260828.json",
+    "qualification_sha256": "f734dd4c5815a447e6fbf2bfacae26c5b60a10ac359d03e5838760793e077c9a"
+  },
+  "mindmemos": {
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "initial_skill_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb",
+    "skill_mutation_allowed": false
+  },
+  "support_gate": {
+    "evaluate_only_after_all_96_k8_pools_are_frozen": true,
+    "mixed_pool_count_minimum": 24,
+    "mixed_pool_total": 96,
+    "exposed_stream_minimum": 8,
+    "stream_total": 12,
+    "mixed_pools_per_exposed_stream_minimum": 2,
+    "supported_families_minimum": 4,
+    "family_gate_controls_primary_e1_b": false,
+    "borderline_is_failure": true,
+    "rounding_or_waiver": false,
+    "replace_or_drop_tasks_after_support_observation": false,
+    "hard_gate_failure": "STOP_E1_BEFORE_ANY_UPDATER_CALL"
+  },
+  "budget": {
+    "actor_rollouts_exact": 768,
+    "max_provider_calls": 7680,
+    "max_output_tokens_per_provider_call": 4096,
+    "theoretical_max_output_tokens": 31457280,
+    "provider_retry_limit": 0,
+    "duplicate_completed_rollout_calls": 0,
+    "updater_calls": 0
+  },
+  "checkpoint": {
+    "exclusive_lock": ".exclusive.lock",
+    "leave_lock_on_failure_for_manual_inspection": true,
+    "stream_manifest": "checkpoints/completed_streams.jsonl",
+    "unit_level_rollout_refs": "cases/<task>/rollout_<i>/r17_trajectory_ref.json",
+    "unit_level_pool_freeze": "cases/<task>/pool_k{1,2,4,8}.json",
+    "stream_summary": "summary/streams/<stream>.json",
+    "revalidate_completed_stream_and_rollout_sha_before_resume": true,
+    "resume_missing_only": true,
+    "blind_relaunch_after_timeout_or_502": false
+  },
+  "bound_code": {
+    "actor_runner": {
+      "path": "scripts/run_e2_r17_actor_pool.py",
+      "sha256": "a1bf2dded7f632af21fcf107614d9776cb9c148a43e4391fa36c0a47ffd836f0"
+    },
+    "e1_a_orchestrator": {
+      "path": "scripts/run_e2_r17_e1_a_pool_support.py",
+      "sha256": "0fb636eb6cd00fe96c5a88365fa7d0530ac02f19c5362ff1eed91027fadde688"
+    },
+    "support_adjudicator": {
+      "path": "scripts/adjudicate_e2_r17_e1_a_pool_support.py",
+      "sha256": "7b63a526cf2c695daf69dbe1cfefd41df4e635bc8c1609cf193e39e11c4197dc"
+    },
+    "authority_scope_test": {
+      "path": "research_pipeline/test_e2_r17_actor_authority_scope.py",
+      "sha256": "4c383aed93bb4d20d0726bc02c3fbba72baead62cc55838850b4f12061b2a1a0"
+    }
+  },
+  "authorization_scope_required": {
+    "status": "AUTHORIZED_E1",
+    "authority.scientific_experiment": true,
+    "authority.e1_a": true,
+    "authority.e1_b": false,
+    "allowed_modes": ["e1"],
+    "allowed_task_ids": "exact 96 task IDs from the bound e1_update_streams split",
+    "exact_k": 8,
+    "allow_noninitial_skill": false,
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "required_skill_pre_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+  },
+  "forbidden_during_e1_a": [
+    "updater calls",
+    "MRW/WIN/RB-AGG skill updates",
+    "held-out future-skill evaluation",
+    "method-effectiveness selection",
+    "task replacement or dropping after mixed-pool support is observed",
+    "changing K/model/skill/prompt/verifier after launch",
+    "paper promotion",
+    "automatic E1-B authority inheritance"
+  ],
+  "post_run": {
+    "runner_status": "COMPLETED_ALL_96_POOLS_PENDING_SEPARATE_SUPPORT_ADJUDICATION",
+    "adjudicator": "scripts/adjudicate_e2_r17_e1_a_pool_support.py",
+    "primary_support_pass": "mixed>=24/96 AND exposed_streams>=8/12 where each exposed stream has >=2 mixed pools",
+    "if_primary_support_fail": "STOP_E1_BEFORE_UPDATER",
+    "if_primary_support_pass": "may prepare a separate immutable E1-B contract; E1-B remains unauthorized until separately reviewed"
+  },
+  "authority": {
+    "independent_preexecution_review": true,
+    "execute_e1_a": false,
+    "execute_e1_b": false,
+    "provider_runtime_updater_pilot": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

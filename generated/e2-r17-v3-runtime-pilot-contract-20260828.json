@@ -1,0 +1,84 @@
+{
+  "artifact_type": "e2-r17-v3-runtime-pilot-contract",
+  "schema_version": "1.0",
+  "date": "2026-08-28",
+  "status": "AUTHORIZED_OUTCOME_BLIND_MECHANICAL_PILOT_ONLY",
+  "authority_parent": {
+    "artifact": "generated/e2-r17-experiment-plan-v3-review-adjudication-20260828.json",
+    "sha256": "25cc6b8098292aed0f83a10a1f5884c73f3bd5bc669533a89a30e478c811ad82",
+    "required_status": "PASS_TO_OUTCOME_BLIND_RUNTIME_PILOT_ONLY"
+  },
+  "plan": {
+    "artifact": "generated/e2-r17-experiment-plan-v3-20260828.json",
+    "sha256": "b1a0224117f161ead9fccefa2c22a0f01dfa1d9e72ca1e98107418f21e3e04c5"
+  },
+  "inputs": {
+    "historical_e0_root": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828",
+    "historical_e0_summary_sha256": "533abf55359360bd408a4878235d24b5192d77f2471f0676bb8b10d570ad0366",
+    "use_all_existing_k8_pools": true,
+    "future_e1_split_or_heldout_outcomes_accessed": false,
+    "reasoningbank_root": "/data/wyt/e2-r17-search-projection/baselines/published/reasoning-bank",
+    "reasoningbank_commit": "ed80611788292ea739f1effd31f16c53823b8a0d"
+  },
+  "environment": {
+    "shared_python_modified": false,
+    "isolated_venv": "/data/wyt/e2-r17-search-projection/venvs/e2-r17-evidence-window-v1",
+    "required_packages": {
+      "tiktoken": "0.11.0"
+    }
+  },
+  "frozen_renderer": {
+    "implementation": "research_pipeline/e2_r17_evidence_window.py",
+    "tokenizer": "tiktoken==0.11.0/cl100k_base",
+    "cap_tokens": 3072,
+    "pair_budget": "min(cap, WIN raw tokens, MRW raw tokens)",
+    "truncation": "first 1/3 + last 2/3",
+    "policy_may_change_after_pilot": false
+  },
+  "frozen_reasoningbank_style_input": {
+    "implementation": "research_pipeline/e2_r17_reasoningbank_style.py",
+    "official_prompt_name": "PARALLEL_SI",
+    "official_prompt_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "per_trajectory_input_cap_tokens": 512,
+    "explicit_verifier_labels": true,
+    "aggregator_temperature_for_future_semantic_call": 0.7,
+    "aggregator_max_output_tokens_for_future_semantic_call": 1024,
+    "provider_call_authorized_in_this_pilot": false,
+    "official_source_faithful_label_allowed": false
+  },
+  "allowed_checks": [
+    "re-hash and validate every historical E0 K8 pool source trajectory",
+    "construct WIN and MRW projections on every historical E0 pool",
+    "verify MRW differs from WIN iff the pool is mixed",
+    "render pairwise token-matched WIN/MRW evidence and verify exact token parity",
+    "verify nonmixed WIN/MRW rendered evidence is byte-identical",
+    "verify canonical evidence excludes system/provider/provenance metadata",
+    "construct ReasoningBank-style aggregation prompts from all eight trajectories and bind official prompt SHA plus explicit verifier labels",
+    "verify RB-style source caps and all trajectory provenance",
+    "verify WIN-A/WIN-B pre-provider inputs can be byte-identical by exact duplicate serialization",
+    "run unit tests and resume/SHA-corruption simulations without provider calls",
+    "measure local rendering/token counts and wall time for budget planning"
+  ],
+  "forbidden": [
+    "new actor/provider rollout",
+    "E1-A pool generation",
+    "MindMemOS scientific updater provider call",
+    "ReasoningBank aggregation provider call",
+    "held-out future skill evaluation",
+    "model or method selection based on effectiveness",
+    "changing renderer/tokenizer/cap because one arm looks scientifically better",
+    "paper promotion",
+    "submission"
+  ],
+  "run_root": "/data/wyt/e2-r17-search-projection/runtime-pilots/v3-mechanical-20260828",
+  "outputs": {
+    "per_pool_receipts": "raw/pools/*.json",
+    "completed_manifest": "checkpoints/completed_units.jsonl",
+    "summary": "summary/runtime_pilot_summary.json"
+  },
+  "go": "all historical source SHAs valid, exact token parity on every WIN/MRW pair, nonmixed identity exact, mixed treatment exact, RB-style provenance complete, dependency pin exact, resume corruption check catches mismatch",
+  "hold_or_stop": "any source SHA mismatch, tokenizer drift, projection invariant failure, token parity failure, system/provenance leakage, or RB prompt/source provenance mismatch",
+  "scientific_authority": false,
+  "e1_a_authority": false,
+  "e1_b_authority": false
+}

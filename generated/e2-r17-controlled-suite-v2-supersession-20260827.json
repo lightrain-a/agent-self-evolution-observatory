@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-controlled-suite-preoutcome-supersession",
+  "created_at_utc": "2026-08-27T14:24:00Z",
+  "status": "V2_SUPERSEDES_V1_FOR_R4_CONTRACT_NO_SCIENTIFIC_OUTCOME",
+  "branch": "research/e2-r17-compute-shielding-20260825",
+  "branch_head_before_v2_commit": "5fcd093e",
+  "superseded_asset": {
+    "suite_id": "E2-R17-CONTROLLED-SPREADSHEET-SUITE-V1",
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v1",
+    "archive": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v1.tar",
+    "dataset_sha256": "063edbffced0a587e024a7319df268cd5bf40656bfdaee2c3ddb535df03db268",
+    "archive_sha256": "b928633b4388c93fdfba2992853b0c64ad124cc004b5993ce9f93f12898da056",
+    "suite_manifest_sha256": "d407ab6fc2ced9f6e536cc14819020e61b77c1594bcbe46c8ed890e58bbbdd9d",
+    "split_manifest_sha256": "8249d4dad5947c7a5991fb3364f780bd65dd1082e072acf2a19a73408783f029",
+    "qualification": "324/324 golden self-check and 324/324 blank-init negative control PASS",
+    "preservation": "retained unchanged as a valid zero-provider design/qualification asset; prohibited as the R4 execution split"
+  },
+  "surviving_asset": {
+    "suite_id": "E2-R17-CONTROLLED-SPREADSHEET-SUITE-V2",
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "archive": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2.tar",
+    "task_count": 378,
+    "dataset_sha256": "4b5ec329f32855e1d358bcf63dd1781a8861f9f0d44f8f0b12af8a798da0a87a",
+    "archive_sha256": "bbcfae9ff7a0c5b36e922c1a450c6755a36a8da1b30fafb1523d38f326b89456",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "qualification": "378/378 golden self-check and 378/378 blank-init negative control PASS",
+    "e1": "12 family-homogeneous independently evolved streams, exactly two streams per precommitted structural procedure family and eight tasks per stream",
+    "e3": "12 family-homogeneous sealed future streams, exactly two streams per precommitted structural procedure family and eight tasks per stream",
+    "common_probe": "18 never-fed tasks, exactly three per structural procedure family"
+  },
+  "preoutcome_reason": {
+    "problem_in_v1": "The v1 E1 streams were outcome-blind but mixed all six structural procedure families. They could identify an overall projection effect, but an updater consumes an eight-trajectory batch nonlinearly, so a mixed stream cannot identify a family-conditional diagnostic advantage delta_z or support a clean prospective family ranking.",
+    "repair_in_v2": "Keep the same six-family controlled task generator and L9 factor design, add one sealed future block, and freeze E1/E3 streams to one structural procedure family each. This changes only pre-outcome allocation and identifiability, not the scientific headline or observed results.",
+    "why_not_posthoc": "No actor, updater, probe, or benchmark model outcome existed for either suite when this supersession was made. The issue was discovered while compiling the formal R4 estimand from the four-round review requirements."
+  },
+  "frozen_partition": {
+    "partition_variable": "primary structural procedure family assigned by the generator before any model call",
+    "families": [
+      "input_output_contract",
+      "target_sheet_range",
+      "schema_key_alignment",
+      "aggregation_join",
+      "formula_materialization",
+      "multi_step_pipeline"
+    ],
+    "mutually_exclusive": true,
+    "actual_failure_codes": "may be logged descriptively but cannot replace or redefine the primary partition"
+  },
+  "scientific_outcomes_accessed": false,
+  "provider_calls_for_v1_or_v2_tasks": 0,
+  "authority": {
+    "bind_v2_in_r4_candidate": true,
+    "freeze_r4_without_preexecution_review": false,
+    "scientific_experiment": false,
+    "gpu": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "r16_unchanged": true
+}

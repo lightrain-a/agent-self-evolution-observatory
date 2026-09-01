@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "failure-asset",
+  "failure_id": "E2-R17-F0-SUBSTRATE-PROVENANCE-001",
+  "paper_child": "E2-R17-COMPUTE-SHIELDING",
+  "failure": "An early F0 draft bound MindMemOS to commit 2c940fd19d11cdc272f7051a0e5dfde3f50cbfd4, but that object is not resolvable in the available shallow official clone and therefore cannot serve as executable provenance.",
+  "detection": "F0-R3 substrate_commit_exact gate failed before scientific execution.",
+  "scientific_outcome_affected": false,
+  "scientific_calls_before_detection": 0,
+  "repair": "Supersede commit-only binding with a fresh qualification of the current clean official checkout, binding remote URL, actual commit, and exact SHA-256 for every runtime file used by R17. Preserve the upstream SpreadsheetBench packaging-test warning rather than silently patching the source checkout.",
+  "repaired_by": "generated/e2-r17-mindmemos-substrate-qualification-20260825.json",
+  "prevention": "Future R17 gates must consume the substrate qualification receipt and may not hard-code an unverified commit identifier.",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "submission_authority": false
+}

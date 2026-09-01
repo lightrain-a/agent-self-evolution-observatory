@@ -1,0 +1,52 @@
+{
+  "artifact_type": "e2-r17-current-ark-plan-model-identity-qualification",
+  "authority": {
+    "gpu": false,
+    "paper_promotion": false,
+    "preexecution_consultation": false,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "checks": {
+    "all_protocol_calls_pass": false,
+    "provider_retry_zero": true,
+    "resolved_identities_distinct": false,
+    "route_is_ark_plan": true
+  },
+  "compatibility_parent": {
+    "path": "generated/e2-r17-current-ark-plan-model-identity-qualification-20260828.json",
+    "separate_generation_calls_declared": true,
+    "sha256": "7df4e1996494ca10f31a5aa43df1b5cf8977ff49b155a14e65a04751a8cb6c0f"
+  },
+  "created_at_utc": "2026-08-28T03:06:42+00:00",
+  "default_model": "ark-code-latest",
+  "models": [
+    {
+      "benchmark_data_accessed": false,
+      "error_message_sanitized": "Ark retrieve HTTP 404: {'error': {'code': 'ResourceNotFound', 'message': 'Response with id  resp_[REDACTED] not found. Request id: [REDACTED]', 'param': '', 'type': 'NotFound'}}",
+      "error_sha256": "97fb5555687829b995291f54d21a6e4e1b69b87cd18128a6b10f9522a182cab8",
+      "error_type": "RuntimeError",
+      "hidden_provider_retry_used": false,
+      "initial_response_state": {
+        "incomplete_reason": "length",
+        "requested_model": "kimi-k3",
+        "resolved_model": "kimi-k3",
+        "response_id_sha256": "d084b59bfd3dd802f5f24aeabf805429f75eda991f3c3fe219474f32d3c529bc",
+        "status": "incomplete"
+      },
+      "max_output_tokens": 512,
+      "prompt_sha256": "7bfaf5897d7bbd7f972a67554ee32acc828cd8309e40822dfc05217e987776bf",
+      "provider_generation_attempts": 1,
+      "provider_retry_limit": 0,
+      "requested_model": "kimi-k3",
+      "scientific_outcome": false,
+      "status": "FAIL_PROVIDER_PROTOCOL"
+    }
+  ],
+  "private_credentials_included": false,
+  "raw_response_ids_included": false,
+  "release_drift_policy": "Observed resolved identities are frozen for this review tranche. Historical exact suffixes are not reused as authority. Any later execution tranche must requalify and bind its own observed identities.",
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "status": "HOLD_OR_FAIL"
+}

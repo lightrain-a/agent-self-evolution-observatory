@@ -1,0 +1,65 @@
+{
+  "allowed_single_operational_repair": {
+    "dataset_repo_id": "use the already-frozen official repo_id behavior-1k/2026-challenge-demos",
+    "dataset_revision": "pass the already-frozen exact dataset revision to LeRobotDataset",
+    "download_videos": "set False on fallback so generic unused depth streams are not added; the three frozen R1Pro RGB streams remain the only video inputs",
+    "must_not_change": [
+      "5200 episode indices",
+      "1380-file scientific payload",
+      "R1Pro RGB observation mapping",
+      "state/action transforms",
+      "normalization definition",
+      "seed",
+      "batch size",
+      "optimizer",
+      "learning-rate schedule",
+      "training horizon",
+      "checkpoint rule"
+    ],
+    "normalization_asset_id": "retain b1k_shared26_frozen only as AssetsConfig.asset_id"
+  },
+  "frozen_bindings": {
+    "environment_qualification_sha256": "7e21e03f03cfc876aba2be5c8458803930c1344f24b8852b51bce485ec242bc5",
+    "openpi_child_patch_provenance_sha256": "b70fff483a49fdb371150d3c17d32f940b2b9fd0e1e2d863d7a5dcaa486efec2",
+    "original_child_contract_sha256": "098df08569c75ac3806a762754aab5ded1bb41ee164b9f9a34a89fdb9b065d2f",
+    "whole_manifest_final_seal_sha256": "1890045423141532213f9398451a7f51e7c481b3ea90a5cc0fa86c3516db1a9f"
+  },
+  "generated_at": "2026-09-01T21:43:21+08:00",
+  "gpu_used": false,
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "next_gate": "APPLY_SINGLE_PRE_OUTCOME_OPERATIONAL_REPAIR_AND_RERUN_DATASET_CONSTRUCTOR_ONCE",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "observed_failure": {
+    "exception": "huggingface_hub.errors.RepositoryNotFoundError",
+    "http_status": 404,
+    "reason": "the frozen child overloaded the local normalization asset identifier as LeRobot repo_id; generic LeRobot fallback therefore queried a non-existent Hub dataset after its all-video cache sufficiency check failed",
+    "requested_dataset_repo": "b1k_shared26_frozen"
+  },
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-dataset-constructor-hold-v1",
+  "scientific_authority": false,
+  "source_diagnosis": {
+    "all_missing_generic_video_files_are_unused_depth": true,
+    "generic_metadata_video_key_count": 6,
+    "generic_missing_unique_video_files": 2532,
+    "generic_missing_video_modalities": [
+      "observation.depth_linear.left_realsense_link_camera_0",
+      "observation.depth_linear.right_realsense_link_camera_0",
+      "observation.depth_linear.zed_link_camera_0"
+    ],
+    "lerobot_dataset_source_sha256": "e3817ee2beb81d763afe77cdf8867d3fb3ff57b1fd8ceaee1384cd5ee8b39b82",
+    "official_dataset_repo_id": "behavior-1k/2026-challenge-demos",
+    "official_dataset_revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+    "openpi_r1pro_required_video_modalities": [
+      "observation.rgb.zed_link_camera_0",
+      "observation.rgb.left_realsense_link_camera_0",
+      "observation.rgb.right_realsense_link_camera_0"
+    ],
+    "sealed_required_payload_remains_complete": true
+  },
+  "stage": "CPU_ONLY_ZERO_MODEL_DATASET_CONSTRUCTOR",
+  "status": "DATASET_CONSTRUCTOR_HOLD_REPO_ID_AND_UNUSED_DEPTH_COMPLETENESS",
+  "training_started": false
+}
