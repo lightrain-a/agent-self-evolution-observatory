@@ -23,6 +23,8 @@ BANK = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source
 SOURCE_DIR = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-trajectories-20260901"
 CONTRACT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-fidelity-audit-contract-20260901.json"
 OUTPUT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-fidelity-audit-result-20260901.json"
+INDEX = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-fidelity-audit-index-20260901.json"
+RECEIPT_DIR = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-fidelity-audit-receipts-20260901"
 EXPECTED_CONTRACT_SHA256 = "PENDING"
 JSON_RE = re.compile(r"\{.*\}", re.DOTALL)
 SYSTEM = """You are an independent source-memory fidelity auditor. Judge only the supplied
@@ -112,6 +114,31 @@ def make_reviewer() -> ArkReasoningBankClient:
         timeout_seconds=120.0, max_retries=0))
 
 
+def audit_receipt_path(unit: dict[str, Any]) -> Path:
+    return RECEIPT_DIR / f"{int(unit['ordinal']):02d}-{unit['audit_id']}.json"
+
+
+def audit_index(contract: dict[str, Any], receipts: list[dict[str, Any]],
+                inflight: dict[str, Any] | None = None) -> dict[str, Any]:
+    return {
+        "schema_version": 1, "experiment_id": EXPERIMENT_ID,
+        "stage": "INDEPENDENT_SOURCE_MEMORY_FIDELITY_AUDIT",
+        "created_at_utc": utcnow(), "contract_sha256": sha256_file(CONTRACT),
+        "planned_count": len(contract["plan"]), "completed_count": len(receipts),
+        "journal_record_count": len(receipts), "inflight": inflight,
+        "execution_complete": len(receipts) == len(contract["plan"]),
+        "journal": [{
+            "ordinal": row["ordinal"], "audit_id": row["audit_id"],
+            "source_task_id": row["source_task_id"], "attempt_count": row["attempt_count"],
+            "execution_status": row["execution_status"], "persisted": True,
+            "receipt_sha256": sha256_file(audit_receipt_path(row)),
+        } for row in receipts],
+        "checks": {"every_attempt_count_one": all(row["attempt_count"] == 1 for row in receipts),
+                   "no_retry": True, "no_replacement": True, "frozen_order_prefix": True},
+        "credential_material_present": False,
+    }
+
+
 def run(output: Path = OUTPUT) -> dict[str, Any]:
     if output.exists():
         raise RuntimeError("refusing duplicate fidelity audit")
@@ -123,15 +150,33 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
     bank = json.loads(BANK.read_text(encoding="utf-8"))
     if contract["source_bank_sha256"] != sha256_file(BANK):
         raise RuntimeError("fidelity bank binding drift")
+    RECEIPT_DIR.mkdir(parents=True, exist_ok=True)
+    receipts: list[dict[str, Any]] = []
+    missing_seen = False
+    for unit in contract["plan"]:
+        path = audit_receipt_path(unit)
+        if not path.exists():
+            missing_seen = True
+            continue
+        if missing_seen:
+            raise RuntimeError("fidelity receipts are not a frozen-order prefix")
+        receipt = json.loads(path.read_text(encoding="utf-8"))
+        if receipt["audit_id"] != unit["audit_id"] or receipt["attempt_count"] != 1:
+            raise RuntimeError("fidelity receipt identity/attempt drift")
+        receipts.append(receipt)
+    if INDEX.exists():
+        prior = json.loads(INDEX.read_text(encoding="utf-8"))
+        inflight = prior.get("inflight")
+        if inflight and not audit_receipt_path(contract["plan"][int(inflight["ordinal"]) - 1]).exists():
+            raise RuntimeError("FIDELITY_AMBIGUOUS_INFLIGHT_HOLD: refusing duplicate review")
+    write_json(INDEX, audit_index(contract, receipts))
     by_task = {row["source_task_id"]: row for row in bank["entries"]}
     client = make_reviewer()
-    reviews = []
-    implementation_failures = []
-    for unit in contract["plan"]:
-        path = ROOT / unit["source_receipt"]
-        if sha256_file(path) != unit["source_receipt_sha256"]:
+    for unit in contract["plan"][len(receipts):]:
+        source_path = ROOT / unit["source_receipt"]
+        if sha256_file(source_path) != unit["source_receipt_sha256"]:
             raise RuntimeError("fidelity source receipt drift")
-        source = json.loads(path.read_text(encoding="utf-8"))
+        source = json.loads(source_path.read_text(encoding="utf-8"))
         memory = by_task[unit["source_task_id"]]
         visible = {
             "source_task_id": unit["source_task_id"],
@@ -140,6 +185,10 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
                 or source["trajectory"].get("failure"),
             "extracted_memory": memory["parsed_memory_items"],
         }
+        write_json(INDEX, audit_index(contract, receipts, {
+            "ordinal": unit["ordinal"], "audit_id": unit["audit_id"],
+            "source_task_id": unit["source_task_id"], "attempt_count": 1,
+            "state": "DISPATCHED_BEFORE_ANY_PROVIDER_SIDE_EFFECT"}))
         try:
             response = client.create_response(
                 input_items=canonical_json(visible), instructions=SYSTEM,
@@ -148,22 +197,33 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
             if response.get("resolved_model") != REVIEWER_MODEL or response.get("transport_attempts") != 1:
                 raise RuntimeError("independent reviewer identity/retry drift")
             parsed = parse_review(str(response.get("raw_text", response.get("text", ""))))
-            reviews.append({
-                **unit, **parsed,
+            receipt = {
+                **unit, **parsed, "execution_status": "REVIEW_VALID",
                 "request_sha256": sha256_text(canonical_json(visible)),
                 "response_sha256": sha256_text(str(response.get("raw_text", response.get("text", "")))),
                 "resolved_model": response.get("resolved_model"),
                 "credential_material_present": False,
-            })
+            }
         except (ArkCompatibilityError, RuntimeError, ValueError) as error:
-            implementation_failures.append({
-                **unit, "failure_layer": "provider_or_parser",
-                "error_type": type(error).__name__,
+            receipt = {
+                **unit, "execution_status": "TERMINAL_IMPLEMENTATION_FAILURE",
+                "failure_layer": "provider_or_parser", "error_type": type(error).__name__,
                 "safe_receipt": error.safe_receipt() if isinstance(error, ArkCompatibilityError) else None,
                 "credential_material_present": False,
-            })
-    complete = len(reviews) == len(contract["plan"])
-    gate = adjudicate_fidelity(reviews) if complete else {
+            }
+        target = audit_receipt_path(unit)
+        if target.exists():
+            raise RuntimeError("refusing to overwrite fidelity receipt")
+        write_json(target, receipt)
+        receipts.append(json.loads(target.read_text(encoding="utf-8")))
+        write_json(INDEX, audit_index(contract, receipts))
+        print(json.dumps({"ordinal": unit["ordinal"], "audit_id": unit["audit_id"],
+                          "execution_status": receipt["execution_status"],
+                          "completed": len(receipts)}, sort_keys=True), flush=True)
+    reviews = [row for row in receipts if row["execution_status"] == "REVIEW_VALID"]
+    implementation_failures = [row for row in receipts
+                               if row["execution_status"] != "REVIEW_VALID"]
+    gate = adjudicate_fidelity(reviews) if not implementation_failures else {
         "decision": "SOURCE_BANK_FIDELITY_AUDIT_IMPLEMENTATION_HOLD",
         "audited_source_task_count": len(reviews),
     }
@@ -172,9 +232,9 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         "stage": "INDEPENDENT_SOURCE_MEMORY_FIDELITY_AUDIT",
         "created_at_utc": utcnow(), "decision": gate["decision"],
         "contract_sha256": sha256_file(CONTRACT), "source_bank_sha256": sha256_file(BANK),
-        "reviews": reviews, "implementation_failures": implementation_failures,
-        "gate": gate, "all_source_memories_retained": True,
-        "selective_memory_deletion_performed": False,
+        "index_sha256": sha256_file(INDEX), "reviews": reviews,
+        "implementation_failures": implementation_failures, "gate": gate,
+        "all_source_memories_retained": True, "selective_memory_deletion_performed": False,
         "confirmatory_behavioral_outcomes_visible": False,
         "credential_material_present": False,
     }
