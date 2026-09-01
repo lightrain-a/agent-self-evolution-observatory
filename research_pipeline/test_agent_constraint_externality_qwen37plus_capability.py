@@ -11,6 +11,7 @@ from research_pipeline.agent_constraint_externality_qwen37plus_capability import
     build_addendum,
     capture_provider_snapshot,
     enumerate_units,
+    require_r2_contract,
 )
 from research_pipeline.agent_constraint_externality_runner_core import sha256_value
 
@@ -21,6 +22,9 @@ class Qwen37PlusCapabilityA1Test(unittest.TestCase):
         self.assertEqual(len(units), 8)
         self.assertEqual(len({u.unit_id for u in units}), 8)
         self.assertTrue(all(ALLOWED_ALIAS in u.unit_id for u in units))
+        r2_units = enumerate_units(ALLOWED_ALIAS, stage="CAPABILITY_CALIBRATION_R2")
+        self.assertEqual({u.unit_id for u in units}, {u.unit_id for u in r2_units})
+        self.assertTrue(all(u.stage == "CAPABILITY_CALIBRATION_R2" for u in r2_units))
 
     def test_addendum_is_post_floor_not_fake_original_prereg(self) -> None:
         addendum = build_addendum(catalog_sha256="abc", catalog_model_count=200)
@@ -75,6 +79,17 @@ class Qwen37PlusCapabilityA1Test(unittest.TestCase):
         self.assertEqual(gate["provider_max_retries"], 0)
         self.assertFalse(gate["application_retry"])
         self.assertFalse(gate["replacement"])
+
+    def test_r2_contract_requires_void_substrate_reexecution_without_scientific_change(self) -> None:
+        path = Path("generated/agent-constraint-externality-qwen37plus-capability-r2-contract-20260901.json")
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        validated = require_r2_contract(path, payload["execution_id"])
+        self.assertEqual(validated["model"], ALLOWED_ALIAS)
+        self.assertTrue(validated["same_eight_unit_panel"])
+        self.assertFalse(validated["prior_a1_units_count_as_scientific_measurements"])
+        self.assertFalse(validated["threshold_change"])
+        self.assertFalse(validated["task_change"])
+        self.assertFalse(validated["authority"]["f0"])
 
 
 if __name__ == "__main__":

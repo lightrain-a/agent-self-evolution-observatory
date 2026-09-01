@@ -131,7 +131,27 @@ def validate_source(appworld_root: Path) -> dict[str, Any]:
 
 
 def insert_fixture_row(connection: sqlite3.Connection, row: dict[str, Any]) -> None:
-    values = row["values"]
+    values = dict(row["values"])
+    fixture_timestamp = "2023-05-18 12:00:00.000000"
+    app = row.get("app")
+    table = row.get("table")
+    if app == "file_system" and table in {"directories", "files"}:
+        # Raw SQLite insertion bypasses SQLModel default factories. Populate the
+        # API-visible native timestamps explicitly so show_file/show_directory
+        # responses remain valid.
+        values.setdefault("created_at", fixture_timestamp)
+        values.setdefault("updated_at", fixture_timestamp)
+    if app == "file_system" and table == "files":
+        # AppWorld's native File model stores an empty JSON list for ordinary
+        # uncompressed text files. Leaving this column NULL makes cross-app
+        # attachment transfer invalid even though the file content/path exist.
+        values.setdefault("compressed_data", "[]")
+    if app == "simple_note" and table == "notes":
+        values.setdefault("created_at", fixture_timestamp)
+        values.setdefault("updated_at", fixture_timestamp)
+    if app == "todoist" and table == "tasks":
+        values.setdefault("priority", "low")
+        values.setdefault("created_at", fixture_timestamp)
     columns = list(values)
     placeholders = ", ".join("?" for _ in columns)
     quoted = ", ".join(f'"{column}"' for column in columns)

@@ -47,6 +47,7 @@ CREDENTIAL_REUSE = GENERATED / "agent-constraint-externality-credential-reuse-au
 ADDENDUM_OUTPUT = GENERATED / "agent-constraint-externality-qwen37plus-capability-addendum-a1-20260901.json"
 PROVIDER_SNAPSHOT_OUTPUT = GENERATED / "agent-constraint-externality-qwen37plus-provider-snapshot-a1-20260901.json"
 RESULT_OUTPUT = GENERATED / "agent-constraint-externality-qwen37plus-capability-result-a1-20260901.json"
+R2_CONTRACT_DEFAULT = GENERATED / "agent-constraint-externality-qwen37plus-capability-r2-contract-20260901.json"
 TOOLCAP_SCHEMA = "ace-qwen37plus-toolcap-measurement-a1-v1"
 
 
@@ -67,12 +68,16 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def enumerate_units(model_id: str = ALLOWED_ALIAS) -> list[EpisodeUnit]:
+def enumerate_units(
+    model_id: str = ALLOWED_ALIAS,
+    *,
+    stage: str = "CAPABILITY_CALIBRATION_A1",
+) -> list[EpisodeUnit]:
     units = [
         EpisodeUnit(
             namespace="capability",
             key=(model_id, family_id, repeat),
-            stage="CAPABILITY_CALIBRATION_A1",
+            stage=stage,
             family_id=family_id,
             repeat=repeat,
         )
@@ -182,6 +187,39 @@ def build_addendum(*, catalog_sha256: str | None = None, catalog_model_count: in
     return payload
 
 
+def require_r2_contract(path: Path, execution_id: str) -> dict[str, Any]:
+    if not path.is_file():
+        raise RunnerError("R2 scientific execution requires a frozen reexecution contract.")
+    payload = read_json(path)
+    claimed = payload.get("content_sha256")
+    unsigned = dict(payload)
+    unsigned.pop("content_sha256", None)
+    if claimed != sha256_value(unsigned):
+        raise RunnerError("R2 reexecution contract content hash mismatch.")
+    if payload.get("object_id") != OBJECT_ID:
+        raise RunnerError("R2 reexecution contract object mismatch.")
+    if payload.get("status") != "QWEN37PLUS_CAPABILITY_R2_AUTHORIZED_AFTER_SUBSTRATE_VOID":
+        raise RunnerError("R2 reexecution contract is not authorized.")
+    if payload.get("execution_id") != execution_id:
+        raise RunnerError("R2 reexecution contract execution ID mismatch.")
+    if payload.get("model") != ALLOWED_ALIAS:
+        raise RunnerError("R2 reexecution contract model drifted.")
+    if payload.get("same_eight_unit_panel") is not True:
+        raise RunnerError("R2 must reuse the exact eight-unit capability panel.")
+    if payload.get("tool_call_cap") != TOOL_CAP or payload.get("temperature") != 0:
+        raise RunnerError("R2 tool cap or temperature drifted.")
+    if payload.get("provider_max_retries") != 0 or payload.get("application_retry") is not False:
+        raise RunnerError("R2 retry semantics drifted.")
+    for field in ("replacement", "model_switch", "threshold_change", "task_change"):
+        if payload.get(field) is not False:
+            raise RunnerError(f"R2 contract illegally changes {field}.")
+    if payload.get("prior_a1_units_count_as_scientific_measurements") is not False:
+        raise RunnerError("Void A1 units must not count toward the R2 capability gate.")
+    if payload.get("authority", {}).get("f0") is not False:
+        raise RunnerError("R2 contract must keep F0 closed.")
+    return payload
+
+
 def capture_provider_snapshot(*, api_key: str, base_url: str, opener: Any = urllib.request.urlopen) -> dict[str, Any]:
     request = urllib.request.Request(
         base_url.rstrip("/") + "/models",
@@ -247,14 +285,21 @@ def _toolcap_rows(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
-def _append_toolcap(path: Path, *, unit: EpisodeUnit, evaluation: dict[str, Any], receipt_count: int) -> None:
+def _append_toolcap(
+    path: Path,
+    *,
+    unit: EpisodeUnit,
+    evaluation: dict[str, Any],
+    receipt_count: int,
+    execution_id: str = EXECUTION_ID,
+) -> None:
     existing = {row["unit_id"] for row in _toolcap_rows(path)}
     if unit.unit_id in existing:
         raise RunnerError("Refusing duplicate A1 tool-cap measurement.")
     row: dict[str, Any] = {
         "schema_version": TOOLCAP_SCHEMA,
         "object_id": OBJECT_ID,
-        "execution_id": EXECUTION_ID,
+        "execution_id": execution_id,
         "unit_id": unit.unit_id,
         "family_id": unit.family_id,
         "classification": "CAPABILITY_TOOL_LOOP_INCOMPLETE_AT_FROZEN_CAP",
@@ -274,13 +319,25 @@ def _append_toolcap(path: Path, *, unit: EpisodeUnit, evaluation: dict[str, Any]
         os.fsync(handle.fileno())
 
 
-def execute(*, appworld_root: Path, protected_bundle: Path, runtime_root: Path, ledger_path: Path, toolcap_path: Path, resolved_model: str, api_key: str, base_url: str) -> None:
+def execute(
+    *,
+    appworld_root: Path,
+    protected_bundle: Path,
+    runtime_root: Path,
+    ledger_path: Path,
+    toolcap_path: Path,
+    resolved_model: str,
+    api_key: str,
+    base_url: str,
+    execution_id: str = EXECUTION_ID,
+) -> None:
     if resolved_model not in {REQUESTED_MODEL, ALLOWED_ALIAS}:
-        raise RunnerError("A1 model replacement is forbidden.")
+        raise RunnerError("Qwen3.7-Plus model replacement is forbidden.")
     provider = TypicalResponsesClient(api_key, base_url)
     spec = load_protected_spec(protected_bundle)
     families = {f["family_id"]: f for f in spec["families"]}
-    units = enumerate_units(resolved_model)
+    stage = "CAPABILITY_CALIBRATION_R2" if execution_id != EXECUTION_ID else "CAPABILITY_CALIBRATION_A1"
+    units = enumerate_units(resolved_model, stage=stage)
     ledger = AppendOnlyLedger(ledger_path)
     states = ledger.states()
     failure_rows = {row["unit_id"]: row for row in ledger.rows() if row["event"] == "FAILURE"}
@@ -303,13 +360,18 @@ def execute(*, appworld_root: Path, protected_bundle: Path, runtime_root: Path, 
         if state is not None:
             raise RunnerError(f"A1 cannot replay non-terminal unit {unit.unit_id}: {state}")
         arm = next(a for a in family["arms"] if a["coupling_level"] == "LOW")
-        task_id = "acea1" + unit.family_id.lower().replace("-", "") + f"r{unit.repeat}_1"
+        run_tag = "acer2" if execution_id != EXECUTION_ID else "acea1"
+        task_id = run_tag + unit.family_id.lower().replace("-", "") + f"r{unit.repeat}_1"
         unit_root = runtime_root / "worlds" / unit.unit_id.replace(":", "_").replace("|", "_")
         materialized = prepare_appworld_runtime_root(appworld_root, unit_root, family=family, arm=arm, task_id=task_id)
         world = AppWorldToolWorld(
             runtime_root=unit_root,
             task_id=task_id,
-            experiment_name="ace-qwen37plus-capability-a1",
+            experiment_name=(
+                "ace-qwen37plus-capability-r2"
+                if execution_id != EXECUTION_ID
+                else "ace-qwen37plus-capability-a1"
+            ),
             seed=1100 + int(unit.repeat or 0),
             allowed_apps=set(family["fixture"]["apps"]),
         )
@@ -335,16 +397,30 @@ def execute(*, appworld_root: Path, protected_bundle: Path, runtime_root: Path, 
                     row for row in reversed(ledger.rows())
                     if row["unit_id"] == unit.unit_id and row["event"] == "FAILURE"
                 )
-                _append_toolcap(toolcap_path, unit=unit, evaluation=evaluation, receipt_count=len(failure.get("provider_receipts", [])))
+                _append_toolcap(
+                    toolcap_path,
+                    unit=unit,
+                    evaluation=evaluation,
+                    receipt_count=len(failure.get("provider_receipts", [])),
+                    execution_id=execution_id,
+                )
         finally:
             world.close()
         states = ledger.states()
     ledger.assert_all_terminal(units)
 
 
-def adjudicate(*, ledger_path: Path, toolcap_path: Path, resolved_model: str, catalog_request_count: int = 1) -> dict[str, Any]:
+def adjudicate(
+    *,
+    ledger_path: Path,
+    toolcap_path: Path,
+    resolved_model: str,
+    catalog_request_count: int = 1,
+    execution_id: str = EXECUTION_ID,
+) -> dict[str, Any]:
     ledger = AppendOnlyLedger(ledger_path)
-    units = enumerate_units(resolved_model)
+    stage = "CAPABILITY_CALIBRATION_R2" if execution_id != EXECUTION_ID else "CAPABILITY_CALIBRATION_A1"
+    units = enumerate_units(resolved_model, stage=stage)
     ledger.assert_all_terminal(units)
     rows = ledger.rows()
     failures = [row for row in rows if row["event"] == "FAILURE"]
@@ -358,9 +434,9 @@ def adjudicate(*, ledger_path: Path, toolcap_path: Path, resolved_model: str, ca
     ]
     if invalid:
         result: dict[str, Any] = {
-            "schema_version": "ace-qwen37plus-capability-result-a1-v1",
+            "schema_version": "ace-qwen37plus-capability-result-v1",
             "object_id": OBJECT_ID,
-            "execution_id": EXECUTION_ID,
+            "execution_id": execution_id,
             "status": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP",
             "failure_units": [row["unit_id"] for row in invalid],
             "valid_capability_measurements": len(units) - len(invalid),
@@ -405,9 +481,9 @@ def adjudicate(*, ledger_path: Path, toolcap_path: Path, resolved_model: str, ca
         raise RunnerError("A1 resolved-model identity drifted during capability calibration.")
     gate = capability_gate(measurements)
     result = {
-        "schema_version": "ace-qwen37plus-capability-result-a1-v1",
+        "schema_version": "ace-qwen37plus-capability-result-v1",
         "object_id": OBJECT_ID,
-        "execution_id": EXECUTION_ID,
+        "execution_id": execution_id,
         "status": gate["verdict"],
         "gate": gate,
         "requested_model": REQUESTED_MODEL,
@@ -447,9 +523,17 @@ def main() -> None:
     parser.add_argument("--result-output", type=Path, default=RESULT_OUTPUT)
     parser.add_argument("--snapshot-output", type=Path, default=PROVIDER_SNAPSHOT_OUTPUT)
     parser.add_argument("--addendum-output", type=Path, default=ADDENDUM_OUTPUT)
+    parser.add_argument("--execution-id", default=EXECUTION_ID)
+    parser.add_argument("--reexecution-contract", type=Path, default=None)
     args = parser.parse_args()
 
     require_parent_state()
+    is_r2 = args.execution_id != EXECUTION_ID
+    if is_r2:
+        contract_path = args.reexecution_contract or R2_CONTRACT_DEFAULT
+        require_r2_contract(contract_path, args.execution_id)
+    elif args.reexecution_contract is not None:
+        raise RunnerError("A1 execution must not consume an R2 reexecution contract.")
     load_env_file(DEFAULT_ENV_FILE)
     api_key = os.getenv("AA_API_KEY", "")
     base_url = os.getenv("AA_BASE_URL", DEFAULT_BASE_URL).rstrip("/")
@@ -489,12 +573,14 @@ def main() -> None:
         resolved_model=resolved_model,
         api_key=api_key,
         base_url=base_url,
+        execution_id=args.execution_id,
     )
     result = adjudicate(
         ledger_path=args.ledger,
         toolcap_path=args.toolcap_ledger,
         resolved_model=resolved_model,
-        catalog_request_count=1,
+        catalog_request_count=0 if is_r2 else 1,
+        execution_id=args.execution_id,
     )
     write_json(args.result_output, result)
     print(json.dumps({

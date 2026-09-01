@@ -1,0 +1,38 @@
+{
+  "affected_results": [
+    {
+      "model": "qwen3.7-flash",
+      "path": "generated/agent-constraint-externality-qwen-capability-continuation-r1-result-20260901.json",
+      "sha256": "9a06f36f7d1ba25c0325c8d04c24dd09fbef4f947f18da67a9ff26a320cfa958"
+    },
+    {
+      "model": "qwen3.7-plus",
+      "path": "generated/agent-constraint-externality-qwen37plus-capability-result-a1-20260901.json",
+      "sha256": "4966fd7b91a6ab37e80b932fbd0ee743e0b576af9545ba836e299a41985dcc7e"
+    }
+  ],
+  "authority": {
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "classification": "CAPABILITY_SUBSTRATE_AUTH_AND_API_SCHEMA_INVALID",
+  "content_sha256": "e1174ead318899d131c0f9a286495b5042f06dc026c8a507b29c1dd0db7e7434",
+  "defects": [
+    "CUSTOM_TASK_COPIED_BASE_SUPERVISOR_DB_WITHOUT_ACTIVE_SUPERVISOR_OR_ACCOUNT_PASSWORD_CONTEXT",
+    "CUSTOM_TASK_SPECS_SUPERVISOR_DID_NOT_MATCH_FIXTURE_OWNER_USER_99",
+    "RAW_FILE_FIXTURES_OMITTED_NATIVE_COMPRESSED_DATA_AND_API_VISIBLE_TIMESTAMPS",
+    "RAW_NOTE_AND_TODO_FIXTURES_OMITTED_SQLMODEL_DEFAULT_FIELDS_REQUIRED_BY_TOOL_API_RESPONSES"
+  ],
+  "f0_scientific_outcomes_observed": 0,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "pre_repair_observation": {
+    "fixture_owner_user_id": 99,
+    "supervisor_account_passwords": "EMPTY",
+    "supervisor_show_profile": "NO_SUPERVISOR_FOUND"
+  },
+  "schema_version": "ace-capability-substrate-invalid-void-r1-v1",
+  "scientific_interpretation": "The prior floor verdicts are retained as execution evidence but are void for model-capability selection, because the intended tasks were not executable through valid AppWorld authentication/API state.",
+  "status": "CAPABILITY_RESULTS_VOID_SUBSTRATE_INVALID"
+}

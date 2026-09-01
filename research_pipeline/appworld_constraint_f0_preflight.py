@@ -45,6 +45,30 @@ CAPABILITY_MODEL_SNAPSHOT = (
 CAPABILITY_CONTINUATION_RESULT = (
     GENERATED / "agent-constraint-externality-qwen-capability-continuation-r1-result-20260901.json"
 )
+CAPABILITY_A1_RESULT = (
+    GENERATED / "agent-constraint-externality-qwen37plus-capability-result-a1-20260901.json"
+)
+CAPABILITY_A1_ADDENDUM = (
+    GENERATED / "agent-constraint-externality-qwen37plus-capability-addendum-a1-20260901.json"
+)
+CAPABILITY_A1_SNAPSHOT = (
+    GENERATED / "agent-constraint-externality-qwen37plus-provider-snapshot-a1-20260901.json"
+)
+CAPABILITY_A1_MANIFEST = (
+    GENERATED / "agent-constraint-externality-qwen37plus-capability-a1-manifest-20260901.json"
+)
+CAPABILITY_SUBSTRATE_VOID = (
+    GENERATED / "agent-constraint-externality-capability-substrate-invalid-void-r1-20260901.json"
+)
+CAPABILITY_SUBSTRATE_QUALIFICATION = (
+    GENERATED / "agent-constraint-externality-capability-substrate-recovery-qualification-r1-20260901.json"
+)
+CAPABILITY_R2_CONTRACT = (
+    GENERATED / "agent-constraint-externality-qwen37plus-capability-r2-contract-20260901.json"
+)
+CAPABILITY_R2_RESULT = (
+    GENERATED / "agent-constraint-externality-qwen37plus-capability-result-r2-20260901.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -106,8 +130,8 @@ def validate_capability_result(payload: dict[str, Any]) -> str | None:
     if content_sha256 != digest(unhashed):
         raise PreflightError("Capability result content hash mismatch.")
     f0_authorized = bool(payload.get("authority", {}).get("f0"))
-    if f0_authorized != (status == "CAPABILITY_CALIBRATION_PASS"):
-        raise PreflightError("Capability result F0 authority contradicts its status.")
+    if status != "CAPABILITY_CALIBRATION_PASS" and f0_authorized:
+        raise PreflightError("A stopped capability result cannot authorize F0.")
     if status != "CAPABILITY_CALIBRATION_PASS" and payload.get(
         "scientific_outcomes_observed"
     ) != 0:
@@ -144,15 +168,67 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
     provider_ready = bool(safe_provider["configured"])
     m1 = read_json(M1_QUALIFICATION) if M1_QUALIFICATION.is_file() else {}
     m1_pass = m1.get("status") == "M1_RUNNER_QUALIFICATION_PASS"
-    capability_result_path = (
-        CAPABILITY_CONTINUATION_RESULT
-        if CAPABILITY_CONTINUATION_RESULT.is_file()
-        else CAPABILITY_RESULT
+    substrate_void = (
+        read_json(CAPABILITY_SUBSTRATE_VOID)
+        if CAPABILITY_SUBSTRATE_VOID.is_file()
+        else {}
     )
+    substrate_qualification = (
+        read_json(CAPABILITY_SUBSTRATE_QUALIFICATION)
+        if CAPABILITY_SUBSTRATE_QUALIFICATION.is_file()
+        else {}
+    )
+    r2_contract = (
+        read_json(CAPABILITY_R2_CONTRACT)
+        if CAPABILITY_R2_CONTRACT.is_file()
+        else {}
+    )
+    substrate_void_active = (
+        substrate_void.get("status") == "CAPABILITY_RESULTS_VOID_SUBSTRATE_INVALID"
+    )
+    substrate_recovery_pass = (
+        substrate_qualification.get("status")
+        == "CAPABILITY_SUBSTRATE_RECOVERY_QUALIFICATION_PASS"
+    )
+    r2_authorized = (
+        r2_contract.get("status")
+        == "QWEN37PLUS_CAPABILITY_R2_AUTHORIZED_AFTER_SUBSTRATE_VOID"
+    )
+
+    capability_result_path = CAPABILITY_R2_RESULT if CAPABILITY_R2_RESULT.is_file() else Path()
     capability_result = (
-        read_json(capability_result_path) if capability_result_path.is_file() else {}
+        read_json(CAPABILITY_R2_RESULT) if CAPABILITY_R2_RESULT.is_file() else {}
     )
     capability_status = validate_capability_result(capability_result)
+
+    flash_final = (
+        read_json(CAPABILITY_CONTINUATION_RESULT)
+        if CAPABILITY_CONTINUATION_RESULT.is_file()
+        else {}
+    )
+    plus_a1 = read_json(CAPABILITY_A1_RESULT) if CAPABILITY_A1_RESULT.is_file() else {}
+    flash_provider_requests = int(flash_final.get("provider_request_total", 0))
+    plus_a1_provider_requests = int(plus_a1.get("provider_request_total", 0))
+    r2_provider_requests = int(capability_result.get("provider_request_total", 0))
+    flash_agent_requests = int(
+        flash_final.get(
+            "agent_model_request_count",
+            flash_final.get("gate", {}).get("agent_model_request_count", 0),
+        )
+    )
+    plus_a1_agent_requests = int(plus_a1.get("agent_model_request_count", 0))
+    r2_agent_requests = int(capability_result.get("agent_model_request_count", 0))
+    historical_void_provider_requests = flash_provider_requests + plus_a1_provider_requests
+    historical_void_agent_requests = flash_agent_requests + plus_a1_agent_requests
+    historical_void_agent_episodes = int(flash_final.get("agent_episode_count", 0)) + int(
+        plus_a1.get("agent_episode_count", 0)
+    )
+    latest_provider_requests = r2_provider_requests
+    latest_agent_requests = r2_agent_requests
+    latest_agent_episodes = int(capability_result.get("agent_episode_count", 0))
+    lineage_provider_requests = historical_void_provider_requests + r2_provider_requests
+    lineage_agent_requests = historical_void_agent_requests + r2_agent_requests
+    lineage_agent_episodes = historical_void_agent_episodes + latest_agent_episodes
 
     capability = {
         "schema_version": "agent-constraint-externality-capability-calibration-v1",
@@ -343,9 +419,9 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         blocker = "M1 scientific runner qualification has not passed."
         next_action = "RUN_M1_MOCK_QUALIFICATION"
     elif capability_status == "CAPABILITY_CALIBRATION_PASS":
-        readiness_status = "F0_SOURCE_READY"
-        blocker = None
-        next_action = "RUN_F0_SOURCE"
+        readiness_status = "CAPABILITY_CALIBRATION_PASS_F0_AUTHORIZATION_REQUIRED"
+        blocker = "Capability passed, but this capability execution does not itself authorize F0."
+        next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
     elif capability_status:
         readiness_status = capability_status
         blocker = (
@@ -353,6 +429,14 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             "F0 remains unauthorized."
         )
         next_action = "STOP_AWAIT_HUMAN_ADJUDICATION"
+    elif substrate_void_active and substrate_recovery_pass and r2_authorized:
+        readiness_status = "CAPABILITY_SUBSTRATE_REQUALIFICATION_READY"
+        blocker = None
+        next_action = "RUN_QWEN37PLUS_CAPABILITY_R2"
+    elif substrate_void_active:
+        readiness_status = "CAPABILITY_SUBSTRATE_RECOVERY_REQUIRED"
+        blocker = "Prior capability results are void because the AppWorld task substrate was invalid."
+        next_action = "QUALIFY_CAPABILITY_SUBSTRATE_RECOVERY"
     elif not provider_ready:
         readiness_status = "QWEN_PROVIDER_CONFIGURATION_REQUIRED"
         blocker = "AA_API_KEY is not configured in the approved environment."
@@ -373,6 +457,9 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "model_prereg_addendum_a0_pass": True,
         "m1_runner_qualification_pass": m1_pass,
         "capability_contract_frozen": True,
+        "capability_prior_results_void_substrate_invalid": substrate_void_active,
+        "capability_substrate_recovery_qualification_pass": substrate_recovery_pass,
+        "capability_r2_authorized": r2_authorized,
         "capability_result_status": capability_status,
         "capability_result_artifact": (
             str(capability_result_path.relative_to(ROOT))
@@ -388,18 +475,18 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "capability_scheduled_agent_episode_count": capability_result.get(
             "scheduled_agent_episode_count", 0
         ),
-        "capability_agent_episode_count": capability_result.get(
-            "agent_episode_count", 0
-        ),
+        "capability_latest_attempt_agent_episode_count": latest_agent_episodes,
+        "capability_historical_void_agent_episode_count": historical_void_agent_episodes,
+        "capability_agent_episode_count": lineage_agent_episodes,
         "capability_terminal_agent_episode_count": capability_result.get(
             "terminal_agent_episode_count", 0
         ),
-        "capability_agent_model_request_count": capability_result.get(
-            "gate", {}
-        ).get("agent_model_request_count", 0),
-        "capability_provider_request_total": capability_result.get(
-            "provider_request_total", 0
-        ),
+        "capability_latest_attempt_agent_model_request_count": latest_agent_requests,
+        "capability_historical_void_agent_model_request_count": historical_void_agent_requests,
+        "capability_agent_model_request_count": lineage_agent_requests,
+        "capability_latest_attempt_provider_request_total": latest_provider_requests,
+        "capability_historical_void_provider_request_total": historical_void_provider_requests,
+        "capability_provider_request_total": lineage_provider_requests,
         "capability_scientific_outcomes_observed": capability_result.get(
             "scientific_outcomes_observed", 0
         ),
@@ -417,7 +504,8 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "tool_sandbox_authorized": False,
         "appworld_ul_authorized": False,
         "p1_authorized": False,
-        "f0_authorized": capability_status == "CAPABILITY_CALIBRATION_PASS",
+        "f0_authorized": False,
+        "f0_authority_note": "Capability PASS, if obtained, still requires separate human F0 authorization.",
     }
     return {
         "agent-constraint-externality-capability-contract-20260831.json": capability,
@@ -447,7 +535,9 @@ def main() -> None:
         }
     for path in (
         CAPABILITY_RESULT, CAPABILITY_RESULT_MANIFEST, CAPABILITY_MODEL_SNAPSHOT,
-        CAPABILITY_CONTINUATION_RESULT,
+        CAPABILITY_CONTINUATION_RESULT, CAPABILITY_A1_RESULT, CAPABILITY_A1_ADDENDUM,
+        CAPABILITY_A1_SNAPSHOT, CAPABILITY_A1_MANIFEST, CAPABILITY_SUBSTRATE_VOID,
+        CAPABILITY_SUBSTRATE_QUALIFICATION, CAPABILITY_R2_CONTRACT, CAPABILITY_R2_RESULT,
     ):
         if not path.is_file():
             continue

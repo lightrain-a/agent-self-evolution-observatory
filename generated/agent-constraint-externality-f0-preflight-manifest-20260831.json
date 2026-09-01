@@ -1,7 +1,7 @@
 {
   "authority": {
     "appworld_ul": false,
-    "capability_calibration": false,
+    "capability_calibration": true,
     "f0": false,
     "m1_mock_qualification": false,
     "method": false,
@@ -22,13 +22,21 @@
       "bytes": 1773,
       "sha256": "7cdaab014b73c125780066d72624aee6e6dd9064db73f945f9938bc76d4572a5"
     },
+    "generated/agent-constraint-externality-capability-substrate-invalid-void-r1-20260901.json": {
+      "bytes": 1755,
+      "sha256": "0f8ee28cf0b6bd360438e0c11d46a3abdcfe26ce818bf517f7cea0cc26e89e50"
+    },
+    "generated/agent-constraint-externality-capability-substrate-recovery-qualification-r1-20260901.json": {
+      "bytes": 1656,
+      "sha256": "0a7fa36d660e206848e8b327c1442fc0faff045e85a1a0879f3a3e0bb2b1025c"
+    },
     "generated/agent-constraint-externality-f0-frozen-protocol-20260831.json": {
       "bytes": 4894,
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 1831,
-      "sha256": "d2c7b08a49cf4ed4097b2aa2faf60e42d270d56d672b261939dd4e6d1c4cfc0b"
+      "bytes": 2240,
+      "sha256": "7db46e3b9a87640225199a4b0cb947d905bfa3fcca23787cfdbaa5f425479b66"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -65,13 +73,33 @@
     "generated/agent-constraint-externality-qwen-provider-model-snapshot-20260901.json": {
       "bytes": 667,
       "sha256": "71f0a536c62c3659f7620f1c754b1e5e293aec81c9db3897be028dda979687d8"
+    },
+    "generated/agent-constraint-externality-qwen37plus-capability-a1-manifest-20260901.json": {
+      "bytes": 1092,
+      "sha256": "5e0d70a4941c1379ba815dde8934f1ab8dfa8db9e5b8ebb728c7478c3fcbdd25"
+    },
+    "generated/agent-constraint-externality-qwen37plus-capability-addendum-a1-20260901.json": {
+      "bytes": 2704,
+      "sha256": "054416d5aca3ec34d87d7306b21ba1ccb9dd8bb376f482f218ef8dd8e602e609"
+    },
+    "generated/agent-constraint-externality-qwen37plus-capability-r2-contract-20260901.json": {
+      "bytes": 1236,
+      "sha256": "ae920b0dd006dda857c692f4e18f1406725327e74d71c6e3d73302e020449883"
+    },
+    "generated/agent-constraint-externality-qwen37plus-capability-result-a1-20260901.json": {
+      "bytes": 1639,
+      "sha256": "4966fd7b91a6ab37e80b932fbd0ee743e0b576af9545ba836e299a41985dcc7e"
+    },
+    "generated/agent-constraint-externality-qwen37plus-provider-snapshot-a1-20260901.json": {
+      "bytes": 723,
+      "sha256": "18e48b51c45543f069091557276c34240ac18b4510c3e05f730cac054210a5d5"
     }
   },
   "generated_at": "2026-09-01T15:35:00+08:00",
   "gpu_runs": 0,
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
-  "provider_calls": 97,
+  "provider_calls": 172,
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP"
+  "status": "CAPABILITY_SUBSTRATE_REQUALIFICATION_READY"
 }
