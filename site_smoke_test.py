@@ -440,6 +440,18 @@ def main() -> None:
                 fail(f"{filename} Paper Story script order is invalid")
         elif any(name.startswith("paper-story-") for name in scripts):
             fail(f"{filename} is a working/scientific-object page and must not load unrelated formal Paper Stories")
+    working_audit_files = {
+        "paper-a.html":"current-paper-new-audit-a.js",
+        "paper-b.html":"current-paper-new-audit-b.js",
+        "paper-agent-constraint.html":"current-paper-new-audit-agent-constraint.js",
+        "paper-3d.html":"current-paper-new-audit-3d.js",
+    }
+    for filename, audit_script in working_audit_files.items():
+        scripts = canonical_scripts.get(filename, [])
+        if audit_script not in scripts or scripts.index(audit_script) > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load its working novelty/related-work audit before the single-paper renderer")
+        if any(name in scripts for name in ("paper-novelty-audit-data.js","paper-external-review-data.js","generated/stanford-r2-objection-matrix.js")):
+            fail(f"{filename} must not fabricate formal novelty/reviewer audits for a non-PaperRegistry object")
     required_depth_files = {
         "paper-e1.html":"current-paper-depth-e1.js", "paper-g1.html":"current-paper-depth-g1.js", "paper-c1.html":"current-paper-depth-c1.js",
         "paper-e2.html":"current-paper-depth-e2.js", "paper-b1.html":"current-paper-depth-b1.js", "paper-a.html":"current-paper-depth-a.js",
