@@ -221,6 +221,7 @@ def public_success(name: str, value: dict[str, Any], elapsed: float) -> dict[str
         "incomplete_details": value.get("incomplete_details") or {},
         "raw_payload_sha256": value.get("raw_payload_sha256"),
         "response_metadata": value.get("response_metadata") or {},
+        "safe_rate_quota_headers": value.get("response_headers") or {},
         "response_id_present": bool(response_id),
         "response_id_sha256": sha256_text(response_id),
         "transport_attempts": value.get("transport_attempts"),

@@ -66,6 +66,7 @@ def safe_response(response: Mapping[str, Any]) -> dict[str, Any]:
         "resolved_model": response.get("resolved_model"),
         "text": text, "text_sha256": sha256_text(text),
         "raw_payload_sha256": response.get("raw_payload_sha256"),
+        "safe_rate_quota_headers": response.get("response_headers") or {},
         "usage": response.get("usage") or {},
         "transport_attempts": response.get("transport_attempts"),
         "response_id_sha256": sha256_text(response_id),
