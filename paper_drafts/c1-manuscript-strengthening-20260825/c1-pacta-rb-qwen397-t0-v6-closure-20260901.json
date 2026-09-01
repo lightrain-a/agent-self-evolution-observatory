@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T12:45:00Z",
+  "experiment": "C1-PACTA-RB-QWEN397-T0-v6-20260901",
+  "status": "STOP_T0_V6_IMPLEMENTATION_FAILURE_AFTER_TWO_VALID_TRAJECTORIES",
+  "source_execution_git_sha": "024a8181b63d494bbbb370732fd294f46c169ccd",
+  "source_budget": 16384,
+  "pacta_first_decision_budget": 512,
+  "source_logical_attempts": 3,
+  "valid_trajectories": 2,
+  "valid_sources": ["scikit-learn__scikit-learn-14496", "psf__requests-1766"],
+  "invalid_consumed_source": "matplotlib__matplotlib-24627",
+  "invalid_reason": "Runner KeyError 'timeout_template' after a legitimate 60-second environment command timeout. Official MiniSWEAgent stores timeout_template as an AgentConfig default when omitted from swebench.yaml; the v6 compatibility wrapper incorrectly indexed the YAML directly.",
+  "support_audit_sha256": "261c5a98a123b0384f5b41b92f75b9ae4d8da434130b50e96425f82f0eaf309f",
+  "valid_artifacts": {
+    "scikit-learn__scikit-learn-14496": {"run_sha256": "8df02c015658cda18cf740a1c12a6dc1b5b8b7787c9ba08f218194936f368d30", "trajectory_sha256": "4190083ead39e4682682fe04e46a8df7bab09d5e7639a6f0714b5335f7321966", "writer_input_sha256": "eaea196d4a1f6ef402c80374524c8b7ff6d628b7331ed916fb746005ab297cbd"},
+    "psf__requests-1766": {"run_sha256": "c1533b262b58501d50234348b13af5e5bb0f5177c848a2413343af01fd080c6f", "trajectory_sha256": "1d044d60107255b802be286e62f1d57f133e8ba0afe1ed52c742e1bfa5355261", "writer_input_sha256": "7fd8498517c173e0f3c9be8dbaf8c2b25af0e9760a449c3101f8ee26014781ab"}
+  },
+  "matplotlib_artifacts": {"run_sha256": "1b91a6ff20bfb3522d3c543ea8738b573037ec3f83ad49ce9cb9789d25eba8f6", "trajectory_sha256": "c0695cad2a85d9dbc82563a233a702b59ae694727cbfe3dffa1666518bb4adea", "writer_input_sha256": "867c7c98ed677da7fd6e74ea8f8ead1a1c67f3c6391fa4acdbeb6b5d49d862a1", "writer_ready": false},
+  "repair_scope": "Compatibility-only: resolve timeout_template from frozen official AgentConfig default when the YAML omits it. Do not change the 60-second command timeout, model, source budget, parser, task, image, or source outcome semantics.",
+  "matplotlib_replay": false,
+  "remaining_untouched_sources": 7,
+  "maximum_total_valid_original_pool_after_v7": 9,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_measurement_calls": 0,
+  "future_task_executions": 0,
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "active_manuscript": "R9"
+}
