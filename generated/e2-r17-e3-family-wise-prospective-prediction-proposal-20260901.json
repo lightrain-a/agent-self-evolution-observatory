@@ -1,0 +1,61 @@
+{
+  "artifact_type": "e2-r17-e3-family-wise-prospective-prediction-proposal",
+  "authority": {
+    "analyze_v2_by_family": false,
+    "d0_calibration": false,
+    "gpu": false,
+    "heldout_evaluation": false,
+    "new_search_pool_acquisition": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "second_backbone": false,
+    "submission": false,
+    "updater": false
+  },
+  "canonical_base_git_commit": "3634d271d57f6f011171548ce9ff788c78975267",
+  "confirmatory_principle": {
+    "development_data_never_confirmatory": true,
+    "independent_unit": "new confirmatory stream",
+    "no_family_deletion_after_outcomes": true,
+    "no_v2_stream_reuse_as_e3_confirmatory": true,
+    "prediction_frozen_before_confirmatory_outcomes": true,
+    "primary_comparison": "family-conditioned mixed-support prediction versus pooled mixed-support prediction",
+    "proposed_stream_loss_improvement": "G_s=(D_s-D_hat_pool_s)^2-(D_s-D_hat_family_s)^2"
+  },
+  "created_date": "2026-09-01",
+  "current_gate": "PRE_F0_PROPOSAL_ONLY",
+  "families": [
+    "agj",
+    "fmv",
+    "ioc",
+    "msp",
+    "ska",
+    "tsr"
+  ],
+  "historical_bindings": {
+    "mixed_pool_theory_path": "consultations/e2-r17-theory-correction-mixed-pool-20260828.md",
+    "mixed_pool_theory_sha256": "9a45b28c33081a88e7453a9b3a608736e7b60e4ddcdde559d981321156a2f0db",
+    "v2_closeout_path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-closeout-20260901.json",
+    "v2_closeout_sha256": "f51e8267923ca2e50f70d6fbe931e01cebed470c6597160bca4d964ef7529d7a",
+    "v2_protocol_path": "consultations/e2-r17-deepseek-v2-protocol-20260830.md",
+    "v2_protocol_sha256": "546981b691fda58a700d2b3c5af458eace92391810080d2b531c5ae111cf0300",
+    "v2_scientific_adjudication_path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-scientific-adjudication-20260901.json",
+    "v2_scientific_adjudication_sha256": "1a71d0c32536c65987dc960d1f1f4cf40a41127f3f9cfe30d3fe73295ce9268a"
+  },
+  "next_allowed_action": "P0_ZERO_OUTCOME_SUBSTRATE_SUFFICIENCY_AUDIT_ONLY",
+  "p0_requirements": [
+    "inventory new independent streams for all six predeclared families",
+    "prove no E3 confirmatory stream duplicates the 12 V2 streams",
+    "prove no E3 confirmatory heldout unit reuses the V2 confirmatory sample",
+    "prove family labels are mutually exclusive without outcome-dependent decisions",
+    "prove K=8 mixed-pool support is pre-treatment measurable",
+    "prove V2 WIN-C/MRW projection semantics can remain unchanged",
+    "establish enough independent stream support for a future stream-level prediction-comparison test"
+  ],
+  "proposal_path": "consultations/e2-r17-e3-family-wise-prospective-prediction-proposal-20260901.md",
+  "schema_version": "1.0",
+  "scientific_object": "E2-R17-E3-FAMILY-WISE-PROSPECTIVE-PREDICTION-20260901",
+  "status": "PRE_F0_PROPOSAL_ONLY_ZERO_AUTHORITY",
+  "v2_status_preserved": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS"
+}
