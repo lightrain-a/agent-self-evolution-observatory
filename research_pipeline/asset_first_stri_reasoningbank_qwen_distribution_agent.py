@@ -180,6 +180,7 @@ def execute_trajectory(*, row: Mapping[str, Any], image_pull_reference: str,
     trajectory = {
         "schema_version": 1, "run_id": run_id, "created_at_utc": utcnow(),
         "instance_id": row["instance_id"], "task_sha256": sha256_text(task),
+        "problem_statement": task,
         "base_commit": base_commit, "image_pull_reference": image_pull_reference,
         "selected_memory": selected_memory,
         "selected_memory_sha256": sha256_text(selected_memory),
