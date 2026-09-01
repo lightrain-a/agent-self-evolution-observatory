@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T14:20:00Z",
+  "experiment": "C1-PACTA-RB-QWEN397-P0-20260901",
+  "status": "WRITER_TWINS_PASS",
+  "execution_git_sha": "6641659bab2293447eba54d704b67652cc100aa9",
+  "run_root": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-p0-20260901-v1",
+  "writer_result_sha256": "c98aded643ce573669309a98bed20a8b58677eeb220de86d49164cee6215e920",
+  "calls": 12,
+  "units": 6,
+  "same_context_pairs": 6,
+  "different_memory_pairs": 6,
+  "all_success_memory_items": 3,
+  "all_failure_memory_items": 3,
+  "all_finish_reason_stop": true,
+  "model_drift": 0,
+  "input_tokens": 524446,
+  "output_tokens": 4762,
+  "sealed_provider_calls": 0,
+  "branch_semantics": "Controlled intervention over the two native ReasoningBank induction instructions SUCCESSFUL_SI versus FAILED_SI on the exact same source task and frozen writer-input trajectory. This is not natural ReasoningBank branch selection and not pure reward-bit causality.",
+  "next_gate": "SCB binder: 12 calls, same Qwen397, temperature 0, max_completion_tokens 512; stop on any incomplete or >60-word binding."
+}
