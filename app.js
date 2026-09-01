@@ -738,8 +738,9 @@ function renderNavigation() {
   const nav = document.querySelector(".sidebar .nav");
   if (!nav) return;
   nav.innerHTML = NAV_GROUPS.map((group) => {
-    const isOpen = group.pages.some(([href]) => href.replace(".html", "") === pageId) || group.open;
-    return `<details class="nav-group" ${isOpen ? "open" : ""}><summary class="nav-level1"><span>${esc(textOf(group.title))}</span><span class="nav-chevron">⌄</span></summary><div class="nav-children">${group.pages.map(([href, label]) => {
+    const hasActive = group.pages.some(([href]) => href.replace(".html", "") === pageId || (href === "index.html" && pageId === "home"));
+    const isOpen = Boolean(group.open);
+    return `<details class="nav-group ${hasActive ? "active-group" : ""}" ${isOpen ? "open" : ""}><summary class="nav-level1"><span>${esc(textOf(group.title))}</span><span class="nav-chevron">⌄</span></summary><div class="nav-children">${group.pages.map(([href, label]) => {
       const active = href.replace(".html", "") === pageId || (href === "index.html" && pageId === "home");
       return `<a class="nav-level2 ${active ? "active" : ""}" href="${href}">${esc(textOf(label))}</a>`;
     }).join("")}</div></details>`;

@@ -1,0 +1,44 @@
+diff --git a/src/openpi/training/config.py b/src/openpi/training/config.py
+index ec6cd0f..6aae564 100644
+--- a/src/openpi/training/config.py
++++ b/src/openpi/training/config.py
+@@ -772,6 +772,39 @@ _CONFIGS = [
+         assets_base_dir="./outputs/assets",
+         checkpoint_base_dir="./outputs/checkpoints",
+     ),
++    # Prospective frozen shared26 child for the formal-goal-coupling experiment.
++    # The only scientific change from pi05_b1k is the outcome-blind 26-task episode subset.
++    TrainConfig(
++        name="pi05_b1k_shared26_frozen",
++        model=pi0_config.Pi0Config(action_horizon=32, pi05=True),
++        data=LeRobotB1KDataConfig(
++            repo_id="b1k_shared26_frozen",
++            base_config=DataConfig(
++                data_cls=_lerobot_compat.LeRobotDataset,
++                dataset_root="/data/wyt/behavior-2026-shared26-v3.0",
++                prompt_from_task=True,
++                dataset_kwargs={
++                    "tolerance_s": 5e-4,
++                    "episodes": [
++                        episode
++                        for task_index in (
++                            8, 10, 12, 13, 14, 17, 33, 41, 42, 46, 51, 56, 59,
++                            62, 65, 67, 68, 73, 74, 77, 81, 84, 85, 88, 89, 94,
++                        )
++                        for episode in range(task_index * 200, (task_index + 1) * 200)
++                    ],
++                },
++            ),
++            robot_config_name="b1k/R1Pro",
++        ),
++        weight_loader=weight_loaders.CheckpointWeightLoader("gs://openpi-assets/checkpoints/pi05_base/params"),
++        seed=42,
++        batch_size=64,
++        save_interval=10_000,
++        num_train_steps=50_000,
++        assets_base_dir="./outputs/assets",
++        checkpoint_base_dir="./outputs/checkpoints",
++    ),
+     #
+     # Fine-tuning Libero configs.
+     #

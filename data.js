@@ -1,17 +1,17 @@
 window.NAV_GROUPS = [
-  { title:{en:"Start Here",zh:"开始阅读"}, open:true, pages:[
+  { title:{en:"Start Here",zh:"开始阅读"}, open:false, pages:[
     ["index.html",{en:"Observatory Home",zh:"研究站首页"}],
     ["research-timeline.html",{en:"Research Timeline",zh:"研究时间轴"}],
     ["system-overview.html",{en:"Research System",zh:"科研系统"}],
   ]},
-  { title:{en:"Field Atlas",zh:"领域图谱"}, open:true, pages:[
+  { title:{en:"Field Atlas",zh:"领域图谱"}, open:false, pages:[
     ["foundations.html",{en:"Definition & Boundary · What Is Self-Evolution?",zh:"定义与边界 · 什么是 Agent 自进化"}],
     ["research-directions.html",{en:"Field Landscape · History & Problems",zh:"领域全景 · 历史与问题"}],
     ["mechanisms.html",{en:"Field Matrix · Mechanism × Domain × Evidence",zh:"领域矩阵 · 机制 × 场景 × 评测"}],
     ["research-map.html",{en:"Current Research Map · A–G Portfolio",zh:"当前研究组合图谱 · A–G"}],
     ["paper-ideas.html",{en:"Research Portfolio · ResearchItems",zh:"研究组合 · ResearchItems"}],
   ]},
-  { title:{en:"Current Research",zh:"当前科研"}, open:true, pages:[
+  { title:{en:"Current Research",zh:"当前科研"}, open:false, pages:[
     ["selected-paper.html",{en:"Paper Collection · Current 9",zh:"论文合集 · 当前 9 篇"}],
     ["paper-e1.html",{en:"① E1 · STRI",zh:"① E1 · STRI"}],
     ["paper-g1.html",{en:"② G1 · Temporal Safety",zh:"② G1 · 时间安全"}],
@@ -23,7 +23,7 @@ window.NAV_GROUPS = [
     ["paper-agent-constraint.html",{en:"⑧ Constraint Externality",zh:"⑧ 约束外部性"}],
     ["paper-3d.html",{en:"⑨ 3D · Relational Topology",zh:"⑨ 3D · 关系拓扑"}],
   ]},
-  { title:{en:"Literature",zh:"文献"}, open:true, pages:[
+  { title:{en:"Literature",zh:"参考文献"}, open:false, pages:[
     ["bibliography.html",{en:"Literature Library · Spine & Research Gaps",zh:"文献库 · 主线与研究空白"}],
   ]},
 ];
