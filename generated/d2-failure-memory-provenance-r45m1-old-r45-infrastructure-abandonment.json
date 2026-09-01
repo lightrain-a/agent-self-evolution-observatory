@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-OLD-R45-INFRASTRUCTURE-ABANDONMENT",
+  "recorded_date": "2026-09-01",
+  "role": "USER_AUTHORIZED_INFRASTRUCTURE_ONLY_REPLACEMENT_PRECONDITION",
+  "status": "OLD_R45_PERMANENTLY_QUARANTINED_REMOTE_STATE_UNKNOWN",
+  "explicit_user_directive": "直接开始重新跑",
+  "adjudication": {
+    "old_host": "yutong@222.20.126.60",
+    "old_lineage": "R45",
+    "old_state": "UNKNOWN_REMOTE_STATE",
+    "reason": "host/network route unavailable",
+    "pid_verified": false,
+    "completed_ledger_verified": false,
+    "checkpoint_verified": false,
+    "old_scientific_outputs_read": false,
+    "old_effect_inspected": false,
+    "old_lineage_admissible_in_new_analysis": false,
+    "future_recovery_of_old_artifacts": "QUARANTINE_ONLY",
+    "unknown_reclassified_as_not_started": false
+  },
+  "replacement": {
+    "authorized": true,
+    "classification": "USER_AUTHORIZED_INFRASTRUCTURE_ONLY_REPLACEMENT_RUN",
+    "is_resume_of_old_r45": false,
+    "fresh_lineage": "R45-M1",
+    "preferred_host": "wyt@222.20.126.231",
+    "fallback_host_before_first_scientific_source_exposure_only": "wyt@222.20.126.232",
+    "old_artifact_pooling": false,
+    "old_artifact_task_selection": false,
+    "old_artifact_threshold_adjustment": false,
+    "old_artifact_claim_adjustment": false
+  },
+  "bindings": {
+    "r43": {
+      "path": "generated/d2-failure-memory-provenance-r43-memrl-g8-execution-manifest.json",
+      "sha256": "dbd810dce063f5bdaaf7c40038a3329166f8ad11441dd11b49034491bf753de2",
+      "receipt_sha256": "ed496819814765359a85f190c71de04f7c19c9788da27784b7c588b1ab5f2fce"
+    },
+    "r44": {
+      "path": "generated/d2-failure-memory-provenance-r44-human-execution-authorization.json",
+      "sha256": "155ff75eadbc286527a43cc54026f651832413a15eb79f5fd994bc4345a33ba3",
+      "receipt_sha256": "58de2e81e998db7c8f5321e6985fa477be9037247a0fffc197f943533dafc3cf"
+    },
+    "continuation": {
+      "path": "generated/d2-failure-memory-provenance-continuation-status-20260831.json",
+      "sha256": "75892ee200d640c1dcac7f2a57392b740aaba06961262357f8764ace7bdcfaf5"
+    }
+  },
+  "authority": {
+    "abandon_old_lineage": true,
+    "resume_old_lineage": false,
+    "inspect_old_scientific_effect": false,
+    "pool_old_artifacts": false,
+    "start_replacement_before_migration_qualification": false,
+    "scientific_claim_change": false
+  },
+  "confirmatory_outcomes_observed_by_this_receipt": 0,
+  "receipt_sha256": "9f260b60289b4735384882fa1ad98940f844129d8f39e1e871b28246259b7e55"
+}

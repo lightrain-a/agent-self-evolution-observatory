@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "projection_id": "B1-PSMG-MANUSCRIPT-PROJECTION-R36",
+  "recorded_date": "2026-08-24",
+  "status": "MANUSCRIPT_DESIGN_LOOP_PROJECTED_NO_SCIENTIFIC_CLAIM_EXPANSION",
+  "role": "MANUSCRIPT_AND_RELEASE_PROJECTION_ONLY",
+  "parents": {
+    "psmg_design": {
+      "path": "generated/d2-failure-memory-provenance-psmg-method-design-r27.json",
+      "sha256": "4d96dcf98c26785463d9638bc0ce7ae78d76fc874db784bc18348cb0ef4a98f1"
+    },
+    "fresh_confirmatory_reopen_gate": {
+      "path": "generated/d2-failure-memory-provenance-r35-fresh-confirmatory-reopen-gate.json",
+      "sha256": "f15b1b1e01fad9def59b4f7ee43e01f7ed5d215ae19b2a3ffb7e6990e62eaff5"
+    },
+    "prior_stable_source_zip": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
+      "sha256": "932fadfe648aa5d440a54b74e69b72f5359773e31fbce888763f97bb28cce92c"
+    },
+    "prior_stable_pdf": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf",
+      "sha256": "3d9d12435560c350b892a942528b7fd13068c10a03599819eaab81bdee63ac02"
+    }
+  },
+  "projected_story": {
+    "closed_design_loop": "phenomenon -> causal identification -> PSMG provenance-separated governance",
+    "efficacy_loop": "OPEN_PENDING_FRESH_CONFIRMATORY_EXPERIMENT",
+    "psmg_design_frozen": true,
+    "psmg_effect_validated": false,
+    "provenance_only_causal_sign_resolved": false,
+    "r19_reopenable": false,
+    "same_asset_27_is_fresh_confirmatory": false
+  },
+  "manuscript_changes": {
+    "abstract": "PSMG introduced explicitly as a frozen method design; efficacy requires a fresh provenance-bearing substrate.",
+    "introduction": "Current R19 fail-closed status is projected; contribution list now includes PSMG as design-level response.",
+    "method": "Adds a formal PSMG section with control-plane provenance, calibrated governance, executor-blind projection, and a strongest same-information provenance-free comparator.",
+    "related_work": "Compresses prior work and binds novelty to identification-to-governance coupling rather than provenance storage, trust scoring, routing, or firewalls in isolation.",
+    "limitations": "Projects R19 29/140 fail-closed stop, no-interim-inference rule, and 27-unit inventory boundary.",
+    "appendix": "Adds R19 non-reuse rule and the six-stage fresh-confirmatory reopen gate."
+  },
+  "release_candidate": {
+    "pdf_sha256": "6f89d11cbc302d950d28f3027bc7c7795ea1f89263f7a9ef3d71e493e10c8189",
+    "source_zip_sha256": "af9044bead291320d907f89f39fe6471c9f43942cc1152aa2bdc2ed511cc73c3",
+    "source_files": 20,
+    "total_pdf_pages": 13,
+    "main_text_last_page": 9,
+    "references_start_page": 10,
+    "appendix_starts_page": 10,
+    "all_fonts_embedded": true,
+    "all_pages_rasterized": true,
+    "raster_pages": 13,
+    "raster_dimensions_px": [1020, 1320],
+    "edge_ink_8px_max_fraction": 0.0,
+    "blank_like_pages": [],
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "overfull_boxes": 0
+  },
+  "claim_boundary": {
+    "scientific_values_changed": false,
+    "new_scientific_outcomes_opened": false,
+    "r19_partial_outcomes_used": false,
+    "r19_partial_outcomes_used_for_design_selection": false,
+    "same_asset_27_promoted_to_confirmatory": false,
+    "psmg_efficacy_claim_added": false,
+    "provenance_only_directional_claim_added": false,
+    "failure_memory_blacklist_claim_added": false,
+    "claim_expansion": false
+  },
+  "verification": {
+    "r27_r35_system_regression": "13/13 PASS",
+    "latex_compile": "PASS",
+    "main_text_page_limit": "PASS_9_OF_9",
+    "claim_boundary_scan": "PASS_DESIGN_ONLY",
+    "release_projection_pending_at_receipt_creation": true
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_calls": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "gpu": false,
+    "claim_expansion": false,
+    "submission": false
+  }
+}

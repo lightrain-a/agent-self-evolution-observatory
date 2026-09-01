@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R41-MEMRL-G5-RUNTIME-ADJUDICATION",
+  "recorded_date": "2026-08-29",
+  "status": "MEMRL_R40_G5_SUPPORT_AND_PREREGISTRATION_PASS_CONFIRMATORY_IMAGE_STILL_UNFROZEN",
+  "role": "ZERO_CONFIRMATORY_OUTCOME_RUNTIME_SUPPORT_ADJUDICATION",
+  "parent_bindings": {
+    "r40_preregistration": {
+      "path": "generated/d2-failure-memory-provenance-r40-memrl-g5-preflight.json",
+      "sha256": "770edb5028b9cc39e8e24861115f78a94bdeac71226793dda85ee405bbbe35fd"
+    },
+    "r41_runtime_evidence": {
+      "path": "generated/d2-failure-memory-provenance-r41-memrl-g5-runtime-evidence.json",
+      "sha256": "7a42cffb3318526e9d6a687a8a9e04d5aa26ecdc28a6d73a91da88c29b6ee7e7"
+    }
+  },
+  "source_identity": {
+    "repo": "https://github.com/MemTensor/MemRL",
+    "revision": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "host": "workstation3090",
+    "docker_server": "20.10.8",
+    "source_file_sha256": {
+      "3rdparty/LifelongAgentBench/scripts/dockerfile/os_interaction/default": "f4e7b3d4298777fcc6b955e2853e7d38a8d50916b1853c3fefe6d0b3a0a2f1fe",
+      "3rdparty/LifelongAgentBench/src/tasks/instance/os_interaction/container.py": "b8ec612a3aa024f110caaf40b44df07360830c991357e153f62c6ac6153b2300",
+      "3rdparty/LifelongAgentBench/src/tasks/instance/os_interaction/utility.py": "30f1dfd6517c5295e8bbf80ad83631a41cdd843656f048e93517910ad19c236c",
+      "data/llb/os_interaction_train.json": "d33513493856e6cdce2377a951a48a42686463eee1c92acb9d6b0a0320601e62",
+      "data/llb/os_interaction_val.json": "1804781d7e768e74cc9f9038fcdfcf373ff34d4edc668382d6d18cbf74f856d6"
+    }
+  },
+  "runtime_support": {
+    "native_osinteraction_container_lifecycle_pass": true,
+    "fresh_container_isolation_pass": true,
+    "timeout_semantics_pass": true,
+    "cleanup_pass": true,
+    "training_support_evaluator_replay_pass": true,
+    "training_support_unit": {
+      "split": "data/llb/os_interaction_train.json",
+      "unit_id": "0",
+      "instruction_sha256": "8fc812b7186dc37112abd0ada02236e9bf78c513ba07856caf3610fa110b287c"
+    },
+    "validation_split_executed": false,
+    "confirmatory_outcome_observed": false,
+    "support_image": {
+      "tag": "ubuntu2004_cuda1141_ssh:latest",
+      "id": "sha256:a42dc29f8d95292f261a309a21ba21ceff3a9edef516c54d40e5e9b51f253f1a",
+      "created": "2021-09-08T03:47:40.78135987Z",
+      "size_bytes": 522460448,
+      "role": "support-only cached Ubuntu 20.04 image",
+      "source_default_image_equivalent_claimed": false,
+      "confirmatory_image_claimed": false,
+      "reason_used": "The host Docker daemon was reachable but Docker Hub and apt network access were unavailable. The cached Ubuntu image was used only to exercise the released OSInteractionContainer lifecycle without target evaluation."
+    },
+    "support_image_is_final_confirmatory_image": false,
+    "source_faithful_confirmatory_image_frozen": false
+  },
+  "historical_r39_r40_gate_adjudication": {
+    "G1_RELEASE": true,
+    "G2_PROVENANCE_SCHEMA": true,
+    "G3_EXACT_INFORMATION": true,
+    "G4_FRESH_CAPACITY": true,
+    "G5_SUPPORT_AND_PREREGISTRATION": true,
+    "G6_AUTHORITY": false,
+    "passed_now": true,
+    "next_blocking_stage": "CURRENT_20260827_G1_G8_RECOMPILE_AND_CONFIRMATORY_IMAGE_FREEZE"
+  },
+  "current_program_boundary": {
+    "r40_gate_names_are_historical_and_do_not_replace_20260827_G1_G8": true,
+    "current_fresh_substrate_gate_must_be_recompiled": true,
+    "confirmatory_image_must_be_frozen_before_first_validation_treatment_outcome": true,
+    "current_user_request_may_authorize_continuation_but_does_not_waive_scientific_gates": true
+  },
+  "access_accounting": {
+    "confirmatory_validation_tasks_executed": 0,
+    "confirmatory_treatment_outcomes_observed": 0,
+    "training_support_evaluator_calls": 4,
+    "model_calls": 0,
+    "provider_calls": 0,
+    "gpu_scientific_runs": 0
+  },
+  "claim_policy": {
+    "new_scientific_behavioral_result": false,
+    "provenance_only_causal_sign_updated": false,
+    "PSMG_efficacy_updated": false,
+    "paper_claim_expansion_allowed": false
+  },
+  "authority": {
+    "scientific_execution": false,
+    "experiment": false,
+    "model_calls": false,
+    "evaluator_calls_on_confirmatory_validation": false,
+    "gpu": false,
+    "claim_expansion": false,
+    "submission": false
+  },
+  "next_action": "RECOMPILE_PINNED_MEMRL_AGAINST_CURRENT_G1_G8_WITHOUT_VALIDATION_TREATMENT_OUTCOME_ACCESS",
+  "scientific_verdict": "NO_BEHAVIORAL_VERDICT_RUNTIME_SUPPORT_FAILURE_WAS_IMPLEMENTATION_LEVEL_AND_IS_NOW_CLOSED",
+  "receipt_sha256": "e54ec1300c97030ded64bb18ec37082d11cf49bb8ae66463f9cbe0ccf1d8348b"
+}
