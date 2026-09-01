@@ -1,0 +1,40 @@
+{
+  "adjudication": "HOLD normalization until a preregistered metadata-only RGB runtime projection passes an HF_HUB_OFFLINE=1 sample-level qualification",
+  "generated_at": "2026-09-01T22:03:45+08:00",
+  "not_a_scientific_result": true,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "rejected_stock_depth_completion": {
+    "exact_lfs_bytes": 474923580178,
+    "exact_lfs_pointer_file_count": 2532,
+    "gib": 442.3070514369756,
+    "reason": "all bytes are three depth modalities absent from the pinned OpenPI R1Pro observation mapping; downloading them would add no scientific model input and would more than triple current video transport burden"
+  },
+  "repair1_constructor_receipt_path": "generated/behavior-formal-goal-coupling-shared26-pi05-data-runtime-qualification-repair1-20260901.json",
+  "repair1_constructor_receipt_sha256": "92a8ff33cb7688372f5821c376adeaee7a02fc506fdd894960a20888f08180ee",
+  "repair1_constructor_status": "PI05_DATA_RUNTIME_QUALIFICATION_PASS",
+  "schema_version": "behavior-formal-goal-coupling-shared26-repair1-sample-schema-hold-v1",
+  "scientific_state": {
+    "gpu_used": false,
+    "model_checkpoint_weight_downloaded": false,
+    "model_loaded": false,
+    "normalization_started": false,
+    "policy_outcomes_read": false,
+    "policy_rollouts_started": false,
+    "training_started": false,
+    "whole_manifest_final_seal_sha256": "1890045423141532213f9398451a7f51e7c481b3ea90a5cc0fa86c3516db1a9f"
+  },
+  "source_audit_finding": {
+    "all_missing_modalities_unused_by_openpi_r1pro": true,
+    "lerobot_behavior": "DatasetReader.get_item() decodes every metadata video_key before OpenPI repack/data transforms",
+    "metadata_video_key_count": 6,
+    "missing_modalities": [
+      "observation.depth_linear.left_realsense_link_camera_0",
+      "observation.depth_linear.right_realsense_link_camera_0",
+      "observation.depth_linear.zed_link_camera_0"
+    ],
+    "missing_unique_video_files": 2532,
+    "openpi_r1pro_required_video_key_count": 3,
+    "sample_access_would_fail_before_normalization": true
+  },
+  "status": "REPAIR1_CONSTRUCTOR_PASS_SAMPLE_SCHEMA_HOLD"
+}

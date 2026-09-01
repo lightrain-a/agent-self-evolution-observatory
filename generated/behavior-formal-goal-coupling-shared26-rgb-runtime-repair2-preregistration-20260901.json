@@ -1,0 +1,89 @@
+{
+  "failure_rule": "If projection creation or offline sample qualification fails, HOLD/STOP. Do not iterate to a third runtime repair before separate adjudication.",
+  "generated_at": "2026-09-01T22:03:45+08:00",
+  "gpu_used": false,
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "normalization_authorized_only_if_repair2_passes": true,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "parent_sample_schema_hold_path": "generated/behavior-formal-goal-coupling-shared26-repair1-sample-schema-hold-20260901.json",
+  "parent_sample_schema_hold_sha256": "970e01211f10d7317da5177a5fa8bcf826506d8953ae90e8fca9c27d00920805",
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "projection_builder_path": "research_pipeline/behavior_formal_goal_coupling_shared26_rgb_runtime_projection.py",
+  "projection_builder_sha256": "79f50dd33b667557192ea21d1dc91870667aa7857c7c1b8d94dff8ba2ea939eb",
+  "projection_test_path": "research_pipeline/test_behavior_formal_goal_coupling_shared26_rgb_runtime_projection.py",
+  "projection_test_result": "2/2 PASS",
+  "projection_test_sha256": "b74cfdb3aee8522c222f782c271b1e4dd2d260b4be5b0e847a895d731aec12ae",
+  "repair2_child_config_source_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+  "repair2_openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "repair2_openpi_parent_commit": "2b734b700a6a872b5d960f0a9f55f9c295ed42a0",
+  "repair2_patch_path": "generated/behavior-formal-goal-coupling-shared26-openpi-child-config-repair2-20260901.patch",
+  "repair2_patch_sha256": "4728c3820c0172c6f8f11456e77aa13925730e53518c539c339676f6a78a3bdb",
+  "runtime_projection": {
+    "only_derived_file": "meta/info.json",
+    "remove_exactly": [
+      "observation.depth_linear.left_realsense_link_camera_0",
+      "observation.depth_linear.right_realsense_link_camera_0",
+      "observation.depth_linear.zed_link_camera_0"
+    ],
+    "runtime_root": "/data/wyt/behavior-2026-shared26-v3.0-rgb-runtime-repair2",
+    "scientific_payload_copy_or_reencode_bytes": 0,
+    "source_info_sha256": "24c77f7a984bcee775e666203881a946b11a899f524fbc2405922b2109757874",
+    "source_root": "/data/wyt/behavior-2026-shared26-v3.0",
+    "symlink_source_objects": [
+      "data",
+      "videos",
+      "meta/episodes",
+      "meta/stats.json",
+      "meta/tasks.jsonl",
+      "meta/tasks.parquet"
+    ]
+  },
+  "sample_qualification": {
+    "environment": [
+      "HF_HUB_OFFLINE=1",
+      "CUDA_VISIBLE_DEVICES=",
+      "JAX_PLATFORMS=cpu"
+    ],
+    "model_load_forbidden": true,
+    "required_depth_keys_empty": true,
+    "required_loaded_episode_set_exactly_frozen_5200": true,
+    "required_metadata_video_keys_exactly_three_rgb": true,
+    "required_model_image_names": [
+      "base_0_rgb",
+      "left_wrist_0_rgb",
+      "right_wrist_0_rgb"
+    ],
+    "required_sample_actions_shape": [
+      32,
+      23
+    ],
+    "required_sample_index": 0,
+    "required_sample_state_shape": [
+      23
+    ],
+    "single_actor_required": true
+  },
+  "sample_qualification_runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_rgb_sample_qualify.py",
+  "sample_qualification_runner_sha256": "5fd5567425d04c795b05df308e3fbb33976ce61992d4f143d421e13761c6a12f",
+  "schema_version": "behavior-formal-goal-coupling-shared26-rgb-runtime-repair2-preregistration-v1",
+  "scientific_authority": false,
+  "scientific_treatment_unchanged": {
+    "R1Pro_observation_mapping": true,
+    "action_horizon": true,
+    "batch_size": true,
+    "episode_subset": true,
+    "optimizer_and_lr": true,
+    "parquet_payload": true,
+    "seed": true,
+    "state_action_transforms": true,
+    "task_panel": true,
+    "terminal_checkpoint_rule": true,
+    "three_rgb_video_payload": true,
+    "training_horizon": true,
+    "z_score_definition": true
+  },
+  "status": "PREREGISTERED_REPAIR2_METADATA_ONLY_ZERO_SCIENTIFIC_EXECUTION",
+  "training_started": false
+}

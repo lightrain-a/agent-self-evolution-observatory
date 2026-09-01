@@ -1,0 +1,13 @@
+diff --git a/src/openpi/training/config.py b/src/openpi/training/config.py
+index d93d98e..049824f 100644
+--- a/src/openpi/training/config.py
++++ b/src/openpi/training/config.py
+@@ -782,7 +782,7 @@ _CONFIGS = [
+             assets=AssetsConfig(asset_id="b1k_shared26_frozen"),
+             base_config=DataConfig(
+                 data_cls=_lerobot_compat.LeRobotDataset,
+-                dataset_root="/data/wyt/behavior-2026-shared26-v3.0",
++                dataset_root="/data/wyt/behavior-2026-shared26-v3.0-rgb-runtime-repair2",
+                 prompt_from_task=True,
+                 dataset_kwargs={
+                     "tolerance_s": 5e-4,
