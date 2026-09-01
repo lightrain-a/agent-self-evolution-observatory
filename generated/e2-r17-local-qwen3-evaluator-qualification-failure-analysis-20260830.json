@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-local-qwen3-evaluator-qualification-failure-analysis",
+  "date": "2026-08-30",
+  "status": "TERMINAL_LOCAL_EVALUATOR_CAPABILITY_FLOOR",
+  "scientific_authority": {
+    "central_mechanism_adjudication": false,
+    "execute_mrw": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "historical_hosted_hold_reinterpreted": false,
+  "heldout_or_scientific_tasks_accessed": false,
+  "failure_classification": [
+    "EVALUATOR_MODEL_QUALIFICATION",
+    "CAPABILITY_FLOOR"
+  ],
+  "model": {
+    "model_id": "Qwen/Qwen3-8B",
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "files_manifest_sha256": "73ea6bb0a38168c9b923bd12fe8c1bfca9a0b8c39ebd5e8fb9d2ef8e97789bac",
+    "verification_receipt_sha256": "86e5151358a45eb3092b120250b7b5a4af58b185094e870d38046d64d5b059ee",
+    "served_name": "qwen3-8b-open-weight-e2-qualification",
+    "runtime": "vllm==0.20.0",
+    "dtype": "bfloat16",
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "seed": 1717,
+    "thinking_enabled": false,
+    "provider_retry_limit": 0
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "artifact": {
+        "path": "generated/e2-r17-local-qwen3-evaluator-qualification-v1-20260830.json",
+        "sha256": "f3bb0d571bfab5dea9b065ad94a5dd54a68d065071a91179c1ac7052adca7403"
+      },
+      "status": "FAIL_LOCAL_EVALUATOR_RUNTIME_QUALIFICATION",
+      "diagnosis": "The exact-message probe included vLLM-generated tool_call.id values. Tool names and arguments were stable, but transport-generated identifiers varied.",
+      "scientific_outcomes_observed": false,
+      "development_rollouts_started": 0,
+      "disposition": "LEGITIMATE_TRANSPORT_LAYER_REPAIR_ALLOWED"
+    },
+    {
+      "attempt": 2,
+      "artifact": {
+        "path": "generated/e2-r17-local-qwen3-evaluator-qualification-v2-20260830.json",
+        "sha256": "2586691e4d2175bd7643994230c4c0a03aec37af74151101556785e0083c4f2a"
+      },
+      "status": "FAIL_LOCAL_EVALUATOR_RUNTIME_QUALIFICATION",
+      "transport_probe": {
+        "repeats": 3,
+        "expected_tool_call": true,
+        "exact_message_reproduction_after_transport_id_canonicalization": true,
+        "message_sha256": "a8e5a07c7746a4c40207dabde2fec8602d46f38ebd6c49641d31f710b11cb884"
+      },
+      "development_tasks": 6,
+      "completed_rollouts": 6,
+      "technical_failures": 0,
+      "length_finish_reasons": 0,
+      "successes": 0,
+      "failures": 6,
+      "failure_families": [
+        "aggregation_join",
+        "formula_materialization",
+        "input_output_contract",
+        "multi_step_pipeline",
+        "schema_key_alignment",
+        "target_sheet_range"
+      ],
+      "disposition": "TERMINAL_CAPABILITY_FLOOR_NO_HELDOUT_EXECUTION"
+    }
+  ],
+  "transport_repair": {
+    "policy": "Replace provider-random tool_call.id with call_<first24hex(sha256(request_sha256:tool_index))> before returning the assistant message to MindMemOS.",
+    "why_scientifically_permissible": "The repaired field is a transport correlation identifier, not model semantic content. The repair was made after a zero-outcome simple probe and before any development or held-out rollout.",
+    "tests": {
+      "count": 3,
+      "status": "PASS",
+      "adapter_path": "research_pipeline/e2_r17_local_openai_react.py",
+      "adapter_sha256": "2506f78e028537f24b75c37be02b0ec8de245647161b7211b5571a015bc163eb",
+      "test_path": "research_pipeline/test_e2_r17_local_openai_react.py",
+      "test_sha256": "28b2ece98475c368c906b817f26102d6818fcd517f48674306e5fc9017b15d66"
+    }
+  },
+  "cost_accounting": {
+    "local_chat_completion_requests": 62,
+    "attempt_1_simple_probe_requests": 3,
+    "transport_diagnostic_requests": 3,
+    "attempt_2_simple_probe_requests": 3,
+    "attempt_2_development_actor_requests": 53,
+    "hosted_provider_requests": 0,
+    "server_log_sha256": "4f436cbc8c2039d9768d5afb1308892adb55e4340cd5dcca609e1db306cd6cfa"
+  },
+  "failure_differential": {
+    "model_identity_and_provenance": "PASS_EXACT_REVISION_CONTENT_ADDRESSED",
+    "server_startup_and_inference": "PASS",
+    "tool_call_semantics": "PASS",
+    "transport_level_exact_reproduction": "PASS_AFTER_PREDEVELOPMENT_REPAIR",
+    "technical_rollout_completion": "PASS_6_OF_6",
+    "development_task_capability": "FAIL_ZERO_OF_SIX",
+    "scientific_identifiability": "NOT_TESTED",
+    "central_mechanism": "NOT_ADJUDICATED"
+  },
+  "next_authorized_step": {
+    "local_qwen3_8b_evaluator": "STOP",
+    "heldout_evaluation_with_local_qwen3_8b": "FORBIDDEN",
+    "mrw": "FORBIDDEN",
+    "candidate_queue": "A separately qualified evaluator may be tested on the same fixed development-only six-family panel before any new heldout nuisance-control contract."
+  },
+  "reusable_rule": "A reproducible tool-calling runtime is not a qualified scientific evaluator if its development score is at the task floor. Separate transport determinism from task competence, repair only transport-only fields before outcomes, and stop before held-out access when the capability gate fails."
+}

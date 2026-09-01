@@ -1,12 +1,6 @@
 {
   "schema_version": "1.0",
-  "policy": {
-    "entries_are_zero_authority_institutional_memory_inputs": true,
-    "entries_cannot_create_or_promote_candidates": true,
-    "entries_cannot_authorize_problem_gate_method_experiment_provider_or_gpu": true,
-    "entries_must_be_scope_bound_and_layer_typed": true,
-    "external_or_auxiliary_negative_runs_may_enter_memory_without_mutating_active_scientific_state": true
-  },
+  "governance": {},
   "assets": [
     {
       "source_path": "research_pipeline/memento_composition_hold_failure_asset_20260823.json",
@@ -67,6 +61,46 @@
     {
       "source_path": "research_pipeline/formal_goal_policy_contract_failure_assets_20260828.json",
       "source_key": "cross_product_integration_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "final_visible_budget_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "causal_provenance_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "provider_budget_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "role_runtime_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "zero_missing_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "review_layer_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "execution_faithful_preflight_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "duplicate_launch_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "negative_control_identifiability_asset"
+    },
+    {
+      "source_path": "research_pipeline/e2_r17_reusable_failure_assets_20260829.json",
+      "source_key": "evaluator_qualification_asset"
     }
   ],
   "scientific_authority": false

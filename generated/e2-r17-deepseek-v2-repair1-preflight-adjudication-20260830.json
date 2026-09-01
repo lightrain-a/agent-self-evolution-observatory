@@ -1,0 +1,44 @@
+{
+  "artifact_type": "e2-r17-deepseek-v2-repair1-preflight-adjudication",
+  "authority": {
+    "execute_deepseek_v2": true,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "second_backbone": false,
+    "submission": false
+  },
+  "authorization": {
+    "path": "generated/e2-r17-deepseek-v2-replicated-paired-repair1-authorization-20260830.json",
+    "sha256": "8301fa9d96768a86c802c06fbe04a02be552c5fa68195f709011b73c83b8dac5"
+  },
+  "created_at_utc": "2026-08-30T14:33:20+00:00",
+  "parent_failure": {
+    "path": "generated/e2-r17-deepseek-v2-execution-blocker-20260830.json",
+    "sha256": "fd84dd43718508151050f5e7c872ebf2dfbd453e8ccfae41b1e30081f986d22a"
+  },
+  "preflight": {
+    "env_file": ".env",
+    "heldout_rollouts": 1728,
+    "learned_states": 96,
+    "path": "scripts/preflight_e2_r17_deepseek_v2.py",
+    "replicates_per_stream": 4,
+    "run_root_fresh": true,
+    "sha256": "7455c00bdf00a02390d9f44e42e4231f660770c69c91aaa6d58c0801d612ff82",
+    "streams": 12
+  },
+  "provider_calls": 0,
+  "repair_classification": "IMPLEMENTATION/EXECUTABLE_SCHEMA",
+  "repair_review": {
+    "dual_pass": true,
+    "path": "generated/e2-r17-deepseek-v2-repair1-review-20260830/summary.json",
+    "sha256": "75b3d9007aeff0451bc5a53312bb4dfc0edad8b41031c799c6217f33b96de497"
+  },
+  "repaired_contract": {
+    "path": "generated/e2-r17-deepseek-v2-replicated-paired-repair1-contract-20260830.json",
+    "sha256": "a4ce14dea5c5b0ab5509d97a072013a9924b592ae18c049b05d4edf707201f80"
+  },
+  "schema_version": "1.0",
+  "scientific_belief_update": "NONE",
+  "scientific_outcomes_observed": false,
+  "status": "PASS_EXECUTABLE_SCHEMA_REPAIR_READY_FOR_DEEPSEEK_V2_EXECUTION"
+}

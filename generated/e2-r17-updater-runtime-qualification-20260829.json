@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-updater-runtime-qualification",
+  "date": "2026-08-29",
+  "status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_UPDATER_RUNTIME",
+  "scientific_role": "PERSISTENT_SKILL_UPDATER_ONLY",
+  "runtime": {
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+    "python_version": "3.12.3",
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv.freeze.txt",
+    "freeze_sha256": "80cd6fdd8eb672e41252c099766fd171a5a7a4b90c284d87da87d09f0d559731",
+    "source_binding": [
+      "/data/wyt/evidence-substrates/MindMemOS-20260817/src/mindmemos",
+      "/data/wyt/evidence-substrates/MindMemOS-20260817/src/mindmemos_sdk",
+      "/data/wyt/evidence-substrates/MindMemOS-20260817/src/mindmemos_eval"
+    ],
+    "environment_requirements": {
+      "LITELLM_LOCAL_MODEL_COST_MAP": "True"
+    }
+  },
+  "mindmemos": {
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "checkout_clean": true,
+    "uv_lock_path": "/data/wyt/evidence-substrates/MindMemOS-20260817/uv.lock",
+    "uv_lock_sha256": "867495f270aa3c44d7f0409feb03a8838642f7f1eb6b3552ae79e837ec164cae",
+    "sync_semantics": "UV_PROJECT_ENVIRONMENT=<updater-venv> uv sync --project <MindMemOS> --package mindmemos --frozen --no-dev --python /usr/bin/python3.12"
+  },
+  "post_lock_compatibility_override": {
+    "present": true,
+    "package": "tiktoken",
+    "locked_environment_version_before_override": "0.13.0",
+    "qualified_runtime_version": "0.11.0",
+    "reason": "E2-R17 V3.1 ExactMatchedEvidenceBlockRenderer was independently pre-frozen and mechanically qualified with tiktoken==0.11.0 / cl100k_base before provider-runtime execution. The updater runtime therefore applies this explicit compatibility override after the frozen MindMemOS sync instead of silently changing the renderer tokenizer.",
+    "claim_boundary": "This runtime is not described as a pure uv.lock environment; the override is explicit and content-addressed by the final freeze SHA."
+  },
+  "package_versions": {
+    "mindmemos": "0.1.3",
+    "omegaconf": "2.3.1",
+    "qdrant-client": "1.18.0",
+    "pydantic": "2.13.4",
+    "tiktoken": "0.11.0"
+  },
+  "exact_entrypoint_qualification": {
+    "first_party_entrypoint": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "import_status": "PASS",
+    "supporting_entrypoints": [
+      "qdrant_client.AsyncQdrantClient",
+      "research_pipeline.e2_r17_mindmemos_updater.run_projection_update",
+      "research_pipeline.e2_r17_evidence_window_v2.ExactMatchedEvidenceBlockRenderer"
+    ]
+  },
+  "zero_provider_first_party_updater_qualification": {
+    "path": "/data/wyt/e2-r17-search-projection/runtime-qualifications/updater-runtime-zero-provider-20260829.json",
+    "sha256": "9d2f4e3525a04a55128e3592f44531226962084613adf1bca17f0f96f7d521a9",
+    "status": "PASS_ZERO_PROVIDER",
+    "provider_calls": 0,
+    "all_six_updater_arms_pass": true
+  },
+  "regression_tests": {
+    "status": "PASS",
+    "ran": 16,
+    "skipped": 2,
+    "failed": 0,
+    "errors": 0,
+    "suites": [
+      "research_pipeline.test_e2_r17_mindmemos_updater_v31",
+      "research_pipeline.test_e2_r17_evidence_window_v2",
+      "research_pipeline.test_e2_r17_mindmemos_ark_adapter",
+      "research_pipeline.test_e2_r17_provider_budget"
+    ]
+  },
+  "scope_separation": {
+    "actor_evaluator_runtime_qualification_inherited": false,
+    "updater_runtime_qualification_is_role_specific": true,
+    "public_baseline_runtime_authority": false
+  },
+  "failure_that_triggered_this_qualification": {
+    "failure_id": "R17-F008-UPDATER-RUNTIME-COVERAGE",
+    "classification": "RUNTIME_INFRA/IMPLEMENTATION",
+    "scientific_belief_update": "NONE"
+  },
+  "provider_calls": 0,
+  "scientific_outcome": false,
+  "authority": {
+    "prepare_provider_runtime_pilot_v2_contract": true,
+    "execute_provider_runtime_pilot": false,
+    "e1_b": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "private_credentials_included": false,
+  "raw_response_ids_included": false
+}

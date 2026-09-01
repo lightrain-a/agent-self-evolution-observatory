@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-e1-a-support-adjudicator-mechanical-repair",
+  "date": "2026-08-28",
+  "status": "REPAIR_PENDING_INDEPENDENT_PRE_ADJUDICATION_REVIEW",
+  "trigger": {
+    "failed_command_stage": "support adjudicator precondition validation",
+    "error": "E1-A must contain zero updater calls",
+    "diagnosis": "The original expression int(summary.get('updater_calls') or -1) maps the legitimate integer 0 to -1 because 0 is falsy in Python.",
+    "support_statistics_exposed_to_operator_before_repair": false,
+    "mixed_or_exposed_counts_read_before_repair": false,
+    "thresholds_changed": false,
+    "task_set_changed": false,
+    "pool_set_changed": false
+  },
+  "frozen_run": {
+    "contract_path": "generated/e2-r17-e1-a-pool-support-v2-1-contract-20260828.json",
+    "contract_sha256": "f2919d201f03a0166d6255240378efd14d45bc7f8a3269bff5b78fcccb6d1d21",
+    "authorization_path": "generated/e2-r17-e1-a-pool-support-v2-1-authorization-20260828.json",
+    "authorization_sha256": "743836932a1aa08391ec7699f925097a17c01e94a0ad7d0470f25a367247d8dd",
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828",
+    "completed_streams": 12,
+    "completed_rollout_refs": 768,
+    "technical_failures": 0
+  },
+  "code_delta": {
+    "original_path": "scripts/adjudicate_e2_r17_e1_a_pool_support.py",
+    "original_sha256": "9972296dfc140a3cbd29bc6f475dddb46822353a1f9ae56b5f5b243c13b722ea",
+    "repaired_path": "scripts/adjudicate_e2_r17_e1_a_pool_support_v2.py",
+    "repaired_sha256": "cc5d43828179bbdcc932a3194140cb798ccfb9b6d60bda6a44090ae4983601a6",
+    "only_change": "Replace `int(summary.get(\"updater_calls\") or -1) == 0` with an explicit non-None check followed by `int(summary[\"updater_calls\"]) == 0`.",
+    "support_computation_logic_changed": false,
+    "support_threshold_logic_changed": false,
+    "pool_or_trajectory_validation_changed": false,
+    "authority_logic_changed": false
+  },
+  "zero_outcome_tests": {
+    "zero_value_accepted": true,
+    "one_value_rejected": true,
+    "missing_value_rejected": true,
+    "module_import_help": "PASS"
+  },
+  "rule": "The repaired adjudicator may be used only after independent reviewers confirm that the one-line change is mechanical and cannot alter any support statistic or gate. No support value may be inspected before that review.",
+  "authority": {
+    "run_repaired_support_adjudicator": false,
+    "execute_e1_b": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

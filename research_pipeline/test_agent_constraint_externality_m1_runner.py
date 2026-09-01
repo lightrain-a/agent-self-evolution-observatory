@@ -274,6 +274,11 @@ class AgentConstraintExternalityM1RunnerTest(unittest.TestCase):
             prepare_appworld_runtime_root(
                 APPWORLD_ROOT, runtime, family=family, arm=arm, task_id="acem1test_1"
             )
+            with sqlite3.connect(runtime / "data/tasks/acem1test_1/dbs/file_system.db") as fixture_db:
+                compressed = fixture_db.execute(
+                    "SELECT compressed_data FROM files WHERE id = 910101"
+                ).fetchone()
+            self.assertEqual(compressed, ("[]",))
             world = AppWorldToolWorld(
                 runtime_root=runtime,
                 task_id="acem1test_1",
@@ -298,6 +303,14 @@ class AgentConstraintExternalityM1RunnerTest(unittest.TestCase):
                     item["name"].startswith(allowed) for item in world.tools
                 ))
                 self.assertTrue(str(result).strip())
+                supervisor_profile = world.execute("supervisor__show_profile", {})
+                supervisor_passwords = world.execute("supervisor__show_account_passwords", {})
+                active_task = world.execute("supervisor__show_active_task", {})
+                self.assertNotIn("No supervisor found", str(supervisor_profile))
+                self.assertIn("aa_burt@gmail.com", str(supervisor_profile))
+                self.assertIn("file_system", str(supervisor_passwords))
+                self.assertIn("gmail", str(supervisor_passwords))
+                self.assertIn(arm["task_instruction"], str(active_task))
             finally:
                 world.close()
 

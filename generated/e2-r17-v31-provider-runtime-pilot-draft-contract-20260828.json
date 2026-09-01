@@ -1,0 +1,160 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v31-provider-runtime-pilot-contract",
+  "date": "2026-08-28",
+  "status": "DRAFT_PENDING_DUAL_PREEXECUTION_REVIEW",
+  "purpose": "Outcome-blind real-provider runtime/measurability qualification for the V3.1 MindMemOS updater path before any E1-B scientific authorization.",
+  "run_root": "/data/wyt/e2-r17-search-projection/runtime-pilots/v31-provider-updater-20260828",
+  "upstream_e1_a_support": {
+    "path": "generated/e2-r17-e1-a-pool-support-v2-1-adjudication-20260828.json",
+    "sha256": "b2c611285c20377d77af7ea62448c6fee0d5973cd657687f6dde7f7fce6be6d7",
+    "required_status": "PASS_E1_A_SUPPORT_READY_FOR_SEPARATE_E1_B_CONTRACT"
+  },
+  "historical_inputs": {
+    "source": "E0 historical pools only",
+    "e0_root": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828",
+    "selection_rule": "Lexicographically first eight pool_k8.json paths, frozen before reading mixed/rescue/outcome fields for this Pilot.",
+    "selected_pools": [
+      {"task_id": "r17-b1-agj-p1", "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-agj-p1/pool_k8.json", "sha256": "3872f2b33f11130aeed073e46650c7d6c4a13c256632252a7102ea81c8492c0c"},
+      {"task_id": "r17-b1-agj-p4", "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-agj-p4/pool_k8.json", "sha256": "1afa7d56dca0b3b04ab4c494e05c43ad49f6015e928cf8348a61af81eb753813"},
+      {"task_id": "r17-b1-fmv-p4", "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-fmv-p4/pool_k8.json", "sha256": "2b852fc1f2f41cc68e1869ce3f11f552ca176e63fd1121a528fa4361ade7e989"},
+      {"task_id": "r17-b1-fmv-p8", "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-fmv-p8/pool_k8.json", "sha256": "945fde93b9812ceb750cace1140bb383eb59a2f1ae2fa966dc7723fe1ebd9d03"},
+      {"task_id": "r17-b1-ioc-p2", "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-ioc-p2/pool_k8.json", "sha256": "5a5c6bc214b05fc807387cf32766aa6f0f42617af04ac24e0b9993d431169bdc"},
+      {"task_id": "r17-b1-ioc-p5", "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-ioc-p5/pool_k8.json", "sha256": "7e5f613d500b2be2b40d42d4124b12213ee989619f0b6f464649522b194645df"},
+      {"task_id": "r17-b1-msp-p0", "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-msp-p0/pool_k8.json", "sha256": "10d950ffdad2dce1957c9bac73f5f4e4816db47cff40bc4177ab4f8930f8834e"},
+      {"task_id": "r17-b1-msp-p2", "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-msp-p2/pool_k8.json", "sha256": "18ce3604f249ecbbddab21dd39b9f9db67861c41cb97cd7866dbf5c5e9d1355c"}
+    ]
+  },
+  "arms": ["win_a", "win_b", "mrw"],
+  "arm_semantics": {
+    "win_a": "V3.1 arm-blinded winner evidence from the eight exact historical pools.",
+    "win_b": "Independent hosted-updater call sequence from a fresh cloned state receiving the exact same pre-provider winner evidence bytes as WIN-A.",
+    "mrw": "V3.1 arm-blinded mixed-rejected-witness evidence for runtime/measurability only; no future-skill comparison is permitted in this Pilot."
+  },
+  "renderer": {
+    "path": "research_pipeline/e2_r17_evidence_window_v2.py",
+    "sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7",
+    "tokenizer_package": "tiktoken",
+    "tokenizer_version": "0.11.0",
+    "tokenizer_encoding": "cl100k_base",
+    "final_block_cap_tokens": 3072,
+    "padding": false,
+    "exact_final_retokenized_parity_required": true,
+    "arm_metadata_visible": false
+  },
+  "updater": {
+    "first_party": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "wrapper_path": "research_pipeline/e2_r17_mindmemos_updater.py",
+    "wrapper_sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d",
+    "adapter_path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+    "adapter_sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8",
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "max_parse_attempts": 1,
+    "temperature": 0.0,
+    "provider_retry_limit": 0,
+    "thinking": "disabled",
+    "transcript_max_chars": 100000,
+    "batch_size": 8,
+    "score_semantics": "selected_evidence_trajectory"
+  },
+  "model_identity": {
+    "path": "generated/e2-r17-v31-provider-pilot-model-identity-adjudication-20260828.json",
+    "sha256": "2ea0412d672efe244acd40c4754a73b08158f3893e3f466dcff3a633e509425b",
+    "qualification_path": "generated/e2-r17-v31-provider-pilot-model-identity-qualification-20260828.json",
+    "qualification_sha256": "c920fa82199bf32071b0cb9c899b9002f091ef2e217ae8e6c7c763e9b1aab84a",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE"
+  },
+  "mindmemos": {
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c"
+    }
+  },
+  "initial_skill": {
+    "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+    "sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+  },
+  "runtime": {
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2"
+  },
+  "budget": {
+    "max_provider_calls_per_arm": 10,
+    "max_provider_calls": 30,
+    "claim_before_provider_io": true,
+    "claims_never_released": true,
+    "ledger_relative_path": "checkpoints/provider_budget.sqlite3"
+  },
+  "checkpoint": {
+    "unit": "complete updater arm",
+    "completed_manifest": "checkpoints/completed_arms.jsonl",
+    "persist_immediately": true,
+    "resume": "revalidate completed arm receipt and skill SHA; execute missing arms only",
+    "partial_ambiguous_arm": "STOP_AND_ADJUDICATE; never auto-rerun a directory containing provider-call artifacts without a complete manifest"
+  },
+  "measurements_allowed": [
+    "provider calls per arm",
+    "provider input/output/total tokens",
+    "provider call wall time",
+    "parse-error/correction frequency",
+    "resolved model identity",
+    "temperature/retry/thinking receipts",
+    "provider-budget claims",
+    "content-addressed update receipt and skill artifact integrity"
+  ],
+  "forbidden": [
+    "new actor rollouts",
+    "E1 held-out probe evaluation",
+    "comparison of learned skill quality",
+    "scientific-effect GO/HOLD/STOP",
+    "task/model/renderer selection based on learned-skill outcome",
+    "E1-B scientific execution",
+    "paper promotion",
+    "frontend promotion",
+    "submission"
+  ],
+  "bound_code": {
+    "runner": {"path": "scripts/run_e2_r17_v31_provider_runtime_pilot.py", "sha256": "c203e49002490290e1f3366624e097671c2c6a1d1d988135601e53207d0f9f32"},
+    "updater_adapter": {"path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py", "sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8"},
+    "updater_wrapper": {"path": "research_pipeline/e2_r17_mindmemos_updater.py", "sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d"},
+    "renderer": {"path": "research_pipeline/e2_r17_evidence_window_v2.py", "sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7"},
+    "provider_budget": {"path": "research_pipeline/e2_r17_provider_budget.py", "sha256": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444"},
+    "runtime_validator": {"path": "scripts/run_e2_r17_e1_a_pool_support.py", "sha256": "24ea070b08399d48af99294615a508874f851af941f5bb0efabe341b0854617d"},
+    "adapter_tests": {"path": "research_pipeline/test_e2_r17_mindmemos_ark_adapter.py", "sha256": "29a0dc539fddc33a710876efd33931b091f75fa68fd239a396e4e6f5fa182f8c"},
+    "updater_tests": {"path": "research_pipeline/test_e2_r17_mindmemos_updater_v31.py", "sha256": "874fc99106e2f85f67180f4962f50b50ad2d921c8ba5ad8fad54fb12f62ded9f"},
+    "renderer_tests": {"path": "research_pipeline/test_e2_r17_evidence_window_v2.py", "sha256": "4a217180b9711ed829e5d1e7be952d48698ca5572980f9c887457b28b5c84611"},
+    "provider_budget_tests": {"path": "research_pipeline/test_e2_r17_provider_budget.py", "sha256": "443b0377941a4fbba1a6eaf7fa5af8e33615511b43890bd73da19a8ec94b61eb"}
+  },
+  "required_checks": [
+    "contract-bound frozen venv is active before any provider call",
+    "fresh DeepSeek resolved identity matches deepseek-v4-pro-ga-260813",
+    "all eight historical pool and trajectory SHAs revalidate",
+    "WIN-A and WIN-B share exact pre-provider winner evidence bytes and selected-evidence scores",
+    "MRW differs from WIN only according to the frozen mixed-pool rule",
+    "WIN/MRW final provider-visible evidence token counts match exactly within each pool",
+    "no projection/role/rollout/path/provider/provenance labels enter model-visible evidence",
+    "provider retries zero; temperature zero; thinking disabled",
+    "provider budget claimed transactionally before I/O with 10-call per-arm and 30-call global hard ceilings",
+    "each complete updater arm is content-addressed and checkpointed immediately",
+    "ambiguous partial arm is never automatically rerun",
+    "no held-out probe evaluation and no method-effectiveness comparison occurs"
+  ],
+  "authority": {
+    "independent_review": true,
+    "provider_runtime_pilot": false,
+    "scientific_experiment": false,
+    "e1_b": false,
+    "paper_promotion": false,
+    "frontend_promotion": false,
+    "submission": false
+  }
+}

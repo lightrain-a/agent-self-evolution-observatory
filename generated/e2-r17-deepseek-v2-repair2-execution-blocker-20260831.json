@@ -1,0 +1,100 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-deepseek-v2-repair2-execution-blocker",
+  "created_at_utc": "2026-08-31T04:58:01Z",
+  "status": "STOP_AND_ADJUDICATE_ACTOR_AUTHORIZATION_STATUS_SCHEMA_MISMATCH",
+  "classification": [
+    "IMPLEMENTATION",
+    "EXECUTABLE_SCHEMA",
+    "ACTOR_AUTHORIZATION"
+  ],
+  "scientific_endpoint_reached": false,
+  "scientific_effect_read": false,
+  "scientific_belief_update": "NONE",
+  "frozen_binding": {
+    "contract_sha256": "9e38bdbfc71186e3e58587169d8c619bff4ae24de4145fefafa63e49a6f148a3",
+    "authorization_sha256": "9643a0a30d0acc4f32607b217701b368a895b2fe1e86a0aa84da24aa0a80898b",
+    "frozen_preflight_adjudication_sha256": "88919d787afa47bb5419db9fe57a9552fee29a12be437803a099ec7c716e7b5c",
+    "runner_sha256": "63206799b017b159b425053b31617bad010b00b6c8df0bcdf9e40a8e68101a2a",
+    "actor_runner_sha256": "20a81fbe06f3839cd17babfdb021407368493da61610bca33aae33df8d31ec14"
+  },
+  "execution_identity": {
+    "pid": 2150504,
+    "pgid": 2150504,
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-20260831",
+    "run_start_receipt_sha256": "1547271ad3448f2624d971812cc4914d20d19374ee44828f33ec368bf61cecb8",
+    "run_start_commit": "482a44a47769b9aa0071d183bb8fd5ade4b7b70a"
+  },
+  "completion": {
+    "paired_replicate_units": 14,
+    "expected_paired_replicate_units": 48,
+    "inherited_paired_units": 14,
+    "fresh_paired_units": 0,
+    "learned_states": 30,
+    "expected_learned_states": 96,
+    "inherited_learned_states": 28,
+    "fresh_learned_states": 2,
+    "heldout_units": 504,
+    "expected_heldout_units": 1728,
+    "inherited_heldout_units": 504,
+    "fresh_heldout_units": 0
+  },
+  "provider_accounting": {
+    "repair2_provider_receipts": 20,
+    "repair2_provider_budget_claims": 20,
+    "win_c_updater_claims": 10,
+    "mrw_updater_claims": 10,
+    "actor_or_evaluator_claims": 0,
+    "actor_or_evaluator_provider_calls": 0,
+    "ambiguous_provider_response": false,
+    "hidden_retry": false,
+    "automatic_relaunch": false
+  },
+  "failed_unit": {
+    "stream_id": "e1-fmv-01",
+    "replicate": 2,
+    "arm": "mrw",
+    "task_id": "r17-b4-agj-p2",
+    "stage": "heldout_actor_authorization_validation_before_provider_io",
+    "failure_artifact_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-20260831/states/e1-fmv-01/replicate_2/mrw/checkpoints/eval_failure_r17-b4-agj-p2.json",
+    "failure_artifact_sha256": "71685ca40695e90a0963ff886558b076749ce9109ca96ed5875203ef5ffc5e74",
+    "mrw_update_checkpoint_sha256": "81b623a4c8c84ee57fdec5df885a91e6e0e39e777940597b9eb22c27945898e5",
+    "win_c_update_checkpoint_sha256": "fb32336c875f16f0035c9e09041cb8fdf8bd897b815fca9cc69d2c5a75eedf25",
+    "error": "RuntimeError: authorization artifact does not authorize actor execution"
+  },
+  "root_cause": {
+    "current_authorization_status": "AUTHORIZED_E2_R17_DEEPSEEK_V2_REPAIR2",
+    "actor_allowed_statuses": [
+      "AUTHORIZED_E0",
+      "AUTHORIZED_E1",
+      "AUTHORIZED_PUBLIC_EXTERNALITY"
+    ],
+    "diagnosis": "Repair2 authorization grants scientific_experiment and exact E1 scope but its terminal status string is not accepted by the frozen actor runner whitelist. Frozen preflight did not execute the actor authorization validator with the final Repair2 authorization."
+  },
+  "integrity": {
+    "run_summary_exists": false,
+    "analyzer_executed": false,
+    "final_scientific_decision_generated": false,
+    "partial_effect_read": false,
+    "repair1_relaunched": false,
+    "second_runner_started": false,
+    "second_scientific_model_started": false,
+    "public_benchmark_started": false
+  },
+  "repair_eligibility": {
+    "status": "OUTCOME_BLIND_IMPLEMENTATION_REPAIR_ELIGIBLE_PROPOSAL_ONLY",
+    "completed_learned_states_candidate_for_reuse": true,
+    "provider_replay_for_completed_updaters_allowed": false,
+    "same_frozen_authorization_may_be_modified": false,
+    "same_runner_may_be_relaunched": false,
+    "requirements": [
+      "Preserve this stopped run and both completed update receipts unchanged.",
+      "Validate actor authorization status and exact scope through the last pre-provider-I/O line.",
+      "Create a separately versioned measurement-only compatibility manifest for the two completed learned states.",
+      "Use a new repaired contract and authorization bound to the exact actor authorization path or whitelist delta.",
+      "Prove zero actor/evaluator claims and zero heldout outcomes before authorizing any continuation.",
+      "Do not replay the 20 completed updater provider calls."
+    ]
+  },
+  "terminal_action": "FAIL_CLOSED_NO_RESTART_NO_ANALYZER"
+}

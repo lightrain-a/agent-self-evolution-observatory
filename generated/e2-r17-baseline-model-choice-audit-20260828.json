@@ -1,0 +1,174 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-baseline-model-choice-audit",
+  "created_at_utc": "2026-08-28T07:30:00+00:00",
+  "status": "V1_PRIMARY_SOURCE_AUDIT_COMPLETE",
+  "question": "Which executor and updater models are actually used by the strongest adjacent baselines, and which comparisons can be reproduced faithfully in E2-R17?",
+  "rows": [
+    {
+      "work": "MindMemOS",
+      "benchmark": ["SpreadsheetBench Verified-400"],
+      "actor_executor": "Released evaluation CLI and default use gpt-5.4-mini; the public result table itself does not bind its numbers to an explicit model identifier.",
+      "updater_teacher": "Configured MindMemOS chat endpoint; the released public result table does not expose a distinct updater model identity.",
+      "interface": "OpenAI-compatible API plus MindMemOS service",
+      "model_size": "Closed/API; undisclosed",
+      "why_this_model": "First-party released runtime default and reproduction command.",
+      "reusable_in_r17": "YES_CORE_SUBSTRATE. Exact runtime is locally pinned; model-role claims must be limited to what the released config binds.",
+      "implementation_fidelity": "OFFICIAL_CODE_LOCAL_PIN",
+      "source": {
+        "local_repo": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+        "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+        "files": [
+          "docs/eval/README.md",
+          "src/mindmemos_eval/mindmemos_eval/skills/args.py",
+          "README.md"
+        ]
+      }
+    },
+    {
+      "work": "SkillCAT",
+      "benchmark": ["SpreadsheetBench", "WikiTableQuestions", "DocVQA"],
+      "actor_executor": "Qwen3.5-35B-A3B and Qwen3.5-122B-A10B as skill users; transfer users Gemma-4-31B-it and GPT-5.4-mini.",
+      "updater_teacher": "Qwen3.5-35B-A3B and Qwen3.5-122B-A10B as skill authors.",
+      "interface": "Open-weight Qwen/Gemma plus API GPT; ReAct filesystem and spreadsheet tools",
+      "model_size": "35B sparse, 122B sparse, 31B, closed/API",
+      "why_this_model": "Matches Trace2Skill-style settings and tests matched author/user plus cross-model transfer.",
+      "reusable_in_r17": "PARTIAL. Reuse CCE as a SkillCAT-style same-task success/failure contrast arm; full CCE+AAE+TTE requires a separate faithful implementation and source-task replay budget.",
+      "implementation_fidelity": "PAPER_SPEC_ONLY_NO_OFFICIAL_REPO_FOUND_IN_AUDIT",
+      "source": {
+        "paper": "https://arxiv.org/html/2606.13317v2",
+        "evidence": ["Section 4.1 models and baselines", "CCE K=5", "AAE source-task clone validation", "TTE Top-k=7"]
+      }
+    },
+    {
+      "work": "Branch2Skill",
+      "benchmark": ["SearchQA", "SpreadsheetBench", "OfficeQA", "DocVQA", "LiveMath", "ALFWorld"],
+      "actor_executor": "GPT-5.5, GPT-5.4, GPT-5.4-mini, GPT-5.4-nano, Qwen3.6-35B-A3B.",
+      "updater_teacher": "GPT-5.5 for all main-table results except the model-role analysis.",
+      "interface": "API/Qwen target model plus MCTS reasoning-tree construction",
+      "model_size": "35B sparse and closed/API models",
+      "why_this_model": "Separates target and skill model and tests transfer of branch evidence across model identities.",
+      "reusable_in_r17": "PAPER_SPEC_EXTENDED_ONLY. Map elite-path versus shared-prefix sibling evidence into the common projection abstraction, but do not claim exact reproduction until code is released.",
+      "implementation_fidelity": "CODE_NOT_RELEASED_AS_OF_AUDIT",
+      "source": {
+        "paper": "https://arxiv.org/html/2608.08677v1",
+        "evidence": ["Section 4.1 target/skill models", "elite path plus same-parent siblings", "validation rollback", "paper states code will be published"]
+      }
+    },
+    {
+      "work": "SkillOpt",
+      "benchmark": ["SearchQA", "SpreadsheetBench", "OfficeQA", "DocVQA", "LiveMath", "ALFWorld"],
+      "actor_executor": "GPT-5.5, GPT-5.4, GPT-5.4-mini, GPT-5.4-nano, GPT-5.2, Qwen3.5-4B, Qwen3.6-35B-A3B.",
+      "updater_teacher": "Separate optimizer model; paper-style examples commonly use GPT-5.5, while matched self-optimizer settings are also supported.",
+      "interface": "OpenAI/Azure/Claude/Qwen/MiniMax backends; direct chat, Codex, Claude Code",
+      "model_size": "4B, 35B sparse, closed/API",
+      "why_this_model": "Deliberately spans weak-to-frontier targets and keeps the optimizer role independent.",
+      "reusable_in_r17": "YES_EXTENDED_STRONG_BASELINE. Official implementation can be adapted to the same benchmark/split and fixed actor/updater roles; rollout, edit, validation, and token budgets must be matched and logged.",
+      "implementation_fidelity": "OFFICIAL_CODE_AVAILABLE",
+      "source": {
+        "repo": "https://github.com/microsoft/SkillOpt",
+        "project": "https://microsoft.github.io/SkillOpt/",
+        "evidence": ["separate frozen target and optimizer", "seven target models", "bounded add/delete/replace edits", "held-out validation gate"]
+      }
+    },
+    {
+      "work": "Rethinking Self-Evolving Agent Skills / RethinkSkill",
+      "benchmark": ["SearchQA", "OfficeQA", "SpreadsheetBench", "LiveMath", "DocVQA"],
+      "actor_executor": "GPT-5.5, Gemini 3.1 Pro, DeepSeek V4-Pro.",
+      "updater_teacher": "Same model configuration as executor in the primary paper; released framework can configure target and optimizer backends separately.",
+      "interface": "OpenAI-compatible HTTP, Codex, Claude Code, Gemini CLI",
+      "model_size": "Closed/API; DeepSeek V4-Pro 1.6T total / 49B active per official model release",
+      "why_this_model": "Controlled feedback-view study across strong model families; directly tests Normal, Fail-only, and Success-only.",
+      "reusable_in_r17": "YES_CORE_CONTROL_AND_MULTIROUND. Official code supports matched feedback arms and complete candidate/rollback logging; R17 must retain exact same-pool acting winner to isolate projection more tightly.",
+      "implementation_fidelity": "OFFICIAL_CODE_AVAILABLE",
+      "source": {
+        "paper": "https://arxiv.org/html/2608.02636v1",
+        "repo": "https://github.com/HKUST-KnowComp/rethinkskill",
+        "evidence": ["42 matched feedback runs", "three primary models", "same executor/optimizer configuration in paper", "provider-role separation in released code"]
+      }
+    },
+    {
+      "work": "TSR",
+      "benchmark": ["Sokoban", "FrozenLake", "WebShop"],
+      "actor_executor": "Qwen2.5-0.5B and Qwen2.5-3B; WebShop uses Qwen2.5-3B.",
+      "updater_teacher": "PPO or GRPO parameter update; no external natural-language skill updater.",
+      "interface": "Open-weight policy training with best-of-N, beam, or shallow lookahead search",
+      "model_size": "0.5B and 3B",
+      "why_this_model": "Studies search-shaped training trajectories in small parametric RL agents.",
+      "reusable_in_r17": "NO_AS_MAIN_SKILL_BASELINE. Use as search/topology and compute-control context, not as a directly comparable projection method on SpreadsheetBench.",
+      "implementation_fidelity": "PAPER_SPEC_CODE_PROMISED_UPON_ACCEPTANCE",
+      "source": {
+        "paper": "https://arxiv.org/html/2602.11767",
+        "evidence": ["Qwen2.5 model scales", "Sokoban/FrozenLake/WebShop", "PPO/GRPO", "code release promised upon acceptance"]
+      }
+    },
+    {
+      "work": "SkillEvolBench",
+      "benchmark": ["180 tasks: 6 environments x 5 latent skill families x 6 tasks"],
+      "actor_executor": "Claude Code Opus/Sonnet 4.5/4.6, Codex GPT-5.2/5.3-Codex and GPT-5.4, Gemini CLI 2.5 Pro/3 Flash/3.1 Pro; repository also provides Kimi-style provider presets.",
+      "updater_teacher": "Condition-dependent self-generated or curated revision within each harness/model configuration.",
+      "interface": "Harbor plus Claude Code, Codex, Gemini CLI, Kimi CLI adapters",
+      "model_size": "Closed/API",
+      "why_this_model": "Cross-harness public testbed with frozen acquisition/evaluation task structure.",
+      "reusable_in_r17": "YES_SECONDARY_EXTERNAL_VALIDATION_AFTER_ADAPTER_PILOT. It is not a drop-in same-pool spreadsheet causal test; use its learning T1-T3 and frozen evaluation T4-T6 structure for external validation.",
+      "implementation_fidelity": "OFFICIAL_CODE_AVAILABLE",
+      "source": {
+        "repo": "https://github.com/AIoT-MLSys-Lab/SkillEvolBench",
+        "project": "https://skillevolbench.github.io/",
+        "evidence": ["180-task fixed stratified design", "model/provider presets", "canonical baseline ladder", "preflight and run validators"]
+      }
+    }
+  ],
+  "cross_work_findings": {
+    "common_executor_anchor": "A Qwen sparse 35B-class executor is the strongest open/common comparison axis: Qwen3.5-35B-A3B in SkillCAT and Qwen3.6-35B-A3B in Branch2Skill/SkillOpt. These are different released models and must not be conflated.",
+    "weak_anchor": "Qwen3.5-4B is the literature-backed weak open target from SkillOpt; it enters R17 only if outcome-blind tool-use/headroom qualification passes.",
+    "strong_non_qwen_anchor": "DeepSeek V4-Pro is directly used in RethinkSkill and is already qualified in E0; it is a defensible strong cross-family executor and frozen updater candidate.",
+    "diversity_anchor": "Kimi K3 is not a common baseline model in the closest methods. It may enter as a second API/model-family robustness axis only after tool qualification, and must not be presented as direct baseline matching.",
+    "role_separation": "Actor/executor and updater/skill author are distinct scientific roles in SkillOpt and Branch2Skill. R17 core experiments should freeze one updater while varying executors, then test updater robustness only after the mechanism passes.",
+    "implementation_tiers": {
+      "core_official": ["MindMemOS", "RethinkSkill"],
+      "extended_official": ["SkillOpt", "SkillEvolBench"],
+      "paper_spec_only": ["SkillCAT", "Branch2Skill", "TSR"]
+    }
+  },
+  "candidate_model_matrix_v1": [
+    {
+      "role": "weak_open_candidate",
+      "model": "Qwen3.5-4B",
+      "justification": "SkillOpt weak target; capability-spread anchor",
+      "status": "PILOT_REQUIRED_NOT_FROZEN"
+    },
+    {
+      "role": "common_open_candidate",
+      "model": "Qwen3.5-35B-A3B or Qwen3.6-35B-A3B, exact available release to be chosen before Pilot",
+      "justification": "Closest common open axis across SkillCAT, Branch2Skill, and SkillOpt",
+      "status": "AVAILABILITY_AND_TOOL_PILOT_REQUIRED"
+    },
+    {
+      "role": "strong_api_qualified",
+      "model": "deepseek-v4-pro -> deepseek-v4-pro-ga-260813",
+      "justification": "RethinkSkill primary model and completed E0 runtime qualification",
+      "status": "E0_QUALIFIED_REQUALIFY_PER_TRANCHE"
+    },
+    {
+      "role": "second_family_api_candidate",
+      "model": "kimi-k3",
+      "justification": "Family diversity and available Ark route; not a direct baseline-match claim",
+      "status": "PILOT_REQUIRED_NOT_FROZEN"
+    }
+  ],
+  "updater_policy_v1": {
+    "core": "Freeze DeepSeek V4-Pro as updater for the executor matrix because its identity and MindMemOS runtime are already qualified; keep updater prompts, token budget, validation, and skill initialization fixed.",
+    "robustness": "After E1 passes, repeat the primary contrast with one second updater backend (Kimi K3 or the qualified Qwen 35B model), not a full actor x updater cross-product.",
+    "limitation": "The closest papers often use GPT-5.5 as a strong optimizer; current infrastructure does not provide that route, so R17 must report this mismatch rather than imply exact reproduction."
+  },
+  "authority": {
+    "model_matrix_freeze": false,
+    "model_calls": false,
+    "gpu": false,
+    "e0_full": false,
+    "e1": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

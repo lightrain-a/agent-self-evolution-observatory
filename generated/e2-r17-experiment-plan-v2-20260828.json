@@ -1,0 +1,157 @@
+{
+  "artifact_type": "e2-r17-experiment-plan-v2",
+  "schema_version": "1.0",
+  "date": "2026-08-28",
+  "status": "V2_REQUIRES_DUAL_REVIEW_BEFORE_ANY_NEW_SCIENTIFIC_PROVIDER_CALL",
+  "supersedes_for_future_execution": "e2-r17-experiment-plan-v1",
+  "preserves_historical_artifacts": true,
+  "central_question": "Does an acting selector applied to a fixed best-of-K search pool systematically change updater-visible evidence so that winner-only acting projection is learning-suboptimal for future frozen skill?",
+  "novelty_boundary": {
+    "reasoningbank_collision": true,
+    "cannot_claim": [
+      "failed trajectories are useful",
+      "success/failure contrast can improve memory",
+      "test-time scaling can create learning signal",
+      "memory and test-time scaling can be combined"
+    ],
+    "candidate_claim": "exact same-pool acting/learning projection separation, compute-shielding law, budget-matched causal intervention, and prospective regime prediction"
+  },
+  "theory": {
+    "rescue_identity": "A_K-A_1=P(Y_1=0,max_i Y_i=1)=V_pre-V_winner",
+    "mixed_support_iid": "M_K=1-p^K-(1-p)^K",
+    "nested_monotonicity_without_iid": true,
+    "learning_factorization": "Delta_K=M_K*delta_K",
+    "delta_positive_assumed": false
+  },
+  "frozen_e0": {
+    "summary_sha256": "533abf55359360bd408a4878235d24b5192d77f2471f0676bb8b10d570ad0366",
+    "historical_decision": "HOLD",
+    "historical_decision_rewritten": false,
+    "k8": {
+      "acting_success": "12/12",
+      "mixed_pools": "8/12",
+      "rescue_events": "1/12",
+      "winner_visible_failures": "0/12",
+      "hidden_failed_nonwinners": 16,
+      "failure_family_support": "5/6"
+    },
+    "old_42_task_rescue_quota_tranche": "DO_NOT_LAUNCH_UNDER_OLD_RATIONALE"
+  },
+  "controlled_split": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4",
+    "selection_is_outcome_blind": true,
+    "e1_streams": 12,
+    "tasks_per_stream": 8,
+    "failure_families": 6,
+    "streams_per_family": 2,
+    "common_heldout_probes": 18
+  },
+  "e1_a_support_phase": {
+    "k": 8,
+    "actor_rollouts": 768,
+    "updater_calls": 0,
+    "freeze_all_pools_before_gate": true,
+    "support_gate_for_review": {
+      "minimum_mixed_pools": "24/96",
+      "minimum_exposed_streams": "8/12 with >=1 mixed pool",
+      "minimum_failure_families": "4/6",
+      "task_or_pool_replacement": false,
+      "protocol_integrity_required": true
+    },
+    "failure_action": "STOP_BEFORE_UPDATER_AND_REQUIRE_NEW_PROTOCOL"
+  },
+  "e1_b_primary": {
+    "arms": ["winner_only", "mixed_rejected_witness"],
+    "mixed_rejected_witness_rule": "On a mixed pool expose the lowest-rollout-index failed nonwinner; otherwise expose the served winner. Acting always serves the exact same winner.",
+    "evidence_slots_per_task": {"winner_only": 1, "mixed_rejected_witness": 1},
+    "extra_actor_calls_for_treatment": 0,
+    "fixed_invariants": [
+      "task IDs and order",
+      "initial skill SHA",
+      "exact pool IDs",
+      "served winner SHA",
+      "executor model",
+      "verifier",
+      "updater model and prompt",
+      "update-call count",
+      "acceptance/rollback rule",
+      "held-out probes",
+      "K=1 frozen evaluation",
+      "retry policy",
+      "software revisions"
+    ],
+    "primary_endpoint": "per-stream mean K=1 success over the same 18 held-out probes",
+    "independent_units": 12,
+    "statistics": [
+      "exact one-sided paired sign-flip over 4096 sign assignments",
+      "10000-draw paired bootstrap over streams",
+      "mean and median paired effect",
+      "descriptive family-stratified effects"
+    ],
+    "equivalence_margin": "1/18 = 0.0555556 absolute success",
+    "go": "mean>0 AND exact p<=0.05 AND 95% paired-bootstrap CI lower>0 AND integrity/token-policy gates pass",
+    "stop": "significantly negative OR predeclared equivalence test supports practical equivalence within +/-1/18",
+    "hold": "interval spans both zero and effects larger than the equivalence margin"
+  },
+  "evidence_budget_policy": {
+    "status": "MUST_BE_FROZEN_AFTER_RUNTIME_PILOT_BEFORE_FULL",
+    "allowed_choices": [
+      "deterministic common-window renderer under fixed public tokenizer",
+      "raw one-trajectory evidence plus predeclared token-length robustness and matched-window secondary arm"
+    ]
+  },
+  "e1_c_diagnosis_after_primary_go_only": [
+    "Full Pool",
+    "deterministic single random nonwinner",
+    "success nonwinner when available",
+    "ReasoningBank-style aggregation after source-semantic validation"
+  ],
+  "published_baselines": {
+    "headline": ["ReasoningBank/MaTTS (ICLR 2026)", "PolySkill (ICLR 2026)", "ACE (ICLR 2026)", "AWM (ICML 2025)"],
+    "extended": ["SAGE (ACL 2026 Long)"],
+    "arxiv_only_related_not_headline": ["SkillCAT", "Branch2Skill", "SkillOpt", "RethinkSkill", "TSR"]
+  },
+  "evaluation_lanes": {
+    "source_faithful": {
+      "purpose": "reproduction/qualification under each first-party harness and stated model",
+      "current_credential_blocker": "69 exposes Ark credentials only; Google/OpenAI/Anthropic/SambaNova source-lane endpoints are not presently configured"
+    },
+    "unified_rerun": {
+      "purpose": "direct method comparison under common qualified executor/updater and identical task/environment accounting",
+      "source_faithful_scores_mixed_into_ranking": false
+    }
+  },
+  "public_benchmarks_after_e1_go": {
+    "primary": "WebArena",
+    "secondary": "AppWorld",
+    "additional_if_budget": "SpreadsheetBench Verified-400"
+  },
+  "later_stages": {
+    "e3": "prospective family/K mechanism prediction frozen before future outcomes",
+    "e4": "multi-round persistent evolution with online acting vs frozen-skill endpoint separated",
+    "e5": "parallel-vs-sequential topology x winner/history-preserving learning"
+  },
+  "checkpoint_policy": {
+    "persist_immediately": ["rollout", "pool", "projection", "updater", "held-out evaluation"],
+    "raw_immutable": true,
+    "summary_rebuildable": true,
+    "missing_unit_resume_only": true,
+    "timeout_502_relaunch_without_inspection": false
+  },
+  "next_gate": [
+    "independent Kimi K3 review of exact V2 + theory correction + published baseline audit",
+    "independent DeepSeek V4-Pro review of same packet",
+    "fix verdict-changing issues only",
+    "runtime Pilot for projection renderer and baseline adapters",
+    "freeze immutable V3 E1 contract before any new scientific updater outcome"
+  ],
+  "authority": {
+    "new_scientific_provider_calls": false,
+    "e1_updater_outcomes": false,
+    "public_full_runs": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

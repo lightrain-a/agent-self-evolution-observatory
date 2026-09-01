@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-deepseek-v2-repair2-m1-frozen-preflight-v1-failure-adjudication",
+  "date": "2026-08-31",
+  "status": "OUTCOME_BLIND_PRE_PROVIDER_IMPLEMENTATION_REPAIR_ELIGIBLE",
+  "failed_preflight_root": "/data/wyt/e2-r17-search-projection/preflight/deepseek-v2-repair2-m1-frozen-actual-path-20260831",
+  "failed_log_path": "generated/e2-r17-deepseek-v2-repair2-m1-frozen-actual-path-preflight-20260831.log",
+  "failed_exit_path": "generated/e2-r17-deepseek-v2-repair2-m1-frozen-actual-path-preflight-20260831.exit",
+  "contract_sha256": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+  "authorization_sha256": "4d16c65ba3c6c345e8104bc75885589ed574632744ec8479e81de01bb808ca0f",
+  "failure_classification": "IMPLEMENTATION/FROZEN_PREFLIGHT_STAGE_AUTHORITY_BOOLEAN",
+  "failure_detail": "The outer preflight wrapper required scientific_experiment to equal execution=false even when validating an authorized artifact with stop-before-provider-I/O. It stopped before invoking the frozen actor.",
+  "actor_invocations": 0,
+  "unit_receipts": 0,
+  "provider_ledgers": 0,
+  "provider_claims": 0,
+  "provider_calls": 0,
+  "formal_execution_root_created": false,
+  "partial_effect_read": false,
+  "analyzer_run": false,
+  "parent_repair2_modified": false,
+  "repair_boundary": "Preserve the failed root and frozen actor/orchestrator. A versioned final-authorization preflight harness may validate the authorization as execution=true, invoke the exact bound actor with --stop-before-provider-io for all 36 combinations, and perform no provider I/O."
+}

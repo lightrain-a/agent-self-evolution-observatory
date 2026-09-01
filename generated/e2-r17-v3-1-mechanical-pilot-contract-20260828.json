@@ -1,0 +1,101 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-1-mechanical-pilot-contract",
+  "date": "2026-08-28",
+  "status": "AUTHORIZED_ZERO_PROVIDER_MECHANICAL_PILOT_ONLY",
+  "run_root": "/data/wyt/e2-r17-search-projection/runtime-pilots/v3-1-mechanical-20260828",
+  "runner": {
+    "path": "scripts/run_e2_r17_v3_1_mechanical_pilot.py",
+    "sha256": "3a486d529a9f2e0208d072a15de11c56bfd75ff92949af1b565e1adb012bc2f5"
+  },
+  "repair": {
+    "path": "generated/e2-r17-v3-1-causal-purity-repair-20260828.json",
+    "sha256": "2b4589d704037c9dd781c4091d03b12dddf727b6d7a7aad765dc7536863a6880"
+  },
+  "upstream_prompt_dataflow_audit": {
+    "path": "generated/e2-r17-v3-1-upstream-prompt-dataflow-audit-20260828.json",
+    "sha256": "ecd160e6c87b259c56e5a667fe94a9cc7310c37c5fca92ce514436c131d30d7c"
+  },
+  "review_adjudication": {
+    "path": "generated/e2-r17-v3-1-review-adjudication-20260828.json",
+    "sha256": "858e200f2fa9a3b9e4b591b4b895e590e10537d0b96c85346f8c5e98b89e4585",
+    "required_status": "PASS_TO_FRESH_ZERO_PROVIDER_MECHANICAL_PILOT_ONLY"
+  },
+  "historical_inputs": {
+    "e0_root": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828",
+    "e0_summary": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/e0_pilot_summary.json",
+    "e0_summary_sha256": "533abf55359360bd408a4878235d24b5192d77f2471f0676bb8b10d570ad0366",
+    "expected_k8_pools": 12
+  },
+  "renderer": {
+    "path": "research_pipeline/e2_r17_evidence_window_v2.py",
+    "sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7",
+    "tokenizer_package": "tiktoken",
+    "tokenizer_version": "0.11.0",
+    "tokenizer_encoding": "cl100k_base",
+    "final_block_cap_tokens": 3072,
+    "padding": false,
+    "exact_final_retokenized_parity_required": true
+  },
+  "updater_wrapper": {
+    "path": "research_pipeline/e2_r17_mindmemos_updater.py",
+    "sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d",
+    "test_path": "research_pipeline/test_e2_r17_mindmemos_updater_v31.py",
+    "test_sha256": "874fc99106e2f85f67180f4962f50b50ad2d921c8ba5ad8fad54fb12f62ded9f",
+    "transcript_max_chars": 100000,
+    "score_semantics": "selected_evidence_trajectory"
+  },
+  "mindmemos": {
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c"
+    }
+  },
+  "checks": [
+    "revalidate every historical pool and trajectory SHA",
+    "exact actual final WIN/MRW token parity on all 12 pools",
+    "nonmixed WIN/MRW byte identity",
+    "MRW differs from WIN only on mixed pools",
+    "model-visible messages contain no projection/role/rollout/path/provider/provenance treatment labels",
+    "selected evidence score equals selected trajectory verifier score",
+    "served acting winner SHA and acting score remain identical across cloned WIN/MRW payload provenance",
+    "no downstream first-party transcript truncation under frozen 100000-char limit",
+    "pinned MindMemOS commit and bound source SHAs revalidate",
+    "completed-unit receipts are content-addressed and revalidated on resume",
+    "temporary corruption detector catches receipt SHA drift",
+    "provider calls remain zero",
+    "new actor rollouts remain zero",
+    "scientific effectiveness is not evaluated"
+  ],
+  "checkpoint": {
+    "unit": "historical K8 pool",
+    "persist_immediately": true,
+    "completed_manifest": "checkpoints/completed_units.jsonl",
+    "resume": "revalidate completed receipt SHA then execute missing units only",
+    "reuse_v3_failed_root": false
+  },
+  "forbidden": [
+    "provider calls",
+    "new actor rollouts",
+    "held-out future-skill evaluation",
+    "method effectiveness comparison",
+    "scientific GO/HOLD/STOP from method outcome",
+    "retrying the V3 failed contract/root",
+    "E1-A generation",
+    "E1-B updater execution",
+    "paper promotion"
+  ],
+  "authority": {
+    "independent_review": true,
+    "execute_mechanical_pilot": true,
+    "provider_runtime_pilot": false,
+    "e1_a": false,
+    "e1_b": false,
+    "scientific_effectiveness": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

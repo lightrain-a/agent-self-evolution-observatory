@@ -1,0 +1,16 @@
+{
+  "artifact_type": "e2-r17-local-evaluator-runtime-qualification",
+  "authority": {
+    "execute_mrw": false,
+    "execute_scientific_negative_control": false,
+    "freeze_scientific_protocol": false,
+    "paper_promotion": false
+  },
+  "central_mechanism_adjudicated": false,
+  "created_at_utc": "2026-08-30T09:49:48+00:00",
+  "historical_hold_reinterpreted": false,
+  "schema_version": "1.0",
+  "scientific_outcome": false,
+  "status": "FAIL_LOCAL_EVALUATOR_RUNTIME_QUALIFICATION",
+  "technical_error": "RuntimeError: simple local tool-call probe was not exactly reproducible"
+}

@@ -1,0 +1,83 @@
+{
+  "artifact_type": "e2-r17-v3-1-independent-review",
+  "created_at_utc": "2026-08-31T04:14:42+00:00",
+  "dossier_file_sha256": {
+    "analyzer": "9b3c7f0aed465b69a19476138a00882a268b59f47460e8a2abb1bb39dd37eec8",
+    "compatibility_manifest": "61e243027e6d42f7923e249f6c88267e6db07ed4bccb32d5a50c8d13bf1695bb",
+    "manifest_validator": "ad358c792136ee247d0d6e0116c850af0cf678e3de88f04474af3e5466c74371",
+    "model_identity": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "preflight": "d4ff983111f61a802443f456d53d1693375e5d30ed6f90fb6c3a74d6ff89fa13",
+    "repair1_authorization": "8301fa9d96768a86c802c06fbe04a02be552c5fa68195f709011b73c83b8dac5",
+    "repair1_contract": "a4ce14dea5c5b0ab5509d97a072013a9924b592ae18c049b05d4edf707201f80",
+    "repair2_draft": "999498499649f873f1f0eff32593d9d2a2c788f843f0484af77cf8868ce89e26",
+    "runner": "63206799b017b159b425053b31617bad010b00b6c8df0bcdf9e40a8e68101a2a",
+    "superseding_failure": "c21ce2ef3fb4f4573c3f6f45cab8842fbb75dab8d61d256ee3985f24932b38fa",
+    "technical_quarantine": "1908a3dfc472f835c204f7f9d5a66a9ee4b37093adb09a8d0c0f297b4b1abd7a",
+    "test_adjudication": "ab86fef9695aafc355d7e91a20db9752724cdf646987c2efe73b0b586582920d",
+    "tests": "1735ac87979afc83092a0ce0e5851761197a530c53d91fd6c2392c73332cd1b3"
+  },
+  "expected_resolved_model": "kimi-k3",
+  "experiment_authority": false,
+  "exposed_to_other_review": false,
+  "get_poll_recovery": false,
+  "hidden_provider_retry_used": false,
+  "independent": true,
+  "max_output_tokens": 5000,
+  "missing_required_fields": [],
+  "paper_promotion_authority": false,
+  "parse_valid": true,
+  "poll_count": 0,
+  "prompt_path": "generated/e2-r17-deepseek-v2-repair2-review-20260831/kimi-k3-prompt.md",
+  "prompt_sha256": "ea35f0c8cbf35e181414b9f488052b9142720b8a41fee4abb1fcaa6a2c89111f",
+  "provider_generation_attempts": 1,
+  "provider_retry_limit": 0,
+  "provider_status": "completed",
+  "raw_text": "{\n  \"draft_contract_sha256_acknowledged\": \"999498499649f873f1f0eff32593d9d2a2c788f843f0484af77cf8868ce89e26\",\n  \"verdict\": \"PASS_TO_SEPARATELY_AUTHORIZED_REPAIR2\",\n  \"selection_bias_assessment\": \"PASS. The 14 inherited pairs are selected solely by pre-outcome completeness/provenance and attempt0-success prefix identity; the compatibility manifest records scientific_scores_read=false and the validator deliberately never reads ref['score'] (test I). The treatment-dependent failed pair e1-fmv-01/rep2 is quarantined, not analyzed, and Repair2 fresh-runs both arms. The eligibility rule (complete paired unit, both arms nominal attempt0 success, 18/18 heldout integrity, no parse error) is a pre-outcome integrity criterion, not a score- or outcome-conditioned filter. The inherited set spans streams e1-agj-00, e1-agj-01, e1-fmv-00, and e1-fmv-01 (replicates 0-1), determined by where the deterministic failure happened to stop, not by any measured effect. This avoids unacceptable post-treatment selection bias.\",\n  \"prefix_compatibility_assessment\": \"PASS. For every inherited state, all 10 provider calls completed at attempt0 with zero parse errors; under max_parse_attempts=2 the correction branch is only entered after an attempt0 parse/apply failure, so the execution path for an attempt0-success state is byte-identical between max_parse_attempts=1 and =2. The manifest verifies all receipts are attempt=0, parse_error empty, provider_status completed, and patch_apply_correction_required=false. Inheritance of these 14 pairs under the Repair2 policy is scientifically valid because the extra branch was never exercised and could not have altered prompts, responses, skills, or evaluations.\",\n  \"arm_symmetry_assessment\": \"PASS. max_parse_attempts=2, the 11-call updater unit limit, and the 191-call state limit are bound identically in the contract for both arms; the runner constructs the adapter and ProviderBudgetLedger from the same contract values for win_c and mrw with no arm-, stream-, or failure-conditioned allowance. The correction policy applies to whichever arm experiences an attempt0 deterministic parse/apply failure, and reliability counts are reported by arm without filtering.\",\n  \"fresh_failed_pair_assessment\": \"PASS. The quarantine disposition is PRESERVE; EXCLUDE FROM VALID MANIFEST; REPAIR2 FRESH-RUNS BOTH ARMS; single_arm_resume_authorized=false and operator_semantic_patch_authorized=false. The runner treats any pre-existing partial update directory as a hard error (no auto-rerun), and e1-fmv-01/rep2 will be executed fresh for both win_c and mrw under the same current model identity (deepseek-v4-pro-ga-260813), pools, initial skill, policy, and SHA-salted time-balanced update/eval order as all other fresh pairs.\",\n  \"valid_manifest_assessment\": \"PASS. Only the frozen 14-pair compatibility manifest (SHA 61e243...95bb) seeds inheritance; the runner copies exactly those rows into the content-addressed valid_replicates manifest and asserts the runtime inherited set equals the frozen manifest set. validate_valid_rows enforces exactly 48 rows, exactly four per stream across the 12 frozen streams, complete paired arms, exclusion of the quarantined unit/state, and directory discovery is forbidden. Analysis reads only this manifest.\",\n  \"runtime_reliability_reporting_assessment\": \"PASS. correction_required/attempt0_success/correction_success/correction_failure are accumulated per arm into runtime_reliability as secondary outcomes; they are not used to include or exclude any pair from the primary estimand (validity is determined by completion and binding integrity, not by correction status). The Repair1 MRW patch-apply failure is separately reported as repair1_quarantined_patch_apply_failures {win_c:0, mrw:1} and carried into the analyzer output.\",\n  \"provider_budget_assessment\": \"PASS. Nominal updater=10 with one explicit correction yields max=11 per unit; actor remains structurally <=180 (18 probes x 10 turns); state max=191; hard structural ceiling 96 x 191 = 18336. Claims are made before provider I/O, never released, provider_retry_limit=0 everywhere, and the adapter/runner tests prove the second failure stops with no third attempt (exactly 11 calls). The fresh-run pair's 10 quarantined calls are not reused, so Repair2's own ceiling is internally consistent.\",\n  \"scientific_cardinality_assessment\": \"PASS. The design preserves exactly 12 stream D_s, four valid pairs per stream (48 pairs, 96 learned states), same treatment/control definitions, exact same pools, initial skill, renderer, updater entrypoint, verifier, 18 heldout probes, K=1, 8192 max output tokens, identical statistics (sign-flip over 2^12, TOST epsilon=1/18, bootstrap seed 1718, reps 100000), and the same time-balance salts. GPT/Kimi/Qwen scientific execution, second backbone, and public benchmark remain forbidden; authority bits are all false in the draft.\",\n  \"remaining_blockers\": [],\n  \"nonblocking_notes\": [\n    \"The inherited 14 pairs cover only 4 of 12 streams; this is acceptable because selection is pre-outcome and the failed pair's stream (e1-fmv-01) retains two inherited replicates (rep0, rep1) while rep2 is fresh-run as a complete pair, so no stream is defined by a partial or treatment-failed unit.\",\n    \"The fresh-run e1-fmv-01/rep2 pair will execute under the requalified 2026-08-31 model identity while inherited pairs ran under the 2026-08-30 identity; both bind the same requested and resolved model (deepseek-v4-pro-ga-260813), and the Repair2 contract freezes the fresh identity artifact for all new execution, so this is a documented requalification rather than a scientific variable change.\",\n    \"Preflight enforces a fresh empty run_root and nonexistent valid manifest, preventing accidental reuse of any prior Repair2 artifacts.\",\n    \"The analyzer correctly prioritizes TOST practical-null over a nominally significant superiority result, matching the predeclared decision priority.\"\n  ],\n  \"execution_recommendation\": \"ALLOW_SEPARATE_REPAIR2_AUTHORIZATION\",\n  \"second_backbone_recommendation\": \"HOLD\",\n  \"paper_claim_authority\": false,\n  \"single_sentence_verdict\": \"All eight gates pass: the Repair2 draft's pre-outcome, prefix-identical inheritance of 14 complete Repair1 pairs, paired fresh rerun of the quarantined failure, symmetric single-correction policy, fail-closed budgets, and exact 48-pair/12-stream manifest discipline are scientifically sound, so it may proceed only to a separately SHA-bound Repair2 contract and authorization after zero-provider preflight.\"\n}",
+  "raw_text_sha256": "1eb11097b8be5800ff511636fc5daf5c9e09e78f0e99f63888d40d3350eb61ea",
+  "repair_sha256": "999498499649f873f1f0eff32593d9d2a2c788f843f0484af77cf8868ce89e26",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "c2fbd7c4484e733474d36e47240098cac67cc11b8964da85bfbe8594fba55f24",
+  "review": {
+    "arm_symmetry_assessment": "PASS. max_parse_attempts=2, the 11-call updater unit limit, and the 191-call state limit are bound identically in the contract for both arms; the runner constructs the adapter and ProviderBudgetLedger from the same contract values for win_c and mrw with no arm-, stream-, or failure-conditioned allowance. The correction policy applies to whichever arm experiences an attempt0 deterministic parse/apply failure, and reliability counts are reported by arm without filtering.",
+    "draft_contract_sha256_acknowledged": "999498499649f873f1f0eff32593d9d2a2c788f843f0484af77cf8868ce89e26",
+    "execution_recommendation": "ALLOW_SEPARATE_REPAIR2_AUTHORIZATION",
+    "fresh_failed_pair_assessment": "PASS. The quarantine disposition is PRESERVE; EXCLUDE FROM VALID MANIFEST; REPAIR2 FRESH-RUNS BOTH ARMS; single_arm_resume_authorized=false and operator_semantic_patch_authorized=false. The runner treats any pre-existing partial update directory as a hard error (no auto-rerun), and e1-fmv-01/rep2 will be executed fresh for both win_c and mrw under the same current model identity (deepseek-v4-pro-ga-260813), pools, initial skill, policy, and SHA-salted time-balanced update/eval order as all other fresh pairs.",
+    "nonblocking_notes": [
+      "The inherited 14 pairs cover only 4 of 12 streams; this is acceptable because selection is pre-outcome and the failed pair's stream (e1-fmv-01) retains two inherited replicates (rep0, rep1) while rep2 is fresh-run as a complete pair, so no stream is defined by a partial or treatment-failed unit.",
+      "The fresh-run e1-fmv-01/rep2 pair will execute under the requalified 2026-08-31 model identity while inherited pairs ran under the 2026-08-30 identity; both bind the same requested and resolved model (deepseek-v4-pro-ga-260813), and the Repair2 contract freezes the fresh identity artifact for all new execution, so this is a documented requalification rather than a scientific variable change.",
+      "Preflight enforces a fresh empty run_root and nonexistent valid manifest, preventing accidental reuse of any prior Repair2 artifacts.",
+      "The analyzer correctly prioritizes TOST practical-null over a nominally significant superiority result, matching the predeclared decision priority."
+    ],
+    "paper_claim_authority": false,
+    "prefix_compatibility_assessment": "PASS. For every inherited state, all 10 provider calls completed at attempt0 with zero parse errors; under max_parse_attempts=2 the correction branch is only entered after an attempt0 parse/apply failure, so the execution path for an attempt0-success state is byte-identical between max_parse_attempts=1 and =2. The manifest verifies all receipts are attempt=0, parse_error empty, provider_status completed, and patch_apply_correction_required=false. Inheritance of these 14 pairs under the Repair2 policy is scientifically valid because the extra branch was never exercised and could not have altered prompts, responses, skills, or evaluations.",
+    "provider_budget_assessment": "PASS. Nominal updater=10 with one explicit correction yields max=11 per unit; actor remains structurally <=180 (18 probes x 10 turns); state max=191; hard structural ceiling 96 x 191 = 18336. Claims are made before provider I/O, never released, provider_retry_limit=0 everywhere, and the adapter/runner tests prove the second failure stops with no third attempt (exactly 11 calls). The fresh-run pair's 10 quarantined calls are not reused, so Repair2's own ceiling is internally consistent.",
+    "remaining_blockers": [],
+    "runtime_reliability_reporting_assessment": "PASS. correction_required/attempt0_success/correction_success/correction_failure are accumulated per arm into runtime_reliability as secondary outcomes; they are not used to include or exclude any pair from the primary estimand (validity is determined by completion and binding integrity, not by correction status). The Repair1 MRW patch-apply failure is separately reported as repair1_quarantined_patch_apply_failures {win_c:0, mrw:1} and carried into the analyzer output.",
+    "scientific_cardinality_assessment": "PASS. The design preserves exactly 12 stream D_s, four valid pairs per stream (48 pairs, 96 learned states), same treatment/control definitions, exact same pools, initial skill, renderer, updater entrypoint, verifier, 18 heldout probes, K=1, 8192 max output tokens, identical statistics (sign-flip over 2^12, TOST epsilon=1/18, bootstrap seed 1718, reps 100000), and the same time-balance salts. GPT/Kimi/Qwen scientific execution, second backbone, and public benchmark remain forbidden; authority bits are all false in the draft.",
+    "second_backbone_recommendation": "HOLD",
+    "selection_bias_assessment": "PASS. The 14 inherited pairs are selected solely by pre-outcome completeness/provenance and attempt0-success prefix identity; the compatibility manifest records scientific_scores_read=false and the validator deliberately never reads ref['score'] (test I). The treatment-dependent failed pair e1-fmv-01/rep2 is quarantined, not analyzed, and Repair2 fresh-runs both arms. The eligibility rule (complete paired unit, both arms nominal attempt0 success, 18/18 heldout integrity, no parse error) is a pre-outcome integrity criterion, not a score- or outcome-conditioned filter. The inherited set spans streams e1-agj-00, e1-agj-01, e1-fmv-00, and e1-fmv-01 (replicates 0-1), determined by where the deterministic failure happened to stop, not by any measured effect. This avoids unacceptable post-treatment selection bias.",
+    "single_sentence_verdict": "All eight gates pass: the Repair2 draft's pre-outcome, prefix-identical inheritance of 14 complete Repair1 pairs, paired fresh rerun of the quarantined failure, symmetric single-correction policy, fail-closed budgets, and exact 48-pair/12-stream manifest discipline are scientifically sound, so it may proceed only to a separately SHA-bound Repair2 contract and authorization after zero-provider preflight.",
+    "valid_manifest_assessment": "PASS. Only the frozen 14-pair compatibility manifest (SHA 61e243...95bb) seeds inheritance; the runner copies exactly those rows into the content-addressed valid_replicates manifest and asserts the runtime inherited set equals the frozen manifest set. validate_valid_rows enforces exactly 48 rows, exactly four per stream across the 12 frozen streams, complete paired arms, exclusion of the quarantined unit/state, and directory discovery is forbidden. Analysis reads only this manifest.",
+    "verdict": "PASS_TO_SEPARATELY_AUTHORIZED_REPAIR2"
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "submission_authority": false,
+  "temperature": 0,
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 136783,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1495,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 138278
+  }
+}

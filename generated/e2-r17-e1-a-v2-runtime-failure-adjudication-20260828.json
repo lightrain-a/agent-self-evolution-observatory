@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-e1-a-runtime-failure-adjudication",
+  "date": "2026-08-28",
+  "status": "TECHNICAL_FAILURE_ZERO_PROVIDER_ZERO_SCIENTIFIC_OUTCOME",
+  "failed_contract": {
+    "path": "generated/e2-r17-e1-a-pool-support-v2-contract-20260828.json",
+    "sha256": "e886abe909ef73873f4d7a808157a580c13de9ed052668f7fb77b8157583fc9e"
+  },
+  "failed_authorization": {
+    "path": "generated/e2-r17-e1-a-pool-support-v2-authorization-20260828.json",
+    "sha256": "f82d993589ad82629475f12285e3df0ad2bfc5af7f68971bb22df25bdbe95024"
+  },
+  "failed_run_root": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-20260828",
+  "failure_receipt": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-20260828/checkpoints/failures/e1-agj-00.json",
+  "diagnosis": "The E1-A orchestrator spawned the actor with ambient sys.executable (/usr/bin/python3) instead of the previously qualified MindMemOS virtual environment. Import failed at mindmemos_sdk -> pydantic before actor rollout execution.",
+  "observed": {
+    "active_r17_process_after_failure": false,
+    "completed_streams": 0,
+    "completed_trajectory_refs": 0,
+    "provider_budget_claims": 0,
+    "provider_calls": 0,
+    "new_actor_rollouts": 0,
+    "mixed_or_rescue_support_inspected": false,
+    "updater_calls": 0,
+    "future_skill_evaluations": 0,
+    "scientific_effectiveness_evaluated": false,
+    "stale_lock_preserved": true
+  },
+  "runtime_evidence": {
+    "qualified_venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv",
+    "qualified_venv_python": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "runtime_freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "runtime_freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "runtime_qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "runtime_qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "fresh_import_smoke": "PASS",
+    "pydantic_in_qualified_venv": "2.13.4",
+    "openpyxl_in_qualified_venv": "3.1.5"
+  },
+  "adjudication": "This is a pre-provider runtime-binding failure, not a scientific negative result. The failed V2 run root, ledger, failure receipt, and stale lock must remain untouched. The exact V2 authorization is not retryable after code/runtime repair. A fresh V2.1 contract and authorization on a fresh run root are required.",
+  "authority": {
+    "repair_runtime_binding": true,
+    "prepare_fresh_e1_a_contract": true,
+    "execute_failed_v2_contract": false,
+    "execute_e1_b": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

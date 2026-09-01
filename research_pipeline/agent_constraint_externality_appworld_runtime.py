@@ -19,6 +19,8 @@ from research_pipeline.appworld_constraint_compiler import (
 )
 
 DIRECT_SEPARATOR = "__"
+SUPERVISOR_SPECS_EXEMPLAR_TASK_ID = "5238afc_1"
+SUPERVISOR_MAIN_USER_ID = 99
 MEASUREMENT_FAILURE_CLASS = "MEASUREMENT_INTERFACE_FAIL_CLOSED"
 
 
@@ -217,6 +219,132 @@ def prepare_appworld_runtime_root(
     db_root.mkdir(parents=True)
     for source in sorted((appworld_root / "data" / "base_dbs").glob("*.db")):
         shutil.copy2(source, db_root / source.name)
+
+    # AppWorld base_dbs intentionally contain no active supervisor task context.
+    # ACE fixtures are owned by base main user 99 (Aaron Burton), so the custom
+    # supervisor must be derived from that same main user rather than borrowed
+    # from an unrelated official task.  This keeps ~ paths, app ownership, Gmail
+    # sender_id, and note/todo ownership aligned with one identity.
+    exemplar_specs_path = (
+        appworld_root / "data" / "tasks" / SUPERVISOR_SPECS_EXEMPLAR_TASK_ID / "specs.json"
+    )
+    if not exemplar_specs_path.is_file():
+        raise RunnerError("Frozen AppWorld specs exemplar is unavailable.")
+    specs = json.loads(exemplar_specs_path.read_text(encoding="utf-8"))
+    specs["instruction"] = arm["task_instruction"]
+
+    admin_connection = sqlite3.connect(db_root / "admin.db")
+    try:
+        main_user_row = admin_connection.execute(
+            "SELECT sex, record_hash, id, first_name, last_name, email, phone_number, birthday "
+            "FROM main_users WHERE id = ?",
+            (SUPERVISOR_MAIN_USER_ID,),
+        ).fetchone()
+        if main_user_row is None:
+            raise RunnerError("Frozen supervisor main user 99 is missing from admin DB.")
+        (
+            supervisor_sex,
+            supervisor_record_hash,
+            supervisor_id,
+            supervisor_first_name,
+            supervisor_last_name,
+            supervisor_email,
+            supervisor_phone,
+            supervisor_birthday,
+        ) = main_user_row
+        password_rows = admin_connection.execute(
+            "SELECT account_name, password FROM account_passwords WHERE main_user_id = ?",
+            (SUPERVISOR_MAIN_USER_ID,),
+        ).fetchall()
+        account_passwords = {str(name): str(password) for name, password in password_rows}
+        address_rows = admin_connection.execute(
+            "SELECT ua.name, ga.street_address, ga.city, ga.state, ga.country, ga.zip_code "
+            "FROM user_addresses ua JOIN global_addresses ga ON ga.id = ua.global_address_id "
+            "WHERE ua.main_user_id = ? ORDER BY ua.id",
+            (SUPERVISOR_MAIN_USER_ID,),
+        ).fetchall()
+        card_rows = admin_connection.execute(
+            "SELECT card_name, owner_name, card_number, expiry_year, expiry_month, cvv_number "
+            "FROM payment_cards WHERE main_user_id = ? ORDER BY id",
+            (SUPERVISOR_MAIN_USER_ID,),
+        ).fetchall()
+    finally:
+        admin_connection.close()
+
+    specs["supervisor"] = {
+        "first_name": str(supervisor_first_name),
+        "last_name": str(supervisor_last_name),
+        "email": str(supervisor_email),
+        "phone_number": str(supervisor_phone),
+    }
+    supervisor_db = db_root / "supervisor.db"
+    supervisor_connection = sqlite3.connect(supervisor_db)
+    try:
+        supervisor_connection.execute(
+            "INSERT INTO supervisors (sex, record_hash, id, first_name, last_name, email, phone_number, birthday) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (
+                supervisor_sex,
+                supervisor_record_hash,
+                supervisor_id,
+                supervisor_first_name,
+                supervisor_last_name,
+                supervisor_email,
+                supervisor_phone,
+                supervisor_birthday,
+            ),
+        )
+        supervisor_connection.execute(
+            "INSERT INTO tasks (status, record_hash, id, supervisor_id, instruction, answer) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (None, None, 1, supervisor_id, arm["task_instruction"], json.dumps("<<NOT_GIVEN>>")),
+        )
+        for index, (account_name, password) in enumerate(sorted(account_passwords.items()), start=1):
+            supervisor_connection.execute(
+                "INSERT INTO account_passwords (record_hash, id, supervisor_id, account_name, password) "
+                "VALUES (?, ?, ?, ?, ?)",
+                (None, index, supervisor_id, account_name, password),
+            )
+        for index, row in enumerate(address_rows, start=1):
+            supervisor_connection.execute(
+                "INSERT INTO addresses (name, record_hash, id, supervisor_id, street_address, city, state, country, zip_code) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (row[0], None, index, supervisor_id, row[1], row[2], row[3], row[4], row[5]),
+            )
+        for index, row in enumerate(card_rows, start=1):
+            supervisor_connection.execute(
+                "INSERT INTO payment_cards (card_name, record_hash, id, supervisor_id, owner_name, card_number, expiry_year, expiry_month, cvv_number) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (row[0], None, index, supervisor_id, row[1], row[2], row[3], row[4], row[5]),
+            )
+        supervisor_connection.commit()
+        active_tasks = supervisor_connection.execute(
+            "SELECT instruction FROM tasks WHERE supervisor_id = ?", (supervisor_id,)
+        ).fetchall()
+        if len(active_tasks) != 1 or active_tasks[0][0] != arm["task_instruction"]:
+            raise RunnerError("Materialized AppWorld active-task binding is invalid.")
+    finally:
+        supervisor_connection.close()
+
+    for app in family["fixture"]["apps"]:
+        if app not in account_passwords:
+            raise RunnerError(f"Supervisor lacks an account password for required app {app}.")
+        app_connection = sqlite3.connect(db_root / f"{app}.db")
+        try:
+            account_row = app_connection.execute(
+                "SELECT id, password FROM users WHERE email = ?", (supervisor_email,)
+            ).fetchone()
+        finally:
+            app_connection.close()
+        if (
+            account_row is None
+            or int(account_row[0]) != SUPERVISOR_MAIN_USER_ID
+            or str(account_row[1]) != account_passwords[app]
+        ):
+            raise RunnerError(
+                f"Supervisor credential/ownership does not match required app user 99 for {app}."
+            )
+
     connections: dict[str, sqlite3.Connection] = {}
     try:
         for app in family["fixture"]["apps"]:
@@ -231,9 +359,6 @@ def prepare_appworld_runtime_root(
     finally:
         for connection in connections.values():
             connection.close()
-    exemplar = next((appworld_root / "data" / "tasks").glob("*/specs.json"))
-    specs = json.loads(exemplar.read_text(encoding="utf-8"))
-    specs["instruction"] = arm["task_instruction"]
     (task_root / "specs.json").write_text(
         json.dumps(specs, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
         encoding="utf-8",

@@ -1,0 +1,40 @@
+{
+  "artifact_type": "e2-r17-runtime-repair-dual-technical-review-summary",
+  "authority": {
+    "e0_full": false,
+    "e1": false,
+    "paper_promotion": false,
+    "scientific_experiment": false,
+    "submission": false,
+    "write_reauthorization": true
+  },
+  "created_at_utc": "2026-08-28T04:52:36+00:00",
+  "failure_receipt_sha256": "0b9ad1dfba9611a95ddcf4f9ba35f8d165562b387e6f424805bd1ac38a37d802",
+  "repair_commit": "64a2eee5",
+  "reviews": [
+    {
+      "blockers": [],
+      "model": "deepseek-v4-pro",
+      "path": "generated/e2-r17-runtime-repair-review-20260828/deepseek-v4-pro.json",
+      "repair_sufficient": true,
+      "resolved": "deepseek-v4-pro-ga-260813",
+      "sha256": "97e70058b192464f240dc34c99a9b40a27a53eedb867a0db13717a94c42e3694",
+      "tokens": 4017,
+      "verdict": "PASS"
+    },
+    {
+      "blockers": [],
+      "model": "kimi-k3",
+      "path": "generated/e2-r17-runtime-repair-review-20260828/kimi-k3.json",
+      "repair_sufficient": true,
+      "resolved": "kimi-k3",
+      "sha256": "3a56b6c06b5e1a4aeac3bd6ac9e6ef512365c04c989d9a65facf46aca345064d",
+      "tokens": 3695,
+      "verdict": "PASS"
+    }
+  ],
+  "runtime_r2_receipt_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+  "schema_version": "1.0",
+  "scientific_contract_changed": false,
+  "status": "PASS"
+}

@@ -1,0 +1,53 @@
+{
+  "adjudication": "The initial Kimi Auto/default-thinking smokes are retained as explicit incomplete-length protocol failures. The passing Kimi qualification is a separately declared compatibility call with thinking disabled. DeepSeek resolves to the current GA release rather than the historical 260425 suffix. These observed identities are frozen only for the current pre-execution review tranche and must be requalified before any later scientific tranche.",
+  "artifact_type": "e2-r17-current-plan-model-identity-adjudication",
+  "authority": {
+    "gpu": false,
+    "paper_promotion": false,
+    "preexecution_consultation": true,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "checks": {
+    "deepseek_pass": true,
+    "kimi_pass": true,
+    "no_hidden_provider_retry": true,
+    "provider_retry_zero": true,
+    "resolved_identities_distinct": true,
+    "route_is_ark_plan": true
+  },
+  "compatibility_history": [
+    {
+      "path": "generated/e2-r17-deepseek-v2-repair2-deepseek-identity-qualification-20260831.json",
+      "sha256": "6f7305554f710ce56d07e86cbc786ab5d4618327f5b6c0161c7259067cae59ac",
+      "status": "PASS"
+    },
+    {
+      "path": "generated/e2-r17-deepseek-v2-repair2-kimi-reviewer-identity-qualification-20260831.json",
+      "sha256": "438fd94e5b9eba442204d7e9ba5bf2092e4512c2fef50875d58238959da4cf5a",
+      "status": "PASS"
+    }
+  ],
+  "created_at_utc": "2026-08-31T04:07:18+00:00",
+  "private_credentials_included": false,
+  "raw_response_ids_included": false,
+  "requested_and_resolved": {
+    "deepseek-v4-pro": {
+      "requested": "deepseek-v4-pro",
+      "resolved": "deepseek-v4-pro-ga-260813",
+      "source_artifact": "generated/e2-r17-deepseek-v2-repair2-deepseek-identity-qualification-20260831.json",
+      "source_artifact_sha256": "6f7305554f710ce56d07e86cbc786ab5d4618327f5b6c0161c7259067cae59ac",
+      "thinking_requested": "disabled"
+    },
+    "kimi-k3": {
+      "requested": "kimi-k3",
+      "resolved": "kimi-k3",
+      "source_artifact": "generated/e2-r17-deepseek-v2-repair2-kimi-reviewer-identity-qualification-20260831.json",
+      "source_artifact_sha256": "438fd94e5b9eba442204d7e9ba5bf2092e4512c2fef50875d58238959da4cf5a",
+      "thinking_requested": "disabled"
+    }
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "status": "PASS_CURRENT_REVIEW_TRANCHE"
+}

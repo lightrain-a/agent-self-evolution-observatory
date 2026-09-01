@@ -1,0 +1,52 @@
+{
+  "artifact_type": "e2-r17-search-projection-debate-model-qualification",
+  "authority": {
+    "debate_completed": false,
+    "experiment": false,
+    "f0_r4_frozen": false,
+    "gpu": false,
+    "submission": false
+  },
+  "benchmark_data_accessed": false,
+  "created_at_utc": "2026-08-27T13:30:30+00:00",
+  "k3_requested_identity_is_not_assumed_resolved_identity": true,
+  "models": [
+    {
+      "compatibility_retry_used": false,
+      "error_class": "OTHER",
+      "error_message_sanitized": "Ark retrieve HTTP 404: {'error': {'code': 'ResourceNotFound', 'message': 'Response with id  resp_[REDACTED] not found. Request id: [REDACTED]', 'param': '', 'type': 'NotFound'}}",
+      "error_sha256": "c71fe04baa46793e8c125ec2f20d8251a7cccc3cd8b4c54a30a0fb9ef1df019a",
+      "error_type": "RuntimeError",
+      "prompt_sha256": "56878f0053fae7cc5964af67ab8bdc1f6872c1358aa1380a4bdfad26d6d1c1cf",
+      "provider_generation_attempts": 1,
+      "provider_retry_limit": 0,
+      "raw_response_ids_included": false,
+      "requested_model": "deepseek-v4-pro",
+      "scientific_outcome": false,
+      "status": "FAIL_PROVIDER_PROTOCOL"
+    },
+    {
+      "compatibility_retry_used": false,
+      "error_class": "OTHER",
+      "error_message_sanitized": "Ark retrieve HTTP 404: {'error': {'code': 'ResourceNotFound', 'message': 'Response with id  resp_[REDACTED] not found. Request id: [REDACTED]', 'param': '', 'type': 'NotFound'}}",
+      "error_sha256": "e27f95e09c3d0c8e4dd7c79a8502716d2b68635f0c4e96c1c84cc67348f5abab",
+      "error_type": "RuntimeError",
+      "prompt_sha256": "56878f0053fae7cc5964af67ab8bdc1f6872c1358aa1380a4bdfad26d6d1c1cf",
+      "provider_generation_attempts": 1,
+      "provider_retry_limit": 0,
+      "raw_response_ids_included": false,
+      "requested_model": "kimi-k3",
+      "scientific_outcome": false,
+      "status": "FAIL_PROVIDER_PROTOCOL"
+    }
+  ],
+  "private_credentials_included": false,
+  "protocol_smoke_calls": 2,
+  "provider_retry_limit": 0,
+  "raw_response_ids_included": false,
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "route_is_ark_plan": true,
+  "schema_version": "1.0",
+  "scientific_provider_calls": 0,
+  "status": "FAIL"
+}

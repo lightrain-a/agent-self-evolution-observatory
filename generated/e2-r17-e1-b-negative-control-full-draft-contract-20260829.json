@@ -1,0 +1,287 @@
+{
+  "actor": {
+    "concurrency_per_probe": 1,
+    "k": 1,
+    "max_output_tokens": 4096,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "actor_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
+    "role": "actor_evaluator",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "arm_order": {
+    "evaluation_pair_order": "SHA256(E2-R17-E1B-NC-EVAL-PAIR-ORDER-v1|stream_id|task_id|arm)",
+    "purpose": "balance systematic temporal order without outcome-dependent randomization",
+    "update_order": "SHA256(E2-R17-E1B-NC-UPDATE-ORDER-v1|stream_id|arm)"
+  },
+  "artifact_type": "e2-r17-e1-b-negative-control-full-contract",
+  "authority": {
+    "dual_preexecution_review": true,
+    "execute_mrw": false,
+    "execute_negative_control_full": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "bound_code": {
+    "actor_runner": {
+      "path": "scripts/run_e2_r17_actor_pool.py",
+      "sha256": "20a81fbe06f3839cd17babfdb021407368493da61610bca33aae33df8d31ec14"
+    },
+    "actor_runtime_validator": {
+      "path": "scripts/run_e2_r17_e1_a_pool_support.py",
+      "sha256": "24ea070b08399d48af99294615a508874f851af941f5bb0efabe341b0854617d"
+    },
+    "analysis": {
+      "path": "scripts/analyze_e2_r17_e1_b_negative_control.py",
+      "sha256": "5b040c81632ab930ddbd7d44c80b38db21c8ddf01b70dcf87c350bf05376bf23"
+    },
+    "provider_budget": {
+      "path": "research_pipeline/e2_r17_provider_budget.py",
+      "sha256": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444"
+    },
+    "provider_runtime_helpers": {
+      "path": "scripts/run_e2_r17_v31_provider_runtime_pilot.py",
+      "sha256": "533f11ba2bfc85aa6fcea8bc1b9502a039cd7770055010a8838b78bb8b6041d5"
+    },
+    "renderer": {
+      "path": "research_pipeline/e2_r17_evidence_window_v2.py",
+      "sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7"
+    },
+    "runner": {
+      "path": "scripts/run_e2_r17_e1_b_negative_control_full.py",
+      "sha256": "bd43723450bfee0f9aea1e3c5f8e9bef91fa41109d1ab2969c9084269f80b978"
+    },
+    "updater_adapter": {
+      "path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+      "sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8"
+    },
+    "updater_wrapper": {
+      "path": "research_pipeline/e2_r17_mindmemos_updater.py",
+      "sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d"
+    }
+  },
+  "budget": {
+    "claim_before_provider_io": true,
+    "claims_never_released": true,
+    "hard_max_provider_calls_structural": 4560,
+    "max_provider_calls_per_state": 190,
+    "max_provider_calls_per_unit": 10,
+    "planning_basis": "E1-A observed mean 5.5104 actor calls/rollout plus exact 10 updater calls/state; planning only, never a ceiling relaxation",
+    "planning_expected_actor_tokens": 7155016,
+    "planning_expected_provider_calls": 2621,
+    "planning_expected_updater_tokens": 724864,
+    "state_structure": "10 updater + 18 heldout rollouts x <=10 actor calls",
+    "states": 24
+  },
+  "checkpoint": {
+    "exclusive_lock": ".exclusive.lock",
+    "partial_ambiguous_unit_auto_rerun": false,
+    "persist_each_heldout_probe_immediately": true,
+    "preserve_lock_on_failure": true,
+    "resume_completed_units_only_after_sha_revalidation": true,
+    "state_eval_manifest": "states/<stream>/<arm>/checkpoints/completed_eval_tasks.jsonl",
+    "state_update_checkpoint": "states/<stream>/<arm>/checkpoints/update_completed.json",
+    "stream_manifest": "checkpoints/completed_streams.jsonl"
+  },
+  "date": "2026-08-29",
+  "e1_a_pool_root": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828",
+  "e1_a_support": {
+    "path": "generated/e2-r17-e1-a-pool-support-v2-1-adjudication-20260828.json",
+    "required_status": "PASS_E1_A_SUPPORT_READY_FOR_SEPARATE_E1_B_CONTRACT",
+    "sha256": "b2c611285c20377d77af7ea62448c6fee0d5973cd657687f6dde7f7fce6be6d7"
+  },
+  "env_file": ".env",
+  "forbidden": [
+    "MRW provider execution",
+    "ReasoningBank/RB-AGG execution",
+    "task/model/threshold replacement based on negative-control result",
+    "treating nonsignificance as equivalence",
+    "paper/frontend/submission promotion",
+    "automatic rerun after ambiguous provider calls"
+  ],
+  "heldout": {
+    "evaluation_k": 1,
+    "never_fed_to_updater": true,
+    "source_split": "e1_common_heldout_probe",
+    "task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ]
+  },
+  "initial_skill": {
+    "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+    "sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+  },
+  "mindmemos": {
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e"
+    },
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817"
+  },
+  "model_identity": {
+    "path": "generated/e2-r17-e1-b-negative-control-model-identity-adjudication-20260829.json",
+    "qualification_path": "generated/e2-r17-e1-b-negative-control-model-identity-qualification-20260829.json",
+    "qualification_sha256": "1b61624ef347532fd5a083cac26ed6f8febc7ffe9e22a68b32e95362e5d7bc21",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "sha256": "6ebc6ee7edb67b78a7aae910b87a158d81232477f676b42e15ee9c6449432746"
+  },
+  "parents": {
+    "e1_a_support": {
+      "path": "generated/e2-r17-e1-a-pool-support-v2-1-adjudication-20260828.json",
+      "sha256": "b2c611285c20377d77af7ea62448c6fee0d5973cd657687f6dde7f7fce6be6d7"
+    },
+    "failure_registry": {
+      "path": "generated/e2-r17-failure-differential-registry-v3-20260829.json",
+      "sha256": "5f44cc4a43e0aa94a84f42b1fc8c752b2a9d396dfde54144afff2e1aacfd59a6"
+    },
+    "provider_runtime": {
+      "path": "generated/e2-r17-v31-provider-runtime-pilot-v2-adjudication-20260829.json",
+      "sha256": "8be8a4596ffef8e3702f8e422ed4dd2c55b7fc1f97573b125f30096d64f60424"
+    },
+    "transition_runtime": {
+      "path": "generated/e2-r17-e1-b-transition-runtime-pilot-adjudication-20260829.json",
+      "sha256": "75e19d67b1cdb0e65a28a1f2943e223629c27cfcb2b0b562bbca8d32ee988185"
+    }
+  },
+  "purpose": "Measure residual hosted updater+evaluator stochasticity under byte-identical WIN treatment before any MRW causal comparison. Exactly 12 paired stream units, two independent WIN clones per stream, same 18 common heldout probes at K=1. MRW is not executed.",
+  "renderer": {
+    "arm_metadata_visible": false,
+    "exact_final_retokenized_parity_required": true,
+    "final_block_cap_tokens": 3072,
+    "padding": false,
+    "path": "research_pipeline/e2_r17_evidence_window_v2.py",
+    "sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7",
+    "tokenizer_encoding": "cl100k_base",
+    "tokenizer_package": "tiktoken",
+    "tokenizer_version": "0.11.0"
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/e1-b-negative-control-v1-20260829",
+  "schema_version": "1.0",
+  "scientific_units": {
+    "arms": [
+      "win_a",
+      "win_b"
+    ],
+    "heldout_probes_are_repeated_measurements": true,
+    "heldout_probes_per_state": 18,
+    "heldout_rollout_units": 432,
+    "independent_unit": "stream-level learned-state pair",
+    "learned_states": 24,
+    "paired_streams": 12,
+    "update_tasks_per_stream": 8
+  },
+  "statistics": {
+    "alpha": 0.05,
+    "bootstrap_robustness": {
+      "controls_primary_gate": false,
+      "interval": "90%",
+      "paired_stream_resampling": true,
+      "reps": 100000,
+      "seed": 1717
+    },
+    "difference": "N_s=J_s(WIN-B)-J_s(WIN-A)",
+    "endpoint": "J_s(arm)=mean binary success over the same 18 heldout K=1 probes",
+    "equivalence_margin": 0.05555555555555555,
+    "if_equivalence_fail": "HOLD_UPDATER_OR_EVALUATOR_STOCHASTICITY; MRW remains unauthorized",
+    "if_equivalence_pass": "PASS_NEGATIVE_CONTROL_EQUIVALENCE_READY_FOR_SEPARATE_MRW_CONTRACT",
+    "n_pairs": 12,
+    "nonsignificance_is_not_equivalence": true,
+    "primary_gate": "paired TOST equivalence, implemented equivalently as the 90% paired-mean t interval lying strictly within [-1/18,+1/18]",
+    "t_critical_0_95_df11": 1.7958848187036691
+  },
+  "status": "DRAFT_PENDING_DUAL_PREEXECUTION_REVIEW",
+  "streams": [
+    "e1-agj-00",
+    "e1-agj-01",
+    "e1-fmv-00",
+    "e1-fmv-01",
+    "e1-ioc-00",
+    "e1-ioc-01",
+    "e1-msp-00",
+    "e1-msp-01",
+    "e1-ska-00",
+    "e1-ska-01",
+    "e1-tsr-00",
+    "e1-tsr-01"
+  ],
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "treatment": {
+    "mrw_executed": false,
+    "pre_provider_evidence_identity_required": true,
+    "same_exact_search_pools": true,
+    "same_heldout_probes": true,
+    "same_initial_skill": true,
+    "same_served_winner": true,
+    "same_updater_config": true,
+    "win_a": "V3.1 arm-blinded matched-window winner evidence for all eight exact pools",
+    "win_b": "byte-identical V3.1 arm-blinded matched-window winner evidence for all eight exact pools, independent hosted provider calls and cloned persistent state"
+  },
+  "updater": {
+    "adapter_path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+    "adapter_sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8",
+    "batch_size": 8,
+    "first_party": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "max_parse_attempts": 1,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "score_semantics": "selected_evidence_trajectory",
+    "temperature": 0.0,
+    "thinking": "disabled",
+    "transcript_max_chars": 100000,
+    "wrapper_path": "research_pipeline/e2_r17_mindmemos_updater.py",
+    "wrapper_sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d"
+  },
+  "updater_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv.freeze.txt",
+    "freeze_sha256": "80cd6fdd8eb672e41252c099766fd171a5a7a4b90c284d87da87d09f0d559731",
+    "litellm_local_model_cost_map": true,
+    "post_lock_compatibility_override": {
+      "disclosed": true,
+      "package": "tiktoken",
+      "reason": "pre-frozen V3.1 ExactMatchedEvidenceBlockRenderer compatibility",
+      "version": "0.11.0"
+    },
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+    "qualification_path": "generated/e2-r17-updater-runtime-qualification-20260829.json",
+    "qualification_sha256": "f2319815cdcd7caf248c498c470720d4e3f6c9b5e579fad59914df687cdf5b6d",
+    "required_entrypoint": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_UPDATER_RUNTIME",
+    "role": "persistent_skill_updater",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv"
+  }
+}

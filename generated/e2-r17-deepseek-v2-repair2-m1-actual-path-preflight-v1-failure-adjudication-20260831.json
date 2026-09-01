@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-repair2-m1-actual-path-preflight-v1-failure-adjudication",
+  "date": "2026-08-31",
+  "status": "OUTCOME_BLIND_PRE_PROVIDER_IMPLEMENTATION_REPAIR_ELIGIBLE",
+  "failed_contract_path": "generated/e2-r17-deepseek-v2-repair2-m1-measurement-contract-20260831.json",
+  "failed_contract_sha256": "ab77b53f5da909ffdeee384f10560e67fe38c8683009004db07b9c833a3c2e45",
+  "failed_authorization_path": "generated/e2-r17-deepseek-v2-repair2-m1-preflight-authorization-20260831.json",
+  "failed_authorization_sha256": "29ff99fbd5fd46fde8101a44f541e6248b5f158a59efa503270b7f5b7555ff6c",
+  "failed_preflight_root": "/data/wyt/e2-r17-search-projection/preflight/deepseek-v2-repair2-m1-actual-path-20260831",
+  "failed_unit": {
+    "arm": "win_c",
+    "task_id": "r17-b4-agj-p2"
+  },
+  "cause": "The isolated child worktree had no ignored .env; relative env_file=.env failed before provider-budget ledger creation.",
+  "provider_claims": 0,
+  "provider_calls": 0,
+  "scientific_outcomes": 0,
+  "partial_effect_read": false,
+  "allowed_repair": "Versioned V2 contract/auth may bind the exact absolute path of the unchanged ignored parent .env. All scientific variables and parent learned-state provenance remain frozen.",
+  "forbidden": [
+    "overwrite V1 artifacts",
+    "resume V1 preflight root",
+    "change model/task/K/skill/receipt/budget/metric",
+    "start M1 scientific measurement before 36/36 preflight and review"
+  ]
+}

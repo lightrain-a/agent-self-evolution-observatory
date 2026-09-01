@@ -1209,9 +1209,13 @@ def main() -> None:
         if marker not in app_text:
             fail(f"literature ranking implementation is missing {marker}")
 
-    literature_nav = re.search(r'\{ title:\{en:"Literature",zh:"文献"\}, open:true, pages:\[(.*?)\]\}', data_text, re.DOTALL)
+    for en_title, zh_title in [("Start Here","开始阅读"),("Field Atlas","领域图谱"),("Current Research","当前科研"),("Literature","参考文献")]:
+        marker = f'{{ title:{{en:"{en_title}",zh:"{zh_title}"}}, open:false, pages:['
+        if marker not in data_text:
+            fail(f"Sidebar navigation group must default closed: {zh_title}")
+    literature_nav = re.search(r'\{ title:\{en:"Literature",zh:"参考文献"\}, open:false, pages:\[(.*?)\]\}', data_text, re.DOTALL)
     if not literature_nav or '"bibliography.html",{en:"Literature Library · Spine & Research Gaps",zh:"文献库 · 主线与研究空白"}' not in literature_nav.group(1):
-        fail("Literature navigation must be default-open and use the canonical bibliography label")
+        fail("Literature navigation must default closed and use the canonical bibliography label")
     if '"selected-paper.html",{en:"Paper Collection · Current 9",zh:"论文合集 · 当前 9 篇"}' not in data_text:
         fail("Current Research navigation must place the nine-paper collection first")
     if 'const LANGUAGE_STORAGE_KEY = "agent-evolution-language";' not in app_text or 'localStorage.setItem(LANGUAGE_STORAGE_KEY, language);' not in app_text or "scopedLanguageKey" in app_text:

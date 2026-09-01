@@ -1,0 +1,25 @@
+{
+  "all_allow_separate_transition_runtime_pilot_authorization": true,
+  "artifact_type": "e2-r17-e1-b-transition-runtime-pilot-dual-review",
+  "created_at_utc": "2026-08-29T11:09:06+00:00",
+  "draft_contract_sha256": "c279c328018c9e37e2d2676adc9f0c5118886a1a3e9222a2206ff99b723bdb35",
+  "e1_b_negative_control_authority": false,
+  "exposed_to_other_review": false,
+  "independent": true,
+  "mrw_authority": false,
+  "paper_claim_authority": false,
+  "resolved_models": {
+    "deepseek-v4-pro": "deepseek-v4-pro-ga-260813",
+    "kimi-k3": "kimi-k3"
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "statuses": {
+    "deepseek-v4-pro": "COMPLETED",
+    "kimi-k3": "COMPLETED"
+  },
+  "verdicts": {
+    "deepseek-v4-pro": "PASS_TO_SEPARATELY_AUTHORIZED_E1_B_TRANSITION_RUNTIME_PILOT",
+    "kimi-k3": "PASS_TO_SEPARATELY_AUTHORIZED_E1_B_TRANSITION_RUNTIME_PILOT"
+  }
+}

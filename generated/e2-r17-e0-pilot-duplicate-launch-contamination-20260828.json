@@ -1,0 +1,40 @@
+{
+  "affected_run_root": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-20260828",
+  "artifact_type": "e2-r17-e0-pilot-duplicate-launch-protocol-contamination",
+  "authority": {
+    "e0_full": false,
+    "e0_pilot": false,
+    "e1": false,
+    "paper_promotion": false,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "authorization_path": "generated/e2-r17-e0-pilot-authorization-r2-20260828.json",
+  "authorization_sha256": "272ad27ea7f0e5ee294747852d7b2a236adc09cfd90fa0cef4f4c45a0d5bfc7d",
+  "completed_trajectory_ref_file_count_at_abort": 69,
+  "created_at_utc": "2026-08-28T04:59:14+00:00",
+  "observed_duplicate_actor_count": 2,
+  "observed_duplicate_launch_count": 2,
+  "private_credentials_included": false,
+  "provider_call_count_used_for_science": 0,
+  "provider_calls_occurred": true,
+  "quarantined_partial_directory_count": 30,
+  "raw_response_ids_included": false,
+  "reason_unit_reuse_forbidden": "Concurrent duplicate launch could quarantine or overwrite an in-flight rollout workdir; unit provenance is therefore not uniquely attributable even when a final ref file exists.",
+  "required_repair": [
+    "add exclusive nonblocking run-root launch lock",
+    "bind a fresh run_root in a new authorization",
+    "retain this entire run as protocol-failure evidence only",
+    "do not inspect or use scores from the contaminated run"
+  ],
+  "schema_version": "1.0",
+  "scientific_inference_allowed": false,
+  "scientific_outcomes_opened_for_diagnosis": false,
+  "scores_opened_for_diagnosis": false,
+  "status": "INVALID_PROTOCOL_CONTAMINATED_OUTCOME_UNREAD",
+  "summary_exists": false,
+  "technical_failure_receipt_count": 0,
+  "trajectory_contents_opened_for_diagnosis": false,
+  "trigger": "MCP invocation returned 502 while remote command remained live; the upstream execution layer started the identical launcher a second time against the same run_root.",
+  "unit_reuse_allowed": false
+}

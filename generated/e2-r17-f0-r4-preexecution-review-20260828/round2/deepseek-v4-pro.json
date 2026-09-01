@@ -1,0 +1,92 @@
+{
+  "artifact_type": "e2-r17-f0-r4-preexecution-review-response",
+  "automatic_thinking_compatibility_fallback_allowed": false,
+  "contract_sha256": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+  "created_at_utc": "2026-08-28T03:54:38+00:00",
+  "dossier_file_sha256": {
+    "consultations/e2-r17-public-dataset-and-baseline-audit-20260828.md": "2e86fbdf8b985e9d710043dfeccf964d8fcc17ee2f90a483e41b745c33a21126",
+    "generated/e2-r17-actor-protocol-smoke-20260828.json": "c6be7877dc63c63ae843490504b6cb333deb07f27f5173fcb8d7a8e11645df79",
+    "generated/e2-r17-cloned-state-first-party-updater-qualification-20260828.json": "e26337e1d5c7839248fb227ce763f35a70e2c10648a4aad496dd43f412fc0af4",
+    "generated/e2-r17-current-plan-model-identity-adjudication-20260828.json": "287fdcc4dc193adfac677f417dd382637e6c4b8fe6134377465e10fd5f4fb30b",
+    "generated/e2-r17-e0-pilot-manifest-20260828.json": "e6653ee7cd2d7391b555086adb1a9d2bf660a7df25455f8c0215b35fa85b893f",
+    "generated/e2-r17-f0-r4-frozen-candidate-contract-20260828.json": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+    "generated/e2-r17-search-projection-debate-adjudication-20260827.json": "f743a97e6436c209bb73cabedb51405c56059688202f94f8fb6465374f544c1f"
+  },
+  "expected_resolved_model": "deepseek-v4-pro-ga-260813",
+  "experiment_authority": false,
+  "exposed_to_other_review": true,
+  "get_poll_recovery": false,
+  "hidden_provider_retry_used": false,
+  "independent": false,
+  "max_output_tokens": 5000,
+  "missing_required_fields": [],
+  "paper_promotion_authority": false,
+  "parse_valid": true,
+  "poll_count": 0,
+  "prompt_path": "generated/e2-r17-f0-r4-preexecution-review-20260828/round2/deepseek-v4-pro-prompt.md",
+  "prompt_sha256": "7627240e1e0531ca0ae2d3f3ba00f19e19988b26ad94e48f94887302b26a5af3",
+  "provider_generation_attempts": 1,
+  "provider_retry_limit": 0,
+  "provider_status": "completed",
+  "raw_text": "{\n  \"contract_sha256_acknowledged\": \"f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508\",\n  \"other_review_understood\": true,\n  \"final_verdict\": \"GO\",\n  \"agreements\": [\n    \"Both reviews correctly identify the cloned-state identical-pool design as the decisive identification feature, with provider stochasticity confined to pool creation and not the cross-arm contrast.\",\n    \"Both reviews agree the mandatory controls (duplicated-winner, random-nonwinner, precommitted rollout-0, SkillCAT-style contrast, winner-only) are sufficient for the narrow E0 pilot authorization.\",\n    \"Both reviews correctly note that n=12 is adequate only for the E1 decision rule, not for a paper-level claim, and the contract explicitly says so.\",\n    \"Both reviews agree the public-dataset roles are non-shopping and correctly gated behind controlled-suite mechanism success.\",\n    \"Both reviews agree the scientific object is appropriately narrow and the closest-work reduction boundary is honest.\"\n  ],\n  \"disagreements\": [\n    \"The other review's suggestion to predeclare how partial updater acceptance or empty edits will be counted is a reasonable E1 receipt improvement, but it is not blocking for E0 pilot authorization because E0 is a pool-law and rescue-support qualification, not an updater experiment.\",\n    \"The other review's request to report all pairwise control contrasts in E1 is good practice, but the contract already lists the controls (RW-DUP, RW-random-nonwinner, SkillCAT-style-WIN, PRE-WIN, Delta versus rescue count) in the statistics section, so this is partially addressed.\"\n  ],\n  \"issues_that_remain_blocking\": [],\n  \"issues_resolved_by_existing_controls\": [\n    \"Token/context-length effects are controlled by duplicated-winner.\",\n    \"Generic diversity effects are controlled by random-nonwinner.\",\n    \"Alternative fixed observation kernels are controlled by precommitted rollout-0.\",\n    \"Strongest direct method reduction is controlled by SkillCAT-style contrast.\",\n    \"Provider stochasticity is addressed by freezing resolved model identity, temperature 0, retry 0, and tranche stop on resolved-id change.\",\n    \"Pseudoreplication is avoided by using the independently evolved eight-task stream-state as the scientific unit.\"\n  ],\n  \"exact_preexecution_conditions\": [\n    \"Run only the 12-task E0 pilot from the frozen manifest; no task replacement for any model outcome.\",\n    \"Stop the tranche on any resolved model identity change from deepseek-v4-pro-ga-260813.\",\n    \"E0 pilot stop condition: zero rescue events or protocol failure; otherwise predeclared extension allowed.\",\n    \"E1 remains conditional on E0 support (at least 6 rescue tasks and >=3 families) and integrity; no E1 authorization is granted by this review.\",\n    \"No paper claims, benchmark claims, or front-end claims are authorized; paper_claim_authority is false.\"\n  ],\n  \"e0_pilot_authorization_recommendation\": \"GO\",\n  \"e1_authorization_recommendation\": \"HOLD_UNTIL_E0\",\n  \"paper_claim_authority\": false,\n  \"single_sentence_verdict\": \"The exact F0-R4 contract is identifiable, falsifiable, and control-complete for the narrow 12-task E0 pilot, with both independent reviews converging on GO and no blocking issue surviving cross-examination.\"\n}",
+  "raw_text_sha256": "3b73febba75ba56ea33296156472522bf052b15149d7b22771aa8bec664a5b48",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "3e60437450aef4ab59329112a3a31198d84a486bfd0288262a897a2556ef9544",
+  "review": {
+    "agreements": [
+      "Both reviews correctly identify the cloned-state identical-pool design as the decisive identification feature, with provider stochasticity confined to pool creation and not the cross-arm contrast.",
+      "Both reviews agree the mandatory controls (duplicated-winner, random-nonwinner, precommitted rollout-0, SkillCAT-style contrast, winner-only) are sufficient for the narrow E0 pilot authorization.",
+      "Both reviews correctly note that n=12 is adequate only for the E1 decision rule, not for a paper-level claim, and the contract explicitly says so.",
+      "Both reviews agree the public-dataset roles are non-shopping and correctly gated behind controlled-suite mechanism success.",
+      "Both reviews agree the scientific object is appropriately narrow and the closest-work reduction boundary is honest."
+    ],
+    "contract_sha256_acknowledged": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+    "disagreements": [
+      "The other review's suggestion to predeclare how partial updater acceptance or empty edits will be counted is a reasonable E1 receipt improvement, but it is not blocking for E0 pilot authorization because E0 is a pool-law and rescue-support qualification, not an updater experiment.",
+      "The other review's request to report all pairwise control contrasts in E1 is good practice, but the contract already lists the controls (RW-DUP, RW-random-nonwinner, SkillCAT-style-WIN, PRE-WIN, Delta versus rescue count) in the statistics section, so this is partially addressed."
+    ],
+    "e0_pilot_authorization_recommendation": "GO",
+    "e1_authorization_recommendation": "HOLD_UNTIL_E0",
+    "exact_preexecution_conditions": [
+      "Run only the 12-task E0 pilot from the frozen manifest; no task replacement for any model outcome.",
+      "Stop the tranche on any resolved model identity change from deepseek-v4-pro-ga-260813.",
+      "E0 pilot stop condition: zero rescue events or protocol failure; otherwise predeclared extension allowed.",
+      "E1 remains conditional on E0 support (at least 6 rescue tasks and >=3 families) and integrity; no E1 authorization is granted by this review.",
+      "No paper claims, benchmark claims, or front-end claims are authorized; paper_claim_authority is false."
+    ],
+    "final_verdict": "GO",
+    "issues_resolved_by_existing_controls": [
+      "Token/context-length effects are controlled by duplicated-winner.",
+      "Generic diversity effects are controlled by random-nonwinner.",
+      "Alternative fixed observation kernels are controlled by precommitted rollout-0.",
+      "Strongest direct method reduction is controlled by SkillCAT-style contrast.",
+      "Provider stochasticity is addressed by freezing resolved model identity, temperature 0, retry 0, and tranche stop on resolved-id change.",
+      "Pseudoreplication is avoided by using the independently evolved eight-task stream-state as the scientific unit."
+    ],
+    "issues_that_remain_blocking": [],
+    "other_review_understood": true,
+    "paper_claim_authority": false,
+    "single_sentence_verdict": "The exact F0-R4 contract is identifiable, falsifiable, and control-complete for the narrow 12-task E0 pilot, with both independent reviews converging on GO and no blocking issue surviving cross-examination."
+  },
+  "round": 2,
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "submission_authority": false,
+  "temperature": 0,
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 22211,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 746,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 22957
+  }
+}

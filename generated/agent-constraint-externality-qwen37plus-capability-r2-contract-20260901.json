@@ -1,0 +1,38 @@
+{
+  "application_retry": false,
+  "authority": {
+    "capability_r2": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "665bd1aced283f2a376494a90eed0d20cbd62488b9056c4d7b51779ff2e2d532",
+  "execution_id": "QWEN37PLUS-CAPABILITY-R2-AUTH-SUBSTRATE-RECOVERY",
+  "model": "qwen3.7-plus",
+  "model_switch": false,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prior_a1_units_count_as_scientific_measurements": false,
+  "provider_max_retries": 0,
+  "qualification_artifact_sha256": "e4f3e09e50e9771030dcb44b56952f7086f8f38e5c36a94a2c601836d4058085",
+  "reason_for_reexecution": "PRIOR_A1_MEASUREMENTS_VOID_DUE_OBJECTIVE_SUBSTRATE_INVALIDITY",
+  "replacement": false,
+  "same_eight_unit_panel": true,
+  "same_family_ids": [
+    "ACE-FG-05",
+    "ACE-FG-06",
+    "ACE-TNF-05",
+    "ACE-TNF-06"
+  ],
+  "same_repeats": [
+    1,
+    2
+  ],
+  "schema_version": "ace-qwen37plus-capability-r2-contract-v1",
+  "status": "QWEN37PLUS_CAPABILITY_R2_AUTHORIZED_AFTER_SUBSTRATE_VOID",
+  "task_change": false,
+  "temperature": 0,
+  "threshold_change": false,
+  "tool_call_cap": 12,
+  "void_artifact_sha256": "5eaa09feb43a9caa49f59997d77fa29e88cf349f2341d9880b98555513910b78"
+}

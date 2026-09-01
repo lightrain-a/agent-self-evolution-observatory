@@ -1,0 +1,87 @@
+{
+  "artifact_type": "e2-r17-v3-1-independent-review",
+  "created_at_utc": "2026-08-28T15:40:57+00:00",
+  "dossier_file_sha256": {
+    "adapter_tests": "29a0dc539fddc33a710876efd33931b091f75fa68fd239a396e4e6f5fa182f8c",
+    "e1_a_support_adjudication": "b2c611285c20377d77af7ea62448c6fee0d5973cd657687f6dde7f7fce6be6d7",
+    "fresh_model_identity_adjudication": "2ea0412d672efe244acd40c4754a73b08158f3893e3f466dcff3a633e509425b",
+    "fresh_model_identity_qualification": "c920fa82199bf32071b0cb9c899b9002f091ef2e217ae8e6c7c763e9b1aab84a",
+    "provider_budget": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444",
+    "provider_budget_tests": "443b0377941a4fbba1a6eaf7fa5af8e33615511b43890bd73da19a8ec94b61eb",
+    "provider_runtime_pilot_draft": "b7340add5392667551ab6838f6acf32876bec8b3d75bcd1a82fdfdcacb7254a1",
+    "provider_runtime_pilot_runner": "c203e49002490290e1f3366624e097671c2c6a1d1d988135601e53207d0f9f32",
+    "renderer": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7",
+    "renderer_tests": "4a217180b9711ed829e5d1e7be952d48698ca5572980f9c887457b28b5c84611",
+    "runtime_validator": "24ea070b08399d48af99294615a508874f851af941f5bb0efabe341b0854617d",
+    "updater_adapter": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8",
+    "updater_v31_tests": "874fc99106e2f85f67180f4962f50b50ad2d921c8ba5ad8fad54fb12f62ded9f",
+    "updater_wrapper": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d",
+    "v31_mechanical_contract": "46606d33c3d6b7694279bbaf4d1e4469fee40820ab8ca64a06d1fbdc6bafa6e9"
+  },
+  "expected_resolved_model": "deepseek-v4-pro-ga-260813",
+  "experiment_authority": false,
+  "exposed_to_other_review": false,
+  "get_poll_recovery": false,
+  "hidden_provider_retry_used": false,
+  "independent": true,
+  "max_output_tokens": 5000,
+  "missing_required_fields": [
+    "repair_sha256_acknowledged_exact"
+  ],
+  "paper_promotion_authority": false,
+  "parse_valid": false,
+  "poll_count": 0,
+  "prompt_path": "generated/e2-r17-v31-provider-runtime-pilot-review-20260828/deepseek-v4-pro-prompt.md",
+  "prompt_sha256": "6d365efda38935907144347c7b36a1bcb208d78a6aad0a32ba0a426ba18ab129",
+  "provider_generation_attempts": 1,
+  "provider_retry_limit": 0,
+  "provider_status": "completed",
+  "raw_text": "```json\n{\n  \"draft_contract_sha256_acknowledged\": \"b7340add5392667551ab6838f6acf32876bec8b3d75bcd1a82fdfdcacb7254a1\",\n  \"verdict\": \"PASS_TO_SEPARATELY_AUTHORIZED_PROVIDER_RUNTIME_PILOT\",\n  \"outcome_blind_selection_assessment\": \"PASS. The eight pools are fixed by the predeclared lexicographic path rule in the contract's historical_inputs.selected_pools, with explicit SHA-256 bindings. The runner load_selected_pools() revalidates each pool SHA and task_id and enforces exact order, with no mixed/rescue/outcome field read before selection. No E1 held-out probe or learned-skill quality is used to select pools, model, or renderer.\",\n  \"win_clone_identity_assessment\": \"PASS. The runner builds win_units once and assigns the same list to both win_a and win_b arms (arms dict maps both to (win_stream, win_units)). The same win_stream object is reused. evidence_units() renders the winner evidence once per pool, and the runner asserts canonical_sha of the win unit bundle is stable. Initial evidence bytes and selected-evidence scores are therefore identical pre-provider. Hosted stochasticity may affect later generated prompts, which is correctly scoped as the later negative-control measurement rather than pre-provider drift.\",\n  \"arm_blinding_assessment\": \"PASS. build_blinded_add_record_payload() places only unit.evidence_text into payload['messages'] as a single user message. Projection label, pool_id, rollout index, trajectory SHA, acting winner SHA, and provenance are stored in r17_* fields outside messages. The score field is set to float(unit.source_score), the selected evidence trajectory verifier score, not the served acting winner score. The runner also scans rendered evidence for FORBIDDEN_VISIBLE_MARKERS and fails on leakage.\",\n  \"token_parity_assessment\": \"PASS. ExactMatchedEvidenceBlockRenderer uses tiktoken 0.11.0 cl100k_base, searches deterministic source-token budgets, and accepts only pairs whose final rendered UTF-8 texts re-encode to exactly the same token count, with no padding (padding_used=False). The runner asserts win_tokens == mrw_tokens == matched.matched_final_block_tokens and, for nonmixed pools, win_block == mrw_block byte-for-byte. transcript_max_chars=100000 is explicitly checked against len('[user] ' + block) for both WIN and MRW, so it is nonbinding and verified.\",\n  \"updater_semantics_assessment\": \"PASS. run_projection_update() imports and exercises the first-party mindmemos.pipelines.skill.evolution.SkillEvolver at the pinned commit. The runner validates MindMemOS commit and clean state, binds the exact source tree, and freezes SkillEvolutionConfig with min_aggregate=8, max_aggregate=8, temperature=0.0 via adapter, retry=0, thinking disabled, and max_parse_attempts=1. Only calls/tokens/latency/parse errors are measured; no learned-skill quality comparison is performed.\",\n  \"provider_budget_assessment\": \"PASS. ProviderBudgetLedger.claim() uses SQLite BEGIN IMMEDIATE and commits the claim transactionally before any provider I/O in the adapter's _respond(). Limits are 10 per arm and 30 total, bound to contract and authorization SHAs. Claims are never released, including on ambiguous failures, and are reflected in receipts via provider_budget_claim_id/unit_call_index/total_claimed_after. Parse-correction attempts and poll recovery both go through _respond(), which claims before I/O, so neither can bypass the ceiling.\",\n  \"checkpoint_resume_assessment\": \"PASS. Each completed arm is persisted to completed_arms.jsonl immediately after verify_completed() passes, with content-addressed receipt and skill SHAs. On resume, verify_completed() revalidates receipt/skill SHAs and contract/auth/causal-purity mode. Critically, before running an incomplete arm, the runner checks if arm_dir exists and contains any files; if so, it raises RuntimeError and stops rather than auto-rerunning.\",\n  \"runtime_and_model_identity_assessment\": \"PASS. The runner requires Path(sys.executable) == contract runtime python, calls validate_runtime() to check the frozen venv, freeze SHA, qualification artifact, and import smoke test, and revalidates bound code SHAs, MindMemOS commit/clean state, selected pool SHAs, and the fresh DeepSeek resolved identity (deepseek-v4-pro-ga-260813) before any provider call.\",\n  \"scientific_boundary_assessment\": \"PASS. The contract and runner forbid new actor rollouts, E1 held-out evaluation, learned-skill quality comparison, and method-effect GO/HOLD/STOP. The summary explicitly sets scientific_effectiveness_evaluated=False, heldout_evaluation_calls=0, new_actor_rollouts=0, and authority execute_e1_b=False. A PASS only recommends minting a separate SHA-bound provider-runtime Pilot authorization.\",\n  \"remaining_blockers\": [],\n  \"nonblocking_notes\": [\n    \"The adapter's module-level REQUIRED_RESOLVED_MODEL default is the historical deepseek-v4-pro-260425, but the runner always passes the fresh resolved model deepseek-v4-pro-ga-260813 explicitly, so the stale default is not exercised.\",\n    \"The runner's win_a/win_b pre-provider identity check is a tautological self-comparison of the same in-memory list, but the underlying evidence_units() construction is deterministic and SHA-bound, so this is acceptable.\",\n    \"The provider budget ledger's assert_completed_receipts_covered() helper is not called in the runner, but the runner independently asserts len(receipts) == len(claims) == result.provider_calls per arm, which covers the same invariant.\"\n  ],\n  \"provider_runtime_pilot_recommendation\": \"ALLOW_SEPARATE_FROZEN_PROVIDER_RUNTIME_PILOT_AUTHORIZATION\",\n  \"e1_b_recommendation\": \"HOLD\",\n  \"paper_claim_authority\": false,\n  \"single_sentence_verdict\": \"The provider-runtime Pilot is outcome-blind, arm-blinded, token-parity-enforced, budget-fail-closed, checkpoint-safe, and scientifically bounded, with no P0/P1 blockers, so it may proceed only under a separately minted SHA-bound provider-runtime Pilot authorization while E1-B remains HOLD and paper claims remain false.\"\n}\n```",
+  "raw_text_sha256": "c5933c12bf695d5b5f10defff356156ee7beeba62cd207a9c7a996776169ed52",
+  "repair_sha256": "b7340add5392667551ab6838f6acf32876bec8b3d75bcd1a82fdfdcacb7254a1",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "012898861bd94cb0228e77c62d972f841b7e2cff5671e9b5c97eb030ef7c04f1",
+  "review": {
+    "arm_blinding_assessment": "PASS. build_blinded_add_record_payload() places only unit.evidence_text into payload['messages'] as a single user message. Projection label, pool_id, rollout index, trajectory SHA, acting winner SHA, and provenance are stored in r17_* fields outside messages. The score field is set to float(unit.source_score), the selected evidence trajectory verifier score, not the served acting winner score. The runner also scans rendered evidence for FORBIDDEN_VISIBLE_MARKERS and fails on leakage.",
+    "checkpoint_resume_assessment": "PASS. Each completed arm is persisted to completed_arms.jsonl immediately after verify_completed() passes, with content-addressed receipt and skill SHAs. On resume, verify_completed() revalidates receipt/skill SHAs and contract/auth/causal-purity mode. Critically, before running an incomplete arm, the runner checks if arm_dir exists and contains any files; if so, it raises RuntimeError and stops rather than auto-rerunning.",
+    "draft_contract_sha256_acknowledged": "b7340add5392667551ab6838f6acf32876bec8b3d75bcd1a82fdfdcacb7254a1",
+    "e1_b_recommendation": "HOLD",
+    "nonblocking_notes": [
+      "The adapter's module-level REQUIRED_RESOLVED_MODEL default is the historical deepseek-v4-pro-260425, but the runner always passes the fresh resolved model deepseek-v4-pro-ga-260813 explicitly, so the stale default is not exercised.",
+      "The runner's win_a/win_b pre-provider identity check is a tautological self-comparison of the same in-memory list, but the underlying evidence_units() construction is deterministic and SHA-bound, so this is acceptable.",
+      "The provider budget ledger's assert_completed_receipts_covered() helper is not called in the runner, but the runner independently asserts len(receipts) == len(claims) == result.provider_calls per arm, which covers the same invariant."
+    ],
+    "outcome_blind_selection_assessment": "PASS. The eight pools are fixed by the predeclared lexicographic path rule in the contract's historical_inputs.selected_pools, with explicit SHA-256 bindings. The runner load_selected_pools() revalidates each pool SHA and task_id and enforces exact order, with no mixed/rescue/outcome field read before selection. No E1 held-out probe or learned-skill quality is used to select pools, model, or renderer.",
+    "paper_claim_authority": false,
+    "provider_budget_assessment": "PASS. ProviderBudgetLedger.claim() uses SQLite BEGIN IMMEDIATE and commits the claim transactionally before any provider I/O in the adapter's _respond(). Limits are 10 per arm and 30 total, bound to contract and authorization SHAs. Claims are never released, including on ambiguous failures, and are reflected in receipts via provider_budget_claim_id/unit_call_index/total_claimed_after. Parse-correction attempts and poll recovery both go through _respond(), which claims before I/O, so neither can bypass the ceiling.",
+    "provider_runtime_pilot_recommendation": "ALLOW_SEPARATE_FROZEN_PROVIDER_RUNTIME_PILOT_AUTHORIZATION",
+    "remaining_blockers": [],
+    "runtime_and_model_identity_assessment": "PASS. The runner requires Path(sys.executable) == contract runtime python, calls validate_runtime() to check the frozen venv, freeze SHA, qualification artifact, and import smoke test, and revalidates bound code SHAs, MindMemOS commit/clean state, selected pool SHAs, and the fresh DeepSeek resolved identity (deepseek-v4-pro-ga-260813) before any provider call.",
+    "scientific_boundary_assessment": "PASS. The contract and runner forbid new actor rollouts, E1 held-out evaluation, learned-skill quality comparison, and method-effect GO/HOLD/STOP. The summary explicitly sets scientific_effectiveness_evaluated=False, heldout_evaluation_calls=0, new_actor_rollouts=0, and authority execute_e1_b=False. A PASS only recommends minting a separate SHA-bound provider-runtime Pilot authorization.",
+    "single_sentence_verdict": "The provider-runtime Pilot is outcome-blind, arm-blinded, token-parity-enforced, budget-fail-closed, checkpoint-safe, and scientifically bounded, with no P0/P1 blockers, so it may proceed only under a separately minted SHA-bound provider-runtime Pilot authorization while E1-B remains HOLD and paper claims remain false.",
+    "token_parity_assessment": "PASS. ExactMatchedEvidenceBlockRenderer uses tiktoken 0.11.0 cl100k_base, searches deterministic source-token budgets, and accepts only pairs whose final rendered UTF-8 texts re-encode to exactly the same token count, with no padding (padding_used=False). The runner asserts win_tokens == mrw_tokens == matched.matched_final_block_tokens and, for nonmixed pools, win_block == mrw_block byte-for-byte. transcript_max_chars=100000 is explicitly checked against len('[user] ' + block) for both WIN and MRW, so it is nonbinding and verified.",
+    "updater_semantics_assessment": "PASS. run_projection_update() imports and exercises the first-party mindmemos.pipelines.skill.evolution.SkillEvolver at the pinned commit. The runner validates MindMemOS commit and clean state, binds the exact source tree, and freezes SkillEvolutionConfig with min_aggregate=8, max_aggregate=8, temperature=0.0 via adapter, retry=0, thinking disabled, and max_parse_attempts=1. Only calls/tokens/latency/parse errors are measured; no learned-skill quality comparison is performed.",
+    "verdict": "PASS_TO_SEPARATELY_AUTHORIZED_PROVIDER_RUNTIME_PILOT",
+    "win_clone_identity_assessment": "PASS. The runner builds win_units once and assigns the same list to both win_a and win_b arms (arms dict maps both to (win_stream, win_units)). The same win_stream object is reused. evidence_units() renders the winner evidence once per pool, and the runner asserts canonical_sha of the win unit bundle is stable. Initial evidence bytes and selected-evidence scores are therefore identical pre-provider. Hosted stochasticity may affect later generated prompts, which is correctly scoped as the later negative-control measurement rather than pre-provider drift."
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "FAIL_SCHEMA",
+  "submission_authority": false,
+  "temperature": 0,
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 44727,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 1452,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 46179
+  }
+}

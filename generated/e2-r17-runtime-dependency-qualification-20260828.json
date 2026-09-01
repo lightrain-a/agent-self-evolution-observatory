@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-runtime-dependency-qualification",
+  "created_at_utc": "2026-08-28T03:58:00+00:00",
+  "status": "PASS_ZERO_PROVIDER",
+  "python_executable": "/usr/bin/python",
+  "python_version": "3.12.3",
+  "runtime_pydeps": "/data/wyt/e2-r17-search-projection/runtime-pydeps",
+  "packages": {
+    "openpyxl": "3.1.5",
+    "et-xmlfile": "2.0.0"
+  },
+  "dependency_tree_aggregate_sha256": "8aeb0838e467e2e06369144b257f132d68b89756b373338b2b5b445b8d51f2ea",
+  "tests": {
+    "command": "PYTHONPATH=/data/wyt/e2-r17-search-projection/runtime-pydeps python -m unittest -v research_pipeline.test_e2_r17_search_projection_theory research_pipeline.test_e2_r17_search_projection_runner research_pipeline.test_e2_r17_controlled_spreadsheet_suite research_pipeline.test_e2_r17_ark_plan_react research_pipeline.test_e2_r17_mindmemos_ark_adapter",
+    "passed": 28,
+    "failed": 0,
+    "errors": 0,
+    "status": "PASS"
+  },
+  "qualification_scope": [
+    "search-projection theory identities",
+    "exact-same-pool projection and cloned-stream invariants",
+    "controlled spreadsheet suite cardinality, split, workbook, and reproducibility checks",
+    "Ark Plan ReAct tool-call transport and model-drift failure",
+    "MindMemOS updater adapter retry, receipt, and resolved-model controls"
+  ],
+  "provider_calls": 0,
+  "scientific_outcome": false,
+  "authority": {
+    "scientific_experiment": false,
+    "gpu": false,
+    "paper_promotion": false,
+    "front_end_claim": false,
+    "submission": false
+  },
+  "private_credentials_included": false,
+  "raw_response_ids_included": false
+}

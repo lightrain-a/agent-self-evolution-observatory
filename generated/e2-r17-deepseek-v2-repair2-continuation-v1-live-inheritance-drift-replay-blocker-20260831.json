@@ -1,0 +1,152 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-deepseek-v2-repair2-continuation-v1-live-inheritance-drift-and-replay-blocker",
+  "created_at_utc": "2026-08-31T15:58:20Z",
+  "status": "STOP_CONTINUATION_V1_LIVE_INHERITANCE_DRIFT_AND_COMPLETED_UNIT_REPLAY",
+  "classification": "PROTOCOL_INTEGRITY / CONCURRENT_CONTINUATION_AUTHORITY_COLLISION",
+  "terminal": true,
+  "scientific_state": {
+    "partial_effect_read": false,
+    "scientific_scores_read": false,
+    "analyzer_run": false,
+    "scientific_belief_update": "NONE",
+    "valid_uncontaminated_boundary": {
+      "paired_units": 17,
+      "learned_states": 36,
+      "heldout_units": 636,
+      "provider_claims": 609
+    },
+    "later_outputs_disposition": "NOT_ADJUDICATED_FOR_FINAL_SCIENTIFIC_MANIFEST"
+  },
+  "current_process_state": {
+    "v3_resume_pid": 584224,
+    "v3_resume_alive": false,
+    "continuation_v1_pid": 832381,
+    "continuation_v1_alive": false,
+    "original_v3_pid": 2439745,
+    "original_v3_alive": false,
+    "actor_or_provider_worker_alive": false,
+    "full_summary_present": false
+  },
+  "frozen_continuation_v1": {
+    "contract_sha256": "b944797b6333c66bf1edf9ae789aa16e8b19df8763dbf89280da1efd8dd1c2c2",
+    "authorization_sha256": "14df6c41e0ba3b0a300f341f5ed73599bf0545392aa86c888383dd4729e6d67b",
+    "preflight_adjudication_sha256": "8d2f6794b3769410d9eded1e25edf50eb589c68b53f139902c505d6516eb5c84",
+    "inheritance_manifest_sha256": "c50e4f01f13e58f604ce67d79e450b2f9ae7dc9d2140c1b3eee6b9e9176acea0",
+    "run_start_receipt_sha256": "de57613303de6248e55fccec58e86f591f1bbffb98297f846322b45e5c876a7f",
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831",
+    "lock_sha256": "be82d901c7a8bb8c87e263f060ed390b9645934e0e40d4dde2a17084f9a34c85",
+    "valid_pairs": 17,
+    "new_updater_calls": 0,
+    "new_learned_states": 0,
+    "new_heldout_completed": 12,
+    "new_provider_claims": 78,
+    "child_provider_claims_before_start": 0,
+    "completed_manifest_sha256": "77b2753e2ad3b64bb1cbdeaa1981ac589f4e86cc95930225bebee1c7652d4a41",
+    "valid_manifest_sha256": "9e8319ea9402aba748a7d12e9aa703154df1ac3d0873befa3faeaa2865f9733b",
+    "execution_stop": "RuntimeError: boundary replay: win_c"
+  },
+  "concurrent_v3_host_shutdown_resume": {
+    "branch": "research/e2-r17-deepseek-v2-repair2-v3-resume-v1-20260831",
+    "authorization_commit": "6189bfcbddbb1210abc53ad5331aa61ebaee3eba",
+    "start_commit": "c7e990f91ea9b2892a969d5ecf4c00f12e2e657b",
+    "duplicate_replay_stop_commit": "d53a187dc82856d6b16798668350187ef899e992",
+    "duplicate_replay_stop_artifact_sha256": "e001e07e03a392c14733fa94c8e50aeb10cc80d995877f2b562d8fe93799e501",
+    "authorization_sha256": "cfd1fd9614bbbd09b72ff8ada4a74f6db412b3731de5e6d25b902a291a6081ff",
+    "boundary_audit_sha256": "7fa025b0bb38406cd628a66cf1e5ee644ce90fad596a360c500bd791be4ff78f",
+    "inheritance_manifest_sha256": "3ec1cc780e62afd0fa04ec5285097d26c5c4313b24d73b4b50fae7f4cbeec84a",
+    "remaining_set_sha256": "3c1879db47283f48a4d6e21d3a2fda8b00fa8f3a32ab9c6b7ca5fa4c42213128",
+    "start_adjudication_sha256": "9542cffe4bc9a7707acd4a5fc3838c846f54f97060b5524d74ceb7ecad9c9c90",
+    "run_start_receipt_sha256": "98458a7a49101cef73d103433823782ccf6494e58fe4bd2115b3e039635afcd7",
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831",
+    "lock_sha256": "8a64eca23c197ddfd83d51387491d1a2330be2ab2c3ba82d210fbcecabe9a888",
+    "pid": 584224,
+    "started_at_utc": "2026-08-31T10:38:23Z",
+    "current_technical_counts": {
+      "completed_pairs": 28,
+      "learned_states_including_incomplete_pair": 58,
+      "heldout_units_including_incomplete_pair": 1037,
+      "provider_claims": 3306,
+      "provider_claims_after_frozen_snapshot": 2697
+    },
+    "added_complete_pairs_after_snapshot": [
+      "e1-ioc-00/rep1",
+      "e1-ioc-00/rep2",
+      "e1-ioc-00/rep3",
+      "e1-ioc-01/rep0",
+      "e1-ioc-01/rep1",
+      "e1-ioc-01/rep2",
+      "e1-ioc-01/rep3",
+      "e1-msp-00/rep0",
+      "e1-msp-00/rep1",
+      "e1-msp-00/rep2",
+      "e1-msp-00/rep3"
+    ],
+    "current_completed_manifest_sha256": "ea4945723eda5b46643b65626f1300da0952870ed4fd122ec65e8341fc44acb8",
+    "current_valid_manifest_sha256": "64c879e576e4da6ec4c40eede8c1ff0d2f26be0def22d4a1cf04a50464b1aab9",
+    "incomplete_pair": {
+      "unit_id": "e1-msp-01/rep0",
+      "mrw_completed_heldout": 15,
+      "win_c_completed_heldout": 14,
+      "failed_arm": "win_c",
+      "failed_task_id": "r17-b4-ska-p8",
+      "technical_failure_sha256": "9d381657e4c526fe4014e96839203aad13aae81c7b3439f3be85a9bdabaf817c",
+      "provider_claims_for_failed_task": 5,
+      "completed_adapter_receipts": 4,
+      "terminal_transport_status": "HTTP_429_ACCOUNT_QUOTA_EXCEEDED",
+      "ambiguous_provider_response": false,
+      "provider_retry_limit": 0,
+      "scientific_outcome": false
+    }
+  },
+  "live_inheritance_drift_proof": {
+    "unit_id": "e1-ioc-00/rep1",
+    "win_c": {
+      "frozen_manifest_sha256": "cf0fecc2a5e0d15826015f6d8326cd0e1d820eed8db3b79342d2875d6b3b5181",
+      "live_manifest_sha256": "48e54eab96b88fa3c5e0d4cd2ae991e3cff32e2ef63341b0327be8a8a2e9c9ed",
+      "frozen_prefix_sha256_matches": true,
+      "frozen_rows": 12,
+      "live_rows": 18,
+      "child_rows": 6,
+      "child_manifest_sha256": "1ce815aae2c77b6c1ade59357d3466997476c64490668450c7cd16c65d06bf7d"
+    },
+    "mrw": {
+      "frozen_manifest_sha256": "8276c3a4f2b3c1a4ce195f874cdf91fd52429b3c248c4337fde8266b0bcdd270",
+      "live_manifest_sha256": "bfe7a3659ba575f8c74e50f71c313c20b74837029f87012c037efebb613235da",
+      "frozen_prefix_sha256_matches": true,
+      "frozen_rows": 12,
+      "live_rows": 18,
+      "child_rows": 6,
+      "child_manifest_sha256": "4e6dc590b6aae9243005cdf9b08425cd9a24af1a40773cf27591f49259255969"
+    },
+    "replayed_task_ids_per_arm": [
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "replayed_arm_task_units": 12,
+    "all_parent_and_child_summaries_status": "COMPLETED",
+    "parent_and_child_authorization_bindings_distinct": true
+  },
+  "cause": {
+    "immediate": "The parent V3 run root changed after the V1 inheritance snapshot and before/during V1 execution.",
+    "systemic": "Two separately authorized continuation lineages targeted overlapping units from the same frozen boundary.",
+    "v1_guard_gap": "V1 checked the frozen inheritance artifact but did not fail before provider I/O on live parent-run liveness and live partial-boundary manifest SHA drift."
+  },
+  "disposition": {
+    "continuation_v1_run_root": "QUARANTINE_IMMUTABLE_EXCLUDE_FROM_ALL_FINAL_MANIFESTS",
+    "current_v3_resume_outputs": "PRESERVE_IMMUTABLE_PENDING_SEPARATE_PROTOCOL_INTEGRITY_ADJUDICATION",
+    "restart_continuation_v1": false,
+    "retry_failed_v3_task": false,
+    "create_v2": false,
+    "replacement_sampling": false,
+    "mutate_existing_run_roots": false,
+    "run_analyzer": false,
+    "read_partial_effect": false,
+    "authorize_second_model_or_public_benchmark": false
+  },
+  "required_next_gate": "EXPLICIT_HUMAN_ADJUDICATION_OF_CONCURRENT_AUTHORITY_COLLISION_AND_INCOMPLETE_V3_RESUME; NO EXECUTION AUTHORITY REMAINS"
+}

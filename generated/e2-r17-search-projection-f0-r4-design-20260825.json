@@ -1,0 +1,176 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "scientific-child-design-only",
+  "child_id": "E2-R17-SEARCH-PROJECTION-CENSORING",
+  "parent_paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "working_title": "When Better Search Teaches Less: Search-Projection Censoring in Self-Evolving Agents",
+  "status": "DESIGN_ONLY_NOT_EXECUTION_AUTHORITY",
+  "created_at": "2026-08-25",
+  "does_not_supersede": [
+    "generated/e2-r17-compute-shielding-f0-contract-r2-20260825.json",
+    "generated/e2-r17-compute-shielding-f0-r3-gate-20260825.json"
+  ],
+  "central_question": "When test-time search generates multiple trajectories, can the projection used for serving the current task be learning-suboptimal for a persistent skill updater?",
+  "core_insight": "Test-time search is both an inference procedure and a data-generation process. The acting projection selects what is served; the learning projection selects what persistent self-evolution observes. Winner-only coupling can improve current success while censoring reusable deficiencies.",
+  "formal_objects": {
+    "search_object": "T_K ~ Q_K(. | x, S_t)",
+    "acting_projection": "tau_plus = a(T_K)",
+    "learning_projection": "E_t = g(T_K)",
+    "persistent_update": "S_{t+1} = U(S_t, E_t)",
+    "acting_value": "A(a,K) = E[R(a(T_K))]",
+    "frozen_skill_value": "J(S) = E_{x'~D_test}[R(pi_L(x';S))]"
+  },
+  "winner_only_default": "g_win(T_K) = a(T_K)",
+  "binary_rescue_censoring_law": {
+    "single_rollout_success": "p",
+    "best_of_k_success": "A_K(p) = 1 - (1-p)^K",
+    "winner_visible_failure": "V_win(K,p) = (1-p)^K",
+    "precommitted_visible_failure": "V_pre(K,p) = 1-p",
+    "identity": "A_K(p)-A_1(p) = V_pre(K,p)-V_win(K,p) = Gamma_K(p)",
+    "gamma": "Gamma_K(p) = (1-p)-(1-p)^K",
+    "intermediate_difficulty_peak": "p_star(K) = 1 - K^(-1/(K-1))"
+  },
+  "learning_value_law": {
+    "diagnostic_advantage": "delta_z = expected future gain from failure/contrast evidence minus expected future gain from served-success evidence for reusable family z",
+    "shielding_risk": "R_shield(K,z) = Gamma_K(p_z) * delta_z",
+    "interpretation": "Search is harmful only when selection censoring is nonzero and the censored evidence has positive reusable learning value. This admits TSR/expert-iteration regimes where richer search evidence improves learning."
+  },
+  "novelty_boundary": {
+    "not_claimed": [
+      "failures are useful",
+      "first use of sibling rollouts",
+      "first contrastive trajectory learning",
+      "test-time compute universally harms learning",
+      "first selective-label or performative-data phenomenon"
+    ],
+    "defended_residual": "Causal and predictive study of how best-of-K acting selection censors the experience distribution of an external persistent skill updater, including an exact order-statistic law, same-pool projection intervention, and no-extra-actor-compute dual projection."
+  },
+  "primary_interventions": {
+    "L_L": {
+      "acting": "K=1 rollout_0",
+      "learning": "rollout_0"
+    },
+    "H_WINNER": {
+      "acting": "best-of-K by frozen verifier",
+      "learning": "same served winner"
+    },
+    "H_PRECOMMITTED": {
+      "acting": "same best-of-K winner",
+      "learning": "same-pool rollout_0 predesignated before outcomes",
+      "extra_actor_rollouts": 0
+    },
+    "H_REJECTED_WITNESS": {
+      "acting": "same best-of-K winner",
+      "learning": "pre-frozen representative nonserved failure when a mixed group exists"
+    },
+    "H_CADP": {
+      "acting": "same best-of-K winner",
+      "learning": "fixed-budget winner-failure contrast packet on mixed groups plus bounded validation-gated skill patch"
+    }
+  },
+  "method": {
+    "name_provisional": "Censor-Aware Dual Projection",
+    "abbreviation": "CADP",
+    "rule": {
+      "all_success": "winner-only or no update",
+      "all_failure": "representative failure",
+      "mixed": "outcome-grounded winner-failure contrast packet"
+    },
+    "controls": [
+      "winner-only",
+      "winner plus duplicate winner token-matched",
+      "winner plus random nonselected success",
+      "failure witness only",
+      "random pair",
+      "full-pool upper bound",
+      "contrast without validation gate",
+      "contrast with validation gate"
+    ]
+  },
+  "experiment_stages": [
+    {
+      "stage": "F0",
+      "purpose": "retain current static substrate/provider/checkpoint qualification",
+      "scientific_outcome": false
+    },
+    {
+      "stage": "F1",
+      "purpose": "controlled executable procedure suite; validate Gamma_K(p), intermediate-difficulty peak, and exact failure-family coverage",
+      "budgets": [1, 2, 4, 8],
+      "nested_pool": true
+    },
+    {
+      "stage": "F2",
+      "purpose": "cloned-state one-step causal projection intervention using exact same K-pools and initial skill state"
+    },
+    {
+      "stage": "F3",
+      "purpose": "freeze Gamma times delta predictions and test sign/rank/calibration on unseen task cells"
+    },
+    {
+      "stage": "F4",
+      "purpose": "multi-round MindMemOS plus SpreadsheetBench evolution; measure online acting and common-K=1 frozen-skill curves"
+    },
+    {
+      "stage": "F5",
+      "purpose": "compute-matched search-topology by learning-projection interaction: parallel versus sequential; winner/final-only versus history-preserving"
+    },
+    {
+      "stage": "F6",
+      "purpose": "one second substrate and one different-capability backbone only after the main mechanism passes"
+    }
+  ],
+  "primary_estimands": {
+    "acting_gain": "A_H - A_L",
+    "winner_shielding_reversal": "J(S_L) - J(S_H_WINNER)",
+    "projection_rescue": "J(S_H_CADP) - J(S_H_WINNER)",
+    "cloned_projection_effect": "J(U(S,g_CADP(T))) - J(U(S,g_WIN(T)))",
+    "mechanism_prediction": "observed frozen-skill deficit versus preregistered Gamma_K(p_z)*delta_z",
+    "topology_projection_interaction": "parallel/sequential by winner/history-preserving interaction"
+  },
+  "scientific_unit": "one independently seeded complete evolution stream or cloned learned-skill state, not a rollout or model call",
+  "data_roles": [
+    "runtime development pool",
+    "mechanism calibration pool",
+    "evolution train and validation-gate split",
+    "never-fed held-out probe and final test"
+  ],
+  "required_validators": [
+    "pool identity",
+    "projection exactness",
+    "acting invariance",
+    "no extra actor compute",
+    "evidence token budget",
+    "deterministic failure-family labels on controlled suite",
+    "skill instance-leakage",
+    "held-out isolation",
+    "common frozen evaluation",
+    "scientific-unit integrity",
+    "per-unit CSV/JSONL checkpoint",
+    "resume missing units only"
+  ],
+  "kill_conditions": [
+    "qualified high-K search has no acting gain",
+    "winner-only does not reduce diagnostic coverage",
+    "same-pool cloned projection has no effect on future frozen skill",
+    "planned multi-round H_WINNER skill is not weaker than L_L",
+    "CADP does not recover or recovery is explained by extra budget",
+    "Gamma times delta fails prospective held-out prediction",
+    "effect requires outcome-driven task or failure-family selection"
+  ],
+  "downgrade_conditions": [
+    "rejected witness matches CADP: retain rollout-recycling claim but drop need for counterfactual branch",
+    "random pair matches CADP: drop outcome-grounded divergence claim",
+    "duplicate winner matches CADP: attribute effect to updater context budget",
+    "sequential full-history does not differ: drop topology interaction",
+    "delta_z is nonpositive: classify that family as search-improves-learning rather than force shielding"
+  ],
+  "authority": {
+    "provider_calls": false,
+    "gpu_execution": false,
+    "r16_mutation": false,
+    "paper_reframe": false,
+    "submission": false
+  },
+  "next_required_artifact": "F0-R4 executable contract after literature-design review and before any R17 scientific provider outcome"
+}

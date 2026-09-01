@@ -1,0 +1,55 @@
+{
+  "artifact_type": "e2-r17-search-projection-scientific-debate-round-summary",
+  "created_at_utc": "2026-08-27T13:40:26+00:00",
+  "experiment_authority": false,
+  "provider_retry_limit": 0,
+  "resolved_identity_independence": true,
+  "reviews": [
+    {
+      "artifact": "generated/e2-r17-search-projection-debate-20260827/round2/deepseek-v4-pro.json",
+      "artifact_sha256": "47413ee9c609db69d2dbb95bea4fe449ac6f9b8ed67d8d7157d49a747e3b3923",
+      "parse_valid": true,
+      "raw_text_sha256": "72f31729aed1f88f0d4e0d64c71b90205a0a205eef27fa4ccf0d7e894ba3bbf0",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "status": "COMPLETED",
+      "usage": {
+        "input_tokens": 22694,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 2284,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 24978
+      }
+    },
+    {
+      "artifact": "generated/e2-r17-search-projection-debate-20260827/round2/kimi-k3.json",
+      "artifact_sha256": "c21c571b16d5ab42257f39392b913974727fdf86a0bae6378d03e1f46f02ba97",
+      "parse_valid": true,
+      "raw_text_sha256": "5d61364c7e4c848bfe11013222729b83e4b423acd6e412c0c5ebd74803990723",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "status": "COMPLETED",
+      "usage": {
+        "input_tokens": 22218,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 2296,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 24514
+      }
+    }
+  ],
+  "round": 2,
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "submission_authority": false
+}

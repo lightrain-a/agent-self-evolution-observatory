@@ -1,0 +1,81 @@
+{
+  "artifact_type": "e2-r17-v3-1-independent-review",
+  "created_at_utc": "2026-08-31T05:45:04+00:00",
+  "dossier_file_sha256": {
+    "m1_actor": "8261645a7d2864635e3985002328c7610e46e38fcd15dbe50bf688c8348ca583",
+    "m1_actual_actor_path_preflight": "53cc759052b2d5f7748095a590ef0e5414a151fb8f1a44d6e13c9577b8b882c0",
+    "m1_contract": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+    "m1_orchestrator": "d48b0f1c47522baba023d7ee02d59992fc5f2646c576f0648e2dcb3cf8850eda",
+    "m1_preflight_authorization": "5bc344de83a81333658c1e029df9e8943b8427d31c036967f69325d4dfe929eb",
+    "m1_tests": "305259d88bed9eb82c29f55b76f6e4abe56ddca315012503b82faaac25882a80",
+    "m1_v1_failure_adjudication": "69049777197cc04365876575d9a3705830819524ca68bfb0213d163b243ecb49",
+    "model_identity": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "parent_execution_blocker": "4b8ef1b7f4986bb9abd6e4309a7f254e35b1cbe135fe34af9eefbbdb51554816",
+    "parent_repair2_authorization": "9643a0a30d0acc4f32607b217701b368a895b2fe1e86a0aa84da24aa0a80898b",
+    "parent_repair2_contract": "9e38bdbfc71186e3e58587169d8c619bff4ae24de4145fefafa63e49a6f148a3",
+    "parent_stop_diagnosis": "b0e551279ad1e86e992ea01633ef8ec098922d2d3472377ff9981491fedab900"
+  },
+  "expected_resolved_model": "kimi-k3",
+  "experiment_authority": false,
+  "exposed_to_other_review": false,
+  "get_poll_recovery": false,
+  "hidden_provider_retry_used": false,
+  "independent": true,
+  "max_output_tokens": 5000,
+  "missing_required_fields": [
+    "preflight_sha256_acknowledged_exact"
+  ],
+  "paper_promotion_authority": false,
+  "parse_valid": false,
+  "poll_count": 0,
+  "prompt_path": "generated/e2-r17-deepseek-v2-repair2-m1-review-20260831/kimi-k3-prompt.md",
+  "prompt_sha256": "eb486c99ed5a94df67b22375005930066f419a88c80db702aa11b0fca68b1dcc",
+  "provider_generation_attempts": 1,
+  "provider_retry_limit": 0,
+  "provider_status": "completed",
+  "raw_text": "{\n  \"contract_sha256_acknowledged\": \"1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983\",\n  \"preflight_sha256_acknowledged\": \"53cc759052b2d5f7748095a590ef0e5414a151fb8f1a44d6e13c9577b8b882c0\",\n  \"verdict\": \"PASS_TO_SINGLE_USE_M1_AUTHORIZATION\",\n  \"measurement_only_authority_assessment\": \"M1 is measurement-only: the contract and authorization bind exactly two frozen parent learned states and 18 heldout tasks for 36 evaluations, with new/replayed updater calls fixed at 0, updater/analyzer/paper/submission authority false, and partial-effect reading forbidden.\",\n  \"cross_authorization_provenance_assessment\": \"The child authorization binds its own contract SHA 1476... and ledger, while both parent updater receipts are required to remain bound to parent contract 9e38... and authorization 9643...; the versioned actor and orchestrator reject receipt rewriting and the old Repair2 authorization.\",\n  \"actual_actor_path_assessment\": \"The versioned compatibility actor, not the historical actor, validates current M1 status, child scope, exact task/K/model/identity/suite/skill/receipt bindings, and parent contract/authorization provenance before provider I/O; the actual-path preflight is 36/36 with zero provider claims and zero calls.\",\n  \"provider_budget_assessment\": \"Actor-only provider budget is exact 180 total claims per learned state and 10 per heldout unit, bound to the child contract and authorization; updater authority remains zero and preflight requires a zero-claim ledger before stopping.\",\n  \"v1_local_repair_assessment\": \"V1 failed before ledger creation because the isolated worktree lacked the ignored relative .env; V2 is adjudicated and implemented as an absolute-path env_file repair only, with scientific variables and parent learned-state provenance unchanged.\",\n  \"exactly_once_assessment\": \"Execution uses a new run root with an exclusive lock, no automatic retry, no replacement sampling, and no parent resume; the parent Repair2 root, 20 updater calls, failure artifacts, and two learned states remain immutable.\",\n  \"no_partial_effect_assessment\": \"The measurement path withholds scores from summaries, forbids analyzer execution and partial-effect reads, and seals success only as REPAIR2_M1_MEASUREMENT_RECOVERY_PASS with next_state REPAIR2_CONTINUATION_V3_REQUIRED.\",\n  \"remaining_blockers\": [],\n  \"nonblocking_notes\": [\n    \"The single-use authorization must be a new versioned M1 artifact; the reviewed preflight-only authorization must not be edited in place.\",\n    \"Execution remains forbidden from authorizing V3, analyzer, paper promotion, other streams/replicates/models/tasks/K, or public benchmarks.\"\n  ],\n  \"execution_recommendation\": \"ALLOW_SINGLE_USE_M1_AUTHORIZATION\",\n  \"paper_claim_authority\": false,\n  \"single_sentence_verdict\": \"M1 is a fail-closed, measurement-only recovery path with valid 36/36 actual-actor preflight and may receive exactly one single-use authorization for the 36 bound heldout measurements.\"\n}",
+  "raw_text_sha256": "0ed835945ec81e652a7f10adc34a220ae5bcc1b9e01739358c4fccb17642126b",
+  "repair_sha256": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "737f43a3b5331e514ae05e47ced8956e75cbdce890c5d95d0ed01d6d31a361d9",
+  "review": {
+    "actual_actor_path_assessment": "The versioned compatibility actor, not the historical actor, validates current M1 status, child scope, exact task/K/model/identity/suite/skill/receipt bindings, and parent contract/authorization provenance before provider I/O; the actual-path preflight is 36/36 with zero provider claims and zero calls.",
+    "contract_sha256_acknowledged": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+    "cross_authorization_provenance_assessment": "The child authorization binds its own contract SHA 1476... and ledger, while both parent updater receipts are required to remain bound to parent contract 9e38... and authorization 9643...; the versioned actor and orchestrator reject receipt rewriting and the old Repair2 authorization.",
+    "exactly_once_assessment": "Execution uses a new run root with an exclusive lock, no automatic retry, no replacement sampling, and no parent resume; the parent Repair2 root, 20 updater calls, failure artifacts, and two learned states remain immutable.",
+    "execution_recommendation": "ALLOW_SINGLE_USE_M1_AUTHORIZATION",
+    "measurement_only_authority_assessment": "M1 is measurement-only: the contract and authorization bind exactly two frozen parent learned states and 18 heldout tasks for 36 evaluations, with new/replayed updater calls fixed at 0, updater/analyzer/paper/submission authority false, and partial-effect reading forbidden.",
+    "no_partial_effect_assessment": "The measurement path withholds scores from summaries, forbids analyzer execution and partial-effect reads, and seals success only as REPAIR2_M1_MEASUREMENT_RECOVERY_PASS with next_state REPAIR2_CONTINUATION_V3_REQUIRED.",
+    "nonblocking_notes": [
+      "The single-use authorization must be a new versioned M1 artifact; the reviewed preflight-only authorization must not be edited in place.",
+      "Execution remains forbidden from authorizing V3, analyzer, paper promotion, other streams/replicates/models/tasks/K, or public benchmarks."
+    ],
+    "paper_claim_authority": false,
+    "preflight_sha256_acknowledged": "53cc759052b2d5f7748095a590ef0e5414a151fb8f1a44d6e13c9577b8b882c0",
+    "provider_budget_assessment": "Actor-only provider budget is exact 180 total claims per learned state and 10 per heldout unit, bound to the child contract and authorization; updater authority remains zero and preflight requires a zero-claim ledger before stopping.",
+    "remaining_blockers": [],
+    "single_sentence_verdict": "M1 is a fail-closed, measurement-only recovery path with valid 36/36 actual-actor preflight and may receive exactly one single-use authorization for the 36 bound heldout measurements.",
+    "v1_local_repair_assessment": "V1 failed before ledger creation because the isolated worktree lacked the ignored relative .env; V2 is adjudicated and implemented as an absolute-path env_file repair only, with scientific variables and parent learned-state provenance unchanged.",
+    "verdict": "PASS_TO_SINGLE_USE_M1_AUTHORIZATION"
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "FAIL_SCHEMA",
+  "submission_authority": false,
+  "temperature": 0,
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 36846,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 698,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 37544
+  }
+}

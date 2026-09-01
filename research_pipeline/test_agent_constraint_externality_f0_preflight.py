@@ -131,7 +131,17 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness.get("capability_result_status"):
+        if readiness.get("capability_result_status") == "CAPABILITY_CALIBRATION_PASS":
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_CALIBRATION_PASS_F0_AUTHORIZATION_REQUIRED",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "STOP_AWAIT_HUMAN_F0_AUTHORIZATION",
+            )
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_result_status"):
             self.assertEqual(
                 readiness["status"], readiness["capability_result_status"]
             )
@@ -139,6 +149,12 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
                 readiness["next_authorized_action"],
                 "STOP_AWAIT_HUMAN_ADJUDICATION",
             )
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_prior_results_void_substrate_invalid"):
+            self.assertTrue(readiness["capability_substrate_recovery_qualification_pass"])
+            self.assertTrue(readiness["capability_r2_authorized"])
+            self.assertEqual(readiness["status"], "CAPABILITY_SUBSTRATE_REQUALIFICATION_READY")
+            self.assertEqual(readiness["next_authorized_action"], "RUN_QWEN37PLUS_CAPABILITY_R2")
             self.assertFalse(readiness["f0_authorized"])
         elif readiness["provider_credential_present"]:
             self.assertEqual(

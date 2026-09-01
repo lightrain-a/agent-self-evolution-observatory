@@ -1,0 +1,41 @@
+{
+  "actor_sha256": "a04f36ba6270d51eedf3d4fde31028f6aa3fc50852a6ce58736c45ff98eff0d0",
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-deepseek-v2-repair2-continuation-v3-run-start-adjudication",
+  "authorization_sha256": "7aa826db915b40840fb54ca2c269a23c4f74807bae74fd99285eac6875ee5b74",
+  "contract_sha256": "312e970520794c564b23a9717f4c40d4baeb0674619da334c8fcc20ee95fc045",
+  "created_at_utc": "2026-08-31T07:32:20Z",
+  "execution_identity": {
+    "pgid": 2439745,
+    "pid": 2439745,
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831"
+  },
+  "exactly_once": true,
+  "failure_files_at_observation": 0,
+  "fresh_execution_at_observation": {
+    "completed_heldout_units": 1,
+    "completed_learned_states": 2,
+    "completed_pairs": 0
+  },
+  "inherited_prefix": {
+    "provider_replay": false,
+    "repair1_inherited_pairs": 14,
+    "repair2_m1_recovered_pairs": 1,
+    "total_pairs": 15
+  },
+  "observed_total_state": {
+    "heldout_units": 541,
+    "learned_states": 32,
+    "paired_units": 15
+  },
+  "parent_repair2_updater_calls_sealed": 20,
+  "partial_effect_read": false,
+  "preflight_sha256": "fb1022bd6add1f5ea64237f81b0933331cfb6e263243deb33da5e0bc728ad66d",
+  "provider_calls_before_start": 0,
+  "provider_claims_before_start": 0,
+  "run_start_receipt_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/run_start_receipt.json",
+  "run_start_receipt_sha256": "0731739b4c1e51f60eb35e1915fc634a028108c593f11b93a8d583fdefee0e23",
+  "runner_sha256": "a735c7cd15f10a4feb52cc171b5e906494ae53205e29f334ecd7e3afbf7efe30",
+  "schema_version": "1.0",
+  "status": "REPAIR2_CONTINUATION_V3_STARTED_EXACTLY_ONCE_AND_ACTOR_BINDING_CONFIRMED"
+}

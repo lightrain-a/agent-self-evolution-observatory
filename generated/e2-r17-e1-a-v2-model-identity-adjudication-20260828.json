@@ -1,0 +1,48 @@
+{
+  "adjudication": "The initial Kimi Auto/default-thinking smokes are retained as explicit incomplete-length protocol failures. The passing Kimi qualification is a separately declared compatibility call with thinking disabled. DeepSeek resolves to the current GA release rather than the historical 260425 suffix. These observed identities are frozen only for the current pre-execution review tranche and must be requalified before any later scientific tranche.",
+  "artifact_type": "e2-r17-current-plan-model-identity-adjudication",
+  "authority": {
+    "gpu": false,
+    "paper_promotion": false,
+    "preexecution_consultation": true,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "checks": {
+    "deepseek_pass": true,
+    "kimi_pass": true,
+    "no_hidden_provider_retry": true,
+    "provider_retry_zero": true,
+    "resolved_identities_distinct": true,
+    "route_is_ark_plan": true
+  },
+  "compatibility_history": [
+    {
+      "path": "generated/e2-r17-e1-a-v2-model-identity-qualification-20260828.json",
+      "sha256": "5ed3550ec1b10e8be775385640c0048e0c50fad96e3eebe757336d17a3e1052f",
+      "status": "PASS"
+    }
+  ],
+  "created_at_utc": "2026-08-28T14:09:41+00:00",
+  "private_credentials_included": false,
+  "raw_response_ids_included": false,
+  "requested_and_resolved": {
+    "deepseek-v4-pro": {
+      "requested": "deepseek-v4-pro",
+      "resolved": "deepseek-v4-pro-ga-260813",
+      "source_artifact": "generated/e2-r17-e1-a-v2-model-identity-qualification-20260828.json",
+      "source_artifact_sha256": "5ed3550ec1b10e8be775385640c0048e0c50fad96e3eebe757336d17a3e1052f",
+      "thinking_requested": "disabled"
+    },
+    "kimi-k3": {
+      "requested": "kimi-k3",
+      "resolved": "kimi-k3",
+      "source_artifact": "generated/e2-r17-e1-a-v2-model-identity-qualification-20260828.json",
+      "source_artifact_sha256": "5ed3550ec1b10e8be775385640c0048e0c50fad96e3eebe757336d17a3e1052f",
+      "thinking_requested": "disabled"
+    }
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "status": "PASS_CURRENT_REVIEW_TRANCHE"
+}

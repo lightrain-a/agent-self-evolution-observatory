@@ -1,0 +1,71 @@
+{
+  "analyzer_run": false,
+  "arm_cardinality": {
+    "mrw": 18,
+    "win_c": 18
+  },
+  "artifact_type": "e2-r17-deepseek-v2-repair2-m1-measurement-recovery-pass-adjudication",
+  "authority": {
+    "execute_v3": false,
+    "paper_promotion": false,
+    "prepare_repair2_continuation_v3": true,
+    "read_partial_effect": false,
+    "reexecute_m1": false,
+    "run_analyzer": false,
+    "submission": false
+  },
+  "authorization_path": "generated/e2-r17-deepseek-v2-repair2-m1-single-use-authorization-20260831.json",
+  "authorization_sha256": "4d16c65ba3c6c345e8104bc75885589ed574632744ec8479e81de01bb808ca0f",
+  "contract_path": "generated/e2-r17-deepseek-v2-repair2-m1-measurement-contract-v2-20260831.json",
+  "contract_sha256": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+  "created_at_utc": "2026-08-31T06:47:05+00:00",
+  "exclusive_lock_sha256": "ebff81fd2afcd10a9db08c89ba5a70a2b95f9aac200cb929568b7e30f91994d4",
+  "failure_artifacts": 0,
+  "heldout_evaluations": 36,
+  "heldout_units_after_recovery": 540,
+  "learned_states_after_recovery": 30,
+  "ledger_audit": {
+    "mrw": {
+      "duplicate_provider_unit_calls": 0,
+      "ledger_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-m1-measurement-20260831/states/mrw/provider_budget.sqlite3",
+      "ledger_sha256": "a31a7ff3a85306b247be741cac286178106a9dba06e8b4d1da8fa3ddc385f50b",
+      "max_claims_per_unit": 10,
+      "per_unit_limit": 10,
+      "provider_claims": 104,
+      "total_limit": 180,
+      "unique_provider_units": 18
+    },
+    "win_c": {
+      "duplicate_provider_unit_calls": 0,
+      "ledger_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-m1-measurement-20260831/states/win_c/provider_budget.sqlite3",
+      "ledger_sha256": "3209bfcf1955ccc3522a4538bb43eaf776747780d33b71d55ea1923314b6ac7f",
+      "max_claims_per_unit": 9,
+      "per_unit_limit": 10,
+      "provider_claims": 105,
+      "total_limit": 180,
+      "unique_provider_units": 18
+    }
+  },
+  "manifest_rows": 36,
+  "measurement_manifest_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-m1-measurement-20260831/checkpoints/completed_measurements.jsonl",
+  "measurement_manifest_sha256": "f83b64515e0c58138619489c50f1c01984334d6aa8f1ab3083578513abbf77fa",
+  "measurement_states": 2,
+  "measurement_summary_sha256_count": 36,
+  "measurement_summary_sha256_unique": 36,
+  "new_learned_states": 0,
+  "new_updater_calls": 0,
+  "next_state": "PREPARE_REPAIR2_CONTINUATION_V3",
+  "paired_units_after_recovery": 15,
+  "partial_effect_read": false,
+  "provider_retry_limit": 0,
+  "recovery_summary_path": "generated/e2-r17-deepseek-v2-repair2-m1-measurement-recovery-summary-20260831.json",
+  "recovery_summary_sha256": "d0d53baf644e452261e3976767439857c3e6263709b9b8c3e5dff9b8faf2da51",
+  "replayed_updater_calls": 0,
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-m1-measurement-20260831",
+  "run_start_receipt_sha256": "dffc585b9a064f6fd5b81a15c0979d6a1af75a75435320a0efaf570435c1568c",
+  "schema_version": "1.0",
+  "scientific_belief_update": "NONE_AT_M1; complete effect remains sealed until the full 48/48 closeout.",
+  "sealed_parent_updater_calls": 20,
+  "status": "REPAIR2_M1_MEASUREMENT_RECOVERY_PASS_INTEGRITY_AUDITED",
+  "unique_arm_task_rows": 36
+}

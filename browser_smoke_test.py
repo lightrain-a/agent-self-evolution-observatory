@@ -587,7 +587,7 @@ def main() -> None:
         ensure_language("zh")
         zh_state = execute(session_id, """return {text:document.body.textContent||'',brand:[document.querySelector('.brand strong')?.textContent||'',document.querySelector('.brand span')?.textContent||''],nav:[...document.querySelectorAll('.nav-level1 span:first-child,.nav-level2')].map(x=>x.textContent.trim()),placeholder:document.querySelector('#site-search')?.getAttribute('placeholder')||''};""")
         require(all(marker in zh_state["text"] for marker in ("领域矩阵 · 机制 × 场景 × 评测","先横向比较十个问题","代表论文","今天落到哪些","当前 A 类")), "Chinese compact field landscape did not switch")
-        require(zh_state["brand"] == ["Agent 自进化","科研观测站"] and "开始阅读" in zh_state["nav"] and "领域图谱" in zh_state["nav"] and "当前科研" in zh_state["nav"] and "文献" in zh_state["nav"] and "Start Here" not in zh_state["nav"] and zh_state["placeholder"] == "搜索研究站内容…", f"shared shell did not fully switch to Chinese: {zh_state}")
+        require(zh_state["brand"] == ["Agent 自进化","科研观测站"] and "开始阅读" in zh_state["nav"] and "领域图谱" in zh_state["nav"] and "当前科研" in zh_state["nav"] and "参考文献" in zh_state["nav"] and "Start Here" not in zh_state["nav"] and zh_state["placeholder"] == "搜索研究站内容…", f"shared shell did not fully switch to Chinese: {zh_state}")
 
         navigate("/domains.html#group-gui-web", 3)
         redirected_domain = execute(session_id, """return {href:location.pathname+location.hash,open:!!document.getElementById('field-gui-web')?.open};""")
@@ -804,12 +804,13 @@ def main() -> None:
                 open:d.open,
                 links:[...d.querySelectorAll('a.nav-level2')].map(a=>[(a.textContent||'').trim(),a.getAttribute('href')||''])
               }));
-              const literature=groups.find(g=>g.links.some(x=>x[1]==='bibliography.html'))||null;
-              return {lang:document.documentElement.lang,groups,literatureOpen:!!literature?.open,roleTerm:(document.body.textContent||'').includes('师兄')};""")
+              const currentFile=location.pathname.split('/').pop()||'index.html';
+              const currentListed=groups.some(g=>g.links.some(x=>x[1]===currentFile));
+              return {lang:document.documentElement.lang,groups,allClosed:groups.every(g=>!g.open),activeGroups:document.querySelectorAll('.sidebar .nav > details.nav-group.active-group').length,currentListed,roleTerm:(document.body.textContent||'').includes('师兄')};""")
             require(nav_contract["lang"] == "zh-CN", f"{frontend_page} did not honor the shared Chinese sidebar language state: {nav_contract}")
-            require(nav_contract["literatureOpen"], f"{frontend_page} must keep the Literature navigation group expanded")
+            require(nav_contract["allClosed"] and nav_contract["activeGroups"] == (1 if nav_contract["currentListed"] else 0), f"{frontend_page} must load with all sidebar groups collapsed and mark the current group only when the page is listed: {nav_contract}")
             require(not nav_contract["roleTerm"], f"{frontend_page} still renders a role-specific decision label")
-            require([group["title"] for group in nav_contract["groups"]] == ["开始阅读","领域图谱","当前科研","文献"], f"{frontend_page} sidebar group names drifted: {nav_contract['groups']}")
+            require([group["title"] for group in nav_contract["groups"]] == ["开始阅读","领域图谱","当前科研","参考文献"], f"{frontend_page} sidebar group names drifted: {nav_contract['groups']}")
             current_signature = [(group["title"], tuple(tuple(link) for link in group["links"])) for group in nav_contract["groups"]]
             if sidebar_signature is None:
                 sidebar_signature = current_signature

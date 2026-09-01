@@ -1,0 +1,41 @@
+{
+  "archive": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2.tar",
+  "archive_sha256": "bbcfae9ff7a0c5b36e922c1a450c6755a36a8da1b30fafb1523d38f326b89456",
+  "artifact_type": "e2-r17-controlled-spreadsheet-suite-build-receipt",
+  "authority": {
+    "f0_r4_freeze": false,
+    "gpu": false,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "benchmark_outcomes_accessed": false,
+  "created_at_utc": "2026-08-27T14:23:04+00:00",
+  "dataset_sha256": "4b5ec329f32855e1d358bcf63dd1781a8861f9f0d44f8f0b12af8a798da0a87a",
+  "output_root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_outcome": false,
+  "self_check": {
+    "dataset_sha256": "4b5ec329f32855e1d358bcf63dd1781a8861f9f0d44f8f0b12af8a798da0a87a",
+    "e0_calibration_tasks": 54,
+    "e1_probe_tasks": 18,
+    "e1_streams": 12,
+    "e1_tasks_per_stream": 8,
+    "e3_future_tasks": 96,
+    "e3_streams": 12,
+    "e3_tasks_per_stream": 8,
+    "probe_family_counts": {
+      "aggregation_join": 3,
+      "formula_materialization": 3,
+      "input_output_contract": 3,
+      "multi_step_pipeline": 3,
+      "schema_key_alignment": 3,
+      "target_sheet_range": 3
+    },
+    "status": "PASS",
+    "task_count": 378
+  },
+  "status": "PASS_ZERO_PROVIDER",
+  "suite_manifest": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2/suite_manifest.json",
+  "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+}
