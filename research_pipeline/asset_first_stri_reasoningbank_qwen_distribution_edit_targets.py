@@ -106,6 +106,8 @@ def enclosing_symbol(source: str, old_start: int, old_count: int) -> str:
 def edit_target_set(diff_text: str, base_files: Mapping[str, str]) -> dict[str, Any]:
     atoms: set[tuple[str, str]] = set()
     hunks = parse_hunks(diff_text)
+    python_hunk_count = 0
+    python_fallback_hunk_count = 0
     for hunk in hunks:
         path = hunk.path
         if not path:
@@ -113,11 +115,16 @@ def edit_target_set(diff_text: str, base_files: Mapping[str, str]) -> dict[str, 
         if not path.endswith(".py"):
             atom = (path, "<file>")
         elif hunk.old_path == "/dev/null":
+            python_hunk_count += 1
+            python_fallback_hunk_count += 1
             atom = (path, "<module_or_file>")
         else:
+            python_hunk_count += 1
             source = base_files.get(hunk.old_path)
             symbol = "<module_or_file>" if source is None else enclosing_symbol(
                 source, hunk.old_start, hunk.old_count)
+            if symbol == "<module_or_file>":
+                python_fallback_hunk_count += 1
             atom = (path, symbol)
         atoms.add(atom)
     ordered = [{"relative_path": path, "qualified_symbol": symbol}
@@ -128,6 +135,8 @@ def edit_target_set(diff_text: str, base_files: Mapping[str, str]) -> dict[str, 
         "atoms": ordered,
         "signature_sha256": sha256_text(canonical_json(ordered)),
         "hunk_count": len(hunks),
+        "nonempty_python_diff_hunk_count": python_hunk_count,
+        "python_fallback_hunk_count": python_fallback_hunk_count,
     }
 
 
