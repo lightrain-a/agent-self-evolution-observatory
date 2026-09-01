@@ -455,18 +455,30 @@ def main() -> None:
     base_url = os.getenv("AA_BASE_URL", DEFAULT_BASE_URL).rstrip("/")
     if not api_key:
         raise RunnerError("AA_API_KEY is not configured.")
-    snapshot = capture_provider_snapshot(api_key=api_key, base_url=base_url)
-    write_json(args.snapshot_output, snapshot)
-    addendum = build_addendum(
-        catalog_sha256=snapshot["catalog_response_sha256"],
-        catalog_model_count=snapshot["catalog_model_count"],
-    )
-    addendum["catalog_evidence"]["exact_snapshot_available"] = snapshot["requested_model_available"]
-    addendum["catalog_evidence"]["allowed_alias_available"] = snapshot["allowed_alias_available"]
-    unsigned = dict(addendum)
-    unsigned.pop("content_sha256", None)
-    addendum["content_sha256"] = sha256_value(unsigned)
-    write_json(args.addendum_output, addendum)
+    if not args.snapshot_output.is_file() or not args.addendum_output.is_file():
+        raise RunnerError("A1 scientific execution requires the pre-provider frozen snapshot and addendum.")
+    snapshot = read_json(args.snapshot_output)
+    claimed_snapshot = snapshot.get("content_sha256")
+    unsigned_snapshot = dict(snapshot)
+    unsigned_snapshot.pop("content_sha256", None)
+    if claimed_snapshot != sha256_value(unsigned_snapshot):
+        raise RunnerError("Frozen A1 provider snapshot content hash mismatch.")
+    if snapshot.get("requested_model_available") is not False:
+        raise RunnerError("Frozen A1 evidence no longer represents exact-snapshot unavailability.")
+    if snapshot.get("allowed_alias_available") is not True:
+        raise RunnerError("Frozen A1 allowed alias was not available at prereg freeze.")
+    if snapshot.get("resolved_request_model") != ALLOWED_ALIAS:
+        raise RunnerError("Frozen A1 provider snapshot did not resolve the unique allowed alias.")
+    if snapshot.get("base_url") != base_url:
+        raise RunnerError("A1 provider base URL drifted from the frozen snapshot.")
+    addendum = read_json(args.addendum_output)
+    claimed_addendum = addendum.get("content_sha256")
+    unsigned_addendum = dict(addendum)
+    unsigned_addendum.pop("content_sha256", None)
+    if claimed_addendum != sha256_value(unsigned_addendum):
+        raise RunnerError("Frozen A1 addendum content hash mismatch.")
+    if addendum.get("status") != "QWEN37PLUS_CAPABILITY_A1_AUTHORIZED":
+        raise RunnerError("Frozen A1 addendum is not authorized.")
     resolved_model = snapshot["resolved_request_model"]
     execute(
         appworld_root=args.appworld_root,
