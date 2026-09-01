@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T11:02:06Z",
+  "experiment_id": "C1-PACTA-RB-QWEN397-T0-ROOTFUL-SOURCE-20260901-v3",
+  "status": "BRIDGE_PASS_SOURCE_EXECUTION_OPEN",
+  "execution_parent_sha": "f3b9363b7fd354c16ce394c2ff948e13b78f33bc",
+  "bridge": {
+    "path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v3/bridge-qualification.json",
+    "sha256": "6cfc78475b84bacc2aee2a67c725b5b7f7602f11e9394d78bad72492102c5e74",
+    "pass": true,
+    "provider_calls": 1,
+    "requested_model": "qwen3.5-397b-a17b",
+    "resolved_model": "qwen3.5-397b-a17b",
+    "enable_thinking": false,
+    "max_completion_tokens": 512,
+    "exact_action": "printf T0_BRIDGE_OK"
+  },
+  "source_execution_authority": {
+    "fixed_source_units": 11,
+    "logical_attempts_per_source": 1,
+    "replacement": false,
+    "top_up": false,
+    "future_task_execution": false,
+    "writer_calls": 0,
+    "binder_calls": 0,
+    "shadow_calls": 0,
+    "final_measurement_calls": 0
+  },
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "active_manuscript": "R9"
+}
