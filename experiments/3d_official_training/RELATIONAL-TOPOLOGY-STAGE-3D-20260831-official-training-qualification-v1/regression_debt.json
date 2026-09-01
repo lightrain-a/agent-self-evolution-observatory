@@ -1,6 +1,6 @@
 {
-  "compiler_source_git_sha": "114c1e1a936c00f677e2c71b2b30bb03f0548bf0",
-  "compiler_source_git_tree": "087fcce4298ee75ffbb2419e45fe6e6e2d099b04",
+  "compiler_source_git_sha": "7bd13063eb45350bd26bd2eb84d94da8988cbe5c",
+  "compiler_source_git_tree": "554dbccef23b53871d87df27a7ed8d25a4fcda03",
   "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
   "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
   "generated_at": "2026-09-01T08:00:00+00:00",
@@ -22,9 +22,9 @@
   "scope_proof": "Frozen child audit places all inherited incidents outside authority, provenance, integrity, registry, replay, and this object's dependency chain.",
   "targeted_dependency_audit": {
     "blocking_incidents": [],
-    "log_sha256": "6620f259e28d53413d79b296943499db32ec305a50bb3a46c80cb2a9fa34f6d0",
+    "log_sha256": "d82a742733f979f053bbac254354e4ed21faaa81b84360993a473c79c9777ffd",
     "status": "PASS",
-    "test_blocks_observed": 1,
-    "tests_observed": 81
+    "test_blocks_observed": 2,
+    "tests_observed": 66
   }
 }

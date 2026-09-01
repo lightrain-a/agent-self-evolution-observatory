@@ -1,0 +1,27 @@
+{
+  "addendum_id": "AGENT-CONSTRAINT-EXTERNALITY-QWEN-MODEL-PREREG-ADDENDUM-A0",
+  "authority": {
+    "appworld_ul": false,
+    "capability_calibration": false,
+    "f0": false,
+    "m1_mock_qualification": true,
+    "method": false,
+    "p1": false,
+    "paper_claim": false,
+    "real_provider_call": false,
+    "second_model": false,
+    "toolsandbox": false
+  },
+  "files": {
+    "generated/agent-constraint-externality-qwen-model-prereg-addendum-a0-20260901.json": {
+      "bytes": 3413,
+      "sha256": "8e9408cde5af2657e05edfd9eae0a129f8d635b85b6bb1f5a41916e926d41a96"
+    }
+  },
+  "generated_at": "2026-09-01T15:30:00+08:00",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider_calls": 0,
+  "schema_version": "agent-constraint-externality-model-prereg-addendum-manifest-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "QWEN_MODEL_PREREG_ADDENDUM_A0_PASS"
+}

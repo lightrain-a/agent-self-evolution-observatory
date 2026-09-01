@@ -1,0 +1,14 @@
+{
+  "files": {
+    "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
+      "bytes": 3202,
+      "sha256": "fe54783daa899dd293cdbdddc33da87ce8d890a95cb25160fff0744d4598ddd0"
+    }
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "qualification_id": "AGENT-CONSTRAINT-EXTERNALITY-M1-RUNNER-QUALIFICATION-V1",
+  "real_scientific_provider_calls": 0,
+  "schema_version": "ace-m1-runner-qualification-manifest-v1",
+  "scientific_outcomes": 0,
+  "status": "M1_RUNNER_QUALIFICATION_PASS"
+}

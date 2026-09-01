@@ -1,0 +1,23 @@
+{
+  "accepted_receipt_exactly": "USER_CONFIRMED_RESEARCH_LICENSE_ACCEPTED",
+  "compiler_source_git_sha": "5acc6ce1365dbbbe34347ba35d2a572a81dd7d54",
+  "compiler_source_git_tree": "735e5a092205c0e9876f7faccb04b8f9b52d9a4b",
+  "config_sha256": "8930293e420f008dba8f57af7e9504d2a5104b7ad01257abd6096e1c1adea075",
+  "data_materialization_authorized": true,
+  "dataset_revision": "LICENSE_CONFIRMED_DATA_NOT_MATERIALIZED",
+  "fail_closed_verdict": "LICENSE_CONFIRMED_MATERIALIZATION_AUTHORIZED",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "gpu_qualification_authorized": false,
+  "licensed_corpus_materialized": false,
+  "licenses": {
+    "3D-FRONT": "USER_CONFIRMED_RESEARCH_LICENSE_ACCEPTED",
+    "3D-FUTURE": "USER_CONFIRMED_RESEARCH_LICENSE_ACCEPTED"
+  },
+  "note": "A derivative dataset page license does not establish underlying 3D-FRONT/3D-FUTURE research-license acceptance.",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "observed_receipt": "USER_CONFIRMED_RESEARCH_LICENSE_ACCEPTED",
+  "official_training_authorized": false,
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-license-confirmed-v2",
+  "status": "LICENSE_CONFIRMED_MATERIALIZATION_AUTHORIZED"
+}

@@ -7,6 +7,20 @@
     "uptake_fail": "Fewer than 6 eligible repair families or mean target repair gain is not positive."
   },
   "backbone": "FROZEN_FROM_CAPABILITY_CALIBRATION_BEFORE_F0",
+  "budgets": {
+    "agent_episode_total_max": 160,
+    "capability_agent_episodes": 8,
+    "count_separately": [
+      "agent_episode_count",
+      "agent_model_request_count",
+      "updater_model_request_count",
+      "provider_request_total"
+    ],
+    "f0_probe_agent_episode_max": 144,
+    "f0_probe_agent_episode_min": 108,
+    "f0_source_agent_episodes": 8,
+    "repair_generation_provider_request_cap": 8
+  },
   "exactly_once": {
     "append_only_ledger": true,
     "application_retry": false,
@@ -34,7 +48,7 @@
     "ACE-TNF-03",
     "ACE-TNF-04"
   ],
-  "generated_at": "2026-08-31T19:45:00+08:00",
+  "generated_at": "2026-09-01T15:35:00+08:00",
   "gpu_runs": 0,
   "harness": "APPWORLD_FUNCTION_CALLING_V1",
   "metrics": {
@@ -104,12 +118,17 @@
     ],
     "freeze_fields": [
       "sha256",
-      "exact_bytes",
+      "raw_bytes",
+      "normalized_bytes",
       "byte_length",
+      "word_count",
       "fixed_tokenizer_token_count",
       "procedural_clause_count",
       "injection_position",
-      "exposure_rule"
+      "exposure_rule",
+      "generation_model_id",
+      "generation_request_sha256",
+      "source_trajectory_sha256"
     ],
     "human_edit_after_generation": false,
     "maximum_eligible_repair_families": 8,

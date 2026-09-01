@@ -1,0 +1,26 @@
+{
+  "authority_gate": "No scientific or training sample proceeds without exact_clip_token_count and tokenizer_truncated populated.",
+  "compiler_source_git_sha": "5acc6ce1365dbbbe34347ba35d2a572a81dd7d54",
+  "compiler_source_git_tree": "735e5a092205c0e9876f7faccb04b8f9b52d9a4b",
+  "config_sha256": "8930293e420f008dba8f57af7e9504d2a5104b7ad01257abd6096e1c1adea075",
+  "dataset_revision": "LICENSE_CONFIRMED_DATA_NOT_MATERIALIZED",
+  "exact_token_counts_materialized": [],
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "matching": "Exact count where feasible; otherwise same one-token bin within relation_count and topology strata, with token count modeled continuously.",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "primary_scientific_exclusion": "tokenizer_truncated == true",
+  "required_distribution_statistics": [
+    "histogram",
+    "mean",
+    "median",
+    "quantiles",
+    "overlap",
+    "relation_count_stratified_distribution"
+  ],
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-license-confirmed-v2",
+  "status": "STATIC_CONTRACT_PASS_REAL_COUNTS_PENDING_LICENSE",
+  "synthetic_placeholder_token_counts": null,
+  "tokenizer": "openai/clip-vit-base-patch32",
+  "tokenizer_revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268"
+}

@@ -116,9 +116,9 @@ def verify_instructscene(root: Path | None) -> dict[str, Any]:
     return result
 
 
-def provenance(config_sha256: str, dataset_revision: str) -> dict[str, Any]:
+def provenance(config_sha256: str, dataset_revision: str, run_id: str) -> dict[str, Any]:
     return {
-        "object_id": OBJECT_ID, "parent_object_id": PARENT_ID, "run_id": RUN_ID,
+        "object_id": OBJECT_ID, "parent_object_id": PARENT_ID, "run_id": run_id,
         "generated_at": CREATED_AT, "compiler_source_git_sha": git("rev-parse", "HEAD"),
         "compiler_source_git_tree": git("rev-parse", "HEAD^{tree}"),
         "config_sha256": config_sha256, "dataset_revision": dataset_revision,
@@ -182,7 +182,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         "p1_open": False,
         "regimes": {name: list(values) for name, values in REGIME_SUPPORT.items()},
     }
-    p = provenance(sha256_value(config), dataset_state)
+    p = provenance(sha256_value(config), dataset_state, args.run_id)
     scene_ids = ["SYN-BEDROOM-0001", "SYN-BEDROOM-0002", "SYN-BEDROOM-0003", "SYN-BEDROOM-0004"]
     corpora, corpus_hashes, replay = {}, {}, {}
     for regime in REGIME_SUPPORT:
@@ -540,11 +540,14 @@ def write_artifact(path: Path, value: Any) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output-dir", type=Path, default=OUT)
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--run-id", default=RUN_ID)
     parser.add_argument("--instructscene-root", type=Path)
     parser.add_argument("--targeted-audit-log", type=Path)
     parser.add_argument("--license-receipt")
     args = parser.parse_args()
+    if args.output_dir is None:
+        args.output_dir = ROOT / "experiments/3d_official_training" / args.run_id
     artifacts, adjudication = build(args)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     for name, value in artifacts.items():
@@ -552,7 +555,7 @@ def main() -> None:
     hashes = {name: file_sha(args.output_dir / name) for name in sorted(artifacts)}
     manifest = {
         "schema_version": "relational-topology-official-training-qualification-manifest-v1",
-        "object_id": OBJECT_ID, "parent_object_id": PARENT_ID, "run_id": RUN_ID,
+        "object_id": OBJECT_ID, "parent_object_id": PARENT_ID, "run_id": args.run_id,
         "generated_at": CREATED_AT, "verdict": adjudication["verdict"],
         "compiler_source_git_sha": adjudication["compiler_source_git_sha"],
         "compiler_source_git_tree": adjudication["compiler_source_git_tree"],

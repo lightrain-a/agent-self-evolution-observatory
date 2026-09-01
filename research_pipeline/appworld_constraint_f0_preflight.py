@@ -5,10 +5,17 @@ import json
 from pathlib import Path
 from typing import Any
 
-from research_pipeline.ark_provider import ARK_MODELS, ArkSettings
+from research_pipeline.agent_constraint_externality_qwen_model_prereg import (
+    ALLOWED_ALIAS,
+    MANIFEST as MODEL_ADDENDUM_MANIFEST,
+    OUTPUT as MODEL_ADDENDUM,
+    PROVIDER_ID,
+    REQUESTED_MODEL,
+    safe_provider_summary,
+)
 
 OBJECT_ID = "AGENT-CONSTRAINT-EXTERNALITY-20260831"
-GENERATED_AT = "2026-08-31T19:45:00+08:00"
+GENERATED_AT = "2026-09-01T15:35:00+08:00"
 ROOT = Path(__file__).resolve().parents[1]
 GENERATED = ROOT / "generated"
 FAMILY_MANIFEST = (
@@ -20,6 +27,21 @@ COMPILER_QUALIFICATION = (
 COMPILER_MANIFEST = (
     GENERATED / "agent-constraint-externality-appworld-compiler-manifest-20260831.json"
 )
+M1_QUALIFICATION = (
+    GENERATED / "agent-constraint-externality-m1-runner-qualification-v1-20260901.json"
+)
+M1_MANIFEST = (
+    GENERATED / "agent-constraint-externality-m1-runner-qualification-v1-manifest-20260901.json"
+)
+CAPABILITY_RESULT = (
+    GENERATED / "agent-constraint-externality-qwen-capability-result-20260901.json"
+)
+CAPABILITY_RESULT_MANIFEST = (
+    GENERATED / "agent-constraint-externality-qwen-capability-manifest-20260901.json"
+)
+CAPABILITY_MODEL_SNAPSHOT = (
+    GENERATED / "agent-constraint-externality-qwen-provider-model-snapshot-20260901.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -27,12 +49,16 @@ F0_FAMILIES = (
     "ACE-FG-01", "ACE-FG-02", "ACE-FG-03", "ACE-FG-04",
     "ACE-TNF-01", "ACE-TNF-02", "ACE-TNF-03", "ACE-TNF-04",
 )
-MODEL_SELECTION_ORDER = (
-    "doubao-seed-2.0-lite", "deepseek-v4-flash", "deepseek-v4-pro"
-)
+MODEL_SELECTION_ORDER = (REQUESTED_MODEL,)
 SEEDS = (1201, 1202, 1203)
 ARMS = ("INDEPENDENT", "LOW", "HIGH")
 BRANCHES = ("NO_UPDATE", "UPDATE")
+CAPABILITY_STATUSES = {
+    "CAPABILITY_CALIBRATION_PASS",
+    "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
+    "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+    "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP",
+}
 
 
 class PreflightError(RuntimeError):
@@ -64,6 +90,28 @@ def write_json(path: Path, value: dict[str, Any]) -> None:
     )
 
 
+def validate_capability_result(payload: dict[str, Any]) -> str | None:
+    if not payload:
+        return None
+    if payload.get("object_id") != OBJECT_ID:
+        raise PreflightError("Capability result object identity mismatch.")
+    status = payload.get("status")
+    if status not in CAPABILITY_STATUSES:
+        raise PreflightError("Capability result status is not frozen.")
+    content_sha256 = payload.get("content_sha256")
+    unhashed = {key: value for key, value in payload.items() if key != "content_sha256"}
+    if content_sha256 != digest(unhashed):
+        raise PreflightError("Capability result content hash mismatch.")
+    f0_authorized = bool(payload.get("authority", {}).get("f0"))
+    if f0_authorized != (status == "CAPABILITY_CALIBRATION_PASS"):
+        raise PreflightError("Capability result F0 authority contradicts its status.")
+    if status != "CAPABILITY_CALIBRATION_PASS" and payload.get(
+        "scientific_outcomes_observed"
+    ) != 0:
+        raise PreflightError("Stopped capability result exposed scientific outcomes.")
+    return str(status)
+
+
 def validate_inputs() -> tuple[dict[str, Any], dict[str, Any]]:
     families = read_json(FAMILY_MANIFEST)
     qualification = read_json(COMPILER_QUALIFICATION)
@@ -79,16 +127,24 @@ def validate_inputs() -> tuple[dict[str, Any], dict[str, Any]]:
         raise PreflightError("Capability and decisive splits overlap.")
     if selected != set(available):
         raise PreflightError("Outcome-blind split must partition all compiled families.")
-    if not all(model in ARK_MODELS for model in MODEL_SELECTION_ORDER):
-        raise PreflightError("A preregistered model is absent from the provider catalog.")
+    if MODEL_SELECTION_ORDER != (REQUESTED_MODEL,):
+        raise PreflightError("Exactly one Qwen candidate must remain preregistered.")
+    addendum = read_json(MODEL_ADDENDUM)
+    if addendum["status"] != "QWEN_MODEL_PREREG_ADDENDUM_A0_PASS":
+        raise PreflightError("Qwen model prereg addendum is not qualified.")
     return families, qualification
 
 
 def build_artifacts() -> dict[str, dict[str, Any]]:
     families, qualification = validate_inputs()
-    settings = ArkSettings.from_env(required=False)
-    safe_provider = settings.safe_summary()
+    safe_provider = safe_provider_summary()
     provider_ready = bool(safe_provider["configured"])
+    m1 = read_json(M1_QUALIFICATION) if M1_QUALIFICATION.is_file() else {}
+    m1_pass = m1.get("status") == "M1_RUNNER_QUALIFICATION_PASS"
+    capability_result = (
+        read_json(CAPABILITY_RESULT) if CAPABILITY_RESULT.is_file() else {}
+    )
+    capability_status = validate_capability_result(capability_result)
 
     capability = {
         "schema_version": "agent-constraint-externality-capability-calibration-v1",
@@ -106,9 +162,11 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             len(CAPABILITY_FAMILIES) * 2 * len(MODEL_SELECTION_ORDER)
         ),
         "model_selection_order": list(MODEL_SELECTION_ORDER),
-        "selection_rule": "FIRST_CANDIDATE_MEETING_ALL_FLOOR_AND_CEILING_RULES",
+        "selection_rule": "ONLY_QWEN_CANDIDATE_MUST_QUALIFY_OR_STOP",
+        "requested_model": REQUESTED_MODEL,
+        "allowed_alias": ALLOWED_ALIAS,
         "candidate_isolation": (
-            "Each rejected candidate uses only this disjoint split; no F0 family "
+            "The single candidate uses only this disjoint split; no F0 family "
             "outcome is readable before backbone freeze."
         ),
         "qualification_rules": {
@@ -118,13 +176,15 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             "baseline_non_target_preservation_rate_min": 0.85,
             "zero_malformed_function_calls_required": True,
         },
-        "floor_disposition": "TRY_NEXT_PREDECLARED_CANDIDATE_OR_STOP",
-        "ceiling_disposition": "TRY_NEXT_PREDECLARED_CANDIDATE_OR_HARDER_PREDECLARED_STRATUM",
-        "all_candidates_fail_disposition": "CAPABILITY_CALIBRATION_FAIL_STOP",
+        "floor_disposition": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
+        "ceiling_disposition": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+        "interface_disposition": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP",
+        "automatic_fallback": False,
         "execution": {
-            "provider": "ARK_RESPONSES_API",
+            "provider": PROVIDER_ID,
             "provider_max_retries": 0,
             "application_retry": False,
+            "capability_episode_cap": 8,
             "tool_interaction_cap": 12,
             "temperature": 0,
             "append_only_ledger": True,
@@ -146,6 +206,18 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "backbone": "FROZEN_FROM_CAPABILITY_CALIBRATION_BEFORE_F0",
         "harness": "APPWORLD_FUNCTION_CALLING_V1",
         "update_surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE",
+        "budgets": {
+            "capability_agent_episodes": 8,
+            "f0_source_agent_episodes": 8,
+            "f0_probe_agent_episode_min": 108,
+            "f0_probe_agent_episode_max": 144,
+            "agent_episode_total_max": 160,
+            "repair_generation_provider_request_cap": 8,
+            "count_separately": [
+                "agent_episode_count", "agent_model_request_count",
+                "updater_model_request_count", "provider_request_total",
+            ],
+        },
         "source_phase": {
             "episodes": len(F0_FAMILIES),
             "one_target_isolated_episode_per_family": True,
@@ -168,9 +240,11 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             ),
             "human_edit_after_generation": False,
             "freeze_fields": [
-                "sha256", "exact_bytes", "byte_length",
-                "fixed_tokenizer_token_count", "procedural_clause_count",
-                "injection_position", "exposure_rule",
+                "sha256", "raw_bytes", "normalized_bytes", "byte_length",
+                "word_count", "fixed_tokenizer_token_count",
+                "procedural_clause_count", "injection_position", "exposure_rule",
+                "generation_model_id", "generation_request_sha256",
+                "source_trajectory_sha256",
             ],
             "minimum_eligible_repair_families": 6,
             "maximum_eligible_repair_families": 8,
@@ -256,11 +330,29 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "gpu_runs": 0,
     }
 
-    readiness_status = (
-        "CAPABILITY_CALIBRATION_READY_NOT_EXECUTED"
-        if provider_ready
-        else "CAPABILITY_CALIBRATION_BLOCKED_PROVIDER_NOT_CONFIGURED"
-    )
+    if not m1_pass:
+        readiness_status = "M1_RUNNER_QUALIFICATION_REQUIRED"
+        blocker = "M1 scientific runner qualification has not passed."
+        next_action = "RUN_M1_MOCK_QUALIFICATION"
+    elif capability_status == "CAPABILITY_CALIBRATION_PASS":
+        readiness_status = "F0_SOURCE_READY"
+        blocker = None
+        next_action = "RUN_F0_SOURCE"
+    elif capability_status:
+        readiness_status = capability_status
+        blocker = (
+            "Capability calibration terminated at its frozen stop rule; "
+            "F0 remains unauthorized."
+        )
+        next_action = "STOP_AWAIT_HUMAN_ADJUDICATION"
+    elif not provider_ready:
+        readiness_status = "QWEN_PROVIDER_CONFIGURATION_REQUIRED"
+        blocker = "AA_API_KEY is not configured in the approved environment."
+        next_action = "CONFIGURE_QWEN_PROVIDER_CREDENTIAL"
+    else:
+        readiness_status = "CAPABILITY_CALIBRATION_READY"
+        blocker = None
+        next_action = "RUN_QWEN_CAPABILITY_CALIBRATION"
     readiness = {
         "schema_version": "agent-constraint-externality-f0-readiness-v1",
         "generated_at": GENERATED_AT,
@@ -270,28 +362,43 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "compiler_pass_conditions_all_true": all(
             qualification["pass_conditions"].values()
         ),
+        "model_prereg_addendum_a0_pass": True,
+        "m1_runner_qualification_pass": m1_pass,
         "capability_contract_frozen": True,
+        "capability_result_status": capability_status,
+        "capability_scheduled_agent_episode_count": capability_result.get(
+            "scheduled_agent_episode_count", 0
+        ),
+        "capability_agent_episode_count": capability_result.get(
+            "agent_episode_count", 0
+        ),
+        "capability_terminal_agent_episode_count": capability_result.get(
+            "terminal_agent_episode_count", 0
+        ),
+        "capability_agent_model_request_count": capability_result.get(
+            "gate", {}
+        ).get("agent_model_request_count", 0),
+        "capability_provider_request_total": capability_result.get(
+            "provider_request_total", 0
+        ),
+        "capability_scientific_outcomes_observed": capability_result.get(
+            "scientific_outcomes_observed", 0
+        ),
         "f0_contract_frozen": True,
         "provider": safe_provider,
         "execution_override": {
             "max_retries": 0,
             "note": "Frozen protocol overrides provider default for scientific calls.",
         },
-        "blocker": (
-            None
-            if provider_ready
-            else "ARK_API_KEY is absent from the configured ignored server environment."
-        ),
-        "next_authorized_action": (
-            "RUN_DISJOINT_CAPABILITY_CALIBRATION"
-            if provider_ready
-            else "CONFIGURE_PROVIDER_CREDENTIAL_THEN_RERUN_READINESS"
-        ),
+        "provider_credential_present": provider_ready,
+        "blocker": blocker,
+        "next_authorized_action": next_action,
         "f0_executed": False,
         "f0_outcomes_observed": 0,
         "tool_sandbox_authorized": False,
         "appworld_ul_authorized": False,
         "p1_authorized": False,
+        "f0_authorized": capability_status == "CAPABILITY_CALIBRATION_PASS",
     }
     return {
         "agent-constraint-externality-capability-contract-20260831.json": capability,
@@ -311,7 +418,19 @@ def main() -> None:
         }
         for name in artifacts
     }
-    for path in (FAMILY_MANIFEST, COMPILER_QUALIFICATION, COMPILER_MANIFEST):
+    for path in (
+        FAMILY_MANIFEST, COMPILER_QUALIFICATION, COMPILER_MANIFEST,
+        MODEL_ADDENDUM, MODEL_ADDENDUM_MANIFEST, M1_QUALIFICATION, M1_MANIFEST,
+    ):
+        manifest_files[str(path.relative_to(ROOT))] = {
+            "sha256": file_sha256(path),
+            "bytes": path.stat().st_size,
+        }
+    for path in (
+        CAPABILITY_RESULT, CAPABILITY_RESULT_MANIFEST, CAPABILITY_MODEL_SNAPSHOT,
+    ):
+        if not path.is_file():
+            continue
         manifest_files[str(path.relative_to(ROOT))] = {
             "sha256": file_sha256(path),
             "bytes": path.stat().st_size,
@@ -325,14 +444,16 @@ def main() -> None:
         "object_id": OBJECT_ID,
         "status": readiness["status"],
         "files": manifest_files,
-        "scientific_outcomes_observed": 0,
-        "provider_calls": 0,
+        "scientific_outcomes_observed": readiness["f0_outcomes_observed"],
+        "provider_calls": readiness["capability_provider_request_total"],
         "gpu_runs": 0,
         "authority": {
+            "m1_mock_qualification": not readiness["m1_runner_qualification_pass"],
             "capability_calibration": (
-                readiness["status"] == "CAPABILITY_CALIBRATION_READY_NOT_EXECUTED"
+                readiness["m1_runner_qualification_pass"]
+                and readiness["capability_result_status"] is None
             ),
-            "f0": False,
+            "f0": readiness["f0_authorized"],
             "toolsandbox": False,
             "appworld_ul": False,
             "p1": False,
@@ -348,11 +469,14 @@ def main() -> None:
         "status": readiness["status"],
         "capability_family_count": len(CAPABILITY_FAMILIES),
         "f0_family_count": len(F0_FAMILIES),
-        "f0_episode_envelope": (
+        "capability_episode_cap": 8,
+        "f0_source_episode_cap": 8,
+        "f0_probe_episode_envelope": (
             len(F0_FAMILIES) * len(ARMS) * len(BRANCHES) * len(SEEDS)
         ),
-        "scientific_outcomes_observed": 0,
-        "provider_calls": 0,
+        "agent_episode_total_max": 160,
+        "scientific_outcomes_observed": readiness["f0_outcomes_observed"],
+        "provider_calls": readiness["capability_provider_request_total"],
     }, sort_keys=True))
 
 

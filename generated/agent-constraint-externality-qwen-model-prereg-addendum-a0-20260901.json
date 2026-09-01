@@ -1,0 +1,96 @@
+{
+  "addendum_id": "AGENT-CONSTRAINT-EXTERNALITY-QWEN-MODEL-PREREG-ADDENDUM-A0",
+  "authority": {
+    "appworld_ul": false,
+    "capability_calibration": false,
+    "f0": false,
+    "m1_mock_qualification": true,
+    "method": false,
+    "p1": false,
+    "paper_claim": false,
+    "real_provider_call": false,
+    "second_model": false,
+    "toolsandbox": false
+  },
+  "budget_correction": {
+    "agent_episode_total_max": 160,
+    "capability_agent_episodes": 8,
+    "count_separately": [
+      "agent_episode_count",
+      "agent_model_request_count",
+      "updater_model_request_count",
+      "provider_request_total"
+    ],
+    "f0_probe_agent_episode_max": 144,
+    "f0_probe_agent_episode_min": 108,
+    "f0_source_agent_episodes": 8,
+    "probe_144_is_total_f0_cap": false,
+    "repair_generation_provider_request_cap": 8
+  },
+  "capability_dispositions": {
+    "automatic_fallback": false,
+    "ceiling": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+    "floor": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
+    "pass": "FREEZE_QWEN_BACKBONE_AND_ENTER_F0",
+    "provider_or_tool_incompatibility": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP"
+  },
+  "change_boundary": {
+    "f0_executed_at_switch": false,
+    "outcome_driven_change": false,
+    "scientific_outcomes_at_switch": 0,
+    "scientific_provider_calls_at_switch": 0,
+    "validated_counters": {
+      "compiler_provider_calls": 0,
+      "compiler_scientific_outcomes": 0,
+      "prior_capability_provider_calls": 0,
+      "prior_capability_scientific_outcomes": 0,
+      "prior_f0_outcomes": 0
+    }
+  },
+  "forbidden_selection_reason": "EXPECTED_TO_PRODUCE_MORE_EXTERNALITY",
+  "generated_at": "2026-09-01T15:30:00+08:00",
+  "gpu_runs": 0,
+  "live_parent_sha": "da3ebe8fc66503b28183853e251fa291bfb8d118",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "primary_candidate": {
+    "alias_policy": {
+      "allowed_only_if_snapshot_unavailable": true,
+      "backend_revision_drift_disposition": "STOP_AND_ADJUDICATE",
+      "persist_capability_feature_snapshot": true,
+      "persist_provider_base_url": true,
+      "persist_request_model_id": true,
+      "persist_resolved_model_metadata": true
+    },
+    "allowed_alias": "qwen3.7-flash",
+    "candidate_count": 1,
+    "fallback_candidates": [],
+    "requested_model": "qwen3.7-flash-2026-07-15",
+    "snapshot_preferred": true
+  },
+  "provider_calls": 0,
+  "provider_contract": {
+    "base_url": "https://api.aa.com.cn/api/v1",
+    "custom_function_tools_supported": true,
+    "models_endpoint": "https://api.aa.com.cn/api/v1/models",
+    "official_documentation": "https://api-doc.aa.com.cn/zh/docs/api/ai-model/text/post-api-v1-responses",
+    "provider": "TYPICAL_TOKEN_OPENAI_RESPONSES_API",
+    "response_model_field_is_resolved_identity_source": true,
+    "responses_endpoint": "https://api.aa.com.cn/api/v1/responses",
+    "secrets_in_artifacts": false
+  },
+  "schema_version": "agent-constraint-externality-model-prereg-addendum-v1",
+  "scientific_outcomes_observed": 0,
+  "selection_reasons": [
+    "FUNCTION_CALLING_SUPPORT",
+    "AGENT_AND_TOOL_USE_SUITABILITY",
+    "LOW_INFERENCE_COST",
+    "SUITABLE_FIRST_STAGE_NON_FRONTIER_CAPABILITY_TIER",
+    "STRONGER_SAME_FAMILY_VALIDATION_CAN_BE_ADDED_LATER"
+  ],
+  "status": "QWEN_MODEL_PREREG_ADDENDUM_A0_PASS",
+  "supersedes_candidate_order": [
+    "doubao-seed-2.0-lite",
+    "deepseek-v4-flash",
+    "deepseek-v4-pro"
+  ]
+}

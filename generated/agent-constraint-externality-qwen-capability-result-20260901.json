@@ -1,0 +1,82 @@
+{
+  "adjudication_mode": "POST_OUTCOME_READ_ONLY",
+  "agent_episode_count": 1,
+  "application_retry": false,
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "method": false,
+    "p1": false,
+    "paper_claim": false,
+    "second_model": false,
+    "toolsandbox": false
+  },
+  "catalog_provider_request_count": 1,
+  "content_sha256": "e4907ef374c2a68d0b2b93fd6cfe5f86e1d9cae1a60f1895b536e4a97a5dd66e",
+  "f0_backbone": null,
+  "gate": {
+    "agent_model_request_count": 5,
+    "evaluator_failure_evidence": {
+      "classification": "RUNNER_EVALUATOR_INTERFACE_FAILURE",
+      "evaluator_output_db_bytes": 0,
+      "evaluator_output_db_path": "runtimes/agent-constraint-externality-capability-20260901/worlds/capability_qwen3.7-flash_ACE-FG-05_1/experiments/outputs/ace-capability/tasks/acecapacefg05r1_1/dbs/gmail.db",
+      "expected_table": "emails",
+      "failure_message_matches_expected_table": true,
+      "inference": "The source task database contains the required table, while the database handed to evaluation is an empty file.",
+      "source_db_bytes": 62550016,
+      "source_db_path": "runtimes/agent-constraint-externality-capability-20260901/worlds/capability_qwen3.7-flash_ACE-FG-05_1/data/tasks/acecapacefg05r1_1/dbs/gmail.db",
+      "source_db_table_count": 25,
+      "source_has_expected_table": true
+    },
+    "failure_classes": [
+      "OperationalError"
+    ],
+    "failure_classification": "RUNNER_EVALUATOR_INTERFACE_FAILURE",
+    "failure_messages": [
+      "no such table: emails"
+    ],
+    "failure_units": [
+      "capability:qwen3.7-flash|ACE-FG-05|1"
+    ],
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "resolved_model_identities": [
+      "qwen3.7-flash"
+    ],
+    "scientific_outcome_available": false,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP"
+  },
+  "ledger_sha256": "9120ee1d20e3bed3b93d577adc3458d1bfcdce442e5a622eeb29930bc11f89f7",
+  "measurement_only_recovery": false,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "partial_scientific_effects_reported": false,
+  "provider_calls_initiated_by_adjudicator": 0,
+  "provider_max_retries": 0,
+  "provider_request_total": 6,
+  "provider_side_deterministic_replay_guaranteed": false,
+  "provider_snapshot": {
+    "allowed_alias": "qwen3.7-flash",
+    "allowed_alias_available": true,
+    "base_url": "https://api.aa.com.cn/api/v1",
+    "catalog_model_count": 200,
+    "catalog_provider_request_count": 1,
+    "catalog_response_sha256": "f62b00473aeb1a19b0a17a7fc20160595003f2607b641e14339fc5e86fa39353",
+    "max_retries": 0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "provider": "TYPICAL_TOKEN_OPENAI_RESPONSES_API",
+    "requested_model": "qwen3.7-flash-2026-07-15",
+    "requested_model_available": false,
+    "resolved_request_model": "qwen3.7-flash",
+    "schema_version": "ace-qwen-provider-model-snapshot-v1",
+    "secrets_persisted": false,
+    "snapshot_unavailable": true
+  },
+  "replacement": false,
+  "scheduled_agent_episode_count": 8,
+  "schema_version": "ace-qwen-capability-failure-adjudication-v1",
+  "scientific_outcomes_observed": 0,
+  "scientific_unit_replayed": false,
+  "status": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP",
+  "temperature": 0,
+  "terminal_agent_episode_count": 1,
+  "updater_model_request_count": 0
+}

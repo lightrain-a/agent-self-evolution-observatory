@@ -1,0 +1,18 @@
+{
+  "authority_from_proposal_branch": false,
+  "canonical_main_lineage_authority_eligible": true,
+  "compiler_head": "5acc6ce1365dbbbe34347ba35d2a572a81dd7d54",
+  "compiler_source_git_sha": "5acc6ce1365dbbbe34347ba35d2a572a81dd7d54",
+  "compiler_source_git_tree": "735e5a092205c0e9876f7faccb04b8f9b52d9a4b",
+  "config_sha256": "8930293e420f008dba8f57af7e9504d2a5104b7ad01257abd6096e1c1adea075",
+  "continuation_branch": "research/relational-topology-stage-3d-training-qualification-20260901",
+  "dataset_revision": "LICENSE_CONFIRMED_DATA_NOT_MATERIALIZED",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "head_is_in_origin_main_history": true,
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "origin_main_at_branch_creation": "da3ebe8fc66503b28183853e251fa291bfb8d118",
+  "origin_main_at_compilation": "5acc6ce1365dbbbe34347ba35d2a572a81dd7d54",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "prior_child_sha": "aded989e4917e57466cddb75ac395fff2a590e52",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-license-confirmed-v2"
+}

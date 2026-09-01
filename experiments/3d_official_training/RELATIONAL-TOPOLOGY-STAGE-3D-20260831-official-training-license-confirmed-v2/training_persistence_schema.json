@@ -1,0 +1,33 @@
+{
+  "compiler_source_git_sha": "5acc6ce1365dbbbe34347ba35d2a572a81dd7d54",
+  "compiler_source_git_tree": "735e5a092205c0e9876f7faccb04b8f9b52d9a4b",
+  "config_sha256": "8930293e420f008dba8f57af7e9504d2a5104b7ad01257abd6096e1c1adea075",
+  "dataset_revision": "LICENSE_CONFIRMED_DATA_NOT_MATERIALIZED",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "incremental_persistence_required": true,
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "required_paths": [
+    "manifest.json",
+    "authority.json",
+    "environment.json",
+    "git_state.json",
+    "dataset_manifest.json",
+    "corpus_manifest.json",
+    "model_manifest.json",
+    "config.yaml",
+    "training_events.jsonl",
+    "loss.jsonl",
+    "checkpoints/",
+    "checkpoint_manifest.jsonl",
+    "heartbeat.json",
+    "failures.jsonl",
+    "stdout.log",
+    "stderr.log",
+    "final_training_summary.json"
+  ],
+  "root_template": "experiments/3d_official_training/<run_id>/",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-license-confirmed-v2",
+  "status": "SCHEMA_FROZEN_NO_TRAINING_RUN",
+  "summary_only_persistence_forbidden": true
+}

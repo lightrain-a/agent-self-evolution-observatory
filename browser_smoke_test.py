@@ -745,12 +745,17 @@ def main() -> None:
               evolution: document.querySelectorAll('#paper-evolution .cpp-evolution article').length,
               origin: document.querySelectorAll('#problem-origin .cpp-origin-grid article').length,
               registry: document.querySelectorAll('#paper-state').length,
+              download: document.querySelector('.cpp-hero .cpp-download-primary')?.getAttribute('href')||'',
+              deepDiveClosed: !!document.querySelector('#research-archive:not([open])'),
               back: [...document.querySelectorAll('a')].some(a=>a.getAttribute('href')==='selected-paper.html'),
               overflow: document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
               text: document.body.textContent||''
             };""")
-            require(paper_view["quick"] == 1 and paper_view["quickLabel"] == "速览版" and paper_view["otherPaperCards"] == 0 and paper_view["pager"] == 0 and paper_view["modelCards"] >= 2 and paper_view["dataCards"] >= 2 and paper_view["design"] == 1 and paper_view["proofCards"] >= 3 and paper_view["evolution"] >= 6 and paper_view["back"] and not paper_view["overflow"], f"single-paper reader contract failed for {page}: {paper_view}")
+            expected_quick_label = "0 · 先看懂问题" if page == "/paper-e1.html" else "速览版"
+            require(paper_view["quick"] == 1 and paper_view["quickLabel"] == expected_quick_label and paper_view["otherPaperCards"] == 0 and paper_view["pager"] == 0 and paper_view["modelCards"] >= 2 and paper_view["dataCards"] >= 2 and paper_view["design"] == 1 and paper_view["proofCards"] >= 3 and paper_view["evolution"] >= 6 and paper_view["back"] and not paper_view["overflow"], f"single-paper reader contract failed for {page}: {paper_view}")
             require((paper_view["origin"] >= 3) is formal_story and (paper_view["registry"] == 1) is formal_story, f"formal-story/PaperRegistry migration contract failed for {page}: {paper_view}")
+            if page == "/paper-e1.html":
+                require(paper_view["download"] == "downloads/E1-STRI.pdf" and paper_view["deepDiveClosed"], f"E1 beginner-first contract requires the PDF action in the hero and the technical dossier closed by default: {paper_view}")
             require("讲给小白听" not in paper_view["text"] and all(marker in paper_view["text"] for marker in markers), f"single-paper content markers missing for {page}: markers={markers}")
 
         navigate("/experiments.html", 4)

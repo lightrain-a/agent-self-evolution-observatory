@@ -36,9 +36,14 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
             self.assertEqual(
                 self.data[name]["scientific_outcomes_observed"], 0
             )
-            self.assertEqual(self.data[name]["provider_calls"], 0)
             self.assertEqual(self.data[name]["gpu_runs"], 0)
+        self.assertEqual(self.data["capability"]["provider_calls"], 0)
+        self.assertEqual(self.data["f0"]["provider_calls"], 0)
         readiness = self.data["readiness"]
+        self.assertEqual(
+            self.data["manifest"]["provider_calls"],
+            readiness["capability_provider_request_total"],
+        )
         self.assertFalse(readiness["f0_executed"])
         self.assertEqual(readiness["f0_outcomes_observed"], 0)
         self.assertFalse(readiness["p1_authorized"])
@@ -56,12 +61,15 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         capability = self.data["capability"]
         self.assertEqual(
             capability["model_selection_order"],
-            ["doubao-seed-2.0-lite", "deepseek-v4-flash", "deepseek-v4-pro"],
+            ["qwen3.7-flash-2026-07-15"],
         )
+        self.assertEqual(capability["maximum_candidate_count"], 1)
+        self.assertEqual(capability["maximum_episode_envelope"], 8)
         self.assertEqual(
             capability["selection_rule"],
-            "FIRST_CANDIDATE_MEETING_ALL_FLOOR_AND_CEILING_RULES",
+            "ONLY_QWEN_CANDIDATE_MUST_QUALIFY_OR_STOP",
         )
+        self.assertFalse(capability["automatic_fallback"])
         self.assertEqual(capability["execution"]["provider_max_retries"], 0)
         self.assertFalse(capability["execution"]["application_retry"])
         self.assertTrue(capability["execution"]["no_episode_replacement"])
@@ -73,6 +81,13 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(probe["branches"], ["NO_UPDATE", "UPDATE"])
         self.assertEqual(probe["seeds"], [1201, 1202, 1203])
         self.assertEqual(probe["planned_episode_envelope"], 144)
+        budgets = f0["budgets"]
+        self.assertEqual(budgets["capability_agent_episodes"], 8)
+        self.assertEqual(budgets["f0_source_agent_episodes"], 8)
+        self.assertEqual(budgets["f0_probe_agent_episode_min"], 108)
+        self.assertEqual(budgets["f0_probe_agent_episode_max"], 144)
+        self.assertEqual(budgets["agent_episode_total_max"], 160)
+        self.assertEqual(budgets["repair_generation_provider_request_cap"], 8)
         exactly_once = f0["exactly_once"]
         self.assertEqual(exactly_once["provider_max_retries"], 0)
         self.assertFalse(exactly_once["application_retry"])
@@ -89,7 +104,10 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertIn("F0_EFFECT", forbidden)
         self.assertFalse(source["human_edit_after_generation"])
         self.assertIn("sha256", source["freeze_fields"])
-        self.assertIn("exact_bytes", source["freeze_fields"])
+        self.assertIn("raw_bytes", source["freeze_fields"])
+        self.assertIn("normalized_bytes", source["freeze_fields"])
+        self.assertIn("word_count", source["freeze_fields"])
+        self.assertIn("source_trajectory_sha256", source["freeze_fields"])
         self.assertEqual(source["minimum_eligible_repair_families"], 6)
 
     def test_post_f0_expansion_remains_closed(self) -> None:
@@ -111,17 +129,45 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         serialized = json.dumps(readiness, sort_keys=True)
         self.assertNotIn("Bearer ", serialized)
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
-        self.assertIn(
-            readiness["status"],
-            {
-                "CAPABILITY_CALIBRATION_BLOCKED_PROVIDER_NOT_CONFIGURED",
-                "CAPABILITY_CALIBRATION_READY_NOT_EXECUTED",
-            },
-        )
+        self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
+        self.assertTrue(readiness["m1_runner_qualification_pass"])
+        if readiness.get("capability_result_status"):
+            self.assertEqual(
+                readiness["status"], readiness["capability_result_status"]
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "STOP_AWAIT_HUMAN_ADJUDICATION",
+            )
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness["provider_credential_present"]:
+            self.assertEqual(
+                readiness["status"], "CAPABILITY_CALIBRATION_READY"
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "RUN_QWEN_CAPABILITY_CALIBRATION",
+            )
+        else:
+            self.assertEqual(
+                readiness["status"], "QWEN_PROVIDER_CONFIGURATION_REQUIRED"
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "CONFIGURE_QWEN_PROVIDER_CREDENTIAL",
+            )
 
     def test_manifest_hashes_are_self_consistent(self) -> None:
         manifest = self.data["manifest"]
-        self.assertFalse(manifest["authority"]["f0"])
+        self.assertFalse(manifest["authority"]["m1_mock_qualification"])
+        if self.data["readiness"].get("capability_result_status"):
+            self.assertFalse(manifest["authority"]["capability_calibration"])
+        else:
+            self.assertTrue(manifest["authority"]["capability_calibration"])
+        self.assertEqual(
+            manifest["authority"]["f0"],
+            self.data["readiness"].get("f0_authorized", False),
+        )
         self.assertFalse(manifest["authority"]["p1"])
         for relative, metadata in manifest["files"].items():
             path = ROOT / relative
