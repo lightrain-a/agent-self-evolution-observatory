@@ -90,6 +90,8 @@ def contract_payload() -> dict[str, Any]:
             "UNQUALIFIED": "fewer than 20 valid exactly-once receipts",
         },
         "scientific_boundary": {
+            "task_split_authorized": False,
+            "behavioral_runtime_qualification_authorized": False,
             "source_generation_authorized": False,
             "confirmatory_execution_authorized": False,
         },
@@ -257,9 +259,9 @@ def execute(output: Path = OUTPUT) -> dict[str, Any]:
     if not qualified:
         backend, decision = "UNQUALIFIED", "Q1_BACKEND_STOCHASTICITY_QUALIFICATION_HOLD"
     elif len(response_hashes) == len(action_hashes) == 1:
-        backend, decision = "DETERMINISTIC", "Q1_QWEN_BACKEND_DETERMINISTIC_SOURCE_GATE_OPEN"
+        backend, decision = "DETERMINISTIC", "Q1_QWEN_BACKEND_DETERMINISTIC_TASK_SPLIT_GATE_OPEN"
     else:
-        backend, decision = "STOCHASTIC", "Q1_QWEN_BACKEND_STOCHASTIC_SOURCE_GATE_OPEN"
+        backend, decision = "STOCHASTIC", "Q1_QWEN_BACKEND_STOCHASTIC_TASK_SPLIT_GATE_OPEN"
     payload = {
         "schema_version": 1, "experiment_id": EXPERIMENT_ID,
         "stage": "Q1_QWEN_BACKEND_STOCHASTICITY_QUALIFICATION",
@@ -277,7 +279,9 @@ def execute(output: Path = OUTPUT) -> dict[str, Any]:
         "attempt_counts": [r["attempt_count"] for r in receipts],
         "retry_count": 0, "replacement_count": 0, "receipts": receipts,
         "scientific_boundary": {"benchmark_calls_made": 0,
-            "source_generation_authorized": qualified,
+            "task_split_authorized": qualified,
+            "behavioral_runtime_qualification_authorized": False,
+            "source_generation_authorized": False,
             "confirmatory_execution_authorized": False},
         "credential_material_present": False,
     }
