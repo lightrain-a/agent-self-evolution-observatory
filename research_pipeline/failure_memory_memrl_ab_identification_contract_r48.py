@@ -25,6 +25,9 @@ R43 = PROJECT_ROOT / "generated/d2-failure-memory-provenance-r43-memrl-g8-execut
 MIGRATION = PROJECT_ROOT / "generated/d2-failure-memory-provenance-r45m1-host-migration-execution-manifest-v2.json"
 AUTH = PROJECT_ROOT / "generated/d2-failure-memory-provenance-r45m1-replacement-execution-authority-v2.json"
 ADAPTER = PROJECT_ROOT / "research_pipeline/failure_memory_memrl_exact_information_adapter_r39.py"
+R46M2 = PROJECT_ROOT / "research_pipeline/failure_memory_memrl_source_qualification_r46m2.py"
+R47M2 = PROJECT_ROOT / "research_pipeline/failure_memory_memrl_utilization_r47m2.py"
+R48_RUNNER = PROJECT_ROOT / "research_pipeline/failure_memory_memrl_ab_identification_r48.py"
 PRIMARY_AUDIT = PROJECT_ROOT / "generated/d2-failure-memory-provenance-r45m1-primary-preimplementation-audit-20260901.json"
 HIST_AUDIT = PROJECT_ROOT / "generated/d2-failure-memory-provenance-r45m1-primary-historical-controller-audit-addendum-20260901.json"
 OUT = PROJECT_ROOT / "generated/d2-failure-memory-provenance-r48-ab-identification-operationalization-contract.json"
@@ -108,6 +111,9 @@ def build() -> dict[str, Any]:
             "replacement_authority_sha256": _sha(AUTH),
             "replacement_authority_receipt_sha256": auth.get("receipt_sha256"),
             "R39_exact_information_adapter_sha256": _sha(ADAPTER),
+            "R46M2_strict_source_qualification_sha256": _sha(R46M2),
+            "R47M2_strict_utilization_sha256": _sha(R47M2),
+            "R48_AB_runner_sha256": _sha(R48_RUNNER),
             "primary_preimplementation_audit_sha256": _sha(PRIMARY_AUDIT),
             "historical_controller_audit_sha256": _sha(HIST_AUDIT),
         },

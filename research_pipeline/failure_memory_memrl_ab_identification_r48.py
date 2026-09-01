@@ -24,10 +24,12 @@ from typing import Any
 try:
     from . import failure_memory_memrl_utilization_r47 as r47base
     from . import failure_memory_memrl_utilization_r47m2 as r47m2
+    from . import failure_memory_memrl_source_qualification_r46m2 as r46m2
     from .failure_memory_memrl_exact_information_adapter_r39 import build_memrl_exact_information_pair
 except ImportError:
     import failure_memory_memrl_utilization_r47 as r47base  # type: ignore
     import failure_memory_memrl_utilization_r47m2 as r47m2  # type: ignore
+    import failure_memory_memrl_source_qualification_r46m2 as r46m2  # type: ignore
     from failure_memory_memrl_exact_information_adapter_r39 import build_memrl_exact_information_pair  # type: ignore
 
 PAPER_ID = "D2-PAPER-FAILURE-MEMORY-PROVENANCE"
@@ -131,6 +133,10 @@ def preflight(manifest: dict[str,Any], parent_auth: dict[str,Any], contract: dic
     if contract.get("status")!=CONTRACT_STATUS or authority.get("status")!=AUTH_STATUS: raise RuntimeError("R48-contract-authority-status-drift")
     if not all(valid(x) for x in [manifest,parent_auth,contract,authority,qual,frozen,source_receipt,util]): raise RuntimeError("R48-receipt-hash-drift")
     if ((authority.get("bindings") or {}).get("contract_receipt_sha256"))!=contract.get("receipt_sha256"): raise RuntimeError("R48-authority-contract-binding-drift")
+    bindings=contract.get("bindings") or {}
+    if sha(pathlib.Path(__file__).resolve())!=bindings.get("R48_AB_runner_sha256"): raise RuntimeError("R48-runner-code-drift")
+    if sha(pathlib.Path(str(r46m2.__file__)).resolve())!=bindings.get("R46M2_strict_source_qualification_sha256"): raise RuntimeError("R46M2-code-drift")
+    if sha(pathlib.Path(str(r47m2.__file__)).resolve())!=bindings.get("R47M2_strict_utilization_sha256"): raise RuntimeError("R47M2-code-drift")
     if ((authority.get("bindings") or {}).get("parent_authority_receipt_sha256"))!=parent_auth.get("receipt_sha256"): raise RuntimeError("R48-parent-authority-binding-drift")
     if ((authority.get("authority") or {}).get("A_B_execution_conditionally")) is not True or ((authority.get("authority") or {}).get("C_D_execution")) is not False: raise RuntimeError("R48-authority-scope-drift")
     r47m2.preflight(manifest,parent_auth,qual,frozen,source_receipt)
