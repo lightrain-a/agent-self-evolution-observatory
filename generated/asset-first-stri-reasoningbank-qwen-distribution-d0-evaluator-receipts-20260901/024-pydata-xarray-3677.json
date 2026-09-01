@@ -1,0 +1,317 @@
+{
+  "behavioral_outcomes_observed": false,
+  "checks": {
+    "all_fail_to_pass": true,
+    "all_pass_to_pass": true,
+    "architecture_amd64": true,
+    "base_commit_exact": true,
+    "container_cleanup_accepted": true,
+    "eval_script_available": true,
+    "evaluator_cleanup_diff_exact": true,
+    "evaluator_not_timed_out": true,
+    "evaluator_returncode_zero": true,
+    "gold_patch_applied": true,
+    "gold_patch_sha_exact": true,
+    "gold_state_observable_before_eval": true,
+    "image_digest_exact": true,
+    "official_parser_family_supported": true,
+    "post_eval_state_observable": true,
+    "status_map_nonempty": true,
+    "task_identity_exact": true,
+    "test_output_markers_valid": true,
+    "test_patch_available": true
+  },
+  "container_cleanup_receipt": {
+    "accepted": true,
+    "cleanup_invoked": true,
+    "container_name": "e1-rb-qwen-d0-024-pydata__xarray-3677-21c45918",
+    "reconciliation_receipt_finalized_before_cleanup": true,
+    "returncode": 0,
+    "timed_out": false
+  },
+  "created_at_utc": "2026-09-01T08:17:45+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "finished_at_utc": "2026-09-01T08:17:59+00:00",
+  "gold_patch_model_visible": false,
+  "instance_id": "pydata__xarray-3677",
+  "model_calls": 0,
+  "ordinal": 24,
+  "payload_sha256": "b74c35c5c1ce66aa0d94162cefe766371a4d769ec344111cc699b1c5a863f080",
+  "provider_calls": 0,
+  "qualification_attempt_count": 1,
+  "qualification_status": "QUALIFIED",
+  "qualified": true,
+  "repo": "pydata/xarray",
+  "repo_hash_rank": 3,
+  "runtime_receipt": {
+    "base_commit_receipt": {
+      "expected_base_commit": "ef6e6a7b86f8479b9a1fecf15ad5b88a2326b31e",
+      "finished_at_utc": "2026-09-01T08:17:49+00:00",
+      "git_clean_invoked": false,
+      "normalization": {
+        "finished_at_utc": "2026-09-01T08:17:49+00:00",
+        "output": "HEAD is now at ef6e6a7b raise an error when renaming dimensions to existing names (#3645)\n",
+        "returncode": 0,
+        "started_at_utc": "2026-09-01T08:17:49+00:00",
+        "timed_out": false
+      },
+      "normalization_action": "git reset --hard <frozen expected base commit>",
+      "observed_head": "ef6e6a7b86f8479b9a1fecf15ad5b88a2326b31e",
+      "output": "ef6e6a7b86f8479b9a1fecf15ad5b88a2326b31e\n",
+      "pre_normalization": {
+        "finished_at_utc": "2026-09-01T08:17:49+00:00",
+        "output": "deda502c985dd986597ace798a2340cf9e8381f3\n",
+        "returncode": 0,
+        "started_at_utc": "2026-09-01T08:17:45+00:00",
+        "timed_out": false
+      },
+      "returncode": 0,
+      "rule": "exact_base_after_preregistered_hard_reset",
+      "started_at_utc": "2026-09-01T08:17:49+00:00",
+      "timed_out": false
+    },
+    "image_inspect": {
+      "finished_at_utc": "2026-09-01T08:17:45+00:00",
+      "output": "[\n    {\n        \"Id\": \"sha256:9565b12e06238c704b0f287e66ba97dd85e039367c3868f5eb7eb58119f3d8ed\",\n        \"RepoTags\": [\n            \"docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-3677:qwend0-97f5f793df1b\"\n        ],\n        \"RepoDigests\": [\n            \"docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-3677@sha256:97f5f793df1b6df512d8be87cd9c3180c407f858764f0af3d9d98934deca24a9\"\n        ],\n        \"Comment\": \"buildkit.dockerfile.v0\",\n        \"Created\": \"2026-08-13T04:34:16.058222418Z\",\n        \"Config\": {\n            \"Env\": [\n                \"PATH=/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"TZ=Etc/UTC\"\n            ],\n            \"Cmd\": [\n                \"/bin/bash\"\n            ],\n            \"WorkingDir\": \"/testbed/\",\n            \"Labels\": {\n                \"org.opencontainers.image.version\": \"22.04\"\n            }\n        },\n        \"Architecture\": \"amd64\",\n        \"Os\": \"linux\",\n        \"Size\": 5098973684,\n        \"GraphDriver\": {\n            \"Data\": {\n                \"LowerDir\": \"/data/wyt/rootless-docker24/overlay2/deed9d0396ef3677e0013a00e574c9ff2edc1e2a461eb9c0a518f1455fe2cd26/diff:/data/wyt/rootless-docker24/overlay2/bac0b2533d287bbf800dbdbeb0b71927da06354ff56e8a023b5b7983ada9c0d1/diff:/data/wyt/rootless-docker24/overlay2/182b44d1eb007356a798a44e3c97691dd270d75a2f2e72ae7895671e003a1ec2/diff:/data/wyt/rootless-docker24/overlay2/c1eff5144d13cb538e520720810ade4d8aad8de132a88313e0b4108f90013fb6/diff:/data/wyt/rootless-docker24/overlay2/d627d60d80a3d87f0c651b9b2777253de9107e2c70590faa82937d321d971b1b/diff:/data/wyt/rootless-docker24/overlay2/ed45c3c1f5428b3003a2282f174b40662eff5aeccdff5a02ab215f696730de87/diff:/data/wyt/rootless-docker24/overlay2/d590be0134b931d943d7818ff6595f85ab23d5e948d4ba2c73f799ac9f40ffab/diff:/data/wyt/rootless-docker24/overlay2/387a15feaf4f2ddd79b8a667e40a54ad3f9935ed6d89f510e68e04a1c7d12fea/diff:/data/wyt/rootless-docker24/overlay2/4bb6aec75beee95ec35e955925b0372f18b537015d2d8c730f87ee9bd81ae1b9/diff\",\n                \"MergedDir\": \"/data/wyt/rootless-docker24/overlay2/834ae631f4daa042087a60daaa77872c29082c242544ca2a304626901e2178c5/merged\",\n                \"UpperDir\": \"/data/wyt/rootless-docker24/overlay2/834ae631f4daa042087a60daaa77872c29082c242544ca2a304626901e2178c5/diff\",\n                \"WorkDir\": \"/data/wyt/rootless-docker24/overlay2/834ae631f4daa042087a60daaa77872c29082c242544ca2a304626901e2178c5/work\"\n            },\n            \"Name\": \"overlay2\"\n        },\n        \"RootFS\": {\n            \"Type\": \"layers\",\n            \"Layers\": [\n                \"sha256:beb59027b96ddbf30ac9c80b527668fe7011f4f553fe83f5e59199e9a84fb5ca\",\n                \"sha256:24df650e8ccc41451cf4f7113e09420f7ec00ca9ae41e8be09c60bc467cdf4fe\",\n                \"sha256:098cb03ec50e1bd1637b7db5e2696a4d1dc3f1c3811adbbe444f43f631f2e7fd\",\n                \"sha256:fc3a8fa12509a555b3cea8d1f7457c0837ab8360be78e7a380294e09f96fe2f2\",\n                \"sha256:a3540f5c375c231bc054e7472d0de5a6d8fe5c96b92948f7655914860647fb54\",\n                \"sha256:f3684f1a85d5159913e2c41a55a86947882302421241b14b57583633bfc31873\",\n                \"sha256:8eade9ed4d64b8463e511222b718a4ff55ce8276d3c763ed612262dc767ab7b5\",\n                \"sha256:50301944a012659250a3193008453fb5ac788e2314568c26dc5b6434304db8cb\",\n                \"sha256:370dc858e9e1abbf1d5b6caaf0d0f6ae637c58404c526a9633d93ca81be306f1\",\n                \"sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef\"\n            ]\n        },\n        \"Metadata\": {\n            \"LastTagTime\": \"0001-01-01T00:00:00Z\"\n        }\n    }\n]\n",
+      "returncode": 0,
+      "started_at_utc": "2026-09-01T08:17:45+00:00",
+      "timed_out": false
+    },
+    "q10_start_reconciliation": {
+      "acceptance_rule": "normal_client_acknowledgement_with_exact_post_start_state",
+      "accepted": true,
+      "client_output": "e1-rb-qwen-d0-024-pydata__xarray-3677-21c45918\n",
+      "client_returncode": 0,
+      "client_start_invocations": 1,
+      "client_timed_out": false,
+      "container_id": "1ce44dc5be802a6b0e0a6a210b2eda2374a74c14271bf586f9b636e68a4b75b0",
+      "container_name": "/e1-rb-qwen-d0-024-pydata__xarray-3677-21c45918",
+      "contract_sha256": "bc4781ce0188d899af3b1a491b51f30467e6c655c7f8d3074b919a043b2878bd",
+      "daemon_dead": false,
+      "daemon_pid": 2728252,
+      "daemon_restarting": false,
+      "daemon_running": true,
+      "daemon_status": "running",
+      "docker_inspect_invoked": true,
+      "docker_inspect_receipt": {
+        "output_sha256_recorded_elsewhere": false,
+        "returncode": 0,
+        "timed_out": false
+      },
+      "exact_identity_verified": true,
+      "exact_running_state_verified": true,
+      "expected_image": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-3677@sha256:97f5f793df1b6df512d8be87cd9c3180c407f858764f0af3d9d98934deca24a9",
+      "expected_image_digest": "sha256:97f5f793df1b6df512d8be87cd9c3180c407f858764f0af3d9d98934deca24a9",
+      "expected_pid_mode": "host",
+      "observed_cmd": [
+        "infinity"
+      ],
+      "observed_entrypoint": [
+        "sleep"
+      ],
+      "observed_image": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-3677@sha256:97f5f793df1b6df512d8be87cd9c3180c407f858764f0af3d9d98934deca24a9",
+      "observed_image_digests": [
+        "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-3677@sha256:97f5f793df1b6df512d8be87cd9c3180c407f858764f0af3d9d98934deca24a9"
+      ],
+      "observed_pid_mode": "host",
+      "receipt_finalized": true,
+      "reconciliation_invoked": false,
+      "restart_count": 0,
+      "second_start_invoked": false
+    },
+    "q6_create_acknowledgement": {
+      "accepted": true,
+      "client_create_invocations": 1,
+      "client_output": "1ce44dc5be802a6b0e0a6a210b2eda2374a74c14271bf586f9b636e68a4b75b0\n",
+      "client_returncode": 0,
+      "client_timed_out": false,
+      "container_id": "1ce44dc5be802a6b0e0a6a210b2eda2374a74c14271bf586f9b636e68a4b75b0",
+      "contract_sha256": "5779bd037811c6446610eb31b6b7f73f8110993f5ad0f112902523477ee0158b",
+      "normal_create_receipt_accepted": true,
+      "repair_invoked": false,
+      "second_create_invoked": false
+    }
+  },
+  "schema_version": 1,
+  "stage": "D0_ZERO_MODEL_EVALUATOR_QUALIFICATION",
+  "task_hash_rank_within_repo": 2,
+  "task_receipt": {
+    "FAIL_TO_PASS": {
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_dataarray": "PASSED"
+    },
+    "PASS_TO_PASS": {
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_alignment_error": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_arrays": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_dataarray_unnamed": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_datasets": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_dicts_dims": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_dicts_simple": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_error": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_no_conflicts_broadcast": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_no_conflicts_multi_var": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_no_conflicts_preserve_attrs": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_no_conflicts_single_var": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_wrong_input_error": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeInternals::test_broadcast_dimension_size": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_auto_align": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_broadcast_equals": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_compat": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_fill_value[2.0]": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_fill_value[2]": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_fill_value[fill_value0]": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_no_conflicts": "PASSED"
+    },
+    "base_commit": "ef6e6a7b86f8479b9a1fecf15ad5b88a2326b31e",
+    "eval_script_sha256": "7ca17a925cbd69ee23d1b6a08c826098ac4f8f05701013cf65e280f7369d9a31",
+    "eval_type": "pass_and_fail",
+    "evaluator_returncode": 0,
+    "evaluator_timed_out": false,
+    "gold_patch_content_persisted_in_receipt": false,
+    "gold_patch_sha256": "eb6bc3dcb4a4406f23abc17190cffd828ee58e1948e5621cc75abbd9fae142cd",
+    "image_manifest": {
+      "architecture": "amd64",
+      "config_digest": "sha256:9565b12e06238c704b0f287e66ba97dd85e039367c3868f5eb7eb58119f3d8ed",
+      "credential_material_present": false,
+      "download_repo": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3677",
+      "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-3677@sha256:97f5f793df1b6df512d8be87cd9c3180c407f858764f0af3d9d98934deca24a9",
+      "instance_id": "pydata__xarray-3677",
+      "layer_bytes": 2048100252,
+      "layer_count": 10,
+      "manifest_digest": "sha256:97f5f793df1b6df512d8be87cd9c3180c407f858764f0af3d9d98934deca24a9",
+      "manifest_file_sha256": "97f5f793df1b6df512d8be87cd9c3180c407f858764f0af3d9d98934deca24a9",
+      "manifest_media_type": "application/vnd.oci.image.manifest.v1+json",
+      "manifest_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-image-manifests-20260901/024-pydata-xarray-3677-amd64.json",
+      "manifest_size": 2200,
+      "mirror_base": "https://docker.1ms.run",
+      "mirror_repo": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-3677",
+      "os": "linux",
+      "payload_sha256": "3f95caa0177bfebec0273ccf58b90d70ac43b9482c74cc21c2386ad0393ed9bd"
+    },
+    "image_runtime": {
+      "all_blobs_sha256_verified": true,
+      "architecture": "amd64",
+      "architecture_amd64_visible": true,
+      "download_rows": [
+        {
+          "digest": "sha256:079027039e9d5fa1677dd462c60fd9240097243a87ff8a124fffbd16f909c266",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 420170791,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:08aa064d3dbc53056d73501b8384cb23334d6057ba86ef2123476984f1283e11",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 1376151759,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:0ddda5039dab8b2772d0f65857071df489438384259b8fabd0a7882656cf8ca0",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 164,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:39a945af8df2ad9343f141c82355d3f2c4b576d432eda34c460d630607462b60",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 29736517,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:407de719c2d3bde9e1d31481e451ac465ef6cdcf90f48b446b000dd907979233",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 21565,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 32,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:53752545c9b26814a5dadb2ac5d26e71ee039f17d72ee04fbc55e8e14a42966e",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 4313,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:5fe80537c176bb337d4f75e4dd3c590a3fcea9af4239e2710471d68407db4a5d",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 188,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:604273fc2166bf8991c34aba2d0a1635350238e1a8d390832c56640d59f09d0f",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 11718471,
+          "status": "downloaded-and-verified"
+        },
+        {
+          "digest": "sha256:9565b12e06238c704b0f287e66ba97dd85e039367c3868f5eb7eb58119f3d8ed",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 4214,
+          "status": "downloaded-and-verified"
+        },
+        {
+          "digest": "sha256:fd3f01088aa854fa99907bd918d9bc8146064c2f452aae3e07d61a6244ca9968",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 210296452,
+          "status": "verified-existing"
+        }
+      ],
+      "exact_digest_visible": true,
+      "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-3677@sha256:97f5f793df1b6df512d8be87cd9c3180c407f858764f0af3d9d98934deca24a9",
+      "import_archive_sha256": "425e7864c544a56ccc1be0b1b7bd980d7a5293df1b7e55fb2b0605a2b229ddfb",
+      "import_status": "imported-and-verified",
+      "manifest_digest": "sha256:97f5f793df1b6df512d8be87cd9c3180c407f858764f0af3d9d98934deca24a9",
+      "temporary_import_archive_removed": true
+    },
+    "image_tag": "swebench/sweb.eval.x86_64.pydata_1776_xarray-3677:latest",
+    "log_parser": "parse_log_xarray",
+    "model_visible_task_sha256": "3a71d0209d5d5dc6ccde6ff867c246bac0f33f3acbd8abbe7ebe597a6d7dd53c",
+    "post_evaluator_state_sha256": "ca77489c374bd1ec96c2875c6f206a2ec5fdbb60b8f17696574e2dbcd817ef8f",
+    "pre_evaluator_gold_state_sha256": "ca77489c374bd1ec96c2875c6f206a2ec5fdbb60b8f17696574e2dbcd817ef8f",
+    "raw_evaluator_log_model_visible": false,
+    "raw_evaluator_log_path": "/data/wyt/e1-stri-reasoningbank-runtime/qwen-distribution-v3/d0-evaluator-raw-logs/024-pydata-xarray-3677.log",
+    "raw_evaluator_log_sha256": "1df971b86df9c44f50db636b3aaff84bdb80671ac99fb3fc91391612af7fad7c",
+    "status_map": {
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_alignment_error": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_arrays": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_dataarray_unnamed": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_datasets": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_dicts_dims": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_dicts_simple": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_error": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_no_conflicts_broadcast": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_no_conflicts_multi_var": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_no_conflicts_preserve_attrs": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_no_conflicts_single_var": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeFunction::test_merge_wrong_input_error": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeInternals::test_broadcast_dimension_size": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_auto_align": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_broadcast_equals": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_compat": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_dataarray": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_fill_value[2.0]": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_fill_value[2]": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_fill_value[fill_value0]": "PASSED",
+      "xarray/tests/test_merge.py::TestMergeMethod::test_merge_no_conflicts": "PASSED"
+    },
+    "test_patch_available": true,
+    "test_patch_sha256": "378d54dd2ff404fe064e1dff3d69bd6cd2682f33b0e1202c664842b73d3372be"
+  }
+}

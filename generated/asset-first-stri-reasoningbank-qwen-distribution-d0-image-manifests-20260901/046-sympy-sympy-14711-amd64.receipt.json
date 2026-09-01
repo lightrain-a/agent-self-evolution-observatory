@@ -1,0 +1,19 @@
+{
+  "architecture": "amd64",
+  "config_digest": "sha256:bba8a91b93b45d122124ca49f4a9aea5efec3cf1877997b46f33433e1a9e5fd5",
+  "credential_material_present": false,
+  "download_repo": "swebench/sweb.eval.x86_64.sympy_1776_sympy-14711",
+  "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-14711@sha256:db09c7341f3cbf583f2d08dbf56f25673911c1b8d42599c19519411242fa9035",
+  "instance_id": "sympy__sympy-14711",
+  "layer_bytes": 1070312017,
+  "layer_count": 10,
+  "manifest_digest": "sha256:db09c7341f3cbf583f2d08dbf56f25673911c1b8d42599c19519411242fa9035",
+  "manifest_file_sha256": "db09c7341f3cbf583f2d08dbf56f25673911c1b8d42599c19519411242fa9035",
+  "manifest_media_type": "application/vnd.oci.image.manifest.v1+json",
+  "manifest_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-image-manifests-20260901/046-sympy-sympy-14711-amd64.json",
+  "manifest_size": 2199,
+  "mirror_base": "https://docker.1ms.run",
+  "mirror_repo": "docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-14711",
+  "os": "linux",
+  "payload_sha256": "7f195b15eb0dbc3bb40dd5b1054c55a49454ec57d95e51b6a654459664aaefad"
+}

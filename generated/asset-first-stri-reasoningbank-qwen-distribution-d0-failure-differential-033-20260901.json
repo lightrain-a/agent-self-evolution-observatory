@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "created_at_utc": "2026-09-01T09:08:52Z",
+  "stage": "D0_ZERO_MODEL_EVALUATOR_QUALIFICATION",
+  "hypothesis_or_qualification_goal": "Prospectively qualify fresh SWE-bench Verified task evaluator/runtime substrate without policy-model calls.",
+  "observed_failure": "For ordinal 33 (pydata__xarray-2905), Docker create acknowledgement/reconciliation failed after the fixed image was acquired. Independent inspection found no container, no running process, no task receipt, and no evaluator side effect.",
+  "failure_layer": "environment",
+  "root_cause": "Transient Docker client/daemon create acknowledgement failure before an inspectable container side effect.",
+  "scientific_belief_update": "none",
+  "repair_allowed": true,
+  "repair_scope": "Resume the same untouched ordinal 33. No container existed, no evaluator started, and no provider, policy-model, or behavioral call occurred.",
+  "prohibited_repairs": [
+    "mark task unqualified",
+    "replace task",
+    "change repo/task order",
+    "rerun any completed unit",
+    "change evaluator or image",
+    "count infrastructure acknowledgement as a task attempt"
+  ],
+  "artifact_refs": {
+    "live_index": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-index-20260901.json",
+    "image_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-image-manifests-20260901/033-pydata-xarray-2905-amd64.receipt.json",
+    "image_receipt_file_sha256": "8980938f603c5c450f442bf54f154fee4ae1d6460112e1e5c09f88c9aae424dd",
+    "container_match": null
+  },
+  "reconciliation": {
+    "process_pid_before_inspection": 0,
+    "runner_service_state": "inactive",
+    "ordinal_33_task_receipt_absent": true,
+    "matching_container_absent": true,
+    "matching_process_absent": true,
+    "evaluator_started": false,
+    "model_calls": 0,
+    "provider_calls": 0,
+    "behavioral_outcomes_observed": false,
+    "cleanup_required": false
+  },
+  "authorized_next_action": "resume same untouched qualification unit",
+  "credential_material_present": false,
+  "payload_sha256": "6224044f8f77eccf204fa099c822c53389c46ea65ca93706e226279091ec6eb6"
+}
