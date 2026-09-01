@@ -1,0 +1,12 @@
+{
+  "binder_calls": 0,
+  "created_at_utc": "2026-09-01T08:07:49+00:00",
+  "final_measurement_calls": 0,
+  "logical_attempts": 0,
+  "payload_sha256": "88e9134c7438e6472f66d9cb8fb84d0d5533bbc278100c4308a2b7f0c25d5a26",
+  "schema_version": 1,
+  "shadow_calls": 0,
+  "source_trajectory_calls": 0,
+  "status": "NOT_CREATED_DUE_T05_GATE",
+  "writer_calls": 0
+}

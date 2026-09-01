@@ -1,0 +1,760 @@
+{
+  "all_blobs_verified": true,
+  "created_at_utc": "2026-09-01T08:07:49+00:00",
+  "downloaded_bytes": 7931322804,
+  "missing_blob_bytes_at_freeze": 7931322804,
+  "missing_blob_count_at_freeze": 42,
+  "payload_sha256": "284f10d1347dc04f7fb21f8341477cecde42e2c87c930bae3e9a84ec79066912",
+  "plan_artifact": {
+    "path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05-images-20260901-v1/blob-plan.json",
+    "sha256": "7c7e5d3105e34f659fabb477d3e40c33ddff87354183c321de98d047ea5561a0"
+  },
+  "receipt_artifact": {
+    "path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05-images-20260901-v1/blob-receipt.json",
+    "sha256": "18346047eea25fa4549aad255e6bfa900baa5b6ce8d39115afdf3a06b96fd51c"
+  },
+  "reusable_blob_bytes": 1640552053,
+  "reusable_blob_count": 14,
+  "rows": [
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/00867a1047c88f4174cbab71c1a736f00215e76550417270b11dc385a4c22e5f",
+      "digest": "sha256:00867a1047c88f4174cbab71c1a736f00215e76550417270b11dc385a4c22e5f",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.django_1776_django-13449"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 402886014,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/04d36df979a3cc89ceba67df58abd56e975e3b43db54ef69e94ec1ff5223d020",
+      "digest": "sha256:04d36df979a3cc89ceba67df58abd56e975e3b43db54ef69e94ec1ff5223d020",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.psf_1776_requests-1766"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4215,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/079027039e9d5fa1677dd462c60fd9240097243a87ff8a124fffbd16f909c266",
+      "digest": "sha256:079027039e9d5fa1677dd462c60fd9240097243a87ff8a124fffbd16f909c266",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966",
+        "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496",
+        "swebench/sweb.eval.x86_64.psf_1776_requests-1766",
+        "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627",
+        "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593",
+        "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187",
+        "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599",
+        "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166",
+        "swebench/sweb.eval.x86_64.django_1776_django-13449",
+        "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 420170791,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/0d991d4152fdb6686ccda902060f3d7d53abcfb176e251e279a0fc96d027618f",
+      "digest": "sha256:0d991d4152fdb6686ccda902060f3d7d53abcfb176e251e279a0fc96d027618f",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 1492864152,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/0ddda5039dab8b2772d0f65857071df489438384259b8fabd0a7882656cf8ca0",
+      "digest": "sha256:0ddda5039dab8b2772d0f65857071df489438384259b8fabd0a7882656cf8ca0",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966",
+        "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496",
+        "swebench/sweb.eval.x86_64.psf_1776_requests-1766",
+        "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627",
+        "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593",
+        "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187",
+        "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599",
+        "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166",
+        "swebench/sweb.eval.x86_64.django_1776_django-13449",
+        "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 164,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/0f473daa8ac909e4cf92abb892d57b70888243c0854d530e9ef664d54c981bc1",
+      "digest": "sha256:0f473daa8ac909e4cf92abb892d57b70888243c0854d530e9ef664d54c981bc1",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 192,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/103089961f8ea64487a65e770df219d23965f38aa8a4545f88fdd3fc4bfda1ac",
+      "digest": "sha256:103089961f8ea64487a65e770df219d23965f38aa8a4545f88fdd3fc4bfda1ac",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 396287006,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/16929dc08de16e897aa25e5c14b97b8931747a50133465e1608058a833875260",
+      "digest": "sha256:16929dc08de16e897aa25e5c14b97b8931747a50133465e1608058a833875260",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 36395943,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/25213b80116815b0f1638bcde3c2fe4ecf4f4926f35090230077fe95186da12b",
+      "digest": "sha256:25213b80116815b0f1638bcde3c2fe4ecf4f4926f35090230077fe95186da12b",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 188,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/25874d3a0ce2f06adad2fec239a663e128f9c78b7e5bb15394673e16d3fb613d",
+      "digest": "sha256:25874d3a0ce2f06adad2fec239a663e128f9c78b7e5bb15394673e16d3fb613d",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 348115836,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/2bb3546bcf0ed6c2ec6b16ff29bab901d2489d845ae1d82df72a7334cf050875",
+      "digest": "sha256:2bb3546bcf0ed6c2ec6b16ff29bab901d2489d845ae1d82df72a7334cf050875",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 16112202,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/2c8aada2abc2881b787ad9f651fe144c3c85b2805d5ae988c83b96d6c3c01ece",
+      "digest": "sha256:2c8aada2abc2881b787ad9f651fe144c3c85b2805d5ae988c83b96d6c3c01ece",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 190,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/39a945af8df2ad9343f141c82355d3f2c4b576d432eda34c460d630607462b60",
+      "digest": "sha256:39a945af8df2ad9343f141c82355d3f2c4b576d432eda34c460d630607462b60",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966",
+        "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496",
+        "swebench/sweb.eval.x86_64.psf_1776_requests-1766",
+        "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627",
+        "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593",
+        "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187",
+        "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599",
+        "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166",
+        "swebench/sweb.eval.x86_64.django_1776_django-13449",
+        "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080",
+        "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 29736517,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/3d473160e8e53b487164b03e8f911a724fd2b97c2c7f5aeaf5ee89adfb8517e4",
+      "digest": "sha256:3d473160e8e53b487164b03e8f911a724fd2b97c2c7f5aeaf5ee89adfb8517e4",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 163,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/3db4a13ad5ec732e7a6f9efef5b72ca97fd9c857806dae1390ef569b60f284ba",
+      "digest": "sha256:3db4a13ad5ec732e7a6f9efef5b72ca97fd9c857806dae1390ef569b60f284ba",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 984754314,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/3eea90e6f9a6af8cd335677dbce9efb41fc0e72a98ba6396ad5e634adde4f889",
+      "digest": "sha256:3eea90e6f9a6af8cd335677dbce9efb41fc0e72a98ba6396ad5e634adde4f889",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 64927171,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/407de719c2d3bde9e1d31481e451ac465ef6cdcf90f48b446b000dd907979233",
+      "digest": "sha256:407de719c2d3bde9e1d31481e451ac465ef6cdcf90f48b446b000dd907979233",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966",
+        "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496",
+        "swebench/sweb.eval.x86_64.psf_1776_requests-1766",
+        "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627",
+        "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593",
+        "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187",
+        "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599",
+        "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166",
+        "swebench/sweb.eval.x86_64.django_1776_django-13449",
+        "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 21565,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/42f6d82dc84565ec2401ab485dba1963d47ba92b554229f30d3f9b5872432b6c",
+      "digest": "sha256:42f6d82dc84565ec2401ab485dba1963d47ba92b554229f30d3f9b5872432b6c",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 191,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/4843da9fd8a67f3b1ceb3ae1d719ed43e7bc822e035f18b51d8b0d49077598a0",
+      "digest": "sha256:4843da9fd8a67f3b1ceb3ae1d719ed43e7bc822e035f18b51d8b0d49077598a0",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.psf_1776_requests-1766"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 192,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/4a95afb95d9abaaaa1818e0da1cdff80f198c1ad322ef51e24a304e1b3dea194",
+      "digest": "sha256:4a95afb95d9abaaaa1818e0da1cdff80f198c1ad322ef51e24a304e1b3dea194",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 588620089,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966",
+        "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496",
+        "swebench/sweb.eval.x86_64.psf_1776_requests-1766",
+        "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627",
+        "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593",
+        "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187",
+        "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599",
+        "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166",
+        "swebench/sweb.eval.x86_64.django_1776_django-13449",
+        "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080",
+        "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 32,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/53752545c9b26814a5dadb2ac5d26e71ee039f17d72ee04fbc55e8e14a42966e",
+      "digest": "sha256:53752545c9b26814a5dadb2ac5d26e71ee039f17d72ee04fbc55e8e14a42966e",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966",
+        "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496",
+        "swebench/sweb.eval.x86_64.psf_1776_requests-1766",
+        "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627",
+        "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593",
+        "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187",
+        "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599",
+        "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166",
+        "swebench/sweb.eval.x86_64.django_1776_django-13449",
+        "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 4313,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/568850deb3ab3295526675ae987f50f2f304332deab1c69cb2968365032bb986",
+      "digest": "sha256:568850deb3ab3295526675ae987f50f2f304332deab1c69cb2968365032bb986",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 1375825524,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/576160b02ee53603932571b414a794ec36922b530b7350346e0b888b839029ad",
+      "digest": "sha256:576160b02ee53603932571b414a794ec36922b530b7350346e0b888b839029ad",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4214,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/5c1896964a33a076a186a627cead7f065f03eafd17655bbcea53e4d175cd2d94",
+      "digest": "sha256:5c1896964a33a076a186a627cead7f065f03eafd17655bbcea53e4d175cd2d94",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 188,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/5e5324dbd0c0c7181966b6ef1a4ed83b8f0f9173e488238e4df170542872bfa6",
+      "digest": "sha256:5e5324dbd0c0c7181966b6ef1a4ed83b8f0f9173e488238e4df170542872bfa6",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4214,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/61cf7c0eb4a729547237ba894a67835d6210640b23a08e232ccef079be0adb37",
+      "digest": "sha256:61cf7c0eb4a729547237ba894a67835d6210640b23a08e232ccef079be0adb37",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.django_1776_django-13449"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 95478184,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/6a99d82d9a891196945ba11ebc320a1bf85bfc1187b4e4d4cfe4154b5644e3de",
+      "digest": "sha256:6a99d82d9a891196945ba11ebc320a1bf85bfc1187b4e4d4cfe4154b5644e3de",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 4308,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/6c084da5b646e378624cdc507d2eb05e8d52406b8031c54710ceb788634f0206",
+      "digest": "sha256:6c084da5b646e378624cdc507d2eb05e8d52406b8031c54710ceb788634f0206",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 46271362,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/732b01eb52153ee680dfffa55aff4b39a79af9067a5b554fbc00350ee13b126c",
+      "digest": "sha256:732b01eb52153ee680dfffa55aff4b39a79af9067a5b554fbc00350ee13b126c",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4215,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/733ff0a2f4f1ef2c3d00b8eb4c2ae0564984ba6cc9e4c397a3dd466417d8800e",
+      "digest": "sha256:733ff0a2f4f1ef2c3d00b8eb4c2ae0564984ba6cc9e4c397a3dd466417d8800e",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 349833214,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/7e4ad1c26af7e89f1a0ac490a3b66ff182b1ab8c16eeaee7ad08dfa7edf856aa",
+      "digest": "sha256:7e4ad1c26af7e89f1a0ac490a3b66ff182b1ab8c16eeaee7ad08dfa7edf856aa",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 409524635,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/8031b0afcc4b54bb3e24f14ad85a1ea1629e27837e43ca557c23c904a9bf3c3b",
+      "digest": "sha256:8031b0afcc4b54bb3e24f14ad85a1ea1629e27837e43ca557c23c904a9bf3c3b",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4214,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/820cd63dce1f8459bfdf53d528c9bd7d321e77bfe226dac6cee3fcb5f65754e7",
+      "digest": "sha256:820cd63dce1f8459bfdf53d528c9bd7d321e77bfe226dac6cee3fcb5f65754e7",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.django_1776_django-13449"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4215,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/84afce840a98b42233a648267d9c1fb6fa402b466eb500fb309d641921838f49",
+      "digest": "sha256:84afce840a98b42233a648267d9c1fb6fa402b466eb500fb309d641921838f49",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 190,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/84fd7981cbcb53fe42d3f314cac61670175b9429ec51abea180f258d6e66f293",
+      "digest": "sha256:84fd7981cbcb53fe42d3f314cac61670175b9429ec51abea180f258d6e66f293",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4215,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/8c345e39dad2971552a222fd25de0dcc9deb4c62b994ee75d786756f6282816b",
+      "digest": "sha256:8c345e39dad2971552a222fd25de0dcc9deb4c62b994ee75d786756f6282816b",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4214,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/93f45703f09740752cee2cd5694c7a05a73bd6199cbe8a2aeb06d46017f77796",
+      "digest": "sha256:93f45703f09740752cee2cd5694c7a05a73bd6199cbe8a2aeb06d46017f77796",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 400558680,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/947026ad5ca54dbbf6cc676543bf6c2299484dd9f50e746b8e027f46c44f4da4",
+      "digest": "sha256:947026ad5ca54dbbf6cc676543bf6c2299484dd9f50e746b8e027f46c44f4da4",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4211,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/a11fe451d5d158584efcceb2009c516e3de53111970fd0bddd11ef5eab026726",
+      "digest": "sha256:a11fe451d5d158584efcceb2009c516e3de53111970fd0bddd11ef5eab026726",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 190,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/a4d326e88417b9b4a3363dfabc9de79b87be8ce1cba4f09c1893df8147cbe669",
+      "digest": "sha256:a4d326e88417b9b4a3363dfabc9de79b87be8ce1cba4f09c1893df8147cbe669",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 210294821,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/a5cbddd4bccb5773db5f4bcb57525b9c4cde48726b34490f2e45107b8ee92ddc",
+      "digest": "sha256:a5cbddd4bccb5773db5f4bcb57525b9c4cde48726b34490f2e45107b8ee92ddc",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4215,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/a8451046d273e4f8694234b819eeb520ab92164c3c5c1d01eae911218f406f90",
+      "digest": "sha256:a8451046d273e4f8694234b819eeb520ab92164c3c5c1d01eae911218f406f90",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 56089659,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/c22b3904fa864c4d2639da726c9da0a572f635ce16cc75c32e921020b81c8335",
+      "digest": "sha256:c22b3904fa864c4d2639da726c9da0a572f635ce16cc75c32e921020b81c8335",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.django_1776_django-13449"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 191,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/c6a91836b52c6cd92f324a1141a764d58040cc16ab2741ccd1b408963e9ed6b1",
+      "digest": "sha256:c6a91836b52c6cd92f324a1141a764d58040cc16ab2741ccd1b408963e9ed6b1",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.psf_1776_requests-1766"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 349974027,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/c723ce7a64bff72fc95b9aa9420de055d16dfa544b1f25c765e6b0e20ceb5309",
+      "digest": "sha256:c723ce7a64bff72fc95b9aa9420de055d16dfa544b1f25c765e6b0e20ceb5309",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 14246792,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/c8dc6bea21b9c127733db1326e2282a433a501d6205b9728c713b2b91f9c4b14",
+      "digest": "sha256:c8dc6bea21b9c127733db1326e2282a433a501d6205b9728c713b2b91f9c4b14",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.psf_1776_requests-1766"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4239073,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/d07e7f5cb3eb9bc05af4042e06ff23bc67fd825fe4615d36a7c1cfbe561c80f4",
+      "digest": "sha256:d07e7f5cb3eb9bc05af4042e06ff23bc67fd825fe4615d36a7c1cfbe561c80f4",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 21559,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/dbf6016183fb9dd7957c3c4a5e2be60f26738468a7a9a9dae34b39116425b7db",
+      "digest": "sha256:dbf6016183fb9dd7957c3c4a5e2be60f26738468a7a9a9dae34b39116425b7db",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 108074923,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/e365bf2da4e86ec99e76157fc0820c8f5cf4da63d07bddcfc3f59b088913e840",
+      "digest": "sha256:e365bf2da4e86ec99e76157fc0820c8f5cf4da63d07bddcfc3f59b088913e840",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 727443776,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/f0bc7b4bcbe00dabb9b76a1108047741fbf4a670086baf3186c7b17e58ef949b",
+      "digest": "sha256:f0bc7b4bcbe00dabb9b76a1108047741fbf4a670086baf3186c7b17e58ef949b",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 190,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/f120d658e0511543165e631c3c3bb6cee1b13a830f1e18bdf6f0d0d74f41a9fa",
+      "digest": "sha256:f120d658e0511543165e631c3c3bb6cee1b13a830f1e18bdf6f0d0d74f41a9fa",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 4214,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/f77db298c31fdbec4d227ef4c4368233d4cd342757dc1dc49c112ecf2056f9c3",
+      "digest": "sha256:f77db298c31fdbec4d227ef4c4368233d4cd342757dc1dc49c112ecf2056f9c3",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 190,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/f8c060dce8da42ed7f743071654049b191cb532b6cee1e70977cf34cd569c1b2",
+      "digest": "sha256:f8c060dce8da42ed7f743071654049b191cb532b6cee1e70977cf34cd569c1b2",
+      "exists": false,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080"
+      ],
+      "reusable": false,
+      "sha256_ok": false,
+      "size": 12585184,
+      "size_ok": false
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/fd3f01088aa854fa99907bd918d9bc8146064c2f452aae3e07d61a6244ca9968",
+      "digest": "sha256:fd3f01088aa854fa99907bd918d9bc8146064c2f452aae3e07d61a6244ca9968",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pydata_1776_xarray-4966",
+        "swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14496",
+        "swebench/sweb.eval.x86_64.psf_1776_requests-1766",
+        "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24627",
+        "swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-8593",
+        "swebench/sweb.eval.x86_64.mwaskom_1776_seaborn-3187",
+        "swebench/sweb.eval.x86_64.sympy_1776_sympy-15599",
+        "swebench/sweb.eval.x86_64.astropy_1776_astropy-7166",
+        "swebench/sweb.eval.x86_64.django_1776_django-13449",
+        "swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-5840"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 210296452,
+      "size_ok": true
+    },
+    {
+      "cache_path": "/data/wyt/e1-stri-reasoningbank-runtime/oci-blob-cache/sha256/fd7a87c0b95ba9470ab5b292bee0cde8f8f4b91a5c9755052c1b36b06f71c7d3",
+      "digest": "sha256:fd7a87c0b95ba9470ab5b292bee0cde8f8f4b91a5c9755052c1b36b06f71c7d3",
+      "exists": true,
+      "repositories": [
+        "swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-7080"
+      ],
+      "reusable": true,
+      "sha256_ok": true,
+      "size": 420167964,
+      "size_ok": true
+    }
+  ],
+  "schema_version": 1,
+  "unique_blob_bytes": 9571874857,
+  "unique_blob_count": 56
+}

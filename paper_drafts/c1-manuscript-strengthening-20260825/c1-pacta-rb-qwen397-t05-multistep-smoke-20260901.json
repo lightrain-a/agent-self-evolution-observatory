@@ -1,0 +1,9 @@
+{
+  "created_at_utc": "2026-09-01T08:07:49+00:00",
+  "pass": false,
+  "payload_sha256": "0d71f109a823aefb765c0341869a5f527cabc4707f0330621c0b044d93539be1",
+  "provider_calls": 0,
+  "schema_version": 1,
+  "source_trajectory_calls": 0,
+  "status": "NOT_RUN_DUE_T05_GATE"
+}
