@@ -78,7 +78,10 @@ def test_unparsable_python_and_non_python():
     bad = edit_target_set(diff("bad.py", "-1 +1"), {"bad.py": "def ("})
     txt = edit_target_set(diff("README.md", "-1 +1"), {"README.md": "old"})
     assert bad["atoms"][0]["qualified_symbol"] == "<module_or_file>"
+    assert bad["nonempty_python_diff_hunk_count"] == 1
+    assert bad["python_fallback_hunk_count"] == 1
     assert txt["atoms"][0]["qualified_symbol"] == "<file>"
+    assert txt["nonempty_python_diff_hunk_count"] == 0
 
 
 def test_multiple_hunks_same_symbol_deduplicate():
