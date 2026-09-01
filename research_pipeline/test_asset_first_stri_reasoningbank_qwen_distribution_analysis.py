@@ -4,7 +4,7 @@ import math
 
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_analysis import (
     bootstrap_ci, fisher_exact_two_sided, high_relevance_set, missingness_gate,
-    permutation_test, seed_from_contract, task_statistic, task_statistics,
+    paired_task_sign_flip, permutation_test, seed_from_contract, task_statistic, task_statistics,
 )
 
 
@@ -58,6 +58,15 @@ def test_fisher_and_missingness_gate():
     assert held["decision"] == "MISSINGNESS_ARM_IMBALANCED"
     assert held["absolute_failure_rate_difference"] > .10
     assert held["fisher_exact_two_sided_p"] < .05
+
+
+def test_paired_task_sign_flip_is_task_blocked_and_deterministic():
+    first = paired_task_sign_flip({"a": .5, "b": .25}, replicates=200, seed=11)
+    second = paired_task_sign_flip({"a": .5, "b": .25}, replicates=200, seed=11)
+    assert first == second
+    assert first["task_count"] == 2
+    assert first["observed_mean_task_difference"] == .375
+    assert first["paired"] is True
 
 
 def test_seed_and_relevance_order_are_deterministic():
