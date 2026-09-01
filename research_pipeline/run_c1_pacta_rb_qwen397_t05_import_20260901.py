@@ -27,8 +27,14 @@ def now() -> str:
 def run(command: list[str], timeout: int = 1800) -> dict[str, Any]:
     env = os.environ.copy()
     env["DOCKER_HOST"] = DOCKER_HOST
-    completed = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, timeout=timeout, env=env, check=False)
-    return {"command": command, "returncode": completed.returncode, "output": completed.stdout}
+    try:
+        completed = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, timeout=timeout, env=env, check=False)
+        return {"command": command, "returncode": completed.returncode, "output": completed.stdout}
+    except subprocess.TimeoutExpired as exc:
+        output = exc.stdout or ""
+        if isinstance(output, bytes):
+            output = output.decode("utf-8", errors="replace")
+        return {"command": command, "returncode": 124, "output": output, "timeout_seconds": timeout}
 
 def assemble(root: Path, instance: str, amd64: str) -> tuple[Path, str]:
     manifest_path = root / "raw-manifests" / "pass2" / f"{instance}__amd64.json"
@@ -104,30 +110,50 @@ def docker_metadata() -> dict[str, Any]:
 def qualify(root: Path) -> dict[str, Any]:
     pool = json.loads(POOL.read_text())
     units = {row["source_task_id"]: row for row in pool["units"]}
+    imports = {row["instance_id"]: row for row in json.loads((root / "import-receipt.json").read_text())["rows"]}
+    journal = root / "runtime-journal.jsonl"
+    completed: dict[str, dict[str, Any]] = {}
+    if journal.exists():
+        for line in journal.read_text().splitlines():
+            if line.strip():
+                row = json.loads(line)
+                completed[row["instance_id"]] = row
     rows = []
     for instance, _index, amd64 in SPECS:
-        unit = units[instance]
-        digest_ref = f"docker.1ms.run/{image_repo(instance)}@sha256:{amd64}"
-        check = run(["docker", "run", "--rm", digest_ref, "sh", "-lc", "cd /testbed && printf 'HEAD=' && git rev-parse HEAD && printf 'DIRTY=' && git status --porcelain | wc -l && printf 'BASH=' && command -v bash && printf 'GIT=' && command -v git && printf 'PYTHON=' && command -v python"], 180)
-        values = {}
-        for line in check["output"].splitlines():
-            if "=" in line:
-                key, value = line.split("=", 1)
-                values[key] = value
-        observed = values.get("HEAD", "")
-        row = {
-            "instance_id": instance, "repository": unit["task_family"], "digest_ref": digest_ref,
-            "expected_base_commit": unit["source_base_commit"], "observed_base_commit": observed,
-            "container_start_pass": check["returncode"] == 0,
-            "base_commit_pass": observed == unit["source_base_commit"],
-            "working_tree_equivalent": values.get("DIRTY") == "0",
-            "runtime_prerequisites_pass": all(values.get(k) for k in ("BASH", "GIT", "PYTHON")),
-            "tests_executed": 0, "evaluator_calls": 0, "future_task_executions": 0, "provider_calls": 0,
-            "raw_check_output": check["output"],
-        }
-        row["runtime_qualified"] = all(row[k] for k in ("container_start_pass", "base_commit_pass", "working_tree_equivalent", "runtime_prerequisites_pass"))
+        if instance in completed:
+            row = completed[instance]
+        else:
+            unit = units[instance]
+            digest_ref = f"docker.1ms.run/{image_repo(instance)}@sha256:{amd64}"
+            if not imports[instance]["exact_digest_pass"]:
+                check = {"returncode": 125, "output": "not run: exact digest import failed"}
+            else:
+                check = run(["docker", "run", "--rm", "--pull=never", digest_ref, "sh", "-lc", "cd /testbed && printf 'HEAD=' && git rev-parse HEAD && printf 'DIRTY=' && git status --porcelain | wc -l && printf 'BASH=' && command -v bash && printf 'GIT=' && command -v git && printf 'PYTHON=' && command -v python"], 180)
+            values = {}
+            for line in check["output"].splitlines():
+                if "=" in line:
+                    key, value = line.split("=", 1)
+                    values[key] = value
+            observed = values.get("HEAD", "")
+            row = {
+                "instance_id": instance, "repository": unit["task_family"], "digest_ref": digest_ref,
+                "expected_base_commit": unit["source_base_commit"], "observed_base_commit": observed,
+                "exact_digest_import_pass": imports[instance]["exact_digest_pass"],
+                "container_start_pass": check["returncode"] == 0,
+                "base_commit_pass": observed == unit["source_base_commit"],
+                "working_tree_equivalent": values.get("DIRTY") == "0",
+                "runtime_prerequisites_pass": all(values.get(k) for k in ("BASH", "GIT", "PYTHON")),
+                "tests_executed": 0, "evaluator_calls": 0, "future_task_executions": 0, "provider_calls": 0,
+                "raw_check_output": check["output"],
+            }
+            row["runtime_qualified"] = all(row[k] for k in ("exact_digest_import_pass", "container_start_pass", "base_commit_pass", "working_tree_equivalent", "runtime_prerequisites_pass"))
+            with journal.open("a", encoding="utf-8") as handle:
+                handle.write(json.dumps(row, sort_keys=True) + "\n")
+                handle.flush()
+                os.fsync(handle.fileno())
+            completed[instance] = row
         rows.append(row)
-        print(json.dumps({"instance_id": instance, "runtime_qualified": row["runtime_qualified"], "base_commit": observed}), flush=True)
+        print(json.dumps({"instance_id": instance, "runtime_qualified": row["runtime_qualified"], "base_commit": row["observed_base_commit"]}), flush=True)
     count = sum(row["runtime_qualified"] for row in rows)
     decision = "T0_5_FIXED_IMAGES_READY" if count == 11 else ("STOP_REDUCED_RESERVE_IMAGE_SUPPORT" if count >= 6 else "HOLD_FRESH_RUNTIME_SUPPORT_INSUFFICIENT")
     result = {"schema_version": 1, "created_at_utc": now(), "docker": docker_metadata(), "qualified_images": count, "total_images": 11, "rows": rows, "decision": decision, "scientific_calls": 0}
