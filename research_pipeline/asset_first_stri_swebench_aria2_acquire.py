@@ -30,12 +30,24 @@ def file_digest(path: Path) -> str:
 
 
 def signed_url(repo: str, digest: str) -> str:
-    challenge = requests.get(
-        f"{BASE}/v2/{repo}/blobs/sha256:{'0' * 64}", timeout=20
+    """Resolve an exact blob URL across direct and bearer-auth mirrors."""
+    blob_url = f"{BASE}/v2/{repo}/blobs/{digest}"
+    response = requests.get(
+        blob_url, allow_redirects=False, timeout=30, stream=True
     )
-    fields = dict(
-        re.findall(r'(\w+)="([^"]+)"', challenge.headers["www-authenticate"])
-    )
+    try:
+        if response.status_code == 200:
+            return blob_url
+        if response.status_code in {301, 302, 303, 307, 308}:
+            return response.headers["location"]
+        if response.status_code != 401:
+            response.raise_for_status()
+        challenge = response.headers.get("www-authenticate")
+        if not challenge:
+            raise RuntimeError("registry 401 response omitted www-authenticate")
+        fields = dict(re.findall(r'(\w+)="([^"]+)"', challenge))
+    finally:
+        response.close()
     token_payload = requests.get(
         fields["realm"],
         params={"service": fields["service"], "scope": f"repository:{repo}:pull"},
@@ -43,14 +55,20 @@ def signed_url(repo: str, digest: str) -> str:
     ).json()
     token = token_payload.get("token") or token_payload["access_token"]
     response = requests.get(
-        f"{BASE}/v2/{repo}/blobs/{digest}",
+        blob_url,
         headers={"Authorization": f"Bearer {token}"},
         allow_redirects=False,
         timeout=30,
+        stream=True,
     )
-    if response.status_code not in {301, 302, 303, 307, 308}:
-        response.raise_for_status()
-    return response.headers["location"]
+    try:
+        if response.status_code == 200:
+            return blob_url
+        if response.status_code not in {301, 302, 303, 307, 308}:
+            response.raise_for_status()
+        return response.headers["location"]
+    finally:
+        response.close()
 
 
 def acquire_one(digest: str, size: int, repo: str) -> dict:
