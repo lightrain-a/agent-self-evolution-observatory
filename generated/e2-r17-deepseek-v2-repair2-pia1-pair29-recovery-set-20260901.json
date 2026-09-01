@@ -1,0 +1,184 @@
+{
+  "analysis_changed": false,
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-repair2-pia1-pair29-recovery-set",
+  "canonical_lineage_only": true,
+  "completed_counts_by_arm": {
+    "mrw": 15,
+    "win_c": 14
+  },
+  "correction_budget_changed": false,
+  "created_at_utc": "2026-09-01T08:17:51+00:00",
+  "failed_429_evidence": {
+    "ambiguous_completion": false,
+    "completed_adapter_claim_ids": [
+      89,
+      90,
+      91,
+      92
+    ],
+    "explicit_429_claim_id": 93,
+    "old_partial_directory_quarantined": true,
+    "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/r17_technical_failure.json",
+    "scientific_outcome": false,
+    "sha256": "9d381657e4c526fe4014e96839203aad13aae81c7b3439f3be85a9bdabaf817c"
+  },
+  "missing_measurement_count": 7,
+  "missing_measurements_in_frozen_order": [
+    {
+      "arm": "win_c",
+      "classification": "explicit_429_logical_unit_recovery",
+      "parent_authorization_sha256": "7aa826db915b40840fb54ca2c269a23c4f74807bae74fd99285eac6875ee5b74",
+      "parent_contract_sha256": "312e970520794c564b23a9717f4c40d4baeb0674619da334c8fcc20ee95fc045",
+      "parent_skill_sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "parent_state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c",
+      "parent_update_receipt_sha256": "9d1ac5cea03411832a3e3038d834f4ca79f449b61814efb41b1c9eaf9a2b55a6",
+      "provider_replay_of_completed_unit": false,
+      "task_id": "r17-b4-ska-p8",
+      "unit_id": "e1-msp-01/rep0"
+    },
+    {
+      "arm": "win_c",
+      "classification": "never_started_measurement",
+      "parent_authorization_sha256": "7aa826db915b40840fb54ca2c269a23c4f74807bae74fd99285eac6875ee5b74",
+      "parent_contract_sha256": "312e970520794c564b23a9717f4c40d4baeb0674619da334c8fcc20ee95fc045",
+      "parent_skill_sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "parent_state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c",
+      "parent_update_receipt_sha256": "9d1ac5cea03411832a3e3038d834f4ca79f449b61814efb41b1c9eaf9a2b55a6",
+      "provider_replay_of_completed_unit": false,
+      "task_id": "r17-b4-tsr-p0",
+      "unit_id": "e1-msp-01/rep0"
+    },
+    {
+      "arm": "win_c",
+      "classification": "never_started_measurement",
+      "parent_authorization_sha256": "7aa826db915b40840fb54ca2c269a23c4f74807bae74fd99285eac6875ee5b74",
+      "parent_contract_sha256": "312e970520794c564b23a9717f4c40d4baeb0674619da334c8fcc20ee95fc045",
+      "parent_skill_sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "parent_state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c",
+      "parent_update_receipt_sha256": "9d1ac5cea03411832a3e3038d834f4ca79f449b61814efb41b1c9eaf9a2b55a6",
+      "provider_replay_of_completed_unit": false,
+      "task_id": "r17-b4-tsr-p6",
+      "unit_id": "e1-msp-01/rep0"
+    },
+    {
+      "arm": "win_c",
+      "classification": "never_started_measurement",
+      "parent_authorization_sha256": "7aa826db915b40840fb54ca2c269a23c4f74807bae74fd99285eac6875ee5b74",
+      "parent_contract_sha256": "312e970520794c564b23a9717f4c40d4baeb0674619da334c8fcc20ee95fc045",
+      "parent_skill_sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "parent_state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c",
+      "parent_update_receipt_sha256": "9d1ac5cea03411832a3e3038d834f4ca79f449b61814efb41b1c9eaf9a2b55a6",
+      "provider_replay_of_completed_unit": false,
+      "task_id": "r17-b4-tsr-p8",
+      "unit_id": "e1-msp-01/rep0"
+    },
+    {
+      "arm": "mrw",
+      "classification": "never_started_measurement",
+      "parent_authorization_sha256": "7aa826db915b40840fb54ca2c269a23c4f74807bae74fd99285eac6875ee5b74",
+      "parent_contract_sha256": "312e970520794c564b23a9717f4c40d4baeb0674619da334c8fcc20ee95fc045",
+      "parent_skill_sha256": "346b8d62f774c976d1f8a07349e2813cb069311441b6597d8085dbea8f029aad",
+      "parent_state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw",
+      "parent_update_receipt_sha256": "5b277e1a8aedf09899d28e28c7c541d03477d65a4ddd8ae8de5fcedee3c754ff",
+      "provider_replay_of_completed_unit": false,
+      "task_id": "r17-b4-tsr-p0",
+      "unit_id": "e1-msp-01/rep0"
+    },
+    {
+      "arm": "mrw",
+      "classification": "never_started_measurement",
+      "parent_authorization_sha256": "7aa826db915b40840fb54ca2c269a23c4f74807bae74fd99285eac6875ee5b74",
+      "parent_contract_sha256": "312e970520794c564b23a9717f4c40d4baeb0674619da334c8fcc20ee95fc045",
+      "parent_skill_sha256": "346b8d62f774c976d1f8a07349e2813cb069311441b6597d8085dbea8f029aad",
+      "parent_state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw",
+      "parent_update_receipt_sha256": "5b277e1a8aedf09899d28e28c7c541d03477d65a4ddd8ae8de5fcedee3c754ff",
+      "provider_replay_of_completed_unit": false,
+      "task_id": "r17-b4-tsr-p6",
+      "unit_id": "e1-msp-01/rep0"
+    },
+    {
+      "arm": "mrw",
+      "classification": "never_started_measurement",
+      "parent_authorization_sha256": "7aa826db915b40840fb54ca2c269a23c4f74807bae74fd99285eac6875ee5b74",
+      "parent_contract_sha256": "312e970520794c564b23a9717f4c40d4baeb0674619da334c8fcc20ee95fc045",
+      "parent_skill_sha256": "346b8d62f774c976d1f8a07349e2813cb069311441b6597d8085dbea8f029aad",
+      "parent_state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw",
+      "parent_update_receipt_sha256": "5b277e1a8aedf09899d28e28c7c541d03477d65a4ddd8ae8de5fcedee3c754ff",
+      "provider_replay_of_completed_unit": false,
+      "task_id": "r17-b4-tsr-p8",
+      "unit_id": "e1-msp-01/rep0"
+    }
+  ],
+  "model_changed": false,
+  "never_started_measurement_count": 6,
+  "pair29_unit_id": "e1-msp-01/rep0",
+  "parent_claim_counts_by_arm": {
+    "mrw": 117,
+    "win_c": 93
+  },
+  "partial_effect_read": false,
+  "prompt_changed": false,
+  "schema_version": "1.0",
+  "scientific_design_changed": false,
+  "scientific_scores_read": false,
+  "state_bindings": {
+    "mrw": {
+      "completed_eval_manifest_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw/checkpoints/completed_eval_tasks.jsonl",
+      "completed_eval_manifest_sha256": "3cad2c0035aa6b822fded8b5a92b359fca4e34d642865fb2a4419930613bae0e",
+      "completed_tasks": [
+        "r17-b4-agj-p2",
+        "r17-b4-agj-p3",
+        "r17-b4-agj-p8",
+        "r17-b4-fmv-p1",
+        "r17-b4-fmv-p2",
+        "r17-b4-fmv-p8",
+        "r17-b4-ioc-p1",
+        "r17-b4-ioc-p4",
+        "r17-b4-ioc-p6",
+        "r17-b4-msp-p0",
+        "r17-b4-msp-p7",
+        "r17-b4-msp-p8",
+        "r17-b4-ska-p4",
+        "r17-b4-ska-p5",
+        "r17-b4-ska-p8"
+      ],
+      "parent_claims": 117,
+      "skill_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw/update/skill_post/SKILL.md",
+      "skill_sha256": "346b8d62f774c976d1f8a07349e2813cb069311441b6597d8085dbea8f029aad",
+      "state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw",
+      "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw/update/update_receipt.json",
+      "update_receipt_sha256": "5b277e1a8aedf09899d28e28c7c541d03477d65a4ddd8ae8de5fcedee3c754ff"
+    },
+    "win_c": {
+      "completed_eval_manifest_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c/checkpoints/completed_eval_tasks.jsonl",
+      "completed_eval_manifest_sha256": "b38c8e2734ebb784851daaff276484f00af1bb163f05c4bd4d446b2816fe19fb",
+      "completed_tasks": [
+        "r17-b4-agj-p2",
+        "r17-b4-agj-p3",
+        "r17-b4-agj-p8",
+        "r17-b4-fmv-p1",
+        "r17-b4-fmv-p2",
+        "r17-b4-fmv-p8",
+        "r17-b4-ioc-p1",
+        "r17-b4-ioc-p4",
+        "r17-b4-ioc-p6",
+        "r17-b4-msp-p0",
+        "r17-b4-msp-p7",
+        "r17-b4-msp-p8",
+        "r17-b4-ska-p4",
+        "r17-b4-ska-p5"
+      ],
+      "parent_claims": 93,
+      "skill_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c/update/skill_post/SKILL.md",
+      "skill_sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c",
+      "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c/update/update_receipt.json",
+      "update_receipt_sha256": "9d1ac5cea03411832a3e3038d834f4ca79f449b61814efb41b1c9eaf9a2b55a6"
+    }
+  },
+  "status": "PIA1_PASS_PAIR29_MEASUREMENT_ONLY_RECOVERY_ELIGIBLE",
+  "task_order_changed": false,
+  "unique_429_recovery_count": 1,
+  "updater_calls_authorized": 0
+}
