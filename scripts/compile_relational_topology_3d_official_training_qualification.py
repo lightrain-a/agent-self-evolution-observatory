@@ -16,7 +16,8 @@ if str(ROOT) not in sys.path:
 
 from research_pipeline.relational_topology_training_qualification import (
     CHECKPOINT_REQUIRED, CORPUS_FIELDS, LICENSE_RECEIPT, OBJECT_ID, REGIME_SUPPORT,
-    compile_synthetic_corpus, empty_p1_schema, replay_matrix, sha256_value, write_jsonl,
+    compile_synthetic_corpus, empty_p1_schema, replay_matrix, require_license,
+    sha256_value, write_jsonl,
 )
 
 PARENT_ID = "RELATIONAL-CONSTRAINT-CAPACITY-20260830"
@@ -63,6 +64,20 @@ def git(*args: str) -> str:
     return subprocess.check_output(["git", "-C", str(ROOT), *args], text=True).strip()
 
 
+def canonical_lineage_status() -> dict[str, Any]:
+    head = git("rev-parse", "HEAD")
+    origin_main = git("rev-parse", "origin/main")
+    in_main = subprocess.run(
+        ["git", "-C", str(ROOT), "merge-base", "--is-ancestor", head, "origin/main"],
+        check=False, capture_output=True, text=True,
+    ).returncode == 0
+    return {
+        "compiler_head": head,
+        "origin_main_at_compilation": origin_main,
+        "head_is_in_origin_main_history": in_main,
+    }
+
+
 def check_parent() -> dict[str, str]:
     for relative, expected in PARENT_ARTIFACTS.items():
         actual = file_sha(ROOT / relative)
@@ -101,12 +116,12 @@ def verify_instructscene(root: Path | None) -> dict[str, Any]:
     return result
 
 
-def provenance(config_sha256: str) -> dict[str, Any]:
+def provenance(config_sha256: str, dataset_revision: str) -> dict[str, Any]:
     return {
         "object_id": OBJECT_ID, "parent_object_id": PARENT_ID, "run_id": RUN_ID,
         "generated_at": CREATED_AT, "compiler_source_git_sha": git("rev-parse", "HEAD"),
         "compiler_source_git_tree": git("rev-parse", "HEAD^{tree}"),
-        "config_sha256": config_sha256, "dataset_revision": DATASET_STATE,
+        "config_sha256": config_sha256, "dataset_revision": dataset_revision,
     }
 
 
@@ -149,16 +164,25 @@ def targeted_audit(path: Path | None) -> dict[str, Any]:
 def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
     parent_hashes = check_parent()
     source_audit = verify_instructscene(args.instructscene_root)
+    canonical_lineage = canonical_lineage_status()
+    license_confirmed = args.license_receipt is not None
+    if license_confirmed:
+        require_license(args.license_receipt)
+    dataset_state = (
+        "LICENSE_CONFIRMED_DATA_NOT_MATERIALIZED"
+        if license_confirmed else DATASET_STATE
+    )
     config = {
         "schema_version": "relational-topology-official-training-qualification-v1",
         "lifecycle": "PRE_P1_OFFICIAL_TRAINING_QUALIFICATION", "room": "BEDROOM",
         "license_receipt_required_exactly": LICENSE_RECEIPT,
-        "license_receipt_observed": None, "data_materialization": False,
+        "license_receipt_observed": args.license_receipt,
+        "data_materialization": False,
         "gpu_training": False, "scientific_gpu_runs": 0, "scientific_outcomes": 0,
         "p1_open": False,
         "regimes": {name: list(values) for name, values in REGIME_SUPPORT.items()},
     }
-    p = provenance(sha256_value(config))
+    p = provenance(sha256_value(config), dataset_state)
     scene_ids = ["SYN-BEDROOM-0001", "SYN-BEDROOM-0002", "SYN-BEDROOM-0003", "SYN-BEDROOM-0004"]
     corpora, corpus_hashes, replay = {}, {}, {}
     for regime in REGIME_SUPPORT:
@@ -176,8 +200,14 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
 
     debt = targeted_audit(args.targeted_audit_log)
     targeted = debt["targeted_dependency_audit"]
-    verdict = ("PRE_P1_TRAINING_QUALIFICATION_REFORMULATE"
-               if targeted["status"] == "FAIL" else "HOLD_USER_LICENSE_CONFIRMATION")
+    if targeted["status"] == "FAIL":
+        verdict = "PRE_P1_TRAINING_QUALIFICATION_REFORMULATE"
+    elif license_confirmed and canonical_lineage["head_is_in_origin_main_history"]:
+        verdict = "LICENSE_CONFIRMED_MATERIALIZATION_AUTHORIZED"
+    elif license_confirmed:
+        verdict = "HOLD_CANONICAL_MAIN_INTEGRATION"
+    else:
+        verdict = "HOLD_USER_LICENSE_CONFIRMATION"
 
     source_manifest = {
         **p, "parent_artifacts": parent_hashes, "instructscene": source_audit,
@@ -200,12 +230,24 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         "recheck_required_immediately_before_training_authority": True,
     }
     license_gate = {
-        **p, "status": "LICENSE_NOT_CONFIRMED",
-        "licenses": {"3D-FRONT": "LICENSE_NOT_CONFIRMED", "3D-FUTURE": "LICENSE_NOT_CONFIRMED"},
+        **p,
+        "status": ("LICENSE_CONFIRMED_MATERIALIZATION_AUTHORIZED"
+                   if license_confirmed and canonical_lineage["head_is_in_origin_main_history"]
+                   else "LICENSE_CONFIRMED_CANONICAL_INTEGRATION_REQUIRED"
+                   if license_confirmed else "LICENSE_NOT_CONFIRMED"),
+        "licenses": {
+            "3D-FRONT": ("USER_CONFIRMED_RESEARCH_LICENSE_ACCEPTED"
+                         if license_confirmed else "LICENSE_NOT_CONFIRMED"),
+            "3D-FUTURE": ("USER_CONFIRMED_RESEARCH_LICENSE_ACCEPTED"
+                          if license_confirmed else "LICENSE_NOT_CONFIRMED"),
+        },
         "accepted_receipt_exactly": LICENSE_RECEIPT,
-        "observed_receipt": None, "licensed_corpus_materialized": False,
+        "observed_receipt": args.license_receipt,
+        "licensed_corpus_materialized": False,
+        "data_materialization_authorized": bool(
+            license_confirmed and canonical_lineage["head_is_in_origin_main_history"]),
         "official_training_authorized": False, "gpu_qualification_authorized": False,
-        "fail_closed_verdict": "HOLD_USER_LICENSE_CONFIRMATION",
+        "fail_closed_verdict": verdict,
         "note": "A derivative dataset page license does not establish underlying 3D-FRONT/3D-FUTURE research-license acceptance.",
     }
     decoder_audit = {
@@ -254,7 +296,8 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         "forbidden_interpretation": "Decline at unseen counts is not intrinsic capacity without the matched support crossover.",
     }
     corpus_schema = {
-        **p, "status": "SCHEMA_FROZEN_REAL_CORPUS_NOT_MATERIALIZED",
+        **p, "status": ("SCHEMA_FROZEN_LICENSE_CONFIRMED_REAL_CORPUS_NOT_MATERIALIZED"
+                        if license_confirmed else "SCHEMA_FROZEN_REAL_CORPUS_NOT_MATERIALIZED"),
         "fields_in_exact_order": list(CORPUS_FIELDS),
         "example_seed_formula": "uint64_be(SHA256(source_scene_id|corpus_regime|sample_slot|RELATIONAL-TOPOLOGY-3D-CORPUS-V1)[0:8])",
         "example_content_address": "SHA256(canonical JSON of all prior fields including tokenizer metadata)",
@@ -338,6 +381,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
     }
     gpu_qualification = {
         **p, "status": "NOT_REQUESTED_NOT_AUTHORIZED_NOT_RUN",
+        "canonical_main_lineage_satisfied": canonical_lineage["head_is_in_origin_main_history"],
         "allowed_scope_after_all_gates": "50-100 optimizer steps per required component",
         "classification": "NON_SCIENTIFIC_OFFICIAL_TRAINING_RESOURCE_AND_REPLAY_QUALIFICATION",
         "prerequisites": ["exact user license receipt", "licensed corpus content address",
@@ -388,8 +432,10 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
     }
     p1_schema = {**p, **empty_p1_schema(), "status": "CLOSED_EMPTY_SCHEMA_ONLY"}
     authority = {
-        **p, "state": verdict, "data_license_confirmed": False,
-        "data_materialization_authority": False, "gpu_authority_requested": False,
+        **p, "state": verdict, "data_license_confirmed": license_confirmed,
+        "data_materialization_authority": bool(
+            license_confirmed and canonical_lineage["head_is_in_origin_main_history"]),
+        "gpu_authority_requested": False,
         "gpu_authority": False, "official_instructscene_training": False,
         "training_qualification_run": False,
         "training_status": {"BEDROOM-SG2SC-SHARED": "NOT_STARTED", "SGP-12": "NOT_STARTED", "SGP-14": "NOT_STARTED"},
@@ -399,16 +445,26 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         "scenenat_comparison_run": False, "full_cross_architecture_suite_run": False,
         "port_010": {"status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
                      "evidence_review": "BLOCK_BAKE_IN", "changed": False},
-        "canonical_integration_requirement": "Authority may issue only from reviewed canonical main lineage; this continuation branch is proposal-only.",
+        "canonical_integration_requirement": (
+            "SATISFIED_REVIEWED_CANONICAL_MAIN_LINEAGE"
+            if canonical_lineage["head_is_in_origin_main_history"]
+            else "Authority may issue only from reviewed canonical main lineage; this continuation branch is proposal-only."
+        ),
     }
     gates = {
-        "CANONICAL_CONTINUATION_LINEAGE": "PASS_PROPOSAL_BRANCH_MAIN_INTEGRATION_REQUIRED_BEFORE_AUTHORITY",
+        "CANONICAL_CONTINUATION_LINEAGE": (
+            "PASS_CANONICAL_MAIN_LINEAGE"
+            if canonical_lineage["head_is_in_origin_main_history"]
+            else "PASS_PROPOSAL_BRANCH_MAIN_INTEGRATION_REQUIRED_BEFORE_AUTHORITY"
+        ),
         "SCENENAT_DRIFT": "PASS_NO_MATERIAL_DRIFT",
-        "DATA_LICENSE": "HOLD_USER_LICENSE_CONFIRMATION",
+        "DATA_LICENSE": ("PASS_USER_CONFIRMED_EXACT_RECEIPT" if license_confirmed
+                         else "HOLD_USER_LICENSE_CONFIRMATION"),
         "SHARED_DECODER_CAUSAL_CONTROL": "PASS_STATIC_INTERFACE",
         "OFFICIAL_SHARED_DECODER_CHECKPOINT": "ABSENT_TRAIN_AFTER_LICENSE",
         "CORPUS_SCHEMA": "PASS_STATIC_AND_SYNTHETIC",
-        "LICENSED_CORPUS": "NOT_RUN_LICENSE_ABSENT",
+        "LICENSED_CORPUS": ("NOT_RUN_MATERIALIZATION_PENDING" if license_confirmed
+                            else "NOT_RUN_LICENSE_ABSENT"),
         "TOKEN_MATCHING": "PASS_STATIC_REAL_MATERIALIZATION_PENDING",
         "RELATION_MATCHING": "PASS_SYNTHETIC_REAL_MATERIALIZATION_PENDING",
         "TOPOLOGY_MATCHING": "PASS_STATIC_REAL_MATERIALIZATION_PENDING",
@@ -427,17 +483,23 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         "gates": gates, "scientific_gpu_runs": 0, "scientific_outcomes": 0,
         "official_training_runs": 0, "gpu_authority_requested_this_round": False,
         "p1_open": False,
-        "next_if_license_receipt_arrives": "MATERIALIZE_AND_CONTENT_ADDRESS_BEDROOM_CORPORA_THEN_RECHECK_ALL_GATES; DO_NOT_AUTO_ISSUE_GPU_AUTHORITY",
+        "next_if_license_receipt_arrives": (
+            "MATERIALIZE_AND_CONTENT_ADDRESS_BEDROOM_CORPORA_THEN_RECHECK_ALL_GATES; DO_NOT_AUTO_ISSUE_GPU_AUTHORITY"
+            if not license_confirmed else
+            "LICENSE_RECEIPT_ACCEPTED; MATERIALIZE_AND_CONTENT_ADDRESS_BEDROOM_CORPORA; GPU_AND_P1_REMAIN_CLOSED"
+        ),
     }
     artifacts: dict[str, Any] = {
         "canonical_state.json": {
             **p, "origin_main_at_branch_creation": "da3ebe8fc66503b28183853e251fa291bfb8d118",
             "prior_child_sha": "aded989e4917e57466cddb75ac395fff2a590e52",
             "continuation_branch": "research/relational-topology-stage-3d-training-qualification-20260901",
-            "authority_from_proposal_branch": False},
+            **canonical_lineage,
+            "authority_from_proposal_branch": False,
+            "canonical_main_lineage_authority_eligible": canonical_lineage["head_is_in_origin_main_history"]},
         "source_manifest.json": source_manifest, "novelty_watch.json": novelty_watch,
         "license_gate.json": license_gate,
-        "dataset_manifest.json": {**p, "room": "BEDROOM", "status": DATASET_STATE,
+        "dataset_manifest.json": {**p, "room": "BEDROOM", "status": dataset_state,
             "licensed_rows": 0, "synthetic_rows": sum(map(len, corpora.values())),
             "corpus_sha256": corpus_hashes},
         "decoder_audit.json": decoder_audit,
@@ -454,10 +516,16 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         "failure_taxonomy.json": failure_taxonomy,
         "p1_empty_schema.json": p1_schema, "authority.json": authority, "regression_debt.json": {**p, **debt},
         "adjudication.json": adjudication,
-        "failures.jsonl": [{**p, "record_type": "GATE_HOLD",
-            "classification": "DATA_LICENSE_FAILURE", "status": "OPEN",
-            "verdict": "HOLD_USER_LICENSE_CONFIRMATION", "scientific_execution": False,
-            "gpu_execution": False}],
+        "failures.jsonl": [{
+            **p,
+            "record_type": ("GATE_PENDING" if license_confirmed else "GATE_HOLD"),
+            "classification": ("DATA_PROVENANCE_FAILURE" if license_confirmed
+                               else "DATA_LICENSE_FAILURE"),
+            "status": "OPEN",
+            "verdict": verdict,
+            "scientific_execution": False,
+            "gpu_execution": False,
+        }],
         "synthetic_corpus.jsonl": [row for regime in sorted(corpora) for row in corpora[regime]],
     }
     return artifacts, adjudication
@@ -475,6 +543,7 @@ def main() -> None:
     parser.add_argument("--output-dir", type=Path, default=OUT)
     parser.add_argument("--instructscene-root", type=Path)
     parser.add_argument("--targeted-audit-log", type=Path)
+    parser.add_argument("--license-receipt")
     args = parser.parse_args()
     artifacts, adjudication = build(args)
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -487,7 +556,8 @@ def main() -> None:
         "generated_at": CREATED_AT, "verdict": adjudication["verdict"],
         "compiler_source_git_sha": adjudication["compiler_source_git_sha"],
         "compiler_source_git_tree": adjudication["compiler_source_git_tree"],
-        "config_sha256": adjudication["config_sha256"], "dataset_revision": DATASET_STATE,
+        "config_sha256": adjudication["config_sha256"],
+        "dataset_revision": adjudication["dataset_revision"],
         "artifact_sha256": hashes, "artifact_count": len(hashes),
         "scientific_gpu_runs": 0, "scientific_outcomes": 0, "official_training_runs": 0,
     }
