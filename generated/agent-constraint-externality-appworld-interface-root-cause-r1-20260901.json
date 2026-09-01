@@ -1,0 +1,60 @@
+{
+  "appworld": {
+    "commit": "a072b7a86e7c1d5b1d7175659d750ebb9b79f10a",
+    "official_semantics_used_for_recovery": "apply_db_changes",
+    "source_witnesses": {
+      "src/appworld/apps/lib/apis/local_remote.py": "b5e16eeb13147992aa55ca973ed1f522f0f4829a5b2ab62048c6de4a31c4920d",
+      "src/appworld/apps/lib/models/db.py": "1adb02b4783aeb286ee3ecae2a248253cd0cc2ff982de800a570b7a415725b40",
+      "src/appworld/collections/models.py": "8b2fac59d77c887ab08fe4092ec0811952d051bd56551dc239332c556df136e4",
+      "src/appworld/environment.py": "6f01aa53fbb29c1aac751c766c55af438ce5a612048c36671dbb8e877ee955ac"
+    }
+  },
+  "authority": {
+    "appworld_ul": false,
+    "capability_recovery_implementation": true,
+    "f0": false,
+    "method": false,
+    "p1": false,
+    "paper_claim": false,
+    "provider_reexecution": false,
+    "second_model": false,
+    "toolsandbox": false
+  },
+  "classification": "RUNNER_EVALUATOR_INTERFACE_FAILURE",
+  "content_sha256": "6b0a6b71b391f98be30ff77cd478f6bb2a214b0d1f87ede4f6b9a486a6d78c35",
+  "evidence": {
+    "accidental_output_gmail_db": {
+      "bytes": 0,
+      "path": "runtimes/agent-constraint-externality-capability-20260901/worlds/capability_qwen3.7-flash_ACE-FG-05_1/experiments/outputs/ace-capability/tasks/acecapacefg05r1_1/dbs/gmail.db",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "historical_ledger_sha256": "9120ee1d20e3bed3b93d577adc3458d1bfcdce442e5a622eeb29930bc11f89f7",
+    "historical_result_sha256": "43375b3ecefd5e7b583a44d04cb82a5af5e9f2276a22e19038405927b8283072",
+    "output_gmail_changes": {
+      "bytes": 0,
+      "path": "runtimes/agent-constraint-externality-capability-20260901/worlds/capability_qwen3.7-flash_ACE-FG-05_1/experiments/outputs/ace-capability/tasks/acecapacefg05r1_1/dbs/gmail.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "source_gmail_db": {
+      "bytes": 62550016,
+      "path": "runtimes/agent-constraint-externality-capability-20260901/worlds/capability_qwen3.7-flash_ACE-FG-05_1/data/tasks/acecapacefg05r1_1/dbs/gmail.db",
+      "sha256": "069221ea55688e2e454840ac4915b7920848be1958ec2a8d45e0743f7bc48cef"
+    }
+  },
+  "historical_status": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP",
+  "historical_unit": "capability:qwen3.7-flash|ACE-FG-05|1",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "parent_scientific_evidence_commit": "7b6f8e4493d4f0a6407c644ad366e5b6a50f076f",
+  "prepared_from_git_head": "0ff545e3dc1a04d1cf693dc87a3e966870808b97",
+  "provider_calls_added_by_root_cause_audit": 0,
+  "recovery_id": "APPWORLD-INTERFACE-RECOVERY-R1",
+  "root_cause": {
+    "appworld_task_output_format": "changes_jsonl",
+    "failure": "subsequent evaluator query raised no such table: emails",
+    "sqlite_side_effect": "ordinary sqlite3.connect created the missing output gmail.db as an empty file",
+    "wrapper_bug": "save_and_evaluate opened output/<app>.db with ordinary sqlite3.connect although AppWorld save() emitted <app>.jsonl changes"
+  },
+  "schema_version": "ace-appworld-interface-root-cause-r1-v1",
+  "scientific_model_failure": false,
+  "valid_scientific_outcome_observed": false
+}

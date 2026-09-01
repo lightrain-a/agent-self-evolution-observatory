@@ -1,0 +1,42 @@
+{
+  "content_sha256": "bfc91020af03109f7526b499212acf8165febb1acaf7f551af77af954c8de0ca",
+  "critical_invariant": "measurement must never create an expected-existing SQLite DB as a side effect",
+  "f0_authorized": false,
+  "implementation": {
+    "change_semantics": "AppWorld official apply_db_changes over saved *.jsonl",
+    "measurement_read_mode": "SQLite URI mode=ro",
+    "measurement_start_state": "frozen task-input full DBs",
+    "overwrite_policy": "fail closed",
+    "runtime_module": "research_pipeline/agent_constraint_externality_appworld_runtime.py",
+    "runtime_module_sha256": "eb9c6b48f71fba0f8c34cadd6ecd82ac801b8bda72d13541a7f76fad8f0717e0",
+    "test_module": "research_pipeline/test_agent_constraint_externality_appworld_interface_recovery.py",
+    "test_module_sha256": "6c6b95667f09d633982d09aef298a787145554be8b6b4bdf173abaf6c241372a"
+  },
+  "next_allowed_action": "MEASUREMENT_ONLY_RECOVERY_OF_HISTORICAL_UNIT",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "parent_root_cause_artifact": "generated/agent-constraint-externality-appworld-interface-root-cause-r1-20260901.json",
+  "prepared_from_git_head": "0ff545e3dc1a04d1cf693dc87a3e966870808b97",
+  "provider_reexecution_authorized": false,
+  "recovery_id": "APPWORLD-INTERFACE-RECOVERY-R1",
+  "schema_version": "ace-appworld-interface-qualification-r1-v1",
+  "scientific_outcomes_read_during_qualification": 0,
+  "scientific_provider_calls": 0,
+  "status": "APPWORLD_INTERFACE_RECOVERY_QUALIFICATION_PASS",
+  "tests": {
+    "cases": [
+      "identity reconstruction",
+      "insert/update/delete official changes semantics",
+      "missing source fail closed",
+      "read-only missing path creates no DB",
+      "zero-byte DB fail closed",
+      "corrupt DB fail closed",
+      "missing required table fail closed",
+      "malformed changes fail closed",
+      "missing changes fail closed",
+      "logical repeatability",
+      "actual AppWorld save() integration"
+    ],
+    "failed": 0,
+    "passed": 11
+  }
+}

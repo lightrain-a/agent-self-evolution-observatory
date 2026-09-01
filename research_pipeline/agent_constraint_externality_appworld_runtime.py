@@ -19,6 +19,173 @@ from research_pipeline.appworld_constraint_compiler import (
 )
 
 DIRECT_SEPARATOR = "__"
+MEASUREMENT_FAILURE_CLASS = "MEASUREMENT_INTERFACE_FAIL_CLOSED"
+
+
+class MeasurementInterfaceError(RunnerError):
+    """Fail-closed measurement error; never reinterpret as an agent capability result."""
+
+
+def _sqlite_inventory(
+    path: Path, *, required_tables: set[str] | None = None
+) -> tuple[sqlite3.Connection, dict[str, Any]]:
+    """Open an existing SQLite DB read-only and validate its schema/integrity."""
+    if not path.is_file():
+        raise MeasurementInterfaceError(f"{MEASUREMENT_FAILURE_CLASS}: missing DB {path}")
+    size = path.stat().st_size
+    if size <= 0:
+        raise MeasurementInterfaceError(f"{MEASUREMENT_FAILURE_CLASS}: empty DB {path}")
+    uri = f"file:{path.resolve().as_posix()}?mode=ro"
+    try:
+        connection = sqlite3.connect(uri, uri=True)
+        integrity = connection.execute("PRAGMA integrity_check").fetchone()
+        if not integrity or integrity[0] != "ok":
+            connection.close()
+            raise MeasurementInterfaceError(
+                f"{MEASUREMENT_FAILURE_CLASS}: integrity check failed for {path}"
+            )
+        tables = {
+            row[0]
+            for row in connection.execute(
+                "SELECT name FROM sqlite_master WHERE type='table'"
+            ).fetchall()
+        }
+        missing = set(required_tables or set()) - tables
+        if missing:
+            connection.close()
+            raise MeasurementInterfaceError(
+                f"{MEASUREMENT_FAILURE_CLASS}: missing tables {sorted(missing)} in {path}"
+            )
+        return connection, {
+            "path": str(path),
+            "bytes": size,
+            "sha256": sha256_file(path),
+            "integrity_check": "ok",
+            "table_count": len(tables),
+            "tables": sorted(tables),
+        }
+    except sqlite3.DatabaseError as exc:
+        raise MeasurementInterfaceError(
+            f"{MEASUREMENT_FAILURE_CLASS}: invalid SQLite DB {path}: {type(exc).__name__}"
+        ) from exc
+
+
+def materialize_appworld_measurement_state(
+    *,
+    source_db_root: Path,
+    changes_db_root: Path,
+    measurement_db_root: Path,
+    required_tables_by_app: dict[str, set[str]],
+) -> dict[str, Any]:
+    """Apply AppWorld's official changes format to frozen task-input full DBs.
+
+    AppWorld saves task outputs as ``*.jsonl`` changes.  The scientific task input
+    in this project contains fixture rows beyond the public base DB, so recovery
+    must apply those official changes to the frozen task-input DB, not to a fresh
+    public base DB.  The official ``apply_db_changes`` function defines the change
+    semantics; this adapter only provides the correct starting snapshot and then
+    validates the materialized full DB fail-closed.
+    """
+    if measurement_db_root.exists() and any(measurement_db_root.iterdir()):
+        raise MeasurementInterfaceError(
+            f"{MEASUREMENT_FAILURE_CLASS}: refusing to overwrite measurement state "
+            f"{measurement_db_root}"
+        )
+    measurement_db_root.mkdir(parents=True, exist_ok=True)
+    from appworld.apps.lib.models.db import apply_db_changes
+
+    manifest: dict[str, Any] = {
+        "failure_class": MEASUREMENT_FAILURE_CLASS,
+        "source_db_root": str(source_db_root),
+        "changes_db_root": str(changes_db_root),
+        "measurement_db_root": str(measurement_db_root),
+        "apps": {},
+    }
+    for app in sorted(required_tables_by_app):
+        required_tables = required_tables_by_app[app]
+        source = source_db_root / f"{app}.db"
+        source_connection, source_info = _sqlite_inventory(
+            source, required_tables=required_tables
+        )
+        source_connection.close()
+        changes = changes_db_root / f"{app}.jsonl"
+        if not changes.is_file():
+            raise MeasurementInterfaceError(
+                f"{MEASUREMENT_FAILURE_CLASS}: missing AppWorld changes file {changes}"
+            )
+        target = measurement_db_root / f"{app}.db"
+        shutil.copy2(source, target)
+        try:
+            connection = sqlite3.connect(target)
+            try:
+                apply_db_changes(connection, str(changes))
+            finally:
+                connection.close()
+        except Exception as exc:
+            raise MeasurementInterfaceError(
+                f"{MEASUREMENT_FAILURE_CLASS}: failed to apply AppWorld changes for {app}: "
+                f"{type(exc).__name__}"
+            ) from exc
+        target_connection, target_info = _sqlite_inventory(
+            target, required_tables=required_tables
+        )
+        target_connection.close()
+        manifest["apps"][app] = {
+            "required_tables": sorted(required_tables),
+            "source": source_info,
+            "changes_path": str(changes),
+            "changes_bytes": changes.stat().st_size,
+            "changes_sha256": sha256_file(changes),
+            "measurement": target_info,
+        }
+    manifest["content_sha256"] = sha256_value(manifest)
+    return manifest
+
+
+def evaluate_arm_from_materialized_state(
+    *,
+    arm: dict[str, Any],
+    source_db_root: Path,
+    changes_db_root: Path,
+    measurement_db_root: Path,
+) -> dict[str, Any]:
+    required_tables_by_app: dict[str, set[str]] = {}
+    for constraint in arm["constraints"]:
+        binding = constraint["evaluator_binding"]
+        required_tables_by_app.setdefault(binding["app"], set()).add(binding["table"])
+    measurement = materialize_appworld_measurement_state(
+        source_db_root=source_db_root,
+        changes_db_root=changes_db_root,
+        measurement_db_root=measurement_db_root,
+        required_tables_by_app=required_tables_by_app,
+    )
+    target: dict[str, bool] = {}
+    non_target: dict[str, bool] = {}
+    connections: dict[str, sqlite3.Connection] = {}
+    try:
+        for constraint in arm["constraints"]:
+            binding = constraint["evaluator_binding"]
+            app = binding["app"]
+            if app not in connections:
+                connections[app], _ = _sqlite_inventory(
+                    measurement_db_root / f"{app}.db",
+                    required_tables=required_tables_by_app[app],
+                )
+            passed = evaluate_binding(connections[app], binding)
+            destination = target if constraint["role"] == "TARGET" else non_target
+            destination[constraint["constraint_id"]] = passed
+    finally:
+        for connection in connections.values():
+            connection.close()
+    return {
+        "target": target,
+        "non_target": non_target,
+        "target_success": all(target.values()),
+        "non_target_preservation": (
+            sum(non_target.values()) / len(non_target) if non_target else 1.0
+        ),
+        "measurement": measurement,
+    }
 
 
 def _copy_or_link(source: Path, target: Path) -> None:
@@ -106,6 +273,8 @@ class AppWorldToolWorld:
             random_seed=seed,
         )
         self.output_db_root = Path(self._world.output_db_home_path_on_disk)
+        self.source_db_root = runtime_root / "data" / "tasks" / task_id / "dbs"
+        self.measurement_db_root = self.output_db_root.parent / "measurement-full-dbs"
         self._tools = []
         allowed_prefixes = (
             None
@@ -139,29 +308,12 @@ class AppWorldToolWorld:
 
     def save_and_evaluate(self, arm: dict[str, Any]) -> dict[str, Any]:
         self._world.save()
-        target: dict[str, bool] = {}
-        non_target: dict[str, bool] = {}
-        connections: dict[str, sqlite3.Connection] = {}
-        try:
-            for constraint in arm["constraints"]:
-                binding = constraint["evaluator_binding"]
-                app = binding["app"]
-                if app not in connections:
-                    connections[app] = sqlite3.connect(self.output_db_root / f"{app}.db")
-                passed = evaluate_binding(connections[app], binding)
-                destination = target if constraint["role"] == "TARGET" else non_target
-                destination[constraint["constraint_id"]] = passed
-        finally:
-            for connection in connections.values():
-                connection.close()
-        return {
-            "target": target,
-            "non_target": non_target,
-            "target_success": all(target.values()),
-            "non_target_preservation": (
-                sum(non_target.values()) / len(non_target) if non_target else 1.0
-            ),
-        }
+        return evaluate_arm_from_materialized_state(
+            arm=arm,
+            source_db_root=self.source_db_root,
+            changes_db_root=self.output_db_root,
+            measurement_db_root=self.measurement_db_root,
+        )
 
     def close(self) -> None:
         self._world.close()
