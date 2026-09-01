@@ -131,6 +131,7 @@ class OfficialTrainingQualificationArtifactTest(unittest.TestCase):
         license_gate = self.load("license_gate.json")
         self.assertEqual(license_gate["status"], "LICENSE_NOT_CONFIRMED")
         self.assertEqual(license_gate["accepted_receipt_exactly"], LICENSE_RECEIPT)
+        self.assertEqual(set(license_gate["licenses"].values()), {"LICENSE_NOT_CONFIRMED"})
         self.assertIsNone(license_gate["observed_receipt"])
         self.assertFalse(license_gate["licensed_corpus_materialized"])
         authority = self.load("authority.json")
@@ -139,6 +140,8 @@ class OfficialTrainingQualificationArtifactTest(unittest.TestCase):
                     "official_instructscene_training", "training_qualification_run",
                     "p1", "p2", "p3"):
             self.assertFalse(authority[key])
+        self.assertEqual(set(authority["training_status"].values()), {"NOT_STARTED"})
+        self.assertEqual(authority["provider_calls"], 0)
         self.assertEqual(authority["port_010"]["status"],
                          "HOLD_EVIDENCE_REVIEW_BLOCKED")
         self.assertEqual(authority["port_010"]["evidence_review"], "BLOCK_BAKE_IN")
