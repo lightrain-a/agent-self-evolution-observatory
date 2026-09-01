@@ -15,6 +15,7 @@ class FakeResponse:
         self.status_code = status_code
         self._payload = payload
         self.text = ""
+        self.headers: dict[str, str] = {}
 
     def json(self) -> dict:
         return self._payload
@@ -98,6 +99,20 @@ class ReasoningBankArkProviderTest(unittest.TestCase):
         self.assertEqual(result["text"], "OK")
         self.assertEqual(result["raw_text"], "OK")
         self.assertRegex(result["raw_payload_sha256"], r"^[0-9a-f]{64}$")
+
+    def test_only_safe_rate_quota_headers_are_persisted(self) -> None:
+        response = FakeResponse(200, success_payload())
+        response.headers = {
+            "X-RateLimit-Remaining-Requests": "17",
+            "Retry-After": "2",
+            "Authorization": "SECRET_SENTINEL",
+            "Set-Cookie": "private",
+        }
+        client = ArkReasoningBankClient(settings(), session=FakeSession([response]))
+        result = client.create_response(input_items="probe")
+        self.assertEqual(result["response_headers"], {
+            "x-ratelimit-remaining-requests": "17", "retry-after": "2"})
+        self.assertNotIn("SECRET_SENTINEL", str(result["response_headers"]))
 
     def test_raw_text_preserves_memory_induction_split_boundaries(self) -> None:
         payload = success_payload()
