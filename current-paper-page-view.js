@@ -49,11 +49,21 @@
     return T(row[key]);
   };
   const venueYearTag=(work)=>{
-    const venue=String(work?.venue||"").trim();
-    const year=String(work?.year||"").trim();
-    const shortYear=year.length>=2?year.slice(-2):year;
-    if(!venue&&!shortYear)return "";
-    return `${venue||"Year"}${shortYear?`'${shortYear}`:""}`;
+    const raw=String(work?.venue||"").trim();
+    const embeddedYear=(raw.match(/\b(20\d{2})\b/)||[])[1]||"";
+    const year=embeddedYear||String(work?.year||"").trim();
+    const yy=year.length>=2?year.slice(-2):year;
+    if(!raw&&!yy)return "";
+    if(/^arxiv/i.test(raw))return `arXiv${yy?`'${yy}`:""}`;
+    if(/^iclr/i.test(raw))return `ICLR${yy?`'${yy}`:""}${/workshop/i.test(raw)?" Wkshp":""}`;
+    if(/^neurips/i.test(raw))return `NeurIPS${yy?`'${yy}`:""}${/datasets/i.test(raw)?" D&B":""}`;
+    if(/^cvpr/i.test(raw))return `CVPR${yy?`'${yy}`:""}`;
+    if(/^kdd/i.test(raw))return `KDD${yy?`'${yy}`:""}`;
+    if(/^sigir/i.test(raw))return `SIGIR${yy?`'${yy}`:""}`;
+    if(/findings.*naacl|naacl.*findings/i.test(raw))return `NAACL Findings${yy?`'${yy}`:""}`;
+    if(/^npj artificial intelligence/i.test(raw))return `npj AI${yy?`'${yy}`:""}`;
+    const venue=raw.replace(/\b20\d{2}\b/g,"").replace(/\s{2,}/g," ").trim();
+    return `${venue||"Year"}${yy?`'${yy}`:""}`;
   };
   const relatedWorkComparison=(story)=>{
     if(!story?.approaches?.length)return "";
@@ -260,7 +270,13 @@
   };
   const beginnerQuick=(paper,spec)=>`<section class="cpp-plain cpp-e1-overview cpp-beginner-overview panel" id="quick-overview"><div class="cpp-section-kicker">${isZh()?"0 · 先看懂问题":"0 · START HERE"}</div><h2>${isZh()?"30 秒先抓住这篇论文在研究什么":"The paper in 30 seconds"}</h2><p class="cpp-e1-hook">${E(spec.hook)}</p><div class="cpp-e1-overview-grid"><article><span>${isZh()?"先看一个例子":"ONE EXAMPLE"}</span><p>${E(spec.example)}</p></article><article><span>${isZh()?"本文真正的问题":"THE QUESTION"}</span><p>${E(T(paper.question))}</p></article><article class="answer"><span>${isZh()?"一句话答案":"THE ANSWER"}</span><p>${E(spec.answer)}</p></article></div><div class="cpp-term-strip">${spec.terms.map(x=>`<span><b>${E(x[0])}</b>${E(x[1])}</span>`).join("")}</div></section>`;
   const beginnerOrigin=(spec)=>`<section class="panel cpp-origin cpp-e1-origin cpp-beginner-origin" id="problem-origin"><div class="cpp-section-kicker">${isZh()?"1 · 为什么会有这个问题":"1 · WHY THIS PROBLEM EXISTS"}</div><h2>${isZh()?"这个研究问题是怎么一步步冒出来的？":"How did this research problem emerge?"}</h2><div class="cpp-origin-grid">${spec.origin.map(x=>`<article><b>${E(x[0])}</b><p>${E(x[1])}</p></article>`).join("")}</div></section>`;
-  const beginnerGaps=(paper,spec)=>`<section class="panel cpp-related-summary cpp-beginner-gaps" id="related-work-comparison"><div class="cpp-section-kicker">${isZh()?"2 · 现有研究缺什么":"2 · WHAT PRIOR WORK STILL MISSES"}</div><h2>${isZh()?"为什么不能直接用现有思路回答？":"Why do existing approaches not answer the exact question?"}</h2><p class="cpp-design-lead">${E(spec.gapLead)}</p><div class="cpp-related-summary-grid">${spec.gaps.map((x,i)=>`<article><span>${String(i+1).padStart(2,"0")}</span><b>${E(x[0])}</b><p><strong>${isZh()?"已经能做：":"What it already does: "}</strong>${E(x[1])}</p><p><strong>${isZh()?"还缺：":"What is still missing: "}</strong>${E(x[2])}</p></article>`).join("")}</div><div class="cpp-gap-callout"><b>${isZh()?`${paper.code} 真正切入的位置`:`Where ${paper.code} enters`}</b><p>${E(T(paper.thesis))}</p></div></section>`;
+  const summaryLiterature=(dossier)=>{
+    const priority=(w)=>/^arxiv/i.test(String(w?.venue||""))?1:0;
+    const groups=(dossier?.approaches||[]).map(a=>({name:a.name||"",works:[...(a.closest_work||[])].sort((x,y)=>priority(x)-priority(y)).slice(0,2)})).filter(x=>x.works.length);
+    if(!groups.length)return "";
+    return `<div class="cpp-gap-literature"><div class="cpp-gap-literature-head"><b>${isZh()?"代表工作 · 会议 / 年份":"Representative work · venue / year"}</b><span>${isZh()?"正式发表显示 venue；未正式发表保留 arXiv。":"Published work shows its venue; preprints remain arXiv."}</span></div><div class="cpp-gap-literature-grid">${groups.map(g=>`<article><strong>${E(g.name)}</strong>${g.works.map(w=>`<a href="${E(w.url||w.u||"#")}" target="_blank" rel="noopener"><span>${E(w.title||w.t||"")}</span>${venueYearTag(w)?`<em class="cpp-venue-tag">${E(venueYearTag(w))}</em>`:""}</a>`).join("")}</article>`).join("")}</div></div>`;
+  };
+  const beginnerGaps=(paper,spec,dossier)=>`<section class="panel cpp-related-summary cpp-beginner-gaps" id="related-work-comparison"><div class="cpp-section-kicker">${isZh()?"2 · 现有研究缺什么":"2 · WHAT PRIOR WORK STILL MISSES"}</div><h2>${isZh()?"为什么不能直接用现有思路回答？":"Why do existing approaches not answer the exact question?"}</h2><p class="cpp-design-lead">${E(spec.gapLead)}</p><div class="cpp-related-summary-grid">${spec.gaps.map((x,i)=>`<article><span>${String(i+1).padStart(2,"0")}</span><b>${E(x[0])}</b><p><strong>${isZh()?"已经能做：":"What it already does: "}</strong>${E(x[1])}</p><p><strong>${isZh()?"还缺：":"What is still missing: "}</strong>${E(x[2])}</p></article>`).join("")}</div>${summaryLiterature(dossier)}<div class="cpp-gap-callout"><b>${isZh()?`${paper.code} 真正切入的位置`:`Where ${paper.code} enters`}</b><p>${E(T(paper.thesis))}</p></div></section>`;
   const beginnerWork=(spec)=>`<section class="panel cpp-e1-work cpp-beginner-work" id="mechanism"><div class="cpp-section-kicker">${isZh()?"3 · 我们具体做了什么":"3 · WHAT WE DID"}</div><h2>${isZh()?"把问题变成一个可被证伪的实验，我们做了四步":"Four steps turn the question into a falsifiable experiment"}</h2><div class="cpp-work-grid">${spec.work.map((x,i)=>`<article><span>0${i+1}</span><div><b>${E(x[0])}</b><strong>${E(x[1])}</strong><p>${E(x[2])}</p></div></article>`).join("")}</div><div class="cpp-simple-chain"><b>${isZh()?"整篇论文可以先沿这条链理解":"A simple way to read the paper"}</b><div>${spec.chain.map((x,i)=>`${i?'<i>→</i>':''}<span>${E(x)}</span>`).join("")}</div></div></section>`;
   const beginnerResults=(spec)=>`<section class="panel cpp-e1-results cpp-beginner-results" id="experiment-results"><div class="cpp-section-kicker">${isZh()?"4 · 实验现在回答了什么":"4 · WHAT THE EVIDENCE ANSWERS"}</div><h2>${isZh()?"不要按实验编号记：直接看三个核心问题的当前答案":"Read the evidence by question, not by experiment ID"}</h2><div class="cpp-e1-rq-grid">${spec.rqs.map(x=>`<article><header><span>${E(x[0])}</span><b>${E(x[1])}</b></header><p class="cpp-rq-how"><strong>${isZh()?"怎么测：":"How: "}</strong>${E(x[2])}</p><div class="cpp-rq-answer"><strong>${isZh()?"当前答案":"Current answer"}</strong><p>${E(x[3])}</p></div></article>`).join("")}</div><h3 data-toc="false">${isZh()?"最值得记住的三个证据":"Three pieces of evidence to remember"}</h3><div class="cpp-proof-grid cpp-proof-grid-three">${spec.evidence.map(x=>`<article><strong>${E(x[0])}</strong><p>${E(x[1])}</p></article>`).join("")}</div></section>`;
   const beginnerContributions=(spec)=>`<section class="panel cpp-e1-contributions cpp-beginner-contributions" id="claim-boundary"><div class="cpp-section-kicker">${isZh()?"5 · 最终贡献与边界":"5 · CONTRIBUTIONS & BOUNDARIES"}</div><h2>${isZh()?"所以这篇论文 / 科学对象真正多做了什么？":"What does this paper or scientific object actually add?"}</h2><div class="cpp-contribution-grid">${spec.contributions.map(x=>`<article><span>${E(x[0])}</span><div><b>${E(x[1])}</b><p>${E(x[2])}</p></div></article>`).join("")}</div><div class="cpp-boundary-box"><b>${isZh()?"同样重要：现在明确不能写成什么":"Equally important: what cannot currently be claimed"}</b>${list(spec.limits.map(x=>({zh:x,en:x})),"boundary")}</div></section>`;
@@ -273,7 +289,7 @@
   };
   const renderBeginnerPage=(pageId,paper,reg,detail,story)=>{
     const spec=beginnerSpec(pageId); if(!spec)return "";
-    return `<main class="cpp-page cpp-e1-page cpp-beginner-page" data-paper-order="${paper.order}"><header class="cpp-hero"><div class="cpp-hero-top"><span class="cpp-index">${String(paper.order).padStart(2,"0")}</span><div class="cpp-badges">${statusBadge(paper,reg)}</div></div><div class="eyebrow">${E(T(paper.area))}</div><h1>${E(T(paper.title))}</h1><p class="cpp-hero-subtitle">${E(spec.hook)}</p><p class="cpp-canonical-title">${E(paper.canonicalTitle)}</p>${heroLinks(paper,reg)}</header>${beginnerQuick(paper,spec)}${beginnerOrigin(spec)}${beginnerGaps(paper,spec)}${beginnerWork(spec)}${beginnerResults(spec)}${beginnerContributions(spec)}${beginnerEvolution(paper,detail,spec)}${beginnerStatus(paper,reg,spec)}${beginnerDeepDive(paper,reg,detail,story,spec)}<div class="cpp-back-collection"><a href="selected-paper.html">${isZh()?"← 返回当前论文合集":"← Back to current paper collection"}</a></div></main>`;
+    return `<main class="cpp-page cpp-e1-page cpp-beginner-page" data-paper-order="${paper.order}"><header class="cpp-hero"><div class="cpp-hero-top"><span class="cpp-index">${String(paper.order).padStart(2,"0")}</span><div class="cpp-badges">${statusBadge(paper,reg)}</div></div><div class="eyebrow">${E(T(paper.area))}</div><h1>${E(T(paper.title))}</h1><p class="cpp-hero-subtitle">${E(spec.hook)}</p><p class="cpp-canonical-title">${E(paper.canonicalTitle)}</p>${heroLinks(paper,reg)}</header>${beginnerQuick(paper,spec)}${beginnerOrigin(spec)}${beginnerGaps(paper,spec,story||detail)}${beginnerWork(spec)}${beginnerResults(spec)}${beginnerContributions(spec)}${beginnerEvolution(paper,detail,spec)}${beginnerStatus(paper,reg,spec)}${beginnerDeepDive(paper,reg,detail,story,spec)}<div class="cpp-back-collection"><a href="selected-paper.html">${isZh()?"← 返回当前论文合集":"← Back to current paper collection"}</a></div></main>`;
   };
   const collectionCard=(id,paper)=>{
     const d=detailFor(id), reg=registryPaper(paper), label=T(d.collectionLabel)||`${orderMark(paper.order)} ${paper.code}`;
