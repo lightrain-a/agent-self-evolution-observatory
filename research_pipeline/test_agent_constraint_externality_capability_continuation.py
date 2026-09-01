@@ -98,6 +98,70 @@ class CapabilityContinuationTests(unittest.TestCase):
             )
             self.assertEqual(mode, "EXISTING_CREDENTIAL_USER_AUTHORIZED")
 
+    def test_toolcap_failure_counts_as_incomplete_capability_measurement_not_interface(self) -> None:
+        units = remaining_capability_units()
+        with tempfile.TemporaryDirectory() as directory:
+            ledger = Path(directory) / "continuation-ledger.jsonl"
+            measurements = Path(directory) / "toolcap-measurements.jsonl"
+            rows = []
+            for index, unit in enumerate(units):
+                rows.append({
+                    "schema_version": "ace-exactly-once-ledger-v1",
+                    "object_id": OBJECT_ID,
+                    "event": "DISPATCH",
+                    "unit_id": unit.unit_id,
+                })
+                if index == 0:
+                    rows.append({
+                        "schema_version": "ace-exactly-once-ledger-v1",
+                        "object_id": OBJECT_ID,
+                        "event": "FAILURE",
+                        "unit_id": unit.unit_id,
+                        "failure_class": "RunnerError",
+                        "message": "Tool-call cap exceeded.",
+                        "retry_attempted": False,
+                        "provider_receipts": [{"resolved_model": ALLOWED_ALIAS}],
+                    })
+                    measurement = {
+                        "schema_version": "ace-capability-toolcap-measurement-v1",
+                        "object_id": OBJECT_ID,
+                        "continuation_id": "CAPABILITY-INTERFACE-RECOVERY-CONTINUATION-R1",
+                        "unit_id": unit.unit_id,
+                        "family_id": unit.family_id,
+                        "classification": "CAPABILITY_TOOL_LOOP_INCOMPLETE_AT_FROZEN_CAP",
+                        "tool_loop_completed": False,
+                        "executed_tool_call_cap": 12,
+                        "provider_receipt_count": 1,
+                        "provider_reexecution": False,
+                        "retry": False,
+                        "replacement": False,
+                        "recovery_mode": "TEST",
+                        "evaluation": {"target_success": False, "non_target_preservation": 1.0},
+                    }
+                    measurement["content_sha256"] = sha256_value(measurement)
+                    measurements.write_text(json.dumps(measurement, sort_keys=True) + "\n", encoding="utf-8")
+                else:
+                    rows.append({
+                        "schema_version": "ace-exactly-once-ledger-v1",
+                        "object_id": OBJECT_ID,
+                        "event": "COMPLETION",
+                        "unit_id": unit.unit_id,
+                        "provider_receipts": [{"resolved_model": ALLOWED_ALIAS}],
+                        "result": {
+                            "tool_call_count": 1,
+                            "evaluation": {"target_success": True, "non_target_preservation": 1.0},
+                        },
+                    })
+            ledger.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in rows), encoding="utf-8")
+            result = adjudicate_continuation(
+                recovery_path=RECOVERY,
+                continuation_ledger_path=ledger,
+                toolcap_measurement_ledger_path=measurements,
+            )
+            self.assertEqual(result["tool_cap_incomplete_measurements"], 1)
+            self.assertEqual(result["status"], "CAPABILITY_CALIBRATION_PASS")
+            self.assertEqual(result["gate"]["tool_loop_completion_rate"], 0.875)
+
     def test_combined_adjudication_uses_one_recovery_plus_seven_new_units(self) -> None:
         units = remaining_capability_units()
         with tempfile.TemporaryDirectory() as directory:

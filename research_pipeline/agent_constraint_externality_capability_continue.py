@@ -8,6 +8,7 @@ from typing import Any
 
 from research_pipeline.agent_constraint_externality_appworld_runtime import (
     AppWorldToolWorld,
+    evaluate_arm_from_materialized_state,
     prepare_appworld_runtime_root,
 )
 from research_pipeline.agent_constraint_externality_capability_execute import (
@@ -20,6 +21,7 @@ from research_pipeline.agent_constraint_externality_capability_measurement_recov
 from research_pipeline.agent_constraint_externality_runner_core import (
     ALLOWED_ALIAS,
     DEFAULT_BASE_URL,
+    MAX_TOOL_CALLS,
     OBJECT_ID,
     AppendOnlyLedger,
     RunnerError,
@@ -32,6 +34,8 @@ from research_pipeline.appworld_constraint_compiler import load_protected_spec
 from research_pipeline.config import DEFAULT_ENV_FILE, load_env_file
 
 CONTINUATION_ID = "CAPABILITY-INTERFACE-RECOVERY-CONTINUATION-R1"
+TOOL_CAP_FAILURE_MESSAGE = "Tool-call cap exceeded."
+TOOL_CAP_MEASUREMENT_SCHEMA = "ace-capability-toolcap-measurement-v1"
 QUALIFICATION_PATH = Path(
     "generated/agent-constraint-externality-appworld-interface-qualification-r1-20260901.json"
 )
@@ -148,6 +152,130 @@ def require_credential_authorization(
     return "EXISTING_CREDENTIAL_USER_AUTHORIZED"
 
 
+def _toolcap_measurement_rows(path: Path) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    rows: list[dict[str, Any]] = []
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), start=1):
+        if not line.strip():
+            continue
+        try:
+            row = json.loads(line)
+        except json.JSONDecodeError as exc:
+            raise RunnerError(f"Malformed tool-cap measurement row {number}.") from exc
+        if row.get("schema_version") != TOOL_CAP_MEASUREMENT_SCHEMA:
+            raise RunnerError("Unexpected tool-cap measurement schema.")
+        claimed = row.get("content_sha256")
+        unsigned = dict(row)
+        unsigned.pop("content_sha256", None)
+        if claimed != sha256_value(unsigned):
+            raise RunnerError("Tool-cap measurement content hash mismatch.")
+        rows.append(row)
+    ids = [row["unit_id"] for row in rows]
+    if len(ids) != len(set(ids)):
+        raise RunnerError("Duplicate tool-cap measurement unit.")
+    return rows
+
+
+def _append_toolcap_measurement(
+    path: Path,
+    *,
+    unit_id: str,
+    family_id: str,
+    evaluation: dict[str, Any],
+    provider_receipt_count: int,
+    recovery_mode: str,
+) -> dict[str, Any]:
+    existing = {row["unit_id"] for row in _toolcap_measurement_rows(path)}
+    if unit_id in existing:
+        raise RunnerError(f"Duplicate tool-cap measurement for {unit_id}")
+    row: dict[str, Any] = {
+        "schema_version": TOOL_CAP_MEASUREMENT_SCHEMA,
+        "object_id": OBJECT_ID,
+        "continuation_id": CONTINUATION_ID,
+        "unit_id": unit_id,
+        "family_id": family_id,
+        "classification": "CAPABILITY_TOOL_LOOP_INCOMPLETE_AT_FROZEN_CAP",
+        "tool_loop_completed": False,
+        "executed_tool_call_cap": MAX_TOOL_CALLS,
+        "provider_receipt_count": provider_receipt_count,
+        "provider_reexecution": False,
+        "retry": False,
+        "replacement": False,
+        "recovery_mode": recovery_mode,
+        "evaluation": evaluation,
+    }
+    row["content_sha256"] = sha256_value(row)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+        handle.flush()
+        os.fsync(handle.fileno())
+    return row
+
+
+def _is_toolcap_failure(row: dict[str, Any]) -> bool:
+    return (
+        row.get("event") == "FAILURE"
+        and row.get("failure_class") == "RunnerError"
+        and row.get("message") == TOOL_CAP_FAILURE_MESSAGE
+        and row.get("retry_attempted") is False
+    )
+
+
+def _unit_runtime_parts(
+    *, runtime_root: Path, unit: Any
+) -> tuple[Path, str, Path, Path, Path]:
+    unit_root = runtime_root / "worlds" / unit.unit_id.replace(":", "_").replace("|", "_")
+    task_id = "acecap" + unit.family_id.lower().replace("-", "") + f"r{unit.repeat}_1"
+    source_db_root = unit_root / "data" / "tasks" / task_id / "dbs"
+    changes_db_root = (
+        unit_root
+        / "experiments/outputs/ace-capability-continuation-r1/tasks"
+        / task_id
+        / "dbs"
+    )
+    measurement_db_root = unit_root / "measurement-toolcap-r1"
+    return unit_root, task_id, source_db_root, changes_db_root, measurement_db_root
+
+
+def _recover_existing_toolcap_measurement(
+    *,
+    unit: Any,
+    family: dict[str, Any],
+    runtime_root: Path,
+    failure_row: dict[str, Any],
+    measurement_ledger_path: Path,
+) -> None:
+    if not _is_toolcap_failure(failure_row):
+        raise RunnerError("Only frozen tool-cap failures can use capability boundary recovery.")
+    existing = {row["unit_id"] for row in _toolcap_measurement_rows(measurement_ledger_path)}
+    if unit.unit_id in existing:
+        return
+    arm = next(arm for arm in family["arms"] if arm["coupling_level"] == "LOW")
+    _, _, source_db_root, changes_db_root, measurement_db_root = _unit_runtime_parts(
+        runtime_root=runtime_root, unit=unit
+    )
+    if measurement_db_root.exists():
+        import shutil
+
+        shutil.rmtree(measurement_db_root)
+    evaluation = evaluate_arm_from_materialized_state(
+        arm=arm,
+        source_db_root=source_db_root,
+        changes_db_root=changes_db_root,
+        measurement_db_root=measurement_db_root,
+    )
+    _append_toolcap_measurement(
+        measurement_ledger_path,
+        unit_id=unit.unit_id,
+        family_id=unit.family_id,
+        evaluation=evaluation,
+        provider_receipt_count=len(failure_row.get("provider_receipts", [])),
+        recovery_mode="OFFLINE_FROZEN_CAP_BOUNDARY_MEASUREMENT",
+    )
+
+
 def execute_remaining_capability(
     *,
     appworld_root: Path,
@@ -155,6 +283,7 @@ def execute_remaining_capability(
     runtime_root: Path,
     ledger_path: Path,
     recovery_path: Path,
+    toolcap_measurement_ledger_path: Path,
 ) -> None:
     require_recovery_qualification()
     contract = require_continuation_contract()
@@ -171,15 +300,32 @@ def execute_remaining_capability(
     ledger = AppendOnlyLedger(ledger_path)
     units = remaining_capability_units()
     states = ledger.states()
+    failure_rows = {
+        row["unit_id"]: row for row in ledger.rows() if row["event"] == "FAILURE"
+    }
     for unit in units:
+        family = families[unit.family_id]
         state = states.get(unit.unit_id)
         if state == "COMPLETION":
+            continue
+        if state == "FAILURE":
+            failure_row = failure_rows.get(unit.unit_id, {})
+            if not _is_toolcap_failure(failure_row):
+                raise RunnerError(
+                    f"Continuation cannot proceed past non-toolcap failure {unit.unit_id}."
+                )
+            _recover_existing_toolcap_measurement(
+                unit=unit,
+                family=family,
+                runtime_root=runtime_root,
+                failure_row=failure_row,
+                measurement_ledger_path=toolcap_measurement_ledger_path,
+            )
             continue
         if state is not None:
             raise RunnerError(
                 f"Continuation cannot replay/replace non-completed unit {unit.unit_id}: {state}"
             )
-        family = families[unit.family_id]
         arm = next(arm for arm in family["arms"] if arm["coupling_level"] == "LOW")
         task_id = "acecap" + unit.family_id.lower().replace("-", "") + f"r{unit.repeat}_1"
         unit_root = runtime_root / "worlds" / unit.unit_id.replace(":", "_").replace("|", "_")
@@ -194,18 +340,37 @@ def execute_remaining_capability(
             allowed_apps=set(family["fixture"]["apps"]),
         )
         try:
-            run_episode(
-                unit=unit,
-                instruction=arm["task_instruction"],
-                snapshot_sha256=materialized["initial_snapshot_sha256"],
-                repair_sha256=None,
-                world=world,
-                provider=provider,
-                ledger=ledger,
-                model=ALLOWED_ALIAS,
-                base_url=base_url,
-                result_evaluator=lambda arm=arm, world=world: world.save_and_evaluate(arm),
-            )
+            try:
+                run_episode(
+                    unit=unit,
+                    instruction=arm["task_instruction"],
+                    snapshot_sha256=materialized["initial_snapshot_sha256"],
+                    repair_sha256=None,
+                    world=world,
+                    provider=provider,
+                    ledger=ledger,
+                    model=ALLOWED_ALIAS,
+                    base_url=base_url,
+                    result_evaluator=lambda arm=arm, world=world: world.save_and_evaluate(arm),
+                )
+            except RunnerError as exc:
+                if str(exc) != TOOL_CAP_FAILURE_MESSAGE:
+                    raise
+                evaluation = world.save_and_evaluate(arm)
+                failure_row = next(
+                    row for row in reversed(ledger.rows())
+                    if row["unit_id"] == unit.unit_id and row["event"] == "FAILURE"
+                )
+                if not _is_toolcap_failure(failure_row):
+                    raise RunnerError("Frozen tool-cap failure ledger classification mismatch.")
+                _append_toolcap_measurement(
+                    toolcap_measurement_ledger_path,
+                    unit_id=unit.unit_id,
+                    family_id=unit.family_id,
+                    evaluation=evaluation,
+                    provider_receipt_count=len(failure_row.get("provider_receipts", [])),
+                    recovery_mode="INLINE_FROZEN_CAP_BOUNDARY_MEASUREMENT",
+                )
         finally:
             world.close()
         states = ledger.states()
@@ -218,6 +383,7 @@ def adjudicate_continuation(
     *,
     recovery_path: Path,
     continuation_ledger_path: Path,
+    toolcap_measurement_ledger_path: Path | None = None,
 ) -> dict[str, Any]:
     recovery = load_recovery(recovery_path)
     ledger = AppendOnlyLedger(continuation_ledger_path)
@@ -225,13 +391,14 @@ def adjudicate_continuation(
     ledger.assert_all_terminal(units)
     rows = ledger.rows()
     failures = [row for row in rows if row["event"] == "FAILURE"]
-    if failures:
+    invalid_failures = [row for row in failures if not _is_toolcap_failure(row)]
+    if invalid_failures:
         result: dict[str, Any] = {
             "schema_version": "ace-qwen-capability-continuation-r1-v1",
             "object_id": OBJECT_ID,
             "continuation_id": CONTINUATION_ID,
             "status": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP",
-            "failure_units": [row["unit_id"] for row in failures],
+            "failure_units": [row["unit_id"] for row in invalid_failures],
             "recovery_artifact_sha256": sha256_file(recovery_path),
             "continuation_ledger_sha256": sha256_file(continuation_ledger_path),
             "f0_backbone": None,
@@ -240,8 +407,19 @@ def adjudicate_continuation(
         result["content_sha256"] = sha256_value(result)
         return result
     completion_rows = [row for row in rows if row["event"] == "COMPLETION"]
-    if len(completion_rows) != 7:
-        raise RunnerError("Continuation adjudication requires seven completion rows.")
+    toolcap_rows = (
+        _toolcap_measurement_rows(toolcap_measurement_ledger_path)
+        if toolcap_measurement_ledger_path
+        else []
+    )
+    toolcap_by_unit = {row["unit_id"]: row for row in toolcap_rows}
+    missing_toolcap = [row["unit_id"] for row in failures if row["unit_id"] not in toolcap_by_unit]
+    if missing_toolcap:
+        raise RunnerError(
+            "Tool-cap failures lack frozen-boundary measurements: " + ", ".join(missing_toolcap)
+        )
+    if len(completion_rows) + len(failures) != 7:
+        raise RunnerError("Continuation adjudication requires seven terminal scientific units.")
     completions: list[dict[str, Any]] = [{
         "tool_loop_completed": bool(recovery["tool_loop_completed"]),
         "target_success": bool(recovery["evaluation"]["target_success"]),
@@ -257,7 +435,19 @@ def adjudicate_continuation(
         continuation_agent_requests += len(receipts)
         resolved_models.update(receipt["resolved_model"] for receipt in receipts)
         completions.append({
-            "tool_loop_completed": result["tool_call_count"] > 0,
+            "tool_loop_completed": True,
+            "target_success": bool(evaluation["target_success"]),
+            "non_target_preservation": float(evaluation["non_target_preservation"]),
+            "malformed_tool_calls": 0,
+        })
+    for failure in failures:
+        receipts = failure.get("provider_receipts", [])
+        continuation_agent_requests += len(receipts)
+        resolved_models.update(receipt["resolved_model"] for receipt in receipts)
+        measurement = toolcap_by_unit[failure["unit_id"]]
+        evaluation = measurement["evaluation"]
+        completions.append({
+            "tool_loop_completed": False,
             "target_success": bool(evaluation["target_success"]),
             "non_target_preservation": float(evaluation["non_target_preservation"]),
             "malformed_tool_calls": 0,
@@ -275,6 +465,7 @@ def adjudicate_continuation(
         "valid_capability_measurements": 8,
         "recovered_measurements": 1,
         "newly_executed_measurements": 7,
+        "tool_cap_incomplete_measurements": len(failures),
         "historical_agent_model_requests": int(recovery["historical_provider_request_count"]),
         "continuation_agent_model_requests": continuation_agent_requests,
         "catalog_provider_requests_historical": 1,
@@ -284,6 +475,11 @@ def adjudicate_continuation(
         ),
         "recovery_artifact_sha256": sha256_file(recovery_path),
         "continuation_ledger_sha256": sha256_file(continuation_ledger_path),
+        "toolcap_measurement_ledger_sha256": (
+            sha256_file(toolcap_measurement_ledger_path)
+            if toolcap_measurement_ledger_path and toolcap_measurement_ledger_path.exists()
+            else None
+        ),
         "f0_backbone": ALLOWED_ALIAS if gate["verdict"] == "CAPABILITY_CALIBRATION_PASS" else None,
         "authority": {
             "f0": False,
@@ -309,16 +505,19 @@ def main() -> None:
     parser.add_argument("--recovery", type=Path, required=True)
     parser.add_argument("--result-output", type=Path, required=True)
     args = parser.parse_args()
+    toolcap_measurements = args.runtime_root / "toolcap-measurements.jsonl"
     execute_remaining_capability(
         appworld_root=args.appworld_root,
         protected_bundle=args.protected_bundle,
         runtime_root=args.runtime_root,
         ledger_path=args.ledger,
         recovery_path=args.recovery,
+        toolcap_measurement_ledger_path=toolcap_measurements,
     )
     result = adjudicate_continuation(
         recovery_path=args.recovery,
         continuation_ledger_path=args.ledger,
+        toolcap_measurement_ledger_path=toolcap_measurements,
     )
     args.result_output.parent.mkdir(parents=True, exist_ok=True)
     args.result_output.write_text(
