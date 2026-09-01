@@ -1,0 +1,60 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-transport-repair-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "generated_at": "2026-09-01T19:11:27+08:00",
+  "status": "TRANSPORT_REPAIR_PASS_S25_HF_XET_RELAY",
+  "segment_id": "S25",
+  "diagnosis": "The final two 69 hf-mirror curl files stopped making byte progress while the original single-writer parent remained healthy. The parent was preserved until only its two curl children were terminated and it wrote a fail-closed PAYLOAD_SEGMENT_TRANSPORT_HOLD receipt. The partial files remained non-evidence.",
+  "original_hold": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-materialization-payload-seg25-receipt-20260901.json",
+    "sha256": "da0fc565c3dcdb307c8108aefa05707e1c344cdfb45b5ef3e67efad35b7fab1c",
+    "status": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
+    "verified_file_count": 45,
+    "remaining_file_count": 2
+  },
+  "frozen_files": [
+    {
+      "path": "videos/observation.rgb.zed_link_camera_0/chunk-068/file-047.mp4",
+      "lfs_size_bytes": 175519713,
+      "lfs_oid_sha256": "e96554c08d1af6ab7eddd24b320a8e9ed41c1a38eaae13a6b2f426f1a6970f95"
+    },
+    {
+      "path": "videos/observation.rgb.zed_link_camera_0/chunk-073/file-017.mp4",
+      "lfs_size_bytes": 172425472,
+      "lfs_oid_sha256": "620d85a691d13e05c88768ed83ca55ed0e5439036f6429cd5d671606a6ed1911"
+    }
+  ],
+  "repair": {
+    "relay_host": "222.20.126.67",
+    "client": "huggingface_hub hf CLI with hf_xet high-performance transport",
+    "endpoint": "https://hf-mirror.com",
+    "dataset_revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+    "remote_relay_size_sha_verified": true,
+    "local_quarantine_size_sha_verified": true,
+    "local_part_size_sha_verified_before_materializer": true,
+    "relay_quarantine": "/data/wyt/behavior-2026-shared26-v3.0.transport-quarantine/20260901-s25-hfxet-relay",
+    "finalization": "The two verified relay byte objects replaced only the non-evidence .part files while no single-writer lock was held. The unchanged original segmented materializer then reverified all 47 frozen segment files and atomically finalized the .part files."
+  },
+  "repair_receipt": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-materialization-payload-seg25-repair1-receipt-20260901.json",
+    "sha256": "e79e2567f1d684498d61bcae5efb920df36f5357a620290c8161b79f77c3b2e7",
+    "status": "PAYLOAD_SEGMENT_COMPLETE",
+    "verified_file_count": 47,
+    "verified_bytes": 8474216753,
+    "remaining_file_count": 0,
+    "partial_file_count": 0
+  },
+  "materialization_manifest_sha256": "9ee70726fb70750b23053e2358d3d42d4089238cd0bd52e5b74329279e961df4",
+  "segment_plan_sha256": "1ad14491dbbcbff289bdaada9bcd02c64ff271a7374e4e9bcdff28c8d11d493a",
+  "authority_sha256": "9379a5b0d0ccd8d5fa288327a8a1f764e511828ba5a389395712f0086b0474c9",
+  "path_oid_size_manifest_changed": false,
+  "task_or_episode_selection_changed": false,
+  "scientific_contract_changed": false,
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "gpu_used": false,
+  "training_started": false,
+  "policy_rollouts_started": false,
+  "policy_outcomes_read": false,
+  "scientific_authority": false
+}
