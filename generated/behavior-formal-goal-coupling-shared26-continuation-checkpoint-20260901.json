@@ -1,11 +1,12 @@
 {
   "canonical_closed_state": {
-    "last_closed_segment": "S23",
-    "next_segment": "S24",
+    "last_closed_segment": "S24",
+    "next_segment": "S25",
     "origin_main_parent_before_s20_integration": "60c5b183768e17366a2d4646af5c35a833e6f204",
     "origin_main_parent_before_s21_integration": "57487b4a4e0b211bcdac8310859960a10176838e",
     "origin_main_parent_before_s22_integration": "581ac386da83acc33b06bc98f789c521f2e08491",
     "origin_main_parent_before_s23_integration": "e5b8bf4ddb70168285c48f20c927688f22428088",
+    "origin_main_parent_before_s24_integration": "076ee0e3298d5f705214046c7f05949dd3feea1a",
     "s01_s07": "PAYLOAD_SEGMENT_COMPLETE",
     "s08_initial": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
     "s08_repair1": "PAYLOAD_SEGMENT_COMPLETE",
@@ -57,7 +58,11 @@
     "s23": "PAYLOAD_SEGMENT_COMPLETE",
     "s23_receipt_sha256": "b102336c561bc32491ccdcecce26fd949993b99308272f10a5ef8379dd555b6a",
     "s23_verified_bytes": 8556036311,
-    "s23_verified_file_count": 43
+    "s23_verified_file_count": 43,
+    "s24": "PAYLOAD_SEGMENT_COMPLETE",
+    "s24_receipt_sha256": "fe8234fb60f7f19240228fc64f3d1abed754a1121d50ebf7a3caf68b1c47f6f8",
+    "s24_verified_bytes": 8551841226,
+    "s24_verified_file_count": 48
   },
   "execution_authority_created_by_this_checkpoint": false,
   "execution_resume_location": {
@@ -70,7 +75,7 @@
   "model_loaded": false,
   "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
   "policy_outcomes_read": false,
-  "recorded_at": "2026-09-01T18:10:00+08:00",
+  "recorded_at": "2026-09-01T18:55:00+08:00",
   "resume_protocol": [
     "Before S22, inspect the single-writer lock holder, actor process, S22 receipt, finalized files, and partial files.",
     "Never rerun S01-S20; they are content-addressed closed segments.",
@@ -78,6 +83,6 @@
     "Transport-only retry may reuse the verified-relay pattern without changing frozen file identity, task/episode selection, or the scientific contract.",
     "No model/checkpoint weight download, model load, GPU execution, training, policy rollout, policy outcome read, task replacement, episode replacement, or claim expansion is authorized."
   ],
-  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.15",
+  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.16",
   "scientific_authority": false
 }
