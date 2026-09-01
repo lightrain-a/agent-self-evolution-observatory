@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-PREEXPOSURE-RUNNER-TRANSFER-REPAIR",
+  "recorded_at": "2026-09-01T18:53:30+08:00",
+  "status": "PREEXPOSURE_TRANSFER_REPAIR_PASS",
+  "role": "INFRASTRUCTURE_ONLY_BYTE_EXACT_RESTORATION_BEFORE_SCIENTIFIC_SOURCE_EXPOSURE",
+  "branch": "research/b1-memrl-replacement-20260901",
+  "pre_repair_execution_git_sha": "bda2c1d378d6f9a13a4bee500fd6823a9f3f1d51",
+  "live_origin_main_at_recording": "951456f752cb144883a307a89dac7101f293e3f2",
+  "host": {
+    "ssh_identity": "wyt@222.20.126.231",
+    "hostname": "ubuntu"
+  },
+  "runner": {
+    "repo_path": "research_pipeline/failure_memory_memrl_source_execute_r45m1.py",
+    "canonical_git_sha256": "101b9f3cd9056993c243b880c5b366f7009527a19b74c8b04120ba34528d6d47",
+    "remote_path": "/data/wyt/b1-memrl-r45m1-execution/frozen/source-execute-r45m1.py",
+    "corrupt_remote_sha256": "dc550474d76657c3d0a86f1bf96d8953dc0af31c62b8fd4acc0a0670c53ee3f6",
+    "corrupt_forensic_copy": "/data/wyt/b1-memrl-r45m1-execution/forensics/source-execute-r45m1.corrupt-pre-exposure.py",
+    "corrupt_forensic_sha256": "dc550474d76657c3d0a86f1bf96d8953dc0af31c62b8fd4acc0a0670c53ee3f6",
+    "failure": "remote transfer was truncated at a Codex placeholder after the first 395 canonical lines",
+    "prefix_395_sha256": "1388647a0a72be218e29d3dabaf9c677703081ceb510d7be8abc5268f606230c",
+    "restored_remote_sha256": "101b9f3cd9056993c243b880c5b366f7009527a19b74c8b04120ba34528d6d47",
+    "restoration_method": "preserve exact matching canonical first 395 lines; append exact canonical suffix from committed Git runner; verify full SHA256",
+    "python_compile_pass": true,
+    "codex_placeholder_remaining": false,
+    "scientific_logic_modified": false
+  },
+  "bindings": {
+    "migration_manifest_file_sha256": "4d5ae64e23716764c329ededa2fb26620d2bd7d8fd4127ab23f98aa3906a75b7",
+    "replacement_authority_file_sha256": "dd16a10460d6516b281d29e5c391b6986f36938be16ca8461de90300cdaaf7b4"
+  },
+  "post_repair_preflight": {
+    "status": "PREFLIGHT_PASS",
+    "receipt_sha256": "56babb185aa14e930d72a4ce2cefc035cca67d4e1317a1d94ae76cbf1021ed1e",
+    "remote_file": "/data/wyt/b1-memrl-r45m1-execution/source-build/preflight.json",
+    "remote_file_sha256": "7a6da95dc2358455020bb52461a725b9b723828ad4264cd784ccc9cbca515cab",
+    "completed_source_ledger_exists": false,
+    "source_build_receipt_exists": false,
+    "confirmatory_outcomes_observed": 0
+  },
+  "access_accounting": {
+    "scientific_source_units_executed": 0,
+    "validation_units_opened": 0,
+    "confirmatory_outcomes_observed": 0,
+    "partial_effect_inspected": false
+  },
+  "adjudication": {
+    "classification": "transport_copy_corruption_only",
+    "new_scientific_design": false,
+    "scientific_protocol_changed": false,
+    "replacement_attempt_consumed": false,
+    "source_execution_may_proceed_after_this_receipt_is_committed_and_pushed": true
+  },
+  "receipt_sha256": "92a218fccb5047488f8777be68d31f26e764edd573fdcbd70e7496aaaec8a338"
+}
