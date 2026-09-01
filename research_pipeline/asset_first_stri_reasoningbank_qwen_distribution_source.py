@@ -178,16 +178,26 @@ def run() -> dict[str, Any]:
                 row=row, image_pull_reference=image, selected_memory="",
                 run_id=unit["run_id"], sampling=contract["sampling"],
                 container=container)
+            status = "COMPLETED"
+            if trajectory["task_sha256"] != unit["task_sha256"]:
+                trajectory["failure"] = {
+                    "failure_layer": "artifact_integrity",
+                    "error_type": "ModelVisibleTaskHashDrift",
+                    "expected": unit["task_sha256"], "actual": trajectory["task_sha256"],
+                }
+                status = "TERMINAL_TASK_HASH_DRIFT"
             try:
                 trajectory["R4_terminal_outcome"] = evaluate(container, row)
-                status = "COMPLETED"
+                if status != "TERMINAL_TASK_HASH_DRIFT":
+                    status = "COMPLETED"
             except Exception as error:
                 trajectory["R4_terminal_outcome"] = {
                     "valid": False, "resolved": False,
                     "failure": {"failure_layer": "evaluator",
                                 "error_type": type(error).__name__, "message": str(error)},
                 }
-                status = "TERMINAL_EVALUATOR_FAILURE"
+                if status != "TERMINAL_TASK_HASH_DRIFT":
+                    status = "TERMINAL_EVALUATOR_FAILURE"
         except Exception as error:
             trajectory = {
                 "schema_version": 1, "run_id": unit["run_id"],

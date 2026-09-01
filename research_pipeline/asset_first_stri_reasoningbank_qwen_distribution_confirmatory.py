@@ -192,7 +192,8 @@ def schedule_payload() -> dict[str, Any]:
     for row in schedule["units"]:
         task = per_task[row["instance_id"]]
         enriched.append({
-            **row, "expected_R1_sha256": task["complete_R1_sha256"][row["arm"]],
+            **row, "task_sha256": task["task_sha256"],
+            "expected_R1_sha256": task["complete_R1_sha256"][row["arm"]],
             "qualification_receipt": task["qualification_receipt"],
             "qualification_receipt_sha256": task["qualification_receipt_sha256"],
         })

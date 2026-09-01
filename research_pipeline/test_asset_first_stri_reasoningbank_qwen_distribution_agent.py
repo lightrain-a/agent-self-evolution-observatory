@@ -1,6 +1,15 @@
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_agent import (
-    modified_files_from_status, request_body,
+    model_visible_task_sha256, modified_files_from_status, request_body,
 )
+
+
+def test_task_hash_binds_all_model_visible_task_identity_fields():
+    row = {"instance_id": "repo__1", "problem_statement": "fix it",
+           "base_commit": "abc", "repo": "org/repo", "version": "1"}
+    first = model_visible_task_sha256(row)
+    assert len(first) == 64
+    assert model_visible_task_sha256(row) == first
+    assert model_visible_task_sha256({**row, "problem_statement": "change"}) != first
 
 
 def test_request_uses_q0_sampling_and_no_retry_fields():
