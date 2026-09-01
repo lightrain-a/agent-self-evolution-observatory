@@ -93,9 +93,159 @@
   const registryBox=(paper,reg)=>{
     if(!reg) return `<div class="cpp-registry-note working"><b>${isZh()?"身份说明":"Identity"}</b><p>${E(kindLabel(paper))}。${isZh()?"这是只读研究说明，不会因此创建正式论文编号，也不会授予科学、实验、GPU 或投稿权限。":"This is a read-only research explanation. It does not create a formal publication code or grant scientific, experiment, GPU, or submission authority."}</p></div>`;
     const claimAudit=reg.latest_claim_audit||{}, prep=reg.latest_paper_preparation||{}, prebuttal=reg.latest_prebuttal||{};
-    const download=reg.publication_identity?.pdf||reg.downloads?.pdf||"";
-    return `<section class="cpp-registry-note" id="paper-state"><div class="cpp-section-kicker">PaperRegistry</div><h2>${isZh()?"这篇论文当前正式状态":"Current formal paper state"}</h2><div class="cpp-registry-kpis"><span><b>${E(reg.paper_stage||reg.current_state||"--")}</b>${isZh()?"Paper stage":"Paper stage"}</span><span><b>${E(reg.scientific_status||"--")}</b>${isZh()?"科学状态":"Scientific status"}</span><span><b>${E(`${reg.supported_claims??reg.claims_supported??0}`)}</b>${isZh()?"supported claims":"supported claims"}</span><span><b>${E(claimAudit.pass?`${claimAudit.passed||claimAudit.checks||"PASS"}/${claimAudit.checks||claimAudit.passed||""}`:"--")}</b>Claim Audit</span><span><b>${E(prep.pass?`${prep.passed_gates||0}/${prep.required_gates||0}`:"--")}</b>Paper Prep</span><span><b>${E(prebuttal.pass?"PASS":`${prebuttal.unresolved_decision_critical??"--"} open`)}</b>Prebuttal</span></div><p>${isZh()?"这里保留的是正式 PaperState；本页上方的当前科学扩展（如 E1 Full-P1、E2 R17）不会自动改写已经冻结的 PaperRegistry 主张。":"This is the formal PaperState. Current scientific extensions shown above do not automatically rewrite the frozen PaperRegistry claims."}</p><div class="cpp-actions">${download?`<a href="${E(download)}">${isZh()?"论文 PDF":"Paper PDF"}</a>`:""}<a href="selected-paper.html">${isZh()?"← 返回论文合集":"← Back to paper collection"}</a></div></section>`;
+    return `<div class="cpp-registry-note" id="paper-state"><div class="cpp-section-kicker">PaperRegistry</div><h3 data-toc="false">${isZh()?"正式 PaperState":"Formal PaperState"}</h3><div class="cpp-registry-kpis"><span><b>${E(reg.paper_stage||reg.current_state||"--")}</b>${isZh()?"Paper stage":"Paper stage"}</span><span><b>${E(reg.scientific_status||"--")}</b>${isZh()?"科学状态":"Scientific status"}</span><span><b>${E(`${reg.supported_claims??reg.claims_supported??0}`)}</b>${isZh()?"supported claims":"supported claims"}</span><span><b>${E(claimAudit.pass?`${claimAudit.passed||claimAudit.checks||"PASS"}/${claimAudit.checks||claimAudit.passed||""}`:"--")}</b>Claim Audit</span><span><b>${E(prep.pass?`${prep.passed_gates||0}/${prep.required_gates||0}`:"--")}</b>Paper Prep</span><span><b>${E(prebuttal.pass?"PASS":`${prebuttal.unresolved_decision_critical??"--"} open`)}</b>Prebuttal</span></div><p>${isZh()?"这里保留正式 PaperState；当前扩展不会自动改写已经冻结的论文主张。":"This preserves the formal PaperState; current extensions do not automatically rewrite frozen claims."}</p></div>`;
   };
+  const paperDownload=(reg)=>reg?(reg.publication_identity?.pdf||reg.downloads?.pdf||""):"";
+  const heroLinks=(paper,reg)=>{
+    const download=paperDownload(reg);
+    return `<div class="cpp-hero-links">${download?`<a class="cpp-download-primary" href="${E(download)}" download>${isZh()?"↓ 下载论文 PDF":"↓ Download paper PDF"}</a>`:""}<a href="selected-paper.html">${isZh()?"← 论文合集":"← Paper collection"}</a><a href="research-map.html">${isZh()?"领域研究组合图谱":"Research map"}</a><a href="paper-ideas.html">${isZh()?"研究对象 · ResearchItems":"ResearchItems"}</a></div>`;
+  };
+  const relatedWorkSummary=(story)=>{
+    const rows=isZh()?[
+      ["语义检索 / Routing","根据任务和技能描述的相似度，尽量找到合适的技能。","它主要关心“找得准不准”，通常不测试：Agent 会的东西完全一样、只换技能包装时，控制是否也应该完全一样。"],
+      ["技能拆分 / Composition","把一个大技能拆成多个小技能，再组合起来完成复杂任务。","拆分时常常连技能内容和粒度也一起变了，因此很难判断：表现变化来自能力真的变了，还是只来自包装变了。"],
+      ["Exposure / 权重平衡","重新调整不同技能包获得多少曝光、检索机会或权重。","它能在给定表示上做优化，但没有回答：某些技能覆盖结构是否让“只调技能包权重”从数学上就不可能恢复同一个语义目标。"]
+    ]:[
+      ["Semantic retrieval / routing","Match tasks to skill descriptions and retrieve the most relevant skills.","It optimizes retrieval quality but usually does not test whether repackaging identical capabilities must preserve control."],
+      ["Skill decomposition / composition","Split a large skill into smaller pieces and compose them for complex tasks.","Decomposition often changes content granularity too, making capability change and representation change hard to separate."],
+      ["Exposure / weight balancing","Reweight how much exposure, retrieval opportunity, or control each package receives.","It optimizes a fixed representation but does not ask when package-only reweighting is mathematically unable to recover the same semantic target."]
+    ];
+    return `<section class="panel cpp-related-summary" id="related-work-comparison"><div class="cpp-section-kicker">${isZh()?"2 · 现有研究缺什么":"2 · WHAT PRIOR WORK STILL MISSES"}</div><h2>${isZh()?"现有方法已经很会“找技能、拆技能、调权重”，但还缺一个更基础的问题":"Prior work is good at finding, splitting, and weighting skills—but misses a more basic question"}</h2><div class="cpp-related-summary-grid">${rows.map((x,i)=>`<article><span>${String(i+1).padStart(2,"0")}</span><b>${E(x[0])}</b><p><strong>${isZh()?"已经会做：":"Already solves: "}</strong>${E(x[1])}</p><p><strong>${isZh()?"还没有回答：":"Still unanswered: "}</strong>${E(x[2])}</p></article>`).join("")}</div><div class="cpp-gap-callout"><b>${isZh()?"E1 的位置":"Where E1 enters"}</b><p>${isZh()?"我们不再发明一种新的技能拆分或路由算法，而是把一个更基础的原则变成可检查对象：如果 Agent 真正会做的事情没变，技能怎么包装就不应该改变它的语义控制。":"We do not propose another decomposition or routing algorithm. We turn a more basic principle into an auditable object: if capability is unchanged, packaging alone should not change semantic control."}</p></div></section>`;
+  };
+  const e1QuickOverview=(paper,story,detail)=>{
+    const example=isZh()?"比如，Agent 原来有一个“查航班并比较价格”的技能。我们只把它拆成 4 个技能包，并没有让 Agent 学会任何新能力。如果控制器因此改变了技能分配和最终行为，那么变化来自“怎么包装”，而不是“会什么”。":"For example, an agent may already have one skill for finding flights and comparing prices. Splitting that same capability into four packages adds no new ability. If control and behavior change anyway, the cause is packaging rather than capability.";
+    const question=isZh()?"当 Agent 真正会做的事情完全不变时，只改技能的拆分、复制或分组方式，会不会让自进化控制器做出不同决定？":"When the agent's actual capabilities stay identical, can changing only how skills are split, cloned, or grouped make the self-evolution controller behave differently?";
+    const answer=isZh()?"原则上不应该；但 E1 的证据显示，一些按“技能包身份”分配控制权的系统确实会受这种包装影响。STRI 就是用来检查这种不该出现的敏感性。":"It should not. Yet E1 shows that controllers allocating control over package identities can be sensitive to packaging alone. STRI audits this unwanted sensitivity.";
+    const findings=isZh()?[
+      "只换包装，也可能改变控制：能力不变，并不保证按技能包逐个分配资源的控制器得到同样结果。",
+      "问题不是“技能重叠越多就越糟”：真正关键的是哪些技能包覆盖哪些语义能力，也就是“技能包—能力覆盖结构”。",
+      "我们还能判断“能不能只靠调权重修回来”：R*(A;q) 给出精确边界，再用 AutoSkill P19 检查这种差异是否会传到真实执行行为。"
+    ]:[
+      "Packaging alone can change control: unchanged capability does not guarantee unchanged allocation in a package-first controller.",
+      "The issue is not simply 'more overlap is worse'. What matters is the structural pattern of which packages cover which capabilities—support geometry.",
+      "We can also ask whether reweighting alone can repair the problem: R*(A;q) gives the exact boundary, and AutoSkill P19 tests whether the effect reaches executed behavior."
+    ];
+    return `<section class="cpp-plain cpp-e1-overview panel" id="quick-overview"><div class="cpp-section-kicker">${isZh()?"0 · 先看懂问题":"0 · START HERE"}</div><h2>${isZh()?"30 秒先抓住这篇论文在研究什么":"The paper in 30 seconds"}</h2><p class="cpp-e1-hook">${isZh()?"如果 Agent 会的东西完全没变，仅仅把一个技能拆成四个，它为什么会做出不同决定？":"If an agent's capabilities do not change, why should splitting one skill into four change its decisions?"}</p><div class="cpp-e1-overview-grid"><article><span>${isZh()?"先看一个例子":"ONE EXAMPLE"}</span><p>${E(example)}</p></article><article><span>${isZh()?"本文真正的问题":"THE QUESTION"}</span><p>${E(question)}</p></article><article class="answer"><span>${isZh()?"一句话答案":"THE ANSWER"}</span><p>${E(answer)}</p></article></div><div class="cpp-e1-findings"><b>${isZh()?"读完整页，只需要记住这三件事":"Three things to remember"}</b><div>${findings.map((x,i)=>`<article><span>0${i+1}</span><p>${E(x)}</p></article>`).join("")}</div></div><div class="cpp-term-strip"><span><b>Skill package</b>${isZh()?"一个被控制器单独看待的技能单元":"a skill unit the controller treats separately"}</span><span><b>Semantic capability</b>${isZh()?"Agent 真正会做什么":"what the agent can actually do"}</span><span><b>Representation invariance</b>${isZh()?"能力不变时，换包装不应改变控制":"repackaging alone should not change control"}</span></div><div class="cpp-e1-status-strip"><span><b>${isZh()?"核心 E1":"Canonical E1"}</b>${isZh()?"3/3 核心窄主张已有证据支持":"3/3 narrow claims supported"}</span><span><b>${isZh()?"外部扩展":"External extension"}</b>${isZh()?"已执行，但当前不纳入论文结论":"executed, but not used in the paper claim"}</span></div></section>`;
+  };
+  const e1ProblemOrigin=(story)=>{
+    const rows=isZh()?[
+      ["01 · Skill library 会不断变化","Agent 会积累、拆分、合并和复用技能，所以同一种能力经常会有不同的“包装方式”。"],
+      ["02 · 但“包装变了”不等于“能力变了”","把一个技能拆成四个、复制一份或重新分组，都可以做到 Agent 真正会做的事情完全不变。"],
+      ["03 · 麻烦在于控制器往往先看到“技能包”","如果控制器按技能包逐个分配曝光、检索机会或更新权重，那么多一个技能包身份，就可能多拿一份控制资源。"],
+      ["04 · 于是工程细节可能改变未来行为","同一个 Agent 仅仅因为技能怎么打包，就可能检索到不同内容，进而走向不同的执行结果和自进化轨迹。"],
+      ["05 · 所以缺的是一个“不变量”","我们真正要检查的是：能力相同的两种表示，是否会得到相同的语义控制。这个性质就是本文所说的 representation invariance。"]
+    ]:[
+      ["01 · Skill libraries keep changing","Agents accumulate, split, merge, and reuse skills, so the same capability can appear under different packaging schemes."],
+      ["02 · Different packaging need not mean different capability","Splitting, cloning, or regrouping can leave what the agent can actually do completely unchanged."],
+      ["03 · Controllers often see packages first","If exposure or retrieval is allocated package by package, an extra package identity can receive extra control resources."],
+      ["04 · An engineering detail can therefore alter behavior","The same agent may retrieve different content and follow a different evolution trajectory solely because the library was packaged differently."],
+      ["05 · The missing object is an invariant","We ask whether two representations with the same capabilities receive the same semantic control. This is representation invariance."]
+    ];
+    return `<section class="panel cpp-origin cpp-e1-origin" id="problem-origin"><div class="cpp-section-kicker">${isZh()?"1 · 为什么会有这个问题":"1 · WHY THIS PROBLEM EXISTS"}</div><h2>${isZh()?"“技能怎么拆”为什么不只是一个工程细节？":"Why is skill packaging more than an engineering detail?"}</h2><div class="cpp-e1-funnel"><span>${isZh()?"同样能力":"Same capability"}</span><i>→</i><span>split / clone / regroup</span><i>→</i><span>${isZh()?"按 package 分配控制":"package-level control"}</span><i>→</i><span>${isZh()?"检索内容变化":"retrieval changes"}</span><i>→</i><strong>${isZh()?"行为也可能变化":"behavior may change"}</strong></div><div class="cpp-origin-grid">${rows.map(([k,v])=>`<article><b>${E(k)}</b><p>${E(v)}</p></article>`).join("")}</div></section>`;
+  };
+  const e1Work=(paper,story)=>{
+    const work=isZh()?[
+      ["先做公平对比","能力不变，只换包装","冻结 Agent 真正会做什么，只改变技能的拆分、复制和重新分组。这样后面看到的差异才可以归因到“表示方式”，而不是技能内容变了。","Frozen support matrix A"],
+      ["把直觉变成可检查规则","定义 STRI","我们把“等价技能表示应该得到相同控制”正式定义为 Skill-Taxonomy Representation Invariance（STRI）。","Representation invariance"],
+      ["判断到底能不能修回来","计算 R*(A;q)","看到差异后继续问：只重新调每个技能包的权重，能否恢复同一个语义目标？R*(A;q) 给出精确的“能 / 不能”边界。","Exact certificate"],
+      ["确认不是纸上问题","做 AutoSkill P19 行为验证","最后检查表示差异是否真的会改变检索、中间技能和执行行为，并用“只恢复关键中间技能”与“普通清理”做区分。","Behavioral witness"]
+    ]:[
+      ["Make the comparison fair","Keep capability fixed; change packaging only","Freeze what the agent can do and vary only split / clone / regroup so any difference can be attributed to representation.","Frozen support matrix A"],
+      ["Turn the intuition into a testable rule","Define STRI","Formalize the requirement that equivalent skill representations should receive equivalent semantic control.","Representation invariance"],
+      ["Ask whether the effect is repairable","Compute R*(A;q)","Test whether package reweighting alone can recover the same semantic target. R*(A;q) gives an exact yes/no boundary.","Exact certificate"],
+      ["Check that it matters to a real agent","Run the AutoSkill P19 witness","Test whether representation changes retrieval, an intermediate skill, and executed behavior; compare specific mediator restoration against generic cleanup.","Behavioral witness"]
+    ];
+    const chain=isZh()?["同样能力","只换技能包装","控制分配改变","检索内容改变","行为可能改变"]:["Same capability","Repackage only","Control allocation changes","Retrieval changes","Behavior may change"];
+    return `<section class="panel cpp-e1-work" id="mechanism"><div class="cpp-section-kicker">${isZh()?"3 · 我们做了什么":"3 · WHAT WE DID"}</div><h2>${isZh()?"从一个工程现象，到一个能被严格验证的科学问题，我们做了四步":"Four steps turn a packaging observation into a scientific result"}</h2><div class="cpp-work-grid">${work.map((x,i)=>`<article><span>0${i+1}</span><div><b>${E(x[0])}</b><strong>${E(x[1])}</strong><p>${E(x[2])}</p><small>${E(x[3])}</small></div></article>`).join("")}</div><div class="cpp-simple-chain"><b>${isZh()?"整篇论文的逻辑链可以先这样理解":"A simple way to read the paper's chain"}</b><div>${chain.map((x,i)=>`${i?'<i>→</i>':''}<span>${E(x)}</span>`).join("")}</div><p>${isZh()?"STRI 先检查“只换表示，控制是否会不合理地改变”，再用 P19 验证这种差异能否继续传到后面的真实行为。":"STRI audits unwanted sensitivity at the representation/control boundary; P19 then checks whether that difference propagates to real behavior."}</p></div></section>`;
+  };
+  const e1Results=(paper,story,detail)=>{
+    const rows=isZh()?[
+      ["RQ1","同样会的东西，只换技能包装，控制会变吗？","固定 Agent 真正会做的能力，只改变 split / clone / regroup，也就是只动“包装”。","会。当前审计里确实存在“对包装敏感”的情况：能力没变，但按技能包逐个分配控制资源时，结果会变。"],
+      ["RQ2","是不是因为“技能重叠越多就越容易出问题”？","专门加入“重叠很高、但仍然可以完全均衡”的反例，再和真正无法均衡的结构比较。","不是。简单数技能重叠量解释不了结果；真正关键的是技能包如何覆盖语义能力，也就是“技能包—能力覆盖结构”。"],
+      ["RQ3","这种表示差异真的会传到 Agent 行为吗？","在同一个 AutoSkill P19 场景中比较原表示、split-4、安慰剂对照和语义聚合对照，再比较“恢复关键中间技能”和“普通清理”。","在这个冻结场景里会：原表示 6/6 出现异常行为标记，split-4 后变成 0/6；只恢复那个关键中间技能时 3/3 恢复，而普通清理为 0/3。"]
+    ]:[
+      ["RQ1","Can packaging alone change control when capability is identical?","Freeze the agent's actual capability and vary only split / clone / regroup.","Yes. The audit contains representation-sensitive regimes where package-level allocation changes despite unchanged capability."],
+      ["RQ2","Is the problem simply that more skill overlap is worse?","Include high-overlap cases that remain fully equalizable and compare them with truly non-equalizable structures.","No. Raw overlap count does not explain the result; the decisive object is the package-to-capability coverage structure, or support geometry."],
+      ["RQ3","Does the representation difference reach actual agent behavior?","Compare original, split-4, placebo, and semantic-quotient controls on frozen AutoSkill P19, then specific mediator restoration versus generic cleanup.","On this frozen substrate, yes: 6/6 destructive signatures under the original representation become 0/6 under split-4; specific mediator restoration is 3/3 while matched cleanup is 0/3."]
+    ];
+    const evidence=isZh()?[
+      ["R*(A;q)","它不是一个“看起来差不多”的经验分数，而是精确判断：同一个语义目标能不能只靠重新分配技能包权重实现。"],
+      ["6/6 → 0/6","Agent 会的东西没变，只把表示换成 split-4，P19 的异常行为标记从 6 个都出现变成 6 个都不出现。"],
+      ["3/3 vs 0/3","只加回被挤掉的关键中间技能，3 个案例都恢复；换成同规模的普通清理，0 个恢复。说明不是“随便清理一下都有效”。"]
+    ]:[
+      ["R*(A;q)","An exact audit of whether package weights alone can realize the same semantic target, rather than a heuristic score."],
+      ["6/6 → 0/6","With capability fixed, switching to split-4 changes the P19 destructive signature from all six cases to none."],
+      ["3/3 vs 0/3","Restoring the specific crowded-out mediator restores all three cases, while matched generic cleanup restores none."]
+    ];
+    return `<section class="panel cpp-e1-results" id="experiment-results"><div class="cpp-section-kicker">${isZh()?"4 · 实验回答了什么":"4 · WHAT THE EXPERIMENTS ANSWER"}</div><h2>${isZh()?"不要记一堆实验名：三个 RQ 分别回答三个核心疑问":"Do not memorize experiment names: three RQs carry the paper"}</h2><div class="cpp-e1-rq-grid">${rows.map(x=>`<article><header><span>${E(x[0])}</span><b>${E(x[1])}</b></header><p class="cpp-rq-how"><strong>${isZh()?"怎么测：":"How: "}</strong>${E(x[2])}</p><div class="cpp-rq-answer"><strong>${isZh()?"看到什么":"What we found"}</strong><p>${E(x[3])}</p></div></article>`).join("")}</div><h3 data-toc="false">${isZh()?"最值得记住的三个证据":"Three pieces of decisive evidence"}</h3><div class="cpp-proof-grid cpp-proof-grid-three">${evidence.map(x=>`<article><strong>${E(x[0])}</strong><p>${E(x[1])}</p></article>`).join("")}</div><div class="cpp-now"><b>${isZh()?"这些结果合起来说明什么":"What the evidence means together"}</b><p>${isZh()?"“技能怎么拆”不是永远无害的实现细节。E1 先把这种表示敏感性单独隔离出来，再给出它什么时候能靠调权重修复、什么时候会受结构限制的精确边界，并在一个冻结 Agent 场景里看到它确实可以传到执行行为。":"Skill packaging is not always a harmless implementation detail. E1 isolates representation sensitivity, identifies when package weights can or cannot repair it, and shows on one frozen agent substrate that it can propagate to executed behavior."}</p></div></section>`;
+  };
+  const e1Contributions=(paper,detail)=>{
+    const contributions=isZh()?[
+      ["C1","把“技能包装”变成一个新的系统检查问题","我们不问哪种拆法分数更高，而问：同样能力换一种等价表示后，控制是否仍然相同。"],
+      ["C2","给出一个精确的“能不能修”判断","R*(A;q) 告诉我们：差异只是权重没调好，还是当前技能包—能力结构让“只调 package 权重”本身就无法精确恢复目标。"],
+      ["C3","把静态问题连接到真实行为","AutoSkill P19 提供一条限定但完整的“表示 → 检索 → 中间技能 → 行为”证据链，说明这个问题不只存在于数学表述中。"]
+    ]:[
+      ["C1","Turn packaging into a systems-level audit question","Rather than asking which split scores higher, ask whether equivalent representations of the same capability preserve control."],
+      ["C2","Provide an exact repairability test","R*(A;q) distinguishes a bad weighting choice from a package/capability structure that package-only reweighting cannot exactly repair."],
+      ["C3","Connect the static issue to behavior","AutoSkill P19 supplies a bounded representation → retrieval → mediator → behavior chain, showing that the issue is not purely mathematical."]
+    ];
+    const limits=isZh()?[
+      "这不等于所有 skill system 都一定有这个问题；当前行为证据只覆盖一个冻结的 AutoSkill P19 场景。",
+      "STRI 不是一个新的 LP 求解算法；数学工具服务于“表示不变量怎么审计”这个新问题。",
+      "我们没有证明 STRI 一定提高总体任务成功率、长期安全或所有 Agent 的效用。",
+      "ReasoningBank Full-P1 虽然执行了 40/40，但因为评测有效性和模型服务完整性门没有通过，不能当作新的科学结果。"
+    ]:[
+      "This does not mean every skill system has the problem; the behavioral evidence is bounded to one frozen AutoSkill P19 substrate.",
+      "STRI is not a new LP solver; the mathematics serves the representation-invariance audit object.",
+      "The paper does not establish universal task utility, longitudinal safety, or agent-wide performance gains.",
+      "ReasoningBank Full-P1 completed 40/40 executions, but failed evaluator/provider eligibility and therefore is not a scientific result."
+    ];
+    return `<section class="panel cpp-e1-contributions" id="claim-boundary"><div class="cpp-section-kicker">${isZh()?"5 · 最终贡献与边界":"5 · CONTRIBUTIONS & BOUNDARIES"}</div><h2>${isZh()?"所以这篇论文最终让我们多知道了什么？":"What do we know now that we did not know before?"}</h2><div class="cpp-contribution-grid">${contributions.map(x=>`<article><span>${E(x[0])}</span><div><b>${E(x[1])}</b><p>${E(x[2])}</p></div></article>`).join("")}</div><div class="cpp-boundary-box"><b>${isZh()?"同样重要：这些结果没有证明什么":"Equally important: what the paper does not establish"}</b>${list(limits.map(x=>({zh:x,en:x})),"boundary")}</div></section>`;
+  };
+  const e1Evolution=()=>{
+    const rows=isZh()?[
+      ["01","最初只是工程问题","一开始我们只是在想：skill library 到底应该怎么拆、怎么检索、怎么组合。"],
+      ["02","发现“能力没变，控制却变了”","真正的转折是发现控制器按技能包身份分配控制资源，于是技能包装方式本身可能改变结果。"],
+      ["03","从“现象”升级成表示不变性","问题不再是“哪种拆法更好”，而是“语义等价的重新打包，本来就应该保持控制不变”。"],
+      ["04","简单的“重叠越多越糟”被反例推翻","我们发现重叠很多也可以完全均衡，所以不能只数重叠多少，必须转向“技能包—能力覆盖结构”。"],
+      ["05","R*(A;q) 给出精确边界","论文从经验现象推进到：什么时候只调技能包权重就能修，什么时候从结构上就做不到。"],
+      ["06","补上真实 Agent 行为链","因为纯数学证书还不够，我们加入 AutoSkill P19 和中间技能对照，验证表示差异确实能沿检索传到执行行为。"],
+      ["07","外部扩展保持独立","ReasoningBank Full-P1 用来尝试扩大外部有效性；它自己的评测和模型服务门没有通过，所以保持 HOLD，不倒灌修改已经成立的 E1 核心结论。"]
+    ]:[
+      ["01","It began as an engineering question","How should a skill library be split, retrieved, and composed?"],
+      ["02","Capability stayed fixed but control changed","Controllers allocate resources over package identities, so packaging itself could affect outcomes."],
+      ["03","The question became representation invariance","The paper shifted from 'which split is better?' to whether semantically equivalent repackaging should preserve control."],
+      ["04","Simple overlap explanations failed","High-overlap counterexamples remained fully equalizable, forcing the story toward support geometry."],
+      ["05","R*(A;q) gave the exact boundary","The paper moved from observing a phenomenon to deciding when package reweighting can and cannot repair it."],
+      ["06","A behavioral bridge was added","AutoSkill P19 and mediator controls test whether representation differences reach executed behavior."],
+      ["07","The external extension remains separate","ReasoningBank Full-P1 targets broader validity, but its own evaluator/provider gates failed, so it remains held outside the canonical claim."]
+    ];
+    return `<div class="cpp-evolution cpp-evolution-detailed cpp-e1-evolution">${rows.map(x=>`<article><span>${E(x[0])}</span><div><strong>${E(x[1])}</strong><p>${E(x[2])}</p></div></article>`).join("")}</div>`;
+  };
+  const e1Status=(paper,reg,detail)=>{
+    return `<section class="panel cpp-next cpp-e1-status" id="next-gate"><div class="cpp-section-kicker">${isZh()?"7 · 当前状态与下一步":"7 · CURRENT STATE & NEXT"}</div><h2>${isZh()?"核心论文和外部扩展要分开看":"Separate the canonical paper from the external extension"}</h2><div class="cpp-e1-state-grid"><article><span>${isZh()?"核心 E1":"CANONICAL E1"}</span><strong>3 / 3</strong><p>${isZh()?"三个核心窄主张已有冻结证据支持，PaperRegistry 当前为 SUBMISSION_READY。简单说：E1 的核心故事已经有自己的理论边界和 P19 行为证据。":"All three narrow claims have frozen support and PaperRegistry is SUBMISSION_READY. The core E1 story already has its theoretical boundary and P19 behavioral evidence."}</p></article><article class="hold"><span>${isZh()?"外部扩展":"REASONINGBANK EXTENSION"}</span><strong>40 / 40 · HOLD</strong><p>${isZh()?"40 个实验运行的“程序执行完了”不等于“实验结论成立”。部分评测器无效，另有模型服务配额中断，因此成对科学分析不能打开；这条扩展既不加强，也不推翻核心 E1。":"Completing 40 runs is not the same as obtaining a valid scientific result. Evaluator invalidity and provider quota interruptions block paired inference, so the extension neither strengthens nor overturns canonical E1."}</p></article></div><div class="cpp-next-action"><b>${isZh()?"下一步用一句话说":"Next, in plain language"}</b><p>${isZh()?"核心 E1 不需要为了“追更多分数”重新跑。若要继续扩大外部有效性，先修好 ReasoningBank 扩展自己的评测有效性和模型服务完整性，再按原先冻结规则继续。":"Do not rerun canonical E1 merely to chase more scores. Any broader-validity continuation should first repair the ReasoningBank extension's evaluator validity and provider completeness under its frozen rules."}</p></div>${registryBox(paper,reg)}</section>`;
+  };
+  const e1DeepDive=(paper,reg,detail,story)=>{
+    const fullRelated=relatedWorkComparison(story).replace('id="related-work-comparison"','id="related-work-full"');
+    const legacy=reg&&window.renderPaperLegacyAuditBundle?window.renderPaperLegacyAuditBundle(paper.registryPaperId):"";
+    const glossary=isZh()?[
+      ["semantic support","Agent 真正具备哪些能力；主实验里这一层保持不变。"],
+      ["package identity","控制器眼里一个独立的技能包/技能条目；我们只改变这一层的拆分与分组。"],
+      ["support geometry","哪些技能包覆盖哪些语义能力形成的结构关系，不是简单的“重叠数量”。"],
+      ["quotient","先把语义等价的 package 合并成同一类，再做控制；可以理解为“先看能力，再看包装”。"],
+      ["certificate / R*(A;q)","一个精确审计：告诉我们同一个语义目标能不能只靠重新分配 package 权重实现。"],
+      ["mediator","表示变化影响最终行为之前经过的中间环节；P19 中对应被挤掉、后来又被恢复的关键技能。"]
+    ]:[
+      ["semantic support","Which capabilities the agent actually has; this layer stays fixed in the main treatment."],
+      ["package identity","A skill entry treated separately by the controller; only this packaging layer is split or regrouped."],
+      ["support geometry","The structural pattern linking packages to capabilities, rather than a simple overlap count."],
+      ["quotient","Merge semantically equivalent packages before control—conceptually, capability first and packaging second."],
+      ["certificate / R*(A;q)","An exact audit of whether the target can be achieved by package reweighting alone."],
+      ["mediator","An intermediate step between representation and final behavior; in P19, the specific skill that is crowded out and restored."]
+    ];
+    return `<details class="cpp-deep-dive system-deep-dive" id="research-archive"><summary><span><b>${isZh()?"研究档案 / 想看严谨细节时再展开":"Research dossier / open for rigorous detail"}</b><small>${isZh()?"默认正文已经讲完论文故事；这里保留模型、数据、冻结合同、完整 Related Work、审稿与证据链。":"The default story is complete above; this fold preserves models, data, frozen contracts, full related work, reviews, and evidence chains."}</small></span><em>${isZh()?"展开细节":"Open details"}</em></summary><div class="cpp-deep-dive-body"><section class="panel cpp-glossary"><div class="cpp-section-kicker">${isZh()?"先把术语翻成人话":"PLAIN-LANGUAGE GLOSSARY"}</div><h2 data-toc="false">${isZh()?"下面技术档案里最常见的 6 个词是什么意思？":"Six terms used in the technical dossier"}</h2><div class="cpp-glossary-grid">${glossary.map(x=>`<article><b>${E(x[0])}</b><p>${E(x[1])}</p></article>`).join("")}</div></section>${snapshot(detail)}<section class="panel" id="models-data"><div class="cpp-section-kicker">${isZh()?"实验对象":"EXPERIMENTAL SUBSTRATE"}</div><h2>${isZh()?"具体用了什么模型、数据和环境？":"Which models, data, and environments were used?"}</h2>${modelData(detail)}</section>${detail.contract?.length?`<section class="panel" id="experiment-contract"><div class="cpp-section-kicker">${isZh()?"冻结实验合同":"FROZEN EXPERIMENT CONTRACT"}</div><h2>${isZh()?"为了保证比较公平，哪些东西必须固定？":"What must stay fixed for a fair comparison?"}</h2>${contract(detail)}</section>`:""}<section class="panel" id="experiment-design"><div class="cpp-section-kicker">${isZh()?"完整实验设计":"FULL EXPERIMENT DESIGN"}</div><h2>${isZh()?"各个对照组分别在排除什么替代解释？":"What alternative explanation does each control rule out?"}</h2><p class="cpp-design-lead">${E(T(detail.design))}</p>${arms(detail)}${analysisPlan(detail)}</section>${fullRelated}${fullStoryArchive(story)}${failureBoundaries(story)}${replayNotes(detail)}${legacy}</div></details>`;
+  };
+  const renderE1Page=(paper,reg,detail,story)=>`<main class="cpp-page cpp-e1-page" data-paper-order="${paper.order}"><header class="cpp-hero"><div class="cpp-hero-top"><span class="cpp-index">${String(paper.order).padStart(2,"0")}</span><div class="cpp-badges">${statusBadge(paper,reg)}</div></div><div class="eyebrow">${E(T(paper.area))}</div><h1>${E(T(paper.title))}</h1><p class="cpp-hero-subtitle">${isZh()?"如果 Agent 会的东西完全没变，仅仅把一个技能拆成四个，它为什么会做出不同决定？":"If an agent's capabilities stay identical, why should splitting one skill into four change its decisions?"}</p><p class="cpp-canonical-title">${E(paper.canonicalTitle)}</p>${heroLinks(paper,reg)}</header>${e1QuickOverview(paper,story,detail)}${e1ProblemOrigin(story)}${relatedWorkSummary(story)}${e1Work(paper,story)}${e1Results(paper,story,detail)}${e1Contributions(paper,detail)}<section class="panel" id="paper-evolution"><div class="cpp-section-kicker">${isZh()?"6 · 论文怎么演变到今天":"6 · HOW THE PAPER EVOLVED"}</div><h2>${isZh()?"这不是一开始就定好的故事，而是被反例和实验一步步收窄出来的":"The story was narrowed step by step by counterexamples and evidence"}</h2>${e1Evolution()}</section>${e1Status(paper,reg,detail)}${e1DeepDive(paper,reg,detail,story)}<div class="cpp-back-collection"><a href="selected-paper.html">${isZh()?"← 返回当前论文合集":"← Back to current paper collection"}</a></div></main>`;
   const collectionCard=(id,paper)=>{
     const d=detailFor(id), reg=registryPaper(paper), label=T(d.collectionLabel)||`${orderMark(paper.order)} ${paper.code}`;
     const models=(d.models||[]).slice(0,2).map(x=>x.name).join(" · ")||"—";
@@ -112,8 +262,9 @@
     const paper=window.CURRENT_PAPER_PAGES?.papers?.[pageId];
     if(!paper) return `<div class="empty">Paper page unavailable.</div>`;
     const reg=registryPaper(paper), detail=detailFor(pageId), story=storyFor(paper), dossier=story||detail;
+    if(pageId==="paper-e1"&&story) return renderE1Page(paper,reg,detail,story);
     return `<main class="cpp-page" data-paper-order="${paper.order}">
-      <header class="cpp-hero"><div class="cpp-hero-top"><span class="cpp-index">${String(paper.order).padStart(2,"0")}</span><div class="cpp-badges">${statusBadge(paper,reg)}</div></div><div class="eyebrow">${E(T(paper.area))}</div><h1>${E(T(paper.title))}</h1><p class="cpp-canonical-title">${E(paper.canonicalTitle)}</p><div class="cpp-hero-links"><a href="selected-paper.html">${isZh()?"← 论文合集":"← Paper collection"}</a><a href="research-map.html">${isZh()?"领域研究组合图谱":"Research map"}</a><a href="paper-ideas.html">${isZh()?"研究对象 · ResearchItems":"ResearchItems"}</a></div></header>
+      <header class="cpp-hero"><div class="cpp-hero-top"><span class="cpp-index">${String(paper.order).padStart(2,"0")}</span><div class="cpp-badges">${statusBadge(paper,reg)}</div></div><div class="eyebrow">${E(T(paper.area))}</div><h1>${E(T(paper.title))}</h1><p class="cpp-canonical-title">${E(paper.canonicalTitle)}</p>${heroLinks(paper,reg)}</header>
       ${snapshot(detail)}
       <section class="cpp-plain panel" id="quick-overview"><div class="cpp-section-kicker">${isZh()?"速览版":"QUICK OVERVIEW"}</div><h2>${isZh()?"30 秒看懂这篇论文":"Understand the paper in 30 seconds"}</h2><p class="cpp-plain-lead">${E(T(paper.plain))}</p><div class="cpp-question"><b>${isZh()?"一句话问题":"One question"}</b><span>${E(T(paper.question))}</span></div><div class="cpp-thesis"><b>${isZh()?"当前核心判断":"Current thesis"}</b><span>${E(T(paper.thesis))}</span></div></section>
       ${problemOrigin(paper,story)}
@@ -130,8 +281,7 @@
       ${!reg?workingNoveltyAudit(detail):""}
       ${replayNotes(detail)}
       ${reg&&window.renderPaperLegacyAuditBundle?window.renderPaperLegacyAuditBundle(paper.registryPaperId):""}
-      <section class="panel cpp-next" id="next-gate"><div class="cpp-section-kicker">${isZh()?"下一步":"NEXT GATE"}</div><h2>${isZh()?"接下来真正该做什么":"What should happen next"}</h2><p>${E(T(paper.next))}</p></section>
-      ${registryBox(paper,reg)}
+      <section class="panel cpp-next" id="next-gate"><div class="cpp-section-kicker">${isZh()?"下一步":"NEXT GATE"}</div><h2>${isZh()?"接下来真正该做什么":"What should happen next"}</h2><p>${E(T(paper.next))}</p>${registryBox(paper,reg)}</section>
       <div class="cpp-back-collection"><a href="selected-paper.html">${isZh()?"← 返回当前论文合集":"← Back to current paper collection"}</a></div>
     </main>`;
   };
