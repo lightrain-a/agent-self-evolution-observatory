@@ -158,6 +158,7 @@ def contract_payload() -> dict[str, Any]:
         "probe_plan_sha256": sha256_text(canonical_json(plan)),
         "classification_vocabulary": [
             "honored",
+            "accepted_unverified",
             "ignored",
             "unsupported",
             "server-fixed",
@@ -263,6 +264,23 @@ def classify(result: dict[str, Any], *, exact_text: str | None = None) -> str:
     if exact_text is None:
         return "unresolved"
     return "honored" if str(result.get("text", "")).strip() == exact_text else "ignored"
+
+
+def classify_accepted_parameter(
+    result: dict[str, Any], *, metadata_key: str, expected: Any,
+) -> str:
+    """Separate successful API acceptance from provider response echo semantics."""
+    if result.get("status") != "SUCCESS":
+        status_code = ((result.get("failure") or {}).get("status_code"))
+        return "unsupported" if status_code in {400, 404, 422} else "unresolved"
+    metadata = result.get("response_metadata") or {}
+    return "honored" if metadata.get(metadata_key) == expected else "accepted_unverified"
+
+
+def resolved_top_k(parameter_support: dict[str, str]) -> int | str:
+    if parameter_support.get("top_k") in {"honored", "accepted_unverified"}:
+        return RECOMMENDED_TOP_K
+    return "OMITTED_UNPROVEN_OR_UNSUPPORTED"
 
 
 def run(output: Path = OUTPUT) -> dict[str, Any]:
@@ -423,24 +441,17 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         "system_user_messages": classify(by_name["identity_messages_sampling"], exact_text="Q0_BASE_OK"),
         "instructions": classify(by_name["instructions_semantics"], exact_text="Q0_INSTRUCTIONS_OK"),
         "multi_turn_history": classify(by_name["multi_turn_history"], exact_text="Q0_HISTORY_OK"),
-        "temperature": (
-            "honored" if metadata.get("temperature") == RECOMMENDED_TEMPERATURE else
-            ("unsupported" if by_name["identity_messages_sampling"]["status"] != "SUCCESS" else "unresolved")
-        ),
-        "top_p": (
-            "honored" if metadata.get("top_p") == RECOMMENDED_TOP_P else
-            ("unsupported" if by_name["identity_messages_sampling"]["status"] != "SUCCESS" else "unresolved")
-        ),
-        "top_k": (
-            "unsupported"
-            if by_name["recommended_top_k"]["status"] != "SUCCESS"
-            else ("honored" if (by_name["recommended_top_k"].get("response_metadata") or {}).get("top_k") == RECOMMENDED_TOP_K else "unresolved")
-        ),
-        "seed": (
-            "unsupported"
-            if by_name["seed_acceptance"]["status"] != "SUCCESS"
-            else ("honored" if (by_name["seed_acceptance"].get("response_metadata") or {}).get("seed") == 20260901 else "unresolved")
-        ),
+        "temperature": classify_accepted_parameter(
+            by_name["identity_messages_sampling"],
+            metadata_key="temperature", expected=RECOMMENDED_TEMPERATURE),
+        "top_p": classify_accepted_parameter(
+            by_name["identity_messages_sampling"],
+            metadata_key="top_p", expected=RECOMMENDED_TOP_P),
+        "top_k": classify_accepted_parameter(
+            by_name["recommended_top_k"],
+            metadata_key="top_k", expected=RECOMMENDED_TOP_K),
+        "seed": classify_accepted_parameter(
+            by_name["seed_acceptance"], metadata_key="seed", expected=20260901),
         "stop": (
             "unsupported" if classify(by_name["stop_semantics"]) == "unsupported"
             else (
@@ -509,9 +520,7 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         "recommended_sampling_resolution": {
             "temperature": RECOMMENDED_TEMPERATURE,
             "top_p": RECOMMENDED_TOP_P,
-            "top_k": (
-                RECOMMENDED_TOP_K if parameter_support["top_k"] == "honored" else "OMITTED_UNPROVEN_OR_UNSUPPORTED"
-            ),
+            "top_k": resolved_top_k(parameter_support),
             "seed": "OMITTED",
             "thinking": "SERVER_FIXED_NON_THINKING",
             "streaming": False,

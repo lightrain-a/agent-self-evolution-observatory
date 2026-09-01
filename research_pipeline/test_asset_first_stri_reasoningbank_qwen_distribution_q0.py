@@ -130,3 +130,26 @@ def test_classification_never_equates_acceptance_with_honoring() -> None:
         "failure": {"status_code": 400},
     }
     assert q0.classify(unsupported) == "unsupported"
+
+
+def test_parameter_acceptance_is_distinct_from_response_echo() -> None:
+    accepted = {"status": "SUCCESS", "response_metadata": {}}
+    echoed = {"status": "SUCCESS", "response_metadata": {"top_k": 40}}
+    rejected = {"status": "UNSUPPORTED_OR_FAILED", "failure": {"status_code": 400}}
+    transient = {"status": "UNSUPPORTED_OR_FAILED", "failure": {"status_code": 503}}
+    assert q0.classify_accepted_parameter(
+        accepted, metadata_key="top_k", expected=40) == "accepted_unverified"
+    assert q0.classify_accepted_parameter(
+        echoed, metadata_key="top_k", expected=40) == "honored"
+    assert q0.classify_accepted_parameter(
+        rejected, metadata_key="top_k", expected=40) == "unsupported"
+    assert q0.classify_accepted_parameter(
+        transient, metadata_key="top_k", expected=40) == "unresolved"
+
+
+def test_accepted_top_k_remains_in_scientific_sampling_but_seed_does_not() -> None:
+    assert q0.resolved_top_k({"top_k": "accepted_unverified"}) == 40
+    assert q0.resolved_top_k({"top_k": "honored"}) == 40
+    assert q0.resolved_top_k({"top_k": "unsupported"}) == "OMITTED_UNPROVEN_OR_UNSUPPORTED"
+    # Seed semantics remain a separate Q1/stochasticity question; Q0 never enables it.
+    assert q0.contract_payload is not None
