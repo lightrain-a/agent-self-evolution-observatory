@@ -20,9 +20,21 @@ def main():
  ap=argparse.ArgumentParser();ap.add_argument("--execution-sha",required=True);args=ap.parse_args()
  manifest=load(T05/"manifest-resolution.json");plan=load(T05/"blob-plan.json")
  receipt=load(T05/"blob-receipt.json");imported=load(T05/"import-receipt.json")
- runtime=load(T05/"runtime-qualification.json");smoke=load(T05/"synthetic-smoke.json")
- bridge=load(T0/"bridge-qualification.json");schedule=load(T0/"acquisition-schedule.json")
- support=load(T0/"support-audit.json")
+ runtime=load(T05/"runtime-qualification.json")
+ t05_ready=runtime["decision"]=="T0_5_FIXED_IMAGES_READY"
+ if t05_ready:
+  smoke=load(T05/"synthetic-smoke.json")
+  bridge=load(T0/"bridge-qualification.json");schedule=load(T0/"acquisition-schedule.json")
+  support=load(T0/"support-audit.json")
+ else:
+  smoke={"schema_version":1,"created_at_utc":now(),"status":"NOT_RUN_DUE_T05_GATE","pass":False,
+   "provider_calls":0,"source_trajectory_calls":0}
+  bridge={"schema_version":1,"created_at_utc":now(),"status":"NOT_RUN_DUE_T05_GATE","pass":False,"provider_calls":0}
+  schedule={"schema_version":1,"created_at_utc":now(),"status":"NOT_CREATED_DUE_T05_GATE","logical_attempts":0,
+   "source_trajectory_calls":0,"writer_calls":0,"binder_calls":0,"shadow_calls":0,"final_measurement_calls":0}
+  support={"schema_version":1,"created_at_utc":now(),"decision":runtime["decision"],
+   "N_valid_trajectory":0,"N_valid_repository":0,"full_6_plus_5_design_recovered":False,
+   "source_logical_attempts":0,"writer_calls":0,"binder_calls":0,"shadow_calls":0,"final_measurement_calls":0}
  freeze={"schema_version":1,"created_at_utc":now(),"decision":manifest["decision"],
   "stable_twice":manifest["stable_twice"],"supplied_observations_match":manifest["supplied_observations_match"],
   "mirror":manifest["mirror"],"rows":manifest["rows"],"source_artifact":stamped(T05/"manifest-resolution.json"),
@@ -33,7 +45,7 @@ def main():
   "missing_blob_bytes_at_freeze":plan["missing_blob_bytes"],"all_blobs_verified":receipt["all_blobs_verified"],
   "downloaded_bytes":sum(r["size"] for r in receipt["rows"] if r["status"]=="downloaded-and-verified"),
   "rows":plan["rows"],"plan_artifact":stamped(T05/"blob-plan.json"),"receipt_artifact":stamped(T05/"blob-receipt.json")}
- acquisition={"schema_version":1,"created_at_utc":now(),"decision":"T0_5_FIXED_IMAGES_READY",
+ acquisition={"schema_version":1,"created_at_utc":now(),"decision":runtime["decision"],
   "manifest":stamped(T05/"manifest-resolution.json"),"blobs":stamped(T05/"blob-receipt.json"),
   "import":stamped(T05/"import-receipt.json"),"all_blobs_verified":receipt["all_blobs_verified"],
   "oci_import_status":f"{sum(r['exact_digest_pass'] for r in imported['rows'])}/11",
@@ -45,7 +57,7 @@ def main():
   "N_valid_repository":support["N_valid_repository"],"full_6_plus_5_design_recovered":support["full_6_plus_5_design_recovered"],
   "writer_calls":0,"binder_calls":0,"shadow_calls":0,"final_measurement_calls":0,"future_task_executions":0,
   "claim_authority":"NO_NEW_PACTA_EFFECT_EVIDENCE","active_manuscript":"R9",
-  "strongest_failure_differential":"Image absence was an acquisition-layer blocker. Exact images, provider binding, and provenance-complete native trajectories are substrate support; no PACTA mechanism component was executed or measured."}
+  "strongest_failure_differential":"The frozen mirror manifests were stable and every blob was SHA-verified, but the substrate failed before model use: one exact image could not unpack under the 65,536-ID rootless mapping, and all ten imported images had /testbed HEAD values different from the frozen source base commits. This is image/runtime provenance failure, not PACTA or Qwen397 evidence."}
  copies={
  "c1-pacta-rb-qwen397-t05-image-manifest-freeze-20260901.json":freeze,
  "c1-pacta-rb-qwen397-t05-blob-inventory-20260901.json":inventory,
@@ -61,6 +73,7 @@ def main():
   "lessons":[
    "Runtime image absence is an acquisition-layer blocker, not evidence against a carrier or method. For SWE-bench-backed scientific units, mutable tags must be resolved and frozen to content-addressed platform manifests before execution.",
    "Transport retries for immutable image blobs are infrastructure recovery and are distinct from forbidden scientific sample retries.",
+   "A stable content-addressed image digest is not sufficient substrate provenance when the image's /testbed HEAD differs from the frozen task base commit; both digest binding and task-state qualification are required.",
    "A planned native source ID is not a native source trajectory. A writer-ready experience requires persisted trajectory bytes, an exact rendering contract, and content-addressed provenance.",
    "ReasoningBank exposes native SUCCESSFUL_SI and FAILED_SI induction instructions over the same Query + Trajectory input. PACTA may use them as a controlled writer-branch intervention, but this must not be described as ReasoningBank's natural branch selection or as pure reward-bit causality."],
   "artifacts":{k:stamped(PAPER/k) for k in copies},
