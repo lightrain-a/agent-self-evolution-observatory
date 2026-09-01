@@ -1,0 +1,55 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-transport-repair-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "generated_at": "2026-09-01T13:28:29+08:00",
+  "status": "TRANSPORT_REPAIR_PASS_S16_HF_XET_RELAY",
+  "segment_id": "S16",
+  "diagnosis": "The final 69 hf-mirror curl file stopped making byte progress while the original single-writer parent remained healthy. The parent was preserved until its curl child was terminated and it wrote a fail-closed PAYLOAD_SEGMENT_TRANSPORT_HOLD receipt. The partial file remained non-evidence.",
+  "original_hold": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-materialization-payload-seg16-receipt-20260901.json",
+    "sha256": "ab1990472dc1fd94a6d9957c98025f050addee1061495fb052c6e773e88526a4",
+    "status": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
+    "verified_file_count": 44,
+    "remaining_file_count": 1
+  },
+  "frozen_files": [
+    {
+      "path": "videos/observation.rgb.zed_link_camera_0/chunk-010/file-010.mp4",
+      "lfs_size_bytes": 188876362,
+      "lfs_oid_sha256": "99a7f98d0a222dfa0912b9be60a64aa7ae2c2bf0ddfce39d73efc49f4b67d4af"
+    }
+  ],
+  "repair": {
+    "relay_host": "222.20.126.67",
+    "client": "huggingface_hub hf CLI with hf_xet high-performance transport",
+    "endpoint": "https://hf-mirror.com",
+    "dataset_revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+    "remote_relay_size_sha_verified": true,
+    "local_quarantine_size_sha_verified": true,
+    "local_part_size_sha_verified_before_materializer": true,
+    "relay_quarantine": "/data/wyt/behavior-2026-shared26-v3.0.transport-quarantine/20260901-s16-hfxet-relay",
+    "finalization": "The verified relay byte object replaced only the non-evidence .part while no single-writer lock was held. The unchanged original segmented materializer then reverified all 45 frozen segment files and atomically finalized the .part file."
+  },
+  "repair_receipt": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-materialization-payload-seg16-repair1-receipt-20260901.json",
+    "sha256": "eb9e9eb6503def68d2c956e71ca67982e4ee9f32a8d95dd8a8eba2d50996493b",
+    "status": "PAYLOAD_SEGMENT_COMPLETE",
+    "verified_file_count": 45,
+    "verified_bytes": 8461123415,
+    "remaining_file_count": 0,
+    "partial_file_count": 0
+  },
+  "materialization_manifest_sha256": "9ee70726fb70750b23053e2358d3d42d4089238cd0bd52e5b74329279e961df4",
+  "segment_plan_sha256": "1ad14491dbbcbff289bdaada9bcd02c64ff271a7374e4e9bcdff28c8d11d493a",
+  "authority_sha256": "9379a5b0d0ccd8d5fa288327a8a1f764e511828ba5a389395712f0086b0474c9",
+  "path_oid_size_manifest_changed": false,
+  "task_or_episode_selection_changed": false,
+  "scientific_contract_changed": false,
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "gpu_used": false,
+  "training_started": false,
+  "policy_rollouts_started": false,
+  "policy_outcomes_read": false,
+  "scientific_authority": false
+}
