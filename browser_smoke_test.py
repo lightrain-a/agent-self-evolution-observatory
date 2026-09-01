@@ -723,10 +723,10 @@ def main() -> None:
           ("/paper-e1.html", True, ("R*(A;q)","AutoSkill P19","40 / 40")),
           ("/paper-g1.html", True, ("BrowserART + AWM","HB 0/12","DS 3/12")),
           ("/paper-c1.html", True, ("Shopping","125/172","0.700 vs 0.595")),
-          ("/paper-e2.html", True, ("12 streams × 4 paired replicates","17 / 48","Partial effect unopened")),
+          ("/paper-e2.html", True, ("48 matched pairs","17 / 48","R17 · 17/48 · effect unopened")),
           ("/paper-b1.html", True, ("AgentDojo financial","5/10 eligible","0 calls")),
           ("/paper-a.html", False, ("MemoryVLA","LIBERO-Plus","0.5541")),
-          ("/paper-b.html", False, ("MemoryVLA","24 development scopes","Longitudinal confirmatory")),
+          ("/paper-b.html", False, ("MemoryVLA","24 scopes","longitudinal")),
           ("/paper-agent-constraint.html", False, ("AppWorld-derived matched families","PRE-F0.5","ARK_API_KEY")),
           ("/paper-3d.html", False, ("InstructScene","3D-FRONT / 3D-FUTURE","SceneNAT")),
         ]
@@ -751,11 +751,12 @@ def main() -> None:
               overflow: document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
               text: document.body.textContent||''
             };""")
-            expected_quick_label = "0 · 先看懂问题" if page == "/paper-e1.html" else "速览版"
-            require(paper_view["quick"] == 1 and paper_view["quickLabel"] == expected_quick_label and paper_view["otherPaperCards"] == 0 and paper_view["pager"] == 0 and paper_view["modelCards"] >= 2 and paper_view["dataCards"] >= 2 and paper_view["design"] == 1 and paper_view["proofCards"] >= 3 and paper_view["evolution"] >= 6 and paper_view["back"] and not paper_view["overflow"], f"single-paper reader contract failed for {page}: {paper_view}")
-            require((paper_view["origin"] >= 3) is formal_story and (paper_view["registry"] == 1) is formal_story, f"formal-story/PaperRegistry migration contract failed for {page}: {paper_view}")
+            expected_quick_label = "0 · 先看懂问题"
+            require(paper_view["quick"] == 1 and paper_view["quickLabel"] == expected_quick_label and paper_view["otherPaperCards"] == 0 and paper_view["pager"] == 0 and paper_view["modelCards"] >= 2 and paper_view["dataCards"] >= 2 and paper_view["design"] == 1 and paper_view["proofCards"] >= 3 and paper_view["evolution"] >= 6 and paper_view["origin"] >= 3 and paper_view["back"] and paper_view["deepDiveClosed"] and not paper_view["overflow"], f"beginner-first single-paper reader contract failed for {page}: {paper_view}")
+            require((paper_view["registry"] == 1) is formal_story, f"PaperRegistry identity contract failed for {page}: {paper_view}")
+            require(bool(paper_view["download"]) is formal_story, f"formal papers must expose the PDF action in the hero and working/scientific-object pages must not invent one: {page} {paper_view}")
             if page == "/paper-e1.html":
-                require(paper_view["download"] == "downloads/E1-STRI.pdf" and paper_view["deepDiveClosed"], f"E1 beginner-first contract requires the PDF action in the hero and the technical dossier closed by default: {paper_view}")
+                require(paper_view["download"] == "downloads/E1-STRI.pdf", f"E1 PDF target changed unexpectedly: {paper_view}")
             require("讲给小白听" not in paper_view["text"] and all(marker in paper_view["text"] for marker in markers), f"single-paper content markers missing for {page}: markers={markers}")
 
         navigate("/experiments.html", 4)

@@ -27,8 +27,8 @@
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 1620,
-      "sha256": "fc606cbb49fac7de2bd000dcef6de189810f158db070121479ea273942c074f8"
+      "bytes": 1831,
+      "sha256": "d2c7b08a49cf4ed4097b2aa2faf60e42d270d56d672b261939dd4e6d1c4cfc0b"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -41,6 +41,10 @@
     "generated/agent-constraint-externality-matched-family-manifest-20260831.json": {
       "bytes": 28346,
       "sha256": "0276b91b6ca9f00b382134238a2bdea2c90b384d5a1bc1eb63c9c9b9c13cea7c"
+    },
+    "generated/agent-constraint-externality-qwen-capability-continuation-r1-result-20260901.json": {
+      "bytes": 2191,
+      "sha256": "9a06f36f7d1ba25c0325c8d04c24dd09fbef4f947f18da67a9ff26a320cfa958"
     },
     "generated/agent-constraint-externality-qwen-capability-manifest-20260901.json": {
       "bytes": 1203,
@@ -66,8 +70,8 @@
   "generated_at": "2026-09-01T15:35:00+08:00",
   "gpu_runs": 0,
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
-  "provider_calls": 6,
+  "provider_calls": 97,
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP"
+  "status": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP"
 }

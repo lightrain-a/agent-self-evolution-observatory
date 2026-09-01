@@ -42,6 +42,9 @@ CAPABILITY_RESULT_MANIFEST = (
 CAPABILITY_MODEL_SNAPSHOT = (
     GENERATED / "agent-constraint-externality-qwen-provider-model-snapshot-20260901.json"
 )
+CAPABILITY_CONTINUATION_RESULT = (
+    GENERATED / "agent-constraint-externality-qwen-capability-continuation-r1-result-20260901.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -141,8 +144,13 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
     provider_ready = bool(safe_provider["configured"])
     m1 = read_json(M1_QUALIFICATION) if M1_QUALIFICATION.is_file() else {}
     m1_pass = m1.get("status") == "M1_RUNNER_QUALIFICATION_PASS"
+    capability_result_path = (
+        CAPABILITY_CONTINUATION_RESULT
+        if CAPABILITY_CONTINUATION_RESULT.is_file()
+        else CAPABILITY_RESULT
+    )
     capability_result = (
-        read_json(CAPABILITY_RESULT) if CAPABILITY_RESULT.is_file() else {}
+        read_json(capability_result_path) if capability_result_path.is_file() else {}
     )
     capability_status = validate_capability_result(capability_result)
 
@@ -366,6 +374,17 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "m1_runner_qualification_pass": m1_pass,
         "capability_contract_frozen": True,
         "capability_result_status": capability_status,
+        "capability_result_artifact": (
+            str(capability_result_path.relative_to(ROOT))
+            if capability_result_path.is_file()
+            else None
+        ),
+        "capability_valid_measurements": capability_result.get(
+            "valid_capability_measurements", 0
+        ),
+        "capability_tool_cap_incomplete_measurements": capability_result.get(
+            "tool_cap_incomplete_measurements", 0
+        ),
         "capability_scheduled_agent_episode_count": capability_result.get(
             "scheduled_agent_episode_count", 0
         ),
@@ -428,6 +447,7 @@ def main() -> None:
         }
     for path in (
         CAPABILITY_RESULT, CAPABILITY_RESULT_MANIFEST, CAPABILITY_MODEL_SNAPSHOT,
+        CAPABILITY_CONTINUATION_RESULT,
     ):
         if not path.is_file():
             continue

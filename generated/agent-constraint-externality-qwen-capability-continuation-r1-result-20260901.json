@@ -1,0 +1,57 @@
+{
+  "agent_episode_count": 8,
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "f0_reason": "Capability continuation does not itself grant F0 execution authority.",
+    "method": false,
+    "p1": false,
+    "paper_claim": false,
+    "second_model": false,
+    "toolsandbox": false
+  },
+  "capability_measurements_observed": 8,
+  "catalog_provider_request_count": 1,
+  "catalog_provider_requests_historical": 1,
+  "content_sha256": "ba131f98aa3e0596ea111ef2e335a035bd85a644292acdefbfe71e15d3ac3d2f",
+  "continuation_agent_model_requests": 91,
+  "continuation_id": "CAPABILITY-INTERFACE-RECOVERY-CONTINUATION-R1",
+  "continuation_ledger_sha256": "11487c22df7adb132e3b798bacff0c9ddfa6398a7e63648473dad056a62c44ab",
+  "f0_backbone": null,
+  "gate": {
+    "agent_model_request_count": 96,
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 0.0,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 0.125,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP"
+  },
+  "historical_agent_model_requests": 5,
+  "newly_executed_measurements": 7,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider_request_total": 97,
+  "provider_request_total_across_lineage": 97,
+  "provider_requests_added_by_measurement_recovery": 0,
+  "recovered_measurements": 1,
+  "recovery_artifact_sha256": "ec1063e0bbe9e27aaca79cce0ae40be2da86a1558eeeefa967a71a5e5222a1af",
+  "resolved_model_identities": [
+    "qwen3.7-flash"
+  ],
+  "scheduled_agent_episode_count": 8,
+  "schema_version": "ace-qwen-capability-continuation-r1-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
+  "terminal_agent_episode_count": 8,
+  "tool_cap_incomplete_measurements": 7,
+  "toolcap_measurement_ledger_sha256": "2ce64b8f8147df99ba07f2a8b7ede48fd2cf847551f5e47e26185642199f923f",
+  "updater_model_request_count": 0,
+  "valid_capability_measurements": 8
+}

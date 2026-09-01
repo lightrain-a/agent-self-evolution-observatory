@@ -1,14 +1,17 @@
 {
   "appworld_ul_authorized": false,
   "blocker": "Capability calibration terminated at its frozen stop rule; F0 remains unauthorized.",
-  "capability_agent_episode_count": 1,
-  "capability_agent_model_request_count": 5,
+  "capability_agent_episode_count": 8,
+  "capability_agent_model_request_count": 96,
   "capability_contract_frozen": true,
-  "capability_provider_request_total": 6,
-  "capability_result_status": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP",
+  "capability_provider_request_total": 97,
+  "capability_result_artifact": "generated/agent-constraint-externality-qwen-capability-continuation-r1-result-20260901.json",
+  "capability_result_status": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
   "capability_scheduled_agent_episode_count": 8,
   "capability_scientific_outcomes_observed": 0,
-  "capability_terminal_agent_episode_count": 1,
+  "capability_terminal_agent_episode_count": 8,
+  "capability_tool_cap_incomplete_measurements": 7,
+  "capability_valid_measurements": 8,
   "compiler_pass_conditions_all_true": true,
   "compiler_verdict": "PRE_F0_5_PASS",
   "execution_override": {
@@ -36,6 +39,6 @@
   },
   "provider_credential_present": true,
   "schema_version": "agent-constraint-externality-f0-readiness-v1",
-  "status": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP",
+  "status": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
   "tool_sandbox_authorized": false
 }
