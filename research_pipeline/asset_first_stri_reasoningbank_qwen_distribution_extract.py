@@ -221,6 +221,13 @@ def run() -> dict[str, Any]:
         write_json(INDEX, index_payload(contract, completed))
         print(json.dumps({"ordinal": unit["ordinal"], "source_task_id": unit["source_task_id"],
                           "execution_status": status, "completed": len(completed)}, sort_keys=True), flush=True)
+        if status != "COMPLETED":
+            break
+    if len(completed) != len(contract["plan"]):
+        final = index_payload(contract, completed)
+        return {"decision": "QWEN_MEMORY_EXTRACTION_PROVIDER_HOLD_REMAINING_UNTOUCHED",
+                "execution_complete": False, "completed_count": len(completed),
+                "index_sha256": write_json(INDEX, final)}
     bank_entries = [row["memory"] for row in completed]
     bank_payload = {
         "schema_version": 1, "experiment_id": EXPERIMENT_ID,

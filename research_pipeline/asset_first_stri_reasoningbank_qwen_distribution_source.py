@@ -179,6 +179,8 @@ def run() -> dict[str, Any]:
                 run_id=unit["run_id"], sampling=contract["sampling"],
                 container=container)
             status = "COMPLETED"
+            if trajectory.get("failure") is not None:
+                status = "TERMINAL_PROVIDER_OR_POLICY_FAILURE"
             if trajectory["task_sha256"] != unit["task_sha256"]:
                 trajectory["failure"] = {
                     "failure_layer": "artifact_integrity",
@@ -188,15 +190,14 @@ def run() -> dict[str, Any]:
                 status = "TERMINAL_TASK_HASH_DRIFT"
             try:
                 trajectory["R4_terminal_outcome"] = evaluate(container, row)
-                if status != "TERMINAL_TASK_HASH_DRIFT":
-                    status = "COMPLETED"
+                # Preserve any earlier terminal provider/artifact status.
             except Exception as error:
                 trajectory["R4_terminal_outcome"] = {
                     "valid": False, "resolved": False,
                     "failure": {"failure_layer": "evaluator",
                                 "error_type": type(error).__name__, "message": str(error)},
                 }
-                if status != "TERMINAL_TASK_HASH_DRIFT":
+                if status == "COMPLETED":
                     status = "TERMINAL_EVALUATOR_FAILURE"
         except Exception as error:
             trajectory = {
@@ -226,6 +227,8 @@ def run() -> dict[str, Any]:
         print(json.dumps({
             "ordinal": unit["ordinal"], "instance_id": unit["instance_id"],
             "execution_status": status, "completed": len(completed)}, sort_keys=True), flush=True)
+        if status != "COMPLETED":
+            break
     final = index_payload(contract, completed)
     return {"decision": final["decision"], "completed_count": len(completed),
             "index_sha256": write_json(INDEX, final)}

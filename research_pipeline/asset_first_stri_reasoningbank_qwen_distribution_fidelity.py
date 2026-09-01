@@ -220,6 +220,12 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         print(json.dumps({"ordinal": unit["ordinal"], "audit_id": unit["audit_id"],
                           "execution_status": receipt["execution_status"],
                           "completed": len(receipts)}, sort_keys=True), flush=True)
+        if receipt["execution_status"] != "REVIEW_VALID":
+            break
+    if len(receipts) != len(contract["plan"]):
+        return {"decision": "SOURCE_BANK_FIDELITY_AUDIT_PROVIDER_HOLD_REMAINING_UNTOUCHED",
+                "execution_complete": False, "completed_count": len(receipts),
+                "index_sha256": sha256_file(INDEX)}
     reviews = [row for row in receipts if row["execution_status"] == "REVIEW_VALID"]
     implementation_failures = [row for row in receipts
                                if row["execution_status"] != "REVIEW_VALID"]
