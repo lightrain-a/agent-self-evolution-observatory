@@ -25,7 +25,7 @@
     "replacement_authority_receipt_sha256": "ae12bffededd5f91ee480f17c138ec47be38c723d0f939871839b335701e9891",
     "R39_exact_information_adapter_sha256": "c94353ca46c8cfb65cfae6218d2e03ae6946b37aa25e52ee83212e2dfe03afe2",
     "R46M2_strict_source_qualification_sha256": "e0740dc09609d1a551ac791492417b159c4f465ef42edf659c9a5a0631bfbeac",
-    "R47M2_strict_utilization_sha256": "583db5e9aea66dff99e5d5564b9f23c9ed4e2e54845c0edfe8c0a8e39cbb70ae",
+    "R47M2_strict_utilization_sha256": "288608515fdfd896dc4b992ea66818e1116fabe3cd114e0c53b3b3c94da5c713",
     "R48_AB_runner_sha256": "6e28cfa75eef0d9833e0184cff5aaa0ff81957555b764f834c7c23c10324d2a1",
     "primary_preimplementation_audit_sha256": "4706cd1d19d60de90ed6b0ac4bfae72c3ce8339943ccd794937ad3263aa63244",
     "historical_controller_audit_sha256": "36f2dce2c9731069f2de0f4d5ae64e42ff3d9973228bf2e90c06edd4320c0296"
@@ -161,5 +161,5 @@
     "C_D_execution": false,
     "claim_expansion": false
   },
-  "receipt_sha256": "a4b00d27c433add6583059d56cd57617106ce72bcd2642def5fab001b9e373bd"
+  "receipt_sha256": "3fddea2d82bbcea57fb66d5a50bc252134a82ce4805b372c562c4c0493445d21"
 }

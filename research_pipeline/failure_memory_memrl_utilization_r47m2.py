@@ -7,6 +7,10 @@ utilization representative can realize U1 from a top frozen eligible retrieval.
 """
 from __future__ import annotations
 
+import json
+import pathlib
+import sys
+
 try:
     from . import failure_memory_memrl_utilization_r47m1 as base
 except ImportError:
@@ -46,7 +50,28 @@ memctx = base.memctx
 analyze = base.analyze
 
 
+def resume_guard(output_dir: pathlib.Path) -> None:
+    """Allow resume only from an unambiguous all-COMPLETE arm boundary."""
+    ledger = output_dir / "completed-utilization-arms.jsonl"
+    rows = [json.loads(x) for x in ledger.read_text(encoding="utf-8").splitlines() if x.strip()] if ledger.exists() else []
+    if any(row.get("status") != "COMPLETE" for row in rows):
+        raise RuntimeError("R47M2-exposed-failure-row-forbids-resume")
+    arm_root = output_dir / "arms"
+    arm_dirs = [p for p in arm_root.iterdir() if p.is_dir()] if arm_root.is_dir() else []
+    if len(arm_dirs) != len(rows):
+        raise RuntimeError("R47M2-ambiguous-started-arm-forbids-resume")
+    if any((p / "failure.json").exists() for p in arm_dirs):
+        raise RuntimeError("R47M2-failure-artifact-forbids-resume")
+
+
 def main() -> None:
+    if "--resume" in sys.argv:
+        if "--output-dir" not in sys.argv:
+            raise RuntimeError("R47M2-resume-output-dir-missing")
+        i = sys.argv.index("--output-dir")
+        if i + 1 >= len(sys.argv):
+            raise RuntimeError("R47M2-resume-output-dir-missing")
+        resume_guard(pathlib.Path(sys.argv[i + 1]).resolve())
     base.main()
 
 

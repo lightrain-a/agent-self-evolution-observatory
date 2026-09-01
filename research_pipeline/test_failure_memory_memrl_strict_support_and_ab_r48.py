@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from research_pipeline.failure_memory_memrl_source_qualification_r46m2 import strict_adjudicate
 from research_pipeline.failure_memory_memrl_ab_identification_r48 import (
@@ -53,6 +56,21 @@ class StrictR46Tests(unittest.TestCase):
 class R47M2PlumbingTests(unittest.TestCase):
     def test_command_line_main_rebinds_original_r47_preflight_to_m2(self):
         self.assertIs(r47m2.base.base.preflight, r47m2.preflight)
+
+    def test_resume_guard_accepts_only_complete_boundary(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); (root/'arms'/'000-x-U0_no_memory').mkdir(parents=True)
+            (root/'completed-utilization-arms.jsonl').write_text(json.dumps({'status':'COMPLETE'})+'\n')
+            r47m2.resume_guard(root)
+
+    def test_resume_guard_rejects_failure_or_ambiguous_started_arm(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); (root/'arms'/'000-x-U0_no_memory').mkdir(parents=True)
+            (root/'completed-utilization-arms.jsonl').write_text(json.dumps({'status':'EXECUTION_FAILURE_NO_RETRY'})+'\n')
+            with self.assertRaises(RuntimeError): r47m2.resume_guard(root)
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td); (root/'arms'/'000-x-U0_no_memory').mkdir(parents=True)
+            with self.assertRaises(RuntimeError): r47m2.resume_guard(root)
 
 
 class ABOperationalizationTests(unittest.TestCase):

@@ -6,8 +6,8 @@
   "status": "PASS_ZERO_OUTCOME_AB_RENDERER_SURFACE_AUDIT",
   "role": "SYNTHETIC_STATIC_PROMPT_SURFACE_AUDIT_NO_MODEL_OR_VALIDATION_OUTCOME",
   "bindings": {
-    "R48_contract_file_sha256": "a7653293720c17e1c56ac4fb54d1e9aa676d8a0f812e5563bb6d6bf2662e12cd",
-    "R48_contract_receipt_sha256": "a4b00d27c433add6583059d56cd57617106ce72bcd2642def5fab001b9e373bd",
+    "R48_contract_file_sha256": "9c769c4f71dae298ff9655a8f3a3dca53dff19e3f7f5ea3e54b4211feb9da716",
+    "R48_contract_receipt_sha256": "3fddea2d82bbcea57fb66d5a50bc252134a82ce4805b372c562c4c0493445d21",
     "R48_latest_runner_file_sha256": "6e28cfa75eef0d9833e0184cff5aaa0ff81957555b764f834c7c23c10324d2a1",
     "R48_renderer_semantic_sha256": "d4c7abdb8394d7fd436af8f1127a3a68bec664dc6588efe65ac009024bff25f7",
     "synthetic_audit_checkout_head": "1b64f93f9620d3110286b9600184f2b95b9d985d",
@@ -41,5 +41,5 @@
     "A_B_treatment_outcomes_observed": 0
   },
   "scientific_authority": false,
-  "receipt_sha256": "13718ccd3a21e24df326dfcc6c1302cec92531b41d71ddc6974e2e72d6a37b9f"
+  "receipt_sha256": "c7dc38dbcb73e529fba1e7ae76e4a9e71c2a596153f91cce7d320be14b6927eb"
 }

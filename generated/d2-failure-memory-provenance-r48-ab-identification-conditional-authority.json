@@ -7,8 +7,8 @@
   "role": "NARROW_SUBESTIMAND_AUTHORITY_WITHIN_EXISTING_HUMAN_BOUNDED_PRIMARY_SCOPE",
   "bindings": {
     "contract_path": "generated/d2-failure-memory-provenance-r48-ab-identification-operationalization-contract.json",
-    "contract_file_sha256": "a7653293720c17e1c56ac4fb54d1e9aa676d8a0f812e5563bb6d6bf2662e12cd",
-    "contract_receipt_sha256": "a4b00d27c433add6583059d56cd57617106ce72bcd2642def5fab001b9e373bd",
+    "contract_file_sha256": "9c769c4f71dae298ff9655a8f3a3dca53dff19e3f7f5ea3e54b4211feb9da716",
+    "contract_receipt_sha256": "3fddea2d82bbcea57fb66d5a50bc252134a82ce4805b372c562c4c0493445d21",
     "parent_authority_path": "generated/d2-failure-memory-provenance-r45m1-replacement-execution-authority-v2.json",
     "parent_authority_file_sha256": "7f81d7dfb133a6dcc603f7a9d8d80ecc4f0eb5f9bed0ac72a7acd3114f3a5871",
     "parent_authority_receipt_sha256": "ae12bffededd5f91ee480f17c138ec47be38c723d0f939871839b335701e9891",
@@ -56,5 +56,5 @@
     "claim_expansion": false
   },
   "scientific_boundary": "A/B may close only the already-registered minimum L2 identification estimand. C/D remains NOT EXECUTED and PSMG efficacy remains NOT IDENTIFIED.",
-  "receipt_sha256": "b430ffacb07b74ca49d433bf3970b15bf62eff0aee4d7fdeb6d555361616e659"
+  "receipt_sha256": "99838fbbc7c9dfa2521a9c10a93545d69ba5c7fa4a72ca2d41fd556963ab761f"
 }
