@@ -48,6 +48,8 @@ def test_q0_probe_plan_is_exactly_once_and_provider_free() -> None:
     assert q0.RECOMMENDED_TEMPERATURE == 1.0
     assert q0.RECOMMENDED_TOP_P == 0.95
     assert q0.RECOMMENDED_TOP_K == 40
+    assert q0.SEMANTIC_PROBE_TEMPERATURE == 0.0
+    assert q0.SEMANTIC_PROBE_TOP_P == 1.0
 
 
 def test_q0_contract_does_not_open_benchmark_or_source_authority(tmp_path, monkeypatch) -> None:
@@ -59,6 +61,9 @@ def test_q0_contract_does_not_open_benchmark_or_source_authority(tmp_path, monke
     monkeypatch.setattr(q0, "ROOT", tmp_path)
     monkeypatch.setattr(q0, "D0_INDEX", d0)
     contract = q0.contract_payload()
+    basis = contract["official_configuration_basis"]
+    assert basis["semantic_probe_temperature"] == 0.0
+    assert basis["semantic_probe_top_p"] == 1.0
     assert contract["qualification_gate"]["single_choice_n1_required"] is True
     assert contract["qualification_gate"]["text_action_compatibility_required"] is False
     boundary = contract["scientific_boundary"]

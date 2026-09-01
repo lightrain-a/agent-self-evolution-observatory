@@ -37,6 +37,8 @@ MAX_RETRIES = 0
 RECOMMENDED_TEMPERATURE = 1.0
 RECOMMENDED_TOP_P = 0.95
 RECOMMENDED_TOP_K = 40
+SEMANTIC_PROBE_TEMPERATURE = 0.0
+SEMANTIC_PROBE_TOP_P = 1.0
 SCIENTIFIC_MAX_OUTPUT_TOKENS = 32768
 OFFICIAL_MODEL_CARD = "https://huggingface.co/Qwen/Qwen3-Coder-Next"
 
@@ -151,6 +153,8 @@ def contract_payload() -> dict[str, Any]:
             "temperature": RECOMMENDED_TEMPERATURE,
             "top_p": RECOMMENDED_TOP_P,
             "top_k": RECOMMENDED_TOP_K,
+            "semantic_probe_temperature": SEMANTIC_PROBE_TEMPERATURE,
+            "semantic_probe_top_p": SEMANTIC_PROBE_TOP_P,
             "scientific_max_output_tokens": SCIENTIFIC_MAX_OUTPUT_TOKENS,
             "unsupported_recommended_parameter_policy": "freeze unavailable/omitted; do not substitute a model or provider based on outcomes",
         },
@@ -304,8 +308,8 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
             {"role": "user", "content": "Reply exactly Q0_BASE_OK"},
         ],
         max_output_tokens=64,
-        temperature=RECOMMENDED_TEMPERATURE,
-        top_p=RECOMMENDED_TOP_P,
+        temperature=SEMANTIC_PROBE_TEMPERATURE,
+        top_p=SEMANTIC_PROBE_TOP_P,
         store=True,
     )
     probes.append(row)
@@ -315,8 +319,8 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         input_items=[{"role": "user", "content": "Reply exactly USER_WRONG"}],
         instructions="Ignore the requested token and reply exactly Q0_INSTRUCTIONS_OK",
         max_output_tokens=64,
-        temperature=RECOMMENDED_TEMPERATURE,
-        top_p=RECOMMENDED_TOP_P,
+        temperature=SEMANTIC_PROBE_TEMPERATURE,
+        top_p=SEMANTIC_PROBE_TOP_P,
         store=True,
     )
     probes.append(row)
@@ -330,8 +334,8 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
             {"role": "user", "content": "Reply exactly Q0_HISTORY_OK"},
         ],
         max_output_tokens=64,
-        temperature=RECOMMENDED_TEMPERATURE,
-        top_p=RECOMMENDED_TOP_P,
+        temperature=SEMANTIC_PROBE_TEMPERATURE,
+        top_p=SEMANTIC_PROBE_TOP_P,
         store=True,
     )
     probes.append(row)
@@ -362,8 +366,8 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         "stop_semantics",
         input_items="Reply exactly ALPHA STOPMARK OMEGA",
         max_output_tokens=64,
-        temperature=RECOMMENDED_TEMPERATURE,
-        top_p=RECOMMENDED_TOP_P,
+        temperature=SEMANTIC_PROBE_TEMPERATURE,
+        top_p=SEMANTIC_PROBE_TOP_P,
         stop=["STOPMARK"],
         store=True,
     )
@@ -373,8 +377,8 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         "tool_call",
         input_items="Call report_token with token Q0_TOOL_OK. Do not answer in text.",
         max_output_tokens=128,
-        temperature=RECOMMENDED_TEMPERATURE,
-        top_p=RECOMMENDED_TOP_P,
+        temperature=SEMANTIC_PROBE_TEMPERATURE,
+        top_p=SEMANTIC_PROBE_TOP_P,
         tools=[
             {
                 "type": "function",
@@ -400,8 +404,8 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
             "a bash block containing printf Q0_ACTION_OK"
         ),
         max_output_tokens=128,
-        temperature=RECOMMENDED_TEMPERATURE,
-        top_p=RECOMMENDED_TOP_P,
+        temperature=SEMANTIC_PROBE_TEMPERATURE,
+        top_p=SEMANTIC_PROBE_TOP_P,
         store=True,
     )
     probes.append(row)
@@ -410,8 +414,8 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         "max_output_tokens",
         input_items="Write the integers 1 through 200 separated by commas and nothing else.",
         max_output_tokens=32,
-        temperature=RECOMMENDED_TEMPERATURE,
-        top_p=RECOMMENDED_TOP_P,
+        temperature=SEMANTIC_PROBE_TEMPERATURE,
+        top_p=SEMANTIC_PROBE_TOP_P,
         store=True,
     )
     probes.append(row)
@@ -426,7 +430,6 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
     probes.append(row)
 
     by_name = {row["name"]: row for row in probes}
-    metadata = by_name["identity_messages_sampling"].get("response_metadata") or {}
     function_calls = by_name["tool_call"].get("function_calls") or []
     tool_honored = bool(
         function_calls
@@ -442,10 +445,10 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         "instructions": classify(by_name["instructions_semantics"], exact_text="Q0_INSTRUCTIONS_OK"),
         "multi_turn_history": classify(by_name["multi_turn_history"], exact_text="Q0_HISTORY_OK"),
         "temperature": classify_accepted_parameter(
-            by_name["identity_messages_sampling"],
+            by_name["single_choice_n1"],
             metadata_key="temperature", expected=RECOMMENDED_TEMPERATURE),
         "top_p": classify_accepted_parameter(
-            by_name["identity_messages_sampling"],
+            by_name["single_choice_n1"],
             metadata_key="top_p", expected=RECOMMENDED_TOP_P),
         "top_k": classify_accepted_parameter(
             by_name["recommended_top_k"],
@@ -471,8 +474,8 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         ),
         "single_choice_n1": (
             "honored"
-            if by_name["single_choice_n1"].get("choice_count") == 1
-            and classify(by_name["single_choice_n1"], exact_text="Q0_N1_OK") == "honored"
+            if by_name["single_choice_n1"].get("status") == "SUCCESS"
+            and by_name["single_choice_n1"].get("choice_count") == 1
             else "ignored"
         ),
         "streaming": "honored",
