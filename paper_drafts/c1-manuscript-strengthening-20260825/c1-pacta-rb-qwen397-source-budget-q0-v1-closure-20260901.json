@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T12:05:00Z",
+  "experiment": "C1-PACTA-RB-QWEN397-SOURCE-BUDGET-Q0-20260901-v1",
+  "status": "STOP_SOURCE_TRAJECTORY_BUDGET_4096_UNQUALIFIED",
+  "non_scientific": true,
+  "source_trajectory_output_budget_candidate": 4096,
+  "pacta_first_decision_budget_unchanged": 512,
+  "provider_calls": 12,
+  "scientific_source_tasks_used": 0,
+  "v5_source_task_replayed": false,
+  "qualification_result_sha256": "73ff4787bb7ece1286cb14bfce2e3380e2b3f5cb454838e46b7b32bfad56eb4e",
+  "run_contract_sha256": "41e72fe2a6b18a07a31ca9efb53826becbca42102140a05b4f507f738d7e4f52",
+  "result": {"qualified": 0, "total": 12, "prompt_tokens": 102161, "completion_tokens": 1007},
+  "diagnosis": {
+    "fixture_interface_mismatch": "Eight responses completed with finish_reason=stop but chose ordinary repository-inspection actions rather than byte-exact replay of the synthetic payload, showing that the official MiniSWEAgent task envelope is a poor transport-only qualification surface.",
+    "budget_evidence": "Four fixtures that did attempt the requested long verbatim action terminated with finish_reason=length at the frozen 4096-token ceiling. The 160-line payload could still be truncated, so 4096 is not sufficient for the prospectively defined worst-case long-action qualification.",
+    "strongest_supported_conclusion": "4096 cannot be qualified as the full-source trajectory action ceiling under this Q0 object. This is not evidence against the 512 first-decision budget or against PACTA."
+  },
+  "next_epoch": "Use a neutral transport-only prompt surface and prospectively test source-only max_completion_tokens=16384 on 160/320-line long bash actions. Do not alter the PACTA first-decision budget of 512.",
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_measurement_calls": 0,
+  "future_task_executions": 0,
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "active_manuscript": "R9"
+}
