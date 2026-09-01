@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T11:40:00Z",
+  "experiment": "C1-PACTA-RB-QWEN397-SOURCE-BUDGET-Q0-20260901",
+  "purpose": "Prospectively qualify a separate output-token ceiling for full native source trajectories after the frozen 512-token first-decision budget produced extensive truncation in T0-v5.",
+  "non_scientific": true,
+  "model": "qwen3.5-397b-a17b",
+  "source_trajectory_output_budget_candidate": 4096,
+  "pacta_first_decision_budget_unchanged": 512,
+  "selection_rule": "single prospective 4096 candidate; no adaptive budget ladder in this epoch",
+  "fixture_count": 12,
+  "fixture_grid": {
+    "synthetic_history_pairs": [0, 4, 12, 24],
+    "verbatim_payload_lines": [80, 160, 320]
+  },
+  "pass_rule": "12/12 HTTP success, raw persisted before parse, exact qwen3.5-397b-a17b identity, finish_reason=stop, exactly one fenced bash action, and byte-exact expected action after fence trimming",
+  "provider_retries": 0,
+  "source_tasks_used": 0,
+  "v5_source_task_replayed": false,
+  "v5_consumed_source_task": "pydata__xarray-4966",
+  "remaining_untouched_source_units": 10,
+  "parent_q0": {
+    "provider_binding_sha256": "0a538aa4ca3e24a3ad025d647d01c0b8b0c97f36749d8e549f42ca797e6fb100",
+    "qualification_result_sha256": "71873bea7325ff9e35ded143d9fb6cc28a3cd98d93d472d82e2fabc2877947fe"
+  },
+  "v5_closure": {
+    "status": "STOP_SOURCE_TRAJECTORY_OUTPUT_BUDGET_UNQUALIFIED",
+    "artifact": "paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-rb-qwen397-t0-v5-source-budget-stop-20260901.json",
+    "source_execution_git_sha": "7272cc3dda5360a1c0c0d7ce7288e356cf1ef02a"
+  },
+  "forbidden": [
+    "rerun pydata__xarray-4966",
+    "use any remaining scientific source task during budget qualification",
+    "change PACTA first-decision budget from 512",
+    "writer calls",
+    "SCB binder calls",
+    "shadow calls",
+    "PACTA gate",
+    "final measurement",
+    "future-task execution",
+    "model switching"
+  ],
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "active_manuscript": "R9"
+}
