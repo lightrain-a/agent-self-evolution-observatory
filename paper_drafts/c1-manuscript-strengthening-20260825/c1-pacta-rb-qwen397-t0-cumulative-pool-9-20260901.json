@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T14:05:00Z",
+  "experiment": "C1-PACTA-RB-QWEN397-T0-CUMULATIVE-POOL-20260901",
+  "status": "SOURCE_TRAJECTORY_POOL_PARTIAL_9",
+  "carrier": "ReasoningBank + SWE-bench Verified + official MiniSWEAgent",
+  "official_reasoningbank_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+  "model": "qwen3.5-397b-a17b",
+  "source_trajectory_output_budget": 16384,
+  "pacta_first_decision_budget_unchanged": 512,
+  "valid_count": 9,
+  "valid_repository_count": 9,
+  "full_original_6_plus_5_design_recovered": false,
+  "six_unit_pilot_supported": true,
+  "sealed_reserve_available_after_six_unit_selection": 3,
+  "selection_not_yet_executed": true,
+  "invalid_consumed_sources": [
+    {
+      "source_task_id": "pydata__xarray-4966",
+      "reason": "v5 full-source trajectory invalid after 512-token truncation loop and provider rate-limit stop",
+      "replay_forbidden": true
+    },
+    {
+      "source_task_id": "matplotlib__matplotlib-24627",
+      "reason": "v6 compatibility implementation failure after a legitimate environment timeout; trajectory is not writer-ready",
+      "replay_forbidden": true
+    }
+  ],
+  "valid_units": [
+    {
+      "source_task_id": "psf__requests-1766",
+      "repository": "psf/requests",
+      "task_sha256": "90d541e87a05a5135b7ee242c82702e5cad1e2cae9e5571fcbc032d7d6d80682",
+      "source_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v6/source-psf__requests-1766/source_trajectory.json",
+      "source_trajectory_sha256": "1d044d60107255b802be286e62f1d57f133e8ba0afe1ed52c742e1bfa5355261",
+      "writer_input_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v6/source-psf__requests-1766/writer_input_trajectory.txt",
+      "writer_input_trajectory_sha256": "7fd8498517c173e0f3c9be8dbaf8c2b25af0e9760a449c3101f8ee26014781ab",
+      "terminal_status": "Submitted"
+    },
+    {
+      "source_task_id": "scikit-learn__scikit-learn-14496",
+      "repository": "scikit-learn/scikit-learn",
+      "task_sha256": "7860d59abe6e6a85ed92cbc43c7b632982164bc89105df4df399793154bb15df",
+      "source_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v6/source-scikit-learn__scikit-learn-14496/source_trajectory.json",
+      "source_trajectory_sha256": "4190083ead39e4682682fe04e46a8df7bab09d5e7639a6f0714b5335f7321966",
+      "writer_input_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v6/source-scikit-learn__scikit-learn-14496/writer_input_trajectory.txt",
+      "writer_input_trajectory_sha256": "eaea196d4a1f6ef402c80374524c8b7ff6d628b7331ed916fb746005ab297cbd",
+      "terminal_status": "Submitted"
+    },
+    {
+      "source_task_id": "astropy__astropy-7166",
+      "repository": "astropy/astropy",
+      "task_sha256": "70c79d6da0284ce81f9e951dbab5c77d94bf8a27cd156f54169b424d75d11e43",
+      "source_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-astropy__astropy-7166/source_trajectory.json",
+      "source_trajectory_sha256": "4f27680aaa1cf448f002fc0cf8b4b612fba205abae22107add64cd40f10de3df",
+      "writer_input_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-astropy__astropy-7166/writer_input_trajectory.txt",
+      "writer_input_trajectory_sha256": "942b6596660ec3b9242f05180f4a7b6fae217b0fcd9c4c178ea3bfce83aa8221",
+      "terminal_status": "Submitted"
+    },
+    {
+      "source_task_id": "django__django-13449",
+      "repository": "django/django",
+      "task_sha256": "b082782316bb4c8f2899f9f31d81edd84d4ded60ed7627073f56014db30da0d9",
+      "source_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-django__django-13449/source_trajectory.json",
+      "source_trajectory_sha256": "bcb9d59cc5955aac76eb5da38167465ec77de55c11b364d9fcfd444933a6c0dd",
+      "writer_input_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-django__django-13449/writer_input_trajectory.txt",
+      "writer_input_trajectory_sha256": "2d729f1160de0743da4676fd5026e41cb7a8b49708e5edb740e1ff7f803faec3",
+      "terminal_status": "Submitted"
+    },
+    {
+      "source_task_id": "mwaskom__seaborn-3187",
+      "repository": "mwaskom/seaborn",
+      "task_sha256": "72157e71b5c0ed5d58d66a7eeb30ed7b2fb237374183b9ebee200f5d58abd77b",
+      "source_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-mwaskom__seaborn-3187/source_trajectory.json",
+      "source_trajectory_sha256": "1bde2b2ff599ab7e362f4f9c1f41b866579e7e0ca7dace23192d4057da6c6d9e",
+      "writer_input_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-mwaskom__seaborn-3187/writer_input_trajectory.txt",
+      "writer_input_trajectory_sha256": "6a6f58b29c8c47c7de40f82119eca7b3eaab70ad3ead91ef7f360345240f575a",
+      "terminal_status": "Submitted"
+    },
+    {
+      "source_task_id": "pylint-dev__pylint-7080",
+      "repository": "pylint-dev/pylint",
+      "task_sha256": "82319497af035b3cdcd4ee71b5fccd578074989dfa157dc54ecc5bf8ea76ceab",
+      "source_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-pylint-dev__pylint-7080/source_trajectory.json",
+      "source_trajectory_sha256": "d77c1bc99656d51adc2cea736a81f8212709798592b3a7c071d5298285b13433",
+      "writer_input_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-pylint-dev__pylint-7080/writer_input_trajectory.txt",
+      "writer_input_trajectory_sha256": "68c3c692dfa1435759c55511ad83eb3d8deab65a12941417a7bde09baccb5608",
+      "terminal_status": "Submitted"
+    },
+    {
+      "source_task_id": "pytest-dev__pytest-5840",
+      "repository": "pytest-dev/pytest",
+      "task_sha256": "20d9cc3dd4114c8bc9f5eb76bb16d3c50ff8826b8c106119be6c3cf4ed01f398",
+      "source_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-pytest-dev__pytest-5840/source_trajectory.json",
+      "source_trajectory_sha256": "0a751f64fbf98289c71c700d4347c5a87472b987231743c5967730edb6c74281",
+      "writer_input_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-pytest-dev__pytest-5840/writer_input_trajectory.txt",
+      "writer_input_trajectory_sha256": "3075230d04801cb0a9ed45274abcdb8d2c54f16120335eb847d6daff2108d44a",
+      "terminal_status": "Submitted"
+    },
+    {
+      "source_task_id": "sphinx-doc__sphinx-8593",
+      "repository": "sphinx-doc/sphinx",
+      "task_sha256": "d7a0b222ecda2268846b70d86cee54c8162748aacb047519b2e657c3c18dc962",
+      "source_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-sphinx-doc__sphinx-8593/source_trajectory.json",
+      "source_trajectory_sha256": "a53999e9539476b61d54c2a5940a695ba606677018f449588710b2f8a5a79692",
+      "writer_input_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-sphinx-doc__sphinx-8593/writer_input_trajectory.txt",
+      "writer_input_trajectory_sha256": "405eeab673eac3e2e0b8ce07a16c6aa0b2b9150fd9ea713f219b4ffcb134eda5",
+      "terminal_status": "Submitted"
+    },
+    {
+      "source_task_id": "sympy__sympy-15599",
+      "repository": "sympy/sympy",
+      "task_sha256": "cf4081c50e2bce78ef90503152dbf7f94f2f8cf0323ee9cd68cf0e3a60835d6e",
+      "source_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-sympy__sympy-15599/source_trajectory.json",
+      "source_trajectory_sha256": "ffd058b5ba72189fedbe21cf41cfeaa89de500f6981ab2a1f457dd657b0d58b6",
+      "writer_input_trajectory_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/source-sympy__sympy-15599/writer_input_trajectory.txt",
+      "writer_input_trajectory_sha256": "84b91b7f515020dfca6ed584e0eb5ade703b1e3125070bc52ec396e79919b2e7",
+      "terminal_status": "Submitted"
+    }
+  ],
+  "scientific_boundary": {
+    "writer_calls": 0,
+    "binder_calls": 0,
+    "shadow_calls": 0,
+    "pacta_gate_calls": 0,
+    "final_measurement_calls": 0,
+    "future_task_executions": 0,
+    "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+    "active_manuscript": "R9"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T14:08:00Z",
+  "experiment": "C1-PACTA-RB-QWEN397-T0-v7-20260901",
+  "status": "SOURCE_TRAJECTORY_POOL_PARTIAL_9_STOP_BEFORE_PACTA",
+  "source_execution_git_sha": "62047336ce654b23e7902e889000e9bdc2ec599f",
+  "live_origin_main_at_close": "6e40379bc526adc15b045f66bd2ec94a57d94712",
+  "source_budget": 16384,
+  "pacta_first_decision_budget": 512,
+  "v7": {
+    "scheduled_untouched_sources": 7,
+    "logical_attempts": 7,
+    "valid_trajectories": 7,
+    "valid_repositories": 7,
+    "all_terminal_status": "Submitted",
+    "provider_logical_calls": 535,
+    "provider_transport_attempts": 535,
+    "input_tokens": 12256571,
+    "output_tokens": 115959,
+    "support_audit_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v7/support-audit.json",
+    "support_audit_sha256": "bc833d1bb9121ebccbb1e2e50e5f9795bb53a8955bf36fbfe96d09c13fc99098"
+  },
+  "prior_valid_v6": {
+    "valid_trajectories": 2,
+    "sources": [
+      "scikit-learn__scikit-learn-14496",
+      "psf__requests-1766"
+    ],
+    "provider_logical_calls": 77,
+    "provider_transport_attempts": 77,
+    "input_tokens": 835562,
+    "output_tokens": 15199
+  },
+  "cumulative_original_pool": {
+    "valid_trajectories": 9,
+    "valid_repositories": 9,
+    "six_unit_pilot_supported": true,
+    "reserve_after_six_unit_selection": 3,
+    "full_original_six_plus_five_design_recovered": false,
+    "pool_manifest": "paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-rb-qwen397-t0-cumulative-pool-9-20260901.json",
+    "pool_manifest_sha256": "6ab3b77146e194de76f20abb238ef106c266ba084b44df3d7e56c4212eb31124"
+  },
+  "consumed_invalid_sources": [
+    "pydata__xarray-4966",
+    "matplotlib__matplotlib-24627"
+  ],
+  "consumed_source_replay": false,
+  "replacement": false,
+  "top_up": false,
+  "scientific_interpretation": "The ReasoningBank/Qwen397 carrier now has nine provenance-complete native source trajectories. This restores support for the preregistered six-unit PACTA pilot, with only three sealed reserve trajectories rather than the originally planned five. No PACTA writer, binding, shadow, gate, or final-effect call has yet been made.",
+  "next_authorized_direction": "In a new prospective epoch, outcome-blind hash-select six Pilot units from the fixed nine-unit pool and seal the remaining three. Then execute the frozen controlled ReasoningBank SUCCESSFUL_SI versus FAILED_SI writer intervention, SCB, shadow-policy calibration, PACTA gate, rate-matched random control, and four-arm first-decision P0. Do not reuse the two consumed invalid sources and do not use the three reserve units as replacements.",
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_measurement_calls": 0,
+  "future_task_executions": 0,
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "active_manuscript": "R9"
+}

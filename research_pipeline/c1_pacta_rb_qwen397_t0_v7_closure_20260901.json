@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T14:09:00Z",
+  "research_object": "C1-PACTA-RB-QWEN397 T0 source-trajectory acquisition closure",
+  "status": "SOURCE_TRAJECTORY_POOL_PARTIAL_9_STOP_BEFORE_PACTA",
+  "evidence": {
+    "v6_valid": 2,
+    "v7_valid": 7,
+    "cumulative_valid": 9,
+    "cumulative_repositories": 9,
+    "v7_support_audit_sha256": "bc833d1bb9121ebccbb1e2e50e5f9795bb53a8955bf36fbfe96d09c13fc99098",
+    "cumulative_pool_sha256": "6ab3b77146e194de76f20abb238ef106c266ba084b44df3d7e56c4212eb31124"
+  },
+  "scientific_boundary": {
+    "source_trajectory_acquisition_complete": true,
+    "six_unit_pilot_supported": true,
+    "sealed_reserve_capacity": 3,
+    "writer_calls": 0,
+    "binder_calls": 0,
+    "shadow_calls": 0,
+    "gate_calls": 0,
+    "final_measurement_calls": 0,
+    "future_task_executions": 0,
+    "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+    "active_manuscript": "R9"
+  },
+  "lessons": [
+    "First-decision output qualification and full-source-trajectory output qualification are distinct interfaces. The 512-token budget remains qualified for first-decision measurement, while 16384 was separately qualified for full source actions.",
+    "A source trajectory is writer-ready only when native interaction, raw response persistence, exact-base runtime provenance, trajectory bytes, and exact writer-input rendering are all content-addressed; provider or compatibility stops consume the source without producing writer-ready evidence.",
+    "Compatibility repairs must preserve the frozen scientific treatment. Resolving MiniSWEAgent timeout_template from the official AgentConfig default was permissible because the YAML omitted the field and the environment timeout, model, prompt, parser, source budget, and task semantics stayed fixed.",
+    "A reduced reserve does not invalidate a six-unit pilot when Pilot selection is performed prospectively from the fixed valid pool, but it must be reported explicitly and reserve units must not be used as outcome-driven replacements."
+  ],
+  "next_step": "New prospective PACTA P0 epoch: freeze the nine-unit pool, hash-select six Pilot units outcome-blind, seal three reserve units, then execute the already defined ReasoningBank writer-branch intervention and downstream PACTA protocol without using the two consumed invalid sources."
+}
