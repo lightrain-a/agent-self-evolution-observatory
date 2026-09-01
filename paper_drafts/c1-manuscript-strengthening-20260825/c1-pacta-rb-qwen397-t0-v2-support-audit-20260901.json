@@ -1,0 +1,14 @@
+{
+  "N_valid_repository": 0,
+  "N_valid_trajectory": 0,
+  "binder_calls": 0,
+  "created_at_utc": "2026-09-01T08:07:49+00:00",
+  "decision": "HOLD_FRESH_RUNTIME_SUPPORT_INSUFFICIENT",
+  "final_measurement_calls": 0,
+  "full_6_plus_5_design_recovered": false,
+  "payload_sha256": "5631d31224b6ac87bfa6e109926471277347634c44e7e12c098287c0eff615a4",
+  "schema_version": 1,
+  "shadow_calls": 0,
+  "source_logical_attempts": 0,
+  "writer_calls": 0
+}

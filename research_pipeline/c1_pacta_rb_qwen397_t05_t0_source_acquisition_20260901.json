@@ -1,0 +1,61 @@
+{
+  "active_manuscript": "R9",
+  "artifacts": {
+    "c1-pacta-rb-qwen397-t0-v2-acquisition-schedule-20260901.json": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/c1-pacta-rb-qwen397-t05-images-20260901/paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-rb-qwen397-t0-v2-acquisition-schedule-20260901.json",
+      "sha256": "6848ac84663228240f840ea399df9a663699087f51e5b77a30ab4ca6a3232447"
+    },
+    "c1-pacta-rb-qwen397-t0-v2-closure-20260901.json": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/c1-pacta-rb-qwen397-t05-images-20260901/paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-rb-qwen397-t0-v2-closure-20260901.json",
+      "sha256": "2d60b55c053a85047ea029cbf9604b2722e3da7a68e1c91db4716e1dd0bd8958"
+    },
+    "c1-pacta-rb-qwen397-t0-v2-support-audit-20260901.json": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/c1-pacta-rb-qwen397-t05-images-20260901/paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-rb-qwen397-t0-v2-support-audit-20260901.json",
+      "sha256": "8e9071c7e319c3f6343d7dab7756ba8528b964e0e88ff8145ed60f9f12a951df"
+    },
+    "c1-pacta-rb-qwen397-t05-blob-inventory-20260901.json": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/c1-pacta-rb-qwen397-t05-images-20260901/paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-rb-qwen397-t05-blob-inventory-20260901.json",
+      "sha256": "85d51ca776c1cf4d3a95a1b8aa41674d85a78586ea7a474f904c9bcfcb50fad4"
+    },
+    "c1-pacta-rb-qwen397-t05-image-acquisition-result-20260901.json": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/c1-pacta-rb-qwen397-t05-images-20260901/paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-rb-qwen397-t05-image-acquisition-result-20260901.json",
+      "sha256": "c6d748c05091d4c15362ed13745648214a4b3ca375c4e0eff6f58c71bc029174"
+    },
+    "c1-pacta-rb-qwen397-t05-image-manifest-freeze-20260901.json": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/c1-pacta-rb-qwen397-t05-images-20260901/paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-rb-qwen397-t05-image-manifest-freeze-20260901.json",
+      "sha256": "f3e7bf62ca9fb941972b7fdbe0e469adea37b2b60a508a773fd7d038ea3505ac"
+    },
+    "c1-pacta-rb-qwen397-t05-multistep-smoke-20260901.json": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/c1-pacta-rb-qwen397-t05-images-20260901/paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-rb-qwen397-t05-multistep-smoke-20260901.json",
+      "sha256": "68b0870fde5a5393030374982c903f3292595132aa16edad2be63a1677c0ab96"
+    },
+    "c1-pacta-rb-qwen397-t05-runtime-qualification-20260901.json": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/c1-pacta-rb-qwen397-t05-images-20260901/paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-rb-qwen397-t05-runtime-qualification-20260901.json",
+      "sha256": "554f5cd5da0a85b768e15480f9f0bfb8fdda3c9378d2c744f7fee3fe7809179c"
+    }
+  },
+  "asset_id": "c1-pacta-rb-qwen397-t05-t0-source-acquisition-20260901",
+  "belief_update": "No PACTA mechanism update; T0.5/T0 establish carrier substrate and trajectory provenance only.",
+  "call_counts": {
+    "binder": 0,
+    "final": 0,
+    "future_task": 0,
+    "shadow": 0,
+    "writer": 0
+  },
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "created_at_utc": "2026-09-01T08:07:49+00:00",
+  "decision": "HOLD_FRESH_RUNTIME_SUPPORT_INSUFFICIENT",
+  "lessons": [
+    "Runtime image absence is an acquisition-layer blocker, not evidence against a carrier or method. For SWE-bench-backed scientific units, mutable tags must be resolved and frozen to content-addressed platform manifests before execution.",
+    "Transport retries for immutable image blobs are infrastructure recovery and are distinct from forbidden scientific sample retries.",
+    "A stable content-addressed image digest is not sufficient substrate provenance when the image's /testbed HEAD differs from the frozen task base commit; both digest binding and task-state qualification are required.",
+    "A planned native source ID is not a native source trajectory. A writer-ready experience requires persisted trajectory bytes, an exact rendering contract, and content-addressed provenance.",
+    "ReasoningBank exposes native SUCCESSFUL_SI and FAILED_SI induction instructions over the same Query + Trajectory input. PACTA may use them as a controlled writer-branch intervention, but this must not be described as ReasoningBank's natural branch selection or as pure reward-bit causality."
+  ],
+  "payload_sha256": "e2c340764eceb8e4996ff334005d5de1aa828ee6f42d3678837d9c82e86341ee",
+  "reopen_conditions": [
+    "New human authorization after trajectory-backed pool closure for outcome-blind 6+5 selection and controlled writer-branch intervention."
+  ],
+  "schema_version": 1
+}

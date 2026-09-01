@@ -1,0 +1,23 @@
+{
+  "N_valid_repository": 0,
+  "N_valid_trajectory": 0,
+  "active_manuscript": "R9",
+  "binder_calls": 0,
+  "bridge_identity_pass": false,
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "created_at_utc": "2026-09-01T08:07:49+00:00",
+  "decision": "HOLD_FRESH_RUNTIME_SUPPORT_INSUFFICIENT",
+  "execution_git_sha": "6636d7ecc45ffa7614f4e665bf51f8dea6b098c7",
+  "final_measurement_calls": 0,
+  "full_6_plus_5_design_recovered": false,
+  "future_task_executions": 0,
+  "multistep_smoke_pass": false,
+  "payload_sha256": "089357de49392268a3806887e1212ed199f95b021e590cbf982f48b33c5f2319",
+  "runtime_qualified": 0,
+  "schema_version": 1,
+  "shadow_calls": 0,
+  "source_support_decision": "HOLD_FRESH_RUNTIME_SUPPORT_INSUFFICIENT",
+  "strongest_failure_differential": "The frozen mirror manifests were stable and every blob was SHA-verified, but the substrate failed before model use: one exact image could not unpack under the 65,536-ID rootless mapping, and all ten imported images had /testbed HEAD values different from the frozen source base commits. This is image/runtime provenance failure, not PACTA or Qwen397 evidence.",
+  "t05_decision": "HOLD_FRESH_RUNTIME_SUPPORT_INSUFFICIENT",
+  "writer_calls": 0
+}
