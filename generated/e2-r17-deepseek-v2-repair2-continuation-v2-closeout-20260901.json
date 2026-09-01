@@ -1,0 +1,55 @@
+{
+  "analysis_single_use_consumed": true,
+  "artifact_type": "e2-r17-deepseek-v2-repair2-continuation-v2-closeout",
+  "bindings": {
+    "analysis_authorization_sha256": "9b7dd55226900d8ce8b3a9e1bd1bb7be52ffcdfb3a5030c2c21214d4ddce6d5b",
+    "analyzer_sha256": "b55d8a3d629cb28192e6d326423ff775bc5eeb7c124af85eb46166b84e10c2d3",
+    "completion_audit_sha256": "55ef41b8f672c7e8b9b38aea8fb7fe79677fbdfc5a79c475fb31733828d4ccc3",
+    "contract_sha256": "d59a6aae277d956491b1be8acb5fb9bfa52fe164459b6864b6886e45667c2ce8",
+    "execution_authorization_sha256": "d4e3c10d5f6d90b27643bb5722e0bbf64d3e1aa516570293be94c8f071293917",
+    "global_lineage_lease_sha256": "a56750aa96f027cf77fdaf40b3b64ff81fa8ef46513687438b9286ce3687f78e",
+    "run_summary_sha256": "ba6bac50deb920e81d56f584082c665178a79ef3dd55f1282dd09c04cbc99a92",
+    "scientific_adjudication_sha256": "1a71d0c32536c65987dc960d1f1f4cf40a41127f3f9cfe30d3fe73295ce9268a",
+    "valid_replicate_manifest_sha256": "359a76ffcbe5f0a5627d9926da95d08d10b6737007360e4bc048bea17fd4107e"
+  },
+  "created_at_utc": "2026-09-01T13:43:58+00:00",
+  "execution": {
+    "completed_unit_replay": false,
+    "global_lineage_lease_status": "COMPLETED_CONTINUATION_V2",
+    "heldout_units": "1728/1728",
+    "learned_states": "96/96",
+    "pairs": "48/48",
+    "technical_failures": 0
+  },
+  "followup_boundary": {
+    "add_samples_to_rescue_significance": false,
+    "change_thresholds_or_margin": false,
+    "new_scientific_execution_authorized": false,
+    "next_step": "PROPOSAL_ONLY_FOR_NEW_PROSPECTIVE_OBJECT_IF_SCIENTIFICALLY_JUSTIFIED",
+    "paper_promotion_authorized": false,
+    "public_benchmark_authorized": false,
+    "second_backbone_authorized": false,
+    "submission_authorized": false
+  },
+  "pre_closeout_git_commit": "7ffd9673ede98d47df6efb0dfc21253e279a6a43",
+  "primary_result": {
+    "harm_pass": false,
+    "mean_difference_mrw_minus_win_c": 0.02314814814814815,
+    "one_sided_sign_flip_p": 0.171875,
+    "paired_bootstrap_95_ci": [
+      -0.018518518518518507,
+      0.06597222222222222
+    ],
+    "paired_t_90_ci": [
+      -0.017273596987843382,
+      0.06356989328413969
+    ],
+    "practical_equivalence_pass": false,
+    "practical_null_epsilon": 0.05555555555555555,
+    "superiority_pass": false
+  },
+  "protocol_interpretation": "Valid but noisy endpoint. Global MRW superiority, practical equivalence, and harm are all unestablished under the frozen design.",
+  "schema_version": "1.0",
+  "scientific_object": "E2-R17-DEEPSEEK-V2-REPAIR2-CONTINUATION-V2",
+  "status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS"
+}
