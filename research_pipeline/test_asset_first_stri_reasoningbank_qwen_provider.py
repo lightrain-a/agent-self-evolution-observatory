@@ -133,13 +133,15 @@ def test_responses_style_tool_is_converted_to_chat_tool_and_normalized_back():
         tools=[{
             "type": "function", "name": "record_probe", "description": "record",
             "parameters": {"type": "object", "properties": {"value": {"type": "integer"}}},
-            "strict": True,
         }],
-        tool_choice="required",
+        tool_choice={"type": "function", "function": {"name": "record_probe"}},
     )
-    sent = session.requests[0]["json"]["tools"][0]
+    body = session.requests[0]["json"]
+    sent = body["tools"][0]
     assert sent["type"] == "function"
     assert sent["function"]["name"] == "record_probe"
+    assert "strict" not in sent["function"]
+    assert body["tool_choice"] == {"type": "function", "function": {"name": "record_probe"}}
     assert out["function_calls"] == [{
         "type": "function_call", "call_id": "call-7", "name": "record_probe",
         "arguments": '{"value":731}',
