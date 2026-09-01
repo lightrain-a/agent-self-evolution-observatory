@@ -1,13 +1,42 @@
 {
   "schema_version": 1,
-  "created_at_utc": "2026-09-01T10:24:08Z",
-  "status": "NOT_RUN_CREDENTIAL_NOT_CONFIGURED",
+  "created_at_utc": "2026-09-01T10:31:14Z",
+  "status": "STOP_T0_MULTISTEP_RUNTIME_UNQUALIFIED",
+  "non_scientific": true,
   "gate_precondition": "T0_5R_ROOTFUL_RUNTIME_READY",
   "gate_precondition_pass": true,
-  "blocker": "AA_API_KEY absent in fresh remote execution environment",
-  "provider_calls": 0,
-  "smoke_root_created": false,
-  "scientific": false,
+  "authoritative_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05r-images-rootful-20260901-v1/rootful-synthetic-smoke.json",
+  "authoritative_sha256": "a52c3004a37bbd04a16eb21fb8f42972242639254917766d727c6a3e20c6ba3f",
+  "exact_base_normalization": {
+    "pass": true,
+    "persisted_before_provider_call": true,
+    "path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05r-images-rootful-20260901-v1/rootful-multistep-smoke/exact-base-normalization.json",
+    "sha256": "b8728e46706d265a1dc3ed2448d1c07bfe2d50bac175b7d8516916963550cd74"
+  },
+  "provider": {
+    "requested_model": "qwen3.5-397b-a17b",
+    "resolved_model": "qwen3.5-397b-a17b",
+    "model_drift": 0,
+    "calls": 8,
+    "input_tokens": 36227,
+    "output_tokens": 415,
+    "all_status_200": true,
+    "all_raw_responses_persisted": true,
+    "all_envelopes_parsed": true
+  },
+  "environment_loop": {
+    "actions_executed": 8,
+    "action_parse_failures": 0,
+    "environment_failures": 0,
+    "submitted": false
+  },
+  "failure_reason": "The model produced eight valid sequential bash actions but did not issue the required MiniSWEAgent completion command within the frozen eight-step smoke ceiling.",
   "retry": false,
-  "claim_update": "NONE"
+  "source_tasks_consumed": 0,
+  "claim_update": "NONE",
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_measurement_calls": 0,
+  "future_task_executions": 0
 }

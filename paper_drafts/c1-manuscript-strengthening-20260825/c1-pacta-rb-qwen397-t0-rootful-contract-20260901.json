@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "created_at_utc": "2026-09-01T10:24:08Z",
+  "created_at_utc": "2026-09-01T10:31:14Z",
   "status": "NOT_FROZEN_SOURCE_CALLS_LOCKED",
-  "reason": "synthetic smoke and bridge gates not reached due missing credential",
+  "reason": "synthetic multi-step smoke failed; bridge and T0 acquisition remained locked",
   "planned_run_root": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v1",
   "fixed_source_count": 11,
   "docker_host": "unix:///var/run/docker.sock",
@@ -25,6 +25,8 @@
     "R10"
   ],
   "calls": {
+    "synthetic_smoke": 8,
+    "bridge": 0,
     "source_trajectory": 0,
     "writer": 0,
     "binder": 0,
