@@ -8,6 +8,7 @@ from jinja2 import Template
 from research_pipeline.c1_pacta_rb_qwen397 import AA_BASE_URL, atomic_bytes, atomic_json, canonical, render_writer_input, sha256_file, sha256_text, t0_validity
 
 DOCKER_HOST="unix:///run/user/1006/e1-reasoningbank-docker.sock"
+ROOTFUL_DOCKER_HOST="unix:///var/run/docker.sock"
 ACTION_RE=re.compile(r"```bash\n(.*?)\n```",re.DOTALL)
 
 def now(): return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
@@ -69,12 +70,42 @@ class RawProvider:
   return {"content":content,"provider":call}
 
 class Container:
- def __init__(self,digest_ref:str):
-  self.env=os.environ.copy();self.env["DOCKER_HOST"]=DOCKER_HOST
+ def __init__(self,digest_ref:str,*,docker_host:str=DOCKER_HOST,base_commit:str|None=None,
+  provenance_root:Path|None=None):
+  self.env=os.environ.copy();self.env["DOCKER_HOST"]=docker_host;self.docker_host=docker_host;self.digest_ref=digest_ref
   name="c1-t0-"+os.urandom(6).hex()
   p=subprocess.run(["docker","run","-d","--name",name,"-w","/testbed","--rm",digest_ref,"sleep","2h"],
    text=True,capture_output=True,timeout=120,env=self.env,check=True)
   self.container_id=p.stdout.strip()
+  if base_commit is not None:
+   if provenance_root is None:
+    self.cleanup();raise RuntimeError("provenance_root is required for exact-base normalization")
+   try:self._normalize_exact_base(base_commit,provenance_root)
+   except Exception:self.cleanup();raise
+ def _git(self,*args:str,check:bool=True)->subprocess.CompletedProcess[str]:
+  return subprocess.run(["docker","exec","-w","/testbed",self.container_id,"git",*args],text=True,
+   capture_output=True,timeout=120,env=self.env,check=check)
+ def _normalize_exact_base(self,base_commit:str,provenance_root:Path)->None:
+  initial_head=self._git("rev-parse","HEAD").stdout.strip()
+  initial_status=self._git("status","--porcelain").stdout
+  exists=self._git("cat-file","-e",base_commit+"^{commit}",check=False).returncode==0
+  ancestor=exists and self._git("merge-base","--is-ancestor",base_commit,initial_head,check=False).returncode==0
+  precondition=not initial_status and exists and ancestor
+  reset=self._git("reset","--hard",base_commit,check=False) if precondition else None
+  post_head=self._git("rev-parse","HEAD").stdout.strip()
+  post_status=self._git("status","--porcelain").stdout
+  passed=bool(precondition and reset and reset.returncode==0 and post_head==base_commit and not post_status)
+  audit={"schema_version":1,"created_at_utc":now(),"docker_host":self.docker_host,
+   "digest_ref":self.digest_ref,"frozen_base_commit":base_commit,
+   "observed_initial_head":initial_head,"initial_working_tree_clean":not bool(initial_status),
+   "base_commit_exists":exists,"base_is_ancestor":ancestor,"reset_attempted":precondition,
+   "reset_returncode":None if reset is None else reset.returncode,
+   "reset_stdout":None if reset is None else reset.stdout,"reset_stderr":None if reset is None else reset.stderr,
+   "post_reset_head":post_head,"post_reset_head_exact":post_head==base_commit,
+   "post_reset_working_tree_clean":not bool(post_status),"exact_base_normalization_pass":passed,
+   "persisted_before_provider_call":True}
+  atomic_json(provenance_root/"exact-base-normalization.json",audit)
+  if not passed:raise RuntimeError("STOP_EXACT_BASE_NORMALIZATION_FAILED")
  def execute(self,action:str)->dict[str,Any]:
   try:
    p=subprocess.run(["docker","exec","-w","/testbed",self.container_id,"bash","-lc",action],
@@ -93,10 +124,11 @@ def initial_messages(task:str,config:dict[str,Any])->list[dict[str,str]]:
   {"role":"user","content":render(agent["instance_template"],variables)}]
 
 def execute_trajectory(instance:str,task:str,digest_ref:str,unit_root:Path,config:dict[str,Any],
- key:str,requested:str,resolved:str)->dict[str,Any]:
+ key:str,requested:str,resolved:str,*,docker_host:str=DOCKER_HOST,base_commit:str|None=None)->dict[str,Any]:
  if unit_root.exists():raise RuntimeError(f"exactly-once unit root exists: {unit_root}")
  unit_root.mkdir(parents=True)
- provider=RawProvider(key,unit_root,requested,resolved);container=Container(digest_ref)
+ provider=RawProvider(key,unit_root,requested,resolved)
+ container=Container(digest_ref,docker_host=docker_host,base_commit=base_commit,provenance_root=unit_root)
  messages=initial_messages(task,config);variables={"task":task,"selected_memory":""}
  append_jsonl(unit_root/"step-journal.jsonl",{"event":"trajectory_start","timestamp":now(),"messages":messages,"selected_memory":""})
  terminal="LimitsExceeded";result_text="";corrupt=False
@@ -151,6 +183,7 @@ def execute_trajectory(instance:str,task:str,digest_ref:str,unit_root:Path,confi
  run={**unit,"schema_version":1,"created_at_utc":now(),"task_sha256":sha256_text(task),"digest_ref":digest_ref,
   "requested_model":requested,"resolved_model":resolved,"enable_thinking":False,"max_completion_tokens":512,
   "temperature":0.0,"provider_retries":0,"logical_attempt":1,"selected_memory":"",
+  "docker_host":docker_host,"frozen_base_commit":base_commit,
   "input_tokens":provider.prompt_tokens,"output_tokens":provider.output_tokens,"terminal_status":terminal,
   "source_evaluator_outcome":None,"validity_status":"TRAJECTORY_BACKED_VALID" if valid else "INVALID",
   "invalid_reason":None if valid else reason,"writer_calls":0,"binder_calls":0,"shadow_calls":0,
