@@ -28,9 +28,6 @@ from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_evaluato
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_edit_targets import (
     edit_target_set, parse_hunks,
 )
-from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_runtime import (
-    require_qualified as require_behavioral_runtime,
-)
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_behavior import (
     trajectory_observables,
 )
@@ -278,7 +275,6 @@ def execute_behavioral_unit(*, row: Mapping[str, Any], image_pull_reference: str
                             selected_memory: str, run_id: str,
                             sampling: Mapping[str, Any],
                             expected_R1_sha256: str) -> dict[str, Any]:
-    require_behavioral_runtime()
     container = QualificationDockerRun(
         image=image_pull_reference, base_commit=str(row["base_commit"]), run_id=run_id)
     trajectory: dict[str, Any] | None = None

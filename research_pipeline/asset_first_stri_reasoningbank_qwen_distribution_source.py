@@ -12,7 +12,7 @@ from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_agent im
     QualificationDockerRun, evaluate, execute_trajectory,
 )
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_runtime import (
-    RESULT as BEHAVIORAL_RUNTIME_RESULT, require_qualified as require_behavioral_runtime,
+    SOURCE_RESULT, require_source_qualified,
 )
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_d0_qualify import (
     dataset_rows,
@@ -70,7 +70,7 @@ def contract_payload() -> dict[str, Any]:
         "decision": "QWEN_SOURCE_TRAJECTORIES_EXACTLY_ONCE_AUTHORIZED",
         "split_sha256": sha256_file(SPLIT), "q0_sha256": sha256_file(Q0),
         "q1_sha256": sha256_file(Q1),
-        "behavioral_runtime_result_sha256": sha256_file(BEHAVIORAL_RUNTIME_RESULT),
+        "source_runtime_result_sha256": sha256_file(SOURCE_RESULT),
         "source_plan": plan,
         "source_plan_sha256": sha256_text(canonical_json(plan)),
         "source_task_count": len(plan), "sampling": sampling,
@@ -81,7 +81,7 @@ def contract_payload() -> dict[str, Any]:
         },
         "scientific_boundary": {
             "source_tasks_disjoint": True,
-            "rootful_behavioral_runtime_qualified": True,
+            "rootful_source_runtime_qualified": True,
             "memory_extraction_authorized": False,
             "calibration_authorized": False, "confirmatory_execution_authorized": False,
         },
@@ -154,11 +154,11 @@ def run() -> dict[str, Any]:
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     if contract["split_sha256"] != sha256_file(SPLIT):
         raise RuntimeError("source split binding drift")
-    runtime = require_behavioral_runtime()
-    if contract["behavioral_runtime_result_sha256"] != sha256_file(BEHAVIORAL_RUNTIME_RESULT):
-        raise RuntimeError("source behavioral runtime binding drift")
-    if runtime["decision"] != "QWEN_ROOTFUL_BEHAVIORAL_RUNTIME_QUALIFIED_SOURCE_GATE_OPEN":
-        raise RuntimeError("source behavioral runtime gate closed")
+    runtime = require_source_qualified()
+    if contract["source_runtime_result_sha256"] != sha256_file(SOURCE_RESULT):
+        raise RuntimeError("source runtime binding drift")
+    if runtime["decision"] != "QWEN_ROOTFUL_SOURCE_RUNTIME_QUALIFIED_SOURCE_GATE_OPEN":
+        raise RuntimeError("source runtime gate closed")
     rows = dataset_rows()
     completed = load_completed(contract["source_plan"])
     RECEIPT_DIR.mkdir(parents=True, exist_ok=True)
