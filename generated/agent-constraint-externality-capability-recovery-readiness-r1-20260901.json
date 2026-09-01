@@ -1,0 +1,60 @@
+{
+  "appworld_ul_authorized": false,
+  "content_sha256": "9d514fe9fd0d0fc67e075fcbdef93ca60bef1e64dd8f148fe07e2b0ddb52971f",
+  "continuation_contract": {
+    "artifact": "generated/agent-constraint-externality-capability-continuation-r1-contract-20260901.json",
+    "remaining_units": 7,
+    "replay_recovered_unit": false,
+    "sha256": "18a89913f9dceb22ee6343044490b88441115789c07d3c13854344255b6edcbe"
+  },
+  "continuation_id": "CAPABILITY-INTERFACE-RECOVERY-CONTINUATION-R1",
+  "credential_gate": {
+    "env_exists": true,
+    "env_mtime": 1788250293,
+    "env_path": ".env",
+    "required_mtime_gt": 1788251387,
+    "rotation_verified": false,
+    "secret_value_persisted": false
+  },
+  "f0_authorized": false,
+  "historical_measurement_recovery": {
+    "agent_reexecution": false,
+    "artifact": "generated/agent-constraint-externality-capability-measurement-recovery-r1-20260901.json",
+    "provider_calls_added": 0,
+    "scheduled_units": 8,
+    "sha256": "ec1063e0bbe9e27aaca79cce0ae40be2da86a1558eeeefa967a71a5e5222a1af",
+    "status": "PASS",
+    "valid_units": 1
+  },
+  "interface_qualification": {
+    "artifact": "generated/agent-constraint-externality-appworld-interface-qualification-r1-20260901.json",
+    "sha256": "d29b37f2d35b9aef7cf636b0ccf69a35ac5aecd9ee4d46fa865c90d6b2c37913",
+    "status": "PASS"
+  },
+  "next_legal_action": "Rotate/update the ignored server .env credential past the frozen rotation boundary, then execute exactly the seven never-dispatched capability units with qwen3.7-flash.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "p1_authorized": false,
+  "prepared_from_git_head": "4ad4b9414702ca6206e04e4cb32e19a22085f16f",
+  "provider_requests_added_since_interface_stop": 0,
+  "recovery_id": "APPWORLD-INTERFACE-RECOVERY-R1",
+  "runner": {
+    "continuation_module": "research_pipeline/agent_constraint_externality_capability_continue.py",
+    "continuation_module_sha256": "4efc27d2491b54e621ac745aa392c56d02a0b1d565cf91e4dddd7b1842d6b984",
+    "continuation_test_module": "research_pipeline/test_agent_constraint_externality_capability_continuation.py",
+    "continuation_test_module_sha256": "61a262ff27c6f13a8725f3b88d7235a53ae912d439ce53d1d8ca459020dea458",
+    "measurement_recovery_module": "research_pipeline/agent_constraint_externality_capability_measurement_recover.py",
+    "measurement_recovery_module_sha256": "480b0947dc848347ed37ac279c17430e89ccb2439a7158fb060c9e10aff65be0"
+  },
+  "schema_version": "ace-capability-recovery-readiness-r1-v1",
+  "second_model_authorized": false,
+  "status": "CAPABILITY_RECOVERY_READY_CREDENTIAL_ROTATION_REQUIRED",
+  "tests": {
+    "continuation_tests_failed": 0,
+    "continuation_tests_passed": 5,
+    "interface_tests_failed": 0,
+    "interface_tests_passed": 11,
+    "prior_object_suite_failed": 0,
+    "prior_object_suite_passed": 76
+  },
+  "toolsandbox_authorized": false
+}
