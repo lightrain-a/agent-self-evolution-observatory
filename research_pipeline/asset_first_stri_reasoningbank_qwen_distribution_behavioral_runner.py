@@ -74,6 +74,14 @@ def index_payload(*, experiment_id: str, stage: str, contract_path: Path,
     }
 
 
+def must_pause_after_result(result: Mapping[str, Any]) -> bool:
+    status = str(result.get("execution_status") or "")
+    if status in {"TERMINAL_RUNTIME_OR_IMPLEMENTATION_FAILURE", "TERMINAL_TASK_HASH_DRIFT"}:
+        return True
+    failures = [result.get("failure"), (result.get("trajectory") or {}).get("failure")]
+    return any((failure or {}).get("failure_layer") == "provider" for failure in failures)
+
+
 def run_plan(*, experiment_id: str, stage: str, contract_path: Path,
              expected_contract_sha256: str, index_path: Path, receipt_dir: Path,
              plan: Sequence[dict[str, Any]], sampling: Mapping[str, Any],
@@ -142,6 +150,8 @@ def run_plan(*, experiment_id: str, stage: str, contract_path: Path,
             "instance_id": unit["instance_id"], "arm": unit["arm"],
             "execution_status": result["execution_status"],
             "completed": len(completed)}, sort_keys=True), flush=True)
+        if must_pause_after_result(result):
+            break
     final = index_payload(
         experiment_id=experiment_id, stage=stage, contract_path=contract_path,
         plan=plan, completed=completed, receipt_dir=receipt_dir)
