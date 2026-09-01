@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R48-AB-RENDERER-SYNTHETIC-AUDIT-20260901",
+  "recorded_at": "2026-09-01T20:14:00+08:00",
+  "status": "PASS_ZERO_OUTCOME_AB_RENDERER_SURFACE_AUDIT",
+  "role": "SYNTHETIC_STATIC_PROMPT_SURFACE_AUDIT_NO_MODEL_OR_VALIDATION_OUTCOME",
+  "bindings": {
+    "R48_contract_file_sha256": "a7653293720c17e1c56ac4fb54d1e9aa676d8a0f812e5563bb6d6bf2662e12cd",
+    "R48_contract_receipt_sha256": "a4b00d27c433add6583059d56cd57617106ce72bcd2642def5fab001b9e373bd",
+    "R48_latest_runner_file_sha256": "6e28cfa75eef0d9833e0184cff5aaa0ff81957555b764f834c7c23c10324d2a1",
+    "R48_renderer_semantic_sha256": "d4c7abdb8394d7fd436af8f1127a3a68bec664dc6588efe65ac009024bff25f7",
+    "synthetic_audit_checkout_head": "1b64f93f9620d3110286b9600184f2b95b9d985d",
+    "synthetic_audit_runner_file_sha256": "df583623cc358306bb8ed8c987c07490decc228e76c2d5214b584c55a2e34595",
+    "renderer_semantic_sha256_matches_latest_runner": true,
+    "R39_adapter_sha256": "c94353ca46c8cfb65cfae6218d2e03ae6946b37aa25e52ee83212e2dfe03afe2",
+    "pinned_prompt_builder_source": "/data/wyt/b1-memrl-r45m1-source-c1b322ca/memrl/lifelongbench_eval/prompts.py"
+  },
+  "synthetic_inputs": {
+    "rows": 2,
+    "source_outcome_success_values": [true, false],
+    "contains_no_benchmark_task": true
+  },
+  "checks": {
+    "A_prompt_sha256": "94ce3876abfd5756c79bd927ed4efd3c9130bdf7dc4b247cf45e432b5a556a3d",
+    "B_prompt_sha256": "7d714343ccece83780f41747a038cd5fa89d47202752b7ad607fd73d11425042",
+    "A_contains_source_outcome_success": false,
+    "B_contains_source_outcome_success": true,
+    "forbidden_memory_id_visible": false,
+    "forbidden_similarity_visible": false,
+    "forbidden_q_estimate_visible": false,
+    "strict_OS_output_format_tail_preserved_A": true,
+    "strict_OS_output_format_tail_preserved_B": true,
+    "only_intended_structured_treatment_field_added_by_B": true
+  },
+  "access_accounting": {
+    "model_calls": 0,
+    "environment_resets": 0,
+    "evaluator_calls": 0,
+    "validation_treatment_outcomes_observed": 0,
+    "A_B_treatment_outcomes_observed": 0
+  },
+  "scientific_authority": false,
+  "receipt_sha256": "13718ccd3a21e24df326dfcc6c1302cec92531b41d71ddc6974e2e72d6a37b9f"
+}
