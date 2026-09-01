@@ -110,6 +110,7 @@ class OfficialTrainingQualificationArtifactTest(unittest.TestCase):
         cls.licensed_out = temp_root / "licensed-out"
         subprocess.run(
             [sys.executable, str(SCRIPT), "--output-dir", str(cls.licensed_out),
+             "--run-id", "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-license-confirmed-v2",
              "--targeted-audit-log", str(cls.audit),
              "--license-receipt", LICENSE_RECEIPT],
             cwd=ROOT, check=True, capture_output=True, text=True)
@@ -171,6 +172,9 @@ class OfficialTrainingQualificationArtifactTest(unittest.TestCase):
 
     def test_exact_license_receipt_only_opens_materialization(self) -> None:
         license_gate = self.load_licensed("license_gate.json")
+        self.assertEqual(
+            license_gate["run_id"],
+            "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-license-confirmed-v2")
         canonical = self.load_licensed("canonical_state.json")
         in_main = canonical["head_is_in_origin_main_history"]
         self.assertEqual(
