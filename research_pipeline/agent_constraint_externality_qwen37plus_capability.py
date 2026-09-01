@@ -70,7 +70,7 @@ def write_json(path: Path, payload: dict[str, Any]) -> None:
 def enumerate_units(model_id: str = ALLOWED_ALIAS) -> list[EpisodeUnit]:
     units = [
         EpisodeUnit(
-            namespace="capability-a1",
+            namespace="capability",
             key=(model_id, family_id, repeat),
             stage="CAPABILITY_CALIBRATION_A1",
             family_id=family_id,
