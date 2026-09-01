@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "created_at_utc": "2026-09-01T10:50:50.743531+00:00",
+  "stage": "D0_ZERO_MODEL_EVALUATOR_QUALIFICATION_RUNTIME_REPAIR",
+  "decision": "D0_ROOTFUL_DOCKER_RUNTIME_REPAIR_PREREGISTERED",
+  "parent_git_commit": "a86eb542ea7a4dcd582a425378ce14cdd54a589a",
+  "parent_index": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-index-20260901.json",
+  "parent_index_sha256": "7b40bcc5d0d74c1ad7558cc028762e81d67da7a79448ea370fc1015ff6972d2b",
+  "trigger": {
+    "ordinal": 117,
+    "instance_id": "matplotlib__matplotlib-24026",
+    "failure_layer": "environment_or_transport",
+    "failure": "rootless Docker exact OCI import failed because subordinate UID/GID mapping could not lchown an image path owned by UID 197609 / GID 197121",
+    "task_receipt_persisted": false,
+    "qualification_attempt_consumed": false,
+    "model_calls": 0,
+    "provider_calls": 0,
+    "behavioral_outcomes_observed": false
+  },
+  "single_variable_repair": {
+    "variable": "Docker daemon used for D0 OCI import and zero-model evaluator qualification",
+    "before": "unix:///run/user/1006/e1-reasoningbank-docker.sock",
+    "after": "unix:///var/run/docker.sock",
+    "reason": "rootful daemon can represent the exact image UID/GID ownership that the rootless subordinate-ID range cannot",
+    "candidate_schedule_changed": false,
+    "task_identity_changed": false,
+    "task_order_changed": false,
+    "image_manifest_changed": false,
+    "image_digest_changed": false,
+    "architecture_changed": false,
+    "base_commit_changed": false,
+    "gold_patch_changed": false,
+    "test_patch_changed": false,
+    "evaluator_changed": false,
+    "parser_changed": false,
+    "qualification_rule_changed": false,
+    "model_calls": 0,
+    "provider_calls": 0
+  },
+  "rootful_prequalification": {
+    "socket": "/var/run/docker.sock",
+    "socket_mode": "660",
+    "socket_group": "docker",
+    "user_in_docker_group": true,
+    "client_version": "29.3.0",
+    "server_version": "29.3.0",
+    "storage_driver": "overlayfs",
+    "docker_root_dir": "/var/lib/docker",
+    "architecture": "x86_64",
+    "read_only_version_info_pass": true,
+    "read_only_daemon_info_pass": true
+  },
+  "resume_rule": {
+    "completed_receipts_immutable": true,
+    "completed_receipt_count": 49,
+    "next_unit_must_remain": {
+      "ordinal": 117,
+      "instance_id": "matplotlib__matplotlib-24026"
+    },
+    "resume_same_untouched_unit_only": true,
+    "do_not_requalify_completed_units": true,
+    "task_replacement_forbidden": true,
+    "qualification_attempt_count_on_new_task_receipt": 1
+  },
+  "smoke_gate": {
+    "required_before_resume": true,
+    "exact_ordinal_117_image_archive_may_be_loaded_into_rootful_daemon": true,
+    "must_verify_exact_digest_visible": true,
+    "must_verify_linux_amd64": true,
+    "must_verify_container_create_start_exec_cleanup": true,
+    "must_not_apply_gold_patch_or_run_task_evaluator_in_smoke": true,
+    "model_calls": 0,
+    "provider_calls": 0
+  },
+  "prohibited_repairs": [
+    "mark ordinal 117 unqualified because of the rootless import failure",
+    "skip ordinal 117",
+    "replace ordinal 117",
+    "rerun any completed D0 qualification receipt",
+    "change repository or task ordering",
+    "change frozen image digest, base commit, gold patch, test patch, evaluator, parser, or grading rule",
+    "use model or provider outcomes to decide D0 eligibility"
+  ],
+  "scientific_boundary": {
+    "provider_calls_authorized": false,
+    "model_calls_authorized": false,
+    "source_generation_authorized": false,
+    "confirmatory_execution_authorized": false,
+    "scientific_belief_update": "none"
+  },
+  "credential_material_present": false
+}

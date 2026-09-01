@@ -17,7 +17,6 @@ import pyarrow.parquet as pq
 from research_pipeline import asset_first_stri_swebench_aria2_acquire as aria
 from research_pipeline import asset_first_stri_swebench_oci_import as oci
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
-    DOCKER_HOST,
     ROOT,
     canonical_json,
     sha256_file,
@@ -32,6 +31,12 @@ from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_d0 impor
     DATASET,
     DATASET_SHA256,
     EXPERIMENT_ID,
+)
+from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_d0_rootful_runtime import (
+    CONTRACT as ROOTFUL_REPAIR_CONTRACT,
+    CONTRACT_SHA256 as ROOTFUL_REPAIR_CONTRACT_SHA256,
+    ROOTFUL_DOCKER_HOST,
+    activate as activate_rootful_runtime,
 )
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_evaluator import (
     OFFICIAL_PYTHON_PARSER_SHA256,
@@ -203,7 +208,7 @@ def dataset_rows() -> dict[str, dict[str, Any]]:
 def _run(command: list[str], timeout: int, *, docker: bool = False) -> dict[str, Any]:
     env = os.environ.copy()
     if docker:
-        env["DOCKER_HOST"] = DOCKER_HOST
+        env["DOCKER_HOST"] = ROOTFUL_DOCKER_HOST
     try:
         completed = subprocess.run(
             command,
@@ -686,6 +691,12 @@ def index_payload(
         "journal_record_count": len(journal),
         "journal": journal,
         "operational_blocker": operational_blocker,
+        "runtime_repair": {
+            "contract_path": str(ROOTFUL_REPAIR_CONTRACT.relative_to(ROOT)),
+            "contract_sha256": ROOTFUL_REPAIR_CONTRACT_SHA256,
+            "docker_host_for_new_units": ROOTFUL_DOCKER_HOST,
+            "completed_pre_repair_receipts_remain_immutable": True,
+        },
         "checks": {
             "journal_count_matches_completed": len(journal) == len(completed),
             "every_attempt_count_one": all(row["qualification_attempt_count"] == 1 for row in journal),
@@ -712,6 +723,7 @@ def run(index_path: Path = INDEX) -> dict[str, Any]:
     contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
     if contract["decision"] != "D0_ZERO_MODEL_EVALUATOR_QUALIFICATION_AUTHORIZED":
         raise RuntimeError("D0 evaluator qualification unauthorized")
+    activate_rootful_runtime()
     schedule = candidate_schedule()
     if sha256_text(canonical_json(schedule)) != contract["candidate_schedule_sha256"]:
         raise RuntimeError("D0 evaluator schedule drift")
