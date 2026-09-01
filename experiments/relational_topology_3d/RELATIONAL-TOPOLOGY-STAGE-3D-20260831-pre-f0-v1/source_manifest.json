@@ -1,0 +1,51 @@
+{
+  "compiler_source_git_sha": "d61262f08a5a7a82e8ccfc0c35efa57e09f6c609",
+  "compiler_source_git_tree": "f54821ba2982714de38f01c54a1f67fcd6cdd5f4",
+  "config_sha256": "e0d68fa08c8bcdf496f1c261ee945924ea2b5f74277a9b054b26fd95bb414b41",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "generated_at": "2026-08-31T12:00:00+00:00",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_artifacts": {
+    "generated/paper-first-pre-f0-evidence-acquisition-plan.json": "3594967e2e491984e522b4b53c10c0478848ecd34cc2287d718e175360861ebd",
+    "generated/relational-constraint-capacity-construct-v2-20260830.json": "48a86fa4bb83cdb9308a1cd6a005cf8ea34033f8649cd579c15fbe3e8347317f",
+    "generated/relational-constraint-capacity-legacy-regression-debt-20260831.json": "7e623a8c4ce24eb80b3cc2265b7d4bd6bd2d0da829e909ff83b339a7d313d7cf",
+    "generated/relational-constraint-capacity-novelty-support-differential-20260831.json": "465dbbf9d2f1bb6aadad73681dac994e252b7201966e069d9b5c5e2dd7d16b83"
+  },
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-pre-f0-v1",
+  "scenenat": {
+    "arxiv": "2601.07218v2",
+    "pdf_sha256": "682f59c77e9aa1caf41550fab959073cff7b506486435e7507555f69ad7dc970",
+    "source_tar_sha256": "92263ceba8e7883c1bb6bf86c40fc536d44d144195a0a679b17b3bbcea13dfd5"
+  },
+  "source_pins": {
+    "ATISS": {
+      "official_repository": "https://github.com/nv-tlabs/ATISS",
+      "repo_sha": "0909ce0000e52bf1bf300a6a558109f7f8383fd9"
+    },
+    "DiffuScene": {
+      "official_repository": "https://github.com/tangjiapeng/DiffuScene",
+      "repo_sha": "d78a2890c6b806b61279463b1dbe7701f286a024"
+    },
+    "FreeScene": {
+      "official_repository": "https://github.com/mushui-ty/FreeScene",
+      "repo_sha": "e40c61152982ee6de926778d5c4d02f3eb03a15c"
+    },
+    "InstructScene": {
+      "official_repository": "https://github.com/chenguolin/InstructScene",
+      "repo_sha": "a9097a62c484c56ac7be5ec2928ef497cbbaaf24"
+    },
+    "LayoutGPT": {
+      "official_repository": "https://github.com/weixi-feng/LayoutGPT",
+      "repo_sha": "fc31954962553e5b65bf267a904a6930d50b1f5e"
+    },
+    "SceneFactor": {
+      "official_repository": "https://github.com/alexeybokhovkin/SceneFactor",
+      "repo_sha": "c633b9fe98fcdf11d57fe6f17b86589d9670f033"
+    },
+    "SceneNAT": {
+      "official_repository": "https://github.com/lojol2327/SceneNAT-official",
+      "repo_sha": "542b82ff0cda4e0350575ca8f1cd5d147529130c"
+    }
+  }
+}

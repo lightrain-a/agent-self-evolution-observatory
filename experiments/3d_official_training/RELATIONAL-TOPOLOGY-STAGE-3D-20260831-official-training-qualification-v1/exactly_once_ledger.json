@@ -1,0 +1,34 @@
+{
+  "compiler_source_git_sha": "114c1e1a936c00f677e2c71b2b30bb03f0548bf0",
+  "compiler_source_git_tree": "087fcce4298ee75ffbb2419e45fe6e6e2d099b04",
+  "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "duplicate_claims": [],
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "key_formula": "SHA256(component_id|corpus_sha256|config_sha256|seed)",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "reconnect_checks_before_retry": [
+    "PID",
+    "process_group",
+    "heartbeat",
+    "checkpoint",
+    "ledger",
+    "GPU_process"
+  ],
+  "required_run_fields": [
+    "run_id",
+    "component_id",
+    "corpus_sha256",
+    "config_sha256",
+    "model_code_sha",
+    "dataset_revision",
+    "seed",
+    "authority_receipt"
+  ],
+  "run_claims": [],
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-qualification-v1",
+  "scientific_outcomes": [],
+  "status": "EMPTY_NO_TRAINING_RUN",
+  "step_commits": []
+}

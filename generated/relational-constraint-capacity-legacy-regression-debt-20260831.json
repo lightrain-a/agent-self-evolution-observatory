@@ -1,0 +1,299 @@
+{
+  "schema_version": "relational-constraint-capacity-legacy-regression-debt-v1",
+  "generated_at": "2026-08-31T00:00:00+00:00",
+  "object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "baseline": {
+    "canonical_sha": "47a8ba35966149bfa6e205304b17c21af72d0804",
+    "command": "python -m unittest discover -v",
+    "runner": "CPU_ONLY",
+    "scientific_gpu_runs": 0,
+    "log_sha256": "9534a5248f554198ad492fb0adeaf387e49cc1dccf26357c02c388e64fe7c7d1",
+    "historical_user_reported_baseline": {
+      "canonical_sha": "0451add2c9bd28740b80f436e3c626b1957e3c3e",
+      "tests": 1753,
+      "failures": 1,
+      "errors": 24,
+      "skipped": 3
+    },
+    "delta_from_historical": {
+      "tests": 67,
+      "failures": 0,
+      "errors": 3,
+      "skipped": 0
+    },
+    "tests": 1820,
+    "duration_seconds": 4561.123,
+    "failures": 1,
+    "errors": 27,
+    "skipped": 3
+  },
+  "authority_chain_audit": {
+    "chain_file_sha256": {
+      "scripts/compile_relational_constraint_capacity_construct_v2.py": "e06b6eb6a52983afda8088ac3ccef7448c07275670a076710a004f28e61fdda2",
+      "generated/relational-constraint-capacity-construct-v2-20260830.json": "48a86fa4bb83cdb9308a1cd6a005cf8ea34033f8649cd579c15fbe3e8347317f",
+      "scripts/run_instructscene_non_scientific_execution_smoke.py": "fe9978ada3504f81793cfb4fab23215846dbe0037fc89055deb3478277f82511",
+      "scripts/compile_relational_constraint_capacity_pre_f0_adjudication.py": "cc35d8a318c00d80758d7b8704edbd7f254628987772adbc4a5b0a0d3e2dbf45",
+      "generated/relational-constraint-capacity-pre-f0-adjudication-20260830.json": "cfc91edee5e6315f2e765628316a6ffa61f2521da4c5cfb557dd5c5b8edad92b",
+      "scripts/compile_relational_constraint_capacity_novelty_support_differential.py": "234bc07f917bf8cfabe08d6f261e76e4bb396556592c8c08f063cfe32e78371b",
+      "generated/relational-constraint-capacity-novelty-support-differential-20260831.json": "465dbbf9d2f1bb6aadad73681dac994e252b7201966e069d9b5c5e2dd7d16b83",
+      "generated/paper-first-pre-f0-evidence-acquisition-plan.json": "3594967e2e491984e522b4b53c10c0478848ecd34cc2287d718e175360861ebd"
+    },
+    "checked_axes": [
+      "authority compiler",
+      "source provenance",
+      "artifact integrity",
+      "experiment registry",
+      "exact replay",
+      "object dependency chain"
+    ],
+    "incidents_in_chain": 0,
+    "classification_counts": {
+      "AUTHORITY_CRITICAL": 0,
+      "SCIENTIFIC_OBJECT_DEPENDENCY": 0,
+      "UNRELATED_LEGACY_DEBT": 31
+    },
+    "shared_port010_regression_checks": "PASS_IN_TARGETED_17_TEST_REPLAY",
+    "targeted_constraint_integration_result": {
+      "tests": 17,
+      "passed": 16,
+      "failed": 1,
+      "failure": "stale noncanonical SceneEval proposal status expectation",
+      "port010_hold_checks_passed": true,
+      "zero_authority_checks_passed": true
+    }
+  },
+  "incidents": [
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_agentskillos_oracle_analogue_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_agentskillos_oracle_analogue_20260824)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "32787f40c95e5c03d2a8b3a5e5e7e5fcfdaebe6a1b47f6cb1def9833a7848d7f"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_certificate (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_certificate)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "2be64083da8ccabeb2721b6d1712b1406ed0d39cde320875b56d530a4401fe27"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_crossval_sparsity_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_crossval_sparsity_20260824)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "4731c5757cf5a2498009fd814101540f2c5a2dc5262f09db1961efad9d9d348a"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_logical_support (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_logical_support)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "c477b10f761462d00dd27d905cef96589d0226d34023ab321e513297cddafb12"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_offline_completion_analysis_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_offline_completion_analysis_20260824)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "d63a0554040417ca54c25f02825043fae6fc6de80e316cfd62aed77dd678a8a8"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_practical_baselines_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_practical_baselines_20260824)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "03766f7a312450b5227f8981f62f33d4410872d926aeab9352c9e27ac7f6c4aa"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_reasoningbank_p1_q2_prepare (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reasoningbank_p1_q2_prepare)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "eedb23206ec24f9738e77b0560418ecd91d6e152098d8eb887719d0aae6eb99e"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_reasoningbank_p1_q3_parser (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reasoningbank_p1_q3_parser)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "b3d5bf444b7c10d37b01e29bd1dd11133e80bd1aa77a19ed970badde36aa40a9"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_reasoningbank_p1_q3_prepare (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reasoningbank_p1_q3_prepare)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "3f447d8a7cde311ec7f923c34f2cd3c1fb629845e81da887f5ea93ea8ac27735"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_reviewer_extensions (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reviewer_extensions)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "28aaffb6f8751b8ea5fddabb9d66ffab92a6528d6484280f90b90b31da0687e6"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_skillrouter_relevance_analogue_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_skillrouter_relevance_analogue_20260824)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "21f19e0f05fa96ecf2709478bfc2479425f71cabef80d275e682f03927998030"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "research_pipeline.test_asset_first_stri_target_null_analysis_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_target_null_analysis_20260824)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "5b1ac6ae4e46fd4c5baf3df25794dcb6be8cc16b172b6d642695b07c89a96d76"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_current_pa03_is_closed_by_scoped_selection_bias_reduction (research_pipeline.test_harnessbank_selection_principle_readjudication.HarnessBankSelectionPrincipleReadjudicationTest.test_current_pa03_is_closed_by_scoped_selection_bias_reduction)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "927f64a5167b57cc022301b1ec94b67685259f67be60edd73038b622cdc47c38"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_reopen_requires_lineage_level_residual (research_pipeline.test_harnessbank_selection_principle_readjudication.HarnessBankSelectionPrincipleReadjudicationTest.test_reopen_requires_lineage_level_residual)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "b00cb530199acf19469b4357e247409d864f8c165e4b1f7c30726f37a6c67877"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_action_space_and_feedback_counter_explanation_closes_only_prompt_only_boundary (research_pipeline.test_paper_first_comfyclaw_prompt_only_refinement_principle_readjudication.ComfyClawPromptOnlyRefinementPrincipleReadjudicationTest.test_action_space_and_feedback_counter_explanation_closes_only_prompt_only_boundary)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "f576c965aa22ac81b5edf7b823fd59b4db2c3c8598ab5a1195d19c50df14a1eb"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_persistent_memory_keeps_adjacent_comfyclaw_evidence_open (research_pipeline.test_paper_first_comfyclaw_prompt_only_refinement_principle_readjudication.ComfyClawPromptOnlyRefinementPrincipleReadjudicationTest.test_persistent_memory_keeps_adjacent_comfyclaw_evidence_open)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "9c950bba4cc95b02b4c57156a84417176de776841d78608200687c285b7fe428"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "setUpClass (research_pipeline.test_paper_first_memory_monotonicity_consolidation_principle_readjudication.MemoryMonotonicityConsolidationPrincipleReadjudicationTest)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "cdb4b6ca0cab69c799088a19bc8c26afb124a703ee084d7618edcc0bcdaab457"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_persistent_memory_blocks_pair_scope_without_blacklisting_source_evidence (research_pipeline.test_paper_first_memory_skill_coverage_scope_principle_readjudication.MemorySkillCoverageScopePrincipleReadjudicationTest.test_persistent_memory_blocks_pair_scope_without_blacklisting_source_evidence)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "18aae7e09db4e063432db016daeb414751be57283a7289433c8107270b2b6f0f"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_scope_mismatch_is_certified_from_primary_evidence_not_ai_vote (research_pipeline.test_paper_first_memory_skill_coverage_scope_principle_readjudication.MemorySkillCoverageScopePrincipleReadjudicationTest.test_scope_mismatch_is_certified_from_primary_evidence_not_ai_vote)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "e90de61b858cbd2f5949477cbc7df68c2d0a17bd70341e57ef9653169619ad64"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_persistent_memory_projection_closes_target_not_source (research_pipeline.test_paper_first_metaskill_alfworld_residual_principle_readjudication.MetaSkillAlfworldResidualPrincipleReadjudicationTest.test_persistent_memory_projection_closes_target_not_source)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "1e9f1861a7c3a97317aaf004891a7fa9c6dd79cedae5a486b8cc07b774eb663c"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_source_internal_component_ablation_certifies_only_exact_p4_residual (research_pipeline.test_paper_first_metaskill_alfworld_residual_principle_readjudication.MetaSkillAlfworldResidualPrincipleReadjudicationTest.test_source_internal_component_ablation_certifies_only_exact_p4_residual)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "a3702f356fcae203c25b65a1c2e27ed7839baa698f50467d08e548caa6263526"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_primary_declared_deferred_package_is_support_hold_not_scientific_failure (research_pipeline.test_paper_first_qwen_harness_regression_support_audit.QwenHarnessRegressionSupportAuditTest.test_primary_declared_deferred_package_is_support_hold_not_scientific_failure)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "0d70433180b6a9c3808604a54422fb91b2401796f31e3c726642732fb8bb822d"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_two_exact_evidence_holds_compile_as_reopenable_memory_not_dead_end (research_pipeline.test_paper_first_qwen_harness_regression_support_audit.QwenHarnessRegressionSupportAuditTest.test_two_exact_evidence_holds_compile_as_reopenable_memory_not_dead_end)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "81601f6620a21e287cb32a5063aa8f4f6f377492ac3746b4b9a1cd2db52470ba"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_boundary_is_scoped_counter_mechanism_not_source_blacklist (research_pipeline.test_paper_first_skillcoach_distractor_boundary_principle_readjudication.SkillCoachDistractorBoundaryPrincipleReadjudicationTest.test_boundary_is_scoped_counter_mechanism_not_source_blacklist)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "9133ca392ef194b0283069088e97e0d8c27265c04f1c47dc58e61ac3c5a636a8"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_persistent_memory_closes_only_two_boundary_items (research_pipeline.test_paper_first_skillcoach_distractor_boundary_principle_readjudication.SkillCoachDistractorBoundaryPrincipleReadjudicationTest.test_persistent_memory_closes_only_two_boundary_items)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "c29fff26fcd596a32646019843fe4f02cb0191ced7b567c085a462d4cdeb1511"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_reopen_requires_matched_treatment_not_only_matched_headroom (research_pipeline.test_paper_first_static_procedural_prior_contradiction_principle_readjudication.StaticProceduralPriorContradictionPrincipleReadjudicationTest.test_reopen_requires_matched_treatment_not_only_matched_headroom)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "1ee4aaa74703586c013a5ba2b968889b5c2821ede3d90ee7a2b32d97f313402f"
+    },
+    {
+      "outcome": "ERROR",
+      "test": "test_treatment_surface_mismatch_closes_only_current_contradiction (research_pipeline.test_paper_first_static_procedural_prior_contradiction_principle_readjudication.StaticProceduralPriorContradictionPrincipleReadjudicationTest.test_treatment_surface_mismatch_closes_only_current_contradiction)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "separate historical research object; absent from this object's read/import chain",
+      "trace_sha256": "ce56bb5b09675d57aa8602e8f455e6ac2aa93dbd3817e04db8f1ee01524a7a37"
+    },
+    {
+      "outcome": "FAIL",
+      "test": "test_proposal_is_noncanonical_zero_execution_authority (research_pipeline.test_constraint_integration_cross_substrate_proposal.ConstraintIntegrationCrossSubstrateProposalTest.test_proposal_is_noncanonical_zero_execution_authority)",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "stale noncanonical SceneEval status string; shared PORT-010 tests pass",
+      "trace_sha256": "cd9fb77b0b50f72e1c6eae5daeb7af544f0de675e17e0e50f685066ac819deda"
+    },
+    {
+      "outcome": "SKIP",
+      "test": "test_c1_counts_real_lineage_contract (research_pipeline.test_p0_c_shared.CSharedAnalyzeTest.test_c1_counts_real_lineage_contract)",
+      "skip_reason": "'optional C-shared analysis dependencies (numpy/pandas/sklearn) are not installed in this runtime'",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "optional dependency/environment skip outside this object"
+    },
+    {
+      "outcome": "SKIP",
+      "test": "test_c4_and_c5_emit_typed_decisions (research_pipeline.test_p0_c_shared.CSharedAnalyzeTest.test_c4_and_c5_emit_typed_decisions)",
+      "skip_reason": "'optional C-shared analysis dependencies (numpy/pandas/sklearn) are not installed in this runtime'",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "optional dependency/environment skip outside this object"
+    },
+    {
+      "outcome": "SKIP",
+      "test": "test_shared_analysis_replaces_missing_substrate_hold (research_pipeline.test_p0_c_shared.CSharedAnalyzeTest.test_shared_analysis_replaces_missing_substrate_hold)",
+      "skip_reason": "'optional C-shared analysis dependencies (numpy/pandas/sklearn) are not installed in this runtime'",
+      "category": "UNRELATED_LEGACY_DEBT",
+      "reason": "optional dependency/environment skip outside this object"
+    }
+  ],
+  "adjudication": {
+    "global_suite_clean": false,
+    "legacy_debt_ignored": false,
+    "repair_all_legacy_modules_authorized": false,
+    "authority_critical_hold": false,
+    "scoped_non_blocking_for_this_object": true,
+    "reason": "all 1 failure, 27 errors and 3 skips are outside this object's exact read/import/hash chain; three post-0451 additions are old STRI loader errors; the shared PORT-010 checks independently pass"
+  },
+  "object_state": {
+    "parent_status": "PRE_F0_DUAL_QUALIFICATION_PASS_PROPOSAL_ONLY",
+    "novelty_verdict": "PRE_F0_REFORMULATE",
+    "gpu_authority": false,
+    "official_training": false,
+    "P1": false
+  }
+}

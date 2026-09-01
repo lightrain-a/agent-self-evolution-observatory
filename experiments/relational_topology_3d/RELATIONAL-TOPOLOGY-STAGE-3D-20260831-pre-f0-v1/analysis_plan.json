@@ -1,0 +1,30 @@
+{
+  "capability_masking": [
+    "unsupported observable is NA_NOT_MEASURED, never zero",
+    "denominators include only predeclared observable-capable pairs",
+    "oracle/structured-access rows are upper bounds, never normal ranks",
+    "no average rank across different input access or output representations"
+  ],
+  "compiler_source_git_sha": "d61262f08a5a7a82e8ccfc0c35efa57e09f6c609",
+  "compiler_source_git_tree": "f54821ba2982714de38f01c54a1f67fcd6cdd5f4",
+  "config_sha256": "e0d68fa08c8bcdf496f1c261ee945924ea2b5f74277a9b054b26fd95bb414b41",
+  "continuous_topology_sensitivity": [
+    "maximum_degree",
+    "degree_concentration",
+    "active_component_count",
+    "largest_active_component_diameter",
+    "shared_anchor_edge_pair_fraction",
+    "cycle_rank",
+    "edge_density"
+  ],
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "formula": "realized ~ relation_count_c * exact_clip_token_count_c * training_support_regime * topology_class + relation_family + (1 + relation_count_c | base_scene_id) + (1 | instruction_template_id) + (1 | seed_id)",
+  "generated_at": "2026-08-31T12:00:00+00:00",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "primary_model": "binomial mixed-effects response surface at relation level",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-pre-f0-v1",
+  "secondary_model": "exact_all_success with same fixed factors/random-effects strategy",
+  "shape": "smooth degradation default; segmented/change-point C* secondary only if supported",
+  "stage_analysis": "same response surface per observable plus paired oracle-minus-predicted contrasts"
+}

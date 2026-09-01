@@ -1,0 +1,53 @@
+{
+  "allowed_scope_after_all_gates": "50-100 optimizer steps per required component",
+  "candidate_devices": [
+    "RTX_3090_24GB",
+    "A100_40GB",
+    "A100_80GB"
+  ],
+  "classification": "NON_SCIENTIFIC_OFFICIAL_TRAINING_RESOURCE_AND_REPLAY_QUALIFICATION",
+  "compiler_source_git_sha": "114c1e1a936c00f677e2c71b2b30bb03f0548bf0",
+  "compiler_source_git_tree": "087fcce4298ee75ffbb2419e45fe6e6e2d099b04",
+  "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "default_preference": "A100_80GB",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "gpu_runs": 0,
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "outcomes_enter_p1": false,
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "prerequisites": [
+    "exact user license receipt",
+    "licensed corpus content address",
+    "shared decoder validation",
+    "exact-resume child adapter",
+    "canonical main-lineage authority",
+    "fresh SceneNAT drift check"
+  ],
+  "provider_calls": 0,
+  "required_measurements": [
+    "GPU_model",
+    "CUDA",
+    "driver",
+    "PyTorch",
+    "precision",
+    "batch_size",
+    "gradient_accumulation",
+    "peak_allocated_VRAM",
+    "peak_reserved_VRAM",
+    "step_time",
+    "samples_per_second",
+    "CPU_RAM",
+    "disk_write_rate",
+    "checkpoint_size",
+    "loss_finite",
+    "grad_finite",
+    "OOM",
+    "NaN_Inf",
+    "dataloader_failures"
+  ],
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-qualification-v1",
+  "selection_rule": "peak_vram + throughput + resume_stability",
+  "status": "NOT_REQUESTED_NOT_AUTHORIZED_NOT_RUN",
+  "training_steps": 0
+}

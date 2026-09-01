@@ -1,0 +1,49 @@
+{
+  "bands": {
+    "catastrophic_invalid_rate_upper": 0.1,
+    "relation_level_iRecall_lower": "reference_iRecall - max(0.05, 0.10 * abs(reference_iRecall))",
+    "text_to_graph_relation_recall_lower": "reference_recall - max(0.05, 0.10 * abs(reference_recall))",
+    "valid_graph_rate_lower": 0.9,
+    "valid_scene_rate_lower": 0.9
+  },
+  "compiler_source_git_sha": "114c1e1a936c00f677e2c71b2b30bb03f0548bf0",
+  "compiler_source_git_tree": "087fcce4298ee75ffbb2419e45fe6e6e2d099b04",
+  "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "end_to_end_metrics": [
+    "basic_instruction_conditioned_generation",
+    "official_style_iRecall_or_compatible",
+    "qualitative_quantitative_sanity"
+  ],
+  "failure_verdict": "STOP_TRAINING_REPRODUCTION_FAILED",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "metric_scale": "[0,1]",
+  "no_scientific_claim_from_qualification": true,
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "official_reference_requirement": "Content-address official/source BEDROOM reference and evaluator mapping before authority; no post-training reference selection.",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "qualification_only_checks": [
+    "finite loss",
+    "finite gradients",
+    "checkpoint load",
+    "kill/resume tolerance",
+    "no exactly-once duplicates or gaps"
+  ],
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-qualification-v1",
+  "semantic_graph_prior_metrics": [
+    "valid_graph_rate",
+    "object_category_validity",
+    "relation_output_validity",
+    "relation_recall",
+    "generation_failure_rate"
+  ],
+  "sg2sc_metrics": [
+    "valid_scene_rate",
+    "object_placement_validity",
+    "collision_diagnostic",
+    "relation_retention",
+    "catastrophic_invalid_output_rate"
+  ],
+  "status": "PREREGISTERED_BEFORE_TRAINING_VALUES_NOT_OBSERVED",
+  "validation_split": "MUST_BE_CONTENT_ADDRESSED_BEFORE_TRAINING"
+}

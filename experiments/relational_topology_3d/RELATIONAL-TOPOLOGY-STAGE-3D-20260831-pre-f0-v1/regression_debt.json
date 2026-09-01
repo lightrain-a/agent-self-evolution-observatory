@@ -1,0 +1,210 @@
+{
+  "authority_impact": "SCOPED_NON_BLOCKING_DEBT",
+  "base_sha": "45359640b9f22416b2fd4ac673972988db87cb02",
+  "blocking_incidents": [],
+  "classification_rule": "exact module dependency-chain classification; child/authority/registry/replay incidents block",
+  "compiler_source_git_sha": "d61262f08a5a7a82e8ccfc0c35efa57e09f6c609",
+  "compiler_source_git_tree": "f54821ba2982714de38f01c54a1f67fcd6cdd5f4",
+  "config_sha256": "e0d68fa08c8bcdf496f1c261ee945924ea2b5f74277a9b054b26fd95bb414b41",
+  "counts": {
+    "errors": 29,
+    "failures": 1,
+    "skips": 3
+  },
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "duration_seconds": 349.747,
+  "generated_at": "2026-08-31T12:00:00+00:00",
+  "incidents": [
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_agentskillos_oracle_analogue_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_agentskillos_oracle_analogue_20260824)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_certificate (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_certificate)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_crossval_sparsity_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_crossval_sparsity_20260824)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_logical_support (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_logical_support)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_offline_completion_analysis_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_offline_completion_analysis_20260824)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_practical_baselines_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_practical_baselines_20260824)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_reasoningbank_full_p1 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reasoningbank_full_p1)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_reasoningbank_full_p1_adjudicate (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reasoningbank_full_p1_adjudicate)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_reasoningbank_p1_q2_prepare (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reasoningbank_p1_q2_prepare)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_reasoningbank_p1_q3_parser (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reasoningbank_p1_q3_parser)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_reasoningbank_p1_q3_prepare (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reasoningbank_p1_q3_prepare)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_reviewer_extensions (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_reviewer_extensions)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_skillrouter_relevance_analogue_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_skillrouter_relevance_analogue_20260824)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OPTIONAL_SCIPY",
+      "test": "research_pipeline.test_asset_first_stri_target_null_analysis_20260824 (unittest.loader._FailedTest.research_pipeline.test_asset_first_stri_target_null_analysis_20260824)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_current_pa03_is_closed_by_scoped_selection_bias_reduction (research_pipeline.test_harnessbank_selection_principle_readjudication.HarnessBankSelectionPrincipleReadjudicationTest.test_current_pa03_is_closed_by_scoped_selection_bias_reduction)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_reopen_requires_lineage_level_residual (research_pipeline.test_harnessbank_selection_principle_readjudication.HarnessBankSelectionPrincipleReadjudicationTest.test_reopen_requires_lineage_level_residual)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_action_space_and_feedback_counter_explanation_closes_only_prompt_only_boundary (research_pipeline.test_paper_first_comfyclaw_prompt_only_refinement_principle_readjudication.ComfyClawPromptOnlyRefinementPrincipleReadjudicationTest.test_action_space_and_feedback_counter_explanation_closes_only_prompt_only_boundary)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_persistent_memory_keeps_adjacent_comfyclaw_evidence_open (research_pipeline.test_paper_first_comfyclaw_prompt_only_refinement_principle_readjudication.ComfyClawPromptOnlyRefinementPrincipleReadjudicationTest.test_persistent_memory_keeps_adjacent_comfyclaw_evidence_open)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "setUpClass (research_pipeline.test_paper_first_memory_monotonicity_consolidation_principle_readjudication.MemoryMonotonicityConsolidationPrincipleReadjudicationTest)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_persistent_memory_blocks_pair_scope_without_blacklisting_source_evidence (research_pipeline.test_paper_first_memory_skill_coverage_scope_principle_readjudication.MemorySkillCoverageScopePrincipleReadjudicationTest.test_persistent_memory_blocks_pair_scope_without_blacklisting_source_evidence)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_scope_mismatch_is_certified_from_primary_evidence_not_ai_vote (research_pipeline.test_paper_first_memory_skill_coverage_scope_principle_readjudication.MemorySkillCoverageScopePrincipleReadjudicationTest.test_scope_mismatch_is_certified_from_primary_evidence_not_ai_vote)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_persistent_memory_projection_closes_target_not_source (research_pipeline.test_paper_first_metaskill_alfworld_residual_principle_readjudication.MetaSkillAlfworldResidualPrincipleReadjudicationTest.test_persistent_memory_projection_closes_target_not_source)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_source_internal_component_ablation_certifies_only_exact_p4_residual (research_pipeline.test_paper_first_metaskill_alfworld_residual_principle_readjudication.MetaSkillAlfworldResidualPrincipleReadjudicationTest.test_source_internal_component_ablation_certifies_only_exact_p4_residual)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_primary_declared_deferred_package_is_support_hold_not_scientific_failure (research_pipeline.test_paper_first_qwen_harness_regression_support_audit.QwenHarnessRegressionSupportAuditTest.test_primary_declared_deferred_package_is_support_hold_not_scientific_failure)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_two_exact_evidence_holds_compile_as_reopenable_memory_not_dead_end (research_pipeline.test_paper_first_qwen_harness_regression_support_audit.QwenHarnessRegressionSupportAuditTest.test_two_exact_evidence_holds_compile_as_reopenable_memory_not_dead_end)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_boundary_is_scoped_counter_mechanism_not_source_blacklist (research_pipeline.test_paper_first_skillcoach_distractor_boundary_principle_readjudication.SkillCoachDistractorBoundaryPrincipleReadjudicationTest.test_boundary_is_scoped_counter_mechanism_not_source_blacklist)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_persistent_memory_closes_only_two_boundary_items (research_pipeline.test_paper_first_skillcoach_distractor_boundary_principle_readjudication.SkillCoachDistractorBoundaryPrincipleReadjudicationTest.test_persistent_memory_closes_only_two_boundary_items)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_reopen_requires_matched_treatment_not_only_matched_headroom (research_pipeline.test_paper_first_static_procedural_prior_contradiction_principle_readjudication.StaticProceduralPriorContradictionPrincipleReadjudicationTest.test_reopen_requires_matched_treatment_not_only_matched_headroom)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "ERROR",
+      "root_cause": "MISSING_OR_DRIFTED_UNRELATED_PRIMARY_EVIDENCE",
+      "test": "test_treatment_surface_mismatch_closes_only_current_contradiction (research_pipeline.test_paper_first_static_procedural_prior_contradiction_principle_readjudication.StaticProceduralPriorContradictionPrincipleReadjudicationTest.test_treatment_surface_mismatch_closes_only_current_contradiction)"
+    },
+    {
+      "classification": "UNRELATED_LEGACY_DEBT",
+      "kind": "FAIL",
+      "root_cause": "STALE_SCENEEVAL_PROPOSAL_STATUS_ASSERTION",
+      "test": "test_proposal_is_noncanonical_zero_execution_authority (research_pipeline.test_constraint_integration_cross_substrate_proposal.ConstraintIntegrationCrossSubstrateProposalTest.test_proposal_is_noncanonical_zero_execution_authority)"
+    }
+  ],
+  "log_sha256": "365b1aed0ce7ec639cd107a38791d103733a0422bdf27f99a9819f559361e2de",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-pre-f0-v1",
+  "scope_proof": {
+    "all_full_suite_incidents_outside_child_dependency_chain": true,
+    "targeted_authority_port_parent_child_tests": "68/68 PASS",
+    "unrelated_debt_was_recorded_not_repaired": true
+  },
+  "status": "COMPLETE",
+  "tests": 1924
+}
