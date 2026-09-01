@@ -58,6 +58,20 @@ def split_for_repo(repo: str, task_ids: list[str]) -> dict[str, Any]:
     }
 
 
+
+def apply_fallback_calibration(repo_splits: list[dict[str, Any]]) -> list[str]:
+    if len(repo_splits) != 3:
+        raise RuntimeError("fallback calibration requires three repositories")
+    extras = []
+    for row in repo_splits[:2]:
+        extra = row["structural_candidate_task_ids"].pop(0)
+        row["calibration_task_ids"].append(extra)
+        row["counts"]["calibration"] += 1
+        row["counts"]["structural_candidates"] -= 1
+        extras.append(extra)
+    return extras
+
+
 def build_payload() -> dict[str, Any]:
     d0, q1 = load_gates()
     selected = list(d0["selected_repositories"])
@@ -68,14 +82,19 @@ def build_payload() -> dict[str, Any]:
         split_for_repo(repo, list(d0["selected_qualified_task_ids"][repo]))
         for repo in selected
     ]
+    fallback_extra_calibration: list[str] = []
+    if expected_repos == 3:
+        # Section 28 fixes eight total calibration tasks. The first structural
+        # candidate from each of the first two hash-ordered repositories supplies
+        # the two extras without outcome use and leaves ten candidates there.
+        fallback_extra_calibration = apply_fallback_calibration(repo_splits)
     all_source = [x for row in repo_splits for x in row["source_task_ids"]]
     all_calibration = [x for row in repo_splits for x in row["calibration_task_ids"]]
     all_candidates = [x for row in repo_splits for x in row["structural_candidate_task_ids"]]
     if set(all_source) & set(all_calibration) or set(all_source) & set(all_candidates) or set(all_calibration) & set(all_candidates):
         raise RuntimeError("global split overlap")
-    # The primary four-repository path yields exactly eight calibration tasks.
-    if expected_repos == 4 and len(all_calibration) != 8:
-        raise RuntimeError("primary calibration count drift")
+    if len(all_calibration) != 8:
+        raise RuntimeError("calibration count drift")
     receipts = {}
     for task_id in all_source + all_calibration + all_candidates:
         candidates = sorted(RECEIPT_DIR.glob(f"*-{task_id.replace('__', '-')}.json"))
@@ -106,6 +125,12 @@ def build_payload() -> dict[str, Any]:
         "q1_result_path": str(Q1_RESULT.relative_to(ROOT)),
         "q1_result_sha256": sha256_file(Q1_RESULT),
         "dataset_design": "PRIMARY_4_REPOSITORY" if expected_repos == 4 else "FALLBACK_3_REPOSITORY",
+        "fallback_extra_calibration_task_ids": fallback_extra_calibration,
+        "fallback_extra_rule": (
+            "none"
+            if expected_repos == 4
+            else "first structural candidate from each of first two repo-hash-ordered repositories"
+        ),
         **split_identity,
         "split_identity_sha256": sha256_text(canonical_json(split_identity)),
         "task_receipts": receipts,

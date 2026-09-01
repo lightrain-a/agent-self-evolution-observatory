@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_split import (
-    split_for_repo,
+    apply_fallback_calibration, split_for_repo,
 )
 
 
@@ -21,6 +21,18 @@ def test_primary_repo_split_counts_and_order():
 def test_repo_split_requires_headroom():
     with pytest.raises(RuntimeError, match="insufficient"):
         split_for_repo("org/repo", [str(i) for i in range(20)])
+
+
+
+def test_fallback_adds_two_calibration_tasks_outcome_blind():
+    rows = [
+        split_for_repo(f"repo-{repo}", [f"r{repo}-task-{i:02d}" for i in range(21)])
+        for repo in range(3)
+    ]
+    extras = apply_fallback_calibration(rows)
+    assert extras == ["r0-task-10", "r1-task-10"]
+    assert [row["counts"]["calibration"] for row in rows] == [3, 3, 2]
+    assert [row["counts"]["structural_candidates"] for row in rows] == [10, 10, 11]
 
 
 def test_repo_split_is_deterministic():
