@@ -33,6 +33,15 @@ M1_QUALIFICATION = (
 M1_MANIFEST = (
     GENERATED / "agent-constraint-externality-m1-runner-qualification-v1-manifest-20260901.json"
 )
+CAPABILITY_RESULT = (
+    GENERATED / "agent-constraint-externality-qwen-capability-result-20260901.json"
+)
+CAPABILITY_RESULT_MANIFEST = (
+    GENERATED / "agent-constraint-externality-qwen-capability-manifest-20260901.json"
+)
+CAPABILITY_MODEL_SNAPSHOT = (
+    GENERATED / "agent-constraint-externality-qwen-provider-model-snapshot-20260901.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -44,6 +53,12 @@ MODEL_SELECTION_ORDER = (REQUESTED_MODEL,)
 SEEDS = (1201, 1202, 1203)
 ARMS = ("INDEPENDENT", "LOW", "HIGH")
 BRANCHES = ("NO_UPDATE", "UPDATE")
+CAPABILITY_STATUSES = {
+    "CAPABILITY_CALIBRATION_PASS",
+    "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
+    "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+    "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP",
+}
 
 
 class PreflightError(RuntimeError):
@@ -75,6 +90,28 @@ def write_json(path: Path, value: dict[str, Any]) -> None:
     )
 
 
+def validate_capability_result(payload: dict[str, Any]) -> str | None:
+    if not payload:
+        return None
+    if payload.get("object_id") != OBJECT_ID:
+        raise PreflightError("Capability result object identity mismatch.")
+    status = payload.get("status")
+    if status not in CAPABILITY_STATUSES:
+        raise PreflightError("Capability result status is not frozen.")
+    content_sha256 = payload.get("content_sha256")
+    unhashed = {key: value for key, value in payload.items() if key != "content_sha256"}
+    if content_sha256 != digest(unhashed):
+        raise PreflightError("Capability result content hash mismatch.")
+    f0_authorized = bool(payload.get("authority", {}).get("f0"))
+    if f0_authorized != (status == "CAPABILITY_CALIBRATION_PASS"):
+        raise PreflightError("Capability result F0 authority contradicts its status.")
+    if status != "CAPABILITY_CALIBRATION_PASS" and payload.get(
+        "scientific_outcomes_observed"
+    ) != 0:
+        raise PreflightError("Stopped capability result exposed scientific outcomes.")
+    return str(status)
+
+
 def validate_inputs() -> tuple[dict[str, Any], dict[str, Any]]:
     families = read_json(FAMILY_MANIFEST)
     qualification = read_json(COMPILER_QUALIFICATION)
@@ -104,6 +141,10 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
     provider_ready = bool(safe_provider["configured"])
     m1 = read_json(M1_QUALIFICATION) if M1_QUALIFICATION.is_file() else {}
     m1_pass = m1.get("status") == "M1_RUNNER_QUALIFICATION_PASS"
+    capability_result = (
+        read_json(CAPABILITY_RESULT) if CAPABILITY_RESULT.is_file() else {}
+    )
+    capability_status = validate_capability_result(capability_result)
 
     capability = {
         "schema_version": "agent-constraint-externality-capability-calibration-v1",
@@ -293,6 +334,17 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "M1_RUNNER_QUALIFICATION_REQUIRED"
         blocker = "M1 scientific runner qualification has not passed."
         next_action = "RUN_M1_MOCK_QUALIFICATION"
+    elif capability_status == "CAPABILITY_CALIBRATION_PASS":
+        readiness_status = "F0_SOURCE_READY"
+        blocker = None
+        next_action = "RUN_F0_SOURCE"
+    elif capability_status:
+        readiness_status = capability_status
+        blocker = (
+            "Capability calibration terminated at its frozen stop rule; "
+            "F0 remains unauthorized."
+        )
+        next_action = "STOP_AWAIT_HUMAN_ADJUDICATION"
     elif not provider_ready:
         readiness_status = "QWEN_PROVIDER_CONFIGURATION_REQUIRED"
         blocker = "AA_API_KEY is not configured in the approved environment."
@@ -313,6 +365,25 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "model_prereg_addendum_a0_pass": True,
         "m1_runner_qualification_pass": m1_pass,
         "capability_contract_frozen": True,
+        "capability_result_status": capability_status,
+        "capability_scheduled_agent_episode_count": capability_result.get(
+            "scheduled_agent_episode_count", 0
+        ),
+        "capability_agent_episode_count": capability_result.get(
+            "agent_episode_count", 0
+        ),
+        "capability_terminal_agent_episode_count": capability_result.get(
+            "terminal_agent_episode_count", 0
+        ),
+        "capability_agent_model_request_count": capability_result.get(
+            "gate", {}
+        ).get("agent_model_request_count", 0),
+        "capability_provider_request_total": capability_result.get(
+            "provider_request_total", 0
+        ),
+        "capability_scientific_outcomes_observed": capability_result.get(
+            "scientific_outcomes_observed", 0
+        ),
         "f0_contract_frozen": True,
         "provider": safe_provider,
         "execution_override": {
@@ -327,6 +398,7 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "tool_sandbox_authorized": False,
         "appworld_ul_authorized": False,
         "p1_authorized": False,
+        "f0_authorized": capability_status == "CAPABILITY_CALIBRATION_PASS",
     }
     return {
         "agent-constraint-externality-capability-contract-20260831.json": capability,
@@ -354,6 +426,15 @@ def main() -> None:
             "sha256": file_sha256(path),
             "bytes": path.stat().st_size,
         }
+    for path in (
+        CAPABILITY_RESULT, CAPABILITY_RESULT_MANIFEST, CAPABILITY_MODEL_SNAPSHOT,
+    ):
+        if not path.is_file():
+            continue
+        manifest_files[str(path.relative_to(ROOT))] = {
+            "sha256": file_sha256(path),
+            "bytes": path.stat().st_size,
+        }
     readiness = artifacts[
         "agent-constraint-externality-f0-readiness-20260831.json"
     ]
@@ -363,13 +444,16 @@ def main() -> None:
         "object_id": OBJECT_ID,
         "status": readiness["status"],
         "files": manifest_files,
-        "scientific_outcomes_observed": 0,
-        "provider_calls": 0,
+        "scientific_outcomes_observed": readiness["f0_outcomes_observed"],
+        "provider_calls": readiness["capability_provider_request_total"],
         "gpu_runs": 0,
         "authority": {
             "m1_mock_qualification": not readiness["m1_runner_qualification_pass"],
-            "capability_calibration": readiness["m1_runner_qualification_pass"],
-            "f0": False,
+            "capability_calibration": (
+                readiness["m1_runner_qualification_pass"]
+                and readiness["capability_result_status"] is None
+            ),
+            "f0": readiness["f0_authorized"],
             "toolsandbox": False,
             "appworld_ul": False,
             "p1": False,
@@ -391,8 +475,8 @@ def main() -> None:
             len(F0_FAMILIES) * len(ARMS) * len(BRANCHES) * len(SEEDS)
         ),
         "agent_episode_total_max": 160,
-        "scientific_outcomes_observed": 0,
-        "provider_calls": 0,
+        "scientific_outcomes_observed": readiness["f0_outcomes_observed"],
+        "provider_calls": readiness["capability_provider_request_total"],
     }, sort_keys=True))
 
 

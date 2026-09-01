@@ -1,0 +1,17 @@
+{
+  "allowed_alias": "qwen3.7-flash",
+  "allowed_alias_available": true,
+  "base_url": "https://api.aa.com.cn/api/v1",
+  "catalog_model_count": 200,
+  "catalog_provider_request_count": 1,
+  "catalog_response_sha256": "f62b00473aeb1a19b0a17a7fc20160595003f2607b641e14339fc5e86fa39353",
+  "max_retries": 0,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider": "TYPICAL_TOKEN_OPENAI_RESPONSES_API",
+  "requested_model": "qwen3.7-flash-2026-07-15",
+  "requested_model_available": false,
+  "resolved_request_model": "qwen3.7-flash",
+  "schema_version": "ace-qwen-provider-model-snapshot-v1",
+  "secrets_persisted": false,
+  "snapshot_unavailable": true
+}

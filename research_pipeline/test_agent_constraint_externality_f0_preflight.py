@@ -36,9 +36,14 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
             self.assertEqual(
                 self.data[name]["scientific_outcomes_observed"], 0
             )
-            self.assertEqual(self.data[name]["provider_calls"], 0)
             self.assertEqual(self.data[name]["gpu_runs"], 0)
+        self.assertEqual(self.data["capability"]["provider_calls"], 0)
+        self.assertEqual(self.data["f0"]["provider_calls"], 0)
         readiness = self.data["readiness"]
+        self.assertEqual(
+            self.data["manifest"]["provider_calls"],
+            readiness["capability_provider_request_total"],
+        )
         self.assertFalse(readiness["f0_executed"])
         self.assertEqual(readiness["f0_outcomes_observed"], 0)
         self.assertFalse(readiness["p1_authorized"])
@@ -126,7 +131,16 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness["provider_credential_present"]:
+        if readiness.get("capability_result_status"):
+            self.assertEqual(
+                readiness["status"], readiness["capability_result_status"]
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "STOP_AWAIT_HUMAN_ADJUDICATION",
+            )
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness["provider_credential_present"]:
             self.assertEqual(
                 readiness["status"], "CAPABILITY_CALIBRATION_READY"
             )
@@ -146,8 +160,14 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
     def test_manifest_hashes_are_self_consistent(self) -> None:
         manifest = self.data["manifest"]
         self.assertFalse(manifest["authority"]["m1_mock_qualification"])
-        self.assertTrue(manifest["authority"]["capability_calibration"])
-        self.assertFalse(manifest["authority"]["f0"])
+        if self.data["readiness"].get("capability_result_status"):
+            self.assertFalse(manifest["authority"]["capability_calibration"])
+        else:
+            self.assertTrue(manifest["authority"]["capability_calibration"])
+        self.assertEqual(
+            manifest["authority"]["f0"],
+            self.data["readiness"].get("f0_authorized", False),
+        )
         self.assertFalse(manifest["authority"]["p1"])
         for relative, metadata in manifest["files"].items():
             path = ROOT / relative
