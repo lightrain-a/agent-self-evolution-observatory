@@ -1,10 +1,10 @@
 {
-  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.9",
+  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.10",
   "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
-  "recorded_at": "2026-09-01T13:32:54+08:00",
+  "recorded_at": "2026-09-01T18:23:52+08:00",
   "canonical_closed_state": {
-    "origin_main_parent_before_s17_integration": "791a8c119649d4ae23e67ce68233e5b1248bb06f",
-    "last_closed_segment": "S17",
+    "origin_main_parent_before_s18_integration": "c100544bf452f5a422478f22902a273a0f1760f5",
+    "last_closed_segment": "S18",
     "s01_s07": "PAYLOAD_SEGMENT_COMPLETE",
     "s08_initial": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
     "s08_repair1": "PAYLOAD_SEGMENT_COMPLETE",
@@ -33,17 +33,21 @@
     "s17_receipt_sha256": "541950dcd7ddbb096a27021ec7fd81d4b225d1c18b147121aa097d20eb0efca4",
     "s17_verified_file_count": 44,
     "s17_verified_bytes": 8397761821,
-    "next_segment": "S18"
+    "s18": "PAYLOAD_SEGMENT_COMPLETE",
+    "s18_receipt_sha256": "f39f9395367277dc2932f57065615bf5b8265b94af79174c7d93921aab06f12e",
+    "s18_verified_file_count": 44,
+    "s18_verified_bytes": 8406784920,
+    "next_segment": "S19"
   },
   "execution_resume_location": {
-    "worktree": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-continuation-20260831",
-    "branch": "research/formal-goal-continuation-20260831",
-    "branch_head_after_s17_receipt": "c0cc8fc55e90eb5690e379bba8492392d868bd13",
+    "worktree": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-shared26-execution-20260901",
+    "branch": "research/formal-goal-shared26-execution-20260901",
+    "branch_head_after_s18_receipt": "8ee300b1447ec962136538bdc73babf213316d98",
     "single_writer_lock": "/data/wyt/.behavior-2026-shared26-v3.0.materialization.lock"
   },
   "resume_protocol": [
-    "Before S18, inspect the single-writer lock holder, actor process, S18 receipt, finalized files, and partial files.",
-    "Never rerun S01-S17; they are content-addressed closed segments.",
+    "Before S19, inspect the single-writer lock holder, actor process, S19 receipt, finalized files, and partial files.",
+    "Never rerun S01-S18; they are content-addressed closed segments.",
     "Do not duplicate a lock-holding actor after SSH/tool transport errors.",
     "Transport-only retry may reuse the verified-relay pattern without changing frozen file identity, task/episode selection, or the scientific contract.",
     "No model/checkpoint weight download, model load, GPU execution, training, policy rollout, policy outcome read, task replacement, episode replacement, or claim expansion is authorized."
