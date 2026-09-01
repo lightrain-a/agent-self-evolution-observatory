@@ -272,6 +272,8 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         "equal_example_count": len(corpora["IS-SUPPORT-12"]) == len(corpora["IS-SUPPORT-14"]),
         "family_counts": family_counts, "family_proportions": family_proportions,
         "family_proportions_equal": True, "direction_policy_equal": True,
+        "per_scene_family_composition_required": True,
+        "residual_imbalance_adjustment": "PREREGISTER_IF_EXACT_MATCHING_IMPOSSIBLE",
         "nested_permutations_required": True,
         "real_corpus_gate": "Block authority unless family, direction, scene, object-count and template marginals satisfy frozen tolerances.",
     }
@@ -279,6 +281,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         **p, "status": "STATIC_CONTRACT_PASS_REAL_COUNTS_PENDING_LICENSE",
         "tokenizer": "openai/clip-vit-base-patch32", "tokenizer_revision": CLIP_REVISION,
         "exact_token_counts_materialized": [], "synthetic_placeholder_token_counts": None,
+        "required_distribution_statistics": ["histogram", "mean", "median", "quantiles", "overlap", "relation_count_stratified_distribution"],
         "primary_scientific_exclusion": "tokenizer_truncated == true",
         "matching": "Exact count where feasible; otherwise same one-token bin within relation_count and topology strata, with token count modeled continuously.",
         "authority_gate": "No scientific or training sample proceeds without exact_clip_token_count and tokenizer_truncated populated.",
@@ -290,6 +293,7 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
             "degree_concentration", "diameter", "shared_anchor_fraction",
             "largest_component", "relation_graph_density"],
         "same_policy_conditional_on_relation_count": True, "p1_topology_held_fixed": True,
+        "outcome_blind_sampling": True, "scientific_topology_comparison_this_round": False,
         "blocking_condition": "Conditional balance or exact fixed-topology contrasts cannot be built.",
     }
     rng_contract = {
@@ -326,6 +330,8 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
     exactly_once = {
         **p, "status": "EMPTY_NO_TRAINING_RUN",
         "key_formula": "SHA256(component_id|corpus_sha256|config_sha256|seed)",
+        "required_run_fields": ["run_id", "component_id", "corpus_sha256", "config_sha256", "model_code_sha", "dataset_revision", "seed", "authority_receipt"],
+        "reconnect_checks_before_retry": ["PID", "process_group", "heartbeat", "checkpoint", "ledger", "GPU_process"],
         "run_claims": [], "step_commits": [], "duplicate_claims": [], "scientific_outcomes": [],
     }
     gpu_qualification = {
@@ -335,6 +341,10 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         "prerequisites": ["exact user license receipt", "licensed corpus content address",
             "shared decoder validation", "exact-resume child adapter", "canonical main-lineage authority",
             "fresh SceneNAT drift check"],
+        "candidate_devices": ["RTX_3090_24GB", "A100_40GB", "A100_80GB"],
+        "default_preference": "A100_80GB",
+        "required_measurements": ["GPU_model", "CUDA", "driver", "PyTorch", "precision", "batch_size", "gradient_accumulation", "peak_allocated_VRAM", "peak_reserved_VRAM", "step_time", "samples_per_second", "CPU_RAM", "disk_write_rate", "checkpoint_size", "loss_finite", "grad_finite", "OOM", "NaN_Inf", "dataloader_failures"],
+        "selection_rule": "peak_vram + throughput + resume_stability",
         "provider_calls": 0, "gpu_runs": 0, "training_steps": 0, "outcomes_enter_p1": False,
     }
     reproduction = {
@@ -345,10 +355,34 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
             "text_to_graph_relation_recall_lower": "reference_recall - max(0.05, 0.10 * abs(reference_recall))",
             "valid_graph_rate_lower": 0.90, "valid_scene_rate_lower": 0.90,
             "catastrophic_invalid_rate_upper": 0.10},
+        "validation_split": "MUST_BE_CONTENT_ADDRESSED_BEFORE_TRAINING",
+        "semantic_graph_prior_metrics": ["valid_graph_rate", "object_category_validity", "relation_output_validity", "relation_recall", "generation_failure_rate"],
+        "sg2sc_metrics": ["valid_scene_rate", "object_placement_validity", "collision_diagnostic", "relation_retention", "catastrophic_invalid_output_rate"],
+        "end_to_end_metrics": ["basic_instruction_conditioned_generation", "official_style_iRecall_or_compatible", "qualitative_quantitative_sanity"],
         "qualification_only_checks": ["finite loss", "finite gradients", "checkpoint load",
             "kill/resume tolerance", "no exactly-once duplicates or gaps"],
         "failure_verdict": "STOP_TRAINING_REPRODUCTION_FAILED",
         "no_scientific_claim_from_qualification": True,
+    }
+    training_persistence = {
+        **p, "status": "SCHEMA_FROZEN_NO_TRAINING_RUN",
+        "root_template": "experiments/3d_official_training/<run_id>/",
+        "required_paths": ["manifest.json", "authority.json", "environment.json",
+            "git_state.json", "dataset_manifest.json", "corpus_manifest.json",
+            "model_manifest.json", "config.yaml", "training_events.jsonl",
+            "loss.jsonl", "checkpoints/", "checkpoint_manifest.jsonl",
+            "heartbeat.json", "failures.jsonl", "stdout.log", "stderr.log",
+            "final_training_summary.json"],
+        "incremental_persistence_required": True,
+        "summary_only_persistence_forbidden": True,
+    }
+    failure_taxonomy = {
+        **p, "status": "FROZEN_NON_SCIENTIFIC_FAILURE_CLASSES",
+        "classes": ["DATA_LICENSE_FAILURE", "DATA_PROVENANCE_FAILURE",
+            "CORPUS_MATCHING_FAILURE", "DECODER_COUPLING_FAILURE",
+            "GPU_RESOURCE_FAILURE", "EXECUTION_FAILURE", "CHECKPOINT_FAILURE",
+            "RESUME_FAILURE", "TRAINING_INSTABILITY", "REPRODUCTION_FAILURE"],
+        "scientific_mechanism_update_allowed": False,
     }
     p1_schema = {**p, **empty_p1_schema(), "status": "CLOSED_EMPTY_SCHEMA_ONLY"}
     authority = {
@@ -411,8 +445,10 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         "oracle_interface.json": oracle_interface,
         "checkpoint_resume_contract.json": checkpoint_contract,
         "exactly_once_ledger.json": exactly_once, "gpu_qualification.json": gpu_qualification,
-        "reproduction_preregistration.json": reproduction, "p1_empty_schema.json": p1_schema,
-        "authority.json": authority, "regression_debt.json": {**p, **debt},
+        "reproduction_preregistration.json": reproduction,
+        "training_persistence_schema.json": training_persistence,
+        "failure_taxonomy.json": failure_taxonomy,
+        "p1_empty_schema.json": p1_schema, "authority.json": authority, "regression_debt.json": {**p, **debt},
         "adjudication.json": adjudication,
         "failures.jsonl": [{**p, "record_type": "GATE_HOLD",
             "classification": "DATA_LICENSE_FAILURE", "status": "OPEN",
