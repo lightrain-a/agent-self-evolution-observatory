@@ -38,8 +38,11 @@ requests target the same policy distribution.
 
 \paragraph{Population and repeated trials.}
 Repositories and tasks are selected by deterministic hash order after historical
-exclusions and evaluator qualification, without policy outcomes. Source,
-calibration, pilot, and confirmatory tasks are permanently disjoint. The
+exclusions and evaluator qualification, without policy outcomes. The pinned dataset's
+difficulty field is descriptive only because a separate exact provenance package for
+official human difficulty annotations was not content-addressed before outcomes; it
+is not used for selection, exclusion, stratification, or confirmatory adjustment.
+Source, calibration, pilot, and confirmatory tasks are permanently disjoint. The
 confirmatory population contains 24 structurally qualified tasks drawn from a
 multi-repository design. For each task we execute six planned trials in each of
 A, D, and N. These are repeated samples, not retries: every scheduled unit is
