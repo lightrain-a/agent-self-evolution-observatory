@@ -1,6 +1,6 @@
 {
   "appworld_ul_authorized": false,
-  "content_sha256": "9d514fe9fd0d0fc67e075fcbdef93ca60bef1e64dd8f148fe07e2b0ddb52971f",
+  "content_sha256": "d02d2e1cdb9ce68b3068e033ba7d1edb9f1fbc33f10a14a81153347a9a085e54",
   "continuation_contract": {
     "artifact": "generated/agent-constraint-externality-capability-continuation-r1-contract-20260901.json",
     "remaining_units": 7,
@@ -41,7 +41,7 @@
     "continuation_module": "research_pipeline/agent_constraint_externality_capability_continue.py",
     "continuation_module_sha256": "4efc27d2491b54e621ac745aa392c56d02a0b1d565cf91e4dddd7b1842d6b984",
     "continuation_test_module": "research_pipeline/test_agent_constraint_externality_capability_continuation.py",
-    "continuation_test_module_sha256": "61a262ff27c6f13a8725f3b88d7235a53ae912d439ce53d1d8ca459020dea458",
+    "continuation_test_module_sha256": "cd033bdf2784565daa30e93c53c0247ae8387ba5538fc0b1e9af03b8d6954399",
     "measurement_recovery_module": "research_pipeline/agent_constraint_externality_capability_measurement_recover.py",
     "measurement_recovery_module_sha256": "480b0947dc848347ed37ac279c17430e89ccb2439a7158fb060c9e10aff65be0"
   },

@@ -59,7 +59,7 @@ class CapabilityContinuationTests(unittest.TestCase):
     def test_credential_rotation_gate_is_objective_and_fail_closed(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / ".env"
-            path.write_text("AA_API_KEY=secret\n", encoding="utf-8")
+            path.write_text("PLACEHOLDER_ROTATION_MARKER=updated\n", encoding="utf-8")
             os.utime(path, (100, 100))
             contract = {"credential_env_mtime_must_be_gt": 100}
             with self.assertRaises(RunnerError):
