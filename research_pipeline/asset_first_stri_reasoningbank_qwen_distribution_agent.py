@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import copy
 import json
+import shlex
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -22,6 +23,12 @@ from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_d0_quali
 )
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_evaluator import (
     grade_status_map, parse_status_map,
+)
+from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_edit_targets import (
+    edit_target_set, parse_hunks,
+)
+from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_behavior import (
+    trajectory_observables,
 )
 
 MODEL = "qwen3-coder-next"
@@ -228,4 +235,83 @@ def evaluate(container: QualificationDockerRun, row: Mapping[str, Any]) -> dict[
         **grade, "valid": valid,
         "resolved": bool(valid and grade["resolved"]),
         "gold_patch_used": False, "test_patch_model_visible": False,
+    }
+
+
+def frozen_base_files(container: QualificationDockerRun, base_commit: str,
+                      patch: str) -> dict[str, str]:
+    files = {}
+    for hunk in parse_hunks(patch):
+        path = hunk.old_path
+        if path in {"/dev/null", ""} or not path.endswith(".py") or path in files:
+            continue
+        result = container.exec(
+            "git show " + shlex.quote(f"{base_commit}:{path}"), timeout=60)
+        if result["returncode"] == 0 and not result["timed_out"]:
+            files[path] = result["output"]
+    return files
+
+
+def execute_behavioral_unit(*, row: Mapping[str, Any], image_pull_reference: str,
+                            selected_memory: str, run_id: str,
+                            sampling: Mapping[str, Any],
+                            expected_R1_sha256: str) -> dict[str, Any]:
+    container = QualificationDockerRun(
+        image=image_pull_reference, base_commit=str(row["base_commit"]), run_id=run_id)
+    trajectory: dict[str, Any] | None = None
+    evaluator: dict[str, Any] | None = None
+    failure: dict[str, Any] | None = None
+    try:
+        trajectory, _ = execute_trajectory(
+            row=row, image_pull_reference=image_pull_reference,
+            selected_memory=selected_memory, run_id=run_id,
+            sampling=sampling, container=container)
+        first_request_sha = (
+            trajectory["requests"][0]["request_sha256"]
+            if trajectory.get("requests") else None)
+        r1_exact = first_request_sha == expected_R1_sha256
+        try:
+            evaluator = evaluate(container, row)
+        except Exception as error:
+            evaluator = {
+                "valid": False, "resolved": False,
+                "failure": {"failure_layer": "evaluator",
+                            "error_type": type(error).__name__, "message": str(error)},
+            }
+        patch = str(trajectory.get("final_patch") or "")
+        base_files = frozen_base_files(
+            container, str(row["base_commit"]), patch)
+        edit_target = edit_target_set(patch, base_files)
+        observables = trajectory_observables(
+            actions=trajectory.get("actions") or [], patch=patch,
+            modified_files=trajectory.get("modified_files") or [],
+            edit_target=edit_target,
+            model_call_count=int(trajectory.get("model_call_count") or 0),
+            exit_status=str(trajectory.get("exit_status") or ""))
+        complete_exit = trajectory.get("exit_status") in {"Submitted", "LimitsExceeded"}
+        behavior_valid = bool(
+            r1_exact and complete_exit and trajectory.get("failure") is None
+            and trajectory.get("accepted_response_count", 0) > 0)
+        status = "COMPLETED" if behavior_valid else "TERMINAL_INVALID_BEHAVIOR"
+    except Exception as error:
+        first_request_sha, r1_exact, behavior_valid = None, False, False
+        observables = None
+        failure = {
+            "failure_layer": "runtime_or_implementation",
+            "error_type": type(error).__name__, "message": str(error),
+        }
+        status = "TERMINAL_RUNTIME_OR_IMPLEMENTATION_FAILURE"
+    cleanup = container.close()
+    return {
+        "schema_version": 1, "run_id": run_id, "created_at_utc": utcnow(),
+        "instance_id": row["instance_id"], "attempt_count": 1,
+        "execution_status": status, "behavior_valid": behavior_valid,
+        "expected_R1_sha256": expected_R1_sha256,
+        "first_actual_request_sha256": first_request_sha,
+        "complete_R1_exact": r1_exact,
+        "trajectory": trajectory, "behavior_observables": observables,
+        "R4_terminal_outcome": evaluator, "failure": failure,
+        "container_cleanup_receipt": cleanup,
+        "automatic_retry": False, "replacement": False,
+        "credential_material_present": False,
     }
