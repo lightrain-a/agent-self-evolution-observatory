@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import json
 import shlex
+import time
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -106,6 +107,7 @@ def execute_trajectory(*, row: Mapping[str, Any], image_pull_reference: str,
             "request_sha256": sha256_text(canonical_json(request)),
             "attempt_count": 1,
         })
+        call_started = time.monotonic()
         try:
             response = policy.create_response(
                 input_items=request["input"], model=request["model"],
@@ -121,6 +123,7 @@ def execute_trajectory(*, row: Mapping[str, Any], image_pull_reference: str,
             exit_status = "ProviderTerminalFailure"
             break
         receipt = safe_response(response)
+        receipt["latency_seconds"] = round(time.monotonic() - call_started, 6)
         responses.append({"step": step, **receipt})
         if int(receipt.get("transport_attempts") or 0) != 1:
             failure = {"failure_layer": "provider", "error_type": "HiddenRetryDetected"}
