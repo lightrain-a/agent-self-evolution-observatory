@@ -6,17 +6,18 @@ import time
 from pathlib import Path
 from typing import Any
 
-from research_pipeline.asset_first_stri_reasoningbank_ark_provider import (
-    ArkCompatibilityError, ArkReasoningBankClient, ArkReasoningBankSettings,
-    CANONICAL_SECRET_FILE,
+from research_pipeline.asset_first_stri_reasoningbank_qwen_provider import (
+    DIANMING_BASE_URL, DIANMING_SECRET_FILE, QwenChatClient, QwenChatSettings,
+    QwenProviderError,
 )
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
-    BASE_URL, FORMAT_RE, ROOT, canonical_json, sha256_file, sha256_text,
+    FORMAT_RE, ROOT, canonical_json, sha256_file, sha256_text,
     utcnow, write_json,
 )
 
 EXPERIMENT_ID = "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901"
 MODEL = "qwen3-coder-next"
+BASE_URL = DIANMING_BASE_URL
 K_Q1 = 20
 Q0_RESULT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q0-result-20260901.json"
 CONTRACT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-contract-20260901.json"
@@ -46,14 +47,15 @@ def request_body(sampling: dict[str, Any]) -> dict[str, Any]:
         raise RuntimeError("Q0 sampling drift: retries enabled")
     body: dict[str, Any] = {
         "model": MODEL,
-        "input": [
+        "messages": [
             {"role": "system", "content": "Follow the mini-SWE-agent fenced-bash action format exactly."},
             {"role": "user", "content": FIXED_PROMPT},
         ],
-        "max_output_tokens": int(sampling["max_output_tokens"]),
+        "max_completion_tokens": int(sampling["max_output_tokens"]),
         "temperature": float(sampling["temperature"]),
         "top_p": float(sampling["top_p"]),
-        "store": True,
+        "n": 1,
+        "stream": False,
     }
     if isinstance(sampling.get("top_k"), int):
         body["top_k"] = int(sampling["top_k"])
@@ -126,11 +128,11 @@ def normalize_action(text: str) -> dict[str, Any]:
     return signature
 
 
-def make_client() -> ArkReasoningBankClient:
-    base = ArkReasoningBankSettings.from_env_file(CANONICAL_SECRET_FILE)
-    if base.base_url.rstrip("/") != BASE_URL:
-        raise RuntimeError("Q1 provider base URL drift")
-    return ArkReasoningBankClient(ArkReasoningBankSettings(
+def make_client() -> QwenChatClient:
+    base = QwenChatSettings.from_env_file(DIANMING_SECRET_FILE)
+    if base.base_url.rstrip("/") != BASE_URL or base.model != MODEL:
+        raise RuntimeError("Q1 provider base URL/model drift")
+    return QwenChatClient(QwenChatSettings(
         api_key=base.api_key, base_url=BASE_URL, model=MODEL,
         timeout_seconds=120.0, max_retries=0))
 
@@ -200,10 +202,12 @@ def execute(output: Path = OUTPUT) -> dict[str, Any]:
         started = time.monotonic()
         try:
             response = client.create_response(
-                input_items=request["input"], model=request["model"],
-                max_output_tokens=request["max_output_tokens"],
+                input_items=request["messages"], model=request["model"],
+                max_output_tokens=request["max_completion_tokens"],
                 temperature=request["temperature"], top_p=request["top_p"],
-                top_k=request.get("top_k"), store=request["store"])
+                top_k=request.get("top_k"))
+            if response.get("actual_request_sha256") != contract["request_sha256"]:
+                raise RuntimeError("Q1 actual Chat request hash drift")
             raw = str(response.get("raw_text", response.get("text", "")))
             row = {
                 **planned, "status": "SUCCESS",
@@ -219,7 +223,7 @@ def execute(output: Path = OUTPUT) -> dict[str, Any]:
                 "latency_seconds": round(time.monotonic() - started, 6),
                 "credential_material_present": False,
             }
-        except ArkCompatibilityError as error:
+        except QwenProviderError as error:
             row = {
                 **planned, "status": "FAILED",
                 "request_sha256": contract["request_sha256"],

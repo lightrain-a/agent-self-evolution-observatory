@@ -18,9 +18,9 @@ def test_request_uses_q0_sampling_and_no_retry_fields():
         {"temperature": 1.0, "top_p": .95, "top_k": 40, "max_output_tokens": 32768})
     assert body == {
         "model": "qwen3-coder-next",
-        "input": [{"role": "user", "content": "task"}],
+        "messages": [{"role": "user", "content": "task"}],
         "temperature": 1.0, "top_p": .95, "top_k": 40,
-        "max_output_tokens": 32768, "store": True,
+        "max_completion_tokens": 32768, "n": 1, "stream": False,
     }
     assert "seed" not in body
     assert "max_retries" not in body

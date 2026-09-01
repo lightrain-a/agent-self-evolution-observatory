@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from research_pipeline.asset_first_stri_reasoningbank_ark_provider import ArkCompatibilityError
+from research_pipeline.asset_first_stri_reasoningbank_qwen_provider import QwenProviderError
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
     OFFICIAL_COMMIT, INSTRUCTION_PATH, ROOT, canonical_json, load_instructions,
     sha256_file, sha256_text, utcnow, write_json,
@@ -175,31 +175,38 @@ def run() -> dict[str, Any]:
             "state": "DISPATCHED_BEFORE_PROVIDER_CALL",
         }))
         request = {
-            "model": MODEL, "input": prompt, "instructions": instruction,
+            "model": MODEL,
+            "messages": [
+                {"role": "system", "content": instruction},
+                {"role": "user", "content": prompt},
+            ],
             "temperature": contract["extractor_sampling"]["temperature"],
             "top_p": contract["extractor_sampling"]["top_p"],
-            "max_output_tokens": contract["extractor_sampling"]["max_output_tokens"],
-            "store": True,
+            "max_completion_tokens": contract["extractor_sampling"]["max_output_tokens"],
+            "n": 1,
+            "stream": False,
         }
         if isinstance(contract["extractor_sampling"].get("top_k"), int):
             request["top_k"] = contract["extractor_sampling"]["top_k"]
         try:
             response = client.create_response(
-                input_items=prompt, instructions=instruction, model=MODEL,
+                input_items=request["messages"], model=MODEL,
                 temperature=request["temperature"], top_p=request["top_p"],
                 top_k=request.get("top_k"),
-                max_output_tokens=request["max_output_tokens"], store=True)
+                max_output_tokens=request["max_completion_tokens"])
+            if response.get("actual_request_sha256") != sha256_text(canonical_json(request)):
+                raise RuntimeError("memory extractor actual Chat request hash drift")
             safe = safe_response(response)
             if safe["resolved_model"] != MODEL or safe["transport_attempts"] != 1:
                 raise RuntimeError("extractor provider identity/retry drift")
             raw = safe["text"]
             status, failure = "COMPLETED", None
-        except (ArkCompatibilityError, RuntimeError) as error:
+        except (QwenProviderError, RuntimeError) as error:
             raw, safe, status = "", None, "TERMINAL_PROVIDER_OR_IDENTITY_FAILURE"
             failure = {
                 "failure_layer": "provider", "error_type": type(error).__name__,
-                "message": str(error) if not isinstance(error, ArkCompatibilityError) else None,
-                "safe_receipt": error.safe_receipt() if isinstance(error, ArkCompatibilityError) else None,
+                "message": str(error) if not isinstance(error, QwenProviderError) else None,
+                "safe_receipt": error.safe_receipt() if isinstance(error, QwenProviderError) else None,
             }
         record = memory_record(
             source_task_id=unit["source_task_id"],

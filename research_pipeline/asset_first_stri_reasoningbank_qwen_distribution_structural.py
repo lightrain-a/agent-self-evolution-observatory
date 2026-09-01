@@ -14,11 +14,12 @@ def complete_request(problem_statement: str, selected_memory: str,
                      sampling: Mapping[str, Any]) -> dict[str, Any]:
     request: dict[str, Any] = {
         "model": MODEL,
-        "input": render_messages(problem_statement, selected_memory),
+        "messages": render_messages(problem_statement, selected_memory),
         "temperature": float(sampling["temperature"]),
         "top_p": float(sampling["top_p"]),
-        "max_output_tokens": int(sampling["max_output_tokens"]),
-        "store": True,
+        "max_completion_tokens": int(sampling["max_output_tokens"]),
+        "n": 1,
+        "stream": False,
     }
     if isinstance(sampling.get("top_k"), int):
         request["top_k"] = int(sampling["top_k"])
