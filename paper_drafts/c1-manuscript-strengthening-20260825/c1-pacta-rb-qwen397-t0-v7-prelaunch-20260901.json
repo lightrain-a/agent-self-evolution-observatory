@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T12:53:00Z",
+  "experiment": "C1-PACTA-RB-QWEN397-T0-v7-20260901",
+  "status": "T0_V7_PRELAUNCH_PASS",
+  "qualified": 7,
+  "total": 7,
+  "provider_calls": 0,
+  "contract_sha256": "747b06efbaba6d1fdeea1efeeedabe393eec06563218e23d146f333222409d42",
+  "schedule_sha256": "f7f54698e38bafd2b25dc9cdc4d29ed46dc22d808fcfde923e20945d227f2e35",
+  "prelaunch_sha256": "e5b683ba390cf14dd439934e1de3cc6bb1e13788eabb98ada1bd472da1d7dc30",
+  "timeout_template_repair": "qualified statically and by tests; no scientific provider call yet",
+  "prior_valid_trajectory_count": 2,
+  "maximum_total_valid_original_pool_after_v7": 9,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_measurement_calls": 0,
+  "future_task_executions": 0,
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE"
+}
