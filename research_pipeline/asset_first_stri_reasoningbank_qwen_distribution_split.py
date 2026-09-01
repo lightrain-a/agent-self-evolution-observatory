@@ -108,7 +108,9 @@ def build_payload() -> dict[str, Any]:
             "qualification_receipt_sha256": sha256_file(candidates[0]),
             "task_sha256": receipt["task_receipt"]["model_visible_task_sha256"],
             "base_commit": receipt["task_receipt"]["base_commit"],
-            "image_manifest_digest": receipt["task_receipt"]["image_manifest"],
+            "image_manifest_digest": receipt["task_receipt"]["image_manifest"]["manifest_digest"],
+            "image_config_digest": receipt["task_receipt"]["image_manifest"]["config_digest"],
+            "image_architecture": receipt["task_receipt"]["image_manifest"]["architecture"],
         }
     split_identity = {
         "repositories": selected, "repo_splits": repo_splits,
