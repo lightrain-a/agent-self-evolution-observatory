@@ -1,12 +1,13 @@
 {
   "canonical_closed_state": {
-    "last_closed_segment": "S24",
-    "next_segment": "S25",
+    "last_closed_segment": "S25",
+    "next_segment": "S26",
     "origin_main_parent_before_s20_integration": "60c5b183768e17366a2d4646af5c35a833e6f204",
     "origin_main_parent_before_s21_integration": "57487b4a4e0b211bcdac8310859960a10176838e",
     "origin_main_parent_before_s22_integration": "581ac386da83acc33b06bc98f789c521f2e08491",
     "origin_main_parent_before_s23_integration": "e5b8bf4ddb70168285c48f20c927688f22428088",
     "origin_main_parent_before_s24_integration": "076ee0e3298d5f705214046c7f05949dd3feea1a",
+    "origin_main_parent_before_s25_integration": "f8b28f77ee0e16100013fa00854143e320451498",
     "s01_s07": "PAYLOAD_SEGMENT_COMPLETE",
     "s08_initial": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
     "s08_repair1": "PAYLOAD_SEGMENT_COMPLETE",
@@ -62,7 +63,14 @@
     "s24": "PAYLOAD_SEGMENT_COMPLETE",
     "s24_receipt_sha256": "fe8234fb60f7f19240228fc64f3d1abed754a1121d50ebf7a3caf68b1c47f6f8",
     "s24_verified_bytes": 8551841226,
-    "s24_verified_file_count": 48
+    "s24_verified_file_count": 48,
+    "s25_hold_receipt_sha256": "da0fc565c3dcdb307c8108aefa05707e1c344cdfb45b5ef3e67efad35b7fab1c",
+    "s25_initial": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
+    "s25_repair1": "PAYLOAD_SEGMENT_COMPLETE",
+    "s25_repair_receipt_sha256": "e79e2567f1d684498d61bcae5efb920df36f5357a620290c8161b79f77c3b2e7",
+    "s25_transport_repair_sha256": "7f3db7e736584e47edf5fea2918bd6e9ec5300a3224ea39184354001f33ab357",
+    "s25_verified_bytes": 8474216753,
+    "s25_verified_file_count": 47
   },
   "execution_authority_created_by_this_checkpoint": false,
   "execution_resume_location": {
@@ -75,7 +83,7 @@
   "model_loaded": false,
   "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
   "policy_outcomes_read": false,
-  "recorded_at": "2026-09-01T18:55:00+08:00",
+  "recorded_at": "2026-09-01T19:15:00+08:00",
   "resume_protocol": [
     "Before S22, inspect the single-writer lock holder, actor process, S22 receipt, finalized files, and partial files.",
     "Never rerun S01-S20; they are content-addressed closed segments.",
@@ -83,6 +91,6 @@
     "Transport-only retry may reuse the verified-relay pattern without changing frozen file identity, task/episode selection, or the scientific contract.",
     "No model/checkpoint weight download, model load, GPU execution, training, policy rollout, policy outcome read, task replacement, episode replacement, or claim expansion is authorized."
   ],
-  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.16",
+  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.17",
   "scientific_authority": false
 }
