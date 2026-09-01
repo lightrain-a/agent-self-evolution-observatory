@@ -1,10 +1,10 @@
 {
-  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.5",
+  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.6",
   "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
-  "recorded_at": "2026-09-01T13:05:12+08:00",
+  "recorded_at": "2026-09-01T13:16:58+08:00",
   "canonical_closed_state": {
-    "origin_main_parent_before_s13_integration": "3a87160fcea6f7ba27d2b83ac50a8432be248d0e",
-    "last_closed_segment": "S13",
+    "origin_main_parent_before_s14_integration": "1eaf9f2da5f83a7528e3b4c78a38ea066851a40b",
+    "last_closed_segment": "S14",
     "s01_s07": "PAYLOAD_SEGMENT_COMPLETE",
     "s08_initial": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
     "s08_repair1": "PAYLOAD_SEGMENT_COMPLETE",
@@ -14,24 +14,23 @@
     "s12": "PAYLOAD_SEGMENT_COMPLETE",
     "s13_initial": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
     "s13_repair1": "PAYLOAD_SEGMENT_COMPLETE",
-    "s13_hold_receipt_sha256": "7c8f7ec91d051c407a12448c3ad1f761fcf53f868abf41f1654a0e17d5f9a588",
-    "s13_repair_receipt_sha256": "720c3b7c19181bc429a7d02f64bb6377c3480e7d697d247256b69e33dbb08767",
-    "s13_transport_repair_sha256": "83a293b0af47bd50dcf946b2ab7db9be9293abfdd70e012f5b838958ec592e5c",
-    "s13_verified_file_count": 44,
-    "s13_verified_bytes": 8447912022,
-    "next_segment": "S14"
+    "s14": "PAYLOAD_SEGMENT_COMPLETE",
+    "s14_receipt_sha256": "58079c3ecd1852e9b99b55dfa9e646497429a1ed6da98055b20e744453b57127",
+    "s14_verified_file_count": 44,
+    "s14_verified_bytes": 8578673390,
+    "next_segment": "S15"
   },
   "execution_resume_location": {
     "worktree": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-continuation-20260831",
     "branch": "research/formal-goal-continuation-20260831",
-    "branch_head_after_s13_repair": "cc51f5b4cac37d3306b94d9597dd3026530c40a7",
+    "branch_head_after_s14_receipt": "aabe0a1249829c450b9822827b9ac14327a46db3",
     "single_writer_lock": "/data/wyt/.behavior-2026-shared26-v3.0.materialization.lock"
   },
   "resume_protocol": [
-    "Before S14, inspect the single-writer lock holder, actor process, S14 receipt, finalized files, and partial files.",
-    "Never rerun S01-S13; they are content-addressed closed segments.",
+    "Before S15, inspect the single-writer lock holder, actor process, S15 receipt, finalized files, and partial files.",
+    "Never rerun S01-S14; they are content-addressed closed segments.",
     "Do not duplicate a lock-holding actor after SSH/tool transport errors.",
-    "Transport-only retry may reuse the S08/S13 verified-relay pattern without changing frozen file identity, task/episode selection, or the scientific contract.",
+    "Transport-only retry may reuse the verified-relay pattern without changing frozen file identity, task/episode selection, or the scientific contract.",
     "No model/checkpoint weight download, model load, GPU execution, training, policy rollout, policy outcome read, task replacement, episode replacement, or claim expansion is authorized."
   ],
   "scientific_authority": false,
