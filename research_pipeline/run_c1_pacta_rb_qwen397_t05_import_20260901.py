@@ -143,12 +143,46 @@ def main() -> None:
         receipt = args.root / "import-receipt.json"
         if receipt.exists():
             raise RuntimeError("import receipt exists; no overwrite")
+        journal = args.root / "import-journal.jsonl"
+        completed: dict[str, dict[str, Any]] = {}
+        if journal.exists():
+            for line in journal.read_text().splitlines():
+                if line.strip():
+                    row = json.loads(line)
+                    completed[row["instance_id"]] = row
         rows = []
         for instance, _index, amd64 in SPECS:
-            row = import_one(args.root, instance, amd64)
+            if instance in completed:
+                row = completed[instance]
+            else:
+                try:
+                    row = import_one(args.root, instance, amd64)
+                except Exception as exc:  # persist the infrastructure differential and continue the fixed list
+                    row = {
+                        "instance_id": instance,
+                        "amd64_digest": f"sha256:{amd64}",
+                        "exact_digest_pass": False,
+                        "invalid_reason": f"{type(exc).__name__}: {exc}",
+                    }
+                with journal.open("a", encoding="utf-8") as handle:
+                    handle.write(json.dumps(row, sort_keys=True) + "\n")
+                    handle.flush()
+                    os.fsync(handle.fileno())
+                completed[instance] = row
             rows.append(row)
             print(json.dumps({"instance_id": instance, "exact_digest_pass": row["exact_digest_pass"]}), flush=True)
-        result = {"schema_version": 1, "created_at_utc": now(), "docker": docker_metadata(), "rows": rows, "all_imported_by_exact_digest": all(row["exact_digest_pass"] for row in rows), "decision": "ALL_FIXED_DIGEST_IMAGES_IMPORTED", "provider_calls": 0}
+        imported = sum(bool(row["exact_digest_pass"]) for row in rows)
+        result = {
+            "schema_version": 1,
+            "created_at_utc": now(),
+            "docker": docker_metadata(),
+            "rows": rows,
+            "imported_by_exact_digest": imported,
+            "total_images": len(rows),
+            "all_imported_by_exact_digest": imported == len(rows),
+            "decision": "ALL_FIXED_DIGEST_IMAGES_IMPORTED" if imported == len(rows) else "EXACT_DIGEST_IMPORT_INCOMPLETE",
+            "provider_calls": 0,
+        }
         atomic_json(receipt, result)
     else:
         if (args.root / "runtime-qualification.json").exists():
