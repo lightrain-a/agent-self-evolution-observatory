@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R49-R46-SNAPSHOT-INTERFACE-REPAIR-CONTRACT",
+  "recorded_date": "2026-09-01",
+  "status": "PREVALIDATION_QUALIFICATION_INTERFACE_REPAIR_AUTHORIZED_ZERO_VALIDATION_OUTCOME",
+  "role": "R46_QUALIFICATION_INTERFACE_REPAIR_NOT_SCIENTIFIC_PROTOCOL_CHANGE",
+  "trigger": {
+    "r45m1_source_build": "SOURCE_BUILD_COMPLETE",
+    "source_completed_count": 128,
+    "source_success_count": 61,
+    "source_failure_count": 67,
+    "source_receipt_sha256": "875e82c825a7b3f96e65fcdd94cefe98c765b13e36fc6f6ea86592885eb95406",
+    "source_receipt_file_sha256": "da13080913baf4becb0c134c65cbbcc503436bff24552aec98085b4910e6b3d2",
+    "original_r46m1_failure": "RuntimeError: final-source-checkpoint-empty",
+    "failure_stage": "before load_checkpoint_snapshot and before any validation instruction retrieval",
+    "validation_treatment_outcomes_observed": 0
+  },
+  "false_negative_evidence": {
+    "final_snapshot_textual_memory_sha256": "35dbc45d7a59f88cc6820f0c2b2ef88a1d0587ab6a4350cf936d9310483fe00d",
+    "final_snapshot_textual_memory_entries": 128,
+    "final_snapshot_unique_source_task_ids": 128,
+    "final_snapshot_success_memories": 61,
+    "final_snapshot_failure_memories": 67,
+    "snapshot_meta_sha256": "e8a01d077aadbd232adeca4141cb87c2153a82a7cf64a2a85ec0a3133f18c31d",
+    "snapshot_meta_visible_memories": 0,
+    "restored_qdrant_meta_sha256": "5b1ca63524cf98a1b56611ad822ded4bfc294d5c04fb817c55138e41fb281836",
+    "live_qdrant_storage_sha256": "60a6299d22bd19e3700844497434125722853ff739fddb07c62b1d6a8e2baebb",
+    "copy_on_write_load_diagnostic": {
+      "load_checkpoint_snapshot_returned": 0,
+      "native_retrieve_query_succeeded": true,
+      "selected_count": 5,
+      "retrieved_both_source_provenance_polarities": true,
+      "validation_instruction_used": false,
+      "validation_environment_reset": false,
+      "validation_evaluator_call": false
+    }
+  },
+  "diagnostic_side_effect_and_restoration": {
+    "direct_load_diagnostic_created_snapshot_collection": true,
+    "post_diagnostic_qdrant_meta_sha256": "11467bceede875912abfc9e38f71729c3337fd5d5f84a572eccc5ed8b980d0b6",
+    "diagnostic_created_snapshot_storage_sha256": "36a2eadc4682a7c965b901b45ab9661ac095a31e16eaea7c06258220d3614ee9",
+    "forensic_path": "/data/wyt/b1-memrl-r45m1-execution/forensics/r46-direct-load-diagnostic-20260901",
+    "original_live_qdrant_storage_unchanged": true,
+    "original_textual_memory_unchanged": true,
+    "original_snapshot_meta_unchanged": true,
+    "qdrant_meta_restored_from_byte_identical_prediagnostic_checkpoint_template": true,
+    "restored_qdrant_meta_sha256": "5b1ca63524cf98a1b56611ad822ded4bfc294d5c04fb817c55138e41fb281836"
+  },
+  "authorized_change": {
+    "replace_visible_memories_counter_as_gate": true,
+    "replacement_check": "verify completed ledger, snapshot MD5, exact source-task support, both source provenance polarities, Qdrant storage presence, then clone the source snapshot to a copy-on-write qualification directory and run unchanged native load/retrieval on the clone",
+    "original_source_snapshot_may_be_passed_to_load_checkpoint_snapshot": false,
+    "copy_on_write_required": true
+  },
+  "scientific_invariants": {
+    "source_tasks_changed": false,
+    "source_outcomes_changed": false,
+    "validation_units_changed": false,
+    "validation_instructions_changed": false,
+    "retrieval_algorithm_changed": false,
+    "retrieve_k_changed": false,
+    "similarity_threshold_changed": false,
+    "retrieval_rng_changed": false,
+    "R46M2_32_of_32_primary_support_rule_changed": false,
+    "source_provenance_polarity_rule_changed": false,
+    "utilization_arms_changed": false,
+    "primary_A_B_arm_semantics_changed": false,
+    "primary_C_D_controller_hold_changed": false,
+    "validation_treatment_outcomes_observed": 0
+  },
+  "execution_scope": {
+    "one_R46M3_qualification_attempt": true,
+    "if_pass": "continue only to already-frozen R47M2 utilization qualification",
+    "if_fail": "SUPPORT_STOP_NO_BEHAVIORAL_VERDICT",
+    "primary_execution_authorized_by_R49": false
+  },
+  "receipt_sha256": "d727c2b1f3be94d6a89939013e2adfb96a8a6cdf6d03f8045c74e2cdcb7e2144"
+}
