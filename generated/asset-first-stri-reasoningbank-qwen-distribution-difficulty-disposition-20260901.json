@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "created_at_utc": "2026-09-01T09:38:48Z",
+  "stage": "D0_DIFFICULTY_PROVENANCE_DISPOSITION",
+  "decision": "OFFICIAL_HUMAN_DIFFICULTY_PROVENANCE_UNAVAILABLE_FOR_STRATIFICATION",
+  "d0_feasibility_artifact": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-feasibility-20260901.json",
+  "d0_feasibility_sha256": "7ba0264dc410380c1f910d17eaeb1275789c06b8c3d8694cc87e01fd7e1e36fa",
+  "dataset": {
+    "id": "SWE-bench/SWE-bench_Verified",
+    "revision": "78f471bf655a3137b2e8a75af1501690ec009ec3",
+    "parquet_sha256": "030cfd7f2a704c4c0226e7f104c725a3b41230b1d3517f9c915ad7ea5be3fa25",
+    "row_count": 500,
+    "difficulty_field_present": true
+  },
+  "provenance_assessment": "The pinned dataset contains a difficulty field, but no separate exact official human-annotation provenance package was content-addressed before policy outcomes.",
+  "scientific_use": {
+    "stratification": false,
+    "selection": false,
+    "exclusion": false,
+    "confirmatory_covariate": false,
+    "descriptive_reporting_only": true,
+    "llm_derived_replacement_labels": false,
+    "historical_deepseek_outcomes_as_labels": false
+  },
+  "outcome_information_used": false,
+  "model_calls": 0,
+  "provider_calls": 0,
+  "credential_material_present": false
+}
