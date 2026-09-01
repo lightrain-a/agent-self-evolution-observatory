@@ -172,7 +172,7 @@ def run_arm_exact(manifest: dict[str,Any],adapter: Any,task_id: str,arm: str,pro
     from src.typings import Session,SampleStatus,SessionEvaluationOutcome
     agent=LanguageModelAgent(language_model=adapter,system_prompt=prompt)
     task,tname=build_task(task="os",data_file_path=str(root/e["confirmatory_units"]["split"]),max_round=int(e["source_build"]["max_steps"]),os_timeout=int(e["source_build"]["os_timeout_seconds"]));session=Session(task_name=tname,sample_index=task_id)
-    actions=[];first=None;steps=0;success=None
+    actions=[];first=None;steps=0;success=None;evaluation_outcome=None
     try:
         task.reset(session)
         while session.sample_status==SampleStatus.RUNNING:
@@ -181,11 +181,11 @@ def run_arm_exact(manifest: dict[str,Any],adapter: Any,task_id: str,arm: str,pro
             norm=r47base.norm_action(content);actions.append({"response":resp,"parsed":str(parsed.action),"content":parsed.content,"normalized":norm});first=first if first is not None else norm
             task.interact(session);steps+=1
             if steps>int(e["source_build"]["max_steps"])*2: raise RuntimeError("step-ceiling")
-        task.complete(session);out=getattr(getattr(session,"evaluation_record",None),"outcome",None);success=(out==SessionEvaluationOutcome.CORRECT)
+        task.complete(session);out=getattr(getattr(session,"evaluation_record",None),"outcome",None);evaluation_outcome=str(out);success=(out==SessionEvaluationOutcome.CORRECT)
     finally:
         try: task.release()
         except Exception: pass
-    return {"task_id":task_id,"arm":arm,"full_system_prompt":prompt,"actions":actions,"first_executable_action":first,"terminal_success":success,"steps":steps}
+    return {"task_id":task_id,"arm":arm,"full_system_prompt":prompt,"chat_messages":r47base.chat(session),"actions":actions,"first_executable_action":first,"terminal_success":success,"evaluation_outcome":evaluation_outcome,"steps":steps}
 
 
 def exact_two_sided_signflip(b_only: int,a_only: int) -> float:
