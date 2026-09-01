@@ -110,8 +110,12 @@
     "single_writer_lock": "/data/wyt/.behavior-2026-shared26-v3.0.materialization.lock",
     "worktree": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-shared26-resume-20260901"
   },
+  "generated_at": "2026-09-01T21:21:32+08:00",
   "gpu_used": false,
+  "last_closed_segment": "S31",
   "model_loaded": false,
+  "next_gate": "SHARED26_NORMALIZATION_AND_ZERO_UPDATE_DATA_RUNTIME_QUALIFICATION",
+  "next_segment": null,
   "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
   "policy_outcomes_read": false,
   "recorded_at": "2026-09-01T20:25:44+08:00",
@@ -122,6 +126,17 @@
     "Do not duplicate a lock-holding actor after SSH/tool transport errors.",
     "No model/checkpoint weight download, model load, GPU execution, training, policy rollout, policy outcome read, task replacement, episode replacement, or claim expansion is authorized by this checkpoint."
   ],
-  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.23",
-  "scientific_authority": false
+  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.24",
+  "scientific_authority": false,
+  "whole_manifest_final_seal": {
+    "missing_file_count": 0,
+    "partial_file_count": 0,
+    "path": "generated/behavior-formal-goal-coupling-shared26-whole-manifest-final-seal-20260901.json",
+    "sha256": "1890045423141532213f9398451a7f51e7c481b3ea90a5cc0fa86c3516db1a9f",
+    "sha_mismatch_count": 0,
+    "size_mismatch_count": 0,
+    "status": "WHOLE_MANIFEST_FINAL_SEAL_PASS",
+    "verified_bytes": 236480375583,
+    "verified_file_count": 1380
+  }
 }
