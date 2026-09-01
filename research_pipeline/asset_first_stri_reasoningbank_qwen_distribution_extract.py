@@ -155,12 +155,9 @@ def run() -> dict[str, Any]:
         if sha256_text(text) != unit["trajectory_input_sha256"]:
             raise RuntimeError("memory trajectory input drift")
         task = str(source["trajectory"].get("task_sha256") or unit["source_task_id"])
-        task_text = ""
-        messages = source["trajectory"].get("messages") or []
-        for message in messages:
-            if message.get("role") == "user":
-                task_text = str(message.get("content") or "")
-                break
+        task_text = str(source["trajectory"].get("problem_statement") or "")
+        if not task_text:
+            raise RuntimeError("source problem statement absent from trajectory receipt")
         prompt = f"**Query:** {task_text}\n\n**Trajectory:**\n{text}"
         instruction = instructions[unit["instruction_key"]].strip()
         request = {
@@ -192,7 +189,7 @@ def run() -> dict[str, Any]:
             }
         record = memory_record(
             source_task_id=unit["source_task_id"],
-            source_repository=unit["source_repository"],
+            source_repository=unit["source_repository"], source_query=task_text,
             task_sha256=task, trajectory_sha256=unit["source_trajectory_sha256"],
             source_resolved=unit["source_resolved"], raw_response=raw,
             policy_model=MODEL, extractor_model=MODEL,
