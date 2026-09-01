@@ -60,6 +60,7 @@ def test_q0_contract_does_not_open_benchmark_or_source_authority(tmp_path, monke
     monkeypatch.setattr(q0, "D0_INDEX", d0)
     contract = q0.contract_payload()
     assert contract["qualification_gate"]["single_choice_n1_required"] is True
+    assert contract["qualification_gate"]["text_action_compatibility_required"] is False
     boundary = contract["scientific_boundary"]
     assert boundary["q1_stochasticity_qualification_authorized"] is False
     assert boundary["source_generation_authorized"] is False

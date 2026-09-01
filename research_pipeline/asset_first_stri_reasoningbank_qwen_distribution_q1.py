@@ -19,6 +19,7 @@ EXPERIMENT_ID = "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901"
 MODEL = "qwen3-coder-next"
 BASE_URL = DIANMING_BASE_URL
 K_Q1 = 20
+MIN_PARSE_VALID_Q1 = 16
 Q0_RESULT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q0-result-20260901.json"
 CONTRACT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-contract-20260901.json"
 OUTPUT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-result-20260901.json"
@@ -85,9 +86,11 @@ def contract_payload() -> dict[str, Any]:
             "max_retries": 0, "streaming": False,
         },
         "classification_rule": {
-            "DETERMINISTIC": "all 20 response and normalized-action hashes identical",
-            "STOCHASTIC": "at least two response or normalized-action hashes",
-            "UNQUALIFIED": "fewer than 20 valid exactly-once receipts",
+            "DETERMINISTIC": "all 20 raw response hashes and all 20 normalized-action signatures identical",
+            "STOCHASTIC": "at least two raw response hashes or normalized-action signatures",
+            "PROVIDER_RECEIPTS_REQUIRED": 20,
+            "MIN_PARSE_VALID": MIN_PARSE_VALID_Q1,
+            "UNQUALIFIED": "fewer than 20 successful exactly-once provider receipts, identity/retry drift, or fewer than 16 parse-valid actions",
         },
         "scientific_boundary": {
             "task_split_authorized": False,
@@ -137,6 +140,40 @@ def make_client() -> QwenChatClient:
     return QwenChatClient(QwenChatSettings(
         api_key=base.api_key, base_url=BASE_URL, model=MODEL,
         timeout_seconds=120.0, max_retries=0))
+
+
+def qualification_summary(receipts: list[dict[str, Any]]) -> dict[str, Any]:
+    successful = [r for r in receipts if r.get("status") == "SUCCESS"]
+    valid = [r for r in successful if (r.get("normalized_action") or {}).get("parse_valid")]
+    response_hashes = sorted({str(r.get("response_sha256") or "") for r in successful})
+    action_hashes = sorted({
+        str((r.get("normalized_action") or {}).get("signature_sha256") or "")
+        for r in successful
+    })
+    once = all(
+        r.get("attempt_count") == 1 and int(r.get("transport_attempts") or 0) <= 1
+        for r in receipts
+    )
+    identity_exact = (
+        len(successful) == K_Q1
+        and all(r.get("resolved_model") == MODEL for r in successful)
+    )
+    qualified = bool(
+        len(receipts) == K_Q1
+        and len(successful) == K_Q1
+        and len(valid) >= MIN_PARSE_VALID_Q1
+        and once
+        and identity_exact
+    )
+    return {
+        "successful": successful,
+        "valid": valid,
+        "response_hashes": response_hashes,
+        "action_hashes": action_hashes,
+        "exactly_once": once,
+        "identity_exact": identity_exact,
+        "qualified": qualified,
+    }
 
 
 def receipt_path(planned: dict[str, Any]) -> Path:
@@ -248,14 +285,13 @@ def execute(output: Path = OUTPUT) -> dict[str, Any]:
         return {"decision": "Q1_PROVIDER_HOLD_REMAINING_TRIALS_UNTOUCHED",
                 "backend_classification": "UNQUALIFIED", "execution_complete": False,
                 "completed_count": len(receipts), "index_sha256": sha256_file(INDEX)}
-    successful = [r for r in receipts if r["status"] == "SUCCESS"]
-    valid = [r for r in successful if r["normalized_action"]["parse_valid"]]
-    response_hashes = sorted({r["response_sha256"] for r in successful})
-    action_hashes = sorted({r["normalized_action"]["signature_sha256"] for r in valid})
-    once = all(r["attempt_count"] == 1 and int(r.get("transport_attempts") or 0) <= 1
-               for r in receipts)
-    qualified = (len(valid) == K_Q1 and once
-                 and all(r.get("resolved_model") == MODEL for r in successful))
+    summary = qualification_summary(receipts)
+    successful = summary["successful"]
+    valid = summary["valid"]
+    response_hashes = summary["response_hashes"]
+    action_hashes = summary["action_hashes"]
+    once = summary["exactly_once"]
+    qualified = summary["qualified"]
     if not qualified:
         backend, decision = "UNQUALIFIED", "Q1_BACKEND_STOCHASTICITY_QUALIFICATION_HOLD"
     elif len(response_hashes) == len(action_hashes) == 1:
@@ -271,7 +307,8 @@ def execute(output: Path = OUTPUT) -> dict[str, Any]:
         "q0_result_sha256": sha256_file(Q0_RESULT), "index_sha256": sha256_file(INDEX),
         "request_sha256": contract["request_sha256"], "K_Q1": K_Q1,
         "receipt_count": len(receipts), "successful_count": len(successful),
-        "parse_valid_count": len(valid),
+        "parse_valid_count": len(valid), "minimum_parse_valid_required": MIN_PARSE_VALID_Q1,
+        "parse_valid_rate": len(valid) / K_Q1,
         "unique_response_hash_count": len(response_hashes),
         "unique_action_signature_count": len(action_hashes),
         "response_hashes": response_hashes, "action_signature_hashes": action_hashes,
