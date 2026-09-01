@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T10:24:08Z",
+  "epoch": "C1-PACTA-RB-QWEN397-T05R",
+  "status": "T0_5R_ROOTFUL_RUNTIME_READY",
+  "execution_git_sha": "6be0b9effdd8027b721008c55fc38a0284afd828",
+  "docker": {
+    "access": true,
+    "user_in_docker_group": true,
+    "host": "unix:///var/run/docker.sock",
+    "engine_version": "29.3.0",
+    "storage_root": "/var/lib/docker",
+    "storage_driver": "overlayfs",
+    "architecture": "x86_64",
+    "rootless": false
+  },
+  "import": {
+    "qualified": 11,
+    "total": 11,
+    "decision": "T05R_IMPORT_PASS",
+    "receipt_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05r-images-rootful-20260901-v1/import-receipt.json",
+    "receipt_sha256": "13b9aeb3d5bc994d5cdaaf2a4ef30c85abe54843ac2eca78baad860d6a376a61"
+  },
+  "preflight": {
+    "decision": "T05R_PREFLIGHT_PASS",
+    "path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05r-images-rootful-20260901-v1/preflight.json",
+    "sha256": "58bb6935bf55f0cb27177970380f3c18770476576c756a17da7babe5c1dc6215"
+  },
+  "calls": {
+    "provider": 0,
+    "source_trajectory": 0,
+    "writer": 0,
+    "binder": 0,
+    "shadow": 0,
+    "final_measurement": 0,
+    "future_task": 0
+  }
+}

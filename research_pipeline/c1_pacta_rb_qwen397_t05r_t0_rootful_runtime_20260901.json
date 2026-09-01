@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T10:24:08Z",
+  "research_object": "C1-PACTA-RB-QWEN397 T0.5-R + conditional T0",
+  "execution_git_sha": "6be0b9effdd8027b721008c55fc38a0284afd828",
+  "t05r": {
+    "decision": "T0_5R_ROOTFUL_RUNTIME_READY",
+    "exact_digest_import": "11/11",
+    "exact_base_normalization": "11/11",
+    "provider_calls": 0,
+    "authoritative_artifact": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05r-images-rootful-20260901-v1/normalization-qualification.json",
+    "authoritative_sha256": "f45a31f5365f896b8647e5ece843362aeb7a763c75f5bb775f844b442aa36bfa"
+  },
+  "t0": {
+    "status": "NOT_RUN_CREDENTIAL_NOT_CONFIGURED",
+    "synthetic_smoke": "NOT_RUN",
+    "bridge_probe": "LOCKED",
+    "source_logical_attempts": 0,
+    "trajectory_backed_valid_count": 0,
+    "valid_repository_count": 0,
+    "full_6_plus_5_design_recovered": false
+  },
+  "failure_differential": {
+    "class": "provider credential injection / execution support",
+    "not_evidence_for": [
+      "PACTA negative",
+      "Qwen397 negative",
+      "ReasoningBank negative",
+      "SCB negative",
+      "gate negative",
+      "carrier substrate failure after normalization"
+    ]
+  },
+  "scientific_belief_update": "The rootful exact-base carrier substrate is now supported for all 11 fixed units. No PACTA behavioral or mechanism evidence was collected.",
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "active_manuscript": "R9",
+  "prohibited_call_counts": {
+    "writer": 0,
+    "binder": 0,
+    "shadow": 0,
+    "gate": 0,
+    "final_measurement": 0,
+    "future_task": 0
+  },
+  "reopen_condition": "Configure AA_API_KEY securely in the remote execution environment; reuse the sealed Q0 binding and frozen rootful runner without changing model, prompt, parser, budget, carrier, or task pool.",
+  "lessons": [
+    "For SWE-bench-backed carriers, image identity and scientific base-state identity are distinct. A clean descendant image HEAD may still be valid when a preregistered exact-base normalization git reset --hard <frozen_base_commit> is performed before any model call.",
+    "Rootless subordinate-ID limits can invalidate OCI import without implying image corruption. When a uniform rootful Docker substrate is available, it is preferable to unify all fixed images under one daemon rather than mixing runtimes across units.",
+    "Runtime substrate acquisition and normalization are infrastructure gates and must remain separate from PACTA scientific effect evaluation."
+  ]
+}

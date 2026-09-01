@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T10:24:08Z",
+  "decision": "T0_5R_ROOTFUL_RUNTIME_READY",
+  "qualified": 11,
+  "total": 11,
+  "semantics": "clean descendant + frozen base exists + ancestor + pre-call git reset --hard + exact clean postcondition",
+  "authoritative_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05r-images-rootful-20260901-v1/normalization-qualification.json",
+  "authoritative_sha256": "f45a31f5365f896b8647e5ece843362aeb7a763c75f5bb775f844b442aa36bfa",
+  "initial_head_equality_required": false,
+  "all_base_objects_exist": true,
+  "all_base_ancestors": true,
+  "all_initial_trees_clean": true,
+  "all_post_reset_heads_exact": true,
+  "all_post_reset_trees_clean": true,
+  "matplotlib": {
+    "instance_id": "matplotlib__matplotlib-24627",
+    "initial_head": "9be06ee0fe46d271455ee745ec39bc95e6f9b146",
+    "frozen_base_commit": "9d22ab09d52d279b125d8770967569de070913b2",
+    "exact_base_normalization_pass": true
+  },
+  "calls": {
+    "provider": 0,
+    "source_trajectory": 0,
+    "writer": 0,
+    "binder": 0,
+    "shadow": 0,
+    "final_measurement": 0
+  }
+}
