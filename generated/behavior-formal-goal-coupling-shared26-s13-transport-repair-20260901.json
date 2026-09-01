@@ -1,0 +1,65 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-transport-repair-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "generated_at": "2026-09-01T13:04:44+08:00",
+  "status": "TRANSPORT_REPAIR_PASS_S13_HF_XET_RELAY",
+  "segment_id": "S13",
+  "diagnosis": "69 hf-mirror curl transport entered the same pathological low-throughput basin previously observed at S08. The original single-writer parent was preserved until it wrote a fail-closed PAYLOAD_SEGMENT_TRANSPORT_HOLD receipt. The three partial files remained non-evidence.",
+  "original_hold": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-materialization-payload-seg13-receipt-20260901.json",
+    "sha256": "7c8f7ec91d051c407a12448c3ad1f761fcf53f868abf41f1654a0e17d5f9a588",
+    "status": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
+    "verified_file_count": 41,
+    "remaining_file_count": 3
+  },
+  "frozen_files": [
+    {
+      "path": "videos/observation.rgb.right_realsense_link_camera_0/chunk-068/file-009.mp4",
+      "lfs_size_bytes": 201631314,
+      "lfs_oid_sha256": "6d2c54ff1d735d45aef534fc5b174ee05522576297169b78b3bfc3d49c3cefa1"
+    },
+    {
+      "path": "videos/observation.rgb.right_realsense_link_camera_0/chunk-068/file-010.mp4",
+      "lfs_size_bytes": 198430731,
+      "lfs_oid_sha256": "9038ab5309674428b7964c7809f58162fb8a02958916126d187eacf472e7facf"
+    },
+    {
+      "path": "videos/observation.rgb.right_realsense_link_camera_0/chunk-068/file-015.mp4",
+      "lfs_size_bytes": 191222445,
+      "lfs_oid_sha256": "d08e8e4eac4835df51b6814459fa8ec7699be6a490b8ddf160e72ef197d57472"
+    }
+  ],
+  "repair": {
+    "relay_host": "222.20.126.67",
+    "client": "huggingface_hub hf CLI with hf_xet high-performance transport",
+    "endpoint": "https://hf-mirror.com",
+    "dataset_revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+    "remote_relay_size_sha_verified": true,
+    "local_quarantine_size_sha_verified": true,
+    "local_part_size_sha_verified_before_materializer": true,
+    "relay_quarantine": "/data/wyt/behavior-2026-shared26-v3.0.transport-quarantine/20260901-s13-hfxet-relay",
+    "finalization": "The verified relay bytes replaced only the three non-evidence .part files while no single-writer lock was held. The unchanged original segmented materializer then reverified all 44 frozen segment files and atomically finalized the three .part files."
+  },
+  "repair_receipt": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-materialization-payload-seg13-repair1-receipt-20260901.json",
+    "sha256": "720c3b7c19181bc429a7d02f64bb6377c3480e7d697d247256b69e33dbb08767",
+    "status": "PAYLOAD_SEGMENT_COMPLETE",
+    "verified_file_count": 44,
+    "verified_bytes": 8447912022,
+    "remaining_file_count": 0,
+    "partial_file_count": 0
+  },
+  "materialization_manifest_sha256": "9ee70726fb70750b23053e2358d3d42d4089238cd0bd52e5b74329279e961df4",
+  "segment_plan_sha256": "1ad14491dbbcbff289bdaada9bcd02c64ff271a7374e4e9bcdff28c8d11d493a",
+  "authority_sha256": "9379a5b0d0ccd8d5fa288327a8a1f764e511828ba5a389395712f0086b0474c9",
+  "path_oid_size_manifest_changed": false,
+  "task_or_episode_selection_changed": false,
+  "scientific_contract_changed": false,
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "gpu_used": false,
+  "training_started": false,
+  "policy_rollouts_started": false,
+  "policy_outcomes_read": false,
+  "scientific_authority": false
+}
