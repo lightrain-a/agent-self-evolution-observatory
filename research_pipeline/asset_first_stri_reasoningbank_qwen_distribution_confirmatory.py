@@ -11,6 +11,9 @@ from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_schedule import (
     build_schedule,
 )
+from research_pipeline.asset_first_stri_reasoningbank_qwen_provider import (
+    DIANMING_BASE_URL, DIANMING_CHAT_ENDPOINT,
+)
 
 EXPERIMENT_ID = "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901"
 STRUCTURAL = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-structural-result-20260901.json"
@@ -19,6 +22,7 @@ SPLIT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-task-
 BANK = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-bank-20260901.json"
 Q0 = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q0-result-20260901.json"
 Q1 = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-result-20260901.json"
+BEHAVIORAL_RUNTIME = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-behavioral-runtime-result-20260901.json"
 MANIFEST = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-confirmatory-manifest-20260901.json"
 SCHEDULE = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-confirmatory-schedule-20260901.json"
 
@@ -63,6 +67,7 @@ def manifest_payload() -> dict[str, Any]:
             "structural": sha256_file(STRUCTURAL), "pilot": sha256_file(PILOT),
             "split": sha256_file(SPLIT), "source_bank": sha256_file(BANK),
             "q0": sha256_file(Q0), "q1": sha256_file(Q1),
+            "behavioral_runtime": sha256_file(BEHAVIORAL_RUNTIME),
         },
         "evaluation_population": {
             "dataset_design": split["dataset_design"], "task_count": 24,
@@ -81,12 +86,13 @@ def manifest_payload() -> dict[str, Any]:
         },
         "per_task_frozen_state": per_task,
         "provider_model": {
-            "provider": "domestic OpenAI-compatible Ark Responses route",
-            "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+            "provider": "Dianming OpenAI-compatible Chat Completions",
+            "base_url": DIANMING_BASE_URL,
+            "endpoint": DIANMING_BASE_URL + DIANMING_CHAT_ENDPOINT,
             "requested_resolved_model_required": "qwen3-coder-next",
             "sampling": q0["recommended_sampling_resolution"],
             "backend_classification": q1["backend_classification"],
-            "max_retries": 0, "streaming": False, "seed": "omitted",
+            "max_retries": 0, "streaming": False, "n": 1, "seed": "omitted",
         },
         "sample": {
             "N_confirmatory_tasks": 24, "K_per_arm": 6, "arms": ["A", "D", "N"],

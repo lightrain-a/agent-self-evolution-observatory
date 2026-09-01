@@ -146,7 +146,9 @@ def build_payload() -> dict[str, Any]:
         "scientific_boundary": {
             "pilot_task_ids_finalized": False,
             "confirmatory_task_ids_finalized": False,
-            "source_execution_authorized": True,
+            "behavioral_runtime_qualification_authorized": True,
+            "source_execution_authorized": False,
+            "source_execution_requires_rootful_runtime_qualification": True,
             "confirmatory_execution_authorized": False,
         },
         "credential_material_present": False,
