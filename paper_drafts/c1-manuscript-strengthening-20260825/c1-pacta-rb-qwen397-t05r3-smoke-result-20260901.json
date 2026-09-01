@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T11:00:48Z",
+  "experiment_id": "C1-PACTA-RB-QWEN397-T05R3-SMOKE-20260901",
+  "status": "PASS",
+  "execution_git_sha": "0236d40124d1b074625b7cc4652c26a081333b85",
+  "authoritative_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05r3-smoke-20260901-v1/rootful-synthetic-smoke.json",
+  "authoritative_sha256": "32737aafd4924cb2c40350e7a0497becb96c772b3eb63531d20351b59409d761",
+  "provider": {
+    "requested_model": "qwen3.5-397b-a17b",
+    "resolved_model": "qwen3.5-397b-a17b",
+    "calls": 7,
+    "input_tokens": 16877,
+    "output_tokens": 475,
+    "enable_thinking": false,
+    "max_completion_tokens": 512,
+    "identity_drift": 0
+  },
+  "runtime": {
+    "docker_host": "unix:///var/run/docker.sock",
+    "exact_base_normalized_before_provider": true,
+    "actions": 7,
+    "submitted": true,
+    "all_action_returncodes_zero": true,
+    "all_raw_requests_persisted": true,
+    "all_raw_responses_persisted": true,
+    "task_verification_pass": true,
+    "verified_marker_output": "QWEN397_T0_RUNTIME_SMOKE_OK",
+    "verified_staged_diff": "runtime_smoke_marker.py"
+  },
+  "repair_adjudication": "The final non-scientific qualification changed only the arbitrary synthetic-smoke step ceiling from 8 to 16. The model submitted at step 7 under the unchanged repaired task, Q0 binding, 512-token response budget, parser, provider packet, rootful Docker, and exact-base normalization.",
+  "scientific_boundary": {
+    "source_tasks_consumed": 0,
+    "writer_calls": 0,
+    "binder_calls": 0,
+    "shadow_calls": 0,
+    "final_measurement_calls": 0,
+    "future_task_executions": 0,
+    "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+    "active_manuscript": "R9"
+  }
+}

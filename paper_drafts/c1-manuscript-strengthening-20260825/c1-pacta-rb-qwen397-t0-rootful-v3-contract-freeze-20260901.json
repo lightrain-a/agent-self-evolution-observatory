@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T11:00:48Z",
+  "experiment_id": "C1-PACTA-RB-QWEN397-T0-ROOTFUL-SOURCE-20260901-v3",
+  "status": "FROZEN_BEFORE_BRIDGE_AND_SOURCE_POLICY",
+  "execution_parent_sha": "0236d40124d1b074625b7cc4652c26a081333b85",
+  "smoke_qualification": {
+    "path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t05r3-smoke-20260901-v1/rootful-synthetic-smoke.json",
+    "sha256": "32737aafd4924cb2c40350e7a0497becb96c772b3eb63531d20351b59409d761",
+    "pass": true
+  },
+  "contract": {
+    "path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v3/contract.json",
+    "sha256": "ef603f0fe53824b39868fe0f54cb8e92780e97e3fa08299021211a379324d63e"
+  },
+  "schedule": {
+    "path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v3/acquisition-schedule.json",
+    "sha256": "bf0707a9ac82c3b07a59df80deb6ec31e01aed7794c27f556f432a6d598de8f5",
+    "scheduled_source_units": 11,
+    "logical_attempts_per_source": 1,
+    "selection": "all fixed source units",
+    "replacement": false,
+    "top_up": false,
+    "future_task_execution": false
+  },
+  "provider": {
+    "requested_model": "qwen3.5-397b-a17b",
+    "resolved_model": "qwen3.5-397b-a17b",
+    "enable_thinking": false,
+    "max_completion_tokens": 512,
+    "temperature": 0.0,
+    "provider_retries": 0
+  },
+  "runtime": {
+    "docker_host": "unix:///var/run/docker.sock",
+    "exact_digest_images": "11/11",
+    "exact_base_normalization": "11/11",
+    "normalization_before_provider_call": true
+  },
+  "next_gate": "One non-scientific bridge identity/action probe must pass before any source trajectory call.",
+  "scientific_boundary": {
+    "writer_authorized": false,
+    "binder_authorized": false,
+    "shadow_authorized": false,
+    "gate_authorized": false,
+    "final_measurement_authorized": false,
+    "future_task_execution_authorized": false,
+    "source_trajectory_authorized_after_bridge_pass": true,
+    "active_manuscript": "R9"
+  }
+}
