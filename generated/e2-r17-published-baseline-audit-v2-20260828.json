@@ -1,0 +1,120 @@
+{
+  "artifact_type": "e2-r17-published-baseline-audit-v2",
+  "schema_version": "1.0",
+  "date": "2026-08-28",
+  "status": "PUBLISHED_TOP_VENUE_BASELINE_SET_FROZEN_FOR_V2_REVIEW",
+  "authority": {
+    "planning": true,
+    "baseline_selection": true,
+    "runtime_pilot": false,
+    "scientific_experiment": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "selection_rule": {
+    "top_peer_reviewed_venue_required_for_headline": true,
+    "first_party_or_official_implementation_required": true,
+    "arxiv_only_headline_baseline_allowed": false,
+    "arxiv_only_related_work_allowed": true
+  },
+  "headline_published_baselines": [
+    {
+      "method": "ReasoningBank/MaTTS",
+      "venue": "ICLR 2026",
+      "repository": "https://github.com/google-research/reasoning-bank",
+      "pinned_head": "ed80611788292ea739f1effd31f16c53823b8a0d",
+      "benchmarks": ["WebArena", "SWE-Bench"],
+      "published_or_public_model_anchor": ["gemini-2.5-flash"],
+      "role": "PRIMARY_COLLISION_AND_HEADLINE_BASELINE",
+      "failure_evidence": "explicitly distills from successful and failed trajectories",
+      "same_pool_exact_causal_control": false,
+      "implementation_caveat": "Pinned WebArena pipeline_scaling.py launches K results_i directories but passes only the final results_i directory to induce_scaling.py; induce_scaling.py loops num_samples without varying result_dir. Source-faithful reproduction requires adjudication before any adapter patch."
+    },
+    {
+      "method": "PolySkill",
+      "venue": "ICLR 2026",
+      "repository": "https://github.com/simonucl/PolySkill",
+      "pinned_head": "fff8807d7501d93188f9f658f4d0af2f29f35c23",
+      "benchmarks": ["WebArena", "Mind2Web"],
+      "published_or_public_model_anchor": ["gpt-4.1", "claude-3-7-sonnet-20250219", "qwen3-coder-480b-a35b", "glm-4.5"],
+      "role": "HEADLINE_SKILL_LEARNING_BASELINE",
+      "failure_evidence": "not the central scientific axis",
+      "same_pool_exact_causal_control": false,
+      "implementation_caveat": "Official repository states the 2026-07 public harness is a clean-room re-release rebuilt on BrowserGym + LiteLLM rather than the original internal experiment infrastructure."
+    },
+    {
+      "method": "ACE",
+      "venue": "ICLR 2026",
+      "repository": "https://github.com/ace-agent/ace",
+      "pinned_head": "82709de050e1db6e6ef2f07bcb0393560b94992a",
+      "companion_repository": "https://github.com/ace-agent/ace-appworld",
+      "companion_pinned_head": "928e86877d34cd10eaba159606386f93a1765090",
+      "benchmarks": ["AppWorld"],
+      "published_or_public_model_anchor": ["DeepSeek-V3.1"],
+      "role": "HEADLINE_CONTEXT_EVOLUTION_BASELINE",
+      "failure_evidence": "Reflector extracts lessons from execution successes/errors",
+      "same_pool_exact_causal_control": false,
+      "implementation_caveat": "First-party AppWorld online no-GT config uses DeepSeek-V3.1 via SambaNova for generator, reflector, and curator at temperature 0."
+    },
+    {
+      "method": "Agent Workflow Memory",
+      "venue": "ICML 2025",
+      "repository": "https://github.com/zorazrw/agent-workflow-memory",
+      "pinned_head": "8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1",
+      "benchmarks": ["WebArena", "Mind2Web"],
+      "published_or_public_model_anchor": ["gpt-4o-2024-05-13"],
+      "role": "CANONICAL_WORKFLOW_MEMORY_ANCHOR",
+      "failure_evidence": "online workflow induction is centered on executions judged correct; ReasoningBank uses AWM as a successful-routine contrast",
+      "same_pool_exact_causal_control": false,
+      "implementation_caveat": null
+    }
+  ],
+  "extended_published_baselines": [
+    {
+      "method": "SAGE",
+      "venue": "ACL 2026 Long",
+      "repository": "https://github.com/amazon-science/SAGE",
+      "pinned_head": "3c9244e82244abb1adc5467ee601a03ba0f433a0",
+      "benchmarks": ["AppWorld"],
+      "published_or_public_model_anchor": ["Qwen/Qwen2.5-32B-Instruct"],
+      "expert_data_teacher": "Claude 3.5 Sonnet V2",
+      "role": "EXTENDED_PARAMETRIC_SKILL_LIBRARY_BASELINE",
+      "same_pool_exact_causal_control": false,
+      "compute_caveat": "Full training recipe requires multi-node H100-scale compute and changes model weights, so it is not a matched projection-only E1 control."
+    }
+  ],
+  "collision_or_related_only": [
+    "SkillCAT",
+    "Branch2Skill",
+    "SkillOpt",
+    "RethinkSkill / Rethinking Self-Evolving Agent Skills",
+    "TSR"
+  ],
+  "benchmark_recommendation": {
+    "mechanism_identification": "controlled spreadsheet suite",
+    "primary_external_published_baseline_lane": "WebArena",
+    "secondary_external_published_baseline_lane": "AppWorld",
+    "additional_transport_lane": "SpreadsheetBench Verified-400 if budget permits"
+  },
+  "model_fairness": {
+    "single_common_published_model_exists": false,
+    "policy": "two_lane",
+    "source_faithful_lane": "use each published baseline's stated/supported model and first-party harness with exact deviations logged",
+    "unified_rerun_lane": "rerun compatible methods under a common qualified executor/updater and identical benchmark/task/environment accounting",
+    "merge_source_faithful_and_unified_rankings": false
+  },
+  "v1_model_gate_supersession": {
+    "old_gate": "pin Qwen3.5-35B-A3B or Qwen3.6-35B-A3B as common published axis",
+    "status": "SUPERSEDED_BY_PUBLISHED_BASELINE_SET_CHANGE",
+    "reason": "The old common-Qwen axis was derived mainly from arXiv-only baseline choices and is not shared by the headline published baselines."
+  },
+  "novelty_boundary": {
+    "cannot_claim": [
+      "failed trajectories are useful",
+      "success/failure contrast can improve memory",
+      "test-time scaling can produce learning signal",
+      "memory and test-time scaling can be combined"
+    ],
+    "candidate_claim": "selection-induced evidence shielding under exact same-pool acting/learning projection separation, followed by a budget-matched causal intervention and prospective regime prediction"
+  }
+}

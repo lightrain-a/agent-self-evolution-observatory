@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-compute-shielding-f0-qualification",
+  "contract_sha256": "abc12d0514bbd35ddcf3ad797597f80e5cc4ad70038232c317f268d6c54bb9d9",
+  "source_commit_expected": "90491828726e1540442b17cd445d0308d0b8093c",
+  "source_commit_observed": "90491828726e1540442b17cd445d0308d0b8093c",
+  "source_commit_match": true,
+  "source_hash_checks": {
+    "src/mindmemos_eval/mindmemos_eval/skills/runners.py": true,
+    "src/mindmemos_eval/mindmemos_eval/skills/agents/react.py": true,
+    "src/mindmemos_eval/mindmemos_eval/skills/evolve/algo.py": true,
+    "src/mindmemos/mindmemos/pipelines/skill/evolution.py": true,
+    "resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md": true
+  },
+  "import_checks": {
+    "mindmemos_eval.skills.agents.react": true,
+    "mindmemos_eval.skills.agents.factory": true,
+    "mindmemos_eval.skills.envs.spreadsheetbench.env": true,
+    "mindmemos_eval.skills.evolve.algo": true,
+    "mindmemos.pipelines.skill.evolution": true
+  },
+  "first_party_test_packaging_issue": {
+    "official_test_imports_evolve_outcome_from_package": true,
+    "package_init_exports_evolve_outcome": false,
+    "direct_evolve_outcome_import_works": true,
+    "spreadsheet_env_direct_import_works": true,
+    "classification": "FIRST_PARTY_TEST_REEXPORT_MISMATCH_ONLY"
+  },
+  "synthetic_acting_compute_probe": {
+    "low": {
+      "max_turns": 3,
+      "total": 1,
+      "correct": 0,
+      "accuracy": 0.0,
+      "finished": false,
+      "turns": 3,
+      "trajectory_exists": true,
+      "trajectory_sha256": "f670e5eb90faf73a9e0f0304fe295ed389b9f681bf0e5ecd69503bbdd216361b",
+      "skill_tool_staged": true,
+      "output_exists": false
+    },
+    "high": {
+      "max_turns": 8,
+      "total": 1,
+      "correct": 1,
+      "accuracy": 1.0,
+      "finished": true,
+      "turns": 5,
+      "trajectory_exists": true,
+      "trajectory_sha256": "af4ce7eb3de7ffca30f963633f3b2b2eb72f379660346d7a8d3c658caeeb77b2",
+      "skill_tool_staged": true,
+      "output_exists": true
+    }
+  },
+  "updater_preflight": {
+    "status": "PASS",
+    "evidence": "first-party tests test_evolves_single_version_when_threshold_met and test_consumed_summaries_not_reused passed in isolated R17 venv with in-memory Qdrant and fake LLM",
+    "scientific_provider_calls": 0
+  },
+  "interface_qualification_pass": true,
+  "live_infrastructure": {
+    "mindmemos_service_running": false,
+    "spreadsheetbench_full_data_cached": false,
+    "status": "HOLD_LIVE_INFRASTRUCTURE_ONLY"
+  },
+  "overall_status": "F0_INTERFACE_PASS_LIVE_INFRA_HOLD",
+  "scientific_provider_calls": 0,
+  "scientific_outcomes_available": false,
+  "authority": {
+    "full_scientific_run": false,
+    "mutate_r16": false,
+    "submission": false
+  },
+  "qualification_sha256": "e63e62bb7449d0b13ecdcc806aeffb51033515fb2990e111760a055fd064d9cc"
+}

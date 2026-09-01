@@ -1,0 +1,718 @@
+{
+  "analysis": "forbidden",
+  "artifact_type": "e2-r17-repair2-pia1-permanent-v1-quarantine",
+  "authorization_sha256": "14df6c41e0ba3b0a300f341f5ed73599bf0545392aa86c888383dd4729e6d67b",
+  "child_manifest_pairs": 17,
+  "contract_sha256": "b944797b6333c66bf1edf9ae789aa16e8b19df8763dbf89280da1efd8dd1c2c2",
+  "created_at_utc": "2026-09-01T08:17:51+00:00",
+  "duplicate_heldout_evaluations": 12,
+  "duplicate_rows": [
+    {
+      "arm": "mrw",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/evaluation_summary.json",
+      "canonical_summary_sha256": "d4e45a8252faf6a0047e9f85806c26b76102578a4466ad0e0a33978830aeb618",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/evaluation_summary.json",
+      "child_summary_sha256": "bd8bc79a2cf1665a7c987f381d4a19c26fd14e569af8fd15f3d3131e73d9d1e3",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-ska-p4",
+      "unit_id": "e1-ioc-00/rep1"
+    },
+    {
+      "arm": "mrw",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/evaluation_summary.json",
+      "canonical_summary_sha256": "35284798b11a2343fd85b8ef444319c2811cd5f87aa012fbfe93dccbb2ebc141",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/evaluation_summary.json",
+      "child_summary_sha256": "c63ca2fe79755fff222c30b8fb81b51e6d05f70acb9f70b36bf54fe8fe567035",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-ska-p5",
+      "unit_id": "e1-ioc-00/rep1"
+    },
+    {
+      "arm": "mrw",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/evaluation_summary.json",
+      "canonical_summary_sha256": "46b1415c1e93fe5b1629cd5b4f1df0fe88f473c39685843ab6974804ba385f66",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/evaluation_summary.json",
+      "child_summary_sha256": "b6a36590bfbe96f430ca8478c7ee3c7c03041d6cdecf9aebe00422f73b05905a",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-ska-p8",
+      "unit_id": "e1-ioc-00/rep1"
+    },
+    {
+      "arm": "mrw",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/evaluation_summary.json",
+      "canonical_summary_sha256": "ea1151e390bbb02648ef4c05470b59646cc6b44a70c924b3fd1e142808128538",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/evaluation_summary.json",
+      "child_summary_sha256": "9788cbcf293de7f5c5268a940d4b52bc580ae499f052ce5714b386ff63138012",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-tsr-p0",
+      "unit_id": "e1-ioc-00/rep1"
+    },
+    {
+      "arm": "mrw",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/evaluation_summary.json",
+      "canonical_summary_sha256": "79feb04bcd6aff508b64a43af126130e24d64444c6881261d413a42c9bf835e8",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/evaluation_summary.json",
+      "child_summary_sha256": "ad88bfe2a805d8d268cabc7781b2948b6885a39898fd117bc2ac1a40120d9854",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-tsr-p6",
+      "unit_id": "e1-ioc-00/rep1"
+    },
+    {
+      "arm": "mrw",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/evaluation_summary.json",
+      "canonical_summary_sha256": "12a1dde903bf898c943f0cfa5e908b5aca5e4f0382a7ae2e1a34c746ea61a249",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/evaluation_summary.json",
+      "child_summary_sha256": "285d751c4a27cf6b0301b1aba1cfd44124e32c1ff0c0ce92c6e0fe4ecbb25448",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-tsr-p8",
+      "unit_id": "e1-ioc-00/rep1"
+    },
+    {
+      "arm": "win_c",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/evaluation_summary.json",
+      "canonical_summary_sha256": "1e5991011d1e03ef47bca61c35b3936821729fdf4c00589ca537ae7225d5bd49",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/evaluation_summary.json",
+      "child_summary_sha256": "b1850fd7e49cc1cadd076bb295748d58f5a4d1ca1db1dfdf6f97c371d9befccb",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-ska-p4",
+      "unit_id": "e1-ioc-00/rep1"
+    },
+    {
+      "arm": "win_c",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/evaluation_summary.json",
+      "canonical_summary_sha256": "47efa522e327d37dff07676ca1363e8545881f29043e95d8683211fb65c34042",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/evaluation_summary.json",
+      "child_summary_sha256": "86933cdc31fcb02f57ea38a7e5b8c48dd3544898079a2051b80ac337320ac448",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-ska-p5",
+      "unit_id": "e1-ioc-00/rep1"
+    },
+    {
+      "arm": "win_c",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/evaluation_summary.json",
+      "canonical_summary_sha256": "1c461f7461dc0837aeaae6557ca5696fba9eff5b8c9b3ba5f1972579dff6c4a3",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/evaluation_summary.json",
+      "child_summary_sha256": "4c8a8099338e05771b644f60ebca330478658edc14d7d178228d2f0fc8d8665b",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-ska-p8",
+      "unit_id": "e1-ioc-00/rep1"
+    },
+    {
+      "arm": "win_c",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/evaluation_summary.json",
+      "canonical_summary_sha256": "8ed33b74ee5747b832f37969ce89b10765fbb27348617f8cc21335af02ec91a4",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/evaluation_summary.json",
+      "child_summary_sha256": "c73583ddf1fafb16bd0af0c64a6f33737793423f3ac1be6901848bafa596d70f",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-tsr-p0",
+      "unit_id": "e1-ioc-00/rep1"
+    },
+    {
+      "arm": "win_c",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/evaluation_summary.json",
+      "canonical_summary_sha256": "aed52cb24a547624f98e64f4c9cb4e474149e4e9c5ac3f92dbb133a1a10a6b5f",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/evaluation_summary.json",
+      "child_summary_sha256": "0dcb9245c5cf199fbc946f27642593aeee6d4123ca89ae6082ceb83a9ba6b4e4",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-tsr-p6",
+      "unit_id": "e1-ioc-00/rep1"
+    },
+    {
+      "arm": "win_c",
+      "canonical_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/evaluation_summary.json",
+      "canonical_summary_sha256": "4dc84b6210b1a58237ff5f9b9f1f64dc9e78fbd3d096555240740113fac65c28",
+      "child_summary_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/evaluation_summary.json",
+      "child_summary_sha256": "6a8f1e104efe2b42366fd901117d620da877c51de3ea136518b0f47677fdb5b5",
+      "scientific_inclusion": false,
+      "task_id": "r17-b4-tsr-p8",
+      "unit_id": "e1-ioc-00/rep1"
+    }
+  ],
+  "file_inventory": [
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/.exclusive.lock",
+      "relative_path": ".exclusive.lock",
+      "sha256": "be82d901c7a8bb8c87e263f060ed390b9645934e0e40d4dde2a17084f9a34c85",
+      "size_bytes": 195
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/checkpoints/completed_eval_tasks.jsonl",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/checkpoints/completed_eval_tasks.jsonl",
+      "sha256": "4e6dc590b6aae9243005cdf9b08425cd9a24af1a40773cf27591f49259255969",
+      "size_bytes": 4104
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/checkpoints/provider_budget.sqlite3",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/checkpoints/provider_budget.sqlite3",
+      "sha256": "03b4e7d7536022e2ea4d2d5ca1f1c6405366591fc41b598be7919415bac3bb68",
+      "size_bytes": 24576
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/checkpoints/provider_budget.sqlite3-shm",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/checkpoints/provider_budget.sqlite3-shm",
+      "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "size_bytes": 32768
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/checkpoints/provider_budget.sqlite3-wal",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/checkpoints/provider_budget.sqlite3-wal",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/pool_k1.json",
+      "sha256": "51b4b78130ad38636cf065ac59d1302430bf90495d9be1b0dccad2e491dd4e6f",
+      "size_bytes": 1765
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/input.xlsx",
+      "sha256": "12db3dae36e40d54392ff2b0a9a33e6f68580f6d44e622970f4cee60ad1dce5a",
+      "size_bytes": 7927
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/output.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/output.xlsx",
+      "sha256": "7eb4628eca946d5b63bf1d6878fc3afa9d2b3b2cce45aabb2b761c944392205c",
+      "size_bytes": 7970
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/r17_trajectory.json",
+      "sha256": "e0270e21f028c43a3a005c06a28c5f902657cbbbfd44486ce1813a3d16ed7d6d",
+      "size_bytes": 25832
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/r17_trajectory_ref.json",
+      "sha256": "7d341ad74890404eaaa36aa8136f8d76c114a8555af2801fdd3e4e100c0ee425",
+      "size_bytes": 1301
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "0b3e6ce3a770b33e556de980bdc1a9e52f9c85114e0c0d122ce245fdc85db5d1",
+      "size_bytes": 2658
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p4/evaluation_summary.json",
+      "sha256": "bd8bc79a2cf1665a7c987f381d4a19c26fd14e569af8fd15f3d3131e73d9d1e3",
+      "size_bytes": 3050
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/pool_k1.json",
+      "sha256": "17716072c2a4ffb507c003c9de872b2979c97acab582a4ba412c7cc219680c86",
+      "size_bytes": 1783
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/input.xlsx",
+      "sha256": "1eed9c23d4c60df2c3d5c052aeb4ca3000a965e2ec1916d126a5d13dfb87e19b",
+      "size_bytes": 9834
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/r17_trajectory.json",
+      "sha256": "b5f86f2da4b41622ce3612fa204adca80689b78bad5fc5b4ac6c4d899807fc51",
+      "size_bytes": 14472
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/r17_trajectory_ref.json",
+      "sha256": "036e155b27dd5b2ec6ccc1c1db5f2727416b9fb30a7f60225f437ac0f175e00e",
+      "size_bytes": 1319
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "0b3e6ce3a770b33e556de980bdc1a9e52f9c85114e0c0d122ce245fdc85db5d1",
+      "size_bytes": 2658
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p5/evaluation_summary.json",
+      "sha256": "c63ca2fe79755fff222c30b8fb81b51e6d05f70acb9f70b36bf54fe8fe567035",
+      "size_bytes": 3087
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/pool_k1.json",
+      "sha256": "3d26d948909cfe32102ebc233a45d3cfadbc72744b973c4dfaf99a8827198fc5",
+      "size_bytes": 1766
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/input.xlsx",
+      "sha256": "cc6a06605653330f906e2a0f4038bd5fe1fbe9601cf3cb8e14385492f3a54694",
+      "size_bytes": 9984
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/output.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/output.xlsx",
+      "sha256": "10bfccbe8f2066e9e0312e8bbf26a54b86584b4dcd36287fcba1904c513ea321",
+      "size_bytes": 10038
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/r17_trajectory.json",
+      "sha256": "2fd90708ed28485e5c0d31b866aea2665808e094008cf3fa245b51608fa5f51d",
+      "size_bytes": 31606
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/r17_trajectory_ref.json",
+      "sha256": "3975b9f026de2f564044d8f708c7873730de6a5a87dd94b074afbbe11cb13c54",
+      "size_bytes": 1302
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "0b3e6ce3a770b33e556de980bdc1a9e52f9c85114e0c0d122ce245fdc85db5d1",
+      "size_bytes": 2658
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/solve.py",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/solve.py",
+      "sha256": "03c8d25fcecc6bed19755006c4b94b9bab8af4e47643147e13a23b95df6c26d8",
+      "size_bytes": 894
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-ska-p8/evaluation_summary.json",
+      "sha256": "b6a36590bfbe96f430ca8478c7ee3c7c03041d6cdecf9aebe00422f73b05905a",
+      "size_bytes": 3123
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/pool_k1.json",
+      "sha256": "68a6fd0738a64cd8ec47a35e428ecbcf79dfb833b6bc531048f1837ef440032e",
+      "size_bytes": 1766
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/input.xlsx",
+      "sha256": "2ba9077e478900d86c6f935d885aac3000fb9297b43fab992ba99f3d7166c792",
+      "size_bytes": 5592
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/output.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/output.xlsx",
+      "sha256": "cf1e6a9d418c9f9ab2641d43f82d63c5404be0ec9121240ac2c7ad7ea56d51c1",
+      "size_bytes": 5631
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/r17_trajectory.json",
+      "sha256": "05e24ecb7dd81711b9ea65aff8123fb38bfc76cc1a020750fde151384bbc0010",
+      "size_bytes": 17598
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/r17_trajectory_ref.json",
+      "sha256": "d03608ab2aa7066d6af81a788b2bdc6742345f4178f5020909c393acc4f03729",
+      "size_bytes": 1302
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "0b3e6ce3a770b33e556de980bdc1a9e52f9c85114e0c0d122ce245fdc85db5d1",
+      "size_bytes": 2658
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p0/evaluation_summary.json",
+      "sha256": "9788cbcf293de7f5c5268a940d4b52bc580ae499f052ce5714b386ff63138012",
+      "size_bytes": 3157
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/pool_k1.json",
+      "sha256": "62dc3a70baf0bf2afa80323d780d85fc95f4d51757d64942fc73f2c7d7fe493d",
+      "size_bytes": 1766
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/input.xlsx",
+      "sha256": "3a6483b71f051babfb1a9090285d6498400fd5efd421da60f52adb0e87e88028",
+      "size_bytes": 7808
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/output.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/output.xlsx",
+      "sha256": "cce867172b6dede39620f37a10b73fb54bf20f0a9f83273a31f4aeb652cfb54e",
+      "size_bytes": 7862
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/r17_trajectory.json",
+      "sha256": "17c978fed04d6a6bb0ffebe5603cab0708bc372bfc2fa7e6800fd3a286d12ed8",
+      "size_bytes": 22618
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/r17_trajectory_ref.json",
+      "sha256": "42a0419e6c36ec6672d42e4861c4bf498503db826d97082b7deb25cdc02269dd",
+      "size_bytes": 1302
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "0b3e6ce3a770b33e556de980bdc1a9e52f9c85114e0c0d122ce245fdc85db5d1",
+      "size_bytes": 2658
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p6/evaluation_summary.json",
+      "sha256": "ad88bfe2a805d8d268cabc7781b2948b6885a39898fd117bc2ac1a40120d9854",
+      "size_bytes": 3193
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/pool_k1.json",
+      "sha256": "266d000e7702cda40d14a94c421937fdd014804de4ac9501d99f2d0dc60e543c",
+      "size_bytes": 1766
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/input.xlsx",
+      "sha256": "9d5d0c633cda8aac5f668564747a28c9bdece0b168bdfea1cb98ff0eb6088162",
+      "size_bytes": 9872
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/output.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/output.xlsx",
+      "sha256": "063e2df0b411cf35ec383bf4210d2144081c138a515fff9bbeda0763dc9cdf65",
+      "size_bytes": 9921
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/r17_trajectory.json",
+      "sha256": "1ba8eae776f28bc646179da4308fe701580001a6bb62d0afdb0fb642f85491b1",
+      "size_bytes": 19847
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/r17_trajectory_ref.json",
+      "sha256": "979f02adff45d82cda0044fd1e3eba62116f85976846ac1bb6132339bd566bcf",
+      "size_bytes": 1302
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "0b3e6ce3a770b33e556de980bdc1a9e52f9c85114e0c0d122ce245fdc85db5d1",
+      "size_bytes": 2658
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/mrw/evaluation/r17-b4-tsr-p8/evaluation_summary.json",
+      "sha256": "285d751c4a27cf6b0301b1aba1cfd44124e32c1ff0c0ce92c6e0fe4ecbb25448",
+      "size_bytes": 3229
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/checkpoints/completed_eval_tasks.jsonl",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/checkpoints/completed_eval_tasks.jsonl",
+      "sha256": "1ce815aae2c77b6c1ade59357d3466997476c64490668450c7cd16c65d06bf7d",
+      "size_bytes": 4128
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/checkpoints/provider_budget.sqlite3",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/checkpoints/provider_budget.sqlite3",
+      "sha256": "060241d2185929661fb4c61348d260ac8a38e5ad8e147331ced41c746a5e65d1",
+      "size_bytes": 24576
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/checkpoints/provider_budget.sqlite3-shm",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/checkpoints/provider_budget.sqlite3-shm",
+      "sha256": "fd4c9fda9cd3f9ae7c962b0ddf37232294d55580e1aa165aa06129b8549389eb",
+      "size_bytes": 32768
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/checkpoints/provider_budget.sqlite3-wal",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/checkpoints/provider_budget.sqlite3-wal",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/pool_k1.json",
+      "sha256": "98931f90b94489aec80d2fc3105775644cf15d180e34c131702003fc5a12772f",
+      "size_bytes": 1767
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/input.xlsx",
+      "sha256": "12db3dae36e40d54392ff2b0a9a33e6f68580f6d44e622970f4cee60ad1dce5a",
+      "size_bytes": 7927
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/output.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/output.xlsx",
+      "sha256": "a21445e846ed678b58127c8ae06b4ce52718c5d54f88db9cdbd3e19522a8d289",
+      "size_bytes": 7970
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/r17_trajectory.json",
+      "sha256": "91061a6064dcb98cca0af7fde2708ab512426a660ef6be91a7b47e1c104fd571",
+      "size_bytes": 30905
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/r17_trajectory_ref.json",
+      "sha256": "5fff87397e0908f28a45586841de235ff5b580d5dc0422847e456879507393cb",
+      "size_bytes": 1303
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/cases/r17-b4-ska-p4/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "size_bytes": 1221
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p4/evaluation_summary.json",
+      "sha256": "b1850fd7e49cc1cadd076bb295748d58f5a4d1ca1db1dfdf6f97c371d9befccb",
+      "size_bytes": 3056
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/pool_k1.json",
+      "sha256": "d9f0a759fc6c8c9ffd68f1e9254dabee46b27ae92e49098e5e3b3f5967302450",
+      "size_bytes": 1768
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/input.xlsx",
+      "sha256": "1eed9c23d4c60df2c3d5c052aeb4ca3000a965e2ec1916d126a5d13dfb87e19b",
+      "size_bytes": 9834
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/output.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/output.xlsx",
+      "sha256": "4d4c4a25e207b265bae02c0df4391c3b9478ceb24e6538eb2a8bd3b3ee36fd09",
+      "size_bytes": 9879
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/r17_trajectory.json",
+      "sha256": "a3ab8412d2c15ecb6cecc865118672457643adde7039d828065f1779f1c6ae54",
+      "size_bytes": 20169
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/r17_trajectory_ref.json",
+      "sha256": "12e95ad76ef405c40ded5f2e1caa402ea0c63ebf6586bf702b8bc0cab6e3ef5e",
+      "size_bytes": 1304
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/cases/r17-b4-ska-p5/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "size_bytes": 1221
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p5/evaluation_summary.json",
+      "sha256": "86933cdc31fcb02f57ea38a7e5b8c48dd3544898079a2051b80ac337320ac448",
+      "size_bytes": 3093
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/pool_k1.json",
+      "sha256": "47194841c0ee6f7e096d6a80529ccbda2e9c3754eca7cde75bc38f35901ad953",
+      "size_bytes": 1768
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/input.xlsx",
+      "sha256": "cc6a06605653330f906e2a0f4038bd5fe1fbe9601cf3cb8e14385492f3a54694",
+      "size_bytes": 9984
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/output.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/output.xlsx",
+      "sha256": "b7be22470a6c31a7364f503a6fa19eda7008acc0ad15c5a3a34b47065eb1423b",
+      "size_bytes": 10038
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/r17_trajectory.json",
+      "sha256": "3d402e69a5b56b13b208ebeb5595e8e94184984fef7c3a93a2eaccbf9ac9aee1",
+      "size_bytes": 26331
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/r17_trajectory_ref.json",
+      "sha256": "4915f4c730125af9efcabc50347b61a800ed2eb5ee8e2c963661ae9de7ef174b",
+      "size_bytes": 1304
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/cases/r17-b4-ska-p8/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "size_bytes": 1221
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-ska-p8/evaluation_summary.json",
+      "sha256": "4c8a8099338e05771b644f60ebca330478658edc14d7d178228d2f0fc8d8665b",
+      "size_bytes": 3129
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/pool_k1.json",
+      "sha256": "48913ef10cff7e30c370bed030293adf7a0a9f61457f67c0aebb9a434e4f2090",
+      "size_bytes": 1768
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/input.xlsx",
+      "sha256": "2ba9077e478900d86c6f935d885aac3000fb9297b43fab992ba99f3d7166c792",
+      "size_bytes": 5592
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/output.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/output.xlsx",
+      "sha256": "6ab743ce73c3c5b7da4940e1aa954aefe4ea72289dadf0f766073f7daae41b12",
+      "size_bytes": 5630
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/r17_trajectory.json",
+      "sha256": "511c01e5161afbc8c15ff1efea021f94fc21a7fe8e304f87a70a349e6fffc9b1",
+      "size_bytes": 18115
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/r17_trajectory_ref.json",
+      "sha256": "b904302c26209cbbf16b0f87a8c5b98a4c3899583dc5aa370c88397d996904b9",
+      "size_bytes": 1304
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/cases/r17-b4-tsr-p0/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "size_bytes": 1221
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p0/evaluation_summary.json",
+      "sha256": "c73583ddf1fafb16bd0af0c64a6f33737793423f3ac1be6901848bafa596d70f",
+      "size_bytes": 3163
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/pool_k1.json",
+      "sha256": "f9c744d41ba157ea39091b50834fd8d078558f0afd17621c4a5a2aac71e99190",
+      "size_bytes": 1768
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/input.xlsx",
+      "sha256": "3a6483b71f051babfb1a9090285d6498400fd5efd421da60f52adb0e87e88028",
+      "size_bytes": 7808
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/output.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/output.xlsx",
+      "sha256": "0986cb00261cb1019734fdd9510959d052d9f0fb9fba0063aa98b76b328606f9",
+      "size_bytes": 7861
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/r17_trajectory.json",
+      "sha256": "9e7c25453f7df2963c0c670f4df287d8cba37ab7d371544cf807ae2d08868944",
+      "size_bytes": 18420
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/r17_trajectory_ref.json",
+      "sha256": "fc089c88dc9b62a1b678a17c7eefb8c95f75868991879c2b2b2c7fe6ec0bf189",
+      "size_bytes": 1304
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/cases/r17-b4-tsr-p6/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "size_bytes": 1221
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p6/evaluation_summary.json",
+      "sha256": "0dcb9245c5cf199fbc946f27642593aeee6d4123ca89ae6082ceb83a9ba6b4e4",
+      "size_bytes": 3199
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/pool_k1.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/pool_k1.json",
+      "sha256": "853937b2f6fef5918f9fc6c489b11aecd72b80cefcde187f0d0fb2b93832b00a",
+      "size_bytes": 1768
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/input.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/input.xlsx",
+      "sha256": "9d5d0c633cda8aac5f668564747a28c9bdece0b168bdfea1cb98ff0eb6088162",
+      "size_bytes": 9872
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/output.xlsx",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/output.xlsx",
+      "sha256": "b9f6f2bf69f4e8e9a0d8961498ec0407b8a670bcc1f0bce56031acd22556507f",
+      "size_bytes": 9920
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/r17_trajectory.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/r17_trajectory.json",
+      "sha256": "cb4c9c207ba1eae182a87b3d868bad8b5d244e425aa5a68922bf14b7e4229998",
+      "size_bytes": 18380
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/r17_trajectory_ref.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/r17_trajectory_ref.json",
+      "sha256": "1fc561ad812ecd7e7766b7e9702e0e927d3f229686722bb44f2a5ddfadf6bbaf",
+      "size_bytes": 1304
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/skills/skill_post/SKILL.md",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/cases/r17-b4-tsr-p8/rollout_0/skills/skill_post/SKILL.md",
+      "sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "size_bytes": 1221
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/evaluation_summary.json",
+      "relative_path": "boundary/states/e1-ioc-00/replicate_1/win_c/evaluation/r17-b4-tsr-p8/evaluation_summary.json",
+      "sha256": "6a8f1e104efe2b42366fd901117d620da877c51de3ea136518b0f47677fdb5b5",
+      "size_bytes": 3235
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/checkpoints/completed_replicates.jsonl",
+      "relative_path": "checkpoints/completed_replicates.jsonl",
+      "sha256": "77b2753e2ad3b64bb1cbdeaa1981ac589f4e86cc95930225bebee1c7652d4a41",
+      "size_bytes": 7483
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/checkpoints/run_start_receipt.json",
+      "relative_path": "checkpoints/run_start_receipt.json",
+      "sha256": "de57613303de6248e55fccec58e86f591f1bbffb98297f846322b45e5c876a7f",
+      "size_bytes": 3162
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831/checkpoints/valid_replicates.jsonl",
+      "relative_path": "checkpoints/valid_replicates.jsonl",
+      "sha256": "9e8319ea9402aba748a7d12e9aa703154df1ac3d0873befa3faeaa2865f9733b",
+      "size_bytes": 33771
+    }
+  ],
+  "mutation": "forbidden",
+  "new_updater_calls": 0,
+  "partial_effect_read": false,
+  "reuse": "forbidden",
+  "root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-continuation-v1-20260831",
+  "schema_version": "1.0",
+  "scientific_inclusion": false,
+  "scientific_scores_read": false,
+  "status": "PERMANENTLY_QUARANTINED_DUPLICATE_CONTINUATION_V1"
+}

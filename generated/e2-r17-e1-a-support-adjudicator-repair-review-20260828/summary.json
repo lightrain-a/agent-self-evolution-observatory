@@ -1,0 +1,24 @@
+{
+  "all_allow_repaired_support_adjudication": true,
+  "artifact_type": "e2-r17-e1-a-support-adjudicator-repair-dual-review",
+  "created_at_utc": "2026-08-28T15:28:07+00:00",
+  "e1_b_authority": false,
+  "exposed_to_other_review": false,
+  "independent": true,
+  "paper_claim_authority": false,
+  "repair_sha256": "e632988b3ebf39588caaaa7b9b425b869e6d06656353506ef0c8782b5ca33d50",
+  "resolved_models": {
+    "deepseek-v4-pro": "deepseek-v4-pro-ga-260813",
+    "kimi-k3": "kimi-k3"
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "statuses": {
+    "deepseek-v4-pro": "COMPLETED",
+    "kimi-k3": "COMPLETED"
+  },
+  "verdicts": {
+    "deepseek-v4-pro": "PASS_TO_REPAIRED_SUPPORT_ADJUDICATION",
+    "kimi-k3": "PASS_TO_REPAIRED_SUPPORT_ADJUDICATION"
+  }
+}

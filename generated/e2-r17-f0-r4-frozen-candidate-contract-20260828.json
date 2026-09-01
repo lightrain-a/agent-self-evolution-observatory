@@ -1,0 +1,491 @@
+{
+  "arms": {
+    "duplicated_winner": "winner twice",
+    "precommitted_always": "rollout0",
+    "rejected_witness": "rollout0 on M, winner otherwise",
+    "skillcat_style_contrast": "winner+rollout0 failure on M, duplicate winner otherwise; matched control, not full SkillCAT reproduction",
+    "winner_only": "winner",
+    "winner_random_nonwinner": "winner + SHA-selected nonwinner"
+  },
+  "artifact_type": "e2-r17-f0-r4-frozen-candidate-contract",
+  "assets": {
+    "actor_smoke": {
+      "path": "generated/e2-r17-actor-protocol-smoke-20260828.json",
+      "sha256": "c6be7877dc63c63ae843490504b6cb333deb07f27f5173fcb8d7a8e11645df79"
+    },
+    "debate": {
+      "path": "generated/e2-r17-search-projection-debate-adjudication-20260827.json",
+      "sha256": "f743a97e6436c209bb73cabedb51405c56059688202f94f8fb6465374f544c1f"
+    },
+    "identity": {
+      "path": "generated/e2-r17-current-plan-model-identity-adjudication-20260828.json",
+      "sha256": "287fdcc4dc193adfac677f417dd382637e6c4b8fe6134377465e10fd5f4fb30b"
+    },
+    "pilot": {
+      "path": "generated/e2-r17-e0-pilot-manifest-20260828.json",
+      "sha256": "e6653ee7cd2d7391b555086adb1a9d2bf660a7df25455f8c0215b35fa85b893f"
+    },
+    "public_audit": {
+      "path": "consultations/e2-r17-public-dataset-and-baseline-audit-20260828.md",
+      "sha256": "2e86fbdf8b985e9d710043dfeccf964d8fcc17ee2f90a483e41b745c33a21126"
+    },
+    "source_audit": {
+      "path": "consultations/e2-r17-search-projection-current-source-and-theory-audit-20260827.md",
+      "sha256": "e66a400505bc5cb83c3ed1d804f5ab4eb01e5914e840e400a95404bb02d49d45"
+    },
+    "suite_qualification": {
+      "path": "generated/e2-r17-controlled-suite-v2-mindmemos-qualification-20260827.json",
+      "sha256": "b4e9a03c3dcb46f9775b3db8852b9e5141023357b37c2ca573e0ee3b8991ae90"
+    },
+    "updater_qualification": {
+      "path": "generated/e2-r17-cloned-state-first-party-updater-qualification-20260828.json",
+      "sha256": "e26337e1d5c7839248fb227ce763f35a70e2c10648a4aad496dd43f412fc0af4"
+    }
+  },
+  "authority": {
+    "front_end_claim": false,
+    "gpu": false,
+    "paper_promotion": false,
+    "preexecution_review": true,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "branch": "research/e2-r17-compute-shielding-20260825",
+  "claim": "A best-of-K serving selector can improve current acting while a tied winner-only logging policy removes a generated and verified failed witness from an external persistent updater; changing only that projection on an identical pool can change future frozen skill.",
+  "code": {
+    "research_pipeline/e2_r17_actor_pool.py": "386144c61bab17326d9f1a09d1cb0f926cef26295eb3f6c402038c519cac14db",
+    "research_pipeline/e2_r17_ark_plan_react.py": "17c735e24ddf5c089240d6b4083cf00dc12154191b13c0def48a8a9def60e1e0",
+    "research_pipeline/e2_r17_mindmemos_ark_adapter.py": "3670b8aa3c96ff3cd5dc2474312346f05aaeedeb2f6ca587bfcbcc99c9250992",
+    "research_pipeline/e2_r17_mindmemos_updater.py": "323ada88c837c2e57b6f71aa4cf6a17b1ae1f01b278a7eb0c19bee8c702be004",
+    "research_pipeline/e2_r17_search_projection_runner.py": "5cd5caf1b382a2378959ccbcdab8965e67f6b596033cb2a9a00bbe565ccaed4f",
+    "research_pipeline/e2_r17_search_projection_theory.py": "8ec701b2059eb7ae7d8c1eac1394cd0ab78100916934370b227ca08bec3fbf06",
+    "scripts/freeze_e2_r17_e0_pilot_manifest.py": "1d0de766571141b3783039f359478c0cde681c27d1cfb34b1b8fabbe6b08f92b",
+    "scripts/run_e2_r17_actor_pool.py": "e5c504b016b98a5ccd4f7d40b56e307b6810c6cc6a0bff3dee64a0fd6c7f6706",
+    "scripts/run_e2_r17_cloned_state_updates.py": "37818964d14bba27d3a7b61d0593e8f56377ee9d344e5bef67570feb850491cd"
+  },
+  "created_at_utc": "2026-08-28T03:41:27+00:00",
+  "data": {
+    "development": [
+      "r17-b0-agj-p4",
+      "r17-b0-agj-p6",
+      "r17-b0-fmv-p1",
+      "r17-b0-fmv-p5",
+      "r17-b0-ioc-p3",
+      "r17-b0-ioc-p7",
+      "r17-b0-msp-p3",
+      "r17-b0-msp-p5",
+      "r17-b0-ska-p3",
+      "r17-b0-ska-p7",
+      "r17-b0-tsr-p3",
+      "r17-b0-tsr-p7"
+    ],
+    "development_never_promoted": true,
+    "e0_all_count": 54,
+    "e0_pilot": [
+      "r17-b1-agj-p1",
+      "r17-b1-agj-p4",
+      "r17-b1-fmv-p4",
+      "r17-b1-fmv-p8",
+      "r17-b1-ioc-p5",
+      "r17-b1-ioc-p2",
+      "r17-b1-msp-p2",
+      "r17-b1-msp-p0",
+      "r17-b1-ska-p0",
+      "r17-b1-ska-p4",
+      "r17-b1-tsr-p8",
+      "r17-b1-tsr-p7"
+    ],
+    "e1_probes": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "e1_streams": {
+      "e1-agj-00": [
+        "r17-b2-agj-p2",
+        "r17-b2-agj-p5",
+        "r17-b2-agj-p7",
+        "r17-b3-agj-p0",
+        "r17-b2-agj-p3",
+        "r17-b3-agj-p3",
+        "r17-b2-agj-p8",
+        "r17-b3-agj-p8"
+      ],
+      "e1-agj-01": [
+        "r17-b2-agj-p0",
+        "r17-b3-agj-p6",
+        "r17-b3-agj-p2",
+        "r17-b3-agj-p5",
+        "r17-b2-agj-p6",
+        "r17-b3-agj-p7",
+        "r17-b3-agj-p1",
+        "r17-b2-agj-p4"
+      ],
+      "e1-fmv-00": [
+        "r17-b3-fmv-p4",
+        "r17-b2-fmv-p8",
+        "r17-b2-fmv-p1",
+        "r17-b2-fmv-p0",
+        "r17-b3-fmv-p5",
+        "r17-b2-fmv-p5",
+        "r17-b3-fmv-p7",
+        "r17-b2-fmv-p6"
+      ],
+      "e1-fmv-01": [
+        "r17-b3-fmv-p0",
+        "r17-b2-fmv-p7",
+        "r17-b2-fmv-p2",
+        "r17-b3-fmv-p2",
+        "r17-b3-fmv-p1",
+        "r17-b3-fmv-p8",
+        "r17-b3-fmv-p3",
+        "r17-b2-fmv-p3"
+      ],
+      "e1-ioc-00": [
+        "r17-b3-ioc-p3",
+        "r17-b2-ioc-p2",
+        "r17-b2-ioc-p5",
+        "r17-b2-ioc-p8",
+        "r17-b2-ioc-p0",
+        "r17-b3-ioc-p6",
+        "r17-b3-ioc-p7",
+        "r17-b2-ioc-p3"
+      ],
+      "e1-ioc-01": [
+        "r17-b3-ioc-p0",
+        "r17-b3-ioc-p5",
+        "r17-b2-ioc-p6",
+        "r17-b2-ioc-p7",
+        "r17-b3-ioc-p4",
+        "r17-b2-ioc-p1",
+        "r17-b3-ioc-p1",
+        "r17-b3-ioc-p8"
+      ],
+      "e1-msp-00": [
+        "r17-b2-msp-p4",
+        "r17-b3-msp-p4",
+        "r17-b2-msp-p8",
+        "r17-b3-msp-p3",
+        "r17-b3-msp-p2",
+        "r17-b2-msp-p6",
+        "r17-b3-msp-p0",
+        "r17-b3-msp-p8"
+      ],
+      "e1-msp-01": [
+        "r17-b3-msp-p5",
+        "r17-b2-msp-p1",
+        "r17-b3-msp-p1",
+        "r17-b2-msp-p2",
+        "r17-b2-msp-p7",
+        "r17-b3-msp-p7",
+        "r17-b2-msp-p5",
+        "r17-b3-msp-p6"
+      ],
+      "e1-ska-00": [
+        "r17-b2-ska-p3",
+        "r17-b2-ska-p1",
+        "r17-b2-ska-p4",
+        "r17-b3-ska-p8",
+        "r17-b3-ska-p2",
+        "r17-b3-ska-p6",
+        "r17-b2-ska-p6",
+        "r17-b2-ska-p7"
+      ],
+      "e1-ska-01": [
+        "r17-b2-ska-p8",
+        "r17-b3-ska-p1",
+        "r17-b3-ska-p7",
+        "r17-b3-ska-p0",
+        "r17-b2-ska-p5",
+        "r17-b3-ska-p5",
+        "r17-b3-ska-p3",
+        "r17-b2-ska-p0"
+      ],
+      "e1-tsr-00": [
+        "r17-b3-tsr-p7",
+        "r17-b3-tsr-p0",
+        "r17-b2-tsr-p3",
+        "r17-b2-tsr-p8",
+        "r17-b2-tsr-p2",
+        "r17-b2-tsr-p5",
+        "r17-b2-tsr-p4",
+        "r17-b3-tsr-p8"
+      ],
+      "e1-tsr-01": [
+        "r17-b2-tsr-p0",
+        "r17-b2-tsr-p6",
+        "r17-b2-tsr-p1",
+        "r17-b3-tsr-p3",
+        "r17-b3-tsr-p1",
+        "r17-b3-tsr-p4",
+        "r17-b3-tsr-p6",
+        "r17-b3-tsr-p5"
+      ]
+    },
+    "integrity_reserve": [
+      "r17-b2-agj-p1",
+      "r17-b2-fmv-p4",
+      "r17-b2-ioc-p4",
+      "r17-b2-msp-p0",
+      "r17-b2-msp-p3",
+      "r17-b2-ska-p2",
+      "r17-b2-tsr-p7",
+      "r17-b3-agj-p4",
+      "r17-b3-fmv-p6",
+      "r17-b3-ioc-p2",
+      "r17-b3-ska-p4",
+      "r17-b3-tsr-p2"
+    ],
+    "metadata": {
+      "path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2/r17_controlled_metadata.json",
+      "sha256": "12d6eb876e2a230e7990be3e61fed108d45f6ddec00bac5c9b88585a04111b04"
+    },
+    "public": {
+      "archive_sha256": "10ef893dd29cb13ab97143ea787e68cdc9574a13873ab9a54e50b31dc03fc949",
+      "audit": {
+        "path": "consultations/e2-r17-public-dataset-and-baseline-audit-20260828.md",
+        "sha256": "2e86fbdf8b985e9d710043dfeccf964d8fcc17ee2f90a483e41b745c33a21126"
+      },
+      "dataset_sha256": "bcecaa89a005bd4e3bbe98da150a86e8062c27f262e575d5e47bd9861b3525e7",
+      "primary": "SpreadsheetBench Verified-400",
+      "secondary": "SpreadsheetBench 2 only after controlled+Verified GO"
+    },
+    "split": {
+      "path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2/r17_split_manifest.json",
+      "sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9"
+    },
+    "suite": {
+      "path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2/suite_manifest.json",
+      "sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+    },
+    "suite_root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2"
+  },
+  "execution": {
+    "forbidden": [
+      "task replacement",
+      "dev promotion",
+      "taxonomy/threshold retuning",
+      "benchmark shopping",
+      "/api/v3",
+      "credential/raw response-id logging"
+    ],
+    "no_gpu_required": true,
+    "pilot_first": true,
+    "raw_assets": [
+      "provider JSON",
+      "trajectory JSONL/JSON",
+      "pool+projection hashes",
+      "skill pre/post hashes",
+      "verifier",
+      "token ledger",
+      "CSV summary",
+      "integrity receipt",
+      "belief update"
+    ],
+    "resume_missing_only": true,
+    "server": "69"
+  },
+  "gates": {
+    "Identification_GO": [
+      "E0 and E1 support pass",
+      "provenance pass",
+      "mean RW-WIN>0",
+      "one-sided p<=0.05",
+      "95% CI lower>0",
+      "duplicated winner does not reproduce gain"
+    ],
+    "STOP": [
+      "projection null/negative",
+      "duplicated-winner equivalence",
+      "post-outcome selection required",
+      "insufficient frozen rescue support",
+      "any cloned invariant fails"
+    ],
+    "downgrade": [
+      "random nonwinner matches RW => generic diversity",
+      "SkillCAT-style dominates => keep prior method",
+      "RW sufficient => delete CADP"
+    ],
+    "paper": "Identification+Prediction+longitudinal Closure required; E1 alone is insufficient"
+  },
+  "graph": {
+    "act": "tau+=a(T_K)",
+    "endpoint": "J(S') at common frozen K=1",
+    "learn": "E=g(T_K)",
+    "search": "T_K~Q_K(.|x,S)",
+    "update": "S'=U(S,E)"
+  },
+  "head_before_contract": "b8162c84be2edb736fe685088e20b1f94d1c91db",
+  "invariants": [
+    "same task/input/prompt/initial-skill/verifier/requested+resolved actor model within pool",
+    "same exact K=8 pool and served winner across cloned arms",
+    "selector=max binary score then lowest rollout index",
+    "Rejected-Witness=rollout0 on M and winner outside M",
+    "same MindMemOS updater/model/batch/evaluation probes across arms",
+    "one add-record per task and same top-level acting-winner score; only evidence packet differs",
+    "scientific unit is independently evolved eight-task stream-state, not rollout/probe"
+  ],
+  "models": {
+    "actor_updater": {
+      "requested": "deepseek-v4-pro",
+      "resolved": "deepseek-v4-pro-ga-260813"
+    },
+    "drift": "stop tranche on any resolved-id change",
+    "reviewers": {
+      "deepseek": "deepseek-v4-pro-ga-260813",
+      "kimi": "kimi-k3"
+    }
+  },
+  "next": "independent DeepSeek and Kimi reviews bound to exact contract SHA",
+  "not_claimed": [
+    "more compute inherently harms learning",
+    "failure utility is novel",
+    "success/failure contrast is novel",
+    "first divergence is novel",
+    "validation-gated editing is novel",
+    "CADP is novel"
+  ],
+  "prerequisite_checks": {
+    "debate": true,
+    "identity": true,
+    "mindmemos": true,
+    "pilot": true,
+    "smoke": true,
+    "split": true,
+    "suite": true,
+    "suite_hash": true,
+    "updater": true
+  },
+  "r16": {
+    "mutated": false,
+    "preserve": true,
+    "superseded": false
+  },
+  "review_questions": [
+    "identifiable under provider stochasticity?",
+    "support gates non-selective?",
+    "evidence packet only treatment?",
+    "controls separate tokens/diversity?",
+    "n=12 statistics adequate?",
+    "closest-work reduction?"
+  ],
+  "route": {
+    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "config_default": "ark-code-latest",
+    "forbidden": "https://ark.cn-beijing.volces.com/api/v3",
+    "retry": 0,
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "schema_version": "1.0",
+  "scientific_object": "SERVING_INDUCED_OBSERVATION_KERNEL_FOR_PERSISTENT_SKILL_LEARNING",
+  "search": {
+    "actor_max_output_tokens": 4096,
+    "actor_max_turns": 10,
+    "generate_once_k": 8,
+    "nested_prefixes": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "random_nonwinner_salt": "e2-r17-r4-random-nonwinner-v1",
+    "topology": "parallel_best_of_k"
+  },
+  "stages": {
+    "E0_full": {
+      "E1_support": "at least 6 rescue tasks and >=3 families; otherwise HOLD/STOP before updater",
+      "tasks": 54
+    },
+    "E0_pilot": {
+      "run": "K8 then derive prefixes",
+      "stop": "zero rescue events or protocol failure; otherwise predeclared extension allowed",
+      "tasks": 12
+    },
+    "E1_eval": {
+      "K": 1,
+      "endpoint": "mean success across common probes",
+      "probes_per_state": 18
+    },
+    "E1_pool_freeze": {
+      "pools": 96,
+      "streams": 12,
+      "support": "at least 8 rescue task-packets and >=6 streams exposed; drop no stream; pass all or stop",
+      "tasks_per_stream": 8
+    },
+    "E1_update": {
+      "arm_order": "SHA256(E2-R17-F0-R4-CLONED-ARM-ORDER-v1|stream|arm)",
+      "arms": 6,
+      "post_versions": "one content-addressed version per stream-arm"
+    },
+    "later_only_on_GO": [
+      "prospective prediction",
+      "multi-round evolution",
+      "Verified-400",
+      "topology x projection",
+      "SpreadsheetBench 2"
+    ]
+  },
+  "statistics": {
+    "ci": "95% percentile bootstrap over streams, 10000 draws",
+    "controls": [
+      "RW-DUP",
+      "RW-random-nonwinner",
+      "SkillCAT-style-WIN",
+      "PRE-WIN",
+      "Delta versus rescue count"
+    ],
+    "no_pseudoreplication": true,
+    "primary": "Delta_s=J_s(rejected_witness)-J_s(winner_only)",
+    "summary": "mean Delta_s",
+    "test": "exact one-sided 2^12 sign-flip",
+    "unit": "12 independently evolved stream-states"
+  },
+  "status": "CANDIDATE_REQUIRES_DUAL_PREEXECUTION_REVIEW",
+  "substrate": {
+    "batch_tasks": 8,
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "config": {
+      "max_aggregate": 8,
+      "max_parse_attempts": 1,
+      "min_aggregate": 8,
+      "rewrite_skill": false,
+      "slot_char_budget": 6000,
+      "summary_concurrency": 4,
+      "transcript_max_chars": 16000,
+      "use_trajectory_score": true
+    },
+    "initial_skill": {
+      "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+      "sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+    },
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "updater": "mindmemos.pipelines.skill.evolution.SkillEvolver"
+  },
+  "theory": {
+    "Gamma": "P(M)",
+    "M": "Y_0=0 and max_i Y_i=1",
+    "Y": "binary deterministic verifier",
+    "families": "mutually exclusive primary_failure_family; overlapping post-hoc tags forbidden",
+    "gated_effect": "g_RW=g_WIN outside M, hence E[D]=Gamma*E[D|M]",
+    "identity": "A_K-A_1=V_pre-V_win=Gamma_K(Q), arbitrary rollout dependence",
+    "iid_reference": "Gamma_K(p)=(1-p)-(1-p)^K; p*=1-K^(-1/(K-1))",
+    "role": "measurement structure; novelty requires prospective prediction and causal intervention"
+  },
+  "working_title": "When Better Search Teaches Less: Serving-Induced Observation Kernels in Self-Evolving Agents"
+}

@@ -1,0 +1,818 @@
+{
+  "artifact_type": "e2-r17-e0-pilot-analysis",
+  "authority": {
+    "e0_full_calls": false,
+    "e1_calls": false,
+    "frontend_promotion": false,
+    "paper_promotion": false,
+    "submission": false,
+    "support_qualification": true
+  },
+  "authorization_sha256": "5033c226b7248c3d9f72caa2b574f84ffa4ae9c3097175bde87e9b469c9fdff4",
+  "contract_sha256": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+  "created_at_utc": "2026-08-28T07:08:40+00:00",
+  "decision": {
+    "belief_update": "Rescue censoring is observable and the exact joint-pool identity holds, but support is one task in one family and cannot authorize E1.",
+    "central_mechanism_stopped": false,
+    "e0_full_gate": {
+      "frozen_tasks": 54,
+      "rescue_families_min": 3,
+      "rescue_tasks_min": 6
+    },
+    "e1_authorized": false,
+    "execution_rule": "Do not rerun the completed 12 tasks. Run only the 42 frozen extension tasks, then combine both content-addressed tranches.",
+    "next": "E0_FULL_EXTENSION_ONLY",
+    "pilot_support": {
+      "rescue_families": [
+        "target_sheet_range"
+      ],
+      "rescue_tasks": 1
+    },
+    "verdict": "HOLD_FOR_PREDECLARED_E0_FULL"
+  },
+  "failed_rollouts": {
+    "count": 16,
+    "families": [
+      "aggregation_join",
+      "formula_materialization",
+      "input_output_contract",
+      "schema_key_alignment",
+      "target_sheet_range"
+    ],
+    "winner_visible_failed_tasks_k8": 0
+  },
+  "failure_families": {
+    "aggregation_join": {
+      "failures": 1,
+      "mixed_k8": 1,
+      "rescue_k8": 0,
+      "successes": 15,
+      "tasks": 2
+    },
+    "formula_materialization": {
+      "failures": 5,
+      "mixed_k8": 2,
+      "rescue_k8": 0,
+      "successes": 11,
+      "tasks": 2
+    },
+    "input_output_contract": {
+      "failures": 2,
+      "mixed_k8": 1,
+      "rescue_k8": 0,
+      "successes": 14,
+      "tasks": 2
+    },
+    "multi_step_pipeline": {
+      "failures": 0,
+      "mixed_k8": 0,
+      "rescue_k8": 0,
+      "successes": 16,
+      "tasks": 2
+    },
+    "schema_key_alignment": {
+      "failures": 4,
+      "mixed_k8": 2,
+      "rescue_k8": 0,
+      "successes": 12,
+      "tasks": 2
+    },
+    "target_sheet_range": {
+      "failures": 4,
+      "mixed_k8": 2,
+      "rescue_k8": 1,
+      "successes": 12,
+      "tasks": 2
+    }
+  },
+  "iid_reference_only": {
+    "by_k": {
+      "1": {
+        "observed_gamma": 0.0,
+        "pooled_curve": 0.0,
+        "task_plugin_mean": 0.0
+      },
+      "2": {
+        "observed_gamma": 0.0,
+        "pooled_curve": 0.13888888888888887,
+        "task_plugin_mean": 0.1171875
+      },
+      "4": {
+        "observed_gamma": 0.08333333333333333,
+        "pooled_curve": 0.16589506172839502,
+        "task_plugin_mean": 0.1610107421875
+      },
+      "8": {
+        "observed_gamma": 0.08333333333333333,
+        "pooled_curve": 0.16666607129248587,
+        "task_plugin_mean": 0.16656634211540222
+      }
+    },
+    "note": "Reference only; exact analysis assumes neither independence nor exchangeability.",
+    "pooled_p": 0.8333333333333334
+  },
+  "integrity": {
+    "checks": {
+      "credentials_absent": true,
+      "k_8": true,
+      "no_incomplete_dirs": true,
+      "no_technical_failures": true,
+      "outputs_match_successes": true,
+      "prefixes_1_2_4_8": true,
+      "provider_response_shas_unique": true,
+      "raw_response_ids_absent": true,
+      "retry_0": true,
+      "rollout_count_96": true,
+      "scientific_outcome": true,
+      "status_completed": true,
+      "summary_sha": true,
+      "task_count_12": true,
+      "thinking_disabled": true,
+      "trajectory_shas_unique": true
+    },
+    "errors": [],
+    "outputs": 80,
+    "provider_calls": 566,
+    "rollouts": 96,
+    "status": "PASS",
+    "tasks": 12,
+    "total_tokens": 1711693
+  },
+  "metrics_by_k": {
+    "1": {
+      "gain_vs_k1": 0.0,
+      "identity_exact": true,
+      "mixed_count": 0,
+      "mixed_families": [],
+      "mixed_rate": 0.0,
+      "n": 12,
+      "pre_failure_visibility": 0.08333333333333333,
+      "precommitted_success_rate": 0.9166666666666666,
+      "rescue_count": 0,
+      "rescue_families": [],
+      "rescue_rate": 0.0,
+      "success_count": 11,
+      "success_rate": 0.9166666666666666,
+      "visibility_gap": 0.0,
+      "winner_failure_visibility": 0.08333333333333333
+    },
+    "2": {
+      "gain_vs_k1": 0.0,
+      "identity_exact": true,
+      "mixed_count": 1,
+      "mixed_families": [
+        "input_output_contract"
+      ],
+      "mixed_rate": 0.08333333333333333,
+      "n": 12,
+      "pre_failure_visibility": 0.08333333333333333,
+      "precommitted_success_rate": 0.9166666666666666,
+      "rescue_count": 0,
+      "rescue_families": [],
+      "rescue_rate": 0.0,
+      "success_count": 11,
+      "success_rate": 0.9166666666666666,
+      "visibility_gap": 0.0,
+      "winner_failure_visibility": 0.08333333333333333
+    },
+    "4": {
+      "gain_vs_k1": 0.08333333333333333,
+      "identity_exact": true,
+      "mixed_count": 6,
+      "mixed_families": [
+        "formula_materialization",
+        "input_output_contract",
+        "schema_key_alignment",
+        "target_sheet_range"
+      ],
+      "mixed_rate": 0.5,
+      "n": 12,
+      "pre_failure_visibility": 0.08333333333333333,
+      "precommitted_success_rate": 0.9166666666666666,
+      "rescue_count": 1,
+      "rescue_families": [
+        "target_sheet_range"
+      ],
+      "rescue_rate": 0.08333333333333333,
+      "success_count": 12,
+      "success_rate": 1.0,
+      "visibility_gap": 0.08333333333333333,
+      "winner_failure_visibility": 0.0
+    },
+    "8": {
+      "gain_vs_k1": 0.08333333333333333,
+      "identity_exact": true,
+      "mixed_count": 8,
+      "mixed_families": [
+        "aggregation_join",
+        "formula_materialization",
+        "input_output_contract",
+        "schema_key_alignment",
+        "target_sheet_range"
+      ],
+      "mixed_rate": 0.6666666666666666,
+      "n": 12,
+      "pre_failure_visibility": 0.08333333333333333,
+      "precommitted_success_rate": 0.9166666666666666,
+      "rescue_count": 1,
+      "rescue_families": [
+        "target_sheet_range"
+      ],
+      "rescue_rate": 0.08333333333333333,
+      "success_count": 12,
+      "success_rate": 1.0,
+      "visibility_gap": 0.08333333333333333,
+      "winner_failure_visibility": 0.0
+    }
+  },
+  "model": {
+    "requested": "deepseek-v4-pro",
+    "resolved": "deepseek-v4-pro-ga-260813"
+  },
+  "regimes_k8": {
+    "ceiling": 4,
+    "mixed_pre_success": 7,
+    "rescueable": 1
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828",
+  "schema_version": "1.0",
+  "summary_sha256": "533abf55359360bd408a4878235d24b5192d77f2471f0676bb8b10d570ad0366",
+  "task_rows": [
+    {
+      "family": "aggregation_join",
+      "pools": {
+        "1": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "ce121fd6b4c1fe47a2ba4109b815193ab83149c1b2b45b25536e505eb7eecb58",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "6878fe76199ad2c963852a9c6bcc4ce931fe266008abfb5a5d6adeb8a060ef11",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "90711f4f4ea985e9515e91fb400a00dc0f85087ca16e1244cba76c911f283b96",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "6da9aad96104496f767e5d8ca726db9dd3e3385762ea5b6f1ea6f155e2089238",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        }
+      },
+      "scores": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "task_id": "r17-b1-agj-p1"
+    },
+    {
+      "family": "aggregation_join",
+      "pools": {
+        "1": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "151ae10513b1a7548fd1ee98b6349e7fd93c7891fcba31941674b6a60a0d0ef6",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "e2412d250219c6d16a646552b88a8cc55d7973a5482730ba682a6cec5a7c692e",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "3f46a44fbac7abb91a0eae302a9c6076a499c9bec7199d9f160b5a4ee113aae3",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "2c09a71ba2b0087f5f2aaa1388e24f647d743f303a325a92a7f6480e58490adc",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        }
+      },
+      "scores": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      "task_id": "r17-b1-agj-p4"
+    },
+    {
+      "family": "formula_materialization",
+      "pools": {
+        "1": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "dc1c7c446b51329cdd1a443c1cfea3214a235885b9c8bd6ea45be77ad8c53f01",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "e872e293a64c68c4cacd4842ce22c64ad14c7aeeb628ab27e5bacd51ab7ac30d",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "fac7963d9eaee39fa72b4199ef563c79bc9be83a629b3d1b35bbf1c0b7289d9a",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "41a1682b4549606d20d29e83975b33e2e3055f60117efc7b337d0829e317741d",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        }
+      },
+      "scores": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1
+      ],
+      "task_id": "r17-b1-fmv-p4"
+    },
+    {
+      "family": "formula_materialization",
+      "pools": {
+        "1": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "efa863de4e0b25add7a047cc6dcf687ee7808a7ad5f67b96d21adc3ac4259ad0",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "6ab486271c1d209f5972cb25e1e329c5c0efde5e656b98269e9f708de9a9cc98",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "dc65671a66974be7cc2fc0c345dd59374e5e28af6c257d54fbc90d85b88b3b08",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "d8ae6396f1023d163883003da3f0702e331017818c873c57533bdf5a66f4c48f",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        }
+      },
+      "scores": [
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "task_id": "r17-b1-fmv-p8"
+    },
+    {
+      "family": "input_output_contract",
+      "pools": {
+        "1": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "87c2f0374de011fd25d0609d77142fe91eba6f99ececa815add9c5c7e731702a",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "63ba2b79a524b62a3874bcdd87a3e1a168f5b2d54c196b7271aa1c14edbfe15c",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "864fac732cb583379a809d0875f4b09ad909ae017a9a6281c6b392b5780e5565",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "7218b73fc571d36f1620bf3a99ac1056f856f51b6952274b8fe4707cbc86b28c",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        }
+      },
+      "scores": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "task_id": "r17-b1-ioc-p5"
+    },
+    {
+      "family": "input_output_contract",
+      "pools": {
+        "1": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "4c70e7db19034630f7c3fe3b7364b7f7ce8b00dff97cf0e34ddc47a3829d052f",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "1729d5fdf2c44bc123eb28c63a09e937e1ffa7829d5caaad02b1d440fad1cf66",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "52ee12139655263543742d80bd47527830d8dda8d59f2e45bc73c9aaaf4e51d5",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "c416114a426f4dc8807c00dfddebe685f69d02d4f2311817d3e60aa0276bb267",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        }
+      },
+      "scores": [
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "task_id": "r17-b1-ioc-p2"
+    },
+    {
+      "family": "multi_step_pipeline",
+      "pools": {
+        "1": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "684a5a819f40351b7f8787a8210145b8000155bbd1df02d67986f9d8def62f4e",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "c32fc9f21ac5479c419be487a8912a83085e1bd15c34e20be3c67dcd311ce855",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "131120cb9e691d6c3322c1535582757c515a119725a98f026ff65c625c87c72e",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "6fb44f9d5b16031941cbd5500fe57e1629774e445202a25944b27f416a5dca72",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        }
+      },
+      "scores": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "task_id": "r17-b1-msp-p2"
+    },
+    {
+      "family": "multi_step_pipeline",
+      "pools": {
+        "1": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "e8e53256d036fec078b9d1c642a66f6bb4b297b3b1b23186d9ae9d88da5b9f64",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "4d9107d3a215b227b8ada02651698a72a47a61ef40c83c09ef900f16444e0425",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "d57d90e5c59baf97192df2e327e8b63997bf8fad98fdbac10a468fd129f4c69f",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "4d714c6d20dd831d68f216a8a694b179eab2396a709795edeb5aa5661820cf6f",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        }
+      },
+      "scores": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "task_id": "r17-b1-msp-p0"
+    },
+    {
+      "family": "schema_key_alignment",
+      "pools": {
+        "1": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "7a6486c51e8ac19b4a148e412f792beb9c40a33b13080e047daaee86d9ad8bde",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "ef701dc35b1f74e4462febdb95b3bbdf558c14bed3119df2e0fa4a1b6252b5bf",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "077c39ede802a78096f27588eed48073edb097b0ce44d44a9095956520aa4be9",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "8d6fcbb1c11a0ed601aa297030b69bbd00ce858bfeac3e394f9c331adc49a2cf",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        }
+      },
+      "scores": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        0,
+        1
+      ],
+      "task_id": "r17-b1-ska-p0"
+    },
+    {
+      "family": "schema_key_alignment",
+      "pools": {
+        "1": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "72cf681ce7eed0d58ae8979d4ba32a25478cf60d3731ffba3bbb59c75969619f",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "6d19a0a7465cd894760261f183f28b79feb8bb7f7bfc6d4415c6993fc20c4b3b",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "786a983454c5d7536d7c8f9934a9587f9c9bf45b7a9e448f2a29420a9779f5e4",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "c8503e970c09ea72028f9dbc43eb05bba449268250b122221c5637593c61a493",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        }
+      },
+      "scores": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1,
+        1
+      ],
+      "task_id": "r17-b1-ska-p4"
+    },
+    {
+      "family": "target_sheet_range",
+      "pools": {
+        "1": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "45884741a63288990fffc9c97ed8b1e409d3a02517a1db04fcee125a6e37c53a",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 1,
+          "mixed": false,
+          "pool_id": "c4016284172ee1cf4a392adee02ed493ed467cf84a4f35e72311e57b7f17b7d1",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "6301491900cdea3adbb8d10244a8d1f5ceabed6044ee15b50b1dc2896031d747",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "88bc5cd529c8352270a63efe9015958053d51a353d1672e2242baf33789c20e5",
+          "precommitted_success": 1,
+          "rescue": false,
+          "winner_index": 0
+        }
+      },
+      "scores": [
+        1,
+        1,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "task_id": "r17-b1-tsr-p8"
+    },
+    {
+      "family": "target_sheet_range",
+      "pools": {
+        "1": {
+          "acting_success": 0,
+          "mixed": false,
+          "pool_id": "ffa294d3dd073fd9ef7b9b09f4919a32aba6225518e8f76191be3938637eed1c",
+          "precommitted_success": 0,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "2": {
+          "acting_success": 0,
+          "mixed": false,
+          "pool_id": "c2b731a7717ede46aa20a62cf528228ae4e8e279c8f7a4de5c35192069904af1",
+          "precommitted_success": 0,
+          "rescue": false,
+          "winner_index": 0
+        },
+        "4": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "97ce5a2da79a9aa41c7e9f501d10486d05022d11078c8f27768b1456e7832930",
+          "precommitted_success": 0,
+          "rescue": true,
+          "winner_index": 2
+        },
+        "8": {
+          "acting_success": 1,
+          "mixed": true,
+          "pool_id": "49c28d82e403f67ffa62bca7cfab8be12d4229ce84018c3e878040a198aaf01b",
+          "precommitted_success": 0,
+          "rescue": true,
+          "winner_index": 2
+        }
+      },
+      "scores": [
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        1
+      ],
+      "task_id": "r17-b1-tsr-p7"
+    }
+  ]
+}

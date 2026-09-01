@@ -1,0 +1,52 @@
+{
+  "artifact_type": "e2-r17-deepseek-v2-repair1-superseding-failure-analysis",
+  "classification": [
+    "IMPLEMENTATION",
+    "RUNTIME_INFRA"
+  ],
+  "created_at_utc": "2026-08-31T03:45:10+00:00",
+  "forbidden_recovery": [
+    "resume failed MRW",
+    "manual semantic edit of provider patch",
+    "replacement MRW only",
+    "rerun all completed pairs"
+  ],
+  "heldout_evaluation_units": 0,
+  "paired_win_c_started": false,
+  "primary_classification": "IMPLEMENTATION / UPDATER_PATCH_APPLY_FAILURE",
+  "provider_calls": 10,
+  "provider_response_ambiguity": false,
+  "provider_statuses_completed": "10/10",
+  "repair1_compatibility_manifest_path": "generated/e2-r17-deepseek-v2-repair1-compatibility-manifest-20260831.json",
+  "repair1_compatibility_manifest_sha256": "61e243027e6d42f7923e249f6c88267e6db07ed4bccb32d5a50c8d13bf1695bb",
+  "repair1_completed_pairs_preserved": 14,
+  "repair1_runner_log_path": "/data/wyt/e2-r17-search-projection/deepseek-v2-mrw-r4-repair1-full-20260830.log",
+  "repair1_runner_log_sha256": "9e6c20a9eab7cd1c3d9a293e6344f1aab8a451b0471ea2c2aef0c256cbb94ffd",
+  "repair2_permitted_delta": {
+    "actor_max_turns": 10,
+    "all_scientific_variables_unchanged": true,
+    "max_correction_attempts": 1,
+    "max_parse_attempts": {
+      "from": 1,
+      "to": 2
+    },
+    "state_provider_limit": {
+      "from": 190,
+      "to": 191
+    },
+    "updater_provider_unit_limit": {
+      "from": 10,
+      "to": 11
+    }
+  },
+  "root_cause": "SkillEditError: edit #0: line 12 does not match 'old_string_prefix', so the line number is likely off. Line 12 is actually '```python', but you gave '```python from openpyxl import load_workbook'. Re-read the N| gutter and fix the line number.",
+  "schema_version": "1.0",
+  "scientific_belief_update": "NONE",
+  "scientific_endpoint_reached": false,
+  "skill_post": false,
+  "status": "STOP_AND_ADJUDICATE_UPDATER_PATCH_APPLY_FAILURE",
+  "supersedes_operational_classification": "RUNTIME / AMBIGUOUS_PARTIAL_PROVIDER_UNIT",
+  "technical_quarantine_path": "generated/e2-r17-deepseek-v2-repair1-technical-quarantine-20260831.json",
+  "technical_quarantine_sha256": "1908a3dfc472f835c204f7f9d5a66a9ee4b37093adb09a8d0c0f297b4b1abd7a",
+  "update_completed": false
+}

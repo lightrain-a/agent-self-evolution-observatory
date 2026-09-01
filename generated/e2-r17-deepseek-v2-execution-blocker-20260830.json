@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-deepseek-v2-execution-blocker",
+  "created_at_utc": "2026-08-30T14:07:04Z",
+  "status": "STOP_AND_ADJUDICATE_IMPLEMENTATION_SCHEMA_MISMATCH_BEFORE_PROVIDER_IO",
+  "stage": "DeepSeek V2 formal full-run initialization",
+  "classification": [
+    "IMPLEMENTATION"
+  ],
+  "scientific_endpoint_reached": false,
+  "scientific_belief_update": "NONE",
+  "contamination": "NONE",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "api_route": "NOT_REACHED",
+  "actor_max_output_tokens": 8192,
+  "frozen_inputs": {
+    "git_head": "6644260e96b997e12b39dfed362cc8d28891d6fe",
+    "contract": {
+      "path": "generated/e2-r17-deepseek-v2-replicated-paired-full-contract-20260830.json",
+      "sha256": "54f37f073881fe676064ec738676b1b869d1625b2bdd8fe11980b9abf801f2bc"
+    },
+    "authorization": {
+      "path": "generated/e2-r17-deepseek-v2-replicated-paired-full-authorization-20260830.json",
+      "sha256": "fbe5c0ce0b033c0bebc10d5f9b14230c740b838da5dbf33ea676c9f54a809ac4"
+    },
+    "runner": {
+      "path": "scripts/run_e2_r17_deepseek_v2_replicated_paired_full.py",
+      "sha256": "4ea3ecbb44b4143e28c144b1e19df20921dab81451c455b5800085f8b71e6ac3"
+    },
+    "analyzer": {
+      "path": "scripts/analyze_e2_r17_deepseek_v2_replicated_paired.py",
+      "sha256": "52904ef3e4498cdb133efe4bf590a3bc0db130cf178960d2bf8b9b8277956707"
+    }
+  },
+  "preflight": {
+    "status": "PREFLIGHT_PASS",
+    "provider_calls": 0,
+    "streams": 12,
+    "replicates_per_stream": 4,
+    "learned_states": 96,
+    "heldout_rollout_units": 1728,
+    "log_path": "/data/wyt/e2-r17-search-projection/deepseek-v2-preflight-rerun-after-mcp504-20260830.log",
+    "log_sha256": "9ff73151cd3b1e9ce86f78f730ada9be8f9647fec0953033641df61eae64b266"
+  },
+  "execution": {
+    "launch_pid": 888490,
+    "launch_pid_file": "/data/wyt/e2-r17-search-projection/deepseek-v2-mrw-r4-full-20260830.pid",
+    "run_log_path": "/data/wyt/e2-r17-search-projection/deepseek-v2-mrw-r4-full-20260830.log",
+    "run_log_sha256": "07ac8e95b6dd095a082fa54c54a701bd3c1ec3947c9f425c70b55ed7035f3c7d",
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-mrw-r4-20260830",
+    "run_root_created": false,
+    "exclusive_lock_created": false,
+    "paired_replicate_units_completed": 0,
+    "paired_replicate_units_expected": 48,
+    "learned_states_completed": 0,
+    "learned_states_expected": 96,
+    "heldout_rollout_units_completed": 0,
+    "heldout_rollout_units_expected": 1728,
+    "provider_budget_claims": 0,
+    "provider_calls": 0,
+    "provider_tokens": 0,
+    "ambiguous_provider_units": 0,
+    "analyzer_executed": false,
+    "second_model_executed": false,
+    "public_benchmark_executed": false
+  },
+  "failure": {
+    "exception": "KeyError: 'env_file'",
+    "runner_line": 204,
+    "first_failing_expression": "load_env_file(Path(contract[\"env_file\"]))",
+    "additional_dereference_line": 168,
+    "symptom": "The zero-provider preflight passed, but the frozen full runner exited before lock acquisition because the frozen contract has no env_file field.",
+    "root_cause": "The frozen DeepSeek V2 contract schema omitted the env_file field required twice by its hash-bound runner, and the preflight did not validate this runner-required field.",
+    "why_no_automatic_resume": "Adding env_file changes the frozen contract SHA and invalidates the existing authorization binding; changing the bound runner also changes its frozen SHA. Either action requires a new repaired contract and matching authorization.",
+    "partial_state_adjudication": "No run root, lock, checkpoint, budget ledger, provider artifact, learned state, or heldout evaluation was created. There is no partial scientific state to resume."
+  },
+  "v1_identifiability_result": {
+    "path": "generated/e2-r17-e1-b-negative-control-adjudication-20260829.json",
+    "sha256": "758d7514518216c6913d623b9175f237a35a63c4f2f523fa24a3097d07515a2e",
+    "status": "HOLD_UPDATER_OR_EVALUATOR_STOCHASTICITY",
+    "preserved": true
+  },
+  "next_authorized_step": "Prepare and separately authorize a new repaired DeepSeek V2 contract that adds the required env_file binding, update preflight to assert runner-required schema closure, keep every frozen scientific variable unchanged, and use a fresh run root. Do not rerun under the current contract/authorization SHA pair.",
+  "requires_new_user_authorization": true
+}

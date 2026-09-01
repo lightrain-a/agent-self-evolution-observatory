@@ -1,0 +1,74 @@
+{
+  "actual_actor_path_preflight_path": "generated/e2-r17-deepseek-v2-repair2-m1-actual-actor-path-preflight-v2-20260831.json",
+  "actual_actor_path_preflight_sha256": "53cc759052b2d5f7748095a590ef0e5414a151fb8f1a44d6e13c9577b8b882c0",
+  "artifact_type": "e2-r17-deepseek-v2-repair2-m1-review-reparse-adjudication",
+  "authority": {
+    "execute_m1_measurement": false,
+    "execute_updater": false,
+    "paper_promotion": false,
+    "prepare_single_use_m1_authorization": true,
+    "prepare_v3": false,
+    "run_analyzer": false,
+    "submission": false
+  },
+  "contract_path": "generated/e2-r17-deepseek-v2-repair2-m1-measurement-contract-v2-20260831.json",
+  "contract_sha256": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+  "created_at_utc": "2026-08-31T05:49:17+00:00",
+  "failure_classification": "IMPLEMENTATION/REUSED_BASE_REVIEW_SCHEMA_SHA_BINDING",
+  "failure_detail": "The reused V3.1 helper compared every *_sha256_acknowledged field to the contract SHA. M1 correctly has distinct contract and preflight SHA fields.",
+  "original_fail_schema_artifacts_preserved": true,
+  "partial_effect_read": false,
+  "provider_claims": 0,
+  "provider_generation_calls": 0,
+  "reused_exact_model_outputs": true,
+  "rows": {
+    "deepseek-v4-pro": {
+      "contract_sha256_acknowledged": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+      "execution_recommendation": "ALLOW_SINGLE_USE_M1_AUTHORIZATION",
+      "original_missing_required_fields": [
+        "preflight_sha256_acknowledged_exact"
+      ],
+      "original_parse_valid": false,
+      "original_status": "FAIL_SCHEMA",
+      "paper_claim_authority": false,
+      "preflight_sha256_acknowledged": "53cc759052b2d5f7748095a590ef0e5414a151fb8f1a44d6e13c9577b8b882c0",
+      "provider_integrity": true,
+      "raw_text_sha256": "da9550b35897c3d382fc92c63c9b1f63668d516437e1d72dff2fba79b95082a1",
+      "remaining_blockers": [],
+      "reparsed_missing_required_fields": [],
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "resolved_model_matches_qualification": true,
+      "single_sentence_verdict": "The M1 measurement-only recovery is fail-closed, provenance-bound, exactly-once, and preflighted 36/36 with zero provider claims, so it may authorize only the 36 heldout measurements and seal REPAIR2_M1_MEASUREMENT_RECOVERY_PASS without analysis.",
+      "source_path": "generated/e2-r17-deepseek-v2-repair2-m1-review-20260831/deepseek-v4-pro.json",
+      "source_sha256": "06d59fc6980a35de38c70252d0f75f1ba28e399656652bb593baea66498dbbd7",
+      "valid_after_local_schema_repair": true,
+      "verdict": "PASS_TO_SINGLE_USE_M1_AUTHORIZATION"
+    },
+    "kimi-k3": {
+      "contract_sha256_acknowledged": "1476eb82f36a578e00cc9979f7f36a03535c2db3f1a3a693f6ac669d8f48f983",
+      "execution_recommendation": "ALLOW_SINGLE_USE_M1_AUTHORIZATION",
+      "original_missing_required_fields": [
+        "preflight_sha256_acknowledged_exact"
+      ],
+      "original_parse_valid": false,
+      "original_status": "FAIL_SCHEMA",
+      "paper_claim_authority": false,
+      "preflight_sha256_acknowledged": "53cc759052b2d5f7748095a590ef0e5414a151fb8f1a44d6e13c9577b8b882c0",
+      "provider_integrity": true,
+      "raw_text_sha256": "0ed835945ec81e652a7f10adc34a220ae5bcc1b9e01739358c4fccb17642126b",
+      "remaining_blockers": [],
+      "reparsed_missing_required_fields": [],
+      "resolved_model": "kimi-k3",
+      "resolved_model_matches_qualification": true,
+      "single_sentence_verdict": "M1 is a fail-closed, measurement-only recovery path with valid 36/36 actual-actor preflight and may receive exactly one single-use authorization for the 36 bound heldout measurements.",
+      "source_path": "generated/e2-r17-deepseek-v2-repair2-m1-review-20260831/kimi-k3.json",
+      "source_sha256": "b3caa42f0b0edbc3a137d630e6b788da114fa15d9b7ed0dd1e1d566c0f95e422",
+      "valid_after_local_schema_repair": true,
+      "verdict": "PASS_TO_SINGLE_USE_M1_AUTHORIZATION"
+    }
+  },
+  "schema_version": "1.0",
+  "scientific_belief_update": "NONE",
+  "source_review_root": "generated/e2-r17-deepseek-v2-repair2-m1-review-20260831",
+  "status": "PASS_REPARSED_EXISTING_M1_REVIEWS_2_OF_2"
+}

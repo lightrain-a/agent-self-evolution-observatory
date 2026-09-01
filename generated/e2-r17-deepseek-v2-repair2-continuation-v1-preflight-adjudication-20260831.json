@@ -1,0 +1,115 @@
+{
+  "actual_actor_authorization_path_preflight": {
+    "expected": 12,
+    "passed": 12,
+    "results": [
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p4"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p5"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p8"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p0"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p6"
+      },
+      {
+        "arm": "win_c",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p8"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p4"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p5"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-ska-p8"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p0"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p6"
+      },
+      {
+        "arm": "mrw",
+        "provider_calls": 0,
+        "provider_claims": 0,
+        "status": "PASS",
+        "task_id": "r17-b4-tsr-p8"
+      }
+    ]
+  },
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-deepseek-v2-repair2-continuation-v1-preflight",
+  "authorization_sha256": "14df6c41e0ba3b0a300f341f5ed73599bf0545392aa86c888383dd4729e6d67b",
+  "completed_intersection_remaining": [],
+  "completed_unit_replay": false,
+  "contract_sha256": "b944797b6333c66bf1edf9ae789aa16e8b19df8763dbf89280da1efd8dd1c2c2",
+  "created_at_utc": "2026-08-31T11:08:41+00:00",
+  "first_continuation_unit": "e1-ioc-00/rep1",
+  "immutable_heldout_units": 636,
+  "immutable_learned_states": 36,
+  "inherited_pairs": 17,
+  "original_v3_authorization_sha256": "7aa826db915b40840fb54ca2c269a23c4f74807bae74fd99285eac6875ee5b74",
+  "original_v3_contract_sha256": "312e970520794c564b23a9717f4c40d4baeb0674619da334c8fcc20ee95fc045",
+  "partial_effect_read": false,
+  "preflight_provider_calls": 0,
+  "preflight_provider_claims": 0,
+  "provider_claims_before_preflight": 609,
+  "remaining_heldout_units": 1092,
+  "remaining_new_learned_states": 60,
+  "remaining_pairs": 31,
+  "schema_version": "1.0",
+  "status": "PREFLIGHT_PASS",
+  "union_equals_frozen_design": true
+}

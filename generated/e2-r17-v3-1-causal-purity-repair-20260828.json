@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-1-causal-purity-repair",
+  "date": "2026-08-28",
+  "status": "READY_FOR_INDEPENDENT_REVIEW_ONLY",
+  "scientific_authority": false,
+  "parents": {
+    "v3_plan": {
+      "path": "generated/e2-r17-experiment-plan-v3-20260828.json",
+      "sha256": "b1a0224117f161ead9fccefa2c22a0f01dfa1d9e72ca1e98107418f21e3e04c5"
+    },
+    "v3_failure_adjudication": {
+      "path": "generated/e2-r17-v3-runtime-pilot-failure-adjudication-20260828.json",
+      "sha256": "fec66715370144f4b8c72c7afd32520f9f990ef466f988c0d77cf3a954aefcef",
+      "same_contract_retry_allowed": false
+    }
+  },
+  "design_note": {
+    "path": "consultations/e2-r17-v3-1-causal-purity-repair-20260828.md",
+    "sha256": "94490232790ec78cdcb5773b49bb9fcb509ca18b8cc5cc2842216d0becb25521"
+  },
+  "repairs": {
+    "actual_retokenized_parity": {
+      "renderer": "research_pipeline/e2_r17_evidence_window_v2.py",
+      "renderer_sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7",
+      "tokenizer": "tiktoken==0.11.0/cl100k_base",
+      "final_block_cap_tokens": 3072,
+      "padding": false,
+      "selection_rule": "largest common reachable final re-tokenized evidence-block length",
+      "historical_zero_provider_replay": {
+        "pools": 12,
+        "mixed": 8,
+        "nonmixed": 4,
+        "exact_final_token_parity": "12/12",
+        "nonmixed_byte_identity": "4/4",
+        "matched_final_tokens_min": 995,
+        "matched_final_tokens_max": 3072,
+        "matched_final_tokens_mean": 2072.5,
+        "max_selected_source_budget_gap": 1,
+        "provider_calls": 0,
+        "new_rollouts": 0,
+        "scientific_effectiveness_evaluated": false
+      }
+    },
+    "arm_blinding_and_score_semantics": {
+      "updater": "research_pipeline/e2_r17_mindmemos_updater.py",
+      "updater_sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d",
+      "upstream_audit": "generated/e2-r17-v3-1-upstream-prompt-dataflow-audit-20260828.json",
+      "upstream_audit_sha256": "ecd160e6c87b259c56e5a667fe94a9cc7310c37c5fca92ce514436c131d30d7c",
+      "messages": "selected arm-blinded evidence only",
+      "score": "selected evidence trajectory verifier score",
+      "acting_score": "provenance only and fixed by exact served winner",
+      "projection_metadata_in_model_visible_messages": false,
+      "required_transcript_max_chars": 100000
+    },
+    "stream_level_theory": {
+      "old_exact_learning_factorization_promotable": false,
+      "reason": "actual updater aggregates eight tasks nonlinearly into one stream-level skill state",
+      "mixed_witness_dose": "R_s=sum_j M_sj over eight frozen update tasks",
+      "primary_effect": "D_s=J_s(MRW)-J_s(WIN)",
+      "exact_zero_dose_implication": "R_s=0 implies identical WIN/MRW evidence inputs before residual updater/provider stochasticity",
+      "linearity_assumed": false,
+      "monotonicity_assumed": false,
+      "family_additivity_assumed": false,
+      "dose_response_role": "prospective mechanism/heterogeneity analysis only after primary E1"
+    }
+  },
+  "e1_primary_inference": {
+    "independent_units": 12,
+    "tasks_per_update_stream": 8,
+    "common_heldout_probes_per_state": 18,
+    "negative_control_first": "WIN-B vs WIN-A equivalence",
+    "primary_contrast": "MRW vs WIN-A paired stream effect",
+    "later_diagnostics_cannot_rescue_primary_failure": true
+  },
+  "published_baseline_boundary": {
+    "headline": [
+      "ReasoningBank/MaTTS — ICLR 2026",
+      "PolySkill — ICLR 2026",
+      "ACE — ICLR 2026",
+      "Agent Workflow Memory — ICML 2025"
+    ],
+    "extended": ["SAGE — ACL 2026 Long"],
+    "arxiv_only_not_headline": ["SkillCAT", "Branch2Skill", "SkillOpt", "RethinkSkill", "TSR"],
+    "generic_failure_learning_novelty_claim_forbidden": true
+  },
+  "tests_observed": {
+    "evidence_window_v2_pinned_tokenizer": "5/5 PASS",
+    "updater_v31": "4/4 PASS",
+    "search_projection_runner_plus_theory": "20/20 PASS",
+    "python_compile": "PASS"
+  },
+  "next_gate": "INDEPENDENT_KIMI_AND_DEEPSEEK_V3_1_REVIEW",
+  "authority": {
+    "independent_review": true,
+    "fresh_zero_provider_mechanical_pilot": false,
+    "provider_runtime_pilot": false,
+    "e1_a": false,
+    "e1_b": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

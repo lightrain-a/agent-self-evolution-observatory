@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v31-provider-runtime-pilot-adjudication",
+  "date": "2026-08-29",
+  "status": "PASS_PROVIDER_RUNTIME_MEASURABILITY_ONLY_E1B_STILL_UNAUTHORIZED",
+  "contract": {
+    "path": "generated/e2-r17-v31-provider-runtime-pilot-v2-contract-20260829.json",
+    "sha256": "98467e1a22fa5fabb0947c83b5295085f4866424993190fa4af2f4f5d91b99aa"
+  },
+  "authorization": {
+    "path": "generated/e2-r17-v31-provider-runtime-pilot-v2-authorization-20260829.json",
+    "sha256": "a32e80976b7eb037582c36f3768bd0b37a5977c29e4b5da1d972953ea696d559"
+  },
+  "run": {
+    "root": "/data/wyt/e2-r17-search-projection/runtime-pilots/v31-provider-updater-v2-20260829",
+    "summary": "/data/wyt/e2-r17-search-projection/runtime-pilots/v31-provider-updater-v2-20260829/summary/provider_runtime_pilot_summary.json",
+    "summary_sha256": "e1903beb48d9ede6447f92dad6a68d1e4f9b169cd570f09d73f069373014ee28",
+    "completed_arms": 3,
+    "provider_call_receipts": 30,
+    "exclusive_lock_released_only_after_full_success": true
+  },
+  "scientific_boundary": {
+    "new_actor_rollouts": 0,
+    "heldout_evaluation_calls": 0,
+    "scientific_effectiveness_evaluated": false,
+    "learned_skill_quality_compared": false,
+    "e1_b_effect_authority": false,
+    "paper_claim_authority": false
+  },
+  "runtime_measurability": {
+    "win_a_win_b_pre_provider_evidence_byte_identical": true,
+    "causal_purity_mode_all_arms": "arm_blinded_selected_evidence",
+    "arm_metadata_visible_in_transcript_all_arms": false,
+    "updater_visible_score_semantics_all_arms": "selected_evidence_trajectory",
+    "summaries_per_arm": 8,
+    "consumed_records_per_arm": 8,
+    "provider_retry_limit": 0,
+    "thinking": "disabled",
+    "temperature": 0.0,
+    "parse_error_calls": 0,
+    "provider_calls": 30,
+    "provider_calls_per_arm": {
+      "win_a": 10,
+      "win_b": 10,
+      "mrw": 10
+    },
+    "provider_call_task_structure_per_arm": {
+      "skill_trajectory_summary": 8,
+      "skill_patch_propose": 1,
+      "skill_patch_apply": 1
+    },
+    "provider_tokens": {
+      "total": 90608,
+      "win_a": 30187,
+      "win_b": 29851,
+      "mrw": 30570
+    },
+    "provider_input_tokens": {
+      "win_a": 26677,
+      "win_b": 26509,
+      "mrw": 26711
+    },
+    "provider_output_tokens": {
+      "win_a": 3510,
+      "win_b": 3342,
+      "mrw": 3859
+    },
+    "provider_wall_time_seconds_sum": {
+      "win_a": 54.043,
+      "win_b": 51.747,
+      "mrw": 55.779
+    },
+    "provider_call_latency_median_seconds": {
+      "win_a": 5.819,
+      "win_b": 5.745,
+      "mrw": 5.544
+    },
+    "provider_call_latency_max_seconds": {
+      "win_a": 6.794,
+      "win_b": 6.184,
+      "mrw": 8.094
+    }
+  },
+  "budget": {
+    "pre_io_claiming": true,
+    "claims_never_released": true,
+    "total_claimed": 30,
+    "total_limit": 30,
+    "per_arm_claimed": {
+      "win_a": 10,
+      "win_b": 10,
+      "mrw": 10
+    },
+    "per_arm_limit": 10,
+    "interpretation": "The nominal first-party SkillEvolver path uses exactly 10 generations per eight-task update under max_parse_attempts=1. The Pilot consumed the exact frozen ceiling without overflow. Any additional generation would have failed before provider I/O."
+  },
+  "failure_learning": {
+    "trigger_failure_id": "R17-F008-UPDATER-RUNTIME-COVERAGE",
+    "repair_validated": true,
+    "lesson": "A role-specific updater runtime bound to the exact SkillEvolver entrypoint is sufficient; actor/evaluator runtime qualification must not be inherited for updater execution.",
+    "post_lock_override": "tiktoken==0.11.0 remained compatible with the pinned first-party updater in a real hosted 30-call Pilot after zero-provider qualification."
+  },
+  "interpretation": "The V3.1 causal-purity path is operational with the real hosted first-party SkillEvolver: exact historical pools can be rendered into arm-blinded evidence, consumed by three independent updater arms, checkpointed, budget-accounted and completed without parse/runtime failure. This does NOT show that MRW improves future skill and does NOT test WIN-A/WIN-B behavioral equivalence.",
+  "next_gate": "PREPARE_AND_INDEPENDENTLY_REVIEW_E1_B_WIN_A_WIN_B_NEGATIVE_CONTROL_ONLY_CONTRACT",
+  "authority": {
+    "prepare_e1_b_negative_control_contract": true,
+    "execute_e1_b_negative_control": false,
+    "execute_mrw_causal_comparison": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

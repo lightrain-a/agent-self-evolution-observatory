@@ -1,0 +1,52 @@
+{
+  "artifact_type": "e2-r17-v3-dual-review-adjudication",
+  "authority": {
+    "e1_a_pool_generation": false,
+    "e1_b_updater": false,
+    "outcome_blind_runtime_pilot": true,
+    "paper_promotion": false,
+    "scientific_outcomes": false,
+    "submission": false
+  },
+  "checks": {
+    "both_allow_runtime_pilot": true,
+    "both_completed": true,
+    "both_hold_e1_a": true,
+    "both_hold_e1_b": true,
+    "both_v3_pass": true,
+    "paper_claim_authority_false": true
+  },
+  "created_at_utc": "2026-08-28T08:59:58+00:00",
+  "plan": "generated/e2-r17-experiment-plan-v3-20260828.json",
+  "plan_sha256": "b1a0224117f161ead9fccefa2c22a0f01dfa1d9e72ca1e98107418f21e3e04c5",
+  "reviewers": [
+    {
+      "artifact": "generated/e2-r17-experiment-plan-v3-review-20260828/deepseek-v4-pro.json",
+      "artifact_sha256": "da5f773d27ea6ef3aa69e4177ca80427d31c430a0951c10519fa5447daaa484e",
+      "e1_a_recommendation": "HOLD_UNTIL_SEPARATE_IMMUTABLE_CONTRACT",
+      "e1_b_recommendation": "HOLD_UNTIL_SUPPORT_GATE_AND_SEPARATE_CONTRACT",
+      "paper_claim_authority": false,
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "runtime_pilot_recommendation": "ALLOW_OUTCOME_BLIND_RUNTIME_PILOT",
+      "status": "COMPLETED",
+      "verdict": "PASS_TO_OUTCOME_BLIND_RUNTIME_PILOT"
+    },
+    {
+      "artifact": "generated/e2-r17-experiment-plan-v3-review-20260828/kimi-k3.json",
+      "artifact_sha256": "9b529ceec18e315f050e4d5c5aa3e0579e9a3440f1f332675adf38ec70cacbcd",
+      "e1_a_recommendation": "HOLD_UNTIL_SEPARATE_IMMUTABLE_CONTRACT",
+      "e1_b_recommendation": "HOLD_UNTIL_SUPPORT_GATE_AND_SEPARATE_CONTRACT",
+      "paper_claim_authority": false,
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "runtime_pilot_recommendation": "ALLOW_OUTCOME_BLIND_RUNTIME_PILOT",
+      "status": "COMPLETED",
+      "verdict": "PASS_TO_OUTCOME_BLIND_RUNTIME_PILOT"
+    }
+  ],
+  "schema_version": "1.0",
+  "status": "PASS_TO_OUTCOME_BLIND_RUNTIME_PILOT_ONLY",
+  "summary_bug_note": "The inherited V2 summary script checked the plural enum ALLOW_OUTCOME_BLIND_RUNTIME_PILOTS, while the V3 schema uses singular ALLOW_OUTCOME_BLIND_RUNTIME_PILOT. Therefore its all_allow_runtime_pilot=false field is a renderer/adjudicator bug and is not used as authority.",
+  "transport_note": "The MCP call returned 502 after remote execution. Process/output inspection showed both reviewer artifacts complete. No provider call was relaunched."
+}

@@ -1,0 +1,22 @@
+{
+  "adapter_sha256": "c8b105859cfe632b03bb8a3df35a53177f7cf22589cd09fd670f044c2faa7e80",
+  "artifact_type": "e2-r17-mindmemos-ark-plan-adapter-qualification",
+  "benchmark_data_accessed": false,
+  "call_receipts": [],
+  "f1_execution_authorized": false,
+  "model_identity": {
+    "requested": "deepseek-v4-pro",
+    "required_resolved": "deepseek-v4-pro-260425",
+    "route": "https://ark.cn-beijing.volces.com/api/plan/v3"
+  },
+  "provider_error_class": "ARK_PLAN_SUBSCRIPTION",
+  "provider_error_message_sanitized": "Ark Plan subscription unavailable",
+  "provider_error_type": "RuntimeError",
+  "provider_request_is_protocol_smoke_only": true,
+  "provider_retry_disabled": true,
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "scientific_outcome": false,
+  "status": "HOLD_PROVIDER_SUBSCRIPTION",
+  "submission_authority": false
+}

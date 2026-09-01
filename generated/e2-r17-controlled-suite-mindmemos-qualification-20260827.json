@@ -1,0 +1,36 @@
+{
+  "artifact_type": "e2-r17-controlled-suite-mindmemos-qualification",
+  "authority": {
+    "f0_r4_freeze": false,
+    "gpu": false,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "benchmark_outcomes_accessed": false,
+  "cases_loaded": 324,
+  "created_at_utc": "2026-08-27T14:10:44+00:00",
+  "dataset_sha256": "063edbffced0a587e024a7319df268cd5bf40656bfdaee2c3ddb535df03db268",
+  "failures": [],
+  "golden_self_check_pass": 324,
+  "init_negative_control_pass": 324,
+  "mindmemos_clean": true,
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "mindmemos_root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_outcome": false,
+  "split_manifest_sha256": "8249d4dad5947c7a5991fb3364f780bd65dd1082e072acf2a19a73408783f029",
+  "split_shape": {
+    "development": 12,
+    "e0_calibration": 54,
+    "e1_probe": 18,
+    "e1_streams": 12,
+    "e1_tasks_per_stream": [
+      8
+    ],
+    "e3_future": 54
+  },
+  "status": "PASS_ZERO_PROVIDER",
+  "suite_manifest_sha256": "d407ab6fc2ced9f6e536cc14819020e61b77c1594bcbe46c8ed890e58bbbdd9d",
+  "suite_root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v1"
+}

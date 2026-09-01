@@ -1,0 +1,258 @@
+{
+  "actor": {
+    "concurrency_per_probe": 1,
+    "k": 1,
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "actor_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
+    "role": "actor_evaluator",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "allowed_measurements": [
+    {
+      "arm": "win_c",
+      "classification": "explicit_429_logical_unit_recovery",
+      "task_id": "r17-b4-ska-p8"
+    },
+    {
+      "arm": "win_c",
+      "classification": "never_started_measurement",
+      "task_id": "r17-b4-tsr-p0"
+    },
+    {
+      "arm": "win_c",
+      "classification": "never_started_measurement",
+      "task_id": "r17-b4-tsr-p6"
+    },
+    {
+      "arm": "win_c",
+      "classification": "never_started_measurement",
+      "task_id": "r17-b4-tsr-p8"
+    },
+    {
+      "arm": "mrw",
+      "classification": "never_started_measurement",
+      "task_id": "r17-b4-tsr-p0"
+    },
+    {
+      "arm": "mrw",
+      "classification": "never_started_measurement",
+      "task_id": "r17-b4-tsr-p6"
+    },
+    {
+      "arm": "mrw",
+      "classification": "never_started_measurement",
+      "task_id": "r17-b4-tsr-p8"
+    }
+  ],
+  "analysis_changed": false,
+  "artifact_type": "e2-r17-deepseek-v2-repair2-pair29-recovery-m1-contract",
+  "authority": {
+    "analyzer": false,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "updater": false
+  },
+  "bound_code": {
+    "measurement_actor": {
+      "path": "scripts/run_e2_r17_actor_pool_pair29_recovery_compat_v1.py",
+      "sha256": "ceb1cdc06a83eecacf57d15739c38f8300f5ab1f96f35df10629d85a25bc9dca"
+    },
+    "recovery_runner": {
+      "path": "scripts/run_e2_r17_deepseek_v2_repair2_pair29_recovery_m1.py",
+      "sha256": "eea4cdcc12475188e594c8c58a37b4b780c0f7a26c58e897c23adf79409abd16"
+    }
+  },
+  "correction_budget_changed": false,
+  "created_at_utc": "2026-09-01T08:24:32+00:00",
+  "env_file": ".env",
+  "exactly_once": {
+    "authorized_runs": 1,
+    "automatic_retry": false,
+    "completed_unit_replay": false,
+    "replacement_sampling": false
+  },
+  "heldout": {
+    "k": 1,
+    "task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ]
+  },
+  "learned_states": [
+    {
+      "arm": "win_c",
+      "attempt0_success": true,
+      "child_provider_total_limit": 98,
+      "correction_required": false,
+      "parent_claim_count": 93,
+      "parent_completed_eval_manifest_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c/checkpoints/completed_eval_tasks.jsonl",
+      "parent_completed_eval_manifest_sha256": "b38c8e2734ebb784851daaff276484f00af1bb163f05c4bd4d446b2816fe19fb",
+      "parent_completed_task_ids": [
+        "r17-b4-agj-p2",
+        "r17-b4-agj-p3",
+        "r17-b4-agj-p8",
+        "r17-b4-fmv-p1",
+        "r17-b4-fmv-p2",
+        "r17-b4-fmv-p8",
+        "r17-b4-ioc-p1",
+        "r17-b4-ioc-p4",
+        "r17-b4-ioc-p6",
+        "r17-b4-msp-p0",
+        "r17-b4-msp-p7",
+        "r17-b4-msp-p8",
+        "r17-b4-ska-p4",
+        "r17-b4-ska-p5"
+      ],
+      "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c/update/skill_post/SKILL.md",
+      "skill_post_sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c",
+      "update_completed_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c/checkpoints/update_completed.json",
+      "update_completed_sha256": "52f343f5ebe457c6946fb939fa8bde4556b27d5c730bdd59043292dc76966f16",
+      "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/win_c/update/update_receipt.json",
+      "update_receipt_sha256": "9d1ac5cea03411832a3e3038d834f4ca79f449b61814efb41b1c9eaf9a2b55a6",
+      "updater_calls": 10
+    },
+    {
+      "arm": "mrw",
+      "attempt0_success": true,
+      "child_provider_total_limit": 74,
+      "correction_required": false,
+      "parent_claim_count": 117,
+      "parent_completed_eval_manifest_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw/checkpoints/completed_eval_tasks.jsonl",
+      "parent_completed_eval_manifest_sha256": "3cad2c0035aa6b822fded8b5a92b359fca4e34d642865fb2a4419930613bae0e",
+      "parent_completed_task_ids": [
+        "r17-b4-agj-p2",
+        "r17-b4-agj-p3",
+        "r17-b4-agj-p8",
+        "r17-b4-fmv-p1",
+        "r17-b4-fmv-p2",
+        "r17-b4-fmv-p8",
+        "r17-b4-ioc-p1",
+        "r17-b4-ioc-p4",
+        "r17-b4-ioc-p6",
+        "r17-b4-msp-p0",
+        "r17-b4-msp-p7",
+        "r17-b4-msp-p8",
+        "r17-b4-ska-p4",
+        "r17-b4-ska-p5",
+        "r17-b4-ska-p8"
+      ],
+      "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw/update/skill_post/SKILL.md",
+      "skill_post_sha256": "346b8d62f774c976d1f8a07349e2813cb069311441b6597d8085dbea8f029aad",
+      "state_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw",
+      "update_completed_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw/checkpoints/update_completed.json",
+      "update_completed_sha256": "12d5dec537c4960bf7c7683daceb1a331e7637c9071dd735d2ca98ab856e99fa",
+      "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831/states/e1-msp-01/replicate_0/mrw/update/update_receipt.json",
+      "update_receipt_sha256": "5b277e1a8aedf09899d28e28c7c541d03477d65a4ddd8ae8de5fcedee3c754ff",
+      "updater_calls": 10
+    }
+  ],
+  "measurement": {
+    "heldout_evaluations": 7,
+    "measurement_states": 2,
+    "never_started_measurements": 6,
+    "new_updater_calls": 0,
+    "partial_effect_read": false,
+    "replayed_updater_calls": 0,
+    "unique_429_logical_unit_recoveries": 1
+  },
+  "mindmemos": {
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e"
+    },
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817"
+  },
+  "model_changed": false,
+  "model_identity": {
+    "fresh_max_output_tokens_smoke": 8192,
+    "path": "generated/e2-r17-deepseek-v2-repair2-model-identity-adjudication-20260831.json",
+    "provider_retry_limit": 0,
+    "qualification_path": "generated/e2-r17-deepseek-v2-repair2-deepseek-identity-qualification-20260831.json",
+    "qualification_sha256": "6f7305554f710ce56d07e86cbc786ab5d4618327f5b6c0161c7259067cae59ac",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "thinking": "disabled"
+  },
+  "parent_v3_provenance": {
+    "authorization_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-deepseek-v2-pia1-recovery-v2-20260901/generated/e2-r17-deepseek-v2-repair2-v3-authorization-20260831.json",
+    "authorization_sha256": "7aa826db915b40840fb54ca2c269a23c4f74807bae74fd99285eac6875ee5b74",
+    "completed_manifest_sha256": "ea4945723eda5b46643b65626f1300da0952870ed4fd122ec65e8341fc44acb8",
+    "contract_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-deepseek-v2-pia1-recovery-v2-20260901/generated/e2-r17-deepseek-v2-repair2-v3-contract-20260831.json",
+    "contract_sha256": "312e970520794c564b23a9717f4c40d4baeb0674619da334c8fcc20ee95fc045",
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-v3-20260831",
+    "valid_manifest_sha256": "64c879e576e4da6ec4c40eede8c1ff0d2f26be0def22d4a1cf04a50464b1aab9"
+  },
+  "pia1": {
+    "canonical_lineage": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-pia1-canonical-v3-lineage-20260901.json",
+      "sha256": "0c13358cc76653e624bf0359254540a743569c0e121a09bf1b1ec50cc383e955"
+    },
+    "duplicate_quarantine": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-pia1-permanent-v1-quarantine-20260901.json",
+      "sha256": "f5e20a7bf91324b413d72494f768d12c2728f552fea4e230716f5f5701abb4bc"
+    },
+    "pia_adjudication": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-pia1-adjudication-20260901.json",
+      "sha256": "f9e81a195b000711a04950a93f0559ab61b33bf403fde18966b02defe7bdbae5"
+    },
+    "recovery_set": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-pia1-pair29-recovery-set-20260901.json",
+      "sha256": "18492a42e2e4c0780e6a356f316adce0e5204462f0719279297e721bdc8c1082"
+    }
+  },
+  "prompt_changed": false,
+  "provider_budget": {
+    "allowed_total_limits": [
+      74,
+      98
+    ],
+    "claims_never_released": true,
+    "original_per_state_limit": 191,
+    "per_unit_limit": 11,
+    "required": true
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/deepseek-v2-repair2-pair29-recovery-m1-20260901",
+  "schema_version": "1.0",
+  "scientific_design_changed": false,
+  "status": "FROZEN_E2_R17_DEEPSEEK_V2_REPAIR2_PAIR29_RECOVERY_M1_MEASUREMENT_ONLY",
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "task_order_changed": false,
+  "title": "E2-R17 DeepSeek V2 Repair2 Pair29 Measurement-Only Recovery M1"
+}

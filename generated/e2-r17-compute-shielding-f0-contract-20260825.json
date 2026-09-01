@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "scientific-child-f0-contract",
+  "paper_id": "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK",
+  "child_id": "E2-R17-COMPUTE-SHIELDING",
+  "title": "Stronger Agents Can Learn Weaker Skills",
+  "status": "F0_FROZEN_BEFORE_SCIENTIFIC_PROVIDER_OUTCOMES",
+  "parent_revision": "R16_STABLE_FALLBACK",
+  "central_question": "Can increasing execution-time test-time compute improve online task success while degrading the persistent skill learned from those executions because reusable failures are rescued before the updater observes them?",
+  "thesis": "Acting-optimal compute need not be learning-optimal compute when the execution policy also generates the experience consumed by persistent self-evolution.",
+  "causal_graph": [
+    "C_act -> trajectory_distribution",
+    "trajectory_distribution -> online_reward",
+    "trajectory_distribution -> visible_failure_distribution",
+    "visible_failure_distribution -> fixed_skill_updater_U",
+    "fixed_skill_updater_U -> learned_skill_state",
+    "learned_skill_state -> frozen_low_compute_future_performance"
+  ],
+  "substrate": {
+    "name": "MindMemOS + SpreadsheetBench",
+    "source_root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "source_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "source_hashes": {
+      "mindmemos_eval/skills/runners.py": "a0b7dd1071148f570b65f53963ff5843beeaeded5aaf82f0846182bb55d61732",
+      "mindmemos_eval/skills/agents/react.py": "aeff09d26829307c1362356802b668d12b9d9c47f6372583bbeb93d245b5bf24",
+      "mindmemos_eval/skills/evolve/algo.py": "2d2264b712e788b7f7e4aa988085ae943ac230a2ef7b4ae6c750d9887a6cf2ad",
+      "mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "spreadsheetbench_init_skill/xlsx/SKILL.md": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+    },
+    "acting_compute_knob": "ReactAgent.max_turns",
+    "low_compute_max_turns": 3,
+    "high_compute_max_turns": 8,
+    "why_low_is_three": "The first-party skill prompt requests a skill-tool load before spreadsheet actions; three turns permit skill retrieval, one substantive tool action, and a final assistant turn without forcing premature truncation.",
+    "updater": "MindMemOS trace_v2_summary SkillEvolver",
+    "updater_input": ["full dialogue messages", "trajectory score", "task_id", "injected skill version binding"],
+    "persistent_artifact": "live skill directory / xlsx/SKILL.md",
+    "frozen_eval_compute_max_turns": 3,
+    "secondary_substrate": "SkillEvolBench commit 9e3daa339987c3cfa624121e1be442593a53d43c; deferred because first-party Harbor job fixes n_attempts=1 and lacks an equally clean executor-compute knob"
+  },
+  "arms": {
+    "L_L": {
+      "serve_max_turns": 3,
+      "updater_trajectory": "observed_low_compute_same_task"
+    },
+    "H_H": {
+      "serve_max_turns": 8,
+      "updater_trajectory": "observed_high_compute_same_task"
+    },
+    "H_L_SHADOW": {
+      "serve_max_turns": 8,
+      "updater_trajectory": "counterfactual_low_compute_rollout_on_same_task_and_pre_task_skill_state",
+      "shadow_serves_user": false
+    },
+    "H_H_HARDMINE": {
+      "serve_max_turns": 8,
+      "updater_trajectory": "pre_frozen_reweighting_of_failures_remaining_in_high_compute_stream"
+    }
+  },
+  "load_bearing_hypotheses": {
+    "H1_acting_benefit": "R_online(H) > R_online(L)",
+    "H2_shielding_reversal": "G_frozen(H_H; C_eval=3) < G_frozen(L_L; C_eval=3)",
+    "H3_shadow_recovery": "G_frozen(H_L_SHADOW; C_eval=3) > G_frozen(H_H; C_eval=3)",
+    "H4_missing_information": "G_frozen(H_L_SHADOW) > G_frozen(H_H_HARDMINE) is required for the strong missing-counterfactual-information interpretation"
+  },
+  "scientific_unit": "complete evolution run and its final learned skill state",
+  "episode_role": "within-run experience only; episodes/repeats are not independent scientific units",
+  "frozen_dimensions": [
+    "MindMemOS source commit and updater implementation",
+    "initial xlsx SKILL.md bytes",
+    "SpreadsheetBench task subset, order, and seed",
+    "acting model identity",
+    "skill updater model identity and prompts",
+    "verifier/scorer semantics",
+    "number of evolution opportunities and batching schedule",
+    "frozen evaluation task set and max_turns=3",
+    "shadow pairing rule",
+    "hardmine rule",
+    "checkpoint and resume policy"
+  ],
+  "provider_policy": {
+    "scientific_llm_route": "Ark Plan only when Ark-backed adapters are used",
+    "ark_plan_base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "direct_api_v3_forbidden": true,
+    "pilot_first": true,
+    "pilot_promotion_uses_scientific_outcomes": false,
+    "resume_missing_only": true,
+    "checkpoint_per_call_or_case": true
+  },
+  "required_persistence": [
+    "raw provider receipt or sanitized response receipt",
+    "per-case CSV or JSONL row",
+    "trajectory artifact",
+    "skill version hash after each evolution batch",
+    "atomic checkpoint",
+    "final frozen skill artifact"
+  ],
+  "kill_conditions": [
+    "high compute does not improve online acting on the qualified substrate",
+    "frozen-skill quality is not lower after high-compute evolution",
+    "low-compute shadow feedback does not recover frozen-skill quality",
+    "failure visibility/type distribution does not materially change across low/high compute",
+    "effect is explained by unequal task stream, model, verifier, updater, evolution opportunities, or frozen-eval compute",
+    "hard mining/reweighting fully matches low-compute shadow, which kills the strong missing-counterfactual-information claim",
+    "task/failure selection becomes outcome-driven"
+  ],
+  "authority": {
+    "mutate_r16": false,
+    "scientific_full_run": false,
+    "paper_reframe": false,
+    "submission": false
+  },
+  "next_gate": "F0_RUNTIME_AND_INFRASTRUCTURE_QUALIFICATION"
+}

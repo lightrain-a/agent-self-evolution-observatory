@@ -1,0 +1,77 @@
+{
+  "artifact_type": "e2-r17-f0-r4-preexecution-review-response",
+  "automatic_thinking_compatibility_fallback_allowed": false,
+  "contract_sha256": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+  "created_at_utc": "2026-08-28T03:53:00+00:00",
+  "dossier_file_sha256": {
+    "consultations/e2-r17-public-dataset-and-baseline-audit-20260828.md": "2e86fbdf8b985e9d710043dfeccf964d8fcc17ee2f90a483e41b745c33a21126",
+    "generated/e2-r17-actor-protocol-smoke-20260828.json": "c6be7877dc63c63ae843490504b6cb333deb07f27f5173fcb8d7a8e11645df79",
+    "generated/e2-r17-cloned-state-first-party-updater-qualification-20260828.json": "e26337e1d5c7839248fb227ce763f35a70e2c10648a4aad496dd43f412fc0af4",
+    "generated/e2-r17-current-plan-model-identity-adjudication-20260828.json": "287fdcc4dc193adfac677f417dd382637e6c4b8fe6134377465e10fd5f4fb30b",
+    "generated/e2-r17-e0-pilot-manifest-20260828.json": "e6653ee7cd2d7391b555086adb1a9d2bf660a7df25455f8c0215b35fa85b893f",
+    "generated/e2-r17-f0-r4-frozen-candidate-contract-20260828.json": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+    "generated/e2-r17-search-projection-debate-adjudication-20260827.json": "f743a97e6436c209bb73cabedb51405c56059688202f94f8fb6465374f544c1f"
+  },
+  "expected_resolved_model": "kimi-k3",
+  "experiment_authority": false,
+  "exposed_to_other_review": false,
+  "get_poll_recovery": false,
+  "hidden_provider_retry_used": false,
+  "independent": true,
+  "max_output_tokens": 5000,
+  "missing_required_fields": [],
+  "paper_promotion_authority": false,
+  "parse_valid": true,
+  "poll_count": 0,
+  "prompt_path": "generated/e2-r17-f0-r4-preexecution-review-20260828/round1/kimi-k3-prompt.md",
+  "prompt_sha256": "10416ee0ed15097d7fa2bbca2a0c3e6d8f49c6d31c68694cc471f48e4b927f2a",
+  "provider_generation_attempts": 1,
+  "provider_retry_limit": 0,
+  "provider_status": "completed",
+  "raw_text": "{\n  \"contract_sha256_acknowledged\": \"f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508\",\n  \"verdict\": \"GO\",\n  \"experiment_identifiable\": true,\n  \"main_claim_falsifiable\": true,\n  \"strongest_simpler_explanation_controlled\": true,\n  \"blocking_collision_present\": false,\n  \"scientific_object_assessment\": \"The object is narrowly and correctly defined as the serving-induced observation kernel of an external persistent updater, not a broad claim that more compute harms learning or a new contrastive algorithm. The estimand is a same-pool projection contrast: identical task, initial skill, K=8 pool, served winner, actor, verifier, updater, and probes, with only the logged evidence packet changed. Rejected-Witness is appropriately framed as the minimal intervention, and SkillCAT-style contrast plus RethinkSkill feedback views are treated as mandatory reductions rather than optional decoration. The contract also explicitly disclaims novelty for failure utility, success/failure contrast, first divergence, validation-gated editing, and CADP, which is the correct scope.\",\n  \"causal_identification_assessment\": \"The cloned-state design is identifiable because the generated pool is fixed once and reused across arms, so provider stochasticity affects pool creation but not the cross-arm contrast. The decisive comparison is therefore not exposed to resampling noise between arms. The key invariants are explicit: same pool and winner, same initial skill hash, same updater and probes, one add-record per task, and only the evidence packet differs. The remaining threat is parser or validation behavior acting as a hidden treatment, but the contract partially addresses this by fixing updater configuration and by requiring matched packet structure in duplicated-winner and SkillCAT-style controls. For the narrow E0 pilot decision, this is sufficient.\",\n  \"statistics_assessment\": \"For E0 pilot authorization, the statistics are adequate because the pilot is a qualification and support check, not a confirmatory scientific result. The later E1 design uses the stream as the unit, with 12 independently evolved streams, an exact one-sided sign-flip test, bootstrap confidence interval over streams, and explicit no-pseudoreplication language. That is enough to justify the E1 decision rule, but only barely: n=12 is small, so the contract would overclaim if it treated E1 alone as paper-level evidence. It does not; it correctly states that paper claims require identification plus prediction plus longitudinal closure.\",\n  \"public_dataset_assessment\": \"The public-source audit assigns non-shopping roles correctly. The controlled suite is mechanism-only and explicitly not a public benchmark. SpreadsheetBench Verified-400 is reserved for later public transport and longitudinal validation only after the controlled mechanism passes. SpreadsheetBench 2 is later still and cannot be opened to rescue a negative result. The audit also forbids importing mismatched published scores and requires exact-harness reruns. No blocking issue here.\",\n  \"baseline_assessment\": \"The mandatory controls address the main simpler explanations. Duplicated winner controls token or context-length effects. Random nonwinner controls generic diversity. Precommitted rollout-0 controls for simply changing the observation kernel to another fixed rule. SkillCAT-style contrast is the strongest direct method reduction and is explicitly included as a matched control rather than a loose citation. Winner-only is the current default. Together these controls are sufficient for the narrow pilot authorization decision.\",\n  \"fatal_or_blocking_issues\": [],\n  \"nonblocking_improvements\": [\n    \"Make the parser and validation-gate accounting even more explicit in the E0/E1 receipts so that any rejection, rewrite, truncation, or failed packet assembly is logged as part of treatment rather than inferred later.\",\n    \"Predeclare how partial updater acceptance or empty edits will be counted so that a null result cannot be reinterpreted post hoc as a packaging failure.\",\n    \"For E1, report all pairwise control contrasts, not only the primary RW-WIN contrast, to reduce the risk of selective emphasis after outcomes exist.\"\n  ],\n  \"e0_pilot_recommendation\": \"GO\",\n  \"single_sentence_verdict\": \"The exact F0-R4 contract is identifiable, falsifiable, and sufficiently controlled to authorize only the 12-task E0 pilot, with no blocking issue visible in the bound dossier.\"\n}",
+  "raw_text_sha256": "a35b0048e11b3435824d8ea8e4a394da0b2e4d512421058fa93e41e440a5e20c",
+  "requested_model": "kimi-k3",
+  "resolved_model": "kimi-k3",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "534e604cc68ec76caac64c06ef85842c503ee542c888fb7f5288fbd1f0bdf4dc",
+  "review": {
+    "baseline_assessment": "The mandatory controls address the main simpler explanations. Duplicated winner controls token or context-length effects. Random nonwinner controls generic diversity. Precommitted rollout-0 controls for simply changing the observation kernel to another fixed rule. SkillCAT-style contrast is the strongest direct method reduction and is explicitly included as a matched control rather than a loose citation. Winner-only is the current default. Together these controls are sufficient for the narrow pilot authorization decision.",
+    "blocking_collision_present": false,
+    "causal_identification_assessment": "The cloned-state design is identifiable because the generated pool is fixed once and reused across arms, so provider stochasticity affects pool creation but not the cross-arm contrast. The decisive comparison is therefore not exposed to resampling noise between arms. The key invariants are explicit: same pool and winner, same initial skill hash, same updater and probes, one add-record per task, and only the evidence packet differs. The remaining threat is parser or validation behavior acting as a hidden treatment, but the contract partially addresses this by fixing updater configuration and by requiring matched packet structure in duplicated-winner and SkillCAT-style controls. For the narrow E0 pilot decision, this is sufficient.",
+    "contract_sha256_acknowledged": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+    "e0_pilot_recommendation": "GO",
+    "experiment_identifiable": true,
+    "fatal_or_blocking_issues": [],
+    "main_claim_falsifiable": true,
+    "nonblocking_improvements": [
+      "Make the parser and validation-gate accounting even more explicit in the E0/E1 receipts so that any rejection, rewrite, truncation, or failed packet assembly is logged as part of treatment rather than inferred later.",
+      "Predeclare how partial updater acceptance or empty edits will be counted so that a null result cannot be reinterpreted post hoc as a packaging failure.",
+      "For E1, report all pairwise control contrasts, not only the primary RW-WIN contrast, to reduce the risk of selective emphasis after outcomes exist."
+    ],
+    "public_dataset_assessment": "The public-source audit assigns non-shopping roles correctly. The controlled suite is mechanism-only and explicitly not a public benchmark. SpreadsheetBench Verified-400 is reserved for later public transport and longitudinal validation only after the controlled mechanism passes. SpreadsheetBench 2 is later still and cannot be opened to rescue a negative result. The audit also forbids importing mismatched published scores and requires exact-harness reruns. No blocking issue here.",
+    "scientific_object_assessment": "The object is narrowly and correctly defined as the serving-induced observation kernel of an external persistent updater, not a broad claim that more compute harms learning or a new contrastive algorithm. The estimand is a same-pool projection contrast: identical task, initial skill, K=8 pool, served winner, actor, verifier, updater, and probes, with only the logged evidence packet changed. Rejected-Witness is appropriately framed as the minimal intervention, and SkillCAT-style contrast plus RethinkSkill feedback views are treated as mandatory reductions rather than optional decoration. The contract also explicitly disclaims novelty for failure utility, success/failure contrast, first divergence, validation-gated editing, and CADP, which is the correct scope.",
+    "single_sentence_verdict": "The exact F0-R4 contract is identifiable, falsifiable, and sufficiently controlled to authorize only the 12-task E0 pilot, with no blocking issue visible in the bound dossier.",
+    "statistics_assessment": "For E0 pilot authorization, the statistics are adequate because the pilot is a qualification and support check, not a confirmatory scientific result. The later E1 design uses the stream as the unit, with 12 independently evolved streams, an exact one-sided sign-flip test, bootstrap confidence interval over streams, and explicit no-pseudoreplication language. That is enough to justify the E1 decision rule, but only barely: n=12 is small, so the contract would overclaim if it treated E1 alone as paper-level evidence. It does not; it correctly states that paper claims require identification plus prediction plus longitudinal closure.",
+    "strongest_simpler_explanation_controlled": true,
+    "verdict": "GO"
+  },
+  "round": 1,
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "submission_authority": false,
+  "temperature": 0,
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 19216,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 906,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 20122
+  }
+}

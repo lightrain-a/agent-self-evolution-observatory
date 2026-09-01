@@ -1,0 +1,32 @@
+{
+  "artifact_type": "e2-r17-search-projection-zero-provider-theory-audit-receipt",
+  "authority": {
+    "experiment": false,
+    "f0_r4_frozen": false,
+    "gpu": false,
+    "submission": false
+  },
+  "benchmark_outcomes_accessed": false,
+  "branch_head": "10e2ae2b8af6ced45ee58c8e0b1ad63b6a86c121",
+  "claims_checked": [
+    "binary rescue-censoring identity under arbitrary correlated joint rollout laws",
+    "iid Bernoulli closed form and p-star",
+    "continuous-verifier layer-cake identity on finite-support joint laws",
+    "exact gated Gamma-times-delta factorization and off-event rejection"
+  ],
+  "created_at_utc": "2026-08-27T13:28:39Z",
+  "files": {
+    "consultations/e2-r17-search-projection-current-source-and-theory-audit-20260827.md": "e66a400505bc5cb83c3ed1d804f5ab4eb01e5914e840e400a95404bb02d49d45",
+    "research_pipeline/e2_r17_search_projection_theory.py": "8ec701b2059eb7ae7d8c1eac1394cd0ab78100916934370b227ca08bec3fbf06",
+    "research_pipeline/test_e2_r17_search_projection_theory.py": "3d9d11ffb2dbb70b62368e5882635796a5a99ae741b5c5b9d8cb2e87d5be8f6d"
+  },
+  "schema_version": "1.0",
+  "scientific_provider_calls": 0,
+  "status": "PASS_ZERO_PROVIDER_NO_EXPERIMENT_AUTHORITY",
+  "tests": {
+    "failed": 0,
+    "passed": 6,
+    "random_joint_laws": 250,
+    "random_seed": 20260827
+  }
+}

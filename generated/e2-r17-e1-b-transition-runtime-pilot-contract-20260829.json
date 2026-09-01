@@ -1,0 +1,255 @@
+{
+  "actor": {
+    "concurrency": 1,
+    "k": 1,
+    "max_output_tokens": 4096,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "actor_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
+    "role": "actor_evaluator",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "artifact_type": "e2-r17-e1-b-transition-runtime-pilot-contract",
+  "authority": {
+    "dual_preexecution_review": true,
+    "e1_b_negative_control": false,
+    "execute_transition_runtime_pilot": false,
+    "mrw_causal_comparison": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "bound_code": {
+    "actor_runner": {
+      "path": "scripts/run_e2_r17_actor_pool.py",
+      "sha256": "20a81fbe06f3839cd17babfdb021407368493da61610bca33aae33df8d31ec14"
+    },
+    "actor_runtime_validator": {
+      "path": "scripts/run_e2_r17_e1_a_pool_support.py",
+      "sha256": "24ea070b08399d48af99294615a508874f851af941f5bb0efabe341b0854617d"
+    },
+    "provider_budget": {
+      "path": "research_pipeline/e2_r17_provider_budget.py",
+      "sha256": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444"
+    },
+    "provider_runtime_helpers": {
+      "path": "scripts/run_e2_r17_v31_provider_runtime_pilot.py",
+      "sha256": "533f11ba2bfc85aa6fcea8bc1b9502a039cd7770055010a8838b78bb8b6041d5"
+    },
+    "renderer": {
+      "path": "research_pipeline/e2_r17_evidence_window_v2.py",
+      "sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7"
+    },
+    "transition_runner": {
+      "path": "scripts/run_e2_r17_e1_b_transition_runtime_pilot.py",
+      "sha256": "2564252ac4ce54c076d47a35bd32f8bd319463b284f1a5e2d008bd581530058c"
+    },
+    "updater_adapter": {
+      "path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+      "sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8"
+    },
+    "updater_wrapper": {
+      "path": "research_pipeline/e2_r17_mindmemos_updater.py",
+      "sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d"
+    }
+  },
+  "budget": {
+    "actor_max_calls": 10,
+    "claim_before_provider_io": true,
+    "claims_never_released": true,
+    "max_provider_calls": 20,
+    "max_provider_calls_per_unit": 10,
+    "shared_ledger_relative_path": "checkpoints/provider_budget.sqlite3",
+    "updater_nominal_calls": 10
+  },
+  "checkpoint": {
+    "evaluation_failure": "checkpoints/evaluation_failure.json",
+    "exclusive_lock": ".exclusive.lock",
+    "partial_update_or_eval_auto_rerun": false,
+    "preserve_lock_on_failure": true,
+    "update_checkpoint": "checkpoints/update_completed.json"
+  },
+  "date": "2026-08-29",
+  "development_evaluation": {
+    "e1_common_heldout_accessed": false,
+    "k": 1,
+    "selection_rule": "Lexicographically first task ID from the pre-existing development split; frozen without reading any task outcome under the learned skill.",
+    "task_id": "r17-b0-agj-p4",
+    "used_for_scientific_effectiveness": false
+  },
+  "forbidden": [
+    "E1 common heldout evaluation",
+    "WIN-A/WIN-B equivalence inference",
+    "MRW execution or method-effect comparison",
+    "task/model/renderer selection based on development outcome",
+    "paper/frontend/submission promotion",
+    "automatic rerun after ambiguous provider call"
+  ],
+  "freeze_note": "Execution-relevant fields are unchanged from the dual-reviewed draft; only status/review metadata are added.",
+  "historical_inputs": {
+    "e0_root": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828",
+    "selected_pools": [
+      {
+        "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-agj-p1/pool_k8.json",
+        "sha256": "3872f2b33f11130aeed073e46650c7d6c4a13c256632252a7102ea81c8492c0c",
+        "task_id": "r17-b1-agj-p1"
+      },
+      {
+        "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-agj-p4/pool_k8.json",
+        "sha256": "1afa7d56dca0b3b04ab4c494e05c43ad49f6015e928cf8348a61af81eb753813",
+        "task_id": "r17-b1-agj-p4"
+      },
+      {
+        "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-fmv-p4/pool_k8.json",
+        "sha256": "2b852fc1f2f41cc68e1869ce3f11f552ca176e63fd1121a528fa4361ade7e989",
+        "task_id": "r17-b1-fmv-p4"
+      },
+      {
+        "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-fmv-p8/pool_k8.json",
+        "sha256": "945fde93b9812ceb750cace1140bb383eb59a2f1ae2fa966dc7723fe1ebd9d03",
+        "task_id": "r17-b1-fmv-p8"
+      },
+      {
+        "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-ioc-p2/pool_k8.json",
+        "sha256": "5a5c6bc214b05fc807387cf32766aa6f0f42617af04ac24e0b9993d431169bdc",
+        "task_id": "r17-b1-ioc-p2"
+      },
+      {
+        "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-ioc-p5/pool_k8.json",
+        "sha256": "7e5f613d500b2be2b40d42d4124b12213ee989619f0b6f464649522b194645df",
+        "task_id": "r17-b1-ioc-p5"
+      },
+      {
+        "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-msp-p0/pool_k8.json",
+        "sha256": "10d950ffdad2dce1957c9bac73f5f4e4816db47cff40bc4177ab4f8930f8834e",
+        "task_id": "r17-b1-msp-p0"
+      },
+      {
+        "path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/cases/r17-b1-msp-p2/pool_k8.json",
+        "sha256": "18ce3604f249ecbbddab21dd39b9f9db67861c41cb97cd7866dbf5c5e9d1355c",
+        "task_id": "r17-b1-msp-p2"
+      }
+    ],
+    "selection_rule": "Lexicographically first eight pool_k8.json paths, frozen before reading mixed/rescue/outcome fields for this Pilot.",
+    "source": "E0 historical pools only"
+  },
+  "initial_skill": {
+    "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+    "sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+  },
+  "mindmemos": {
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e"
+    },
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817"
+  },
+  "model_identity": {
+    "path": "generated/e2-r17-v31-provider-pilot-v2-model-identity-adjudication-20260829.json",
+    "qualification_path": "generated/e2-r17-v31-provider-pilot-v2-model-identity-qualification-20260829.json",
+    "qualification_sha256": "8063a6d638b4bfa974c74ab8bbea023deec3958d497f4e78366222e0cd7a5634",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "sha256": "7c0874547387bb2c9a3aaf13f8fb1ac0dccd555caf78ec2d8e040740642957ea"
+  },
+  "parents": {
+    "failure_registry": {
+      "path": "generated/e2-r17-failure-differential-registry-v2-20260829.json",
+      "sha256": "7850763eeeb3c08db0e1989d456ea21c03384fa46d559f78f802e9323b69f4c5"
+    },
+    "provider_runtime_adjudication": {
+      "path": "generated/e2-r17-v31-provider-runtime-pilot-v2-adjudication-20260829.json",
+      "sha256": "8be8a4596ffef8e3702f8e422ed4dd2c55b7fc1f97573b125f30096d64f60424"
+    }
+  },
+  "purpose": "Runtime/measurability transition only: generate one receipt-bound WIN skill from eight historical E0 pools, then load that noninitial skill through the frozen actor path and execute exactly one K=1 development task. No E1 heldout data, no WIN-A/WIN-B equivalence inference, no MRW scientific comparison.",
+  "renderer": {
+    "arm_metadata_visible": false,
+    "exact_final_retokenized_parity_required": true,
+    "final_block_cap_tokens": 3072,
+    "padding": false,
+    "path": "research_pipeline/e2_r17_evidence_window_v2.py",
+    "sha256": "6a79d4e671167a9c4b89fc0cfa8c4b95c1020a62043f409db07bb39a75d2a9f7",
+    "tokenizer_encoding": "cl100k_base",
+    "tokenizer_package": "tiktoken",
+    "tokenizer_version": "0.11.0"
+  },
+  "required_checks": [
+    "dedicated updater runtime exact-entrypoint qualification passes",
+    "actor/evaluator runtime qualification passes independently",
+    "one shared provider ledger claims before I/O and caps total at 20 / per-unit at 10",
+    "WIN update uses V3.1 arm-blinded selected-evidence semantics from exact historical pools",
+    "update receipt content-addresses skill_post and binds exact contract+authorization",
+    "actor loads noninitial SKILL.md only through the matching updater receipt",
+    "actor evaluation uses fixed development task r17-b0-agj-p4, K=1, same resolved model and verifier",
+    "no E1 common heldout task is accessed",
+    "development outcome is not used to promote/select method/model/runtime",
+    "partial update/evaluation keeps stale lock and cannot auto-rerun"
+  ],
+  "review_binding": {
+    "e1_b_negative_control_authority": false,
+    "mrw_authority": false,
+    "paper_claim_authority": false,
+    "reviewed_draft_path": "generated/e2-r17-e1-b-transition-runtime-pilot-draft-contract-20260829.json",
+    "reviewed_draft_sha256": "c279c328018c9e37e2d2676adc9f0c5118886a1a3e9222a2206ff99b723bdb35",
+    "summary_path": "generated/e2-r17-e1-b-transition-runtime-pilot-review-20260829/summary.json",
+    "summary_sha256": "7edd7cd411681a51eacc2acf2dd40f160257c91f842fd17cc0267ff73dc9cd12",
+    "verdicts": {
+      "deepseek-v4-pro": "PASS_TO_SEPARATELY_AUTHORIZED_E1_B_TRANSITION_RUNTIME_PILOT",
+      "kimi-k3": "PASS_TO_SEPARATELY_AUTHORIZED_E1_B_TRANSITION_RUNTIME_PILOT"
+    }
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runtime-pilots/e1-b-transition-v1-20260829",
+  "schema_version": "1.0",
+  "status": "FROZEN_E1_B_TRANSITION_RUNTIME_PILOT",
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "updater": {
+    "adapter_path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+    "adapter_sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8",
+    "batch_size": 8,
+    "first_party": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "max_parse_attempts": 1,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "score_semantics": "selected_evidence_trajectory",
+    "temperature": 0.0,
+    "thinking": "disabled",
+    "transcript_max_chars": 100000,
+    "wrapper_path": "research_pipeline/e2_r17_mindmemos_updater.py",
+    "wrapper_sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d"
+  },
+  "updater_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv.freeze.txt",
+    "freeze_sha256": "80cd6fdd8eb672e41252c099766fd171a5a7a4b90c284d87da87d09f0d559731",
+    "litellm_local_model_cost_map": true,
+    "post_lock_compatibility_override": {
+      "disclosed": true,
+      "package": "tiktoken",
+      "reason": "pre-frozen V3.1 ExactMatchedEvidenceBlockRenderer compatibility",
+      "version": "0.11.0"
+    },
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+    "qualification_path": "generated/e2-r17-updater-runtime-qualification-20260829.json",
+    "qualification_sha256": "f2319815cdcd7caf248c498c470720d4e3f6c9b5e579fad59914df687cdf5b6d",
+    "required_entrypoint": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_UPDATER_RUNTIME",
+    "role": "persistent_skill_updater",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv"
+  }
+}

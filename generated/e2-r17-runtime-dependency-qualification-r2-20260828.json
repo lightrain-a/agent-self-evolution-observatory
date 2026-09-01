@@ -1,0 +1,61 @@
+{
+  "artifact_type": "e2-r17-runtime-dependency-qualification",
+  "authority": {
+    "e0_full": false,
+    "e0_pilot": false,
+    "e1": false,
+    "front_end_claim": false,
+    "paper_promotion": false,
+    "public_externality": false,
+    "scientific_experiment": false,
+    "submission": false
+  },
+  "created_at_utc": "2026-08-28T04:13:26+00:00",
+  "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+  "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+  "import_smoke": {
+    "imports": [
+      "mindmemos_eval.skills.agents.ReactAgentFactory",
+      "mindmemos_eval.skills.envs.spreadsheetbench.env.SpreadsheetBenchEnv"
+    ],
+    "status": "PASS"
+  },
+  "installed_distribution_count": 69,
+  "mindmemos_uv_lock_path": "/data/wyt/evidence-substrates/MindMemOS-20260817/uv.lock",
+  "mindmemos_uv_lock_sha256": "867495f270aa3c44d7f0409feb03a8838642f7f1eb6b3552ae79e837ec164cae",
+  "pilot_case_preflight": {
+    "pilot_manifest_path": "generated/e2-r17-e0-pilot-manifest-20260828.json",
+    "pilot_manifest_sha256": "e6653ee7cd2d7391b555086adb1a9d2bf660a7df25455f8c0215b35fa85b893f",
+    "provider_calls": 0,
+    "status": "PASS",
+    "task_count": 12,
+    "task_execution": false
+  },
+  "private_credentials_included": false,
+  "provider_calls": 0,
+  "python_executable": "/usr/bin/python3.12",
+  "python_version": "3.12.3",
+  "raw_response_ids_included": false,
+  "repair_trigger_path": "generated/e2-r17-e0-pilot-launch-failure-r1-20260828.json",
+  "schema_version": "2.0",
+  "scientific_outcome": false,
+  "status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
+  "supersedes": "generated/e2-r17-runtime-dependency-qualification-20260828.json",
+  "tests": {
+    "errors": 0,
+    "failed": 0,
+    "passed": 28,
+    "status": "PASS",
+    "suites": [
+      "search_projection_theory",
+      "search_projection_runner",
+      "controlled_spreadsheet_suite",
+      "ark_plan_react",
+      "mindmemos_ark_adapter"
+    ]
+  },
+  "uv_executable": "/data/wyt/e2-r17-search-projection/uv-bootstrap/bin/uv",
+  "uv_sync_command": "UV_PROJECT_ENVIRONMENT=<venv> uv sync --project <MindMemOS> --package mindmemos-eval --frozen --no-dev --python /usr/bin/python3.12",
+  "uv_version": "0.12.7",
+  "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+}

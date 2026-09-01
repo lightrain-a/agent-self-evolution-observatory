@@ -1,0 +1,102 @@
+{
+  "artifact_type": "e2-r17-search-projection-debate-model-qualification",
+  "authority": {
+    "debate_completed": false,
+    "experiment": false,
+    "f0_r4_frozen": false,
+    "gpu": false,
+    "submission": false
+  },
+  "benchmark_data_accessed": false,
+  "call_kind": "EXPLICIT_COMPATIBILITY_QUALIFICATION",
+  "compatibility_parent": {
+    "path": "generated/e2-r17-search-projection-debate-model-qualification-20260827.json",
+    "separate_generation_calls_declared": true,
+    "sha256": "a77aa324a9f3cd8881ffbb6e5439c8634d90f87888032a0ca9a8e6576d23143d"
+  },
+  "created_at_utc": "2026-08-27T13:32:15+00:00",
+  "k3_requested_identity_is_not_assumed_resolved_identity": true,
+  "models": [
+    {
+      "automatic_thinking_compatibility_fallback_allowed": false,
+      "call_kind": "EXPLICIT_COMPATIBILITY_QUALIFICATION",
+      "checks": {
+        "deepseek_resolved_exact": false,
+        "resolved_model_present": true,
+        "text_exact": true
+      },
+      "get_poll_recovery": false,
+      "hidden_provider_retry_used": false,
+      "max_output_tokens": 512,
+      "poll_count": 0,
+      "prompt_sha256": "56878f0053fae7cc5964af67ab8bdc1f6872c1358aa1380a4bdfad26d6d1c1cf",
+      "provider_generation_attempts": 1,
+      "provider_retry_limit": 0,
+      "provider_status": "completed",
+      "raw_text": "PLAN_OK",
+      "raw_text_sha256": "aa6b4c1b97751f326153c1927c1106bf5a927ec506a8066dfe0dded595992d7c",
+      "requested_model": "deepseek-v4-pro",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "response_id_sha256": "2afa22701aad717d9adff3fcae44b50cd463314abf419547d55ac8f1a155d2d8",
+      "scientific_outcome": false,
+      "status": "FAIL",
+      "thinking_requested": "disabled",
+      "usage": {
+        "input_tokens": 30,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 3,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 33
+      }
+    },
+    {
+      "automatic_thinking_compatibility_fallback_allowed": false,
+      "call_kind": "EXPLICIT_COMPATIBILITY_QUALIFICATION",
+      "checks": {
+        "deepseek_resolved_exact": true,
+        "resolved_model_present": true,
+        "text_exact": true
+      },
+      "get_poll_recovery": false,
+      "hidden_provider_retry_used": false,
+      "max_output_tokens": 512,
+      "poll_count": 0,
+      "prompt_sha256": "56878f0053fae7cc5964af67ab8bdc1f6872c1358aa1380a4bdfad26d6d1c1cf",
+      "provider_generation_attempts": 1,
+      "provider_retry_limit": 0,
+      "provider_status": "completed",
+      "raw_text": "PLAN_OK",
+      "raw_text_sha256": "aa6b4c1b97751f326153c1927c1106bf5a927ec506a8066dfe0dded595992d7c",
+      "requested_model": "kimi-k3",
+      "resolved_model": "kimi-k3",
+      "response_id_sha256": "882d9c8872baa9cc5248461b6d04c1722bbc7ece27e1e14e1d61dd0b98123d05",
+      "scientific_outcome": false,
+      "status": "PASS",
+      "thinking_requested": "disabled",
+      "usage": {
+        "input_tokens": 44,
+        "input_tokens_details": {
+          "cached_tokens": 0
+        },
+        "output_tokens": 13,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 57
+      }
+    }
+  ],
+  "private_credentials_included": false,
+  "protocol_smoke_calls": 2,
+  "provider_retry_limit": 0,
+  "raw_response_ids_included": false,
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "route_is_ark_plan": true,
+  "schema_version": "1.1",
+  "scientific_provider_calls": 0,
+  "status": "HOLD_OR_FAIL"
+}

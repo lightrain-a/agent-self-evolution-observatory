@@ -1,0 +1,181 @@
+{
+  "artifact_type": "e2-r17-e0-analysis",
+  "schema_version": "1.0",
+  "created_at_utc": "2026-08-28T08:23:21.819922+00:00",
+  "read_only_source": true,
+  "source": {
+    "run_root": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828",
+    "summary_path": "/data/wyt/e2-r17-search-projection/runs/e0-pilot-r4-r3-20260828/e0_pilot_summary.json",
+    "summary_sha256": "533abf55359360bd408a4878235d24b5192d77f2471f0676bb8b10d570ad0366",
+    "contract_path": "generated/e2-r17-f0-r4-frozen-candidate-contract-20260828.json",
+    "contract_sha256": "f4019646b653f41abe056fdd7b746ff6cb4749ce4d2771c2ef90af6845631508",
+    "authorization_path": "generated/e2-r17-e0-pilot-authorization-r3-20260828.json",
+    "authorization_sha256": "5033c226b7248c3d9f72caa2b574f84ffa4ae9c3097175bde87e9b469c9fdff4"
+  },
+  "protocol_integrity": {
+    "tasks_complete": 12,
+    "expected_tasks": 12,
+    "trajectory_files": 96,
+    "trajectory_ref_files": 96,
+    "pool_files": 48,
+    "unique_rollout_units": 96,
+    "technical_failures": 0,
+    "actor_finished_false_unit_count": 1,
+    "actor_finished_false_units": [
+      {
+        "case_id": "r17-b1-ioc-p2",
+        "rollout_index": 7,
+        "score": 1.0,
+        "turns": 10,
+        "output_sha256": "cb3af592123ac32d229a48f773dc47f2bd79f6f0594baee361bb231125a4fef6"
+      }
+    ],
+    "resolved_models": {
+      "deepseek-v4-pro-ga-260813": 96
+    },
+    "provider_calls_reconstructed": 566,
+    "total_tokens_reconstructed": 1711693,
+    "k": 8,
+    "prefix_ks": [
+      1,
+      2,
+      4,
+      8
+    ]
+  },
+  "acting": {
+    "success_at_k": {
+      "1": 0.9166666666666666,
+      "2": 0.9166666666666666,
+      "4": 1.0,
+      "8": 1.0
+    },
+    "delta_vs_success_at_1": {
+      "1": 0.0,
+      "2": 0.0,
+      "4": 0.08333333333333337,
+      "8": 0.08333333333333337
+    },
+    "mixed_pool_count": {
+      "1": 0,
+      "2": 1,
+      "4": 6,
+      "8": 8
+    },
+    "mixed_pool_rate": {
+      "1": 0.0,
+      "2": 0.08333333333333333,
+      "4": 0.5,
+      "8": 0.6666666666666666
+    },
+    "rescue_event_count": {
+      "1": 0,
+      "2": 0,
+      "4": 1,
+      "8": 1
+    },
+    "rescue_event_rate": {
+      "1": 0.0,
+      "2": 0.0,
+      "4": 0.08333333333333333,
+      "8": 0.08333333333333333
+    }
+  },
+  "visibility": {
+    "V_pre": {
+      "1": 0.08333333333333333,
+      "2": 0.08333333333333333,
+      "4": 0.08333333333333333,
+      "8": 0.08333333333333333
+    },
+    "V_winner": {
+      "1": 0.08333333333333333,
+      "2": 0.08333333333333333,
+      "4": 0.0,
+      "8": 0.0
+    },
+    "Gamma": {
+      "1": 0.0,
+      "2": 0.0,
+      "4": 0.08333333333333333,
+      "8": 0.08333333333333333
+    },
+    "identity_check_max_abs_error": 4.163336342344337e-17
+  },
+  "iid_special_case_reference": {
+    "pooled_rollout_success_p": 0.8333333333333334,
+    "formula": "Gamma_K(p)=(1-p)-(1-p)^K",
+    "Gamma": {
+      "1": 0.0,
+      "2": 0.13888888888888887,
+      "4": 0.16589506172839502,
+      "8": 0.16666607129248587
+    },
+    "interpretation": "reference only; observed task pools are heterogeneous and need not be iid"
+  },
+  "failure_support": {
+    "k8_failure_families_with_any_failed_rollout": [
+      "aggregation_join",
+      "formula_materialization",
+      "input_output_contract",
+      "schema_key_alignment",
+      "target_sheet_range"
+    ],
+    "k8_mixed_pool_families": [
+      "aggregation_join",
+      "formula_materialization",
+      "input_output_contract",
+      "schema_key_alignment",
+      "target_sheet_range"
+    ],
+    "k8_rescue_tasks": [
+      {
+        "task_id": "r17-b1-tsr-p7",
+        "failure_family": "target_sheet_range",
+        "scores": [
+          0.0,
+          0.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.0,
+          1.0
+        ],
+        "winner_index": 2
+      }
+    ],
+    "k8_rescue_task_count": 1,
+    "k8_rescue_families": [
+      "target_sheet_range"
+    ],
+    "k8_rescue_family_count": 1
+  },
+  "interpretation": {
+    "search_improves_acting": true,
+    "winner_only_censors_precommitted_failure_on_rescueable_pool": true,
+    "ceiling_warning": true,
+    "observed_regime": "one rescueable intermediate cell inside an otherwise high-success/ceiling-heavy pilot",
+    "alternative_explanations": [
+      "task-level capability heterogeneity makes the pooled-iid reference overpredict censoring mass",
+      "the 12-task pilot is ceiling-heavy, so rescue support is sparse",
+      "E0 identifies visibility structure only; it does not establish future learning utility"
+    ]
+  },
+  "promotion_gate": {
+    "frozen_text": "at least 6 rescue tasks and >=3 families; otherwise HOLD/STOP before updater",
+    "required_rescue_tasks": 6,
+    "required_failure_families": 3,
+    "observed_rescue_tasks": 1,
+    "observed_failure_families": 1,
+    "pass": false
+  },
+  "belief_update": "Search-projection censoring is empirically nonzero in the frozen E0 pilot, but support is too sparse to authorize the updater intervention. The correct update is HOLD, not mechanism rejection: one precommitted failure is rescued and hidden by the winner at K>=4, while the frozen E1 support gate requires at least six rescue tasks spanning at least three failure families.",
+  "decision": "HOLD",
+  "authority": {
+    "E1_scientific_experiment": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "next": "Freeze and independently review a non-selective support-qualification tranche using only actor/verifier rescueability structure; do not select on projection or downstream learning outcomes. Planning, baseline/model audit, and outcome-blind runtime pilots may proceed while E1 remains blocked."
+}

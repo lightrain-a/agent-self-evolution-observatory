@@ -1,0 +1,86 @@
+{
+  "artifact_type": "e2-r17-pair29-actual-actor-path-preflight",
+  "authorization_sha256": "de4d09c152d6513c6d03c89d542dd26b2f0ba45fdf339f8a7966345f2b4e589b",
+  "contract_sha256": "2c249ed3f3e413469f777ed3d748e2d1735ddf2d7c58a06d039e4188c065c21a",
+  "created_at_utc": "2026-09-01T08:27:16+00:00",
+  "heldout_combinations": 7,
+  "never_started_measurements": 6,
+  "partial_effect_read": false,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "schema_version": "1.0",
+  "status": "PASS_ACTUAL_ACTOR_AUTHORIZATION_PATH_PREFLIGHT_7_OF_7",
+  "unique_429_recovery": 1,
+  "units": [
+    {
+      "arm": "win_c",
+      "classification": "explicit_429_logical_unit_recovery",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-pair29-recovery-m1-v2-20260901/win_c/r17-b4-ska-p8/pre-provider-stop.json",
+      "receipt_sha256": "968e62b73b2483b7cd41acea0f0910017880b298d134fe94457530119ab3e3e2",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-ska-p8"
+    },
+    {
+      "arm": "win_c",
+      "classification": "never_started_measurement",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-pair29-recovery-m1-v2-20260901/win_c/r17-b4-tsr-p0/pre-provider-stop.json",
+      "receipt_sha256": "b1ba3e3b923c4d9e75bf2ff6635473eb5787a8faee5da6fa563ffe0a25bbbd48",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-tsr-p0"
+    },
+    {
+      "arm": "win_c",
+      "classification": "never_started_measurement",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-pair29-recovery-m1-v2-20260901/win_c/r17-b4-tsr-p6/pre-provider-stop.json",
+      "receipt_sha256": "900cdb1b1a30b57da0ff9d1af364b8df941305c61688d7af4b27e93bef22012d",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-tsr-p6"
+    },
+    {
+      "arm": "win_c",
+      "classification": "never_started_measurement",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-pair29-recovery-m1-v2-20260901/win_c/r17-b4-tsr-p8/pre-provider-stop.json",
+      "receipt_sha256": "01972fd23c5a508a118d682a35a51570254ce9d94ef8744619f7f302a6514b8c",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-tsr-p8"
+    },
+    {
+      "arm": "mrw",
+      "classification": "never_started_measurement",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-pair29-recovery-m1-v2-20260901/mrw/r17-b4-tsr-p0/pre-provider-stop.json",
+      "receipt_sha256": "3db140799b6849fc713653a592c91ce4ed8f89b91d3c1393729ed05254d80397",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-tsr-p0"
+    },
+    {
+      "arm": "mrw",
+      "classification": "never_started_measurement",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-pair29-recovery-m1-v2-20260901/mrw/r17-b4-tsr-p6/pre-provider-stop.json",
+      "receipt_sha256": "6c94136bf13f7388d0413e164bfba571fc0cc9be87f6b6e025afd21c9a7f6adf",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-tsr-p6"
+    },
+    {
+      "arm": "mrw",
+      "classification": "never_started_measurement",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-pair29-recovery-m1-v2-20260901/mrw/r17-b4-tsr-p8/pre-provider-stop.json",
+      "receipt_sha256": "d9d18f468b2368b646a3e07ab330c3efa636ddf4434b03971e8fd14f764ada49",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-tsr-p8"
+    }
+  ]
+}

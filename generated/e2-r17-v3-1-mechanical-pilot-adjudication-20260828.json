@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-v3-1-mechanical-pilot-adjudication",
+  "date": "2026-08-28",
+  "status": "PASS_MECHANICAL_ONLY_NO_E1_AUTHORITY",
+  "contract": {
+    "path": "generated/e2-r17-v3-1-mechanical-pilot-contract-20260828.json",
+    "sha256": "46606d33c3d6b7694279bbaf4d1e4469fee40820ab8ca64a06d1fbdc6bafa6e9"
+  },
+  "run": {
+    "root": "/data/wyt/e2-r17-search-projection/runtime-pilots/v3-1-mechanical-20260828",
+    "summary": "summary/runtime_pilot_summary.json",
+    "summary_sha256": "f24743f2c70bcc914060a432a7ec6833145546e7946e25cb73bb62e556c10807",
+    "completed_manifest": "checkpoints/completed_units.jsonl",
+    "completed_manifest_sha256": "14002142e56eed1e081f108f170445e9de97a69c0459c09f135f130f9c1738df",
+    "raw_pool_receipts": 12,
+    "completed_manifest_rows": 12
+  },
+  "observed": {
+    "pools": 12,
+    "mixed_pools": 8,
+    "nonmixed_pools": 4,
+    "exact_final_retokenized_parity": true,
+    "matched_final_tokens_min": 995,
+    "matched_final_tokens_median": 2057.5,
+    "matched_final_tokens_mean": 2072.5,
+    "matched_final_tokens_max": 3072,
+    "selected_source_budget_gap_max": 1,
+    "nonmixed_model_visible_identity": true,
+    "arm_metadata_visible_in_messages": false,
+    "selected_evidence_score_semantics": true,
+    "acting_provenance_identical_across_clones": true,
+    "downstream_transcript_truncation": false,
+    "corruption_detection_simulation": true,
+    "provider_calls": 0,
+    "new_actor_rollouts": 0,
+    "scientific_effectiveness_evaluated": false
+  },
+  "resume_check": {
+    "intentional_second_invocation": true,
+    "completed_now": 0,
+    "reused_after_sha_validation": 12,
+    "duplicate_provider_calls": 0,
+    "duplicate_actor_rollouts": 0,
+    "status": "PASS"
+  },
+  "interpretation": "V3.1 repairs the mechanical causal-purity defects that stopped V3. This is engineering qualification only. It does not establish that MRW changes future skill utility and cannot promote the paper mechanism.",
+  "next_gate": "SEPARATE_IMMUTABLE_E1_A_POOL_SUPPORT_CONTRACT_AND_INDEPENDENT_PREEXECUTION_REVIEW",
+  "authority": {
+    "prepare_e1_a_contract": true,
+    "review_e1_a_contract": true,
+    "execute_e1_a": false,
+    "provider_runtime_pilot": false,
+    "e1_b": false,
+    "scientific_effectiveness": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

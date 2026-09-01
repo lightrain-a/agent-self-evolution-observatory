@@ -1,0 +1,24 @@
+{
+  "all_allow_separate_negative_control_authorization": true,
+  "artifact_type": "e2-r17-e1-b-negative-control-dual-review",
+  "created_at_utc": "2026-08-29T11:22:40+00:00",
+  "draft_contract_sha256": "8010b307d084d2996522df30ae12ff71cdaf46b5228659a44c770c3f09db5781",
+  "exposed_to_other_review": false,
+  "independent": true,
+  "mrw_authority": false,
+  "paper_claim_authority": false,
+  "resolved_models": {
+    "deepseek-v4-pro": "deepseek-v4-pro-ga-260813",
+    "kimi-k3": "kimi-k3"
+  },
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "statuses": {
+    "deepseek-v4-pro": "COMPLETED",
+    "kimi-k3": "COMPLETED"
+  },
+  "verdicts": {
+    "deepseek-v4-pro": "PASS_TO_SEPARATELY_AUTHORIZED_NEGATIVE_CONTROL_FULL",
+    "kimi-k3": "PASS_TO_SEPARATELY_AUTHORIZED_NEGATIVE_CONTROL_FULL"
+  }
+}

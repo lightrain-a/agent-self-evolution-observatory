@@ -1,0 +1,81 @@
+{
+  "artifact_type": "e2-r17-v3-1-independent-review",
+  "created_at_utc": "2026-08-31T04:14:26+00:00",
+  "dossier_file_sha256": {
+    "analyzer": "9b3c7f0aed465b69a19476138a00882a268b59f47460e8a2abb1bb39dd37eec8",
+    "compatibility_manifest": "61e243027e6d42f7923e249f6c88267e6db07ed4bccb32d5a50c8d13bf1695bb",
+    "manifest_validator": "ad358c792136ee247d0d6e0116c850af0cf678e3de88f04474af3e5466c74371",
+    "model_identity": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "preflight": "d4ff983111f61a802443f456d53d1693375e5d30ed6f90fb6c3a74d6ff89fa13",
+    "repair1_authorization": "8301fa9d96768a86c802c06fbe04a02be552c5fa68195f709011b73c83b8dac5",
+    "repair1_contract": "a4ce14dea5c5b0ab5509d97a072013a9924b592ae18c049b05d4edf707201f80",
+    "repair2_draft": "999498499649f873f1f0eff32593d9d2a2c788f843f0484af77cf8868ce89e26",
+    "runner": "63206799b017b159b425053b31617bad010b00b6c8df0bcdf9e40a8e68101a2a",
+    "superseding_failure": "c21ce2ef3fb4f4573c3f6f45cab8842fbb75dab8d61d256ee3985f24932b38fa",
+    "technical_quarantine": "1908a3dfc472f835c204f7f9d5a66a9ee4b37093adb09a8d0c0f297b4b1abd7a",
+    "test_adjudication": "ab86fef9695aafc355d7e91a20db9752724cdf646987c2efe73b0b586582920d",
+    "tests": "1735ac87979afc83092a0ce0e5851761197a530c53d91fd6c2392c73332cd1b3"
+  },
+  "expected_resolved_model": "deepseek-v4-pro-ga-260813",
+  "experiment_authority": false,
+  "exposed_to_other_review": false,
+  "get_poll_recovery": false,
+  "hidden_provider_retry_used": false,
+  "independent": true,
+  "max_output_tokens": 5000,
+  "missing_required_fields": [],
+  "paper_promotion_authority": false,
+  "parse_valid": true,
+  "poll_count": 0,
+  "prompt_path": "generated/e2-r17-deepseek-v2-repair2-review-20260831/deepseek-v4-pro-prompt.md",
+  "prompt_sha256": "5b16ae8b93068983d87efb891a80e85d49b9b3a37fd2dfbf04a06cef9e175038",
+  "provider_generation_attempts": 1,
+  "provider_retry_limit": 0,
+  "provider_status": "completed",
+  "raw_text": "```json\n{\n  \"draft_contract_sha256_acknowledged\": \"999498499649f873f1f0eff32593d9d2a2c788f843f0484af77cf8868ce89e26\",\n  \"verdict\": \"PASS_TO_SEPARATELY_AUTHORIZED_REPAIR2\",\n  \"selection_bias_assessment\": \"PASS. The 14 inherited pairs are selected only by pre-outcome completeness/provenance and attempt0-success prefix identity. The compatibility manifest explicitly records scientific_scores_read=false, and the validator deliberately does not read ref['score'] (test I confirms no score/effect/J/D/success_count subscripts). The treatment-dependent failed pair e1-fmv-01/rep2 is quarantined, excluded from the valid manifest, and Repair2 fresh-runs both arms. No post-treatment selection or protocol-version bias is introduced.\",\n  \"prefix_compatibility_assessment\": \"PASS. For attempt0-success states, max_parse_attempts=1 and =2 follow the identical execution path through the endpoint; the extra branch exists only after attempt0 fails. The compatibility manifest marks all 14 pairs PASS_ATTEMPT0_SUCCESS_PATH_IDENTICAL, each with 10 nominal calls, zero parse errors, and no correction. The runner enforces that nominal Repair2 paths are attempt0-only and that the correction path is only triggered by a patch-apply attempt0 failure.\",\n  \"arm_symmetry_assessment\": \"PASS. max_parse_attempts=2 and budgets (updater nominal 10, correction max 11, state max 191, actor max 180) apply identically to WIN-C and MRW. The runner uses the same ensure_update/ensure_eval paths for both arms, with no arm/stream/failure-conditioned allowance. The correction policy is symmetric and only triggered by deterministic parse/apply failure.\",\n  \"fresh_failed_pair_assessment\": \"PASS. Repair2 never resumes old MRW. The failed pair e1-fmv-01/rep2 is fresh-run for both WIN-C and MRW under the same current identity, pools, initial skill, policy, and time-balanced schedule. The quarantine disposition is PRESERVE; EXCLUDE FROM VALID MANIFEST; REPAIR2 FRESH-RUNS BOTH ARMS, and single-arm resume is forbidden.\",\n  \"valid_manifest_assessment\": \"PASS. Only the frozen 14-pair compatibility manifest may seed inheritance. Analysis reads a content-addressed valid_replicates manifest that must contain exactly 48 complete paired rows and exactly four per stream. Directory discovery is forbidden, quarantine is excluded, and no single-arm row is allowed. The manifest validator enforces these constraints.\",\n  \"runtime_reliability_reporting_assessment\": \"PASS. correction required/success/failure counts are secondary runtime reliability outcomes by arm, cannot filter the primary estimand, and the Repair1 MRW patch-apply failure remains separately reported. The runner computes reliability counts but does not use them to filter the primary analysis.\",\n  \"provider_budget_assessment\": \"PASS. nominal updater=10, one explicit correction yields max=11, actor remains <=180 (18 probes x 10 turns), state max=191; claims are visible and fail-closed, provider retry=0, no third attempt. The runner enforces these limits and the tests confirm no third attempt.\",\n  \"scientific_cardinality_assessment\": \"PASS. exactly 12 stream D_s, four valid pairs per stream, same treatment/control/pools/initial skill/renderer/updater/verifier/heldout/K=1/8192/statistics/epsilon. GPT/Kimi/Qwen scientific execution and public benchmark remain forbidden.\",\n  \"remaining_blockers\": [],\n  \"nonblocking_notes\": [\n    \"The compatibility manifest contains extensive per-arm provider receipt data; the validator correctly avoids reading score fields during inheritance.\",\n    \"The runner's correction path requires exactly one parse error on patch-apply attempt0 and a successful attempt1; this is a strict, fail-closed implementation of the single-variable repair.\"\n  ],\n  \"execution_recommendation\": \"ALLOW_SEPARATE_REPAIR2_AUTHORIZATION\",\n  \"second_backbone_recommendation\": \"HOLD\",\n  \"paper_claim_authority\": false,\n  \"single_sentence_verdict\": \"All eight gates pass with no remaining blockers, authorizing only a separately SHA-bound Repair2 contract/authorization after zero-provider preflight.\"\n}\n```",
+  "raw_text_sha256": "041d98bd00e540bc486e656a9b91f49a66ce9fe233476a49c253200b0d326422",
+  "repair_sha256": "999498499649f873f1f0eff32593d9d2a2c788f843f0484af77cf8868ce89e26",
+  "requested_model": "deepseek-v4-pro",
+  "resolved_model": "deepseek-v4-pro-ga-260813",
+  "resolved_model_matches_qualification": true,
+  "response_id_sha256": "d9923f1d5d36906efb1deb9534d6037c904237064092673f86b700787af15aec",
+  "review": {
+    "arm_symmetry_assessment": "PASS. max_parse_attempts=2 and budgets (updater nominal 10, correction max 11, state max 191, actor max 180) apply identically to WIN-C and MRW. The runner uses the same ensure_update/ensure_eval paths for both arms, with no arm/stream/failure-conditioned allowance. The correction policy is symmetric and only triggered by deterministic parse/apply failure.",
+    "draft_contract_sha256_acknowledged": "999498499649f873f1f0eff32593d9d2a2c788f843f0484af77cf8868ce89e26",
+    "execution_recommendation": "ALLOW_SEPARATE_REPAIR2_AUTHORIZATION",
+    "fresh_failed_pair_assessment": "PASS. Repair2 never resumes old MRW. The failed pair e1-fmv-01/rep2 is fresh-run for both WIN-C and MRW under the same current identity, pools, initial skill, policy, and time-balanced schedule. The quarantine disposition is PRESERVE; EXCLUDE FROM VALID MANIFEST; REPAIR2 FRESH-RUNS BOTH ARMS, and single-arm resume is forbidden.",
+    "nonblocking_notes": [
+      "The compatibility manifest contains extensive per-arm provider receipt data; the validator correctly avoids reading score fields during inheritance.",
+      "The runner's correction path requires exactly one parse error on patch-apply attempt0 and a successful attempt1; this is a strict, fail-closed implementation of the single-variable repair."
+    ],
+    "paper_claim_authority": false,
+    "prefix_compatibility_assessment": "PASS. For attempt0-success states, max_parse_attempts=1 and =2 follow the identical execution path through the endpoint; the extra branch exists only after attempt0 fails. The compatibility manifest marks all 14 pairs PASS_ATTEMPT0_SUCCESS_PATH_IDENTICAL, each with 10 nominal calls, zero parse errors, and no correction. The runner enforces that nominal Repair2 paths are attempt0-only and that the correction path is only triggered by a patch-apply attempt0 failure.",
+    "provider_budget_assessment": "PASS. nominal updater=10, one explicit correction yields max=11, actor remains <=180 (18 probes x 10 turns), state max=191; claims are visible and fail-closed, provider retry=0, no third attempt. The runner enforces these limits and the tests confirm no third attempt.",
+    "remaining_blockers": [],
+    "runtime_reliability_reporting_assessment": "PASS. correction required/success/failure counts are secondary runtime reliability outcomes by arm, cannot filter the primary estimand, and the Repair1 MRW patch-apply failure remains separately reported. The runner computes reliability counts but does not use them to filter the primary analysis.",
+    "scientific_cardinality_assessment": "PASS. exactly 12 stream D_s, four valid pairs per stream, same treatment/control/pools/initial skill/renderer/updater/verifier/heldout/K=1/8192/statistics/epsilon. GPT/Kimi/Qwen scientific execution and public benchmark remain forbidden.",
+    "second_backbone_recommendation": "HOLD",
+    "selection_bias_assessment": "PASS. The 14 inherited pairs are selected only by pre-outcome completeness/provenance and attempt0-success prefix identity. The compatibility manifest explicitly records scientific_scores_read=false, and the validator deliberately does not read ref['score'] (test I confirms no score/effect/J/D/success_count subscripts). The treatment-dependent failed pair e1-fmv-01/rep2 is quarantined, excluded from the valid manifest, and Repair2 fresh-runs both arms. No post-treatment selection or protocol-version bias is introduced.",
+    "single_sentence_verdict": "All eight gates pass with no remaining blockers, authorizing only a separately SHA-bound Repair2 contract/authorization after zero-provider preflight.",
+    "valid_manifest_assessment": "PASS. Only the frozen 14-pair compatibility manifest may seed inheritance. Analysis reads a content-addressed valid_replicates manifest that must contain exactly 48 complete paired rows and exactly four per stream. Directory discovery is forbidden, quarantine is excluded, and no single-arm row is allowed. The manifest validator enforces these constraints.",
+    "verdict": "PASS_TO_SEPARATELY_AUTHORIZED_REPAIR2"
+  },
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "schema_version": "1.0",
+  "scientific_authority": false,
+  "status": "COMPLETED",
+  "submission_authority": false,
+  "temperature": 0,
+  "thinking_requested": "disabled",
+  "usage": {
+    "input_tokens": 146117,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 963,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "total_tokens": 147080
+  }
+}
