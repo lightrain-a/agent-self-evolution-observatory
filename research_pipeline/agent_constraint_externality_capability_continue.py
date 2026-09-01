@@ -455,6 +455,11 @@ def adjudicate_continuation(
     if resolved_models != {ALLOWED_ALIAS}:
         raise RunnerError("Resolved-model identity drifted during capability continuation.")
     gate = capability_gate(completions)
+    total_agent_model_requests = (
+        int(recovery["historical_provider_request_count"])
+        + continuation_agent_requests
+    )
+    gate["agent_model_request_count"] = total_agent_model_requests
     result: dict[str, Any] = {
         "schema_version": "ace-qwen-capability-continuation-r1-v1",
         "object_id": OBJECT_ID,
@@ -462,17 +467,23 @@ def adjudicate_continuation(
         "status": gate["verdict"],
         "gate": gate,
         "resolved_model_identities": sorted(resolved_models),
+        "scheduled_agent_episode_count": 8,
+        "agent_episode_count": 8,
+        "terminal_agent_episode_count": 8,
         "valid_capability_measurements": 8,
+        "capability_measurements_observed": 8,
+        "scientific_outcomes_observed": 0,
         "recovered_measurements": 1,
         "newly_executed_measurements": 7,
         "tool_cap_incomplete_measurements": len(failures),
         "historical_agent_model_requests": int(recovery["historical_provider_request_count"]),
         "continuation_agent_model_requests": continuation_agent_requests,
         "catalog_provider_requests_historical": 1,
+        "catalog_provider_request_count": 1,
+        "updater_model_request_count": 0,
         "provider_requests_added_by_measurement_recovery": 0,
-        "provider_request_total_across_lineage": (
-            1 + int(recovery["historical_provider_request_count"]) + continuation_agent_requests
-        ),
+        "provider_request_total": 1 + total_agent_model_requests,
+        "provider_request_total_across_lineage": 1 + total_agent_model_requests,
         "recovery_artifact_sha256": sha256_file(recovery_path),
         "continuation_ledger_sha256": sha256_file(continuation_ledger_path),
         "toolcap_measurement_ledger_sha256": (
