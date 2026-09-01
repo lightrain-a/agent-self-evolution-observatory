@@ -1,0 +1,25 @@
+{
+  "authority": {
+    "capability_a1_relaunch_after_static_repair": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "classification": "PREDISPATCH_RUNNER_NAMESPACE_IMPLEMENTATION_FAILURE",
+  "content_sha256": "c2dba673874d209a2bd7d282b15ab48dd0a338ab33f16144bc3a08b617512392",
+  "execution_id": "QWEN37PLUS-CAPABILITY-A1",
+  "failure_message": "Unknown episode namespace: capability-a1",
+  "ledger_created": false,
+  "log_sha256": "c4da0d3d031be6c8c1722cd41b91df5fb332f4835f859453d06260b4f866bd92",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "old_runtime_reused": false,
+  "repair": "Use frozen capability namespace with the Plus model id in the existing (model_id,family_id,repeat) key.",
+  "replacement": false,
+  "retry": false,
+  "root_cause": "A1 introduced a new EpisodeUnit namespace although exactly-once core only admits capability/source/probe; capability unit keys already include model_id so no new namespace is required.",
+  "schema_version": "ace-qwen37plus-capability-a1-predispatch-repair-v1",
+  "scientific_agent_episodes_dispatched": 0,
+  "scientific_agent_model_requests": 0,
+  "scientific_protocol_changed": false
+}

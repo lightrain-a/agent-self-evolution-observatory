@@ -1,7 +1,8 @@
 {
   "canonical_closed_state": {
-    "last_closed_segment": "S30",
-    "next_segment": "S31",
+    "last_closed_segment": "S31",
+    "next_gate": "WHOLE_MANIFEST_FINAL_SEAL",
+    "next_segment": null,
     "origin_main_parent_before_s20_integration": "60c5b183768e17366a2d4646af5c35a833e6f204",
     "origin_main_parent_before_s21_integration": "57487b4a4e0b211bcdac8310859960a10176838e",
     "origin_main_parent_before_s22_integration": "581ac386da83acc33b06bc98f789c521f2e08491",
@@ -13,6 +14,7 @@
     "origin_main_parent_before_s28_integration": "aafb7f682a0da935a8dfe80d8a9ee43b5eb936a8",
     "origin_main_parent_before_s29_integration": "d2b1245b00f25f670a29f3816ce040ff05d1d669",
     "origin_main_parent_before_s30_integration": "e97edbf663668db832692ef8415a3f6ca2f322fd",
+    "origin_main_parent_before_s31_integration": "6b9abcb7b51c636eb698e4893da60b8f8e03fc3b",
     "s01_s07": "PAYLOAD_SEGMENT_COMPLETE",
     "s08_initial": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
     "s08_repair1": "PAYLOAD_SEGMENT_COMPLETE",
@@ -95,7 +97,11 @@
     "s30": "PAYLOAD_SEGMENT_COMPLETE",
     "s30_receipt_sha256": "5f215f8a017b29739f306a119d8b8db00e8e9acddca085dffbaed10566a57c4a",
     "s30_verified_bytes": 8583605408,
-    "s30_verified_file_count": 46
+    "s30_verified_file_count": 46,
+    "s31": "PAYLOAD_SEGMENT_COMPLETE",
+    "s31_receipt_sha256": "7cd1fc83b21b822b71534a323ab69fa5830ec58b8a71ea152c9ae2c4c5af4ae6",
+    "s31_verified_bytes": 3643046048,
+    "s31_verified_file_count": 19
   },
   "execution_authority_created_by_this_checkpoint": false,
   "execution_resume_location": {
@@ -108,14 +114,14 @@
   "model_loaded": false,
   "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
   "policy_outcomes_read": false,
-  "recorded_at": "2026-09-01T20:22:07+08:00",
+  "recorded_at": "2026-09-01T20:25:44+08:00",
   "resume_protocol": [
-    "Before S31, inspect the single-writer lock holder, actor process, S31 receipt, finalized files, and partial files.",
-    "Never rerun S01-S30; they are content-addressed closed segments.",
+    "Before whole-manifest final seal, prove no active materializer lock holder and verify all S01-S31 receipts are closed; never rerun S01-S31.",
+    "Run the whole-manifest final seal against the frozen 1380-file manifest and evidence root before normalization, model asset acquisition, model load, GPU execution, training, rollout, or policy outcome read.",
+    "The seal must require exact frozen path, size, and SHA-256 for every file, exact total bytes, zero .part files, zero missing/invalid files, and the frozen dataset revision.",
     "Do not duplicate a lock-holding actor after SSH/tool transport errors.",
-    "Transport-only retry may reuse the verified-relay pattern without changing frozen file identity, task/episode selection, or the scientific contract.",
     "No model/checkpoint weight download, model load, GPU execution, training, policy rollout, policy outcome read, task replacement, episode replacement, or claim expansion is authorized by this checkpoint."
   ],
-  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.22",
+  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.23",
   "scientific_authority": false
 }
