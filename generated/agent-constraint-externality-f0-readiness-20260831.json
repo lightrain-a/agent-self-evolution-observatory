@@ -1,6 +1,6 @@
 {
   "appworld_ul_authorized": false,
-  "blocker": "AA_API_KEY is not configured in the approved environment.",
+  "blocker": null,
   "capability_contract_frozen": true,
   "compiler_pass_conditions_all_true": true,
   "compiler_verdict": "PRE_F0_5_PASS",
@@ -14,7 +14,7 @@
   "generated_at": "2026-09-01T15:35:00+08:00",
   "m1_runner_qualification_pass": true,
   "model_prereg_addendum_a0_pass": true,
-  "next_authorized_action": "CONFIGURE_QWEN_PROVIDER_CREDENTIAL",
+  "next_authorized_action": "RUN_QWEN_CAPABILITY_CALIBRATION",
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "p1_authorized": false,
   "provider": {
@@ -22,12 +22,12 @@
     "api_key_env": "AA_API_KEY",
     "api_key_in_output": false,
     "base_url": "https://api.aa.com.cn/api/v1",
-    "configured": false,
+    "configured": true,
     "provider": "TYPICAL_TOKEN_OPENAI_RESPONSES_API",
     "requested_model": "qwen3.7-flash-2026-07-15"
   },
-  "provider_credential_present": false,
+  "provider_credential_present": true,
   "schema_version": "agent-constraint-externality-f0-readiness-v1",
-  "status": "QWEN_PROVIDER_CONFIGURATION_REQUIRED",
+  "status": "CAPABILITY_CALIBRATION_READY",
   "tool_sandbox_authorized": false
 }

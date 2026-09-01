@@ -124,16 +124,24 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         serialized = json.dumps(readiness, sort_keys=True)
         self.assertNotIn("Bearer ", serialized)
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
-        self.assertEqual(
-            readiness["status"], "QWEN_PROVIDER_CONFIGURATION_REQUIRED"
-        )
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        self.assertFalse(readiness["provider_credential_present"])
-        self.assertEqual(
-            readiness["next_authorized_action"],
-            "CONFIGURE_QWEN_PROVIDER_CREDENTIAL",
-        )
+        if readiness["provider_credential_present"]:
+            self.assertEqual(
+                readiness["status"], "CAPABILITY_CALIBRATION_READY"
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "RUN_QWEN_CAPABILITY_CALIBRATION",
+            )
+        else:
+            self.assertEqual(
+                readiness["status"], "QWEN_PROVIDER_CONFIGURATION_REQUIRED"
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "CONFIGURE_QWEN_PROVIDER_CREDENTIAL",
+            )
 
     def test_manifest_hashes_are_self_consistent(self) -> None:
         manifest = self.data["manifest"]

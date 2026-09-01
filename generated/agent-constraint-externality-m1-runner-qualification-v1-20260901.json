@@ -2,7 +2,7 @@
   "appworld_non_scientific_qualification": {
     "command": "appworld verify tasks",
     "custom_task_direct_function_adapter": "PASS",
-    "function_tool_count": 473,
+    "family_scoped_tool_filter": "PASS",
     "passed_task_count": 1,
     "read_only_tool_executed": "api_docs__show_app_descriptions",
     "returncode": 0,
@@ -35,7 +35,7 @@
     "update_injects_exact_frozen_bytes": "PASS",
     "zero_retries": "PASS"
   },
-  "content_sha256": "96f22857224609c1ce54f9a6d89a3406de4836ad1c8882aca66d98d1ae372945",
+  "content_sha256": "c8df0ad3a8fb446849ef857fa494c7b6e6db6d3a9b432fa7e172dce7d2fca121",
   "mock_provider_calls_only": true,
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "qualification_id": "AGENT-CONSTRAINT-EXTERNALITY-M1-RUNNER-QUALIFICATION-V1",
@@ -50,28 +50,28 @@
   },
   "runner_files": {
     "research_pipeline/agent_constraint_externality_appworld_runtime.py": {
-      "bytes": 5786,
-      "sha256": "928075a5713e5ba6d06dc0256998105f744d093e9b2292255e360241ae3e953e"
+      "bytes": 6220,
+      "sha256": "2da681e14d264884d239a33f93119f94e6f4dfe85adf215876ae43dc9e644930"
     },
     "research_pipeline/agent_constraint_externality_capability_execute.py": {
-      "bytes": 6874,
-      "sha256": "af8324621564e0d2ef3fef5bf1871f57b20b4f01b812403473e137833f8c0e93"
+      "bytes": 15101,
+      "sha256": "fd117b331e489f0510a18c0d49dd707dbcb3651faa382144a9706b92b28970dc"
     },
     "research_pipeline/agent_constraint_externality_f0_adjudicate.py": {
       "bytes": 9431,
       "sha256": "b72af01df0048be70769ab70e4dc6a3d0c2f73a6b1b51aea5c434ec8e6b9fb83"
     },
     "research_pipeline/agent_constraint_externality_f0_execute.py": {
-      "bytes": 17556,
-      "sha256": "e7c3fa1d1ca7a514fa1995d1abd2f5c736340b21e7128660c687af988e35a0ca"
+      "bytes": 17811,
+      "sha256": "bfa9f6327b3e70437ffc798c697a12f127d7606ec508f27b17a52ac2117302f1"
     },
     "research_pipeline/agent_constraint_externality_runner_core.py": {
       "bytes": 16992,
       "sha256": "8fddfaaec17002904bb48df701c12c01651dddea44f380076628af036299a890"
     },
     "research_pipeline/test_agent_constraint_externality_m1_runner.py": {
-      "bytes": 13194,
-      "sha256": "dce6beddae0c7b4b71a9ad21101e39827e9b240bb12ecd1eaf8f2b9adae2393d"
+      "bytes": 14594,
+      "sha256": "f8a6a266756c77f0bcd6243ef97c9b1a1d4afded000e4f448f591a2edaa9bd07"
     }
   },
   "schema_version": "ace-m1-runner-qualification-v1",
@@ -81,6 +81,6 @@
     "errors": 0,
     "failures": 0,
     "successful": true,
-    "tests_run": 17
+    "tests_run": 18
   }
 }

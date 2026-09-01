@@ -113,7 +113,7 @@ def build_qualification() -> dict[str, Any]:
         "appworld_non_scientific_qualification": {
             **appworld,
             "custom_task_direct_function_adapter": "PASS",
-            "function_tool_count": 473,
+            "family_scoped_tool_filter": "PASS",
             "read_only_tool_executed": "api_docs__show_app_descriptions",
         },
         "runner_contract": {

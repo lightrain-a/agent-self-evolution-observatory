@@ -15,6 +15,7 @@ from research_pipeline.agent_constraint_externality_appworld_runtime import (
 )
 from research_pipeline.agent_constraint_externality_capability_execute import (
     capability_gate,
+    capture_model_snapshot,
     enumerate_capability_units,
 )
 from research_pipeline.agent_constraint_externality_f0_execute import (
@@ -278,6 +279,7 @@ class AgentConstraintExternalityM1RunnerTest(unittest.TestCase):
                 task_id="acem1test_1",
                 experiment_name="ace-m1-test",
                 seed=1,
+                allowed_apps=set(family["fixture"]["apps"]),
             )
             try:
                 tool = next(
@@ -285,10 +287,44 @@ class AgentConstraintExternalityM1RunnerTest(unittest.TestCase):
                     if item["name"] == "api_docs__show_app_descriptions"
                 )
                 result = world.execute(tool["name"], {})
-                self.assertEqual(len(world.tools), 473)
+                allowed = tuple(
+                    f"{app}__"
+                    for app in sorted({
+                        *family["fixture"]["apps"], "api_docs", "supervisor"
+                    })
+                )
+                self.assertTrue(world.tools)
+                self.assertTrue(all(
+                    item["name"].startswith(allowed) for item in world.tools
+                ))
                 self.assertTrue(str(result).strip())
             finally:
                 world.close()
+
+    def test_provider_model_snapshot_resolves_exact_without_fallback(self) -> None:
+        class Catalog:
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self):
+                return json.dumps({
+                    "data": [
+                        {"id": REQUESTED_MODEL},
+                        {"id": "qwen3.7-flash"},
+                    ]
+                }).encode("utf-8")
+        calls = []
+        def opener(*args, **kwargs):
+            calls.append(1)
+            return Catalog()
+        snapshot = capture_model_snapshot(
+            api_key="test-key",
+            base_url="https://example.invalid/api/v1",
+            opener=opener,
+        )
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(snapshot["resolved_request_model"], REQUESTED_MODEL)
+        self.assertFalse(snapshot["snapshot_unavailable"])
+        self.assertFalse(snapshot["secrets_persisted"])
 
     def test_capability_gate_boundaries_are_fixed(self) -> None:
         rows = [

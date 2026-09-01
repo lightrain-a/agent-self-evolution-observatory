@@ -90,6 +90,7 @@ class AppWorldToolWorld:
         task_id: str,
         experiment_name: str,
         seed: int,
+        allowed_apps: set[str] | None = None,
     ) -> None:
         os.environ["APPWORLD_ROOT"] = str(runtime_root)
         from appworld import AppWorld
@@ -106,8 +107,19 @@ class AppWorldToolWorld:
         )
         self.output_db_root = Path(self._world.output_db_home_path_on_disk)
         self._tools = []
+        allowed_prefixes = (
+            None
+            if allowed_apps is None
+            else tuple(f"{app}{DIRECT_SEPARATOR}" for app in sorted(
+                {*allowed_apps, "api_docs", "supervisor"}
+            ))
+        )
         for document in self._world.task.api_docs.function_calling():
             function = document["function"]
+            if allowed_prefixes is not None and not function["name"].startswith(
+                allowed_prefixes
+            ):
+                continue
             self._tools.append({
                 "type": "function",
                 "name": function["name"],

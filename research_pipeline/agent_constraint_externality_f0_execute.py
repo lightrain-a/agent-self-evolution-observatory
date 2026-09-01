@@ -27,6 +27,7 @@ from research_pipeline.agent_constraint_externality_runner_core import (
     sha256_value,
 )
 from research_pipeline.appworld_constraint_compiler import load_protected_spec
+from research_pipeline.config import DEFAULT_ENV_FILE, load_env_file
 
 F0_FAMILIES = (
     "ACE-FG-01", "ACE-FG-02", "ACE-FG-03", "ACE-FG-04",
@@ -237,6 +238,7 @@ def execute_sources(
     model: str,
 ) -> dict[str, Any]:
     _require_capability_pass(capability_result)
+    load_env_file(DEFAULT_ENV_FILE)
     if model not in {REQUESTED_MODEL, ALLOWED_ALIAS}:
         raise RunnerError("Model replacement is forbidden.")
     provider = TypicalResponsesClient(
@@ -272,6 +274,7 @@ def execute_sources(
             task_id=task_id,
             experiment_name="ace-f0-source",
             seed=1200,
+            allowed_apps=set(family["fixture"]["apps"]),
         )
         try:
             result = run_episode(
@@ -361,6 +364,7 @@ def execute_probes(
     model: str,
 ) -> None:
     _require_capability_pass(capability_result)
+    load_env_file(DEFAULT_ENV_FILE)
     repairs = json.loads(repairs_manifest.read_text(encoding="utf-8"))
     eligible = tuple(repairs["eligible_families"])
     if len(eligible) < 6:
@@ -396,6 +400,7 @@ def execute_probes(
             task_id=task_id,
             experiment_name="ace-f0-probe",
             seed=int(unit.seed or 0),
+            allowed_apps=set(family["fixture"]["apps"]),
         )
         try:
             run_episode(
