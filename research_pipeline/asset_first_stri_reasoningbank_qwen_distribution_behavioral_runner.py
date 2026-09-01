@@ -118,6 +118,16 @@ def run_plan(*, experiment_id: str, stage: str, contract_path: Path,
             row=row, image_pull_reference=image, selected_memory=memory,
             run_id=unit["run_id"], sampling=sampling,
             expected_R1_sha256=unit["expected_R1_sha256"])
+        expected_task_sha = unit.get("task_sha256")
+        actual_task_sha = (result.get("trajectory") or {}).get("task_sha256")
+        if expected_task_sha is not None and actual_task_sha != expected_task_sha:
+            result["behavior_valid"] = False
+            result["execution_status"] = "TERMINAL_TASK_HASH_DRIFT"
+            result["failure"] = {
+                "failure_layer": "artifact_integrity",
+                "error_type": "ModelVisibleTaskHashDrift",
+                "expected": expected_task_sha, "actual": actual_task_sha,
+            }
         receipt = {**unit, **result}
         target = receipt_path(receipt_dir, unit)
         if target.exists():

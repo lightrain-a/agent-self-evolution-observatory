@@ -35,6 +35,17 @@ from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_behavior
 MODEL = "qwen3-coder-next"
 
 
+def model_visible_task_sha256(row: Mapping[str, Any]) -> str:
+    visible = {
+        "instance_id": str(row["instance_id"]),
+        "problem_statement": str(row["problem_statement"]),
+        "base_commit": str(row["base_commit"]),
+        "repo": str(row["repo"]),
+        "version": str(row["version"]),
+    }
+    return sha256_text(canonical_json(visible))
+
+
 def make_client(*, timeout_seconds: float = 120.0) -> ArkReasoningBankClient:
     base = ArkReasoningBankSettings.from_env_file(CANONICAL_SECRET_FILE)
     if base.base_url.rstrip("/") != BASE_URL:
@@ -190,7 +201,7 @@ def execute_trajectory(*, row: Mapping[str, Any], image_pull_reference: str,
     status_output = status_result["output"] if status_result["returncode"] == 0 else ""
     trajectory = {
         "schema_version": 1, "run_id": run_id, "created_at_utc": utcnow(),
-        "instance_id": row["instance_id"], "task_sha256": sha256_text(task),
+        "instance_id": row["instance_id"], "task_sha256": model_visible_task_sha256(row),
         "problem_statement": task,
         "base_commit": base_commit, "image_pull_reference": image_pull_reference,
         "selected_memory": selected_memory,
