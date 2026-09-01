@@ -1,0 +1,48 @@
+{
+  "compiler_source_git_sha": "5acc6ce1365dbbbe34347ba35d2a572a81dd7d54",
+  "compiler_source_git_tree": "735e5a092205c0e9876f7faccb04b8f9b52d9a4b",
+  "config_sha256": "8930293e420f008dba8f57af7e9504d2a5104b7ad01257abd6096e1c1adea075",
+  "corpus_rows_per_regime": {
+    "IS-SUPPORT-12": 96,
+    "IS-SUPPORT-14": 96
+  },
+  "corpus_sha256": {
+    "IS-SUPPORT-12": "50d047f24e6aa0da2222acf342c20cb17c960113d9600d53e15720cc971494bc",
+    "IS-SUPPORT-14": "ad79c69b01b22d182b9d05b466ed712c35622fd1542548bbbdc66414176fba58"
+  },
+  "dataset_revision": "LICENSE_CONFIRMED_DATA_NOT_MATERIALIZED",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "record_type": "NON_SCIENTIFIC_SYNTHETIC_COMPILER_QUALIFICATION",
+  "replay_matrix": {
+    "IS-SUPPORT-12": {
+      "byte_identical": true,
+      "hashes": {
+        "forward_w1": "50d047f24e6aa0da2222acf342c20cb17c960113d9600d53e15720cc971494bc",
+        "forward_w4": "50d047f24e6aa0da2222acf342c20cb17c960113d9600d53e15720cc971494bc",
+        "reverse_w1": "50d047f24e6aa0da2222acf342c20cb17c960113d9600d53e15720cc971494bc",
+        "shuffled_w1": "50d047f24e6aa0da2222acf342c20cb17c960113d9600d53e15720cc971494bc"
+      }
+    },
+    "IS-SUPPORT-14": {
+      "byte_identical": true,
+      "hashes": {
+        "forward_w1": "ad79c69b01b22d182b9d05b466ed712c35622fd1542548bbbdc66414176fba58",
+        "forward_w4": "ad79c69b01b22d182b9d05b466ed712c35622fd1542548bbbdc66414176fba58",
+        "reverse_w1": "ad79c69b01b22d182b9d05b466ed712c35622fd1542548bbbdc66414176fba58",
+        "shuffled_w1": "ad79c69b01b22d182b9d05b466ed712c35622fd1542548bbbdc66414176fba58"
+      }
+    }
+  },
+  "result": "PASS",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-license-confirmed-v2",
+  "sample_slots_per_scene": 24,
+  "scene_ids": [
+    "SYN-BEDROOM-0001",
+    "SYN-BEDROOM-0002",
+    "SYN-BEDROOM-0003",
+    "SYN-BEDROOM-0004"
+  ],
+  "scientific_evidence": false
+}

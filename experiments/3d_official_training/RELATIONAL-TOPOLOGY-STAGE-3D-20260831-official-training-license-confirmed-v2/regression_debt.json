@@ -1,0 +1,30 @@
+{
+  "compiler_source_git_sha": "5acc6ce1365dbbbe34347ba35d2a572a81dd7d54",
+  "compiler_source_git_tree": "735e5a092205c0e9876f7faccb04b8f9b52d9a4b",
+  "config_sha256": "8930293e420f008dba8f57af7e9504d2a5104b7ad01257abd6096e1c1adea075",
+  "dataset_revision": "LICENSE_CONFIRMED_DATA_NOT_MATERIALIZED",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "inherited_authority_impact": "SCOPED_NON_BLOCKING_DEBT",
+  "inherited_baseline_artifact_sha256": "1cedd6704fd9a114dff798f07f0a9b7f1476082e63aa05b9e40b24a00648e89a",
+  "inherited_classification": {
+    "AUTHORITY_CRITICAL": 0,
+    "SCIENTIFIC_OBJECT_DEPENDENCY": 0,
+    "UNRELATED_LEGACY_DEBT": 28
+  },
+  "inherited_counts": {
+    "errors": 29,
+    "failures": 1,
+    "skips": 3
+  },
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-license-confirmed-v2",
+  "scope_proof": "Frozen child audit places all inherited incidents outside authority, provenance, integrity, registry, replay, and this object's dependency chain.",
+  "targeted_dependency_audit": {
+    "blocking_incidents": [],
+    "log_sha256": "b1c29768ac8cd37f91a53e2f533815d0b77e029bbb326121c01336b42dcfa696",
+    "status": "PASS",
+    "test_blocks_observed": 2,
+    "tests_observed": 66
+  }
+}
