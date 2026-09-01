@@ -1,0 +1,19 @@
+{
+  "architecture": "amd64",
+  "config_digest": "sha256:8da2231416051efd2623424be2140945aac9e30c6c8f69a82703a42a580f8ba5",
+  "credential_material_present": false,
+  "download_repo": "swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24570",
+  "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24570@sha256:5d93272292526ed727fdbf8fcad24e751965c5d62d66f91c64be7119339b323c",
+  "instance_id": "matplotlib__matplotlib-24570",
+  "layer_bytes": 3137932335,
+  "layer_count": 10,
+  "manifest_digest": "sha256:5d93272292526ed727fdbf8fcad24e751965c5d62d66f91c64be7119339b323c",
+  "manifest_file_sha256": "5d93272292526ed727fdbf8fcad24e751965c5d62d66f91c64be7119339b323c",
+  "manifest_media_type": "application/vnd.oci.image.manifest.v1+json",
+  "manifest_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-image-manifests-20260901/118-matplotlib-matplotlib-24570-amd64.json",
+  "manifest_size": 2201,
+  "mirror_base": "https://docker.1ms.run",
+  "mirror_repo": "docker.1ms.run/swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-24570",
+  "os": "linux",
+  "payload_sha256": "d111c7a5227e9aea8f8634a33a1f259aca808d0537d16b9dbfe4fb4aac714d69"
+}
