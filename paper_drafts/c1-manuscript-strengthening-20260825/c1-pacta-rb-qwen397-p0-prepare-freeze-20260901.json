@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T14:17:00Z",
+  "experiment": "C1-PACTA-RB-QWEN397-P0-20260901",
+  "status": "P0_PREPARE_PASS_FROZEN_BEFORE_WRITER",
+  "execution_parent": "45e6518539a588233eb5abd446c03434cbca2e08",
+  "preregistered_runner_commit": "5b9c84b7",
+  "run_root": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-p0-20260901-v1",
+  "contract_sha256": "cec780ab72117d604c061ca5bbbda79af85c7966c88cdfb460fafe7d41596e4f",
+  "pilot_split_sha256": "d8dc6a3100b5842e160d375fd43ff1e675dc34329761fd34b331090f20730ae8",
+  "shadow_schedule_sha256": "2aafda06c31975f5f1daaacdc521804fd38133284b68792c5b7207cacce7adcf",
+  "prepare_audit_sha256": "daa5408f6971d16c4dfed8f4b106195dff7894d959674761c840ec5207aee375",
+  "pilot": [
+    "sphinx-doc__sphinx-8593=>sphinx-doc__sphinx-7748",
+    "django__django-13449=>django__django-11400",
+    "pylint-dev__pylint-7080=>pylint-dev__pylint-8898",
+    "mwaskom__seaborn-3187=>mwaskom__seaborn-3069",
+    "psf__requests-1766=>psf__requests-1724",
+    "astropy__astropy-7166=>astropy__astropy-14096"
+  ],
+  "sealed": [
+    "pytest-dev__pytest-5840=>pytest-dev__pytest-5809",
+    "sympy__sympy-15599=>sympy__sympy-18189",
+    "scikit-learn__scikit-learn-14496=>scikit-learn__scikit-learn-10908"
+  ],
+  "random_ranking_pre_shadow": [
+    "sphinx-doc__sphinx-8593=>sphinx-doc__sphinx-7748",
+    "mwaskom__seaborn-3187=>mwaskom__seaborn-3069",
+    "psf__requests-1766=>psf__requests-1724",
+    "pylint-dev__pylint-7080=>pylint-dev__pylint-8898",
+    "astropy__astropy-7166=>astropy__astropy-14096",
+    "django__django-13449=>django__django-11400"
+  ],
+  "budgets": {
+    "writer": 2048,
+    "binder": 512,
+    "shadow_first_decision": 512,
+    "final_first_decision": 512
+  },
+  "temperatures": {"writer": 0.0, "binder": 0.0, "policy": 0.2},
+  "scientific_token_caps": {"input": 5000000, "output": 500000},
+  "provider_calls_before_writer": 0,
+  "sealed_provider_calls": 0,
+  "replacement": false,
+  "top_up": false,
+  "terminal_locked": true,
+  "other_models_locked": true,
+  "R10_locked": true
+}
