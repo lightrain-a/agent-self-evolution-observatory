@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T12:35:00Z",
+  "experiment": "C1-PACTA-RB-QWEN397-T0-v6-20260901",
+  "purpose": "Prospectively acquire native ReasoningBank source trajectories for the ten untouched fixed units after qualifying a separate 16384-token full-source action budget.",
+  "model": "qwen3.5-397b-a17b",
+  "source_trajectory_output_budget": 16384,
+  "pacta_first_decision_budget_unchanged": 512,
+  "source_budget_q0_result_sha256": "668848d930db9087617fbe839c11d77ca3d57e75a2787a32605ce13ddb530e25",
+  "consumed_excluded_source": "pydata__xarray-4966",
+  "consumed_source_replay": false,
+  "scheduled_source_units": 10,
+  "replacement": false,
+  "top_up": false,
+  "logical_attempts_per_source": 1,
+  "rate_limit_transport_recovery": {
+    "eligible_only_when": "HTTP 400/429 rate_limit_exceeded with no model content",
+    "max_retries": 2,
+    "fixed_backoff_seconds": [60, 120],
+    "scientific_interpretation": "transport recovery, not an additional model sample"
+  },
+  "runtime": {
+    "docker_host": "unix:///var/run/docker.sock",
+    "exact_digest": true,
+    "exact_base_normalization_before_provider": true,
+    "carrier": "ReasoningBank + SWE-bench Verified + official MiniSWEAgent",
+    "official_commit": "ed80611788292ea739f1effd31f16c53823b8a0d"
+  },
+  "maximum_possible_valid_pool_after_exclusion": 10,
+  "full_6_plus_5_design_recoverable_in_this_epoch": false,
+  "required_stop_after_t0": true,
+  "forbidden": [
+    "rerun pydata__xarray-4966",
+    "replacement source",
+    "writer calls",
+    "SCB binder calls",
+    "shadow calls",
+    "PACTA gate",
+    "A0/A1/A2/A3 final measurement",
+    "future-task execution",
+    "model switch",
+    "R10"
+  ],
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_measurement_calls": 0,
+  "future_task_executions": 0,
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "active_manuscript": "R9"
+}
