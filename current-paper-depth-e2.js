@@ -1,0 +1,37 @@
+window.CURRENT_PAPER_DETAILS=window.CURRENT_PAPER_DETAILS||{papers:{}};
+Object.assign(window.CURRENT_PAPER_DETAILS.papers["paper-e2"],{
+ collection:{label:{zh:"④ E2 · 搜索投影",en:"④ E2 · Search Projection"},type:{zh:"正式论文谱系 + 当前扩展",en:"Formal lineage + current extension"},status:{zh:"R17 continuation · effect 未打开",en:"R17 continuation · effect sealed"},method:{zh:"WIN-C vs MRW paired learning audit",en:"WIN-C vs MRW paired learning audit"},model:{zh:"DeepSeek primary；Kimi/DeepSeek 历史 attribution",en:"DeepSeek primary; Kimi/DeepSeek historical attribution"},data:{zh:"12 streams × 4 pairs · 1,728 held-out",en:"12 streams × 4 pairs · 1,728 held-out"},takeaway:{zh:"执行最优与学习最优可能需要不同证据投影。",en:"Acting and learning may require different evidence projections."}},
+ snapshot:[
+  {k:{zh:"当前科学对象",en:"Current object"},v:{zh:"Search-Projection Censoring",en:"Search-Projection Censoring"}},
+  {k:{zh:"核心对照",en:"Core contrast"},v:{zh:"WIN-C vs MRW",en:"WIN-C vs MRW"}},
+  {k:{zh:"主模型",en:"Primary model"},v:{zh:"DeepSeek",en:"DeepSeek"}},
+  {k:{zh:"冻结设计",en:"Frozen design"},v:{zh:"48 pairs / 96 states / 1,728 held-out",en:"48 pairs / 96 states / 1,728 held-out"}},
+  {k:{zh:"当前进度",en:"Current progress"},v:{zh:"17/48；clean-boundary exit",en:"17/48; clean-boundary exit"}},
+  {k:{zh:"结果状态",en:"Outcome state"},v:{zh:"partial effect unopened",en:"Partial effect unopened"}}
+ ],
+ contract:[
+  {k:{zh:"实验单位",en:"Unit"},v:{zh:"同一 stream / replicate 下的一对 learned states",en:"A pair of learned states within the same stream/replicate"},why:{zh:"paired design 吸收 task 与 search-context 差异。",en:"The paired design absorbs task and search-context differences."}},
+  {k:{zh:"Search 阶段",en:"Search stage"},v:{zh:"同一任务产生 winner、near-miss 与 rejected/failure evidence",en:"The same task produces winner, near-miss, and rejected/failure evidence"},why:{zh:"完整 search evidence 是潜在学习对象。",en:"The full search trace is the candidate learning evidence."}},
+  {k:{zh:"Acting 规则",en:"Acting rule"},v:{zh:"两臂都执行 winner",en:"Both arms act from the winner"},why:{zh:"不牺牲当前任务表现，只操纵 learner 看见什么。",en:"Current-task performance is preserved; only learning evidence changes."}},
+  {k:{zh:"Learning 处理",en:"Learning treatment"},v:{zh:"WIN-C：winner-centric；MRW：diagnostic witness",en:"WIN-C: winner-centric; MRW: diagnostic witness"},why:{zh:"直接识别 acting projection 与 learning projection 是否应相同。",en:"Directly identifies whether acting and learning should share an evidence projection."}},
+  {k:{zh:"主 endpoint",en:"Primary endpoint"},v:{zh:"学习后的 held-out future performance",en:"Post-learning held-out future performance"},why:{zh:"不拿当前 search score 当学习效果。",en:"Current search score is not used as learning effect."}},
+  {k:{zh:"完整分析",en:"Full analysis"},v:{zh:"12 D_s + 48 d_sr；sign-flip、bootstrap、TOST、heterogeneity",en:"12 D_s + 48 d_sr; sign-flip, bootstrap, TOST, heterogeneity"},why:{zh:"完整 48/48 前禁止查看 partial direction。",en:"Partial direction remains sealed until 48/48 completion."}}
+ ],
+ arms:[
+  {name:"WIN-C",kind:{zh:"winner-centric learning",en:"Winner-centric learning"},changes:{zh:"learner 主要接收最终 winner evidence",en:"Learner primarily receives final-winner evidence"},fixed:{zh:"search / acting / model / task / held-out",en:"Search / acting / model / task / held-out"},purpose:{zh:"代表“执行选择规则同时决定学习证据”的自然做法。",en:"Represents the natural design where execution selection also controls learning evidence."}},
+  {name:"MRW",kind:{zh:"diagnostic witness learning",en:"Diagnostic-witness learning"},changes:{zh:"保留最能暴露能力缺口的 witness",en:"Retains witnesses that best reveal capability gaps"},fixed:{zh:"winner acting 与所有其他条件",en:"Winner acting and all other conditions"},purpose:{zh:"测试 winner-only projection 是否删失学习信号。",en:"Tests whether winner-only projection censors learning signal."}}
+ ],
+ analysis:[
+  {name:{zh:"pair-level",en:"Pair level"},detail:{zh:"d_sr = J(MRW) − J(WIN-C)，同一 stream/replicate 内计算。",en:"d_sr = J(MRW) − J(WIN-C) within the same stream/replicate."}},
+  {name:{zh:"stream-level",en:"Stream level"},detail:{zh:"每个 stream 汇总 D_s，避免把 1,728 个 held-out unit 当成 1,728 个独立 treatment unit。",en:"Each stream yields D_s so 1,728 held-out units are not treated as 1,728 independent treatment units."}},
+  {name:{zh:"判定",en:"Decision"},detail:{zh:"完整 analyzer 只允许 GO supported / STOP null / STOP harmful / HOLD underpowered-or-heterogeneous 四种结论。",en:"The frozen analyzer allows only GO supported, STOP null, STOP harmful, or HOLD underpowered/heterogeneous."}}
+ ],
+ interpretation:{proves:[{zh:"当前只证明 Repair2 在 clean held-out boundary 中断，且完成对象可冻结继承。",en:"Current evidence only establishes that Repair2 exited at a clean held-out boundary and completed objects can be immutably inherited."},{zh:"完整设计能够把 acting evidence 与 learning evidence 做 paired causal contrast。",en:"The complete design can causally contrast acting evidence with learning evidence in paired form."}],doesNot:[{zh:"17/48 不支持 MRW 优于、等于或差于 WIN-C 的任何结论。",en:"17/48 supports no conclusion that MRW is better, equal, or worse than WIN-C."},{zh:"不主张失败证据天然优于成功证据。",en:"It does not claim failure evidence is inherently superior to success evidence."},{zh:"continuation 不能改 prompt、model、task order、budget 或 analysis。",en:"Continuation cannot change the prompt, model, task order, budget, or analysis."}],importance:{zh:"它把 self-evolution 的默认假设变成可检验问题：为了执行而选出的 winner，凭什么也决定 learner 的可见证据？",en:"It turns a default assumption into a testable question: why should the winner selected for acting also determine what the learner sees?"}},
+ lineage:[
+  {stage:"A",title:{zh:"从 Temporal Skill repair 到 attribution audit",en:"From temporal-skill repair to attribution audit"},body:{zh:"早期两臂结果把 targeted skill 的表面提升直接叫 repair。加入 original-agent、same-surface placebo 与 exact-output surface control 后，漂亮 gain 多次被改判，论文先学会“credit 要拆开”。",en:"Early two-arm gains were called repair. Original-agent, same-surface placebo, and exact-output controls repeatedly changed the verdict, teaching the project to decompose credit."}},
+  {stage:"B",title:{zh:"从 skill credit 再推进到 evidence credit",en:"From skill credit to evidence credit"},body:{zh:"R16 benign organizer 显示 targeted operation 的 credit 可能被一般信息组织吸收。R17 进一步问：search 之后究竟哪条 evidence 有 learning credit，而不是哪个 skill wrapper 有 credit。",en:"R16 showed that generic organization can absorb targeted-operation credit. R17 asks which search evidence deserves learning credit."}},
+  {stage:"C",title:{zh:"正式 E2 与 R17 的关系",en:"Relationship between formal E2 and R17"},body:{zh:"正式 PaperRegistry 仍是 temporal-skill attribution audit；R17 是同一科研谱系上的新 decisive extension。只有完整 Repair2 analyzer 给出合法结论后，才决定是否重写 formal paper story。",en:"The formal PaperRegistry remains the temporal-skill attribution audit; R17 is a new decisive extension. The formal story changes only after a valid complete Repair2 adjudication."}},
+  {stage:"D",title:{zh:"为什么 runner 中断不能催生 Repair3",en:"Why runner exit does not create Repair3"},body:{zh:"科学设计没有变，只有 execution lineage 中断。正确对象是 content-addressed continuation：继承已完成单元、只补 remaining set、0 replay、0 partial-effect access。",en:"The scientific design did not change; only execution lineage was interrupted. The correct object is a content-addressed remainder-only continuation."}}
+ ],
+ replayNotes:[{zh:"任何页面、日志或进度条都不得显示 partial mean effect、d_sr、D_s、bootstrap 或 TOST。",en:"No page, log, or progress view may expose partial mean effect, d_sr, D_s, bootstrap, or TOST."},{zh:"48/48 前只能展示技术进度与 provenance completeness。",en:"Before 48/48, only technical progress and provenance completeness may be shown."}]
+});

@@ -437,6 +437,15 @@ def main() -> None:
                 fail(f"{filename} Paper Story script order is invalid")
         elif any(name.startswith("paper-story-") for name in scripts):
             fail(f"{filename} is a working/scientific-object page and must not load unrelated formal Paper Stories")
+    required_depth_files = {
+        "paper-e1.html":"current-paper-depth-e1.js", "paper-g1.html":"current-paper-depth-g1.js", "paper-c1.html":"current-paper-depth-c1.js",
+        "paper-e2.html":"current-paper-depth-e2.js", "paper-b1.html":"current-paper-depth-b1.js", "paper-a.html":"current-paper-depth-a.js",
+        "paper-b.html":"current-paper-depth-b.js", "paper-agent-constraint.html":"current-paper-depth-agent-constraint.js", "paper-3d.html":"current-paper-depth-3d.js",
+    }
+    for filename, depth_script in required_depth_files.items():
+        scripts = canonical_scripts.get(filename, [])
+        if depth_script not in scripts or scripts.index(depth_script) > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load its deep replay dossier before the single-paper renderer")
     if "renderCurrentPaperCollection" not in current_paper_view_source or "QUICK OVERVIEW" not in current_paper_view_source or "速览版" not in current_paper_view_source:
         fail("current-paper renderer must expose collection-only routing plus the single-paper quick overview")
     if "renderCurrentPaperShelf" in current_paper_view_source or "cpp-pager" in current_paper_view_source:
