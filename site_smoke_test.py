@@ -433,6 +433,9 @@ def main() -> None:
         if story_script:
             if "paper-story-blueprint.js" not in scripts or story_script not in scripts:
                 fail(f"{filename} must load only its own formal Paper Story source")
+            audit_scripts=("paper-novelty-audit-data.js","paper-external-review-data.js","generated/stanford-r2-objection-matrix.js")
+            if not all(name in scripts for name in audit_scripts):
+                fail(f"{filename} must migrate its former PaperRegistry novelty/review/objection audit into the single-paper page")
             if not (scripts.index("paper-story-blueprint.js") < scripts.index(story_script) < scripts.index("current-paper-page-view.js")):
                 fail(f"{filename} Paper Story script order is invalid")
         elif any(name.startswith("paper-story-") for name in scripts):
