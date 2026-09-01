@@ -1,0 +1,44 @@
+{
+  "agent_episode_count": 8,
+  "agent_model_request_count": 57,
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "f0_reason": "A1 capability result requires separate human F0 authorization even if PASS.",
+    "method": false,
+    "p1": false,
+    "paper_claim": false,
+    "second_additional_model": false,
+    "toolsandbox": false
+  },
+  "catalog_provider_request_count": 0,
+  "content_sha256": "6ac70f2cdfbd67f4a9fe54d0db3aaf37e75e0f6548252ff112b574b05860949e",
+  "execution_id": "QWEN37PLUS-CAPABILITY-R2-AUTH-SUBSTRATE-RECOVERY",
+  "f0_executed": false,
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 0.5,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 0.5,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP"
+  },
+  "ledger_sha256": "d6e713a6d4613797578c3b5e606200b6a94309806b1b2a096d64b9744a30b185",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider_request_total": 57,
+  "requested_model": "qwen3.7-plus-2026-05-26",
+  "resolved_model": "qwen3.7-plus",
+  "schema_version": "ace-qwen37plus-capability-result-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
+  "tool_cap_incomplete_measurements": 4,
+  "toolcap_measurement_sha256": "9f8465a718f5344a37d16cace773b69e44bf1f138e5ea977db44dc66ddc64437",
+  "valid_capability_measurements": 8
+}
