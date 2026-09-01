@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-09-01T22:04:40+08:00",
+  "gpu_used": false,
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "network_access_used": false,
+  "next_gate": "REPAIR2_CPU_ONLY_HUB_OFFLINE_SAMPLE_SCHEMA_QUALIFICATION",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "projected_feature_count": 16,
+  "projected_info_sha256": "9955a58511fdba468ca10b6929c9051f6d693e3915cdc58d66c1cd1ce04a45e1",
+  "removed_features": [
+    "observation.depth_linear.left_realsense_link_camera_0",
+    "observation.depth_linear.right_realsense_link_camera_0",
+    "observation.depth_linear.zed_link_camera_0"
+  ],
+  "required_rgb_features": [
+    "observation.rgb.zed_link_camera_0",
+    "observation.rgb.left_realsense_link_camera_0",
+    "observation.rgb.right_realsense_link_camera_0"
+  ],
+  "runtime_root": "/data/wyt/behavior-2026-shared26-v3.0-rgb-runtime-repair2",
+  "schema_version": "behavior-formal-goal-coupling-shared26-rgb-runtime-projection-v1",
+  "scientific_authority": false,
+  "scientific_payload_bytes_copied_or_reencoded": 0,
+  "source_feature_count": 19,
+  "source_info_sha256": "24c77f7a984bcee775e666203881a946b11a899f524fbc2405922b2109757874",
+  "source_metadata_hashes_after": {
+    "info.json": "24c77f7a984bcee775e666203881a946b11a899f524fbc2405922b2109757874",
+    "stats.json": "729da3b4a7a52c387ddbad1f9f641df20cff1329aa624e60eb54ccfbfc5a1df5",
+    "tasks.jsonl": "8d8222310c3611316c6e5fe822a8dd3c6e552b32bcfddd10870c0672bfb8427c",
+    "tasks.parquet": "2477455ef214e2348123379c6895549a5a5b5c76dee7b817de174e0d4b226a94"
+  },
+  "source_metadata_hashes_before": {
+    "info.json": "24c77f7a984bcee775e666203881a946b11a899f524fbc2405922b2109757874",
+    "stats.json": "729da3b4a7a52c387ddbad1f9f641df20cff1329aa624e60eb54ccfbfc5a1df5",
+    "tasks.jsonl": "8d8222310c3611316c6e5fe822a8dd3c6e552b32bcfddd10870c0672bfb8427c",
+    "tasks.parquet": "2477455ef214e2348123379c6895549a5a5b5c76dee7b817de174e0d4b226a94"
+  },
+  "source_root": "/data/wyt/behavior-2026-shared26-v3.0",
+  "status": "RGB_RUNTIME_PROJECTION_PASS",
+  "symlinks": {
+    "data": "/data/wyt/behavior-2026-shared26-v3.0/data",
+    "meta/episodes": "/data/wyt/behavior-2026-shared26-v3.0/meta/episodes",
+    "meta/stats.json": "/data/wyt/behavior-2026-shared26-v3.0/meta/stats.json",
+    "meta/tasks.jsonl": "/data/wyt/behavior-2026-shared26-v3.0/meta/tasks.jsonl",
+    "meta/tasks.parquet": "/data/wyt/behavior-2026-shared26-v3.0/meta/tasks.parquet",
+    "videos": "/data/wyt/behavior-2026-shared26-v3.0/videos"
+  },
+  "training_started": false,
+  "whole_manifest_final_seal_path": "generated/behavior-formal-goal-coupling-shared26-whole-manifest-final-seal-20260901.json",
+  "whole_manifest_final_seal_sha256": "1890045423141532213f9398451a7f51e7c481b3ea90a5cc0fa86c3516db1a9f"
+}
