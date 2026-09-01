@@ -79,6 +79,7 @@ class ReasoningBankArkProviderTest(unittest.TestCase):
             instructions="system",
             temperature=0.2,
             top_p=0.8,
+            top_k=40,
             seed=42,
             stop=["END"],
             max_output_tokens=19,
@@ -89,12 +90,14 @@ class ReasoningBankArkProviderTest(unittest.TestCase):
         self.assertEqual(body["instructions"], "system")
         self.assertEqual(body["temperature"], 0.2)
         self.assertEqual(body["top_p"], 0.8)
+        self.assertEqual(body["top_k"], 40)
         self.assertEqual(body["seed"], 42)
         self.assertEqual(body["stop"], ["END"])
         self.assertEqual(body["thinking"], {"type": "disabled"})
         self.assertEqual(body["max_output_tokens"], 19)
         self.assertEqual(result["text"], "OK")
         self.assertEqual(result["raw_text"], "OK")
+        self.assertRegex(result["raw_payload_sha256"], r"^[0-9a-f]{64}$")
 
     def test_raw_text_preserves_memory_induction_split_boundaries(self) -> None:
         payload = success_payload()
