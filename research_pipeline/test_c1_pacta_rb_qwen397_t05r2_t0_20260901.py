@@ -115,6 +115,9 @@ def test_repaired_smoke_contract_is_prospectively_bounded_and_noncontradictory()
  assert runner.SMOKE_STEP_CEILING == 8
  assert "runtime_smoke_marker.py" in source
  assert "QWEN397_T0_RUNTIME_SMOKE_OK" in source
+ assert "git diff --cached --name-only" in source
+ assert "task_verification" in source
+ assert "all_action_returncodes_zero" in source
  assert "then finish using the required completion command. Do not modify files." not in source
  assert "single-variable qualification repair" in source
  assert "scientific_outcome_access_before_repair" in source

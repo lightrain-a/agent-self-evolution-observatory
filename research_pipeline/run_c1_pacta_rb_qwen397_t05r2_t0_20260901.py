@@ -98,7 +98,7 @@ def smoke()->dict[str,Any]:
  container=Container(digest_ref,docker_host=ROOTFUL_DOCKER_HOST,
   base_commit=units[instance]["source_base_commit"],provenance_root=smoke_root)
  provider=RawProvider(key,smoke_root,b["requested_model"],b["resolved_model"])
- rows=[];submitted=False
+ rows=[];submitted=False;task_verification={"attempted":False,"pass":False}
  try:
   for step in range(1,SMOKE_STEP_CEILING+1):
    response=provider.call(messages,f"rootful-multistep-smoke-{step}")
@@ -115,9 +115,20 @@ def smoke()->dict[str,Any]:
    rows.append({"step":step,"action":action,"returncode":obs["returncode"],
     "response_sha256":response["provider"]["response_sha256"],"observation_path":str(obs_path),
     "observation_sha256":obs_sha})
-   if submitted:break
+   if submitted:
+    verify=container.execute(
+     "test -f runtime_smoke_marker.py && "
+     "test \"$(python runtime_smoke_marker.py)\" = \"QWEN397_T0_RUNTIME_SMOKE_OK\" && "
+     "test \"$(git diff --cached --name-only)\" = \"runtime_smoke_marker.py\""
+    )
+    task_verification={"attempted":True,"pass":verify["returncode"]==0 and not verify["timeout"],
+     "returncode":verify["returncode"],"timeout":verify["timeout"],"output":verify["output"]}
+    break
  finally:container.cleanup()
- passed=submitted and len(rows)>=2 and provider.calls==len(list((smoke_root/"raw").glob("response-*.json")))
+ response_count=len(list((smoke_root/"raw").glob("response-*.json")))
+ request_count=len(list((smoke_root/"raw").glob("request-*.json")))
+ passed=(submitted and task_verification["pass"] and len(rows)>=2 and
+  provider.calls==response_count==request_count and all(row["returncode"]==0 for row in rows))
  result={"schema_version":1,"created_at_utc":now(),"epoch":"C1-PACTA-RB-QWEN397-T05R2-SMOKE",
   "non_scientific":True,"multi_step":True,"prior_smoke_stop_preserved":True,
   "prior_smoke_path":str(PRIOR_SMOKE),"prior_smoke_sha256":sha256_file(PRIOR_SMOKE),
@@ -127,7 +138,9 @@ def smoke()->dict[str,Any]:
   "docker_host":ROOTFUL_DOCKER_HOST,"exact_base_normalized_before_provider":True,
   "requested_model":b["requested_model"],"resolved_model":b["resolved_model"],"enable_thinking":False,
   "max_completion_tokens":512,"provider_calls":provider.calls,"input_tokens":provider.prompt_tokens,
-  "output_tokens":provider.output_tokens,"rows":rows,"submitted":submitted,"pass":passed,
+  "output_tokens":provider.output_tokens,"rows":rows,"submitted":submitted,
+  "task_verification":task_verification,"request_count":request_count,"response_count":response_count,
+  "all_action_returncodes_zero":all(row["returncode"]==0 for row in rows),"pass":passed,
   "source_tasks_consumed":0,"writer_calls":0,"binder_calls":0,"shadow_calls":0,
   "final_measurement_calls":0,"future_task_executions":0}
  atomic_json(SMOKE_EPOCH/"rootful-synthetic-smoke.json",result)
