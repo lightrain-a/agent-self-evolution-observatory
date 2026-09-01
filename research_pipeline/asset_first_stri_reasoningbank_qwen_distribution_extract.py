@@ -136,6 +136,15 @@ def run() -> dict[str, Any]:
     instructions = load_instructions()
     client = make_client()
     RECEIPT_DIR.mkdir(parents=True, exist_ok=True)
+    if INDEX.exists():
+        prior = json.loads(INDEX.read_text(encoding="utf-8"))
+        inflight = prior.get("inflight")
+        if inflight:
+            unit = contract["plan"][int(inflight["ordinal"]) - 1]
+            if not receipt_path(unit).exists():
+                raise RuntimeError(
+                    "MEMORY_EXTRACTION_AMBIGUOUS_INFLIGHT_HOLD: refusing duplicate generation"
+                )
     completed: list[dict[str, Any]] = []
     for unit in contract["plan"]:
         target = receipt_path(unit)
@@ -160,6 +169,11 @@ def run() -> dict[str, Any]:
             raise RuntimeError("source problem statement absent from trajectory receipt")
         prompt = f"**Query:** {task_text}\n\n**Trajectory:**\n{text}"
         instruction = instructions[unit["instruction_key"]].strip()
+        write_json(INDEX, index_payload(contract, completed, inflight={
+            "ordinal": unit["ordinal"], "extraction_id": unit["extraction_id"],
+            "source_task_id": unit["source_task_id"], "attempt_count": 1,
+            "state": "DISPATCHED_BEFORE_PROVIDER_CALL",
+        }))
         request = {
             "model": MODEL, "input": prompt, "instructions": instruction,
             "temperature": contract["extractor_sampling"]["temperature"],
@@ -231,7 +245,8 @@ def run() -> dict[str, Any]:
             "source_bank_sha256": bank_sha, "memory_count": len(bank_entries)}
 
 
-def index_payload(contract: dict[str, Any], completed: list[dict[str, Any]]) -> dict[str, Any]:
+def index_payload(contract: dict[str, Any], completed: list[dict[str, Any]],
+                  inflight: dict[str, Any] | None = None) -> dict[str, Any]:
     return {
         "schema_version": 1, "experiment_id": EXPERIMENT_ID,
         "stage": "QWEN_REASONINGBANK_MEMORY_EXTRACTION",
@@ -240,6 +255,7 @@ def index_payload(contract: dict[str, Any], completed: list[dict[str, Any]]) -> 
         "execution_complete": len(completed) == len(contract["plan"]),
         "planned_count": len(contract["plan"]), "completed_count": len(completed),
         "journal_record_count": len(completed),
+        "inflight": inflight,
         "journal": [{
             "ordinal": row["ordinal"], "extraction_id": row["extraction_id"],
             "source_task_id": row["source_task_id"], "attempt_count": row["attempt_count"],
