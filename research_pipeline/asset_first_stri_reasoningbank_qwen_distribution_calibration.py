@@ -19,6 +19,7 @@ STRUCTURAL = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-
 SPLIT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-task-split-20260901.json"
 BANK = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-bank-20260901.json"
 Q0 = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q0-result-20260901.json"
+BEHAVIORAL_RUNTIME = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-behavioral-runtime-result-20260901.json"
 CONTRACT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-calibration-contract-20260901.json"
 INDEX = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-calibration-index-20260901.json"
 RECEIPT_DIR = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-calibration-runs-20260901"
@@ -57,6 +58,7 @@ def contract_payload() -> dict[str, Any]:
         "created_at_utc": utcnow(), "decision": "QWEN_A_ONLY_CALIBRATION_AUTHORIZED",
         "structural_sha256": sha256_file(STRUCTURAL), "split_sha256": sha256_file(SPLIT),
         "source_bank_sha256": sha256_file(BANK), "q0_sha256": sha256_file(Q0),
+        "behavioral_runtime_result_sha256": sha256_file(BEHAVIORAL_RUNTIME),
         "sampling": q0["recommended_sampling_resolution"],
         "plan": rows, "plan_sha256": sha256_text(canonical_json(rows)),
         "task_count": 8, "arms": ["A"],

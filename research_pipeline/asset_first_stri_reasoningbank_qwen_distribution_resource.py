@@ -189,7 +189,10 @@ def authority_payload(*, approved_request_budget: int | None = None,
         "cost": {
             "currency_charge_observable": False,
             "currency_p50_p90_p95": None,
-            "reason": "subscription/plan route exposes usage and quota, not per-request currency charge",
+            "reason": (
+                "Dianming Chat responses expose auditable token usage; currency pricing is external "
+                "provider metadata rather than a per-response scientific receipt field"
+            ),
             "operational_cost_proxies": {
                 metric: summary[metric] for metric in
                 ("model_calls", "input_tokens", "output_tokens", "total_tokens",
