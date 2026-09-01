@@ -200,7 +200,9 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         "recheck_required_immediately_before_training_authority": True,
     }
     license_gate = {
-        **p, "status": "LICENSE_NOT_CONFIRMED", "accepted_receipt_exactly": LICENSE_RECEIPT,
+        **p, "status": "LICENSE_NOT_CONFIRMED",
+        "licenses": {"3D-FRONT": "LICENSE_NOT_CONFIRMED", "3D-FUTURE": "LICENSE_NOT_CONFIRMED"},
+        "accepted_receipt_exactly": LICENSE_RECEIPT,
         "observed_receipt": None, "licensed_corpus_materialized": False,
         "official_training_authorized": False, "gpu_qualification_authorized": False,
         "fail_closed_verdict": "HOLD_USER_LICENSE_CONFIRMATION",
@@ -389,7 +391,9 @@ def build(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any]]:
         **p, "state": verdict, "data_license_confirmed": False,
         "data_materialization_authority": False, "gpu_authority_requested": False,
         "gpu_authority": False, "official_instructscene_training": False,
-        "training_qualification_run": False, "p1": False, "p2": False, "p3": False,
+        "training_qualification_run": False,
+        "training_status": {"BEDROOM-SG2SC-SHARED": "NOT_STARTED", "SGP-12": "NOT_STARTED", "SGP-14": "NOT_STARTED"},
+        "p1": False, "p2": False, "p3": False, "provider_calls": 0,
         "scientific_gpu_runs": 0, "scientific_outcomes": 0,
         "unofficial_checkpoint_scientific_evidence": False,
         "scenenat_comparison_run": False, "full_cross_architecture_suite_run": False,
