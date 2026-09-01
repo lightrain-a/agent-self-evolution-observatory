@@ -91,7 +91,7 @@ def contract_payload() -> dict[str, Any]:
         },
         "scientific_boundary": {
             "task_split_authorized": False,
-            "behavioral_runtime_qualification_authorized": False,
+            "source_runtime_qualification_authorized": False,
             "source_generation_authorized": False,
             "confirmatory_execution_authorized": False,
         },
@@ -280,7 +280,7 @@ def execute(output: Path = OUTPUT) -> dict[str, Any]:
         "retry_count": 0, "replacement_count": 0, "receipts": receipts,
         "scientific_boundary": {"benchmark_calls_made": 0,
             "task_split_authorized": qualified,
-            "behavioral_runtime_qualification_authorized": False,
+            "source_runtime_qualification_authorized": False,
             "source_generation_authorized": False,
             "confirmatory_execution_authorized": False},
         "credential_material_present": False,

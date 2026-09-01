@@ -14,6 +14,9 @@ from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_schedule
 from research_pipeline.asset_first_stri_reasoningbank_qwen_provider import (
     DIANMING_BASE_URL, DIANMING_CHAT_ENDPOINT,
 )
+from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_runtime_eval import (
+    RESULT as EVALUATION_RUNTIME,
+)
 
 EXPERIMENT_ID = "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901"
 STRUCTURAL = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-structural-result-20260901.json"
@@ -22,7 +25,6 @@ SPLIT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-task-
 BANK = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-bank-20260901.json"
 Q0 = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q0-result-20260901.json"
 Q1 = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-result-20260901.json"
-BEHAVIORAL_RUNTIME = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-behavioral-runtime-result-20260901.json"
 MANIFEST = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-confirmatory-manifest-20260901.json"
 SCHEDULE = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-confirmatory-schedule-20260901.json"
 
@@ -67,7 +69,7 @@ def manifest_payload() -> dict[str, Any]:
             "structural": sha256_file(STRUCTURAL), "pilot": sha256_file(PILOT),
             "split": sha256_file(SPLIT), "source_bank": sha256_file(BANK),
             "q0": sha256_file(Q0), "q1": sha256_file(Q1),
-            "behavioral_runtime": sha256_file(BEHAVIORAL_RUNTIME),
+            "evaluation_runtime": sha256_file(EVALUATION_RUNTIME),
         },
         "evaluation_population": {
             "dataset_design": split["dataset_design"], "task_count": 24,

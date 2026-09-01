@@ -234,8 +234,10 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
                 for x in pilots + confirmatory),
         },
         "scientific_boundary": {
-            "calibration_authorized": decision.endswith("FINAL_TASKS_FROZEN"),
-            "pilot_authorized": False, "confirmatory_execution_authorized": False,
+            "evaluation_runtime_qualification_authorized": decision.endswith("FINAL_TASKS_FROZEN"),
+            "calibration_authorized": False,
+            "pilot_authorized": False,
+            "confirmatory_execution_authorized": False,
         },
         "credential_material_present": False,
     }

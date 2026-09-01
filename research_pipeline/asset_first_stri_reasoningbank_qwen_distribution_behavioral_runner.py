@@ -8,6 +8,9 @@ from typing import Any, Mapping, Sequence
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import ROOT, sha256_file, utcnow, write_json
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_agent import execute_behavioral_unit
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_d0_qualify import dataset_rows
+from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_runtime_eval import (
+    require_qualified as require_evaluation_runtime,
+)
 
 
 def memory_for_arm(bank_by_task: Mapping[str, Mapping[str, Any]],
@@ -89,6 +92,7 @@ def run_plan(*, experiment_id: str, stage: str, contract_path: Path,
              stop_after_ordinal: int | None = None) -> dict[str, Any]:
     if expected_contract_sha256 == "PENDING":
         raise RuntimeError("behavioral contract SHA not pinned")
+    require_evaluation_runtime()
     if sha256_file(contract_path) != expected_contract_sha256:
         raise RuntimeError("behavioral contract SHA drift")
     receipt_dir.mkdir(parents=True, exist_ok=True)

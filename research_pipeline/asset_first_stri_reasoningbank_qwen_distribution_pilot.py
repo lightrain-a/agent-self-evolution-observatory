@@ -23,6 +23,9 @@ from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_power im
     precision_simulation,
 )
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_schedule import schedule_seed
+from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_runtime_eval import (
+    RESULT as EVALUATION_RUNTIME,
+)
 
 EXPERIMENT_ID = "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901"
 STAGE = "QWEN_BEHAVIORAL_PILOT"
@@ -31,7 +34,6 @@ CALIBRATION = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution
 SPLIT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-task-split-20260901.json"
 BANK = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-bank-20260901.json"
 Q0 = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q0-result-20260901.json"
-BEHAVIORAL_RUNTIME = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-behavioral-runtime-result-20260901.json"
 CONTRACT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-pilot-contract-20260901.json"
 INDEX = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-pilot-index-20260901.json"
 RECEIPT_DIR = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-pilot-runs-20260901"
@@ -94,7 +96,7 @@ def contract_payload() -> dict[str, Any]:
         "structural_sha256": sha256_file(STRUCTURAL),
         "calibration_sha256": sha256_file(CALIBRATION),
         "source_bank_sha256": sha256_file(BANK), "q0_sha256": sha256_file(Q0),
-        "behavioral_runtime_result_sha256": sha256_file(BEHAVIORAL_RUNTIME),
+        "evaluation_runtime_result_sha256": sha256_file(EVALUATION_RUNTIME),
         "sampling": q0["recommended_sampling_resolution"],
         "task_ids": tasks, "N_pilot": 4, "K_pilot": 4, "arms": list(ARMS),
         "planned_trajectory_count": 48, "rng_seed": seed,
