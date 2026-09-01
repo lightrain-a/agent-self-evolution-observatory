@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-deepseek-v2-repair2-pair29-recovery-m1-preflight-v1-blocker",
+  "created_at_utc": "2026-09-01T04:30:00+00:00",
+  "status": "SUPERSEDED_PRE_PROVIDER_ENV_CONFIGURATION_BLOCKER",
+  "classification": "LOCAL_IGNORED_ENV_NOT_LINKED_IN_ISOLATED_WORKTREE",
+  "failed_combination": {
+    "arm": "win_c",
+    "task_id": "r17-b4-ska-p8"
+  },
+  "preflight_root": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-pair29-recovery-m1-20260901",
+  "provider_budget_ledger_created": false,
+  "provider_claims": 0,
+  "provider_calls": 0,
+  "execution_run_root_created": false,
+  "scientific_execution_started": false,
+  "automatic_retry": false,
+  "resolution": "linked existing ignored server .env into isolated child worktree; no credential values copied into tracked artifacts",
+  "superseded_by": "generated/e2-r17-deepseek-v2-repair2-pair29-recovery-m1-actual-path-preflight-v2-20260901.json",
+  "partial_effect_read": false,
+  "scientific_scores_read": false,
+  "analyzer_run": false
+}
