@@ -1,0 +1,48 @@
+{
+  "compiler_source_git_sha": "114c1e1a936c00f677e2c71b2b30bb03f0548bf0",
+  "compiler_source_git_tree": "087fcce4298ee75ffbb2419e45fe6e6e2d099b04",
+  "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
+  "corpus_rows_per_regime": {
+    "IS-SUPPORT-12": 96,
+    "IS-SUPPORT-14": 96
+  },
+  "corpus_sha256": {
+    "IS-SUPPORT-12": "e4e88d1e412ed1da575e27d55c81da340a64e582b53bad97ec09449650319940",
+    "IS-SUPPORT-14": "cbb06926e61450281a52ee7287d086ab6bf23b933c34ee7be89bbe18603d73dc"
+  },
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "record_type": "NON_SCIENTIFIC_SYNTHETIC_COMPILER_QUALIFICATION",
+  "replay_matrix": {
+    "IS-SUPPORT-12": {
+      "byte_identical": true,
+      "hashes": {
+        "forward_w1": "e4e88d1e412ed1da575e27d55c81da340a64e582b53bad97ec09449650319940",
+        "forward_w4": "e4e88d1e412ed1da575e27d55c81da340a64e582b53bad97ec09449650319940",
+        "reverse_w1": "e4e88d1e412ed1da575e27d55c81da340a64e582b53bad97ec09449650319940",
+        "shuffled_w1": "e4e88d1e412ed1da575e27d55c81da340a64e582b53bad97ec09449650319940"
+      }
+    },
+    "IS-SUPPORT-14": {
+      "byte_identical": true,
+      "hashes": {
+        "forward_w1": "cbb06926e61450281a52ee7287d086ab6bf23b933c34ee7be89bbe18603d73dc",
+        "forward_w4": "cbb06926e61450281a52ee7287d086ab6bf23b933c34ee7be89bbe18603d73dc",
+        "reverse_w1": "cbb06926e61450281a52ee7287d086ab6bf23b933c34ee7be89bbe18603d73dc",
+        "shuffled_w1": "cbb06926e61450281a52ee7287d086ab6bf23b933c34ee7be89bbe18603d73dc"
+      }
+    }
+  },
+  "result": "PASS",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-qualification-v1",
+  "sample_slots_per_scene": 24,
+  "scene_ids": [
+    "SYN-BEDROOM-0001",
+    "SYN-BEDROOM-0002",
+    "SYN-BEDROOM-0003",
+    "SYN-BEDROOM-0004"
+  ],
+  "scientific_evidence": false
+}

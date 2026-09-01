@@ -1,0 +1,53 @@
+{
+  "compiler_source_git_sha": "114c1e1a936c00f677e2c71b2b30bb03f0548bf0",
+  "compiler_source_git_tree": "087fcce4298ee75ffbb2419e45fe6e6e2d099b04",
+  "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "kill_resume_protocol": {
+    "acceptance": [
+      "identical consumed-example key sequence",
+      "identical exactly-once ledger",
+      "identical model-state hash where deterministic kernels permit",
+      "otherwise tensor max_abs_diff <= 1e-7",
+      "loss trajectory max_abs_diff <= 1e-7"
+    ],
+    "compare_to_uninterrupted_at_step": 100,
+    "failure_verdict": "STOP_TRAINING_REPRODUCTION_FAILED",
+    "interrupt_after_step": 50,
+    "must_restore": [
+      "model",
+      "optimizer",
+      "scheduler",
+      "all RNG",
+      "sampler",
+      "sampler position",
+      "corpus cursor",
+      "global step"
+    ],
+    "qualification_steps": [
+      50,
+      100
+    ]
+  },
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "required_fields": [
+    "run_id",
+    "component_id",
+    "step",
+    "model_state_sha256",
+    "optimizer_state_sha256",
+    "scheduler_state_sha256",
+    "rng_state_sha256",
+    "sampler_state_sha256",
+    "sampler_position",
+    "corpus_cursor",
+    "corpus_sha256",
+    "config_sha256",
+    "code_sha",
+    "checkpoint_sha256"
+  ],
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-qualification-v1",
+  "status": "STATIC_SCHEMA_PASS_LIVE_KILL_RESUME_NOT_RUN"
+}
