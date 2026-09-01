@@ -107,6 +107,14 @@ class OfficialTrainingQualificationArtifactTest(unittest.TestCase):
             cwd=ROOT, check=True, capture_output=True, text=True)
         cls.load = staticmethod(
             lambda name: json.loads((cls.out / name).read_text()))
+        cls.licensed_out = temp_root / "licensed-out"
+        subprocess.run(
+            [sys.executable, str(SCRIPT), "--output-dir", str(cls.licensed_out),
+             "--targeted-audit-log", str(cls.audit),
+             "--license-receipt", LICENSE_RECEIPT],
+            cwd=ROOT, check=True, capture_output=True, text=True)
+        cls.load_licensed = staticmethod(
+            lambda name: json.loads((cls.licensed_out / name).read_text()))
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -128,6 +136,15 @@ class OfficialTrainingQualificationArtifactTest(unittest.TestCase):
                              expected)
 
     def test_license_hold_and_zero_authority(self) -> None:
+        canonical = self.load("canonical_state.json")
+        expected_in_main = subprocess.run(
+            ["git", "-C", str(ROOT), "merge-base", "--is-ancestor",
+             "HEAD", "origin/main"],
+            check=False, capture_output=True, text=True,
+        ).returncode == 0
+        self.assertEqual(canonical["head_is_in_origin_main_history"], expected_in_main)
+        self.assertEqual(canonical["canonical_main_lineage_authority_eligible"],
+                         expected_in_main)
         license_gate = self.load("license_gate.json")
         self.assertEqual(license_gate["status"], "LICENSE_NOT_CONFIRMED")
         self.assertEqual(license_gate["accepted_receipt_exactly"], LICENSE_RECEIPT)
@@ -145,6 +162,52 @@ class OfficialTrainingQualificationArtifactTest(unittest.TestCase):
         self.assertEqual(authority["port_010"]["status"],
                          "HOLD_EVIDENCE_REVIEW_BLOCKED")
         self.assertEqual(authority["port_010"]["evidence_review"], "BLOCK_BAKE_IN")
+        if expected_in_main:
+            self.assertEqual(authority["canonical_integration_requirement"],
+                             "SATISFIED_REVIEWED_CANONICAL_MAIN_LINEAGE")
+        else:
+            self.assertIn("reviewed canonical main lineage",
+                          authority["canonical_integration_requirement"])
+
+    def test_exact_license_receipt_only_opens_materialization(self) -> None:
+        license_gate = self.load_licensed("license_gate.json")
+        canonical = self.load_licensed("canonical_state.json")
+        in_main = canonical["head_is_in_origin_main_history"]
+        self.assertEqual(
+            license_gate["status"],
+            "LICENSE_CONFIRMED_MATERIALIZATION_AUTHORIZED"
+            if in_main else "LICENSE_CONFIRMED_CANONICAL_INTEGRATION_REQUIRED")
+        self.assertEqual(license_gate["observed_receipt"], LICENSE_RECEIPT)
+        self.assertEqual(license_gate["data_materialization_authorized"], in_main)
+        self.assertFalse(license_gate["licensed_corpus_materialized"])
+        self.assertFalse(license_gate["gpu_qualification_authorized"])
+        authority = self.load_licensed("authority.json")
+        self.assertTrue(authority["data_license_confirmed"])
+        self.assertEqual(authority["data_materialization_authority"], in_main)
+        self.assertFalse(authority["gpu_authority"])
+        self.assertFalse(authority["official_instructscene_training"])
+        self.assertFalse(authority["p1"])
+        adjudication = self.load_licensed("adjudication.json")
+        self.assertEqual(
+            adjudication["verdict"],
+            "LICENSE_CONFIRMED_MATERIALIZATION_AUTHORIZED"
+            if in_main else "HOLD_CANONICAL_MAIN_INTEGRATION")
+        self.assertEqual(adjudication["gates"]["DATA_LICENSE"],
+                         "PASS_USER_CONFIRMED_EXACT_RECEIPT")
+        self.assertEqual(adjudication["gates"]["LICENSED_CORPUS"],
+                         "NOT_RUN_MATERIALIZATION_PENDING")
+        dataset = self.load_licensed("dataset_manifest.json")
+        self.assertEqual(dataset["status"],
+                         "LICENSE_CONFIRMED_DATA_NOT_MATERIALIZED")
+        self.assertEqual(dataset["licensed_rows"], 0)
+
+        bad_out = Path(self.tmp.name) / "bad-license"
+        result = subprocess.run(
+            [sys.executable, str(SCRIPT), "--output-dir", str(bad_out),
+             "--license-receipt", LICENSE_RECEIPT + " "],
+            cwd=ROOT, capture_output=True, text=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("HOLD_USER_LICENSE_CONFIRMATION", result.stderr + result.stdout)
 
     def test_shared_decoder_and_checkpoint_audit(self) -> None:
         decoder = self.load("decoder_audit.json")
@@ -227,6 +290,13 @@ class OfficialTrainingQualificationArtifactTest(unittest.TestCase):
         adjudication = self.load("adjudication.json")
         self.assertEqual(adjudication["verdict"],
                          "HOLD_USER_LICENSE_CONFIRMATION")
+        canonical = self.load("canonical_state.json")
+        expected_gate = (
+            "PASS_CANONICAL_MAIN_LINEAGE"
+            if canonical["head_is_in_origin_main_history"]
+            else "PASS_PROPOSAL_BRANCH_MAIN_INTEGRATION_REQUIRED_BEFORE_AUTHORITY")
+        self.assertEqual(adjudication["gates"]["CANONICAL_CONTINUATION_LINEAGE"],
+                         expected_gate)
         self.assertFalse(adjudication["gpu_authority_requested_this_round"])
         self.assertFalse(adjudication["p1_open"])
 
