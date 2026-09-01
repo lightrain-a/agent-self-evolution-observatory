@@ -32,7 +32,10 @@ def preflight(manifest, auth, qual, frozen, source_receipt):
             raise RuntimeError(f"utilization-top-retrieval-not-eligible:{row.get('validation_task_id')}")
 
 
+# r47m1.main() delegates into its imported original-r47 module. Rebind both
+# layers so command-line execution cannot bypass this strict M2 preflight.
 base.preflight = preflight
+base.base.preflight = preflight
 
 ARMS = base.ARMS
 arm_order = base.arm_order

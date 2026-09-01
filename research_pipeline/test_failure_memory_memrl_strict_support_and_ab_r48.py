@@ -10,6 +10,7 @@ from research_pipeline.failure_memory_memrl_ab_identification_r48 import (
     percentile_ci,
     render_pair,
 )
+from research_pipeline import failure_memory_memrl_utilization_r47m2 as r47m2
 
 
 def _digest(v):
@@ -47,6 +48,11 @@ class StrictR46Tests(unittest.TestCase):
         self.assertEqual(r["primary_clusters_with_eligible_frozen_retrieval"],32)
         self.assertTrue(r["all_32_primary_clusters_supported"])
         self.assertEqual(r["status"],"SOURCE_QUALIFICATION_PASS_RETRIEVAL_FROZEN_VALIDATION_STILL_SEALED")
+
+
+class R47M2PlumbingTests(unittest.TestCase):
+    def test_command_line_main_rebinds_original_r47_preflight_to_m2(self):
+        self.assertIs(r47m2.base.base.preflight, r47m2.preflight)
 
 
 class ABOperationalizationTests(unittest.TestCase):
