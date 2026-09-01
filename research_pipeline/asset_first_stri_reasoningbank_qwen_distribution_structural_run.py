@@ -154,7 +154,8 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
     for index, task_id in enumerate(evaluation_ids):
         task = rows[task_id]
         retrieval = retrieval_receipt(
-            instance_id=task_id, task_sha256=sha256_text(str(task["problem_statement"])),
+            instance_id=task_id,
+            task_sha256=split["task_receipts"][task_id]["task_sha256"],
             query=str(task["problem_statement"]), source_ids=source_ids,
             source_repositories=source_repositories, source_vectors=source_vectors,
             query_vector=query_vectors[index:index + 1],
