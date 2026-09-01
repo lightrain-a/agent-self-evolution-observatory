@@ -38,6 +38,9 @@ QUALIFICATION_PATH = Path(
 CONTRACT_PATH = Path(
     "generated/agent-constraint-externality-capability-continuation-r1-contract-20260901.json"
 )
+CREDENTIAL_REUSE_AUTHORIZATION_PATH = Path(
+    "generated/agent-constraint-externality-credential-reuse-authorization-r1-20260901.json"
+)
 
 
 def load_recovery(path: Path) -> dict[str, Any]:
@@ -104,6 +107,47 @@ def require_rotated_credential(
         raise RunnerError("CREDENTIAL_ROTATION_REQUIRED: env file predates the frozen rotation boundary.")
 
 
+def require_credential_authorization(
+    contract: dict[str, Any],
+    *,
+    env_path: Path = DEFAULT_ENV_FILE,
+    reuse_authorization_path: Path = CREDENTIAL_REUSE_AUTHORIZATION_PATH,
+) -> str:
+    """Permit either a rotated credential or an explicit non-scientific reuse override."""
+    if not env_path.is_file():
+        raise RunnerError("Credential env file is unavailable.")
+    boundary = int(contract["credential_env_mtime_must_be_gt"])
+    if int(env_path.stat().st_mtime) > boundary:
+        return "ROTATED_CREDENTIAL"
+    if not reuse_authorization_path.is_file():
+        raise RunnerError(
+            "CREDENTIAL_ROTATION_REQUIRED: no explicit existing-credential reuse authorization."
+        )
+    payload = json.loads(reuse_authorization_path.read_text(encoding="utf-8"))
+    if payload.get("object_id") != OBJECT_ID:
+        raise RunnerError("Credential-reuse authorization object mismatch.")
+    if payload.get("status") != "EXISTING_CREDENTIAL_REUSE_USER_AUTHORIZED":
+        raise RunnerError("Credential-reuse authorization is not active.")
+    if payload.get("existing_credential_reuse_authorized") is not True:
+        raise RunnerError("Credential-reuse authorization is not explicit.")
+    if payload.get("credential_value_persisted") is not False:
+        raise RunnerError("Credential-reuse artifact must not persist the credential value.")
+    if payload.get("scientific_protocol_changed") is not False:
+        raise RunnerError("Credential reuse may not modify the scientific protocol.")
+    if payload.get("model_changed") is not False or payload.get("thresholds_changed") is not False:
+        raise RunnerError("Credential reuse may not change model or thresholds.")
+    if payload.get("replay_recovered_unit_authorized") is not False:
+        raise RunnerError("Credential reuse must not authorize recovered-unit replay.")
+    if payload.get("f0_authorized") is not False:
+        raise RunnerError("Credential reuse must not authorize F0.")
+    claimed = payload.get("content_sha256")
+    unsigned = dict(payload)
+    unsigned.pop("content_sha256", None)
+    if claimed != sha256_value(unsigned):
+        raise RunnerError("Credential-reuse authorization content hash mismatch.")
+    return "EXISTING_CREDENTIAL_USER_AUTHORIZED"
+
+
 def execute_remaining_capability(
     *,
     appworld_root: Path,
@@ -115,7 +159,7 @@ def execute_remaining_capability(
     require_recovery_qualification()
     contract = require_continuation_contract()
     recovery = load_recovery(recovery_path)
-    require_rotated_credential(contract)
+    require_credential_authorization(contract)
     load_env_file(DEFAULT_ENV_FILE)
     api_key = os.getenv("AA_API_KEY", "")
     base_url = os.getenv("AA_BASE_URL", DEFAULT_BASE_URL).rstrip("/")

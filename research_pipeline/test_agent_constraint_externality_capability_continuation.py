@@ -7,9 +7,11 @@ import unittest
 from pathlib import Path
 
 from research_pipeline.agent_constraint_externality_capability_continue import (
+    CREDENTIAL_REUSE_AUTHORIZATION_PATH,
     adjudicate_continuation,
     load_recovery,
     remaining_capability_units,
+    require_credential_authorization,
     require_rotated_credential,
 )
 from research_pipeline.agent_constraint_externality_capability_measurement_recover import (
@@ -66,6 +68,35 @@ class CapabilityContinuationTests(unittest.TestCase):
                 require_rotated_credential(contract, path)
             os.utime(path, (101, 101))
             require_rotated_credential(contract, path)
+
+    def test_existing_credential_reuse_override_is_content_addressed_and_non_scientific(self) -> None:
+        payload = json.loads(CREDENTIAL_REUSE_AUTHORIZATION_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(payload["status"], "EXISTING_CREDENTIAL_REUSE_USER_AUTHORIZED")
+        self.assertTrue(payload["existing_credential_reuse_authorized"])
+        self.assertFalse(payload["credential_value_persisted"])
+        self.assertFalse(payload["scientific_protocol_changed"])
+        self.assertFalse(payload["model_changed"])
+        self.assertFalse(payload["thresholds_changed"])
+        self.assertFalse(payload["replay_recovered_unit_authorized"])
+        self.assertFalse(payload["f0_authorized"])
+        claimed = payload["content_sha256"]
+        unsigned = dict(payload)
+        unsigned.pop("content_sha256")
+        self.assertEqual(claimed, sha256_value(unsigned))
+
+    def test_existing_credential_reuse_authorization_can_replace_rotation_gate(self) -> None:
+        contract = json.loads(CONTRACT.read_text(encoding="utf-8"))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / ".env"
+            path.write_text("PLACEHOLDER_CREDENTIAL_MARKER=existing\n", encoding="utf-8")
+            old_time = int(contract["credential_env_mtime_must_be_gt"])
+            os.utime(path, (old_time, old_time))
+            mode = require_credential_authorization(
+                contract,
+                env_path=path,
+                reuse_authorization_path=CREDENTIAL_REUSE_AUTHORIZATION_PATH,
+            )
+            self.assertEqual(mode, "EXISTING_CREDENTIAL_USER_AUTHORIZED")
 
     def test_combined_adjudication_uses_one_recovery_plus_seven_new_units(self) -> None:
         units = remaining_capability_units()
