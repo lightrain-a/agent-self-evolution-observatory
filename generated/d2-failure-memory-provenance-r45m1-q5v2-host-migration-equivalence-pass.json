@@ -1,0 +1,263 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-Q5V2-HOST-MIGRATION-EQUIVALENCE",
+  "recorded_date": "2026-09-01",
+  "status": "HOST_MIGRATION_EQUIVALENCE_PASS",
+  "role": "ZERO_CONFIRMATORY_OUTCOME_SUPPORT_INTERFACE_QUALIFICATION",
+  "host": {
+    "logical_name": "ubuntu",
+    "ssh_identity": "wyt@222.20.126.231"
+  },
+  "source": {
+    "root": "/data/wyt/b1-memrl-r45m1-source-c1b322ca",
+    "revision": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "train_split_sha256": "d33513493856e6cdce2377a951a48a42686463eee1c92acb9d6b0a0320601e62"
+  },
+  "script": {
+    "path": "/data/wyt/b1-memrl-r45m1-runtime/support_code/failure_memory_memrl_q5v2_qualification_r45m1.py",
+    "sha256": "9127a6cca60b6ef5cc2568e6134b727273804039b3573bcfca21b1b12cbdddf9"
+  },
+  "contract": {
+    "path": "/data/wyt/b1-memrl-r45m1-runtime/support_code/q5v2-contract.json",
+    "sha256": "4871f26a0336e4dc4ef6d96c6a0eebac1168bfbf98f7d74820ae38378524320a"
+  },
+  "prompt_contract_diff": {
+    "path": "/data/wyt/b1-memrl-r45m1-runtime/support_code/q5v2-prompt-contract-diff.json",
+    "sha256": "5c4ec92b181ef798ae9e99dc8b5616c40df780fe8f54d856d5f7ae8d80d0ee30"
+  },
+  "loopback": {
+    "base_url": "http://127.0.0.1:18143/v1",
+    "network_scope": "loopback-only",
+    "llm_model": "B1-Qwen2.5-7B-Instruct-r43",
+    "embedding_model": "B1-all-mpnet-base-v2-isometric3072-r43",
+    "external_provider_calls": 0
+  },
+  "runtime_image": {
+    "tag": "b1-memrl-r45m1-osinteraction:20260901",
+    "id": "sha256:02c5cb67fff7bfddda09ca63e5318628d02d943767e6cd59069ece755253f036"
+  },
+  "qualification": {
+    "Q1": {
+      "pass": true,
+      "repetitions": 3,
+      "token_sequence_stable": true,
+      "executable_action_parse_stable": true,
+      "response_sha256": "fdee0e202fabf5f07774d808546c6b8c2d22fb67ecaf51a2a8981db4c6df6b37",
+      "token_ids_sha256": "d168378589377bf4fb4ef19b5775c45ba7f57b78cff29db6d46b80a22349c620",
+      "parsed_content_sha256": "0bf59a044644198140a3b516cf5d090cea3efae9c74c0d1ae6caf682723f1346"
+    },
+    "Q2": {
+      "pass": true,
+      "repetitions": 3,
+      "repeated_vectors_stable": true,
+      "dimension": 3072,
+      "native_dimension": 768,
+      "vectors_sha256": "63daba9531a2d44e13d04cbe5c936557acbd3aa363f3c13b069adfb432eaeda1",
+      "norms": [
+        0.9999999680746315,
+        0.9999999992648664,
+        0.9999999483735774
+      ],
+      "pairwise_cosines_sha256": "7ef481d63a31ff149a5881f90f6e20dd8f4c56ced8eef50a8a84c3fd437ac935",
+      "max_cosine_bridge_error": 1.1657341758564144e-15
+    },
+    "Q3": {
+      "pass": true,
+      "repetitions": 3,
+      "synthetic_memory_count": 3,
+      "retrieval_order_stable": true,
+      "built_ids_sha256": "e6a0449914bcdd2041d95866642d36d4a622e7bf8a608c0ea042a313cd8c10ae",
+      "retrieved_ids_sha256": "17c9004e1e85794c8a67ff01625bcbd88c6a3e1fca56ef3a061d394041cca5c6"
+    },
+    "Q4": {
+      "pass": true,
+      "repetitions": 3,
+      "unit_id": "0",
+      "split": "data/llb/os_interaction_train.json",
+      "split_sha256": "d33513493856e6cdce2377a951a48a42686463eee1c92acb9d6b0a0320601e62",
+      "evaluator_verdict_stable": true,
+      "reset_reproducible": true,
+      "validation_split_used": false,
+      "expected_replay": [
+        0,
+        false,
+        1,
+        false,
+        0,
+        false,
+        0,
+        false,
+        0,
+        false
+      ]
+    },
+    "Q5a": {
+      "pass": true,
+      "diagnostic_only": false,
+      "repetitions": 3,
+      "native_frozen_prompt_builder": "build_llb_prompt_with_memory(task=os)",
+      "native_parser_used": true,
+      "parser_or_postprocessing_repair": false,
+      "temperature": 0,
+      "max_tokens": 128,
+      "stable": true,
+      "validation_unit_used": false,
+      "rows": [
+        {
+          "retrieval_sha256": "17c9004e1e85794c8a67ff01625bcbd88c6a3e1fca56ef3a061d394041cca5c6",
+          "native_system_prompt_sha256": "7af0257e84d6198ddd2e87b877bce2e7ebff5abcbb51b9cdb11cdf67bdbdf90d",
+          "user_prompt_sha256": "082dc13380e0de1b31cdcedd02302014087d34ce3a1da6bad4a4e8b9817c23e8",
+          "response_sha256": "c7a454e0e60105d5bab86c7cd53134e2be2eff512e04789b18a67b5fbb5f9906",
+          "literal_act_bash": true,
+          "begins_act_bash": true,
+          "parsed_action": "execute",
+          "parsed_command_nonempty": true,
+          "command_executed": true,
+          "evaluator_called": true,
+          "action_sha256": "91ee41ff9fe00d1479746e1725456026f43663f9cd834351c830ce495a0440c6",
+          "action_exit": 0,
+          "action_timeout": false,
+          "verdict_exit": 0,
+          "verdict_timeout": false
+        },
+        {
+          "retrieval_sha256": "17c9004e1e85794c8a67ff01625bcbd88c6a3e1fca56ef3a061d394041cca5c6",
+          "native_system_prompt_sha256": "7af0257e84d6198ddd2e87b877bce2e7ebff5abcbb51b9cdb11cdf67bdbdf90d",
+          "user_prompt_sha256": "082dc13380e0de1b31cdcedd02302014087d34ce3a1da6bad4a4e8b9817c23e8",
+          "response_sha256": "c7a454e0e60105d5bab86c7cd53134e2be2eff512e04789b18a67b5fbb5f9906",
+          "literal_act_bash": true,
+          "begins_act_bash": true,
+          "parsed_action": "execute",
+          "parsed_command_nonempty": true,
+          "command_executed": true,
+          "evaluator_called": true,
+          "action_sha256": "91ee41ff9fe00d1479746e1725456026f43663f9cd834351c830ce495a0440c6",
+          "action_exit": 0,
+          "action_timeout": false,
+          "verdict_exit": 0,
+          "verdict_timeout": false
+        },
+        {
+          "retrieval_sha256": "17c9004e1e85794c8a67ff01625bcbd88c6a3e1fca56ef3a061d394041cca5c6",
+          "native_system_prompt_sha256": "7af0257e84d6198ddd2e87b877bce2e7ebff5abcbb51b9cdb11cdf67bdbdf90d",
+          "user_prompt_sha256": "082dc13380e0de1b31cdcedd02302014087d34ce3a1da6bad4a4e8b9817c23e8",
+          "response_sha256": "c7a454e0e60105d5bab86c7cd53134e2be2eff512e04789b18a67b5fbb5f9906",
+          "literal_act_bash": true,
+          "begins_act_bash": true,
+          "parsed_action": "execute",
+          "parsed_command_nonempty": true,
+          "command_executed": true,
+          "evaluator_called": true,
+          "action_sha256": "91ee41ff9fe00d1479746e1725456026f43663f9cd834351c830ce495a0440c6",
+          "action_exit": 0,
+          "action_timeout": false,
+          "verdict_exit": 0,
+          "verdict_timeout": false
+        }
+      ]
+    },
+    "Q5b": {
+      "pass": true,
+      "diagnostic_only": true,
+      "repetitions": 3,
+      "native_frozen_prompt_builder": "build_llb_prompt_with_memory(task=os)",
+      "native_parser_used": true,
+      "parser_or_postprocessing_repair": false,
+      "temperature": 0,
+      "max_tokens": 128,
+      "stable": true,
+      "validation_unit_used": false,
+      "rows": [
+        {
+          "retrieval_sha256": "17c9004e1e85794c8a67ff01625bcbd88c6a3e1fca56ef3a061d394041cca5c6",
+          "native_system_prompt_sha256": "7af0257e84d6198ddd2e87b877bce2e7ebff5abcbb51b9cdb11cdf67bdbdf90d",
+          "user_prompt_sha256": "bcbbbbe3dfb261f006468f43fbe569d935c11c23dd5084d16c01bdc30ca2fffe",
+          "response_sha256": "abb862928ad901aea8ba521e35bdc2dae59d82331c493fb088ae3458bfb41c60",
+          "literal_act_bash": true,
+          "begins_act_bash": true,
+          "parsed_action": "execute",
+          "parsed_command_nonempty": true,
+          "command_executed": true,
+          "evaluator_called": true,
+          "action_sha256": "91ee41ff9fe00d1479746e1725456026f43663f9cd834351c830ce495a0440c6",
+          "action_exit": 0,
+          "action_timeout": false,
+          "verdict_exit": 0,
+          "verdict_timeout": false
+        },
+        {
+          "retrieval_sha256": "17c9004e1e85794c8a67ff01625bcbd88c6a3e1fca56ef3a061d394041cca5c6",
+          "native_system_prompt_sha256": "7af0257e84d6198ddd2e87b877bce2e7ebff5abcbb51b9cdb11cdf67bdbdf90d",
+          "user_prompt_sha256": "bcbbbbe3dfb261f006468f43fbe569d935c11c23dd5084d16c01bdc30ca2fffe",
+          "response_sha256": "abb862928ad901aea8ba521e35bdc2dae59d82331c493fb088ae3458bfb41c60",
+          "literal_act_bash": true,
+          "begins_act_bash": true,
+          "parsed_action": "execute",
+          "parsed_command_nonempty": true,
+          "command_executed": true,
+          "evaluator_called": true,
+          "action_sha256": "91ee41ff9fe00d1479746e1725456026f43663f9cd834351c830ce495a0440c6",
+          "action_exit": 0,
+          "action_timeout": false,
+          "verdict_exit": 0,
+          "verdict_timeout": false
+        },
+        {
+          "retrieval_sha256": "17c9004e1e85794c8a67ff01625bcbd88c6a3e1fca56ef3a061d394041cca5c6",
+          "native_system_prompt_sha256": "7af0257e84d6198ddd2e87b877bce2e7ebff5abcbb51b9cdb11cdf67bdbdf90d",
+          "user_prompt_sha256": "bcbbbbe3dfb261f006468f43fbe569d935c11c23dd5084d16c01bdc30ca2fffe",
+          "response_sha256": "abb862928ad901aea8ba521e35bdc2dae59d82331c493fb088ae3458bfb41c60",
+          "literal_act_bash": true,
+          "begins_act_bash": true,
+          "parsed_action": "execute",
+          "parsed_command_nonempty": true,
+          "command_executed": true,
+          "evaluator_called": true,
+          "action_sha256": "91ee41ff9fe00d1479746e1725456026f43663f9cd834351c830ce495a0440c6",
+          "action_exit": 0,
+          "action_timeout": false,
+          "verdict_exit": 0,
+          "verdict_timeout": false
+        }
+      ]
+    }
+  },
+  "release_gate_keys": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5a"
+  ],
+  "all_q1_q5a_pass": true,
+  "q5b_diagnostic_only": true,
+  "access_accounting": {
+    "training_support_units_initialized": 3,
+    "training_support_evaluator_calls": 9,
+    "training_support_ground_truth_calls": 3,
+    "synthetic_memory_builds": 3,
+    "synthetic_retrieval_calls": 9,
+    "validation_units_initialized": 0,
+    "validation_evaluator_calls": 0,
+    "validation_ground_truth_calls": 0,
+    "confirmatory_treatment_outcomes_observed": 0,
+    "scientific_source_units_executed": 0,
+    "external_provider_calls": 0
+  },
+  "scientific_contract": {
+    "parser_changed": false,
+    "scientific_source_prompt_changed": false,
+    "source_build_runner_changed": false,
+    "model_changed": false,
+    "temperature_changed": false,
+    "validation_exposure": 0,
+    "scientific_source_exposure": 0
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "support_only": true,
+  "failure_route": "HOLD_NATIVE_FROZEN_INTERFACE_NOT_QUALIFIED",
+  "wall_seconds": 52.83660078048706,
+  "receipt_sha256": "51eb89c909f53224e8d7b8a85b3663693ac44a3d309bcc55e4c350482a92bf52"
+}

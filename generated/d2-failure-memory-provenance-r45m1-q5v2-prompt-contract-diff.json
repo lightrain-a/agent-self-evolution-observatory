@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-Q5V2-PROMPT-CONTRACT-DIFF",
+  "recorded_date": "2026-09-01",
+  "status": "PASS",
+  "role": "PREEXECUTION_MACHINE_READABLE_SUPPORT_VS_SCIENTIFIC_PROMPT_DIFF",
+  "A_q5v1_support": {
+    "prompt_template_sha256": "e802a9fecfbf66ffc1cdd5bbf71699aa71dbda0e85668f8be2bb80df70f756ac",
+    "result": "MISSING_NATIVE_ACT_LINE"
+  },
+  "B_q5v2_support": {
+    "q5a_user_instruction_sha256": "082dc13380e0de1b31cdcedd02302014087d34ce3a1da6bad4a4e8b9817c23e8",
+    "q5a_system_prompt_builder": "build_llb_prompt_with_memory(task=os)",
+    "q5b_user_prompt_sha256": "bcbbbbe3dfb261f006468f43fbe569d935c11c23dd5084d16c01bdc30ca2fffe",
+    "support_prompt_changed_from_q5v1": true
+  },
+  "C_frozen_scientific_contract": {
+    "memrl_revision": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "prompt_file_sha256": "1af576bf8af7a72a7032509ad6747e12e4f1317fdf80d48e7d32915a80f4a515",
+    "default_system_prompt_sha256": "ab35ee09681e495df35f2c817f7e20eabe4599221715b7db68cf29309093d2ea",
+    "os_constraint_sha256": "522d1eb382268f326407722ce092e1c088e9e1e89c7ee17a8e19e6af3cdfb0db",
+    "build_llb_system_prompt_task_os_sha256": "07c50df1d57c848bdaaaf727dd44282c3178f6de17274f8f19f8027ff88cf2ce",
+    "parser_file_sha256": "3912ea9ba093767ae5a8ff5fed59bae628dfcc09a26f706c8375ecbd3649509f",
+    "parser_pattern": "Act:\\s*(.+)",
+    "llb_runner_sha256": "3d93d5992b7496194529e02d48e148c8c5217c3bf07f2f3783c62035fa48bc18",
+    "source_build_runner_sha256": "aca29c9db00571bdded58f8f8c64ebc90fe6da10615334c5e8f04f63a83d4cbe"
+  },
+  "audit": {
+    "parser_changed": false,
+    "scientific_source_prompt_changed": false,
+    "LLB_DEFAULT_SYSTEM_PROMPT_changed": false,
+    "build_llb_system_prompt_task_os_changed": false,
+    "source_build_runner_changed": false,
+    "arm_semantics_changed": false,
+    "model_changed": false,
+    "temperature_changed": false,
+    "max_tokens_changed": false,
+    "validation_exposure": 0,
+    "scientific_source_exposure": 0,
+    "non_whitelisted_scientific_difference_count": 0
+  },
+  "failure_route": "STOP_Q5V2_SCIENTIFIC_CONTRACT_DRIFT",
+  "receipt_sha256": "6482ee1b2144ee2b5aa209bbbb32bc3a7b6939065bc16d4ab05b7bc6e8694437"
+}
