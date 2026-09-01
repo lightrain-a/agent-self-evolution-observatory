@@ -5,10 +5,17 @@ import json
 from pathlib import Path
 from typing import Any
 
-from research_pipeline.ark_provider import ARK_MODELS, ArkSettings
+from research_pipeline.agent_constraint_externality_qwen_model_prereg import (
+    ALLOWED_ALIAS,
+    MANIFEST as MODEL_ADDENDUM_MANIFEST,
+    OUTPUT as MODEL_ADDENDUM,
+    PROVIDER_ID,
+    REQUESTED_MODEL,
+    safe_provider_summary,
+)
 
 OBJECT_ID = "AGENT-CONSTRAINT-EXTERNALITY-20260831"
-GENERATED_AT = "2026-08-31T19:45:00+08:00"
+GENERATED_AT = "2026-09-01T15:35:00+08:00"
 ROOT = Path(__file__).resolve().parents[1]
 GENERATED = ROOT / "generated"
 FAMILY_MANIFEST = (
@@ -27,9 +34,7 @@ F0_FAMILIES = (
     "ACE-FG-01", "ACE-FG-02", "ACE-FG-03", "ACE-FG-04",
     "ACE-TNF-01", "ACE-TNF-02", "ACE-TNF-03", "ACE-TNF-04",
 )
-MODEL_SELECTION_ORDER = (
-    "doubao-seed-2.0-lite", "deepseek-v4-flash", "deepseek-v4-pro"
-)
+MODEL_SELECTION_ORDER = (REQUESTED_MODEL,)
 SEEDS = (1201, 1202, 1203)
 ARMS = ("INDEPENDENT", "LOW", "HIGH")
 BRANCHES = ("NO_UPDATE", "UPDATE")
@@ -79,15 +84,17 @@ def validate_inputs() -> tuple[dict[str, Any], dict[str, Any]]:
         raise PreflightError("Capability and decisive splits overlap.")
     if selected != set(available):
         raise PreflightError("Outcome-blind split must partition all compiled families.")
-    if not all(model in ARK_MODELS for model in MODEL_SELECTION_ORDER):
-        raise PreflightError("A preregistered model is absent from the provider catalog.")
+    if MODEL_SELECTION_ORDER != (REQUESTED_MODEL,):
+        raise PreflightError("Exactly one Qwen candidate must remain preregistered.")
+    addendum = read_json(MODEL_ADDENDUM)
+    if addendum["status"] != "QWEN_MODEL_PREREG_ADDENDUM_A0_PASS":
+        raise PreflightError("Qwen model prereg addendum is not qualified.")
     return families, qualification
 
 
 def build_artifacts() -> dict[str, dict[str, Any]]:
     families, qualification = validate_inputs()
-    settings = ArkSettings.from_env(required=False)
-    safe_provider = settings.safe_summary()
+    safe_provider = safe_provider_summary()
     provider_ready = bool(safe_provider["configured"])
 
     capability = {
@@ -106,9 +113,11 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             len(CAPABILITY_FAMILIES) * 2 * len(MODEL_SELECTION_ORDER)
         ),
         "model_selection_order": list(MODEL_SELECTION_ORDER),
-        "selection_rule": "FIRST_CANDIDATE_MEETING_ALL_FLOOR_AND_CEILING_RULES",
+        "selection_rule": "ONLY_QWEN_CANDIDATE_MUST_QUALIFY_OR_STOP",
+        "requested_model": REQUESTED_MODEL,
+        "allowed_alias": ALLOWED_ALIAS,
         "candidate_isolation": (
-            "Each rejected candidate uses only this disjoint split; no F0 family "
+            "The single candidate uses only this disjoint split; no F0 family "
             "outcome is readable before backbone freeze."
         ),
         "qualification_rules": {
@@ -118,13 +127,15 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             "baseline_non_target_preservation_rate_min": 0.85,
             "zero_malformed_function_calls_required": True,
         },
-        "floor_disposition": "TRY_NEXT_PREDECLARED_CANDIDATE_OR_STOP",
-        "ceiling_disposition": "TRY_NEXT_PREDECLARED_CANDIDATE_OR_HARDER_PREDECLARED_STRATUM",
-        "all_candidates_fail_disposition": "CAPABILITY_CALIBRATION_FAIL_STOP",
+        "floor_disposition": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
+        "ceiling_disposition": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+        "interface_disposition": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP",
+        "automatic_fallback": False,
         "execution": {
-            "provider": "ARK_RESPONSES_API",
+            "provider": PROVIDER_ID,
             "provider_max_retries": 0,
             "application_retry": False,
+            "capability_episode_cap": 8,
             "tool_interaction_cap": 12,
             "temperature": 0,
             "append_only_ledger": True,
@@ -146,6 +157,18 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "backbone": "FROZEN_FROM_CAPABILITY_CALIBRATION_BEFORE_F0",
         "harness": "APPWORLD_FUNCTION_CALLING_V1",
         "update_surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE",
+        "budgets": {
+            "capability_agent_episodes": 8,
+            "f0_source_agent_episodes": 8,
+            "f0_probe_agent_episode_min": 108,
+            "f0_probe_agent_episode_max": 144,
+            "agent_episode_total_max": 160,
+            "repair_generation_provider_request_cap": 8,
+            "count_separately": [
+                "agent_episode_count", "agent_model_request_count",
+                "updater_model_request_count", "provider_request_total",
+            ],
+        },
         "source_phase": {
             "episodes": len(F0_FAMILIES),
             "one_target_isolated_episode_per_family": True,
@@ -168,9 +191,11 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             ),
             "human_edit_after_generation": False,
             "freeze_fields": [
-                "sha256", "exact_bytes", "byte_length",
-                "fixed_tokenizer_token_count", "procedural_clause_count",
-                "injection_position", "exposure_rule",
+                "sha256", "raw_bytes", "normalized_bytes", "byte_length",
+                "word_count", "fixed_tokenizer_token_count",
+                "procedural_clause_count", "injection_position", "exposure_rule",
+                "generation_model_id", "generation_request_sha256",
+                "source_trajectory_sha256",
             ],
             "minimum_eligible_repair_families": 6,
             "maximum_eligible_repair_families": 8,
@@ -256,11 +281,7 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "gpu_runs": 0,
     }
 
-    readiness_status = (
-        "CAPABILITY_CALIBRATION_READY_NOT_EXECUTED"
-        if provider_ready
-        else "CAPABILITY_CALIBRATION_BLOCKED_PROVIDER_NOT_CONFIGURED"
-    )
+    readiness_status = "M1_RUNNER_QUALIFICATION_REQUIRED"
     readiness = {
         "schema_version": "agent-constraint-externality-f0-readiness-v1",
         "generated_at": GENERATED_AT,
@@ -270,6 +291,8 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "compiler_pass_conditions_all_true": all(
             qualification["pass_conditions"].values()
         ),
+        "model_prereg_addendum_a0_pass": True,
+        "m1_runner_qualification_pass": False,
         "capability_contract_frozen": True,
         "f0_contract_frozen": True,
         "provider": safe_provider,
@@ -277,16 +300,9 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             "max_retries": 0,
             "note": "Frozen protocol overrides provider default for scientific calls.",
         },
-        "blocker": (
-            None
-            if provider_ready
-            else "ARK_API_KEY is absent from the configured ignored server environment."
-        ),
-        "next_authorized_action": (
-            "RUN_DISJOINT_CAPABILITY_CALIBRATION"
-            if provider_ready
-            else "CONFIGURE_PROVIDER_CREDENTIAL_THEN_RERUN_READINESS"
-        ),
+        "provider_credential_present": provider_ready,
+        "blocker": "M1 scientific runner qualification has not passed.",
+        "next_authorized_action": "RUN_M1_MOCK_QUALIFICATION",
         "f0_executed": False,
         "f0_outcomes_observed": 0,
         "tool_sandbox_authorized": False,
@@ -311,7 +327,10 @@ def main() -> None:
         }
         for name in artifacts
     }
-    for path in (FAMILY_MANIFEST, COMPILER_QUALIFICATION, COMPILER_MANIFEST):
+    for path in (
+        FAMILY_MANIFEST, COMPILER_QUALIFICATION, COMPILER_MANIFEST,
+        MODEL_ADDENDUM, MODEL_ADDENDUM_MANIFEST,
+    ):
         manifest_files[str(path.relative_to(ROOT))] = {
             "sha256": file_sha256(path),
             "bytes": path.stat().st_size,
@@ -329,9 +348,8 @@ def main() -> None:
         "provider_calls": 0,
         "gpu_runs": 0,
         "authority": {
-            "capability_calibration": (
-                readiness["status"] == "CAPABILITY_CALIBRATION_READY_NOT_EXECUTED"
-            ),
+            "m1_mock_qualification": True,
+            "capability_calibration": False,
             "f0": False,
             "toolsandbox": False,
             "appworld_ul": False,
@@ -348,9 +366,12 @@ def main() -> None:
         "status": readiness["status"],
         "capability_family_count": len(CAPABILITY_FAMILIES),
         "f0_family_count": len(F0_FAMILIES),
-        "f0_episode_envelope": (
+        "capability_episode_cap": 8,
+        "f0_source_episode_cap": 8,
+        "f0_probe_episode_envelope": (
             len(F0_FAMILIES) * len(ARMS) * len(BRANCHES) * len(SEEDS)
         ),
+        "agent_episode_total_max": 160,
         "scientific_outcomes_observed": 0,
         "provider_calls": 0,
     }, sort_keys=True))

@@ -1,13 +1,15 @@
 {
-  "all_candidates_fail_disposition": "CAPABILITY_CALIBRATION_FAIL_STOP",
-  "candidate_isolation": "Each rejected candidate uses only this disjoint split; no F0 family outcome is readable before backbone freeze.",
-  "ceiling_disposition": "TRY_NEXT_PREDECLARED_CANDIDATE_OR_HARDER_PREDECLARED_STRATUM",
+  "allowed_alias": "qwen3.7-flash",
+  "automatic_fallback": false,
+  "candidate_isolation": "The single candidate uses only this disjoint split; no F0 family outcome is readable before backbone freeze.",
+  "ceiling_disposition": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
   "episodes_per_candidate": 8,
   "execution": {
     "append_only_ledger": true,
     "application_retry": false,
+    "capability_episode_cap": 8,
     "no_episode_replacement": true,
-    "provider": "ARK_RESPONSES_API",
+    "provider": "TYPICAL_TOKEN_OPENAI_RESPONSES_API",
     "provider_max_retries": 0,
     "temperature": 0,
     "tool_interaction_cap": 12
@@ -20,15 +22,14 @@
     "ACE-TNF-06"
   ],
   "family_split_rule": "FIXED_BEFORE_ANY_PROVIDER_CALL",
-  "floor_disposition": "TRY_NEXT_PREDECLARED_CANDIDATE_OR_STOP",
-  "generated_at": "2026-08-31T19:45:00+08:00",
+  "floor_disposition": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
+  "generated_at": "2026-09-01T15:35:00+08:00",
   "gpu_runs": 0,
-  "maximum_candidate_count": 3,
-  "maximum_episode_envelope": 24,
+  "interface_disposition": "CAPABILITY_CALIBRATION_FAIL_INTERFACE_STOP",
+  "maximum_candidate_count": 1,
+  "maximum_episode_envelope": 8,
   "model_selection_order": [
-    "doubao-seed-2.0-lite",
-    "deepseek-v4-flash",
-    "deepseek-v4-pro"
+    "qwen3.7-flash-2026-07-15"
   ],
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "outcome_status": "NOT_EXECUTED",
@@ -41,8 +42,9 @@
     "zero_malformed_function_calls_required": true
   },
   "repeats_per_family": 2,
+  "requested_model": "qwen3.7-flash-2026-07-15",
   "schema_version": "agent-constraint-externality-capability-calibration-v1",
   "scientific_outcomes_observed": 0,
-  "selection_rule": "FIRST_CANDIDATE_MEETING_ALL_FLOOR_AND_CEILING_RULES",
+  "selection_rule": "ONLY_QWEN_CANDIDATE_MUST_QUALIFY_OR_STOP",
   "stage": "DISJOINT_CAPABILITY_CALIBRATION"
 }

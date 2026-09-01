@@ -1,6 +1,6 @@
 {
   "appworld_ul_authorized": false,
-  "blocker": "ARK_API_KEY is absent from the configured ignored server environment.",
+  "blocker": "M1 scientific runner qualification has not passed.",
   "capability_contract_frozen": true,
   "compiler_pass_conditions_all_true": true,
   "compiler_verdict": "PRE_F0_5_PASS",
@@ -11,19 +11,23 @@
   "f0_contract_frozen": true,
   "f0_executed": false,
   "f0_outcomes_observed": 0,
-  "generated_at": "2026-08-31T19:45:00+08:00",
-  "next_authorized_action": "CONFIGURE_PROVIDER_CREDENTIAL_THEN_RERUN_READINESS",
+  "generated_at": "2026-09-01T15:35:00+08:00",
+  "m1_runner_qualification_pass": false,
+  "model_prereg_addendum_a0_pass": true,
+  "next_authorized_action": "RUN_M1_MOCK_QUALIFICATION",
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "p1_authorized": false,
   "provider": {
+    "allowed_alias": "qwen3.7-flash",
+    "api_key_env": "AA_API_KEY",
     "api_key_in_output": false,
-    "base_url": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "base_url": "https://api.aa.com.cn/api/v1",
     "configured": false,
-    "default_model": "ark-code-latest",
-    "max_retries": 2,
-    "timeout_seconds": 120.0
+    "provider": "TYPICAL_TOKEN_OPENAI_RESPONSES_API",
+    "requested_model": "qwen3.7-flash-2026-07-15"
   },
+  "provider_credential_present": false,
   "schema_version": "agent-constraint-externality-f0-readiness-v1",
-  "status": "CAPABILITY_CALIBRATION_BLOCKED_PROVIDER_NOT_CONFIGURED",
+  "status": "M1_RUNNER_QUALIFICATION_REQUIRED",
   "tool_sandbox_authorized": false
 }

@@ -3,6 +3,7 @@
     "appworld_ul": false,
     "capability_calibration": false,
     "f0": false,
+    "m1_mock_qualification": true,
     "method": false,
     "p1": false,
     "paper_claim": false,
@@ -18,27 +19,35 @@
       "sha256": "8a7a16fc5a232e151a9303bb33e5cc8c6314d7782a854858aee158a53502bd6a"
     },
     "generated/agent-constraint-externality-capability-contract-20260831.json": {
-      "bytes": 1686,
-      "sha256": "d45006f19664f4a9d8f41080641b0afd0948fe9d9b7693eb3f5b4937a4c29642"
+      "bytes": 1773,
+      "sha256": "7cdaab014b73c125780066d72624aee6e6dd9064db73f945f9938bc76d4572a5"
     },
     "generated/agent-constraint-externality-f0-frozen-protocol-20260831.json": {
-      "bytes": 4334,
-      "sha256": "6872d506f1d51c38bb6ed21731b59ee50b5b0cf9b71d02d9997e4d631e265a8e"
+      "bytes": 4894,
+      "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 1080,
-      "sha256": "dd0c6c8700775969ab872b2f36b9a297999b9756ddb73e8fbed66305d523b936"
+      "bytes": 1203,
+      "sha256": "7cb95f74f1c86d58ede6d8e9c61140d7b56bc23f02bee2fb24b8aa4da26d6c73"
     },
     "generated/agent-constraint-externality-matched-family-manifest-20260831.json": {
       "bytes": 28346,
       "sha256": "0276b91b6ca9f00b382134238a2bdea2c90b384d5a1bc1eb63c9c9b9c13cea7c"
+    },
+    "generated/agent-constraint-externality-qwen-model-prereg-addendum-a0-20260901.json": {
+      "bytes": 3413,
+      "sha256": "8e9408cde5af2657e05edfd9eae0a129f8d635b85b6bb1f5a41916e926d41a96"
+    },
+    "generated/agent-constraint-externality-qwen-model-prereg-addendum-a0-manifest-20260901.json": {
+      "bytes": 887,
+      "sha256": "bee2a9e984453fc5accd4f7dbd630ee5764994f944f03d42c82d5d91320a0317"
     }
   },
-  "generated_at": "2026-08-31T19:45:00+08:00",
+  "generated_at": "2026-09-01T15:35:00+08:00",
   "gpu_runs": 0,
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "provider_calls": 0,
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_CALIBRATION_BLOCKED_PROVIDER_NOT_CONFIGURED"
+  "status": "M1_RUNNER_QUALIFICATION_REQUIRED"
 }
