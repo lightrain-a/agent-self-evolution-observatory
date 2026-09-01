@@ -11,18 +11,15 @@ import json
 from pathlib import Path
 from typing import Any, Sequence
 
+from research_pipeline import asset_first_stri_reasoningbank_p1_core as p1_core
+from research_pipeline import asset_first_stri_swebench_oci_import as oci
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
     ROOT, canonical_json, sha256_file, sha256_text, utcnow, write_json,
 )
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_d0_qualify import (
     QualificationDockerRun, acquire_and_import, candidate_schedule,
 )
-from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_d0_rootful_runtime import (
-    CONTRACT as REPAIR_CONTRACT,
-    CONTRACT_SHA256 as REPAIR_CONTRACT_SHA256,
-    ROOTFUL_DOCKER_HOST,
-    activate,
-)
+ROOTFUL_DOCKER_HOST = "unix:///var/run/docker.sock"
 
 EXPERIMENT_ID = "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901"
 SPLIT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-task-split-20260901.json"
@@ -50,8 +47,6 @@ def load_split_d0() -> tuple[dict[str, Any], dict[str, Any]]:
         raise RuntimeError("D0 evaluator feasibility not terminal/pass")
     if split.get("d0_index_sha256") != sha256_file(D0_INDEX):
         raise RuntimeError("split/D0 binding drift")
-    if sha256_file(REPAIR_CONTRACT) != REPAIR_CONTRACT_SHA256:
-        raise RuntimeError("rootful D0 repair contract drift")
     return split, d0
 
 
@@ -102,9 +97,9 @@ def common_contract_fields(*, split: dict[str, Any], d0: dict[str, Any], plan: l
         "d0_index_path": str(D0_INDEX.relative_to(ROOT)),
         "d0_index_sha256": sha256_file(D0_INDEX),
         "d0_decision": d0["decision"],
-        "rootful_repair_contract_path": str(REPAIR_CONTRACT.relative_to(ROOT)),
-        "rootful_repair_contract_sha256": REPAIR_CONTRACT_SHA256,
         "docker_host": ROOTFUL_DOCKER_HOST,
+        "rootful_runtime_authority": "this prospective population-scoped runtime contract",
+        "historical_D0_rootful_repair_authority_reused": False,
         "plan": plan,
         "plan_sha256": sha256_text(canonical_json(plan)),
         "qualification_semantics": {
@@ -227,6 +222,13 @@ def index_payload(
     }
 
 
+def activate_rootful_runtime() -> dict[str, str]:
+    """Bind helper calls to rootful Docker under the current runtime contract."""
+    p1_core.DOCKER_HOST = ROOTFUL_DOCKER_HOST
+    oci.DOCKER_HOST = ROOTFUL_DOCKER_HOST
+    return {"docker_host": ROOTFUL_DOCKER_HOST}
+
+
 def qualify_unit(unit: dict[str, Any]) -> dict[str, Any]:
     qpath = ROOT / unit["qualification_receipt"]
     if sha256_file(qpath) != unit["qualification_receipt_sha256"]:
@@ -323,7 +325,7 @@ def execute_runtime_plan(
     contract = json.loads(contract_path.read_text(encoding="utf-8"))
     if contract["split_sha256"] != sha256_file(SPLIT):
         raise RuntimeError("runtime split binding drift")
-    activate()
+    activate_rootful_runtime()
     receipt_dir.mkdir(parents=True, exist_ok=True)
     completed = load_completed(contract["plan"], receipt_dir)
     if index_path.exists():
@@ -444,7 +446,7 @@ def require_source_qualified() -> dict[str, Any]:
         raise RuntimeError("Qwen source runtime Docker host drift")
     if result.get("split_sha256") != sha256_file(SPLIT):
         raise RuntimeError("Qwen source runtime split binding drift")
-    activate()
+    activate_rootful_runtime()
     return result
 
 
