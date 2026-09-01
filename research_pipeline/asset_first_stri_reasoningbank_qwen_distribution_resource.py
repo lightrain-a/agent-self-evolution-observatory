@@ -124,6 +124,10 @@ def authority_payload(*, approved_request_budget: int | None = None,
         for response in (receipt.get("trajectory") or {}).get("responses") or []:
             safe_headers.append(response.get("safe_rate_quota_headers") or {})
 
+    nonempty_safe_headers = [dict(row) for row in safe_headers if row]
+    latest_safe_headers = nonempty_safe_headers[-1] if nonempty_safe_headers else {}
+    reset_headers = {key: value for key, value in latest_safe_headers.items()
+                     if "reset" in str(key).lower() or str(key).lower() == "retry-after"}
     request_remaining = numeric_remaining(safe_headers, "request")
     token_remaining = numeric_remaining(safe_headers, "token")
     observed_request_budget = request_remaining[-1] if request_remaining else None
@@ -169,6 +173,9 @@ def authority_payload(*, approved_request_budget: int | None = None,
         "projected_432_with_25_percent_headroom": projected,
         "quota_evidence": {
             "safe_header_sets_observed": len(safe_headers),
+            "nonempty_safe_header_sets_observed": len(nonempty_safe_headers),
+            "latest_safe_rate_quota_headers": latest_safe_headers,
+            "latest_reset_window_headers": reset_headers,
             "provider_reported_latest_remaining_requests": observed_request_budget,
             "provider_reported_latest_remaining_tokens": observed_token_budget,
             "explicit_approved_request_budget": approved_request_budget,
@@ -192,7 +199,8 @@ def authority_payload(*, approved_request_budget: int | None = None,
         "operational_chunks": chunks,
         "chunk_rule": (
             "only contiguous chunks; before each chunk subtract persisted main usage from the "
-            "proven full-plan budget and require the untouched chunk p95 headroom"
+            "proven full-plan budget and require the untouched chunk p95 headroom; when reset "
+            "metadata is reported, never start a held chunk until the reported reset window"
         ),
         "checks": checks, "execution_authorized": passed,
         "no_retry": True, "no_replacement": True, "attempt_count": 1,
