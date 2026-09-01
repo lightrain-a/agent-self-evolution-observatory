@@ -1,0 +1,357 @@
+{
+  "authority_sha256": "9379a5b0d0ccd8d5fa288327a8a1f764e511828ba5a389395712f0086b0474c9",
+  "base_runner_sha256": "a8c4ab53f3b7ba3b762dad110bf80ecc5010de35501432538b1a48885ae46f72",
+  "completed_or_resumed_this_invocation": 45,
+  "dataset_revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+  "errors": [],
+  "gpu_used": false,
+  "internal_transport_workers": 4,
+  "materialization_manifest_sha256": "9ee70726fb70750b23053e2358d3d42d4089238cd0bd52e5b74329279e961df4",
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "partial_file_count": 0,
+  "partial_files_are_evidence": false,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "records": [
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-073/file-010.mp4",
+      "sha256": "6a795f98e31d144a831c7a2222e9f0dd66bfed6074a0b42d34cdb12ae550fc89",
+      "size": 204596597,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 204596597
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-073/file-011.mp4",
+      "sha256": "22e888b6598a5354f657e8587f6de6c30f2b4062e460a67a20d564a724f7c518",
+      "size": 194432366,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 194432366
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-073/file-012.mp4",
+      "sha256": "ff95306088ccdc3df890b6e78bfbe2b35c6b8061b4986b694901d18203a0e7a5",
+      "size": 206004529,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 206004529
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-073/file-013.mp4",
+      "sha256": "b39944830a2e0935aa13bbc1e9019f12f84cd6c9fb47a7d1c6bed2a1c0540bde",
+      "size": 197744322,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 197744322
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-073/file-014.mp4",
+      "sha256": "a7399ddcc432168c8ef17692429c1f15433e75b7264e4fd82c29ae1b24589204",
+      "size": 195549744,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 195549744
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-073/file-015.mp4",
+      "sha256": "2da54086f07477669e1956451aa5447bc29c6838a4c726f6ef2ae7c0911e60ff",
+      "size": 207104861,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 207104861
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-073/file-016.mp4",
+      "sha256": "fb88f52002a32375bde006e5a08c1aefb5c411cee97ef0bedb2804b0f6b57988",
+      "size": 202114369,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 202114369
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-073/file-017.mp4",
+      "sha256": "8bdfe6b5dfe86d36bd5d0f84772ad72429da871e4db87595bc2cbd790f2593ba",
+      "size": 79150718,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 79150718
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-074/file-000.mp4",
+      "sha256": "3034989706740e729d870160603b6e1d1cfcde249195699cfde08eae37da12cb",
+      "size": 202565923,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 202565923
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-074/file-001.mp4",
+      "sha256": "9907c8986696f7804682a860dd0bbe4104c2bfb6a3a48ba1952fbdb96ef232b4",
+      "size": 201350161,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 201350161
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-074/file-002.mp4",
+      "sha256": "06a45942dea3a440cf62396848bf4a240c9daf08f4e63cb1c4f94055203e88b1",
+      "size": 201796285,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 201796285
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-074/file-003.mp4",
+      "sha256": "9365b6455bce6dc74cdba5ba98311967c8d19d897b92f704c6c05d19e9bab54d",
+      "size": 201027634,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 201027634
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-074/file-004.mp4",
+      "sha256": "2789e8d670ee2720667e21df076aa7ca1a7cd9264dfca0bc96d2e70bbac41230",
+      "size": 209573413,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 209573413
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-074/file-005.mp4",
+      "sha256": "60a89a800f06a83ad30f4ef14d8c45f46fe20a99bf9a409256c6cebf20ac362a",
+      "size": 201484338,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 201484338
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-074/file-006.mp4",
+      "sha256": "94668ae513aef11d6f9d29a0fc76ccc367f8de86353b2e11866d2c4dbe8dcc56",
+      "size": 201779759,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 201779759
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-074/file-007.mp4",
+      "sha256": "c6c354634fe2f0e89447c80936917f11fb189e79d88f8d32e9872a97f6213151",
+      "size": 199382300,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 199382300
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-074/file-008.mp4",
+      "sha256": "b6f9a856a7c81e459414b8ecaf57547d2bd09c01357477fcadfe2ce1656a7cd3",
+      "size": 202662757,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 202662757
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-074/file-009.mp4",
+      "sha256": "f75b2e1e9914b5e21796397a93cc49bd69cb691a9323c33c75542f0cd7db8e5c",
+      "size": 203924295,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 203924295
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-074/file-010.mp4",
+      "sha256": "71043d610b0965c5e65ff374617253174b84c33352f58374927adcda13ff94c0",
+      "size": 109251077,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 109251077
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-077/file-000.mp4",
+      "sha256": "c4e79337bd94bbe26563d26fda1160c71ec4b1299123110699bc638b16d23fd7",
+      "size": 208399294,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 208399294
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-077/file-001.mp4",
+      "sha256": "300e02e96780c342d96c27daebf3e5669e3b1903d0ab88a33eba4607c14c9544",
+      "size": 207989382,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 207989382
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-077/file-002.mp4",
+      "sha256": "ef456603d99cd3f2d17405685a6e96e83eaa3f97ab35c7531ed86e6ab327f173",
+      "size": 27553117,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 27553117
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-081/file-000.mp4",
+      "sha256": "5324426b232cffa06c190be1ebb3cd7791d0ec0f8c5bfad0d10398bfc7bd047e",
+      "size": 205060977,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 205060977
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-081/file-001.mp4",
+      "sha256": "e17a94e7d9394a502d725e74b86d7c8214e51abb59afc0704dd9e2bf61e38404",
+      "size": 205562482,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 205562482
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-081/file-002.mp4",
+      "sha256": "e2992dc113fede5e37fbeed00c865782efe1829d5faec39817773dfd58d0662e",
+      "size": 206940823,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 206940823
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-081/file-003.mp4",
+      "sha256": "db096c3b5138b88f5688048400105b10956a85fe1bd74a0c4f08321ffea55a61",
+      "size": 204591353,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 204591353
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-081/file-004.mp4",
+      "sha256": "ba3c8190b9ae9f4efc86ee88c25b1595f261f0b2523e48b7f5441a8738ee4fa7",
+      "size": 205730973,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 205730973
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-081/file-005.mp4",
+      "sha256": "1a465859b2a2124befa03cec312057a9658194acd606d848c7e2597aa087a7b9",
+      "size": 63781017,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 63781017
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-000.mp4",
+      "sha256": "32eae40993f1e94a8c471c726ce43c3729bd4ec533302a8dcec77d6659b10f7a",
+      "size": 200102918,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 200102918
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-001.mp4",
+      "sha256": "65629771e4ef68312b619ed64b67181c0563d67396744a88402ac049f790498f",
+      "size": 201654764,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 201654764
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-002.mp4",
+      "sha256": "68fc7f3f99bf07271d73ae9caa9416ec5b5db87cdd0bd440bee07ab8f5ff65e9",
+      "size": 206291380,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 206291380
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-003.mp4",
+      "sha256": "bc501052637bf4932f161c928243822618b3411e214fe856f2d49fcb08f6f650",
+      "size": 207463258,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 207463258
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-004.mp4",
+      "sha256": "ca656d187eb19bf782539f45f928fdc66771c349965c8fdbfbe8f11e08e4ab32",
+      "size": 203030033,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 203030033
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-005.mp4",
+      "sha256": "15c1d0d4ddfccf81830014644b4d94a7b750afaeef1c69087e6eb338443c2f8a",
+      "size": 205592370,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 205592370
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-006.mp4",
+      "sha256": "607ff15e1f74625164e01f83aba9b84a7c7627cbb04fa3269b3ed914a089783b",
+      "size": 199973649,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 199973649
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-007.mp4",
+      "sha256": "7b4322a92e1fc2dfb4c947c79a0eff9f52e3924bf6280e6ebe070d6c810d74bd",
+      "size": 196213561,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 196213561
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-008.mp4",
+      "sha256": "2c872a06265f3b4f4f4495d6624a508763ff22b7cd33625edd665d3917884f48",
+      "size": 194199299,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 194199299
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-009.mp4",
+      "sha256": "8365da3a110767369ea5544d14b5e5fd69a8cda593f8ea655185773ae32c2eb3",
+      "size": 199727280,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 199727280
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-010.mp4",
+      "sha256": "297008d1dad1c8977e989e963fee15a86078f8b094b18d5849146fc35471f1f4",
+      "size": 207060590,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 207060590
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-084/file-011.mp4",
+      "sha256": "d1f8c7d949eadc5b8cf8590fcfab5d4c001d2d82d07cb21ed2e888323f253fd3",
+      "size": 80164098,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 80164098
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-085/file-000.mp4",
+      "sha256": "d54a213e2d9870cef1f9dc1cbb867e827b912568a4ab568d899c6a6e19c655c6",
+      "size": 200205511,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 200205511
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-085/file-001.mp4",
+      "sha256": "9d393c63fbe0ea70139105bb6a82076d55ad7a2dc838f700e62ee66f6a12711a",
+      "size": 204338997,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 204338997
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-085/file-002.mp4",
+      "sha256": "d0131e4524ba9dbeca4b860ef106db23cc22f19e7c692de54357fd2653f93fe4",
+      "size": 206147744,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 206147744
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-085/file-003.mp4",
+      "sha256": "b18c20999de4de73d661a6083498ccb28523897a8a1445541bf96707722b939d",
+      "size": 202790822,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 202790822
+    },
+    {
+      "path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-085/file-004.mp4",
+      "sha256": "f6672fe8dc6fa3e8850e1b5d5b2440e12fed1ab63d01c33e96c69bba0552f11e",
+      "size": 209207762,
+      "state": "downloaded-and-verified",
+      "transported_bytes": 209207762
+    }
+  ],
+  "remaining_file_count": 0,
+  "schema_version": "behavior-formal-goal-coupling-shared26-payload-segment-receipt-v1",
+  "segment": {
+    "bytes": 8481268902,
+    "file_count": 45,
+    "first_path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-073/file-010.mp4",
+    "gib": 7.8987971898168325,
+    "last_path": "videos/observation.rgb.left_realsense_link_camera_0/chunk-085/file-004.mp4",
+    "segment_id": "S09",
+    "segment_path_oid_size_sha256": "4898a16a46ff19f5bcf6330275eca6aee21b269922fcd0fe707bb6ef2e2b8649",
+    "start_index": 382,
+    "stop_index_exclusive": 427
+  },
+  "segment_id": "S09",
+  "segment_plan_sha256": "1ad14491dbbcbff289bdaada9bcd02c64ff271a7374e4e9bcdff28c8d11d493a",
+  "single_writer_lock_path": "/data/wyt/.behavior-2026-shared26-v3.0.materialization.lock",
+  "status": "PAYLOAD_SEGMENT_COMPLETE",
+  "training_started": false,
+  "transported_bytes_this_invocation": 8481268902,
+  "verification_semantics": "each record returned only after exact per-file size+SHA-256 verification while the exclusive root lock is held; no redundant segment-end rehash; one final whole-materialization rehash seal remains required",
+  "verified_bytes": 8481268902,
+  "verified_existing_this_invocation": 0,
+  "verified_file_count": 45
+}
