@@ -50,6 +50,22 @@ def test_q0_probe_plan_is_exactly_once_and_provider_free() -> None:
     assert q0.RECOMMENDED_TOP_K == 40
 
 
+def test_q0_contract_does_not_open_benchmark_or_source_authority(tmp_path, monkeypatch) -> None:
+    d0 = tmp_path / "d0.json"
+    q0.write_json(d0, {
+        "execution_complete": True,
+        "decision": "D0_PRIMARY_FOUR_REPOSITORY_EVALUATOR_FEASIBILITY_PASS",
+    })
+    monkeypatch.setattr(q0, "ROOT", tmp_path)
+    monkeypatch.setattr(q0, "D0_INDEX", d0)
+    contract = q0.contract_payload()
+    assert contract["qualification_gate"]["single_choice_n1_required"] is True
+    boundary = contract["scientific_boundary"]
+    assert boundary["q1_stochasticity_qualification_authorized"] is False
+    assert boundary["source_generation_authorized"] is False
+    assert boundary["confirmatory_execution_authorized"] is False
+
+
 def test_provider_forwards_top_k_and_hashes_raw_response() -> None:
     session = FakeSession()
     client = QwenChatClient(
