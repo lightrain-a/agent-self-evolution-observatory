@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-01T11:06:53Z",
+  "experiment_line": "C1-PACTA-RB-QWEN397-T0",
+  "v3": {
+    "status": "STOP_PRE_POLICY_CONTAINER_START_TRANSIENT",
+    "execution_sha": "a4360ff83fd37e888267226d3fc914e3061da219",
+    "run_root": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v3",
+    "acquire_log_sha256": "6828d8db5fa55a8dc8aeac048c06dae810dfb0603ec1415f23472a37f7244d17",
+    "acquire_exit_sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+    "first_source_task_id": "pydata__xarray-4966",
+    "provider_calls": 0,
+    "raw_provider_responses": 0,
+    "source_trajectories_completed": 0,
+    "writer_calls": 0,
+    "binder_calls": 0,
+    "shadow_calls": 0,
+    "final_measurement_calls": 0,
+    "failure": "docker run failed before the first provider call; the partial v3 unit root is preserved and not retried"
+  },
+  "v4": {
+    "status": "T0_V4_PRELAUNCH_PASS",
+    "run_root": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-t0-rootful-source-20260901-v4",
+    "contract_sha256": "17e8e68c88ebb53928e473c6c39a866fee920944d0e3c44dc2b55c5925d3ae11",
+    "schedule_sha256": "0da5f16a9f7a754fb10f8918175c70ea88004d58a86504bb7507b44802c541c7",
+    "prelaunch_qualification_sha256": "c23928f1cb621f95aae9343303971c3c7b4f323b6bea1e2d8d02c497a5338b26",
+    "container_start_and_exact_base": "11/11 PASS",
+    "provider_calls": 0,
+    "source_model_calls": 0,
+    "replacement": false,
+    "top_up": false
+  },
+  "adjudication": "The v3 stop occurred before any scientific source-policy call and is classified as a transient pre-policy container-launch failure. A new prospective v4 epoch was opened without deleting or retrying the v3 unit root. The fixed 11 digest/base pairs then passed a persisted zero-model container-start plus exact-base prelaunch qualification 11/11.",
+  "next_gate": "Run a fresh v4 non-scientific Qwen397 bridge probe. Only on PASS may the fixed 11 source trajectories execute exactly once in v4.",
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "active_manuscript": "R9"
+}
