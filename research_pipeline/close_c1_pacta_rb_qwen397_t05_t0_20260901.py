@@ -51,7 +51,7 @@ def main():
   "oci_import_status":f"{sum(r['exact_digest_pass'] for r in imported['rows'])}/11",
   "docker":imported["docker"],"infrastructure_retries_only":True,"scientific_retries":0}
  closure={"schema_version":1,"created_at_utc":now(),"execution_git_sha":args.execution_sha,
-  "t05_decision":runtime["decision"],"runtime_qualified":runtime["qualified_images"],
+  "decision":runtime["decision"],"t05_decision":runtime["decision"],"runtime_qualified":runtime["qualified_images"],
   "multistep_smoke_pass":smoke["pass"],"bridge_identity_pass":bridge["pass"],
   "source_support_decision":support["decision"],"N_valid_trajectory":support["N_valid_trajectory"],
   "N_valid_repository":support["N_valid_repository"],"full_6_plus_5_design_recovered":support["full_6_plus_5_design_recovered"],
