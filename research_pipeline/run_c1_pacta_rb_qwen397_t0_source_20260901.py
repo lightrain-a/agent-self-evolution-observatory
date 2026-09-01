@@ -7,8 +7,8 @@ from pathlib import Path
 from typing import Any
 import yaml
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
-from research_pipeline.c1_pacta_rb_qwen397 import atomic_json,sha256_file
-from research_pipeline.c1_pacta_rb_qwen397_t0_runtime import Container,RawProvider,execute_trajectory,initial_messages,parse_action
+from research_pipeline.c1_pacta_rb_qwen397 import atomic_bytes,atomic_json,sha256_file
+from research_pipeline.c1_pacta_rb_qwen397_t0_runtime import Container,RawProvider,execute_trajectory,initial_messages,parse_action,render
 from research_pipeline.run_c1_pacta_rb_qwen397_t05_images_20260901 import SPECS,image_repo
 
 OFFICIAL=Path("/data/wyt/agent-self-evolution-observatory/external/stri-reasoningbank-iclr2026")
@@ -43,19 +43,38 @@ def frozen()->tuple[dict[str,Any],dict[str,Any],dict[str,Any]]:
  return q,b,yaml.safe_load(CONFIG.read_text())
 
 def smoke()->dict[str,Any]:
- _,_,config=frozen();instance,_idx,amd64=SPECS[0]
- digest_ref=f"docker.1ms.run/{image_repo(instance)}@sha256:{amd64}";container=Container(digest_ref)
- rows=[]
+ _,b,config=frozen();instance,_idx,amd64=SPECS[0]
+ smoke_root=T05/"multistep-smoke"
+ if smoke_root.exists():raise RuntimeError("smoke root exists; no overwrite/retry")
+ smoke_root.mkdir(parents=True)
+ digest_ref=f"docker.1ms.run/{image_repo(instance)}@sha256:{amd64}"
+ task=("Synthetic non-scientific runtime qualification. First inspect the current working directory, "
+       "then inspect one harmless file such as README, then issue another harmless shell command, "
+       "then finish using the required completion command. Do not modify files.")
+ messages=initial_messages(task,config)
+ provider=RawProvider(os.environ.get("AA_API_KEY",""),smoke_root,b["requested_model"],b["resolved_model"])
+ container=Container(digest_ref);rows=[];submitted=False
  try:
-  for i,action in enumerate(("pwd","echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT && printf T0_SMOKE_OK"),1):
-   content=f"THOUGHT: synthetic smoke step {i}\n\n```bash\n{action}\n```"
-   parsed=parse_action(content);obs=container.execute(parsed)
-   rows.append({"step":i,"action":parsed,"returncode":obs["returncode"],"output":obs["output"]})
+  for step in range(1,9):
+   response=provider.call(messages,f"multistep-smoke-{step}");content=response["content"]
+   messages.append({"role":"assistant","content":content});action=parse_action(content);obs=container.execute(action)
+   obs_path=smoke_root/"raw"/f"observation-{step:04d}.json"
+   obs_sha=atomic_bytes(obs_path,(json.dumps(obs,ensure_ascii=False,sort_keys=True)+"\n").encode())
+   lines=obs["output"].lstrip().splitlines(keepends=True)
+   if not obs["timeout"] and lines and lines[0].strip() in ("MINI_SWE_AGENT_FINAL_OUTPUT","COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT"):
+    submitted=True;messages.append({"role":"user","content":"".join(lines[1:])})
+   else:
+    messages.append({"role":"user","content":render(config["agent"]["action_observation_template"],{"task":task,"selected_memory":""},output=obs)})
+   rows.append({"step":step,"action":action,"returncode":obs["returncode"],"response_sha256":response["provider"]["response_sha256"],"observation_path":str(obs_path),"observation_sha256":obs_sha})
+   if submitted:break
  finally:container.cleanup()
- passed=rows[0]["output"].strip()=="/testbed" and rows[1]["output"].splitlines()[:2]==["COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT","T0_SMOKE_OK"]
- result={"schema_version":1,"created_at_utc":now(),"non_scientific":True,"multi_step":True,"provider_calls":0,"rows":rows,"pass":passed}
+ passed=submitted and len(rows)>=2 and provider.calls==len(list((smoke_root/"raw").glob("response-*.json")))
+ result={"schema_version":1,"created_at_utc":now(),"non_scientific":True,"multi_step":True,
+  "requested_model":b["requested_model"],"resolved_model":b["resolved_model"],"enable_thinking":False,
+  "max_completion_tokens":512,"provider_calls":provider.calls,"input_tokens":provider.prompt_tokens,
+  "output_tokens":provider.output_tokens,"rows":rows,"submitted":submitted,"pass":passed}
  atomic_json(T05/"synthetic-smoke.json",result)
- if not passed:raise RuntimeError("STOP_SYNTHETIC_SMOKE")
+ if not passed:raise RuntimeError("STOP_T0_MULTI_STEP_RUNTIME_UNQUALIFIED")
  return result
 
 def prepare(root:Path)->dict[str,Any]:
