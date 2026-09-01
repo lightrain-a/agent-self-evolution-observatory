@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R48-AB-IDENTIFICATION-OPERATIONALIZATION",
+  "recorded_date": "2026-09-01",
+  "status": "PREVALIDATION_AB_IDENTIFICATION_FROZEN_C_D_REMAINS_NOT_EXECUTABLE",
+  "role": "PREVALIDATION_OPERATIONALIZATION_ADDENDUM_FOR_ALREADY_REGISTERED_MINIMUM_L2_IDENTIFICATION_ARMS",
+  "scientific_boundary": {
+    "A_B_is_original_minimum_identification_contrast": true,
+    "C_D_is_distinct_governance_estimand": true,
+    "C_D_not_executed_by_R48": true,
+    "four_arm_R43_program_may_not_be_called_complete_from_A_B_alone": true,
+    "PSMG_efficacy_claim_forbidden": true,
+    "A_B_and_C_D_pooling_forbidden": true,
+    "historical_evidence_pooling_forbidden": true
+  },
+  "bindings": {
+    "R35_sha256": "f15b1b1e01fad9def59b4f7ee43e01f7ed5d215ae19b2a3ffb7e6990e62eaff5",
+    "R39_sha256": "671e6aead6eb95cfee2656587d83c415c15a4d167f58921e28c93530532c8c0f",
+    "R40_sha256": "770edb5028b9cc39e8e24861115f78a94bdeac71226793dda85ee405bbbe35fd",
+    "R43_sha256": "dbd810dce063f5bdaaf7c40038a3329166f8ad11441dd11b49034491bf753de2",
+    "replacement_manifest_sha256": "3669c6fedbdb6e0f3c51d60fa2aff041aa8e5580761129c12bd82f8a774561cc",
+    "replacement_manifest_receipt_sha256": "3c7927cab5ae636f0d37292e72995880c9fa8a34b092956475322d2e28a7b113",
+    "replacement_authority_sha256": "7f81d7dfb133a6dcc603f7a9d8d80ecc4f0eb5f9bed0ac72a7acd3114f3a5871",
+    "replacement_authority_receipt_sha256": "ae12bffededd5f91ee480f17c138ec47be38c723d0f939871839b335701e9891",
+    "R39_exact_information_adapter_sha256": "c94353ca46c8cfb65cfae6218d2e03ae6946b37aa25e52ee83212e2dfe03afe2",
+    "primary_preimplementation_audit_sha256": "4706cd1d19d60de90ed6b0ac4bfae72c3ce8339943ccd794937ad3263aa63244",
+    "historical_controller_audit_sha256": "36f2dce2c9731069f2de0f4d5ae64e42ff3d9973228bf2e90c06edd4320c0296"
+  },
+  "units": {
+    "benchmark": "OSInteraction",
+    "statistical_unit": "exact frozen skill_list-signature dependency cluster representative",
+    "count": 32,
+    "representative_ids": [
+      "107",
+      "138",
+      "360",
+      "229",
+      "395",
+      "332",
+      "214",
+      "134",
+      "22",
+      "379",
+      "81",
+      "413",
+      "309",
+      "311",
+      "194",
+      "47",
+      "140",
+      "499",
+      "279",
+      "49",
+      "70",
+      "482",
+      "204",
+      "205",
+      "480",
+      "174",
+      "181",
+      "273",
+      "367",
+      "46",
+      "172",
+      "380"
+    ],
+    "representative_ids_sha256": "128bf594547f1509625223bee1bb275b1ad655fa08971eba5013264c33b879a5"
+  },
+  "arms": {
+    "A_content_only": "R39 adapter content_only_provenance_hidden executor view",
+    "B_raw_provenance": "R39 adapter raw_provenance_exact_information executor view; only added field is truthful boolean source_outcome_success"
+  },
+  "pre_arm_support_rule": {
+    "R46M2_required": true,
+    "all_32_primary_clusters_must_have_eligible_frozen_retrieval": true,
+    "every_selected_row_used_by_A_B_must_be_eligible": true,
+    "missing_or_nonboolean_source_outcome_rejects_before_any_A_B_treatment": true,
+    "retrieval_rerun_between_arms": false
+  },
+  "renderer": {
+    "input": "R46 frozen selected rows in frozen retrieval order, reconstructed into the already-frozen R39 adapter schema",
+    "adapter": "build_memrl_exact_information_pair",
+    "eligible_rows_only": false,
+    "eligibility_policy": "all selected rows must already be eligible; otherwise STOP before A/B execution",
+    "serialization": "json.dumps(arm_view, ensure_ascii=False, sort_keys=True, separators=(',', ':'))",
+    "memory_context_template": "[Retrieved Memory Context]\\n{canonical_json}",
+    "base_system_prompt": "pinned MemRL DEFAULT_SYSTEM_PROMPT",
+    "prompt_builder": "build_llb_prompt_with_memory(task='os', base_prompt=DEFAULT_SYSTEM_PROMPT, memory_context=rendered_context)",
+    "only_executor_visible_arm_difference": "truthful boolean source_outcome_success field",
+    "forbidden_executor_fields": [
+      "memory_id",
+      "task_id",
+      "similarity",
+      "q_estimate",
+      "score",
+      "other metadata"
+    ]
+  },
+  "randomization": {
+    "seed": 20260825,
+    "arms": [
+      "A_content_only",
+      "B_raw_provenance"
+    ],
+    "per_unit_algorithm": "random.Random(int(SHA256('B1-R48-AB-ARM|<seed>|<task_id>')[:16],16)).shuffle(['A_content_only','B_raw_provenance'])",
+    "schedule_created_only_after_R46M2_and_R47_PASS": true,
+    "schedule_created_before_first_A_B_treatment_outcome": true,
+    "outcome_adaptive_randomization": false
+  },
+  "execution": {
+    "endpoint": "pinned LifelongAgentBench native OSInteraction terminal success",
+    "max_steps": 15,
+    "os_timeout_seconds": 20,
+    "temperature": 0.0,
+    "max_new_tokens": 512,
+    "incremental_jsonl_required": true,
+    "per_arm_trace_required": true,
+    "mark_STARTED_before_environment_reset": true,
+    "STARTED_without_COMPLETE_is_exposed_and_never_retried": true,
+    "resume_allowed_only_from_clean_boundary_with_no_incomplete_STARTED_arm": true,
+    "no_partial_effect_analysis": true
+  },
+  "analysis": {
+    "estimand": "mean over 32 clusters of terminal_success(B_raw_provenance) - terminal_success(A_content_only)",
+    "effect_relevance_floor_abs": 0.15,
+    "confidence_interval": "95% paired-cluster percentile bootstrap",
+    "bootstrap_repetitions": 100000,
+    "bootstrap_seed": 20260825,
+    "bootstrap_quantile_method": "sort 100000 paired-resample effects; lower=floor(0.025*(B-1)), upper=ceil(0.975*(B-1))",
+    "test": "two-sided exact paired sign-flip test over discordant cluster pairs (equivalent exact binomial/McNemar sign test)",
+    "p_value_cannot_upgrade_rung_by_itself": true,
+    "complete_case_requirement": "all 32 A/B pairs complete; no imputation",
+    "analysis_only_after_64_complete_arm_runs": true
+  },
+  "adjudication": {
+    "A_B_allowed_claim": "fresh content-controlled executor-visible provenance identification contrast on the frozen MemRL/OSInteraction surface",
+    "C_D_status": "NOT_EXECUTED_PSMG_OPERATIONALIZATION_NOT_QUALIFIED",
+    "PSMG_efficacy_status": "NOT_IDENTIFIED",
+    "if_A_B_null": "qualified content-controlled visible-provenance null on this surface; does not establish hidden-governance null",
+    "if_A_B_effect": "visible provenance channel effect on this surface; does not establish PSMG governance value"
+  },
+  "prevalidation_accounting": {
+    "validation_treatment_outcomes_observed": 0,
+    "A_B_treatment_outcomes_observed": 0,
+    "partial_A_B_effect_inspected": false,
+    "source_build_may_be_in_progress": true,
+    "source_success_failure_counts_may_have_been_observed_for_execution_health_monitoring": true,
+    "source_outcomes_used_to_choose_primary_units": false,
+    "source_outcomes_used_to_choose_renderer": false,
+    "source_outcomes_used_to_choose_arm_order_algorithm": false,
+    "source_outcomes_used_to_choose_effect_floor_or_analysis": false,
+    "operationalization_basis": "pre-existing R35 minimum A/B identification boundary, R39 exact-information adapter, R43 distinct-estimand/no-pooling contract, and static code/contract audits"
+  },
+  "authority": {
+    "contract_freeze": true,
+    "A_B_execution": false,
+    "C_D_execution": false,
+    "claim_expansion": false
+  },
+  "receipt_sha256": "0106afb2017a0749b1b6a3534ba4ce8d63cb330678dfa826c8dc474d40cb342f"
+}
