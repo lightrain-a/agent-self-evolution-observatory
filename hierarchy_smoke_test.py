@@ -33,7 +33,7 @@ EXPECTATIONS = {
     "research-directions": (3, 4, 1, 0),
     "paper-ideas": (0, 3, 7, 0),
     "experiments": (3, 4, 3, 0),
-    "selected-paper": (4, 5, 32, 0),
+    "selected-paper": (0, 2, 0, 0),
     "bibliography": (6, 7, 8, 0),
 }
 
@@ -182,7 +182,7 @@ def main() -> None:
             expected_group_links = [
                 [("研究站首页", "index.html"), ("研究时间轴", "research-timeline.html"), ("科研系统", "system-overview.html")],
                 [("定义与边界 · 什么是 Agent 自进化", "foundations.html"), ("领域全景 · 历史与问题", "research-directions.html"), ("领域矩阵 · 机制 × 场景 × 评测", "mechanisms.html"), ("当前研究组合图谱 · A–G", "research-map.html"), ("研究组合 · ResearchItems", "paper-ideas.html")],
-                [("① E1 · STRI", "paper-e1.html"), ("② G1 · 时间安全", "paper-g1.html"), ("③ C1 · 记忆传输", "paper-c1.html"), ("④ E2 · 搜索投影", "paper-e2.html"), ("⑤ B1 · 记忆来源", "paper-b1.html"), ("⑥ Paper A · Influence–Fidelity", "paper-a.html"), ("⑦ Paper B · 具身持久记忆", "paper-b.html"), ("⑧ Agent-New · 约束外部性", "paper-agent-constraint.html"), ("⑨ 3D-New · 关系拓扑", "paper-3d.html"), ("论文 · PaperRegistry", "selected-paper.html")],
+                [("论文合集 · 当前 9 篇", "selected-paper.html"), ("① E1 · STRI", "paper-e1.html"), ("② G1 · 时间安全", "paper-g1.html"), ("③ C1 · 记忆传输", "paper-c1.html"), ("④ E2 · 搜索投影", "paper-e2.html"), ("⑤ B1 · 记忆来源", "paper-b1.html"), ("⑥ Paper A · Influence–Fidelity", "paper-a.html"), ("⑦ Paper B · 具身持久记忆", "paper-b.html"), ("⑧ 约束外部性", "paper-agent-constraint.html"), ("⑨ 3D · 关系拓扑", "paper-3d.html")],
                 [("文献库 · 主线与研究空白", "bibliography.html")],
             ]
             actual_group_links = [[tuple(link) for link in group.get("links", [])] for group in nav_contract.get("groups", [])]
@@ -210,12 +210,12 @@ def main() -> None:
             if page == "paper-ideas":
                 portfolio = execute(session_id, """return {paperShelf:document.querySelectorAll('#current-paper-pages .cpp-shelf-card').length,console:document.querySelectorAll('#portfolio-current').length,currentCards:document.querySelectorAll('.portfolio-attention-card').length,categories:document.querySelectorAll('.canonical-category-nav a').length,currentLanes:document.querySelectorAll('.lane-current').length,concludedOpen:document.querySelectorAll('.lane-concluded[open]').length,assetsOpen:document.querySelectorAll('.lane-assets[open]').length,mementoOpen:document.querySelector('#live-memento-paper-design')?.open===true,safetyOpen:document.querySelector('.agent-safety-program-fold')?.open===true,auditOpen:document.querySelector('#portfolio-audit')?.open===true,toc:[...document.querySelectorAll('#page-toc a')].map(a=>a.textContent.trim()),scrollHeight:document.documentElement.scrollHeight,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
                 expected_toc = ["当前需要看什么","A–G 研究组合","更新可靠性与回归控制","记忆、经验与持久知识","评价器、奖励与自纠正","任务生成与课程","工作流与结构演化","世界模型与具身适应","Agent 自进化安全与未来风险","审计与历史"]
-                if portfolio.get("paperShelf") != 9 or portfolio.get("console") != 1 or portfolio.get("currentCards") != 6 or portfolio.get("categories") != 7 or portfolio.get("currentLanes") != 7 or portfolio.get("concludedOpen") != 0 or portfolio.get("assetsOpen") != 0 or portfolio.get("mementoOpen") or portfolio.get("safetyOpen") or portfolio.get("auditOpen") or portfolio.get("toc") != expected_toc or portfolio.get("scrollHeight",99999) > 8200 or portfolio.get("overflow"):
+                if portfolio.get("paperShelf") != 0 or portfolio.get("console") != 1 or portfolio.get("currentCards") != 6 or portfolio.get("categories") != 7 or portfolio.get("currentLanes") != 7 or portfolio.get("concludedOpen") != 0 or portfolio.get("assetsOpen") != 0 or portfolio.get("mementoOpen") or portfolio.get("safetyOpen") or portfolio.get("auditOpen") or portfolio.get("toc") != expected_toc or portfolio.get("scrollHeight",99999) > 7500 or portfolio.get("overflow"):
                     raise AssertionError(f"paper-ideas: decision-first portfolio contract failed: {portfolio}")
             if page == "selected-paper":
-                paper_toc = execute(session_id, """const hrefs=[...document.querySelectorAll('#page-toc .toc-level-3 > a')].map(a=>a.getAttribute('href')||''); return {count:hrefs.length,unique:new Set(hrefs).size,argumentFirst:hrefs.filter(x=>x.startsWith('#paper-')&&x.endsWith('-section-1')).length,acceptance:hrefs.filter(x=>x.endsWith('-paper-acceptance')||x==='#stri-paper-acceptance'||x==='#agent-safety-paper-acceptance').length};""")
-                if paper_toc != {"count":32,"unique":32,"argumentFirst":5,"acceptance":5}:
-                    raise AssertionError(f"selected-paper: argument-first PaperRegistry TOC contract failed: {paper_toc}")
+                collection = execute(session_id, """return {cards:document.querySelectorAll('.cpp-collection-card').length,formal:document.querySelectorAll('#formal-paper-collection .cpp-collection-card').length,working:document.querySelectorAll('#working-paper-collection .cpp-collection-card').length,detailSections:document.querySelectorAll('.paper-detail-section,.cpp-origin,.cpp-resource-columns,.cpp-proof-grid').length,toc:[...document.querySelectorAll('#page-toc a')].map(a=>a.textContent.trim()),paper8:[...document.querySelectorAll('.cpp-collection-card header>span')].find(x=>x.textContent.includes('⑧'))?.textContent.trim()||'',overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
+                if collection != {"cards":9,"formal":5,"working":4,"detailSections":0,"toc":["①–⑤ 正式论文","⑥–⑨ 工作论文 / Scientific Object"],"paper8":"⑧ Constraint Externality","overflow":False}:
+                    raise AssertionError(f"selected-paper: collection-only contract failed: {collection}")
             if page == "bibliography":
                 paper_details = execute(session_id, """const rows=[...document.querySelectorAll('.reference-card .paper-analysis')]; const first=rows[0]||null; const before=rows.filter(x=>x.open).length; if(first) first.querySelector('summary')?.click(); return {total:rows.length,before,firstOpened:!!first?.open};""")
                 if paper_details.get("total") != 80 or paper_details.get("before") != 0 or not paper_details.get("firstOpened"):

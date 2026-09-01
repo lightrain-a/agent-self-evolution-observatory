@@ -1,5 +1,5 @@
 window.CURRENT_PAPER_PAGES={
- schema_version:"1.0",generated_at:"2026-08-31T17:55:00+08:00",
+ schema_version:"2.0",generated_at:"2026-09-01T12:16:00+08:00",
  policy:{reader_facing_projection_only:true,cannot_grant_scientific_authority:true,cannot_grant_experiment_authority:true,cannot_grant_gpu_authority:true,cannot_grant_submission_authority:true,formal_registry_codes_are_never_invented:true,working_papers_are_explicitly_separated_from_paper_registry:true},
  order:["paper-e1","paper-g1","paper-c1","paper-e2","paper-b1","paper-a","paper-b","paper-agent-constraint","paper-3d"],
  papers:{
@@ -70,4 +70,4 @@ window.CURRENT_PAPER_PAGES={
 }
  }};
 window.PAGE_CONTENT=window.PAGE_CONTENT||{};
-Object.entries(window.CURRENT_PAPER_PAGES.papers).forEach(([pageId,p])=>{window.PAGE_CONTENT[pageId]={eyebrow:{en:`Current Research · Paper ${p.order} of 9`,zh:`当前科研 · 第 ${p.order}/9 篇`},title:p.title,lead:{en:"A reader-facing paper page: plain-language idea, experiment state, evolution history, claim boundary, and next gate.",zh:"单篇论文阅读页：先讲给小白听，再看核心机制、当前实验、历史演变、主张边界与下一道门。"},renderMode:"current-paper"};});
+Object.entries(window.CURRENT_PAPER_PAGES.papers).forEach(([pageId,p])=>{window.PAGE_CONTENT[pageId]={eyebrow:{en:`Current Research · Paper ${p.order} of 9`,zh:`当前科研 · 第 ${p.order}/9 篇`},title:p.title,lead:{en:"A single-paper reader page: quick overview, mechanism, models and datasets, experimental design, evidence, evolution history, claim boundary, and next gate.",zh:"单篇论文阅读页：先看速览版，再看机制、模型与数据集、实验思路、结果证据、详细演变、主张边界与下一道门。"},renderMode:"current-paper"};});

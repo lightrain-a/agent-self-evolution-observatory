@@ -347,7 +347,6 @@
     const layering=`${currentControlBoard()}${readingBridge()}${topStats(groups)}`;
     const coverage=coverageSummary(groups);
     const integrated=`${overviewIndex(groups)}<section class="rpm-map-intro"><div><b>${mapPick("先逐个读 A–G，再用正式论文时间线回看全局","Read A–G first, then use the formal-paper timeline to review the field")}</b><p>${mapPick("每个 A–G 先把我们的完整研究进展与现有正式工作放在一起比较；七个方向读完后，再用正式发表论文时间线回看整个领域怎样发展。arXiv / preprint 仍只作为各方向的前沿补充。","Each A–G section first compares our complete progress with formally published work. After all seven areas, the formal-publication timeline summarizes how the field developed; arXiv/preprints remain frontier supplements within each area.")}</p></div><a class="link-btn" href="research-directions.html">${mapPick("查看领域全景 →","Open field landscape →")}</a></section><section class="rpm-category-stack">${groups.map(categorySection).join("")}</section>${formalPublicationTimeline()}`;
-    const papers=window.renderCurrentPaperShelf?window.renderCurrentPaperShelf({}):"";
-    return `${pageHeader(config)}${papers}${renderArchitectureOverview(window.PAGE_ARCHITECTURES?.["research-map"])}${renderCustomChapter(chapters[0],0,layering)}${renderCustomChapter(chapters[1],1,coverage)}${renderCustomChapter(chapters[2],2,integrated)}${renderCustomChapter(chapters[3],3,graphTechnicalAppendix())}`;
+    return `${pageHeader(config)}${renderArchitectureOverview(window.PAGE_ARCHITECTURES?.["research-map"])}${renderCustomChapter(chapters[0],0,layering)}${renderCustomChapter(chapters[1],1,coverage)}${renderCustomChapter(chapters[2],2,integrated)}${renderCustomChapter(chapters[3],3,graphTechnicalAppendix())}`;
   };
 })();

@@ -64,10 +64,10 @@ REDIRECT_PAGES = {
     "coverage-method.html": "bibliography.html#group-coverage-method",
     "research-agenda.html": "research-directions.html#group-research-agenda",
     "direction-board.html": "paper-ideas.html#discussed-ideas",
-    "paper-problem.html": "selected-paper.html#group-paper-problem",
-    "paper-experiments.html": "selected-paper.html#group-paper-experiments",
-    "paper-roadmap.html": "selected-paper.html#group-paper-roadmap",
-    "review-log.html": "selected-paper.html#group-review-log",
+    "paper-problem.html": "selected-paper.html",
+    "paper-experiments.html": "selected-paper.html",
+    "paper-roadmap.html": "selected-paper.html",
+    "review-log.html": "selected-paper.html",
 }
 REQUIRED_STATIC = [
     "CNAME", "_config.yml", ".gitignore", "style.css", "app.js", "data.js",
@@ -95,7 +95,7 @@ REQUIRED_STATIC = [
     "content-system-overview.js", "system-overview-core.js", "system-overview-map.js", "system-overview-layers.js", "system-overview-intake.js", "system-overview-lifecycle.js", "system-overview-reader.js", "system-overview-preflight.js", "system-overview-operations.js", "system-overview-closure.js", "system-overview-view.js", "system-overview.css", "system-overview-v2.css",
     "research-timeline.html", "research-timeline-view.js", "research-timeline.css", "generated/research-timeline.js", "generated/research-timeline.json", "generated/research-dashboard.js", "generated/research-dashboard.json",
     "research-map.html", "research-map-view.js", "research-map.css", "research-landscape-data.js",
-    "current-paper-pages-data.js", "current-paper-page-view.js", "current-paper-pages.css",
+    "current-paper-pages-data.js", "current-paper-details-registry-a.js", "current-paper-details-registry-b.js", "current-paper-details-working.js", "current-paper-details-objects.js", "current-paper-collection-data.js", "current-paper-page-view.js", "current-paper-pages.css",
     "idea-lab.css",
     "current-research-status-view.js", "generated/current-research-status.json", "generated/current-research-status.js",
     "generated/pre-researchitem-candidates.json", "generated/pre-researchitem-candidates.js",
@@ -415,44 +415,57 @@ def main() -> None:
     if paper_page_data.count("registryPaperId:null") != 4:
         fail("exactly four current paper pages must remain explicitly outside PaperRegistry")
     current_paper_view_source = (ROOT / "current-paper-page-view.js").read_text(encoding="utf-8")
-    if "renderCurrentPaperShelf" not in current_paper_view_source or "Nine papers / scientific objects" not in current_paper_view_source:
-        fail("current-paper reader must expose the nine-paper shelf as a shared navigation surface")
+    required_detail_files = {
+        "paper-e1.html": ("current-paper-details-registry-a.js", "paper-story-stri.js"),
+        "paper-g1.html": ("current-paper-details-registry-a.js", "paper-story-agent-safety.js"),
+        "paper-c1.html": ("current-paper-details-registry-b.js", "paper-story-reward-memory.js"),
+        "paper-e2.html": ("current-paper-details-registry-b.js", "paper-story-temporal.js"),
+        "paper-b1.html": ("current-paper-details-registry-b.js", "paper-story-failure-memory.js"),
+        "paper-a.html": ("current-paper-details-working.js", None),
+        "paper-b.html": ("current-paper-details-working.js", None),
+        "paper-agent-constraint.html": ("current-paper-details-objects.js", None),
+        "paper-3d.html": ("current-paper-details-objects.js", None),
+    }
+    for filename, (detail_script, story_script) in required_detail_files.items():
+        scripts = canonical_scripts.get(filename, [])
+        if detail_script not in scripts or scripts.index(detail_script) > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load its own detail projection before the single-paper renderer")
+        if story_script:
+            if "paper-story-blueprint.js" not in scripts or story_script not in scripts:
+                fail(f"{filename} must load only its own formal Paper Story source")
+            if not (scripts.index("paper-story-blueprint.js") < scripts.index(story_script) < scripts.index("current-paper-page-view.js")):
+                fail(f"{filename} Paper Story script order is invalid")
+        elif any(name.startswith("paper-story-") for name in scripts):
+            fail(f"{filename} is a working/scientific-object page and must not load unrelated formal Paper Stories")
+    if "renderCurrentPaperCollection" not in current_paper_view_source or "QUICK OVERVIEW" not in current_paper_view_source or "速览版" not in current_paper_view_source:
+        fail("current-paper renderer must expose collection-only routing plus the single-paper quick overview")
+    if "renderCurrentPaperShelf" in current_paper_view_source or "cpp-pager" in current_paper_view_source:
+        fail("single-paper pages must not render the nine-paper shelf or previous/next paper content")
     for filename in ("research-map.html", "paper-ideas.html"):
         scripts = canonical_scripts.get(filename, [])
         html = (ROOT / filename).read_text(encoding="utf-8")
-        if not all(name in scripts for name in ("current-paper-pages-data.js", "current-paper-page-view.js")):
-            fail(f"{filename} must load the shared current-paper portfolio projection")
-        if not (scripts.index("current-paper-pages-data.js") < scripts.index("current-paper-page-view.js") < scripts.index("app.js")):
-            fail(f"{filename} current-paper shelf script order is invalid")
-        if 'href="current-paper-pages.css"' not in html:
-            fail(f"{filename} must load current-paper-pages.css for the shared paper shelf")
-    app_source_for_paper_shelf = (ROOT / "app.js").read_text(encoding="utf-8")
-    if "renderCurrentPaperShelf" not in map_view_source or "renderCurrentPaperShelf" not in app_source_for_paper_shelf:
-        fail("both research-map and Research Portfolio must render the shared nine-paper shelf")
+        if "current-paper-pages-data.js" in scripts or "current-paper-page-view.js" in scripts or 'href="current-paper-pages.css"' in html:
+            fail(f"{filename} must not duplicate the paper collection; the collection lives only on selected-paper")
 
     selected_scripts_list = canonical_scripts.get("selected-paper.html", [])
-    if not all(name in selected_scripts_list for name in ("generated/research-items.js", "generated/paper-registry.js")) or selected_scripts_list.index("generated/research-items.js") > selected_scripts_list.index("app.js") or selected_scripts_list.index("generated/paper-registry.js") > selected_scripts_list.index("app.js"):
-        fail("selected-paper must load canonical ResearchItem/PaperRegistry state before app.js")
-    selected_scripts = set(selected_scripts_list)
-    if {"content-review.js", "content-review-external.js"} & selected_scripts:
-        fail("selected-paper must not load stale review overrides")
     selected_html = (ROOT / "selected-paper.html").read_text(encoding="utf-8")
-    if "Papers · PaperRegistry" not in selected_html:
-        fail("selected-paper must be explicitly labeled as the canonical PaperRegistry workspace")
-    if "current-research-status-view.js" not in selected_html:
-        fail("selected-paper must load the unified current-paper renderer")
-    if "paper-novelty-audit-data.js" not in selected_html or selected_scripts_list.index("paper-novelty-audit-data.js") > selected_scripts_list.index("current-research-status-view.js"):
-        fail("selected-paper must load the advisor-facing novelty audit before the current-paper renderer")
-    if "paper-external-review-data.js" not in selected_html or selected_scripts_list.index("paper-external-review-data.js") > selected_scripts_list.index("current-research-status-view.js"):
-        fail("selected-paper must load the external-review repair overlay before the current-paper renderer")
-    if "generated/stanford-r2-objection-matrix.js" not in selected_html or selected_scripts_list.index("generated/stanford-r2-objection-matrix.js") > selected_scripts_list.index("current-research-status-view.js"):
-        fail("selected-paper must load the Stanford Round-2 objection matrix before the current-paper renderer")
-    paper_story_data_scripts = tuple(sorted(path.name for path in ROOT.glob("paper-story-*.js") if path.name not in {"paper-story-blueprint.js", "paper-story-view.js"}))
-    paper_story_scripts = ("paper-story-blueprint.js",) + paper_story_data_scripts + ("paper-story-view.js",)
-    if not all(name in selected_scripts_list for name in paper_story_scripts):
-        fail("selected-paper must load the complete Paper Story V3 blueprint, every discovered paper story, and renderer")
-    if paper_story_data_scripts and (selected_scripts_list.index("paper-story-blueprint.js") > min(selected_scripts_list.index(name) for name in paper_story_data_scripts) or max(selected_scripts_list.index(name) for name in paper_story_data_scripts) > selected_scripts_list.index("paper-story-view.js")) or selected_scripts_list.index("paper-story-view.js") > selected_scripts_list.index("current-research-status-view.js"):
-        fail("Paper Story V3 data must load after its blueprint and before the PaperRegistry renderer")
+    selected_required = ("generated/research-items.js", "generated/paper-registry.js", "current-paper-pages-data.js", "current-paper-details-registry-a.js", "current-paper-details-registry-b.js", "current-paper-details-working.js", "current-paper-details-objects.js", "current-paper-collection-data.js", "current-paper-page-view.js")
+    if not all(name in selected_scripts_list for name in selected_required):
+        fail("selected-paper must load the nine-paper collection projection and canonical PaperRegistry state")
+    if selected_scripts_list.index("generated/paper-registry.js") > selected_scripts_list.index("app.js") or selected_scripts_list.index("current-paper-page-view.js") > selected_scripts_list.index("app.js"):
+        fail("selected-paper collection scripts must load before app.js")
+    forbidden_selected_scripts = {"paper-novelty-audit-data.js", "paper-external-review-data.js", "generated/stanford-r2-objection-matrix.js", "paper-reader-data.js", "paper-reader-view.js", "paper-story-view.js", "paper-story-blueprint.js", "paper-story-stri.js", "paper-story-agent-safety.js", "paper-story-reward-memory.js", "paper-story-temporal.js", "paper-story-failure-memory.js"}
+    if forbidden_selected_scripts & set(selected_scripts_list):
+        fail(f"selected-paper must remain collection-only and must not load per-paper story/review payloads: {sorted(forbidden_selected_scripts & set(selected_scripts_list))}")
+    if 'href="current-paper-pages.css"' not in selected_html or "当前论文合集" not in selected_html:
+        fail("selected-paper must be explicitly labeled and styled as the current paper collection")
+    detail_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in ("current-paper-details-registry-a.js", "current-paper-details-registry-b.js", "current-paper-details-working.js", "current-paper-details-objects.js"))
+    for marker in ("R*(A;q)", "BrowserART + AWM", "Shopping", "12 streams × 4 paired replicates", "AgentDojo financial", "MemoryVLA", "AppWorld-derived matched families", "InstructScene"):
+        if marker not in detail_text:
+            fail(f"single-paper detail projection is missing model/dataset/design evidence: {marker}")
+    if "⑧ Constraint Externality" not in detail_text:
+        fail("paper 8 collection label must stay compact")
+
     novelty_source = (ROOT / "paper-novelty-audit-data.js").read_text(encoding="utf-8")
     novelty_ids = ("STRI", "AGENT-SAFETY-R9", "D2-PAPER-PROXY-REWARD-MEMORY-VARIANCE", "D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK", "D2-PAPER-FAILURE-MEMORY-PROVENANCE")
     if not all(f'\"{paper_id}\"' in novelty_source for paper_id in novelty_ids) or "scientific_authority:false" not in novelty_source or "cannot_change_paper_state:true" not in novelty_source:
@@ -550,7 +563,7 @@ def main() -> None:
         "research-directions": ["orientation", "direction-atlas", "current-bridge"],
         "research-map": ["layering", "coverage-gaps", "integrated-map", "handoff"],
         "paper-ideas": ["discussed-ideas", "new-ideas"],
-        "selected-paper": ["problem-scope", "evidence-experiments", "narrative-execution", "review-gates"],
+        "selected-paper": ["paper-collection-formal", "paper-collection-working"],
         "bibliography": ["published-spine", "published-comparison", "idea-mining", "field-maps", "search-corpus", "coverage-protocol"],
     }
     for page_id, chapter_ids in expected_chapter_ids.items():
@@ -1175,8 +1188,8 @@ def main() -> None:
     literature_nav = re.search(r'\{ title:\{en:"Literature",zh:"文献"\}, open:true, pages:\[(.*?)\]\}', data_text, re.DOTALL)
     if not literature_nav or '"bibliography.html",{en:"Literature Library · Spine & Research Gaps",zh:"文献库 · 主线与研究空白"}' not in literature_nav.group(1):
         fail("Literature navigation must be default-open and use the canonical bibliography label")
-    if '"selected-paper.html",{en:"Papers · PaperRegistry",zh:"论文 · PaperRegistry"}' not in data_text:
-        fail("PaperRegistry navigation label must be canonical in both languages")
+    if '"selected-paper.html",{en:"Paper Collection · Current 9",zh:"论文合集 · 当前 9 篇"}' not in data_text:
+        fail("Current Research navigation must place the nine-paper collection first")
     if 'const LANGUAGE_STORAGE_KEY = "agent-evolution-language";' not in app_text or 'localStorage.setItem(LANGUAGE_STORAGE_KEY, language);' not in app_text or "scopedLanguageKey" in app_text:
         fail("all canonical pages must share one sidebar language state instead of page-scoped navigation language")
 
