@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import time
 from dataclasses import dataclass
@@ -128,6 +129,34 @@ class ArkReasoningBankClient:
             "function_calls": cls.function_calls(payload),
             "usage": payload.get("usage") or {},
             "incomplete_details": payload.get("incomplete_details") or {},
+            "raw_payload_sha256": hashlib.sha256(
+                json.dumps(
+                    payload,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ).encode("utf-8")
+            ).hexdigest(),
+            "response_metadata": {
+                key: payload.get(key)
+                for key in (
+                    "created_at",
+                    "completed_at",
+                    "error",
+                    "incomplete_details",
+                    "model",
+                    "object",
+                    "parallel_tool_calls",
+                    "service_tier",
+                    "status",
+                    "temperature",
+                    "top_p",
+                    "top_k",
+                    "seed",
+                    "stop",
+                )
+                if key in payload
+            },
         }
 
     @staticmethod
@@ -153,6 +182,7 @@ class ArkReasoningBankClient:
         max_output_tokens: int | None = 512,
         temperature: float | None = None,
         top_p: float | None = None,
+        top_k: int | None = None,
         seed: int | None = None,
         stop: list[str] | None = None,
         tools: list[dict[str, Any]] | None = None,
@@ -173,6 +203,7 @@ class ArkReasoningBankClient:
             "instructions": instructions,
             "temperature": temperature,
             "top_p": top_p,
+            "top_k": top_k,
             "seed": seed,
             "stop": stop,
             "tools": tools,
