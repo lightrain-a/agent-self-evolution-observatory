@@ -1,0 +1,34 @@
+{
+  "compiler_source_git_sha": "d61262f08a5a7a82e8ccfc0c35efa57e09f6c609",
+  "compiler_source_git_tree": "f54821ba2982714de38f01c54a1f67fcd6cdd5f4",
+  "config_sha256": "e0d68fa08c8bcdf496f1c261ee945924ea2b5f74277a9b054b26fd95bb414b41",
+  "data_license_confirmed": false,
+  "data_materialization": false,
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "generated_at": "2026-08-31T12:00:00+00:00",
+  "gpu_authority": false,
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "official_two_stage_training": false,
+  "p1": false,
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "port_010": {
+    "changed": false,
+    "evidence_review": "BLOCK_BAKE_IN",
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED"
+  },
+  "preflight_contract": {
+    "allowed_only_after_authority": "50-100 step NON_SCIENTIFIC_RESOURCE_PREFLIGHT",
+    "devices": [
+      "RTX_3090_24GB",
+      "A100_40GB",
+      "A100_80GB"
+    ],
+    "memory_batch_mapping": "UNQUALIFIED_UNTIL_PREFLIGHT",
+    "outcomes_forbidden_from_science": true
+  },
+  "provider_calls": false,
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-pre-f0-v1",
+  "scientific_gpu_runs": 0,
+  "state": "NO_AUTHORITY_PROPOSAL_ONLY",
+  "unofficial_checkpoint_smoke": false
+}

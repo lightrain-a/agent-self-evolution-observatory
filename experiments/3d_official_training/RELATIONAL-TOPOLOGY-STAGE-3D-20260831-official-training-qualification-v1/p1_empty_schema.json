@@ -1,0 +1,39 @@
+{
+  "authorized": false,
+  "compiler_source_git_sha": "7bd13063eb45350bd26bd2eb84d94da8988cbe5c",
+  "compiler_source_git_tree": "554dbccef23b53871d87df27a7ed8d25a4fcda03",
+  "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "interventions": [
+    "predicted_graph",
+    "oracle_graph"
+  ],
+  "models": [
+    "SGP-12+SHARED",
+    "SGP-14+SHARED"
+  ],
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "observables": [
+    "text_to_graph_relation_recall",
+    "graph_to_scene_relation_retention",
+    "end_to_end_relation_iRecall"
+  ],
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "relation_counts": [
+    2,
+    3,
+    4
+  ],
+  "room": "BEDROOM",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-qualification-v1",
+  "scientific_cases": [],
+  "scientific_outcomes": [],
+  "status": "CLOSED_EMPTY_SCHEMA_ONLY",
+  "topologies": [
+    "DISJOINT",
+    "CHAIN",
+    "HUB",
+    "COMPONENT_BRIDGE_OPTIONAL"
+  ]
+}

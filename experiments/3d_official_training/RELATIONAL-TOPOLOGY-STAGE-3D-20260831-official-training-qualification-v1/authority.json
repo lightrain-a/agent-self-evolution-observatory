@@ -1,0 +1,37 @@
+{
+  "canonical_integration_requirement": "SATISFIED_REVIEWED_CANONICAL_MAIN_LINEAGE",
+  "compiler_source_git_sha": "7bd13063eb45350bd26bd2eb84d94da8988cbe5c",
+  "compiler_source_git_tree": "554dbccef23b53871d87df27a7ed8d25a4fcda03",
+  "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
+  "data_license_confirmed": false,
+  "data_materialization_authority": false,
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "full_cross_architecture_suite_run": false,
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "gpu_authority": false,
+  "gpu_authority_requested": false,
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "official_instructscene_training": false,
+  "p1": false,
+  "p2": false,
+  "p3": false,
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "port_010": {
+    "changed": false,
+    "evidence_review": "BLOCK_BAKE_IN",
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED"
+  },
+  "provider_calls": 0,
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-qualification-v1",
+  "scenenat_comparison_run": false,
+  "scientific_gpu_runs": 0,
+  "scientific_outcomes": 0,
+  "state": "HOLD_USER_LICENSE_CONFIRMATION",
+  "training_qualification_run": false,
+  "training_status": {
+    "BEDROOM-SG2SC-SHARED": "NOT_STARTED",
+    "SGP-12": "NOT_STARTED",
+    "SGP-14": "NOT_STARTED"
+  },
+  "unofficial_checkpoint_scientific_evidence": false
+}

@@ -1,0 +1,22 @@
+{
+  "compiler_source_git_sha": "d61262f08a5a7a82e8ccfc0c35efa57e09f6c609",
+  "compiler_source_git_tree": "f54821ba2982714de38f01c54a1f67fcd6cdd5f4",
+  "config_sha256": "e0d68fa08c8bcdf496f1c261ee945924ea2b5f74277a9b054b26fd95bb414b41",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "generated_at": "2026-08-31T12:00:00+00:00",
+  "numerical_results": [],
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "plans": [
+    "count × tokens × support × topology response surface",
+    "within-count topology contrasts",
+    "three-observable stage waterfall",
+    "paired predicted-graph versus oracle-graph intervention"
+  ],
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-pre-f0-v1",
+  "tables": [
+    "seven-model protocol audit",
+    "same-access matrix",
+    "gate adjudication"
+  ]
+}

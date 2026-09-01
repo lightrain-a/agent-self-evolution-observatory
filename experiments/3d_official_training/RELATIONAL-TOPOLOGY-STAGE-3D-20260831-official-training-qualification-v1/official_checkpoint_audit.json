@@ -1,0 +1,31 @@
+{
+  "child_adapter_required_before_gpu_qualification": true,
+  "community_room_checkpoints": "UNOFFICIAL_NOT_ELIGIBLE_FOR_SCIENTIFIC_EVIDENCE",
+  "compiler_source_git_sha": "7bd13063eb45350bd26bd2eb84d94da8988cbe5c",
+  "compiler_source_git_tree": "554dbccef23b53871d87df27a7ed8d25a4fcda03",
+  "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "decision": "TRAIN_ONE_SHARED_BEDROOM_SG2SC_FROM_OFFICIAL_SOURCE_AFTER_LICENSE",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "official_code_exact_resume_complete": false,
+  "official_code_missing_states": [
+    "scheduler",
+    "all RNG streams",
+    "sampler state",
+    "sampler position",
+    "corpus cursor",
+    "global step"
+  ],
+  "official_code_saved_states": [
+    "model",
+    "optimizer",
+    "optional_ema"
+  ],
+  "official_released_component": "fVQ-VAE_ONLY",
+  "official_room_checkpoint_available": false,
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-qualification-v1",
+  "unofficial_checkpoint_execution_this_round": false,
+  "unofficial_checkpoint_scientific_evidence": false
+}

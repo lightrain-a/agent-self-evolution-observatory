@@ -1,0 +1,48 @@
+{
+  "compiler_source_git_sha": "7bd13063eb45350bd26bd2eb84d94da8988cbe5c",
+  "compiler_source_git_tree": "554dbccef23b53871d87df27a7ed8d25a4fcda03",
+  "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "forbidden_seed_sources": [
+    "batch_idx",
+    "worker_id",
+    "enumeration order",
+    "process id",
+    "wall clock"
+  ],
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "live_training_replay": "NOT_RUN_LICENSE_AND_GPU_AUTHORITY_ABSENT",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "replay": {
+    "IS-SUPPORT-12": {
+      "byte_identical": true,
+      "hashes": {
+        "forward_w1": "f8cf12c3ea0e8d5f93fb105eb4bc54d4146d3370e69fab0d302bb01faca9a007",
+        "forward_w4": "f8cf12c3ea0e8d5f93fb105eb4bc54d4146d3370e69fab0d302bb01faca9a007",
+        "reverse_w1": "f8cf12c3ea0e8d5f93fb105eb4bc54d4146d3370e69fab0d302bb01faca9a007",
+        "shuffled_w1": "f8cf12c3ea0e8d5f93fb105eb4bc54d4146d3370e69fab0d302bb01faca9a007"
+      }
+    },
+    "IS-SUPPORT-14": {
+      "byte_identical": true,
+      "hashes": {
+        "forward_w1": "daccafc65dd371af8db74c0371eb1753689b03d76a84ded99e2bdfbb5d831b28",
+        "forward_w4": "daccafc65dd371af8db74c0371eb1753689b03d76a84ded99e2bdfbb5d831b28",
+        "reverse_w1": "daccafc65dd371af8db74c0371eb1753689b03d76a84ded99e2bdfbb5d831b28",
+        "shuffled_w1": "daccafc65dd371af8db74c0371eb1753689b03d76a84ded99e2bdfbb5d831b28"
+      }
+    }
+  },
+  "required_rng_streams": [
+    "python",
+    "numpy",
+    "torch_cpu",
+    "torch_cuda_all_devices",
+    "dataloader_generator",
+    "sampler"
+  ],
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-qualification-v1",
+  "seed_is_content_derived": true,
+  "status": "PASS_SYNTHETIC_REPLAY"
+}

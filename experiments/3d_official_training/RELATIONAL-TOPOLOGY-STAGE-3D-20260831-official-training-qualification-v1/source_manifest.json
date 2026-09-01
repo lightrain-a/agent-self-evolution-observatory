@@ -1,0 +1,48 @@
+{
+  "clip_tokenizer": {
+    "model": "openai/clip-vit-base-patch32",
+    "official_code_revision_pin_missing": true,
+    "qualification_requirement": "PIN_EXACT_REVISION_IN_CHILD_ADAPTER",
+    "revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268"
+  },
+  "compiler_source_git_sha": "7bd13063eb45350bd26bd2eb84d94da8988cbe5c",
+  "compiler_source_git_tree": "554dbccef23b53871d87df27a7ed8d25a4fcda03",
+  "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "instructscene": {
+    "local_exact_clone": "NOT_SUPPLIED",
+    "official_repository": "https://github.com/chenguolin/InstructScene",
+    "repo_sha": "a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+    "source_file_sha256": {
+      "README.md": "72a28f596cb3adc21c50db9e5d2679e9dcf5674e59d5fffcf14de5051e8e22ff",
+      "configs/bedroom_sg2sc_diffusion_objfeat.yaml": "93a8483771de03a6d1673916d9fb22d075bd03ace40d21f074a0e42a89e85c15",
+      "configs/bedroom_sg_diffusion_vq_objfeat.yaml": "ae4699a8be0ba2d1cd332a37d3233abee96cde172fbddd7a89857e0b0d31d021",
+      "scripts/train_sg2sc_objfeat.sh": "dad1c40ee5837bcb82a37c6eed0ac7de0b53a0dd55febeb8b38f9b34f058de54",
+      "scripts/train_sg_vq_objfeat.sh": "48e11079aad3eb89aaa54055963d23bdeacd49a9a1de25f5f530da2fefcce6da",
+      "src/generate_sg.py": "ea6f532d12a7d511902e6e72d84e0c9e61ddee8b632061b518327bc8956753cd",
+      "src/generate_sg2sc.py": "57d420b6cf79db29eb494c2782c1f8992f6b12ef8596611dd79f4453b203d051",
+      "src/models/sg2sc_diffusion.py": "bbeed6e2ad1164e658f7d4e1bedd9fc42dfc47db31d865c6e000665c53a33451",
+      "src/train_sg.py": "65b991feaf2442c33dd9fe6edc76b3c99d1b0cbddaff8cd72673a88aced9bf29",
+      "src/train_sg2sc.py": "b5fd13847884783db9c9cb1c0d76fa7687e029e7db7d4f7cf3527f7c2c53e8c8"
+    },
+    "verification": "PINNED_STATIC_AUDIT"
+  },
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_artifacts": {
+    "experiments/relational_topology_3d/RELATIONAL-TOPOLOGY-STAGE-3D-20260831-pre-f0-v1/adjudication.json": "1ef86c046d8f92962d05d693931dfff9feb51a4da68bf83a2936f957e7e6351c",
+    "experiments/relational_topology_3d/RELATIONAL-TOPOLOGY-STAGE-3D-20260831-pre-f0-v1/manifest.json": "75696ab57ff430bb4bef249a938363c3a962208c2915c411062f819912b4280c",
+    "experiments/relational_topology_3d/RELATIONAL-TOPOLOGY-STAGE-3D-20260831-pre-f0-v1/regression_debt.json": "1cedd6704fd9a114dff798f07f0a9b7f1476082e63aa05b9e40b24a00648e89a",
+    "generated/paper-first-pre-f0-evidence-acquisition-plan.json": "3594967e2e491984e522b4b53c10c0478848ecd34cc2287d718e175360861ebd",
+    "generated/relational-constraint-capacity-construct-v2-20260830.json": "48a86fa4bb83cdb9308a1cd6a005cf8ea34033f8649cd579c15fbe3e8347317f",
+    "generated/relational-constraint-capacity-novelty-support-differential-20260831.json": "465dbbf9d2f1bb6aadad73681dac994e252b7201966e069d9b5c5e2dd7d16b83"
+  },
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-qualification-v1",
+  "scenenat": {
+    "arxiv_last_revised": "2026-08-11",
+    "arxiv_revision": "2601.07218v2",
+    "official_repository": "https://github.com/lojol2327/SceneNAT-official",
+    "repo_sha": "542b82ff0cda4e0350575ca8f1cd5d147529130c"
+  }
+}

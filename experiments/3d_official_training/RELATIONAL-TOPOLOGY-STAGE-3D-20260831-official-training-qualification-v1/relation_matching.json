@@ -1,0 +1,54 @@
+{
+  "compiler_source_git_sha": "7bd13063eb45350bd26bd2eb84d94da8988cbe5c",
+  "compiler_source_git_tree": "554dbccef23b53871d87df27a7ed8d25a4fcda03",
+  "config_sha256": "9ed2f76781e876ef9af315e92f09f0707858d3e657866b125a899ee7c19943d2",
+  "dataset_revision": "NOT_MATERIALIZED_LICENSE_NOT_CONFIRMED",
+  "direction_policy_equal": true,
+  "equal_example_count": true,
+  "family_counts": {
+    "IS-SUPPORT-12": {
+      "above/below": 24,
+      "behind/front": 24,
+      "facing/not_facing": 24,
+      "far/near": 24,
+      "left/right": 24,
+      "on/supporting": 24
+    },
+    "IS-SUPPORT-14": {
+      "above/below": 40,
+      "behind/front": 40,
+      "facing/not_facing": 40,
+      "far/near": 40,
+      "left/right": 40,
+      "on/supporting": 40
+    }
+  },
+  "family_proportions": {
+    "IS-SUPPORT-12": {
+      "above/below": 0.16666666666666666,
+      "behind/front": 0.16666666666666666,
+      "facing/not_facing": 0.16666666666666666,
+      "far/near": 0.16666666666666666,
+      "left/right": 0.16666666666666666,
+      "on/supporting": 0.16666666666666666
+    },
+    "IS-SUPPORT-14": {
+      "above/below": 0.16666666666666666,
+      "behind/front": 0.16666666666666666,
+      "facing/not_facing": 0.16666666666666666,
+      "far/near": 0.16666666666666666,
+      "left/right": 0.16666666666666666,
+      "on/supporting": 0.16666666666666666
+    }
+  },
+  "family_proportions_equal": true,
+  "generated_at": "2026-09-01T08:00:00+00:00",
+  "nested_permutations_required": true,
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "parent_object_id": "RELATIONAL-CONSTRAINT-CAPACITY-20260830",
+  "per_scene_family_composition_required": true,
+  "real_corpus_gate": "Block authority unless family, direction, scene, object-count and template marginals satisfy frozen tolerances.",
+  "residual_imbalance_adjustment": "PREREGISTER_IF_EXACT_MATCHING_IMPOSSIBLE",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-qualification-v1",
+  "status": "PASS_SYNTHETIC_POLICY_QUALIFICATION_REAL_MATCH_PENDING_LICENSE"
+}
