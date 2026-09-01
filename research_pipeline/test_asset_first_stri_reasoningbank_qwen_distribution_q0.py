@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 from research_pipeline import asset_first_stri_reasoningbank_qwen_distribution_q0 as q0
-from research_pipeline.asset_first_stri_reasoningbank_ark_provider import (
-    ArkReasoningBankClient,
-    ArkReasoningBankSettings,
+from research_pipeline.asset_first_stri_reasoningbank_qwen_provider import (
+    QwenChatClient,
+    QwenChatSettings,
 )
 
 
@@ -17,19 +17,14 @@ class FakeResponse:
     def json() -> dict:
         return {
             "id": "response-id",
-            "object": "response",
-            "status": "completed",
+            "object": "chat.completion",
             "model": q0.MODEL,
-            "temperature": 1.0,
-            "top_p": 0.95,
-            "top_k": 40,
-            "output": [
-                {
-                    "type": "message",
-                    "content": [{"type": "output_text", "text": "Q0_BASE_OK"}],
-                }
-            ],
-            "usage": {"input_tokens": 9, "output_tokens": 3},
+            "choices": [{
+                "index": 0,
+                "message": {"role": "assistant", "content": "Q0_BASE_OK"},
+                "finish_reason": "stop",
+            }],
+            "usage": {"prompt_tokens": 9, "completion_tokens": 3, "total_tokens": 12},
         }
 
 
@@ -57,10 +52,10 @@ def test_q0_probe_plan_is_exactly_once_and_provider_free() -> None:
 
 def test_provider_forwards_top_k_and_hashes_raw_response() -> None:
     session = FakeSession()
-    client = ArkReasoningBankClient(
-        ArkReasoningBankSettings(
+    client = QwenChatClient(
+        QwenChatSettings(
             api_key="SECRET_SENTINEL",
-            base_url="https://example.invalid/api/plan/v3",
+            base_url="https://example.invalid/api/v1",
             model=q0.MODEL,
             timeout_seconds=1.0,
             max_retries=0,
@@ -75,8 +70,10 @@ def test_provider_forwards_top_k_and_hashes_raw_response() -> None:
     )
     assert session.body is not None
     assert session.body["top_k"] == 40
+    assert session.body["n"] == 1
+    assert session.body["stream"] is False
     assert result["raw_payload_sha256"]
-    assert result["response_metadata"]["top_k"] == 40
+    assert result["choice_count"] == 1
     assert "SECRET_SENTINEL" not in str(result)
 
 

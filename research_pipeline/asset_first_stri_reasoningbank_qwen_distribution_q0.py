@@ -7,14 +7,15 @@ import time
 from pathlib import Path
 from typing import Any
 
-from research_pipeline.asset_first_stri_reasoningbank_ark_provider import (
-    ArkCompatibilityError,
-    ArkReasoningBankClient,
-    ArkReasoningBankSettings,
-    CANONICAL_SECRET_FILE,
+from research_pipeline.asset_first_stri_reasoningbank_qwen_provider import (
+    DIANMING_BASE_URL,
+    DIANMING_CHAT_ENDPOINT,
+    DIANMING_SECRET_FILE,
+    QwenChatClient,
+    QwenChatSettings,
+    QwenProviderError,
 )
 from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
-    BASE_URL,
     FORMAT_RE,
     ROOT,
     canonical_json,
@@ -26,6 +27,7 @@ from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
 
 EXPERIMENT_ID = "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901"
 MODEL = "qwen3-coder-next"
+BASE_URL = DIANMING_BASE_URL
 D0_INDEX = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-index-20260901.json"
 CONTRACT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q0-contract-20260901.json"
 OUTPUT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q0-result-20260901.json"
@@ -97,8 +99,8 @@ def probe_plan() -> list[dict[str, Any]]:
         },
         {
             "ordinal": 10,
-            "name": "previous_response",
-            "goal": "stored response identity and continuation semantics",
+            "name": "single_choice_n1",
+            "goal": "explicit n=1 Chat-Completions semantics and exactly one returned choice",
             "attempt_count": 1,
         },
     ]
@@ -131,15 +133,16 @@ def contract_payload() -> dict[str, Any]:
         "d0_index_sha256": sha256_file(D0_INDEX),
         "d0_decision": d0["decision"],
         "provider": {
-            "route_family": "domestic OpenAI-compatible Responses API",
+            "route_family": "Dianming OpenAI-compatible Chat Completions API",
             "base_url": BASE_URL,
+            "endpoint": BASE_URL + DIANMING_CHAT_ENDPOINT,
             "requested_model": MODEL,
             "resolved_model_requirement": MODEL,
             "timeout_seconds": TIMEOUT_SECONDS,
             "max_retries": MAX_RETRIES,
             "streaming": False,
-            "store": True,
-            "credential_source": "pre-existing mode-0600 server secret file",
+            "n": 1,
+            "credential_source": "dedicated ignored mode-0600 server secret file",
             "credential_value_persisted": False,
         },
         "official_configuration_basis": {
@@ -192,18 +195,18 @@ def freeze_contract(output: Path = CONTRACT) -> dict[str, Any]:
     }
 
 
-def make_client() -> ArkReasoningBankClient:
-    base = ArkReasoningBankSettings.from_env_file(CANONICAL_SECRET_FILE)
-    if base.base_url.rstrip("/") != BASE_URL:
-        raise RuntimeError("Q0 provider base URL drift")
-    settings = ArkReasoningBankSettings(
+def make_client() -> QwenChatClient:
+    base = QwenChatSettings.from_env_file(DIANMING_SECRET_FILE)
+    if base.base_url.rstrip("/") != BASE_URL or base.model != MODEL:
+        raise RuntimeError("Q0 provider base URL/model drift")
+    settings = QwenChatSettings(
         api_key=base.api_key,
         base_url=BASE_URL,
         model=MODEL,
         timeout_seconds=TIMEOUT_SECONDS,
         max_retries=MAX_RETRIES,
     )
-    return ArkReasoningBankClient(settings)
+    return QwenChatClient(settings)
 
 
 def public_success(name: str, value: dict[str, Any], elapsed: float) -> dict[str, Any]:
@@ -221,6 +224,8 @@ def public_success(name: str, value: dict[str, Any], elapsed: float) -> dict[str
         "incomplete_details": value.get("incomplete_details") or {},
         "raw_payload_sha256": value.get("raw_payload_sha256"),
         "response_metadata": value.get("response_metadata") or {},
+        "choice_count": value.get("choice_count"),
+        "actual_request_sha256": value.get("actual_request_sha256"),
         "safe_rate_quota_headers": value.get("response_headers") or {},
         "response_id_present": bool(response_id),
         "response_id_sha256": sha256_text(response_id),
@@ -231,12 +236,12 @@ def public_success(name: str, value: dict[str, Any], elapsed: float) -> dict[str
     return public
 
 
-def call_probe(client: ArkReasoningBankClient, name: str, **kwargs: Any) -> tuple[dict[str, Any], dict[str, Any] | None]:
+def call_probe(client: QwenChatClient, name: str, **kwargs: Any) -> tuple[dict[str, Any], dict[str, Any] | None]:
     started = time.monotonic()
     try:
         private = client.create_response(model=MODEL, **kwargs)
         return public_success(name, private, time.monotonic() - started), private
-    except ArkCompatibilityError as error:
+    except QwenProviderError as error:
         return {
             "name": name,
             "status": "UNSUPPORTED_OR_FAILED",
@@ -268,9 +273,8 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         raise RuntimeError("Q0 D0 binding drift")
     client = make_client()
     probes: list[dict[str, Any]] = []
-    private_base: dict[str, Any] | None = None
 
-    row, private_base = call_probe(
+    row, _ = call_probe(
         client,
         "identity_messages_sampling",
         input_items=[
@@ -390,25 +394,14 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         store=True,
     )
     probes.append(row)
-    if private_base and private_base.get("response_id"):
-        row, _ = call_probe(
-            client,
-            "previous_response",
-            input_items=[{"role": "user", "content": "Reply exactly Q0_CONTINUE_OK"}],
-            previous_response_id=str(private_base["response_id"]),
-            max_output_tokens=64,
-            temperature=RECOMMENDED_TEMPERATURE,
-            top_p=RECOMMENDED_TOP_P,
-            store=True,
-        )
-    else:
-        row = {
-            "name": "previous_response",
-            "status": "UNSUPPORTED_OR_FAILED",
-            "failure": {"error_type": "MissingBaseResponseIdentity", "credential_material_present": False},
-            "transport_attempts": 0,
-            "credential_material_present": False,
-        }
+    row, _ = call_probe(
+        client,
+        "single_choice_n1",
+        input_items="Reply exactly Q0_N1_OK",
+        max_output_tokens=64,
+        temperature=RECOMMENDED_TEMPERATURE,
+        top_p=RECOMMENDED_TOP_P,
+    )
     probes.append(row)
 
     by_name = {row["name"]: row for row in probes}
@@ -462,7 +455,12 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
             "honored" if by_name["max_output_tokens"]["status"] == "SUCCESS" and 0 < small_output <= 32
             else ("unsupported" if by_name["max_output_tokens"]["status"] != "SUCCESS" else "unresolved")
         ),
-        "previous_response_id": classify(by_name["previous_response"], exact_text="Q0_CONTINUE_OK"),
+        "single_choice_n1": (
+            "honored"
+            if by_name["single_choice_n1"].get("choice_count") == 1
+            and classify(by_name["single_choice_n1"], exact_text="Q0_N1_OK") == "honored"
+            else "ignored"
+        ),
         "streaming": "honored",
         "thinking": "server-fixed",
     }
@@ -474,6 +472,7 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
         "text_action_compatibility": parameter_support["text_action"] == "honored",
         "usage_metadata": bool(by_name["identity_messages_sampling"].get("usage")),
         "response_identity_metadata": bool(by_name["identity_messages_sampling"].get("response_id_present")),
+        "single_choice_exact": parameter_support["single_choice_n1"] == "honored",
         "every_probe_attempt_at_most_one": all(int(row.get("transport_attempts") or 0) <= 1 for row in probes),
         "credential_material_absent": all(row["credential_material_present"] is False for row in probes),
     }
@@ -498,7 +497,7 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
             "timeout_seconds": TIMEOUT_SECONDS,
             "max_retries": MAX_RETRIES,
             "streaming": False,
-            "store": True,
+            "n": 1,
             "credential_source_present": True,
             "credential_value_persisted": False,
         },
@@ -514,6 +513,7 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
             "seed": "OMITTED",
             "thinking": "SERVER_FIXED_NON_THINKING",
             "streaming": False,
+            "n": 1,
             "stop": "OMITTED",
             "max_output_tokens": SCIENTIFIC_MAX_OUTPUT_TOKENS,
             "max_retries": 0,
