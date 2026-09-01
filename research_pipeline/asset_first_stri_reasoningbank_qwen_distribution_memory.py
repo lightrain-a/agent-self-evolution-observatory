@@ -13,13 +13,14 @@ def parse_official_memory_items(raw_response: str) -> list[str]:
 
 
 def memory_record(*, source_task_id: str, source_repository: str,
-                  task_sha256: str, trajectory_sha256: str,
+                  source_query: str, task_sha256: str, trajectory_sha256: str,
                   source_resolved: bool, raw_response: str,
                   policy_model: str, extractor_model: str,
                   provider_config_sha256: str, evaluator_result: dict[str, Any]) -> dict[str, Any]:
     items = parse_official_memory_items(raw_response)
     return {
         "source_task_id": source_task_id, "source_repository": source_repository,
+        "source_query": source_query, "source_query_sha256": sha256_text(source_query),
         "task_sha256": task_sha256, "source_trajectory_sha256": trajectory_sha256,
         "source_resolved": source_resolved, "raw_extractor_response": raw_response,
         "raw_extractor_response_sha256": sha256_text(raw_response),
