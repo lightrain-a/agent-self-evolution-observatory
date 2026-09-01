@@ -39,11 +39,11 @@ def allocation_rule(design: str) -> dict[str, Any]:
     if design == "FALLBACK_3_REPOSITORY":
         return {
             "per_repo": (
-                "first hash-ordered repository: first 2 structurally qualified pilot, "
-                "next 8 confirmatory; other repositories: first 1 pilot, next 8 confirmatory"
+                "first two hash-ordered repositories: first 1 structurally qualified pilot, "
+                "next 8 confirmatory; third repository: first 2 pilot, next 8 confirmatory"
             ),
             "pilot_count": 4, "confirmatory_count": 24,
-            "required_structural_per_repo": [10, 9, 9],
+            "required_structural_per_repo": [9, 9, 10],
         }
     raise RuntimeError("unknown dataset design")
 
@@ -104,8 +104,10 @@ def allocate(split: dict[str, Any], qualified: dict[str, bool]) -> tuple[list[st
     for repo_index, row in enumerate(split["repo_splits"]):
         eligible = [task_id for task_id in row["structural_candidate_task_ids"]
                     if qualified.get(task_id, False)]
-        pilot_n, confirm_n = ((2, 8) if fallback and repo_index == 0 else
-                              ((1, 8) if fallback else (1, 6)))
+        pilot_n, confirm_n = (
+            ((2, 8) if repo_index == 2 else (1, 8))
+            if fallback else (1, 6)
+        )
         if len(eligible) < pilot_n + confirm_n:
             raise RuntimeError(f"insufficient structurally qualified tasks for {row['repo']}")
         pilots.extend(eligible[:pilot_n])

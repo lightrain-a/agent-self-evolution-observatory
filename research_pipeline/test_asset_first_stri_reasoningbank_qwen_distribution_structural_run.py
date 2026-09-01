@@ -39,9 +39,29 @@ def test_fallback_allocation_has_four_pilot_and_twenty_four_main():
     qualified = {task: True for row in split["repo_splits"]
                  for task in row["structural_candidate_task_ids"]}
     pilots, main = allocate(split, qualified)
-    assert pilots == ["r0-t0", "r0-t1", "r1-t0", "r2-t0"]
+    assert pilots == ["r0-t0", "r1-t0", "r2-t0", "r2-t1"]
     assert len(main) == 24
-    assert allocation_rule("FALLBACK_3_REPOSITORY")["required_structural_per_repo"] == [10, 9, 9]
+    assert allocation_rule("FALLBACK_3_REPOSITORY")["required_structural_per_repo"] == [9, 9, 10]
+
+
+def test_fallback_allocation_has_one_structural_failure_headroom_per_repo():
+    split = {
+        "dataset_design": "FALLBACK_3_REPOSITORY",
+        "repo_splits": [
+            {"repo": f"r{i}", "structural_candidate_task_ids": [
+                f"r{i}-t{j}" for j in range(10 if i < 2 else 11)]}
+            for i in range(3)
+        ],
+    }
+    qualified = {task: True for row in split["repo_splits"]
+                 for task in row["structural_candidate_task_ids"]}
+    qualified["r0-t1"] = False
+    qualified["r1-t1"] = False
+    qualified["r2-t2"] = False
+    pilots, main = allocate(split, qualified)
+    assert len(pilots) == 4
+    assert len(main) == 24
+    assert all(task not in pilots + main for task in ("r0-t1", "r1-t1", "r2-t2"))
 
 
 def test_allocation_holds_instead_of_replacing_when_capacity_insufficient():
