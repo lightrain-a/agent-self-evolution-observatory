@@ -111,7 +111,8 @@ def load_completed(plan: list[dict[str, Any]]) -> dict[int, dict[str, Any]]:
     return completed
 
 
-def index_payload(contract: dict[str, Any], completed: dict[int, dict[str, Any]]) -> dict[str, Any]:
+def index_payload(contract: dict[str, Any], completed: dict[int, dict[str, Any]],
+                  inflight: dict[str, Any] | None = None) -> dict[str, Any]:
     journal = [{
         "ordinal": ordinal, "run_id": row["run_id"],
         "instance_id": row["instance_id"], "attempt_count": row["attempt_count"],
@@ -127,6 +128,7 @@ def index_payload(contract: dict[str, Any], completed: dict[int, dict[str, Any]]
         "execution_complete": complete, "contract_sha256": sha256_file(CONTRACT),
         "planned_count": len(contract["source_plan"]), "completed_count": len(completed),
         "journal_record_count": len(journal), "journal": journal,
+        "inflight": inflight,
         "checks": {
             "frozen_order_prefix": True,
             "every_attempt_count_one": all(row["attempt_count"] == 1 for row in journal),
@@ -148,8 +150,20 @@ def run() -> dict[str, Any]:
     rows = dataset_rows()
     completed = load_completed(contract["source_plan"])
     RECEIPT_DIR.mkdir(parents=True, exist_ok=True)
+    if INDEX.exists():
+        prior = json.loads(INDEX.read_text(encoding="utf-8"))
+        inflight = prior.get("inflight")
+        if inflight and not receipt_path(inflight).exists():
+            raise RuntimeError(
+                "SOURCE_AMBIGUOUS_INFLIGHT_HOLD: refusing to reissue an unreceipted source unit"
+            )
     write_json(INDEX, index_payload(contract, completed))
     for unit in contract["source_plan"][len(completed):]:
+        write_json(INDEX, index_payload(contract, completed, inflight={
+            "ordinal": unit["ordinal"], "run_id": unit["run_id"],
+            "instance_id": unit["instance_id"], "attempt_count": 1,
+            "state": "DISPATCHED_BEFORE_ANY_SIDE_EFFECT",
+        }))
         row = rows[unit["instance_id"]]
         qpath = ROOT / unit["qualification_receipt"]
         if sha256_file(qpath) != unit["qualification_receipt_sha256"]:
