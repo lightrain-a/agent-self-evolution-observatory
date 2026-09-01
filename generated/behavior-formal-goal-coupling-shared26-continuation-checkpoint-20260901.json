@@ -1,7 +1,7 @@
 {
   "canonical_closed_state": {
-    "last_closed_segment": "S27",
-    "next_segment": "S28",
+    "last_closed_segment": "S28",
+    "next_segment": "S29",
     "origin_main_parent_before_s20_integration": "60c5b183768e17366a2d4646af5c35a833e6f204",
     "origin_main_parent_before_s21_integration": "57487b4a4e0b211bcdac8310859960a10176838e",
     "origin_main_parent_before_s22_integration": "581ac386da83acc33b06bc98f789c521f2e08491",
@@ -10,6 +10,7 @@
     "origin_main_parent_before_s25_integration": "f8b28f77ee0e16100013fa00854143e320451498",
     "origin_main_parent_before_s26_integration": "70b47e3a7f7810e87548594dd87c2e07ac34ef50",
     "origin_main_parent_before_s27_integration": "53d53c127cc0f6e72e188d9a6786be893a8de3f0",
+    "origin_main_parent_before_s28_integration": "aafb7f682a0da935a8dfe80d8a9ee43b5eb936a8",
     "s01_s07": "PAYLOAD_SEGMENT_COMPLETE",
     "s08_initial": "PAYLOAD_SEGMENT_TRANSPORT_HOLD",
     "s08_repair1": "PAYLOAD_SEGMENT_COMPLETE",
@@ -80,27 +81,31 @@
     "s27": "PAYLOAD_SEGMENT_COMPLETE",
     "s27_receipt_sha256": "98650d484bf03c265e5076732b0f2968cb78db1381dcaf3fb8abe57d3760f6f4",
     "s27_verified_bytes": 8572459453,
-    "s27_verified_file_count": 45
+    "s27_verified_file_count": 45,
+    "s28": "PAYLOAD_SEGMENT_COMPLETE",
+    "s28_receipt_sha256": "dbff97295bde19cf348e047b3c6dc3d3ef20492d10e07dcf41f1e4715a77a2ac",
+    "s28_verified_bytes": 8540047665,
+    "s28_verified_file_count": 45
   },
   "execution_authority_created_by_this_checkpoint": false,
   "execution_resume_location": {
-    "branch": "research/formal-goal-shared26-execution-20260901",
+    "branch": "research/formal-goal-shared26-resume-20260901",
     "branch_head_after_s20_receipt": "cb0c85c9df7af936d21a78a73994712cf485df04",
     "single_writer_lock": "/data/wyt/.behavior-2026-shared26-v3.0.materialization.lock",
-    "worktree": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-shared26-execution-20260901"
+    "worktree": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-shared26-resume-20260901"
   },
   "gpu_used": false,
   "model_loaded": false,
   "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
   "policy_outcomes_read": false,
-  "recorded_at": "2026-09-01T19:25:00+08:00",
+  "recorded_at": "2026-09-01T20:10:39+08:00",
   "resume_protocol": [
-    "Before S22, inspect the single-writer lock holder, actor process, S22 receipt, finalized files, and partial files.",
-    "Never rerun S01-S20; they are content-addressed closed segments.",
+    "Before S29, inspect the single-writer lock holder, actor process, S29 receipt, finalized files, and partial files.",
+    "Never rerun S01-S28; they are content-addressed closed segments.",
     "Do not duplicate a lock-holding actor after SSH/tool transport errors.",
     "Transport-only retry may reuse the verified-relay pattern without changing frozen file identity, task/episode selection, or the scientific contract.",
-    "No model/checkpoint weight download, model load, GPU execution, training, policy rollout, policy outcome read, task replacement, episode replacement, or claim expansion is authorized."
+    "No model/checkpoint weight download, model load, GPU execution, training, policy rollout, policy outcome read, task replacement, episode replacement, or claim expansion is authorized by this checkpoint."
   ],
-  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.19",
+  "schema_version": "behavior-formal-goal-coupling-shared26-continuation-checkpoint-v1.20",
   "scientific_authority": false
 }
