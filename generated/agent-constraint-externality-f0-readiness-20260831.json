@@ -1,6 +1,6 @@
 {
   "appworld_ul_authorized": false,
-  "blocker": "M1 scientific runner qualification has not passed.",
+  "blocker": "AA_API_KEY is not configured in the approved environment.",
   "capability_contract_frozen": true,
   "compiler_pass_conditions_all_true": true,
   "compiler_verdict": "PRE_F0_5_PASS",
@@ -12,9 +12,9 @@
   "f0_executed": false,
   "f0_outcomes_observed": 0,
   "generated_at": "2026-09-01T15:35:00+08:00",
-  "m1_runner_qualification_pass": false,
+  "m1_runner_qualification_pass": true,
   "model_prereg_addendum_a0_pass": true,
-  "next_authorized_action": "RUN_M1_MOCK_QUALIFICATION",
+  "next_authorized_action": "CONFIGURE_QWEN_PROVIDER_CREDENTIAL",
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "p1_authorized": false,
   "provider": {
@@ -28,6 +28,6 @@
   },
   "provider_credential_present": false,
   "schema_version": "agent-constraint-externality-f0-readiness-v1",
-  "status": "M1_RUNNER_QUALIFICATION_REQUIRED",
+  "status": "QWEN_PROVIDER_CONFIGURATION_REQUIRED",
   "tool_sandbox_authorized": false
 }

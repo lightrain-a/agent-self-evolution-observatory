@@ -27,6 +27,12 @@ COMPILER_QUALIFICATION = (
 COMPILER_MANIFEST = (
     GENERATED / "agent-constraint-externality-appworld-compiler-manifest-20260831.json"
 )
+M1_QUALIFICATION = (
+    GENERATED / "agent-constraint-externality-m1-runner-qualification-v1-20260901.json"
+)
+M1_MANIFEST = (
+    GENERATED / "agent-constraint-externality-m1-runner-qualification-v1-manifest-20260901.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -96,6 +102,8 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
     families, qualification = validate_inputs()
     safe_provider = safe_provider_summary()
     provider_ready = bool(safe_provider["configured"])
+    m1 = read_json(M1_QUALIFICATION) if M1_QUALIFICATION.is_file() else {}
+    m1_pass = m1.get("status") == "M1_RUNNER_QUALIFICATION_PASS"
 
     capability = {
         "schema_version": "agent-constraint-externality-capability-calibration-v1",
@@ -281,7 +289,18 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "gpu_runs": 0,
     }
 
-    readiness_status = "M1_RUNNER_QUALIFICATION_REQUIRED"
+    if not m1_pass:
+        readiness_status = "M1_RUNNER_QUALIFICATION_REQUIRED"
+        blocker = "M1 scientific runner qualification has not passed."
+        next_action = "RUN_M1_MOCK_QUALIFICATION"
+    elif not provider_ready:
+        readiness_status = "QWEN_PROVIDER_CONFIGURATION_REQUIRED"
+        blocker = "AA_API_KEY is not configured in the approved environment."
+        next_action = "CONFIGURE_QWEN_PROVIDER_CREDENTIAL"
+    else:
+        readiness_status = "CAPABILITY_CALIBRATION_READY"
+        blocker = None
+        next_action = "RUN_QWEN_CAPABILITY_CALIBRATION"
     readiness = {
         "schema_version": "agent-constraint-externality-f0-readiness-v1",
         "generated_at": GENERATED_AT,
@@ -292,7 +311,7 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             qualification["pass_conditions"].values()
         ),
         "model_prereg_addendum_a0_pass": True,
-        "m1_runner_qualification_pass": False,
+        "m1_runner_qualification_pass": m1_pass,
         "capability_contract_frozen": True,
         "f0_contract_frozen": True,
         "provider": safe_provider,
@@ -301,8 +320,8 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             "note": "Frozen protocol overrides provider default for scientific calls.",
         },
         "provider_credential_present": provider_ready,
-        "blocker": "M1 scientific runner qualification has not passed.",
-        "next_authorized_action": "RUN_M1_MOCK_QUALIFICATION",
+        "blocker": blocker,
+        "next_authorized_action": next_action,
         "f0_executed": False,
         "f0_outcomes_observed": 0,
         "tool_sandbox_authorized": False,
@@ -329,7 +348,7 @@ def main() -> None:
     }
     for path in (
         FAMILY_MANIFEST, COMPILER_QUALIFICATION, COMPILER_MANIFEST,
-        MODEL_ADDENDUM, MODEL_ADDENDUM_MANIFEST,
+        MODEL_ADDENDUM, MODEL_ADDENDUM_MANIFEST, M1_QUALIFICATION, M1_MANIFEST,
     ):
         manifest_files[str(path.relative_to(ROOT))] = {
             "sha256": file_sha256(path),
@@ -348,8 +367,8 @@ def main() -> None:
         "provider_calls": 0,
         "gpu_runs": 0,
         "authority": {
-            "m1_mock_qualification": True,
-            "capability_calibration": False,
+            "m1_mock_qualification": not readiness["m1_runner_qualification_pass"],
+            "capability_calibration": readiness["m1_runner_qualification_pass"],
             "f0": False,
             "toolsandbox": False,
             "appworld_ul": False,

@@ -1,0 +1,86 @@
+{
+  "appworld_non_scientific_qualification": {
+    "command": "appworld verify tasks",
+    "custom_task_direct_function_adapter": "PASS",
+    "function_tool_count": 473,
+    "passed_task_count": 1,
+    "read_only_tool_executed": "api_docs__show_app_descriptions",
+    "returncode": 0,
+    "verified_task_count": 1
+  },
+  "authority_after_pass": {
+    "appworld_ul": false,
+    "f0": false,
+    "method": false,
+    "p1": false,
+    "paper_claim": false,
+    "real_provider_capability_calibration": true,
+    "second_model": false,
+    "toolsandbox": false
+  },
+  "checks": {
+    "branch_ordering_frozen": "PASS",
+    "crash_no_automatic_replay": "PASS",
+    "exact_unit_enumeration": "PASS",
+    "malformed_function_call_retained_failure": "PASS",
+    "no_duplicate_unit": "PASS",
+    "no_update_contains_no_repair": "PASS",
+    "partial_aggregate_firewall": "PASS",
+    "provider_model_identity_persisted": "PASS",
+    "reset_snapshot_before_replay": "PASS",
+    "scientific_artifacts_content_addressed": "PASS",
+    "secrets_absent_from_artifacts": "PASS",
+    "source_probe_namespace_separation": "PASS",
+    "target_non_target_evaluator_binding": "PASS",
+    "update_injects_exact_frozen_bytes": "PASS",
+    "zero_retries": "PASS"
+  },
+  "content_sha256": "96f22857224609c1ce54f9a6d89a3406de4836ad1c8882aca66d98d1ae372945",
+  "mock_provider_calls_only": true,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "qualification_id": "AGENT-CONSTRAINT-EXTERNALITY-M1-RUNNER-QUALIFICATION-V1",
+  "real_scientific_provider_calls": 0,
+  "runner_contract": {
+    "application_level_retry": false,
+    "dispatch_before_provider_request": true,
+    "partial_aggregate_outcomes_exposed": false,
+    "provider_max_retries": 0,
+    "replacement_on_failure": false,
+    "unknown_after_dispatch_no_auto_replay": true
+  },
+  "runner_files": {
+    "research_pipeline/agent_constraint_externality_appworld_runtime.py": {
+      "bytes": 5786,
+      "sha256": "928075a5713e5ba6d06dc0256998105f744d093e9b2292255e360241ae3e953e"
+    },
+    "research_pipeline/agent_constraint_externality_capability_execute.py": {
+      "bytes": 6874,
+      "sha256": "af8324621564e0d2ef3fef5bf1871f57b20b4f01b812403473e137833f8c0e93"
+    },
+    "research_pipeline/agent_constraint_externality_f0_adjudicate.py": {
+      "bytes": 9431,
+      "sha256": "b72af01df0048be70769ab70e4dc6a3d0c2f73a6b1b51aea5c434ec8e6b9fb83"
+    },
+    "research_pipeline/agent_constraint_externality_f0_execute.py": {
+      "bytes": 17556,
+      "sha256": "e7c3fa1d1ca7a514fa1995d1abd2f5c736340b21e7128660c687af988e35a0ca"
+    },
+    "research_pipeline/agent_constraint_externality_runner_core.py": {
+      "bytes": 16992,
+      "sha256": "8fddfaaec17002904bb48df701c12c01651dddea44f380076628af036299a890"
+    },
+    "research_pipeline/test_agent_constraint_externality_m1_runner.py": {
+      "bytes": 13194,
+      "sha256": "dce6beddae0c7b4b71a9ad21101e39827e9b240bb12ecd1eaf8f2b9adae2393d"
+    }
+  },
+  "schema_version": "ace-m1-runner-qualification-v1",
+  "scientific_outcomes": 0,
+  "status": "M1_RUNNER_QUALIFICATION_PASS",
+  "unit_qualification": {
+    "errors": 0,
+    "failures": 0,
+    "successful": true,
+    "tests_run": 17
+  }
+}

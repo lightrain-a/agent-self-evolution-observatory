@@ -125,18 +125,20 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertNotIn("Bearer ", serialized)
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertEqual(
-            readiness["status"], "M1_RUNNER_QUALIFICATION_REQUIRED"
+            readiness["status"], "QWEN_PROVIDER_CONFIGURATION_REQUIRED"
         )
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
-        self.assertFalse(readiness["m1_runner_qualification_pass"])
+        self.assertTrue(readiness["m1_runner_qualification_pass"])
+        self.assertFalse(readiness["provider_credential_present"])
         self.assertEqual(
-            readiness["next_authorized_action"], "RUN_M1_MOCK_QUALIFICATION"
+            readiness["next_authorized_action"],
+            "CONFIGURE_QWEN_PROVIDER_CREDENTIAL",
         )
 
     def test_manifest_hashes_are_self_consistent(self) -> None:
         manifest = self.data["manifest"]
-        self.assertTrue(manifest["authority"]["m1_mock_qualification"])
-        self.assertFalse(manifest["authority"]["capability_calibration"])
+        self.assertFalse(manifest["authority"]["m1_mock_qualification"])
+        self.assertTrue(manifest["authority"]["capability_calibration"])
         self.assertFalse(manifest["authority"]["f0"])
         self.assertFalse(manifest["authority"]["p1"])
         for relative, metadata in manifest["files"].items():

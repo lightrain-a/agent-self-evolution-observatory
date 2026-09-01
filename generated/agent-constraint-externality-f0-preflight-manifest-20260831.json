@@ -1,9 +1,9 @@
 {
   "authority": {
     "appworld_ul": false,
-    "capability_calibration": false,
+    "capability_calibration": true,
     "f0": false,
-    "m1_mock_qualification": true,
+    "m1_mock_qualification": false,
     "method": false,
     "p1": false,
     "paper_claim": false,
@@ -27,8 +27,16 @@
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 1203,
-      "sha256": "7cb95f74f1c86d58ede6d8e9c61140d7b56bc23f02bee2fb24b8aa4da26d6c73"
+      "bytes": 1222,
+      "sha256": "a72543a6bb4f0ece262f7c231ad0d5cab017d07301fe85512460cb54f9caffc1"
+    },
+    "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
+      "bytes": 3192,
+      "sha256": "696bc5c3c0a4ea899daf558884d47789300b5cf0792cd003d47df14a6444e1f4"
+    },
+    "generated/agent-constraint-externality-m1-runner-qualification-v1-manifest-20260901.json": {
+      "bytes": 531,
+      "sha256": "7dac60ded9ca0eafa9e752b14941c7bfca57f91dfad372eee14685c08961d519"
     },
     "generated/agent-constraint-externality-matched-family-manifest-20260831.json": {
       "bytes": 28346,
@@ -49,5 +57,5 @@
   "provider_calls": 0,
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "M1_RUNNER_QUALIFICATION_REQUIRED"
+  "status": "QWEN_PROVIDER_CONFIGURATION_REQUIRED"
 }
