@@ -1,0 +1,21 @@
+{
+  "addendum_id": "AGENT-CONSTRAINT-EXTERNALITY-QWEN37PLUS-CAPABILITY-ADDENDUM-A1",
+  "catalog_provider_requests": 1,
+  "content_sha256": "7d1c2e6f959a07f0b414d83dbae031eab276314ba68fdaabe8488754bbfc9902",
+  "f0_authorized": false,
+  "files": {
+    "/data/wyt/agent-self-evolution-observatory/worktrees/agent-constraint-externality-20260831/generated/agent-constraint-externality-qwen37plus-capability-addendum-a1-20260901.json": {
+      "bytes": 2704,
+      "sha256": "054416d5aca3ec34d87d7306b21ba1ccb9dd8bb376f482f218ef8dd8e602e609"
+    },
+    "/data/wyt/agent-self-evolution-observatory/worktrees/agent-constraint-externality-20260831/generated/agent-constraint-externality-qwen37plus-provider-snapshot-a1-20260901.json": {
+      "bytes": 723,
+      "sha256": "18e48b51c45543f069091557276c34240ac18b4510c3e05f730cac054210a5d5"
+    }
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-qwen37plus-capability-a1-manifest-v1",
+  "scientific_agent_episodes": 0,
+  "scientific_agent_model_requests": 0,
+  "status": "QWEN37PLUS_CAPABILITY_A1_PREREG_FROZEN"
+}

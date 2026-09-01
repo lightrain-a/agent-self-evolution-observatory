@@ -1,0 +1,78 @@
+{
+  "addendum_id": "AGENT-CONSTRAINT-EXTERNALITY-QWEN37PLUS-CAPABILITY-ADDENDUM-A1",
+  "authority": {
+    "appworld_ul": false,
+    "capability_calibration_a1": true,
+    "catalog_query": true,
+    "f0": false,
+    "method": false,
+    "p1": false,
+    "paper_claim": false,
+    "second_additional_model": false,
+    "toolsandbox": false
+  },
+  "candidate": {
+    "alias_allowed_only_if_exact_unavailable": true,
+    "allowed_alias": "qwen3.7-plus",
+    "candidate_count": 1,
+    "exact_snapshot_preferred": true,
+    "fallback_candidates": [],
+    "requested_model": "qwen3.7-plus-2026-05-26"
+  },
+  "catalog_evidence": {
+    "allowed_alias_available": true,
+    "catalog_model_count": 200,
+    "catalog_sha256": "f62b00473aeb1a19b0a17a7fc20160595003f2607b641e14339fc5e86fa39353",
+    "exact_snapshot_available": false
+  },
+  "change_boundary": {
+    "f0_executed": false,
+    "f0_scientific_outcomes_observed": 0,
+    "not_claimed_as_original_zero-outcome_prereg": true,
+    "post_floor_sequential_escalation": true,
+    "prior_model": "qwen3.7-flash",
+    "prior_valid_capability_measurements": 8,
+    "prior_verdict": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP"
+  },
+  "content_sha256": "b59e2c2f87f78a4a535c9f03e5ade9a9c84497435db9992fcbbd0a5dcaff9f60",
+  "forbidden_rationale": "EXPECTED_TO_PRODUCE_THE_PAPER_HYPOTHESIS",
+  "frozen_gate": {
+    "application_retry": false,
+    "malformed_tool_calls_required": 0,
+    "non_target_preservation_rate_min": 0.85,
+    "provider_max_retries": 0,
+    "replacement": false,
+    "target_success_rate_max": 0.875,
+    "target_success_rate_min": 0.5,
+    "temperature": 0,
+    "tool_call_cap": 12,
+    "tool_loop_completion_rate_min": 0.75
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "panel_reuse": {
+    "episodes": 8,
+    "family_ids": [
+      "ACE-FG-05",
+      "ACE-FG-06",
+      "ACE-TNF-05",
+      "ACE-TNF-06"
+    ],
+    "harness_change": false,
+    "item_dropping": false,
+    "item_replacement": false,
+    "reason": "Fixed capability panel is reused prospectively for a stronger model; prior item outcomes are not used to select, drop, replace, or alter tasks or thresholds.",
+    "repeats_per_family": 2,
+    "same_panel_as_flash": true,
+    "temperature_change": false,
+    "threshold_change": false,
+    "tool_cap_change": false
+  },
+  "schema_version": "ace-qwen37plus-capability-addendum-a1-v1",
+  "selection_rationale": [
+    "STRONGER_SAME_GENERATION_CAPABILITY_TIER_AFTER_CLEAR_FLASH_FLOOR",
+    "FUNCTION_CALLING_AND_AGENT_TOOL_USE_SUPPORT",
+    "PREFER_REPRODUCIBLE_SNAPSHOT_WHEN_PROVIDER_EXPOSES_IT",
+    "AVOID_JUMPING_DIRECTLY_TO_MAX_TIER_BEFORE_CAPABILITY_GATE"
+  ],
+  "status": "QWEN37PLUS_CAPABILITY_A1_AUTHORIZED"
+}
