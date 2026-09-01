@@ -161,6 +161,29 @@ def missingness_gate(*, planned_a: int, valid_a: int,
     }
 
 
+def paired_task_sign_flip(differences: Mapping[str, float], *, replicates: int = 100_000,
+                          seed: int) -> dict[str, object]:
+    ordered = [float(value) for _, value in sorted(differences.items())]
+    if not ordered:
+        raise ValueError("no paired task differences")
+    observed = mean(ordered)
+    rng = random.Random(seed)
+    exceed = 0
+    for _ in range(replicates):
+        permuted = mean(value if rng.getrandbits(1) else -value for value in ordered)
+        if abs(permuted) >= abs(observed):
+            exceed += 1
+    p_value = (exceed + 1) / (replicates + 1)
+    return {
+        "observed_mean_task_difference": observed,
+        "per_task_differences": dict(sorted(differences.items())),
+        "task_count": len(ordered), "replicates": replicates,
+        "two_sided_monte_carlo_p_value": p_value,
+        "monte_carlo_standard_error": math.sqrt(p_value * (1.0 - p_value) / (replicates + 1)),
+        "rng_seed": seed, "resampling_unit": "task", "paired": True,
+    }
+
+
 def high_relevance_set(rows: Iterable[Mapping[str, object]], count: int = 12) -> list[str]:
     ordered = sorted(rows, key=lambda row: (-float(row["top1_relevance"]),
                                             str(row["task_sha256"])))

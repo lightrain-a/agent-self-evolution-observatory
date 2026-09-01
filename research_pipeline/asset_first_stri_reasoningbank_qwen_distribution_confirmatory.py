@@ -118,7 +118,11 @@ def manifest_payload() -> dict[str, Any]:
             "R3": ["modified-file set", "exact patch hash/equality", "EditTargetSet",
                    "modified-file count", "hunk count", "model calls", "shell actions",
                    "tests run", "trajectory length", "submission state"],
-            "R4": "per-task repeated-trial resolution proportions and task-blocked A-D/A-N differences",
+            "R4": (
+                "per-task resolution proportions; a paired task enters a contrast with >=4 "
+                "behavior-valid and evaluator-valid trials in both arms; 100000 two-sided task sign-flip "
+                "permutations of arm-proportion differences plus task bootstrap CI"
+            ),
             "relevance_sensitivity": structural["high_relevance_sensitivity_task_ids"],
         },
         "missingness": {
