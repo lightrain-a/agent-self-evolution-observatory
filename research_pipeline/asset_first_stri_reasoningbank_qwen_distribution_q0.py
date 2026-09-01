@@ -368,10 +368,9 @@ def run(output: Path = OUTPUT) -> dict[str, Any]:
                     "required": ["token"],
                     "additionalProperties": False,
                 },
-                "strict": True,
             }
         ],
-        tool_choice="required",
+        tool_choice={"type": "function", "function": {"name": "report_token"}},
         store=True,
     )
     probes.append(row)

@@ -15,8 +15,8 @@ from research_pipeline.asset_first_stri_reasoningbank_p1_core import (
 )
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_runtime import (
     EXPERIMENT_ID, ROOTFUL_DOCKER_HOST, SPLIT,
-    build_runtime_plan, common_contract_fields, execute_runtime_plan,
-    load_completed, load_split_d0,
+    activate_rootful_runtime, build_runtime_plan, common_contract_fields,
+    execute_runtime_plan, load_completed, load_split_d0,
 )
 
 STRUCTURAL = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-structural-result-20260901.json"
@@ -146,9 +146,8 @@ def require_qualified() -> dict[str, Any]:
         raise RuntimeError("Qwen evaluation runtime split binding drift")
     if result.get("structural_sha256") != sha256_file(STRUCTURAL):
         raise RuntimeError("Qwen evaluation runtime structural binding drift")
-    # Re-activates the preregistered rootful daemon binding for subsequent behavior.
-    from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_d0_rootful_runtime import activate
-    activate()
+    # Re-activates the preregistered population-scoped rootful binding.
+    activate_rootful_runtime()
     return result
 
 
