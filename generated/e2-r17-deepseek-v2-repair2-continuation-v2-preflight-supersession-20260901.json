@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-deepseek-v2-repair2-continuation-v2-preflight-supersession",
+  "created_at_utc": "2026-09-01T04:45:00+00:00",
+  "status": "SUPERSEDE_PROSPECTIVE_PREFLIGHT_V1_WITH_V2",
+  "reason": "global lineage lease acquisition moved to immediately after contract/auth validation, before runtime/deep lineage validation/run root/provider I/O",
+  "scientific_design_changed": false,
+  "remaining_set_changed": false,
+  "provider_calls_v1": 0,
+  "provider_calls_v2": 0,
+  "execution_started": false,
+  "old_preflight_path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-preflight-20260901.json",
+  "new_preflight_path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-preflight-v2-20260901.json",
+  "partial_effect_read": false,
+  "analyzer_run": false
+}

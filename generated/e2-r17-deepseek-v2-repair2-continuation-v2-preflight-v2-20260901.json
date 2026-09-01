@@ -1,0 +1,168 @@
+{
+  "actor_combinations": 18,
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-deepseek-v2-repair2-continuation-v2-preflight",
+  "authorization_sha256": "d4e3c10d5f6d90b27643bb5722e0bbf64d3e1aa516570293be94c8f071293917",
+  "contract_sha256": "d59a6aae277d956491b1be8acb5fb9bfa52fe164459b6864b6886e45667c2ce8",
+  "created_at_utc": "2026-09-01T08:41:26+00:00",
+  "global_lineage_lease_absent_before_start": true,
+  "inherited_pairs": 29,
+  "new_heldout_units": 684,
+  "new_learned_states": 38,
+  "partial_effect_read": false,
+  "partition_intersection": 0,
+  "partition_union": 48,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "remaining_pairs": 19,
+  "run_root_absent": true,
+  "schema_version": "1.0",
+  "scientific_scores_read": false,
+  "status": "PASS_CONTINUATION_V2_COLLISION_PROOF_PREFLIGHT_18_OF_18",
+  "units": [
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-agj-p2/pre-provider-stop.json",
+      "receipt_sha256": "e7881faffd6a0978f77f1772e2be2fef7c51eca7bd2f8a2bf1180558081a4ade",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-agj-p2"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-agj-p3/pre-provider-stop.json",
+      "receipt_sha256": "56fe341c7ec09224b41e3aa87ea0a26a89076eecb233d02de53d10d3e78b330d",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-agj-p3"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-agj-p8/pre-provider-stop.json",
+      "receipt_sha256": "a896d0afec757f9b00b87a8b79d572d840cd8f7a9fe11705b38b5615b9d128a4",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-agj-p8"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-fmv-p1/pre-provider-stop.json",
+      "receipt_sha256": "1985b3b3038494d78bf3a32d1d11d4156cf94e536d46af44d9a83a63409f86a1",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-fmv-p1"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-fmv-p2/pre-provider-stop.json",
+      "receipt_sha256": "f112f23cf9d27f12733ec496aed7ad4448964160f4a60651f5f0c97f496ee2ec",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-fmv-p2"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-fmv-p8/pre-provider-stop.json",
+      "receipt_sha256": "4248042fdcbc41d32ae4a40b85cc70d9c4fbad56cb2995d59e39cccf5d7143ec",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-fmv-p8"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-ioc-p1/pre-provider-stop.json",
+      "receipt_sha256": "9a5ab8e8ed5b8a2316b230cf9756daee58e5a22163084616aaef05c21a1c2749",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-ioc-p1"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-ioc-p4/pre-provider-stop.json",
+      "receipt_sha256": "61d8f2bc6c169bd715d5868e44f0607ccadf98e8fde1b6686fe96c0bd6a3f5b1",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-ioc-p4"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-ioc-p6/pre-provider-stop.json",
+      "receipt_sha256": "61d9da4ca4f868dbc8bc7cdf22a1403f4e451d53ed6b2b303445aeb833e4fc7e",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-ioc-p6"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-msp-p0/pre-provider-stop.json",
+      "receipt_sha256": "a846ced2402dc1d20907bec0c94b5dbe28bbb9fc9a70d7818d15f1192c1b3f21",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-msp-p0"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-msp-p7/pre-provider-stop.json",
+      "receipt_sha256": "fb2b436fca238d561e4d55d5e15214ed6ae9151af21728b08bf547de94fd095a",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-msp-p7"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-msp-p8/pre-provider-stop.json",
+      "receipt_sha256": "bf81ed9b9e144fb2b7a041027ae9a9ec69e0aff04cf6b387b97d3997466c9ca0",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-msp-p8"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-ska-p4/pre-provider-stop.json",
+      "receipt_sha256": "4ad3d10844190e66c30a7f6ea57afa262f783f9c52e66b6f3655b9cb06544d2a",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-ska-p4"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-ska-p5/pre-provider-stop.json",
+      "receipt_sha256": "c00abe4bf51e45746e50e7ab1012fa32165cd95fe59c79fefd58d3a1742fd256",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-ska-p5"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-ska-p8/pre-provider-stop.json",
+      "receipt_sha256": "334bc622508873cb6ecc2a51e8abcbf85bf31bf0e366aea3b1139d5b45627c87",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-ska-p8"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-tsr-p0/pre-provider-stop.json",
+      "receipt_sha256": "98d25a54ccb3fb736cbab3d287027c8f2d41086fac26a0469497e63c16e58576",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-tsr-p0"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-tsr-p6/pre-provider-stop.json",
+      "receipt_sha256": "117b093847e0a38797fa1e0c5e037474aa24e61f7a1af6dc2a06ac128359a0bb",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-tsr-p6"
+    },
+    {
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_path": "/data/wyt/e2-r17-search-projection/preflights/deepseek-v2-repair2-continuation-v2-v2-20260901/r17-b4-tsr-p8/pre-provider-stop.json",
+      "receipt_sha256": "248da50c4725a1e3357f5ae0a03f197f90b49ea3013bf4ef930ad09402c86a56",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+      "task_id": "r17-b4-tsr-p8"
+    }
+  ]
+}

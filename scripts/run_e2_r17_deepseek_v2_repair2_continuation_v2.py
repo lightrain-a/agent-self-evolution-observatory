@@ -302,6 +302,8 @@ def ensure_eval(*, contract: dict[str, Any], auth_path: Path, identity_path: Pat
 async def main_async(args: argparse.Namespace) -> dict[str, Any]:
     contract, auth = validate_contract_auth(args.contract, args.authorization)
     contract_sha = sha_file(args.contract); auth_sha = sha_file(args.authorization)
+    lease_path = Path(contract["global_lineage_lease"]["path"])
+    acquire_global_lease(lease_path, contract, contract_sha, auth_sha)
     updater_python, _ = validate_updater_runtime({"runtime":contract["updater_runtime"],"mindmemos":contract["mindmemos"]})
     require(Path(sys.executable) == updater_python, "MRW causal runner must use dedicated updater runtime")
     actor_python, actor_env = validate_actor_runtime({"runtime":contract["actor_runtime"]}); actor_env["LITELLM_LOCAL_MODEL_COST_MAP"] = "True"
@@ -340,8 +342,7 @@ async def main_async(args: argparse.Namespace) -> dict[str, Any]:
     expected_order = [f"{stream}/rep{rep}" for stream in contract["streams"] for rep in REPLICATES]
     require([row["unit_id"] for row in inherited_rows] == expected_order[:29], "V2 inheritance not frozen prefix")
     require(remaining_units == expected_order[29:] and len(remaining_units) == 19, "V2 remaining set not frozen suffix")
-    lease_path = Path(contract["global_lineage_lease"]["path"])
-    acquire_global_lease(lease_path, contract, contract_sha, auth_sha)
+    assert_global_lease(lease_path, contract, contract_sha, auth_sha)
     run_root=Path(contract["run_root"])
     require(not run_root.exists(), "Continuation V2 run root must be fresh")
     lock_path=run_root/".exclusive.lock"; lock_fd=acquire_lock(lock_path,contract_sha,auth_sha); success=False

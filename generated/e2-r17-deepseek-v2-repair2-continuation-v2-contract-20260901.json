@@ -52,7 +52,7 @@
     },
     "runner_v2": {
       "path": "scripts/run_e2_r17_deepseek_v2_repair2_continuation_v2.py",
-      "sha256": "75caec90c7623a8aed59f62c397322bb0aed5be8c6cc62aad3a7ef09c3e13c0d"
+      "sha256": "d2556676c455b32b75444786692760b6e72e68b7e99dc36f1f0a3366c2a3fd99"
     },
     "updater_adapter": {
       "path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
@@ -103,7 +103,7 @@
       "paired_units": 48
     }
   },
-  "created_at_utc": "2026-09-01T08:37:53+00:00",
+  "created_at_utc": "2026-09-01T08:40:18+00:00",
   "date": "2026-09-01",
   "e1_a_pool_root": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828",
   "e1_a_support": {
@@ -203,7 +203,7 @@
   },
   "lineage_inheritance_manifest": {
     "path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-inheritance-29-20260901.json",
-    "sha256": "31c277a59e337623498c5db9efeccd4e5f9e54f2aa6244658d25d0edbb6144c7"
+    "sha256": "9c55423ae7683a910e1c500cc72ae7e82f1f480a3ea6b1f04d341f7b045867ef"
   },
   "mindmemos": {
     "bound_files": {
@@ -258,7 +258,7 @@
   "purpose": "Finish exactly the 19-pair unexecuted suffix of the canonical original Repair2 design after PIA-1 and pair29 measurement recovery.",
   "remaining_set_manifest": {
     "path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-remaining-19-20260901.json",
-    "sha256": "e2ce8efc99b360d2b28a11532c59d2c2190270ea99b588e38cc4d32532522251"
+    "sha256": "50eede0b3d8459b6f598dad6c9cd9d2efcdee1647a2a491ae683251698203878"
   },
   "remaining_units": [
     "e1-msp-01/rep1",
