@@ -90,15 +90,34 @@ def token_for(repo: str, session: requests.Session) -> str:
     payload = response.json()
     return payload.get("token") or payload["access_token"]
 
-def get_raw(repo: str, reference: str, accept: str, session: requests.Session) -> tuple[bytes, dict[str, str]]:
-    token = token_for(repo, session)
-    response = session.get(
-        f"{MIRROR}/v2/{repo}/manifests/{reference}",
-        headers={"Authorization": f"Bearer {token}", "Accept": accept},
-        timeout=60,
-    )
-    response.raise_for_status()
-    return response.content, {k.lower(): v for k, v in response.headers.items()}
+def append_jsonl(path: Path, value: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("ab") as stream:
+        stream.write(canonical(value))
+        stream.flush()
+        os.fsync(stream.fileno())
+
+def get_raw(repo: str, reference: str, accept: str, session: requests.Session, retry_log: Path) -> tuple[bytes, dict[str, str]]:
+    for attempt in range(1, 7):
+        try:
+            token = token_for(repo, session)
+            response = session.get(
+                f"{MIRROR}/v2/{repo}/manifests/{reference}",
+                headers={"Authorization": f"Bearer {token}", "Accept": accept},
+                timeout=60,
+            )
+            response.raise_for_status()
+            return response.content, {k.lower(): v for k, v in response.headers.items()}
+        except Exception as error:
+            append_jsonl(retry_log, {
+                "timestamp": now(), "repository": repo, "reference": reference,
+                "attempt": attempt, "error_type": type(error).__name__,
+                "error": str(error)[:500], "scientific_retry": False,
+            })
+            if attempt == 6:
+                raise
+            time.sleep(min(2 ** attempt, 20))
+    raise AssertionError("unreachable")
 
 def unique_amd64(index: dict[str, Any]) -> dict[str, Any]:
     rows = [
@@ -114,18 +133,29 @@ def unique_amd64(index: dict[str, Any]) -> dict[str, Any]:
 def resolve_once(root: Path, pass_no: int, instance: str, expected_index: str, expected_amd64: str) -> dict[str, Any]:
     repo = image_repo(instance)
     session = requests.Session()
-    raw_index, index_headers = get_raw(repo, "latest", ACCEPT_INDEX, session)
+    retry_log = root / "transport-retries.jsonl"
+    raw_index, index_headers = get_raw(repo, "latest", ACCEPT_INDEX, session, retry_log)
     index_path = root / "raw-manifests" / f"pass{pass_no}" / f"{instance}__index.json"
-    index_sha = atomic_bytes(index_path, raw_index)
+    if index_path.exists():
+        if index_path.read_bytes() != raw_index:
+            raise RuntimeError(f"checkpoint/tag mismatch for {instance} pass {pass_no} index")
+        index_sha = sha_file(index_path)
+    else:
+        index_sha = atomic_bytes(index_path, raw_index)
     index_header_digest = index_headers.get("docker-content-digest", "")
     if index_header_digest != f"sha256:{index_sha}":
         raise RuntimeError(f"index header/content digest mismatch for {instance}")
     index = json.loads(raw_index)
     child = unique_amd64(index)
     amd64_digest = child["digest"]
-    raw_child, child_headers = get_raw(repo, amd64_digest, ACCEPT_MANIFEST, session)
+    raw_child, child_headers = get_raw(repo, amd64_digest, ACCEPT_MANIFEST, session, retry_log)
     child_path = root / "raw-manifests" / f"pass{pass_no}" / f"{instance}__amd64.json"
-    child_sha = atomic_bytes(child_path, raw_child)
+    if child_path.exists():
+        if child_path.read_bytes() != raw_child:
+            raise RuntimeError(f"checkpoint/digest mismatch for {instance} pass {pass_no} child")
+        child_sha = sha_file(child_path)
+    else:
+        child_sha = atomic_bytes(child_path, raw_child)
     child_header_digest = child_headers.get("docker-content-digest", "")
     if child_header_digest != f"sha256:{child_sha}" or amd64_digest != f"sha256:{child_sha}":
         raise RuntimeError(f"child header/index/content digest mismatch for {instance}")
