@@ -1,0 +1,70 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "capability_b1": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "backbone_search_state_sha256": "a96d8a4834c8680ce655af49eda8e946fc9bea7afc1168f9cea7b9248436d672",
+  "content_sha256": "08918ad768208e101b1cb70c116918fc2a6cad2eb2980d4ab8d99a18520bb44a",
+  "execution_id": "CODINGPLAN-GLM52-CAPABILITY-B1",
+  "execution_policy": {
+    "durable_dispatch_before_model_request": true,
+    "partial_outcome_redesign": false,
+    "stop_on_first_failure": true,
+    "unknown_after_dispatch_replay": false
+  },
+  "gate": {
+    "malformed_tool_calls_required": 0,
+    "non_target_preservation_min": 0.85,
+    "target_success_max": 0.875,
+    "target_success_min": 0.5,
+    "tool_loop_completion_min": 0.75
+  },
+  "harness": {
+    "ai_session_naming": false,
+    "appworld_mcp_native": true,
+    "appworld_tool_call_cap": 16,
+    "id": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "model_round_cap_per_episode": 20,
+    "replacement_allowed": false,
+    "retry_allowed": false,
+    "subagents": false,
+    "transport_reused_from_frozen_qwen_a0": true
+  },
+  "model": {
+    "context_window": 200000,
+    "id": "GLM-5.2",
+    "max_output_tokens_control": "PROVIDER_MANAGED_UNSET_BY_OFFICIAL_CODINGPLAN_CATALOG",
+    "profile": "AtomGit-GLM-5.2",
+    "retry_max_attempts": 1,
+    "sampling_control": "PROVIDER_MANAGED_NO_REASONING_EFFORT_CONTROL_ADVERTISED"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "panel": {
+    "arm": "LOW",
+    "episodes": 8,
+    "family_ids": [
+      "ACE-FG-05",
+      "ACE-FG-06",
+      "ACE-TNF-05",
+      "ACE-TNF-06"
+    ],
+    "repeats": [
+      1,
+      2
+    ],
+    "reuse_prior_glm52_measurements": false
+  },
+  "q1_predispatch_sha256": "e917e8d6e30a1a104dbcd464ec9dc9e91433fb82c0a2b9aa1936b8d4c5e87c16",
+  "schema_version": "ace-codingplan-glm52-capability-b1-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CODINGPLAN_GLM52_CAPABILITY_B1_AUTHORIZED",
+  "substrate": {
+    "bundle": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle",
+    "bundle_sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5",
+    "v4_qualification_sha256": "1220edddc6cbfa89538031109c19204fb5a2bb9a8ee68e318ca87eacb70d1f4e"
+  }
+}
