@@ -4590,37 +4590,57 @@ function enhanceExperimentCostPriceColumns(root) {
   if (!table || table.dataset.priceColumnsReady === "1") return;
   const zh = language === "zh";
   const msg = (z, e) => zh ? z : e;
+  const GPU_MARKET = { a100Sxm80:10.78, rtx3090Community:1.49, rtx3090Secure:3.39 };
+  const gpuRange = (lo, hi, rate=GPU_MARKET.a100Sxm80) => `¥${Math.round(lo*rate).toLocaleString()}–${Math.round(hi*rate).toLocaleString()}`;
+  const gpuMarketNote = msg("RunPod 2026-09 市场参考；A100 SXM 80G≈¥10.78/GPU·h，RTX 3090≈¥1.49–3.39/GPU·h", "RunPod Sep-2026 market reference; A100 SXM 80G≈¥10.78/GPU·h, RTX 3090≈¥1.49–3.39/GPU·h");
+  const kindOf = model => {
+    if (["HarmBench","Qwen2.5-7B-Instruct","Second local","第二个本地","MemoryVLA","Second VLA","第二 VLA","OptimusVLA","pi0.5","BEDROOM-SG2SC","SGP-12","SGP-14"].some(x => model.includes(x))) return "gpu";
+    if (["Qwen3-Coder-Next","Hosted Qwen API","Qwen3-8B","235b-a22b","397b-a17b","DeepSeek semantic evaluator","Canonical writer","DeepSeek V4 Pro","Kimi K3","Second backbone","第二 backbone","qwen3.7-plus","Additional LLM","额外 LLM"].some(x => model.includes(x))) return "token";
+    return "other";
+  };
+  const tokenEstimate = (paper, model, usedText, planText) => {
+    const has = needle => model.includes(needle);
+    let used="", plan="";
+    if (model === "Hosted Qwen API") plan=msg("预算估算：≈52.8–105.6M input + 0.27–0.55M output（按 V3 每任务上下文形状 × P0 12–24；P0 receipt 后替换）","Budget estimate: ≈52.8–105.6M input + 0.27–0.55M output (V3 per-task context shape × P0 12–24; replace after P0 receipt)");
+    else if (model === "Qwen3-8B") used=msg("用量估算：≈2.4M input + 0.24M output（120 trajectories × 20k/2k 预算假设；非 receipt）","Usage estimate: ≈2.4M input + 0.24M output (120 trajectories × 20k/2k planning assumption; not a receipt)");
+    else if (has("235b-a22b") || (has("397b-a17b") && paper.includes("G1"))) plan=msg("用量估算：≈2.8M input + 0.28M output（140 episodes × 20k/2k）","Usage estimate: ≈2.8M input + 0.28M output (140 episodes × 20k/2k)");
+    else if (has("DeepSeek semantic evaluator")) { used=msg("用量估算：≈0.24M input + 0.012M output（按 120 eval × 2k/0.1k）","Usage estimate: ≈0.24M input + 0.012M output (120 eval × 2k/0.1k)"); plan=used; }
+    else if (has("Canonical writer")) used=msg("用量估算：≈1–3M total Token（依据现有 write/retrieval/forced-rollout 规模做宽区间重建；非 receipt）","Usage estimate: ≈1–3M total tokens (broad reconstruction from current write/retrieval/forced-rollout scale; not a receipt)");
+    else if (model === "Kimi K3") used=msg("用量估算：≈0.1–0.5M total Token（少量 review tranche；非 receipt）","Usage estimate: ≈0.1–0.5M total tokens (small review tranches; not a receipt)");
+    else if (has("Second backbone") || has("第二 backbone")) plan=msg("用量估算：若复刻 E2 primary full lane，≈30.6M input + 2.15M output / model","Usage estimate: if mirroring E2 primary full lane, ≈30.6M input + 2.15M output per model");
+    else if (has("qwen3.7-plus")) { used=msg("用量估算：≈0.5–2M total Token（R4 partial capability；非 receipt）","Usage estimate: ≈0.5–2M total tokens (R4 partial capability; not a receipt)"); plan=msg("用量估算：≈8–16M input + 0.5–1.0M output（160 episodes × 50–100k/3–6k）","Usage estimate: ≈8–16M input + 0.5–1.0M output (160 episodes × 50–100k/3–6k)"); }
+    else if (has("Additional LLM") || has("额外 LLM")) plan=msg("用量估算：每新增 1 个 model family ≈8–16M input + 0.5–1.0M output（按 primary F0 envelope）","Usage estimate: per added model family ≈8–16M input + 0.5–1.0M output (primary F0 envelope)");
+    return {used,plan};
+  };
   const price = (paper, model) => {
     const has = needle => model.includes(needle);
-    if (has("Qwen3-Coder-Next")) return {used:`<b>≈¥75.6</b><small>${msg("按本页 qwen3-coder-next 实测综合 ¥1.425/M 折算；非逐-run发票","Using the observed ¥1.425/M composite rate; not a per-run invoice")}</small>`, plan:`<b>¥0</b><small>${msg("V3 已停止","V3 stopped")}</small>`};
-    if (model === "Hosted Qwen API") return {used:`<b>¥0</b><small>${msg("V4 scientific usage 尚未开始","V4 scientific usage has not started")}</small>`, plan:`<b>TBD</b><small>${msg("exact model/provider 冻结后按 P0 receipt 计价","Price after exact model/provider freeze and P0 receipt")}</small>`};
+    if (has("Qwen3-Coder-Next")) return {used:`<b>≈¥75.6</b><small>${msg("按本页 qwen3-coder-next 实测综合 ¥1.425/M 折算；非逐-run发票","Using observed ¥1.425/M composite rate; not a per-run invoice")}</small>`, plan:`<b>¥0</b><small>${msg("V3 已停止","V3 stopped")}</small>`};
+    if (model === "Hosted Qwen API") return {used:`<b>¥0</b>`, plan:`<b>≈¥10.8–21.7*</b><small>${msg("*仅用 qwen3.7-flash 实测综合 ¥0.204/M 做预算参考；exact model 冻结后重算","*Budget reference only using qwen3.7-flash observed ¥0.204/M; recalc after exact-model freeze")}</small>`};
     if (has("STRI-Cert")) return {used:`<b>${msg("CPU账未集中","CPU ledger not centralized")}</b>`, plan:`<b>≈¥0 model API</b>`};
-    if (model === "Qwen3-8B") return {used:`<b>${msg("历史成本未集中","Historical cost not centralized")}</b>`, plan:`<b>¥0</b><small>${msg("不重跑","No rerun")}</small>`};
-    if (has("235b-a22b")) return {used:`<b>¥0</b>`, plan:`<b>TBD</b><small>${msg("Token 未知；按量参考 input ¥2.009/M · output ¥20.076/M","Tokens unknown; pay-go reference input ¥2.009/M · output ¥20.076/M")}</small>`};
+    if (model === "Qwen3-8B") return {used:`<b>${msg("GPU·h 未集中","GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>¥0</b><small>${msg("不重跑","No rerun")}</small>`};
+    if (has("235b-a22b")) return {used:`<b>¥0</b>`, plan:`<b>≈¥11.25</b><small>${msg("2.8M input + 0.28M output；input ¥2.009/M · output ¥20.076/M","2.8M input + 0.28M output; input ¥2.009/M · output ¥20.076/M")}</small>`};
     if (has("397b-a17b")) {
-      if (paper.includes("C1")) return {used:`<b>¥0</b>`, plan:`<b>≈¥1.9–3.9</b><small>${msg("预计量；hard cap≈¥9.63。按 ≤128K input ¥1.204/M · output ¥7.224/M","Expected volume; hard cap≈¥9.63. At ≤128K input ¥1.204/M · output ¥7.224/M")}</small>`};
-      return {used:`<b>¥0</b>`, plan:`<b>TBD</b><small>${msg("Token 未知；参考 input ¥1.204/M · output ¥7.224/M","Tokens unknown; reference input ¥1.204/M · output ¥7.224/M")}</small>`};
+      if (paper.includes("C1")) return {used:`<b>¥0</b>`, plan:`<b>≈¥1.9–3.9</b><small>${msg("预计量；hard cap≈¥9.63。≤128K input ¥1.204/M · output ¥7.224/M","Expected volume; hard cap≈¥9.63. ≤128K input ¥1.204/M · output ¥7.224/M")}</small>`};
+      return {used:`<b>¥0</b>`, plan:`<b>≈¥5.39</b><small>${msg("按 2.8M input + 0.28M output 估算","From estimated 2.8M input + 0.28M output")}</small>`};
     }
-    if (has("HarmBench")) return {used:`<b>${msg("历史 GPU 成本未集中","Historical GPU cost not centralized")}</b>`, plan:`<b>≈¥100–200</b><small>${msg("A100 机会成本 ¥10/GPU·h × 10–20h","A100 shadow rate ¥10/GPU·h × 10–20h")}</small>`};
-    if (has("DeepSeek semantic evaluator")) return {used:`<b>${msg("历史 API 价格未集中","Historical API cost not centralized")}</b>`, plan:`<b>TBD</b><small>${msg("120 evaluator units 的 Token receipt 后计价","Price after token receipts for 120 evaluator units")}</small>`};
-    if (has("Canonical writer")) return {used:`<b>${msg("历史 API 价格未集中","Historical API cost not centralized")}</b>`, plan:`<b>¥0</b>`};
-    if (has("DeepSeek V4 Pro")) return {used:`<b>≈¥19.1 pay-go</b><small>${msg("典名 off-peak 参考；Ark 吃满等效≈¥4.18，最终以 provider receipt 为准","Dianming off-peak reference; Ark full-use equivalent≈¥4.18; final = provider receipt")}</small>`, plan:`<b>≈¥166.5 pay-go</b><small>${msg("典名 off-peak 参考；Ark 吃满等效≈¥36.0，仅 exact contract 匹配时适用","Dianming off-peak reference; Ark full-use equivalent≈¥36.0 only if exact contract matches")}</small>`};
-    if (model === "Kimi K3") return {used:`<b>${msg("少量 review 成本未集中","Small review cost not centralized")}</b>`, plan:`<b>¥0</b><small>${msg("无大规模 scientific lane","No large scientific lane")}</small>`};
-    if (has("Second backbone") || has("第二 backbone")) return {used:`<b>¥0</b>`, plan:`<b>TBD</b>`};
-    if (has("Qwen2.5-7B-Instruct")) return {used:`<b>${msg("历史 GPU 成本未集中","Historical GPU cost not centralized")}</b>`, plan:`<b>≈¥800–1,500</b><small>${msg("A100 机会成本 ¥10/GPU·h × 80–150h","A100 shadow rate ¥10/GPU·h × 80–150h")}</small>`};
-    if (has("Second local") || has("第二个本地")) return {used:`<b>¥0</b>`, plan:`<b>TBD</b><small>${msg("模型与 GPU·h 均待冻结","Model and GPU-hours pending freeze")}</small>`};
+    if (has("HarmBench")) return {used:`<b>${msg("历史 GPU·h 未集中","Historical GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(10,20)}</b><small>${msg("10–20 A100 SXM 80G·h × 市场 ¥10.78/h","10–20 A100 SXM 80G·h × market ¥10.78/h")}</small>`};
+    if (has("DeepSeek semantic evaluator")) return {used:`<b>${msg("价格估算待 exact evaluator tariff","Cost estimate needs exact evaluator tariff")}</b>`, plan:`<b>≈¥1.24*</b><small>${msg("*若按 DeepSeek V4 Pro off-peak 4.5/13.5 元/M，仅作预算参考","*If priced as DeepSeek V4 Pro off-peak 4.5/13.5 RMB/M; budget reference only")}</small>`};
+    if (has("Canonical writer")) return {used:`<b>${msg("模型单价未集中","Model tariff not centralized")}</b>`, plan:`<b>¥0</b>`};
+    if (has("DeepSeek V4 Pro")) return {used:`<b>≈¥19.1 pay-go</b><small>${msg("典名 off-peak 参考；最终以 provider receipt 为准","Dianming off-peak reference; final = provider receipt")}</small>`, plan:`<b>≈¥166.5 pay-go</b><small>${msg("30.6M input + 2.15M output，off-peak 4.5/13.5 元/M","30.6M input + 2.15M output at off-peak 4.5/13.5 RMB/M")}</small>`};
+    if (model === "Kimi K3") return {used:`<b>≈¥0.2–1.0*</b><small>${msg("*按 Ark 吃满等效 ¥2/M × 估算 token，仅作参考","*Ark full-use equivalent ¥2/M × estimated tokens; reference only")}</small>`, plan:`<b>¥0</b>`};
+    if (has("Second backbone") || has("第二 backbone")) return {used:`<b>¥0</b>`, plan:`<b>${msg("模型未冻结 · 价格 TBD","Model not frozen · price TBD")}</b>`};
+    if (has("Qwen2.5-7B-Instruct")) return {used:`<b>${msg("历史 GPU·h 未集中","Historical GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(80,150)}</b><small>${msg("80–150 A100 SXM 80G·h × 市场 ¥10.78/h","80–150 A100 SXM 80G·h × market ¥10.78/h")}</small>`};
+    if (has("Second local") || has("第二个本地")) return {used:`<b>¥0</b>`, plan:`<b>${msg("GPU·h 待定","GPU-hours TBD")}</b><small>${gpuMarketNote}</small>`};
     if (model === "MemoryVLA") {
       const isB = paper.includes("Paper B");
-      const hours = isB ? "150–300" : "100–200";
-      const a100 = isB ? "1,500–3,000" : "1,000–2,000";
-      const r3090 = isB ? "300–600" : "200–400";
-      return {used:`<b>${msg("历史 GPU 成本未集中","Historical GPU cost not centralized")}</b>`, plan:`<b>${msg(`若 A100：≈¥${a100}`,`If A100: ≈¥${a100}`)}</b><small>${msg(`若 3090：≈¥${r3090}；对应 ${hours} GPU·h`,`If 3090: ≈¥${r3090}; for ${hours} GPU·h`)}</small>`};
+      const lo=isB?150:100, hi=isB?300:200;
+      return {used:`<b>${msg("历史 GPU·h 未集中","Historical GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>A100：≈${gpuRange(lo,hi,GPU_MARKET.a100Sxm80)}</b><small>${msg(`3090 Community≈${gpuRange(lo,hi,GPU_MARKET.rtx3090Community)}；Secure≈${gpuRange(lo,hi,GPU_MARKET.rtx3090Secure)}；对应 ${lo}–${hi} GPU·h`,`3090 Community≈${gpuRange(lo,hi,GPU_MARKET.rtx3090Community)}; Secure≈${gpuRange(lo,hi,GPU_MARKET.rtx3090Secure)}; for ${lo}–${hi} GPU·h`)}</small>`};
     }
-    if (has("Second VLA") || has("第二 VLA")) return {used:`<b>¥0</b>`, plan:`<b>TBD</b>`};
-    if (has("OptimusVLA") || has("pi0.5")) return {used:`<b>${msg("资格化 GPU 成本未集中","Qualification GPU cost not centralized")}</b>`, plan:`<b>TBD</b><small>${msg("首条合法 rollout 后按 GPU·h 计价","Price by GPU-hours after first valid rollout")}</small>`};
-    if (has("qwen3.7-plus")) return {used:`<b>${msg("历史价格未按论文归因","Historical spend not paper-attributed")}</b>`, plan:`<b>TBD</b><small>${msg("Token receipt × 当前实测综合约 ¥0.747/M","Token receipt × current observed composite ≈¥0.747/M")}</small>`};
-    if (has("Additional LLM") || has("额外 LLM")) return {used:`<b>¥0</b>`, plan:`<b>TBD</b>`};
-    if (has("BEDROOM-SG2SC") || model === "SGP-12" || model === "SGP-14") return {used:`<b>${msg("qualification GPU 成本未集中","Qualification GPU cost not centralized")}</b>`, plan:`<b>${msg("公式：¥10 × 实测 A100·h","Formula: ¥10 × measured A100·h")}</b><small>${msg("源码 1–3 GPU-days/component 仅作粗参考 → ¥240–720 shadow/component","Source 1–3 GPU-days/component is a rough reference only → ¥240–720 shadow/component")}</small>`};
+    if (has("Second VLA") || has("第二 VLA")) return {used:`<b>¥0</b>`, plan:`<b>${msg("GPU·h 待定","GPU-hours TBD")}</b><small>${gpuMarketNote}</small>`};
+    if (has("OptimusVLA") || has("pi0.5")) return {used:`<b>${msg("资格化 GPU·h 未集中","Qualification GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>${msg("首条合法 rollout 后按市场 GPU·h 计价","Market GPU-hour price after first valid rollout")}</b><small>${gpuMarketNote}</small>`};
+    if (has("qwen3.7-plus")) return {used:`<b>≈¥0.37–1.49*</b><small>${msg("*0.5–2M total Token × 当前实测综合 ¥0.747/M","*0.5–2M total tokens × observed composite ¥0.747/M")}</small>`, plan:`<b>≈¥6.35–12.70</b><small>${msg("8.5–17M total estimated Token × ¥0.747/M","8.5–17M estimated total tokens × ¥0.747/M")}</small>`};
+    if (has("Additional LLM") || has("额外 LLM")) return {used:`<b>¥0</b>`, plan:`<b>${msg("每模型价格取决于 exact family","Per-model price depends on exact family")}</b>`};
+    if (has("BEDROOM-SG2SC") || model === "SGP-12" || model === "SGP-14") return {used:`<b>${msg("qualification GPU·h 未集中","Qualification GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(24,72)}</b><small>${msg("若正式单组件占用 24–72 A100·h：× 市场 ¥10.78/h；正式 run 后用实测替换","If a component occupies 24–72 A100·h: × market ¥10.78/h; replace with measured runtime")}</small>`};
     return {used:`<b>TBD</b>`, plan:`<b>TBD</b>`};
   };
   let currentPaper = "";
@@ -4634,9 +4654,18 @@ function enhanceExperimentCostPriceColumns(root) {
     const usedCell = cells[modelIndex + 1];
     const planCell = cells[modelIndex + 2];
     if (!usedCell || !planCell) return;
+    const kind = kindOf(model);
+    row.classList.add(`ec-resource-${kind}`);
+    usedCell.classList.add("ec-usage-cell", `ec-usage-${kind}`);
+    planCell.classList.add("ec-usage-cell", `ec-usage-${kind}`);
+    if (kind === "token") {
+      const est=tokenEstimate(currentPaper, model, usedCell.textContent, planCell.textContent);
+      if (est.used) usedCell.insertAdjacentHTML("beforeend", `<span class="ec-token-estimate">${est.used}</span>`);
+      if (est.plan) planCell.insertAdjacentHTML("beforeend", `<span class="ec-token-estimate">${est.plan}</span>`);
+    }
     const p = price(currentPaper, model);
-    const usedPrice = document.createElement("td"); usedPrice.className = "ec-price-cell ec-price-used"; usedPrice.innerHTML = p.used;
-    const planPrice = document.createElement("td"); planPrice.className = "ec-price-cell ec-price-plan"; planPrice.innerHTML = p.plan;
+    const usedPrice = document.createElement("td"); usedPrice.className = `ec-price-cell ec-price-used ec-price-${kind}`; usedPrice.innerHTML = p.used;
+    const planPrice = document.createElement("td"); planPrice.className = `ec-price-cell ec-price-plan ec-price-${kind}`; planPrice.innerHTML = p.plan;
     usedCell.after(usedPrice);
     planCell.after(planPrice);
   });
