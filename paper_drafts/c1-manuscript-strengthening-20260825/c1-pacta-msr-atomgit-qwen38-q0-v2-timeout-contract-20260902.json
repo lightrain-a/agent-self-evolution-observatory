@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q0-v2-TIMEOUT-20260902",
+  "status": "FROZEN_PRE_PROVIDER",
+  "parent": {
+    "branch": "experiment/c1-pacta-msr-atomgit-qwen38-q0-20260902",
+    "closure_commit": "569ecd75ec8ffb768e0477df369ef65deb9a7f6a",
+    "identity_result_sha256": "7e6798231fe2000fb2828d76b96be664f2c6906b97befdaf5dfe3cd4cc9e8b00",
+    "first_action_result_sha256": "eb9f1513859ac3169da11ff0668d9c26088f4b1643312784b4e7eae2ce50aa4a",
+    "source_budget_result_sha256": "e554de18ae89086c915796aa4004f8578ab26a05acaa0d9641d61b6a5ae028be"
+  },
+  "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+  "atomcode_version": "5.0.9",
+  "profile": "AtomGit-qwen3.8-27b",
+  "resolved_model": "qwen3.8-27b",
+  "single_changed_variable": {
+    "name": "atomcode_subprocess_timeout_seconds",
+    "from": 300,
+    "to": 900
+  },
+  "source_budget": {
+    "fixed_max_tokens": 16384,
+    "fixtures": 6,
+    "fixture_grid": {
+      "history_pairs": [0, 12, 24],
+      "payload_lines": [160, 320]
+    },
+    "pass_rule": "6/6 returncode 0, exactly one model request, exact qwen3.8-27b identity, exactly one fenced bash action, byte-exact expected command",
+    "provider_retries": 0
+  },
+  "inherited_first_decision_budget": 2048,
+  "sampling_diagnostic": {
+    "run_only_after_source_budget_pass": true,
+    "fixtures": 2,
+    "replicates_per_fixture": 6,
+    "calls": 12,
+    "budget": 2048,
+    "interpretation": "diagnostic only; provider-managed sampling is not tuned and no PASS threshold is imposed"
+  },
+  "unchanged": [
+    "same six synthetic long-action fixtures",
+    "same serialized message bytes",
+    "same AtomGit-qwen3.8-27b profile",
+    "same resolved qwen3.8-27b identity requirement",
+    "same AtomCode 5.0.9 headless interface",
+    "same --no-tools --ephemeral --no-telemetry flags",
+    "same parser",
+    "same source max_tokens=16384",
+    "same provider retries=0",
+    "same empty workdir"
+  ],
+  "forbidden": [
+    "scientific source tasks",
+    "future task execution",
+    "writer",
+    "binder",
+    "shadow",
+    "gate",
+    "final",
+    "model switch",
+    "prompt tuning",
+    "parser repair",
+    "budget increase"
+  ],
+  "authority": {
+    "q0_v2_transport_qualification": true,
+    "sampling_diagnostic_if_pass": true,
+    "scientific_source_acquisition": false,
+    "pacta_effect_measurement": false
+  }
+}
