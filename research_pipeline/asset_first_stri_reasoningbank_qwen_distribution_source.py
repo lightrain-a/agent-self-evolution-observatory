@@ -25,7 +25,7 @@ Q1 = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-resul
 CONTRACT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-contract-20260901.json"
 INDEX = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-index-20260901.json"
 RECEIPT_DIR = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-trajectories-20260901"
-EXPECTED_CONTRACT_SHA256 = "PENDING"
+EXPECTED_CONTRACT_SHA256 = "072980a4e71a3e31de2e59ef77b52cd090073d645b665af0adc25c24a99b8daa"
 
 
 def load_inputs() -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
