@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-02T04:22:00Z",
+  "experiment": "C1-PACTA-MSR-QWEN397-P0-20260902",
+  "status": "MSR_20_RUNTIME_READY",
+  "runtime_root": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-msr-qwen397-runtime-20260902-v1",
+  "preflight_sha256": "d10411edf1ff5f2688e5faed054987bec087344a494c43361e5f450ecb3fd05c",
+  "import_receipt_sha256": "103b609e1fb1cc92778823c277ab006cf6d11e476ef3e651de5b0f86b5fc3b62",
+  "normalization_qualification_sha256": "7b876c9dc31e964868fa1c5cff3cd5ab3510e57162e65368023102822d933a01",
+  "exact_digest_import": "20/20",
+  "exact_base_normalization": "20/20",
+  "source_images_qualified": 10,
+  "future_images_qualified": 10,
+  "docker_host": "unix:///var/run/docker.sock",
+  "docker_root": "/var/lib/docker",
+  "architecture": "x86_64",
+  "provider_calls": 0,
+  "scientific_calls": 0,
+  "next_authority": "exactly-once native source-trajectory acquisition for the 10 frozen fresh source tasks only; future-task execution remains locked"
+}
