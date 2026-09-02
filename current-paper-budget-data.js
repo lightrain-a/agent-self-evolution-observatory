@@ -39,13 +39,13 @@ window.CURRENT_PAPER_BUDGET={
   },
   rows:[
     {
-      id:"paper-e1",paper:"E1 · STRI",tier:"low",costDriver:{zh:"CPU / 已有 artifact 为主",en:"CPU / existing artifacts"},
-      gpu:{zh:"canonical 结构证据不需要 GPU；当前没有新增 GPU 主预算。",en:"Canonical structural evidence needs no GPU; no material new GPU budget is currently required."},
-      cpu:{zh:"support-matrix / LP / robustness / artifact replay 与少量 Docker 行为桥。",en:"Support-matrix/LP/robustness/artifact replay plus a small Docker behavioral bridge."},
-      api:{zh:"canonical 主张几乎不需要新增 API。ReasoningBank Full-P1 扩展曾冻结 deepseek-v4-pro-ga-260813，40/40 run 已执行但扩展 HOLD。",en:"Canonical claims need almost no new API spend. The ReasoningBank Full-P1 extension froze deepseek-v4-pro-ga-260813; 40/40 runs executed but the extension remains on HOLD."},
-      envelope:{zh:"当前新增：≈0 GPU；扩展未重新开放前，模型服务支出≈0。",en:"Current incremental: ≈0 GPU; ≈0 provider spend until the extension reopens."},
-      cash:{zh:"低；主要是已发生的历史 API / 工程成本。",en:"Low; mostly sunk historical API/engineering cost."},
-      atomgit:{status:"engineering",label:{zh:"工程可用 · 科学替换禁止",en:"Engineering yes · scientific replacement no"},use:{zh:"适合做论文/表格、静态审计、测试修复、Full-P1 失败日志定位；不能把 deepseek-v4-flash 替换 frozen DeepSeek V4 Pro 后继续旧实验。",en:"Useful for paper/table work, static audits, test repair, and Full-P1 failure triage; deepseek-v4-flash cannot replace the frozen DeepSeek V4 Pro inside the old experiment."}}
+      id:"paper-e1",paper:"E1 · STRI",tier:"medium",costDriver:{zh:"V4 优先自托管推理 + 阶段 gate",en:"V4 self-hosted inference + staged gates"},
+      gpu:{zh:"canonical 结构证据不需要 GPU；新的 V4 软件 Agent 扩展优先评估本地 Qwen3.5-35B-A3B-FP8 serving，以现有 A100 换掉按 token API。具体 GPU 拓扑须在 V4 contract 前实测并冻结。",en:"Canonical structural evidence needs no GPU. The V4 software-agent extension prioritizes local Qwen3.5-35B-A3B-FP8 serving on existing A100 resources to replace per-token API billing; exact GPU topology must be qualified and frozen before V4."},
+      cpu:{zh:"support-matrix / LP / artifact replay 仍主要是 CPU；V4 额外需要 SWE-bench Docker、trajectory bookkeeping、R2/R3/R4 分层分析。",en:"Support-matrix/LP/artifact replay remains CPU-heavy; V4 adds SWE-bench Docker, trajectory bookkeeping, and staged R2/R3/R4 analysis."},
+      api:{zh:"Qwen3-Coder-Next V3 在 12/32 source 已产生 52.8M 输入 token、1,422 次调用并因 credit 停止，因此不再直接续跑。V4 hosted fallback 候选是更低价的 qwen3.5-flash；模型/provider 尚未冻结。",en:"Qwen3-Coder-Next V3 used 52.8M input tokens and 1,422 calls by source 12/32 and stopped on credit, so it will not simply continue. A lower-cost qwen3.5-flash hosted route is a V4 fallback; model/provider are not yet frozen."},
+      envelope:{zh:"新预算按 gate 打开：P0 约 12–24 trajectories；通过后 P1 约 48；再通过才 P2 约 100–180；P3 跨 repo replication 约 48–72。任一 gate 无清晰信号即 STOP/PIVOT。",en:"Budget opens by gate: roughly 12–24 P0 trajectories, then ~48 P1, then ~100–180 P2 only if prior gates pass; P3 cross-repository replication is ~48–72. Any weak gate triggers STOP/PIVOT."},
+      cash:{zh:"目标是把现金成本从旧 432-run API 路线的不可控量级降到可封顶范围；优先本地 GPU 时直接 API 现金接近 0，hosted 只作有硬预算的 fallback。",en:"The goal is to replace the uncontrolled old 432-run API envelope with a hard-bounded budget; direct API cash approaches zero under local serving, with hosted inference only as a capped fallback."},
+      atomgit:{status:"engineering",label:{zh:"工程可用 · V4 actor 需单独冻结",en:"Engineering yes · V4 actor must be frozen separately"},use:{zh:"适合写/审 runner、token ledger、Docker preflight、trajectory analyzer 与页面；不能把 CodingPlan 模型直接当成尚未冻结的 V4 scientific actor。",en:"Useful for runner work, token ledgers, Docker preflight, trajectory analyzers, and paper/site updates; CodingPlan models cannot silently become the unfrozen V4 scientific actor."}}
     },
     {
       id:"paper-g1",paper:"G1 · Agent Safety R9",tier:"low",costDriver:{zh:"CPU/Web 环境 + evaluator",en:"CPU/web environment + evaluators"},
