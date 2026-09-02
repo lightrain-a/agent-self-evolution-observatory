@@ -40,15 +40,26 @@ def test_activate_scopes_d0_helpers_to_rootful_daemon(monkeypatch) -> None:
         oci.DOCKER_HOST = old_oci
 
 
-def test_live_parent_index_preserves_49_receipts_and_untouched_117() -> None:
+def test_live_parent_index_records_terminal_four_repo_qualification() -> None:
     doc = json.loads(d0.INDEX.read_text(encoding="utf-8"))
-    assert doc["completed_qualification_count"] == 49
-    assert doc["operational_blocker"]["ordinal"] == 117
-    assert doc["operational_blocker"]["instance_id"] == "matplotlib__matplotlib-24026"
-    completed = d0.existing_receipts(d0.candidate_schedule())
-    unit = d0.next_unit(d0.candidate_schedule(), completed)
-    assert unit["ordinal"] == 117
-    assert unit["instance_id"] == "matplotlib__matplotlib-24026"
+    assert doc["completed_qualification_count"] == 91
+    assert doc["execution_complete"] is True
+    assert doc["decision"] == "D0_PRIMARY_FOUR_REPOSITORY_EVALUATOR_FEASIBILITY_PASS"
+    assert doc["operational_blocker"] is None
+    assert doc["selected_repositories"] == [
+        "pydata/xarray",
+        "sympy/sympy",
+        "matplotlib/matplotlib",
+        "django/django",
+    ]
+    state = {row["repo"]: row for row in doc["repository_state"]}
+    for repo in doc["selected_repositories"]:
+        assert state[repo]["qualified_count"] == d0.MIN_QUALIFIED_PER_REPO
+        assert state[repo]["eligibility"] == "ELIGIBLE"
+    schedule = d0.candidate_schedule()
+    completed = d0.existing_receipts(schedule)
+    assert len(completed) == 91
+    assert d0.next_unit(schedule, completed) is None
 
 
 def test_index_payload_binds_runtime_repair_without_changing_attempts() -> None:
