@@ -33,6 +33,7 @@ class CodingPlanProviderTest(unittest.TestCase):
             self.assertIn(f'context_window = {CONTEXT_WINDOW}', text)
             self.assertIn(f'max_tokens = {MAX_OUTPUT_TOKENS}', text)
             self.assertIn(f'retry_max_attempts = {RETRY_MAX_ATTEMPTS}', text)
+            self.assertIn('max_rounds = 1', text)
             self.assertEqual(RETRY_MAX_ATTEMPTS, 1)
             self.assertEqual(CONTEXT_WINDOW, 512000)
             self.assertEqual(MAX_OUTPUT_TOKENS, 128000)
