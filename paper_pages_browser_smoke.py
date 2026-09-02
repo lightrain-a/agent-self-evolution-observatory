@@ -73,7 +73,7 @@ def main():
             beginner_text=execute(sid,"""const root=document.createElement('div');document.querySelectorAll('.cpp-reader-chapter').forEach(x=>root.append(x.cloneNode(true)));root.querySelectorAll('details:not([open]),#research-archive').forEach(x=>x.remove());return root.textContent||'';""")
             beginner_required={
               "paper-g1.html":["两个判分器有分歧时","新数据前"],
-              "paper-c1.html":["它不是人","现实里这次购物本身只有一个实际发生的结果","不声称它同时成功又失败","一个具体购物例子","连续问三道门","172 次机会里有 125 次","购物只是一个任务"],
+              "paper-c1.html":["它不是人","现实里这次购物本身只有一个实际发生的结果","不声称它同时成功又失败","正常系统只会根据这次结果 / 反馈写一份记忆","C1 才把同一条轨迹复制两份做反事实","一个具体购物例子","连续问三道门","172 次检索机会里有 125 次","0/36","34/36","购物只是一个任务"],
               "paper-e2.html":["只看赢家组（WIN-C）","保留诊断线索组（MRW）","做题和复盘分开"],
               "paper-b1.html":["两张记忆卡","实验条件还不够干净，所以我们拒绝下结论","只改来源标签"],
               "paper-b.html":["当前这一回合是否真的受益","这段经验是否值得长期学进去","未来再次遇到类似情况"],

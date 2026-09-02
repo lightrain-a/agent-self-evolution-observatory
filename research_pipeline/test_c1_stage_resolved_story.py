@@ -68,7 +68,11 @@ class C1StageResolvedStoryTest(unittest.TestCase):
         self.assertIn("125/172", self.reader)
         self.assertIn("0.02083", self.reader)
         self.assertNotIn("propagates from memory construction to later behavior", self.reader)
-        self.assertIn("native retrieval, policy uptake, and terminal outcome", self.page)
+        self.assertIn("retrieval, first-action uptake, and terminal outcome separately", self.page)
+        self.assertIn("actual task outcome", self.page)
+        self.assertIn("actual task outcome", self.story)
+        self.assertIn("normal runtime", self.story.lower())
+        self.assertIn("not two truths for one real shopping event", self.story.lower())
 
     def test_claim_hierarchy_preserves_method_stop_without_failing_measurement_paper(self) -> None:
         claims = {row["claim"]: row for row in self.receipt["claim_hierarchy"]}
