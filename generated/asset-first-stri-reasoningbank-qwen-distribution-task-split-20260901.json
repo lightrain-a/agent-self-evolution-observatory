@@ -1,0 +1,1129 @@
+{
+  "calibration_task_ids": [
+    "pydata__xarray-7229",
+    "pydata__xarray-3151",
+    "sympy__sympy-12096",
+    "sympy__sympy-21847",
+    "matplotlib__matplotlib-21568",
+    "matplotlib__matplotlib-20859",
+    "django__django-12754",
+    "django__django-15280"
+  ],
+  "checks": {
+    "all_qualification_attempt_counts_one": true,
+    "calibration_count": 8,
+    "no_behavioral_outcomes_used": true,
+    "source_calibration_candidate_disjoint": true,
+    "source_count": 32
+  },
+  "created_at_utc": "2026-09-02T03:28:33+00:00",
+  "credential_material_present": false,
+  "d0_index_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-index-20260901.json",
+  "d0_index_sha256": "b21f6c1a9a8c897d8c241f9687d0861072d28d00742beadf8c702fe8721d1de9",
+  "dataset_design": "PRIMARY_4_REPOSITORY",
+  "decision": "QWEN_OUTCOME_BLIND_TASK_SPLITS_FROZEN",
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "fallback_extra_calibration_task_ids": [],
+  "fallback_extra_rule": "none",
+  "payload_sha256": "478752d0bf4024d6530bd49b394da20213a8911f5d5d7752274793f5a8de8f18",
+  "q1_result_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-result-20260901.json",
+  "q1_result_sha256": "6eb085caea1ebad43bd47140fbe1eeb3265e9a22eb8595177a698ed4920d2e7f",
+  "repo_splits": [
+    {
+      "calibration_task_ids": [
+        "pydata__xarray-7229",
+        "pydata__xarray-3151"
+      ],
+      "counts": {
+        "calibration": 2,
+        "qualified": 21,
+        "source": 8,
+        "structural_candidates": 11
+      },
+      "ordering_rule": "frozen D0 SHA256(instance_id) order",
+      "qualified_order": [
+        "pydata__xarray-4356",
+        "pydata__xarray-3677",
+        "pydata__xarray-3095",
+        "pydata__xarray-6721",
+        "pydata__xarray-6992",
+        "pydata__xarray-4629",
+        "pydata__xarray-4687",
+        "pydata__xarray-4695",
+        "pydata__xarray-7229",
+        "pydata__xarray-3151",
+        "pydata__xarray-2905",
+        "pydata__xarray-4966",
+        "pydata__xarray-6461",
+        "pydata__xarray-7233",
+        "pydata__xarray-6744",
+        "pydata__xarray-7393",
+        "pydata__xarray-3305",
+        "pydata__xarray-3993",
+        "pydata__xarray-4075",
+        "pydata__xarray-6938",
+        "pydata__xarray-4094"
+      ],
+      "repo": "pydata/xarray",
+      "source_task_ids": [
+        "pydata__xarray-4356",
+        "pydata__xarray-3677",
+        "pydata__xarray-3095",
+        "pydata__xarray-6721",
+        "pydata__xarray-6992",
+        "pydata__xarray-4629",
+        "pydata__xarray-4687",
+        "pydata__xarray-4695"
+      ],
+      "structural_candidate_task_ids": [
+        "pydata__xarray-2905",
+        "pydata__xarray-4966",
+        "pydata__xarray-6461",
+        "pydata__xarray-7233",
+        "pydata__xarray-6744",
+        "pydata__xarray-7393",
+        "pydata__xarray-3305",
+        "pydata__xarray-3993",
+        "pydata__xarray-4075",
+        "pydata__xarray-6938",
+        "pydata__xarray-4094"
+      ]
+    },
+    {
+      "calibration_task_ids": [
+        "sympy__sympy-12096",
+        "sympy__sympy-21847"
+      ],
+      "counts": {
+        "calibration": 2,
+        "qualified": 21,
+        "source": 8,
+        "structural_candidates": 11
+      },
+      "ordering_rule": "frozen D0 SHA256(instance_id) order",
+      "qualified_order": [
+        "sympy__sympy-13031",
+        "sympy__sympy-14711",
+        "sympy__sympy-13877",
+        "sympy__sympy-15875",
+        "sympy__sympy-16792",
+        "sympy__sympy-24443",
+        "sympy__sympy-19346",
+        "sympy__sympy-12489",
+        "sympy__sympy-12096",
+        "sympy__sympy-21847",
+        "sympy__sympy-20428",
+        "sympy__sympy-18698",
+        "sympy__sympy-16886",
+        "sympy__sympy-20590",
+        "sympy__sympy-16450",
+        "sympy__sympy-20916",
+        "sympy__sympy-19954",
+        "sympy__sympy-15345",
+        "sympy__sympy-19783",
+        "sympy__sympy-23413",
+        "sympy__sympy-20801"
+      ],
+      "repo": "sympy/sympy",
+      "source_task_ids": [
+        "sympy__sympy-13031",
+        "sympy__sympy-14711",
+        "sympy__sympy-13877",
+        "sympy__sympy-15875",
+        "sympy__sympy-16792",
+        "sympy__sympy-24443",
+        "sympy__sympy-19346",
+        "sympy__sympy-12489"
+      ],
+      "structural_candidate_task_ids": [
+        "sympy__sympy-20428",
+        "sympy__sympy-18698",
+        "sympy__sympy-16886",
+        "sympy__sympy-20590",
+        "sympy__sympy-16450",
+        "sympy__sympy-20916",
+        "sympy__sympy-19954",
+        "sympy__sympy-15345",
+        "sympy__sympy-19783",
+        "sympy__sympy-23413",
+        "sympy__sympy-20801"
+      ]
+    },
+    {
+      "calibration_task_ids": [
+        "matplotlib__matplotlib-21568",
+        "matplotlib__matplotlib-20859"
+      ],
+      "counts": {
+        "calibration": 2,
+        "qualified": 21,
+        "source": 8,
+        "structural_candidates": 11
+      },
+      "ordering_rule": "frozen D0 SHA256(instance_id) order",
+      "qualified_order": [
+        "matplotlib__matplotlib-24026",
+        "matplotlib__matplotlib-24570",
+        "matplotlib__matplotlib-25332",
+        "matplotlib__matplotlib-14623",
+        "matplotlib__matplotlib-20676",
+        "matplotlib__matplotlib-22871",
+        "matplotlib__matplotlib-25122",
+        "matplotlib__matplotlib-22865",
+        "matplotlib__matplotlib-21568",
+        "matplotlib__matplotlib-20859",
+        "matplotlib__matplotlib-24149",
+        "matplotlib__matplotlib-13989",
+        "matplotlib__matplotlib-23299",
+        "matplotlib__matplotlib-25287",
+        "matplotlib__matplotlib-23476",
+        "matplotlib__matplotlib-25775",
+        "matplotlib__matplotlib-20488",
+        "matplotlib__matplotlib-24627",
+        "matplotlib__matplotlib-24637",
+        "matplotlib__matplotlib-26342",
+        "matplotlib__matplotlib-20826"
+      ],
+      "repo": "matplotlib/matplotlib",
+      "source_task_ids": [
+        "matplotlib__matplotlib-24026",
+        "matplotlib__matplotlib-24570",
+        "matplotlib__matplotlib-25332",
+        "matplotlib__matplotlib-14623",
+        "matplotlib__matplotlib-20676",
+        "matplotlib__matplotlib-22871",
+        "matplotlib__matplotlib-25122",
+        "matplotlib__matplotlib-22865"
+      ],
+      "structural_candidate_task_ids": [
+        "matplotlib__matplotlib-24149",
+        "matplotlib__matplotlib-13989",
+        "matplotlib__matplotlib-23299",
+        "matplotlib__matplotlib-25287",
+        "matplotlib__matplotlib-23476",
+        "matplotlib__matplotlib-25775",
+        "matplotlib__matplotlib-20488",
+        "matplotlib__matplotlib-24627",
+        "matplotlib__matplotlib-24637",
+        "matplotlib__matplotlib-26342",
+        "matplotlib__matplotlib-20826"
+      ]
+    },
+    {
+      "calibration_task_ids": [
+        "django__django-12754",
+        "django__django-15280"
+      ],
+      "counts": {
+        "calibration": 2,
+        "qualified": 21,
+        "source": 8,
+        "structural_candidates": 11
+      },
+      "ordering_rule": "frozen D0 SHA256(instance_id) order",
+      "qualified_order": [
+        "django__django-15563",
+        "django__django-16502",
+        "django__django-12774",
+        "django__django-13512",
+        "django__django-15957",
+        "django__django-13279",
+        "django__django-11964",
+        "django__django-11790",
+        "django__django-12754",
+        "django__django-15280",
+        "django__django-14373",
+        "django__django-13121",
+        "django__django-14122",
+        "django__django-12276",
+        "django__django-11885",
+        "django__django-11555",
+        "django__django-13820",
+        "django__django-13410",
+        "django__django-12663",
+        "django__django-13807",
+        "django__django-14539"
+      ],
+      "repo": "django/django",
+      "source_task_ids": [
+        "django__django-15563",
+        "django__django-16502",
+        "django__django-12774",
+        "django__django-13512",
+        "django__django-15957",
+        "django__django-13279",
+        "django__django-11964",
+        "django__django-11790"
+      ],
+      "structural_candidate_task_ids": [
+        "django__django-14373",
+        "django__django-13121",
+        "django__django-14122",
+        "django__django-12276",
+        "django__django-11885",
+        "django__django-11555",
+        "django__django-13820",
+        "django__django-13410",
+        "django__django-12663",
+        "django__django-13807",
+        "django__django-14539"
+      ]
+    }
+  ],
+  "repositories": [
+    "pydata/xarray",
+    "sympy/sympy",
+    "matplotlib/matplotlib",
+    "django/django"
+  ],
+  "schema_version": 1,
+  "scientific_boundary": {
+    "confirmatory_execution_authorized": false,
+    "confirmatory_task_ids_finalized": false,
+    "evaluation_runtime_qualification_authorized": false,
+    "pilot_task_ids_finalized": false,
+    "source_execution_authorized": false,
+    "source_execution_requires_rootful_runtime_qualification": true,
+    "source_runtime_qualification_authorized": true
+  },
+  "source_task_ids": [
+    "pydata__xarray-4356",
+    "pydata__xarray-3677",
+    "pydata__xarray-3095",
+    "pydata__xarray-6721",
+    "pydata__xarray-6992",
+    "pydata__xarray-4629",
+    "pydata__xarray-4687",
+    "pydata__xarray-4695",
+    "sympy__sympy-13031",
+    "sympy__sympy-14711",
+    "sympy__sympy-13877",
+    "sympy__sympy-15875",
+    "sympy__sympy-16792",
+    "sympy__sympy-24443",
+    "sympy__sympy-19346",
+    "sympy__sympy-12489",
+    "matplotlib__matplotlib-24026",
+    "matplotlib__matplotlib-24570",
+    "matplotlib__matplotlib-25332",
+    "matplotlib__matplotlib-14623",
+    "matplotlib__matplotlib-20676",
+    "matplotlib__matplotlib-22871",
+    "matplotlib__matplotlib-25122",
+    "matplotlib__matplotlib-22865",
+    "django__django-15563",
+    "django__django-16502",
+    "django__django-12774",
+    "django__django-13512",
+    "django__django-15957",
+    "django__django-13279",
+    "django__django-11964",
+    "django__django-11790"
+  ],
+  "split_identity_sha256": "0e67fff3c02023e7b11ba7c16d219cfbef106b24660bf28c1ac527eacda3563f",
+  "stage": "SOURCE_CALIBRATION_STRUCTURAL_CANDIDATE_FREEZE",
+  "structural_candidate_task_ids": [
+    "pydata__xarray-2905",
+    "pydata__xarray-4966",
+    "pydata__xarray-6461",
+    "pydata__xarray-7233",
+    "pydata__xarray-6744",
+    "pydata__xarray-7393",
+    "pydata__xarray-3305",
+    "pydata__xarray-3993",
+    "pydata__xarray-4075",
+    "pydata__xarray-6938",
+    "pydata__xarray-4094",
+    "sympy__sympy-20428",
+    "sympy__sympy-18698",
+    "sympy__sympy-16886",
+    "sympy__sympy-20590",
+    "sympy__sympy-16450",
+    "sympy__sympy-20916",
+    "sympy__sympy-19954",
+    "sympy__sympy-15345",
+    "sympy__sympy-19783",
+    "sympy__sympy-23413",
+    "sympy__sympy-20801",
+    "matplotlib__matplotlib-24149",
+    "matplotlib__matplotlib-13989",
+    "matplotlib__matplotlib-23299",
+    "matplotlib__matplotlib-25287",
+    "matplotlib__matplotlib-23476",
+    "matplotlib__matplotlib-25775",
+    "matplotlib__matplotlib-20488",
+    "matplotlib__matplotlib-24627",
+    "matplotlib__matplotlib-24637",
+    "matplotlib__matplotlib-26342",
+    "matplotlib__matplotlib-20826",
+    "django__django-14373",
+    "django__django-13121",
+    "django__django-14122",
+    "django__django-12276",
+    "django__django-11885",
+    "django__django-11555",
+    "django__django-13820",
+    "django__django-13410",
+    "django__django-12663",
+    "django__django-13807",
+    "django__django-14539"
+  ],
+  "task_receipts": {
+    "django__django-11555": {
+      "base_commit": "8dd5877f58f84f2b11126afbd0813e24545919ed",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:2dd3b5697b6d08ddd3f47b4059e8f507dc127271baf6fbbaeadff005100410f4",
+      "image_manifest_digest": "sha256:36c28a4ff3d57102f43c3ea25d60357c48b24ceb013126e3588b707dddd1cd36",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/166-django-django-11555.json",
+      "qualification_receipt_sha256": "ac3ba52b130a79585405af14ed53111159d54b7299c857e90087190c0bcd98a3",
+      "task_sha256": "61b57114bbb71be478522b0b2799ed60b2bf7aba2fa0d11127f683c2b31c9a12"
+    },
+    "django__django-11790": {
+      "base_commit": "b1d6b35e146aea83b171c1b921178bbaae2795ed",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:c91e8e2db24af4206f02c20273e4ed30fa1f88222fe388302b09b8e9672bba25",
+      "image_manifest_digest": "sha256:97132bd9fa42be42add93741520b3e58dbba8a693a209757a18381a31d386ec5",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/158-django-django-11790.json",
+      "qualification_receipt_sha256": "c42b7f78bf47fcaa1250d94bc2ca81eb678ac487db490c57f1dea0ba08abffd0",
+      "task_sha256": "74a263132a0aa6c311081943f3789bc5430ca24ecf0215853bc8d5966f32ad9a"
+    },
+    "django__django-11885": {
+      "base_commit": "04ac9b45a34440fa447feb6ae934687aacbfc5f4",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:ed825bbda017a0f716be5c41506e27a668424cedbfffc01a661dec5429095157",
+      "image_manifest_digest": "sha256:4a0f8c7fbcfa5101ffa2ba697c2a75aa58174acff3a286a81b0807a8395a46fc",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/165-django-django-11885.json",
+      "qualification_receipt_sha256": "956ed6be8ad1da33ec6633c36b5d27521ae325c99f0c5998d632df5eb08c6641",
+      "task_sha256": "2e1ac5d03ad628a8b3f7cfd679febcf5994294c7223219552b406ae99ecf7f1d"
+    },
+    "django__django-11964": {
+      "base_commit": "fc2b1cc926e34041953738e58fa6ad3053059b22",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:bb840e5a07f0552c1fb8d68e4a0b378be827dd23bbcb215b5e05b52f7909e3e8",
+      "image_manifest_digest": "sha256:a3d3a631f68fe44d05fc86f526fa25dfdccb611600baa46459558f674af48dae",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/157-django-django-11964.json",
+      "qualification_receipt_sha256": "6afe224005208001cc1b802c970d11e2e223552a11e645089c2ee656054ff069",
+      "task_sha256": "5a66641f0c8322b173cc573c71a89ae9295eba210cd688443b04c49770ae2732"
+    },
+    "django__django-12276": {
+      "base_commit": "53d8646f799de7f92ab9defe9dc56c6125448102",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:590b60981698bd7342f3c46cae07e70b7bb768d4a877a8794c756029a2c17a6b",
+      "image_manifest_digest": "sha256:001fcf705cb514b1a4e6af9dad2a21a657127cf92fe00c1ef8200706d44186c9",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/164-django-django-12276.json",
+      "qualification_receipt_sha256": "72db8bd584c6625c03c866caded9427c40a73f3b2c5198b09a2f4f462f099287",
+      "task_sha256": "6afd43ac37a4f206026168fd06498e5123ec40790fc2b19103ea154a1f12fe4d"
+    },
+    "django__django-12663": {
+      "base_commit": "fa5e7e46d875d4143510944f19d79df7b1739bab",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:8c000d1960ebd4f84ef9218cde860a7fd5450841793edb119e32b9154228e995",
+      "image_manifest_digest": "sha256:44fcecdc823d4eb00d6cd2f4c3a2610874e911acf9133e0604db9324850051d9",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/169-django-django-12663.json",
+      "qualification_receipt_sha256": "7cabb1f38c1fb30c65b5920a46d5fbcb4d0b62ccbbf37e9d5e017d6d21d9b3f6",
+      "task_sha256": "054a95d71f900ff9a8e26062bb006972cc5741dc6b988078e1a98a4f54e592f6"
+    },
+    "django__django-12754": {
+      "base_commit": "18759b2209ff556aed7f20d83cbf23e3d234e41c",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:eb6f5d97babf450137683eb41ff94bd046a9f051a68f1582be619d1cf33c7835",
+      "image_manifest_digest": "sha256:449c15ed1d3f73bb30a9665965f57de8ea72a3589c8c1194a8a8dd0da4f753e5",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/159-django-django-12754.json",
+      "qualification_receipt_sha256": "c62dacf51defa5282db23248802c5be7fb970df900be4399da28fd1be62ea1a5",
+      "task_sha256": "115c26cf298cf3af6a9b8af1493985c5b48a45cee32f78e630d0b56cd692d4d1"
+    },
+    "django__django-12774": {
+      "base_commit": "67f9d076cfc1858b94f9ed6d1a5ce2327dcc8d0d",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:40aefa7e73bfdef48180c055d19d6f59f3b1049738a18fcba9cfb2b691b7eb20",
+      "image_manifest_digest": "sha256:1f65dc6387cca60297bcfccacc30a38367c5c82787a35b444f78d8bace351436",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/153-django-django-12774.json",
+      "qualification_receipt_sha256": "79d163d49034503f608f8753cbfd44a78f08cf207e5e69ca9386a35ccb6760bb",
+      "task_sha256": "47b6545e7b7841f20b9cc7815583a7b226b6a3ee0ebf04559a63d36eba0c0d47"
+    },
+    "django__django-13121": {
+      "base_commit": "ec5aa2161d8015a3fe57dcbbfe14200cd18f0a16",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:0d90a24e1b072387c47732366ddbb160d6b8acf956f8388e835a444861e9c568",
+      "image_manifest_digest": "sha256:2c2930a18a172c78c1454f02a2eda84c0cb8404246c98044e59876f554ac82fe",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/162-django-django-13121.json",
+      "qualification_receipt_sha256": "b61971f2291316d89d189ba5b8d8ddd14313232716456df1b6ab2743b30af828",
+      "task_sha256": "3e1fe911abdbca6181574ec4480760f776ea1a2b1fcb6ed051c9a03ffffe2b05"
+    },
+    "django__django-13279": {
+      "base_commit": "6e9c5ee88fc948e05b4a7d9f82a8861ed2b0343d",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:a2ce19d948c4264bc8bf32d6cd3e13294096c15eb8326a28ad473a6439c6f3af",
+      "image_manifest_digest": "sha256:9bab50ce3f2e0c86a1e423d36ac6c7dd77c2034979d5e68bd72c96098fbb1470",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/156-django-django-13279.json",
+      "qualification_receipt_sha256": "8d6e1e23eaa66ad55c1cfe66dcd065f2d64d68d22c8d725635622ee5966f8a6d",
+      "task_sha256": "5a7a40f16866b20f419e4da9746224a5681f71c8061824bd1a10740654ac0aa3"
+    },
+    "django__django-13410": {
+      "base_commit": "580a4341cb0b4cbfc215a70afc004875a7e815f4",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:f5fa79b26f52016a0cdaf12d7f41b37ad9534d392d61a3399f504de9c5a8600e",
+      "image_manifest_digest": "sha256:78f814438b2ca1a63da0567362046f8e12e0d630d1c492947a7eb8bb015df8ec",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/168-django-django-13410.json",
+      "qualification_receipt_sha256": "dc762d112f9fe9f88466063216b7edb3dfa5f419ac293e655677dedd6d4fb522",
+      "task_sha256": "e2fbca1ab77c307900f01128bf73b68eca7268c4626024946b60aeed61b1fc47"
+    },
+    "django__django-13512": {
+      "base_commit": "b79088306513d5ed76d31ac40ab3c15f858946ea",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:6d829b07502b56c84e0a8fffea5d4a9acd0eac8219dd52fbd1357a7614c1a6b4",
+      "image_manifest_digest": "sha256:d9ed685983c9725847d150a52114aaae03d8c922e266d37a61c4dadf4d89633e",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/154-django-django-13512.json",
+      "qualification_receipt_sha256": "589fb89ca06a2346a943fed94c94d48504dcbc36aff8bbe05d1925f938e366f3",
+      "task_sha256": "c7f3e292c74fc2bdda909095b64956da35faaedb0d90f760ac0f464fdb90f45c"
+    },
+    "django__django-13807": {
+      "base_commit": "89fc144dedc737a79929231438f035b1d4a993c9",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:8dd6ade9c734c99748320547a9dcc0147e6fa2fe337c0ee159a36cdbe6dff983",
+      "image_manifest_digest": "sha256:3ff0e9e834ecdfd11c159f8f52b641a8602260380243b1b8f7cedffddd29b589",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/170-django-django-13807.json",
+      "qualification_receipt_sha256": "92ec37904a1ca47d79ba1dca305dc296fbc4cf2302abc5d9c5b5a878a26ffc57",
+      "task_sha256": "2b85d8e6bfbb138d476859d370ca15bec2dcef8ba88bccb45247c635151f27ce"
+    },
+    "django__django-13820": {
+      "base_commit": "98ad327864aed8df245fd19ea9d2743279e11643",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:272e3cbbefa5280d2b9030473cd003d029114722bba97cd06fa08b35eec5a070",
+      "image_manifest_digest": "sha256:5b1737db790332410d17e1b47a9df8f7344a83002ce219593bcbf74a16d8b8eb",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/167-django-django-13820.json",
+      "qualification_receipt_sha256": "ed1122ad2738c2652694493aada8d9344ea6c2c02e4cb6877623c1db3c873daa",
+      "task_sha256": "19dd64cb953b2b13624ff48d6d242be55ce96628e065acd5ee04d8c988fb2912"
+    },
+    "django__django-14122": {
+      "base_commit": "bc04941bf811d1ea2c79fb7fc20457ed2c7e3410",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:18e4423c9c88729ddfab2140b26518a3c89760b24e57bea4e9f1889d056e8a02",
+      "image_manifest_digest": "sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/163-django-django-14122.json",
+      "qualification_receipt_sha256": "bbfe1ca2843fd41cac16e159039adeff4346f19f9f355596a11a90c5129f1c94",
+      "task_sha256": "a19bdcf54edd8c009bb9d305df1cc7acd85b486020f3a645aca87f32701471f8"
+    },
+    "django__django-14373": {
+      "base_commit": "b1a4b1f0bdf05adbd3dc4dde14228e68da54c1a3",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:2ae71515b1f2097d52a26512a39a10f45a671176b37f1b6a8c66eeba40eb7fd5",
+      "image_manifest_digest": "sha256:347f288fb0684e3eacc2c2184634d7820f9345d8d4851b5542ad27067fcbea26",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/161-django-django-14373.json",
+      "qualification_receipt_sha256": "7e387379b85255b79f83b76a98083fbfcbc6f2de9c9f9a9ea5cb22638876b076",
+      "task_sha256": "52a21e3dce56beeae8160079806b258b3dc8a29cdea1659e0c9373288594c0bc"
+    },
+    "django__django-14539": {
+      "base_commit": "6a5ef557f80a8eb6a758ebe99c8bb477ca47459e",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:87ee174bf76b880a59fe31b9e4587a8cd9db24fe0728e5aed16ceecd07a23432",
+      "image_manifest_digest": "sha256:c8ce818e7f4d925c74fc38cec3d64585371a24e2cd1f0a60a478db7bd44c3bba",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/171-django-django-14539.json",
+      "qualification_receipt_sha256": "36437aa8e87ae7017379866fce2d21590f08b7e6cea53fa4b7cc75d0d12ca5ac",
+      "task_sha256": "11d02086d5ce6db51a7385915c03d12b0663adb140b3c17346b5dbc3c8184566"
+    },
+    "django__django-15280": {
+      "base_commit": "973fa566521037ac140dcece73fceae50ee522f1",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:c42ac2709bf2b9886179c2c18d2c83e40ae1302e1619a3446daae6f120ee2d33",
+      "image_manifest_digest": "sha256:d1fc6c4600c4e41b9f1894611a22b91f30baa109270ee8205a42de90d995b54d",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/160-django-django-15280.json",
+      "qualification_receipt_sha256": "2a94827d98db355d1892a574f48a3459026d428d9f09da5a64b6324b649505c2",
+      "task_sha256": "6f1063f4a45ffb9ae5a45d61d7686eef202dd76becdd075b5f6778c74f3654df"
+    },
+    "django__django-15563": {
+      "base_commit": "9ffd4eae2ce7a7100c98f681e2b6ab818df384a4",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:b9c8f9de693f3cb82cc98cbb5fe846951150289d45606b43d41982830dd98165",
+      "image_manifest_digest": "sha256:94186b4d24bc8f1da5f54488e4367dd466aba0ceb6fc29f0057479e30275445e",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/151-django-django-15563.json",
+      "qualification_receipt_sha256": "fcfc635182d39e6b6391b996f2454b32988b1cc4df8d53051a236f587218318e",
+      "task_sha256": "9f9b1eb2bc21f9c8bd7d89ca7db166da432d4e2a12b285fad28dabf134bb3a77"
+    },
+    "django__django-15957": {
+      "base_commit": "f387d024fc75569d2a4a338bfda76cc2f328f627",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:9f8a9395422947576288c0955ad7a7b75bb160ea2ea3660578518d19860f4f70",
+      "image_manifest_digest": "sha256:7e2694f891d96ec8eaef27b746823acaa6dd28d65832b79db2bd18a816b3437e",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/155-django-django-15957.json",
+      "qualification_receipt_sha256": "e11109ce6ac5997928f81addd04ec73283479c3217b30c2a0edb3bddf1690eb3",
+      "task_sha256": "702f2834cecd37d08303317b0a1ac22ff83e6fbce19f1839a72abccc8fc43d92"
+    },
+    "django__django-16502": {
+      "base_commit": "246eb4836a6fb967880f838aa0d22ecfdca8b6f1",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:9a11c6e2c643ff3ff7ff55726832849d6bb5de264538d2330a2676548d2d3680",
+      "image_manifest_digest": "sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/152-django-django-16502.json",
+      "qualification_receipt_sha256": "870c254012b8bfe145d389f3e4ed04cb496e8ef1c64c2cd74b13dd70cdeabff5",
+      "task_sha256": "a374bc09cead28d6233e56a38e7de4997d00d580bb1fd346b8e72f3cedc8f71d"
+    },
+    "matplotlib__matplotlib-13989": {
+      "base_commit": "a3e2897bfaf9eaac1d6649da535c4e721c89fa69",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:be7c103637d77a59a51589f7f84fddc6b232d525eba0f3b345ac00046e70486d",
+      "image_manifest_digest": "sha256:187f0890b81e3f497783ef4bd89d4c9a2c400800e670967f3284d962394345e4",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/128-matplotlib-matplotlib-13989.json",
+      "qualification_receipt_sha256": "506d6ea899c153fb9d9a9204b09fe99b94ff0b2cec488f7281fd12f933abf84f",
+      "task_sha256": "81646f80b454031742477f2007c1b798d81b442344e36e101b917e5e294cca9e"
+    },
+    "matplotlib__matplotlib-14623": {
+      "base_commit": "d65c9ca20ddf81ef91199e6d819f9d3506ef477c",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:30368e1c136e8eded62e7229d134a132cabb4bb47b5a2c56e1d1e0dc5e9752b3",
+      "image_manifest_digest": "sha256:52cdd8ac0f4a8b05f40507d500680ec613092186310cbaf7895d1554e9d654dc",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/120-matplotlib-matplotlib-14623.json",
+      "qualification_receipt_sha256": "1d7818abcdae16e84539177049fa327d74ece7c01c70f4b0c112afe4f62f2959",
+      "task_sha256": "ee2f866855a9b0607f162a718f9c29c57a6fdde46d4c1a425c3cf24223b39a5d"
+    },
+    "matplotlib__matplotlib-20488": {
+      "base_commit": "b7ce415c15eb39b026a097a2865da73fbcf15c9c",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:e2c911dc9bc0a8847e18cb83b76ec901c5ab5945bf819ac8a6989b55b2c6a1aa",
+      "image_manifest_digest": "sha256:f07dc86a09fc03363a3152920f0fcb4c64b98417dd3a8d5a790601bf6714143f",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/133-matplotlib-matplotlib-20488.json",
+      "qualification_receipt_sha256": "4f3d835dc92065d1aa8434dc2567751cf78eca1483007e4edd2a6600415da99c",
+      "task_sha256": "a8625a881879d49b6c9e85f4ac174585b744abd3017dcddf33de29b55e584f40"
+    },
+    "matplotlib__matplotlib-20676": {
+      "base_commit": "6786f437df54ca7780a047203cbcfaa1db8dc542",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:7f603ecba31ab182ad9b6c2005d4810b6b52c0e238e662820339e21319ca6871",
+      "image_manifest_digest": "sha256:e0206dcf91b0a43c7a91982211400b8ad5e5b6fc1750024a0e3301d75f200c91",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/121-matplotlib-matplotlib-20676.json",
+      "qualification_receipt_sha256": "23e6ce26ce1edc83ccad94235a7a8f595bbd7f1332487b70645456fb45a0b2db",
+      "task_sha256": "dcaa78e841b52ce62ee176f43f1b106d7af43c4ef98bf5a0982303dfec52517d"
+    },
+    "matplotlib__matplotlib-20826": {
+      "base_commit": "a0d2e399729d36499a1924e5ca5bc067c8396810",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:1e941854c2a74b04f1e9ecbbccdf8ac8273dddb0fb666a1e86d2fd5dee3dcaf0",
+      "image_manifest_digest": "sha256:7ae350b0a6b3fe3cc4165ac10b81dbdcace7a65b8a608988043611a05473e3ef",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/137-matplotlib-matplotlib-20826.json",
+      "qualification_receipt_sha256": "35e7e22b6fe6d0064602b424423e25617d8305ee00fa58ea17b8b41db1171c41",
+      "task_sha256": "cd992c0f8708af65120a6fda8fbffbd08dc26bb57d0bd39f2d9c634b23651c88"
+    },
+    "matplotlib__matplotlib-20859": {
+      "base_commit": "64619e53e9d0ed417daba287ac0d3a06943a54d5",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:bb7506e2d7551e15bcf2d317b4cff11f2a142f753468ea407023ac5e486410a0",
+      "image_manifest_digest": "sha256:6b3463d153c8d0469b440af8457f1cf3fd3effbbfbb87ef85e062e937e21cb02",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/126-matplotlib-matplotlib-20859.json",
+      "qualification_receipt_sha256": "8b4d44b9c8e728e938bc1c92bcdd802485175750750d9872b8e2f3b206185709",
+      "task_sha256": "5e97aeab5344b3992e52e9ab209f20b81b0d7e4a314420294d5c0c050856a155"
+    },
+    "matplotlib__matplotlib-21568": {
+      "base_commit": "f0632c0fc7339f68e992ed63ae4cfac76cd41aad",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:b7a98953467c941eda3c1fc4e1904d1dbce1a53d84ae622d629426e55ff2c42d",
+      "image_manifest_digest": "sha256:fd7d09fc5a5bf67feb6f0280f65aa84cb6215e8024bd557eb4f3599328a64a2c",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/125-matplotlib-matplotlib-21568.json",
+      "qualification_receipt_sha256": "6c3be1de382148c1895b6e02b359fe25a85f1b34feb6dcffc8431469a08820bc",
+      "task_sha256": "bbbd4cbc2c57573c922487244e8e4fdc35e95ac49b8ec1cc647ef2ece0d91ebc"
+    },
+    "matplotlib__matplotlib-22865": {
+      "base_commit": "c6c7ec1978c22ae2c704555a873d0ec6e1e2eaa8",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:c360512331dd3a9bb6053a0601eb348c7c56d6f65e793127864cba8da5ed6083",
+      "image_manifest_digest": "sha256:9696098532ade2d1e2fac736a4d9c46ba983fcd92fbada1307df1a78d55e0731",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/124-matplotlib-matplotlib-22865.json",
+      "qualification_receipt_sha256": "d65ca8ee6c27bbea31417e2f7c9786b455c05b9b17f5d15eaae0e23ccc1d2deb",
+      "task_sha256": "4ad4dcfb9422a4f639b5af16343c64998ee7fec3f5ff8b567580ae9f2a582b9a"
+    },
+    "matplotlib__matplotlib-22871": {
+      "base_commit": "a7b7260bf06c20d408215d95ce20a1a01c12e5b1",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:f65f6e248b99e1a6c2316f49450dabd7c1af9cfaccc2e4bfd6d3498fdde7a5cd",
+      "image_manifest_digest": "sha256:0b50468d5fab27e15ed1d19f001d357534872b4392b71683e400923881c258aa",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/122-matplotlib-matplotlib-22871.json",
+      "qualification_receipt_sha256": "6c718b0b97dab0286528cc9c5c606b2a113e79af7c9763e4a18289ee3e404cc1",
+      "task_sha256": "513c564852b77c1771831754c764edea0659cb64e3e41021ba49f0e4d8435d71"
+    },
+    "matplotlib__matplotlib-23299": {
+      "base_commit": "3eadeacc06c9f2ddcdac6ae39819faa9fbee9e39",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:535541839dafcef6ab19014cafbb02fdc5ddc9a6748ea985939bf8e3d9c38418",
+      "image_manifest_digest": "sha256:1c5ac00aa69abc5ef856b2887ced295c5721f1c1f1211774878d4fbdea4884be",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/129-matplotlib-matplotlib-23299.json",
+      "qualification_receipt_sha256": "d3dda30891d3a29f25e5eee836f80dad0999302825e01962f8b42a49180bc61f",
+      "task_sha256": "34cfb46f0bb556acba8b83c8847fb668f736d1ccfed1cacf5a4ff8c042050f0c"
+    },
+    "matplotlib__matplotlib-23476": {
+      "base_commit": "33a0599711d26dc2b79f851c6daed4947df7c167",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:fb4a58349c84df8568bdfcadc657c01157c99a3a8aead4b82e8fc43f8cb448d4",
+      "image_manifest_digest": "sha256:64bb043b17a25dbeeba766c82d1d5f66ca446ca32da12c88418ded9e0d79cfdc",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/131-matplotlib-matplotlib-23476.json",
+      "qualification_receipt_sha256": "c55efc107722c4473777b06827ec5055538a46c8cd56d807e91ffe8c14d2c1ff",
+      "task_sha256": "27459389a9c6177f9aa9167216c12b510c8733d6cca523b245e83184514c7722"
+    },
+    "matplotlib__matplotlib-24026": {
+      "base_commit": "14c96b510ebeba40f573e512299b1976f35b620e",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:9b40e12cdc21b8a394369d233a346fc9faf9b5b76fc62e824a8cdc0151acaceb",
+      "image_manifest_digest": "sha256:8fa7a329667ea2b146fdf2ab5746bd2a7d831e1eb4094bb2c56f7163e7cd304a",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/117-matplotlib-matplotlib-24026.json",
+      "qualification_receipt_sha256": "e4eef3f9e3d43e8343cbfc16e3615f321d5060557a331ea0da769940e18af160",
+      "task_sha256": "70b36f33fc58aa04731219d020234721875847c93d03b79cd3722f61a1bc657f"
+    },
+    "matplotlib__matplotlib-24149": {
+      "base_commit": "af39f1edffcd828f05cfdd04f2e59506bb4a27bc",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:76a50f4a5d1b876980996731d7de4fe6d01b292128d5396b6f89dfe327f3bcc9",
+      "image_manifest_digest": "sha256:14294abcab0e82584eb761a715cc8de0365957f0375746cc6800c0f3c5a0d402",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/127-matplotlib-matplotlib-24149.json",
+      "qualification_receipt_sha256": "31c861026c5556ce24b92b8dc20586bb56d707e4d4018248c2a4a7dddbd45770",
+      "task_sha256": "6698944c95d26140b5a7fd1153a97377f49d23087d26e92bd29f925ded1ab0f5"
+    },
+    "matplotlib__matplotlib-24570": {
+      "base_commit": "8f0003ae902952372824c9917975fb372c026a42",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:8da2231416051efd2623424be2140945aac9e30c6c8f69a82703a42a580f8ba5",
+      "image_manifest_digest": "sha256:5d93272292526ed727fdbf8fcad24e751965c5d62d66f91c64be7119339b323c",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/118-matplotlib-matplotlib-24570.json",
+      "qualification_receipt_sha256": "84c034f0d1a414e9d42fdcfc5a9cb8d302442409aa29f290ff5307abb03da6d5",
+      "task_sha256": "17df957e95cae7742880f91f7c767eafa98d2cd84b166df7f1060e9d561f8ace"
+    },
+    "matplotlib__matplotlib-24627": {
+      "base_commit": "9d22ab09d52d279b125d8770967569de070913b2",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:576160b02ee53603932571b414a794ec36922b530b7350346e0b888b839029ad",
+      "image_manifest_digest": "sha256:526b4c5c1b786ecf4dbfecb7c3ef847a0749d2de721932871abb46d8ca3dd6d8",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/134-matplotlib-matplotlib-24627.json",
+      "qualification_receipt_sha256": "0896d01d94b210382dbcd93676743e409b7109e800d9f28edd47b3981f4633d6",
+      "task_sha256": "c0ca391def1e72b075868fb7112b6c7b2667d0d7800115f5fb0930ae252c5760"
+    },
+    "matplotlib__matplotlib-24637": {
+      "base_commit": "a9ba9d5d3fe9d5ac15fbdb06127f97d381148dd0",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:110fd3b0522934576c87b69557d3d05a554c86cd5694f2e76ec1e1a920956bf0",
+      "image_manifest_digest": "sha256:4b23025de00447a61c1a4e88d1a4a5511f45663a8bd81142978676999466849d",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/135-matplotlib-matplotlib-24637.json",
+      "qualification_receipt_sha256": "e0158e1fe5cd7b9d4e33c0cbdc0f2eccb826bb769398a08373f06ec73af9b305",
+      "task_sha256": "9dd3eb17a71cafbe5b8547dbf07297e98fff73d57dc36e64fe4716a866b857d0"
+    },
+    "matplotlib__matplotlib-25122": {
+      "base_commit": "5ec2bd279729ff534719b8bf238dbbca907b93c5",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:17b35fcaeadf12ee4d1900b19e6b598166ac699a6824385677b8d1a8ea011de4",
+      "image_manifest_digest": "sha256:7dac4e6faa3be2af10d4cf48d8d53cd765191df5584a1f2b2ec139e7221ff742",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/123-matplotlib-matplotlib-25122.json",
+      "qualification_receipt_sha256": "4865c091057c70c6afe12fe6a4948aeb8d5612636a7a440ac471f10ae083b0b3",
+      "task_sha256": "7f51391756f35291129ca010448bc81ddf8c0ac3dfdeb8f8fadcc920ca4894b2"
+    },
+    "matplotlib__matplotlib-25287": {
+      "base_commit": "f8ffce6d44127d4ea7d6491262ab30046b03294b",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:0a721ca71f4cfd2858777c2a451a954e50fa78f2551661a4cbcd0a9d6aa71c73",
+      "image_manifest_digest": "sha256:5b08f138d0d1cf6be4719c6cc803de63ff7d139da5372c0a4be6d87031b08b40",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/130-matplotlib-matplotlib-25287.json",
+      "qualification_receipt_sha256": "2fc102fe6fa98cbc4fba83e7702364e1440c2d527d81f5f17a96720f427031d2",
+      "task_sha256": "183b5d04c470a5e17e350cbff4c80cd46c8837e5e17db2d5f53362da7341a196"
+    },
+    "matplotlib__matplotlib-25332": {
+      "base_commit": "66ba515e671638971bd11a34cff12c107a437e0b",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:00d42a208a1bf1eed6ce2b3c82dfa8522ff5653df697a02f3433a99fdf181198",
+      "image_manifest_digest": "sha256:8fe08c1a8888990862bbdb9a9ad38c740e0910f08bca0b6cecb87f0bdb012dbc",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/119-matplotlib-matplotlib-25332.json",
+      "qualification_receipt_sha256": "860c0f9dbbff93f9ac49172d40e88150ad94e975f7482b5af82e804518c2f287",
+      "task_sha256": "858adee39bbb473143ed3c443fb202999945233833cfc10d35376d34a65c018a"
+    },
+    "matplotlib__matplotlib-25775": {
+      "base_commit": "26224d96066b5c60882296c551f54ca7732c0af0",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:10774124cda334139748958bb0cdb47509cf6e668670dab74207c1bbec0ba8cb",
+      "image_manifest_digest": "sha256:0e72108fafecbb2cdc5c8d17ce24327e5aeff3033c81625dde59ca5d2d42b573",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/132-matplotlib-matplotlib-25775.json",
+      "qualification_receipt_sha256": "9ebcf19dec705d3fe7f29084eed6e8408192d5670d3daf0e6d4cf3e8dfdd996c",
+      "task_sha256": "73cb045188fc6c0d9f5384cae44d240b4278b0ef07ddbd96615aefcfe115f967"
+    },
+    "matplotlib__matplotlib-26342": {
+      "base_commit": "2aee6ccd7c7e1f8d282c1e7579f4ee546b838542",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:005276f8388eeee1caec470c4d8da926cccaa959a74ef22545ad857f62c6bde8",
+      "image_manifest_digest": "sha256:a5f37bb41ef65f91ec231e41b30d67720bdbdd7b3ad3adcfcc71257c782d376e",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/136-matplotlib-matplotlib-26342.json",
+      "qualification_receipt_sha256": "a888e7fd11098cc5720ed8b51837230e1f99b9f50cba26ea79112fa6960beee2",
+      "task_sha256": "1a8453dbfab8f95f6017f765587ed4ac90b4d3fac4cefe2ba5c1680ce373727b"
+    },
+    "pydata__xarray-2905": {
+      "base_commit": "7c4e2ac83f7b4306296ff9b7b51aaf016e5ad614",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:92c9ca93a247d4f85f199c87ba7f807e881385853ea571b43a4697f8f85c4196",
+      "image_manifest_digest": "sha256:1fb7fb411d115d06cf2f34fde3b6f8a33427f2d6f36e1ab8df3b1b977195bd61",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/033-pydata-xarray-2905.json",
+      "qualification_receipt_sha256": "4452c68751b607060e4a6bdc131ee0396fb97d9cc6b8c9b73af896043c281656",
+      "task_sha256": "bacd1844f6236c5509d3272bd56d48281a203650d5626d5238479d1be9eea31f"
+    },
+    "pydata__xarray-3095": {
+      "base_commit": "1757dffac2fa493d7b9a074b84cf8c830a706688",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:4e682920ccfb9f1707a53a0609ef10120b04c25744ad0a5da2a57640d0491f00",
+      "image_manifest_digest": "sha256:fb721923cba0d05faafdafb2fb76e6caa3adc22fd4fdcbf2de45741312f91c74",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/025-pydata-xarray-3095.json",
+      "qualification_receipt_sha256": "999a2d004f30c1d64403c07b45053931d747d46cc920a905e4cef4283a09fb8a",
+      "task_sha256": "e7a4beb9797ec89651d09b72e54e545720b725a1c5733f79655eed5d8c8d3327"
+    },
+    "pydata__xarray-3151": {
+      "base_commit": "118f4d996e7711c9aced916e6049af9f28d5ec66",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:77bcc0b610c1a7fd60cadd50acaccafb7627b04aaaa6d13b8aa95e1d920e4247",
+      "image_manifest_digest": "sha256:320eea88d5a1b8553e7bf3f51c705b2230936800bac59f9cc0acd920a5d44d6b",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/032-pydata-xarray-3151.json",
+      "qualification_receipt_sha256": "45c72c7958af893d99e34cf340f19a4cf4d90cd858569b973f2a37e20691574b",
+      "task_sha256": "4d14daffb8cd11a160ada7c9acceea779eb576049a4ca8615325647ea9568b0e"
+    },
+    "pydata__xarray-3305": {
+      "base_commit": "69c7e01e5167a3137c285cb50d1978252bb8bcbf",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:a337d20d46a9e0bd4694ef8f8eff96abc7501b08f6bee029e79f25603a27e5fa",
+      "image_manifest_digest": "sha256:0e234daddf9a42b85a77ba0436f3fcbad90759921c978b127dff90d55cba0f89",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/039-pydata-xarray-3305.json",
+      "qualification_receipt_sha256": "4a3f2a2324af163f9f51206755cd0ed48e76baed3d9483a131b59cdeb2bd5bc5",
+      "task_sha256": "7d5355f269c9663a2eab8edf0a577cc32ea3a33eeacb40121ac8ad16934aecf2"
+    },
+    "pydata__xarray-3677": {
+      "base_commit": "ef6e6a7b86f8479b9a1fecf15ad5b88a2326b31e",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:9565b12e06238c704b0f287e66ba97dd85e039367c3868f5eb7eb58119f3d8ed",
+      "image_manifest_digest": "sha256:97f5f793df1b6df512d8be87cd9c3180c407f858764f0af3d9d98934deca24a9",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/024-pydata-xarray-3677.json",
+      "qualification_receipt_sha256": "1b37efc77117e9d0d490cd19093f36c674901f072f8327ab3253b179d79c9738",
+      "task_sha256": "3a71d0209d5d5dc6ccde6ff867c246bac0f33f3acbd8abbe7ebe597a6d7dd53c"
+    },
+    "pydata__xarray-3993": {
+      "base_commit": "8cc34cb412ba89ebca12fc84f76a9e452628f1bc",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:bda81056d40c4be9809fe6bbbd1d22c8486215ce8bff984e58d58e9d9c47f9c1",
+      "image_manifest_digest": "sha256:c765fcdd0e1073042cb610b400299ed09394765f6c3e5419d8e2bb4f2258ad52",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/040-pydata-xarray-3993.json",
+      "qualification_receipt_sha256": "a236abafbf8bf2725bc161273c553d5f3c0726bcb412206d6a65d7991d984585",
+      "task_sha256": "13cf852ddb03caa9da3401f9742d5541be668d6475ae12a2c3600f373ba416e8"
+    },
+    "pydata__xarray-4075": {
+      "base_commit": "19b088636eb7d3f65ab7a1046ac672e0689371d8",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:628bf1c639902fc6937a8947c2a78f59375f309e4f2ba19b5e2ee648c48870e6",
+      "image_manifest_digest": "sha256:64cba3e907a0c4fa08652422573abe19a43d12299e15ce08d8ff84a3a1f39a18",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/041-pydata-xarray-4075.json",
+      "qualification_receipt_sha256": "d5e75658530968c1d00af89697c7cbdb3c97778169f354a4fc700bd1299d9e4a",
+      "task_sha256": "42f16103ecef2ebc988eeebcf2b6b7d425f4ed84ee8a25169103d970379414f2"
+    },
+    "pydata__xarray-4094": {
+      "base_commit": "a64cf2d5476e7bbda099b34c40b7be1880dbd39a",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:a18e074e2230f1f06df847df0451aef2063d777000ae6ed5d86adba4d2eafef6",
+      "image_manifest_digest": "sha256:21f472d57540856fad92f411b7c0f14bc27bf9ecf349475ddb239feed865da73",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/043-pydata-xarray-4094.json",
+      "qualification_receipt_sha256": "8ed809a468483097101839f599d35ac104a3525c32ab554014675f1469deb173",
+      "task_sha256": "db17a247f94b2deb0e456bc160edee16c29532fea7aa3c280c4255fb792ca9ed"
+    },
+    "pydata__xarray-4356": {
+      "base_commit": "e05fddea852d08fc0845f954b79deb9e9f9ff883",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:7dd40503a0a6107a7b1d37ed7e8739c8721c64954e879f6b1ed3dab4ff4ac8c6",
+      "image_manifest_digest": "sha256:43e2c1d578ea6b1b1e64369aae9632569ca254e46c16819fcf4e08529814c406",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/023-pydata-xarray-4356.json",
+      "qualification_receipt_sha256": "bfc23db481b513e92373f6a8b91f2f48736d0aa5aeb2f495bc148a11f671bd5c",
+      "task_sha256": "05d5a49970b80b4baaf14d49f0b2a9b5142af6fe29fad651f5e44c8268120306"
+    },
+    "pydata__xarray-4629": {
+      "base_commit": "a41edc7bf5302f2ea327943c0c48c532b12009bc",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:6ef760ecc8a78780f669f3e24a32e11a5ad5adaec505fce12cc15d27648657d0",
+      "image_manifest_digest": "sha256:583ef721ebfc24858c10704ad28fb935adef5f18f493d29751b68fb467c66994",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/028-pydata-xarray-4629.json",
+      "qualification_receipt_sha256": "7a5f3c4bd4819127dfb979f1b15e29b929c768838fa76a90b9ca25c8af6d8076",
+      "task_sha256": "3c9a69463bebdf53f4b18fac7bb483f9fc728c1e33c76041c34dcfb59b8d7272"
+    },
+    "pydata__xarray-4687": {
+      "base_commit": "d3b6aa6d8b997df115a53c001d00222a0f92f63a",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:32f5d2e9668c981e0e75536064e8be85dd853f45b69067d88d726d1f846c05e8",
+      "image_manifest_digest": "sha256:530359b318941f6a3649f33c204f8426cf7ebf4b097f9770b114498020dc2458",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/029-pydata-xarray-4687.json",
+      "qualification_receipt_sha256": "d9aecf97f095b2ff173ccfc0eea1f78c5daf23c6d51a4675d237cc9a5b3e89ce",
+      "task_sha256": "a19b1e0ed76a419b16eb6f208049522fdd514cc0d1ce051890fb5b4882328eed"
+    },
+    "pydata__xarray-4695": {
+      "base_commit": "51ef2a66c4e0896eab7d2b03e3dfb3963e338e3c",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:dacf663fa4ed2c8ce6001ceea04c245277b5f3431555062729e46234f142c2c0",
+      "image_manifest_digest": "sha256:93a1265e6fe32cda6fe8d5fb5f8eba4d689fedeaae1228abc7948f2403de98a5",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/030-pydata-xarray-4695.json",
+      "qualification_receipt_sha256": "444209908eacb545d4fbc36c46a6c4e8f7436c6d611c44df91e48fb3f8de6e5e",
+      "task_sha256": "ce5601a53db0d9ae10c9e3c882e445e2d014761e99e022994814bd227cbd8e2c"
+    },
+    "pydata__xarray-4966": {
+      "base_commit": "37522e991a32ee3c0ad1a5ff8afe8e3eb1885550",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:8031b0afcc4b54bb3e24f14ad85a1ea1629e27837e43ca557c23c904a9bf3c3b",
+      "image_manifest_digest": "sha256:445adac04fe8ac03a165c2e91adc1cfb3f41c20bdfa977ca195698c23d1876e5",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/034-pydata-xarray-4966.json",
+      "qualification_receipt_sha256": "6aae4f2c99461dfe185e13ef2dc4d4d83e85f104f58d0e290b245736906aa23d",
+      "task_sha256": "af6aacf3c0f1b8028d4a0b32886878906c6c94c950f886674df63e65c3c3caad"
+    },
+    "pydata__xarray-6461": {
+      "base_commit": "851dadeb0338403e5021c3fbe80cbc9127ee672d",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:ffe2941c9f15d0be9816dc041823be247374e398db83e64b0491ad945f8bb72a",
+      "image_manifest_digest": "sha256:5f0507f4349e057da586ceafba199570b94370808dcefbe55bc8cc39dfeacb0b",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/035-pydata-xarray-6461.json",
+      "qualification_receipt_sha256": "8e75013d1e2b723809af4ec66799df6fff8af6b1656b77b6aef3baa47680cf42",
+      "task_sha256": "cea7a3e3bd8330ea9de045a78e852fadd13061317f7df53bec4f83231bcdd57f"
+    },
+    "pydata__xarray-6721": {
+      "base_commit": "cc183652bf6e1273e985e1c4b3cba79c896c1193",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:855880ce6241af2349762fe34b893eb277216c9d053d08e1372c8dd6eb066021",
+      "image_manifest_digest": "sha256:58c7f4ada7f3cbcfcde50e0b55157701100cf694faa87978c672e368c0531898",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/026-pydata-xarray-6721.json",
+      "qualification_receipt_sha256": "dbc4cf87f2790aed59b87afc32b28d8387686eb5109194bc61243f17ac14712d",
+      "task_sha256": "cb5001a24df096ea6d639b65605c1f036fd26d17580af07ffbae7b49438de9c4"
+    },
+    "pydata__xarray-6744": {
+      "base_commit": "7cc6cc991e586a6158bb656b8001234ccda25407",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:95b5b0360c485da9e666e0ae98c98677b75c24aa6e4859093e09a260de067bb8",
+      "image_manifest_digest": "sha256:81611b35828f9d9f2c39e755d21d53ac74e23b5d24fe5b01516b39d8619d0c93",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/037-pydata-xarray-6744.json",
+      "qualification_receipt_sha256": "926173b09c3cd45d6db5ce5be61296dff02efa55f6e73f0841f0fc8b828f7a32",
+      "task_sha256": "9c0966c26b1f54996765f5c199b1080d8fb3e892e7a8b4591233f561c5c58d5a"
+    },
+    "pydata__xarray-6938": {
+      "base_commit": "c4e40d991c28be51de9ac560ce895ac7f9b14924",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:954da55e2ada2f0e2d5d617865388ecdd4bc0793b3d7404e370f8fa4d75f0fd3",
+      "image_manifest_digest": "sha256:672985f42845cd0b9c53819e1c74c6caa4959d8bf9470587d47fea8115f80dff",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/042-pydata-xarray-6938.json",
+      "qualification_receipt_sha256": "9ab007e3cf8b4607e0cf2ddef7382c93f7ae4624360bd1ef0bdb68c7a5f2fe99",
+      "task_sha256": "5599c0b3c920b060d0f871e3764722d6e3e8e3a647b100aa549b6fd0aab3af11"
+    },
+    "pydata__xarray-6992": {
+      "base_commit": "45c0a114e2b7b27b83c9618bc05b36afac82183c",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:0fb3743afe3f5255786e43755a10901212cdcd0a14089229dd093d4ca4f6021d",
+      "image_manifest_digest": "sha256:2811e30973fd2cca1ccad4858a4e1a51cc615f2590ebfc8df44baeecf3596221",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/027-pydata-xarray-6992.json",
+      "qualification_receipt_sha256": "c22bbd4a6c685f71dcca4c3520bd938a07141ba41a3e65a4b1ceb53fafe06edd",
+      "task_sha256": "406bf97e4e4166a5f1801b8734126a8ca4e28e2cd18a19397323e256dc0987e3"
+    },
+    "pydata__xarray-7229": {
+      "base_commit": "3aa75c8d00a4a2d4acf10d80f76b937cadb666b7",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:b2db3a6ab994cd3873198d9d37835e476178d4a6c0612afd37c6e378f32aaa5a",
+      "image_manifest_digest": "sha256:99d38e6b07da20fcc875c0a1379aead8392a5976018b6052f2f330b6400ff740",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/031-pydata-xarray-7229.json",
+      "qualification_receipt_sha256": "22db8f770837154f05e173b078e4d57f212a78963af9f73c9efc533586fe9f14",
+      "task_sha256": "1f660ca2d86921489a5ec9067724fd19adc9a81a1cf4988b091cb353c9e4a92d"
+    },
+    "pydata__xarray-7233": {
+      "base_commit": "51d37d1be95547059251076b3fadaa317750aab3",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:34ad0ebb1194a9753abb5ff4d241c12b48ef6382d22abc23d45a82c9ccb43d79",
+      "image_manifest_digest": "sha256:f40e55c21c683a06ba9f1e6d0dda7e83f7561c732e3d7d037e34f591a327d763",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/036-pydata-xarray-7233.json",
+      "qualification_receipt_sha256": "a8cdf26fe91d88972ef9b1fb2cf16f761cbb7f185497f8f5b5fa4baff9f5a7b7",
+      "task_sha256": "b2240c7f108a118c2aaa3c1b003c73deb3f5fa34968835ee7d001c1aa2d31cd1"
+    },
+    "pydata__xarray-7393": {
+      "base_commit": "41fef6f1352be994cd90056d47440fe9aa4c068f",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:32537775cd1fce4a9e15c75e77b69bb382cb38640c8bda7915e550738555984b",
+      "image_manifest_digest": "sha256:15d79e643a94b7fba2a8138cdc5daf011bc2d99f61a7ce30508689a90ab9042f",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/038-pydata-xarray-7393.json",
+      "qualification_receipt_sha256": "522bbd4f150155123440cf8eeec29ce93679740fb99930cc2b0e812e60d89650",
+      "task_sha256": "2f8f8c5371eb99e7bab23466d7c1ff5a430f2ced920cdf2b1cc6fcb52077ddc1"
+    },
+    "sympy__sympy-12096": {
+      "base_commit": "d7c3045115693e887bcd03599b7ca4650ac5f2cb",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:660e7d92998f55c98443175b42fe6e4234ba788b4e1cda753384059edd7cc1b8",
+      "image_manifest_digest": "sha256:0f9ad5cbf26325624de0de46f56adf96471b0d717c1cdd85d445a48d5158279b",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/053-sympy-sympy-12096.json",
+      "qualification_receipt_sha256": "1cb6dde60c143ce14db928dd680ca89585042adf28e50b2a3dc83bcd0f9d5071",
+      "task_sha256": "e980533f1a6177a6865537272098e7f440bda6d696e1ab8013d94d12bf9ee764"
+    },
+    "sympy__sympy-12489": {
+      "base_commit": "aa9780761ad8c3c0f68beeef3a0ce5caac9e100b",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:a8e8249d6252148720faa5b5ac2b4a8c29c03b2aab84e3fe093cbbfc951ed9aa",
+      "image_manifest_digest": "sha256:97d5e3120174bd85719c4e96148c9a1fefc3360f9c276fbea417f9167d0ee8f9",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/052-sympy-sympy-12489.json",
+      "qualification_receipt_sha256": "c6df4ae2d5ec27575a5a51c9871e72ec84756a100943ddc6304edfd6dd3e903e",
+      "task_sha256": "bc33b2664f81a6920a271872e6e561df7a7dc236262eedf34650d09e483e614e"
+    },
+    "sympy__sympy-13031": {
+      "base_commit": "2dfa7457f20ee187fbb09b5b6a1631da4458388c",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:bbacd912430dc5658d6355f8fc335f1156baa56cb58e5f96eda59648d6f26cf4",
+      "image_manifest_digest": "sha256:f1b132a899871f43c1eed5dc33ab53a1a3c96b73502fa970e276ee531efa11e7",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/045-sympy-sympy-13031.json",
+      "qualification_receipt_sha256": "159a86b572e5019385be76fb11fcce6b360967ff3399e956379610bf1c6c1e00",
+      "task_sha256": "e39db9f9ca2a5e9f03e63d3de70ee07ad9db6f1cb7212a1c9b06ff447fc5434b"
+    },
+    "sympy__sympy-13877": {
+      "base_commit": "1659712001810f5fc563a443949f8e3bb38af4bd",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:cefa61dae849040e826dfb210119a15b622018d1df4b6affe48038862ed69936",
+      "image_manifest_digest": "sha256:2fec29bf3c475fe1d0b6e430560b7bd5e008011c4d420e92197aea8c52f5e14a",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/047-sympy-sympy-13877.json",
+      "qualification_receipt_sha256": "a0f452bfc3243d381b6ca6b9c8310d31823523e8d46706fa87196e8e5ea05744",
+      "task_sha256": "9102b37ea484c449b977d25da00a5f7348fda54c9019860a87a250a86d6d7d2d"
+    },
+    "sympy__sympy-14711": {
+      "base_commit": "c6753448b5c34f95e250105d76709fe4d349ca1f",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:bba8a91b93b45d122124ca49f4a9aea5efec3cf1877997b46f33433e1a9e5fd5",
+      "image_manifest_digest": "sha256:db09c7341f3cbf583f2d08dbf56f25673911c1b8d42599c19519411242fa9035",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/046-sympy-sympy-14711.json",
+      "qualification_receipt_sha256": "4490c499951ebd9f59d79a5e6064a46ab1153952e8bd21d530445d8137d39fa7",
+      "task_sha256": "658798e55cd225791464e02e83309c861dc74faf86148bb129b475a01808aa55"
+    },
+    "sympy__sympy-15345": {
+      "base_commit": "9ef28fba5b4d6d0168237c9c005a550e6dc27d81",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:8ca85d23b25633bf3ef2ec79ddc500ea3c91806ca5570024cd5026c1a4d386b8",
+      "image_manifest_digest": "sha256:abb44c544ba4f65d5c6fe657257ba1001912643ed83783c2655aaf6aa1729f17",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/062-sympy-sympy-15345.json",
+      "qualification_receipt_sha256": "2aa0afe8b593b1bd1b1d38957c3fab8daf058bf4b7552b17f963c271203413fe",
+      "task_sha256": "ddd61eb935985c79c5058eda438253efc1cc93d598c00dd362807827b6e0712e"
+    },
+    "sympy__sympy-15875": {
+      "base_commit": "b506169ad727ee39cb3d60c8b3ff5e315d443d8e",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:52778ee56e3ffa57b7f4199f03d62861ea8345dea616de3128f60ab24d86eeca",
+      "image_manifest_digest": "sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/048-sympy-sympy-15875.json",
+      "qualification_receipt_sha256": "fa34d87c84c40ecc33b4fe9905316b74a9c82f089a02c6086e6006339ac20aa8",
+      "task_sha256": "9661ae16489a66f35b79394ca1f49c5d5d364b9dbb8c90e664f237a11721db52"
+    },
+    "sympy__sympy-16450": {
+      "base_commit": "aefdd023dc4f73c441953ed51f5f05a076f0862f",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:92daef62c6097244d4769744d5d580137a4fd50aa6a5105863ce74dc8786c9cf",
+      "image_manifest_digest": "sha256:0281fdd254c479762a78267206c93a5ceff112ed78ce5d414e4b53a50f2115d7",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/059-sympy-sympy-16450.json",
+      "qualification_receipt_sha256": "41644aedb9ce01e3f54e3dde4973d971da452fa3519fab0e699f645cb6ad5231",
+      "task_sha256": "cd3575f6573598e04ee0ee057b14113735a46c486e4c8cc88ced96a138b57eff"
+    },
+    "sympy__sympy-16792": {
+      "base_commit": "09786a173e7a0a488f46dd6000177c23e5d24eed",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:94ab860210fafd2d98c646df90e5a07e5472cd06bbde7c124b2beafc1b104dbc",
+      "image_manifest_digest": "sha256:3064872f9fef7139d864d821938635b2798232942db1dbe1b95bc085b45bfc61",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/049-sympy-sympy-16792.json",
+      "qualification_receipt_sha256": "18b5eb6ff61075087d202cff87baf8f4201c20493a06d0117aacf8a4224e5c2c",
+      "task_sha256": "60a66e1954d31094b39c281c529abba7e538c0ebd733f7e7916de88fdf2380e1"
+    },
+    "sympy__sympy-16886": {
+      "base_commit": "c50643a49811e9fe2f4851adff4313ad46f7325e",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:ef6962cc38502486b14a8673524bd43e6a6a6547d02c4b7b1715e74458362366",
+      "image_manifest_digest": "sha256:513a744bf11ccfe87f3cbc97bf093925d3d17d47c651859b8f1efdb66cb24f12",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/057-sympy-sympy-16886.json",
+      "qualification_receipt_sha256": "82b5efaf90b28287b6ac70a67924c84f9b07aed40bb9fa2b15366c1c60fc4c9d",
+      "task_sha256": "7e03b29da0e788ad17b83a465dced1cdaebd68dadd7f4e4f38fec36e4375540e"
+    },
+    "sympy__sympy-18698": {
+      "base_commit": "3dff1b98a78f28c953ae2140b69356b8391e399c",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:9051a6ce84b159a836d1a0d6db9ed986b9337ee613508be55afd2ffa7df19ae4",
+      "image_manifest_digest": "sha256:fddcc1afcb282e97ebe724c0df5d5f045593eee2265ca078ce9895e292019a4e",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/056-sympy-sympy-18698.json",
+      "qualification_receipt_sha256": "6e4a0d1058e0a802a897b73082d940444b96c3c062d171943c7a37558f38f5bd",
+      "task_sha256": "410eee8d14b873c326164c04f10757ee1740afa2ac90d67c9befd792cbe738df"
+    },
+    "sympy__sympy-19346": {
+      "base_commit": "94fb720696f5f5d12bad8bc813699fd696afd2fb",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:788a39aa53bf1fb1d59f6dbbc29b2e257a1304eb0de6da7ad0a4183e088e2683",
+      "image_manifest_digest": "sha256:b26508a2bb654f1870a7f975fa50bd16eec0fb4de295a321816ffd0abd332721",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/051-sympy-sympy-19346.json",
+      "qualification_receipt_sha256": "4371d7b6d386e8b77323a80ba8ed21d92c5926e636f3b964fab20f4ac79bc812",
+      "task_sha256": "82a06a97621c0fc12360b9496e263c503439862543f146aa5b53ffb5c5292d42"
+    },
+    "sympy__sympy-19783": {
+      "base_commit": "586a43201d0357e92e8c93548d69a9f42bf548f4",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:ce7f364920d9b00f5c5a2a04a7bace60ab81870047bfcb62896875eb38c72023",
+      "image_manifest_digest": "sha256:6a2b612909911b6406a70a85b02182754ff19195d711d38b824f94bd34136c3e",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/063-sympy-sympy-19783.json",
+      "qualification_receipt_sha256": "ec35d190a3f48205ed2870c6dcc6822c97cc886d463a66f6482672f73d685297",
+      "task_sha256": "1fb56d45e0458d1c80817d8d0de918cea169a26f4151f93ed3645e8dfd165883"
+    },
+    "sympy__sympy-19954": {
+      "base_commit": "6f54459aa0248bf1467ad12ee6333d8bc924a642",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:10e3d8ae3e327e66b6e3c14564493c9b67075b9f4c94c41e946b204e928132e7",
+      "image_manifest_digest": "sha256:fd13cef829daf5da790c170634159f461382d51b71dea0cb304d7f55efafd5fe",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/061-sympy-sympy-19954.json",
+      "qualification_receipt_sha256": "0aec01a53833bafeeb6b1a72e40ecb4f76d0b8146fcf1db5e507b881302365cc",
+      "task_sha256": "ef714d9f0d7560b493532f3bc340c7d8cea240e699326332c1b31427df44e4f9"
+    },
+    "sympy__sympy-20428": {
+      "base_commit": "c0e85160406f9bf2bcaa2992138587668a1cd0bc",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:0d167f5deffd6806b320e14016491a2518f33af2ca313fe47e368e3b5d9eca16",
+      "image_manifest_digest": "sha256:9d3cc06601f7d120a22d2821eaf5c5456cbc0599ec734ba767182b0919994094",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/055-sympy-sympy-20428.json",
+      "qualification_receipt_sha256": "d6ea9823b6fc8a3cd1e4acec9d31f45f454f94736f64acb5a662118d2549a37a",
+      "task_sha256": "f3fabd2f7cd73226abd08ff57bf0ef483cc00eb22652b2da9a99104129dc3b5c"
+    },
+    "sympy__sympy-20590": {
+      "base_commit": "cffd4e0f86fefd4802349a9f9b19ed70934ea354",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:fcfe2aec281d3a1af6a71bedef4637a446bcb076e0acdec6fec03b9b25a346f2",
+      "image_manifest_digest": "sha256:bcdff110a35d19a6838fde5f678d1b5103610234bd034e5703df46878aad3b63",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/058-sympy-sympy-20590.json",
+      "qualification_receipt_sha256": "6d6b5f3f045d6399d6f4d1410f48d3e9efe485808977e31f21fa94622e749e46",
+      "task_sha256": "f5ff569e47f08a0188e0d32eb62415b85d9ac17fef671bfb14759cd3d0fe2054"
+    },
+    "sympy__sympy-20801": {
+      "base_commit": "e11d3fed782146eebbffdc9ced0364b223b84b6c",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:115aca3626840cf0f5bbfa4e6a180a19bea08f57c9cc907887e862b1b01cc4c4",
+      "image_manifest_digest": "sha256:c2a2bea936145e76f1674773b1174a7f71bf5a498889e8242bb4e9f7c76e8237",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/065-sympy-sympy-20801.json",
+      "qualification_receipt_sha256": "7e87211ec7ad85c2844b934697fcf0bc4aa6f2ee681533dd2bc6cc3302b5489a",
+      "task_sha256": "a222ba2e69f55597f4b7bc455265616bb64ee54730aa4c4e96390c09a9ab31cf"
+    },
+    "sympy__sympy-20916": {
+      "base_commit": "82298df6a51491bfaad0c6d1980e7e3ca808ae93",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:380e9476fed689db726857924769874eb8ebc4b46f9ba59146bd3c4640e8b6b9",
+      "image_manifest_digest": "sha256:792007a030035b455f7a3ae1b9abe02bf19109b7dea43521df4175fc9c8c1a10",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/060-sympy-sympy-20916.json",
+      "qualification_receipt_sha256": "db315abcde51afa3fc66253b2c39388e4a18842229ea0177860ac923afaae1bf",
+      "task_sha256": "9459cc7d00acb22b560dfc4e4ae37dbc645da4f45dd36c1be2c84b26694fd4d5"
+    },
+    "sympy__sympy-21847": {
+      "base_commit": "d9b18c518d64d0ebe8e35a98c2fb519938b9b151",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:03e700790cf908ecf1175ffe9e9371896ad1783b5db3ce3f2c8c2776fa0bb6de",
+      "image_manifest_digest": "sha256:dc63eae1d6089ed44748eca7a136b877beaf316ca0ed31d0c563909ff1e094c8",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/054-sympy-sympy-21847.json",
+      "qualification_receipt_sha256": "5b80303a43682307559f2ca499c04a26a00d28901d1089bedad58cb8e3a4e117",
+      "task_sha256": "67383a84f588a04075d86d1b88e113c7facf82b543185309b9619a54242d3c00"
+    },
+    "sympy__sympy-23413": {
+      "base_commit": "10de1a18a0efac0b19b611e40c928250dda688bf",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:0405f497cf7d11625b22f4b5acfc1a0a3355f1271ccf7cc9de098d47a50af1cd",
+      "image_manifest_digest": "sha256:20ff27f6a06e781c201194bc8c30f321703461c63e1a7e14014dae6b2fffbb0e",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/064-sympy-sympy-23413.json",
+      "qualification_receipt_sha256": "45f3dca432dc230eadf0e35dda479dd31692b9a392c38905a99a3c4365fd4e72",
+      "task_sha256": "4d713e94a51f77ce315bc85f279acefc865a27e982dbc124a3b3afeed04d335b"
+    },
+    "sympy__sympy-24443": {
+      "base_commit": "809c53c077485ca48a206cee78340389cb83b7f1",
+      "image_architecture": "amd64",
+      "image_config_digest": "sha256:68d0df8f3ba8d80b782fd5b19eaa9c21d89ec68eee773896dfbf0d5aac14617a",
+      "image_manifest_digest": "sha256:2c038f0f89170065a375ccb9210f6cfc91d9c9a22683ebfe46f713078c30d2e1",
+      "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/050-sympy-sympy-24443.json",
+      "qualification_receipt_sha256": "ac086682aedd0e684459fa8f29c561bf3bd2838db94f503ff88544648af84378",
+      "task_sha256": "e58e6c9867b79d9dfab6e0ad7e7087773d01e54affea10a352411b3d56f95fec"
+    }
+  }
+}
