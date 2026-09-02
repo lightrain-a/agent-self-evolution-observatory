@@ -1,0 +1,13 @@
+{
+  "contract_sha256": "408043b15adef5c3fb5d6345dcdc4098f5df6884c6b2068dc48ebf1477e4567a",
+  "created_at_utc": "2026-09-02T06:05:53+00:00",
+  "credential_material_present": false,
+  "execution_complete": true,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "inflight": null,
+  "payload_sha256": "e09b1c6cc5189097f1bfd5ed457e4483dcf0f98a7a48830b7e70e5848156612f",
+  "result_sha256": "f6790a629f5528e77ba5890d10c170ce30c000566f7e0a2b875a985912350a68",
+  "schema_version": 1,
+  "stage": "QWEN_SOURCE_PROVIDER_RESUME_QUALIFICATION",
+  "trigger_ordinal": 6
+}
