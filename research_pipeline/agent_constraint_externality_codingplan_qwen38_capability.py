@@ -272,6 +272,10 @@ def run_live_turn(*, base: str, token: str, instruction: str, progress_path: Pat
     }
 
 def prepare_unit_runtime(*, unit: EpisodeUnit, unit_root: Path) -> tuple[Path, Path, Path, dict[str, Any]]:
+    # AtomCode resolves ATOMCODE_HOME relative to its daemon cwd. Scientific
+    # runtimes must therefore be absolute before the daemon starts; otherwise
+    # daemon metadata can be written under a duplicated relative path.
+    unit_root = unit_root.resolve()
     atom_home = unit_root / "atomcode-home"; workdir = unit_root / "atomcode-workdir"; progress = unit_root / "bridge-progress.json"
     atom_home.mkdir(parents=True, exist_ok=False); workdir.mkdir(parents=True, exist_ok=False)
     auth_source = Path.home() / ".atomcode/auth.toml"
@@ -284,20 +288,26 @@ def prepare_unit_runtime(*, unit: EpisodeUnit, unit_root: Path) -> tuple[Path, P
 
 
 def start_daemon(*, atom_home: Path, workdir: Path, log_path: Path) -> tuple[subprocess.Popen[Any], str, str]:
+    atom_home = atom_home.resolve(); workdir = workdir.resolve(); log_path = log_path.resolve()
     port = free_port(); env = os.environ.copy()
     env.update({"ATOMCODE_HOME": str(atom_home), "ATOMCODE_SUBAGENT": "0", "ATOMCODE_AI_SESSION_NAMING": "0", "ATOMCODE_TURN_MAX_ROUNDS": str(MODEL_ROUND_CAP), "ATOMCODE_LOOP_MAX_ROUNDS": str(MODEL_ROUND_CAP)})
     log = log_path.open("wb")
     process = subprocess.Popen([str(ATOMCODE_BIN), "daemon", "--port", str(port), "--idle-timeout", "0", "--no-telemetry"], cwd=workdir, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
-    token_path = atom_home / f"daemon-{port}.json"; wait_file(token_path, 20); token = str(read_json(token_path)["token"]); base = f"http://127.0.0.1:{port}"
-    deadline = time.time() + 20
-    while time.time() < deadline:
-        try:
-            if http_json(base, token, "/health", timeout=3).get("status") == "ok": break
-        except Exception: pass
-        time.sleep(0.1)
-    else:
-        terminate_process(process); raise CodingPlanInterfaceStop("AtomCode daemon health check failed.")
-    return process, base, token
+    log.close()
+    try:
+        token_path = atom_home / f"daemon-{port}.json"; wait_file(token_path, 20); token = str(read_json(token_path)["token"]); base = f"http://127.0.0.1:{port}"
+        deadline = time.time() + 20
+        while time.time() < deadline:
+            try:
+                if http_json(base, token, "/health", timeout=3).get("status") == "ok": break
+            except Exception: pass
+            time.sleep(0.1)
+        else:
+            raise CodingPlanInterfaceStop("AtomCode daemon health check failed.")
+        return process, base, token
+    except Exception:
+        terminate_process(process)
+        raise
 
 
 def dispatch_row(*, unit: EpisodeUnit, arm: dict[str, Any], progress: dict[str, Any], usage: dict[str, Any]) -> dict[str, Any]:
@@ -309,6 +319,7 @@ def dispatch_row(*, unit: EpisodeUnit, arm: dict[str, Any], progress: dict[str, 
 
 
 def execute_panel(*, runtime_root: Path, ledger_path: Path) -> None:
+    runtime_root = runtime_root.resolve(); ledger_path = ledger_path.resolve()
     verified(CONTRACT_OUTPUT, "CODINGPLAN_QWEN38_CAPABILITY_A0_AUTHORIZED"); verified(Q0_OUTPUT, "CODINGPLAN_MCP_Q0_PASS"); verified(Q1_OUTPUT, "CODINGPLAN_APPWORLD_MCP_LIVE_PREDISPATCH_PASS"); verified(V4_QUAL, "CAPABILITY_SUBSTRATE_V4_PUBLIC_REACHABILITY_WITH_HEADROOM_PASS")
     if sha256_file(ATOMCODE_BIN) != ATOMCODE_BINARY_SHA256: raise CodingPlanInterfaceStop("AtomCode binary hash drifted from Q0.")
     spec = load_protected_spec(V4_BUNDLE); families = {row["family_id"]: row for row in spec["families"]}; states = ledger_states(ledger_path)
@@ -389,7 +400,8 @@ def adjudicate(*, ledger_path: Path) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(); parser.add_argument("--runtime-root", type=Path, required=True); parser.add_argument("--ledger", type=Path, required=True); parser.add_argument("--result-output", type=Path, default=RESULT_OUTPUT); args = parser.parse_args()
-    execute_panel(runtime_root=args.runtime_root, ledger_path=args.ledger); result = adjudicate(ledger_path=args.ledger); write_json(args.result_output, result)
+    runtime_root = args.runtime_root.resolve(); ledger_path = args.ledger.resolve(); result_output = args.result_output.resolve()
+    execute_panel(runtime_root=runtime_root, ledger_path=ledger_path); result = adjudicate(ledger_path=ledger_path); write_json(result_output, result)
     print(json.dumps({"status": result["status"], "model_round_count": result["model_round_count"], "appworld_tool_call_total": result["appworld_tool_call_total"], "target_success_rate": result["gate"]["target_success_rate"], "tool_loop_completion_rate": result["gate"]["tool_loop_completion_rate"], "f0_authorized": False}, sort_keys=True))
 
 

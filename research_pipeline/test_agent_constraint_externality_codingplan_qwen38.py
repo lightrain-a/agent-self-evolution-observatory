@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -21,6 +22,7 @@ from research_pipeline.agent_constraint_externality_codingplan_qwen38_capability
     agents_md,
     atomcode_config,
     ledger_states,
+    prepare_unit_runtime,
     units,
 )
 from research_pipeline.agent_constraint_externality_runner_core import sha256_value
@@ -82,6 +84,21 @@ class CodingPlanQwen38CapabilityTests(unittest.TestCase):
         self.assertIn("mcp__appworld__", instructions)
         self.assertIn("Never use host coding", instructions)
         self.assertIn("Batch independent AppWorld tool calls", instructions)
+
+    def test_relative_episode_root_is_canonicalized_before_atomcode_start(self) -> None:
+        original = Path.cwd()
+        with tempfile.TemporaryDirectory() as directory:
+            os.chdir(directory)
+            try:
+                atom_home, workdir, progress, _ = prepare_unit_runtime(
+                    unit=units()[0], unit_root=Path("relative-episode")
+                )
+                self.assertTrue(atom_home.is_absolute())
+                self.assertTrue(workdir.is_absolute())
+                self.assertTrue(progress.is_absolute())
+                self.assertTrue(str(atom_home).startswith(str(Path(directory).resolve())))
+            finally:
+                os.chdir(original)
 
     def test_codingplan_ledger_is_exactly_once(self) -> None:
         unit = units()[0]

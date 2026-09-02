@@ -15,7 +15,7 @@
     "scientific_request_accounting": "COUNT_LIVE_TOKEN_EVENTS_AND_PLAN_WINDOW_DELTA",
     "total_token_quota": "UNLIMITED_BY_PLAN"
   },
-  "content_sha256": "a69f77664acc5f3072c84e8b378b13345454a72bde8b58824853f0516593c5ae",
+  "content_sha256": "ca4aa350927951ff713df2760a34ffccc57701493fa72889e0f6b812fd259d71",
   "execution_id": "CODINGPLAN-QWEN38-27B-CAPABILITY-A0",
   "f0_scientific_outcomes_observed": 0,
   "frozen_gate": {
@@ -76,7 +76,7 @@
   },
   "purpose": "Prospective capability calibration only; F0 remains closed.",
   "q0_qualification_sha256": "797ebe6c4defb607a59165182789671b1f70c4592549a57dc475688f2c914611",
-  "q1_appworld_mcp_predispatch_sha256": "7fadc1deddf8183fbac89b6205779b31e3c2b5b88e0326f101740182a7a094a6",
+  "q1_appworld_mcp_predispatch_sha256": "63a1fe8c7c71f207bea7542d9d406557c513e19ce0d62f8b8e2f79bddec04726",
   "schema_version": "ace-codingplan-qwen38-capability-a0-contract-v1",
   "selection_context": {
     "new_candidate_is_post_ceiling_sequential_selection": true,
