@@ -461,6 +461,17 @@ def main() -> None:
         scripts = canonical_scripts.get(filename, [])
         if depth_script not in scripts or scripts.index(depth_script) > scripts.index("current-paper-page-view.js"):
             fail(f"{filename} must load its deep replay dossier before the single-paper renderer")
+    required_evidence_profiles = {
+        "paper-e1.html":"current-paper-evidence-e1-g1.js", "paper-g1.html":"current-paper-evidence-e1-g1.js",
+        "paper-c1.html":"current-paper-evidence-c1-e2.js", "paper-e2.html":"current-paper-evidence-c1-e2.js",
+        "paper-b1.html":"current-paper-evidence-b1.js", "paper-a.html":"current-paper-evidence-embodied.js",
+        "paper-b.html":"current-paper-evidence-embodied.js", "paper-agent-constraint.html":"current-paper-evidence-objects.js",
+        "paper-3d.html":"current-paper-evidence-objects.js",
+    }
+    for filename, evidence_script in required_evidence_profiles.items():
+        scripts = canonical_scripts.get(filename, [])
+        if evidence_script not in scripts or scripts.index(evidence_script) > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load its published-neighbor / experiment-provenance profile before the single-paper renderer")
     if "renderCurrentPaperCollection" not in current_paper_view_source or "QUICK OVERVIEW" not in current_paper_view_source or "速览版" not in current_paper_view_source:
         fail("current-paper renderer must expose collection-only routing plus the single-paper quick overview")
     if "renderCurrentPaperShelf" in current_paper_view_source or "cpp-pager" in current_paper_view_source:
