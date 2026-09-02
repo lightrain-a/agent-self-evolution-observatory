@@ -78,6 +78,14 @@
     "TOKENIZERS_PARALLELISM": "false"
   },
   "required_launch_scope": "systemd-run --user --scope -p MemoryMax=72G -p MemorySwapMax=0",
+  "required_inheritance_if_pass": {
+    "future_formal_training_num_workers": 0,
+    "future_formal_training_thread_caps": "same as resource-v2",
+    "future_formal_training_MemoryMax": "72G unless a separate pre-outcome resource amendment proves a different finite bound",
+    "future_formal_training_MemorySwapMax": "0",
+    "worker_count_increase_without_new_resource_qualification": false,
+    "reason": "A dry-step PASS only validates the repaired resource topology. Returning to source num_workers=8 would reintroduce the adjudicated host-memory failure mode."
+  },
   "optimizer_update_count_authorized": 0,
   "formal_training_authorized": false,
   "policy_rollouts_authorized": false,
