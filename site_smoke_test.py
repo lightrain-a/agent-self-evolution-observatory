@@ -498,7 +498,7 @@ def main() -> None:
     if 'href="current-paper-pages.css"' not in selected_html or "当前论文合集" not in selected_html:
         fail("selected-paper must be explicitly labeled and styled as the current paper collection")
     detail_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in ("current-paper-details-registry-a.js", "current-paper-details-registry-b.js", "current-paper-details-working.js", "current-paper-details-objects.js"))
-    for marker in ("R*(A;q)", "BrowserART + AWM", "Shopping", "12 streams × 4 paired replicates", "AgentDojo financial", "MemoryVLA", "AppWorld-derived matched families", "InstructScene"):
+    for marker in ("STRI-Cert", "e=Aw", "R*(A)", "BrowserART + AWM", "Shopping", "12 streams × 4 paired replicates", "AgentDojo financial", "MemoryVLA", "AppWorld-derived matched families", "InstructScene"):
         if marker not in detail_text:
             fail(f"single-paper detail projection is missing model/dataset/design evidence: {marker}")
     if "⑧ Constraint Externality" not in detail_text:
