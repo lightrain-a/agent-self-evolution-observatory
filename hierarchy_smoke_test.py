@@ -28,7 +28,7 @@ EXPECTATIONS = {
     "foundations": (2, 3, 2, 0),
     "mechanisms": (3, 3, 1, 0),
     "system-overview": (10, 11, 18, 0),
-    "experiment-costs": (0, 7, 0, 0),
+    "experiment-costs": (0, 3, 0, 0),
     "research-timeline": (0, 0, 0, 0),
     "research-map": (4, 5, 8, 0),
     "research-directions": (3, 4, 1, 0),
@@ -209,9 +209,9 @@ def main() -> None:
                 if ddl.get("panel") != 1 or ddl.get("cards") != 2 or ddl.get("targets") != ["2026-09-19T11:59:00Z","2026-09-26T11:59:00Z"] or not all("北京时间" in x for x in ddl.get("dates", [])) or "iclr.cc/Conferences/2027/AuthorGuidelines" not in ddl.get("official", "") or ddl.get("overflow"):
                     raise AssertionError(f"research-timeline: ICLR 2027 deadline/countdown contract failed: {ddl}")
             if page == "experiment-costs":
-                costs = execute(session_id, """return {sections:document.querySelectorAll('.topic-section').length,tables:document.querySelectorAll('.advisor-table-scroll>.matrix').length,toc:[...document.querySelectorAll('#page-toc a')].map(a=>a.textContent.trim()),status:document.querySelectorAll('.project-status-strip').length,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
-                if costs.get("sections") != 7 or costs.get("tables") != 5 or len(costs.get("toc", [])) != 7 or costs.get("status") != 0 or costs.get("overflow"):
-                    raise AssertionError(f"experiment-costs: cost ledger layout contract failed: {costs}")
+                costs = execute(session_id, """return {sections:document.querySelectorAll('.topic-section').length,tables:document.querySelectorAll('.advisor-table-scroll>.matrix').length,rows:document.querySelectorAll('.ec-master tbody tr').length,facts:document.querySelectorAll('.ec-facts article').length,toc:[...document.querySelectorAll('#page-toc a')].map(a=>a.textContent.trim()),status:document.querySelectorAll('.project-status-strip').length,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
+                if costs.get("sections") != 3 or costs.get("tables") != 1 or costs.get("rows") != 12 or costs.get("facts") != 3 or len(costs.get("toc", [])) != 3 or costs.get("status") != 0 or costs.get("overflow"):
+                    raise AssertionError(f"experiment-costs: compact cost ledger layout contract failed: {costs}")
             if page == "paper-ideas":
                 portfolio = execute(session_id, """return {paperShelf:document.querySelectorAll('#current-paper-pages .cpp-shelf-card').length,console:document.querySelectorAll('#portfolio-current').length,currentCards:document.querySelectorAll('.portfolio-attention-card').length,categories:document.querySelectorAll('.canonical-category-nav a').length,currentLanes:document.querySelectorAll('.lane-current').length,concludedOpen:document.querySelectorAll('.lane-concluded[open]').length,assetsOpen:document.querySelectorAll('.lane-assets[open]').length,mementoOpen:document.querySelector('#live-memento-paper-design')?.open===true,safetyOpen:document.querySelector('.agent-safety-program-fold')?.open===true,auditOpen:document.querySelector('#portfolio-audit')?.open===true,toc:[...document.querySelectorAll('#page-toc a')].map(a=>a.textContent.trim()),scrollHeight:document.documentElement.scrollHeight,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
                 expected_toc = ["当前需要看什么","A–G 研究组合","更新可靠性与回归控制","记忆、经验与持久知识","评价器、奖励与自纠正","任务生成与课程","工作流与结构演化","世界模型与具身适应","Agent 自进化安全与未来风险","审计与历史"]
