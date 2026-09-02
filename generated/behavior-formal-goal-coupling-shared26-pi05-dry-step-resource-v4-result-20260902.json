@@ -1,0 +1,119 @@
+{
+  "adapter_qualification_path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-dataloader-resource-adapter-qualification-20260902.json",
+  "adapter_qualification_sha256": "e3f2b1dc7fe40b91c47a68ec084119497c28a9e64262328ce723a35aa5751dd2",
+  "attempt_count_under_resource_v4_authority": 1,
+  "attempt_is_exactly_once": true,
+  "authority_path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-v4-authority-20260902.json",
+  "authority_sha256": "761513c2efe2797936580407d04745742494ef5dbabe87e524c6c57fec515d8a",
+  "backward_gradient_executed": false,
+  "base_bytes_rehashed": 12441721931,
+  "base_object_count_rehashed": 20,
+  "base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+  "batch_ready": true,
+  "checkpoint_written": false,
+  "dataloader_smoke_sha256": "91e6e138bbe353fbf8774ea894c43cb9f6e7169b1f2dd0356456f62400babbd2",
+  "dataset_batch_accessed": true,
+  "dry_gradient_execution_completed": false,
+  "dry_gradient_execution_started": true,
+  "error": "XlaRuntimeError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 29452454632 bytes.",
+  "failure_adjudication_path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-v3-compile-thread-failure-adjudication-20260902.json",
+  "failure_adjudication_sha256": "4cf3919832730df555a1e2f5609360451f498c5ceb3b95741756e75f276fdea7",
+  "formal_training_authorized": false,
+  "generated_at": "2026-09-02T14:17:27.605533+00:00",
+  "gpu_after_gradient_or_error": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 61357,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_after_state": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 61319,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 445,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gradient_element_count": null,
+  "gradient_leaf_count": null,
+  "gradient_numerical_values_read": false,
+  "jax_cuda_preflight": {
+    "allowed_cpu_count": 64,
+    "cpu_affinity": "0-63",
+    "devices": [
+      "cuda:0"
+    ],
+    "platforms": [
+      "gpu"
+    ],
+    "thread_count_after_cuda_client_init": 70
+  },
+  "jax_memory_after_gradient": null,
+  "jax_memory_after_state": {
+    "bytes_in_use": 53773035264,
+    "bytes_limit": 63821119488,
+    "bytes_reserved": 0,
+    "largest_alloc_size": 4831838208,
+    "largest_free_block_bytes": 0,
+    "num_allocs": 247,
+    "peak_bytes_in_use": 53773046272,
+    "peak_bytes_reserved": 0,
+    "peak_pool_bytes": 63821119488,
+    "pool_bytes": 63821119488
+  },
+  "loss_value_retained_or_reported": false,
+  "model_forward_executed": false,
+  "model_load_result_sha256": "fda2c02b5d8ec3e9acd491c9d197ba251e78cfc5e7d5486112c9a13bf655da0c",
+  "next_gate": "RESOURCE_V4_DRY_STEP_FAILURE_ADJUDICATION_NO_AUTOMATIC_RETRY",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "optimizer_update": false,
+  "parameter_update": false,
+  "parent_v1_v2_v3_attempts_consumed": true,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "resource_admission_sha256": "b7c010d45c21a83db57567a2fe599d59bf2933c327423d1bc4cd2e265e376275",
+  "resource_repair_num_workers": 0,
+  "resource_scope": {
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1006.slice/user@1006.service/app.slice/run-r8134ad1ee8cb484bab34fd1e50cf6b44.scope",
+    "memory_max_bytes": 77309411328,
+    "memory_swap_max_bytes": 0
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-v4-result-v1",
+  "scientific_authority": false,
+  "scientific_training_started": false,
+  "source_num_workers": 8,
+  "status": "PI05_NO_UPDATE_DRY_STEP_RESOURCE_V4_HOLD",
+  "thread_environment": {
+    "JAX_PLATFORMS": "cuda",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "TOKENIZERS_PARALLELISM": "false"
+  },
+  "tokenizer_cache": "/data/wyt/formal-goal-openpi-cache-v1/big_vision/paligemma_tokenizer.model",
+  "tokenizer_executed": true,
+  "tokenizer_result_sha256": "18ca3f4a11f23d58a0e14eb2ebc13838b5717f959ba788557de19439b74ce0dc",
+  "tokenizer_sha256": "8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6",
+  "train_state_ready": true
+}
