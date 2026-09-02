@@ -127,6 +127,82 @@ class SemanticTransferStageAControlTest(unittest.TestCase):
             self.assertNotEqual(0, result.returncode)
             self.assertFalse(output.exists())
 
+    def test_authorizer_refuses_single_reviewer_or_drifted_review(self) -> None:
+        contract_sha = hashlib.sha256(CONTRACT.read_bytes()).hexdigest()
+        base_review = {
+            "status": "COMPLETED",
+            "scientific_authority": False,
+            "experiment_authority": False,
+            "review": {
+                "contract_sha256_acknowledged": contract_sha,
+                "verdict": "PASS_TO_SEPARATE_STAGE_A_AUTHORIZATION",
+                "execution_recommendation": "ALLOW_SEPARATE_STAGE_A_AUTHORIZATION",
+                "remaining_blockers": [],
+                "stage_b_authority": False,
+                "paper_claim_authority": False,
+            },
+        }
+        scenarios = {
+            "single_reviewer_only": {
+                "deepseek-v4-pro": base_review,
+                "kimi-k3": {
+                    "status": "FAIL_PROVIDER_PROTOCOL",
+                    "scientific_authority": False,
+                    "experiment_authority": False,
+                    "review": {},
+                },
+            },
+            "wrong_contract_ack": {
+                "deepseek-v4-pro": base_review,
+                "kimi-k3": {
+                    **base_review,
+                    "review": {**base_review["review"], "contract_sha256_acknowledged": "0" * 64},
+                },
+            },
+            "overbroad_stage_b": {
+                "deepseek-v4-pro": base_review,
+                "kimi-k3": {
+                    **base_review,
+                    "review": {**base_review["review"], "stage_b_authority": True},
+                },
+            },
+        }
+        for name, rows in scenarios.items():
+            with self.subTest(name=name), tempfile.TemporaryDirectory() as td:
+                root = Path(td)
+                review_root = root / "reviews"
+                review_root.mkdir()
+                summary = {
+                    "contract_sha256": contract_sha,
+                    "all_pass_to_separate_stage_a_authorization": True,
+                    "stage_b_authority": False,
+                    "paper_claim_authority": False,
+                }
+                (review_root / "summary.json").write_text(json.dumps(summary), encoding="utf-8")
+                for model, row in rows.items():
+                    (review_root / f"{model}.json").write_text(json.dumps(row), encoding="utf-8")
+                output = root / "authorization.json"
+                result = subprocess.run(
+                    [
+                        sys.executable,
+                        str(AUTHORIZER),
+                        "--contract",
+                        str(CONTRACT),
+                        "--preflight",
+                        str(PREFLIGHT),
+                        "--review-root",
+                        str(review_root),
+                        "--output",
+                        str(output),
+                    ],
+                    cwd=ROOT,
+                    capture_output=True,
+                    text=True,
+                    check=False,
+                )
+                self.assertNotEqual(0, result.returncode)
+                self.assertFalse(output.exists())
+
 
 if __name__ == "__main__":
     unittest.main()
