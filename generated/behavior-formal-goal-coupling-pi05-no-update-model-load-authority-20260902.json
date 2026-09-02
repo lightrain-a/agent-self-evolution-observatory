@@ -1,0 +1,47 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-pi05-no-update-model-load-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "AUTHORIZED_PI05_NO_UPDATE_MODEL_LOAD_QUALIFICATION",
+  "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "config_name": "pi05_b1k_shared26_frozen",
+  "base_checkpoint_source": "gs://openpi-assets/checkpoints/pi05_base/params",
+  "local_content_address_root": "/data/wyt/formal-goal-pi05-base-params-v1",
+  "base_asset_receipt_path": "generated/behavior-formal-goal-coupling-pi05-base-transport-repair1-result-20260902.json",
+  "base_asset_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+  "normalization_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+  "qualification_scope": [
+    "instantiate the frozen pi0.5 model/train-state shape under the pinned OpenPI child",
+    "replace only the remote checkpoint transport path with the content-addressed local byte-identical mirror",
+    "restore and source-validate checkpoint parameter shapes and dtypes",
+    "initialize step-0 train state with source optimizer/EMA semantics",
+    "block until device state is ready and record memory/provenance"
+  ],
+  "qualification_device_topology": {
+    "host": "222.20.126.69",
+    "visible_gpu_count": 1,
+    "gpu_class": "A100-SXM4-80GB",
+    "purpose": "model-load/no-update qualification only",
+    "formal_training_topology_authorized": false
+  },
+  "forbidden": [
+    "dataset batch access",
+    "tokenizer execution",
+    "model forward pass",
+    "loss computation",
+    "backward pass",
+    "optimizer update",
+    "checkpoint write",
+    "policy rollout",
+    "Q/reward/success read",
+    "using this single-device qualification as authority to change the frozen formal training topology"
+  ],
+  "model_checkpoint_weight_downloaded": true,
+  "model_loaded": false,
+  "gpu_used": false,
+  "training_started": false,
+  "optimizer_update": false,
+  "policy_rollouts_started": false,
+  "policy_outcomes_read": false,
+  "scientific_authority": false,
+  "next_gate_if_pass": "FROZEN_DISTRIBUTED_TRAINING_RESOURCE_ADMISSION"
+}
