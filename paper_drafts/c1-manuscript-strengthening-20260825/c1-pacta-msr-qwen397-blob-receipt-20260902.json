@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-02T04:16:00Z",
+  "experiment": "C1-PACTA-MSR-QWEN397-P0-20260902",
+  "status": "ALL_86_OCI_BLOBS_VERIFIED",
+  "manifest_freeze_sha256": "5c788e477a342b159d3928f4a66e1cb74f44445c5bee2cbb09a57933e1dec3be",
+  "blob_plan_sha256": "aad1f4878e6c49a123b9585151264d4337b270d496453f158a8a9148a80514a8",
+  "blob_receipt_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-msr-qwen397-images-20260902-v1/blob-receipt.json",
+  "blob_receipt_sha256": "faeb699dd6b35e51871f6a7ab7122282feaf4d70a394cfe292ba8426b10f30eb",
+  "unique_blob_count": 86,
+  "unique_blob_bytes": 14836117721,
+  "verified_existing_count": 42,
+  "downloaded_and_verified_count": 44,
+  "scientific_retries": 0,
+  "provider_calls": 0,
+  "next_authority": "rootful exact-digest import and exact-base runtime qualification for all 20 frozen images"
+}
