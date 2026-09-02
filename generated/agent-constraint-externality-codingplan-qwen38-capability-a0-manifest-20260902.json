@@ -1,0 +1,33 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "codingplan_capability_a0": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "b586631f595893ab77e1d0705f83986048753f594860fb89ea8f2a88280bc926",
+  "f0_scientific_outcomes_observed": 0,
+  "files": {
+    "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle": {
+      "bytes": 13239,
+      "sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5"
+    },
+    "generated/agent-constraint-externality-codingplan-appworld-mcp-q1-predispatch-20260902.json": {
+      "bytes": 1143,
+      "sha256": "ae8a625ac4467dfae08502b44860af535b8c13fa426f7c16516eeee46663aeea"
+    },
+    "generated/agent-constraint-externality-codingplan-mcp-q0-qualification-20260902.json": {
+      "bytes": 1008,
+      "sha256": "50d1976ae6532ad34bdf109510f08fd821d9f3da41b2e566a24001cd07507939"
+    },
+    "generated/agent-constraint-externality-codingplan-qwen38-capability-a0-contract-20260902.json": {
+      "bytes": 3821,
+      "sha256": "a301f9ac5cee3e09e575065c73b3b9791b51b3bab1fb93a6636270ba0d3b7fe5"
+    }
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-codingplan-qwen38-capability-a0-manifest-v1",
+  "status": "CODINGPLAN_QWEN38_CAPABILITY_A0_FROZEN"
+}

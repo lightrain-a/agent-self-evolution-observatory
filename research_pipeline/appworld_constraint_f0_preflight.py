@@ -126,6 +126,24 @@ CAPABILITY_R5_PARTIAL_CONTRACT = (
 CAPABILITY_R5_PARTIAL_RESULT = (
     GENERATED / "agent-constraint-externality-qwen37plus-capability-result-r5-partial-20260902.json"
 )
+CODINGPLAN_QWEN38_Q0 = (
+    GENERATED / "agent-constraint-externality-codingplan-mcp-q0-qualification-20260902.json"
+)
+CODINGPLAN_QWEN38_Q1 = (
+    GENERATED / "agent-constraint-externality-codingplan-appworld-mcp-q1-predispatch-20260902.json"
+)
+CODINGPLAN_QWEN38_CONTRACT = (
+    GENERATED / "agent-constraint-externality-codingplan-qwen38-capability-a0-contract-20260902.json"
+)
+CODINGPLAN_QWEN38_MANIFEST = (
+    GENERATED / "agent-constraint-externality-codingplan-qwen38-capability-a0-manifest-20260902.json"
+)
+CODINGPLAN_QWEN38_RESULT = (
+    GENERATED / "agent-constraint-externality-codingplan-qwen38-capability-a0-result-20260902.json"
+)
+CODINGPLAN_QWEN38_CLOSEOUT = (
+    GENERATED / "agent-constraint-externality-codingplan-qwen38-capability-a0-closeout-20260902.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -336,6 +354,29 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         and r5_partial_contract.get("model_switch") is False
         and r5_partial_contract.get("replacement") is False
     )
+    codingplan_result = (
+        read_json(CODINGPLAN_QWEN38_RESULT) if CODINGPLAN_QWEN38_RESULT.is_file() else {}
+    )
+    codingplan_status = validate_capability_result(codingplan_result)
+    codingplan_closeout = (
+        read_json(CODINGPLAN_QWEN38_CLOSEOUT) if CODINGPLAN_QWEN38_CLOSEOUT.is_file() else {}
+    )
+    codingplan_closeout_valid = False
+    if codingplan_closeout:
+        if codingplan_closeout.get("object_id") != OBJECT_ID:
+            raise PreflightError("CodingPlan closeout object identity mismatch.")
+        claimed = codingplan_closeout.get("content_sha256")
+        unsigned = dict(codingplan_closeout)
+        unsigned.pop("content_sha256", None)
+        if claimed != digest(unsigned):
+            raise PreflightError("CodingPlan closeout content hash mismatch.")
+        if codingplan_closeout.get("status") != "CODINGPLAN_QWEN38_CAPABILITY_A0_CLOSEOUT_CEILING_STOP":
+            raise PreflightError("CodingPlan closeout is not at its frozen ceiling stop.")
+        if codingplan_closeout.get("scientific_verdict") != codingplan_status:
+            raise PreflightError("CodingPlan closeout/result verdict mismatch.")
+        if codingplan_closeout.get("authority", {}).get("f0") is not False:
+            raise PreflightError("CodingPlan closeout cannot authorize F0.")
+        codingplan_closeout_valid = True
 
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
@@ -429,6 +470,16 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
     lineage_provider_requests = historical_void_provider_requests + latest_provider_requests
     lineage_agent_requests = historical_void_agent_requests + latest_agent_requests
     lineage_agent_episodes = historical_void_agent_episodes + latest_agent_episodes
+    codingplan_accounting = codingplan_closeout.get("execution_accounting", {})
+    both_valid_candidates_ceiling = (
+        capability_status == "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+        and codingplan_status == "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+        and codingplan_closeout_valid
+    )
+    eligible_backbone_selected = (
+        capability_status == "CAPABILITY_CALIBRATION_PASS"
+        or codingplan_status == "CAPABILITY_CALIBRATION_PASS"
+    )
 
     capability = {
         "schema_version": "agent-constraint-externality-capability-calibration-v1",
@@ -622,6 +673,18 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CAPABILITY_CALIBRATION_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "Capability passed, but this capability execution does not itself authorize F0."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif codingplan_status == "CAPABILITY_CALIBRATION_PASS" and codingplan_closeout_valid:
+        readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
+        blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
+        next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif both_valid_candidates_ceiling:
+        readiness_status = "CAPABILITY_MODEL_SELECTION_NO_ELIGIBLE_BACKBONE_ALL_CEILING_STOP"
+        blocker = (
+            "Both valid post-repair candidates are above the frozen target-success ceiling: "
+            "Qwen3.7-Plus under the direct AppWorld harness and CodingPlan Qwen3.8-27B under AtomCode MCP. "
+            "No F0 backbone is selected."
+        )
+        next_action = "STOP_AWAIT_HUMAN_BACKBONE_SELECTION"
     elif capability_status:
         readiness_status = capability_status
         blocker = (
@@ -707,6 +770,57 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             if capability_result_path.is_file()
             else None
         ),
+        "direct_api_capability_result_status": capability_status,
+        "direct_api_capability_result_artifact": (
+            str(capability_result_path.relative_to(ROOT))
+            if capability_result_path.is_file()
+            else None
+        ),
+        "codingplan_capability_result_status": codingplan_status,
+        "codingplan_capability_result_artifact": (
+            str(CODINGPLAN_QWEN38_RESULT.relative_to(ROOT))
+            if CODINGPLAN_QWEN38_RESULT.is_file()
+            else None
+        ),
+        "codingplan_capability_closeout_status": codingplan_closeout.get("status"),
+        "codingplan_capability_closeout_artifact": (
+            str(CODINGPLAN_QWEN38_CLOSEOUT.relative_to(ROOT))
+            if CODINGPLAN_QWEN38_CLOSEOUT.is_file()
+            else None
+        ),
+        "codingplan_capability_valid_measurements": int(
+            codingplan_result.get("valid_capability_measurements", 0)
+        ),
+        "codingplan_model_profile": codingplan_result.get("model_profile"),
+        "codingplan_model_id": codingplan_result.get("model_id"),
+        "codingplan_harness": codingplan_result.get("harness"),
+        "codingplan_scientific_model_round_count": int(
+            codingplan_accounting.get("scientific_model_round_count", 0)
+        ),
+        "codingplan_account_window_request_delta": int(
+            codingplan_accounting.get("codingplan_account_window_request_delta", 0)
+        ),
+        "codingplan_account_level_unattributed_request_count": int(
+            codingplan_accounting.get("account_level_unattributed_request_count", 0)
+        ),
+        "codingplan_appworld_tool_call_total": int(
+            codingplan_accounting.get("appworld_tool_call_total", 0)
+        ),
+        "codingplan_prompt_tokens_total": int(
+            codingplan_accounting.get("prompt_tokens_total", 0)
+        ),
+        "codingplan_completion_tokens_total": int(
+            codingplan_accounting.get("completion_tokens_total", 0)
+        ),
+        "codingplan_request_accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
+        "capability_model_selection_state": (
+            "NO_ELIGIBLE_BACKBONE_BOTH_VALID_CANDIDATES_CEILING"
+            if both_valid_candidates_ceiling
+            else "ELIGIBLE_BACKBONE_SELECTED"
+            if eligible_backbone_selected
+            else "MODEL_SELECTION_INCOMPLETE"
+        ),
+        "eligible_backbone_selected": eligible_backbone_selected,
         "capability_valid_measurements": capability_result.get(
             "valid_capability_measurements", 0
         ),
@@ -788,6 +902,8 @@ def main() -> None:
         CAPABILITY_SUBSTRATE_V3_BUNDLE, CAPABILITY_SUBSTRATE_V4_CONTRACT,
         CAPABILITY_SUBSTRATE_QUALIFICATION_R4, CAPABILITY_SUBSTRATE_V4_BUNDLE,
         CAPABILITY_R5_PARTIAL_CONTRACT, CAPABILITY_R5_PARTIAL_RESULT,
+        CODINGPLAN_QWEN38_Q0, CODINGPLAN_QWEN38_Q1, CODINGPLAN_QWEN38_CONTRACT,
+        CODINGPLAN_QWEN38_MANIFEST, CODINGPLAN_QWEN38_RESULT, CODINGPLAN_QWEN38_CLOSEOUT,
     ):
         if not path.is_file():
             continue
@@ -806,6 +922,13 @@ def main() -> None:
         "files": manifest_files,
         "scientific_outcomes_observed": readiness["f0_outcomes_observed"],
         "provider_calls": readiness["capability_provider_request_total"],
+        "provider_calls_accounting_domain": "DIRECT_API_ONLY",
+        "codingplan_account_window_requests": readiness[
+            "codingplan_account_window_request_delta"
+        ],
+        "codingplan_request_accounting_domain": readiness[
+            "codingplan_request_accounting_domain"
+        ],
         "gpu_runs": 0,
         "authority": {
             "m1_mock_qualification": not readiness["m1_runner_qualification_pass"],

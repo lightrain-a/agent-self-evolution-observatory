@@ -9,6 +9,8 @@
     "paper_claim": false,
     "toolsandbox": false
   },
+  "codingplan_account_window_requests": 70,
+  "codingplan_request_accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
   "files": {
     "generated/agent-constraint-externality-appworld-compiler-manifest-20260831.json": {
       "bytes": 2041,
@@ -78,13 +80,37 @@
       "bytes": 1822,
       "sha256": "d60f0ad2b584fd193dc81b36a3dc274f3f2db2a0fb36c6e5e68a9120459d247d"
     },
+    "generated/agent-constraint-externality-codingplan-appworld-mcp-q1-predispatch-20260902.json": {
+      "bytes": 1143,
+      "sha256": "ae8a625ac4467dfae08502b44860af535b8c13fa426f7c16516eeee46663aeea"
+    },
+    "generated/agent-constraint-externality-codingplan-mcp-q0-qualification-20260902.json": {
+      "bytes": 1008,
+      "sha256": "50d1976ae6532ad34bdf109510f08fd821d9f3da41b2e566a24001cd07507939"
+    },
+    "generated/agent-constraint-externality-codingplan-qwen38-capability-a0-closeout-20260902.json": {
+      "bytes": 6490,
+      "sha256": "425449ff45935bca00daa9db83a77037b62e1e0b2e3d20e01545a31951e983c9"
+    },
+    "generated/agent-constraint-externality-codingplan-qwen38-capability-a0-contract-20260902.json": {
+      "bytes": 3821,
+      "sha256": "a301f9ac5cee3e09e575065c73b3b9791b51b3bab1fb93a6636270ba0d3b7fe5"
+    },
+    "generated/agent-constraint-externality-codingplan-qwen38-capability-a0-manifest-20260902.json": {
+      "bytes": 1338,
+      "sha256": "fe662970904a351e09a91faefc7b325573797bdeb8d4b6918fb13ffa753a7226"
+    },
+    "generated/agent-constraint-externality-codingplan-qwen38-capability-a0-result-20260902.json": {
+      "bytes": 1862,
+      "sha256": "014c8c99eec62417706144e9a9983e3650c87e9e531892d19651d4347b814a04"
+    },
     "generated/agent-constraint-externality-f0-frozen-protocol-20260831.json": {
       "bytes": 4894,
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 3070,
-      "sha256": "7f02b4afc07f41ddf343381b6b3a8ee899d6a4cb8fbdc29c10105bcc51fb2500"
+      "bytes": 4641,
+      "sha256": "79a4409c8ff92728a287f8672d741b8f280a6396fb16fcd7f07ed4f5523b3ca8"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -171,7 +197,8 @@
   "gpu_runs": 0,
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "provider_calls": 296,
+  "provider_calls_accounting_domain": "DIRECT_API_ONLY",
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+  "status": "CAPABILITY_MODEL_SELECTION_NO_ELIGIBLE_BACKBONE_ALL_CEILING_STOP"
 }
