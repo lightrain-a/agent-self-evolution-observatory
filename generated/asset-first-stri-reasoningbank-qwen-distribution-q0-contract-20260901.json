@@ -1,0 +1,128 @@
+{
+  "classification_vocabulary": [
+    "honored",
+    "accepted_unverified",
+    "ignored",
+    "unsupported",
+    "server-fixed",
+    "unresolved"
+  ],
+  "created_at_utc": "2026-09-02T03:23:57+00:00",
+  "credential_material_present": false,
+  "d0_decision": "D0_PRIMARY_FOUR_REPOSITORY_EVALUATOR_FEASIBILITY_PASS",
+  "d0_index_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-index-20260901.json",
+  "d0_index_sha256": "b21f6c1a9a8c897d8c241f9687d0861072d28d00742beadf8c702fe8721d1de9",
+  "decision": "Q0_QWEN3_CODER_NEXT_PROVIDER_QUALIFICATION_AUTHORIZED",
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "official_configuration_basis": {
+    "model_card": "https://huggingface.co/Qwen/Qwen3-Coder-Next",
+    "model_card_statement": "non-thinking-only; temperature=1.0; top_p=0.95; top_k=40",
+    "scientific_max_output_tokens": 32768,
+    "semantic_probe_temperature": 0.0,
+    "semantic_probe_top_p": 1.0,
+    "temperature": 1.0,
+    "top_k": 40,
+    "top_p": 0.95,
+    "unsupported_recommended_parameter_policy": "freeze unavailable/omitted; do not substitute a model or provider based on outcomes"
+  },
+  "payload_sha256": "5e838da8936231ac5ef6d4c4d03b83e12b6065a1221b8f30ed1a85de0ebcf927",
+  "probe_plan": [
+    {
+      "attempt_count": 1,
+      "goal": "model identity, system/user semantics, recommended temperature/top_p",
+      "name": "identity_messages_sampling",
+      "ordinal": 1
+    },
+    {
+      "attempt_count": 1,
+      "goal": "Responses instructions/system priority",
+      "name": "instructions_semantics",
+      "ordinal": 2
+    },
+    {
+      "attempt_count": 1,
+      "goal": "system/user/assistant/user history semantics",
+      "name": "multi_turn_history",
+      "ordinal": 3
+    },
+    {
+      "attempt_count": 1,
+      "goal": "recommended top_k=40 acceptance and evidence of honoring",
+      "name": "recommended_top_k",
+      "ordinal": 4
+    },
+    {
+      "attempt_count": 1,
+      "goal": "seed field acceptance without assuming it is honored",
+      "name": "seed_acceptance",
+      "ordinal": 5
+    },
+    {
+      "attempt_count": 1,
+      "goal": "stop field acceptance and visible truncation",
+      "name": "stop_semantics",
+      "ordinal": 6
+    },
+    {
+      "attempt_count": 1,
+      "goal": "function tool/action compatibility",
+      "name": "tool_call",
+      "ordinal": 7
+    },
+    {
+      "attempt_count": 1,
+      "goal": "exact mini-SWE-agent bash action format compatibility",
+      "name": "text_action_parser",
+      "ordinal": 8
+    },
+    {
+      "attempt_count": 1,
+      "goal": "small output cap behavior and incomplete metadata",
+      "name": "max_output_tokens",
+      "ordinal": 9
+    },
+    {
+      "attempt_count": 1,
+      "goal": "explicit n=1 Chat-Completions semantics and exactly one returned choice",
+      "name": "single_choice_n1",
+      "ordinal": 10
+    }
+  ],
+  "probe_plan_sha256": "74dd564cb8772027c33c55d9b858acb8f4eb3834bda52cfb281f18efc28c78d2",
+  "provider": {
+    "base_url": "https://api.aa.com.cn/api/v1",
+    "credential_source": "dedicated ignored mode-0600 server secret file",
+    "credential_value_persisted": false,
+    "endpoint": "https://api.aa.com.cn/api/v1/chat/completions",
+    "max_retries": 0,
+    "n": 1,
+    "requested_model": "qwen3-coder-next",
+    "resolved_model_requirement": "qwen3-coder-next",
+    "route_family": "Dianming OpenAI-compatible Chat Completions API",
+    "streaming": false,
+    "timeout_seconds": 120.0
+  },
+  "qualification_gate": {
+    "model_identity_exact_required": true,
+    "multi_turn_required": true,
+    "no_hidden_retries": true,
+    "recommended_top_k_support_required": false,
+    "response_identity_metadata_required": true,
+    "response_parser_required": true,
+    "single_choice_n1_required": true,
+    "system_user_semantics_required": true,
+    "text_action_compatibility_required": false,
+    "tool_function_call_required_for_scientific_agent": false,
+    "usage_metadata_required": true
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "benchmark_calls_authorized": false,
+    "confirmatory_execution_authorized": false,
+    "q1_stochasticity_qualification_authorized": false,
+    "source_generation_authorized": false,
+    "source_runtime_qualification_authorized": false,
+    "task_split_authorized": false
+  },
+  "stage": "Q0_QWEN_PROVIDER_QUALIFICATION"
+}
