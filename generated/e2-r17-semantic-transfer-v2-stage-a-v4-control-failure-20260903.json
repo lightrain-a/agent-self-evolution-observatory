@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-semantic-transfer-v2-stage-a-v4-control-failure",
+  "created_at_utc": "2026-09-02T16:57:00+00:00",
+  "status": "FAIL_PREEXECUTION_CONTROL_PLANE_ZERO_RETRY_TRUTHINESS",
+  "contract_path": "generated/e2-r17-semantic-transfer-v2-stage-a-v4-contract-20260903.json",
+  "contract_sha256": "95958f00da3bb8b3cd58981ea936c0dfac29608ca0af9f425360436589810567",
+  "preflight_path": "generated/e2-r17-semantic-transfer-v2-stage-a-v4-preflight-20260903.json",
+  "preflight_sha256": "3189256adb2da7100f2cdd0fb52a6f054cb1c4573079578775185393e3ccd41a",
+  "discovery_stage": "zero-provider authorization control unit test",
+  "test_result": "7/8 PASS; only the positive fresh-identity authorization-path test failed",
+  "root_cause": "provider_retry_limit=0 was evaluated through `value or -1`, converting the valid zero to -1. The same fail-closed truthiness bug appears in authorization, runner, and reviewer fresh-identity checks.",
+  "provider_calls": 0,
+  "scientific_execution": false,
+  "authorization_created": false,
+  "run_root_created": false,
+  "global_lease_created": false,
+  "scientific_outcomes_accessed": false,
+  "scientific_design_changed": false,
+  "allowed_repair": "Create a new versioned V5 control plane changing only zero-value retry validation to an explicit None check; preserve all scientific design, suite, K, model requirement, budgets, support gates, statistics and authority boundaries.",
+  "v4_disposition": "PERMANENTLY_NONEXECUTABLE_SUPERSEDED_PRE_PROVIDER",
+  "authority": {
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "paper_promotion": false
+  }
+}

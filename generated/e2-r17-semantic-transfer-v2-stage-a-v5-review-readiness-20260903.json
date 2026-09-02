@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-semantic-transfer-v2-stage-a-v5-review-readiness",
+  "created_at_utc": "2026-09-02T17:05:00+00:00",
+  "status": "READY_FOR_LOCKED_DUAL_REVIEW_BLOCKED_BY_ARK_WEEKLY_QUOTA",
+  "scientific_design": {
+    "path": "consultations/e2-r17-selective-mrw-semantic-transfer-v2-20260903.md",
+    "pre_f0_path": "generated/e2-r17-selective-mrw-semantic-transfer-v2-pre-f0-20260903.json",
+    "closed_parent_result": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+    "old_outcomes_pooled": false
+  },
+  "stage_a_v5": {
+    "contract_path": "generated/e2-r17-semantic-transfer-v2-stage-a-v5-contract-20260903.json",
+    "contract_sha256": "19ddaf7a73c6270547a6f1056a3bc291bce11e57c6c33199b25a339a412b4b25",
+    "preflight_path": "generated/e2-r17-semantic-transfer-v2-stage-a-v5-preflight-20260903.json",
+    "preflight_sha256": "65377c7e224c53dfaaf1bbe431f664b953e58a38855f2c9a138ca9f7391b0a2b",
+    "preflight_status": "PASS_ZERO_PROVIDER_SEMANTIC_TRANSFER_V2_STAGE_A_V5_PREFLIGHT",
+    "provider_calls": 0,
+    "scientific_execution": false,
+    "authorization_exists": false,
+    "run_root_exists": false,
+    "global_lease_exists": false,
+    "fresh_execution_identity_qualified": false
+  },
+  "control_plane_history": {
+    "v3": {
+      "status": "FAIL_PREEXECUTION_CONTROL_PLANE_PYTHON_BOOLEAN_LITERAL",
+      "provider_calls": 0,
+      "scientific_execution": false,
+      "disposition": "PERMANENTLY_NONEXECUTABLE_SUPERSEDED_PRE_PROVIDER"
+    },
+    "v4": {
+      "status": "FAIL_PREEXECUTION_CONTROL_PLANE_ZERO_RETRY_TRUTHINESS",
+      "preflight_passed": true,
+      "provider_calls": 0,
+      "scientific_execution": false,
+      "disposition": "PERMANENTLY_NONEXECUTABLE_SUPERSEDED_PRE_PROVIDER"
+    },
+    "v5": {
+      "control_tests": "8/8 PASS",
+      "mechanism_budget_regressions": "16/16 PASS",
+      "updater_blinding_and_exact_evidence_window": "9/9 PASS"
+    }
+  },
+  "review_policy": {
+    "reviewers": ["deepseek-v4-pro", "kimi-k3"],
+    "both_required": true,
+    "fresh_identity_qualification_after_v5_contract_freeze_required": true,
+    "review_output_root_must_be_fresh": true,
+    "required_verdict": "PASS_TO_SEPARATE_STAGE_A_AUTHORIZATION",
+    "stage_b_authority": false,
+    "paper_claim_authority": false
+  },
+  "provider_blocker": {
+    "status": "HOLD_EXTERNAL_REVIEWER_QUOTA_NO_REVIEW_VERDICT",
+    "source_artifact": "generated/e2-r17-semantic-transfer-stage-a-review-quota-hold-20260902.json",
+    "source_artifact_sha256": "eabfbb63699c73c7f120449801f49a5873d5535ef40951ac06d9d88a60e2ebaf",
+    "error_code": "AccountQuotaExceeded",
+    "provider_reported_reset": "2026-09-07T00:00:00+08:00",
+    "old_review_verdict_generated": false,
+    "policy": "Do not repeatedly retry before quota availability changes; quota failure is not a review verdict and cannot mint execution authority."
+  },
+  "legal_next_sequence": [
+    "Qualify fresh DeepSeek and Kimi reviewer identities after V5 contract freeze.",
+    "Run the locked V5 dual review in a fresh review output root.",
+    "Require 2/2 PASS with zero blockers and no Stage-B/paper authority.",
+    "Qualify a fresh DeepSeek execution identity after V5 contract freeze, resolving exactly to deepseek-v4-pro-ga-260813 with thinking disabled and retry=0.",
+    "Mint one single-use Stage-A V5 authorization binding that fresh identity and the dual-review receipts.",
+    "Only then execute 18 streams / 144 K=8 pools / 1152 actor rollouts."
+  ],
+  "authority": {
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "heldout_evaluation": false,
+    "analyzer": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false
+  }
+}

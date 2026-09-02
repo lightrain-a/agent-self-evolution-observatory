@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-semantic-transfer-v2-stage-a-v3-preflight-failure",
+  "created_at_utc": "2026-09-02T16:53:00+00:00",
+  "status": "FAIL_PREEXECUTION_CONTROL_PLANE_PYTHON_BOOLEAN_LITERAL",
+  "contract_path": "generated/e2-r17-semantic-transfer-v2-stage-a-v3-contract-20260903.json",
+  "contract_sha256": "a1f2d3627d35464507e707d09763448288f6b7050c389e3bb6ce7f7f59754252",
+  "failure_stage": "zero-provider actual-path preflight payload assembly",
+  "error_type": "NameError",
+  "error_summary": "Python payload used JSON-style true/false literals instead of True/False after all preceding zero-provider checks.",
+  "provider_calls": 0,
+  "scientific_execution": false,
+  "stage_a_run_root_created": false,
+  "global_lease_created": false,
+  "scientific_outcomes_accessed": false,
+  "stage_b_outcomes_accessed": false,
+  "scientific_design_changed": false,
+  "allowed_repair": "Create a new versioned Stage-A control-plane contract binding the corrected preflight implementation. Do not edit or authorize the V3 contract in place.",
+  "v3_disposition": "PERMANENTLY_NONEXECUTABLE_SUPERSEDED_PRE_PROVIDER",
+  "authority": {
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "paper_promotion": false
+  }
+}

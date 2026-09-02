@@ -1,0 +1,45 @@
+{
+  "ark_plan_route_verified_without_exposing_key": true,
+  "artifact_type": "e2-r17-semantic-transfer-v2-stage-a-v4-zero-provider-preflight",
+  "authority": {
+    "mint_stage_a_authorization": false,
+    "paper_promotion": false,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false
+  },
+  "bound_code_compile_pass": true,
+  "contract_path": "generated/e2-r17-semantic-transfer-v2-stage-a-v4-contract-20260903.json",
+  "contract_sha256": "95958f00da3bb8b3cd58981ea936c0dfac29608ca0af9f425360436589810567",
+  "created_at_utc": "2026-09-02T16:54:16+00:00",
+  "env_file_path": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env",
+  "exactly_once": {
+    "authorized_runs": 1,
+    "automatic_retry": false,
+    "completed_rollout_replay": false,
+    "failure_preserves_running_global_lease": true,
+    "first_run_only_runner": true,
+    "replacement_sampling": false,
+    "resume_requires_separate_adjudication_and_authorization": true
+  },
+  "fresh_identity_qualified": false,
+  "fresh_identity_required_before_authorization": true,
+  "global_lease_exists": false,
+  "heldout_forbidden_count": 18,
+  "new_test_outcomes_accessed": false,
+  "next_gate": "LOCKED_DUAL_PREEXECUTION_REVIEW_AND_FRESH_IDENTITY_BEFORE_SINGLE_USE_STAGE_A_V4_AUTHORIZATION",
+  "provider_calls": 0,
+  "required_resolved_model": "deepseek-v4-pro-ga-260813",
+  "run_root_exists": false,
+  "runtime_import_smoke_pass": true,
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "scope_guard_checks": {
+    "heldout_rejected": true,
+    "valid_scope": true,
+    "wrong_k_rejected": true,
+    "wrong_mode_rejected": true
+  },
+  "status": "PASS_ZERO_PROVIDER_SEMANTIC_TRANSFER_V2_STAGE_A_V4_PREFLIGHT",
+  "stream_count": 18,
+  "task_count": 144
+}
