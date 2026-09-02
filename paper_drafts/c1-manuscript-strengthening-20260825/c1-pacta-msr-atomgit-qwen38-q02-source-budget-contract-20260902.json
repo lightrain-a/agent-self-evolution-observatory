@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q0.2-SOURCE-BUDGET-20260902",
+  "status": "FROZEN_PRE_PROVIDER",
+  "scientific_problem": "The first valid prospective AtomGit source T0 reached exactly 16384 completion tokens on a real multi-step SWE-bench state and terminated with AtomCode output_truncation/max-rounds. The prior synthetic exact-copy panel therefore under-covered the realistic reasoning-length tail.",
+  "model_condition": {
+    "provider_profile": "AtomGit-qwen3.8-27b",
+    "resolved_model": "qwen3.8-27b",
+    "atomcode_version": "5.0.9",
+    "interface": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+    "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+    "flags": ["--no-tools", "--ephemeral", "--no-telemetry", "--output-format=jsonl"],
+    "provider_retries": 0,
+    "invocation_timeout_seconds": 900
+  },
+  "parent_evidence": {
+    "base_q0_runner_sha256": "11c5da1d954db4cfb45695b785d2db231744b9ab8174c08af1e4e75fa68df439",
+    "q0v2_runner_sha256": "fdad87f8168285de71d5770a156a8f768dd2a02374871a94a3621fa673b433f3",
+    "q0v2_closure_sha256": "19ec9c078b2c4a6f3ec77eee181b47a4f7cc082a516eff0074feace7a74e6f70",
+    "q0v2_source_budget_result_sha256": "8eead97e1a3b39a701886a24a4597e2ce607ee50580803a5655c7ac4087c4198",
+    "q0v2_sampling_diagnostic_sha256": "6398f0d9a5d29888a0003fc7783f7a41732d3e38cf396ea13f80b46ee2ef3b64",
+    "failed_t0_closeout_sha256": "1796b9739e85065405d70f2f1f5e60376a38d2f66bc048bea99f57cbed388db4"
+  },
+  "candidate_budget_ladder": [32768, 65536],
+  "selection_rule": "Choose the smallest budget that passes both panels. If 32768 passes both panels, do not call 65536. If neither passes, stop AtomGit Qwen3.8 PACTA-MSR source work; do not increase timeout or budget again without a new scientific redesign.",
+  "panel_A_transport_regression": {
+    "fixtures": 6,
+    "source": "the exact already-frozen Q0 long-action fixture generator",
+    "grid": {"history_pairs": [0, 12, 24], "payload_lines": [160, 320]},
+    "pass_rule": "6/6 returncode=0, exact qwen3.8-27b identity, exactly one CodingPlan request, one fenced bash action, byte-exact requested action, no output_truncation event"
+  },
+  "panel_B_realistic_envelope": {
+    "fixtures": 6,
+    "repetitions_per_fixture": 1,
+    "source": "new deterministic synthetic MiniSWEAgent coding histories generated without any real PACTA source/future task text",
+    "history_pairs": [18, 24, 30, 36, 42, 48],
+    "purpose": "stress realistic multi-turn prompt size, ambiguous coding reasoning and natural next-action generation rather than exact command copying",
+    "pass_rule": "6/6 returncode=0, exact qwen3.8-27b identity, exactly one CodingPlan request, parseable one fenced bash action, completion_tokens strictly below candidate budget, no output_truncation/retry event and no MaxRounds termination"
+  },
+  "first_decision_budget_unchanged": 2048,
+  "source_real_tasks_used": 0,
+  "retired_source_pool_reused": false,
+  "forbidden": [
+    "any real SWE-bench source/future task",
+    "reuse or retry matplotlib__matplotlib-25479",
+    "reuse any member of the retired ten-pair AtomGit source pool for scientific acquisition",
+    "change model",
+    "change 900s timeout",
+    "change parser after Q0.2 outcomes",
+    "change panel fixtures after Q0.2 outcomes",
+    "writer",
+    "binder",
+    "MSR probe",
+    "shadow",
+    "final measurement"
+  ],
+  "if_pass": "Freeze the selected larger source budget and create a completely fresh disjoint source/future pool before any new scientific source call."
+}
