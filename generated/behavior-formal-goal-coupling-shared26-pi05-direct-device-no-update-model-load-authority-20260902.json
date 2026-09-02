@@ -15,7 +15,18 @@
   "runner_path": "research_pipeline/behavior_formal_goal_coupling_pi05_direct_device_no_update_model_load.py",
   "runner_sha256": "d15c7666fc3b0d2ae88eeb252fcd2e11a1750005b0a5454538d7b19d7a823a76",
   "launcher_path": "scripts/run_behavior_formal_goal_coupling_pi05_direct_device_no_update_model_load.sh",
-  "launcher_sha256": "aebcc7e0c8c41a0eed2187c1b132ed737f39b68d00a972b607b37d61f67adae9",
+  "launcher_sha256": "3871166b6b63df3a3cad7f2e6e17d4f4a076b8fe340b305f02a22197a0a85214",
+  "worker_path": "scripts/run_behavior_formal_goal_coupling_pi05_direct_device_no_update_model_load_worker.sh",
+  "worker_sha256": "2ccb12d0e6aa1a007b1996ef128ca2a39d400d3591e7a70fe492158a76ce657c",
+  "admission_wait": {
+    "detached_user_systemd_service": true,
+    "gpu_compute_apps_required": 0,
+    "gpu_memory_used_max_mib": 1024,
+    "host_mem_available_min_gib": 22,
+    "memory_psi_avg10_max_percent": 1.0,
+    "io_psi_avg10_max_percent": 5.0,
+    "scientific_attempt_consumed_while_waiting": false
+  },
   "frozen_checkpoint": {
     "base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
     "object_count": 20,
