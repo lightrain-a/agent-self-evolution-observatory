@@ -1,0 +1,89 @@
+{
+  "actions_shape": [
+    32,
+    23
+  ],
+  "dataset_frame_count": 50852705,
+  "frozen_child_path": "generated/behavior-formal-goal-coupling-shared-multitask-pi05-child-config-20260831.json",
+  "frozen_child_sha256": "098df08569c75ac3806a762754aab5ded1bb41ee164b9f9a34a89fdb9b065d2f",
+  "generated_at": "2026-09-01T22:11:07+08:00",
+  "gpu_used": false,
+  "hf_hub_offline": true,
+  "image_dtypes": {
+    "base_0_rgb": "uint8",
+    "left_wrist_0_rgb": "uint8",
+    "right_wrist_0_rgb": "uint8"
+  },
+  "image_shapes": {
+    "base_0_rgb": [
+      720,
+      720,
+      3
+    ],
+    "left_wrist_0_rgb": [
+      480,
+      480,
+      3
+    ],
+    "right_wrist_0_rgb": [
+      480,
+      480,
+      3
+    ]
+  },
+  "loaded_unique_episode_count": 5200,
+  "metadata_depth_keys": [],
+  "metadata_video_keys": [
+    "observation.rgb.left_realsense_link_camera_0",
+    "observation.rgb.right_realsense_link_camera_0",
+    "observation.rgb.zed_link_camera_0"
+  ],
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "next_gate_if_pass": "CPU_ONLY_SOURCE_FAITHFUL_NORMALIZATION",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "projection_receipt_path": "generated/behavior-formal-goal-coupling-shared26-rgb-runtime-projection-repair2-20260901.json",
+  "projection_receipt_sha256": "442c039cf972d0afb3e7aa25da37807a40f8b71208902b6c23bcb2d6b4d6ab44",
+  "prompt_nonempty": true,
+  "sample_checks": {
+    "actions_shape_32x23": true,
+    "all_images_uint8": true,
+    "loaded_episode_set_exact": true,
+    "metadata_depth_keys_empty": true,
+    "metadata_video_keys_exact_rgb": true,
+    "prompt_present": true,
+    "selected_episode_count_5200": true,
+    "state_shape_23": true,
+    "three_model_images": true
+  },
+  "sample_index": 0,
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-rgb-sample-qualification-v1",
+  "scientific_authority": false,
+  "scientific_outcome": false,
+  "state_shape": [
+    23
+  ],
+  "static_checks": {
+    "action_horizon_32": true,
+    "asset_id": true,
+    "batch_64": true,
+    "config_name": true,
+    "cpu_only_jax": true,
+    "data_symlink": true,
+    "dataset_revision": true,
+    "download_videos_false": true,
+    "episode_subset_exact": true,
+    "official_repo_id": true,
+    "prompt_from_task": true,
+    "runtime_root": true,
+    "seed_42": true,
+    "steps_50000": true,
+    "torch_cuda_unavailable": true,
+    "videos_symlink": true,
+    "z_score": true
+  },
+  "status": "PI05_RGB_SAMPLE_SCHEMA_QUALIFICATION_PASS",
+  "training_started": false
+}
