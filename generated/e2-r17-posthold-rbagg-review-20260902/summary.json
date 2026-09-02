@@ -1,0 +1,28 @@
+{
+  "all_pass_to_separate_single_stream_semantic_pilot": true,
+  "artifact_type": "e2-r17-posthold-rbagg-dual-protocol-review",
+  "created_at_utc": "2026-09-02T04:20:30+00:00",
+  "full_diagnostic_authority": false,
+  "paper_claim_authority": false,
+  "parent_primary_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "parent_status_changed": false,
+  "pref0_sha256": "d44270cb73529b87d2f71a68825ced93ee615102dee6b6cef4c969ba5ae6699b",
+  "remaining_blockers": {
+    "deepseek-v4-pro": [],
+    "kimi-k3": []
+  },
+  "resolved_models": {
+    "deepseek-v4-pro": "deepseek-v4-pro-ga-260813",
+    "kimi-k3": "kimi-k3"
+  },
+  "schema_version": "1.0",
+  "semantic_pilot_authority": false,
+  "statuses": {
+    "deepseek-v4-pro": "COMPLETED",
+    "kimi-k3": "COMPLETED"
+  },
+  "verdicts": {
+    "deepseek-v4-pro": "PASS_TO_SEPARATE_SINGLE_STREAM_SEMANTIC_PILOT",
+    "kimi-k3": "PASS_TO_SEPARATE_SINGLE_STREAM_SEMANTIC_PILOT"
+  }
+}

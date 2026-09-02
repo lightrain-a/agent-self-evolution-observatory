@@ -1,0 +1,64 @@
+{
+  "artifact_type": "e2-r17-posthold-rbagg-review-adjudication",
+  "created_at_utc": "2026-09-02T04:23:00+00:00",
+  "status": "PASS_DUAL_REVIEW_TO_SEPARATE_SINGLE_STREAM_SEMANTIC_PILOT_PROPOSAL_ONLY",
+  "parent_primary_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "parent_status_changed": false,
+  "pref0_sha256": "d44270cb73529b87d2f71a68825ced93ee615102dee6b6cef4c969ba5ae6699b",
+  "review_runner_sha256": "5decd3263f925ddd03ec60e22d5d8807f0baf542b89fdd3eea84a5a249b601c9",
+  "reviews": {
+    "deepseek-v4-pro": {
+      "path": "generated/e2-r17-posthold-rbagg-review-20260902/deepseek-v4-pro.json",
+      "sha256": "3f04a549f10ee9ad5d4f9dab244389cbb79143683adba2fccf7742a099722387",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "verdict": "PASS_TO_SEPARATE_SINGLE_STREAM_SEMANTIC_PILOT",
+      "remaining_blockers": []
+    },
+    "kimi-k3": {
+      "path": "generated/e2-r17-posthold-rbagg-review-20260902/kimi-k3.json",
+      "sha256": "df1cc66aa95d5002c51b9796bdb4fdf9e020b77d13d1eeb6a4191d3bf3b16fef",
+      "resolved_model": "kimi-k3",
+      "verdict": "PASS_TO_SEPARATE_SINGLE_STREAM_SEMANTIC_PILOT",
+      "remaining_blockers": []
+    }
+  },
+  "review_summary": {
+    "path": "generated/e2-r17-posthold-rbagg-review-20260902/summary.json",
+    "sha256": "52f200913bdc52969e2d38acc544f19084908a706ddb66a5174f64eff2f109c5",
+    "all_pass": true
+  },
+  "review_consensus": {
+    "session_score_truthful": true,
+    "score_vector_exact_to_win_removes_score_label_confound": true,
+    "search_session_add_record_plus_precomputed_summary_acceptable": true,
+    "mindmemos_scored_path_isolated_at_summary_stage": true,
+    "fresh_contemporaneous_win_d_required_for_full_diagnostic": true,
+    "one_aggregation_per_task_reused_across_updater_replicates_acceptable_for_secondary_diagnostic": true,
+    "token_compute_differences_must_be_reported": true,
+    "reasoningbank_style_not_source_faithful_label_required": true,
+    "pilot_skill_must_be_quarantined": true,
+    "parent_hold_must_remain_immutable": true
+  },
+  "semantic_pilot_candidate": {
+    "fixed_stream": "e1-agj-00",
+    "aggregation_calls": 8,
+    "mindmemos_nominal_calls": 2,
+    "mindmemos_hard_max_calls": 3,
+    "total_nominal_calls": 10,
+    "total_hard_max_calls": 11,
+    "heldout_evaluations": 0,
+    "scientific_effectiveness_evaluated": false,
+    "pilot_skill_scientific_inclusion": false,
+    "automatic_retry": false
+  },
+  "authority": {
+    "provider_io": false,
+    "semantic_provider_pilot": false,
+    "rbagg_full_diagnostic": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "second_backbone": false
+  },
+  "next_gate": "CREATE_SEPARATE_SHA_BOUND_SEMANTIC_PILOT_CONTRACT_AND_SINGLE_USE_AUTHORIZATION"
+}
