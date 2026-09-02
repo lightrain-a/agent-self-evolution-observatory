@@ -1,0 +1,25 @@
+{
+  "atomcode_binary_sha256": "ac5ee62fa4c20d70ee4220bdbafa8081051dd717c29a0c0c95de630a989a2113",
+  "atomcode_version": "5.0.9",
+  "completion_tokens_total": 179,
+  "content_sha256": "797ebe6c4defb607a59165182789671b1f70c4592549a57dc475688f2c914611",
+  "f0_scientific_outcomes_observed": 0,
+  "final_text_sha256": "72fb22e172fc4d53ab8882a0c75042c849893c17e9ded44fd29eb9b8e4b607f1",
+  "mcp_tool_names": [
+    "mcp__appworld__set_value"
+  ],
+  "mcp_tool_success": [
+    true
+  ],
+  "model_id": "qwen3.8-27b",
+  "model_profile": "AtomGit-qwen3.8-27b",
+  "model_round_count": 2,
+  "non_mcp_tool_calls": 0,
+  "note": "Synthetic tool-use qualification only; prior failed Q0 plumbing attempts are non-scientific infrastructure history.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prompt_tokens_total": 35378,
+  "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+  "schema_version": "ace-codingplan-mcp-q0-qualification-v1",
+  "scientific_appworld_episodes": 0,
+  "status": "CODINGPLAN_MCP_Q0_PASS"
+}

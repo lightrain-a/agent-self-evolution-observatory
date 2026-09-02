@@ -1,0 +1,21 @@
+{
+  "appworld_bundle": "agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle",
+  "appworld_bundle_sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5",
+  "atomcode_version": "5.0.9",
+  "bridge_source_sha256": "712d44d5d7c3c7b9fdf0762b29cb167b7274347bdd5d2a2a24cc2ca98a30bec3",
+  "codingplan_model_requests": 0,
+  "codingplan_window_used_after": 130,
+  "codingplan_window_used_before": 130,
+  "content_sha256": "7fadc1deddf8183fbac89b6205779b31e3c2b5b88e0326f101740182a7a094a6",
+  "live_session_seen": true,
+  "model_profile": "AtomGit-qwen3.8-27b",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "protocol": "DAEMON_BOOT_WITHOUT_MCP_THEN_ACTIVATE_USER_MCP_THEN_GET_LIVE_WAIT_TOOLS_LISTED_BEFORE_DISPATCH",
+  "runner_source_sha256": "a13f4a146207873271b33a9431f11842cea92d3e60511c143b7c38208dac7186",
+  "schema_version": "ace-codingplan-appworld-mcp-q1-predispatch-v2",
+  "scientific_dispatch_sent": false,
+  "scientific_outcomes_observed": 0,
+  "session_mcp_progress_status": "TOOLS_LISTED",
+  "session_mcp_tool_count": 84,
+  "status": "CODINGPLAN_APPWORLD_MCP_LIVE_PREDISPATCH_PASS"
+}
