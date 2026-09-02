@@ -1,0 +1,29 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-portable-openpi-child-equivalence-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "PORTABLE_OPENPI_CHILD_CONTENT_EQUIVALENCE_PASS",
+  "host": "222.20.126.232",
+  "parent_openpi_revision": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+  "canonical_69_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "canonical_69_final_config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+  "portable_232_git_head": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+  "portable_232_changed_paths": [
+    "src/openpi/training/config.py"
+  ],
+  "portable_232_final_config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+  "content_equal": true,
+  "canonical_initial_patch_sha256": "2a3b7331ce3be11498b629ce5ad70f9fa72765c6bb718c095f1d036041504b10",
+  "reconstructed_repairs": {
+    "repo_id": "behavior-1k/2026-challenge-demos",
+    "asset_id": "b1k_shared26_frozen",
+    "dataset_revision": "4f50b44796641a4d526a19d9aeadc8aa51e2f2c2",
+    "download_videos": false,
+    "dataset_root": "/data/wyt/behavior-2026-shared26-v3.0-rgb-runtime-repair2"
+  },
+  "scientific_change": false,
+  "model_loaded": false,
+  "gpu_used": false,
+  "training_started": false,
+  "policy_outcomes_read": false,
+  "next_gate": "PORTABLE_OPENPI_ENVIRONMENT_QUALIFICATION"
+}

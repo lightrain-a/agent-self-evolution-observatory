@@ -1,0 +1,69 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-portable-direct-device-no-update-model-load-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "AUTHORIZED_PI05_PORTABLE_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_QUALIFICATION",
+  "scope": "host-232 resource-only step-0 checkpoint staging qualification; no dataset, training, or policy outcome authority",
+  "qualification_host": "222.20.126.232",
+  "portable_child_equivalence": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-portable-openpi-child-equivalence-232-20260903.json",
+    "sha256": "cdaaa63d09792b1771a7b8d28751155cd8bbfaf089d4a95f8b4ed0721264a5b9",
+    "status": "PORTABLE_OPENPI_CHILD_CONTENT_EQUIVALENCE_PASS"
+  },
+  "portable_env_qualification": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-portable-openpi-environment-232-20260903.json",
+    "sha256": "c94226fb4cc23eb6be984673034a71120bd96cede44236d0e5c8578bdce2f4bf",
+    "status": "PORTABLE_OPENPI_FROZEN_ENVIRONMENT_PASS"
+  },
+  "parent_8x8_host_exit_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-attempt1-host-exit-adjudication-20260902.json",
+    "sha256": "7fce8b714c2b46c1561930c34f0c2e5b67987ddaa63e4868f42f752e076afad8"
+  },
+  "static_qualification": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-direct-device-checkpoint-loader-static-qualification-20260902.json",
+    "sha256": "3ff3e13e929e73af6f324acf954cc74d1f37a76aa54109cd7e08f28e4c910380",
+    "status": "PI05_DIRECT_DEVICE_CHECKPOINT_LOADER_STATIC_QUALIFIED"
+  },
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_pi05_portable_direct_device_no_update_model_load.py",
+  "runner_sha256": "9a68097dc6e1849fcba7a7a3892b89f0ff7dc1a0afff50eb1962a3ad58d08768",
+  "launcher_path": "scripts/run_behavior_formal_goal_coupling_pi05_portable_direct_device_no_update_model_load_232.sh",
+  "launcher_sha256": "93d09170fdb91eed28a53fa4f77fb5ce6cc037f2925808726f5941e22fdb7efc",
+  "admission_worker_path": "scripts/run_behavior_formal_goal_coupling_pi05_portable_direct_device_no_update_model_load_worker_232.sh",
+  "admission_worker_sha256": "275e6b4f574c2ce744e842f35907a6c39a3c4ad86c91ab226c3dd011c724515f",
+  "frozen_checkpoint": {
+    "canonical_base_receipt_path": "generated/behavior-formal-goal-coupling-pi05-base-transport-repair1-result-20260902.json",
+    "canonical_base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+    "object_count": 20,
+    "bytes": 12441721931,
+    "portable_params_root": "/data/wyt/formal-goal-pi05-base-params-v1"
+  },
+  "resource_scope": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "memory_max_gib": 20,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "authorized_operations": [
+    "rehash all 20 locally materialized checkpoint objects against the canonical 69 repair receipt",
+    "restore checkpoint leaves directly as jax.Array on the single visible A100",
+    "construct the same frozen step-0 train state and optimizer state",
+    "record host/cgroup and GPU memory before and after state readiness"
+  ],
+  "forbidden_operations": [
+    "dataset access",
+    "tokenizer execution",
+    "forward pass",
+    "loss computation",
+    "backward pass",
+    "optimizer update",
+    "parameter or EMA update",
+    "checkpoint write",
+    "policy rollout",
+    "policy outcome read"
+  ],
+  "formal_training_authorized": false,
+  "policy_outcomes_read": false,
+  "next_gate_if_pass": "STREAMING_ACCUM8X8_PORTABLE_DIRECT_DEVICE_REPAIR_AUTHORITY"
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-portable-openpi-environment-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "PORTABLE_OPENPI_FROZEN_ENVIRONMENT_PASS",
+  "host": "222.20.126.232",
+  "environment_path": "/data/wyt/formal-goal-shared26-openpi-env-20260901",
+  "openpi_parent_path": "/data/wyt/formal-goal-policy-contracts-20260828/openpi",
+  "openpi_parent_revision": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+  "uv_lock_sha256": "75657cfbac40473237a6eaebc994fe998b249b44a4671d38129af198f00e4ed6",
+  "builder": {
+    "uv_version": "0.12.9",
+    "python_requested": "3.11.16",
+    "sync_mode": "uv sync --frozen",
+    "http_timeout_seconds": 300,
+    "single_writer_systemd_unit": "formal-goal-232-openpi-env-sync.service"
+  },
+  "runtime_versions": {
+    "python": "3.11.16",
+    "jax": "0.5.3",
+    "torch": "2.7.1+cu128",
+    "pyarrow": "24.0.0",
+    "lerobot": "0.5.2",
+    "numpy": "1.26.4"
+  },
+  "package_freeze": {
+    "entry_count": 205,
+    "sorted_uv_pip_freeze_sha256": "2678dcf65b5ee866ae0c467b0eb2cc9e56f1da123178cf3f8f980041bcc0e7a7"
+  },
+  "portable_config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+  "cuda_available_during_environment_check": true,
+  "model_loaded": false,
+  "gpu_training_used": false,
+  "training_started": false,
+  "policy_outcomes_read": false,
+  "scientific_authority": false,
+  "next_gate": "PORTABLE_PI05_BASE_MATERIALIZATION_THEN_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD"
+}
