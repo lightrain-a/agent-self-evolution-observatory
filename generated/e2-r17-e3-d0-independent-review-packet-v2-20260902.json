@@ -1,0 +1,50 @@
+{
+  "artifact_type": "e2-r17-e3-d0-independent-review-packet-v2",
+  "schema_version": "2.0",
+  "created_date": "2026-09-02",
+  "status": "REVIEW_PACKET_V2_ONLY_ZERO_AUTHORITY_NOT_ADJUDICATED",
+  "review_result_present": false,
+  "d0_v2_markdown_path": "consultations/e2-r17-e3-d0-development-design-v2-20260902.md",
+  "d0_v2_markdown_sha256": "71abe748ee81b59776eb47a48df261bfe14b99f85a7983e681e25e5452445417",
+  "d0_v2_json_path": "generated/e2-r17-e3-d0-development-design-v2-20260902.json",
+  "d0_v2_json_sha256": "ebba5af669e00a2bd7322425ca7606b03325c52acb66659db766b62f95c09af8",
+  "packet_markdown_path": "consultations/e2-r17-e3-d0-independent-review-packet-v2-20260902.md",
+  "packet_markdown_sha256": "bcb892ab027ff1076b686be1a9bbf2c65e4bee5137a0b1853b7283bcb96aa623",
+  "e3_p0_substrate_audit_path": "generated/e2-r17-e3-p0-substrate-audit-20260901.json",
+  "e3_p0_substrate_audit_sha256": "c31e5e1404c7ee6a23fef6c0f8cb78d8c6c35dee6cbe5f94c6699b8dbd745f18",
+  "internal_review_path": "generated/e2-r17-e3-d0-internal-adversarial-review-20260902.json",
+  "internal_review_sha256": "0a7e2bd8b95e37ed09518526b63e242f56aef2718f2f8e9b81ee1696ef7aab6a",
+  "required_review_items": [
+    "A_mechanism_prediction_separation",
+    "B_feasible_prediction_projection",
+    "C_pooled_comparator",
+    "D_sparse_development",
+    "E_unconditional_c0",
+    "F_cross_heldout_panel_generalization",
+    "G_exact_binomial_stream_win_primary",
+    "H_secondary_effect_magnitude",
+    "I_d0_authority_boundary"
+  ],
+  "allowed_verdicts": [
+    "PASS_D0_V2_DESIGN_FOR_DEVELOPMENT_ONLY_AUTHORIZATION",
+    "HOLD_D0_V2_REQUIRES_FURTHER_PREOUTCOME_REVISION",
+    "STOP_E3_NOT_PROSPECTIVELY_IDENTIFIED"
+  ],
+  "authority": {
+    "adjudicate_review": false,
+    "analyze_v2_by_family": false,
+    "compute_development_mixed_support": false,
+    "compute_family_coefficients": false,
+    "compute_loso_diagnostics": false,
+    "provider_io": false,
+    "new_search_pool_acquisition": false,
+    "confirmatory_execution": false,
+    "heldout_evaluation": false,
+    "gpu": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "next_allowed_action": "GENUINE_INDEPENDENT_REVIEW_ONLY"
+}
