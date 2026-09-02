@@ -1,5 +1,13 @@
 {
   "appworld_ul_authorized": false,
+  "backbone_search_b2_next_candidate": {
+    "model_id": "mimo-v2.5",
+    "profile": "AtomGit-mimo-v2.5"
+  },
+  "backbone_search_b2_remaining_frozen_order": [
+    "mimo-v2.5",
+    "mimo-v2.5-pro"
+  ],
   "backbone_search_next_candidate": {
     "model_id": "GLM-5.2",
     "profile": "AtomGit-GLM-5.2"
@@ -10,8 +18,10 @@
     "mimo-v2.5-pro"
   ],
   "backbone_search_state_artifact": "generated/agent-constraint-externality-capability-backbone-search-state-b1-20260903.json",
+  "backbone_search_state_b2_artifact": "generated/agent-constraint-externality-capability-backbone-search-state-b2-20260903.json",
+  "backbone_search_state_b2_status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25_NEXT",
   "backbone_search_state_status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_GLM52_NEXT",
-  "blocker": "No eligible backbone has been selected yet: Qwen3.7-Plus and CodingPlan Qwen3.8-27B are ceiling candidates, while CodingPlan DeepSeek-v4-flash is a floor candidate because frozen tool-loop completion is below threshold. The remaining candidate order was frozen before any GLM-5.2 scientific dispatch.",
+  "blocker": "No eligible backbone has been selected yet: Qwen3.7-Plus, CodingPlan Qwen3.8-27B, and GLM-5.2 are ceiling candidates, while CodingPlan DeepSeek-v4-flash is a floor candidate. The remaining order was frozen before any mimo-v2.5 scientific dispatch.",
   "capability_agent_episode_count": 32,
   "capability_agent_model_request_count": 294,
   "capability_contract_frozen": true,
@@ -21,7 +31,7 @@
   "capability_latest_attempt_agent_episode_count": 4,
   "capability_latest_attempt_agent_model_request_count": 39,
   "capability_latest_attempt_provider_request_total": 39,
-  "capability_model_selection_state": "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_NEXT",
+  "capability_model_selection_state": "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_NEXT",
   "capability_preserved_fg_measurements": 4,
   "capability_prior_results_void_substrate_invalid": true,
   "capability_provider_request_total": 296,
@@ -84,9 +94,17 @@
   "f0_executed": false,
   "f0_outcomes_observed": 0,
   "generated_at": "2026-09-01T15:35:00+08:00",
+  "glm52_account_window_request_delta": 77,
+  "glm52_capability_closeout_artifact": "generated/agent-constraint-externality-codingplan-glm52-capability-b1-closeout-20260903.json",
+  "glm52_capability_closeout_status": "CODINGPLAN_GLM52_B1_CEILING_CLOSEOUT",
+  "glm52_capability_result_artifact": "generated/agent-constraint-externality-codingplan-glm52-capability-b1-result-20260903.json",
+  "glm52_capability_result_status": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+  "glm52_scientific_model_round_count": 77,
+  "glm52_target_success_rate": 1.0,
+  "glm52_tool_loop_completion_rate": 1.0,
   "m1_runner_qualification_pass": true,
   "model_prereg_addendum_a0_pass": true,
-  "next_authorized_action": "FREEZE_AND_RUN_CODINGPLAN_GLM52_CAPABILITY_B1",
+  "next_authorized_action": "FREEZE_AND_RUN_CODINGPLAN_MIMO25_CAPABILITY_B2",
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "p1_authorized": false,
   "provider": {
@@ -100,6 +118,6 @@
   },
   "provider_credential_present": true,
   "schema_version": "agent-constraint-externality-f0-readiness-v1",
-  "status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_GLM52_NEXT",
+  "status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25_NEXT",
   "tool_sandbox_authorized": false
 }

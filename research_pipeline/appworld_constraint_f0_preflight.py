@@ -156,6 +156,15 @@ CODINGPLAN_CATALOG_B1 = (
 BACKBONE_SEARCH_STATE_B1 = (
     GENERATED / "agent-constraint-externality-capability-backbone-search-state-b1-20260903.json"
 )
+CODINGPLAN_GLM52_RESULT = (
+    GENERATED / "agent-constraint-externality-codingplan-glm52-capability-b1-result-20260903.json"
+)
+CODINGPLAN_GLM52_CLOSEOUT = (
+    GENERATED / "agent-constraint-externality-codingplan-glm52-capability-b1-closeout-20260903.json"
+)
+BACKBONE_SEARCH_STATE_B2 = (
+    GENERATED / "agent-constraint-externality-capability-backbone-search-state-b2-20260903.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -444,6 +453,51 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         if backbone_search_state.get("authority", {}).get("f0") is not False:
             raise PreflightError("Backbone search state cannot authorize F0.")
         backbone_search_active = True
+
+    glm52_result = (
+        read_json(CODINGPLAN_GLM52_RESULT)
+        if CODINGPLAN_GLM52_RESULT.is_file()
+        else {}
+    )
+    glm52_status = validate_capability_result(glm52_result)
+    glm52_closeout = (
+        read_json(CODINGPLAN_GLM52_CLOSEOUT)
+        if CODINGPLAN_GLM52_CLOSEOUT.is_file()
+        else {}
+    )
+    backbone_search_state_b2 = (
+        read_json(BACKBONE_SEARCH_STATE_B2)
+        if BACKBONE_SEARCH_STATE_B2.is_file()
+        else {}
+    )
+    backbone_search_b2_active = False
+    if backbone_search_state_b2:
+        for label, payload in (
+            ("GLM-5.2 closeout", glm52_closeout),
+            ("backbone search state B2", backbone_search_state_b2),
+        ):
+            if payload.get("object_id") != OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            claimed = payload.get("content_sha256")
+            unsigned = dict(payload)
+            unsigned.pop("content_sha256", None)
+            if claimed != digest(unsigned):
+                raise PreflightError(f"{label} content hash mismatch.")
+        if glm52_status != "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP":
+            raise PreflightError("GLM-5.2 B1 result is not at its frozen ceiling stop.")
+        if glm52_closeout.get("status") != "CODINGPLAN_GLM52_B1_CEILING_CLOSEOUT":
+            raise PreflightError("GLM-5.2 B1 closeout status mismatch.")
+        if glm52_closeout.get("verdict") != glm52_status:
+            raise PreflightError("GLM-5.2 result/closeout verdict mismatch.")
+        if backbone_search_state_b2.get("status") != "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25_NEXT":
+            raise PreflightError("Backbone search B2 state is not frozen to mimo-v2.5 next.")
+        if backbone_search_state_b2.get("remaining_frozen_order") != [
+            "mimo-v2.5", "mimo-v2.5-pro"
+        ]:
+            raise PreflightError("Backbone search B2 candidate order drifted.")
+        if backbone_search_state_b2.get("authority", {}).get("f0") is not False:
+            raise PreflightError("Backbone search B2 state cannot authorize F0.")
+        backbone_search_b2_active = True
 
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
@@ -744,6 +798,13 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif backbone_search_b2_active:
+        readiness_status = backbone_search_state_b2["status"]
+        blocker = (
+            "No eligible backbone has been selected yet: Qwen3.7-Plus, CodingPlan Qwen3.8-27B, and GLM-5.2 are ceiling candidates, "
+            "while CodingPlan DeepSeek-v4-flash is a floor candidate. The remaining order was frozen before any mimo-v2.5 scientific dispatch."
+        )
+        next_action = "FREEZE_AND_RUN_CODINGPLAN_MIMO25_CAPABILITY_B2"
     elif backbone_search_active:
         readiness_status = backbone_search_state["status"]
         blocker = (
@@ -925,8 +986,40 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             if CODINGPLAN_CATALOG_B1.is_file()
             else None
         ),
+        "glm52_capability_result_status": glm52_status,
+        "glm52_capability_result_artifact": (
+            str(CODINGPLAN_GLM52_RESULT.relative_to(ROOT))
+            if CODINGPLAN_GLM52_RESULT.is_file()
+            else None
+        ),
+        "glm52_capability_closeout_status": glm52_closeout.get("status"),
+        "glm52_capability_closeout_artifact": (
+            str(CODINGPLAN_GLM52_CLOSEOUT.relative_to(ROOT))
+            if CODINGPLAN_GLM52_CLOSEOUT.is_file()
+            else None
+        ),
+        "glm52_scientific_model_round_count": int(
+            glm52_closeout.get("accounting", {}).get("scientific_model_round_count", 0)
+        ),
+        "glm52_account_window_request_delta": int(
+            glm52_closeout.get("accounting", {}).get("codingplan_account_window_request_delta", 0)
+        ),
+        "glm52_tool_loop_completion_rate": glm52_result.get("gate", {}).get("tool_loop_completion_rate"),
+        "glm52_target_success_rate": glm52_result.get("gate", {}).get("target_success_rate"),
+        "backbone_search_state_b2_status": backbone_search_state_b2.get("status"),
+        "backbone_search_state_b2_artifact": (
+            str(BACKBONE_SEARCH_STATE_B2.relative_to(ROOT))
+            if BACKBONE_SEARCH_STATE_B2.is_file()
+            else None
+        ),
+        "backbone_search_b2_remaining_frozen_order": backbone_search_state_b2.get(
+            "remaining_frozen_order", []
+        ),
+        "backbone_search_b2_next_candidate": backbone_search_state_b2.get("next_candidate"),
         "capability_model_selection_state": (
-            "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_NEXT"
+            "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_NEXT"
+            if backbone_search_b2_active
+            else "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_NEXT"
             if backbone_search_active
             else "NO_ELIGIBLE_BACKBONE_BOTH_VALID_CANDIDATES_CEILING"
             if both_valid_candidates_ceiling
@@ -1020,6 +1113,8 @@ def main() -> None:
         CODINGPLAN_QWEN38_MANIFEST, CODINGPLAN_QWEN38_RESULT, CODINGPLAN_QWEN38_CLOSEOUT,
         CODINGPLAN_DEEPSEEK_RESULT, CODINGPLAN_DEEPSEEK_CLOSEOUT,
         CODINGPLAN_CATALOG_B1, BACKBONE_SEARCH_STATE_B1,
+        CODINGPLAN_GLM52_RESULT, CODINGPLAN_GLM52_CLOSEOUT,
+        BACKBONE_SEARCH_STATE_B2,
     ):
         if not path.is_file():
             continue
@@ -1050,6 +1145,12 @@ def main() -> None:
         ],
         "deepseek_codingplan_request_accounting_domain": (
             "CODINGPLAN_ACCOUNT_WINDOW_DEEPSEEK_B0_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS"
+        ),
+        "glm52_codingplan_account_window_requests": readiness[
+            "glm52_account_window_request_delta"
+        ],
+        "glm52_codingplan_request_accounting_domain": (
+            "CODINGPLAN_ACCOUNT_WINDOW_GLM52_B1_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS"
         ),
         "gpu_runs": 0,
         "authority": {

@@ -1,0 +1,57 @@
+{
+  "agent_episode_count": 8,
+  "appworld_tool_call_total": 93,
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "f0_reason": "Capability selection never self-authorizes F0.",
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "backbone_search_state_sha256": "a96d8a4834c8680ce655af49eda8e946fc9bea7afc1168f9cea7b9248436d672",
+  "codingplan_window_first_before": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T05:04:58",
+    "remaining": 428,
+    "used": 72
+  },
+  "codingplan_window_last_after": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T05:04:58",
+    "remaining": 351,
+    "used": 149
+  },
+  "completion_tokens_total": 9552,
+  "content_sha256": "60bdea2cee41ee7e1fadddefa4a116fee8a0d48b004ac385a43110fcff2cfd27",
+  "contract_sha256": "08918ad768208e101b1cb70c116918fc2a6cad2eb2980d4ab8d99a18520bb44a",
+  "execution_id": "CODINGPLAN-GLM52-CAPABILITY-B1",
+  "f0_executed": false,
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 1.0,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 1.0,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+  },
+  "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+  "ledger_sha256": "65e667a8a479b4c46b6e6f6fc5cb4609039ed8a22ed4e5045b448f6c54dec1db",
+  "model_id": "GLM-5.2",
+  "model_profile": "AtomGit-GLM-5.2",
+  "model_round_count": 77,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prompt_tokens_total": 2522924,
+  "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+  "schema_version": "ace-codingplan-glm52-capability-b1-result-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+  "valid_capability_measurements": 8
+}

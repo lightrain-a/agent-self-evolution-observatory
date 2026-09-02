@@ -1,0 +1,44 @@
+{
+  "accounting": {
+    "account_level_unattributed_request_count": 0,
+    "appworld_tool_call_total": 93,
+    "codingplan_account_window_request_delta": 77,
+    "completion_tokens_total": 9552,
+    "prompt_tokens_total": 2522924,
+    "scientific_model_round_count": 77
+  },
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "990d316410471601a2b838d0fecc3fe371d541ab7d37d27b646566fe4655b238",
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 1.0,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 1.0,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+  },
+  "interpretation_boundary": "GLM-5.2 fails only the frozen target-success ceiling; gate, task panel, tool cap, and substrate are unchanged for the next predeclared candidate.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "result_artifact": "generated/agent-constraint-externality-codingplan-glm52-capability-b1-result-20260903.json",
+  "result_content_sha256": "60bdea2cee41ee7e1fadddefa4a116fee8a0d48b004ac385a43110fcff2cfd27",
+  "result_file_sha256": "441e8c893b342455b7cfb38e568a07f8668d9fd0c4d74edc16422772ce172481",
+  "schema_version": "ace-codingplan-glm52-capability-b1-closeout-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CODINGPLAN_GLM52_B1_CEILING_CLOSEOUT",
+  "tool_loop_completed_measurements": 8,
+  "tool_loop_incomplete_measurements": 0,
+  "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+}

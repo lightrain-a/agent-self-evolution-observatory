@@ -38,6 +38,10 @@
       "bytes": 1653,
       "sha256": "36ced26f2ebbd12017e8a51839517c88868a22b9290a3058df264dfefeb169bc"
     },
+    "generated/agent-constraint-externality-capability-backbone-search-state-b2-20260903.json": {
+      "bytes": 1816,
+      "sha256": "410c54c69622dab44d6c1d98622f47b957260729f1ac04dcc95dc67e91331f1f"
+    },
     "generated/agent-constraint-externality-capability-contract-20260831.json": {
       "bytes": 1773,
       "sha256": "8336b5c82aa88531794e541cfa200409644ea52842a9cdd45534f8679f235e25"
@@ -102,6 +106,14 @@
       "bytes": 2025,
       "sha256": "d10570c3316c7af791ad6a3fc91e4157902a5e7be28313cf85f248ccfbdd6d01"
     },
+    "generated/agent-constraint-externality-codingplan-glm52-capability-b1-closeout-20260903.json": {
+      "bytes": 1831,
+      "sha256": "437e5a23a24e8d3bd43f09765554b2664dede45bed502e70505738a64d968d13"
+    },
+    "generated/agent-constraint-externality-codingplan-glm52-capability-b1-result-20260903.json": {
+      "bytes": 1997,
+      "sha256": "441e8c893b342455b7cfb38e568a07f8668d9fd0c4d74edc16422772ce172481"
+    },
     "generated/agent-constraint-externality-codingplan-mcp-q0-qualification-20260902.json": {
       "bytes": 1008,
       "sha256": "50d1976ae6532ad34bdf109510f08fd821d9f3da41b2e566a24001cd07507939"
@@ -127,8 +139,8 @@
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 5907,
-      "sha256": "ddbc40a24f39f2994e5c1b23f35c95695d14e9efbcfdc57fe7766c67f1906448"
+      "bytes": 6883,
+      "sha256": "687921e907cc4d2e09b05e54f53fbc1d503eec71cc2c0368142c188d702a3de6"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -212,11 +224,13 @@
     }
   },
   "generated_at": "2026-09-01T15:35:00+08:00",
+  "glm52_codingplan_account_window_requests": 77,
+  "glm52_codingplan_request_accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_GLM52_B1_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
   "gpu_runs": 0,
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "provider_calls": 296,
   "provider_calls_accounting_domain": "DIRECT_API_ONLY",
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_GLM52_NEXT"
+  "status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25_NEXT"
 }
