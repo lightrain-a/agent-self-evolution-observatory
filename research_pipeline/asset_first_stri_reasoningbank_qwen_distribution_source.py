@@ -20,6 +20,9 @@ from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_d0_quali
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_source_resume import (
     require_resume_gate,
 )
+from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_source_pacing import (
+    require_pacing,
+)
 
 EXPERIMENT_ID = "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901"
 SPLIT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-task-split-20260901.json"
@@ -202,6 +205,7 @@ def run() -> dict[str, Any]:
                 "SOURCE_AMBIGUOUS_INFLIGHT_HOLD: refusing to reissue an unreceipted source unit"
             )
     require_resume_if_last_terminal(contract, completed)
+    transport_pacing = require_pacing(len(completed) + 1)
     write_json(INDEX, index_payload(contract, completed))
     for unit in contract["source_plan"][len(completed):]:
         write_json(INDEX, index_payload(contract, completed, inflight={
@@ -222,7 +226,7 @@ def run() -> dict[str, Any]:
             trajectory, _ = execute_trajectory(
                 row=row, image_pull_reference=image, selected_memory="",
                 run_id=unit["run_id"], sampling=contract["sampling"],
-                container=container)
+                container=container, transport_pacing=transport_pacing)
             status = "COMPLETED"
             if trajectory.get("failure") is not None:
                 status = "TERMINAL_PROVIDER_OR_POLICY_FAILURE"

@@ -96,11 +96,24 @@ def modified_files_from_status(status_output: str) -> list[str]:
     return sorted(set(files))
 
 
+def provider_pacing_delay_seconds(
+    *, previous_input_tokens: int, target_input_tokens_per_minute: int,
+    elapsed_since_previous_call_start: float,
+) -> float:
+    if previous_input_tokens <= 0:
+        raise RuntimeError("provider pacing requires positive previous input_tokens")
+    if target_input_tokens_per_minute <= 0:
+        raise RuntimeError("provider pacing target must be positive")
+    minimum_interval = previous_input_tokens * 60.0 / target_input_tokens_per_minute
+    return max(0.0, minimum_interval - max(0.0, elapsed_since_previous_call_start))
+
+
 def execute_trajectory(*, row: Mapping[str, Any], image_pull_reference: str,
                        selected_memory: str, run_id: str,
                        sampling: Mapping[str, Any],
                        client: QwenChatClient | None = None,
-                       container: QualificationDockerRun | None = None) -> tuple[dict[str, Any], QualificationDockerRun]:
+                       container: QualificationDockerRun | None = None,
+                       transport_pacing: Mapping[str, Any] | None = None) -> tuple[dict[str, Any], QualificationDockerRun]:
     task = str(row["problem_statement"])
     base_commit = str(row["base_commit"])
     messages = render_messages(task, selected_memory)
@@ -114,12 +127,42 @@ def execute_trajectory(*, row: Mapping[str, Any], image_pull_reference: str,
     actions: list[dict[str, Any]] = []
     failure: dict[str, Any] | None = None
     exit_status, submission = "", ""
+    previous_call_started: float | None = None
+    previous_input_tokens: int | None = None
+    pacing_target = None
+    if transport_pacing is not None:
+        pacing_target = int(transport_pacing["target_input_tokens_per_minute"])
+        if pacing_target <= 0:
+            raise RuntimeError("invalid transport pacing target")
     for step in range(1, STEP_LIMIT + 1):
+        pacing_delay = 0.0
+        pacing_elapsed = None
+        if pacing_target is not None and previous_call_started is not None:
+            if previous_input_tokens is None or previous_input_tokens <= 0:
+                raise RuntimeError("provider pacing previous input_tokens missing")
+            pacing_elapsed = time.monotonic() - previous_call_started
+            pacing_delay = provider_pacing_delay_seconds(
+                previous_input_tokens=previous_input_tokens,
+                target_input_tokens_per_minute=pacing_target,
+                elapsed_since_previous_call_start=pacing_elapsed,
+            )
+            if pacing_delay > 0:
+                time.sleep(pacing_delay)
         request = request_body(messages, sampling)
         requests.append({
             "step": step, "canonical_request": request,
             "request_sha256": sha256_text(canonical_json(request)),
             "attempt_count": 1,
+            "transport_pacing": {
+                "enabled": pacing_target is not None,
+                "target_input_tokens_per_minute": pacing_target,
+                "previous_input_tokens": previous_input_tokens,
+                "elapsed_since_previous_call_start_seconds": (
+                    None if pacing_elapsed is None else round(pacing_elapsed, 6)
+                ),
+                "sleep_seconds": round(pacing_delay, 6),
+                "request_payload_changed": False,
+            },
         })
         call_started = time.monotonic()
         try:
@@ -141,6 +184,10 @@ def execute_trajectory(*, row: Mapping[str, Any], image_pull_reference: str,
         receipt = safe_response(response)
         receipt["latency_seconds"] = round(time.monotonic() - call_started, 6)
         responses.append({"step": step, **receipt})
+        previous_call_started = call_started
+        previous_input_tokens = int((receipt.get("usage") or {}).get("input_tokens") or 0)
+        if pacing_target is not None and previous_input_tokens <= 0:
+            raise RuntimeError("provider pacing requires provider-reported input_tokens")
         if int(receipt.get("transport_attempts") or 0) != 1:
             failure = {"failure_layer": "provider", "error_type": "HiddenRetryDetected"}
             exit_status = "ProviderRetryPolicyViolation"
@@ -214,6 +261,7 @@ def execute_trajectory(*, row: Mapping[str, Any], image_pull_reference: str,
             "base_url": BASE_URL, "requested_model": MODEL,
             "sampling": dict(sampling), "max_retries": 0,
             "streaming": False, "n": 1, "seed": "omitted",
+            "transport_pacing": None if transport_pacing is None else dict(transport_pacing),
         },
         "runtime_receipt": runtime,
         "messages": messages, "requests": requests, "responses": responses,

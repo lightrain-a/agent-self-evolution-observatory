@@ -1,0 +1,146 @@
+{
+  "created_at_utc": "2026-09-02T06:18:14+00:00",
+  "credential_material_present": false,
+  "decision": "QWEN_SOURCE_PROVIDER_PACING_REPAIR_AUTHORIZED",
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "non_outcome_usage_evidence": {
+    "completed_source_count": 7,
+    "per_source_non_outcome_usage": [
+      {
+        "accepted_response_count": 125,
+        "execution_status": "COMPLETED",
+        "input_tokens": 5156284,
+        "instance_id": "pydata__xarray-4356",
+        "model_call_count": 125,
+        "ordinal": 1,
+        "output_tokens": 39772,
+        "receipt_sha256": "c04dc72255a1a864ed435372e031f3b103fdadc47929c80c34bed624684dd656"
+      },
+      {
+        "accepted_response_count": 96,
+        "execution_status": "COMPLETED",
+        "input_tokens": 2922842,
+        "instance_id": "pydata__xarray-3677",
+        "model_call_count": 96,
+        "ordinal": 2,
+        "output_tokens": 15144,
+        "receipt_sha256": "a502abdfa7ed975beefa44af404de26ace754a7c7d49f6541e07dbd9c710eabf"
+      },
+      {
+        "accepted_response_count": 122,
+        "execution_status": "TERMINAL_PROVIDER_OR_POLICY_FAILURE",
+        "input_tokens": 4434169,
+        "instance_id": "pydata__xarray-3095",
+        "model_call_count": 123,
+        "ordinal": 3,
+        "output_tokens": 18184,
+        "receipt_sha256": "a4ed2d696f6949e7044f836a24fc3dfa8335ac3d08c342f347dcd75e326f9dc7"
+      },
+      {
+        "accepted_response_count": 183,
+        "execution_status": "COMPLETED",
+        "input_tokens": 8960686,
+        "instance_id": "pydata__xarray-6721",
+        "model_call_count": 183,
+        "ordinal": 4,
+        "output_tokens": 37190,
+        "receipt_sha256": "96626cc538a3025bade7e45163e693dd1ef9a61e9be8d106ec20d9bd5c21b8e6"
+      },
+      {
+        "accepted_response_count": 110,
+        "execution_status": "COMPLETED",
+        "input_tokens": 4287517,
+        "instance_id": "pydata__xarray-6992",
+        "model_call_count": 110,
+        "ordinal": 5,
+        "output_tokens": 31436,
+        "receipt_sha256": "005fe1f2706673c79db7c6801edec4dbd054e04e8091d3cac7d75fc2682a9b0b"
+      },
+      {
+        "accepted_response_count": 86,
+        "execution_status": "TERMINAL_PROVIDER_OR_POLICY_FAILURE",
+        "input_tokens": 2018101,
+        "instance_id": "pydata__xarray-4629",
+        "model_call_count": 87,
+        "ordinal": 6,
+        "output_tokens": 10880,
+        "receipt_sha256": "799a3480f46d5ea997717e6b5ba9de76893a0c1c7bdafd0b859c2c3ed1ae1fa7"
+      },
+      {
+        "accepted_response_count": 53,
+        "execution_status": "TERMINAL_PROVIDER_OR_POLICY_FAILURE",
+        "input_tokens": 1357767,
+        "instance_id": "pydata__xarray-4687",
+        "model_call_count": 54,
+        "ordinal": 7,
+        "output_tokens": 4143,
+        "receipt_sha256": "a4dcf53d3a0dfc6fa5fca6e70295b551c232b57ddcbf99a496d56d0fd951c78d"
+      }
+    ],
+    "total_accepted_response_count": 775,
+    "total_input_tokens": 29137366,
+    "total_model_call_count": 778,
+    "total_output_tokens": 156749
+  },
+  "payload_sha256": "cbf6b8c51591b775e17484708c7f0a5c6a6e1bfacd29e6f95ac88a2823ad4022",
+  "repair": {
+    "active_from_source_ordinal": 8,
+    "algorithm": "before each provider call after the first accepted response in a trajectory, let min_interval = previous_response_input_tokens * 60 / target_input_tokens_per_minute; sleep max(0, min_interval - elapsed_since_previous_provider_call_start)",
+    "max_output_tokens_changed": false,
+    "messages_changed": false,
+    "missing_previous_input_tokens_policy": "fail closed before the next provider call",
+    "model_changed": false,
+    "previous_usage_source": "provider-reported input_tokens from immediately preceding accepted response",
+    "replacement_enabled": false,
+    "request_payload_changed": false,
+    "retry_enabled": false,
+    "sampling_changed": false,
+    "target_input_tokens_per_minute": 400000,
+    "task_eligibility_changed": false,
+    "task_order_changed": false
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "completed_source_receipts_1_through_7_immutable": true,
+    "confirmatory_execution_authorized": false,
+    "evaluator_outcomes_used_to_design_repair": false,
+    "memory_extraction_authorized": false,
+    "provider_failure_and_usage_metadata_only": true,
+    "source_ordinals_8_through_32_outcomes_unobserved_at_freeze": true,
+    "source_replacement_authorized": false,
+    "source_retry_authorized": false
+  },
+  "source_contract_sha256": "072980a4e71a3e31de2e59ef77b52cd090073d645b665af0adc25c24a99b8daa",
+  "source_index_completed_count": 7,
+  "source_index_hold_sha256": "c3d20056585474735148e8373f4491c32a60ea81a31526eef1c620c07dce64fb",
+  "stage": "QWEN_SOURCE_PROVIDER_TRANSPORT_PACING_REPAIR",
+  "trigger_rate_limit_receipts": [
+    {
+      "accepted_response_count": 122,
+      "error_code": "rate_limit_exceeded",
+      "instance_id": "pydata__xarray-3095",
+      "model_call_count": 123,
+      "ordinal": 3,
+      "receipt_sha256": "a4ed2d696f6949e7044f836a24fc3dfa8335ac3d08c342f347dcd75e326f9dc7",
+      "status_code": 400
+    },
+    {
+      "accepted_response_count": 86,
+      "error_code": "rate_limit_exceeded",
+      "instance_id": "pydata__xarray-4629",
+      "model_call_count": 87,
+      "ordinal": 6,
+      "receipt_sha256": "799a3480f46d5ea997717e6b5ba9de76893a0c1c7bdafd0b859c2c3ed1ae1fa7",
+      "status_code": 400
+    },
+    {
+      "accepted_response_count": 53,
+      "error_code": "rate_limit_exceeded",
+      "instance_id": "pydata__xarray-4687",
+      "model_call_count": 54,
+      "ordinal": 7,
+      "receipt_sha256": "a4dcf53d3a0dfc6fa5fca6e70295b551c232b57ddcbf99a496d56d0fd951c78d",
+      "status_code": 400
+    }
+  ]
+}
