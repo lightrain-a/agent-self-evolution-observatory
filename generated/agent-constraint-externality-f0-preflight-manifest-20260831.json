@@ -42,6 +42,10 @@
       "bytes": 1816,
       "sha256": "410c54c69622dab44d6c1d98622f47b957260729f1ac04dcc95dc67e91331f1f"
     },
+    "generated/agent-constraint-externality-capability-backbone-search-state-b3-20260903.json": {
+      "bytes": 1823,
+      "sha256": "6efd9a58c3408799fff2ebd872e7699495b200e264214cc0ac6f51668dbe67a4"
+    },
     "generated/agent-constraint-externality-capability-contract-20260831.json": {
       "bytes": 1773,
       "sha256": "8336b5c82aa88531794e541cfa200409644ea52842a9cdd45534f8679f235e25"
@@ -118,6 +122,14 @@
       "bytes": 1008,
       "sha256": "50d1976ae6532ad34bdf109510f08fd821d9f3da41b2e566a24001cd07507939"
     },
+    "generated/agent-constraint-externality-codingplan-mimo25-capability-b2-closeout-20260903.json": {
+      "bytes": 1830,
+      "sha256": "04387466574150275388041cbf68c8b62f24027a1e7447b4f5ba086f7b717988"
+    },
+    "generated/agent-constraint-externality-codingplan-mimo25-capability-b2-result-20260903.json": {
+      "bytes": 2005,
+      "sha256": "7bbe1c0ce20ab86ff37ec912fcde17cfad9a3a444581fbc7a0b2e2033d9d328c"
+    },
     "generated/agent-constraint-externality-codingplan-qwen38-capability-a0-closeout-20260902.json": {
       "bytes": 6490,
       "sha256": "425449ff45935bca00daa9db83a77037b62e1e0b2e3d20e01545a31951e983c9"
@@ -139,8 +151,8 @@
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 6883,
-      "sha256": "687921e907cc4d2e09b05e54f53fbc1d503eec71cc2c0368142c188d702a3de6"
+      "bytes": 7917,
+      "sha256": "d162295e975fbfbbbc1d7aab6fa0ea75417318d49e8b8fc5977a69db416ca1e6"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -227,10 +239,12 @@
   "glm52_codingplan_account_window_requests": 77,
   "glm52_codingplan_request_accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_GLM52_B1_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
   "gpu_runs": 0,
+  "mimo25_codingplan_account_window_requests": 69,
+  "mimo25_codingplan_request_accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_MIMO25_B2_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "provider_calls": 296,
   "provider_calls_accounting_domain": "DIRECT_API_ONLY",
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25_NEXT"
+  "status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25PRO_NEXT"
 }

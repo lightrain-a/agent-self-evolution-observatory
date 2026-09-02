@@ -131,7 +131,28 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness.get("capability_model_selection_state") == "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_NEXT":
+        if readiness.get("capability_model_selection_state") == "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_CEILING_MIMO25PRO_NEXT":
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25PRO_NEXT",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "FREEZE_AND_RUN_CODINGPLAN_MIMO25PRO_CAPABILITY_B3",
+            )
+            self.assertEqual(readiness["mimo25_capability_result_status"], "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP")
+            self.assertEqual(readiness["mimo25_scientific_model_round_count"], 69)
+            self.assertEqual(readiness["mimo25_account_window_request_delta"], 69)
+            self.assertEqual(readiness["mimo25_tool_loop_completion_rate"], 1.0)
+            self.assertEqual(readiness["mimo25_target_success_rate"], 1.0)
+            self.assertEqual(readiness["backbone_search_b3_remaining_frozen_order"], ["mimo-v2.5-pro"])
+            self.assertEqual(
+                readiness["backbone_search_b3_next_candidate"],
+                {"model_id": "mimo-v2.5-pro", "profile": "AtomGit-mimo-v2.5-pro"},
+            )
+            self.assertFalse(readiness["eligible_backbone_selected"])
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_NEXT":
             self.assertEqual(
                 readiness["status"],
                 "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25_NEXT",
@@ -320,6 +341,13 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         )
         self.assertIn(
             "DO_NOT_SUM", manifest["glm52_codingplan_request_accounting_domain"]
+        )
+        self.assertEqual(
+            manifest["mimo25_codingplan_account_window_requests"],
+            self.data["readiness"]["mimo25_account_window_request_delta"],
+        )
+        self.assertIn(
+            "DO_NOT_SUM", manifest["mimo25_codingplan_request_accounting_domain"]
         )
         for relative, metadata in manifest["files"].items():
             path = ROOT / relative

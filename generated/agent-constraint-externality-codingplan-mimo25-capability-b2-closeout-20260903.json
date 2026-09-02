@@ -1,0 +1,44 @@
+{
+  "accounting": {
+    "account_level_unattributed_request_count": 0,
+    "appworld_tool_call_total": 91,
+    "codingplan_account_window_request_delta": 69,
+    "completion_tokens_total": 16743,
+    "prompt_tokens_total": 2745476,
+    "scientific_model_round_count": 69
+  },
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "6d9e37f59aff39314eead9c4a9e06ca5a05049a4ebd32d4eccb06ef69ee0296a",
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 1.0,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 1.0,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+  },
+  "interpretation_boundary": "mimo-v2.5 fails only the frozen target-success ceiling; the predeclared final candidate mimo-v2.5-pro inherits the unchanged gate and panel.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "result_artifact": "generated/agent-constraint-externality-codingplan-mimo25-capability-b2-result-20260903.json",
+  "result_content_sha256": "b205d813667c228aa8ba9f0db6fa1b91a7df9b0a64d9ad1c679a7af36338b397",
+  "result_file_sha256": "7bbe1c0ce20ab86ff37ec912fcde17cfad9a3a444581fbc7a0b2e2033d9d328c",
+  "schema_version": "ace-codingplan-mimo25-capability-b2-closeout-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CODINGPLAN_MIMO25_B2_CEILING_CLOSEOUT",
+  "tool_loop_completed_measurements": 8,
+  "tool_loop_incomplete_measurements": 0,
+  "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+}

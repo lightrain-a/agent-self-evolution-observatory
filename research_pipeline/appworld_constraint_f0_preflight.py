@@ -165,6 +165,15 @@ CODINGPLAN_GLM52_CLOSEOUT = (
 BACKBONE_SEARCH_STATE_B2 = (
     GENERATED / "agent-constraint-externality-capability-backbone-search-state-b2-20260903.json"
 )
+CODINGPLAN_MIMO25_RESULT = (
+    GENERATED / "agent-constraint-externality-codingplan-mimo25-capability-b2-result-20260903.json"
+)
+CODINGPLAN_MIMO25_CLOSEOUT = (
+    GENERATED / "agent-constraint-externality-codingplan-mimo25-capability-b2-closeout-20260903.json"
+)
+BACKBONE_SEARCH_STATE_B3 = (
+    GENERATED / "agent-constraint-externality-capability-backbone-search-state-b3-20260903.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -499,6 +508,49 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             raise PreflightError("Backbone search B2 state cannot authorize F0.")
         backbone_search_b2_active = True
 
+    mimo25_result = (
+        read_json(CODINGPLAN_MIMO25_RESULT)
+        if CODINGPLAN_MIMO25_RESULT.is_file()
+        else {}
+    )
+    mimo25_status = validate_capability_result(mimo25_result)
+    mimo25_closeout = (
+        read_json(CODINGPLAN_MIMO25_CLOSEOUT)
+        if CODINGPLAN_MIMO25_CLOSEOUT.is_file()
+        else {}
+    )
+    backbone_search_state_b3 = (
+        read_json(BACKBONE_SEARCH_STATE_B3)
+        if BACKBONE_SEARCH_STATE_B3.is_file()
+        else {}
+    )
+    backbone_search_b3_active = False
+    if backbone_search_state_b3:
+        for label, payload in (
+            ("mimo-v2.5 closeout", mimo25_closeout),
+            ("backbone search state B3", backbone_search_state_b3),
+        ):
+            if payload.get("object_id") != OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            claimed = payload.get("content_sha256")
+            unsigned = dict(payload)
+            unsigned.pop("content_sha256", None)
+            if claimed != digest(unsigned):
+                raise PreflightError(f"{label} content hash mismatch.")
+        if mimo25_status != "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP":
+            raise PreflightError("mimo-v2.5 B2 result is not at its frozen ceiling stop.")
+        if mimo25_closeout.get("status") != "CODINGPLAN_MIMO25_B2_CEILING_CLOSEOUT":
+            raise PreflightError("mimo-v2.5 B2 closeout status mismatch.")
+        if mimo25_closeout.get("verdict") != mimo25_status:
+            raise PreflightError("mimo-v2.5 result/closeout verdict mismatch.")
+        if backbone_search_state_b3.get("status") != "CAPABILITY_BACKBONE_SEARCH_CONTINUE_MIMO25PRO_NEXT":
+            raise PreflightError("Backbone search B3 state is not frozen to mimo-v2.5-pro next.")
+        if backbone_search_state_b3.get("remaining_frozen_order") != ["mimo-v2.5-pro"]:
+            raise PreflightError("Backbone search B3 candidate order drifted.")
+        if backbone_search_state_b3.get("authority", {}).get("f0") is not False:
+            raise PreflightError("Backbone search B3 state cannot authorize F0.")
+        backbone_search_b3_active = True
+
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
         capability_result = read_json(CAPABILITY_R5_PARTIAL_RESULT)
@@ -798,6 +850,13 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif backbone_search_b3_active:
+        readiness_status = backbone_search_state_b3["status"]
+        blocker = (
+            "No eligible backbone has been selected yet: Qwen3.7-Plus, CodingPlan Qwen3.8-27B, GLM-5.2, and mimo-v2.5 are ceiling candidates, "
+            "while CodingPlan DeepSeek-v4-flash is a floor candidate. The final predeclared candidate mimo-v2.5-pro remains."
+        )
+        next_action = "FREEZE_AND_RUN_CODINGPLAN_MIMO25PRO_CAPABILITY_B3"
     elif backbone_search_b2_active:
         readiness_status = backbone_search_state_b2["status"]
         blocker = (
@@ -1016,8 +1075,40 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             "remaining_frozen_order", []
         ),
         "backbone_search_b2_next_candidate": backbone_search_state_b2.get("next_candidate"),
+        "mimo25_capability_result_status": mimo25_status,
+        "mimo25_capability_result_artifact": (
+            str(CODINGPLAN_MIMO25_RESULT.relative_to(ROOT))
+            if CODINGPLAN_MIMO25_RESULT.is_file()
+            else None
+        ),
+        "mimo25_capability_closeout_status": mimo25_closeout.get("status"),
+        "mimo25_capability_closeout_artifact": (
+            str(CODINGPLAN_MIMO25_CLOSEOUT.relative_to(ROOT))
+            if CODINGPLAN_MIMO25_CLOSEOUT.is_file()
+            else None
+        ),
+        "mimo25_scientific_model_round_count": int(
+            mimo25_closeout.get("accounting", {}).get("scientific_model_round_count", 0)
+        ),
+        "mimo25_account_window_request_delta": int(
+            mimo25_closeout.get("accounting", {}).get("codingplan_account_window_request_delta", 0)
+        ),
+        "mimo25_tool_loop_completion_rate": mimo25_result.get("gate", {}).get("tool_loop_completion_rate"),
+        "mimo25_target_success_rate": mimo25_result.get("gate", {}).get("target_success_rate"),
+        "backbone_search_state_b3_status": backbone_search_state_b3.get("status"),
+        "backbone_search_state_b3_artifact": (
+            str(BACKBONE_SEARCH_STATE_B3.relative_to(ROOT))
+            if BACKBONE_SEARCH_STATE_B3.is_file()
+            else None
+        ),
+        "backbone_search_b3_remaining_frozen_order": backbone_search_state_b3.get(
+            "remaining_frozen_order", []
+        ),
+        "backbone_search_b3_next_candidate": backbone_search_state_b3.get("next_candidate"),
         "capability_model_selection_state": (
-            "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_NEXT"
+            "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_CEILING_MIMO25PRO_NEXT"
+            if backbone_search_b3_active
+            else "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_NEXT"
             if backbone_search_b2_active
             else "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_NEXT"
             if backbone_search_active
@@ -1115,6 +1206,8 @@ def main() -> None:
         CODINGPLAN_CATALOG_B1, BACKBONE_SEARCH_STATE_B1,
         CODINGPLAN_GLM52_RESULT, CODINGPLAN_GLM52_CLOSEOUT,
         BACKBONE_SEARCH_STATE_B2,
+        CODINGPLAN_MIMO25_RESULT, CODINGPLAN_MIMO25_CLOSEOUT,
+        BACKBONE_SEARCH_STATE_B3,
     ):
         if not path.is_file():
             continue
@@ -1151,6 +1244,12 @@ def main() -> None:
         ],
         "glm52_codingplan_request_accounting_domain": (
             "CODINGPLAN_ACCOUNT_WINDOW_GLM52_B1_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS"
+        ),
+        "mimo25_codingplan_account_window_requests": readiness[
+            "mimo25_account_window_request_delta"
+        ],
+        "mimo25_codingplan_request_accounting_domain": (
+            "CODINGPLAN_ACCOUNT_WINDOW_MIMO25_B2_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS"
         ),
         "gpu_runs": 0,
         "authority": {
