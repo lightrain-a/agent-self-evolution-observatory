@@ -19,13 +19,13 @@ window.CURRENT_PAPER_GOLDEN_SPECS["paper-g1"]={
  architecture:{lead:{zh:"G1 不是把 BrowserART、AWM、HarmBench 当三个平级数据集，而是把它们放在一条‘任务 → 持久状态 → 测量’链上。",en:"G1 uses a task→persistent-state→measurement chain."},layers:[
   {k:"A",t:"BrowserART",d:{zh:"提供真实浏览器 Agent 安全任务与行动轨迹底座。",en:"Browser safety task/trajectory substrate."}},
   {k:"B",t:"Agent Workflow Memory",d:{zh:"提供会跨任务持续更新的 workflow / memory 状态机制。",en:"Persistent workflow/memory mechanism."}},
-  {k:"C",t:"HarmBench + DeepSeek",d:{zh:"对同一冻结轨迹做两个独立测量，检查 premise、event set 与 ordering 是否稳定。",en:"Two independent measurements on identical traces."}},
-  {k:"D",t:"PV1",d:{zh:"在新结果出现前冻结任务、评价器和 verdict rule，验证协议是否真的会保守停止。",en:"Prospective panel testing fail-closed behavior."}}
+  {k:"C",t:"HarmBench + DeepSeek",d:{zh:"让两个独立判分器看完全相同的轨迹，检查‘当前是否安全’‘哪些未来轨迹算问题’以及‘哪个实验组更危险’这三件事是否一致。",en:"Two independent measurements on identical traces."}},
+  {k:"D",t:{zh:"新数据前先把‘意见不一致时怎么办’写死",en:"PV1"},d:{zh:"在新结果出现之前，先把任务、两个判分器和‘意见不一致时怎么办’的规则写死，再看新数据到来时协议会不会真的保守停止。",en:"Prospective panel testing fail-closed behavior."}}
  ]},
  arc:[
-  {k:"A",t:{zh:"单评价器初始结果",en:"Initial single-evaluator result"},q:{zh:"updated 是否比 base / NullMemory 更危险？",en:"Is updated riskier?"},found:{zh:"HarmBench 给出明显排序，最初很像 update-associated risk。",en:"HarmBench showed a directional ordering."},meaning:{zh:"只能形成候选故事，还不能证明测量稳定。",en:"Candidate story only."}},
-  {k:"B",t:{zh:"第二评价器复核",en:"Second evaluator"},q:{zh:"同一批轨迹换 judge 后方向还在吗？",en:"Does the direction survive another judge?"},found:{zh:"current premise 和 future ordering 都发生变化。",en:"Premise and ordering changed."},meaning:{zh:"原‘更新更危险’故事被迫改写。",en:"The original risk story was no longer identified."}},
-  {k:"C",t:"ERTA",q:{zh:"有分歧时还能确定什么？",en:"What remains identifiable?"},found:{zh:"保留 definite / possible sets 与 contrast envelope，而不是投票。",en:"Retains sets and contrast envelopes instead of voting."},meaning:{zh:"把不确定本身变成可报告结果。",en:"Uncertainty becomes an explicit result."}},
-  {k:"D",t:"PV1",q:{zh:"新数据上协议会不会真的停止过度结论？",en:"Will the protocol fail closed prospectively?"},found:{zh:"fresh panel 仍分歧，冻结规则输出 measurement-inconclusive。",en:"Fresh disagreement produced the preregistered inconclusive verdict."},meaning:{zh:"证明不是事后看到结果才改口径。",en:"Shows the rule was not post-hoc."}}
+  {k:"A",t:{zh:"先看一个判分器会得出什么故事",en:"Initial single-evaluator result"},q:{zh:"只看 HarmBench 时，更新后的 Agent 是不是显得更危险？",en:"Is updated riskier?"},found:{zh:"是，三个实验组出现很明显的排序，很容易讲成‘更新越多越危险’。",en:"HarmBench showed a directional ordering."},meaning:{zh:"但这时只能说‘一个判分器看起来是这样’，还不能说这是 Agent 的稳定属性。",en:"Candidate story only."}},
+  {k:"B",t:{zh:"把完全相同的轨迹交给第二个判分器",en:"Second evaluator"},q:{zh:"如果换一个独立判分器，‘哪个组更危险’这个方向还在吗？",en:"Does the direction survive another judge?"},found:{zh:"不在：连‘当前是否安全’这个前提和未来三个组的排序都发生变化。",en:"Premise and ordering changed."},meaning:{zh:"所以原来的‘更新更危险’不能再当成稳定结论。",en:"The original risk story was no longer identified."}},
+  {k:"C",t:{zh:"两个判分器有分歧时，先只报告还能确定的部分",en:"ERTA"},q:{zh:"两个判分器意见不一致时，是不是只能投票选一个？",en:"What remains identifiable?"},found:{zh:"不是。论文保留‘两个判分器都同意的确定部分’和‘至少一个判分器认为可能有问题的部分’，同时报告效果方向可能落在哪个范围。",en:"Retains sets and contrast envelopes instead of voting."},meaning:{zh:"这样‘我们其实不知道方向’本身也成为一个诚实、可计算的结果。",en:"Uncertainty becomes an explicit result."}},
+  {k:"D",t:{zh:"再用一批全新数据验证这套保守规则",en:"PV1"},q:{zh:"这套‘意见不一致就保守停止’的规则，会不会只是看到旧结果后才临时想出来？",en:"Will the protocol fail closed prospectively?"},found:{zh:"在全新的 12 个回合出现结果之前就冻结任务、判分器和判定规则；新数据仍然分歧，协议按预先规则输出‘测量无法确定’。",en:"Fresh disagreement produced the preregistered inconclusive verdict."},meaning:{zh:"说明不是事后为了配合结果才改口径。",en:"Shows the rule was not post-hoc."}}
  ]
 };

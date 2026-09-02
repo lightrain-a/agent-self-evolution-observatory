@@ -70,6 +70,28 @@ def main():
             require(not jargon,f"untranslated default jargon remains {page}: {jargon}")
             readability=execute(sid,"""const root=document.createElement('div');document.querySelectorAll('.cpp-reader-chapter').forEach(x=>root.append(x.cloneNode(true)));root.querySelectorAll('details:not([open])').forEach(x=>x.remove());const rows=[...root.querySelectorAll('p,li,dd')].map(e=>(e.textContent||'').replace(/\\s+/g,'').trim()).filter(Boolean);return {max:Math.max(0,...rows.map(x=>x.length)),over180:rows.filter(x=>x.length>180).length};""")
             require(readability["over180"]==0,f"default beginner paragraph is too dense {page}: {readability}")
+            beginner_text=execute(sid,"""const root=document.createElement('div');document.querySelectorAll('.cpp-reader-chapter').forEach(x=>root.append(x.cloneNode(true)));root.querySelectorAll('details:not([open]),#research-archive').forEach(x=>x.remove());return root.textContent||'';""")
+            beginner_required={
+              "paper-g1.html":["两个判分器有分歧时","新数据前"],
+              "paper-c1.html":["一个具体购物例子","连续问三道门","172 次机会里有 125 次"],
+              "paper-e2.html":["只看赢家组（WIN-C）","保留诊断线索组（MRW）","做题和复盘分开"],
+              "paper-b1.html":["两张记忆卡","实验条件还不够干净，所以我们拒绝下结论","只改来源标签"],
+              "paper-b.html":["当前这一回合是否真的受益","这段经验是否值得长期学进去","未来再次遇到类似情况"],
+              "paper-agent-constraint.html":["世界 A · 完全独立（INDEPENDENT）","世界 B · 少量共享（LOW）","世界 C · 强共享（HIGH）","修一处、坏一处"],
+              "paper-3d.html":["第一步：有没有读懂关系","第二步：有没有把关系结构记对","第三步：家具有没有真正摆对"]
+            }
+            beginner_forbidden={
+              "paper-g1.html":["ERTA","PV1"],
+              "paper-c1.html":["native transport","forced injection","policy uptake","durable state"],
+              "paper-e2.html":["WIN-C vs MRW","winner-only","learning projection"],
+              "paper-b1.html":["metadata-only","provenance-only","writer bundle"],
+              "paper-b.html":["fast loop","slow loop"],
+              "paper-agent-constraint.html":["coupling topology","collateral regression"],
+              "paper-3d.html":["stage localization","relational topology"]
+            }
+            for marker in beginner_required.get(page,[]): require(marker in beginner_text,f"beginner explanation missing {page}: {marker}")
+            lower_beginner=beginner_text.lower()
+            for term in beginner_forbidden.get(page,[]): require(term.lower() not in lower_beginner,f"raw default jargon leaked {page}: {term}")
             if page=="paper-e1.html":
                 require(v["e1WhySplit"]==1 and v["e1SplitReasons"]==4 and v["e1SplitFlight"]==4 and v["e1WorkedExample"]==1 and v["e1Packages"]==4 and v["e1Flights"]==3 and v["e1MethodGlance"]==1 and v["e1MethodSteps"]==6 and v["e1AuditRepair"]==2 and v["e1CloneRows"]==3 and v["e1EvidenceGlance"]==3 and v["e1EvidenceLadder"]==1 and v["e1ExperimentArc"]==6 and v["e1ClaimRows"]==3 and v["e1Review"]==1 and "6.1" in v["e1ReviewScore"] and "Accept" in v["e1ReviewScore"] and v["e1ReviewHistory"]==1 and not v["e1ReviewHistoryOpen"] and v["e1Budget"]==1,f"E1 golden-template contract failed: {v}")
             else:
