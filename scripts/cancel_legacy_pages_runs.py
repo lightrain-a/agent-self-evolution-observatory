@@ -72,13 +72,13 @@ def cancel_active_runs(token: str, repository: str) -> None:
     # the direct workflow starts.
     observed: set[str] = set()
     consecutive_empty = 0
-    for _ in range(18):
+    for _ in range(6):
         active = list_active_runs(token, repository)
         if not active:
             consecutive_empty += 1
             # Allow enough time for the generated branch workflow to appear,
             # but do not add a fixed ninety-second delay when it is absent.
-            if consecutive_empty >= 4:
+            if consecutive_empty >= 2:
                 break
         else:
             consecutive_empty = 0
@@ -93,9 +93,9 @@ def cancel_active_runs(token: str, repository: str) -> None:
                 observed.add(run_id)
             else:
                 raise RuntimeError(f"Unable to cancel legacy Pages run {run_id}: HTTP {status} {message}")
-        time.sleep(5)
+        time.sleep(2)
 
-    for attempt in range(1, 61):
+    for attempt in range(1, 7):
         active = list_active_runs(token, repository)
         if not active:
             print(f"No active generated Pages runs remain after {attempt} status checks.")
@@ -104,8 +104,8 @@ def cancel_active_runs(token: str, repository: str) -> None:
             "Waiting for generated Pages runs to finish: "
             + ", ".join(f"{run.get('id')}={run.get('status')}" for run in active)
         )
-        time.sleep(5)
-    raise RuntimeError("Generated Pages workflow did not release after cancellation")
+        time.sleep(2)
+    raise RuntimeError("Generated Pages workflow did not release during the short best-effort cancellation window")
 
 
 def main() -> int:
