@@ -1,0 +1,159 @@
+{
+  "actor": {
+    "concurrency": 4,
+    "k": 8,
+    "max_output_tokens": 4096,
+    "max_turns": 10,
+    "prefix_ks": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "search_topology": "parallel_best_of_k",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "artifact_type": "e2-r18-diagnostic-value-stage-a-contract",
+  "authority": {
+    "analyzer": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "scientific_experiment": false,
+    "second_backbone": false,
+    "updater": false
+  },
+  "bound_code": {
+    "actor_stage_a": {
+      "path": "scripts/run_e2_r18_actor_pool_stage_a.py",
+      "sha256": "a5fb7776ae36d5ded9023dad9ee89588c9165d50627b25a378be5eed14dfdd68"
+    },
+    "freeze_contract": {
+      "path": "scripts/freeze_e2_r18_stage_a_contract.py",
+      "sha256": "77ac0453d0bfcae03b24af6a64d73a07d725e01df2a6cc12c6680244bf450d71"
+    },
+    "prediction_freeze": {
+      "path": "scripts/freeze_e2_r18_diagnostic_value_prediction.py",
+      "sha256": "f668e4ec647d8549febc8f800aec1f446f936f44e1c38a8cf8cd262c661f87c9"
+    },
+    "preflight_stage_a": {
+      "path": "scripts/preflight_e2_r18_stage_a.py",
+      "sha256": "2ad39ff8f15063cf3598850f5533be8766c91ae72be10f5383d789b5fc558c72"
+    },
+    "runner_stage_a": {
+      "path": "scripts/run_e2_r18_pool_support_stage_a.py",
+      "sha256": "a37311ea4e44e02476024125983226e2287e2c2a7a98f6436c43f99c55de8972"
+    }
+  },
+  "budget": {
+    "actor_rollouts_exact": 768,
+    "claim_before_provider_io": true,
+    "claims_never_released": true,
+    "heldout_evaluations": 0,
+    "max_output_tokens_per_provider_call": 4096,
+    "max_provider_calls": 7680,
+    "provider_retry_limit": 0,
+    "updater_calls": 0
+  },
+  "created_at_utc": "2026-09-02T06:32:58+00:00",
+  "forbidden": [
+    "updater",
+    "heldout evaluation",
+    "prediction refit",
+    "old E3 authorization reuse",
+    "second backbone",
+    "public benchmark",
+    "paper promotion",
+    "parent R17 status change",
+    "partial R18 effect"
+  ],
+  "fresh_heldout_qualification": {
+    "path": "generated/e2-r18-heldout-probe-runtime-qualification-20260902.json",
+    "required_status": "PASS_ZERO_PROVIDER_R18_FRESH_HELDOUT_RUNTIME_QUALIFIED",
+    "sha256": "be84664b667277a2cbbc4b4f382bd3cc3d086afad54cb260c3d0dd0d44b8613d"
+  },
+  "future_substrate_eligibility": {
+    "path": "generated/e2-r18-future-substrate-eligibility-audit-20260902.json",
+    "required_status": "PASS_R18_UNTOUCHED_FUTURE_SUBSTRATE_ELIGIBLE_FOR_NEW_CHILD_ONLY",
+    "sha256": "7af27725ad6c36a7b7e88b7222ce8ca38cbd7e5a492e1af33097b999e516b687"
+  },
+  "global_lineage_lease": {
+    "acquire": "O_EXCL_BEFORE_RUN_ROOT_AND_PROVIDER_IO",
+    "path": "/data/wyt/e2-r18-diagnostic-value-transport/lineage-leases/stage-a-v1.json",
+    "persistent_terminal_seal": true
+  },
+  "mindmemos": {
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "initial_skill_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "skill_mutation_allowed": false
+  },
+  "model_identity": {
+    "path": "generated/e2-r17-e1-a-v2-1-model-identity-adjudication-20260828.json",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "sha256": "7fb73c09bc96288438989f4b773abbe3bcb37c43d150b78a9c66da80d1b66ae4"
+  },
+  "parent_calibration": {
+    "analysis_path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-analysis-20260902.json",
+    "analysis_sha256": "f736cf7107d4439105bc8d24ae4519f34f742b26439113d97b56f6a0c1dbd0ab",
+    "required_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+    "role": "calibration_only"
+  },
+  "prediction_freeze": {
+    "formula": "Rhat_z=M_z_future*delta_hat_z_R17",
+    "must_run_after_stage_a_before_any_updater": true,
+    "script": "scripts/freeze_e2_r18_diagnostic_value_prediction.py",
+    "sha256": "f668e4ec647d8549febc8f800aec1f446f936f44e1c38a8cf8cd262c661f87c9"
+  },
+  "preregistration": {
+    "path": "generated/e2-r18-diagnostic-value-transport-preregistration-20260902.json",
+    "sha256": "e1037a9ad9e5e9d6711cdb0733de334a50a0040c13cc0097b579c72aa9deface"
+  },
+  "run_root": "/data/wyt/e2-r18-diagnostic-value-transport/runs/stage-a-pool-support-20260902",
+  "runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "schema_version": "1.0",
+  "status": "FROZEN_E2_R18_DIAGNOSTIC_VALUE_STAGE_A_POOL_SUPPORT",
+  "streams": [
+    "e3-agj-00",
+    "e3-agj-01",
+    "e3-fmv-00",
+    "e3-fmv-01",
+    "e3-ioc-00",
+    "e3-ioc-01",
+    "e3-msp-00",
+    "e3-msp-01",
+    "e3-ska-00",
+    "e3-ska-01",
+    "e3-tsr-00",
+    "e3-tsr-01"
+  ],
+  "suite": {
+    "future_field": "e3_future_streams",
+    "metadata_sha256": "12d6eb876e2a230e7990be3e61fed108d45f6ddec00bac5c9b88585a04111b04",
+    "old_e3_authority_reused": false,
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "support_gate": {
+    "exposed_stream_minimum": 8,
+    "mixed_pool_count_minimum": 24,
+    "mixed_pool_total": 96,
+    "mixed_pools_per_exposed_stream_minimum": 2,
+    "r18_binding_gate": "prediction freeze requires >=4 distinct family Rhat values; no updater before freeze",
+    "role": "diagnostic_only_before_mechanical_prediction_freeze",
+    "supported_families_minimum": 4
+  }
+}

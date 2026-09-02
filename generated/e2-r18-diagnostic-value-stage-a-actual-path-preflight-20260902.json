@@ -1,0 +1,36 @@
+{
+  "artifact_type": "e2-r18-stage-a-actual-actor-path-preflight",
+  "authority": {
+    "mint_stage_a_execution_authorization": false,
+    "provider_io": false,
+    "scientific_execution": false
+  },
+  "contract_sha256": "bfbb89dd0c72e8dedb0592cf720eb8dfc5a6da24271ab2b9c7ac6d990f814041",
+  "created_at_utc": "2026-09-02T06:33:16+00:00",
+  "heldout_evaluations": 0,
+  "k": 8,
+  "preflight_authorization_sha256": "7df73eed15d2c4a5abe539951b36f5b3e9651f56c72c21a40e1b4ef081d38996",
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "schema_version": "1.0",
+  "status": "PASS_R18_STAGE_A_ACTUAL_PATH_12_OF_12_ZERO_PROVIDER",
+  "stopped_before_provider_io": true,
+  "stream_ids": [
+    "e3-agj-00",
+    "e3-agj-01",
+    "e3-fmv-00",
+    "e3-fmv-01",
+    "e3-ioc-00",
+    "e3-ioc-01",
+    "e3-msp-00",
+    "e3-msp-01",
+    "e3-ska-00",
+    "e3-ska-01",
+    "e3-tsr-00",
+    "e3-tsr-01"
+  ],
+  "streams_expected": 12,
+  "streams_passed": 12,
+  "tasks_validated": 96,
+  "updater_calls": 0
+}
