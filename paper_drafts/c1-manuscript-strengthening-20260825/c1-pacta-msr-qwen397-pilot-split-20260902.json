@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-02T04:36:00Z",
+  "experiment": "C1-PACTA-MSR-QWEN397-P0-20260902",
+  "status": "FROZEN_PRE_SOURCE_OUTCOME",
+  "fresh_pool_sha256": "2391967a3da363bcbbe87403599970854d7cf7ed82b249078b0469b36a8de59e",
+  "runtime_qualification_sha256": "7b876c9dc31e964868fa1c5cff3cd5ab3510e57162e65368023102822d933a01",
+  "pilot_count": 8,
+  "sealed_count": 2,
+  "pilot": [
+    "astropy__astropy-7606=>astropy__astropy-8707",
+    "matplotlib__matplotlib-25479=>matplotlib__matplotlib-23314",
+    "django__django-14855=>django__django-15695",
+    "pylint-dev__pylint-4551=>pylint-dev__pylint-4604",
+    "pydata__xarray-4629=>pydata__xarray-2905",
+    "sphinx-doc__sphinx-7590=>sphinx-doc__sphinx-7757",
+    "scikit-learn__scikit-learn-25747=>scikit-learn__scikit-learn-13779",
+    "pytest-dev__pytest-7982=>pytest-dev__pytest-7324"
+  ],
+  "sealed": [
+    "sympy__sympy-13974=>sympy__sympy-20916",
+    "psf__requests-2317=>psf__requests-2931"
+  ],
+  "random_gate_ranking_pre_shadow": [
+    "pydata__xarray-4629=>pydata__xarray-2905",
+    "astropy__astropy-7606=>astropy__astropy-8707",
+    "django__django-14855=>django__django-15695",
+    "scikit-learn__scikit-learn-25747=>scikit-learn__scikit-learn-13779",
+    "pytest-dev__pytest-7982=>pytest-dev__pytest-7324",
+    "matplotlib__matplotlib-25479=>matplotlib__matplotlib-23314",
+    "pylint-dev__pylint-4551=>pylint-dev__pylint-4604",
+    "sphinx-doc__sphinx-7590=>sphinx-doc__sphinx-7757"
+  ],
+  "selection_basis": "ascending frozen pilot_rank over all ten fresh pairs after 20/20 runtime qualification and before any new source trajectory provider call",
+  "failure_rule": "All ten source trajectories must still qualify. If any source trajectory is invalid, stop; do not promote either sealed pair or replace any unit.",
+  "probe_execution_rule": "Only the eight pilot v2 probe commands may be executed after all ten source trajectories qualify. The two sealed probe commands remain unexecuted.",
+  "provider_calls_before_split": 0,
+  "source_trajectory_calls_before_split": 0,
+  "future_task_executions_before_split": 0
+}
