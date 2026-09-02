@@ -1,0 +1,20 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "classification": "NON_SCIENTIFIC_QUALIFICATION_CHECKPOINT_CONTENT_ADDRESSES_ONLY",
+  "checkpoint_bytes_not_committed_to_git": true,
+  "BEDROOM-SG2SC-SHARED": {
+    "v9_baseline_step_050": "a5c311cf9c91dd6464253ea402e0cda5faf9e2fccd539c1573c2cbcca99577ca",
+    "v9_baseline_step_100": "55f356c69301329d313acd7c7a7185fe1870fdcb14dcb34e99bffccdb775e9d2",
+    "v11_resumed_step_100": "388a05475d882e7123bbe7f33fc5ba1b55d91b1cf3989fd6d6d5de96a03d2d20"
+  },
+  "SGP-12": {
+    "v11_baseline_step_050": "2610c727f4034131e236a09998fb9c14cafc8c474d0bc00c4f93a92b64960ed8",
+    "v11_baseline_step_100": "2fc29db7a4756f8cf14520fada06bb52a3f66539982c9239bddd754f1d9906bb",
+    "v11_resumed_step_100": "7cb6cb0d8d731aab0c8c32d3f46058c1580bf3df14eec92ad2ea3232edf0b104"
+  },
+  "SGP-14": {
+    "v11_baseline_step_050": "8a50667603d6690af94f3ec3b1e6c9be180eebe226282dba910c4c7f324f4b14",
+    "v11_baseline_step_100": "9d6fdf21254108852b40da4d3937ddb328fda9806bc4acd7815c08b269c74aab",
+    "v11_resumed_step_100": "ae06d4f158b7bc07025c8b010500665038a74631ae6547e18dfed1248bba1341"
+  }
+}

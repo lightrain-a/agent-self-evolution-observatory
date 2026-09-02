@@ -1,0 +1,56 @@
+{
+  "artifact_type": "e2-r17-e3-d0-internal-adversarial-review",
+  "created_date": "2026-09-02",
+  "status": "HOLD_D0_DESIGN_REQUIRES_PREOUTCOME_REVISION",
+  "formal_independent_review": false,
+  "d0_execution_authorized": false,
+  "d0_values_exposed_by_review": false,
+  "v2_family_coefficients_computed": false,
+  "v2_mixed_support_by_stream_computed": false,
+  "loso_diagnostics_computed": false,
+  "review_items": {
+    "R1_scientific_independence": "PASS",
+    "R2_estimator_fidelity": "HOLD_RENAME_CAUSAL_DELTA_TO_PREDICTIVE_BETA_AND_DEMOTE_LINEARITY_TO_WORKING_MODEL",
+    "R3_comparator_validity": "PASS_POOLED_MIXED_SUPPORT_SLOPE",
+    "R4_development_scarcity": "HOLD_ADD_DETERMINISTIC_MINUS1_PLUS1_FEASIBILITY_PROJECTION",
+    "R5_zero_support_rule": "PASS",
+    "R6_confirmatory_unit": "PASS_12_STREAMS",
+    "R7_c0_continuation": "PASS_OPTION_A_UNCONDITIONAL_ALL_12_RESERVED_STREAMS",
+    "R8_inference": "HOLD_REJECT_EXACT_SIGN_FLIP_FOR_MEAN_LOSS_REPLACE_WITH_EXACT_BINOMIAL_STREAM_WIN_TEST_PLUS_POSITIVE_MEAN_G",
+    "R9_practical_effect": "PASS_NO_ADDITIONAL_ARBITRARY_MAGNITUDE_THRESHOLD",
+    "R10_execution_boundary": "PASS",
+    "R11_heldout_panel_shift": "HOLD_EXPLICIT_CROSS_PANEL_GENERALIZATION_REQUIRED"
+  },
+  "required_preoutcome_repairs": [
+    "replace delta_hat_z causal-language with beta_hat_z predictive-language",
+    "clip family and pooled predictions to the mathematically feasible interval [-1,1]",
+    "freeze unconditional all-12-stream C0 continuation",
+    "replace exact sign-flip mean-loss test with exact one-sided binomial stream-win test and require positive mean G",
+    "define C0 as cross-stream plus cross-heldout-panel generalization using all 36 untouched complementary B4 tasks"
+  ],
+  "proposed_primary_c0_decision": {
+    "stream_win_definition": "W_s=1[L_family_s < L_pool_s]; ties are non-wins",
+    "null": "P(W_s=1) <= 0.5",
+    "test": "exact one-sided binomial sign test",
+    "n_streams": 12,
+    "alpha": 0.05,
+    "minimum_wins_for_pass": 10,
+    "additional_requirement": "mean_s G_s > 0"
+  },
+  "next_allowed_action": "REVISE_D0_DRAFT_PREOUTCOME_THEN_REQUEST_GENUINE_INDEPENDENT_REVIEW",
+  "authority": {
+    "provider_io": false,
+    "analyze_v2_by_family": false,
+    "compute_development_mixed_support": false,
+    "compute_family_coefficients": false,
+    "compute_loso_diagnostics": false,
+    "new_search_pool_acquisition": false,
+    "confirmatory_execution": false,
+    "heldout_evaluation": false,
+    "gpu": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

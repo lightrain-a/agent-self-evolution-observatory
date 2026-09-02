@@ -1,0 +1,42 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "state": "GPU_TRAINING_QUALIFICATION_AUTHORITY_GRANTED_BOUNDED",
+  "grant": {
+    "source": "USER_EXPLICIT_NATURAL_LANGUAGE_AUTHORIZATION_IN_CURRENT_CONVERSATION",
+    "normalized_authority": "GPU_TRAINING_QUALIFICATION_AUTHORITY_GRANTED",
+    "user_requested_size_constraint": true,
+    "classification": "NON_SCIENTIFIC_OFFICIAL_TRAINING_RESOURCE_AND_REPLAY_QUALIFICATION",
+    "required_components": [
+      "BEDROOM-SG2SC-SHARED",
+      "SGP-12",
+      "SGP-14"
+    ],
+    "batch_size": 4,
+    "gradient_accumulation": 1,
+    "logical_optimizer_steps_per_component": 100,
+    "interrupt_after_step": 50,
+    "resume_compare_at_step": 100,
+    "replayed_suffix_steps_per_component": 50,
+    "why_100_not_50": "The frozen exact-resume contract requires interruption at step 50 and comparison at step 100; 100 is the smallest logical horizon that satisfies it.",
+    "parameter_sweep": false,
+    "validation_or_scientific_evaluation": false,
+    "scientific_outcomes": 0,
+    "outcomes_enter_p1": false
+  },
+  "prohibited": [
+    "official confirmatory training",
+    "P1 execution or outcome admission",
+    "scientific effect estimation",
+    "using qualification loss as a paper result",
+    "hyperparameter or seed sweeps",
+    "changing SUPPORT-12 or SUPPORT-14 membership or prompts",
+    "resampling zero-truncation exclusions",
+    "changing tokenizer revision",
+    "changing PORT-010 status"
+  ],
+  "port_010": {
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+    "evidence_review": "BLOCK_BAKE_IN",
+    "changed": false
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "artifact_type": "e2-r17-e3-b4-heldout-panel-shift-audit",
+  "authority": {
+    "c0": false,
+    "d0": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "submission": false
+  },
+  "b4_universe_count": 54,
+  "c0_panel_count": 36,
+  "c0_panel_task_ids": [
+    "r17-b4-agj-p0",
+    "r17-b4-agj-p1",
+    "r17-b4-agj-p4",
+    "r17-b4-agj-p5",
+    "r17-b4-agj-p6",
+    "r17-b4-agj-p7",
+    "r17-b4-fmv-p0",
+    "r17-b4-fmv-p3",
+    "r17-b4-fmv-p4",
+    "r17-b4-fmv-p5",
+    "r17-b4-fmv-p6",
+    "r17-b4-fmv-p7",
+    "r17-b4-ioc-p0",
+    "r17-b4-ioc-p2",
+    "r17-b4-ioc-p3",
+    "r17-b4-ioc-p5",
+    "r17-b4-ioc-p7",
+    "r17-b4-ioc-p8",
+    "r17-b4-msp-p1",
+    "r17-b4-msp-p2",
+    "r17-b4-msp-p3",
+    "r17-b4-msp-p4",
+    "r17-b4-msp-p5",
+    "r17-b4-msp-p6",
+    "r17-b4-ska-p0",
+    "r17-b4-ska-p1",
+    "r17-b4-ska-p2",
+    "r17-b4-ska-p3",
+    "r17-b4-ska-p6",
+    "r17-b4-ska-p7",
+    "r17-b4-tsr-p1",
+    "r17-b4-tsr-p2",
+    "r17-b4-tsr-p3",
+    "r17-b4-tsr-p4",
+    "r17-b4-tsr-p5",
+    "r17-b4-tsr-p7"
+  ],
+  "factor_distributions_all_identical": false,
+  "interpretation": "The V2 18-task and C0 36-task panels are disjoint outcome-blind complementary subsets of the same pre-existing 54-task B4 universe and are family-balanced, but their profile/factor distributions are not identical. C0 must therefore be interpreted as cross-stream plus cross-heldout-panel generalization.",
+  "metadata_distributions": {
+    "distractor_level": {
+      "c0_36": {
+        "0": 13,
+        "1": 13,
+        "2": 10
+      },
+      "v2_18": {
+        "0": 5,
+        "1": 5,
+        "2": 8
+      }
+    },
+    "primary_failure_family": {
+      "c0_36": {
+        "aggregation_join": 6,
+        "formula_materialization": 6,
+        "input_output_contract": 6,
+        "multi_step_pipeline": 6,
+        "schema_key_alignment": 6,
+        "target_sheet_range": 6
+      },
+      "v2_18": {
+        "aggregation_join": 3,
+        "formula_materialization": 3,
+        "input_output_contract": 3,
+        "multi_step_pipeline": 3,
+        "schema_key_alignment": 3,
+        "target_sheet_range": 3
+      }
+    },
+    "procedure_depth_level": {
+      "c0_36": {
+        "0": 12,
+        "1": 14,
+        "2": 10
+      },
+      "v2_18": {
+        "0": 6,
+        "1": 4,
+        "2": 8
+      }
+    },
+    "profile_index": {
+      "c0_36": {
+        "0": 4,
+        "1": 4,
+        "2": 4,
+        "3": 5,
+        "4": 4,
+        "5": 5,
+        "6": 4,
+        "7": 5,
+        "8": 1
+      },
+      "v2_18": {
+        "0": 2,
+        "1": 2,
+        "2": 2,
+        "3": 1,
+        "4": 2,
+        "5": 1,
+        "6": 2,
+        "7": 1,
+        "8": 5
+      }
+    },
+    "schema_ambiguity_level": {
+      "c0_36": {
+        "0": 14,
+        "1": 10,
+        "2": 12
+      },
+      "v2_18": {
+        "0": 4,
+        "1": 8,
+        "2": 6
+      }
+    }
+  },
+  "panels_partition_b4_universe": true,
+  "profile_distribution_identical": false,
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "selection_is_outcome_blind": true,
+  "status": "PASS_ZERO_OUTCOME_CROSS_PANEL_SHIFT_EXPLICIT",
+  "v2_c0_overlap": 0,
+  "v2_panel_count": 18,
+  "v2_panel_task_ids": [
+    "r17-b4-agj-p2",
+    "r17-b4-agj-p3",
+    "r17-b4-agj-p8",
+    "r17-b4-fmv-p1",
+    "r17-b4-fmv-p2",
+    "r17-b4-fmv-p8",
+    "r17-b4-ioc-p1",
+    "r17-b4-ioc-p4",
+    "r17-b4-ioc-p6",
+    "r17-b4-msp-p0",
+    "r17-b4-msp-p7",
+    "r17-b4-msp-p8",
+    "r17-b4-ska-p4",
+    "r17-b4-ska-p5",
+    "r17-b4-ska-p8",
+    "r17-b4-tsr-p0",
+    "r17-b4-tsr-p6",
+    "r17-b4-tsr-p8"
+  ]
+}

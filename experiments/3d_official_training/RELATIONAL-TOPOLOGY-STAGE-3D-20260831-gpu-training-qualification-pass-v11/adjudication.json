@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-09-02T11:39:54.356935+08:00",
+  "next_gate": "AWAIT_SEPARATE_OFFICIAL_TRAINING_AUTHORITY_DECISION",
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "official_training_authorized": false,
+  "p1_authorized": false,
+  "port_010": {
+    "changed": false,
+    "evidence_review": "BLOCK_BAKE_IN",
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED"
+  },
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-gpu-training-qualification-repair-v11",
+  "scientific_interpretation": "FORBIDDEN_QUALIFICATION_ONLY",
+  "scientific_outcomes": 0,
+  "verdict": "PASS_GPU_TRAINING_QUALIFICATION_ONLY"
+}
