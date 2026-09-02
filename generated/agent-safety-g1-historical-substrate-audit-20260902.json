@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "G1-HISTORICAL-SUBSTRATE-AUDIT-20260902",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "ZERO_NEW_CALL_AUDIT_COMPLETE",
+  "recorded_date": "2026-09-02",
+  "canonical_parent_sha": "38f88794c4d78afb719e7568f9ce6a7ec7b4a596",
+  "scope": "Read-only audit of the frozen historical R9 BrowserART/AWM execution and benchmark-native reference settings. No agent, evaluator, or provider calls were executed.",
+  "source_bindings": {
+    "browserart_commit": "0d72180042f2a076c68e1114e7494cb3fc7dd30b",
+    "awm_commit": "8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1",
+    "browserart_official_run_script": {
+      "path": "substrate-assets-r9/browser-art-pinned-0d72180042f2/src/agents/OpenDevin/evaluation/customarena/scripts/run_infer.sh",
+      "sha256": "2b4bd828dc0fae7a8f7baf3c9a7c6cb09bfbd087713cd3886356162b4f74eab7"
+    },
+    "awm_webarena_run": {
+      "path": "substrate-assets-r9/agent-workflow-memory/webarena/run.py",
+      "sha256": "98f33ab466ef1ea5591a492e9c62c43704e78de9d2f65bf63f3de98d1eb68009"
+    },
+    "browserart_benign_dataset": {
+      "path": "substrate-assets-r9/browser-art-pinned-0d72180042f2/src/datasets/behaviors/hbb_benign.json",
+      "sha256": "8edea0d4d393cae54e0ee39361ca0f5643c02cf02e694dcf9a543cce8116e774",
+      "task_count": 10
+    },
+    "browserart_benign_task_wrapper": {
+      "path": "substrate-assets-r9/browser-art-pinned-0d72180042f2/src/agents/OpenDevin/BrowserGym/hbb_benign/src/browsergym/hbb_benign/task.py",
+      "sha256": "5279af138bef7dba75829c4e6ad58c96d7f99c2b12a7a553441d0726cd0a104c"
+    },
+    "historical_agent_adapter": {
+      "path_on_52": "/home/wyt/code/agent-self-evolution-observatory-agent-safety-20260818/research_pipeline/paper_first_agent_safety_r9_agent_adapter.py",
+      "sha256": "7536e430cd5bda39a14efa904b1637715ea10f0a690ea3f50ae49ab76b371aba"
+    },
+    "historical_runner": {
+      "path_on_52": "/home/wyt/code/agent-self-evolution-observatory-agent-safety-20260818/research_pipeline/paper_first_agent_safety_r9_f0_executor.py",
+      "sha256": "2a139a507fbb8b453d5d33b46c8bfefd7336599f0b09f27acdcba9754087f4a4"
+    },
+    "updated_runtime_journal": {
+      "path_on_52": "shadow-agent-safety-20260818-r9-runtime52/f0v4-future-execution/runtime-journal.json",
+      "sha256": "22eef2239ff1273f2e251074d12e3dabe0210a029c7d5037c99fd695cac45117"
+    },
+    "frozen_runtime_journal": {
+      "path_on_52": "runtime-r9/r23-controlled-longitudinal/no-update-execution/runtime-journal.json",
+      "sha256": "57441b021d6e6f21260524c05297de1cf2264f8b9793a21514ea4277c110e4c1"
+    },
+    "nullmemory_runtime_journal": {
+      "path_on_52": "runtime-r9/r23-controlled-longitudinal/reopen-r8/o6-nullmemory-r2/future-r23stack-execution/runtime-journal.json",
+      "sha256": "2c6aa8327e4431b89506a98840c898c136ac72b432efe507776f2a008f5ebb16"
+    }
+  },
+  "findings": {
+    "step_budget": {
+      "browserart_official_iterations": 10,
+      "awm_webarena_default_steps": 10,
+      "historical_r9_max_episode_steps": 4,
+      "historical_r9_max_agent_calls_per_episode": 4,
+      "interpretation": "Historical R9 used a materially shorter interaction budget than both pinned BrowserART OpenHands execution and pinned AWM WebArena defaults."
+    },
+    "historical_observation_action_stack": {
+      "observation": "AXTree text",
+      "screenshot": false,
+      "action_space": "bid",
+      "multi_actions": true,
+      "agent_temperature": 0.1
+    },
+    "historical_evaluator_input": {
+      "listener_effect_sources_across_three_future_arms": 0,
+      "thought_fallback_sources_across_three_future_arms": 108,
+      "fallback_definition": "When no listener artifact existed, the historical runner concatenated agent think strings and sent that text to HarmBench; executed action rows were not included in that fallback payload.",
+      "interpretation": "The old 8/4/0 result is a HarmBench-specific thought/attempt-trace operational result, not benchmark-native proof of harmful task completion."
+    },
+    "zero_call_execution_quality_diagnostic": {
+      "updated": {
+        "episodes": 36,
+        "harmbench_positive_episodes": 11
+      },
+      "frozen": {
+        "episodes": 36,
+        "harmbench_positive_episodes": 7
+      },
+      "nullmemory": {
+        "episodes": 36,
+        "harmbench_positive_episodes": 0
+      },
+      "harmbench_positive_total": 18,
+      "harmbench_positive_with_any_recorded_parser_or_browser_error": 18,
+      "harmbench_positive_with_recorded_error_free_fill_step": 0,
+      "explicit_refusal_string_found_in_action_text": {
+        "updated": 1,
+        "frozen": 1,
+        "total": 2
+      },
+      "warning": "These are mechanical diagnostics over frozen logs, not human semantic labels. A multi-action step may partially execute before an error, so absence of an error-free fill must not be upgraded to 'no external action occurred'."
+    }
+  },
+  "scientific_disposition": {
+    "historical_8_4_0": "RETAIN_AS_FROZEN_HARMBENCH_OPERATIONAL_RESULT",
+    "mechanism_claim": "DO_NOT_UPGRADE_FROM_THIS_AUDIT",
+    "new_full_safety_replication": "BLOCKED_PENDING_CAPABILITY_REQUALIFICATION_AND_NEW_ENDPOINT_PREREGISTRATION"
+  },
+  "scientific_authority": false,
+  "artifact_sha256": "d10a19dcd47f3458ec1ae827a39850075c37c511ddee3006cab660f56a606ebc"
+}
