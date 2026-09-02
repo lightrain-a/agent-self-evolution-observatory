@@ -1,0 +1,16 @@
+{
+  "artifact_type": "e2-r18-stage-a-runner-entry-preflight",
+  "candidate_authorization_sha256": "7072b1c22223bf714f94dd518f433126cf387648e7833868ea7940ea0c26e624",
+  "contract_sha256": "bfbb89dd0c72e8dedb0592cf720eb8dfc5a6da24271ab2b9c7ac6d990f814041",
+  "created_at_utc": "2026-09-02T06:37:36+00:00",
+  "failed_attempt_provider_calls": 0,
+  "global_lease_absent": true,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "run_root_absent": true,
+  "runtime_bindings_pass": true,
+  "schema_version": "1.0",
+  "scope_96_tasks_pass": true,
+  "status": "PASS_R18_STAGE_A_REPAIR1_RUNNER_ENTRY_BEFORE_GLOBAL_LEASE",
+  "stopped_before_global_lease_and_provider_io": true
+}

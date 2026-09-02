@@ -1,0 +1,30 @@
+{
+  "artifact_type": "e2-r18-stage-a-pre-io-authorization-schema-blocker",
+  "authorization_path": "generated/e2-r18-diagnostic-value-stage-a-execution-authorization-20260902.json",
+  "authorization_sha256": "de6730e6ed2359a1dd3b6dc2855752536b98fa85dbefe38ca1203b32fc676423",
+  "contract_sha256": "bfbb89dd0c72e8dedb0592cf720eb8dfc5a6da24271ab2b9c7ac6d990f814041",
+  "created_at_utc": "2026-09-02T06:36:51+00:00",
+  "error": "authorization runtime python drift",
+  "failed_pid": 1563669,
+  "failure_stage": "runner_authorization_validation_before_global_lease_and_provider_io",
+  "global_lease_created": false,
+  "heldout_evaluations": 0,
+  "missing_execution_scope_fields": [
+    "runtime_python_executable",
+    "runtime_freeze_sha256",
+    "runtime_qualification_sha256"
+  ],
+  "old_authorization_relaunch_authorized": false,
+  "parent_r17_status_changed": false,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "repair_eligibility": "OUTCOME_BLIND_AUTHORIZATION_SCHEMA_REPLACEMENT_ONLY",
+  "run_root_created": false,
+  "schema_version": "1.0",
+  "scientific_outcomes_accessed": false,
+  "status": "FAIL_CLOSED_STAGE_A_PRE_IO_AUTHORIZATION_RUNTIME_BINDING_OMISSION",
+  "stderr_log_path": "/data/wyt/e2-r18-diagnostic-value-transport/logs/stage-a.stderr.log",
+  "stderr_log_sha256": "fffb5459f57951b41b00c975636275b604a59d0d6ad85ec0eac0a9e8c0ddd80d",
+  "stdout_bytes": 0,
+  "updater_calls": 0
+}
