@@ -1,0 +1,224 @@
+{
+  "artifact_type": "e2-r17-posthold-rbagg-semantic-pilot-contract",
+  "authority": {
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "rbagg_full_diagnostic": false,
+    "second_backbone": false,
+    "semantic_provider_pilot": false
+  },
+  "bound_files": {
+    "actor_pool_loader": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/research_pipeline/e2_r17_actor_pool.py",
+      "sha256": "ade5f605f32056b7797dbcbcb7b3e839b9c18dce1c0f287f609d86cee3463ef4"
+    },
+    "actual_path_zero_provider_preflight": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/generated/e2-r17-posthold-rbagg-zero-provider-actual-path-preflight-v2-20260902.json",
+      "sha256": "1987b002a88442ae98e87990ca896e4614ca4b2ae13fe9bcb5a1e118fddf5bbc"
+    },
+    "evidence_renderer": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/research_pipeline/e2_r17_evidence_window.py",
+      "sha256": "59fc340608b85d236833a9e354ef7da39c3ffee623866d7ac27f44297256f21e"
+    },
+    "mindmemos_ark_adapter": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+      "sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8"
+    },
+    "mindmemos_evolution": {
+      "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/src/mindmemos/mindmemos/pipelines/skill/evolution.py",
+      "sha256": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0"
+    },
+    "mindmemos_skill_mapper": {
+      "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/src/mindmemos/mindmemos/mappers/skill.py",
+      "sha256": "4da2283e0dea72ba09a8e8166505e4cf6cb7af79e1ae95eec19b841b6d24de8b"
+    },
+    "mindmemos_skill_patch_prompt": {
+      "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py",
+      "sha256": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c"
+    },
+    "mindmemos_skill_typing": {
+      "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/src/mindmemos/mindmemos/typing/skill.py",
+      "sha256": "6f20893eb1a5272d47a99954a22a1e94f4edf82dc729051f01d03ff603f881e6"
+    },
+    "parent_closeout": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/generated/e2-r17-deepseek-v2-final-scientific-closeout-20260902.json",
+      "sha256": "0c4d2e485db09046c6f34147a2ae4ab808f0ccc67e95179fadf76319106848ca"
+    },
+    "parent_repair2_contract": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/generated/e2-r17-deepseek-v2-repair2-contract-20260831.json",
+      "sha256": "9e38bdbfc71186e3e58587169d8c619bff4ae24de4145fefafa63e49a6f148a3"
+    },
+    "pilot_authorizer": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/scripts/authorize_e2_r17_posthold_rbagg_semantic_pilot.py",
+      "sha256": "a078eca9232fe6db80a9faf4638a57fb3fc280bd86434ae5f9cd82df1739637d"
+    },
+    "pilot_preflight_runner": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/scripts/preflight_e2_r17_posthold_rbagg_semantic_pilot.py",
+      "sha256": "a928f53a2f7af88088d35f8bce19a22600c687f99b24e808e1ff235d4565bfd0"
+    },
+    "pilot_runner": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/scripts/run_e2_r17_posthold_rbagg_semantic_pilot.py",
+      "sha256": "fe5de27d68dc084a94c6fd6e88a3eaa02e7ac0f54cfe7e3c8341aaf412e2702b"
+    },
+    "pool_support": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/generated/e2-r17-e1-a-pool-support-v2-1-adjudication-20260828.json",
+      "sha256": "b2c611285c20377d77af7ea62448c6fee0d5973cd657687f6dde7f7fce6be6d7"
+    },
+    "provider_budget": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/research_pipeline/e2_r17_provider_budget.py",
+      "sha256": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444"
+    },
+    "rbagg_mindmemos_updater": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/research_pipeline/e2_r17_rbagg_mindmemos_updater.py",
+      "sha256": "7d9ef1247ac2f0d7175b82efe195ae33932ff6b896bcfbc1062646469ca2b043"
+    },
+    "rbagg_semantic_adapter": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/research_pipeline/e2_r17_rbagg_posthold.py",
+      "sha256": "17652c2db62a355ab44a485f8d358803846b9ec02ee66461aa048d6612aa81cf"
+    },
+    "rbagg_tests": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/research_pipeline/test_e2_r17_rbagg_posthold.py",
+      "sha256": "4e661833d1dd1f5d585d4f4dcbe5944bd923dd566eb9676a974bfc2040d7b4b1"
+    },
+    "reasoningbank_induce_scaling": {
+      "path": "/data/wyt/e2-r17-search-projection/baselines/published/reasoning-bank/WebArena/induce_scaling.py",
+      "sha256": "bb7399af96a674fc36de61665b91d87748aeef7f972df8757ce42869d12f30be"
+    },
+    "reasoningbank_memory_instruction": {
+      "path": "/data/wyt/e2-r17-search-projection/baselines/published/reasoning-bank/WebArena/prompts/memory_instruction.py",
+      "sha256": "073d354bc84a24ba8a2c697133b5d832fe89ca67a53705fb0af419528f7b11ee"
+    },
+    "reasoningbank_style_renderer": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/research_pipeline/e2_r17_reasoningbank_style.py",
+      "sha256": "3c06c40b9073dade22d2079070aaee6f37170459dc2d4340e34c183469afb64a"
+    },
+    "review_adjudication": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/generated/e2-r17-posthold-rbagg-review-adjudication-20260902.json",
+      "sha256": "f0e409af1b7d8c3babfc228984379f9eabb4f69cab407f01c2facb6915982eac"
+    },
+    "review_deepseek": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/generated/e2-r17-posthold-rbagg-review-20260902/deepseek-v4-pro.json",
+      "sha256": "3f04a549f10ee9ad5d4f9dab244389cbb79143683adba2fccf7742a099722387"
+    },
+    "review_kimi": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/generated/e2-r17-posthold-rbagg-review-20260902/kimi-k3.json",
+      "sha256": "df1cc66aa95d5002c51b9796bdb4fdf9e020b77d13d1eeb6a4191d3bf3b16fef"
+    },
+    "search_projection_runner": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/research_pipeline/e2_r17_search_projection_runner.py",
+      "sha256": "91f5545fe6def937ddee231e71295cc2539bfbb6ea1cf8292f8daef81b4272bc"
+    },
+    "semantic_zero_provider_preflight": {
+      "path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-posthold-rbagg-diagnostic-20260902/generated/e2-r17-posthold-rbagg-zero-provider-semantic-adapter-preflight-20260902.json",
+      "sha256": "ddbd8fbb8d89ce31870f85ed97f844ee61414277005f8c4fad97c5f1a50e1e7f"
+    },
+    "split_manifest": {
+      "path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2/r17_split_manifest.json",
+      "sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9"
+    }
+  },
+  "created_at_utc": "2026-09-02T04:28:15+00:00",
+  "env_file": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env",
+  "exactly_once": {
+    "authorized_runs": 1,
+    "automatic_retry": false,
+    "pilot_skill_scientific_inclusion": false,
+    "replacement_sampling": false,
+    "run_root_must_be_absent": true
+  },
+  "inputs": {
+    "actual_path_preflight_sha256": "1987b002a88442ae98e87990ca896e4614ca4b2ae13fe9bcb5a1e118fddf5bbc",
+    "parent_closeout_path": "generated/e2-r17-deepseek-v2-final-scientific-closeout-20260902.json",
+    "parent_closeout_sha256": "0c4d2e485db09046c6f34147a2ae4ab808f0ccc67e95179fadf76319106848ca",
+    "parent_repair2_contract_path": "generated/e2-r17-deepseek-v2-repair2-contract-20260831.json",
+    "parent_repair2_contract_sha256": "9e38bdbfc71186e3e58587169d8c619bff4ae24de4145fefafa63e49a6f148a3",
+    "pool_support_path": "generated/e2-r17-e1-a-pool-support-v2-1-adjudication-20260828.json",
+    "pool_support_sha256": "b2c611285c20377d77af7ea62448c6fee0d5973cd657687f6dde7f7fce6be6d7",
+    "review_adjudication_path": "generated/e2-r17-posthold-rbagg-review-adjudication-20260902.json",
+    "review_adjudication_sha256": "f0e409af1b7d8c3babfc228984379f9eabb4f69cab407f01c2facb6915982eac",
+    "review_deepseek_sha256": "3f04a549f10ee9ad5d4f9dab244389cbb79143683adba2fccf7742a099722387",
+    "review_kimi_sha256": "df1cc66aa95d5002c51b9796bdb4fdf9e020b77d13d1eeb6a4191d3bf3b16fef",
+    "semantic_preflight_sha256": "ddbd8fbb8d89ce31870f85ed97f844ee61414277005f8c4fad97c5f1a50e1e7f",
+    "split_manifest_path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2/r17_split_manifest.json",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9"
+  },
+  "mindmemos": {
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "direct_trajectory_summary_calls": 0,
+    "max_aggregate": 8,
+    "max_parse_attempts": 2,
+    "min_aggregate": 8,
+    "patch_proposer": "PROPOSE_PATCH_SCORED_SYSTEM",
+    "patch_temperature": 0.0,
+    "rewrite_skill": false,
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "score_semantics": "K=8 search-session acting_success equal to WIN selected winner score",
+    "summary_stage": "replaced by precomputed ReasoningBank-style search-session summaries",
+    "use_trajectory_score": true
+  },
+  "model": {
+    "identity_evidence": "fresh independent DeepSeek reviewer call resolved to the same exact model before pilot authorization",
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "thinking": "disabled"
+  },
+  "next_gate": "ZERO_PROVIDER_PREFLIGHT_THEN_SEPARATE_SINGLE_USE_AUTHORIZATION",
+  "parent_primary_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "parent_status_changed": false,
+  "pilot": {
+    "aggregation_calls": 8,
+    "fixed_stream": "e1-agj-00",
+    "heldout_evaluations": 0,
+    "mindmemos_hard_max_calls": 3,
+    "mindmemos_nominal_calls": 2,
+    "pilot_skill_quarantined": true,
+    "pilot_skill_scientific_inclusion": false,
+    "pool_sha256": {
+      "r17-b2-agj-p2": "6bb134e333f83aff68308b28bf4802d17babd04d0036d3141c652f8a48c82ecb",
+      "r17-b2-agj-p3": "80a8cb85525eca0ad019442979e675259df8435b2fc73e58def52ae899546b2a",
+      "r17-b2-agj-p5": "e85119a85cbd8addf87540c97ff36c166250f7c641b7c566530a45ccefee6dbf",
+      "r17-b2-agj-p7": "5be18be58545d9dc3a9a3767770596e6588eb21183059481407746c118b28542",
+      "r17-b2-agj-p8": "8a37c0684dde8122bf38c46b4f9ef242de0d0c7c249c19db68399e647538b319",
+      "r17-b3-agj-p0": "f5b8130bdd069944cc496778bcf0069ace535255542fb80d46345f04cc64b5f6",
+      "r17-b3-agj-p3": "bb979598543063189ccabecc4709ee53e6fd65c2626f32e738269c5f904575ce",
+      "r17-b3-agj-p8": "3c10937593f08179e8e0f6e149dd31526d2a51df44ddcaf4c7d9d35266d88235"
+    },
+    "scientific_effectiveness_evaluated": false,
+    "task_ids": [
+      "r17-b2-agj-p2",
+      "r17-b2-agj-p5",
+      "r17-b2-agj-p7",
+      "r17-b3-agj-p0",
+      "r17-b2-agj-p3",
+      "r17-b3-agj-p3",
+      "r17-b2-agj-p8",
+      "r17-b3-agj-p8"
+    ],
+    "total_hard_max_calls": 11,
+    "total_nominal_calls": 10
+  },
+  "preflight_path": "generated/e2-r17-posthold-rbagg-semantic-pilot-preflight-20260902.json",
+  "provider_budget": {
+    "claim_before_provider_io": true,
+    "claims_never_released": true,
+    "per_unit_limit": 11,
+    "total_limit": 11
+  },
+  "reasoningbank": {
+    "aggregator_max_output_tokens": 1024,
+    "aggregator_temperature": 0.7,
+    "commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+    "per_trajectory_cap_tokens": 512,
+    "prompt": "PARALLEL_SI",
+    "root": "/data/wyt/e2-r17-search-projection/baselines/published/reasoning-bank",
+    "source_faithful_reproduction": false,
+    "strict_memory_item_count_max": 5,
+    "strict_memory_item_count_min": 1
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902",
+  "schema_version": "1.0",
+  "status": "FROZEN_E2_R17_POSTHOLD_RBAGG_SEMANTIC_PILOT"
+}

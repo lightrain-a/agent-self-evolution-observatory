@@ -1,0 +1,31 @@
+{
+  "all_bound_file_checks_pass": true,
+  "artifact_type": "e2-r17-posthold-rbagg-semantic-pilot-zero-provider-preflight",
+  "authority": {
+    "heldout_evaluation": false,
+    "mint_single_use_semantic_pilot_authorization": true,
+    "paper_promotion": false,
+    "provider_io": false,
+    "rbagg_full_diagnostic": false
+  },
+  "bound_file_checks": 27,
+  "contract_path": "generated/e2-r17-posthold-rbagg-semantic-pilot-contract-20260902.json",
+  "contract_sha256": "64ac4475ead105143147a4a46d15cd2b279f8d0d8af2e51d9fcd59202bbaed80",
+  "created_at_utc": "2026-09-02T04:28:24+00:00",
+  "fixed_stream": "e1-agj-00",
+  "heldout_evaluations": 0,
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "parent_primary_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "parent_status_changed": false,
+  "pool_sha_checks": 8,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "reasoningbank_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+  "required_resolved_model": "deepseek-v4-pro-ga-260813",
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "run_root_absent": true,
+  "schema_version": "1.0",
+  "scientific_effectiveness_evaluated": false,
+  "status": "PASS_RBAGG_SEMANTIC_PILOT_ZERO_PROVIDER_PREFLIGHT",
+  "task_count": 8
+}
