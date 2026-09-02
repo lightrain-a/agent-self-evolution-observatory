@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q0.1-TIMEOUT-20260902",
+  "status": "ATOMGIT_QWEN38_Q0_PASS_AFTER_TIMEOUT_AMENDMENT",
+  "execution_git_sha": "4d5eba5432f4f7460a2181019d478ecbf9da143e",
+  "parent_q0_closed_git_sha": "569ecd75ec8ffb768e0477df369ef65deb9a7f6a",
+  "single_variable_repair": "AtomCode invocation timeout 300s -> 900s; prompts, fixtures, parser, model binding and 16384-token source budget held constant.",
+  "results": {
+    "source_budget_16384": "6/6 byte-exact PASS",
+    "source_timeout_seconds": 900,
+    "first_decision_budget": 2048,
+    "resolved_model": "qwen3.8-27b",
+    "provider_profile": "AtomGit-qwen3.8-27b",
+    "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+    "sampling_fixture_1_unique_actions": 6,
+    "sampling_fixture_2_unique_actions": 6,
+    "sampling_parse_failures": 0
+  },
+  "content_addresses": {
+    "source_budget_result_sha256": "208a5ea8173dc37f1d8a8fee073c6239e43535efd94d3f5fa0297ff9658cd729",
+    "sampling_diagnostic_sha256": "932d47b3b30388c88f085d8e977cabfe981405d0b03d7269a019d8a4df349d55",
+    "q01_closure_sha256": "f9f7b5113a443500fd6bda2e36f31e91d2d9135afd3599eb9d47fbce08d03a52"
+  },
+  "interpretation": "Q0 v1's 16384 failure was a wrapper transport ceiling, not demonstrated model-content incapability. Under the prospectively frozen 900s ceiling, all six identical non-scientific long-action fixtures are byte-exact. Provider-managed decoding also exhibits nonzero within-condition action diversity, so noise-calibrated paired transport remains operationally measurable.",
+  "authority": {
+    "real_source_acquisition": true,
+    "writer": false,
+    "binder": false,
+    "shadow": false,
+    "final_measurement": false,
+    "second_model": false,
+    "R10": false
+  },
+  "next": "Acquire the already-frozen ten fresh native source trajectories exactly once with AtomGit/AtomCode Qwen3.8-27B, source max_tokens=16384 and per-invocation timeout=900s. Keep future tasks, writer, binder, shadow and final locked until source support closes."
+}

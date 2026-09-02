@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "artifact_kind": "C1_PACTA_MSR_ATOMGIT_QWEN38_Q01_TIMEOUT_CLOSURE",
+  "status": "ATOMGIT_QWEN38_Q0_PASS_AFTER_TIMEOUT_AMENDMENT",
+  "lessons": [
+    "For AtomCode-mediated experimental providers, max_tokens and wrapper invocation timeout are distinct qualification dimensions; a near-complete long action can be transport-limited even when model-content capacity is adequate.",
+    "A timeout repair should be prospective and single-variable: preserve model, prompt, parser, fixtures and token budget, then requalify the identical non-scientific packet before opening scientific source authority.",
+    "AtomGit Qwen3.8 provider-managed decoding exhibits substantial within-condition first-action diversity on repeated identical fixtures; PACTA-style within-branch noise calibration is therefore operationally relevant rather than vacuous on this provider."
+  ],
+  "frozen_after_q01": {
+    "resolved_model": "qwen3.8-27b",
+    "first_decision_budget": 2048,
+    "source_trajectory_budget": 16384,
+    "source_invocation_timeout_seconds": 900,
+    "provider_retries": 0,
+    "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9"
+  },
+  "scientific_authority": {
+    "source_acquisition": true,
+    "writer": false,
+    "binder": false,
+    "shadow": false,
+    "final": false
+  },
+  "run_artifacts": {
+    "source_budget_result_sha256": "208a5ea8173dc37f1d8a8fee073c6239e43535efd94d3f5fa0297ff9658cd729",
+    "sampling_diagnostic_sha256": "932d47b3b30388c88f085d8e977cabfe981405d0b03d7269a019d8a4df349d55",
+    "q01_closure_sha256": "f9f7b5113a443500fd6bda2e36f31e91d2d9135afd3599eb9d47fbce08d03a52"
+  }
+}
