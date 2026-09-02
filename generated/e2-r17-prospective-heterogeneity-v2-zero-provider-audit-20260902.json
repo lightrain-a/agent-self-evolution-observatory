@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-prospective-heterogeneity-v2-zero-provider-audit",
+  "status": "PASS_ZERO_PROVIDER_PROSPECTIVE_V2_STATIC_QUALIFICATION",
+  "provider_calls": 0,
+  "scientific_outcomes_accessed": false,
+  "old_primary_status_preserved": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "suite_root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-ph-v2",
+  "suite_manifest_sha256": "2e04956e72dbc56fe029fa99eded91953c9775f10a3425f10a085d7d52497868",
+  "split_manifest_sha256": "bbc24277c717f7499d9f9e30ccb254ad98229bcd61bd17e484310a8397fb2d46",
+  "metadata_sha256": "40cb56082903ed5ad2fb7ed6cf55b813c8fb80f3ec43e8535cb02af2d0953853",
+  "shape": {
+    "new_tasks": 378,
+    "prediction_cells": 18,
+    "cal_streams": 18,
+    "test_streams": 18,
+    "tasks_per_stream": 8,
+    "common_heldout_tasks": 18
+  },
+  "prediction_unit": "primary_failure_family x procedure_depth_level",
+  "checks": {
+    "old_task_id_overlap": 0,
+    "old_xlsx_sha256_overlap": 0,
+    "cal_test_task_overlap": 0,
+    "update_heldout_overlap": 0,
+    "all_cal_streams_single_family_single_depth": true,
+    "all_test_streams_single_family_single_depth": true,
+    "all_cal_streams_distractor_counts_sorted": [2,3,3],
+    "all_test_streams_distractor_counts_sorted": [2,3,3],
+    "all_cal_streams_ambiguity_counts_sorted": [2,3,3],
+    "all_test_streams_ambiguity_counts_sorted": [2,3,3],
+    "heldout_each_family_depth_levels": [0,1,2],
+    "heldout_each_family_distractor_levels": [0,1,2],
+    "heldout_each_family_ambiguity_levels": [0,1,2]
+  },
+  "authority": {
+    "static_design": true,
+    "zero_provider_preflight": true,
+    "cal_scientific_execution": false,
+    "test_scientific_execution": false,
+    "analyzer": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false
+  }
+}

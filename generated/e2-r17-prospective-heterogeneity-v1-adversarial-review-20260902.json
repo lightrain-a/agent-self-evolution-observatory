@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-prospective-heterogeneity-v1-adversarial-review",
+  "status": "BLOCK_PRE_F0_V1_PSEUDOREPLICATION_AND_POWER",
+  "scientific_authority": false,
+  "provider_calls": 0,
+  "old_primary_status_preserved": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "findings": [
+    {
+      "severity": "P0",
+      "id": "FAMILY_LEVEL_LABEL_PSEUDOREPLICATION",
+      "finding": "V1 assigns each TEST stream a prediction label inherited from one of only six failure families, but proposes a 12-stream permutation test. The label is a family-level object, so unrestricted stream-level permutation is not the correct randomization unit for a family-level heterogeneity claim.",
+      "consequence": "Inference can be anti-conservative if within-family effects are correlated. The independent prediction-label universe is six families, not twelve stream labels."
+    },
+    {
+      "severity": "P0",
+      "id": "GO_CAN_BE_MATHEMATICALLY_UNREACHABLE",
+      "finding": "With six family-level units, if CAL yields 2 positive versus 4 nonpositive families (or 4 versus 2), the smallest possible exact label-permutation p-value is 1/C(6,2)=1/15=0.0667. Only a 3-versus-3 split can attain 0.05, and then only under perfect separation.",
+      "consequence": "The V1 CAL support rule can authorize TEST even when its own primary GO criterion is mathematically unreachable."
+    },
+    {
+      "severity": "P1",
+      "id": "TWO_REPLICATES_TOO_NOISY",
+      "finding": "Planning-only variance from the closed sample gives pooled within-stream replicate SD about 0.1633. Averaging only two replicates implies a replicate-noise SD about 0.1155 for a stream effect, versus about 0.0816 with four replicates.",
+      "consequence": "Two replicates are a weak basis for freezing family sign/rank predictions. This does not use old family signs or ranks; it is variance-only planning."
+    },
+    {
+      "severity": "P1",
+      "id": "AVAILABILITY_BASELINE_TOO_WEAKLY_SPECIFIED",
+      "finding": "The proposed availability-only baseline does not consume CAL effect information while the CAL diagnostic-value predictor does. A stronger baseline should be frozen using the same CAL tranche to orient or fit an availability-only predictor before TEST.",
+      "consequence": "Without this repair, a positive result could partly reflect unequal calibration information rather than diagnostic-value structure."
+    }
+  ],
+  "required_repairs": [
+    "Increase the number of independently predicted pre-outcome regime cells beyond six families.",
+    "Make the TEST randomization/permutation unit exactly match the frozen prediction unit.",
+    "Use a pre-outcome regime definition that does not depend on the exposed DeepSeek family outcomes.",
+    "Strengthen the availability-only comparator using the same CAL tranche while keeping its feature set restricted to availability variables.",
+    "Freeze replicate count from variance/power planning before any new scientific outcome."
+  ],
+  "recommended_repair": "Use the already-defined orthogonal L9 generator structure to define 18 prediction cells = six failure families x three procedure-depth levels. Keep distractor and schema-ambiguity balanced within cells. Generate fully disjoint CAL and TEST streams for all 18 cells plus a new common heldout panel. Primary prediction inference must operate on the 18 frozen TEST cell effects, not on duplicated family labels.",
+  "execution_authorized": false
+}
