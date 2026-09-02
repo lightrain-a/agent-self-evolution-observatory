@@ -1,0 +1,88 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-proposal-v12",
+  "state": "EVALUATION_SPLITS_CONTENT_ADDRESSED_OUTCOME_LOCKED",
+  "official_split_file": {
+    "path_within_instructscene": "configs/bedroom_threed_front_splits.csv",
+    "sha256": "f8f144f2380668b7db999d1b21b0331ade27b72f7e4892b43da068559ffb6d79",
+    "row_count": 6534,
+    "counts": {
+      "train": 6037,
+      "val": 249,
+      "test": 248
+    }
+  },
+  "ordered_official_scene_id_lists": {
+    "train": {
+      "count": 6037,
+      "sha256": "d32cb5e36a4f8bcad203bded960dc8575b0125b6f8bf438220fdc3924db97e7d"
+    },
+    "val": {
+      "count": 249,
+      "sha256": "614db78861b7a574a9306e668a8c441830c1ee236a71298a7e80a49351842452"
+    },
+    "test": {
+      "count": 248,
+      "sha256": "7c112d23ac7ac6102d6e69eb805dde6a64b458c03027c9544c2d0451febf82c4"
+    }
+  },
+  "materialized_preprocessed_scene_intersection": {
+    "train": {
+      "count": 3722,
+      "sorted_full_scene_uid_sha256": "e1c8be1dad5d02db5aafadaadbbd4f8c69a18aeff100b46938492ffb9f388ce2"
+    },
+    "val": {
+      "count": 157,
+      "sorted_full_scene_uid_sha256": "c83c2c6daad45453762c45dab7d567b873e2252d77ba41e25ffcf2497faf2f02"
+    },
+    "test": {
+      "count": 162,
+      "sorted_full_scene_uid_sha256": "2db626c2a2df454f93b9e3ae54a7ee1d0bc4e5f3e59bb3a3e5a74c7ec726579f"
+    },
+    "unmapped_materialized_directories": 2
+  },
+  "roles": {
+    "train": "training only; no evaluation selection",
+    "val": "future reproduction qualification lockbox only; requires separate authority before any model outputs are evaluated",
+    "test": "future scientific P1 lockbox only; requires separate P1 authority before any model outputs are evaluated"
+  },
+  "training_leakage_controls": {
+    "val_used_for_training": false,
+    "test_used_for_training": false,
+    "validation_metrics_during_training": false,
+    "test_metrics_during_training": false,
+    "checkpoint_selection_from_val_or_test": false,
+    "future_panel_sampling_must_be_outcome_blind": true,
+    "future_test_panel_rule_must_be_identical_for_SGP_12_and_SGP_14": true,
+    "future_oracle_predicted_pairs_require_exact_identity": true
+  },
+  "future_p1_schema_preserved": {
+    "models": [
+      "SGP-12+SHARED",
+      "SGP-14+SHARED"
+    ],
+    "interventions": [
+      "predicted_graph",
+      "oracle_graph"
+    ],
+    "relation_counts": [2, 3, 4],
+    "topologies": [
+      "DISJOINT",
+      "CHAIN",
+      "HUB",
+      "COMPONENT_BRIDGE_OPTIONAL"
+    ],
+    "observables": [
+      "text_to_graph_relation_recall",
+      "graph_to_scene_relation_retention",
+      "end_to_end_relation_iRecall"
+    ],
+    "scientific_cases_materialized_now": 0,
+    "scientific_outcomes_observed_now": 0
+  },
+  "next_actions": {
+    "before_training": "none required from val/test beyond these frozen split content addresses",
+    "after_training": "request a separate reproduction qualification authority before generating or scoring val outputs",
+    "before_scientific_test": "request P1 authority and materialize the deterministic topology panel without outcome-aware filtering"
+  }
+}
