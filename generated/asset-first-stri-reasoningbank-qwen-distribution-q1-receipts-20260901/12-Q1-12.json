@@ -1,0 +1,35 @@
+{
+  "attempt_count": 1,
+  "credential_material_present": false,
+  "latency_seconds": 0.385675,
+  "normalized_action": {
+    "action_class": "OTHER",
+    "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+    "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+    "parse_valid": true,
+    "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+  },
+  "ordinal": 12,
+  "payload_sha256": "7ff4c5f18c013bc763399ac01a53e0a4ffda12a62ba9372dbf33be776305f16c",
+  "raw_payload_sha256": "36aaa721e5a568a1d5671ecb366f47af726e3216cbec6275e851da905d8a4962",
+  "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+  "requested_model": "qwen3-coder-next",
+  "resolved_model": "qwen3-coder-next",
+  "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+  "safe_rate_quota_headers": {
+    "request-id": "5a8a2646-2a90-4e62-9be5-482e9cc89533"
+  },
+  "status": "SUCCESS",
+  "transport_attempts": 1,
+  "trial_id": "Q1-12",
+  "usage": {
+    "input_tokens": 64,
+    "output_tokens": 13,
+    "raw": {
+      "completion_tokens": 13,
+      "prompt_tokens": 64,
+      "total_tokens": 77
+    },
+    "total_tokens": 77
+  }
+}

@@ -1,0 +1,182 @@
+{
+  "checks": {
+    "every_attempt_count_one": true,
+    "frozen_order_prefix": true,
+    "no_replacement": true,
+    "no_retry": true
+  },
+  "completed_count": 20,
+  "contract_sha256": "4c000e3fed09a742babed6c6371204ebc1ca12b1e6237464b73bbfab44a7f3e5",
+  "created_at_utc": "2026-09-02T03:27:32+00:00",
+  "credential_material_present": false,
+  "execution_complete": true,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "inflight": null,
+  "journal": [
+    {
+      "attempt_count": 1,
+      "ordinal": 1,
+      "persisted": true,
+      "receipt_sha256": "5df1ae70b6b3c59df3cb62be675a423d3c7c7a92aa4be35baf3816b2be52497d",
+      "status": "SUCCESS",
+      "trial_id": "Q1-01"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 2,
+      "persisted": true,
+      "receipt_sha256": "89e42d701b6313f38370afd52c8386dd610e0f4c2990b1ffb04a419b952f64cd",
+      "status": "SUCCESS",
+      "trial_id": "Q1-02"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 3,
+      "persisted": true,
+      "receipt_sha256": "0bf689d0641ecdd70fd7cc1347021db1880fa411451e8f0ca99a7d14ec2f89c6",
+      "status": "SUCCESS",
+      "trial_id": "Q1-03"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 4,
+      "persisted": true,
+      "receipt_sha256": "13a16ba18e562fe79a2a51140cdff258adca1e29b1cfdc9fa7985b08cc03ba23",
+      "status": "SUCCESS",
+      "trial_id": "Q1-04"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 5,
+      "persisted": true,
+      "receipt_sha256": "7daf377fb4a0524d5f1fead291aecf14a5532555e7ce7acb479ea5a8e2f522b5",
+      "status": "SUCCESS",
+      "trial_id": "Q1-05"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 6,
+      "persisted": true,
+      "receipt_sha256": "c5f32f9f080782857aa3b5f522c37ade996e04d9872492a5178be52e7eee9a10",
+      "status": "SUCCESS",
+      "trial_id": "Q1-06"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 7,
+      "persisted": true,
+      "receipt_sha256": "250cf2dd51d757e5dd0ebb0289c7850e13ecf35a705a0d6441e3e42e50cf86f0",
+      "status": "SUCCESS",
+      "trial_id": "Q1-07"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 8,
+      "persisted": true,
+      "receipt_sha256": "682d87bd8c94118fd6bd44239c8de95af4c5fa57b5707cda24aecfebeb37f1ab",
+      "status": "SUCCESS",
+      "trial_id": "Q1-08"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 9,
+      "persisted": true,
+      "receipt_sha256": "909eda52fd867b77c3554b746188c4c720ffd4cb72a5aae32e1c837846f7cbd0",
+      "status": "SUCCESS",
+      "trial_id": "Q1-09"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 10,
+      "persisted": true,
+      "receipt_sha256": "39a6bbd1561fbfa50555e3491a6646079350610f4d8daec30bd642b463996287",
+      "status": "SUCCESS",
+      "trial_id": "Q1-10"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 11,
+      "persisted": true,
+      "receipt_sha256": "4a0c80fa0ea13831b6353a383845c0450f84aa07a9ea2b3a5d7c04c90d69c33a",
+      "status": "SUCCESS",
+      "trial_id": "Q1-11"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 12,
+      "persisted": true,
+      "receipt_sha256": "70286ece1b53a039882a83ca2b2c2e7044f3a8a8a8875de552d3e89b7d27ff6b",
+      "status": "SUCCESS",
+      "trial_id": "Q1-12"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 13,
+      "persisted": true,
+      "receipt_sha256": "da46faefa173dcce9b9e9855aca93fc940ab8687c1cdd55b2a8ba7369fa3f91f",
+      "status": "SUCCESS",
+      "trial_id": "Q1-13"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 14,
+      "persisted": true,
+      "receipt_sha256": "55b2d699be4afe2f0bfbcf57be8dacd8914a621fa847b45967692acb636e2d7b",
+      "status": "SUCCESS",
+      "trial_id": "Q1-14"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 15,
+      "persisted": true,
+      "receipt_sha256": "95830a23a21548acbe3ca6b57e0312550be5877ec4526f626baf177042f81160",
+      "status": "SUCCESS",
+      "trial_id": "Q1-15"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 16,
+      "persisted": true,
+      "receipt_sha256": "38aa375dac5e488aa91a635baa711929257dc12eb5580819eab00e6b3280a74b",
+      "status": "SUCCESS",
+      "trial_id": "Q1-16"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 17,
+      "persisted": true,
+      "receipt_sha256": "63a5ba97e59f8dd39e3747bf4c4646823f3fbb9b2964651004e54a34171afb3a",
+      "status": "SUCCESS",
+      "trial_id": "Q1-17"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 18,
+      "persisted": true,
+      "receipt_sha256": "549cb94470f1c7e5931af7b2e25effca855972deec5e4d9917898b3470869019",
+      "status": "SUCCESS",
+      "trial_id": "Q1-18"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 19,
+      "persisted": true,
+      "receipt_sha256": "d9e41119c424190653f4148d443b39acd1bda1e34944133b84d8de12cb5ef2d5",
+      "status": "SUCCESS",
+      "trial_id": "Q1-19"
+    },
+    {
+      "attempt_count": 1,
+      "ordinal": 20,
+      "persisted": true,
+      "receipt_sha256": "856f31362c6da39a4212927792330b77053a19b05e238a3e8f7775d5cc81d430",
+      "status": "SUCCESS",
+      "trial_id": "Q1-20"
+    }
+  ],
+  "journal_record_count": 20,
+  "payload_sha256": "70a5d1f01e9c0449282581d1feb09aa365f87787090634ad616933003a20b340",
+  "planned_count": 20,
+  "schema_version": 1,
+  "stage": "Q1_QWEN_BACKEND_STOCHASTICITY_QUALIFICATION"
+}

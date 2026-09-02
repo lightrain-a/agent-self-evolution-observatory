@@ -1,0 +1,763 @@
+{
+  "K_Q1": 20,
+  "action_signature_hashes": [
+    "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+  ],
+  "attempt_counts": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "backend_classification": "DETERMINISTIC",
+  "contract_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-contract-20260901.json",
+  "contract_sha256": "4c000e3fed09a742babed6c6371204ebc1ca12b1e6237464b73bbfab44a7f3e5",
+  "created_at_utc": "2026-09-02T03:27:32+00:00",
+  "credential_material_present": false,
+  "decision": "Q1_QWEN_BACKEND_DETERMINISTIC_TASK_SPLIT_GATE_OPEN",
+  "exactly_once": true,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "index_sha256": "43ca889315e54d12577cfe73e89c55d76709e2dcf9084224f854d1a1a9a69200",
+  "minimum_parse_valid_required": 16,
+  "parse_valid_count": 20,
+  "parse_valid_rate": 1.0,
+  "payload_sha256": "1ae8c46316f71d03bbec0fc534d69b83990533b91e123089066f0dc57192f54b",
+  "q0_result_sha256": "d2b63c4d8c2305c813a6affefe4ac7c275556ae7fd93426b10a73aed964c5a16",
+  "receipt_count": 20,
+  "receipts": [
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.568095,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 1,
+      "payload_sha256": "a93e5904b4cbf51d9db0e30330614d363ef386917ac64c2052fafe5e0fee1313",
+      "raw_payload_sha256": "fb3ce5789ba53c85d6402d9513950c52ead246c178eb3c46ead06adc2d4ec6de",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "0097a370-a84f-4911-8696-af7984ea2243"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-01",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.406024,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 2,
+      "payload_sha256": "17220a0d350f779d2ae6eff4342246aedb23383bcdc34a4f25a647bffbd8aa06",
+      "raw_payload_sha256": "1c13e73b2755bf7b2e20523ee4764e09fc3683a9753a95a4740a8934bc8e8459",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "a38daea2-5518-4327-a097-8140c0e6f7ec"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-02",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.410084,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 3,
+      "payload_sha256": "f238a8f059146520a14a2a91f1ccdd87747c06a28e14256153086628fa0df6d0",
+      "raw_payload_sha256": "662d8a59a85b5f2825de5141771ffe7689ce9cbc5f493e2f4d80f000ec5531bb",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "1874a5c0-2fbd-4269-a7d0-254c6facb227"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-03",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.429487,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 4,
+      "payload_sha256": "4d808de28c267418b7590483147a66874b191596bab121df0b3e0eaed48f3a7e",
+      "raw_payload_sha256": "d62150a6500069ae69153085c31a4d3ec414859d951539a3340c1ca97e66f4dc",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "8be7e658-c6e4-471a-b8a4-38777ef1946b"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-04",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.423354,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 5,
+      "payload_sha256": "26f09d5b82ff0dd3b40011affe6631182068a93553d28035d1d9d6c30a32cfb0",
+      "raw_payload_sha256": "84a8fe80e61eb094143ec922ade4354381ff365435bace76d2c830b720f469a6",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "92d8a34f-11cf-43f6-b881-173d34ec1124"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-05",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.422368,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 6,
+      "payload_sha256": "67b8120787343c7c8e26e4d1fb9c37c55c5601b1937044066f64256d533bf471",
+      "raw_payload_sha256": "889adf3d0d4f68a9b026c3a134cf549627ada8deb975f0cd9d7620e3f7d02c6b",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "2f1cb4b5-10ef-4b97-85d0-6c0bf8b57b7c"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-06",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.739484,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 7,
+      "payload_sha256": "11f6bc7a139cab842b3261afd488f6bd53f8a3fd4fd5989f050f52da1f8fb4ba",
+      "raw_payload_sha256": "ceedf6c6cf81829d083e64a9da65e96b54b945204ebb8d3aff9853968ef786ae",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "c582fd08-398b-4d70-91e3-115f3df0769a"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-07",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.401545,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 8,
+      "payload_sha256": "2fb5804d46f31c40558a31a09d034c6e61550eb982d3236259e83d9193fe944d",
+      "raw_payload_sha256": "eb26dc746ee85cab80722bd3b3dd9f25d40c877ba34da24768f7a4a8b9a16de4",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "17140e05-b57e-4c97-81f9-8fbb55a81808"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-08",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.459658,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 9,
+      "payload_sha256": "fd3eddd195c183b4e6bc75a82ee37ecdae6c8d376df18cca3abe0b0b11f3e021",
+      "raw_payload_sha256": "41aef801d61ea2d49e98e16142a899e7b9708f1aaa2eff08701d4d5c77cd7ba8",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "26c16a22-4271-4f5b-8ef1-398deb90607d"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-09",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.404809,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 10,
+      "payload_sha256": "0227b62ff5954c3a313b04e7fa4543779b1bd83497f52eddfe1166d8302eacea",
+      "raw_payload_sha256": "3d20dbc3e4440a1c2889a5ead841663b1dac7fc87ec9caec5726dc3c61e2245b",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "cbe28217-8b42-4d85-97cb-70c9f079c467"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-10",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.416018,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 11,
+      "payload_sha256": "a5acacdbfc08cddd4a96ae6f108d408032d351fc67366a66780e5bdae73dae0a",
+      "raw_payload_sha256": "fae501a34f7fe4def91bf65775fca2829e3fec6684f5fc6e42b36199ada3fcea",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "cd98e17d-ecc0-4961-9244-0516c761b4ee"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-11",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.385675,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 12,
+      "payload_sha256": "7ff4c5f18c013bc763399ac01a53e0a4ffda12a62ba9372dbf33be776305f16c",
+      "raw_payload_sha256": "36aaa721e5a568a1d5671ecb366f47af726e3216cbec6275e851da905d8a4962",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "5a8a2646-2a90-4e62-9be5-482e9cc89533"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-12",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.418578,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 13,
+      "payload_sha256": "8fec31165bae0e57c9ca2a37e872cbdc794d47cbc3355240f15d39ba746680f5",
+      "raw_payload_sha256": "9f758555cc93c3d5a09273e165621337991b420d048d987317b4cc96e4f5c683",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "3e975380-680e-4ca0-8d59-d4a7bbc03b0d"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-13",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.492213,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 14,
+      "payload_sha256": "0bc18d0fe6b47f4790e8eaee224271e7b2f6893fb493c1fd9b92fadaf9d288b7",
+      "raw_payload_sha256": "34573c7e8a9731c40303b570c1f228ba2ba0bee887933d11b3c91062a7852799",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "f5c4daa1-cfb5-48c5-a309-05fa41c83292"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-14",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.382299,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 15,
+      "payload_sha256": "f914ea948efd72d7936ea78cfb1ad69d79208c4b0ac87a02ed76323e9c8c888a",
+      "raw_payload_sha256": "8d643d5d69bd74fed2c47d24777114dabe2cee74463dee1bb37d9f496592017f",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "5e70eeb2-4541-45cb-8c8d-7c7419412db8"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-15",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.554534,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 16,
+      "payload_sha256": "994c669a9ffb6e16aabb63ac86646cb6192110d542c9ce15e0e2b4347c7b44c0",
+      "raw_payload_sha256": "2d3972558ce3cd2a5b5e2dcbc4e048e61ed6b14482300e4979c3e5609c2dbd83",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "33112013-95f9-4ca2-a64d-8d5e41faf547"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-16",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.431229,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 17,
+      "payload_sha256": "6f17351440a1f673830e3c107351c4d63a3451c046c6390923d203acca6271f6",
+      "raw_payload_sha256": "170122a0103b69b668841998b4698db9073d5d6e4410fed55f134358a7e472e2",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "13710c82-7eb3-4dbc-b9d5-a3aebb953f90"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-17",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.434006,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 18,
+      "payload_sha256": "dc9faac5d60664d41933a118d996ebfbc0e99ec3e868329ad35450122cfb7d41",
+      "raw_payload_sha256": "658f2a02def9987a50854c3c325122c62316b31322239c34d95fc5fc57acdcfb",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "f03329c3-ea55-478f-90df-f6f8b2555b0f"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-18",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.407739,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 19,
+      "payload_sha256": "bda8b7fe55bebde847f838a8d69993eccdc97a27bef74a0216db33a0d005be4d",
+      "raw_payload_sha256": "7fab41f5a3276b2032ecfd5abc8243f1995945c1c94473125b74d63c8d2f8968",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "fb2601cb-efca-458a-8d05-1e8ce15982f0"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-19",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    },
+    {
+      "attempt_count": 1,
+      "credential_material_present": false,
+      "latency_seconds": 0.420083,
+      "normalized_action": {
+        "action_class": "OTHER",
+        "first_line": "printf 'Q1_FIXED_ACTION\\n'",
+        "normalized_action": "printf 'Q1_FIXED_ACTION\\n'",
+        "parse_valid": true,
+        "signature_sha256": "0b215ff5b44e3ba8a820af25a57459d23732c66474a2793d1e34c8a70bbaaab9"
+      },
+      "ordinal": 20,
+      "payload_sha256": "4bd8db327ce0d88d871956961dafd79091d7ab181d68983f77cde7083eb85fb8",
+      "raw_payload_sha256": "90e6325a23606508147ae95c4c4880e53e4f7e6d4e339e74a72593c876d4d6cb",
+      "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_sha256": "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067",
+      "safe_rate_quota_headers": {
+        "request-id": "c5f0d20f-b745-4746-adc7-1ab670739727"
+      },
+      "status": "SUCCESS",
+      "transport_attempts": 1,
+      "trial_id": "Q1-20",
+      "usage": {
+        "input_tokens": 64,
+        "output_tokens": 13,
+        "raw": {
+          "completion_tokens": 13,
+          "prompt_tokens": 64,
+          "total_tokens": 77
+        },
+        "total_tokens": 77
+      }
+    }
+  ],
+  "replacement_count": 0,
+  "request_sha256": "6a89d2ae3cd37bb93c5f0349c817450e256ba28a92a3262ec74b038c4aefc3c6",
+  "response_hashes": [
+    "1c276d6603d0d71d0f13fc463486724f768764efa8c13333b780d9d4404ad067"
+  ],
+  "retry_count": 0,
+  "schema_version": 1,
+  "scientific_boundary": {
+    "benchmark_calls_made": 0,
+    "confirmatory_execution_authorized": false,
+    "source_generation_authorized": false,
+    "source_runtime_qualification_authorized": false,
+    "task_split_authorized": true
+  },
+  "stage": "Q1_QWEN_BACKEND_STOCHASTICITY_QUALIFICATION",
+  "successful_count": 20,
+  "unique_action_signature_count": 1,
+  "unique_response_hash_count": 1
+}
