@@ -25,6 +25,9 @@ from research_pipeline.agent_constraint_externality_codingplan_qwen38_capability
     prepare_unit_runtime,
     units,
 )
+from research_pipeline.agent_constraint_externality_codingplan_qwen38_closeout import (
+    OUTPUT as CLOSEOUT_OUTPUT,
+)
 from research_pipeline.agent_constraint_externality_runner_core import sha256_value
 
 
@@ -65,6 +68,21 @@ class CodingPlanQwen38CapabilityTests(unittest.TestCase):
         self.assertEqual(contract["panel"]["model_round_cap_per_episode"], MODEL_ROUND_CAP)
         self.assertFalse(contract["authority"]["f0"])
         self.assertEqual(contract["q1_appworld_mcp_predispatch_sha256"], json.loads(Q1_OUTPUT.read_text(encoding="utf-8"))["content_sha256"])
+
+    def test_closeout_separates_scientific_rounds_from_account_window_requests(self) -> None:
+        closeout = json.loads(CLOSEOUT_OUTPUT.read_text(encoding="utf-8"))
+        claimed = closeout["content_sha256"]
+        unsigned = dict(closeout); unsigned.pop("content_sha256")
+        self.assertEqual(claimed, sha256_value(unsigned))
+        self.assertEqual(closeout["status"], "CODINGPLAN_QWEN38_CAPABILITY_A0_CLOSEOUT_CEILING_STOP")
+        self.assertEqual(closeout["scientific_verdict"], "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP")
+        accounting = closeout["execution_accounting"]
+        self.assertEqual(accounting["scientific_model_round_count"], 69)
+        self.assertEqual(accounting["codingplan_account_window_request_delta"], 70)
+        self.assertEqual(accounting["account_level_unattributed_request_count"], 1)
+        self.assertEqual(len(accounting["inter_unit_account_window_gaps"]), 1)
+        self.assertFalse(closeout["strict_direct_api_comparison"])
+        self.assertFalse(closeout["authority"]["f0"])
 
     def test_exact_eight_unit_panel(self) -> None:
         rows = units()

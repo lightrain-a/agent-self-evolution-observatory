@@ -131,7 +131,29 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness.get("capability_result_status") == "CAPABILITY_CALIBRATION_PASS":
+        if readiness.get("capability_model_selection_state") == "NO_ELIGIBLE_BACKBONE_BOTH_VALID_CANDIDATES_CEILING":
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_MODEL_SELECTION_NO_ELIGIBLE_BACKBONE_ALL_CEILING_STOP",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "STOP_AWAIT_HUMAN_BACKBONE_SELECTION",
+            )
+            self.assertEqual(
+                readiness["direct_api_capability_result_status"],
+                "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+            )
+            self.assertEqual(
+                readiness["codingplan_capability_result_status"],
+                "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+            )
+            self.assertFalse(readiness["eligible_backbone_selected"])
+            self.assertEqual(readiness["codingplan_scientific_model_round_count"], 69)
+            self.assertEqual(readiness["codingplan_account_window_request_delta"], 70)
+            self.assertEqual(readiness["codingplan_account_level_unattributed_request_count"], 1)
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_result_status") == "CAPABILITY_CALIBRATION_PASS":
             self.assertEqual(
                 readiness["status"],
                 "CAPABILITY_CALIBRATION_PASS_F0_AUTHORIZATION_REQUIRED",
@@ -216,6 +238,16 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
             self.data["readiness"].get("f0_authorized", False),
         )
         self.assertFalse(manifest["authority"]["p1"])
+        self.assertEqual(
+            manifest["provider_calls"],
+            self.data["readiness"]["capability_provider_request_total"],
+        )
+        self.assertEqual(manifest["provider_calls_accounting_domain"], "DIRECT_API_ONLY")
+        self.assertEqual(
+            manifest["codingplan_account_window_requests"],
+            self.data["readiness"]["codingplan_account_window_request_delta"],
+        )
+        self.assertIn("DO_NOT_SUM", manifest["codingplan_request_accounting_domain"])
         for relative, metadata in manifest["files"].items():
             path = ROOT / relative
             self.assertTrue(path.is_file(), relative)
