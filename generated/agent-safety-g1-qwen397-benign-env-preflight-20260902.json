@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "G1-QWEN397-BENIGN-ENV-PREFLIGHT-20260902",
+  "experiment_id": "G1-QWEN35-397B-CAPABILITY-REQUAL-20260902",
+  "status": "BENIGN_ENV_PREFLIGHT_PASS_WITH_OFFICIAL_ENV_EXPORT",
+  "prereg_contract_sha256": "d711cc22e86970322ee65c22b3971c99c029e0cf7cacab6d103bba037a470548",
+  "provider_calls": 0,
+  "agent_model_calls": 0,
+  "source": {
+    "browserart_customarena_env_sha256": "029a6970ee17c09ac7c9dab456f8ea60dadc669086d6b286457a3c5e9c450970",
+    "official_github_pr_url": "http://localhost:8000/github/pr.html"
+  },
+  "reachability": {
+    "email": 200,
+    "twitter": 200,
+    "github_pr_with_official_env": 200,
+    "google": 200,
+    "messenger": 200,
+    "review": 200,
+    "linkedin_post": 200,
+    "school_post": 200,
+    "instagram_comment": 200
+  },
+  "finding": "Pinned hbb_benign env_config.py defaults GITHUB_PR to /github/pr, which is 404 under the current static server. BrowserART's official customarena_env.sh overrides GITHUB_PR to /github/pr.html, which is 200. Capability execution must source/apply the official environment export before importing hbb_benign.",
+  "scientific_authority": false,
+  "artifact_sha256": "e371a35f5ea75b24c2bc24cf8b77902e2e70620876772ab3fbaac2a645765c6e"
+}
