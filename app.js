@@ -4595,15 +4595,14 @@ function enhanceExperimentCostPriceColumns(root) {
   const gpuRange = (lo, hi, rate=GPU_MARKET.a100Sxm80) => `¥${Math.round(lo*rate).toLocaleString()}–${Math.round(hi*rate).toLocaleString()}`;
   const gpuMarketNote = msg("RunPod 2026-09 市场参考；A100 SXM 80G≈¥10.78/GPU·h，RTX 3090≈¥1.49–3.39/GPU·h", "RunPod Sep-2026 market reference; A100 SXM 80G≈¥10.78/GPU·h, RTX 3090≈¥1.49–3.39/GPU·h");
   const kindOf = model => {
-    if (["HarmBench","Qwen2.5-7B-Instruct","Second local","第二个本地","MemoryVLA","Second VLA","第二 VLA","OptimusVLA","pi0.5","BEDROOM-SG2SC","SGP-12","SGP-14"].some(x => model.includes(x))) return "gpu";
-    if (["Qwen3-Coder-Next","Hosted Qwen API","Qwen3-8B","235b-a22b","397b-a17b","DeepSeek semantic evaluator","Canonical writer","DeepSeek V4 Pro","Kimi K3","Second backbone","第二 backbone","qwen3.7-plus","Additional LLM","额外 LLM"].some(x => model.includes(x))) return "token";
+    if (["HarmBench","Qwen3-8B","Qwen2.5-7B-Instruct","Second local","第二个本地","MemoryVLA","Second VLA","第二 VLA","OptimusVLA","pi0.5","BEDROOM-SG2SC","SGP-12","SGP-14"].some(x => model.includes(x))) return "gpu";
+    if (["Qwen3-Coder-Next","Hosted Qwen API","235b-a22b","397b-a17b","DeepSeek semantic evaluator","Canonical writer","DeepSeek V4 Pro","Kimi K3","Second backbone","第二 backbone","qwen3.7-plus","Additional LLM","额外 LLM"].some(x => model.includes(x))) return "token";
     return "other";
   };
   const tokenEstimate = (paper, model, usedText, planText) => {
     const has = needle => model.includes(needle);
     let used="", plan="";
     if (model === "Hosted Qwen API") plan=msg("预算估算：≈52.8–105.6M input + 0.27–0.55M output（按 V3 每任务上下文形状 × P0 12–24；P0 receipt 后替换）","Budget estimate: ≈52.8–105.6M input + 0.27–0.55M output (V3 per-task context shape × P0 12–24; replace after P0 receipt)");
-    else if (model === "Qwen3-8B") used=msg("用量估算：≈2.4M input + 0.24M output（120 trajectories × 20k/2k 预算假设；非 receipt）","Usage estimate: ≈2.4M input + 0.24M output (120 trajectories × 20k/2k planning assumption; not a receipt)");
     else if (has("235b-a22b") || (has("397b-a17b") && paper.includes("G1"))) plan=msg("用量估算：≈2.8M input + 0.28M output（140 episodes × 20k/2k）","Usage estimate: ≈2.8M input + 0.28M output (140 episodes × 20k/2k)");
     else if (has("DeepSeek semantic evaluator")) { used=msg("用量估算：≈0.24M input + 0.012M output（按 120 eval × 2k/0.1k）","Usage estimate: ≈0.24M input + 0.012M output (120 eval × 2k/0.1k)"); plan=used; }
     else if (has("Canonical writer")) used=msg("用量估算：≈1–3M total Token（依据现有 write/retrieval/forced-rollout 规模做宽区间重建；非 receipt）","Usage estimate: ≈1–3M total tokens (broad reconstruction from current write/retrieval/forced-rollout scale; not a receipt)");
