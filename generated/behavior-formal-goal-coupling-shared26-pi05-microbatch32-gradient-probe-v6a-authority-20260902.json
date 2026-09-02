@@ -1,0 +1,85 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-microbatch32-gradient-probe-v6a-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_date": "2026-09-02",
+  "status": "AUTHORIZED_PI05_MICROBATCH32_NO_UPDATE_GRADIENT_PROBE_V6A",
+  "scope": "outcome-blind resource-only microbatch32 forward/backward qualification; no optimizer update and no scientific batch change",
+  "parent_failure_adjudication_sha256": "6b322b5f1730a2e6e4e8a0b847d75da73a9386505c2c048d9e8f50444b4a3ade",
+  "source_compile_probe_result_sha256": "caf092167350adfe50b80733fdf93fdcafa0e91c0b8d1cf50e0c6e60ec697ca8",
+  "resource_adapter_qualification_sha256": "e3f2b1dc7fe40b91c47a68ec084119497c28a9e64262328ce723a35aa5751dd2",
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_microbatch32_gradient_probe_v6a.py",
+    "sha256": "83a48e016d70106a195ba350371fe0a5a5ceed1b698600e97b51b507431c8a55"
+  },
+  "launcher": {
+    "path": "scripts/run_behavior_formal_goal_coupling_shared26_pi05_microbatch32_gradient_probe_v6a.sh",
+    "sha256": "1f73d565990ba9246008a444035802f70cc1c2a51ffbd3a9ee34199e04ca3fc5"
+  },
+  "resource_only_adapter": {
+    "source_num_workers": 8,
+    "num_workers": 0,
+    "scientific_global_batch_size": 64,
+    "probe_microbatch_size": 32,
+    "probe_microbatch_is_scientific_batch_change": false,
+    "cpu_affinity": "0-63",
+    "TasksMax": 512,
+    "MemoryMax": "72G",
+    "MemorySwapMax": "0",
+    "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.9",
+    "XLA_PYTHON_CLIENT_PREALLOCATE": "true"
+  },
+  "frozen_scientific_runtime": {
+    "global_batch_size": 64,
+    "seed": 42,
+    "episode_count": 5200,
+    "action_horizon": 32,
+    "fsdp_devices": 1,
+    "model": "pi0.5",
+    "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+    "base_checkpoint": "content-addressed pi05_base",
+    "normalization_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+    "optimizer_and_lr_schedule": "unchanged"
+  },
+  "bindings": {
+    "resource_admission_sha256": "b7c010d45c21a83db57567a2fe599d59bf2933c327423d1bc4cd2e265e376275",
+    "model_load_result_sha256": "fda2c02b5d8ec3e9acd491c9d197ba251e78cfc5e7d5486112c9a13bf655da0c",
+    "normalized_dataloader_smoke_sha256": "91e6e138bbe353fbf8774ea894c43cb9f6e7169b1f2dd0356456f62400babbd2",
+    "tokenizer_result_sha256": "18ca3f4a11f23d58a0e14eb2ebc13838b5717f959ba788557de19439b74ce0dc",
+    "base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed"
+  },
+  "authorized_operations": [
+    "construct exactly one shuffled 32-sample resource-probe batch from the frozen shared26 dataset using seed 42 and num_workers=0",
+    "restore the existing content-addressed step-0 pi0.5 train state",
+    "compile and execute exactly one 32-sample forward/backward gradient computation",
+    "read only structural gradient metadata and device-memory statistics",
+    "discard gradients and in-memory state without applying an optimizer update"
+  ],
+  "forbidden_operations": [
+    "treating microbatch32 as the scientific batch size",
+    "any optimizer update or parameter mutation",
+    "saving a checkpoint",
+    "retaining, reporting, comparing, or using the loss value",
+    "policy rollout or policy outcome read",
+    "changing seed, episode subset, model, optimizer, schedule, action horizon, normalization, or GPU topology",
+    "formal training launch",
+    "implementing 32x2 gradient accumulation before this probe is adjudicated"
+  ],
+  "required_launch_environment": {
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "TOKENIZERS_PARALLELISM": "false",
+    "JAX_PLATFORMS": "cuda",
+    "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.9",
+    "XLA_PYTHON_CLIENT_PREALLOCATE": "true"
+  },
+  "optimizer_update_count_authorized": 0,
+  "formal_training_authorized": false,
+  "scientific_authority": false,
+  "paper_claim_authority": false,
+  "next_gate_if_pass": "QUALIFY_RNG_PRESERVING_GLOBAL64_AS_32X2_GRADIENT_ACCUMULATION",
+  "next_gate_if_fail": "MICROBATCH32_V6A_FAILURE_ADJUDICATION_OR_FALLBACK_TO_MICROBATCH16"
+}

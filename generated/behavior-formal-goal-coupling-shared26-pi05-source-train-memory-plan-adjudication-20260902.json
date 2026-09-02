@@ -1,0 +1,38 @@
+{
+  "adjudication": "The exact source donated-state batch64 train_step is too close to or above the physical 80GB device boundary to qualify as a stable single-A100 execution topology in the current JAX/OpenPI build. Raising the allocator further would reduce safety margin rather than solve the underlying peak-memory plan.",
+  "allocator_fraction": 0.9,
+  "compiler_memory_stats_bytes": {
+    "alias_size": 53654941964,
+    "argument_plus_temp_plus_nonaliased_output": 85286465272,
+    "argument_size": 53770873812,
+    "output_size": 53654943656,
+    "temp_size": 31515589768
+  },
+  "compiler_memory_stats_gib": {
+    "argument": 50.07802863791585,
+    "nominal_live_plan": 79.42921041697264,
+    "temp": 29.35118020325899
+  },
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "hlo_rematerialization_reported_bytes": 87523661848,
+  "hlo_rematerialization_reported_gib": 81.51276209205389,
+  "microbatch_training_not_yet_authorized": true,
+  "next_gate": "MICROBATCH32_NO_UPDATE_GRADIENT_RESOURCE_PROBE",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "optimizer_update_executed": false,
+  "policy_outcomes_read": false,
+  "recorded_date": "2026-09-02",
+  "resource_amendment_allowed": {
+    "optimizer_updates_in_probe": 0,
+    "probe_microbatch_size": 32,
+    "purpose": "determine whether a 32-sample forward/backward fits before implementing global64 as 32x2 gradient accumulation",
+    "scientific_batch_change": false,
+    "scientific_global_batch_size": 64
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-source-train-memory-plan-adjudication-v1",
+  "scientific_outcomes_observed": 0,
+  "source_compile_probe_result_sha256": "caf092167350adfe50b80733fdf93fdcafa0e91c0b8d1cf50e0c6e60ec697ca8",
+  "source_compile_probe_status": "PI05_SOURCE_NATIVE_09_COMPILE_ONLY_MEMORY_PROBE_PASS",
+  "source_train_step_executed": false,
+  "status": "PI05_BATCH64_SINGLE_A100_MEMORY_PLAN_HOLD_MICROBATCH_RESOURCE_PROBE_ALLOWED"
+}
