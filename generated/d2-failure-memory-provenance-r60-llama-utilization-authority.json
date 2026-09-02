@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R60-LLAMA-UTILIZATION-AUTHORITY",
+  "recorded_date": "2026-09-02",
+  "status": "R60_LLAMA_FRESH_UTILIZATION_AUTHORITY_FROZEN_PRE_PROBE",
+  "bindings": {
+    "manifest_file_sha256": "2add9259f78d5d8a63aad10fc15c9d7cfaf7a14f58b670e61279930b79c81340",
+    "manifest_receipt_sha256": "618ca71ea4052efc5636ee8e1b8c17b801db6944558131036c35015276880e4c",
+    "r54v2_receipt_file_sha256": "650e145a491f09555e40aa8c81c8598d8e1e2dc9febd906857fb8a3202f3aca3",
+    "selection_file_sha256": "39957119208258bd0bbd7a9a613cfa3403e9693229cb9452714c655774ad071c",
+    "frozen_retrieval_file_sha256": "fc906765f2f94b053996bef2d7a085b6a2534b0922f2929da253390d3b855b72",
+    "source_receipt_file_sha256": "64b64cb2ca170482fafe4bb89db96071e896d1a952dc6c9a8002093849a000b0",
+    "runner_sha256": "67e203d7f26feeaa4c4c64d1d05fb6b4a80a5b26bc40b0f9e00f868b7441d99c",
+    "parser_runner_sha256": "7c92ed53dcf7952e0ba9feb28eff8c467dfcaace28366b6add51f5057e0894dc",
+    "program_contract_receipt_sha256": "a8366b531406ec0fb5d77509b2e9731add87bfb50623e2f3916dad73ffbe93eb"
+  },
+  "conditional_on": "R59 parser receipt PASS from exact frozen runner/probe IDs",
+  "scope": {
+    "exact_clusters": 8,
+    "arms": [
+      "U0_no_memory",
+      "U1_true_memory",
+      "U2_null_memory",
+      "U3_reversed_memory",
+      "U4_shuffled_memory"
+    ],
+    "exact_arm_runs": 40,
+    "attempts": 1
+  },
+  "authority": {
+    "utilization_conditionally": true,
+    "A_B": false,
+    "C_D": false,
+    "external_provider_spend": false
+  },
+  "scientific_authority": false,
+  "receipt_sha256": "3137a722d33a279923c50242f90d1d33a24dfff05f97f313f1482c5de33aabce"
+}
