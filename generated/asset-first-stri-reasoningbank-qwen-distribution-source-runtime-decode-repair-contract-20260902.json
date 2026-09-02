@@ -1,0 +1,73 @@
+{
+  "created_at_utc": "2026-09-02T06:55:18+00:00",
+  "credential_material_present": false,
+  "decision": "QWEN_SOURCE_RUNTIME_DECODE_REPAIR_AUTHORIZED",
+  "execution_policy": {
+    "authorized_scientific_replay_count": 1,
+    "canonical_slot_reopened_only_after_smoke_pass": true,
+    "invalid_attempt_must_be_archived_byte_exact": true,
+    "same_source_case_only": "sympy__sympy-13031",
+    "smoke_evaluator_calls": 0,
+    "smoke_model_calls": 0,
+    "smoke_provider_calls": 0,
+    "zero_model_runtime_smoke_required_before_replay": true
+  },
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "payload_sha256": "c07cfee8c5e85ec862ee9b30e340b0dc13e0d9ff36f9977a1bf75f1979459645",
+  "repair": {
+    "agent_action_output_utf8_errors": "strict",
+    "control_plane_utf8_errors": "replace",
+    "model_visible_messages_changed": false,
+    "model_visible_request_changed": false,
+    "provider_changed": false,
+    "sampling_changed": false,
+    "scientific_attempt_consumed_by_invalid_attempt": false,
+    "scope": "Docker/runtime control-plane output decoding only",
+    "source_replacement": false,
+    "task_changed": false,
+    "task_order_changed": false
+  },
+  "repair_code_sha256": {
+    "research_pipeline/asset_first_stri_reasoningbank_p1_core.py": "9222b8131f29a2d063811bb1ba4141e51533b8418e58bdc6afeecf970666b0b8",
+    "research_pipeline/asset_first_stri_reasoningbank_p1_q10_runtime.py": "fe39459cddddc82c985cd5de3568197cd3011819d5bcd5caef55e3a3e1731e95",
+    "research_pipeline/asset_first_stri_reasoningbank_qwen_distribution_source.py": "b33ae92ad400de896129281a56b2db3e3c08b3a6401319f2928747fa582796d9",
+    "research_pipeline/test_asset_first_stri_reasoningbank_p1_q10_runtime.py": "ddc9f2664d0da5a2f6ddccb143c3743368978c66d6fe79be5e5ceb936589e47a"
+  },
+  "runtime_smoke_unit": {
+    "attempt_count": 1,
+    "base_commit": "2dfa7457f20ee187fbb09b5b6a1631da4458388c",
+    "image_manifest_digest": "sha256:f1b132a899871f43c1eed5dc33ab53a1a3c96b73502fa970e276ee531efa11e7",
+    "instance_id": "sympy__sympy-13031",
+    "ordinal": 9,
+    "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/045-sympy-sympy-13031.json",
+    "qualification_receipt_sha256": "159a86b572e5019385be76fb11fcce6b360967ff3399e956379610bf1c6c1e00",
+    "repo": "sympy/sympy",
+    "runtime_id": "QWEN-SOURCE-RUNTIME-009",
+    "task_sha256": "e39db9f9ca2a5e9f03e63d3de70ee07ad9db6f1cb7212a1c9b06ff447fc5434b"
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "confirmatory_execution_authorized": false,
+    "invalid_attempt_evaluator_outcome_observed": false,
+    "invalid_attempt_model_outcome_observed": false,
+    "invalid_attempt_scientifically_valid": false,
+    "memory_extraction_authorized": false,
+    "ordinals_10_through_32_outcomes_unobserved": true,
+    "treatment_selection_from_invalid_attempt_forbidden": true
+  },
+  "source_contract_sha256": "072980a4e71a3e31de2e59ef77b52cd090073d645b665af0adc25c24a99b8daa",
+  "stage": "QWEN_SOURCE_RUNTIME_DECODE_INVALID_ATTEMPT_REPAIR",
+  "trigger": {
+    "cleanup_accepted": true,
+    "error_type": "UnicodeDecodeError",
+    "evaluator_outcome_observed": false,
+    "failure_layer": "runtime_or_implementation",
+    "instance_id": "sympy__sympy-13031",
+    "model_call_count": 0,
+    "ordinal": 9,
+    "provider_interaction_count": 0,
+    "source_index_hold_sha256": "ea2b4dc9e0af6b23943940dfa091cc45389f22d24299fd1a0c6aac90fbb94694",
+    "source_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-source-trajectories-20260901/09-sympy-sympy-13031.json",
+    "source_receipt_sha256": "3c442631b2398dedac3c67f8bf1b819d36944df3c0b8b0c987cfaa017a593131"
+  }
+}

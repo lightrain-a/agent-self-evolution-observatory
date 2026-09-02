@@ -31,6 +31,8 @@ Q1 = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-resul
 CONTRACT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-contract-20260901.json"
 INDEX = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-index-20260901.json"
 RECEIPT_DIR = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-trajectories-20260901"
+INVALID_ATTEMPT_REGISTRY = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-invalid-attempt-registry-20260902.json"
+RUNTIME_REPAIR_RESULT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-runtime-decode-repair-result-20260902.json"
 EXPECTED_CONTRACT_SHA256 = "072980a4e71a3e31de2e59ef77b52cd090073d645b665af0adc25c24a99b8daa"
 
 
@@ -124,6 +126,54 @@ def load_completed(plan: list[dict[str, Any]]) -> dict[int, dict[str, Any]]:
     return completed
 
 
+def invalid_attempt_records() -> list[dict[str, Any]]:
+    if not INVALID_ATTEMPT_REGISTRY.is_file():
+        return []
+    registry = json.loads(INVALID_ATTEMPT_REGISTRY.read_text(encoding="utf-8"))
+    if registry.get("decision") != "QWEN_SOURCE_INVALID_ATTEMPT_REGISTRY_ACTIVE":
+        raise RuntimeError("source invalid-attempt registry decision drift")
+    rows = list(registry.get("invalid_attempts") or [])
+    if any(
+        "scientific_attempt_count_consumed" not in row
+        or int(row["scientific_attempt_count_consumed"]) != 0
+        for row in rows
+    ):
+        raise RuntimeError("invalid-attempt registry consumed a scientific attempt")
+    return rows
+
+
+def require_invalid_replay_gate(next_source_ordinal: int) -> dict[str, Any] | None:
+    matches = [
+        row for row in invalid_attempt_records()
+        if int(row.get("authorized_replay_ordinal") or 0) == next_source_ordinal
+    ]
+    if not matches:
+        return None
+    if len(matches) != 1:
+        raise RuntimeError("source invalid replay authorization is not unique")
+    row = matches[0]
+    archive = ROOT / str(row["archive_path"])
+    if not archive.is_file() or sha256_file(archive) != row["invalid_attempt_receipt_sha256"]:
+        raise RuntimeError("source invalid-attempt archive binding drift")
+    if receipt_path({
+        "ordinal": next_source_ordinal,
+        "instance_id": row["instance_id"],
+    }).exists():
+        raise RuntimeError("source invalid replay canonical slot is not empty")
+    if not RUNTIME_REPAIR_RESULT.is_file():
+        raise RuntimeError("SOURCE_RUNTIME_INVALID_ATTEMPT_REPAIR_REQUIRED")
+    result = json.loads(RUNTIME_REPAIR_RESULT.read_text(encoding="utf-8"))
+    if result.get("decision") != "QWEN_SOURCE_RUNTIME_INVALID_ATTEMPT_ARCHIVED_REPLAY_GATE_OPEN":
+        raise RuntimeError("source runtime invalid-attempt replay gate closed")
+    if int(result.get("authorized_replay_ordinal") or 0) != next_source_ordinal:
+        raise RuntimeError("source runtime replay ordinal drift")
+    if result.get("invalid_attempt_receipt_sha256") != row["invalid_attempt_receipt_sha256"]:
+        raise RuntimeError("source runtime repair invalid-attempt binding drift")
+    if result.get("scientific_attempt_count_consumed") != 0:
+        raise RuntimeError("source runtime repair scientific-attempt count drift")
+    return result
+
+
 def require_resume_if_last_terminal(
     contract: dict[str, Any], completed: dict[int, dict[str, Any]],
 ) -> dict[str, Any] | None:
@@ -162,6 +212,7 @@ def index_payload(contract: dict[str, Any], completed: dict[int, dict[str, Any]]
         "receipt_sha256": sha256_file(receipt_path(contract["source_plan"][ordinal - 1])),
     } for ordinal, row in sorted(completed.items())]
     complete = len(completed) == len(contract["source_plan"])
+    invalid_attempts = invalid_attempt_records()
     return {
         "schema_version": 1, "experiment_id": EXPERIMENT_ID,
         "stage": "QWEN_SOURCE_TRAJECTORY_EXECUTION",
@@ -170,12 +221,19 @@ def index_payload(contract: dict[str, Any], completed: dict[int, dict[str, Any]]
         "execution_complete": complete, "contract_sha256": sha256_file(CONTRACT),
         "planned_count": len(contract["source_plan"]), "completed_count": len(completed),
         "journal_record_count": len(journal), "journal": journal,
+        "invalid_attempt_count": len(invalid_attempts),
+        "invalid_attempts": invalid_attempts,
         "inflight": inflight,
         "checks": {
             "frozen_order_prefix": True,
             "every_attempt_count_one": all(row["attempt_count"] == 1 for row in journal),
             "no_retry": True, "no_replacement": True,
             "all_receipts_persisted": all(row["persisted"] for row in journal),
+            "invalid_scientific_attempts_excluded_from_completed_prefix": all(
+                "scientific_attempt_count_consumed" in row
+                and int(row["scientific_attempt_count_consumed"]) == 0
+                for row in invalid_attempts
+            ),
         },
         "credential_material_present": False,
     }
@@ -204,6 +262,7 @@ def run() -> dict[str, Any]:
             raise RuntimeError(
                 "SOURCE_AMBIGUOUS_INFLIGHT_HOLD: refusing to reissue an unreceipted source unit"
             )
+    require_invalid_replay_gate(len(completed) + 1)
     require_resume_if_last_terminal(contract, completed)
     transport_pacing = require_pacing(len(completed) + 1)
     write_json(INDEX, index_payload(contract, completed))

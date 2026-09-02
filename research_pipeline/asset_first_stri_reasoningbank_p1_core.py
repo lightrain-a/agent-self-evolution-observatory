@@ -88,7 +88,10 @@ def write_json(path: Path, payload: dict[str, Any]) -> str:
     return sha256_file(path)
 
 
-def run_host(command: list[str], *, timeout: int | float, docker: bool = False) -> dict[str, Any]:
+def run_host(
+    command: list[str], *, timeout: int | float, docker: bool = False,
+    decode_errors: str = "strict",
+) -> dict[str, Any]:
     env = os.environ.copy()
     if docker:
         env["DOCKER_HOST"] = DOCKER_HOST
@@ -96,6 +99,7 @@ def run_host(command: list[str], *, timeout: int | float, docker: bool = False) 
     try:
         completed = subprocess.run(
             command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+            encoding="utf-8", errors=decode_errors,
             timeout=timeout, env=env, check=False,
         )
         return {

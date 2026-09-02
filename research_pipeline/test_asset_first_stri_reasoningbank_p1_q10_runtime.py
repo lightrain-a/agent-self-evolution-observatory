@@ -45,6 +45,7 @@ class HostHarness:
         self.container_changes = container_changes or {}
         self.inspect_result = inspect_result
         self.commands: list[list[str]] = []
+        self.decode_errors: list[str] = []
 
     def image_record(self) -> dict:
         return {
@@ -81,8 +82,12 @@ class HostHarness:
             target[parts[-1]] = value
         return record
 
-    def __call__(self, command: list[str], *, timeout: int | float, docker: bool = False) -> dict:
+    def __call__(
+        self, command: list[str], *, timeout: int | float, docker: bool = False,
+        decode_errors: str = "strict",
+    ) -> dict:
         self.commands.append(command)
+        self.decode_errors.append(decode_errors)
         if command[:3] == ["docker", "image", "inspect"]:
             return result(0, json.dumps([self.image_record()]))
         if command[:2] == ["docker", "create"]:
@@ -129,6 +134,21 @@ class ReasoningBankP1Q10RuntimeTest(unittest.TestCase):
         self.assertFalse(receipt["second_start_invoked"])
         self.assertEqual(host.start_count, 1)
         self.assertTrue(cleanup["accepted"])
+        self.assertTrue(host.decode_errors)
+        self.assertEqual(set(host.decode_errors), {"replace"})
+
+    def test_control_decode_is_lossy_but_agent_exec_remains_strict(self) -> None:
+        run = self.make_run()
+        host = HostHarness(run)
+        with patch(
+            "research_pipeline.asset_first_stri_reasoningbank_p1_q10_runtime.run_host",
+            side_effect=host,
+        ):
+            run.start()
+            run.exec("echo scientific-action")
+            run.close()
+        self.assertEqual(host.decode_errors[-2], "strict")
+        self.assertEqual(host.decode_errors[-1], "replace")
 
     def test_t2_timeout_daemon_running(self) -> None:
         run = self.make_run()

@@ -53,6 +53,26 @@ class DaemonReconciledDockerRun(ExtendedStartGraceDockerRun):
             and receipt.get("returncode") is None
         )
 
+    @staticmethod
+    def _control_host(command: list[str], *, timeout: int | float) -> dict[str, Any]:
+        """Decode Docker/runtime-control output lossily; agent action output stays strict."""
+        return run_host(
+            command, timeout=timeout, docker=True, decode_errors="replace"
+        )
+
+    def _control_exec(
+        self, action: str, *, timeout: int | float = COMMAND_TIMEOUT_SECONDS,
+    ) -> dict[str, Any]:
+        return self._control_host(
+            [
+                "docker", "exec", "--workdir", "/testbed",
+                "--env", "PAGER=cat", "--env", "MANPAGER=cat",
+                "--env", "LESS=-R", "--env", "PIP_PROGRESS_BAR=off",
+                "--env", "TQDM_DISABLE=1", self.name, "bash", "-lc", action,
+            ],
+            timeout=timeout,
+        )
+
     def _image_record(self, image_inspect: dict[str, Any]) -> dict[str, Any]:
         try:
             records = json.loads(image_inspect["output"])
@@ -69,20 +89,18 @@ class DaemonReconciledDockerRun(ExtendedStartGraceDockerRun):
         return record
 
     def _create_once(self) -> tuple[dict[str, Any], dict[str, Any]]:
-        image_inspect = run_host(
+        image_inspect = self._control_host(
             ["docker", "image", "inspect", self.image],
             timeout=30,
-            docker=True,
         )
         image_record = self._image_record(image_inspect)
-        created = run_host(
+        created = self._control_host(
             [
                 "docker", "create", "--platform", "linux/amd64",
                 "--pid", PID_NAMESPACE, "--name", self.name,
                 "--entrypoint", "sleep", self.image, "infinity",
             ],
             timeout=60,
-            docker=True,
         )
         create_ack: dict[str, Any] = {
             "client_create_invocations": 1,
@@ -108,10 +126,9 @@ class DaemonReconciledDockerRun(ExtendedStartGraceDockerRun):
             return image_inspect, create_ack
         if not (created["timed_out"] and created["returncode"] is None):
             raise RuntimeError(f"docker create failed: {created['output'][-800:]}")
-        inspected = run_host(
+        inspected = self._control_host(
             ["docker", "inspect", self.name],
             timeout=self.CREATE_INSPECT_TIMEOUT_SECONDS,
-            docker=True,
         )
         if inspected["returncode"] != 0 or inspected["timed_out"]:
             raise RuntimeError("Q10 inherited create reconciliation found no inspectable side effect")
@@ -185,10 +202,9 @@ class DaemonReconciledDockerRun(ExtendedStartGraceDockerRun):
         image_record: dict[str, Any],
     ) -> bool:
         receipt["docker_inspect_invoked"] = True
-        inspected = run_host(
+        inspected = self._control_host(
             ["docker", "inspect", self.name],
             timeout=self.START_INSPECT_TIMEOUT_SECONDS,
-            docker=True,
         )
         receipt["docker_inspect_receipt"] = {
             "returncode": inspected["returncode"],
@@ -249,10 +265,9 @@ class DaemonReconciledDockerRun(ExtendedStartGraceDockerRun):
         image_inspect: dict[str, Any],
     ) -> dict[str, Any]:
         image_record = self._image_record(image_inspect)
-        started = run_host(
+        started = self._control_host(
             ["docker", "start", self.name],
             timeout=self.START_TIMEOUT_SECONDS,
-            docker=True,
         )
         receipt = self._receipt_base(started)
         self.start_reconciliation_receipt = receipt
@@ -300,7 +315,7 @@ class DaemonReconciledDockerRun(ExtendedStartGraceDockerRun):
             raise RuntimeError("invalid frozen base commit")
         if not self.exact_base:
             raise RuntimeError("Q10 reconciliation is scoped to exact-base containers")
-        pre = self.exec(
+        pre = self._control_exec(
             "git rev-parse HEAD && "
             f"git cat-file -e {self.base_commit}^{{commit}} && "
             f"git merge-base --is-ancestor {self.base_commit} HEAD && "
@@ -311,12 +326,12 @@ class DaemonReconciledDockerRun(ExtendedStartGraceDockerRun):
             raise RuntimeError(
                 f"Q10 exact-base normalization precondition failed: {pre['output'].strip()}"
             )
-        normalization = self.exec(f"git reset --hard {self.base_commit}", timeout=30)
+        normalization = self._control_exec(f"git reset --hard {self.base_commit}", timeout=30)
         if normalization["returncode"] != 0 or normalization["timed_out"]:
             raise RuntimeError(
                 f"Q10 exact-base normalization action failed: {normalization['output'].strip()}"
             )
-        base = self.exec(
+        base = self._control_exec(
             f'test "$(git rev-parse HEAD)" = "{self.base_commit}" && '
             "test -z \"$(git status --porcelain=v1 --untracked-files=all)\" && "
             "git rev-parse HEAD",
@@ -379,10 +394,9 @@ class DaemonReconciledDockerRun(ExtendedStartGraceDockerRun):
             "accepted": not self.created,
         }
         if self.created:
-            removed = run_host(
+            removed = self._control_host(
                 ["docker", "rm", "-f", self.name],
                 timeout=60,
-                docker=True,
             )
             cleanup.update({
                 "returncode": removed["returncode"],
