@@ -1,0 +1,315 @@
+{
+  "checks": {
+    "every_attempt_count_one": true,
+    "every_completed_runtime_qualified": true,
+    "no_behavioral_outcomes": true,
+    "no_evaluator_calls": true,
+    "no_gold_or_test_patch": true,
+    "no_model_calls": true,
+    "no_provider_calls": true
+  },
+  "completed_count": 32,
+  "contract_sha256": "e89136117531d181d7f729d9ac67d6935ec1c01d214e600de3df2e04faf96e94",
+  "created_at_utc": "2026-09-02T03:55:27+00:00",
+  "credential_material_present": false,
+  "decision": "QWEN_ROOTFUL_SOURCE_RUNTIME_QUALIFICATION_COMPLETE",
+  "execution_complete": true,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "inflight": null,
+  "journal": [
+    {
+      "attempt_count": 1,
+      "instance_id": "pydata__xarray-4356",
+      "ordinal": 1,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "7456bc20c651f09c36028221c6abe4ad6030acd9683ad1ce0497f00b0ca4dde5",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-001"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "pydata__xarray-3677",
+      "ordinal": 2,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "b39fa8841a7dca27e71db679549064594b1f741ed2a6fa5148e45b9614c0e546",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-002"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "pydata__xarray-3095",
+      "ordinal": 3,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "47546174b460a4181e25bbb945a2d173d7c65ab5a63afc68e30c614b97f6cd12",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-003"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "pydata__xarray-6721",
+      "ordinal": 4,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "ecb4359035364a344fe7c6bbf86bc419d51d9e3dc89ddf0872370a18cde01e4c",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-004"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "pydata__xarray-6992",
+      "ordinal": 5,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "4433fd9a84a7a5fcc026ab6184da039eddeb827a51dce160d8d5315ad8c2bd0c",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-005"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "pydata__xarray-4629",
+      "ordinal": 6,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "418900fb9d690948a623fc888fd5d303826b51953e8020bfae51ecf7a4562d08",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-006"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "pydata__xarray-4687",
+      "ordinal": 7,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "95a2745652bf2f3426e63bbcaf4e5b87dece125aeee6a0c83d427a67afb3a02d",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-007"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "pydata__xarray-4695",
+      "ordinal": 8,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "52469a6c623141922f60b1dde9e1f41647d1a1e390755bb1850270d792d4fcc9",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-008"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "sympy__sympy-13031",
+      "ordinal": 9,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "c3e97707eec849abdbc7776d67bb453302ed47a04d50d7396756b5f35ce42571",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-009"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "sympy__sympy-14711",
+      "ordinal": 10,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "63de79ceaa6f4eb4df704bf1b40d4172268ea8dc461759a3b7d73ab6d3634dfc",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-010"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "sympy__sympy-13877",
+      "ordinal": 11,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "8131e3d26a68a00cb1e1d9cde6f21edcef14faff2f91467eeda69e0aa08fcae5",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-011"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "sympy__sympy-15875",
+      "ordinal": 12,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "b50dfcd3b6728b50b61383917a8adee7c18faa195d5753923f8ee23f685e6d03",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-012"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "sympy__sympy-16792",
+      "ordinal": 13,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "3397b48a2297031ba5c0f922c04934dedc71983cd6f1c10e90e4c7597f4f4b8e",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-013"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "sympy__sympy-24443",
+      "ordinal": 14,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "2af40ae8911b0a0a47a318043cbd81a181765af21c229f327903d702c75a017d",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-014"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "sympy__sympy-19346",
+      "ordinal": 15,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "d1a5d00d48ca11fa17e5e02438e0304c11c449936b1de796a764f600c98fd407",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-015"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "sympy__sympy-12489",
+      "ordinal": 16,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "9053e11e0c9f7b2fdb097fb1ae25e1150f706483f18fe2fd204f18d924d37176",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-016"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "matplotlib__matplotlib-24026",
+      "ordinal": 17,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "84dc924c78a418f02f96744e7a85a61e2ae309bc484353c1604900ac4bd921de",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-017"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "matplotlib__matplotlib-24570",
+      "ordinal": 18,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "0bd1dff81ffa63afc1592af50024ce8133a1e5bd3854060efdb369e75032ede8",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-018"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "matplotlib__matplotlib-25332",
+      "ordinal": 19,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "a9bb080e2c2f34507f4da7c71d6cca17ae9b56f4368ed71241ce420f76f1c11d",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-019"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "matplotlib__matplotlib-14623",
+      "ordinal": 20,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "d836848d106bdd3deba4cc2224ea65a9714d041f9eaa78b8410a9deeefdfe62e",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-020"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "matplotlib__matplotlib-20676",
+      "ordinal": 21,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "e5b82360d2ebc8a82e630735a408c7a685a574cf34cc303a13400a6c7b451db6",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-021"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "matplotlib__matplotlib-22871",
+      "ordinal": 22,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "cba3a050f74f23dbc8157ccffcf779edabe98834e221d518f58a5c980f3db8a7",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-022"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "matplotlib__matplotlib-25122",
+      "ordinal": 23,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "7062ede018273e9a318f199337b780100f4c2389d85cfcd9c84fb5ac84b7c22d",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-023"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "matplotlib__matplotlib-22865",
+      "ordinal": 24,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "b6b99278f85c434eea11a64506a9559f703c931d425c646af47d7aa174da6e6c",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-024"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "django__django-15563",
+      "ordinal": 25,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "bea156e25f7777f461e3bfd0b3ff76394435496d3e4bb9723d9c72e45a8f8831",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-025"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "django__django-16502",
+      "ordinal": 26,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "137e796c4d3f3a5deae3ec5d6713eb7eaa607bc0d22f9787cbb50727040a8bb4",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-026"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "django__django-12774",
+      "ordinal": 27,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "285a8561275696af8a20228bcf2173ccff2af536c82678bb999d7d32656adb8e",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-027"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "django__django-13512",
+      "ordinal": 28,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "402fc9b5469ac56da9227f356fc5f43615fc7d473db5784ae3400df73d53e450",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-028"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "django__django-15957",
+      "ordinal": 29,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "3e7e8d91fa4f918eea7edb74bb76e416a43bf675cddd1166a70dc9b1986b502e",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-029"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "django__django-13279",
+      "ordinal": 30,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "e7f05fc9ff14736c7402aba3d2743099ccac1bf4810f822139d89df9acea7d5f",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-030"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "django__django-11964",
+      "ordinal": 31,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "036eac29128d2670aabfe3d05a80ba1fb966b2a7fd58cf9bfb056a9c9f23ca84",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-031"
+    },
+    {
+      "attempt_count": 1,
+      "instance_id": "django__django-11790",
+      "ordinal": 32,
+      "persisted": true,
+      "qualified": true,
+      "receipt_sha256": "03d7ddf9ff888c5f0922c3a677d82ed57419a2a28ad523105a5e2582bc15317f",
+      "runtime_id": "QWEN-SOURCE-RUNTIME-032"
+    }
+  ],
+  "journal_record_count": 32,
+  "operational_blocker": null,
+  "payload_sha256": "47d04625d05b436d3f798ee5c357046273070f1dca7f1f64aacbc2176fd4cba0",
+  "planned_count": 32,
+  "schema_version": 1,
+  "stage": "QWEN_ROOTFUL_SOURCE_RUNTIME_QUALIFICATION"
+}

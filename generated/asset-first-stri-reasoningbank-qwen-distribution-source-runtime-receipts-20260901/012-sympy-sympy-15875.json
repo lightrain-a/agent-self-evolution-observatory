@@ -1,0 +1,233 @@
+{
+  "attempt_count": 1,
+  "base_commit": "b506169ad727ee39cb3d60c8b3ff5e315d443d8e",
+  "behavioral_outcomes_observed": false,
+  "checks": {
+    "architecture_amd64_visible": true,
+    "base_commit_exact": true,
+    "behavioral_outcomes_not_observed": true,
+    "cleanup_accepted": true,
+    "d0_receipt_exact": true,
+    "evaluator_not_run": true,
+    "exact_digest_visible": true,
+    "gold_patch_not_applied": true,
+    "image_manifest_digest_exact": true,
+    "model_calls_zero": true,
+    "provider_calls_zero": true,
+    "read_only_probe_pass": true,
+    "rootful_docker_host_exact": true,
+    "runtime_started": true,
+    "task_hash_exact": true,
+    "test_patch_not_applied": true
+  },
+  "cleanup_receipt": {
+    "accepted": true,
+    "cleanup_invoked": true,
+    "container_name": "e1-rb-qwen-source-runtime-012-sympy__sympy-15875-b4821cbf",
+    "reconciliation_receipt_finalized_before_cleanup": true,
+    "returncode": 0,
+    "timed_out": false
+  },
+  "created_at_utc": "2026-09-02T03:49:51+00:00",
+  "credential_material_present": false,
+  "docker_host": "unix:///var/run/docker.sock",
+  "evaluator_calls": 0,
+  "image_manifest_digest": "sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7",
+  "image_runtime": {
+    "all_blobs_sha256_verified": true,
+    "architecture": "amd64",
+    "architecture_amd64_visible": true,
+    "download_rows": [
+      {
+        "digest": "sha256:079027039e9d5fa1677dd462c60fd9240097243a87ff8a124fffbd16f909c266",
+        "mirror_base": "https://docker.1ms.run",
+        "sha256_verified": true,
+        "size": 420170791,
+        "status": "verified-existing"
+      },
+      {
+        "digest": "sha256:0ddda5039dab8b2772d0f65857071df489438384259b8fabd0a7882656cf8ca0",
+        "mirror_base": "https://docker.1ms.run",
+        "sha256_verified": true,
+        "size": 164,
+        "status": "verified-existing"
+      },
+      {
+        "digest": "sha256:39a945af8df2ad9343f141c82355d3f2c4b576d432eda34c460d630607462b60",
+        "mirror_base": "https://docker.1ms.run",
+        "sha256_verified": true,
+        "size": 29736517,
+        "status": "verified-existing"
+      },
+      {
+        "digest": "sha256:407de719c2d3bde9e1d31481e451ac465ef6cdcf90f48b446b000dd907979233",
+        "mirror_base": "https://docker.1ms.run",
+        "sha256_verified": true,
+        "size": 21565,
+        "status": "verified-existing"
+      },
+      {
+        "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+        "mirror_base": "https://docker.1ms.run",
+        "sha256_verified": true,
+        "size": 32,
+        "status": "verified-existing"
+      },
+      {
+        "digest": "sha256:52778ee56e3ffa57b7f4199f03d62861ea8345dea616de3128f60ab24d86eeca",
+        "mirror_base": "https://docker.1ms.run",
+        "sha256_verified": true,
+        "size": 4214,
+        "status": "verified-existing"
+      },
+      {
+        "digest": "sha256:53752545c9b26814a5dadb2ac5d26e71ee039f17d72ee04fbc55e8e14a42966e",
+        "mirror_base": "https://docker.1ms.run",
+        "sha256_verified": true,
+        "size": 4313,
+        "status": "verified-existing"
+      },
+      {
+        "digest": "sha256:733ff0a2f4f1ef2c3d00b8eb4c2ae0564984ba6cc9e4c397a3dd466417d8800e",
+        "mirror_base": "https://docker.1ms.run",
+        "sha256_verified": true,
+        "size": 349833214,
+        "status": "verified-existing"
+      },
+      {
+        "digest": "sha256:a11fe451d5d158584efcceb2009c516e3de53111970fd0bddd11ef5eab026726",
+        "mirror_base": "https://docker.1ms.run",
+        "sha256_verified": true,
+        "size": 190,
+        "status": "verified-existing"
+      },
+      {
+        "digest": "sha256:c8f3bca75a818e48867868d2cada84662b47704b3a571dc76719aabdfab6800d",
+        "mirror_base": "https://docker.1ms.run",
+        "sha256_verified": true,
+        "size": 65290230,
+        "status": "verified-existing"
+      },
+      {
+        "digest": "sha256:fd3f01088aa854fa99907bd918d9bc8146064c2f452aae3e07d61a6244ca9968",
+        "mirror_base": "https://docker.1ms.run",
+        "sha256_verified": true,
+        "size": 210296452,
+        "status": "verified-existing"
+      }
+    ],
+    "exact_digest_visible": true,
+    "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-15875@sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7",
+    "import_archive_sha256": "be822d613e52e7cb0c701f6f3ea63c3d8fe4e883a056db830bbcc9bd9b4bfd3a",
+    "import_status": "imported-and-verified",
+    "manifest_digest": "sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7",
+    "temporary_import_archive_removed": true
+  },
+  "instance_id": "sympy__sympy-15875",
+  "model_calls": 0,
+  "ordinal": 12,
+  "payload_sha256": "adbe0e39345a3631c841e858a019430e4eb95db1e03c8d87f76fc4ad189829dc",
+  "probe_receipt": {
+    "finished_at_utc": "2026-09-02T03:49:50+00:00",
+    "output": "QWEN_RUNTIME_OK\n",
+    "returncode": 0,
+    "started_at_utc": "2026-09-02T03:49:50+00:00",
+    "timed_out": false
+  },
+  "provider_calls": 0,
+  "qualification_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-evaluator-receipts-20260901/048-sympy-sympy-15875.json",
+  "qualification_receipt_sha256": "fa34d87c84c40ecc33b4fe9905316b74a9c82f089a02c6086e6006339ac20aa8",
+  "qualified": true,
+  "repo": "sympy/sympy",
+  "runtime_id": "QWEN-SOURCE-RUNTIME-012",
+  "runtime_receipt": {
+    "base_commit_receipt": {
+      "expected_base_commit": "b506169ad727ee39cb3d60c8b3ff5e315d443d8e",
+      "finished_at_utc": "2026-09-02T03:49:50+00:00",
+      "git_clean_invoked": false,
+      "normalization": {
+        "finished_at_utc": "2026-09-02T03:49:50+00:00",
+        "output": "HEAD is now at b506169ad Merge pull request #15712 from jmig5776/fix_matrixpowerfailure\n",
+        "returncode": 0,
+        "started_at_utc": "2026-09-02T03:49:50+00:00",
+        "timed_out": false
+      },
+      "normalization_action": "git reset --hard <frozen expected base commit>",
+      "observed_head": "b506169ad727ee39cb3d60c8b3ff5e315d443d8e",
+      "output": "b506169ad727ee39cb3d60c8b3ff5e315d443d8e\n",
+      "pre_normalization": {
+        "finished_at_utc": "2026-09-02T03:49:50+00:00",
+        "output": "62e87142802a4de134bcc0e357f3a404edfdeb36\n",
+        "returncode": 0,
+        "started_at_utc": "2026-09-02T03:49:49+00:00",
+        "timed_out": false
+      },
+      "returncode": 0,
+      "rule": "exact_base_after_preregistered_hard_reset",
+      "started_at_utc": "2026-09-02T03:49:50+00:00",
+      "timed_out": false
+    },
+    "image_inspect": {
+      "finished_at_utc": "2026-09-02T03:49:49+00:00",
+      "output": "[\n    {\n        \"Id\": \"sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7\",\n        \"RepoTags\": [\n            \"docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-15875@sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7\"\n        ],\n        \"RepoDigests\": [\n            \"docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-15875@sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7\"\n        ],\n        \"Comment\": \"buildkit.dockerfile.v0\",\n        \"Created\": \"2026-08-13T03:58:29.343279301Z\",\n        \"Config\": {\n            \"Env\": [\n                \"PATH=/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"TZ=Etc/UTC\"\n            ],\n            \"Cmd\": [\n                \"/bin/bash\"\n            ],\n            \"WorkingDir\": \"/testbed/\",\n            \"Labels\": {\n                \"org.opencontainers.image.version\": \"22.04\"\n            }\n        },\n        \"Architecture\": \"amd64\",\n        \"Os\": \"linux\",\n        \"Size\": 1075359881,\n        \"RootFS\": {\n            \"Type\": \"layers\",\n            \"Layers\": [\n                \"sha256:beb59027b96ddbf30ac9c80b527668fe7011f4f553fe83f5e59199e9a84fb5ca\",\n                \"sha256:24df650e8ccc41451cf4f7113e09420f7ec00ca9ae41e8be09c60bc467cdf4fe\",\n                \"sha256:098cb03ec50e1bd1637b7db5e2696a4d1dc3f1c3811adbbe444f43f631f2e7fd\",\n                \"sha256:fc3a8fa12509a555b3cea8d1f7457c0837ab8360be78e7a380294e09f96fe2f2\",\n                \"sha256:a3540f5c375c231bc054e7472d0de5a6d8fe5c96b92948f7655914860647fb54\",\n                \"sha256:f3684f1a85d5159913e2c41a55a86947882302421241b14b57583633bfc31873\",\n                \"sha256:fe542fe64c3f8a7b726310ec1785fb4a03948f157976e080e06c684396010d13\",\n                \"sha256:c41677510cfe38564e7bb15dea585ec1b5057f40b29ceaad3b1c733edd8a35a8\",\n                \"sha256:1c5d756d00ff218b5cc7f9256022e91513453c655bd80cbb953d948a9766fa29\",\n                \"sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef\"\n            ]\n        },\n        \"Metadata\": {\n            \"LastTagTime\": \"2026-09-02T03:49:46.958453639Z\"\n        },\n        \"Descriptor\": {\n            \"mediaType\": \"application/vnd.oci.image.manifest.v1+json\",\n            \"digest\": \"sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7\",\n            \"size\": 2199\n        },\n        \"Identity\": {\n            \"Pull\": [\n                {\n                    \"Repository\": \"docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-15875\"\n                }\n            ]\n        }\n    }\n]\n",
+      "returncode": 0,
+      "started_at_utc": "2026-09-02T03:49:49+00:00",
+      "timed_out": false
+    },
+    "q10_start_reconciliation": {
+      "acceptance_rule": "normal_client_acknowledgement_with_exact_post_start_state",
+      "accepted": true,
+      "client_output": "e1-rb-qwen-source-runtime-012-sympy__sympy-15875-b4821cbf\n",
+      "client_returncode": 0,
+      "client_start_invocations": 1,
+      "client_timed_out": false,
+      "container_id": "2c1f5c60441aaf52ba92729940c2a2d8f6c35f19d69d93889314430dde958eed",
+      "container_name": "/e1-rb-qwen-source-runtime-012-sympy__sympy-15875-b4821cbf",
+      "contract_sha256": "bc4781ce0188d899af3b1a491b51f30467e6c655c7f8d3074b919a043b2878bd",
+      "daemon_dead": false,
+      "daemon_pid": 549734,
+      "daemon_restarting": false,
+      "daemon_running": true,
+      "daemon_status": "running",
+      "docker_inspect_invoked": true,
+      "docker_inspect_receipt": {
+        "output_sha256_recorded_elsewhere": false,
+        "returncode": 0,
+        "timed_out": false
+      },
+      "exact_identity_verified": true,
+      "exact_running_state_verified": true,
+      "expected_image": "docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-15875@sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7",
+      "expected_image_digest": "sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7",
+      "expected_pid_mode": "host",
+      "observed_cmd": [
+        "infinity"
+      ],
+      "observed_entrypoint": [
+        "sleep"
+      ],
+      "observed_image": "docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-15875@sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7",
+      "observed_image_digests": [
+        "docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-15875@sha256:38f122d257b6cc7dbd14e195ae26f3c42d8a0627b7bb8bccfdf70178ecec34f7"
+      ],
+      "observed_pid_mode": "host",
+      "receipt_finalized": true,
+      "reconciliation_invoked": false,
+      "restart_count": 0,
+      "second_start_invoked": false
+    },
+    "q6_create_acknowledgement": {
+      "accepted": true,
+      "client_create_invocations": 1,
+      "client_output": "2c1f5c60441aaf52ba92729940c2a2d8f6c35f19d69d93889314430dde958eed\n",
+      "client_returncode": 0,
+      "client_timed_out": false,
+      "container_id": "2c1f5c60441aaf52ba92729940c2a2d8f6c35f19d69d93889314430dde958eed",
+      "contract_sha256": "5779bd037811c6446610eb31b6b7f73f8110993f5ad0f112902523477ee0158b",
+      "normal_create_receipt_accepted": true,
+      "repair_invoked": false,
+      "second_create_invoked": false
+    }
+  },
+  "task_sha256": "9661ae16489a66f35b79394ca1f49c5d5d364b9dbb8c90e664f237a11721db52"
+}

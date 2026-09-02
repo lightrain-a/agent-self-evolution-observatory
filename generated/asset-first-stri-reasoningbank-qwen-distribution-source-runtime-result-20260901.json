@@ -1,0 +1,27 @@
+{
+  "all_attempt_count_one": true,
+  "behavioral_outcomes_observed": false,
+  "contract_sha256": "e89136117531d181d7f729d9ac67d6935ec1c01d214e600de3df2e04faf96e94",
+  "created_at_utc": "2026-09-02T03:55:27+00:00",
+  "credential_material_present": false,
+  "decision": "QWEN_ROOTFUL_SOURCE_RUNTIME_QUALIFIED_SOURCE_GATE_OPEN",
+  "docker_host": "unix:///var/run/docker.sock",
+  "evaluator_calls": 0,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "index_sha256": "c01fc29fa2d4297d8ef26fa26b8a8d93b250fd029ba46488a52fe97c0281dbfb",
+  "model_calls": 0,
+  "payload_sha256": "38923397b83ce7420a9d21f7632e578ccda89a3affcaadf414b235baa1ca32bf",
+  "planned_count": 32,
+  "provider_calls": 0,
+  "qualified_count": 32,
+  "schema_version": 1,
+  "scientific_boundary": {
+    "calibration_authorized": false,
+    "confirmatory_execution_authorized": false,
+    "evaluation_runtime_qualification_authorized": false,
+    "pilot_authorized": false,
+    "source_generation_authorized": true
+  },
+  "split_sha256": "b47a660d403f47273aa9819c7aee36fa11c29628f4d345818b8ad18df5ec6588",
+  "stage": "QWEN_ROOTFUL_SOURCE_RUNTIME_QUALIFICATION"
+}
