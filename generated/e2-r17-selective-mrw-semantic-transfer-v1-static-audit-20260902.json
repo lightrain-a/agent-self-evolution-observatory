@@ -1,0 +1,81 @@
+{
+  "artifact_type": "e2-r17-selective-mrw-semantic-transfer-v1-static-audit",
+  "authority": {
+    "analyzer": false,
+    "current_provider_identity_qualification": true,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "second_backbone": false,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "zero_provider_stage_a_preflight": true
+  },
+  "new_test_outcomes_accessed": false,
+  "next_gate": "CURRENT_DEEPSEEK_IDENTITY_QUALIFICATION_THEN_ZERO_PROVIDER_STAGE_A_PREFLIGHT",
+  "prior_v3": {
+    "disposition": "SUPERSEDED_PRE_PROVIDER_BY_SEMANTIC_TRANSFER_V1",
+    "new_test_outcomes_accessed": false,
+    "path": "generated/e2-r17-selective-mrw-v3-static-audit-20260902.json",
+    "provider_calls": 0,
+    "sha256": "03db418f29884d9370a5e5916f5f8c81db3bc52b026e83a4b965e9f7e780ede8"
+  },
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "semantic_identification": {
+    "binding_streams": 6,
+    "equal_dose_stage_b_requires_four_mixed_pools_per_stream": true,
+    "family_id_lookup_from_closed_sample_can_route_test": false,
+    "family_semantics": {
+      "foreign_key_binding": "INSTANCE_BINDING_LOCALIZATION",
+      "header_source_binding": "INSTANCE_BINDING_LOCALIZATION",
+      "named_region_binding": "INSTANCE_BINDING_LOCALIZATION",
+      "normalize_then_rank": "PROCEDURAL_TRANSFORMATION",
+      "ordered_filter_rollup": "PROCEDURAL_TRANSFORMATION",
+      "reconcile_then_aggregate": "PROCEDURAL_TRANSFORMATION"
+    },
+    "family_skeletons": {
+      "foreign_key_binding": "two_table_join",
+      "header_source_binding": "single_table_measure",
+      "named_region_binding": "snapshot_table",
+      "normalize_then_rank": "single_table_measure",
+      "ordered_filter_rollup": "two_table_join",
+      "reconcile_then_aggregate": "snapshot_table"
+    },
+    "matched_skeletons": {
+      "single_table_measure": [
+        "INSTANCE_BINDING_LOCALIZATION",
+        "PROCEDURAL_TRANSFORMATION"
+      ],
+      "snapshot_table": [
+        "INSTANCE_BINDING_LOCALIZATION",
+        "PROCEDURAL_TRANSFORMATION"
+      ],
+      "two_table_join": [
+        "INSTANCE_BINDING_LOCALIZATION",
+        "PROCEDURAL_TRANSFORMATION"
+      ]
+    },
+    "mechanical_rule_bound": true,
+    "old_family_ids_disjoint": true,
+    "procedural_streams": 6
+  },
+  "status": "PASS_SEMANTIC_TRANSFER_V1_ZERO_PROVIDER_STATIC_AUDIT",
+  "suite": {
+    "dataset_sha256": "5949612d35e308c1ef25534b26f14f925a2a33e2afb5d5145b2358e8baef96cd",
+    "heldout_tasks": 18,
+    "historical_run_refs": 0,
+    "historical_trajectory_refs": 0,
+    "metadata_sha256": "5802f35a6fedaa843ba61887ad0a892b8a178b33c20fb6bc4ad0f05e9832476f",
+    "old_task_id_overlap": 0,
+    "old_xlsx_sha256_overlap": 0,
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v1",
+    "split_manifest_sha256": "db911c2c088f3a5df08ffccc922ea8b68a6af31f0f8a1bb4372ce85e62b34033",
+    "suite_manifest_sha256": "1d4e048c74839d96bb773859cfecd2d9193e7ed0bcdfd29711dadfbfc8b53717",
+    "task_count": 162,
+    "update_streams": 12,
+    "update_tasks": 96,
+    "workbook_pairs_checked": 162
+  }
+}

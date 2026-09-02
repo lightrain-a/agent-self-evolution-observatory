@@ -1,0 +1,116 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-selective-mrw-semantic-transfer-v1-pre-f0",
+  "status": "PRE_F0_SEMANTIC_TRANSFER_STATIC_PASS_AWAIT_PROVIDER_IDENTITY",
+  "created_at_utc": "2026-09-02T15:28:40+00:00",
+  "closed_parent": {
+    "scientific_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+    "reuse_in_confirmatory_inference": false,
+    "role": "discovery_calibration_only"
+  },
+  "superseded_same_family_v3": {
+    "status": "SUPERSEDED_BEFORE_PROVIDER_EXECUTION",
+    "provider_calls": 0,
+    "new_test_outcomes_accessed": false,
+    "static_audit_path": "generated/e2-r17-selective-mrw-v3-static-audit-20260902.json",
+    "static_audit_sha256": "03db418f29884d9370a5e5916f5f8c81db3bc52b026e83a4b965e9f7e780ede8"
+  },
+  "design": {
+    "path": "consultations/e2-r17-selective-mrw-semantic-transfer-v1-20260902.md",
+    "sha256": "b12066714d39caddfbe85fcc71dcd94cc970122cec3d24fb1b9725a3c2708bbd",
+    "scientific_question": "Can a pre-outcome structural semantic rule select between winner-only and equal-dose rejected-witness learning on completely new failure-family identities?",
+    "routing_rule": {
+      "PROCEDURAL_TRANSFORMATION": "MRW4",
+      "INSTANCE_BINDING_LOCALIZATION": "WIN-C"
+    },
+    "equal_dose_mixed_pool_replacements_per_stream": 4,
+    "old_family_lookup_can_route_new_test": false
+  },
+  "code": {
+    "builders": {
+      "path": "research_pipeline/e2_r17_semantic_transfer_builders.py",
+      "sha256": "1736f6f7d768cee8f387b31d9249d832e4d221facc239a00df07c3024ec33e07"
+    },
+    "suite_builder": {
+      "path": "scripts/build_e2_r17_semantic_transfer_suite_v1.py",
+      "sha256": "a9b29a881b27cce4279f01472d2d7963c0cae13586164192491ef1b6272cb286"
+    },
+    "static_auditor": {
+      "path": "scripts/audit_e2_r17_semantic_transfer_v1_static.py",
+      "sha256": "34aa781a8d9188eda104986808d5245ca9e6c2d2d87876dee55e0556d74551eb"
+    }
+  },
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v1",
+    "suite_manifest_sha256": "1d4e048c74839d96bb773859cfecd2d9193e7ed0bcdfd29711dadfbfc8b53717",
+    "split_manifest_sha256": "db911c2c088f3a5df08ffccc922ea8b68a6af31f0f8a1bb4372ce85e62b34033",
+    "metadata_sha256": "5802f35a6fedaa843ba61887ad0a892b8a178b33c20fb6bc4ad0f05e9832476f",
+    "task_count": 162,
+    "update_streams": 12,
+    "update_tasks": 96,
+    "heldout_tasks": 18,
+    "procedural_streams": 6,
+    "binding_streams": 6,
+    "matched_skeletons": 3,
+    "deterministic_regeneration_all_files_equal": true,
+    "old_task_id_overlap": 0,
+    "old_xlsx_sha256_overlap": 0,
+    "historical_run_refs": 0,
+    "historical_trajectory_refs": 0
+  },
+  "static_audit": {
+    "path": "generated/e2-r17-selective-mrw-semantic-transfer-v1-static-audit-20260902.json",
+    "sha256": "30e2350447b190661c6ed20d40fd9e95d40f81d846a9fd2a172a6ec59d85f3f6",
+    "status": "PASS_SEMANTIC_TRANSFER_V1_ZERO_PROVIDER_STATIC_AUDIT",
+    "workbook_pairs_checked": 162,
+    "provider_calls": 0,
+    "scientific_execution": false,
+    "new_test_outcomes_accessed": false
+  },
+  "required_provider_identity": {
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "thinking": "disabled",
+    "provider_retry_limit": 0
+  },
+  "stage_a": {
+    "authorized": false,
+    "k": 8,
+    "pools": 96,
+    "actor_rollouts": 768,
+    "updater_calls": 0,
+    "heldout_evaluations": 0,
+    "support_rule": "all 12 streams must have at least four mixed pools; exactly four mixed pools per passing stream are hash-selected and frozen for MRW4"
+  },
+  "stage_b": {
+    "authorized": false,
+    "replicates_per_stream": 8,
+    "paired_units": 96,
+    "learned_states": 192,
+    "heldout_evaluations": 3456,
+    "selective_extra_updater_calls": 0,
+    "selective_extra_heldout_evaluations": 0
+  },
+  "confirmatory_decision": {
+    "gate_a": "MRW4 > WIN-C over six procedural streams by positive mean, exact one-sided sign-flip p<=0.05, and 95% bootstrap lower bound>0",
+    "gate_b": "WIN-C > MRW4 over six binding streams by positive mean of -D, exact one-sided sign-flip p<=0.05, and 95% bootstrap lower bound>0",
+    "joint_go": "GO_SELECTIVE_MRW_SEMANTIC_TRANSFER_SUPPORTED only if both gates pass",
+    "family_specific_p_values": false,
+    "old_parent_outcomes_pooled": false
+  },
+  "authority": {
+    "static_design": true,
+    "suite_materialization": true,
+    "static_audit": true,
+    "current_provider_identity_qualification": true,
+    "zero_provider_stage_a_preflight": true,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "heldout_evaluation": false,
+    "analyzer": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false
+  },
+  "next_gate": "CURRENT_DEEPSEEK_IDENTITY_QUALIFICATION_THEN_ZERO_PROVIDER_STAGE_A_PREFLIGHT"
+}
