@@ -1,0 +1,32 @@
+{
+  "artifact_type": "e2-r18-heldout-probe-suite-build-receipt",
+  "authority": {
+    "evaluation": false,
+    "provider_io": false,
+    "scientific_execution": false,
+    "updater": false
+  },
+  "created_at_utc": "2026-09-02T06:22:21+00:00",
+  "dataset_sha256": "c004f3381e8a8949f7c5c3c0464e173b305d339808f99460c94305e82b4d34b1",
+  "output_root": "/data/wyt/e2-r18-diagnostic-value-transport/heldout-probe-suite-v1",
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_outcomes_accessed": false,
+  "self_check": {
+    "per_family": {
+      "aggregation_join": 3,
+      "formula_materialization": 3,
+      "input_output_contract": 3,
+      "multi_step_pipeline": 3,
+      "schema_key_alignment": 3,
+      "target_sheet_range": 3
+    },
+    "provider_calls": 0,
+    "selected_probes": 18,
+    "status": "PASS_ZERO_PROVIDER",
+    "tasks_checked": 54
+  },
+  "split_manifest_sha256": "994b8ce75499eb2accb7cec86df9b0db1f858632ca5c9731b6178bc813b3e5c8",
+  "status": "PASS_ZERO_PROVIDER",
+  "suite_manifest_sha256": "560c0aa09ef9246bb30087d8849318084be0689e5ae78f9bae63d6bd8f82be0d"
+}

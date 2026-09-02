@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r18-diagnostic-value-transport-preregistration",
+  "created_at_utc": "2026-09-02T06:20:00+00:00",
+  "status": "PRE_F0_ZERO_PROVIDER_PREREGISTERED_NOT_AUTHORIZED",
+  "parent": {
+    "object": "E2-R17-DEEPSEEK-V2-REPAIR2",
+    "terminal_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+    "analysis_path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-analysis-20260902.json",
+    "analysis_sha256": "f736cf7107d4439105bc8d24ae4519f34f742b26439113d97b56f6a0c1dbd0ab",
+    "parent_status_may_not_be_changed": true,
+    "unconditional_mrw_superiority_may_not_be_rescued": true
+  },
+  "scientific_object": {
+    "id": "E2-R18-DIAGNOSTIC-VALUE-TRANSPORT-20260902",
+    "question": "Can a family-conditioned estimate of the reusable diagnostic value of discarded search evidence prospectively predict the direction and ranking of future MRW-vs-WIN-C learning-projection effects on untouched streams?",
+    "changed_object_from_parent": "prospective effect transport / mechanism prediction, not unconditional average superiority",
+    "core_predictor": "Rhat_z = M_z_future * delta_hat_z_R17",
+    "interpretation": "Selection censoring matters for persistent learning only when the censored evidence has reusable diagnostic value; availability and reusable value are separate factors."
+  },
+  "calibration_lock": {
+    "source": "complete R17 DeepSeek sample; calibration only, never confirmatory for R18",
+    "family_effects_delta_hat": {
+      "aggregation_join": 0.04166666666666664,
+      "formula_materialization": 0.09027777777777778,
+      "input_output_contract": 0.0,
+      "multi_step_pipeline": 0.09027777777777776,
+      "schema_key_alignment": -0.06249999999999998,
+      "target_sheet_range": -0.020833333333333315
+    },
+    "family_effects_frozen_before_any_r18_provider_io": true,
+    "no_refit_after_r18_pool_support": true,
+    "no_family_deletion": true
+  },
+  "future_update_substrate": {
+    "suite_root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2/r17_split_manifest.json",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "source_field": "e3_future_streams",
+    "streams": 12,
+    "tasks": 96,
+    "tasks_per_stream": 8,
+    "streams_per_family": 2,
+    "selected_before_r17_outcomes": true,
+    "selection_is_outcome_blind": true,
+    "provider_execution_observed_before_r18_prereg": false,
+    "old_e3_authority_reused": false,
+    "reuse_scope": "task assets and frozen outcome-blind split only"
+  },
+  "fresh_evaluation_substrate": {
+    "required": true,
+    "reason": "Do not reuse the 18 E1 common heldout probes whose outcomes were repeatedly observed during R17.",
+    "planned_task_prefix": "r18-b7",
+    "candidate_tasks": 54,
+    "selected_common_heldout": 18,
+    "per_family": 3,
+    "selection": "SHA256(r18-heldout-v1|family|task_id)",
+    "generation_and_selection_before_r18_scientific_outcomes": true,
+    "provider_calls_for_build": 0
+  },
+  "r18_stage_a_pool_support": {
+    "model": "same frozen DeepSeek route as R17",
+    "k": 8,
+    "tasks": 96,
+    "provider_rollout_budget_structural": 768,
+    "purpose": "Measure pre-treatment mixed-pool availability M_s on untouched streams only.",
+    "mixed_indicator": "K=8 pool contains at least one verifier success and at least one verifier failure",
+    "M_stream": "mixed_pool_count / 8",
+    "M_family": "mean M_stream across the two frozen streams of the family",
+    "prediction_freeze_after_stage_a": "Rhat_z = M_family * frozen delta_hat_z_R17",
+    "support_gate": {
+      "all_6_families_present": true,
+      "at_least_4_distinct_Rhat_family_values_required": true,
+      "if_degenerate": "HOLD_R18_PREDICTOR_SUPPORT_DEGENERATE_BEFORE_UPDATER"
+    }
+  },
+  "r18_stage_b_confirmatory": {
+    "arms": ["win_c", "mrw"],
+    "same_initial_skill_within_pair": true,
+    "same_search_pool_within_pair": true,
+    "replicates_per_stream": 4,
+    "paired_units": 48,
+    "learned_states": 96,
+    "fresh_common_heldout_tasks_per_state": 18,
+    "heldout_evaluations": 1728,
+    "evaluation_k": 1,
+    "primary_stream_effect": "D_s = mean_r[J_s,r(MRW)-J_s,r(WIN-C)]",
+    "primary_family_effect": "D_z = mean of the two frozen future stream effects in family z"
+  },
+  "statistics": {
+    "primary_prediction_test": "exact one-sided permutation test of Spearman correlation between 6 frozen Rhat_z values and 6 observed D_z values over all 6! family-label permutations",
+    "alpha": 0.05,
+    "go_requires": [
+      "Spearman rho > 0",
+      "exact one-sided permutation p <= 0.05",
+      "all 6 families retained",
+      "prediction artifact hash-frozen before any updater call"
+    ],
+    "secondary_only": [
+      "family sign accuracy",
+      "stream-level predicted-vs-observed scatter",
+      "calibration slope",
+      "failed family predictions",
+      "overall pooled MRW-WIN-C difference"
+    ],
+    "forbidden_primary_substitutions": [
+      "pooled MRW superiority",
+      "family-specific significance tests",
+      "posthoc favorable-family subset",
+      "threshold tuning after future outcomes",
+      "second-backbone rescue",
+      "public-benchmark rescue"
+    ],
+    "decision": {
+      "prediction_pass": "GO_R18_DIAGNOSTIC_VALUE_TRANSPORT_SUPPORTED",
+      "prediction_fail": "HOLD_OR_STOP_R18_NO_PROSPECTIVE_TRANSPORT; parent R17 remains HOLD"
+    }
+  },
+  "authority": {
+    "provider_io": false,
+    "scientific_execution": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "analyzer": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "artifact_type": "e2-r18-future-substrate-eligibility-audit",
+  "authority": {
+    "analyzer": false,
+    "evaluation": false,
+    "provider_io": false,
+    "scientific_execution": false,
+    "updater": false
+  },
+  "created_at_utc": "2026-09-02T06:19:53+00:00",
+  "eligible_reuse": "frozen untouched task assets and split only; fresh R18 contract/authorization required",
+  "family_stream_counts": {
+    "aggregation_join": 2,
+    "formula_materialization": 2,
+    "input_output_contract": 2,
+    "multi_step_pipeline": 2,
+    "schema_key_alignment": 2,
+    "target_sheet_range": 2
+  },
+  "future_execution_task_dirs": 0,
+  "future_provider_claim_ledgers": 0,
+  "future_streams": 12,
+  "future_tasks": 96,
+  "ledgers_scanned": 140,
+  "old_e3_contract_or_authority_reused": false,
+  "parent_analysis_sha256": "f736cf7107d4439105bc8d24ae4519f34f742b26439113d97b56f6a0c1dbd0ab",
+  "parent_r17_status_changed": false,
+  "parent_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "prereg_path": "generated/e2-r18-diagnostic-value-transport-preregistration-20260902.json",
+  "prereg_sha256": "e1037a9ad9e5e9d6711cdb0733de334a50a0040c13cc0097b579c72aa9deface",
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_scores_read": false,
+  "selected_before_parent_outcomes": true,
+  "selection_is_outcome_blind": true,
+  "split_manifest": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2/r17_split_manifest.json",
+  "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+  "status": "PASS_R18_UNTOUCHED_FUTURE_SUBSTRATE_ELIGIBLE_FOR_NEW_CHILD_ONLY",
+  "tasks_per_stream": 8
+}
