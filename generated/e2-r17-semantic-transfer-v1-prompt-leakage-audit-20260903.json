@@ -1,0 +1,24 @@
+{
+  "artifact_type": "e2-r17-semantic-transfer-v1-model-visible-prompt-leakage-audit",
+  "authority": {
+    "paper_promotion": false,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false
+  },
+  "created_at_utc": "2026-09-02T16:08:56+00:00",
+  "explicit_family_identity_visible_to_actor": false,
+  "explicit_semantic_label_visible_to_actor": false,
+  "heldout_tasks": 18,
+  "interpretation": "The actor sees only the natural-language SpreadsheetBench task messages and common system prompt. Experiment-only semantic type, matched-skeleton labels, family identities/codes, and task ids are absent from model-visible text.",
+  "metadata_sha256": "5802f35a6fedaa843ba61887ad0a892b8a178b33c20fb6bc4ad0f05e9832476f",
+  "schema_version": "1.0",
+  "split_manifest_sha256": "6ac03fd07391b2671e2e3cecd975395adff6c9fbd622751195a5a46b6a39af1c",
+  "status": "PASS_SEMANTIC_TRANSFER_V1_MODEL_VISIBLE_PROMPT_LEAKAGE_AUDIT",
+  "suite_manifest_sha256": "a7ddee258ddc22cee3efe22bad44046faa20ba9d49762c98a66a843c2c9533a3",
+  "suite_root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v1",
+  "system_prompt_forbidden_hits": [],
+  "task_id_visible_to_actor": false,
+  "task_message_forbidden_hit_count": 0,
+  "tasks_checked": 162,
+  "update_tasks": 96
+}

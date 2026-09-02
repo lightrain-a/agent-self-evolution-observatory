@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-semantic-transfer-stage-a-review-readiness",
+  "created_at_utc": "2026-09-02T16:12:00+00:00",
+  "status": "READY_FOR_LOCKED_DUAL_REVIEW_BLOCKED_BY_ARK_WEEKLY_QUOTA",
+  "scientific_execution": false,
+  "stage_a_provider_execution_started": false,
+  "stage_b_learning_execution_started": false,
+  "scientific_outcomes_accessed": false,
+  "current_contract": {
+    "path": "generated/e2-r17-semantic-transfer-v1-stage-a-r2-contract-20260902.json",
+    "sha256": "93cce6fd52e96826383fcd01c860fdd423a7a54d1b43b7363548e5e6cbb9ecf2",
+    "status": "FROZEN_SEMANTIC_TRANSFER_V1_STAGE_A_R2"
+  },
+  "zero_provider_preflight": {
+    "path": "generated/e2-r17-semantic-transfer-v1-stage-a-r2-preflight-20260902.json",
+    "sha256": "9a07942fde24e5e4ef8fd0772b118a27f0d16f848bc4cd5b109322cf8673b984",
+    "status": "PASS_ZERO_PROVIDER_SEMANTIC_TRANSFER_STAGE_A_R2_PREFLIGHT",
+    "provider_calls": 0
+  },
+  "model_identity": {
+    "path": "generated/e2-r17-semantic-transfer-v1-model-identity-adjudication-20260902.json",
+    "sha256": "ac5668fbfd465a6fbcc7760d1b751e1717d1903ab59b3a274bc91cd94e8cb304",
+    "status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "scientific_actor": {
+      "requested": "deepseek-v4-pro",
+      "resolved": "deepseek-v4-pro-ga-260813"
+    },
+    "reviewers": [
+      "deepseek-v4-pro-ga-260813",
+      "kimi-k3"
+    ]
+  },
+  "model_visible_leakage_audit": {
+    "path": "generated/e2-r17-semantic-transfer-v1-prompt-leakage-audit-20260903.json",
+    "sha256": "8bbee284e7dbc995a55bbc39e8c0b9847c548ddb288b8015c42559c161af38d0",
+    "status": "PASS_SEMANTIC_TRANSFER_V1_MODEL_VISIBLE_PROMPT_LEAKAGE_AUDIT",
+    "tasks_checked": 162,
+    "explicit_semantic_label_visible_to_actor": false,
+    "explicit_family_identity_visible_to_actor": false,
+    "task_id_visible_to_actor": false
+  },
+  "regression_checks": {
+    "stage_a_and_projection_runtime": {
+      "tests": 28,
+      "passed": 28,
+      "failed": 0,
+      "runtime": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python"
+    },
+    "stage_a_authorization_failclosed": {
+      "tests": 7,
+      "passed": 7,
+      "failed": 0,
+      "checks_include": [
+        "single reviewer cannot authorize",
+        "wrong reviewer contract SHA cannot authorize",
+        "reviewer Stage-B overreach cannot authorize",
+        "nonpassing dual-review summary cannot authorize"
+      ]
+    },
+    "stage_b_updater_blinding_and_token_parity": {
+      "tests": 9,
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "runtime": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+      "frozen_tiktoken": "0.11.0"
+    }
+  },
+  "runtime_boundary": {
+    "stage_a_actor_runtime": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "stage_b_updater_runtime_required_if_later_authorized": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+    "stage_b_must_not_reuse_stage_a_actor_venv_for_updater": true
+  },
+  "failed_review_attempt": {
+    "root": "generated/e2-r17-semantic-transfer-stage-a-review-20260902",
+    "deepseek_receipt_sha256": "a2973460be3fbc3266dceba1b66a7028869cb87cfa003e6a9465ea5871448899",
+    "kimi_receipt_sha256": "5a62ac5fac51ba7a63bdb3893a218368fcbe58edb604e3fe97be51bbab7e49c3",
+    "summary_sha256": "23fd37d286a41e940a6217942128a4eca7da8586f9488cf2606f0437ac790b7e",
+    "deepseek_status": "FAIL_PROVIDER_PROTOCOL",
+    "kimi_status": "FAIL_PROVIDER_PROTOCOL",
+    "cause": "Ark AccountQuotaExceeded before any review verdict",
+    "weekly_quota_reset_at": "2026-09-07T00:00:00+08:00",
+    "review_verdict_obtained": false,
+    "immutable_failure_evidence": true
+  },
+  "review_replay_policy": {
+    "reviewer_policy_locked": true,
+    "required_reviewers": [
+      "deepseek-v4-pro",
+      "kimi-k3"
+    ],
+    "required_transport": "Ark Plan",
+    "alternative_reviewer_substitution_authorized": false,
+    "overwrite_failed_review_root": false,
+    "next_attempt_requires_fresh_review_root": true,
+    "same_stage_a_r2_contract_sha_required": true,
+    "both_reviewers_must_complete_and_pass": true,
+    "stage_a_authorization_before_dual_pass": false,
+    "automatic_stage_a_execution_after_review": false
+  },
+  "sole_current_blocker": "EXTERNAL_REVIEWER_WEEKLY_QUOTA",
+  "next_gate": "REPLAY_LOCKED_DEEPSEEK_PLUS_KIMI_PREEXECUTION_REVIEW_IN_FRESH_ROOT_WHEN_ARK_REVIEWER_QUOTA_IS_AVAILABLE",
+  "authority": {
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "analyzer": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false
+  }
+}
