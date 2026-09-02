@@ -528,8 +528,12 @@ class AppWorldToolWorld:
         encoded = repr(arguments)
         return self._world.execute(f"print({name}(**{encoded}))")
 
-    def save_and_evaluate(self, arm: dict[str, Any]) -> dict[str, Any]:
+    def save_state(self) -> None:
+        """Persist AppWorld's current task changes without opening scientific outcomes."""
         self._world.save()
+
+    def save_and_evaluate(self, arm: dict[str, Any]) -> dict[str, Any]:
+        self.save_state()
         return evaluate_arm_from_materialized_state(
             arm=arm,
             source_db_root=self.source_db_root,
