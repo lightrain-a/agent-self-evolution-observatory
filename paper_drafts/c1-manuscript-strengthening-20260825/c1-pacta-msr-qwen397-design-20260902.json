@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-02T04:00:00Z",
+  "experiment": "C1-PACTA-MSR-QWEN397-P0-20260902",
+  "status": "FROZEN_DESIGN_PRE_PROVIDER",
+  "motivation_from_prior_epoch": {
+    "prior_result": "HOLD_GATE_DEGENERATE_QWEN397",
+    "prior_gate_geometry": "1/6 open",
+    "diagnosed_boundary": "At MiniSWEAgent step 0, no repository observation has been returned. Most first actions are generic repository-inspection prefixes, while exact command strings also show within-branch surface variation.",
+    "forbidden_repair": "Do not tune the old gate, add old-pilot samples, consume the three old sealed units, or switch Qwen backbones to search for a positive result."
+  },
+  "method": {
+    "name": "PACTA-MSR",
+    "expanded_name": "Paired Action-Contrast Transport Authority with Matched State Reveal",
+    "new_component": "Matched State Reveal (MSR)",
+    "definition": "Before branch-specific memory authority is assessed, a branch-blind controller obtains one read-only repository observation using the future task but no writer memory. The exact probe action and observation are frozen and injected identically into both success-writer and failure-writer decision contexts. PACTA then evaluates paired branch influence from this matched post-observation state.",
+    "writer_twins": "Official ReasoningBank SUCCESSFUL_SI versus FAILED_SI applied to the exact same frozen native source trajectory.",
+    "state_reveal": {
+      "branch_blind": true,
+      "memory_blind": true,
+      "temperature": 0.0,
+      "model": "qwen3.5-397b-a17b",
+      "max_completion_tokens": 512,
+      "one_logical_attempt": true,
+      "read_only_required": true,
+      "execution": "exact future SWE-bench image normalized to the frozen future base commit",
+      "output": "one validated read-only shell command plus its exact environment observation"
+    },
+    "two_selector_shadow_ablation": {
+      "G0": "Original step-0 PACTA on the fresh pilot units.",
+      "Gplus": "PACTA-MSR from the exact same units after the matched state reveal.",
+      "replicates_per_branch_block": 6,
+      "blocks_per_branch": 2,
+      "gate": "min(B1,B2) > max(WS,WF)",
+      "margin": "min(B1,B2) - max(WS,WF)"
+    },
+    "mechanism_gate": {
+      "required_Gplus_geometry": "2..6/8",
+      "mean_margin_improvement_ge": 0.05,
+      "positive_margin_improvement_count_ge": 5,
+      "interpretation": "MSR must prospectively improve stable branch-specific transport relative to the step-0 selector before final method-effect measurement is opened."
+    },
+    "final_arms": {
+      "A0_NATIVE": "raw factual branch memory at the matched revealed state",
+      "A1_SCB_ALWAYS": "state-conditioned binding always active at the matched revealed state",
+      "A2_RATE_MATCHED_RANDOM": "SCB enabled on exactly K units by a pre-shadow hash ranking",
+      "A3_PACTA_MSR": "SCB enabled on units opened by Gplus"
+    },
+    "primary_effect": "mean(U_A3_PACTA_MSR - U_A2_RATE_MATCHED_RANDOM)",
+    "pilot_effect_gate": [
+      "all required final calls complete",
+      "mean D_select >= 0.05",
+      "positive D_select unit count > negative count",
+      "mean A3-A0 > 0",
+      "mean A3-A1 >= 0"
+    ]
+  },
+  "freshness": {
+    "new_source_future_pairs": 10,
+    "pilot": 8,
+    "sealed_reserve": 2,
+    "old_C1_PACTA_units_forbidden": true,
+    "old_three_sealed_units_forbidden": true,
+    "source_selection": "one deterministic source/future pair per eligible repository after complete prior-task exclusion using new SHA salts"
+  },
+  "literature_boundary": {
+    "SAMem": "Findings ACL 2026, DOI 10.18653/v1/2026.findings-acl.722. Current-state memory alignment is prior work and not novelty.",
+    "MemArbiter": "arXiv:2608.02113. Decision-time memory arbitration and temporal presentation gating are prior work and not novelty.",
+    "WebATLAS": "arXiv:2510.22732. Candidate action simulation and experience-driven memory are adjacent but do not use paired same-trajectory writer counterfactuals at a matched revealed state.",
+    "SARA": "arXiv:2608.27146. Its Action Probe separates action induction from execution authorization for tool-output security; MSR is a branch-blind state-acquisition intervention for identifying memory-to-action transport.",
+    "novelty_residual": "paired same-trajectory outcome-branch writer twins + branch-blind matched state reveal + paired post-observation action-distribution transport + within-condition stochasticity calibration + rate-matched selective authority",
+    "verdict": "PASS_PROVISIONAL_NOVEL_RESIDUAL; requires continued collision watch before paper claim"
+  },
+  "locked": [
+    "Qwen3.5-122B and Qwen3.5-27B",
+    "old 6-unit pilot",
+    "old 3-unit sealed reserve",
+    "old gate threshold tuning",
+    "terminal SWE-bench utility",
+    "R10 positive-method rewrite",
+    "same-data post-hoc action canonicalization"
+  ],
+  "authority": {
+    "zero_provider_fresh_pool_discovery": true,
+    "runtime/image qualification": true,
+    "new source trajectory acquisition": true,
+    "pilot split after substrate qualification": true,
+    "MSR probe qualification": true,
+    "pilot writer_binder_shadow_final": "conditional on all prior gates",
+    "second_model": false,
+    "terminal": false,
+    "R10": false
+  }
+}
