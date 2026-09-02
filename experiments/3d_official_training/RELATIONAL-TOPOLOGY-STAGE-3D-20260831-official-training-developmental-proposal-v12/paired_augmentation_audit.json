@@ -1,0 +1,61 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-proposal-v12",
+  "state": "PASS_PAIRED_SGP_AUGMENTATION_REPLAY_PREFLIGHT",
+  "scientific_outcomes": 0,
+  "optimizer_steps": 0,
+  "audit_environment": {
+    "host": "231",
+    "torch": "2.4.0+cu121",
+    "batch_size": 128,
+    "training_seed": 20260901,
+    "cuda_used": false
+  },
+  "source_audit": {
+    "official_permutation_augmentation_rng": "NumPy np.random.permutation",
+    "official_SGP_diffusion_and_CFG_rng": "Torch RNG",
+    "interpretation": "The data-augmentation RNG stream is separate from the model diffusion/dropout RNG stream. With identical structural order and NumPy seed, prompt-content differences do not by themselves advance the NumPy augmentation stream."
+  },
+  "replay_design": {
+    "arms": ["SGP-12", "SGP-14"],
+    "fresh_dataset_object_per_arm": true,
+    "numpy_seed_reset_per_arm": 20260901,
+    "python_seed_reset_per_arm": 20260901,
+    "torch_seed_reset_per_arm": 20260901,
+    "audited_batches": 3,
+    "audited_rows": 384,
+    "tensor_hash_scope": "all tensor-valued fields returned by the official SGP collate_fn; external exact_instruction text excluded because it is the intended treatment",
+    "outcome_blind": true
+  },
+  "results": {
+    "frozen_structural_order_identical": true,
+    "batch_key_hashes_identical": [true, true, true],
+    "batch_tensor_hashes_identical": [true, true, true],
+    "exact_prompt_matches": 191,
+    "intentional_prompt_differences": 193,
+    "batches": [
+      {
+        "batch": 0,
+        "keys_sha256": "eb0a851c60e6a55f4eca2d4f9e7abb9236e44dbc1b22232d6abc5c347fff836f",
+        "tensor_sha256": "2c9bf7975b29ea77954344a8d3528a9e1246d9df06b94ba3736a197000c46d53"
+      },
+      {
+        "batch": 1,
+        "keys_sha256": "ee094609d4425ab16e98f98bece1a4af4c9452d958f4eb5252645b359d9b234e",
+        "tensor_sha256": "35d9f678351d793abdfcf94a068296dcb816b14f6795b73d7b60e4830b71f899"
+      },
+      {
+        "batch": 2,
+        "keys_sha256": "b40d836435c62653d5e5c6840511ad6a53228ae991bc071c1883e1d11ffd51c7",
+        "tensor_sha256": "d35bfdeb91991ae0a3e0d2e8d37824ee716549851e0bcc7b471bba58a41e8dc7"
+      }
+    ]
+  },
+  "future_admission_rule": {
+    "checkpoint_steps": [50000,100000,150000,200000,250000,300000,350000,400000,450000,500000,550000,600000,650000,700000,750000,800000,850000,900000,950000,1000000],
+    "require_same_sampler_order_sha256_between_SGP_12_and_SGP_14": true,
+    "require_same_sampler_cursor_between_SGP_12_and_SGP_14": true,
+    "require_same_RNG_state_sha256_between_SGP_12_and_SGP_14": true,
+    "failure_action": "HOLD_PAIRED_TREATMENT_ADMISSION; preserve both training runs but do not interpret their difference as the frozen one-factor intervention until the divergence is adjudicated"
+  }
+}

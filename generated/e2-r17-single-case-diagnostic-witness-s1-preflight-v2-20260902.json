@@ -1,0 +1,32 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-single-case-s1-zero-provider-preflight",
+  "contract_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-single-case-s1-20260902/generated/e2-r17-single-case-diagnostic-witness-s1-contract-v2-20260902.json",
+  "contract_sha256": "e1865abbcccdeeea03b34c4526044660c4b4826b3ecab40ac54bb1030e0f7d8c",
+  "created_at_utc": "2026-09-02T04:24:25+00:00",
+  "evidence": {
+    "arms": [
+      "win_c",
+      "first_fail",
+      "progress_fail",
+      "progress_contrast"
+    ],
+    "contrast_source_allocation": "50/50",
+    "four_way_token_parity": true,
+    "mixed_pools": 7,
+    "pools": 8,
+    "selector_changed_mixed_pools": 4
+  },
+  "lineage_lease_absent": true,
+  "next_gate": "MINT_SINGLE_USE_S1_EXECUTION_AUTHORIZATION",
+  "partial_effect_read": false,
+  "provider_calls": 0,
+  "run_root_absent": true,
+  "runtime": {
+    "actor_python": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "updater_python": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python"
+  },
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "status": "PASS_SINGLE_CASE_S1_ZERO_PROVIDER_PREFLIGHT"
+}

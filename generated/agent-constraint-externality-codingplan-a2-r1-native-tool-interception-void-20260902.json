@@ -1,0 +1,21 @@
+{
+  "affected_unit": "capability:deepseek-v4-flash|ACE-FG-05|1",
+  "appworld_api_calls_observed": 0,
+  "content_sha256": "a140e4b30532c6e392f329863e3932220334b506f1ae632c810f22963f9ba19f",
+  "f0_authorized": false,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "old_ledger_sha256": "0464a2af21fe53775fdcf0f299136de679c0cd3012709bb80ad2ddb23470ad8b",
+  "protocol_diagnostic": {
+    "appworld_tool_execution": false,
+    "codingplan_requests": 1,
+    "observed_plain_json_wrapper": "tool_call_response"
+  },
+  "provider_requests_spent_as_infrastructure_cost": 1,
+  "repair": "OPAQUE_TOOL_ALIASES_T001_PLUS_LOCAL_ALIAS_TO_APPWORLD_MAPPING",
+  "replacement": false,
+  "retry": false,
+  "root_cause": "REAL_APPWORLD_TOOL_NAMES_TRIGGERED_ATOMCODE_NATIVE_TOOL_CALL_INTERPRETATION_WHILE_NO_TOOLS_MOUNTED",
+  "schema_version": "ace-codingplan-a2-r1-native-tool-interception-void-v1",
+  "status": "CODINGPLAN_A2_R1_NATIVE_TOOL_INTERCEPTION_FAILURE_VOID",
+  "valid_capability_measurements": 0
+}

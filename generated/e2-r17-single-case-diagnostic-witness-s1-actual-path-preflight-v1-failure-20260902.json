@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-single-case-s1-actual-path-preflight-failure",
+  "created_date": "2026-09-02",
+  "status": "FAIL_ZERO_PROVIDER_ACTOR_WRAPPER_IMPORT_PATH",
+  "contract_path": "generated/e2-r17-single-case-diagnostic-witness-s1-contract-20260902.json",
+  "authorization_path": "generated/e2-r17-single-case-diagnostic-witness-s1-authorization-20260902.json",
+  "provider_claims": 0,
+  "provider_calls": 0,
+  "scientific_outcomes_generated": false,
+  "scientific_belief_update": "NONE",
+  "failure_class": "IMPLEMENTATION_LAUNCH_PATH",
+  "failure": "ModuleNotFoundError: No module named 'scripts'",
+  "root_cause": "The versioned actor wrapper imported the base actor module through the scripts namespace but did not insert the repository root into sys.path when launched as a script.",
+  "repair_boundary": "Add repository-root sys.path binding to the wrapper (and authorizer for robust direct CLI use), then freeze a new v2 contract because the v1 contract content-addressed the old wrapper SHA. Do not reuse v1 authorization.",
+  "v1_authorization_scientific_execution_used": false,
+  "next_gate": "FREEZE_NEW_S1_CONTRACT_V2_AFTER_CODE_REPAIR"
+}

@@ -5,7 +5,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-01",
-      "initial_snapshot_sha256": "0df8f8eb2eaeac239c893480ac874adaa0e13805dfd743ae2847ddd82303751b",
+      "initial_snapshot_sha256": "d63e10ed878eff4c9b4c54988f1a22a3e9545a0e1ea745e4bd225d51e95266ac",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -39,7 +39,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-01",
-      "initial_snapshot_sha256": "0df8f8eb2eaeac239c893480ac874adaa0e13805dfd743ae2847ddd82303751b",
+      "initial_snapshot_sha256": "d63e10ed878eff4c9b4c54988f1a22a3e9545a0e1ea745e4bd225d51e95266ac",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -73,7 +73,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-01",
-      "initial_snapshot_sha256": "0df8f8eb2eaeac239c893480ac874adaa0e13805dfd743ae2847ddd82303751b",
+      "initial_snapshot_sha256": "d63e10ed878eff4c9b4c54988f1a22a3e9545a0e1ea745e4bd225d51e95266ac",
       "intended_structural_difference": {
         "graph_sha256": [
           "2b1e4e3790b5d4d35a1c4a7b63a66a1ce5ed8708fef891570137c44fecb4e891",
@@ -107,7 +107,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-02",
-      "initial_snapshot_sha256": "66c54d74437d21053b296014e94cfda8de97a1b874b17492ad712517474bd3d3",
+      "initial_snapshot_sha256": "1cfa607f043bf4a784ce822621b75de4bbcdfb82bc391e08292bb1f0496372e1",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -141,7 +141,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-02",
-      "initial_snapshot_sha256": "66c54d74437d21053b296014e94cfda8de97a1b874b17492ad712517474bd3d3",
+      "initial_snapshot_sha256": "1cfa607f043bf4a784ce822621b75de4bbcdfb82bc391e08292bb1f0496372e1",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -175,7 +175,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-02",
-      "initial_snapshot_sha256": "66c54d74437d21053b296014e94cfda8de97a1b874b17492ad712517474bd3d3",
+      "initial_snapshot_sha256": "1cfa607f043bf4a784ce822621b75de4bbcdfb82bc391e08292bb1f0496372e1",
       "intended_structural_difference": {
         "graph_sha256": [
           "8e0afab3c31bd81c35d6f10f20692ff2b722fd7ce70009c25c75ddc1ff1b1fab",
@@ -209,7 +209,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-03",
-      "initial_snapshot_sha256": "0163b7364d111b6c91847e4a2f3e1686be878c1131534554a6e11c16875f58db",
+      "initial_snapshot_sha256": "873bb389ec9c39205a001392b8dddf38a384bc0994f0a295db4d00263ac3058a",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -243,7 +243,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-03",
-      "initial_snapshot_sha256": "0163b7364d111b6c91847e4a2f3e1686be878c1131534554a6e11c16875f58db",
+      "initial_snapshot_sha256": "873bb389ec9c39205a001392b8dddf38a384bc0994f0a295db4d00263ac3058a",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -277,7 +277,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-03",
-      "initial_snapshot_sha256": "0163b7364d111b6c91847e4a2f3e1686be878c1131534554a6e11c16875f58db",
+      "initial_snapshot_sha256": "873bb389ec9c39205a001392b8dddf38a384bc0994f0a295db4d00263ac3058a",
       "intended_structural_difference": {
         "graph_sha256": [
           "64f359a89c96c878e793ff0365ff14ac7ca3634a4bcf7cfe73de5fa09295a87d",
@@ -311,7 +311,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-04",
-      "initial_snapshot_sha256": "fa1296858d27b88679bd78781c8f2feef0d0fcb4b5720ad19f0b3c7a46f2a209",
+      "initial_snapshot_sha256": "4de4683586bdcb5c259d8a3485c38b3600fdeee5c4cf4ef9d079f98dac36f624",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -345,7 +345,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-04",
-      "initial_snapshot_sha256": "fa1296858d27b88679bd78781c8f2feef0d0fcb4b5720ad19f0b3c7a46f2a209",
+      "initial_snapshot_sha256": "4de4683586bdcb5c259d8a3485c38b3600fdeee5c4cf4ef9d079f98dac36f624",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -379,7 +379,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-04",
-      "initial_snapshot_sha256": "fa1296858d27b88679bd78781c8f2feef0d0fcb4b5720ad19f0b3c7a46f2a209",
+      "initial_snapshot_sha256": "4de4683586bdcb5c259d8a3485c38b3600fdeee5c4cf4ef9d079f98dac36f624",
       "intended_structural_difference": {
         "graph_sha256": [
           "a34c12a318ac6a7c727020f33e0dcc89e8295f9ff00d0b922443d27b2399db23",
@@ -413,7 +413,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-05",
-      "initial_snapshot_sha256": "d0d9e54d762d715c948aa2575b4b72e24d2ebe5ca10b19a16fe1a1f4802fd921",
+      "initial_snapshot_sha256": "de84c40d3b8a5795cebb0d4562244093d51b06e81a01db657d32a597e6e36029",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -447,7 +447,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-05",
-      "initial_snapshot_sha256": "d0d9e54d762d715c948aa2575b4b72e24d2ebe5ca10b19a16fe1a1f4802fd921",
+      "initial_snapshot_sha256": "de84c40d3b8a5795cebb0d4562244093d51b06e81a01db657d32a597e6e36029",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -481,7 +481,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-05",
-      "initial_snapshot_sha256": "d0d9e54d762d715c948aa2575b4b72e24d2ebe5ca10b19a16fe1a1f4802fd921",
+      "initial_snapshot_sha256": "de84c40d3b8a5795cebb0d4562244093d51b06e81a01db657d32a597e6e36029",
       "intended_structural_difference": {
         "graph_sha256": [
           "d69ac1dc1ae426c282851c07ceab48cd9697964b6cd7563f35ef6537eb25c9a8",
@@ -515,7 +515,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-06",
-      "initial_snapshot_sha256": "ba10866eb425781c058ea39096be9a77cd3c4e8a0a237d00101e5598baa7e452",
+      "initial_snapshot_sha256": "8fb7a23cd18047e243eb912b6e576409220d7a5053cea10aadad6d93bc57017a",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -549,7 +549,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-06",
-      "initial_snapshot_sha256": "ba10866eb425781c058ea39096be9a77cd3c4e8a0a237d00101e5598baa7e452",
+      "initial_snapshot_sha256": "8fb7a23cd18047e243eb912b6e576409220d7a5053cea10aadad6d93bc57017a",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -583,7 +583,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-FG-06",
-      "initial_snapshot_sha256": "ba10866eb425781c058ea39096be9a77cd3c4e8a0a237d00101e5598baa7e452",
+      "initial_snapshot_sha256": "8fb7a23cd18047e243eb912b6e576409220d7a5053cea10aadad6d93bc57017a",
       "intended_structural_difference": {
         "graph_sha256": [
           "14887abf5f770816fac826885e92ce52ef82e07f2e195c124d09e3b315e099ef",
@@ -617,7 +617,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-01",
-      "initial_snapshot_sha256": "dc0efd1f977231b17672526f2c5d77f3497a06667dabc9acad63e0c17d3ee416",
+      "initial_snapshot_sha256": "5ff687209fe92f9bad595ec0db2c1f486bac566f17d9ac2da986d0483fb686c0",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -651,7 +651,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-01",
-      "initial_snapshot_sha256": "dc0efd1f977231b17672526f2c5d77f3497a06667dabc9acad63e0c17d3ee416",
+      "initial_snapshot_sha256": "5ff687209fe92f9bad595ec0db2c1f486bac566f17d9ac2da986d0483fb686c0",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -685,7 +685,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-01",
-      "initial_snapshot_sha256": "dc0efd1f977231b17672526f2c5d77f3497a06667dabc9acad63e0c17d3ee416",
+      "initial_snapshot_sha256": "5ff687209fe92f9bad595ec0db2c1f486bac566f17d9ac2da986d0483fb686c0",
       "intended_structural_difference": {
         "graph_sha256": [
           "618f10df6792808eb488789ae648e6218083464e0111b2c114291fcb4292b26d",
@@ -719,7 +719,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-02",
-      "initial_snapshot_sha256": "de5938c10e34195359911810520e8d6bb60c922389d610954e85ebe6563ca9d6",
+      "initial_snapshot_sha256": "0c1faeb16ab897b4ce0e2dd3db9106e8e117a56f1074cc6ae1aa6488f6f43b38",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -753,7 +753,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-02",
-      "initial_snapshot_sha256": "de5938c10e34195359911810520e8d6bb60c922389d610954e85ebe6563ca9d6",
+      "initial_snapshot_sha256": "0c1faeb16ab897b4ce0e2dd3db9106e8e117a56f1074cc6ae1aa6488f6f43b38",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -787,7 +787,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-02",
-      "initial_snapshot_sha256": "de5938c10e34195359911810520e8d6bb60c922389d610954e85ebe6563ca9d6",
+      "initial_snapshot_sha256": "0c1faeb16ab897b4ce0e2dd3db9106e8e117a56f1074cc6ae1aa6488f6f43b38",
       "intended_structural_difference": {
         "graph_sha256": [
           "c05bfadc20aebd88dfdf36c43411f2ea96f3737102df873cfd17b230182ffb16",
@@ -821,7 +821,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-03",
-      "initial_snapshot_sha256": "908529243b92c708f8dd505c1c3f98dcb2be7c53c697fcd9af93534b8497fd7c",
+      "initial_snapshot_sha256": "21a9e16dcf265bf0fad771c9f1c404e36034407fa0501bcbdf80940240f6284d",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -855,7 +855,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-03",
-      "initial_snapshot_sha256": "908529243b92c708f8dd505c1c3f98dcb2be7c53c697fcd9af93534b8497fd7c",
+      "initial_snapshot_sha256": "21a9e16dcf265bf0fad771c9f1c404e36034407fa0501bcbdf80940240f6284d",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -889,7 +889,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-03",
-      "initial_snapshot_sha256": "908529243b92c708f8dd505c1c3f98dcb2be7c53c697fcd9af93534b8497fd7c",
+      "initial_snapshot_sha256": "21a9e16dcf265bf0fad771c9f1c404e36034407fa0501bcbdf80940240f6284d",
       "intended_structural_difference": {
         "graph_sha256": [
           "4a91a8d79a67c3452a3770075052b36e788705c172499afa66225df6501ed1f5",
@@ -923,7 +923,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-04",
-      "initial_snapshot_sha256": "919f6746983199065bb9053701a46bc1d62e0da150e915ba87c4933c62f91f9a",
+      "initial_snapshot_sha256": "b473f340bb3ebac544d5960e9705880ff944dddaba762263aad75f86271aed37",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -957,7 +957,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-04",
-      "initial_snapshot_sha256": "919f6746983199065bb9053701a46bc1d62e0da150e915ba87c4933c62f91f9a",
+      "initial_snapshot_sha256": "b473f340bb3ebac544d5960e9705880ff944dddaba762263aad75f86271aed37",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -991,7 +991,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-04",
-      "initial_snapshot_sha256": "919f6746983199065bb9053701a46bc1d62e0da150e915ba87c4933c62f91f9a",
+      "initial_snapshot_sha256": "b473f340bb3ebac544d5960e9705880ff944dddaba762263aad75f86271aed37",
       "intended_structural_difference": {
         "graph_sha256": [
           "e5163ab2146f5eced3ccc66d9446ada292b5d71630630b8e54baed10db526cf4",
@@ -1025,7 +1025,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-05",
-      "initial_snapshot_sha256": "2b55f275fe7b27951138756e57137957f91b7a6a1fca119e19c938c075b76a6f",
+      "initial_snapshot_sha256": "daedaa643fda52438844cbb4e7505996882e59d428e09e5a7ecb1e56d754ad7b",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -1059,7 +1059,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-05",
-      "initial_snapshot_sha256": "2b55f275fe7b27951138756e57137957f91b7a6a1fca119e19c938c075b76a6f",
+      "initial_snapshot_sha256": "daedaa643fda52438844cbb4e7505996882e59d428e09e5a7ecb1e56d754ad7b",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -1093,7 +1093,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-05",
-      "initial_snapshot_sha256": "2b55f275fe7b27951138756e57137957f91b7a6a1fca119e19c938c075b76a6f",
+      "initial_snapshot_sha256": "daedaa643fda52438844cbb4e7505996882e59d428e09e5a7ecb1e56d754ad7b",
       "intended_structural_difference": {
         "graph_sha256": [
           "4896df6bb9f5de08db1fa7cc5c9166ecbcb1e11b853aeb47bc1603fed8db3e21",
@@ -1127,7 +1127,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-06",
-      "initial_snapshot_sha256": "d1dbf20dffa715de29d500f9e5215ab45394ef0f681cdf5c2e98339a85f6a7e9",
+      "initial_snapshot_sha256": "b9a05111d42bc92ab8149908360c4883b68700bd47aaa2ea7e5790c43c916f2e",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -1161,7 +1161,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-06",
-      "initial_snapshot_sha256": "d1dbf20dffa715de29d500f9e5215ab45394ef0f681cdf5c2e98339a85f6a7e9",
+      "initial_snapshot_sha256": "b9a05111d42bc92ab8149908360c4883b68700bd47aaa2ea7e5790c43c916f2e",
       "intended_structural_difference": {
         "graph_sha256": [
           "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
@@ -1195,7 +1195,7 @@
     {
       "claim_language": "EXACT_UPDATE_ARTIFACT_PLUS_MATCHED_TOPOLOGY_CONTEXT",
       "family_id": "ACE-TNF-06",
-      "initial_snapshot_sha256": "d1dbf20dffa715de29d500f9e5215ab45394ef0f681cdf5c2e98339a85f6a7e9",
+      "initial_snapshot_sha256": "b9a05111d42bc92ab8149908360c4883b68700bd47aaa2ea7e5790c43c916f2e",
       "intended_structural_difference": {
         "graph_sha256": [
           "e3f78b85995c43dcea0a2c81af714d2c1c6eda2fd913e4cc2d7336af9428a54c",

@@ -141,6 +141,40 @@ def insert_fixture_row(connection: sqlite3.Connection, row: dict[str, Any]) -> N
         # responses remain valid.
         values.setdefault("created_at", fixture_timestamp)
         values.setdefault("updated_at", fixture_timestamp)
+    if app == "file_system" and table == "directories":
+        # AppWorld's process_path() canonicalizes directories with a trailing '/'.
+        # Scientific fixtures previously omitted it, so public directory_exists()
+        # could not see rows that were present in SQLite. Also ensure the synthetic
+        # family directory has its parent, avoiding an impossible child-without-parent
+        # filesystem hierarchy that induces unnecessary agent repair calls.
+        path = str(values["path"]).rstrip("/") + "/"
+        tilde_path = str(values.get("tilde_path", "~/")).rstrip("/") + "/"
+        values["path"] = path
+        values["tilde_path"] = tilde_path
+        parent_path = path.rstrip("/").rsplit("/", 1)[0] + "/"
+        parent_tilde = tilde_path.rstrip("/").rsplit("/", 1)[0] + "/"
+        if parent_path.startswith("/home/") and parent_path.count("/") >= 4:
+            exists = connection.execute(
+                "SELECT 1 FROM directories WHERE path = ? AND user_id = ?",
+                (parent_path, values["user_id"]),
+            ).fetchone()
+            if exists is None:
+                parent_id = int(values["id"]) - 1
+                if connection.execute("SELECT 1 FROM directories WHERE id = ?", (parent_id,)).fetchone():
+                    raise QualificationError(f"Synthetic parent directory id collision: {parent_id}")
+                connection.execute(
+                    "INSERT INTO directories (created_at, updated_at, record_hash, id, path, tilde_path, user_id) "
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    (
+                        fixture_timestamp,
+                        fixture_timestamp,
+                        None,
+                        parent_id,
+                        parent_path,
+                        parent_tilde,
+                        values["user_id"],
+                    ),
+                )
     if app == "file_system" and table == "files":
         # AppWorld's native File model stores an empty JSON list for ordinary
         # uncompressed text files. Leaving this column NULL makes cross-app
@@ -159,6 +193,33 @@ def insert_fixture_row(connection: sqlite3.Connection, row: dict[str, Any]) -> N
         f'INSERT INTO "{row["table"]}" ({quoted}) VALUES ({placeholders})',
         [values[column] for column in columns],
     )
+    if app == "simple_note" and table == "notes":
+        # AppWorld search_notes ranks through notes_fts. Raw fixture insertion
+        # bypasses SQLModel.set_search_text(), so the scientific note would
+        # otherwise exist in the table but be invisible to the public search API.
+        raw_tags = values.get("tags", [])
+        if isinstance(raw_tags, str):
+            try:
+                parsed_tags = json.loads(raw_tags)
+            except json.JSONDecodeError:
+                parsed_tags = []
+        else:
+            parsed_tags = raw_tags
+        tags = parsed_tags if isinstance(parsed_tags, list) else []
+        search_text = " ".join(
+            str(part).strip()
+            for part in (
+                values.get("title", ""),
+                values.get("content", ""),
+                " ".join(str(tag) for tag in tags),
+            )
+            if str(part).strip()
+        )
+        search_text = " ".join(search_text.lower().split())
+        connection.execute(
+            "INSERT INTO notes_fts (id, saved_search_text) VALUES (?, ?)",
+            (values["id"], search_text),
+        )
 
 
 def evaluate_binding(connection: sqlite3.Connection, binding: dict[str, Any]) -> bool:

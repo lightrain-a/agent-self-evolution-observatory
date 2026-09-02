@@ -1,0 +1,116 @@
+{
+  "artifact_type": "e2-r17-single-case-diagnostic-witness-s0-selector-freeze",
+  "authority": {
+    "heldout_evaluation": false,
+    "provider_io": false,
+    "scientific_runner": false,
+    "updater": false
+  },
+  "case_stream": "e1-tsr-00",
+  "mixed_pool_count": 7,
+  "nonmixed_pool_count": 1,
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_outcomes_generated": false,
+  "selector_changed_mixed_pools": 4,
+  "selector_rule": [
+    "min_abs_tool_call_count_gap_to_winner",
+    "min_abs_provider_call_count_gap_to_winner",
+    "max_tool_name_longest_common_prefix_with_winner",
+    "min_rollout_index"
+  ],
+  "status": "S0_SELECTOR_FREEZE_PASS_ZERO_PROVIDER",
+  "units": [
+    {
+      "first_fail_rollout": 6,
+      "first_fail_tool_gap": 10,
+      "mixed": true,
+      "pool_id": "4cd7e3ec496f6f46068a07adbb6bf210cbdb479ecb3683ac0ad33aa8c06dc404",
+      "pool_sha256": "53d9abbbce1a5fb4bf48906a273785e9f8f280b637f9ad8f6d577f610e9db6b6",
+      "progress_fail_rollout": 6,
+      "progress_fail_tool_gap": 10,
+      "selector_changed": false,
+      "task_id": "r17-b3-tsr-p7",
+      "winner_rollout": 0
+    },
+    {
+      "mixed": false,
+      "pool_id": "8adb17d5d33e8a3d7799bdbae65ddb2151c23a3d86f71eecf72ca9679ea15c9c",
+      "pool_sha256": "2629ce7090a3f5b6142bd996e50366ff1bf8cac709d482a636844f6c5b28511c",
+      "task_id": "r17-b3-tsr-p0",
+      "winner_rollout": 0
+    },
+    {
+      "first_fail_rollout": 0,
+      "first_fail_tool_gap": 6,
+      "mixed": true,
+      "pool_id": "6257eecdb7f9aac53d2ff91c1da5f582b587aff51413cbd54227b7f43fc07230",
+      "pool_sha256": "565ca49b5b75be18b38351bce67975808f5103f7dc5d80449717b524d298b798",
+      "progress_fail_rollout": 3,
+      "progress_fail_tool_gap": 3,
+      "selector_changed": true,
+      "task_id": "r17-b2-tsr-p3",
+      "winner_rollout": 1
+    },
+    {
+      "first_fail_rollout": 3,
+      "first_fail_tool_gap": 7,
+      "mixed": true,
+      "pool_id": "51bf9e9a1f2e84212c1e1854f885ad0606e169634d8de31d848535645857cfa3",
+      "pool_sha256": "5001ce346851199f40616f4f78531e1f6b5b6aff929ba8c7a9cc73b4303b2d97",
+      "progress_fail_rollout": 3,
+      "progress_fail_tool_gap": 7,
+      "selector_changed": false,
+      "task_id": "r17-b2-tsr-p8",
+      "winner_rollout": 0
+    },
+    {
+      "first_fail_rollout": 4,
+      "first_fail_tool_gap": 2,
+      "mixed": true,
+      "pool_id": "47ee8035cf14cb7a0f7ce3877f120e5b8771bdb0810d5df290b8c15ea78aef56",
+      "pool_sha256": "b36a3799cd74647d7bb8859b024f3fd3bab6063e4e54fda5620279aca13cbefc",
+      "progress_fail_rollout": 5,
+      "progress_fail_tool_gap": 1,
+      "selector_changed": true,
+      "task_id": "r17-b2-tsr-p2",
+      "winner_rollout": 0
+    },
+    {
+      "first_fail_rollout": 3,
+      "first_fail_tool_gap": 2,
+      "mixed": true,
+      "pool_id": "2febf527afae2f6fe089edf4902b66b7abd85bcfb8e44b2fe823d1523e1bae3d",
+      "pool_sha256": "d86c7832efbbfdb11b3e5539740a5e02491f8ad4488462939ba721612d0d653c",
+      "progress_fail_rollout": 6,
+      "progress_fail_tool_gap": 1,
+      "selector_changed": true,
+      "task_id": "r17-b2-tsr-p5",
+      "winner_rollout": 0
+    },
+    {
+      "first_fail_rollout": 0,
+      "first_fail_tool_gap": 4,
+      "mixed": true,
+      "pool_id": "45592ca13a16ab6c8de32194aea53534a80a28050dbc9f2d0e6bfe75de7f071c",
+      "pool_sha256": "0080b3e0da0786ef1dfcc51d704c041b287c4917323fd9d570d0f42ab2091811",
+      "progress_fail_rollout": 4,
+      "progress_fail_tool_gap": 2,
+      "selector_changed": true,
+      "task_id": "r17-b2-tsr-p4",
+      "winner_rollout": 1
+    },
+    {
+      "first_fail_rollout": 3,
+      "first_fail_tool_gap": 3,
+      "mixed": true,
+      "pool_id": "ad8bba4b6f4634d8435f619f4ff79b485e74c33fecdb858094b444129c338cf4",
+      "pool_sha256": "ca70f41358fd2a586f0980a4a2bf81951833956a497a446126f5d6df081af501",
+      "progress_fail_rollout": 3,
+      "progress_fail_tool_gap": 3,
+      "selector_changed": false,
+      "task_id": "r17-b3-tsr-p8",
+      "winner_rollout": 0
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "affected_unit": "capability:deepseek-v4-flash|ACE-FG-05|1",
+  "content_sha256": "8cdbe508ef1e8f373aefaf7f7fede31f2de015f1e995b286112c68ca23e347c4",
+  "disposition": "DO_NOT_REPLAY_DEEPSEEK_R4; USE_SEPARATELY_QUALIFIED_CODINGPLAN_MODEL_OR_PATCHED_ATOMCODE",
+  "execution_id": "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2-R4",
+  "f0_authorized": false,
+  "failure_class": "ProviderCallError",
+  "ledger_sha256": "8cb9fc9ca08d064b40fa29f52ef473a7cbccaa06442b3709f25ab27f2d4952ce",
+  "model_mapped_appworld_actions_executed": 0,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider_requests_spent_as_infrastructure_cost": 1,
+  "replacement": false,
+  "retry": false,
+  "root_cause": {
+    "atomcode_source_commit_audited": "287bff70f9400c24f4afd8fcf4762fbab63d8efa",
+    "atomcode_version": "5.0.9",
+    "classification": "ATOMCODE_HEADLESS_NO_TOOLS_EXTRA_TOOL_LEAK",
+    "observed_native_tool": "schedule_wakeup",
+    "observed_tool_result": "schedule_wakeup is only available inside an active /loop turn",
+    "source_witnesses": [
+      "crates/atomcode-coding/src/runtime.rs: unconditional register_extra_tool(ScheduleWakeupTool) during runtime start",
+      "crates/atomcode-cli/src/main.rs: --no-tools disables ordinary tool capability flags but not runtime extra-tool registration"
+    ]
+  },
+  "schema_version": "ace-codingplan-deepseek-a2-r4-schedule-wakeup-void-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CODINGPLAN_DEEPSEEK_A2_R4_VOID_ATOMCODE_SCHEDULE_WAKEUP_LEAK",
+  "valid_capability_measurements": 0
+}

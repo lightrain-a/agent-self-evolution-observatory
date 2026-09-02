@@ -1,0 +1,67 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-runtime-amendment-v14a",
+  "state": "OFFICIAL_TRAINING_RUNTIME_AMENDMENT_V14A_AUTHORIZED_WITHIN_EXISTING_BOUNDED_SCOPE",
+  "parent_authority": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-authority-v13",
+  "parent_authority_sha256": "d2abe5b0647abeecc464fa2b77189fc28e91ea5999c173189b42f04576914dc2",
+  "parent_proposal": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-proposal-v12",
+  "parent_proposal_sha256": "da323f6173002b62ef8de09ea6046fc8ddd0e9f94b4c0bee82618f5d6b66c1d9",
+  "observed_failure": {
+    "host": "232",
+    "component": "BEDROOM-SG2SC-SHARED",
+    "phase": "RESOURCE_PREFLIGHT_BEFORE_MODEL_INITIALIZATION",
+    "optimizer_steps_committed": 0,
+    "forward_backward_executed": false,
+    "model_initialized": false,
+    "scientific_outcomes": 0,
+    "classification": "PYTORCH_CUDA_MEMORY_STATS_API_COMPATIBILITY_NON_SCIENTIFIC",
+    "error": "torch.cuda.reset_peak_memory_stats(torch.device('cuda:0')) raised RuntimeError: Invalid device argument under PyTorch 2.3.1+cu121",
+    "external_claim_sha256": "3ad9000592b1ead3e8568085c99761a97c7632f4cf1a2e52e8a57e82fcf437a6",
+    "external_failure_sha256": "c5ec9f1801246efa146a878cf90f4349af6b41cd5ca2edf8f689160e3938716c"
+  },
+  "minimal_reproduction": {
+    "torch_version": "2.3.1+cu121",
+    "reset_peak_memory_stats_with_device_object": "FAIL",
+    "reset_peak_memory_stats_with_integer_zero": "FAIL",
+    "reset_peak_memory_stats_with_cuda_string": "FAIL",
+    "reset_peak_memory_stats_without_argument": "PASS",
+    "max_memory_allocated_with_device_object": "PASS",
+    "max_memory_reserved_with_device_object": "PASS"
+  },
+  "repair": {
+    "scientific_change": false,
+    "model_change": false,
+    "data_change": false,
+    "corpus_change": false,
+    "prompt_change": false,
+    "seed_change": false,
+    "batch_size_change": false,
+    "gradient_accumulation_change": false,
+    "optimizer_change": false,
+    "training_step_budget_change": false,
+    "checkpoint_cadence_change": false,
+    "validation_policy_change": false,
+    "precision_policy_change": false,
+    "only_runtime_change": "Execute torch.cuda.reset_peak_memory_stats() without an explicit argument inside with torch.cuda.device(device), preserving the selected CUDA device while avoiding the PyTorch 2.3 reset API incompatibility."
+  },
+  "child_code": {
+    "core_sha256": "26af48a97f6967b4afdd3ee825a0dbdde7f018b26f5012e4a5f7f7421a153511",
+    "training_segment_sha256": "a7903904379d746c8950c167d375feecc61ae3c8a179ee81fd1ffd6f8ec6c9a9",
+    "entrypoint_sha256": "ce9003ea9a506aa7721fc45b441860dec005d74770251a513986eb171dcd2fa5"
+  },
+  "authority": {
+    "official_training_developmental_authority": true,
+    "scope_is_identical_to_v13": true,
+    "resource_preflight_retry_authorized_as_new_child_path": true,
+    "completed_or_failed_parent_preflight_overwrite_forbidden": true,
+    "reproduction_evaluation": false,
+    "p1": false,
+    "scientific_outcomes": 0
+  },
+  "next_gate": "RUN_NEW_V15_ZERO_OPTIMIZER_BATCH128_RESOURCE_PREFLIGHT_USING_V14A_RUNTIME",
+  "port_010": {
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+    "evidence_review": "BLOCK_BAKE_IN",
+    "changed": false
+  }
+}

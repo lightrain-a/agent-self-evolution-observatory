@@ -1,0 +1,42 @@
+{
+  "analyzer_run": false,
+  "arms": [
+    "win_c",
+    "first_fail",
+    "progress_fail",
+    "progress_contrast"
+  ],
+  "artifact_type": "e2-r17-single-case-s1-completion-integrity-audit",
+  "authority": {
+    "mint_single_use_s1_analysis_authorization": true,
+    "paper_promotion": false,
+    "provider_io": false,
+    "scientific_execution": false,
+    "submission": false
+  },
+  "contract_path": "generated/e2-r17-single-case-diagnostic-witness-s1-contract-v2-20260902.json",
+  "contract_sha256": "e1865abbcccdeeea03b34c4526044660c4b4826b3ecab40ac54bb1030e0f7d8c",
+  "created_at_utc": "2026-09-02T04:52:03+00:00",
+  "evidence_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/evidence_four_arm_receipt.json",
+  "evidence_receipt_sha256": "bab551ab8c493fb6e942d39c66781359301612bc60559964af327f227e976807",
+  "execution_authorization_path": "generated/e2-r17-single-case-diagnostic-witness-s1-authorization-v2-20260902.json",
+  "execution_authorization_sha256": "3244b39757a41dc801a79ed5edaff1050354974c8f0be70994cd9d690ca0a002",
+  "heldout_rollout_units": 72,
+  "learned_states": 4,
+  "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-diagnostic-witness-s1-v1.json",
+  "lineage_lease_sha256": "213201d45592df5bc46f937b4491dc90d5ef0834b54b9787c097d973e3cd6e83",
+  "partial_effect_read": false,
+  "provider_budget_binding_pass": true,
+  "provider_claim_uniqueness_pass": true,
+  "provider_claims_by_arm": {
+    "first_fail": 114,
+    "progress_contrast": 106,
+    "progress_fail": 104,
+    "win_c": 115
+  },
+  "run_summary_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/summary/s1_summary.json",
+  "run_summary_sha256": "9d78cfa78438c2f16f0091b5caff0fcff04ca9af465ddcc677280920fe3901a8",
+  "schema_version": "1.0",
+  "scientific_scores_read": false,
+  "status": "PASS_SINGLE_CASE_S1_FULL_INTEGRITY_READY_FOR_ANALYSIS"
+}

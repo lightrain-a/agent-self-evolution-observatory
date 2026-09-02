@@ -3,6 +3,7 @@ window.NAV_GROUPS = [
     ["index.html",{en:"Observatory Home",zh:"研究站首页"}],
     ["research-timeline.html",{en:"Research Timeline",zh:"研究时间轴"}],
     ["system-overview.html",{en:"Research System",zh:"科研系统"}],
+    ["experiment-costs.html",{en:"Experiment Costs",zh:"实验成本"}],
   ]},
   { title:{en:"Field Atlas",zh:"领域图谱"}, open:false, pages:[
     ["foundations.html",{en:"Definition & Boundary · What Is Self-Evolution?",zh:"定义与边界 · 什么是 Agent 自进化"}],

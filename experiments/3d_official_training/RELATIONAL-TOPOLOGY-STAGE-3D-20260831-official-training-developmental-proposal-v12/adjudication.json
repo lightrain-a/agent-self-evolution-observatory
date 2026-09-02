@@ -1,0 +1,19 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-proposal-v12",
+  "verdict": "OFFICIAL_TRAINING_DEVELOPMENTAL_AUTHORITY_PROPOSAL_ONLY",
+  "training_plan_frozen": true,
+  "official_training_authorized": false,
+  "official_training_started": false,
+  "reproduction_evaluation_authorized": false,
+  "p1_authorized": false,
+  "scientific_gpu_runs": 0,
+  "scientific_outcomes": 0,
+  "claim_boundary_updated_for_2026_literature": true,
+  "next_gate": "AWAIT_EXPLICIT_OFFICIAL_TRAINING_DEVELOPMENTAL_AUTHORITY_DECISION",
+  "port_010": {
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+    "evidence_review": "BLOCK_BAKE_IN",
+    "changed": false
+  }
+}

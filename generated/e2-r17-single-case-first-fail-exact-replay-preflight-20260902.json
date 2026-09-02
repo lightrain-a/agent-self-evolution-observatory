@@ -1,0 +1,49 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-single-case-first-fail-exact-replay-preflight",
+  "contract_path": "generated/e2-r17-single-case-first-fail-exact-replay-contract-20260902.json",
+  "contract_sha256": "dd508d9cefb3bfba1a439f784f718cb7962f78130b83c18f14e5b0d591478dea",
+  "created_at_utc": "2026-09-02T06:34:12+00:00",
+  "evidence_checks": {
+    "first_fail": {
+      "count": 8,
+      "evidence_sha256s": [
+        "d774ff7402a944f76e5447236bd9559e552252ff65bf5b2e99b489f8daea484f",
+        "9ba6f5f09321a15d07b540f1bb3c836b439bd03355995e67e9fa894964644102",
+        "7fbea5f24584d9dc2852d5cd5c63afbccec11946af2c5c6a4c2026f79b012917",
+        "3265087c8a5f3083ddb70a11f0146cbcdc0b002be6e3c9be876c6c2992d8ccaa",
+        "30ba716522144d63a9ea5e40da47ac96df69fe2834a4d61499a35014dfd36880",
+        "1bdb42b3aaaee0fd8c495196c374e325e015fdcdf8a4621dd6c4f3326d4769b2",
+        "fd317804112a5d27bead5483a94ced5aa487a6e077e0b6dbcc8d4e94a0034fa2",
+        "080fb3f18deff5f9e9e4a1a91827e236cc095f95bc328a95a5a9fb8cfc101f29"
+      ],
+      "sha_match": true
+    },
+    "win_c": {
+      "count": 8,
+      "evidence_sha256s": [
+        "955531c255f32f8dfb170fa0a729cd5924b9c3dd115e43c10af4c4aa5abee359",
+        "9ba6f5f09321a15d07b540f1bb3c836b439bd03355995e67e9fa894964644102",
+        "4af489a3750c1e9e179b55a025cecab1c5093e5d7565ab526d22d8eb765d6b94",
+        "26375b103a0c0d6b42e4b3857a596f6726cfa42e52e0a6061ee42bedbd284f6b",
+        "3154686274701f261c449c82f5a0a58710d158b50bc6025c09e87983b32ac36f",
+        "af08d7e25a25659988253cd845477c3dc48d603329a1d23e226aeaabbddad56a",
+        "d7b845654a5e9de19186d27b4b44f5884b2b1ad5be7c6d7921c96aa94d144f5d",
+        "d9d1f698dc79a4df3a8889a7f2757f8c5f265262c3552cc7b0fd6c5d7a229484"
+      ],
+      "sha_match": true
+    }
+  },
+  "exact_evidence_identity_pass": true,
+  "heldout_units": 72,
+  "lineage_lease_absent": true,
+  "new_learned_states": 4,
+  "next_gate": "MINT_SINGLE_USE_FIRST_FAIL_EXACT_REPLAY_AUTHORIZATION",
+  "partial_effect_read": false,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "run_root_absent": true,
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "status": "PASS_SINGLE_CASE_FIRST_FAIL_EXACT_REPLAY_ZERO_PROVIDER_PREFLIGHT"
+}

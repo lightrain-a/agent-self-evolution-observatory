@@ -150,6 +150,37 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
                 "STOP_AWAIT_HUMAN_ADJUDICATION",
             )
             self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_r3_partial_void_substrate_filesystem_filename_invalid"):
+            self.assertTrue(readiness["capability_prior_results_void_substrate_invalid"])
+            self.assertTrue(readiness["capability_substrate_v4_recovery_qualification_pass"])
+            self.assertTrue(readiness["capability_r5_partial_authorized"])
+            self.assertEqual(readiness["capability_preserved_fg_measurements"], 4)
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_SUBSTRATE_V4_PARTIAL_REQUALIFICATION_READY",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "RUN_QWEN37PLUS_CAPABILITY_R5_PARTIAL_TNF_ONLY",
+            )
+            self.assertEqual(readiness["capability_valid_measurements"], 0)
+            self.assertIsNone(readiness["capability_result_artifact"])
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_r2_void_substrate_discoverability_invalid"):
+            self.assertTrue(readiness["capability_prior_results_void_substrate_invalid"])
+            self.assertTrue(readiness["capability_substrate_v2_recovery_qualification_pass"])
+            self.assertTrue(readiness["capability_r3_authorized"])
+            self.assertTrue(readiness["capability_r3_partial_authorized"])
+            self.assertTrue(readiness["capability_r3_full_contract_superseded"])
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_SUBSTRATE_V2_PARTIAL_REQUALIFICATION_READY",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "RUN_QWEN37PLUS_CAPABILITY_R3_PARTIAL_TNF_ONLY",
+            )
+            self.assertFalse(readiness["f0_authorized"])
         elif readiness.get("capability_prior_results_void_substrate_invalid"):
             self.assertTrue(readiness["capability_substrate_recovery_qualification_pass"])
             self.assertTrue(readiness["capability_r2_authorized"])

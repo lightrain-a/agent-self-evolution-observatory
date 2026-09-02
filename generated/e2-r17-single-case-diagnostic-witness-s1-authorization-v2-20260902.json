@@ -1,0 +1,80 @@
+{
+  "artifact_type": "e2-r17-single-case-s1-execution-authorization",
+  "authority": {
+    "analyzer": false,
+    "e3_confirmation": false,
+    "heldout_evaluation": true,
+    "paper_promotion": false,
+    "provider_io": true,
+    "public_benchmark": false,
+    "scientific_experiment": true,
+    "second_backbone": false,
+    "single_case_s1": true,
+    "submission": false,
+    "updater": true
+  },
+  "contract_path": "generated/e2-r17-single-case-diagnostic-witness-s1-contract-v2-20260902.json",
+  "contract_sha256": "e1865abbcccdeeea03b34c4526044660c4b4826b3ecab40ac54bb1030e0f7d8c",
+  "created_at_utc": "2026-09-02T04:24:37+00:00",
+  "execution_scope": {
+    "allow_noninitial_skill": true,
+    "allowed_modes": [
+      "e1"
+    ],
+    "allowed_task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "arms": [
+      "win_c",
+      "first_fail",
+      "progress_fail",
+      "progress_contrast"
+    ],
+    "automatic_retry": false,
+    "case_stream": "e1-tsr-00",
+    "completed_unit_replay": false,
+    "exact_k": 1,
+    "exactly_once": true,
+    "identity_artifact_sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-diagnostic-witness-s1-v1.json",
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "partial_effect_read": false,
+    "phase": "single_case_s1",
+    "provider_budget": {
+      "per_unit_limit": 11,
+      "required": true,
+      "total_limit": 191
+    },
+    "replicates": [
+      0
+    ],
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "interpretation_boundary": "Authorizes exactly one development-only S1 run: e1-tsr-00, rep0, four frozen arms, 4 learned states, 72 heldout units. It grants no analyzer, E3 confirmation, second-backbone, public-benchmark, paper, or submission authority.",
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "preflight_path": "generated/e2-r17-single-case-diagnostic-witness-s1-preflight-v2-20260902.json",
+  "preflight_sha256": "4f076e2e92cbda8c1c1c3a3f40dd0a9ec2881725d46e4143d6100d3416f1086c",
+  "schema_version": "1.0",
+  "single_use": true,
+  "status": "AUTHORIZED_E2_R17_SINGLE_CASE_DIAGNOSTIC_WITNESS_S1"
+}
