@@ -1,0 +1,75 @@
+{
+  "artifact_type": "e2-r17-lessons-mechanism-next-experiment",
+  "authority": {
+    "confirmatory_claim": false,
+    "gpu": false,
+    "new_scientific_execution": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "second_backbone": false,
+    "submission": false
+  },
+  "created_date": "2026-09-02",
+  "development_evidence": {
+    "family_is_primary_mechanism": false,
+    "mean_off_family_heldout_effect": 0.027777777777777776,
+    "mean_same_family_heldout_effect": 0.0,
+    "mixed_pool_fraction_effect_pearson_r": -0.09118376850080846,
+    "selected_failure_minus_winner_provider_calls_effect_pearson_r": 0.5420588996215556,
+    "selected_failure_minus_winner_tool_calls_effect_pearson_r": 0.5827329634180755,
+    "selected_failure_progress_upper_six_mean_effect": 0.060185185185185175,
+    "selected_failure_progress_lower_six_mean_effect": -0.013888888888888881,
+    "status": "POSTHOC_EXPLORATORY_DEVELOPMENT_ONLY"
+  },
+  "development_mechanism_artifact_path": "generated/e2-r17-v2-posthoc-mechanism-development-analysis-20260902.json",
+  "development_mechanism_artifact_sha256": "91176c42362dfcaca8caf1e73694f72362a47195cd844e6736f02fe5358cc6d4",
+  "institutionalized_lessons": [
+    "availability of failed evidence is not equivalent to behavioral utility",
+    "failure-family identity is a coverage/blocking variable unless a stronger transferable mediator is identified",
+    "completed noisy HOLD results must not be rescued by adding samples/models/threshold changes inside the same confirmatory object",
+    "post-outcome mechanism discovery must be development-only and retested prospectively",
+    "global lineage lease plus unit-level exactly-once protection is required for continuation",
+    "HTTP 429 recovery must be measurement-scoped and may not replay completed updater or heldout units",
+    "full outcome embargo remains closed until canonical completion and integrity audit"
+  ],
+  "next_scientific_object_proposal": {
+    "central_hypothesis": "Rejected evidence is useful when the selected failure is counterfactually proximal/diagnostic, and a successful anchor may help the updater distill the local failure-to-repair delta.",
+    "name": "E2-R17-DIAGNOSTIC-WITNESS-REPAIR",
+    "stage_c0": {
+      "arms": [
+        "WIN-C",
+        "single M2-qualified repaired method"
+      ],
+      "heldout_tasks": 36,
+      "independent_future_streams": 12,
+      "replicates": 2,
+      "suggested_primary": "stream-level exact binomial sign test on positive repaired-minus-WIN effects plus positive mean effect",
+      "untouched_substrate": "pre-reserved E3 future streams and previously-unsplit B4 heldout complement"
+    },
+    "stage_m1": {
+      "arms": [
+        "WIN-C",
+        "FIRST-FAIL",
+        "PROXIMAL-FAIL",
+        "PROXIMAL-CONTRAST"
+      ],
+      "development_streams": 6,
+      "heldout_tasks": 18,
+      "replicates": 2,
+      "stream_selection": "one per family by deterministic SHA ordering before new outcomes"
+    },
+    "stage_m2": {
+      "candidate_selection": "larger M1 mean improvement over WIN between PROXIMAL-FAIL and PROXIMAL-CONTRAST; ties choose PROXIMAL-FAIL",
+      "development_streams": 6,
+      "eligibility_gate": "positive mean candidate-minus-WIN and positive on at least 4/6 validation streams",
+      "heldout_tasks": 18,
+      "replicates": 2
+    }
+  },
+  "next_step": "FREEZE_AND_REVIEW_M1_CONTRACT_BEFORE_PROVIDER_IO",
+  "schema_version": "1.0",
+  "status": "LESSONS_FROZEN_NEXT_MECHANISM_PROPOSAL_ZERO_AUTHORITY",
+  "strategy_memo_path": "consultations/e2-r17-lessons-mechanism-and-next-experiment-20260902.md",
+  "v2_verdict_preserved": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS"
+}
