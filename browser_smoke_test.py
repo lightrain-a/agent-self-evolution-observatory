@@ -723,7 +723,7 @@ def main() -> None:
         require("速览版" not in selected["text"] and "完整 PaperState" not in selected["text"] and "Stanford" not in selected["text"], "collection page must not duplicate single-paper detail/review content")
 
         paper_pages = [
-          ("/paper-e1.html", True, ("R*(A;q)","AutoSkill P19","12 / 32")),
+          ("/paper-e1.html", True, ("R*(A)","AutoSkill P19","12 / 32")),
           ("/paper-g1.html", True, ("BrowserART + AWM","HB 0/12","DS 3/12")),
           ("/paper-c1.html", True, ("Shopping","125/172","0.700 vs 0.595")),
           ("/paper-e2.html", True, ("48 matched pairs","17 / 48","R17 · 17/48 · effect unopened")),
