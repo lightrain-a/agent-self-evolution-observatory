@@ -1,0 +1,23 @@
+{
+  "codingplan_model_requests": 0,
+  "codingplan_window_used_after": 130,
+  "codingplan_window_used_before": 130,
+  "content_sha256": "dc72648c46cb2a331166fb620b5bc1e1953bf6f5b4714d71b265304092b56380",
+  "execution_id": "CODINGPLAN-QWEN38-27B-CAPABILITY-A0",
+  "f0_authorized": false,
+  "failed_runtime_root": "runtimes/agent-constraint-externality-codingplan-qwen38-capability-a0-20260902",
+  "failure_class": "ATOMCODE_HOME_RELATIVE_PATH_DOUBLE_RESOLUTION",
+  "ledger_created": false,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "observed_misplaced_daemon_metadata": "episodes/capability_qwen3.8-27b_ACE-FG-05_1/atomcode-workdir/runtimes/.../atomcode-home/daemon-38795.json",
+  "repair": {
+    "new_runtime_root_required": true,
+    "resolve_daemon_paths_before_spawn": true,
+    "resolve_episode_root_before_ATOMCODE_HOME": true,
+    "terminate_daemon_on_token_or_health_failure": true
+  },
+  "retry_semantics": "NO_SCIENTIFIC_RETRY_BECAUSE_NO_DISPATCH_OR_MODEL_REQUEST_OCCURRED",
+  "schema_version": "ace-codingplan-qwen38-a0-predispatch-path-repair1-v1",
+  "scientific_dispatch_sent": false,
+  "status": "CODINGPLAN_QWEN38_A0_PREDISPATCH_RELATIVE_ATOMCODE_HOME_VOID_REPAIR1"
+}

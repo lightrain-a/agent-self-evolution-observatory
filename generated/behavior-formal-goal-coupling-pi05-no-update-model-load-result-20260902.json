@@ -1,0 +1,65 @@
+{
+  "authority_path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-shared26-resume-20260901/generated/behavior-formal-goal-coupling-pi05-no-update-model-load-authority-20260902.json",
+  "authority_sha256": "a3d9f9358b8c1a24d64a9483cf0c2adb11dcb1d3965477f57ac9135a73d4a561",
+  "backward_pass_executed": false,
+  "base_asset_receipt": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-shared26-resume-20260901/generated/behavior-formal-goal-coupling-pi05-base-transport-repair1-result-20260902.json",
+  "base_asset_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+  "base_bytes_rehashed": 12441721931,
+  "base_object_count_rehashed": 20,
+  "checkpoint_written": false,
+  "config_name": "pi05_b1k_shared26_frozen",
+  "dataset_accessed": false,
+  "error": null,
+  "exp_name": "shared26-seed42-run1",
+  "formal_training_topology_authorized": false,
+  "forward_pass_executed": false,
+  "fsdp_devices": 1,
+  "generated_at": "2026-09-02T12:03:51.415765+00:00",
+  "global_batch_size": 64,
+  "gpu_after_ready_or_error": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 75465,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 1991,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_used": true,
+  "initialized_step": 0,
+  "local_checkpoint_root": "/data/wyt/formal-goal-pi05-base-params-v1",
+  "loss_computed": false,
+  "model_checkpoint_weight_downloaded": true,
+  "model_load_attempted": true,
+  "model_loaded": true,
+  "next_gate": "FROZEN_DISTRIBUTED_TRAINING_RESOURCE_ADMISSION",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "openpi_child_root": "/data/wyt/formal-goal-shared26-openpi-child-20260901",
+  "optimizer_update": false,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "qualification_devices": [
+    "cuda:0"
+  ],
+  "qualification_visible_device_count": 1,
+  "schema_version": "behavior-formal-goal-coupling-pi05-no-update-model-load-result-v1",
+  "scientific_authority": false,
+  "status": "PI05_NO_UPDATE_MODEL_LOAD_PASS",
+  "tokenizer_executed": false,
+  "train_state_ready": true,
+  "training_started": false
+}

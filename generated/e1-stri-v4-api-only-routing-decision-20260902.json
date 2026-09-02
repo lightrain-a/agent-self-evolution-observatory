@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "object": "E1_STRI_V4_SUCCESSOR",
+  "artifact_type": "user_resource_routing_decision",
+  "created_date": "2026-09-02",
+  "state": "API_ONLY_ROUTE_SELECTED_EXACT_MODEL_NOT_YET_FROZEN",
+  "decision": {
+    "hosted_api_only": true,
+    "self_hosted_qwen35b_fp8_allowed": false,
+    "a100_model_serving_budget": 0,
+    "reason": "User explicitly prefers API execution for E1 V4 and does not want Qwen3.5-35B-A3B-FP8 self-hosting to occupy scarce A100 capacity."
+  },
+  "scientific_boundary": {
+    "canonical_e1_evidence_unchanged": true,
+    "v3_outcomes_unchanged": true,
+    "v4_scientific_actor_frozen": false,
+    "exact_hosted_model": null,
+    "exact_provider": null,
+    "selection_must_be_outcome_blind": true,
+    "required_before_p0": [
+      "non-scientific hosted API capability preflight",
+      "model identity / version capture",
+      "provider route capture",
+      "call/input/output token accounting",
+      "hard budget ceiling",
+      "fresh single-repository task-pool freeze"
+    ],
+    "model_switch_after_p0_start": false,
+    "provider_switch_after_p0_start": false
+  },
+  "budget_policy": {
+    "p0_only_first": true,
+    "later_stages_require_prior_gate_pass": true,
+    "freeze_separate_call_and_token_ceiling_per_stage": true,
+    "do_not_open_full_successor_budget_from_v3_extrapolation_alone": true
+  },
+  "authority": {
+    "scientific_execution": false,
+    "provider_calls": false,
+    "gpu_claim": false,
+    "paper_promotion": false
+  }
+}

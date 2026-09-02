@@ -1,0 +1,23 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-paligemma-tokenizer-transport-hold-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "PALIGEMMA_TOKENIZER_CURL_TRANSPORT_HOLD",
+  "remote_manifest_path": "generated/behavior-formal-goal-coupling-paligemma-tokenizer-remote-manifest-20260902.json",
+  "remote_manifest_sha256": "18cf4503fe991c5889d82db5fd8adf097b5c7de70fda17a88fd47ca1e95d1ec6",
+  "source": "gs://big_vision/paligemma_tokenizer.model",
+  "generation": "1711547605575873",
+  "expected_size": 4264023,
+  "partial_path": "/data/wyt/formal-goal-paligemma-tokenizer-v1/paligemma_tokenizer.model.part",
+  "partial_size": 540672,
+  "partial_files_are_scientific_evidence": false,
+  "diagnosis": "Generation-pinned JSON API curl stopped making useful progress before completion. The curl process was terminated and no finalized tokenizer object was admitted.",
+  "authorized_repair": "Use generation-qualified gsutil into a non-evidence temporary/quarantine path, verify exact size, GCS MD5, GCS CRC32C and local SHA-256, then atomically install the verified byte object and delete only the stale non-evidence .part.",
+  "model_checkpoint_weight_downloaded": true,
+  "model_loaded": true,
+  "gpu_used": false,
+  "training_started": false,
+  "optimizer_update": false,
+  "policy_rollouts_started": false,
+  "policy_outcomes_read": false,
+  "scientific_authority": false
+}
