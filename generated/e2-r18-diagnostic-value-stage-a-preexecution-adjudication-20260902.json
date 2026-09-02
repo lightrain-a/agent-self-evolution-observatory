@@ -1,0 +1,41 @@
+{
+  "actor_rollouts_exact": 768,
+  "actual_path_preflight_path": "generated/e2-r18-diagnostic-value-stage-a-actual-path-preflight-20260902.json",
+  "actual_path_preflight_sha256": "0d26ababcdd0662898deac5d1399b12261d81232fbcfd363e6780b13857e7939",
+  "artifact_type": "e2-r18-stage-a-preexecution-adjudication",
+  "authority": {
+    "analyzer": false,
+    "heldout_evaluation": false,
+    "mint_single_use_stage_a_execution_authorization": true,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "second_backbone": false,
+    "updater": false
+  },
+  "contract_path": "generated/e2-r18-diagnostic-value-stage-a-contract-20260902.json",
+  "contract_sha256": "bfbb89dd0c72e8dedb0592cf720eb8dfc5a6da24271ab2b9c7ac6d990f814041",
+  "created_at_utc": "2026-09-02T06:34:37+00:00",
+  "fresh_heldout_reserved_for_later_stage_b": true,
+  "future_streams": 12,
+  "future_tasks": 96,
+  "git_head": "c99e1f82b5667f487d6244842ba28c2779450475",
+  "global_lease_absent": true,
+  "heldout_evaluations_authorized": 0,
+  "k": 8,
+  "negative_guard_tests": {
+    "out_of_scope_task_rejected": true,
+    "preflight_auth_cannot_execute": true,
+    "wrong_k_rejected": true
+  },
+  "old_e3_authority_reused": false,
+  "parent_r17_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "parent_r17_status_changed": false,
+  "prediction_freeze_before_stage_a": false,
+  "provider_call_hard_ceiling": 7680,
+  "provider_calls_before_authorization": 0,
+  "provider_retry_limit": 0,
+  "run_root_absent": true,
+  "schema_version": "1.0",
+  "status": "PASS_R18_STAGE_A_READY_FOR_SINGLE_USE_EXECUTION_AUTHORIZATION",
+  "updater_calls_authorized": 0
+}
