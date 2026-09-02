@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH2-IMAGES-20260903",
+  "status": "MSR_20_IMAGE_MANIFESTS_FROZEN",
+  "fresh2_pool_sha256": "1e52b3e00d7c8d82cf0846d66c87223c44bc137765cbd10e4ca139809134c3b1",
+  "manifest_freeze_sha256": "45be64121d04d8b5146364463154a2c87e43f410e4449b274f77bd99cbd553c4",
+  "blob_plan_sha256": "d770b3da1527709114aa866d54f944f833069ae2c72c3f46cefb6421d467d8a3",
+  "image_count": 20,
+  "stable_twice": true,
+  "unique_blob_count": 86,
+  "unique_blob_bytes": 13908456441,
+  "reusable_blob_count": 38,
+  "reusable_blob_bytes": 8561899648,
+  "missing_blob_count": 48,
+  "missing_blob_bytes": 5346556793,
+  "provider_calls": 0,
+  "scientific_calls": 0,
+  "authority": {
+    "immutable_blob_acquisition": true,
+    "docker_import": false,
+    "source_execution": false
+  }
+}
