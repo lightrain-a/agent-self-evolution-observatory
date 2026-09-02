@@ -1,0 +1,296 @@
+{
+  "accumulation_steps": 8,
+  "compared_effective_updates": 32,
+  "comparison": [
+    {
+      "effective_step": 0,
+      "equal": true,
+      "micro_first_index": 15070476,
+      "micro_last_index": 6119982,
+      "source_first_index": 15070476,
+      "source_last_index": 6119982
+    },
+    {
+      "effective_step": 1,
+      "equal": true,
+      "micro_first_index": 7221107,
+      "micro_last_index": 13710900,
+      "source_first_index": 7221107,
+      "source_last_index": 13710900
+    },
+    {
+      "effective_step": 2,
+      "equal": true,
+      "micro_first_index": 42496110,
+      "micro_last_index": 1123221,
+      "source_first_index": 42496110,
+      "source_last_index": 1123221
+    },
+    {
+      "effective_step": 3,
+      "equal": true,
+      "micro_first_index": 5584426,
+      "micro_last_index": 46109898,
+      "source_first_index": 5584426,
+      "source_last_index": 46109898
+    },
+    {
+      "effective_step": 4,
+      "equal": true,
+      "micro_first_index": 6987900,
+      "micro_last_index": 36683093,
+      "source_first_index": 6987900,
+      "source_last_index": 36683093
+    },
+    {
+      "effective_step": 5,
+      "equal": true,
+      "micro_first_index": 20556766,
+      "micro_last_index": 27822794,
+      "source_first_index": 20556766,
+      "source_last_index": 27822794
+    },
+    {
+      "effective_step": 6,
+      "equal": true,
+      "micro_first_index": 23977445,
+      "micro_last_index": 7828362,
+      "source_first_index": 23977445,
+      "source_last_index": 7828362
+    },
+    {
+      "effective_step": 7,
+      "equal": true,
+      "micro_first_index": 30882841,
+      "micro_last_index": 15362566,
+      "source_first_index": 30882841,
+      "source_last_index": 15362566
+    },
+    {
+      "effective_step": 8,
+      "equal": true,
+      "micro_first_index": 39998527,
+      "micro_last_index": 43543432,
+      "source_first_index": 39998527,
+      "source_last_index": 43543432
+    },
+    {
+      "effective_step": 9,
+      "equal": true,
+      "micro_first_index": 45855784,
+      "micro_last_index": 47218886,
+      "source_first_index": 45855784,
+      "source_last_index": 47218886
+    },
+    {
+      "effective_step": 10,
+      "equal": true,
+      "micro_first_index": 18042867,
+      "micro_last_index": 39038617,
+      "source_first_index": 18042867,
+      "source_last_index": 39038617
+    },
+    {
+      "effective_step": 11,
+      "equal": true,
+      "micro_first_index": 38722710,
+      "micro_last_index": 15247473,
+      "source_first_index": 38722710,
+      "source_last_index": 15247473
+    },
+    {
+      "effective_step": 12,
+      "equal": true,
+      "micro_first_index": 43845297,
+      "micro_last_index": 44871206,
+      "source_first_index": 43845297,
+      "source_last_index": 44871206
+    },
+    {
+      "effective_step": 13,
+      "equal": true,
+      "micro_first_index": 38603741,
+      "micro_last_index": 41359204,
+      "source_first_index": 38603741,
+      "source_last_index": 41359204
+    },
+    {
+      "effective_step": 14,
+      "equal": true,
+      "micro_first_index": 2671095,
+      "micro_last_index": 15857547,
+      "source_first_index": 2671095,
+      "source_last_index": 15857547
+    },
+    {
+      "effective_step": 15,
+      "equal": true,
+      "micro_first_index": 38817619,
+      "micro_last_index": 2208968,
+      "source_first_index": 38817619,
+      "source_last_index": 2208968
+    },
+    {
+      "effective_step": 16,
+      "equal": true,
+      "micro_first_index": 7544392,
+      "micro_last_index": 48865018,
+      "source_first_index": 7544392,
+      "source_last_index": 48865018
+    },
+    {
+      "effective_step": 17,
+      "equal": true,
+      "micro_first_index": 12749757,
+      "micro_last_index": 40521596,
+      "source_first_index": 12749757,
+      "source_last_index": 40521596
+    },
+    {
+      "effective_step": 18,
+      "equal": true,
+      "micro_first_index": 13243561,
+      "micro_last_index": 44777602,
+      "source_first_index": 13243561,
+      "source_last_index": 44777602
+    },
+    {
+      "effective_step": 19,
+      "equal": true,
+      "micro_first_index": 15838066,
+      "micro_last_index": 32195879,
+      "source_first_index": 15838066,
+      "source_last_index": 32195879
+    },
+    {
+      "effective_step": 20,
+      "equal": true,
+      "micro_first_index": 10332285,
+      "micro_last_index": 18368569,
+      "source_first_index": 10332285,
+      "source_last_index": 18368569
+    },
+    {
+      "effective_step": 21,
+      "equal": true,
+      "micro_first_index": 15300742,
+      "micro_last_index": 18443628,
+      "source_first_index": 15300742,
+      "source_last_index": 18443628
+    },
+    {
+      "effective_step": 22,
+      "equal": true,
+      "micro_first_index": 31190584,
+      "micro_last_index": 34866750,
+      "source_first_index": 31190584,
+      "source_last_index": 34866750
+    },
+    {
+      "effective_step": 23,
+      "equal": true,
+      "micro_first_index": 49385507,
+      "micro_last_index": 35213156,
+      "source_first_index": 49385507,
+      "source_last_index": 35213156
+    },
+    {
+      "effective_step": 24,
+      "equal": true,
+      "micro_first_index": 18544128,
+      "micro_last_index": 791663,
+      "source_first_index": 18544128,
+      "source_last_index": 791663
+    },
+    {
+      "effective_step": 25,
+      "equal": true,
+      "micro_first_index": 44938525,
+      "micro_last_index": 49105292,
+      "source_first_index": 44938525,
+      "source_last_index": 49105292
+    },
+    {
+      "effective_step": 26,
+      "equal": true,
+      "micro_first_index": 45663433,
+      "micro_last_index": 49761706,
+      "source_first_index": 45663433,
+      "source_last_index": 49761706
+    },
+    {
+      "effective_step": 27,
+      "equal": true,
+      "micro_first_index": 13642710,
+      "micro_last_index": 18553823,
+      "source_first_index": 13642710,
+      "source_last_index": 18553823
+    },
+    {
+      "effective_step": 28,
+      "equal": true,
+      "micro_first_index": 35916356,
+      "micro_last_index": 12243,
+      "source_first_index": 35916356,
+      "source_last_index": 12243
+    },
+    {
+      "effective_step": 29,
+      "equal": true,
+      "micro_first_index": 39753201,
+      "micro_last_index": 32040709,
+      "source_first_index": 39753201,
+      "source_last_index": 32040709
+    },
+    {
+      "effective_step": 30,
+      "equal": true,
+      "micro_first_index": 47981233,
+      "micro_last_index": 22566948,
+      "source_first_index": 47981233,
+      "source_last_index": 22566948
+    },
+    {
+      "effective_step": 31,
+      "equal": true,
+      "micro_first_index": 43338064,
+      "micro_last_index": 8975157,
+      "source_first_index": 43338064,
+      "source_last_index": 8975157
+    }
+  ],
+  "config_name": "pi05_b1k_shared26_frozen",
+  "dataset_frames": 50852705,
+  "dataset_samples_decoded": false,
+  "effective_batch_size": 64,
+  "epoch_accounting": {
+    "extra_full_micro_batches_at_epoch_tail_if_uncontrolled": 4,
+    "matched_micro_batches_per_epoch": 6356584,
+    "micro_batches_per_epoch": 6356588,
+    "micro_tail_frames_dropped": 1,
+    "required_future_epoch_rule": "If a run ever reaches an epoch boundary, discard the extra full micro-batches so each effective update remains aligned to the source batch-64 drop_last grouping.",
+    "source_batches_per_epoch": 794573,
+    "source_tail_frames_dropped": 33
+  },
+  "formal_50k_accounting": {
+    "conclusion": "The frozen 50k run remains within the first source epoch, so no microbatch-tail special case is reached during this experiment.",
+    "frames_consumed": 3200000,
+    "optimizer_updates": 50000,
+    "source_epoch_boundary_reached": false
+  },
+  "generated_at": "2026-09-02T15:30:15.008465+00:00",
+  "gpu_used": false,
+  "micro_batch_size": 8,
+  "model_loaded": false,
+  "next_gate": "ACCUM8X8_NO_UPDATE_DRY_GRADIENT_RESOURCE_QUALIFICATION",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "openpi_child_root": "/data/wyt/formal-goal-shared26-openpi-child-20260901",
+  "optimizer_update": false,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "sampler_groups_exactly_equal": true,
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum-data-order-qualification-v1",
+  "seed": 42,
+  "source_batch_size": 64,
+  "status": "PI05_ACCUM_8X8_DATA_ORDER_QUALIFICATION_PASS"
+}

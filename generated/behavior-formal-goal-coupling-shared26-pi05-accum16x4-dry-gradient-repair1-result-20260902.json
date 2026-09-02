@@ -1,0 +1,104 @@
+{
+  "accumulated_gradient_complete": false,
+  "accumulation_steps": 4,
+  "accumulator_element_count": null,
+  "accumulator_leaf_count": null,
+  "attempt_count_under_candidate_authority": 1,
+  "attempt_is_exactly_once": true,
+  "authority_sha256": "46bbc3edb3e7e7be6567a0143d9783223319c3d8a3526c96c35f2622c128346f",
+  "base_bytes_rehashed": 12441721931,
+  "base_object_count_rehashed": 20,
+  "batch_ready": true,
+  "candidate_priority": 1,
+  "checkpoint_written": false,
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "data_order_qualification_sha256": "0d2778edcfed2203cca93e8aa3e6c4733a24ba3b8dadb3e808a0fa2f795bcfec",
+  "effective_batch": 64,
+  "error": "XlaRuntimeError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 17055690208 bytes.",
+  "formal_training_authorized": false,
+  "generated_at": "2026-09-02T15:26:14.455931+00:00",
+  "gpu_after_each_completed_micro": [
+    {
+      "gpus": [
+        {
+          "index": 0,
+          "memory_total_mib": 81920,
+          "memory_used_mib": 73533,
+          "name": "NVIDIA A100-SXM4-80GB",
+          "utilization_gpu_percent": 100
+        }
+      ]
+    }
+  ],
+  "gpu_after_state": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 73491,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gradient_numerical_values_read": false,
+  "jax_memory_after_each_completed_micro": [
+    {
+      "bytes_in_use": 67187993088,
+      "bytes_limit": 76585341356,
+      "bytes_reserved": 0,
+      "largest_alloc_size": 5240111360,
+      "largest_free_block_bytes": 0,
+      "num_allocs": 8892,
+      "peak_bytes_in_use": 72428104960,
+      "peak_bytes_reserved": 0,
+      "peak_pool_bytes": 76585341184,
+      "pool_bytes": 76585341184
+    }
+  ],
+  "jax_memory_after_state": {
+    "bytes_in_use": 53774257152,
+    "bytes_limit": 76585341356,
+    "bytes_reserved": 0,
+    "largest_alloc_size": 4831838208,
+    "largest_free_block_bytes": 0,
+    "num_allocs": 340,
+    "peak_bytes_in_use": 53774268160,
+    "peak_bytes_reserved": 0,
+    "peak_pool_bytes": 76585341184,
+    "pool_bytes": 76585341184
+  },
+  "loss_value_retained_or_reported": false,
+  "micro_gradients_completed": 1,
+  "next_gate": "ADVANCE_TO_PREREGISTERED_MICROBATCH8_ACCUM8_IF_RESOURCE_ONLY_FAILURE",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "optimizer_update": false,
+  "parameter_update": false,
+  "physical_micro_batch": 16,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "preregistration_sha256": "0d0a88b20f15d3a0fa2e8721da865bd5488cc39c43523a518608063c8a51a8d7",
+  "resource_scope": {
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1006.slice/user@1006.service/app.slice/run-rc47d3cee07ee4da2816e1dfd11faaf62.scope",
+    "cpu_affinity": "0-63",
+    "memory_max_bytes": 77309411328,
+    "memory_swap_max_bytes": 0
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum16x4-dry-gradient-result-v1",
+  "scientific_training_started": false,
+  "status": "PI05_ACCUM16X4_NO_UPDATE_DRY_GRADIENT_HOLD",
+  "train_state_ready": true,
+  "v4_adjudication_sha256": "b2671ad042fd9bd5bfe44d9cba3d2beb0421c504712a5ad8128f5dfec691ea29"
+}

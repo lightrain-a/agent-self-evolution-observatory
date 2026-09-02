@@ -1,0 +1,25 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum16x4-resource-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "ACCUM16X4_RESOURCE_INFEASIBLE_AFTER_ONE_COMPLETED_MICROGRADIENT",
+  "result_path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum16x4-dry-gradient-repair1-result-20260902.json",
+  "result_sha256": "1208e32c2df053023aaf38a9069a430b35ed51b2d26bcfe8a29bb95fa86fdc9d",
+  "observed": {
+    "physical_micro_batch": 16,
+    "accumulation_steps": 4,
+    "micro_gradients_completed": 1,
+    "gpu_memory_after_first_micro_mib": 73533,
+    "second_micro_failed_allocation_bytes": 17055690208,
+    "error": "XlaRuntimeError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 17055690208 bytes."
+  },
+  "scientific_safety": {
+    "optimizer_update": false,
+    "parameter_update": false,
+    "checkpoint_written": false,
+    "policy_outcomes_read": false
+  },
+  "interpretation": "A physical microbatch of 16 can complete a real gradient on the frozen model, but retaining the FP32 accumulator while computing the next micro-gradient is not feasible on one A100-80GB under candidate-1.",
+  "decision": "ADVANCE_TO_PREREGISTERED_CANDIDATE_2_MICROBATCH8_ACCUM8",
+  "next_gate": "MICROBATCH8_ACCUM8_DATA_ORDER_AND_NO_UPDATE_DRY_GRADIENT_QUALIFICATION"
+}
