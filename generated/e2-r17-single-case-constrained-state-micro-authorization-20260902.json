@@ -1,0 +1,80 @@
+{
+  "artifact_type": "e2-r17-single-case-constrained-state-micro-measurement-authorization",
+  "authority": {
+    "analyzer": false,
+    "e3_confirmation": false,
+    "measurement_only": true,
+    "paper_promotion": false,
+    "provider_io": true,
+    "public_benchmark": false,
+    "scientific_experiment": true,
+    "second_backbone": false,
+    "submission": false,
+    "updater": false
+  },
+  "contract_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-e3-family-prediction-proposal-20260901/generated/e2-r17-single-case-constrained-state-micro-contract-20260902.json",
+  "contract_sha256": "31996d5d2f11f7c67cfdd023dbd63746f7930b23642272ac8135a7bc559208b7",
+  "created_at_utc": "2026-09-02T08:19:55+00:00",
+  "execution_scope": {
+    "allow_noninitial_skill": true,
+    "allowed_modes": [
+      "e1"
+    ],
+    "allowed_task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "automatic_retry": false,
+    "exact_k": 1,
+    "exactly_once": true,
+    "identity_artifact_sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-constrained-state-micro-v1.json",
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "measurement_child": "E2-R17-SINGLE-CASE-CONSTRAINED-STATE-MICRO",
+    "partial_effect_read": false,
+    "provider_budget": {
+      "per_unit_limit": 11,
+      "required": true,
+      "total_limit": 191
+    },
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "state_arms": [
+      "g0_base",
+      "g1_verify",
+      "g2_complete",
+      "g3_complete_recover"
+    ],
+    "state_skill_sha256": {
+      "g0_base": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb",
+      "g1_verify": "b8f51458daa28672dbe078c293f29d37c42eb5b2305199d92ccd7600ac078997",
+      "g2_complete": "248f1f7c3429c99d98c8d58584048efe2f989050116f507cea895484f8c80289",
+      "g3_complete_recover": "a89cbbd46a01aecb7e3c7f9e5cda964ce7c584492eef0aa6d78a9b422192ceb2"
+    },
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "interpretation_boundary": "Development-only measurement of four deterministic skill states. No updater calls, no E3, no second backbone, no paper or submission authority.",
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "preflight_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-e3-family-prediction-proposal-20260901/generated/e2-r17-single-case-constrained-state-micro-preflight-20260902.json",
+  "preflight_sha256": "087b1f63aa3d8d5c4cd408aa4480fb133f149856496113e4272764172b945d4b",
+  "schema_version": "1.0",
+  "single_use": true,
+  "status": "AUTHORIZED_E2_R17_SINGLE_CASE_CONSTRAINED_STATE_MICRO_MEASUREMENT"
+}
