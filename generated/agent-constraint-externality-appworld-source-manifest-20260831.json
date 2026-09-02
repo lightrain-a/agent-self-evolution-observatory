@@ -18,10 +18,10 @@
     "src/appworld/.source/tests.bundle": "04aa898cb015c53468c355d5ded662757c5234835a4de5cf4f7d7947bef159ec"
   },
   "protected_compiler_bundle": {
-    "path": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v2-20260902.bundle",
-    "plaintext_spec_sha256": "9920480e3b28c4916d8fd9ea8b94bd4aec3c9089af301b494212e2f72c3e0e45",
+    "path": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle",
+    "plaintext_spec_sha256": "8ff075108a3ced1aa6e1e9073300061138de71847c6c27db48e95d0920038828",
     "replay": "Decrypt locally with pinned AppWorld; never redistribute extracted plaintext.",
-    "sha256": "0a5bfae987cf136df57d3ad5431c097143e3ca333d8ae3258356c50fdcf3597d"
+    "sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5"
   },
   "public_redistribution_boundary": "Protected AppWorld material and detailed derivatives remain encrypted.",
   "schema_version": "appworld-constraint-source-revision-manifest-v1",

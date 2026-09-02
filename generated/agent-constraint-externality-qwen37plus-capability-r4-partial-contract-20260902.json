@@ -1,0 +1,30 @@
+{
+  "active_bundle_sha256": "4a2bf45fc63f2bde8f9b8ac31ffc48ce2fc42c64d65df9298605ddd8e68d1e05",
+  "application_retry": false,
+  "content_sha256": "358b469fd0368f891d883e3f22f60927aa8346398285c0284d3bccecaf61b19d",
+  "execution_id": "QWEN37PLUS-CAPABILITY-R4-PARTIAL-SUBSTRATE-V3",
+  "f0_authorized": false,
+  "fg_provider_reexecution": false,
+  "model": "qwen3.7-plus",
+  "model_switch": false,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "preserve_fg_measurements": 4,
+  "provider_max_retries": 0,
+  "qualification_sha256": "9800e7254cc6e4e5e1f22fc4b176159ae7072ca23d8830e9863b3a66d3ec8b76",
+  "replacement": false,
+  "rerun_family_ids": [
+    "ACE-TNF-05",
+    "ACE-TNF-06"
+  ],
+  "rerun_tnf_measurements": 4,
+  "same_repeats": [
+    1,
+    2
+  ],
+  "schema_version": "ace-qwen37plus-capability-r4-partial-contract-v1",
+  "status": "QWEN37PLUS_CAPABILITY_R4_PARTIAL_TNF_ONLY_AUTHORIZED",
+  "temperature": 0,
+  "threshold_change": false,
+  "tool_call_cap": 12,
+  "void_sha256": "e8345816fb2b8bc5a1a0f31021ecb62d1154cb43377516361dbddd4fd46a43bb"
+}

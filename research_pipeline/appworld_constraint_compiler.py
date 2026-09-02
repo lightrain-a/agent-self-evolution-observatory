@@ -141,6 +141,40 @@ def insert_fixture_row(connection: sqlite3.Connection, row: dict[str, Any]) -> N
         # responses remain valid.
         values.setdefault("created_at", fixture_timestamp)
         values.setdefault("updated_at", fixture_timestamp)
+    if app == "file_system" and table == "directories":
+        # AppWorld's process_path() canonicalizes directories with a trailing '/'.
+        # Scientific fixtures previously omitted it, so public directory_exists()
+        # could not see rows that were present in SQLite. Also ensure the synthetic
+        # family directory has its parent, avoiding an impossible child-without-parent
+        # filesystem hierarchy that induces unnecessary agent repair calls.
+        path = str(values["path"]).rstrip("/") + "/"
+        tilde_path = str(values.get("tilde_path", "~/")).rstrip("/") + "/"
+        values["path"] = path
+        values["tilde_path"] = tilde_path
+        parent_path = path.rstrip("/").rsplit("/", 1)[0] + "/"
+        parent_tilde = tilde_path.rstrip("/").rsplit("/", 1)[0] + "/"
+        if parent_path.startswith("/home/") and parent_path.count("/") >= 4:
+            exists = connection.execute(
+                "SELECT 1 FROM directories WHERE path = ? AND user_id = ?",
+                (parent_path, values["user_id"]),
+            ).fetchone()
+            if exists is None:
+                parent_id = int(values["id"]) - 1
+                if connection.execute("SELECT 1 FROM directories WHERE id = ?", (parent_id,)).fetchone():
+                    raise QualificationError(f"Synthetic parent directory id collision: {parent_id}")
+                connection.execute(
+                    "INSERT INTO directories (created_at, updated_at, record_hash, id, path, tilde_path, user_id) "
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    (
+                        fixture_timestamp,
+                        fixture_timestamp,
+                        None,
+                        parent_id,
+                        parent_path,
+                        parent_tilde,
+                        values["user_id"],
+                    ),
+                )
     if app == "file_system" and table == "files":
         # AppWorld's native File model stores an empty JSON list for ordinary
         # uncompressed text files. Leaving this column NULL makes cross-app

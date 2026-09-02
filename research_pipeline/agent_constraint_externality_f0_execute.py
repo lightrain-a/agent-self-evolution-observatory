@@ -269,12 +269,14 @@ def execute_sources(
         materialized = prepare_appworld_runtime_root(
             appworld_root, unit_root, family=family, arm=source_arm, task_id=task_id
         )
+        tool_budget = int(reference_arm["matching"]["tool_budget"])
         world = AppWorldToolWorld(
             runtime_root=unit_root,
             task_id=task_id,
             experiment_name="ace-f0-source",
             seed=1200,
             allowed_apps=set(family["fixture"]["apps"]),
+            max_interactions=tool_budget,
         )
         try:
             result = run_episode(
@@ -290,6 +292,7 @@ def execute_sources(
                 result_evaluator=lambda arm=source_arm, world=world: (
                     world.save_and_evaluate(arm)
                 ),
+                max_tool_calls=tool_budget,
             )
         finally:
             world.close()
@@ -395,12 +398,14 @@ def execute_probes(
         materialized = prepare_appworld_runtime_root(
             appworld_root, unit_root, family=family, arm=materialized_arm, task_id=task_id
         )
+        tool_budget = int(arm["matching"]["tool_budget"])
         world = AppWorldToolWorld(
             runtime_root=unit_root,
             task_id=task_id,
             experiment_name="ace-f0-probe",
             seed=int(unit.seed or 0),
             allowed_apps=set(family["fixture"]["apps"]),
+            max_interactions=tool_budget,
         )
         try:
             run_episode(
@@ -416,6 +421,7 @@ def execute_probes(
                 result_evaluator=lambda arm=arm, world=world: evaluate_constraints_from_arm(
                     arm, world.save_and_evaluate(arm)
                 ),
+                max_tool_calls=tool_budget,
             )
         finally:
             world.close()

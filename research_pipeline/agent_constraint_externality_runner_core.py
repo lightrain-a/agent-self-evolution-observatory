@@ -410,6 +410,7 @@ def run_episode(
     base_url: str = DEFAULT_BASE_URL,
     crash_after_dispatch: bool = False,
     result_evaluator: Callable[[], dict[str, Any]] | None = None,
+    max_tool_calls: int = MAX_TOOL_CALLS,
 ) -> dict[str, Any]:
     ledger.dispatch(
         unit,
@@ -453,7 +454,7 @@ def run_episode(
             input_items.extend(receipt.output)
             for call in calls:
                 tool_calls += 1
-                if tool_calls > MAX_TOOL_CALLS:
+                if tool_calls > max_tool_calls:
                     raise RunnerError("Tool-call cap exceeded.")
                 output = world.execute(call["name"], call["arguments"])
                 input_items.append({

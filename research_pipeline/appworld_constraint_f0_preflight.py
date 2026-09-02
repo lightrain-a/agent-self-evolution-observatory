@@ -99,6 +99,33 @@ CAPABILITY_SUBSTRATE_V2_BUNDLE = (
 CAPABILITY_R2_ROOT_CAUSE_AUDIT = (
     GENERATED / "agent-constraint-externality-capability-r2-root-cause-audit-20260902.json"
 )
+CAPABILITY_R3_PARTIAL_VOID = (
+    GENERATED / "agent-constraint-externality-capability-r3-partial-void-r1-20260902.json"
+)
+CAPABILITY_SUBSTRATE_V3_CONTRACT = (
+    GENERATED / "agent-constraint-externality-capability-substrate-v3-contract-20260902.json"
+)
+CAPABILITY_SUBSTRATE_QUALIFICATION_R3 = (
+    GENERATED / "agent-constraint-externality-capability-substrate-recovery-qualification-r3-20260902.json"
+)
+CAPABILITY_SUBSTRATE_V3_BUNDLE = (
+    GENERATED / "agent-constraint-externality-appworld-pre-f0_5-protected-v3-20260902.bundle"
+)
+CAPABILITY_SUBSTRATE_V4_CONTRACT = (
+    GENERATED / "agent-constraint-externality-capability-substrate-v4-contract-20260902.json"
+)
+CAPABILITY_SUBSTRATE_QUALIFICATION_R4 = (
+    GENERATED / "agent-constraint-externality-capability-substrate-recovery-qualification-r4-20260902.json"
+)
+CAPABILITY_SUBSTRATE_V4_BUNDLE = (
+    GENERATED / "agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle"
+)
+CAPABILITY_R5_PARTIAL_CONTRACT = (
+    GENERATED / "agent-constraint-externality-qwen37plus-capability-r5-partial-contract-20260902.json"
+)
+CAPABILITY_R5_PARTIAL_RESULT = (
+    GENERATED / "agent-constraint-externality-qwen37plus-capability-result-r5-partial-20260902.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -269,8 +296,54 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         and r3_partial_contract.get("rerun_unit_count") == 4
         and r3_partial_contract.get("preserved_unit_count") == 4
     )
+    r3_partial_void = (
+        read_json(CAPABILITY_R3_PARTIAL_VOID)
+        if CAPABILITY_R3_PARTIAL_VOID.is_file()
+        else {}
+    )
+    r3_partial_void_active = (
+        r3_partial_void.get("status")
+        == "QWEN37PLUS_R3_PARTIAL_VOID_SUBSTRATE_FILESYSTEM_FILENAME_INVALID"
+    )
+    substrate_v4_contract = (
+        read_json(CAPABILITY_SUBSTRATE_V4_CONTRACT)
+        if CAPABILITY_SUBSTRATE_V4_CONTRACT.is_file()
+        else {}
+    )
+    substrate_qualification_r4 = (
+        read_json(CAPABILITY_SUBSTRATE_QUALIFICATION_R4)
+        if CAPABILITY_SUBSTRATE_QUALIFICATION_R4.is_file()
+        else {}
+    )
+    substrate_v4_recovery_pass = (
+        substrate_v4_contract.get("status") == "CAPABILITY_SUBSTRATE_V4_TOOL_BUDGET_QUALIFIED"
+        and substrate_v4_contract.get("tool_budget_rule", {}).get("resolved_tool_call_cap") == 16
+        and substrate_qualification_r4.get("status")
+        == "CAPABILITY_SUBSTRATE_V4_PUBLIC_REACHABILITY_WITH_HEADROOM_PASS"
+        and substrate_qualification_r4.get("tool_call_cap") == 16
+    )
+    r5_partial_contract = (
+        read_json(CAPABILITY_R5_PARTIAL_CONTRACT)
+        if CAPABILITY_R5_PARTIAL_CONTRACT.is_file()
+        else {}
+    )
+    r5_partial_authorized = (
+        r5_partial_contract.get("status")
+        == "QWEN37PLUS_CAPABILITY_R5_PARTIAL_TNF_ONLY_AUTHORIZED"
+        and r5_partial_contract.get("rerun_tnf_measurements") == 4
+        and r5_partial_contract.get("preserve_fg_measurements") == 4
+        and r5_partial_contract.get("tool_call_cap") == 16
+        and r5_partial_contract.get("model_switch") is False
+        and r5_partial_contract.get("replacement") is False
+    )
 
-    if CAPABILITY_R3_PARTIAL_RESULT.is_file():
+    if CAPABILITY_R5_PARTIAL_RESULT.is_file():
+        capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
+        capability_result = read_json(CAPABILITY_R5_PARTIAL_RESULT)
+    elif r3_partial_void_active:
+        capability_result_path = Path()
+        capability_result = {}
+    elif CAPABILITY_R3_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R3_PARTIAL_RESULT
         capability_result = read_json(CAPABILITY_R3_PARTIAL_RESULT)
     elif CAPABILITY_R3_RESULT.is_file():
@@ -303,6 +376,14 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         if capability_result_path == CAPABILITY_R3_PARTIAL_RESULT
         else 0
     )
+    r3_partial_void_provider_requests = int(
+        r3_partial_void.get("provider_requests_spent_in_void_tnf_attempt", 0)
+    )
+    r5_provider_requests = (
+        int(capability_result.get("provider_request_total_new", 0))
+        if capability_result_path == CAPABILITY_R5_PARTIAL_RESULT
+        else 0
+    )
     flash_agent_requests = int(
         flash_final.get(
             "agent_model_request_count",
@@ -321,7 +402,15 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         historical_void_provider_requests += r2_provider_requests
         historical_void_agent_requests += r2_agent_requests
         historical_void_agent_episodes += r2_agent_episodes
-    if capability_result_path == CAPABILITY_R3_PARTIAL_RESULT:
+    if r3_partial_void_active:
+        historical_void_provider_requests += r3_partial_void_provider_requests
+        historical_void_agent_requests += r3_partial_void_provider_requests
+        historical_void_agent_episodes += len(r3_partial_void.get("affected_units", []))
+    if capability_result_path == CAPABILITY_R5_PARTIAL_RESULT:
+        latest_provider_requests = r5_provider_requests
+        latest_agent_requests = int(capability_result.get("new_agent_model_request_count", 0))
+        latest_agent_episodes = int(capability_result.get("rerun_tnf_measurements", 0))
+    elif capability_result_path == CAPABILITY_R3_PARTIAL_RESULT:
         latest_provider_requests = r3_provider_requests
         latest_agent_requests = int(capability_result.get("new_agent_model_request_count", 0))
         latest_agent_episodes = int(capability_result.get("rerun_tnf_measurements", 0))
@@ -380,7 +469,7 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             "provider_max_retries": 0,
             "application_retry": False,
             "capability_episode_cap": 8,
-            "tool_interaction_cap": 12,
+            "tool_interaction_cap": 16 if substrate_v4_recovery_pass else 12,
             "temperature": 0,
             "append_only_ledger": True,
             "no_episode_replacement": True,
@@ -540,6 +629,17 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             "F0 remains unauthorized."
         )
         next_action = "STOP_AWAIT_HUMAN_ADJUDICATION"
+    elif r3_partial_void_active and substrate_v4_recovery_pass and r5_partial_authorized:
+        readiness_status = "CAPABILITY_SUBSTRATE_V4_PARTIAL_REQUALIFICATION_READY"
+        blocker = None
+        next_action = "RUN_QWEN37PLUS_CAPABILITY_R5_PARTIAL_TNF_ONLY"
+    elif r3_partial_void_active:
+        readiness_status = "CAPABILITY_SUBSTRATE_V4_RECOVERY_REQUIRED"
+        blocker = (
+            "R3 partial TNF measurements are void because FileSystem path/filename semantics "
+            "and the zero-headroom 12-call budget were not a valid capability substrate."
+        )
+        next_action = "QUALIFY_CAPABILITY_SUBSTRATE_V4"
     elif r2_void_active and substrate_v2_recovery_pass and r3_partial_authorized:
         readiness_status = "CAPABILITY_SUBSTRATE_V2_PARTIAL_REQUALIFICATION_READY"
         blocker = None
@@ -592,6 +692,12 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "capability_r3_full_contract_superseded": r3_partial_authorized,
         "capability_r3_preserved_fg_measurements": int(capability_result.get("preserved_fg_measurements", 0)),
         "capability_r3_rerun_tnf_measurements": int(capability_result.get("rerun_tnf_measurements", 0)),
+        "capability_r3_partial_void_substrate_filesystem_filename_invalid": r3_partial_void_active,
+        "capability_substrate_v4_recovery_qualification_pass": substrate_v4_recovery_pass,
+        "capability_r5_partial_authorized": r5_partial_authorized,
+        "capability_preserved_fg_measurements": 4 if r3_partial_void_active else int(
+            capability_result.get("preserved_fg_measurements", 0)
+        ),
         "capability_result_status": capability_status,
         "capability_result_artifact": (
             str(capability_result_path.relative_to(ROOT))
@@ -674,7 +780,11 @@ def main() -> None:
         CAPABILITY_R3_CONTRACT, CAPABILITY_R3_RESULT, CAPABILITY_R3_PARTIAL_CONTRACT,
         CAPABILITY_R3_PARTIAL_RESULT, CAPABILITY_R2_FG_V2_REVALIDATION,
         CAPABILITY_SUBSTRATE_V2_CONTRACT, CAPABILITY_SUBSTRATE_V2_BUNDLE,
-        CAPABILITY_R2_ROOT_CAUSE_AUDIT,
+        CAPABILITY_R2_ROOT_CAUSE_AUDIT, CAPABILITY_R3_PARTIAL_VOID,
+        CAPABILITY_SUBSTRATE_V3_CONTRACT, CAPABILITY_SUBSTRATE_QUALIFICATION_R3,
+        CAPABILITY_SUBSTRATE_V3_BUNDLE, CAPABILITY_SUBSTRATE_V4_CONTRACT,
+        CAPABILITY_SUBSTRATE_QUALIFICATION_R4, CAPABILITY_SUBSTRATE_V4_BUNDLE,
+        CAPABILITY_R5_PARTIAL_CONTRACT, CAPABILITY_R5_PARTIAL_RESULT,
     ):
         if not path.is_file():
             continue

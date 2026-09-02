@@ -1,0 +1,44 @@
+{
+  "active_bundle": {
+    "path": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v3-20260902.bundle",
+    "sha256": "4a2bf45fc63f2bde8f9b8ac31ffc48ce2fc42c64d65df9298605ddd8e68d1e05"
+  },
+  "changed_family_ids": [
+    "ACE-TNF-01",
+    "ACE-TNF-02",
+    "ACE-TNF-03",
+    "ACE-TNF-04",
+    "ACE-TNF-05",
+    "ACE-TNF-06"
+  ],
+  "content_sha256": "ef2375194da1a76c24974102c9da1de696cef50809edb288929276827ff86bea",
+  "f0_scientific_outcomes_observed": 0,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "parent_bundle": {
+    "path": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v2-20260902.bundle",
+    "sha256": "0a5bfae987cf136df57d3ad5431c097143e3ca333d8ae3258356c50fdcf3597d"
+  },
+  "protected_plaintext_persisted": false,
+  "provider_requests": 0,
+  "repairs": {
+    "directory_api_fidelity": "RUNTIME_CANONICALIZES_DIRECTORY_TRAILING_SLASH_AND_MATERIALIZES_PARENT",
+    "tnf_filename_semantics": "TASK_EXPLICITLY_USES_TODO_TITLE_AS_STEM_AND_DOT_TXT_FILENAME"
+  },
+  "schema_version": "ace-appworld-capability-substrate-v3-contract-v1",
+  "status": "CAPABILITY_SUBSTRATE_V3_STATIC_REPAIR_READY",
+  "substrate_id": "ACE-APPWORLD-CAPABILITY-SUBSTRATE-V3-20260902",
+  "unchanged": {
+    "capability_thresholds": "UNCHANGED",
+    "constraint_count": 3,
+    "coupling_levels": [
+      0,
+      1,
+      2
+    ],
+    "fg_measurements": true,
+    "fg_task_text": true,
+    "model": "qwen3.7-plus",
+    "tool_call_cap": 12,
+    "update_surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE"
+  }
+}
