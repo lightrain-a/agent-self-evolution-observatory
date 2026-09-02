@@ -1,0 +1,79 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-source-train-compile-probe-v5b-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_date": "2026-09-02",
+  "status": "AUTHORIZED_PI05_SOURCE_NATIVE_09_COMPILE_ONLY_MEMORY_PROBE_V5B",
+  "scope": "outcome-blind compile-only repair of v5a diagnostic lowering; source train_step must not execute",
+  "parent_v5a_failure_adjudication_sha256": "33f850929f08a30f360e6bdd73755450f9ef4226b5af63d2648c1d3f508ea584",
+  "repair": {
+    "operation": "wrap only JAX lower/compile in openpi.shared.array_typing.disable_typechecking()",
+    "basis": "the pinned OpenPI source explicitly exposes disable_typechecking() for JAX tracing; numerical train_step code, parameters, data, optimizer, batch, RNG and sharding are unchanged",
+    "scientific_semantics_changed": false
+  },
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_source_train_compile_probe_v5b.py",
+    "sha256": "047b889e6b2dca57129efacefb4bcafdfbc56b967149391cdec4d860921de2de"
+  },
+  "launcher": {
+    "path": "scripts/run_behavior_formal_goal_coupling_shared26_pi05_source_train_compile_probe_v5b.sh",
+    "sha256": "92bb008d77aa68040a41cbed9da04e626da77d8e132e30cdf1dc7bc4aa8e2c03"
+  },
+  "source_bindings": {
+    "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+    "source_train_b1k_py_sha256": "9e1ac351c8f491d0c5307963d11ab07b008548da2bcd29a4670e88622eae6507",
+    "source_train_b1k_sh_sha256": "f69e949c25c486835ecb3918962ddd048936a7d17a57f76c1a539efeaa9b65d2"
+  },
+  "frozen_scientific_runtime": {
+    "global_batch_size": 64,
+    "seed": 42,
+    "episode_count": 5200,
+    "action_horizon": 32,
+    "fsdp_devices": 1,
+    "model": "pi0.5",
+    "optimizer_and_schedule": "unchanged"
+  },
+  "resource_runtime": {
+    "num_workers": 0,
+    "cpu_affinity": "0-63",
+    "TasksMax": 512,
+    "host_MemoryMax": "72G",
+    "host_MemorySwapMax": "0",
+    "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.9",
+    "XLA_PYTHON_CLIENT_PREALLOCATE": "true"
+  },
+  "authorized_operations": [
+    "construct one frozen batch with num_workers=0",
+    "initialize the frozen step-0 train state",
+    "disable OpenPI runtime type annotations only during JAX lower/compile",
+    "lower and compile the exact numerical source train_b1k.train_step with state donation",
+    "read compiler memory-analysis metadata"
+  ],
+  "forbidden_operations": [
+    "executing the compiled source train_step",
+    "optimizer or parameter update",
+    "checkpoint write",
+    "loss value read",
+    "policy rollout or outcome read",
+    "global batch change",
+    "microbatching or gradient accumulation",
+    "formal training launch"
+  ],
+  "required_launch_environment": {
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "OPENPI_DATA_HOME": "/data/wyt/formal-goal-openpi-cache-v1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "TOKENIZERS_PARALLELISM": "false",
+    "JAX_PLATFORMS": "cuda",
+    "XLA_PYTHON_CLIENT_MEM_FRACTION": "0.9",
+    "XLA_PYTHON_CLIENT_PREALLOCATE": "true"
+  },
+  "optimizer_update_count_authorized": 0,
+  "scientific_training_authorized": false,
+  "scientific_authority": false,
+  "next_gate_if_pass": "ADJUDICATE_SOURCE_TRAIN_STEP_COMPILED_MEMORY_PLAN",
+  "next_gate_if_fail": "V5B_COMPILE_PROBE_FAILURE_ADJUDICATION"
+}

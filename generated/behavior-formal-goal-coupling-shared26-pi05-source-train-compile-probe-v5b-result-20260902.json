@@ -1,0 +1,96 @@
+{
+  "authority_sha256": "66133f92fb3c856305b01a6820c808ac563ea3cd9e04597cfd6b275a7ad5d5ee",
+  "batch_accessed": true,
+  "cgroup": {
+    "memory_max": "77309411328",
+    "memory_swap_max": "0",
+    "path": "/sys/fs/cgroup/user.slice/user-1006.slice/user@1006.service/app.slice/run-re2cdb2ad3ca44484ab34b72d67b72ade.scope",
+    "pids_max": "512"
+  },
+  "compiled_memory_analysis": {
+    "alias_size_in_bytes": 53654941964,
+    "argument_size_in_bytes": 53770873812,
+    "host_alias_size_in_bytes": 0,
+    "host_argument_size_in_bytes": 0,
+    "host_output_size_in_bytes": 0,
+    "host_temp_size_in_bytes": 0,
+    "output_size_in_bytes": 53654943656,
+    "repr": "CompiledMemoryStats(generated_code_size_in_bytes=2642308, argument_size_in_bytes=53770873812, output_size_in_bytes=53654943656, alias_size_in_bytes=53654941964, temp_size_in_bytes=31515589768, host_generated_code_size_in_bytes=0, host_argument_size_in_bytes=0, host_output_size_in_bytes=0, host_alias_size_in_bytes=0, host_temp_size_in_bytes=0)",
+    "temp_size_in_bytes": 31515589768
+  },
+  "generated_at": "2026-09-02T14:59:56.434074+00:00",
+  "gpu_after_batch": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 73483,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_after_compile": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 73533,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_after_state": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 73491,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "jax_memory_after_state": {
+    "bytes_in_use": 53773035264,
+    "bytes_limit": 76585341356,
+    "bytes_reserved": 0,
+    "largest_alloc_size": 4831838208,
+    "largest_free_block_bytes": 0,
+    "num_allocs": 247,
+    "peak_bytes_in_use": 53773046272,
+    "peak_bytes_reserved": 0,
+    "peak_pool_bytes": 76585341184,
+    "pool_bytes": 76585341184
+  },
+  "loss_value_read": false,
+  "next_gate": "ADJUDICATE_COMPILED_MEMORY_PLAN_BEFORE_ANY_EXECUTION",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "optimizer_update_executed": false,
+  "parameter_update_executed": false,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-source-train-compile-probe-v5b-result-v1",
+  "scientific_authority": false,
+  "scientific_training_started": false,
+  "source_train_script_sha256": "9e1ac351c8f491d0c5307963d11ab07b008548da2bcd29a4670e88622eae6507",
+  "source_train_step_compiled": true,
+  "source_train_step_executed": false,
+  "source_train_step_lowered": true,
+  "status": "PI05_SOURCE_NATIVE_09_COMPILE_ONLY_MEMORY_PROBE_PASS",
+  "train_state_initialized": true,
+  "xla_python_client_mem_fraction": "0.9"
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-resource-v4-gradient-oom-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_date": "2026-09-02",
+  "status": "PI05_RESOURCE_V4_GRADIENT_OOM_ADJUDICATED_OUTCOME_BLIND",
+  "parent_authority_sha256": "761513c2efe2797936580407d04745742494ef5dbabe87e524c6c57fec515d8a",
+  "parent_result_sha256": "e5fe56b7451c208c0c10dd8fe001ee9d238bc072f39965b26f52ddfd9c3842a9",
+  "evidence": {
+    "batch_ready": true,
+    "train_state_ready": true,
+    "dry_gradient_execution_started": true,
+    "dry_gradient_execution_completed": false,
+    "gpu_memory_used_after_state_mib": 61319,
+    "jax_bytes_in_use_after_state": 53773035264,
+    "jax_bytes_limit_v4": 63821119488,
+    "failed_allocation_bytes": 29452454632,
+    "error_class": "XlaRuntimeError RESOURCE_EXHAUSTED"
+  },
+  "source_native_resource_evidence": {
+    "README_sha256": "567fc57766bd736664f50126cab8145af4071ca16cc5e238f2b11e369169c3b5",
+    "docs_b1k_sha256": "d984a4bed60f7c50b05caebb662e4c148fc95601cd1dd176c8ea2cff18e40adf",
+    "train_b1k_sh_sha256": "f69e949c25c486835ecb3918962ddd048936a7d17a57f76c1a539efeaa9b65d2",
+    "documented_full_finetune_gpu": "A100 80GB / H100; >70GB",
+    "documented_b1k_batch_size": 64,
+    "documented_XLA_PYTHON_CLIENT_MEM_FRACTION": 0.9
+  },
+  "diagnosis": "v4 omitted the source-native B1K XLA_PYTHON_CLIENT_MEM_FRACTION=0.9 setting and therefore exposed a substantially smaller JAX device pool. The v4 no-update dry-gradient also returns the full gradient tree rather than executing the source donated-state train_step, so its peak memory behavior is not yet proven equivalent to the actual source training step. A compile-only memory analysis of the exact source train_step under the documented 0.9 allocator is required before changing global batch or training semantics.",
+  "scientific_outcomes_observed": 0,
+  "policy_outcomes_read": false,
+  "optimizer_update": false,
+  "parameter_update": false,
+  "checkpoint_written": false,
+  "scientific_training_started": false,
+  "automatic_v4_retry_authorized": false,
+  "microbatching_authorized": false,
+  "global_batch_change_authorized": false,
+  "next_gate": "SOURCE_NATIVE_09_COMPILE_ONLY_MEMORY_PROBE"
+}

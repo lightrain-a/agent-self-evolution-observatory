@@ -1,0 +1,23 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-source-train-compile-probe-v5a-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_date": "2026-09-02",
+  "status": "PI05_V5A_COMPILE_PROBE_TYPECHECK_COMPAT_FAILURE_ADJUDICATED",
+  "parent_authority_sha256": "560e4d4404ffe4dbe135cf9b89f1f98c6c6fc76054063979568ef1210f9d8ee5",
+  "parent_result_sha256": "1b533f82689f4df67e12a2acc147bd30f544db99011e9cdbe7bd1437d157e8b0",
+  "failure_class": "DIAGNOSTIC_LOWERING_RUNTIME_TYPECHECK_COMPATIBILITY",
+  "failure": "OpenPI TrainState runtime typechecking rejects JAX donated ArgInfo values produced by jitted.lower(); source train_step was not lowered, compiled, or executed.",
+  "repair_basis": "openpi.shared.array_typing explicitly provides disable_typechecking() for JAX tracing operations; using that context only around lower/compile removes runtime annotation checks but does not modify the numerical train_step graph.",
+  "batch_accessed": true,
+  "train_state_initialized": true,
+  "source_train_step_lowered": false,
+  "source_train_step_compiled": false,
+  "source_train_step_executed": false,
+  "optimizer_update_executed": false,
+  "parameter_update_executed": false,
+  "loss_value_read": false,
+  "policy_outcomes_read": false,
+  "scientific_training_started": false,
+  "scientific_outcomes_observed": 0,
+  "next_gate": "V5B_SOURCE_NATIVE_09_COMPILE_PROBE_WITH_TRACING_TYPECHECK_DISABLED"
+}
