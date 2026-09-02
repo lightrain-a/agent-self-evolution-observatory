@@ -17,6 +17,9 @@ from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_runtime 
 from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_d0_qualify import (
     dataset_rows,
 )
+from research_pipeline.asset_first_stri_reasoningbank_qwen_distribution_source_resume import (
+    require_resume_gate,
+)
 
 EXPERIMENT_ID = "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901"
 SPLIT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-task-split-20260901.json"
@@ -118,6 +121,35 @@ def load_completed(plan: list[dict[str, Any]]) -> dict[int, dict[str, Any]]:
     return completed
 
 
+def require_resume_if_last_terminal(
+    contract: dict[str, Any], completed: dict[int, dict[str, Any]],
+) -> dict[str, Any] | None:
+    """Fail closed at a consumed terminal source until its resume gate passes."""
+    if not completed:
+        return None
+    last_ordinal = max(completed)
+    last = completed[last_ordinal]
+    if last.get("execution_status") == "COMPLETED":
+        return None
+    if last.get("execution_status") != "TERMINAL_PROVIDER_OR_POLICY_FAILURE":
+        raise RuntimeError("SOURCE_TERMINAL_HOLD_REQUIRES_EXPLICIT_PROSPECTIVE_REPAIR")
+    trajectory = last.get("trajectory") or {}
+    failure = trajectory.get("failure") or {}
+    safe = failure.get("safe_receipt") or {}
+    detail = safe.get("detail") or {}
+    error = detail.get("error") or {}
+    if failure.get("failure_layer") != "provider" or error.get("code") != "rate_limit_exceeded":
+        raise RuntimeError("SOURCE_TERMINAL_HOLD_NOT_RATE_LIMIT_RESUMABLE")
+    if failure.get("ambiguous_generation_reissued") is not False:
+        raise RuntimeError("SOURCE_TERMINAL_HOLD_AMBIGUOUS_PROVIDER_GENERATION")
+    cleanup = last.get("container_cleanup_receipt") or {}
+    if cleanup.get("accepted") is not True:
+        raise RuntimeError("SOURCE_TERMINAL_HOLD_CLEANUP_NOT_ACCEPTED")
+    unit = contract["source_plan"][last_ordinal - 1]
+    terminal_path = receipt_path(unit)
+    return require_resume_gate(last_ordinal, terminal_path)
+
+
 def index_payload(contract: dict[str, Any], completed: dict[int, dict[str, Any]],
                   inflight: dict[str, Any] | None = None) -> dict[str, Any]:
     journal = [{
@@ -169,6 +201,7 @@ def run() -> dict[str, Any]:
             raise RuntimeError(
                 "SOURCE_AMBIGUOUS_INFLIGHT_HOLD: refusing to reissue an unreceipted source unit"
             )
+    require_resume_if_last_terminal(contract, completed)
     write_json(INDEX, index_payload(contract, completed))
     for unit in contract["source_plan"][len(completed):]:
         write_json(INDEX, index_payload(contract, completed, inflight={

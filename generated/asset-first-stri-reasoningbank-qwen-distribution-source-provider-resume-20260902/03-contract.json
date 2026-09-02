@@ -1,0 +1,85 @@
+{
+  "created_at_utc": "2026-09-02T04:25:46+00:00",
+  "credential_material_present": false,
+  "decision": "QWEN_SOURCE_PROVIDER_RESUME_SINGLE_PROBE_AUTHORIZED",
+  "execution_policy": {
+    "attempt_count": 1,
+    "automatic_retry": false,
+    "probe_failure_leaves_remaining_source_units_untouched": true,
+    "source_task_replacement": false,
+    "source_trigger_retry": false,
+    "synthetic_nonbenchmark_probe_count": 1
+  },
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "next_untouched_ordinal": 4,
+  "payload_sha256": "6ae4238ca691a30c8434dd9df1c4166a5977d1131155536efde3fa52f73881cd",
+  "probe_request": {
+    "max_completion_tokens": 16,
+    "messages": [
+      {
+        "content": "Synthetic provider liveness check only. Follow the user exactly.",
+        "role": "system"
+      },
+      {
+        "content": "Return exactly SOURCE_RESUME_OK and nothing else.",
+        "role": "user"
+      }
+    ],
+    "model": "qwen3-coder-next",
+    "n": 1,
+    "stream": false,
+    "temperature": 0.0,
+    "top_p": 1.0
+  },
+  "probe_request_sha256": "58368e4290b567a934b4b6f3d8be6776b9cdc6e613da5bdbb3c9178c06844418",
+  "remaining_untouched_ordinals": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32
+  ],
+  "schema_version": 1,
+  "scientific_boundary": {
+    "confirmatory_execution_authorized": false,
+    "memory_extraction_authorized": false,
+    "next_untouched_source_execution_authorized": false,
+    "remaining_source_outcomes_observed": false,
+    "trigger_source_receipt_permanently_retained": true,
+    "trigger_source_reexecution_authorized": false
+  },
+  "source_contract_sha256": "072980a4e71a3e31de2e59ef77b52cd090073d645b665af0adc25c24a99b8daa",
+  "source_index_completed_count": 3,
+  "source_index_hold_sha256": "57f3f07c579dc91a7fb1cbd2e470ab53d9b51d368cb6678d7e78aaa2ff3b5a90",
+  "stage": "QWEN_SOURCE_PROVIDER_RESUME_QUALIFICATION",
+  "trigger_execution_status": "TERMINAL_PROVIDER_OR_POLICY_FAILURE",
+  "trigger_failure_code": "rate_limit_exceeded",
+  "trigger_instance_id": "pydata__xarray-3095",
+  "trigger_ordinal": 3,
+  "trigger_source_receipt": "generated/asset-first-stri-reasoningbank-qwen-distribution-source-trajectories-20260901/03-pydata-xarray-3095.json",
+  "trigger_source_receipt_sha256": "a4ed2d696f6949e7044f836a24fc3dfa8335ac3d08c342f347dcd75e326f9dc7"
+}
