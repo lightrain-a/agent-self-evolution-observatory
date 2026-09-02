@@ -1,0 +1,89 @@
+{
+  "actual_path_preflight_path": "generated/e2-r17-single-case-first-fail-exact-replay-measurement-actual-path-preflight-20260902.json",
+  "actual_path_preflight_sha256": "e6ea9c59adf66787a01a4393ec240756f5ee88bbaf2a2ddfbadc0bbc015d698f",
+  "artifact_type": "e2-r17-first-fail-exact-replay-measurement-authorization",
+  "authority": {
+    "analyzer": false,
+    "e3_confirmation": false,
+    "measurement_only": true,
+    "paper_promotion": false,
+    "provider_io": true,
+    "public_benchmark": false,
+    "scientific_experiment": true,
+    "second_backbone": false,
+    "submission": false,
+    "updater": false
+  },
+  "contract_path": "generated/e2-r17-single-case-first-fail-exact-replay-measurement-contract-20260902.json",
+  "contract_sha256": "c81b9c771be564991a97b2b15815f89d591f501ff107dd982bfdddd39c2f05d4",
+  "created_at_utc": "2026-09-02T06:53:54+00:00",
+  "execution_scope": {
+    "allow_noninitial_skill": true,
+    "allowed_modes": [
+      "e1"
+    ],
+    "allowed_task_ids": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8",
+      "r17-b4-ska-p4",
+      "r17-b4-ska-p5",
+      "r17-b4-ska-p8",
+      "r17-b4-tsr-p0",
+      "r17-b4-tsr-p6",
+      "r17-b4-tsr-p8"
+    ],
+    "exact_k": 1,
+    "identity_artifact_sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "learned_states": [
+      {
+        "arm": "win_c",
+        "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/win_c/update/skill_post/SKILL.md",
+        "skill_post_sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+        "state_root": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/win_c",
+        "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/win_c/update/update_receipt.json",
+        "update_receipt_sha256": "deae0e650a20740d6dc777b448c26ce58e66852ba61ec15d984feb83fe438598"
+      },
+      {
+        "arm": "first_fail",
+        "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/first_fail/update/skill_post/SKILL.md",
+        "skill_post_sha256": "596bd30b49935d16f35d51e9eed36e19567332cd8a9104ae50d832f91ffdf04f",
+        "state_root": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/first_fail",
+        "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/first_fail/update/update_receipt.json",
+        "update_receipt_sha256": "332fd5d3a265c01c3be5887fa3e8f40c37d1f0e5c5825840a8fddc257b83a5c1"
+      }
+    ],
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "measurement_child": "E2-R17-FIRST-FAIL-EXACT-REPLAY-MEASUREMENT",
+    "provider_budget": {
+      "per_unit_limit": 11,
+      "required": true,
+      "total_limit": 191
+    },
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "group": "rep1",
+  "interpretation_boundary": "Measurement-only child for one frozen updater-provenance group. No updater, analyzer, S2/E3, second backbone, public benchmark, paper, or submission authority.",
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "parent_repair2_provenance": {
+    "authorization_path": "generated/e2-r17-single-case-first-fail-exact-replay-authorization-20260902.json",
+    "authorization_sha256": "e5d5a8ac04fe8b924327672e5b4efbe82ab053a6882ec5167d2771f8d06b84e4",
+    "contract_path": "generated/e2-r17-single-case-first-fail-exact-replay-contract-20260902.json",
+    "contract_sha256": "dd508d9cefb3bfba1a439f784f718cb7962f78130b83c18f14e5b0d591478dea"
+  },
+  "schema_version": "1.0",
+  "single_use": true,
+  "status": "AUTHORIZED_E2_R17_FIRST_FAIL_EXACT_REPLAY_MEASUREMENT_ONLY"
+}
