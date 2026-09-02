@@ -1,0 +1,369 @@
+{
+  "actor": {
+    "concurrency_per_probe": 1,
+    "k": 1,
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "actor_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
+    "role": "actor_evaluator",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "arms": [
+    "win_c",
+    "first_fail"
+  ],
+  "artifact_type": "e2-r17-single-case-first-fail-exact-evidence-updater-replication-contract",
+  "authority": {
+    "analyzer": false,
+    "e3_confirmation": false,
+    "exact_replay": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "scientific_experiment": false,
+    "second_backbone": false,
+    "submission": false,
+    "updater": false
+  },
+  "bound_code": {
+    "actor_wrapper": {
+      "path": "scripts/run_e2_r17_actor_pool_first_fail_exact_replay.py",
+      "sha256": "1007e888ff3bfe8c8449da20bd10b204857c7f1b81a65dd9fc6e9a5fc63e05a8"
+    },
+    "analysis_authorizer": {
+      "path": "scripts/authorize_e2_r17_first_fail_exact_replay_analysis.py",
+      "sha256": "2ae0f7acd270986474e7fd13a3330ef63b1795ece06d82c9ad5203ecfafe832b"
+    },
+    "analyzer": {
+      "path": "scripts/analyze_e2_r17_first_fail_exact_replay.py",
+      "sha256": "39bb56273810c9d9e3ba0dbdcf7d19d609c66da0fe27aa8d9d2a85895210a3c2"
+    },
+    "audit": {
+      "path": "scripts/audit_e2_r17_first_fail_exact_replay_completion.py",
+      "sha256": "21a362bc64a9a9baa009bddf19b271bdff1120579bf8d06694331c9fe7a6e45a"
+    },
+    "authorizer": {
+      "path": "scripts/authorize_e2_r17_first_fail_exact_replay.py",
+      "sha256": "5423a807f5f739825483ce9af21ec30a24f62b0217ac4ab454b96c9c46841348"
+    },
+    "diagnostic_witness": {
+      "path": "research_pipeline/e2_r17_diagnostic_witness.py",
+      "sha256": "4759693d807b15a815f866f8873e2b0e65e34059c653ce4d8ac81df6bb2a949a"
+    },
+    "preflight": {
+      "path": "scripts/preflight_e2_r17_first_fail_exact_replay.py",
+      "sha256": "6811ad9dd465b98ccb31b6543f285b6ae0204d5f601be727048ceb1efd5a7342"
+    },
+    "provider_budget": {
+      "path": "research_pipeline/e2_r17_provider_budget.py",
+      "sha256": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444"
+    },
+    "runner": {
+      "path": "scripts/run_e2_r17_first_fail_exact_replay.py",
+      "sha256": "a747b828571eafd8e5aff9b8f51081b4b43b3ff3da046ce5efa9cca802d767ee"
+    }
+  },
+  "budget": {
+    "max_provider_calls_per_state": 191,
+    "max_provider_calls_per_unit": 11
+  },
+  "case_stream": "e1-tsr-00",
+  "created_at_utc": "2026-09-02T06:33:34+00:00",
+  "design": {
+    "path": "generated/e2-r17-single-case-first-fail-exact-replay-design-20260902.json",
+    "sha256": "b09d3ddeff93e5fa0d448f21686b7125bb9fe4dbeaf4bac7cf70590dc48fad17"
+  },
+  "env_file": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env",
+  "exact_evidence": {
+    "first_fail": {
+      "evidence_sha256s": [
+        "d774ff7402a944f76e5447236bd9559e552252ff65bf5b2e99b489f8daea484f",
+        "9ba6f5f09321a15d07b540f1bb3c836b439bd03355995e67e9fa894964644102",
+        "7fbea5f24584d9dc2852d5cd5c63afbccec11946af2c5c6a4c2026f79b012917",
+        "3265087c8a5f3083ddb70a11f0146cbcdc0b002be6e3c9be876c6c2992d8ccaa",
+        "30ba716522144d63a9ea5e40da47ac96df69fe2834a4d61499a35014dfd36880",
+        "1bdb42b3aaaee0fd8c495196c374e325e015fdcdf8a4621dd6c4f3326d4769b2",
+        "fd317804112a5d27bead5483a94ced5aa487a6e077e0b6dbcc8d4e94a0034fa2",
+        "080fb3f18deff5f9e9e4a1a91827e236cc095f95bc328a95a5a9fb8cfc101f29"
+      ],
+      "evidence_tokens": [
+        1030,
+        3072,
+        1192,
+        1070,
+        1271,
+        1161,
+        1295,
+        1367
+      ],
+      "receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/states/e1-tsr-00/replicate_0/first_fail/update/update_receipt.json",
+      "receipt_sha256": "e5fefbe7070fc4afbad9a62a7d175806cab011b64578bca0ee52cfedc4999ab9",
+      "source_trajectory_sha256s": [
+        "ba0a02ba4e437b9c5075d6382b5121fc40aab2fc1c96ec3a4864d9c221e30a97",
+        "cfcfa221a3eaafc666d8e29a37f39fccda84d8d2a3aac49bad3461296616e473",
+        "f4c468f8e1bc609f1e19fd1e3abe4b3e1a3d0eb1daea8d32ffffdd78ae48ab8f",
+        "809a87babf7851695ab7dfbfb5613ab5e46604fef031840725d6438ce9c0c452",
+        "f4cfd0edd652b736b2ad28f92bf4756fb3c03d1f23a34c6919056ad190dfb67b",
+        "919ccb49afa2c9fdfd0cf97268a741357468a3fbd365c192c0af15320ac62487",
+        "772df8af03bdda0bb118d8418cf39bc7fa2035ddbcdaac3d0001b5ab055dc3ca",
+        "7e12f4bd1243385dbeef24b3b326e20335a165dec76c3dd8d29e1a514ef88590"
+      ],
+      "task_ids": [
+        "r17-b3-tsr-p7",
+        "r17-b3-tsr-p0",
+        "r17-b2-tsr-p3",
+        "r17-b2-tsr-p8",
+        "r17-b2-tsr-p2",
+        "r17-b2-tsr-p5",
+        "r17-b2-tsr-p4",
+        "r17-b3-tsr-p8"
+      ]
+    },
+    "win_c": {
+      "evidence_sha256s": [
+        "955531c255f32f8dfb170fa0a729cd5924b9c3dd115e43c10af4c4aa5abee359",
+        "9ba6f5f09321a15d07b540f1bb3c836b439bd03355995e67e9fa894964644102",
+        "4af489a3750c1e9e179b55a025cecab1c5093e5d7565ab526d22d8eb765d6b94",
+        "26375b103a0c0d6b42e4b3857a596f6726cfa42e52e0a6061ee42bedbd284f6b",
+        "3154686274701f261c449c82f5a0a58710d158b50bc6025c09e87983b32ac36f",
+        "af08d7e25a25659988253cd845477c3dc48d603329a1d23e226aeaabbddad56a",
+        "d7b845654a5e9de19186d27b4b44f5884b2b1ad5be7c6d7921c96aa94d144f5d",
+        "d9d1f698dc79a4df3a8889a7f2757f8c5f265262c3552cc7b0fd6c5d7a229484"
+      ],
+      "evidence_tokens": [
+        1030,
+        3072,
+        1192,
+        1070,
+        1271,
+        1161,
+        1295,
+        1367
+      ],
+      "receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/states/e1-tsr-00/replicate_0/win_c/update/update_receipt.json",
+      "receipt_sha256": "eb1dfc4d2849205b7ddca2cc6f006031501770eb146a70076799e46266fbe08d",
+      "source_trajectory_sha256s": [
+        "26ce12049eab500d89d9b49cb66d283c01f37d2f96240e36703fb4f7086ace4c",
+        "cfcfa221a3eaafc666d8e29a37f39fccda84d8d2a3aac49bad3461296616e473",
+        "87f1717029ea794a39d310d060c53f6e58d994ea85bad7233a35d7d3f1d19f0f",
+        "1d59cda7a51049288d04a78c71319ad31fef5edde1748c8f4e17705c188652fa",
+        "d67d16f88667281d72b947be47e5d2630623f007b23357102464f0b333818d74",
+        "0f80ebf453b2a6fa86fb26b37feec38c40a614191ad4c5fa2ccafce8af0a1de1",
+        "602cd3687c507e52f34f21af45ead2a75b21f8f24d57a51f5418c9cbb8cde400",
+        "fa467c8d809c504b2faec38d6020f82e94ea57f92af70813ada0132cae567055"
+      ],
+      "task_ids": [
+        "r17-b3-tsr-p7",
+        "r17-b3-tsr-p0",
+        "r17-b2-tsr-p3",
+        "r17-b2-tsr-p8",
+        "r17-b2-tsr-p2",
+        "r17-b2-tsr-p5",
+        "r17-b2-tsr-p4",
+        "r17-b3-tsr-p8"
+      ]
+    }
+  },
+  "git_commit_at_freeze": "566367e5adfffa62f6f54253cae6974a3300ff23",
+  "heldout_task_ids": [
+    "r17-b4-agj-p2",
+    "r17-b4-agj-p3",
+    "r17-b4-agj-p8",
+    "r17-b4-fmv-p1",
+    "r17-b4-fmv-p2",
+    "r17-b4-fmv-p8",
+    "r17-b4-ioc-p1",
+    "r17-b4-ioc-p4",
+    "r17-b4-ioc-p6",
+    "r17-b4-msp-p0",
+    "r17-b4-msp-p7",
+    "r17-b4-msp-p8",
+    "r17-b4-ska-p4",
+    "r17-b4-ska-p5",
+    "r17-b4-ska-p8",
+    "r17-b4-tsr-p0",
+    "r17-b4-tsr-p6",
+    "r17-b4-tsr-p8"
+  ],
+  "initial_skill": {
+    "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+    "sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+  },
+  "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-first-fail-exact-replay-v1.json",
+  "mindmemos": {
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e"
+    },
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817"
+  },
+  "model_identity": {
+    "fresh_max_output_tokens_smoke": 8192,
+    "path": "generated/e2-r17-deepseek-v2-repair2-model-identity-adjudication-20260831.json",
+    "provider_retry_limit": 0,
+    "qualification_path": "generated/e2-r17-deepseek-v2-repair2-deepseek-identity-qualification-20260831.json",
+    "qualification_sha256": "6f7305554f710ce56d07e86cbc786ab5d4618327f5b6c0161c7259067cae59ac",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "thinking": "disabled"
+  },
+  "outcome_embargo": {
+    "analyzer_authorized": false,
+    "before_72_heldout": true,
+    "partial_effect_read": false
+  },
+  "parent_s1": {
+    "analysis_path": "generated/e2-r17-single-case-diagnostic-witness-s1-analysis-20260902.json",
+    "analysis_sha256": "c5c2cdd51ae715761a3615220c0de9c4193e0a204e2f0d9ba9909ef9f3661096",
+    "authorization_path": "generated/e2-r17-single-case-diagnostic-witness-s1-authorization-v2-20260902.json",
+    "authorization_sha256": "3244b39757a41dc801a79ed5edaff1050354974c8f0be70994cd9d690ca0a002",
+    "contract_path": "generated/e2-r17-single-case-diagnostic-witness-s1-contract-v2-20260902.json",
+    "contract_sha256": "e1865abbcccdeeea03b34c4526044660c4b4826b3ecab40ac54bb1030e0f7d8c",
+    "summary_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/summary/s1_summary.json",
+    "summary_sha256": "9d78cfa78438c2f16f0091b5caff0fcff04ca9af465ddcc677280920fe3901a8"
+  },
+  "parent_stability_analysis": {
+    "path": "generated/e2-r17-single-case-first-fail-stability-analysis-20260902.json",
+    "required_status": "FIRST_FAIL_FROZEN_STATE_STABILITY_PASS",
+    "sha256": "ef7805f1e6f5ddad0c6d87bc8b362f7e3efc77d092868fc1b3cefc42ca2f86d2"
+  },
+  "pool_bindings": [
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828/cases/r17-b3-tsr-p7/pool_k8.json",
+      "pool_id": "4cd7e3ec496f6f46068a07adbb6bf210cbdb479ecb3683ac0ad33aa8c06dc404",
+      "sha256": "53d9abbbce1a5fb4bf48906a273785e9f8f280b637f9ad8f6d577f610e9db6b6",
+      "task_id": "r17-b3-tsr-p7"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828/cases/r17-b3-tsr-p0/pool_k8.json",
+      "pool_id": "8adb17d5d33e8a3d7799bdbae65ddb2151c23a3d86f71eecf72ca9679ea15c9c",
+      "sha256": "2629ce7090a3f5b6142bd996e50366ff1bf8cac709d482a636844f6c5b28511c",
+      "task_id": "r17-b3-tsr-p0"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828/cases/r17-b2-tsr-p3/pool_k8.json",
+      "pool_id": "6257eecdb7f9aac53d2ff91c1da5f582b587aff51413cbd54227b7f43fc07230",
+      "sha256": "565ca49b5b75be18b38351bce67975808f5103f7dc5d80449717b524d298b798",
+      "task_id": "r17-b2-tsr-p3"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828/cases/r17-b2-tsr-p8/pool_k8.json",
+      "pool_id": "51bf9e9a1f2e84212c1e1854f885ad0606e169634d8de31d848535645857cfa3",
+      "sha256": "5001ce346851199f40616f4f78531e1f6b5b6aff929ba8c7a9cc73b4303b2d97",
+      "task_id": "r17-b2-tsr-p8"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828/cases/r17-b2-tsr-p2/pool_k8.json",
+      "pool_id": "47ee8035cf14cb7a0f7ce3877f120e5b8771bdb0810d5df290b8c15ea78aef56",
+      "sha256": "b36a3799cd74647d7bb8859b024f3fd3bab6063e4e54fda5620279aca13cbefc",
+      "task_id": "r17-b2-tsr-p2"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828/cases/r17-b2-tsr-p5/pool_k8.json",
+      "pool_id": "2febf527afae2f6fe089edf4902b66b7abd85bcfb8e44b2fe823d1523e1bae3d",
+      "sha256": "d86c7832efbbfdb11b3e5539740a5e02491f8ad4488462939ba721612d0d653c",
+      "task_id": "r17-b2-tsr-p5"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828/cases/r17-b2-tsr-p4/pool_k8.json",
+      "pool_id": "45592ca13a16ab6c8de32194aea53534a80a28050dbc9f2d0e6bfe75de7f071c",
+      "sha256": "0080b3e0da0786ef1dfcc51d704c041b287c4917323fd9d570d0f42ab2091811",
+      "task_id": "r17-b2-tsr-p4"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/e1-a-v31-pool-support-v2-1-20260828/cases/r17-b3-tsr-p8/pool_k8.json",
+      "pool_id": "ad8bba4b6f4634d8435f619f4ff79b485e74c33fecdb858094b444129c338cf4",
+      "sha256": "ca70f41358fd2a586f0980a4a2bf81951833956a497a446126f5d6df081af501",
+      "task_id": "r17-b3-tsr-p8"
+    }
+  ],
+  "renderer": {
+    "contrast_source_allocation": "50/50",
+    "final_block_cap_tokens": 3072,
+    "four_way_exact_retokenized_parity_required": true,
+    "padding": false,
+    "tokenizer_encoding": "cl100k_base",
+    "tokenizer_version": "0.11.0"
+  },
+  "replicates": [
+    1,
+    2
+  ],
+  "replication_gate": {
+    "fail_status": "FIRST_FAIL_EXACT_EVIDENCE_UPDATER_REPLICATION_FAIL_STATE_GENERATION_VARIANCE",
+    "historical_s1_rep0_descriptive_only": true,
+    "minimum_first_fail_minus_common_win_c_each_new_replicate": 0.05555555555555555,
+    "minimum_mean_first_fail_minus_common_win_c": 0.05555555555555555,
+    "pass_status": "FIRST_FAIL_EXACT_EVIDENCE_UPDATER_REPLICATION_PASS"
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902",
+  "schema_version": "1.0",
+  "scientific_object": "E2-R17-SINGLE-CASE-FIRST-FAIL-EXACT-EVIDENCE-UPDATER-REPLICATION-20260902",
+  "scientific_scope": {
+    "heldout_units": 72,
+    "new_learned_states": 4,
+    "replicates": 2
+  },
+  "selector_freeze": {
+    "path": "generated/e2-r17-single-case-diagnostic-witness-s0-selector-freeze-20260902.json",
+    "sha256": "d053d8cd09e953ebfb79bc91ebb75399e1fb403ba4bb7b8e0a5871fe63676113"
+  },
+  "status": "FROZEN_E2_R17_SINGLE_CASE_FIRST_FAIL_EXACT_REPLAY",
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  },
+  "updater": {
+    "adapter_path": "research_pipeline/e2_r17_mindmemos_ark_adapter.py",
+    "adapter_sha256": "b3fb2bfbd98b185a9905d744c41fe6ca5cde1a2b52a0c7554cb8c28e2b48fcc8",
+    "batch_size": 8,
+    "correction_policy": "Only after skill_patch_apply attempt0 deterministic parse/apply failure: feed the exact error and complete prior response to the same model; attempt1 is visible, claimed, receipted; failure stops; no attempt2.",
+    "first_party": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "max_correction_attempts": 1,
+    "max_parse_attempts": 2,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "score_semantics": "selected_evidence_trajectory",
+    "temperature": 0,
+    "thinking": "disabled",
+    "transcript_max_chars": 100000,
+    "wrapper_path": "research_pipeline/e2_r17_mindmemos_updater.py",
+    "wrapper_sha256": "9516ecfd54236d5ba22321cf96ebd897644396a87bc325fbd9632e12eefd004d"
+  },
+  "updater_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv.freeze.txt",
+    "freeze_sha256": "80cd6fdd8eb672e41252c099766fd171a5a7a4b90c284d87da87d09f0d559731",
+    "litellm_local_model_cost_map": true,
+    "post_lock_compatibility_override": {
+      "disclosed": true,
+      "package": "tiktoken",
+      "reason": "pre-frozen V3.1 ExactMatchedEvidenceBlockRenderer compatibility",
+      "version": "0.11.0"
+    },
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv/bin/python",
+    "qualification_path": "generated/e2-r17-updater-runtime-qualification-20260829.json",
+    "qualification_sha256": "f2319815cdcd7caf248c498c470720d4e3f6c9b5e579fad59914df687cdf5b6d",
+    "required_entrypoint": "mindmemos.pipelines.skill.evolution.SkillEvolver",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_UPDATER_RUNTIME",
+    "role": "persistent_skill_updater",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-updater-venv"
+  }
+}
