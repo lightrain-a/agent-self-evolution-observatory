@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-02T04:30:00Z",
+  "experiment": "C1-PACTA-MSR-QWEN397-P0-20260902",
+  "status": "FROZEN_PRE_PROVIDER_DESIGN_ADDENDUM",
+  "supersedes_only": "state_reveal probe selection in c1-pacta-msr-qwen397-design-20260902.json",
+  "unchanged": [
+    "Qwen3.5-397B backbone for source writer/binder/shadow/final policy",
+    "fresh 10-pair pool",
+    "8 pilot + 2 sealed target geometry",
+    "same-trajectory SUCCESSFUL_SI/FAILED_SI writer twins",
+    "strict PACTA gate min(B1,B2) > max(WS,WF)",
+    "G0 versus Gplus mechanism comparison",
+    "mechanism thresholds",
+    "rate-matched random final control",
+    "512-token first-decision budget",
+    "16k source-trajectory action budget"
+  ],
+  "changed_variable": {
+    "from": "a Qwen397 branch-blind memory-blind model call chooses one read-only state-reveal shell command",
+    "to": "a deterministic outcome-blind task-guided compiler constructs one bounded read-only repository probe; no model call is used for state reveal"
+  },
+  "rationale": "The scientific purpose of MSR is to expose identical repository state to both memory branches, not to test another action-selection policy. A model-selected probe would introduce unnecessary stochasticity and a second policy-selection surface. Deterministic compilation strengthens the matched-state intervention and makes the G0-vs-Gplus contrast closer to a single-variable test.",
+  "compiler": {
+    "input": "future task text only; no source trajectory, writer memory, branch label, outcome, gold patch, evaluator result, or model output",
+    "token_candidates": "backticked/code-like identifiers first, then identifier-like lexical tokens; fixed stoplist; deterministic deduplication",
+    "token_ranking": "candidate class priority, then SHA256(C1-PACTA-MSR-PROBE-TOKEN-v1|future_task_sha256|token), then token",
+    "selected_tokens": 3,
+    "command_template": "git status --short; git grep -n -I -e <token1> -e <token2> -e <token3> -- . | head -n 80; git ls-files | head -n 40",
+    "quoting": "Python shlex.quote on every selected token",
+    "execution": "future exact-digest image after exact-base normalization, with no memory injected",
+    "timeout_seconds": 60,
+    "read_only": true,
+    "tests_evaluator_gold_patch": false,
+    "observation_binding": "exact command bytes/hash and exact stdout+returncode bytes/hash are copied identically into both branch decision contexts"
+  },
+  "failure_policy": "If the deterministic probe cannot be compiled or executed for any selected pilot unit, stop before writer/shadow method evaluation; do not substitute a different probe after seeing branch outcomes.",
+  "provider_calls_for_probe": 0,
+  "scientific_outcomes_observed_before_addendum": 0,
+  "claim_boundary": "MSR is a matched state-acquisition intervention. It does not claim state-aware memory or generic action probing as novel; the novelty residual remains the paired writer-counterfactual transport test at an exactly matched revealed state."
+}
