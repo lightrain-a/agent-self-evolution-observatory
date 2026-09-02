@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-prospective-heterogeneity-pre-f0",
+  "date": "2026-09-02",
+  "status": "PRE_F0_PROSPECTIVE_HETEROGENEITY_DESIGN_ONLY",
+  "parent_scientific_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "parent_hold_immutable": true,
+  "scientific_question": "Can a calibration phase prospectively predict the sign and ordering of rejected-witness learning value across failure families on untouched confirmatory streams?",
+  "theory": {
+    "decomposition": "Delta(K)=sum_z pi_z M_z(K) delta_z",
+    "availability": "M_z(K)",
+    "diagnostic_value": "delta_z",
+    "universal_positive_delta_assumed": false
+  },
+  "families": [
+    "aggregation_join",
+    "formula_materialization",
+    "input_output_contract",
+    "multi_step_pipeline",
+    "schema_key_alignment",
+    "target_sheet_range"
+  ],
+  "design": {
+    "new_streams": 24,
+    "cal_streams": 12,
+    "test_streams": 12,
+    "streams_per_family_per_split": 2,
+    "replicates_per_stream": 2,
+    "paired_units": 48,
+    "arms": ["win_c", "mrw"],
+    "learned_states": 96,
+    "heldout_tasks_per_state": 18,
+    "heldout_evaluations": 1728,
+    "all_units_disjoint_from_closed_sample": true
+  },
+  "cal_prediction_rule": {
+    "positive": "both CAL stream effects > 0",
+    "negative": "both CAL stream effects < 0",
+    "null_or_unstable": "otherwise",
+    "effect_size_threshold_tuning": false,
+    "family_dropping": false,
+    "support_gate": "at least two POSITIVE families and at least two NONPOSITIVE families before TEST"
+  },
+  "test_primary": {
+    "estimand": "mean TEST D_s in CAL-predicted POSITIVE families minus mean TEST D_s in CAL-predicted NONPOSITIVE families",
+    "direction": "positive",
+    "test": "exact one-sided permutation over 12 TEST stream effects with frozen prediction labels",
+    "alpha": 0.05,
+    "bootstrap": "cluster/stream bootstrap 95% CI",
+    "go_requires_ci_lower_gt_zero": true,
+    "global_mrw_superiority_claim": false
+  },
+  "same_information_baselines": [
+    "availability-only M_z(K)",
+    "family-identity-only categorical predictor"
+  ],
+  "secondary_outputs": [
+    "TEST sign accuracy",
+    "Spearman rank correlation of CAL family score vs TEST family mean",
+    "CAL-vs-TEST calibration plot",
+    "all failed predictions retained"
+  ],
+  "forbidden": [
+    "use old 48-pair outcomes to choose favorable families",
+    "change parent HOLD",
+    "family-specific significance claims",
+    "posthoc regrouping or threshold tuning",
+    "Qwen/GPT/public benchmark rescue",
+    "provider execution before separate authorization",
+    "TEST outcome access before frozen CAL prediction artifact"
+  ],
+  "authority": {
+    "static_design_review": true,
+    "zero_provider_stream_uniqueness_checks": true,
+    "cost_estimation": true,
+    "adversarial_design_review": true,
+    "provider_io": false,
+    "cal_scientific_execution": false,
+    "test_scientific_execution": false,
+    "updater": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false
+  }
+}
