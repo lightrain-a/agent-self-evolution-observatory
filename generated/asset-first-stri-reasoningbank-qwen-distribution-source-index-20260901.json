@@ -6,9 +6,9 @@
     "no_replacement": true,
     "no_retry": true
   },
-  "completed_count": 6,
+  "completed_count": 7,
   "contract_sha256": "072980a4e71a3e31de2e59ef77b52cd090073d645b665af0adc25c24a99b8daa",
-  "created_at_utc": "2026-09-02T04:54:03+00:00",
+  "created_at_utc": "2026-09-02T06:08:49+00:00",
   "credential_material_present": false,
   "decision": "QWEN_SOURCE_TRAJECTORIES_IN_PROGRESS",
   "execution_complete": false,
@@ -68,10 +68,19 @@
       "persisted": true,
       "receipt_sha256": "799a3480f46d5ea997717e6b5ba9de76893a0c1c7bdafd0b859c2c3ed1ae1fa7",
       "run_id": "QWEN-SOURCE-06"
+    },
+    {
+      "attempt_count": 1,
+      "execution_status": "TERMINAL_PROVIDER_OR_POLICY_FAILURE",
+      "instance_id": "pydata__xarray-4687",
+      "ordinal": 7,
+      "persisted": true,
+      "receipt_sha256": "a4dcf53d3a0dfc6fa5fca6e70295b551c232b57ddcbf99a496d56d0fd951c78d",
+      "run_id": "QWEN-SOURCE-07"
     }
   ],
-  "journal_record_count": 6,
-  "payload_sha256": "ab47c6dadb6eb798257bf7c4d0f48638f2479c83fad4e95dd782d3e078708a9b",
+  "journal_record_count": 7,
+  "payload_sha256": "2d297f7ddbd23eca364577e07c0a3a1128e3d9814da07f5186fd0b638d5b4ce1",
   "planned_count": 32,
   "schema_version": 1,
   "stage": "QWEN_SOURCE_TRAJECTORY_EXECUTION"
