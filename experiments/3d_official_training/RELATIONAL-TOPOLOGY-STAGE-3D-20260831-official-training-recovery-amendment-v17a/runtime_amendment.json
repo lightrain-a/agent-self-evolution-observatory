@@ -1,0 +1,45 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-recovery-amendment-v17a",
+  "state": "OFFICIAL_TRAINING_RECOVERY_AMENDMENT_V17A_AUTHORIZED_WITHIN_EXISTING_BOUNDED_SCOPE",
+  "trigger": "PRE_STEP1_EXACTLY_ONCE_RESUME_AUDIT",
+  "observed_gap": {
+    "optimizer_steps_committed": 0,
+    "scientific_outcomes": 0,
+    "description": "The qualified loop had no committed recovery anchor before the first 50k checkpoint, and its base claim gate accepted only RESOURCE_PREFLIGHT_PASS, making explicit recovery after a crash impossible without a claim-state adapter."
+  },
+  "repair": {
+    "scientific_change": false,
+    "training_math_change": false,
+    "model_change": false,
+    "data_change": false,
+    "seed_change": false,
+    "batch_size_change": false,
+    "optimizer_change": false,
+    "step_budget_change": false,
+    "mandatory_checkpoint_cadence_change": false,
+    "step0_anchor_is_scientific_checkpoint": false,
+    "step0_anchor_purpose": "Recovery only: commit full model/optimizer/EMA/RNG/sampler/cursor state before optimizer step 1 so any pre-50k execution tail can be discarded and replayed from a content-addressed state.",
+    "resume_policy": "Explicit resume only. The supplied checkpoint must be the claim's latest committed path and SHA; if another matching training process is alive on the same host, resume fails closed. Current claim state is preserved in resume_transition_from before transition to TRAINING_RUNNING."
+  },
+  "base_training_loop": "research_pipeline.relational_topology_official_training_dev_run_v15a.train",
+  "persistence_wrapper": "research_pipeline.relational_topology_official_training_dev_run_v16a.train",
+  "child_code": {
+    "recovery_wrapper_sha256": "dd9b67f11a6b75aa0aa89e53d4a7d809ee1b62680d775b3120b013d2200b72a6",
+    "entrypoint_sha256": "8ca9b9838fccb784f03c33ec13543249f75ebb82d96677faf0f6e00f66d51480",
+    "composite_training_code_sha256": "b807e6fd884a8b45272ae5dbd3d6f88d9bfeda1f02d7a9eeb6b0f8d231d06da1"
+  },
+  "authority": {
+    "official_training_developmental_authority": true,
+    "scope_is_identical_to_v13": true,
+    "reproduction_evaluation": false,
+    "p1": false,
+    "scientific_outcomes": 0
+  },
+  "next_gate": "CANONICALIZE_AND_LAUNCH_ONE_ADMITTED_COMPONENT",
+  "port_010": {
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+    "evidence_review": "BLOCK_BAKE_IN",
+    "changed": false
+  }
+}
