@@ -1,0 +1,67 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-authority-v13",
+  "state": "OFFICIAL_TRAINING_DEVELOPMENTAL_AUTHORITY_GRANTED_BOUNDED",
+  "proposal_sha256": "da323f6173002b62ef8de09ea6046fc8ddd0e9f94b4c0bee82618f5d6b66c1d9",
+  "grant": {
+    "source": "USER_EXPLICIT_NATURAL_LANGUAGE_AUTHORIZATION_IN_CURRENT_CONVERSATION",
+    "normalized_authority": "OFFICIAL_TRAINING_DEVELOPMENTAL_AUTHORITY_GRANTED",
+    "user_intent": "Continue the frozen developmental official-training plan and directly use currently idle GPUs subject to the frozen admission gates.",
+    "scope": {
+      "components": [
+        "BEDROOM-SG2SC-SHARED",
+        "SGP-12",
+        "SGP-14"
+      ],
+      "training_seed": 20260901,
+      "training_seed_count": 1,
+      "batch_size": 128,
+      "gradient_accumulation": 1,
+      "logical_optimizer_steps_per_component": 1000000,
+      "checkpoint_every_steps": 50000,
+      "validation_during_training": false,
+      "scientific_metrics_during_training": false,
+      "scientific_outcomes": 0,
+      "outcomes_enter_p1": false
+    },
+    "pre_optimizer_resource_preflight_authorized": true,
+    "official_developmental_training_authorized_after_component_preflight_pass": true,
+    "automatic_scope_change_authorized": false
+  },
+  "prohibited": [
+    "validation or test evaluation during training",
+    "reproduction qualification outputs",
+    "P1 execution",
+    "oracle-graph intervention",
+    "scientific effect estimation",
+    "SUPPORT-12 versus SUPPORT-14 metric comparison",
+    "training-loss interpretation as paper evidence",
+    "outcome-based early stopping",
+    "validation-based checkpoint selection",
+    "hyperparameter sweep",
+    "training seed sweep",
+    "confirmatory multi-seed replication",
+    "automatic batch-size reduction after OOM",
+    "automatic gradient-accumulation change",
+    "automatic precision change",
+    "changing corpus membership or prompt realization",
+    "changing tokenizer revision",
+    "changing shared-decoder identity across arms",
+    "changing PORT-010 status"
+  ],
+  "authority_after_grant": {
+    "official_training_developmental_authority": true,
+    "official_training_component_launch_requires_zero_step_preflight": true,
+    "reproduction_evaluation": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "scientific_outcomes": 0
+  },
+  "port_010": {
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+    "evidence_review": "BLOCK_BAKE_IN",
+    "changed": false
+  },
+  "next_gate": "PER_COMPONENT_ZERO_OPTIMIZER_BATCH128_RESOURCE_PREFLIGHT_THEN_COMPONENT_LAUNCH"
+}
