@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-qwen25-32b-q4-local-route-closeout",
+  "status": "CLOSE_QWEN25_32B_Q4_LOW_NOISE_ROUTE",
+  "scientific_outcome": false,
+  "old_deepseek_hold_reinterpreted": false,
+  "new_cal_test_outcomes_accessed": false,
+  "realizations": [
+    {
+      "transport": "ollama_openai_compatible",
+      "verdict": "FAIL_SCORE_REPRODUCIBILITY",
+      "decisive_task": "r17-b0-fmv-p1",
+      "scores": [1.0, 0.0, 0.0],
+      "artifact": "generated/e2-r17-qwen25-32b-q4-local-realization-qualification-failure-20260902.json"
+    },
+    {
+      "transport": "ollama_native_api_chat_explicit_sampler_options",
+      "preflight": "PASS_ON_PREVIOUSLY_FAILED_FORMULA_TASK_1_1_1",
+      "full_qualification_verdict": "FAIL_SCORE_REPRODUCIBILITY",
+      "full_qualification_completed_rollouts": 6,
+      "full_qualification_planned_rollouts": 18,
+      "aggregation_join_scores": [0.0, 0.0, 0.0],
+      "decisive_formula_scores": [0.0, 1.0, 1.0],
+      "preflight_artifact": "generated/e2-r17-qwen25-32b-q4-native-transport-r1-preflight-20260902.json",
+      "qualification_artifact": "generated/e2-r17-qwen25-32b-q4-native-realization-qualification-20260902.json"
+    }
+  ],
+  "model_identity": {
+    "base_model": "Qwen2.5-32B-Instruct",
+    "served_model": "qwen2.5:32b",
+    "quantization": "Q4_K_M",
+    "model_blob_sha256": "eabc98a9bcbfce7fd70f3e07de599f8fda98120fefed5881934161ede8bd1a41"
+  },
+  "diagnosis": "Tool-call formatting can be canonicalized, and native sampler binding improved one targeted development preflight, but full development qualification still produced task-level endpoint variation under fixed model/seed/temperature/top_p. This route therefore does not establish the lower measurement noise required to justify replacing DeepSeek in the prospective heterogeneity study.",
+  "forbidden_repairs": [
+    "try additional seeds until stable",
+    "change temperature/top_p after observing qualification scores",
+    "change development tasks",
+    "promote the successful targeted preflight over the failed full qualification",
+    "use Qwen as a rescue backbone for the closed DeepSeek HOLD"
+  ],
+  "next_action": "Return to DeepSeek-centered economy/power design or another independently preregistered realization; do not authorize Qwen updater or CAL/TEST execution from this route.",
+  "authority": {
+    "qwen_actor_realization": false,
+    "qwen_updater_qualification": false,
+    "qwen_cal_execution": false,
+    "qwen_test_execution": false,
+    "paper_promotion": false
+  }
+}

@@ -1,0 +1,317 @@
+{
+  "artifact_type": "e2-r17-qwen25-32b-q4-native-realization-qualification",
+  "authority": {
+    "cal_scientific_execution": false,
+    "qwen_actor_realization": false,
+    "test_scientific_execution": false,
+    "updater_qualification": false
+  },
+  "checks": {
+    "completed_rollouts": 6,
+    "score_exact_reproduction_all_completed_tasks": false,
+    "tool_probe_pass": true
+  },
+  "created_at_utc": "2026-09-02T12:09:51+00:00",
+  "decoding": {
+    "max_output_tokens": 4096,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "seed": 1717,
+    "temperature": 0.0,
+    "thinking": false,
+    "top_p": 1.0
+  },
+  "development_task_ids": [
+    "r17-b0-agj-p4",
+    "r17-b0-fmv-p1",
+    "r17-b0-ioc-p3",
+    "r17-b0-msp-p3",
+    "r17-b0-ska-p3",
+    "r17-b0-tsr-p3"
+  ],
+  "fail_fast_task": "r17-b0-fmv-p1",
+  "model_identity": {
+    "base_model": "Qwen2.5-32B-Instruct",
+    "endpoint": "http://127.0.0.1:11444",
+    "model_blob_sha256": "eabc98a9bcbfce7fd70f3e07de599f8fda98120fefed5881934161ede8bd1a41",
+    "ollama_manifest_sha256": "9f13ba1299afea09d9a956fc6a85becc99115a6d596fae201a5487a03bdc4368",
+    "ollama_show_sha256": "e6e56810c471a24dace665dc07bc05cfbbef484969134c84468ab22a02d590e5",
+    "parameter_size": "32.8B",
+    "quantization": "Q4_K_M",
+    "served_model": "qwen2.5:32b",
+    "transport": "native_ollama_api_chat"
+  },
+  "new_cal_test_outcomes_accessed": false,
+  "old_deepseek_hold_reinterpreted": false,
+  "repeats_per_task": 3,
+  "schema_version": "1.0",
+  "scientific_outcome": false,
+  "status": "FAIL_QWEN25_32B_Q4_NATIVE_SCORE_REPRODUCIBILITY",
+  "tasks": [
+    {
+      "action_tool_sequence_exact": false,
+      "failure_family": "aggregation_join",
+      "repeats": [
+        {
+          "action_tool_sequence": [
+            "skill",
+            "shell",
+            "shell",
+            "shell",
+            "shell",
+            "shell",
+            "shell",
+            "shell",
+            "shell",
+            "shell"
+          ],
+          "finish_reasons": [
+            "stop",
+            "stop",
+            "stop",
+            "stop",
+            "stop"
+          ],
+          "provider_calls": 5,
+          "repeat": 0,
+          "score": 0.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/qwen25-32b-ph-native-full-qualification-20260902/r17-b0-agj-p4/repeat_0/cases/r17-b0-agj-p4/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "31d74d887d7d157c801fa8843e329ea287813a414ab8591d35f322f267f468a7"
+        },
+        {
+          "action_tool_sequence": [
+            "skill",
+            "shell",
+            "shell",
+            "shell",
+            "shell",
+            "shell",
+            "shell",
+            "shell"
+          ],
+          "finish_reasons": [
+            "stop",
+            "stop",
+            "stop",
+            "stop"
+          ],
+          "provider_calls": 4,
+          "repeat": 1,
+          "score": 0.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/qwen25-32b-ph-native-full-qualification-20260902/r17-b0-agj-p4/repeat_1/cases/r17-b0-agj-p4/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "e83e7ad0f32eb76db0d550165f2d53dd51832bd5dca946fca634b1c5550ac65c"
+        },
+        {
+          "action_tool_sequence": [
+            "skill",
+            "shell",
+            "shell",
+            "shell",
+            "shell",
+            "shell",
+            "shell",
+            "shell"
+          ],
+          "finish_reasons": [
+            "stop",
+            "stop",
+            "stop",
+            "stop"
+          ],
+          "provider_calls": 4,
+          "repeat": 2,
+          "score": 0.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/qwen25-32b-ph-native-full-qualification-20260902/r17-b0-agj-p4/repeat_2/cases/r17-b0-agj-p4/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "c3f3507719eceae10a27eed56c937bb2ace69db82166bb0a676256eac212cdf5"
+        }
+      ],
+      "score": 0.0,
+      "score_exact_reproduction": true,
+      "task_id": "r17-b0-agj-p4"
+    },
+    {
+      "action_tool_sequence_exact": false,
+      "failure_family": "formula_materialization",
+      "repeats": [
+        {
+          "action_tool_sequence": [
+            "skill",
+            "shell",
+            "shell"
+          ],
+          "finish_reasons": [
+            "stop",
+            "stop"
+          ],
+          "provider_calls": 2,
+          "repeat": 0,
+          "score": 0.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/qwen25-32b-ph-native-full-qualification-20260902/r17-b0-fmv-p1/repeat_0/cases/r17-b0-fmv-p1/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "28d1b6f2d1f13564ffcce4145410773f87bfd7cdbc81a59e8a17cf60f53deb3f"
+        },
+        {
+          "action_tool_sequence": [
+            "skill",
+            "shell"
+          ],
+          "finish_reasons": [
+            "stop",
+            "stop"
+          ],
+          "provider_calls": 2,
+          "repeat": 1,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/qwen25-32b-ph-native-full-qualification-20260902/r17-b0-fmv-p1/repeat_1/cases/r17-b0-fmv-p1/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "2ad00d973d52983febce6c24bffff68a7fcca9ef7f8aadfa4843e23aa0027c9b"
+        },
+        {
+          "action_tool_sequence": [
+            "skill",
+            "shell"
+          ],
+          "finish_reasons": [
+            "stop",
+            "stop"
+          ],
+          "provider_calls": 2,
+          "repeat": 2,
+          "score": 1.0,
+          "trajectory_ref_path": "/data/wyt/e2-r17-search-projection/qwen25-32b-ph-native-full-qualification-20260902/r17-b0-fmv-p1/repeat_2/cases/r17-b0-fmv-p1/rollout_0/r17_trajectory_ref.json",
+          "trajectory_ref_sha256": "0cf227e479fd9bf009005a99e1d8141fc4c62cf4fa4217b5739866c1747cc2e5"
+        }
+      ],
+      "score": null,
+      "score_exact_reproduction": false,
+      "task_id": "r17-b0-fmv-p1"
+    }
+  ],
+  "tool_probe": {
+    "expected_semantics": true,
+    "rows": [
+      {
+        "receipts": [
+          {
+            "call_index": 0,
+            "completion_tokens": 26,
+            "created_at_utc": "2026-09-02T12:10:09+00:00",
+            "done_reason": "stop",
+            "eval_count": 26,
+            "finish_reason": "stop",
+            "hidden_provider_retry_used": false,
+            "max_output_tokens": 256,
+            "parallel_tool_calls": false,
+            "prompt_eval_count": 157,
+            "prompt_tokens": 157,
+            "provider_retry_limit": 0,
+            "provider_status": "completed",
+            "request_sha256": "4bc3f8796c9a86d3f0650df212e3fec622cb4426f07a670b79746cc741c285c1",
+            "requested_model": "qwen2.5:32b",
+            "resolved_model": "qwen2.5:32b",
+            "response_id_sha256": "67f104a68f879e3360cbb73bf0a2943146323f8e70db82ce832d3b1a1fb35467",
+            "response_message_sha256": "4c192308082458b0fdf70c4e9cdca689fec237b468dd36b6df08b9d36fb4ccd6",
+            "seed_requested": 1717,
+            "temperature_requested": 0.0,
+            "tool_call_id_policy": "sha256(request_payload):tool_index",
+            "top_p_requested": 1.0,
+            "total_tokens": 183,
+            "wall_time_seconds": 0.9962166670011356
+          }
+        ],
+        "repeat": 0,
+        "semantic_sha256": "01e7cd611d4a5bebec2ef927e56a5a05ef66bbd2dbed845c64c100b6d6914c8f",
+        "semantic_tool_calls": [
+          {
+            "arguments": {
+              "a": 7,
+              "b": 5
+            },
+            "name": "add_numbers"
+          }
+        ]
+      },
+      {
+        "receipts": [
+          {
+            "call_index": 0,
+            "completion_tokens": 26,
+            "created_at_utc": "2026-09-02T12:10:10+00:00",
+            "done_reason": "stop",
+            "eval_count": 26,
+            "finish_reason": "stop",
+            "hidden_provider_retry_used": false,
+            "max_output_tokens": 256,
+            "parallel_tool_calls": false,
+            "prompt_eval_count": 157,
+            "prompt_tokens": 157,
+            "provider_retry_limit": 0,
+            "provider_status": "completed",
+            "request_sha256": "4bc3f8796c9a86d3f0650df212e3fec622cb4426f07a670b79746cc741c285c1",
+            "requested_model": "qwen2.5:32b",
+            "resolved_model": "qwen2.5:32b",
+            "response_id_sha256": "6870f1647469fb105485596291f71d69649c2132f009c6ea7e1c1bec09e0469a",
+            "response_message_sha256": "4c192308082458b0fdf70c4e9cdca689fec237b468dd36b6df08b9d36fb4ccd6",
+            "seed_requested": 1717,
+            "temperature_requested": 0.0,
+            "tool_call_id_policy": "sha256(request_payload):tool_index",
+            "top_p_requested": 1.0,
+            "total_tokens": 183,
+            "wall_time_seconds": 0.8683444579946809
+          }
+        ],
+        "repeat": 1,
+        "semantic_sha256": "01e7cd611d4a5bebec2ef927e56a5a05ef66bbd2dbed845c64c100b6d6914c8f",
+        "semantic_tool_calls": [
+          {
+            "arguments": {
+              "a": 7,
+              "b": 5
+            },
+            "name": "add_numbers"
+          }
+        ]
+      },
+      {
+        "receipts": [
+          {
+            "call_index": 0,
+            "completion_tokens": 26,
+            "created_at_utc": "2026-09-02T12:10:11+00:00",
+            "done_reason": "stop",
+            "eval_count": 26,
+            "finish_reason": "stop",
+            "hidden_provider_retry_used": false,
+            "max_output_tokens": 256,
+            "parallel_tool_calls": false,
+            "prompt_eval_count": 157,
+            "prompt_tokens": 157,
+            "provider_retry_limit": 0,
+            "provider_status": "completed",
+            "request_sha256": "4bc3f8796c9a86d3f0650df212e3fec622cb4426f07a670b79746cc741c285c1",
+            "requested_model": "qwen2.5:32b",
+            "resolved_model": "qwen2.5:32b",
+            "response_id_sha256": "f330886bf43ff678a6ff1b1997bdcd7141b51e2799329cde2c9317f4a34b5e21",
+            "response_message_sha256": "4c192308082458b0fdf70c4e9cdca689fec237b468dd36b6df08b9d36fb4ccd6",
+            "seed_requested": 1717,
+            "temperature_requested": 0.0,
+            "tool_call_id_policy": "sha256(request_payload):tool_index",
+            "top_p_requested": 1.0,
+            "total_tokens": 183,
+            "wall_time_seconds": 0.8511172629951034
+          }
+        ],
+        "repeat": 2,
+        "semantic_sha256": "01e7cd611d4a5bebec2ef927e56a5a05ef66bbd2dbed845c64c100b6d6914c8f",
+        "semantic_tool_calls": [
+          {
+            "arguments": {
+              "a": 7,
+              "b": 5
+            },
+            "name": "add_numbers"
+          }
+        ]
+      }
+    ],
+    "semantic_exact_reproduction": true
+  }
+}

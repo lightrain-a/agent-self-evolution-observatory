@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-qwen25-32b-q4-native-transport-r1-preflight",
+  "status": "PASS_QWEN25_32B_Q4_NATIVE_TRANSPORT_REPRO_PRECHECK",
+  "scientific_outcome": false,
+  "new_cal_test_outcomes_accessed": false,
+  "parent_failed_realization": "FAIL_QWEN25_32B_Q4_LOCAL_SCORE_REPRODUCIBILITY",
+  "repair_scope": "TRANSPORT_ONLY_OPENAI_COMPAT_TO_NATIVE_OLLAMA_WITH_EXPLICIT_SAMPLER_OPTIONS",
+  "invariants": {
+    "model_blob_sha256": "eabc98a9bcbfce7fd70f3e07de599f8fda98120fefed5881934161ede8bd1a41",
+    "quantization": "Q4_K_M",
+    "mindmemos_unchanged": true,
+    "development_task_unchanged": "r17-b0-fmv-p1",
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "seed": 1717,
+    "max_turns": 10,
+    "max_output_tokens": 4096,
+    "prompt_and_tool_schema_unchanged": true
+  },
+  "changed_only": {
+    "from": "Ollama OpenAI-compatible /v1/chat/completions",
+    "to": "Ollama native /api/chat",
+    "native_sampler_binding": "options.seed=1717, options.temperature=0.0, options.top_p=1.0"
+  },
+  "native_adapter_sha256": "5a7cdaaddbd4dd3a92ff70aea1910e5e89a6da2603bf0805af1498d065c91a7e",
+  "simple_tool_probe": {
+    "semantic_repeats": 3,
+    "all_expected": true,
+    "semantic_result": "add_numbers(a=7,b=5)",
+    "native_eval_count_each": 26,
+    "note": "Native Ollama-generated tool-call IDs varied, but the adapter deterministically rewrites IDs from request SHA and tool index."
+  },
+  "decision_task_precheck": {
+    "task_id": "r17-b0-fmv-p1",
+    "reason_for_use": "This development-only task produced the parent realization's irreversible 1/0/0 reproducibility failure and therefore directly tests the transport repair without touching CAL/TEST.",
+    "scores": [1.0, 1.0, 1.0],
+    "provider_calls_per_repeat": [2, 2, 2],
+    "tool_sequence_each": ["skill", "shell"],
+    "trajectory_ref_sha256": [
+      "220b15c0164f3f4e8b41edf2a6524301f705e1ce6157996d1d3b418bb7a89421",
+      "f27b977098eed863bf95d831ac984420e1bf80490c99fd23798b278365f60ac9",
+      "d1a3ac504fdcf044780757d5d62d0069d824725486139c9e26a9a81401ffd8d4"
+    ],
+    "score_exact_reproduction": true
+  },
+  "next_gate": "FULL_SIX_TASK_X_THREE_REPEAT_DEVELOPMENT_QUALIFICATION",
+  "authority": {
+    "native_transport_candidate": true,
+    "full_development_qualification": true,
+    "updater_qualification": false,
+    "cal_scientific_execution": false,
+    "test_scientific_execution": false,
+    "paper_promotion": false
+  }
+}
