@@ -17,13 +17,19 @@ from research_pipeline.agent_constraint_externality_runner_core import (
 
 PROVIDER_ID = "ATOMGIT_CODINGPLAN_ATOMCODE_HEADLESS_V1"
 PROVIDER_BASE_URL = "https://llm-api.atomgit.com/v1"
-BRIDGE_SCHEMA = "ace-atomcode-json-tool-bridge-v1"
+BRIDGE_SCHEMA = "ace-atomcode-json-action-bridge-v2"
 ATOMCODE_PROVIDER_PROFILE = "AtomGit-deepseek-v4-flash"
 RESOLVED_MODEL = "deepseek-v4-flash"
 CONTEXT_WINDOW = 512000
 MAX_OUTPUT_TOKENS = 128000
 RETRY_MAX_ATTEMPTS = 1
 SAMPLING_CONTROL = "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9"
+SYSTEM_PROMPT = (
+    "You are a decision policy inside an offline controlled simulation. "
+    "Never invoke native tools or function calls. Return only ordinary JSON text "
+    "describing proposed action IDs. This JSON is a decision, not an execution receipt, "
+    "and does not claim any action was executed."
+)
 
 
 def _extract_json_object(text: str) -> dict[str, Any]:
@@ -85,12 +91,12 @@ def _tool_prompt(
     name_to_alias: dict[str, str] = {}
     bridged_tools: list[dict[str, Any]] = []
     for index, tool in enumerate(tools, start=1):
-        alias = f"T{index:03d}"
+        alias = f"A{index:03d}"
         name = str(tool["name"])
         alias_to_name[alias] = name
         name_to_alias[name] = alias
         bridged_tools.append({
-            "tool_id": alias,
+            "action_id": alias,
             "description": tool.get("description", ""),
             "parameters": tool.get("parameters", {}),
         })
@@ -98,20 +104,31 @@ def _tool_prompt(
     for item in input_items:
         cloned = dict(item)
         if cloned.get("type") == "function_call" and cloned.get("name") in name_to_alias:
-            cloned["tool_id"] = name_to_alias[str(cloned.pop("name"))]
+            cloned = {
+                "type": "proposed_action",
+                "action_id": name_to_alias[str(cloned["name"])],
+                "arguments": cloned.get("arguments", "{}"),
+                "call_id": cloned.get("call_id"),
+            }
+        elif cloned.get("type") == "function_call_output":
+            cloned = {
+                "type": "action_result",
+                "call_id": cloned.get("call_id"),
+                "output": cloned.get("output"),
+            }
         bridged_input.append(cloned)
     schema = {
-        "tool_call_response": {
-            "type": "tool_calls",
-            "calls": [
+        "act": {
+            "decision": "act",
+            "actions": [
                 {
-                    "tool_id": "T001",
+                    "action_id": "A001",
                     "arguments": {"argument": "value"},
                 }
             ],
         },
-        "completion_response": {
-            "type": "final",
+        "finish": {
+            "decision": "finish",
             "message": "concise completion message",
         },
     }
@@ -119,17 +136,17 @@ def _tool_prompt(
         "bridge_schema": BRIDGE_SCHEMA,
         "instructions": instructions,
         "conversation": bridged_input,
-        "tools": bridged_tools,
+        "available_actions": bridged_tools,
         "required_output_schema": schema,
     }
     return (
-        "You are the policy model for a controlled AppWorld agent experiment.\n"
-        "Choose the next action using ONLY the supplied tools and conversation.\n"
-        "Return EXACTLY one JSON object and no markdown or prose outside it.\n"
-        "When several tool calls are independent and their arguments are already known, include all of them in one response to reduce turns.\n"
-        "The tool identifiers are opaque aliases such as T001. Never emit native function/tool-call syntax; emit only plain JSON text using tool_id aliases.\n"
-        "Do not invent tool identifiers or arguments. Do not expose hidden evaluator assumptions.\n"
-        "If the task is complete, return the final form. Otherwise return one or more tool calls.\n"
+        "You are choosing proposed actions for an offline controlled AppWorld simulation.\n"
+        "Choose the next action using ONLY the supplied available_actions and conversation.\n"
+        "Return EXACTLY one ordinary JSON object and no markdown or prose outside it.\n"
+        "When several proposed actions are independent and their arguments are already known, include all of them in one decision to reduce model requests.\n"
+        "Action identifiers are opaque aliases such as A001. Never emit native function/tool-call syntax.\n"
+        "Do not invent action identifiers or arguments. Do not expose hidden evaluator assumptions.\n"
+        "If the simulated task is complete, return decision=finish. Otherwise return decision=act with one or more proposed actions.\n"
         + json.dumps(payload, ensure_ascii=False, sort_keys=True)
     ), alias_to_name
 
@@ -156,6 +173,7 @@ def write_experiment_config(path: Path) -> None:
                 f'context_window = {CONTEXT_WINDOW}',
                 f'max_tokens = {MAX_OUTPUT_TOKENS}',
                 f'retry_max_attempts = {RETRY_MAX_ATTEMPTS}',
+                'system_prompt = ' + json.dumps(SYSTEM_PROMPT, ensure_ascii=False),
                 '',
                 '[coding]',
                 'max_rounds = 1',
@@ -249,26 +267,26 @@ class AtomCodeCodingPlanClient:
         text, metadata = _message_text_from_jsonl(completed.stdout)
         parsed = _extract_json_object(text)
         output: list[dict[str, Any]] = []
-        response_type = parsed.get("type")
-        if response_type == "tool_calls":
-            calls = parsed.get("calls")
+        decision = parsed.get("decision")
+        if decision == "act":
+            calls = parsed.get("actions")
             if not isinstance(calls, list) or not calls:
-                raise MalformedToolCallError("CodingPlan tool_calls must contain a non-empty calls list.")
+                raise MalformedToolCallError("CodingPlan decision=act must contain a non-empty actions list.")
             for index, call in enumerate(calls):
-                if not isinstance(call, dict) or not isinstance(call.get("tool_id"), str) or not isinstance(call.get("arguments"), dict):
-                    raise MalformedToolCallError("CodingPlan call must contain tool_id:string and arguments:object.")
-                tool_id = call["tool_id"]
-                if tool_id not in alias_to_name:
-                    raise MalformedToolCallError(f"CodingPlan returned unknown tool alias: {tool_id}")
+                if not isinstance(call, dict) or not isinstance(call.get("action_id"), str) or not isinstance(call.get("arguments"), dict):
+                    raise MalformedToolCallError("CodingPlan action must contain action_id:string and arguments:object.")
+                action_id = call["action_id"]
+                if action_id not in alias_to_name:
+                    raise MalformedToolCallError(f"CodingPlan returned unknown action alias: {action_id}")
                 output.append(
                     {
                         "type": "function_call",
-                        "name": alias_to_name[tool_id],
+                        "name": alias_to_name[action_id],
                         "arguments": json.dumps(call["arguments"], ensure_ascii=False, sort_keys=True),
                         "call_id": f"cp-{self.request_count}-{index+1}",
                     }
                 )
-        elif response_type == "final":
+        elif decision == "finish":
             message = parsed.get("message", "")
             if not isinstance(message, str):
                 raise MalformedToolCallError("CodingPlan final message must be a string.")
@@ -280,7 +298,7 @@ class AtomCodeCodingPlanClient:
                 }
             )
         else:
-            raise MalformedToolCallError("CodingPlan bridge type must be tool_calls or final.")
+            raise MalformedToolCallError("CodingPlan bridge decision must be act or finish.")
         usage_row = metadata["usage"]
         started = metadata["started"]
         started_model = str(started.get("model", ""))

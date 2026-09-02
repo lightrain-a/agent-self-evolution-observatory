@@ -1,0 +1,16 @@
+{
+  "affected_unit": "capability:deepseek-v4-flash|ACE-FG-05|1",
+  "appworld_api_calls_observed": 0,
+  "content_sha256": "b24c6e141ae200db6e1eca3f8ee29104fd26a5c79210e44d2b46938f52d85233",
+  "f0_authorized": false,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "old_ledger_sha256": "3502794c5394ee9ebd17cf49e87a6208676d5c0a173c91d411431096b07524b4",
+  "provider_requests_spent_as_infrastructure_cost": 1,
+  "repair": "MODEL_PROFILE_SYSTEM_PROMPT_PLAIN_JSON_DECISION_PROTOCOL_WITH_ACTION_IDS",
+  "replacement": false,
+  "retry": false,
+  "root_cause": "ATOMCODE_SYSTEM_TOOL_PROTOCOL_STILL_INTERPRETED_MODEL_NATIVE_ACTION_OUTPUT_AS_TOOL_CALL_DESPITE_NO_TOOLS",
+  "schema_version": "ace-codingplan-a2-r2-native-tool-protocol-void-v1",
+  "status": "CODINGPLAN_A2_R2_NATIVE_TOOL_PROTOCOL_FAILURE_VOID",
+  "valid_capability_measurements": 0
+}

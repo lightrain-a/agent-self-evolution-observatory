@@ -44,8 +44,12 @@ RECOVERY_VOID = GENERATED / "agent-constraint-externality-codingplan-a2-provider
 RECOVERY_CONTRACT = GENERATED / "agent-constraint-externality-codingplan-deepseek-capability-a2-r1-contract-20260902.json"
 RECOVERY_R2_VOID = GENERATED / "agent-constraint-externality-codingplan-a2-r1-native-tool-interception-void-20260902.json"
 RECOVERY_R2_CONTRACT = GENERATED / "agent-constraint-externality-codingplan-deepseek-capability-a2-r2-contract-20260902.json"
+RECOVERY_R3_VOID = GENERATED / "agent-constraint-externality-codingplan-a2-r2-native-tool-protocol-void-20260902.json"
+ACTION_BRIDGE_QUAL = GENERATED / "agent-constraint-externality-codingplan-action-bridge-qualification-a3-20260902.json"
+RECOVERY_R3_CONTRACT = GENERATED / "agent-constraint-externality-codingplan-deepseek-capability-a2-r3-contract-20260902.json"
 EXECUTION_ID = "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2"
-RECOVERY_EXECUTION_ID = "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2-R2"
+RECOVERY_EXECUTION_ID = "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2-R3"
+FROZEN_A2_BRIDGE_SCHEMA = "ace-atomcode-json-tool-bridge-v1"
 CAPABILITY_FAMILIES = ("ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06")
 REPEATS = (1, 2)
 TOOL_CAP = 16
@@ -90,7 +94,7 @@ def build_provider_qualification() -> dict[str, Any]:
         "max_output_tokens": MAX_OUTPUT_TOKENS,
         "retry_max_attempts": RETRY_MAX_ATTEMPTS,
         "sampling_control": SAMPLING_CONTROL,
-        "bridge_schema": BRIDGE_SCHEMA,
+        "bridge_schema": FROZEN_A2_BRIDGE_SCHEMA,
         "live_probe": {
             "codingplan_requests": 1,
             "synthetic_tool": "set_value",
@@ -143,7 +147,7 @@ def build_addendum(provider_qualification: dict[str, Any]) -> dict[str, Any]:
             "max_output_tokens": MAX_OUTPUT_TOKENS,
             "retry_max_attempts": RETRY_MAX_ATTEMPTS,
             "sampling_control": SAMPLING_CONTROL,
-            "bridge_schema": BRIDGE_SCHEMA,
+            "bridge_schema": FROZEN_A2_BRIDGE_SCHEMA,
         },
         "panel": {
             "family_ids": list(CAPABILITY_FAMILIES),
@@ -352,6 +356,9 @@ def adjudicate(*, ledger_path: Path, toolcap_path: Path) -> dict[str, Any]:
         "recovery_contract_sha256": sha256_file(RECOVERY_CONTRACT),
         "native_tool_interception_void_sha256": sha256_file(RECOVERY_R2_VOID),
         "recovery_r2_contract_sha256": sha256_file(RECOVERY_R2_CONTRACT),
+        "native_tool_protocol_void_sha256": sha256_file(RECOVERY_R3_VOID),
+        "action_bridge_qualification_sha256": sha256_file(ACTION_BRIDGE_QUAL),
+        "recovery_r3_contract_sha256": sha256_file(RECOVERY_R3_CONTRACT),
     }
     result["content_sha256"] = sha256_value(result)
     return result
@@ -395,6 +402,14 @@ def main() -> None:
         recovery_r2_contract = read_json(RECOVERY_R2_CONTRACT)
         if recovery_r2_contract.get("status") != "CODINGPLAN_DEEPSEEK_CAPABILITY_A2_R2_AUTHORIZED_AFTER_NATIVE_TOOL_INTERCEPTION_VOID":
             raise RunnerError("CodingPlan A2-R2 recovery contract is not authorized.")
+        if not RECOVERY_R3_VOID.is_file() or not ACTION_BRIDGE_QUAL.is_file() or not RECOVERY_R3_CONTRACT.is_file():
+            raise RunnerError("CodingPlan A2-R3 requires frozen action-bridge recovery evidence.")
+        action_qualification = read_json(ACTION_BRIDGE_QUAL)
+        if action_qualification.get("status") != "CODINGPLAN_ACTION_BRIDGE_A3_QUALIFICATION_PASS":
+            raise RunnerError("CodingPlan action bridge A3 is not qualified.")
+        recovery_r3_contract = read_json(RECOVERY_R3_CONTRACT)
+        if recovery_r3_contract.get("status") != "CODINGPLAN_DEEPSEEK_CAPABILITY_A2_R3_AUTHORIZED_AFTER_ACTION_BRIDGE_QUALIFICATION":
+            raise RunnerError("CodingPlan A2-R3 recovery contract is not authorized.")
         runtime_root = args.runtime_root
         ledger_path = args.ledger or runtime_root / "ledger.jsonl"
         toolcap_path = args.toolcap_ledger or runtime_root / "toolcap-measurements.jsonl"
