@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-02T03:28:30Z",
+  "experiment": "C1-PACTA-RB-QWEN397-P0-20260901",
+  "status": "HOLD_GATE_DEGENERATE_QWEN397",
+  "scientific_stage_reached": "shadow calibration only",
+  "model": "qwen3.5-397b-a17b",
+  "carrier": "ReasoningBank + SWE-bench Verified + official MiniSWEAgent",
+  "pilot_units": 6,
+  "sealed_units": 3,
+  "writer": {"calls": 12, "status": "WRITER_TWINS_PASS"},
+  "binder": {"calls": 12, "status": "BINDER_PASS", "scope": "initial MiniSWEAgent decision state"},
+  "shadow": {
+    "calls": 144,
+    "status": "HOLD_GATE_DEGENERATE_QWEN397",
+    "K": 1,
+    "required_K": "2..5/6",
+    "pacta_open": ["pylint-dev__pylint-7080=>pylint-dev__pylint-8898"],
+    "random_open": ["sphinx-doc__sphinx-8593=>sphinx-doc__sphinx-7748"],
+    "per_unit": [
+      {"unit_id":"sphinx-doc__sphinx-8593=>sphinx-doc__sphinx-7748","B1":0.0,"B2":0.16666666666666663,"WS":0.16666666666666663,"WF":0.0,"G":false},
+      {"unit_id":"django__django-13449=>django__django-11400","B1":0.16666666666666666,"B2":0.16666666666666666,"WS":0.16666666666666669,"WF":0.16666666666666669,"G":false},
+      {"unit_id":"pylint-dev__pylint-7080=>pylint-dev__pylint-8898","B1":0.8333333333333334,"B2":0.8333333333333334,"WS":0.0,"WF":0.16666666666666663,"G":true},
+      {"unit_id":"mwaskom__seaborn-3187=>mwaskom__seaborn-3069","B1":0.16666666666666663,"B2":0.5,"WS":0.33333333333333337,"WF":0.0,"G":false},
+      {"unit_id":"psf__requests-1766=>psf__requests-1724","B1":0.0,"B2":0.0,"WS":0.0,"WF":0.0,"G":false},
+      {"unit_id":"astropy__astropy-7166=>astropy__astropy-14096","B1":0.5,"B2":0.33333333333333337,"WS":0.33333333333333337,"WF":0.33333333333333337,"G":false}
+    ]
+  },
+  "usage": {
+    "writer_input_tokens": 524446,
+    "writer_output_tokens": 4762,
+    "binder_input_tokens": 14432,
+    "binder_output_tokens": 474,
+    "shadow_input_tokens": 353688,
+    "shadow_output_tokens": 10580,
+    "cumulative_input_tokens": 892566,
+    "cumulative_output_tokens": 15816
+  },
+  "final_measurement": {"authorized": false, "calls": 0, "outcomes": 0, "guard_verified": true},
+  "sealed_provider_calls": 0,
+  "terminal_executed": false,
+  "confirmatory_executed": false,
+  "claim_authority": "NO_NEW_PACTA_METHOD_EFFECT_EVIDENCE",
+  "interpretation": "The paired writer, initial-decision binder, and stochastic shadow policy were realized, but only one of six units showed branch separation that exceeded within-branch stochasticity in both replicate blocks. The preregistered gate geometry therefore failed before any A0/A1/A2/A3 final measurement. This is evidence that the current PACTA selection criterion is not qualified on this Qwen397/ReasoningBank step-0 pilot; it is not an A3-vs-A2 method-effect estimate because final measurement was never opened.",
+  "strongest_failure_differential": "The dominant failure is gate sparsity: for five units, cross-branch first-action TV was either zero, equal to within-branch noise, or exceeded noise in only one block. The sole stable opening was pylint (B1=B2=0.8333 versus WS=0, WF=0.1667).",
+  "forbidden_next_actions": [
+    "run the 288-call final measurement",
+    "change the strict > gate threshold on these six units",
+    "increase shadow samples on these six units to rescue K",
+    "unseal the three reserve units to repair gate geometry",
+    "switch to Qwen3.5-122B or Qwen3.5-27B to search for a positive gate",
+    "create R10 positive-method manuscript"
+  ],
+  "active_manuscript": "R9",
+  "shadow_result_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-rb-qwen397-p0-20260901-v1/shadow-result.json",
+  "shadow_result_sha256": "0df194a4de6a187b6f24ac0db044d9f319ce3939286d5cb8873483b64b0ed8d3",
+  "shadow_outcomes_sha256": "c315a2e01e816477f3996b91f06f4473b7fd17239356aa6315574647d753821e",
+  "shadow_inputs_sha256": "597407ad51a0796089df9cb162fdd4a809d22925975c59a297ad84aae66a80d2"
+}

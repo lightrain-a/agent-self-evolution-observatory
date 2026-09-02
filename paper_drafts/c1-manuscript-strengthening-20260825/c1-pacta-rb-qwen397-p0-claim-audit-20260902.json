@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-02T03:29:30Z",
+  "experiment": "C1-PACTA-RB-QWEN397-P0-20260901",
+  "status": "PASS",
+  "checks": [
+    {"claim":"Nine provenance-complete native source trajectories were available before P0 split.","status":"PASS"},
+    {"claim":"Six pilot units and three sealed units were selected outcome-blind by the frozen pilot salt.","status":"PASS"},
+    {"claim":"Twelve controlled same-trajectory ReasoningBank writer branches completed with distinct success/failure memories.","status":"PASS"},
+    {"claim":"Twelve initial-decision SCB bindings completed; this adapter is not claimed novel.","status":"PASS"},
+    {"claim":"All 144 shadow first-decision calls completed with no model drift or sealed-unit leakage.","status":"PASS"},
+    {"claim":"Only one of six units opened the frozen noise-calibrated PACTA gate, so the preregistered 2..5/6 geometry requirement failed.","status":"PASS"},
+    {"claim":"No A0/A1/A2/A3 method-effect estimate exists because the 288-call final measurement remained locked and executed zero calls.","status":"PASS"},
+    {"claim":"This result supports a qualification failure of the current selection criterion on this Qwen397/ReasoningBank step-0 pilot, not a negative A3-vs-A2 effect estimate and not a universal PACTA failure.","status":"PASS"}
+  ],
+  "forbidden_claims": [
+    "PACTA is effective on ReasoningBank/Qwen397",
+    "PACTA is ineffective on ReasoningBank/Qwen397 based on A3-vs-A2",
+    "the three sealed units confirm the gate result",
+    "the state-conditioned binder used post-action repository observations",
+    "Qwen3.5-122B or Qwen3.5-27B replication has been authorized or executed",
+    "R10 has been created"
+  ],
+  "claim_authority": "NO_NEW_PACTA_METHOD_EFFECT_EVIDENCE",
+  "active_manuscript": "R9"
+}

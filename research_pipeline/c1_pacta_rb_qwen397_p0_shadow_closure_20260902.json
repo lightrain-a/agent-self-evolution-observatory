@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-02T03:28:30Z",
+  "research_object": "C1 PACTA / ReasoningBank / Qwen3.5-397B-A17B P0",
+  "decision": "HOLD_GATE_DEGENERATE_QWEN397",
+  "scientific_boundary": "writer+binder+shadow realized; final four-arm effect measurement not authorized",
+  "evidence": {
+    "valid_native_source_pool": 9,
+    "pilot": 6,
+    "sealed": 3,
+    "writer_calls": 12,
+    "binder_calls": 12,
+    "shadow_calls": 144,
+    "gate_open": 1,
+    "final_calls": 0,
+    "sealed_provider_calls": 0
+  },
+  "lessons": [
+    "A same-trajectory success/failure writer intervention can produce distinct valid ReasoningBank memories without implying that those differences reliably move the downstream first-decision distribution.",
+    "Noise calibration matters: cross-branch TV that equals or only intermittently exceeds within-branch TV does not earn transport authority under the frozen PACTA gate.",
+    "On this step-0 MiniSWEAgent surface, five of six pilot units fail the strict two-block noise-calibrated gate; only the pylint unit shows stable branch separation substantially above within-branch variation.",
+    "A gate-geometry failure before A0/A1/A2/A3 measurement is not a method-effect estimate. It qualifies a selection criterion, not the final intervention effect.",
+    "Initial-decision state conditioning should be described narrowly: before the first shell action, no repository observation has been returned, so the SCB adapter conditions on the coding task plus the initial agent state, not on a post-action repository observation.",
+    "Do not rescue a sparse gate by tuning the threshold, adding samples, consuming sealed reserve, or switching to a smaller Qwen model after observing this outcome. A revised selection rule would require a new method object and new prospective substrate."
+  ],
+  "belief_update": {
+    "increase": "Confidence that the W->first-decision transport bottleneck is real even under a stronger ReasoningBank carrier and a very strong Qwen policy: writer differences are easy to realize, but stable action-distribution separation remains sparse.",
+    "decrease": "Confidence that the current strict PACTA noise-calibrated gate is broadly usable as a six-unit selection mechanism at MiniSWEAgent step 0.",
+    "unchanged": "No direct belief update about A3-vs-rate-matched-random effectiveness because the final method-effect stage was never opened."
+  },
+  "reopen_condition": "Any new PACTA-style selector must be preregistered as a new scientific object on fresh source/future pairs before its selection outcomes are observed. The three sealed units from this epoch remain sealed and are not a rescue set.",
+  "claim_authority": "NO_NEW_PACTA_METHOD_EFFECT_EVIDENCE",
+  "active_manuscript": "R9"
+}
