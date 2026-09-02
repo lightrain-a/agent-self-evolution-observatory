@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q0-v2-TIMEOUT-20260902",
+  "status": "SOURCE_BUDGET_GATE_PASS",
+  "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+  "resolved_model": "qwen3.8-27b",
+  "source_trajectory_budget": 16384,
+  "atomcode_subprocess_timeout_seconds": 900,
+  "qualified": 6,
+  "total": 6,
+  "provider_retries": 0,
+  "codingplan_requests": 6,
+  "elapsed_ms": [97040, 585240, 433950, 139655, 203918, 656526],
+  "result_sha256": "8eead97e1a3b39a701886a24a4597e2ce607ee50580803a5655c7ac4087c4198",
+  "failure_differential": {
+    "parent_300s": "16384 produced 5/6 byte-exact PASS with the sole failure at the 300-second wrapper timeout.",
+    "repair_900s": "The same six fixtures, same prompt/config/parser/model and same 16384 budget produced 6/6 byte-exact PASS.",
+    "critical_witness": "The previously timed-out h0/l320 fixture returned byte-exact at 585240 ms; the h24/l320 fixture returned byte-exact at 656526 ms.",
+    "conclusion": "The Q0-v1 block was the AtomCode subprocess timeout, not demonstrated model content-capacity or parser failure."
+  },
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_measurement_calls": 0,
+  "next": "Run the pre-registered 12-call provider-managed sampling diagnostic at the inherited 2048 first-decision budget, then close Q0."
+}
