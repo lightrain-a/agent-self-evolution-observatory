@@ -120,7 +120,8 @@
       "Local repair":"局部修复","Coupling":"结构耦合","Collateral regression":"非目标退化",
       "Relational topology":"关系拓扑","Stage localization":"阶段定位","iRecall":"关系满足率 iRecall"
     };
-    return map[raw]||raw;
+    const lower={treatment:"实验变量",counterfactual:"反事实对照",mediator:"中间环节",retrieval:"检索",support:"支持条件",failclosed:"证据不足时保守停止",writer:"写入模块",native:"原生流程",terminal:"最终结果",trajectory:"行动轨迹",backbone:"主模型",substrate:"实验底座",ir:"关系满足率 iRecall",pair:"成对比较",heldout:"留出测试",provenance:"来源身份",evaluator:"判分器",arm:"实验组"};
+    return map[raw]||lower[raw.toLowerCase()]||raw;
   };
   const readableParagraphs=(value)=>{
     const raw=String(value??"");
