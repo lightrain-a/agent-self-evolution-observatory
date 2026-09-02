@@ -1,0 +1,32 @@
+{
+  "analysis_output_path": "generated/e2-r17-single-case-first-fail-stability-analysis-20260902.json",
+  "analyzer_path": "scripts/analyze_e2_r17_single_case_stability.py",
+  "analyzer_sha256": "d2242268e2ee7ca71ef96957a42d426283caa17a68ea2cfddbd8998d8a85de35",
+  "artifact_type": "e2-r17-single-case-first-fail-stability-analysis-authorization",
+  "authority": {
+    "analyzer": true,
+    "e3_confirmation": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "read_complete_stability_effect_once": true,
+    "s2_execution": false,
+    "scientific_experiment": false,
+    "second_backbone": false,
+    "submission": false,
+    "updater": false
+  },
+  "completion_audit_path": "generated/e2-r17-single-case-first-fail-stability-completion-audit-20260902.json",
+  "completion_audit_sha256": "03282ea94e854d208b625e2179b36178d3727cdaee18f79563b7ce201715bda9",
+  "contract_path": "generated/e2-r17-single-case-first-fail-stability-contract-20260902.json",
+  "contract_sha256": "8c415befe185e4bccc631342ead8e93aa050fc0002ad02213ecd1b9a743d3b16",
+  "created_at_utc": "2026-09-02T06:18:15+00:00",
+  "execution_authorization_path": "generated/e2-r17-single-case-first-fail-stability-authorization-20260902.json",
+  "execution_authorization_sha256": "8437add262bdf3fbdd4988596bba8ce0dad3abd74a4e3c7f6bda631e485490a8",
+  "run_summary_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-stability-20260902/summary/stability_summary.json",
+  "run_summary_sha256": "c5b5db7b434a67047203c02051c462c9231512e144e0d8dc6c0012a2ff350083",
+  "schema_version": "1.0",
+  "single_use": true,
+  "status": "AUTHORIZED_E2_R17_SINGLE_CASE_FIRST_FAIL_STABILITY_ANALYSIS"
+}
