@@ -1,0 +1,19 @@
+{
+  "all_pass_to_separate_stage_a_authorization": false,
+  "artifact_type": "e2-r17-semantic-transfer-stage-a-dual-review",
+  "contract_sha256": "232d0085ff03ef76c1ff993082ea6b40aeb47382e9156cc821f0ee9a55d0cfa0",
+  "created_at_utc": "2026-09-02T15:42:46+00:00",
+  "paper_claim_authority": false,
+  "remaining_blockers": {},
+  "resolved_models": {
+    "deepseek-v4-pro": null,
+    "kimi-k3": null
+  },
+  "schema_version": "1.0",
+  "stage_b_authority": false,
+  "statuses": {
+    "deepseek-v4-pro": "FAIL_PROVIDER_PROTOCOL",
+    "kimi-k3": "FAIL_PROVIDER_PROTOCOL"
+  },
+  "verdicts": {}
+}

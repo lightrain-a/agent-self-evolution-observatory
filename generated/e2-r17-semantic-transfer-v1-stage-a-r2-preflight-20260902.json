@@ -1,0 +1,42 @@
+{
+  "artifact_type": "e2-r17-semantic-transfer-v1-stage-a-r2-zero-provider-preflight",
+  "authority": {
+    "mint_stage_a_authorization": false,
+    "paper_promotion": false,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false
+  },
+  "bound_code_compile_pass": true,
+  "contract_path": "generated/e2-r17-semantic-transfer-v1-stage-a-r2-contract-20260902.json",
+  "contract_sha256": "93cce6fd52e96826383fcd01c860fdd423a7a54d1b43b7363548e5e6cbb9ecf2",
+  "created_at_utc": "2026-09-02T15:51:02+00:00",
+  "exactly_once": {
+    "authorized_runs": 1,
+    "automatic_retry": false,
+    "completed_rollout_replay": false,
+    "failure_preserves_running_global_lease": true,
+    "first_run_only_runner": true,
+    "replacement_sampling": false,
+    "resume_requires_separate_adjudication_and_authorization": true
+  },
+  "global_lease_exists": false,
+  "heldout_forbidden_count": 18,
+  "identity_wrapper_status": "PASS_CURRENT_REVIEW_TRANCHE",
+  "new_test_outcomes_accessed": false,
+  "next_gate": "INDEPENDENT_PREEXECUTION_REVIEW_OF_R2_BEFORE_SINGLE_USE_AUTHORIZATION",
+  "provider_calls": 0,
+  "required_resolved_model": "deepseek-v4-pro-ga-260813",
+  "run_root_exists": false,
+  "runtime_import_smoke_pass": true,
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "scope_guard_checks": {
+    "heldout_rejected": true,
+    "valid_scope": true,
+    "wrong_k_rejected": true,
+    "wrong_mode_rejected": true
+  },
+  "status": "PASS_ZERO_PROVIDER_SEMANTIC_TRANSFER_STAGE_A_R2_PREFLIGHT",
+  "stream_count": 12,
+  "task_count": 96
+}

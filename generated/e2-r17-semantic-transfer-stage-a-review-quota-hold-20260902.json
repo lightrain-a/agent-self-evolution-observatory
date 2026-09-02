@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-semantic-transfer-stage-a-review-quota-hold",
+  "status": "HOLD_EXTERNAL_REVIEWER_QUOTA_NO_REVIEW_VERDICT",
+  "created_at_utc": "2026-09-02T15:43:00+00:00",
+  "stage_a_contract_sha256": "232d0085ff03ef76c1ff993082ea6b40aeb47382e9156cc821f0ee9a55d0cfa0",
+  "stage_a_preflight_sha256": "78b2069be6f20fbb4dae482238df8681acb7fbc2c81b652978032f531fd415a0",
+  "review_attempts": {
+    "deepseek-v4-pro": {
+      "receipt_sha256": "a2973460be3fbc3266dceba1b66a7028869cb87cfa003e6a9465ea5871448899",
+      "status": "FAIL_PROVIDER_PROTOCOL",
+      "provider_error_code": "AccountQuotaExceeded",
+      "review_verdict_generated": false
+    },
+    "kimi-k3": {
+      "receipt_sha256": "5a62ac5fac51ba7a63bdb3893a218368fcbe58edb604e3fe97be51bbab7e49c3",
+      "status": "FAIL_PROVIDER_PROTOCOL",
+      "provider_error_code": "AccountQuotaExceeded",
+      "review_verdict_generated": false
+    }
+  },
+  "review_summary_sha256": "23fd37d286a41e940a6217942128a4eca7da8586f9488cf2606f0437ac790b7e",
+  "provider_reported_reset": "2026-09-07T00:00:00+08:00",
+  "scientific_execution": false,
+  "stage_a_authorization_minted": false,
+  "stage_a_run_root_created": false,
+  "stage_b_authority": false,
+  "paper_claim_authority": false,
+  "policy": "Quota failure is not a negative review and cannot be converted into execution authority. Do not retry repeatedly before quota availability changes. Continue only zero-provider implementation/preflight work.",
+  "next_gate": "INDEPENDENT_PREEXECUTION_REVIEW_WHEN_REVIEWER_PROVIDER_AVAILABLE"
+}

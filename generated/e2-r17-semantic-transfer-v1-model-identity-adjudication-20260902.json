@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-semantic-transfer-v1-model-identity-adjudication",
+  "status": "PASS_CURRENT_REVIEW_TRANCHE",
+  "created_at_utc": "2026-09-02T15:45:00+00:00",
+  "qualification_path": "generated/e2-r17-selective-mrw-semantic-transfer-v1-deepseek-identity-qualification-20260902.json",
+  "qualification_sha256": "78eeb2f58edd6c9f60d355afaf90a8adc5ae811f0434cc0ef59d2b31220b6c5d",
+  "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "requested_and_resolved": {
+    "deepseek-v4-pro": {
+      "requested": "deepseek-v4-pro",
+      "resolved": "deepseek-v4-pro-ga-260813",
+      "thinking": "disabled",
+      "provider_retry_limit": 0,
+      "qualification_scientific_outcome": false
+    }
+  },
+  "exact_identity_required": true,
+  "scientific_execution": false,
+  "authority": {
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "paper_promotion": false
+  }
+}

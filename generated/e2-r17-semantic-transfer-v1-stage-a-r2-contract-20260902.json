@@ -1,0 +1,149 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-semantic-transfer-v1-stage-a-r2-contract",
+  "created_at_utc": "2026-09-02T15:46:00+00:00",
+  "status": "FROZEN_SEMANTIC_TRANSFER_V1_STAGE_A_R2",
+  "parent_stage_a_r1": {
+    "contract_path": "generated/e2-r17-semantic-transfer-v1-stage-a-contract-20260902.json",
+    "contract_sha256": "232d0085ff03ef76c1ff993082ea6b40aeb47382e9156cc821f0ee9a55d0cfa0",
+    "provider_execution_started": false,
+    "scientific_outcomes_accessed": false,
+    "disposition": "SUPERSEDED_PRE_EXECUTION_BY_R2_CONTROL_PLANE_BINDING"
+  },
+  "scientific_role": "Stage-A search-pool acquisition and equal-dose support qualification only; no learning-effect inference",
+  "scientific_design_parent": {
+    "path": "generated/e2-r17-selective-mrw-semantic-transfer-v1-pre-f0-20260902.json",
+    "sha256": "d30aadfc1991e63d9db604edbf38dac8203603c00edc3c5c103026bd9ff661a9",
+    "status": "PRE_F0_SEMANTIC_TRANSFER_STATIC_PASS_AWAIT_PROVIDER_IDENTITY"
+  },
+  "static_audit": {
+    "path": "generated/e2-r17-selective-mrw-semantic-transfer-v1-static-audit-20260902.json",
+    "sha256": "30e2350447b190661c6ed20d40fd9e95d40f81d846a9fd2a172a6ec59d85f3f6",
+    "status": "PASS_SEMANTIC_TRANSFER_V1_ZERO_PROVIDER_STATIC_AUDIT"
+  },
+  "runtime_compat_audit": {
+    "path": "generated/e2-r17-semantic-transfer-v1-runtime-compat-r1-audit-20260902.json",
+    "sha256": "f63d9817dacedc1e1ec5ad3ed1e657875cdfcc436363929f0e8a9b30e360aa89",
+    "status": "PASS_SEMANTIC_TRANSFER_V1_RUNTIME_COMPAT_R1"
+  },
+  "model_identity": {
+    "path": "generated/e2-r17-semantic-transfer-v1-model-identity-adjudication-20260902.json",
+    "sha256": "ac5668fbfd465a6fbcc7760d1b751e1717d1903ab59b3a274bc91cd94e8cb304",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "route": "https://ark.cn-beijing.volces.com/api/plan/v3"
+  },
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v1",
+    "suite_manifest_sha256": "a7ddee258ddc22cee3efe22bad44046faa20ba9d49762c98a66a843c2c9533a3",
+    "split_manifest_path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v1/r17_split_manifest.json",
+    "split_manifest_sha256": "6ac03fd07391b2671e2e3cecd975395adff6c9fbd622751195a5a46b6a39af1c",
+    "metadata_path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v1/r17_controlled_metadata.json",
+    "metadata_sha256": "5802f35a6fedaa843ba61887ad0a892b8a178b33c20fb6bc4ad0f05e9832476f",
+    "core_semantic_split_sha256": "db911c2c088f3a5df08ffccc922ea8b68a6af31f0f8a1bb4372ce85e62b34033",
+    "streams": [
+      "st-fkb-00",
+      "st-fkb-01",
+      "st-hsb-00",
+      "st-hsb-01",
+      "st-nrb-00",
+      "st-nrb-01",
+      "st-ntr-00",
+      "st-ntr-01",
+      "st-ofr-00",
+      "st-ofr-01",
+      "st-rta-00",
+      "st-rta-01"
+    ],
+    "stream_count": 12,
+    "update_tasks": 96,
+    "heldout_tasks_forbidden": 18
+  },
+  "mindmemos": {
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "initial_skill_path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+    "initial_skill_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+  },
+  "runtime": {
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b"
+  },
+  "bound_code": {
+    "actor": {
+      "path": "scripts/run_e2_r17_actor_pool.py",
+      "sha256": "20a81fbe06f3839cd17babfdb021407368493da61610bca33aae33df8d31ec14"
+    },
+    "stage_a_runner": {
+      "path": "scripts/run_e2_r17_semantic_transfer_stage_a_v1.py",
+      "sha256": "ad11dc97a2db228626a9ee0fe56ea8b9ab4dedb32c02359f93b0257c9193b2a1"
+    },
+    "equal_dose_adjudicator": {
+      "path": "scripts/adjudicate_e2_r17_semantic_transfer_stage_a_v1.py",
+      "sha256": "b3a2e17616cfb330e4b8958daf4e58049ca22486dd390f58a28d35cc62c53f41"
+    },
+    "authorization_minter": {
+      "path": "scripts/authorize_e2_r17_semantic_transfer_stage_a_r2.py",
+      "sha256": "0428178a3b30c4c6986e2cb267ce38404f3026195db41af9d0036022463d1df0"
+    }
+  },
+  "actor": {
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "k": 8,
+    "prefix_ks": [1, 2, 4, 8],
+    "temperature": 0,
+    "thinking": "disabled",
+    "provider_retry_limit": 0,
+    "max_turns": 10,
+    "max_output_tokens": 8192,
+    "concurrency": 1
+  },
+  "budget": {
+    "actor_rollouts": 768,
+    "max_provider_calls": 7680,
+    "provider_calls_per_rollout_limit": 10
+  },
+  "equal_dose_support": {
+    "required_mixed_pools_per_stream": 4,
+    "streams_required": 12,
+    "treated_mixed_pools_per_stream": 4,
+    "treated_pool_selection": "lowest SHA256(semantic-transfer-mrw4-v1|stream_id|task_id) among mixed pools",
+    "all_96_pools_must_be_sealed_before_support_read": true,
+    "stage_b_treated_pool_ids_must_be_frozen_before_updater": true,
+    "failure_status": "HOLD_SEMANTIC_TRANSFER_INSUFFICIENT_EQUAL_DOSE_SUPPORT"
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v1-stage-a-r2-20260902",
+  "global_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-semantic-transfer-v1-stage-a-r2.json",
+  "exactly_once": {
+    "authorized_runs": 1,
+    "first_run_only_runner": true,
+    "completed_rollout_replay": false,
+    "automatic_retry": false,
+    "replacement_sampling": false,
+    "resume_requires_separate_adjudication_and_authorization": true,
+    "failure_preserves_running_global_lease": true
+  },
+  "analysis_boundary": {
+    "stage_a_support_only": true,
+    "partial_learning_effect_read": false,
+    "scientific_scores_read": false,
+    "stage_b_effect_inference": false
+  },
+  "authority": {
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "analyzer": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false
+  },
+  "next_gate": "ZERO_PROVIDER_R2_PREFLIGHT_THEN_INDEPENDENT_PREEXECUTION_REVIEW"
+}
