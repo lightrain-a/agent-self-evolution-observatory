@@ -1,0 +1,17 @@
+{
+  "artifact_type": "e2-r17-constrained-state-micro-recovery2-v1-supersession",
+  "created_at_utc": "2026-09-02T15:05:12+00:00",
+  "next_gate": "RECOVERY2_V2_ZERO_PROVIDER_PREFLIGHT",
+  "provider_calls_under_v1": 0,
+  "reason": "Initial-skill G0 must not carry a synthetic updater receipt on the actual actor path. V1 was never executed.",
+  "schema_version": "1.0",
+  "scientific_outcomes_under_v1": 0,
+  "status": "PASS_RECOVERY2_V2_SUPERSEDES_UNUSED_V1_AUTHORITY",
+  "v1_authorization_path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-authorization-20260902.json",
+  "v1_authorization_sha256": "12006165663b9d9a3da169045e55992237bb16a78e6e7299a3c2a16ea9d83326",
+  "v1_contract_path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-contract-20260902.json",
+  "v1_contract_sha256": "bfcd6405182f93ed6346a0691da47037507c9fcef1bd3d01e0f3944636b3e959",
+  "v1_execution_authority_revoked": true,
+  "v1_lineage_lease_absent": true,
+  "v1_run_root_absent": true
+}

@@ -1,0 +1,32 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-constrained-state-micro-recovery2-zero-provider-preflight",
+  "child_provider_total_limit": 123,
+  "contract_path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v2-contract-20260902.json",
+  "contract_sha256": "6e9d9b344b763e4b9f4f2b2d3f8e5207f38a7230c8a35f882bac9b1e215436f5",
+  "created_at_utc": "2026-09-02T15:05:13+00:00",
+  "cumulative_claims_before_child": {
+    "g0_base": 55,
+    "g1_verify": 60,
+    "g2_complete": 65,
+    "g3_complete_recover": 68
+  },
+  "explicit_429_recovery_units": 1,
+  "never_started_measurements": 26,
+  "new_measurements": 27,
+  "next_gate": "MINT_RECOVERY2_MEASUREMENT_AUTHORIZATION",
+  "original_failed_claims_g3": 3,
+  "parent_claims_by_arm": {
+    "g0_base": 55,
+    "g1_verify": 60,
+    "g2_complete": 65,
+    "g3_complete_recover": 65
+  },
+  "parent_completed_measurements": 45,
+  "partial_effect_read": false,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "status": "PASS_CONSTRAINED_STATE_MICRO_ZERO_PROVIDER_PREFLIGHT"
+}
