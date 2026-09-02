@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "artifact_kind": "C1_PACTA_MSR_ATOMGIT_QWEN38_T0_SOURCE_CLOSEOUT",
+  "status": "HOLD_ATOMGIT_MSR_SOURCE_SUPPORT_INSUFFICIENT_REAL_TASK_OUTPUT_TRUNCATION",
+  "lessons": [
+    "Synthetic long-action transport qualification can establish byte-exact envelope capacity without covering the reasoning-length tail of a realistic multi-step software-engineering trajectory.",
+    "For AtomCode-mediated models, wrapper timeout and model output budget must be qualified separately. Q0.1 repaired the former; the first real source episode exposed the latter at exactly 16384 completion tokens.",
+    "A scientific source episode that has already consumed model-content-bearing steps is not retryable merely because a later provider invocation terminates nonzero. Exactly-once authority applies to the logical episode, not only to its final packet.",
+    "When source support requires all fixed units, an early consumed-invalid unit retires the entire substrate rather than authorizing replacement or continuation on the remaining units."
+  ],
+  "reopen_condition": "A new disjoint source/future pool plus a prospective higher source-output-budget qualification on new non-scientific realistic MiniSWEAgent coding envelopes. Keep AtomGit Qwen3.8, 900s wrapper ceiling, exact-base runtime and PACTA-MSR method fixed; do not reuse the retired ten-pair source pool.",
+  "scientific_authority": {
+    "source_retry_on_retired_pool": false,
+    "replacement_on_retired_pool": false,
+    "new_fresh_source_design": true,
+    "writer": false,
+    "binder": false,
+    "shadow": false,
+    "final": false
+  },
+  "evidence": {
+    "support_audit_sha256": "fe7cfaf62a63bc264d7d7bcdbb33fa2b614f4f848efc1e752cc3077b9042dedf",
+    "call10_sha256": "4c6175e068c4e7a253d5af927fd98abb52d41ac8a518db92f7c425352cc7adcd",
+    "first_scientific_request_at": "2026-09-02T22:29:09+08:00",
+    "preregistered_at": "2026-09-02T22:24:49+08:00"
+  }
+}

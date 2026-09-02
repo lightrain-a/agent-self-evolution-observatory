@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-SOURCE-T0-20260902",
+  "status": "HOLD_ATOMGIT_MSR_SOURCE_SUPPORT_INSUFFICIENT_REAL_TASK_OUTPUT_TRUNCATION",
+  "scientific_epoch_validity": "PROSPECTIVE_PROTOCOL_VALID_BUT_SOURCE_GATE_FAILED",
+  "prospective_timeline": {
+    "runner_preregistered_git_sha": "d9eea394af92afaf91c8a38bae774f280108023e",
+    "runner_preregistered_at": "2026-09-02T22:24:49+08:00",
+    "prelaunch_gate_git_sha": "8fb85d2c09d2bf7b0e54bbadfbcd98d0360e329e",
+    "prelaunch_gate_at": "2026-09-02T22:26:05+08:00",
+    "smoke_gate_git_sha": "e28b2df053190790df8a482b919e5607e9176faa",
+    "smoke_gate_at": "2026-09-02T22:28:42+08:00",
+    "first_scientific_request_at": "2026-09-02T22:29:09+08:00"
+  },
+  "frozen_condition": {
+    "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+    "resolved_model": "qwen3.8-27b",
+    "source_max_completion_tokens": 16384,
+    "atomcode_subprocess_timeout_seconds": 900,
+    "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+    "provider_wrapper_retries": 0,
+    "source_gate": "all 10 source trajectories provenance-valid; no replacement",
+    "scheduled_units": 10
+  },
+  "execution": {
+    "attempted_source_units": 1,
+    "valid_source_units": 0,
+    "consumed_source_task": "matplotlib__matplotlib-25479",
+    "provider_logical_calls": 10,
+    "codingplan_requests": 10,
+    "input_tokens": 122931,
+    "output_tokens": 33121,
+    "future_task_executions": 0,
+    "writer_calls": 0,
+    "binder_calls": 0,
+    "probe_calls": 0,
+    "shadow_calls": 0,
+    "final_calls": 0
+  },
+  "failure_differential": {
+    "calls_1_to_9": "provider/model packets completed and were persisted; the trajectory executed multiple real shell observations",
+    "call_10": {
+      "provider_returncode": 1,
+      "prompt_tokens": 18824,
+      "completion_tokens": 16384,
+      "elapsed_ms": 272693,
+      "raw_event": "retry kind=output_truncation attempt=1 max_attempts=4",
+      "terminal_event": "error: max rounds (1) reached",
+      "wrapper_classification": "NOT_PARSED_ATOMCODE_NONZERO",
+      "scientific_classification": "REAL_TASK_MODEL_OUTPUT_REACHED_FROZEN_16384_BUDGET"
+    },
+    "not_a_900s_timeout": true,
+    "not_a_model_identity_drift": true,
+    "not_a_docker_or_exact_base_failure": true,
+    "not_eligible_for_no_content_transport_retry": true
+  },
+  "content_addresses": {
+    "contract_sha256": "b5368345a9ecd42c32b8ad2168775e0d86c94113671598581fbca58b63e061b4",
+    "schedule_sha256": "33a2abd5fe4261a241bd6d3555a22ad122fc62ff4d0b50d1b0d8a0f06302c40c",
+    "prelaunch_sha256": "75473c724b195f61f454aaa9167ce3ce4e323562fdd6ebba1b555071a2f979c5",
+    "smoke_result_sha256": "9afabe37c53879a662fc55812db65047598cd50876f361a02c9e97f6e08cc11f",
+    "support_audit_sha256": "fe7cfaf62a63bc264d7d7bcdbb33fa2b614f4f848efc1e752cc3077b9042dedf",
+    "matplotlib_run_sha256": "0e02d6f6fc79ba1e98747e70abaa947e58767d27e866a0cc1b519dcb5d43ec0d",
+    "matplotlib_call10_sha256": "4c6175e068c4e7a253d5af927fd98abb52d41ac8a518db92f7c425352cc7adcd"
+  },
+  "adjudication": {
+    "this_10_pair_substrate": "RETIRED_NO_RERUN_NO_REPLACEMENT",
+    "pacta_msr_method_effect": "NOT_EVALUATED",
+    "active_manuscript": "R9",
+    "R10_created": false,
+    "second_model_rescue": false
+  },
+  "next": "Use a completely fresh source/future substrate. Before any new real source task, prospectively qualify a larger AtomGit Qwen3.8 source-output budget on new non-scientific realistic MiniSWEAgent coding envelopes under the already-qualified 900s invocation ceiling. Do not reuse matplotlib__matplotlib-25479 or any member of this retired 10-pair pool for scientific source acquisition."
+}
