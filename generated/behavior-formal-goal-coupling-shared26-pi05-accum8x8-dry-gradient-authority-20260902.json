@@ -1,0 +1,53 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum8x8-dry-gradient-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "AUTHORIZED_PI05_SINGLE_GPU_ACCUM8X8_NO_UPDATE_DRY_GRADIENT",
+  "scope": "preregistered candidate-2 resource qualification only; no formal training or outcome authority",
+  "consumed_attempt1": {
+    "result_path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum16x4-dry-gradient-repair1-result-20260902.json",
+    "result_sha256": "1208e32c2df053023aaf38a9069a430b35ed51b2d26bcfe8a29bb95fa86fdc9d",
+    "adjudication_path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum16x4-resource-failure-adjudication-20260902.json",
+    "adjudication_sha256": "1a87183e3c48bfca43fe32dab518b76498f337044eb4db506be99ad74404714f",
+    "classification": "ACCUM16X4_RESOURCE_INFEASIBLE_AFTER_ONE_COMPLETED_MICROGRADIENT"
+  },
+  "parent_preregistration_sha256": "0d0a88b20f15d3a0fa2e8721da865bd5488cc39c43523a518608063c8a51a8d7",
+  "data_order_qualification": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-data-order-qualification-20260902.json",
+    "sha256": "a218a76893b8e97dc849eb2d7dd63cf3a7516acbc0d0ded3822e20a0a211446d",
+    "status": "PI05_ACCUM_8X8_DATA_ORDER_QUALIFICATION_PASS"
+  },
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum8x8_dry_gradient.py",
+  "runner_sha256": "afd67979f50b80795077b1e6e5094eb6111fed1e072f3c1348e744032e8daeb4",
+  "launcher_path": "scripts/run_behavior_formal_goal_coupling_shared26_pi05_accum8x8_dry_gradient.sh",
+  "launcher_sha256": "e36e80aa514848c7bc3f201b708c1f33bb7665b75574d7e181820c62656ff941",
+  "candidate": {
+    "priority": 2,
+    "physical_micro_batch": 8,
+    "accumulation_steps": 8,
+    "effective_batch": 64
+  },
+  "resource_execution": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "num_workers": 0,
+    "cpu_affinity": "0-63",
+    "memory_max_gib": 72,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "forbidden": [
+    "optimizer update",
+    "parameter or EMA update",
+    "checkpoint write",
+    "loss or numerical gradient inspection",
+    "policy rollout or outcome read",
+    "advance to 4x16 unless this candidate fails for a resource reason"
+  ],
+  "optimizer_updates_authorized": 0,
+  "formal_training_authorized": false,
+  "policy_outcomes_read": false,
+  "next_gate_if_pass": "AUTHORIZE_SINGLE_GPU_ACCUM8X8_FORMAL_TRAINING_IMPLEMENTATION",
+  "next_gate_if_resource_failure": "AUTHORIZE_PREREGISTERED_MICROBATCH4_ACCUM16_NO_UPDATE_DRY_GRADIENT"
+}
