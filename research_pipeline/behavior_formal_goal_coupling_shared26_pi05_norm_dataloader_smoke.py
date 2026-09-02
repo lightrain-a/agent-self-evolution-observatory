@@ -93,6 +93,8 @@ def main() -> int:
         if not norm_source.is_file() or sha256_file(norm_source) != EXPECTED_NORM_SHA256:
             raise RuntimeError("frozen normalization asset missing or SHA mismatch")
 
+        # Match the formal training launch root before resolving cwd-relative OpenPI asset paths.
+        os.chdir(child_root)
         sys.path.insert(0, str(child_root / "src"))
         import jax
         import torch
@@ -173,6 +175,7 @@ def main() -> int:
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "status": "PI05_NORMALIZED_DATALOADER_ZERO_UPDATE_PASS",
             "openpi_child_commit": child_commit,
+            "launch_cwd": str(Path.cwd()),
             "config_name": CONFIG_NAME,
             "dataset_root": data_config.dataset_root,
             "repo_id": data_config.repo_id,
