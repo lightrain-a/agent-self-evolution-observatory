@@ -1,0 +1,47 @@
+{
+  "already_validly_tested": [
+    {
+      "model_id": "qwen3.7-plus",
+      "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+    },
+    {
+      "model_id": "qwen3.8-27b",
+      "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+    },
+    {
+      "model_id": "deepseek-v4-flash",
+      "verdict": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP"
+    }
+  ],
+  "authority": {
+    "f0": false,
+    "next_capability_candidate": true,
+    "p1": false,
+    "paper_claim": false
+  },
+  "catalog_artifact": "generated/agent-constraint-externality-codingplan-catalog-b1-20260903.json",
+  "catalog_content_sha256": "4a843540a177d51b49c4040bfe8d29be19debd225da169cb1235ed751eceb619",
+  "content_sha256": "a96d8a4834c8680ce655af49eda8e946fc9bea7afc1168f9cea7b9248436d672",
+  "gate_unchanged": {
+    "malformed_tool_calls_required": 0,
+    "non_target_preservation_min": 0.85,
+    "target_success_max": 0.875,
+    "target_success_min": 0.5,
+    "tool_loop_completion_min": 0.75
+  },
+  "next_candidate": {
+    "model_id": "GLM-5.2",
+    "profile": "AtomGit-GLM-5.2"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "remaining_frozen_order": [
+    "GLM-5.2",
+    "mimo-v2.5",
+    "mimo-v2.5-pro"
+  ],
+  "schema_version": "ace-capability-backbone-search-state-b1-v1",
+  "scientific_outcomes_observed": 0,
+  "selection_policy": "FREEZE_CURRENT_ACCOUNT_CATALOG_ORDER_AFTER_EXCLUDING_ALREADY_VALIDLY_TESTED_MODELS; STOP_AT_FIRST_CAPABILITY_PASS",
+  "status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_GLM52_NEXT",
+  "stop_rule": "STOP_BACKBONE_SEARCH_IMMEDIATELY_AT_FIRST_CAPABILITY_CALIBRATION_PASS; FLOOR_OR_CEILING_ADVANCES_ONLY_TO_NEXT_PREDECLARED_MODEL"
+}

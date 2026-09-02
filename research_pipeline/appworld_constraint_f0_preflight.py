@@ -144,6 +144,18 @@ CODINGPLAN_QWEN38_RESULT = (
 CODINGPLAN_QWEN38_CLOSEOUT = (
     GENERATED / "agent-constraint-externality-codingplan-qwen38-capability-a0-closeout-20260902.json"
 )
+CODINGPLAN_DEEPSEEK_RESULT = (
+    GENERATED / "agent-constraint-externality-codingplan-deepseek-live-capability-b0-result-20260903.json"
+)
+CODINGPLAN_DEEPSEEK_CLOSEOUT = (
+    GENERATED / "agent-constraint-externality-codingplan-deepseek-live-capability-b0-closeout-20260903.json"
+)
+CODINGPLAN_CATALOG_B1 = (
+    GENERATED / "agent-constraint-externality-codingplan-catalog-b1-20260903.json"
+)
+BACKBONE_SEARCH_STATE_B1 = (
+    GENERATED / "agent-constraint-externality-capability-backbone-search-state-b1-20260903.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -377,6 +389,61 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         if codingplan_closeout.get("authority", {}).get("f0") is not False:
             raise PreflightError("CodingPlan closeout cannot authorize F0.")
         codingplan_closeout_valid = True
+
+    deepseek_result = (
+        read_json(CODINGPLAN_DEEPSEEK_RESULT)
+        if CODINGPLAN_DEEPSEEK_RESULT.is_file()
+        else {}
+    )
+    deepseek_status = validate_capability_result(deepseek_result)
+    deepseek_closeout = (
+        read_json(CODINGPLAN_DEEPSEEK_CLOSEOUT)
+        if CODINGPLAN_DEEPSEEK_CLOSEOUT.is_file()
+        else {}
+    )
+    backbone_search_state = (
+        read_json(BACKBONE_SEARCH_STATE_B1)
+        if BACKBONE_SEARCH_STATE_B1.is_file()
+        else {}
+    )
+    codingplan_catalog_b1 = (
+        read_json(CODINGPLAN_CATALOG_B1)
+        if CODINGPLAN_CATALOG_B1.is_file()
+        else {}
+    )
+    backbone_search_active = False
+    if backbone_search_state:
+        for label, payload in (
+            ("DeepSeek closeout", deepseek_closeout),
+            ("CodingPlan catalog B1", codingplan_catalog_b1),
+            ("backbone search state B1", backbone_search_state),
+        ):
+            if payload.get("object_id") != OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            claimed = payload.get("content_sha256")
+            unsigned = dict(payload)
+            unsigned.pop("content_sha256", None)
+            if claimed != digest(unsigned):
+                raise PreflightError(f"{label} content hash mismatch.")
+        if deepseek_status != "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP":
+            raise PreflightError("DeepSeek B0 result is not at its frozen floor stop.")
+        if deepseek_closeout.get("status") != "CODINGPLAN_DEEPSEEK_LIVE_B0_FLOOR_CLOSEOUT":
+            raise PreflightError("DeepSeek B0 closeout status mismatch.")
+        if deepseek_closeout.get("verdict") != deepseek_status:
+            raise PreflightError("DeepSeek B0 result/closeout verdict mismatch.")
+        if codingplan_catalog_b1.get("status") != "CODINGPLAN_ACCOUNT_CATALOG_REFRESH_PASS_ZERO_MODEL_REQUESTS":
+            raise PreflightError("CodingPlan catalog B1 is not a zero-request refresh pass.")
+        if codingplan_catalog_b1.get("codingplan_model_request_delta") != 0:
+            raise PreflightError("CodingPlan catalog B1 consumed model requests.")
+        if backbone_search_state.get("status") != "CAPABILITY_BACKBONE_SEARCH_CONTINUE_GLM52_NEXT":
+            raise PreflightError("Backbone search B1 state is not frozen to GLM-5.2 next.")
+        if backbone_search_state.get("remaining_frozen_order") != [
+            "GLM-5.2", "mimo-v2.5", "mimo-v2.5-pro"
+        ]:
+            raise PreflightError("Backbone search candidate order drifted.")
+        if backbone_search_state.get("authority", {}).get("f0") is not False:
+            raise PreflightError("Backbone search state cannot authorize F0.")
+        backbone_search_active = True
 
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
@@ -677,6 +744,14 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif backbone_search_active:
+        readiness_status = backbone_search_state["status"]
+        blocker = (
+            "No eligible backbone has been selected yet: Qwen3.7-Plus and CodingPlan Qwen3.8-27B are ceiling candidates, "
+            "while CodingPlan DeepSeek-v4-flash is a floor candidate because frozen tool-loop completion is below threshold. "
+            "The remaining candidate order was frozen before any GLM-5.2 scientific dispatch."
+        )
+        next_action = "FREEZE_AND_RUN_CODINGPLAN_GLM52_CAPABILITY_B1"
     elif both_valid_candidates_ceiling:
         readiness_status = "CAPABILITY_MODEL_SELECTION_NO_ELIGIBLE_BACKBONE_ALL_CEILING_STOP"
         blocker = (
@@ -813,8 +888,47 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             codingplan_accounting.get("completion_tokens_total", 0)
         ),
         "codingplan_request_accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
+        "deepseek_capability_result_status": deepseek_status,
+        "deepseek_capability_result_artifact": (
+            str(CODINGPLAN_DEEPSEEK_RESULT.relative_to(ROOT))
+            if CODINGPLAN_DEEPSEEK_RESULT.is_file()
+            else None
+        ),
+        "deepseek_capability_closeout_status": deepseek_closeout.get("status"),
+        "deepseek_capability_closeout_artifact": (
+            str(CODINGPLAN_DEEPSEEK_CLOSEOUT.relative_to(ROOT))
+            if CODINGPLAN_DEEPSEEK_CLOSEOUT.is_file()
+            else None
+        ),
+        "deepseek_scientific_model_round_count": int(
+            deepseek_closeout.get("accounting", {}).get("scientific_model_round_count", 0)
+        ),
+        "deepseek_account_window_request_delta": int(
+            deepseek_closeout.get("accounting", {}).get("codingplan_account_window_request_delta", 0)
+        ),
+        "deepseek_tool_loop_completion_rate": (
+            deepseek_result.get("gate", {}).get("tool_loop_completion_rate")
+        ),
+        "deepseek_target_success_rate": deepseek_result.get("gate", {}).get("target_success_rate"),
+        "backbone_search_state_status": backbone_search_state.get("status"),
+        "backbone_search_state_artifact": (
+            str(BACKBONE_SEARCH_STATE_B1.relative_to(ROOT))
+            if BACKBONE_SEARCH_STATE_B1.is_file()
+            else None
+        ),
+        "backbone_search_remaining_frozen_order": backbone_search_state.get(
+            "remaining_frozen_order", []
+        ),
+        "backbone_search_next_candidate": backbone_search_state.get("next_candidate"),
+        "codingplan_catalog_b1_artifact": (
+            str(CODINGPLAN_CATALOG_B1.relative_to(ROOT))
+            if CODINGPLAN_CATALOG_B1.is_file()
+            else None
+        ),
         "capability_model_selection_state": (
-            "NO_ELIGIBLE_BACKBONE_BOTH_VALID_CANDIDATES_CEILING"
+            "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_NEXT"
+            if backbone_search_active
+            else "NO_ELIGIBLE_BACKBONE_BOTH_VALID_CANDIDATES_CEILING"
             if both_valid_candidates_ceiling
             else "ELIGIBLE_BACKBONE_SELECTED"
             if eligible_backbone_selected
@@ -904,6 +1018,8 @@ def main() -> None:
         CAPABILITY_R5_PARTIAL_CONTRACT, CAPABILITY_R5_PARTIAL_RESULT,
         CODINGPLAN_QWEN38_Q0, CODINGPLAN_QWEN38_Q1, CODINGPLAN_QWEN38_CONTRACT,
         CODINGPLAN_QWEN38_MANIFEST, CODINGPLAN_QWEN38_RESULT, CODINGPLAN_QWEN38_CLOSEOUT,
+        CODINGPLAN_DEEPSEEK_RESULT, CODINGPLAN_DEEPSEEK_CLOSEOUT,
+        CODINGPLAN_CATALOG_B1, BACKBONE_SEARCH_STATE_B1,
     ):
         if not path.is_file():
             continue
@@ -929,6 +1045,12 @@ def main() -> None:
         "codingplan_request_accounting_domain": readiness[
             "codingplan_request_accounting_domain"
         ],
+        "deepseek_codingplan_account_window_requests": readiness[
+            "deepseek_account_window_request_delta"
+        ],
+        "deepseek_codingplan_request_accounting_domain": (
+            "CODINGPLAN_ACCOUNT_WINDOW_DEEPSEEK_B0_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS"
+        ),
         "gpu_runs": 0,
         "authority": {
             "m1_mock_qualification": not readiness["m1_runner_qualification_pass"],

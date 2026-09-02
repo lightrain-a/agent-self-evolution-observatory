@@ -131,7 +131,42 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness.get("capability_model_selection_state") == "NO_ELIGIBLE_BACKBONE_BOTH_VALID_CANDIDATES_CEILING":
+        if readiness.get("capability_model_selection_state") == "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_NEXT":
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_BACKBONE_SEARCH_CONTINUE_GLM52_NEXT",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "FREEZE_AND_RUN_CODINGPLAN_GLM52_CAPABILITY_B1",
+            )
+            self.assertEqual(
+                readiness["direct_api_capability_result_status"],
+                "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+            )
+            self.assertEqual(
+                readiness["codingplan_capability_result_status"],
+                "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+            )
+            self.assertEqual(
+                readiness["deepseek_capability_result_status"],
+                "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
+            )
+            self.assertEqual(readiness["deepseek_scientific_model_round_count"], 72)
+            self.assertEqual(readiness["deepseek_account_window_request_delta"], 72)
+            self.assertEqual(readiness["deepseek_tool_loop_completion_rate"], 0.625)
+            self.assertEqual(readiness["deepseek_target_success_rate"], 0.875)
+            self.assertEqual(
+                readiness["backbone_search_remaining_frozen_order"],
+                ["GLM-5.2", "mimo-v2.5", "mimo-v2.5-pro"],
+            )
+            self.assertEqual(
+                readiness["backbone_search_next_candidate"],
+                {"model_id": "GLM-5.2", "profile": "AtomGit-GLM-5.2"},
+            )
+            self.assertFalse(readiness["eligible_backbone_selected"])
+            self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_model_selection_state") == "NO_ELIGIBLE_BACKBONE_BOTH_VALID_CANDIDATES_CEILING":
             self.assertEqual(
                 readiness["status"],
                 "CAPABILITY_MODEL_SELECTION_NO_ELIGIBLE_BACKBONE_ALL_CEILING_STOP",
@@ -248,6 +283,13 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
             self.data["readiness"]["codingplan_account_window_request_delta"],
         )
         self.assertIn("DO_NOT_SUM", manifest["codingplan_request_accounting_domain"])
+        self.assertEqual(
+            manifest["deepseek_codingplan_account_window_requests"],
+            self.data["readiness"]["deepseek_account_window_request_delta"],
+        )
+        self.assertIn(
+            "DO_NOT_SUM", manifest["deepseek_codingplan_request_accounting_domain"]
+        )
         for relative, metadata in manifest["files"].items():
             path = ROOT / relative
             self.assertTrue(path.is_file(), relative)

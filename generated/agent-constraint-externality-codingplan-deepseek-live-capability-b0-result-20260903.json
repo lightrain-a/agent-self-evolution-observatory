@@ -1,0 +1,57 @@
+{
+  "agent_episode_count": 8,
+  "appworld_tool_call_total": 114,
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "f0_reason": "Capability selection never self-authorizes F0.",
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "codingplan_window_first_before": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T05:04:58",
+    "remaining": 500,
+    "used": 0
+  },
+  "codingplan_window_last_after": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T05:04:58",
+    "remaining": 428,
+    "used": 72
+  },
+  "completion_tokens_total": 28257,
+  "content_sha256": "e0ba74cd619f6469e854d5143d424a9008ba09b0d2bafcfe1fe897a1f10aec1c",
+  "contract_sha256": "b06b8e5105279defe2663e2acb4e4c128f75e6489c54a5b261bd78025c84f1d5",
+  "execution_id": "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-B0",
+  "f0_executed": false,
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 0.875,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 0.625,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP"
+  },
+  "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+  "ledger_sha256": "54684e744d93c5895b85cdeb9c3852ecb1e0427da52615a6c147cf3173d6c5e7",
+  "model_id": "deepseek-v4-flash",
+  "model_profile": "AtomGit-deepseek-v4-flash",
+  "model_round_count": 72,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prompt_tokens_total": 2597399,
+  "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+  "schema_version": "ace-codingplan-deepseek-live-capability-b0-result-v1",
+  "scientific_outcomes_observed": 0,
+  "selection_sha256": "f8e5a5f4fc04d0f29b16751e6b1465f77d03b3cd97da275f69fd38e08f7cf50d",
+  "status": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP",
+  "valid_capability_measurements": 8
+}

@@ -11,6 +11,8 @@
   },
   "codingplan_account_window_requests": 70,
   "codingplan_request_accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
+  "deepseek_codingplan_account_window_requests": 72,
+  "deepseek_codingplan_request_accounting_domain": "CODINGPLAN_ACCOUNT_WINDOW_DEEPSEEK_B0_DO_NOT_SUM_WITH_DIRECT_API_PROVIDER_CALLS",
   "files": {
     "generated/agent-constraint-externality-appworld-compiler-manifest-20260831.json": {
       "bytes": 2041,
@@ -31,6 +33,10 @@
     "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle": {
       "bytes": 13239,
       "sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5"
+    },
+    "generated/agent-constraint-externality-capability-backbone-search-state-b1-20260903.json": {
+      "bytes": 1653,
+      "sha256": "36ced26f2ebbd12017e8a51839517c88868a22b9290a3058df264dfefeb169bc"
     },
     "generated/agent-constraint-externality-capability-contract-20260831.json": {
       "bytes": 1773,
@@ -84,6 +90,18 @@
       "bytes": 1143,
       "sha256": "ae8a625ac4467dfae08502b44860af535b8c13fa426f7c16516eeee46663aeea"
     },
+    "generated/agent-constraint-externality-codingplan-catalog-b1-20260903.json": {
+      "bytes": 2615,
+      "sha256": "792927b03c2404c602a95c10c0e03724495ea80d02fc4be3c4503d580909781a"
+    },
+    "generated/agent-constraint-externality-codingplan-deepseek-live-capability-b0-closeout-20260903.json": {
+      "bytes": 1849,
+      "sha256": "b40bea358de1b31299ac75f9bce636e2e576a5b2ab3f81e6f8818c1c7679b277"
+    },
+    "generated/agent-constraint-externality-codingplan-deepseek-live-capability-b0-result-20260903.json": {
+      "bytes": 2025,
+      "sha256": "d10570c3316c7af791ad6a3fc91e4157902a5e7be28313cf85f248ccfbdd6d01"
+    },
     "generated/agent-constraint-externality-codingplan-mcp-q0-qualification-20260902.json": {
       "bytes": 1008,
       "sha256": "50d1976ae6532ad34bdf109510f08fd821d9f3da41b2e566a24001cd07507939"
@@ -109,8 +127,8 @@
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 4641,
-      "sha256": "79a4409c8ff92728a287f8672d741b8f280a6396fb16fcd7f07ed4f5523b3ca8"
+      "bytes": 5907,
+      "sha256": "ddbc40a24f39f2994e5c1b23f35c95695d14e9efbcfdc57fe7766c67f1906448"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -200,5 +218,5 @@
   "provider_calls_accounting_domain": "DIRECT_API_ONLY",
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_MODEL_SELECTION_NO_ELIGIBLE_BACKBONE_ALL_CEILING_STOP"
+  "status": "CAPABILITY_BACKBONE_SEARCH_CONTINUE_GLM52_NEXT"
 }
