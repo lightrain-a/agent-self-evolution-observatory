@@ -1,0 +1,48 @@
+{
+  "accumulated_gradient_complete": false,
+  "accumulation_steps": 8,
+  "attempt_count_under_candidate_authority": 1,
+  "attempt_is_exactly_once": true,
+  "authority_sha256": "2ab305afca73a43c9c682aa09d959e0ae7c7f8f99b794eb5a84af800c5e87d56",
+  "base_bytes_rehashed": 12441721931,
+  "base_object_count_rehashed": 20,
+  "candidate_priority": 2,
+  "checkpoint_written": false,
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "data_order_qualification_sha256": "a218a76893b8e97dc849eb2d7dd63cf3a7516acbc0d0ded3822e20a0a211446d",
+  "effective_batch": 64,
+  "formal_training_authorized": false,
+  "generated_at": "2026-09-02T15:33:41.836804+00:00",
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gradient_numerical_values_read": false,
+  "loss_value_retained_or_reported": false,
+  "micro_gradients_completed": 0,
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "optimizer_update": false,
+  "parameter_update": false,
+  "physical_micro_batch": 8,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "preregistration_sha256": "0d0a88b20f15d3a0fa2e8721da865bd5488cc39c43523a518608063c8a51a8d7",
+  "resource_scope": {
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1006.slice/user@1006.service/app.slice/run-r241504dfc5e74d678184a212695cad21.scope",
+    "cpu_affinity": "0-63",
+    "memory_max_bytes": 77309411328,
+    "memory_swap_max_bytes": 0
+  },
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum8x8-dry-gradient-result-v1",
+  "scientific_training_started": false,
+  "status": "PI05_ACCUM8X8_NO_UPDATE_DRY_GRADIENT_STARTED",
+  "v4_adjudication_sha256": "1a87183e3c48bfca43fe32dab518b76498f337044eb4db506be99ad74404714f"
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-direct-device-no-update-model-load-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "AUTHORIZED_PI05_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_QUALIFICATION",
+  "scope": "resource-only checkpoint staging qualification after the consumed 8x8 host/control exit; no formal training or policy outcome authority",
+  "parent_8x8_host_exit_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-attempt1-host-exit-adjudication-20260902.json",
+    "sha256": "7fce8b714c2b46c1561930c34f0c2e5b67987ddaa63e4868f42f752e076afad8"
+  },
+  "static_qualification": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-direct-device-checkpoint-loader-static-qualification-20260902.json",
+    "sha256": "3ff3e13e929e73af6f324acf954cc74d1f37a76aa54109cd7e08f28e4c910380",
+    "status": "PI05_DIRECT_DEVICE_CHECKPOINT_LOADER_STATIC_QUALIFIED"
+  },
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_pi05_direct_device_no_update_model_load.py",
+  "runner_sha256": "d15c7666fc3b0d2ae88eeb252fcd2e11a1750005b0a5454538d7b19d7a823a76",
+  "launcher_path": "scripts/run_behavior_formal_goal_coupling_pi05_direct_device_no_update_model_load.sh",
+  "launcher_sha256": "aebcc7e0c8c41a0eed2187c1b132ed737f39b68d00a972b607b37d61f67adae9",
+  "frozen_checkpoint": {
+    "base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+    "object_count": 20,
+    "bytes": 12441721931,
+    "params_root": "/data/wyt/formal-goal-pi05-base-params-v1"
+  },
+  "resource_scope": {
+    "memory_max_gib": 20,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "authorized_operations": [
+    "rehash the already content-addressed local base checkpoint",
+    "restore checkpoint leaves with OpenPI restore_params(..., restore_type=jax.Array)",
+    "validate restored checkpoint leaves are jax.Array values on the single visible A100",
+    "construct the same frozen step-0 train state and optimizer state",
+    "record GPU and host/cgroup memory before and after the step-0 state becomes ready"
+  ],
+  "forbidden_operations": [
+    "dataset access",
+    "tokenizer execution",
+    "forward pass",
+    "loss computation",
+    "backward pass",
+    "optimizer update",
+    "parameter or EMA update",
+    "checkpoint write",
+    "policy rollout",
+    "policy outcome read"
+  ],
+  "formal_training_authorized": false,
+  "policy_outcomes_read": false,
+  "next_gate_if_pass": "STREAMING_ACCUM8X8_DIRECT_DEVICE_REPAIR_AUTHORITY"
+}

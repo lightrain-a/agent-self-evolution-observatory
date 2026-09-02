@@ -1,0 +1,38 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-direct-device-checkpoint-loader-static-qualification-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "PI05_DIRECT_DEVICE_CHECKPOINT_LOADER_STATIC_QUALIFIED",
+  "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "source_hashes": {
+    "src/openpi/models/model.py": "0d74bc1d8f4623ac3d8e543710b8bf75f9b95e588a3ebf6127c659e001385cff",
+    "src/openpi/training/weight_loaders.py": "cbc3f2d7bc07488de054bfd4ecf0cf48f0ffb65dd27243f400184e9d1d971fbb",
+    "scripts/b1k/train_b1k.py": "9e1ac351c8f491d0c5307963d11ab07b008548da2bcd29a4670e88622eae6507"
+  },
+  "source_semantics": {
+    "released_checkpoint_loader_current_behavior": "CheckpointWeightLoader.load calls restore_params(..., restore_type=np.ndarray) and relies on training code to convert/shard later.",
+    "restore_params_native_capability": "restore_params accepts restore_type=jax.Array and optional sharding; with jax.Array and no explicit sharding it creates one-device replicated NamedSharding on the visible JAX device(s).",
+    "train_state_loader_contract": "_load_weights_and_validate accepts any loader implementing load(params), then checks PyTree structure, shapes, and dtypes; it does not require numpy arrays.",
+    "train_state_initialization": "init_train_state passes the loaded partial params to a JIT with replicated_sharding and donate_argnums=(1), so an already-device-resident one-GPU replicated checkpoint is compatible with the same merge/init path."
+  },
+  "resource_only_adapter": {
+    "change": "replace released checkpoint host numpy staging with restore_params(..., restore_type=jax.Array) for the already content-addressed local pi05_base params",
+    "checkpoint_bytes": "unchanged",
+    "checkpoint_tree": "unchanged",
+    "model": "unchanged",
+    "optimizer": "unchanged",
+    "data": "not accessed in qualification",
+    "scientific_training": "not authorized"
+  },
+  "qualification_goal": "Measure whether the same step-0 train state can be constructed while avoiding the large host numpy checkpoint staging that contributed to 69 host-memory/cgroup instability.",
+  "forbidden": [
+    "forward pass",
+    "loss computation",
+    "backward pass",
+    "optimizer update",
+    "checkpoint write",
+    "dataset access",
+    "policy rollout",
+    "policy outcome read"
+  ],
+  "next_gate": "EXACTLY_ONCE_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_QUALIFICATION"
+}

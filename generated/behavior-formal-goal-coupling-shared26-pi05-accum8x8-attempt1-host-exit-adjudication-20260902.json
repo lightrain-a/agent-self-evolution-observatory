@@ -1,0 +1,52 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum8x8-attempt1-host-exit-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "ACCUM8X8_ATTEMPT1_PRE_MICROGRADIENT_HOST_RESOURCE_CONTROL_EXIT",
+  "attempt1_result": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-dry-gradient-result-20260902.json",
+    "sha256": "9202758ef8e25fa079f340bff74da4749115e536bf166b6017c8c3ceefe4a0bb",
+    "last_status": "PI05_ACCUM8X8_NO_UPDATE_DRY_GRADIENT_STARTED",
+    "micro_gradients_completed": 0,
+    "optimizer_update": false,
+    "parameter_update": false,
+    "checkpoint_written": false
+  },
+  "failure_evidence": {
+    "python_final_exception_receipt": false,
+    "gpu_resource_exhausted_message": false,
+    "gpu_memory_after_exit_mib": 14,
+    "formal_checkpoint_directory_created": false,
+    "orphan_python_processes_after_exit": false,
+    "transient_scope": "/sys/fs/cgroup/user.slice/user-1006.slice/user@1006.service/app.slice/run-r241504dfc5e74d678184a212695cad21.scope",
+    "transient_scope_populated_after_exit": false,
+    "transient_scope_memory_current_bytes_after_exit": 30144581632,
+    "transient_scope_memory_peak_bytes": 59332698112,
+    "transient_scope_oom_kill_count": 0,
+    "user_slice_memory_current_bytes_observed_after_exit": 98322604032,
+    "host_mem_available_gib_after_exit_approx": 23,
+    "host_swap_used_gib_after_exit_approx": 5.3
+  },
+  "implementation_issue": "The candidate runner materialized all eight transformed micro-batches with batches=list(iter(loader)) before train-state initialization. This unnecessarily retains all micro-batch host/device payloads simultaneously and defeats the intended streaming-memory advantage of micro-batching. The same run also used OpenPI CheckpointWeightLoader, which stages released checkpoint weights as host numpy arrays before transferring them to JAX/device state.",
+  "scientific_interpretation": "This attempt does not adjudicate microbatch8/accum8 GPU-gradient feasibility because no micro-gradient was durably started or completed and no GPU RESOURCE_EXHAUSTED result was produced.",
+  "scientific_safety": {
+    "optimizer_update": false,
+    "parameter_update": false,
+    "checkpoint_written": false,
+    "policy_rollouts_started": false,
+    "policy_outcomes_read": false
+  },
+  "decision": "REPAIR_SAME_8X8_CANDIDATE_BEFORE_ANY_4X16_ADVANCE",
+  "allowed_resource_repairs": [
+    "stream one micro-batch at a time instead of materializing all eight micro-batches",
+    "use OpenPI restore_params native jax.Array restore to avoid released-checkpoint host numpy staging, after a separate no-update qualification",
+    "preserve microbatch=8, accumulation_steps=8, effective_batch=64 and all scientific invariants"
+  ],
+  "forbidden": [
+    "treat this hard exit as evidence that 8x8 is GPU-infeasible",
+    "advance to 4x16 before the repaired 8x8 candidate receives a genuine resource qualification",
+    "reuse the consumed attempt1 authority",
+    "change model, data, seed, optimizer, LR schedule, EMA, normalization, action horizon, or effective batch"
+  ],
+  "next_gate": "DIRECT_DEVICE_CHECKPOINT_LOAD_QUALIFICATION_THEN_STREAMING_8X8_REPAIR_AUTHORITY"
+}
