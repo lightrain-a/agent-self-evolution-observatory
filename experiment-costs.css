@@ -32,8 +32,11 @@ body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-used{width:2
 body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-plan{width:27%}
 body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-why{width:0}
 body[data-page="experiment-costs"] .ec-portfolio>.matrix th:last-child,body[data-page="experiment-costs"] .ec-portfolio>.matrix td:last-child{display:none}
+@counter-style ec-circled-paper{system:fixed;symbols:"①" "②" "③" "④" "⑤" "⑥" "⑦" "⑧" "⑨";suffix:" "}
+body[data-page="experiment-costs"] .ec-portfolio tbody{counter-reset:ec-paper-index}
 body[data-page="experiment-costs"] .ec-portfolio .ec-paper-cell{vertical-align:middle;font-weight:700;background:#f8fafc;border-right:1px solid #e1e7ef}
 body[data-page="experiment-costs"] .ec-portfolio .ec-paper-cell b{display:block;line-height:1.35}
+body[data-page="experiment-costs"] .ec-portfolio .ec-paper-cell b::before{counter-increment:ec-paper-index;content:counter(ec-paper-index,ec-circled-paper);display:block;margin-bottom:5px;color:#596579;font-size:15px;line-height:1}
 body[data-page="experiment-costs"] .ec-portfolio tr.ec-group-start td{border-top:2px solid #cfd8e6}
 body[data-page="experiment-costs"] .ec-portfolio tr.ec-group-start td:not(.ec-paper-cell){background:#f8fafc}
 body[data-page="experiment-costs"] .ec-portfolio .ec-model b{display:block;color:#27344a;font-size:11px;line-height:1.3}
