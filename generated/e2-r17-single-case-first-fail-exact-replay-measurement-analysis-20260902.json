@@ -1,0 +1,146 @@
+{
+  "analysis_authorization_sha256": "979f974abb01ae7ebd201794d2d6df4b95602e55ddb038963541c91fcc85805b",
+  "artifact_type": "e2-r17-first-fail-exact-evidence-updater-replication-final-analysis",
+  "authority": {
+    "e3_confirmation": false,
+    "new_followup_execution": false,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "s2_execution": false,
+    "second_backbone": false,
+    "submission": false
+  },
+  "case_stream": "e1-tsr-00",
+  "completion_audit_sha256": "4d84e9da806808526ffb629bfdc5f2c26f0ffdd322280dab3278bc85f189caf1",
+  "contract_sha256": "c81b9c771be564991a97b2b15815f89d591f501ff107dd982bfdddd39c2f05d4",
+  "created_at_utc": "2026-09-02T07:21:33+00:00",
+  "development_only": true,
+  "interpretation": "Rep1 and rep2 use the exact S1 rendered evidence for both arms but independently generated updater states. This adjudicates whether First-Fail advantage itself reproduces across hosted updater realizations.",
+  "mean_difference_first_fail_minus_win_c": -0.027777777777777735,
+  "measurement_authorization_sha256s": [
+    "76dfcd70298b75e80e5a484294bc56a3ee3b55d6183f2d51bec19b893d165796",
+    "7122ba5d4df67cac4d36cb2776f5d47ef300630db5bf1847a0708aa3423cd9f5"
+  ],
+  "replicate_differences_first_fail_minus_win_c": {
+    "1": 0.0,
+    "2": -0.05555555555555547
+  },
+  "replication_gate": {
+    "minimum_difference_each_replicate": 0.05555555555555555,
+    "minimum_mean_difference": 0.05555555555555555,
+    "pass": false,
+    "replicate_pass": {
+      "1": false,
+      "2": false
+    }
+  },
+  "run_summary_sha256": "3676bf5153fae615d6b732b5ddac587e3361bf45ce72313bf7bf352154cfb688",
+  "schema_version": "1.0",
+  "status": "FIRST_FAIL_EXACT_EVIDENCE_UPDATER_REPLICATION_FAIL_STATE_GENERATION_VARIANCE",
+  "success_rates": {
+    "1": {
+      "first_fail": 0.8333333333333334,
+      "win_c": 0.8333333333333334
+    },
+    "2": {
+      "first_fail": 0.6111111111111112,
+      "win_c": 0.6666666666666666
+    }
+  },
+  "successes": {
+    "1": {
+      "first_fail": 15,
+      "win_c": 15
+    },
+    "2": {
+      "first_fail": 11,
+      "win_c": 12
+    }
+  },
+  "task_level_scores": {
+    "1": {
+      "first_fail": {
+        "r17-b4-agj-p2": 1,
+        "r17-b4-agj-p3": 1,
+        "r17-b4-agj-p8": 1,
+        "r17-b4-fmv-p1": 1,
+        "r17-b4-fmv-p2": 1,
+        "r17-b4-fmv-p8": 1,
+        "r17-b4-ioc-p1": 0,
+        "r17-b4-ioc-p4": 1,
+        "r17-b4-ioc-p6": 1,
+        "r17-b4-msp-p0": 1,
+        "r17-b4-msp-p7": 1,
+        "r17-b4-msp-p8": 0,
+        "r17-b4-ska-p4": 1,
+        "r17-b4-ska-p5": 1,
+        "r17-b4-ska-p8": 1,
+        "r17-b4-tsr-p0": 1,
+        "r17-b4-tsr-p6": 0,
+        "r17-b4-tsr-p8": 1
+      },
+      "win_c": {
+        "r17-b4-agj-p2": 1,
+        "r17-b4-agj-p3": 1,
+        "r17-b4-agj-p8": 1,
+        "r17-b4-fmv-p1": 1,
+        "r17-b4-fmv-p2": 1,
+        "r17-b4-fmv-p8": 1,
+        "r17-b4-ioc-p1": 0,
+        "r17-b4-ioc-p4": 1,
+        "r17-b4-ioc-p6": 1,
+        "r17-b4-msp-p0": 1,
+        "r17-b4-msp-p7": 0,
+        "r17-b4-msp-p8": 1,
+        "r17-b4-ska-p4": 1,
+        "r17-b4-ska-p5": 0,
+        "r17-b4-ska-p8": 1,
+        "r17-b4-tsr-p0": 1,
+        "r17-b4-tsr-p6": 1,
+        "r17-b4-tsr-p8": 1
+      }
+    },
+    "2": {
+      "first_fail": {
+        "r17-b4-agj-p2": 1,
+        "r17-b4-agj-p3": 0,
+        "r17-b4-agj-p8": 1,
+        "r17-b4-fmv-p1": 1,
+        "r17-b4-fmv-p2": 0,
+        "r17-b4-fmv-p8": 0,
+        "r17-b4-ioc-p1": 1,
+        "r17-b4-ioc-p4": 1,
+        "r17-b4-ioc-p6": 0,
+        "r17-b4-msp-p0": 1,
+        "r17-b4-msp-p7": 0,
+        "r17-b4-msp-p8": 1,
+        "r17-b4-ska-p4": 1,
+        "r17-b4-ska-p5": 1,
+        "r17-b4-ska-p8": 1,
+        "r17-b4-tsr-p0": 1,
+        "r17-b4-tsr-p6": 0,
+        "r17-b4-tsr-p8": 0
+      },
+      "win_c": {
+        "r17-b4-agj-p2": 1,
+        "r17-b4-agj-p3": 1,
+        "r17-b4-agj-p8": 1,
+        "r17-b4-fmv-p1": 1,
+        "r17-b4-fmv-p2": 1,
+        "r17-b4-fmv-p8": 1,
+        "r17-b4-ioc-p1": 0,
+        "r17-b4-ioc-p4": 0,
+        "r17-b4-ioc-p6": 1,
+        "r17-b4-msp-p0": 0,
+        "r17-b4-msp-p7": 1,
+        "r17-b4-msp-p8": 0,
+        "r17-b4-ska-p4": 0,
+        "r17-b4-ska-p5": 1,
+        "r17-b4-ska-p8": 1,
+        "r17-b4-tsr-p0": 1,
+        "r17-b4-tsr-p6": 0,
+        "r17-b4-tsr-p8": 1
+      }
+    }
+  }
+}

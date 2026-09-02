@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-single-case-first-fail-frozen-state-stability-design",
+  "created_date": "2026-09-02",
+  "status": "DESIGN_ONLY_ZERO_AUTHORITY",
+  "scientific_object": "E2-R17-SINGLE-CASE-FIRST-FAIL-FROZEN-STATE-STABILITY-20260902",
+  "parent_s1_analysis_path": "generated/e2-r17-single-case-diagnostic-witness-s1-analysis-20260902.json",
+  "parent_s1_analysis_sha256": "c5c2cdd51ae715761a3615220c0de9c4193e0a204e2f0d9ba9909ef9f3661096",
+  "case_stream": "e1-tsr-00",
+  "development_only": true,
+  "arms": ["win_c", "first_fail"],
+  "new_measurement_replicates": [1, 2],
+  "heldout_tasks_per_state": 18,
+  "new_learned_states": 0,
+  "updater_calls": 0,
+  "new_heldout_rollout_units": 72,
+  "state_binding_policy": "reuse exactly the completed S1 rep0 learned skill and updater receipt for each arm; no state regeneration",
+  "measurement_order": "SHA256(E2-R17-SINGLE-CASE-FROZEN-STATE-STABILITY-EVAL-ORDER-v1|replicate|task|arm)",
+  "stability_gate": {
+    "uses_only_new_replicates": true,
+    "minimum_difference_each_replicate": 0.05555555555555555,
+    "minimum_mean_difference": 0.05555555555555555,
+    "technical_integrity_required": true,
+    "pass_status": "FIRST_FAIL_FROZEN_STATE_STABILITY_PASS",
+    "fail_status": "FIRST_FAIL_FROZEN_STATE_STABILITY_FAIL_MEASUREMENT_INSTABILITY"
+  },
+  "historical_s1_replicate_role": "descriptive only; cannot satisfy stability gate",
+  "e3_untouched_assets_consumed": false,
+  "authority": {
+    "provider_io": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "scientific_runner": false,
+    "analyzer": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "e3_confirmation": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "next_allowed_action": "FREEZE_BOUND_STATE_MEASUREMENT_CONTRACT_AND_ZERO_PROVIDER_PREFLIGHT"
+}

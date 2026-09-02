@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-single-case-first-fail-exact-evidence-updater-replication-design",
+  "created_date": "2026-09-02",
+  "status": "DESIGN_ONLY_ZERO_AUTHORITY",
+  "scientific_object": "E2-R17-SINGLE-CASE-FIRST-FAIL-EXACT-EVIDENCE-UPDATER-REPLICATION-20260902",
+  "case_stream": "e1-tsr-00",
+  "development_only": true,
+  "purpose": "Test whether two new contemporaneous First-Fail versus WIN-C updater realizations, generated from the exact same frozen S1 rendered evidence for both arms, reproduce a positive First-Fail future-skill advantage.",
+  "parent_s1": {
+    "contract_path": "generated/e2-r17-single-case-diagnostic-witness-s1-contract-v2-20260902.json",
+    "contract_sha256": "e1865abbcccdeeea03b34c4526044660c4b4826b3ecab40ac54bb1030e0f7d8c",
+    "authorization_path": "generated/e2-r17-single-case-diagnostic-witness-s1-authorization-v2-20260902.json",
+    "authorization_sha256": "3244b39757a41dc801a79ed5edaff1050354974c8f0be70994cd9d690ca0a002",
+    "summary_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/summary/s1_summary.json",
+    "summary_sha256": "9d78cfa78438c2f16f0091b5caff0fcff04ca9af465ddcc677280920fe3901a8",
+    "analysis_path": "generated/e2-r17-single-case-diagnostic-witness-s1-analysis-20260902.json",
+    "analysis_sha256": "c5c2cdd51ae715761a3615220c0de9c4193e0a204e2f0d9ba9909ef9f3661096"
+  },
+  "parent_stability_analysis": {
+    "path": "generated/e2-r17-single-case-first-fail-stability-analysis-20260902.json",
+    "sha256": "ef7805f1e6f5ddad0c6d87bc8b362f7e3efc77d092868fc1b3cefc42ca2f86d2",
+    "required_status": "FIRST_FAIL_FROZEN_STATE_STABILITY_PASS"
+  },
+  "exact_evidence_rule": {
+    "source": "reconstruct S1 four-arm evidence from the exact frozen pools and selector freeze, then use only the first_fail units",
+    "required_packet_identity": "all 8 reconstructed First-Fail evidence SHA256 values must equal the 8 rendered_packet_sha256 values in the completed S1 First-Fail update receipt before provider I/O",
+    "s1_first_fail_update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/states/e1-tsr-00/replicate_0/first_fail/update/update_receipt.json",
+    "s1_first_fail_update_receipt_sha256": "e5fefbe7070fc4afbad9a62a7d175806cab011b64578bca0ee52cfedc4999ab9"
+  },
+  "new_updater_replicates": [1, 2],
+  "new_first_fail_learned_states": 2,
+  "new_win_c_learned_states": 2,
+  "new_learned_states_total": 4,
+  "contemporaneous_control": "Generate a fresh WIN-C updater state beside each fresh First-Fail state from the exact S1 WIN-C rendered evidence; do not reuse the S1 rep0 WIN-C learned state for the gate.",
+  "measurement": {
+    "heldout_tasks_per_state": 18,
+    "new_first_fail_measurement_states": 2,
+    "new_win_c_measurement_states": 2,
+    "new_heldout_rollout_units": 72,
+    "evaluation_replicates": [1, 2]
+  },
+  "replication_gate": {
+    "historical_s1_rep0_descriptive_only": true,
+    "minimum_first_fail_minus_common_win_c_each_new_replicate": 0.05555555555555555,
+    "minimum_mean_first_fail_minus_common_win_c": 0.05555555555555555,
+    "pass_status": "FIRST_FAIL_EXACT_EVIDENCE_UPDATER_REPLICATION_PASS",
+    "fail_status": "FIRST_FAIL_EXACT_EVIDENCE_UPDATER_REPLICATION_FAIL_STATE_GENERATION_VARIANCE"
+  },
+  "e3_untouched_assets_consumed": false,
+  "authority": {
+    "provider_io": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "scientific_runner": false,
+    "analyzer": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "e3_confirmation": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "next_allowed_action": "IMPLEMENT_AND_FREEZE_EXACT_REPLAY_CONTRACT_WITH_ZERO_PROVIDER_PREFLIGHT"
+}
