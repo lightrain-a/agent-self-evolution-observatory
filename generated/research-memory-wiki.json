@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-31T18:56:43+00:00",
+  "generated_at": "2026-09-01T18:54:55+00:00",
   "status": "MEMORY_COMPILED",
   "policy": {
     "schema_version": "1.2",
@@ -51,7 +51,7 @@
   "source_manifest": {
     "search_memory_closed_objects": 43,
     "search_memory_hold_objects": 9,
-    "failure_assets": 22,
+    "failure_assets": 32,
     "candidate_portfolio_visible": 3,
     "unresolved_principles": 2,
     "generator_blocked_attempts": 0,
@@ -61,11 +61,11 @@
     "result_analysis_lessons": 3
   },
   "summary": {
-    "entries": 107,
+    "entries": 117,
     "search_closures": 41,
     "scientific_closures": 2,
     "holds": 9,
-    "failure_assets": 19,
+    "failure_assets": 29,
     "success_assets": 3,
     "open_questions": 2,
     "repeated_review_blocks": 0,
@@ -73,17 +73,17 @@
     "review_lessons": 5,
     "paper_development_guidance": 1,
     "contribution_aware_lesson_templates": 2,
-    "prompt_eligible": 107,
-    "skill_candidates": 44,
-    "certainty_confirmed": 23,
+    "prompt_eligible": 114,
+    "skill_candidates": 51,
+    "certainty_confirmed": 33,
     "certainty_supported": 72,
     "certainty_tentative": 0,
     "certainty_speculative": 0,
     "certainty_refuted": 0,
     "certainty_not_applicable": 12,
-    "transient": 0,
-    "recurring_systemic": 17,
-    "scientific": 90
+    "transient": 3,
+    "recurring_systemic": 18,
+    "scientific": 96
   },
   "entries": [
     {
@@ -841,6 +841,41 @@
       "automatic_skill_promotion": false
     },
     {
+      "memory_id": "MEM-FAIL-196eb53fa124838a88",
+      "kind": "FAILURE_ASSET",
+      "title": "execution:provider-budget-must-fail-close-before-io",
+      "summary": "scientific failure; this is an execution-governance defect",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"E2-R17\"], \"reuse_scope\": {\"affected_layer\": \"execution\", \"applies_to\": \"paid APIs and long-running provider experiments\", \"diagnosis\": \"provider-budget-plan-mismatch\"}}",
+      "affected_layer": "execution",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "transient",
+      "prompt_eligible": false,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Before any paid/provider scientific tranche, make the call ceiling a transactional pre-I/O invariant. Persist a contract/authorization-bound ledger, claim before I/O, never release ambiguous crash claims, and test the first forbidden per-unit/global call is rejected before network I/O.",
+      "source_refs": [
+        "generated/e2-r17-failure-differential-registry-v5-20260829.json#R17-F003-E1A-BUDGET-POSTHOC"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-29",
+      "reuse_effectiveness": {
+        "reuse_count": 2,
+        "helped_count": 2,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": false,
+      "automatic_skill_promotion": false
+    },
+    {
       "memory_id": "MEM-FAIL-1da4db0dd315f8f4e8",
       "kind": "FAILURE_ASSET",
       "title": "experiment_identifiability:proxy-length-and-capability-nonspecificity",
@@ -873,6 +908,41 @@
       "certainty_basis": "failure-receipt-backed",
       "certainty_scope_bound": true,
       "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-1f3dde3f9da3e1cadb",
+      "kind": "FAILURE_ASSET",
+      "title": "execution:duplicate-launch-state-must-be-grounded-in-lock-and-checkpoints",
+      "summary": "a scientific failure or a stopped remote experiment",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"E2-R17\"], \"reuse_scope\": {\"affected_layer\": \"execution\", \"applies_to\": \"MCP/SSH/API long-running experiments\", \"diagnosis\": \"duplicate-launch-state-ambiguity\"}}",
+      "affected_layer": "execution",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "transient",
+      "prompt_eligible": false,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "After timeout/502 or before relaunch, inspect the content-addressed run root, exclusive lock payload, PID state, completed-unit manifest and provider-budget ledger. Do not rely on naive full-command `pgrep` patterns that can self-match, and never interpret a transport timeout as proof the remote job stopped.",
+      "source_refs": [
+        "generated/e2-r17-failure-differential-registry-v5-20260829.json#R17-F010-PROCESS-GUARD-SELF-MATCH"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-29",
+      "reuse_effectiveness": {
+        "reuse_count": 2,
+        "helped_count": 2,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": false,
       "automatic_skill_promotion": false
     },
     {
@@ -968,6 +1038,76 @@
       "source_artifact": "failure_asset_library",
       "occurrences": 1,
       "last_revalidated": "2026-08-28",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-3c128fd78325065586",
+      "kind": "FAILURE_ASSET",
+      "title": "measurement:evaluator-qualification-needs-competence-headroom-and-completion",
+      "summary": "central-mechanism failure, historical negative-control invalidity, or permission to access heldout data with an unqualified evaluator",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"E2-R17\"], \"reuse_scope\": {\"affected_layer\": \"measurement\", \"applies_to\": \"agent benchmarks and stochastic evaluator substitutions\", \"diagnosis\": \"evaluator-qualification-resolution-failure\"}}",
+      "affected_layer": "measurement",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Before a replacement evaluator sees heldout data, freeze a development sample and require multi-task competence, nondegenerate pooled headroom, repeat stability, and completed provider states. Canonicalize only outcome-irrelevant transport entropy before the test. Fail closed at either 0% or 100% saturation and do not retune tasks or shop models after outcomes.",
+      "source_refs": [
+        "generated/e2-r17-failure-differential-registry-v8-20260830.json#R17-F014-LOCAL-QWEN3-EVALUATOR-FLOOR,#R17-F015-KIMI-EVALUATOR-CEILING"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-30",
+      "reuse_effectiveness": {
+        "reuse_count": 0,
+        "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-4bbf746d167a28e5ad",
+      "kind": "FAILURE_ASSET",
+      "title": "identifiability:negative-control-nonequivalence-blocks-causal-interpretation",
+      "summary": "implementation failure, central-mechanism failure, or permission to relax the equivalence margin, remove noisy units, change models/probes, or rerun until favorable",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"E2-R17\"], \"reuse_scope\": {\"affected_layer\": \"scientific-identifiability\", \"applies_to\": \"hosted stochastic updater/evaluator causal experiments\", \"diagnosis\": \"negative-control-nonequivalence\"}}",
+      "affected_layer": "scientific-identifiability",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Before a causal treatment comparison on a hosted stochastic stack, run a byte-identical treatment negative control at the true independent unit and test a preregistered practical-equivalence margin. If equivalence fails, keep the mechanism sign/value unknown, block downstream causal execution, and use only zero-provider diagnostics to localize nuisance layers. Any renewed attempt must be a new versioned protocol with an independently justified single-variable intervention.",
+      "source_refs": [
+        "generated/e2-r17-failure-differential-registry-v7-20260829.json#R17-F012-E1B-NC-NONEQUIVALENCE"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-29",
       "reuse_effectiveness": {
         "reuse_count": 0,
         "helped_count": 0,
@@ -1226,6 +1366,41 @@
       "automatic_skill_promotion": false
     },
     {
+      "memory_id": "MEM-FAIL-8792719fdf93f8d4f4",
+      "kind": "FAILURE_ASSET",
+      "title": "runtime:qualification-must-bind-role-and-exact-entrypoint",
+      "summary": "mechanism failure or model incapability; the intended updater procedure was not executable in the inherited actor runtime",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"E2-R17\"], \"reuse_scope\": {\"affected_layer\": \"runtime\", \"applies_to\": \"multi-role agent/ML experiments\", \"diagnosis\": \"runtime-role-mismatch\"}}",
+      "affected_layer": "runtime",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "recurring-systemic",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Qualify actor/evaluator, updater/trainer and baseline harness runtimes separately. For each role bind the exact interpreter, environment/freeze hash, source-path binding and real scientific entrypoint, and execute a zero-provider/zero-outcome smoke of that entrypoint. Passing one role never authorizes another.",
+      "source_refs": [
+        "generated/e2-r17-failure-differential-registry-v5-20260829.json#R17-F008-UPDATER-RUNTIME-COVERAGE"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-29",
+      "reuse_effectiveness": {
+        "reuse_count": 1,
+        "helped_count": 1,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
       "memory_id": "MEM-FAIL-899e4039e09381303a",
       "kind": "FAILURE_ASSET",
       "title": "operationalization:paid-agent-action-turn-nonexecution",
@@ -1286,6 +1461,76 @@
       "reuse_effectiveness": {
         "reuse_count": 0,
         "helped_count": 0,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-a5f92e19a3cdbd2409",
+      "kind": "FAILURE_ASSET",
+      "title": "review:raw-model-output-and-local-schema-verdict-are-separate-evidence-layers",
+      "summary": "reviewer disagreement or scientific rejection; local parser failure must not erase valid raw model content",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"E2-R17\"], \"reuse_scope\": {\"affected_layer\": \"review-harness\", \"applies_to\": \"LLM review/adjudication pipelines\", \"diagnosis\": \"review-parser-schema-mismatch\"}}",
+      "affected_layer": "review-harness",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Persist raw reviewer output before local parsing. Version the schema separately, validate acknowledgement fields declared by the active schema rather than hard-coding historical names, and when raw content is complete prefer zero-provider reparsing over regenerating reviewer calls.",
+      "source_refs": [
+        "generated/e2-r17-failure-differential-registry-v5-20260829.json#R17-F006-REVIEW-ACK-SCHEMA"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-29",
+      "reuse_effectiveness": {
+        "reuse_count": 1,
+        "helped_count": 1,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-ae59a339a1bdfc3fbc",
+      "kind": "FAILURE_ASSET",
+      "title": "analysis:meaningful-zero-must-not-use-truthiness-as-missingness",
+      "summary": "a negative scientific result; the frozen data remained valid and required a versioned re-adjudication only",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"E2-R17\"], \"reuse_scope\": {\"affected_layer\": \"analysis\", \"applies_to\": \"scientific summaries, counters and gate adjudicators\", \"diagnosis\": \"zero-vs-missing-parser-error\"}}",
+      "affected_layer": "analysis",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "For scientific counters where zero is meaningful, parse missing/null explicitly and test zero, one and missing cases. Never use `value or sentinel` or generic truthiness to distinguish missingness from zero in adjudication code.",
+      "source_refs": [
+        "generated/e2-r17-failure-differential-registry-v5-20260829.json#R17-F005-SUPPORT-ZERO-FALSY"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-29",
+      "reuse_effectiveness": {
+        "reuse_count": 1,
+        "helped_count": 1,
         "hurt_count": 0
       },
       "scientific_authority": false,
@@ -1366,6 +1611,76 @@
       "automatic_skill_promotion": false
     },
     {
+      "memory_id": "MEM-FAIL-c537077ac918399c30",
+      "kind": "FAILURE_ASSET",
+      "title": "causal-protocol:audit-provenance-must-stay-outside-treatment",
+      "summary": "the underlying mechanism is false; the legacy path was not causally interpretable",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"E2-R17\"], \"reuse_scope\": {\"affected_layer\": \"causal-protocol\", \"applies_to\": \"same-pool/same-state counterfactual experiments\", \"diagnosis\": \"treatment-leakage\"}}",
+      "affected_layer": "causal-protocol",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "For same-object causal interventions, trace the exact model-visible dataflow. Keep arm labels, projection names, rollout IDs, file paths, provider IDs, content hashes and acting provenance outside model-visible treatment unless explicitly predeclared as treatment. Bind outcome labels to the selected evidence rather than to a different served action.",
+      "source_refs": [
+        "generated/e2-r17-failure-differential-registry-v5-20260829.json#R17-F002-LEGACY-PROJECTION-LEAK"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-29",
+      "reuse_effectiveness": {
+        "reuse_count": 1,
+        "helped_count": 1,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-ca891db50835bde816",
+      "kind": "FAILURE_ASSET",
+      "title": "measurement:final-model-visible-budget-not-upstream-proxy",
+      "summary": "scientific-mechanism failure; the failed run did not reach a valid effectiveness endpoint",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"E2-R17\"], \"reuse_scope\": {\"affected_layer\": \"measurement\", \"applies_to\": \"LLM/VLM evidence matching and any transformed model input\", \"diagnosis\": \"representation-budget-mismatch\"}}",
+      "affected_layer": "measurement",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "scientific",
+      "prompt_eligible": true,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "Before declaring evidence/token budgets matched, measure the exact representation visible to the model after decoding, concatenation, wrappers, truncation and re-tokenization. Freeze the final renderer/tokenizer and verify parity on the final model-visible text, not on upstream token slices.",
+      "source_refs": [
+        "generated/e2-r17-failure-differential-registry-v5-20260829.json#R17-F001-V3-BPE-PARITY"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-29",
+      "reuse_effectiveness": {
+        "reuse_count": 1,
+        "helped_count": 1,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
       "memory_id": "MEM-FAIL-d2bcf0c820af363095",
       "kind": "FAILURE_ASSET",
       "title": "execution:infrastructure-error",
@@ -1431,6 +1746,41 @@
       "certainty_basis": "failure-receipt-backed",
       "certainty_scope_bound": true,
       "skill_candidate_eligible": true,
+      "automatic_skill_promotion": false
+    },
+    {
+      "memory_id": "MEM-FAIL-ec6c70b39cc6b23f04",
+      "kind": "FAILURE_ASSET",
+      "title": "execution:preflight-must-reproduce-real-binding",
+      "summary": "runtime failure or scientific failure until the execution-faithful preflight reproduces it",
+      "candidate_id": "",
+      "scope": "{\"ideas\": [\"E2-R17\"], \"reuse_scope\": {\"affected_layer\": \"execution\", \"applies_to\": \"remote scientific runners and source-tree checkouts\", \"diagnosis\": \"preflight-execution-mismatch\"}}",
+      "affected_layer": "execution",
+      "memory_class": "FAILURE_ASSET",
+      "durability_class": "transient",
+      "prompt_eligible": false,
+      "search_closure_certified": false,
+      "scientific_dead_end_certified": false,
+      "principle_update_allowed": false,
+      "reopen_condition": "",
+      "opposite_search_seed": "",
+      "reusable_precheck": "A preflight is authoritative only if it uses the same executable, VIRTUAL_ENV/PATH, source roots, environment variables and exact entrypoint as the scientific runner. Treat a check with different bindings as diagnostic noise until reproduced faithfully.",
+      "source_refs": [
+        "generated/e2-r17-failure-differential-registry-v5-20260829.json#R17-F009-PREFLIGHT-SOURCE-BINDING"
+      ],
+      "source_artifact": "failure_asset_library",
+      "occurrences": 1,
+      "last_revalidated": "2026-08-29",
+      "reuse_effectiveness": {
+        "reuse_count": 1,
+        "helped_count": 1,
+        "hurt_count": 0
+      },
+      "scientific_authority": false,
+      "certainty": "CONFIRMED",
+      "certainty_basis": "failure-receipt-backed",
+      "certainty_scope_bound": true,
+      "skill_candidate_eligible": false,
       "automatic_skill_promotion": false
     },
     {
@@ -3790,7 +4140,7 @@
     "p0": false,
     "gpu": false
   },
-  "wiki_sha256": "43e2de9a6bf8972ac937459bc685174ac2ce6a36649074bbd31d0c836f325a02",
+  "wiki_sha256": "e3f5fc03bad2f8c7d9a9065328fd264987893d2da7f1e72ee40c4121ccb4109b",
   "lint": {
     "schema_version": "1.2",
     "status": "PASS",
@@ -3815,6 +4165,16 @@
         "code": "failure-asset-not-yet-effectiveness-validated",
         "memory_id": "MEM-FAIL-2ce50eecd2337130af",
         "detail": "operationalization:missing-as-zero-estimand-drift"
+      },
+      {
+        "code": "failure-asset-not-yet-effectiveness-validated",
+        "memory_id": "MEM-FAIL-3c128fd78325065586",
+        "detail": "measurement:evaluator-qualification-needs-competence-headroom-and-completion"
+      },
+      {
+        "code": "failure-asset-not-yet-effectiveness-validated",
+        "memory_id": "MEM-FAIL-4bbf746d167a28e5ad",
+        "detail": "identifiability:negative-control-nonequivalence-blocks-causal-interpretation"
       },
       {
         "code": "failure-asset-not-yet-effectiveness-validated",
@@ -3925,8 +4285,8 @@
     ],
     "summary": {
       "errors": 0,
-      "warnings": 26,
-      "unconsumed_failure_assets": 16,
+      "warnings": 28,
+      "unconsumed_failure_assets": 18,
       "missing_revalidation_dates": 6
     },
     "scientific_authority": false
@@ -3956,7 +4316,7 @@
     },
     "sampled_memory_ids": [
       "MEM-DISC-087393b9919c0ee1df",
-      "MEM-FAIL-1da4db0dd315f8f4e8",
+      "MEM-FAIL-196eb53fa124838a88",
       "MEM-HOLD-25b692734789d6e35c",
       "MEM-OPEN-29a589216cf210fa68",
       "MEM-PDEV-SENIOR-20260823",
@@ -3965,7 +4325,7 @@
       "MEM-SEAR-16b145b18dd60e1811",
       "MEM-SUCC-714ad00d4b0ab118be",
       "MEM-DISC-0dbca121608f22c542",
-      "MEM-FAIL-1f7691f41a1dcfa103",
+      "MEM-FAIL-1da4db0dd315f8f4e8",
       "MEM-HOLD-2fc3f1e767a7e59794",
       "MEM-OPEN-8b30172b29af989aba",
       "MEM-REVI-62370210b4e3a77558",
@@ -3973,18 +4333,18 @@
       "MEM-SEAR-1ba2b6e8d305dafaad",
       "MEM-SUCC-d4a91b62325176bd03",
       "MEM-DISC-104c2dd4e9f4b90ed3",
-      "MEM-FAIL-211f762d5ba4c67ca1",
+      "MEM-FAIL-1f3dde3f9da3e1cadb",
       "MEM-HOLD-3d2ca52b06eb1115f3",
       "MEM-REVI-ae1288779c7f4d35fa",
       "MEM-SEAR-1f73ec187b29d80d4b",
       "MEM-SUCC-ff21703f69998ff65c",
       "MEM-DISC-1ed76bd4a2e36f2461",
-      "MEM-FAIL-2ce50eecd2337130af",
+      "MEM-FAIL-1f7691f41a1dcfa103",
       "MEM-HOLD-452d1a58eea1476812",
       "MEM-REVI-ccb86700ca3f850cdb",
       "MEM-SEAR-2a5a804540732de3fd",
       "MEM-DISC-20324e960ce47381eb",
-      "MEM-FAIL-4e137b822da5c5cfed"
+      "MEM-FAIL-211f762d5ba4c67ca1"
     ],
     "automatic_skill_promotions": 0,
     "scientific_authority": false
