@@ -1,0 +1,500 @@
+{
+  "contract_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-q0-contract-20260901.json",
+  "contract_sha256": "1f2bf8050f711af4ce1d096fc153a7d76ceb25b408ed8adefdc60a2aab961a2b",
+  "created_at_utc": "2026-09-02T03:25:43+00:00",
+  "credential_material_present": false,
+  "d0_index_sha256": "b21f6c1a9a8c897d8c241f9687d0861072d28d00742beadf8c702fe8721d1de9",
+  "decision": "Q0_QWEN3_CODER_NEXT_PROVIDER_QUALIFIED",
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "parameter_support": {
+    "instructions": "ignored",
+    "max_output_tokens": "honored",
+    "model": "honored",
+    "multi_turn_history": "honored",
+    "seed": "accepted_unverified",
+    "single_choice_n1": "honored",
+    "stop": "honored",
+    "streaming": "honored",
+    "system_user_messages": "honored",
+    "temperature": "accepted_unverified",
+    "text_action": "honored",
+    "thinking": "server-fixed",
+    "tools": "honored",
+    "top_k": "accepted_unverified",
+    "top_p": "accepted_unverified"
+  },
+  "payload_sha256": "8f4cb43814cb438d445ba77e14e475cb096d2553298c7473470203487b6c10ee",
+  "probes": [
+    {
+      "actual_request_sha256": "3ed807c6b643894e6c95909e60d928c92dcc16fa1e2115abc57945299e9351dd",
+      "choice_count": 1,
+      "credential_material_present": false,
+      "function_calls": [],
+      "incomplete_details": {
+        "finish_reason": "stop"
+      },
+      "latency_seconds": 0.549939,
+      "name": "identity_messages_sampling",
+      "raw_payload_sha256": "322d29ab335908897c16c9da4593db8f5bad005222fc7f8e49d5f668bbf6826c",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_id_present": true,
+      "response_id_sha256": "933b49114797b9bc653e1049ed14ffb80d5a046eb6c3823ed0840f6e028de48c",
+      "response_metadata": {
+        "choice_count": 1,
+        "created": 1788319539,
+        "finish_reason": "stop",
+        "model": "qwen3-coder-next",
+        "object": "chat.completion",
+        "system_fingerprint": null
+      },
+      "response_status": "stop",
+      "safe_rate_quota_headers": {
+        "request-id": "b1bf54fb-c54f-4af8-9777-6a53d52586b1"
+      },
+      "status": "SUCCESS",
+      "text": "Q0_BASE_OK",
+      "text_sha256": "5de72ac89364113abe363f9efcd61853c57cfb43100b1e7837c8c22231cd15f8",
+      "transport_attempts": 1,
+      "usage": {
+        "input_tokens": 27,
+        "output_tokens": 5,
+        "raw": {
+          "completion_tokens": 5,
+          "prompt_tokens": 27,
+          "total_tokens": 32
+        },
+        "total_tokens": 32
+      }
+    },
+    {
+      "actual_request_sha256": "8650273fc8ba91426b2bb09479190fe53b0b98bbb56b2232dd45fc9b2a9fc856",
+      "choice_count": 1,
+      "credential_material_present": false,
+      "function_calls": [],
+      "incomplete_details": {
+        "finish_reason": "stop"
+      },
+      "latency_seconds": 0.361945,
+      "name": "instructions_semantics",
+      "raw_payload_sha256": "bb617624272bc8a31354eae4e960b78731fbbbb206276ec1e66f4b89d9c77662",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_id_present": true,
+      "response_id_sha256": "ee9ce74adc4abf3017c7af7b726efe42f4edc931d3beb690f6d8c9bafd14711d",
+      "response_metadata": {
+        "choice_count": 1,
+        "created": 1788319540,
+        "finish_reason": "stop",
+        "model": "qwen3-coder-next",
+        "object": "chat.completion",
+        "system_fingerprint": null
+      },
+      "response_status": "stop",
+      "safe_rate_quota_headers": {
+        "request-id": "b1775840-a871-4625-8cd5-ff7e9f310a98"
+      },
+      "status": "SUCCESS",
+      "text": "USER_WRONG",
+      "text_sha256": "a75db86718d27251853ee6a978ac0078bfd3a297c0bd72197b1f3d1f8150fcc9",
+      "transport_attempts": 1,
+      "usage": {
+        "input_tokens": 29,
+        "output_tokens": 3,
+        "raw": {
+          "completion_tokens": 3,
+          "prompt_tokens": 29,
+          "total_tokens": 32
+        },
+        "total_tokens": 32
+      }
+    },
+    {
+      "actual_request_sha256": "27a10aa35e5dbaf6ba78c2902b3808412b059940d4f2c442accbb004aa10d3b2",
+      "choice_count": 1,
+      "credential_material_present": false,
+      "function_calls": [],
+      "incomplete_details": {
+        "finish_reason": "stop"
+      },
+      "latency_seconds": 0.412315,
+      "name": "multi_turn_history",
+      "raw_payload_sha256": "7444f952ca77bbaae22c4124443576552dbd8c21e55c2d7923363ad4af1776b1",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_id_present": true,
+      "response_id_sha256": "40a3590a98fd79a714dec0b9cb8e4844c1bd19fa36707e6dd4fb99ee5c966616",
+      "response_metadata": {
+        "choice_count": 1,
+        "created": 1788319540,
+        "finish_reason": "stop",
+        "model": "qwen3-coder-next",
+        "object": "chat.completion",
+        "system_fingerprint": null
+      },
+      "response_status": "stop",
+      "safe_rate_quota_headers": {
+        "request-id": "9f58f820-de46-4239-bdf1-833ba6d4553a"
+      },
+      "status": "SUCCESS",
+      "text": "Q0_HISTORY_OK",
+      "text_sha256": "34c7e2ea68bed7dc78fec365afe3cb409724aacc275a3754cf907978ffcf720f",
+      "transport_attempts": 1,
+      "usage": {
+        "input_tokens": 47,
+        "output_tokens": 5,
+        "raw": {
+          "completion_tokens": 5,
+          "prompt_tokens": 47,
+          "total_tokens": 52
+        },
+        "total_tokens": 52
+      }
+    },
+    {
+      "actual_request_sha256": "0247dc183fa816a5db3f174e092a455f1652d03fe37ce703cfde1b4893a28420",
+      "choice_count": 1,
+      "credential_material_present": false,
+      "function_calls": [],
+      "incomplete_details": {
+        "finish_reason": "stop"
+      },
+      "latency_seconds": 0.528195,
+      "name": "recommended_top_k",
+      "raw_payload_sha256": "d1caf443610e153122412f125ad0053d81b339ab95fbb3a934344d9e6dd66fe1",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_id_present": true,
+      "response_id_sha256": "ba8a610edda2f9cca6d3de495ef22869e48244eb1030194728eece506020d32f",
+      "response_metadata": {
+        "choice_count": 1,
+        "created": 1788319540,
+        "finish_reason": "stop",
+        "model": "qwen3-coder-next",
+        "object": "chat.completion",
+        "system_fingerprint": null
+      },
+      "response_status": "stop",
+      "safe_rate_quota_headers": {
+        "request-id": "1fb31ccd-c4ff-4846-b0bb-6aa9a7b9dba6"
+      },
+      "status": "SUCCESS",
+      "text": "Q0_TOP_K_OK",
+      "text_sha256": "e0018631db21cd4fc67519c4958a5c9444bea98cd5e7adaa5eee4a4b108375da",
+      "transport_attempts": 1,
+      "usage": {
+        "input_tokens": 15,
+        "output_tokens": 6,
+        "raw": {
+          "completion_tokens": 6,
+          "prompt_tokens": 15,
+          "total_tokens": 21
+        },
+        "total_tokens": 21
+      }
+    },
+    {
+      "actual_request_sha256": "5eb697e90de4c604ec9d8e16c71768a2aa0435c8d9235a618f1eda12509ead91",
+      "choice_count": 1,
+      "credential_material_present": false,
+      "function_calls": [],
+      "incomplete_details": {
+        "finish_reason": "stop"
+      },
+      "latency_seconds": 0.40779,
+      "name": "seed_acceptance",
+      "raw_payload_sha256": "c878d84d2e33efa615e5b346aec5541a6704941a51e70f7ae290162130e1dae1",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_id_present": true,
+      "response_id_sha256": "f307c187b5b49023aa7e3aff11774c9d2e191e1a68f76801f5daefef1ec932a6",
+      "response_metadata": {
+        "choice_count": 1,
+        "created": 1788319541,
+        "finish_reason": "stop",
+        "model": "qwen3-coder-next",
+        "object": "chat.completion",
+        "system_fingerprint": null
+      },
+      "response_status": "stop",
+      "safe_rate_quota_headers": {
+        "request-id": "dd3c3e76-0be1-44d0-b1e0-8d64f03ecb3c"
+      },
+      "status": "SUCCESS",
+      "text": "Q0_SEED_OK",
+      "text_sha256": "afee643bab1232280ac0e7c80f2fa0e7ffb58efefa633cde6d59ce35c7d17079",
+      "transport_attempts": 1,
+      "usage": {
+        "input_tokens": 15,
+        "output_tokens": 6,
+        "raw": {
+          "completion_tokens": 6,
+          "prompt_tokens": 15,
+          "total_tokens": 21
+        },
+        "total_tokens": 21
+      }
+    },
+    {
+      "actual_request_sha256": "dd9a71f6f70749cbbab7eca6b9538ceb6ef574a4bc5f53c10f20750f989ff6ff",
+      "choice_count": 1,
+      "credential_material_present": false,
+      "function_calls": [],
+      "incomplete_details": {
+        "finish_reason": "stop"
+      },
+      "latency_seconds": 0.372542,
+      "name": "stop_semantics",
+      "raw_payload_sha256": "200a009d85c18500294955cc4183478ff278ec36a4b751e268c362e05b1dc5ac",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_id_present": true,
+      "response_id_sha256": "927b5f3bc014b533d7199c8299c239025f98b3970f5234992f1aea11de0369bc",
+      "response_metadata": {
+        "choice_count": 1,
+        "created": 1788319541,
+        "finish_reason": "stop",
+        "model": "qwen3-coder-next",
+        "object": "chat.completion",
+        "system_fingerprint": null
+      },
+      "response_status": "stop",
+      "safe_rate_quota_headers": {
+        "request-id": "b421a277-d5ef-4596-be99-1aaf9cfca297"
+      },
+      "status": "SUCCESS",
+      "text": "ALPHA ",
+      "text_sha256": "3fd9e171706cdc17e80f9796dc094a91d329d3ddd308c985f5522d24949eefda",
+      "transport_attempts": 1,
+      "usage": {
+        "input_tokens": 16,
+        "output_tokens": 4,
+        "raw": {
+          "completion_tokens": 4,
+          "prompt_tokens": 16,
+          "total_tokens": 20
+        },
+        "total_tokens": 20
+      }
+    },
+    {
+      "actual_request_sha256": "ee579ee3dc959ba2a6f9ca5900fb6d505281feb5396809d669747a8e411b6014",
+      "choice_count": 1,
+      "credential_material_present": false,
+      "function_calls": [
+        {
+          "arguments": "<tool_call>\n<function=report_token>\n<parameter=token>\nQ0_TOOL_OK\n</parameter>\n</function>\n</tool_call>",
+          "call_id": "chatcmpl-tool-2e81f83aac6b4fc9947a6aba64f1e2ea",
+          "name": "report_token",
+          "type": "function_call"
+        }
+      ],
+      "incomplete_details": {
+        "finish_reason": "tool_calls"
+      },
+      "latency_seconds": 0.525732,
+      "name": "tool_call",
+      "raw_payload_sha256": "731f28c40d7565ca67c0a35e29bb4430b04e9d264734b4e1c79718e9131ecf78",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_id_present": true,
+      "response_id_sha256": "78dda26be8804a98f21936a90758d46b30e97d44d7d6c1da8d9807a22b308853",
+      "response_metadata": {
+        "choice_count": 1,
+        "created": 1788319542,
+        "finish_reason": "tool_calls",
+        "model": "qwen3-coder-next",
+        "object": "chat.completion",
+        "system_fingerprint": null
+      },
+      "response_status": "tool_calls",
+      "safe_rate_quota_headers": {
+        "request-id": "876d7b34-b7e9-48f0-a012-784cafabe539"
+      },
+      "status": "SUCCESS",
+      "text": "",
+      "text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transport_attempts": 1,
+      "usage": {
+        "input_tokens": 306,
+        "output_tokens": 26,
+        "raw": {
+          "completion_tokens": 26,
+          "prompt_tokens": 306,
+          "total_tokens": 332
+        },
+        "total_tokens": 332
+      }
+    },
+    {
+      "actual_request_sha256": "58eecf6e62c155858917597298c214deb622d728056158b1e2bfb82532e04059",
+      "choice_count": 1,
+      "credential_material_present": false,
+      "function_calls": [],
+      "incomplete_details": {
+        "finish_reason": "stop"
+      },
+      "latency_seconds": 0.397977,
+      "name": "text_action_parser",
+      "raw_payload_sha256": "e150209ff18019ab0f356ba4934b887ef11e51e3b9893746d9ac756dbe89df29",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_id_present": true,
+      "response_id_sha256": "02f8dda8e3e10da666f83c0a166ccce83dba891357d3b89db4da3a68ab9cb066",
+      "response_metadata": {
+        "choice_count": 1,
+        "created": 1788319542,
+        "finish_reason": "stop",
+        "model": "qwen3-coder-next",
+        "object": "chat.completion",
+        "system_fingerprint": null
+      },
+      "response_status": "stop",
+      "safe_rate_quota_headers": {
+        "request-id": "4ee829d6-e2b1-492e-a55d-e60bfe96cf20"
+      },
+      "status": "SUCCESS",
+      "text": "```bash\nprintf \"Q0_ACTION_OK\"\n```",
+      "text_sha256": "c52876888bc8a992ecb9f27b541254685abb0fc05ce7ebbec502266bf4510397",
+      "transport_attempts": 1,
+      "usage": {
+        "input_tokens": 28,
+        "output_tokens": 12,
+        "raw": {
+          "completion_tokens": 12,
+          "prompt_tokens": 28,
+          "total_tokens": 40
+        },
+        "total_tokens": 40
+      }
+    },
+    {
+      "actual_request_sha256": "7e54cfd87517e13439c879b2c21a36429357b46edcd29f76d0aa1aa78eddd690",
+      "choice_count": 1,
+      "credential_material_present": false,
+      "function_calls": [],
+      "incomplete_details": {
+        "finish_reason": "length"
+      },
+      "latency_seconds": 0.446114,
+      "name": "max_output_tokens",
+      "raw_payload_sha256": "06f2332c413ddd1dce6299a628eb9513a5914a9085f8352c26d87587c624f1e9",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_id_present": true,
+      "response_id_sha256": "dfde2b0b4f86460081d707b205640e56efb3802a82c2135294e24d055e1cc984",
+      "response_metadata": {
+        "choice_count": 1,
+        "created": 1788319543,
+        "finish_reason": "length",
+        "model": "qwen3-coder-next",
+        "object": "chat.completion",
+        "system_fingerprint": null
+      },
+      "response_status": "length",
+      "safe_rate_quota_headers": {
+        "request-id": "47108c41-4da6-4734-be23-a2be74b4c605"
+      },
+      "status": "SUCCESS",
+      "text": "1,2,3,4,5,6,7,8,9,10,11,12,13,14",
+      "text_sha256": "7a3ab5474e4f9b4cf30d57afff13218248c7c84cb0ce11908587248cfb8adaf1",
+      "transport_attempts": 1,
+      "usage": {
+        "input_tokens": 25,
+        "output_tokens": 32,
+        "raw": {
+          "completion_tokens": 32,
+          "prompt_tokens": 25,
+          "total_tokens": 57
+        },
+        "total_tokens": 57
+      }
+    },
+    {
+      "actual_request_sha256": "703bf197cbfcb9de6d60eba5e1e9ef64fdcaf48d35a3e8c78374a3fc3b7b5578",
+      "choice_count": 1,
+      "credential_material_present": false,
+      "function_calls": [],
+      "incomplete_details": {
+        "finish_reason": "stop"
+      },
+      "latency_seconds": 0.372969,
+      "name": "single_choice_n1",
+      "raw_payload_sha256": "25b43197619dc96a6e7a2f92632e4de919ec00bd69be8232c4b70699647000b4",
+      "requested_model": "qwen3-coder-next",
+      "resolved_model": "qwen3-coder-next",
+      "response_id_present": true,
+      "response_id_sha256": "fe4d4c099a559c5a87a91f0540da76ef1567ca8ce8ad6fb3ca819d94348ad0db",
+      "response_metadata": {
+        "choice_count": 1,
+        "created": 1788319543,
+        "finish_reason": "stop",
+        "model": "qwen3-coder-next",
+        "object": "chat.completion",
+        "system_fingerprint": null
+      },
+      "response_status": "stop",
+      "safe_rate_quota_headers": {
+        "request-id": "0e683f0d-c74c-4624-92c2-0e875e961d59"
+      },
+      "status": "SUCCESS",
+      "text": "Q0_N1_OK",
+      "text_sha256": "9aa537b1cb3d5eb8a23244287b3a652a8714660ed509dbc10e74ccf7551b6ca8",
+      "transport_attempts": 1,
+      "usage": {
+        "input_tokens": 15,
+        "output_tokens": 6,
+        "raw": {
+          "completion_tokens": 6,
+          "prompt_tokens": 15,
+          "total_tokens": 21
+        },
+        "total_tokens": 21
+      }
+    }
+  ],
+  "provider": {
+    "base_url": "https://api.aa.com.cn/api/v1",
+    "credential_source_present": true,
+    "credential_value_persisted": false,
+    "max_retries": 0,
+    "n": 1,
+    "requested_model": "qwen3-coder-next",
+    "resolved_model": "qwen3-coder-next",
+    "streaming": false,
+    "timeout_seconds": 120.0
+  },
+  "recommended_sampling_resolution": {
+    "max_output_tokens": 32768,
+    "max_retries": 0,
+    "n": 1,
+    "seed": "OMITTED",
+    "stop": "OMITTED",
+    "streaming": false,
+    "temperature": 1.0,
+    "thinking": "SERVER_FIXED_NON_THINKING",
+    "top_k": 40,
+    "top_p": 0.95
+  },
+  "required_checks": {
+    "credential_material_absent": true,
+    "every_probe_attempt_at_most_one": true,
+    "model_identity_exact": true,
+    "multi_turn_history": true,
+    "response_identity_metadata": true,
+    "response_parser_nonempty": true,
+    "single_choice_exact": true,
+    "system_user_semantics": true,
+    "usage_metadata": true
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "benchmark_calls_made": 0,
+    "confirmatory_execution_authorized": false,
+    "q1_stochasticity_qualification_authorized": true,
+    "source_generation_authorized": false,
+    "source_runtime_qualification_authorized": false,
+    "task_split_authorized": false
+  },
+  "stage": "Q0_QWEN_PROVIDER_QUALIFICATION"
+}
