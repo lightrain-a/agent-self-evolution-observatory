@@ -4584,6 +4584,65 @@ function bindPageEvents() {
     refreshBibliography();
   });
 }
+function enhanceExperimentCostPriceColumns(root) {
+  if (pageId !== "experiment-costs" || !root) return;
+  const table = root.querySelector(".ec-portfolio>.matrix");
+  if (!table || table.dataset.priceColumnsReady === "1") return;
+  const zh = language === "zh";
+  const msg = (z, e) => zh ? z : e;
+  const price = (paper, model) => {
+    const has = needle => model.includes(needle);
+    if (has("Qwen3-Coder-Next")) return {used:`<b>≈¥75.6</b><small>${msg("按本页 qwen3-coder-next 实测综合 ¥1.425/M 折算；非逐-run发票","Using the observed ¥1.425/M composite rate; not a per-run invoice")}</small>`, plan:`<b>¥0</b><small>${msg("V3 已停止","V3 stopped")}</small>`};
+    if (model === "Hosted Qwen API") return {used:`<b>¥0</b><small>${msg("V4 scientific usage 尚未开始","V4 scientific usage has not started")}</small>`, plan:`<b>TBD</b><small>${msg("exact model/provider 冻结后按 P0 receipt 计价","Price after exact model/provider freeze and P0 receipt")}</small>`};
+    if (has("STRI-Cert")) return {used:`<b>${msg("CPU账未集中","CPU ledger not centralized")}</b>`, plan:`<b>≈¥0 model API</b>`};
+    if (model === "Qwen3-8B") return {used:`<b>${msg("历史成本未集中","Historical cost not centralized")}</b>`, plan:`<b>¥0</b><small>${msg("不重跑","No rerun")}</small>`};
+    if (has("235b-a22b")) return {used:`<b>¥0</b>`, plan:`<b>TBD</b><small>${msg("Token 未知；按量参考 input ¥2.009/M · output ¥20.076/M","Tokens unknown; pay-go reference input ¥2.009/M · output ¥20.076/M")}</small>`};
+    if (has("397b-a17b")) {
+      if (paper.includes("C1")) return {used:`<b>¥0</b>`, plan:`<b>≈¥1.9–3.9</b><small>${msg("预计量；hard cap≈¥9.63。按 ≤128K input ¥1.204/M · output ¥7.224/M","Expected volume; hard cap≈¥9.63. At ≤128K input ¥1.204/M · output ¥7.224/M")}</small>`};
+      return {used:`<b>¥0</b>`, plan:`<b>TBD</b><small>${msg("Token 未知；参考 input ¥1.204/M · output ¥7.224/M","Tokens unknown; reference input ¥1.204/M · output ¥7.224/M")}</small>`};
+    }
+    if (has("HarmBench")) return {used:`<b>${msg("历史 GPU 成本未集中","Historical GPU cost not centralized")}</b>`, plan:`<b>≈¥100–200</b><small>${msg("A100 机会成本 ¥10/GPU·h × 10–20h","A100 shadow rate ¥10/GPU·h × 10–20h")}</small>`};
+    if (has("DeepSeek semantic evaluator")) return {used:`<b>${msg("历史 API 价格未集中","Historical API cost not centralized")}</b>`, plan:`<b>TBD</b><small>${msg("120 evaluator units 的 Token receipt 后计价","Price after token receipts for 120 evaluator units")}</small>`};
+    if (has("Canonical writer")) return {used:`<b>${msg("历史 API 价格未集中","Historical API cost not centralized")}</b>`, plan:`<b>¥0</b>`};
+    if (has("DeepSeek V4 Pro")) return {used:`<b>≈¥19.1 pay-go</b><small>${msg("典名 off-peak 参考；Ark 吃满等效≈¥4.18，最终以 provider receipt 为准","Dianming off-peak reference; Ark full-use equivalent≈¥4.18; final = provider receipt")}</small>`, plan:`<b>≈¥166.5 pay-go</b><small>${msg("典名 off-peak 参考；Ark 吃满等效≈¥36.0，仅 exact contract 匹配时适用","Dianming off-peak reference; Ark full-use equivalent≈¥36.0 only if exact contract matches")}</small>`};
+    if (model === "Kimi K3") return {used:`<b>${msg("少量 review 成本未集中","Small review cost not centralized")}</b>`, plan:`<b>¥0</b><small>${msg("无大规模 scientific lane","No large scientific lane")}</small>`};
+    if (has("Second backbone") || has("第二 backbone")) return {used:`<b>¥0</b>`, plan:`<b>TBD</b>`};
+    if (has("Qwen2.5-7B-Instruct")) return {used:`<b>${msg("历史 GPU 成本未集中","Historical GPU cost not centralized")}</b>`, plan:`<b>≈¥800–1,500</b><small>${msg("A100 机会成本 ¥10/GPU·h × 80–150h","A100 shadow rate ¥10/GPU·h × 80–150h")}</small>`};
+    if (has("Second local") || has("第二个本地")) return {used:`<b>¥0</b>`, plan:`<b>TBD</b><small>${msg("模型与 GPU·h 均待冻结","Model and GPU-hours pending freeze")}</small>`};
+    if (model === "MemoryVLA") {
+      const isB = paper.includes("Paper B");
+      const hours = isB ? "150–300" : "100–200";
+      const a100 = isB ? "1,500–3,000" : "1,000–2,000";
+      const r3090 = isB ? "300–600" : "200–400";
+      return {used:`<b>${msg("历史 GPU 成本未集中","Historical GPU cost not centralized")}</b>`, plan:`<b>${msg(`若 A100：≈¥${a100}`,`If A100: ≈¥${a100}`)}</b><small>${msg(`若 3090：≈¥${r3090}；对应 ${hours} GPU·h`,`If 3090: ≈¥${r3090}; for ${hours} GPU·h`)}</small>`};
+    }
+    if (has("Second VLA") || has("第二 VLA")) return {used:`<b>¥0</b>`, plan:`<b>TBD</b>`};
+    if (has("OptimusVLA") || has("pi0.5")) return {used:`<b>${msg("资格化 GPU 成本未集中","Qualification GPU cost not centralized")}</b>`, plan:`<b>TBD</b><small>${msg("首条合法 rollout 后按 GPU·h 计价","Price by GPU-hours after first valid rollout")}</small>`};
+    if (has("qwen3.7-plus")) return {used:`<b>${msg("历史价格未按论文归因","Historical spend not paper-attributed")}</b>`, plan:`<b>TBD</b><small>${msg("Token receipt × 当前实测综合约 ¥0.747/M","Token receipt × current observed composite ≈¥0.747/M")}</small>`};
+    if (has("Additional LLM") || has("额外 LLM")) return {used:`<b>¥0</b>`, plan:`<b>TBD</b>`};
+    if (has("BEDROOM-SG2SC") || model === "SGP-12" || model === "SGP-14") return {used:`<b>${msg("qualification GPU 成本未集中","Qualification GPU cost not centralized")}</b>`, plan:`<b>${msg("公式：¥10 × 实测 A100·h","Formula: ¥10 × measured A100·h")}</b><small>${msg("源码 1–3 GPU-days/component 仅作粗参考 → ¥240–720 shadow/component","Source 1–3 GPU-days/component is a rough reference only → ¥240–720 shadow/component")}</small>`};
+    return {used:`<b>TBD</b>`, plan:`<b>TBD</b>`};
+  };
+  let currentPaper = "";
+  table.querySelectorAll("tbody tr").forEach(row => {
+    const paperCell = row.querySelector(".ec-paper-cell b");
+    if (paperCell) currentPaper = paperCell.textContent.trim();
+    const model = row.querySelector(".ec-model b")?.textContent.trim() || "";
+    const cells = [...row.children];
+    const modelIndex = cells.findIndex(cell => cell.classList?.contains("ec-model"));
+    if (modelIndex < 0) return;
+    const usedCell = cells[modelIndex + 1];
+    const planCell = cells[modelIndex + 2];
+    if (!usedCell || !planCell) return;
+    const p = price(currentPaper, model);
+    const usedPrice = document.createElement("td"); usedPrice.className = "ec-price-cell ec-price-used"; usedPrice.innerHTML = p.used;
+    const planPrice = document.createElement("td"); planPrice.className = "ec-price-cell ec-price-plan"; planPrice.innerHTML = p.plan;
+    usedCell.after(usedPrice);
+    planCell.after(planPrice);
+  });
+  table.dataset.priceColumnsReady = "1";
+}
+
 function renderPage() {
   document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
   const config = PAGES[pageId] || PAGES.home;
@@ -4645,6 +4704,7 @@ function renderPage() {
   hydrateCitations(root);
   updateCitationStatus();
   localizeRenderedChinese(root);
+  enhanceExperimentCostPriceColumns(root);
   buildToc();
   if (new Set(["mechanisms","research-directions"]).has(pageId) && location.hash) {
     const fieldAliases = pageId === "mechanisms" ? {
