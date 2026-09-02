@@ -42,8 +42,10 @@ ADDENDUM = GENERATED / "agent-constraint-externality-codingplan-deepseek-capabil
 RESULT = GENERATED / "agent-constraint-externality-codingplan-deepseek-capability-result-a2-20260902.json"
 RECOVERY_VOID = GENERATED / "agent-constraint-externality-codingplan-a2-provider-round-control-void-r1-20260902.json"
 RECOVERY_CONTRACT = GENERATED / "agent-constraint-externality-codingplan-deepseek-capability-a2-r1-contract-20260902.json"
+RECOVERY_R2_VOID = GENERATED / "agent-constraint-externality-codingplan-a2-r1-native-tool-interception-void-20260902.json"
+RECOVERY_R2_CONTRACT = GENERATED / "agent-constraint-externality-codingplan-deepseek-capability-a2-r2-contract-20260902.json"
 EXECUTION_ID = "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2"
-RECOVERY_EXECUTION_ID = "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2-R1"
+RECOVERY_EXECUTION_ID = "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2-R2"
 CAPABILITY_FAMILIES = ("ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06")
 REPEATS = (1, 2)
 TOOL_CAP = 16
@@ -348,6 +350,8 @@ def adjudicate(*, ledger_path: Path, toolcap_path: Path) -> dict[str, Any]:
         "toolcap_sha256": sha256_file(toolcap_path) if toolcap_path.is_file() else None,
         "provider_round_control_void_sha256": sha256_file(RECOVERY_VOID),
         "recovery_contract_sha256": sha256_file(RECOVERY_CONTRACT),
+        "native_tool_interception_void_sha256": sha256_file(RECOVERY_R2_VOID),
+        "recovery_r2_contract_sha256": sha256_file(RECOVERY_R2_CONTRACT),
     }
     result["content_sha256"] = sha256_value(result)
     return result
@@ -386,6 +390,11 @@ def main() -> None:
         recovery_contract = read_json(RECOVERY_CONTRACT)
         if recovery_contract.get("status") != "CODINGPLAN_DEEPSEEK_CAPABILITY_A2_R1_AUTHORIZED_AFTER_PROVIDER_ROUND_CONTROL_VOID":
             raise RunnerError("CodingPlan A2-R1 recovery contract is not authorized.")
+        if not RECOVERY_R2_VOID.is_file() or not RECOVERY_R2_CONTRACT.is_file():
+            raise RunnerError("CodingPlan A2-R2 requires frozen native-tool-interception recovery evidence.")
+        recovery_r2_contract = read_json(RECOVERY_R2_CONTRACT)
+        if recovery_r2_contract.get("status") != "CODINGPLAN_DEEPSEEK_CAPABILITY_A2_R2_AUTHORIZED_AFTER_NATIVE_TOOL_INTERCEPTION_VOID":
+            raise RunnerError("CodingPlan A2-R2 recovery contract is not authorized.")
         runtime_root = args.runtime_root
         ledger_path = args.ledger or runtime_root / "ledger.jsonl"
         toolcap_path = args.toolcap_ledger or runtime_root / "toolcap-measurements.jsonl"

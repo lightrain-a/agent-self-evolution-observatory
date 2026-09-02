@@ -37,6 +37,10 @@ def _extract_json_object(text: str) -> dict[str, Any]:
         raise MalformedToolCallError("CodingPlan bridge output is not exact JSON.") from exc
     if not isinstance(parsed, dict):
         raise MalformedToolCallError("CodingPlan bridge output must be one JSON object.")
+    if set(parsed) == {"tool_call_response"} and isinstance(parsed["tool_call_response"], dict):
+        parsed = parsed["tool_call_response"]
+    elif set(parsed) == {"completion_response"} and isinstance(parsed["completion_response"], dict):
+        parsed = parsed["completion_response"]
     return parsed
 
 
@@ -76,13 +80,32 @@ def _tool_prompt(
     instructions: str,
     input_items: list[dict[str, Any]],
     tools: list[dict[str, Any]],
-) -> str:
+) -> tuple[str, dict[str, str]]:
+    alias_to_name: dict[str, str] = {}
+    name_to_alias: dict[str, str] = {}
+    bridged_tools: list[dict[str, Any]] = []
+    for index, tool in enumerate(tools, start=1):
+        alias = f"T{index:03d}"
+        name = str(tool["name"])
+        alias_to_name[alias] = name
+        name_to_alias[name] = alias
+        bridged_tools.append({
+            "tool_id": alias,
+            "description": tool.get("description", ""),
+            "parameters": tool.get("parameters", {}),
+        })
+    bridged_input: list[dict[str, Any]] = []
+    for item in input_items:
+        cloned = dict(item)
+        if cloned.get("type") == "function_call" and cloned.get("name") in name_to_alias:
+            cloned["tool_id"] = name_to_alias[str(cloned.pop("name"))]
+        bridged_input.append(cloned)
     schema = {
         "tool_call_response": {
             "type": "tool_calls",
             "calls": [
                 {
-                    "name": "EXACT_TOOL_NAME",
+                    "tool_id": "T001",
                     "arguments": {"argument": "value"},
                 }
             ],
@@ -95,8 +118,8 @@ def _tool_prompt(
     payload = {
         "bridge_schema": BRIDGE_SCHEMA,
         "instructions": instructions,
-        "conversation": input_items,
-        "tools": tools,
+        "conversation": bridged_input,
+        "tools": bridged_tools,
         "required_output_schema": schema,
     }
     return (
@@ -104,10 +127,11 @@ def _tool_prompt(
         "Choose the next action using ONLY the supplied tools and conversation.\n"
         "Return EXACTLY one JSON object and no markdown or prose outside it.\n"
         "When several tool calls are independent and their arguments are already known, include all of them in one response to reduce turns.\n"
-        "Do not invent tool names or arguments. Do not expose hidden evaluator assumptions.\n"
+        "The tool identifiers are opaque aliases such as T001. Never emit native function/tool-call syntax; emit only plain JSON text using tool_id aliases.\n"
+        "Do not invent tool identifiers or arguments. Do not expose hidden evaluator assumptions.\n"
         "If the task is complete, return the final form. Otherwise return one or more tool calls.\n"
         + json.dumps(payload, ensure_ascii=False, sort_keys=True)
-    )
+    ), alias_to_name
 
 
 def write_experiment_config(path: Path) -> None:
@@ -179,7 +203,7 @@ class AtomCodeCodingPlanClient:
         del temperature  # AtomCode 5.0.9 exposes no supported sampling-temperature override.
         if model != RESOLVED_MODEL:
             raise ProviderCallError(f"CodingPlan model replacement forbidden: {model}")
-        prompt = _tool_prompt(instructions=instructions, input_items=input_items, tools=tools)
+        prompt, alias_to_name = _tool_prompt(instructions=instructions, input_items=input_items, tools=tools)
         with tempfile.NamedTemporaryFile(
             mode="w", encoding="utf-8", suffix=".txt", prefix="ace-codingplan-", delete=False
         ) as handle:
@@ -231,12 +255,15 @@ class AtomCodeCodingPlanClient:
             if not isinstance(calls, list) or not calls:
                 raise MalformedToolCallError("CodingPlan tool_calls must contain a non-empty calls list.")
             for index, call in enumerate(calls):
-                if not isinstance(call, dict) or not isinstance(call.get("name"), str) or not isinstance(call.get("arguments"), dict):
-                    raise MalformedToolCallError("CodingPlan call must contain name:string and arguments:object.")
+                if not isinstance(call, dict) or not isinstance(call.get("tool_id"), str) or not isinstance(call.get("arguments"), dict):
+                    raise MalformedToolCallError("CodingPlan call must contain tool_id:string and arguments:object.")
+                tool_id = call["tool_id"]
+                if tool_id not in alias_to_name:
+                    raise MalformedToolCallError(f"CodingPlan returned unknown tool alias: {tool_id}")
                 output.append(
                     {
                         "type": "function_call",
-                        "name": call["name"],
+                        "name": alias_to_name[tool_id],
                         "arguments": json.dumps(call["arguments"], ensure_ascii=False, sort_keys=True),
                         "call_id": f"cp-{self.request_count}-{index+1}",
                     }

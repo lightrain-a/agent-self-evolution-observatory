@@ -13,6 +13,7 @@ from research_pipeline.agent_constraint_externality_codingplan_provider import (
     RETRY_MAX_ATTEMPTS,
     RESOLVED_MODEL,
     AtomCodeCodingPlanClient,
+    _extract_json_object,
     _message_text_from_jsonl,
     write_experiment_config,
 )
@@ -38,6 +39,11 @@ class CodingPlanProviderTest(unittest.TestCase):
             self.assertEqual(CONTEXT_WINDOW, 512000)
             self.assertEqual(MAX_OUTPUT_TOKENS, 128000)
 
+    def test_wrapped_tool_call_response_is_accepted(self) -> None:
+        parsed = _extract_json_object(json.dumps({"tool_call_response":{"type":"tool_calls","calls":[{"tool_id":"T001","arguments":{}}]}}))
+        self.assertEqual(parsed["type"], "tool_calls")
+        self.assertEqual(parsed["calls"][0]["tool_id"], "T001")
+
     def test_jsonl_requires_exactly_one_usage_request(self) -> None:
         stdout = "\n".join([
             json.dumps({"type":"run.started","provider":ATOMCODE_PROVIDER_PROFILE,"model":RESOLVED_MODEL}),
@@ -49,7 +55,7 @@ class CodingPlanProviderTest(unittest.TestCase):
         self.assertEqual(meta["usage"]["total_tokens"], 2)
 
     def test_fake_atomcode_bridge_preserves_provider_provenance(self) -> None:
-        message = json.dumps({"type":"tool_calls","calls":[{"name":"set_value","arguments":{"key":"x","value":1}}]})
+        message = json.dumps({"type":"tool_calls","calls":[{"tool_id":"T001","arguments":{"key":"x","value":1}}]})
         final = json.dumps({"type":"final","message":"done"})
         outputs = [message, final]
         calls = []

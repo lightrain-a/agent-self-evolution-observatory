@@ -1,0 +1,28 @@
+{
+  "authority": {
+    "capability_a2_r2": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false
+  },
+  "bridge_repair": {
+    "coding_max_rounds": 1,
+    "native_tool_names_hidden_from_model": true,
+    "opaque_tool_aliases": true,
+    "retry_max_attempts": 1,
+    "single_wrapper_compatibility": true
+  },
+  "content_sha256": "acfe0a976444c35f552da90a0fb88a3ad75cc72c630dc2d121b7976f7e8dcf64",
+  "execution_id": "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2-R2",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "parent_a2_r1_contract_sha256": "63fb77c7cb4123e422a97d66d5f769a4b3974b36150a6a98ffd8d5a5f64be3f6",
+  "prior_invalid_units_count_as_measurements": false,
+  "same_eight_unit_panel": true,
+  "same_gate": true,
+  "same_model": true,
+  "same_substrate_v4": true,
+  "same_tool_call_cap": 16,
+  "schema_version": "ace-codingplan-deepseek-capability-a2-r2-contract-v1",
+  "status": "CODINGPLAN_DEEPSEEK_CAPABILITY_A2_R2_AUTHORIZED_AFTER_NATIVE_TOOL_INTERCEPTION_VOID",
+  "void_artifact_sha256": "30e8e05cfba50f8cc9a6e1d573297285d8da8b7891ecade1edfb2dc2ad6ea1e0"
+}
