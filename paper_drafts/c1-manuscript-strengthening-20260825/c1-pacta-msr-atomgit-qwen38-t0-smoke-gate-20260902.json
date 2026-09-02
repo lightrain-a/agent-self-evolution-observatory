@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-SOURCE-T0-20260902",
+  "status": "ATOMGIT_MSR_MULTISTEP_SMOKE_PASS",
+  "smoke_execution_commit": "8fb85d2c09d2bf7b0e54bbadfbcd98d0360e329e",
+  "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+  "resolved_model": "qwen3.8-27b",
+  "source_max_completion_tokens": 16384,
+  "pacta_first_decision_budget": 2048,
+  "atomcode_subprocess_timeout_seconds": 900,
+  "smoke": {
+    "non_scientific": true,
+    "provider_calls": 2,
+    "terminal_status": "Submitted",
+    "marker_file_action": true,
+    "marker_observation_seen": true,
+    "input_tokens": 15510,
+    "output_tokens": 1809,
+    "smoke_result_sha256": "9afabe37c53879a662fc55812db65047598cd50876f361a02c9e97f6e08cc11f",
+    "smoke_run_sha256": "cd90ed8739fd937380582e8bbf8c5de10b92d7fad0d2e4bfa8da4b0eb580fe2f"
+  },
+  "scientific_source_tasks_used": 0,
+  "scientific_source_responses": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "probe_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "next_authorized_action": "Run the already frozen ten-source exactly-once acquisition schedule. Stop on the first provider/implementation failure; do not replace or top up a source unit."
+}
