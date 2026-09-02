@@ -4361,6 +4361,8 @@ function buildToc() {
   }
   if (pageId === "selected-paper") {
     const rows = [
+      {id:"paper-resource-budget",label:language === "zh" ? "实验资源与成本预算" : "Experiment resource budget"},
+      {id:"atomgit-pro-allocation",label:language === "zh" ? "AtomGit Pro 分配" : "AtomGit Pro allocation"},
       {id:"formal-paper-collection",label:language === "zh" ? "①–⑤ 正式论文" : "①–⑤ Formal papers"},
       {id:"working-paper-collection",label:language === "zh" ? "⑥–⑨ 工作论文 / Scientific Object" : "⑥–⑨ Working papers / scientific objects"},
     ];

@@ -34,7 +34,7 @@ EXPECTATIONS = {
     "research-directions": (3, 4, 1, 0),
     "paper-ideas": (0, 3, 7, 0),
     "experiments": (3, 4, 3, 0),
-    "selected-paper": (0, 2, 0, 0),
+    "selected-paper": (0, 4, 0, 0),
     "bibliography": (6, 7, 8, 0),
 }
 
@@ -218,9 +218,9 @@ def main() -> None:
                 if portfolio.get("paperShelf") != 0 or portfolio.get("console") != 1 or portfolio.get("currentCards") != 6 or portfolio.get("categories") != 7 or portfolio.get("currentLanes") != 7 or portfolio.get("concludedOpen") != 0 or portfolio.get("assetsOpen") != 0 or portfolio.get("mementoOpen") or portfolio.get("safetyOpen") or portfolio.get("auditOpen") or portfolio.get("toc") != expected_toc or portfolio.get("scrollHeight",99999) > 7500 or portfolio.get("overflow"):
                     raise AssertionError(f"paper-ideas: decision-first portfolio contract failed: {portfolio}")
             if page == "selected-paper":
-                collection = execute(session_id, """return {cards:document.querySelectorAll('.cpp-collection-card').length,formal:document.querySelectorAll('#formal-paper-collection .cpp-collection-card').length,working:document.querySelectorAll('#working-paper-collection .cpp-collection-card').length,detailSections:document.querySelectorAll('.paper-detail-section,.cpp-origin,.cpp-resource-columns,.cpp-proof-grid').length,toc:[...document.querySelectorAll('#page-toc a')].map(a=>a.textContent.trim()),paper8:[...document.querySelectorAll('.cpp-collection-card header>span')].find(x=>x.textContent.includes('⑧'))?.textContent.trim()||'',overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
-                if collection != {"cards":9,"formal":5,"working":4,"detailSections":0,"toc":["①–⑤ 正式论文","⑥–⑨ 工作论文 / Scientific Object"],"paper8":"⑧ Constraint Externality","overflow":False}:
-                    raise AssertionError(f"selected-paper: collection-only contract failed: {collection}")
+                collection = execute(session_id, """return {cards:document.querySelectorAll('.cpp-collection-card').length,formal:document.querySelectorAll('#formal-paper-collection .cpp-collection-card').length,working:document.querySelectorAll('#working-paper-collection .cpp-collection-card').length,detailSections:document.querySelectorAll('.paper-detail-section,.cpp-origin,.cpp-resource-columns,.cpp-proof-grid').length,budgetRows:document.querySelectorAll('#paper-resource-budget .cpp-budget-table tbody tr').length,atomgitRows:document.querySelectorAll('#paper-resource-budget .cpp-atomgit-tag').length,toc:[...document.querySelectorAll('#page-toc a')].map(a=>a.textContent.trim()),paper8:[...document.querySelectorAll('.cpp-collection-card header>span')].find(x=>x.textContent.includes('⑧'))?.textContent.trim()||'',overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};""")
+                if collection != {"cards":9,"formal":5,"working":4,"detailSections":0,"budgetRows":9,"atomgitRows":9,"toc":["实验资源与成本预算","AtomGit Pro 分配","①–⑤ 正式论文","⑥–⑨ 工作论文 / Scientific Object"],"paper8":"⑧ Constraint Externality","overflow":False}:
+                    raise AssertionError(f"selected-paper: nine-paper collection + resource-budget contract failed: {collection}")
             if page == "bibliography":
                 paper_details = execute(session_id, """const rows=[...document.querySelectorAll('.reference-card .paper-analysis')]; const first=rows[0]||null; const before=rows.filter(x=>x.open).length; if(first) first.querySelector('summary')?.click(); return {total:rows.length,before,firstOpened:!!first?.open};""")
                 if paper_details.get("total") != 80 or paper_details.get("before") != 0 or not paper_details.get("firstOpened"):

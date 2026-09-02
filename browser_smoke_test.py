@@ -711,11 +711,14 @@ def main() -> None:
           labels: [...document.querySelectorAll('.cpp-collection-card header>span')].map(x=>x.textContent.trim()),
           titles: [...document.querySelectorAll('.cpp-collection-card h3')].map(x=>x.textContent.trim()),
           toc: [...document.querySelectorAll('#page-toc a')].map(x=>x.textContent.trim()),
+          budgetRows: document.querySelectorAll('#paper-resource-budget .cpp-budget-table tbody tr').length,
+          atomgitRows: document.querySelectorAll('#paper-resource-budget .cpp-atomgit-tag').length,
+          atomgitSourceLinks: document.querySelectorAll('#atomgit-pro-allocation .cpp-budget-sources a').length,
           paperRegistrySummary: window.PAPER_REGISTRY?.summary || {},
           overflow: document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
           text: document.body.textContent || ''
         };""")
-        require(selected["cards"] == 9 and selected["formal"] == 5 and selected["working"] == 4 and selected["detailSections"] == 0 and selected["toc"] == ["①–⑤ 正式论文","⑥–⑨ 工作论文 / Scientific Object"] and selected["paperRegistrySummary"] == expected_registry_summary and not selected["overflow"], f"selected-paper must be a collection-only nine-paper routing surface: {selected}")
+        require(selected["cards"] == 9 and selected["formal"] == 5 and selected["working"] == 4 and selected["detailSections"] == 0 and selected["toc"] == ["实验资源与成本预算","AtomGit Pro 分配","①–⑤ 正式论文","⑥–⑨ 工作论文 / Scientific Object"] and selected["budgetRows"] == 9 and selected["atomgitRows"] == 9 and selected["atomgitSourceLinks"] == 3 and selected["paperRegistrySummary"] == expected_registry_summary and not selected["overflow"], f"selected-paper must remain a nine-paper routing surface with the portfolio resource budget: {selected}")
         require(selected["labels"][:5] == ["① E1 · STRI","② G1 · Temporal Safety","③ C1 · Memory Transport","④ E2 · Search Projection","⑤ B1 · Memory Provenance"] and selected["labels"][7] == "⑧ Constraint Externality" and selected["labels"][8] == "⑨ 3D · Relational Topology", f"paper collection labels/order drifted: {selected['labels']}")
         require("速览版" not in selected["text"] and "完整 PaperState" not in selected["text"] and "Stanford" not in selected["text"], "collection page must not duplicate single-paper detail/review content")
 
