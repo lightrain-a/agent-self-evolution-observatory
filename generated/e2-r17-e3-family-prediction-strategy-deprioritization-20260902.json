@@ -1,0 +1,36 @@
+{
+  "artifact_type": "e2-r17-e3-family-prediction-strategy-deprioritization",
+  "authority": {
+    "d0_execution": false,
+    "gpu": false,
+    "new_scientific_execution": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "second_backbone": false,
+    "submission": false
+  },
+  "created_date": "2026-09-02",
+  "decision": "PRESERVE_AS_ANALYSIS_ASSET_BUT_DEPRIORITIZE_AS_NEXT_EXPERIMENT",
+  "development_basis": {
+    "family_same_transfer_not_privileged": true,
+    "mean_off_family_heldout_effect": 0.027777777777777776,
+    "mean_same_family_heldout_effect": 0.0,
+    "mixed_availability_not_predictive": true,
+    "selected_witness_progress_more_promising": true
+  },
+  "e3_family_d0_status": "ZERO_AUTHORITY_NOT_NEXT_BUDGET_PRIORITY",
+  "mechanism_analysis_path": "generated/e2-r17-v2-posthoc-mechanism-development-analysis-20260902.json",
+  "mechanism_analysis_sha256": "91176c42362dfcaca8caf1e73694f72362a47195cd844e6736f02fe5358cc6d4",
+  "next_priority": "E2-R17-DIAGNOSTIC-WITNESS-REPAIR_M1_CONTRACT_DESIGN_AND_REVIEW",
+  "preservation": {
+    "d0_v1_internal_review_preserved": true,
+    "d0_v2_design_preserved": true,
+    "family_prediction_hypothesis_preserved": true,
+    "future_reopening_requires_new_explicit_strategy_decision": true,
+    "p0_substrate_preserved_for_future_confirmatory_use": true
+  },
+  "reason": "Completed V2 development analysis shows mixed-pool availability is nearly uncorrelated with stream effect and same-family heldout transfer is not stronger than off-family transfer, while structural proximity of the selected rejected witness is more associated with effect. Family remains a useful blocking/coverage variable, but diagnostic witness quality is the higher-information next intervention.",
+  "schema_version": "1.0",
+  "status": "E3_FAMILY_PREDICTION_DEPRIORITIZED_ZERO_AUTHORITY"
+}
