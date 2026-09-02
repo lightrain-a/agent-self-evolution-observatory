@@ -81,6 +81,15 @@ CAPABILITY_R3_CONTRACT = (
 CAPABILITY_R3_RESULT = (
     GENERATED / "agent-constraint-externality-qwen37plus-capability-result-r3-20260902.json"
 )
+CAPABILITY_R3_PARTIAL_CONTRACT = (
+    GENERATED / "agent-constraint-externality-qwen37plus-capability-r3-partial-contract-20260902.json"
+)
+CAPABILITY_R3_PARTIAL_RESULT = (
+    GENERATED / "agent-constraint-externality-qwen37plus-capability-result-r3-partial-20260902.json"
+)
+CAPABILITY_R2_FG_V2_REVALIDATION = (
+    GENERATED / "agent-constraint-externality-qwen37plus-r2-fg-v2-revalidation-20260902.json"
+)
 CAPABILITY_SUBSTRATE_V2_CONTRACT = (
     GENERATED / "agent-constraint-externality-capability-substrate-v2-contract-20260902.json"
 )
@@ -249,8 +258,22 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         r3_contract.get("status")
         == "QWEN37PLUS_CAPABILITY_R3_AUTHORIZED_AFTER_SUBSTRATE_V2"
     )
+    r3_partial_contract = (
+        read_json(CAPABILITY_R3_PARTIAL_CONTRACT)
+        if CAPABILITY_R3_PARTIAL_CONTRACT.is_file()
+        else {}
+    )
+    r3_partial_authorized = (
+        r3_partial_contract.get("status")
+        == "QWEN37PLUS_CAPABILITY_R3_PARTIAL_AUTHORIZED"
+        and r3_partial_contract.get("rerun_unit_count") == 4
+        and r3_partial_contract.get("preserved_unit_count") == 4
+    )
 
-    if CAPABILITY_R3_RESULT.is_file():
+    if CAPABILITY_R3_PARTIAL_RESULT.is_file():
+        capability_result_path = CAPABILITY_R3_PARTIAL_RESULT
+        capability_result = read_json(CAPABILITY_R3_PARTIAL_RESULT)
+    elif CAPABILITY_R3_RESULT.is_file():
         capability_result_path = CAPABILITY_R3_RESULT
         capability_result = read_json(CAPABILITY_R3_RESULT)
     elif r2_void_active:
@@ -273,7 +296,13 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
     plus_a1_provider_requests = int(plus_a1.get("provider_request_total", 0))
     r2_result = read_json(CAPABILITY_R2_RESULT) if CAPABILITY_R2_RESULT.is_file() else {}
     r2_provider_requests = int(r2_result.get("provider_request_total", 0))
-    r3_provider_requests = int(capability_result.get("provider_request_total", 0)) if capability_result_path == CAPABILITY_R3_RESULT else 0
+    r3_provider_requests = (
+        int(capability_result.get("provider_request_total", 0))
+        if capability_result_path == CAPABILITY_R3_RESULT
+        else int(capability_result.get("provider_request_total_new", 0))
+        if capability_result_path == CAPABILITY_R3_PARTIAL_RESULT
+        else 0
+    )
     flash_agent_requests = int(
         flash_final.get(
             "agent_model_request_count",
@@ -292,7 +321,11 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         historical_void_provider_requests += r2_provider_requests
         historical_void_agent_requests += r2_agent_requests
         historical_void_agent_episodes += r2_agent_episodes
-    if capability_result_path == CAPABILITY_R3_RESULT:
+    if capability_result_path == CAPABILITY_R3_PARTIAL_RESULT:
+        latest_provider_requests = r3_provider_requests
+        latest_agent_requests = int(capability_result.get("new_agent_model_request_count", 0))
+        latest_agent_episodes = int(capability_result.get("rerun_tnf_measurements", 0))
+    elif capability_result_path == CAPABILITY_R3_RESULT:
         latest_provider_requests = r3_provider_requests
         latest_agent_requests = int(capability_result.get("agent_model_request_count", 0))
         latest_agent_episodes = int(capability_result.get("agent_episode_count", 0))
@@ -507,10 +540,14 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             "F0 remains unauthorized."
         )
         next_action = "STOP_AWAIT_HUMAN_ADJUDICATION"
+    elif r2_void_active and substrate_v2_recovery_pass and r3_partial_authorized:
+        readiness_status = "CAPABILITY_SUBSTRATE_V2_PARTIAL_REQUALIFICATION_READY"
+        blocker = None
+        next_action = "RUN_QWEN37PLUS_CAPABILITY_R3_PARTIAL_TNF_ONLY"
     elif r2_void_active and substrate_v2_recovery_pass and r3_authorized:
         readiness_status = "CAPABILITY_SUBSTRATE_V2_REQUALIFICATION_READY"
-        blocker = None
-        next_action = "RUN_QWEN37PLUS_CAPABILITY_R3"
+        blocker = "Full eight-unit R3 contract is superseded when a narrower partial contract is present."
+        next_action = "FREEZE_PARTIAL_R3_OR_STOP"
     elif r2_void_active:
         readiness_status = "CAPABILITY_SUBSTRATE_V2_RECOVERY_REQUIRED"
         blocker = (
@@ -551,6 +588,10 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "capability_r2_void_substrate_discoverability_invalid": r2_void_active,
         "capability_substrate_v2_recovery_qualification_pass": substrate_v2_recovery_pass,
         "capability_r3_authorized": r3_authorized,
+        "capability_r3_partial_authorized": r3_partial_authorized,
+        "capability_r3_full_contract_superseded": r3_partial_authorized,
+        "capability_r3_preserved_fg_measurements": int(capability_result.get("preserved_fg_measurements", 0)),
+        "capability_r3_rerun_tnf_measurements": int(capability_result.get("rerun_tnf_measurements", 0)),
         "capability_result_status": capability_status,
         "capability_result_artifact": (
             str(capability_result_path.relative_to(ROOT))
@@ -630,8 +671,10 @@ def main() -> None:
         CAPABILITY_A1_SNAPSHOT, CAPABILITY_A1_MANIFEST, CAPABILITY_SUBSTRATE_VOID,
         CAPABILITY_SUBSTRATE_QUALIFICATION, CAPABILITY_R2_CONTRACT, CAPABILITY_R2_RESULT,
         CAPABILITY_SUBSTRATE_VOID_R2, CAPABILITY_SUBSTRATE_QUALIFICATION_R2,
-        CAPABILITY_R3_CONTRACT, CAPABILITY_R3_RESULT, CAPABILITY_SUBSTRATE_V2_CONTRACT,
-        CAPABILITY_SUBSTRATE_V2_BUNDLE, CAPABILITY_R2_ROOT_CAUSE_AUDIT,
+        CAPABILITY_R3_CONTRACT, CAPABILITY_R3_RESULT, CAPABILITY_R3_PARTIAL_CONTRACT,
+        CAPABILITY_R3_PARTIAL_RESULT, CAPABILITY_R2_FG_V2_REVALIDATION,
+        CAPABILITY_SUBSTRATE_V2_CONTRACT, CAPABILITY_SUBSTRATE_V2_BUNDLE,
+        CAPABILITY_R2_ROOT_CAUSE_AUDIT,
     ):
         if not path.is_file():
             continue

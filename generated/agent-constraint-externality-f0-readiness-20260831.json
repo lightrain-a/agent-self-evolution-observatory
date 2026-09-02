@@ -15,6 +15,10 @@
   "capability_r2_authorized": true,
   "capability_r2_void_substrate_discoverability_invalid": true,
   "capability_r3_authorized": true,
+  "capability_r3_full_contract_superseded": true,
+  "capability_r3_partial_authorized": true,
+  "capability_r3_preserved_fg_measurements": 0,
+  "capability_r3_rerun_tnf_measurements": 0,
   "capability_result_artifact": null,
   "capability_result_status": null,
   "capability_scheduled_agent_episode_count": 0,
@@ -38,7 +42,7 @@
   "generated_at": "2026-09-01T15:35:00+08:00",
   "m1_runner_qualification_pass": true,
   "model_prereg_addendum_a0_pass": true,
-  "next_authorized_action": "RUN_QWEN37PLUS_CAPABILITY_R3",
+  "next_authorized_action": "RUN_QWEN37PLUS_CAPABILITY_R3_PARTIAL_TNF_ONLY",
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "p1_authorized": false,
   "provider": {
@@ -52,6 +56,6 @@
   },
   "provider_credential_present": true,
   "schema_version": "agent-constraint-externality-f0-readiness-v1",
-  "status": "CAPABILITY_SUBSTRATE_V2_REQUALIFICATION_READY",
+  "status": "CAPABILITY_SUBSTRATE_V2_PARTIAL_REQUALIFICATION_READY",
   "tool_sandbox_authorized": false
 }

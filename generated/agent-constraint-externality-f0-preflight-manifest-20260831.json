@@ -55,8 +55,8 @@
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 2406,
-      "sha256": "6e4502cb13c356e11fb771a1c0870cb1d4acd333c1d1039a154a71b3d1044239"
+      "bytes": 2618,
+      "sha256": "2fb8378eae8485d770d6dc69c25a6897521f30c7522017ee1e1a6e748b0bb3b7"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -110,6 +110,10 @@
       "bytes": 1490,
       "sha256": "4868c1885d9b4286bac4e2fa28be92c3babc9f0d3f687a11c62169e3de69a07d"
     },
+    "generated/agent-constraint-externality-qwen37plus-capability-r3-partial-contract-20260902.json": {
+      "bytes": 1765,
+      "sha256": "e091cfa38c65e9bd008cdfa11013928e8e9d3098d2674eceb7e33efd7d472e77"
+    },
     "generated/agent-constraint-externality-qwen37plus-capability-result-a1-20260901.json": {
       "bytes": 1639,
       "sha256": "4966fd7b91a6ab37e80b932fbd0ee743e0b576af9545ba836e299a41985dcc7e"
@@ -121,6 +125,10 @@
     "generated/agent-constraint-externality-qwen37plus-provider-snapshot-a1-20260901.json": {
       "bytes": 723,
       "sha256": "18e48b51c45543f069091557276c34240ac18b4510c3e05f730cac054210a5d5"
+    },
+    "generated/agent-constraint-externality-qwen37plus-r2-fg-v2-revalidation-20260902.json": {
+      "bytes": 3037,
+      "sha256": "d3aa7a5cba50e309d784fc570c32e3c967b1078d8d898bb10d53a2588542a735"
     }
   },
   "generated_at": "2026-09-01T15:35:00+08:00",
@@ -129,5 +137,5 @@
   "provider_calls": 229,
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_SUBSTRATE_V2_REQUALIFICATION_READY"
+  "status": "CAPABILITY_SUBSTRATE_V2_PARTIAL_REQUALIFICATION_READY"
 }

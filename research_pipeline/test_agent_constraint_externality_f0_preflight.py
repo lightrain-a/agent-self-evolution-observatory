@@ -154,13 +154,15 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
             self.assertTrue(readiness["capability_prior_results_void_substrate_invalid"])
             self.assertTrue(readiness["capability_substrate_v2_recovery_qualification_pass"])
             self.assertTrue(readiness["capability_r3_authorized"])
+            self.assertTrue(readiness["capability_r3_partial_authorized"])
+            self.assertTrue(readiness["capability_r3_full_contract_superseded"])
             self.assertEqual(
                 readiness["status"],
-                "CAPABILITY_SUBSTRATE_V2_REQUALIFICATION_READY",
+                "CAPABILITY_SUBSTRATE_V2_PARTIAL_REQUALIFICATION_READY",
             )
             self.assertEqual(
                 readiness["next_authorized_action"],
-                "RUN_QWEN37PLUS_CAPABILITY_R3",
+                "RUN_QWEN37PLUS_CAPABILITY_R3_PARTIAL_TNF_ONLY",
             )
             self.assertEqual(readiness["capability_valid_measurements"], 0)
             self.assertIsNone(readiness["capability_result_artifact"])
