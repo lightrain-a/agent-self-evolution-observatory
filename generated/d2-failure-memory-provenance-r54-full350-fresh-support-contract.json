@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R54-FULL350-FRESH-SUPPORT-CONTRACT",
+  "recorded_date": "2026-09-02",
+  "status": "R54_FRESH_SUPPORT_QUALIFICATION_FROZEN_ZERO_VALIDATION_OUTCOME",
+  "role": "ZERO_OUTCOME_SUPPORT_SELECTION_OPERATIONALIZATION",
+  "bindings": {
+    "program_contract_file_sha256": "fd729cd224fca08322b5346faa1a110e9f68b3459746308281537581a49647bc",
+    "source_manifest_file_sha256": "8217d7fab3a27687560d143f1671769f004a3f1f12018c87f0b5ed31b34d2a67",
+    "source_receipt_file_sha256": "64b64cb2ca170482fafe4bb89db96071e896d1a952dc6c9a8002093849a000b0",
+    "source_receipt_receipt_sha256": "ce15c57e9c1274d1b40aca49850c7b0cbb5a8fe0656314d8bdfca3d7024e95c7",
+    "completed_ledger_file_sha256": "e98ea4e910bed5bf32b56dfc321879842385b920f10636b97c0f850a5316c06a",
+    "source_trace_file_sha256": "8a0bdb536f6130d0984abbf459a2c45f6e66008a447255cbfd85ad4b5acd5798",
+    "old_selection_evidence_file_sha256": "b6ebf082ab943012074790d9c820ef3ec356a2a5a31f6bcf3a199428ca557e9a",
+    "runner_sha256": "8fd4132c8337cba82c6df7cf9bc3566346d2b8b9ab2c2b21d5f5fbe3c0df33c7",
+    "final_checkpoint_key_hashes": {
+      "snapshot_meta_sha256": "fd89a8b7277957be54a7db357d55a2ee11a0044bdba1ff6a3267fc8e4bf792e0",
+      "textual_memory_sha256": "019941879f637c5205cba99da2d485716715f544b07bd2fceefb511d8c44d875",
+      "qdrant_meta_sha256": "7ab537283d36e583b7da952d270625c1e68f8e55f6ed12be1e3b179e2ff0a712",
+      "qdrant_storage_sha256": "3d3370207670b3574412f8fd116d32d1dfa70b8ab0ac18b8ece972ce3c06a0b8"
+    }
+  },
+  "operationalization": {
+    "validation_seed": "B1-R53-VALIDATION-20260902",
+    "joined_signature_encoding": "skill1|skill2|... over exact sorted skill_list",
+    "cluster_rank": "SHA256(seed|cluster|joined_signature)",
+    "representative_rank": "SHA256(seed|member|task_id)",
+    "exclude_exact_old_R43_40_signatures": true,
+    "expected_fresh_cluster_count": 108,
+    "native_retrieve_k": 10,
+    "native_similarity_threshold": 0.5,
+    "retrieval_rng_seed": 20260825,
+    "primary_selection": "first 32 eligible in frozen rank order",
+    "utilization_selection": "next 8 eligible in frozen rank order",
+    "minimum_eligible_clusters": 40,
+    "both_source_provenance_polarities_required_among_selected_40": true,
+    "copy_on_write_source_snapshot": true,
+    "validation_environment_resets": 0,
+    "validation_evaluator_calls": 0,
+    "validation_treatment_outcomes_observed": 0
+  },
+  "hard_limits": {
+    "validation_task_execution": false,
+    "evaluator_call": false,
+    "threshold_change": false,
+    "source_bank_change": false,
+    "old_40_reintroduction": false,
+    "selection_by_validation_outcome": false,
+    "support_retry_after_result": false,
+    "historical_outcome_pooling": false
+  },
+  "scientific_authority": false,
+  "validation_execution_authority": false,
+  "receipt_sha256": "bc4b41a165cf7d75c1a8091889d38daa81c2ee2833f43c502732c92132378310"
+}
