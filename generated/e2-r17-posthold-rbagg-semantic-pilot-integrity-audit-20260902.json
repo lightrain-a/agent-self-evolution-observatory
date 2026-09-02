@@ -1,0 +1,216 @@
+{
+  "aggregate_inventory": [
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/aggregates/r17-b2-agj-p2.json",
+      "sha256": "011d36db7a45741f19c7829670f29295049d44cbfe05434827f299e33f2e36d1"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/aggregates/r17-b2-agj-p3.json",
+      "sha256": "c3eb3351a4cc14f780e4e7fafa25005a58446f9025223525feb110d9d2445320"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/aggregates/r17-b2-agj-p5.json",
+      "sha256": "b55ff0d4be560c762bb4dffad412f600d9375e508279c17c73f5f4ee144cf25b"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/aggregates/r17-b2-agj-p7.json",
+      "sha256": "38707f86d3da4c1692a3af57481740ba489f1bd1e5ee4a6d3e3d7ab4ae054ec0"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/aggregates/r17-b2-agj-p8.json",
+      "sha256": "ec861fd730bf544c7a4df13baae18360d10889d79a0e5ee5a3d5974b75191f89"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/aggregates/r17-b3-agj-p0.json",
+      "sha256": "63f8e369f2c3e4a36bb51b4e3356b467d1d80490a5cb0c06d53a3507f4c860d5"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/aggregates/r17-b3-agj-p3.json",
+      "sha256": "2d671c83dec7d47d9c61585d6546f5c1e6953ad9536e6d4d3bd80d5f62276263"
+    },
+    {
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/aggregates/r17-b3-agj-p8.json",
+      "sha256": "4262c6e6efde6ffec2d0c81613ae64b67edfbe4e8e5e7f4c2db0c6f360ef3c4e"
+    }
+  ],
+  "aggregation_calls": 8,
+  "all_provider_calls_completed": true,
+  "all_provider_calls_exact_model": true,
+  "artifact_type": "e2-r17-posthold-rbagg-semantic-pilot-integrity-audit",
+  "authority": {
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "rbagg_full_diagnostic": false,
+    "second_backbone": false
+  },
+  "authorization_sha256": "4cf40ea8d5f325c2e3faccf46a94f5d6968446035f56bffc5d550ad83e8a03ce",
+  "contract_sha256": "64ac4475ead105143147a4a46d15cd2b279f8d0d8af2e51d9fcd59202bbaed80",
+  "created_at_utc": "2026-09-02T04:32:23+00:00",
+  "exclusive_lock_sha256": "c471b954632738edb5b9cf63f3aebce941e23d16682f615bd85858a887768f27",
+  "heldout_evaluations": 0,
+  "hidden_provider_retry_used": false,
+  "mindmemos_calls": 2,
+  "next_gate": "FULL_DIAGNOSTIC_REQUIRES_NEW_POST_PILOT_DESIGN_REVIEW_CONTRACT_AND_AUTHORIZATION",
+  "parent_primary_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "parent_status_changed": false,
+  "parse_failures": 0,
+  "pilot_skill_quarantined": true,
+  "pilot_skill_scientific_inclusion": false,
+  "provider_budget_ledger_sha256": "6e306516b804d499c9ebd02c617e8f30329e5d964ef8691b3c5ee844f34ef935",
+  "provider_budget_limit": 11,
+  "provider_call_inventory": [
+    {
+      "completion_tokens": 497,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/provider_calls/aggregation/000-rbagg-aggregate-r17-b2-agj-p2-attempt0.json",
+      "prompt_tokens": 4955,
+      "provider_status": "completed",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "role": "aggregation",
+      "sha256": "2aca9e796f2c66ceaa53f951dda0efd0ffc6ecec8c6a2d11a56a18e0163ec64a",
+      "task": "rbagg-aggregate-r17-b2-agj-p2",
+      "temperature_requested": 0.7,
+      "total_tokens": 5452,
+      "wall_time_seconds": 8.682908294984372
+    },
+    {
+      "completion_tokens": 421,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/provider_calls/aggregation/001-rbagg-aggregate-r17-b2-agj-p5-attempt0.json",
+      "prompt_tokens": 4882,
+      "provider_status": "completed",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "role": "aggregation",
+      "sha256": "d29a12a2093c073763e6a46c0e829963e0528b104339bcca2b4c15bcf192c701",
+      "task": "rbagg-aggregate-r17-b2-agj-p5",
+      "temperature_requested": 0.7,
+      "total_tokens": 5303,
+      "wall_time_seconds": 7.67057624302106
+    },
+    {
+      "completion_tokens": 580,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/provider_calls/aggregation/002-rbagg-aggregate-r17-b2-agj-p7-attempt0.json",
+      "prompt_tokens": 4903,
+      "provider_status": "completed",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "role": "aggregation",
+      "sha256": "90f4bc6259f6bd35369430a4b440d6ad2af77d625ed73f2639e9c57aec0784f7",
+      "task": "rbagg-aggregate-r17-b2-agj-p7",
+      "temperature_requested": 0.7,
+      "total_tokens": 5483,
+      "wall_time_seconds": 10.068100795004284
+    },
+    {
+      "completion_tokens": 499,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/provider_calls/aggregation/003-rbagg-aggregate-r17-b3-agj-p0-attempt0.json",
+      "prompt_tokens": 4912,
+      "provider_status": "completed",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "role": "aggregation",
+      "sha256": "4a409b72d9ffcf990fa74092242fccb456a9c35842831effae81d9a90620e255",
+      "task": "rbagg-aggregate-r17-b3-agj-p0",
+      "temperature_requested": 0.7,
+      "total_tokens": 5411,
+      "wall_time_seconds": 9.302209807996405
+    },
+    {
+      "completion_tokens": 447,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/provider_calls/aggregation/004-rbagg-aggregate-r17-b2-agj-p3-attempt0.json",
+      "prompt_tokens": 4872,
+      "provider_status": "completed",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "role": "aggregation",
+      "sha256": "9ff3ab036ededfec5da1d1187accc3ac8b4087d529aa4ceb16eefd0913bc6edf",
+      "task": "rbagg-aggregate-r17-b2-agj-p3",
+      "temperature_requested": 0.7,
+      "total_tokens": 5319,
+      "wall_time_seconds": 8.878625802026363
+    },
+    {
+      "completion_tokens": 546,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/provider_calls/aggregation/005-rbagg-aggregate-r17-b3-agj-p3-attempt0.json",
+      "prompt_tokens": 4894,
+      "provider_status": "completed",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "role": "aggregation",
+      "sha256": "b9fb0512bc06599c3ff8b3e71ad473c55877645c35d5761f0ae412ec03c30eb8",
+      "task": "rbagg-aggregate-r17-b3-agj-p3",
+      "temperature_requested": 0.7,
+      "total_tokens": 5440,
+      "wall_time_seconds": 10.571453862998169
+    },
+    {
+      "completion_tokens": 482,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/provider_calls/aggregation/006-rbagg-aggregate-r17-b2-agj-p8-attempt0.json",
+      "prompt_tokens": 4894,
+      "provider_status": "completed",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "role": "aggregation",
+      "sha256": "7032bff4a5d88ff7de6fc0fbe081119517a5af2763f39c8c36a0d3a3d4f40341",
+      "task": "rbagg-aggregate-r17-b2-agj-p8",
+      "temperature_requested": 0.7,
+      "total_tokens": 5376,
+      "wall_time_seconds": 9.539615318994038
+    },
+    {
+      "completion_tokens": 566,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/provider_calls/aggregation/007-rbagg-aggregate-r17-b3-agj-p8-attempt0.json",
+      "prompt_tokens": 4928,
+      "provider_status": "completed",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "role": "aggregation",
+      "sha256": "006534a6271599786cc14f5618ec1e27cda8dfb4d7b7124e5e5ffdfc93467006",
+      "task": "rbagg-aggregate-r17-b3-agj-p8",
+      "temperature_requested": 0.7,
+      "total_tokens": 5494,
+      "wall_time_seconds": 10.77684891098761
+    },
+    {
+      "completion_tokens": 758,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/provider_calls/mindmemos/000-skill_patch_propose-attempt0.json",
+      "prompt_tokens": 4902,
+      "provider_status": "completed",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "role": "mindmemos",
+      "sha256": "c1c4525d5fce703a89e5e8f8107120e78b348426dde9ec33a553dcda54039a18",
+      "task": "skill_patch_propose",
+      "temperature_requested": 0.0,
+      "total_tokens": 5660,
+      "wall_time_seconds": 10.550980105006602
+    },
+    {
+      "completion_tokens": 429,
+      "parse_error": "",
+      "path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/provider_calls/mindmemos/001-skill_patch_apply-attempt0.json",
+      "prompt_tokens": 1960,
+      "provider_status": "completed",
+      "resolved_model": "deepseek-v4-pro-ga-260813",
+      "role": "mindmemos",
+      "sha256": "832238858b3d538c234845ad6481d3f4f4869cb4336256034097a2c7d25d7430",
+      "task": "skill_patch_apply",
+      "temperature_requested": 0.0,
+      "total_tokens": 2389,
+      "wall_time_seconds": 4.295474864018615
+    }
+  ],
+  "provider_claims": 10,
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902",
+  "run_start_receipt_sha256": "7bdbd666d483154ee25c58ebd87a1d8088fb3f83380eaeb5c310e3261d200e54",
+  "schema_version": "1.0",
+  "scientific_effectiveness_evaluated": false,
+  "skill_post_sha256": "093ac5f36c132b0399b4dac971b53f373beba3ce520cc8fe5b482f443061a40b",
+  "status": "PASS_RBAGG_SEMANTIC_PILOT_INTEGRITY_FULL_DIAGNOSTIC_STILL_HOLD",
+  "summary_path": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902/summary/rbagg_semantic_pilot_summary.json",
+  "summary_sha256": "cae857ba36b9b1fc59baecfd035fa811be667d16c63dfe43a45ef99d398f0521",
+  "total_provider_calls": 10,
+  "update_receipt_sha256": "5b8c550d734b9bc5cd6232e287961d62215cbd0e24dc89295354522c7d5baf8d",
+  "visible_apply_correction_used": false
+}

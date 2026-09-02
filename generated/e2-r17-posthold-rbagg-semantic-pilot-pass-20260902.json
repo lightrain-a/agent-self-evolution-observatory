@@ -1,0 +1,55 @@
+{
+  "artifact_type": "e2-r17-posthold-rbagg-semantic-pilot-pass",
+  "authority": {
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "rbagg_full_diagnostic": false,
+    "second_backbone": false
+  },
+  "created_at_utc": "2026-09-02T04:34:00+00:00",
+  "execution": {
+    "aggregation_calls": 8,
+    "aggregation_completion_tokens": 4038,
+    "aggregation_prompt_tokens": 39240,
+    "aggregation_total_tokens": 43278,
+    "aggregation_wall_seconds": 75.4903390360123,
+    "heldout_evaluations": 0,
+    "mindmemos_calls": 2,
+    "mindmemos_completion_tokens": 1187,
+    "mindmemos_prompt_tokens": 6862,
+    "mindmemos_total_tokens": 8049,
+    "mindmemos_wall_seconds": 14.846454969025217,
+    "overall_provider_calls": 10,
+    "overall_provider_tokens": 51327,
+    "overall_provider_wall_seconds": 90.33679400503752,
+    "provider_budget_claims": 10,
+    "provider_budget_limit": 11,
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "visible_apply_correction_used": false
+  },
+  "integrity_audit": {
+    "path": "generated/e2-r17-posthold-rbagg-semantic-pilot-integrity-audit-20260902.json",
+    "sha256": "1002a044be0c176c6b82bd9af0b04a965a9278c0e51932fecffb00c2d070b01d",
+    "status": "PASS_RBAGG_SEMANTIC_PILOT_INTEGRITY_FULL_DIAGNOSTIC_STILL_HOLD"
+  },
+  "parent_primary_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "parent_status_changed": false,
+  "pilot": {
+    "fixed_stream": "e1-agj-00",
+    "first_party_trajectory_summary_calls": 0,
+    "new_skill_versions": 1,
+    "pilot_skill_quarantined": true,
+    "pilot_skill_scientific_inclusion": false,
+    "precomputed_summaries_consumed": 8,
+    "scientific_effectiveness_evaluated": false,
+    "strict_aggregation_parse_successes": 8,
+    "strict_aggregation_tasks": 8
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902",
+  "run_summary_sha256": "cae857ba36b9b1fc59baecfd035fa811be667d16c63dfe43a45ef99d398f0521",
+  "schema_version": "1.0",
+  "status": "PASS_RBAGG_SINGLE_STREAM_SEMANTIC_PROVIDER_PILOT_FULL_DIAGNOSTIC_NOT_AUTHORIZED",
+  "strict_interpretation": "The pilot establishes provider/runtime semantic feasibility only. It contains no heldout effectiveness measurement and cannot support any RB-AGG utility claim, parent-HOLD rescue, paper promotion, public benchmark, or second-backbone execution.",
+  "next_gate": "NEW_POST_PILOT_FULL_DIAGNOSTIC_DESIGN_REVIEW_REQUIRED"
+}
