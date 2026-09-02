@@ -1,0 +1,203 @@
+{
+  "actor": {
+    "concurrency_per_probe": 1,
+    "k": 1,
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "actor_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
+    "role": "actor_evaluator",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "artifact_type": "e2-r17-single-case-constrained-state-micro-recovery-contract",
+  "authority": {
+    "analyzer": false,
+    "e3_confirmation": false,
+    "heldout_evaluation": false,
+    "measurement_only": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "scientific_experiment": false,
+    "second_backbone": false,
+    "submission": false,
+    "updater": false
+  },
+  "bound_code": {
+    "actor_wrapper": {
+      "path": "scripts/run_e2_r17_actor_pool_constrained_state_micro.py",
+      "sha256": "d975fd7f6206fa716b10ded16bfe010cd5875838303435d466d708db59cbf4a9"
+    },
+    "analysis_authorizer": {
+      "path": "scripts/authorize_e2_r17_constrained_state_micro_analysis.py",
+      "sha256": "22b5eab9f6e36dcf25a171710d08ea63dcf74364c34564cb1e5101822676dfd5"
+    },
+    "analyzer": {
+      "path": "scripts/analyze_e2_r17_constrained_state_micro.py",
+      "sha256": "8e75a904fca4f4b34acf89886a42d3a9a48bbaaa7ec00acdb372697d9cfd1b08"
+    },
+    "authorizer": {
+      "path": "scripts/authorize_e2_r17_constrained_state_micro.py",
+      "sha256": "d8099edf6e06f7d4bd719f59aeebdfb99000b84a8498f8c639e0529f25479487"
+    },
+    "compat_actor": {
+      "path": "scripts/run_e2_r17_actor_pool_repair2_continuation_v2.py",
+      "sha256": "64087869e2e98e0825054669de4ee5dfb138d1d577005c97d3f85942f77a4e0c"
+    },
+    "completion_audit": {
+      "path": "scripts/audit_e2_r17_constrained_state_micro_completion.py",
+      "sha256": "e5aa49f6df33bcbedf554cc5da56d207a1445e8eef35e300e6ea14bf759f4aab"
+    },
+    "preflight": {
+      "path": "scripts/preflight_e2_r17_constrained_state_micro.py",
+      "sha256": "50b36b95ffbf4db29914852a26349f1cf47feae23252bba9b40596ec2c1dd5c7"
+    },
+    "provider_budget": {
+      "path": "research_pipeline/e2_r17_provider_budget.py",
+      "sha256": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444"
+    },
+    "runner": {
+      "path": "scripts/run_e2_r17_constrained_state_micro.py",
+      "sha256": "c89956ff5280e5e26f9ff0b28982a383e405b7022f98970014e6e630a642c3de"
+    }
+  },
+  "budget": {
+    "max_provider_calls_per_measurement_state": 191,
+    "max_provider_calls_per_unit": 11,
+    "new_updater_calls": 0
+  },
+  "case_stream": "e1-tsr-00",
+  "created_at_utc": "2026-09-02T08:22:49+00:00",
+  "design": {
+    "path": "generated/e2-r17-single-case-constrained-state-micro-design-20260902.json",
+    "sha256": "49c052c75670022fbe99ea39de69325130d60e53a970ce3f729921e40d6f05c6"
+  },
+  "development_only": true,
+  "env_file": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env",
+  "git_commit_at_freeze": "61fc5aca2162ceaa3bab37c79d8e9b34396981dd",
+  "heldout_task_ids": [
+    "r17-b4-agj-p2",
+    "r17-b4-agj-p3",
+    "r17-b4-agj-p8",
+    "r17-b4-fmv-p1",
+    "r17-b4-fmv-p2",
+    "r17-b4-fmv-p8",
+    "r17-b4-ioc-p1",
+    "r17-b4-ioc-p4",
+    "r17-b4-ioc-p6",
+    "r17-b4-msp-p0",
+    "r17-b4-msp-p7",
+    "r17-b4-msp-p8",
+    "r17-b4-ska-p4",
+    "r17-b4-ska-p5",
+    "r17-b4-ska-p8",
+    "r17-b4-tsr-p0",
+    "r17-b4-tsr-p6",
+    "r17-b4-tsr-p8"
+  ],
+  "initial_skill": {
+    "path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+    "sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+  },
+  "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-constrained-state-micro-recovery-v1.json",
+  "mindmemos": {
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e"
+    },
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817"
+  },
+  "model_identity": {
+    "fresh_max_output_tokens_smoke": 8192,
+    "path": "generated/e2-r17-deepseek-v2-repair2-model-identity-adjudication-20260831.json",
+    "provider_retry_limit": 0,
+    "qualification_path": "generated/e2-r17-deepseek-v2-repair2-deepseek-identity-qualification-20260831.json",
+    "qualification_sha256": "6f7305554f710ce56d07e86cbc786ab5d4618327f5b6c0161c7259067cae59ac",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "thinking": "disabled"
+  },
+  "outcome_embargo": {
+    "analyzer_authorized": false,
+    "before_72_heldout": true,
+    "partial_effect_read": false
+  },
+  "recovery": {
+    "completed_measurements_in_parent": 0,
+    "completed_unit_replay": false,
+    "explicit_429_recovery_units": 1,
+    "interruption_audit_path": "generated/e2-r17-single-case-constrained-state-micro-interruption-audit-20260902.json",
+    "interruption_audit_sha256": "dfe8fc2f9d797cb0ae1bfa49c96d4a3f48de390691658b0fff8095fccc6532b1",
+    "never_started_measurements": 71,
+    "provider_claims_quarantined_in_parent": 3,
+    "quota_reset_not_before": "2026-09-02T17:16:59+08:00"
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery-20260902",
+  "schema_version": "1.0",
+  "scientific_object": "E2-R17-SINGLE-CASE-CONSTRAINED-STATE-MICRO-RECOVERY-20260902",
+  "scientific_scope": {
+    "deterministic_states": 4,
+    "heldout_units": 72,
+    "measurement_replicates": 1,
+    "new_updater_calls": 0
+  },
+  "screen_gate": {
+    "arm_order": [
+      "g1_verify",
+      "g2_complete",
+      "g3_complete_recover"
+    ],
+    "minimum_difference_vs_g0": 0.05555555555555555,
+    "select_simplest_passing": true
+  },
+  "states": [
+    {
+      "append_text": "",
+      "arm": "g0_base",
+      "deterministic": true,
+      "skill_path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+      "skill_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+    },
+    {
+      "append_text": "\n## Output Verification Guard\n\nAfter saving `output.xlsx`, reload it with `load_workbook(\"output.xlsx\", data_only=True)` and verify the exact target cells contain the intended final values before stopping. If verification fails, fix the output and save it again before completion.\n",
+      "arm": "g1_verify",
+      "deterministic": true,
+      "skill_path": "generated/e2-r17-single-case-constrained-state-micro-20260902/g1_verify/SKILL.md",
+      "skill_sha256": "b8f51458daa28672dbe078c293f29d37c42eb5b2305199d92ccd7600ac078997"
+    },
+    {
+      "append_text": "\n## Completion Loop\n\nFor every spreadsheet task, complete this full sequence before stopping:\n\n1. Inspect the workbook structure and identify the exact source and target cells.\n2. Read the source data required by the request.\n3. Compute the requested transformation or final values.\n4. Write or materialize the requested values into the exact target cells.\n5. Save the result to `output.xlsx` without modifying `input.xlsx`.\n6. Reload `output.xlsx` with `load_workbook(\"output.xlsx\", data_only=True)` and verify the target cells contain the intended values.\n\nInspection alone is never task completion. Do not stop until the requested output has been written, saved, reloaded, and verified.\n",
+      "arm": "g2_complete",
+      "deterministic": true,
+      "skill_path": "generated/e2-r17-single-case-constrained-state-micro-20260902/g2_complete/SKILL.md",
+      "skill_sha256": "248f1f7c3429c99d98c8d58584048efe2f989050116f507cea895484f8c80289"
+    },
+    {
+      "append_text": "\n## Completion Loop\n\nFor every spreadsheet task, complete this full sequence before stopping:\n\n1. Inspect the workbook structure and identify the exact source and target cells.\n2. Read the source data required by the request.\n3. Compute the requested transformation or final values.\n4. Write or materialize the requested values into the exact target cells.\n5. Save the result to `output.xlsx` without modifying `input.xlsx`.\n6. Reload `output.xlsx` with `load_workbook(\"output.xlsx\", data_only=True)` and verify the target cells contain the intended values.\n\nInspection alone is never task completion. Do not stop until the requested output has been written, saved, reloaded, and verified.\n\n## Tool-Error Recovery Guard\n\nIf a shell, Python, or tool invocation fails or is malformed, do not stop and do not repeat the same broken call unchanged. Issue a clean minimal corrected command, then continue the completion loop through write, save, reload, and verification.\n",
+      "arm": "g3_complete_recover",
+      "deterministic": true,
+      "skill_path": "generated/e2-r17-single-case-constrained-state-micro-20260902/g3_complete_recover/SKILL.md",
+      "skill_sha256": "a89cbbd46a01aecb7e3c7f9e5cda964ce7c584492eef0aa6d78a9b422192ceb2"
+    }
+  ],
+  "status": "FROZEN_E2_R17_SINGLE_CASE_CONSTRAINED_STATE_MICRO",
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  }
+}

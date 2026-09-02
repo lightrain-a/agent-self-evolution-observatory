@@ -1,0 +1,29 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-single-case-constrained-state-micro-interruption-audit",
+  "completed_measurements": 0,
+  "completed_unit_replay_authorized": false,
+  "created_at_utc": "2026-09-02T08:22:49+00:00",
+  "failed_logical_unit": {
+    "arm": "g3_complete_recover",
+    "classification": "EXPLICIT_ACCOUNT_QUOTA_429_INTERRUPTED_LOGICAL_UNIT",
+    "completed_measurement": false,
+    "provider_claims_before_failure": 3,
+    "task_id": "r17-b4-agj-p2"
+  },
+  "failed_run_root": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-20260902",
+  "failure_artifact_path": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-20260902/measurement/g3_complete_recover/eval_failure_r17-b4-agj-p2.json",
+  "failure_artifact_sha256": "cdb7715540c50858a8d98f6db073e95c4bc2a860ee8b0065bca4e438ac9d0917",
+  "next_gate": "SEPARATE_RECOVERY_CONTRACT_AFTER_QUOTA_RESET",
+  "parent_authorization_sha256": "5ab29f03a79e0de962547bea89aac8f1f0d9f9282723122736aa0078043206ca",
+  "parent_contract_sha256": "31996d5d2f11f7c67cfdd023dbd63746f7930b23642272ac8135a7bc559208b7",
+  "parent_lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-constrained-state-micro-v1.json",
+  "parent_lineage_lease_sha256": "2866579b9ba65f2026768e056a28c1e82cd76d6ae1118e36592554bb0090b3e5",
+  "parent_lineage_status": "FAIL_CLOSED_CONSTRAINED_STATE_MICRO",
+  "partial_effect_read": false,
+  "provider_relaunch_authorized": false,
+  "remaining_never_started_measurements": 71,
+  "schema_version": "1.0",
+  "scientific_scores_read": false,
+  "status": "PASS_RECOVERABLE_EXPLICIT_429_BEFORE_FIRST_COMPLETED_MEASUREMENT"
+}
