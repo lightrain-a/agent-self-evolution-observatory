@@ -1,7 +1,7 @@
 {
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
   "outcome_blind": true,
-  "protected_full_instances": "agent-constraint-externality-appworld-pre-f0_5-protected-20260831.bundle",
+  "protected_full_instances": "agent-constraint-externality-appworld-pre-f0_5-protected-v2-20260902.bundle",
   "raw_assertion_is_scientific_constraint": false,
   "required_fields": [
     "constraint_id",

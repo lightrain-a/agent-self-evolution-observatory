@@ -1,7 +1,7 @@
 {
   "authority": {
     "appworld_ul": false,
-    "capability_calibration": false,
+    "capability_calibration": true,
     "f0": false,
     "m1_mock_qualification": false,
     "method": false,
@@ -11,32 +11,52 @@
   },
   "files": {
     "generated/agent-constraint-externality-appworld-compiler-manifest-20260831.json": {
-      "bytes": 2038,
-      "sha256": "a8fd8709ad871f4b242bd30db1fc6f3e8805334787aea0d18f23aadcd0ff0dff"
+      "bytes": 2041,
+      "sha256": "5aae88f47d66161b966290798e18375b563ddd7b58161ac255cc6d874621e9f2"
     },
     "generated/agent-constraint-externality-appworld-compiler-qualification-20260831.json": {
       "bytes": 1115,
       "sha256": "8a7a16fc5a232e151a9303bb33e5cc8c6314d7782a854858aee158a53502bd6a"
     },
+    "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v2-20260902.bundle": {
+      "bytes": 13002,
+      "sha256": "0a5bfae987cf136df57d3ad5431c097143e3ca333d8ae3258356c50fdcf3597d"
+    },
     "generated/agent-constraint-externality-capability-contract-20260831.json": {
       "bytes": 1773,
       "sha256": "7cdaab014b73c125780066d72624aee6e6dd9064db73f945f9938bc76d4572a5"
+    },
+    "generated/agent-constraint-externality-capability-r2-root-cause-audit-20260902.json": {
+      "bytes": 11301,
+      "sha256": "bc8bccfe7a337d7c64f9db0bd3194974c92c1b7b05e58481c7084f56f3b78833"
     },
     "generated/agent-constraint-externality-capability-substrate-invalid-void-r1-20260901.json": {
       "bytes": 1755,
       "sha256": "0f8ee28cf0b6bd360438e0c11d46a3abdcfe26ce818bf517f7cea0cc26e89e50"
     },
+    "generated/agent-constraint-externality-capability-substrate-invalid-void-r2-20260902.json": {
+      "bytes": 1539,
+      "sha256": "b88dc75a918bfc32e8f5f61f3221e0080c5ce3be51b5b5b1f96c0702715ad9cc"
+    },
     "generated/agent-constraint-externality-capability-substrate-recovery-qualification-r1-20260901.json": {
       "bytes": 1656,
       "sha256": "0a7fa36d660e206848e8b327c1442fc0faff045e85a1a0879f3a3e0bb2b1025c"
+    },
+    "generated/agent-constraint-externality-capability-substrate-recovery-qualification-r2-20260902.json": {
+      "bytes": 2046,
+      "sha256": "274fce98a4b05b7025e5c2899287e994e1919f9b06db5c371c3aa2ebfd27e5b6"
+    },
+    "generated/agent-constraint-externality-capability-substrate-v2-contract-20260902.json": {
+      "bytes": 1788,
+      "sha256": "e72b7468790ef07e2e9a0a68d21ecff1fbce4ba2fad51c1de61a4a52c426d2d4"
     },
     "generated/agent-constraint-externality-f0-frozen-protocol-20260831.json": {
       "bytes": 4894,
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 2438,
-      "sha256": "7d3fc8a1875334a485b7aa077c346886862a1fe4d349b4ccc0efb2ad225307d0"
+      "bytes": 2406,
+      "sha256": "6e4502cb13c356e11fb771a1c0870cb1d4acd333c1d1039a154a71b3d1044239"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -47,8 +67,8 @@
       "sha256": "42e063a310ed74befc7f464d9c7568ceba036418723edc6ecf9c3096203a62d2"
     },
     "generated/agent-constraint-externality-matched-family-manifest-20260831.json": {
-      "bytes": 28346,
-      "sha256": "0276b91b6ca9f00b382134238a2bdea2c90b384d5a1bc1eb63c9c9b9c13cea7c"
+      "bytes": 28349,
+      "sha256": "ddfa4b3b96cef5b1dc964db70a75e7e1e77f9c73ebb78725d243a53a695c69b1"
     },
     "generated/agent-constraint-externality-qwen-capability-continuation-r1-result-20260901.json": {
       "bytes": 2191,
@@ -86,6 +106,10 @@
       "bytes": 1236,
       "sha256": "ae920b0dd006dda857c692f4e18f1406725327e74d71c6e3d73302e020449883"
     },
+    "generated/agent-constraint-externality-qwen37plus-capability-r3-contract-20260902.json": {
+      "bytes": 1490,
+      "sha256": "4868c1885d9b4286bac4e2fa28be92c3babc9f0d3f687a11c62169e3de69a07d"
+    },
     "generated/agent-constraint-externality-qwen37plus-capability-result-a1-20260901.json": {
       "bytes": 1639,
       "sha256": "4966fd7b91a6ab37e80b932fbd0ee743e0b576af9545ba836e299a41985dcc7e"
@@ -105,5 +129,5 @@
   "provider_calls": 229,
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_CALIBRATION_FAIL_FLOOR_STOP"
+  "status": "CAPABILITY_SUBSTRATE_V2_REQUALIFICATION_READY"
 }

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import shutil
 import sqlite3
 from pathlib import Path
@@ -144,6 +145,85 @@ def materialize_appworld_measurement_state(
     return manifest
 
 
+def _is_file_gmail_target(constraint: dict[str, Any]) -> bool:
+    return (
+        constraint.get("role") == "TARGET"
+        and constraint.get("evaluator_binding", {}).get("app") == "gmail"
+        and constraint.get("semantic_description")
+        == "Send exactly one email to the designated recipient with the two designated source files attached, preserving their bytes."
+    )
+
+
+def _evaluate_file_gmail_target(
+    *,
+    arm: dict[str, Any],
+    constraint: dict[str, Any],
+    connections: dict[str, sqlite3.Connection],
+) -> bool:
+    """Evaluate the complete semantic email obligation, not only its subject row.
+
+    The protected family spec historically used one SQLite binding for the target,
+    which was sufficient to locate the sent email but did not prove recipient or
+    attachment correctness.  The scientific constraint is semantic, so the runtime
+    evaluator closes that gap with deterministic checks over AppWorld state.
+    """
+    match = re.search(
+        r"^Email (?P<recipient>\S+) with subject (?P<subject>\S+) and attach "
+        r"(?P<first>\S+) and (?P<second>\S+) from (?P<directory>~/[^.]+)\.",
+        arm["task_instruction"],
+    )
+    if match is None:
+        raise MeasurementInterfaceError(
+            f"{MEASUREMENT_FAILURE_CLASS}: cannot parse File/Gmail target instruction"
+        )
+    gmail = connections["gmail"]
+    file_system = connections["file_system"]
+    binding = constraint["evaluator_binding"]
+    if not evaluate_binding(gmail, binding):
+        return False
+    where = binding["where"]
+    clauses = " AND ".join(f'"{column}" = ?' for column in where)
+    email_rows = gmail.execute(
+        f'SELECT id, recipient_ids, subject FROM emails WHERE {clauses}',
+        list(where.values()),
+    ).fetchall()
+    if len(email_rows) != 1:
+        return False
+    email_id, recipient_ids_raw, subject = email_rows[0]
+    if str(subject) != match.group("subject"):
+        return False
+    recipient_row = gmail.execute(
+        "SELECT id FROM users WHERE email = ?", (match.group("recipient"),)
+    ).fetchone()
+    if recipient_row is None:
+        return False
+    try:
+        recipient_ids = json.loads(recipient_ids_raw)
+    except (TypeError, json.JSONDecodeError):
+        return False
+    if recipient_ids != [int(recipient_row[0])]:
+        return False
+
+    expected_attachments: dict[str, str] = {}
+    for file_name in (match.group("first"), match.group("second")):
+        tilde_path = match.group("directory").rstrip("/") + "/" + file_name
+        source_row = file_system.execute(
+            "SELECT content FROM files WHERE tilde_path = ?", (tilde_path,)
+        ).fetchone()
+        if source_row is None:
+            return False
+        expected_attachments[file_name] = str(source_row[0])
+    attachment_rows = gmail.execute(
+        "SELECT file_name, file_content FROM attachments WHERE email_id = ? ORDER BY file_name",
+        (email_id,),
+    ).fetchall()
+    observed_attachments = {str(name): str(content) for name, content in attachment_rows}
+    return (
+        len(attachment_rows) == len(expected_attachments)
+        and observed_attachments == expected_attachments
+    )
+
+
 def evaluate_arm_from_materialized_state(
     *,
     arm: dict[str, Any],
@@ -155,6 +235,11 @@ def evaluate_arm_from_materialized_state(
     for constraint in arm["constraints"]:
         binding = constraint["evaluator_binding"]
         required_tables_by_app.setdefault(binding["app"], set()).add(binding["table"])
+        if _is_file_gmail_target(constraint):
+            required_tables_by_app.setdefault("gmail", set()).update(
+                {"emails", "attachments", "users"}
+            )
+            required_tables_by_app.setdefault("file_system", set()).add("files")
     measurement = materialize_appworld_measurement_state(
         source_db_root=source_db_root,
         changes_db_root=changes_db_root,
@@ -173,7 +258,18 @@ def evaluate_arm_from_materialized_state(
                     measurement_db_root / f"{app}.db",
                     required_tables=required_tables_by_app[app],
                 )
-            passed = evaluate_binding(connections[app], binding)
+            if _is_file_gmail_target(constraint):
+                for required_app in ("gmail", "file_system"):
+                    if required_app not in connections:
+                        connections[required_app], _ = _sqlite_inventory(
+                            measurement_db_root / f"{required_app}.db",
+                            required_tables=required_tables_by_app[required_app],
+                        )
+                passed = _evaluate_file_gmail_target(
+                    arm=arm, constraint=constraint, connections=connections
+                )
+            else:
+                passed = evaluate_binding(connections[app], binding)
             destination = target if constraint["role"] == "TARGET" else non_target
             destination[constraint["constraint_id"]] = passed
     finally:

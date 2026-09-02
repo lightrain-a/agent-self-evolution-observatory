@@ -159,6 +159,33 @@ def insert_fixture_row(connection: sqlite3.Connection, row: dict[str, Any]) -> N
         f'INSERT INTO "{row["table"]}" ({quoted}) VALUES ({placeholders})',
         [values[column] for column in columns],
     )
+    if app == "simple_note" and table == "notes":
+        # AppWorld search_notes ranks through notes_fts. Raw fixture insertion
+        # bypasses SQLModel.set_search_text(), so the scientific note would
+        # otherwise exist in the table but be invisible to the public search API.
+        raw_tags = values.get("tags", [])
+        if isinstance(raw_tags, str):
+            try:
+                parsed_tags = json.loads(raw_tags)
+            except json.JSONDecodeError:
+                parsed_tags = []
+        else:
+            parsed_tags = raw_tags
+        tags = parsed_tags if isinstance(parsed_tags, list) else []
+        search_text = " ".join(
+            str(part).strip()
+            for part in (
+                values.get("title", ""),
+                values.get("content", ""),
+                " ".join(str(tag) for tag in tags),
+            )
+            if str(part).strip()
+        )
+        search_text = " ".join(search_text.lower().split())
+        connection.execute(
+            "INSERT INTO notes_fts (id, saved_search_text) VALUES (?, ?)",
+            (values["id"], search_text),
+        )
 
 
 def evaluate_binding(connection: sqlite3.Connection, binding: dict[str, Any]) -> bool:
