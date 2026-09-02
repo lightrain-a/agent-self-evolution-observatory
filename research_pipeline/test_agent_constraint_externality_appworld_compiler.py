@@ -19,7 +19,7 @@ PATHS = {
     "source": GENERATED / "agent-constraint-externality-appworld-source-manifest-20260831.json",
     "qualification": GENERATED / "agent-constraint-externality-appworld-compiler-qualification-20260831.json",
     "manifest": GENERATED / "agent-constraint-externality-appworld-compiler-manifest-20260831.json",
-    "bundle": GENERATED / "agent-constraint-externality-appworld-pre-f0_5-protected-20260831.bundle",
+    "bundle": GENERATED / "agent-constraint-externality-appworld-pre-f0_5-protected-v2-20260902.bundle",
 }
 
 
@@ -158,7 +158,7 @@ class AppWorldConstraintCompilerTest(unittest.TestCase):
         self.assertEqual(protected["sha256"], sha256(PATHS["bundle"]))
         self.assertEqual(
             protected["path"],
-            "generated/agent-constraint-externality-appworld-pre-f0_5-protected-20260831.bundle",
+            "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v2-20260902.bundle",
         )
 
     def test_qualification_pass_has_zero_scientific_outcomes(self) -> None:

@@ -150,6 +150,21 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
                 "STOP_AWAIT_HUMAN_ADJUDICATION",
             )
             self.assertFalse(readiness["f0_authorized"])
+        elif readiness.get("capability_r2_void_substrate_discoverability_invalid"):
+            self.assertTrue(readiness["capability_prior_results_void_substrate_invalid"])
+            self.assertTrue(readiness["capability_substrate_v2_recovery_qualification_pass"])
+            self.assertTrue(readiness["capability_r3_authorized"])
+            self.assertEqual(
+                readiness["status"],
+                "CAPABILITY_SUBSTRATE_V2_REQUALIFICATION_READY",
+            )
+            self.assertEqual(
+                readiness["next_authorized_action"],
+                "RUN_QWEN37PLUS_CAPABILITY_R3",
+            )
+            self.assertEqual(readiness["capability_valid_measurements"], 0)
+            self.assertIsNone(readiness["capability_result_artifact"])
+            self.assertFalse(readiness["f0_authorized"])
         elif readiness.get("capability_prior_results_void_substrate_invalid"):
             self.assertTrue(readiness["capability_substrate_recovery_qualification_pass"])
             self.assertTrue(readiness["capability_r2_authorized"])

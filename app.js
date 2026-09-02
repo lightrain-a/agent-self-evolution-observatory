@@ -4341,14 +4341,31 @@ function buildToc() {
     return;
   }
   const tocSelector = "#dynamic-page h2, #dynamic-page h3";
-  const headings = [...document.querySelectorAll(tocSelector)].filter((heading) => heading.dataset.toc !== "false" && !heading.closest(".review-trace-fold,.review-archive-fold,.system-deep-dive") && (heading.id || heading.closest(".panel, .page-chapter, .merged-group, .direction-cluster, .idea-macro-cluster")));
+  const currentPaperHierarchy = Boolean(document.querySelector(".cpp-page .cpp-reader-chapter"));
+  const headings = [...document.querySelectorAll(tocSelector)].filter((heading) => {
+    if (heading.dataset.toc === "false" || heading.closest(".review-trace-fold,.review-archive-fold,.system-deep-dive")) return false;
+    if (currentPaperHierarchy) return heading.matches(".cpp-reader-chapter-head h2, .cpp-subsection-title");
+    return Boolean(heading.id || heading.closest(".panel, .page-chapter, .merged-group, .direction-cluster, .idea-macro-cluster"));
+  });
   headings.forEach((heading, index) => { if (!heading.id) heading.id = `${slugify(heading.textContent)}-${index + 1}`; });
+  const paperSubsectionLabels = pageId.startsWith("paper-") ? {
+    "quick-overview": language === "zh" ? "0 · 先看懂问题" : "0 · Start here",
+    "problem-origin": language === "zh" ? "1 · 为什么有这个问题" : "1 · Why this problem exists",
+    "related-work-comparison": language === "zh" ? "2 · 现有研究缺什么" : "2 · What prior work misses",
+    "mechanism": language === "zh" ? "3 · 我们做了什么" : "3 · What we did",
+    "experiment-results": language === "zh" ? "4 · 实验回答了什么" : "4 · What the evidence answers",
+    "claim-boundary": language === "zh" ? "5 · 最终贡献与边界" : "5 · Contributions & boundaries",
+    "paper-evolution": language === "zh" ? "6 · 完整研究演变" : "6 · Full research evolution",
+    "next-gate": language === "zh" ? "7 · 当前状态与下一步" : "7 · Current state & next",
+  } : {};
   const root = [];
   const stack = [{level:1, children:root}];
   headings.forEach((heading) => {
     const level = Number(heading.tagName.slice(1));
     while (stack.length > 1 && stack[stack.length - 1].level >= level) stack.pop();
-    const node = {level, id:heading.id, label:(heading.dataset.tocLabel || heading.textContent).trim(), children:[]};
+    const sectionId = heading.closest("section[id]")?.id || "";
+    const shortPaperLabel = level === 3 && heading.classList.contains("cpp-subsection-title") ? paperSubsectionLabels[sectionId] : "";
+    const node = {level, id:heading.id, label:(heading.dataset.tocLabel || shortPaperLabel || heading.textContent).trim(), children:[]};
     stack[stack.length - 1].children.push(node);
     stack.push(node);
   });

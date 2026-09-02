@@ -1,0 +1,28 @@
+{
+  "affected_result": {
+    "model": "qwen3.7-plus",
+    "path": "generated/agent-constraint-externality-qwen37plus-capability-result-r2-20260901.json",
+    "reported_target_success_rate": 0.5,
+    "reported_tool_loop_completion_rate": 0.5,
+    "sha256": "1e2474c407cb7b8414f3a7e53b57dfd0df8391504a4bf4ddbffa86f1271ac4df"
+  },
+  "authority": {
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "0495431435a9a5379bbb873eaf6b6640cb5f3be23acc52e53713809549278c51",
+  "f0_scientific_outcomes_observed": 0,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "objective_defects": [
+    "RAW_SIMPLE_NOTE_FIXTURES_EXISTED_IN_NOTES_TABLE_BUT_WERE_ABSENT_FROM_NOTES_FTS",
+    "EXACT_PUBLIC_SEARCH_FOR_TARGET_NOTE_RETURNED_UNRELATED_BASE_NOTES",
+    "TNF_TASK_REFERENCED_TODO_TITLE_WITHOUT_AGENT_VISIBLE_PROJECT_LOCATOR_WHILE_TODOIST_HAS_NO_GLOBAL_TASK_SEARCH",
+    "R1_REACHABILITY_ORACLE_USED_PROTECTED_NOTE_AND_TASK_IDS_AND_THEREFORE_DID_NOT_PROVE_AGENT_VISIBLE_REACHABILITY",
+    "FILE_GMAIL_TARGET_BINDING_LOCATED_EMAIL_ROW_BUT_DID_NOT_ENFORCE_RECIPIENT_AND_ATTACHMENT_SEMANTICS"
+  ],
+  "schema_version": "ace-capability-substrate-invalid-void-r2-v1",
+  "scientific_interpretation": "The R2 50% capability result is retained as execution evidence but is void for model selection. At least the TNF half was measured on a substrate where exact note discovery was broken and task location was underspecified.",
+  "status": "QWEN37PLUS_R2_VOID_SUBSTRATE_DISCOVERABILITY_INVALID"
+}

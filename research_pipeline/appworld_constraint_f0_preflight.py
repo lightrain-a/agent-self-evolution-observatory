@@ -69,6 +69,27 @@ CAPABILITY_R2_CONTRACT = (
 CAPABILITY_R2_RESULT = (
     GENERATED / "agent-constraint-externality-qwen37plus-capability-result-r2-20260901.json"
 )
+CAPABILITY_SUBSTRATE_VOID_R2 = (
+    GENERATED / "agent-constraint-externality-capability-substrate-invalid-void-r2-20260902.json"
+)
+CAPABILITY_SUBSTRATE_QUALIFICATION_R2 = (
+    GENERATED / "agent-constraint-externality-capability-substrate-recovery-qualification-r2-20260902.json"
+)
+CAPABILITY_R3_CONTRACT = (
+    GENERATED / "agent-constraint-externality-qwen37plus-capability-r3-contract-20260902.json"
+)
+CAPABILITY_R3_RESULT = (
+    GENERATED / "agent-constraint-externality-qwen37plus-capability-result-r3-20260902.json"
+)
+CAPABILITY_SUBSTRATE_V2_CONTRACT = (
+    GENERATED / "agent-constraint-externality-capability-substrate-v2-contract-20260902.json"
+)
+CAPABILITY_SUBSTRATE_V2_BUNDLE = (
+    GENERATED / "agent-constraint-externality-appworld-pre-f0_5-protected-v2-20260902.bundle"
+)
+CAPABILITY_R2_ROOT_CAUSE_AUDIT = (
+    GENERATED / "agent-constraint-externality-capability-r2-root-cause-audit-20260902.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -194,11 +215,52 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         r2_contract.get("status")
         == "QWEN37PLUS_CAPABILITY_R2_AUTHORIZED_AFTER_SUBSTRATE_VOID"
     )
-
-    capability_result_path = CAPABILITY_R2_RESULT if CAPABILITY_R2_RESULT.is_file() else Path()
-    capability_result = (
-        read_json(CAPABILITY_R2_RESULT) if CAPABILITY_R2_RESULT.is_file() else {}
+    substrate_void_r2 = (
+        read_json(CAPABILITY_SUBSTRATE_VOID_R2)
+        if CAPABILITY_SUBSTRATE_VOID_R2.is_file()
+        else {}
     )
+    substrate_qualification_r2 = (
+        read_json(CAPABILITY_SUBSTRATE_QUALIFICATION_R2)
+        if CAPABILITY_SUBSTRATE_QUALIFICATION_R2.is_file()
+        else {}
+    )
+    r3_contract = (
+        read_json(CAPABILITY_R3_CONTRACT)
+        if CAPABILITY_R3_CONTRACT.is_file()
+        else {}
+    )
+    substrate_v2_contract = (
+        read_json(CAPABILITY_SUBSTRATE_V2_CONTRACT)
+        if CAPABILITY_SUBSTRATE_V2_CONTRACT.is_file()
+        else {}
+    )
+    r2_void_active = (
+        substrate_void_r2.get("status")
+        == "QWEN37PLUS_R2_VOID_SUBSTRATE_DISCOVERABILITY_INVALID"
+    )
+    substrate_v2_recovery_pass = (
+        substrate_qualification_r2.get("status")
+        == "CAPABILITY_SUBSTRATE_V2_PUBLIC_REACHABILITY_PASS"
+        and substrate_v2_contract.get("status")
+        == "CAPABILITY_SUBSTRATE_V2_STATIC_REPAIR_READY"
+    )
+    r3_authorized = (
+        r3_contract.get("status")
+        == "QWEN37PLUS_CAPABILITY_R3_AUTHORIZED_AFTER_SUBSTRATE_V2"
+    )
+
+    if CAPABILITY_R3_RESULT.is_file():
+        capability_result_path = CAPABILITY_R3_RESULT
+        capability_result = read_json(CAPABILITY_R3_RESULT)
+    elif r2_void_active:
+        capability_result_path = Path()
+        capability_result = {}
+    else:
+        capability_result_path = CAPABILITY_R2_RESULT if CAPABILITY_R2_RESULT.is_file() else Path()
+        capability_result = (
+            read_json(CAPABILITY_R2_RESULT) if CAPABILITY_R2_RESULT.is_file() else {}
+        )
     capability_status = validate_capability_result(capability_result)
 
     flash_final = (
@@ -209,7 +271,9 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
     plus_a1 = read_json(CAPABILITY_A1_RESULT) if CAPABILITY_A1_RESULT.is_file() else {}
     flash_provider_requests = int(flash_final.get("provider_request_total", 0))
     plus_a1_provider_requests = int(plus_a1.get("provider_request_total", 0))
-    r2_provider_requests = int(capability_result.get("provider_request_total", 0))
+    r2_result = read_json(CAPABILITY_R2_RESULT) if CAPABILITY_R2_RESULT.is_file() else {}
+    r2_provider_requests = int(r2_result.get("provider_request_total", 0))
+    r3_provider_requests = int(capability_result.get("provider_request_total", 0)) if capability_result_path == CAPABILITY_R3_RESULT else 0
     flash_agent_requests = int(
         flash_final.get(
             "agent_model_request_count",
@@ -217,17 +281,31 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         )
     )
     plus_a1_agent_requests = int(plus_a1.get("agent_model_request_count", 0))
-    r2_agent_requests = int(capability_result.get("agent_model_request_count", 0))
+    r2_agent_requests = int(r2_result.get("agent_model_request_count", 0))
+    r2_agent_episodes = int(r2_result.get("agent_episode_count", 0))
     historical_void_provider_requests = flash_provider_requests + plus_a1_provider_requests
     historical_void_agent_requests = flash_agent_requests + plus_a1_agent_requests
     historical_void_agent_episodes = int(flash_final.get("agent_episode_count", 0)) + int(
         plus_a1.get("agent_episode_count", 0)
     )
-    latest_provider_requests = r2_provider_requests
-    latest_agent_requests = r2_agent_requests
-    latest_agent_episodes = int(capability_result.get("agent_episode_count", 0))
-    lineage_provider_requests = historical_void_provider_requests + r2_provider_requests
-    lineage_agent_requests = historical_void_agent_requests + r2_agent_requests
+    if r2_void_active:
+        historical_void_provider_requests += r2_provider_requests
+        historical_void_agent_requests += r2_agent_requests
+        historical_void_agent_episodes += r2_agent_episodes
+    if capability_result_path == CAPABILITY_R3_RESULT:
+        latest_provider_requests = r3_provider_requests
+        latest_agent_requests = int(capability_result.get("agent_model_request_count", 0))
+        latest_agent_episodes = int(capability_result.get("agent_episode_count", 0))
+    elif r2_void_active:
+        latest_provider_requests = 0
+        latest_agent_requests = 0
+        latest_agent_episodes = 0
+    else:
+        latest_provider_requests = r2_provider_requests
+        latest_agent_requests = r2_agent_requests
+        latest_agent_episodes = r2_agent_episodes
+    lineage_provider_requests = historical_void_provider_requests + latest_provider_requests
+    lineage_agent_requests = historical_void_agent_requests + latest_agent_requests
     lineage_agent_episodes = historical_void_agent_episodes + latest_agent_episodes
 
     capability = {
@@ -429,6 +507,16 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             "F0 remains unauthorized."
         )
         next_action = "STOP_AWAIT_HUMAN_ADJUDICATION"
+    elif r2_void_active and substrate_v2_recovery_pass and r3_authorized:
+        readiness_status = "CAPABILITY_SUBSTRATE_V2_REQUALIFICATION_READY"
+        blocker = None
+        next_action = "RUN_QWEN37PLUS_CAPABILITY_R3"
+    elif r2_void_active:
+        readiness_status = "CAPABILITY_SUBSTRATE_V2_RECOVERY_REQUIRED"
+        blocker = (
+            "Plus R2 is void because target-note discoverability and File/Gmail evaluator fidelity were invalid."
+        )
+        next_action = "QUALIFY_CAPABILITY_SUBSTRATE_V2"
     elif substrate_void_active and substrate_recovery_pass and r2_authorized:
         readiness_status = "CAPABILITY_SUBSTRATE_REQUALIFICATION_READY"
         blocker = None
@@ -457,9 +545,12 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "model_prereg_addendum_a0_pass": True,
         "m1_runner_qualification_pass": m1_pass,
         "capability_contract_frozen": True,
-        "capability_prior_results_void_substrate_invalid": substrate_void_active,
+        "capability_prior_results_void_substrate_invalid": substrate_void_active or r2_void_active,
         "capability_substrate_recovery_qualification_pass": substrate_recovery_pass,
         "capability_r2_authorized": r2_authorized,
+        "capability_r2_void_substrate_discoverability_invalid": r2_void_active,
+        "capability_substrate_v2_recovery_qualification_pass": substrate_v2_recovery_pass,
+        "capability_r3_authorized": r3_authorized,
         "capability_result_status": capability_status,
         "capability_result_artifact": (
             str(capability_result_path.relative_to(ROOT))
@@ -538,6 +629,9 @@ def main() -> None:
         CAPABILITY_CONTINUATION_RESULT, CAPABILITY_A1_RESULT, CAPABILITY_A1_ADDENDUM,
         CAPABILITY_A1_SNAPSHOT, CAPABILITY_A1_MANIFEST, CAPABILITY_SUBSTRATE_VOID,
         CAPABILITY_SUBSTRATE_QUALIFICATION, CAPABILITY_R2_CONTRACT, CAPABILITY_R2_RESULT,
+        CAPABILITY_SUBSTRATE_VOID_R2, CAPABILITY_SUBSTRATE_QUALIFICATION_R2,
+        CAPABILITY_R3_CONTRACT, CAPABILITY_R3_RESULT, CAPABILITY_SUBSTRATE_V2_CONTRACT,
+        CAPABILITY_SUBSTRATE_V2_BUNDLE, CAPABILITY_R2_ROOT_CAUSE_AUDIT,
     ):
         if not path.is_file():
             continue

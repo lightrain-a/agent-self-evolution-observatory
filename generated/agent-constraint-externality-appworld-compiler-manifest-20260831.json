@@ -17,21 +17,21 @@
       "bytes": 1115,
       "sha256": "8a7a16fc5a232e151a9303bb33e5cc8c6314d7782a854858aee158a53502bd6a"
     },
-    "generated/agent-constraint-externality-appworld-pre-f0_5-protected-20260831.bundle": {
-      "bytes": 12723,
-      "sha256": "53ae510e09ab9bce09a735046ef921e1a1d5fde4044a8a50f2763a2fd7d69cb6"
+    "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v2-20260902.bundle": {
+      "bytes": 13002,
+      "sha256": "0a5bfae987cf136df57d3ad5431c097143e3ca333d8ae3258356c50fdcf3597d"
     },
     "generated/agent-constraint-externality-appworld-source-manifest-20260831.json": {
-      "bytes": 1833,
-      "sha256": "3ce192d2bd694a32e33ce1d9ba0f7286c7ac61a1d94bd27183abb2d0264b553b"
+      "bytes": 1836,
+      "sha256": "d47e69e0cb04c3dc99e7e1cfd0ac97dcbeeb7a639597a1a1afc2d705d1f7998e"
     },
     "generated/agent-constraint-externality-constraint-schema-20260831.json": {
-      "bytes": 615,
-      "sha256": "8b2c4d4cd4278e19a7f16420a84ef7634d4b74c72d7522c8fcd10eb3388061ea"
+      "bytes": 618,
+      "sha256": "35d85b2ad6cd4d87c8fb13fbf6ec7910c1d90b67caf6e9c2de5cb412729dac52"
     },
     "generated/agent-constraint-externality-matched-family-manifest-20260831.json": {
-      "bytes": 28346,
-      "sha256": "0276b91b6ca9f00b382134238a2bdea2c90b384d5a1bc1eb63c9c9b9c13cea7c"
+      "bytes": 28349,
+      "sha256": "ddfa4b3b96cef5b1dc964db70a75e7e1e77f9c73ebb78725d243a53a695c69b1"
     },
     "generated/agent-constraint-externality-resource-graph-schema-20260831.json": {
       "bytes": 523,
@@ -39,7 +39,7 @@
     },
     "generated/agent-constraint-externality-topology-arm-diff-20260831.json": {
       "bytes": 39174,
-      "sha256": "45ec0e66a59dc548aa90d3ef423169f8b594e378d75ead89b982dcaa492e763e"
+      "sha256": "f05c56e545c21955d2d8ecea5e64b5b9e601fcfb503f5cedd5f5e8faf556f3a6"
     }
   },
   "generated_at": "2026-08-31T19:30:00+08:00",

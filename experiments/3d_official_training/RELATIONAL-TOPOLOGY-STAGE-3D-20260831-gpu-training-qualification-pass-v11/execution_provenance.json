@@ -1,0 +1,65 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-gpu-training-qualification-repair-v11",
+  "execution_host": "231",
+  "gpu": "NVIDIA A100-SXM4-80GB",
+  "driver_version": "580.173.02",
+  "cuda": "12.1",
+  "pytorch": "2.4.0+cu121",
+  "frozen_sources": {
+    "instructscene_source_sha": "a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+    "scenenat_source_sha": "542b82ff0cda4e0350575ca8f1cd5d147529130c",
+    "scenenat_fresh_github_main_sha": "542b82ff0cda4e0350575ca8f1cd5d147529130c",
+    "scenenat_fresh_drift_status": "NO_CODE_DRIFT",
+    "clip_revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+    "dataset_revision": "c8cf0bd282699d56a7940ac588ea5e961b1260cb"
+  },
+  "executed_code": {
+    "runner_v11_sha256": "dba40142264ba5e68e98f95365f560a1117ac053eb28a523d1654013a87ba7d9",
+    "entrypoint_v11_runtime_sha256": "0d31b35dffb67d3d84ba4d9f89a3850e673e4dfc66838d03cb7c56fd5887bd4f",
+    "bedroom_resume_v11_runtime_sha256": "c5cea88ef97bb78371875397b5fd698e8bb878d83b89d20f683ddf888a9e081b",
+    "restore_ema_preflight_sha256": "6f4d4af291ed2d7fea635f89e6e85710eb2f826841e1f4c638021bae12b2ef78"
+  },
+  "historical_repair_lineage": {
+    "v7": {
+      "classification": "IMPLEMENTATION_FAILURE_NON_SCIENTIFIC",
+      "committed_optimizer_steps": 1,
+      "failure": "PyTorch 2.4 deterministic CUDA boolean-index assignment runtime bug",
+      "runner_sha256": "394bbd7db689676498ecde5d470d6c1f3672934b3c40ec60f2f0e09197f4c375",
+      "failure_json_sha256": "2590791a82c36264d35d539935337aa16fc25c5a43df391c6f13ab5c9cee1737"
+    },
+    "v8": {
+      "classification": "IMPLEMENTATION_FAILURE_NON_SCIENTIFIC",
+      "committed_optimizer_steps": 50,
+      "failure": "0-D scalar tensor provenance hashing bug after checkpoint write",
+      "checkpoint_step_050_sha256": "aaba27c2991f26ff2991d878bb7a92dc1ba4398f442b5ad8ee271b07d4f2e117",
+      "failure_json_sha256": "f49bc420ca5e773086ae8ac63c9f7d9b6baee4d5a0f057c6a9bfc3a44f829c36"
+    },
+    "v9": {
+      "classification": "IMPLEMENTATION_FAILURE_AFTER_COMPLETE_UNINTERRUPTED_BASELINE_NON_SCIENTIFIC",
+      "bedroom_uninterrupted_baseline_steps": 100,
+      "resume_optimizer_steps_before_failure": 0,
+      "failure": "CPU RNG checkpoint state loaded onto CUDA before torch.set_rng_state"
+    },
+    "v10": {
+      "classification": "RESTORE_ONLY_PREFLIGHT_NO_OPTIMIZER_STEPS",
+      "finding": "EMA shadow parameters remained on CPU after load_state_dict"
+    },
+    "v11": {
+      "classification": "QUALIFICATION_PASS_NON_SCIENTIFIC",
+      "model_changed": false,
+      "data_changed": false,
+      "seed_changed": false,
+      "batch_changed": false,
+      "logical_step_budget_changed": false,
+      "resume_tolerance_changed": false,
+      "all_required_components_pass": true
+    }
+  },
+  "raw_artifacts": {
+    "checkpoints_committed_to_git": false,
+    "loss_trajectories_committed_to_git": false,
+    "licensed_corpus_rows_committed_to_git": false,
+    "sanitized_hashes_and_aggregates_only": true
+  }
+}

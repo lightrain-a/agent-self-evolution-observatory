@@ -1,0 +1,47 @@
+{
+  "active_bundle": {
+    "path": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v2-20260902.bundle",
+    "sha256": "0a5bfae987cf136df57d3ad5431c097143e3ca333d8ae3258356c50fdcf3597d"
+  },
+  "changed_family_ids": [
+    "ACE-TNF-01",
+    "ACE-TNF-02",
+    "ACE-TNF-03",
+    "ACE-TNF-04",
+    "ACE-TNF-05",
+    "ACE-TNF-06"
+  ],
+  "content_sha256": "6e87931ead666268893c2c6982a5cf4268cd5ecfdbfda64aad68a421d634e539",
+  "f0_scientific_outcomes_observed": 0,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "parent_bundle": {
+    "path": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-20260831.bundle",
+    "sha256": "53ae510e09ab9bce09a735046ef921e1a1d5fde4044a8a50f2763a2fd7d69cb6"
+  },
+  "protected_plaintext_persisted": false,
+  "provider_requests": 0,
+  "repairs": {
+    "fg_target_evaluator": "RECIPIENT_PLUS_TWO_ATTACHMENT_NAMES_AND_BYTES_PLUS_SUBJECT",
+    "fixture_api_schema": "RAW_FIXTURES_POPULATE_APPWORLD_API_NATIVE_DEFAULT_FIELDS",
+    "note_discoverability": "SIMPLE_NOTE_FIXTURE_MUST_BE_PRESENT_IN_NOTES_FTS",
+    "supervisor_identity": "USER_99_AARON_BURTON_MATCHES_ALL_FIXTURE_OWNERS",
+    "todo_locator": "ALL_TNF_TARGET_AND_ARM_INSTRUCTIONS_EXPLICITLY_NAME_INBOX"
+  },
+  "schema_version": "ace-appworld-capability-substrate-v2-contract-v1",
+  "status": "CAPABILITY_SUBSTRATE_V2_STATIC_REPAIR_READY",
+  "substrate_id": "ACE-APPWORLD-CAPABILITY-SUBSTRATE-V2-20260902",
+  "unchanged_scientific_design": {
+    "arms_per_family": 3,
+    "backbone": "NOT_CHANGED_BY_SUBSTRATE_REPAIR",
+    "capability_thresholds": "UNCHANGED",
+    "constraint_count": 3,
+    "coupling_levels": [
+      0,
+      1,
+      2
+    ],
+    "family_count": 12,
+    "tool_call_cap": 12,
+    "update_surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE"
+  }
+}
