@@ -17,7 +17,7 @@ Object.assign(window.CURRENT_PAPER_EVIDENCE_PROFILES,{
    {name:"STRI-Cert · R*(A)",role:{zh:"离线控制接口审计；输入 A，输出最优 w 与残差 R*(A)。",en:"Offline control-interface audit; input A, output optimal w and residual R*(A)."},status:{zh:"canonical · 无 LLM",en:"canonical · no LLM"}},
    {name:"AutoSkill executor",role:{zh:"P19 行为 witness；executor/harness/top-k 固定。",en:"P19 witness with executor/harness/top-k fixed."},status:{zh:"canonical bounded witness",en:"canonical bounded witness"}},
    {name:"Qwen3-Coder-Next",role:{zh:"V3 capability / cost pilot actor；不是 V4 已冻结模型。",en:"V3 capability/cost pilot actor; not the frozen V4 model."},status:{zh:"12/32 early stop",en:"12/32 early stop"}},
-   {name:"Qwen3.5-35B-A3B-FP8 / qwen3.5-flash",role:{zh:"V4 模型/provider 候选；优先比较本地 self-host 与低价 hosted。",en:"V4 model/provider candidates comparing self-hosted and low-cost hosted routes."},status:{zh:"候选 · 未冻结",en:"candidate · not frozen"}}
+   {name:"Hosted Qwen API · exact model pending freeze",role:{zh:"V4 只允许 hosted API；A100 self-host 路线已取消。先做 outcome-blind capability / cost preflight，再在 P0 前冻结 exact model + provider。",en:"V4 is hosted-API-only; the A100 self-host route is retired. Run an outcome-blind capability/cost preflight, then freeze one exact model + provider before P0."},status:{zh:"API-only · exact model 未冻结",en:"API-only · exact model not frozen"}}
   ],
   quantities:[
    {v:"2,294 / 12",k:{zh:"SWE-bench 原始 issue / repositories",en:"original SWE-bench issues / repositories"}},
