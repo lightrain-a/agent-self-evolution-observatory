@@ -32,6 +32,7 @@ The independent review must finish before those D0 values are exposed in a D0 ar
 5. P0 identified 36 untouched B4 tasks, six per family, as the complete previously-unsplit complement of the 18-task V2 B4 panel.
 6. All 264 task files needed for the 96 E3 update tasks plus 36 E3 held-out tasks match the original content-addressed suite manifest.
 7. No historical E3 run exists.
+8. A zero-outcome metadata audit proves that the V2 18-task panel and C0 36-task panel are disjoint complementary subsets of the same pre-existing 54-task B4 universe and are family-balanced, while their profile/difficulty-factor marginals are not identical (`generated/e2-r17-e3-b4-heldout-panel-shift-audit-20260902.json`).
 
 ## V2 repairs that the independent reviewer must verify
 

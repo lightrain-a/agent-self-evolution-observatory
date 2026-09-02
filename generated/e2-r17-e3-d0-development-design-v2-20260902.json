@@ -23,7 +23,9 @@
     "v2_scientific_adjudication_path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-scientific-adjudication-20260901.json",
     "v2_scientific_adjudication_sha256": "1a71d0c32536c65987dc960d1f1f4cf40a41127f3f9cfe30d3fe73295ce9268a",
     "mixed_pool_theory_path": "consultations/e2-r17-theory-correction-mixed-pool-20260828.md",
-    "mixed_pool_theory_sha256": "9a45b28c33081a88e7453a9b3a608736e7b60e4ddcdde559d981321156a2f0db"
+    "mixed_pool_theory_sha256": "9a45b28c33081a88e7453a9b3a608736e7b60e4ddcdde559d981321156a2f0db",
+    "b4_panel_shift_audit_path": "generated/e2-r17-e3-b4-heldout-panel-shift-audit-20260902.json",
+    "b4_panel_shift_audit_sha256": "9a7ab8929be4aa5d1a829b9ff61087bf478e38c6950b5a4b58a8cbf849d1aabe"
   },
   "development_streams": [
     "e1-agj-00",
