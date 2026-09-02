@@ -46,23 +46,20 @@ body[data-page="experiment-costs"] .ec-portfolio .ec-model small{display:block;m
 body[data-page="experiment-costs"] .ec-portfolio .ec-model+td{background:#f7f9ff;border-left:2px solid #cfd8f4;font-size:10.2px}
 body[data-page="experiment-costs"] .ec-portfolio .ec-price-used{background:#f2f8ff;border-left:1px solid #d9e6f5;font-size:9.5px}
 body[data-page="experiment-costs"] .ec-portfolio .ec-price-used+td{background:#fffaf1;border-left:2px solid #ead9ad;font-size:10.2px}
-body[data-page="experiment-costs"] .ec-portfolio .ec-price-plan{background:#f5fbf6;border-left:1px solid #d9eadc;font-size:9.5px}
+body[data-page="experiment-costs"] .ec-portfolio .ec-price-plan{background:#f8fafc;border-left:1px solid #e4e7ec;font-size:9.5px}
 body[data-page="experiment-costs"] .ec-portfolio .ec-model+td>b:first-child,body[data-page="experiment-costs"] .ec-portfolio .ec-price-used+td>b:first-child{display:inline-block;margin-bottom:3px;color:#263858;font-size:10.8px;line-height:1.32}
 body[data-page="experiment-costs"] .ec-portfolio .ec-model+td strong,body[data-page="experiment-costs"] .ec-portfolio .ec-price-used+td strong{color:#30339a;font-size:11.4px;line-height:1.35}
-body[data-page="experiment-costs"] .ec-portfolio .ec-price-cell b{display:block;color:#1f4f3a;font-size:10.6px;line-height:1.3}
+body[data-page="experiment-costs"] .ec-portfolio .ec-price-cell b{display:block;color:#344054;font-size:10.6px;line-height:1.3}
 body[data-page="experiment-costs"] .ec-portfolio .ec-price-cell small{display:block;margin-top:3px;color:#64756b;font-size:8.2px;line-height:1.35}
 body[data-page="experiment-costs"] .ec-portfolio .ec-unknown{display:inline-block;margin-top:3px;padding:2px 5px;border-radius:5px;background:#eef1f5;color:#687386;font-size:8.7px;line-height:1.3}
-body[data-page="experiment-costs"] .ec-portfolio .ec-resource-token .ec-usage-cell{background:#e2f3e8;border-left:2px solid #2f7a50;color:#173f2b}
+body[data-page="experiment-costs"] .ec-portfolio .ec-resource-token .ec-usage-cell{background:#fff;border-left:3px solid #17633d;color:#173f2b}
 body[data-page="experiment-costs"] .ec-portfolio .ec-resource-token .ec-usage-cell strong{color:#145c38}
 body[data-page="experiment-costs"] .ec-portfolio .ec-token-estimate{display:block;margin-top:5px;padding:4px 6px;border-radius:6px;background:#17633d;color:#fff;font-size:8.7px;font-weight:650;line-height:1.38}
-body[data-page="experiment-costs"] .ec-portfolio .ec-price-token{background:#d6eddf;border-left:1px solid #a9d2b8}
+body[data-page="experiment-costs"] .ec-portfolio .ec-price-token{background:#fff;border-left:3px solid #17633d}
 body[data-page="experiment-costs"] .ec-portfolio .ec-price-token b{color:#14532d}
 body[data-page="experiment-costs"] .ec-portfolio .ec-price-token small{color:#35634a}
-body[data-page="experiment-costs"] .ec-portfolio .ec-price-gpu{background:#eff9f1;border-left:1px solid #cce7d2}
-body[data-page="experiment-costs"] .ec-portfolio .ec-price-gpu b{color:#356b43}
-body[data-page="experiment-costs"] .ec-portfolio .ec-price-gpu small{color:#58765f}
-body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(4),body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(6){background:#d9efe2;color:#174b30}
-body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(5),body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(7){background:#eff9f1;color:#356346}
+body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(4),body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(6){background:#f5f7fa;color:#344054}
+body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(5),body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(7){background:#f8fafc;color:#475467}
 body[data-page="experiment-costs"] .ec-portfolio thead th small{display:block;margin-top:2px;font-size:7.5px;font-weight:600;line-height:1.25;text-transform:none;letter-spacing:0}
 body[data-page="experiment-costs"] .ec-reconcile{margin:10px 0;padding:12px 14px;border:1px solid #d9e2f0;border-radius:11px;background:#f7f9fc;font-size:10.8px;line-height:1.58;color:#58667a}
 body[data-page="experiment-costs"] .ec-reconcile b{display:block;margin-bottom:4px;color:#27344a;font-size:12px}
