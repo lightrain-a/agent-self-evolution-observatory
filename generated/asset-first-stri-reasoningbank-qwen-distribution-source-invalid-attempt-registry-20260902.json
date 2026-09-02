@@ -1,0 +1,28 @@
+{
+  "created_at_utc": "2026-09-02T06:57:17+00:00",
+  "credential_material_present": false,
+  "decision": "QWEN_SOURCE_INVALID_ATTEMPT_REGISTRY_ACTIVE",
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "invalid_attempts": [
+    {
+      "archive_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-source-invalid-attempts-20260902/09-sympy-sympy-13031-runtime-decode-invalid-attempt1.json",
+      "authorized_replay_ordinal": 9,
+      "evaluator_outcome_observed": false,
+      "instance_id": "sympy__sympy-13031",
+      "invalid_attempt_receipt_sha256": "3c442631b2398dedac3c67f8bf1b819d36944df3c0b8b0c987cfaa017a593131",
+      "invalid_reason": "runtime-control UnicodeDecodeError before any model/provider call",
+      "model_call_count": 0,
+      "ordinal": 9,
+      "original_canonical_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-source-trajectories-20260901/09-sympy-sympy-13031.json",
+      "provider_interaction_count": 0,
+      "replacement": false,
+      "same_source_case_only": "sympy__sympy-13031",
+      "scientific_attempt_count_consumed": 0
+    }
+  ],
+  "invalid_operational_artifact_archived": true,
+  "payload_sha256": "9df364619e2ee1b5ec642f4f06138d63f95af2c6ef72c4a3708281f1db929ebf",
+  "schema_version": 1,
+  "selective_scientific_outcome_deletion": false,
+  "stage": "QWEN_SOURCE_INVALID_ATTEMPT_REGISTRY"
+}

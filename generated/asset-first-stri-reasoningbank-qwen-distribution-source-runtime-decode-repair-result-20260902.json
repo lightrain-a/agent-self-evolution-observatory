@@ -1,0 +1,31 @@
+{
+  "authorized_replay_instance_id": "sympy__sympy-13031",
+  "authorized_replay_ordinal": 9,
+  "contract_sha256": "52764f8d6c3bb502ab5444e7d41f85ff6c0276db04a73a95d5ca522ae88de11c",
+  "created_at_utc": "2026-09-02T06:57:18+00:00",
+  "credential_material_present": false,
+  "decision": "QWEN_SOURCE_RUNTIME_INVALID_ATTEMPT_ARCHIVED_REPLAY_GATE_OPEN",
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "invalid_attempt_archive_sha256": "3c442631b2398dedac3c67f8bf1b819d36944df3c0b8b0c987cfaa017a593131",
+  "invalid_attempt_receipt_sha256": "3c442631b2398dedac3c67f8bf1b819d36944df3c0b8b0c987cfaa017a593131",
+  "invalid_attempt_registry_sha256": "6f53b30b3bb89064dee62480c7b734e39fe9cbf3619aa1c91cefb50b14bdd3b5",
+  "payload_sha256": "dac63431a1fccfc5c48da496d0f4735344dff8dac2346843d836870f56b2681d",
+  "repair_scope": "Docker/runtime control-plane output decoding only",
+  "schema_version": 1,
+  "scientific_attempt_count_consumed": 0,
+  "scientific_boundary": {
+    "confirmatory_execution_authorized": false,
+    "invalid_attempt_retained_byte_exact": true,
+    "invalid_attempt_scientifically_valid": false,
+    "memory_extraction_authorized": false,
+    "model_or_evaluator_outcome_used_for_repair": false,
+    "ordinals_10_through_32_remain_untouched": true,
+    "same_source_only": true
+  },
+  "scientific_replay_count_authorized": 1,
+  "smoke_sha256": "a2b5936b02f61ec36e1144bb5131f86550d3afaa6cc1074907f3ba9259fe63e2",
+  "source_index_pre_repair_sha256": "ea2b4dc9e0af6b23943940dfa091cc45389f22d24299fd1a0c6aac90fbb94694",
+  "source_index_reopened_sha256": "5387f1b4893d207cf55f1b08d25e76626b1f5a090eacca2a4603feb817e4aec4",
+  "source_replacement": false,
+  "stage": "QWEN_SOURCE_RUNTIME_DECODE_INVALID_ATTEMPT_ADJUDICATION"
+}

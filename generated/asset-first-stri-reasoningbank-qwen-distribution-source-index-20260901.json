@@ -3,17 +3,36 @@
     "all_receipts_persisted": true,
     "every_attempt_count_one": true,
     "frozen_order_prefix": true,
+    "invalid_scientific_attempts_excluded_from_completed_prefix": true,
     "no_replacement": true,
     "no_retry": true
   },
-  "completed_count": 9,
+  "completed_count": 8,
   "contract_sha256": "072980a4e71a3e31de2e59ef77b52cd090073d645b665af0adc25c24a99b8daa",
-  "created_at_utc": "2026-09-02T06:45:46+00:00",
+  "created_at_utc": "2026-09-02T06:57:18+00:00",
   "credential_material_present": false,
   "decision": "QWEN_SOURCE_TRAJECTORIES_IN_PROGRESS",
   "execution_complete": false,
   "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
   "inflight": null,
+  "invalid_attempt_count": 1,
+  "invalid_attempts": [
+    {
+      "archive_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-source-invalid-attempts-20260902/09-sympy-sympy-13031-runtime-decode-invalid-attempt1.json",
+      "authorized_replay_ordinal": 9,
+      "evaluator_outcome_observed": false,
+      "instance_id": "sympy__sympy-13031",
+      "invalid_attempt_receipt_sha256": "3c442631b2398dedac3c67f8bf1b819d36944df3c0b8b0c987cfaa017a593131",
+      "invalid_reason": "runtime-control UnicodeDecodeError before any model/provider call",
+      "model_call_count": 0,
+      "ordinal": 9,
+      "original_canonical_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-source-trajectories-20260901/09-sympy-sympy-13031.json",
+      "provider_interaction_count": 0,
+      "replacement": false,
+      "same_source_case_only": "sympy__sympy-13031",
+      "scientific_attempt_count_consumed": 0
+    }
+  ],
   "journal": [
     {
       "attempt_count": 1,
@@ -86,19 +105,10 @@
       "persisted": true,
       "receipt_sha256": "445b45421291d1a6b4a5b0b9ad91ebfb9de991e1ee902e376e97507058409de7",
       "run_id": "QWEN-SOURCE-08"
-    },
-    {
-      "attempt_count": 1,
-      "execution_status": "TERMINAL_FAILURE",
-      "instance_id": "sympy__sympy-13031",
-      "ordinal": 9,
-      "persisted": true,
-      "receipt_sha256": "3c442631b2398dedac3c67f8bf1b819d36944df3c0b8b0c987cfaa017a593131",
-      "run_id": "QWEN-SOURCE-09"
     }
   ],
-  "journal_record_count": 9,
-  "payload_sha256": "d3fc4aa0acaf22bfceac78f2728540ef01c40cd53a331f83163243f2f5fc2a88",
+  "journal_record_count": 8,
+  "payload_sha256": "73331564c2452458f8ce5973801108f369c570c3117c0a148e636b1044c477bd",
   "planned_count": 32,
   "schema_version": 1,
   "stage": "QWEN_SOURCE_TRAJECTORY_EXECUTION"
