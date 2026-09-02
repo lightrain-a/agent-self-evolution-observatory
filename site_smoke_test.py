@@ -472,6 +472,8 @@ def main() -> None:
         scripts = canonical_scripts.get(filename, [])
         if evidence_script not in scripts or scripts.index(evidence_script) > scripts.index("current-paper-page-view.js"):
             fail(f"{filename} must load its published-neighbor / experiment-provenance profile before the single-paper renderer")
+        if "current-paper-dataset-primer.js" not in scripts or scripts.index("current-paper-dataset-primer.js") > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load the plain-language dataset primer before the single-paper renderer")
     if "renderCurrentPaperCollection" not in current_paper_view_source or "QUICK OVERVIEW" not in current_paper_view_source or "速览版" not in current_paper_view_source:
         fail("current-paper renderer must expose collection-only routing plus the single-paper quick overview")
     if "renderCurrentPaperShelf" in current_paper_view_source or "cpp-pager" in current_paper_view_source:
