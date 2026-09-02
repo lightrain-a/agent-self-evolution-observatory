@@ -109,7 +109,17 @@ def cancel_active_runs(token: str, repository: str) -> None:
 
 
 def main() -> int:
-    cancel_active_runs(required("GH_TOKEN"), required("GITHUB_REPOSITORY"))
+    # This helper is only a preflight optimization. The deploy job has its own
+    # stale-deployment recovery and lock-conflict retries, so a transient REST
+    # failure here must never prevent the frontend artifact from being built.
+    try:
+        cancel_active_runs(required("GH_TOKEN"), required("GITHUB_REPOSITORY"))
+    except Exception as error:
+        print(
+            f"::warning::Generated Pages cancellation was best-effort and failed: {error}. "
+            "Continuing to build; deployment recovery will handle remaining locks.",
+            file=sys.stderr,
+        )
     return 0
 
 
