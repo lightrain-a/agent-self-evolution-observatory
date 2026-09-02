@@ -1,0 +1,42 @@
+{
+  "attempt_count": 1,
+  "attempt_is_exactly_once": true,
+  "authority_path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-shared26-resume-20260901/generated/behavior-formal-goal-coupling-shared26-pi05-dry-step-authority-20260902.json",
+  "authority_sha256": "880bdc0c213e35ef2a6031a0a1d636ead8be8da5e9bfc48273bb4899f1ea320b",
+  "base_bytes_rehashed": 12441721931,
+  "base_object_count_rehashed": 20,
+  "base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+  "checkpoint_written": false,
+  "dataloader_smoke_sha256": "91e6e138bbe353fbf8774ea894c43cb9f6e7169b1f2dd0356456f62400babbd2",
+  "dry_gradient_execution_completed": false,
+  "dry_gradient_execution_started": false,
+  "formal_training_authorized": false,
+  "generated_at": "2026-09-02T12:18:51.867000+00:00",
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 2170,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "loss_value_retained_or_reported": false,
+  "model_load_result_sha256": "fda2c02b5d8ec3e9acd491c9d197ba251e78cfc5e7d5486112c9a13bf655da0c",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "optimizer_update": false,
+  "parameter_update": false,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "resource_admission_sha256": "b7c010d45c21a83db57567a2fe599d59bf2933c327423d1bc4cd2e265e376275",
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-dry-step-result-v1",
+  "scientific_authority": false,
+  "scientific_training_started": false,
+  "status": "PI05_NO_UPDATE_DRY_STEP_STARTED",
+  "tokenizer_cache": "/data/wyt/formal-goal-openpi-cache-v1/big_vision/paligemma_tokenizer.model",
+  "tokenizer_result_sha256": "18ca3f4a11f23d58a0e14eb2ebc13838b5717f959ba788557de19439b74ce0dc",
+  "tokenizer_sha256": "8986bb4f423f07f8c7f70d0dbe3526fb2316056c17bae71b1ea975e77a168fc6"
+}

@@ -1,0 +1,70 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-dataloader-resource-adapter-qualification-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_date": "2026-09-02",
+  "status": "PI05_DATALOADER_RESOURCE_ADAPTER_STATIC_QUALIFIED",
+  "role": "OUTCOME_BLIND_RESOURCE_ONLY_QUALIFICATION",
+  "parent_failure_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-failure-adjudication-20260902.json",
+    "sha256": "2e1287183ca8e3f00a007df1ad388359f019dc77786f80abade14bedfe66531f"
+  },
+  "source_runtime": {
+    "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+    "data_loader_py_sha256": "3818273c09d5fa46d8d5cfe8081c5c16c6bd9bb70fd1f1c1eff73bc0725d50b1",
+    "config_py_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+    "source_num_workers": 8,
+    "source_comment_semantics": "num_workers controls data-loader performance and explicitly increases memory/CPU usage; it is not a model/training objective hyperparameter"
+  },
+  "code_audit": {
+    "create_b1k_data_loader_worker_effect": "config.num_workers is passed to TorchDataLoader; batch size, seed, dataset construction, transforms, sharding, optimizer, model, and action horizon are not changed by this argument",
+    "shuffle_generator": "TorchDataLoader creates torch.Generator() and manual_seed(config.seed); sampler/shuffle ordering is driven by this generator rather than worker count",
+    "worker_context_if_positive": "multiprocessing.get_context('spawn')",
+    "persistent_workers_if_positive": true,
+    "worker_init_function_effect": "only sets JAX/XLA allocator environment variables; it does not modify examples, labels, actions, or the scientific treatment",
+    "num_workers_zero_semantics": "the same TorchDataLoader executes dataset access in the main process and avoids spawned persistent workers"
+  },
+  "existing_zero_worker_evidence": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-normalized-dataloader-smoke-repair2-20260902.json",
+    "sha256": "91e6e138bbe353fbf8774ea894c43cb9f6e7169b1f2dd0356456f62400babbd2",
+    "status": "PI05_NORMALIZED_DATALOADER_ZERO_UPDATE_PASS",
+    "batch_size": 64,
+    "action_horizon": 32,
+    "episode_count": 5200,
+    "num_workers": 0,
+    "scope_note": "This prior smoke establishes that the frozen dataset/normalization can produce the required batch shape with zero workers. It is not a scientific outcome and is not used to choose a treatment."
+  },
+  "prospective_adapter": {
+    "num_workers": 0,
+    "source_num_workers": 8,
+    "thread_caps": {
+      "OMP_NUM_THREADS": 1,
+      "MKL_NUM_THREADS": 1,
+      "OPENBLAS_NUM_THREADS": 1,
+      "NUMEXPR_NUM_THREADS": 1,
+      "TOKENIZERS_PARALLELISM": false
+    },
+    "cgroup_memory_max_gib": 72,
+    "cgroup_memory_swap_max_gib": 0,
+    "scientific_variables_changed": false
+  },
+  "must_remain_fixed": {
+    "global_batch_size": 64,
+    "seed": 42,
+    "episode_count": 5200,
+    "action_horizon": 32,
+    "fsdp_devices": 1,
+    "data_shuffle": true,
+    "dataset_and_episode_subset": "unchanged",
+    "normalization_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+    "model_and_base_checkpoint": "unchanged",
+    "optimizer_and_lr_schedule": "unchanged",
+    "device_topology": "single A100 80GB unchanged",
+    "optimizer_updates_in_dry_step": 0
+  },
+  "scientific_outcomes_observed": 0,
+  "policy_outcomes_read": false,
+  "scientific_authority": false,
+  "formal_training_authority": false,
+  "verdict": "QUALIFY_RESOURCE_ONLY_NUM_WORKERS_ZERO_ADAPTER_FOR_A_NEW_EXACTLY_ONCE_DRY_STEP_CHILD",
+  "next_gate": "NEW_EXACTLY_ONCE_RESOURCE_V2_DRY_STEP_AUTHORITY"
+}

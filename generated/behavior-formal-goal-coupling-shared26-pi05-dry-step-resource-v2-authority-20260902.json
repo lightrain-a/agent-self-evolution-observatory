@@ -1,0 +1,88 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-v2-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_date": "2026-09-02",
+  "status": "AUTHORIZED_SINGLE_A100_NO_UPDATE_DRY_TRAIN_STEP_RESOURCE_V2",
+  "scope": "resource-only replacement child for the consumed v1 dry-step; no scientific outcome authority",
+  "parent_v1_authority_sha256": "880bdc0c213e35ef2a6031a0a1d636ead8be8da5e9bfc48273bb4899f1ea320b",
+  "parent_v1_attempt_receipt_sha256": "3b6a9cda17b847f0945898ee55e441c2456c6582ce7875039c49e9439113ce1b",
+  "parent_failure_adjudication_sha256": "2e1287183ca8e3f00a007df1ad388359f019dc77786f80abade14bedfe66531f",
+  "resource_adapter_qualification_sha256": "e3f2b1dc7fe40b91c47a68ec084119497c28a9e64262328ce723a35aa5751dd2",
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_dry_step_resource_v2.py",
+    "sha256": "ac79219f85ba56116ec51c3a60f93308dbce34247ba325e3111ffa0225f6acae"
+  },
+  "launcher": {
+    "path": "scripts/run_behavior_formal_goal_coupling_shared26_pi05_dry_step_resource_v2.sh",
+    "sha256": "4dbb6fbbd1a05712a40ac174485c423eee8ec772201c6419d39def0a731eca0b"
+  },
+  "resource_only_adapter": {
+    "source_num_workers": 8,
+    "num_workers": 0,
+    "reason": "The source default is an I/O throughput parameter that caused eight spawned persistent workers to consume about 81 GiB RSS and survive parent exit. Zero workers executes the same dataset access in the main process and removes the worker-fanout failure mode.",
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "TOKENIZERS_PARALLELISM": "false"
+    },
+    "cgroup": {
+      "MemoryMax": "72G",
+      "MemorySwapMax": "0",
+      "failure_semantics": "A cgroup OOM/resource kill is a resource qualification failure and never licenses relaxing scientific variables."
+    }
+  },
+  "frozen_runtime": {
+    "global_batch_size": 64,
+    "fsdp_devices": 1,
+    "seed": 42,
+    "action_horizon": 32,
+    "episode_count": 5200,
+    "data_shuffle": true,
+    "normalization_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+    "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde"
+  },
+  "bindings": {
+    "resource_admission_sha256": "b7c010d45c21a83db57567a2fe599d59bf2933c327423d1bc4cd2e265e376275",
+    "model_load_result_sha256": "fda2c02b5d8ec3e9acd491c9d197ba251e78cfc5e7d5486112c9a13bf655da0c",
+    "normalized_dataloader_smoke_sha256": "91e6e138bbe353fbf8774ea894c43cb9f6e7169b1f2dd0356456f62400babbd2",
+    "tokenizer_result_sha256": "18ca3f4a11f23d58a0e14eb2ebc13838b5717f959ba788557de19439b74ce0dc",
+    "base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed"
+  },
+  "authorized_operations": [
+    "construct exactly one frozen shuffled training batch using num_workers=0",
+    "restore the content-addressed frozen pi0.5 base checkpoint into a step-0 train state",
+    "compile and execute exactly one forward+backward gradient computation on that batch",
+    "discard gradients and all in-memory state without any optimizer update"
+  ],
+  "forbidden_operations": [
+    "replaying the v1 dry-step authority",
+    "any optimizer update or parameter mutation",
+    "saving a checkpoint",
+    "retaining or comparing loss values",
+    "more than one resource-v2 dry gradient attempt",
+    "changing batch size, seed, data, model, optimizer, schedule, action horizon, normalization, or GPU topology",
+    "raising num_workers in response to throughput",
+    "raising MemoryMax or enabling swap in response to a resource-v2 failure",
+    "policy rollout or policy outcome read",
+    "formal training launch without a later separate authority"
+  ],
+  "required_launch_environment": {
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "TOKENIZERS_PARALLELISM": "false"
+  },
+  "required_launch_scope": "systemd-run --user --scope -p MemoryMax=72G -p MemorySwapMax=0",
+  "optimizer_update_count_authorized": 0,
+  "formal_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "scientific_authority": false,
+  "paper_claim_authority": false,
+  "next_gate_if_pass": "SEPARATE_EXACTLY_ONCE_PI05_SHARED26_TRAINING_LAUNCH_AUTHORITY",
+  "next_gate_if_fail": "RESOURCE_V2_FAILURE_ADJUDICATION_NO_AUTOMATIC_RETRY"
+}

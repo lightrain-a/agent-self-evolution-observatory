@@ -1,0 +1,87 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_at": "2026-09-02T21:23:08+08:00",
+  "status": "PI05_NO_UPDATE_DRY_STEP_RESOURCE_FAILURE_ORPHANED_DATALOADER_WORKERS",
+  "classification": "OUTCOME_BLIND_PRE_GRADIENT_RESOURCE_FAILURE",
+  "parent_authority": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-dry-step-authority-20260902.json",
+    "sha256": "880bdc0c213e35ef2a6031a0a1d636ead8be8da5e9bfc48273bb4899f1ea320b"
+  },
+  "attempt_receipt": {
+    "source_path": "../formal-goal-shared26-resume-20260901/generated/behavior-formal-goal-coupling-shared26-pi05-dry-step-result-20260902.json",
+    "preserved_copy_path": "generated/behavior-formal-goal-coupling-shared26-pi05-dry-step-v1-consumed-started-receipt-20260902.json",
+    "sha256": "3b6a9cda17b847f0945898ee55e441c2456c6582ce7875039c49e9439113ce1b",
+    "last_status": "PI05_NO_UPDATE_DRY_STEP_STARTED",
+    "dry_gradient_execution_started": false,
+    "dry_gradient_execution_completed": false,
+    "optimizer_update": false,
+    "parameter_update": false,
+    "checkpoint_written": false,
+    "policy_rollouts_started": false,
+    "policy_outcomes_read": false,
+    "scientific_training_started": false
+  },
+  "resource_failure_evidence": {
+    "source_config_num_workers": 8,
+    "multiprocessing_context": "spawn",
+    "persistent_workers": true,
+    "orphan_worker_count": 8,
+    "orphan_worker_ppid": 1,
+    "orphan_worker_process_name": "pt_data_worker",
+    "orphan_worker_pids_observed": [3993302, 3998087, 4001800, 4004624, 4008535, 4012369, 4018419, 4023948],
+    "orphan_worker_total_rss_kib_observed": 84870456,
+    "orphan_worker_total_rss_gib_observed": 80.93877410888672,
+    "representative_worker_threads": 129,
+    "representative_worker_open_data": "43 Arrow shards plus multi-camera MP4 files from behavior-formal-goal-shared26-lerobot-v31",
+    "stdout_stderr_target": "/data/wyt/formal-goal-pi05-dry-step-20260902.log",
+    "host_before_cleanup": {
+      "ram_total_gib": 125,
+      "ram_used_gib": 108,
+      "ram_available_gib": 17,
+      "swap_total_gib": 19,
+      "swap_used_gib": 19
+    },
+    "host_after_cleanup": {
+      "ram_used_gib": 27,
+      "ram_available_gib": 98,
+      "swap_used_gib": 1.7
+    }
+  },
+  "root_cause": "The source TrainConfig defaults num_workers=8. OpenPI's B1K TorchDataLoader uses multiprocessing spawn and persistent_workers when num_workers>0. On this 125-GiB host, eight spawned workers each reconstructed a large dataset/video state and consumed roughly 8-12 GiB RSS. The main dry-step process exited before gradient execution and the workers became PPID=1 orphans, leaving about 81 GiB RSS resident and driving system swap to exhaustion.",
+  "disk_capacity_root_cause": false,
+  "scientific_outcomes_observed": 0,
+  "partial_scientific_effect_read": false,
+  "old_exactly_once_attempt_consumed": true,
+  "automatic_retry_under_old_authority": false,
+  "cleanup": {
+    "orphan_workers_terminated": true,
+    "termination_policy": "SIGTERM then SIGKILL only for survivors",
+    "scientific_processes_terminated": false,
+    "reason": "The parent dry-step process was already absent and the orphan workers could no longer produce a valid completed receipt."
+  },
+  "repair_boundary": {
+    "allowed": "Prospective resource-only child qualification that changes DataLoader execution parallelism and process containment only.",
+    "must_remain_fixed": [
+      "object_id",
+      "OpenPI child commit",
+      "dataset and episode subset",
+      "normalization",
+      "global batch size 64",
+      "seed 42",
+      "model architecture and base checkpoint",
+      "optimizer and learning-rate schedule",
+      "action horizon 32",
+      "single-A100 topology",
+      "zero optimizer updates in dry-step",
+      "no policy rollout or outcome read"
+    ],
+    "forbidden": [
+      "silent retry of the v1 exactly-once dry-step",
+      "changing scientific treatment after observing outcomes",
+      "using the resource failure to tune scientific hyperparameters",
+      "opening formal training authority before a fresh resource qualification passes"
+    ]
+  },
+  "next_gate": "PROSPECTIVE_PI05_DATALOADER_RESOURCE_ADAPTER_QUALIFICATION"
+}
