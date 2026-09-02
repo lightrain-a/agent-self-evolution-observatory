@@ -1,0 +1,31 @@
+{
+  "active_bundle_sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5",
+  "application_retry": false,
+  "content_sha256": "825cf318af407f0c41bc54b216e52cc783f8d64054d8e51d24a43887531cd88d",
+  "execution_id": "QWEN37PLUS-CAPABILITY-R5-PARTIAL-SUBSTRATE-V4",
+  "f0_authorized": false,
+  "fg_provider_reexecution": false,
+  "model": "qwen3.7-plus",
+  "model_switch": false,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "preserve_fg_measurements": 4,
+  "provider_max_retries": 0,
+  "qualification_sha256": "b0a01b3fde6ad7eb05324444f692abb7e0124d52e616c86d88947a44142647b0",
+  "replacement": false,
+  "rerun_family_ids": [
+    "ACE-TNF-05",
+    "ACE-TNF-06"
+  ],
+  "rerun_tnf_measurements": 4,
+  "same_repeats": [
+    1,
+    2
+  ],
+  "schema_version": "ace-qwen37plus-capability-r5-partial-contract-v1",
+  "status": "QWEN37PLUS_CAPABILITY_R5_PARTIAL_TNF_ONLY_AUTHORIZED",
+  "supersedes_unexecuted_r4_contract_sha256": "0ff7fa78d2508310fedc97bb6a7611860dc415d7a917b4024a61a88b975c3926",
+  "supersession_reason": "PUBLIC_ORACLE_TOOL_BUDGET_HEADROOM_QUALIFICATION",
+  "temperature": 0,
+  "threshold_change": false,
+  "tool_call_cap": 16
+}

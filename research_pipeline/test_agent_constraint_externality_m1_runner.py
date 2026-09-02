@@ -52,7 +52,7 @@ from research_pipeline.appworld_constraint_compiler import (
 
 ROOT = Path(__file__).resolve().parents[1]
 APPWORLD_ROOT = ROOT / "cache/substrates/appworld-official-20260831"
-BUNDLE = ROOT / "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v2-20260902.bundle"
+BUNDLE = ROOT / "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle"
 
 
 def call(name: str = "set_value", arguments: str = '{"key":"x","value":1}') -> dict:

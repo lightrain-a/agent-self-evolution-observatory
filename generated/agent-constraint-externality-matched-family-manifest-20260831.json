@@ -28,10 +28,10 @@
         "ACE-FG-01-low": "2b1e4e3790b5d4d35a1c4a7b63a66a1ce5ed8708fef891570137c44fecb4e891"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "a004855d169da1622e653c96d2482c9166eaafef427b376cfa2199a706e3c241",
+      "initial_snapshot_sha256": "d63e10ed878eff4c9b4c54988f1a22a3e9545a0e1ea745e4bd225d51e95266ac",
       "instruction_byte_length": 258,
       "instruction_word_count": 23,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -74,10 +74,10 @@
         "ACE-FG-02-low": "8e0afab3c31bd81c35d6f10f20692ff2b722fd7ce70009c25c75ddc1ff1b1fab"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "6315eaf631aed5f4f437f81777f978da8244700b91896c3595234af7a193efc2",
+      "initial_snapshot_sha256": "1cfa607f043bf4a784ce822621b75de4bbcdfb82bc391e08292bb1f0496372e1",
       "instruction_byte_length": 258,
       "instruction_word_count": 23,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -120,10 +120,10 @@
         "ACE-FG-03-low": "64f359a89c96c878e793ff0365ff14ac7ca3634a4bcf7cfe73de5fa09295a87d"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "a0a0b2c9603158fa525f6257910145a5b02cf6929c99f1866c35f0481459d96d",
+      "initial_snapshot_sha256": "873bb389ec9c39205a001392b8dddf38a384bc0994f0a295db4d00263ac3058a",
       "instruction_byte_length": 258,
       "instruction_word_count": 23,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -166,10 +166,10 @@
         "ACE-FG-04-low": "a34c12a318ac6a7c727020f33e0dcc89e8295f9ff00d0b922443d27b2399db23"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "5e2ba0f7dd1809f9d888b157025fec43e392d0d981776c5fcc17770fa74843f7",
+      "initial_snapshot_sha256": "4de4683586bdcb5c259d8a3485c38b3600fdeee5c4cf4ef9d079f98dac36f624",
       "instruction_byte_length": 258,
       "instruction_word_count": 23,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -212,10 +212,10 @@
         "ACE-FG-05-low": "d69ac1dc1ae426c282851c07ceab48cd9697964b6cd7563f35ef6537eb25c9a8"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "0572559e182021b4ee81430a02e64ef93b2e5341f5346e64a80af175bf7617cd",
+      "initial_snapshot_sha256": "de84c40d3b8a5795cebb0d4562244093d51b06e81a01db657d32a597e6e36029",
       "instruction_byte_length": 258,
       "instruction_word_count": 23,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -258,10 +258,10 @@
         "ACE-FG-06-low": "14887abf5f770816fac826885e92ce52ef82e07f2e195c124d09e3b315e099ef"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "faf735ff84ae60ffba21cf824f8a034c586088386bcb0e5304ce7d6ab3fa89e9",
+      "initial_snapshot_sha256": "8fb7a23cd18047e243eb912b6e576409220d7a5053cea10aadad6d93bc57017a",
       "instruction_byte_length": 258,
       "instruction_word_count": 23,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -281,9 +281,9 @@
     {
       "arm_count": 3,
       "arm_instruction_sha256_by_arm": {
-        "ACE-TNF-01-high": "0247f08a6cbd5281383170c62c8933d2d5411596a9f1c7a9c20c6c8f0da1f0ff",
-        "ACE-TNF-01-independent": "68686b056ad3a3016a9569f5b309e5e01ccf0727277db752129268e0906f0043",
-        "ACE-TNF-01-low": "b8c04fd28fce61f805ea7141716d8958291f60187ec0d32eabc9c76ade473849"
+        "ACE-TNF-01-high": "b75fc6f85d12c7c7f7e37aa9b621a7418739e71b3990048df8559667729653a8",
+        "ACE-TNF-01-independent": "5348ffb2cdfd1eb2dd3ff240015ebc00aff1269cb370e248f0cd80611a26ffda",
+        "ACE-TNF-01-low": "f627ecad18be323e576dcffb99fce7f3dad262cec38b72b182559733bef9303e"
       },
       "category": "TODO_NOTE_FILE",
       "constraint_count": 3,
@@ -304,10 +304,10 @@
         "ACE-TNF-01-low": "618f10df6792808eb488789ae648e6218083464e0111b2c114291fcb4292b26d"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "284d17510f2f9b3f5df3c40a5b1dbd1accabb0fa0c1ae884b2b02d74facf5665",
-      "instruction_byte_length": 196,
-      "instruction_word_count": 26,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "initial_snapshot_sha256": "5ff687209fe92f9bad595ec0db2c1f486bac566f17d9ac2da986d0483fb686c0",
+      "instruction_byte_length": 221,
+      "instruction_word_count": 27,
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -319,7 +319,7 @@
         "LOW": 1
       },
       "target_constraint_id_sha256": "58b8203183437e94e301c899b7f73091770128f7fa1c881676918fbd4f039f81",
-      "target_instruction_sha256": "78a32a153144388614aac228100c4206a5f79c98d71825d486fcd9139075515f",
+      "target_instruction_sha256": "00bb8274c604e1172b9fbda3888df2fb7dc641762f98bcbd5bc2ec6e5d92cfe1",
       "target_resource_footprint_sha256": "0a61fe063a059f16fc662fb560b13e81e8424d28efaa6be4a0f914489b39c19d",
       "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
       "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
@@ -327,9 +327,9 @@
     {
       "arm_count": 3,
       "arm_instruction_sha256_by_arm": {
-        "ACE-TNF-02-high": "efe37ea2213644037523eb3bd7cc54fecae4fa31ee7200880e9d0b4015f4b0bb",
-        "ACE-TNF-02-independent": "427e72e0cb4d187122a1af60e8026038b1ad86aee958d0dd97a975069ffb89f8",
-        "ACE-TNF-02-low": "125b8062e2a58d3a862ccaf2d0eb0af41827bfab606e8383ce557c083645612b"
+        "ACE-TNF-02-high": "1dc9e3511a4addd222ee47e0abe01fbf93e0dbab5ab051a21e6264ee217383ce",
+        "ACE-TNF-02-independent": "fb1aacde283470c5257b72afbe37d198591a708d7221c04f665ce00a0ae3390d",
+        "ACE-TNF-02-low": "4dfaa00572e95031b65832fb20159d39f136fdae39ff592dfd05b6d141c8ea0e"
       },
       "category": "TODO_NOTE_FILE",
       "constraint_count": 3,
@@ -350,10 +350,10 @@
         "ACE-TNF-02-low": "c05bfadc20aebd88dfdf36c43411f2ea96f3737102df873cfd17b230182ffb16"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "8a45c49a2dc216872020b81c11143f44909fe3d1a7c74f68aaf76f6dda03d2a6",
-      "instruction_byte_length": 196,
-      "instruction_word_count": 26,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "initial_snapshot_sha256": "0c1faeb16ab897b4ce0e2dd3db9106e8e117a56f1074cc6ae1aa6488f6f43b38",
+      "instruction_byte_length": 221,
+      "instruction_word_count": 27,
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -365,7 +365,7 @@
         "LOW": 1
       },
       "target_constraint_id_sha256": "8a41d93d21a65ef36a042d9e0df2f16286080c55a76bd7e819a1587c8988c4fe",
-      "target_instruction_sha256": "ebb4c3e2280fc01b9d4925de8c8cb3026da405652c0bce5454579a4210880cd6",
+      "target_instruction_sha256": "d3fbf90514db0bbeffff59386baa1d649e2ed84be7a199f465d2147e17fb7832",
       "target_resource_footprint_sha256": "fe9d0aaf2e403b7e61abc58cf45077fa9ababfb1e72168f9072970b4cee98d27",
       "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
       "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
@@ -373,9 +373,9 @@
     {
       "arm_count": 3,
       "arm_instruction_sha256_by_arm": {
-        "ACE-TNF-03-high": "28b07cc2174ceb9b9b0c40cfaa1676c04253fc7243c1feb06f715bd862cb6a84",
-        "ACE-TNF-03-independent": "f1c2e03bec263205f228785ce38becac27ea539cf7b982e57ac68a9cf2770543",
-        "ACE-TNF-03-low": "58b189b4203b5294628654598c379c53684785e4b86d880050f7b01d6b2d4e34"
+        "ACE-TNF-03-high": "c69efebac89825b9297669019c049cd5a4e1dee376861756ab7202a58f785565",
+        "ACE-TNF-03-independent": "64466bd4ffd6fb118344a63a510512632a6138b88d525aa6eefe34118ff31fc7",
+        "ACE-TNF-03-low": "267ee0795b2d80abaf46a224b1ae45bf2408289f8a740dd04b09160369c19da9"
       },
       "category": "TODO_NOTE_FILE",
       "constraint_count": 3,
@@ -396,10 +396,10 @@
         "ACE-TNF-03-low": "4a91a8d79a67c3452a3770075052b36e788705c172499afa66225df6501ed1f5"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "0b07e172575ddaf0154d75b6856186c44aaa06966114e8c47cedf15088cde0cf",
-      "instruction_byte_length": 196,
-      "instruction_word_count": 26,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "initial_snapshot_sha256": "21a9e16dcf265bf0fad771c9f1c404e36034407fa0501bcbdf80940240f6284d",
+      "instruction_byte_length": 221,
+      "instruction_word_count": 27,
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -411,7 +411,7 @@
         "LOW": 1
       },
       "target_constraint_id_sha256": "48617ae4cc91fb2027eb1ba84f46f2083cd87d6c0abf2c5b2474b89c877cdaf1",
-      "target_instruction_sha256": "2a0660e913c0c9dbf0a605b7f2804d32761befc753a1dab0a86867dcf3f17ea7",
+      "target_instruction_sha256": "a6b3fe924a006bc8ce9e2e0cede4e4654b932430252f06f3385fa7f5d3b42697",
       "target_resource_footprint_sha256": "b8f88a0fe5915d48cfe0cea661f0e9a811c10c2392efd6943c1014697c1cac6f",
       "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
       "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
@@ -419,9 +419,9 @@
     {
       "arm_count": 3,
       "arm_instruction_sha256_by_arm": {
-        "ACE-TNF-04-high": "e5bafc7660297dfb71c56b8e906a0d815dcb3ef5a2fbca75c033ea3c6a8748ec",
-        "ACE-TNF-04-independent": "583cd4baaf538902c1df918b601b782c740405a652f7b42e28560f2e65f4c93d",
-        "ACE-TNF-04-low": "befb95181239937fa661e0ed796cab140cea27ddf6c729d4eef92a7bb6a67510"
+        "ACE-TNF-04-high": "b6c76150ed740b00617b86993eecdb19c3da35af82049533f2e68b5d41bfd400",
+        "ACE-TNF-04-independent": "e3fe09422d3a1b32efa942c73740287a5e792a28b510704f78bedce403f56cd0",
+        "ACE-TNF-04-low": "9224c9fed8c386b66f738a51155a62f295ed70ac7c91b41acc17ec7e21ea18d2"
       },
       "category": "TODO_NOTE_FILE",
       "constraint_count": 3,
@@ -442,10 +442,10 @@
         "ACE-TNF-04-low": "e5163ab2146f5eced3ccc66d9446ada292b5d71630630b8e54baed10db526cf4"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "f09b7a6e502de02abf8d041cd9ae11bc4bb57b0e9afb1a451f820abd9a609858",
-      "instruction_byte_length": 196,
-      "instruction_word_count": 26,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "initial_snapshot_sha256": "b473f340bb3ebac544d5960e9705880ff944dddaba762263aad75f86271aed37",
+      "instruction_byte_length": 221,
+      "instruction_word_count": 27,
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -457,7 +457,7 @@
         "LOW": 1
       },
       "target_constraint_id_sha256": "39af01a3466c020cd1037d7a83461e0771f3f92a2312c39c21205cf77425aad8",
-      "target_instruction_sha256": "417faceeb9be65d17e35a5e0dd3818d466f5646fea659cfd9a58e650fc390b33",
+      "target_instruction_sha256": "62d9685ecba6ad5f737c16b1420b239ca34bfa3ef1a46dff956eb6dd71920905",
       "target_resource_footprint_sha256": "694873acd133b92d1a17a33ff510ca7fcc5e3e106663bb7b3df8cd36245408b7",
       "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
       "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
@@ -465,9 +465,9 @@
     {
       "arm_count": 3,
       "arm_instruction_sha256_by_arm": {
-        "ACE-TNF-05-high": "804c048a0503768d6d60800e37981a90b9717c37dd9053bb75baf3daac9f4789",
-        "ACE-TNF-05-independent": "c33d04625047df091ca91c0f6fe2465fc3d9965404a94d17cf2867b8dbf98ea9",
-        "ACE-TNF-05-low": "f9b76369937b2fe58935efbc7aca7625ddbb2eb2b1a12981ea92dc82fe87fdcf"
+        "ACE-TNF-05-high": "fe61be9bcf1194856885b85b2d6c1fcc7f21cd6e39408d45125d34b1bd65dfef",
+        "ACE-TNF-05-independent": "562d8b053dd08b8cea482cbed40f2d18333a9ce0c21464e7935237e77a91819e",
+        "ACE-TNF-05-low": "79e7250d6bff5168298925401f8aa6ee72f0814e5057a01d5a560f40c8d4949f"
       },
       "category": "TODO_NOTE_FILE",
       "constraint_count": 3,
@@ -488,10 +488,10 @@
         "ACE-TNF-05-low": "4896df6bb9f5de08db1fa7cc5c9166ecbcb1e11b853aeb47bc1603fed8db3e21"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "acbd7c76afd283f023e2fa773be9b2237e82bf2d7a30d47362c8fd4ef36c5ae6",
-      "instruction_byte_length": 196,
-      "instruction_word_count": 26,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "initial_snapshot_sha256": "daedaa643fda52438844cbb4e7505996882e59d428e09e5a7ecb1e56d754ad7b",
+      "instruction_byte_length": 221,
+      "instruction_word_count": 27,
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -503,7 +503,7 @@
         "LOW": 1
       },
       "target_constraint_id_sha256": "b93651071bd87c4b58a6424d385afd19e85acd4a3cf083634ccecd5594afb0b7",
-      "target_instruction_sha256": "cf58067caac402439585f8fe5193046d7a6e58eaa90f2a694e54de4e994bdfb0",
+      "target_instruction_sha256": "4bf72433f21c8b396b67f82598a5afa92438fb6b91398ce1948ea9b2a0f070e1",
       "target_resource_footprint_sha256": "25efb82a5edc6b04ab32f594de16c9b7a9abcba6a73c47bb699284fc861cce55",
       "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
       "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
@@ -511,9 +511,9 @@
     {
       "arm_count": 3,
       "arm_instruction_sha256_by_arm": {
-        "ACE-TNF-06-high": "2f096eb05b16228aa49749295ed06d832eb8ac56560c8f051f6066c85580d669",
-        "ACE-TNF-06-independent": "670e3af141d32cc0ef72de0d5c69eb2d4656eff03d80fd59dcf5ea684d7b52d0",
-        "ACE-TNF-06-low": "e91a8bbba4bb7d58aa614e9a95a0fa9d7e1804200f661ce3b6ab89ffcb5fc7c8"
+        "ACE-TNF-06-high": "a5c7e3068cb221b4012e45e899f7e4e771ae0fce96e97e52a1479c9085f16060",
+        "ACE-TNF-06-independent": "8a91963fa58a7f02a37e9837e3eb9f27c2270b239508726abf6176819827b913",
+        "ACE-TNF-06-low": "3d773ea3e61cfb33d8d9c05f9970cbc4a17758f640c71ac0669129c9306b2453"
       },
       "category": "TODO_NOTE_FILE",
       "constraint_count": 3,
@@ -534,10 +534,10 @@
         "ACE-TNF-06-low": "e3f78b85995c43dcea0a2c81af714d2c1c6eda2fd913e4cc2d7336af9428a54c"
       },
       "initial_non_target_constraints_satisfied": true,
-      "initial_snapshot_sha256": "9f842a3aa87db7551987881e01829f78a0988822fdc98bf084b6caa265955c5d",
-      "instruction_byte_length": 196,
-      "instruction_word_count": 26,
-      "matching_sha256": "eb3e71c401c9009f4dbfc3e36efda897a5232fbd2c5948bc781ce165eee13236",
+      "initial_snapshot_sha256": "b9a05111d42bc92ab8149908360c4883b68700bd47aaa2ea7e5790c43c916f2e",
+      "instruction_byte_length": 221,
+      "instruction_word_count": 27,
+      "matching_sha256": "85d0a7f1740cc964a96e660c66cc43d17c80c012a1819b9c917b473e5dd20c0d",
       "residual_confounds": [
         "non_target_entity_identity",
         "resource_role_salience",
@@ -549,7 +549,7 @@
         "LOW": 1
       },
       "target_constraint_id_sha256": "ab4fdeb5df46b43f89989b5422876e2feb299dc09983f9d7d03f8d83868f41fb",
-      "target_instruction_sha256": "d73d6c953a80d405ebbc061bd3f12bf45b26975ec79cf84e6025cc37f264b2fe",
+      "target_instruction_sha256": "cfbf7548e8c10e9a695239dd9c261d293a222daeaf8ea1d7c9cbc47480fef53e",
       "target_resource_footprint_sha256": "3785171c6e0705cf73559d1311b55ed3e4486ed86b73161fb1406210e9b29ac5",
       "target_semantics_sha256": "0c8291f06f3bbb70d180371316c73e02ef090f1906954413228c080615a015ab",
       "update_interface_sha256": "834853b79ca454d1f09e60d16999b96275a9eb96d925131f6708c1c360a4fbf4"
@@ -558,8 +558,8 @@
   "family_count": 12,
   "generated_at": "2026-08-31T19:30:00+08:00",
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
-  "protected_detail_bundle": "agent-constraint-externality-appworld-pre-f0_5-protected-v2-20260902.bundle",
-  "protected_detail_bundle_sha256": "0a5bfae987cf136df57d3ad5431c097143e3ca333d8ae3258356c50fdcf3597d",
+  "protected_detail_bundle": "agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle",
+  "protected_detail_bundle_sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5",
   "schema_version": "appworld-constraint-matched-family-manifest-v1",
   "scientific_outcomes_observed": 0
 }

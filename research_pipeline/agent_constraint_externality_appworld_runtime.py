@@ -479,6 +479,7 @@ class AppWorldToolWorld:
         experiment_name: str,
         seed: int,
         allowed_apps: set[str] | None = None,
+        max_interactions: int = 12,
     ) -> None:
         os.environ["APPWORLD_ROOT"] = str(runtime_root)
         from appworld import AppWorld
@@ -489,7 +490,7 @@ class AppWorldToolWorld:
             load_ground_truth=False,
             include_direct_functions=True,
             direct_function_separator=DIRECT_SEPARATOR,
-            max_interactions=12,
+            max_interactions=max_interactions,
             max_api_calls_per_interaction=12,
             random_seed=seed,
         )
