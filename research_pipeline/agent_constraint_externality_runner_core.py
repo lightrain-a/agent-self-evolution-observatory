@@ -412,14 +412,16 @@ def run_episode(
     result_evaluator: Callable[[], dict[str, Any]] | None = None,
     max_tool_calls: int = MAX_TOOL_CALLS,
 ) -> dict[str, Any]:
+    dispatch_provider = str(getattr(provider, "provider_id", PROVIDER_ID))
+    dispatch_base_url = str(getattr(provider, "base_url", base_url))
     ledger.dispatch(
         unit,
         prompt_sha256=sha256_value(instruction),
         snapshot_sha256=snapshot_sha256,
         repair_sha256=repair_sha256,
         requested_model=model,
-        provider=PROVIDER_ID,
-        base_url=base_url,
+        provider=dispatch_provider,
+        base_url=dispatch_base_url,
     )
     if crash_after_dispatch:
         raise UnknownAfterDispatchError("Synthetic crash after durable dispatch.")
