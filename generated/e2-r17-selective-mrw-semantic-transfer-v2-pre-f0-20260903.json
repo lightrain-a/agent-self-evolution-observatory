@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-selective-mrw-semantic-transfer-v2-pre-f0",
+  "created_at_utc": "2026-09-02T16:45:00+00:00",
+  "status": "PRE_F0_SEMANTIC_TRANSFER_V2_STATIC_PASS_AWAIT_CURRENT_PROVIDER_REQUALIFICATION",
+  "scientific_parent": {
+    "closed_result": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+    "old_outcomes_pooled_into_v2": false
+  },
+  "superseded_semantic_transfer_v1": {
+    "stage_a_r2_contract_path": "generated/e2-r17-semantic-transfer-v1-stage-a-r2-contract-20260902.json",
+    "stage_a_r2_contract_sha256": "93cce6fd52e96826383fcd01c860fdd423a7a54d1b43b7363548e5e6cbb9ecf2",
+    "review_readiness_path": "generated/e2-r17-semantic-transfer-stage-a-review-readiness-20260903.json",
+    "review_readiness_sha256": "ed2beb4c12e70cb15b9c0f992f069efbcfb28536e4edf12dd53af55c297f39de",
+    "provider_execution_started": false,
+    "stage_a_authorization_exists": false,
+    "global_lease_exists": false,
+    "run_root_exists": false,
+    "scientific_outcomes_accessed": false,
+    "disposition": "SUPERSEDED_PRE_PROVIDER_BY_V2_INDEPENDENT_STREAM_POWER_ALLOCATION_REPAIR"
+  },
+  "design": {
+    "path": "consultations/e2-r17-selective-mrw-semantic-transfer-v2-20260903.md",
+    "sha256": "e524952f2dd9ac42953707215d938a72d0c6177923c8ab442ce3c3981878b2cd",
+    "update_streams": 18,
+    "streams_per_family": 3,
+    "streams_per_semantic_group": 9,
+    "tasks_per_stream": 8,
+    "stage_a_k": 8,
+    "stage_a_actor_rollouts": 1152,
+    "stage_b_replicates_per_stream": 7,
+    "stage_b_paired_units": 126,
+    "stage_b_learned_states": 252,
+    "heldout_tasks_per_state": 18,
+    "stage_b_heldout_evaluations": 4536,
+    "mrw4_treated_mixed_pools_per_stream": 4,
+    "equal_dose_support_all_streams_required": true
+  },
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v2",
+    "suite_manifest_sha256": "6ceabf7607856214984fff2c39cdf8ceb8a02620c519d9790a89ecefefe91071",
+    "core_split_manifest_sha256": "f6c3a5e24cc284e27006d9a9fbc2f0d20f185ec53e0e6f58d05a7bd5a0afdd18",
+    "actor_compat_split_manifest_sha256": "7f6d2c3edd7e4b144ac5f8ad5de4f14ac5e039aec8249a0ba34f16eb0876c2fd",
+    "metadata_sha256": "5fb76d7da7ff19e67fdaad8e3a8c1c4dbb82337e524d31b450cdf7f91c62d5e8",
+    "dataset_sha256": "af7b8123f16954652118c8bc4836c0d65e73e6b066cdb73a163eb38ca94e0a82",
+    "deterministic_rebuild_file_count": 438,
+    "deterministic_rebuild_all_sha_equal": true,
+    "old_task_id_overlap": 0,
+    "old_xlsx_sha256_overlap": 0
+  },
+  "bound_code": {
+    "semantic_builders": {
+      "path": "research_pipeline/e2_r17_semantic_transfer_builders.py",
+      "sha256": "1736f6f7d768cee8f387b31d9249d832e4d221facc239a00df07c3024ec33e07"
+    },
+    "suite_builder": {
+      "path": "scripts/build_e2_r17_semantic_transfer_suite_v2.py",
+      "sha256": "f041cf35dea7619b432d72c467bd92537c655cea5f481d3263f21bc55e638414"
+    },
+    "static_auditor": {
+      "path": "scripts/audit_e2_r17_semantic_transfer_v2_static.py",
+      "sha256": "6bab626e6224d19f295678f98d048b5ff76467fc58025ad67d2dd36af4195da0"
+    },
+    "prompt_leakage_auditor": {
+      "path": "scripts/audit_e2_r17_semantic_transfer_v2_prompt_leakage.py",
+      "sha256": "e9a74f7cf1f534d49700503c5535d3ddd725e8a45a4b6b4dc6b20be3b956a596"
+    },
+    "static_balance_auditor": {
+      "path": "scripts/audit_e2_r17_semantic_transfer_v2_static_balance.py",
+      "sha256": "9539907ed44d0fbafd8dea84c1b7fe44f7efda759e56e3eb8c11b46ac85cd38a"
+    }
+  },
+  "audits": {
+    "static": {
+      "path": "generated/e2-r17-selective-mrw-semantic-transfer-v2-static-audit-20260903.json",
+      "sha256": "75c63b9a9ce57afd0070388103cc868df55120220999b4ee01c9fc602fd07761",
+      "status": "PASS_SEMANTIC_TRANSFER_V2_ZERO_PROVIDER_STATIC_AUDIT"
+    },
+    "prompt_leakage": {
+      "path": "generated/e2-r17-semantic-transfer-v2-prompt-leakage-audit-20260903.json",
+      "sha256": "4d6add16a5cda970d0e27f3504351f40603ef072f99381ed9f238988d6da59c0",
+      "status": "PASS_SEMANTIC_TRANSFER_V2_MODEL_VISIBLE_PROMPT_LEAKAGE_AUDIT"
+    },
+    "static_nuisance_balance": {
+      "path": "generated/e2-r17-semantic-transfer-v2-static-nuisance-balance-20260903.json",
+      "sha256": "af140e9da02c55bcaa86685234891b169e17ca398864809af7ff3107e564a5c5",
+      "status": "PASS_SEMANTIC_TRANSFER_V2_STATIC_NUISANCE_BALANCE"
+    }
+  },
+  "frozen_reduction_baselines": {
+    "difficulty_only": "rank 18 streams by Stage-A success rate ascending; hash-tie-break; lowest 9 -> MRW4, highest 9 -> WIN-C",
+    "mixedness_only": "rank 18 streams by Stage-A mixed-pool count descending; hash-tie-break; highest 9 -> MRW4, lowest 9 -> WIN-C",
+    "freeze_before_stage_b_outcomes": true,
+    "extra_updater_calls": 0,
+    "extra_heldout_evaluations": 0
+  },
+  "matched_skeleton_consistency": {
+    "skeleton_count": 3,
+    "criterion": "mean procedural D_s > mean binding D_s within each skeleton",
+    "inferential_p_value": false,
+    "role": "mechanism_falsifier_not_primary_alpha_gate"
+  },
+  "power_boundary": {
+    "planning_source": "closed-sample pooled within-stream replicate SD only",
+    "pooled_replicate_sd": 0.1633,
+    "practical_component_effect": 0.05555555555555555,
+    "component_streams": 9,
+    "replicates_per_stream": 7,
+    "paired_t_planning_power_approx": 0.79,
+    "joint_80_percent_power_claimed": false,
+    "cost_bounded_design": true
+  },
+  "provider_calls_v2": 0,
+  "scientific_execution_v2": false,
+  "stage_b_outcomes_accessed": false,
+  "authority": {
+    "static_design": true,
+    "provider_identity_qualification": true,
+    "zero_provider_stage_a_preflight": true,
+    "independent_preexecution_review": true,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "heldout_evaluation": false,
+    "analyzer": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false
+  },
+  "next_gate": "CURRENT_DEEPSEEK_IDENTITY_REQUALIFICATION_THEN_ZERO_PROVIDER_STAGE_A_V3_PREFLIGHT_AND_LOCKED_DUAL_REVIEW"
+}

@@ -1,0 +1,104 @@
+{
+  "artifact_type": "e2-r17-semantic-transfer-v2-static-nuisance-balance-audit",
+  "authority": {
+    "paper_promotion": false,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false
+  },
+  "by_semantic": {
+    "INSTANCE_BINDING_LOCALIZATION": {
+      "distractor_level": {
+        "counts": {
+          "0": 21,
+          "1": 24,
+          "2": 27
+        },
+        "mean": 1.0833333333333333
+      },
+      "instruction_chars": {
+        "max": 445,
+        "mean": 321.47222222222223,
+        "min": 220
+      },
+      "procedure_depth_level": {
+        "counts": {
+          "0": 27,
+          "1": 19,
+          "2": 26
+        },
+        "mean": 0.9861111111111112
+      },
+      "schema_ambiguity_level": {
+        "counts": {
+          "0": 27,
+          "1": 22,
+          "2": 23
+        },
+        "mean": 0.9444444444444444
+      },
+      "tasks": 72,
+      "xlsx_bytes": {
+        "max": 10250,
+        "mean": 7926.777777777777,
+        "min": 5770
+      }
+    },
+    "PROCEDURAL_TRANSFORMATION": {
+      "distractor_level": {
+        "counts": {
+          "0": 24,
+          "1": 24,
+          "2": 24
+        },
+        "mean": 1.0
+      },
+      "instruction_chars": {
+        "max": 474,
+        "mean": 345.56944444444446,
+        "min": 224
+      },
+      "procedure_depth_level": {
+        "counts": {
+          "0": 22,
+          "1": 26,
+          "2": 24
+        },
+        "mean": 1.0277777777777777
+      },
+      "schema_ambiguity_level": {
+        "counts": {
+          "0": 26,
+          "1": 21,
+          "2": 25
+        },
+        "mean": 0.9861111111111112
+      },
+      "tasks": 72,
+      "xlsx_bytes": {
+        "max": 10449,
+        "mean": 7989.847222222223,
+        "min": 5735
+      }
+    }
+  },
+  "checks": {
+    "ambiguity_mean_abs_diff_le_0_10": true,
+    "depth_mean_abs_diff_le_0_10": true,
+    "distractor_level_per_level_count_abs_diff_le_8": true,
+    "distractor_mean_abs_diff_le_0_10": true,
+    "instruction_mean_abs_diff_le_40_chars": true,
+    "procedure_depth_level_per_level_count_abs_diff_le_8": true,
+    "schema_ambiguity_level_per_level_count_abs_diff_le_8": true,
+    "xlsx_mean_abs_diff_le_250_bytes": true
+  },
+  "created_at_utc": "2026-09-02T16:37:37+00:00",
+  "dataset_sha256": "af7b8123f16954652118c8bc4836c0d65e73e6b066cdb73a163eb38ca94e0a82",
+  "interpretation": "The two semantic groups are statically balanced on the controlled L9 depth/distractor/ambiguity factors, instruction length, and input-workbook size before any model outcome. These checks do not prove equal behavioral difficulty; Stage-A acting success is therefore retained as a pre-learning difficulty reduction baseline rather than assumed away.",
+  "metadata_sha256": "5fb76d7da7ff19e67fdaad8e3a8c1c4dbb82337e524d31b450cdf7f91c62d5e8",
+  "schema_version": "1.0",
+  "split_manifest_sha256": "7f6d2c3edd7e4b144ac5f8ad5de4f14ac5e039aec8249a0ba34f16eb0876c2fd",
+  "status": "PASS_SEMANTIC_TRANSFER_V2_STATIC_NUISANCE_BALANCE",
+  "suite_manifest_sha256": "6ceabf7607856214984fff2c39cdf8ceb8a02620c519d9790a89ecefefe91071",
+  "suite_root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v2",
+  "update_tasks": 144
+}
