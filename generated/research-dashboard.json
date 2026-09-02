@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "as_of_date": "2026-09-02",
+  "as_of_date": "2026-09-03",
   "projection_policy": {
     "read_only": true,
     "scientific_authority": false,
@@ -413,46 +413,26 @@
   ],
   "week": {
     "start_date": "2026-08-31",
-    "end_date": "2026-09-02",
-    "research_days": 3,
-    "events": 305,
-    "substantive_events": 112,
+    "end_date": "2026-09-03",
+    "research_days": 4,
+    "events": 480,
+    "substantive_events": 212,
     "key_changes": 0,
     "class_counts": {
-      "blocker": 28,
-      "closure": 33,
-      "experiment": 34,
-      "idea": 9,
-      "paper": 8,
-      "system": 193
+      "blocker": 34,
+      "closure": 71,
+      "experiment": 69,
+      "idea": 18,
+      "paper": 20,
+      "system": 268
     },
     "attention_activity": {
       "B-3": 1,
-      "E-7": 42
+      "E-7": 46
     },
     "highlights": [
       {
-        "date": "2026-09-02",
-        "event_class": "closure",
-        "title_zh": "停止 / 关闭裁决 · longitudinal-cross-failure-orthogonal-screen-20260824",
-        "title_en": "longitudinal-cross-failure-orthogonal-screen-20260824",
-        "research_items": [],
-        "papers": [],
-        "href": "research-timeline.html"
-      },
-      {
-        "date": "2026-09-02",
-        "event_class": "closure",
-        "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
-        "title_en": "paper-first-pf1-problem-adjudication",
-        "research_items": [
-          "A-8"
-        ],
-        "papers": [],
-        "href": "research-timeline.html?research=A-8"
-      },
-      {
-        "date": "2026-09-02",
+        "date": "2026-09-03",
         "event_class": "closure",
         "title_zh": "停止 / 关闭裁决 · repair-surface-identifiability-under-persistent-agent-updates",
         "title_en": "paper-first-pf2-method-adjudication",
@@ -463,18 +443,27 @@
         "href": "research-timeline.html?research=E-5"
       },
       {
-        "date": "2026-09-02",
+        "date": "2026-09-03",
         "event_class": "closure",
-        "title_zh": "P0 实验裁决 · P0-B10-TYPED-MEMORY-ORDER",
-        "title_en": "P0-B10-TYPED-MEMORY-ORDER",
-        "research_items": [
-          "B-10"
-        ],
+        "title_zh": "停止 / 关闭裁决 · SCG-001",
+        "title_en": "Semantic Commit Gap: persisted self-update versus future enactment",
+        "research_items": [],
         "papers": [],
-        "href": "research-timeline.html?research=B-10"
+        "href": "research-timeline.html"
       },
       {
-        "date": "2026-09-02",
+        "date": "2026-09-03",
+        "event_class": "closure",
+        "title_zh": "停止 / 关闭裁决 · evolvability-debt-under-persistent-agent-updates",
+        "title_en": "paper-first-pf1-problem-adjudication",
+        "research_items": [
+          "A-8"
+        ],
+        "papers": [],
+        "href": "research-timeline.html?research=A-8"
+      },
+      {
+        "date": "2026-09-03",
         "event_class": "closure",
         "title_zh": "P0 实验裁决 · P0-A6-ACTIVE-CAUSAL-MINIMAL-ROLLBACK",
         "title_en": "P0-A6-ACTIVE-CAUSAL-MINIMAL-ROLLBACK",
@@ -483,6 +472,17 @@
         ],
         "papers": [],
         "href": "research-timeline.html?research=A-6"
+      },
+      {
+        "date": "2026-09-03",
+        "event_class": "closure",
+        "title_zh": "P0 实验裁决 · P0-B10-TYPED-MEMORY-ORDER",
+        "title_en": "P0-B10-TYPED-MEMORY-ORDER",
+        "research_items": [
+          "B-10"
+        ],
+        "papers": [],
+        "href": "research-timeline.html?research=B-10"
       }
     ],
     "timeline_href": "research-timeline.html"
