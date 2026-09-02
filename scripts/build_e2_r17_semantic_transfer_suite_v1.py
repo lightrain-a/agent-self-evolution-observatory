@@ -242,6 +242,15 @@ def main() -> int:
         },
     }
     write_json(root / "r17_semantic_transfer_split_manifest.json", split)
+    # Compatibility aliases for the frozen generic actor. These files only
+    # rename schema fields; they point to the exact same 96 update tasks and
+    # 18 heldout tasks and do not alter any task or treatment semantics.
+    compat_split = dict(split)
+    compat_split["development"] = []
+    compat_split["e1_update_streams"] = streams
+    compat_split["e1_common_heldout_probe"] = heldout
+    write_json(root / "r17_split_manifest.json", compat_split)
+    write_json(root / "r17_controlled_metadata.json", metadata)
 
     new_ids = {row["id"] for row in metadata}
     new_hashes = {sha256_file(item[key]) for item in built for key in ("init", "golden")}
@@ -298,6 +307,8 @@ def main() -> int:
         "matched_skeleton_stream_counts": {key: len(value) for key, value in skeleton_streams.items()},
         "split_manifest_sha256": sha256_file(root / "r17_semantic_transfer_split_manifest.json"),
         "metadata_sha256": sha256_file(root / "r17_semantic_transfer_metadata.json"),
+        "actor_compat_split_manifest_sha256": sha256_file(root / "r17_split_manifest.json"),
+        "actor_compat_metadata_sha256": sha256_file(root / "r17_controlled_metadata.json"),
         "dataset_sha256": canonical_sha(files),
         "old_suite_disjointness": {
             "task_id_overlap": old_id_overlap,

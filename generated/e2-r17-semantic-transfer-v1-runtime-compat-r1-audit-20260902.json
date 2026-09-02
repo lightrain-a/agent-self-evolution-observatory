@@ -1,0 +1,69 @@
+{
+  "actor": {
+    "compatibility_mode": "existing_e1_mode",
+    "path": "scripts/run_e2_r17_actor_pool.py",
+    "sha256": "20a81fbe06f3839cd17babfdb021407368493da61610bca33aae33df8d31ec14"
+  },
+  "artifact_type": "e2-r17-semantic-transfer-v1-runtime-compat-r1-audit",
+  "authority": {
+    "analyzer": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "zero_provider_stage_a_contract_preflight": true
+  },
+  "identity": {
+    "path": "generated/e2-r17-selective-mrw-semantic-transfer-v1-deepseek-identity-qualification-20260902.json",
+    "requested": "deepseek-v4-pro",
+    "resolved": "deepseek-v4-pro-ga-260813",
+    "sha256": "78eeb2f58edd6c9f60d355afaf90a8adc5ae811f0434cc0ef59d2b31220b6c5d",
+    "usage": {
+      "input_tokens": 27,
+      "input_tokens_details": {
+        "cached_tokens": 0
+      },
+      "output_tokens": 3,
+      "output_tokens_details": {
+        "reasoning_tokens": 0
+      },
+      "total_tokens": 30
+    }
+  },
+  "new_test_outcomes_accessed": false,
+  "next_gate": "FREEZE_STAGE_A_DRAFT_CONTRACT_AND_RUN_ZERO_PROVIDER_ACTUAL_PATH_PREFLIGHT",
+  "parent_pre_f0": {
+    "path": "generated/e2-r17-selective-mrw-semantic-transfer-v1-pre-f0-20260902.json",
+    "sha256": "d30aadfc1991e63d9db604edbf38dac8203603c00edc3c5c103026bd9ff661a9"
+  },
+  "parent_static_audit": {
+    "path": "generated/e2-r17-selective-mrw-semantic-transfer-v1-static-audit-20260902.json",
+    "sha256": "30e2350447b190661c6ed20d40fd9e95d40f81d846a9fd2a172a6ec59d85f3f6"
+  },
+  "provider_calls_scientific": 0,
+  "provider_calls_total_for_child": 1,
+  "runtime": {
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "initial_skill_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb",
+    "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "mindmemos_root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "status": "PASS_SEMANTIC_TRANSFER_V1_RUNTIME_COMPAT_R1",
+  "suite": {
+    "actor_compat_metadata_sha256": "5802f35a6fedaa843ba61887ad0a892b8a178b33c20fb6bc4ad0f05e9832476f",
+    "actor_compat_split_sha256": "6ac03fd07391b2671e2e3cecd975395adff6c9fbd622751195a5a46b6a39af1c",
+    "compat_alias_semantics_changed": false,
+    "core_metadata_sha256": "5802f35a6fedaa843ba61887ad0a892b8a178b33c20fb6bc4ad0f05e9832476f",
+    "core_split_sha256": "db911c2c088f3a5df08ffccc922ea8b68a6af31f0f8a1bb4372ce85e62b34033",
+    "deterministic_regeneration_all_330_files_equal": true,
+    "heldout_tasks": 18,
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v1",
+    "suite_manifest_sha256": "a7ddee258ddc22cee3efe22bad44046faa20ba9d49762c98a66a843c2c9533a3",
+    "update_tasks": 96
+  }
+}
