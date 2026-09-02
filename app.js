@@ -4421,11 +4421,13 @@ function localizeRenderedChinese(root = document) {
 function applyReadabilityFloor(root = document) {
   const bodyTags = new Set(["P","LI","TD","DD"]);
   const mobile = window.matchMedia("(max-width: 820px)").matches;
+  const paperReader = /^paper-(?:e1|g1|c1|e2|b1|a|b|agent-constraint|3d)$/.test(pageId);
   root.querySelectorAll(".layout *").forEach((node) => {
     if (![...node.childNodes].some((child) => child.nodeType === Node.TEXT_NODE && child.textContent.trim())) return;
     const size = Number.parseFloat(getComputedStyle(node).fontSize || "0");
     if (!Number.isFinite(size) || size <= 0) return;
-    const floor = bodyTags.has(node.tagName) ? (mobile ? 12.5 : 12) : 11.5;
+    const bodyFloor = paperReader ? (mobile ? 13.5 : 13) : (mobile ? 12.5 : 12);
+    const floor = bodyTags.has(node.tagName) ? bodyFloor : 11.5;
     if (size < floor) {
       node.classList.add(bodyTags.has(node.tagName) ? "readability-body-floor" : "readability-floor");
       node.style.setProperty("font-size", `${floor}px`, "important");
