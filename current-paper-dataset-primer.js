@@ -23,3 +23,37 @@ window.CURRENT_PAPER_DATASET_PRIMER={
 "BLS CPI / Federal Reserve FOMC":{kind:{zh:"真实经济发布系统",en:"Real economic release systems"},what:{zh:"CPI 与 FOMC 都有明确发布日期、版本和官方页面。",en:"CPI and FOMC have explicit release dates, versions, and official pages."},sample:{zh:"一条任务指定一个时间点，Agent 只能使用当时已发布的 CPI/FOMC 信息。",en:"A task fixes a point in time and permits only information available then."},io:{zh:"输入是搜索环境 + 时间约束；输出是带证据的时点答案。",en:"Input is a search environment plus temporal constraints; output is a grounded answer."},score:{zh:"答案、引用证据和 cutoff 都要正确。",en:"Answer, evidence, and cutoff compliance must all be correct."},why:{zh:"让 E2 基于真实变化的信息，而不是静态 trivia。",en:"Makes E2 about genuinely changing information."}},
 "R17 frozen search-evidence panel":{kind:{zh:"本项目 search→learning 实验集",en:"Project search-to-learning panel"},what:{zh:"冻结一次搜索中的 winner、near-miss、failure evidence，再研究 learner 应该看到哪些。",en:"Freezes winner, near-miss, and failure evidence from search and varies what the learner sees."},sample:{zh:"一个 pair 用同一个 source search，形成 WIN-C / MRW 两个 learned state，再做相同 held-out future tasks。",en:"One pair uses the same source search to create WIN-C/MRW learned states, then tests identical held-out tasks."},io:{zh:"acting 始终用 winner；唯一改变的是 learning projection。",en:"Acting always uses the winner; only the learning projection changes."},score:{zh:"比较学习后的 held-out future performance，不看 source task 当下是否成功。",en:"The endpoint is future held-out performance after learning."},why:{zh:"把‘做事选 winner’与‘学习只看 winner’拆成两个问题。",en:"Separates acting-optimal from learning-optimal evidence."}}
 };
+
+window.CURRENT_PAPER_TERM_PRIMER={
+ definitions:{
+  evaluator:{zh:"评价器：负责判分或打标签的模型/规则，不一定是被测 Agent。",en:"Evaluator: the model/rule that judges outcomes, not necessarily the tested agent."},
+  backbone:{zh:"主模型：真正执行任务、产生行为的核心模型。",en:"Backbone: the main model that actually performs the task."},
+  writer:{zh:"写入模块：把一次经验总结成长期记忆、规则或更新。",en:"Writer: turns an experience into persistent memory/rules/updates."},
+  retrieval:{zh:"检索：系统从记忆库里找回可能相关的内容。",en:"Retrieval: fetching potentially relevant content from memory."},
+  trajectory:{zh:"轨迹：Agent 从任务开始到结束的一整串状态、观察和动作。",en:"Trajectory: the full sequence of states, observations, and actions."},
+  heldout:{zh:"留出测试：前面没有用于选方法、调参数或学习的测试任务。",en:"Held-out: test cases not used for method selection, tuning, or learning."},
+  treatment:{zh:"处理变量：实验里我们主动改变的那一个关键条件。",en:"Treatment: the one key condition intentionally changed in the experiment."},
+  arm:{zh:"实验组：同一实验中一种固定条件，例如有更新/无更新。",en:"Arm: one fixed experimental condition, such as update/no-update."},
+  pair:{zh:"成对比较：尽量保持其它条件一致，只让一个变量不同的一对实验。",en:"Pair: two matched runs differing in one intended variable."},
+  terminal:{zh:"最终结果：任务走到最后时是否真正完成，而不是中途看起来变好了。",en:"Terminal outcome: whether the task truly succeeds at the end."},
+  provenance:{zh:"来源身份：这段记忆/经验来自成功、失败或哪个来源。",en:"Provenance: where a memory/experience came from, such as success or failure."},
+  native:{zh:"原生流程：系统正常运行时本来就会走的真实路径，不是研究者强行塞入。",en:"Native: the system's normal execution path rather than forced injection."},
+  counterfactual:{zh:"反事实对照：保持同一场景，只改一个条件，问结果会不会变。",en:"Counterfactual: keep the scene fixed and change one condition."},
+  mediator:{zh:"中间环节：最终行为之前真正把影响传下去的那一步。",en:"Mediator: an intermediate step carrying the effect to behavior."},
+  substrate:{zh:"实验底座：承载实验的真实环境、模型和工具栈。",en:"Substrate: the real environment/model/tool stack used for the experiment."},
+  support:{zh:"支持条件：当前数据和系统是否足够构造一个公平、可解释的实验。",en:"Support: whether the available data/system can support a fair interpretable test."},
+  failclosed:{zh:"保守停止：证据不够或测量不稳定时先停止，不硬凑一个确定结论。",en:"Fail closed: stop under insufficient or unstable evidence rather than forcing a conclusion."},
+  ir:{zh:"iRecall：3D 场景里要求的空间关系有多少真正被满足。",en:"iRecall: how many requested scene relations are actually satisfied."}
+ },
+ pages:{
+  "paper-e1":["treatment","counterfactual","mediator","retrieval","support","failclosed"],
+  "paper-g1":["evaluator","trajectory","arm","failclosed","heldout","backbone"],
+  "paper-c1":["writer","retrieval","native","terminal","trajectory","support"],
+  "paper-e2":["pair","heldout","treatment","trajectory","support","failclosed"],
+  "paper-b1":["provenance","pair","writer","treatment","support","terminal"],
+  "paper-a":["counterfactual","retrieval","backbone","terminal","treatment","support"],
+  "paper-b":["retrieval","counterfactual","terminal","trajectory","backbone","support"],
+  "paper-agent-constraint":["treatment","arm","pair","support","backbone","failclosed"],
+  "paper-3d":["substrate","treatment","support","ir","counterfactual","backbone"]
+ }
+};
