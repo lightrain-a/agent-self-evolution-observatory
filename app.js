@@ -1394,8 +1394,8 @@ function renderProjectStatusStrip(){
   const selectedStatusLabels=selectedPaper?(language==="zh"?[["PaperState 总数",selectedPaperCount],["Ledger SUBMISSION_READY",selectedLedgerReadyCount],["最新门禁 clean",selectedGateCleanCount],["Readiness HOLD",selectedHoldCount],["STRI",paper.paper_stage||paper.current_state||"--"],["Agent Safety R9",selectedSafetyPaper.paper_stage||selectedSafetyPaper.current_state||"--"]]:[["PaperStates",selectedPaperCount],["Ledger SUBMISSION_READY",selectedLedgerReadyCount],["Latest gates clean",selectedGateCleanCount],["Readiness HOLD",selectedHoldCount],["STRI",paper.paper_stage||paper.current_state||"--"],["Agent Safety R9",selectedSafetyPaper.paper_stage||selectedSafetyPaper.current_state||"--"]]):statusLabels;
   return `<section class="project-status-strip current"><div class="project-status-copy"><b>${selectedPaper?(language==="zh"?"当前论文 · PaperRegistry":"Current papers · PaperRegistry"):(language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`)}</b><span>${selectedMessage}</span></div><dl class="project-status-metrics">${selectedStatusLabels.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl></section>`;
 }
-function pageHeader(config) {
-  return `<div class="eyebrow">${esc(textOf(config.eyebrow))}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout ? `<div class="callout">${textOf(config.callout)}</div>` : ""}${renderProjectStatusStrip()}`;
+function pageHeader(config, includeProjectStatus = true) {
+  return `<div class="eyebrow">${esc(textOf(config.eyebrow))}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout ? `<div class="callout">${textOf(config.callout)}</div>` : ""}${includeProjectStatus ? renderProjectStatusStrip() : ""}`;
 }
 function renderSectionForPage(section, index, citationPageId = pageId, extraClass = "", headingLevel = 2) {
   const title = textOf(section.title);
@@ -4603,6 +4603,7 @@ function renderPage() {
   else if (pageId === "bibliography") root.innerHTML = renderBibliography(config);
   else if (pageId === "repositories") root.innerHTML = renderDynamicResourceIndex(config, "repositories");
   else if (pageId === "datasets-benchmarks") root.innerHTML = renderDynamicResourceIndex(config, "benchmarks");
+  else if (pageId === "experiment-costs") root.innerHTML = `${pageHeader(config, false)}${(config.sections || []).map(renderSection).join("")}`;
   else root.innerHTML = `${pageHeader(config)}${renderOverviewFigure(config)}${(config.sections || []).map(renderSection).join("")}`;
   document.querySelector(".language-toggle")?.replaceChildren(document.createTextNode(language === "en" ? "中文" : "English"));
   bindPageEvents();

@@ -185,7 +185,7 @@ def main() -> None:
               consoleLinks: [...document.querySelectorAll('.home-research-console a')].map(x=>x.getAttribute('href')||'')
             };""",
         )
-        require(home["nav"] == 19, f"expected 19 primary navigation targets after adding nine current-paper pages, got {home['nav']}")
+        require(home["nav"] == 20, f"expected 20 primary navigation targets after adding the experiment-cost page, got {home['nav']}")
         require(home["stats"] == 4 and home["routeCards"] == 9 and home["hero"] == 1 and home["heroActions"] == 4 and home["ruleSteps"] == 4 and home["routeGroups"] == 3 and home["legacyFramework"] == 0, f"home compact portal layout is incomplete or duplicated: {home}")
         require(not home["figure"] and home["distribution"] == 0, "home should route readers instead of duplicating the field-history figure or literature distribution")
         require(home["missing"] == 0, "home contains unresolved citations")
@@ -788,7 +788,7 @@ def main() -> None:
         # expanded everywhere so readers can jump to the bibliography without another click.
         canonical_frontend_pages = (
             "/index.html", "/foundations.html", "/mechanisms.html",
-            "/system-overview.html", "/research-map.html", "/research-timeline.html", "/research-directions.html",
+            "/system-overview.html", "/experiment-costs.html", "/research-map.html", "/research-timeline.html", "/research-directions.html",
             "/paper-ideas.html", "/experiments.html", "/selected-paper.html",
             "/paper-e1.html", "/paper-g1.html", "/paper-c1.html", "/paper-e2.html", "/paper-b1.html",
             "/paper-a.html", "/paper-b.html", "/paper-agent-constraint.html", "/paper-3d.html",

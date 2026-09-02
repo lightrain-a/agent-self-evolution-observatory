@@ -19,6 +19,7 @@ CANONICAL_PAGES = {
     "system-overview.html": "system-overview",
     "research-map.html": "research-map",
     "research-timeline.html": "research-timeline",
+    "experiment-costs.html": "experiment-costs",
     "research-map.html": "research-map",
     "research-directions.html": "research-directions",
     "paper-ideas.html": "paper-ideas",
@@ -70,7 +71,7 @@ REDIRECT_PAGES = {
     "review-log.html": "selected-paper.html",
 }
 REQUIRED_STATIC = [
-    "CNAME", "_config.yml", ".gitignore", "style.css", "app.js", "data.js",
+    "CNAME", "_config.yml", ".gitignore", "style.css", "experiment-costs.css", "app.js", "data.js", "content-experiment-costs.js",
     "content-consolidated.js", "redirect.js", "favicon.svg", "robots.txt",
     "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
