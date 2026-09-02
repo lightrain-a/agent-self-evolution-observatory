@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q0-v1-20260902",
+  "status": "STOP_SOURCE_BUDGET_V1_TRANSPORT_TIMEOUT",
+  "provider": "AtomGit CodingPlan via AtomCode 5.0.9 headless",
+  "requested_profile": "AtomGit-qwen3.8-27b",
+  "resolved_model": "qwen3.8-27b",
+  "identity": {
+    "status": "PASS",
+    "qualified": 3,
+    "total": 3,
+    "result_sha256": "7e6798231fe2000fb2828d76b96be664f2c6906b97befdaf5dfe3cd4cc9e8b00"
+  },
+  "first_action": {
+    "status": "PASS",
+    "selected_budget": 2048,
+    "ladder": [
+      {"budget": 512, "qualified": 11, "total": 20},
+      {"budget": 1024, "qualified": 13, "total": 20},
+      {"budget": 2048, "qualified": 20, "total": 20}
+    ],
+    "result_sha256": "eb9f1513859ac3169da11ff0668d9c26088f4b1643312784b4e7eae2ce50aa4a"
+  },
+  "source_budget": {
+    "status": "STOP_ATOMGIT_QWEN38_SOURCE_BUDGET",
+    "ladder": [
+      {"budget": 4096, "qualified": 0, "total": 6},
+      {"budget": 16384, "qualified": 5, "total": 6},
+      {"budget": 32768, "qualified": 3, "total": 6}
+    ],
+    "result_sha256": "e554de18ae89086c915796aa4004f8578ab26a05acaa0d9641d61b6a5ae028be",
+    "failure_differential": {
+      "16384": "5/6 byte-exact PASS; sole failure is AtomCode subprocess TIMEOUT at 300 seconds on h0/l320.",
+      "32768": "All three failures are AtomCode subprocess TIMEOUT at 300 seconds; completed calls are byte-exact PASS.",
+      "interpretation": "The blocking layer is the wrapper transport timeout, not demonstrated content-capacity, parser, or model-identity failure."
+    }
+  },
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_measurement_calls": 0,
+  "claim_authority": "NO_NEW_PACTA_EFFECT_EVIDENCE",
+  "next_epoch": {
+    "name": "Q0-v2 transport-timeout-only repair",
+    "single_changed_variable": "AtomCode subprocess timeout 300s -> 900s",
+    "fixed_source_budget": 16384,
+    "fixtures": "same six non-scientific source-budget fixtures",
+    "unchanged": [
+      "AtomGit-qwen3.8-27b profile",
+      "resolved qwen3.8-27b model",
+      "AtomCode 5.0.9 headless interface",
+      "--no-tools",
+      "--ephemeral",
+      "--no-telemetry",
+      "prompt bytes",
+      "parser",
+      "budget 16384",
+      "provider retries = 0"
+    ]
+  }
+}
