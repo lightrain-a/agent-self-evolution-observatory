@@ -112,10 +112,16 @@ Failure of this support gate is SUPPORT HOLD, not permission to change K, model,
 
 For each of the 12 sealed E3 streams, use the same frozen search pools to create contemporaneous paired arms:
 
-- WIN-C: updater sees the winner only;
-- MRW: updater sees the same winner plus the frozen mixed rejected witness under the existing MRW projection rule.
+- WIN-C: for every pool, the updater-visible evidence is the served winner;
+- MRW: on a mixed pool, the updater-visible evidence is the deterministic first failed nonwinner; on a nonmixed pool, it is byte-identical in source identity to WIN-C's winner evidence.
 
-Everything else is held fixed: initial skill, stream tasks, pool hashes, acting winner, updater implementation, model, prompt, budget, heldout panel, K=1 evaluation, verifier, and decoding settings.
+MRW is therefore a **matched-budget branch replacement**, not an additive `winner + failure` packet. The acting channel is unchanged in both arms: the verifier-selected winner is served in either case. The learning channel alone changes which already-generated branch is exposed to the updater, and the exact matched-window renderer equalizes final updater-visible token length across the paired evidence blocks.
+
+The resulting data flow is:
+
+`initial skill S0 -> K=8 search pool T_K -> verifier-selected acting winner a(T_K) -> {g_WIN(T_K), g_MRW(T_K)} -> same SkillEvolver -> frozen learned skills {S_WIN, S_MRW} -> common unseen K=1 heldout panel`.
+
+Everything else is held fixed: initial skill, stream tasks, pool hashes, acting winner, updater implementation, model, prompt, evidence budget, heldout panel, K=1 evaluation, verifier, and decoding settings.
 
 Freeze `R = 8` paired replicates per stream before any V3 learning outcome.
 
