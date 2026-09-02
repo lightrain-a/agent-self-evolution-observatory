@@ -1,0 +1,169 @@
+{
+  "actor": {
+    "concurrency_per_probe": 1,
+    "k": 1,
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "actor_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
+    "role": "actor_evaluator",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "arms": [
+    "win_c",
+    "first_fail"
+  ],
+  "artifact_type": "e2-r17-single-case-first-fail-frozen-state-stability-contract",
+  "authority": {
+    "analyzer": false,
+    "e3_confirmation": false,
+    "heldout_evaluation": false,
+    "measurement_only": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "scientific_experiment": false,
+    "second_backbone": false,
+    "submission": false,
+    "updater": false
+  },
+  "bound_code": {
+    "actor_wrapper": {
+      "path": "scripts/run_e2_r17_actor_pool_single_case_stability.py",
+      "sha256": "e428da77dc833982f1e6da9b4f21c81360c6c76f3541651569e5eafa577ae58a"
+    },
+    "authorizer": {
+      "path": "scripts/authorize_e2_r17_single_case_stability.py",
+      "sha256": "fa857b2508c2eb95baac35b77f8be7007c26f0e9fbe14533425747e14229d6aa"
+    },
+    "compat_actor": {
+      "path": "scripts/run_e2_r17_actor_pool_measurement_compat_v1.py",
+      "sha256": "8261645a7d2864635e3985002328c7610e46e38fcd15dbe50bf688c8348ca583"
+    },
+    "preflight": {
+      "path": "scripts/preflight_e2_r17_single_case_stability.py",
+      "sha256": "73586e3e97f4372ceeeb0659ed302def75e0bb973ec0a9f70bb68c1aace62f1c"
+    },
+    "provider_budget": {
+      "path": "research_pipeline/e2_r17_provider_budget.py",
+      "sha256": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444"
+    },
+    "runner": {
+      "path": "scripts/run_e2_r17_single_case_stability.py",
+      "sha256": "a6781738a9cc9ab62ebe3f7f7438577c6b3f46c5a55f631492237563ee09b7ea"
+    }
+  },
+  "budget": {
+    "max_provider_calls_per_measurement_state": 191,
+    "max_provider_calls_per_unit": 11
+  },
+  "case_stream": "e1-tsr-00",
+  "created_at_utc": "2026-09-02T04:59:05+00:00",
+  "design": {
+    "path": "generated/e2-r17-single-case-first-fail-frozen-state-stability-design-20260902.json",
+    "sha256": "695933749fa8cc101652ce863c2133387f8871291e0745fd6e481030b2567d78"
+  },
+  "env_file": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env",
+  "git_commit_at_freeze": "bdd7167dfb21617cca2c6e9f3a9c8c02a0432d5b",
+  "heldout_task_ids": [
+    "r17-b4-agj-p2",
+    "r17-b4-agj-p3",
+    "r17-b4-agj-p8",
+    "r17-b4-fmv-p1",
+    "r17-b4-fmv-p2",
+    "r17-b4-fmv-p8",
+    "r17-b4-ioc-p1",
+    "r17-b4-ioc-p4",
+    "r17-b4-ioc-p6",
+    "r17-b4-msp-p0",
+    "r17-b4-msp-p7",
+    "r17-b4-msp-p8",
+    "r17-b4-ska-p4",
+    "r17-b4-ska-p5",
+    "r17-b4-ska-p8",
+    "r17-b4-tsr-p0",
+    "r17-b4-tsr-p6",
+    "r17-b4-tsr-p8"
+  ],
+  "learned_states": [
+    {
+      "arm": "win_c",
+      "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/states/e1-tsr-00/replicate_0/win_c/update/skill_post/SKILL.md",
+      "skill_post_sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+      "state_root": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/states/e1-tsr-00/replicate_0/win_c",
+      "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/states/e1-tsr-00/replicate_0/win_c/update/update_receipt.json",
+      "update_receipt_sha256": "eb1dfc4d2849205b7ddca2cc6f006031501770eb146a70076799e46266fbe08d"
+    },
+    {
+      "arm": "first_fail",
+      "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/states/e1-tsr-00/replicate_0/first_fail/update/skill_post/SKILL.md",
+      "skill_post_sha256": "97e28b4862ed5817929fa6014eb1ba1401667875d80e03d18c0b54978a185252",
+      "state_root": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/states/e1-tsr-00/replicate_0/first_fail",
+      "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/states/e1-tsr-00/replicate_0/first_fail/update/update_receipt.json",
+      "update_receipt_sha256": "e5fefbe7070fc4afbad9a62a7d175806cab011b64578bca0ee52cfedc4999ab9"
+    }
+  ],
+  "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-first-fail-stability-v1.json",
+  "measurement_replicates": [
+    1,
+    2
+  ],
+  "mindmemos": {
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e"
+    },
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817"
+  },
+  "model_identity": {
+    "fresh_max_output_tokens_smoke": 8192,
+    "path": "generated/e2-r17-deepseek-v2-repair2-model-identity-adjudication-20260831.json",
+    "provider_retry_limit": 0,
+    "qualification_path": "generated/e2-r17-deepseek-v2-repair2-deepseek-identity-qualification-20260831.json",
+    "qualification_sha256": "6f7305554f710ce56d07e86cbc786ab5d4618327f5b6c0161c7259067cae59ac",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "thinking": "disabled"
+  },
+  "outcome_embargo": {
+    "analyzer_authorized": false,
+    "before_72_heldout": true,
+    "partial_effect_read": false
+  },
+  "parent_s1": {
+    "authorization_path": "generated/e2-r17-single-case-diagnostic-witness-s1-authorization-v2-20260902.json",
+    "authorization_sha256": "3244b39757a41dc801a79ed5edaff1050354974c8f0be70994cd9d690ca0a002",
+    "contract_path": "generated/e2-r17-single-case-diagnostic-witness-s1-contract-v2-20260902.json",
+    "contract_sha256": "e1865abbcccdeeea03b34c4526044660c4b4826b3ecab40ac54bb1030e0f7d8c",
+    "run_summary_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/summary/s1_summary.json",
+    "run_summary_sha256": "9d78cfa78438c2f16f0091b5caff0fcff04ca9af465ddcc677280920fe3901a8"
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-stability-20260902",
+  "schema_version": "1.0",
+  "scientific_object": "E2-R17-SINGLE-CASE-FIRST-FAIL-FROZEN-STATE-STABILITY-20260902",
+  "scientific_scope": {
+    "heldout_units": 72,
+    "measurement_states": 4,
+    "new_learned_states": 0
+  },
+  "status": "FROZEN_E2_R17_SINGLE_CASE_FIRST_FAIL_STABILITY",
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-first-fail-exact-replay-measurement-completion-audit",
+  "authority": {
+    "mint_single_use_analysis_authorization": true,
+    "paper_promotion": false,
+    "provider_io": false,
+    "scientific_execution": false,
+    "submission": false,
+    "updater": false
+  },
+  "authorization_sha256s": [
+    "76dfcd70298b75e80e5a484294bc56a3ee3b55d6183f2d51bec19b893d165796",
+    "7122ba5d4df67cac4d36cb2776f5d47ef300630db5bf1847a0708aa3423cd9f5"
+  ],
+  "contract_path": "generated/e2-r17-single-case-first-fail-exact-replay-measurement-contract-20260902.json",
+  "contract_sha256": "c81b9c771be564991a97b2b15815f89d591f501ff107dd982bfdddd39c2f05d4",
+  "created_at_utc": "2026-09-02T07:20:52+00:00",
+  "heldout_rollout_units": 72,
+  "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-first-fail-exact-replay-measurement-v1.json",
+  "lineage_lease_sha256": "d0230ec1403b77663acdabd0d17a7761ca24ccd951176fcbc6e54b719dda2c20",
+  "measurement_states": 4,
+  "new_learned_states": 0,
+  "partial_effect_read": false,
+  "provider_budget_binding_pass": true,
+  "provider_claims_by_state": {
+    "rep1/first_fail": 108,
+    "rep1/win_c": 102,
+    "rep2/first_fail": 95,
+    "rep2/win_c": 95
+  },
+  "run_summary_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-measurement-20260902/summary/measurement_summary.json",
+  "run_summary_sha256": "3676bf5153fae615d6b732b5ddac587e3361bf45ce72313bf7bf352154cfb688",
+  "schema_version": "1.0",
+  "scientific_scores_read": false,
+  "status": "PASS_FIRST_FAIL_EXACT_REPLAY_MEASUREMENT_FULL_INTEGRITY_READY_FOR_ANALYSIS"
+}

@@ -1,0 +1,204 @@
+{
+  "actor": {
+    "concurrency_per_probe": 1,
+    "k": 1,
+    "max_output_tokens": 8192,
+    "max_turns": 10,
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "resolved_model": "deepseek-v4-pro-ga-260813",
+    "temperature": 0,
+    "thinking": "disabled"
+  },
+  "actor_runtime": {
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b",
+    "required_status": "PASS_ZERO_PROVIDER_FULL_MINDMEMOS_RUNTIME_R2",
+    "role": "actor_evaluator",
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv"
+  },
+  "artifact_type": "e2-r17-first-fail-exact-replay-measurement-contract",
+  "authority": {
+    "analyzer": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "scientific_experiment": false,
+    "submission": false,
+    "updater": false
+  },
+  "bound_code": {
+    "actor_wrapper": {
+      "path": "scripts/run_e2_r17_actor_pool_first_fail_exact_replay_measurement.py",
+      "sha256": "383fc3748b0767277f3a7b7b745826c8aaf80ac78a33a0859cd82d7845fb7641"
+    },
+    "actual_path_preflight": {
+      "path": "scripts/preflight_e2_r17_first_fail_exact_replay_measurement_actual_path.py",
+      "sha256": "031bc1e97b2f638d6943965fd412c1e21f0fd1772a6c27488b0667f45c6aa6da"
+    },
+    "analysis_authorizer": {
+      "path": "scripts/authorize_e2_r17_first_fail_exact_replay_measurement_analysis.py",
+      "sha256": "35cb5966fefbc594825aa14d567555ddec6a79d13ed1a0c9a5038cc763cd3fbb"
+    },
+    "analyzer": {
+      "path": "scripts/analyze_e2_r17_first_fail_exact_replay_measurement.py",
+      "sha256": "f424d23f8c034ea8c4e7745c1078c81c7147f3cb79ceb8a429a472525ae86512"
+    },
+    "audit": {
+      "path": "scripts/audit_e2_r17_first_fail_exact_replay_measurement_completion.py",
+      "sha256": "b0d365e7e6a0829bc2de51d5fa90a765f6c7465c0be0424c194093331f0dfb68"
+    },
+    "authorizer": {
+      "path": "scripts/authorize_e2_r17_first_fail_exact_replay_measurement.py",
+      "sha256": "eae5a1b11e488c3819d737ac83bf4895ae92dd37ab869318f0bc4cb982d2aacc"
+    },
+    "measurement_compat": {
+      "path": "scripts/run_e2_r17_actor_pool_measurement_compat_v1.py",
+      "sha256": "8261645a7d2864635e3985002328c7610e46e38fcd15dbe50bf688c8348ca583"
+    },
+    "preflight_authorizer": {
+      "path": "scripts/authorize_e2_r17_first_fail_exact_replay_measurement_preflight.py",
+      "sha256": "8555490b2a40bcda294ae4a6d026d23430fef38c9f9a9802136c4bb74f4be85f"
+    },
+    "provider_budget": {
+      "path": "research_pipeline/e2_r17_provider_budget.py",
+      "sha256": "df819b30a31e62e007e3f85ae76aa8d06faefaa56e9acefe71ceadb9f8fce444"
+    },
+    "runner": {
+      "path": "scripts/run_e2_r17_first_fail_exact_replay_measurement.py",
+      "sha256": "07abf8fcb847f2d7fc4c83e5c54ad75685873fabb761ed965a86ae109d55220b"
+    }
+  },
+  "budget": {
+    "per_unit_limit": 11,
+    "total_limit": 191
+  },
+  "case_stream": "e1-tsr-00",
+  "created_at_utc": "2026-09-02T06:52:51+00:00",
+  "env_file": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env",
+  "git_commit_at_freeze": "686f92115e557a40b3a9d128de0da604ed9fb6e3",
+  "heldout_task_ids": [
+    "r17-b4-agj-p2",
+    "r17-b4-agj-p3",
+    "r17-b4-agj-p8",
+    "r17-b4-fmv-p1",
+    "r17-b4-fmv-p2",
+    "r17-b4-fmv-p8",
+    "r17-b4-ioc-p1",
+    "r17-b4-ioc-p4",
+    "r17-b4-ioc-p6",
+    "r17-b4-msp-p0",
+    "r17-b4-msp-p7",
+    "r17-b4-msp-p8",
+    "r17-b4-ska-p4",
+    "r17-b4-ska-p5",
+    "r17-b4-ska-p8",
+    "r17-b4-tsr-p0",
+    "r17-b4-tsr-p6",
+    "r17-b4-tsr-p8"
+  ],
+  "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-first-fail-exact-replay-measurement-v1.json",
+  "mindmemos": {
+    "bound_files": {
+      "src/mindmemos/mindmemos/pipelines/skill/evolution.py": "37bb22da6d4e8485d824c3c31e48f200561b05834a8a6bf3c057b29613b2bca0",
+      "src/mindmemos/mindmemos/prompts/EN/skills/skill_patch.py": "48ab68ee3fbb6f115269679358cbcc1f08f9a28318a95438860eae1bbf5a3f4c",
+      "src/mindmemos/mindmemos/prompts/EN/skills/trajectory_summary.py": "771a5dc2efc369ed8b4c6d90b5ee470339263780eaf26265be24561b7156b95e"
+    },
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817"
+  },
+  "model_identity": {
+    "fresh_max_output_tokens_smoke": 8192,
+    "path": "generated/e2-r17-deepseek-v2-repair2-model-identity-adjudication-20260831.json",
+    "provider_retry_limit": 0,
+    "qualification_path": "generated/e2-r17-deepseek-v2-repair2-deepseek-identity-qualification-20260831.json",
+    "qualification_sha256": "6f7305554f710ce56d07e86cbc786ab5d4618327f5b6c0161c7259067cae59ac",
+    "required_status": "PASS_CURRENT_REVIEW_TRANCHE",
+    "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "sha256": "491e4aa738260fab7c6331ee5a1e9a0d57b87df8411a01471c1df0564adf15ee",
+    "thinking": "disabled"
+  },
+  "preflight_root": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-measurement-preflight-20260902",
+  "replication_gate": {
+    "fail_status": "FIRST_FAIL_EXACT_EVIDENCE_UPDATER_REPLICATION_FAIL_STATE_GENERATION_VARIANCE",
+    "historical_s1_rep0_descriptive_only": true,
+    "minimum_first_fail_minus_common_win_c_each_new_replicate": 0.05555555555555555,
+    "minimum_mean_first_fail_minus_common_win_c": 0.05555555555555555,
+    "pass_status": "FIRST_FAIL_EXACT_EVIDENCE_UPDATER_REPLICATION_PASS"
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-measurement-20260902",
+  "schema_version": "1.0",
+  "scientific_object": "E2-R17-SINGLE-CASE-FIRST-FAIL-EXACT-REPLAY-MEASUREMENT-20260902",
+  "scientific_scope": {
+    "heldout_units": 72,
+    "measurement_states": 4,
+    "new_learned_states": 0,
+    "replicates": [
+      1,
+      2
+    ]
+  },
+  "state_groups": [
+    {
+      "group": "rep1",
+      "learned_states": [
+        {
+          "arm": "win_c",
+          "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/win_c/update/skill_post/SKILL.md",
+          "skill_post_sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+          "state_root": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/win_c",
+          "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/win_c/update/update_receipt.json",
+          "update_receipt_sha256": "deae0e650a20740d6dc777b448c26ce58e66852ba61ec15d984feb83fe438598"
+        },
+        {
+          "arm": "first_fail",
+          "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/first_fail/update/skill_post/SKILL.md",
+          "skill_post_sha256": "596bd30b49935d16f35d51e9eed36e19567332cd8a9104ae50d832f91ffdf04f",
+          "state_root": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/first_fail",
+          "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/first_fail/update/update_receipt.json",
+          "update_receipt_sha256": "332fd5d3a265c01c3be5887fa3e8f40c37d1f0e5c5825840a8fddc257b83a5c1"
+        }
+      ],
+      "parent_authorization_path": "generated/e2-r17-single-case-first-fail-exact-replay-authorization-20260902.json",
+      "parent_authorization_sha256": "e5d5a8ac04fe8b924327672e5b4efbe82ab053a6882ec5167d2771f8d06b84e4",
+      "parent_contract_path": "generated/e2-r17-single-case-first-fail-exact-replay-contract-20260902.json",
+      "parent_contract_sha256": "dd508d9cefb3bfba1a439f784f718cb7962f78130b83c18f14e5b0d591478dea",
+      "replicate": 1
+    },
+    {
+      "group": "rep2",
+      "learned_states": [
+        {
+          "arm": "win_c",
+          "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-updater-recovery-v2-20260902/states/e1-tsr-00/replicate_2/win_c/update/skill_post/SKILL.md",
+          "skill_post_sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+          "state_root": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-updater-recovery-v2-20260902/states/e1-tsr-00/replicate_2/win_c",
+          "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-updater-recovery-v2-20260902/states/e1-tsr-00/replicate_2/win_c/update/update_receipt.json",
+          "update_receipt_sha256": "666a86b5797a8665a770799d2b26b8b1672870871eaeca43a36b22a44a8e3961"
+        },
+        {
+          "arm": "first_fail",
+          "skill_post_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-updater-recovery-v2-20260902/states/e1-tsr-00/replicate_2/first_fail/update/skill_post/SKILL.md",
+          "skill_post_sha256": "fb5454a27faf8182ba1b0d722273c4377d4762815cd1898c3780cc8ff336615e",
+          "state_root": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-updater-recovery-v2-20260902/states/e1-tsr-00/replicate_2/first_fail",
+          "update_receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-updater-recovery-v2-20260902/states/e1-tsr-00/replicate_2/first_fail/update/update_receipt.json",
+          "update_receipt_sha256": "acf25c85f672010ccb0203365c309e53c574ea7840f81808c26a837f6d4e1cfa"
+        }
+      ],
+      "parent_authorization_path": "generated/e2-r17-single-case-first-fail-exact-replay-updater-recovery-v2-authorization-20260902.json",
+      "parent_authorization_sha256": "d4553bdddf2a8838b2866b917fe721c37d5510be27a8a21dadb57936c2fec7f2",
+      "parent_contract_path": "generated/e2-r17-single-case-first-fail-exact-replay-updater-recovery-v2-contract-20260902.json",
+      "parent_contract_sha256": "9afbcd0d499a7e0a3ea9982975a9538f27033ef07b0e1a9043da7bf6b57c1ca9",
+      "replicate": 2
+    }
+  ],
+  "status": "FROZEN_E2_R17_FIRST_FAIL_EXACT_REPLAY_MEASUREMENT",
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-v2",
+    "split_manifest_sha256": "aca995b69b6dcd48ddde8aa92b0d14a278ee3194eac5e494feb9c986db4567d9",
+    "suite_manifest_sha256": "2d02b2102778b898c6ff16074bfc2203b80f1d0f1441e13e66127a533b1d9ce4"
+  }
+}

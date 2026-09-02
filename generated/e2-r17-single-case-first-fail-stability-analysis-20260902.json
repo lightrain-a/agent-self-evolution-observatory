@@ -1,0 +1,148 @@
+{
+  "analysis_authorization_sha256": "3ba8be3e3645525aa0366fbd58f502bb6beaa190d658019dd3382fb8fdcc6663",
+  "artifact_type": "e2-r17-single-case-first-fail-stability-analysis",
+  "authority": {
+    "e3_confirmation": false,
+    "new_updater_execution": false,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "s2_execution": false,
+    "second_backbone": false,
+    "submission": false
+  },
+  "case_stream": "e1-tsr-00",
+  "completion_audit_sha256": "723bed3e8a89055bdf0d15114124bf6d12cb42d71701465f2f87888fc970c5aa",
+  "contract_sha256": "8c415befe185e4bccc631342ead8e93aa050fc0002ad02213ecd1b9a743d3b16",
+  "created_at_utc": "2026-09-02T06:22:30+00:00",
+  "development_only": true,
+  "execution_authorization_sha256": "8437add262bdf3fbdd4988596bba8ce0dad3abd74a4e3c7f6bda631e485490a8",
+  "historical_s1_replicate_used_for_gate": false,
+  "interpretation": "Tests whether the exact frozen First-Fail learned state remains better than the exact frozen WIN-C state under two fresh hosted evaluation replicates. No updater is rerun.",
+  "mean_new_replicate_difference": 0.1388888888888889,
+  "measurement_replicates": [
+    1,
+    2
+  ],
+  "replicate_differences_first_fail_minus_win_c": {
+    "1": 0.05555555555555558,
+    "2": 0.2222222222222222
+  },
+  "run_summary_sha256": "c5b5db7b434a67047203c02051c462c9231512e144e0d8dc6c0012a2ff350083",
+  "schema_version": "1.0",
+  "stability_gate": {
+    "minimum_difference_each_replicate": 0.05555555555555555,
+    "minimum_mean_difference": 0.05555555555555555,
+    "pass": true,
+    "replicate_pass": {
+      "1": true,
+      "2": true
+    }
+  },
+  "status": "FIRST_FAIL_FROZEN_STATE_STABILITY_PASS",
+  "success_rates": {
+    "1": {
+      "first_fail": 0.8333333333333334,
+      "win_c": 0.7777777777777778
+    },
+    "2": {
+      "first_fail": 0.8888888888888888,
+      "win_c": 0.6666666666666666
+    }
+  },
+  "successes": {
+    "1": {
+      "first_fail": 15,
+      "win_c": 14
+    },
+    "2": {
+      "first_fail": 16,
+      "win_c": 12
+    }
+  },
+  "task_level_scores": {
+    "1": {
+      "first_fail": {
+        "r17-b4-agj-p2": 0,
+        "r17-b4-agj-p3": 0,
+        "r17-b4-agj-p8": 1,
+        "r17-b4-fmv-p1": 1,
+        "r17-b4-fmv-p2": 1,
+        "r17-b4-fmv-p8": 1,
+        "r17-b4-ioc-p1": 1,
+        "r17-b4-ioc-p4": 1,
+        "r17-b4-ioc-p6": 1,
+        "r17-b4-msp-p0": 1,
+        "r17-b4-msp-p7": 1,
+        "r17-b4-msp-p8": 1,
+        "r17-b4-ska-p4": 1,
+        "r17-b4-ska-p5": 1,
+        "r17-b4-ska-p8": 1,
+        "r17-b4-tsr-p0": 0,
+        "r17-b4-tsr-p6": 1,
+        "r17-b4-tsr-p8": 1
+      },
+      "win_c": {
+        "r17-b4-agj-p2": 1,
+        "r17-b4-agj-p3": 1,
+        "r17-b4-agj-p8": 1,
+        "r17-b4-fmv-p1": 1,
+        "r17-b4-fmv-p2": 1,
+        "r17-b4-fmv-p8": 0,
+        "r17-b4-ioc-p1": 1,
+        "r17-b4-ioc-p4": 0,
+        "r17-b4-ioc-p6": 1,
+        "r17-b4-msp-p0": 0,
+        "r17-b4-msp-p7": 0,
+        "r17-b4-msp-p8": 1,
+        "r17-b4-ska-p4": 1,
+        "r17-b4-ska-p5": 1,
+        "r17-b4-ska-p8": 1,
+        "r17-b4-tsr-p0": 1,
+        "r17-b4-tsr-p6": 1,
+        "r17-b4-tsr-p8": 1
+      }
+    },
+    "2": {
+      "first_fail": {
+        "r17-b4-agj-p2": 1,
+        "r17-b4-agj-p3": 1,
+        "r17-b4-agj-p8": 1,
+        "r17-b4-fmv-p1": 0,
+        "r17-b4-fmv-p2": 1,
+        "r17-b4-fmv-p8": 0,
+        "r17-b4-ioc-p1": 1,
+        "r17-b4-ioc-p4": 1,
+        "r17-b4-ioc-p6": 1,
+        "r17-b4-msp-p0": 1,
+        "r17-b4-msp-p7": 1,
+        "r17-b4-msp-p8": 1,
+        "r17-b4-ska-p4": 1,
+        "r17-b4-ska-p5": 1,
+        "r17-b4-ska-p8": 1,
+        "r17-b4-tsr-p0": 1,
+        "r17-b4-tsr-p6": 1,
+        "r17-b4-tsr-p8": 1
+      },
+      "win_c": {
+        "r17-b4-agj-p2": 0,
+        "r17-b4-agj-p3": 0,
+        "r17-b4-agj-p8": 1,
+        "r17-b4-fmv-p1": 0,
+        "r17-b4-fmv-p2": 1,
+        "r17-b4-fmv-p8": 1,
+        "r17-b4-ioc-p1": 0,
+        "r17-b4-ioc-p4": 0,
+        "r17-b4-ioc-p6": 1,
+        "r17-b4-msp-p0": 1,
+        "r17-b4-msp-p7": 1,
+        "r17-b4-msp-p8": 0,
+        "r17-b4-ska-p4": 1,
+        "r17-b4-ska-p5": 1,
+        "r17-b4-ska-p8": 1,
+        "r17-b4-tsr-p0": 1,
+        "r17-b4-tsr-p6": 1,
+        "r17-b4-tsr-p8": 1
+      }
+    }
+  }
+}

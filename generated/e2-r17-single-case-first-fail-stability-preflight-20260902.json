@@ -1,0 +1,22 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-single-case-first-fail-stability-zero-provider-preflight",
+  "contract_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-single-case-s1-postrun-20260902/generated/e2-r17-single-case-first-fail-stability-contract-20260902.json",
+  "contract_sha256": "8c415befe185e4bccc631342ead8e93aa050fc0002ad02213ecd1b9a743d3b16",
+  "created_at_utc": "2026-09-02T04:59:07+00:00",
+  "heldout_units": 72,
+  "learned_states_bound": 2,
+  "lineage_lease_absent": true,
+  "measurement_replicates": [
+    1,
+    2
+  ],
+  "next_gate": "MINT_SINGLE_USE_FIRST_FAIL_STABILITY_MEASUREMENT_AUTHORIZATION",
+  "partial_effect_read": false,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "run_root_absent": true,
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "status": "PASS_FIRST_FAIL_STABILITY_ZERO_PROVIDER_PREFLIGHT"
+}

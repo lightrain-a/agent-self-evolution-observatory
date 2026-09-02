@@ -307,6 +307,7 @@ def build() -> Path:
         OUTPUT / "current-paper-details-working.js",
         OUTPUT / "current-paper-details-objects.js",
         OUTPUT / "current-paper-collection-data.js",
+        OUTPUT / "current-paper-budget-data.js",
         OUTPUT / "current-paper-page-view.js",
         OUTPUT / "current-paper-pages.css",
         OUTPUT / "research-directions.html",

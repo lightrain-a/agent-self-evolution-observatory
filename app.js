@@ -277,6 +277,33 @@ const ZH_INLINE_TEXT = [
   [/supplement reproduction/g,"补充材料复现"],
   [/\bcontext\b/g,"上下文"],
   [/\breplay\b/g,"回放"],
+  [/\bwriter[- ]mode\b/gi,"写入模式"],
+  [/\bprovenance[- ]only\b/gi,"仅来源身份"],
+  [/\bsame[- ]state\b/gi,"同状态"],
+  [/\bsource[- ]faithful\b/gi,"忠实于来源"],
+  [/\bstage[- ]resolved\b/gi,"分阶段"],
+  [/\blearning projection\b/gi,"学习证据投影"],
+  [/\bacting projection\b/gi,"执行证据投影"],
+  [/\bnative transport\b/gi,"原生传递流程"],
+  [/\bcoupling topology\b/gi,"耦合拓扑"],
+  [/\brelation count\b/gi,"关系数量"],
+  [/\bstage localization\b/gi,"阶段定位"],
+  [/\bnative retrieval\b/gi,"原生检索"],
+  [/\bfirst[- ]action\b/gi,"第一步动作"],
+  [/\bterminal outcome\b/gi,"最终任务结果"],
+  [/\bevaluator-relative\b/gi,"依赖判分器"],
+  [/\bevaluator-independent\b/gi,"不依赖判分器"],
+  [/\bexactly-once\b/gi,"只执行一次"],
+  [/\bcounterfactual\b/gi,"反事实对照"],
+  [/\bprovenance\b/gi,"来源身份"],
+  [/\bevaluator\b/gi,"判分器"],
+  [/\bwriter\b/gi,"写入模块"],
+  [/\btreatment\b/gi,"实验变量"],
+  [/\bsubstrate\b/gi,"实验底座"],
+  [/\bmediator\b/gi,"中间环节"],
+  [/\btrajectory\b/gi,"行动轨迹"],
+  [/\barm\b/gi,"实验组"],
+  [/\bplacebo\b/gi,"安慰剂对照"],
   [/\bretrieval\b/g,"检索"],
   [/\binteraction\b/g,"交互"],
   [/\blesson\b/g,"经验"],
@@ -300,13 +327,13 @@ const ZH_INLINE_TEXT = [
   [/process family/g,"过程族"],
   [/fresh collision/g,"最新碰撞"],
   [/fresh audit/g,"最新审计"],
-  [/\bheldout\b/g,"留出"],
-  [/\bheld-out\b/g,"留出"],
+  [/\bheldout\b/g,"留出测试"],
+  [/\bheld-out\b/g,"留出测试"],
   [/\bquery\b/g,"查询"],
   [/\bselector\b/g,"选择器"],
   [/\bstatus\b/g,"状态"],
   [/source transaction/g,"来源事务"],
-  [/\bterminal\b/g,"终态"],
+  [/\bterminal\b/g,"最终"],
   [/external-wait/g,"外部等待"],
   [/\bwatch\b/g,"监控"],
   [/\bqueue\b/g,"队列"],
@@ -1394,8 +1421,8 @@ function renderProjectStatusStrip(){
   const selectedStatusLabels=selectedPaper?(language==="zh"?[["PaperState 总数",selectedPaperCount],["Ledger SUBMISSION_READY",selectedLedgerReadyCount],["最新门禁 clean",selectedGateCleanCount],["Readiness HOLD",selectedHoldCount],["STRI",paper.paper_stage||paper.current_state||"--"],["Agent Safety R9",selectedSafetyPaper.paper_stage||selectedSafetyPaper.current_state||"--"]]:[["PaperStates",selectedPaperCount],["Ledger SUBMISSION_READY",selectedLedgerReadyCount],["Latest gates clean",selectedGateCleanCount],["Readiness HOLD",selectedHoldCount],["STRI",paper.paper_stage||paper.current_state||"--"],["Agent Safety R9",selectedSafetyPaper.paper_stage||selectedSafetyPaper.current_state||"--"]]):statusLabels;
   return `<section class="project-status-strip current"><div class="project-status-copy"><b>${selectedPaper?(language==="zh"?"当前论文 · PaperRegistry":"Current papers · PaperRegistry"):(language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`)}</b><span>${selectedMessage}</span></div><dl class="project-status-metrics">${selectedStatusLabels.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl></section>`;
 }
-function pageHeader(config) {
-  return `<div class="eyebrow">${esc(textOf(config.eyebrow))}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout ? `<div class="callout">${textOf(config.callout)}</div>` : ""}${renderProjectStatusStrip()}`;
+function pageHeader(config, includeProjectStatus = true) {
+  return `<div class="eyebrow">${esc(textOf(config.eyebrow))}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout ? `<div class="callout">${textOf(config.callout)}</div>` : ""}${includeProjectStatus ? renderProjectStatusStrip() : ""}`;
 }
 function renderSectionForPage(section, index, citationPageId = pageId, extraClass = "", headingLevel = 2) {
   const title = textOf(section.title);
@@ -4334,6 +4361,8 @@ function buildToc() {
   }
   if (pageId === "selected-paper") {
     const rows = [
+      {id:"paper-resource-budget",label:language === "zh" ? "实验资源与成本预算" : "Experiment resource budget"},
+      {id:"atomgit-pro-allocation",label:language === "zh" ? "AtomGit Pro 分配" : "AtomGit Pro allocation"},
       {id:"formal-paper-collection",label:language === "zh" ? "①–⑤ 正式论文" : "①–⑤ Formal papers"},
       {id:"working-paper-collection",label:language === "zh" ? "⑥–⑨ 工作论文 / Scientific Object" : "⑥–⑨ Working papers / scientific objects"},
     ];
@@ -4392,11 +4421,13 @@ function localizeRenderedChinese(root = document) {
 function applyReadabilityFloor(root = document) {
   const bodyTags = new Set(["P","LI","TD","DD"]);
   const mobile = window.matchMedia("(max-width: 820px)").matches;
+  const paperReader = /^paper-(?:e1|g1|c1|e2|b1|a|b|agent-constraint|3d)$/.test(pageId);
   root.querySelectorAll(".layout *").forEach((node) => {
     if (![...node.childNodes].some((child) => child.nodeType === Node.TEXT_NODE && child.textContent.trim())) return;
     const size = Number.parseFloat(getComputedStyle(node).fontSize || "0");
     if (!Number.isFinite(size) || size <= 0) return;
-    const floor = bodyTags.has(node.tagName) ? (mobile ? 12.5 : 12) : 11.5;
+    const bodyFloor = paperReader ? (mobile ? 13.5 : 13) : (mobile ? 12.5 : 12);
+    const floor = bodyTags.has(node.tagName) ? bodyFloor : 11.5;
     if (size < floor) {
       node.classList.add(bodyTags.has(node.tagName) ? "readability-body-floor" : "readability-floor");
       node.style.setProperty("font-size", `${floor}px`, "important");
@@ -4603,6 +4634,7 @@ function renderPage() {
   else if (pageId === "bibliography") root.innerHTML = renderBibliography(config);
   else if (pageId === "repositories") root.innerHTML = renderDynamicResourceIndex(config, "repositories");
   else if (pageId === "datasets-benchmarks") root.innerHTML = renderDynamicResourceIndex(config, "benchmarks");
+  else if (pageId === "experiment-costs") root.innerHTML = `${pageHeader(config, false)}${(config.sections || []).map(renderSection).join("")}`;
   else root.innerHTML = `${pageHeader(config)}${renderOverviewFigure(config)}${(config.sections || []).map(renderSection).join("")}`;
   document.querySelector(".language-toggle")?.replaceChildren(document.createTextNode(language === "en" ? "中文" : "English"));
   bindPageEvents();

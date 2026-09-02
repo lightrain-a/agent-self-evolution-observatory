@@ -19,6 +19,7 @@ CANONICAL_PAGES = {
     "system-overview.html": "system-overview",
     "research-map.html": "research-map",
     "research-timeline.html": "research-timeline",
+    "experiment-costs.html": "experiment-costs",
     "research-map.html": "research-map",
     "research-directions.html": "research-directions",
     "paper-ideas.html": "paper-ideas",
@@ -70,7 +71,7 @@ REDIRECT_PAGES = {
     "review-log.html": "selected-paper.html",
 }
 REQUIRED_STATIC = [
-    "CNAME", "_config.yml", ".gitignore", "style.css", "app.js", "data.js",
+    "CNAME", "_config.yml", ".gitignore", "style.css", "experiment-costs.css", "app.js", "data.js", "content-experiment-costs.js",
     "content-consolidated.js", "redirect.js", "favicon.svg", "robots.txt",
     "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
@@ -472,6 +473,8 @@ def main() -> None:
         scripts = canonical_scripts.get(filename, [])
         if evidence_script not in scripts or scripts.index(evidence_script) > scripts.index("current-paper-page-view.js"):
             fail(f"{filename} must load its published-neighbor / experiment-provenance profile before the single-paper renderer")
+        if "current-paper-dataset-primer.js" not in scripts or scripts.index("current-paper-dataset-primer.js") > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load the plain-language dataset primer before the single-paper renderer")
     if "renderCurrentPaperCollection" not in current_paper_view_source or "QUICK OVERVIEW" not in current_paper_view_source or "速览版" not in current_paper_view_source:
         fail("current-paper renderer must expose collection-only routing plus the single-paper quick overview")
     if "renderCurrentPaperShelf" in current_paper_view_source or "cpp-pager" in current_paper_view_source:
