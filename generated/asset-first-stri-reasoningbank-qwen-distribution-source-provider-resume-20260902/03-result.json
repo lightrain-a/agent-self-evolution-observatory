@@ -1,0 +1,58 @@
+{
+  "checks": {
+    "credential_material_absent": true,
+    "exact_liveness_text": true,
+    "provider_response_received": true,
+    "resolved_model_exact": true,
+    "transport_attempt_exactly_one": true
+  },
+  "contract_sha256": "51420cc0397a0bbd438b4d18dea2a660468d94e25e2387c3d9996ee976fc30f4",
+  "created_at_utc": "2026-09-02T04:27:10+00:00",
+  "credential_material_present": false,
+  "decision": "QWEN_SOURCE_PROVIDER_RESUME_QUALIFIED_NEXT_UNTOUCHED_GATE_OPEN",
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "failure": null,
+  "next_untouched_ordinal": 4,
+  "payload_sha256": "79c41f4a23d273f1bcb7a9809a309beba309d5406fcaea2853fc73e6e7bc20a2",
+  "probe_request_sha256": "58368e4290b567a934b4b6f3d8be6776b9cdc6e613da5bdbb3c9178c06844418",
+  "probe_response": {
+    "credential_material_present": false,
+    "raw_payload_sha256": "084d0d97f4cc107311f75fa3b46c6b483928a9ebbcf66510239a0141b2ebe7a2",
+    "requested_model": "qwen3-coder-next",
+    "resolved_model": "qwen3-coder-next",
+    "response_id_sha256": "70cde787aa160ee0609dc8280aec2a56c387850186f9cfa28b9d6c8293ec5c87",
+    "safe_rate_quota_headers": {
+      "request-id": "cdef5b75-7da3-4872-a062-ef231609fa84"
+    },
+    "status": "stop",
+    "text": "SOURCE_RESUME_OK",
+    "text_sha256": "803d86175049485b0829d6eed79fd848dcba254f02eb85c266e40c78082eacfb",
+    "transport_attempts": 1,
+    "usage": {
+      "input_tokens": 36,
+      "output_tokens": 5,
+      "raw": {
+        "completion_tokens": 5,
+        "prompt_tokens": 36,
+        "total_tokens": 41
+      },
+      "total_tokens": 41
+    }
+  },
+  "schema_version": 1,
+  "scientific_boundary": {
+    "confirmatory_execution_authorized": false,
+    "memory_extraction_authorized": false,
+    "next_untouched_source_execution_authorized": true,
+    "remaining_source_outcomes_observed": false,
+    "trigger_source_receipt_permanently_retained": true,
+    "trigger_source_reexecution_authorized": false
+  },
+  "source_contract_sha256": "072980a4e71a3e31de2e59ef77b52cd090073d645b665af0adc25c24a99b8daa",
+  "source_index_hold_sha256": "57f3f07c579dc91a7fb1cbd2e470ab53d9b51d368cb6678d7e78aaa2ff3b5a90",
+  "source_replacement_count": 0,
+  "source_trigger_retry_count": 0,
+  "stage": "QWEN_SOURCE_PROVIDER_RESUME_QUALIFICATION",
+  "trigger_ordinal": 3,
+  "trigger_source_receipt_sha256": "a4ed2d696f6949e7044f836a24fc3dfa8335ac3d08c342f347dcd75e326f9dc7"
+}
