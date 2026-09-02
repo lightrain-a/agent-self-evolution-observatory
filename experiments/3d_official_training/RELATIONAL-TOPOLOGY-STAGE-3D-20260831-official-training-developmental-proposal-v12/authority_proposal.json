@@ -1,0 +1,124 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-proposal-v12",
+  "state": "OFFICIAL_TRAINING_DEVELOPMENTAL_AUTHORITY_PROPOSAL_ONLY",
+  "proposal": {
+    "requested_authority": "OFFICIAL_TRAINING_DEVELOPMENTAL_AUTHORITY",
+    "authority_requested": true,
+    "authority_granted": false,
+    "scope_if_granted": {
+      "classification": "DEVELOPMENTAL_OFFICIAL_TRAINING_NO_SCIENTIFIC_OUTCOME_ADMISSION",
+      "components": [
+        "BEDROOM-SG2SC-SHARED",
+        "SGP-12",
+        "SGP-14"
+      ],
+      "training_seed": 20260901,
+      "training_seed_count": 1,
+      "batch_size": 128,
+      "gradient_accumulation": 1,
+      "logical_optimizer_steps_per_component": 1000000,
+      "checkpoint_every_steps": 50000,
+      "final_checkpoint": "step-1000000 EMA",
+      "validation_during_training": false,
+      "scientific_metrics_during_training": false,
+      "pre_optimizer_resource_preflight_steps": 0,
+      "scientific_outcomes": 0,
+      "outcomes_enter_p1": false
+    },
+    "purpose": "Train one shared official BEDROOM decoder and one matched developmental SUPPORT-12/SUPPORT-14 SGP pair, then stop before any model-output evaluation. This is the minimum official-training tranche needed for a later go/no-go developmental P1 without paying multi-seed confirmatory cost first.",
+    "prohibited_even_if_granted": [
+      "validation or test evaluation during training",
+      "reproduction qualification outputs",
+      "P1 execution",
+      "oracle-graph intervention",
+      "scientific effect estimation",
+      "SUPPORT-12 versus SUPPORT-14 metric comparison",
+      "training-loss interpretation as paper evidence",
+      "outcome-based early stopping",
+      "validation-based checkpoint selection",
+      "hyperparameter sweep",
+      "training seed sweep",
+      "confirmatory multi-seed replication",
+      "automatic batch-size reduction after an OOM",
+      "automatic gradient-accumulation change",
+      "automatic precision change",
+      "changing corpus membership or prompt realization",
+      "changing tokenizer revision",
+      "changing shared-decoder identity across arms",
+      "changing PORT-010 status"
+    ],
+    "pre_run_requirements_if_later_granted": [
+      "fetch and verify live origin/main contains this proposal lineage",
+      "fresh SceneNAT and InstructScene source-drift check immediately before optimizer step 1",
+      "verify frozen corpus and split content addresses",
+      "verify SGP-12 and SGP-14 initial model-state hashes are identical",
+      "run exact batch-128 forward/backward resource preflight with zero optimizer steps for each component",
+      "verify target GPU is otherwise idle and no existing exactly-once component claim is active",
+      "create incremental persistence tree and authority receipt before component launch"
+    ],
+    "failure_policy": "Any failed prerequisite closes the relevant component launch. Do not repair by changing the frozen scientific treatment or training budget under this authority."
+  },
+  "prerequisites": {
+    "real_corpus_qualification_v3": {
+      "sha256": "613807893eb9d24a490df2d4b28cef9ef14dd684deb95cfe0829600727d9eef0",
+      "verdict": "PASS_REAL_MATCHED_CORPUS_QUALIFIED_GPU_QUALIFICATION_PROPOSABLE"
+    },
+    "real_corpus_balance_v4": {
+      "sha256": "1cd60686cba3b11e363f5ce973a67b19306ff105b213cc31a753ac16ebb8e56c",
+      "verdict": "PASS_REAL_CORPUS_BALANCE_QUALIFIED_GPU_QUALIFICATION_PROPOSABLE"
+    },
+    "gpu_training_qualification_v11": {
+      "summary_sha256": "5ea38416ceb4b049200362d30a461e0a1a88576463727912b30ca71a1d310bae",
+      "adjudication_sha256": "4609206bab68ac9b62011413b761a1f00071463952b7d375107757a190768276",
+      "verdict": "PASS_GPU_TRAINING_QUALIFICATION_ONLY",
+      "all_required_components_pass": true,
+      "exact_resume_model_diff": 0.0,
+      "exact_resume_loss_diff": 0.0
+    }
+  },
+  "frozen_sources": {
+    "dataset_revision": "c8cf0bd282699d56a7940ac588ea5e961b1260cb",
+    "instructscene_repo_sha": "a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+    "scenenat_repo_sha": "542b82ff0cda4e0350575ca8f1cd5d147529130c",
+    "clip_model": "openai/clip-vit-base-patch32",
+    "clip_revision": "3d74acf9a28c67741b2f4f2ea7635f0aaf6f0268",
+    "clip_max_tokens": 77,
+    "support_12_corpus_sha256": "9884b2afd58e05ed0eb80864154765e55551e5f77632d4fbd6308d0af50dd58b",
+    "support_14_corpus_sha256": "51e9e6011250970c660d91c75843919f55192b800423d8ad59a2cfb5c08c4b05",
+    "eligible_scene_pool_sha256": "40da5528402087f97bcd5d704d914a3d4eca65a083b66fffca6be92fd452ea89",
+    "official_bedroom_split_sha256": "f8f144f2380668b7db999d1b21b0331ade27b72f7e4892b43da068559ffb6d79"
+  },
+  "prepared_execution": {
+    "runner_core_sha256": "8cf631b1584395ac6f0a071909aea0aa474a0a9cb7fe9680f49d87b2f517e3f4",
+    "training_segment_runner_sha256": "9bd675102309f67baf8a3b2eb574a9ceba99021bd0470e5db59d1319615883a6",
+    "entrypoint_sha256": "34c54a9cfe22ede239b6f89125c3e1af806f803e717c60fa4e6789edb2921f4e",
+    "composite_training_code_sha256": "97b1722647b5a9abb6b4079d38c63426e13c1d3fcc2081287d6210d81c41e8d2",
+    "authority_gate_static_test": "PASS",
+    "scope_drift_fail_closed_test": "PASS",
+    "cli_authority_first_fail_closed_test": "PASS",
+    "paired_batch128_augmentation_replay_preflight": "PASS_384_ROWS_3_BATCHES_ALL_TENSOR_HASHES_IDENTICAL",
+    "gpu_preflight_run": false,
+    "optimizer_steps_run": 0
+  },
+  "current_authority": {
+    "data_license_confirmed": true,
+    "data_materialization_authority": true,
+    "gpu_training_qualification_passed": true,
+    "official_training_developmental_authority": false,
+    "official_training": false,
+    "reproduction_evaluation": false,
+    "p1": false,
+    "p2": false,
+    "p3": false,
+    "scientific_gpu_runs": 0,
+    "scientific_outcomes": 0
+  },
+  "port_010": {
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+    "evidence_review": "BLOCK_BAKE_IN",
+    "changed": false
+  },
+  "decision_required": "EXPLICIT_OFFICIAL_TRAINING_DEVELOPMENTAL_AUTHORITY_GRANT",
+  "next_gate": "AWAIT_EXPLICIT_OFFICIAL_TRAINING_DEVELOPMENTAL_AUTHORITY_DECISION"
+}

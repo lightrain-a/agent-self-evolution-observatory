@@ -1,0 +1,95 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-proposal-v12",
+  "checked_at": "2026-09-02",
+  "state": "NO_DIRECT_COLLISION_CLAIMS_NARROWED_BEFORE_AUTHORITY",
+  "source_drift": {
+    "SceneNAT": {
+      "frozen_repo_sha": "542b82ff0cda4e0350575ca8f1cd5d147529130c",
+      "github_main_sha_checked_2026_09_02": "542b82ff0cda4e0350575ca8f1cd5d147529130c",
+      "github_main_drift": false,
+      "arxiv_revision": "2601.07218v2",
+      "arxiv_last_revised": "2026-08-11"
+    },
+    "InstructScene": {
+      "frozen_repo_sha": "a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+      "github_main_sha_checked_2026_09_02": "a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+      "github_main_drift": false
+    }
+  },
+  "nearest_collision_review": [
+    {
+      "work": "SceneNAT: Masked Generative Modeling for Language-Guided Indoor Scene Synthesis",
+      "year": 2026,
+      "overlap": [
+        "extended InstructScene substrate",
+        "up to four relations during training",
+        "iRecall versus relation-count",
+        "evaluation at 5/6 relations beyond training support"
+      ],
+      "collision": "MATERIAL_WITH_RELATION_COUNT_GENERALIZATION",
+      "consequence": "Do not claim relation-count curves, training-to-5/6 extrapolation, generic relational reasoning, or four-relation instructions as novelty."
+    },
+    {
+      "work": "GeoSceneGraph: Geometric Scene Graph Diffusion Model for Text-guided 3D Indoor Scene Synthesis",
+      "year": 2026,
+      "overlap": [
+        "graph-based text-to-scene generation",
+        "InstructScene reproduction",
+        "stage discrepancy between semantic graph iRecall and final-layout iRecall"
+      ],
+      "collision": "MATERIAL_WITH_DESCRIPTIVE_STAGE_ATTENUATION",
+      "consequence": "Do not claim that merely reporting graph-stage versus final-layout attenuation is novel. Preserve exact-identity intervention as the causal localization contribution."
+    },
+    {
+      "work": "Global Graph-Validated Optimization for VLM-based 3D Indoor Scene Generation",
+      "year": 2026,
+      "overlap": [
+        "explicit graph representation",
+        "global consistency",
+        "constraint verification"
+      ],
+      "collision": "NO_DIRECT_TRAINING_SUPPORT_INTERVENTION_COLLISION",
+      "consequence": "Do not sell graph/global consistency itself as novelty."
+    },
+    {
+      "work": "SDGScenes: User-intent driven indoor scene generation via semantic dependency graph",
+      "year": 2026,
+      "overlap": [
+        "semantic dependency graph",
+        "commonsense constraints",
+        "layout optimization"
+      ],
+      "collision": "NO_DIRECT_MATCHED_SUPPORT_OR_ORACLE_COLLISION",
+      "consequence": "Treat as adjacent structured-scene work, not a baseline strawman."
+    },
+    {
+      "work": "SPREAD: Spatial-Physical REasoning via geometry Aware Diffusion",
+      "year": 2026,
+      "overlap": [
+        "3D-FRONT evaluation",
+        "graph recall",
+        "spatial-physical relation reasoning"
+      ],
+      "collision": "NO_DIRECT_FIXED_COUNT_TRAINING_SUPPORT_OR_ORACLE_COLLISION",
+      "consequence": "Do not claim relation-aware physical reasoning itself as novelty; topology novelty must be specifically count/token/support matched."
+    },
+    {
+      "work": "SceneEval: Evaluating Semantic Coherence in Text-Conditioned 3D Indoor Scene Synthesis",
+      "year": 2026,
+      "overlap": [
+        "explicit spatial-relation evaluation",
+        "fine-grained requirement satisfaction"
+      ],
+      "collision": "EVALUATION_ADJACENCY_ONLY",
+      "consequence": "Do not claim fine-grained relation evaluation itself as novelty; SceneEval-style external validation can be considered later."
+    }
+  ],
+  "surviving_residual_claims": [
+    "training-support crossover under matched architecture, initialization policy, corpus size, scene pool, tokenizer, optimizer, training horizon and one shared decoder",
+    "fixed-count/fixed-token topology residual after support is controlled",
+    "predicted-versus-oracle graph stage localization with exact object/slot/feature identity pairing and the same downstream decoder"
+  ],
+  "standalone_paper_stop_rule": "If the future P1 support crossover has no meaningful residual, or a residual cannot be selectively localized/recovered by the exact-identity oracle intervention, stop the standalone mechanism paper rather than redefining topology or switching endpoints after outcomes.",
+  "recheck_required_again": "immediately before any later confirmatory multi-seed training authority, because this v12 check only protects the developmental tranche"
+}

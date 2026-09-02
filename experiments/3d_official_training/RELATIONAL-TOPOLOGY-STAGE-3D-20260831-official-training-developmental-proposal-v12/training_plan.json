@@ -1,0 +1,201 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-proposal-v12",
+  "state": "DEVELOPMENTAL_OFFICIAL_TRAINING_PLAN_FROZEN_PROPOSAL_ONLY",
+  "classification": "DEVELOPMENTAL_OFFICIAL_TRAINING_NO_SCIENTIFIC_OUTCOME_ADMISSION",
+  "purpose": "Create the smallest scientifically useful official InstructScene training tranche that can later support a separately authorized developmental P1 decision without pre-committing the cost of multi-seed confirmatory replication.",
+  "scientific_question_preserved": "Does training relation-count support itself causally change behavior under matched architecture and one shared decoder, before asking whether fixed-count topology localizes the residual?",
+  "deliberate_official_source_adapter": {
+    "official_instructscene_training_splits": ["train", "val"],
+    "developmental_training_splits": ["train"],
+    "reason": "Keep the official val split outcome-locked for a later separately authorized reproduction qualification and prevent checkpoint-selection leakage.",
+    "scientific_treatment_difference_between_SUPPORT_12_and_SUPPORT_14": false,
+    "must_be_disclosed_in_reproduction_reporting": true
+  },
+  "components": {
+    "BEDROOM-SG2SC-SHARED": {
+      "role": "shared downstream decoder causal control",
+      "architecture_source": "official InstructScene a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+      "official_config_sha256": "93a8483771de03a6d1673916d9fb22d075bd03ace40d21f074a0e42a89e85c15",
+      "developmental_runtime_config_sha256": "429301d308ee6d99c479cc6d7e4a55dca7661f3bec2c29a128e3586e4ea17b7a",
+      "training_scene_policy": "materialized official BEDROOM train split only; ground-truth semantic graphs; exclude val/test and unmapped scenes",
+      "materialized_train_scene_count_observed_before_training": 3722,
+      "materialized_train_scene_pool_sha256": "e1c8be1dad5d02db5aafadaadbbd4f8c69a18aeff100b46938492ffb9f388ce2",
+      "corpus_treatment": "NONE_SHARED_CONTROL",
+      "training_seed": 20260901,
+      "batch_size": 128,
+      "gradient_accumulation": 1,
+      "optimizer": {
+        "name": "adamw",
+        "lr": 0.0001,
+        "weight_decay": 0.02
+      },
+      "ema": {
+        "use_ema": true,
+        "max_decay": 0.9999,
+        "min_decay": 0.0,
+        "update_after_step": 0,
+        "use_warmup": true,
+        "inv_gamma": 1.0,
+        "power": 0.75
+      },
+      "logical_optimizer_steps": 1000000,
+      "official_equivalent_schedule": "2000 epochs x 500 steps_per_epoch",
+      "checkpoint_every_steps": 50000,
+      "final_checkpoint_policy": "step-1000000 EMA state; outcome-blind fixed endpoint",
+      "validation_during_training": false,
+      "scientific_metrics_during_training": false
+    },
+    "SGP-12": {
+      "role": "developmental treatment arm with training relation-count support {1,2}",
+      "architecture_source": "official InstructScene a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+      "official_config_sha256": "ae4699a8be0ba2d1cd332a37d3233abee96cde172fbddd7a89857e0b0d31d021",
+      "developmental_runtime_config_sha256": "64ce016dbeb1d3c5cee7174ae05370a5874ae716ed9fe93280b997415b1864d7",
+      "corpus_sha256": "9884b2afd58e05ed0eb80864154765e55551e5f77632d4fbd6308d0af50dd58b",
+      "eligible_scene_pool_sha256": "40da5528402087f97bcd5d704d914a3d4eca65a083b66fffca6be92fd452ea89",
+      "row_count": 12240,
+      "relation_count_support": [1, 2],
+      "training_seed": 20260901,
+      "batch_size": 128,
+      "gradient_accumulation": 1,
+      "optimizer": {
+        "name": "adamw",
+        "lr": 0.0001,
+        "weight_decay": 0.02
+      },
+      "ema": {
+        "use_ema": true,
+        "max_decay": 0.9999,
+        "min_decay": 0.0,
+        "update_after_step": 0,
+        "use_warmup": true,
+        "inv_gamma": 1.0,
+        "power": 0.75
+      },
+      "logical_optimizer_steps": 1000000,
+      "official_equivalent_schedule": "2000 epochs x 500 steps_per_epoch",
+      "checkpoint_every_steps": 50000,
+      "final_checkpoint_policy": "step-1000000 EMA state; outcome-blind fixed endpoint",
+      "validation_during_training": false,
+      "scientific_metrics_during_training": false
+    },
+    "SGP-14": {
+      "role": "developmental treatment arm with training relation-count support {1,2,3,4}",
+      "architecture_source": "official InstructScene a9097a62c484c56ac7be5ec2928ef497cbbaaf24",
+      "official_config_sha256": "ae4699a8be0ba2d1cd332a37d3233abee96cde172fbddd7a89857e0b0d31d021",
+      "developmental_runtime_config_sha256": "64ce016dbeb1d3c5cee7174ae05370a5874ae716ed9fe93280b997415b1864d7",
+      "corpus_sha256": "51e9e6011250970c660d91c75843919f55192b800423d8ad59a2cfb5c08c4b05",
+      "eligible_scene_pool_sha256": "40da5528402087f97bcd5d704d914a3d4eca65a083b66fffca6be92fd452ea89",
+      "row_count": 12240,
+      "relation_count_support": [1, 2, 3, 4],
+      "training_seed": 20260901,
+      "batch_size": 128,
+      "gradient_accumulation": 1,
+      "optimizer": {
+        "name": "adamw",
+        "lr": 0.0001,
+        "weight_decay": 0.02
+      },
+      "ema": {
+        "use_ema": true,
+        "max_decay": 0.9999,
+        "min_decay": 0.0,
+        "update_after_step": 0,
+        "use_warmup": true,
+        "inv_gamma": 1.0,
+        "power": 0.75
+      },
+      "logical_optimizer_steps": 1000000,
+      "official_equivalent_schedule": "2000 epochs x 500 steps_per_epoch",
+      "checkpoint_every_steps": 50000,
+      "final_checkpoint_policy": "step-1000000 EMA state; outcome-blind fixed endpoint",
+      "validation_during_training": false,
+      "scientific_metrics_during_training": false
+    }
+  },
+  "paired_sgp_invariants": {
+    "same_initial_model_state_hash_required": true,
+    "expected_initial_model_state_sha256": "efd8ee84bf36e5ebfc9a191155495d5c540f289e20a117356c4b490a4c2fb3f3",
+    "expected_parameter_count": 51156834,
+    "initialization_precomputed_cpu_only": true,
+    "initialization_precompute_torch": "2.4.0+cu121",
+    "same_architecture": true,
+    "same_parameter_count": true,
+    "same_text_encoder_and_revision": true,
+    "same_optimizer": true,
+    "same_batch_size": true,
+    "same_training_steps": true,
+    "same_checkpoint_policy": true,
+    "same_seed": true,
+    "same_structural_example_key_order": true,
+    "paired_batch128_augmentation_replay_preflight": "PASS_384_ROWS_3_BATCHES_ALL_TENSOR_HASHES_IDENTICAL",
+    "checkpoint_sampler_and_rng_lineage_must_match_between_arms": true,
+    "same_scene_pool": true,
+    "same_row_count": true,
+    "same_shared_decoder_checkpoint": true,
+    "only_intentionally_varied_factor": "TRAINING_RELATION_COUNT_SUPPORT"
+  },
+  "pre_optimizer_resource_gate": {
+    "required": true,
+    "exact_target_batch_size": 128,
+    "optimizer_steps": 0,
+    "checks": [
+      "forward pass",
+      "backward pass",
+      "loss finite",
+      "grad finite",
+      "peak allocated VRAM",
+      "peak reserved VRAM",
+      "no OOM"
+    ],
+    "failure_action": "HOLD_OFFICIAL_TRAINING_RESOURCE_ENVELOPE; do not lower batch size, change gradient accumulation, or start training without a new adjudicated amendment"
+  },
+  "persistence": {
+    "incremental": true,
+    "heartbeat_required": true,
+    "exactly_once_component_claim": true,
+    "checkpoint_contains": [
+      "model",
+      "optimizer",
+      "EMA",
+      "scheduler/no-op state",
+      "Python RNG",
+      "NumPy RNG",
+      "Torch CPU RNG",
+      "all Torch CUDA RNG states",
+      "sampler order",
+      "sampler cursor",
+      "corpus cursor",
+      "global step"
+    ],
+    "resume_tolerance": 1e-7,
+    "completed_checkpoint_mutation_forbidden": true
+  },
+  "stopping_rules": {
+    "outcome_based_early_stopping": false,
+    "training_loss_based_early_stopping": false,
+    "validation_based_checkpoint_selection": false,
+    "fixed_training_endpoint": 1000000,
+    "fail_closed_on": [
+      "OOM after resource gate",
+      "non-finite loss",
+      "non-finite gradient",
+      "dataloader failure not attributable to transient infrastructure",
+      "checkpoint unreadable",
+      "resume state mismatch",
+      "corpus hash drift",
+      "config hash drift",
+      "paired SGP initial-state mismatch",
+      "scientific or evaluation outcome leakage into training selection"
+    ]
+  },
+  "developmental_scope_boundary": {
+    "training_seed_count": 1,
+    "confirmatory_multi_seed_replication": "NOT_AUTHORIZED_NOT_INCLUDED",
+    "reproduction_evaluation": "NOT_AUTHORIZED_NOT_INCLUDED",
+    "P1_evaluation": "NOT_AUTHORIZED_NOT_INCLUDED",
+    "oracle_graph_intervention": "NOT_AUTHORIZED_NOT_INCLUDED",
+    "scientific_outcomes": 0,
+    "paper_claims_from_training_loss": "FORBIDDEN"
+  }
+}
