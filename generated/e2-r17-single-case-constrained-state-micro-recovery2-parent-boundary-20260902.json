@@ -1,0 +1,132 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-constrained-state-micro-recovery2-parent-boundary",
+  "authority": {
+    "analyzer": false,
+    "heldout_evaluation": false,
+    "provider_io": false,
+    "updater": false
+  },
+  "child_provider_total_limit": 123,
+  "completed_unit_replay": false,
+  "created_at_utc": "2026-09-02T15:02:08+00:00",
+  "cumulative_claims_before_recovery2": {
+    "g0_base": 55,
+    "g1_verify": 60,
+    "g2_complete": 65,
+    "g3_complete_recover": 68
+  },
+  "explicit_429_recovery_units": 1,
+  "never_started_measurements": 26,
+  "new_measurements_required": 27,
+  "original_failed_lineage": {
+    "interruption_audit_path": "generated/e2-r17-single-case-constrained-state-micro-interruption-audit-20260902.json",
+    "interruption_audit_sha256": "dfe8fc2f9d797cb0ae1bfa49c96d4a3f48de390691658b0fff8095fccc6532b1",
+    "provider_claims": 3,
+    "provider_ledger_path": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-20260902/measurement/g3_complete_recover/provider_budget.sqlite3"
+  },
+  "original_per_arm_total_limit": 191,
+  "parent_authorization_path": "generated/e2-r17-single-case-constrained-state-micro-recovery-authorization-20260902.json",
+  "parent_authorization_sha256": "36b19cbdffdfca4be1bcec9ef54fe581181ab68d76a6bc4797e64e03cef53612",
+  "parent_claims_by_arm": {
+    "g0_base": 55,
+    "g1_verify": 60,
+    "g2_complete": 65,
+    "g3_complete_recover": 65
+  },
+  "parent_completed_manifests": {
+    "g0_base": {
+      "completed_count": 11,
+      "path": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery-20260902/measurement/g0_base/completed_eval_tasks.jsonl",
+      "sha256": "8afb55a0b9159f11c2f55f51041e69dd7493807c93292215a0d5fc8af482b319"
+    },
+    "g1_verify": {
+      "completed_count": 11,
+      "path": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery-20260902/measurement/g1_verify/completed_eval_tasks.jsonl",
+      "sha256": "10b17ea35200dfbf39140bb88dff5a7f7c57deb9398df963ad64f8eba4a3ffa3"
+    },
+    "g2_complete": {
+      "completed_count": 11,
+      "path": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery-20260902/measurement/g2_complete/completed_eval_tasks.jsonl",
+      "sha256": "97a429f50dbd67759263dcb28e9fda9160a06ff9d669443574f77f3245944021"
+    },
+    "g3_complete_recover": {
+      "completed_count": 12,
+      "path": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery-20260902/measurement/g3_complete_recover/completed_eval_tasks.jsonl",
+      "sha256": "630791be6f6ce3e1f0623d2846792c748a824eebe2655cf9560d5458cd6a1136"
+    }
+  },
+  "parent_completed_measurements": 45,
+  "parent_completed_tasks": {
+    "g0_base": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7"
+    ],
+    "g1_verify": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7"
+    ],
+    "g2_complete": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7"
+    ],
+    "g3_complete_recover": [
+      "r17-b4-agj-p2",
+      "r17-b4-agj-p3",
+      "r17-b4-agj-p8",
+      "r17-b4-fmv-p1",
+      "r17-b4-fmv-p2",
+      "r17-b4-fmv-p8",
+      "r17-b4-ioc-p1",
+      "r17-b4-ioc-p4",
+      "r17-b4-ioc-p6",
+      "r17-b4-msp-p0",
+      "r17-b4-msp-p7",
+      "r17-b4-msp-p8"
+    ]
+  },
+  "parent_contract_path": "generated/e2-r17-single-case-constrained-state-micro-recovery-contract-20260902.json",
+  "parent_contract_sha256": "9cd25942850676493940883a98f06e842946ffad28afb605cd88c122a70e30a2",
+  "parent_failure_arm": "g2_complete",
+  "parent_failure_class": "EXPLICIT_WEEKLY_ACCOUNT_QUOTA_429",
+  "parent_failure_path": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery-20260902/measurement/g2_complete/eval_failure_r17-b4-msp-p8.json",
+  "parent_failure_sha256": "1559ccbaabddf56be9129939748c87ab07dbf1ff04726ceec912541fc7fd3ff7",
+  "parent_failure_task": "r17-b4-msp-p8",
+  "parent_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-constrained-state-micro-recovery-v1.json",
+  "parent_lease_sha256": "3eb1414d3155280644298c0a5b003b5151cd218c1bc301322dc34a1020aae089",
+  "parent_lease_status": "FAIL_CLOSED_CONSTRAINED_STATE_MICRO",
+  "parent_run_root": "/data/wyt/e2-r17-search-projection/runs/single-case-constrained-state-micro-recovery-20260902",
+  "partial_effect_read": false,
+  "per_unit_limit": 11,
+  "quota_reset_not_before": "2026-09-07T00:00:00+08:00",
+  "schema_version": "1.0",
+  "scientific_scores_read": false,
+  "status": "PASS_RECOVERY2_PARENT_BOUNDARY_OUTCOME_BLIND"
+}
