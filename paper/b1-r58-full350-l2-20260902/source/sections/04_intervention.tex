@@ -1,0 +1,104 @@
+\section{Controlled Evidence Across Writer and Provenance Channels}
+\label{sec:intervention}
+We first summarize matched outcome-conditioned writer-mode interventions on released WebArena evidence using the first-party ReasoningBank memory-writing contract. These L1 experiments fix the future query and observation evidence but allow the writer objective to change, so they test a writer-mode bundle rather than provenance metadata alone. We then report the main fresh L2 experiment on MemRL/OSInteraction, where retrieval membership, retrieval order, and actionable memory bytes are fixed and the only executor-visible treatment is truthful source-outcome provenance.
+
+\subsection{Terminal-success endpoint}
+We freeze six candidate future tasks before memory writing or downstream evaluation. For each task, the writer receives paired acquisition traces under its success-reflection objective and its failure-reflection objective. The downstream query evidence remains fixed within each pair.
+
+A pair enters terminal evaluation only after an information-equivalence gate. Both memories must parse as valid ReasoningBank items. Their embedding cosine must be at least 0.75. An independent verifier must judge the actionable guidance equivalent and find no task-solving fact unique to either memory. Literal benchmark-reference leakage excludes a pair before downstream outcomes. Four of the six frozen candidates pass, with cosines 0.902--0.931. Re-thresholding the archived pre-outcome values at 0.85 or 0.90 retains all 4/4 pairs. However, a previously archived post-hoc audit with stronger semantic reviewers is less permissive (0/4 fully equivalent under one reviewer and 1/4 under another), so we do not interpret cosine stability as proof of information identity.
+
+The evidence packets contain repeated global browser chrome. A condition-blind projection removes complete menu blocks before the clean run. It also drops blank lines and exact duplicate lines. The projection is frozen without consulting downstream answers. A context preflight shows that the largest prompt occupies 5,209 input tokens inside a 12,288-token allocation. Qwen2.5-32B remains the executor at temperature 0.6. The pair set and seed schedule remain frozen.
+
+Each qualified pair receives six paired seeds per writer condition. Terminal correctness uses the WebArena must-include evaluator. Table~\ref{tab:swap} reports pair-level success rates.
+
+\begin{table}[t]
+\centering
+\caption{L1 terminal-success writer-mode contrast. $\Delta$ is success-derived minus failure-derived terminal success.}
+\label{tab:swap}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Released task & Success-derived & Failure-derived & $\Delta$ \\
+\midrule
+167 & 0.000 & 0.000 & 0.000 \\
+23  & 1.000 & 0.667 & +0.333 \\
+387 & 0.000 & 0.000 & 0.000 \\
+388 & 0.500 & 0.167 & +0.333 \\
+\midrule
+Mean & 0.375 & 0.208 & +0.167 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The mean controlled difference is +0.1667. The preregistered support gate requires a difference of at least 0.15 together with a one-sided stratified permutation value below 0.05. The magnitude criterion is met. The 100,000-permutation test gives $p=0.0785$, so the support gate remains closed. More fundamentally, four independent task units permit only $2^4=16$ exact sign patterns; the smallest attainable exact one-sided value is therefore $1/16=0.0625$. R4 is structurally incapable of clearing the frozen $0.05$ gate and is treated as directional, non-decisive evidence. A deterministic lexical audit also shows that writer mode changes pragmatic register: across the six R4 pairs, failure-derived memories use more search/filter and strong-directive language in 6/6 pairs. This reinforces the L1 writer-bundle interpretation rather than a provenance-only interpretation.
+
+\subsection{Disjoint early-action endpoint}
+The manuscript specifies action divergence before terminal feedback as a second endpoint. We execute that endpoint on a disjoint cohort after the terminal run. Candidate selection occurs before counterfactual memory writing. A released successful trajectory supplies a frozen reference action at an intermediate browser state. This reference is external to the L1 writer-mode contrast.
+
+The candidate rule selects the earliest visible single-click decision at step two or later. Prior D2 task IDs are excluded. The remaining tasks are ordered by numeric task ID. The first 24 candidates are frozen. Their compact process traces are byte-identical across writer conditions. Terminal success labels are removed from those traces before the ReasoningBank success-reflection and failure-reflection interventions.
+
+Twenty-three of the 24 candidates pass the pre-outcome information-equivalence gate. The minimum gate is 12. One candidate is excluded because the independent verifier returns an unparsable audit response; this support failure carries no scientific verdict. All 23 eligible pairs enter downstream execution. Each receives six paired seeds under each memory condition, producing 276 completed requests with zero support failures.
+
+The endpoint asks for the next click from the frozen browser state. The released successful trajectory provides the reference click. We use this endpoint only to localize action-selection divergence under the L1 writer-mode contrast before terminal feedback. Reference-action match is not treated as a surrogate for task success: a different click can still lead to a correct trajectory, so terminal quality remains the distinct endpoint above. Statistical inference uses tasks as the independent units. The preregistered test sign-flips each task-level success-derived minus failure-derived reference-match difference over 100,000 permutations.
+
+\begin{table}[t]
+\centering
+\caption{Two frozen L1 writer-mode endpoints. Support requires $\Delta\geq0.15$ with $p_S<0.05$. Counterevidence requires $\Delta\leq-0.15$ with $p_F<0.05$.}
+\label{tab:endpoints}
+\small
+\begin{tabular}{lrrrrl}
+\toprule
+Endpoint & Units & Requests & $\Delta$ & Relevant $p$ & Gate \\
+\midrule
+Terminal success & 4 & 48 & +0.167 & $p_S=0.0785$ & closed \\
+Reference-action match & 23 & 276 & $-0.094$ & $p_F=0.0792$ & closed \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the early-action endpoint, the observed success-derived minus failure-derived reference-action match difference is $-0.0942$. Its support-side value is 0.9841. The counterevidence-side value is 0.0792. Thus R6 misses both frozen directional criteria: $|\Delta|=0.0942<0.15$ and the relevant randomization value exceeds 0.05. Paired action choices differ in 21.0\% of seeds; hypothesized-direction and reverse error-consistent divergence are 0.7\% and 10.1\%. These are mechanism-localization quantities, not terminal-quality evidence.
+
+\subsection{Cross-endpoint L1 adjudication}
+Table~\ref{tab:endpoints} shows opposite descriptive signs on distinct L1 estimands, so we do not pool them. R4 is non-decisive at terminal success; R6 fails both directional criteria on an early-action readout that is not terminal quality. Neither can overwrite the other. The strongest L1 statement is \emph{no endpoint-robust directional conclusion under the writer-mode bundle}. This is precisely why the L2 exact-information experiment is needed.
+
+\subsection{Fresh L2 provenance-exposure experiment}
+\label{sec:l2fresh}
+The main experiment is a new prospective object and does not reuse historical R4/R6 outcomes or the stopped R5/R19 prefixes. We execute the frozen OSInteraction training split under Qwen2.5-7B-Instruct and MemRL to build a source bank from all 350 source tasks, one durable memory at a time. The run completes 350/350 units with 176 success-derived and 174 failure-derived memories. This balance is descriptive; source outcomes are never used to choose target units.
+
+Before any validation environment is reset, we apply native MemRL retrieval ($k=10$, cosine threshold $0.5$) to fresh exact skill-signature clusters from the frozen validation split. All 40 historical primary/utilization signatures are excluded. Of 108 remaining clusters, 106 have at least one eligible retrieved memory with nonempty content, a source task in the full source universe, and a boolean source outcome. Frozen hash ranking selects the first 32 eligible clusters as the primary sample and the next eight as a disjoint utilization sample. No target outcome is observed during this support step.
+
+\paragraph{Utilization first stage.}
+The eight utilization clusters each receive five frozen surfaces: no memory (U0), true retrieved memory (U1), null content (U2), reversed content (U3), and shuffled other-task memory (U4). Promotion uses only the first executable action; terminal success is diagnostic. U1 produces a first-action change relative to both U0 and U2 in 5/8 units, while U2 differs from U0 in 3/8. This satisfies the preregistered rule $5\geq3$ and $5\geq3+1$, establishing that the memory surface is behaviorally used before the primary contrast is opened.
+
+\paragraph{Primary A/B contrast.}
+For each of the 32 fresh primary clusters, the frozen retrieval is rendered into two executor views. A contains only actionable content. B contains the same rows, order, and actionable content plus a truthful boolean \texttt{source\_outcome\_success} field for each row. Similarity, Q estimates, scores, roles, memory IDs, and source task IDs are hidden from both arms; retrieval is not rerun between arms. Arm order is frozen per cluster before treatment. All 64 arm runs complete without execution failure.
+
+\begin{table}[t]
+\centering
+\caption{Fresh L2 terminal-success result. The inference unit is the paired dependency cluster.}
+\label{tab:l2fresh}
+\small
+\begin{tabular}{lrr}
+\toprule
+Quantity & Content only (A) & + truthful provenance (B) \\
+\midrule
+Terminal successes & 15/32 & 16/32 \\
+Success rate & 0.46875 & 0.50000 \\
+\midrule
+Paired $B-A$ effect & \multicolumn{2}{c}{$+0.03125$} \\
+B-only / A-only successes & \multicolumn{2}{c}{1 / 0} \\
+Exact two-sided sign test & \multicolumn{2}{c}{$p=1.0$} \\
+Paired bootstrap 95\% interval & \multicolumn{2}{c}{$[0,0.09375]$} \\
+Preregistered relevance floor & \multicolumn{2}{c}{$|\Delta|\geq0.15$; not met} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Thirty-one of 32 pairs have identical terminal outcomes. The only discordant pair favors B, but one discordant unit supplies no directional statistical evidence under the exact two-sided paired test. The preregistered bootstrap interval is reported as specified; because the empirical paired-effect distribution contains 31 zeros and one $+1$, we do not interpret the upper endpoint as a universal population bound. The supported claim is narrower: on this support-qualified substrate, we find neither a statistically detectable terminal provenance benefit nor an effect meeting the prespecified 15-point practical floor.
+
+\paragraph{Behavioral legibility without terminal conversion.}
+A complete-run diagnostic shows that A and B nevertheless differ in first executable action for 9/32 clusters and in total step count for 7/32, while terminal success differs for only 1/32. Thus provenance is not simply ignored. It can perturb local control, but those perturbations almost always wash out before the terminal evaluator. One illustrative discordant task asks the agent to create a user and a protected configuration file: the content-only arm repeatedly recreates the user until the step limit, whereas the provenance-visible arm proceeds to file creation and succeeds. This single case is illustrative rather than a general mechanism estimate.
+
+\paragraph{L3 transport.} A source-faithful test still requires the motivating financial writer/checkpoint, original memory interface, fixed acquisition content, and paired source runtime; WebArena or MemRL is not a substitute. Appendix~\ref{app:l3} gives the transport contract. L3 therefore remains replication debt.
+
+The L2 result changes the governance implication. Raw provenance is behaviorally active enough to perturb decisions, yet its incremental terminal value is small in the completed experiment. Section~\ref{sec:psmg} therefore treats provenance as auditable control-plane information whose decision weight should be learned and allowed to collapse toward zero, rather than as a monotone SUCCESS/FAILURE trust rule. R56 does not test PSMG efficacy.

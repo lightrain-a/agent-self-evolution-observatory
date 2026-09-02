@@ -1,0 +1,77 @@
+\begin{thebibliography}{16}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Allard et~al.(2026)Allard, Teinturier, Xing, and Viaud]{allard2026erl}
+Marc-Antoine Allard, Arnaud Teinturier, Victor Xing, and Gautier Viaud.
+\newblock Experiential reflective learning for self-improving llm agents.
+\newblock In \emph{ICLR 2026 Workshop on Memory for LLM-Based Agentic Systems}, 2026.
+
+\bibitem[Asadolahi et~al.(2026)Asadolahi, Amini, Talebi, Farhadi, and Zamanifar]{asadolahi2026inflation}
+Mohammad Asadolahi, Amir Amini, Samira Talebi, Amirfarhad Farhadi, and Azadeh Zamanifar.
+\newblock Memory reward inflation in self-improving llm agents, 2026.
+
+\bibitem[Joshi(2026)]{joshi2026eywa}
+Resham Joshi.
+\newblock Eywa: Provenance-grounded long-term memory for ai agents, 2026.
+
+\bibitem[Li \& Zhu(2026)Li and Zhu]{li2026audit}
+Jialong Li and Jialing Zhu.
+\newblock Auditing self-evolution in financial agents: Capability gains, security drift, and execution-interface mismatch, 2026.
+
+\bibitem[Liu et~al.(2026)Liu, Su, Zhang, et~al.]{liu2026rethinkingfeedback}
+Yuxuan Liu, Zhaochen Su, Yuhao Zhang, et~al.
+\newblock Rethinking self-evolving agent skills: Feedback dynamics over multiple rounds, 2026.
+
+\bibitem[Ouyang et~al.(2026)Ouyang, Yan, Hsu, Chen, Jiang, Wang, Han, Le, Daruki, Tang, Tirumalashetty, Lee, Rofouei, Lin, Han, Lee, and Pfister]{ouyang2026reasoningbank}
+Siru Ouyang, Jun Yan, I-Hung Hsu, Yanfei Chen, Ke~Jiang, Zifeng Wang, Rujun Han, Long~T. Le, Samira Daruki, Xiangru Tang, Vishy Tirumalashetty, George Lee, Mahsan Rofouei, Hangfei Lin, Jiawei Han, Chen-Yu Lee, and Tomas Pfister.
+\newblock Reasoningbank: Scaling agent self-evolving with reasoning memory.
+\newblock In \emph{International Conference on Learning Representations}, 2026.
+
+\bibitem[Saidi(2026)]{saidi2026mutmem}
+Walid Saidi.
+\newblock Mutmem: Cryptographically authorized mutation in persistent agent memory, 2026.
+
+\bibitem[Shinn et~al.(2023)Shinn, Cassano, Berman, Gopinath, Narasimhan, and Yao]{shinn2023reflexion}
+Noah Shinn, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao.
+\newblock Reflexion: Language agents with verbal reinforcement learning.
+\newblock In \emph{Advances in Neural Information Processing Systems}, 2023.
+
+\bibitem[Sun et~al.(2026)Sun, Wang, Schmidt, et~al.]{sun2026learningfromfailure}
+Xueqiao Sun, Xiaohan Wang, Ludwig Schmidt, et~al.
+\newblock Learning from failure: Inference-time self-improvement for computer-use agents, 2026.
+
+\bibitem[Van et~al.(2026)Van, Hieu, Tuan, Hai, Van, Diep, and Le]{pham2026memorai}
+Hung~Pham Van, Nguyen~Manh Hieu, Khang Pham~Tran Tuan, Nam~Le Hai, Linh~Ngo Van, Nguyen Thi~Ngoc Diep, and Trung Le.
+\newblock Memorai: Memory organization and retrieval via adaptive graph intelligence for llm conversational agents.
+\newblock In \emph{Findings of the Association for Computational Linguistics: ACL 2026}, pp.\  28235--28253. Association for Computational Linguistics, 2026.
+\newblock \doi{10.18653/v1/2026.findings-acl.1408}.
+
+\bibitem[Wang et~al.(2026)Wang, Zhang, Cai, et~al.]{wang2026tracetotrust}
+Yiqi Wang, Jiaqi Zhang, Taotao Cai, et~al.
+\newblock From agent traces to trust: A survey of evidence tracing and execution provenance in llm agents, 2026.
+
+\bibitem[Wang et~al.(2024)Wang, Mao, Fried, and Neubig]{wang2024awm}
+Zora~Zhiruo Wang, Jiayuan Mao, Daniel Fried, and Graham Neubig.
+\newblock Agent workflow memory, 2024.
+
+\bibitem[Xu et~al.(2026)Xu, Xiao, Shao, et~al.]{xu2026laundering}
+Jinghan Xu, Yiyong Xiao, Wanru Shao, et~al.
+\newblock Memory provenance laundering in llm agents: A non-amplification firewall for persistent memory, 2026.
+
+\bibitem[Xu et~al.(2025)Xu, Liang, Mei, et~al.]{xu2025amem}
+Wujiang Xu, Zujie Liang, Kai Mei, et~al.
+\newblock A-mem: Agentic memory for llm agents, 2025.
+
+\bibitem[Zhang et~al.(2026)Zhang, Wang, Zhou, et~al.]{zhang2026memrl}
+Shengtao Zhang, Jiaqian Wang, Ruiwen Zhou, et~al.
+\newblock Memrl: Self-evolving agents via runtime reinforcement learning on episodic memory, 2026.
+
+\bibitem[Zhu et~al.(2026)Zhu, Chen, Yu, Wu, and Wang]{zhu2026tiermem}
+Qiming Zhu, Shunian Chen, Rui Yu, Zhehao Wu, and Benyou Wang.
+\newblock From lossy to verified: A provenance-aware tiered memory for agents, 2026.
+
+\end{thebibliography}

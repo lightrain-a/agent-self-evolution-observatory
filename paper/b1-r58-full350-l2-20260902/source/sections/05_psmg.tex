@@ -1,0 +1,18 @@
+\section{Provenance-Separated Memory Governance}
+\label{sec:psmg}
+The identification ladder suggests a governance response that does not require guessing the sign of provenance. Let a persistent memory record be
+\begin{equation}
+r_i=(m_i,p_i,z_i,h_i),
+\end{equation}
+where $m_i$ is actionable memory content, $p_i$ is process provenance (for example, source success/failure), $z_i$ contains all other pre-outcome relevance, utility, and verification features available to the memory manager, and $h_i$ is a content-addressed audit pointer. PSMG keeps $(p_i,h_i)$ in the control plane rather than silently deleting provenance or concatenating it to the executor prompt.
+
+\paragraph{Calibrated governance, not a provenance blacklist.}
+A frozen controller computes $s_i=g_\theta(z_i,p_i)$ and a decision rule $\delta(s_i)$ chooses among admit, down-weight, request verification, or withhold. Failure-derived memory is therefore not rejected by definition: provenance can change a decision only through a calibrated rule conditioned on the same pre-outcome evidence used for ordinary memory quality control. This is important because prior work and the completed L2 result make a universal FAILURE$\rightarrow$low-trust rule scientifically unjustified: provenance is behaviorally legible in our fresh experiment, but its incremental terminal value beyond fixed content is small.
+
+\paragraph{Executor-blind projection.}
+After the governance action, a projection $\Pi(r_i,\delta)$ sends only the approved actionable content (and any separately authorized verification result) to the executor. The raw $p_i$ label is omitted unless an executor-facing provenance channel is itself the prospectively declared treatment. This separates two mechanisms that ordinary provenance prompting conflates: provenance can influence \emph{whether/how} a memory is reused without also becoming a lexical cue that directly changes generation.
+
+\paragraph{The same-information test.}
+PSMG's future causal question is incremental, not absolute. Its strongest comparator is a controller $g^0_\phi(z_i)$ that receives every pre-outcome feature available to PSMG except $p_i$. A decisive evaluation must keep memory bytes, candidate support, retrieval/content budget, executor, verification information, task distribution, endpoint, and analysis rule fixed, and compare PSMG against this provenance-free controller. Content-only retrieval, raw provenance-tag exposure, and a hard provenance heuristic are useful additional arms, but cannot replace the same-information comparator. Under this design, a PSMG advantage would identify decision value attributable to provenance in the governance plane rather than to extra content or a prompt cue.
+
+PSMG remains a method design rather than an efficacy result. R56 identifies the executor-visible incremental-information contrast $Y_L(p;m)-Y_L(\varnothing;m)$; it does not compare a provenance-sensitive governor $g_\theta(z,p)$ against the strongest same-information provenance-free controller $g^0_\phi(z)$. The stopped R19 prefix is not used to choose the controller, endpoint, cohort, threshold, or analysis. A future PSMG-efficacy experiment is therefore a distinct prospective object with its own frozen controller, comparator, support, and execution authority (Appendix~\ref{app:fresh}).

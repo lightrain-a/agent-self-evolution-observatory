@@ -4,7 +4,7 @@
 
 B1 不再把科学问题写成“failure-derived memory 是否更差”。当前最稳的对象是：**在 actionable content 与 target context 已知后，process provenance 是否还包含关于 downstream marginal utility 的额外信息；该信息通过哪个可观察通道进入 executor / governor；只有当它改变最优 memory-governance 决策时，provenance 才具有工程价值。**
 
-现有结果仍严格保持原边界：L0 是观察关联；L1 是 outcome-conditioned writer-mode bundle；历史 L2 byte-identical 设计只有 5/10 eligible unique tasks、0 calls，因此不是 null；L3 source-faithful transport 仍未完成。不能把当前证据写成固定方向的 provenance-only causal effect。
+现有结果已经把最关键的 L2 blocker 真正关闭：L0 仍是观察关联；L1 仍只识别 outcome-conditioned writer-mode bundle；历史 R5/R19 的 L2 support/runner stop 继续保持原边界，不与新实验合并；但新的 R53--R57 prospective MemRL/OSInteraction 实验在 350 个 source tasks 上建立独立 memory bank，经 zero-outcome native-support gate 从旧 40 个 cluster 之外冻结 32 个 fresh primary clusters 与 8 个 utilization clusters，最终完成 64/64 个 byte-identical-content A/B treatment。A(content-only) terminal success 为 15/32，B(+ truthful provenance) 为 16/32，$\Delta=B-A=+0.03125$，exact paired sign-flip $p=1.0$，预注册 paired bootstrap 95% CI 为 $[0,0.09375]$，未达到 $|\Delta|\ge 0.15$ 的 practical-relevance floor。31/32 对 terminal outcome 完全一致。因此当前最强结论不再是“L2 未识别”，而是：**在该 support-qualified Qwen2.5-7B + MemRL + OSInteraction L2 setting 中，provenance 对 executor 是 behaviorally legible 的，但在固定 actionable content 后几乎没有转化为 terminal utility；结果与 qualified content-sufficiency 一致，而不是对真实效应精确为零的证明。** L3 source-faithful transport 仍未完成。
 
 ## 一条完整论文线
 
@@ -140,9 +140,18 @@ Qualified baselines：contribution-aware content-only、observed-return/Q rankin
 
 指标除了 terminal utility，还必须有 policy regret、negative-utility reuse、false promotion of negative-utility success memories、missed useful failure-derived memory、calibration/Brier、risk-coverage、verification/escalation cost、token/latency/call/storage cost。
 
-### E5 Fresh replication
+### E5 Fresh L2 replication（R53--R57，已完成）
 
-历史 R4/R6 与 L2 support stop 只作为冻结上下文，不与 fresh confirmatory analysis 合并。
+历史 R4/R6、R5、R19 与 R51 support stop 只作为冻结上下文，不与 fresh confirmatory analysis 合并。新实验采用独立 prospective lineage：
+
+- **R53 source bank**：冻结 OSInteraction train split 的全部 350 个 source tasks，按 outcome-blind SHA256 顺序逐个执行并写 memory；350/350 完成，source outcome 176 success / 174 failure，外部 API calls 为 0。
+- **R54 native support**：在任何 validation environment reset/evaluator 前，仅用 frozen instruction + native MemRL retrieval 检查支持；排除历史 40 个 cluster 后共有 108 个 fresh skill-signature clusters，其中 106/108 有 eligible retrieval；按预冻结 hash rank 取前 32 个为 primary、后 8 个为 utilization。
+- **R55 utilization first stage**：8 clusters × U0/U1/U2/U3/U4 共 40/40 arms 完成。U1 true-memory 在 5/8 units 上相对 U0 与 U2 产生 specific first-action divergence；U2-vs-U0 placebo divergence 为 3/8，满足冻结的 `5 >= 3` 且 `5 >= 3+1` promotion rule，因此确认 memory surface 被 Agent 行为性使用。
+- **R56 L2 primary**：32 fresh clusters × A/B 两臂，64/64 arms、0 failures。A=`content only`，B=`same retrieval/order/actionable bytes + truthful source_outcome_success`。A=15/32，B=16/32，$\Delta=+3.125$ pp；B-only=1、A-only=0、discordant pairs=1；exact two-sided sign-flip $p=1.0$；预注册 paired bootstrap 95% CI $[0,9.375]$ pp；15 pp practical floor 未达到。
+- **complete-only mechanism diagnostic**：A/B 第一条 executable action 在 9/32 clusters 不同，总步数在 7/32 不同，但 terminal outcome 仅 1/32 不同。这支持 `PROVENANCE_BEHAVIORALLY_LEGIBLE_LOW_TERMINAL_CONVERSION`：标签可以扰动局部控制，但几乎没有增加最终任务效用。
+- **R57 adjudication**：`L2_PROVENANCE_ONLY_COMPLETE_QUALIFIED_CONTENT_SUFFICIENCY_LOW_TERMINAL_VALUE`。不能写成 provenance 的真实效应“精确为零”，也不能把一个 task 的差异升级为普遍机制。
+
+下一步 robustness 不再重建同一个 Qwen source bank，而优先做 **executor-backbone replication**：冻结 R54 的同一 32 个 fresh units、同一 retrieval/content/order/A-B renderer，仅把 executor backbone 从 Qwen2.5-7B-Instruct 换成独立模型。这样最低成本地检验“behaviorally legible but low terminal conversion”是否跨 executor 成立，而不重新引入 source-bank coverage 随机性。
 
 ## Fresh substrate G1–G8
 
@@ -166,14 +175,14 @@ Canonical literature anchors already used in the paper story: arXiv:2606.04990, 
 
 ## 当前冻结边界
 
-- L0：强 association，仅 motivation。
-- L1：writer-mode endpoints 方向不一致，不能升级 provenance-only sign。
-- L2：5/10 unique task、0 calls，是 support stop，不是 null。
-- L3：source-faithful transport debt 未关闭。
-- R19：归档，不复活来补实验量。
-- 历史剩余 27：non-confirmatory，不做 outcome mining。
-- Fresh confirmatory：只有 G1–G8 全过才允许重新申请执行权限。
-- PSMG：已形式化为 prospective method，但没有 performance-improvement claim。
+- L0：强 association，仅 motivation，不能升级为 causal sign。
+- L1：writer-mode endpoints 方向不一致；只识别 writer-mode bundle，不能升级 provenance-only sign。
+- 历史 L2：R5 的 5/10 unique-task support stop 与 R19 的 fail-closed incomplete run继续归档，不复活、不 pooling。
+- **Fresh L2（R53--R57）**：已完整执行并识别。32 paired clusters 中 A=15/32、B=16/32，$\Delta=+3.125$ pp，exact $p=1.0$，预注册 bootstrap CI $[0,9.375]$ pp，未达到 15 pp relevance floor；31/32 terminal pairs 相同。允许的结论是 **qualified content-sufficiency / low incremental terminal provenance value in this setting**，不是 universal null。
+- **Behavioral channel**：R55 utilization PASS；R56 A/B first action 9/32 不同，因此不能解释为“Agent 没看到/没用 memory 或 provenance”。更准确的机制描述是 provenance 可改变局部轨迹，但 terminal conversion 很低。
+- L3：source-faithful motivating-runtime transport debt 未关闭。
+- 第二 backbone：尚未执行；必须作为新 prospective replication，固定 R54 content/retrieval surface 后只替换 executor backbone，不能用来 outcome-rescue R56。
+- PSMG：已形式化为 prospective governance method，但 C/D controller efficacy 仍 `NOT_IDENTIFIED`；R56 A/B 不能被包装成 PSMG performance claim。
 
 ## 可复用研究经验
 
