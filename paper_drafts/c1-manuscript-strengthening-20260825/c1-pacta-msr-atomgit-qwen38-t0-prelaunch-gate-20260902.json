@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-SOURCE-T0-20260902",
+  "status": "ATOMGIT_MSR_SOURCE_PRELAUNCH_PASS",
+  "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+  "resolved_model": "qwen3.8-27b",
+  "q0": {
+    "status": "ATOMGIT_QWEN38_Q0_PASS_AFTER_TIMEOUT_REPAIR",
+    "first_decision_budget": 2048,
+    "source_trajectory_budget": 16384,
+    "atomcode_subprocess_timeout_seconds": 900,
+    "q0_closure_sha256": "19ec9c078b2c4a6f3ec77eee181b47a4f7cc082a516eff0074feace7a74e6f70"
+  },
+  "t0_prereg_commit": "d9eea394af92afaf91c8a38bae774f280108023e",
+  "receipts": {
+    "contract_sha256": "b5368345a9ecd42c32b8ad2168775e0d86c94113671598581fbca58b63e061b4",
+    "schedule_sha256": "33a2abd5fe4261a241bd6d3555a22ad122fc62ff4d0b50d1b0d8a0f06302c40c",
+    "prelaunch_sha256": "75473c724b195f61f454aaa9167ce3ce4e323562fdd6ebba1b555071a2f979c5",
+    "provider_config_sha256": "e5ef4b1e626cf0379e000922dec76f8121e54d1f2c7596e0b87f75d742722671"
+  },
+  "prelaunch": {
+    "qualified": 10,
+    "total": 10,
+    "provider_calls": 0,
+    "future_task_executions": 0
+  },
+  "source_schedule": [
+    "matplotlib__matplotlib-25479",
+    "sympy__sympy-13974",
+    "django__django-14855",
+    "scikit-learn__scikit-learn-25747",
+    "pylint-dev__pylint-4551",
+    "pydata__xarray-4629",
+    "astropy__astropy-7606",
+    "psf__requests-2317",
+    "pytest-dev__pytest-7982",
+    "sphinx-doc__sphinx-7590"
+  ],
+  "provider_responses_before_smoke": 0,
+  "scientific_source_tasks_used": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "probe_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "next": "Run exactly one non-scientific bounded multi-step smoke. No real source task may execute unless the smoke mechanically passes."
+}
