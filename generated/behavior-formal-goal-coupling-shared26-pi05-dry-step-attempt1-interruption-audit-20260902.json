@@ -1,0 +1,79 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-dry-step-attempt1-interruption-audit-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "generated_at": "2026-09-02T20:46:00+08:00",
+  "status": "PRE_GRADIENT_TECHNICAL_INTERRUPTION_CONFIRMED",
+  "attempt": 1,
+  "attempt_is_closed": true,
+  "automatic_retry_authorized": false,
+  "source_authority_sha256": "880bdc0c213e35ef2a6031a0a1d636ead8be8da5e9bfc48273bb4899f1ea320b",
+  "source_runner_sha256": "369e61c221619ad193db0ef4583b6414bd3cfdeaf2002721ef74c04123c14a14",
+  "source_runner_git_commit": "6be383400a50b960c9e1de6a1f977ed429a551f2",
+  "remote_durable_receipt_observation": {
+    "host": "222.20.126.69",
+    "receipt_path": "/data/wyt/agent-self-evolution-observatory/worktrees/formal-goal-shared26-resume-20260901/generated/behavior-formal-goal-coupling-shared26-pi05-dry-step-result-20260902.json",
+    "receipt_sha256": "3b6a9cda17b847f0945898ee55e441c2456c6582ce7875039c49e9439113ce1b",
+    "status": "PI05_NO_UPDATE_DRY_STEP_STARTED",
+    "attempt_count": 1,
+    "batch_ready": null,
+    "train_state_ready": null,
+    "dry_gradient_execution_started": false,
+    "dry_gradient_execution_completed": false,
+    "gradient_leaf_count": null,
+    "gradient_element_count": null,
+    "optimizer_update": false,
+    "parameter_update": false,
+    "checkpoint_written": false,
+    "error": null,
+    "next_gate": null
+  },
+  "remote_process_observation_after_interruption": {
+    "pid": 3977619,
+    "pid_present": false,
+    "gpu_memory_used_mib": 17,
+    "gpu_utilization_percent": 0,
+    "formal_training_checkpoint_directory_present": false
+  },
+  "runner_ordering_proof": {
+    "started_receipt_written_before_batch_or_gradient": true,
+    "gradient_started_receipt_status": "PI05_NO_UPDATE_DRY_STEP_GRADIENT_STARTED",
+    "gradient_started_receipt_is_written_before_pdry_call": true,
+    "gradient_call_occurs_after_gradient_started_receipt": true,
+    "runner_lineage_note": "The canonical runner sets dry_gradient_execution_started=true and atomically writes the GRADIENT_STARTED receipt before invoking pdry(...). Therefore the last durable receipt remaining at STARTED with dry_gradient_execution_started=false is positive evidence that the gradient call was not entered before the hard interruption."
+  },
+  "adjudication": {
+    "gradient_execution_started": false,
+    "model_forward_executed": false,
+    "backward_gradient_executed": false,
+    "optimizer_update_executed": false,
+    "parameter_update_executed": false,
+    "scientific_training_started": false,
+    "checkpoint_written": false,
+    "policy_rollout_started": false,
+    "policy_outcomes_read": false,
+    "classification": "PRE_GRADIENT_TECHNICAL_INTERRUPTION",
+    "scientific_object_contaminated": false
+  },
+  "transport_control_plane_observation": {
+    "host_ping_reachable": true,
+    "tcp_22_connectable_from_67": true,
+    "ssh_server_banner_received": false,
+    "ssh_banner_wait_seconds_tested": 60,
+    "direct_mcp_ssh": "timeout_during_banner_exchange",
+    "from_232_to_69": "timeout_during_banner_exchange_or_port_timeout",
+    "from_67_to_69": "timeout_during_banner_exchange",
+    "interpretation": "69 remained network-alive but its SSH/login path was not usable for post-interruption kernel/log forensics. This is not evidence of a scientific runner error."
+  },
+  "repair_policy": {
+    "attempt1_must_never_be_relaunched_or_overwritten": true,
+    "repair_requires_new_explicit_authority": true,
+    "repair_may_only_be_authorized_after_69_recovery_revalidation": [
+      "attempt1 receipt SHA remains 3b6a9cda17b847f0945898ee55e441c2456c6582ce7875039c49e9439113ce1b",
+      "attempt1 PID 3977619 remains absent",
+      "formal training checkpoint directory remains absent",
+      "no scientific training/rollout/outcome receipt appeared",
+      "frozen model/data/config/tokenizer/base-checkpoint hashes remain unchanged"
+    ]
+  },
+  "next_gate": "PROPOSE_SINGLE_REPAIR_DRY_STEP_AFTER_69_RECOVERY_REVALIDATION"
+}

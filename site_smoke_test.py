@@ -475,6 +475,18 @@ def main() -> None:
             fail(f"{filename} must load its published-neighbor / experiment-provenance profile before the single-paper renderer")
         if "current-paper-dataset-primer.js" not in scripts or scripts.index("current-paper-dataset-primer.js") > scripts.index("current-paper-page-view.js"):
             fail(f"{filename} must load the plain-language dataset primer before the single-paper renderer")
+    required_golden_specs = {
+        "paper-g1.html":"current-paper-golden-g1.js", "paper-c1.html":"current-paper-golden-c1.js",
+        "paper-e2.html":"current-paper-golden-e2.js", "paper-b1.html":"current-paper-golden-b1.js",
+        "paper-a.html":"current-paper-golden-a.js", "paper-b.html":"current-paper-golden-b.js",
+        "paper-agent-constraint.html":"current-paper-golden-agent-constraint.js", "paper-3d.html":"current-paper-golden-3d.js",
+    }
+    for filename, golden_script in required_golden_specs.items():
+        scripts = canonical_scripts.get(filename, [])
+        if "current-paper-budget-data.js" not in scripts or scripts.index("current-paper-budget-data.js") > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load the reader-facing paper budget before the golden renderer")
+        if golden_script not in scripts or scripts.index(golden_script) > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load its page-specific golden-reader spec before the single-paper renderer")
     if "renderCurrentPaperCollection" not in current_paper_view_source or "QUICK OVERVIEW" not in current_paper_view_source or "速览版" not in current_paper_view_source:
         fail("current-paper renderer must expose collection-only routing plus the single-paper quick overview")
     if "renderCurrentPaperShelf" in current_paper_view_source or "cpp-pager" in current_paper_view_source:
@@ -498,7 +510,7 @@ def main() -> None:
     if 'href="current-paper-pages.css"' not in selected_html or "当前论文合集" not in selected_html:
         fail("selected-paper must be explicitly labeled and styled as the current paper collection")
     detail_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in ("current-paper-details-registry-a.js", "current-paper-details-registry-b.js", "current-paper-details-working.js", "current-paper-details-objects.js"))
-    for marker in ("R*(A;q)", "BrowserART + AWM", "Shopping", "12 streams × 4 paired replicates", "AgentDojo financial", "MemoryVLA", "AppWorld-derived matched families", "InstructScene"):
+    for marker in ("STRI-Cert", "e=Aw", "R*(A)", "BrowserART + AWM", "Shopping", "12 streams × 4 paired replicates", "AgentDojo financial", "MemoryVLA", "AppWorld-derived matched families", "InstructScene"):
         if marker not in detail_text:
             fail(f"single-paper detail projection is missing model/dataset/design evidence: {marker}")
     if "⑧ Constraint Externality" not in detail_text:

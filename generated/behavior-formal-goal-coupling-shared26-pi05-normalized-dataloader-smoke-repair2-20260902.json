@@ -1,0 +1,72 @@
+{
+  "action_horizon": 32,
+  "actions_finite": true,
+  "actions_shape": [
+    64,
+    32,
+    23
+  ],
+  "asset_id": "b1k_shared26_frozen",
+  "batch_size": 64,
+  "config_name": "pi05_b1k_shared26_frozen",
+  "data_only_strings_removed_before_batching": true,
+  "dataset_root": "/data/wyt/behavior-2026-shared26-v3.0-rgb-runtime-repair2",
+  "episode_count": 5200,
+  "generated_at": "2026-09-02T11:40:20.162487+00:00",
+  "gpu_used": false,
+  "image_dtypes": {
+    "base_0_rgb": "uint8",
+    "left_wrist_0_rgb": "uint8",
+    "right_wrist_0_rgb": "uint8"
+  },
+  "image_shapes": {
+    "base_0_rgb": [
+      64,
+      720,
+      720,
+      3
+    ],
+    "left_wrist_0_rgb": [
+      64,
+      480,
+      480,
+      3
+    ],
+    "right_wrist_0_rgb": [
+      64,
+      480,
+      480,
+      3
+    ]
+  },
+  "installed_norm_asset": "/data/wyt/formal-goal-shared26-openpi-child-20260901/outputs/assets/pi05_b1k_shared26_frozen/b1k_shared26_frozen/norm_stats.json",
+  "installed_norm_asset_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+  "jax_platforms": [
+    "cpu"
+  ],
+  "launch_cwd": "/data/wyt/formal-goal-shared26-openpi-child-20260901",
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "model_transforms_executed": false,
+  "next_gate": "CONTENT_ADDRESS_PI05_BASE_MODEL_ASSETS_AND_NO_UPDATE_MODEL_LOAD_QUALIFICATION",
+  "norm_source": "/data/wyt/behavior-formal-goal-shared26-norm-v1/norm_stats.json",
+  "norm_stats_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "optimizer_update": false,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "remove_strings_semantics": "identical to pinned scripts/compute_norm_stats.py RemoveStrings for the data-only path",
+  "repo_id": "behavior-1k/2026-challenge-demos",
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-norm-dataloader-smoke-v1",
+  "scientific_authority": false,
+  "state_finite": true,
+  "state_shape": [
+    64,
+    23
+  ],
+  "status": "PI05_NORMALIZED_DATALOADER_ZERO_UPDATE_PASS",
+  "tokenizer_executed": false,
+  "torch_cuda_available": false,
+  "training_started": false
+}
