@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH2-20260903",
+  "status": "FROZEN_PRE_SELECTION",
+  "purpose": "Create a completely new PACTA-MSR source/future substrate after retiring the first AtomGit ten-pair pool on a consumed-invalid real source trajectory.",
+  "dataset": "SWE-bench Verified 500-row frozen parquet",
+  "exclusions": {
+    "base_C1_ReasoningBank_prior_ids": 29,
+    "retired_first_PACTA_MSR_pool_ids": 20,
+    "expected_total_unique_excluded_ids": 49,
+    "reuse_allowed": false
+  },
+  "selection": {
+    "one_pair_per_repository": true,
+    "expected_repositories": 10,
+    "source_salt": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH2-SOURCE-v1",
+    "future_salt": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH2-FUTURE-v1",
+    "pilot_salt": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH2-PILOT-v1",
+    "random_gate_salt": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH2-RANDOM-v1",
+    "outcome_fields_read": false
+  },
+  "pilot_geometry": {
+    "pilot_units": 8,
+    "sealed_units": 2,
+    "freeze_before_any_model_call": true
+  },
+  "frozen_model_transport_for_later": {
+    "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+    "resolved_model": "qwen3.8-27b",
+    "source_max_completion_tokens": 32768,
+    "source_invocation_timeout_seconds": 900,
+    "first_decision_budget": 2048,
+    "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9"
+  },
+  "parent_evidence": {
+    "retired_t0_closeout_sha256": "1796b9739e85065405d70f2f1f5e60376a38d2f66bc048bea99f57cbed388db4",
+    "q02_closure_sha256": "c41ebc9df5a28b1e6f2643195be2cdfd170318de5577ef2aff3b1891819959b6",
+    "q02_result_sha256": "c4c7c05f4e14d82fa8ef7d0d0ea2c31a8888295f96eb810b649150da1577b7ce"
+  },
+  "authority": {
+    "pool_selection": true,
+    "image_acquisition": false,
+    "runtime_qualification": false,
+    "source_execution": false,
+    "writer": false,
+    "binder": false,
+    "shadow": false,
+    "final": false
+  }
+}
