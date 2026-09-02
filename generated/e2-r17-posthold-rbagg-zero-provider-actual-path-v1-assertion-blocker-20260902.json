@@ -1,0 +1,26 @@
+{
+  "artifact_type": "e2-r17-posthold-rbagg-zero-provider-actual-path-v1-assertion-blocker",
+  "created_at_utc": "2026-09-02T04:11:00+00:00",
+  "status": "SUPERSEDED_IMPLEMENTATION_ASSERTION_TOO_STRICT_ZERO_PROVIDER",
+  "provider_calls": 0,
+  "scientific_effectiveness_evaluated": false,
+  "heldout_evaluations": 0,
+  "pilot_root": "/data/wyt/e2-r17-search-projection/runtime-pilots/posthold-rbagg-zero-provider-actual-path-20260902",
+  "observed": {
+    "skill_post_sha256": "6df40f61707494793289aa95cc89f5ac99da9eb0aa062cf9ad0fbffd71c00649",
+    "initial_skill_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb",
+    "byte_difference": "one trailing newline removed by first-party SkillEvolver .strip()",
+    "semantic_text_equal_after_strip": true,
+    "summary_count": 8,
+    "new_first_party_trajectory_summaries": 0,
+    "precomputed_summary_consumed_count": 8,
+    "fake_patch_interface_calls": 2
+  },
+  "diagnosis": "The actual MindMemOS path completed successfully. The preflight script then incorrectly required byte-identical SKILL.md despite first-party _mint_version stripping surrounding whitespace from every patch result, including an edits=[] no-op. The assertion is repaired to require exact semantic text equality after the already-frozen first-party strip behavior. The v1 root is preserved and not reused.",
+  "authority": {
+    "provider_io": false,
+    "semantic_provider_pilot": false,
+    "rbagg_full_diagnostic": false,
+    "paper_promotion": false
+  }
+}

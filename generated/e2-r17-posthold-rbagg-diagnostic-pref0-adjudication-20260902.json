@@ -1,0 +1,122 @@
+{
+  "artifact_type": "e2-r17-posthold-rbagg-diagnostic-pref0-adjudication",
+  "authority": {
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "rbagg_full_diagnostic": false,
+    "scientific_experiment": false,
+    "second_backbone": false,
+    "semantic_provider_pilot": false
+  },
+  "created_at_utc": "2026-09-02T04:17:00+00:00",
+  "design": {
+    "protocol_path": "consultations/e2-r17-posthold-rbagg-diagnostic-protocol-20260902.md",
+    "protocol_sha256": "97151b5f9bbf7c3132bab3d25b78d98d709fd4e7375158b40cd74f54dca8c248",
+    "role": "secondary published-collision diagnostic; never a parent-HOLD rescue"
+  },
+  "full_diagnostic_candidate": {
+    "arms": [
+      "fresh_contemporaneous_win_d",
+      "fresh_reasoningbank_style_rb_agg"
+    ],
+    "heldout_evaluations_per_arm": 864,
+    "historical_parent_outcomes_in_primary_statistic": false,
+    "k8_search_rerun": false,
+    "learned_states_per_arm": 48,
+    "paired_replicates_per_stream": 4,
+    "parent_hold_reclassification": false,
+    "stream_level_units": 12
+  },
+  "parent": {
+    "closeout_path": "generated/e2-r17-deepseek-v2-final-scientific-closeout-20260902.json",
+    "closeout_sha256": "0c4d2e485db09046c6f34147a2ae4ab808f0ccc67e95179fadf76319106848ca",
+    "primary_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+    "status_is_immutable": true,
+    "v3_plan_path": "generated/e2-r17-experiment-plan-v3-20260828.json",
+    "v3_plan_sha256": "b1a0224117f161ead9fccefa2c22a0f01dfa1d9e72ca1e98107418f21e3e04c5"
+  },
+  "semantic_adapter": {
+    "add_record_summary_cardinality": "1:1 per frozen K=8 task session",
+    "aggregate_is_not_single_trajectory": true,
+    "aggregation_replaces_first_party_trajectory_summary_stage": true,
+    "direct_mindmemos_trajectory_summary_forbidden": true,
+    "mindmemos_patch_prompt": "PROPOSE_PATCH_SCORED_SYSTEM",
+    "mindmemos_patch_prompt_parser_config_changed": false,
+    "rb_output_role": "precomputed search-session SkillTraceSummary",
+    "reasoningbank_source_faithful_reproduction": false,
+    "score_semantics": "frozen K=8 search-session acting_success",
+    "score_vector_exact_to_win": true
+  },
+  "semantic_preflight": {
+    "path": "generated/e2-r17-posthold-rbagg-zero-provider-semantic-adapter-preflight-20260902.json",
+    "sha256": "ddbd8fbb8d89ce31870f85ed97f844ee61414277005f8c4fad97c5f1a50e1e7f",
+    "status": "PASS_RBAGG_ZERO_PROVIDER_SEMANTIC_ADAPTER_PREFLIGHT",
+    "pool_count": 96,
+    "score_equal_to_win": "96/96",
+    "provider_calls": 0
+  },
+  "actual_path_preflight": {
+    "path": "generated/e2-r17-posthold-rbagg-zero-provider-actual-path-preflight-v2-20260902.json",
+    "sha256": "1987b002a88442ae98e87990ca896e4614ca4b2ae13fe9bcb5a1e118fddf5bbc",
+    "status": "PASS_RBAGG_ZERO_PROVIDER_ACTUAL_MINDMEMOS_PATH",
+    "precomputed_summaries": 8,
+    "first_party_trajectory_summary_calls": 0,
+    "fake_patch_interface_calls": 2,
+    "provider_calls": 0,
+    "heldout_evaluations": 0
+  },
+  "superseded_preflight": {
+    "path": "generated/e2-r17-posthold-rbagg-zero-provider-actual-path-v1-assertion-blocker-20260902.json",
+    "sha256": "7c20a658f07c8992ba1a6d2f1cb588012a545286c6213bf1ea181bb2b78e6e80",
+    "status": "SUPERSEDED_IMPLEMENTATION_ASSERTION_TOO_STRICT_ZERO_PROVIDER",
+    "provider_calls": 0
+  },
+  "bound_code": {
+    "semantic_adapter": {
+      "path": "research_pipeline/e2_r17_rbagg_posthold.py",
+      "sha256": "17652c2db62a355ab44a485f8d358803846b9ec02ee66461aa048d6612aa81cf"
+    },
+    "mindmemos_adapter": {
+      "path": "research_pipeline/e2_r17_rbagg_mindmemos_updater.py",
+      "sha256": "7d9ef1247ac2f0d7175b82efe195ae33932ff6b896bcfbc1062646469ca2b043"
+    },
+    "tests": {
+      "path": "research_pipeline/test_e2_r17_rbagg_posthold.py",
+      "sha256": "4e661833d1dd1f5d585d4f4dcbe5944bd923dd566eb9676a974bfc2040d7b4b1"
+    },
+    "semantic_preflight_runner": {
+      "path": "scripts/preflight_e2_r17_posthold_rbagg_semantic_adapter.py",
+      "sha256": "78ebcc9ded84a16612bd3eaf0be4aa2b6ec393908a72008816e52ce0085b9665"
+    },
+    "actual_path_preflight_runner": {
+      "path": "scripts/preflight_e2_r17_posthold_rbagg_actual_path.py",
+      "sha256": "38b4998559796a9ad51cde56ec7291112d3ea5cf8c493f700b9a21a4c10e0384"
+    }
+  },
+  "provider_pilot_candidate": {
+    "fixed_stream": "e1-agj-00",
+    "aggregation_calls": 8,
+    "mindmemos_nominal_calls": 2,
+    "mindmemos_hard_max_calls": 3,
+    "total_nominal_calls": 10,
+    "total_hard_max_calls": 11,
+    "heldout_evaluations": 0,
+    "pilot_skill_scientific_inclusion": false,
+    "automatic_retry": false
+  },
+  "required_next_gate": [
+    "independent DeepSeek reviewer PASS or explicit repair",
+    "independent Kimi reviewer PASS or explicit repair",
+    "both reviewers acknowledge exact protocol/adjudication SHA and keep parent HOLD immutable",
+    "fresh review-only provider calls may not grant semantic-pilot authority by themselves",
+    "after review PASS create a separate SHA-bound semantic-pilot contract and authorization"
+  ],
+  "schema_version": "1.0",
+  "status": "PREF0_RBAGG_REVIEW_REQUIRED_ZERO_PROVIDER_AUTHORITY",
+  "tests": {
+    "rbagg_unit_tests": "10/10 PASS including existing ReasoningBank-style tests",
+    "diff_check": "PASS"
+  }
+}
