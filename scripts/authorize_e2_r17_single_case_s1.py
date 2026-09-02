@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, json
+import argparse, json, sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 ROOT=Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 from scripts.run_e2_r17_deepseek_v2_repair2_continuation_v2 import load_json, require, sha_file
 
 
