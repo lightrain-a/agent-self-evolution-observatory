@@ -1,0 +1,75 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-single-gpu-accumulation-child-preregistration-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "PREREGISTERED_RESOURCE_ONLY_MICROBATCH_LADDER_NO_OUTCOME_ACCESS",
+  "parent_resource_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-resource-v4-oom-adjudication-20260902.json"
+  },
+  "scientific_scope": "Prospective computational realization of the already-frozen shared26 pi0.5 training unit after physical-batch-64 single-A100 infeasibility. This child is not claimed to be bitwise or RNG-stream equivalent to the original physical-batch-64 execution.",
+  "invariants": {
+    "model": "pi0.5 B1K R1Pro configuration unchanged",
+    "base_checkpoint": "content-addressed pi05_base params unchanged",
+    "dataset_episode_count": 5200,
+    "dataset_ordering": "same source shuffle mechanism and seed; K consecutive physical micro-batches form one effective optimizer batch",
+    "seed": 42,
+    "effective_optimizer_batch_size": 64,
+    "optimizer_updates": 50000,
+    "optimizer": "AdamW(b1=0.9,b2=0.95,eps=1e-8,weight_decay=1e-10,clip_gradient_norm=1.0)",
+    "lr_schedule": "CosineDecaySchedule(warmup_steps=1000,peak_lr=2.5e-05,decay_steps=30000,decay_lr=2.5e-06)",
+    "ema_decay": 0.99,
+    "ema_update_cadence": "once per effective optimizer update, never once per micro-batch",
+    "action_horizon": 32,
+    "normalization_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+    "terminal_checkpoint": "source-emitted effective optimizer step label 49999 only",
+    "gpu_topology": "1x NVIDIA A100-SXM4-80GB"
+  },
+  "microbatch_resource_ladder": [
+    {
+      "priority": 1,
+      "physical_micro_batch": 16,
+      "accumulation_steps": 4,
+      "effective_batch": 64
+    },
+    {
+      "priority": 2,
+      "physical_micro_batch": 8,
+      "accumulation_steps": 8,
+      "effective_batch": 64
+    },
+    {
+      "priority": 3,
+      "physical_micro_batch": 4,
+      "accumulation_steps": 16,
+      "effective_batch": 64
+    }
+  ],
+  "selection_rule": "Test candidates strictly in listed order using no-update dry accumulated-gradient memory qualification. Advance to the next candidate only if the previous candidate fails specifically because of GPU RESOURCE_EXHAUSTED or another resource infeasibility before any optimizer update. Stop at the first candidate that completes the accumulated gradient. Never inspect loss values or scientific outcomes for candidate selection.",
+  "accumulation_semantics": {
+    "gradient": "For K consecutive micro-batches, compute each micro-gradient, scale by 1/K, and accumulate into one gradient tree; call optimizer exactly once on the accumulated gradient.",
+    "train_state_step": "increments once per effective batch of 64 examples",
+    "lr_schedule_step": "advances once per effective optimizer update",
+    "ema": "updated once after the single optimizer update for the effective batch",
+    "checkpoint_step": "counts effective optimizer updates, not micro-batches",
+    "data_consumption": "64 source-shuffled examples are consumed per effective update",
+    "rng": "Each effective step uses deterministic per-microbatch RNG keys derived from the frozen seed and effective step index. Because source physical-batch-64 pi0.5 draws augmentation/noise/time randomness for the full batch in one call, this child intentionally freezes a new deterministic RNG expansion and must not be described as bitwise/source-RNG equivalent."
+  },
+  "dry_qualification": {
+    "optimizer_updates_authorized": 0,
+    "loss_values_must_not_be_retained_or_reported": true,
+    "gradient_numerical_values_must_not_be_inspected": true,
+    "policy_rollouts": 0,
+    "policy_outcomes_read": false,
+    "candidate_may_pass_only_if": [
+      "all K micro-gradients complete",
+      "accumulated gradient tree is finite by structural/non-numerical checks only",
+      "no optimizer update or parameter mutation occurs",
+      "no checkpoint is written"
+    ]
+  },
+  "claim_boundary": "If this child is used for the paper, describe it as the frozen shared26 treatment executed with a preregistered single-GPU microbatch-accumulation implementation. Do not claim exact replication of the original physical-batch-64 RNG stream.",
+  "formal_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "next_gate": "IMPLEMENT_AND_QUALIFY_MICROBATCH16_ACCUM4_NO_UPDATE_DRY_STEP"
+}

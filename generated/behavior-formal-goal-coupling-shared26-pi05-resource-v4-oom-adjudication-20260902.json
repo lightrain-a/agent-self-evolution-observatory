@@ -1,0 +1,41 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-resource-v4-oom-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "SINGLE_A100_PHYSICAL_BATCH64_GRADIENT_INFEASIBLE",
+  "scope": "resource-only adjudication before any scientific optimizer update",
+  "v4_result": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-v4-result-20260902.json",
+    "sha256": "e5fe56b7451c208c0c10dd8fe001ee9d238bc072f39965b26f52ddfd9c3842a9",
+    "batch_ready": true,
+    "train_state_ready": true,
+    "dry_gradient_execution_started": true,
+    "dry_gradient_execution_completed": false,
+    "error": "XlaRuntimeError: RESOURCE_EXHAUSTED: Out of memory while trying to allocate 29452454632 bytes."
+  },
+  "resource_observation": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "physical_batch_size": 64,
+    "gpu_memory_used_after_step0_state_mib": 61319,
+    "failed_additional_allocation_bytes": 29452454632,
+    "interpretation": "The frozen step-0 train state fits, but a physical batch of 64 cannot complete the first forward+backward gradient execution on one A100-80GB. Further identical single-A100 batch-64 retries are not authorized."
+  },
+  "scientific_safety": {
+    "optimizer_update": false,
+    "parameter_update": false,
+    "checkpoint_written": false,
+    "scientific_training_started": false,
+    "policy_rollouts_started": false,
+    "policy_outcomes_read": false,
+    "loss_value_used_for_decision": false
+  },
+  "decision": "OPEN_PROSPECTIVE_SINGLE_GPU_ACCUMULATION_CHILD",
+  "reason": "The failure is a pre-outcome hardware-memory infeasibility. A new prospective child may change only physical micro-batch execution and gradient accumulation while preserving the effective batch, optimizer-update count, model, data, seed, optimizer, LR schedule, EMA cadence, normalization, and checkpoint-selection rule.",
+  "forbidden": [
+    "rerun physical batch 64 on one A100 under the consumed v4 authority",
+    "select micro-batch size using loss, reward, success, Q, or downstream policy outcomes",
+    "reduce effective optimizer batch below 64",
+    "change optimizer, learning-rate schedule, seed, dataset, model, normalization, action horizon, or terminal-checkpoint rule",
+    "change the number of optimizer updates from 50000"
+  ],
+  "next_gate": "PREREGISTER_SINGLE_GPU_ACCUMULATION_RESOURCE_LADDER"
+}
