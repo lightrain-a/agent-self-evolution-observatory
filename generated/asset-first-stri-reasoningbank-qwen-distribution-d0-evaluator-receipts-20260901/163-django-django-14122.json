@@ -1,0 +1,327 @@
+{
+  "behavioral_outcomes_observed": false,
+  "checks": {
+    "all_fail_to_pass": true,
+    "all_pass_to_pass": true,
+    "architecture_amd64": true,
+    "base_commit_exact": true,
+    "container_cleanup_accepted": true,
+    "eval_script_available": true,
+    "evaluator_cleanup_diff_exact": true,
+    "evaluator_not_timed_out": true,
+    "evaluator_returncode_zero": true,
+    "gold_patch_applied": true,
+    "gold_patch_sha_exact": true,
+    "gold_state_observable_before_eval": true,
+    "image_digest_exact": true,
+    "official_parser_family_supported": true,
+    "post_eval_state_observable": true,
+    "status_map_nonempty": true,
+    "task_identity_exact": true,
+    "test_output_markers_valid": true,
+    "test_patch_available": true
+  },
+  "container_cleanup_receipt": {
+    "accepted": true,
+    "cleanup_invoked": true,
+    "container_name": "e1-rb-qwen-d0-163-django__django-14122-bf5c5553",
+    "reconciliation_receipt_finalized_before_cleanup": true,
+    "returncode": 0,
+    "timed_out": false
+  },
+  "created_at_utc": "2026-09-01T15:30:30+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "finished_at_utc": "2026-09-01T15:30:40+00:00",
+  "gold_patch_model_visible": false,
+  "instance_id": "django__django-14122",
+  "model_calls": 0,
+  "ordinal": 163,
+  "payload_sha256": "0eb0b1c914aee78f9c9fb45a33c38c6224676e918179387731e03fc961bcff04",
+  "provider_calls": 0,
+  "qualification_attempt_count": 1,
+  "qualification_status": "QUALIFIED",
+  "qualified": true,
+  "repo": "django/django",
+  "repo_hash_rank": 6,
+  "runtime_receipt": {
+    "base_commit_receipt": {
+      "expected_base_commit": "bc04941bf811d1ea2c79fb7fc20457ed2c7e3410",
+      "finished_at_utc": "2026-09-01T15:30:32+00:00",
+      "git_clean_invoked": false,
+      "normalization": {
+        "finished_at_utc": "2026-09-01T15:30:32+00:00",
+        "output": "HEAD is now at bc04941bf8 Fixed #32536 -- Added links to BaseDetailView/BaseListView.get() methods in CBV docs.\n",
+        "returncode": 0,
+        "started_at_utc": "2026-09-01T15:30:32+00:00",
+        "timed_out": false
+      },
+      "normalization_action": "git reset --hard <frozen expected base commit>",
+      "observed_head": "bc04941bf811d1ea2c79fb7fc20457ed2c7e3410",
+      "output": "bc04941bf811d1ea2c79fb7fc20457ed2c7e3410\n",
+      "pre_normalization": {
+        "finished_at_utc": "2026-09-01T15:30:32+00:00",
+        "output": "674519e45a74c489b2a7c33a5c4688509037a3e8\n",
+        "returncode": 0,
+        "started_at_utc": "2026-09-01T15:30:31+00:00",
+        "timed_out": false
+      },
+      "returncode": 0,
+      "rule": "exact_base_after_preregistered_hard_reset",
+      "started_at_utc": "2026-09-01T15:30:32+00:00",
+      "timed_out": false
+    },
+    "image_inspect": {
+      "finished_at_utc": "2026-09-01T15:30:31+00:00",
+      "output": "[\n    {\n        \"Id\": \"sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5\",\n        \"RepoTags\": [\n            \"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14122@sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5\"\n        ],\n        \"RepoDigests\": [\n            \"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14122@sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5\"\n        ],\n        \"Comment\": \"buildkit.dockerfile.v0\",\n        \"Created\": \"2026-08-13T01:24:02.413368677Z\",\n        \"Config\": {\n            \"Env\": [\n                \"PATH=/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"TZ=Etc/UTC\"\n            ],\n            \"Cmd\": [\n                \"/bin/bash\"\n            ],\n            \"WorkingDir\": \"/testbed/\",\n            \"Labels\": {\n                \"org.opencontainers.image.version\": \"22.04\"\n            }\n        },\n        \"Architecture\": \"amd64\",\n        \"Os\": \"linux\",\n        \"Size\": 1192601997,\n        \"RootFS\": {\n            \"Type\": \"layers\",\n            \"Layers\": [\n                \"sha256:beb59027b96ddbf30ac9c80b527668fe7011f4f553fe83f5e59199e9a84fb5ca\",\n                \"sha256:24df650e8ccc41451cf4f7113e09420f7ec00ca9ae41e8be09c60bc467cdf4fe\",\n                \"sha256:098cb03ec50e1bd1637b7db5e2696a4d1dc3f1c3811adbbe444f43f631f2e7fd\",\n                \"sha256:fc3a8fa12509a555b3cea8d1f7457c0837ab8360be78e7a380294e09f96fe2f2\",\n                \"sha256:a3540f5c375c231bc054e7472d0de5a6d8fe5c96b92948f7655914860647fb54\",\n                \"sha256:f3684f1a85d5159913e2c41a55a86947882302421241b14b57583633bfc31873\",\n                \"sha256:e49a4d6b01430152546bb76935a27d290d6e7bbc653fcf1f3fb6ed24c0de2168\",\n                \"sha256:8d194f18e1be2fc90185ee56c36d6fa00015771f2b578c5403017a9b2754aeba\",\n                \"sha256:982791b97c95cfa11b92817e3bc3aa5e98493e898139236b844f36508d2af94d\",\n                \"sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef\"\n            ]\n        },\n        \"Metadata\": {\n            \"LastTagTime\": \"2026-09-01T15:30:28.156921167Z\"\n        },\n        \"Descriptor\": {\n            \"mediaType\": \"application/vnd.oci.image.manifest.v1+json\",\n            \"digest\": \"sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5\",\n            \"size\": 2199\n        },\n        \"Identity\": {\n            \"Pull\": [\n                {\n                    \"Repository\": \"docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14122\"\n                }\n            ]\n        }\n    }\n]\n",
+      "returncode": 0,
+      "started_at_utc": "2026-09-01T15:30:30+00:00",
+      "timed_out": false
+    },
+    "q10_start_reconciliation": {
+      "acceptance_rule": "normal_client_acknowledgement_with_exact_post_start_state",
+      "accepted": true,
+      "client_output": "e1-rb-qwen-d0-163-django__django-14122-bf5c5553\n",
+      "client_returncode": 0,
+      "client_start_invocations": 1,
+      "client_timed_out": false,
+      "container_id": "0e014558923e2c8e48aa2e6e2a181cfdd33f39aa0a1ffb7326a39d52e2c85a52",
+      "container_name": "/e1-rb-qwen-d0-163-django__django-14122-bf5c5553",
+      "contract_sha256": "bc4781ce0188d899af3b1a491b51f30467e6c655c7f8d3074b919a043b2878bd",
+      "daemon_dead": false,
+      "daemon_pid": 1616585,
+      "daemon_restarting": false,
+      "daemon_running": true,
+      "daemon_status": "running",
+      "docker_inspect_invoked": true,
+      "docker_inspect_receipt": {
+        "output_sha256_recorded_elsewhere": false,
+        "returncode": 0,
+        "timed_out": false
+      },
+      "exact_identity_verified": true,
+      "exact_running_state_verified": true,
+      "expected_image": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14122@sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5",
+      "expected_image_digest": "sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5",
+      "expected_pid_mode": "host",
+      "observed_cmd": [
+        "infinity"
+      ],
+      "observed_entrypoint": [
+        "sleep"
+      ],
+      "observed_image": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14122@sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5",
+      "observed_image_digests": [
+        "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14122@sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5"
+      ],
+      "observed_pid_mode": "host",
+      "receipt_finalized": true,
+      "reconciliation_invoked": false,
+      "restart_count": 0,
+      "second_start_invoked": false
+    },
+    "q6_create_acknowledgement": {
+      "accepted": true,
+      "client_create_invocations": 1,
+      "client_output": "0e014558923e2c8e48aa2e6e2a181cfdd33f39aa0a1ffb7326a39d52e2c85a52\n",
+      "client_returncode": 0,
+      "client_timed_out": false,
+      "container_id": "0e014558923e2c8e48aa2e6e2a181cfdd33f39aa0a1ffb7326a39d52e2c85a52",
+      "contract_sha256": "5779bd037811c6446610eb31b6b7f73f8110993f5ad0f112902523477ee0158b",
+      "normal_create_receipt_accepted": true,
+      "repair_invoked": false,
+      "second_create_invoked": false
+    }
+  },
+  "schema_version": 1,
+  "stage": "D0_ZERO_MODEL_EVALUATOR_QUALIFICATION",
+  "task_hash_rank_within_repo": 13,
+  "task_receipt": {
+    "FAIL_TO_PASS": {
+      "test_default_ordering_does_not_affect_group_by (ordering.tests.OrderingTests)": "PASSED"
+    },
+    "PASS_TO_PASS": {
+      "'pk' works as an ordering option in Meta.": "PASSED",
+      "A column may only be included once (the first occurrence) so we check": "PASSED",
+      "An ordering referencing a model with an ordering referencing a model": "PASSED",
+      "By default, Article.objects.all() orders by pub_date descending, then": "PASSED",
+      "F expressions can be used in Meta.ordering.": "PASSED",
+      "If the extra clause uses an SQL keyword for a name, it will be": "PASSED",
+      "Only the last order_by has any effect (since they each override any": "PASSED",
+      "Ordering can be based on fields included from an 'extra' clause": "PASSED",
+      "Ordering can be reversed using the reverse() method on a queryset.": "PASSED",
+      "Override ordering with order_by, which is in the same format as the": "PASSED",
+      "Use '?' to order randomly.": "PASSED",
+      "Use the 'stop' and 'start' parts of slicing notation to offset the": "PASSED",
+      "Use the 'stop' part of slicing notation to limit the results.": "PASSED",
+      "ordering by a foreign key by its attribute name prevents the query": "PASSED",
+      "test_extra_ordering_with_table_name (ordering.tests.OrderingTests)": "PASSED",
+      "test_no_reordering_after_slicing (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_constant_value (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_f_expression (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_nulls_first (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_nulls_first_and_last (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_nulls_last (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_ptr_field_with_default_ordering_by_expression (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_self_referential_fk (ordering.tests.OrderingTests)": "PASSED",
+      "test_orders_nulls_first_on_filtered_subquery (ordering.tests.OrderingTests)": "PASSED",
+      "test_reverse_meta_ordering_pure (ordering.tests.OrderingTests)": "PASSED",
+      "test_reverse_ordering_pure (ordering.tests.OrderingTests)": "PASSED"
+    },
+    "base_commit": "bc04941bf811d1ea2c79fb7fc20457ed2c7e3410",
+    "eval_script_sha256": "2a51b54aba0c71625168595484532cb927baf48032f1294410b708ee5d4276b1",
+    "eval_type": "pass_and_fail",
+    "evaluator_returncode": 0,
+    "evaluator_timed_out": false,
+    "gold_patch_content_persisted_in_receipt": false,
+    "gold_patch_sha256": "72dad77354825f18513f90daf025dc005d7aef00bf2407617f2b89233af0d879",
+    "image_manifest": {
+      "architecture": "amd64",
+      "config_digest": "sha256:18e4423c9c88729ddfab2140b26518a3c89760b24e57bea4e9f1889d056e8a02",
+      "credential_material_present": false,
+      "download_repo": "swebench/sweb.eval.x86_64.django_1776_django-14122",
+      "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14122@sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5",
+      "instance_id": "django__django-14122",
+      "layer_bytes": 1192595584,
+      "layer_count": 10,
+      "manifest_digest": "sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5",
+      "manifest_file_sha256": "7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5",
+      "manifest_media_type": "application/vnd.oci.image.manifest.v1+json",
+      "manifest_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-image-manifests-20260901/163-django-django-14122-amd64.json",
+      "manifest_size": 2199,
+      "mirror_base": "https://docker.1ms.run",
+      "mirror_repo": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14122",
+      "os": "linux",
+      "payload_sha256": "d6fd833d2364334d3797b8aafc353abdb62196434b975b1b5a14732fbcd682e9"
+    },
+    "image_runtime": {
+      "all_blobs_sha256_verified": true,
+      "architecture": "amd64",
+      "architecture_amd64_visible": true,
+      "download_rows": [
+        {
+          "digest": "sha256:079027039e9d5fa1677dd462c60fd9240097243a87ff8a124fffbd16f909c266",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 420170791,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:0ddda5039dab8b2772d0f65857071df489438384259b8fabd0a7882656cf8ca0",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 164,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:18e4423c9c88729ddfab2140b26518a3c89760b24e57bea4e9f1889d056e8a02",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 4214,
+          "status": "downloaded-and-verified"
+        },
+        {
+          "digest": "sha256:2d58e6852c7e2b2bbf7462dc202cdff83f2ec3cd6b051617299da354db863e0e",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 96890558,
+          "status": "downloaded-and-verified"
+        },
+        {
+          "digest": "sha256:39a945af8df2ad9343f141c82355d3f2c4b576d432eda34c460d630607462b60",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 29736517,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:407de719c2d3bde9e1d31481e451ac465ef6cdcf90f48b446b000dd907979233",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 21565,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 32,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:53752545c9b26814a5dadb2ac5d26e71ee039f17d72ee04fbc55e8e14a42966e",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 4313,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:5518014e5e43c88daa12357debf61fb82e4d78310d7c75c7ca8ba7502b828e5b",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 190,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:7a13365a6c7b7b36335ff21844747a73a50b1fc011c63e840e8c50ce4cdbc927",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 435475002,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:fd3f01088aa854fa99907bd918d9bc8146064c2f452aae3e07d61a6244ca9968",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 210296452,
+          "status": "verified-existing"
+        }
+      ],
+      "exact_digest_visible": true,
+      "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-14122@sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5",
+      "import_archive_sha256": "cd34312916966c45b99b1c07fcf7b409ac17ffa39684c158a31eae4a23ff407e",
+      "import_status": "imported-and-verified",
+      "manifest_digest": "sha256:7fc3bb62f68f709d5cf5f8da26fb41c187fa096769c40367b150bb634c14bfe5",
+      "temporary_import_archive_removed": true
+    },
+    "image_tag": "swebench/sweb.eval.x86_64.django_1776_django-14122:latest",
+    "log_parser": "parse_log_django",
+    "model_visible_task_sha256": "a19bdcf54edd8c009bb9d305df1cc7acd85b486020f3a645aca87f32701471f8",
+    "post_evaluator_state_sha256": "e1d78369bb62118f20faa5f021589c06642408fbb7dd87f51fdd89640bc700cf",
+    "pre_evaluator_gold_state_sha256": "e1d78369bb62118f20faa5f021589c06642408fbb7dd87f51fdd89640bc700cf",
+    "raw_evaluator_log_model_visible": false,
+    "raw_evaluator_log_path": "/data/wyt/e1-stri-reasoningbank-runtime/qwen-distribution-v3/d0-evaluator-raw-logs/163-django-django-14122.log",
+    "raw_evaluator_log_sha256": "df7e24b452fb473f45a927201427b88e4e72b04f390322e48554234280c9112c",
+    "status_map": {
+      "'pk' works as an ordering option in Meta.": "PASSED",
+      "A column may only be included once (the first occurrence) so we check": "PASSED",
+      "An ordering referencing a model with an ordering referencing a model": "PASSED",
+      "By default, Article.objects.all() orders by pub_date descending, then": "PASSED",
+      "F expressions can be used in Meta.ordering.": "PASSED",
+      "If the extra clause uses an SQL keyword for a name, it will be": "PASSED",
+      "Only the last order_by has any effect (since they each override any": "PASSED",
+      "Ordering can be based on fields included from an 'extra' clause": "PASSED",
+      "Ordering can be reversed using the reverse() method on a queryset.": "PASSED",
+      "Override ordering with order_by, which is in the same format as the": "PASSED",
+      "Use '?' to order randomly.": "PASSED",
+      "Use the 'stop' and 'start' parts of slicing notation to offset the": "PASSED",
+      "Use the 'stop' part of slicing notation to limit the results.": "PASSED",
+      "ordering by a foreign key by its attribute name prevents the query": "PASSED",
+      "test_default_ordering_does_not_affect_group_by (ordering.tests.OrderingTests)": "PASSED",
+      "test_extra_ordering_with_table_name (ordering.tests.OrderingTests)": "PASSED",
+      "test_no_reordering_after_slicing (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_constant_value (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_f_expression (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_nulls_first (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_nulls_first_and_last (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_nulls_last (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_ptr_field_with_default_ordering_by_expression (ordering.tests.OrderingTests)": "PASSED",
+      "test_order_by_self_referential_fk (ordering.tests.OrderingTests)": "PASSED",
+      "test_orders_nulls_first_on_filtered_subquery (ordering.tests.OrderingTests)": "PASSED",
+      "test_reverse_meta_ordering_pure (ordering.tests.OrderingTests)": "PASSED",
+      "test_reverse_ordering_pure (ordering.tests.OrderingTests)": "PASSED"
+    },
+    "test_patch_available": true,
+    "test_patch_sha256": "aa9d954e7c89ff64d135361060a2c1a29696baad1c3f8d1b917c3233b75673ab"
+  }
+}

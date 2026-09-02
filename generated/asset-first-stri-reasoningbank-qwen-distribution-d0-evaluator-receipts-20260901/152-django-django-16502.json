@@ -1,0 +1,283 @@
+{
+  "behavioral_outcomes_observed": false,
+  "checks": {
+    "all_fail_to_pass": true,
+    "all_pass_to_pass": true,
+    "architecture_amd64": true,
+    "base_commit_exact": true,
+    "container_cleanup_accepted": true,
+    "eval_script_available": true,
+    "evaluator_cleanup_diff_exact": true,
+    "evaluator_not_timed_out": true,
+    "evaluator_returncode_zero": true,
+    "gold_patch_applied": true,
+    "gold_patch_sha_exact": true,
+    "gold_state_observable_before_eval": true,
+    "image_digest_exact": true,
+    "official_parser_family_supported": true,
+    "post_eval_state_observable": true,
+    "status_map_nonempty": true,
+    "task_identity_exact": true,
+    "test_output_markers_valid": true,
+    "test_patch_available": true
+  },
+  "container_cleanup_receipt": {
+    "accepted": true,
+    "cleanup_invoked": true,
+    "container_name": "e1-rb-qwen-d0-152-django__django-16502-a39c8f7f",
+    "reconciliation_receipt_finalized_before_cleanup": true,
+    "returncode": 0,
+    "timed_out": false
+  },
+  "created_at_utc": "2026-09-01T14:35:33+00:00",
+  "credential_material_present": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "finished_at_utc": "2026-09-01T14:35:43+00:00",
+  "gold_patch_model_visible": false,
+  "instance_id": "django__django-16502",
+  "model_calls": 0,
+  "ordinal": 152,
+  "payload_sha256": "78907fce7936e11a7811c10496f2ca157ea71b2a4479c939ed372976cba4362f",
+  "provider_calls": 0,
+  "qualification_attempt_count": 1,
+  "qualification_status": "QUALIFIED",
+  "qualified": true,
+  "repo": "django/django",
+  "repo_hash_rank": 6,
+  "runtime_receipt": {
+    "base_commit_receipt": {
+      "expected_base_commit": "246eb4836a6fb967880f838aa0d22ecfdca8b6f1",
+      "finished_at_utc": "2026-09-01T14:35:36+00:00",
+      "git_clean_invoked": false,
+      "normalization": {
+        "finished_at_utc": "2026-09-01T14:35:35+00:00",
+        "output": "HEAD is now at 246eb4836a Fixed #34254 -- Fixed return value of Exists() with empty queryset.\n",
+        "returncode": 0,
+        "started_at_utc": "2026-09-01T14:35:35+00:00",
+        "timed_out": false
+      },
+      "normalization_action": "git reset --hard <frozen expected base commit>",
+      "observed_head": "246eb4836a6fb967880f838aa0d22ecfdca8b6f1",
+      "output": "246eb4836a6fb967880f838aa0d22ecfdca8b6f1\n",
+      "pre_normalization": {
+        "finished_at_utc": "2026-09-01T14:35:35+00:00",
+        "output": "9c98191e6302c50b4898990f275facd6160050fa\n",
+        "returncode": 0,
+        "started_at_utc": "2026-09-01T14:35:34+00:00",
+        "timed_out": false
+      },
+      "returncode": 0,
+      "rule": "exact_base_after_preregistered_hard_reset",
+      "started_at_utc": "2026-09-01T14:35:35+00:00",
+      "timed_out": false
+    },
+    "image_inspect": {
+      "finished_at_utc": "2026-09-01T14:35:33+00:00",
+      "output": "[\n    {\n        \"Id\": \"sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2\",\n        \"RepoTags\": [\n            \"docker.1panel.live/swebench/sweb.eval.x86_64.django_1776_django-16502@sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2\"\n        ],\n        \"RepoDigests\": [\n            \"docker.1panel.live/swebench/sweb.eval.x86_64.django_1776_django-16502@sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2\"\n        ],\n        \"Comment\": \"buildkit.dockerfile.v0\",\n        \"Created\": \"2026-08-13T01:44:56.997852544Z\",\n        \"Config\": {\n            \"Env\": [\n                \"PATH=/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\",\n                \"TZ=Etc/UTC\"\n            ],\n            \"Cmd\": [\n                \"/bin/bash\"\n            ],\n            \"WorkingDir\": \"/testbed/\",\n            \"Labels\": {\n                \"org.opencontainers.image.version\": \"22.04\"\n            }\n        },\n        \"Architecture\": \"amd64\",\n        \"Os\": \"linux\",\n        \"Size\": 1240829808,\n        \"RootFS\": {\n            \"Type\": \"layers\",\n            \"Layers\": [\n                \"sha256:beb59027b96ddbf30ac9c80b527668fe7011f4f553fe83f5e59199e9a84fb5ca\",\n                \"sha256:24df650e8ccc41451cf4f7113e09420f7ec00ca9ae41e8be09c60bc467cdf4fe\",\n                \"sha256:098cb03ec50e1bd1637b7db5e2696a4d1dc3f1c3811adbbe444f43f631f2e7fd\",\n                \"sha256:fc3a8fa12509a555b3cea8d1f7457c0837ab8360be78e7a380294e09f96fe2f2\",\n                \"sha256:a3540f5c375c231bc054e7472d0de5a6d8fe5c96b92948f7655914860647fb54\",\n                \"sha256:f3684f1a85d5159913e2c41a55a86947882302421241b14b57583633bfc31873\",\n                \"sha256:ebee49ce3b2bfe429e28a4f4a2b06fd3d3a8768db453149bea56feab2fdf052b\",\n                \"sha256:f2160922d4b6265b166d28e863978a078c4f6ad92246a1aaed3b7b47f429eabe\",\n                \"sha256:1b879a274dc4b54fc5a4699cdbc34ea0a83aea9893fbe510edd4c306b14998d6\",\n                \"sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef\"\n            ]\n        },\n        \"Metadata\": {\n            \"LastTagTime\": \"2026-09-01T14:35:30.790098388Z\"\n        },\n        \"Descriptor\": {\n            \"mediaType\": \"application/vnd.oci.image.manifest.v1+json\",\n            \"digest\": \"sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2\",\n            \"size\": 2200\n        },\n        \"Identity\": {\n            \"Pull\": [\n                {\n                    \"Repository\": \"docker.1panel.live/swebench/sweb.eval.x86_64.django_1776_django-16502\"\n                }\n            ]\n        }\n    }\n]\n",
+      "returncode": 0,
+      "started_at_utc": "2026-09-01T14:35:33+00:00",
+      "timed_out": false
+    },
+    "q10_start_reconciliation": {
+      "acceptance_rule": "normal_client_acknowledgement_with_exact_post_start_state",
+      "accepted": true,
+      "client_output": "e1-rb-qwen-d0-152-django__django-16502-a39c8f7f\n",
+      "client_returncode": 0,
+      "client_start_invocations": 1,
+      "client_timed_out": false,
+      "container_id": "15d6b0624adf5aebf88d7757df73de6a9c265954164da9ccb9dc1a56b151d0b0",
+      "container_name": "/e1-rb-qwen-d0-152-django__django-16502-a39c8f7f",
+      "contract_sha256": "bc4781ce0188d899af3b1a491b51f30467e6c655c7f8d3074b919a043b2878bd",
+      "daemon_dead": false,
+      "daemon_pid": 1314337,
+      "daemon_restarting": false,
+      "daemon_running": true,
+      "daemon_status": "running",
+      "docker_inspect_invoked": true,
+      "docker_inspect_receipt": {
+        "output_sha256_recorded_elsewhere": false,
+        "returncode": 0,
+        "timed_out": false
+      },
+      "exact_identity_verified": true,
+      "exact_running_state_verified": true,
+      "expected_image": "docker.1panel.live/swebench/sweb.eval.x86_64.django_1776_django-16502@sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2",
+      "expected_image_digest": "sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2",
+      "expected_pid_mode": "host",
+      "observed_cmd": [
+        "infinity"
+      ],
+      "observed_entrypoint": [
+        "sleep"
+      ],
+      "observed_image": "docker.1panel.live/swebench/sweb.eval.x86_64.django_1776_django-16502@sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2",
+      "observed_image_digests": [
+        "docker.1panel.live/swebench/sweb.eval.x86_64.django_1776_django-16502@sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2"
+      ],
+      "observed_pid_mode": "host",
+      "receipt_finalized": true,
+      "reconciliation_invoked": false,
+      "restart_count": 0,
+      "second_start_invoked": false
+    },
+    "q6_create_acknowledgement": {
+      "accepted": true,
+      "client_create_invocations": 1,
+      "client_output": "15d6b0624adf5aebf88d7757df73de6a9c265954164da9ccb9dc1a56b151d0b0\n",
+      "client_returncode": 0,
+      "client_timed_out": false,
+      "container_id": "15d6b0624adf5aebf88d7757df73de6a9c265954164da9ccb9dc1a56b151d0b0",
+      "contract_sha256": "5779bd037811c6446610eb31b6b7f73f8110993f5ad0f112902523477ee0158b",
+      "normal_create_receipt_accepted": true,
+      "repair_invoked": false,
+      "second_create_invoked": false
+    }
+  },
+  "schema_version": 1,
+  "stage": "D0_ZERO_MODEL_EVALUATOR_QUALIFICATION",
+  "task_hash_rank_within_repo": 2,
+  "task_receipt": {
+    "FAIL_TO_PASS": {
+      "test_no_body_returned_for_head_requests (servers.test_basehttp.WSGIRequestHandlerTestCase.test_no_body_returned_for_head_requests)": "PASSED"
+    },
+    "PASS_TO_PASS": {
+      "WSGIRequestHandler ignores headers containing underscores.": "PASSED",
+      "WSGIServer handles broken pipe errors.": "PASSED",
+      "test_https (servers.test_basehttp.WSGIRequestHandlerTestCase.test_https)": "PASSED",
+      "test_log_message (servers.test_basehttp.WSGIRequestHandlerTestCase.test_log_message)": "PASSED"
+    },
+    "base_commit": "246eb4836a6fb967880f838aa0d22ecfdca8b6f1",
+    "eval_script_sha256": "9a3d0b3315afae8b2f03858316ffbd061c9bde11e378d008ed3800c98eb35caa",
+    "eval_type": "pass_and_fail",
+    "evaluator_returncode": 0,
+    "evaluator_timed_out": false,
+    "gold_patch_content_persisted_in_receipt": false,
+    "gold_patch_sha256": "a4cd5d618966b2716837f8c58dbe81436c7580acb05b28cfc5a4f8bf144cad85",
+    "image_manifest": {
+      "architecture": "amd64",
+      "config_digest": "sha256:9a11c6e2c643ff3ff7ff55726832849d6bb5de264538d2330a2676548d2d3680",
+      "credential_material_present": false,
+      "download_repo": "swebench/sweb.eval.x86_64.django_1776_django-16502",
+      "image_pull_reference": "docker.1panel.live/swebench/sweb.eval.x86_64.django_1776_django-16502@sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2",
+      "instance_id": "django__django-16502",
+      "layer_bytes": 1240823393,
+      "layer_count": 10,
+      "manifest_digest": "sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2",
+      "manifest_file_sha256": "95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2",
+      "manifest_media_type": "application/vnd.oci.image.manifest.v1+json",
+      "manifest_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-image-manifests-20260901/152-django-django-16502-amd64.json",
+      "manifest_size": 2200,
+      "mirror_base": "https://docker.1panel.live",
+      "mirror_repo": "docker.1panel.live/swebench/sweb.eval.x86_64.django_1776_django-16502",
+      "os": "linux",
+      "payload_sha256": "1a473ccac2aaa8e2620b2e8a017e29bf3201a2b61111adbb02ae0c1dd6d1160a"
+    },
+    "image_runtime": {
+      "all_blobs_sha256_verified": true,
+      "architecture": "amd64",
+      "architecture_amd64_visible": true,
+      "download_rows": [
+        {
+          "digest": "sha256:079027039e9d5fa1677dd462c60fd9240097243a87ff8a124fffbd16f909c266",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 420170791,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:0ddda5039dab8b2772d0f65857071df489438384259b8fabd0a7882656cf8ca0",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 164,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:39a945af8df2ad9343f141c82355d3f2c4b576d432eda34c460d630607462b60",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 29736517,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:407de719c2d3bde9e1d31481e451ac465ef6cdcf90f48b446b000dd907979233",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 21565,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 32,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:53752545c9b26814a5dadb2ac5d26e71ee039f17d72ee04fbc55e8e14a42966e",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 4313,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:7d46deda440ab6108994059ea5bd9e9cef0cc8afe060a3401ad921387388de97",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 190,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:9a11c6e2c643ff3ff7ff55726832849d6bb5de264538d2330a2676548d2d3680",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 4215,
+          "status": "downloaded-and-verified"
+        },
+        {
+          "digest": "sha256:ac7756917c6714c127c9ecf98074801233eee3400c00153aa1c13b91151b7f70",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 476296665,
+          "status": "verified-existing"
+        },
+        {
+          "digest": "sha256:af59572ef1c1845bf30dccb5f2f4d8a51fa286cd61eab21f615aee782e93fdb8",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 104296704,
+          "status": "downloaded-and-verified"
+        },
+        {
+          "digest": "sha256:fd3f01088aa854fa99907bd918d9bc8146064c2f452aae3e07d61a6244ca9968",
+          "mirror_base": "https://docker.1ms.run",
+          "sha256_verified": true,
+          "size": 210296452,
+          "status": "verified-existing"
+        }
+      ],
+      "exact_digest_visible": true,
+      "image_pull_reference": "docker.1panel.live/swebench/sweb.eval.x86_64.django_1776_django-16502@sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2",
+      "import_archive_sha256": "757aa87293f4e1fbdcc7974aa375e818b8322f54afc27e4e14b9846e295a617e",
+      "import_status": "imported-and-verified",
+      "manifest_digest": "sha256:95234213ffb269fe318ed370c2d2aef2febf6b6199ba6cbe4fc1fa42495a7ac2",
+      "temporary_import_archive_removed": true
+    },
+    "image_tag": "swebench/sweb.eval.x86_64.django_1776_django-16502:latest",
+    "log_parser": "parse_log_django",
+    "model_visible_task_sha256": "a374bc09cead28d6233e56a38e7de4997d00d580bb1fd346b8e72f3cedc8f71d",
+    "post_evaluator_state_sha256": "1f4645c9f32176701aab005c7e1937b0972fc96a5bf315eda646369335bd85a0",
+    "pre_evaluator_gold_state_sha256": "1f4645c9f32176701aab005c7e1937b0972fc96a5bf315eda646369335bd85a0",
+    "raw_evaluator_log_model_visible": false,
+    "raw_evaluator_log_path": "/data/wyt/e1-stri-reasoningbank-runtime/qwen-distribution-v3/d0-evaluator-raw-logs/152-django-django-16502.log",
+    "raw_evaluator_log_sha256": "02c10cb1759df3c0eaf3ea1b2358c0d50729b338ab158a375cc17e7fa71f0f06",
+    "status_map": {
+      "WSGIRequestHandler ignores headers containing underscores.": "PASSED",
+      "WSGIServer handles broken pipe errors.": "PASSED",
+      "test_https (servers.test_basehttp.WSGIRequestHandlerTestCase.test_https)": "PASSED",
+      "test_log_message (servers.test_basehttp.WSGIRequestHandlerTestCase.test_log_message)": "PASSED",
+      "test_no_body_returned_for_head_requests (servers.test_basehttp.WSGIRequestHandlerTestCase.test_no_body_returned_for_head_requests)": "PASSED"
+    },
+    "test_patch_available": true,
+    "test_patch_sha256": "5086e5a493828d6b3db11c3988cf76a7e5575c4ca6cea43e39d2900f6d57681b"
+  }
+}

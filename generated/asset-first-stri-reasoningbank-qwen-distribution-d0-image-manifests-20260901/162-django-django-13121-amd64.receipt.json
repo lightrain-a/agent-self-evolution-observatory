@@ -1,0 +1,19 @@
+{
+  "architecture": "amd64",
+  "config_digest": "sha256:0d90a24e1b072387c47732366ddbb160d6b8acf956f8388e835a444861e9c568",
+  "credential_material_present": false,
+  "download_repo": "swebench/sweb.eval.x86_64.django_1776_django-13121",
+  "image_pull_reference": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-13121@sha256:2c2930a18a172c78c1454f02a2eda84c0cb8404246c98044e59876f554ac82fe",
+  "instance_id": "django__django-13121",
+  "layer_bytes": 1157365454,
+  "layer_count": 10,
+  "manifest_digest": "sha256:2c2930a18a172c78c1454f02a2eda84c0cb8404246c98044e59876f554ac82fe",
+  "manifest_file_sha256": "2c2930a18a172c78c1454f02a2eda84c0cb8404246c98044e59876f554ac82fe",
+  "manifest_media_type": "application/vnd.oci.image.manifest.v1+json",
+  "manifest_path": "generated/asset-first-stri-reasoningbank-qwen-distribution-d0-image-manifests-20260901/162-django-django-13121-amd64.json",
+  "manifest_size": 2199,
+  "mirror_base": "https://docker.1ms.run",
+  "mirror_repo": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-13121",
+  "os": "linux",
+  "payload_sha256": "7a78a2df43914f9ff5534b147b7ab7dca991a30d0c64ca3d1339536754854692"
+}
