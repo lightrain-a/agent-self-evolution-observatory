@@ -7,9 +7,9 @@
     "no_replacement": true,
     "no_retry": true
   },
-  "completed_count": 8,
+  "completed_count": 12,
   "contract_sha256": "072980a4e71a3e31de2e59ef77b52cd090073d645b665af0adc25c24a99b8daa",
-  "created_at_utc": "2026-09-02T06:57:18+00:00",
+  "created_at_utc": "2026-09-02T07:44:41+00:00",
   "credential_material_present": false,
   "decision": "QWEN_SOURCE_TRAJECTORIES_IN_PROGRESS",
   "execution_complete": false,
@@ -105,10 +105,46 @@
       "persisted": true,
       "receipt_sha256": "445b45421291d1a6b4a5b0b9ad91ebfb9de991e1ee902e376e97507058409de7",
       "run_id": "QWEN-SOURCE-08"
+    },
+    {
+      "attempt_count": 1,
+      "execution_status": "COMPLETED",
+      "instance_id": "sympy__sympy-13031",
+      "ordinal": 9,
+      "persisted": true,
+      "receipt_sha256": "0f82b87102e981e7b5788063d2262ae052e38db81735a2a8862898a127c5ec59",
+      "run_id": "QWEN-SOURCE-09"
+    },
+    {
+      "attempt_count": 1,
+      "execution_status": "COMPLETED",
+      "instance_id": "sympy__sympy-14711",
+      "ordinal": 10,
+      "persisted": true,
+      "receipt_sha256": "bbab7f9ef0bf6ffd58de14ddfe95be1fccd1d114d761e1f2bae88691c4590a42",
+      "run_id": "QWEN-SOURCE-10"
+    },
+    {
+      "attempt_count": 1,
+      "execution_status": "COMPLETED",
+      "instance_id": "sympy__sympy-13877",
+      "ordinal": 11,
+      "persisted": true,
+      "receipt_sha256": "92fd915f83a499290a2dff9e0a5222f8d2b7e8d0ae5aae32c1018b46a291ea3c",
+      "run_id": "QWEN-SOURCE-11"
+    },
+    {
+      "attempt_count": 1,
+      "execution_status": "TERMINAL_PROVIDER_OR_POLICY_FAILURE",
+      "instance_id": "sympy__sympy-15875",
+      "ordinal": 12,
+      "persisted": true,
+      "receipt_sha256": "b1794b6fd55d41dc1b901663dada6b3dcb616354e0fadf2474ea71c310e7ae43",
+      "run_id": "QWEN-SOURCE-12"
     }
   ],
-  "journal_record_count": 8,
-  "payload_sha256": "73331564c2452458f8ce5973801108f369c570c3117c0a148e636b1044c477bd",
+  "journal_record_count": 12,
+  "payload_sha256": "3b9787486c5d616654ee975d2e81fec4d984aa7d080273a79f5e844bc4c37c5a",
   "planned_count": 32,
   "schema_version": 1,
   "stage": "QWEN_SOURCE_TRAJECTORY_EXECUTION"
