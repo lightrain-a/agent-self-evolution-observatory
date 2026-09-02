@@ -105,7 +105,7 @@
   const termPrimer=(pageId)=>{
     const cfg=window.CURRENT_PAPER_TERM_PRIMER,keys=cfg?.pages?.[pageId]||[];
     if(!keys.length)return "";
-    return `<aside class="cpp-term-primer"><header><b>${isZh()?"后面会反复出现的词，先翻成人话":"Terms worth decoding before the technical sections"}</b><span>${isZh()?"不要求记英文；先理解它在实验里扮演什么角色。":"Remember the role, not the jargon."}</span></header><div>${keys.map(k=>{const d=cfg.definitions?.[k];return d?`<article><strong>${E(k)}</strong><p>${E(T(d))}</p></article>`:""}).join("")}</div></aside>`;
+    return `<aside class="cpp-term-primer"><header><b>${isZh()?"后面会反复出现的词，先翻成人话":"Terms worth decoding before the technical sections"}</b><span>${isZh()?"不要求记英文；先理解它在实验里扮演什么角色。":"Remember the role, not the jargon."}</span></header><div>${keys.map(k=>{const d=cfg.definitions?.[k];return d?`<article><strong>${E(plainTermLabel(k))}</strong><p>${E(T(d))}</p></article>`:""}).join("")}</div></aside>`;
   };
   const plainTermLabel=(value)=>{
     const raw=String(value??""); if(!isZh())return raw;
