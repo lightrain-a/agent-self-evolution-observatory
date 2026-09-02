@@ -5,12 +5,12 @@ body[data-page="experiment-costs"] .callout{margin:20px 0 14px;padding:14px 16px
 body[data-page="experiment-costs"] .panel{padding:18px 20px;margin:14px 0}
 body[data-page="experiment-costs"] .panel h2{font-size:21px;margin-bottom:7px}
 body[data-page="experiment-costs"] .section-intro{margin:0 0 10px;font-size:12px;line-height:1.55}
-body[data-page="experiment-costs"] .advisor-table-scroll{max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;border:1px solid #dbe2eb;border-radius:12px;background:#fff}
-body[data-page="experiment-costs"] .advisor-table-scroll>.matrix{min-width:820px;border:0;border-radius:0;font-size:11.5px}
-body[data-page="experiment-costs"] .advisor-table-scroll>.matrix th{padding:8px 9px;font-size:9.5px;line-height:1.25;white-space:nowrap}
-body[data-page="experiment-costs"] .advisor-table-scroll>.matrix td{padding:8px 9px;line-height:1.35;white-space:nowrap}
+body[data-page="experiment-costs"] .advisor-table-scroll{max-width:100%;min-width:0;overflow:visible;border:1px solid #dbe2eb;border-radius:12px;background:#fff}
+body[data-page="experiment-costs"] .advisor-table-scroll>.matrix{width:100%;min-width:0;table-layout:fixed;border:0;border-radius:0;font-size:11px}
+body[data-page="experiment-costs"] .advisor-table-scroll>.matrix th{padding:8px 8px;font-size:9.2px;line-height:1.25;white-space:normal;overflow-wrap:anywhere}
+body[data-page="experiment-costs"] .advisor-table-scroll>.matrix td{padding:8px 8px;line-height:1.35;white-space:normal;overflow-wrap:anywhere}
 body[data-page="experiment-costs"] .advisor-table-scroll>.matrix td:nth-child(2){font-weight:720;color:#27344a}
-body[data-page="experiment-costs"] .advisor-table-scroll>.matrix td:last-child{white-space:normal;min-width:170px;color:#657188}
+body[data-page="experiment-costs"] .advisor-table-scroll>.matrix td:last-child{white-space:normal;min-width:0;color:#657188}
 body[data-page="experiment-costs"] .ec-price b{font-size:14px;color:#3434a5}
 body[data-page="experiment-costs"] .ec-ark td:first-child b{color:#087e5b}
 body[data-page="experiment-costs"] .ec-qwen td:first-child b{color:#3156a6}
@@ -22,10 +22,21 @@ body[data-page="experiment-costs"] .ec-facts article>b{display:block;color:#6670
 body[data-page="experiment-costs"] .ec-facts article>strong{display:block;margin:4px 0;color:#27344a;font-size:18px;line-height:1.25}
 body[data-page="experiment-costs"] .ec-facts article>span{display:block;color:#667085;font-size:10.5px;line-height:1.5}
 body[data-page="experiment-costs"] .warning-box{margin:10px 0 0;padding:11px 13px;font-size:11px;line-height:1.55}
-body[data-page="experiment-costs"] .ec-portfolio>.matrix{min-width:1500px}
-body[data-page="experiment-costs"] .ec-portfolio>.matrix td{white-space:normal;vertical-align:top;min-width:180px}
-body[data-page="experiment-costs"] .ec-portfolio>.matrix td:first-child{min-width:150px;white-space:nowrap}
-body[data-page="experiment-costs"] .ec-portfolio>.matrix td:last-child{min-width:170px}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix{width:100%;min-width:0;table-layout:fixed;font-size:9.6px}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix th{font-size:8.5px;white-space:normal}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix td{white-space:normal;vertical-align:top;min-width:0;line-height:1.42}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(1),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(1){width:9%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(2),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(2){width:15%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(3),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(3){width:14%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(4),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(4){width:16%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(5),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(5){width:16%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(6),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(6){width:17%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(7),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(7){width:13%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix td:first-child{white-space:normal;font-weight:700}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix td:last-child{min-width:0}
+body[data-page="experiment-costs"] .ec-reconcile{margin:10px 0;padding:12px 14px;border:1px solid #d9e2f0;border-radius:11px;background:#f7f9fc;font-size:10.8px;line-height:1.58;color:#58667a}
+body[data-page="experiment-costs"] .ec-reconcile b{display:block;margin-bottom:4px;color:#27344a;font-size:12px}
+body[data-page="experiment-costs"] .ec-reconcile span{display:block}
 body[data-page="experiment-costs"] .ec-bundle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}
 body[data-page="experiment-costs"] .ec-bundle article{padding:12px 13px;border:1px solid #dfe5ee;border-radius:11px;background:#fbfcfe}
 body[data-page="experiment-costs"] .ec-bundle article>b{display:block;margin-bottom:5px;color:#344054;font-size:11px}
@@ -37,4 +48,4 @@ body[data-page="experiment-costs"] .section-body li{margin:4px 0;font-size:11px;
 body[data-page="experiment-costs"] .section-body small{display:block;margin-top:7px;color:#7b8495;font-size:9.5px;line-height:1.5}
 @media(max-width:1100px){body[data-page="experiment-costs"] .ec-facts.ec-facts-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:900px){body[data-page="experiment-costs"] .ec-facts,body[data-page="experiment-costs"] .ec-facts.ec-facts-4,body[data-page="experiment-costs"] .ec-bundle{grid-template-columns:1fr}body[data-page="experiment-costs"] .ec-source{display:grid;gap:4px}}
-@media(max-width:820px){body[data-page="experiment-costs"] .content{padding-top:28px}body[data-page="experiment-costs"] .advisor-table-scroll>.matrix{min-width:760px}}
+@media(max-width:820px){body[data-page="experiment-costs"] .content{padding-top:28px}body[data-page="experiment-costs"] .advisor-table-scroll>.matrix{width:100%;min-width:0;font-size:8.2px}body[data-page="experiment-costs"] .advisor-table-scroll>.matrix th,body[data-page="experiment-costs"] .advisor-table-scroll>.matrix td{padding:6px 4px}body[data-page="experiment-costs"] .ec-portfolio>.matrix{font-size:7.6px}body[data-page="experiment-costs"] .ec-portfolio>.matrix th{font-size:7px}}
