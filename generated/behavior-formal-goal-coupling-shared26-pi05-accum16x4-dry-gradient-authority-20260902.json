@@ -1,0 +1,69 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum16x4-dry-gradient-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "AUTHORIZED_PI05_SINGLE_GPU_ACCUM16X4_NO_UPDATE_DRY_GRADIENT",
+  "scope": "candidate-1 resource qualification only; no formal training or policy outcome authority",
+  "parent_preregistration": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-single-gpu-accumulation-child-preregistration-20260902.json",
+    "sha256": "0d0a88b20f15d3a0fa2e8721da865bd5488cc39c43523a518608063c8a51a8d7"
+  },
+  "parent_v4_oom_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-resource-v4-oom-adjudication-20260902.json",
+    "sha256": "b2671ad042fd9bd5bfe44d9cba3d2beb0421c504712a5ad8128f5dfec691ea29"
+  },
+  "data_order_qualification": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum16x4-data-order-qualification-20260902.json",
+    "sha256": "0d2778edcfed2203cca93e8aa3e6c4733a24ba3b8dadb3e808a0fa2f795bcfec",
+    "status": "PI05_ACCUM_16X4_DATA_ORDER_QUALIFICATION_PASS"
+  },
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum16x4_dry_gradient.py",
+  "runner_sha256": "4fe783fe20520d82bbbcf4dfa515cc00db16a802196142cd2cbca5080a59da9c",
+  "launcher_path": "scripts/run_behavior_formal_goal_coupling_shared26_pi05_accum16x4_dry_gradient.sh",
+  "launcher_sha256": "6ffa92cc30e6d9c3e740211fb54bd5c82fcd7fbbe4d866df78dc44272f9980cb",
+  "candidate": {
+    "priority": 1,
+    "physical_micro_batch": 16,
+    "accumulation_steps": 4,
+    "effective_batch": 64,
+    "trainable_parameter_elements": 3353433872,
+    "single_fp32_gradient_tree_bytes": 13413735488
+  },
+  "resource_only_execution": {
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "num_workers": 0,
+    "cpu_affinity": "0-63",
+    "memory_max_gib": 72,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9,
+    "xla_mem_fraction_provenance": "OpenPI scripts/b1k/train_b1k.sh uses XLA_PYTHON_CLIENT_MEM_FRACTION=0.9; this is an allocator/resource setting, not a scientific hyperparameter."
+  },
+  "authorized_operations": [
+    "construct exactly four consecutive source-shuffled micro-batches of 16 examples each",
+    "restore the frozen pi0.5 base checkpoint into a step-0 train state",
+    "compute four micro-gradients with deterministic per-microbatch RNG keys",
+    "scale each micro-gradient by 1/4 and accumulate them into one FP32 gradient tree",
+    "donate/reuse the prior accumulator buffer for micro-gradients 2 through 4",
+    "inspect only structural gradient metadata such as leaf count, shapes, dtypes, and element count"
+  ],
+  "forbidden_operations": [
+    "optimizer update",
+    "parameter mutation",
+    "EMA update",
+    "checkpoint write",
+    "loss value retention or reporting",
+    "reading numerical gradient values",
+    "policy rollout",
+    "Q/reward/success read",
+    "a second accum16x4 attempt under this authority",
+    "changing microbatch or accumulation after this attempt except through the already-preregistered next candidate gate"
+  ],
+  "optimizer_updates_authorized": 0,
+  "formal_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "next_gate_if_pass": "AUTHORIZE_SINGLE_GPU_ACCUM16X4_FORMAL_TRAINING_IMPLEMENTATION",
+  "next_gate_if_resource_failure": "AUTHORIZE_PREREGISTERED_MICROBATCH8_ACCUM8_NO_UPDATE_DRY_GRADIENT"
+}
