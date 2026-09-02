@@ -28,7 +28,7 @@
   "launcher_path": "scripts/run_behavior_formal_goal_coupling_pi05_portable_direct_device_no_update_model_load_232.sh",
   "launcher_sha256": "93d09170fdb91eed28a53fa4f77fb5ce6cc037f2925808726f5941e22fdb7efc",
   "admission_worker_path": "scripts/run_behavior_formal_goal_coupling_pi05_portable_direct_device_no_update_model_load_worker_232.sh",
-  "admission_worker_sha256": "275e6b4f574c2ce744e842f35907a6c39a3c4ad86c91ab226c3dd011c724515f",
+  "admission_worker_sha256": "4fcdc00ceb0e93b751d6ddabde99eb8c59e3354cc254e0ec38c172dfbda80ea4",
   "frozen_checkpoint": {
     "canonical_base_receipt_path": "generated/behavior-formal-goal-coupling-pi05-base-transport-repair1-result-20260902.json",
     "canonical_base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",

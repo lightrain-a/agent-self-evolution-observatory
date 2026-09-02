@@ -3,7 +3,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 EXEC="$ROOT/scripts/run_behavior_formal_goal_coupling_pi05_portable_direct_device_no_update_model_load_232.sh"
 RECEIPT="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-portable-direct-device-no-update-model-load-result-232-20260903.json"
-ACQ=/data/wyt/formal-goal-pi05-base-acquire-232-result.json
+ACQ=/data/wyt/formal-goal-pi05-base-acquire-232-repair1-result.json
 ENV=/data/wyt/formal-goal-shared26-openpi-env-20260901
 CONFIG=/data/wyt/formal-goal-policy-contracts-20260828/openpi/src/openpi/training/config.py
 EXPECTED_CONFIG_SHA=4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99
@@ -19,7 +19,7 @@ while true; do
   ACQ_OK=$($ENV/bin/python - "$ACQ" <<'PY'
 import json,sys
 p=json.load(open(sys.argv[1]))
-print('1' if p.get('status')=='PI05_BASE_LOCAL_CONTENT_ADDRESS_COMPLETE' and p.get('verified_object_count')==20 and p.get('verified_bytes')==12441721931 else '0')
+print('1' if p.get('status')=='PI05_BASE_LOCAL_CONTENT_ADDRESS_REPAIR1_COMPLETE' and p.get('verified_object_count')==20 and p.get('verified_bytes')==12441721931 and p.get('error') is None else '0')
 PY
 )
   if [[ "$ACQ_OK" != 1 ]]; then echo "[$(date --iso-8601=seconds)] checkpoint acquisition not complete"; sleep 30; continue; fi
