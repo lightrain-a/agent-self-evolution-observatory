@@ -102,6 +102,10 @@ def main() -> int:
         import openpi.training.data_loader as data_loader
         import openpi.transforms as transforms
 
+        class RemoveStrings(transforms.DataTransformFn):
+            def __call__(self, data: dict) -> dict:
+                return {key: value for key, value in data.items() if not np.issubdtype(np.asarray(value).dtype, np.str_)}
+
         jax_platforms = [device.platform for device in jax.devices()]
         if set(jax_platforms) != {"cpu"}:
             raise RuntimeError(f"zero-update smoke must be CPU-only, got {jax_platforms}")
@@ -139,6 +143,7 @@ def main() -> int:
             [
                 *data_config.repack_transforms.inputs,
                 *data_config.data_transforms.inputs,
+                RemoveStrings(),
                 transforms.Normalize(data_config.norm_stats, use_quantiles=False),
             ],
         )
@@ -195,6 +200,8 @@ def main() -> int:
             "actions_finite": True,
             "image_shapes": image_shapes,
             "image_dtypes": image_dtypes,
+            "data_only_strings_removed_before_batching": True,
+            "remove_strings_semantics": "identical to pinned scripts/compute_norm_stats.py RemoveStrings for the data-only path",
             "model_transforms_executed": False,
             "tokenizer_executed": False,
             "model_checkpoint_weight_downloaded": False,
