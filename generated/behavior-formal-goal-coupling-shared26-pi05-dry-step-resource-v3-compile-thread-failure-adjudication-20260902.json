@@ -1,0 +1,74 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-v3-compile-thread-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_date": "2026-09-02",
+  "status": "PI05_NO_UPDATE_DRY_STEP_RESOURCE_V3_GRADIENT_COMPILE_THREAD_FAILURE",
+  "classification": "OUTCOME_BLIND_GRADIENT_STARTED_NOT_COMPLETED_RESOURCE_FAILURE",
+  "parent_v3_authority_sha256": "e1573db255f98150aff2c0a24320db134ecc798f45a81608c6775057444835a5",
+  "v3_consumed_receipt": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-v3-consumed-gradient-started-receipt-20260902.json",
+    "sha256": "7c15a146373b4faa6270a1dec67de08612bec0059480437adb23008f95054137",
+    "last_status": "PI05_NO_UPDATE_DRY_STEP_RESOURCE_V3_GRADIENT_STARTED",
+    "batch_ready": true,
+    "train_state_ready": true,
+    "dry_gradient_execution_started": true,
+    "dry_gradient_execution_completed": false,
+    "optimizer_update": false,
+    "parameter_update": false,
+    "checkpoint_written": false,
+    "policy_rollouts_started": false,
+    "policy_outcomes_read": false,
+    "scientific_training_started": false
+  },
+  "runtime_evidence": {
+    "fatal_message": "Thread tf_foreach creation via pthread_create() failed",
+    "errno": 11,
+    "failure_point": "large pi0.5 JAX/XLA gradient compile/execute after step-0 state was ready",
+    "threads_observed_before_gradient_compile": 266,
+    "gpu_memory_after_state_mib": 61319,
+    "jax_bytes_in_use_after_state": 53773035264,
+    "jax_pool_limit_bytes": 63821119488,
+    "cgroup_memory_peak_bytes_observed": 65264427008,
+    "cgroup_MemoryMax_bytes": 77309411328,
+    "cgroup_oom_events": 0,
+    "host_swap_growth_observed": false,
+    "gradient_values_read": false,
+    "loss_value_read_or_retained": false
+  },
+  "thread_cause_analysis": {
+    "host_logical_cpus": 256,
+    "TasksMax": 512,
+    "cuda_client_threads_before_large_compile": 266,
+    "mechanism": "The CUDA-only client itself scales host helper threads with schedulable CPUs. Large XLA compilation then attempts an additional tf_foreach parallel pool. On the unrestricted 256-CPU affinity this can cross the finite 512-task cgroup bound even though memory remains below MemoryMax.",
+    "memory_failure_rejected": true,
+    "gpu_oom_rejected": true
+  },
+  "outcome_blind_affinity_diagnostic": {
+    "scope": "JAX CUDA client initialization only; no dataset/model/scientific outcomes",
+    "TasksMax": 512,
+    "results": [
+      {"cpu_affinity": "0-31", "allowed_cpu_count": 32, "threads_after_cuda_client_init": 38, "result": "PASS"},
+      {"cpu_affinity": "0-63", "allowed_cpu_count": 64, "threads_after_cuda_client_init": 70, "result": "PASS"},
+      {"cpu_affinity": "0-95", "allowed_cpu_count": 96, "threads_after_cuda_client_init": 102, "result": "PASS"},
+      {"cpu_affinity": "0-127", "allowed_cpu_count": 128, "threads_after_cuda_client_init": 134, "result": "PASS"}
+    ]
+  },
+  "v4_resource_repair": {
+    "cpu_affinity": "0-63",
+    "allowed_cpu_count": 64,
+    "keep_JAX_PLATFORMS": "cuda",
+    "keep_TasksMax": 512,
+    "keep_MemoryMax": "72G",
+    "keep_MemorySwapMax": "0",
+    "keep_num_workers": 0,
+    "scientific_variables_changed": false,
+    "rationale": "64 schedulable CPUs preserve substantial host compile parallelism while reducing baseline CUDA-client helper threads from about 266 to about 70, leaving large margin under TasksMax=512. This also limits whole-host CPU contention without changing the single-A100 scientific topology."
+  },
+  "v3_attempt_consumed": true,
+  "automatic_v3_retry": false,
+  "scientific_outcomes_observed": 0,
+  "partial_scientific_effect_read": false,
+  "formal_training_authorized": false,
+  "scientific_authority": false,
+  "next_gate": "NEW_EXACTLY_ONCE_RESOURCE_V4_DRY_STEP_AUTHORITY_WITH_64_CPU_AFFINITY"
+}
