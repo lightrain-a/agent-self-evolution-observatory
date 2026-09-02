@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q0-v2-TIMEOUT-20260902",
+  "status": "ATOMGIT_QWEN38_Q0_PASS_AFTER_TIMEOUT_REPAIR",
+  "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+  "resolved_model": "qwen3.8-27b",
+  "atomcode_version": "5.0.9",
+  "first_decision_budget": 2048,
+  "source_trajectory_budget": 16384,
+  "atomcode_subprocess_timeout_seconds": 900,
+  "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+  "content_addresses": {
+    "q0_closure_sha256": "19ec9c078b2c4a6f3ec77eee181b47a4f7cc082a516eff0074feace7a74e6f70",
+    "source_budget_result_sha256": "8eead97e1a3b39a701886a24a4597e2ce607ee50580803a5655c7ac4087c4198",
+    "sampling_diagnostic_sha256": "6398f0d9a5d29888a0003fc7783f7a41732d3e38cf396ea13f80b46ee2ef3b64",
+    "parent_identity_result_sha256": "7e6798231fe2000fb2828d76b96be664f2c6906b97befdaf5dfe3cd4cc9e8b00",
+    "parent_first_action_result_sha256": "eb9f1513859ac3169da11ff0668d9c26088f4b1643312784b4e7eae2ce50aa4a"
+  },
+  "qualification_summary": {
+    "identity": "3/3 exact qwen3.8-27b",
+    "first_action_ladder": "512=11/20; 1024=13/20; 2048=20/20; selected 2048",
+    "source_budget_v1": "4096=0/6; 16384=5/6 with sole 300s timeout; 32768=3/6 with timeout-only failures",
+    "source_budget_v2": "same six 16384 fixtures, only timeout 300->900, 6/6 byte-exact PASS",
+    "critical_timeout_witnesses_ms": [585240, 656526],
+    "sampling": "two fixed fixtures x six repeats; all 12 parse; unique action counts 4 and 5"
+  },
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_measurement_calls": 0,
+  "other_models_used": 0,
+  "claim_authority": "PROVIDER_AND_ACTION_INTERFACE_QUALIFIED_ONLY; NO_PACTA_EFFECT_EVIDENCE",
+  "next_authorized_epoch": "Prospective AtomGit Qwen3.8 native source-trajectory acquisition on the already frozen ten fresh PACTA-MSR source units; no model shopping and no writer/binder/shadow/final in T0."
+}
