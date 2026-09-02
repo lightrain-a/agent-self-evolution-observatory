@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q0.2-SOURCE-BUDGET-20260902",
+  "status": "ATOMGIT_QWEN38_Q02_SOURCE_BUDGET_PASS",
+  "execution_git_sha": "073296a8c5289f65d061d0baeff47587abd02abc",
+  "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+  "resolved_model": "qwen3.8-27b",
+  "selected_source_budget": 32768,
+  "first_decision_budget": 2048,
+  "invocation_timeout_seconds": 900,
+  "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+  "selection": "32768 is the first candidate budget and passed both frozen panels; 65536 received zero calls by preregistered stop-at-first-pass rule.",
+  "panel_A_transport_regression": {
+    "qualified": 6,
+    "total": 6,
+    "status": "PASS"
+  },
+  "panel_B_realistic_envelope": {
+    "qualified": 6,
+    "total": 6,
+    "status": "PASS",
+    "serialized_char_range": [83618, 212508],
+    "completion_token_range": [1657, 1961],
+    "output_truncation_events": 0,
+    "max_rounds_events": 0
+  },
+  "content_addresses": {
+    "prepare_sha256": "85f9533ab176d639ed9ff5abe647a0c171819012c3466ec9138633c7b8fa1154",
+    "budget_32768_result_sha256": "984e3135f00b4b531f99b487b7ac765b63b234833ab8e64fc4a48213b7291c03",
+    "q02_result_sha256": "c4c7c05f4e14d82fa8ef7d0d0ea2c31a8888295f96eb810b649150da1577b7ce"
+  },
+  "scientific_calls": {
+    "real_source_tasks": 0,
+    "future_tasks": 0,
+    "writer": 0,
+    "binder": 0,
+    "shadow": 0,
+    "final": 0
+  },
+  "interpretation": "The real-task 16384 truncation exposed an underqualified source-output ceiling, not a need to alter the PACTA-MSR method. Under the unchanged 900s wrapper ceiling, 32768 passes both exact transport regression and new realistic multi-turn synthetic coding envelopes.",
+  "authority": {
+    "new_disjoint_fresh_source_design": true,
+    "retired_ten_pair_pool_reuse": false,
+    "source_acquisition_on_new_pool": false,
+    "writer": false,
+    "binder": false,
+    "shadow": false,
+    "final": false
+  },
+  "next": "Freeze a completely new source/future pool disjoint from every prior C1/ReasoningBank and retired AtomGit T0 task ID, then qualify its exact images/runtime before opening source acquisition with max_tokens=32768 and timeout=900s."
+}

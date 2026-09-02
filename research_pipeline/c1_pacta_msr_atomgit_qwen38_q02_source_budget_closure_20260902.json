@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "artifact_kind": "C1_PACTA_MSR_ATOMGIT_QWEN38_Q02_SOURCE_BUDGET_CLOSURE",
+  "status": "ATOMGIT_QWEN38_Q02_SOURCE_BUDGET_PASS",
+  "lessons": [
+    "A source-output budget must be qualified on both exact transport capacity and realistic multi-turn coding envelopes. Exact command copying alone can miss reasoning-length tails exposed by real agent trajectories.",
+    "After a real-task max-token truncation, increasing only the output ceiling while holding model, wrapper timeout, parser, and PACTA-MSR method fixed is a clean transport repair; the scientific substrate itself must still be replaced because the original source unit was consumed.",
+    "The first larger budget, 32768, passes both panels under the already-qualified 900-second AtomCode ceiling, so 65536 is not executed and no budget shopping occurs."
+  ],
+  "frozen_after_q02": {
+    "resolved_model": "qwen3.8-27b",
+    "source_max_completion_tokens": 32768,
+    "source_invocation_timeout_seconds": 900,
+    "first_decision_budget": 2048,
+    "provider_retries": 0,
+    "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9"
+  },
+  "reopen_condition": "Use only a completely new disjoint source/future substrate. The retired ten-pair AtomGit T0 pool remains non-reusable.",
+  "authority": {
+    "fresh_pool_design": true,
+    "fresh_image_runtime_qualification": true,
+    "fresh_source_execution": false,
+    "writer": false,
+    "binder": false,
+    "shadow": false,
+    "final": false
+  },
+  "evidence": {
+    "q02_result_sha256": "c4c7c05f4e14d82fa8ef7d0d0ea2c31a8888295f96eb810b649150da1577b7ce",
+    "budget_32768_result_sha256": "984e3135f00b4b531f99b487b7ac765b63b234833ab8e64fc4a48213b7291c03"
+  }
+}
