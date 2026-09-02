@@ -25,7 +25,7 @@ CONTRACT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1
 OUTPUT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-result-20260901.json"
 INDEX = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-index-20260901.json"
 RECEIPT_DIR = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-q1-receipts-20260901"
-EXPECTED_CONTRACT_SHA256 = "PENDING"
+EXPECTED_CONTRACT_SHA256 = "4c000e3fed09a742babed6c6371204ebc1ca12b1e6237464b73bbfab44a7f3e5"
 FENCE = chr(96) * 3
 FIXED_PROMPT = (
     "This is a synthetic non-benchmark parser check. Return exactly one fenced "
