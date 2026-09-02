@@ -1,0 +1,37 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-single-case-first-fail-stability-completion-integrity-audit",
+  "authority": {
+    "mint_single_use_stability_analysis_authorization": true,
+    "paper_promotion": false,
+    "provider_io": false,
+    "scientific_execution": false,
+    "submission": false,
+    "updater": false
+  },
+  "contract_path": "generated/e2-r17-single-case-first-fail-stability-contract-20260902.json",
+  "contract_sha256": "8c415befe185e4bccc631342ead8e93aa050fc0002ad02213ecd1b9a743d3b16",
+  "created_at_utc": "2026-09-02T06:17:58+00:00",
+  "execution_authorization_path": "generated/e2-r17-single-case-first-fail-stability-authorization-20260902.json",
+  "execution_authorization_sha256": "8437add262bdf3fbdd4988596bba8ce0dad3abd74a4e3c7f6bda631e485490a8",
+  "frozen_parent_state_binding_pass": true,
+  "heldout_rollout_units": 72,
+  "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-first-fail-stability-v1.json",
+  "lineage_lease_sha256": "843b739f06fece9a4ced041bf28eda1a0f72b3cb401ce1f082a0dc3aec762497",
+  "measurement_states": 4,
+  "new_learned_states": 0,
+  "partial_effect_read": false,
+  "provider_budget_binding_pass": true,
+  "provider_claim_uniqueness_pass": true,
+  "provider_claims_by_measurement_state": {
+    "rep1/first_fail": 104,
+    "rep1/win_c": 97,
+    "rep2/first_fail": 101,
+    "rep2/win_c": 94
+  },
+  "run_summary_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-stability-20260902/summary/stability_summary.json",
+  "run_summary_sha256": "c5b5db7b434a67047203c02051c462c9231512e144e0d8dc6c0012a2ff350083",
+  "schema_version": "1.0",
+  "scientific_scores_read": false,
+  "status": "PASS_SINGLE_CASE_FIRST_FAIL_STABILITY_FULL_INTEGRITY_READY_FOR_ANALYSIS"
+}
