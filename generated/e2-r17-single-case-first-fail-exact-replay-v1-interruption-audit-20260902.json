@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-single-case-first-fail-exact-replay-v1-interruption-audit",
+  "created_date": "2026-09-02",
+  "status": "PASS_RECOVERABLE_AUTHORIZATION_SCHEMA_FAILURE_BEFORE_HELDOUT_PROVIDER_IO",
+  "scientific_object": "E2-R17-SINGLE-CASE-FIRST-FAIL-EXACT-EVIDENCE-UPDATER-REPLICATION-20260902",
+  "failure_class": "IMPLEMENTATION_AUTHORIZATION_SCHEMA",
+  "failure_detail": "The exact-replay execution authorization omitted mindmemos_commit, while the frozen actor path requires authorization_payload.mindmemos_commit to equal the pinned MindMemOS HEAD before provider I/O.",
+  "failed_task": "r17-b4-agj-p2",
+  "failed_arm": "win_c",
+  "failed_replicate": 1,
+  "heldout_provider_calls_before_failure": 0,
+  "heldout_completed_units_before_failure": 0,
+  "scientific_outcomes_read": false,
+  "partial_effect_read": false,
+  "analyzer_run": false,
+  "rep1": {
+    "win_c": {
+      "update_completed": true,
+      "update_checkpoint_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/win_c/checkpoints/update_completed.json",
+      "update_checkpoint_sha256": "f4d462454cb07e354b845782eb504d6e138313136087e2d70eb54ea1f448fb02",
+      "provider_claims": 10,
+      "heldout_manifest_present": false
+    },
+    "first_fail": {
+      "update_completed": true,
+      "update_checkpoint_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/first_fail/checkpoints/update_completed.json",
+      "update_checkpoint_sha256": "f8a3b038fe975b4056c80e32ed0ca3685ce5f8adab9b0be242d91854be6f398c",
+      "provider_claims": 10,
+      "heldout_manifest_present": false
+    }
+  },
+  "rep2": {
+    "win_c_update_completed": false,
+    "first_fail_update_completed": false,
+    "heldout_manifest_present": false
+  },
+  "failure_artifact_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-20260902/states/e1-tsr-00/replicate_1/win_c/checkpoints/eval_failure_r17-b4-agj-p2.json",
+  "failure_artifact_sha256": "291aba6bd9267b8bc3dfa91ce4d5aa8dbe7ac65a133ed135f77890a75d01f483",
+  "terminal_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-single-case-first-fail-exact-replay-v1.json",
+  "terminal_lease_sha256": "aee6f5d25a7eb7f0ae3d1421c244c4eeee2a37223c89da9ab5d88a442c77b92b",
+  "terminal_lease_status": "FAIL_CLOSED_FIRST_FAIL_EXACT_REPLAY",
+  "recovery_rule": "Preserve both rep1 updater states exactly. Do not rerun them. Generate only the two never-started rep2 updater states under a new updater-only authorization, then measure all four frozen states under measurement-only authorities that bind each state's original updater provenance.",
+  "authority": {
+    "provider_io": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "analyzer": false,
+    "s2_execution": false,
+    "e3_confirmation": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

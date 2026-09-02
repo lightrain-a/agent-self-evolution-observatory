@@ -1,0 +1,20 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+import argparse, hashlib, json, subprocess, sys
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+ROOT=Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path: sys.path.insert(0,str(ROOT))
+def sha(p:Path)->str: return hashlib.sha256(p.read_bytes()).hexdigest()
+def load(p:Path)->dict[str,Any]: return json.loads(p.read_text(encoding='utf-8'))
+def req(x:bool,m:str)->None:
+ if not x: raise RuntimeError(m)
+def atomic(p:Path,d:dict[str,Any])->None:
+ p.parent.mkdir(parents=True,exist_ok=True); t=p.with_suffix(p.suffix+'.tmp'); t.write_text(json.dumps(d,ensure_ascii=False,indent=2,sort_keys=True)+'\n',encoding='utf-8'); t.replace(p)
+def main()->int:
+ ap=argparse.ArgumentParser(); ap.add_argument('--parent-contract',type=Path,required=True); ap.add_argument('--parent-authorization',type=Path,required=True); ap.add_argument('--interruption-audit',type=Path,required=True); ap.add_argument('--output',type=Path,required=True); a=ap.parse_args(); req(not a.output.exists(),'recovery contract exists')
+ pc=load(a.parent_contract); pa=load(a.parent_authorization); ia=load(a.interruption_audit); req(pc.get('status')=='FROZEN_E2_R17_SINGLE_CASE_FIRST_FAIL_EXACT_REPLAY','parent contract drift'); req(pa.get('status')=='AUTHORIZED_E2_R17_SINGLE_CASE_FIRST_FAIL_EXACT_REPLAY' and pa.get('contract_sha256')==sha(a.parent_contract),'parent auth drift'); req(ia.get('status')=='PASS_RECOVERABLE_AUTHORIZATION_SCHEMA_FAILURE_BEFORE_HELDOUT_PROVIDER_IO' and not any((ia.get('authority') or {}).values()),'interruption audit drift')
+ code={'runner':'scripts/run_e2_r17_first_fail_exact_replay_updater_recovery.py','preflight':'scripts/preflight_e2_r17_first_fail_exact_replay_updater_recovery.py','authorizer':'scripts/authorize_e2_r17_first_fail_exact_replay_updater_recovery.py','exact_replay_runner':'scripts/run_e2_r17_first_fail_exact_replay.py','diagnostic_witness':'research_pipeline/e2_r17_diagnostic_witness.py','provider_budget':'research_pipeline/e2_r17_provider_budget.py'}; bound={k:{'path':v,'sha256':sha(ROOT/v)} for k,v in code.items()}
+ payload={'schema_version':'1.0','artifact_type':'e2-r17-first-fail-exact-replay-updater-recovery-v2-contract','created_at_utc':datetime.now(timezone.utc).isoformat(timespec='seconds'),'status':'FROZEN_E2_R17_FIRST_FAIL_EXACT_REPLAY_UPDATER_RECOVERY_V2','scientific_object':'E2-R17-SINGLE-CASE-FIRST-FAIL-EXACT-REPLAY-UPDATER-RECOVERY-V2-20260902','authority':{'scientific_experiment':False,'provider_io':False,'updater':False,'heldout_evaluation':False,'analyzer':False,'paper_promotion':False,'submission':False},'parent_exact_replay':{'contract_path':str(a.parent_contract),'contract_sha256':sha(a.parent_contract),'authorization_path':str(a.parent_authorization),'authorization_sha256':sha(a.parent_authorization),'interruption_audit_path':str(a.interruption_audit),'interruption_audit_sha256':sha(a.interruption_audit)},'rep1_preserved':ia['rep1'],'recovery_scope':{'replicate':2,'arms':['win_c','first_fail'],'new_learned_states':2,'heldout_rollout_units':0,'rep1_updater_replay':False},'pool_bindings':pc['pool_bindings'],'selector_freeze':pc['selector_freeze'],'exact_evidence':pc['exact_evidence'],'initial_skill':pc['initial_skill'],'suite':pc['suite'],'mindmemos':pc['mindmemos'],'model_identity':pc['model_identity'],'updater_runtime':pc['updater_runtime'],'updater':pc['updater'],'renderer':pc['renderer'],'budget':pc['budget'],'env_file':pc['env_file'],'bound_code':bound,'run_root':'/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-updater-recovery-v2-20260902','lineage_lease_path':'/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-first-fail-exact-replay-updater-recovery-v2.json','git_commit_at_freeze':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()}; atomic(a.output,payload); print(json.dumps({'status':payload['status'],'sha256':sha(a.output)},indent=2)); return 0
+if __name__=='__main__': raise SystemExit(main())
