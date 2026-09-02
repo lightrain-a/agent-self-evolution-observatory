@@ -1,7 +1,7 @@
 {
   "authority": {
     "appworld_ul": false,
-    "capability_calibration": true,
+    "capability_calibration": false,
     "f0": false,
     "m1_mock_qualification": false,
     "method": false,
@@ -12,7 +12,7 @@
   "files": {
     "generated/agent-constraint-externality-appworld-compiler-manifest-20260831.json": {
       "bytes": 2041,
-      "sha256": "5aae88f47d66161b966290798e18375b563ddd7b58161ac255cc6d874621e9f2"
+      "sha256": "235402e1d3a36e639381f57ad361b6d2f229cc9b8fddbf9f2d074ba5caac9418"
     },
     "generated/agent-constraint-externality-appworld-compiler-qualification-20260831.json": {
       "bytes": 1115,
@@ -22,13 +22,25 @@
       "bytes": 13002,
       "sha256": "0a5bfae987cf136df57d3ad5431c097143e3ca333d8ae3258356c50fdcf3597d"
     },
+    "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v3-20260902.bundle": {
+      "bytes": 13113,
+      "sha256": "4a2bf45fc63f2bde8f9b8ac31ffc48ce2fc42c64d65df9298605ddd8e68d1e05"
+    },
+    "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle": {
+      "bytes": 13239,
+      "sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5"
+    },
     "generated/agent-constraint-externality-capability-contract-20260831.json": {
       "bytes": 1773,
-      "sha256": "7cdaab014b73c125780066d72624aee6e6dd9064db73f945f9938bc76d4572a5"
+      "sha256": "8336b5c82aa88531794e541cfa200409644ea52842a9cdd45534f8679f235e25"
     },
     "generated/agent-constraint-externality-capability-r2-root-cause-audit-20260902.json": {
       "bytes": 11301,
       "sha256": "bc8bccfe7a337d7c64f9db0bd3194974c92c1b7b05e58481c7084f56f3b78833"
+    },
+    "generated/agent-constraint-externality-capability-r3-partial-void-r1-20260902.json": {
+      "bytes": 1238,
+      "sha256": "b179f598364f687aa85e871b43f4eb87f5eff94b4416e744ff2ce2b28c0013cd"
     },
     "generated/agent-constraint-externality-capability-substrate-invalid-void-r1-20260901.json": {
       "bytes": 1755,
@@ -46,17 +58,33 @@
       "bytes": 2046,
       "sha256": "274fce98a4b05b7025e5c2899287e994e1919f9b06db5c371c3aa2ebfd27e5b6"
     },
+    "generated/agent-constraint-externality-capability-substrate-recovery-qualification-r3-20260902.json": {
+      "bytes": 2002,
+      "sha256": "7d6681dd45ea602fec58a77aaec5a97d5bd65f0c3dc946824d03b6e748d49a4e"
+    },
+    "generated/agent-constraint-externality-capability-substrate-recovery-qualification-r4-20260902.json": {
+      "bytes": 1502,
+      "sha256": "1220edddc6cbfa89538031109c19204fb5a2bb9a8ee68e318ca87eacb70d1f4e"
+    },
     "generated/agent-constraint-externality-capability-substrate-v2-contract-20260902.json": {
       "bytes": 1788,
       "sha256": "e72b7468790ef07e2e9a0a68d21ecff1fbce4ba2fad51c1de61a4a52c426d2d4"
+    },
+    "generated/agent-constraint-externality-capability-substrate-v3-contract-20260902.json": {
+      "bytes": 1540,
+      "sha256": "03bedd01e196d1fb49a9ff047b6527c418a7bf3bcd87edb2f004b22cf0897e6c"
+    },
+    "generated/agent-constraint-externality-capability-substrate-v4-contract-20260902.json": {
+      "bytes": 1822,
+      "sha256": "d60f0ad2b584fd193dc81b36a3dc274f3f2db2a0fb36c6e5e68a9120459d247d"
     },
     "generated/agent-constraint-externality-f0-frozen-protocol-20260831.json": {
       "bytes": 4894,
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 2406,
-      "sha256": "6e4502cb13c356e11fb771a1c0870cb1d4acd333c1d1039a154a71b3d1044239"
+      "bytes": 3070,
+      "sha256": "7f02b4afc07f41ddf343381b6b3a8ee899d6a4cb8fbdc29c10105bcc51fb2500"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -68,7 +96,7 @@
     },
     "generated/agent-constraint-externality-matched-family-manifest-20260831.json": {
       "bytes": 28349,
-      "sha256": "ddfa4b3b96cef5b1dc964db70a75e7e1e77f9c73ebb78725d243a53a695c69b1"
+      "sha256": "d52f2e6823bb1cb4a88c6b5a33d91eb02c065d237d03f93c2a663855861535df"
     },
     "generated/agent-constraint-externality-qwen-capability-continuation-r1-result-20260901.json": {
       "bytes": 2191,
@@ -110,6 +138,14 @@
       "bytes": 1490,
       "sha256": "4868c1885d9b4286bac4e2fa28be92c3babc9f0d3f687a11c62169e3de69a07d"
     },
+    "generated/agent-constraint-externality-qwen37plus-capability-r3-partial-contract-20260902.json": {
+      "bytes": 1765,
+      "sha256": "e091cfa38c65e9bd008cdfa11013928e8e9d3098d2674eceb7e33efd7d472e77"
+    },
+    "generated/agent-constraint-externality-qwen37plus-capability-r5-partial-contract-20260902.json": {
+      "bytes": 1168,
+      "sha256": "e148fccc99d50a77aeea220074032f30d93c181e39a0651e13d549cfa7cf8f1f"
+    },
     "generated/agent-constraint-externality-qwen37plus-capability-result-a1-20260901.json": {
       "bytes": 1639,
       "sha256": "4966fd7b91a6ab37e80b932fbd0ee743e0b576af9545ba836e299a41985dcc7e"
@@ -118,16 +154,24 @@
       "bytes": 1660,
       "sha256": "1e2474c407cb7b8414f3a7e53b57dfd0df8391504a4bf4ddbffa86f1271ac4df"
     },
+    "generated/agent-constraint-externality-qwen37plus-capability-result-r5-partial-20260902.json": {
+      "bytes": 1856,
+      "sha256": "ec85c4c86827405846db549a4719b374bf1b916af0e6f1a350de132a461abbac"
+    },
     "generated/agent-constraint-externality-qwen37plus-provider-snapshot-a1-20260901.json": {
       "bytes": 723,
       "sha256": "18e48b51c45543f069091557276c34240ac18b4510c3e05f730cac054210a5d5"
+    },
+    "generated/agent-constraint-externality-qwen37plus-r2-fg-v2-revalidation-20260902.json": {
+      "bytes": 3037,
+      "sha256": "d3aa7a5cba50e309d784fc570c32e3c967b1078d8d898bb10d53a2588542a735"
     }
   },
   "generated_at": "2026-09-01T15:35:00+08:00",
   "gpu_runs": 0,
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
-  "provider_calls": 229,
+  "provider_calls": 296,
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_SUBSTRATE_V2_REQUALIFICATION_READY"
+  "status": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
 }

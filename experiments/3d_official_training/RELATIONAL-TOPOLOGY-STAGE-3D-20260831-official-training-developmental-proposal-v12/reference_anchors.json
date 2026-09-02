@@ -1,0 +1,75 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-proposal-v12",
+  "state": "STAGE_SPECIFIC_REPRODUCTION_REFERENCE_POLICY_FROZEN_BEFORE_TRAINING",
+  "reason_for_revision": "The historical preregistration used symbolic reference_iRecall/reference_recall bands. A fresh 2026 literature audit shows that treating the original InstructScene headline iRecall as an unambiguous end-to-end reference is unsafe because a later independent reproduction reports a large graph-stage versus final-layout discrepancy.",
+  "external_anchors": {
+    "instructscene_iclr2024_archival": {
+      "venue": "ICLR 2024 Spotlight",
+      "room": "Bedroom",
+      "reported_iRecall": 0.7364,
+      "reported_std": 0.0137,
+      "reported_trials": 5,
+      "stage_label": "STAGE_AMBIGUOUS_FOR_THIS_REPRODUCTION_POLICY",
+      "use": "DESCRIPTIVE_CONTEXT_ONLY_NOT_A_HARD_END_TO_END_GATE",
+      "source_identity": "InstructScene: Instruction-Driven 3D Indoor Scene Synthesis with Semantic Graph Prior"
+    },
+    "geoscenegraph_2026_instructscene_reproduction": {
+      "venue": "ISPRS Annals 2026",
+      "room": "Bedroom",
+      "reported_instructscene_final_layout_iRecall": 0.3306,
+      "reported_instructscene_graph_stage_iRecall": 0.6653,
+      "authors_interpretation": "The reproduced paper explicitly reports a discrepancy and states that the larger InstructScene number appears to correspond to the first-stage semantic graph rather than the final layout.",
+      "use": "STAGE_SPECIFIC_EXTERNAL_SANITY_ANCHOR",
+      "source_identity": "GeoSceneGraph: Geometric Scene Graph Diffusion Model for Text-guided 3D Indoor Scene Synthesis"
+    },
+    "scenenat_v2_2026": {
+      "arxiv": "2601.07218v2",
+      "room": "Bedroom",
+      "reimplemented_instructscene_iRecall_on_extended_instruction_setting": 0.6672,
+      "sceneNAT_iRecall": 0.7045,
+      "relation_support_training_max": 4,
+      "tested_beyond_training_support": [5, 6],
+      "use": "NEAREST_WORK_CONTEXT_NOT_REPRODUCTION_GATE"
+    }
+  },
+  "future_reproduction_qualification_bands": {
+    "scale": "[0,1]",
+    "graph_stage_relation_recall": {
+      "reference": 0.6653,
+      "historical_band_formula": "reference - max(0.05, 0.10 * abs(reference))",
+      "frozen_lower_bound": 0.59877
+    },
+    "final_layout_relation_iRecall": {
+      "reference": 0.3306,
+      "historical_band_formula": "reference - max(0.05, 0.10 * abs(reference))",
+      "frozen_lower_bound": 0.2806
+    },
+    "valid_graph_rate_lower": 0.9,
+    "valid_scene_rate_lower": 0.9,
+    "catastrophic_invalid_rate_upper": 0.1
+  },
+  "reproduction_policy": {
+    "authority_now": false,
+    "split": "val lockbox only",
+    "primary_reproduction_model": "SGP-12 + BEDROOM-SG2SC-SHARED",
+    "SGP_14_handling": "must pass validity/stability checks independently, but no SUPPORT-12 versus SUPPORT-14 effect difference may be computed in reproduction qualification",
+    "no_scientific_effect_estimation": true,
+    "no_checkpoint_selection": true,
+    "no_threshold_tuning_after_outputs": true,
+    "failure_verdict": "STOP_DEVELOPMENTAL_PIPELINE_REPRODUCTION_FAILED",
+    "next_if_pass": "eligible to request developmental P1 authority; P1 remains closed until separately granted"
+  },
+  "claim_boundary": {
+    "surrender": [
+      "InstructScene headline iRecall is an unambiguous end-to-end number",
+      "simply observing graph-to-layout attenuation is novel",
+      "relation-count extrapolation to 5/6 is novel"
+    ],
+    "preserved": [
+      "matched training-support crossover under one shared decoder",
+      "fixed-count/fixed-token topology residual if it survives the support crossover",
+      "causal stage localization via exact-identity predicted-graph versus oracle-graph intervention rather than stage-wise descriptive metrics alone"
+    ]
+  }
+}

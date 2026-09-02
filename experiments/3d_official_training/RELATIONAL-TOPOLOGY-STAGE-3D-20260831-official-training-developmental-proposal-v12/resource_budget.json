@@ -1,0 +1,65 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-proposal-v12",
+  "state": "RESOURCE_BUDGET_FROZEN_PLANNING_ONLY",
+  "target_hardware_class": "A100_80GB_OR_EQUIVALENT_AFTER_EXACT_BATCH_PREFLIGHT",
+  "official_source_context": {
+    "InstructScene_README_training_runtime": "1-3 days per semantic graph prior or layout decoder on a single NVIDIA A40 depending on room type",
+    "decoder_and_sgp_can_train_in_parallel": true,
+    "official_bedroom_batch_size": 128,
+    "official_steps": 1000000
+  },
+  "qualification_observations_at_batch4": {
+    "BEDROOM-SG2SC-SHARED": {
+      "peak_allocated_vram_bytes": 778214400,
+      "samples_per_second": 25.78076286299433
+    },
+    "SGP-12": {
+      "peak_allocated_vram_bytes": 2830929920,
+      "samples_per_second": 15.713069053661107
+    },
+    "SGP-14": {
+      "peak_allocated_vram_bytes": 2830929920,
+      "samples_per_second": 19.340223709829267
+    }
+  },
+  "important_non_extrapolation": "Batch-4 qualification measurements are not used to assert that batch 128 fits or to predict A100 training duration. Exact batch-128 forward/backward resource preflight is mandatory before optimizer step 1.",
+  "checkpoint_budget": {
+    "checkpoint_every_steps": 50000,
+    "checkpoints_per_component_including_final": 20,
+    "approx_checkpoint_bytes_from_qualification": {
+      "BEDROOM-SG2SC-SHARED": 412045883,
+      "SGP-12": 819786732,
+      "SGP-14": 819786732
+    },
+    "approx_total_checkpoint_bytes_all_three_components": 41032386940,
+    "approx_total_checkpoint_gib": 38.21457451209426,
+    "retention_policy": "retain all 50k checkpoints through reproduction qualification; pruning requires a later content-addressed retention adjudication and may never remove final or interruption/recovery evidence"
+  },
+  "parallel_execution_policy": {
+    "allowed": true,
+    "reason": "Official InstructScene trains layout decoder from ground-truth graphs independently of the semantic graph prior; SGP-12 and SGP-14 are also independent once their common initialization invariant is frozen.",
+    "maximum_components_concurrently": 3,
+    "resource_claim_rule": "claim only an otherwise-idle eligible GPU; never preempt another research job",
+    "dynamic_hosts_observed_during_planning": {
+      "231": "A100 80GB observed busy at planning time; do not bind",
+      "232": "A100 80GB observed idle at planning time; observation only, not a reservation",
+      "69": "candidate from prior project infrastructure; must be rechecked at launch"
+    }
+  },
+  "failure_policy": {
+    "batch128_oom_or_backward_failure": "HOLD_OFFICIAL_TRAINING_RESOURCE_ENVELOPE",
+    "automatic_batch_reduction": false,
+    "automatic_gradient_accumulation_change": false,
+    "automatic_mixed_precision_change": false,
+    "automatic_multi_gpu_sharding": false,
+    "reason": "Any of these changes modifies the frozen training execution object and requires a separate amendment before optimizer step 1."
+  },
+  "scope_cost_control": {
+    "developmental_training_seeds": 1,
+    "models_trained_in_this_proposal": 3,
+    "confirmatory_training_seeds": 0,
+    "why_not_multi_seed_now": "The standalone paper has a preregistered stop rule at the later developmental P1. Training confirmatory replication seeds before observing whether the mechanism exists would spend substantially more compute without increasing the validity of the go/no-go decision.",
+    "confirmatory_expansion_if_later_justified": "separate authority and fresh novelty check"
+  }
+}
