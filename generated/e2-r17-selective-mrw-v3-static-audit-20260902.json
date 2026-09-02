@@ -1,0 +1,229 @@
+{
+  "artifact_type": "e2-r17-selective-mrw-v3-static-audit",
+  "authority": {
+    "analyzer": false,
+    "next": "CURRENT_DEEPSEEK_IDENTITY_QUALIFICATION_AND_ZERO_PROVIDER_STAGE_A_PREFLIGHT",
+    "paper_promotion": false,
+    "second_backbone": false,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false
+  },
+  "closed_calibration": {
+    "analysis_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-prospective-heterogeneity-pre-f0-20260902/generated/e2-r17-deepseek-v2-repair2-continuation-v2-analysis-20260902.json",
+    "analysis_sha256": "f736cf7107d4439105bc8d24ae4519f34f742b26439113d97b56f6a0c1dbd0ab",
+    "binding_mean": -0.027777777777777766,
+    "contrast": 0.10185185185185182,
+    "exact_3v3_permutation_p_calibration_only": 0.05,
+    "family_effects": {
+      "aggregation_join": 0.041666666666666644,
+      "formula_materialization": 0.09027777777777778,
+      "input_output_contract": 0.0,
+      "multi_step_pipeline": 0.09027777777777776,
+      "schema_key_alignment": -0.062499999999999986,
+      "target_sheet_range": -0.020833333333333315
+    },
+    "procedural_mean": 0.07407407407407406,
+    "role": "calibration_only_no_confirmatory_reuse",
+    "sibling_loo_direction_agreement": "6/12",
+    "sibling_loo_spearman": 0.3157894736842105,
+    "status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS"
+  },
+  "cost_shape": {
+    "selective_mrw_extra_heldout_evaluations": 0,
+    "selective_mrw_extra_updater_calls": 0,
+    "stage_a_actor_rollouts": 768,
+    "stage_a_k8_pools": 96,
+    "stage_b_heldout_evaluations": 3456,
+    "stage_b_learned_states": 192,
+    "stage_b_paired_units": 96,
+    "stage_b_replicates_per_stream": 8
+  },
+  "new_heldout": {
+    "historical_trajectory_refs": 0,
+    "metadata_sha256": "40cb56082903ed5ad2fb7ed6cf55b813c8fb80f3ec43e8535cb02af2d0953853",
+    "per_family_count": {
+      "aggregation_join": 3,
+      "formula_materialization": 3,
+      "input_output_contract": 3,
+      "multi_step_pipeline": 3,
+      "schema_key_alignment": 3,
+      "target_sheet_range": 3
+    },
+    "split_manifest_sha256": "bbc24277c717f7499d9f9e30ccb254ad98229bcd61bd17e484310a8397fb2d46",
+    "suite_manifest_sha256": "2e04956e72dbc56fe029fa99eded91953c9775f10a3425f10a085d7d52497868",
+    "task_count": 18,
+    "task_ids": [
+      "r17-b13-agj-p2",
+      "r17-b13-agj-p3",
+      "r17-b13-agj-p7",
+      "r17-b13-fmv-p1",
+      "r17-b13-fmv-p5",
+      "r17-b13-fmv-p6",
+      "r17-b13-ioc-p2",
+      "r17-b13-ioc-p3",
+      "r17-b13-ioc-p7",
+      "r17-b13-msp-p0",
+      "r17-b13-msp-p4",
+      "r17-b13-msp-p8",
+      "r17-b13-ska-p1",
+      "r17-b13-ska-p5",
+      "r17-b13-ska-p6",
+      "r17-b13-tsr-p0",
+      "r17-b13-tsr-p4",
+      "r17-b13-tsr-p8"
+    ],
+    "untouched_pass": true
+  },
+  "new_test_outcomes_accessed": false,
+  "provider_calls": 0,
+  "qwen_route": {
+    "closeout_path": "/data/wyt/agent-self-evolution-observatory/worktrees/e2-r17-prospective-heterogeneity-pre-f0-20260902/generated/e2-r17-qwen25-32b-q4-local-route-closeout-20260902.json",
+    "closeout_sha256": "c19f6a6b1ff3fa4bad393eaf41fa36690407e4cba5a1e0b3628148ebcd9ac294",
+    "status": "CLOSE_QWEN25_32B_Q4_LOW_NOISE_ROUTE"
+  },
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "sealed_e3_test": {
+    "historical_b5_b6_trajectory_refs": 0,
+    "historical_run_files_referencing_b5_b6": 0,
+    "stream_count": 12,
+    "streams": {
+      "e3-agj-00": [
+        "r17-b5-agj-p4",
+        "r17-b5-agj-p6",
+        "r17-b5-agj-p3",
+        "r17-b5-agj-p7",
+        "r17-b6-agj-p5",
+        "r17-b6-agj-p1",
+        "r17-b6-agj-p3",
+        "r17-b6-agj-p0"
+      ],
+      "e3-agj-01": [
+        "r17-b5-agj-p0",
+        "r17-b5-agj-p1",
+        "r17-b5-agj-p5",
+        "r17-b6-agj-p6",
+        "r17-b6-agj-p8",
+        "r17-b5-agj-p2",
+        "r17-b6-agj-p4",
+        "r17-b6-agj-p2"
+      ],
+      "e3-fmv-00": [
+        "r17-b5-fmv-p6",
+        "r17-b5-fmv-p3",
+        "r17-b5-fmv-p5",
+        "r17-b6-fmv-p1",
+        "r17-b6-fmv-p5",
+        "r17-b5-fmv-p0",
+        "r17-b5-fmv-p1",
+        "r17-b6-fmv-p6"
+      ],
+      "e3-fmv-01": [
+        "r17-b6-fmv-p3",
+        "r17-b5-fmv-p8",
+        "r17-b5-fmv-p4",
+        "r17-b5-fmv-p2",
+        "r17-b6-fmv-p2",
+        "r17-b5-fmv-p7",
+        "r17-b6-fmv-p8",
+        "r17-b6-fmv-p4"
+      ],
+      "e3-ioc-00": [
+        "r17-b5-ioc-p5",
+        "r17-b6-ioc-p1",
+        "r17-b5-ioc-p3",
+        "r17-b6-ioc-p4",
+        "r17-b6-ioc-p3",
+        "r17-b5-ioc-p0",
+        "r17-b6-ioc-p5",
+        "r17-b6-ioc-p0"
+      ],
+      "e3-ioc-01": [
+        "r17-b5-ioc-p4",
+        "r17-b5-ioc-p2",
+        "r17-b5-ioc-p6",
+        "r17-b5-ioc-p8",
+        "r17-b6-ioc-p8",
+        "r17-b5-ioc-p1",
+        "r17-b6-ioc-p6",
+        "r17-b5-ioc-p7"
+      ],
+      "e3-msp-00": [
+        "r17-b6-msp-p6",
+        "r17-b5-msp-p6",
+        "r17-b6-msp-p4",
+        "r17-b5-msp-p0",
+        "r17-b5-msp-p5",
+        "r17-b6-msp-p3",
+        "r17-b5-msp-p8",
+        "r17-b6-msp-p0"
+      ],
+      "e3-msp-01": [
+        "r17-b6-msp-p1",
+        "r17-b6-msp-p7",
+        "r17-b6-msp-p2",
+        "r17-b5-msp-p4",
+        "r17-b5-msp-p1",
+        "r17-b6-msp-p5",
+        "r17-b5-msp-p2",
+        "r17-b5-msp-p7"
+      ],
+      "e3-ska-00": [
+        "r17-b5-ska-p2",
+        "r17-b6-ska-p8",
+        "r17-b5-ska-p8",
+        "r17-b6-ska-p7",
+        "r17-b5-ska-p5",
+        "r17-b6-ska-p5",
+        "r17-b5-ska-p6",
+        "r17-b6-ska-p4"
+      ],
+      "e3-ska-01": [
+        "r17-b6-ska-p2",
+        "r17-b6-ska-p0",
+        "r17-b5-ska-p0",
+        "r17-b6-ska-p1",
+        "r17-b5-ska-p3",
+        "r17-b5-ska-p4",
+        "r17-b5-ska-p1",
+        "r17-b6-ska-p6"
+      ],
+      "e3-tsr-00": [
+        "r17-b5-tsr-p7",
+        "r17-b6-tsr-p6",
+        "r17-b6-tsr-p4",
+        "r17-b5-tsr-p2",
+        "r17-b6-tsr-p2",
+        "r17-b6-tsr-p1",
+        "r17-b5-tsr-p4",
+        "r17-b6-tsr-p7"
+      ],
+      "e3-tsr-01": [
+        "r17-b5-tsr-p1",
+        "r17-b5-tsr-p5",
+        "r17-b6-tsr-p0",
+        "r17-b5-tsr-p0",
+        "r17-b6-tsr-p5",
+        "r17-b6-tsr-p8",
+        "r17-b5-tsr-p3",
+        "r17-b5-tsr-p6"
+      ]
+    },
+    "untouched_pass": true,
+    "update_task_count": 96
+  },
+  "status": "PASS_SELECTIVE_MRW_V3_ZERO_PROVIDER_STATIC_AUDIT",
+  "taxonomy": {
+    "frozen_before_e3_execution": true,
+    "instance_binding_localization": [
+      "input_output_contract",
+      "schema_key_alignment",
+      "target_sheet_range"
+    ],
+    "procedural_transformation": [
+      "aggregation_join",
+      "formula_materialization",
+      "multi_step_pipeline"
+    ]
+  }
+}

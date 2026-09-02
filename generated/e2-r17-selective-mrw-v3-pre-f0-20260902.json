@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-selective-mrw-v3-pre-f0",
+  "status": "PRE_F0_SELECTIVE_MRW_V3_STATIC_PASS_AWAIT_PROVIDER_IDENTITY",
+  "scientific_parent_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "parent_result_reopened": false,
+  "provider_calls": 0,
+  "new_test_outcomes_accessed": false,
+  "design_path": "consultations/e2-r17-selective-mrw-prospective-v3-20260902.md",
+  "design_sha256": "b05aa89450e74d86665957bb8371eb9553fd2e3d0e265cbf08872cdd8130f12a",
+  "static_audit_path": "generated/e2-r17-selective-mrw-v3-static-audit-20260902.json",
+  "static_audit_sha256": "03db418f29884d9370a5e5916f5f8c81db3bc52b026e83a4b965e9f7e780ede8",
+  "static_auditor_path": "scripts/audit_e2_r17_selective_mrw_v3_static.py",
+  "static_auditor_sha256": "b248f4ccc90c120f6a0ebb229c56c7bebf496c4fe347199b0c23c49e36b90c99",
+  "taxonomy": {
+    "procedural_transformation": [
+      "aggregation_join",
+      "formula_materialization",
+      "multi_step_pipeline"
+    ],
+    "instance_binding_localization": [
+      "input_output_contract",
+      "schema_key_alignment",
+      "target_sheet_range"
+    ],
+    "frozen_before_test": true
+  },
+  "test_substrate": {
+    "sealed_future_streams": 12,
+    "sealed_future_update_tasks": 96,
+    "sealed_future_historical_refs": 0,
+    "new_heldout_tasks": 18,
+    "new_heldout_historical_refs": 0
+  },
+  "execution_shape_if_later_authorized": {
+    "stage_a_k": 8,
+    "stage_a_pools": 96,
+    "stage_a_actor_rollouts": 768,
+    "stage_b_replicates_per_stream": 8,
+    "stage_b_paired_units": 96,
+    "stage_b_learned_states": 192,
+    "stage_b_heldout_evaluations": 3456,
+    "selective_mrw_third_arm_calls": 0
+  },
+  "required_model_identity": {
+    "requested": "deepseek-v4-pro",
+    "resolved": "deepseek-v4-pro-ga-260813",
+    "substitution_allowed": false
+  },
+  "next_gate": "DEVELOPMENT_ONLY_CURRENT_PROVIDER_IDENTITY_QUALIFICATION_THEN_ZERO_PROVIDER_STAGE_A_PREFLIGHT",
+  "authority": {
+    "static_design": true,
+    "provider_identity_qualification": true,
+    "stage_a_pool_execution": false,
+    "stage_b_learning_execution": false,
+    "analyzer": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false
+  }
+}
