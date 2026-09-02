@@ -1,0 +1,51 @@
+{
+  "checks": {
+    "all_receipts_persisted": true,
+    "every_attempt_count_one": true,
+    "frozen_order_prefix": true,
+    "no_replacement": true,
+    "no_retry": true
+  },
+  "completed_count": 3,
+  "contract_sha256": "072980a4e71a3e31de2e59ef77b52cd090073d645b665af0adc25c24a99b8daa",
+  "created_at_utc": "2026-09-02T04:18:05+00:00",
+  "credential_material_present": false,
+  "decision": "QWEN_SOURCE_TRAJECTORIES_IN_PROGRESS",
+  "execution_complete": false,
+  "experiment_id": "E1-STRI-REASONINGBANK-QWEN-DISTRIBUTION-V3-20260901",
+  "inflight": null,
+  "journal": [
+    {
+      "attempt_count": 1,
+      "execution_status": "COMPLETED",
+      "instance_id": "pydata__xarray-4356",
+      "ordinal": 1,
+      "persisted": true,
+      "receipt_sha256": "c04dc72255a1a864ed435372e031f3b103fdadc47929c80c34bed624684dd656",
+      "run_id": "QWEN-SOURCE-01"
+    },
+    {
+      "attempt_count": 1,
+      "execution_status": "COMPLETED",
+      "instance_id": "pydata__xarray-3677",
+      "ordinal": 2,
+      "persisted": true,
+      "receipt_sha256": "a502abdfa7ed975beefa44af404de26ace754a7c7d49f6541e07dbd9c710eabf",
+      "run_id": "QWEN-SOURCE-02"
+    },
+    {
+      "attempt_count": 1,
+      "execution_status": "TERMINAL_PROVIDER_OR_POLICY_FAILURE",
+      "instance_id": "pydata__xarray-3095",
+      "ordinal": 3,
+      "persisted": true,
+      "receipt_sha256": "a4ed2d696f6949e7044f836a24fc3dfa8335ac3d08c342f347dcd75e326f9dc7",
+      "run_id": "QWEN-SOURCE-03"
+    }
+  ],
+  "journal_record_count": 3,
+  "payload_sha256": "d8a03ffbb65b4c6209a2d78192bab7f58bb117ad534c84413f0d8ba0e04032b9",
+  "planned_count": 32,
+  "schema_version": 1,
+  "stage": "QWEN_SOURCE_TRAJECTORY_EXECUTION"
+}
