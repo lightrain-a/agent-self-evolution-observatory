@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q0.1-TIMEOUT-20260902",
+  "status": "FROZEN_PRE_PROVIDER",
+  "purpose": "Prospective transport-only amendment for the AtomCode invocation ceiling after Q0 v1 showed 5/6 byte-exact PASS at 16384 tokens with the sole failure classified as wrapper TIMEOUT/124.",
+  "parent_q0": {
+    "closed_git_sha": "569ecd75ec8ffb768e0477df369ef65deb9a7f6a",
+    "runner_sha256": "11c5da1d954db4cfb45695b785d2db231744b9ab8174c08af1e4e75fa68df439",
+    "identity_result_sha256": "7e6798231fe2000fb2828d76b96be664f2c6906b97befdaf5dfe3cd4cc9e8b00",
+    "first_action_result_sha256": "eb9f1513859ac3169da11ff0668d9c26088f4b1643312784b4e7eae2ce50aa4a",
+    "source_budget_result_sha256": "e554de18ae89086c915796aa4004f8578ab26a05acaa0d9641d61b6a5ae028be",
+    "closure_sha256": "39b75c139fb37e7281e37613bd1d13603f1379256c4c3649230e0c32719a6643"
+  },
+  "frozen_model_condition": {
+    "provider_profile": "AtomGit-qwen3.8-27b",
+    "resolved_model": "qwen3.8-27b",
+    "atomcode_version": "5.0.9",
+    "interface": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+    "flags": ["--no-tools", "--ephemeral", "--no-telemetry", "--output-format=jsonl"],
+    "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9"
+  },
+  "single_variable_amendment": {
+    "old_invocation_timeout_seconds": 300,
+    "new_invocation_timeout_seconds": 900
+  },
+  "held_constant": {
+    "source_output_budget": 16384,
+    "fixture_count": 6,
+    "fixture_grid": {"history_pairs": [0, 12, 24], "payload_lines": [160, 320]},
+    "prompt": "exact parent Q0 v1 long-action prompt",
+    "parser": "exact parent Q0 v1 MiniSWEAgent fenced-bash parser",
+    "experiment_config": "same AtomCode config generated for max_tokens=16384",
+    "provider_retries": 0,
+    "scientific_source_tasks_used": 0
+  },
+  "pass_rule": "6/6 fixtures must return one byte-exact requested fenced bash action, exact qwen3.8-27b model identity, one CodingPlan request, and no wrapper timeout.",
+  "stop_rule": "Any non-timeout content failure or any remaining timeout at 900s stops AtomGit Qwen3.8 source acquisition. Do not increase timeout again, change prompts, change parser, change model, or select a different budget after observing Q0.1.",
+  "if_pass": "Freeze source_trajectory_budget=16384 and invocation_timeout=900s, then run the already-required provider-managed sampling diagnostic before any real source task.",
+  "forbidden": [
+    "real source tasks",
+    "future task execution",
+    "writer",
+    "binder",
+    "shadow",
+    "final measurement",
+    "model switch",
+    "fixture replacement",
+    "prompt repair",
+    "parser repair",
+    "budget change",
+    "timeout above 900 seconds"
+  ]
+}
