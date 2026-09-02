@@ -1,0 +1,73 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-v2-thread-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_date": "2026-09-02",
+  "status": "PI05_NO_UPDATE_DRY_STEP_RESOURCE_V2_PRE_GRADIENT_THREAD_INIT_FAILURE",
+  "classification": "OUTCOME_BLIND_PRE_BATCH_PRE_MODEL_PRE_GRADIENT_RESOURCE_FAILURE",
+  "parent_v2_authority_sha256": "0d3514e726edee6e99d773f5409f67299d43db439e469d1f9d3f4391b925893f",
+  "v2_consumed_receipt": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-v2-consumed-started-receipt-20260902.json",
+    "sha256": "1a91fa99585bcd0dcff3f51150030e83a6764903a2fcc097443968ae8c4c9bbb",
+    "last_status": "PI05_NO_UPDATE_DRY_STEP_RESOURCE_V2_STARTED",
+    "dry_gradient_execution_started": false,
+    "dry_gradient_execution_completed": false,
+    "optimizer_update": false,
+    "parameter_update": false,
+    "checkpoint_written": false,
+    "policy_rollouts_started": false,
+    "policy_outcomes_read": false,
+    "scientific_training_started": false
+  },
+  "runtime_failure": {
+    "log": "/data/wyt/formal-goal-pi05-dry-step-resource-v2-20260902.log",
+    "fatal_message": "Thread tf_XLATfrtCpuClient creation via pthread_create() failed",
+    "errno": 11,
+    "exit_semantics": "SIGABRT / rc=134",
+    "failure_point": "jax.devices() default backend initialization before DataLoader construction",
+    "batch_constructed": false,
+    "train_state_constructed": false,
+    "gradient_attempted": false,
+    "gpu_memory_used_mib_at_admission": 14,
+    "host_memory_pressure_at_failure": false,
+    "host_swap_growth_observed": false
+  },
+  "diagnostic_reproduction": {
+    "scope": "no dataset, no model, no scientific outcomes; JAX client initialization only",
+    "host_logical_cpus": 256,
+    "host_max_processes_per_user": 513737,
+    "host_total_threads_observed": 8046,
+    "system_level_pid_exhaustion": false,
+    "case_a": {
+      "TasksMax": 512,
+      "JAX_PLATFORMS": "default",
+      "result": "FAIL",
+      "return_code": 134,
+      "fatal_message": "Thread tf_XLATfrtCpuClient creation via pthread_create() failed"
+    },
+    "case_b": {
+      "TasksMax": 512,
+      "JAX_PLATFORMS": "cuda",
+      "result": "PASS",
+      "devices": ["CudaDevice(id=0)"],
+      "threads_after_client_init": 262,
+      "gpu_memory_used_mib_after_test": 14
+    }
+  },
+  "root_cause": "With default JAX platform discovery on a 256-logical-CPU host, XLA initializes a TFRT CPU client and its large CPU thread pool in addition to the CUDA client. Under the intentionally finite TasksMax=512 scope this crosses the task/thread boundary and aborts before any data or model execution. Explicitly constraining JAX_PLATFORMS=cuda avoids the unnecessary CPU backend and initializes successfully with about 262 threads while preserving the single-A100 training backend.",
+  "resource_repair": {
+    "keep_TasksMax": 512,
+    "keep_MemoryMax": "72G",
+    "keep_MemorySwapMax": "0",
+    "keep_num_workers": 0,
+    "add_environment": {"JAX_PLATFORMS": "cuda"},
+    "scientific_variables_changed": false,
+    "reason": "Restricting backend discovery to CUDA is a host-resource containment choice; the authorized training topology already requires exactly one A100 GPU and does not rely on a CPU JAX device."
+  },
+  "v2_attempt_consumed": true,
+  "automatic_v2_retry": false,
+  "scientific_outcomes_observed": 0,
+  "partial_scientific_effect_read": false,
+  "formal_training_authorized": false,
+  "scientific_authority": false,
+  "next_gate": "NEW_EXACTLY_ONCE_RESOURCE_V3_DRY_STEP_AUTHORITY_WITH_CUDA_ONLY_JAX"
+}

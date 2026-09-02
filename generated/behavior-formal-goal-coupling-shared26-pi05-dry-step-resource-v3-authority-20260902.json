@@ -1,0 +1,103 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-dry-step-resource-v3-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_date": "2026-09-02",
+  "status": "AUTHORIZED_SINGLE_A100_NO_UPDATE_DRY_TRAIN_STEP_RESOURCE_V3",
+  "scope": "outcome-blind resource-only replacement child after v2 JAX thread-init failure",
+  "parent_v2_authority_sha256": "0d3514e726edee6e99d773f5409f67299d43db439e469d1f9d3f4391b925893f",
+  "parent_v2_consumed_receipt_sha256": "1a91fa99585bcd0dcff3f51150030e83a6764903a2fcc097443968ae8c4c9bbb",
+  "parent_failure_adjudication_sha256": "d160b1c882fff3aac610c61ff6b51b6391da06caec0095290eb842437b56d72e",
+  "resource_adapter_qualification_sha256": "e3f2b1dc7fe40b91c47a68ec084119497c28a9e64262328ce723a35aa5751dd2",
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_dry_step_resource_v3.py",
+    "sha256": "4fc15ad3dac3552bfb6edc84675b831d7b5c438ac0687124baf5818bd29bb924"
+  },
+  "launcher": {
+    "path": "scripts/run_behavior_formal_goal_coupling_shared26_pi05_dry_step_resource_v3.sh",
+    "sha256": "0028948bc30e4e7c9beb3821827242d056d68ed6e680aa27af4e0d2345d95690"
+  },
+  "resource_only_adapter": {
+    "source_num_workers": 8,
+    "num_workers": 0,
+    "jax_platforms": "cuda",
+    "TasksMax": 512,
+    "MemoryMax": "72G",
+    "MemorySwapMax": "0",
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "TOKENIZERS_PARALLELISM": "false",
+      "JAX_PLATFORMS": "cuda"
+    }
+  },
+  "diagnostic_basis": {
+    "default_platforms_under_TasksMax512": "FAIL rc=134 at tf_XLATfrtCpuClient pthread_create",
+    "cuda_only_under_TasksMax512": "PASS",
+    "cuda_only_thread_count": 262,
+    "cuda_only_devices": ["CudaDevice(id=0)"],
+    "scientific_data_or_model_accessed_by_diagnostic": false
+  },
+  "frozen_runtime": {
+    "global_batch_size": 64,
+    "fsdp_devices": 1,
+    "seed": 42,
+    "action_horizon": 32,
+    "episode_count": 5200,
+    "data_shuffle": true,
+    "normalization_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+    "openpi_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde"
+  },
+  "bindings": {
+    "resource_admission_sha256": "b7c010d45c21a83db57567a2fe599d59bf2933c327423d1bc4cd2e265e376275",
+    "model_load_result_sha256": "fda2c02b5d8ec3e9acd491c9d197ba251e78cfc5e7d5486112c9a13bf655da0c",
+    "normalized_dataloader_smoke_sha256": "91e6e138bbe353fbf8774ea894c43cb9f6e7169b1f2dd0356456f62400babbd2",
+    "tokenizer_result_sha256": "18ca3f4a11f23d58a0e14eb2ebc13838b5717f959ba788557de19439b74ce0dc",
+    "base_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed"
+  },
+  "authorized_operations": [
+    "initialize exactly one CUDA JAX backend under finite task and memory limits before consuming the scientific dry-gradient attempt",
+    "construct exactly one frozen shuffled training batch using num_workers=0",
+    "restore the content-addressed frozen pi0.5 base checkpoint into a step-0 train state",
+    "compile and execute exactly one forward+backward gradient computation on that batch",
+    "discard gradients and all in-memory state without any optimizer update"
+  ],
+  "forbidden_operations": [
+    "replaying v1 or v2 dry-step authorities",
+    "initializing or using a CPU JAX backend",
+    "any optimizer update or parameter mutation",
+    "saving a checkpoint",
+    "retaining or comparing loss values",
+    "more than one resource-v3 dry gradient attempt",
+    "changing batch size, seed, data, model, optimizer, schedule, action horizon, normalization, or GPU topology",
+    "raising num_workers, TasksMax, MemoryMax, or enabling swap in response to failure",
+    "policy rollout or policy outcome read",
+    "formal training launch without a later separate authority"
+  ],
+  "required_launch_environment": {
+    "HF_HUB_OFFLINE": "1",
+    "TRANSFORMERS_OFFLINE": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "TOKENIZERS_PARALLELISM": "false",
+    "JAX_PLATFORMS": "cuda"
+  },
+  "required_launch_scope": "systemd-run --user --scope -p MemoryMax=72G -p MemorySwapMax=0 -p TasksMax=512",
+  "required_inheritance_if_pass": {
+    "future_formal_training_num_workers": 0,
+    "future_formal_training_JAX_PLATFORMS": "cuda",
+    "future_formal_training_TasksMax": 512,
+    "future_formal_training_MemoryMax": "72G unless separately prequalified before outcomes",
+    "future_formal_training_MemorySwapMax": "0"
+  },
+  "optimizer_update_count_authorized": 0,
+  "formal_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "scientific_authority": false,
+  "paper_claim_authority": false,
+  "next_gate_if_pass": "SEPARATE_EXACTLY_ONCE_PI05_SHARED26_TRAINING_LAUNCH_AUTHORITY",
+  "next_gate_if_fail": "RESOURCE_V3_FAILURE_ADJUDICATION_NO_AUTOMATIC_RETRY"
+}
