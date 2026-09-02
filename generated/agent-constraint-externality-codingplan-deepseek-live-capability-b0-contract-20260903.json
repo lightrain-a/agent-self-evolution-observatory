@@ -1,0 +1,70 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "capability_b0": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "b06b8e5105279defe2663e2acb4e4c128f75e6489c54a5b261bd78025c84f1d5",
+  "execution_id": "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-B0",
+  "execution_policy": {
+    "durable_dispatch_before_model_request": true,
+    "partial_outcome_redesign": false,
+    "stop_on_first_failure": true,
+    "unknown_after_dispatch_replay": false
+  },
+  "gate": {
+    "malformed_tool_calls_required": 0,
+    "non_target_preservation_min": 0.85,
+    "target_success_max": 0.875,
+    "target_success_min": 0.5,
+    "tool_loop_completion_min": 0.75
+  },
+  "harness": {
+    "ai_session_naming": false,
+    "appworld_mcp_native": true,
+    "appworld_tool_call_cap": 16,
+    "id": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "model_round_cap_per_episode": 20,
+    "replacement_allowed": false,
+    "retry_allowed": false,
+    "subagents": false,
+    "transport_reused_from_frozen_qwen_a0": true
+  },
+  "model": {
+    "context_window": 512000,
+    "id": "deepseek-v4-flash",
+    "max_output_tokens": 128000,
+    "profile": "AtomGit-deepseek-v4-flash",
+    "retry_max_attempts": 1,
+    "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "panel": {
+    "arm": "LOW",
+    "episodes": 8,
+    "family_ids": [
+      "ACE-FG-05",
+      "ACE-FG-06",
+      "ACE-TNF-05",
+      "ACE-TNF-06"
+    ],
+    "repeats": [
+      1,
+      2
+    ],
+    "reuse_prior_deepseek_measurements": false
+  },
+  "q1_predispatch_sha256": "174d14351ba88910d5d27ccb16eb6fa3ce83eecceb177201a3cf8cc8531f533b",
+  "schema_version": "ace-codingplan-deepseek-live-capability-b0-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "selection_sha256": "f8e5a5f4fc04d0f29b16751e6b1465f77d03b3cd97da275f69fd38e08f7cf50d",
+  "status": "CODINGPLAN_DEEPSEEK_LIVE_CAPABILITY_B0_AUTHORIZED",
+  "substrate": {
+    "bundle": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle",
+    "bundle_sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5",
+    "v4_qualification_sha256": "1220edddc6cbfa89538031109c19204fb5a2bb9a8ee68e318ca87eacb70d1f4e"
+  }
+}
