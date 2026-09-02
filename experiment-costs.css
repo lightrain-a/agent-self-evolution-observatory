@@ -25,15 +25,17 @@ body[data-page="experiment-costs"] .warning-box{margin:10px 0 0;padding:11px 13p
 body[data-page="experiment-costs"] .ec-portfolio>.matrix{width:100%;min-width:0;table-layout:fixed;font-size:10px}
 body[data-page="experiment-costs"] .ec-portfolio>.matrix th{font-size:8.8px;white-space:normal}
 body[data-page="experiment-costs"] .ec-portfolio>.matrix td{white-space:normal;vertical-align:top;min-width:0;line-height:1.42}
-body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(1),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(1){width:10%}
-body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(2),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(2){width:15%}
-body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(3),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(3){width:18%}
-body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(4),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(4){width:18%}
-body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(5),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(5){width:22%}
-body[data-page="experiment-costs"] .ec-portfolio>.matrix th:nth-child(6),body[data-page="experiment-costs"] .ec-portfolio>.matrix td:nth-child(6){width:17%}
-body[data-page="experiment-costs"] .ec-portfolio>.matrix td:first-child{white-space:normal;font-weight:700}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-paper{width:10%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-scene{width:15%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-model{width:18%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-used{width:18%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-plan{width:22%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-why{width:17%}
 body[data-page="experiment-costs"] .ec-portfolio>.matrix td:last-child{min-width:0}
-body[data-page="experiment-costs"] .ec-portfolio tr.ec-group-start td{border-top:2px solid #cfd8e6;background:#f8fafc}
+body[data-page="experiment-costs"] .ec-portfolio .ec-paper-cell{vertical-align:middle;font-weight:700;background:#f8fafc;border-right:1px solid #e1e7ef}
+body[data-page="experiment-costs"] .ec-portfolio .ec-paper-cell b{display:block;line-height:1.35}
+body[data-page="experiment-costs"] .ec-portfolio tr.ec-group-start td{border-top:2px solid #cfd8e6}
+body[data-page="experiment-costs"] .ec-portfolio tr.ec-group-start td:not(.ec-paper-cell){background:#f8fafc}
 body[data-page="experiment-costs"] .ec-portfolio .ec-model b{display:block;color:#27344a;font-size:11px;line-height:1.3}
 body[data-page="experiment-costs"] .ec-portfolio .ec-model small{display:block;margin-top:3px;color:#7a8598;font-size:8.8px;line-height:1.35}
 body[data-page="experiment-costs"] .ec-reconcile{margin:10px 0;padding:12px 14px;border:1px solid #d9e2f0;border-radius:11px;background:#f7f9fc;font-size:10.8px;line-height:1.58;color:#58667a}
