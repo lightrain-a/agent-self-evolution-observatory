@@ -1,0 +1,48 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum8x8-streaming-direct-device-repair-design-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "IMPLEMENTED_PENDING_DIRECT_DEVICE_MODEL_LOAD_PASS_NO_EXECUTION_AUTHORITY",
+  "parent_8x8_host_exit_adjudication": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-attempt1-host-exit-adjudication-20260902.json",
+    "sha256": "7fce8b714c2b46c1561930c34f0c2e5b67987ddaa63e4868f42f752e076afad8"
+  },
+  "candidate": {
+    "physical_micro_batch": 8,
+    "accumulation_steps": 8,
+    "effective_batch": 64,
+    "data_order_qualification_sha256": "a218a76893b8e97dc849eb2d7dd63cf3a7516acbc0d0ded3822e20a0a211446d"
+  },
+  "resource_repairs_only": [
+    "replace batches=list(iter(loader)) with a streaming iterator that retains only the current micro-batch",
+    "restore released pi05 checkpoint directly as jax.Array instead of host np.ndarray staging",
+    "retain num_workers=0, CUDA-only JAX, fixed CPU affinity, finite cgroup memory/swap/task containment"
+  ],
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum8x8_streaming_direct_device_dry_gradient.py",
+    "sha256": "07ee88bcc2644a870e0366fd22d7bd95b470249e8d4ace2e2bfa75da75d217d4"
+  },
+  "launcher_template": {
+    "path": "scripts/run_behavior_formal_goal_coupling_shared26_pi05_accum8x8_streaming_direct_device_dry_gradient.sh",
+    "sha256": "6b38468de5cbd6ac56defbdae614a4ef0ed1661af257cefab336d32158132a9c",
+    "note": "MemoryMax remains a template value until direct-device step0 qualification measures host-memory behavior; no execution authority flows from this template."
+  },
+  "scientific_invariants": {
+    "model": "unchanged",
+    "data": "unchanged",
+    "seed": 42,
+    "normalization": "unchanged",
+    "physical_micro_batch": 8,
+    "accumulation_steps": 8,
+    "effective_batch": 64,
+    "optimizer": "unchanged",
+    "lr_schedule": "unchanged",
+    "ema": "unchanged",
+    "action_horizon": 32,
+    "optimizer_updates_in_dry_qualification": 0
+  },
+  "formal_training_authorized": false,
+  "dry_gradient_execution_authorized": false,
+  "policy_outcomes_read": false,
+  "next_gate": "DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_PASS_AND_NEW_EXACTLY_ONCE_STREAMING_8X8_REPAIR_AUTHORITY"
+}
