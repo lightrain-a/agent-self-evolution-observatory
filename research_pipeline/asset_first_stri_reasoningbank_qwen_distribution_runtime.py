@@ -28,7 +28,7 @@ SOURCE_CONTRACT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribu
 SOURCE_INDEX = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-runtime-index-20260901.json"
 SOURCE_RECEIPT_DIR = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-runtime-receipts-20260901"
 SOURCE_RESULT = ROOT / "generated/asset-first-stri-reasoningbank-qwen-distribution-source-runtime-result-20260901.json"
-EXPECTED_SOURCE_CONTRACT_SHA256 = "PENDING"
+EXPECTED_SOURCE_CONTRACT_SHA256 = "e89136117531d181d7f729d9ac67d6935ec1c01d214e600de3df2e04faf96e94"
 
 
 class BehavioralRuntimeBlocker(RuntimeError):
