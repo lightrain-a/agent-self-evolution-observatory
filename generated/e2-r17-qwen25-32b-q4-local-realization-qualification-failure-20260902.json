@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-qwen25-32b-q4-local-realization-qualification-failure",
+  "status": "FAIL_QWEN25_32B_Q4_LOCAL_SCORE_REPRODUCIBILITY",
+  "scientific_outcome": false,
+  "old_deepseek_hold_reinterpreted": false,
+  "new_cal_test_outcomes_accessed": false,
+  "model_identity": {
+    "served_model": "qwen2.5:32b",
+    "base_model": "Qwen2.5-32B-Instruct",
+    "parameter_size": "32.8B",
+    "quantization": "Q4_K_M",
+    "model_blob_sha256": "eabc98a9bcbfce7fd70f3e07de599f8fda98120fefed5881934161ede8bd1a41",
+    "ollama_manifest_sha256": "9f13ba1299afea09d9a956fc6a85becc99115a6d596fae201a5487a03bdc4368",
+    "ollama_show_sha256": "e6e56810c471a24dace665dc07bc05cfbbef484969134c84468ab22a02d590e5",
+    "endpoint": "http://127.0.0.1:11444"
+  },
+  "decoding": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "seed": 1717,
+    "thinking": false,
+    "max_turns": 10,
+    "max_output_tokens": 4096,
+    "provider_retry_limit": 0
+  },
+  "qualification_rule": {
+    "development_tasks": 6,
+    "repeats_per_task": 3,
+    "required_score_exact_reproduction_per_task": true,
+    "required_nondegenerate_headroom": true,
+    "fail_fast_after_irrecoverable_gate_failure": true
+  },
+  "simple_tool_probe": {
+    "repeats": 3,
+    "semantic_exact_reproduction": true,
+    "expected_tool_call": "add_numbers(a=7,b=5)",
+    "note": "Raw JSON argument key order varied once, but canonical tool semantics were identical; key-order serialization is not treated as behavioral stochasticity."
+  },
+  "observed_before_fail_fast_stop": {
+    "completed_rollouts": 8,
+    "planned_rollouts": 18,
+    "aggregation_join": {
+      "task_id": "r17-b0-agj-p4",
+      "scores": [0.0, 0.0, 0.0],
+      "score_exact_reproduction": true
+    },
+    "formula_materialization": {
+      "task_id": "r17-b0-fmv-p1",
+      "scores": [1.0, 0.0, 0.0],
+      "score_exact_reproduction": false,
+      "decision_changing_failure": true
+    },
+    "input_output_contract_partial": {
+      "task_id": "r17-b0-ioc-p3",
+      "scores_observed_before_stop": [0.0, 0.0],
+      "qualification_role": "incomplete_after_already_irrecoverable_failure"
+    }
+  },
+  "formula_failure_diagnosis": {
+    "successful_repeat": "Loaded xlsx skill, then emitted direct inline openpyxl computation and wrote output.xlsx.",
+    "failed_repeats": "Loaded xlsx skill, then selected a materially different helper-script execution path using scripts/copy_input.py, scripts/compute_and_write_values.py, and scripts/verify_output.py.",
+    "classification": "ACTOR_POLICY_VARIATION_UNDER_FIXED_LOCAL_DECODING",
+    "not_classified_as": [
+      "verifier stochasticity",
+      "JSON argument key-order serialization",
+      "provider retry",
+      "CAL/TEST scientific effect"
+    ]
+  },
+  "runtime_evidence": {
+    "qualification_run_root": "/data/wyt/e2-r17-search-projection/qwen25-32b-ph-qualification-20260902",
+    "ollama_log_path": "/data/wyt/agent-self-evolution-observatory/runtimes/b1-qwen25-32b-r14/ollama-serve-ph-qualification-20260902.log",
+    "ollama_log_sha256_at_closeout": "6db2ac3c0d811e046b4f50408114e258e7fec50cccb7b8882c5db6ab8f8a193e",
+    "qualification_runner_pid": 3823299,
+    "qualification_runner_stopped_after_irrecoverable_gate": true,
+    "ollama_service_pid": 3736707,
+    "ollama_service_stopped_after_qualification": true
+  },
+  "decision": "REJECT_AS_LOW_NOISE_PROSPECTIVE_REALIZATION",
+  "interpretation": "The local Qwen2.5-32B Q4 realization is technically capable and non-floor, but a fixed-seed development task produced 1/0/0 endpoint scores via materially different action policies. It therefore does not satisfy the predeclared score-reproducibility qualification and cannot be promoted as a lower-variance replacement for the DeepSeek prospective study.",
+  "authority": {
+    "qwen_actor_realization": false,
+    "qwen_updater_qualification": false,
+    "cal_scientific_execution": false,
+    "test_scientific_execution": false,
+    "second_backbone": false,
+    "paper_promotion": false
+  }
+}
