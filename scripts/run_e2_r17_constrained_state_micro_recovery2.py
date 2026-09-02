@@ -12,6 +12,7 @@ from research_pipeline.e2_r17_provider_budget import ProviderBudgetLedger
 from scripts.run_e2_r17_e1_a_pool_support import validate_runtime as validate_actor_runtime
 
 ARMS=("g0_base","g1_verify","g2_complete","g3_complete_recover")
+ORDER_SALT="E2-R17-CONSTRAINED-STATE-MICRO-EVAL-ORDER-v1"
 CONTRACT_STATUS="FROZEN_E2_R17_SINGLE_CASE_CONSTRAINED_STATE_MICRO"
 AUTH_STATUS="AUTHORIZED_E2_R17_SINGLE_CASE_CONSTRAINED_STATE_MICRO_MEASUREMENT"
 
@@ -31,6 +32,9 @@ def rows(p:Path,key:str)->dict[str,dict[str,Any]]:
         if line.strip():
             r=json.loads(line); v=str(r[key]); req(v not in out,f'duplicate {key}: {v}'); out[v]=r
     return out
+
+def ordered(task:str)->list[str]:
+    return sorted(ARMS,key=lambda arm:hashlib.sha256(f'{ORDER_SALT}|{task}|{arm}'.encode()).hexdigest())
 
 def validate(cp:Path,ap:Path)->tuple[dict[str,Any],dict[str,Any],str,str]:
     c,a=load(cp),load(ap); cs,aus=sha(cp),sha(ap)
@@ -55,13 +59,18 @@ def main()->int:
     success=False
     try:
         actor_py,env=validate_actor_runtime({'runtime':c['actor_runtime']}); env['LITELLM_LOCAL_MODEL_COST_MAP']='True'; states={x['arm']:x for x in c['states']}; receipts={arm:create_state_receipt(run,arm,states[arm],cs,aus) for arm in ARMS}; identity=ROOT/c['model_identity']['path']; held=list(c['heldout_task_ids']); parent_cs=c['recovery2']['parent_contract_sha256']; parent_as=c['recovery2']['parent_authorization_sha256']
-        parent_rows={}; allowed=[]
+        parent_rows={}
         for arm in ARMS:
             pm=Path(c['recovery2']['parent_manifests'][arm]['path']); req(pm.is_file() and sha(pm)==c['recovery2']['parent_manifests'][arm]['sha256'],f'parent manifest drift {arm}'); pr=rows(pm,'task_id'); parent_rows[arm]=pr
             for row in pr.values(): verify_parent_row(row,states[arm]['skill_sha256'],parent_cs,parent_as)
-            for task in held:
-                if task not in pr: allowed.append((arm,task))
+        allowed=[]
+        for task in held:
+            for arm in ordered(task):
+                if task not in parent_rows[arm]: allowed.append((arm,task))
         req(len(allowed)==27 and ('g2_complete','r17-b4-msp-p8') in allowed,'remaining set drift')
+        expected_order=[(str(row['arm']),str(row['task_id'])) for row in c['recovery2']['remaining_execution_order']]
+        req(allowed==expected_order,'recovery2 remaining execution order drift')
+        req(allowed[:3]==[('g2_complete','r17-b4-msp-p8'),('g0_base','r17-b4-msp-p8'),('g1_verify','r17-b4-msp-p8')],'recovery2 must resume exact frozen task/arm order at interrupted task')
         completed_child={arm:{} for arm in ARMS}; ledgers={}
         for arm,task in allowed:
             state_root=run/'measurement'/arm; manifest=state_root/'completed_eval_tasks.jsonl'; eroot=state_root/'evaluation'/task
