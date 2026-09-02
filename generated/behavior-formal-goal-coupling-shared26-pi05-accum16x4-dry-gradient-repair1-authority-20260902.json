@@ -1,0 +1,53 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum16x4-dry-gradient-repair1-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "AUTHORIZED_PI05_SINGLE_GPU_ACCUM16X4_NO_UPDATE_DRY_GRADIENT_REPAIR1",
+  "scope": "one technical repair of candidate-1 after pre-model import failure; no formal training or outcome authority",
+  "consumed_attempt1": {
+    "result_path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum16x4-dry-gradient-result-20260902.json",
+    "result_sha256": "be95155c37faa8f24062d84ce487c4670d0802ca7e7f4677226bd3c4fec172ea",
+    "adjudication_path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum16x4-attempt1-import-failure-adjudication-20260902.json",
+    "adjudication_sha256": "d0f5784652f9bcc777212eac53a5453a9e2708e7fbd15358ed649ba09460fb97",
+    "classification": "ACCUM16X4_ATTEMPT1_PRE_MODEL_IMPORT_PATH_FAILURE"
+  },
+  "technical_repair": "add the frozen OpenPI child repository root to sys.path before importing scripts.b1k; all candidate/scientific/resource settings remain identical",
+  "runner_path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum16x4_dry_gradient_repair1.py",
+  "runner_sha256": "139c5b890e9ae40faba08e7ef5b9a6e7b31f41b5cbb83947d763e7d6a474949e",
+  "launcher_path": "scripts/run_behavior_formal_goal_coupling_shared26_pi05_accum16x4_dry_gradient_repair1.sh",
+  "launcher_sha256": "8934ad7b76abf6c641cf98033701f5459a45fe3d2eb8b8bbe3764881c630ada9",
+  "candidate": {
+    "priority": 1,
+    "physical_micro_batch": 16,
+    "accumulation_steps": 4,
+    "effective_batch": 64
+  },
+  "invariants": {
+    "seed": 42,
+    "optimizer_updates_authorized": 0,
+    "model": "unchanged",
+    "dataset": "unchanged",
+    "normalization": "unchanged",
+    "optimizer": "unchanged",
+    "lr_schedule": "unchanged",
+    "ema": "unchanged",
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "num_workers": 0,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9
+  },
+  "forbidden": [
+    "reuse attempt1 authority",
+    "advance to 8x8 unless repair1 fails for a resource reason",
+    "optimizer update",
+    "parameter or EMA update",
+    "checkpoint write",
+    "loss or gradient numerical inspection",
+    "policy rollout or outcome read"
+  ],
+  "formal_training_authorized": false,
+  "policy_outcomes_read": false,
+  "next_gate_if_pass": "AUTHORIZE_SINGLE_GPU_ACCUM16X4_FORMAL_TRAINING_IMPLEMENTATION",
+  "next_gate_if_resource_failure": "AUTHORIZE_PREREGISTERED_MICROBATCH8_ACCUM8_NO_UPDATE_DRY_GRADIENT"
+}

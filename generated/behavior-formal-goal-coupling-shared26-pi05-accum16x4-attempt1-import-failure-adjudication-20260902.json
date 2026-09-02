@@ -1,0 +1,27 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum16x4-attempt1-import-failure-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "ACCUM16X4_ATTEMPT1_PRE_MODEL_IMPORT_PATH_FAILURE",
+  "attempt1_result": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum16x4-dry-gradient-result-20260902.json",
+    "sha256": "be95155c37faa8f24062d84ce487c4670d0802ca7e7f4677226bd3c4fec172ea",
+    "error": "ModuleNotFoundError: No module named 'scripts'",
+    "batch_ready": false,
+    "train_state_ready": false,
+    "micro_gradients_completed": 0,
+    "optimizer_update": false,
+    "parameter_update": false,
+    "checkpoint_written": false
+  },
+  "root_cause": "The candidate runner inserted only <openpi-child>/src into sys.path. The pinned B1K train-state initializer is imported from scripts.b1k, which requires the OpenPI child repository root on sys.path. The already-qualified v4 runner inserted both child root and child/src; the new candidate omitted the first entry.",
+  "scientific_effect": "none; failure occurred before dataset batch construction, model/train-state initialization, gradient execution, optimizer update, checkpointing, or outcome access",
+  "decision": "ALLOW_ONE_TECHNICAL_REPAIR_OF_SAME_ACCUM16X4_CANDIDATE",
+  "allowed_repair": "add the frozen OpenPI child repository root to sys.path before importing scripts.b1k; no other candidate/scientific/resource variable changes",
+  "forbidden": [
+    "advance to microbatch8 because this was not a resource failure",
+    "reuse the consumed attempt1 authority",
+    "change microbatch, accumulation, data, seed, optimizer, LR, model, normalization, or GPU topology"
+  ],
+  "next_gate": "NEW_EXACTLY_ONCE_ACCUM16X4_TECHNICAL_REPAIR1_AUTHORITY"
+}
