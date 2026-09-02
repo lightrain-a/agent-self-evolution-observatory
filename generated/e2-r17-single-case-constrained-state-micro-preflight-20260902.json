@@ -1,0 +1,17 @@
+{
+  "analyzer_run": false,
+  "artifact_type": "e2-r17-single-case-constrained-state-micro-preflight",
+  "contract_path": "generated/e2-r17-single-case-constrained-state-micro-contract-20260902.json",
+  "contract_sha256": "31996d5d2f11f7c67cfdd023dbd63746f7930b23642272ac8135a7bc559208b7",
+  "created_at_utc": "2026-09-02T08:19:28+00:00",
+  "heldout_units": 72,
+  "next_gate": "MINT_SINGLE_USE_CONSTRAINED_STATE_MEASUREMENT_AUTHORITY",
+  "partial_effect_read": false,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "states_bound": 4,
+  "status": "PASS_CONSTRAINED_STATE_MICRO_ZERO_PROVIDER_PREFLIGHT",
+  "updater_calls": 0
+}

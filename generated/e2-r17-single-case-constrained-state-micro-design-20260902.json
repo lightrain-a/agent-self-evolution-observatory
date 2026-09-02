@@ -1,0 +1,55 @@
+{
+  "artifact_type": "e2-r17-single-case-constrained-state-micro-design",
+  "authority": {
+    "analyzer": false,
+    "e3_confirmation": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "second_backbone": false,
+    "submission": false,
+    "updater": false
+  },
+  "case_stream": "e1-tsr-00",
+  "created_date": "2026-09-02",
+  "development_only": true,
+  "mechanism_parent": {
+    "path": "consultations/e2-r17-single-case-exact-replay-mechanism-lesson-20260902.md",
+    "sha256": "6879f931597fac89533722225320be2f7a35ef89d01bd5283d2b92d9f090aef1",
+    "status": "FIRST_FAIL_EXACT_EVIDENCE_UPDATER_REPLICATION_FAIL_STATE_GENERATION_VARIANCE"
+  },
+  "next_gate": "ZERO_PROVIDER_PREFLIGHT",
+  "schema_version": "1.0",
+  "scientific_object": "E2-R17-SINGLE-CASE-CONSTRAINED-STATE-MICRO-20260902",
+  "screen": {
+    "heldout_tasks": 18,
+    "heldout_units": 72,
+    "historical_S1_not_used_for_gate": true,
+    "measurement_replicates": 1,
+    "passing_rule": "arm - G0 >= 1/18",
+    "selection_rule": "simplest passing arm: G1 < G2 < G3"
+  },
+  "states": [
+    {
+      "arm": "g0_base",
+      "construction": "exact initial skill",
+      "skill_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+    },
+    {
+      "arm": "g1_verify",
+      "construction": "initial skill + frozen literal append",
+      "skill_sha256": "b8f51458daa28672dbe078c293f29d37c42eb5b2305199d92ccd7600ac078997"
+    },
+    {
+      "arm": "g2_complete",
+      "construction": "initial skill + frozen literal append",
+      "skill_sha256": "248f1f7c3429c99d98c8d58584048efe2f989050116f507cea895484f8c80289"
+    },
+    {
+      "arm": "g3_complete_recover",
+      "construction": "initial skill + frozen literal append",
+      "skill_sha256": "a89cbbd46a01aecb7e3c7f9e5cda964ce7c584492eef0aa6d78a9b422192ceb2"
+    }
+  ],
+  "status": "DESIGN_FROZEN_ZERO_AUTHORITY"
+}
