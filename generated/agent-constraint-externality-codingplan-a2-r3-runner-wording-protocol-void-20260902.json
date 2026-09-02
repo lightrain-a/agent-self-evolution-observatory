@@ -1,0 +1,26 @@
+{
+  "affected_unit": "capability:deepseek-v4-flash|ACE-FG-05|1",
+  "appworld_log_entries": 1,
+  "appworld_log_entries_classification": "WORLD_INITIALIZATION_NOT_MODEL_MAPPED_ACTION",
+  "appworld_log_witnesses": [
+    {
+      "data": {},
+      "method": "get",
+      "url": "/supervisor/active_task"
+    }
+  ],
+  "content_sha256": "30b3bf5600828db67f9715f5c39a1a1d4cb7a4e8794804eed24cf3ca97e3c289",
+  "f0_authorized": false,
+  "model_mapped_appworld_actions_executed": 0,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "old_ledger_sha256": "622a3525418abc641e308299537705879e2c56afefc4d3b4a04041cfa727e721",
+  "provider_receipts_persisted": 0,
+  "provider_requests_spent_as_infrastructure_cost": 1,
+  "repair": "CODINGPLAN_PROVIDER_TRANSLATES_GENERIC_META_INSTRUCTION_TO_OFFLINE_ACTION_DECISION_VOCABULARY_AND_PRESERVES_ONLY_ITS_HASH",
+  "replacement": false,
+  "retry": false,
+  "root_cause": "GENERIC_RUNNER_META_INSTRUCTION_USED_WORDING_COMPLETE_TASK_USING_TOOLS_TRIGGERING_ATOMCODE_NATIVE_INVOKE_FUNCTION_PROTOCOL",
+  "schema_version": "ace-codingplan-a2-r3-runner-wording-protocol-void-v1",
+  "status": "CODINGPLAN_A2_R3_GENERIC_RUNNER_TOOL_WORDING_PROTOCOL_FAILURE_VOID",
+  "valid_capability_measurements": 0
+}

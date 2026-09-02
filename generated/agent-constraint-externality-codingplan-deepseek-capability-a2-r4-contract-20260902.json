@@ -1,0 +1,29 @@
+{
+  "authority": {
+    "capability_a2_r4": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false
+  },
+  "bridge_schema": "ace-atomcode-json-action-bridge-v2",
+  "content_sha256": "8d7cdb6dde56e5b3def036480937f5549b930b41c97fd4308394de38ad8e6cb9",
+  "execution_id": "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2-R4",
+  "instruction_translation_qualification_sha256": "6f56009cbf6b47275eff4e42242a640d3f604b48024ac965fbb093eb17bc9cbe",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "parent_a2_r3_contract_sha256": "8b37da61c7da7f9abafc7a7a8ef1d738f58a0cea6cfb851e89475ebd616fa31a",
+  "prior_invalid_units_count_as_measurements": false,
+  "provider_limits": {
+    "coding_max_rounds": 1,
+    "context_window": 512000,
+    "max_output_tokens": 128000,
+    "retry_max_attempts": 1
+  },
+  "same_eight_unit_panel": true,
+  "same_gate": true,
+  "same_model": true,
+  "same_substrate_v4": true,
+  "same_tool_call_cap": 16,
+  "schema_version": "ace-codingplan-deepseek-capability-a2-r4-contract-v1",
+  "status": "CODINGPLAN_DEEPSEEK_CAPABILITY_A2_R4_AUTHORIZED_AFTER_INSTRUCTION_TRANSLATION_QUALIFICATION",
+  "void_artifact_sha256": "139726a245f98d6e340dbcd10c96a34f924484304ff2fdcef3b365268360e6dd"
+}

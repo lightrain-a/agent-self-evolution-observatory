@@ -47,8 +47,11 @@ RECOVERY_R2_CONTRACT = GENERATED / "agent-constraint-externality-codingplan-deep
 RECOVERY_R3_VOID = GENERATED / "agent-constraint-externality-codingplan-a2-r2-native-tool-protocol-void-20260902.json"
 ACTION_BRIDGE_QUAL = GENERATED / "agent-constraint-externality-codingplan-action-bridge-qualification-a3-20260902.json"
 RECOVERY_R3_CONTRACT = GENERATED / "agent-constraint-externality-codingplan-deepseek-capability-a2-r3-contract-20260902.json"
+RECOVERY_R4_VOID = GENERATED / "agent-constraint-externality-codingplan-a2-r3-runner-wording-protocol-void-20260902.json"
+INSTRUCTION_TRANSLATION_QUAL = GENERATED / "agent-constraint-externality-codingplan-runner-instruction-translation-qualification-a4-20260902.json"
+RECOVERY_R4_CONTRACT = GENERATED / "agent-constraint-externality-codingplan-deepseek-capability-a2-r4-contract-20260902.json"
 EXECUTION_ID = "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2"
-RECOVERY_EXECUTION_ID = "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2-R3"
+RECOVERY_EXECUTION_ID = "CODINGPLAN-DEEPSEEK-V4-FLASH-CAPABILITY-A2-R4"
 FROZEN_A2_BRIDGE_SCHEMA = "ace-atomcode-json-tool-bridge-v1"
 CAPABILITY_FAMILIES = ("ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06")
 REPEATS = (1, 2)
@@ -359,6 +362,9 @@ def adjudicate(*, ledger_path: Path, toolcap_path: Path) -> dict[str, Any]:
         "native_tool_protocol_void_sha256": sha256_file(RECOVERY_R3_VOID),
         "action_bridge_qualification_sha256": sha256_file(ACTION_BRIDGE_QUAL),
         "recovery_r3_contract_sha256": sha256_file(RECOVERY_R3_CONTRACT),
+        "runner_wording_protocol_void_sha256": sha256_file(RECOVERY_R4_VOID),
+        "instruction_translation_qualification_sha256": sha256_file(INSTRUCTION_TRANSLATION_QUAL),
+        "recovery_r4_contract_sha256": sha256_file(RECOVERY_R4_CONTRACT),
     }
     result["content_sha256"] = sha256_value(result)
     return result
@@ -410,6 +416,14 @@ def main() -> None:
         recovery_r3_contract = read_json(RECOVERY_R3_CONTRACT)
         if recovery_r3_contract.get("status") != "CODINGPLAN_DEEPSEEK_CAPABILITY_A2_R3_AUTHORIZED_AFTER_ACTION_BRIDGE_QUALIFICATION":
             raise RunnerError("CodingPlan A2-R3 recovery contract is not authorized.")
+        if not RECOVERY_R4_VOID.is_file() or not INSTRUCTION_TRANSLATION_QUAL.is_file() or not RECOVERY_R4_CONTRACT.is_file():
+            raise RunnerError("CodingPlan A2-R4 requires frozen instruction-translation recovery evidence.")
+        instruction_qualification = read_json(INSTRUCTION_TRANSLATION_QUAL)
+        if instruction_qualification.get("status") != "CODINGPLAN_ACTION_POLICY_INSTRUCTION_TRANSLATION_A4_PASS":
+            raise RunnerError("CodingPlan instruction translation A4 is not qualified.")
+        recovery_r4_contract = read_json(RECOVERY_R4_CONTRACT)
+        if recovery_r4_contract.get("status") != "CODINGPLAN_DEEPSEEK_CAPABILITY_A2_R4_AUTHORIZED_AFTER_INSTRUCTION_TRANSLATION_QUALIFICATION":
+            raise RunnerError("CodingPlan A2-R4 recovery contract is not authorized.")
         runtime_root = args.runtime_root
         ledger_path = args.ledger or runtime_root / "ledger.jsonl"
         toolcap_path = args.toolcap_ledger or runtime_root / "toolcap-measurements.jsonl"

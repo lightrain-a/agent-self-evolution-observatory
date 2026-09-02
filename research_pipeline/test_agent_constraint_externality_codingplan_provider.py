@@ -15,6 +15,7 @@ from research_pipeline.agent_constraint_externality_codingplan_provider import (
     AtomCodeCodingPlanClient,
     _extract_json_object,
     _message_text_from_jsonl,
+    _tool_prompt,
     write_experiment_config,
 )
 from research_pipeline.agent_constraint_externality_runner_core import (
@@ -38,6 +39,17 @@ class CodingPlanProviderTest(unittest.TestCase):
             self.assertEqual(RETRY_MAX_ATTEMPTS, 1)
             self.assertEqual(CONTEXT_WINDOW, 512000)
             self.assertEqual(MAX_OUTPUT_TOKENS, 128000)
+
+    def test_generic_runner_tool_wording_is_translated_out_of_action_policy(self) -> None:
+        prompt, mapping = _tool_prompt(
+            instructions="Complete the task using tools. Preserve unrelated state.",
+            input_items=[{"role":"user","content":"Do the task."}],
+            tools=[{"type":"function","name":"example__action","description":"Example.","parameters":{"type":"object","properties":{},"required":[]}}],
+        )
+        self.assertEqual(mapping["A001"], "example__action")
+        self.assertNotIn("Complete the task using tools", prompt)
+        self.assertIn("Complete the simulated task by proposing only listed action IDs", prompt)
+        self.assertIn("runner_instruction_intent_sha256", prompt)
 
     def test_plain_action_decision_is_accepted(self) -> None:
         parsed = _extract_json_object(json.dumps({"decision":"act","actions":[{"action_id":"A001","arguments":{}}]}))

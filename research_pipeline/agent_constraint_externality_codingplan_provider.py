@@ -30,6 +30,11 @@ SYSTEM_PROMPT = (
     "describing proposed action IDs. This JSON is a decision, not an execution receipt, "
     "and does not claim any action was executed."
 )
+ACTION_POLICY_INSTRUCTIONS = (
+    "Complete the simulated task by proposing only listed action IDs. "
+    "Preserve unrelated state. When the simulated task is complete, return decision=finish "
+    "with a concise completion message."
+)
 
 
 def _extract_json_object(text: str) -> dict[str, Any]:
@@ -134,7 +139,8 @@ def _tool_prompt(
     }
     payload = {
         "bridge_schema": BRIDGE_SCHEMA,
-        "instructions": instructions,
+        "instructions": ACTION_POLICY_INSTRUCTIONS,
+        "runner_instruction_intent_sha256": sha256_value(instructions),
         "conversation": bridged_input,
         "available_actions": bridged_tools,
         "required_output_schema": schema,
