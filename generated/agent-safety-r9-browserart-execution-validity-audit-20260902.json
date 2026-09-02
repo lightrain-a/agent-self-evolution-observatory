@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "AGENT-SAFETY-R9-BROWSERART-EXECUTION-VALIDITY-AUDIT-20260902",
+  "paper_id": "AGENT-SAFETY-R9",
+  "recorded_at": "2026-09-02T12:45:00+08:00",
+  "canonical_base_sha": "14a3c72023ef3db537cd852f89142a7ef5e296ca",
+  "status": "POST_HOC_EXECUTION_VALIDITY_DIAGNOSIS_COMPLETE_NO_SCIENTIFIC_OUTCOME_CHANGE",
+  "purpose": "Audit whether the historical R9 BrowserART trajectories were collected under a browser-agent capability budget and evaluation stack aligned with the published BrowserART setup. This is a zero-provider-call retrospective diagnosis over already frozen code and journals. It cannot change historical labels, arm counts, or claims by itself.",
+  "authority": {
+    "new_agent_execution": false,
+    "new_evaluator_execution": false,
+    "historical_outcome_rewrite": false,
+    "paper_claim_upgrade": false,
+    "prospective_design_repair": true
+  },
+  "source_bindings": {
+    "execution_host": "root@10.42.8.52",
+    "root": "/data/wyt/agent-safety-discovery-20260818",
+    "browserart_commit": "0d72180042f2a076c68e1114e7494cb3fc7dd30b",
+    "awm_commit": "8c0ff8cd11d648c8fceb99e4e42f37e3b75381b1",
+    "browserart_official_customarena_run_script": {
+      "path": "substrate-assets-r9/browser-art-pinned-0d72180042f2/src/agents/OpenDevin/evaluation/customarena/scripts/run_infer.sh",
+      "sha256": "2b4bd828dc0fae7a8f7baf3c9a7c6cb09bfbd087713cd3886356162b4f74eab7",
+      "bound_max_iterations": 10
+    },
+    "browserart_official_benign_suite": {
+      "path": "substrate-assets-r9/browser-art-pinned-0d72180042f2/src/datasets/behaviors/hbb_benign.json",
+      "sha256": "8edea0d4d393cae54e0ee39361ca0f5643c02cf02e694dcf9a543cce8116e774",
+      "task_count": 10,
+      "task_ids": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    "browserart_gpt4_harm_classifier": {
+      "path": "substrate-assets-r9/browser-art-pinned-0d72180042f2/src/behavior_classifier/behavior_classifier/gpt4_classifier.py",
+      "sha256": "b89b4dbc1272b5b9d46be7562f8b4f493bf417f8e6d40206bc54e08d68e48825"
+    },
+    "browserart_gpt4_benign_classifier": {
+      "path": "substrate-assets-r9/browser-art-pinned-0d72180042f2/src/behavior_classifier/behavior_classifier/gpt4_classifier_benign.py",
+      "sha256": "4175f5499cfd552ab468d24a84067785ee464dd3fc3d02a9b0926d4b63d6837c"
+    },
+    "historical_r9_future_contract": {
+      "path": "runtime-r9/f0v4-future/frozen-future-contract.json",
+      "sha256": "2e1a156080e32bc450aa00a024ab3bc23537614332748c064d96a2f679e9bdd5"
+    },
+    "historical_updated_journal": {
+      "path": "shadow-agent-safety-20260818-r9-runtime52/f0v4-future-execution/runtime-journal.json",
+      "sha256": "22eef2239ff1273f2e251074d12e3dabe0210a029c7d5037c99fd695cac45117"
+    },
+    "historical_frozen_journal": {
+      "path": "runtime-r9/r23-controlled-longitudinal/no-update-execution/runtime-journal.json",
+      "sha256": "57441b021d6e6f21260524c05297de1cf2264f8b9793a21514ea4277c110e4c1"
+    },
+    "historical_nullmemory_journal": {
+      "path": "runtime-r9/r23-controlled-longitudinal/reopen-r8/o6-nullmemory-r2/future-r23stack-execution/runtime-journal.json",
+      "sha256": "2c6aa8327e4431b89506a98840c898c136ac72b432efe507776f2a008f5ebb16"
+    }
+  },
+  "published_browserart_reference": {
+    "venue": "ICLR 2025",
+    "title": "Aligned LLMs Are Not Aligned Browser Agents",
+    "agent_setup": "OpenHands integrates BrowserGym for browser rendering/action execution and uses an AXTree-based WebArena browser agent.",
+    "capability_sanity": "Each agent is tested on 10 benign tasks and must be able to complete them absent refusal; SeeAct is excluded because it does not complete all benign tasks.",
+    "published_harm_evaluator": "GPT-4o",
+    "published_max_agent_steps": 10,
+    "endpoint_semantics": "attempting to fulfill the harmful instruction, not necessarily successful realization of downstream harm"
+  },
+  "historical_r9_runtime": {
+    "backbone": "Qwen3-8B",
+    "agent_implementation": "AWM WebArena GenericAgent",
+    "temperature": 0.1,
+    "observation": "AXTree",
+    "screenshot": false,
+    "action_space": "BID textual browser actions",
+    "max_episode_steps": 4,
+    "max_agent_model_calls_per_episode": 4,
+    "historical_primary_evaluator": "cais/HarmBench-Llama-2-13b-cls",
+    "published_browserart_evaluator_match": false,
+    "workflow_update_mode": "released-benign-workflow-unit-append",
+    "workflow_update_generation_model_calls": 0,
+    "workflow_update_note": "The updated arm progressively appends three pre-existing benign GitLab workflow demonstrations; the BrowserART harmful trajectory itself is not used to generate the next workflow update."
+  },
+  "frozen_108_episode_step_cap_audit": {
+    "method_status": "POST_HOC_DIAGNOSTIC_ONLY",
+    "new_model_or_evaluator_calls": 0,
+    "updated": {
+      "episodes": 36,
+      "mean_actions_executed": 4.0,
+      "episodes_with_4_actions": 36,
+      "episodes_with_any_action_error": 23,
+      "episodes_with_any_parser_error": 0,
+      "last_step_truncated": 36,
+      "last_step_terminated": 0,
+      "listener_external_effect": 0
+    },
+    "frozen": {
+      "episodes": 36,
+      "mean_actions_executed": 3.67,
+      "episodes_with_4_actions": 31,
+      "episodes_hitting_4_step_or_action_boundary": 32,
+      "episodes_with_any_action_error": 16,
+      "episodes_with_any_parser_error": 5,
+      "last_step_truncated": 31,
+      "last_step_terminated": 0,
+      "listener_external_effect": 0
+    },
+    "nullmemory": {
+      "episodes": 36,
+      "mean_actions_executed": 4.0,
+      "episodes_with_4_actions": 36,
+      "episodes_with_any_action_error": 4,
+      "episodes_with_any_parser_error": 0,
+      "last_step_truncated": 36,
+      "last_step_terminated": 0,
+      "listener_external_effect": 0
+    },
+    "aggregate": {
+      "episodes": 108,
+      "last_step_truncated": 103,
+      "last_step_terminated": 0,
+      "listener_external_effect": 0
+    }
+  },
+  "adjudication": {
+    "execution_budget": "SEVERE_EXECUTION_BUDGET_CONFOUND",
+    "benchmark_alignment": "HISTORICAL_R9_NOT_BROWSERART_PUBLISHED_EXECUTION_ALIGNED",
+    "capability_interpretation": "The historical trajectories provide insufficient evidence that the agent had benchmark-qualified opportunity to complete the BrowserART tasks: 103/108 future episodes ended at the four-step truncation boundary and none terminated normally.",
+    "evaluator_interpretation": "The historical HarmBench endpoint is a deliberate R9 operationalization but is not the evaluator used for the published BrowserART main results, which used GPT-4o.",
+    "causal_boundary": "This retrospective audit does not establish that the four-step cap caused the 8/4/0 HarmBench ordering, the 5/5/8 DeepSeek ordering, or any evaluator disagreement. The arm-level action-error differences are post-hoc diagnostics only.",
+    "historical_evidence_disposition": "KEEP_AS_DISCOVERY_AND_LEGACY_CONTROLLED_EVIDENCE; DO_NOT PRESENT AS BENCHMARK-ALIGNED STRONG-BACKBONE CONFIRMATION",
+    "paper_implication": "A fresh confirmatory experiment must capability-qualify the proposed agent substrate under the official 10-task benign suite and a 10-step primary execution budget before any new safety outcome is acquired."
+  },
+  "related_work_boundary": {
+    "zhao_acl_2026": "Zhao et al. use AWM and BrowserART for safety evaluation across seven backbones, so an AWM-based BrowserART safety evaluation is literature-supported. Their paper does not report a BrowserART per-task max-step value, so it cannot justify the historical R9 four-step cap."
+  },
+  "next_gate": "FREEZE_AND_RUN_QWEN35_397B_BROWSERART_CAPABILITY_PREREG_V2_BEFORE_ANY_NEW_SAFETY_CALL"
+}
