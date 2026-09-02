@@ -12,12 +12,13 @@ POOL_SHA='2391967a3da363bcbbe87403599970854d7cf7ed82b249078b0469b36a8de59e'
 ADDENDUM=ROOT/'paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-msr-qwen397-probe-compiler-addendum-20260902.json'
 RUNTIME=Path('/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-msr-qwen397-runtime-20260902-v1/normalization-qualification.json')
 RUNTIME_SHA='7b876c9dc31e964868fa1c5cff3cd5ab3510e57162e65368023102822d933a01'
-OUT=ROOT/'paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-msr-qwen397-probe-specs-20260902.json'
-TOKEN_SALT='C1-PACTA-MSR-PROBE-TOKEN-v1'
+OUT=ROOT/'paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-msr-qwen397-probe-specs-v2-20260902.json'
+TOKEN_SALT='C1-PACTA-MSR-PROBE-TOKEN-v2'
 STOP={
- 'about','after','again','also','another','because','before','being','between','both','bug','case','change','changes','code','could','current','describe','does','error','expected','feature','file','files','fix','from','have','into','issue','like','method','more','need','only','other','plus','problem','python','same','should','test','tests','that','their','then','there','these','this','using','value','values','want','when','where','which','with','would','your'}
-LEX=re.compile(r'\b[A-Za-z_][A-Za-z0-9_.-]{3,}\b')
+ 'about','after','again','also','another','argument','because','before','being','between','both','bug','calling','case','change','changes','code','could','current','describe','does','doesn','error','expected','false','feature','file','files','fix','format','from','good','have','into','issue','letters','like','method','more','need','none','only','other','plus','problem','python','same','should','system','test','tests','that','their','then','there','these','this','true','using','value','values','want','when','where','which','with','working','would','your'}
+LEX=re.compile(r'\b[A-Za-z_][A-Za-z0-9_.-]{2,}\b')
 BACKTICK=re.compile(r'`([^`\n]{2,120})`')
+CODEBLOCK=re.compile(r'```(?:[A-Za-z0-9_+.-]+)?\s*\n(.*?)```',re.S)
 
 def sha(x:str)->str:return hashlib.sha256(x.encode()).hexdigest()
 def normalize_token(x:str)->str:
@@ -26,13 +27,22 @@ def normalize_token(x:str)->str:
  return x[:100]
 def candidates(task:str)->list[tuple[int,str]]:
  out=[];seen=set()
- for raw in BACKTICK.findall(task):
-  for tok in LEX.findall(raw):
-   tok=normalize_token(tok);low=tok.lower()
-   if len(tok)>=4 and low not in STOP and low not in seen:seen.add(low);out.append((0,tok))
- for tok in LEX.findall(task):
-  tok=normalize_token(tok);low=tok.lower()
-  if len(tok)>=4 and low not in STOP and low not in seen:seen.add(low);out.append((1,tok))
+ def add(priority:int,text:str,*,code:bool=False)->None:
+  for tok0 in LEX.findall(text):
+   tok=normalize_token(tok0);low=tok.lower();minlen=3 if code else 4
+   if len(tok)<minlen or low in STOP or low in seen:continue
+   seen.add(low);out.append((priority,tok))
+ # Explicit inline code and code-block identifiers have highest priority.
+ for raw in BACKTICK.findall(task):add(0,raw,code=True)
+ for raw in CODEBLOCK.findall(task):
+  codeish=' '.join(t for t in LEX.findall(raw) if any(c in t for c in '_.-') or any(c.isupper() for c in t[1:]))
+  add(0,codeish,code=True)
+ # The issue title is the next strongest outcome-blind relevance signal.
+ title=next((line.strip() for line in task.splitlines() if line.strip()),'')
+ add(1,title)
+ # Fill from other code-block tokens, then the full task, only if needed.
+ for raw in CODEBLOCK.findall(task):add(2,raw,code=True)
+ add(3,task)
  return out
 def compile_tokens(task:str,task_sha:str)->list[str]:
  c=candidates(task)
@@ -56,7 +66,7 @@ def prepare()->dict[str,Any]:
   toks=compile_tokens(u['future_task'],u['future_task_sha256']);cmd=compile_command(toks)
   rows.append({'unit_id':u['unit_id'],'future_task_id':u['future_task_id'],'future_task_sha256':u['future_task_sha256'],'future_base_commit':u['future_base_commit'],'future_digest_ref':rr['digest_ref'],'tokens':toks,'command':cmd,'command_sha256':sha(cmd),'probe_timeout_seconds':60,'provider_calls':0,'branch_blind':True,'memory_blind':True,'read_only':True})
  if len(rows)!=10 or len({x['command_sha256'] for x in rows})<1:raise RuntimeError('probe geometry')
- return {'schema_version':1,'experiment':'C1-PACTA-MSR-QWEN397-PROBE-SPECS-20260902','status':'MSR_10_PROBE_SPECS_FROZEN_PRE_SOURCE_OUTCOME','fresh_pool_sha256':POOL_SHA,'runtime_sha256':RUNTIME_SHA,'addendum_sha256':sha256_file(ADDENDUM),'token_salt':TOKEN_SALT,'rows':rows,'provider_calls':0,'future_task_executions':0,'writer_calls':0,'shadow_calls':0,'final_calls':0}
+ return {'schema_version':1,'experiment':'C1-PACTA-MSR-QWEN397-PROBE-SPECS-v2-20260902','status':'MSR_10_PROBE_SPECS_V2_FROZEN_PRE_SOURCE_OUTCOME','fresh_pool_sha256':POOL_SHA,'runtime_sha256':RUNTIME_SHA,'addendum_sha256':sha256_file(ADDENDUM),'token_salt':TOKEN_SALT,'selection_priority':['explicit_inline_or_codeish_block','issue_title','other_code_block','full_task_fallback'],'rows':rows,'provider_calls':0,'future_task_executions':0,'writer_calls':0,'shadow_calls':0,'final_calls':0}
 def main()->None:
  if OUT.exists():raise RuntimeError('probe specs already exist; no overwrite')
  o=prepare();atomic_json(OUT,o);print(json.dumps({'status':o['status'],'specs':len(o['rows']),'sha256':sha256_file(OUT)},sort_keys=True))

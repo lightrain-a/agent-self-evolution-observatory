@@ -4,7 +4,7 @@ from research_pipeline import prepare_c1_pacta_msr_probe_specs_20260902 as p
 
 def test_probe_specs_cover_all_ten_future_units_without_provider():
     o=p.prepare()
-    assert o['status']=='MSR_10_PROBE_SPECS_FROZEN_PRE_SOURCE_OUTCOME'
+    assert o['status']=='MSR_10_PROBE_SPECS_V2_FROZEN_PRE_SOURCE_OUTCOME'
     assert len(o['rows'])==10
     assert o['provider_calls']==0 and o['future_task_executions']==0
     assert len({x['future_task_id'] for x in o['rows']})==10

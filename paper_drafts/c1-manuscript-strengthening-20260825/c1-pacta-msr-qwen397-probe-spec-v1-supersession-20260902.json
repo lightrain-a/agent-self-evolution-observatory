@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-02T04:32:00Z",
+  "experiment": "C1-PACTA-MSR-QWEN397-P0-20260902",
+  "status": "SUPERSEDED_PRE_EXECUTION_ZERO_OUTCOME",
+  "v1_probe_specs_path": "paper_drafts/c1-manuscript-strengthening-20260825/c1-pacta-msr-qwen397-probe-specs-20260902.json",
+  "v1_probe_specs_sha256": "44c81c0d89a644be120d12c3c2f98c871e575aca4e4be6a5cec5aab7e46a28a6",
+  "supersession_reason": "A zero-provider lexical audit of the frozen future-task text showed that v1's full-body lexical fallback could rank generic natural-language words ahead of code-relevant terms for some tasks. No source trajectory, probe observation, writer memory, shadow action, gate outcome, or final outcome from PACTA-MSR had been observed.",
+  "single_changed_object": "deterministic probe token candidate priority and stoplist",
+  "v2_priority": [
+    "explicit inline code or code-like identifiers inside fenced code blocks",
+    "issue-title tokens",
+    "remaining code-block tokens",
+    "full-task lexical fallback"
+  ],
+  "unchanged": [
+    "three selected tokens",
+    "SHA-based tie-breaking",
+    "read-only command template",
+    "future exact-base runtime",
+    "branch-blind and memory-blind probe",
+    "G0/Gplus method comparison",
+    "all scientific thresholds"
+  ],
+  "provider_calls_before_supersession": 0,
+  "future_probe_executions_before_supersession": 0,
+  "source_trajectory_calls_before_supersession": 0
+}

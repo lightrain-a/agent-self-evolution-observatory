@@ -1,0 +1,207 @@
+{
+  "addendum_sha256": "e99a1d81fbeeb96c79eef08371634115fd93b64b1b272f2a922e6ac7eb6cfb2f",
+  "experiment": "C1-PACTA-MSR-QWEN397-PROBE-SPECS-20260902",
+  "final_calls": 0,
+  "fresh_pool_sha256": "2391967a3da363bcbbe87403599970854d7cf7ed82b249078b0469b36a8de59e",
+  "future_task_executions": 0,
+  "payload_sha256": "963c1f2b57b7075029e99e1753f6df991477e905b7f268eb1e9630ad8c27cbfa",
+  "provider_calls": 0,
+  "rows": [
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e Header.fromstring -e Card.fromstring -e Header.fromfile -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "2c465a1ffa062f78fb18c49a8ce931fafa4802ee98d095a69e71357a02ba0034",
+      "future_base_commit": "a85a0747c54bac75e9c3b2fe436b105ea029d6cf",
+      "future_digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.astropy_1776_astropy-8707@sha256:c6531e6e77ca7f257057f793cf38fc84427cd36fd93d136c21aef2a6e0e8df6d",
+      "future_task_id": "astropy__astropy-8707",
+      "future_task_sha256": "f7420a19ba5b0c807396a84da376d8303e69ff66d0216c332adf099da589a714",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "tokens": [
+        "Header.fromstring",
+        "Card.fromstring",
+        "Header.fromfile"
+      ],
+      "unit_id": "astropy__astropy-7606=>astropy__astropy-8707"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e editor -e operation.database_forwards -e self.assertNumQueries -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "daf6c6d49568f7385112bb43bea9d097a294db80e69e0c99e29198ccf7492459",
+      "future_base_commit": "647480166bfe7532e8c471fef0146e3a17e6c0c9",
+      "future_digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.django_1776_django-15695@sha256:a067cc9cec81ba8be9799c03da7a3355fdcd1f10477142052f3477ce8b33057d",
+      "future_task_id": "django__django-15695",
+      "future_task_sha256": "613bfb30e51009598a05937b5149afbc0cf7b5eb59572cc4282e9154fd39da22",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "tokens": [
+        "editor",
+        "operation.database_forwards",
+        "self.assertNumQueries"
+      ],
+      "unit_id": "django__django-14855=>django__django-15695"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e doesn -e system -e visible -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "bf98ca1e0fb83fde7baba02a9e6d39266812c7cacbbccfafb844fff46f5c40d1",
+      "future_base_commit": "97fc1154992f64cfb2f86321155a7404efeb2d8a",
+      "future_digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.matplotlib_1776_matplotlib-23314@sha256:697d979bab5e8c44407af70ae638a8ae4e3c5464c5c11acb420ca212c92d1348",
+      "future_task_id": "matplotlib__matplotlib-23314",
+      "future_task_sha256": "e724887a3c1acc1c91e3f2fefb8d9e30bafcf58b3d6d1696dc8f57e77fd90cba",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "tokens": [
+        "doesn",
+        "system",
+        "visible"
+      ],
+      "unit_id": "matplotlib__matplotlib-25479=>matplotlib__matplotlib-23314"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e requests -e http -e payload -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "42cfc249c55b1c5c5c6f34a19ff4904c04dff5f35b3d9fcd6581f4edb6b7dffd",
+      "future_base_commit": "5f7a3a74aab1625c2bb65f643197ee885e3da576",
+      "future_digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.psf_1776_requests-2931@sha256:852d3d1ddb3c859675e5bb7d9269cb27c1bf8a6e95965108ad8a38b3495fc1d0",
+      "future_task_id": "psf__requests-2931",
+      "future_task_sha256": "c36c337f6c5d918e8d193684510213e2eaed8633e575b819757674cca0d980fd",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "tokens": [
+        "requests",
+        "http",
+        "payload"
+      ],
+      "unit_id": "psf__requests-2317=>psf__requests-2931"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e Dataset -e object -e lmfit -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "e18c596889219cbf6827e6206da715235f90f363bd976aa04c6ff8bd4cdb84ba",
+      "future_base_commit": "7c4e2ac83f7b4306296ff9b7b51aaf016e5ad614",
+      "future_digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.pydata_1776_xarray-2905@sha256:1fb7fb411d115d06cf2f34fde3b6f8a33427f2d6f36e1ab8df3b1b977195bd61",
+      "future_task_id": "pydata__xarray-2905",
+      "future_task_sha256": "0d3a9b692fc42e67214ed21e669b85cd5c6a222b3a4abc2055d93915876b6be8",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "tokens": [
+        "Dataset",
+        "object",
+        "lmfit"
+      ],
+      "unit_id": "pydata__xarray-4629=>pydata__xarray-2905"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e pylint -e version -e unused-import -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "c11ce829dec30bbbf6c06f845450e9f321d56dde4c636aa0c480130ba48c6390",
+      "future_base_commit": "1e55ae64624d28c5fe8b63ad7979880ee2e6ef3f",
+      "future_digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.pylint-dev_1776_pylint-4604@sha256:e24d647f8421c551d60da005ce2272910c0aae8bb37f9de870b10c5e70b840ce",
+      "future_task_id": "pylint-dev__pylint-4604",
+      "future_task_sha256": "0072c898db86e2500d95b0b95f0929f23f8a733dc9b0eb4a0d170189049a8dbb",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "tokens": [
+        "pylint",
+        "version",
+        "unused-import"
+      ],
+      "unit_id": "pylint-dev__pylint-4551=>pylint-dev__pylint-4604"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e Assertion -e compile.c -e True -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "3570419e8c5ec4c8d23f996fbdbe1b3f59773c74b0999b174429fe66704aa872",
+      "future_base_commit": "19ad5889353c7f5f2b65cc2acd346b7a9e95dfcd",
+      "future_digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.pytest-dev_1776_pytest-7324@sha256:90f6a7d3146119f5505ab807c1cfe51d63f2cc2547b764fade3e710c87db6b5e",
+      "future_task_id": "pytest-dev__pytest-7324",
+      "future_task_sha256": "c86104555dc540eca4e1fc4625c95084e5ebe6bb5484acc6a9d4b2fca7378634",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "tokens": [
+        "Assertion",
+        "compile.c",
+        "True"
+      ],
+      "unit_id": "pytest-dev__pytest-7982=>pytest-dev__pytest-7324"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e sample_weight -e None -e voter.set_params -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "ee42add69e7bc93d6931a1d540162dc7ec9712da0cfb94e805a46fe0d8c223cb",
+      "future_base_commit": "b34751b7ed02b2cfcc36037fb729d4360480a299",
+      "future_digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-13779@sha256:4de8b61aed8a3c6c8bbc1e8d69f5060928a9b7ac0d29d808f696fc3cbf01b521",
+      "future_task_id": "scikit-learn__scikit-learn-13779",
+      "future_task_sha256": "d32c6ecdfaf0eeb42a35e7cb05bd03fc034571aaef7c7743a452422c2bcdc6bc",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "tokens": [
+        "sample_weight",
+        "None",
+        "voter.set_params"
+      ],
+      "unit_id": "scikit-learn__scikit-learn-25747=>scikit-learn__scikit-learn-13779"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e Reproduce -e vanished -e info -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "0e001c60560e6bff69385edf14e5c35db1ad3f9d6d807b1741b2d19ac839dd2a",
+      "future_base_commit": "212fd67b9f0b4fae6a7c3501fdf1a9a5b2801329",
+      "future_digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.sphinx-doc_1776_sphinx-7757@sha256:e8b26974c86962c84c5364b8112db0c095dc1782461809248b7e4abdc69a311a",
+      "future_task_id": "sphinx-doc__sphinx-7757",
+      "future_task_sha256": "3f43b5effb6183c93b07ad0706394845cec8f7306b6fad5d9b60b531bad2328d",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "tokens": [
+        "Reproduce",
+        "vanished",
+        "info"
+      ],
+      "unit_id": "sphinx-doc__sphinx-7590=>sphinx-doc__sphinx-7757"
+    },
+    {
+      "branch_blind": true,
+      "command": "git status --short; git grep -n -I -e Greek -e Good -e unicode -- . | head -n 80; git ls-files | head -n 40",
+      "command_sha256": "ef51937904d4ba92901ddf6e1dc36ae5edcd5eae5b86e74f2d4e89e3cb0fb25f",
+      "future_base_commit": "82298df6a51491bfaad0c6d1980e7e3ca808ae93",
+      "future_digest_ref": "docker.1ms.run/swebench/sweb.eval.x86_64.sympy_1776_sympy-20916@sha256:792007a030035b455f7a3ae1b9abe02bf19109b7dea43521df4175fc9c8c1a10",
+      "future_task_id": "sympy__sympy-20916",
+      "future_task_sha256": "728c710a38f30dcfc83a99f11302f2ff4f69c34b26b6d1daf40f27e289fe550c",
+      "memory_blind": true,
+      "probe_timeout_seconds": 60,
+      "provider_calls": 0,
+      "read_only": true,
+      "tokens": [
+        "Greek",
+        "Good",
+        "unicode"
+      ],
+      "unit_id": "sympy__sympy-13974=>sympy__sympy-20916"
+    }
+  ],
+  "runtime_sha256": "7b876c9dc31e964868fa1c5cff3cd5ab3510e57162e65368023102822d933a01",
+  "schema_version": 1,
+  "shadow_calls": 0,
+  "status": "MSR_10_PROBE_SPECS_FROZEN_PRE_SOURCE_OUTCOME",
+  "token_salt": "C1-PACTA-MSR-PROBE-TOKEN-v1",
+  "writer_calls": 0
+}
