@@ -1,0 +1,268 @@
+{
+  "analysis_artifact": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-analysis-20260902.json",
+  "artifact_type": "e2-r17-deepseek-v2-repair2-descriptive-heterogeneity-report",
+  "created_at_utc": "2026-09-02T03:24:52+00:00",
+  "direction_counts_from_frozen_primary_analysis": {
+    "replicates_negative": 18,
+    "replicates_positive": 25,
+    "replicates_zero": 5,
+    "streams_negative": 4,
+    "streams_positive": 7,
+    "streams_zero": 1
+  },
+  "family_summary": [
+    {
+      "family": "aggregation_join",
+      "mean_stream_effect_mrw_minus_win_c": 0.041666666666666644,
+      "pre_outcome_mixed_pools_total_out_of_16": 9,
+      "stream_effects": [
+        0.027777777777777762,
+        0.055555555555555525
+      ],
+      "streams": [
+        "e1-agj-00",
+        "e1-agj-01"
+      ]
+    },
+    {
+      "family": "formula_materialization",
+      "mean_stream_effect_mrw_minus_win_c": 0.09027777777777778,
+      "pre_outcome_mixed_pools_total_out_of_16": 15,
+      "stream_effects": [
+        0.05555555555555555,
+        0.125
+      ],
+      "streams": [
+        "e1-fmv-00",
+        "e1-fmv-01"
+      ]
+    },
+    {
+      "family": "input_output_contract",
+      "mean_stream_effect_mrw_minus_win_c": 0.0,
+      "pre_outcome_mixed_pools_total_out_of_16": 14,
+      "stream_effects": [
+        0.02777777777777779,
+        -0.02777777777777779
+      ],
+      "streams": [
+        "e1-ioc-00",
+        "e1-ioc-01"
+      ]
+    },
+    {
+      "family": "multi_step_pipeline",
+      "mean_stream_effect_mrw_minus_win_c": 0.09027777777777776,
+      "pre_outcome_mixed_pools_total_out_of_16": 14,
+      "stream_effects": [
+        0.0,
+        0.18055555555555552
+      ],
+      "streams": [
+        "e1-msp-00",
+        "e1-msp-01"
+      ]
+    },
+    {
+      "family": "schema_key_alignment",
+      "mean_stream_effect_mrw_minus_win_c": -0.06249999999999998,
+      "pre_outcome_mixed_pools_total_out_of_16": 13,
+      "stream_effects": [
+        -0.12499999999999997,
+        1.3877787807814457e-17
+      ],
+      "streams": [
+        "e1-ska-00",
+        "e1-ska-01"
+      ]
+    },
+    {
+      "family": "target_sheet_range",
+      "mean_stream_effect_mrw_minus_win_c": -0.020833333333333315,
+      "pre_outcome_mixed_pools_total_out_of_16": 13,
+      "stream_effects": [
+        -0.013888888888888867,
+        -0.027777777777777762
+      ],
+      "streams": [
+        "e1-tsr-00",
+        "e1-tsr-01"
+      ]
+    }
+  ],
+  "interpretation": "The preregistered descriptive view shows substantial stream/family variation around a positive aggregate point estimate. It is compatible with heterogeneity but does not establish a moderator, dose-response law, family-specific effect, or causal regime law, and it cannot change the frozen HOLD primary verdict.",
+  "pre_outcome_support_artifact": "generated/e2-r17-e1-a-pool-support-v2-1-adjudication-20260828.json",
+  "predeclared_role": "per-stream mixed dose and effect; descriptive family grouping only",
+  "primary_scientific_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "primary_status_changed": false,
+  "restrictions": {
+    "e3_prospective_regime_prediction_authority": false,
+    "family_specific_significance_claim": false,
+    "favorable_subset_selection": false,
+    "new_significance_tests": false,
+    "posthoc_regime_law_claim": false,
+    "primary_hold_rescue": false,
+    "public_benchmark_authority": false,
+    "second_backbone_authority": false
+  },
+  "schema_version": "1.0",
+  "status": "DESCRIPTIVE_HETEROGENEITY_ONLY_PRIMARY_HOLD_UNCHANGED",
+  "stream_rows": [
+    {
+      "family": "aggregation_join",
+      "mean_difference_mrw_minus_win_c": 0.027777777777777762,
+      "mixed_fraction_pre_outcome": 0.5,
+      "mixed_pools_out_of_8_pre_outcome": 4,
+      "replicate_differences": [
+        0.05555555555555547,
+        0.0,
+        -0.11111111111111105,
+        0.16666666666666663
+      ],
+      "stream_id": "e1-agj-00"
+    },
+    {
+      "family": "aggregation_join",
+      "mean_difference_mrw_minus_win_c": 0.055555555555555525,
+      "mixed_fraction_pre_outcome": 0.625,
+      "mixed_pools_out_of_8_pre_outcome": 5,
+      "replicate_differences": [
+        -0.05555555555555558,
+        0.0,
+        0.33333333333333326,
+        -0.05555555555555558
+      ],
+      "stream_id": "e1-agj-01"
+    },
+    {
+      "family": "formula_materialization",
+      "mean_difference_mrw_minus_win_c": 0.05555555555555555,
+      "mixed_fraction_pre_outcome": 1.0,
+      "mixed_pools_out_of_8_pre_outcome": 8,
+      "replicate_differences": [
+        0.16666666666666663,
+        0.11111111111111105,
+        0.05555555555555558,
+        -0.11111111111111105
+      ],
+      "stream_id": "e1-fmv-00"
+    },
+    {
+      "family": "formula_materialization",
+      "mean_difference_mrw_minus_win_c": 0.125,
+      "mixed_fraction_pre_outcome": 0.875,
+      "mixed_pools_out_of_8_pre_outcome": 7,
+      "replicate_differences": [
+        0.05555555555555558,
+        0.2222222222222222,
+        0.11111111111111116,
+        0.11111111111111105
+      ],
+      "stream_id": "e1-fmv-01"
+    },
+    {
+      "family": "input_output_contract",
+      "mean_difference_mrw_minus_win_c": 0.02777777777777779,
+      "mixed_fraction_pre_outcome": 1.0,
+      "mixed_pools_out_of_8_pre_outcome": 8,
+      "replicate_differences": [
+        -0.2222222222222222,
+        0.0,
+        0.2777777777777778,
+        0.05555555555555558
+      ],
+      "stream_id": "e1-ioc-00"
+    },
+    {
+      "family": "input_output_contract",
+      "mean_difference_mrw_minus_win_c": -0.02777777777777779,
+      "mixed_fraction_pre_outcome": 0.75,
+      "mixed_pools_out_of_8_pre_outcome": 6,
+      "replicate_differences": [
+        0.11111111111111116,
+        0.05555555555555547,
+        -0.2222222222222222,
+        -0.05555555555555558
+      ],
+      "stream_id": "e1-ioc-01"
+    },
+    {
+      "family": "multi_step_pipeline",
+      "mean_difference_mrw_minus_win_c": 0.0,
+      "mixed_fraction_pre_outcome": 1.0,
+      "mixed_pools_out_of_8_pre_outcome": 8,
+      "replicate_differences": [
+        0.05555555555555547,
+        0.05555555555555558,
+        -0.11111111111111105,
+        0.0
+      ],
+      "stream_id": "e1-msp-00"
+    },
+    {
+      "family": "multi_step_pipeline",
+      "mean_difference_mrw_minus_win_c": 0.18055555555555552,
+      "mixed_fraction_pre_outcome": 0.75,
+      "mixed_pools_out_of_8_pre_outcome": 6,
+      "replicate_differences": [
+        0.38888888888888884,
+        0.2777777777777778,
+        0.2222222222222222,
+        -0.16666666666666674
+      ],
+      "stream_id": "e1-msp-01"
+    },
+    {
+      "family": "schema_key_alignment",
+      "mean_difference_mrw_minus_win_c": -0.12499999999999997,
+      "mixed_fraction_pre_outcome": 0.875,
+      "mixed_pools_out_of_8_pre_outcome": 7,
+      "replicate_differences": [
+        -0.33333333333333337,
+        -0.05555555555555547,
+        -0.11111111111111105,
+        0.0
+      ],
+      "stream_id": "e1-ska-00"
+    },
+    {
+      "family": "schema_key_alignment",
+      "mean_difference_mrw_minus_win_c": 1.3877787807814457e-17,
+      "mixed_fraction_pre_outcome": 0.75,
+      "mixed_pools_out_of_8_pre_outcome": 6,
+      "replicate_differences": [
+        0.16666666666666663,
+        0.16666666666666674,
+        -0.27777777777777773,
+        -0.05555555555555558
+      ],
+      "stream_id": "e1-ska-01"
+    },
+    {
+      "family": "target_sheet_range",
+      "mean_difference_mrw_minus_win_c": -0.013888888888888867,
+      "mixed_fraction_pre_outcome": 0.875,
+      "mixed_pools_out_of_8_pre_outcome": 7,
+      "replicate_differences": [
+        -0.11111111111111105,
+        -0.16666666666666674,
+        0.11111111111111116,
+        0.11111111111111116
+      ],
+      "stream_id": "e1-tsr-00"
+    },
+    {
+      "family": "target_sheet_range",
+      "mean_difference_mrw_minus_win_c": -0.027777777777777762,
+      "mixed_fraction_pre_outcome": 0.75,
+      "mixed_pools_out_of_8_pre_outcome": 6,
+      "replicate_differences": [
+        -0.2777777777777778,
+        0.05555555555555558,
+        -0.05555555555555558,
+        0.16666666666666674
+      ],
+      "stream_id": "e1-tsr-01"
+    }
+  ]
+}

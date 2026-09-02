@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-deepseek-v2-final-scientific-closeout",
+  "date": "2026-09-02",
+  "status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "execution_status": "COMPLETE",
+  "protocol_integrity_status": "PASS_REPAIR2_CONTINUATION_V2_FULL_INTEGRITY_READY_FOR_SINGLE_USE_ANALYSIS",
+  "sample": {
+    "paired_units": 48,
+    "learned_states": 96,
+    "heldout_units": 1728,
+    "win_c_successes": 683,
+    "mrw_successes": 703,
+    "n_per_arm": 864
+  },
+  "primary_result": {
+    "win_c_mean": 0.7905092592592593,
+    "mrw_mean": 0.8136574074074074,
+    "mean_difference_mrw_minus_win_c": 0.02314814814814815,
+    "percentage_point_difference": 2.314814814814815,
+    "exact_one_sided_sign_flip_p": 0.171875,
+    "paired_stream_bootstrap_95_ci": [-0.018518518518518507, 0.06597222222222222],
+    "paired_t_90_ci": [-0.017273596987843382, 0.06356989328413969],
+    "equivalence_margin": 0.05555555555555555,
+    "superiority_pass": false,
+    "practical_equivalence_pass": false,
+    "harm_pass": false
+  },
+  "direction_counts": {
+    "streams_positive": 7,
+    "streams_zero": 1,
+    "streams_negative": 4,
+    "replicates_positive": 25,
+    "replicates_zero": 5,
+    "replicates_negative": 18
+  },
+  "predeclared_descriptive_heterogeneity": {
+    "allowed": true,
+    "role": "per-stream mixed dose and effect; descriptive family grouping only",
+    "new_significance_tests": false,
+    "family_specific_significance_claim": false,
+    "primary_status_changed": false
+  },
+  "artifact_bindings": {
+    "full_integrity_audit": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-final-integrity-audit-20260902.json",
+      "sha256": "02c750de1141e3723542f8674aca6f993e919e9ddf83c1537196872fce4b7039"
+    },
+    "analysis_authorization": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-analysis-authorization-20260902.json",
+      "sha256": "cbf6afba1a62b7a574c153dbb24d8ea513ebec0de86882187c252abb3746fc7c"
+    },
+    "primary_analysis": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-analysis-20260902.json",
+      "sha256": "f736cf7107d4439105bc8d24ae4519f34f742b26439113d97b56f6a0c1dbd0ab"
+    },
+    "descriptive_heterogeneity": {
+      "path": "generated/e2-r17-deepseek-v2-repair2-descriptive-heterogeneity-20260902.json",
+      "sha256": "b0a62e80cb0c7d9815f4e0a8d443eb1a7f4b1fa493d4d7866da360e7be7dfae4"
+    },
+    "closeout_memo": {
+      "path": "consultations/e2-r17-deepseek-v2-final-scientific-closeout-20260902.md",
+      "sha256": "717b296579e6970b73b94554c12752423ec9aeff2b5391c1c1ddadebae34fde0"
+    }
+  },
+  "claim_authority": {
+    "numerically_positive_point_estimate": true,
+    "mrw_causal_superiority": false,
+    "practical_equivalence": false,
+    "harm": false,
+    "family_specific_effect": false,
+    "mixed_dose_monotone_law": false,
+    "prospective_regime_law": false
+  },
+  "execution_authority": {
+    "additional_deepseek_tasks": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "rb_agg_rescue": false,
+    "e3_regime_prediction": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "next_scientific_state": "CURRENT_CONFIRMATORY_SAMPLE_CLOSED_FUTURE_WORK_REQUIRES_NEW_INDEPENDENT_PREREGISTRATION",
+  "interpretation": "The integrity-audited DeepSeek confirmatory sample has a +2.31 percentage-point aggregate MRW point estimate, but the preregistered stream-level superiority test and positive bootstrap lower-bound gate do not pass. Practical equivalence and harm are also not established. Predeclared descriptive stream/family variation is compatible with heterogeneity but cannot rescue or reclassify the frozen HOLD result."
+}
