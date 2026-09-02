@@ -8,12 +8,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ARMS = ("g0_base", "g1_verify", "g2_complete", "g3_complete_recover")
-CONTRACT = ROOT / "generated/e2-r17-single-case-constrained-state-micro-recovery2-v2-contract-20260902.json"
-AUTH = ROOT / "generated/e2-r17-single-case-constrained-state-micro-recovery2-v2-authorization-20260902.json"
-PREFLIGHT = ROOT / "generated/e2-r17-single-case-constrained-state-micro-recovery2-v2-preflight-20260902.json"
-ACTUAL_PATH = ROOT / "generated/e2-r17-single-case-constrained-state-micro-recovery2-v2-actual-path-preflight-20260902.json"
-SUPERSESSION = ROOT / "generated/e2-r17-single-case-constrained-state-micro-recovery2-v1-supersession-20260902.json"
+CONTRACT = ROOT / "generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-contract-20260903.json"
+AUTH = ROOT / "generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-authorization-20260903.json"
+PREFLIGHT = ROOT / "generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-preflight-20260903.json"
+ACTUAL_PATH = ROOT / "generated/e2-r17-single-case-constrained-state-micro-recovery2-v3-actual-path-preflight-20260903.json"
+SUPERSESSION = ROOT / "generated/e2-r17-single-case-constrained-state-micro-recovery2-v2-supersession-20260903.json"
 PARENT_BOUNDARY = ROOT / "generated/e2-r17-single-case-constrained-state-micro-recovery2-parent-boundary-20260902.json"
+ORDER_SALT = "E2-R17-CONSTRAINED-STATE-MICRO-EVAL-ORDER-v1"
 
 
 def load(path: Path) -> dict:
@@ -63,12 +64,12 @@ class TestE2R17ConstrainedStateRecovery2(unittest.TestCase):
         self.assertEqual(self.boundary["status"], "PASS_RECOVERY2_PARENT_BOUNDARY_OUTCOME_BLIND")
         self.assertFalse(self.boundary["scientific_scores_read"])
         self.assertFalse(self.boundary["partial_effect_read"])
-        self.assertEqual(self.supersession["status"], "PASS_RECOVERY2_V2_SUPERSEDES_UNUSED_V1_AUTHORITY")
-        self.assertEqual(self.supersession["provider_calls_under_v1"], 0)
-        self.assertEqual(self.supersession["scientific_outcomes_under_v1"], 0)
-        self.assertTrue(self.supersession["v1_execution_authority_revoked"])
-        self.assertTrue(self.supersession["v1_run_root_absent"])
-        self.assertTrue(self.supersession["v1_lineage_lease_absent"])
+        self.assertEqual(self.supersession["status"], "PASS_RECOVERY2_V3_SUPERSEDES_UNUSED_V2_AUTHORITY")
+        self.assertEqual(self.supersession["provider_calls_under_v2"], 0)
+        self.assertEqual(self.supersession["scientific_outcomes_under_v2"], 0)
+        self.assertTrue(self.supersession["v2_execution_authority_revoked"])
+        self.assertTrue(self.supersession["v2_run_root_absent"])
+        self.assertTrue(self.supersession["v2_lineage_lease_absent"])
 
     def test_exact_remaining_set_is_27_without_completed_replay(self) -> None:
         rec = self.contract["recovery2"]
@@ -76,8 +77,8 @@ class TestE2R17ConstrainedStateRecovery2(unittest.TestCase):
         self.assertEqual(rec["inherited_completed_measurements"], 45)
         self.assertEqual(rec["new_measurements"], 27)
         self.assertFalse(rec["completed_unit_replay"])
-        remaining: list[tuple[str, str]] = []
         completed = 0
+        completed_sets = {}
         for arm in ARMS:
             binding = rec["parent_manifests"][arm]
             manifest = Path(binding["path"])
@@ -86,9 +87,16 @@ class TestE2R17ConstrainedStateRecovery2(unittest.TestCase):
             tasks = [str(row["task_id"]) for row in jsonl_rows(manifest)]
             self.assertEqual(len(tasks), len(set(tasks)))
             completed += len(tasks)
-            remaining.extend((arm, task) for task in heldout if task not in tasks)
+            completed_sets[arm] = set(tasks)
+        remaining: list[tuple[str, str]] = []
+        for task in heldout:
+            ordered_arms = sorted(ARMS, key=lambda arm: hashlib.sha256(f"{ORDER_SALT}|{task}|{arm}".encode()).hexdigest())
+            remaining.extend((arm, task) for arm in ordered_arms if task not in completed_sets[arm])
+        frozen = [(str(row["arm"]), str(row["task_id"])) for row in rec["remaining_execution_order"]]
         self.assertEqual(completed, 45)
         self.assertEqual(len(remaining), 27)
+        self.assertEqual(remaining, frozen)
+        self.assertEqual(remaining[:3], [("g2_complete", "r17-b4-msp-p8"), ("g0_base", "r17-b4-msp-p8"), ("g1_verify", "r17-b4-msp-p8")])
         self.assertEqual(remaining.count(("g2_complete", "r17-b4-msp-p8")), 1)
 
     def test_budget_never_expands_beyond_original_191(self) -> None:
@@ -112,7 +120,7 @@ class TestE2R17ConstrainedStateRecovery2(unittest.TestCase):
 
     def test_actual_actor_path_reaches_provider_boundary_for_all_four_arms(self) -> None:
         self.assertEqual(self.preflight["status"], "PASS_CONSTRAINED_STATE_MICRO_ZERO_PROVIDER_PREFLIGHT")
-        self.assertEqual(self.actual["status"], "PASS_RECOVERY2_V2_ACTUAL_ACTOR_PATH_4_OF_4_ZERO_PROVIDER")
+        self.assertEqual(self.actual["status"], "PASS_RECOVERY2_V3_ACTUAL_ACTOR_PATH_4_OF_4_ZERO_PROVIDER")
         self.assertEqual(self.actual["provider_calls"], 0)
         self.assertEqual(self.actual["provider_claims"], 0)
         rows = {row["arm"]: row for row in self.actual["arms"]}

@@ -1,0 +1,18 @@
+{
+  "artifact_type": "e2-r17-constrained-state-micro-recovery2-v2-supersession",
+  "created_at_utc": "2026-09-02T16:33:34+00:00",
+  "next_gate": "RECOVERY2_V3_ZERO_PROVIDER_PREFLIGHT",
+  "partial_effect_read": false,
+  "provider_calls_under_v2": 0,
+  "reason": "Recovery2 V2 grouped unresolved measurements by arm, which could couple arm identity to provider time/quota position. V3 restores the original frozen per-task hash-balanced arm order and binds the exact 27-unit remaining execution sequence.",
+  "schema_version": "1.0",
+  "scientific_outcomes_under_v2": 0,
+  "status": "PASS_RECOVERY2_V3_SUPERSEDES_UNUSED_V2_AUTHORITY",
+  "v2_authorization_path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v2-authorization-20260902.json",
+  "v2_authorization_sha256": "30c49d7e948eac789f1b371a59da75b997ef3c8376b63e1620d700661e7df36a",
+  "v2_contract_path": "generated/e2-r17-single-case-constrained-state-micro-recovery2-v2-contract-20260902.json",
+  "v2_contract_sha256": "6e9d9b344b763e4b9f4f2b2d3f8e5207f38a7230c8a35f882bac9b1e215436f5",
+  "v2_execution_authority_revoked": true,
+  "v2_lineage_lease_absent": true,
+  "v2_run_root_absent": true
+}

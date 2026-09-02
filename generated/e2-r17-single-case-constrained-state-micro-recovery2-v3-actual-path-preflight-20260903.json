@@ -1,0 +1,57 @@
+{
+  "arms": [
+    {
+      "arm": "g0_base",
+      "artifact_path": "/data/wyt/e2-r17-search-projection/preflight/single-case-constrained-state-micro-recovery2-v3-20260903/g0_base/pre-provider-stop.json",
+      "artifact_sha256": "2a8f175b69ecaf82104da3c4f091a6c2ed728647cc6de65bab77a1167ea26345",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_mode": "none_initial_skill",
+      "skill_pre_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO"
+    },
+    {
+      "arm": "g1_verify",
+      "artifact_path": "/data/wyt/e2-r17-search-projection/preflight/single-case-constrained-state-micro-recovery2-v3-20260903/g1_verify/pre-provider-stop.json",
+      "artifact_sha256": "15f633fe2952f67cff4e14a0331fa9a43faeac59a10efc1b8c349ba5016675a3",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_mode": "deterministic_bound_receipt",
+      "skill_pre_sha256": "b8f51458daa28672dbe078c293f29d37c42eb5b2305199d92ccd7600ac078997",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO"
+    },
+    {
+      "arm": "g2_complete",
+      "artifact_path": "/data/wyt/e2-r17-search-projection/preflight/single-case-constrained-state-micro-recovery2-v3-20260903/g2_complete/pre-provider-stop.json",
+      "artifact_sha256": "2284c2c7455e20e1bd9f64109e4176f273d2dca753e91eed2be9a87775d43019",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_mode": "deterministic_bound_receipt",
+      "skill_pre_sha256": "248f1f7c3429c99d98c8d58584048efe2f989050116f507cea895484f8c80289",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO"
+    },
+    {
+      "arm": "g3_complete_recover",
+      "artifact_path": "/data/wyt/e2-r17-search-projection/preflight/single-case-constrained-state-micro-recovery2-v3-20260903/g3_complete_recover/pre-provider-stop.json",
+      "artifact_sha256": "dc33d18e523c659ff17e2b0b7f4d118b0456230d80c8f56731df96acb187787d",
+      "provider_calls": 0,
+      "provider_claims": 0,
+      "receipt_mode": "deterministic_bound_receipt",
+      "skill_pre_sha256": "a89cbbd46a01aecb7e3c7f9e5cda964ce7c584492eef0aa6d78a9b422192ceb2",
+      "status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO"
+    }
+  ],
+  "artifact_type": "e2-r17-constrained-state-micro-recovery2-v3-actual-path-preflight",
+  "authorization_sha256": "ad235772b0a204ffb33b281c90fc5d5e0c4a56fb6de7a30c16bd4b85d431e26b",
+  "contract_sha256": "6fe178467d8fb726adf1986fa6be2a294f1da736998ce36f6f92ecd25e805877",
+  "created_at_utc": "2026-09-02T16:34:27+00:00",
+  "next_gate": "WAIT_WEEKLY_QUOTA_RESET_THEN_EXECUTE_RECOVERY2_V3",
+  "partial_effect_read": false,
+  "provider_calls": 0,
+  "provider_claims": 0,
+  "remaining_execution_order_sha256": "4219490a820e4551afaf11fee159d3ea15bc3ea88bd8aabf98f7f48a82a7db61",
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "status": "PASS_RECOVERY2_V3_ACTUAL_ACTOR_PATH_4_OF_4_ZERO_PROVIDER",
+  "task_id": "r17-b4-ska-p4"
+}
