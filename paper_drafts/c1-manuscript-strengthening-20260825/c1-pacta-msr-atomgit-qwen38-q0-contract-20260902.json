@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q0-20260902",
+  "status": "FROZEN_PRE_PROVIDER",
+  "non_scientific": true,
+  "purpose": "Qualify AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B as a text-only experimental policy/writer provider before any fresh C1 source task is consumed.",
+  "provider": {
+    "surface": "AtomGit CodingPlan via AtomCode headless",
+    "atomcode_version": "5.0.9",
+    "atomcode_profile": "AtomGit-qwen3.8-27b",
+    "resolved_model": "qwen3.8-27b",
+    "context_window": 262144,
+    "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+    "invocation": ["--ephemeral", "--no-tools", "--no-telemetry", "--output-format", "jsonl"],
+    "workdir": "empty qualification directory with no repository instructions",
+    "provider_retries": 0,
+    "one_codingplan_request_per_invocation": true
+  },
+  "identity": {
+    "probes": 3,
+    "pass": "3/3 run.started model is qwen3.8-27b or AtomGit-qwen3.8-27b, exactly one usage event, nonempty assistant text"
+  },
+  "first_action": {
+    "fixtures": 20,
+    "budget_ladder": [512, 1024, 2048, 4096],
+    "pass": "freeze the smallest budget with 20/20 non-scientific MiniSWEAgent-format responses containing exactly one nonempty fenced bash action, exact model binding, one request, and persisted raw JSONL before parse"
+  },
+  "source_long_action": {
+    "fixtures_per_budget": 6,
+    "budget_ladder": [4096, 16384, 32768],
+    "grid": {"history_pairs": [0, 12, 24], "payload_lines": [160, 320]},
+    "pass": "freeze the smallest budget with 6/6 exact model, one request, one fenced bash action, and byte-exact requested long command"
+  },
+  "sampling_diagnostic": {
+    "fixtures": 2,
+    "replicates_per_fixture": 6,
+    "pass_requirement": false,
+    "purpose": "describe provider-managed repeatability/noise only; never select another model or alter gates from this diagnostic"
+  },
+  "forbidden": [
+    "consume any of the ten fresh PACTA-MSR source tasks",
+    "execute any future task",
+    "writer calls",
+    "binder calls",
+    "shadow calls",
+    "PACTA gate",
+    "final measurement",
+    "switch to AtomGit-deepseek-v4-flash",
+    "switch to AtomGit-GLM-5.2",
+    "reuse Qwen397 source outcomes",
+    "claim raw Qwen API equivalence"
+  ],
+  "claim_boundary": "If Q0 passes, the scientific model condition is AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B, not a raw Qwen3.8 API condition. Sampling is provider-managed.",
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_measurement_calls": 0
+}
