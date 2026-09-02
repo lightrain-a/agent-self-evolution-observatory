@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-02T04:38:00Z",
+  "experiment": "C1-PACTA-MSR-QWEN397-P0-20260902",
+  "status": "FROZEN_PRE_SOURCE_OUTCOME",
+  "model": "qwen3.5-397b-a17b",
+  "carrier": "ReasoningBank + SWE-bench Verified + official MiniSWEAgent",
+  "official_commit": "ed80611788292ea739f1effd31f16c53823b8a0d",
+  "fresh_pool_sha256": "2391967a3da363bcbbe87403599970854d7cf7ed82b249078b0469b36a8de59e",
+  "runtime_qualification_sha256": "7b876c9dc31e964868fa1c5cff3cd5ab3510e57162e65368023102822d933a01",
+  "probe_specs_v2_sha256": "8b687006bf5308c53a95e48e9ab48a0c79957c015b2d32d17dafba9c584c76a0",
+  "pilot_split_git_sha": "7ceed7b9d22d7d2dc9b5034d9800119f5407d399",
+  "pilot_count": 8,
+  "sealed_count": 2,
+  "source_gate": "all 10 fresh native source trajectories must be provenance-valid; otherwise stop with no replacement",
+  "probe": {
+    "provider_calls": 0,
+    "executed_units": 8,
+    "sealed_units_executed": 0,
+    "command_source": "byte-frozen deterministic v2 probe specs",
+    "future_exact_base_required": true,
+    "post_probe_head_and_clean_tree_invariant": true,
+    "timeout_seconds": 60
+  },
+  "writer": {
+    "calls": 16,
+    "branches": ["SUCCESSFUL_SI", "FAILED_SI"],
+    "same_exact_source_trajectory": true,
+    "temperature": 0.0,
+    "max_completion_tokens": 2048,
+    "thinking": false
+  },
+  "binder": {
+    "contexts": ["G0_STEP0", "GPLUS_MATCHED_REVEAL"],
+    "calls": 32,
+    "temperature": 0.0,
+    "max_completion_tokens": 512,
+    "word_limit": 60,
+    "novelty": false
+  },
+  "shadow": {
+    "selectors": ["G0_STEP0", "GPLUS_MATCHED_REVEAL"],
+    "calls": 384,
+    "temperature": 0.2,
+    "max_completion_tokens": 512,
+    "blocks_per_branch": 2,
+    "samples_per_block": 6,
+    "action_signature": "exact first fenced bash command; no post-hoc canonicalization",
+    "gate": "min(B1,B2) > max(WS,WF)",
+    "margin": "min(B1,B2) - max(WS,WF)"
+  },
+  "mechanism_gate": {
+    "all_shadow_calls_complete": true,
+    "Gplus_open_count": "2..6/8",
+    "mean_margin_Gplus_minus_G0_ge": 0.05,
+    "positive_margin_improvement_count_ge": 5,
+    "failure_action": "stop before final measurement"
+  },
+  "rate_matched_random": {
+    "ranking_frozen_pre_shadow": true,
+    "K": "equal to Gplus open count",
+    "reroll": false
+  },
+  "final": {
+    "conditional": "mechanism gate PASS only",
+    "calls": 384,
+    "context": "matched revealed future state",
+    "temperature": 0.2,
+    "max_completion_tokens": 512,
+    "arms": ["A0_NATIVE", "A1_SCB_ALWAYS", "A2_RATE_MATCHED_RANDOM", "A3_PACTA_MSR"],
+    "endpoint": "per-unit empirical TV between success-writer and failure-writer first-action distributions",
+    "primary": "D_select = U_A3 - U_A2",
+    "pilot_pass": [
+      "all final calls complete",
+      "mean D_select >= 0.05",
+      "positive D_select unit count > negative count",
+      "mean A3-A0 > 0",
+      "mean A3-A1 >= 0"
+    ]
+  },
+  "transport_recovery": {
+    "eligible_only_when": "HTTP 400/429 rate_limit_exceeded and no model content is present",
+    "max_retries": 2,
+    "backoff_seconds": [60, 120],
+    "scientific_interpretation": "same logical sample transport recovery, not an additional rollout"
+  },
+  "p0_hard_caps": {
+    "input_tokens": 10000000,
+    "output_tokens": 1000000
+  },
+  "forbidden": [
+    "execute either sealed unit",
+    "replace a failed pilot unit",
+    "change probe tokens or commands after probe execution",
+    "change exact-action signature or gate threshold after shadow outcomes",
+    "add shadow samples to rescue the mechanism gate",
+    "run final after mechanism-gate failure",
+    "run Qwen122/27 or another model as rescue",
+    "terminal SWE-bench evaluation",
+    "R10 positive-method rewrite"
+  ],
+  "terminal": false,
+  "confirmatory": false,
+  "second_model": false,
+  "active_manuscript": "R9"
+}
