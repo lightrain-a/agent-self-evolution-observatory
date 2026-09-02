@@ -1,0 +1,52 @@
+{
+  "artifact_type": "e2-r17-posthold-rbagg-semantic-pilot-authorization",
+  "authority": {
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "provider_io": true,
+    "public_benchmark": false,
+    "rbagg_full_diagnostic": false,
+    "scientific_effectiveness_inference": false,
+    "second_backbone": false,
+    "semantic_provider_pilot": true
+  },
+  "contract_path": "generated/e2-r17-posthold-rbagg-semantic-pilot-contract-20260902.json",
+  "contract_sha256": "64ac4475ead105143147a4a46d15cd2b279f8d0d8af2e51d9fcd59202bbaed80",
+  "created_at_utc": "2026-09-02T04:28:55+00:00",
+  "fixed_stream": "e1-agj-00",
+  "interpretation_boundary": "Exactly one fixed-stream semantic provider pilot. Eight ReasoningBank-style aggregation calls plus one MindMemOS updater realization, hard ceiling eleven total provider claims. The pilot skill is permanently quarantined; no heldout evaluation or scientific effectiveness inference is authorized.",
+  "model": {
+    "identity_evidence": "fresh independent DeepSeek reviewer call resolved to the same exact model before pilot authorization",
+    "provider_retry_limit": 0,
+    "requested_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+    "thinking": "disabled"
+  },
+  "parent_primary_status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+  "parent_status_changed": false,
+  "preflight_path": "generated/e2-r17-posthold-rbagg-semantic-pilot-preflight-20260902.json",
+  "preflight_sha256": "a62346a631362ffa9f1fb9f9b49f29feff2ccb54d3c4474418bdea130923f060",
+  "provider_budget": {
+    "claim_before_provider_io": true,
+    "claims_never_released": true,
+    "per_unit_limit": 11,
+    "total_limit": 11
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/posthold-rbagg-semantic-pilot-20260902",
+  "runner_path": "scripts/run_e2_r17_posthold_rbagg_semantic_pilot.py",
+  "runner_sha256": "fe5de27d68dc084a94c6fd6e88a3eaa02e7ac0f54cfe7e3c8341aaf412e2702b",
+  "schema_version": "1.0",
+  "single_use": true,
+  "status": "AUTHORIZED_E2_R17_POSTHOLD_RBAGG_SEMANTIC_PILOT_EXACTLY_ONCE",
+  "task_ids": [
+    "r17-b2-agj-p2",
+    "r17-b2-agj-p5",
+    "r17-b2-agj-p7",
+    "r17-b3-agj-p0",
+    "r17-b2-agj-p3",
+    "r17-b3-agj-p3",
+    "r17-b2-agj-p8",
+    "r17-b3-agj-p8"
+  ]
+}
