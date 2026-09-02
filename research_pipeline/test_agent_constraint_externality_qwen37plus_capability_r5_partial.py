@@ -9,6 +9,7 @@ from research_pipeline.agent_constraint_externality_qwen37plus_capability_r5_par
     R5_CONTRACT,
     TNF_FAMILIES,
     TOOL_CAP,
+    terminal_scientific_rows,
     units,
 )
 from research_pipeline.agent_constraint_externality_runner_core import sha256_value
@@ -22,6 +23,15 @@ class Qwen37PlusCapabilityR5PartialTest(unittest.TestCase):
         self.assertTrue(all(row.stage == "CAPABILITY_CALIBRATION_R5_PARTIAL_TNF" for row in rows))
         self.assertTrue(all("ACE-FG" not in row.unit_id for row in rows))
         self.assertTrue(all(ALLOWED_ALIAS in row.unit_id for row in rows))
+
+    def test_dispatch_rows_are_excluded_from_model_identity_adjudication(self) -> None:
+        rows = [
+            {"event": "DISPATCH", "unit_id": "u"},
+            {"event": "COMPLETION", "unit_id": "u", "provider_receipts": [{"resolved_model": ALLOWED_ALIAS}]},
+        ]
+        terminal = terminal_scientific_rows(rows)
+        self.assertEqual(len(terminal), 1)
+        self.assertEqual(terminal[0]["event"], "COMPLETION")
 
     def test_contract_preserves_fg_and_changes_only_qualified_tool_budget(self) -> None:
         payload = json.loads(Path(R5_CONTRACT).read_text(encoding="utf-8"))

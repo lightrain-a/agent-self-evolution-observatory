@@ -1,7 +1,7 @@
 {
   "authority": {
     "appworld_ul": false,
-    "capability_calibration": true,
+    "capability_calibration": false,
     "f0": false,
     "m1_mock_qualification": false,
     "method": false,
@@ -83,8 +83,8 @@
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 2846,
-      "sha256": "4a6e1bc5680eecc2a6e751d056d63a611ffb457559ddb878e310efbc6fb376b9"
+      "bytes": 3070,
+      "sha256": "7f02b4afc07f41ddf343381b6b3a8ee899d6a4cb8fbdc29c10105bcc51fb2500"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -154,6 +154,10 @@
       "bytes": 1660,
       "sha256": "1e2474c407cb7b8414f3a7e53b57dfd0df8391504a4bf4ddbffa86f1271ac4df"
     },
+    "generated/agent-constraint-externality-qwen37plus-capability-result-r5-partial-20260902.json": {
+      "bytes": 1856,
+      "sha256": "ec85c4c86827405846db549a4719b374bf1b916af0e6f1a350de132a461abbac"
+    },
     "generated/agent-constraint-externality-qwen37plus-provider-snapshot-a1-20260901.json": {
       "bytes": 723,
       "sha256": "18e48b51c45543f069091557276c34240ac18b4510c3e05f730cac054210a5d5"
@@ -166,8 +170,8 @@
   "generated_at": "2026-09-01T15:35:00+08:00",
   "gpu_runs": 0,
   "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
-  "provider_calls": 257,
+  "provider_calls": 296,
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
   "scientific_outcomes_observed": 0,
-  "status": "CAPABILITY_SUBSTRATE_V4_PARTIAL_REQUALIFICATION_READY"
+  "status": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
 }

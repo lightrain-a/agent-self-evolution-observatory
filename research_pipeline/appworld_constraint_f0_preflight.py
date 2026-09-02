@@ -698,6 +698,9 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "capability_preserved_fg_measurements": 4 if r3_partial_void_active else int(
             capability_result.get("preserved_fg_measurements", 0)
         ),
+        "capability_rerun_tnf_measurements": int(
+            capability_result.get("rerun_tnf_measurements", 0)
+        ),
         "capability_result_status": capability_status,
         "capability_result_artifact": (
             str(capability_result_path.relative_to(ROOT))

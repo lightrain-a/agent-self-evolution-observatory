@@ -172,6 +172,11 @@ def execute(*, appworld_root: Path, runtime_root: Path, ledger_path: Path, toolc
     ledger.assert_all_terminal(units())
 
 
+def terminal_scientific_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Return only terminal rows that can carry provider receipts/scientific measurements."""
+    return [row for row in rows if row.get("event") in {"COMPLETION", "FAILURE"}]
+
+
 def adjudicate(*, ledger_path: Path, toolcap_path: Path) -> dict[str, Any]:
     fg = verified(FG_REVALIDATION, "R2_FG_V2_MEASUREMENT_REVALIDATION_PASS")
     ledger = AppendOnlyLedger(ledger_path)
@@ -202,7 +207,8 @@ def adjudicate(*, ledger_path: Path, toolcap_path: Path) -> dict[str, Any]:
     inherited_requests = sum(int(row["inherited_agent_model_request_count"]) for row in fg["rows"])
     new_requests = 0
     completions = 0
-    for row in rows:
+    terminal_rows = terminal_scientific_rows(rows)
+    for row in terminal_rows:
         receipts = row.get("provider_receipts", [])
         if {receipt.get("resolved_model") for receipt in receipts} != {ALLOWED_ALIAS}:
             raise RunnerError("R5 resolved model drifted.")
