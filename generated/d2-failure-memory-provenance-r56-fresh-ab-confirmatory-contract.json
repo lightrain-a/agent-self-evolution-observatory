@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R56-FRESH-AB-CONFIRMATORY-CONTRACT",
+  "recorded_date": "2026-09-02",
+  "status": "R56_FRESH_AB_CONFIRMATORY_CONTRACT_FROZEN_PRE_VALIDATION_OUTCOME",
+  "role": "FRESH_L2_PROVENANCE_ONLY_CONFIRMATORY_OPERATIONALIZATION",
+  "scientific_boundary": {
+    "estimand": "B_raw_provenance - A_content_only",
+    "C_D_execution": false,
+    "PSMG_efficacy_claim": false,
+    "historical_pooling": false
+  },
+  "bindings": {
+    "r53_program_contract_file_sha256": "fd729cd224fca08322b5346faa1a110e9f68b3459746308281537581a49647bc",
+    "r54_selection_file_sha256": "39957119208258bd0bbd7a9a613cfa3403e9693229cb9452714c655774ad071c",
+    "r54_selection_receipt_sha256": "7d75b4d79a7b83ad8e3d452d4a232d66c1137acc91484e51356160a95a385776",
+    "r55_manifest_file_sha256": "cc2200f898175963e3d0762c370f6d83dad4d572850f88618f24b15f891ca38b",
+    "r55_runner_sha256": "6b86f31e8d62c1ec49d2fb7e94ca4eea05ecc926a06413e7b95318423383c00d",
+    "r56_runner_sha256": "be4b7b4d0ce2808f4564705fc80e2261b771f2c66a5a22cc3d93bf3794211dbf",
+    "r39_exact_information_adapter_sha256": "c94353ca46c8cfb65cfae6218d2e03ae6946b37aa25e52ee83212e2dfe03afe2"
+  },
+  "units": {
+    "benchmark": "OSInteraction",
+    "count": 32,
+    "representative_ids": [
+      "150",
+      "327",
+      "98",
+      "335",
+      "161",
+      "366",
+      "125",
+      "260",
+      "176",
+      "136",
+      "3",
+      "236",
+      "28",
+      "235",
+      "202",
+      "40",
+      "467",
+      "470",
+      "79",
+      "275",
+      "290",
+      "15",
+      "414",
+      "411",
+      "463",
+      "135",
+      "71",
+      "325",
+      "282",
+      "193",
+      "252",
+      "441"
+    ],
+    "representative_ids_sha256": "c78d5b734e073fe1cfe9de432be5a1728a8eb55d1c115f827bbfd0aae25f7052",
+    "statistical_unit": "fresh exact sorted skill_list-signature dependency cluster representative"
+  },
+  "arms": {
+    "A_content_only": "same frozen actionable memory content with provenance hidden",
+    "B_raw_provenance": "same frozen actionable memory content plus truthful boolean source_outcome_success"
+  },
+  "renderer": {
+    "adapter": "build_memrl_exact_information_pair",
+    "canonical_serialization": "json.dumps(sort_keys=True,separators=(comma,colon))",
+    "memory_context_prefix": "[Retrieved Memory Context]\\n",
+    "only_executor_visible_difference": "source_outcome_success",
+    "actionable_content_byte_match_required": true
+  },
+  "randomization": {
+    "seed": 20260825,
+    "arms": [
+      "A_content_only",
+      "B_raw_provenance"
+    ],
+    "per_unit_algorithm": "random.Random(int(SHA256('B1-R48-AB-ARM|<seed>|<task_id>')[:16],16)).shuffle(['A_content_only','B_raw_provenance'])",
+    "schedule_before_first_A_B_outcome": true,
+    "outcome_adaptive_randomization": false
+  },
+  "execution": {
+    "endpoint": "native LifelongAgentBench OSInteraction terminal success",
+    "exact_arm_runs": 64,
+    "all_pairs_complete_required": true,
+    "external_provider_spend": false
+  },
+  "analysis": {
+    "estimand": "mean over 32 clusters of terminal_success(B_raw_provenance) - terminal_success(A_content_only)",
+    "effect_relevance_floor_abs": 0.15,
+    "confidence_interval": "95% paired-cluster percentile bootstrap",
+    "bootstrap_repetitions": 100000,
+    "bootstrap_seed": 20260825,
+    "bootstrap_quantile_method": "sort 100000 paired-resample effects; lower=floor(0.025*(B-1)), upper=ceil(0.975*(B-1))",
+    "test": "two-sided exact paired sign-flip test over discordant cluster pairs",
+    "p_value_cannot_upgrade_rung_by_itself": true,
+    "complete_case_requirement": "all 32 A/B pairs complete; no imputation",
+    "analysis_only_after_64_complete_arm_runs": true
+  },
+  "hard_limits": {
+    "C_D_execution": false,
+    "second_A_B_run": false,
+    "unit_replacement": false,
+    "retrieval_rerun_between_arms": false,
+    "prompt_or_renderer_change_after_first_A_B_exposure": false,
+    "partial_effect_inspection": false,
+    "historical_pooling": false,
+    "optional_stopping": false
+  },
+  "prevalidation_accounting": {
+    "utilization_treatment_outcomes_observed": 0,
+    "A_B_treatment_outcomes_observed": 0,
+    "primary_confirmatory_outcomes_observed": 0
+  },
+  "scientific_authority": false,
+  "receipt_sha256": "79f77f124e1ad66743952a3e461a3cf4cf368ef6d7e07b474d579ce5609b5ab1"
+}

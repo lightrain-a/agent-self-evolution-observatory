@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R55-FRESH-UTILIZATION-AUTHORITY",
+  "recorded_date": "2026-09-02",
+  "status": "R55_FULL350_FRESH_UTILIZATION_EXECUTION_AUTHORITY_FROZEN_PRE_OUTCOME",
+  "authorized_by": "explicit current-conversation user directive: 继续, after R53 full350 completion and R54-v2 zero-outcome fresh support PASS",
+  "bindings": {
+    "manifest_file_sha256": "cc2200f898175963e3d0762c370f6d83dad4d572850f88618f24b15f891ca38b",
+    "manifest_receipt_sha256": "8b7b66ab28752dd8794bf26847aa95294b033f24caaf0cb42ee0f94ad385a1e6",
+    "r54v2_receipt_file_sha256": "650e145a491f09555e40aa8c81c8598d8e1e2dc9febd906857fb8a3202f3aca3",
+    "r54v2_receipt_sha256": "032c79998165700d5405d2d56bd30cf2dfe044b9f9ec97d2e51461a429514c42",
+    "selection_file_sha256": "39957119208258bd0bbd7a9a613cfa3403e9693229cb9452714c655774ad071c",
+    "selection_receipt_sha256": "7d75b4d79a7b83ad8e3d452d4a232d66c1137acc91484e51356160a95a385776",
+    "frozen_retrieval_file_sha256": "fc906765f2f94b053996bef2d7a085b6a2534b0922f2929da253390d3b855b72",
+    "frozen_retrieval_receipt_sha256": "03a891c3c0c8e7fb9de02e41a052d2d1c3481b61f9c4c02655078bb709982ab8",
+    "source_receipt_file_sha256": "64b64cb2ca170482fafe4bb89db96071e896d1a952dc6c9a8002093849a000b0",
+    "source_receipt_sha256": "ce15c57e9c1274d1b40aca49850c7b0cbb5a8fe0656314d8bdfca3d7024e95c7",
+    "runner_sha256": "6b86f31e8d62c1ec49d2fb7e94ca4eea05ecc926a06413e7b95318423383c00d"
+  },
+  "authorized_scope": {
+    "utilization_qualification": {
+      "authorized": true,
+      "exact_clusters": 8,
+      "arms": [
+        "U0_no_memory",
+        "U1_true_memory",
+        "U2_null_memory",
+        "U3_reversed_memory",
+        "U4_shuffled_memory"
+      ],
+      "exact_arm_runs": 40
+    },
+    "primary_A_B": {
+      "authorized": false
+    }
+  },
+  "hard_limits": {
+    "second_utilization_run": false,
+    "unit_replacement": false,
+    "prompt_or_arm_semantic_change": false,
+    "model_or_runtime_change": false,
+    "partial_primary_effect_inspection": false,
+    "historical_pooling": false,
+    "optional_stopping": false
+  },
+  "authority": {
+    "execution": true,
+    "local_gpu": true,
+    "external_provider_spend": false,
+    "A_B_execution": false
+  },
+  "pre_authority_accounting": {
+    "validation_treatment_outcomes_observed": 0,
+    "primary_confirmatory_outcomes_observed": 0
+  },
+  "receipt_sha256": "dd1589c65e2d906b71b4d3bc79d78a11239d64687d4b7bd72b4aaae9e98f4700"
+}
