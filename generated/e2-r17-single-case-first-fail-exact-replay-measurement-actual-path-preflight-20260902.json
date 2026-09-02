@@ -1,0 +1,43 @@
+{
+  "artifact_type": "e2-r17-first-fail-exact-replay-measurement-actual-path-preflight",
+  "contract_path": "generated/e2-r17-single-case-first-fail-exact-replay-measurement-contract-20260902.json",
+  "contract_sha256": "c81b9c771be564991a97b2b15815f89d591f501ff107dd982bfdddd39c2f05d4",
+  "created_at_utc": "2026-09-02T06:53:34+00:00",
+  "next_gate": "MINT_TWO_MEASUREMENT_ONLY_AUTHORIZATIONS",
+  "provider_calls": 0,
+  "rep1_preflight_authorization_sha256": "77a0acbdb4fb9fb92abebaf066467307937a8986fd810e8df75f48d9abe34cc3",
+  "rep2_preflight_authorization_sha256": "5010ad9d33e63fdff8f951287aaed331610dc232aa94b2f4207eb72009810235",
+  "results": [
+    {
+      "arm": "win_c",
+      "group": "rep1",
+      "output_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-measurement-preflight-20260902/rep1/win_c/preflight.json",
+      "output_sha256": "a5ca663831e5e9bd1c7b81b390d6be83bb7d7d86b95b87bffc41bfbebb941976",
+      "provider_calls": 0
+    },
+    {
+      "arm": "first_fail",
+      "group": "rep1",
+      "output_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-measurement-preflight-20260902/rep1/first_fail/preflight.json",
+      "output_sha256": "532baf3627c776b94e6dc01a77d765f540d358ff92cb40c254d16811d2502428",
+      "provider_calls": 0
+    },
+    {
+      "arm": "win_c",
+      "group": "rep2",
+      "output_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-measurement-preflight-20260902/rep2/win_c/preflight.json",
+      "output_sha256": "645d1cd67fc8b0843e8153c6c05a34516e769ea4a0517a592454c3591471263a",
+      "provider_calls": 0
+    },
+    {
+      "arm": "first_fail",
+      "group": "rep2",
+      "output_path": "/data/wyt/e2-r17-search-projection/runs/single-case-first-fail-exact-replay-measurement-preflight-20260902/rep2/first_fail/preflight.json",
+      "output_sha256": "b04d65351e0fd929a7e9bf7f3cd3365e7299f49caf83953a0792ad10b914456f",
+      "provider_calls": 0
+    }
+  ],
+  "schema_version": "1.0",
+  "scientific_outcomes_read": false,
+  "status": "PASS_FIRST_FAIL_EXACT_REPLAY_MEASUREMENT_ACTUAL_PATH_ZERO_PROVIDER"
+}
