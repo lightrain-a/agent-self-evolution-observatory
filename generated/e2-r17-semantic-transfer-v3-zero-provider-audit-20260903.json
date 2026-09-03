@@ -1,0 +1,115 @@
+{
+  "artifact_type": "e2-r17-semantic-transfer-v3-zero-provider-audit",
+  "authority": {
+    "analyzer": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "public_benchmark": false,
+    "second_backbone": false,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false
+  },
+  "deterministic_rebuild_match": true,
+  "frozen_hashes": {
+    "dataset": "be84cca6d75359b713a1d6f914c002f7f2be95bcef5f4b745e61908ac7d56b10",
+    "metadata": "1cd8fbe40ab84d9db32a6b4877a6aeb3949b4db0772cba04bf9d60ca901b612f",
+    "split": "815977e908214b66a1106d623ca68f4707d56b117fb01740cadbd1edeab3679e",
+    "suite_manifest": "9d57c0abc51758e3657484048e9a132a531ff2758d724b7be5cc6d14ae262338"
+  },
+  "generation_runtime": {
+    "audit": {
+      "openpyxl_version": "3.1.5",
+      "python_implementation": "CPython",
+      "python_version": "3.12.3",
+      "zlib_compile_version": "1.3",
+      "zlib_runtime_version": "1.3"
+    },
+    "expected": {
+      "openpyxl_version": "3.1.5",
+      "python_implementation": "CPython",
+      "python_version": "3.12.3",
+      "zlib_compile_version": "1.3",
+      "zlib_runtime_version": "1.3"
+    },
+    "match": true,
+    "suite": {
+      "openpyxl_version": "3.1.5",
+      "python_implementation": "CPython",
+      "python_version": "3.12.3",
+      "zlib_compile_version": "1.3",
+      "zlib_runtime_version": "1.3"
+    }
+  },
+  "identification": {
+    "heldout_profile_selection_semantic_blind": true,
+    "minimum_all_positive_exact_sign_p": 0.03125,
+    "primary_independent_units": 5,
+    "primary_unit": "matched_skeleton_interaction I_h",
+    "replicates_are_measurement_not_semantic_replication": true,
+    "scientific_profile_selection_semantic_blind": true,
+    "semantic_crossed_inside_common_generator": true,
+    "within_stream_sd_power_claim_removed": true
+  },
+  "next_gate": "V3_CONTROL_PLANE_IMPLEMENTATION_AND_INDEPENDENT_PRE_STAGE_A_REVIEW",
+  "provider_calls": 0,
+  "router": {
+    "forbidden_hidden_metadata_inputs": true,
+    "generated_task_routes": {
+      "MRW4": 135,
+      "UNCLASSIFIED": 0,
+      "WIN-C": 135
+    },
+    "hidden_label_mismatches": 0,
+    "input": "actor-visible instruction only",
+    "instruction_length_balance": {
+      "cross_group_window": {
+        "absolute_difference_words": 5.0,
+        "binding_mean_words": 45.0,
+        "procedural_mean_words": 50.0
+      },
+      "cross_join_ledger": {
+        "absolute_difference_words": 3.0,
+        "binding_mean_words": 60.0,
+        "procedural_mean_words": 57.0
+      },
+      "cross_lookup_reconcile": {
+        "absolute_difference_words": 2.0,
+        "binding_mean_words": 46.0,
+        "procedural_mean_words": 44.0
+      },
+      "cross_measure_panel": {
+        "absolute_difference_words": 5.0,
+        "binding_mean_words": 47.0,
+        "procedural_mean_words": 52.0
+      },
+      "cross_snapshot_bundle": {
+        "absolute_difference_words": 2.0,
+        "binding_mean_words": 48.0,
+        "procedural_mean_words": 50.0
+      }
+    },
+    "prompt_hidden_label_leaks": 0
+  },
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "scientific_outcomes_accessed": false,
+  "status": "PASS_V3_CROSSED_IDENTIFICATION_ZERO_PROVIDER_AUDIT",
+  "suite": {
+    "crossed_cells": 10,
+    "crossed_skeletons": 5,
+    "generated_tasks": 270,
+    "heldout_tasks": 20,
+    "old_task_id_overlap": 0,
+    "old_xlsx_sha256_overlap": 0,
+    "paired_init_checks": 135,
+    "paired_init_mismatches": 0,
+    "update_streams": 20,
+    "update_tasks": 160,
+    "workbook_pairs_checked": 270
+  },
+  "treatment": {
+    "exactly_four_treated_pools_per_support_qualified_stream": true,
+    "failed_witness_selector": "lowest original rollout index among verifier-failure nonwinner trajectories",
+    "treated_pool_selection": "lowest SHA256(semantic-transfer-mrw4-v3|stream_id|task_id) among mixed pools; exactly four per qualified stream"
+  }
+}
