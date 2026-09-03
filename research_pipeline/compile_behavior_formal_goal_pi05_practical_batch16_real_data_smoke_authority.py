@@ -12,6 +12,7 @@ CHILD_ID = "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH"
 PRACTICAL_PREREG_SHA = "382449b4320bacd85f736c0df9342f9677b3c755f2daeedcd680212aed2a503a"
 SYNTHETIC_RESULT_SHA = "3914b1f2a3fd5e7964524eac7f625b64b4f089c0048a12dc5ebe9b79ba9bd86e"
 RUNNER_SHA = "9102f1cf4f34efdccce5b78b4769bf5c14dfd983cded8c21e0c96be9725d8027"
+SELECTION_SHA = "1f63415a2e9d6af60d67ec995ba4f0b803054ee7a96f202178d060bda2bfbdbb"
 EXPECTED_FILES = 1380
 EXPECTED_BYTES = 236480375583
 
@@ -36,6 +37,7 @@ def main() -> int:
     repo = output.parent.parent
     prereg = repo / "generated/behavior-formal-goal-coupling-shared26-pi05-practical-single-gpu-batch-preregistration-20260903.json"
     synth_path = repo / "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-synthetic-full-step-result-20260903.json"
+    selection_path = repo / "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch-selection-adjudication-20260903.json"
     if sha(prereg) != PRACTICAL_PREREG_SHA or json.loads(prereg.read_text()).get("status") != "PREREGISTERED_PRACTICAL_SINGLE_GPU_BATCH_LADDER_NO_OUTCOME_ACCESS":
         raise RuntimeError("practical prereg drift")
     if sha(synth_path) != SYNTHETIC_RESULT_SHA:
@@ -43,6 +45,8 @@ def main() -> int:
     synth = json.loads(synth_path.read_text())
     if synth.get("status") != "PI05_PRACTICAL_BATCH16_SYNTHETIC_FULL_STEP_PASS" or synth.get("synthetic_step_after") != 1 or synth.get("real_scientific_optimizer_updates") != 0:
         raise RuntimeError("batch16 synthetic result not eligible")
+    if sha(selection_path) != SELECTION_SHA or json.loads(selection_path.read_text()).get("status") != "PI05_PRACTICAL_BATCH16_SELECTED_FIRST_RESOURCE_PASS":
+        raise RuntimeError("practical batch selection adjudication drift")
     if sha(runner) != RUNNER_SHA:
         raise RuntimeError("smoke runner SHA drift")
     seal = json.loads(seal_path.read_text())
@@ -58,6 +62,7 @@ def main() -> int:
         "launcher_path": str(launcher.relative_to(repo)), "launcher_sha256": sha(launcher),
         "practical_preregistration_sha256": PRACTICAL_PREREG_SHA,
         "synthetic_batch16_result_sha256": SYNTHETIC_RESULT_SHA,
+        "practical_batch_selection_sha256": SELECTION_SHA,
         "dataset_seal_path": str(seal_path), "dataset_seal_sha256": sha(seal_path),
         "dataset_root": "/data/wyt/behavior-2026-shared26-v3.0",
         "projection_root": "/data/wyt/behavior-2026-shared26-v3.0-rgb-runtime-repair2",

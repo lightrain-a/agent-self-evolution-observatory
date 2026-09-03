@@ -1,0 +1,49 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-practical-batch-selection-adjudication-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-PRACTICAL-SINGLE-GPU-BATCH",
+  "status": "PI05_PRACTICAL_BATCH16_SELECTED_FIRST_RESOURCE_PASS",
+  "preregistration": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-practical-single-gpu-batch-preregistration-20260903.json",
+    "sha256": "382449b4320bacd85f736c0df9342f9677b3c755f2daeedcd680212aed2a503a",
+    "ordered_ladder": [16, 8, 4]
+  },
+  "candidate16_result": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-practical-batch16-synthetic-full-step-result-20260903.json",
+    "sha256": "3914b1f2a3fd5e7964524eac7f625b64b4f089c0048a12dc5ebe9b79ba9bd86e",
+    "status": "PI05_PRACTICAL_BATCH16_SYNTHETIC_FULL_STEP_PASS",
+    "synthetic_step_after": 1,
+    "synthetic_optimizer_update_executed": true,
+    "real_scientific_optimizer_updates": 0,
+    "behavior_dataset_accessed": false,
+    "policy_outcomes_read": false
+  },
+  "decision": {
+    "selected_physical_batch": 16,
+    "selected_effective_optimizer_batch": 16,
+    "gradient_accumulation": 1,
+    "batch8_status": "NOT_EXECUTED_BY_PREREGISTERED_STOP_AT_FIRST_PASS_RULE",
+    "batch4_status": "NOT_EXECUTED_BY_PREREGISTERED_STOP_AT_FIRST_PASS_RULE",
+    "selection_basis": "first candidate in the preregistered ladder that completed one full synthetic source train_step including forward, backward, AdamW update, apply_updates, EMA, and step 0->1 on one A100-80GB"
+  },
+  "frozen_formal_recipe": {
+    "optimizer_updates": 50000,
+    "seed": 42,
+    "optimizer": "AdamW(b1=0.9,b2=0.95,eps=1e-8,weight_decay=1e-10,clip_gradient_norm=1.0)",
+    "lr_schedule": "CosineDecaySchedule(warmup_steps=1000,peak_lr=2.5e-05,decay_steps=30000,decay_lr=2.5e-06)",
+    "ema_decay": 0.99,
+    "action_horizon": 32,
+    "normalization_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+    "dataset_episode_count": 5200,
+    "num_workers": 0,
+    "terminal_checkpoint_label": 49999,
+    "gpu_topology": "1x NVIDIA A100-SXM4-80GB"
+  },
+  "claim_boundary": "This is a practical single-GPU pi0.5 shared26 fine-tune with physical/effective batch16. It is not source-batch64 or source-RNG equivalent. The same single frozen trained policy is used across all 26 matched tasks.",
+  "selection_inputs_used": ["resource feasibility only"],
+  "selection_inputs_not_used": ["real-data loss", "reward", "Q", "success", "policy outcomes", "checkpoint performance"],
+  "formal_training_authorized": false,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "next_gate": "SEALED_SHARED26_REAL_DATA_BATCH16_ZERO_UPDATE_SMOKE"
+}
