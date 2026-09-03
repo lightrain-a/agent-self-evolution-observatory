@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH3-RUNTIME88-REPAIR-20260903",
+  "status": "FROZEN_PRE_RUNTIME88_REPAIR_EXECUTION",
+  "scientific_role": "zero-model infrastructure repair only",
+  "parent_fresh3_branch_head": "e4150daed3b982c6920d981d2fdcc60d695c1d38",
+  "fresh3_pool_sha256": "3780fa80ee0bbfce01e3fd4f6bcabe6aaaa21111c0aa910ea7ce1bde302a9257",
+  "manifest_freeze_sha256": "c01683a6bb8b42d93634a4bcc0179721f7704d5fa8fe24ba308be699af94a1e8",
+  "blob_plan_sha256": "a529f4e9dffd27004a7c225d6475d9f0cf951159015a20bb94546545dc403708",
+  "blob_receipt_sha256": "93e67b6fdbcbf5772f46816db764332987db2a54baa8c60c19f0d3bf2fc4996a",
+  "blob_geometry": {"unique_blob_count": 88, "all_blobs_verified": true},
+  "failed_parent_runtime_root": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-msr-atomgit-qwen38-fresh3-runtime-20260903-v1",
+  "failed_parent_runtime_artifacts": 0,
+  "failure_layer": "implementation_geometry_constant",
+  "failure": "fresh3 wrapper accepted the frozen 88-blob geometry but delegated preflight to an older base helper with unique_blob_count==86 hard-coded",
+  "repair": {
+    "new_runtime_root": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-msr-atomgit-qwen38-fresh3-runtime-20260903-v2",
+    "changed_variable": "preflight blob geometry validation",
+    "old": "delegated base.preflight requiring 86 blobs",
+    "new": "fresh3-specific preflight validates content-addressed blob-plan/receipt geometry of 88 blobs",
+    "unchanged": [
+      "20 frozen image manifests",
+      "rootful Docker requirement",
+      "ReasoningBank carrier commit and hashes",
+      "per-blob size and SHA verification",
+      "exact-digest OCI import",
+      "targeted git clean -fd -- build normalization",
+      "20/20 source+future runtime hard gate"
+    ]
+  },
+  "forbidden": [
+    "change blob plan or image manifests",
+    "pretend the fresh3 plan has 86 blobs",
+    "skip per-blob SHA verification",
+    "start scientific source before 20/20 runtime PASS",
+    "overwrite the failed v1 runtime root"
+  ],
+  "provider_calls": 0,
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "probe_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "claim_authority": "NO_NEW_PACTA_MSR_EFFECT_EVIDENCE"
+}
