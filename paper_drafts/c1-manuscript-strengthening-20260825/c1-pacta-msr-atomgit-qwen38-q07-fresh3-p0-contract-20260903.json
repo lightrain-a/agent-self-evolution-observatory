@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH3-P0-20260903",
+  "status": "FROZEN_BEFORE_FRESH3_SOURCE_GATE_VERDICT",
+  "scientific_role": "AtomGit-specific PACTA-MSR state-conditional mechanism pilot",
+  "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+  "resolved_model": "qwen3.8-27b",
+  "fresh3_pool_sha256": "3780fa80ee0bbfce01e3fd4f6bcabe6aaaa21111c0aa910ea7ce1bde302a9257",
+  "fresh3_split_sha256": "d71f48910e531e62de2d056342c0c17ce17872503f089a29b16182fca3c1b2d9",
+  "fresh3_probe_specs_sha256": "19f119fdb80e58427809a565d515900a14455394e79c31126645521702940c97",
+  "fresh3_source_schedule_sha256": "2e78838a46b3a37c09e07e2f0abdf0d9eb82d271e53d91245a41306d0e5b273f",
+  "fresh3_runtime_qualification_sha256": "85d294f49d389601c10042fb0fd11096c82c93ddb2f0571ccd955f031937a5fe",
+  "q05_downstream_budget_closure_sha256": "5ed5205f5b68aa2f5ab6f7a254509335e13b46378204bef8ba97568be4b67b51",
+  "q06_downstream_estimand_closure_sha256": "31e8dc0e5ce4c280ba0331c9e18861b4223641ad5beb866a31e761c0e6862e2c",
+  "original_p0_contract_sha256": "5bc3daf779dd7facd45881080d846ccdf847814fecc6150e8b0d4fcc0db46f32",
+  "source_gate": "fresh3 support-audit must exist and equal FRESH3_ATOMGIT_MSR_SOURCE_POOL_10_QUALIFIED with attempted=10, valid=10, ten repositories, no failure layer, no replacement/top-up. Every source trajectory and writer-input trajectory must pass its content-address check. All downstream scientific phase entry points revalidate this gate.",
+  "pilot_count": 8,
+  "sealed_count": 2,
+  "sealed_execution": "forbidden for probe/writer/binder/shadow/final",
+  "probe": {
+    "executed_units": 8,
+    "provider_calls": 0,
+    "command_source": "byte-frozen fresh3 deterministic probe specs",
+    "future_exact_base_required": true,
+    "post_probe_head_and_clean_tree_invariant": true,
+    "timeout_seconds": 60
+  },
+  "writer": {
+    "calls": 16,
+    "branches": ["SUCCESSFUL_SI", "FAILED_SI"],
+    "same_exact_source_trajectory": true,
+    "bridge_schema": "c1-ordinary-json-plain-text-bridge-v1",
+    "max_tokens": 4096,
+    "provider_sampling": "provider-managed; exactly one valid realized draw per unit/branch; persist and content-address before binder; no semantic reroll",
+    "format": "1..3 ReasoningBank memory items"
+  },
+  "binder": {
+    "contexts": ["G0_STEP0", "GPLUS_MATCHED_REVEAL"],
+    "calls": 32,
+    "bridge_schema": "c1-ordinary-json-plain-text-bridge-v1",
+    "max_tokens": 2048,
+    "provider_sampling": "provider-managed; exactly one valid realized draw per unit/branch/context; persist and content-address before shadow; no semantic reroll",
+    "format": "nonempty single-line text, at most 60 whitespace-delimited words"
+  },
+  "shadow": {
+    "selectors": ["G0_STEP0", "GPLUS_MATCHED_REVEAL"],
+    "calls": 384,
+    "bridge_schema": "c1-minisweagent-ordinary-json-text-bridge-v1",
+    "max_tokens": 4096,
+    "provider_sampling": "provider-managed; no temperature-equivalence claim",
+    "blocks_per_branch": 2,
+    "samples_per_block": 6,
+    "action_signature": "exact first fenced bash command; no post-hoc canonicalization",
+    "gate": "min(B1,B2) > max(WS,WF)",
+    "margin": "min(B1,B2) - max(WS,WF)"
+  },
+  "mechanism_gate": {
+    "all_shadow_calls_complete": true,
+    "Gplus_open_count": "2..6/8",
+    "mean_margin_Gplus_minus_G0_ge": 0.05,
+    "positive_margin_improvement_count_ge": 5,
+    "failure_action": "stop before final measurement"
+  },
+  "rate_matched_random": {
+    "ranking_source": "fresh3 split random_ranking_pre_shadow",
+    "K": "equal to Gplus open count",
+    "reroll": false
+  },
+  "final": {
+    "conditional": "mechanism gate PASS only",
+    "calls": 384,
+    "bridge_schema": "c1-minisweagent-ordinary-json-text-bridge-v1",
+    "max_tokens": 4096,
+    "provider_sampling": "provider-managed; conditional on already content-addressed writer/binder states",
+    "arms": ["A0_NATIVE", "A1_SCB_ALWAYS", "A2_RATE_MATCHED_RANDOM", "A3_PACTA_MSR"],
+    "endpoint": "per-unit empirical TV between success-writer and failure-writer first-action distributions",
+    "primary": "D_select = U_A3 - U_A2",
+    "pilot_pass": ["all final calls complete", "mean D_select >= 0.05", "positive D_select unit count > negative count", "mean A3-A0 > 0", "mean A3-A1 >= 0"]
+  },
+  "estimand": "State-conditional mechanism pilot: downstream empirical action distributions are conditional on exactly one realized, content-addressed writer draw per branch and one realized, content-addressed binder draw per branch/context. Writer/binder stochasticity is part of the realized state. This is not a temperature-matched Qwen397 replication and not an average causal effect over writer/binder randomness.",
+  "transport": {
+    "atomcode_subprocess_timeout_seconds": 900,
+    "provider_wrapper_retries": 0,
+    "native_tool_runtime_events_allowed": 0,
+    "model_identity_required": "qwen3.8-27b",
+    "one_codingplan_usage_row_per_scientific_call": true
+  },
+  "resource_envelope": {
+    "maximum_scientific_requests_if_final_runs": 816,
+    "requests_before_mechanism_gate": 432,
+    "maximum_completion_tokens_by_stage": {"writer": 65536, "binder": 65536, "shadow": 1572864, "final": 1572864},
+    "maximum_completion_tokens_total": 3276800,
+    "rationale": "The original aggregate 1M output-token cap is not portable because AtomCode counts provider-managed hidden reasoning in completion tokens. The AtomGit lane instead freezes the exact request geometry and the deterministic sum of per-call completion ceilings before downstream scientific execution.",
+    "source_resource_cap_unchanged": true
+  },
+  "temperature": {
+    "supported_override": false,
+    "claim": "No temperature equivalence with Qwen397. All AtomGit downstream calls use provider-managed sampling characterized by Q0.6."
+  },
+  "prepare_before_source_gate_allowed": true,
+  "scientific_phase_execution_before_source_gate": false,
+  "fresh3_source_outcomes_used_to_choose_downstream_parameters": false,
+  "scientific_writer_calls_at_contract_freeze": 0,
+  "scientific_binder_calls_at_contract_freeze": 0,
+  "scientific_shadow_calls_at_contract_freeze": 0,
+  "scientific_final_calls_at_contract_freeze": 0,
+  "forbidden": [
+    "execute downstream scientific phases unless fresh3 source support is 10/10 valid",
+    "execute sealed units",
+    "replace or top-up a source or pilot unit",
+    "reroll provider-valid writer/binder states for semantic preference",
+    "change Q0.5/Q0.6 ceilings after downstream outcomes",
+    "change shadow blocks/sample counts/gate thresholds after downstream outcomes",
+    "claim temperature equivalence with Qwen397",
+    "run final after mechanism gate failure",
+    "switch model to rescue a gate"
+  ],
+  "terminal": false,
+  "confirmatory": false,
+  "second_model": false,
+  "active_manuscript": "R9",
+  "claim_authority": "NO_MSR_METHOD_EFFECT_EVIDENCE"
+}
