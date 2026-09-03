@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q06-DOWNSTREAM-ESTIMAND-20260903",
+  "status": "FROZEN_PRE_DOWNSTREAM_PROVIDER_OUTCOME",
+  "scientific_role": "AtomGit-specific downstream action-budget qualification and estimand amendment",
+  "motivation": "AtomCode 5.0.9 does not expose a supported temperature control. Therefore the original Qwen397 temperature=0 writer/binder and temperature=0.2 shadow/final settings cannot be represented as equivalent treatments. Q0.3 qualifies a strict MiniSWEAgent ordinary-JSON text bridge at max_tokens=32768, while the older pre-bridge first-action qualification selected 2048. Q0.6 prospectively selects the smallest output ceiling that supports the exact Q0.3 bridge fixtures and freezes a conditional-on-realized-state estimand for provider-managed sampling before scientific writer/binder/shadow execution.",
+  "q03_prepare_sha256": "79793f7c1b5f72be7981f2bc7f131870eeef6853dc4f394f69be95df883e93e9",
+  "q03_result_sha256": "14860b1a6494dd2d3e39557e57ad5d6605946917071c4f2811e67ca3260b63b4",
+  "q03_closure_sha256": "077383ca894abc1c3986e01ef90b16628d2580a3058d66c2838a63796208fdac",
+  "q05_closure_sha256": "5ed5205f5b68aa2f5ab6f7a254509335e13b46378204bef8ba97568be4b67b51",
+  "original_p0_contract_sha256": "5bc3daf779dd7facd45881080d846ccdf847814fecc6150e8b0d4fcc0db46f32",
+  "fresh3_split_sha256": "d71f48910e531e62de2d056342c0c17ce17872503f089a29b16182fca3c1b2d9",
+  "fresh3_probe_specs_sha256": "19f119fdb80e58427809a565d515900a14455394e79c31126645521702940c97",
+  "fresh3_source_schedule_sha256": "2e78838a46b3a37c09e07e2f0abdf0d9eb82d271e53d91245a41306d0e5b273f",
+  "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+  "resolved_model": "qwen3.8-27b",
+  "action_bridge_schema": "c1-minisweagent-ordinary-json-text-bridge-v1",
+  "plain_text_bridge_schema": "c1-ordinary-json-plain-text-bridge-v1",
+  "provider_sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+  "atomcode_subprocess_timeout_seconds": 900,
+  "provider_wrapper_retries": 0,
+  "action_budget_qualification": {
+    "fixtures": "the exact 12 Q0.3 target MiniSWEAgent conversations, byte-equivalent by messages_sha256",
+    "candidate_max_tokens": [2048, 4096, 8192, 16384, 32768],
+    "selection_rule": "choose the first candidate with 12/12 PASS; do not execute larger candidates after PASS",
+    "per_fixture_pass": [
+      "AtomCode returncode 0",
+      "exact qwen3.8-27b model identity",
+      "exactly one CodingPlan usage row",
+      "zero error events",
+      "zero output-truncation events",
+      "zero tool.* runtime events",
+      "outer JSON parses as exactly assistant_message:string",
+      "assistant_message has THOUGHT and exactly one MiniSWEAgent fenced bash action"
+    ]
+  },
+  "sampling_diagnostic": {
+    "conditional_on_selected_action_budget": true,
+    "fixtures": ["q03-first-01", "q03-first-02"],
+    "replicates_per_fixture": 6,
+    "total_calls": 12,
+    "required_for_transport_validity": "all 12 calls must be provider/bridge-valid; action diversity itself is descriptive and may be zero",
+    "purpose": "characterize the empirical provider-managed first-action distribution under the exact downstream bridge"
+  },
+  "downstream_state_generation": {
+    "writer": "For each pilot unit and each SUCCESSFUL_SI/FAILED_SI branch, generate exactly one provider-managed writer draw using the Q0.4 plain-text JSON bridge and Q0.5 max_tokens=4096. Persist and content-address the realized memory before any binder or action sampling. A provider-valid writer draw is never rerolled for semantic preference.",
+    "binder": "For each pilot unit, branch, and G0_STEP0/GPLUS_MATCHED_REVEAL context, generate exactly one provider-managed binder draw using the Q0.4 plain-text JSON bridge and Q0.5 max_tokens=2048. Persist and content-address the realized bound state before any shadow sampling. A provider-valid binder draw is never rerolled for semantic preference.",
+    "interpretation": "Writer and binder stochasticity are part of the realized persistent/bound state. This pilot conditions on those realized content-addressed states; it does not estimate an average causal effect over writer/binder randomness."
+  },
+  "downstream_action_estimand": {
+    "sampling": "All shadow and final first-action calls use the Q0.3 action JSON bridge, the Q0.6 selected action max_tokens, timeout=900, zero wrapper retries, and provider-managed sampling. No temperature equivalence claim is made.",
+    "blocks_per_branch": 2,
+    "samples_per_block": 6,
+    "action_signature": "exact first fenced bash command; no post-hoc canonicalization",
+    "within_condition_noise": "WS/WF are empirical block-to-block TVs conditional on the frozen writer/binder states",
+    "between_branch_transport": "B1/B2 are empirical success-vs-failure branch TVs conditional on the frozen realized states",
+    "gate": "G = 1[min(B1,B2) > max(WS,WF)]",
+    "margin": "min(B1,B2) - max(WS,WF)",
+    "scientific_scope": "state-conditional mechanism pilot, not a temperature-matched replication of Qwen397 and not a confirmatory model-level average"
+  },
+  "mechanism_gate": {
+    "unchanged_from_original_p0": true,
+    "all_shadow_calls_complete": true,
+    "Gplus_open_count": "2..6/8",
+    "mean_margin_Gplus_minus_G0_ge": 0.05,
+    "positive_margin_improvement_count_ge": 5,
+    "failure_action": "stop before final measurement"
+  },
+  "final_if_gate_passes": {
+    "arms": ["A0_NATIVE", "A1_SCB_ALWAYS", "A2_RATE_MATCHED_RANDOM", "A3_PACTA_MSR"],
+    "replicates_per_branch_per_arm": 6,
+    "endpoint": "per-unit empirical TV between success-writer and failure-writer first-action distributions conditional on the already-frozen realized states",
+    "primary": "D_select = U_A3 - U_A2",
+    "pilot_pass_thresholds": ["mean D_select >= 0.05", "positive D_select unit count > negative count", "mean A3-A0 > 0", "mean A3-A1 >= 0"]
+  },
+  "fresh3_source_terminal_outcomes_used_to_choose_q06_parameters": false,
+  "fresh3_source_artifacts_used_as_q06_fixtures": false,
+  "scientific_writer_calls": 0,
+  "scientific_binder_calls": 0,
+  "scientific_shadow_calls": 0,
+  "scientific_final_calls": 0,
+  "forbidden": [
+    "claim temperature equivalence with Qwen397",
+    "reroll a provider-valid writer or binder state because of semantic preference",
+    "change action budget after scientific shadow outcomes",
+    "change block/sample counts after scientific shadow outcomes",
+    "change gate thresholds after scientific shadow outcomes",
+    "use fresh3 source task text in Q0.6 qualification fixtures",
+    "switch model to rescue Q0.6"
+  ],
+  "claim_authority": "NO_MSR_METHOD_EFFECT_EVIDENCE"
+}
