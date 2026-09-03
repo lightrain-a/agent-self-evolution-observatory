@@ -1,0 +1,57 @@
+{
+  "agent_episode_count": 8,
+  "appworld_tool_call_total": 91,
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "f0_reason": "Capability selection never self-authorizes F0.",
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "backbone_search_state_sha256": "6ae57acaf62c3a74f09f6dd4f80e8b09936dabac3a7a1c8d88c96e5fb7a54445",
+  "codingplan_window_first_before": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T05:04:58",
+    "remaining": 351,
+    "used": 149
+  },
+  "codingplan_window_last_after": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T05:04:58",
+    "remaining": 282,
+    "used": 218
+  },
+  "completion_tokens_total": 16743,
+  "content_sha256": "b205d813667c228aa8ba9f0db6fa1b91a7df9b0a64d9ad1c679a7af36338b397",
+  "contract_sha256": "27558a31e51955799950ba48d6152520ccfee7b859d20b5c3b10d0e3db4e1f37",
+  "execution_id": "CODINGPLAN-MIMO25-CAPABILITY-B2",
+  "f0_executed": false,
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 1.0,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 1.0,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+  },
+  "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+  "ledger_sha256": "b24f5f5a39a82c6d19322551182c71a4f2569d15ffdd5560e9a81e2527408776",
+  "model_id": "mimo-v2.5",
+  "model_profile": "AtomGit-mimo-v2.5",
+  "model_round_count": 69,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prompt_tokens_total": 2745476,
+  "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+  "schema_version": "ace-codingplan-mimo25-capability-b2-result-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+  "valid_capability_measurements": 8
+}

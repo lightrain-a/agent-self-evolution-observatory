@@ -1,0 +1,32 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "f0_transport": true,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "capability_result_content_sha256": "dadf907997be65b381a40fa42e615220c7138a40c7c0fd32a665f2925628660c",
+  "content_sha256": "d30c49472f957d8d6545b23b74a950891ea6c3643556bb81cde2c0c2fb412a91",
+  "frozen_protocol_artifact": "generated/agent-constraint-externality-f0-frozen-protocol-20260831.json",
+  "frozen_protocol_file_sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810",
+  "legacy_preselection_harness_field": "APPWORLD_FUNCTION_CALLING_V1",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "preserved": [
+    "family_ids",
+    "source_phase",
+    "probe_phase",
+    "update_surface",
+    "metrics",
+    "adjudication",
+    "exactly_once",
+    "post_f0_authority"
+  ],
+  "reason": "F0 executes the selected backbone under the same harness used for valid capability calibration; the legacy harness field predated final backbone selection.",
+  "schema_version": "ace-f0-selected-backbone-transport-addendum-v1",
+  "scientific_outcomes_observed": 0,
+  "scientific_variables_changed": [],
+  "selected_backbone_content_sha256": "9f4a649f436552a550fe3e9d54664d6b5eb879cf68dae36b23a91859edf1f18e",
+  "selected_backbone_harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+  "status": "F0_SELECTED_BACKBONE_TRANSPORT_COMPATIBILITY_ADDENDUM_PASS"
+}

@@ -1,0 +1,71 @@
+\section{Controlled Evidence Across Writer and Provenance Channels}
+\label{sec:intervention}
+The controlled evidence separates two channels that are often conflated. Historical L1 experiments change an outcome-conditioned memory writer and therefore identify a writer-mode bundle. Our main L2 experiments instead hold retrieval membership, order, and actionable memory bytes fixed and change only whether truthful source-outcome provenance is exposed to the executor.
+
+\subsection{Historical L1 bridge}
+Two preregistered WebArena bridges motivate the cleaner intervention but do not identify provenance alone. A terminal-success experiment admits four information-equivalent task pairs and completes 48 requests; the success-writer minus failure-writer effect is $+0.1667$ with $p=0.0785$. With only four independent tasks, the smallest exact one-sided sign-flip value is $1/16=0.0625$, so this endpoint is structurally non-decisive under the frozen 0.05 rule. A disjoint early-action experiment admits 23 task pairs and completes 276 requests; its reference-action-match effect is $-0.0942$ with counterevidence-side $p=0.0792$. The two estimands have opposite descriptive signs, and deterministic audits show systematic writer-style differences. We therefore make no endpoint-robust directional L1 claim and never upgrade L1 to provenance-only L2. Full admission rules, pair construction, runtime repair boundaries, tables, and randomization contracts are retained in Appendix~A.2--A.9.
+
+\subsection{Fresh L2 provenance-exposure experiment}
+\label{sec:l2fresh}
+The main experiment is a new prospective treatment-outcome object and does not reuse historical R4/R6 outcomes or the stopped R5/R19 prefixes. Its source-bank capacity is nevertheless pilot-informed: an earlier 128-source support stop and zero-outcome diagnostic exposed coverage sensitivity, after which we chose the entire frozen 350-task training universe rather than tuning a smaller cutoff. The R53 lineage then rebuilds all 350 memories from zero under Qwen2.5-7B-Instruct and MemRL, one durable memory at a time. Fresh target selection excludes every historical validation signature and occurs before any new validation outcome. The source run completes 350/350 units with 176 success-derived and 174 failure-derived memories. This balance is descriptive; source outcomes are never used to choose target units.
+
+Before any validation environment is reset, we apply native MemRL retrieval ($k=10$, cosine threshold $0.5$) to fresh exact skill-signature clusters from the frozen validation split. All 40 historical primary/utilization signatures are excluded. Of 108 remaining clusters, 106 have at least one eligible retrieved memory with nonempty content, a source task in the full source universe, and a boolean source outcome. Frozen hash ranking selects the first 32 eligible clusters as the primary sample and the next eight as a disjoint utilization sample. No target outcome is observed during this support step.
+
+\paragraph{Utilization first stage.}
+The eight utilization clusters each receive five frozen surfaces: no memory (U0), true retrieved memory (U1), null content (U2), reversed content (U3), and shuffled other-task memory (U4). Promotion uses only the first executable action; terminal success is diagnostic. U1 produces a first-action change relative to both U0 and U2 in 5/8 units, while U2 differs from U0 in 3/8. This satisfies the preregistered rule $5\geq3$ and $5\geq3+1$, establishing that the memory surface is behaviorally used before the primary contrast is opened.
+
+\paragraph{Primary A/B contrast.}
+For each of the 32 fresh primary clusters, the frozen retrieval is rendered into two executor views. A contains only actionable content. B contains the same rows, order, and actionable content plus a truthful boolean \texttt{source\_outcome\_success} field for each row. Similarity, Q estimates, scores, roles, memory IDs, and source task IDs are hidden from both arms; retrieval is not rerun between arms. Arm order is frozen per cluster before treatment. All 64 arm runs complete without execution failure.
+
+\begin{table}[t]
+\centering
+\caption{Fresh L2 terminal-success result. The inference unit is the paired dependency cluster.}
+\label{tab:l2fresh}
+\small
+\begin{tabular}{lrr}
+\toprule
+Quantity & Content only (A) & + truthful provenance (B) \\
+\midrule
+Terminal successes & 15/32 & 16/32 \\
+Success rate & 0.46875 & 0.50000 \\
+\midrule
+Paired $B-A$ effect & \multicolumn{2}{c}{$+0.03125$} \\
+B-only / A-only successes & \multicolumn{2}{c}{1 / 0} \\
+Exact two-sided sign test & \multicolumn{2}{c}{$p=1.0$} \\
+Paired bootstrap 95\% interval & \multicolumn{2}{c}{$[0,0.09375]$} \\
+Preregistered relevance floor & \multicolumn{2}{c}{$|\Delta|\geq0.15$; not met} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Thirty-one of 32 pairs have identical terminal outcomes. The only discordant pair favors B, but one discordant unit supplies no directional statistical evidence under the exact two-sided paired test. The preregistered bootstrap interval is reported as specified; because the empirical paired-effect distribution contains 31 zeros and one $+1$, we do not interpret the upper endpoint as a universal population bound. The supported claim is narrower: on this support-qualified substrate, we find neither a statistically detectable terminal provenance benefit nor an effect meeting the prespecified 15-point practical floor.
+
+\paragraph{Behavioral legibility without terminal conversion.}
+A complete-run diagnostic shows that A and B nevertheless differ in first executable action for 9/32 clusters and in total step count for 7/32, while terminal success differs for only 1/32. Thus provenance is not simply ignored. It can perturb local control, but those perturbations almost always wash out before the terminal evaluator. One illustrative discordant task asks the agent to create a user and a protected configuration file: the content-only arm repeatedly recreates the user until the step limit, whereas the provenance-visible arm proceeds to file creation and succeeds. This single case is illustrative rather than a general mechanism estimate.
+
+\subsection{Executor-backbone replication}
+\label{sec:l2replication}
+To test whether the low-terminal-value pattern is specific to the Qwen executor, we freeze a second prospective experiment before any Llama validation outcome. It reuses the same 350-memory source bank, R54 frozen retrieval membership/content/order, eight utilization clusters, 32 primary clusters, exact-information renderer, terminal evaluator, randomization rule, and complete-only analysis. Importantly, the source memories themselves were written once by the Qwen/MemRL source process and are reused unchanged; this is therefore an executor-backbone replication, not an independent writer- or retriever-backbone replication. The only scientific factor changed at evaluation is the executor, from Qwen2.5-7B-Instruct to Meta-Llama-3.1-8B-Instruct. A source-side native parser qualification passes 3/3 before validation exposure.
+
+The Llama utilization first stage also passes rather than borrowing the Qwen qualification: true memory produces the required memory-specific first-action divergence in 8/8 clusters, while null-memory versus no-memory differs in 5/8, satisfying $8\geq3$ and $8\geq5+1$. Thus any low terminal A/B effect cannot be dismissed as a failed memory-utilization first stage. All 64 Llama primary arms complete exactly once.
+
+\begin{table}[t]
+\centering
+\caption{Exact-information L2 results by executor backbone. Models are adjudicated separately; no cross-model pooling is performed.}
+\label{tab:l2backbones}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Executor & $B-A$ & Discordant & 95\% paired bootstrap & Exact $p$ \\
+\midrule
+Qwen2.5-7B-Instruct & $+0.03125$ & 1/32 & $[0,0.09375]$ & 1.0 \\
+Meta-Llama-3.1-8B-Instruct & $0.00000$ & 4/32 & $[-0.125,0.125]$ & 1.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For Llama, two clusters are B-only successes and two are A-only successes, so the paired terminal effect is exactly zero and the discordances are directionally balanced. As Table~\ref{tab:l2backbones} shows, neither executor reaches the preregistered $|\Delta|\geq0.15$ relevance floor. The Qwen and Llama intervals have different widths and are not combined: the supported robustness claim is only that the low-terminal-value regime replicates across two executor backbones on the same qualified MemRL/OSInteraction information surface. This is not a proof that provenance has zero effect across models, tasks, or memory systems.
+
+\paragraph{L3 transport.} A source-faithful test still requires the motivating financial writer/checkpoint, original memory interface, fixed acquisition content, and paired source runtime; WebArena or MemRL is not a substitute. Appendix~\ref{app:l3} gives the transport contract. L3 therefore remains replication debt.
+
+The replicated L2 result sharpens the governance implication. Raw provenance is behaviorally available, yet its incremental terminal value remains below the prespecified relevance floor under two executors. Section~\ref{sec:psmg} therefore treats provenance as auditable control-plane information whose decision weight should be learned and allowed to collapse toward zero, rather than as a monotone SUCCESS/FAILURE trust rule. Neither R56 nor the Llama replication tests PSMG efficacy.

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R43-BASE-RUNTIME-CRITICAL-EVIDENCE",
+  "recorded_date": "2026-08-29",
+  "role": "CONTENT_ADDRESSED_BASE_RUNTIME_CRITICAL_IDENTITY",
+  "host": "workstation3090",
+  "python_executable": {
+    "path": "/home/hdd/yutong/envs/vlm_fp_231_exact/bin/python3.11",
+    "version": "3.11.15",
+    "sha256": "a270fbdc5b16b7fc6661257d7756eec09aefdafecd08d1df096190b895dab2b8"
+  },
+  "torch": {
+    "version": "2.4.0+cu121",
+    "file_count": 12287,
+    "bytes": 1659472247,
+    "tree_sha256": "fc5398a800dbf13fca922aa263b5f06e91a39bc6fd1386d87940eaad70e083da"
+  },
+  "pandas": {
+    "version": "3.0.3",
+    "file_count": 2937,
+    "bytes": 71429354,
+    "tree_sha256": "e659ffff33d7b99519f08fd06cca33943bda35e9870c31cdc6a79fddf96cc217"
+  },
+  "private_full_manifest_sha256": "ace511a10ac8bc803ada39d1a829d35c174bc3dca75793f3eb715ebe0ef5d34a",
+  "private_full_manifest_file_sha256": "f4376e73699e1537b5b175b13f81c2bd6807f4eae36f47572be0ae0597772205",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

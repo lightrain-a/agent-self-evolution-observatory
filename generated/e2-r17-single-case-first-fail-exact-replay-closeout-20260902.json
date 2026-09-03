@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-single-case-first-fail-exact-replay-closeout",
+  "created_date": "2026-09-02",
+  "status": "FIRST_FAIL_EXACT_EVIDENCE_UPDATER_REPLICATION_FAIL_STATE_GENERATION_VARIANCE",
+  "case_stream": "e1-tsr-00",
+  "development_only": true,
+  "final_analysis_path": "generated/e2-r17-single-case-first-fail-exact-replay-measurement-analysis-20260902.json",
+  "final_analysis_sha256": "48d83bba033d0005ddecbd936fbc77e564b0aaa82c980abce5a01baddd937a22",
+  "measurement_completion_audit_path": "generated/e2-r17-single-case-first-fail-exact-replay-measurement-completion-audit-20260902.json",
+  "measurement_completion_audit_sha256": "4d84e9da806808526ffb629bfdc5f2c26f0ffdd322280dab3278bc85f189caf1",
+  "result": {
+    "rep1": {
+      "win_c_successes": 15,
+      "first_fail_successes": 15,
+      "difference": 0.0
+    },
+    "rep2": {
+      "win_c_successes": 12,
+      "first_fail_successes": 11,
+      "difference": -0.05555555555555547
+    },
+    "mean_first_fail_minus_win_c": -0.027777777777777735,
+    "gate_pass": false
+  },
+  "historical_strong_state_boundary": {
+    "statement": "The original S1 First-Fail learned state remains a real frozen-state positive example, but is not evidence that the First-Fail treatment reproducibly generates such a state.",
+    "frozen_state_stability_status": "FIRST_FAIL_FROZEN_STATE_STABILITY_PASS"
+  },
+  "technical_recovery": {
+    "v1_failure": "authorization schema omitted mindmemos_commit; failed before heldout provider I/O",
+    "rep1_updater_states_replayed": false,
+    "rep2_updater_states_generated_once_under_updater_only_recovery": true,
+    "final_measurement_only": true,
+    "heldout_units": 72,
+    "technical_failures_in_final_measurement": 0
+  },
+  "mechanism_update": "Primary bottleneck shifts from rejected-witness selection to high-variance free-form updater state generation. Evidence selection alone does not stabilize learned utility.",
+  "next_priority": "SINGLE_CASE_CONSTRAINED_STATE_GENERATION_MICRO_ABLATION",
+  "authority": {
+    "provider_io": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "analyzer": false,
+    "new_followup_execution": false,
+    "s2_execution": false,
+    "e3_confirmation": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false,
+    "submission": false
+  }
+}

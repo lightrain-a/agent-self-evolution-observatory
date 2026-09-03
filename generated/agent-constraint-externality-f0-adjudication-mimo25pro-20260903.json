@@ -1,0 +1,17 @@
+{
+  "content_sha256": "15c26bf94f0878b24e6591acba6159898e4e3a7fefe9a92d9acd7ab20f7346fb",
+  "eligible_family_count": 0,
+  "further_execution_authority": false,
+  "mandatory_stop": true,
+  "metrics": null,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "reason": "FEWER_THAN_SIX_FROZEN_REPAIR_FAMILIES",
+  "schema_version": "ace-f0-adjudication-v1",
+  "scientific_effects_observed": 0,
+  "significance_claim": false,
+  "thresholds": {
+    "eligible_family_min": 6,
+    "mean_target_repair_gain_strictly_greater_than": 0
+  },
+  "verdict": "F0_UPDATE_UPTAKE_FAIL"
+}

@@ -1,0 +1,75 @@
+{
+  "atomcode_provider_profile": "AtomGit-qwen3.8-27b",
+  "bridge_schema": "ace-atomcode-json-action-bridge-v2",
+  "content_sha256": "234b063636bc82ade16ba94123cfaaf49c6b9254b849f9e8a9acdf574385369a",
+  "context_window": 262144,
+  "f0_authorized": false,
+  "live_probe": {
+    "action_names": [
+      "read_alpha",
+      "read_beta"
+    ],
+    "codingplan_requests": 1,
+    "native_atomcode_tool_calls_observed": 0,
+    "parallel_action_count": 2,
+    "receipt": {
+      "base_url": "atomcode://atomgit-codingplan/qwen3.8-27b",
+      "capability_snapshot": {
+        "atomcode_provider_profile": "AtomGit-qwen3.8-27b",
+        "bridge_schema": "ace-atomcode-json-action-bridge-v2",
+        "context_window": 262144,
+        "max_output_tokens": 65536,
+        "native_custom_function_tools": false,
+        "prompt_sha256": "d3135a57880e020b184abb6d6f4384c9c443808b816326b6344674ae416335f5",
+        "resolved_model": "qwen3.8-27b",
+        "retry_max_attempts": 1,
+        "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+        "text_json_tool_bridge": true
+      },
+      "output": [
+        {
+          "arguments": "{}",
+          "call_id": "cpq38-1-1",
+          "name": "read_alpha",
+          "type": "function_call"
+        },
+        {
+          "arguments": "{}",
+          "call_id": "cpq38-1-2",
+          "name": "read_beta",
+          "type": "function_call"
+        }
+      ],
+      "provider": "ATOMGIT_CODINGPLAN_ATOMCODE_QWEN38_HEADLESS_V1",
+      "requested_model": "qwen3.8-27b",
+      "resolved_model": "qwen3.8-27b",
+      "response_id": "atomcode-qwen38-1788346133489115878",
+      "status": "completed",
+      "usage": {
+        "cached_tokens": 0,
+        "codingplan_requests": 1,
+        "input_tokens": 6772,
+        "output_tokens": 290,
+        "total_tokens": 7062
+      }
+    },
+    "receipt_sha256": "347b1ac3618c66b50f9d70000ccc744c6adcb3fc2ef1c522f6b894e180658771",
+    "scientific_episode": false,
+    "usage": {
+      "cached_tokens": 0,
+      "codingplan_requests": 1,
+      "input_tokens": 6772,
+      "output_tokens": 290,
+      "total_tokens": 7062
+    }
+  },
+  "max_output_tokens": 65536,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider": "ATOMGIT_CODINGPLAN_ATOMCODE_QWEN38_HEADLESS_V1",
+  "resolved_model": "qwen3.8-27b",
+  "retry_max_attempts": 1,
+  "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+  "schema_version": "ace-codingplan-qwen38-provider-qualification-c1-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CODINGPLAN_QWEN38_PROVIDER_QUALIFICATION_PASS"
+}

@@ -1,0 +1,110 @@
+{
+  "authority": {
+    "capability_search": true,
+    "f0": false,
+    "p1": false
+  },
+  "codingplan_model_request_delta": 0,
+  "codingplan_window_after": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T05:04:58",
+    "remaining": 428,
+    "used": 72
+  },
+  "codingplan_window_before": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T05:04:58",
+    "remaining": 428,
+    "used": 72
+  },
+  "content_sha256": "4a843540a177d51b49c4040bfe8d29be19debd225da169cb1235ed751eceb619",
+  "models": [
+    {
+      "context_window": 200000,
+      "effort_applicable": false,
+      "effort_levels": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "max_tokens": null,
+      "model_id": "GLM-5.2",
+      "profile": "AtomGit-GLM-5.2",
+      "provider_type": "openai",
+      "reasoning_effort_levels_config": []
+    },
+    {
+      "context_window": 512000,
+      "effort_applicable": true,
+      "effort_levels": [
+        "high",
+        "max"
+      ],
+      "max_tokens": null,
+      "model_id": "deepseek-v4-flash",
+      "profile": "AtomGit-deepseek-v4-flash",
+      "provider_type": "openai",
+      "reasoning_effort_levels_config": [
+        "high",
+        "max"
+      ]
+    },
+    {
+      "context_window": 1000000,
+      "effort_applicable": false,
+      "effort_levels": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "max_tokens": null,
+      "model_id": "mimo-v2.5",
+      "profile": "AtomGit-mimo-v2.5",
+      "provider_type": "openai",
+      "reasoning_effort_levels_config": []
+    },
+    {
+      "context_window": 1000000,
+      "effort_applicable": false,
+      "effort_levels": [
+        "low",
+        "medium",
+        "high",
+        "xhigh",
+        "max"
+      ],
+      "max_tokens": null,
+      "model_id": "mimo-v2.5-pro",
+      "profile": "AtomGit-mimo-v2.5-pro",
+      "provider_type": "openai",
+      "reasoning_effort_levels_config": []
+    },
+    {
+      "context_window": 262144,
+      "effort_applicable": true,
+      "effort_levels": [
+        "low",
+        "medium",
+        "xhigh"
+      ],
+      "max_tokens": null,
+      "model_id": "qwen3.8-27b",
+      "profile": "AtomGit-qwen3.8-27b",
+      "provider_type": "openai",
+      "reasoning_effort_levels_config": [
+        "low",
+        "medium",
+        "xhigh"
+      ]
+    }
+  ],
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-codingplan-catalog-b1-v1",
+  "scientific_outcomes_observed": 0,
+  "setup_returned_success": true,
+  "status": "CODINGPLAN_ACCOUNT_CATALOG_REFRESH_PASS_ZERO_MODEL_REQUESTS"
+}

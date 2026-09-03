@@ -1,0 +1,57 @@
+{
+  "acceptable_final_failure_counts": [
+    9,
+    10
+  ],
+  "accounting": {
+    "appworld_tool_call_total": 271,
+    "completion_tokens_total": 65724,
+    "prompt_tokens_total": 4472983,
+    "scientific_model_round_count": 106
+  },
+  "authority": {
+    "current_sq0_v3": false,
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v4_design": true,
+    "sq0_v4_execution": false
+  },
+  "by_kind": {
+    "FG_SEMANTIC_V3": {
+      "completed": 6,
+      "target_successes": 1,
+      "usable_target_failures": 5
+    },
+    "TNF_SEMANTIC_V3": {
+      "completed": 3,
+      "target_successes": 3,
+      "usable_target_failures": 0
+    }
+  },
+  "completed_case_count": 9,
+  "confirmatory_reuse": false,
+  "content_sha256": "4d15534e88a2a47a316706b3c7b304bd0d5a86f8c076fcfd0fd1ffb5722a30b4",
+  "development_only": true,
+  "futility_proven": true,
+  "ledger_sha256": "1d84f1b7a680c151940268417ecd86ee1c8304993e4ab1822dd57e4b917f1d47",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "observed_failure_rate": 0.5555555555555556,
+  "planned_case_count": 12,
+  "possible_final_failure_count_interval": [
+    5,
+    8
+  ],
+  "remaining_undispatched_case_count": 3,
+  "result_artifact": "generated/agent-constraint-externality-sq0-v3-mimo25pro-result-20260903.json",
+  "result_content_sha256": "0d8497a058f58e7dca4f8439accc1965227e8f0a153735315d4aa89825ae0f02",
+  "result_file_sha256": "95b42da92c6d6bfaf133d7390b740fd67329d83eb0de3986c4f43ad4064a0cd2",
+  "root_cause_content_sha256": "ee2a82bbd3a6e38bbadac68ad0c320077a52dfc0b676fa81dd715c70a00875d6",
+  "schema_version": "ace-sq0-v3-closeout-v1",
+  "scientific_effects_observed": 0,
+  "status": "SQ0_V3_TOO_EASY_FUTILITY_CLOSEOUT",
+  "target_success_count": 4,
+  "usable_target_failure_count": 5,
+  "verdict": "SQ0_V3_FUTILITY_TOO_EASY_STOP"
+}

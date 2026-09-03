@@ -1,0 +1,49 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-persistence-amendment-v16a",
+  "state": "OFFICIAL_TRAINING_PERSISTENCE_AMENDMENT_V16A_AUTHORIZED_WITHIN_EXISTING_BOUNDED_SCOPE",
+  "trigger": "PRE_STEP1_EXECUTION_CONTRACT_AUDIT",
+  "observed_gap": {
+    "optimizer_steps_committed": 0,
+    "scientific_outcomes": 0,
+    "description": "v15a checkpoint/resume state was complete, but segment-level training_events/loss/failures and missing root manifests did not satisfy the frozen incremental_required_paths contract before optimizer step 1."
+  },
+  "repair": {
+    "scientific_change": false,
+    "training_math_change": false,
+    "model_change": false,
+    "data_change": false,
+    "seed_change": false,
+    "batch_size_change": false,
+    "optimizer_change": false,
+    "step_budget_change": false,
+    "checkpoint_change": false,
+    "only_change": "Wrap the already-qualified v15a train() without rewriting it; create root-level manifests/heartbeat/config/log placeholders and mirror segment event/loss/failure records into root append-only logs."
+  },
+  "required_root_paths_created_before_step1": [
+    "manifest.json", "authority.json", "environment.json", "git_state.json",
+    "dataset_manifest.json", "corpus_manifest.json", "model_manifest.json",
+    "config.yaml", "resource_preflight.json", "training_events.jsonl", "loss.jsonl",
+    "checkpoint_manifest.jsonl", "heartbeat.json", "failures.jsonl", "stdout.log",
+    "stderr.log", "final_training_summary.json"
+  ],
+  "base_training_function": "research_pipeline.relational_topology_official_training_dev_run_v15a.train",
+  "child_code": {
+    "persistence_wrapper_sha256": "26bd6e1975f9a498d3509a7764e13c09676b3c47d92be818c9674b56d558904e",
+    "entrypoint_sha256": "593311dfae4d058f37afd49532a4a3ae4f7559f1fc16caf247cc133a6e3d825c",
+    "composite_training_code_sha256": "2eb8985156c3af2572802996fd4f41c868b2ee1bc1b739798132233ea4fbfe96"
+  },
+  "authority": {
+    "official_training_developmental_authority": true,
+    "scope_is_identical_to_v13": true,
+    "reproduction_evaluation": false,
+    "p1": false,
+    "scientific_outcomes": 0
+  },
+  "next_gate": "CANONICALIZE_V15A_V16A_AND_START_ONE_ADMITTED_COMPONENT_ON_IDLE_GPU",
+  "port_010": {
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+    "evidence_review": "BLOCK_BAKE_IN",
+    "changed": false
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "content_sha256": "cb77d76dae93768d4a703228f047c3f739f283f34b0546abcd51f4398a0920aa",
+  "model": "qwen3.7-plus",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "preserved_unit_count": 4,
+  "provider_requests_added": 0,
+  "r2_root_cause_audit_sha256": "bc8bccfe7a337d7c64f9db0bd3194974c92c1b7b05e58481c7084f56f3b78833",
+  "reason_preservable": "V2 discoverability/task-locator repair changes only TNF. FG task text and execution substrate are unchanged, and all four R2 FG final states pass the stricter V2 recipient-plus-two-attachment semantic evaluator.",
+  "rows": [
+    {
+      "family_id": "ACE-FG-05",
+      "inherited_agent_model_request_count": 9,
+      "malformed_tool_calls": 0,
+      "non_target_preservation": 1.0,
+      "provider_reexecution": false,
+      "r2_ledger_sha256": "d6e713a6d4613797578c3b5e606200b6a94309806b1b2a096d64b9744a30b185",
+      "repeat": 1,
+      "source_execution": "QWEN37PLUS-CAPABILITY-R2-AUTH-SUBSTRATE-RECOVERY",
+      "target_success": true,
+      "tool_loop_completed": true,
+      "unit_id": "capability:qwen3.7-plus|ACE-FG-05|1",
+      "v2_measurement_only_revalidation": true
+    },
+    {
+      "family_id": "ACE-FG-05",
+      "inherited_agent_model_request_count": 9,
+      "malformed_tool_calls": 0,
+      "non_target_preservation": 1.0,
+      "provider_reexecution": false,
+      "r2_ledger_sha256": "d6e713a6d4613797578c3b5e606200b6a94309806b1b2a096d64b9744a30b185",
+      "repeat": 2,
+      "source_execution": "QWEN37PLUS-CAPABILITY-R2-AUTH-SUBSTRATE-RECOVERY",
+      "target_success": true,
+      "tool_loop_completed": true,
+      "unit_id": "capability:qwen3.7-plus|ACE-FG-05|2",
+      "v2_measurement_only_revalidation": true
+    },
+    {
+      "family_id": "ACE-FG-06",
+      "inherited_agent_model_request_count": 9,
+      "malformed_tool_calls": 0,
+      "non_target_preservation": 1.0,
+      "provider_reexecution": false,
+      "r2_ledger_sha256": "d6e713a6d4613797578c3b5e606200b6a94309806b1b2a096d64b9744a30b185",
+      "repeat": 1,
+      "source_execution": "QWEN37PLUS-CAPABILITY-R2-AUTH-SUBSTRATE-RECOVERY",
+      "target_success": true,
+      "tool_loop_completed": true,
+      "unit_id": "capability:qwen3.7-plus|ACE-FG-06|1",
+      "v2_measurement_only_revalidation": true
+    },
+    {
+      "family_id": "ACE-FG-06",
+      "inherited_agent_model_request_count": 9,
+      "malformed_tool_calls": 0,
+      "non_target_preservation": 1.0,
+      "provider_reexecution": false,
+      "r2_ledger_sha256": "d6e713a6d4613797578c3b5e606200b6a94309806b1b2a096d64b9744a30b185",
+      "repeat": 2,
+      "source_execution": "QWEN37PLUS-CAPABILITY-R2-AUTH-SUBSTRATE-RECOVERY",
+      "target_success": true,
+      "tool_loop_completed": true,
+      "unit_id": "capability:qwen3.7-plus|ACE-FG-06|2",
+      "v2_measurement_only_revalidation": true
+    }
+  ],
+  "schema_version": "ace-qwen37plus-r2-fg-v2-revalidation-v1",
+  "status": "R2_FG_V2_MEASUREMENT_REVALIDATION_PASS",
+  "v2_bundle_sha256": "0a5bfae987cf136df57d3ad5431c097143e3ca333d8ae3258356c50fdcf3597d"
+}

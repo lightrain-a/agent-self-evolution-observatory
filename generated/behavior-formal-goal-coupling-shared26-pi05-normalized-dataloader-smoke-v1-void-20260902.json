@@ -1,0 +1,20 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-normalized-dataloader-smoke-void-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "VOID_OPERATIONAL_LAUNCH_ROOT_MISMATCH",
+  "voided_runner_commit": "372136814a88964ac1a7349ce13237cfadcd39a3",
+  "voided_runner_sha256": "a6e999148e2f8f8841c67244f9e4a459d9e8e6aa60cfa76c95e3592c8bce6425",
+  "voided_pid": 3601758,
+  "diagnosis": "The zero-update smoke was launched from the paper worktree. OpenPI resolves TrainConfig.assets_dirs from the current working directory because assets_base_dir is './outputs/assets'. The frozen norm asset was therefore installed under the paper worktree rather than the OpenPI child launch root that formal training will use. The smoke was terminated before any receipt was written and is not admissible as training qualification.",
+  "misplaced_norm_asset_sha256": "5e4159ec0986ad9fc87cc9a265eed9ac67fc9d2d0df233db6130acf0ebff52ce",
+  "scientific_data_changed": false,
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "gpu_used": false,
+  "training_started": false,
+  "optimizer_update": false,
+  "policy_rollouts_started": false,
+  "policy_outcomes_read": false,
+  "scientific_authority": false,
+  "repair_rule": "The replacement runner must chdir to the frozen OpenPI child root before resolving TrainConfig.assets_dirs, must install the identical frozen norm_stats SHA there, and must rerun the same CPU-only zero-update batch=64 smoke without tokenizer/model transforms."
+}

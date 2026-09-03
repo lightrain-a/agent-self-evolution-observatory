@@ -1,0 +1,107 @@
+{
+  "artifact_type": "e2-r17-single-case-diagnostic-witness-pilot-design",
+  "authority": {
+    "e3_confirmation": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "provider_io": false,
+    "public_benchmark": false,
+    "scientific_runner": false,
+    "second_backbone": false,
+    "submission": false,
+    "updater": false
+  },
+  "case": {
+    "development_only": true,
+    "historical_first_fail_effect": -0.013888888888888867,
+    "historical_mixed_pools": 7,
+    "historical_replicate_differences": [
+      -0.11111111111111105,
+      -0.16666666666666674,
+      0.11111111111111116,
+      0.11111111111111116
+    ],
+    "progress_selector_changed_mixed_pools": 4,
+    "progress_selector_mixed_pool_denominator": 7,
+    "stream_id": "e1-tsr-00"
+  },
+  "created_date": "2026-09-02",
+  "evidence_budget": {
+    "contrast_branch_source_allocation": "50/50 winner/progress-failure before outer exact match",
+    "final_block_cap_tokens": 3072,
+    "four_way_exact_retokenized_parity_required": true,
+    "padding": false,
+    "tokenizer": "cl100k_base",
+    "tokenizer_version": "tiktoken==0.11.0"
+  },
+  "historical_use_boundary": {
+    "e3_future_assets_consumed": false,
+    "historical_outcomes_counted_in_new_pilot": false,
+    "historical_v2_role": "development hypothesis and case selection only",
+    "new_controls_must_be_fresh_contemporaneous": true
+  },
+  "interpretation_matrix": {
+    "a2_beats_a1_a3_no_increment": "witness selection is the primary repair mechanism",
+    "a3_beats_a2_and_a1": "explicit success/failure contrast adds diagnostic value",
+    "candidate_beats_a1_not_a0": "repair removes First-Fail harm but does not outperform winner-only; no promotion",
+    "neither_beats_a1": "stop near-miss/contrast mechanism route"
+  },
+  "next_allowed_action": "IMPLEMENT_AND_ZERO-PROVIDER-QUALIFY_S0_SELECTOR_AND_FOUR-WAY_RENDERER",
+  "pilot_arms": [
+    "A0_WIN_C",
+    "A1_FIRST_FAIL",
+    "A2_PROGRESS_FAIL",
+    "A3_PROGRESS_CONTRAST"
+  ],
+  "proposal_path": "consultations/e2-r17-single-case-diagnostic-witness-pilot-20260902.md",
+  "schema_version": "1.0",
+  "scientific_object": "E2-R17-SINGLE-CASE-DIAGNOSTIC-WITNESS-PILOT-20260902",
+  "selector": {
+    "criterion_order": [
+      "min_abs_tool_call_count_gap_to_winner",
+      "min_abs_provider_call_count_gap_to_winner",
+      "max_tool_name_longest_common_prefix_with_winner",
+      "min_rollout_index"
+    ],
+    "llm_judge": false,
+    "uses_future_utility": false
+  },
+  "stages": {
+    "S0": {
+      "provider_calls": 0,
+      "required_changed_mixed_pools": "at_least_4_of_7",
+      "role": "selector and renderer qualification"
+    },
+    "S1": {
+      "arms": 4,
+      "heldout_per_state": 18,
+      "heldout_units": 72,
+      "replicates": 1,
+      "states": 4,
+      "candidate_tie_break": "A2_PROGRESS_FAIL",
+      "continue_if": [
+        "candidate_minus_A1 >= 1/18",
+        "candidate >= A0"
+      ]
+    },
+    "S2": {
+      "additional_replicates": 2,
+      "arms": [
+        "A0_WIN_C",
+        "A1_FIRST_FAIL",
+        "S1_SELECTED_CANDIDATE"
+      ],
+      "additional_states": 6,
+      "additional_heldout_units": 108
+    }
+  },
+  "status": "DESIGN_ONLY_ZERO_AUTHORITY",
+  "success_gate": {
+    "candidate_ge_A0_replicates": "at_least_2_of_3",
+    "candidate_gt_A1_replicates": "at_least_2_of_3",
+    "mean_candidate_minus_A0": ">0",
+    "mean_candidate_minus_A1": ">=1/18",
+    "technical_integrity_required": true,
+    "verdict": "SINGLE_CASE_MECHANISM_EFFECT_PASS"
+  }
+}

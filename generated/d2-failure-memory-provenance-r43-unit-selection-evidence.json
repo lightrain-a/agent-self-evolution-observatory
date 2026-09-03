@@ -1,0 +1,924 @@
+{
+  "schema_version": "1.1",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R43-UNIT-SELECTION-EVIDENCE",
+  "recorded_date": "2026-08-29",
+  "role": "ZERO_CONFIRMATORY_OUTCOME_DETERMINISTIC_UNIT_SELECTION",
+  "source_selection": {
+    "split": "data/llb/os_interaction_train.json",
+    "split_sha256": "d33513493856e6cdce2377a951a48a42686463eee1c92acb9d6b0a0320601e62",
+    "rule": "take 128 train task IDs with smallest SHA256(B1-R43-SOURCE-20260829|task_id)",
+    "seed_string": "B1-R43-SOURCE-20260829",
+    "selected_count": 128,
+    "selected_ids": [
+      "103",
+      "256",
+      "54",
+      "392",
+      "41",
+      "91",
+      "497",
+      "461",
+      "19",
+      "69",
+      "292",
+      "304",
+      "450",
+      "257",
+      "206",
+      "385",
+      "171",
+      "378",
+      "313",
+      "340",
+      "218",
+      "306",
+      "406",
+      "129",
+      "300",
+      "268",
+      "296",
+      "481",
+      "383",
+      "458",
+      "491",
+      "369",
+      "6",
+      "457",
+      "462",
+      "167",
+      "192",
+      "64",
+      "305",
+      "439",
+      "208",
+      "348",
+      "469",
+      "30",
+      "459",
+      "215",
+      "105",
+      "80",
+      "353",
+      "106",
+      "477",
+      "397",
+      "59",
+      "281",
+      "145",
+      "344",
+      "25",
+      "375",
+      "493",
+      "4",
+      "43",
+      "418",
+      "472",
+      "225",
+      "85",
+      "132",
+      "0",
+      "293",
+      "18",
+      "109",
+      "449",
+      "489",
+      "96",
+      "368",
+      "291",
+      "155",
+      "10",
+      "180",
+      "162",
+      "362",
+      "289",
+      "254",
+      "466",
+      "314",
+      "286",
+      "416",
+      "99",
+      "239",
+      "29",
+      "479",
+      "251",
+      "224",
+      "267",
+      "200",
+      "42",
+      "133",
+      "330",
+      "248",
+      "425",
+      "270",
+      "358",
+      "9",
+      "435",
+      "82",
+      "223",
+      "475",
+      "297",
+      "448",
+      "97",
+      "243",
+      "31",
+      "201",
+      "259",
+      "266",
+      "11",
+      "84",
+      "333",
+      "199",
+      "426",
+      "271",
+      "139",
+      "121",
+      "163",
+      "213",
+      "198",
+      "48",
+      "156",
+      "78"
+    ],
+    "selected_ids_sha256": "30e7ad6b4c02c25da3fe2e292bbf598ddaf4fad8c5f7494a95d7fd2e6911fb80",
+    "skill_union": [
+      "addgroup",
+      "awk",
+      "cat",
+      "cd",
+      "chage",
+      "chgrp",
+      "chmod",
+      "chown",
+      "chsh",
+      "cp",
+      "echo",
+      "exit",
+      "find",
+      "gpasswd",
+      "grep",
+      "groupadd",
+      "ln",
+      "ls",
+      "mkdir",
+      "mv",
+      "rm",
+      "sed",
+      "sleep",
+      "tee",
+      "touch",
+      "useradd",
+      "usermod",
+      "vi",
+      "wc"
+    ]
+  },
+  "validation_selection": {
+    "split": "data/llb/os_interaction_val.json",
+    "split_sha256": "1804781d7e768e74cc9f9038fcdfcf373ff34d4edc668382d6d18cbf74f856d6",
+    "cluster_rule": "exact sorted skill_list signature",
+    "cluster_count": 148,
+    "rule": "rank clusters by SHA256(B1-R43-VALIDATION-20260829|cluster|joined_signature); ranks 1-32 are primary confirmatory, ranks 33-40 are disjoint utilization qualification; representative within cluster is minimum SHA256(B1-R43-VALIDATION-20260829|member|task_id)",
+    "seed_string": "B1-R43-VALIDATION-20260829",
+    "selected_cluster_count": 32,
+    "selected_clusters": [
+      {
+        "signature": [
+          "chmod",
+          "cp",
+          "grep",
+          "mkdir",
+          "sed"
+        ],
+        "signature_sha256": "3f817812d25af1438eada4eebf67d1d624ebf0652b8817af222e9f29c507eb29",
+        "member_count": 1,
+        "representative_id": "107",
+        "rank_sha256": "0223dc6a30af8d6d543b5ae888498ea85606b77e362e86685a7b4c6b0bbf364a"
+      },
+      {
+        "signature": [
+          "chgrp",
+          "chmod",
+          "grep",
+          "groupadd",
+          "mkdir",
+          "useradd",
+          "usermod"
+        ],
+        "signature_sha256": "a4bc42e2900f70fe53e91172eb3179e07aa3a1c68b6c8bb791201db590b86f5b",
+        "member_count": 1,
+        "representative_id": "138",
+        "rank_sha256": "028e1b6c8a483797709a1589e274f76ce3a4cc7bdde3f1815fcfac1740124ae6"
+      },
+      {
+        "signature": [
+          "addgroup",
+          "cd",
+          "chmod",
+          "chown",
+          "grep",
+          "mkdir",
+          "touch",
+          "useradd",
+          "usermod",
+          "wc"
+        ],
+        "signature_sha256": "afaaf8d06cc8f8db142e53961815f1211577fcf567abe1bf664677cb9a1c78fe",
+        "member_count": 1,
+        "representative_id": "360",
+        "rank_sha256": "032b68ed3331a54b3cddb8374fb3a883b6170fc1c742edeb9e78d93a43bfe18d"
+      },
+      {
+        "signature": [
+          "chmod",
+          "echo",
+          "mkdir",
+          "mv",
+          "sleep",
+          "touch"
+        ],
+        "signature_sha256": "f84cc8339e9fa264bf912b8f903803f6bf7be4d23f1ace22a7ae2a2cb454af23",
+        "member_count": 1,
+        "representative_id": "229",
+        "rank_sha256": "060a7636454814e80fc87d2dd4187799fb049a125750b16cd934e7740b46d8d8"
+      },
+      {
+        "signature": [
+          "awk",
+          "sleep",
+          "touch"
+        ],
+        "signature_sha256": "7f328b98905f1d8c0c5c8b7ed9e056f26d2d9679eb32a713d2b05589575733f2",
+        "member_count": 1,
+        "representative_id": "395",
+        "rank_sha256": "091784cbdbc0ca486ab7f86dd9163549a822275ab5d57e05d626ab198884999a"
+      },
+      {
+        "signature": [
+          "awk",
+          "cat",
+          "echo",
+          "find",
+          "grep",
+          "ls",
+          "mkdir",
+          "rm",
+          "tee"
+        ],
+        "signature_sha256": "772efc58252baa49fc6ecd7d947b93dec4bf1c79f1698ab7b3e6497b6a77aedf",
+        "member_count": 1,
+        "representative_id": "332",
+        "rank_sha256": "091965e368c36c8c636a2123be35a5ca0d0d6976e9d84721a40f3090ceaf2d3b"
+      },
+      {
+        "signature": [
+          "awk",
+          "cd",
+          "echo",
+          "grep",
+          "wc"
+        ],
+        "signature_sha256": "3d0ed39594f86fb566698afd3c5c035baf586e5626a4cc4f4b8987404e09ec49",
+        "member_count": 1,
+        "representative_id": "214",
+        "rank_sha256": "11d2d643c310bb5e84940b4b0928f4a6151ca9b0d9f3f03b19453da1e824af88"
+      },
+      {
+        "signature": [
+          "cd",
+          "chmod",
+          "chown",
+          "touch"
+        ],
+        "signature_sha256": "4cfcdcb1dbdbaad190da892b547296503ec862a00e3f3be2211eb42915a9b17d",
+        "member_count": 1,
+        "representative_id": "134",
+        "rank_sha256": "139e616c1047934012e0137fef14849c470787059466adf4640f83bf50840a02"
+      },
+      {
+        "signature": [
+          "cd",
+          "chmod",
+          "echo",
+          "find",
+          "grep",
+          "ln",
+          "ls",
+          "mkdir",
+          "touch",
+          "wc"
+        ],
+        "signature_sha256": "0f3e5c88237b2e779fed4538ddbc11f77d4225a26eb1ddd213fc73786a517996",
+        "member_count": 1,
+        "representative_id": "22",
+        "rank_sha256": "15e78fcfa1db151ffc679960a0c2491b673a8d536ab79d9efeed1c7112b2db8a"
+      },
+      {
+        "signature": [
+          "awk",
+          "chmod",
+          "echo",
+          "ls",
+          "mkdir",
+          "mv"
+        ],
+        "signature_sha256": "763136d0df203ac8f3d86a16f31b84d98ed2e1771dfe841fcb4fc42f511280b0",
+        "member_count": 1,
+        "representative_id": "379",
+        "rank_sha256": "178b61da77a5eb47acabc5a19336527bba5ce8289840667a122f53785525e6b6"
+      },
+      {
+        "signature": [
+          "awk",
+          "cat",
+          "cd",
+          "exit",
+          "find",
+          "mkdir",
+          "mv",
+          "rm",
+          "tee"
+        ],
+        "signature_sha256": "e33afd91e1bb1517cc1eaac7b76965ef6c12cbb8373d0cd80ebaadd3a99eac00",
+        "member_count": 1,
+        "representative_id": "81",
+        "rank_sha256": "18705db18a32d8591d48adceb0305d98b6f218d5bf3a994a769a982ff9209317"
+      },
+      {
+        "signature": [
+          "awk",
+          "chmod",
+          "chown",
+          "grep",
+          "ln",
+          "ls",
+          "mkdir",
+          "touch"
+        ],
+        "signature_sha256": "04880917752c6462c9c58d67513228f30a61beea54ea1a9417d61b97d9bc5e76",
+        "member_count": 1,
+        "representative_id": "413",
+        "rank_sha256": "18880060ef3b3f0630162f77a23ed573b62e9bf4b86d88c18461ce11df49a1a2"
+      },
+      {
+        "signature": [
+          "chmod",
+          "chown",
+          "find",
+          "groupadd",
+          "mkdir",
+          "touch",
+          "useradd"
+        ],
+        "signature_sha256": "da5404eb30997e7d1e313942fb03ff2f455cc181dd1f2252d0edd121c6fa96d2",
+        "member_count": 1,
+        "representative_id": "309",
+        "rank_sha256": "19556b1ba6992c66a16dfcc9c79ddddbd40e4da70e0e3c64a48035e759836b12"
+      },
+      {
+        "signature": [
+          "cd",
+          "grep",
+          "ls",
+          "mkdir",
+          "mv",
+          "wc"
+        ],
+        "signature_sha256": "347449f1bde73bcd154419fd19d9c08d7842002969b1099f5cf546d0c74c161a",
+        "member_count": 1,
+        "representative_id": "311",
+        "rank_sha256": "1a7f5b990a6628b5f0651ff9fb6d0692dcad089b7641439d28fde80743a6bd95"
+      },
+      {
+        "signature": [
+          "cd",
+          "find",
+          "rm"
+        ],
+        "signature_sha256": "2e2865a89382f559c97002546cfcdaabb24c6211624101b5c7ae466ad2068a6b",
+        "member_count": 1,
+        "representative_id": "194",
+        "rank_sha256": "1b2370385b5bd21bcd4c9b58160878df4504be739bbc9c05111c447a32778169"
+      },
+      {
+        "signature": [
+          "chmod",
+          "chown",
+          "cp",
+          "echo",
+          "find",
+          "grep",
+          "ls",
+          "mkdir",
+          "tee"
+        ],
+        "signature_sha256": "3b4998e03eef8a51a23a333e06ab3722e17e04fa326b507c2ffb0333e4c1a37f",
+        "member_count": 1,
+        "representative_id": "47",
+        "rank_sha256": "1b32a10752bdf16b1007b6c794aa1941f301c7795d60f550967826a82e6de5c0"
+      },
+      {
+        "signature": [
+          "awk",
+          "cat",
+          "cd",
+          "chgrp",
+          "chmod",
+          "echo",
+          "mkdir",
+          "wc"
+        ],
+        "signature_sha256": "eb3fec23b094a6cecbf82a6aa1287d09d881eb4bb4ed8548312bb7e748b4fca1",
+        "member_count": 1,
+        "representative_id": "140",
+        "rank_sha256": "1dad5a36136a5d0ed31e8cad3f1859acda37825fd03a6775bb0e5b679b425e14"
+      },
+      {
+        "signature": [
+          "chmod",
+          "chown",
+          "echo",
+          "touch",
+          "vi"
+        ],
+        "signature_sha256": "393b91f30f5a45c5eed2684f21d922fb1aa99a57e14224497d2846e91bdcc610",
+        "member_count": 1,
+        "representative_id": "499",
+        "rank_sha256": "1e0ecbf0e081124c21bf62106b9ff6089fa6b6aea2d9b1afdcfce1853efbc5b4"
+      },
+      {
+        "signature": [
+          "chmod",
+          "cp",
+          "echo",
+          "grep",
+          "ls",
+          "sed"
+        ],
+        "signature_sha256": "fb3be28dc3a3dea9df418e5696d009b16730424d1c00cbc3a3e49b1bc41b86a1",
+        "member_count": 1,
+        "representative_id": "279",
+        "rank_sha256": "219d5a3c8b0c94afbf85f44b0066ee9bf64411ac4d8bfeac80ff3807930454f3"
+      },
+      {
+        "signature": [
+          "awk",
+          "chmod",
+          "chsh",
+          "echo",
+          "exit",
+          "grep",
+          "rm",
+          "tee"
+        ],
+        "signature_sha256": "0c9829047b2285ebdf69d9b7ca310e2536d4e6616932c3aa51fc259ed9454585",
+        "member_count": 1,
+        "representative_id": "49",
+        "rank_sha256": "21a7cb4520aeb09387c0b8126ae702e18072872c5f163f22250491f3a88600b2"
+      },
+      {
+        "signature": [
+          "chmod",
+          "cp",
+          "echo",
+          "ls",
+          "mkdir"
+        ],
+        "signature_sha256": "382ee10fe90959225e5f4feea33be4f6c3be862591007fef9e45e6a51726b342",
+        "member_count": 1,
+        "representative_id": "70",
+        "rank_sha256": "262753dc23aabca2736e8cb8287f0e794d6ae82bb929212459dcb849bceef53e"
+      },
+      {
+        "signature": [
+          "addgroup",
+          "chmod",
+          "chown",
+          "echo",
+          "exit",
+          "grep",
+          "ls",
+          "mkdir",
+          "touch",
+          "useradd",
+          "usermod"
+        ],
+        "signature_sha256": "802110369c082d7d78c8bce28f706e1a94606556ce2f07a6db8c2b2e9d66a355",
+        "member_count": 1,
+        "representative_id": "482",
+        "rank_sha256": "277da3de89dcaf659f79bf248ab69ff5b4f8a75e80c0b7c080e6e3775843be2b"
+      },
+      {
+        "signature": [
+          "chage",
+          "chmod",
+          "chown",
+          "echo",
+          "groupadd",
+          "mkdir",
+          "useradd",
+          "usermod"
+        ],
+        "signature_sha256": "8570253bf5e9b73e245e510b8d3faa4cc8e33a123c63a3aa7cf4bd54a3c0318b",
+        "member_count": 1,
+        "representative_id": "204",
+        "rank_sha256": "29813560a269b1f0cf509f1dd62425446a5826c5a4574ba30033ab5d368f288d"
+      },
+      {
+        "signature": [
+          "cd",
+          "chmod",
+          "echo",
+          "ls",
+          "mkdir"
+        ],
+        "signature_sha256": "782a3483e4eea69d40e06f37ff06dc2adde88c743228442c7f21b034ac2b5394",
+        "member_count": 1,
+        "representative_id": "205",
+        "rank_sha256": "29e4b5651e38599623217124957707f60506001135c1b7567831e7e4f0075a30"
+      },
+      {
+        "signature": [
+          "chage",
+          "chmod",
+          "echo",
+          "grep",
+          "ls",
+          "mkdir",
+          "tee",
+          "useradd"
+        ],
+        "signature_sha256": "96ab4283d62bd0ef68fd6c9d566a9cacf0f3004cc6725bb9fea1f1a7dc30629d",
+        "member_count": 1,
+        "representative_id": "480",
+        "rank_sha256": "2c482c4e81367c6759f05903c3b16d23bf5ab302b9291cfb057e1ab6b521e269"
+      },
+      {
+        "signature": [
+          "grep",
+          "ls",
+          "mkdir",
+          "mv",
+          "wc"
+        ],
+        "signature_sha256": "1e0618dd7f1944e2bc42836761d48a628c60c0a5a16181e9c3dfd12217d0084b",
+        "member_count": 1,
+        "representative_id": "174",
+        "rank_sha256": "2d28cae4f018f4f37f2337ef0eef85b2c3b202a859e4f4cf642d12df9aa3436b"
+      },
+      {
+        "signature": [
+          "chmod",
+          "chown",
+          "chsh",
+          "echo",
+          "grep",
+          "ls",
+          "rm",
+          "touch"
+        ],
+        "signature_sha256": "b08553af31ab1aeeb80fc14bdc42592079446ea848aee6b846cf43416913c7c0",
+        "member_count": 1,
+        "representative_id": "181",
+        "rank_sha256": "2e8401ad9e8d9a9b70d8a9b2eb37db8707a065e7ead411d476691f1eb0be30ec"
+      },
+      {
+        "signature": [
+          "addgroup",
+          "chgrp",
+          "chmod",
+          "chown",
+          "chsh",
+          "echo",
+          "mkdir",
+          "touch",
+          "usermod"
+        ],
+        "signature_sha256": "1328bb4ad87e6374ccf64bfcaccd93bc2b960d7282c0aea4343e882cf100fffc",
+        "member_count": 1,
+        "representative_id": "273",
+        "rank_sha256": "301cdbab8c54f810923e8ddfd967dfabdc444d02b533cccc9eebbe6ea53fba7d"
+      },
+      {
+        "signature": [
+          "ls",
+          "mkdir",
+          "mv"
+        ],
+        "signature_sha256": "4cbc1e82daad1e4a293652a4646d06ec618a896b7d16399b5d506d25b4792b1e",
+        "member_count": 1,
+        "representative_id": "367",
+        "rank_sha256": "3184c1a382d5b2ee812bf084b83efd1cc73fcff981c5bfb9c0168d602524bd17"
+      },
+      {
+        "signature": [
+          "find",
+          "tee"
+        ],
+        "signature_sha256": "e5e05ab7a5929c6dd0e2000828b66c60a21a25c45286e4d23652179d84f0a5f1",
+        "member_count": 1,
+        "representative_id": "46",
+        "rank_sha256": "31ad753a74e07888b53459292c41c5aba0be4eb1289364a3d6630e55aae8d5a3"
+      },
+      {
+        "signature": [
+          "echo",
+          "grep",
+          "ls",
+          "mkdir",
+          "rm",
+          "sleep",
+          "touch",
+          "wc"
+        ],
+        "signature_sha256": "f50df17fc627e4f14daab4ba441b3f2c54b65af0fe063388815e7cb322ad7e99",
+        "member_count": 1,
+        "representative_id": "172",
+        "rank_sha256": "3325aaee47219f0d158759a61fc1e76260ea268f158d90b67e06573c30c2cf60"
+      },
+      {
+        "signature": [
+          "awk",
+          "chmod",
+          "chown",
+          "echo",
+          "grep",
+          "ls",
+          "mkdir",
+          "touch"
+        ],
+        "signature_sha256": "e421bc6b2661d1d1363c017f58d7ead1d8ac8b37f0b9fdf009a18f1f9428e069",
+        "member_count": 1,
+        "representative_id": "380",
+        "rank_sha256": "37ddc48cc53be41f6b2697631f800639b880d818baf822e31875f4c8f0fe624c"
+      }
+    ],
+    "selected_representative_ids": [
+      "107",
+      "138",
+      "360",
+      "229",
+      "395",
+      "332",
+      "214",
+      "134",
+      "22",
+      "379",
+      "81",
+      "413",
+      "309",
+      "311",
+      "194",
+      "47",
+      "140",
+      "499",
+      "279",
+      "49",
+      "70",
+      "482",
+      "204",
+      "205",
+      "480",
+      "174",
+      "181",
+      "273",
+      "367",
+      "46",
+      "172",
+      "380"
+    ],
+    "representative_ids_sha256": "128bf594547f1509625223bee1bb275b1ad655fa08971eba5013264c33b879a5",
+    "selected_skill_union": [
+      "addgroup",
+      "awk",
+      "cat",
+      "cd",
+      "chage",
+      "chgrp",
+      "chmod",
+      "chown",
+      "chsh",
+      "cp",
+      "echo",
+      "exit",
+      "find",
+      "grep",
+      "groupadd",
+      "ln",
+      "ls",
+      "mkdir",
+      "mv",
+      "rm",
+      "sed",
+      "sleep",
+      "tee",
+      "touch",
+      "useradd",
+      "usermod",
+      "vi",
+      "wc"
+    ],
+    "all_validation_skill_union": [
+      "addgroup",
+      "awk",
+      "cat",
+      "cd",
+      "chage",
+      "chgrp",
+      "chmod",
+      "chown",
+      "chsh",
+      "cp",
+      "echo",
+      "exit",
+      "find",
+      "gpasswd",
+      "grep",
+      "groupadd",
+      "ln",
+      "ls",
+      "mkdir",
+      "mv",
+      "rm",
+      "sed",
+      "sleep",
+      "tee",
+      "touch",
+      "useradd",
+      "usermod",
+      "vi",
+      "wc"
+    ]
+  },
+  "utilization_pilot_selection": {
+    "rank_range": [
+      33,
+      40
+    ],
+    "selected_cluster_count": 8,
+    "selected_clusters": [
+      {
+        "signature": [
+          "addgroup",
+          "chgrp",
+          "chmod",
+          "echo",
+          "tee",
+          "touch",
+          "usermod"
+        ],
+        "signature_sha256": "caf23698bce6e3d668753eda31eac46bfab1008d286f950b8b7709273eba5af4",
+        "member_count": 1,
+        "representative_id": "350",
+        "rank_sha256": "38b6161a6a803a8f494e5cb184d47731bad1ec0c253e7427c1a0b353aa7432f8"
+      },
+      {
+        "signature": [
+          "addgroup",
+          "chgrp",
+          "chmod",
+          "find",
+          "usermod"
+        ],
+        "signature_sha256": "1db09a59be81b4b090883fc3ea154147cbac96cc0813657e4ba7a62e79330df0",
+        "member_count": 1,
+        "representative_id": "35",
+        "rank_sha256": "3a2401397def9525330706ab7f49e94d18d29be97f1770df59573af593f8dd6c"
+      },
+      {
+        "signature": [
+          "chage",
+          "echo",
+          "grep",
+          "rm",
+          "tee"
+        ],
+        "signature_sha256": "bc8f7472aded5a6a738eb388f011a76c922bce313036be18560d24d0bf36926c",
+        "member_count": 1,
+        "representative_id": "386",
+        "rank_sha256": "3ab45ca4b0613d628b886e8ac04671b5fb1558ac9615aad7d8e96b1c4cdd765f"
+      },
+      {
+        "signature": [
+          "cd",
+          "echo",
+          "mkdir",
+          "touch"
+        ],
+        "signature_sha256": "c9a216cdfc8f3694136fc0cf5913464e92d0fa0562abee8a527872f3d60daf82",
+        "member_count": 1,
+        "representative_id": "483",
+        "rank_sha256": "3e5e1bb4a74fc9f216b13a6f6342662b4b206bc56d2cf5b732dc738c427fea2c"
+      },
+      {
+        "signature": [
+          "awk",
+          "cat",
+          "echo",
+          "grep",
+          "mkdir",
+          "rm",
+          "tee",
+          "wc"
+        ],
+        "signature_sha256": "c63a5203116d1145b2838c6583ffea4f6a6911cd91a7fd8fcdf7d1821f10ede7",
+        "member_count": 1,
+        "representative_id": "117",
+        "rank_sha256": "3ed2bdfb9e19de0d4759babd633d3a72b1e1f237f882e48bdbaad0bf899a3ccc"
+      },
+      {
+        "signature": [
+          "chgrp",
+          "chmod",
+          "groupadd",
+          "mkdir",
+          "usermod"
+        ],
+        "signature_sha256": "d2052f4b109f81bd0c95b0c48e60bd5ba60f0f97db594e3c019c65cb2b0af7f6",
+        "member_count": 1,
+        "representative_id": "186",
+        "rank_sha256": "40bb6d0fac05c0037387bb4b558960f97dfe3bbb04e46240c274b2a4dbd4b65c"
+      },
+      {
+        "signature": [
+          "chmod",
+          "echo",
+          "sleep"
+        ],
+        "signature_sha256": "23e96b4b273a6a71abe4ddab0852529d04517c6f9c90c6728a01d10d5cfd7513",
+        "member_count": 1,
+        "representative_id": "73",
+        "rank_sha256": "41e6b41c4cc89bc35df8fa6eccedf1a408a9a6eede902f92fe4c9c5da70c4706"
+      },
+      {
+        "signature": [
+          "cd",
+          "chgrp",
+          "chmod",
+          "find",
+          "grep",
+          "ls",
+          "mkdir",
+          "touch"
+        ],
+        "signature_sha256": "b1a7d6a452239ecd8f109c259a6b93561371952981fe403e33e5f8ff9dbdeb56",
+        "member_count": 1,
+        "representative_id": "83",
+        "rank_sha256": "44cce3731750d0e3b0e5f791d77b7be1e046a5b84084d36ed165cfe0a6e975b6"
+      }
+    ],
+    "selected_representative_ids": [
+      "350",
+      "35",
+      "386",
+      "483",
+      "117",
+      "186",
+      "73",
+      "83"
+    ],
+    "representative_ids_sha256": "f6fcd4643d4a01359c32b667583702c30fe3138a02f24d6dcaf6c75951ab1ed5",
+    "selected_skill_union": [
+      "addgroup",
+      "awk",
+      "cat",
+      "cd",
+      "chage",
+      "chgrp",
+      "chmod",
+      "echo",
+      "find",
+      "grep",
+      "groupadd",
+      "ls",
+      "mkdir",
+      "rm",
+      "sleep",
+      "tee",
+      "touch",
+      "usermod",
+      "wc"
+    ],
+    "disjoint_from_primary": true
+  },
+  "outcome_blindness": {
+    "validation_task_initializations": 0,
+    "validation_evaluator_calls": 0,
+    "validation_ground_truth_calls": 0,
+    "validation_treatment_outcomes_observed": 0,
+    "source_outcomes_observed_for_selection": 0,
+    "model_calls": 0,
+    "provider_calls": 0
+  },
+  "support_proxy": {
+    "source_selected_skill_union_count": 29,
+    "primary_validation_skill_union_count": 28,
+    "utilization_pilot_skill_union_count": 19,
+    "primary_validation_skills_missing_from_source_union": [],
+    "utilization_pilot_skills_missing_from_source_union": []
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "receipt_sha256": "772594e502e13c464090d2b6a6d6e65ab944fbbbaa4600b2387e87fa2ab0dd64"
+}

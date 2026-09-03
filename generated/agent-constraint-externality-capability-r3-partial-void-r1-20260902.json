@@ -1,0 +1,27 @@
+{
+  "affected_scope": "TNF_RERUN_UNITS_ONLY",
+  "affected_units": [
+    "capability:qwen3.7-plus|ACE-TNF-05|1",
+    "capability:qwen3.7-plus|ACE-TNF-05|2",
+    "capability:qwen3.7-plus|ACE-TNF-06|1",
+    "capability:qwen3.7-plus|ACE-TNF-06|2"
+  ],
+  "content_sha256": "a921f83b55e47f35892634cc996b9e7b6e8644952ae826fd34779a057c035774",
+  "f0_authorized": false,
+  "fg_preserved_measurements_remain_valid": true,
+  "fg_revalidation_sha256": "d3aa7a5cba50e309d784fc570c32e3c967b1078d8d898bb10d53a2588542a735",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "objective_defects": [
+    "FILE_SYSTEM_DIRECTORY_FIXTURE_PATHS_OMITTED_APPWORLD_REQUIRED_TRAILING_SLASH",
+    "SYNTHETIC_CHILD_DIRECTORY_EXISTED_WITHOUT_AGENT_EXTERNALITY_PARENT_DIRECTORY",
+    "TNF_TASK_REQUIRED_DOT_TXT_IN_EVALUATOR_BUT_DID_NOT_EXPLICITLY_STATE_EXTENSION"
+  ],
+  "observed_witnesses": {
+    "create_file_without_extension_returned_http_422": true,
+    "directory_exists_returned_false_for_sqlite_present_directory": true
+  },
+  "provider_requests_spent_in_void_tnf_attempt": 28,
+  "retry_or_replacement": false,
+  "schema_version": "ace-capability-r3-partial-void-r1-v1",
+  "status": "QWEN37PLUS_R3_PARTIAL_VOID_SUBSTRATE_FILESYSTEM_FILENAME_INVALID"
+}

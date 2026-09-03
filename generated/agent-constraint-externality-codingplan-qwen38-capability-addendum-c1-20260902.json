@@ -1,0 +1,69 @@
+{
+  "active_substrate": {
+    "bundle_path": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle",
+    "bundle_sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5",
+    "v4_contract_sha256": "d60f0ad2b584fd193dc81b36a3dc274f3f2db2a0fb36c6e5e68a9120459d247d"
+  },
+  "authority": {
+    "capability_c1": true,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "70c631c9293ac7f6a7611ae5e1b3dd1e37524618f97c7ed0bee9eff31d8d0e12",
+  "deepseek_interface_void_sha256": "e8ede6b5df2bedd897ef85bdb02d66c35977cd73fcb1b48eabb9433fb68a569c",
+  "execution_id": "CODINGPLAN-QWEN38-27B-CAPABILITY-C1",
+  "gate": {
+    "malformed_tool_calls_required": 0,
+    "non_target_preservation_min": 0.85,
+    "target_success_max": 0.875,
+    "target_success_min": 0.5,
+    "tool_loop_completion_min": 0.75
+  },
+  "model": {
+    "atomcode_provider_profile": "AtomGit-qwen3.8-27b",
+    "bridge_schema": "ace-atomcode-json-action-bridge-v2",
+    "context_window": 262144,
+    "max_output_tokens": 65536,
+    "provider": "ATOMGIT_CODINGPLAN_ATOMCODE_QWEN38_HEADLESS_V1",
+    "resolved_model": "qwen3.8-27b",
+    "retry_max_attempts": 1,
+    "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "panel": {
+    "episodes": 8,
+    "family_ids": [
+      "ACE-FG-05",
+      "ACE-FG-06",
+      "ACE-TNF-05",
+      "ACE-TNF-06"
+    ],
+    "repeats": [
+      1,
+      2
+    ],
+    "reuse_other_model_measurements": false,
+    "tool_call_cap": 16
+  },
+  "provider_qualification_sha256": "234b063636bc82ade16ba94123cfaaf49c6b9254b849f9e8a9acdf574385369a",
+  "request_efficiency": {
+    "five_hour_request_limit_user_reported": 500,
+    "one_atomcode_invocation_must_equal_one_codingplan_request": true,
+    "parallel_independent_tool_calls_encouraged_per_turn": true,
+    "token_budget_is_not_primary_constraint": true
+  },
+  "schema_version": "ace-codingplan-qwen38-capability-addendum-c1-v1",
+  "scientific_outcomes_observed": 0,
+  "selection_boundary": "POST_QWEN37PLUS_CEILING_AND_CODINGPLAN_DEEPSEEK_INTERFACE_VOID",
+  "selection_reason": [
+    "USER_REQUESTED_CODINGPLAN_PROVIDER_EVALUATION",
+    "QWEN38_27B_IS_SMALLER_THAN_CEILING_QWEN37PLUS_TIER",
+    "LIVE_JSON_ACTION_BRIDGE_QUALIFIED_WITH_ZERO_NATIVE_ATOMCODE_TOOL_CALLS",
+    "262K_CONTEXT_AND_65K_OUTPUT_ALLOW_LARGE_TOOL_SCHEMA_PER_REQUEST",
+    "REQUEST_LIMITED_PLAN_FAVORS_PARALLEL_ACTIONS_PER_MODEL_TURN",
+    "NOT_SELECTED_FOR_EXPECTED_EXTERNALITY_EFFECT"
+  ],
+  "status": "CODINGPLAN_QWEN38_CAPABILITY_C1_AUTHORIZED"
+}

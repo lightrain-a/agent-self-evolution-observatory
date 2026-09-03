@@ -1,0 +1,49 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "method": false,
+    "p1": false,
+    "paper_claim": false,
+    "second_model": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "cfe714a27a5f1458bc10f94de5648da6de6306eb7f287d4c773d309fb773176b",
+  "execution_id": "QWEN37PLUS-CAPABILITY-R5-PARTIAL-SUBSTRATE-V4",
+  "f0_executed": false,
+  "fg_revalidation_sha256": "d3aa7a5cba50e309d784fc570c32e3c967b1078d8d898bb10d53a2588542a735",
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 1.0,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 1.0,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+  },
+  "inherited_fg_agent_model_request_count": 36,
+  "ledger_sha256": "662537f163365038ddf9322216c5ba5cac1da06556189ce4d68388657498c0a0",
+  "model_selection_evidence_agent_request_total": 75,
+  "new_agent_model_request_count": 39,
+  "new_tnf_completion_count": 4,
+  "new_tnf_tool_cap_incomplete_count": 0,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "preserved_fg_measurements": 4,
+  "provider_request_total_new": 39,
+  "r5_contract_sha256": "e148fccc99d50a77aeea220074032f30d93c181e39a0651e13d549cfa7cf8f1f",
+  "requested_model": "qwen3.7-plus-2026-05-26",
+  "rerun_tnf_measurements": 4,
+  "resolved_model": "qwen3.7-plus",
+  "schema_version": "ace-qwen37plus-capability-r5-partial-result-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+  "tool_call_cap": 16,
+  "toolcap_measurement_sha256": null,
+  "valid_capability_measurements": 8
+}

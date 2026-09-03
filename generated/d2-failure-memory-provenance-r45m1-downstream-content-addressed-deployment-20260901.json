@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-DOWNSTREAM-CONTENT-ADDRESSED-DEPLOYMENT-20260901",
+  "recorded_at": "2026-09-01T20:30:00+08:00",
+  "status": "PASS_DOWNSTREAM_CONTENT_ADDRESSED_DEPLOYMENT_ZERO_VALIDATION_OUTCOME",
+  "role": "DEPLOYMENT_EVIDENCE_ONLY_NOT_A_NEW_SCIENTIFIC_TREATMENT",
+  "host": "wyt@222.20.126.231",
+  "remote_root": "/data/wyt/b1-memrl-r45m1-execution/downstream-frozen-f0d284bc",
+  "source_git_commit": "f0d284bc9841d3fec3fb34a0c5704c83b7481ea4",
+  "files": {
+    "research_pipeline/failure_memory_memrl_source_qualification_r46m2.py": "e0740dc09609d1a551ac791492417b159c4f465ef42edf659c9a5a0631bfbeac",
+    "research_pipeline/failure_memory_memrl_utilization_r47m2.py": "288608515fdfd896dc4b992ea66818e1116fabe3cd114e0c53b3b3c94da5c713",
+    "research_pipeline/failure_memory_memrl_ab_identification_r48.py": "6e28cfa75eef0d9833e0184cff5aaa0ff81957555b764f834c7c23c10324d2a1",
+    "generated/d2-failure-memory-provenance-r48-ab-identification-operationalization-contract.json": "9c769c4f71dae298ff9655a8f3a3dca53dff19e3f7f5ea3e54b4211feb9da716",
+    "generated/d2-failure-memory-provenance-r48-ab-identification-conditional-authority.json": "f9b3b531106d71ab7e4d4d23e8fea296f94239f621a0e82b97412c57beae7cd9"
+  },
+  "remote_deployment_receipt": {
+    "receipt_sha256": "3a1e0f7ec37046f1d0d353c9dea246297b86b3fbc1a96fca3d2a3c98f8c37c7f",
+    "file_sha256": "f7f1a0ac3ad77bae2062b31bfc63e919be057980994883bf9addb64245addc2e"
+  },
+  "checks": {
+    "all_file_sha256_exact": true,
+    "contract_receipt_valid": true,
+    "authority_receipt_valid": true,
+    "R46M2_code_binding_valid": true,
+    "R47M2_code_binding_valid": true,
+    "R48_code_binding_valid": true,
+    "R47M2_strict_preflight_binding_valid": true,
+    "C_D_execution_authority": false
+  },
+  "access_accounting": {
+    "validation_treatment_outcomes_observed": 0,
+    "A_B_treatment_outcomes_observed": 0,
+    "model_calls_for_deployment": 0,
+    "environment_resets_for_deployment": 0,
+    "evaluator_calls_for_deployment": 0
+  },
+  "scientific_authority": false,
+  "receipt_sha256": "920ee41cd430554bbbeff30ea13df6841a81b3047f60936c4518d54baae46f8a"
+}

@@ -1,0 +1,71 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "run_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-runtime-amendment-v15a",
+  "state": "OFFICIAL_TRAINING_RUNTIME_AMENDMENT_V15A_AUTHORIZED_WITHIN_EXISTING_BOUNDED_SCOPE",
+  "parent_authority": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-developmental-authority-v13",
+  "parent_authority_sha256": "d2abe5b0647abeecc464fa2b77189fc28e91ea5999c173189b42f04576914dc2",
+  "parent_runtime_amendment": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-official-training-runtime-amendment-v14a",
+  "observed_failure": {
+    "host": "232",
+    "component": "SGP-12",
+    "phase": "RESOURCE_PREFLIGHT_DURING_MODEL_INITIALIZATION_BEFORE_FORWARD_BACKWARD",
+    "optimizer_steps_committed": 0,
+    "forward_backward_executed": false,
+    "scientific_outcomes": 0,
+    "classification": "FROZEN_INITIALIZATION_ORDER_RNG_DRIFT_NON_SCIENTIFIC",
+    "error": "SGP initialization invariant failed",
+    "external_claim_sha256": "6acb78de3822615fabb4f6de2a2234a1c6cfd68ca681a031ca70980c0fd2982b",
+    "external_failure_sha256": "d850c8fdd8bbdc312d1631eeb535b518fc9c0c8c592f5287be6e72bc03e07712",
+    "external_diagnosis_sha256": "90809246ad6df34767ca9340af9e4f270a382b572723d2550c725aa278253a2e"
+  },
+  "diagnosis": {
+    "frozen_expected_initial_model_state_sha256": "efd8ee84bf36e5ebfc9a191155495d5c540f289e20a117356c4b490a4c2fb3f3",
+    "model_initialized_immediately_after_clip_load_sha256": "68f8e5645137c5e9bdf8b605a453871ec97f041f542e3cd9ef84dba07ea911e0",
+    "model_initialized_after_rng_restore_sha256": "efd8ee84bf36e5ebfc9a191155495d5c540f289e20a117356c4b490a4c2fb3f3",
+    "parameter_count": 51156834,
+    "cause": "CLIPTextModelWithProjection.from_pretrained consumes Torch RNG before SGP model construction. The v12 frozen initialization was defined from the preregistered seed immediately before SGP construction, so the original runtime order violated its own initialization invariant."
+  },
+  "repair": {
+    "scientific_change": false,
+    "model_architecture_change": false,
+    "data_change": false,
+    "corpus_change": false,
+    "prompt_change": false,
+    "training_seed_change": false,
+    "batch_size_change": false,
+    "gradient_accumulation_change": false,
+    "optimizer_change": false,
+    "training_step_budget_change": false,
+    "checkpoint_cadence_change": false,
+    "validation_policy_change": false,
+    "precision_policy_change": false,
+    "decoder_path_change": false,
+    "only_runtime_change": "For SGP components only, load and freeze CLIP first, then restore the preregistered Python/NumPy/Torch CPU/Torch CUDA RNG streams to seed 20260901 immediately before constructing the SGP model, optimizer and EMA."
+  },
+  "why_this_preserves_the_one_factor_intervention": {
+    "support_12_and_support_14_initial_model_state_must_equal": "efd8ee84bf36e5ebfc9a191155495d5c540f289e20a117356c4b490a4c2fb3f3",
+    "post_initialization_rng_state_policy": "Identical across both SGP arms because both load the same frozen CLIP and then restore the same frozen RNG streams immediately before identical model construction.",
+    "paired_augmentation_policy": "NumPy RNG is also restored identically, preserving the already-qualified paired batch augmentation alignment.",
+    "intentionally_varied_factor_remains": "TRAINING_RELATION_COUNT_SUPPORT only"
+  },
+  "child_code": {
+    "core_sha256": "f724388951a4e3077230e1f83c7f0f2bb6fe73804aa7180925ce2c097819fdff",
+    "training_segment_sha256": "6300af43aff85fc58adcc2a37153e1f22802dd94fc1d2016fbc7981bf5a999a5",
+    "entrypoint_sha256": "79c37bbced53f691d2d7fc045afea60d5dc1c847a26a0799f51fb5ed6705d476"
+  },
+  "authority": {
+    "official_training_developmental_authority": true,
+    "scope_is_identical_to_v13": true,
+    "new_child_resource_preflight_authorized": true,
+    "failed_v15_preflight_overwrite_forbidden": true,
+    "reproduction_evaluation": false,
+    "p1": false,
+    "scientific_outcomes": 0
+  },
+  "next_gate": "RUN_NEW_V16_ZERO_OPTIMIZER_BATCH128_SGP_RESOURCE_PREFLIGHT_USING_V15A_RUNTIME",
+  "port_010": {
+    "status": "HOLD_EVIDENCE_REVIEW_BLOCKED",
+    "evidence_review": "BLOCK_BAKE_IN",
+    "changed": false
+  }
+}

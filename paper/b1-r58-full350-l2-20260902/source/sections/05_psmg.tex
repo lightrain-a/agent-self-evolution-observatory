@@ -1,0 +1,13 @@
+\section{Provenance-Separated Memory Governance}
+\label{sec:psmg}
+The identification result suggests a governance response that does not guess the sign of provenance. Let a memory record be
+\begin{equation}
+r_i=(m_i,p_i,z_i,h_i),
+\end{equation}
+where $m_i$ is actionable content, $p_i$ process provenance, $z_i$ all other pre-outcome quality/relevance features, and $h_i$ a content-addressed audit pointer. PSMG keeps $(p_i,h_i)$ in the control plane instead of silently deleting provenance or concatenating it to every executor prompt.
+
+\paragraph{Calibrated decision and executor-blind projection.}
+A frozen controller $g_\theta(z_i,p_i)$ selects admit, down-weight, verify, or withhold; failure-derived memory is never rejected by definition. A projection $\Pi$ then sends only approved actionable content (plus separately authorized verification evidence) to the executor, keeping raw $p_i$ hidden unless executor-facing provenance is itself the declared treatment. This separates governance value from a lexical provenance cue and allows provenance influence to shrink toward zero when conditional information gain is unsupported.
+
+\paragraph{Same-information efficacy test.}
+The decisive comparator is $g^0_\phi(z_i)$, which receives every pre-outcome feature available to PSMG except $p_i$. Memory bytes, support, retrieval/content budget, executor, verification information, task distribution, endpoint, and analysis must remain fixed. Only an advantage over this comparator identifies decision value attributable to provenance in the governance plane. Our L2 experiments instead test executor-visible $Y_L(p;m)-Y_L(\varnothing;m)$, so PSMG remains a prospective method design rather than an efficacy claim (Appendix~\ref{app:fresh}).

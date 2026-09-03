@@ -1,0 +1,114 @@
+body[data-page="experiment-costs"] .content{max-width:1480px;padding-top:38px}
+body[data-page="experiment-costs"] h1{font-size:clamp(32px,3.4vw,50px)}
+body[data-page="experiment-costs"] .lead{max-width:1120px;font-size:16px}
+body[data-page="experiment-costs"] .callout{margin:20px 0 14px;padding:14px 16px;font-size:13px}
+body[data-page="experiment-costs"] .panel{padding:18px 20px;margin:14px 0}
+body[data-page="experiment-costs"] .panel h2{font-size:21px;margin-bottom:7px}
+body[data-page="experiment-costs"] .section-intro{margin:0 0 10px;font-size:12px;line-height:1.55}
+body[data-page="experiment-costs"] .advisor-table-scroll{max-width:100%;min-width:0;overflow:visible;border:1px solid #dbe2eb;border-radius:12px;background:#fff}
+body[data-page="experiment-costs"] .advisor-table-scroll>.matrix{width:100%;min-width:0;table-layout:fixed;border:0;border-radius:0;font-size:11px}
+body[data-page="experiment-costs"] .advisor-table-scroll>.matrix th{padding:8px 8px;font-size:9.2px;line-height:1.25;white-space:normal;overflow-wrap:anywhere}
+body[data-page="experiment-costs"] .advisor-table-scroll>.matrix td{padding:8px 8px;line-height:1.35;white-space:normal;overflow-wrap:anywhere}
+body[data-page="experiment-costs"] .advisor-table-scroll>.matrix td:nth-child(2){font-weight:720;color:#27344a}
+body[data-page="experiment-costs"] .advisor-table-scroll>.matrix td:last-child{white-space:normal;min-width:0;color:#657188}
+body[data-page="experiment-costs"] .ec-price b{font-size:14px;color:#3434a5}
+body[data-page="experiment-costs"] .ec-ark td:first-child b{color:#087e5b}
+body[data-page="experiment-costs"] .ec-qwen td:first-child b{color:#3156a6}
+body[data-page="experiment-costs"] .ec-qwen{background:#fbfcff}
+body[data-page="experiment-costs"] .ec-model-filter{display:grid;grid-template-columns:auto minmax(260px,1fr) auto;align-items:center;gap:9px;margin:0 0 8px;padding:9px 10px;border:1px solid #dbe2eb;border-radius:10px;background:#fafbfc}
+body[data-page="experiment-costs"] .ec-model-filter label{color:#475467;font-size:10px;font-weight:750;white-space:nowrap}
+body[data-page="experiment-costs"] .ec-model-filter input{width:100%;min-width:0;padding:7px 9px;border:1px solid #d0d7e2;border-radius:8px;background:#fff;color:#27344a;font:inherit;outline:none}
+body[data-page="experiment-costs"] .ec-model-filter input:focus{border-color:#8a99ad;box-shadow:0 0 0 2px rgba(39,52,74,.08)}
+body[data-page="experiment-costs"] .ec-model-filter span{color:#667085;font-size:9.5px;white-space:nowrap}
+body[data-page="experiment-costs"] .ec-model-filter span b{color:#27344a;font-size:11px}
+body[data-page="experiment-costs"] .ec-family-summary{margin:0 0 8px;color:#7a8598;font-size:9px;line-height:1.45}
+body[data-page="experiment-costs"] .ec-vendor-matrix{overflow-x:auto;overflow-y:visible}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix{table-layout:fixed;min-width:1320px;font-size:10.2px}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix col.ec-vm-model{width:16%}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix col:not(.ec-vm-model){width:10.5%}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix th{font-size:9px;text-align:left;background:#f5f7fa}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td{vertical-align:middle;line-height:1.35}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix th:first-child,body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td:first-child{position:sticky;left:0;z-index:2;background:#fafbfc}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix th:first-child{z-index:3;background:#f5f7fa}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td:first-child{color:#27344a;font-weight:700}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td>b{display:block;font-size:10.8px;color:#24364f}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td>small{display:block;margin-top:3px;color:#7a8598;font-size:8.3px;line-height:1.28;font-weight:500}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-unavailable{color:#b1b7c2;text-align:center;font-weight:500}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix tr.ec-family-start td{border-top:2px solid #cfd8e6}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix tr.ec-family-start td:first-child{background:#f3f6f9}
+body[data-page="experiment-costs"] .ec-vendor-matrix .ec-family-tag{display:inline-block!important;margin-top:3px!important;padding:1px 5px;border-radius:999px;background:#eef2f6;color:#667085!important;font-size:7.6px!important;line-height:1.35!important}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-junliai{background:#fbfcff}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-junliai-supported{background:#fbfcff;color:#7a8598}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-caution{background:#fff9ee}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-provider-aihubmix{background:#fbfdf8}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-provider-siliconflow,body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-provider-ppio{background:#fbfdfc}
+body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-provider-302{background:#fdfcf9}
+body[data-page="experiment-costs"] .ec-vendor-matrix .ec-tiered-price{padding-top:5px;padding-bottom:5px}
+body[data-page="experiment-costs"] .ec-vendor-matrix .ec-price-tier{display:grid;grid-template-columns:54px minmax(0,1fr);gap:4px;align-items:start;padding:3px 0;border-bottom:1px dotted #dde3eb}
+body[data-page="experiment-costs"] .ec-vendor-matrix .ec-price-tier:last-child{border-bottom:0}
+body[data-page="experiment-costs"] .ec-vendor-matrix .ec-price-tier>span{color:#697586;font-size:7.7px;line-height:1.3;white-space:nowrap}
+body[data-page="experiment-costs"] .ec-vendor-matrix .ec-price-tier>b{color:#24364f;font-size:8.7px;line-height:1.3;font-weight:720}
+body[data-page="experiment-costs"] .ec-matrix-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:8px}
+body[data-page="experiment-costs"] .ec-matrix-notes>span{padding:8px 10px;border:1px solid #e2e7ef;border-radius:8px;background:#fafbfc;color:#667085;font-size:9.3px;line-height:1.45}
+body[data-page="experiment-costs"] .ec-matrix-notes b{color:#344054}
+body[data-page="experiment-costs"] .ec-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+body[data-page="experiment-costs"] .ec-facts.ec-facts-4{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:10px}
+body[data-page="experiment-costs"] .ec-facts article{padding:12px 13px;border:1px solid #dfe5ee;border-radius:11px;background:#fbfcfe}
+body[data-page="experiment-costs"] .ec-facts article>b{display:block;color:#667085;font-size:9.5px;text-transform:uppercase;letter-spacing:.05em}
+body[data-page="experiment-costs"] .ec-facts article>strong{display:block;margin:4px 0;color:#27344a;font-size:18px;line-height:1.25}
+body[data-page="experiment-costs"] .ec-facts article>span{display:block;color:#667085;font-size:10.5px;line-height:1.5}
+body[data-page="experiment-costs"] .warning-box{margin:10px 0 0;padding:11px 13px;font-size:11px;line-height:1.55}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix{width:100%;min-width:0;table-layout:fixed;font-size:10px}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix th{font-size:8.8px;white-space:normal}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix td{white-space:normal;vertical-align:top;min-width:0;line-height:1.42}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-paper{width:9%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-scene{width:12%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-model{width:15%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-used{width:20%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-used-price{width:10%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-plan{width:23%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-plan-price{width:11%}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix col.ec-col-why{width:0}
+body[data-page="experiment-costs"] .ec-portfolio>.matrix th:last-child,body[data-page="experiment-costs"] .ec-portfolio>.matrix td:last-child{display:none}
+@counter-style ec-circled-paper{system:fixed;symbols:"①" "②" "③" "④" "⑤" "⑥" "⑦" "⑧" "⑨";suffix:" "}
+body[data-page="experiment-costs"] .ec-portfolio tbody{counter-reset:ec-paper-index}
+body[data-page="experiment-costs"] .ec-portfolio .ec-paper-cell{vertical-align:middle;font-weight:700;background:#f8fafc;border-right:1px solid #e1e7ef}
+body[data-page="experiment-costs"] .ec-portfolio .ec-paper-cell b{display:block;line-height:1.35}
+body[data-page="experiment-costs"] .ec-portfolio .ec-paper-cell b::before{counter-increment:ec-paper-index;content:counter(ec-paper-index,ec-circled-paper);display:block;margin-bottom:5px;color:#596579;font-size:15px;line-height:1}
+body[data-page="experiment-costs"] .ec-portfolio tr.ec-group-start td{border-top:2px solid #cfd8e6}
+body[data-page="experiment-costs"] .ec-portfolio tr.ec-group-start td:not(.ec-paper-cell){background:#f8fafc}
+body[data-page="experiment-costs"] .ec-portfolio .ec-model b{display:block;color:#27344a;font-size:11px;line-height:1.3}
+body[data-page="experiment-costs"] .ec-portfolio .ec-model small{display:block;margin-top:3px;color:#7a8598;font-size:8.8px;line-height:1.35}
+body[data-page="experiment-costs"] .ec-portfolio .ec-model+td{background:#f7f9ff;border-left:2px solid #cfd8f4;font-size:10.2px}
+body[data-page="experiment-costs"] .ec-portfolio .ec-price-used{background:#f2f8ff;border-left:1px solid #d9e6f5;font-size:9.5px}
+body[data-page="experiment-costs"] .ec-portfolio .ec-price-used+td{background:#fffaf1;border-left:2px solid #ead9ad;font-size:10.2px}
+body[data-page="experiment-costs"] .ec-portfolio .ec-price-plan{background:#f8fafc;border-left:1px solid #e4e7ec;font-size:9.5px}
+body[data-page="experiment-costs"] .ec-portfolio .ec-model+td>b:first-child,body[data-page="experiment-costs"] .ec-portfolio .ec-price-used+td>b:first-child{display:inline-block;margin-bottom:3px;color:#263858;font-size:10.8px;line-height:1.32}
+body[data-page="experiment-costs"] .ec-portfolio .ec-model+td strong,body[data-page="experiment-costs"] .ec-portfolio .ec-price-used+td strong{color:#30339a;font-size:11.4px;line-height:1.35}
+body[data-page="experiment-costs"] .ec-portfolio .ec-price-cell b{display:block;color:#344054;font-size:10.6px;line-height:1.3}
+body[data-page="experiment-costs"] .ec-portfolio .ec-price-cell small{display:block;margin-top:3px;color:#64756b;font-size:8.2px;line-height:1.35}
+body[data-page="experiment-costs"] .ec-portfolio .ec-unknown{display:inline-block;margin-top:3px;padding:2px 5px;border-radius:5px;background:#eef1f5;color:#687386;font-size:8.7px;line-height:1.3}
+body[data-page="experiment-costs"] .ec-portfolio .ec-resource-token .ec-usage-cell{background:#fff;border-left:3px solid #17633d;color:#173f2b}
+body[data-page="experiment-costs"] .ec-portfolio .ec-resource-token .ec-usage-cell strong{color:#145c38}
+body[data-page="experiment-costs"] .ec-portfolio .ec-token-estimate{display:block;margin-top:5px;padding:4px 6px;border-radius:6px;background:#17633d;color:#fff;font-size:8.7px;font-weight:650;line-height:1.38}
+body[data-page="experiment-costs"] .ec-portfolio .ec-price-token{background:#fff;border-left:3px solid #17633d}
+body[data-page="experiment-costs"] .ec-portfolio .ec-price-token b{color:#14532d}
+body[data-page="experiment-costs"] .ec-portfolio .ec-price-token small{color:#35634a}
+body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(4),body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(6){background:#f5f7fa;color:#344054}
+body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(5),body[data-page="experiment-costs"] .ec-portfolio thead th:nth-child(7){background:#f8fafc;color:#475467}
+body[data-page="experiment-costs"] .ec-portfolio thead th small{display:block;margin-top:2px;font-size:7.5px;font-weight:600;line-height:1.25;text-transform:none;letter-spacing:0}
+body[data-page="experiment-costs"] .ec-reconcile{margin:10px 0;padding:12px 14px;border:1px solid #d9e2f0;border-radius:11px;background:#f7f9fc;font-size:10.8px;line-height:1.58;color:#58667a}
+body[data-page="experiment-costs"] .ec-reconcile b{display:block;margin-bottom:4px;color:#27344a;font-size:12px}
+body[data-page="experiment-costs"] .ec-reconcile span{display:block}
+body[data-page="experiment-costs"] .ec-bundle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}
+body[data-page="experiment-costs"] .ec-bundle article{padding:12px 13px;border:1px solid #dfe5ee;border-radius:11px;background:#fbfcfe}
+body[data-page="experiment-costs"] .ec-bundle article>b{display:block;margin-bottom:5px;color:#344054;font-size:11px}
+body[data-page="experiment-costs"] .ec-bundle article>span{display:block;color:#667085;font-size:10.5px;line-height:1.55}
+body[data-page="experiment-costs"] .ec-source{display:flex;align-items:flex-start;gap:14px;margin-bottom:7px;padding:10px 12px;border-radius:10px;background:#f6f8fb;color:#5c687b;font-size:11px;line-height:1.5}
+body[data-page="experiment-costs"] .ec-source b{white-space:nowrap;color:#344054}
+body[data-page="experiment-costs"] .section-body ul{margin:7px 0;padding-left:20px}
+body[data-page="experiment-costs"] .section-body li{margin:4px 0;font-size:11px;line-height:1.55}
+body[data-page="experiment-costs"] .section-body small{display:block;margin-top:7px;color:#7b8495;font-size:9.5px;line-height:1.5}
+@media(max-width:1100px){body[data-page="experiment-costs"] .ec-facts.ec-facts-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){body[data-page="experiment-costs"] .ec-facts,body[data-page="experiment-costs"] .ec-facts.ec-facts-4,body[data-page="experiment-costs"] .ec-bundle,body[data-page="experiment-costs"] .ec-matrix-notes{grid-template-columns:1fr}body[data-page="experiment-costs"] .ec-model-filter{grid-template-columns:1fr}body[data-page="experiment-costs"] .ec-model-filter span{white-space:normal}body[data-page="experiment-costs"] .ec-source{display:grid;gap:4px}}
+@media(max-width:820px){body[data-page="experiment-costs"] .content{padding-top:28px}body[data-page="experiment-costs"] .advisor-table-scroll>.matrix{width:100%;min-width:0;font-size:8.2px}body[data-page="experiment-costs"] .advisor-table-scroll>.matrix th,body[data-page="experiment-costs"] .advisor-table-scroll>.matrix td{padding:6px 4px}body[data-page="experiment-costs"] .ec-portfolio>.matrix{font-size:7.6px}body[data-page="experiment-costs"] .ec-portfolio>.matrix th{font-size:7px}}

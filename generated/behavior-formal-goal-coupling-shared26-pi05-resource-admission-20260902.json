@@ -1,0 +1,75 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-resource-admission-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "status": "PROVISIONAL_SINGLE_A100_RESOURCE_ADMISSION_PENDING_NO_UPDATE_DRY_STEP",
+  "scope": "shared-multitask child only; does not modify or project onto the strict task-specific parent",
+  "strict_parent_8gpu_contract_changed": false,
+  "shared_child_preregistration_sha256": "483235155b6fec941969a4a766cbe15e50f2807b06828e625942f3d731d0e231",
+  "shared_child_config_sha256": "098df08569c75ac3806a762754aab5ded1bb41ee164b9f9a34a89fdb9b065d2f",
+  "shared_child_openpi_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "no_update_model_load_receipt_sha256": "fda2c02b5d8ec3e9acd491c9d197ba251e78cfc5e7d5486112c9a13bf655da0c",
+  "source_evidence": {
+    "source_qualification_pre_outcome_gates": {
+      "device_count_not_hardcoded": true,
+      "single_a100_full_finetune_documented": true
+    },
+    "README.md_sha256": "567fc57766bd736664f50126cab8145af4071ca16cc5e238f2b11e369169c3b5",
+    "docs/b1k.md_sha256": "d984a4bed60f7c50b05caebb662e4c148fc95601cd1dd176c8ea2cff18e40adf",
+    "scripts/b1k/train_b1k.sh_sha256": "f69e949c25c486835ecb3918962ddd048936a7d17a57f76c1a539efeaa9b65d2",
+    "scripts/b1k/train_b1k.py_sha256": "9e1ac351c8f491d0c5307963d11ab07b008548da2bcd29a4670e88622eae6507",
+    "src/openpi/training/sharding.py_sha256": "c67c4112a126ab097571c8a882fd1ee3f106b15b6e608e7205ac7f29b44ca985",
+    "README_full_finetune_single_gpu_requirement": ">70 GB; A100 (80GB) / H100",
+    "README_multi_node_training_supported": false,
+    "b1k_helper_default_gpu_count": 8,
+    "b1k_helper_custom_gpu_count_supported": true,
+    "direct_trainer_device_count_hardcoded": false,
+    "direct_trainer_batch_divisibility_rule": "batch_size % jax.device_count() == 0"
+  },
+  "admitted_shared_child_topology": {
+    "host": "222.20.126.69",
+    "gpu_count": 1,
+    "gpu_class": "NVIDIA A100-SXM4-80GB",
+    "global_batch_size": 64,
+    "fsdp_devices": 1,
+    "seed": 42,
+    "num_train_steps": 50000,
+    "action_horizon": 32,
+    "checkpoint_selection": "source-emitted terminal step label 49999 only"
+  },
+  "scientific_semantics_preserved": [
+    "global batch remains 64",
+    "fsdp_devices remains 1",
+    "model architecture and base checkpoint unchanged",
+    "optimizer and learning-rate schedule unchanged",
+    "seed 42 unchanged",
+    "50000 update horizon unchanged",
+    "R1Pro transforms and action horizon unchanged",
+    "5200 frozen episode subset unchanged",
+    "terminal checkpoint selection unchanged"
+  ],
+  "rationale": "The shared child source qualification was prospectively constructed around OpenPI's source-native device-count flexibility and explicitly verified that a single A100 full fine-tune is documented. The 8-GPU value in the older strict-parent replication contract is the helper-wrapper default and remains frozen for that parent. For this separately preregistered shared child, using one A100 while preserving the global batch and fsdp_devices is treated as an implementation topology choice, not a scientific treatment change.",
+  "runtime_evidence": {
+    "single_a100_step0_train_state_ready": true,
+    "gpu_memory_before_mib": 1991,
+    "gpu_memory_after_ready_mib": 75465,
+    "initialized_step": 0,
+    "forward_pass_executed": false,
+    "backward_pass_executed": false,
+    "optimizer_update": false
+  },
+  "remaining_gate": {
+    "name": "SINGLE_A100_NO_UPDATE_DRY_TRAIN_STEP",
+    "purpose": "prove that the frozen batch/model/optimizer topology can compile and execute forward+backward without applying an optimizer update or consuming policy outcomes",
+    "result_must_not_be_used_for_tuning": true,
+    "loss_value_must_not_be_retained_or_used": true,
+    "formal_training_authority_if_pass": "requires separate exactly-once launch receipt after dry-step PASS and tokenizer content-address qualification"
+  },
+  "model_checkpoint_weight_downloaded": true,
+  "model_loaded": true,
+  "gpu_used": true,
+  "training_started": false,
+  "optimizer_update": false,
+  "policy_rollouts_started": false,
+  "policy_outcomes_read": false,
+  "scientific_authority": false
+}

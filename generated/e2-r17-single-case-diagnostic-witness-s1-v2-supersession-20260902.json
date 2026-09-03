@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-single-case-s1-v2-supersession",
+  "created_date": "2026-09-02",
+  "status": "PASS_S1_V2_SUPERSEDES_UNUSED_V1_AUTHORITY",
+  "v1": {
+    "contract_path": "generated/e2-r17-single-case-diagnostic-witness-s1-contract-20260902.json",
+    "authorization_path": "generated/e2-r17-single-case-diagnostic-witness-s1-authorization-20260902.json",
+    "actual_path_failure_path": "generated/e2-r17-single-case-diagnostic-witness-s1-actual-path-preflight-v1-failure-20260902.json",
+    "provider_calls": 0,
+    "provider_claims": 0,
+    "scientific_execution_used": false,
+    "permanently_superseded": true
+  },
+  "v2": {
+    "contract_path": "generated/e2-r17-single-case-diagnostic-witness-s1-contract-v2-20260902.json",
+    "authorization_path": "generated/e2-r17-single-case-diagnostic-witness-s1-authorization-v2-20260902.json",
+    "static_preflight_path": "generated/e2-r17-single-case-diagnostic-witness-s1-preflight-v2-20260902.json",
+    "actual_path_preflight_path": "generated/e2-r17-single-case-diagnostic-witness-s1-actual-path-preflight-v2-20260902.json",
+    "actual_path_status": "STOPPED_IMMEDIATELY_BEFORE_PROVIDER_IO",
+    "actual_path_provider_calls": 0,
+    "actual_path_provider_claims": 0
+  },
+  "execution_authority": "V2_ONLY",
+  "analyzer_authority": false,
+  "paper_promotion_authority": false
+}

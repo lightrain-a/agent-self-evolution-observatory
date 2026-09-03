@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-HOST-MIGRATION-EQUIVALENCE-HOLD-20260901",
+  "recorded_date": "2026-09-01",
+  "status": "HOLD_HOST_MIGRATION_EQUIVALENCE_FAILED",
+  "role": "ZERO_CONFIRMATORY_OUTCOME_INFRASTRUCTURE_EQUIVALENCE_FAILURE_ADJUDICATION",
+  "host": {
+    "logical_name": "ubuntu",
+    "ssh_identity": "wyt@222.20.126.231"
+  },
+  "qualification_attempt": {
+    "lineage": "R45-M1",
+    "attempt": 1,
+    "scientific_source_exposure": false,
+    "sequential_gates_completed_without_exception": ["Q1", "Q2", "Q3", "Q4"],
+    "intermediate_gate_receipt_written": false,
+    "failed_gate": "Q5",
+    "failed_subcheck": "native OSInteraction executable-action parsing",
+    "native_parser_pattern": "Act:\\s*(.+)",
+    "generated_response_sha256": "e2f485d0d8b4c4f6193edb14a7284ba0603136d625e6a32eae41bfa7b14762f0",
+    "generated_response_had_fenced_bash": true,
+    "generated_response_had_required_act_line": false,
+    "generated_command_executed": false,
+    "environment_evaluator_called_for_q5": false,
+    "automatic_prompt_repair_or_retry": false
+  },
+  "bound_artifacts": {
+    "qualification_script": {
+      "path": "research_pipeline/failure_memory_memrl_host_migration_equivalence_r45m1.py",
+      "sha256": "b0baa18d1fb5224cbab5791c6e52f51d5428bddf26215c04e72693066573f34e"
+    },
+    "remote_qualification_log": {
+      "path": "/data/wyt/b1-memrl-r45m1-runtime/migration-equivalence.log",
+      "sha256": "e405a15c7a194b1862feeb599d48b1002d02214de1793462dbdafa72454f7052"
+    },
+    "loopback_log": {
+      "path": "/data/wyt/b1-memrl-r45m1-runtime/loopback-support.log",
+      "sha256": "3dec08e54d114579dc6067195bc322339879f33f6c9e649b827aab4851171a55"
+    },
+    "mos_config_sha256": "35aeab68df01de29bdf2538665e84a98d9854058d25deaffcd9a48ae766e2ba4",
+    "memrl_revision": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "docker_image": {
+      "tag": "b1-memrl-r45m1-osinteraction:20260901",
+      "id": "sha256:02c5cb67fff7bfddda09ca63e5318628d02d943767e6cd59069ece755253f036"
+    },
+    "qwen_manifest_sha256": "c7e4242ce0f2ebd0700ce3c0ff8e24044a2dddc29f68ef8358993f66e60c153c",
+    "mpnet_manifest_sha256": "ddd2853514c3aadf62ae9efd1751aac4ea3a7b8414b0da654b45f6915894a9e0"
+  },
+  "access_accounting": {
+    "training_support_unit": "0",
+    "training_support_units_initialized": 3,
+    "training_support_evaluator_calls": 9,
+    "training_support_ground_truth_calls": 3,
+    "synthetic_memory_builds": 3,
+    "validation_units_initialized": 0,
+    "validation_evaluator_calls": 0,
+    "validation_ground_truth_calls": 0,
+    "confirmatory_treatment_outcomes_observed": 0,
+    "scientific_source_units_executed": 0,
+    "external_provider_calls": 0
+  },
+  "cleanup": {
+    "loopback_server_stopped": true,
+    "loopback_port_18143_closed": true,
+    "os_pipeline_containers_remaining": 0,
+    "scientific_runner_processes_remaining": 0
+  },
+  "adjudication": {
+    "scientific_execution_allowed": false,
+    "replacement_source_build_started": false,
+    "old_r45_quarantine_unchanged": true,
+    "failure_route_applied": "HOLD_HOST_MIGRATION_EQUIVALENCE_FAILED",
+    "required_next_step": "explicitly authorize a prospectively versioned Q5 qualification repair before any retry"
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "support_only": true,
+  "receipt_sha256": "fc0f9009f6b527dd18dad4a8fd8ca14c4594443793d65b8d2aa5bff374987db4"
+}

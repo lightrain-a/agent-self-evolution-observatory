@@ -1,0 +1,18 @@
+{
+  "affected_unit": "capability:deepseek-v4-flash|ACE-FG-05|1",
+  "appworld_api_calls_observed": 0,
+  "content_sha256": "d3337e5f0734842c2219fcd58ab5ea0af9255df3042c36d3d7898f7d61a5e4c6",
+  "f0_authorized": false,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "observed_atomcode_model_rounds": 5,
+  "old_ledger_sha256": "547a77f51aa7a5a5c04a6efae7b5e73e0e224cbe422902acd043c55697bfb698",
+  "provider_requests_spent_as_infrastructure_cost": 5,
+  "replacement": false,
+  "retry": false,
+  "root_cause": "EXPERIMENT_CONFIG_OMITTED_CODING_MAX_ROUNDS_1",
+  "schema_version": "ace-codingplan-a2-provider-round-control-void-r1-v1",
+  "scientific_interpretation": "Provider bridge rejected the invocation before any AppWorld tool execution because AtomCode internally used multiple model rounds. This is infrastructure-invalid, not a model/task outcome.",
+  "status": "CODINGPLAN_A2_PROVIDER_ROUND_CONTROL_FAILURE_VOID",
+  "valid_capability_measurements": 0,
+  "valid_provider_receipts": 0
+}

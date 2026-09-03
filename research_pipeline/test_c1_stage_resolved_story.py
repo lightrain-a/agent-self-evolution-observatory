@@ -23,7 +23,7 @@ class C1StageResolvedStoryTest(unittest.TestCase):
         cls.receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
         cls.story = (PROJECT_ROOT / "paper-story-reward-memory.js").read_text(encoding="utf-8")
         cls.reader = (PROJECT_ROOT / "paper-reader-data.js").read_text(encoding="utf-8")
-        cls.page = (PROJECT_ROOT / "page-architecture-data.js").read_text(encoding="utf-8")
+        cls.page = (PROJECT_ROOT / "current-paper-pages-data.js").read_text(encoding="utf-8")
         cls.abstract = (SOURCE / "sections" / "00_abstract.tex").read_text(encoding="utf-8")
         cls.intro = (SOURCE / "sections" / "01_intro.tex").read_text(encoding="utf-8")
         cls.mechanism = (SOURCE / "sections" / "02_mechanism.tex").read_text(encoding="utf-8")
@@ -68,7 +68,11 @@ class C1StageResolvedStoryTest(unittest.TestCase):
         self.assertIn("125/172", self.reader)
         self.assertIn("0.02083", self.reader)
         self.assertNotIn("propagates from memory construction to later behavior", self.reader)
-        self.assertIn("native retrieval, policy uptake, and terminal outcome", self.page)
+        self.assertIn("retrieval, first-action uptake, and terminal outcome separately", self.page)
+        self.assertIn("actual task outcome", self.page)
+        self.assertIn("actual task outcome", self.story)
+        self.assertIn("normal runtime", self.story.lower())
+        self.assertIn("not two truths for one real shopping event", self.story.lower())
 
     def test_claim_hierarchy_preserves_method_stop_without_failing_measurement_paper(self) -> None:
         claims = {row["claim"]: row for row in self.receipt["claim_hierarchy"]}

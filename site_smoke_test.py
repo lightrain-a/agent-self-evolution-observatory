@@ -19,6 +19,7 @@ CANONICAL_PAGES = {
     "system-overview.html": "system-overview",
     "research-map.html": "research-map",
     "research-timeline.html": "research-timeline",
+    "experiment-costs.html": "experiment-costs",
     "research-map.html": "research-map",
     "research-directions.html": "research-directions",
     "paper-ideas.html": "paper-ideas",
@@ -70,7 +71,7 @@ REDIRECT_PAGES = {
     "review-log.html": "selected-paper.html",
 }
 REQUIRED_STATIC = [
-    "CNAME", "_config.yml", ".gitignore", "style.css", "app.js", "data.js",
+    "CNAME", "_config.yml", ".gitignore", "style.css", "experiment-costs.css", "app.js", "data.js", "content-experiment-costs.js",
     "content-consolidated.js", "redirect.js", "favicon.svg", "robots.txt",
     "sitemap.xml", "site.webmanifest", "404.html", "knowledge-map.svg",
     "agent-self-evolution-directions-en.svg", "agent-self-evolution-directions-zh.svg",
@@ -184,8 +185,12 @@ def main() -> None:
         fail(f"Temporal Skill D2 PaperState must preserve source-native evidence while latest Paper Preparation controls effective readiness: {d2_temporal}")
     if d2_proxy.get("paper_stage") != "SUBMISSION_READY" or d2_proxy.get("submission_ready") is not True or d2_proxy.get("gate_clean_submission_ready") is not True or (d2_proxy.get("latest_paper_preparation") or {}).get("pass") is not True or d2_proxy.get("source_kind") != "paper-first-discovery-candidate":
         fail(f"Proxy Reward D2 PaperState must remain ledger-ready and latest-gate-clean with paper-first provenance: {d2_proxy}")
-    if d2_failure.get("paper_stage") != "SUBMISSION_READY" or d2_failure.get("submission_ready") is not True or d2_failure.get("gate_clean_submission_ready") is not True or (d2_failure.get("latest_paper_preparation") or {}).get("pass") is not True or d2_failure.get("active_unrefuted_claims") != 2 or d2_failure.get("source_kind") != "paper-first-discovery-candidate" or (d2_failure.get("acceptance_authority") or {}).get("submission") is not False:
-        fail(f"Failure-Memory D2 PaperState must match its canonical SUBMISSION_READY ledger while retaining active-unrefuted claims and zero submission authority: {d2_failure}")
+    failure_claim_audit = d2_failure.get("latest_claim_audit") or {}
+    failure_ci = d2_failure.get("latest_manuscript_ci") or {}
+    failure_prebuttal = d2_failure.get("latest_prebuttal") or {}
+    failure_readiness = d2_failure.get("latest_submission_readiness") or {}
+    if d2_failure.get("paper_stage") != "SUBMISSION_READY" or d2_failure.get("submission_ready") is not True or d2_failure.get("gate_clean_submission_ready") is not True or d2_failure.get("immediate_submission_hold") is not False or d2_failure.get("contract_sha256") != "dbf81e071aaca6270d710c084c1d9f6b5ec78497c28fc9912f40b8d417f14ac7" or d2_failure.get("supported_claims") != 6 or d2_failure.get("active_unrefuted_claims") != 0 or failure_claim_audit.get("pass") is not True or failure_ci.get("pass") is not True or failure_prebuttal.get("pass") is not True or failure_readiness.get("submission_ready") is not True or d2_failure.get("source_kind") != "paper-first-discovery-candidate" or (d2_failure.get("acceptance_authority") or {}).get("submission") is not False:
+        fail(f"Failure-Memory D2 PaperState must match its R62/R64 canonical READY/SUBMISSION_READY ledger with six audited claims, clean manuscript gates, and zero submission authority: {d2_failure}")
     registry_summary = paper_registry.get("summary") or {}
     expected_stage_counts = dict(sorted(__import__("collections").Counter(row.get("paper_stage") for row in papers).items()))
     expected_gate_clean = sum(row.get("gate_clean_submission_ready") is True for row in papers)
@@ -461,6 +466,31 @@ def main() -> None:
         scripts = canonical_scripts.get(filename, [])
         if depth_script not in scripts or scripts.index(depth_script) > scripts.index("current-paper-page-view.js"):
             fail(f"{filename} must load its deep replay dossier before the single-paper renderer")
+    required_evidence_profiles = {
+        "paper-e1.html":"current-paper-evidence-e1-g1.js", "paper-g1.html":"current-paper-evidence-e1-g1.js",
+        "paper-c1.html":"current-paper-evidence-c1-e2.js", "paper-e2.html":"current-paper-evidence-c1-e2.js",
+        "paper-b1.html":"current-paper-evidence-b1.js", "paper-a.html":"current-paper-evidence-embodied.js",
+        "paper-b.html":"current-paper-evidence-embodied.js", "paper-agent-constraint.html":"current-paper-evidence-objects.js",
+        "paper-3d.html":"current-paper-evidence-objects.js",
+    }
+    for filename, evidence_script in required_evidence_profiles.items():
+        scripts = canonical_scripts.get(filename, [])
+        if evidence_script not in scripts or scripts.index(evidence_script) > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load its published-neighbor / experiment-provenance profile before the single-paper renderer")
+        if "current-paper-dataset-primer.js" not in scripts or scripts.index("current-paper-dataset-primer.js") > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load the plain-language dataset primer before the single-paper renderer")
+    required_golden_specs = {
+        "paper-g1.html":"current-paper-golden-g1.js", "paper-c1.html":"current-paper-golden-c1.js",
+        "paper-e2.html":"current-paper-golden-e2.js", "paper-b1.html":"current-paper-golden-b1.js",
+        "paper-a.html":"current-paper-golden-a.js", "paper-b.html":"current-paper-golden-b.js",
+        "paper-agent-constraint.html":"current-paper-golden-agent-constraint.js", "paper-3d.html":"current-paper-golden-3d.js",
+    }
+    for filename, golden_script in required_golden_specs.items():
+        scripts = canonical_scripts.get(filename, [])
+        if "current-paper-budget-data.js" not in scripts or scripts.index("current-paper-budget-data.js") > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load the reader-facing paper budget before the golden renderer")
+        if golden_script not in scripts or scripts.index(golden_script) > scripts.index("current-paper-page-view.js"):
+            fail(f"{filename} must load its page-specific golden-reader spec before the single-paper renderer")
     if "renderCurrentPaperCollection" not in current_paper_view_source or "QUICK OVERVIEW" not in current_paper_view_source or "速览版" not in current_paper_view_source:
         fail("current-paper renderer must expose collection-only routing plus the single-paper quick overview")
     if "renderCurrentPaperShelf" in current_paper_view_source or "cpp-pager" in current_paper_view_source:
@@ -484,7 +514,7 @@ def main() -> None:
     if 'href="current-paper-pages.css"' not in selected_html or "当前论文合集" not in selected_html:
         fail("selected-paper must be explicitly labeled and styled as the current paper collection")
     detail_text = "\n".join((ROOT / name).read_text(encoding="utf-8") for name in ("current-paper-details-registry-a.js", "current-paper-details-registry-b.js", "current-paper-details-working.js", "current-paper-details-objects.js"))
-    for marker in ("R*(A;q)", "BrowserART + AWM", "Shopping", "12 streams × 4 paired replicates", "AgentDojo financial", "MemoryVLA", "AppWorld-derived matched families", "InstructScene"):
+    for marker in ("STRI-Cert", "e=Aw", "R*(A)", "BrowserART + AWM", "Shopping", "12 streams × 4 paired replicates", "AgentDojo financial", "MemoryVLA", "AppWorld-derived matched families", "InstructScene"):
         if marker not in detail_text:
             fail(f"single-paper detail projection is missing model/dataset/design evidence: {marker}")
     if "⑧ Constraint Externality" not in detail_text:

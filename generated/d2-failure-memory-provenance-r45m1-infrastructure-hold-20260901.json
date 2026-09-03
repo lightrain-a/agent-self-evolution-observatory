@@ -1,0 +1,122 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-INFRASTRUCTURE-HOLD-20260901",
+  "recorded_date": "2026-09-01",
+  "status": "HOLD_RUNTIME_REPRODUCTION_FAILED_AND_DOCKER_PERMISSION_UNAVAILABLE",
+  "lineage": {
+    "old_r45": "OLD_R45_PERMANENTLY_QUARANTINED_REMOTE_STATE_UNKNOWN",
+    "replacement": "R45-M1",
+    "replacement_attempt_count": 0,
+    "preferred_host": "wyt@222.20.126.231"
+  },
+  "canonical": {
+    "live_origin_main": "da3ebe8fc66503b28183853e251fa291bfb8d118",
+    "branch": "research/b1-memrl-replacement-20260901",
+    "prequalification_checkpoint_git_sha": "ba9f3105bc4d3c1562935accc206fb3237a14b1d",
+    "execution_git_sha": null,
+    "worktree": "/data/wyt/agent-self-evolution-observatory/worktrees/b1-memrl-replacement-20260901"
+  },
+  "frozen_bindings": {
+    "r43": {
+      "path": "generated/d2-failure-memory-provenance-r43-memrl-g8-execution-manifest.json",
+      "sha256": "dbd810dce063f5bdaaf7c40038a3329166f8ad11441dd11b49034491bf753de2"
+    },
+    "r44": {
+      "path": "generated/d2-failure-memory-provenance-r44-human-execution-authorization.json",
+      "sha256": "155ff75eadbc286527a43cc54026f651832413a15eb79f5fd994bc4345a33ba3"
+    },
+    "continuation": {
+      "path": "generated/d2-failure-memory-provenance-continuation-status-20260831.json",
+      "sha256": "75892ee200d640c1dcac7f2a57392b740aaba06961262357f8764ace7bdcfaf5"
+    },
+    "old_r45_abandonment": {
+      "path": "generated/d2-failure-memory-provenance-r45m1-old-r45-infrastructure-abandonment.json",
+      "sha256": "1bcd5b7c3e6ade84d343b19130bb195416388d57844321a0a772f527fa0b3b86",
+      "receipt_sha256": "9f260b60289b4735384882fa1ad98940f844129d8f39e1e871b28246259b7e55"
+    }
+  },
+  "host_preflight": {
+    "hostname": "ubuntu",
+    "gpu": "NVIDIA A100-SXM4-80GB",
+    "gpu_uuid": "GPU-096a5004-64bf-7b9c-b0bd-b5275d1cd5f7",
+    "disk_available_at_initial_preflight": "1.8T",
+    "host_reachable": true
+  },
+  "exact_source": {
+    "status": "PASS",
+    "checkout": "/data/wyt/b1-memrl-r45m1-source-c1b322ca",
+    "revision": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "git_status": "empty",
+    "tree_sha": "f217df6a09caa9b350887db592d329ec0f269ab8",
+    "transfer_archive_sha256": "305e6dff38471db2529add90a53272878ea203cfd5a41bd268724cb75d21a90a",
+    "pinned_source_files_passed": 4
+  },
+  "model_identity": {
+    "status": "PASS",
+    "llm": {
+      "root": "/data/lry/models/Qwen2.5-7B-Instruct",
+      "file_count": 27,
+      "bytes": 15242807198,
+      "manifest_sha256": "c7e4242ce0f2ebd0700ce3c0ff8e24044a2dddc29f68ef8358993f66e60c153c"
+    },
+    "embedding": {
+      "root": "/data/wyt/models/models--sentence-transformers--all-mpnet-base-v2/snapshots/e8c3b32edf5434bc2275fc9bab85f82640a19130",
+      "file_count": 11,
+      "bytes": 438682922,
+      "manifest_sha256": "ddd2853514c3aadf62ae9efd1751aac4ea3a7b8414b0da654b45f6915894a9e0"
+    }
+  },
+  "python_runtime": {
+    "status": "HOLD_RUNTIME_REPRODUCTION_FAILED",
+    "path": "/data/wyt/b1-memrl-r45m1-runtime",
+    "failed_runtime_receipt_path": "/data/wyt/b1-memrl-r45m1-runtime/FAILED-RUNTIME-DO-NOT-EXECUTE.json",
+    "failed_runtime_receipt_sha256": "3bef73d893562b66642679cd9f4974609db0cf38f3fc5efb6f8372f304c527aa",
+    "failed_runtime_file_sha256": "4c6f8208c69cac92572acfc950b97e78b70a75697a9b8df30ef27fa041fd127f",
+    "exact_pins_installed": true,
+    "llb_import_passed": false,
+    "error": "MemoryOS memos circular import: BaseConfig from partially initialized memos.configs.base",
+    "compatibility_patch_invented": false
+  },
+  "docker": {
+    "status": "HOLD_DOCKER_PERMISSION_UNAVAILABLE",
+    "daemon_active": true,
+    "socket": "/var/run/docker.sock",
+    "socket_owner": "root",
+    "socket_group": "docker",
+    "ssh_user": "wyt",
+    "ssh_user_in_docker_group": false,
+    "sudo_noninteractive": false,
+    "new_image_built": false,
+    "image_id": null
+  },
+  "cross_host_equivalence": {
+    "status": "NOT_EXECUTED",
+    "Q1": "NOT_EXECUTED",
+    "Q2": "NOT_EXECUTED",
+    "Q3": "NOT_EXECUTED",
+    "Q4": "NOT_EXECUTED",
+    "Q5": "NOT_EXECUTED"
+  },
+  "migration_manifest": {
+    "status": "NOT_CREATED",
+    "reason": "all zero-outcome infrastructure qualifications must pass first"
+  },
+  "replacement_authority": {
+    "status": "NOT_CREATED"
+  },
+  "scientific_execution": {
+    "source_build": "0/128 NOT EXECUTED",
+    "source_qualification": "NOT EXECUTED",
+    "utilization": "NOT EXECUTED",
+    "primary": "NOT EXECUTED",
+    "confirmatory_outcomes_observed": 0,
+    "partial_effect_inspected": false
+  },
+  "next_action": [
+    "Provide Docker socket access to wyt on host 231 or an authorized SSH identity already in the docker group, then re-login the session.",
+    "Provide the exact R43-compatible MemoryOS runtime tree/manifest or its frozen compatibility patch evidence; do not patch or upgrade by guess.",
+    "Re-run Q1-Q5 zero-outcome migration qualification before creating migration manifest or execution authority."
+  ],
+  "receipt_sha256": "3b50f4c0fbd9e43531e1610a0f92527d8bf50ed5f95fde02dfcf6d616d4dd13d"
+}

@@ -1,0 +1,26 @@
+{
+  "bucket": "big_vision",
+  "generated_at": "2026-09-02T11:48:52.883441+00:00",
+  "gpu_used": false,
+  "model_checkpoint_weight_downloaded": false,
+  "model_loaded": false,
+  "next_gate": "DOWNLOAD_EXACT_GENERATION_AND_CONTENT_ADDRESS_TOKENIZER",
+  "object": {
+    "crc32c": "cKDEzw==",
+    "etag": "CMHRr9jLlIUDEAE=",
+    "generation": "1711547605575873",
+    "md5Hash": "FCCtyYVnIKVZ6KhyhLGV4g==",
+    "metageneration": "1",
+    "name": "paligemma_tokenizer.model",
+    "size": 4264023,
+    "timeCreated": "2024-03-27T13:53:25.598Z",
+    "updated": "2024-03-27T13:53:25.598Z"
+  },
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "policy_outcomes_read": false,
+  "schema_version": "behavior-formal-goal-coupling-paligemma-tokenizer-remote-manifest-v1",
+  "scientific_authority": false,
+  "source": "gs://big_vision/paligemma_tokenizer.model",
+  "status": "PALIGEMMA_TOKENIZER_REMOTE_OBJECT_FROZEN_ZERO_DOWNLOAD",
+  "training_started": false
+}

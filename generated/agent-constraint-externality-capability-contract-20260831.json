@@ -12,7 +12,7 @@
     "provider": "TYPICAL_TOKEN_OPENAI_RESPONSES_API",
     "provider_max_retries": 0,
     "temperature": 0,
-    "tool_interaction_cap": 12
+    "tool_interaction_cap": 16
   },
   "family_count": 4,
   "family_ids": [

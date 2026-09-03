@@ -1,0 +1,55 @@
+{
+  "agent_episode_count": 8,
+  "appworld_tool_call_total": 89,
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "f0_reason": "CodingPlan capability selection requires separate human F0 authorization even if PASS.",
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "codingplan_window_first_before": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T00:04:58",
+    "remaining": 370,
+    "used": 130
+  },
+  "codingplan_window_last_after": {
+    "limit": 500,
+    "next_reset_at": "2026-09-03T00:04:58",
+    "remaining": 300,
+    "used": 200
+  },
+  "completion_tokens_total": 20456,
+  "content_sha256": "615df90a14f84b46a718ea1f12b9578c8399c6b2c5cd46f511268e9934a858ac",
+  "execution_id": "CODINGPLAN-QWEN38-27B-CAPABILITY-A0",
+  "f0_executed": false,
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 1.0,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 1.0,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+  },
+  "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+  "ledger_sha256": "459115acd8b11f5fbf817aafe69e6ae7226b8a9e555040a666a46425fa2aea4d",
+  "model_id": "qwen3.8-27b",
+  "model_profile": "AtomGit-qwen3.8-27b",
+  "model_round_count": 69,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prompt_tokens_total": 2502360,
+  "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+  "schema_version": "ace-codingplan-qwen38-capability-a0-result-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+  "valid_capability_measurements": 8
+}

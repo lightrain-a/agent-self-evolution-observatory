@@ -1,0 +1,45 @@
+{
+  "active_protected_bundle_sha256": "0a5bfae987cf136df57d3ad5431c097143e3ca333d8ae3258356c50fdcf3597d",
+  "application_retry": false,
+  "content_sha256": "e65ad1e6300e10b5c50755a6c3be13ec36a31166bc82cd94ca4813c6d252110c",
+  "execution_id": "QWEN37PLUS-CAPABILITY-R3-PARTIAL-SUBSTRATE-V2",
+  "f0_authorized": false,
+  "fg_revalidation_artifact_sha256": "d3aa7a5cba50e309d784fc570c32e3c967b1078d8d898bb10d53a2588542a735",
+  "final_gate_measurement_count": 8,
+  "invariants": {
+    "fg_provider_reexecution": false,
+    "same_four_capability_families": true,
+    "same_gate": true,
+    "same_model": true,
+    "same_repeats": true,
+    "same_tool_call_cap": true,
+    "tnf_only_scientific_rerun": true
+  },
+  "model": "qwen3.7-plus",
+  "model_switch": false,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "old_r3_same_eight_unit_panel": true,
+  "preserved_unit_count": 4,
+  "preserved_units": [
+    "capability:qwen3.7-plus|ACE-FG-05|1",
+    "capability:qwen3.7-plus|ACE-FG-05|2",
+    "capability:qwen3.7-plus|ACE-FG-06|1",
+    "capability:qwen3.7-plus|ACE-FG-06|2"
+  ],
+  "provider_max_retries": 0,
+  "replacement": false,
+  "rerun_unit_count": 4,
+  "rerun_units": [
+    "capability:qwen3.7-plus|ACE-TNF-05|1",
+    "capability:qwen3.7-plus|ACE-TNF-05|2",
+    "capability:qwen3.7-plus|ACE-TNF-06|1",
+    "capability:qwen3.7-plus|ACE-TNF-06|2"
+  ],
+  "schema_version": "ace-qwen37plus-capability-r3-partial-contract-v1",
+  "status": "QWEN37PLUS_CAPABILITY_R3_PARTIAL_AUTHORIZED",
+  "supersedes_full_r3_execution_contract_sha256": "4868c1885d9b4286bac4e2fa28be92c3babc9f0d3f687a11c62169e3de69a07d",
+  "supersession_reason": "USER_AUTHORIZED_ONLY_CORRECTION_AFFECTED_UNITS_TO_RERUN",
+  "temperature": 0,
+  "threshold_change": false,
+  "tool_call_cap": 12
+}

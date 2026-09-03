@@ -1,0 +1,158 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "comparison_note": "AtomCode CodingPlan MCP is a distinct harness from the direct OpenAI-compatible AppWorld runner; its capability result is valid for backbone qualification but request accounting is kept separate.",
+  "content_sha256": "b52eb630d29762e04509b9331c6de83129f5632e8a6e07e419c94c4d2e31502c",
+  "execution_accounting": {
+    "account_level_unattributed_request_count": 1,
+    "appworld_tool_call_total": 89,
+    "codingplan_account_window_request_delta": 70,
+    "codingplan_account_window_used_after": 200,
+    "codingplan_account_window_used_before": 130,
+    "completion_tokens_total": 20456,
+    "inter_unit_account_window_gaps": [
+      {
+        "account_window_gap": 1,
+        "before_unit_id": "capability:qwen3.8-27b|ACE-TNF-06|2",
+        "current_unit_window_before": 190,
+        "previous_unit_window_after": 189
+      }
+    ],
+    "per_unit": [
+      {
+        "appworld_tool_call_count": 9,
+        "codingplan_window_used_after": 138,
+        "codingplan_window_used_before": 130,
+        "model_round_count": 8,
+        "unit_id": "capability:qwen3.8-27b|ACE-FG-05|1"
+      },
+      {
+        "appworld_tool_call_count": 7,
+        "codingplan_window_used_after": 145,
+        "codingplan_window_used_before": 138,
+        "model_round_count": 7,
+        "unit_id": "capability:qwen3.8-27b|ACE-FG-05|2"
+      },
+      {
+        "appworld_tool_call_count": 10,
+        "codingplan_window_used_after": 153,
+        "codingplan_window_used_before": 145,
+        "model_round_count": 8,
+        "unit_id": "capability:qwen3.8-27b|ACE-FG-06|1"
+      },
+      {
+        "appworld_tool_call_count": 7,
+        "codingplan_window_used_after": 159,
+        "codingplan_window_used_before": 153,
+        "model_round_count": 6,
+        "unit_id": "capability:qwen3.8-27b|ACE-FG-06|2"
+      },
+      {
+        "appworld_tool_call_count": 16,
+        "codingplan_window_used_after": 170,
+        "codingplan_window_used_before": 159,
+        "model_round_count": 11,
+        "unit_id": "capability:qwen3.8-27b|ACE-TNF-05|1"
+      },
+      {
+        "appworld_tool_call_count": 11,
+        "codingplan_window_used_after": 179,
+        "codingplan_window_used_before": 170,
+        "model_round_count": 9,
+        "unit_id": "capability:qwen3.8-27b|ACE-TNF-05|2"
+      },
+      {
+        "appworld_tool_call_count": 15,
+        "codingplan_window_used_after": 189,
+        "codingplan_window_used_before": 179,
+        "model_round_count": 10,
+        "unit_id": "capability:qwen3.8-27b|ACE-TNF-06|1"
+      },
+      {
+        "appworld_tool_call_count": 14,
+        "codingplan_window_used_after": 200,
+        "codingplan_window_used_before": 190,
+        "model_round_count": 10,
+        "unit_id": "capability:qwen3.8-27b|ACE-TNF-06|2"
+      }
+    ],
+    "prompt_tokens_total": 2502360,
+    "scientific_model_round_count": 69,
+    "scientific_rounds_attributable_to_units": 69,
+    "unattributed_request_classification": "ACCOUNT_LEVEL_CODINGPLAN_REQUEST_OUTSIDE_SCIENTIFIC_UNIT",
+    "unattributed_request_note": "CodingPlan usage is account-level. No extra scientific session, AppWorld MCP trace, or ledger round supports assigning the inter-unit request gap to a scientific unit. AI session naming was disabled."
+  },
+  "execution_id": "CODINGPLAN-QWEN38-27B-CAPABILITY-A0",
+  "f0_executed": false,
+  "gate": {
+    "malformed_tool_call_count": 0,
+    "non_target_preservation_rate": 1.0,
+    "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+    "target_success_rate": 1.0,
+    "thresholds": {
+      "malformed_tool_calls_required": 0,
+      "non_target_preservation_min": 0.85,
+      "target_success_max": 0.875,
+      "target_success_min": 0.5,
+      "tool_loop_completion_min": 0.75
+    },
+    "tool_loop_completion_rate": 1.0,
+    "verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP"
+  },
+  "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+  "model_id": "qwen3.8-27b",
+  "model_profile": "AtomGit-qwen3.8-27b",
+  "next_legal_action": "STOP_AWAIT_HUMAN_BACKBONE_SELECTION",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provenance": {
+    "contract": {
+      "content_sha256": "ca4aa350927951ff713df2760a34ffccc57701493fa72889e0f6b812fd259d71",
+      "path": "generated/agent-constraint-externality-codingplan-qwen38-capability-a0-contract-20260902.json",
+      "sha256": "a301f9ac5cee3e09e575065c73b3b9791b51b3bab1fb93a6636270ba0d3b7fe5"
+    },
+    "contract_manifest": {
+      "content_sha256": "b586631f595893ab77e1d0705f83986048753f594860fb89ea8f2a88280bc926",
+      "path": "generated/agent-constraint-externality-codingplan-qwen38-capability-a0-manifest-20260902.json",
+      "sha256": "fe662970904a351e09a91faefc7b325573797bdeb8d4b6918fb13ffa753a7226"
+    },
+    "ledger": {
+      "path": "runtimes/agent-constraint-externality-codingplan-qwen38-capability-a0-r1-20260902/ledger.jsonl",
+      "sha256": "459115acd8b11f5fbf817aafe69e6ae7226b8a9e555040a666a46425fa2aea4d"
+    },
+    "q0": {
+      "content_sha256": "797ebe6c4defb607a59165182789671b1f70c4592549a57dc475688f2c914611",
+      "path": "generated/agent-constraint-externality-codingplan-mcp-q0-qualification-20260902.json",
+      "sha256": "50d1976ae6532ad34bdf109510f08fd821d9f3da41b2e566a24001cd07507939"
+    },
+    "q1": {
+      "content_sha256": "63a1fe8c7c71f207bea7542d9d406557c513e19ce0d62f8b8e2f79bddec04726",
+      "path": "generated/agent-constraint-externality-codingplan-appworld-mcp-q1-predispatch-20260902.json",
+      "sha256": "ae8a625ac4467dfae08502b44860af535b8c13fa426f7c16516eeee46663aeea"
+    },
+    "result": {
+      "content_sha256": "615df90a14f84b46a718ea1f12b9578c8399c6b2c5cd46f511268e9934a858ac",
+      "path": "generated/agent-constraint-externality-codingplan-qwen38-capability-a0-result-20260902.json",
+      "sha256": "014c8c99eec62417706144e9a9983e3650c87e9e531892d19651d4347b814a04"
+    }
+  },
+  "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+  "schema_version": "ace-codingplan-qwen38-capability-a0-closeout-v1",
+  "scientific_outcomes_observed": 0,
+  "scientific_units": {
+    "completed": 8,
+    "dispatched": 8,
+    "duplicate_completed_units": 0,
+    "failures": 0,
+    "replacements": 0,
+    "retries": 0,
+    "scheduled": 8
+  },
+  "scientific_verdict": "CAPABILITY_CALIBRATION_FAIL_CEILING_STOP",
+  "status": "CODINGPLAN_QWEN38_CAPABILITY_A0_CLOSEOUT_CEILING_STOP",
+  "strict_direct_api_comparison": false
+}

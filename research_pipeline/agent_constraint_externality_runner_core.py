@@ -410,15 +410,18 @@ def run_episode(
     base_url: str = DEFAULT_BASE_URL,
     crash_after_dispatch: bool = False,
     result_evaluator: Callable[[], dict[str, Any]] | None = None,
+    max_tool_calls: int = MAX_TOOL_CALLS,
 ) -> dict[str, Any]:
+    dispatch_provider = str(getattr(provider, "provider_id", PROVIDER_ID))
+    dispatch_base_url = str(getattr(provider, "base_url", base_url))
     ledger.dispatch(
         unit,
         prompt_sha256=sha256_value(instruction),
         snapshot_sha256=snapshot_sha256,
         repair_sha256=repair_sha256,
         requested_model=model,
-        provider=PROVIDER_ID,
-        base_url=base_url,
+        provider=dispatch_provider,
+        base_url=dispatch_base_url,
     )
     if crash_after_dispatch:
         raise UnknownAfterDispatchError("Synthetic crash after durable dispatch.")
@@ -453,7 +456,7 @@ def run_episode(
             input_items.extend(receipt.output)
             for call in calls:
                 tool_calls += 1
-                if tool_calls > MAX_TOOL_CALLS:
+                if tool_calls > max_tool_calls:
                     raise RunnerError("Tool-call cap exceeded.")
                 output = world.execute(call["name"], call["arguments"])
                 input_items.append({

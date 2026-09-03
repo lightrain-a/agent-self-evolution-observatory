@@ -1,0 +1,134 @@
+{
+  "artifact_type": "e2-r17-first-fail-exact-replay-updater-recovery-authorization",
+  "authority": {
+    "analyzer": false,
+    "e3_confirmation": false,
+    "heldout_evaluation": false,
+    "paper_promotion": false,
+    "provider_io": true,
+    "public_benchmark": false,
+    "scientific_experiment": true,
+    "second_backbone": false,
+    "submission": false,
+    "updater": true
+  },
+  "contract_path": "generated/e2-r17-single-case-first-fail-exact-replay-updater-recovery-v2-contract-20260902.json",
+  "contract_sha256": "9afbcd0d499a7e0a3ea9982975a9538f27033ef07b0e1a9043da7bf6b57c1ca9",
+  "created_at_utc": "2026-09-02T06:43:23+00:00",
+  "execution_scope": {
+    "arms": [
+      "win_c",
+      "first_fail"
+    ],
+    "automatic_retry": false,
+    "exact_evidence": {
+      "first_fail": {
+        "evidence_sha256s": [
+          "d774ff7402a944f76e5447236bd9559e552252ff65bf5b2e99b489f8daea484f",
+          "9ba6f5f09321a15d07b540f1bb3c836b439bd03355995e67e9fa894964644102",
+          "7fbea5f24584d9dc2852d5cd5c63afbccec11946af2c5c6a4c2026f79b012917",
+          "3265087c8a5f3083ddb70a11f0146cbcdc0b002be6e3c9be876c6c2992d8ccaa",
+          "30ba716522144d63a9ea5e40da47ac96df69fe2834a4d61499a35014dfd36880",
+          "1bdb42b3aaaee0fd8c495196c374e325e015fdcdf8a4621dd6c4f3326d4769b2",
+          "fd317804112a5d27bead5483a94ced5aa487a6e077e0b6dbcc8d4e94a0034fa2",
+          "080fb3f18deff5f9e9e4a1a91827e236cc095f95bc328a95a5a9fb8cfc101f29"
+        ],
+        "evidence_tokens": [
+          1030,
+          3072,
+          1192,
+          1070,
+          1271,
+          1161,
+          1295,
+          1367
+        ],
+        "receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/states/e1-tsr-00/replicate_0/first_fail/update/update_receipt.json",
+        "receipt_sha256": "e5fefbe7070fc4afbad9a62a7d175806cab011b64578bca0ee52cfedc4999ab9",
+        "source_trajectory_sha256s": [
+          "ba0a02ba4e437b9c5075d6382b5121fc40aab2fc1c96ec3a4864d9c221e30a97",
+          "cfcfa221a3eaafc666d8e29a37f39fccda84d8d2a3aac49bad3461296616e473",
+          "f4c468f8e1bc609f1e19fd1e3abe4b3e1a3d0eb1daea8d32ffffdd78ae48ab8f",
+          "809a87babf7851695ab7dfbfb5613ab5e46604fef031840725d6438ce9c0c452",
+          "f4cfd0edd652b736b2ad28f92bf4756fb3c03d1f23a34c6919056ad190dfb67b",
+          "919ccb49afa2c9fdfd0cf97268a741357468a3fbd365c192c0af15320ac62487",
+          "772df8af03bdda0bb118d8418cf39bc7fa2035ddbcdaac3d0001b5ab055dc3ca",
+          "7e12f4bd1243385dbeef24b3b326e20335a165dec76c3dd8d29e1a514ef88590"
+        ],
+        "task_ids": [
+          "r17-b3-tsr-p7",
+          "r17-b3-tsr-p0",
+          "r17-b2-tsr-p3",
+          "r17-b2-tsr-p8",
+          "r17-b2-tsr-p2",
+          "r17-b2-tsr-p5",
+          "r17-b2-tsr-p4",
+          "r17-b3-tsr-p8"
+        ]
+      },
+      "win_c": {
+        "evidence_sha256s": [
+          "955531c255f32f8dfb170fa0a729cd5924b9c3dd115e43c10af4c4aa5abee359",
+          "9ba6f5f09321a15d07b540f1bb3c836b439bd03355995e67e9fa894964644102",
+          "4af489a3750c1e9e179b55a025cecab1c5093e5d7565ab526d22d8eb765d6b94",
+          "26375b103a0c0d6b42e4b3857a596f6726cfa42e52e0a6061ee42bedbd284f6b",
+          "3154686274701f261c449c82f5a0a58710d158b50bc6025c09e87983b32ac36f",
+          "af08d7e25a25659988253cd845477c3dc48d603329a1d23e226aeaabbddad56a",
+          "d7b845654a5e9de19186d27b4b44f5884b2b1ad5be7c6d7921c96aa94d144f5d",
+          "d9d1f698dc79a4df3a8889a7f2757f8c5f265262c3552cc7b0fd6c5d7a229484"
+        ],
+        "evidence_tokens": [
+          1030,
+          3072,
+          1192,
+          1070,
+          1271,
+          1161,
+          1295,
+          1367
+        ],
+        "receipt_path": "/data/wyt/e2-r17-search-projection/runs/single-case-diagnostic-witness-s1-20260902/states/e1-tsr-00/replicate_0/win_c/update/update_receipt.json",
+        "receipt_sha256": "eb1dfc4d2849205b7ddca2cc6f006031501770eb146a70076799e46266fbe08d",
+        "source_trajectory_sha256s": [
+          "26ce12049eab500d89d9b49cb66d283c01f37d2f96240e36703fb4f7086ace4c",
+          "cfcfa221a3eaafc666d8e29a37f39fccda84d8d2a3aac49bad3461296616e473",
+          "87f1717029ea794a39d310d060c53f6e58d994ea85bad7233a35d7d3f1d19f0f",
+          "1d59cda7a51049288d04a78c71319ad31fef5edde1748c8f4e17705c188652fa",
+          "d67d16f88667281d72b947be47e5d2630623f007b23357102464f0b333818d74",
+          "0f80ebf453b2a6fa86fb26b37feec38c40a614191ad4c5fa2ccafce8af0a1de1",
+          "602cd3687c507e52f34f21af45ead2a75b21f8f24d57a51f5418c9cbb8cde400",
+          "fa467c8d809c504b2faec38d6020f82e94ea57f92af70813ada0132cae567055"
+        ],
+        "task_ids": [
+          "r17-b3-tsr-p7",
+          "r17-b3-tsr-p0",
+          "r17-b2-tsr-p3",
+          "r17-b2-tsr-p8",
+          "r17-b2-tsr-p2",
+          "r17-b2-tsr-p5",
+          "r17-b2-tsr-p4",
+          "r17-b3-tsr-p8"
+        ]
+      }
+    },
+    "exactly_once": true,
+    "heldout_units": 0,
+    "lineage_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-first-fail-exact-replay-updater-recovery-v2.json",
+    "new_learned_states": 2,
+    "phase": "updater_recovery_v2",
+    "provider_budget": {
+      "per_unit_limit": 11,
+      "required": true,
+      "total_limit": 191
+    },
+    "rep1_replay": false,
+    "replicate": 2
+  },
+  "interpretation_boundary": "Updater-only recovery for two never-started rep2 states after deterministic actor authorization-schema failure. No heldout, analyzer, S2/E3, paper, or submission authority.",
+  "mindmemos_commit": "90491828726e1540442b17cd445d0308d0b8093c",
+  "preflight_path": "generated/e2-r17-single-case-first-fail-exact-replay-updater-recovery-v2-preflight-20260902.json",
+  "preflight_sha256": "5f41ae954d92a4aa66f87d1a781e92c66c720636b1e80db74bf6e4b5e0c3ca63",
+  "schema_version": "1.0",
+  "single_use": true,
+  "status": "AUTHORIZED_E2_R17_FIRST_FAIL_EXACT_REPLAY_UPDATER_RECOVERY_V2"
+}

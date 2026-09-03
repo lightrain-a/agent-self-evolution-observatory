@@ -1,0 +1,40 @@
+{
+  "active_bundle": {
+    "path": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle",
+    "sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5"
+  },
+  "content_sha256": "71115f4adef672cfa23301e1332fcada8a41f9516413a76aa86dd6e22f010677",
+  "f0_scientific_outcomes_observed": 0,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "parent_bundle": {
+    "path": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v3-20260902.bundle",
+    "sha256": "4a2bf45fc63f2bde8f9b8ac31ffc48ce2fc42c64d65df9298605ddd8e68d1e05"
+  },
+  "provider_requests": 0,
+  "public_oracle_qualification_sha256": "7d6681dd45ea602fec58a77aaec5a97d5bd65f0c3dc946824d03b6e748d49a4e",
+  "rationale": "The verified public TNF oracle consumes 12 tool calls with no hidden IDs while performing normal discovery and filesystem checks. A cap equal to the oracle path leaves zero execution headroom and turns reasonable post-condition verification into artificial floor failure.",
+  "schema_version": "ace-appworld-capability-substrate-v4-contract-v1",
+  "status": "CAPABILITY_SUBSTRATE_V4_TOOL_BUDGET_QUALIFIED",
+  "substrate_id": "ACE-APPWORLD-CAPABILITY-SUBSTRATE-V4-20260902",
+  "tool_budget_rule": {
+    "formula": "ceil(max_public_oracle_tool_calls * 4 / 3)",
+    "headroom_multiplier": "4/3",
+    "model_outcomes_used_to_choose_cap": false,
+    "oracle_max_tool_calls": 12,
+    "resolved_tool_call_cap": 16
+  },
+  "unchanged": {
+    "capability_thresholds": "UNCHANGED",
+    "constraint_count": 3,
+    "coupling_levels": [
+      0,
+      1,
+      2
+    ],
+    "family_count": 12,
+    "fg_measurements": "PRESERVED_IF_ALREADY_COMPLETED_BELOW_12",
+    "model": "qwen3.7-plus",
+    "task_text_from_v3": true,
+    "update_surface": "PERSISTENT_PROCEDURAL_REPAIR_NOTE"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "successor_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-oracle-pivot-v20",
+  "state": "PROSPECTIVE_MAIN_PAPER_EVIDENCE_PLAN_NO_OUTCOMES",
+  "main_paper_objects_max": 4,
+  "objects": [
+    {
+      "id": "FIG-1",
+      "title": "Matched endpoint-sharing topology intervention",
+      "purpose": "Explain the scientific intervention, not report a result.",
+      "contents": [
+        "same base scene and active objects",
+        "same predicate/direction multiset",
+        "same relation count and exact token count",
+        "CHAIN versus HUB endpoint assignments at counts 3-4",
+        "text -> SGP -> semantic graph -> same SG2SC -> layout",
+        "exact oracle graph substitution point"
+      ]
+    },
+    {
+      "id": "FIG-2",
+      "title": "Within-support paired topology effect",
+      "purpose": "Primary paper evidence if developmental and confirmatory gates pass.",
+      "contents": [
+        "SGP-14 count-3 paired CHAIN-HUB effect",
+        "SGP-14 count-4 paired CHAIN-HUB effect",
+        "pooled predicted-arm end-to-end Delta_topo",
+        "text-to-graph topology effect",
+        "base-scene clustered uncertainty"
+      ],
+      "secondary_overlay_only": "SGP-12 matched exposure-regime result"
+    },
+    {
+      "id": "FIG-3",
+      "title": "Exact-identity oracle localization",
+      "purpose": "Mechanism-localization evidence.",
+      "contents": [
+        "predicted-graph topology gap",
+        "oracle-graph topology gap on the same frozen cases",
+        "paired downstream decoder randomness",
+        "oracle recovery fraction",
+        "exact-identity eligibility by count and topology"
+      ]
+    },
+    {
+      "id": "TABLE-1",
+      "title": "Untouched-test multi-seed confirmation",
+      "purpose": "Paper-level reproducibility evidence, only after developmental GO.",
+      "contents": [
+        "three total independently trained SGP-14 seeds",
+        "seed-level count-3 and count-4 effects",
+        "pooled confirmatory effect",
+        "frozen oracle-recovery and eligibility gates"
+      ]
+    }
+  ],
+  "exclude_from_main_scientific_evidence": [
+    "training loss curves",
+    "checkpoint timeline",
+    "GPU allocation history",
+    "queue/heartbeat status",
+    "failure-ledger process counts",
+    "governance diagram",
+    "hardware table except concise reproducibility appendix information"
+  ],
+  "scientific_outcomes_read": 0
+}

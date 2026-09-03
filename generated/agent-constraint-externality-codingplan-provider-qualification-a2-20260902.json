@@ -1,0 +1,30 @@
+{
+  "atomcode_provider_profile": "AtomGit-deepseek-v4-flash",
+  "bridge_schema": "ace-atomcode-json-tool-bridge-v1",
+  "content_sha256": "377dbbd2dd34af1d44616f5af78f230c56616103190c4756498c9bb7286a6d67",
+  "context_window": 512000,
+  "f0_authorized": false,
+  "limitations": [
+    "ATOMCODE_5_0_9_DOES_NOT_EXPOSE_SUPPORTED_TEMPERATURE_OR_TOP_P_CONFIG_FIELDS",
+    "CUSTOM_APPWORLD_TOOLS_ARE_TEXT_JSON_BRIDGED_RATHER_THAN_NATIVE_PROVIDER_TOOLS"
+  ],
+  "live_probe": {
+    "codingplan_requests": 1,
+    "expected_arguments": {
+      "key": "x",
+      "value": 1
+    },
+    "observed_function_call_valid": true,
+    "scientific_episode": false,
+    "synthetic_tool": "set_value"
+  },
+  "max_output_tokens": 128000,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider": "ATOMGIT_CODINGPLAN_ATOMCODE_HEADLESS_V1",
+  "resolved_model": "deepseek-v4-flash",
+  "retry_max_attempts": 1,
+  "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+  "schema_version": "ace-codingplan-provider-qualification-a2-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "CODINGPLAN_DEEPSEEK_PROVIDER_QUALIFICATION_PASS"
+}

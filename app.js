@@ -277,6 +277,33 @@ const ZH_INLINE_TEXT = [
   [/supplement reproduction/g,"补充材料复现"],
   [/\bcontext\b/g,"上下文"],
   [/\breplay\b/g,"回放"],
+  [/\bwriter[- ]mode\b/gi,"写入模式"],
+  [/\bprovenance[- ]only\b/gi,"仅来源身份"],
+  [/\bsame[- ]state\b/gi,"同状态"],
+  [/\bsource[- ]faithful\b/gi,"忠实于来源"],
+  [/\bstage[- ]resolved\b/gi,"分阶段"],
+  [/\blearning projection\b/gi,"学习证据投影"],
+  [/\bacting projection\b/gi,"执行证据投影"],
+  [/\bnative transport\b/gi,"原生传递流程"],
+  [/\bcoupling topology\b/gi,"耦合拓扑"],
+  [/\brelation count\b/gi,"关系数量"],
+  [/\bstage localization\b/gi,"阶段定位"],
+  [/\bnative retrieval\b/gi,"原生检索"],
+  [/\bfirst[- ]action\b/gi,"第一步动作"],
+  [/\bterminal outcome\b/gi,"最终任务结果"],
+  [/\bevaluator-relative\b/gi,"依赖判分器"],
+  [/\bevaluator-independent\b/gi,"不依赖判分器"],
+  [/\bexactly-once\b/gi,"只执行一次"],
+  [/\bcounterfactual\b/gi,"反事实对照"],
+  [/\bprovenance\b/gi,"来源身份"],
+  [/\bevaluator\b/gi,"判分器"],
+  [/\bwriter\b/gi,"写入模块"],
+  [/\btreatment\b/gi,"实验变量"],
+  [/\bsubstrate\b/gi,"实验底座"],
+  [/\bmediator\b/gi,"中间环节"],
+  [/\btrajectory\b/gi,"行动轨迹"],
+  [/\barm\b/gi,"实验组"],
+  [/\bplacebo\b/gi,"安慰剂对照"],
   [/\bretrieval\b/g,"检索"],
   [/\binteraction\b/g,"交互"],
   [/\blesson\b/g,"经验"],
@@ -300,13 +327,13 @@ const ZH_INLINE_TEXT = [
   [/process family/g,"过程族"],
   [/fresh collision/g,"最新碰撞"],
   [/fresh audit/g,"最新审计"],
-  [/\bheldout\b/g,"留出"],
-  [/\bheld-out\b/g,"留出"],
+  [/\bheldout\b/g,"留出测试"],
+  [/\bheld-out\b/g,"留出测试"],
   [/\bquery\b/g,"查询"],
   [/\bselector\b/g,"选择器"],
   [/\bstatus\b/g,"状态"],
   [/source transaction/g,"来源事务"],
-  [/\bterminal\b/g,"终态"],
+  [/\bterminal\b/g,"最终"],
   [/external-wait/g,"外部等待"],
   [/\bwatch\b/g,"监控"],
   [/\bqueue\b/g,"队列"],
@@ -1394,8 +1421,8 @@ function renderProjectStatusStrip(){
   const selectedStatusLabels=selectedPaper?(language==="zh"?[["PaperState 总数",selectedPaperCount],["Ledger SUBMISSION_READY",selectedLedgerReadyCount],["最新门禁 clean",selectedGateCleanCount],["Readiness HOLD",selectedHoldCount],["STRI",paper.paper_stage||paper.current_state||"--"],["Agent Safety R9",selectedSafetyPaper.paper_stage||selectedSafetyPaper.current_state||"--"]]:[["PaperStates",selectedPaperCount],["Ledger SUBMISSION_READY",selectedLedgerReadyCount],["Latest gates clean",selectedGateCleanCount],["Readiness HOLD",selectedHoldCount],["STRI",paper.paper_stage||paper.current_state||"--"],["Agent Safety R9",selectedSafetyPaper.paper_stage||selectedSafetyPaper.current_state||"--"]]):statusLabels;
   return `<section class="project-status-strip current"><div class="project-status-copy"><b>${selectedPaper?(language==="zh"?"当前论文 · PaperRegistry":"Current papers · PaperRegistry"):(language==="zh"?`当前科研状态${asOf?` · ${asOf}`:""}`:`Current research state${asOf?` · ${asOf}`:""}`)}</b><span>${selectedMessage}</span></div><dl class="project-status-metrics">${selectedStatusLabels.map(([label,value])=>`<div><dt>${label}</dt><dd>${value}</dd></div>`).join("")}</dl></section>`;
 }
-function pageHeader(config) {
-  return `<div class="eyebrow">${esc(textOf(config.eyebrow))}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout ? `<div class="callout">${textOf(config.callout)}</div>` : ""}${renderProjectStatusStrip()}`;
+function pageHeader(config, includeProjectStatus = true) {
+  return `<div class="eyebrow">${esc(textOf(config.eyebrow))}</div><h1>${textOf(config.title)}</h1><p class="lead">${textOf(config.lead)}</p>${config.callout ? `<div class="callout">${textOf(config.callout)}</div>` : ""}${includeProjectStatus ? renderProjectStatusStrip() : ""}`;
 }
 function renderSectionForPage(section, index, citationPageId = pageId, extraClass = "", headingLevel = 2) {
   const title = textOf(section.title);
@@ -4334,6 +4361,8 @@ function buildToc() {
   }
   if (pageId === "selected-paper") {
     const rows = [
+      {id:"paper-resource-budget",label:language === "zh" ? "实验资源与成本预算" : "Experiment resource budget"},
+      {id:"atomgit-pro-allocation",label:language === "zh" ? "AtomGit Pro 分配" : "AtomGit Pro allocation"},
       {id:"formal-paper-collection",label:language === "zh" ? "①–⑤ 正式论文" : "①–⑤ Formal papers"},
       {id:"working-paper-collection",label:language === "zh" ? "⑥–⑨ 工作论文 / Scientific Object" : "⑥–⑨ Working papers / scientific objects"},
     ];
@@ -4341,14 +4370,32 @@ function buildToc() {
     return;
   }
   const tocSelector = "#dynamic-page h2, #dynamic-page h3";
-  const headings = [...document.querySelectorAll(tocSelector)].filter((heading) => heading.dataset.toc !== "false" && !heading.closest(".review-trace-fold,.review-archive-fold,.system-deep-dive") && (heading.id || heading.closest(".panel, .page-chapter, .merged-group, .direction-cluster, .idea-macro-cluster")));
+  const currentPaperHierarchy = Boolean(document.querySelector(".cpp-page .cpp-reader-chapter"));
+  const headings = [...document.querySelectorAll(tocSelector)].filter((heading) => {
+    if (heading.dataset.toc === "false" || heading.closest(".review-trace-fold,.review-archive-fold,.system-deep-dive,.cpp-e1-project-fold")) return false;
+    if (currentPaperHierarchy) return heading.matches(".cpp-reader-chapter-head h2, .cpp-subsection-title");
+    return Boolean(heading.id || heading.closest(".panel, .page-chapter, .merged-group, .direction-cluster, .idea-macro-cluster"));
+  });
   headings.forEach((heading, index) => { if (!heading.id) heading.id = `${slugify(heading.textContent)}-${index + 1}`; });
+  const isE1Paper = pageId === "paper-e1";
+  const paperSubsectionLabels = pageId.startsWith("paper-") ? {
+    "quick-overview": language === "zh" ? "0 · 先看懂问题" : "0 · Start here",
+    "problem-origin": language === "zh" ? (isE1Paper ? "1 · 从 P19 抽象一般问题" : "1 · 为什么有这个问题") : (isE1Paper ? "1 · Generalize the P19 example" : "1 · Why this problem exists"),
+    "related-work-comparison": language === "zh" ? "2 · 现有研究缺什么" : "2 · What prior work misses",
+    "mechanism": language === "zh" ? (isE1Paper ? "3 · 我们怎么验证" : "3 · 我们做了什么") : (isE1Paper ? "3 · How we test it" : "3 · What we did"),
+    "experiment-results": language === "zh" ? "4 · 实验回答了什么" : "4 · What the evidence answers",
+    "claim-boundary": language === "zh" ? "5 · 最终贡献与边界" : "5 · Contributions & boundaries",
+    "paper-evolution": language === "zh" ? (isE1Paper ? "项目档案 · 完整研究演变" : "6 · 完整研究演变") : (isE1Paper ? "Project archive · Full research evolution" : "6 · Full research evolution"),
+    "next-gate": language === "zh" ? (isE1Paper ? "6 · 当前状态与下一步" : "7 · 当前状态与下一步") : (isE1Paper ? "6 · Current state & next" : "7 · Current state & next"),
+  } : {};
   const root = [];
   const stack = [{level:1, children:root}];
   headings.forEach((heading) => {
     const level = Number(heading.tagName.slice(1));
     while (stack.length > 1 && stack[stack.length - 1].level >= level) stack.pop();
-    const node = {level, id:heading.id, label:(heading.dataset.tocLabel || heading.textContent).trim(), children:[]};
+    const sectionId = heading.closest("section[id]")?.id || "";
+    const shortPaperLabel = level === 3 && heading.classList.contains("cpp-subsection-title") ? paperSubsectionLabels[sectionId] : "";
+    const node = {level, id:heading.id, label:(heading.dataset.tocLabel || shortPaperLabel || heading.textContent).trim(), children:[]};
     stack[stack.length - 1].children.push(node);
     stack.push(node);
   });
@@ -4375,11 +4422,13 @@ function localizeRenderedChinese(root = document) {
 function applyReadabilityFloor(root = document) {
   const bodyTags = new Set(["P","LI","TD","DD"]);
   const mobile = window.matchMedia("(max-width: 820px)").matches;
+  const paperReader = /^paper-(?:e1|g1|c1|e2|b1|a|b|agent-constraint|3d)$/.test(pageId);
   root.querySelectorAll(".layout *").forEach((node) => {
     if (![...node.childNodes].some((child) => child.nodeType === Node.TEXT_NODE && child.textContent.trim())) return;
     const size = Number.parseFloat(getComputedStyle(node).fontSize || "0");
     if (!Number.isFinite(size) || size <= 0) return;
-    const floor = bodyTags.has(node.tagName) ? (mobile ? 12.5 : 12) : 11.5;
+    const bodyFloor = paperReader ? (mobile ? 13.5 : 13) : (mobile ? 12.5 : 12);
+    const floor = bodyTags.has(node.tagName) ? bodyFloor : 11.5;
     if (size < floor) {
       node.classList.add(bodyTags.has(node.tagName) ? "readability-body-floor" : "readability-floor");
       node.style.setProperty("font-size", `${floor}px`, "important");
@@ -4536,6 +4585,185 @@ function bindPageEvents() {
     refreshBibliography();
   });
 }
+function enhanceExperimentCostPriceColumns(root) {
+  if (pageId !== "experiment-costs" || !root) return;
+  const table = root.querySelector(".ec-portfolio>.matrix");
+  if (!table || table.dataset.priceColumnsReady === "1") return;
+  const zh = language === "zh";
+  const msg = (z, e) => zh ? z : e;
+  const GPU_MARKET = { a100Sxm80:10.78, rtx3090Community:1.49, rtx3090Secure:3.39 };
+  const gpuRange = (lo, hi, rate=GPU_MARKET.a100Sxm80) => `¥${Math.round(lo*rate).toLocaleString()}–${Math.round(hi*rate).toLocaleString()}`;
+  const gpuMarketNote = msg("RunPod 2026-09 市场参考；A100 SXM 80G≈¥10.78/GPU·h，RTX 3090≈¥1.49–3.39/GPU·h", "RunPod Sep-2026 market reference; A100 SXM 80G≈¥10.78/GPU·h, RTX 3090≈¥1.49–3.39/GPU·h");
+  const kindOf = model => {
+    if (["HarmBench","Qwen3-8B","Qwen2.5-7B-Instruct","Second local","第二个本地","MemoryVLA","Second VLA","第二 VLA","OptimusVLA","pi0.5","BEDROOM-SG2SC","SGP-12","SGP-14"].some(x => model.includes(x))) return "gpu";
+    if (["Qwen3-Coder-Next","Hosted Qwen API","235b-a22b","397b-a17b","DeepSeek semantic evaluator","Canonical writer","DeepSeek V4 Pro","Kimi K3","Second backbone","第二 backbone","qwen3.7-plus","Additional LLM","额外 LLM"].some(x => model.includes(x))) return "token";
+    return "other";
+  };
+  const tokenEstimate = (paper, model, usedText, planText) => {
+    const has = needle => model.includes(needle);
+    let used="", plan="";
+    if (model === "Hosted Qwen API") plan=msg("P0 用量估算：≈52.8–105.6M input + 0.27–0.55M output。注意：这只是 P0，不是整个 V4。若把 V3 的每条 trajectory 上下文形状机械外推到全部 gate 的 208–324 trajectories，容量参考约 0.915–1.426B input + 4.75–7.40M output；P0 receipt 出来后必须用实测重算 P1–P3。","P0 usage estimate: ≈52.8–105.6M input + 0.27–0.55M output. This is P0 only, not all of V4. Mechanically extending the V3 per-trajectory context shape to the full gated envelope of 208–324 trajectories gives a capacity reference of ≈0.915–1.426B input + 4.75–7.40M output; P1–P3 must be recalibrated from the P0 receipt.");
+    else if (has("235b-a22b") || (has("397b-a17b") && paper.includes("G1"))) plan=msg("用量估算：≈2.8M input + 0.28M output（140 episodes × 20k/2k）","Usage estimate: ≈2.8M input + 0.28M output (140 episodes × 20k/2k)");
+    else if (has("DeepSeek semantic evaluator")) { used=msg("用量估算：≈0.24M input + 0.012M output（按 120 eval × 2k/0.1k）","Usage estimate: ≈0.24M input + 0.012M output (120 eval × 2k/0.1k)"); plan=used; }
+    else if (has("Canonical writer")) used=msg("用量估算：≈1–3M total Token（依据现有 write/retrieval/forced-rollout 规模做宽区间重建；非 receipt）","Usage estimate: ≈1–3M total tokens (broad reconstruction from current write/retrieval/forced-rollout scale; not a receipt)");
+    else if (model === "Kimi K3") used=msg("用量估算：≈0.1–0.5M total Token（少量 review tranche；非 receipt）","Usage estimate: ≈0.1–0.5M total tokens (small review tranches; not a receipt)");
+    else if (has("Second backbone") || has("第二 backbone")) plan=msg("用量估算：若复刻 E2 primary full lane，≈30.6M input + 2.15M output / model","Usage estimate: if mirroring E2 primary full lane, ≈30.6M input + 2.15M output per model");
+    else if (has("qwen3.7-plus")) { used=msg("用量估算：≈0.5–2M total Token（R4 partial capability；非 receipt）","Usage estimate: ≈0.5–2M total tokens (R4 partial capability; not a receipt)"); plan=msg("用量估算：≈8–16M input + 0.5–1.0M output（160 episodes × 50–100k/3–6k）","Usage estimate: ≈8–16M input + 0.5–1.0M output (160 episodes × 50–100k/3–6k)"); }
+    else if (has("Additional LLM") || has("额外 LLM")) plan=msg("用量估算：每新增 1 个 model family ≈8–16M input + 0.5–1.0M output（按 primary F0 envelope）","Usage estimate: per added model family ≈8–16M input + 0.5–1.0M output (primary F0 envelope)");
+    return {used,plan};
+  };
+  const price = (paper, model) => {
+    const has = needle => model.includes(needle);
+    if (has("Qwen3-Coder-Next")) return {used:`<b>历史综合参考 ≈¥75.6</b><small>${msg("52.8M input / 1,422 calls = 平均 37.1K input/call，所以不能把全部 Token 都按 ≤32K 首档算。当前典名阶梯价复算：≤32K ¥1.003/4.014/M；32–128K ¥1.505/6.021/M；128–256K ¥2.509/10.035/M。仅由总量+calls 可得当前 tariff 下成本至少约 ¥57.7；若全落在 32–128K 档约 ¥81.1，全落在 128–256K 档约 ¥135.2。1,422 次调用的 per-call histogram 未集中，>128K 尾部比例未知；≈¥75.6 保留为历史账单综合率参考。","52.8M input / 1,422 calls = 37.1K mean input/call, so pricing all tokens at the ≤32K tier is invalid. Current Dianming tiers: ≤32K ¥1.003/4.014/M; 32–128K ¥1.505/6.021/M; 128–256K ¥2.509/10.035/M. Aggregate totals + call count imply a current-tariff floor of ≈¥57.7; all usage at the 32–128K tier would be ≈¥81.1, and all at 128–256K ≈¥135.2. The 1,422-call histogram is not centralized, so the >128K tail is unknown; ≈¥75.6 remains the historical observed-composite reference.")}</small>`, plan:`<b>¥0</b><small>${msg("V3 已停止","V3 stopped")}</small>`};
+    if (paper.includes("E1") && has("DeepSeek V4 Pro") && has("Ark Plan")) return {used:`<b>≈10.69k AFP-equivalent</b><small>${msg("19.432M Token × DeepSeek V4 Pro AFP 系数 5.5 / 10k；套餐吃满等价约 ¥21.38。这里还能逐次审计 1,265 calls：平均 14.6K input/call，p95 33.4K，max 50.2K，>128K = 0/1,265。Ark 本身按 AFP 扣费，不因 128K 改 tariff；这些统计用于证明这条历史 lane 没有被“累计 19.4M Token”误判成长上下文。","19.432M tokens × DeepSeek V4 Pro AFP coefficient 5.5 / 10k; ≈¥21.38 at full-use plan equivalence. All 1,265 calls are auditable: mean 14.6K input/call, p95 33.4K, max 50.2K, >128K = 0/1,265. Ark is AFP-billed rather than context-tier billed; these statistics show why a cumulative 19.4M-token total must not be mistaken for long context.")}</small>`, plan:`<b>0 新 AFP / Token</b><small>${msg("该历史 ReasoningBank lane 已关闭","Historical ReasoningBank lane is closed")}</small>`};
+    if (model === "Hosted Qwen API") return {used:`<b>¥0</b>`, plan:`<b>${msg("exact model 未冻结 · 先做阶梯预算","Exact model not frozen · tier-aware budget first")}</b><small>${msg("P0 预计 52.8–105.6M input + 0.27–0.55M output。不能只报最低档。若仅把 qwen3.7-flash 当 preflight 参考：≤32K 约 ¥10.8–21.6；32–256K 约 ¥32.3–64.7；256K–1M 约 ¥64.7–129.4。真正的 P0 成本在 exact model/provider 冻结后按每次 call 的 input_tokens 分档求和；P1–P3 再用 P0 histogram 重估。","P0 is estimated at 52.8–105.6M input + 0.27–0.55M output. Do not report only the cheapest tier. Using qwen3.7-flash purely as a preflight reference: ≤32K ≈¥10.8–21.6; 32–256K ≈¥32.3–64.7; 256K–1M ≈¥64.7–129.4. Actual P0 cost will be summed call-by-call after the exact model/provider freeze; P1–P3 will be re-estimated from the P0 context histogram.")}</small>`};
+    if (has("STRI-Cert")) return {used:`<b>${msg("CPU账未集中","CPU ledger not centralized")}</b>`, plan:`<b>≈¥0 model API</b>`};
+    if (model === "Qwen3-8B") return {used:`<b>${msg("GPU·h 未集中","GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>¥0</b><small>${msg("不重跑","No rerun")}</small>`};
+    if (has("235b-a22b")) return {used:`<b>¥0</b>`, plan:`<b>≈¥11.25</b><small>${msg("2.8M input + 0.28M output；input ¥2.009/M · output ¥20.076/M","2.8M input + 0.28M output; input ¥2.009/M · output ¥20.076/M")}</small>`};
+    if (has("397b-a17b")) {
+      if (paper.includes("C1")) return {used:`<b>¥0</b>`, plan:`<b>${msg("阶梯预算 ¥1.93–12.84","Tier-aware budget ¥1.93–12.84")}</b><small>${msg("预计 1–2M input + 0.1–0.2M output：若每次 call ≤128K，约 ¥1.93–3.85；128–256K 约 ¥3.21–6.43；256K–1M 约 ¥6.42–12.84。hard cap 5M/0.5M 对应三档约 ¥9.63 / ¥16.07 / ¥32.10。最终总成本按 per-call context tier 求和，不再默认最低档。","For 1–2M input + 0.1–0.2M output: if every call is ≤128K, ≈¥1.93–3.85; 128–256K ≈¥3.21–6.43; 256K–1M ≈¥6.42–12.84. The 5M/0.5M hard cap is ≈¥9.63 / ¥16.07 / ¥32.10 across the three tiers. Final cost is summed by per-call context tier rather than assuming tier 1.")}</small>`};
+      return {used:`<b>¥0</b>`, plan:`<b>${msg("阶梯预算 ¥5.39 / ¥9.00 / ¥17.97","Tier-aware budget ¥5.39 / ¥9.00 / ¥17.97")}</b><small>${msg("按 2.8M input + 0.28M output：≤128K / 128–256K / 256K–1M 三种全量情景分别约 ¥5.39 / ¥9.00 / ¥17.97；实际值由每次 call 的 tier mix 决定。","For 2.8M input + 0.28M output, the all-usage scenarios at ≤128K / 128–256K / 256K–1M are ≈¥5.39 / ¥9.00 / ¥17.97; the actual value depends on the call-level tier mix.")}</small>`};
+    }
+    if (has("HarmBench")) return {used:`<b>${msg("历史 GPU·h 未集中","Historical GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(10,20)}</b><small>${msg("10–20 A100 SXM 80G·h × 市场 ¥10.78/h","10–20 A100 SXM 80G·h × market ¥10.78/h")}</small>`};
+    if (has("DeepSeek semantic evaluator")) return {used:`<b>${msg("价格估算待 exact evaluator tariff","Cost estimate needs exact evaluator tariff")}</b>`, plan:`<b>≈¥1.24*</b><small>${msg("*若按 DeepSeek V4 Pro off-peak 4.5/13.5 元/M，仅作预算参考","*If priced as DeepSeek V4 Pro off-peak 4.5/13.5 RMB/M; budget reference only")}</small>`};
+    if (has("Canonical writer")) return {used:`<b>${msg("模型单价未集中","Model tariff not centralized")}</b>`, plan:`<b>¥0</b>`};
+    if (has("DeepSeek V4 Pro")) return {used:`<b>≈¥19.1 pay-go</b><small>${msg("1,195 actor calls 的 measured tranche 平均约 3.0K input/call；累计 3.575M 并不等于单次 >128K。DeepSeek V4 Pro 当前主要是服务商/时段价差，不是 Qwen 式 128K context tier；最终以服务商 receipt 为准。","The measured 1,195-actor-call tranche averages ≈3.0K input/call; cumulative 3.575M does not mean any request is >128K. Current DeepSeek V4 Pro pricing is mainly provider/time-band dependent rather than a Qwen-style 128K context tier; final cost follows provider receipts.")}</small>`, plan:`<b>≈¥166.5 pay-go</b><small>${msg("30.6M input + 2.15M output，按典名低谷 4.5/13.5 元/M；若实际执行跨入其他时段，则按每次 call 的实际 tariff 重算。","30.6M input + 2.15M output at Dianming off-peak 4.5/13.5 RMB/M; if execution crosses other time bands, recompute each call at its actual tariff.")}</small>`};
+    if (model === "Kimi K3") return {used:`<b>≈¥0.2–1.0*</b><small>${msg("*按 Ark 吃满等效 ¥2/M × 估算 token，仅作参考","*Ark full-use equivalent ¥2/M × estimated tokens; reference only")}</small>`, plan:`<b>¥0</b>`};
+    if (has("Second backbone") || has("第二 backbone")) return {used:`<b>¥0</b>`, plan:`<b>${msg("模型未冻结 · 价格 TBD","Model not frozen · price TBD")}</b>`};
+    if (has("Qwen2.5-7B-Instruct")) return {used:`<b>${msg("历史 GPU·h 未集中","Historical GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(80,150)}</b><small>${msg("80–150 A100 SXM 80G·h × 市场 ¥10.78/h","80–150 A100 SXM 80G·h × market ¥10.78/h")}</small>`};
+    if (has("Second local") || has("第二个本地")) return {used:`<b>¥0</b>`, plan:`<b>${msg("GPU·h 待定","GPU-hours TBD")}</b><small>${gpuMarketNote}</small>`};
+    if (model === "MemoryVLA") {
+      const isB = paper.includes("Paper B");
+      const lo=isB?150:100, hi=isB?300:200;
+      return {used:`<b>${msg("历史 GPU·h 未集中","Historical GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>A100：≈${gpuRange(lo,hi,GPU_MARKET.a100Sxm80)}</b><small>${msg(`3090 Community≈${gpuRange(lo,hi,GPU_MARKET.rtx3090Community)}；Secure≈${gpuRange(lo,hi,GPU_MARKET.rtx3090Secure)}；对应 ${lo}–${hi} GPU·h`,`3090 Community≈${gpuRange(lo,hi,GPU_MARKET.rtx3090Community)}; Secure≈${gpuRange(lo,hi,GPU_MARKET.rtx3090Secure)}; for ${lo}–${hi} GPU·h`)}</small>`};
+    }
+    if (has("Second VLA") || has("第二 VLA")) return {used:`<b>¥0</b>`, plan:`<b>${msg("GPU·h 待定","GPU-hours TBD")}</b><small>${gpuMarketNote}</small>`};
+    if (has("OptimusVLA") || has("pi0.5")) return {used:`<b>${msg("资格化 GPU·h 未集中","Qualification GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>${msg("首条合法 rollout 后按市场 GPU·h 计价","Market GPU-hour price after first valid rollout")}</b><small>${gpuMarketNote}</small>`};
+    if (has("qwen3.7-plus")) return {used:`<b>≈¥0.37–1.49 historical*</b><small>${msg("*0.5–2M total Token × 历史实测综合 ¥0.747/M；因为缺 per-call receipt，这个历史值不反推 context tier。","*0.5–2M total tokens × historical observed composite ¥0.747/M; the missing per-call receipt prevents reconstructing its context-tier mix.")}</small>`, plan:`<b>${msg("阶梯预算 ¥19.31–79.63","Tier-aware budget ¥19.31–79.63")}</b><small>${msg("当前典名 qwen3.7-plus 的阈值是 256K，不是 128K。8–16M input + 0.5–1.0M output：若 call ≤256K，约 ¥19.31–38.62；若 call 在 256K–1M，约 ¥39.81–79.63。正式总成本逐 call 分档求和。","The current Dianming qwen3.7-plus threshold is 256K, not 128K. For 8–16M input + 0.5–1.0M output: calls ≤256K cost ≈¥19.31–38.62; calls in 256K–1M cost ≈¥39.81–79.63. The final total is summed call by call by tier.")}</small>`};
+    if (has("Additional LLM") || has("额外 LLM")) return {used:`<b>¥0</b>`, plan:`<b>${msg("每模型价格取决于 exact family","Per-model price depends on exact family")}</b>`};
+    if (has("BEDROOM-SG2SC") || model === "SGP-12" || model === "SGP-14") return {used:`<b>${msg("资格验证 GPU·h 未集中","Qualification GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(24,72)}</b><small>${msg("若正式单组件占用 24–72 A100·h：× 市场 ¥10.78/h；正式 run 后用实测替换","If a component occupies 24–72 A100·h: × market ¥10.78/h; replace with measured runtime")}</small>`};
+    return {used:`<b>TBD</b>`, plan:`<b>TBD</b>`};
+  };
+  let currentPaper = "";
+  table.querySelectorAll("tbody tr").forEach(row => {
+    const paperCell = row.querySelector(".ec-paper-cell b");
+    if (paperCell) currentPaper = paperCell.textContent.trim();
+    const model = row.querySelector(".ec-model b")?.textContent.trim() || "";
+    const cells = [...row.children];
+    const modelIndex = cells.findIndex(cell => cell.classList?.contains("ec-model"));
+    if (modelIndex < 0) return;
+    const usedCell = cells[modelIndex + 1];
+    const planCell = cells[modelIndex + 2];
+    if (!usedCell || !planCell) return;
+    const kind = kindOf(model);
+    row.classList.add(`ec-resource-${kind}`);
+    usedCell.classList.add("ec-usage-cell", `ec-usage-${kind}`);
+    planCell.classList.add("ec-usage-cell", `ec-usage-${kind}`);
+    if (kind === "token") {
+      const est=tokenEstimate(currentPaper, model, usedCell.textContent, planCell.textContent);
+      if (est.used) usedCell.insertAdjacentHTML("beforeend", `<span class="ec-token-estimate">${est.used}</span>`);
+      if (est.plan) planCell.insertAdjacentHTML("beforeend", `<span class="ec-token-estimate">${est.plan}</span>`);
+    }
+    const p = price(currentPaper, model);
+    const usedPrice = document.createElement("td"); usedPrice.className = `ec-price-cell ec-price-used ec-price-${kind}`; usedPrice.innerHTML = p.used;
+    const planPrice = document.createElement("td"); planPrice.className = `ec-price-cell ec-price-plan ec-price-${kind}`; planPrice.innerHTML = p.plan;
+    usedCell.after(usedPrice);
+    planCell.after(planPrice);
+  });
+  table.dataset.priceColumnsReady = "1";
+}
+
+function enhanceExperimentVendorMatrix(root) {
+  if (pageId !== "experiment-costs" || !root) return;
+  const input = root.querySelector("#ec-model-filter-input");
+  const count = root.querySelector("#ec-model-filter-count");
+  const table = root.querySelector(".ec-vendor-matrix>.matrix");
+  const tbody = table?.querySelector("tbody");
+  const summary = root.querySelector(".ec-family-summary");
+  let rows = [...root.querySelectorAll(".ec-vendor-matrix tbody tr")];
+  if (!input || !tbody || !rows.length || input.dataset.bound === "1") return;
+
+  // Context-tier prices are per request input length, not per paper/account token total.
+  // Keep every currently relevant Dianming tier visible so budget arithmetic cannot silently use tier 1.
+  const DIANMING_CONTEXT_TIERS = {
+    "qwen3.5-plus":[["≤128K",0.805,4.816],["128–256K",2.009,12.04],["256K–1M",4.011,24.08]],
+    "qwen3.5-flash":[["≤128K",0.203,2.009],["128–256K",0.805,8.029],["256K–1M",1.204,12.04]],
+    "qwen3.5-397b-a17b":[["≤128K",1.204,7.224],["128–256K",2.009,12.04],["256K–1M",4.011,24.08]],
+    "qwen3.5-35b-a3b":[["≤128K",0.399,3.213],["128–256K",1.603,12.845]],
+    "qwen3.5-27b":[["≤128K",0.602,4.816],["128–256K",1.806,14.448]],
+    "qwen3.5-122b-a10b":[["≤128K",0.805,6.419],["128–256K",2.009,16.058]],
+    "qwen-plus":[["≤128K",0.805,2.009],["128–256K",2.415,20.076],["256K–1M",4.823,48.167]],
+    "qwen-plus-latest":[["≤128K",0.805,2.009],["128–256K",2.415,20.076],["256K–1M",4.823,48.167]],
+    "qwen3-max-preview":[["≤32K",6.027,24.087],["32–128K",10.038,40.145],["128–256K",15.057,60.214]],
+    "qwen3-max":[["≤32K",2.513,10.038],["32–128K",4.018,16.058],["128–256K",7.028,28.098]],
+    "qwen3-coder-plus":[["≤32K",4.018,16.058],["32–128K",6.02,24.08],["128–256K",8.029,32.109],["256K–1M",16.058,64.218]],
+    "qwen3-coder-next":[["≤32K",1.003,4.014],["32–128K",1.505,6.021],["128–256K",2.509,10.035]],
+    "qwen3.6-plus":[["≤256K",1.932,11.557],["256K–1M",7.707,46.214]],
+    "qwen3.6-flash":[["≤256K",1.155,6.93],["256K–1M",4.62,27.727]],
+    "qwen3.7-flash":[["≤32K",0.2,0.8],["32–256K",0.6,2.4],["256K–1M",1.2,4.8]],
+    "qwen3.7-plus":[["≤256K",1.932,7.707],["256K–1M",3.983,15.897]],
+  };
+  const formatTierNumber = value => Number(value).toLocaleString(undefined,{maximumFractionDigits:3});
+  rows.forEach(row => {
+    const tiers = DIANMING_CONTEXT_TIERS[row.dataset.model || ""];
+    const cell = row.children[2];
+    if (!tiers || !cell) return;
+    cell.classList.add("ec-provider-dianming","ec-tiered-price");
+    cell.innerHTML = tiers.map(([label,inputPrice,outputPrice]) => `<div class="ec-price-tier"><span>${label}</span><b>${language === "zh" ? "入" : "in"} ¥${formatTierNumber(inputPrice)} / ${language === "zh" ? "出" : "out"} ¥${formatTierNumber(outputPrice)}</b></div>`).join("");
+  });
+
+  const domesticFamilies = ["qwen","deepseek","kimi","glm","minimax","doubao","hunyuan","ernie"];
+  const overseasFamilies = ["openai / gpt","claude","gemini","grok"];
+  const familyOrder = [...domesticFamilies, ...overseasFamilies];
+  const familyRank = new Map(familyOrder.map((family, index) => [family, index]));
+  const cheapestInput = row => {
+    const cells = [...row.children].slice(1); // include Ark AFP full-use equivalent as an available unit price
+    const prices = cells.flatMap(cell => {
+      const text = cell.textContent || "";
+      const api = text.match(/(?:in|入)\s*¥\s*([0-9]+(?:\.[0-9]+)?)/i);
+      const ark = text.match(/AFP(?:\s+eq\.|\s+等效)?\s*¥\s*([0-9]+(?:\.[0-9]+)?)/i);
+      const match = api || ark;
+      return match ? [Number(match[1])] : [];
+    }).filter(Number.isFinite);
+    return prices.length ? Math.min(...prices) : Number.POSITIVE_INFINITY;
+  };
+
+  rows.forEach(row => { row.dataset.sortPrice = Number.isFinite(cheapestInput(row)) ? String(cheapestInput(row)) : ""; });
+  rows.sort((a, b) => {
+    const fa = (a.dataset.family || "").toLowerCase();
+    const fb = (b.dataset.family || "").toLowerCase();
+    const familyDelta = (familyRank.get(fa) ?? 999) - (familyRank.get(fb) ?? 999);
+    if (familyDelta) return familyDelta;
+    const pa = cheapestInput(a), pb = cheapestInput(b);
+    if (pa !== pb) return pa - pb;
+    return (a.dataset.model || "").localeCompare(b.dataset.model || "", undefined, {numeric:true, sensitivity:"base"});
+  });
+  rows.forEach((row, index) => {
+    const prevFamily = index ? (rows[index - 1].dataset.family || "").toLowerCase() : "";
+    const family = (row.dataset.family || "").toLowerCase();
+    row.classList.toggle("ec-family-start", index === 0 || family !== prevFamily);
+    tbody.appendChild(row);
+  });
+  if (summary) summary.innerHTML = language === "zh"
+    ? `<b>国内：</b>Qwen 32 · DeepSeek 6 · Kimi 5 · GLM 6 · MiniMax 6 · Doubao 3 · Hunyuan 3 · ERNIE 2　｜　<b>国外：</b>OpenAI / GPT 70 · Claude 12 · Gemini 11 · Grok 4<br><small>系列内按当前可获得渠道的最低可比单价（元 / 1M Token）从低到高；Ark AFP 套餐吃满等效价也参与排序。</small>`
+    : `<b>China:</b> Qwen 32 · DeepSeek 6 · Kimi 5 · GLM 6 · MiniMax 6 · Doubao 3 · Hunyuan 3 · ERNIE 2　|　<b>International:</b> OpenAI / GPT 70 · Claude 12 · Gemini 11 · Grok 4<br><small>Within each family, rows are sorted by the lowest currently available comparable unit price (RMB / 1M tokens), including Ark's full-use AFP equivalent.</small>`;
+
+  const apply = () => {
+    const query = input.value.trim().toLowerCase();
+    let visible = 0;
+    rows.forEach(row => {
+      const haystack = `${row.dataset.model || ""} ${row.dataset.family || ""}`.toLowerCase();
+      const show = !query || haystack.includes(query);
+      row.hidden = !show;
+      if (show) visible += 1;
+    });
+    if (count) count.textContent = String(visible);
+  };
+  input.addEventListener("input", apply);
+  input.dataset.bound = "1";
+  apply();
+}
+
 function renderPage() {
   document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
   const config = PAGES[pageId] || PAGES.home;
@@ -4586,6 +4814,7 @@ function renderPage() {
   else if (pageId === "bibliography") root.innerHTML = renderBibliography(config);
   else if (pageId === "repositories") root.innerHTML = renderDynamicResourceIndex(config, "repositories");
   else if (pageId === "datasets-benchmarks") root.innerHTML = renderDynamicResourceIndex(config, "benchmarks");
+  else if (pageId === "experiment-costs") root.innerHTML = `${pageHeader(config, false)}${(config.sections || []).map(renderSection).join("")}`;
   else root.innerHTML = `${pageHeader(config)}${renderOverviewFigure(config)}${(config.sections || []).map(renderSection).join("")}`;
   document.querySelector(".language-toggle")?.replaceChildren(document.createTextNode(language === "en" ? "中文" : "English"));
   bindPageEvents();
@@ -4596,6 +4825,8 @@ function renderPage() {
   hydrateCitations(root);
   updateCitationStatus();
   localizeRenderedChinese(root);
+  enhanceExperimentCostPriceColumns(root);
+  enhanceExperimentVendorMatrix(root);
   buildToc();
   if (new Set(["mechanisms","research-directions"]).has(pageId) && location.hash) {
     const fieldAliases = pageId === "mechanisms" ? {

@@ -185,7 +185,7 @@ def main() -> None:
               consoleLinks: [...document.querySelectorAll('.home-research-console a')].map(x=>x.getAttribute('href')||'')
             };""",
         )
-        require(home["nav"] == 19, f"expected 19 primary navigation targets after adding nine current-paper pages, got {home['nav']}")
+        require(home["nav"] == 20, f"expected 20 primary navigation targets after adding the experiment-cost page, got {home['nav']}")
         require(home["stats"] == 4 and home["routeCards"] == 9 and home["hero"] == 1 and home["heroActions"] == 4 and home["ruleSteps"] == 4 and home["routeGroups"] == 3 and home["legacyFramework"] == 0, f"home compact portal layout is incomplete or duplicated: {home}")
         require(not home["figure"] and home["distribution"] == 0, "home should route readers instead of duplicating the field-history figure or literature distribution")
         require(home["missing"] == 0, "home contains unresolved citations")
@@ -691,7 +691,7 @@ def main() -> None:
         temporal_prep=temporal_registry.get("latest_paper_preparation") or {}
         temporal_clean=temporal_prep.get("pass") is True
         temporal_action="NO_INTERNAL_ACTION" if temporal_clean else "PAPER_REPAIR_REQUIRED"
-        require(registry_summary == expected_registry_summary and temporal_registry.get("paper_stage") == expected_registry_stages.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") and temporal_registry.get("gate_clean_submission_ready") is temporal_clean and temporal_registry.get("immediate_submission_hold") is (not temporal_clean) and (temporal_registry.get("primary_next_action") or {}).get("action_class") == temporal_action and int(temporal_prep.get("required_gates") or 0) == 8 and (temporal_clean or bool(temporal_prep.get("blockers"))) and int(temporal_evidence.get("runtime_valid_rows") or 0) > 0 and int(temporal_evidence.get("distinct_endpoints") or 0) > 0 and int(temporal_evidence.get("institutional_systems") or 0) > 0 and bool(temporal_registry.get("latest_mock_review")) and failure_registry.get("paper_stage") == expected_registry_stages.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") and failure_registry.get("gate_clean_submission_ready") is True and failure_registry.get("active_unrefuted_claims") == 2, f"Research Portfolio must follow the latest canonical Temporal/Failure paper receipts without pinning an obsolete revision snapshot: {idea_portfolio['paperRegistry']}")
+        require(registry_summary == expected_registry_summary and temporal_registry.get("paper_stage") == expected_registry_stages.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") and temporal_registry.get("gate_clean_submission_ready") is temporal_clean and temporal_registry.get("immediate_submission_hold") is (not temporal_clean) and (temporal_registry.get("primary_next_action") or {}).get("action_class") == temporal_action and int(temporal_prep.get("required_gates") or 0) == 8 and (temporal_clean or bool(temporal_prep.get("blockers"))) and int(temporal_evidence.get("runtime_valid_rows") or 0) > 0 and int(temporal_evidence.get("distinct_endpoints") or 0) > 0 and int(temporal_evidence.get("institutional_systems") or 0) > 0 and bool(temporal_registry.get("latest_mock_review")) and failure_registry.get("paper_stage") == expected_registry_stages.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") and failure_registry.get("gate_clean_submission_ready") is True and failure_registry.get("supported_claims") == 6 and failure_registry.get("active_unrefuted_claims") == 0, f"Research Portfolio must follow the latest canonical Temporal/Failure paper receipts without pinning an obsolete revision snapshot: {idea_portfolio['paperRegistry']}")
         p0e=idea_portfolio["striP0E"]
         require(p0e.get("status") == "STOP_FIXED_POLICY_DYNAMIC_BRIDGE" and p0e.get("principle_disposition") == "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED" and p0e.get("persistent_principle_dead_end_certified") is False and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False, f"qualified STRI P0-E machine boundary is stale: {p0e}")
         require("E-7c" in idea_portfolio["text"] and idea_portfolio["paperHandoffEvidence"] == 3 and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False, "STRI P0-E must stay a nested zero-authority E-7c evidence record rather than a peer Idea")
@@ -711,20 +711,23 @@ def main() -> None:
           labels: [...document.querySelectorAll('.cpp-collection-card header>span')].map(x=>x.textContent.trim()),
           titles: [...document.querySelectorAll('.cpp-collection-card h3')].map(x=>x.textContent.trim()),
           toc: [...document.querySelectorAll('#page-toc a')].map(x=>x.textContent.trim()),
+          budgetRows: document.querySelectorAll('#paper-resource-budget .cpp-budget-table tbody tr').length,
+          atomgitRows: document.querySelectorAll('#paper-resource-budget .cpp-atomgit-tag').length,
+          atomgitSourceLinks: document.querySelectorAll('#atomgit-pro-allocation .cpp-budget-sources a').length,
           paperRegistrySummary: window.PAPER_REGISTRY?.summary || {},
           overflow: document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
           text: document.body.textContent || ''
         };""")
-        require(selected["cards"] == 9 and selected["formal"] == 5 and selected["working"] == 4 and selected["detailSections"] == 0 and selected["toc"] == ["①–⑤ 正式论文","⑥–⑨ 工作论文 / Scientific Object"] and selected["paperRegistrySummary"] == expected_registry_summary and not selected["overflow"], f"selected-paper must be a collection-only nine-paper routing surface: {selected}")
+        require(selected["cards"] == 9 and selected["formal"] == 5 and selected["working"] == 4 and selected["detailSections"] == 0 and selected["toc"] == ["实验资源与成本预算","AtomGit Pro 分配","①–⑤ 正式论文","⑥–⑨ 工作论文 / Scientific Object"] and selected["budgetRows"] == 9 and selected["atomgitRows"] == 9 and selected["atomgitSourceLinks"] == 3 and selected["paperRegistrySummary"] == expected_registry_summary and not selected["overflow"], f"selected-paper must remain a nine-paper routing surface with the portfolio resource budget: {selected}")
         require(selected["labels"][:5] == ["① E1 · STRI","② G1 · Temporal Safety","③ C1 · Memory Transport","④ E2 · Search Projection","⑤ B1 · Memory Provenance"] and selected["labels"][7] == "⑧ Constraint Externality" and selected["labels"][8] == "⑨ 3D · Relational Topology", f"paper collection labels/order drifted: {selected['labels']}")
         require("速览版" not in selected["text"] and "完整 PaperState" not in selected["text"] and "Stanford" not in selected["text"], "collection page must not duplicate single-paper detail/review content")
 
         paper_pages = [
-          ("/paper-e1.html", True, ("R*(A;q)","AutoSkill P19","40 / 40")),
+          ("/paper-e1.html", True, ("R*(A)","AutoSkill P19","12 / 32")),
           ("/paper-g1.html", True, ("BrowserART + AWM","HB 0/12","DS 3/12")),
           ("/paper-c1.html", True, ("Shopping","125/172","0.700 vs 0.595")),
-          ("/paper-e2.html", True, ("48 matched pairs","17 / 48","R17 · 17/48 · effect unopened")),
-          ("/paper-b1.html", True, ("AgentDojo financial","5/10 eligible","0 calls")),
+          ("/paper-e2.html", True, ("48 matched pairs","17 / 48","R17 · 17/48 · 效果 unopened")),
+          ("/paper-b1.html", True, ("350 / 350","+3.125 pp","0.0 pp")),
           ("/paper-a.html", False, ("MemoryVLA","LIBERO-Plus","0.5541")),
           ("/paper-b.html", False, ("MemoryVLA","24 scopes","longitudinal")),
           ("/paper-agent-constraint.html", False, ("AppWorld-derived matched families","PRE-F0.5","ARK_API_KEY")),
@@ -748,8 +751,7 @@ def main() -> None:
               download: document.querySelector('.cpp-hero .cpp-download-primary')?.getAttribute('href')||'',
               deepDiveClosed: !!document.querySelector('#research-archive:not([open])'),
               back: [...document.querySelectorAll('a')].some(a=>a.getAttribute('href')==='selected-paper.html'),
-              overflow: document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
-              text: document.body.textContent||''
+              overflow: document.documentElement.scrollWidth>document.documentElement.clientWidth+2
             };""")
             expected_quick_label = "0 · 先看懂问题"
             require(paper_view["quick"] == 1 and paper_view["quickLabel"] == expected_quick_label and paper_view["otherPaperCards"] == 0 and paper_view["pager"] == 0 and paper_view["modelCards"] >= 2 and paper_view["dataCards"] >= 2 and paper_view["design"] == 1 and paper_view["proofCards"] >= 3 and paper_view["evolution"] >= 6 and paper_view["origin"] >= 3 and paper_view["back"] and paper_view["deepDiveClosed"] and not paper_view["overflow"], f"beginner-first single-paper reader contract failed for {page}: {paper_view}")
@@ -757,7 +759,8 @@ def main() -> None:
             require(bool(paper_view["download"]) is formal_story, f"formal papers must expose the PDF action in the hero and working/scientific-object pages must not invent one: {page} {paper_view}")
             if page == "/paper-e1.html":
                 require(paper_view["download"] == "downloads/E1-STRI.pdf", f"E1 PDF target changed unexpectedly: {paper_view}")
-            require("讲给小白听" not in paper_view["text"] and all(marker in paper_view["text"] for marker in markers), f"single-paper content markers missing for {page}: markers={markers}")
+            marker_check = execute(session_id, """const compact=s=>String(s).replace(/\\s+/g,'');const t=document.body.textContent||'';const c=compact(t);return {required:arguments[0].map(x=>c.includes(compact(x))),forbidden:c.includes(compact(arguments[1])),fffd:(t.match(/\uFFFD/g)||[]).length};""", [list(markers), "讲给小白听"])
+            require(marker_check["fffd"] == 0 and not marker_check["forbidden"] and all(marker_check["required"]), f"single-paper content markers missing/corrupt for {page}: markers={markers} check={marker_check}")
 
         navigate("/experiments.html", 4)
         ensure_language("zh")
@@ -788,7 +791,7 @@ def main() -> None:
         # expanded everywhere so readers can jump to the bibliography without another click.
         canonical_frontend_pages = (
             "/index.html", "/foundations.html", "/mechanisms.html",
-            "/system-overview.html", "/research-map.html", "/research-timeline.html", "/research-directions.html",
+            "/system-overview.html", "/experiment-costs.html", "/research-map.html", "/research-timeline.html", "/research-directions.html",
             "/paper-ideas.html", "/experiments.html", "/selected-paper.html",
             "/paper-e1.html", "/paper-g1.html", "/paper-c1.html", "/paper-e2.html", "/paper-b1.html",
             "/paper-a.html", "/paper-b.html", "/paper-agent-constraint.html", "/paper-3d.html",
@@ -845,7 +848,7 @@ def main() -> None:
             "/domains.html": "mechanisms.html#chapter-domain-axis",
             "/evaluation.html": "mechanisms.html#chapter-evidence-axis",
             "/direction-board.html": "paper-ideas.html#discussed-ideas",
-            "/paper-roadmap.html": "selected-paper.html#group-paper-roadmap",
+            "/paper-roadmap.html": "selected-paper.html",
         }
         for old_path, expected_suffix in redirect_checks.items():
             navigate(old_path, 2)
