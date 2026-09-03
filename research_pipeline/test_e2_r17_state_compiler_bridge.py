@@ -6,7 +6,10 @@ from research_pipeline.e2_r17_state_compiler_bridge import (
     compile_skill,
     diagnose,
     extract_visible_signals,
+    rendered_primitive_count,
     score_only_generic_diagnosis,
+    scope_matched_generic_diagnosis,
+    state_level_utility_contrast,
 )
 
 
@@ -129,6 +132,45 @@ class StateCompilerBridgeTest(unittest.TestCase):
         self.assertEqual(d.required_repairs, ())
         compiled = compile_skill(base_skill_markdown=base, diagnoses=[d])
         self.assertEqual(compiled.skill_markdown, base)
+
+    def test_scope_matched_generic_is_cardinality_informed_but_trajectory_text_blind(self) -> None:
+        base = BASE.read_text(encoding="utf-8")
+        true_d = diagnose(
+            extract_visible_signals(
+                evidence_text="wb=load_workbook('input.xlsx'); ws['B2']=42; wb.save('output.xlsx')",
+                selected_score=0.0,
+            )
+        )
+        self.assertEqual(1, rendered_primitive_count([true_d]))
+        control_d = scope_matched_generic_diagnosis(
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            rendered_block_count=1,
+        )
+        control = compile_skill(base_skill_markdown=base, diagnoses=[control_d])
+        self.assertEqual(control.skill_markdown, G2.read_text(encoding="utf-8"))
+        self.assertIn("rendered_block_count=1", control_d.observed_evidence)
+        self.assertNotIn("trajectory", " ".join(control_d.observed_evidence).lower())
+
+    def test_scope_matched_generic_two_blocks_matches_maximal_generic_surface(self) -> None:
+        base = BASE.read_text(encoding="utf-8")
+        control_d = scope_matched_generic_diagnosis(
+            [0, 0, 0, 0, 1, 1, 1, 1],
+            rendered_block_count=2,
+        )
+        control = compile_skill(base_skill_markdown=base, diagnoses=[control_d])
+        self.assertEqual(control.skill_markdown, G3.read_text(encoding="utf-8"))
+
+    def test_identical_state_sha_cannot_gain_a_causal_advantage_from_actor_noise(self) -> None:
+        digest = "a" * 64
+        self.assertEqual(
+            0.0,
+            state_level_utility_contrast(
+                treatment_skill_sha256=digest,
+                control_skill_sha256=digest,
+                treatment_utility=1.0,
+                control_utility=0.0,
+            ),
+        )
 
     def test_hidden_experiment_labels_are_not_inputs(self) -> None:
         # The public extraction API accepts only learner-visible text + score.

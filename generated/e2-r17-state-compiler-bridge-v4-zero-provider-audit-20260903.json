@@ -1,0 +1,80 @@
+{
+  "artifact_type": "e2-r17-state-compiler-bridge-v4-zero-provider-review-repair-audit",
+  "authority": {
+    "bridge_stage_a": false,
+    "e3": false,
+    "paper_promotion": false,
+    "semantic_transfer": false,
+    "validation": false
+  },
+  "base_canonical_commit": "0be443c0",
+  "bound_zero_provider_code": {
+    "compiler": {
+      "path": "research_pipeline/e2_r17_state_compiler_bridge.py",
+      "sha256": "aa19c0284f1259f0e18006f25523b5393b48bfefaf9ab8110a32d963d3c28e78"
+    },
+    "compiler_tests": {
+      "path": "research_pipeline/test_e2_r17_state_compiler_bridge.py",
+      "sha256": "524fe1f048090ef28bac116c582a8e73e3d73218a1309bc46f0da9e1b60819af"
+    },
+    "orthogonal_analysis": {
+      "path": "research_pipeline/e2_r17_state_compiler_bridge_v4_analysis.py",
+      "sha256": "3b1a72dd5b3d3269b7aec0f11719d0a941d20cfd64a0678d6e9e912763aca02f"
+    },
+    "suite_tests": {
+      "path": "research_pipeline/test_e2_r17_state_compiler_bridge_suite.py",
+      "sha256": "8cfb1d35c80dbe3809d23a6ea33ece17c8ae36424a75c07204ebbac0baa435cd"
+    },
+    "v4_analysis_tests": {
+      "path": "research_pipeline/test_e2_r17_state_compiler_bridge_v4_analysis.py",
+      "sha256": "de849ce89493f0db3af1a63c6e168d9a8ea4946b18e044b97ecfdc231fcc478c"
+    }
+  },
+  "cost_delta_vs_v3": {
+    "new_models": 0,
+    "new_tasks": 0,
+    "possible_actor_call_reduction_from_sha_aliasing": true,
+    "provider_calls": 0
+  },
+  "created_at_utc": "2026-09-03T13:26:34+00:00",
+  "next_gate": "FREEZE_V4_COMMIT_THEN_FRESH_INDEPENDENT_PREEXECUTION_REVIEW",
+  "orthogonal_questions": {
+    "Q1": "complete state-generation method effect / primary",
+    "Q2": "trajectory-conditioned typed diagnosis vs generic/scope canonicalization",
+    "Q3": "state-realization localization beyond within-state actor disagreement",
+    "Q4": "First-Fail / Search-Projection moderator; independent and parked secondary"
+  },
+  "primary_line": "STATE_GENERATION_BOTTLENECK",
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "secondary_line": "SEARCH_PROJECTION_MODERATOR_PARKED",
+  "status": "PASS_BRIDGE_V4_ORTHOGONAL_GATE_ZERO_PROVIDER_AUDIT",
+  "tests": {
+    "environment": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "failed": 0,
+    "passed": 28,
+    "total": 28
+  },
+  "v3_blockers_repaired": {
+    "D_U_replaced_by_commensurate_D_X_minus_D_A": true,
+    "G_F_AB_is_sensitivity_only": true,
+    "ff4_score_statement_corrected": true,
+    "identical_state_sha_collapses_causal_contrast_to_zero": true,
+    "primary_validation_estimand_is_first_free_realization_G_F_A": true,
+    "raw_generator_gate_separated_from_generic_control_interpretation": true,
+    "scope_k_declared_diagnosis_cardinality_side_channel": true
+  },
+  "v3_review": {
+    "brief_sha256": "fb52e02cfbc83441249ea704c29b0cd34abc4ce7a1f74390c80f41434c990057",
+    "model": "GPT-5.6 Sol",
+    "oracle_output_sha256": "a05cc1dd339ba094419bcae912018c12e7346f3b65f348a9a3b818636145a021",
+    "session": "e2-r17-bridge-v3-final",
+    "thinking": "Extra High",
+    "verdict": "REVISE_BEFORE_STAGE_A"
+  },
+  "v4_protocol": {
+    "path": "generated/e2-r17-state-compiler-bridge-protocol-v4-20260903.md",
+    "sha256": "060cf3f2e7084a7c59e6964ec475cda077cba1342a4e2d2450d8be8cfd4456e1"
+  }
+}

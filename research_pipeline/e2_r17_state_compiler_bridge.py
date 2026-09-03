@@ -226,6 +226,27 @@ _PRIMITIVE_BLOCKS: dict[RepairPrimitive, str] = {
 }
 
 
+def _rendered_primitives(diagnoses: Sequence[TypedDiagnosis]) -> tuple[RepairPrimitive, ...]:
+    """Return the exact nonredundant primitive blocks canonical compilation renders."""
+
+    order = (
+        RepairPrimitive.COMPLETE_WORKFLOW,
+        RepairPrimitive.VERIFY_OUTPUT,
+        RepairPrimitive.RECOVER_TOOL_ERROR,
+    )
+    requested = {primitive for diagnosis in diagnoses for primitive in diagnosis.required_repairs}
+    rendered = [primitive for primitive in order if primitive in requested]
+    if RepairPrimitive.COMPLETE_WORKFLOW in rendered and RepairPrimitive.VERIFY_OUTPUT in rendered:
+        rendered.remove(RepairPrimitive.VERIFY_OUTPUT)
+    return tuple(rendered)
+
+
+def rendered_primitive_count(diagnoses: Sequence[TypedDiagnosis]) -> int:
+    """Expose canonical repair-block cardinality without exposing primitive identity."""
+
+    return len(_rendered_primitives(diagnoses))
+
+
 def score_only_generic_diagnosis(selected_scores: Sequence[float]) -> TypedDiagnosis:
     """Build the strongest trajectory-blind generic diagnosis from score pattern only.
 
@@ -265,6 +286,80 @@ def score_only_generic_diagnosis(selected_scores: Sequence[float]) -> TypedDiagn
     )
 
 
+def scope_matched_generic_diagnosis(
+    selected_scores: Sequence[float],
+    *,
+    rendered_block_count: int,
+) -> TypedDiagnosis:
+    """Trajectory-text-blind, diagnosis-cardinality-informed generic falsifier.
+
+    The allowed side channel is only the number of nonredundant blocks the typed
+    compiler would render. Primitive identity and trajectory text remain hidden.
+    This control therefore tests benefit beyond repair cardinality/scope; it is
+    deliberately not described as evidence-independent.
+    """
+
+    if len(selected_scores) != 8:
+        raise ValueError("scope-matched generic control requires exactly eight selected scores")
+    scores = tuple(float(x) for x in selected_scores)
+    if any(x not in (0.0, 1.0) for x in scores):
+        raise ValueError("selected scores must be binary")
+    if rendered_block_count not in (0, 1, 2):
+        raise ValueError("v1 canonical compiler can render only 0, 1, or 2 repair blocks")
+    if 0.0 not in scores and rendered_block_count != 0:
+        raise ValueError("all-success evidence cannot receive nonzero scope under compiler v1")
+
+    if rendered_block_count == 0:
+        repairs: tuple[RepairPrimitive, ...] = ()
+    elif rendered_block_count == 1:
+        repairs = (RepairPrimitive.COMPLETE_WORKFLOW,)
+    else:
+        repairs = (
+            RepairPrimitive.COMPLETE_WORKFLOW,
+            RepairPrimitive.RECOVER_TOOL_ERROR,
+        )
+
+    source_sha = hashlib.sha256(
+        json.dumps(
+            {
+                "scores": scores,
+                "rendered_block_count": rendered_block_count,
+                "rule": "E2-R17-SCOPE-MATCHED-GENERIC-MAX-v1",
+            },
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+    return TypedDiagnosis(
+        schema_version="E2-R17-TYPED-DIAGNOSIS-v1",
+        failure_stage="SCOPE_MATCHED_GENERIC" if rendered_block_count else "NO_TYPED_REPAIR",
+        failed_invariants=("generic_scope_control",) if rendered_block_count else (),
+        observed_evidence=(
+            f"failure_count={scores.count(0.0)}",
+            f"rendered_block_count={rendered_block_count}",
+        ),
+        required_repairs=repairs,
+        source_signal_sha256=source_sha,
+    )
+
+
+def state_level_utility_contrast(
+    *,
+    treatment_skill_sha256: str,
+    control_skill_sha256: str,
+    treatment_utility: float,
+    control_utility: float,
+) -> float:
+    """Collapse byte-identical state treatments to an exact zero causal contrast."""
+
+    for digest in (treatment_skill_sha256, control_skill_sha256):
+        if len(digest) != 64 or any(char not in "0123456789abcdef" for char in digest):
+            raise ValueError("skill SHA must be a lowercase SHA-256 hex digest")
+    if treatment_skill_sha256 == control_skill_sha256:
+        return 0.0
+    return float(treatment_utility) - float(control_utility)
+
+
 def compile_skill(*, base_skill_markdown: str, diagnoses: Sequence[TypedDiagnosis]) -> CompiledState:
     """Compile a canonical persistent skill from typed diagnoses.
 
@@ -282,13 +377,7 @@ def compile_skill(*, base_skill_markdown: str, diagnoses: Sequence[TypedDiagnosi
     )
     requested = {primitive for diagnosis in diagnoses for primitive in diagnosis.required_repairs}
     primitives = tuple(p for p in order if p in requested)
-
-    # COMPLETE_WORKFLOW already contains reload+verification semantics, so a
-    # separate VERIFY_OUTPUT block would be redundant.  Canonicalization removes
-    # that duplicate surface while retaining the typed diagnosis receipt.
-    rendered_primitives = list(primitives)
-    if RepairPrimitive.COMPLETE_WORKFLOW in rendered_primitives and RepairPrimitive.VERIFY_OUTPUT in rendered_primitives:
-        rendered_primitives.remove(RepairPrimitive.VERIFY_OUTPUT)
+    rendered_primitives = _rendered_primitives(diagnoses)
 
     parts = [base_skill_markdown.rstrip()]
     for primitive in rendered_primitives:
@@ -314,6 +403,9 @@ __all__ = [
     "CompiledState",
     "extract_visible_signals",
     "diagnose",
+    "rendered_primitive_count",
     "score_only_generic_diagnosis",
+    "scope_matched_generic_diagnosis",
+    "state_level_utility_contrast",
     "compile_skill",
 ]
