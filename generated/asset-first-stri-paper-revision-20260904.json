@@ -173,7 +173,7 @@
       "no_overfull_boxes": true,
       "no_undefined_citations": true,
       "no_undefined_references": true,
-      "pdf_sha256": "f48f9cc3d5a9aa010576f713a17119d76fe21ec66d3c71ba48b789d9093782c3",
+      "pdf_sha256": "facd78eff150e60472e953868824f7463ac51b20570f9ac3595e4b3af8a58bc6",
       "pdf_text_sha256": "72fb4e562b6cf2551478315a1e1a50826310fe37e39fab4a73494ff349947918"
     },
     "source_compile_matches_active_pdf_text_and_pages": true,
@@ -185,8 +185,12 @@
     },
     "active_tex_matches_main_source": true,
     "visual_inspection": {
-      "status": "PENDING_MANUAL_VISUAL_REVIEW",
-      "pages": [],
+      "status": "PASS",
+      "pages": [
+        1,
+        5,
+        9
+      ],
       "scope": "layout/cropping/overlap/legibility only; no scientific authority"
     }
   },
