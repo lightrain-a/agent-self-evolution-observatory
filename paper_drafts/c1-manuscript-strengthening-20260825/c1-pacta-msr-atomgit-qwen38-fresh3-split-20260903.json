@@ -1,0 +1,34 @@
+{
+  "created_at_utc": "2026-09-03T07:44:57+00:00",
+  "payload_sha256": "07a3c49bae9ced595b1cc263445f57d61f690cbd77bf261bce1aa5e24b660325",
+  "pilot": [
+    "django__django-14034=>django__django-11333",
+    "pydata__xarray-6938=>pydata__xarray-4075",
+    "scikit-learn__scikit-learn-13142=>scikit-learn__scikit-learn-13328",
+    "pylint-dev__pylint-4970=>pylint-dev__pylint-7277",
+    "sympy__sympy-15875=>sympy__sympy-18763",
+    "psf__requests-6028=>psf__requests-1921",
+    "astropy__astropy-7336=>astropy__astropy-14508",
+    "matplotlib__matplotlib-23412=>matplotlib__matplotlib-22719"
+  ],
+  "pilot_salt": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH3-PILOT-v1",
+  "provider_calls": 0,
+  "random_ranking_pre_shadow": [
+    "pylint-dev__pylint-4970=>pylint-dev__pylint-7277",
+    "psf__requests-6028=>psf__requests-1921",
+    "django__django-14034=>django__django-11333",
+    "scikit-learn__scikit-learn-13142=>scikit-learn__scikit-learn-13328",
+    "astropy__astropy-7336=>astropy__astropy-14508",
+    "pydata__xarray-6938=>pydata__xarray-4075",
+    "sympy__sympy-15875=>sympy__sympy-18763",
+    "matplotlib__matplotlib-23412=>matplotlib__matplotlib-22719"
+  ],
+  "random_salt": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH3-RANDOM-v1",
+  "schema_version": 1,
+  "scientific_source_calls": 0,
+  "sealed": [
+    "pytest-dev__pytest-7571=>pytest-dev__pytest-7205",
+    "sphinx-doc__sphinx-9673=>sphinx-doc__sphinx-9591"
+  ],
+  "status": "FRESH3_PILOT_SPLIT_FROZEN_PRE_PROVIDER"
+}
