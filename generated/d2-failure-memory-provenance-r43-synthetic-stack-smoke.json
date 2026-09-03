@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R43-SYNTHETIC-STACK-SMOKE",
+  "recorded_date": "2026-08-29",
+  "role": "ZERO_BENCHMARK_OUTCOME_MEMRL_MEMOS_LOOPBACK_STACK_SMOKE",
+  "host": "workstation3090",
+  "script": {
+    "path": "/home/hdd/yutong/b1-memrl-r43-runtime/run_synthetic_stack_smoke.py",
+    "sha256": "7d8e871e75cb6608ac92b83166cb0c85fae5de35b86499d3433158441ab589a2"
+  },
+  "loopback": {
+    "base_url": "http://127.0.0.1:18143/v1",
+    "llm_model": "B1-Qwen2.5-7B-Instruct-r43",
+    "embedding_model": "B1-all-mpnet-base-v2-isometric3072-r43",
+    "chat_exact": true,
+    "chat_seconds": 0.23026084899902344,
+    "embedding_seconds": 0.051131248474121094,
+    "embedding_dimensions": [3072, 3072],
+    "embedding_norms": [1.0000000119731542, 1.0000000202863444]
+  },
+  "memory_service": {
+    "init_seconds": 1.5371158123016357,
+    "build_seconds": 2.12321400642395,
+    "retrieve_seconds": 0.028972864151000977,
+    "memory_id_sha256": "5188d8015da193b948705d835b6abad0653ae4fa396af68bf7e25e0bc707b3d1",
+    "retrieved_count": 1,
+    "built_memory_retrieved": true,
+    "checkpoint_visible_memories": 1,
+    "checkpoint_textual_memory_md5": "d978470f55b6a085b823e1fad77c23a4"
+  },
+  "runtime_freezes": {
+    "chunker_backend": "sentence",
+    "chunker_tokenizer_or_token_counter": "character",
+    "chunk_size": 500,
+    "chunk_overlap": 128,
+    "embedding_runtime_dimension": 3072,
+    "loopback_only": true
+  },
+  "config_sha256": "71696442f1f24985389d98a6dc10ad83036c4554408c1ecc6585d33305de47e7",
+  "pinned_memrl_revision": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+  "access_accounting": {
+    "llb_train_tasks_initialized": 0,
+    "llb_validation_tasks_initialized": 0,
+    "llb_evaluator_calls": 0,
+    "llb_ground_truth_calls": 0,
+    "confirmatory_outcomes_observed": 0,
+    "external_provider_calls": 0
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "support_only": true,
+  "wall_seconds": 7.07073187828064,
+  "receipt_sha256": "abd02364984657e25430b26fe111225566adc1ae9bfc658f14392f93b092133e"
+}

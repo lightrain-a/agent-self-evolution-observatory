@@ -1,0 +1,119 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R51-R45M1-SUPPORT-STOP-ADJUDICATION",
+  "recorded_date": "2026-09-01",
+  "status": "SUPPORT_STOP_NO_BEHAVIORAL_VERDICT",
+  "role": "FINAL_ADJUDICATION_OF_CURRENT_R45M1_REPLACEMENT_LINEAGE",
+  "execution_lineage": {
+    "replacement_host": "wyt@222.20.126.231",
+    "old_60_r45": "PERMANENTLY_QUARANTINED",
+    "source_execution_commit": "9482573728b424a4f365c9d9132af1b4d03bde6d",
+    "r46m4_qualification_code_commit": "e954f30bcb41131501513b8a7ca09e12c12c713f",
+    "attempt_count": 1
+  },
+  "source_build": {
+    "status": "SOURCE_BUILD_COMPLETE",
+    "completed": 128,
+    "selected": 128,
+    "success_count": 61,
+    "failure_count": 67,
+    "source_build_receipt_file_sha256": "da13080913baf4becb0c134c65cbbcc503436bff24552aec98085b4910e6b3d2",
+    "source_build_receipt_sha256": "875e82c825a7b3f96e65fcdd94cefe98c765b13e36fc6f6ea86592885eb95406",
+    "validation_opened": false,
+    "confirmatory_outcomes_observed": 0,
+    "external_provider_calls": 0
+  },
+  "r46_interface_history": {
+    "r46m1": {
+      "status": "QUALIFICATION_INTERFACE_FALSE_NEGATIVE",
+      "failure": "RuntimeError: final-source-checkpoint-empty",
+      "validation_treatment_outcomes_observed": 0
+    },
+    "r46m3": {
+      "status": "QUARANTINED_IMPLEMENTATION_INVALID",
+      "reason": "copy-on-write snapshot_meta retained absolute qdrant_dir/cube_dir pointers to the original source checkpoint",
+      "support_results_admissible": false,
+      "quarantine_path": "/data/wyt/b1-memrl-r45m1-execution/forensics/r46m3-invalid-absolute-snapshot-pointer-20260901/r46m3-output",
+      "validation_treatment_outcomes_observed": 0
+    },
+    "r46m4": {
+      "contract_file_sha256": "2b02a8b9c5ecfd89ecc2322470361655c5a5d67bf753a27e0caeb00edc7e1606",
+      "contract_receipt_sha256": "ef90fd4b19d626d381ff3931d2fb924c9fc72884a1345046701397a3f4ea557d",
+      "code_sha256": "97d24c3913632cfc1948592b55b441747189a17044ad40a5f2c257f638123554",
+      "status": "SUPPORT_STOP_SOURCE_QUALIFICATION_FAILED_NO_VALIDATION_TREATMENT",
+      "receipt_file_sha256": "41f97dd7fb20cb85baac0b03012552753d76d98300e9359e7e0372b926cc255c",
+      "receipt_sha256": "d10fa01c3a6a40b6e2a6ca6dcf15c856c0b1a8c0086d4c2c2dde2fe286f21769",
+      "frozen_retrieval_file_sha256": "8077851426c1e6281761d3653cd583a24f6f12dd2fc1f3aab59be71139551bb4",
+      "primary_clusters_with_eligible_frozen_retrieval": 31,
+      "primary_clusters_required": 32,
+      "all_32_primary_clusters_supported": false,
+      "utilization_clusters_with_eligible_frozen_retrieval": 7,
+      "utilization_clusters_total": 8,
+      "both_source_provenance_polarities_retrievable": true,
+      "missing_primary_support": [
+        {
+          "validation_task_id": "279",
+          "sim_pair_count": 0,
+          "selected_count": 0,
+          "eligible_retrieval_count": 0
+        }
+      ],
+      "missing_utilization_support": [
+        {
+          "validation_task_id": "483",
+          "sim_pair_count": 0,
+          "selected_count": 0,
+          "eligible_retrieval_count": 0
+        }
+      ],
+      "validation_environment_resets": 0,
+      "validation_evaluator_calls": 0,
+      "validation_treatment_outcomes_observed": 0
+    }
+  },
+  "source_snapshot_integrity_after_r46m4": {
+    "snapshot_meta_sha256": "e8a01d077aadbd232adeca4141cb87c2153a82a7cf64a2a85ec0a3133f18c31d",
+    "textual_memory_sha256": "35dbc45d7a59f88cc6820f0c2b2ef88a1d0587ab6a4350cf936d9310483fe00d",
+    "qdrant_meta_sha256": "5b1ca63524cf98a1b56611ad822ded4bfc294d5c04fb817c55138e41fb281836",
+    "live_qdrant_storage_sha256": "60a6299d22bd19e3700844497434125722853ff739fddb07c62b1d6a8e2baebb",
+    "original_snapshot_byte_stable_across_r46m4": true
+  },
+  "downstream_gate": {
+    "R47M2_utilization": "NOT_EXECUTED",
+    "R47M2_reason": "strict R46 source qualification did not pass",
+    "R48_A_B": "NOT_EXECUTED",
+    "R48_conditional_authority_file_sha256": "f9b3b531106d71ab7e4d4d23e8fea296f94239f621a0e82b97412c57beae7cd9",
+    "R48_conditional_authority_receipt_sha256": "99838fbbc7c9dfa2521a9c10a93545d69ba5c7fa4a72ca2d41fd556963ab761f",
+    "R48_condition_R46_strict_pass": false,
+    "R48_condition_R47_utilization_pass": false,
+    "C_D": "NOT_EXECUTED",
+    "C_D_reason": "executable PSMG controller remains underdetermined and primary source-support gate already failed"
+  },
+  "scientific_interpretation": {
+    "provenance_only_effect": "NOT_IDENTIFIED",
+    "A_B_behavioral_verdict": "NOT_IDENTIFIED",
+    "PSMG_efficacy": "NOT_IDENTIFIED",
+    "qualified_null": false,
+    "support_failure_is_null": false,
+    "claim_update": "NO_BEHAVIORAL_CLAIM_UPDATE",
+    "allowed_statement": "The fresh MemRL replacement source build completed, but the preregistered source-support gate failed because only 31/32 primary clusters retained eligible frozen retrieval; no validation treatment outcome was opened."
+  },
+  "hard_stop": {
+    "threshold_rescue_allowed": false,
+    "unit_replacement_allowed": false,
+    "retrieval_rerun_to_seek_support_allowed": false,
+    "R47_execution_allowed": false,
+    "A_B_execution_allowed": false,
+    "C_D_execution_allowed": false,
+    "historical_pooling_allowed": false,
+    "new_scientific_experiment_requires_new_prospective_contract": true
+  },
+  "cleanup": {
+    "loopback_server": "STOPPED",
+    "loopback_port_18143": "CLOSED",
+    "scientific_osinteraction_containers_remaining": 0,
+    "gpu_scientific_processes_remaining": 0
+  },
+  "receipt_sha256": "3f332deebf3aae910b08b049a48d9f7728a3579feecbd00e2d16db02eb49dc99"
+}

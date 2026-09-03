@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-LOOPBACK-BINDING-REPAIR-20260901",
+  "recorded_date": "2026-09-01",
+  "status": "PREEXPOSURE_INFRASTRUCTURE_BINDING_REPAIR_PASS",
+  "role": "VERSIONED_INFRASTRUCTURE_ONLY_LOOPBACK_BINDING_CORRECTION",
+  "problem": {
+    "v1_manifest_bound_loopback_server_path": "research_pipeline/failure_memory_memrl_local_openai_server_r43.py",
+    "v1_manifest_bound_loopback_server_sha256": "fd43b687a094de3ca2c5b1bdcabfbc39f7dfba324ccf8f1600615969698b5e8b",
+    "qualified_host_231_loopback_server_path": "research_pipeline/failure_memory_memrl_local_openai_server_r45m1.py",
+    "qualified_host_231_loopback_server_sha256": "f2b4b49b179856cdd02d244fba81ab7c558e747954170285da0eef6119336d92",
+    "classification": "execution-artifact binding mismatch discovered before source exposure"
+  },
+  "scientific_boundary": {
+    "model_ids_changed": false,
+    "model_bytes_changed": false,
+    "embedding_bytes_changed": false,
+    "temperature_changed": false,
+    "max_tokens_changed": false,
+    "prompt_changed": false,
+    "parser_changed": false,
+    "retrieval_changed": false,
+    "arm_semantics_changed": false,
+    "selected_units_changed": false
+  },
+  "preexposure_accounting": {
+    "scientific_source_units_executed": 0,
+    "validation_units_opened": 0,
+    "confirmatory_outcomes_observed": 0,
+    "partial_effect_inspected": false
+  },
+  "parents": {
+    "v1_manifest_sha256": "4d5ae64e23716764c329ededa2fb26620d2bd7d8fd4127ab23f98aa3906a75b7",
+    "v1_authority_sha256": "dd16a10460d6516b281d29e5c391b6986f36938be16ca8461de90300cdaaf7b4",
+    "q5v2_pass_sha256": "f5a94150d73a9a3a610d0f6f446375b10ee4d1204f9f9130f0665cb8f77060b4",
+    "transfer_repair_sha256": "2ada206d0a07b503b9dafce360b0157d4dcef80b68f86ab83ae29e3a2b0ab365"
+  },
+  "receipt_sha256": "61abffe61fca1793262d1ae00b793a6c650cfaf3a43626d09d6f50751fdebeec"
+}

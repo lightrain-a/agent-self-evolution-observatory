@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "role": "R60_LLAMA_FRESH_UTILIZATION_QUALIFICATION_ADJUDICATION",
+  "status": "UTILIZATION_QUALIFICATION_PASS",
+  "complete_units": 8,
+  "u1_specific_first_action_units": 8,
+  "u2_vs_u0_divergence_units": 5,
+  "pass": true,
+  "primary_32_clusters_authorized_next": true,
+  "terminal_success_used_for_promotion": false,
+  "unit_rows": [
+    {
+      "task_id": "110",
+      "complete": true,
+      "u1_specific_first_action": true,
+      "u2_vs_u0_divergence": true,
+      "terminal_success_diagnostic": {
+        "U0_no_memory": true,
+        "U1_true_memory": true,
+        "U2_null_memory": true,
+        "U3_reversed_memory": false,
+        "U4_shuffled_memory": true
+      }
+    },
+    {
+      "task_id": "438",
+      "complete": true,
+      "u1_specific_first_action": true,
+      "u2_vs_u0_divergence": true,
+      "terminal_success_diagnostic": {
+        "U0_no_memory": true,
+        "U1_true_memory": false,
+        "U2_null_memory": true,
+        "U3_reversed_memory": false,
+        "U4_shuffled_memory": true
+      }
+    },
+    {
+      "task_id": "456",
+      "complete": true,
+      "u1_specific_first_action": true,
+      "u2_vs_u0_divergence": true,
+      "terminal_success_diagnostic": {
+        "U0_no_memory": false,
+        "U1_true_memory": false,
+        "U2_null_memory": false,
+        "U3_reversed_memory": false,
+        "U4_shuffled_memory": false
+      }
+    },
+    {
+      "task_id": "258",
+      "complete": true,
+      "u1_specific_first_action": true,
+      "u2_vs_u0_divergence": false,
+      "terminal_success_diagnostic": {
+        "U0_no_memory": false,
+        "U1_true_memory": false,
+        "U2_null_memory": false,
+        "U3_reversed_memory": false,
+        "U4_shuffled_memory": false
+      }
+    },
+    {
+      "task_id": "427",
+      "complete": true,
+      "u1_specific_first_action": true,
+      "u2_vs_u0_divergence": true,
+      "terminal_success_diagnostic": {
+        "U0_no_memory": true,
+        "U1_true_memory": true,
+        "U2_null_memory": true,
+        "U3_reversed_memory": true,
+        "U4_shuffled_memory": true
+      }
+    },
+    {
+      "task_id": "183",
+      "complete": true,
+      "u1_specific_first_action": true,
+      "u2_vs_u0_divergence": true,
+      "terminal_success_diagnostic": {
+        "U0_no_memory": false,
+        "U1_true_memory": false,
+        "U2_null_memory": false,
+        "U3_reversed_memory": false,
+        "U4_shuffled_memory": true
+      }
+    },
+    {
+      "task_id": "388",
+      "complete": true,
+      "u1_specific_first_action": true,
+      "u2_vs_u0_divergence": false,
+      "terminal_success_diagnostic": {
+        "U0_no_memory": false,
+        "U1_true_memory": false,
+        "U2_null_memory": false,
+        "U3_reversed_memory": false,
+        "U4_shuffled_memory": false
+      }
+    },
+    {
+      "task_id": "16",
+      "complete": true,
+      "u1_specific_first_action": true,
+      "u2_vs_u0_divergence": false,
+      "terminal_success_diagnostic": {
+        "U0_no_memory": true,
+        "U1_true_memory": true,
+        "U2_null_memory": true,
+        "U3_reversed_memory": false,
+        "U4_shuffled_memory": true
+      }
+    }
+  ],
+  "scientific_authority": false,
+  "manifest_receipt_sha256": "618ca71ea4052efc5636ee8e1b8c17b801db6944558131036c35015276880e4c",
+  "authorization_receipt_sha256": "3137a722d33a279923c50242f90d1d33a24dfff05f97f313f1482c5de33aabce",
+  "r54v2_qualification_receipt_sha256": "032c79998165700d5405d2d56bd30cf2dfe044b9f9ec97d2e51461a429514c42",
+  "selection_receipt_sha256": "7d75b4d79a7b83ad8e3d452d4a232d66c1137acc91484e51356160a95a385776",
+  "completed_arm_runs": 40,
+  "external_provider_calls": 0,
+  "primary_confirmatory_outcomes_observed": 0,
+  "receipt_sha256": "9564f43c668857fbf2cdd256b2be8062e0e023f4622c84c3aaf4a74332b91f87"
+}

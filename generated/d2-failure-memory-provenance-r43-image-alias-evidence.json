@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R43-IMAGE-ALIAS-EVIDENCE",
+  "recorded_date": "2026-08-29",
+  "role": "ZERO_OUTCOME_PINNED_LLB_IMAGE_ALIAS_REALIZATION",
+  "host": "workstation3090",
+  "source_tag": "ubuntu2004_cuda1141_ssh:latest",
+  "required_pinned_llb_tag": "local-os/default:latest",
+  "source_image_id": "sha256:a42dc29f8d95292f261a309a21ba21ceff3a9edef516c54d40e5e9b51f253f1a",
+  "alias_image_id": "sha256:a42dc29f8d95292f261a309a21ba21ceff3a9edef516c54d40e5e9b51f253f1a",
+  "same_content_identity": true,
+  "pinned_source_modified": false,
+  "access_accounting": {
+    "llb_train_tasks_initialized": 0,
+    "llb_validation_tasks_initialized": 0,
+    "llb_evaluator_calls": 0,
+    "confirmatory_outcomes_observed": 0,
+    "external_provider_calls": 0
+  },
+  "scientific_authority": false,
+  "experiment_authority": false
+}
