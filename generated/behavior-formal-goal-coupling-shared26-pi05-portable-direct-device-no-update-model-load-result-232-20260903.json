@@ -1,0 +1,103 @@
+{
+  "authority_path": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-shared26-pi05-portable-direct-device-no-update-model-load-authority-232-20260903.json",
+  "authority_sha256": "9475fc4e64637117b61d2e45b00c08054d38c406adfd56c16b1f0567c10ac74c",
+  "backward_pass_executed": false,
+  "base_asset_receipt": "/data/wyt/formal-goal-pi05-resource-repair-20260902/generated/behavior-formal-goal-coupling-pi05-base-transport-repair1-result-20260902.json",
+  "base_asset_receipt_sha256": "8e0f977e0641960ee3e082a19a57f52f994a817bbf981cbb2f7007ea3104a4ed",
+  "base_bytes_rehashed": 12441721931,
+  "base_object_count_rehashed": 20,
+  "canonical_69_child_commit": "0d05f46ef40a6a0ff0a9b61f078835a71fececde",
+  "checkpoint_restore_adapter": "OpenPI restore_params(..., restore_type=jax.Array) with one-device replicated sharding; no np.ndarray released-checkpoint staging",
+  "checkpoint_written": false,
+  "config_name": "pi05_b1k_shared26_frozen",
+  "dataset_accessed": false,
+  "direct_device_loader_audit": {
+    "all_restored_leaves_are_jax_array": true,
+    "restore_type": "jax.Array",
+    "restored_devices": [
+      "NamedSharding(mesh=Mesh('x': 1, axis_types=(Auto,)), spec=PartitionSpec(), memory_kind=device)"
+    ],
+    "restored_leaf_count": 51
+  },
+  "error": null,
+  "exp_name": "shared26-seed42-run1",
+  "formal_training_topology_authorized": false,
+  "forward_pass_executed": false,
+  "fsdp_devices": 1,
+  "generated_at": "2026-09-03T05:20:52.203494+00:00",
+  "global_batch_size": 64,
+  "gpu_after_ready_or_error": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 73499,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 17
+      }
+    ]
+  },
+  "gpu_before": {
+    "gpus": [
+      {
+        "index": 0,
+        "memory_total_mib": 81920,
+        "memory_used_mib": 14,
+        "name": "NVIDIA A100-SXM4-80GB",
+        "utilization_gpu_percent": 0
+      }
+    ]
+  },
+  "gpu_used": true,
+  "host_memory_after_ready_or_error": {
+    "MemAvailable_kib": 19288756,
+    "MemFree_kib": 14882400,
+    "MemTotal_kib": 65664112,
+    "SwapFree_kib": 5975268,
+    "SwapTotal_kib": 9765884,
+    "process_rss_kib": 5797528,
+    "user_slice_memory_current_bytes": 6342819840
+  },
+  "host_memory_before": {
+    "MemAvailable_kib": 25996680,
+    "MemFree_kib": 1014044,
+    "MemTotal_kib": 65664112,
+    "SwapFree_kib": 6060152,
+    "SwapTotal_kib": 9765884,
+    "process_rss_kib": 20464,
+    "user_slice_memory_current_bytes": 19498504192
+  },
+  "initialized_step": 0,
+  "local_checkpoint_root": "/data/wyt/formal-goal-pi05-base-params-v1",
+  "loss_computed": false,
+  "model_checkpoint_weight_downloaded": true,
+  "model_load_attempted": true,
+  "model_loaded": true,
+  "next_gate": "STREAMING_ACCUM8X8_PORTABLE_DIRECT_DEVICE_REPAIR_AUTHORITY",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "openpi_child_root": "/data/wyt/formal-goal-policy-contracts-20260828/openpi",
+  "optimizer_update": false,
+  "policy_outcomes_read": false,
+  "policy_rollouts_started": false,
+  "portable_openpi_changed_paths": [
+    "src/openpi/training/config.py"
+  ],
+  "portable_openpi_config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+  "portable_openpi_parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+  "qualification_devices": [
+    "cuda:0"
+  ],
+  "qualification_visible_device_count": 1,
+  "resource_scope": {
+    "cgroup": "/sys/fs/cgroup/user.slice/user-1006.slice/user@1006.service/app.slice/pi05-portable-direct-device-no-update-model-load-232-20260903.service",
+    "cpu_affinity": "0-63",
+    "memory_max_bytes": 21474836480,
+    "memory_swap_max_bytes": 0
+  },
+  "schema_version": "behavior-formal-goal-coupling-pi05-portable-direct-device-no-update-model-load-result-v1",
+  "scientific_authority": false,
+  "status": "PI05_PORTABLE_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_PASS",
+  "tokenizer_executed": false,
+  "train_state_ready": true,
+  "training_started": false
+}
