@@ -210,6 +210,11 @@ F0_UPTAKE_ROOT_CAUSE = (
 F0_R1_PROPOSAL = (
     GENERATED / "agent-constraint-externality-f0-r1-source-failure-qualification-proposal-20260903.json"
 )
+SQ0_STATIC_CONTRACT = GENERATED / "agent-constraint-externality-sq0-target-challenge-v1-contract-20260903.json"
+SQ0_STATIC_QUALIFICATION = GENERATED / "agent-constraint-externality-sq0-target-challenge-v1-static-qualification-20260903.json"
+SQ0_HUMAN_AUTHORIZATION = GENERATED / "agent-constraint-externality-sq0-human-authorization-20260903.json"
+SQ0_MIMO25PRO_Q1 = GENERATED / "agent-constraint-externality-sq0-mimo25pro-mcp-q1-predispatch-20260903.json"
+SQ0_EXECUTION_CONTRACT = GENERATED / "agent-constraint-externality-sq0-mimo25pro-execution-contract-v1-20260903.json"
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -750,6 +755,54 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
                 raise PreflightError("F0-R1 proposal crossed proposal-only authority boundary.")
         f0_uptake_failed = True
 
+    sq0_execution_authorized = False
+    sq0_static_contract = read_json(SQ0_STATIC_CONTRACT) if SQ0_STATIC_CONTRACT.is_file() else {}
+    sq0_static_qualification = read_json(SQ0_STATIC_QUALIFICATION) if SQ0_STATIC_QUALIFICATION.is_file() else {}
+    sq0_human_authorization = read_json(SQ0_HUMAN_AUTHORIZATION) if SQ0_HUMAN_AUTHORIZATION.is_file() else {}
+    sq0_q1 = read_json(SQ0_MIMO25PRO_Q1) if SQ0_MIMO25PRO_Q1.is_file() else {}
+    sq0_execution_contract = read_json(SQ0_EXECUTION_CONTRACT) if SQ0_EXECUTION_CONTRACT.is_file() else {}
+    if any((sq0_static_contract, sq0_static_qualification, sq0_human_authorization, sq0_q1, sq0_execution_contract)):
+        if not all((sq0_static_contract, sq0_static_qualification, sq0_human_authorization, sq0_q1, sq0_execution_contract)):
+            raise PreflightError("SQ0 authorization artifact set is incomplete.")
+        if not f0_uptake_failed:
+            raise PreflightError("SQ0 execution requires frozen current-F0 uptake failure.")
+        for label, payload in (
+            ("SQ0 static contract", sq0_static_contract),
+            ("SQ0 static qualification", sq0_static_qualification),
+            ("SQ0 human authorization", sq0_human_authorization),
+            ("SQ0 MCP Q1", sq0_q1),
+            ("SQ0 execution contract", sq0_execution_contract),
+        ):
+            if payload.get("object_id") != OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            claimed = payload.get("content_sha256")
+            unsigned = dict(payload); unsigned.pop("content_sha256", None)
+            if claimed != digest(unsigned):
+                raise PreflightError(f"{label} content hash mismatch.")
+        if sq0_static_contract.get("status") != "SQ0_TARGET_CHALLENGE_V1_STATIC_DESIGN_READY":
+            raise PreflightError("SQ0 static design status mismatch.")
+        if sq0_static_contract.get("case_count") != 12 or sq0_static_contract.get("confirmatory_reuse") is not False:
+            raise PreflightError("SQ0 static design cardinality/reuse boundary drifted.")
+        if sq0_static_qualification.get("status") != "SQ0_TARGET_CHALLENGE_V1_PUBLIC_REACHABILITY_PASS":
+            raise PreflightError("SQ0 public reachability status mismatch.")
+        if sq0_static_qualification.get("provider_requests") != 0 or sq0_static_qualification.get("minimum_headroom", 0) < 6:
+            raise PreflightError("SQ0 static qualification is not zero-request/headroom qualified.")
+        if sq0_human_authorization.get("status") != "USER_AUTHORIZED_SQ0_TARGET_FAILURE_QUALIFICATION_AFTER_F0_UPTAKE_FAIL":
+            raise PreflightError("SQ0 human authorization status mismatch.")
+        if sq0_human_authorization.get("authority", {}).get("sq0_execution") is not True:
+            raise PreflightError("SQ0 authorization did not open SQ0 execution.")
+        if any(sq0_human_authorization.get("authority", {}).get(key) for key in ("f0_r1", "probe", "p1", "toolsandbox", "appworld_ul", "paper_claim")):
+            raise PreflightError("SQ0 human authorization opened forbidden downstream authority.")
+        if sq0_q1.get("status") != "SQ0_MIMO25PRO_MCP_PREDISPATCH_PASS" or sq0_q1.get("codingplan_model_requests") != 0 or sq0_q1.get("scientific_dispatch_sent") is not False:
+            raise PreflightError("SQ0 Q1 crossed zero-request predispatch boundary.")
+        if sq0_execution_contract.get("status") != "SQ0_MIMO25PRO_V1_EXECUTION_AUTHORIZED":
+            raise PreflightError("SQ0 execution contract status mismatch.")
+        if sq0_execution_contract.get("panel", {}).get("case_count") != 12 or sq0_execution_contract.get("panel", {}).get("confirmatory_reuse") is not False:
+            raise PreflightError("SQ0 execution panel/reuse boundary drifted.")
+        if sq0_execution_contract.get("authority", {}).get("sq0_execution") is not True or any(sq0_execution_contract.get("authority", {}).get(key) for key in ("f0_r1", "probe", "p1", "toolsandbox", "appworld_ul", "paper_claim")):
+            raise PreflightError("SQ0 execution contract authority boundary drifted.")
+        sq0_execution_authorized = True
+
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
         capability_result = read_json(CAPABILITY_R5_PARTIAL_RESULT)
@@ -1050,6 +1103,10 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif sq0_execution_authorized:
+        readiness_status = "SQ0_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
+        blocker = None
+        next_action = "RUN_SQ0_MIMO25PRO_V1"
     elif f0_uptake_failed:
         readiness_status = "F0_UPDATE_UPTAKE_FAIL"
         blocker = "All eight frozen target-isolated F0 source episodes succeeded, so no repair note could be generated and the preregistered minimum of six eligible repair families was not met."
@@ -1382,8 +1439,17 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             if F0_R1_PROPOSAL.is_file()
             else None
         ),
-        "f0_r1_sq0_execution_authorized": bool(f0_r1_proposal.get("authority", {}).get("sq0_execution", False)),
-        "f0_r1_execution_authorized": bool(f0_r1_proposal.get("authority", {}).get("f0_r1_execution", False)),
+        "sq0_static_contract_status": sq0_static_contract.get("status"),
+        "sq0_static_qualification_status": sq0_static_qualification.get("status"),
+        "sq0_static_max_public_tool_calls": sq0_static_qualification.get("max_public_tool_calls"),
+        "sq0_static_minimum_headroom": sq0_static_qualification.get("minimum_headroom"),
+        "sq0_human_authorization_status": sq0_human_authorization.get("status"),
+        "sq0_mcp_q1_status": sq0_q1.get("status"),
+        "sq0_mcp_q1_model_requests": sq0_q1.get("codingplan_model_requests"),
+        "sq0_execution_contract_status": sq0_execution_contract.get("status"),
+        "sq0_execution_authorized": sq0_execution_authorized,
+        "f0_r1_sq0_execution_authorized": sq0_execution_authorized,
+        "f0_r1_execution_authorized": False,
         "f0_source_target_success_count": int(f0_source_closeout.get("source_target_success_count", 0)),
         "f0_source_target_failure_count": int(f0_source_closeout.get("source_target_failure_count", 0)),
         "f0_eligible_repair_family_count": int(f0_source_closeout.get("eligible_repair_family_count", 0)),
@@ -1391,7 +1457,9 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "f0_source_appworld_tool_call_total": int(f0_source_closeout.get("appworld_tool_call_total", 0)),
         "f0_probe_episode_count": int(f0_source_closeout.get("probe_episode_count", 0)),
         "capability_model_selection_state": (
-            "SELECTED_MIMO25PRO_F0_UPDATE_UPTAKE_FAIL"
+            "SELECTED_MIMO25PRO_SQ0_AUTHORIZED_AFTER_F0_UPTAKE_FAIL"
+            if sq0_execution_authorized
+            else "SELECTED_MIMO25PRO_F0_UPDATE_UPTAKE_FAIL"
             if f0_uptake_failed
             else "SELECTED_MIMO25PRO_F0_SOURCE_AUTHORIZED"
             if f0_source_authorized
@@ -1512,6 +1580,8 @@ def main() -> None:
         F0_MIMO25PRO_Q1, F0_MIMO25PRO_SOURCE_CONTRACT,
         F0_REPAIRS_MANIFEST, F0_ADJUDICATION, F0_SOURCE_CLOSEOUT,
         F0_UPTAKE_ROOT_CAUSE, F0_R1_PROPOSAL,
+        SQ0_STATIC_CONTRACT, SQ0_STATIC_QUALIFICATION, SQ0_HUMAN_AUTHORIZATION,
+        SQ0_MIMO25PRO_Q1, SQ0_EXECUTION_CONTRACT,
     ):
         if not path.is_file():
             continue
