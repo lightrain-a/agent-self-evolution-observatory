@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R64-PSMG-CALIBRATION-AUTHORITY",
+  "recorded_date": "2026-09-03",
+  "status": "R64_PSMG_CALIBRATION_EXECUTION_AUTHORITY_FROZEN_PRE_CALIBRATION_OUTCOME",
+  "bindings": {
+    "runtime_manifest_file_sha256": "cc2200f898175963e3d0762c370f6d83dad4d572850f88618f24b15f891ca38b",
+    "program_contract_file_sha256": "fd307d582fad58906064c9669405d2a1742fd3b7254e1808cf93ac9afc8dbe9c",
+    "program_contract_receipt_sha256": "fa9586b5bf7dd75b72f0948dafe577f9065ce8ab7795efaa423aa12385ace5d8",
+    "r54v2_receipt_file_sha256": "650e145a491f09555e40aa8c81c8598d8e1e2dc9febd906857fb8a3202f3aca3",
+    "frozen_retrieval_file_sha256": "fc906765f2f94b053996bef2d7a085b6a2534b0922f2929da253390d3b855b72",
+    "source_receipt_file_sha256": "64b64cb2ca170482fafe4bb89db96071e896d1a952dc6c9a8002093849a000b0",
+    "common_module_sha256": "0ac9d407686ba6a47782151161631703deb307dbb64aad75585f4b8aec167b82",
+    "runner_sha256": "d034efab353cdf00f28f6f5565f5009c8c7ec6147c8e3ce6653cb6e196fb3b9f"
+  },
+  "scope": {
+    "exact_clusters": 24,
+    "arms": [
+      "N_no_memory",
+      "M_content_only"
+    ],
+    "exact_arm_runs": 48,
+    "attempts": 1
+  },
+  "authority": {
+    "calibration_execution": true,
+    "test_execution": false,
+    "reserve_execution": false,
+    "raw_provenance_executor_visible": false,
+    "external_provider_spend": false
+  },
+  "scientific_authority": false,
+  "receipt_sha256": "992de14167c1ce202f8627b69fb3fa534d19da2ea32142974aa734eae6732c5d"
+}

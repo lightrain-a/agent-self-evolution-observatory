@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R65-PSMG-TEST-CONDITIONAL-AUTHORITY",
+  "recorded_date": "2026-09-03",
+  "status": "R65_PSMG_TEST_CONDITIONAL_AUTHORITY_FROZEN_PRE_CALIBRATION_OUTCOME",
+  "bindings": {
+    "runtime_manifest_file_sha256": "cc2200f898175963e3d0762c370f6d83dad4d572850f88618f24b15f891ca38b",
+    "program_contract_file_sha256": "fd307d582fad58906064c9669405d2a1742fd3b7254e1808cf93ac9afc8dbe9c",
+    "program_contract_receipt_sha256": "fa9586b5bf7dd75b72f0948dafe577f9065ce8ab7795efaa423aa12385ace5d8",
+    "r64_authority_file_sha256": "a3b140d73f664e991b48976f8b4ce341ca2bdd168089a0283fef05b6cf32c39a",
+    "r64_authority_receipt_sha256": "992de14167c1ce202f8627b69fb3fa534d19da2ea32142974aa734eae6732c5d",
+    "r54v2_receipt_file_sha256": "650e145a491f09555e40aa8c81c8598d8e1e2dc9febd906857fb8a3202f3aca3",
+    "frozen_retrieval_file_sha256": "fc906765f2f94b053996bef2d7a085b6a2534b0922f2929da253390d3b855b72",
+    "source_receipt_file_sha256": "64b64cb2ca170482fafe4bb89db96071e896d1a952dc6c9a8002093849a000b0",
+    "common_module_sha256": "0ac9d407686ba6a47782151161631703deb307dbb64aad75585f4b8aec167b82",
+    "runner_sha256": "c9a1d8aef560f73f2ea1afa32bf77731664bb3ef284f30da85c8de99286bae97"
+  },
+  "conditional_on": "R64 complete 48/48, route-support PASS, deterministic model and all 32 test decisions frozen before first R65 outcome",
+  "scope": {
+    "exact_clusters": 32,
+    "arms": [
+      "N_no_memory",
+      "M_content_only"
+    ],
+    "exact_arm_runs": 64,
+    "attempts": 1
+  },
+  "authority": {
+    "calibration_execution": false,
+    "test_execution_conditionally_after_R64_pass": true,
+    "reserve_execution": false,
+    "raw_provenance_executor_visible": false,
+    "external_provider_spend": false
+  },
+  "hard_limits": {
+    "no_second_test_run": true,
+    "no_unit_replacement": true,
+    "no_model_refit_after_test_exposure": true,
+    "no_threshold_or_lambda_change": true,
+    "partial_effect_inspection": false
+  },
+  "scientific_authority": false,
+  "receipt_sha256": "530008cb23342a17c238976feccfd0b2dcdd8c514a003427a917ec094af95fd3"
+}
