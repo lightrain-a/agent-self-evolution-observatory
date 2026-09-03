@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH2-SOURCE-T0-20260903",
+  "status": "FRESH2_ATOMGIT_MSR_MULTISTEP_SMOKE_PASS",
+  "source_execution_git_sha": "b687bd37c2402531523d22004c4fbebfc4a3b8b6",
+  "prelaunch_git_sha": "f2edaca42efacb68f4e1681c16f6ee2841e36137",
+  "smoke_result_sha256": "f4f1ba04df5022e27765bf2adf683cdba7445a3e8a8f3732b23f88d4c3aedefc",
+  "smoke_run_sha256": "c1e47fd8083d7e59f47dcf079b9da392069f48538393a99a739ef5dc8b7e2e7a",
+  "provider_calls": 2,
+  "terminal_status": "Submitted",
+  "marker_file_action": true,
+  "marker_observation_seen": true,
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "probe_executions": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "authority": "OPEN_FRESH2_SOURCE_ACQUISITION_ONLY",
+  "source_gate": "all 10 provenance-valid; any consumed-invalid source or consumed incomplete epoch retires the entire fresh2 pool",
+  "next": "Start the frozen exactly-once ten-source acquisition. Do not execute writer, binder, probe, shadow, gate, final, or future tasks."
+}
