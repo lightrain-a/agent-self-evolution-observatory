@@ -1,0 +1,55 @@
+{
+  "artifact_type": "e2-r17-semantic-transfer-v3-stage-a-r2-fresh-identity-readiness",
+  "authority": {
+    "identity_provider_call": false,
+    "mint_stage_a_authorization": false,
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false
+  },
+  "contract_path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r2-20260903.json",
+  "contract_sha256": "f5382c552f2e6644e4cbda408510119664a8c6f8502628586c9ff5583abd1234",
+  "created_at_utc": "2026-09-03T12:40:16+00:00",
+  "frozen_r2_bound_code_still_matches_contract": {
+    "actor": true,
+    "authorization_minter": true,
+    "control_tests": true,
+    "equal_dose_adjudicator": true,
+    "preflight": true,
+    "stage_a_runner": true,
+    "stage_b_order_helper": true
+  },
+  "future_commands_not_executed": [
+    "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python scripts/qualify_e2_r17_plan_models_current.py --env-file /home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env --output generated/e2-r17-semantic-transfer-v3-stage-a-r2-fresh-deepseek-identity-qualification-20260903.json --models deepseek-v4-pro --max-output-tokens 256 --thinking disabled",
+    "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python scripts/adjudicate_e2_r17_semantic_transfer_v3_model_identity.py --contract generated/e2-r17-semantic-transfer-v3-stage-a-contract-r2-20260903.json --qualification generated/e2-r17-semantic-transfer-v3-stage-a-r2-fresh-deepseek-identity-qualification-20260903.json --output generated/e2-r17-semantic-transfer-v3-stage-a-r2-fresh-model-identity-adjudication-20260903.json",
+    "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python scripts/authorize_e2_r17_semantic_transfer_v3_stage_a.py --contract generated/e2-r17-semantic-transfer-v3-stage-a-contract-r2-20260903.json --preflight generated/e2-r17-semantic-transfer-v3-stage-a-preflight-r2-20260903.json --review generated/e2-r17-semantic-transfer-v3-stage-a-gpt56-web-review-r2-20260903.json --fresh-identity generated/e2-r17-semantic-transfer-v3-stage-a-r2-fresh-model-identity-adjudication-20260903.json --output generated/e2-r17-semantic-transfer-v3-stage-a-authorization-r2-20260903.json"
+  ],
+  "identity_adapter_path": "scripts/adjudicate_e2_r17_semantic_transfer_v3_model_identity.py",
+  "identity_adapter_sha256": "375f765798aadd4ac2a5838af3d97e57f89f9f11af73b078575b6459e7c9be76",
+  "identity_adapter_test_path": "research_pipeline/test_e2_r17_semantic_transfer_v3_identity_adapter.py",
+  "identity_adapter_test_sha256": "4b0cd3eaddc88485759f1fb257e60d56d14516443cac6787aad6b700f1a1001b",
+  "identity_adapter_tests": {
+    "failed": 0,
+    "passed": 4
+  },
+  "identity_call_plan": {
+    "adjudication_output": "generated/e2-r17-semantic-transfer-v3-stage-a-r2-fresh-model-identity-adjudication-20260903.json",
+    "expected_generation_calls": 1,
+    "expected_resolved_model": "deepseek-v4-pro-ga-260813",
+    "kimi_identity_call_required": false,
+    "max_output_tokens": 256,
+    "models": [
+      "deepseek-v4-pro"
+    ],
+    "provider_retry_limit": 0,
+    "qualification_output": "generated/e2-r17-semantic-transfer-v3-stage-a-r2-fresh-deepseek-identity-qualification-20260903.json",
+    "qualification_tool": "scripts/qualify_e2_r17_plan_models_current.py",
+    "thinking": "disabled"
+  },
+  "independent_review_receipt": "generated/e2-r17-semantic-transfer-v3-stage-a-gpt56-web-review-r2-20260903.json",
+  "independent_review_verdict": "PASS_TO_SEPARATE_STAGE_A_AUTHORIZATION",
+  "provider_calls": 0,
+  "schema_version": "1.0",
+  "scientific_execution": false,
+  "status": "READY_FOR_ONE_FRESH_DEEPSEEK_IDENTITY_CALL_BUT_NOT_AUTHORIZED_TO_EXECUTE",
+  "stop_reason": "User requested the review/protocol repair phase to remain zero scientific/API execution; fresh identity is prepared but intentionally not called."
+}
