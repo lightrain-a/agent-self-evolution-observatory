@@ -1,0 +1,77 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum4x16-synthetic-fused-direct-device-authority-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "AUTHORIZED_PI05_SYNTHETIC_FUSED_ACCUM4X16_DIRECT_DEVICE_NO_UPDATE_GATE",
+  "scope": "Outcome-blind resource-only qualification of preregistered candidate-3 microbatch4/accum16 using synthetic model-shaped inputs; no BEHAVIOR dataset access and no optimizer update.",
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum4x16_synthetic_fused_direct_device_dry_gradient.py",
+    "sha256": "baec6c2e364a25de94e276e8c781e6661237d2552e3a04a2989b4cbe43428969"
+  },
+  "runner_sha256": "baec6c2e364a25de94e276e8c781e6661237d2552e3a04a2989b4cbe43428969",
+  "bound_evidence": {
+    "accumulation_preregistration": {
+      "path": "generated/behavior-formal-goal-coupling-shared26-pi05-single-gpu-accumulation-child-preregistration-20260902.json",
+      "sha256": "0d0a88b20f15d3a0fa2e8721da865bd5488cc39c43523a518608063c8a51a8d7"
+    },
+    "accum8x8_resource_failure_adjudication": {
+      "path": "generated/behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-accum8x8-resource-failure-adjudication-20260903.json",
+      "sha256": "d9306c6f8731bbd875e513a7584a1c8d463a508a731ba572ff64ae086bef55cd",
+      "required_status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_GENUINE_GPU_RESOURCE_INFEASIBILITY"
+    },
+    "accum4x16_data_order_qualification": {
+      "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum4x16-data-order-qualification-20260903.json",
+      "sha256": "34da62085824d5725fbd2044f3f12fccc42971a137eb498999b02391a769f101",
+      "required_status": "PI05_ACCUM_4X16_DATA_ORDER_QUALIFICATION_PASS"
+    },
+    "portable_direct_device_model_load_result": {
+      "path": "generated/behavior-formal-goal-coupling-shared26-pi05-portable-direct-device-no-update-model-load-result-232-20260903.json",
+      "sha256": "5f27f14cfce284f1a75acefafbf9c404556f527b5037007ee8f119df3ddc90df",
+      "required_status": "PI05_PORTABLE_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_PASS"
+    }
+  },
+  "candidate": {
+    "priority": 3,
+    "physical_micro_batch": 4,
+    "accumulation_steps": 16,
+    "effective_batch": 64,
+    "accumulation_implementation": "first micro returns grad/16; micros 2-16 fuse gradient computation and addition into a donated accumulator buffer inside one JIT"
+  },
+  "portable_runtime": {
+    "openpi_parent_commit": "0cc8e355f7bac0976db1cc3139b1ff0379feea60",
+    "openpi_config_sha256": "4a50bb5f3579ed0035e19d2fc2a5d33821c0cc115c6e8c441eac497e74b02e99",
+    "gpu": "1x NVIDIA A100-SXM4-80GB",
+    "resource_scope": "MemoryMax<=20G, MemorySwapMax=0, TasksMax=512, CPU affinity 0-63",
+    "jax": "CUDA only; XLA_PYTHON_CLIENT_MEM_FRACTION=0.9"
+  },
+  "synthetic_input_rule": {
+    "source": "config.model.fake_obs(batch_size=4) and config.model.fake_act(batch_size=4)",
+    "purpose": "exercise the same model/gradient/accumulator shapes without BEHAVIOR dataset access",
+    "dataset_access_authorized": false,
+    "policy_outcomes_authorized": false
+  },
+  "authorized_operations": [
+    "restore the frozen pi0.5 base checkpoint directly as jax.Array leaves on one A100",
+    "construct one synthetic model-shaped batch of size 4",
+    "compute exactly sixteen micro-gradients with deterministic fold_in RNG keys",
+    "scale each micro-gradient by 1/16 and fuse micros 2-16 into a donated accumulator",
+    "inspect only structural gradient metadata and allocator/GPU memory counters"
+  ],
+  "forbidden_operations": [
+    "reading BEHAVIOR demos or policy outcomes",
+    "retaining or reporting loss values",
+    "inspecting gradient numerical values",
+    "calling optimizer.update or optax.apply_updates",
+    "mutating model parameters or EMA",
+    "writing a training checkpoint",
+    "changing model/checkpoint/seed/effective batch/optimizer/LR/EMA/normalization/action horizon/GPU topology",
+    "running more than one synthetic 4x16 attempt under this authority"
+  ],
+  "optimizer_update_count_authorized": 0,
+  "formal_training_authorized": false,
+  "scientific_training_started": false,
+  "policy_rollouts_authorized": false,
+  "policy_outcomes_read": false,
+  "next_gate_if_pass": "REAL_DATA_STREAMING_ACCUM4X16_IMPLEMENTATION_AUTHORITY",
+  "next_gate_if_fail": "ACCUMULATION_LADDER_EXHAUSTED_RESOURCE_ADJUDICATION_BEFORE_PRACTICAL_BATCH_CHILD"
+}
