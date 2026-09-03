@@ -1,0 +1,36 @@
+\section{Introduction}
+
+Self-evolving agents improve without updating model weights by turning execution experience into persistent procedural state. A spreadsheet agent, for example, may execute several attempts of the same task, retain successful or failed trajectories, and ask an LLM updater to revise a reusable skill document for future tasks. This paradigm is attractive because it moves adaptation into an inspectable persistent artifact rather than another round of model training. Recent systems already show that failed trajectories can matter, that success/failure contrasts can reveal useful corrections, and that accumulated execution knowledge can support later skill evolution~\citep{liu2026rethinkskill,chen2026skillcat,liu2026skillrevise,tang2026wikiskill}.
+
+A common assumption nevertheless remains implicit: once the updater is given the ``right'' evidence, writing the persistent state is mostly a downstream implementation step. Under this view, the scientific question is which trajectory or feedback view should reach the learner. Our experiments challenge that reduction. In a controlled study with the same actor, verifier, updater implementation, initial skill, and held-out evaluator, replacing winner evidence with a rejected-witness view does not yield a stable population-level advantage. More importantly, in one outcome-selected development stream, a persistent state generated from First-Fail evidence remains useful when its bytes are frozen, yet fresh updater runs from reconstructed byte-identical evidence fail to recreate the same advantage. The useful evidence did not disappear; the useful state was not reliably regenerated.
+
+This distinction matters because persistent skill text is itself an intervention on future behavior. Two updater calls can receive the same evidence and still synthesize states that differ in scope, redundancy, ordering, specificity, or procedural commitments. If downstream utility is sensitive to those differences, then ``which evidence was shown?'' and ``how was that evidence materialized into state?'' are separate experimental variables. A self-evolution pipeline can therefore fail even when evidence selection is held fixed.
+
+We organize the system as
+\begin{equation}
+\text{search trajectories}
+\rightarrow
+\underbrace{E}_{\text{evidence selection}}
+\rightarrow
+\underbrace{G}_{\text{state generation}}
+\rightarrow
+\underbrace{S}_{\text{persistent state}}
+\rightarrow
+\underbrace{Y}_{\text{future utility}}.
+\end{equation}
+This decomposition is not itself a novelty claim. Closely related systems already separate traces, diagnosis, persistent knowledge, skill revision, and execution~\citep{liu2026skillrevise,chen2026skillcat,tang2026wikiskill}. Its role here is operational: it lets us hold learner-visible evidence fixed while identifying the realized persistent state and changing or freezing the state-generation mechanism. The residual scientific object is the \emph{state-regeneration outcome}: what persistent artifact and downstream behavior are obtained when the same evidence is passed through the updater again.
+
+Our evidence follows that intervention logic rather than a chronology of increasingly complex methods. First, a 48-pair controlled study shows that rejected-witness evidence is not uniformly superior to winner evidence. Second, a single-stream witness-selection intervention fails to recover a simple ``more diagnostic failure is better'' law. Third, the historically strong First-Fail state remains directionally useful under frozen-state actor remeasurements, weakening a pure one-rollout downstream-noise explanation. Fourth, two fresh updater realizations from byte-identical First-Fail evidence fail to reproduce the historical advantage. This does not estimate a population variance component: the development case was selected after outcomes, only two fresh updater states exist, and their original measurements used fresh actor realizations. The completed evidence is therefore narrower: \emph{local state-regeneration instability consistent with a state-generation bottleneck}.
+
+That observation motivates a controlled intervention on $G$. We use a small typed state compiler that maps learner-visible trajectory+score evidence into a finite diagnosis/repair representation and canonical skill state. The point is not that structured diagnosis or deterministic text editing is novel---SkillRevise already performs execution-grounded diagnosis and repair, SkillCAT uses same-task success/failure contrasts, and WikiSkill separates raw experience from persistent knowledge~\citep{liu2026skillrevise,chen2026skillcat,tang2026wikiskill}. Nor do three spreadsheet repair primitives constitute a broad standalone algorithm. The compiler is first an \emph{experimental intervention}: it deliberately removes free-form state-synthesis degrees of freedom while preserving the learner-visible evidence package.
+
+We preregister a fresh development bridge that independently tests four questions rather than forcing them into one pass/fail story: (i) a matched-evidence generator-method effect, (ii) whether trajectory-conditioned compilation beats score-only and state-scope-matched trajectory-blind generic controls, (iii) any secondary First-Fail evidence-package effect, and (iv) an Evidence$\times$Generator interaction. SCREEN and VALIDATION use different streams and disjoint held-out panels. A generator effect may proceed to validation even if First-Fail evidence is not better than winner evidence; failure-evidence and interaction claims are secondary. A small repeated-synthesis diagnostic on validation is separately reserved for the stronger state-regeneration/reproducibility interpretation. None of these prospective stages is reported as a positive scientific result here.
+
+\paragraph{Contributions.}
+The current paper makes two completed contributions and defines two prospective falsification objects.
+\begin{itemize}
+    \item \textbf{A matched-evidence state-regeneration audit.} We identify persistent state bytes as an explicit experimental object and show, in a selected controlled case, that a historically useful state remains behaviorally active when frozen while byte-identical evidence does not reliably regenerate the same advantage through the native updater.
+    \item \textbf{A bounded localization result.} Together with a 48-pair heterogeneous evidence-source study and a failed diagnostic-witness selector, the audit rules out evidence disappearance and weakens a pure one-rollout actor-luck account, while leaving regression-to-the-mean, selected-case bias, evaluator alignment, and population-level variance unresolved.
+    \item \textbf{A controlled generator intervention.} We define a typed canonical compiler with information parity, content-addressed state identity, a score-only generic maximum, and a trajectory-blind state-scope-matched generic control. Its purpose is to isolate a complete state-generation-method effect, not to claim a new universal diagnosis language.
+    \item \textbf{A hierarchical prospective test.} A fresh Evidence$\times$Generator bridge validates the generator question independently of First-Fail superiority or interaction, with explicit STOP rules that prohibit E3, another backbone, or another benchmark from rescuing a failed fresh generator result.
+\end{itemize}

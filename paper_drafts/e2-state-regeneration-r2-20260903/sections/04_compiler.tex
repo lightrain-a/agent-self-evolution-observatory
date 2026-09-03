@@ -1,0 +1,61 @@
+\section{Typed State Compilation as a Controlled Generator Intervention}
+\label{sec:compiler}
+
+The state-regeneration result motivates an intervention on $G$, the state-generation interface. The compiler is intentionally modest: it is designed first to remove free-form synthesis degrees of freedom under matched evidence, not to claim a universal agent-repair algorithm. It receives the same learner-visible trajectory text and selected binary verifier score as the corresponding free-form updater arm, but replaces open-ended state writing with a finite diagnosis and canonical compilation path.
+
+\subsection{Design requirements}
+A valid generator intervention must satisfy four requirements.
+
+\paragraph{R1: Information parity.}
+The compiler may read only the selected trajectory text and score exposed to the corresponding free-form arm. It cannot condition on the experimental arm, projection name, stream/family label, task family, golden answer, held-out result, historical S1 outcome, or hidden provenance. SHA identifiers are retained only for integrity receipts.
+
+\paragraph{R2: Explicit intermediate representation.}
+The method exposes what it inferred before changing the skill. Otherwise a different free-form prompt simply moves the uncontrolled synthesis step. We represent each evidence unit by
+\begin{equation}
+d=(\text{failure stage},\text{failed invariants},\text{observed evidence},\text{required repairs}).
+\end{equation}
+
+\paragraph{R3: Canonical state construction.}
+Identical diagnosis bundles must produce byte-identical persistent skills. Duplicate evidence must not increase state length, primitive ordering is fixed, and redundant repair surfaces are removed deterministically.
+
+\paragraph{R4: Generic and scope falsification.}
+A positive trajectory-conditioned result must beat controls that receive no trajectory text but are allowed the same score pattern, and---for the stronger diagnosis claim---the same rendered repair-block count. This prevents a shorter or less interfering state from being mistaken for correct semantic diagnosis.
+
+\subsection{Typed diagnosis from learner-visible evidence}
+The current intervention uses three repair primitives:
+\begin{equation}
+\mathcal{R}=\{\texttt{VERIFY\_OUTPUT},\texttt{COMPLETE\_WORKFLOW},\texttt{RECOVER\_TOOL\_ERROR}\}.
+\end{equation}
+For a selected failed trajectory, visible signals map to repairs as follows:
+\begin{itemize}
+    \item no materialized write or output save $\rightarrow$ \texttt{COMPLETE\_WORKFLOW};
+    \item output saved but no visible reload/verification $\rightarrow$ \texttt{VERIFY\_OUTPUT};
+    \item visible tool error without visible clean recovery $\rightarrow$ \texttt{RECOVER\_TOOL\_ERROR}.
+\end{itemize}
+A selected successful trajectory is not automatically labelled as needing a generic repair. Multiple repairs may compose.
+
+These rules are deliberately interpretable and narrow. Completion, verification, and recovery are also plausible generic spreadsheet hygiene and closely aligned with the deterministic evaluator. We therefore do not present this vocabulary as standalone algorithmic novelty. Its scientific role is to instantiate a controlled generator whose representation and rendering behavior are fully specified.
+
+\subsection{Canonical compiler}
+For diagnoses $D=\{d_i\}_{i=1}^{8}$ and base skill $S_0$, compilation computes
+\begin{equation}
+C(D,S_0)=S_0\oplus \operatorname{Canon}\!\left(\bigcup_i d_i.\texttt{required\_repairs}\right).
+\end{equation}
+Canonicalization uses a fixed primitive order and deduplicates repeated requirements. \texttt{COMPLETE\_WORKFLOW} already includes save, reload, and target verification, so a separately rendered \texttt{VERIFY\_OUTPUT} block is omitted when both are requested. \texttt{RECOVER\_TOOL\_ERROR} composes after completion semantics. Every diagnosis bundle and compiled skill is content-addressed.
+
+The zero-provider implementation is qualified for deterministic compilation, duplicate suppression, hidden-label exclusion, and the three diagnosis routes. For diagnoses corresponding to the manually frozen mechanism interventions, it reproduces the G1 verification, G2 completion, and G3 completion+recovery skill surfaces byte-for-byte. This is implementation qualification, not evidence that those states improve future utility.
+
+\subsection{Two trajectory-blind generic controls}
+
+\paragraph{Score-only generic maximum.}
+\texttt{SCORE\_ONLY\_GENERIC\_MAX} receives the same ordered eight binary scores but no trajectory text. If all scores are one, it returns $S_0$. If any score is zero, it emits the maximal nonredundant generic v1 bundle, \texttt{COMPLETE\_WORKFLOW}+\texttt{RECOVER\_TOOL\_ERROR}. It tests whether simply knowing that failures occurred plus injecting the strongest generic checklist explains the effect.
+
+\paragraph{State-scope-matched generic maximum.}
+The maximal generic bundle can be longer or broader than a trajectory-conditioned compiler state. We therefore additionally freeze \texttt{SCOPE\_MATCHED\_GENERIC\_MAX}. It receives the same eight scores and exactly one scalar from the trajectory-conditioned compiler: the number $k\in\{0,1,2\}$ of nonredundant repair blocks that canonical compilation would render. It receives neither trajectory text nor primitive identity. A frozen trajectory-independent priority rule returns $S_0$ for $k=0$, a one-block generic completion state for $k=1$, and completion+recovery for $k=2$.
+
+The scope scalar is intentionally a control variable, not evidence supplied to the proposed method. If FF4\_COMP beats the score-only maximum but not the scope-matched control, the result supports state sparsity/canonicalization at most; it does not establish trajectory-conditioned semantic diagnosis.
+
+\subsection{What the generator comparison identifies}
+The free-form and compiler paths are complete state-generation methods. They differ in representation, canonicalization, state scope, redundancy, and use of a generative writer. Thus a positive COMP$-$FREE contrast is a \emph{complete generator-method effect}, not an isolated effect of determinism. State length, delta tokens, rendered block count, and skill SHA are recorded as mechanism diagnostics rather than post-hoc matched away.
+
+A separate repeated-synthesis probe is needed for the stronger regeneration/reproducibility interpretation. It repeats the same free-form evidence package exactly once on pre-frozen validation streams and distinguishes between-state disagreement from within-frozen-state actor disagreement. Failure of that probe removes the state-generation-variability interpretation even if the complete compiler method improves utility.

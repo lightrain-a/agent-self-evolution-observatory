@@ -1,0 +1,33 @@
+\section{Problem Setup and Closest Work}
+\label{sec:problem}
+
+\subsection{Persistent skill self-evolution}
+For an update stream $u$, the agent executes eight tasks. Task $i$ produces a frozen search pool $P_i=\{\tau_{ij}\}_{j=1}^{K}$ with binary verifier scores $r_{ij}\in\{0,1\}$. A serving rule chooses an acting winner for the user-facing task, while an evidence projection $E$ determines which trajectory+score package is exposed to the persistent learner. The state generator $G$ maps the eight learner-visible evidence units and initial skill $S_0$ to a new persistent skill,
+\begin{equation}
+S = G(E(P_1),\ldots,E(P_8);S_0).
+\end{equation}
+A frozen downstream actor then executes held-out task $x$ conditioned on $S$, producing utility $Y(x;S)\in\{0,1\}$ under the deterministic spreadsheet verifier.
+
+This decomposition creates three distinct estimands. The \emph{evidence-package effect} compares different $E$ while holding the generator fixed. The \emph{state-generation-method effect} compares different $G$ on the same selected evidence. The \emph{state effect} holds the state bytes fixed and remeasures downstream behavior. These are not interchangeable. In particular, a useful frozen state does not imply that the updater can reliably regenerate it, and an evidence source that sometimes yields a useful state does not imply that the evidence source is generally superior.
+
+\subsection{Controlled spreadsheet substrate}
+Our mechanism studies use a locally generated SpreadsheetBench-compatible suite with six predeclared failure families: input/output contract, target sheet/range, schema/key alignment, aggregation/join, formula/materialization, and multi-step pipeline. Each task has deterministic initialized and golden workbooks and a deterministic verifier. This suite is used for causal control, not as a public benchmark. SpreadsheetBench itself contains real-world spreadsheet manipulation tasks and OJ-style evaluation~\citep{ma2024spreadsheetbench}; external benchmark claims are deliberately deferred until the internal mechanism survives.
+
+The primary actor and updater model in the current mechanism line are DeepSeek-V4-Pro under a frozen Ark route. Actor decoding uses temperature zero, thinking disabled, and no provider retry. The first-party persistent updater is the MindMemOS SkillEvolver path used throughout the controlled study. Exact model routes, skill hashes, trajectory hashes, budgets, and task IDs are bound in execution receipts rather than inferred from manuscript prose.
+
+\subsection{Closest work and residual scientific object}
+
+\paragraph{Failure-aware feedback and skill evolution.}
+Rethinking Self-Evolving Agent Skills varies the feedback presented to a skill optimizer and shows that failure-containing feedback is often selected, but the ranking of Normal, Fail-only, and Success-only conditions depends on model and benchmark~\citep{liu2026rethinkskill}. This directly rules out a novelty claim that failures can help. Our residual question is different: with evidence bytes fixed, can the state-writing step itself become an unstable bottleneck?
+
+\paragraph{Contrastive trajectory diagnosis.}
+SkillCAT samples multiple trajectories, contrasts same-task successes and failures, extracts candidate corrections, and validates patches before merging~\citep{chen2026skillcat}. It therefore already covers success/failure pairing and contrastive causal extraction. Our First-Fail evidence arm is not presented as a new contrastive-learning idea. We instead use matched evidence arms to factor evidence selection from the generator that materializes persistent state.
+
+\paragraph{Execution-grounded skill revision.}
+SkillRevise diagnoses skill defects from execution traces, retrieves reusable repair principles, and applies execution-anchored revisions that are re-executed and selected by utility~\citep{liu2026skillrevise}. Consequently, ``trajectory $\rightarrow$ structured diagnosis $\rightarrow$ skill edit'' is not our contribution. Our typed compiler is scientifically useful only if it tests a different claim: whether replacing unconstrained state synthesis with canonical compilation changes state reproducibility or downstream utility under the same evidence.
+
+\paragraph{Persistent knowledge accumulation.}
+WikiSkill separates raw execution experience, an accumulated persistent wiki, and executable skills, and uses the knowledge store to guide future skill evolution~\citep{tang2026wikiskill}. We therefore do not claim novelty for compiling experience into persistent knowledge. The missing object here is narrower: the realized persistent state as a causal intermediate whose variability can be studied independently of evidence selection.
+
+\paragraph{Residual novelty boundary.}
+The paper's novelty target is therefore not a new feedback source, diagnosis vocabulary, memory store, or validation-gated text editor. It is the controlled matched-evidence study of state regeneration itself: a frozen-state audit asks whether behavior follows persistent state identity rather than one actor draw, and the prospective bridge varies the complete state-generation method while holding learner-visible evidence fixed. The existing case is consistent with a state-generation bottleneck but does not identify it at population scale. If the fresh generator contrast fails, the method-positive story stops. If the compiler helps but First-Fail evidence does not, the failure-learning claim is dropped while the state-generation-method result may remain.
