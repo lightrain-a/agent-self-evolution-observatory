@@ -22,6 +22,8 @@ class C1StageResolvedStoryTest(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
         cls.story = (PROJECT_ROOT / "paper-story-reward-memory.js").read_text(encoding="utf-8")
+        cls.golden = (PROJECT_ROOT / "current-paper-golden-c1.js").read_text(encoding="utf-8")
+        cls.depth = (PROJECT_ROOT / "current-paper-depth-c1.js").read_text(encoding="utf-8")
         cls.reader = (PROJECT_ROOT / "paper-reader-data.js").read_text(encoding="utf-8")
         cls.page = (PROJECT_ROOT / "current-paper-pages-data.js").read_text(encoding="utf-8")
         cls.abstract = (SOURCE / "sections" / "00_abstract.tex").read_text(encoding="utf-8")
@@ -81,6 +83,20 @@ class C1StageResolvedStoryTest(unittest.TestCase):
         self.assertEqual(claims["native Shopping branch-specific behavioral transport"]["status"], "ATTENUATED_UNRESOLVED")
         self.assertEqual(claims["CBRG method extension"]["status"], "STOP_MERGE_CURRENT_EXTENSION")
         self.assertIn("no behavioral method-effect experiment", claims["CBRG method extension"]["boundary"].lower())
+
+    def test_diagnosis_to_repair_bridge_separates_relevance_from_authority(self) -> None:
+        combined = "\n".join((self.story, self.golden, self.depth)).lower()
+        self.assertIn("pacta-msr", combined)
+        self.assertIn("matched state reveal", combined)
+        self.assertIn("rate-matched random", combined)
+        self.assertIn("behavioral authority", combined)
+        self.assertIn("relevance", combined)
+        self.assertIn("within-condition", combined)
+        self.assertIn("prospective", combined)
+        self.assertIn("method-effect claim", combined)
+        self.assertIn("0.20", combined)
+        self.assertNotIn("pacta-msr improves", combined)
+        self.assertNotIn("pacta-msr outperforms", combined)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-04",
+  "status": "PAPER_STORY_ITERATION_ONLY_NO_NEW_SCIENTIFIC_OUTCOME",
+  "basis": {
+    "note_title": "SkillZip & SkillZip Pro",
+    "note_axes": [
+      "科研方法论与后续启发",
+      "实验设计拆解",
+      "写作架构学习"
+    ],
+    "paper_facts_used": [
+      "SkillZip treats an evolved skill as a typed contract rather than flat text and formulates compression around faithful structural coverage.",
+      "SkillZip Pro treats production skills as progressively loaded directory bundles and preserves routing/loading boundaries rather than flattening them.",
+      "Both papers organize the method around a concrete systems mismatch, targeted safeguards, and claim-aligned evaluation rather than a generic compression slogan."
+    ],
+    "important_boundary": "SkillZip and SkillZip Pro are methodological inspirations for paper construction here, not direct prior work on C1 memory transport or PACTA-MSR."
+  },
+  "methodology_transfer": {
+    "lesson_1_object_first": {
+      "source_lesson": "Define the real system object before proposing an optimization; a skill is a typed contract/bundle, not flat text.",
+      "c1_transfer": "Define the object as a branch-conditioned durable-state contrast transported through write, exposure, uptake, and outcome, not as generic memory quality."
+    },
+    "lesson_2_unit_mismatch": {
+      "source_lesson": "The strongest motivation comes from a unit/boundary mismatch: flat compression is misaligned with contract structure and progressive loading.",
+      "c1_transfer": "The corresponding C1 mismatch is relevance/availability versus behavioral authority. SCB can make memory state-relevant, but 125/172 native exposure with weak stable uptake shows that relevance does not decide whether branch-specific memory should control behavior."
+    },
+    "lesson_3_targeted_repair": {
+      "source_lesson": "Add only the component needed to repair the identified mismatch, with explicit safeguards.",
+      "c1_transfer": "PACTA-MSR is framed as selective transport authority after existing SCB: same-trajectory writer twins + branch-blind Matched State Reveal + paired action-distribution/within-condition-noise gate + rate-matched random control."
+    },
+    "lesson_4_preserve_boundaries": {
+      "source_lesson": "SkillZip Pro preserves progressive-loading/routing boundaries instead of flattening the bundle.",
+      "c1_transfer": "Do not flatten write→exposure→uptake→outcome into one propagation score. Preserve the stage boundaries and preserve forced latent capacity versus native transport as different estimands."
+    },
+    "lesson_5_explain_once_difference_only": {
+      "source_lesson": "Share invariant structure once and keep differences explicit.",
+      "c1_transfer": "Present the frozen source trajectory/current state as shared substrate and the reflection-conditioned memory/action contrast as the only treatment difference. This makes the causal object easier to inspect and reduces narrative duplication."
+    }
+  },
+  "experiment_design_transfer": {
+    "claim_aligned_stack": [
+      "Claim 1 — write intervention: same-trajectory reflection condition changes durable state beyond stronger same-mode wording control.",
+      "Claim 2 — latent leverage: forced fixed-evidence exposure can change downstream behavior, explicitly not native transport.",
+      "Claim 3 — native localization: exposure remains substantial while stable first-action/terminal transport is weak; strongest supported boundary is post-exposure/pre-uptake.",
+      "Claim 4 — boundary/heterogeneity: Reddit replication supports sparse sign-heterogeneous terminal transport rather than a universal directional effect.",
+      "Repair Gate — prospective PACTA-MSR asks whether selective authority improves branch-sensitive downstream transport over rate-matched random selection; no method-effect claim before frozen source/writer/binder/shadow/final gates."
+    ],
+    "repair_controls": [
+      "A0 native raw branch memory at matched revealed state",
+      "A1 existing SCB always",
+      "A2 rate-matched random SCB",
+      "A3 PACTA-MSR selective authority"
+    ],
+    "successor_statistics": {
+      "primary_unit_readout": "unbiased exact-match-kernel MMD2 / collision U-statistic between success-writer and failure-writer action samples",
+      "primary_contrast": "D_select = U_A3 - U_A2",
+      "mean_D_select_threshold": 0.20,
+      "raw_empirical_TV": "descriptive secondary only"
+    },
+    "stop_logic": "A diagnosis paper remains valid even when the repair experiment HOLDs or fails. A failed source/provider/runtime gate is not converted into a negative method-effect result."
+  },
+  "writing_architecture_transfer": {
+    "old_arc_problem": "The current story clearly measures transport but places PACTA/ReasoningBank as a later extension, so the proposed method can read like an appended module rather than a necessary consequence of the diagnosis.",
+    "new_arc": [
+      "1. Concrete object: the post-episode Memory Extractor and a paired durable-state contrast.",
+      "2. Controlled phenomenon: same trajectory/outcome, different reflection condition, robust write divergence beyond wording.",
+      "3. Structural diagnosis: forced leverage exists; native exposure is substantial; stable uptake is weak.",
+      "4. Unit mismatch: state relevance/availability is not behavioral authority.",
+      "5. Existing primitive A1: state-conditioned binding/SCB addresses relevance and utilization but not selective authority.",
+      "6. New component: PACTA-MSR grants branch-specific authority only when matched-state paired action evidence exceeds within-condition noise, with a rate-matched random control.",
+      "7. Claim-aligned experiments: canonical audit results remain completed evidence; repair experiment is prospective until frozen gates close.",
+      "8. Scope: no generic novelty claim for retrieval!=use, stage decomposition, state-aware memory, SCB, or a generic gate."
+    ]
+  },
+  "edits_applied": [
+    "paper-story-reward-memory.js: added diagnosis_to_repair and successor metric/authority boundary; extended outline.",
+    "current-paper-golden-c1.js: reframed architecture block D and added diagnosis-to-repair arc E.",
+    "current-paper-depth-c1.js: added state relevance != behavioral authority contract and diagnosis-driven PACTA-MSR lineage.",
+    "research_pipeline/test_c1_stage_resolved_story.py: added invariants that PACTA-MSR remains prospective and cannot be written as already improving/outperforming."
+  ]
+}
