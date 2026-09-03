@@ -1,0 +1,46 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-safe69-admission-amendment-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "status": "AUTHORIZED_RESOURCE_ONLY_SAFE69_ADMISSION_THRESHOLD_REPAIR",
+  "scope": "Operational admission threshold only for the already-authorized synthetic fused accum8x8 no-update gate on host 69. No model, data, gradient, optimizer, RNG, or outcome semantics change.",
+  "evidence": {
+    "portable_direct_device_result_path": "generated/behavior-formal-goal-coupling-shared26-pi05-portable-direct-device-no-update-model-load-result-232-20260903.json",
+    "portable_direct_device_result_sha256": "5f27f14cfce284f1a75acefafbf9c404556f527b5037007ee8f119df3ddc90df",
+    "observed_memavailable_before_kib": 25996680,
+    "observed_memavailable_after_step0_ready_kib": 19288756,
+    "observed_memavailable_drop_kib": 6707924,
+    "observed_process_rss_after_step0_ready_kib": 5797528,
+    "portable_direct_device_status": "PI05_PORTABLE_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_PASS",
+    "optimizer_update": false,
+    "dataset_accessed": false
+  },
+  "old_admission": {
+    "host_mem_available_min_gib": 22,
+    "gpu_compute_apps_required": 0,
+    "gpu_memory_used_max_mib": 1024,
+    "memory_psi_avg10_max_percent": 1.0,
+    "io_psi_avg10_max_percent": 5.0
+  },
+  "new_admission": {
+    "host_mem_available_min_gib": 12,
+    "gpu_compute_apps_required": 0,
+    "gpu_memory_used_max_mib": 1024,
+    "memory_psi_avg10_max_percent": 1.0,
+    "io_psi_avg10_max_percent": 5.0,
+    "attempt_scope_memory_max_gib": 20,
+    "attempt_scope_memory_swap_max_gib": 0
+  },
+  "safety_rationale": "The direct-device step-0 qualification measured roughly 6.4 GiB loss of system MemAvailable and about 5.5 GiB process RSS while restoring the same frozen pi0.5 train state. The synthetic fused gate does not instantiate the BEHAVIOR dataset or decoded video pipeline, so a 12 GiB host-available floor retains several GiB of empirical headroom while the attempt itself remains fail-closed under MemoryMax=20G and MemorySwapMax=0.",
+  "forbidden": [
+    "starting while another GPU compute application is present",
+    "raising MemoryMax above 20G",
+    "enabling swap for the attempt",
+    "changing physical microbatch=8 or accumulation_steps=8",
+    "reading loss, gradients numerically, or policy outcomes",
+    "optimizer update or checkpoint write"
+  ],
+  "scientific_authority": false,
+  "formal_training_authorized": false,
+  "next_gate": "SAFE69_SYNTHETIC_FUSED_ACCUM8X8_WAIT_OR_EXECUTE"
+}

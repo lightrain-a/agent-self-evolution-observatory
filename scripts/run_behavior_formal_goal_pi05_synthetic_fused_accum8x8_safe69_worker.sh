@@ -5,10 +5,15 @@ ENV=/data/wyt/formal-goal-shared26-openpi-env-20260901
 CHILD=/data/wyt/formal-goal-portable-openpi-child-69-20260903
 PARAMS=/data/wyt/formal-goal-pi05-base-params-v1
 RECEIPT="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-synthetic-fused-direct-device-result-20260903.json"
+AMEND="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-safe69-admission-amendment-20260903.json"
+AMEND_SHA=776bd8d6263c1e9c6bdfd601d4477c7a7df96f0244c2809b0fc0cb972117ca65
 LOG=/data/wyt/formal-goal-pi05-synthetic-fused-accum8x8-safe69-20260903.log
 exec >>"$LOG" 2>&1
 
 echo "[$(date --iso-8601=seconds)] safe69 synthetic fused 8x8 worker started"
+[[ -f "$AMEND" ]] || { echo "admission amendment missing"; exit 3; }
+OBSERVED_AMEND_SHA=$(sha256sum "$AMEND" | awk '{print $1}')
+[[ "$OBSERVED_AMEND_SHA" == "$AMEND_SHA" ]] || { echo "admission amendment SHA drift: $OBSERVED_AMEND_SHA"; exit 3; }
 psi_avg10() {
   awk '/^some / {for (i=1;i<=NF;i++) if ($i ~ /^avg10=/) {split($i,a,"="); print a[2]; exit}}' "$1"
 }
@@ -22,7 +27,7 @@ while true; do
   avail=$(awk '/^MemAvailable:/ {print $2}' /proc/meminfo)
   mp=$(psi_avg10 /proc/pressure/memory)
   ip=$(psi_avg10 /proc/pressure/io)
-  if awk -v apps="$apps" -v used="$used" -v avail="$avail" -v mp="$mp" -v ip="$ip" 'BEGIN{exit !(apps==0 && used<1024 && avail>=23068672 && mp<1.0 && ip<5.0)}'; then
+  if awk -v apps="$apps" -v used="$used" -v avail="$avail" -v mp="$mp" -v ip="$ip" 'BEGIN{exit !(apps==0 && used<1024 && avail>=12582912 && mp<1.0 && ip<5.0)}'; then
     echo "[$(date --iso-8601=seconds)] admission PASS apps=$apps used=$used avail=$avail mp=$mp ip=$ip"
     break
   fi
