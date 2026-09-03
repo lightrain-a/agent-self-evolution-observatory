@@ -1,0 +1,72 @@
+{
+  "authority": {
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v3_design": true,
+    "sq0_v3_execution": false
+  },
+  "by_kind": {
+    "FG_JOIN_V2R1": {
+      "case_count": 6,
+      "raw_failure_count": 0
+    },
+    "TNF_JOIN_V2R1": {
+      "case_count": 6,
+      "formatting_pseudo_failure_count": 4,
+      "raw_failure_count": 4
+    }
+  },
+  "content_sha256": "aa350d6fb81d4db55e0b5ca49f762e835feb7dfe5f260c9552046b4b50861f8a",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prospective_repairs_required": [
+    "Normalize only terminal newline equivalence for prospective SQ0 file-content evaluation; preserve all internal bytes/fields/path checks.",
+    "Increase target-local multi-source decision composition rather than adding distractor count alone.",
+    "Use fresh V3 cases; never reclassify V2R1 as a pass and never reuse V2R1 cases for confirmatory F0-R1."
+  ],
+  "provider_requests_added": 0,
+  "pseudo_failure_cases": [
+    {
+      "actual_sha256": "8c4d4e9088623c79ca9aebe4e7aed70dd3bacf8dbfa6722cf92dab35134e019d",
+      "case_id": "SQ0V2R1-TNF-01",
+      "classification": "TERMINAL_NEWLINE_ONLY",
+      "expected_sha256": "2ddf890240e6f2e9e5aa112ea3dbda2e32730de19bcb85324a1514e327ef7955",
+      "normalized_equal": true
+    },
+    {
+      "actual_sha256": "496808aaa06064d098c31cb0923c76b3eb67e5da5310c340e72f1d8d22b5d79e",
+      "case_id": "SQ0V2R1-TNF-02",
+      "classification": "TERMINAL_NEWLINE_ONLY",
+      "expected_sha256": "47b1cb26f03e7952ea89e9fccab80af82494bc8d2e9c110867349f35ec674d06",
+      "normalized_equal": true
+    },
+    {
+      "actual_sha256": "4c8f4c5b2cc6d00d4aa391d846d7c52d495981ecc973537172f61d4b634dd8d7",
+      "case_id": "SQ0V2R1-TNF-03",
+      "classification": "TERMINAL_NEWLINE_ONLY",
+      "expected_sha256": "57f86a6b5b9396a117389a43c6eb2d184a00a6599512064dbd022a91a58521db",
+      "normalized_equal": true
+    },
+    {
+      "actual_sha256": "5082570018bd323b3756759a7826c1b7c0ba374e473b2113d7db414c90a567d5",
+      "case_id": "SQ0V2R1-TNF-05",
+      "classification": "TERMINAL_NEWLINE_ONLY",
+      "expected_sha256": "036b5349e0daa73ce397568014fd5013e8b1c8cbe0b186457ba20d992d98947c",
+      "normalized_equal": true
+    }
+  ],
+  "raw_usable_failure_count": 4,
+  "raw_usable_failure_rate": 0.3333333333333333,
+  "root_causes": [
+    "FG_JOIN_V2R1 target challenge was solved substantively in all six fresh cases.",
+    "TNF_JOIN_V2R1 joins/arithmetic/path were also solved in all six cases; four raw failures differed only by a terminal newline.",
+    "The V2R1 evaluator therefore over-counted exact-format noise as target-learning opportunity."
+  ],
+  "schema_version": "ace-sq0-v2r1-root-cause-v1",
+  "scientific_effects_observed": 0,
+  "semantic_failure_count_after_terminal_newline_normalization": 0,
+  "semantic_failure_rate_after_terminal_newline_normalization": 0.0,
+  "status": "SQ0_V2R1_RAW_FAILURES_ARE_FORMATTING_PSEUDO_FAILURES",
+  "substantive_failure_cases": []
+}
