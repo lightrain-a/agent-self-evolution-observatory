@@ -1,0 +1,70 @@
+{
+  "appworld_tool_call_total": 87,
+  "authority": {
+    "appworld_ul": false,
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "toolsandbox": false
+  },
+  "codingplan_account_window_delta_exactly_identifiable": false,
+  "codingplan_account_window_reset_crossings": [
+    {
+      "after": {
+        "limit": 500,
+        "next_reset_at": "2026-09-03T20:04:58",
+        "remaining": 500,
+        "used": 0
+      },
+      "before": {
+        "limit": 500,
+        "next_reset_at": "2026-09-03T15:04:58",
+        "remaining": 448,
+        "used": 52
+      },
+      "unit_id": "source:ACE-TNF-03|source"
+    }
+  ],
+  "completion_tokens_total": 13401,
+  "content_sha256": "6f2a1937136e291c5c6a440d281b0295d24c8113227fc005382f5f009c9bd7ab",
+  "eligible_repair_families": [],
+  "eligible_repair_family_count": 0,
+  "interpretation_boundary": "This is an update-uptake/source-failure-substrate failure, not evidence for or against the coupling externality mechanism. No probe outcome or update-attributable externality was observed.",
+  "mandatory_stop": true,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "probe_episode_count": 0,
+  "prompt_tokens_total": 2903368,
+  "repairs_manifest_artifact": "generated/agent-constraint-externality-f0-repairs-manifest-mimo25pro-20260903.json",
+  "repairs_manifest_content_sha256": "f78bf79c974841e5600d4aa1104ac11b1855dd059dd36a7d2ad9174dba74bcbf",
+  "repairs_manifest_file_sha256": "96fe3468bbc893690ea18137c97c76e92ec032e3056d89e6e2be2a81c7fb724a",
+  "schema_version": "ace-f0-source-closeout-v1",
+  "scientific_effects_observed": 0,
+  "scientific_model_round_count": 74,
+  "selected_backbone": {
+    "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "model_id": "mimo-v2.5-pro",
+    "model_profile": "AtomGit-mimo-v2.5-pro",
+    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
+  },
+  "source_contract_content_sha256": "8d04940cf756d4edc9d9e4d223ec54afe0e38d702509d8f79f04e61771618399",
+  "source_episode_count": 8,
+  "source_family_ids": [
+    "ACE-FG-01",
+    "ACE-FG-02",
+    "ACE-FG-03",
+    "ACE-FG-04",
+    "ACE-TNF-01",
+    "ACE-TNF-02",
+    "ACE-TNF-03",
+    "ACE-TNF-04"
+  ],
+  "source_ledger_artifact": "runtimes/agent-constraint-externality-f0-mimo25pro-20260903/source-ledger.jsonl",
+  "source_ledger_sha256": "76896fab0cca9061e5112aed87aa61848f0a4f9c4e8860882a069329035056bc",
+  "source_target_failure_count": 0,
+  "source_target_success_count": 8,
+  "status": "F0_UPDATE_UPTAKE_FAIL_SOURCE_CLOSEOUT",
+  "stop_reason": "ZERO_TARGET_FAILURES_SO_NO_PERSISTENT_REPAIR_COULD_BE_GENERATED",
+  "updater_model_request_count": 0,
+  "verdict": "F0_UPDATE_UPTAKE_FAIL"
+}

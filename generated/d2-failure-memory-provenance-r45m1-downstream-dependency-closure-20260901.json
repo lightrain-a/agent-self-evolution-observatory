@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-DOWNSTREAM-DEPENDENCY-CLOSURE-20260901",
+  "recorded_at": "2026-09-01T20:39:00+08:00",
+  "status": "PASS_DOWNSTREAM_DEPENDENCY_CLOSURE_ZERO_VALIDATION_OUTCOME",
+  "role": "CONTENT_ADDRESSED_EXECUTION_DEPENDENCY_CLOSURE_NOT_SCIENTIFIC_OUTCOME",
+  "source_git_commit": "f0d284bc9841d3fec3fb34a0c5704c83b7481ea4",
+  "remote_host": "wyt@222.20.126.231",
+  "remote_root": "/data/wyt/b1-memrl-r45m1-execution/downstream-frozen-f0d284bc",
+  "primary_files": {
+    "research_pipeline/failure_memory_memrl_source_qualification_r46m2.py": "e0740dc09609d1a551ac791492417b159c4f465ef42edf659c9a5a0631bfbeac",
+    "research_pipeline/failure_memory_memrl_utilization_r47m2.py": "288608515fdfd896dc4b992ea66818e1116fabe3cd114e0c53b3b3c94da5c713",
+    "research_pipeline/failure_memory_memrl_ab_identification_r48.py": "6e28cfa75eef0d9833e0184cff5aaa0ff81957555b764f834c7c23c10324d2a1",
+    "generated/d2-failure-memory-provenance-r48-ab-identification-operationalization-contract.json": "9c769c4f71dae298ff9655a8f3a3dca53dff19e3f7f5ea3e54b4211feb9da716",
+    "generated/d2-failure-memory-provenance-r48-ab-identification-conditional-authority.json": "f9b3b531106d71ab7e4d4d23e8fea296f94239f621a0e82b97412c57beae7cd9"
+  },
+  "dependency_files": {
+    "research_pipeline/failure_memory_memrl_source_execute_r45m1.py": "101b9f3cd9056993c243b880c5b366f7009527a19b74c8b04120ba34528d6d47",
+    "research_pipeline/failure_memory_memrl_source_qualification_r46.py": "20d50d45aa55cb1b7c985f90fb85f6f1129d8e8f24e3b945f818637469e7937b",
+    "research_pipeline/failure_memory_memrl_source_qualification_r46m1.py": "8893b49bfc8e02239b0b54befba9e1db45356db7e265d068a80a88b673474603",
+    "research_pipeline/failure_memory_memrl_utilization_r47.py": "379f1825201143b53510659f717a88e8c01c79d3362d71863f0adb4da8e203b7",
+    "research_pipeline/failure_memory_memrl_utilization_r47m1.py": "92560da83e9902b0fb7f47d628267d3365bfa53d4bc2bd2fc98b3eb94c205552",
+    "research_pipeline/failure_memory_memrl_exact_information_adapter_r39.py": "c94353ca46c8cfb65cfae6218d2e03ae6946b37aa25e52ee83212e2dfe03afe2",
+    "research_pipeline/failure_memory_memrl_local_runtime_r43.py": "32762bafdf0bb4274c6f3b521ceb3e8c008178361503c320691543d51007a3f2",
+    "research_pipeline/failure_memory_memrl_local_openai_server_r45m1.py": "f2b4b49b179856cdd02d244fba81ab7c558e747954170285da0eef6119336d92"
+  },
+  "checks": {
+    "remote_primary_files_match": true,
+    "remote_dependency_files_match": true,
+    "contract_receipt_valid": true,
+    "authority_receipt_valid": true,
+    "R47M2_strict_binding": true,
+    "C_D_execution_authority": false
+  },
+  "launch_policy": {
+    "recompute_all_primary_and_dependency_sha256_before_R46M2": true,
+    "recompute_all_primary_and_dependency_sha256_before_R47M2": true,
+    "recompute_all_primary_and_dependency_sha256_before_R48": true,
+    "any_hash_drift_route": "STOP_DOWNSTREAM_CODE_DEPENDENCY_DRIFT",
+    "github_network_not_required_after_closure": true
+  },
+  "access_accounting": {
+    "validation_treatment_outcomes_observed": 0,
+    "A_B_treatment_outcomes_observed": 0,
+    "model_calls": 0,
+    "environment_resets": 0,
+    "evaluator_calls": 0
+  },
+  "scientific_authority": false,
+  "receipt_sha256": "b8bf33272ccc5be98d6c5934e5af6a77a2f7f1426d9e9f7224ada1baa7f8717d"
+}

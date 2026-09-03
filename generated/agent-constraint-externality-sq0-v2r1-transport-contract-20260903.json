@@ -1,0 +1,33 @@
+{
+  "authority": {
+    "f0_r1": false,
+    "p1": false,
+    "probe": false,
+    "sq0_v2r1_execution": false,
+    "transport_qualification": true
+  },
+  "content_sha256": "85c7d09dd9ff7a5e7f29be403c6ff088ed2a04469be79b4b6d445b9228970415",
+  "model": {
+    "id": "mimo-v2.5-pro",
+    "profile": "AtomGit-mimo-v2.5-pro"
+  },
+  "model_round_cap": 20,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider_requests_before_execution": 0,
+  "public_oracle_pass": true,
+  "purpose": "NON_SCIENTIFIC_TOOL_ROUTING_QUALIFICATION_AFTER_NATIVE_READ_FILE_CONTAMINATION",
+  "schema_version": "ace-sq0-v2r1-transport-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "SQ0_V2R1_TRANSPORT_QUALIFICATION_AUTHORIZED",
+  "success_rule": {
+    "must_finish_without_interface_error": true,
+    "must_use_mcp_file_system": true,
+    "must_use_mcp_simple_note": true,
+    "no_native_tool_attempts": true
+  },
+  "tool_call_cap": 16,
+  "transport_case_sha256": "fa534fe96e39272908332730f2a36ad2f3f945595e96e22bf0d3a7185b998f4d",
+  "v2_void_content_sha256": "0ad20a9299024e10e00583f2ea3d5492f73f2bd6dff94c7878747975ba55d783",
+  "v2r1_static_contract_content_sha256": "b146db6d2357ee3a1a5ce1edd8868938623c96021b500f7f2c76abe1bd2b6d76",
+  "v2r1_static_qualification_content_sha256": "a762ac3ac8811bdaa3e9a49d385f4258c6e5e49ee083d3b4be48844abf6b543d"
+}

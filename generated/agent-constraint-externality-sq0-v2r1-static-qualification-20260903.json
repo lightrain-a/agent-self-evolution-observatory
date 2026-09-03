@@ -1,0 +1,144 @@
+{
+  "authority": {
+    "f0_r1": false,
+    "p1": false,
+    "probe": false,
+    "sq0_v2r1_execution": false,
+    "transport_qualification": false
+  },
+  "case_count": 12,
+  "content_sha256": "a762ac3ac8811bdaa3e9a49d385f4258c6e5e49ee083d3b4be48844abf6b543d",
+  "contract_content_sha256": "b146db6d2357ee3a1a5ce1edd8868938623c96021b500f7f2c76abe1bd2b6d76",
+  "max_public_tool_calls": 25,
+  "minimum_headroom": 19,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "private_fixture_ids_used": false,
+  "protected_bundle_sha256": "dea58b7decc51e9c52722ede269f9b683c38b6f5f609e6a9eb36beb735c2f1bd",
+  "provider_requests": 0,
+  "public_oracles": [
+    {
+      "case_id": "SQ0V2R1-FG-01",
+      "headroom": 22,
+      "initial_snapshot_sha256": "4c2b0610718b5621a604ee8a85dada0b10a74a1fb44f71aa616680c3c488536a",
+      "kind": "FG_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 22,
+      "target_success": true,
+      "tool_call_cap": 44
+    },
+    {
+      "case_id": "SQ0V2R1-FG-02",
+      "headroom": 22,
+      "initial_snapshot_sha256": "a6f16df5cfe96a32d463e19145f5b5459e263511d893921c9f5c738f073bba8f",
+      "kind": "FG_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 22,
+      "target_success": true,
+      "tool_call_cap": 44
+    },
+    {
+      "case_id": "SQ0V2R1-FG-03",
+      "headroom": 22,
+      "initial_snapshot_sha256": "6bdef26328e2b7b31d6274a07e75877c59366eeecf9f0cad746131c1152f4c84",
+      "kind": "FG_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 22,
+      "target_success": true,
+      "tool_call_cap": 44
+    },
+    {
+      "case_id": "SQ0V2R1-FG-04",
+      "headroom": 22,
+      "initial_snapshot_sha256": "8f6083c2d7d9523406addfcf2ead8aa6130dfbbd31eb24ffd833ae3044a4e9af",
+      "kind": "FG_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 22,
+      "target_success": true,
+      "tool_call_cap": 44
+    },
+    {
+      "case_id": "SQ0V2R1-FG-05",
+      "headroom": 22,
+      "initial_snapshot_sha256": "a9e5b93ed32a136cbb575340683e42f006543592ec3cd8f5fda28825214ca108",
+      "kind": "FG_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 22,
+      "target_success": true,
+      "tool_call_cap": 44
+    },
+    {
+      "case_id": "SQ0V2R1-FG-06",
+      "headroom": 22,
+      "initial_snapshot_sha256": "51aa1633e54bccfb3a33e9b2c6b760063d144ca11aafe41949bed03029b49673",
+      "kind": "FG_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 22,
+      "target_success": true,
+      "tool_call_cap": 44
+    },
+    {
+      "case_id": "SQ0V2R1-TNF-01",
+      "headroom": 19,
+      "initial_snapshot_sha256": "f19584e7d8d304836da111881b38d57bdc390b96fb7b5e570661b61eea3079d9",
+      "kind": "TNF_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 25,
+      "target_success": true,
+      "tool_call_cap": 44
+    },
+    {
+      "case_id": "SQ0V2R1-TNF-02",
+      "headroom": 19,
+      "initial_snapshot_sha256": "9b3253268096de88d824b2f76f0c431f68161a4e361844baee3a28b1fbde2daa",
+      "kind": "TNF_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 25,
+      "target_success": true,
+      "tool_call_cap": 44
+    },
+    {
+      "case_id": "SQ0V2R1-TNF-03",
+      "headroom": 19,
+      "initial_snapshot_sha256": "c51bec54bd2142d7f1614e7bb0970069c57f2fc41d5345e430b2d739d1e4a89f",
+      "kind": "TNF_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 25,
+      "target_success": true,
+      "tool_call_cap": 44
+    },
+    {
+      "case_id": "SQ0V2R1-TNF-04",
+      "headroom": 19,
+      "initial_snapshot_sha256": "178a7709abf0c52864e28ccc8b3e05e9ace6ba2436df4e13dbefff4182b17624",
+      "kind": "TNF_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 25,
+      "target_success": true,
+      "tool_call_cap": 44
+    },
+    {
+      "case_id": "SQ0V2R1-TNF-05",
+      "headroom": 19,
+      "initial_snapshot_sha256": "e79bcbe834260166c794943b5989c7ee2bd3e519da021991172af93fec14898c",
+      "kind": "TNF_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 25,
+      "target_success": true,
+      "tool_call_cap": 44
+    },
+    {
+      "case_id": "SQ0V2R1-TNF-06",
+      "headroom": 19,
+      "initial_snapshot_sha256": "19b25f80f63fd8c1b71267cb5f34bb95d5a7c000f1c69a9ce3c271c4a99e1c40",
+      "kind": "TNF_JOIN_V2R1",
+      "private_fixture_ids_used": false,
+      "public_tool_calls": 25,
+      "target_success": true,
+      "tool_call_cap": 44
+    }
+  ],
+  "schema_version": "ace-sq0-v2r1-static-qualification-v1",
+  "scientific_outcomes_observed": 0,
+  "sq0_id": "ACE-SQ0-V2R1-TARGET-CHALLENGE-20260903",
+  "status": "SQ0_V2R1_PUBLIC_REACHABILITY_PASS"
+}

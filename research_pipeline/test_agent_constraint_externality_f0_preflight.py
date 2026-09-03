@@ -32,20 +32,26 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
     def test_identity_and_zero_outcome_boundary(self) -> None:
         for payload in self.data.values():
             self.assertEqual(payload["object_id"], OBJECT_ID)
-        for name in ("capability", "f0", "manifest"):
-            self.assertEqual(
-                self.data[name]["scientific_outcomes_observed"], 0
-            )
+        for name in ("capability", "f0"):
+            self.assertEqual(self.data[name]["scientific_outcomes_observed"], 0)
             self.assertEqual(self.data[name]["gpu_runs"], 0)
+        readiness = self.data["readiness"]
+        self.assertEqual(self.data["manifest"]["scientific_outcomes_observed"], readiness["f0_outcomes_observed"])
+        self.assertEqual(self.data["manifest"]["gpu_runs"], 0)
         self.assertEqual(self.data["capability"]["provider_calls"], 0)
         self.assertEqual(self.data["f0"]["provider_calls"], 0)
-        readiness = self.data["readiness"]
         self.assertEqual(
             self.data["manifest"]["provider_calls"],
             readiness["capability_provider_request_total"],
         )
-        self.assertFalse(readiness["f0_executed"])
-        self.assertEqual(readiness["f0_outcomes_observed"], 0)
+        if readiness.get("f0_adjudication_verdict") == "F0_UPDATE_UPTAKE_FAIL":
+            self.assertTrue(readiness["f0_executed"])
+            self.assertEqual(readiness["f0_source_outcomes_observed"], 8)
+            self.assertEqual(readiness["f0_probe_effects_observed"], 0)
+            self.assertEqual(readiness["f0_outcomes_observed"], 8)
+        else:
+            self.assertFalse(readiness["f0_executed"])
+            self.assertEqual(readiness["f0_outcomes_observed"], 0)
         self.assertFalse(readiness["p1_authorized"])
 
     def test_disjoint_outcome_blind_split(self) -> None:
@@ -131,7 +137,96 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_F0_SOURCE_AUTHORIZED":
+        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_SQ0_V2R1_TRANSPORT_READY_AFTER_V2_VOID":
+            self.assertEqual(readiness["status"], "SQ0_V2R1_TRANSPORT_QUALIFICATION_AUTHORIZED_READY")
+            self.assertEqual(readiness["next_authorized_action"], "RUN_SQ0_V2R1_TRANSPORT_QUALIFICATION")
+            self.assertEqual(readiness["sq0_v2_void_status"], "SQ0_V2_VOID_NATIVE_READ_FILE_SCHEMA_CONTAMINATION")
+            self.assertTrue(readiness["sq0_v2_void_active"])
+            self.assertEqual(readiness["sq0_v2r1_static_contract_status"], "SQ0_V2R1_STATIC_DESIGN_READY")
+            self.assertEqual(readiness["sq0_v2r1_static_qualification_status"], "SQ0_V2R1_PUBLIC_REACHABILITY_PASS")
+            self.assertLessEqual(readiness["sq0_v2r1_static_max_public_tool_calls"], 25)
+            self.assertGreaterEqual(readiness["sq0_v2r1_static_minimum_headroom"], 15)
+            self.assertEqual(readiness["sq0_v2r1_transport_contract_status"], "SQ0_V2R1_TRANSPORT_QUALIFICATION_AUTHORIZED")
+            self.assertIsNone(readiness["sq0_v2r1_transport_result_status"])
+            self.assertTrue(readiness["sq0_v2r1_transport_qualification_ready"])
+            self.assertFalse(readiness["sq0_v2_execution_authorized"])
+            self.assertFalse(readiness["f0_r1_execution_authorized"])
+            self.assertFalse(readiness["f0_authorized"])
+            self.assertFalse(readiness["p1_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_SQ0_V2_AUTHORIZED_AFTER_V1_TOO_EASY":
+            self.assertEqual(readiness["status"], "SQ0_V2_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY")
+            self.assertEqual(readiness["next_authorized_action"], "RUN_SQ0_V2_MIMO25PRO")
+            self.assertEqual(readiness["sq0_v2_static_contract_status"], "SQ0_V2_TARGET_CHALLENGE_STATIC_DESIGN_READY")
+            self.assertEqual(readiness["sq0_v2_static_qualification_status"], "SQ0_V2_PUBLIC_REACHABILITY_PASS")
+            self.assertLessEqual(readiness["sq0_v2_static_max_public_tool_calls"], 26)
+            self.assertGreaterEqual(readiness["sq0_v2_static_minimum_headroom"], 10)
+            self.assertEqual(readiness["sq0_v2_human_authorization_status"], "USER_AUTHORIZED_SQ0_V2_DEVELOPMENT_ITERATION_AFTER_V1_TOO_EASY")
+            self.assertEqual(readiness["sq0_v2_mcp_q1_status"], "SQ0_V2_MIMO25PRO_MCP_PREDISPATCH_PASS")
+            self.assertEqual(readiness["sq0_v2_mcp_q1_model_requests"], 0)
+            self.assertEqual(readiness["sq0_v2_execution_contract_status"], "SQ0_V2_MIMO25PRO_EXECUTION_AUTHORIZED")
+            self.assertTrue(readiness["sq0_v2_execution_authorized"])
+            self.assertFalse(readiness["f0_r1_execution_authorized"])
+            self.assertFalse(readiness["f0_authorized"])
+            self.assertFalse(readiness["p1_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_SQ0_V1_TOO_EASY_STOP":
+            self.assertEqual(readiness["status"], "SQ0_TARGET_CHALLENGE_TOO_EASY_STOP")
+            self.assertEqual(readiness["next_authorized_action"], "DESIGN_FRESH_SQ0_V2_TARGET_CHALLENGE")
+            self.assertEqual(readiness["sq0_v1_result_status"], "SQ0_TARGET_CHALLENGE_TOO_EASY_STOP")
+            self.assertEqual(readiness["sq0_v1_closeout_status"], "SQ0_V1_TOO_EASY_CLOSEOUT")
+            self.assertEqual(readiness["sq0_v1_usable_target_failure_count"], 0)
+            self.assertEqual(readiness["sq0_v1_usable_target_failure_rate"], 0.0)
+            self.assertEqual(readiness["sq0_v1_scientific_model_round_count"], 135)
+            self.assertEqual(readiness["sq0_v1_appworld_tool_call_total"], 190)
+            self.assertFalse(readiness["sq0_execution_authorized"])
+            self.assertFalse(readiness["f0_r1_execution_authorized"])
+            self.assertFalse(readiness["f0_authorized"])
+            self.assertFalse(readiness["p1_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_SQ0_AUTHORIZED_AFTER_F0_UPTAKE_FAIL":
+            self.assertEqual(readiness["status"], "SQ0_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY")
+            self.assertEqual(readiness["next_authorized_action"], "RUN_SQ0_MIMO25PRO_V1")
+            self.assertTrue(readiness["f0_executed"])
+            self.assertFalse(readiness["f0_authorized"])
+            self.assertFalse(readiness["p1_authorized"])
+            self.assertEqual(readiness["f0_adjudication_verdict"], "F0_UPDATE_UPTAKE_FAIL")
+            self.assertEqual(readiness["sq0_static_contract_status"], "SQ0_TARGET_CHALLENGE_V1_STATIC_DESIGN_READY")
+            self.assertEqual(readiness["sq0_static_qualification_status"], "SQ0_TARGET_CHALLENGE_V1_PUBLIC_REACHABILITY_PASS")
+            self.assertLessEqual(readiness["sq0_static_max_public_tool_calls"], 18)
+            self.assertGreaterEqual(readiness["sq0_static_minimum_headroom"], 6)
+            self.assertEqual(readiness["sq0_human_authorization_status"], "USER_AUTHORIZED_SQ0_TARGET_FAILURE_QUALIFICATION_AFTER_F0_UPTAKE_FAIL")
+            self.assertEqual(readiness["sq0_mcp_q1_status"], "SQ0_MIMO25PRO_MCP_PREDISPATCH_PASS")
+            self.assertEqual(readiness["sq0_mcp_q1_model_requests"], 0)
+            self.assertEqual(readiness["sq0_execution_contract_status"], "SQ0_MIMO25PRO_V1_EXECUTION_AUTHORIZED")
+            self.assertTrue(readiness["sq0_execution_authorized"])
+            self.assertTrue(readiness["f0_r1_sq0_execution_authorized"])
+            self.assertFalse(readiness["f0_r1_execution_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_F0_UPDATE_UPTAKE_FAIL":
+            self.assertEqual(readiness["status"], "F0_UPDATE_UPTAKE_FAIL")
+            self.assertEqual(readiness["next_authorized_action"], "STOP_CURRENT_F0_REVIEW_PROSPECTIVE_SOURCE_FAILURE_QUALIFICATION_PROPOSAL")
+            self.assertTrue(readiness["f0_executed"])
+            self.assertFalse(readiness["f0_authorized"])
+            self.assertFalse(readiness["p1_authorized"])
+            self.assertEqual(readiness["f0_source_target_success_count"], 8)
+            self.assertEqual(readiness["f0_source_target_failure_count"], 0)
+            self.assertEqual(readiness["f0_eligible_repair_family_count"], 0)
+            self.assertEqual(readiness["f0_source_scientific_model_round_count"], 74)
+            self.assertEqual(readiness["f0_source_appworld_tool_call_total"], 87)
+            self.assertEqual(readiness["f0_probe_episode_count"], 0)
+            self.assertEqual(readiness["f0_adjudication_verdict"], "F0_UPDATE_UPTAKE_FAIL")
+            self.assertEqual(
+                readiness["f0_uptake_root_cause_status"],
+                "CAPABILITY_GATE_DOES_NOT_IDENTIFY_SOURCE_FAILURE_AVAILABILITY",
+            )
+            self.assertEqual(
+                readiness["f0_uptake_root_cause_classification"],
+                "SOURCE_FAILURE_OPPORTUNITY_DESIGN_MISMATCH",
+            )
+            self.assertEqual(
+                readiness["f0_r1_proposal_status"],
+                "PROSPECTIVE_F0_R1_SOURCE_FAILURE_QUALIFICATION_PROPOSAL_ONLY",
+            )
+            self.assertFalse(readiness["f0_r1_sq0_execution_authorized"])
+            self.assertFalse(readiness["f0_r1_execution_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_F0_SOURCE_AUTHORIZED":
             self.assertEqual(readiness["status"], "F0_SOURCE_AUTHORIZED_READY")
             self.assertEqual(readiness["next_authorized_action"], "RUN_F0_SOURCE_MIMO25PRO")
             self.assertTrue(readiness["eligible_backbone_selected"])

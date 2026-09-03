@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-OLD-R43-VS-REPLACEMENT-MANIFEST-DIFF",
+  "recorded_date": "2026-09-01",
+  "status": "PASS",
+  "allowed_infrastructure_paths": [
+    "host.gpu_assignment.embedding",
+    "host.gpu_assignment.environment",
+    "host.gpu_assignment.llm",
+    "host.logical_name",
+    "host.python",
+    "host.pythonpath",
+    "host.runtime_manifest_file_sha256",
+    "host.runtime_manifest_sha256",
+    "host.runtime_tree_sha256",
+    "host.ssh_identity",
+    "models.embedding.device",
+    "models.embedding.root",
+    "models.llm.device",
+    "models.llm.root",
+    "runtime_image.execution_tag",
+    "runtime_image.execution_tag_same_content_identity",
+    "runtime_image.id",
+    "runtime_image.qualified_tag",
+    "source.checkout"
+  ],
+  "differences": [
+    {
+      "path": "host.gpu_assignment.embedding",
+      "old": "cuda:1",
+      "new": "cuda:0"
+    },
+    {
+      "path": "host.logical_name",
+      "old": "workstation3090",
+      "new": "ubuntu"
+    },
+    {
+      "path": "host.python",
+      "old": "/home/hdd/yutong/envs/vlm_fp_231_exact/bin/python3.11",
+      "new": "/home/wyt/anaconda3/envs/vlm_fp/bin/python3.11"
+    },
+    {
+      "path": "host.pythonpath",
+      "old": "/home/hdd/yutong/b1-memrl-r43-runtime/site",
+      "new": "/data/wyt/b1-memrl-r45m1-runtime/site"
+    },
+    {
+      "path": "host.runtime_manifest_file_sha256",
+      "old": "532c0da4ab3bcfaa9f02b18caa00cb77c62766c6b61ece5dc205dab18b4e1cc3",
+      "new": "1fa6eeccc02e8cde8dff359d6c0122b16fafa179aac07b654c83c386efcdfc48"
+    },
+    {
+      "path": "host.runtime_manifest_sha256",
+      "old": "ed146d1f040aaabbf8053ec821ba40e71085d98988b88ff5470ff465d6112cb6",
+      "new": "c796f04928f502c1e630aead00f113c248540ec10beb50d8245982285688d4fe"
+    },
+    {
+      "path": "host.runtime_tree_sha256",
+      "old": "353284315ca6481db3010ff83a5791424f0fcbb4d3d1830b46b3bfba9626dd28",
+      "new": "3035111300131aa2895cda9062442172fcafe2720ca648224b7ce13fede6f3e0"
+    },
+    {
+      "path": "host.ssh_identity",
+      "old": "yutong@222.20.126.60",
+      "new": "wyt@222.20.126.231"
+    },
+    {
+      "path": "models.embedding.device",
+      "old": "cuda:1",
+      "new": "cuda:0"
+    },
+    {
+      "path": "models.embedding.root",
+      "old": "/home/hdd/yutong/models/models--sentence-transformers--all-mpnet-base-v2/snapshots/e8c3b32edf5434bc2275fc9bab85f82640a19130",
+      "new": "/data/wyt/models/models--sentence-transformers--all-mpnet-base-v2/snapshots/e8c3b32edf5434bc2275fc9bab85f82640a19130"
+    },
+    {
+      "path": "models.llm.root",
+      "old": "/home/hdd/yutong/agent_p0_runtime/models/Qwen2.5-7B-Instruct",
+      "new": "/data/lry/models/Qwen2.5-7B-Instruct"
+    },
+    {
+      "path": "runtime_image.id",
+      "old": "sha256:a42dc29f8d95292f261a309a21ba21ceff3a9edef516c54d40e5e9b51f253f1a",
+      "new": "sha256:02c5cb67fff7bfddda09ca63e5318628d02d943767e6cd59069ece755253f036"
+    },
+    {
+      "path": "runtime_image.qualified_tag",
+      "old": "ubuntu2004_cuda1141_ssh:latest",
+      "new": "b1-memrl-r45m1-osinteraction:20260901"
+    },
+    {
+      "path": "source.checkout",
+      "old": "/home/hdd/yutong/b1-memrl-r41",
+      "new": "/data/wyt/b1-memrl-r45m1-source-c1b322ca"
+    }
+  ],
+  "non_whitelisted_scientific_differences": [],
+  "non_whitelisted_scientific_difference_count": 0,
+  "old_scientific_projection_sha256": "017e73eb2b1bc53e5ef730a116c77f38bd7935b07cee46de16601db1b1a9e820",
+  "replacement_scientific_projection_sha256": "017e73eb2b1bc53e5ef730a116c77f38bd7935b07cee46de16601db1b1a9e820",
+  "scientific_projection_byte_identical": true,
+  "confirmatory_outcomes_observed": 0,
+  "receipt_sha256": "b8121c6e8444c58ca6feb0538a2dca17c0201ddd1db78f9e879317828ee5c221"
+}

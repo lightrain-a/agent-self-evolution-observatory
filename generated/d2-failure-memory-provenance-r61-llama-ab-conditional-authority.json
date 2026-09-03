@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R61-LLAMA-AB-CONDITIONAL-AUTHORITY",
+  "recorded_date": "2026-09-02",
+  "status": "R61_LLAMA_FRESH_AB_CONDITIONAL_AUTHORITY_FROZEN_PRE_PROBE",
+  "bindings": {
+    "manifest_file_sha256": "2add9259f78d5d8a63aad10fc15c9d7cfaf7a14f58b670e61279930b79c81340",
+    "contract_file_sha256": "5cdd69bb358cfe0797e183474fa0a715cbe16b2b7cc06234e65f4cce3edc1b5d",
+    "contract_receipt_sha256": "5f452bed414463e3c3b33be1dfc678883fe375182ba7583e4d3e2a70b3604a83",
+    "r60_authority_file_sha256": "c704b4fab186b6fd93e3d3f5fd6a7b063beaf1c343da3bcd792667992e14c915",
+    "r54v2_receipt_file_sha256": "650e145a491f09555e40aa8c81c8598d8e1e2dc9febd906857fb8a3202f3aca3",
+    "selection_file_sha256": "39957119208258bd0bbd7a9a613cfa3403e9693229cb9452714c655774ad071c",
+    "frozen_retrieval_file_sha256": "fc906765f2f94b053996bef2d7a085b6a253390d3b855b72",
+    "source_receipt_file_sha256": "64b64cb2ca170482fafe4bb89db96071e896d1a952dc6c9a8002093849a000b0",
+    "runner_sha256": "3232be72be617e4e471d5f17d317f0aa83903fe983d3d8df6442dc8336ccc72c"
+  },
+  "conditional_on": "R60 Llama utilization PASS from exact frozen 40-arm schedule",
+  "authority": {
+    "A_B_execution_conditionally_after_R60_PASS": true,
+    "C_D_execution": false,
+    "external_provider_spend": false
+  },
+  "hard_limits": {
+    "second_A_B_run": false,
+    "unit_replacement": false,
+    "partial_effect_inspection": false,
+    "model_switch_after_R60": false
+  },
+  "scientific_authority": false,
+  "receipt_sha256": "2ab4dbcf611eca971e8a6f5331830fa72ed411e0f5d04d63b238d1812d5ac300"
+}

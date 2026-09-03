@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R41-MEMRL-G5-RUNTIME-EVIDENCE",
+  "recorded_date": "2026-08-29",
+  "role": "ZERO_CONFIRMATORY_OUTCOME_NATIVE_LLB_RUNTIME_SUPPORT_EVIDENCE",
+  "host": "workstation3090",
+  "source_repo": "https://github.com/MemTensor/MemRL",
+  "source_revision": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+  "source_clean": true,
+  "docker_server": "20.10.8",
+  "python_runtime": "/home/hdd/yutong/envs/vlm_fp_231_exact/bin/python3.11",
+  "python_support_dependencies": {
+    "docker": "7.1.0",
+    "pydantic": "2.13.4"
+  },
+  "source_file_sha256": {
+    "3rdparty/LifelongAgentBench/scripts/dockerfile/os_interaction/default": "f4e7b3d4298777fcc6b955e2853e7d38a8d50916b1853c3fefe6d0b3a0a2f1fe",
+    "3rdparty/LifelongAgentBench/src/tasks/instance/os_interaction/container.py": "b8ec612a3aa024f110caaf40b44df07360830c991357e153f62c6ac6153b2300",
+    "3rdparty/LifelongAgentBench/src/tasks/instance/os_interaction/utility.py": "30f1dfd6517c5295e8bbf80ad83631a41cdd843656f048e93517910ad19c236c",
+    "data/llb/os_interaction_train.json": "d33513493856e6cdce2377a951a48a42686463eee1c92acb9d6b0a0320601e62",
+    "data/llb/os_interaction_val.json": "1804781d7e768e74cc9f9038fcdfcf373ff34d4edc668382d6d18cbf74f856d6"
+  },
+  "support_image": {
+    "tag": "ubuntu2004_cuda1141_ssh:latest",
+    "id": "sha256:a42dc29f8d95292f261a309a21ba21ceff3a9edef516c54d40e5e9b51f253f1a",
+    "created": "2021-09-08T03:47:40.78135987Z",
+    "size_bytes": 522460448,
+    "role": "support-only cached Ubuntu 20.04 image",
+    "source_default_image_equivalent_claimed": false,
+    "confirmatory_image_claimed": false,
+    "reason_used": "The host Docker daemon was reachable but Docker Hub and apt network access were unavailable. The cached Ubuntu image was used only to exercise the released OSInteractionContainer lifecycle without target evaluation."
+  },
+  "native_runtime_smoke": {
+    "class": "src.tasks.instance.os_interaction.container.OSInteractionContainer",
+    "image_argument_explicitly_overridden_for_support_only": true,
+    "labelled_containers_before": 0,
+    "basic_exec": {
+      "command": "echo G5_SUPPORT_OK",
+      "exit_code": 0,
+      "output": "G5_SUPPORT_OK\n",
+      "timeout_flag": false
+    },
+    "state_isolation": {
+      "first_container_wrote_marker": true,
+      "second_fresh_container_marker_absent": true,
+      "second_container_check_exit_code": 0
+    },
+    "timeout_semantics": {
+      "command": "sleep 3",
+      "configured_timeout_seconds": 1,
+      "exit_code": null,
+      "output": null,
+      "timeout_flag": true
+    },
+    "cleanup": {
+      "labelled_containers_after": 0,
+      "new_labelled_containers_remaining": 0
+    },
+    "pass": true
+  },
+  "training_support_evaluator_replay": {
+    "split": "data/llb/os_interaction_train.json",
+    "unit_id": "0",
+    "instruction_sha256": "8fc812b7186dc37112abd0ada02236e9bf78c513ba07856caf3610fa110b287c",
+    "skill_signature": ["awk", "cat", "cd", "chmod", "cp", "echo", "grep", "mkdir", "mv", "wc"],
+    "first_container": {
+      "initialization_exit_code": 0,
+      "evaluation_before_ground_truth_exit_code": 1,
+      "ground_truth_support_action_exit_code": 0,
+      "evaluation_after_ground_truth_exit_code_1": 0,
+      "evaluation_after_ground_truth_exit_code_2": 0,
+      "evaluation_replay_deterministic": true
+    },
+    "fresh_container": {
+      "initialization_exit_code": 0,
+      "evaluation_before_ground_truth_exit_code": 1,
+      "reset_replays_initial_state": true
+    },
+    "support_evaluator_calls": 4,
+    "validation_split_used": false,
+    "confirmatory_treatment_outcome_used": false,
+    "pass": true
+  },
+  "access_accounting": {
+    "confirmatory_validation_tasks_executed": 0,
+    "confirmatory_treatment_outcomes_observed": 0,
+    "training_support_evaluator_calls": 4,
+    "model_calls": 0,
+    "provider_calls": 0,
+    "gpu_scientific_runs": 0
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false
+}

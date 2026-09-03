@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "recorded_date": "2026-08-31",
+  "status": "EXECUTION_HOLD_REMOTE_STATE_UNKNOWN",
+  "canonical": {
+    "origin_main": "47a8ba35966149bfa6e205304b17c21af72d0804",
+    "working_head": "9e77edf0c7cca2c3928525619993c31bf3f80e23",
+    "branch": "paper/b1-continue-20260829",
+    "worktree": "/data/wyt/agent-self-evolution-observatory/worktrees/b1-continue-20260829",
+    "dirty_state_preserved": true,
+    "rebase_reset_clean_performed": false
+  },
+  "frozen_bindings": {
+    "R43": {
+      "path": "generated/d2-failure-memory-provenance-r43-memrl-g8-execution-manifest.json",
+      "file_sha256": "dbd810dce063f5bdaaf7c40038a3329166f8ad11441dd11b49034491bf753de2"
+    },
+    "R44": {
+      "path": "generated/d2-failure-memory-provenance-r44-human-execution-authorization.json",
+      "file_sha256": "155ff75eadbc286527a43cc54026f651832413a15eb79f5fd994bc4345a33ba3"
+    }
+  },
+  "authorized_chain": {
+    "source_build": "UNKNOWN_REMOTE_STATE",
+    "source_qualification": "NOT_EXECUTED_BY_THIS_CONTINUATION",
+    "utilization_qualification": "NOT_EXECUTED_BY_THIS_CONTINUATION",
+    "primary_32_clusters": "NOT_EXECUTED_BY_THIS_CONTINUATION"
+  },
+  "remote_execution_host": {
+    "ssh_identity": "yutong@222.20.126.60",
+    "logical_name": "workstation3090",
+    "connection_observations": [
+      "direct MCP-Yu SSH timed out",
+      "second direct MCP-Yu SSH timed out",
+      "69-to-60 SSH returned no route to host",
+      "Remote Desktop Windows host was online and Windows OpenSSH 9.5.4.1 was present",
+      "Remote Desktop Test-NetConnection reported 222.20.126.69:22 reachable",
+      "Remote Desktop Test-NetConnection reported 222.20.126.60:22 unreachable",
+      "aTrust agent, tunnel processes, and aTrustVNIC were running, but route print showed no active route for 222.20.126.60"
+    ],
+    "pid_ledger_checkpoint_attempt_count_verified": false,
+    "reason": "The frozen execution host has a host-specific route/reachability failure while 69 remains reachable. Unknown state cannot be converted to NOT_STARTED, RUNNING, COMPLETE, or STOP.",
+    "duplicate_runner_started": false,
+    "resume_attempted": false,
+    "scientific_outcome_opened": false
+  },
+  "zero_outcome_preparation": {
+    "r41_r47_python_compile": "PASS",
+    "r41_r47_unittest": "17_TESTS_PASS",
+    "published_paper_architecture": "COMPLETE_DESIGN_ONLY",
+    "powered_l1_prereg": "PREREGISTERED_NOT_EXECUTED_NEW_AUTHORITY_REQUIRED",
+    "robustness_prereg": "PREREGISTERED_NOT_EXECUTED_NEW_AUTHORITY_REQUIRED",
+    "reasoningbank_feasibility": "SOURCE_CHANNEL_AUDITED_PIN_BLOCKED",
+    "psmg_method_prereg": "PREREGISTERED_NOT_EXECUTED_NEW_AUTHORITY_REQUIRED"
+  },
+  "stop_hold_next_authority": {
+    "current": "HOLD_UNKNOWN_R45_REMOTE_STATE",
+    "safe_next_action": "When workstation3090 is reachable, inspect PID/PPID, durable journal, completed-source-units ledger, latest checkpoint, and attempt count before any resume decision.",
+    "new_scientific_authority_required_for": [
+      "powered L1",
+      "second backbone",
+      "label-corruption outcomes",
+      "distribution-shift outcomes",
+      "memory-budget outcomes",
+      "ReasoningBank transport outcomes"
+    ]
+  },
+  "confirmatory_outcomes_observed_by_this_continuation": 0,
+  "scientific_verdict": "NOT_IDENTIFIED"
+}

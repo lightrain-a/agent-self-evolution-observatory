@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-PRIMARY-PREIMPLEMENTATION-AUDIT-20260901",
+  "recorded_at": "2026-09-01T19:10:47+08:00",
+  "status": "PRIMARY_PREIMPLEMENTATION_HOLD_C_D_CONTROLLER_RULE_UNDERDETERMINED",
+  "role": "PRE_VALIDATION_OUTCOME_OPERATIONALIZATION_AUDIT",
+  "branch": "research/b1-memrl-replacement-20260901",
+  "code_head_at_audit": "9482573728b424a4f365c9d9132af1b4d03bde6d",
+  "live_origin_main_at_audit": "fdbadef46dfea32d203ebdd20ac0d0df23a28d3c",
+  "evidence": {
+    "psmg_method_design": {
+      "path": "generated/d2-failure-memory-provenance-psmg-method-design-r27.json",
+      "sha256": "4d96dcf98c26785463d9638bc0ce7ae78d76fc874db784bc18348cb0ef4a98f1"
+    },
+    "b1_governance_design": {
+      "path": "research_pipeline/b1_process_provenance_governance_design_20260827.json",
+      "sha256": "cd6a3d0fa8554b002046aecae30eeb7b8199b97436529dc0330a9d9dccfe2cff"
+    },
+    "r40_contract": {
+      "path": "generated/d2-failure-memory-provenance-r40-memrl-g5-preflight.json",
+      "sha256": "770edb5028b9cc39e8e24861115f78a94bdeac71226793dda85ee405bbbe35fd"
+    },
+    "r43_manifest": {
+      "path": "generated/d2-failure-memory-provenance-r43-memrl-g8-execution-manifest.json",
+      "sha256": "dbd810dce063f5bdaaf7c40038a3329166f8ad11441dd11b49034491bf753de2"
+    },
+    "replacement_manifest_v2": {
+      "path": "generated/d2-failure-memory-provenance-r45m1-host-migration-execution-manifest-v2.json",
+      "sha256": "3669c6fedbdb6e0f3c51d60fa2aff041aa8e5580761129c12bd82f8a774561cc"
+    },
+    "exact_information_adapter": {
+      "path": "research_pipeline/failure_memory_memrl_exact_information_adapter_r39.py",
+      "sha256": "c94353ca46c8cfb65cfae6218d2e03ae6946b37aa25e52ee83212e2dfe03afe2"
+    }
+  },
+  "findings": {
+    "A_B_structured_treatment_object_pre_frozen": true,
+    "A_B_frozen_field": "source_outcome_success",
+    "A_B_actionable_content_identity_required": true,
+    "C_D_conceptual_arm_semantics_pre_frozen": true,
+    "C_D_exact_controller_score_formula_found": false,
+    "C_D_exact_controller_thresholds_found": false,
+    "C_D_exact_governance_action_mapping_found": false,
+    "C_D_exact_calibration_dataset_or_fit_rule_found": false,
+    "post_source_outcome_controller_invention_allowed": false
+  },
+  "boundary": {
+    "source_build_may_continue": true,
+    "R46_source_qualification_may_execute_if_source_build_completes": true,
+    "R47_utilization_may_execute_if_R46_passes": true,
+    "primary_A_B_C_D_may_execute_under_current_closure": false,
+    "reason": "C_PSMG and D_nonprovenance_controller lack an exact pre-outcome executable controller rule; inventing one now would violate the claimed G8 freeze and the no-arm-semantics-change authority.",
+    "required_resolution": "before any primary validation treatment outcome, obtain a pre-existing content-addressed exact controller specification that was genuinely frozen before source/target outcome inspection, or create a separately human-authorized prospective scientific amendment that explicitly acknowledges the original G8 underspecification. Do not infer/tune the rule from R45-M1 source outcomes or R47 utilization outcomes."
+  },
+  "access_accounting_at_audit": {
+    "source_build_in_progress": true,
+    "validation_treatment_outcomes_observed": 0,
+    "primary_confirmatory_outcomes_observed": 0,
+    "partial_primary_effect_inspected": false
+  },
+  "scientific_verdict": "NO_PRIMARY_VERDICT_PREVALIDATION_OPERATIONALIZATION_HOLD",
+  "receipt_sha256": "851c9a3cc73844d9e7e369062f486c77deb007674384a0da88d3cb5e62da8cd2"
+}

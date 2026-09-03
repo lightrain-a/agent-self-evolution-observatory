@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R50-R46M4-POINTER-REPAIR-CONTRACT",
+  "recorded_date": "2026-09-01",
+  "status": "PREVALIDATION_R46M4_POINTER_REPAIR_AUTHORIZED_ZERO_VALIDATION_OUTCOME",
+  "role": "COPY_ON_WRITE_SNAPSHOT_POINTER_REPAIR_ONLY",
+  "parent": {
+    "r49_contract_file_sha256": "270c95cdb67ee9f6e96d58e84d13e693b1424e91493eb0e75a88d1a9e4366a52",
+    "r49_contract_receipt_sha256": "d727c2b1f3be94d6a89939013e2adfb96a8a6cdf6d03f8045c74e2cdcb7e2144",
+    "r46m3_code_sha256": "473a090ea5952df5a608bcd02f03f8f71e8ced88418b3ae434651e54f1d8beaf"
+  },
+  "r46m3_failure": {
+    "classification": "QUALIFICATION_IMPLEMENTATION_INVALID_COPY_ON_WRITE_POINTER_ESCAPE",
+    "cause": "the cloned snapshot_meta.json retained absolute cube_dir/qdrant_dir paths to the original R45-M1 checkpoint; MemoryOS followed qdrant_dir back to the original snapshot during load",
+    "original_source_snapshot_mutated_by_loader": true,
+    "R46M3_support_results_admissible": false,
+    "R46M3_output_quarantine": "/data/wyt/b1-memrl-r45m1-execution/forensics/r46m3-invalid-absolute-snapshot-pointer-20260901/r46m3-output",
+    "validation_environment_resets": 0,
+    "validation_evaluator_calls": 0,
+    "validation_treatment_outcomes_observed": 0
+  },
+  "source_restoration": {
+    "final_snapshot_meta_sha256": "e8a01d077aadbd232adeca4141cb87c2153a82a7cf64a2a85ec0a3133f18c31d",
+    "final_textual_memory_sha256": "35dbc45d7a59f88cc6820f0c2b2ef88a1d0587ab6a4350cf936d9310483fe00d",
+    "restored_qdrant_meta_sha256": "5b1ca63524cf98a1b56611ad822ded4bfc294d5c04fb817c55138e41fb281836",
+    "live_qdrant_storage_sha256": "60a6299d22bd19e3700844497434125722853ff739fddb07c62b1d6a8e2baebb",
+    "diagnostic_created_snapshot_collection_removed": true,
+    "source_textual_memory_unchanged": true,
+    "source_live_qdrant_storage_unchanged": true
+  },
+  "authorized_change": {
+    "clone_final_source_snapshot": true,
+    "rewrite_working_copy_snapshot_meta_fields": [
+      "cube_dir",
+      "qdrant_dir"
+    ],
+    "new_cube_dir": "working_copy/cube",
+    "new_qdrant_dir": "working_copy/qdrant",
+    "original_source_snapshot_must_remain_byte_stable": true,
+    "all_other_snapshot_meta_fields_must_be_preserved": true
+  },
+  "scientific_invariants": {
+    "R46M3_snapshot_integrity_checks_changed": false,
+    "R46_native_load_changed": false,
+    "R46_native_retrieval_changed": false,
+    "R46_retrieve_k_changed": false,
+    "R46_similarity_threshold_changed": false,
+    "R46_rng_seed_changed": false,
+    "R46_validation_representatives_changed": false,
+    "R46M2_32_of_32_primary_support_rule_changed": false,
+    "provenance_polarity_rule_changed": false,
+    "validation_treatment_outcomes_observed": 0
+  },
+  "execution_scope": {
+    "one_R46M4_attempt": true,
+    "R46M3_may_not_be_resumed": true,
+    "if_R46M4_pass": "continue only to frozen R47M2",
+    "if_R46M4_support_stop": "STOP_WITHOUT_OPENING_UTILIZATION_OR_PRIMARY",
+    "threshold_or_unit_rescue_allowed": false
+  },
+  "receipt_sha256": "ef90fd4b19d626d381ff3931d2fb924c9fc72884a1345046701397a3f4ea557d"
+}

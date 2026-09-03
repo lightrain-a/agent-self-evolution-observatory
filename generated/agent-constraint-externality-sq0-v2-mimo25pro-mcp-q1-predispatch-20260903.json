@@ -1,0 +1,19 @@
+{
+  "bridge_source_sha256": "b0cc96f0a4898d7a8ae2754c303bbb5da21b23873d69ddafeabbb8d8d31d349d",
+  "bundle_sha256": "b965112016aa67e015a5bd82e2dc82ff20238c0fa749a3cae36b590ad1fd7031",
+  "case_id": "SQ0V2-FG-01",
+  "codingplan_model_requests": 0,
+  "codingplan_window_used_after": 167,
+  "codingplan_window_used_before": 167,
+  "content_sha256": "c82069a32abdf224aa2bc4c7420b59abf34c2e01e595c99c8d27722a15f1f766",
+  "model_id": "mimo-v2.5-pro",
+  "model_profile": "AtomGit-mimo-v2.5-pro",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "runner_source_sha256": "c9a5ca61910bb5bc5fd250464eeae3e189325821ed32a489658665dd0ef6ba53",
+  "schema_version": "ace-sq0-v2-mimo25pro-q1-v1",
+  "scientific_dispatch_sent": false,
+  "scientific_outcomes_observed": 0,
+  "session_mcp_progress_status": "TOOLS_LISTED",
+  "session_mcp_tool_count": 84,
+  "status": "SQ0_V2_MIMO25PRO_MCP_PREDISPATCH_PASS"
+}

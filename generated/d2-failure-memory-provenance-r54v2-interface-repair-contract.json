@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R54V2-INTERFACE-REPAIR-CONTRACT",
+  "recorded_date": "2026-09-02",
+  "status": "R54V2_INTERFACE_ONLY_REPAIR_FROZEN_ZERO_VALIDATION_OUTCOME",
+  "role": "QUALIFICATION_INTERFACE_REPAIR",
+  "bindings": {
+    "v1_qualification_contract_file_sha256": "1d1b1aaa59e0e7a2bd83cbbbcf2dca753abc4608a6818e521e06062e72b0da72",
+    "v1_hold_file_sha256": "6438878535bd4d31fa99422d58953a4ddb6ea637780ff6681a8be597b6c884ae",
+    "v1_hold_receipt_sha256": "06f28fe8b3bf96114defd8a019ed52dcda69f59ad1f1b614cd94f113d7fbc298",
+    "v1_runner_sha256": "8fd4132c8337cba82c6df7cf9bc3566346d2b8b9ab2c2b21d5f5fbe3c0df33c7",
+    "v2_runner_sha256": "4163de18b0734aa8ac536bbae83eac929f7cd292355e6e1809b43d5ca12ac85e",
+    "r53_source_manifest_file_sha256": "8217d7fab3a27687560d143f1671769f004a3f1f12018c87f0b5ed31b34d2a67"
+  },
+  "allowed_change": {
+    "file_manifest_modified": false,
+    "runtime_manifest_copy_only": true,
+    "materialization": "derive exact 350 IDs from frozen train split using R53 selection_seed_string/order rule and verify selected_ids_sha256 before builder call"
+  },
+  "scientific_invariants": {
+    "source_count": 350,
+    "source_order_sha256": "a8b8f519e41522d4222e5cadde214b5c7318b7c307a620fbd0c8c9827c0443f4",
+    "fresh_cluster_count": 108,
+    "old_40_excluded": true,
+    "retrieve_k": 10,
+    "similarity_threshold": 0.5,
+    "primary_selection": "first 32 eligible by frozen rank",
+    "utilization_selection": "next 8 eligible by frozen rank",
+    "validation_environment_resets": 0,
+    "validation_evaluator_calls": 0,
+    "validation_treatment_outcomes_observed": 0
+  },
+  "forbidden": {
+    "source_bank_change": true,
+    "threshold_change": true,
+    "validation_unit_manual_replacement": true,
+    "outcome_based_selection": true,
+    "reuse_v1_partial_support": true
+  },
+  "scientific_authority": false,
+  "validation_execution_authority": false,
+  "receipt_sha256": "72821113088c8834d6da83bc7c6e3f4223d570b949dae422ae88679d91dd51e8"
+}

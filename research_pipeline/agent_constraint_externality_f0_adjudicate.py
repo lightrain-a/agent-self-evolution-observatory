@@ -184,14 +184,24 @@ def build_adjudication(
     repairs = json.loads(repairs_manifest_path.read_text(encoding="utf-8"))
     eligible = list(repairs["eligible_families"])
     if len(eligible) < 6:
-        return {
+        result = {
             "schema_version": "ace-f0-adjudication-v1",
             "object_id": OBJECT_ID,
             "verdict": "F0_UPDATE_UPTAKE_FAIL",
             "mandatory_stop": True,
             "eligible_family_count": len(eligible),
             "metrics": None,
+            "thresholds": {
+                "eligible_family_min": 6,
+                "mean_target_repair_gain_strictly_greater_than": 0,
+            },
+            "reason": "FEWER_THAN_SIX_FROZEN_REPAIR_FAMILIES",
+            "significance_claim": False,
+            "scientific_effects_observed": 0,
+            "further_execution_authority": False,
         }
+        result["content_sha256"] = sha256_value(result)
+        return result
     compiler = json.loads(compiler_qualification_path.read_text(encoding="utf-8"))
     metrics = compute_metrics(AppendOnlyLedger(ledger_path), eligible)
     controls = {

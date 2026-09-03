@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R44-HUMAN-EXECUTION-AUTHORIZATION",
+  "recorded_date": "2026-08-29",
+  "status": "HUMAN_BOUNDED_EXECUTION_AUTHORITY_RECORDED",
+  "authorized_by": "explicit user directive in the current conversation to continue B1 experiments; subsequently reaffirmed with '继续'",
+  "bindings": {
+    "g8_manifest": {
+      "path": "generated/d2-failure-memory-provenance-r43-memrl-g8-execution-manifest.json",
+      "sha256": "dbd810dce063f5bdaaf7c40038a3329166f8ad11441dd11b49034491bf753de2",
+      "receipt_sha256": "ed496819814765359a85f190c71de04f7c19c9788da27784b7c588b1ab5f2fce"
+    },
+    "synthetic_stack": {
+      "path": "generated/d2-failure-memory-provenance-r43-synthetic-stack-smoke.json",
+      "sha256": "52446b14ab02ce7d1b00a449eca126248d0ab5d60df9852d99b297a6be76a92d",
+      "receipt_sha256": "abd02364984657e25430b26fe111225566adc1ae9bfc658f14392f93b092133e"
+    }
+  },
+  "authorized_scope": {
+    "source_build": {
+      "authorized": true,
+      "count": 1,
+      "exact_selected_source_tasks": 128,
+      "source_selection_sha256": "30e7ad6b4c02c25da3fe2e292bbf598ddaf4fad8c5f7494a95d7fd2e6911fb80",
+      "external_provider_spend": false
+    },
+    "utilization_qualification": {
+      "authorized_conditionally_after_source_qualification": true,
+      "count": 1,
+      "exact_clusters": 8,
+      "arms": [
+        "U0_no_memory",
+        "U1_true_memory",
+        "U2_null_memory",
+        "U3_reversed_memory",
+        "U4_shuffled_memory"
+      ]
+    },
+    "primary_confirmatory": {
+      "authorized_conditionally_after_source_and_utilization_qualification": true,
+      "count": 1,
+      "exact_clusters": 32,
+      "arms": [
+        "A_content_only",
+        "B_raw_provenance",
+        "C_PSMG",
+        "D_nonprovenance_controller"
+      ]
+    }
+  },
+  "hard_limits": {
+    "rerun_after_observing_effect": false,
+    "outcome_driven_unit_replacement": false,
+    "model_or_embedding_change": false,
+    "runtime_image_change": false,
+    "threshold_or_effect_floor_change": false,
+    "arm_semantics_change": false,
+    "optional_stopping_on_effect": false,
+    "historical_evidence_pooling": false,
+    "second_backbone": false,
+    "external_provider_calls": false
+  },
+  "authority": {
+    "execution": true,
+    "local_gpu": true,
+    "external_provider_spend": false,
+    "scientific_belief": false,
+    "paper_claim_expansion": false,
+    "submission": false
+  },
+  "failure_routing": {
+    "source_qualification_failure": "SUPPORT_STOP_NO_BEHAVIORAL_VERDICT",
+    "utilization_qualification_failure": "OPERATIONALIZATION_STOP_MEMORY_NOT_BEHAVIORALLY_USED",
+    "runtime_failure": "EXECUTION_DIAGNOSTIC_ONLY_NO_SCIENTIFIC_UPDATE"
+  },
+  "receipt_sha256": "58de2e81e998db7c8f5321e6985fa477be9037247a0fffc197f943533dafc3cf"
+}

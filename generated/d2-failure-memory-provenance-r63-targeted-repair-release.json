@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R63-TARGETED-REPAIR-RELEASE",
+  "recorded_date": "2026-09-03",
+  "status": "R63_TARGETED_REPAIR_MANUSCRIPT_RELEASE_PASS",
+  "role": "PAPER_ONLY_TARGETED_REPAIR_ZERO_SCIENTIFIC_AUTHORITY",
+  "title": "Does Memory Provenance Matter? Provenance Shifts Agent Behavior but Adds Little Terminal Value Beyond Memory Content",
+  "parent_scientific_adjudication": {
+    "file": "generated/d2-failure-memory-provenance-r62-cross-backbone-l2-adjudication.json",
+    "file_sha256": "67c1848831c93839697262c0626ee0c107c4643f7f94d440ad34fa7f41b6c572",
+    "receipt_sha256": "8a9ea03a0fdead265a90573aa09240237020422394bac95890985bf4f5960956"
+  },
+  "targeted_repairs": [
+    "Disclose that full350 source-bank capacity was chosen after a zero-outcome diagnosis of the earlier 128-source support stop, while the R53 rebuild, fresh disjoint target selection, treatment schedule, and target outcomes remain prospective.",
+    "Disclose that the Llama study reuses the Qwen/MemRL-generated source memories and frozen retriever outputs, so it is executor-backbone replication rather than writer/retriever replication."
+  ],
+  "release_artifacts": {
+    "pdf": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-r63-20260903.pdf",
+      "bytes": 251288,
+      "sha256": "5a929a14c7313ebc44aac1fc70d367b0df5226c28b0bb20aa08aaedf9f0f55e5"
+    },
+    "source_zip": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-r63-20260903-source.zip",
+      "bytes": 75013,
+      "sha256": "ac31427db1df904a65f52b73a85e0f8786db5bcb9f3e8ed4da36ece7ed6bcd3f"
+    },
+    "supplement_zip": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-r63-20260903-supplement.zip",
+      "bytes": 9861,
+      "sha256": "f2fcaca296514c508b6557181405f4daf6e7c243d4ec53101098549e2214a9ed",
+      "scientific_bytes_identical_to_r62": true
+    },
+    "stable_pdf": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE.pdf",
+      "bytes": 251288,
+      "sha256": "5a929a14c7313ebc44aac1fc70d367b0df5226c28b0bb20aa08aaedf9f0f55e5"
+    },
+    "b1_pdf": {
+      "path": "downloads/B1-Failure-Memory.pdf",
+      "bytes": 251288,
+      "sha256": "5a929a14c7313ebc44aac1fc70d367b0df5226c28b0bb20aa08aaedf9f0f55e5"
+    },
+    "stable_source_zip": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
+      "bytes": 75013,
+      "sha256": "ac31427db1df904a65f52b73a85e0f8786db5bcb9f3e8ed4da36ece7ed6bcd3f"
+    },
+    "stable_supplement_zip": {
+      "path": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip",
+      "bytes": 9861,
+      "sha256": "f2fcaca296514c508b6557181405f4daf6e7c243d4ec53101098549e2214a9ed"
+    }
+  },
+  "manuscript_qa": {
+    "pdf_pages": 14,
+    "page_size": "612 x 792 pts (letter)",
+    "all_fonts_embedded": true,
+    "overfull_boxes": 0,
+    "undefined_citations": 0,
+    "undefined_references": 0,
+    "raster_pages": 14,
+    "raster_dimensions_px": [
+      1020,
+      1320
+    ],
+    "blank_like_pages": [],
+    "edge_ink_suspects": []
+  },
+  "source_rebuild_qa": {
+    "rebuilt_pages": 14,
+    "rendered_pages_byte_identical_to_release_pdf": true,
+    "pdf_binary_hash_expected_to_vary_with_build_metadata": true
+  },
+  "claim_boundary": {
+    "scientific_values_changed": false,
+    "new_scientific_outcomes_opened": false,
+    "two_backbone_adjudication_changed": false,
+    "PSMG_efficacy_identified": false,
+    "L3_source_faithful_transport_complete": false,
+    "cross_model_pooling_performed": false
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "fa9c8610003e534f613008cbd4cafdbc34bf4ba49f373d6e6b4b7bbc5d5e2b59"
+}

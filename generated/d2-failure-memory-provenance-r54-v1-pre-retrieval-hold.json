@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R54-V1-PRE-RETRIEVAL-HOLD",
+  "recorded_date": "2026-09-02",
+  "status": "HOLD_R54V1_INTERFACE_SELECTED_IDS_NOT_MATERIALIZED",
+  "role": "ZERO_VALIDATION_OUTCOME_INTERFACE_FAILURE_EVIDENCE",
+  "failure": {
+    "exception_type": "KeyError",
+    "missing_key": "selected_ids",
+    "location": "R53 inherited _build_service_and_runner before service construction/native fresh retrieval",
+    "cause": "R53 source manifest intentionally freezes full350 by deterministic rule/hash without storing an explicit selected_ids array; inherited builder expects the materialized array."
+  },
+  "evidence": {
+    "r54_v1_runner_sha256": "8fd4132c8337cba82c6df7cf9bc3566346d2b8b9ab2c2b21d5f5fbe3c0df33c7",
+    "r54_v1_contract_sha256": "1d1b1aaa59e0e7a2bd83cbbbcf2dca753abc4608a6818e521e06062e72b0da72",
+    "r53_source_receipt_file_sha256": "64b64cb2ca170482fafe4bb89db96071e896d1a952dc6c9a8002093849a000b0",
+    "r53_source_receipt_sha256": "ce15c57e9c1274d1b40aca49850c7b0cbb5a8fe0656314d8bdfca3d7024e95c7",
+    "failed_output_root": "/data/wyt/b1-memrl-r53-full350-execution/fresh-support-r54",
+    "fresh_frozen_retrieval_created": false,
+    "fresh_validation_selection_created": false,
+    "original_source_snapshot_postfailure_key_hashes": {
+      "snapshot_meta_sha256": "fd89a8b7277957be54a7db357d55a2ee11a0044bdba1ff6a3267fc8e4bf792e0",
+      "textual_memory_sha256": "019941879f637c5205cba99da2d485716715f544b07bd2fceefb511d8c44d875",
+      "qdrant_meta_sha256": "7ab537283d36e583b7da952d270625c1e68f8e55f6ed12be1e3b179e2ff0a712",
+      "qdrant_storage_sha256": "3d3370207670b3574412f8fd116d32d1dfa70b8ab0ac18b8ece972ce3c06a0b8"
+    }
+  },
+  "accounting": {
+    "validation_environment_resets": 0,
+    "validation_evaluator_calls": 0,
+    "validation_treatment_outcomes_observed": 0,
+    "fresh_support_rows_observed": 0
+  },
+  "adjudication": "INFRASTRUCTURE_INTERFACE_HOLD_NOT_SCIENTIFIC_SUPPORT_RESULT",
+  "authorized_repair": "versioned R54-v2 may materialize the already-frozen full350 IDs into an in-memory manifest copy solely for the inherited service builder; no file manifest/scientific rule changes.",
+  "receipt_sha256": "06f28fe8b3bf96114defd8a019ed52dcda69f59ad1f1b614cd94f113d7fbc298"
+}

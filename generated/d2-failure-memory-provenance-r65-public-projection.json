@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0",
+  "status": "B1_R65_SELECTIVE_PUBLIC_PROJECTION_PUBLISHED",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "title": "Does Memory Provenance Matter? Provenance Shifts Agent Behavior but Adds Little Terminal Value Beyond Memory Content",
+  "current_revision": "R65",
+  "contract_sha256": "dbf81e071aaca6270d710c084c1d9f6b5ec78497c28fc9912f40b8d417f14ac7",
+  "scientific_status": "READY",
+  "current_state": "SUBMISSION_READY",
+  "gate_clean_submission_ready": true,
+  "stable_hashes": {
+    "pdf": "5a929a14c7313ebc44aac1fc70d367b0df5226c28b0bb20aa08aaedf9f0f55e5",
+    "source_zip": "ac31427db1df904a65f52b73a85e0f8786db5bcb9f3e8ed4da36ece7ed6bcd3f",
+    "supplement_zip": "f2fcaca296514c508b6557181405f4daf6e7c243d4ec53101098549e2214a9ed"
+  },
+  "other_paper_rows_preserved": true,
+  "other_paper_registry_digest": "2bcdec3335bb0fda3def915546e8b997276f0377e66153339074172fab11a532",
+  "other_research_system_paper_digest": "2e2cb5b942570d55cc00772649f01e5c61660cf516d7a486da82be2b3bdff750",
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "bb57f4657abd80e6226b6a30e8a4a84ae73a2d4db9737c61cb92fcc78652836b"
+}
