@@ -4,7 +4,7 @@
 
 B1 不再把科学问题写成“failure-derived memory 是否更差”。当前最稳的对象是：**在 actionable content 与 target context 已知后，process provenance 是否还包含关于 downstream marginal utility 的额外信息；该信息通过哪个可观察通道进入 executor / governor；只有当它改变最优 memory-governance 决策时，provenance 才具有工程价值。**
 
-现有结果已经把最关键的 L2 blocker 真正关闭：L0 仍是观察关联；L1 仍只识别 outcome-conditioned writer-mode bundle；历史 R5/R19 的 L2 support/runner stop 继续保持原边界，不与新实验合并；但新的 R53--R57 prospective MemRL/OSInteraction 实验在 350 个 source tasks 上建立独立 memory bank，经 zero-outcome native-support gate 从旧 40 个 cluster 之外冻结 32 个 fresh primary clusters 与 8 个 utilization clusters，最终完成 64/64 个 byte-identical-content A/B treatment。A(content-only) terminal success 为 15/32，B(+ truthful provenance) 为 16/32，$\Delta=B-A=+0.03125$，exact paired sign-flip $p=1.0$，预注册 paired bootstrap 95% CI 为 $[0,0.09375]$，未达到 $|\Delta|\ge 0.15$ 的 practical-relevance floor。31/32 对 terminal outcome 完全一致。因此当前最强结论不再是“L2 未识别”，而是：**在该 support-qualified Qwen2.5-7B + MemRL + OSInteraction L2 setting 中，provenance 对 executor 是 behaviorally legible 的，但在固定 actionable content 后几乎没有转化为 terminal utility；结果与 qualified content-sufficiency 一致，而不是对真实效应精确为零的证明。** L3 source-faithful transport 仍未完成。
+现有结果已经把最关键的 L2 blocker 真正关闭，而且完成了第二 executor backbone 复制。L0 仍是观察关联；L1 仍只识别 outcome-conditioned writer-mode bundle；历史 R5/R19 的 L2 support/runner stop 继续保持原边界，不与新实验合并。新的 R53--R57 prospective MemRL/OSInteraction 实验在 350 个 source tasks 上建立独立 memory bank，经 zero-outcome native-support gate 冻结 32 个 fresh primary clusters 与 8 个 utilization clusters；Qwen2.5-7B-Instruct 上 A(content-only)=15/32、B(+ truthful provenance)=16/32，$\Delta=+0.03125$，exact paired sign-flip $p=1.0$，paired bootstrap 95% CI $[0,0.09375]$，未达到 $|\Delta|\ge0.15$ relevance floor。R59--R61 随后在**完全相同的 source bank、retrieval/content/order、32 个 units、A/B renderer、endpoint 和统计规则**上只替换 executor 为 Meta-Llama-3.1-8B-Instruct；Llama 自己先通过 utilization gate（U1-specific 8/8，placebo U2-vs-U0 5/8），再完成 64/64 A/B：$\Delta=0$，B-only/A-only=2/2，exact $p=1.0$，95% CI $[-0.125,0.125]$，同样未达到 15 pp relevance floor。两模型不做统计 pooling。当前最强结论因此是：**在同一 support-qualified MemRL/OSInteraction exact-information surface 上，raw provenance 对局部控制可见，但在 Qwen 与 Llama 两个独立 executor backbone 上都没有表现出预注册意义上的 terminal incremental value；这是 replicated low-terminal-value / qualified content-sufficiency evidence，而不是 universal zero-effect theorem。** L3 source-faithful transport 与 PSMG governor efficacy 仍未完成。
 
 ## 一条完整论文线
 
@@ -151,7 +151,13 @@ Qualified baselines：contribution-aware content-only、observed-return/Q rankin
 - **complete-only mechanism diagnostic**：A/B 第一条 executable action 在 9/32 clusters 不同，总步数在 7/32 不同，但 terminal outcome 仅 1/32 不同。这支持 `PROVENANCE_BEHAVIORALLY_LEGIBLE_LOW_TERMINAL_CONVERSION`：标签可以扰动局部控制，但几乎没有增加最终任务效用。
 - **R57 adjudication**：`L2_PROVENANCE_ONLY_COMPLETE_QUALIFIED_CONTENT_SUFFICIENCY_LOW_TERMINAL_VALUE`。不能写成 provenance 的真实效应“精确为零”，也不能把一个 task 的差异升级为普遍机制。
 
-下一步 robustness 不再重建同一个 Qwen source bank，而优先做 **executor-backbone replication**：冻结 R54 的同一 32 个 fresh units、同一 retrieval/content/order/A-B renderer，仅把 executor backbone 从 Qwen2.5-7B-Instruct 换成独立模型。这样最低成本地检验“behaviorally legible but low terminal conversion”是否跨 executor 成立，而不重新引入 source-bank coverage 随机性。
+### E6 Executor-backbone replication（R59--R62，已完成）
+
+- **只换 executor**：source bank、R54 retrieval/content/order、32 个 primary units、8 个 utilization units、A/B renderer、terminal evaluator、随机化与分析规则全部保持冻结；模型从 Qwen2.5-7B-Instruct 换为 Meta-Llama-3.1-8B-Instruct。
+- **R59 parser qualification**：3/3 source-side probes 在原生 prompt 下产生可解析非空 executable action；未打开 validation outcome。
+- **R60 utilization**：40/40 arms 完成，U1-specific first-action divergence=8/8，U2-vs-U0 placebo divergence=5/8，满足 promotion gate，因此低 terminal effect 不能归因于 memory first stage 失败。
+- **R61 primary**：64/64 A/B 完成；$\Delta=B-A=0$，B-only=2、A-only=2、discordant=4，exact two-sided sign-flip $p=1.0$，paired bootstrap 95% CI $[-0.125,0.125]$，15 pp relevance floor 未达到。
+- **R62 adjudication**：`CROSS_BACKBONE_L2_REPLICATION_COMPLETE_ROBUST_LOW_TERMINAL_VALUE_NO_POOLING`。Qwen $+3.125$ pp、Llama $0$ pp 分别报告，不做 post-hoc pooling；允许写成同一 substrate 上的 **two-backbone replicated low terminal value**，不能写成跨所有模型/任务的 zero-effect theorem。
 
 ## Fresh substrate G1–G8
 
@@ -181,7 +187,7 @@ Canonical literature anchors already used in the paper story: arXiv:2606.04990, 
 - **Fresh L2（R53--R57）**：已完整执行并识别。32 paired clusters 中 A=15/32、B=16/32，$\Delta=+3.125$ pp，exact $p=1.0$，预注册 bootstrap CI $[0,9.375]$ pp，未达到 15 pp relevance floor；31/32 terminal pairs 相同。允许的结论是 **qualified content-sufficiency / low incremental terminal provenance value in this setting**，不是 universal null。
 - **Behavioral channel**：R55 utilization PASS；R56 A/B first action 9/32 不同，因此不能解释为“Agent 没看到/没用 memory 或 provenance”。更准确的机制描述是 provenance 可改变局部轨迹，但 terminal conversion 很低。
 - L3：source-faithful motivating-runtime transport debt 未关闭。
-- 第二 backbone：尚未执行；必须作为新 prospective replication，固定 R54 content/retrieval surface 后只替换 executor backbone，不能用来 outcome-rescue R56。
+- **第二 backbone（R59--R62）**：已 prospectively 完整执行。Meta-Llama-3.1-8B-Instruct parser 3/3 PASS、utilization 8/8-specific vs 5/8-placebo PASS；primary 32 pairs 中 $\Delta=0$，B-only/A-only=2/2，exact $p=1.0$，bootstrap CI $[-12.5,12.5]$ pp，仍低于 15 pp relevance floor。与 Qwen 结果只做 descriptive replication，不 pooling。
 - PSMG：已形式化为 prospective governance method，但 C/D controller efficacy 仍 `NOT_IDENTIFIED`；R56 A/B 不能被包装成 PSMG performance claim。
 
 ## 可复用研究经验
