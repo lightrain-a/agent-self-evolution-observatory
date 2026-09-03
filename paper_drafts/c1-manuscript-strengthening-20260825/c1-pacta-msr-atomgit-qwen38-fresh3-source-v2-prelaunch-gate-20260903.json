@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH3-SOURCE-V2-PRELAUNCH-20260903",
+  "status": "FRESH3_ATOMGIT_MSR_SOURCE_PRELAUNCH_PASS",
+  "source_runtime_v2_rebind_git_sha": "b339aff7eb85d730bca77553da69b033f3261e70",
+  "runtime88_closure_git_sha": "5ae803ed27746ba5003e350b372f3403f2c73bc0",
+  "runtime_qualification_sha256": "85d294f49d389601c10042fb0fd11096c82c93ddb2f0571ccd955f031937a5fe",
+  "source_contract_sha256": "434658d7e4e6fe21eab39e91e0288ed25e3c0ee7091b5d84f688c9b5f63ddcbc",
+  "source_schedule_instance_sha256": "883a527ceb513c07a023cd6dce782bd3012fb5e0d86a7167b812a349f7c7d13e",
+  "prelaunch_qualification_sha256": "c8d35097dd99c5e0f63ff178993309dc20c83cfa020f4910f31248ed5309a602",
+  "provider_config_sha256": "2ba6a72a7f849b9da513002818c2e9593443d000d33154c31676e1d93915fbc8",
+  "bridge_schema": "c1-minisweagent-ordinary-json-text-bridge-v1",
+  "source_max_completion_tokens": 32768,
+  "pacta_first_decision_budget": 2048,
+  "atomcode_subprocess_timeout_seconds": 900,
+  "qualified": 10,
+  "total": 10,
+  "provider_calls": 0,
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "next_gate": "Frozen non-scientific multistep smoke through the same Q0.3 bridge. Scientific source acquisition remains forbidden unless smoke PASS.",
+  "claim_authority": "NO_NEW_PACTA_MSR_EFFECT_EVIDENCE"
+}

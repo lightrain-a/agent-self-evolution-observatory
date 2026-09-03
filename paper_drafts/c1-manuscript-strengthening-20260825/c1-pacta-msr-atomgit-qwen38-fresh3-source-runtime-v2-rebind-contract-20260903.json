@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH3-SOURCE-RUNTIME-V2-REBIND-20260903",
+  "status": "FROZEN_BEFORE_FRESH3_RUNTIME_V2_QUALIFICATION_OUTCOME",
+  "scientific_role": "execution-path rebind only; no treatment or scientific schedule change",
+  "parent_source_runner_git_sha": "e4150daed3b982c6920d981d2fdcc60d695c1d38",
+  "runtime88_repair_git_sha": "863d5ef269afb380b345ad14d5f802e80c506fd1",
+  "old_runtime_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-msr-atomgit-qwen38-fresh3-runtime-20260903-v1/normalization-qualification.json",
+  "new_runtime_path": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-msr-atomgit-qwen38-fresh3-runtime-20260903-v2/normalization-qualification.json",
+  "old_runtime_failure": "empty v1 root after implementation-only 86-vs-88 preflight geometry blocker",
+  "new_source_root": "/data/wyt/agent-self-evolution-observatory/runs/c1-pacta-msr-atomgit-qwen38-fresh3-source-20260903-v2",
+  "runtime_qualification_sha": "supplied explicitly at execution and checked against new runtime path; not known or selected at preregistration",
+  "unchanged": {
+    "fresh3_pool_sha256": "3780fa80ee0bbfce01e3fd4f6bcabe6aaaa21111c0aa910ea7ce1bde302a9257",
+    "q02_source_budget": 32768,
+    "q02_first_decision_budget": 2048,
+    "atomcode_timeout_seconds": 900,
+    "q03_bridge": "c1-minisweagent-ordinary-json-text-bridge-v1",
+    "q03_closure_sha256": "077383ca894abc1c3986e01ef90b16628d2580a3058d66c2838a63796208fdac",
+    "frozen_source_schedule_sha256": "2e78838a46b3a37c09e07e2f0abdf0d9eb82d271e53d91245a41306d0e5b273f",
+    "frozen_probe_specs_sha256": "19f119fdb80e58427809a565d515900a14455394e79c31126645521702940c97",
+    "source_gate": "all 10 provenance-valid; any consumed-invalid source retires the entire fresh3 pool; no replacement or top-up",
+    "phase_order": ["prepare", "prelaunch_10_of_10", "non_scientific_multistep_smoke", "scientific_source_acquire"]
+  },
+  "authorization": "prepare/prelaunch/smoke may proceed only after fresh3 runtime-v2 is 20/20 PASS. Scientific acquire may proceed only after smoke PASS.",
+  "forbidden": [
+    "use runtime-v1 as if qualified",
+    "copy or fabricate a runtime qualification receipt",
+    "change Q0.3 bridge or provider config",
+    "change source schedule",
+    "retry or replace a consumed-invalid source",
+    "start acquire before smoke PASS"
+  ],
+  "provider_calls": 0,
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "probe_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "claim_authority": "NO_NEW_PACTA_MSR_EFFECT_EVIDENCE"
+}
