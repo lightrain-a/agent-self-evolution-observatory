@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "AGENT-SAFETY-G1-MCTA-INDEPENDENT-REVIEW-20260904",
+  "paper_id": "AGENT-SAFETY-R9",
+  "status": "INDEPENDENT_REVIEW_COMPLETE_REVISE_BEFORE_P0",
+  "date": "2026-09-04",
+  "conversation_id": "6a99a4c7-da60-83e8-807c-0ba75742e0e0",
+  "browser_thinking_label": "Extra High",
+  "exact_model_label_reverified_for_this_tab": false,
+  "long_response_dom_rendering_failed": true,
+  "short_followup_decisions": {
+    "verdict": "REVISE_MCTA_BEFORE_P0",
+    "largest_issue": "B_CAPABILITY_TRANSPORT_CONTRACT_TOO_WEAK",
+    "minimum_repairs": {
+      "capability_witness": "B_FREEZE_CANONICAL_SHARED_ACTION_GRAPH_AND_REQUIRE_BENIGN_COVERAGE_OF_ALL_CAPABILITY_RELEVANT_PRIMITIVES_TRANSITIONS",
+      "temporal_matching": "B_FIX_OR_EXACT_MATCH_HARMFUL_TASK_BROWSER_INITIAL_SNAPSHOT_BUDGET_SEED_AND_READ_ONLY_EVALUATION_WITH_EXECUTION_QUALITY_GATE",
+      "pair_admission": "B_FREEZE_STRUCTURAL_RUBRIC_AND_INCLUDE_ONLY_STATICALLY_PASSING_PAIRS_EVEN_IF_FEWER_THAN_TEN"
+    },
+    "post_repair": {
+      "scientific_object_distinct_enough": true,
+      "p0_role": "QUALIFY_LOCAL_CAPABILITY_WITNESS_AND_QUANTIFY_CAPABILITY_CENSORING_BEFORE_TEMPORAL_EFFECT",
+      "smallest_p1": "ONE_CAPABILITY_QUALIFIED_397B_BACKBONE_PLUS_ADMITTED_TWIN_PANEL_PLUS_FRESH_UPDATED_FROZEN_EXACT_SAME_SCHEDULE",
+      "erta_role": "SECONDARY_DISCOVERY_ONLY_UNLESS_DISAGREEMENT_SURVIVES_COMPLETE_OBJECTIVELY_ANCHORED_TRAJECTORIES"
+    }
+  },
+  "adjudication": "KEEP_DIRECTION_AFTER_REPAIRS_BUT_DO_NOT_AUTHORIZE_P0_YET",
+  "authority": {
+    "p0_execution": false,
+    "harmful_model_calls": false,
+    "claim_upgrade": false
+  }
+}
