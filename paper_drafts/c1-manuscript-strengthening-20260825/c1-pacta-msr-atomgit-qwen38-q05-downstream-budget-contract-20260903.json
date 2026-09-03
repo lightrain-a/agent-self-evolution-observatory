@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q05-DOWNSTREAM-BUDGET-20260903",
+  "status": "FROZEN_PRE_PROVIDER_OUTCOME",
+  "scientific_role": "downstream provider-budget qualification only",
+  "motivation": "Q0.4 was prospectively executed before fresh3 source outcomes and stopped on q04-writer-05 solely because the AtomCode/CodingPlan completion reached the frozen 2048-token ceiling. The bridge produced zero native-tool runtime events. Q0.5 therefore changes only the provider output ceiling while preserving exact Q0.4 synthetic conversations, bridge schema, model, timeout, and panel-specific final-text format constraints.",
+  "q04_prepare_sha256": "acbec282380d6e3d87708fe268bf2ea5c875bff145933ba8d14a07b28420e8d0",
+  "q04_result_sha256": "30e898fde3e83fa1332ac153d125cd2d3618f5b7f786c4cb3e79cb4082f3bbcb",
+  "q04_contract_sha256": "94e7c9f8b39ca06817958432355aee038adf73f926e34ecf941e26aa9baa137a",
+  "q03_closure_sha256": "077383ca894abc1c3986e01ef90b16628d2580a3058d66c2838a63796208fdac",
+  "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+  "resolved_model": "qwen3.8-27b",
+  "bridge_schema": "c1-ordinary-json-plain-text-bridge-v1",
+  "atomcode_timeout_seconds": 900,
+  "provider_wrapper_retries": 0,
+  "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+  "writer": {
+    "fixture_ids": ["q04-writer-01", "q04-writer-02", "q04-writer-03", "q04-writer-04", "q04-writer-05", "q04-writer-06"],
+    "candidate_max_tokens": [4096, 8192],
+    "selection_rule": "choose the first candidate with 6/6 PASS; do not execute larger candidates after a PASS",
+    "format_rule": "nonempty valid ReasoningBank memory with 1..3 '# Memory Item i' blocks",
+    "treatment_change": "output ceiling only; target messages and final format unchanged"
+  },
+  "binder": {
+    "fixture_ids": ["q04-binder-01", "q04-binder-02", "q04-binder-03", "q04-binder-04", "q04-binder-05", "q04-binder-06"],
+    "candidate_max_tokens": [512, 1024, 2048, 4096],
+    "selection_rule": "run only after writer qualification; choose the first candidate with 6/6 PASS; do not execute larger candidates after a PASS",
+    "format_rule": "nonempty single-line text with at most 60 whitespace-delimited words",
+    "treatment_change": "output ceiling only; target messages and final format unchanged"
+  },
+  "per_fixture_pass": [
+    "AtomCode returncode 0",
+    "exact qwen3.8-27b model identity",
+    "exactly one CodingPlan usage row",
+    "zero error events",
+    "zero output-truncation events",
+    "zero tool.* runtime events",
+    "outer output is exactly {text:string}",
+    "panel-specific final format passes"
+  ],
+  "overall_pass": "writer budget selected and binder budget selected",
+  "failure_action": "HOLD scientific writer/binder execution; no retry/reroll/fixture replacement/model switch",
+  "fresh3_source_outcomes_used_for_design": false,
+  "scientific_source_tasks_used_as_q05_fixtures": 0,
+  "writer_scientific_calls": 0,
+  "binder_scientific_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "claim_authority": "NO_MSR_METHOD_EFFECT_EVIDENCE"
+}
