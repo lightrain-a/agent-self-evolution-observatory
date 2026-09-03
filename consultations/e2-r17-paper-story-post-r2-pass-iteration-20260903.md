@@ -271,28 +271,28 @@ This makes E2-R17 a unifying interface analysis rather than a claim that every p
 
 This table should be used to sharpen the distinction, not to overclaim that all prior works use winner-only learning.
 
-## 10. Paper empirical arc after this iteration
+## 10. Paper empirical arc after SkillZip/Pro-style restructuring
 
-Recommended main-text order:
+Organize the main experiments by scientific questions, not internal Stage names or execution chronology.
 
-### Experiment 1 — Phenomenon / law
+### RQ1 — Does serving create a measurable learning-observation boundary?
 
-Show the serving-selection censoring object exists and is measurable.
+Measure what evidence exists in the realized search object `T_K` versus what remains visible under winner-coupled learning. Use mixed-pool/support evidence and the rescue/censoring identity only where its assumptions are valid.
 
-This can use historical E0/support evidence plus exact theoretical identity where valid.
+Claim boundary: this establishes **availability/censoring**, not that the omitted evidence is useful.
 
-### Experiment 2 — Closed global causal test: benefit not established
+### RQ2 — Does the learner-visible projection causally matter?
 
-Show the closed exact-same-pool DeepSeek result:
+Use the exact-same-pool, acting-fixed intervention. The completed DeepSeek global study belongs here:
 
 - global point estimate positive;
 - uncertainty overlaps zero;
 - reliable global MRW benefit not established;
-- the observed result is compatible with underpower, heterogeneity, or both.
+- result compatible with underpower, heterogeneity, or both.
 
-Do **not** label this result “clear heterogeneity,” “evidence against a universal rule,” or “demonstrated non-universality.” Its proper role is to record the failed global-benefit establishment and motivate a fresh, prospectively frozen moderator test.
+Do **not** label it “clear heterogeneity,” “evidence against a universal rule,” or “demonstrated non-universality.” Its role is to reject premature promotion of a global replacement rule and motivate a fresh prospective moderator hypothesis.
 
-### Experiment 3 — Prospective crossed moderator test
+### RQ3 — Is the projection effect prospectively structure-dependent?
 
 V3/R2 is the key confirmatory experiment:
 
@@ -300,24 +300,21 @@ V3/R2 is the key confirmatory experiment:
 projection × operationalized task/evidence structure
 ```
 
-The five skeleton interactions are the confirmatory scientific units.
+The five skeleton interactions are the confirmatory scientific units. `R=4` is measurement replication only.
 
-### Experiment 4 — policy consequence, only if Experiment 3 passes
+### RQ4 — Is there a controlled regime of genuine act/learn divergence?
 
-Compare the frozen observable projection policy with:
+Evaluate the separately frozen secondary procedural simple-effect gate only after the primary interaction gate. Interaction PASS and positive alternative-projection simple effects are distinct scientific claims.
 
-- always WIN-C;
-- universal MRW4;
-- difficulty-only routing;
-- mixedness-only routing.
+### RQ5 — Does the effect transport outside the author-constructed suite?
 
-Do not let policy success rescue a failed mechanism interaction.
+Only after the controlled branch warrants claim expansion, run one preregistered natural/out-of-family transport test using ordinary pre-update observables, exact same realized pools, and fixed acting. The primary endpoint is a positive future-skill simple effect, not router accuracy.
 
-### Experiment 5 — one claim-expansion transport test, only after controlled GO
+If transport fails, do not switch family, tune eligibility, mine subsets, add a benchmark zoo, or use a second backbone as rescue.
 
-Use one natural/public substrate or unseen natural family set.
+### Policy consequence — downstream, not a separate primary RQ
 
-This is where a method/deployment claim is earned, not in the synthetic router qualification.
+Only after RQ3 passes, compare the frozen observable projection policy with always WIN-C, universal MRW4, difficulty-only routing, and mixedness-only routing. Policy success cannot rescue a failed mechanism interaction.
 
 ## 11. Conditional post-V3 decision tree
 
@@ -329,12 +326,13 @@ Main conclusion:
 
 This PASS does **not** automatically establish that a rejected/nonwinner trajectory is better learning evidence than the served winner. That stronger statement requires the corresponding prespecified simple-effect evidence.
 
-Then authorize at most two targeted claim-expansion steps:
+Then evaluate the already-frozen **secondary controlled-divergence gate** before deciding what the paper can claim.
 
-1. **generic-alternative diagnostic control** if the paper wants a failure-specific mechanism claim;
-2. **one natural/out-of-family transport test** if the paper wants a deployable projection-policy claim.
+- If the secondary gate passes, the controlled act/learn-divergence statement is unlocked. The highest-value optional strengthening is one natural/out-of-family transport test.
+- If the secondary gate fails, retain the interaction/effect-modification result but keep the stronger divergence thesis locked. If standalone paper strength still requires one claim-expansion experiment, spend it on the same natural/out-of-family transport test rather than a second backbone or a benchmark zoo.
+- A generic-alternative / successful-nonwinner diagnostic is needed only if the paper explicitly wants a **failure-specific** causal mechanism claim; projection-level novelty does not require it.
 
-Second backbone can follow as robustness, but should not be used to rescue a failed transport or mechanism result.
+Second backbone is robustness only and should not be used to rescue a failed interaction, secondary divergence gate, or transport result.
 
 ### If V3 primary interaction FAILS
 
@@ -358,6 +356,28 @@ Before any V3 provider call, freeze the following interpretation:
 - PASS does **not** establish population-level task generality, a universal procedural-vs-binding law, failure-specific value, deployability, or automatically that MRW4 beats WIN-C in either cell.
 - **FAIL:** the proposed procedural-vs-binding moderator explanation is rejected. Replicate-level significance, aggregate averaging, router performance, or an appealing subset cannot rescue it. The strong moderator paper thesis collapses and only the narrower diagnostic/interface object remains for a genuine pivot decision.
 - `R=4` is measurement replication only and never converts five scientific units into twenty independent mechanism observations.
+
+### Frozen secondary controlled-divergence claim gate
+
+The protocol already prospectively reports all five `D_h,PROCEDURAL` and all five `D_h,BINDING`, but a later positive cell cannot be selected post-outcome as a confirmatory witness. Therefore freeze a separate claim-promotion rule now:
+
+```text
+SECONDARY_CONTROLLED_DIVERGENCE_GATE = PASS
+iff
+  primary V3 interaction gate == PASS
+  AND
+  D_h,PROCEDURAL > 0 for all five frozen skeletons.
+```
+
+This is `5/5` positive procedural simple effects; the all-positive configuration is one of the `2^5 = 32` possible sign patterns over the five frozen effects. It is used here as a **prospective finite-suite claim-adjudication rule**, not as a newly asserted inferential `p=1/32` test. All five magnitudes must be reported.
+
+A previous formulation using `mean_h D_h,PROCEDURAL > 0` plus a one-sided `2^5` sign-flip threshold at `1/32` is mathematically equivalent in directional strictness for the mean/sum statistic: if any procedural effect is negative, flipping that sign produces a larger statistic. Exact inferential sign-flip validity additionally requires an appropriate null sign-exchangeability/symmetry assumption, which this secondary claim gate does not newly assert.
+
+- **Secondary PASS:** may unlock the controlled-suite existential statement that an alternative learner projection outperformed the served-winner learner projection across all five preregistered procedural-transformation skeletons while exact pools and acting were held fixed.
+- **Secondary FAIL:** leaves the primary interaction verdict unchanged, but the stronger act/learn-divergence thesis remains locked; no favorable skeleton may be selected after outcomes.
+- This secondary gate does not establish natural-task transport, failure-specific uniqueness, deployability, cross-model generality, or population-level semantic law.
+
+The machine-readable freeze is `generated/e2-r17-v3-secondary-controlled-divergence-claim-gate-20260903.json`.
 
 ## 12. Recommended title direction
 
@@ -397,7 +417,9 @@ The current semantic moderator belongs in a later panel, not in the first concep
 
 From a paper-design perspective, **R2 is sufficiently specified to proceed to Stage A**. No further scientific redesign is justified before seeing the prospectively frozen support data.
 
-The only remaining executable gate is the already-prepared fresh DeepSeek identity qualification, followed by separate single-use Stage-A authorization if identity passes.
+The secondary simple-effect **claim-adjudication** rule is now frozen separately in `generated/e2-r17-v3-secondary-controlled-divergence-claim-gate-20260903.json`; it changes no scientific treatment, unit, or execution behavior.
+
+The only remaining executable gate is still the already-prepared fresh DeepSeek identity qualification, followed by separate single-use Stage-A authorization if identity passes.
 
 This note grants neither.
 

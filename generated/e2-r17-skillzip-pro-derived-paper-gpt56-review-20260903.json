@@ -1,0 +1,37 @@
+{
+  "artifact_type": "e2-r17-skillzip-pro-derived-paper-gpt56-review",
+  "date": "2026-09-03",
+  "review_scope": "zero_provider_skillzip_pro_derived_paper_and_secondary_claim_gate_audit",
+  "reviewer": {
+    "surface": "chatgpt_web_oracle_browser",
+    "model": "GPT-5.6 Sol",
+    "thinking": "Extra High, 4 of 5",
+    "model_verified": true,
+    "thinking_verified": true
+  },
+  "conversation_url": "https://chatgpt.com/c/6a99a0b7-0884-83e9-bab1-2c4d4b665f68",
+  "brief": {
+    "path": "oracle_briefs/E2_R17_SKILLZIP_ITERATION_NARROW_REVIEW_20260903.md",
+    "sha256": "d183ded60def437281707bb8f18386a173c631b63556b5ec9810d4eef7a77134"
+  },
+  "response": {
+    "path": "consultations/e2-r17-skillzip-pro-derived-paper-gpt56-review-20260903.md",
+    "raw_response_sha256": "1bba721ff78c523e3b7e32dd2a17d1ab2462ebb836a92dfaab5ebe711e680c77",
+    "oracle_transcript_sha256": "f032577eeb69c10753dcd238a4c6f128785a8b8be1fa9023dde56e9a2e0ccc41"
+  },
+  "audit": {
+    "sign_flip_combinatorial_correction": "PASS",
+    "secondary_5_of_5_procedural_claim_gate": "PASS_CONSERVATIVE_VALID",
+    "secondary_gate_separate_from_primary_interaction": "PASS",
+    "rq1_to_rq5_causal_architecture": "PASS",
+    "r2_execution_changed": false,
+    "outcome_leakage_detected": false,
+    "remaining_verdict_changing_zero_provider_fixes": [],
+    "wording_note": "Do not describe the secondary 5/5 finite-suite gate as an exact p=1/32 inferential result unless null sign-exchangeability/symmetry and the inferential test are separately frozen."
+  },
+  "verdict": "PASS_SKILLZIP_DERIVED_PAPER_ITERATION",
+  "provider_calls": 0,
+  "scientific_execution": false,
+  "stage_a_authority": false,
+  "stage_b_authority": false
+}

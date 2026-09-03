@@ -1,0 +1,67 @@
+{
+  "artifact_type": "e2-r17-v3-secondary-controlled-divergence-claim-gate",
+  "date": "2026-09-03",
+  "status": "FROZEN_ZERO_PROVIDER_CLAIM_ADJUDICATION_ONLY",
+  "scientific_r2": {
+    "commit": "29799c83c662887694db52acba4bb19e83131bb0",
+    "contract_path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r2-20260903.json",
+    "contract_sha256": "f5382c552f2e6644e4cbda408510119664a8c6f8502628586c9ff5583abd1234",
+    "unchanged": true
+  },
+  "scope": {
+    "changes_treatment": false,
+    "changes_tasks": false,
+    "changes_scientific_units": false,
+    "changes_provider_budget": false,
+    "changes_primary_interaction_gate": false,
+    "changes_execution_order": false,
+    "provider_calls": 0,
+    "scientific_execution": false
+  },
+  "preexisting_measurements": {
+    "reported_after_primary_gate": [
+      "D_h,PROCEDURAL for all five frozen skeletons",
+      "D_h,BINDING for all five frozen skeletons"
+    ],
+    "note": "All ten cell effects were already prospectively declared for reporting; this artifact freezes only the secondary claim-promotion rule before V3 outcomes."
+  },
+  "secondary_gate": {
+    "name": "SECONDARY_CONTROLLED_DIVERGENCE_GATE",
+    "evaluate_only_after_primary_v3_interaction_gate": true,
+    "pass_iff": [
+      "primary V3 interaction gate == PASS",
+      "D_h,PROCEDURAL > 0 for each of the five frozen skeletons"
+    ],
+    "directional_count_required": "5/5",
+    "finite_set_directional_pattern": "all-positive is 1 of the 32 possible sign patterns over five frozen effects",
+    "inferential_p_value_claimed": false,
+    "statistical_wording_boundary": "This is a prospective finite-suite claim-adjudication rule. Do not describe it as an exact p=1/32 test unless a separate null sign-exchangeability/symmetry assumption and inferential test are prospectively frozen.",
+    "report_all_five_magnitudes": true,
+    "no_post_outcome_cell_selection": true
+  },
+  "claim_authority_if_pass": {
+    "allowed": "On the frozen controlled suite, the alternative learner projection outperformed the served-winner learner projection across all five preregistered procedural-transformation skeletons while the realized search pools and served behavior were held fixed.",
+    "may_unlock_memorable_act_learn_divergence_thesis_on_controlled_suite": true,
+    "does_not_establish": [
+      "population-level task generality",
+      "natural-task transport",
+      "failure-specific unique value",
+      "deployability",
+      "cross-model generality"
+    ]
+  },
+  "if_secondary_gate_fails": {
+    "primary_v3_mechanism_verdict_unchanged": true,
+    "no_favorable_skeleton_selection": true,
+    "stronger_act_learn_divergence_claim_locked": true,
+    "allowed_next_claim_expansion": "separately preregistered out-of-family ordinary-observable projection transport test, only if primary V3 interaction passed"
+  },
+  "math_note": "Combinatorially, for five procedural skeleton effects and a mean/sum sign-flip statistic, the observed assignment can be the unique maximum among 32 sign assignments only when all five observed effects are positive; any negative effect can be sign-flipped to yield a larger statistic. Treating the resulting 1/32 tail fraction as an exact inferential p-value would additionally require an appropriate prospectively justified null sign-exchangeability/symmetry assumption.",
+  "authority": {
+    "fresh_identity_call": false,
+    "stage_a": false,
+    "stage_b": false,
+    "analyzer": false,
+    "paper_outcome_claim": false
+  }
+}
