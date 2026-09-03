@@ -233,6 +233,12 @@ SQ0_V2R1_EXECUTION_CONTRACT = GENERATED / "agent-constraint-externality-sq0-v2r1
 SQ0_V2R1_RESULT = GENERATED / "agent-constraint-externality-sq0-v2r1-mimo25pro-result-20260903.json"
 SQ0_V2R1_CLOSEOUT = GENERATED / "agent-constraint-externality-sq0-v2r1-closeout-20260903.json"
 SQ0_V2R1_ROOT_CAUSE = GENERATED / "agent-constraint-externality-sq0-v2r1-root-cause-20260903.json"
+SQ0_V3_STATIC_CONTRACT = GENERATED / "agent-constraint-externality-sq0-v3-target-challenge-contract-20260903.json"
+SQ0_V3_STATIC_QUALIFICATION = GENERATED / "agent-constraint-externality-sq0-v3-static-qualification-20260903.json"
+SQ0_V3_HUMAN_AUTHORIZATION = GENERATED / "agent-constraint-externality-sq0-v3-human-authorization-20260903.json"
+SQ0_V3_MIMO25PRO_Q1 = GENERATED / "agent-constraint-externality-sq0-v3-mimo25pro-mcp-q1-predispatch-20260903.json"
+SQ0_V3_EXECUTION_CONTRACT = GENERATED / "agent-constraint-externality-sq0-v3-mimo25pro-execution-contract-20260903.json"
+SQ0_V3_RESULT = GENERATED / "agent-constraint-externality-sq0-v3-mimo25pro-result-20260903.json"
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -973,6 +979,40 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         sq0_v2r1_closed=True
         sq0_v2r1_execution_authorized=False
 
+    sq0_v3_execution_authorized=False
+    sq0_v3_static_contract=read_json(SQ0_V3_STATIC_CONTRACT) if SQ0_V3_STATIC_CONTRACT.is_file() else {}
+    sq0_v3_static_qualification=read_json(SQ0_V3_STATIC_QUALIFICATION) if SQ0_V3_STATIC_QUALIFICATION.is_file() else {}
+    sq0_v3_human_authorization=read_json(SQ0_V3_HUMAN_AUTHORIZATION) if SQ0_V3_HUMAN_AUTHORIZATION.is_file() else {}
+    sq0_v3_q1=read_json(SQ0_V3_MIMO25PRO_Q1) if SQ0_V3_MIMO25PRO_Q1.is_file() else {}
+    sq0_v3_execution_contract=read_json(SQ0_V3_EXECUTION_CONTRACT) if SQ0_V3_EXECUTION_CONTRACT.is_file() else {}
+    if any((sq0_v3_static_contract,sq0_v3_static_qualification,sq0_v3_human_authorization,sq0_v3_q1,sq0_v3_execution_contract)):
+        if not all((sq0_v3_static_contract,sq0_v3_static_qualification,sq0_v3_human_authorization,sq0_v3_q1,sq0_v3_execution_contract)):
+            raise PreflightError("SQ0-V3 execution artifact set is incomplete.")
+        if not sq0_v2r1_closed:
+            raise PreflightError("SQ0-V3 requires frozen V2R1 closeout.")
+        for label,payload in (("SQ0-V3 static contract",sq0_v3_static_contract),("SQ0-V3 static qualification",sq0_v3_static_qualification),("SQ0-V3 human authorization",sq0_v3_human_authorization),("SQ0-V3 Q1",sq0_v3_q1),("SQ0-V3 execution contract",sq0_v3_execution_contract)):
+            if payload.get("object_id")!=OBJECT_ID: raise PreflightError(f"{label} object mismatch.")
+            c=payload.get("content_sha256");u=dict(payload);u.pop("content_sha256",None)
+            if c!=digest(u): raise PreflightError(f"{label} hash mismatch.")
+        if sq0_v3_static_contract.get("status")!="SQ0_V3_STATIC_DESIGN_READY" or sq0_v3_static_contract.get("case_count")!=12 or sq0_v3_static_contract.get("confirmatory_reuse") is not False:
+            raise PreflightError("SQ0-V3 static contract drifted.")
+        if sq0_v3_static_qualification.get("status")!="SQ0_V3_PUBLIC_REACHABILITY_PASS" or sq0_v3_static_qualification.get("minimum_headroom",0)<18 or sq0_v3_static_qualification.get("provider_requests")!=0:
+            raise PreflightError("SQ0-V3 static qualification drifted.")
+        if sq0_v3_human_authorization.get("status")!="USER_AUTHORIZED_SQ0_V3_AFTER_TRANSPORT_QUALIFICATION_PASS" or sq0_v3_human_authorization.get("authority",{}).get("sq0_v3_execution") is not True:
+            raise PreflightError("SQ0-V3 human authorization mismatch.")
+        if any(sq0_v3_human_authorization.get("authority",{}).get(k) for k in ("f0_r1","probe","p1","toolsandbox","appworld_ul","paper_claim")):
+            raise PreflightError("SQ0-V3 human authorization opened downstream authority.")
+        if sq0_v3_q1.get("status")!="SQ0_V3_MIMO25PRO_MCP_PREDISPATCH_PASS" or sq0_v3_q1.get("codingplan_model_requests")!=0 or sq0_v3_q1.get("scientific_dispatch_sent") is not False:
+            raise PreflightError("SQ0-V3 Q1 crossed zero-request boundary.")
+        if sq0_v3_execution_contract.get("status")!="SQ0_V3_MIMO25PRO_EXECUTION_AUTHORIZED" or sq0_v3_execution_contract.get("panel",{}).get("case_count")!=12:
+            raise PreflightError("SQ0-V3 execution contract drifted.")
+        futility=sq0_v3_execution_contract.get("execution_policy",{}).get("futility_early_stop",{})
+        if futility.get("acceptable_final_failure_counts")!=[9,10] or futility.get("stop_too_easy_if_target_success_count_exceeds")!=3 or futility.get("stop_too_hard_if_usable_failure_count_exceeds")!=10:
+            raise PreflightError("SQ0-V3 futility rule drifted.")
+        if sq0_v3_execution_contract.get("authority",{}).get("sq0_v3_execution") is not True or any(sq0_v3_execution_contract.get("authority",{}).get(k) for k in ("f0_r1","probe","p1","toolsandbox","appworld_ul","paper_claim")):
+            raise PreflightError("SQ0-V3 execution authority boundary drifted.")
+        sq0_v3_execution_authorized=True
+
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
         capability_result = read_json(CAPABILITY_R5_PARTIAL_RESULT)
@@ -1273,6 +1313,10 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif sq0_v3_execution_authorized:
+        readiness_status = "SQ0_V3_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
+        blocker = None
+        next_action = "RUN_SQ0_V3_MIMO25PRO"
     elif sq0_v2r1_closed:
         readiness_status = "SQ0_V2R1_TOO_EASY_CLOSED_V3_DESIGN_REQUIRED"
         blocker = (
@@ -1679,6 +1723,15 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "sq0_v2r1_root_cause_status": sq0_v2r1_root_cause.get("status"),
         "sq0_v2r1_semantic_failure_count": int(sq0_v2r1_root_cause.get("semantic_failure_count_after_terminal_newline_normalization", 0)),
         "sq0_v2r1_closed": sq0_v2r1_closed,
+        "sq0_v3_static_contract_status": sq0_v3_static_contract.get("status"),
+        "sq0_v3_static_qualification_status": sq0_v3_static_qualification.get("status"),
+        "sq0_v3_static_max_public_tool_calls": sq0_v3_static_qualification.get("max_public_tool_calls"),
+        "sq0_v3_static_minimum_headroom": sq0_v3_static_qualification.get("minimum_headroom"),
+        "sq0_v3_human_authorization_status": sq0_v3_human_authorization.get("status"),
+        "sq0_v3_mcp_q1_status": sq0_v3_q1.get("status"),
+        "sq0_v3_mcp_q1_model_requests": sq0_v3_q1.get("codingplan_model_requests"),
+        "sq0_v3_execution_contract_status": sq0_v3_execution_contract.get("status"),
+        "sq0_v3_execution_authorized": sq0_v3_execution_authorized,
         "sq0_v2_execution_authorized": sq0_v2_execution_authorized,
         "sq0_execution_authorized": sq0_execution_authorized and not sq0_v1_closed,
         "f0_r1_sq0_execution_authorized": sq0_execution_authorized and not sq0_v1_closed,
@@ -1690,7 +1743,9 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "f0_source_appworld_tool_call_total": int(f0_source_closeout.get("appworld_tool_call_total", 0)),
         "f0_probe_episode_count": int(f0_source_closeout.get("probe_episode_count", 0)),
         "capability_model_selection_state": (
-            "SELECTED_MIMO25PRO_SQ0_V2R1_TOO_EASY_CLOSED_V3_DESIGN_REQUIRED"
+            "SELECTED_MIMO25PRO_SQ0_V3_AUTHORIZED_AFTER_V2R1_CLOSEOUT"
+            if sq0_v3_execution_authorized
+            else "SELECTED_MIMO25PRO_SQ0_V2R1_TOO_EASY_CLOSED_V3_DESIGN_REQUIRED"
             if sq0_v2r1_closed
             else "SELECTED_MIMO25PRO_SQ0_V2R1_AUTHORIZED_AFTER_TRANSPORT_PASS"
             if sq0_v2r1_execution_authorized

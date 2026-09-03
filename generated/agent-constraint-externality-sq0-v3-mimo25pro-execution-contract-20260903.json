@@ -1,0 +1,80 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v3_execution": true,
+    "toolsandbox": false
+  },
+  "content_sha256": "50f1f16229ce910e1c9e91cb8631c3e1d34e69af8f1166c7682f47d3477f6446",
+  "execution_id": "CODINGPLAN-MIMO25PRO-SQ0-SEMANTIC-FAILURE-V3",
+  "execution_policy": {
+    "aggregate_read_only_after_all_terminal_or_futility_proven": true,
+    "durable_dispatch_before_model_request": true,
+    "futility_early_stop": {
+      "acceptable_final_failure_counts": [
+        9,
+        10
+      ],
+      "stop_too_easy_if_target_success_count_exceeds": 3,
+      "stop_too_hard_if_usable_failure_count_exceeds": 10,
+      "undispatched_cases_are_never_replaced": true
+    },
+    "partial_outcome_redesign": false,
+    "unknown_after_dispatch_replay": false
+  },
+  "gate": {
+    "non_semantic_failure_invalidates_qualification": true,
+    "usable_failure_rate_max": 0.9,
+    "usable_failure_rate_min": 0.75
+  },
+  "harness": {
+    "ai_session_naming": false,
+    "id": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "model_round_cap_per_case": 48,
+    "replacement_allowed": false,
+    "retry_allowed": false,
+    "sq0_bridge": true,
+    "subagents": false,
+    "tool_call_cap": 64
+  },
+  "human_authorization_content_sha256": "6af8ae9ffb5e722abeb04556adebd81f9da719661ca8607e25eefc5698b19255",
+  "inherited_transport_result_content_sha256": "349470c5efb8cffc27a0c33fb8fc5193885f75b01f60b334c91392e0d4664321",
+  "model": {
+    "context_window": 1000000,
+    "id": "mimo-v2.5-pro",
+    "profile": "AtomGit-mimo-v2.5-pro",
+    "retry_max_attempts": 1
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "panel": {
+    "case_count": 12,
+    "case_ids": [
+      "SQ0V3-FG-01",
+      "SQ0V3-FG-02",
+      "SQ0V3-FG-03",
+      "SQ0V3-FG-04",
+      "SQ0V3-FG-05",
+      "SQ0V3-FG-06",
+      "SQ0V3-TNF-01",
+      "SQ0V3-TNF-02",
+      "SQ0V3-TNF-03",
+      "SQ0V3-TNF-04",
+      "SQ0V3-TNF-05",
+      "SQ0V3-TNF-06"
+    ],
+    "confirmatory_reuse": false,
+    "development_iteration": 3,
+    "one_episode_per_case": true
+  },
+  "q1_content_sha256": "b29a8af3e6f11b889da233d769ee8e9c6ab57cc80edbec07754b81ad2d5357e1",
+  "schema_version": "ace-sq0-v3-mimo25pro-execution-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "selected_backbone_content_sha256": "9f4a649f436552a550fe3e9d54664d6b5eb879cf68dae36b23a91859edf1f18e",
+  "static_contract_content_sha256": "c78ac747dc097b60935abcbee1d1064541aee5ae68791546362b5517040d6894",
+  "static_qualification_content_sha256": "8c7e090f4e676cc88741b4ebd670a32a396a62bcff9c20de2d4380aa3a4e3230",
+  "status": "SQ0_V3_MIMO25PRO_EXECUTION_AUTHORIZED",
+  "transport_inherited_without_new_model_request": true
+}

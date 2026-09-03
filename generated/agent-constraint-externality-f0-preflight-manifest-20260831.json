@@ -187,8 +187,8 @@
       "sha256": "b4e44193048e77145606260237fd288e98b4c3c33f7acfcb20f6ab7dbfb0302d"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 13466,
-      "sha256": "fd177b75111e297a1a61dc13086b690da6c7a41226c7e26d202b6d12900de8b4"
+      "bytes": 13801,
+      "sha256": "d7ab9539f9f7f2bb9e736d5df8fca21264aea038fde717c28e57cb904768ac30"
     },
     "generated/agent-constraint-externality-f0-repairs-manifest-mimo25pro-20260903.json": {
       "bytes": 1098,
@@ -394,5 +394,5 @@
     "model_profile": "AtomGit-mimo-v2.5-pro",
     "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
   },
-  "status": "SQ0_V2R1_TOO_EASY_CLOSED_V3_DESIGN_REQUIRED"
+  "status": "SQ0_V3_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
 }
