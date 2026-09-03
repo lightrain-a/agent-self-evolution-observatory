@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-09-03T08:55:00Z",
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q0.3-PROJECT-INSTRUCTION-PRECEDENCE-20260903",
+  "status": "FROZEN_PRE_Q03_PROVIDER_CALL",
+  "scientific_role": "provider-interface qualification only; no C1 task or fresh-pool scientific outcome is used",
+  "root_cause": {
+    "retired_parent": "fresh2 source T0",
+    "parent_closeout_sha256": "c218f298069cbc9238c7c831bc09cb96808ece0bb0c736f29f2977088942a4d0",
+    "observed_failure": "AtomCode --no-tools run emitted native tool intent list_directory, runtime returned unknown or unmounted tool, then max_rounds=1 exited nonzero",
+    "mechanism": "AtomCode Qwen coding persona contains firm tool guidance preferring list_directory/read_file/grep/glob even when the corresponding tools are unmounted by --no-tools",
+    "fresh2_replay_forbidden": true
+  },
+  "model": {
+    "provider_profile": "AtomGit-qwen3.8-27b",
+    "resolved_model": "qwen3.8-27b",
+    "max_tokens": 32768,
+    "context_window": 262144,
+    "sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+    "atomcode_version": "5.0.9",
+    "invocation_timeout_seconds": 900,
+    "flags": ["--no-tools", "--ephemeral", "--no-telemetry", "--output-format=jsonl"],
+    "wrapper_retries": 0
+  },
+  "repair": {
+    "name": "PROJECT_INSTRUCTION_PRECEDENCE_BRIDGE",
+    "surface": ".atomcode.md in an isolated non-repository workdir",
+    "purpose": "override default coding-persona tool preferences while preserving ordinary MiniSWEAgent fenced-bash text as the only action surface",
+    "native_tools_mounted": false,
+    "mcp_mounted": false,
+    "host_repository_exposed": false,
+    "witness": "PACTA_BRIDGE_OK_V1",
+    "bridge_file_sha256_frozen_by_prepare": true
+  },
+  "panel": {
+    "fixture_count": 8,
+    "replicates_per_fixture": 3,
+    "total_calls": 24,
+    "history_depths_by_replicate": [0, 6, 18],
+    "fixtures_are_synthetic": true,
+    "real_c1_task_text_used": false,
+    "fresh2_task_text_used": false,
+    "tool_bait_categories": [
+      "directory_listing",
+      "filename_discovery",
+      "content_search",
+      "file_read",
+      "git_inspection",
+      "python_source_inventory",
+      "subdirectory_inspection",
+      "multi_signal_read_only_inspection"
+    ]
+  },
+  "pass_rule": {
+    "required": "24/24",
+    "returncode_zero": true,
+    "exact_model_identity": true,
+    "exactly_one_usage_row_per_invocation": true,
+    "exactly_one_codingplan_request_per_invocation": true,
+    "native_tool_event_count": 0,
+    "output_truncation_event_count": 0,
+    "max_rounds_event_count": 0,
+    "bridge_witness_required": true,
+    "thought_marker_required": true,
+    "exactly_one_fenced_bash_action_required": true,
+    "fixture_action_marker_required_in_bash": true
+  },
+  "failure_action": "STOP_PROJECT_INSTRUCTION_PRECEDENCE_REPAIR; do not create or execute fresh3; move to a separately preregistered denial/MCP protocol bridge qualification",
+  "pass_action": "close and content-address Q0.3, then create a wholly new fresh3 pool excluding all prior and retired task IDs before any scientific source call",
+  "forbidden": [
+    "reuse any fresh2 source task",
+    "include real SWE-bench/C1 task text in Q0.3",
+    "mount native AtomCode tools",
+    "mount MCP tools",
+    "allow AtomCode to inspect the experiment repository",
+    "retry a failed logical Q0.3 sample",
+    "change bridge wording after observing Q0.3 outputs",
+    "change fixture markers after observing Q0.3 outputs",
+    "open fresh3 after Q0.3 failure"
+  ],
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "probe_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "claim_authority": "NO_NEW_PACTA_MSR_EFFECT_EVIDENCE"
+}
