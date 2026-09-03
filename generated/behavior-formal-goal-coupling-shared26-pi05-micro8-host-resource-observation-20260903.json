@@ -1,0 +1,49 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-micro8-host-resource-observation-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "recorded_date": "2026-09-03",
+  "status": "MICRO8_HOST_RESOURCE_LIFETIME_REPAIR_REQUIRED",
+  "role": "OUTCOME_BLIND_RESOURCE_OBSERVATION_ONLY",
+  "preflight_runner": {
+    "path": "research_pipeline/behavior_formal_goal_pi05_micro8_full_transform_preflight.py",
+    "sha256": "1a95009f4c25dd42cc92d72fedb320d8bf5cdcdbd3a2b0184209ea74304752e8"
+  },
+  "attempts": [
+    {
+      "host": "222.20.126.69",
+      "memory_max_gib": 6,
+      "memory_swap_max_gib": 0,
+      "observed_memory_peak_gib": 6.0,
+      "cgroup_max_events_observed": 4684,
+      "oom_kill": 0,
+      "result_receipt_written": false,
+      "termination": "manually stopped after sustained reclaim at the finite cgroup ceiling",
+      "scientific_attempt_consumed": false
+    },
+    {
+      "host": "222.20.126.69",
+      "memory_max_gib": 10,
+      "memory_swap_max_gib": 0,
+      "observed_memory_current_gib_before_stop": 7.7,
+      "result_receipt_written": false,
+      "termination": "manually stopped after resource signal was established because continued parquet/video I/O was unnecessarily slowing concurrent SGP-14 training",
+      "scientific_attempt_consumed": false
+    }
+  ],
+  "operations_executed": {
+    "dataset_construction": true,
+    "video_and_transform_path_started": true,
+    "model_loaded": false,
+    "forward_pass": false,
+    "backward_pass": false,
+    "optimizer_update": false,
+    "policy_rollout": false,
+    "policy_outcome_read": false
+  },
+  "resource_inference": "The microbatch-8 LeRobot path can exceed 6 GiB of host cgroup memory before a single full-transform preflight completes. Therefore the dry-gradient runner must not overlap the decoded first-batch lifetime with the direct-device checkpoint restore peak.",
+  "authorized_resource_repair": "Restore the step-0 direct-device train state first, allow checkpoint-restore host temporaries to release, then create/iterate the frozen seed-42 num_workers=0 DataLoader. This changes memory lifetime only and cannot change sampler order, examples, model, seed, optimizer, effective batch, or outcomes.",
+  "scientific_outcomes_observed": 0,
+  "scientific_authority": false,
+  "formal_training_authorized": false,
+  "next_gate": "STREAMING_ACCUM8X8_STATE_FIRST_DATA_SECOND_REPAIR_DESIGN"
+}

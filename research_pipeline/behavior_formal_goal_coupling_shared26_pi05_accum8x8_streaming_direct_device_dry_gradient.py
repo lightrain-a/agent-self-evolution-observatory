@@ -143,12 +143,17 @@ def main():
             eps=list(cfg.data.base_config.dataset_kwargs.get('episodes',[]))
             if cfg.seed!=SEED or cfg.model.action_horizon!=ACTION_HORIZON or cfg.fsdp_devices!=FSDP or cfg.num_train_steps!=50000 or len(eps)!=EPISODES or len(set(eps))!=EPISODES: raise RuntimeError('scientific config drift')
             mesh=sharding.make_mesh(cfg.fsdp_devices); ds=jax.sharding.NamedSharding(mesh,jax.sharding.PartitionSpec(sharding.DATA_AXIS)); rs=jax.sharding.NamedSharding(mesh,jax.sharding.PartitionSpec())
-            loader=data_loader.create_b1k_data_loader(cfg,sharding=ds,shuffle=True,num_batches=K,skip_norm_stats=False); loader_iter=iter(loader); first_batch=next(loader_iter)
-            if first_batch[1].shape[0]!=MICRO: raise RuntimeError('first microbatch shape drift')
-            batch_ready=True
+            # Resource-only lifetime repair: restore the direct-device step-0 state before
+            # materializing the first decoded video/tokenizer microbatch.  The sampler uses
+            # its own frozen torch.Generator(seed=42), so this reordering cannot change data
+            # order or any scientific variable; it only avoids overlapping checkpoint-restore
+            # host-memory peak with the 7+ GiB LeRobot first-batch path observed on host 69.
             rng=jax.random.key(cfg.seed); train_rng,init_rng=jax.random.split(rng); state,state_shard=train_b1k.init_train_state(cfg,init_rng,mesh,resume=False); jax.block_until_ready(state)
             if int(jax.device_get(state.step))!=0: raise RuntimeError('state step drift')
             state_ready=True; gpu_state=gpu(); mem_state=jmem(dev)
+            loader=data_loader.create_b1k_data_loader(cfg,sharding=ds,shuffle=True,num_batches=K,skip_norm_stats=False); loader_iter=iter(loader); first_batch=next(loader_iter)
+            if first_batch[1].shape[0]!=MICRO: raise RuntimeError('first microbatch shape drift')
+            batch_ready=True
             @at.typecheck
             def grad_only(cfg_arg,rng_arg:at.KeyArrayLike,state_arg,batch_arg):
                 model=nnx.merge(state_arg.model_def,state_arg.params); model.train()

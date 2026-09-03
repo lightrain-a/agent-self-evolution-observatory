@@ -18,7 +18,7 @@ if [[ ! -e "$AUTH" ]]; then
     --runner "$ROOT/research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum8x8_streaming_direct_device_dry_gradient.py" \
     --worker "$ROOT/scripts/run_behavior_formal_goal_pi05_streaming_accum8x8_safe69_worker.sh" \
     --launcher "$ROOT/scripts/run_behavior_formal_goal_pi05_streaming_accum8x8_safe69.sh" \
-    --design "$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-streaming-direct-device-repair-design-20260902.json" \
+    --design "$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-streaming-direct-device-repair2-design-20260903.json" \
     --output "$AUTH"
 fi
 [[ ! -e "$FINAL" ]] || { echo "streaming result already exists; no replay"; exit 0; }

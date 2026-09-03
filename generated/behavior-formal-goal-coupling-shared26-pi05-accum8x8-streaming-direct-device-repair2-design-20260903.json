@@ -1,0 +1,80 @@
+{
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-accum8x8-streaming-direct-device-repair2-design-v1",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "child_id": "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION",
+  "recorded_date": "2026-09-03",
+  "status": "IMPLEMENTED_PENDING_DIRECT_DEVICE_PASS_NO_EXECUTION_AUTHORITY",
+  "parent_design": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-streaming-direct-device-repair-design-20260902.json",
+    "sha256": "750346375ded94237cca5f8f5eb68f69b664fa819ee1074097b67257672cc43d"
+  },
+  "new_resource_evidence": {
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-micro8-host-resource-observation-20260903.json",
+    "sha256": "498afdcadf8dcf91570a112fb30a35d367fe3785913772880e412d0f44bc876c",
+    "verdict": "MICRO8_HOST_RESOURCE_LIFETIME_REPAIR_REQUIRED"
+  },
+  "repair": {
+    "name": "STATE_FIRST_DATA_SECOND_HOST_LIFETIME_SCHEDULING",
+    "before": "Construct DataLoader, decode and retain first microbatch, then restore direct-device step-0 state.",
+    "after": "Restore direct-device step-0 state first; after restore temporaries have been released, construct the same frozen DataLoader and decode the same first microbatch.",
+    "scientific_semantics_changed": false,
+    "why_sampler_order_is_unchanged": "The torch DataLoader uses its own frozen Generator(seed=42); train-state JAX RNG construction and checkpoint restore do not consume that generator. The DataLoader configuration, shuffle=True, dataset, episode subset, and effective batch remain unchanged."
+  },
+  "candidate": {
+    "physical_micro_batch": 8,
+    "accumulation_steps": 8,
+    "effective_batch": 64,
+    "num_workers": 0,
+    "seed": 42,
+    "episode_count": 5200,
+    "action_horizon": 32
+  },
+  "runner": {
+    "path": "research_pipeline/behavior_formal_goal_coupling_shared26_pi05_accum8x8_streaming_direct_device_dry_gradient.py",
+    "sha256": "1a4e25392ce3766a12987edf0668aca7d5ffd918be80601b19daa1b77dd430bf"
+  },
+  "safe69_worker": {
+    "path": "scripts/run_behavior_formal_goal_pi05_streaming_accum8x8_safe69_worker.sh",
+    "sha256": "4fd79a182ac0515eee53e2098128f3dd7f987e5a24497b3683619832d2b2fa26"
+  },
+  "safe69_launcher": {
+    "path": "scripts/run_behavior_formal_goal_pi05_streaming_accum8x8_safe69.sh",
+    "sha256": "21f0d8595192c8d673e1f138b5e920737ed1969d4c84aaf1c9f570e1a68ee82e"
+  },
+  "resource_scope": {
+    "host": "222.20.126.69",
+    "memory_max_gib": 20,
+    "memory_swap_max_gib": 0,
+    "tasks_max": 512,
+    "cpu_affinity": "0-63",
+    "jax_platforms": "cuda",
+    "xla_python_client_mem_fraction": 0.9,
+    "admission_mem_available_min_gib": 24,
+    "admission_memory_psi_avg10_max_percent": 1.0,
+    "admission_io_psi_avg10_max_percent": 5.0
+  },
+  "scientific_invariants": [
+    "logical/effective batch remains 64",
+    "seed remains 42",
+    "the 5200 frozen episodes remain unchanged",
+    "sampler order remains unchanged",
+    "pi0.5 architecture and base checkpoint remain unchanged",
+    "normalization remains unchanged",
+    "optimizer and learning-rate schedule remain unchanged",
+    "action horizon remains 32",
+    "single-A100 topology remains unchanged",
+    "zero optimizer updates are authorized in the dry-gradient gate"
+  ],
+  "forbidden": [
+    "changing examples after observing any scientific effect",
+    "changing model/optimizer/seed/effective batch",
+    "retaining or comparing loss values",
+    "policy rollout or policy outcome read",
+    "automatic 4x16 advance if this repair fails",
+    "formal training before a separate later authority"
+  ],
+  "scientific_outcomes_observed": 0,
+  "scientific_authority": false,
+  "formal_training_authorized": false,
+  "next_gate": "DIRECT_DEVICE_MODEL_LOAD_PASS_THEN_CONTENT_ADDRESSED_SAFE69_STREAMING_8X8_AUTHORITY"
+}
