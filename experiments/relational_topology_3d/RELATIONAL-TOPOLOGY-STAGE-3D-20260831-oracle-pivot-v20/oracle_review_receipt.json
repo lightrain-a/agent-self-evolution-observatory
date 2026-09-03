@@ -1,0 +1,42 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "successor_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-oracle-pivot-v20",
+  "review_kind": "INDEPENDENT_ADVERSARIAL_PAPER_AND_EXPERIMENT_REVIEW",
+  "reviewed_repository_base": "11f0b76b85596dfd48823f1c8b6bc7dfde951e36",
+  "review_brief_path": "oracle_briefs/RELATIONAL_TOPOLOGY_3D_PAPER_EXPERIMENT_REVIEW_20260903.md",
+  "review_brief_sha256": "01283dee5c1c725f7d104c831ac7803b4bd55cb3563657e37b4602b65e8aa276",
+  "oracle": {
+    "host": "root@10.42.8.52",
+    "version": "0.18.0",
+    "engine": "browser",
+    "remote_chrome": "127.0.0.1:9222",
+    "model_requested": "gpt-5.6-sol",
+    "model_dom_verified": "GPT-5.6 Sol",
+    "model_dom_aria_checked": true,
+    "thinking_requested": "extra-high",
+    "thinking_dom_verified": "Extra High, 4 of 5",
+    "session_id": "relational-topology-3d-paper-experiment",
+    "conversation_id": "6a995dbf-9f40-83ee-b5eb-dbce39b51d74",
+    "prompt_submitted": true,
+    "status": "completed",
+    "error": null,
+    "started_at": "2026-09-03T11:44:06.500Z",
+    "completed_at": "2026-09-03T11:55:07.031Z",
+    "input_tokens": 5757,
+    "output_tokens": 8514,
+    "total_tokens": 14271
+  },
+  "oracle_artifacts_on_host52": {
+    "meta_path": "/root/.oracle/sessions/relational-topology-3d-paper-experiment/meta.json",
+    "meta_sha256": "ba853c807e097768d65f6bde28adc793711fc83b681b6ce2bd8e26a933d233f4",
+    "output_path": "/root/.oracle/sessions/relational-topology-3d-paper-experiment/output.log",
+    "output_sha256": "5fd836d248822b18babe9dc70f05fea29db78042bca80ee21dc7689827bf5816",
+    "transcript_path": "/root/.oracle/sessions/relational-topology-3d-paper-experiment/artifacts/transcript.md",
+    "transcript_sha256": "07d8e9593a0bd0b55ef3284ff7c692f9938c938ff7838445f6a755d389d645b6"
+  },
+  "verdict": "PIVOT",
+  "scientific_outcomes_read": 0,
+  "training_loss_used_as_evidence": false,
+  "p1_opened": false,
+  "review_scope_boundary": "DESIGN_AND_PAPER_INTERPRETATION_ONLY"
+}

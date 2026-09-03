@@ -1,0 +1,49 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "successor_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-oracle-pivot-v20",
+  "review_kind": "INDEPENDENT_ADVERSARIAL_R2_ZERO_OUTCOME_REVIEW",
+  "reviewed_revision_commit": "4ebb8aa1e1d862b81f7ec89a35105d7961a63546",
+  "r2_brief_commit": "23f902d30b19cdb67a55e54da322542935c33ac8",
+  "r2_brief_sha256": "f7dd35c77fd8aab74e8d5100ac0e5ae04b3ffc21aabf99a81e19b0db6b80f9f4",
+  "valid_review": {
+    "oracle_host": "root@10.42.8.52",
+    "oracle_version": "0.18.0",
+    "engine": "browser",
+    "model_dom_verified": "GPT-5.6 Sol",
+    "model_dom_aria_checked": true,
+    "thinking_dom_verified": "Extra High, 4 of 5",
+    "session_id": "relational-topology-3d-v20-r2c",
+    "conversation_id": "6a9966f1-6e80-83ee-83d2-873e35a6a0dd",
+    "prompt_submitted": true,
+    "status": "completed",
+    "started_at": "2026-09-03T12:24:13.180Z",
+    "completed_at": "2026-09-03T12:28:08.338Z",
+    "input_tokens": 4399,
+    "output_tokens": 3404,
+    "total_tokens": 7803,
+    "meta_sha256": "c733da31424571058e397d97a32f8bdcdea4ba937a07a86e2029414ad8dd02cf",
+    "output_sha256": "b24ab51ceff5284c70a486e9ebf1ff2bf0e8d35a289abff00e94e6565bbc5345",
+    "transcript_sha256": "d620be2211f7653d081ec8d987cc633bf641ddcd027a9b08a9d77d760ce9f8a6"
+  },
+  "excluded_invalid_attempts": [
+    {
+      "session_id": "relational-topology-3d-pivot-v20",
+      "reason": "ChatGPT too-many-requests overlay polluted model-picker automation; promptSubmitted=false; no review accepted."
+    },
+    {
+      "session_id": "relational-topology-3d-pivot-v20-2",
+      "reason": "Model/effort verified but ChatGPT rate-limit overlay prevented prompt commit; Oracle prompt-commit-timeout; no review accepted."
+    }
+  ],
+  "verdict": "PASS_ZERO_OUTCOME_P1_DESIGN",
+  "verdict_changing_fixes": [],
+  "non_blocking_implementation_notes": [
+    "Describe SGP-12 and SGP-14 as row-count-matched but exposure-different training regimes rather than implying stronger distribution matching.",
+    "The frozen executable compiler and final panel manifest must be the sole panel authority; no manual tuple substitution is allowed.",
+    "If the same physical base scene appears in both count-3 and count-4 panels, all observations from that scene must remain in one bootstrap cluster across counts.",
+    "The oracle localization claim remains conditional: it localizes attenuation to at-or-before the graph interface under the frozen shared decoder; it does not identify an internal SGP cause or prove decoder topology-insensitivity in general."
+  ],
+  "scientific_outcomes_read": 0,
+  "p1_opened": false,
+  "authority_granted_by_review": false
+}
