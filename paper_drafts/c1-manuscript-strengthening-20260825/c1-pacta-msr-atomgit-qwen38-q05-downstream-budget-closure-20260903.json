@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q05-DOWNSTREAM-BUDGET-20260903",
+  "status": "ATOMGIT_QWEN38_Q05_DOWNSTREAM_BUDGET_PASS",
+  "execution_git_sha": "270da990292c9054b1a578061eb1cdcd09a5c115",
+  "prepare_sha256": "a237522d322be41764626f8c480e577e64c26949fc47f2a3141a4a27b95891f0",
+  "result_sha256": "6ba075ea2e3854847c20203cc4cf246b5a82f038b0a9fcb18c484f219ed5cd98",
+  "writer_selected_max_tokens": 4096,
+  "writer_qualification": "6/6 PASS at first candidate 4096; 8192 not executed",
+  "binder_selected_max_tokens": 2048,
+  "binder_qualification": "512 failed by truncation on fixture 1; 1024 failed by truncation on fixture 3 after 2 passes; 2048 passed 6/6; 4096 not executed",
+  "native_tool_runtime_events": 0,
+  "bridge_schema": "c1-ordinary-json-plain-text-bridge-v1",
+  "scientific_interpretation": "The Q0.4 downstream bridge failure was caused by provider-managed reasoning consuming the low completion ceiling, not by tool interception or bridge-format incompatibility. Increasing only the completion ceiling while preserving byte-equivalent synthetic target conversations and unchanged final-text format constraints qualifies writer=4096 and binder=2048 for future scientific downstream stages.",
+  "fresh3_source_outcomes_used_for_design": false,
+  "scientific_source_tasks_used_as_q05_fixtures": 0,
+  "writer_scientific_calls": 0,
+  "binder_scientific_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "claim_authority": "NO_MSR_METHOD_EFFECT_EVIDENCE",
+  "next": "If and only if the fresh3 10/10 source gate passes, bind the same Q0.4 JSON plain-text bridge with writer max_tokens=4096 and binder max_tokens=2048 before scientific writer/binder execution."
+}
