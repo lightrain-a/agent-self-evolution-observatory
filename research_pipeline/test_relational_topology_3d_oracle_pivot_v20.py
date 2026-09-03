@@ -26,6 +26,20 @@ class RelationalTopologyOraclePivotV20Test(unittest.TestCase):
         self.assertEqual(x["scientific_outcomes_read"], 0)
         self.assertFalse(x["p1_opened"])
 
+    def test_r2_pass_is_content_addressed_and_grants_no_authority(self):
+        x = load("oracle_r2_review_receipt.json")
+        self.assertEqual(x["verdict"], "PASS_ZERO_OUTCOME_P1_DESIGN")
+        self.assertEqual(x["verdict_changing_fixes"], [])
+        self.assertTrue(x["valid_review"]["prompt_submitted"])
+        self.assertEqual(x["valid_review"]["model_dom_verified"], "GPT-5.6 Sol")
+        self.assertEqual(x["valid_review"]["thinking_dom_verified"], "Extra High, 4 of 5")
+        self.assertFalse(x["authority_granted_by_review"])
+        self.assertEqual(x["scientific_outcomes_read"], 0)
+        a = load("r2_adjudication.json")
+        self.assertEqual(a["state"], "ORACLE_R2_PASS_ZERO_OUTCOME_P1_DESIGN")
+        self.assertFalse(a["p1_authority_granted"])
+        self.assertFalse(a["test_lockbox_opened"])
+
     def test_pure_support_claim_is_rejected_by_input_dose(self):
         x = load("training_exposure_dose_audit.json")
         self.assertEqual(x["corpora"]["SGP-12"]["rows"], 12240)
@@ -34,7 +48,7 @@ class RelationalTopologyOraclePivotV20Test(unittest.TestCase):
         self.assertEqual(x["corpora"]["SGP-14"]["total_relation_edges"], 30600)
         self.assertAlmostEqual(x["derived_differences"]["relation_edge_dose_ratio_SGP14_over_SGP12"], 5 / 3)
         self.assertFalse(x["adjudication"]["SGP12_vs_SGP14_identifies_training_support_alone"])
-        self.assertEqual(x["adjudication"]["allowed_label"], "MATCHED_TRAINING_EXPOSURE_REGIMES")
+        self.assertEqual(x["adjudication"]["allowed_label"], "ROW_COUNT_MATCHED_BUT_EXPOSURE_DIFFERENT_TRAINING_REGIMES")
         self.assertFalse(x["adjudication"]["restart_required_for_topology_first_paper"])
 
     def test_primary_story_is_topology_first_and_sgp14(self):
@@ -42,7 +56,7 @@ class RelationalTopologyOraclePivotV20Test(unittest.TestCase):
         self.assertEqual(x["primary_scientific_object"]["model"], "SGP-14_PLUS_SHARED_SG2SC")
         self.assertEqual(x["primary_scientific_object"]["relation_counts"], [3, 4])
         self.assertEqual(x["primary_scientific_object"]["topology_contrast"], ["CHAIN", "HUB"])
-        self.assertEqual(x["secondary_context"]["SGP-12_vs_SGP-14"], "MATCHED_TRAINING_EXPOSURE_REGIME_MODIFIER_ONLY")
+        self.assertEqual(x["secondary_context"]["SGP-12_vs_SGP-14"], "ROW_COUNT_MATCHED_EXPOSURE_DIFFERENT_REGIME_MODIFIER_ONLY")
         self.assertEqual(x["scientific_outcomes_read"], 0)
         self.assertFalse(x["p1_opened"])
 
@@ -80,6 +94,7 @@ class RelationalTopologyOraclePivotV20Test(unittest.TestCase):
             self.assertIn(key, exact)
         self.assertIn("SGP output", x["matched_tuple_contract"]["forbidden_filters"])
         self.assertIn("SG2SC output", x["matched_tuple_contract"]["forbidden_filters"])
+        self.assertIn("Manual tuple substitution", x["panel_compiler_contract"]["authority_rule"])
 
     def test_oracle_identity_is_never_a_silent_filter(self):
         x = load("p1_protocol.json")
@@ -113,6 +128,8 @@ class RelationalTopologyOraclePivotV20Test(unittest.TestCase):
         self.assertEqual(x["analysis"]["primary_method"], "PAIRED_BASE_SCENE_CLUSTER_BOOTSTRAP")
         self.assertEqual(x["analysis"]["bootstrap_replicates"], 10000)
         self.assertEqual(x["analysis"]["bootstrap_seed"], 20260903)
+        self.assertEqual(x["analysis"]["resampling_unit"], "physical_base_scene_id_cluster")
+        self.assertIn("across counts", x["analysis"]["cross_count_scene_reuse_rule"])
         self.assertFalse(x["analysis"]["four_way_mixed_model_primary"])
         self.assertFalse(x["analysis"]["seed_random_effect_in_one_seed_development"])
 

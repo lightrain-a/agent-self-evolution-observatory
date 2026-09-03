@@ -9,7 +9,7 @@
     {
       "id": "FIX-1",
       "decision": "ACCEPT",
-      "change": "Replace the pure training-support causal thesis with a topology-first thesis. Treat SGP-12/14 as matched training exposure regimes unless relation-edge/supervision dose is separately equalized.",
+      "change": "Replace the pure training-support causal thesis with a topology-first thesis. Treat SGP-12/14 as row-count-matched but exposure-different training regimes unless relation-edge/supervision dose is separately equalized.",
       "reason": "Outcome-blind corpus audit shows 18,360 versus 30,600 total relation edges and mean relation count 1.5 versus 2.5 at equal row count."
     },
     {

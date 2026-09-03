@@ -115,7 +115,8 @@
       "semantic/geometric feasibility checker and thresholds",
       "sample size",
       "final panel manifest SHA256"
-    ]
+    ],
+    "authority_rule": "The frozen executable compiler and its final panel manifest are the sole panel authority. Manual tuple substitution, replacement, or hand-curated exceptions are forbidden after the manifest is sealed."
   },
   "predicted_oracle_protocol": {
     "predicted_arm": "instruction -> frozen SGP-14 -> predicted graph -> frozen shared SG2SC",
@@ -178,7 +179,8 @@
     "bootstrap_replicates": 10000,
     "bootstrap_seed": 20260903,
     "confidence_interval": "TWO_SIDED_95_PERCENT_PERCENTILE",
-    "resampling_unit": "matched_base_scene_tuple",
+    "resampling_unit": "physical_base_scene_id_cluster",
+    "cross_count_scene_reuse_rule": "If a physical base_scene_id contributes tuples at both count 3 and count 4, all observations from that scene are resampled together in one bootstrap cluster across counts.",
     "four_way_mixed_model_primary": false,
     "seed_random_effect_in_one_seed_development": false,
     "continuous_graph_statistics": "DESCRIPTIVE_OR_SECONDARY_ONLY"

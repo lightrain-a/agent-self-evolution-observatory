@@ -33,7 +33,7 @@
   "adjudication": {
     "equal_row_count_implies_equal_relational_supervision_dose": false,
     "SGP12_vs_SGP14_identifies_training_support_alone": false,
-    "allowed_label": "MATCHED_TRAINING_EXPOSURE_REGIMES",
+    "allowed_label": "ROW_COUNT_MATCHED_BUT_EXPOSURE_DIFFERENT_TRAINING_REGIMES",
     "forbidden_primary_claim": "CAUSAL_EFFECT_OF_TRAINING_RELATION_COUNT_SUPPORT_ALONE",
     "restart_required_for_topology_first_paper": false,
     "restart_required_if_pure_support_claim_is_retained": true

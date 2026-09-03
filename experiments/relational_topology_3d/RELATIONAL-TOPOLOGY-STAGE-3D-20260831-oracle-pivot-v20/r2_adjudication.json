@@ -1,0 +1,36 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "successor_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-oracle-pivot-v20",
+  "state": "ORACLE_R2_PASS_ZERO_OUTCOME_P1_DESIGN",
+  "verdict": "PASS_ZERO_OUTCOME_P1_DESIGN",
+  "verdict_changing_fixes_remaining": 0,
+  "r1_blockers_resolved": {
+    "pure_support_causal_claim_removed": true,
+    "invalid_count2_chain_hub_removed": true,
+    "validation_development_test_confirmation_separated": true,
+    "oracle_identity_selection_bias_fail_closed": true
+  },
+  "r2_confirmed": {
+    "topology_first_thesis_coherent_for_testing": true,
+    "SGP14_count3_count4_primary_object_valid": true,
+    "count3_count4_chain_hub_non_isomorphic_and_active_node_matched": true,
+    "matched_pair_contract_sufficient_for_intended_estimand": true,
+    "N40_per_count_adequate_for_conservative_developmental_screen": true,
+    "paired_cluster_bootstrap_valid": true,
+    "five_go_stop_gates_coherent_and_prospective": true,
+    "oracle_eligibility_gate_defensible": true,
+    "stage_denominators_non_circular": true,
+    "three_total_SGP14_seeds_sufficient_for_minimal_reproducibility_claim": true,
+    "SGP14_restart_for_topology_balance_not_required": true,
+    "SGP12_secondary_role_appropriate": true
+  },
+  "non_blocking_hardening_applied_after_r2": [
+    "Terminology tightened to row-count-matched but exposure-different training regimes.",
+    "Frozen compiler/final panel manifest declared sole panel authority with no manual tuple substitution.",
+    "Bootstrap resampling unit strengthened to physical base_scene_id cluster across relation counts when a scene is reused."
+  ],
+  "next_state": "ELIGIBLE_TO_PREPARE_SEPARATE_DEVELOPMENTAL_VALIDATION_P1_AUTHORITY_AFTER_REQUIRED_TRAINING_ASSETS_COMPLETE",
+  "p1_authority_granted": false,
+  "scientific_outcomes_read": 0,
+  "test_lockbox_opened": false
+}

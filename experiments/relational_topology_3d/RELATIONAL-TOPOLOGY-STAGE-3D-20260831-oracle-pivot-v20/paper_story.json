@@ -13,7 +13,7 @@
     "reason": "Counts 3-4 are inside SGP-14 training exposure; a within-support topology residual avoids making the standalone thesis depend on count extrapolation or SGP-12 OOD behavior."
   },
   "secondary_context": {
-    "SGP-12_vs_SGP-14": "MATCHED_TRAINING_EXPOSURE_REGIME_MODIFIER_ONLY",
+    "SGP-12_vs_SGP-14": "ROW_COUNT_MATCHED_EXPOSURE_DIFFERENT_REGIME_MODIFIER_ONLY",
     "count_2": "CALIBRATION_ONLY_NO_CHAIN_HUB_TOPOLOGY_EVIDENCE",
     "DISJOINT": "SECONDARY_DESCRIPTIVE_ACTIVE_ENDPOINT_COUNT_DIFFERS",
     "COMPONENT_BRIDGE_OPTIONAL": "EXCLUDED_FROM_PRIMARY_UNTIL_NON_ISOMORPHIC_DEFINITION_IS_FROZEN"

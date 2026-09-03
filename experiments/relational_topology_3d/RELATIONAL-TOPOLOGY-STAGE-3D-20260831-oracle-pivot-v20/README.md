@@ -11,7 +11,7 @@ The original story treated `SGP-12` versus `SGP-14` as a clean training-support 
 - SGP-14 contains 30,600 total relation edges (mean count 2.5);
 - SGP-14 therefore receives 66.7% more relation-edge supervision opportunities, along with a higher mean instruction token count.
 
-The existing training remains useful, but the paper must call these **matched training exposure regimes**, not a pure causal manipulation of support alone.
+The existing training remains useful, but the paper must call these **row-count-matched but exposure-different training regimes**, not a pure causal manipulation of support alone.
 
 ## Corrected paper question
 
@@ -68,3 +68,11 @@ Independent browser review:
 - full transcript remains content-addressed in the Oracle session and is referenced by `oracle_review_receipt.json`.
 
 No scientific outcomes were used in this adjudication.
+
+## Oracle R2 result
+
+A second valid independent browser review of the corrected v20 protocol used GPT-5.6 Sol with Extra High 4/5 in conversation `6a9966f1-6e80-83ee-83d2-873e35a6a0dd` and returned:
+
+`PASS_ZERO_OUTCOME_P1_DESIGN`
+
+with **no verdict-changing fixes**. R2 explicitly confirmed that SGP-14 need not be restarted for topology balancing because the revised estimand is a matched evaluation intervention on a fixed trained model; SGP-12 remains secondary context. The review grants no P1 authority: validation metrics remain closed until a separate scientific execution gate is created.
