@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "status": "FRESH4_MSR_20_IMAGE_MANIFESTS_FROZEN",
+  "fresh4_pool_sha256": "9582877385413807dea6316c25585d5714662cce17f83fa298934229dc4f0927",
+  "manifest_freeze_sha256": "8b84467e67bc4c514a921f53515b50741a7427051941671084e2263e5f95d91f",
+  "blob_plan_sha256": "5e7bddd3772f43c2e9bd3dd8895c3bb7039fe90952934aaa42db7286eda76478",
+  "image_count": 20,
+  "stable_twice": true,
+  "unique_blob_count": 86,
+  "unique_blob_bytes": 14678052162,
+  "reusable_blob_count": 46,
+  "reusable_blob_bytes": 12252621027,
+  "missing_blob_count": 40,
+  "missing_blob_bytes": 2425431135,
+  "provider_calls": 0,
+  "scientific_source_calls": 0,
+  "future_task_executions": 0,
+  "interpretation": "Fresh4 exact image manifests are content-addressed and frozen before any fresh4 scientific source model call. Two transient mirror retries for pytest-10081 recovered without task replacement or scientific retry."
+}
