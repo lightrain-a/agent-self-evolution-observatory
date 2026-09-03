@@ -9,7 +9,8 @@ from pathlib import Path
 
 OBJECT_ID = "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL"
 CHILD_ID = "SUCC-C-BEHAVIOR2026-SHARED26-PI05-SINGLE-GPU-ACCUMULATION"
-EXPECTED_DIRECT_STATUS = "PI05_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_PASS"
+EXPECTED_DIRECT_STATUS = "PI05_PORTABLE_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_PASS"
+EXPECTED_SYNTHETIC_STATUS = "PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_PASS"
 EXPECTED_ATTEMPT1_RESULT_SHA = "9202758ef8e25fa079f340bff74da4749115e536bf166b6017c8c3ceefe4a0bb"
 EXPECTED_ADJ_SHA = "7fce8b714c2b46c1561930c34f0c2e5b67987ddaa63e4868f42f752e076afad8"
 EXPECTED_DESIGN_SHA = "b6c9cebe63b4b16125ce4fb6a9995a93ccb79e58ccebfc4cf9b285ca8e654c30"
@@ -26,6 +27,7 @@ def sha(path: Path) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--direct-result", type=Path, required=True)
+    ap.add_argument("--synthetic-result", type=Path, required=True)
     ap.add_argument("--runner", type=Path, required=True)
     ap.add_argument("--worker", type=Path, required=True)
     ap.add_argument("--launcher", type=Path, required=True)
@@ -50,6 +52,20 @@ def main() -> int:
     bad = [k for k in forbidden_true if direct.get(k) not in (False, None)]
     if bad:
         raise RuntimeError(f"direct-device result crossed forbidden boundary: {bad}")
+    synthetic = json.loads(paths["synthetic_result"].read_text(encoding="utf-8"))
+    if synthetic.get("status") != EXPECTED_SYNTHETIC_STATUS:
+        raise RuntimeError(f"synthetic fused 8x8 gate is not PASS: {synthetic.get('status')}")
+    if synthetic.get("object_id") != OBJECT_ID or synthetic.get("micro_gradients_completed") != 8:
+        raise RuntimeError("synthetic fused 8x8 identity/completion drift")
+    if not synthetic.get("accumulated_gradient_complete"):
+        raise RuntimeError("synthetic fused 8x8 accumulator did not complete")
+    synthetic_forbidden = [
+        "dataset_accessed", "optimizer_update", "parameter_update", "checkpoint_written",
+        "scientific_training_started", "formal_training_authorized",
+    ]
+    synthetic_bad = [k for k in synthetic_forbidden if synthetic.get(k) not in (False, None)]
+    if synthetic_bad:
+        raise RuntimeError(f"synthetic fused 8x8 crossed forbidden boundary: {synthetic_bad}")
     if sha(paths["design"]) != EXPECTED_DESIGN_SHA:
         raise RuntimeError("streaming repair design SHA drift")
 
@@ -70,6 +86,13 @@ def main() -> int:
             "path": str(paths["direct_result"].relative_to(repo)),
             "sha256": sha(paths["direct_result"]),
             "status": EXPECTED_DIRECT_STATUS,
+        },
+        "synthetic_fused_gate": {
+            "path": str(paths["synthetic_result"].relative_to(repo)),
+            "sha256": sha(paths["synthetic_result"]),
+            "status": EXPECTED_SYNTHETIC_STATUS,
+            "micro_gradients_completed": 8,
+            "accumulated_gradient_complete": True,
         },
         "consumed_attempt1": {
             "result_path": str(attempt1.relative_to(repo)),

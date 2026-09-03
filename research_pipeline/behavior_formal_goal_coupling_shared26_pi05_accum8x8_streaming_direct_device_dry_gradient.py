@@ -99,8 +99,16 @@ def main():
     require((repo_root/consumed.get('adjudication_path','')).resolve(),consumed.get('adjudication_sha256',''),'consumed attempt1 adjudication')
     require(P['preregistration'],PREREG_SHA,'prereg'); require(P['host_exit_adjudication'],HOST_EXIT_ADJ_SHA,'8x8 host-exit adjudication'); require(P['data_order_qualification'],DATA_ORDER_SHA,'data order')
     require(P['resource_admission'],RESOURCE_SHA,'resource admission'); require(P['model_load_result'],MODEL_LOAD_SHA,'original model load'); require(P['dataloader_smoke'],LOADER_SHA,'loader smoke'); require(P['tokenizer_result'],TOKEN_RESULT_SHA,'tokenizer result'); require(P['tokenizer_source'],TOKEN_SHA,'tokenizer')
-    direct_binding=auth.get('direct_device_model_load_result') or {}; require(P['direct_device_model_load_result'],direct_binding.get('sha256',''),'direct-device model-load result')
-    if json.loads(P['direct_device_model_load_result'].read_text()).get('status')!='PI05_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_PASS': raise RuntimeError('direct-device model-load result not PASS')
+    direct_binding=auth.get('direct_device_model_load_result') or {}; require(P['direct_device_model_load_result'],direct_binding.get('sha256',''),'portable direct-device model-load result')
+    if json.loads(P['direct_device_model_load_result'].read_text()).get('status')!='PI05_PORTABLE_DIRECT_DEVICE_NO_UPDATE_MODEL_LOAD_PASS': raise RuntimeError('portable direct-device model-load result not PASS')
+    synth_binding=auth.get('synthetic_fused_gate') or {}
+    synth_path=(repo_root/synth_binding.get('path','')).resolve()
+    require(synth_path,synth_binding.get('sha256',''),'synthetic fused 8x8 result')
+    synth=json.loads(synth_path.read_text())
+    if synth.get('status')!='PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_PASS' or synth.get('micro_gradients_completed')!=8 or not synth.get('accumulated_gradient_complete'):
+        raise RuntimeError('synthetic fused 8x8 gate not PASS')
+    if any(synth.get(k) not in (False,None) for k in ['dataset_accessed','optimizer_update','parameter_update','checkpoint_written','scientific_training_started','formal_training_authorized']):
+        raise RuntimeError('synthetic fused 8x8 crossed forbidden boundary')
     pre=json.loads(P['preregistration'].read_text()); first=pre['microbatch_resource_ladder'][1]
     if first!={'priority':2,'physical_micro_batch':8,'accumulation_steps':8,'effective_batch':64}: raise RuntimeError(f'ladder drift {first}')
     order=json.loads(P['data_order_qualification'].read_text())

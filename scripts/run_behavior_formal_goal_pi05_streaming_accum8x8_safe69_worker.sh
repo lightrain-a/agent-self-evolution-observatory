@@ -6,7 +6,7 @@ PYTHON=/data/wyt/formal-goal-shared26-openpi-env-20260901/bin/python
 CHILD=/data/wyt/formal-goal-shared26-openpi-child-20260901
 CACHE=/data/wyt/formal-goal-openpi-cache-v1
 AUTH="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-streaming-accum8x8-safe69-authority-20260903.json"
-DIRECT="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-direct-device-no-update-model-load-result-20260902.json"
+DIRECT="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-portable-direct-device-no-update-model-load-result-232-20260903.json"
 RECEIPT="$ROOT/generated/behavior-formal-goal-coupling-shared26-pi05-streaming-accum8x8-safe69-result-20260903.json"
 LOG=/data/wyt/formal-goal-pi05-streaming-accum8x8-safe69-20260903.log
 
