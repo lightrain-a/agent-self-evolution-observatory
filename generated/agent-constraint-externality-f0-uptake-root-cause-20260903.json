@@ -1,0 +1,211 @@
+{
+  "arithmetic_mismatch": {
+    "capability_panel_size": 8,
+    "capability_target_success_min": 0.5,
+    "f0_minimum_eligible_repair_families": 6,
+    "failure_shortfall_even_at_capability_success_floor": 2,
+    "interpretation": "The capability PASS interval does not guarantee enough target failures to instantiate the preregistered F0 repair stage; at the capability success floor it permits at most four failures while F0 requires at least six repairs.",
+    "maximum_target_failures_when_only_meeting_capability_success_min_if_same_panel": 4,
+    "selected_backbone_capability_target_failures": 1
+  },
+  "authority": {
+    "appworld_ul": false,
+    "current_f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "prospective_redesign_only": true,
+    "toolsandbox": false
+  },
+  "classification": "SOURCE_FAILURE_OPPORTUNITY_DESIGN_MISMATCH",
+  "content_sha256": "e56644d68807164f0fde829089e86a14d990f2d68e5ced243de67f218dbd07a1",
+  "f0_verdict": "F0_UPDATE_UPTAKE_FAIL",
+  "lineage": {
+    "capability_result_artifact": "generated/agent-constraint-externality-codingplan-mimo25pro-capability-b3-result-20260903.json",
+    "capability_result_content_sha256": "dadf907997be65b381a40fa42e615220c7138a40c7c0fd32a665f2925628660c",
+    "f0_adjudication_artifact": "generated/agent-constraint-externality-f0-adjudication-mimo25pro-20260903.json",
+    "f0_adjudication_content_sha256": "15c26bf94f0878b24e6591acba6159898e4e3a7fefe9a92d9acd7ab20f7346fb",
+    "frozen_protocol_artifact": "generated/agent-constraint-externality-f0-frozen-protocol-20260831.json",
+    "frozen_protocol_file_sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810",
+    "source_closeout_artifact": "generated/agent-constraint-externality-f0-source-closeout-mimo25pro-20260903.json",
+    "source_closeout_content_sha256": "6f2a1937136e291c5c6a440d281b0295d24c8113227fc005382f5f009c9bd7ab",
+    "v4_bundle_artifact": "generated/agent-constraint-externality-appworld-pre-f0_5-protected-v4-20260902.bundle",
+    "v4_bundle_sha256": "c69dbd80269ff7b64bac67a0b1a346f89ea56b8a809202f066a9631685e21ca5"
+  },
+  "not_classified_as": [
+    "COUPLING_EXTERNALITY_MECHANISM_FAILURE",
+    "APPWORLD_API_SUBSTRATE_FAILURE",
+    "MIMO25PRO_CAPABILITY_FAILURE"
+  ],
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "observed": {
+    "eligible_repair_family_count": 0,
+    "f0_source_target_failure_count": 0,
+    "f0_source_target_success_count": 8,
+    "probe_episode_count": 0,
+    "scientific_effects_observed": 0,
+    "selected_backbone_capability_target_success_rate": 0.875,
+    "selected_backbone_capability_tool_loop_completion_rate": 0.875,
+    "updater_model_request_count": 0
+  },
+  "prospective_repair_design_requirements": {
+    "current_f0_mandatory_stop": true,
+    "current_f0_source_families_may_not_be_rewritten_and_replayed": true,
+    "dedicated_source_failure_qualification_required": true,
+    "do_not_fix_by": [
+      "LOWERING_THE_SIX_REPAIR_THRESHOLD_POST_OUTCOME",
+      "MANUALLY_EDITING_CURRENT_SOURCE_TASKS_AND_REPLAYING",
+      "SWITCHING_BACKBONE_POST_F0_OUTCOME_WITHIN_THE_SAME_CONFIRMATORY_RUN",
+      "GENERATING_SYNTHETIC_REPAIRS_WITHOUT_OBSERVED_TARGET_FAILURE"
+    ],
+    "new_execution_requires_new_prospective_contract": true,
+    "recommended_design_direction": "Predeclare source/probe paired instances in which the source instance provides a calibrated target-failure opportunity while the decisive probe instances preserve the matched coupling manipulation; qualify failure availability on a separate discovery/qualification split without reading any decisive probe effect.",
+    "source_failure_qualification_must_be_disjoint_from_decisive_probe_outcomes": true,
+    "source_failure_qualification_must_precede_decisive_probe_execution": true
+  },
+  "provider_requests_added_by_diagnosis": 0,
+  "schema_version": "ace-f0-uptake-root-cause-v1",
+  "scientific_outcomes_added_by_diagnosis": 0,
+  "status": "CAPABILITY_GATE_DOES_NOT_IDENTIFY_SOURCE_FAILURE_AVAILABILITY",
+  "structural_comparison": {
+    "capability_means": {
+      "app_count": 2.5,
+      "constraint_count": 3.0,
+      "instruction_word_count": 25.0,
+      "non_target_constraint_count": 2.0,
+      "tool_call_cap": 16.0
+    },
+    "capability_rows": [
+      {
+        "app_count": 2,
+        "constraint_count": 3,
+        "family_id": "ACE-FG-05",
+        "instruction_word_count": 23,
+        "kind": "CAPABILITY_LOW_FULL_CONSTRAINT_TASK",
+        "non_target_constraint_count": 2,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      },
+      {
+        "app_count": 2,
+        "constraint_count": 3,
+        "family_id": "ACE-FG-06",
+        "instruction_word_count": 23,
+        "kind": "CAPABILITY_LOW_FULL_CONSTRAINT_TASK",
+        "non_target_constraint_count": 2,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      },
+      {
+        "app_count": 3,
+        "constraint_count": 3,
+        "family_id": "ACE-TNF-05",
+        "instruction_word_count": 27,
+        "kind": "CAPABILITY_LOW_FULL_CONSTRAINT_TASK",
+        "non_target_constraint_count": 2,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      },
+      {
+        "app_count": 3,
+        "constraint_count": 3,
+        "family_id": "ACE-TNF-06",
+        "instruction_word_count": 27,
+        "kind": "CAPABILITY_LOW_FULL_CONSTRAINT_TASK",
+        "non_target_constraint_count": 2,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      }
+    ],
+    "f0_source_means": {
+      "app_count": 2.5,
+      "constraint_count": 1.0,
+      "instruction_word_count": 15.5,
+      "non_target_constraint_count": 0.0,
+      "tool_call_cap": 16.0
+    },
+    "f0_source_rows": [
+      {
+        "app_count": 2,
+        "constraint_count": 1,
+        "family_id": "ACE-FG-01",
+        "instruction_word_count": 12,
+        "kind": "F0_TARGET_ISOLATED_SOURCE",
+        "non_target_constraint_count": 0,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      },
+      {
+        "app_count": 2,
+        "constraint_count": 1,
+        "family_id": "ACE-FG-02",
+        "instruction_word_count": 12,
+        "kind": "F0_TARGET_ISOLATED_SOURCE",
+        "non_target_constraint_count": 0,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      },
+      {
+        "app_count": 2,
+        "constraint_count": 1,
+        "family_id": "ACE-FG-03",
+        "instruction_word_count": 12,
+        "kind": "F0_TARGET_ISOLATED_SOURCE",
+        "non_target_constraint_count": 0,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      },
+      {
+        "app_count": 2,
+        "constraint_count": 1,
+        "family_id": "ACE-FG-04",
+        "instruction_word_count": 12,
+        "kind": "F0_TARGET_ISOLATED_SOURCE",
+        "non_target_constraint_count": 0,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      },
+      {
+        "app_count": 3,
+        "constraint_count": 1,
+        "family_id": "ACE-TNF-01",
+        "instruction_word_count": 19,
+        "kind": "F0_TARGET_ISOLATED_SOURCE",
+        "non_target_constraint_count": 0,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      },
+      {
+        "app_count": 3,
+        "constraint_count": 1,
+        "family_id": "ACE-TNF-02",
+        "instruction_word_count": 19,
+        "kind": "F0_TARGET_ISOLATED_SOURCE",
+        "non_target_constraint_count": 0,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      },
+      {
+        "app_count": 3,
+        "constraint_count": 1,
+        "family_id": "ACE-TNF-03",
+        "instruction_word_count": 19,
+        "kind": "F0_TARGET_ISOLATED_SOURCE",
+        "non_target_constraint_count": 0,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      },
+      {
+        "app_count": 3,
+        "constraint_count": 1,
+        "family_id": "ACE-TNF-04",
+        "instruction_word_count": 19,
+        "kind": "F0_TARGET_ISOLATED_SOURCE",
+        "non_target_constraint_count": 0,
+        "target_constraint_count": 1,
+        "tool_call_cap": 16
+      }
+    ],
+    "key_difference": "F0 source removes both non-target constraints but retains the same 16-call tool budget, making source failure availability an unqualified variable rather than a consequence of capability PASS."
+  }
+}

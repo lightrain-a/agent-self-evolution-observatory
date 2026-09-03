@@ -32,20 +32,26 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
     def test_identity_and_zero_outcome_boundary(self) -> None:
         for payload in self.data.values():
             self.assertEqual(payload["object_id"], OBJECT_ID)
-        for name in ("capability", "f0", "manifest"):
-            self.assertEqual(
-                self.data[name]["scientific_outcomes_observed"], 0
-            )
+        for name in ("capability", "f0"):
+            self.assertEqual(self.data[name]["scientific_outcomes_observed"], 0)
             self.assertEqual(self.data[name]["gpu_runs"], 0)
+        readiness = self.data["readiness"]
+        self.assertEqual(self.data["manifest"]["scientific_outcomes_observed"], readiness["f0_outcomes_observed"])
+        self.assertEqual(self.data["manifest"]["gpu_runs"], 0)
         self.assertEqual(self.data["capability"]["provider_calls"], 0)
         self.assertEqual(self.data["f0"]["provider_calls"], 0)
-        readiness = self.data["readiness"]
         self.assertEqual(
             self.data["manifest"]["provider_calls"],
             readiness["capability_provider_request_total"],
         )
-        self.assertFalse(readiness["f0_executed"])
-        self.assertEqual(readiness["f0_outcomes_observed"], 0)
+        if readiness.get("f0_adjudication_verdict") == "F0_UPDATE_UPTAKE_FAIL":
+            self.assertTrue(readiness["f0_executed"])
+            self.assertEqual(readiness["f0_source_outcomes_observed"], 8)
+            self.assertEqual(readiness["f0_probe_effects_observed"], 0)
+            self.assertEqual(readiness["f0_outcomes_observed"], 8)
+        else:
+            self.assertFalse(readiness["f0_executed"])
+            self.assertEqual(readiness["f0_outcomes_observed"], 0)
         self.assertFalse(readiness["p1_authorized"])
 
     def test_disjoint_outcome_blind_split(self) -> None:
@@ -131,7 +137,34 @@ class AppWorldConstraintF0PreflightTest(unittest.TestCase):
         self.assertEqual(readiness["execution_override"]["max_retries"], 0)
         self.assertTrue(readiness["model_prereg_addendum_a0_pass"])
         self.assertTrue(readiness["m1_runner_qualification_pass"])
-        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_F0_SOURCE_AUTHORIZED":
+        if readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_F0_UPDATE_UPTAKE_FAIL":
+            self.assertEqual(readiness["status"], "F0_UPDATE_UPTAKE_FAIL")
+            self.assertEqual(readiness["next_authorized_action"], "STOP_CURRENT_F0_REVIEW_PROSPECTIVE_SOURCE_FAILURE_QUALIFICATION_PROPOSAL")
+            self.assertTrue(readiness["f0_executed"])
+            self.assertFalse(readiness["f0_authorized"])
+            self.assertFalse(readiness["p1_authorized"])
+            self.assertEqual(readiness["f0_source_target_success_count"], 8)
+            self.assertEqual(readiness["f0_source_target_failure_count"], 0)
+            self.assertEqual(readiness["f0_eligible_repair_family_count"], 0)
+            self.assertEqual(readiness["f0_source_scientific_model_round_count"], 74)
+            self.assertEqual(readiness["f0_source_appworld_tool_call_total"], 87)
+            self.assertEqual(readiness["f0_probe_episode_count"], 0)
+            self.assertEqual(readiness["f0_adjudication_verdict"], "F0_UPDATE_UPTAKE_FAIL")
+            self.assertEqual(
+                readiness["f0_uptake_root_cause_status"],
+                "CAPABILITY_GATE_DOES_NOT_IDENTIFY_SOURCE_FAILURE_AVAILABILITY",
+            )
+            self.assertEqual(
+                readiness["f0_uptake_root_cause_classification"],
+                "SOURCE_FAILURE_OPPORTUNITY_DESIGN_MISMATCH",
+            )
+            self.assertEqual(
+                readiness["f0_r1_proposal_status"],
+                "PROSPECTIVE_F0_R1_SOURCE_FAILURE_QUALIFICATION_PROPOSAL_ONLY",
+            )
+            self.assertFalse(readiness["f0_r1_sq0_execution_authorized"])
+            self.assertFalse(readiness["f0_r1_execution_authorized"])
+        elif readiness.get("capability_model_selection_state") == "SELECTED_MIMO25PRO_F0_SOURCE_AUTHORIZED":
             self.assertEqual(readiness["status"], "F0_SOURCE_AUTHORIZED_READY")
             self.assertEqual(readiness["next_authorized_action"], "RUN_F0_SOURCE_MIMO25PRO")
             self.assertTrue(readiness["eligible_backbone_selected"])
