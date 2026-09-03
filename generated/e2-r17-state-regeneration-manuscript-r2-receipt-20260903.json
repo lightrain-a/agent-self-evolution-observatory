@@ -45,12 +45,17 @@
     "bridge_protocol_path": "generated/e2-r17-state-compiler-bridge-protocol-v3-review-repair-20260903.md",
     "bridge_protocol_sha256": "74eb493266ae9c3f1a66e0f3e8d85f4279d458837444f8f9006cb5c1a2a1770a",
     "m3_proposal_path": "generated/e2-r17-exact-evidence-frozen-state-regeneration-m3-proposal-20260903.md",
-    "m3_proposal_sha256": "ca430d2308df6dae4738c82e27d2bb11a30c1299bfb7424fa19ffb068b0816bd"
+    "m3_proposal_sha256": "ca430d2308df6dae4738c82e27d2bb11a30c1299bfb7424fa19ffb068b0816bd",
+    "m3_metric_path": "research_pipeline/e2_r17_regeneration_metrics.py",
+    "m3_metric_sha256": "50acfa6fbc87417469d151397fda9d05f3bde5017306362879e2efc93d3d2455",
+    "m3_metric_test_path": "research_pipeline/test_e2_r17_regeneration_metrics.py",
+    "m3_metric_test_sha256": "69040f661397e7e45d1718f471fc2a7eb4e8205f5bd1300d2e10d3abd2614423"
   },
   "tests": {
     "compiler_tests": "15/15 PASS",
     "review_repair_tests": "6/6 PASS",
-    "combined_adjacent_regression": "53/53 PASS"
+    "m3_metric_tests": "5/5 PASS",
+    "combined_adjacent_regression": "58/58 PASS"
   },
   "scientific_state": {
     "recovery_v3_modified": false,
