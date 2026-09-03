@@ -1,0 +1,98 @@
+{
+  "artifact_type": "e2-r17-state-regeneration-manuscript-r4-checkpoint",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PASS_R4_M3R2_V4R1_ALIGNMENT_ZERO_PROVIDER_NO_CLAIM_EXPANSION",
+  "base_commit": "7dcce61a55a8e80ec609ce5580955bb66e974e74",
+  "branch": "research/e2-r17-manuscript-state-generation-20260903",
+  "working_title": "Same Evidence, Different Skill: State-Regeneration Instability in Self-Evolving Agents",
+  "manuscript_root": "paper_drafts/e2-state-regeneration-r4-20260903",
+  "manuscript": {
+    "main_tex_sha256": "d1f4782cc066ca69a5ee96f8afb8dfa8296fcf25aaaf2769ba209a665689269e",
+    "abstract_sha256": "f29fe49ea01bb085694d2b9cb08e5f9e59251e6caefb0c7b9ec21c8778cabb1f",
+    "intro_sha256": "8498abbf3c897ed0a1f62e211f5eea039a96e15fc78acb97540800046bf805f0",
+    "compiler_sha256": "cf772ee68951cd5bfcd1b621487f6c7d9a894c825805a3abbca3313175ba85ad",
+    "evaluation_contract_sha256": "10003dbd07aa2d80d8a796b89bdfd352ee6ec30c06d336ee5422520cc1e04cad",
+    "current_results_sha256": "c4a5641b7689a79ce902d3d931240cafb15e44a5bf5c435aa4f05f2866b925e8",
+    "discussion_sha256": "cc6e0e571c66bb5082d8799a7bfc5ec1ce312dbf8792b42ddcf27e79ab7d836f",
+    "appendix_sha256": "cccf630df543a614b3cdd29a6634000c79e324f3a88bc97f876529ec507d3d06",
+    "status_sha256": "88ce3ed6cd761030f41fb368297db20fdd1281522dfa9b4b63bdb08576c0b265",
+    "pdf_sha256": "8558dfd6f5ceaaa6dcc1d0c05e5a2323d0ec1856158ccc777c9884debbe37b14",
+    "pages": 16,
+    "compile_status": "PASS",
+    "overfull_boxes": 0,
+    "undefined_references_or_citations": 0,
+    "render_preflight": {
+      "dpi": 100,
+      "pages_rendered": 16,
+      "edge_boundary_pixels": 8,
+      "edge_touch_pages": 0,
+      "out_of_page_word_bboxes": 0
+    }
+  },
+  "m3r2_alignment": {
+    "repair_commit": "f8fb39d2289fdc3af2baa7bec23fe9c12087c1d1",
+    "proposal_path": "generated/e2-r17-exact-evidence-frozen-state-regeneration-m3r2-proposal-20260903.md",
+    "metric": "E_REAL = D_X - D_A",
+    "expectation_identity": "E[E_REAL] = mean_q (p_A(q)-p_B(q))^2 under declared Bernoulli/exchangeability assumptions",
+    "old_m3r_metric_superseded_explicitly": true,
+    "state_count": 4,
+    "task_count": 18,
+    "new_actor_units": 72,
+    "updater_calls": 0,
+    "measurement_budget_changed": false,
+    "outcome_conditioned": false
+  },
+  "v4_r1_alignment": {
+    "frozen_protocol_commit": "51edbda1bd18ed6585def50dc8e5c12143d8b0bd",
+    "frozen_protocol_sha256": "6ee0768ce8ef9418250935de2153dde5837266753d63b64cf4d9e99eedf53697",
+    "primary_estimand": "G_MAIN,A = 0.5 * [(W_COMP-W_FREE) + (FF4_COMP-FF4_FREE_A)]",
+    "generic_controls_gate_q1": false,
+    "free_b_primary": false,
+    "bridge_realization_metric": "E_REAL = D_X - D_A",
+    "state_sha_aliasing": true,
+    "rejected_source_is_parked_moderator": true
+  },
+  "completed_claim_boundary": {
+    "state_regeneration_instability_local_selected_case": true,
+    "population_variance_component_claimed": false,
+    "compiler_utility_claimed": false,
+    "first_fail_superiority_claimed": false,
+    "e3_generalization_claimed": false
+  },
+  "independent_review": {
+    "manuscript_r1_review_counted": true,
+    "bridge_v3_review_counted": true,
+    "v4_r1_preexecution_review_complete": false,
+    "v4_r1_review_verdict": null,
+    "failed_or_no-answer_v4_r1_oracle_attempts_counted": false
+  },
+  "tests": {
+    "r4_alignment_test_path": "research_pipeline/test_e2_r17_manuscript_r4_m3r2_alignment.py",
+    "r4_alignment_test_sha256": "4c6dee7f5a0daf179f2dfb53257f74148fb8bb33db2da28a7c3fa3f83c604f4b",
+    "combined_adjacent_regression": "85/85 PASS"
+  },
+  "scientific_state": {
+    "recovery_v3_modified": false,
+    "partial_m2_outcome_read": false,
+    "m3r2_executed": false,
+    "m4_executed": false,
+    "semantic_transfer_stage_a_executed": false,
+    "e3_opened": false
+  },
+  "authority": {
+    "provider_io": false,
+    "recovery_v3_execution": false,
+    "m3_actor_measurement": false,
+    "m4_search_pool_acquisition": false,
+    "m4_updater_or_actor": false,
+    "repeated_free_synthesis": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "e3": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "submission": false
+  },
+  "interpretation_boundary": "R4 aligns the manuscript with the explicitly superseded M3R2 commensurate localization statistic and the frozen V4-R1 balanced generator-factor protocol. It preserves all completed outcomes and grants no scientific execution authority or V4-R1 independent-review verdict."
+}

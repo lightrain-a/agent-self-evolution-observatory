@@ -1,0 +1,51 @@
+\section{From Evidence Heterogeneity to a State-Regeneration Anomaly}
+\label{sec:localization}
+
+We use a sequence of interventions that progressively hold more of the pipeline fixed. The goal is not to turn one selected positive case into a general claim; it is to determine which layer remains plausible after simpler explanations fail.
+
+\subsection{Evidence-source effects are small and heterogeneous at scale}
+Our closed DeepSeek V2 study contains 48 matched pairs, 96 learned states, and 1,728 held-out task evaluations. The two primary states differ in the evidence projection exposed to the same frozen updater. Across pairs, the mean MRW$-$WIN-C utility difference is $+0.0231$, the median is $+0.0139$, and the standard deviation is $0.0780$. The frozen one-sided sign-flip test gives $p=0.1719$, and the bootstrap confidence interval is $[-0.0185,0.0660]$.
+
+This study therefore does not establish rejected-witness superiority. Individual streams span positive, null, and negative effects, including values from $-0.125$ to $+0.181$. The appropriate inference is heterogeneity, not a failed attempt that can be repaired by silently adding samples or widening a threshold.
+
+\subsection{Selecting a more ``diagnostic'' failure does not solve the problem}
+Post-hoc development analysis suggested that progress-related features correlated with pairwise effects, motivating a single-stream witness-selector pilot on \texttt{e1-tsr-00}. This stream was chosen after outcome inspection and is therefore mechanism development only. We froze four evidence arms: WIN-C, First-Fail, Progress-Fail, and Progress-Contrast. On 18 held-out tasks they score 13/18, 17/18, 14/18, and 14/18 respectively.
+
+Although the historical First-Fail state is strong, the preregistered purpose of this pilot was to test whether a progress-based selector provides a stable repair rule. It does not. The frozen verdict is \texttt{S1\_SIGNAL\_FAIL\_STOP\_NO\_S2}. We therefore reject the simple story that ``choose a later or more diagnostic failure'' explains the earlier heterogeneity.
+
+\subsection{The strong persistent state remains useful when frozen}
+The next intervention holds the persistent state bytes fixed and re-runs only downstream evaluation. The historical strong First-Fail state is compared with the corresponding WIN-C state in two fresh complete actor replicates on the same 18-task development panel. Replicate 1 gives 15/18 versus 14/18; replicate 2 gives 16/18 versus 12/18.
+
+These remeasurements do not make the selected stream representative, and they do not prove that First-Fail evidence caused the state. They do weaken a simpler explanation: the original 17/18 First-Fail result was not merely one lucky downstream actor realization attached to an otherwise inert state. The frozen artifact itself carries behaviorally relevant information.
+
+\subsection{Byte-identical evidence fails to regenerate the same advantage}
+We then reconstruct the exact S1 First-Fail evidence rendered to the updater. All 16 rendered packet hashes match the historical inputs. From this byte-identical evidence we create two new free-form updater realizations, then evaluate each fresh state against a fresh WIN-C realization on the same 18 tasks. Replicate 1 is 15/18 versus 15/18; replicate 2 is 11/18 versus 12/18. The mean fresh contrast is $-0.0278$.
+
+The contrast with frozen-state remeasurement is the key anomaly. Holding the strong state fixed preserves a directional advantage; holding the evidence fixed but regenerating the state does not. Because the fresh updater states and their downstream evaluations both vary, this is not a variance-component decomposition and does not by itself isolate the updater from actor noise. It nevertheless rules out evidence disappearance as a sufficient explanation of the strong historical state and motivates a direct frozen-state regeneration audit.
+
+\begin{table}[t]
+\centering
+\caption{Evidence ladder. The independent unit and scientific interpretation change across stages; no row is promoted beyond its design.}
+\label{tab:evidence-ladder}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{0.18\linewidth}p{0.18\linewidth}p{0.22\linewidth}p{0.27\linewidth}}
+\toprule
+Stage & Held fixed & Observation & Supported interpretation \\
+\midrule
+V2 48-pair study & actor/updater configuration, task design & mean MRW$-$WIN-C $=+0.0231$, CI crosses 0 & evidence-source effect is heterogeneous \\
+S1 selector pilot & selected stream, updater path & 13/18, 17/18, 14/18, 14/18 & simple progress selector fails \\
+Frozen-state remeasure & persistent state bytes & FF: 15/18, 16/18; WIN-C: 14/18, 12/18 & strong state has reproducible local behavioral value \\
+Exact-evidence replay & learner-visible evidence bytes & FF: 15/18, 11/18; WIN-C: 15/18, 12/18 & same evidence does not reliably regenerate strong state \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{What the completed evidence supports}
+The current evidence supports the following bounded statement:
+
+\begin{quote}
+In one controlled development case, identical trajectory evidence did not reliably regenerate the historical behaviorally useful persistent skill, while the previously generated strong state retained downstream utility when frozen. The observation is consistent with persistent-state generation as a candidate bottleneck and cannot be explained by evidence disappearance alone.
+\end{quote}
+
+It does \emph{not} establish that rejected failures are generally better than winners, that free-form updater variance dominates actor variance in the population, or that deterministic compilation is already superior. These stronger claims require prospective interventions rather than retrospective interpretation of the selected case.
