@@ -1,0 +1,33 @@
+{
+  "authorized_technical_repair": "Move only *.part transport residues whose corresponding canonical final object is present and checksum-correct into a separate quarantine; then reverify 20/20 canonical objects and zero remaining *.part files.",
+  "automatic_retry_under_repair1_authority": false,
+  "decision": "OPEN_REPAIR2_ONLY_AFTER_HOST67_CHECKPOINT_HYGIENE_PASS",
+  "failure_point": "Orbax checkpoint metadata discovery before train-state restoration and before any micro-gradient",
+  "forbidden": [
+    "delete or alter canonical final checkpoint objects",
+    "change checkpoint generation/model/batch/seed/accumulation/resource topology",
+    "reuse repair1 authority",
+    "optimizer update",
+    "policy outcome access"
+  ],
+  "next_gate": "HOST67_CHECKPOINT_HYGIENE_PASS_THEN_NEW_EXACTLY_ONCE_SYNTHETIC_REPAIR2_AUTHORITY",
+  "object_id": "SUCC-C-BEHAVIOR2026-TWO-FAMILY-SHARED-MULTITASK-PANEL",
+  "repair1_result": {
+    "error": "ValueError: Invalid ArrayMetadata file path: /data/wyt/formal-goal-pi05-base-params-v1/array_metadatas/process_0.part; expected file name to start with \"process_\"",
+    "path": "generated/behavior-formal-goal-coupling-shared26-pi05-accum8x8-synthetic-fused-direct-device-repair1-host67-result-20260903.json",
+    "sha256": "4db9b8f86c5bdc93ca062c7dbbb4e2f0426f2e77ffa760fcf8ae2b2f8bc87bbc",
+    "status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_DIRECT_DEVICE_REPAIR1_HOLD"
+  },
+  "root_cause": "Host67 staging preserved extra *.part transport residues inside the otherwise checksum-correct checkpoint directory. Orbax scans array_metadatas and rejects process_0.part as an invalid metadata filename.",
+  "schema_version": "behavior-formal-goal-coupling-shared26-pi05-synthetic-fused-repair1-checkpoint-residue-adjudication-v1",
+  "scientific_safety": {
+    "checkpoint_written": false,
+    "micro_gradients_completed": 0,
+    "optimizer_update": false,
+    "parameter_update": false,
+    "policy_outcomes_read": false,
+    "scientific_training_started": false,
+    "train_state_ready": false
+  },
+  "status": "PI05_SYNTHETIC_FUSED_ACCUM8X8_REPAIR1_PRE_MODEL_CHECKPOINT_RESIDUE_HOLD"
+}
