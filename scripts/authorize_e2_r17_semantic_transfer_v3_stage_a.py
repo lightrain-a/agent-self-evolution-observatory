@@ -60,11 +60,21 @@ def main() -> int:
     req(preflight.get("stream_count") == 20 and preflight.get("task_count") == 160 and preflight.get("heldout_forbidden_count") == 20, "preflight shape drift")
     req(preflight.get("runtime_import_smoke_pass") is True and preflight.get("bound_code_compile_pass") is True, "preflight runtime/code qualification missing")
     guards = preflight.get("scope_guard_checks") or {}
-    for key in ("valid_scope", "wrong_k_rejected", "heldout_rejected", "wrong_mode_rejected", "runner_exact_authorization_schema"):
+    for key in (
+        "valid_scope",
+        "wrong_k_rejected",
+        "heldout_rejected",
+        "wrong_mode_rejected",
+        "actor_exact_once_scope_valid",
+        "runner_exact_authorization_schema",
+        "stage_b_arm_blind_task_order_valid",
+    ):
         req(guards.get(key) is True, f"preflight scope guard missing: {key}")
     preflight_authority = preflight.get("authority") or {}
     req(preflight_authority.get("mint_stage_a_authorization") is False, "preflight cannot mint authorization")
     req(preflight_authority.get("stage_a_provider_execution") is False and preflight_authority.get("stage_b_learning_execution") is False, "preflight authority overbroad")
+    req((preflight.get("exact_once_acquisition") or {}).get("required") is True, "preflight exact-once acquisition qualification missing")
+    req(preflight.get("stage_b_ordering_prospectively_frozen") is True, "preflight Stage-B common-order qualification missing")
     req(review.get("status") == "COMPLETED", "independent web review not completed")
     req(bool(review.get("conversation_url")), "independent web review conversation URL missing")
     review_created = datetime.fromisoformat(str(review["created_at_utc"]))
@@ -97,6 +107,17 @@ def main() -> int:
     heldout = [str(task) for task in split["e1_common_heldout_probe"]]
     req(len(all_tasks) == 160 and len(set(all_tasks)) == 160, "authorization Stage-A task shape drift")
     req(len(heldout) == 20 and len(set(heldout)) == 20 and set(all_tasks).isdisjoint(heldout), "authorization heldout separation drift")
+    exact_once = contract.get("exact_once_acquisition") or {}
+    req(exact_once.get("required") is True, "contract exact-once acquisition missing")
+    unit_manifest_raw = str(exact_once.get("unit_manifest_path") or "")
+    unit_manifest_path = Path(unit_manifest_raw) if Path(unit_manifest_raw).is_absolute() else ROOT / unit_manifest_raw
+    req(unit_manifest_path.is_file() and sha(unit_manifest_path) == exact_once.get("unit_manifest_sha256"), "authorization exact-once unit manifest drift")
+    unit_manifest = load(unit_manifest_path)
+    req([str(value) for value in unit_manifest.get("ordered_task_ids") or []] == all_tasks, "authorization exact-once unit universe/order drift")
+    req(int(exact_once.get("unit_count") or 0) == 160, "authorization exact-once unit count drift")
+    req(Path(str(exact_once.get("claim_root") or "")).resolve() == (Path(contract["run_root"]) / "checkpoints/stage_a_task_claims").resolve(), "authorization exact-once claim root drift")
+    req(exact_once.get("attempt_before_any_provider_io") is True, "authorization exact-once burn timing drift")
+    req(exact_once.get("replay_allowed") is False and exact_once.get("ambiguous_recollection_allowed") is False, "authorization exact-once replay policy drift")
     lease_path = Path(contract["global_lease_path"])
     req(not lease_path.exists(), "global Stage-A V3 lineage lease already exists")
     req(not Path(contract["run_root"]).exists(), "Stage-A V3 run root already exists")
@@ -165,6 +186,16 @@ def main() -> int:
                 "required": True,
                 "total_limit": contract["budget"]["max_provider_calls"],
                 "per_unit_limit": contract["budget"]["provider_calls_per_rollout_limit"],
+            },
+            "exact_once_acquisition": {
+                "required": True,
+                "unit_manifest_path": exact_once["unit_manifest_path"],
+                "unit_manifest_sha256": exact_once["unit_manifest_sha256"],
+                "unit_count": 160,
+                "required_claim_root": exact_once["claim_root"],
+                "attempt_before_any_provider_io": True,
+                "replay_allowed": False,
+                "ambiguous_recollection_allowed": False,
             },
             "global_lease_path": contract["global_lease_path"],
         },

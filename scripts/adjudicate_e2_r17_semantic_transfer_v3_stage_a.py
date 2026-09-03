@@ -152,8 +152,12 @@ def main() -> int:
         mixed_tasks_by_stream[stream_id] = sorted(mixed_tasks)
         success_rollouts_by_stream[stream_id] = stream_success_rollouts
 
-    required = int(contract["equal_dose_support"]["required_mixed_pools_per_stream"])
+    support_contract = contract["equal_dose_support"]
+    required = int(support_contract["required_mixed_pools_per_stream"])
     require(required == 4, "equal-dose support threshold drift")
+    require(support_contract.get("candidate_domain") == "C_s = mixed K8 pools in stream s", "equal-dose candidate domain drift")
+    require(support_contract.get("unmixed_pool_eligible") is False, "unmixed pools must be ineligible for MRW4 treatment")
+    require(support_contract.get("hash_rank_applied_only_within_candidate_domain") is True, "MRW4 hash ranking must be restricted to C_s")
     failing_streams = sorted(stream_id for stream_id, count in mixed_by_stream.items() if count < required)
     support_pass = not failing_streams
 
@@ -161,8 +165,10 @@ def main() -> int:
     treated_rows: list[dict[str, Any]] = []
     if support_pass:
         for stream_id in streams:
-            selected = choose_four(stream_id, mixed_tasks_by_stream[stream_id])
+            mixed_candidate_domain = mixed_tasks_by_stream[stream_id]
+            selected = choose_four(stream_id, mixed_candidate_domain)
             require(len(selected) == 4, f"treated mixed-pool cardinality drift: {stream_id}")
+            require(set(selected).issubset(set(mixed_candidate_domain)), f"treated selection escaped mixed candidate domain: {stream_id}")
             treated_by_stream[stream_id] = selected
             for task_id in selected:
                 treated_rows.append(
@@ -259,7 +265,10 @@ def main() -> int:
             "pass": support_pass,
         },
         "equal_dose_treatment_manifest": {
-            "selection_rule": "lowest SHA256(semantic-transfer-mrw4-v3|stream_id|task_id) among mixed pools",
+            "candidate_domain": "C_s = mixed K8 pools in stream s; unmixed pools are ineligible",
+            "hash_rank_applied_only_within_candidate_domain": True,
+            "unmixed_pool_eligible": False,
+            "selection_rule": "lowest SHA256(semantic-transfer-mrw4-v3|stream_id|task_id) among members of C_s only",
             "treated_pools_per_stream": 4 if support_pass else 0,
             "treated_pool_total": len(treated_rows),
             "treated_task_ids_by_stream": treated_by_stream,

@@ -64,6 +64,91 @@ def acquire_exclusive_file(path: Path, payload: dict[str, Any]) -> int:
     return fd
 
 
+def _bound_path(raw: str) -> Path:
+    path = Path(raw)
+    return path if path.is_absolute() else ROOT / path
+
+
+def task_claim_paths(claim_root: Path, task_id: str) -> tuple[Path, Path]:
+    stem = hashlib.sha256(task_id.encode("utf-8")).hexdigest()
+    return claim_root / f"{stem}.attempt.json", claim_root / f"{stem}.sealed.json"
+
+
+def verify_exact_once_claim_universe(
+    *,
+    contract: dict[str, Any],
+    all_tasks: list[str],
+    run_root: Path,
+    contract_sha: str,
+    authorization_sha: str,
+) -> dict[str, Any]:
+    policy = contract.get("exact_once_acquisition") or {}
+    require(policy.get("required") is True, "contract lacks actor-enforced exact-once acquisition")
+    require(policy.get("attempt_before_any_provider_io") is True, "contract exact-once burn timing drift")
+    require(policy.get("replay_allowed") is False, "contract permits exact-once replay")
+    require(policy.get("ambiguous_recollection_allowed") is False, "contract permits ambiguous recollection")
+    require(int(policy.get("unit_count") or 0) == 160, "contract exact-once unit cardinality drift")
+
+    manifest_path = _bound_path(str(policy.get("unit_manifest_path") or ""))
+    manifest_sha = str(policy.get("unit_manifest_sha256") or "")
+    require(manifest_path.is_file() and sha_file(manifest_path) == manifest_sha, "exact-once acquisition manifest drift")
+    manifest = load_json(manifest_path)
+    manifest_tasks = [str(value) for value in manifest.get("ordered_task_ids") or []]
+    require(len(manifest_tasks) == 160 and len(set(manifest_tasks)) == 160, "exact-once acquisition manifest is not 160 unique units")
+    require(manifest_tasks == all_tasks, "exact-once acquisition manifest order/task universe drift")
+
+    claim_root = Path(str(policy.get("claim_root") or ""))
+    require(claim_root.resolve() == (run_root / "checkpoints/stage_a_task_claims").resolve(), "exact-once claim root drift")
+    require(claim_root.is_dir(), "exact-once claim root missing")
+    attempt_files = sorted(claim_root.glob("*.attempt.json"))
+    sealed_files = sorted(claim_root.glob("*.sealed.json"))
+    require(len(attempt_files) == 160, f"exact-once attempt marker cardinality drift: {len(attempt_files)}")
+    require(len(sealed_files) == 160, f"exact-once sealed receipt cardinality drift: {len(sealed_files)}")
+
+    attempt_shas: dict[str, str] = {}
+    sealed_shas: dict[str, str] = {}
+    for task_id in all_tasks:
+        attempt_path, sealed_path = task_claim_paths(claim_root, task_id)
+        require(attempt_path.is_file(), f"missing immutable exact-once attempt marker: {task_id}")
+        require(sealed_path.is_file(), f"missing immutable exact-once sealed receipt: {task_id}")
+        attempt = load_json(attempt_path)
+        sealed = load_json(sealed_path)
+        require(attempt.get("status") == "ATTEMPTED_IN_FLIGHT_DO_NOT_REPLAY", f"attempt status drift: {task_id}")
+        require(sealed.get("status") == "SEALED_EXACT_ONCE", f"seal status drift: {task_id}")
+        for payload, label in ((attempt, "attempt"), (sealed, "seal")):
+            require(payload.get("task_id") == task_id, f"{label} task identity drift: {task_id}")
+            require(payload.get("contract_sha256") == contract_sha, f"{label} contract binding drift: {task_id}")
+            require(payload.get("authorization_sha256") == authorization_sha, f"{label} authorization binding drift: {task_id}")
+        attempt_sha = sha_file(attempt_path)
+        sealed_sha = sha_file(sealed_path)
+        require(sealed.get("attempt_sha256") == attempt_sha, f"seal attempt binding drift: {task_id}")
+        pool_path = run_root / "cases" / task_id / "pool_k8.json"
+        require(pool_path.is_file(), f"exact-once seal has no frozen K8 pool: {task_id}")
+        require(Path(str(sealed.get("pool_k8_path") or "")).resolve() == pool_path.resolve(), f"seal pool path drift: {task_id}")
+        require(sealed.get("pool_k8_sha256") == sha_file(pool_path), f"seal pool SHA drift: {task_id}")
+        attempt_shas[task_id] = attempt_sha
+        sealed_shas[task_id] = sealed_sha
+
+    expected_attempts = {task_claim_paths(claim_root, task_id)[0].resolve() for task_id in all_tasks}
+    expected_seals = {task_claim_paths(claim_root, task_id)[1].resolve() for task_id in all_tasks}
+    require({path.resolve() for path in attempt_files} == expected_attempts, "extra or substituted exact-once attempt marker detected")
+    require({path.resolve() for path in sealed_files} == expected_seals, "extra or substituted exact-once seal detected")
+    return {
+        "required": True,
+        "unit_manifest_path": str(manifest_path),
+        "unit_manifest_sha256": manifest_sha,
+        "claim_root": str(claim_root),
+        "predeclared_units": 160,
+        "attempted_units": 160,
+        "sealed_units": 160,
+        "ambiguous_inflight_units": 0,
+        "replay_allowed": False,
+        "replacement_sampling_allowed": False,
+        "attempt_marker_shas": attempt_shas,
+        "sealed_receipt_shas": sealed_shas,
+    }
+
+
 def validate_contract_auth(contract_path: Path, auth_path: Path) -> tuple[dict[str, Any], dict[str, Any], str, str]:
     contract = load_json(contract_path)
     auth = load_json(auth_path)
@@ -110,6 +195,16 @@ def verify_authorization_scope(contract: dict[str, Any], auth: dict[str, Any], a
     require(int(provider.get("per_unit_limit") or 0) == int(contract["budget"]["provider_calls_per_rollout_limit"]), "authorization per-unit provider budget drift")
     require(set(heldout).isdisjoint(scope.get("allowed_task_ids") or []), "authorization accidentally includes heldout task")
     require(scope.get("global_lease_path") == contract["global_lease_path"], "authorization global lease path drift")
+    exact_contract = contract.get("exact_once_acquisition") or {}
+    exact_scope = scope.get("exact_once_acquisition") or {}
+    require(exact_scope.get("required") is True, "authorization exact-once acquisition missing")
+    require(exact_scope.get("unit_manifest_path") == exact_contract.get("unit_manifest_path"), "authorization exact-once manifest path drift")
+    require(exact_scope.get("unit_manifest_sha256") == exact_contract.get("unit_manifest_sha256"), "authorization exact-once manifest SHA drift")
+    require(int(exact_scope.get("unit_count") or 0) == 160, "authorization exact-once unit count drift")
+    require(exact_scope.get("required_claim_root") == exact_contract.get("claim_root"), "authorization exact-once claim root drift")
+    require(exact_scope.get("attempt_before_any_provider_io") is True, "authorization exact-once burn timing drift")
+    require(exact_scope.get("replay_allowed") is False, "authorization permits task replay")
+    require(exact_scope.get("ambiguous_recollection_allowed") is False, "authorization permits ambiguous task recollection")
 
 
 def main() -> int:
@@ -290,6 +385,13 @@ def main() -> int:
         snapshot = provider_budget.snapshot()
         require(snapshot.total_claimed <= int(contract["budget"]["max_provider_calls"]), "provider budget exceeded")
         require(snapshot.total_claimed >= total_provider_receipts, "provider receipts exceed pre-I/O claims")
+        exact_once_summary = verify_exact_once_claim_universe(
+            contract=contract,
+            all_tasks=all_tasks,
+            run_root=run_root,
+            contract_sha=contract_sha,
+            authorization_sha=auth_sha,
+        )
         # Ensure forbidden heldout namespace was never created.
         touched_heldout = [task_id for task_id in heldout if (run_root / "cases" / task_id).exists()]
         require(not touched_heldout, f"Stage-A V3 touched forbidden heldout tasks: {touched_heldout}")
@@ -311,6 +413,7 @@ def main() -> int:
             "actor_rollouts": total_rollouts,
             "provider_receipts": total_provider_receipts,
             "provider_budget": snapshot.to_dict(),
+            "exact_once_acquisition": exact_once_summary,
             "updater_calls": 0,
             "heldout_evaluations": 0,
             "partial_effect_read": False,

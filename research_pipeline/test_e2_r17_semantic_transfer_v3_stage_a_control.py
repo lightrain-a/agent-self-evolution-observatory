@@ -11,12 +11,13 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CONTRACT = ROOT / "generated/e2-r17-semantic-transfer-v3-stage-a-contract-20260903.json"
-PREFLIGHT = ROOT / "generated/e2-r17-semantic-transfer-v3-stage-a-preflight-20260903.json"
+CONTRACT = ROOT / "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r2-20260903.json"
+PREFLIGHT = ROOT / "generated/e2-r17-semantic-transfer-v3-stage-a-preflight-r2-20260903.json"
 ACTOR = ROOT / "scripts/run_e2_r17_semantic_transfer_v3_actor_pool.py"
 RUNNER = ROOT / "scripts/run_e2_r17_semantic_transfer_v3_stage_a.py"
 AUTHORIZER = ROOT / "scripts/authorize_e2_r17_semantic_transfer_v3_stage_a.py"
 ADJUDICATOR = ROOT / "scripts/adjudicate_e2_r17_semantic_transfer_v3_stage_a.py"
+STAGE_B_ORDER = ROOT / "research_pipeline/e2_r17_semantic_transfer_v3_stage_b_order.py"
 
 
 def load_module(path: Path, name: str):
@@ -39,6 +40,7 @@ class SemanticTransferV3StageAControlTest(unittest.TestCase):
         cls.adjudicator = load_module(ADJUDICATOR, "semantic_transfer_v3_adjudicator_test")
         cls.actor = load_module(ACTOR, "semantic_transfer_v3_actor_test")
         cls.runner = load_module(RUNNER, "semantic_transfer_v3_runner_test")
+        cls.stage_b_order = load_module(STAGE_B_ORDER, "semantic_transfer_v3_stage_b_order_test")
         suite_root = Path(cls.contract["suite"]["root"])
         cls.split = json.loads((suite_root / "r17_split_manifest.json").read_text(encoding="utf-8"))
         cls.streams = {str(k): [str(x) for x in v] for k, v in cls.split["e1_update_streams"].items()}
@@ -95,6 +97,14 @@ class SemanticTransferV3StageAControlTest(unittest.TestCase):
             ).hexdigest(),
         )[:4]
         self.assertEqual(expected, a)
+
+    def test_equal_dose_selection_never_escapes_mixed_candidate_domain(self) -> None:
+        mixed = [f"mixed-{index}" for index in range(5)]
+        unmixed = [f"unmixed-{index}" for index in range(3)]
+        selected = self.adjudicator.choose_four("stream-mixed-only", mixed)
+        self.assertEqual(4, len(selected))
+        self.assertTrue(set(selected).issubset(set(mixed)))
+        self.assertFalse(set(selected) & set(unmixed))
 
     def test_failed_witness_selector_is_lowest_index_failed_nonwinner(self) -> None:
         rows = [
@@ -324,6 +334,97 @@ class SemanticTransferV3StageAControlTest(unittest.TestCase):
                     prefix_ks=(1, 8),
                     concurrency=1,
                 )
+
+    def test_actor_exact_once_attempt_replay_is_rejected_before_provider_io(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            scope = {"claim_root": root / "claims"}
+            attempt = self.actor.burn_task_attempt(
+                exact_once_scope=scope,
+                task_id="task-replay",
+                contract_sha256="c" * 64,
+                authorization_sha256="a" * 64,
+                k=8,
+                prefix_ks=(1, 2, 4, 8),
+            )
+            self.assertTrue(attempt.is_file())
+            with self.assertRaises(RuntimeError):
+                self.actor.burn_task_attempt(
+                    exact_once_scope=scope,
+                    task_id="task-replay",
+                    contract_sha256="c" * 64,
+                    authorization_sha256="a" * 64,
+                    k=8,
+                    prefix_ks=(1, 2, 4, 8),
+                )
+            _, sealed = self.actor.task_claim_paths(Path(scope["claim_root"]), "task-replay")
+            self.assertFalse(sealed.exists(), "an ambiguous burned unit must remain unsealed, not recollected")
+
+    def test_actor_exact_once_seal_binds_pool_and_replay_stays_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            task_id = "task-sealed"
+            scope = {"claim_root": root / "claims"}
+            task_dir = root / "run/cases" / task_id
+            task_dir.mkdir(parents=True)
+            pool = task_dir / "pool_k8.json"
+            pool.write_text(json.dumps({"task_id": task_id, "k": 8}), encoding="utf-8")
+            attempt = self.actor.burn_task_attempt(
+                exact_once_scope=scope,
+                task_id=task_id,
+                contract_sha256="c" * 64,
+                authorization_sha256="a" * 64,
+                k=8,
+                prefix_ks=(1, 2, 4, 8),
+            )
+            sealed = self.actor.seal_task_attempt(
+                exact_once_scope=scope,
+                task_id=task_id,
+                attempt_path=attempt,
+                task_dir=task_dir,
+                contract_sha256="c" * 64,
+                authorization_sha256="a" * 64,
+            )
+            receipt = json.loads(sealed.read_text(encoding="utf-8"))
+            self.assertEqual("SEALED_EXACT_ONCE", receipt["status"])
+            self.assertEqual(file_sha(attempt), receipt["attempt_sha256"])
+            self.assertEqual(file_sha(pool), receipt["pool_k8_sha256"])
+            with self.assertRaises(RuntimeError):
+                self.actor.burn_task_attempt(
+                    exact_once_scope=scope,
+                    task_id=task_id,
+                    contract_sha256="c" * 64,
+                    authorization_sha256="a" * 64,
+                    k=8,
+                    prefix_ks=(1, 2, 4, 8),
+                )
+
+    def test_stage_b_update_pool_order_is_task_keyed_and_arm_blind(self) -> None:
+        task_ids = [f"task-{index}" for index in range(8)]
+        forward = self.stage_b_order.update_pool_order("stream-x", 2, task_ids)
+        reverse = self.stage_b_order.update_pool_order("stream-x", 2, reversed(task_ids))
+        self.assertEqual(forward, reverse)
+        expected = tuple(sorted(
+            task_ids,
+            key=lambda task_id: hashlib.sha256(
+                f"semantic-transfer-v3-update-order|stream-x|2|{task_id}".encode("utf-8")
+            ).hexdigest(),
+        ))
+        self.assertEqual(expected, forward)
+        source = STAGE_B_ORDER.read_text(encoding="utf-8")
+        update_function = source.split("def update_pool_order", 1)[1].split("def state_arm_order", 1)[0]
+        self.assertNotIn("|{arm}", update_function)
+        self.assertIn("|{task_id}", update_function)
+
+    def test_stage_b_arm_schedule_is_separate_from_common_pool_order(self) -> None:
+        arms = self.stage_b_order.state_arm_order("stream-x", 3)
+        self.assertEqual({"WIN-C", "MRW4"}, set(arms))
+        heldout = [f"heldout-{index}" for index in range(20)]
+        schedule = self.stage_b_order.heldout_evaluation_schedule("stream-x", 3, heldout)
+        self.assertEqual(40, len(schedule))
+        self.assertEqual(40, len(set(schedule)))
+        self.assertEqual(set(heldout), {task_id for task_id, _ in schedule})
+        self.assertEqual({"WIN-C", "MRW4"}, {arm for _, arm in schedule})
 
     def test_actor_scientific_scope_forbids_noninitial_skill(self) -> None:
         with tempfile.TemporaryDirectory() as td:

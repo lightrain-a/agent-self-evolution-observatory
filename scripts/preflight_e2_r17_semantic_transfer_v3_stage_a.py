@@ -108,6 +108,20 @@ def main() -> int:
     req(len(all_tasks) == 160 and len(set(all_tasks)) == 160, "V3 update task shape invalid")
     req(len(heldout) == 20 and len(set(heldout)) == 20 and set(all_tasks).isdisjoint(heldout), "V3 heldout separation invalid")
 
+    exact_once = contract.get("exact_once_acquisition") or {}
+    req(exact_once.get("required") is True, "V3 exact-once acquisition policy missing")
+    unit_manifest_raw = str(exact_once.get("unit_manifest_path") or "")
+    unit_manifest_path = Path(unit_manifest_raw) if Path(unit_manifest_raw).is_absolute() else ROOT / unit_manifest_raw
+    req(unit_manifest_path.is_file() and sha(unit_manifest_path) == exact_once.get("unit_manifest_sha256"), "V3 exact-once unit manifest drift")
+    unit_manifest = load(unit_manifest_path)
+    req([str(value) for value in unit_manifest.get("ordered_task_ids") or []] == all_tasks, "V3 exact-once unit universe/order drift")
+    req(int(exact_once.get("unit_count") or 0) == 160, "V3 exact-once unit cardinality drift")
+    req(Path(str(exact_once.get("claim_root") or "")).resolve() == (Path(contract["run_root"]) / "checkpoints/stage_a_task_claims").resolve(), "V3 exact-once claim root drift")
+    req(exact_once.get("attempt_before_any_provider_io") is True, "V3 exact-once burn timing drift")
+    req(exact_once.get("attempt_marker_immutable") is True and exact_once.get("sealed_receipt_after_frozen_k8_pool") is True, "V3 exact-once marker semantics drift")
+    req(exact_once.get("replay_allowed") is False and exact_once.get("ambiguous_recollection_allowed") is False, "V3 exact-once replay policy drift")
+    req(exact_once.get("replacement_sampling_allowed") is False, "V3 exact-once replacement-sampling policy drift")
+
     mind_root = Path(contract["mindmemos"]["root"])
     head = subprocess.run(["git", "-C", str(mind_root), "rev-parse", "HEAD"], check=True, capture_output=True, text=True).stdout.strip()
     req(head == contract["mindmemos"]["commit"], "MindMemOS commit drift")
@@ -180,6 +194,16 @@ def main() -> int:
                 "total_limit": contract["budget"]["max_provider_calls"],
                 "per_unit_limit": contract["budget"]["provider_calls_per_rollout_limit"],
             },
+            "exact_once_acquisition": {
+                "required": True,
+                "unit_manifest_path": exact_once["unit_manifest_path"],
+                "unit_manifest_sha256": exact_once["unit_manifest_sha256"],
+                "unit_count": 160,
+                "required_claim_root": exact_once["claim_root"],
+                "attempt_before_any_provider_io": True,
+                "replay_allowed": False,
+                "ambiguous_recollection_allowed": False,
+            },
             "global_lease_path": contract["global_lease_path"],
         },
         "fresh_model_identity": {"path": "synthetic-identity.json", "sha256": "f" * 64},
@@ -204,6 +228,13 @@ def main() -> int:
             guards["wrong_mode_rejected"] = True
         req(all(guards.values()), f"V3 actor scope guards failed: {guards}")
         runner_path = ROOT / contract["bound_code"]["stage_a_runner"]["path"]
+        exact_scope = actor.validate_exact_once_acquisition_scope(
+            authorization_payload=synthetic,
+            run_root=Path(contract["run_root"]),
+            requested_task_ids=all_tasks[:8],
+        )
+        req(exact_scope is not None and Path(exact_scope["claim_root"]).resolve() == Path(exact_once["claim_root"]).resolve(), "actor exact-once scope preflight failed")
+        guards["actor_exact_once_scope_valid"] = True
         runner = import_module(runner_path, "semantic_transfer_v3_stage_a_runner_preflight")
         runner.verify_authorization_scope(contract, synthetic, all_tasks, heldout)
         guards["runner_exact_authorization_schema"] = True
@@ -215,9 +246,14 @@ def main() -> int:
     runner_path = ROOT / contract["bound_code"]["stage_a_runner"]["path"]
     adjudicator_path = ROOT / contract["bound_code"]["equal_dose_adjudicator"]["path"]
     authorizer_path = ROOT / contract["bound_code"]["authorization_minter"]["path"]
-    for path in (runner_path, adjudicator_path, authorizer_path):
+    stage_b_order_path = ROOT / contract["bound_code"]["stage_b_order_helper"]["path"]
+    for path in (runner_path, adjudicator_path, authorizer_path, stage_b_order_path):
         check = subprocess.run([str(runtime_python), "-m", "py_compile", str(path)], capture_output=True, text=True, check=False)
         req(check.returncode == 0, f"V3 bound code compile failed: {path.name}")
+    stage_b_order = import_module(stage_b_order_path, "semantic_transfer_v3_stage_b_order_preflight")
+    sample_order = stage_b_order.update_pool_order("synthetic-stream", 0, [f"task-{i}" for i in range(8)])
+    req(len(sample_order) == 8 and len(set(sample_order)) == 8, "Stage-B common update order helper invalid")
+    guards["stage_b_arm_blind_task_order_valid"] = True
 
     payload = {
         "schema_version": "1.0",
@@ -243,6 +279,8 @@ def main() -> int:
         "scope_guard_checks": guards,
         "bound_code_compile_pass": True,
         "exactly_once": contract["exactly_once"],
+        "exact_once_acquisition": exact_once,
+        "stage_b_ordering_prospectively_frozen": True,
         "authority": {
             "mint_stage_a_authorization": False,
             "stage_a_provider_execution": False,

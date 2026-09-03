@@ -170,6 +170,179 @@ def validate_initial_skill_scope(
         raise RuntimeError("V3 Stage-A authorization forbids any non-initial skill or updater receipt")
 
 
+def _exclusive_json(path: Path, payload: dict[str, Any], *, replay_message: str) -> Path:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    data = (json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")
+    try:
+        fd = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+    except FileExistsError as exc:
+        raise RuntimeError(replay_message) from exc
+    try:
+        view = memoryview(data)
+        written = 0
+        while written < len(data):
+            written += os.write(fd, view[written:])
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+    try:
+        dir_fd = os.open(path.parent, os.O_RDONLY)
+        try:
+            os.fsync(dir_fd)
+        finally:
+            os.close(dir_fd)
+    except OSError:
+        # The file itself is already fsynced. Some filesystems do not support
+        # directory fsync; do not weaken O_EXCL replay protection for that.
+        pass
+    return path
+
+
+def _scope_path(raw: str) -> Path:
+    path = Path(raw)
+    return path if path.is_absolute() else ROOT / path
+
+
+def validate_exact_once_acquisition_scope(
+    *,
+    authorization_payload: dict[str, Any] | None,
+    run_root: Path,
+    requested_task_ids: list[str],
+) -> dict[str, Any] | None:
+    if authorization_payload is None:
+        return None
+    scope = authorization_payload.get("execution_scope") or {}
+    policy = scope.get("exact_once_acquisition") or {}
+    if policy.get("required") is not True:
+        raise RuntimeError("V3 Stage-A authorization lacks actor-enforced exact-once acquisition")
+    if policy.get("attempt_before_any_provider_io") is not True:
+        raise RuntimeError("V3 Stage-A exact-once policy does not burn the task before provider I/O")
+    if policy.get("replay_allowed") is not False or policy.get("ambiguous_recollection_allowed") is not False:
+        raise RuntimeError("V3 Stage-A exact-once policy permits replay or ambiguous recollection")
+    if int(policy.get("unit_count") or 0) != 160:
+        raise RuntimeError("V3 Stage-A exact-once unit cardinality drift")
+
+    manifest_raw = str(policy.get("unit_manifest_path") or "")
+    manifest_sha = str(policy.get("unit_manifest_sha256") or "")
+    if not manifest_raw or not manifest_sha:
+        raise RuntimeError("V3 Stage-A exact-once unit manifest binding missing")
+    manifest_path = _scope_path(manifest_raw)
+    if not manifest_path.is_file() or sha256(manifest_path) != manifest_sha:
+        raise RuntimeError("V3 Stage-A exact-once unit manifest drift")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest_task_ids = [str(value) for value in manifest.get("ordered_task_ids") or []]
+    if len(manifest_task_ids) != 160 or len(set(manifest_task_ids)) != 160:
+        raise RuntimeError("V3 Stage-A exact-once unit manifest is not 160 unique task IDs")
+    allowed_task_ids = [str(value) for value in scope.get("allowed_task_ids") or []]
+    if set(manifest_task_ids) != set(allowed_task_ids):
+        raise RuntimeError("V3 Stage-A exact-once unit manifest differs from authorization task universe")
+    if not set(requested_task_ids).issubset(set(manifest_task_ids)):
+        raise RuntimeError("requested task is absent from V3 exact-once acquisition universe")
+
+    claim_root_raw = str(policy.get("required_claim_root") or "")
+    if not claim_root_raw:
+        raise RuntimeError("V3 Stage-A exact-once claim root missing")
+    claim_root = Path(claim_root_raw)
+    expected_claim_root = run_root / "checkpoints/stage_a_task_claims"
+    if claim_root.resolve() != expected_claim_root.resolve():
+        raise RuntimeError("V3 Stage-A exact-once claim root is not bound inside the contract run root")
+    return {
+        "claim_root": claim_root,
+        "manifest_path": manifest_path,
+        "manifest_sha256": manifest_sha,
+        "unit_ids": tuple(manifest_task_ids),
+    }
+
+
+def task_claim_paths(claim_root: Path, task_id: str) -> tuple[Path, Path]:
+    stem = hashlib.sha256(task_id.encode("utf-8")).hexdigest()
+    return claim_root / f"{stem}.attempt.json", claim_root / f"{stem}.sealed.json"
+
+
+def burn_task_attempt(
+    *,
+    exact_once_scope: dict[str, Any] | None,
+    task_id: str,
+    contract_sha256: str | None,
+    authorization_sha256: str | None,
+    k: int,
+    prefix_ks: tuple[int, ...],
+) -> Path | None:
+    if exact_once_scope is None:
+        return None
+    claim_root = Path(exact_once_scope["claim_root"])
+    attempt_path, sealed_path = task_claim_paths(claim_root, task_id)
+    if sealed_path.exists():
+        raise RuntimeError(f"V3 Stage-A task already sealed; replay forbidden before provider I/O: {task_id}")
+    payload = {
+        "schema_version": "1.0",
+        "artifact_type": "e2-r17-semantic-transfer-v3-stage-a-task-attempt",
+        "status": "ATTEMPTED_IN_FLIGHT_DO_NOT_REPLAY",
+        "created_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "task_id": task_id,
+        "contract_sha256": contract_sha256,
+        "authorization_sha256": authorization_sha256,
+        "k": int(k),
+        "prefix_ks": list(prefix_ks),
+        "pid": os.getpid(),
+        "provider_relaunch_authorized": False,
+        "replacement_sampling_authorized": False,
+        "ambiguous_recollection_authorized": False,
+    }
+    return _exclusive_json(
+        attempt_path,
+        payload,
+        replay_message=f"V3 Stage-A task attempt already exists; replay forbidden before provider I/O: {task_id}",
+    )
+
+
+def seal_task_attempt(
+    *,
+    exact_once_scope: dict[str, Any] | None,
+    task_id: str,
+    attempt_path: Path | None,
+    task_dir: Path,
+    contract_sha256: str | None,
+    authorization_sha256: str | None,
+) -> Path | None:
+    if exact_once_scope is None:
+        return None
+    if attempt_path is None or not attempt_path.is_file():
+        raise RuntimeError(f"V3 Stage-A task cannot seal without immutable attempt marker: {task_id}")
+    claim_root = Path(exact_once_scope["claim_root"])
+    expected_attempt, sealed_path = task_claim_paths(claim_root, task_id)
+    if attempt_path.resolve() != expected_attempt.resolve():
+        raise RuntimeError(f"V3 Stage-A task attempt path drift: {task_id}")
+    attempt = json.loads(attempt_path.read_text(encoding="utf-8"))
+    if attempt.get("status") != "ATTEMPTED_IN_FLIGHT_DO_NOT_REPLAY" or attempt.get("task_id") != task_id:
+        raise RuntimeError(f"V3 Stage-A task attempt marker drift: {task_id}")
+    if attempt.get("contract_sha256") != contract_sha256 or attempt.get("authorization_sha256") != authorization_sha256:
+        raise RuntimeError(f"V3 Stage-A task attempt lineage drift: {task_id}")
+    pool_k8 = task_dir / "pool_k8.json"
+    if not pool_k8.is_file():
+        raise RuntimeError(f"V3 Stage-A task cannot seal before frozen K8 pool exists: {task_id}")
+    payload = {
+        "schema_version": "1.0",
+        "artifact_type": "e2-r17-semantic-transfer-v3-stage-a-task-seal",
+        "status": "SEALED_EXACT_ONCE",
+        "created_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "task_id": task_id,
+        "contract_sha256": contract_sha256,
+        "authorization_sha256": authorization_sha256,
+        "attempt_path": str(attempt_path),
+        "attempt_sha256": sha256(attempt_path),
+        "pool_k8_path": str(pool_k8),
+        "pool_k8_sha256": sha256(pool_k8),
+        "provider_relaunch_authorized": False,
+        "replacement_sampling_authorized": False,
+    }
+    return _exclusive_json(
+        sealed_path,
+        payload,
+        replay_message=f"V3 Stage-A task seal already exists; duplicate completion forbidden: {task_id}",
+    )
+
+
 async def main_async(args: argparse.Namespace) -> dict[str, Any]:
     ReactAgentFactory, SpreadsheetBenchEnv = load_mindmemos(args.mindmemos_root)
     load_env_file(args.env_file)
@@ -212,6 +385,11 @@ async def main_async(args: argparse.Namespace) -> dict[str, Any]:
         run_root=args.run_root,
         prefix_ks=prefix_ks,
         concurrency=args.concurrency,
+    )
+    exact_once_scope = validate_exact_once_acquisition_scope(
+        authorization_payload=authorization_payload,
+        run_root=args.run_root,
+        requested_task_ids=task_ids,
     )
     provider_budget_ledger: ProviderBudgetLedger | None = None
     budget_args_present = any(
@@ -361,13 +539,37 @@ async def main_async(args: argparse.Namespace) -> dict[str, Any]:
 
     task_rows: list[dict[str, Any]] = []
     for task_id in task_ids:
+        # Scientific Stage A irreversibly burns the task acquisition unit before
+        # any provider coroutine is awaited. If execution becomes ambiguous
+        # after this point, the marker remains and all replay/recollection fails
+        # closed before external I/O.
+        attempt_path = burn_task_attempt(
+            exact_once_scope=exact_once_scope,
+            task_id=task_id,
+            contract_sha256=contract_sha,
+            authorization_sha256=authorization_sha,
+            k=args.k,
+            prefix_ks=prefix_ks,
+        )
         refs = await asyncio.gather(*(run_unit(task_id, index) for index in range(args.k)))
         task_dir = args.run_root / "cases" / task_id
         pools = freeze_nested_pools(task_dir=task_dir, trajectories=refs, prefix_ks=prefix_ks)
+        sealed_path = seal_task_attempt(
+            exact_once_scope=exact_once_scope,
+            task_id=task_id,
+            attempt_path=attempt_path,
+            task_dir=task_dir,
+            contract_sha256=contract_sha,
+            authorization_sha256=authorization_sha,
+        )
         task_rows.append(
             {
                 "task_id": task_id,
                 "failure_family": None,
+                "exact_once_attempt_path": str(attempt_path) if attempt_path else None,
+                "exact_once_attempt_sha256": sha256(attempt_path) if attempt_path else None,
+                "exact_once_sealed_path": str(sealed_path) if sealed_path else None,
+                "exact_once_sealed_sha256": sha256(sealed_path) if sealed_path else None,
                 "scores": [ref.score for ref in refs],
                 "provider_calls": sum(
                     len(json.loads(Path(ref.trajectory_path).read_text(encoding="utf-8"))["adapter_receipts"])
@@ -414,6 +616,21 @@ async def main_async(args: argparse.Namespace) -> dict[str, Any]:
         "contract_sha256": contract_sha,
         "authorization_sha256": authorization_sha,
         "provider_budget": provider_budget_ledger.snapshot().to_dict() if provider_budget_ledger is not None else None,
+        "exact_once_acquisition": (
+            {
+                "required": True,
+                "unit_manifest_path": str(exact_once_scope["manifest_path"]),
+                "unit_manifest_sha256": str(exact_once_scope["manifest_sha256"]),
+                "claim_root": str(exact_once_scope["claim_root"]),
+                "requested_units": len(task_rows),
+                "attempted_units": sum(1 for row in task_rows if row.get("exact_once_attempt_path")),
+                "sealed_units": sum(1 for row in task_rows if row.get("exact_once_sealed_path")),
+                "replay_allowed": False,
+                "ambiguous_recollection_allowed": False,
+            }
+            if exact_once_scope is not None
+            else None
+        ),
         "tasks": task_rows,
         "scientific_outcome": args.mode != "protocol_smoke",
         "authority": {

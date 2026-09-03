@@ -1,0 +1,312 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "e2-r17-semantic-transfer-v3-stage-a-contract-r2",
+  "created_at_utc": "2026-09-03T12:24:02+00:00",
+  "status": "FROZEN_SEMANTIC_TRANSFER_V3_STAGE_A",
+  "scientific_role": "Stage-A search-pool acquisition, equal-dose support qualification, failed-witness freeze, and pre-learning baseline-router freeze only; no updater, heldout evaluation, or learning-effect inference",
+  "scientific_design_parent": {
+    "path": "generated/e2-r17-selective-mrw-semantic-transfer-v3-review-repair-pre-f0-20260903.json",
+    "sha256": "e7b317da97d5a745f3ed4dc745551cd7a9344c7b3b93bffe521099f355a32e22",
+    "status": "PRE_F0_V3_ZERO_PROVIDER_REVIEW_REPAIR_PASS",
+    "commit": "c098761838df566d661c196089e689b0b666aa30"
+  },
+  "protocol": {
+    "path": "consultations/e2-r17-semantic-transfer-v3-stage-a-r2-review-repair-20260903.md",
+    "sha256": "952d302ae3777dfd8e2249eb8a1bd7248ded636eadda517b9aa572c7962ee580",
+    "role": "verdict-changing R2 repair layered over base V3 scientific protocol"
+  },
+  "zero_provider_audit": {
+    "path": "generated/e2-r17-semantic-transfer-v3-zero-provider-audit-20260903.json",
+    "sha256": "1cc6552a67377bc02416800c01c39866e962250d6b825425fd6190faa5984e89",
+    "required_status": "PASS_V3_CROSSED_IDENTIFICATION_ZERO_PROVIDER_AUDIT"
+  },
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v3",
+    "suite_manifest_sha256": "9d57c0abc51758e3657484048e9a132a531ff2758d724b7be5cc6d14ae262338",
+    "split_manifest_path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v3/r17_split_manifest.json",
+    "split_manifest_sha256": "a19a57cf1ee71a9af440b56cdf884faeac2ed27990e4fd72e54061be72094fe7",
+    "core_semantic_split_path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v3/r17_semantic_transfer_v3_split_manifest.json",
+    "core_semantic_split_sha256": "815977e908214b66a1106d623ca68f4707d56b117fb01740cadbd1edeab3679e",
+    "metadata_path": "/data/wyt/e2-r17-search-projection/controlled-spreadsheet-suite-semantic-transfer-v3/r17_controlled_metadata.json",
+    "metadata_sha256": "1cd8fbe40ab84d9db32a6b4877a6aeb3949b4db0772cba04bf9d60ca901b612f",
+    "dataset_sha256": "be84cca6d75359b713a1d6f914c002f7f2be95bcef5f4b745e61908ac7d56b10",
+    "generation_runtime": {
+      "python_implementation": "CPython",
+      "python_version": "3.12.3",
+      "openpyxl_version": "3.1.5",
+      "zlib_compile_version": "1.3",
+      "zlib_runtime_version": "1.3"
+    },
+    "streams": [
+      "stv3-cgwb-00",
+      "stv3-cgwb-01",
+      "stv3-cgwp-00",
+      "stv3-cgwp-01",
+      "stv3-cjlb-00",
+      "stv3-cjlb-01",
+      "stv3-cjlp-00",
+      "stv3-cjlp-01",
+      "stv3-clrb-00",
+      "stv3-clrb-01",
+      "stv3-clrp-00",
+      "stv3-clrp-01",
+      "stv3-cmpb-00",
+      "stv3-cmpb-01",
+      "stv3-cmpp-00",
+      "stv3-cmpp-01",
+      "stv3-csbb-00",
+      "stv3-csbb-01",
+      "stv3-csbp-00",
+      "stv3-csbp-01"
+    ],
+    "stream_count": 20,
+    "update_tasks": 160,
+    "heldout_tasks_forbidden": 20,
+    "crossed_skeletons": 5,
+    "semantic_cells_per_skeleton": 2,
+    "streams_per_semantic_cell": 2
+  },
+  "mindmemos": {
+    "root": "/data/wyt/evidence-substrates/MindMemOS-20260817",
+    "commit": "90491828726e1540442b17cd445d0308d0b8093c",
+    "initial_skill_path": "/data/wyt/evidence-substrates/MindMemOS-20260817/resources/skill_evolve/spreadsheetbench_init_skill/xlsx/SKILL.md",
+    "initial_skill_sha256": "bcb738e9141a462c2afc854c5b17cb2ff039af5e1346510c271e6894267a26bb"
+  },
+  "runtime": {
+    "venv_root": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv",
+    "python_executable": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv/bin/python",
+    "freeze_path": "/data/wyt/e2-r17-search-projection/mindmemos-eval-venv.freeze.txt",
+    "freeze_sha256": "ed0e582bdd2ac7bac376d4287b3d38e6e3bf28a522016c14891b4f037635044e",
+    "qualification_path": "generated/e2-r17-runtime-dependency-qualification-r2-20260828.json",
+    "qualification_sha256": "38a1614b049ed328165c85584017ae8f48340afea9cf247bb1dd20958265ef9b"
+  },
+  "env_file_path": "/home/wyt/code/agent-self-evolution-observatory-e2-r17-compute-shielding-20260825/.env",
+  "provider_route": "https://ark.cn-beijing.volces.com/api/plan/v3",
+  "model_identity_policy": {
+    "requested_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "thinking": "disabled",
+    "provider_retry_limit": 0,
+    "fresh_requalification_required_before_authorization": true,
+    "historical_identity_receipts_non_authoritative": true
+  },
+  "review_policy": {
+    "surface": "ChatGPT web",
+    "model": "GPT-5.6 Sol",
+    "thinking_level": "极高",
+    "fresh_review_after_contract_freeze": true,
+    "single_submission_required": true,
+    "required_verdict": "PASS_TO_SEPARATE_STAGE_A_AUTHORIZATION",
+    "required_execution_recommendation": "ALLOW_SEPARATE_STAGE_A_AUTHORIZATION",
+    "remaining_blockers_required": [],
+    "stage_b_authority": false,
+    "paper_claim_authority": false,
+    "fresh_review_after_r2_contract_freeze": true,
+    "r1_review_non_authoritative_for_r2": true
+  },
+  "bound_code": {
+    "actor": {
+      "path": "scripts/run_e2_r17_semantic_transfer_v3_actor_pool.py",
+      "sha256": "28a21f55c5f641d555eecf66f146fd1414720b19e1a5affbb422a0229a543500"
+    },
+    "stage_a_runner": {
+      "path": "scripts/run_e2_r17_semantic_transfer_v3_stage_a.py",
+      "sha256": "267d9dd31e197d6c1d4e7c7bebbbbf0127571a2d209c9e722ebfefbe7c1bcc96"
+    },
+    "equal_dose_adjudicator": {
+      "path": "scripts/adjudicate_e2_r17_semantic_transfer_v3_stage_a.py",
+      "sha256": "b920b213239d02e233f840fd10f15c97df18ba201ca428585e31272a064a487b"
+    },
+    "authorization_minter": {
+      "path": "scripts/authorize_e2_r17_semantic_transfer_v3_stage_a.py",
+      "sha256": "4909c9a701d6f2d6f8dba075f0972bd0addab890d3dbfabf5914d4cc297a427d"
+    },
+    "preflight": {
+      "path": "scripts/preflight_e2_r17_semantic_transfer_v3_stage_a.py",
+      "sha256": "4d554bce39aee9522e8496176e76934de770adcf677bffd751d5814c0f63dc9d"
+    },
+    "control_tests": {
+      "path": "research_pipeline/test_e2_r17_semantic_transfer_v3_stage_a_control.py",
+      "sha256": "2349bdf00fea37d2f2acbb6d595d36413809d5b4387eb752295535de6307763a"
+    },
+    "stage_b_order_helper": {
+      "path": "research_pipeline/e2_r17_semantic_transfer_v3_stage_b_order.py",
+      "sha256": "3c1e7832eff2e8c4a12f317cecf78e4862fc3225724c256e021fcd9f2d7f5057"
+    }
+  },
+  "actor": {
+    "requested_model": "deepseek-v4-pro",
+    "required_resolved_model": "deepseek-v4-pro-ga-260813",
+    "k": 8,
+    "prefix_ks": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "temperature": 0,
+    "thinking": "disabled",
+    "provider_retry_limit": 0,
+    "max_turns": 10,
+    "max_output_tokens": 8192,
+    "concurrency": 1,
+    "legacy_failure_family_metadata": false,
+    "hidden_semantic_or_skeleton_metadata_in_prompt": false
+  },
+  "budget": {
+    "actor_rollouts": 1280,
+    "max_provider_calls": 12800,
+    "provider_calls_per_rollout_limit": 10
+  },
+  "equal_dose_support": {
+    "required_mixed_pools_per_stream": 4,
+    "streams_required": 20,
+    "treated_mixed_pools_per_stream": 4,
+    "treated_pool_selection": "four members of C_s with lowest SHA256(semantic-transfer-mrw4-v3|stream_id|task_id)",
+    "failed_witness_selector": "lowest original rollout index among verifier-failure nonwinner trajectories",
+    "failed_witness_rollout_and_trajectory_sha_frozen_at_adjudication": true,
+    "treated_pool_total_if_pass": 80,
+    "all_160_pools_must_be_sealed_before_support_read": true,
+    "stage_b_treated_pool_ids_and_failed_witnesses_must_be_frozen_before_updater": true,
+    "failure_status": "HOLD_SEMANTIC_TRANSFER_V3_INSUFFICIENT_EQUAL_DOSE_SUPPORT",
+    "candidate_domain": "C_s = mixed K8 pools in stream s",
+    "mixed_definition": ">=1 verifier-success trajectory and >=1 verifier-failure trajectory in the frozen K8 pool",
+    "unmixed_pool_eligible": false,
+    "hash_rank_applied_only_within_candidate_domain": true
+  },
+  "prelearning_baseline_router_policy": {
+    "difficulty_only": "ascending successful-rollout count across 64 rollouts/stream; SHA256(semantic-transfer-difficulty-v3|stream_id) tie-break; lowest 10 -> MRW4",
+    "mixedness_only": "descending mixed-pool count across 8 pools/stream; SHA256(semantic-transfer-mixedness-v3|stream_id) tie-break; highest 10 -> MRW4",
+    "freeze_only_after_all_160_pools_sealed": true,
+    "freeze_before_stage_b_outcomes": true,
+    "extra_provider_calls": 0
+  },
+  "observable_router": {
+    "frozen_before_stage_a": true,
+    "input": "actor-visible instruction only",
+    "hidden_metadata_inputs": false,
+    "family_template_fallback": false,
+    "generated_route_counts": {
+      "MRW4": 135,
+      "WIN-C": 135,
+      "UNCLASSIFIED": 0
+    }
+  },
+  "stage_b_plan_no_authority": {
+    "replicates_per_stream": 4,
+    "paired_stream_replicate_units": 80,
+    "learned_states": 160,
+    "common_heldout_tasks": 20,
+    "heldout_evaluations": 3200,
+    "primary_independent_mechanism_units": 5,
+    "primary_unit": "matched_skeleton_interaction I_h",
+    "update_pool_order": {
+      "key": "SHA256(semantic-transfer-v3-update-order|stream_id|replicate_index|task_id)",
+      "task_id_in_key": true,
+      "arm_in_key": false,
+      "identical_across_win_c_and_mrw4": true,
+      "tasks_per_stream": 8
+    },
+    "state_arm_wallclock_order": {
+      "key": "SHA256(semantic-transfer-v3-state-arm-order|stream_id|replicate_index|arm)",
+      "separate_from_update_pool_order": true
+    },
+    "heldout_evaluation_schedule": {
+      "key": "SHA256(semantic-transfer-v3-heldout-eval-order|stream_id|replicate_index|heldout_task_id|arm)",
+      "evaluation_is_non_mutating": true
+    },
+    "execution_authority": false
+  },
+  "run_root": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903",
+  "global_lease_path": "/data/wyt/e2-r17-search-projection/lineage-leases/e2-r17-semantic-transfer-v3-stage-a-r2.json",
+  "exactly_once": {
+    "authorized_runs": 1,
+    "first_run_only_runner": true,
+    "completed_rollout_replay": false,
+    "automatic_retry": false,
+    "replacement_sampling": false,
+    "resume_requires_separate_adjudication_and_authorization": true,
+    "failure_preserves_running_global_lease": true,
+    "task_level_atomic_attempt_before_provider_io": true,
+    "predeclared_acquisition_units": 160,
+    "attempted_unit_replay": false,
+    "ambiguous_inflight_recollection": false,
+    "terminal_requires_all_attempt_and_seal_receipts": true
+  },
+  "analysis_boundary": {
+    "stage_a_support_only": true,
+    "partial_learning_effect_read": false,
+    "scientific_learning_effect_read": false,
+    "stage_b_effect_inference": false,
+    "heldout_access": false
+  },
+  "authority": {
+    "stage_a_provider_execution": false,
+    "stage_b_learning_execution": false,
+    "updater": false,
+    "heldout_evaluation": false,
+    "analyzer": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_promotion": false,
+    "submission": false
+  },
+  "next_gate": "ZERO_PROVIDER_R2_PREFLIGHT_THEN_FRESH_GPT56_SOL_EXTRA_HIGH_WEB_REVIEW_THEN_FRESH_MODEL_IDENTITY_BEFORE_SINGLE_USE_STAGE_A_AUTHORIZATION",
+  "revision": "R2_VERDICT_CHANGING_REPAIR",
+  "rejected_parent_contract": {
+    "path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-20260903.json",
+    "sha256": "6104caa0d797b3a6bdb94988626f8715ea697fe1c896ef839fa1837a80513fdd",
+    "status": "FROZEN_SEMANTIC_TRANSFER_V3_STAGE_A",
+    "independent_review_verdict": "REVISE_BEFORE_STAGE_A",
+    "provider_calls": 0,
+    "scientific_execution": false
+  },
+  "v2_review_repair_parent": {
+    "path": "consultations/e2-r17-semantic-transfer-v2-gpt56-web-adversarial-review-20260903.md",
+    "sha256": "f3e346fce5e000526d345920049ee2f00e01f08e21cf0d6ef591426d94320a89",
+    "surface": "ChatGPT web",
+    "model": "GPT-5.6 Sol",
+    "thinking_level": "极高",
+    "verdict": "REVISE_BEFORE_STAGE_A",
+    "prompt_submissions": 1
+  },
+  "base_scientific_protocol": {
+    "path": "consultations/e2-r17-selective-mrw-semantic-transfer-v3-review-repair-20260903.md",
+    "sha256": "8e9d3ee123a8f5c589662f3d85c95d89872bb579f1f51a80a825644e896ff5dd"
+  },
+  "r1_preexecution_review_parent": {
+    "receipt_path": "generated/e2-r17-semantic-transfer-v3-stage-a-gpt56-web-review-r1-20260903.json",
+    "receipt_sha256": "bfd0deb4853daed00360c14e9b82388b07d6632a49adcff6654aca67297c53fd",
+    "response_path": "consultations/e2-r17-semantic-transfer-v3-stage-a-gpt56-web-review-r1-20260903.md",
+    "response_sha256": "23c10ccc48f519ff6969180b066ea2fade8e5e351f1dfd6d9aa63e1216d201d9",
+    "conversation_url": "https://chatgpt.com/c/6a996224-4b10-83e8-a7d3-db5ca6b6747a",
+    "surface": "ChatGPT web",
+    "model": "GPT-5.6 Sol",
+    "thinking_level": "极高",
+    "verdict": "REVISE_BEFORE_STAGE_A",
+    "prompt_submissions": 1,
+    "contract_sha256_acknowledged": "6104caa0d797b3a6bdb94988626f8715ea697fe1c896ef839fa1837a80513fdd",
+    "remaining_blockers": [
+      "Freeze MRW4 treated-pool selection to the mixed-pool candidate set only.",
+      "Add actor-enforced atomic per-task exact-once acquisition with fail-closed handling of ambiguous or interrupted calls.",
+      "Freeze one identical task-ID-keyed Stage-B update order across WIN-C and MRW4, excluding arm from the ordering key."
+    ]
+  },
+  "exact_once_acquisition": {
+    "required": true,
+    "unit_manifest_path": "generated/e2-r17-semantic-transfer-v3-stage-a-r2-acquisition-units-20260903.json",
+    "unit_manifest_sha256": "43a5f77df10771e8029809d6ffc1c1a8ba9c12e3165dd20f957866a51e0aa9a9",
+    "unit_count": 160,
+    "claim_root": "/data/wyt/e2-r17-search-projection/runs/semantic-transfer-v3-stage-a-r2-20260903/checkpoints/stage_a_task_claims",
+    "attempt_before_any_provider_io": true,
+    "attempt_marker_creation": "O_CREAT|O_EXCL + file fsync before provider I/O",
+    "attempt_marker_immutable": true,
+    "sealed_receipt_after_frozen_k8_pool": true,
+    "terminal_summary_requires_attempted_units": 160,
+    "terminal_summary_requires_sealed_units": 160,
+    "replay_allowed": false,
+    "ambiguous_recollection_allowed": false,
+    "replacement_sampling_allowed": false,
+    "failure_semantics": "an attempted-but-unsealed unit is burned; preserve run root/global lease and fail closed for separate adjudication"
+  }
+}
