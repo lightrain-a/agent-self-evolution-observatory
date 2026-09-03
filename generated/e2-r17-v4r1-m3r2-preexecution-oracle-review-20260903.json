@@ -1,0 +1,62 @@
+{
+  "artifact_type": "e2-r17-combined-independent-preexecution-review",
+  "schema_version": "1.0",
+  "review_date": "2026-09-03",
+  "reviewer": {
+    "route": "Oracle Browser / logged-in ChatGPT Agent project",
+    "server": "52",
+    "model": "GPT-5.6 Sol",
+    "thinking_effort": "Extra High (4/5 verified from ChatGPT DOM)",
+    "session": "e2-r17-v4r1-m3r2-preexec",
+    "conversation_id": "6a999791-67c8-83e8-8b9a-8390f0ed20eb",
+    "prompt_submitted": true,
+    "completed": true
+  },
+  "reviewed_objects": {
+    "bridge_v4_r1": {
+      "commit": "51edbda1bd18ed6585def50dc8e5c12143d8b0bd",
+      "path": "generated/e2-r17-state-compiler-bridge-protocol-v4-r1-20260903.md",
+      "sha256": "6ee0768ce8ef9418250935de2153dde5837266753d63b64cf4d9e99eedf53697",
+      "verdict": "REVISE_BEFORE_STAGE_A"
+    },
+    "m3r2": {
+      "commit": "f8fb39d2289fdc3af2baa7bec23fe9c12087c1d1",
+      "path": "generated/e2-r17-exact-evidence-frozen-state-regeneration-m3r2-proposal-20260903.md",
+      "sha256": "82f6139344d2c78678130a36a32278e4e9cb0d29a4c9200e45982f1a09d44673",
+      "verdict": "REVISE_M3R2_BEFORE_EXECUTION"
+    }
+  },
+  "bridge_verdict_changing_fixes": [
+    "State that the squared-propensity identity for D_X-D_A requires conditionally iid/independent stationary actor realizations, not exchangeability alone; otherwise bound Q3 to observed excess disagreement.",
+    "Apply state-SHA equivalence universally across FREE, COMP, and generic-control arms so any byte-identical states reuse observations or have exact-zero causal contrast.",
+    "Bound Q2 to FF4-specific method-substance evidence because C_SCORE and C_SCOPE are FF4-only; do not use Q2 to explain or mediate the balanced Q1 generator-factor main effect."
+  ],
+  "bridge_nonblockers": [
+    "The equal-weight G_MAIN,A generator-factor estimand is coherent for the balanced 2x2 and does not create Simpson's paradox; opposite source-specific effects are effect modification and must be reported.",
+    "FREE_B is correctly kept out of the primary Q1 gate and used only as prespecified sensitivity/mechanism evidence.",
+    "The scope-matched generic control is interpretable under its already-bounded diagnosis-cardinality side-channel claim.",
+    "SCREEN to VALIDATION authority preserves the primary estimand without outcome-conditioned redesign."
+  ],
+  "m3r2_verdict_changing_fixes": [
+    "Replace exchangeability-only wording with conditionally iid/independent stationary actor-realization assumptions for the squared-propensity identity.",
+    "Do not use outcome-consumed historical A1/B1 in the new localization gate; provider/runtime matching does not undo historical selection.",
+    "Preserve the 72-unit budget by collecting two fully prospective actor realizations for FF_R1 and two for FF_R2 on all 18 tasks; keep FF_HIST and WIN_COMMON descriptive only.",
+    "Raw E_REAL>0 is insufficient for latent outcome-propensity language; freeze a one-sided uncertainty/randomization criterion using the same 72 fresh observations, or limit the claim to observed excess disagreement."
+  ],
+  "m3r2_cost_fix": {
+    "old_new_actor_units": 72,
+    "repaired_new_actor_units": 72,
+    "new_updater_calls": 0,
+    "new_states": 0,
+    "new_tasks": 0,
+    "new_models": 0
+  },
+  "authority": {
+    "scientific_provider_execution": false,
+    "bridge_stage_a": false,
+    "m3_execution": false,
+    "recovery_v3_modification": false,
+    "e3": false,
+    "submission": false
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "artifact_type": "e2-r17-state-compiler-bridge-v4r2-zero-provider-review-repair-audit",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PASS_BRIDGE_V4R2_ZERO_PROVIDER_REVIEW_REPAIR",
+  "base_commit": "51edbda1bd18ed6585def50dc8e5c12143d8b0bd",
+  "branch": "research/e2-r17-state-compiler-bridge-v4-review-repair-20260903",
+  "independent_review": {
+    "path": "generated/e2-r17-v4r1-m3r2-preexecution-oracle-review-20260903.json",
+    "sha256": "a3232a0adc7978d65383595c2ca58b93a1c14d08ea632b4798efc33c3464d311",
+    "model": "GPT-5.6 Sol",
+    "thinking": "Extra High (4/5)",
+    "conversation_id": "6a999791-67c8-83e8-8b9a-8390f0ed20eb",
+    "v4_r1_verdict": "REVISE_BEFORE_STAGE_A"
+  },
+  "objects": {
+    "protocol": {
+      "path": "generated/e2-r17-state-compiler-bridge-protocol-v4-r2-20260903.md",
+      "sha256": "1bc74c6f98e38535cb3865dcd41fb244b7d17c295db0ee9835937cc1034f9ef7"
+    },
+    "analysis": {
+      "path": "research_pipeline/e2_r17_state_compiler_bridge_v4_analysis.py",
+      "sha256": "3c87fe817ec55f34e602b3de212560c269f7ff43625c4f807e465217f6645355"
+    },
+    "analysis_tests": {
+      "path": "research_pipeline/test_e2_r17_state_compiler_bridge_v4_analysis.py",
+      "sha256": "a66a79b7bffe7a6b1ff0904a2eb6e9e19a2e325b86d096fa142e4c3b79c8050a"
+    },
+    "review_repair_tests": {
+      "path": "research_pipeline/test_e2_r17_state_compiler_bridge_v4r2_review_repair.py",
+      "sha256": "4d78a355f3abadac4f385c2d4ed23b29ba0be3b7736f0b7d9a90c2580688b54c"
+    }
+  },
+  "repairs": {
+    "primary_q1_unchanged": "G_MAIN,A = 0.5 * [(W_COMP-W_FREE) + (FF4_COMP-FF4_FREE_A)]",
+    "q3_unconditional_claim": "observed cross-state-minus-within-state actor disagreement only",
+    "q3_propensity_identity_requires": "conditionally iid/independent stationary actor realizations given frozen state/task/model/runtime",
+    "state_sha_aliasing_scope": "all FREE/COMP/generic arms",
+    "q2_scope": "FF4-only method-substance classification",
+    "q2_explains_balanced_q1": false,
+    "free_b_primary": false,
+    "free_b_sensitivity_only": true
+  },
+  "tests": {
+    "combined_adjacent_regression": "64/64 PASS",
+    "provider_calls": 0,
+    "scientific_outcomes_read": false
+  },
+  "authority": {
+    "provider_io": false,
+    "bridge_stage_a": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "e3": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "submission": false
+  },
+  "next_gate": "FREEZE_V4R2_COMMIT_THEN_FRESH_INDEPENDENT_PREEXECUTION_REREVIEW",
+  "interpretation_boundary": "V4-R2 is a zero-provider repair of V4-R1 reviewer blockers. It does not authorize Bridge Stage A or imply a passing independent rereview."
+}

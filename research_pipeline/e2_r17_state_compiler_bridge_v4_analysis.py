@@ -72,13 +72,13 @@ def diagnosis_control_classification(
     scope_mean = mean(scope)
 
     if score_mean > 0.0 and scope_mean > 0.0:
-        label = "TRAJECTORY_CONDITIONED_DIAGNOSIS_SUPPORTED_BEYOND_REPAIR_CARDINALITY"
+        label = "FF4_TRAJECTORY_CONDITIONED_DIAGNOSIS_SUPPORTED_BEYOND_REPAIR_CARDINALITY"
         supported = True
     elif score_mean > 0.0:
-        label = "SCOPE_OR_SPARSITY_CANONICALIZATION_ONLY"
+        label = "FF4_SCOPE_OR_SPARSITY_CANONICALIZATION_ONLY"
         supported = False
     else:
-        label = "GENERIC_CANONICALIZATION_NOT_REJECTED"
+        label = "FF4_GENERIC_CANONICALIZATION_NOT_REJECTED"
         supported = False
     return DiagnosisClassification(
         score_only_mean_advantage=score_mean,
@@ -88,10 +88,57 @@ def diagnosis_control_classification(
     )
 
 
+def _skill_sha256(value: str, *, name: str) -> str:
+    digest = str(value)
+    if len(digest) != 64 or any(char not in "0123456789abcdef" for char in digest):
+        raise ValueError(f"{name} must be a lowercase SHA-256 hex digest")
+    return digest
+
+
+def state_sha_aware_contrast(
+    *,
+    left_skill_sha256: str,
+    left_utility: float,
+    right_skill_sha256: str,
+    right_utility: float,
+) -> float:
+    """Universal state-treatment contrast with SHA-equivalence collapse.
+
+    Persistent state is the treatment.  Any two arms—FREE, COMP, or generic
+    controls—that materialize byte-identical states belong to the same treatment
+    class and therefore have exact-zero state-level contrast regardless of actor
+    noise. Execution should reuse the same actor observation for aliased arms;
+    this helper also fails closed at analysis time if duplicate execution occurs.
+    """
+
+    left = _skill_sha256(left_skill_sha256, name="left_skill_sha256")
+    right = _skill_sha256(right_skill_sha256, name="right_skill_sha256")
+    if left == right:
+        return 0.0
+    return float(left_utility) - float(right_utility)
+
+
 def within_source_generator_contrast(compiled_utility: float, free_utility: float) -> float:
-    """Generator contrast within one frozen evidence source."""
+    """Arithmetic generator contrast; execution uses the SHA-aware wrapper."""
 
     return float(compiled_utility) - float(free_utility)
+
+
+def within_source_generator_contrast_sha_aware(
+    *,
+    compiled_skill_sha256: str,
+    compiled_utility: float,
+    free_skill_sha256: str,
+    free_utility: float,
+) -> float:
+    """Generator contrast after universal state-SHA equivalence collapse."""
+
+    return state_sha_aware_contrast(
+        left_skill_sha256=compiled_skill_sha256,
+        left_utility=compiled_utility,
+        right_skill_sha256=free_skill_sha256,
+        right_utility=free_utility,
+    )
 
 
 def generator_factorial_main_effect(
@@ -111,6 +158,34 @@ def generator_factorial_main_effect(
 
     winner = within_source_generator_contrast(winner_compiled_utility, winner_free_utility)
     ff4 = within_source_generator_contrast(ff4_compiled_utility, ff4_free_a_utility)
+    return 0.5 * (winner + ff4)
+
+
+def generator_factorial_main_effect_sha_aware(
+    *,
+    winner_compiled_skill_sha256: str,
+    winner_compiled_utility: float,
+    winner_free_skill_sha256: str,
+    winner_free_utility: float,
+    ff4_compiled_skill_sha256: str,
+    ff4_compiled_utility: float,
+    ff4_free_a_skill_sha256: str,
+    ff4_free_a_utility: float,
+) -> float:
+    """Primary generator-factor effect after universal SHA-equivalence collapse."""
+
+    winner = within_source_generator_contrast_sha_aware(
+        compiled_skill_sha256=winner_compiled_skill_sha256,
+        compiled_utility=winner_compiled_utility,
+        free_skill_sha256=winner_free_skill_sha256,
+        free_utility=winner_free_utility,
+    )
+    ff4 = within_source_generator_contrast_sha_aware(
+        compiled_skill_sha256=ff4_compiled_skill_sha256,
+        compiled_utility=ff4_compiled_utility,
+        free_skill_sha256=ff4_free_a_skill_sha256,
+        free_utility=ff4_free_a_utility,
+    )
     return 0.5 * (winner + ff4)
 
 
@@ -210,12 +285,14 @@ def excess_state_realization_disagreement(
     b1: Sequence[float],
     b2: Sequence[float],
 ) -> float:
-    """D_X-D_A, with byte-identical FREE states collapsed to exact zero.
+    """Observed D_X-D_A, with byte-identical FREE states collapsed to zero.
 
-    For binary outcomes and exchangeable conditional actor realizations, the
-    expectation of D_X-D_A is the mean squared difference in the two frozen-state
-    success propensities. It is used only as state-realization localization, not
-    as a population variance-component estimate or proof of a variance bottleneck.
+    For binary outcomes, the squared-propensity expectation requires actor
+    executions to be conditionally iid/independent and stationary given frozen
+    state, task, resolved model, and runtime.  The function itself computes only
+    the observed excess disagreement and does not assert that hidden provider
+    randomness satisfies this model.  It is never a population variance-component
+    estimate or proof that variance reduction mediates compiler utility.
     """
 
     for digest in (free_a_skill_sha256, free_b_skill_sha256):
@@ -238,8 +315,11 @@ __all__ = [
     "directional_gate",
     "generator_method_gate",
     "diagnosis_control_classification",
+    "state_sha_aware_contrast",
     "within_source_generator_contrast",
+    "within_source_generator_contrast_sha_aware",
     "generator_factorial_main_effect",
+    "generator_factorial_main_effect_sha_aware",
     "first_realization_generator_contrast",
     "realization_averaged_sensitivity",
     "generator_factorial_main_effect_sensitivity",

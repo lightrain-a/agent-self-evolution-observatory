@@ -7,10 +7,13 @@ from research_pipeline.e2_r17_state_compiler_bridge_v4_analysis import (
     excess_state_realization_disagreement,
     first_realization_generator_contrast,
     generator_factorial_main_effect,
+    generator_factorial_main_effect_sha_aware,
     generator_factorial_main_effect_sensitivity,
     generator_method_gate,
     realization_averaged_sensitivity,
     realization_localization_gate,
+    state_sha_aware_contrast,
+    within_source_generator_contrast_sha_aware,
 )
 
 
@@ -23,7 +26,7 @@ class StateCompilerBridgeV4AnalysisTest(unittest.TestCase):
         )
         self.assertTrue(raw.passed)
         self.assertFalse(interpretation.trajectory_conditioned_diagnosis_supported)
-        self.assertEqual("SCOPE_OR_SPARSITY_CANONICALIZATION_ONLY", interpretation.label)
+        self.assertEqual("FF4_SCOPE_OR_SPARSITY_CANONICALIZATION_ONLY", interpretation.label)
 
     def test_controls_can_support_typed_diagnosis_without_defining_generator_effect(self) -> None:
         raw = generator_method_gate([-0.05, -0.04, -0.03, 0.01, 0.01, 0.01])
@@ -61,6 +64,40 @@ class StateCompilerBridgeV4AnalysisTest(unittest.TestCase):
         self.assertAlmostEqual(primary, 0.25)
         self.assertAlmostEqual(sensitivity, 0.15)
         self.assertAlmostEqual(realization_averaged_sensitivity(0.8, 0.5, 0.9), 0.1)
+
+    def test_universal_sha_alias_forces_zero_for_free_comp_or_generic_pairs(self) -> None:
+        digest = "a" * 64
+        self.assertEqual(
+            0.0,
+            state_sha_aware_contrast(
+                left_skill_sha256=digest,
+                left_utility=1.0,
+                right_skill_sha256=digest,
+                right_utility=0.0,
+            ),
+        )
+        self.assertEqual(
+            0.0,
+            within_source_generator_contrast_sha_aware(
+                compiled_skill_sha256=digest,
+                compiled_utility=1.0,
+                free_skill_sha256=digest,
+                free_utility=0.0,
+            ),
+        )
+
+    def test_primary_factorial_effect_collapses_each_aliased_source_before_average(self) -> None:
+        main = generator_factorial_main_effect_sha_aware(
+            winner_compiled_skill_sha256="a" * 64,
+            winner_compiled_utility=0.9,
+            winner_free_skill_sha256="a" * 64,
+            winner_free_utility=0.1,
+            ff4_compiled_skill_sha256="b" * 64,
+            ff4_compiled_utility=0.8,
+            ff4_free_a_skill_sha256="c" * 64,
+            ff4_free_a_utility=0.4,
+        )
+        self.assertAlmostEqual(main, 0.2)
 
     def test_primary_generator_main_effect_can_pass_without_ff4_specific_superiority(self) -> None:
         # Winner-side generator benefit can establish a positive balanced factor
