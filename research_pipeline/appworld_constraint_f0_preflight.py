@@ -230,6 +230,9 @@ SQ0_V2R1_TRANSPORT_RESULT = GENERATED / "agent-constraint-externality-sq0-v2r1-t
 SQ0_V2R1_HUMAN_AUTHORIZATION = GENERATED / "agent-constraint-externality-sq0-v2r1-human-authorization-20260903.json"
 SQ0_V2R1_MIMO25PRO_Q1 = GENERATED / "agent-constraint-externality-sq0-v2r1-mimo25pro-mcp-q1-predispatch-20260903.json"
 SQ0_V2R1_EXECUTION_CONTRACT = GENERATED / "agent-constraint-externality-sq0-v2r1-mimo25pro-execution-contract-20260903.json"
+SQ0_V2R1_RESULT = GENERATED / "agent-constraint-externality-sq0-v2r1-mimo25pro-result-20260903.json"
+SQ0_V2R1_CLOSEOUT = GENERATED / "agent-constraint-externality-sq0-v2r1-closeout-20260903.json"
+SQ0_V2R1_ROOT_CAUSE = GENERATED / "agent-constraint-externality-sq0-v2r1-root-cause-20260903.json"
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -947,6 +950,29 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             raise PreflightError("SQ0-V2R1 execution authority boundary drifted.")
         sq0_v2r1_execution_authorized=True
 
+    sq0_v2r1_closed=False
+    sq0_v2r1_result=read_json(SQ0_V2R1_RESULT) if SQ0_V2R1_RESULT.is_file() else {}
+    sq0_v2r1_closeout=read_json(SQ0_V2R1_CLOSEOUT) if SQ0_V2R1_CLOSEOUT.is_file() else {}
+    sq0_v2r1_root_cause=read_json(SQ0_V2R1_ROOT_CAUSE) if SQ0_V2R1_ROOT_CAUSE.is_file() else {}
+    if any((sq0_v2r1_result,sq0_v2r1_closeout,sq0_v2r1_root_cause)):
+        if not all((sq0_v2r1_result,sq0_v2r1_closeout,sq0_v2r1_root_cause)):
+            raise PreflightError("SQ0-V2R1 closeout artifact set is incomplete.")
+        for label,payload in (("SQ0-V2R1 result",sq0_v2r1_result),("SQ0-V2R1 closeout",sq0_v2r1_closeout),("SQ0-V2R1 root cause",sq0_v2r1_root_cause)):
+            if payload.get("object_id")!=OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            c=payload.get("content_sha256");u=dict(payload);u.pop("content_sha256",None)
+            if c!=digest(u): raise PreflightError(f"{label} content hash mismatch.")
+        if sq0_v2r1_result.get("status")!="SQ0_V2R1_TARGET_CHALLENGE_TOO_EASY_STOP" or sq0_v2r1_result.get("usable_target_failure_count")!=4 or sq0_v2r1_result.get("non_semantic_failure_units")!=[]:
+            raise PreflightError("SQ0-V2R1 result aggregate drifted.")
+        if sq0_v2r1_closeout.get("status")!="SQ0_V2R1_TOO_EASY_CLOSEOUT" or sq0_v2r1_closeout.get("verdict")!=sq0_v2r1_result.get("status"):
+            raise PreflightError("SQ0-V2R1 closeout/result mismatch.")
+        if sq0_v2r1_root_cause.get("status")!="SQ0_V2R1_RAW_FAILURES_ARE_FORMATTING_PSEUDO_FAILURES" or sq0_v2r1_root_cause.get("semantic_failure_count_after_terminal_newline_normalization")!=0:
+            raise PreflightError("SQ0-V2R1 semantic failure diagnosis drifted.")
+        if sq0_v2r1_closeout.get("authority",{}).get("sq0_v3_execution") is not False or sq0_v2r1_root_cause.get("authority",{}).get("sq0_v3_execution") is not False:
+            raise PreflightError("SQ0-V2R1 closeout prematurely authorizes V3 execution.")
+        sq0_v2r1_closed=True
+        sq0_v2r1_execution_authorized=False
+
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
         capability_result = read_json(CAPABILITY_R5_PARTIAL_RESULT)
@@ -1247,6 +1273,13 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif sq0_v2r1_closed:
+        readiness_status = "SQ0_V2R1_TOO_EASY_CLOSED_V3_DESIGN_REQUIRED"
+        blocker = (
+            "SQ0-V2R1 completed 12/12 with no interface failures, but raw target-failure rate was only 4/12; "
+            "post-aggregate audit showed all four raw failures were terminal-newline-only formatting pseudo-failures."
+        )
+        next_action = "BUILD_FRESH_SQ0_V3_SEMANTIC_CHALLENGE"
     elif sq0_v2r1_execution_authorized:
         readiness_status = "SQ0_V2R1_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
         blocker = None
@@ -1637,6 +1670,15 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "sq0_v2r1_mcp_q1_model_requests": sq0_v2r1_q1.get("codingplan_model_requests"),
         "sq0_v2r1_execution_contract_status": sq0_v2r1_execution_contract.get("status"),
         "sq0_v2r1_execution_authorized": sq0_v2r1_execution_authorized,
+        "sq0_v2r1_result_status": sq0_v2r1_result.get("status"),
+        "sq0_v2r1_usable_target_failure_count": int(sq0_v2r1_result.get("usable_target_failure_count", 0)),
+        "sq0_v2r1_usable_target_failure_rate": sq0_v2r1_result.get("usable_target_failure_rate"),
+        "sq0_v2r1_non_semantic_failure_units": sq0_v2r1_result.get("non_semantic_failure_units", []),
+        "sq0_v2r1_scientific_model_round_count": int(sq0_v2r1_result.get("scientific_model_round_count", 0)),
+        "sq0_v2r1_closeout_status": sq0_v2r1_closeout.get("status"),
+        "sq0_v2r1_root_cause_status": sq0_v2r1_root_cause.get("status"),
+        "sq0_v2r1_semantic_failure_count": int(sq0_v2r1_root_cause.get("semantic_failure_count_after_terminal_newline_normalization", 0)),
+        "sq0_v2r1_closed": sq0_v2r1_closed,
         "sq0_v2_execution_authorized": sq0_v2_execution_authorized,
         "sq0_execution_authorized": sq0_execution_authorized and not sq0_v1_closed,
         "f0_r1_sq0_execution_authorized": sq0_execution_authorized and not sq0_v1_closed,
@@ -1648,7 +1690,9 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "f0_source_appworld_tool_call_total": int(f0_source_closeout.get("appworld_tool_call_total", 0)),
         "f0_probe_episode_count": int(f0_source_closeout.get("probe_episode_count", 0)),
         "capability_model_selection_state": (
-            "SELECTED_MIMO25PRO_SQ0_V2R1_AUTHORIZED_AFTER_TRANSPORT_PASS"
+            "SELECTED_MIMO25PRO_SQ0_V2R1_TOO_EASY_CLOSED_V3_DESIGN_REQUIRED"
+            if sq0_v2r1_closed
+            else "SELECTED_MIMO25PRO_SQ0_V2R1_AUTHORIZED_AFTER_TRANSPORT_PASS"
             if sq0_v2r1_execution_authorized
             else "SELECTED_MIMO25PRO_SQ0_V2R1_TRANSPORT_READY_AFTER_V2_VOID"
             if sq0_v2r1_transport_ready
@@ -1786,6 +1830,7 @@ def main() -> None:
         SQ0_V2R1_STATIC_CONTRACT, SQ0_V2R1_STATIC_QUALIFICATION, SQ0_V2R1_TRANSPORT_CONTRACT,
         SQ0_V2R1_TRANSPORT_RESULT, SQ0_V2R1_HUMAN_AUTHORIZATION,
         SQ0_V2R1_MIMO25PRO_Q1, SQ0_V2R1_EXECUTION_CONTRACT,
+        SQ0_V2R1_RESULT, SQ0_V2R1_CLOSEOUT, SQ0_V2R1_ROOT_CAUSE,
     ):
         if not path.is_file():
             continue
