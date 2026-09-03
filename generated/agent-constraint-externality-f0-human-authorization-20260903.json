@@ -1,0 +1,18 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "f0": true,
+    "p1": false,
+    "paper_claim": false,
+    "toolsandbox": false
+  },
+  "authorization_source": "CURRENT_SESSION_USER_MESSAGE_CONTINUE_AFTER_EXPLICIT_F0_AUTHORIZATION_GATE",
+  "authorized_at": "2026-09-03T14:41:00+08:00",
+  "content_sha256": "12fca2f0d6ee7c5ec87d4489dc0b4f345d65b2c50a8d7e23609d675db787c050",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "schema_version": "ace-f0-human-authorization-v1",
+  "scientific_outcomes_observed": 0,
+  "scope": "F0_ONLY_SOURCE_REPAIR_AND_CONDITIONAL_PROBES_UNDER_FROZEN_PROTOCOL",
+  "selected_backbone_content_sha256": "9f4a649f436552a550fe3e9d54664d6b5eb879cf68dae36b23a91859edf1f18e",
+  "status": "USER_AUTHORIZED_F0_AFTER_MIMO25PRO_CAPABILITY_PASS"
+}

@@ -183,6 +183,18 @@ CODINGPLAN_MIMO25PRO_CLOSEOUT = (
 FINAL_BACKBONE_SELECTION = (
     GENERATED / "agent-constraint-externality-capability-backbone-selection-final-20260903.json"
 )
+F0_HUMAN_AUTHORIZATION = (
+    GENERATED / "agent-constraint-externality-f0-human-authorization-20260903.json"
+)
+F0_TRANSPORT_ADDENDUM = (
+    GENERATED / "agent-constraint-externality-f0-mimo25pro-transport-addendum-20260903.json"
+)
+F0_MIMO25PRO_Q1 = (
+    GENERATED / "agent-constraint-externality-f0-mimo25pro-mcp-q1-predispatch-20260903.json"
+)
+F0_MIMO25PRO_SOURCE_CONTRACT = (
+    GENERATED / "agent-constraint-externality-f0-mimo25pro-source-contract-20260903.json"
+)
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -611,6 +623,63 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             raise PreflightError("Backbone selection cannot self-authorize F0.")
         final_backbone_selected = True
 
+    f0_source_authorized = False
+    f0_human_authorization = (
+        read_json(F0_HUMAN_AUTHORIZATION) if F0_HUMAN_AUTHORIZATION.is_file() else {}
+    )
+    f0_transport_addendum = (
+        read_json(F0_TRANSPORT_ADDENDUM) if F0_TRANSPORT_ADDENDUM.is_file() else {}
+    )
+    f0_q1 = read_json(F0_MIMO25PRO_Q1) if F0_MIMO25PRO_Q1.is_file() else {}
+    f0_source_contract = (
+        read_json(F0_MIMO25PRO_SOURCE_CONTRACT)
+        if F0_MIMO25PRO_SOURCE_CONTRACT.is_file()
+        else {}
+    )
+    if any((f0_human_authorization, f0_transport_addendum, f0_q1, f0_source_contract)):
+        if not all((f0_human_authorization, f0_transport_addendum, f0_q1, f0_source_contract)):
+            raise PreflightError("F0 authorization artifact set is incomplete.")
+        if not final_backbone_selected:
+            raise PreflightError("F0 authorization requires a frozen selected backbone.")
+        for label, payload in (
+            ("F0 human authorization", f0_human_authorization),
+            ("F0 transport addendum", f0_transport_addendum),
+            ("F0 MCP Q1", f0_q1),
+            ("F0 source contract", f0_source_contract),
+        ):
+            if payload.get("object_id") != OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            claimed = payload.get("content_sha256")
+            unsigned = dict(payload)
+            unsigned.pop("content_sha256", None)
+            if claimed != digest(unsigned):
+                raise PreflightError(f"{label} content hash mismatch.")
+        if f0_human_authorization.get("status") != "USER_AUTHORIZED_F0_AFTER_MIMO25PRO_CAPABILITY_PASS":
+            raise PreflightError("F0 human authorization status mismatch.")
+        if f0_human_authorization.get("authority", {}).get("f0") is not True:
+            raise PreflightError("F0 human authorization did not open F0.")
+        if f0_human_authorization.get("authority", {}).get("p1") is not False:
+            raise PreflightError("F0 authorization cannot open P1.")
+        if f0_transport_addendum.get("status") != "F0_SELECTED_BACKBONE_TRANSPORT_COMPATIBILITY_ADDENDUM_PASS":
+            raise PreflightError("F0 selected-backbone transport addendum mismatch.")
+        if f0_transport_addendum.get("scientific_variables_changed") != []:
+            raise PreflightError("F0 transport addendum changed scientific variables.")
+        if f0_q1.get("status") != "F0_CODINGPLAN_MIMO25PRO_MCP_PREDISPATCH_PASS":
+            raise PreflightError("F0 MCP Q1 status mismatch.")
+        if f0_q1.get("codingplan_model_requests") != 0 or f0_q1.get("scientific_dispatch_sent") is not False:
+            raise PreflightError("F0 MCP Q1 crossed the zero-request predispatch boundary.")
+        if f0_source_contract.get("status") != "F0_CODINGPLAN_MIMO25PRO_SOURCE_AUTHORIZED":
+            raise PreflightError("F0 source contract status mismatch.")
+        if f0_source_contract.get("authority", {}).get("source") is not True:
+            raise PreflightError("F0 source contract did not authorize source execution.")
+        if f0_source_contract.get("authority", {}).get("probe") is not False:
+            raise PreflightError("F0 source contract prematurely authorized probes.")
+        if f0_source_contract.get("authority", {}).get("p1") is not False:
+            raise PreflightError("F0 source contract cannot authorize P1.")
+        if f0_source_contract.get("selected_backbone_content_sha256") != final_backbone_selection.get("content_sha256"):
+            raise PreflightError("F0 source contract/backbone lineage drifted.")
+        f0_source_authorized = True
+
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
         capability_result = read_json(CAPABILITY_R5_PARTIAL_RESULT)
@@ -911,6 +980,10 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif f0_source_authorized:
+        readiness_status = "F0_SOURCE_AUTHORIZED_READY"
+        blocker = None
+        next_action = "RUN_F0_SOURCE_MIMO25PRO"
     elif final_backbone_selected:
         readiness_status = "CAPABILITY_CALIBRATION_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = (
@@ -1206,8 +1279,20 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "selected_backbone_capability_result_status": (
             mimo25pro_status if final_backbone_selected else None
         ),
+        "f0_human_authorization_status": f0_human_authorization.get("status"),
+        "f0_human_authorization_artifact": (
+            str(F0_HUMAN_AUTHORIZATION.relative_to(ROOT))
+            if F0_HUMAN_AUTHORIZATION.is_file()
+            else None
+        ),
+        "f0_transport_addendum_status": f0_transport_addendum.get("status"),
+        "f0_mcp_q1_status": f0_q1.get("status"),
+        "f0_mcp_q1_model_requests": f0_q1.get("codingplan_model_requests"),
+        "f0_source_contract_status": f0_source_contract.get("status"),
         "capability_model_selection_state": (
-            "SELECTED_MIMO25PRO_PASS_F0_AUTHORIZATION_REQUIRED"
+            "SELECTED_MIMO25PRO_F0_SOURCE_AUTHORIZED"
+            if f0_source_authorized
+            else "SELECTED_MIMO25PRO_PASS_F0_AUTHORIZATION_REQUIRED"
             if final_backbone_selected
             else "SEARCH_ACTIVE_QWEN_CEILING_DEEPSEEK_FLOOR_GLM52_CEILING_MIMO25_CEILING_MIMO25PRO_NEXT"
             if backbone_search_b3_active
@@ -1260,8 +1345,12 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "tool_sandbox_authorized": False,
         "appworld_ul_authorized": False,
         "p1_authorized": False,
-        "f0_authorized": False,
-        "f0_authority_note": "Capability PASS, if obtained, still requires separate human F0 authorization.",
+        "f0_authorized": f0_source_authorized,
+        "f0_authority_note": (
+            "User-authorized F0 source execution is open; probes remain closed until repair artifacts are frozen and separately sealed."
+            if f0_source_authorized
+            else "Capability PASS, if obtained, still requires separate human F0 authorization."
+        ),
     }
     return {
         "agent-constraint-externality-capability-contract-20260831.json": capability,
@@ -1312,6 +1401,8 @@ def main() -> None:
         CODINGPLAN_MIMO25_RESULT, CODINGPLAN_MIMO25_CLOSEOUT,
         BACKBONE_SEARCH_STATE_B3, CODINGPLAN_MIMO25PRO_RESULT,
         CODINGPLAN_MIMO25PRO_CLOSEOUT, FINAL_BACKBONE_SELECTION,
+        F0_HUMAN_AUTHORIZATION, F0_TRANSPORT_ADDENDUM,
+        F0_MIMO25PRO_Q1, F0_MIMO25PRO_SOURCE_CONTRACT,
     ):
         if not path.is_file():
             continue

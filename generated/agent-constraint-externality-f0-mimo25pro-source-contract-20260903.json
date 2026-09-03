@@ -1,0 +1,145 @@
+{
+  "adjudication": {
+    "mechanism_fail": "Uptake passes but mean UE_HIGH-UE_INDEPENDENT <= 0 and no ordered exposure direction remains.",
+    "mechanism_support": "At least 6 eligible families, positive mean target repair gain, mean within-family UE_HIGH-UE_INDEPENDENT >= 0.05, and the ordered exposure direction holds in at least two thirds of eligible families.",
+    "no_significance_claim_from_f0": true,
+    "otherwise": "F0_INCONCLUSIVE_STOP_OR_REVISE_WITHOUT_P1",
+    "uptake_fail": "Fewer than 6 eligible repair families or mean target repair gain is not positive."
+  },
+  "authority": {
+    "appworld_ul": false,
+    "f0": true,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "repair_generation": true,
+    "source": true,
+    "toolsandbox": false
+  },
+  "authorization_content_sha256": "12fca2f0d6ee7c5ec87d4489dc0b4f345d65b2c50a8d7e23609d675db787c050",
+  "capability_closeout_content_sha256": "a6a886e04a84ff4c50f16154eed7ddfa026001b9d39e0787a891dacc2334ff62",
+  "content_sha256": "8d04940cf756d4edc9d9e4d223ec54afe0e38d702509d8f79f04e61771618399",
+  "exactly_once": {
+    "append_only_ledger": true,
+    "application_retry": false,
+    "completion_appended_after_provider_call": true,
+    "dispatch_recorded_before_provider_call": true,
+    "duplicate_key_is_fatal": true,
+    "failed_or_partial_episode_retained": true,
+    "provider_max_retries": 0,
+    "retry_or_replacement_forbidden": true,
+    "unique_episode_key_fields": [
+      "family_id",
+      "arm",
+      "branch",
+      "seed"
+    ]
+  },
+  "execution_id": "ACE-F0-MIMO25PRO-20260903",
+  "execution_policy": {
+    "partial_probe_effects_readable": false,
+    "probe_only_after_repair_manifest_frozen_and_committed": true,
+    "repair_generation_now": true,
+    "source_now": true
+  },
+  "harness": {
+    "ai_session_naming": false,
+    "appworld_tool_call_cap": 16,
+    "id": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "model_round_cap_per_episode": 20,
+    "replacement_allowed": false,
+    "retry_allowed": false,
+    "subagents": false
+  },
+  "metrics": {
+    "collateral_regression_rate": "NEWLY_FAILED_BASELINE_SATISFIED_NON_TARGETS_DIVIDED_BY_ELIGIBLE_NON_TARGETS",
+    "negative_values_retained": true,
+    "per_constraint_rows_required": true,
+    "primary_contrast": "UE_HIGH_MINUS_UE_INDEPENDENT_WITHIN_REPAIR_FAMILY",
+    "secondary_ordered_contrast": "UE_INDEPENDENT_LE_UE_LOW_LE_UE_HIGH",
+    "target_repair_gain": "TARGET_UPDATE_MINUS_NO_UPDATE",
+    "update_attributable_externality": "CRR_UPDATE_MINUS_CRR_NO_UPDATE"
+  },
+  "model": {
+    "context_window": 1000000,
+    "id": "mimo-v2.5-pro",
+    "profile": "AtomGit-mimo-v2.5-pro",
+    "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+    "retry_max_attempts": 1
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "probe_phase": {
+    "actual_episode_formula": "eligible_repair_family_count * 3 arms * 2 branches * 3 seeds",
+    "arms": [
+      "INDEPENDENT",
+      "LOW",
+      "HIGH"
+    ],
+    "branch_order": {
+      "balanced_pair_rule": "Parity zero runs NO_UPDATE first; parity one runs UPDATE first.",
+      "key_fields": [
+        "family_id",
+        "arm",
+        "seed"
+      ],
+      "method": "SHA256_PARITY",
+      "salt": "ACE-F0-BRANCH-ORDER-20260831-V1"
+    },
+    "branches": [
+      "NO_UPDATE",
+      "UPDATE"
+    ],
+    "partial_effects_readable_during_execution": false,
+    "planned_episode_envelope": 144,
+    "repeats": 3,
+    "reset_snapshot_before_every_replay": true,
+    "same_update_bytes_across_all_arms_and_update_replays": true,
+    "seeds": [
+      1201,
+      1202,
+      1203
+    ]
+  },
+  "q1_content_sha256": "fae1234caae18da98796be62d31da7e3fe8a5a8fb2d6eb9a1327b5df6d1b10b1",
+  "schema_version": "ace-f0-codingplan-mimo25pro-source-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "selected_backbone_content_sha256": "9f4a649f436552a550fe3e9d54664d6b5eb879cf68dae36b23a91859edf1f18e",
+  "source_phase": {
+    "candidate_generation": "Same frozen backbone generates one procedural repair note automatically from target failure only.",
+    "episodes": 8,
+    "failure_or_success_retention": "Retain every source result; never replace a family. Only a preregistered target failure can yield a repair artifact.",
+    "forbidden_updater_input": [
+      "NON_TARGET_OUTCOMES",
+      "TOPOLOGY_LABEL",
+      "COUPLING_LEVEL",
+      "ARM_ASSIGNMENT",
+      "F0_EFFECT"
+    ],
+    "freeze_fields": [
+      "sha256",
+      "raw_bytes",
+      "normalized_bytes",
+      "byte_length",
+      "word_count",
+      "fixed_tokenizer_token_count",
+      "procedural_clause_count",
+      "injection_position",
+      "exposure_rule",
+      "generation_model_id",
+      "generation_request_sha256",
+      "source_trajectory_sha256"
+    ],
+    "human_edit_after_generation": false,
+    "maximum_eligible_repair_families": 8,
+    "minimum_eligible_repair_families": 6,
+    "one_target_isolated_episode_per_family": true,
+    "updater_input": [
+      "TARGET_CONSTRAINT_SPEC",
+      "TARGET_TASK_INSTRUCTION",
+      "TARGET_FAILURE_SLICE",
+      "TARGET_TOOL_TRAJECTORY"
+    ]
+  },
+  "status": "F0_CODINGPLAN_MIMO25PRO_SOURCE_AUTHORIZED",
+  "transport_addendum_content_sha256": "d30c49472f957d8d6545b23b74a950891ea6c3643556bb81cde2c0c2fb412a91"
+}

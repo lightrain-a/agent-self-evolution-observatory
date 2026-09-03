@@ -4673,6 +4673,28 @@ function enhanceExperimentCostPriceColumns(root) {
   table.dataset.priceColumnsReady = "1";
 }
 
+function enhanceExperimentVendorMatrix(root) {
+  if (pageId !== "experiment-costs" || !root) return;
+  const input = root.querySelector("#ec-model-filter-input");
+  const count = root.querySelector("#ec-model-filter-count");
+  const rows = [...root.querySelectorAll(".ec-vendor-matrix tbody tr")];
+  if (!input || !rows.length || input.dataset.bound === "1") return;
+  const apply = () => {
+    const query = input.value.trim().toLowerCase();
+    let visible = 0;
+    rows.forEach(row => {
+      const haystack = `${row.dataset.model || ""} ${row.dataset.family || ""}`.toLowerCase();
+      const show = !query || haystack.includes(query);
+      row.hidden = !show;
+      if (show) visible += 1;
+    });
+    if (count) count.textContent = String(visible);
+  };
+  input.addEventListener("input", apply);
+  input.dataset.bound = "1";
+  apply();
+}
+
 function renderPage() {
   document.documentElement.lang = language === "zh" ? "zh-CN" : "en";
   const config = PAGES[pageId] || PAGES.home;
@@ -4735,6 +4757,7 @@ function renderPage() {
   updateCitationStatus();
   localizeRenderedChinese(root);
   enhanceExperimentCostPriceColumns(root);
+  enhanceExperimentVendorMatrix(root);
   buildToc();
   if (new Set(["mechanisms","research-directions"]).has(pageId) && location.hash) {
     const fieldAliases = pageId === "mechanisms" ? {
