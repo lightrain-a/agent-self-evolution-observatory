@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH4-RUNTIME-20260903",
+  "status": "FROZEN_PRE_SOURCE_OUTCOME",
+  "fresh4_pool_sha256": "9582877385413807dea6316c25585d5714662cce17f83fa298934229dc4f0927",
+  "manifest_freeze_sha256": "8b84467e67bc4c514a921f53515b50741a7427051941671084e2263e5f95d91f",
+  "blob_plan_sha256": "5e7bddd3772f43c2e9bd3dd8895c3bb7039fe90952934aaa42db7286eda76478",
+  "image_count": 20,
+  "unique_blob_count": 86,
+  "blob_receipt_binding": "required explicit sha256 argument after immutable blob acquisition closes; receipt must state all_blobs_verified=true and unique_blob_count=86",
+  "runtime": {
+    "docker_host": "unix:///var/run/docker.sock",
+    "architecture": "amd64/x86_64",
+    "exact_digest_import": true,
+    "normalization": "reuse fresh3 qualified targeted-build-clean exact-base normalizer unchanged",
+    "tracked_tree_must_start_clean": true,
+    "initial_untracked_allowed_only_under": "build/",
+    "reset": "git reset --hard <frozen_base_commit>",
+    "targeted_clean": "git clean -fd -- build",
+    "postcondition": "HEAD exactly frozen base commit and git status empty"
+  },
+  "hard_gate": "20/20 images must import by exact digest and 20/20 must pass exact-base normalization before fresh4 source prelaunch",
+  "provider_calls": 0,
+  "scientific_source_calls": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "forbidden": [
+    "run source before 20/20 runtime readiness",
+    "accept non-build untracked paths",
+    "use git clean -fdx",
+    "replace a failed image/task based on runtime outcome"
+  ]
+}
