@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "status": "ATOMGIT_QWEN38_Q03_CONTROLLED_OUTPUT_MCP_PASS",
+  "result_sha256": "e7683c03241d7bcc57d7473426cc9f36f09ec4ec497501b9c1c607e422963652",
+  "attempted": 12,
+  "qualified": 12,
+  "prohibited_tool_attempts": 0,
+  "model_round_total": 12,
+  "allowed_tool": "mcp__c1output__submit_output",
+  "action_fixtures": 8,
+  "text_fixtures": 4,
+  "real_scientific_tasks": 0,
+  "scientific_source_tasks_used": 0,
+  "interpretation": "Controlled output-only MCP transport qualified for prospective use. This is provider-interface evidence only and is not PACTA-MSR method-effect evidence.",
+  "fresh2_reuse_authorized": false,
+  "next": "Create a fully disjoint fresh3 substrate and prospectively bind all PACTA-MSR model outputs to the controlled submit_output MCP bridge."
+}
