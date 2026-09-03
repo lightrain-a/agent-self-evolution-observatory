@@ -1,0 +1,32 @@
+{
+  "artifact_type": "e2-r17-paper-story-post-r2-zero-provider-freeze",
+  "date": "2026-09-03",
+  "status": "PASS_ZERO_PROVIDER_PAPER_STORY_FIXES_READY_FOR_FRESH_REREVIEW",
+  "story": {
+    "path": "consultations/e2-r17-paper-story-post-r2-pass-iteration-20260903.md",
+    "sha256": "40880034542a7dd28e9eece2ac38036659c5be790dbd6977267cae31175015ab"
+  },
+  "first_review": {
+    "path": "consultations/e2-r17-paper-story-post-r2-gpt56-web-review-20260903.md",
+    "sha256": "cfc8d97fc6a00d368d2a2a06b2f2d0c0644f206e6eae8c9d960cb53de55a12b8",
+    "verdict": "REVISE_PAPER_OBJECT_BEFORE_STAGE_A"
+  },
+  "fix_checks": {
+    "outcome_neutral_thesis": true,
+    "strong_slogan_locked": true,
+    "global_mrw_inconclusive": true,
+    "underpower_heterogeneity_both": true,
+    "five_unit_boundary_frozen": true,
+    "pass_not_simple_effect": true,
+    "fail_no_router_rescue": true,
+    "r4_measurement_only": true,
+    "neutral_title": true
+  },
+  "r2_scientific_object_unchanged": true,
+  "r2_contract_sha256": "f5382c552f2e6644e4cbda408510119664a8c6f8502628586c9ff5583abd1234",
+  "r2_preflight_sha256": "e257438bd482d4f2209a8321d4a222bd97acf2c03bff46a1d5513b55a42ca766",
+  "new_scientific_provider_calls": 0,
+  "stage_a_authority": false,
+  "stage_b_authority": false,
+  "next_gate": "FRESH_INDEPENDENT_PAPER_STORY_REREVIEW"
+}

@@ -18,9 +18,19 @@ However, **do not make Selective-MRW or the hand-engineered instruction router t
 
 The strongest paper object is now:
 
-> **Act–Learn Dual Projection / Search-Projection Censoring:** test-time search generates a richer experience object, while acting and persistent learning consume potentially different projections of that object. Serving-optimal selection can remove already-generated evidence from the learner-visible stream, and the learning-optimal projection need not equal the acting-optimal projection.
+> **Causal identification of the serving-to-persistent-learning projection interface:** test-time search generates a shared realized experience object, while acting and persistent learning consume separately definable projections of that exact object. Serving selection can remove already-generated evidence from the learner-visible stream; E2-R17 makes that interface experimentally manipulable while holding the realized search pool and served behavior fixed.
 
-Selective-MRW is one controlled intervention / policy instance inside this larger object.
+`Act–Learn Dual Projection` is the organizing abstraction and `Search-Projection Censoring` is the motivating observable phenomenon. Neither terminology alone is the novelty claim. The strongest surviving novelty is the exact-same-pool, acting-fixed causal intervention, plus prospective structural effect modification if V3 passes. Selective-MRW is only one controlled intervention / policy instance inside this larger object.
+
+### Post-R2 independent paper-story correction gate
+
+A fresh independent GPT-5.6 Sol / Extra High review of this paper-level object returned `REVISE_PAPER_OBJECT_BEFORE_STAGE_A`, while explicitly stating that **R2 should not be redesigned and no additional experiment is required before Stage A**. The verdict-changing zero-provider freeze is:
+
+1. align the headline thesis with the actual interaction estimand;
+2. describe the closed global MRW result as inconclusive rather than as demonstrated heterogeneity/non-universality;
+3. freeze the five-unit V3 PASS/FAIL claim boundary before any provider call.
+
+After these edits, the reviewer recommends proceeding through the existing fresh-identity → separately authorized Stage-A boundary unchanged.
 
 ## 2. Why the paper must move above “learn from failures”
 
@@ -62,7 +72,7 @@ This is the **availability/censoring** layer, not proof that censored evidence i
 
 ### 3.2 Closed DeepSeek causal study
 
-The completed 12-stream / 48 paired-replicate DeepSeek study should be presented as a key negative/heterogeneity result rather than hidden:
+The completed 12-stream / 48 paired-replicate DeepSeek study should be presented prominently as a closed **inconclusive global-effect result**, rather than hidden:
 
 - WIN-C: approximately 79.05%;
 - universal MRW: approximately 81.37%;
@@ -73,9 +83,9 @@ The completed 12-stream / 48 paired-replicate DeepSeek study should be presented
 
 Scientific implication:
 
-> The simple story “always replace winner evidence with a failed witness” is not supported. The learning consequence is heterogeneous enough that the relevant question becomes **which projection should be used when**, not whether failures are universally better.
+> The completed study did **not establish a reliable global MRW advantage**. Its result is compatible with insufficient power, effect heterogeneity, or both; it does not itself establish heterogeneity or statistically refute every universal-benefit hypothesis.
 
-This negative/inconclusive result is useful because it motivates the mechanism test without pretending the method already works.
+The legitimate chronology is: the closed study failed to establish the initially attractive global replacement rule; that result generated several possible explanations, including effect heterogeneity; V3 then freezes one specific moderator hypothesis and tests it prospectively on fresh units. This is post-result hypothesis generation followed by prospective confirmation, not evidence that heterogeneity has already been demonstrated.
 
 ### 3.3 What V3/R2 uniquely adds
 
@@ -101,7 +111,9 @@ That is substantially more defensible and more novel than another global success
 
 ### 4.1 One-sentence thesis
 
-> **The trajectory that is optimal to serve is not necessarily the evidence that is optimal to learn from: test-time search should expose acting and persistent learning as separate projections over the same generated experience object.**
+> **Test-time search creates a shared experience object whose serving and persistent-learning projections are distinct causal interfaces; exact-same-pool interventions can isolate the learning consequence of that projection and prospectively test whether it is modified by task structure.**
+
+The memorable statement “the best trajectory to act on is not always the best to learn from” is **locked pre-outcome**. A positive moderator interaction alone does not establish it: MRW4 could be worse than WIN-C in both semantic cells while still producing a positive interaction. That stronger existential statement may be unlocked only if a prespecified simple effect actually shows an alternative projection improving future skill over the served-winner projection.
 
 ### 4.2 Formal object
 
@@ -139,19 +151,19 @@ This same-pool intervention is the central empirical identification device.
 
 Do not present five unrelated contributions. Use a three-level hierarchy.
 
-### Contribution 1 — first-class system object
+### Contribution 1 — causally manipulable interface
 
-**Act–Learn Dual Projection:** formalize test-time search as a shared experience-generation process whose acting and persistent-learning observation kernels may differ.
+**Act–Learn projection interface:** formalize test-time search as a shared realized experience object and make the serving-to-persistent-learning projection independently manipulable and measurable while keeping the search object and served action fixed.
 
-This is the conceptual contribution.
+Writing two projections `a(T_K)` and `g(T_K)` is an organizing abstraction, not by itself the novelty. The contribution is the identification framework built around this interface.
 
 ### Contribution 2 — mechanism and causal evidence
 
 **Search-Projection Censoring + same-pool causal intervention:** characterize when serving selection removes evidence from the learning channel, and causally test future persistent-skill consequences by changing only `g(T_K)`.
 
-The closed global MRW result is part of this contribution because it demonstrates that the consequence is not a universal monotonic “failures help” law.
+The closed global MRW result is part of this contribution because it shows that a reliable global MRW advantage was **not established**. It motivates, but does not itself prove, the later heterogeneity/moderator hypothesis.
 
-### Contribution 3 — prospective projection heterogeneity
+### Contribution 3 — prospective structural effect modification
 
 **Projection policy depends on task/evidence structure:** V3 prospectively tests a crossed structural moderator rather than fitting family IDs after seeing effects.
 
@@ -269,16 +281,16 @@ Show the serving-selection censoring object exists and is measurable.
 
 This can use historical E0/support evidence plus exact theoretical identity where valid.
 
-### Experiment 2 — Global causal test and its failure of universality
+### Experiment 2 — Closed global causal test: benefit not established
 
 Show the closed exact-same-pool DeepSeek result:
 
 - global point estimate positive;
 - uncertainty overlaps zero;
-- clear heterogeneity;
-- reject universal MRW story.
+- reliable global MRW benefit not established;
+- the observed result is compatible with underpower, heterogeneity, or both.
 
-This is scientifically stronger than hiding an inconclusive experiment because it motivates the next prospective mechanism test.
+Do **not** label this result “clear heterogeneity,” “evidence against a universal rule,” or “demonstrated non-universality.” Its proper role is to record the failed global-benefit establishment and motivate a fresh, prospectively frozen moderator test.
 
 ### Experiment 3 — Prospective crossed moderator test
 
@@ -313,7 +325,9 @@ This is where a method/deployment claim is earned, not in the synthetic router q
 
 Main conclusion:
 
-> Acting-optimal serving and learning-optimal evidence are separable, and the effect of learning projection varies prospectively with controlled task/evidence structure.
+> The causal effect of changing the learner-visible projection differs prospectively across the frozen controlled task/evidence structures, supporting structure-dependent effect modification of the act/learn projection interface on this suite.
+
+This PASS does **not** automatically establish that a rejected/nonwinner trajectory is better learning evidence than the served winner. That stronger statement requires the corresponding prespecified simple-effect evidence.
 
 Then authorize at most two targeted claim-expansion steps:
 
@@ -326,9 +340,9 @@ Second backbone can follow as robustness, but should not be used to rescue a fai
 
 Do not rescue it with router tuning, more skeletons, or another model.
 
-The paper can still survive as a narrower scientific paper if the earlier causal/heterogeneity evidence is strong enough:
+The paper can still survive as a narrower scientific paper only if the interface/censoring evidence is strong enough:
 
-> winner-only serving creates measurable search-to-learning censoring, but the tested procedural-vs-binding moderator does not explain the heterogeneous future-learning effect.
+> winner-only serving creates measurable search-to-learning censoring, but the completed global MRW study did not establish a reliable global benefit and the prospective procedural-vs-binding moderator failed to establish the prespecified structural effect modification.
 
 Then the paper becomes primarily a **diagnostic/interface paper**, not a method paper. Selective-MRW and the semantic router should be removed or moved to negative analysis.
 
@@ -336,22 +350,26 @@ Then the paper becomes primarily a **diagnostic/interface paper**, not a method 
 
 Do not interpret that as mechanism failure. It means the planned MRW4 treatment lacks positivity on the frozen V3 substrate. Close this child as `support HOLD`; do not replace tasks after inspecting support.
 
+### Frozen five-unit V3 claim boundary
+
+Before any V3 provider call, freeze the following interpretation:
+
+- **PASS:** if the preregistered five-skeleton primary gate is satisfied, report that the MRW4-versus-WIN projection contrast is directionally larger under the procedural-transformation condition across all five controlled skeletons (5/5; exact finite-set directional resolution 1/32), together with all five interaction magnitudes. This supports the prespecified moderator **on this controlled suite**.
+- PASS does **not** establish population-level task generality, a universal procedural-vs-binding law, failure-specific value, deployability, or automatically that MRW4 beats WIN-C in either cell.
+- **FAIL:** the proposed procedural-vs-binding moderator explanation is rejected. Replicate-level significance, aggregate averaging, router performance, or an appealing subset cannot rescue it. The strong moderator paper thesis collapses and only the narrower diagnostic/interface object remains for a genuine pivot decision.
+- `R=4` is measurement replication only and never converts five scientific units into twenty independent mechanism observations.
+
 ## 12. Recommended title direction
 
-Prefer titles centered on the scientific object rather than the policy name.
+Before V3 outcomes, use a title aligned with the estimand and neutral to simple-effect direction:
 
-Strong candidates:
+**Decoupling Serving and Persistent Learning over Test-Time Search**
 
-1. **The Best Trajectory to Act On Is Not Always the Best to Learn From**
-   - subtitle: *Decoupling Acting and Learning Projections in Self-Evolving Agents*
+Possible subtitle:
 
-2. **When Serving Hides Learning Signals**
-   - subtitle: *Search-Projection Censoring in Self-Evolving Agents*
+*Exact-Same-Pool Causal Tests of Search-Projection Censoring in Self-Evolving Agents*
 
-3. **Act from the Winner, Learn from the Search**
-   - subtitle: *Dual Projections for Persistent Agent Self-Evolution*
-
-Avoid a title centered on `Selective-MRW`, because that undersells the general object and overstates the current router as the contribution.
+The stronger title **“The Best Trajectory to Act On Is Not Always the Best to Learn From”** is locked until an appropriate prespecified simple effect actually shows that an alternative learning projection improves future skill over the served-winner projection. Avoid a title centered on `Selective-MRW`, because that overstates the current policy/router as the contribution.
 
 ## 13. Main figure recommendation
 
@@ -389,7 +407,7 @@ Before V3 outcomes exist, the draft may state:
 
 - search serving and persistent learning consume different projections in principle;
 - winner-only coupling can censor already-generated evidence;
-- the closed global replacement result is heterogeneous/inconclusive;
+- the closed global MRW benefit was not established; the result is compatible with underpower, heterogeneity, or both;
 - V3 prospectively tests a structural moderator;
 - the current router is hand-engineered and task-visible.
 

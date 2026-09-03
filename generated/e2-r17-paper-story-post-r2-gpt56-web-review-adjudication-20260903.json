@@ -1,0 +1,51 @@
+{
+  "artifact_type": "e2-r17-paper-story-post-r2-gpt56-web-review-adjudication",
+  "date": "2026-09-03",
+  "review_scope": "paper_object_novelty_claim_ladder_only",
+  "reviewer": {
+    "surface": "chatgpt_web",
+    "model": "GPT-5.6 Sol",
+    "thinking": "Extra High, 4 of 5"
+  },
+  "brief": {
+    "path": "oracle_briefs/E2_R17_PAPER_STORY_POST_R2_INDEPENDENT_REVIEW_20260903.md",
+    "sha256": "b8ed5543fa9f1c729b197ac6fb88f0b1c2de546633cbbb3509e9bb77528c1eb2"
+  },
+  "source_story": {
+    "commit": "1eb852670551abb6649a796396c8ec93c1499860",
+    "sha256": "f4d2e81a4f47895a490d69d3accf87c89b208cdc2a865d70b063a9d83f13ba5d"
+  },
+  "scientific_r2": {
+    "commit": "29799c83c662887694db52acba4bb19e83131bb0",
+    "contract_path": "generated/e2-r17-semantic-transfer-v3-stage-a-contract-r2-20260903.json",
+    "contract_sha256": "f5382c552f2e6644e4cbda408510119664a8c6f8502628586c9ff5583abd1234",
+    "preflight_path": "generated/e2-r17-semantic-transfer-v3-stage-a-preflight-r2-20260903.json",
+    "preflight_sha256": "e257438bd482d4f2209a8321d4a222bd97acf2c03bff46a1d5513b55a42ca766"
+  },
+  "conversation_url": "https://chatgpt.com/c/6a9988c4-5d58-83e9-be48-012f36d6db42",
+  "prompt_submissions": 1,
+  "prompt_resubmitted": false,
+  "browser_throttle_recovered_same_conversation": true,
+  "raw_response": {
+    "oracle_host_path": "/root/e2_r17_paper_story_review_full.md",
+    "sha256": "cd75be4d7c88298a8a714a4a97243977016476703cc91d11b05f535f9886c845",
+    "chars": 21699,
+    "lines": 539
+  },
+  "repo_review_capture": {
+    "path": "consultations/e2-r17-paper-story-post-r2-gpt56-web-review-20260903.md",
+    "sha256": "cfc8d97fc6a00d368d2a2a06b2f2d0c0644f206e6eae8c9d960cb53de55a12b8"
+  },
+  "verdict": "REVISE_PAPER_OBJECT_BEFORE_STAGE_A",
+  "r2_experiment_redesign_required": false,
+  "additional_experiment_before_stage_a_required": false,
+  "required_zero_provider_fixes": [
+    "align headline thesis with interaction estimand and lock the acting-optimal-vs-learning-preferred slogan until simple-effect evidence",
+    "describe closed global MRW result as inconclusive rather than demonstrated heterogeneity/non-universality",
+    "freeze five-unit V3 PASS/FAIL claim boundary before any provider call"
+  ],
+  "provider_calls": 0,
+  "scientific_execution": false,
+  "stage_a_authority": false,
+  "stage_b_authority": false
+}
