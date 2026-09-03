@@ -1,0 +1,13 @@
+{
+  "classification": "ORACLE_BROWSER_RATE_LIMIT_INTERRUPTED_PARTIAL_REVIEW_NO_VERDICT",
+  "conversation_id": "6a997ced-0fc4-83e8-b677-05206b2e7c52",
+  "model": "gpt-5.6-sol",
+  "thinking": "Extra High 4 of 5 verified before send",
+  "prompt_was_sent": true,
+  "partial_answer_discarded": true,
+  "ui_error": "Too many requests / temporarily limited access to conversations",
+  "review_authority": false,
+  "scientific_outcome": false,
+  "fresh3_retry_authorized": false,
+  "retry_policy": "Fresh Oracle conversation only after the shared ChatGPT rate limit clears. The interrupted partial answer is never adjudicated. Fresh3 remains permanently retired and receives no scientific retry, replacement, or top-up."
+}

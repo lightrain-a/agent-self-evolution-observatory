@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "object": "C1-PACTA-MSR-Q08-SUCCESSOR-STATISTICAL-REPAIR-20260903",
+  "status": "Q08_SUCCESSOR_STATISTICS_FROZEN_PRE_FRESH4",
+  "active_manuscript": "R9",
+  "parent_fresh3_p0_contract_sha256": "eb394af90c78528ca0b8b91c2d2ec891cf36039bf707a8d64f2b101de68b4eea",
+  "fresh3_support_audit_sha256": "29e0214703a8ee71bef93f6dda1837d150ac605f47511a46a32b47cf9d9c18d7",
+  "oracle_review": {
+    "session": "c1-pacta-msr-fresh3-current-2",
+    "conversation_id": "6a99839b-349c-83e8-ab63-f6abc2008eef",
+    "model": "gpt-5.6-sol",
+    "thinking_effort": "extra-high",
+    "transcript_sha256": "2eda0a83f8f9cf6edc89325863d9df55b898d9ba976b77d2404ed6fa47f872a1",
+    "verdict": "REVISE_C1_P0_BEFORE_SUCCESSOR"
+  },
+  "fresh3": {
+    "state": "PERMANENTLY_RETIRED_CONSUMED_INVALID_SOURCE_EPISODE",
+    "retry": false,
+    "replacement": false,
+    "top_up": false,
+    "continue_remaining_sources": false,
+    "downstream_execution": false,
+    "method_effect_claim_authority": "NO_MSR_METHOD_EFFECT_EVIDENCE"
+  },
+  "successor_scope": {
+    "fresh_pool": "wholly disjoint source/future pool required",
+    "historical_fresh3_unit_reuse": false,
+    "sealed_unit_reuse": false,
+    "writer_binder_estimand": "conditional on exactly one realized content-addressed writer draw and one realized content-addressed binder draw per branch/context",
+    "inference_unit": "source/future scientific unit; provider calls are repeated measurements and never independent scientific units"
+  },
+  "shadow": {
+    "endpoint": "unchanged developmental localization statistic min(B1,B2)-max(WS,WF)",
+    "status": "retained",
+    "interpretation": "qualification/localization only, not population estimator",
+    "final_stage_interpretation": "conditional on prospectively frozen mechanism qualification"
+  },
+  "rate_matched_random": {
+    "ranking": "must be frozen before shadow outcomes",
+    "K": "equal to observed Gplus opening count",
+    "reroll": false,
+    "interpretation": "exposure-rate control; no final-outcome tuning"
+  },
+  "final_primary_metric": {
+    "kernel": "exact-match indicator k(a,b)=1[a==b]",
+    "estimator": "unbiased exact-match-kernel MMD2 / collision U-statistic",
+    "success_samples_per_unit_arm": 6,
+    "failure_samples_per_unit_arm": 6,
+    "finite_sample_negative_values_allowed": true,
+    "clip_at_zero": false,
+    "raw_empirical_TV": "descriptive secondary only",
+    "per_unit": "U_arm = MMD_u2(success_writer_actions, failure_writer_actions)",
+    "primary": "D_select = U_A3_PACTA_MSR - U_A2_RATE_MATCHED_RANDOM",
+    "companions": [
+      "A3_A0 = U_A3_PACTA_MSR - U_A0_NATIVE",
+      "A3_A1 = U_A3_PACTA_MSR - U_A1_SCB_ALWAYS"
+    ]
+  },
+  "threshold_calibration": {
+    "artifact": "c1-pacta-msr-q08-unbiased-mmd2-calibration-20260903.json",
+    "artifact_sha256": "b47cca6a6961f7961bdfa7e17267bc4e90e10ffd2bf5d9926df61afb124f86a6",
+    "scientific_provider_calls": 0,
+    "scientific_outcomes_read": 0,
+    "seed": 20260903,
+    "replicates": 200000,
+    "candidate_thresholds": [0.15, 0.2, 0.25],
+    "selected_mean_D_select_threshold": 0.2,
+    "selected_worst_null_gate_rate": 0.048225,
+    "selected_canonical_alternative_gate_rate": 0.51708
+  },
+  "future_pilot_pass": {
+    "all_final_calls_complete": true,
+    "mean_D_select_ge": 0.2,
+    "positive_D_select_unit_count_gt_negative": true,
+    "mean_A3_A0_gt": 0.0,
+    "mean_A3_A1_ge": 0.0,
+    "metric_scale": "unbiased exact-match MMD2 for every U term"
+  },
+  "fresh4_transport_precondition": {
+    "required_before_any_scientific_source_acquisition": true,
+    "kind": "non-scientific repeated-turn finalization stress qualification",
+    "must_use_same_provider_bridge_envelope": true,
+    "must_exercise_repeated_model_bearing_turns": true,
+    "must_end_in_valid_final_ordinary_JSON_message": true,
+    "may_use_fresh4_scientific_source_task": false,
+    "reason": "fresh3 source 2 timed out after six model-bearing calls without final ordinary-JSON assistant completion"
+  },
+  "authority": {
+    "fresh4_scientific_source_acquisition": false,
+    "writer": false,
+    "binder": false,
+    "probe": false,
+    "shadow": false,
+    "final": false,
+    "sealed": false,
+    "method_effect_claim": false
+  }
+}

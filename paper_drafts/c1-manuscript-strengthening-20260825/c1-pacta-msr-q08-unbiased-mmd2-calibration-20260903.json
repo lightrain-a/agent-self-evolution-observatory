@@ -1,0 +1,85 @@
+{
+  "candidate_thresholds": [
+    0.15,
+    0.2,
+    0.25
+  ],
+  "canonical_alternative": {
+    "A2_failure": [
+      0.5,
+      0.5
+    ],
+    "A2_success": [
+      0.5,
+      0.5
+    ],
+    "A3_failure": [
+      0.3333333333333333,
+      0.6666666666666666
+    ],
+    "A3_success": [
+      0.6666666666666666,
+      0.3333333333333333
+    ],
+    "population_A2_MMD2": 0.0,
+    "population_A3_MMD2": 0.2222222222222222,
+    "population_D_select": 0.2222222222222222
+  },
+  "estimator": "unbiased_MMD2_collision_U_statistic",
+  "kernel": "exact_match_indicator",
+  "null_support_sizes": [
+    2,
+    4,
+    8
+  ],
+  "replicates": 200000,
+  "rows": [
+    {
+      "canonical_alt_gate_rate": 0.617205,
+      "null_gate_rates": {
+        "2": 0.095145,
+        "4": 0.075035,
+        "8": 0.0338
+      },
+      "passes": false,
+      "threshold": 0.15,
+      "worst_null_gate_rate": 0.095145
+    },
+    {
+      "canonical_alt_gate_rate": 0.51708,
+      "null_gate_rates": {
+        "2": 0.048225,
+        "4": 0.030355,
+        "8": 0.00779
+      },
+      "passes": true,
+      "threshold": 0.2,
+      "worst_null_gate_rate": 0.048225
+    },
+    {
+      "canonical_alt_gate_rate": 0.411135,
+      "null_gate_rates": {
+        "2": 0.022675,
+        "4": 0.010775,
+        "8": 0.001405
+      },
+      "passes": false,
+      "threshold": 0.25,
+      "worst_null_gate_rate": 0.022675
+    }
+  ],
+  "samples_per_branch": 6,
+  "schema_version": 1,
+  "scientific_outcomes_read": 0,
+  "scientific_provider_calls": 0,
+  "seed": 20260903,
+  "selected_mean_D_select_threshold": 0.2,
+  "selection_rule": {
+    "choose": "smallest predeclared candidate passing both constraints",
+    "gate": "mean_D_select >= threshold AND positive_D_select_units > negative_D_select_units",
+    "max_worst_null_gate_rate": 0.05,
+    "min_canonical_alternative_gate_rate": 0.45
+  },
+  "status": "Q08_UNBIASED_MMD2_SYNTHETIC_CALIBRATION_PASS",
+  "units": 8
+}
