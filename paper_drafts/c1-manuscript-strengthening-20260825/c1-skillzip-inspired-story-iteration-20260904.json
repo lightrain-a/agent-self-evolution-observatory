@@ -77,6 +77,8 @@
     "paper-story-reward-memory.js: added diagnosis_to_repair and successor metric/authority boundary; extended outline.",
     "current-paper-golden-c1.js: reframed architecture block D and added diagnosis-to-repair arc E.",
     "current-paper-depth-c1.js: added state relevance != behavioral authority contract and diagnosis-driven PACTA-MSR lineage.",
-    "research_pipeline/test_c1_stage_resolved_story.py: added invariants that PACTA-MSR remains prospective and cannot be written as already improving/outperforming."
+    "research_pipeline/test_c1_stage_resolved_story.py: added invariants that PACTA-MSR remains prospective and cannot be written as already improving/outperforming.",
+    "source/sections/01_intro.tex: added the relevance/availability versus behavioral-authority mismatch and positioned PACTA-MSR as a prospective diagnosis-driven repair target.",
+    "source/sections/02_mechanism.tex: formalized relevance R_t versus authority A_t, separated the developmental shadow gate from the final population metric, and recorded the outcome-blind MMD2 successor criterion without claiming a method effect."
   ]
 }

@@ -98,6 +98,22 @@ class C1StageResolvedStoryTest(unittest.TestCase):
         self.assertNotIn("pacta-msr improves", combined)
         self.assertNotIn("pacta-msr outperforms", combined)
 
+    def test_manuscript_carries_prospective_selective_authority_design_without_result_claim(self) -> None:
+        combined = "\n".join((self.intro, self.mechanism)).lower()
+        self.assertIn("state-conditioned binding", combined)
+        self.assertIn("behavioral authority", combined)
+        self.assertIn("pacta-msr", combined)
+        self.assertIn("matched state reveal", combined)
+        self.assertIn("rate-matched random", combined)
+        self.assertIn("within-condition", combined)
+        self.assertIn("mmd", combined)
+        self.assertIn("0.20", combined)
+        self.assertIn("prospective", combined)
+        self.assertIn("method-effect result", combined)
+        self.assertIn("not counted among the frozen results", combined)
+        self.assertNotIn("pacta-msr improves", combined)
+        self.assertNotIn("pacta-msr outperforms", combined)
+
 
 if __name__ == "__main__":
     unittest.main()
