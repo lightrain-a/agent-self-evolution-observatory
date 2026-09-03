@@ -1,0 +1,82 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R53-FULL350-SOURCE-EXECUTION-AUTHORITY",
+  "recorded_date": "2026-09-02",
+  "status": "HUMAN_BOUNDED_R53_FULL350_SOURCE_EXECUTION_AUTHORITY_RECORDED",
+  "authorized_by": "explicit current-conversation user directive: run Scheme A full 350 because local execution consumes no external API quota",
+  "lineage": {
+    "replacement": "R53-FULL350",
+    "resume_of_old_r45": false,
+    "source_attempt_count": 1
+  },
+  "bindings": {
+    "source_manifest": {
+      "path": "generated/d2-failure-memory-provenance-r53-full350-source-execution-manifest.json",
+      "sha256": "8217d7fab3a27687560d143f1671769f004a3f1f12018c87f0b5ed31b34d2a67",
+      "receipt_sha256": "17ea9180045b337ae718e779f64ec31e67546e4c994fcff9cf1659e0aa83ce09"
+    },
+    "program_contract": {
+      "path": "generated/d2-failure-memory-provenance-r53-full350-ab-program-contract.json",
+      "sha256": "fd729cd224fca08322b5346faa1a110e9f68b3459746308281537581a49647bc",
+      "receipt_sha256": "bfda80516ceeb8ddd36b715bae70b1cde82487e0602a4e5322148d19e5cd567c"
+    },
+    "model_identity": {
+      "path": "generated/d2-failure-memory-provenance-r45m1-model-identity-evidence.json",
+      "sha256": "b26c926a9a69798205c2ca8fbf2715507bac630ffefb7d3927175446f0d95e91",
+      "receipt_sha256": null
+    },
+    "source_runner": {
+      "path": "research_pipeline/failure_memory_memrl_source_execute_r53.py",
+      "sha256": "624e7f828ab36de217ba780e2a439729820ebddb4bd49a3e6b4d0fe3d4f4cb12"
+    }
+  },
+  "authorized_scope": {
+    "source_build": {
+      "authorized": true,
+      "count": 1,
+      "exact_selected_source_tasks": 350,
+      "source_selection_sha256": "a8b8f519e41522d4222e5cadde214b5c7318b7c307a620fbd0c8c9827c0443f4",
+      "external_provider_spend": false
+    },
+    "fresh_validation_selection": {
+      "authorized_after_source_complete": false
+    },
+    "utilization": {
+      "authorized": false
+    },
+    "AB_confirmatory": {
+      "authorized": false
+    }
+  },
+  "replacement_limits": {
+    "old_r45_remote_access": false,
+    "old_r45_artifact_reuse": false,
+    "partial_effect_inspection": false
+  },
+  "hard_limits": {
+    "second_source_attempt": false,
+    "skip_or_replace_source_unit": false,
+    "model_or_embedding_change": false,
+    "runtime_image_change": false,
+    "threshold_change": false,
+    "historical_pooling": false
+  },
+  "authority": {
+    "execution": true,
+    "local_gpu": true,
+    "external_provider_spend": false,
+    "validation_execution": false,
+    "claim_expansion": false
+  },
+  "failure_routing": {
+    "source_failure": "FAIL_CLOSED_R53_SOURCE_BUILD",
+    "source_complete": "FREEZE_SOURCE_RECEIPT_THEN_RUN_ZERO_OUTCOME_FRESH_SUPPORT_SELECTION_ONLY"
+  },
+  "pre_authority_accounting": {
+    "scientific_source_units_executed": 0,
+    "validation_units_opened": 0,
+    "confirmatory_outcomes_observed": 0
+  },
+  "receipt_sha256": "abad0171fa4c5a55127ba2a193d1e8e4f436817b083c9a8f31f2aa9d40131220"
+}

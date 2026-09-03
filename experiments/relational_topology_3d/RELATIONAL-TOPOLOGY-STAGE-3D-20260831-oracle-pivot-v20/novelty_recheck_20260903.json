@@ -1,0 +1,56 @@
+{
+  "object_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831",
+  "successor_id": "RELATIONAL-TOPOLOGY-STAGE-3D-20260831-oracle-pivot-v20",
+  "state": "TARGETED_CURRENT_NOVELTY_RECHECK_NO_NEW_EXACT_COLLISION_FOUND",
+  "checked_on": "2026-09-03",
+  "scope": "TARGETED_WEB_AND_ARXIV_RECHECK_NOT_EXHAUSTIVE_LITERATURE_PROOF",
+  "nearest_work": [
+    {
+      "title": "SceneNAT: Masked Generative Modeling for Language-Guided Indoor Scene Synthesis",
+      "arxiv_id": "2601.07218",
+      "collision": [
+        "language-guided indoor 3D scene synthesis",
+        "explicit relational reasoning",
+        "training/evaluation over relation-count complexity including beyond-training counts"
+      ],
+      "claim_boundary": "Relation-count degradation, training through four relations, and 5/6-relation extrapolation are not available as novelty."
+    },
+    {
+      "title": "GeoSceneGraph: Geometric Scene Graph Diffusion Model for Text-guided 3D Indoor Scene Synthesis",
+      "arxiv_id": "2511.14884",
+      "collision": [
+        "graph-structured text-guided indoor scene synthesis",
+        "scene-graph/geometric structure as a generation prior"
+      ],
+      "claim_boundary": "Graph structure or a graph-stage representation by itself is not the contribution."
+    },
+    {
+      "title": "Scene Generation at Absolute Scale: Utilizing Semantic and Geometric Guidance From Text for Accurate and Interpretable 3D Indoor Scene Generation",
+      "arxiv_id": "2603.13910",
+      "collision": [
+        "text-conditioned indoor scene generation",
+        "semantic/geometric intermediate guidance"
+      ],
+      "claim_boundary": "Semantic/geometric guidance and multi-stage interpretability are not sufficient novelty claims."
+    },
+    {
+      "title": "InstructScene: Instruction-Driven 3D Indoor Scene Synthesis with Semantic Graph Prior",
+      "arxiv_id": "2402.04717",
+      "collision": [
+        "the experimental substrate itself",
+        "semantic graph prior plus layout decoder"
+      ],
+      "claim_boundary": "The paper is a controlled diagnostic/intervention study on this substrate, not a claim to invent the substrate."
+    }
+  ],
+  "targeted_queries": [
+    "SceneNAT language-guided indoor scene synthesis relation count 2026",
+    "GeoSceneGraph text guided 3D indoor scene generation semantic graph 2026",
+    "endpoint topology relational constraints 3D scene generation 2026",
+    "CHAIN HUB 3D scene generation relation topology",
+    "3D scene generation relational constraints graph topology text guided 2026"
+  ],
+  "exact_surviving_candidate": "Fixed-count, same-active-object, predicate/direction-matched CHAIN-versus-HUB endpoint-connectivity intervention at counts 3-4, coupled to exact-identity predicted-versus-oracle graph substitution through the identical frozen downstream decoder.",
+  "adjudication": "No exact collision with the full surviving intervention was found in this targeted current scan. This is not evidence that no such paper exists; novelty wording must remain narrow and should be rechecked again immediately before submission.",
+  "scientific_outcomes_read": 0
+}

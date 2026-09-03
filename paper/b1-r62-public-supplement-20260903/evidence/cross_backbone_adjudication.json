@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R62-CROSS-BACKBONE-L2-ADJUDICATION",
+  "recorded_date": "2026-09-03",
+  "status": "CROSS_BACKBONE_L2_REPLICATION_COMPLETE_ROBUST_LOW_TERMINAL_VALUE_NO_POOLING",
+  "role": "POSTCONFIRMATORY_CROSS_BACKBONE_ADJUDICATION_ONLY",
+  "evidence_bindings": {
+    "qwen_r57_file_sha256": "536022b73555985a1e915acef1363ba285c881768b97344878d2d9b0f418537e",
+    "qwen_r57_receipt_sha256": "3b3432121d504c5765880bd14a8d2b6bc75bd102990722011ee13e65a95f720a",
+    "llama_r59_parser_file_sha256": "fc75050f1e5ec82926d467ce27f155ae1bda8e72711fc2f7fd7d4e5b9a50c6d6",
+    "llama_r59_parser_receipt_sha256": "3c2d4eb066e4df5f2dce96133ac869bcc9b1972011f746cc8eed27d560147e90",
+    "llama_r60_utilization_file_sha256": "0828f39f2491872feaf7e6e905d17cb6f0a015290b9e503421c25416f155690c",
+    "llama_r60_utilization_receipt_sha256": "9564f43c668857fbf2cdd256b2be8062e0e023f4622c84c3aaf4a74332b91f87",
+    "llama_r61_ab_file_sha256": "4c22f9ee7e59c5f75b8a4ccb211300719d13e2dc4d1ac52592ab570a273cbbca",
+    "llama_r61_ab_receipt_sha256": "680a1fbdc4ddd573027be7b1292e7de9e43f8b3daf4dbf0f335160e88347ad5f",
+    "llama_r61_plan_sha256": "a700e9eb2089df2e0e6273bc28f62ba5d251c566e2a0dbdc26f05a504f14f9fa",
+    "llama_r61_contract_receipt_sha256": "5f452bed414463e3c3b33be1dfc678883fe375182ba7583e4d3e2a70b3604a83",
+    "llama_r61_authority_receipt_sha256": "2cc31eff082b5404def569ad80bbb7a73c59f161efc55809f40d390cb36a0c1c"
+  },
+  "replication_design": {
+    "same_source_bank": true,
+    "same_frozen_retrieval_content_and_order": true,
+    "same_32_primary_cluster_ids": true,
+    "same_A_B_renderer_and_only_visible_difference": true,
+    "same_terminal_endpoint": true,
+    "same_relevance_floor_abs": 0.15,
+    "only_scientific_factor_changed": "executor backbone",
+    "statistical_pooling_across_backbones": false
+  },
+  "model_specific_results": {
+    "Qwen2.5-7B-Instruct": {
+      "units": 32,
+      "A_success_rate": 0.46875,
+      "B_success_rate": 0.5,
+      "B_minus_A_effect": 0.03125,
+      "ci95_paired_cluster_bootstrap": [
+        0.0,
+        0.09375
+      ],
+      "exact_two_sided_signflip_p": 1.0,
+      "B_only_success": 1,
+      "A_only_success": 0,
+      "discordant_pairs": 1,
+      "effect_relevance_floor_met": false
+    },
+    "Meta-Llama-3.1-8B-Instruct": {
+      "units": 32,
+      "B_minus_A_effect": 0.0,
+      "ci95_paired_cluster_bootstrap": [
+        -0.125,
+        0.125
+      ],
+      "exact_two_sided_signflip_p": 1.0,
+      "B_only_success": 2,
+      "A_only_success": 2,
+      "discordant_pairs": 4,
+      "effect_relevance_floor_met": false
+    }
+  },
+  "utilization_guard": {
+    "llama_status": "UTILIZATION_QUALIFICATION_PASS",
+    "llama_complete_units": 8,
+    "llama_u1_specific_first_action_units": 8,
+    "llama_u2_vs_u0_divergence_units": 5,
+    "interpretation": "The Llama low terminal A/B effect cannot be attributed to a failed memory-utilization first stage: U1-specific divergence is 8/8 and exceeds placebo divergence 5/8 by three units."
+  },
+  "scientific_adjudication": {
+    "cross_backbone_status": "REPLICATED_LOW_TERMINAL_VALUE_PATTERN_ON_TWO_EXECUTOR_BACKBONES",
+    "supported_statement": "On the same qualified MemRL/OSInteraction exact-information surface, truthful raw provenance exposure did not reach the preregistered 0.15 terminal-utility relevance floor for either Qwen2.5-7B-Instruct or Meta-Llama-3.1-8B-Instruct.",
+    "behavioral_legibility_statement": "Low terminal value is not evidence that memory or provenance is behaviorally invisible; the Qwen lineage shows local action perturbations and the Llama lineage independently passes the utilization first stage.",
+    "zero_effect_proof": false,
+    "cross_model_general_theorem": false,
+    "PSMG_efficacy_identified": false,
+    "C_D_governance_estimand_identified": false,
+    "transport_to_reasoningbank_or_financial_agentdoj": false,
+    "generalization_boundary": "Two executor backbones, one frozen MemRL/OSInteraction substrate, one full350 source bank, one native retrieval configuration, and the exact R39 A/B information projection."
+  },
+  "forbidden_claims": [
+    "provenance has exactly zero effect",
+    "provenance never matters for any agent or task",
+    "two model-specific estimates may be pooled post hoc",
+    "PSMG efficacy is identified by executor-visible A/B",
+    "historical L1 writer effects are upgraded to L2",
+    "source-faithful L3 transport is complete"
+  ],
+  "remaining_scientific_scope": {
+    "C_D_status": "NOT_EXECUTED",
+    "PSMG_efficacy_status": "NOT_IDENTIFIED",
+    "L3_source_faithful_transport": "OPEN_DEBT",
+    "next_high_value_question": "Whether provenance improves a calibrated governor relative to the strongest same-information provenance-free controller, rather than whether a raw provenance tag helps the executor."
+  },
+  "receipt_sha256": "8a9ea03a0fdead265a90573aa09240237020422394bac95890985bf4f5960956"
+}

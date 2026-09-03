@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-REPLACEMENT-EXECUTION-AUTHORITY",
+  "recorded_date": "2026-09-01",
+  "status": "HUMAN_BOUNDED_R45M1_REPLACEMENT_EXECUTION_AUTHORITY_RECORDED",
+  "authorized_by": "explicit current-conversation user directive: Docker socket permission was granted on host 231 and execution should be retried; prior attached directive authorizes automatic continuation after Q5a PASS through R45-M1, R46, R47, and primary subject to frozen stop rules",
+  "lineage": {
+    "replacement": "R45-M1",
+    "old_r45": "PERMANENTLY_QUARANTINED",
+    "resume_of_old_r45": false,
+    "replacement_attempt_count": 1
+  },
+  "bindings": {
+    "r44_parent_authority": {
+      "path": "generated/d2-failure-memory-provenance-r44-human-execution-authorization.json",
+      "sha256": "155ff75eadbc286527a43cc54026f651832413a15eb79f5fd994bc4345a33ba3",
+      "receipt_sha256": "58de2e81e998db7c8f5321e6985fa477be9037247a0fffc197f943533dafc3cf"
+    },
+    "migration_manifest": {
+      "path": "generated/d2-failure-memory-provenance-r45m1-host-migration-execution-manifest.json",
+      "sha256": "4d5ae64e23716764c329ededa2fb26620d2bd7d8fd4127ab23f98aa3906a75b7",
+      "receipt_sha256": "fc8bd302d26dc1186554941cb73adfbfb50f53d73f87fe807c578d0a9c2499e2"
+    },
+    "q5v2_pass": {
+      "path": "generated/d2-failure-memory-provenance-r45m1-q5v2-host-migration-equivalence-pass.json",
+      "sha256": "f5a94150d73a9a3a610d0f6f446375b10ee4d1204f9f9130f0665cb8f77060b4",
+      "receipt_sha256": "51eb89c909f53224e8d7b8a85b3663693ac44a3d309bcc55e4c350482a92bf52"
+    },
+    "infrastructure_qualification": {
+      "path": "generated/d2-failure-memory-provenance-r45m1-infrastructure-qualification.json",
+      "sha256": "828e923adb76ea33a3ac935bb5198cb1bb01d2c59fdeeb3899ce2a4d41b64d95",
+      "receipt_sha256": "e349f0b3c4b88d0566847dc69453c6b6f3655f01502c38e92d0095afc85a190a"
+    },
+    "old_r45_abandonment": {
+      "path": "generated/d2-failure-memory-provenance-r45m1-old-r45-infrastructure-abandonment.json",
+      "sha256": "1bcd5b7c3e6ade84d343b19130bb195416388d57844321a0a772f527fa0b3b86",
+      "receipt_sha256": "9f260b60289b4735384882fa1ad98940f844129d8f39e1e871b28246259b7e55"
+    }
+  },
+  "authorized_scope": {
+    "source_build": {
+      "authorized": true,
+      "count": 1,
+      "exact_selected_source_tasks": 128,
+      "source_selection_sha256": "30e7ad6b4c02c25da3fe2e292bbf598ddaf4fad8c5f7494a95d7fd2e6911fb80",
+      "external_provider_spend": false
+    },
+    "utilization_qualification": {
+      "authorized_conditionally_after_source_qualification": true,
+      "count": 1,
+      "exact_clusters": 8,
+      "arms": [
+        "U0_no_memory",
+        "U1_true_memory",
+        "U2_null_memory",
+        "U3_reversed_memory",
+        "U4_shuffled_memory"
+      ]
+    },
+    "primary_confirmatory": {
+      "authorized_conditionally_after_source_and_utilization_qualification": true,
+      "count": 1,
+      "exact_clusters": 32,
+      "arms": [
+        "A_content_only",
+        "B_raw_provenance",
+        "C_PSMG",
+        "D_nonprovenance_controller"
+      ]
+    }
+  },
+  "hard_limits": {
+    "rerun_after_observing_effect": false,
+    "outcome_driven_unit_replacement": false,
+    "model_or_embedding_change": false,
+    "runtime_image_change": false,
+    "threshold_or_effect_floor_change": false,
+    "arm_semantics_change": false,
+    "optional_stopping_on_effect": false,
+    "historical_evidence_pooling": false,
+    "second_backbone": false,
+    "external_provider_calls": false
+  },
+  "replacement_limits": {
+    "execution_host": "wyt@222.20.126.231",
+    "hostname": "ubuntu",
+    "source_build_output": "/data/wyt/b1-memrl-r45m1-execution/source-build",
+    "old_r45_remote_access": false,
+    "old_r45_artifact_reuse": false,
+    "partial_effect_inspection": false,
+    "qualification_repetition": false
+  },
+  "authority": {
+    "execution": true,
+    "local_gpu": true,
+    "external_provider_spend": false,
+    "scientific_belief": false,
+    "paper_claim_expansion": false,
+    "submission": false
+  },
+  "failure_routing": {
+    "source_qualification_failure": "SUPPORT_STOP_NO_BEHAVIORAL_VERDICT",
+    "utilization_qualification_failure": "OPERATIONALIZATION_STOP_MEMORY_NOT_BEHAVIORALLY_USED",
+    "runtime_failure": "EXECUTION_DIAGNOSTIC_ONLY_NO_SCIENTIFIC_UPDATE"
+  },
+  "pre_authority_accounting": {
+    "scientific_source_units_executed": 0,
+    "validation_units_opened": 0,
+    "confirmatory_outcomes_observed": 0,
+    "partial_effect_inspected": false
+  },
+  "receipt_sha256": "94af849e10e4c1a7d6dd38351e3ab2f58ae253e7660f34d3c81ab4dfed7a5399"
+}

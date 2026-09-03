@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R43-LOCAL-PROVIDER-SMOKE",
+  "recorded_date": "2026-08-29",
+  "role": "ZERO_BENCHMARK_OUTCOME_LOCAL_PROVIDER_SUPPORT_SMOKE",
+  "host": "workstation3090",
+  "adapter": {
+    "path": "/home/hdd/yutong/b1-memrl-r43-runtime/failure_memory_memrl_local_runtime_r43.py",
+    "sha256": "4d2a18ff12515f018a8ceca445abc8e8e026c59728c54d4921022d10acab3db9"
+  },
+  "model_manifests": {
+    "llm": "c7e4242ce0f2ebd0700ce3c0ff8e24044a2dddc29f68ef8358993f66e60c153c",
+    "embedding": "ddd2853514c3aadf62ae9efd1751aac4ea3a7b8414b0da654b45f6915894a9e0"
+  },
+  "llm_smoke": {
+    "device": "cuda:0",
+    "model_root": "/home/hdd/yutong/agent_p0_runtime/models/Qwen2.5-7B-Instruct",
+    "load_seconds": 6.2398152351379395,
+    "generation_seconds": [
+      1.2281572818756104,
+      0.10989046096801758
+    ],
+    "prompt_sha256": "d3c524e37d787643a70a18871ab01272e7798b3a80bb80532e38b2af038ca6a1",
+    "response_sha256": "2fe416d2c5bbb753adaeadf05e5d50fc0441ace52fad0fc429fa10a725dc61b1",
+    "response_nonempty": true,
+    "deterministic_repeat_equal": true,
+    "response_exact_expected": true,
+    "usage": {
+      "prompt_tokens": 58,
+      "completion_tokens": 10,
+      "total_tokens": 68
+    }
+  },
+  "embedding_smoke": {
+    "device": "cuda:1",
+    "model_root": "/home/hdd/yutong/models/models--sentence-transformers--all-mpnet-base-v2/snapshots/e8c3b32edf5434bc2275fc9bab85f82640a19130",
+    "load_seconds": 13.847995042800903,
+    "embed_seconds": 1.864677906036377,
+    "vector_count": 2,
+    "dimension": 768,
+    "norms": [
+      0.9999999923264979,
+      1.0000000284796695
+    ],
+    "cosine_between_test_texts": 0.2121430103510272,
+    "usage": {
+      "total_tokens": 0,
+      "input_texts": 2,
+      "input_chars": 65
+    }
+  },
+  "gpu": {
+    "cuda_visible_devices": "0,1",
+    "physical_names": [
+      "NVIDIA GeForce RTX 3090 Ti",
+      "NVIDIA GeForce RTX 3090"
+    ],
+    "max_memory_allocated_bytes": [
+      15292075008,
+      236278272
+    ]
+  },
+  "access_accounting": {
+    "source_tasks_initialized": 0,
+    "validation_tasks_initialized": 0,
+    "validation_evaluator_calls": 0,
+    "validation_ground_truth_calls": 0,
+    "validation_treatment_outcomes_observed": 0,
+    "external_provider_calls": 0
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_scientific_run": false,
+  "support_only": true,
+  "wall_seconds": 23.291382551193237,
+  "receipt_sha256": "fd40f91669446d1db21cec3146f265fedc0874b27a355c9691f2cc4e9a70ee86"
+}

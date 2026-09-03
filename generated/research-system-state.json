@@ -64987,9 +64987,9 @@
         },
         {
           "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
-          "title": "Does Memory Provenance Matter? Matched Success–Failure Swaps Leave the Causal Sign Unresolved",
-          "central_question": "Does failure-derived trajectory provenance causally sustain future error when future task difficulty and actionable memory guidance are matched?",
-          "contract_sha256": "582a203818f9f590d601b5ea9d3a3ecdc08acb3e34d3b1d9f190e17a2d1dcc25",
+          "title": "Does Memory Provenance Matter? Provenance Shifts Agent Behavior but Adds Little Terminal Value Beyond Memory Content",
+          "central_question": "Conditional on fixed actionable memory content, retrieval support, and target context, does truthful source-outcome provenance add terminal utility to an executor, and does that incremental value replicate across executor backbones?",
+          "contract_sha256": "dbf81e071aaca6270d710c084c1d9f6b5ec78497c28fc9912f40b8d417f14ac7",
           "scientific_status": "READY",
           "current_state": "SUBMISSION_READY",
           "gate_clean_submission_ready": true,
@@ -65005,101 +65005,99 @@
             "gpu_authority": false
           },
           "review_learning": {
-            "review_receipts": 6,
-            "decision_critical_objections": 14,
+            "review_receipts": 2,
+            "structured_lesson_receipts": 0,
+            "lesson_codes": [],
+            "lesson_source_refs": [],
+            "decision_critical_objections": 8,
             "category_counts": {
-              "confound-control": 1,
-              "confound-residual": 1,
-              "design": 1,
-              "design-operationalization": 1,
-              "empirical": 1,
-              "empirical-sufficiency": 2,
-              "empirical-support": 1,
-              "external-validity": 3,
-              "insufficient-empirical-contribution": 1,
-              "measurement": 2,
-              "measurement-validity": 1,
-              "missing-decisive-evidence": 1,
-              "missing-experiments": 1,
-              "novelty-and-incremental-contribution": 1,
-              "novelty-vs-source": 1,
-              "sample-size": 1,
-              "scope-of-claims": 1,
-              "small-sample-robustness": 1
+              "claim-scope": 1,
+              "generalization": 1,
+              "governance-identification": 1,
+              "mechanism": 1,
+              "method-positioning": 1,
+              "non-pooling": 1,
+              "replication-scope": 1,
+              "selection-integrity": 1,
+              "statistics": 1,
+              "utilization": 1
             },
             "evidence_state_counts": {
               "existing-evidence": 8,
-              "missing-decisive-evidence": 12,
-              "uncertain": 2
+              "false-premise-with-evidence": 1,
+              "requires-new-claim": 1
             },
             "action_class_counts": {
-              "human-adjudication": 1,
-              "narrative-repair": 6,
-              "preserve-limitation": 6,
-              "targeted-experiment": 9
+              "narrative-repair": 8,
+              "prebuttal": 1,
+              "preserve-limitation": 1
             },
-            "targeted_experiment_proposals": 9,
-            "claim_expansion_requests_preserved_as_limitations": 6,
+            "targeted_experiment_proposals": 0,
+            "claim_expansion_requests_preserved_as_limitations": 1,
             "reviewer_prose_exposed": false,
             "scientific_authority": false,
             "experiment_authority": false,
             "gpu_authority": false
           },
-          "supported_claims": 3,
-          "active_unrefuted_claims": 2,
-          "unsupported_claims": 2,
+          "supported_claims": 6,
+          "active_unrefuted_claims": 0,
+          "unsupported_claims": 6,
           "limitations": [
-            "The current public financial-agent release provides aggregate provenance counts and transition statistics. The matched provenance swap requires the first-party per-query memory artifacts or a faithful reconstruction of the audited ReasoningBank runs. Those artifacts are announced for release upon publication and are currently experiment debt.",
-            "The reported provenance accuracies are rounded to three decimals. The integer correct counts used in our decomposition are the unique counts consistent with the reported support sizes and rounded accuracies. The transition allocation beyond the ten W$\\rightarrow$W cases is therefore a derived arithmetic decomposition from public aggregate statistics.",
-            "Semantic matching between failure-derived memory and success-derived memory is an experimental design challenge. A pair can preserve procedural content while differing in wording. We therefore require an information-equivalence audit before the swap. Pair construction and verifier agreement remain experiment debt until the first-party memory artifacts are available.",
-            "The causal claim concerns future persistence under matched memory information. The existing audit supports the provenance-conditioned association and identifies task difficulty as a confound. Direct causal effect size remains experiment debt for the swap experiment in Section~\\ref{sec:intervention}.",
-            "The empirical source is a financial AgentDojo setting with ReasoningBank. Replication in web agents and other external-memory architectures remains experiment debt for a broader cross-domain claim."
+            "The fresh L2 evidence uses one frozen MemRL/OSInteraction source bank and two executor backbones; it is not a population theorem over models, tasks, or memory systems.",
+            "The Qwen and Llama confidence intervals are model-specific finite-sample intervals and are not pooled or interpreted as universal effect bounds.",
+            "Historical R4/R6 L1 experiments manipulate outcome-conditioned writer modes and therefore remain writer-bundle evidence rather than provenance-only identification.",
+            "The motivating financial audit still lacks the per-query artifacts and exact runtime bindings required for source-faithful L3 transport.",
+            "PSMG efficacy remains untested because the completed L2 experiments expose provenance to the executor rather than comparing a provenance-sensitive governor with a strongest same-information provenance-free controller."
           ],
-          "reopen_conditions": [],
+          "reopen_conditions": [
+            "Reopen L3 transport claims only after a source-faithful financial ReasoningBank runtime and per-query artifacts are content-addressed and prospectively executed.",
+            "Reopen PSMG efficacy only after the provenance-sensitive governor, strongest same-information provenance-free comparator, calibration data, thresholds, and action mapping are frozen before target outcomes.",
+            "Reopen a broader cross-system generalization claim only with a separately preregistered independent memory substrate rather than additional outcome-driven reruns of the current surface."
+          ],
           "summary": {
-            "events": 101,
-            "allowed_transitions": 8,
+            "events": 118,
+            "allowed_transitions": 16,
             "blocked_transitions": 0,
-            "story_search_receipts": 1,
-            "mock_reviews": 6,
-            "claim_audit_receipts": 1,
-            "manuscript_ci_receipts": 9,
-            "prebuttal_receipts": 1,
-            "submission_readiness_receipts": 1,
-            "contract_revisions": 0
+            "story_search_receipts": 2,
+            "mock_reviews": 8,
+            "claim_audit_receipts": 2,
+            "manuscript_ci_receipts": 10,
+            "post_draft_integrity_receipts": 0,
+            "prebuttal_receipts": 2,
+            "submission_readiness_receipts": 2,
+            "contract_revisions": 0,
+            "scientific_reopens": 1
           },
           "latest_story_search": {
             "pass": true,
-            "selected_story_id": "S1-CURRENT-CHAIN",
-            "selected_story_title": "Current mechanism chain",
-            "story_search_sha256": "e3123c9dfcf670e0fcab11859aaad3e4b302f4fd93b11e5b476e5133468e3702",
+            "selected_story_id": "R62-S1",
+            "selected_story_title": "Provenance Shifts Agent Behavior but Adds Little Terminal Value Beyond Memory Content",
+            "story_search_sha256": "68f92f663b1837ed8b36286289617c2af226f08273b554d083db4a526c36b590",
             "valid_candidates": 3,
-            "paper_design_memory_query_pack_sha256": "",
-            "paper_design_memory_binding_sha256": "",
-            "paper_design_memory_wiki_sha256": "",
-            "paper_design_memory_selected": 0,
-            "paper_design_review_lessons_selected": 0
+            "paper_design_memory_query_pack_sha256": "5a67ea32c8cff69b64b9b6f35abea6385d865aa9da72317337eecf4a9e7cf789",
+            "paper_design_memory_binding_sha256": "cd9cf58459647be90f0c72a22a94d7fc0a8f11ad26421ce9aa5fde8395252396",
+            "paper_design_memory_wiki_sha256": "43e2de9a6bf8972ac937459bc685174ac2ce6a36649074bbd31d0c836f325a02",
+            "paper_design_memory_selected": 3,
+            "paper_design_review_lessons_selected": 1
           },
           "mock_pc_modes": {
-            "BLIND_MANUSCRIPT": "25e8d2b0bb12e86cfc6dcaa1e9c958b220f00c2f2fe042a5f92dfb4dbb0e5c1f",
-            "ARTIFACT_AWARE": "f22fc74d24ff63d07970b34d2ef8b5da130ff695fc5bcae456d4d0b6fd01e19b"
+            "BLIND_MANUSCRIPT": "fd32f9f4b6ee3fe70751d0d95db8216f0c74d1af963927f3930ea3a7f4da5338",
+            "ARTIFACT_AWARE": "68dc9751a14810c032e423e668f81b19342a920261dda0913b4b803ac3a7fc6c"
           },
           "latest_mock_review": {
             "mode": "ARTIFACT_AWARE",
-            "review_sha256": "f22fc74d24ff63d07970b34d2ef8b5da130ff695fc5bcae456d4d0b6fd01e19b",
+            "review_sha256": "68dc9751a14810c032e423e668f81b19342a920261dda0913b4b803ac3a7fc6c",
             "summary": {
-              "objections": 3,
-              "decision_critical": 3,
-              "targeted_experiment_proposals": 2,
+              "objections": 5,
+              "decision_critical": 4,
+              "targeted_experiment_proposals": 0,
               "claim_expansion_requests_preserved_as_limitations": 0
             }
           },
           "latest_claim_audit": {
             "pass": true,
-            "claim_audit_sha256": "f11e182e32bbcf42464c8671e0326b913cab466837a6ac623663e63bfd58915c",
-            "blockers": [],
-            "checks": 13,
-            "passed": 13
+            "claim_audit_sha256": "7dda646f2e9d5e341a41bc4c314591c839c8bd0f3b7ce2c4e06e69a3d1c7a10f",
+            "blockers": []
           },
           "latest_manuscript_ci": {
             "pass": true,
@@ -65111,41 +65109,30 @@
           "latest_prebuttal": {
             "pass": true,
             "decision_critical": 8,
-            "blockers": [],
-            "unresolved_decision_critical": 0
+            "blockers": []
           },
           "latest_paper_preparation": {
-            "pass": true,
-            "protocol_version": "1.0+r8-public-review-token-redaction",
-            "receipt_sha256": "c624dcf3a9fddd49cf7a118c6067cee2a759f66ac323d66423826b7348e7e72e",
-            "required_gates": 8,
-            "passed_gates": 8,
-            "gate_pass": {
-              "hierarchical-rubric": true,
-              "verification-refinement": true,
-              "citation-integrity": true,
-              "visual-story": true,
-              "reproducibility-bundle": true,
-              "agent-native-artifact": true,
-              "reader-simulation": true,
-              "submission-package": true
-            },
+            "pass": false,
+            "protocol_version": "",
+            "receipt_sha256": "",
+            "required_gates": 0,
+            "passed_gates": 0,
+            "gate_pass": {},
             "blockers": []
           },
           "submission_readiness_context": {
-            "artifact_submission_ready": true,
-            "recommended_immediate_submission": "READY_FOR_HUMAN_SUBMISSION",
-            "scientific_status": "READY",
+            "artifact_submission_ready": false,
+            "recommended_immediate_submission": "",
+            "scientific_status": "",
             "support_blocker": "",
-            "external_human_submission_authority_required_for_SUBMITTED": true,
+            "external_human_submission_authority_required_for_SUBMITTED": false,
             "c3_c4_evidence_state": "",
-            "exact_timesage_replication_debt": "",
             "post_repair_mock_pc_recommendations": [],
             "post_repair_mock_pc_scores": []
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "83b483017b4c931ea2969f94008f89962c34fcafe475652f1f777ac6dd82b233",
+            "receipt_sha256": "258a8d9afc508362aa37da4ebee77e8d78c7b9ca0710b9585f7c6b9d399c1ed1",
             "blockers": []
           },
           "latest_transition": {
@@ -65159,80 +65146,7 @@
             "experiment": false,
             "gpu": false,
             "submission": false
-          },
-          "acceptance_paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
-          "entity_type": "PaperState",
-          "source_kind": "paper-first-discovery-candidate",
-          "source_research_item": null,
-          "source_research_item_id": null,
-          "source_research_object": "D2-FAILURE-MEMORY-PROVENANCE",
-          "source_candidates": [
-            "D2-C01",
-            "D2-C04"
-          ],
-          "discovery_provenance": {
-            "campaign_alias": "DI2",
-            "campaign_zh": "Paper-first Idea Discovery 第 2 轮",
-            "campaign_en": "Paper-first Idea Discovery Round 2",
-            "candidate_aliases": [
-              "DI2-01",
-              "DI2-04"
-            ],
-            "primary_candidate_alias": "DI2-01",
-            "historical_candidate_ids": [
-              "D2-C01",
-              "D2-C04"
-            ],
-            "historical_ids_hidden_by_default": true,
-            "reader_label": "DI2-01 + DI2-04"
-          },
-          "paper_stage": "SUBMISSION_READY",
-          "submission_status": "SUBMISSION_READY",
-          "submission_ready": true,
-          "downloads": {
-            "pdf": "downloads/B1-Failure-Memory.pdf",
-            "source_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-source.zip",
-            "supplement_zip": "downloads/D2-PAPER-FAILURE-MEMORY-PROVENANCE-supplement.zip"
-          },
-          "publication_identity": {
-            "code": "B1",
-            "category": "B",
-            "ordinal": 1,
-            "category_zh": "记忆",
-            "category_en": "Memory",
-            "method": "Provenance Ladder",
-            "idea": {
-              "zh": "失败记忆来源的因果识别",
-              "en": "Causal identification of failure-memory provenance"
-            },
-            "label_zh": "B1 记忆 · Provenance Ladder · 失败记忆来源的因果识别",
-            "label_en": "B1 Memory · Provenance Ladder · Causal identification of failure-memory provenance",
-            "pdf": "downloads/B1-Failure-Memory.pdf"
-          },
-          "experiment_refs": [],
-          "research_authority": {
-            "method": false,
-            "experiment": false,
-            "p0": false,
-            "gpu": false
-          },
-          "acceptance_authority": {
-            "scientific": false,
-            "experiment": false,
-            "gpu": false,
-            "submission": false
-          },
-          "display_order": 32,
-          "provenance_refs": [
-            {
-              "path": "canonical-paper-acceptance-ledger",
-              "role": "D2-PAPER-FAILURE-MEMORY-PROVENANCE"
-            },
-            {
-              "path": "paper-first-discovery-candidates",
-              "role": "D2-C01,D2-C04"
-            }
-          ]
+          }
         }
       ],
       "invalid": [],

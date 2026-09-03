@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-Q5V2-QUALIFICATION-CONTRACT",
+  "recorded_date": "2026-09-01",
+  "status": "FROZEN_PREEXECUTION",
+  "role": "ZERO_CONFIRMATORY_OUTCOME_SUPPORT_INTERFACE_QUALIFICATION_CONTRACT",
+  "parent_q5v1_hold": {
+    "path": "generated/d2-failure-memory-provenance-r45m1-host-migration-equivalence-hold-20260901.json",
+    "file_sha256": "4ec585231470ec1d3e3a0f3d08ad229854e7fa87c597dbe1c01cb2f742131492",
+    "receipt_sha256": "fc0f9009f6b527dd18dad4a8fd8ca14c4594443793d65b8d2aa5bff374987db4"
+  },
+  "attempt_policy": {
+    "program_version": "Q5-v2",
+    "program_count": 1,
+    "q5a_prompt_count": 1,
+    "q5b_prompt_count": 1,
+    "deterministic_replays_per_prompt": 3,
+    "prompt_fishing_forbidden": true,
+    "temperature": 0,
+    "max_tokens": 128
+  },
+  "Q5a": {
+    "role": "NATIVE_FROZEN_INTERFACE_RELEASE_GATE",
+    "synthetic_user_instruction_sha256": "082dc13380e0de1b31cdcedd02302014087d34ce3a1da6bad4a4e8b9817c23e8",
+    "system_prompt_builder": "build_llb_prompt_with_memory(task=os)",
+    "frozen_default_system_prompt_sha256": "ab35ee09681e495df35f2c817f7e20eabe4599221715b7db68cf29309093d2ea",
+    "frozen_os_constraint_sha256": "522d1eb382268f326407722ce092e1c088e9e1e89c7ee17a8e19e6af3cdfb0db",
+    "frozen_built_os_prompt_without_memory_sha256": "07c50df1d57c848bdaaaf727dd44282c3178f6de17274f8f19f8027ff88cf2ce",
+    "uses_native_parser": true,
+    "parser_or_output_repair": false,
+    "pass_required_for_release": true
+  },
+  "Q5b": {
+    "role": "EXPLICIT_FORMAT_DIAGNOSTIC_ONLY",
+    "format_instruction_sha256": "b7874b55fc5e47bde4851154f239dfe6dd445ca284df46b0d846bf71da488f59",
+    "complete_user_prompt_sha256": "bcbbbbe3dfb261f006468f43fbe569d935c11c23dd5084d16c01bdc30ca2fffe",
+    "uses_native_parser": true,
+    "parser_or_output_repair": false,
+    "can_release_scientific_execution": false
+  },
+  "release_rule": "Q1_PASS_AND_Q2_PASS_AND_Q3_PASS_AND_Q4_PASS_AND_Q5A_PASS",
+  "failure_rule": "Q5A_FAIL_YIELDS_HOLD_NATIVE_FROZEN_INTERFACE_NOT_QUALIFIED",
+  "access_ceiling": {
+    "scientific_source_units": 0,
+    "validation_units": 0,
+    "validation_evaluator_calls": 0,
+    "confirmatory_treatment_outcomes": 0
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "support_only": true,
+  "receipt_sha256": "52d71a527790f5c0be877b5b987d147f48548aed2acddff604766a5eb24fc43b"
+}

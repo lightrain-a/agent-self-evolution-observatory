@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-PRIMARY-HISTORICAL-CONTROLLER-AUDIT-ADDENDUM-20260901",
+  "recorded_at": "2026-09-01T19:17:00+08:00",
+  "status": "HISTORICAL_SEARCH_CONFIRMS_PSMG_CONCEPT_PREEXISTED_BUT_EXECUTABLE_CONTROLLER_REMAINED_UNFROZEN",
+  "role": "READ_ONLY_PRE_VALIDATION_PROVENANCE_SEARCH_FOR_PREEXISTING_CONTROLLER_SPECIFICATION",
+  "search_scope": "/data/wyt/agent-self-evolution-observatory/worktrees/b1-*",
+  "key_historical_object": {
+    "path": "/data/wyt/agent-self-evolution-observatory/worktrees/b1-mechanism-v2-20260825/generated/d2-failure-memory-provenance-r41-mechanism-redesign.json",
+    "file_mtime": "2026-08-26T00:12:22+08:00",
+    "sha256": "93ee2fa94d2c551208c225f796ec6030b697d739977d3719662ceb5ffd47178f",
+    "generator_path": "/data/wyt/agent-self-evolution-observatory/worktrees/b1-mechanism-v2-20260825/research_pipeline/failure_memory_mechanism_redesign_r41.py",
+    "generator_sha256": "98005a7b0662d5d8584f15ea3e43518deaa06e80933095c6b90f92b84f60be21"
+  },
+  "historical_specification_found": {
+    "baseline": "g0(C,X,Z)",
+    "residual": "r_P(C,X,Z,P)",
+    "decision_form": "G = argmin_g E[L(Y,g)|C,X,Z,P] subject to frozen safety/cost constraints",
+    "actions": ["admit", "verify-first", "quarantine", "audit-only"],
+    "principles": [
+      "sign-free residual",
+      "shrink provenance residual toward zero when unsupported or redundant",
+      "raw provenance hidden from executor",
+      "strongest same-information g0 comparator",
+      "truthful PSMG versus shuffled-provenance negative control"
+    ],
+    "experiment_program_status_in_historical_object": "E2_EXECUTOR_BLIND_PSMG was explicitly R40_G5_BLOCKED_G6_LOCKED and efficacy unsupported"
+  },
+  "executable_specification_not_found": {
+    "exact_feature_vector_Z": false,
+    "exact_residual_estimator_or_fit_algorithm": false,
+    "exact_training_or_calibration_dataset": false,
+    "exact_regularization_or_shrinkage_parameter": false,
+    "exact_expected_regret_thresholds": false,
+    "exact_action_mapping_at_thresholds": false,
+    "content_addressed_executable_controller_code": false
+  },
+  "adjudication": {
+    "preexisting_psmg_concept_is_established": true,
+    "preexisting_exact_executable_C_D_controller_is_established": false,
+    "primary_preimplementation_hold_resolved": false,
+    "reason": "The historical object predates the current source build and establishes the method concept and estimand, but explicitly leaves calibration/routing as a future qualified experiment and does not content-address an executable controller. It therefore cannot legitimately fill the missing C/D implementation after outcomes begin.",
+    "source_build_may_continue": true,
+    "r46_r47_may_continue_under_their_existing_gates": true,
+    "primary_C_D_execution_allowed": false
+  },
+  "access_accounting": {
+    "historical_search_read_only": true,
+    "validation_treatment_outcomes_observed": 0,
+    "primary_confirmatory_outcomes_observed": 0,
+    "partial_primary_effect_inspected": false
+  },
+  "receipt_sha256": "d219b1dcb0d0e8992fd6cc67cd54fe213f6e701a65c184daf80e68ba513a775a"
+}

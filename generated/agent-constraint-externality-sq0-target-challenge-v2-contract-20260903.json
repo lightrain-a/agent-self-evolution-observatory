@@ -1,0 +1,111 @@
+{
+  "authority": {
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v2_execution": false
+  },
+  "case_count": 12,
+  "case_kinds": {
+    "FG_JOIN_V2": 6,
+    "TNF_JOIN_V2": 6
+  },
+  "cases": [
+    {
+      "case_id": "SQ0V2-FG-01",
+      "fixture_sha256": "20194e308cd6236d3e7d41da5506559cb63e3948149030143f81bb50ce7bf044",
+      "instruction_sha256": "001cfd3bbf2403346f25fcc306647ef9d2d33d2f0ff67c4ffd545f7c3ea7cbdc",
+      "kind": "FG_JOIN_V2"
+    },
+    {
+      "case_id": "SQ0V2-FG-02",
+      "fixture_sha256": "a2680b4d7ec9e3e7fda28281c93fa83aa511e01aae2bc92b5dcff27293385878",
+      "instruction_sha256": "b888cf2028e5da8745fd87cf757ee7376dcbb513da313ecf4fa8a10fde27118f",
+      "kind": "FG_JOIN_V2"
+    },
+    {
+      "case_id": "SQ0V2-FG-03",
+      "fixture_sha256": "21ba29bbc90c7abe5b166ca0d1971a1eae5cb7f84aa1628175a374cd418124e9",
+      "instruction_sha256": "97c58629668f817a828f36ec7ac6868a483715a66b00e0dff45604429ed208cf",
+      "kind": "FG_JOIN_V2"
+    },
+    {
+      "case_id": "SQ0V2-FG-04",
+      "fixture_sha256": "e4eaef4dacfc0180d9b07551f801038bd1bddb09de0a8a07c44ef7842ea52d50",
+      "instruction_sha256": "62792be5f6b9c784c503948fa34b4211d0e34a49360b920c91d22c2f825fd8f3",
+      "kind": "FG_JOIN_V2"
+    },
+    {
+      "case_id": "SQ0V2-FG-05",
+      "fixture_sha256": "7522fd3b8c9880f6ea4b7f42d714c4515b2eb83096c991b2e9f8e1c60668ae8a",
+      "instruction_sha256": "2a33cc444b366735fe9ce59658b90d9d55a3f9f08bf3a31ef5e718eebb46e65c",
+      "kind": "FG_JOIN_V2"
+    },
+    {
+      "case_id": "SQ0V2-FG-06",
+      "fixture_sha256": "109f0da4457ebbf45e8ee227f537d8d66ee454bdafc78d0c02f31c0a4a1c787e",
+      "instruction_sha256": "bb294c4e19bba260496865708e44f8f839ee1fe384bbd85ff453838e2363eeac",
+      "kind": "FG_JOIN_V2"
+    },
+    {
+      "case_id": "SQ0V2-TNF-01",
+      "fixture_sha256": "7b1740eaab8331a2fc83c0e80c63e1bece51895d7b25fa35274b3815ed3a0671",
+      "instruction_sha256": "fc598b67890e37af468004d6dc71dc44bf66f4f0dccf58c4c68f2451cf428ed9",
+      "kind": "TNF_JOIN_V2"
+    },
+    {
+      "case_id": "SQ0V2-TNF-02",
+      "fixture_sha256": "5880d38a383d8aee2d35bcfd80a88107c0c6d6379ecbdec782bfa02ca9c85d03",
+      "instruction_sha256": "bfd3fba7b4298049669282f0ca63425661e9a5f78e19f4e11c628fa0cd010a6f",
+      "kind": "TNF_JOIN_V2"
+    },
+    {
+      "case_id": "SQ0V2-TNF-03",
+      "fixture_sha256": "ac01a478a8a59e82391c5a18ab834ac7df7ae822da40ea54c3d10e35779a618e",
+      "instruction_sha256": "fb80f2c8460a25cdb836f1d73d60d498a8153ffb01a3a2acd75342ed7ee393fa",
+      "kind": "TNF_JOIN_V2"
+    },
+    {
+      "case_id": "SQ0V2-TNF-04",
+      "fixture_sha256": "a65aa97b4cbfdb49baf6cc37fcdd2fca26aa5f1e4d02b5cc555d6c6d94f59220",
+      "instruction_sha256": "622d4b4d29076dc0c5a5b60190595d98a2411766c32825ce36dcaf48a4ef2b03",
+      "kind": "TNF_JOIN_V2"
+    },
+    {
+      "case_id": "SQ0V2-TNF-05",
+      "fixture_sha256": "8b8faec836c1a8fa35a3dc59b0554f338a2c456e5a5be07713b6bcef249b90de",
+      "instruction_sha256": "cb1e8058378c7159d167803e3671065f8207583d5fb1c2b11c74f8b158fd66a4",
+      "kind": "TNF_JOIN_V2"
+    },
+    {
+      "case_id": "SQ0V2-TNF-06",
+      "fixture_sha256": "e3d2d446be6842037deda540232c996fbe605db1f4859af2b9f330d6b38a94dc",
+      "instruction_sha256": "8e18118e9fa2337081f65b3f2215e8d0c9ac1283ba6413f3772cdbcd1f5106c2",
+      "kind": "TNF_JOIN_V2"
+    }
+  ],
+  "confirmatory_reuse": false,
+  "content_sha256": "0e7d7b6b19fd6c2677f5c5f054556cc5bd1b21c1a110d40cd97c7a754ba1b3f8",
+  "design_change": "ADD_MULTI_STAGE_POLICY_RESOLUTION_JOIN_PRIORITY_ARITHMETIC_AND_EXACT_OUTPUT_FORMATTING_WITHOUT_REDUCING_TOOL_HEADROOM",
+  "development_iteration": 2,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "old_f0_case_reuse": false,
+  "protected_bundle": {
+    "path": "generated/agent-constraint-externality-sq0-target-challenge-v2-protected-20260903.bundle",
+    "sha256": "b965112016aa67e015a5bd82e2dc82ff20238c0fa749a3cae36b590ad1fd7031"
+  },
+  "provider_requests": 0,
+  "schema_version": "ace-sq0-v2-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "selected_backbone": "mimo-v2.5-pro",
+  "sq0_id": "ACE-SQ0-TARGET-CHALLENGE-V2-20260903",
+  "status": "SQ0_V2_TARGET_CHALLENGE_STATIC_DESIGN_READY",
+  "tool_call_cap": 40,
+  "usable_failure_window": {
+    "max": 0.9,
+    "min": 0.75
+  },
+  "v1_case_reuse": false,
+  "v1_closeout_content_sha256": "64f312cd28aadec3ed73f8d4ed13e7390ad2d5135f66344678592ca9e1ba6e7a"
+}

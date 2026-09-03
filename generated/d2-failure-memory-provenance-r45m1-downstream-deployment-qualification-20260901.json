@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R45M1-DOWNSTREAM-DEPLOYMENT-QUALIFICATION-20260901",
+  "recorded_at": "2026-09-01T19:17:00+08:00",
+  "status": "R46M1_R47M1_CODE_DEPLOYMENT_QUALIFIED_VALIDATION_UNOPENED",
+  "role": "PRE_VALIDATION_CODE_IDENTITY_AND_IMPORT_QUALIFICATION",
+  "host": {
+    "ssh_identity": "wyt@222.20.126.231",
+    "hostname": "ubuntu",
+    "checkout": "/data/wyt/b1-memrl-r45m1-code-f3f3bd57",
+    "git_sha": "f3f3bd5712f1c598bf3080481aece007cc8592ba",
+    "checkout_status_clean": true,
+    "transport": "https shallow sparse checkout from origin branch"
+  },
+  "code_identity": {
+    "base_r46": {
+      "path": "research_pipeline/failure_memory_memrl_source_qualification_r46.py",
+      "sha256": "20d50d45aa55cb1b7c985f90fb85f6f1129d8e8f24e3b945f818637469e7937b"
+    },
+    "replacement_r46m1": {
+      "path": "research_pipeline/failure_memory_memrl_source_qualification_r46m1.py",
+      "sha256": "8893b49bfc8e02239b0b54befba9e1db45356db7e265d068a80a88b673474603"
+    },
+    "base_r47": {
+      "path": "research_pipeline/failure_memory_memrl_utilization_r47.py",
+      "sha256": "379f1825201143b53510659f717a88e8c01c79d3362d71863f0adb4da8e203b7"
+    },
+    "replacement_r47m1": {
+      "path": "research_pipeline/failure_memory_memrl_utilization_r47m1.py",
+      "sha256": "92560da83e9902b0fb7f47d628267d3365bfa53d4bc2bd2fc98b3eb94c205552"
+    }
+  },
+  "runtime_qualification": {
+    "python": "/home/wyt/anaconda3/envs/vlm_fp/bin/python3.11",
+    "pythonpath": [
+      "/data/wyt/b1-memrl-r45m1-code-f3f3bd57",
+      "/data/wyt/b1-memrl-r45m1-runtime/site"
+    ],
+    "r46m1_import_pass": true,
+    "r47m1_import_pass": true,
+    "r47_frozen_arms": [
+      "U0_no_memory",
+      "U1_true_memory",
+      "U2_null_memory",
+      "U3_reversed_memory",
+      "U4_shuffled_memory"
+    ],
+    "targeted_tests_run": 11,
+    "targeted_tests_pass": 11
+  },
+  "scientific_boundary": {
+    "r46_executed": false,
+    "r47_executed": false,
+    "validation_units_initialized": 0,
+    "validation_treatment_outcomes_observed": 0,
+    "primary_confirmatory_outcomes_observed": 0,
+    "source_runner_modified": false,
+    "source_execution_git_sha": "9482573728b424a4f365c9d9132af1b4d03bde6d",
+    "downstream_code_git_sha": "f3f3bd5712f1c598bf3080481aece007cc8592ba"
+  },
+  "gate_policy": {
+    "r46_may_execute_only_after_source_build_complete": true,
+    "r47_may_execute_only_after_r46_pass": true,
+    "primary_may_execute_only_after_r47_pass_and_primary_operationalization_hold_is_resolved": true
+  },
+  "receipt_sha256": "9ab0bc7fd71b1e90ffd2f3e63ae91e20381c854a36d1a38a2f21626bbeba2111"
+}
