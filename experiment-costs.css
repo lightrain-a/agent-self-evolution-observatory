@@ -43,6 +43,11 @@ body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-caution{backg
 body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-provider-aihubmix{background:#fbfdf8}
 body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-provider-siliconflow,body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-provider-ppio{background:#fbfdfc}
 body[data-page="experiment-costs"] .ec-vendor-matrix>.matrix td.ec-provider-302{background:#fdfcf9}
+body[data-page="experiment-costs"] .ec-vendor-matrix .ec-tiered-price{padding-top:5px;padding-bottom:5px}
+body[data-page="experiment-costs"] .ec-vendor-matrix .ec-price-tier{display:grid;grid-template-columns:54px minmax(0,1fr);gap:4px;align-items:start;padding:3px 0;border-bottom:1px dotted #dde3eb}
+body[data-page="experiment-costs"] .ec-vendor-matrix .ec-price-tier:last-child{border-bottom:0}
+body[data-page="experiment-costs"] .ec-vendor-matrix .ec-price-tier>span{color:#697586;font-size:7.7px;line-height:1.3;white-space:nowrap}
+body[data-page="experiment-costs"] .ec-vendor-matrix .ec-price-tier>b{color:#24364f;font-size:8.7px;line-height:1.3;font-weight:720}
 body[data-page="experiment-costs"] .ec-matrix-notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:8px}
 body[data-page="experiment-costs"] .ec-matrix-notes>span{padding:8px 10px;border:1px solid #e2e7ef;border-radius:8px;background:#fafbfc;color:#667085;font-size:9.3px;line-height:1.45}
 body[data-page="experiment-costs"] .ec-matrix-notes b{color:#344054}

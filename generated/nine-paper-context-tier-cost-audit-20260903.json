@@ -1,0 +1,120 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "nine-paper-context-tier-cost-audit",
+  "created_at_local": "2026-09-03T22:00:00+08:00",
+  "core_rule": "Context pricing thresholds such as 32K/128K/256K apply to a single API request's input context, not to cumulative paper, experiment, or account token totals. Tier-aware total cost must be summed call by call when the provider prices by request context length.",
+  "portfolio_assessment": {
+    "blanket_claim_all_nine_papers_exceed_128k": false,
+    "reason": "Four paper tracks are primarily local-GPU rows, and the API tracks' cumulative token totals do not establish per-call context length. Where exact E1 Ark call receipts are available, no call exceeds 128K.",
+    "exact_grand_total_available": false,
+    "grand_total_rule": "For tiered API rows, compute sum_i(input_tokens_i * input_rate(tier_i) + output_tokens_i * output_rate(tier_i)); for rows without per-call receipts, report a tier-aware range or TBD rather than multiplying cumulative tokens by the cheapest tier."
+  },
+  "audits": [
+    {
+      "paper": "E1 STRI",
+      "resource": "Qwen3-Coder-Next V3",
+      "calls": 1422,
+      "input_tokens_total": 52800000,
+      "output_tokens_total_approx": 274000,
+      "mean_input_tokens_per_call": 37130.8,
+      "per_call_distribution_centralized": false,
+      "over_128k_share": null,
+      "assessment": "The mean is above the model's 32K first-tier boundary but below 128K. Aggregate totals cannot determine how many calls fell in 32-128K or 128-256K tiers.",
+      "current_dianming_tiers_rmb_per_m": [
+        {"context": "<=32K", "input": 1.003, "output": 4.014},
+        {"context": "32K-128K", "input": 1.505, "output": 6.021},
+        {"context": "128K-256K", "input": 2.509, "output": 10.035}
+      ],
+      "current_tariff_floor_from_aggregate_constraints_rmb": 57.72,
+      "historical_observed_composite_reference_rmb": 75.6,
+      "display_rule": "Keep the observed historical composite reference, but state that exact tier reconstruction requires the 1,422 per-call receipts and that any >128K tail must use the highest tier."
+    },
+    {
+      "paper": "E1 STRI",
+      "resource": "DeepSeek V4 Pro / Ark Agent Plan",
+      "calls": 1265,
+      "input_tokens_total": 18433202,
+      "output_tokens_total": 999078,
+      "mean_input_tokens_per_call": 14571.7,
+      "p50_input_tokens": 12465,
+      "p90_input_tokens": 27339,
+      "p95_input_tokens": 33440,
+      "p99_input_tokens": 46194,
+      "max_input_tokens": 50176,
+      "calls_over_32k": 73,
+      "calls_over_128k": 0,
+      "calls_over_256k": 0,
+      "per_call_distribution_centralized": true,
+      "assessment": "No reconstructed Ark E1 call exceeds 128K. Ark Agent Plan is AFP-based rather than a 128K input/output tariff, so this distribution is an audit of context length, not an AFP pricing tier change."
+    },
+    {
+      "paper": "G1 Temporal Safety",
+      "resource": "Qwen3-8B",
+      "billing": "local GPU",
+      "assessment": "No API context-tier price applies."
+    },
+    {
+      "paper": "G1 Temporal Safety",
+      "resource": "qwen3.5-397b-a17b prospective",
+      "estimated_input_tokens_total": 2800000,
+      "estimated_output_tokens_total": 280000,
+      "per_call_distribution_centralized": false,
+      "assessment": "The estimate is cumulative. Exact future cost must use the <=128K, 128-256K, or 256K-1M tier for each call."
+    },
+    {
+      "paper": "C1 Memory Transport",
+      "resource": "qwen3.5-397b-a17b extension",
+      "estimated_input_tokens_total_range": [1000000, 2000000],
+      "estimated_output_tokens_total_range": [100000, 200000],
+      "hard_cap_input_tokens": 5000000,
+      "hard_cap_output_tokens": 500000,
+      "per_call_distribution_centralized": false,
+      "assessment": "Cumulative totals do not imply >128K requests. Budget must show all three context-tier cost ranges."
+    },
+    {
+      "paper": "E2 Search Projection",
+      "resource": "DeepSeek V4 Pro recent actor tranche",
+      "calls": 1195,
+      "input_tokens_total": 3574727,
+      "output_tokens_total": 224114,
+      "mean_input_tokens_per_call": 2991.4,
+      "assessment": "The measured mean is far below 128K; current DeepSeek V4 Pro pricing concerns provider/time bands rather than the Qwen-style 128K tier. Aggregate mean alone does not prove the maximum call length."
+    },
+    {
+      "paper": "B1 Memory Provenance",
+      "billing": "local GPU",
+      "assessment": "No API context-tier price applies to the primary local model rows."
+    },
+    {
+      "paper": "Paper A Influence-Fidelity",
+      "billing": "local GPU",
+      "assessment": "No API context-tier price applies to the primary VLA rows."
+    },
+    {
+      "paper": "Paper B Persistent Memory",
+      "billing": "local GPU",
+      "assessment": "No API context-tier price applies to the primary VLA rows."
+    },
+    {
+      "paper": "Constraint Externality",
+      "resource": "qwen3.7-plus",
+      "estimated_input_tokens_total_range": [8000000, 16000000],
+      "estimated_output_tokens_total_range": [500000, 1000000],
+      "provider_context_threshold": "256K",
+      "per_call_distribution_centralized": false,
+      "assessment": "This model's current Dianming tariff changes at 256K, not 128K. Future totals need a <=256K versus 256K-1M tier-aware budget."
+    },
+    {
+      "paper": "3D Relational Topology",
+      "billing": "local GPU",
+      "assessment": "No API context-tier price applies to the training rows."
+    }
+  ],
+  "source_receipts": [
+    "generated/e1-stri-ark-plan-usage-reconstruction-20260902.json",
+    "generated/asset-first-stri-reasoningbank-full-p1-runs-20260831/*/run.json",
+    "generated/asset-first-stri-reasoningbank-p1-runs-20260829/*/run.json"
+  ],
+  "scientific_authority": false,
+  "paper_claim_authority": false
+}

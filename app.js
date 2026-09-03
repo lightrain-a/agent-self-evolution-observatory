@@ -4614,20 +4614,20 @@ function enhanceExperimentCostPriceColumns(root) {
   };
   const price = (paper, model) => {
     const has = needle => model.includes(needle);
-    if (has("Qwen3-Coder-Next")) return {used:`<b>≈¥75.6</b><small>${msg("按本页 qwen3-coder-next 实测综合 ¥1.425/M 折算；非逐-run发票","Using observed ¥1.425/M composite rate; not a per-run invoice")}</small>`, plan:`<b>¥0</b><small>${msg("V3 已停止","V3 stopped")}</small>`};
-    if (paper.includes("E1") && has("DeepSeek V4 Pro") && has("Ark Plan")) return {used:`<b>≈10.69k AFP-equivalent</b><small>${msg("19.432M Token × DeepSeek V4 Pro AFP 系数 5.5 / 10k；按套餐吃满口径等价约 ¥21.38。它是 repo receipt 可审计下限的机械折算，不是官方账户 GetAFPUsage 回执或现金发票。","19.432M Token × DeepSeek V4 Pro AFP coefficient 5.5 / 10k; ≈¥21.38 at the plan full-use equivalent. This is a mechanical conversion of the repo-receipt lower bound, not the official account GetAFPUsage receipt or a cash invoice.")}</small>`, plan:`<b>0 新 AFP / Token</b><small>${msg("该历史 ReasoningBank lane 已关闭","Historical ReasoningBank lane is closed")}</small>`};
-    if (model === "Hosted Qwen API") return {used:`<b>¥0</b>`, plan:`<b>P0 only：≈¥10.8–21.6*</b><small>${msg("这不是整个 V4 的价格。*仅用 qwen3.7-flash 实测综合 ¥0.204/M 做 P0 预算参考；若 208–324 trajectories 全部机械保持 V3 token 形状，同一 placeholder 的容量参考约 ¥187–292。exact model 与 P0 receipt 冻结后重算。","This is not the full V4 price. *P0 budget reference only using qwen3.7-flash observed ¥0.204/M; if all 208–324 trajectories mechanically retained the V3 token shape, the same placeholder gives a capacity reference of ≈¥187–292. Recalculate after exact-model freeze and the P0 receipt.")}</small>`};
+    if (has("Qwen3-Coder-Next")) return {used:`<b>历史综合参考 ≈¥75.6</b><small>${msg("52.8M input / 1,422 calls = 平均 37.1K input/call，所以不能把全部 Token 都按 ≤32K 首档算。当前典名阶梯价复算：≤32K ¥1.003/4.014/M；32–128K ¥1.505/6.021/M；128–256K ¥2.509/10.035/M。仅由总量+calls 可得当前 tariff 下成本至少约 ¥57.7；若全落在 32–128K 档约 ¥81.1，全落在 128–256K 档约 ¥135.2。1,422 次调用的 per-call histogram 未集中，>128K 尾部比例未知；≈¥75.6 保留为历史账单综合率参考。","52.8M input / 1,422 calls = 37.1K mean input/call, so pricing all tokens at the ≤32K tier is invalid. Current Dianming tiers: ≤32K ¥1.003/4.014/M; 32–128K ¥1.505/6.021/M; 128–256K ¥2.509/10.035/M. Aggregate totals + call count imply a current-tariff floor of ≈¥57.7; all usage at the 32–128K tier would be ≈¥81.1, and all at 128–256K ≈¥135.2. The 1,422-call histogram is not centralized, so the >128K tail is unknown; ≈¥75.6 remains the historical observed-composite reference.")}</small>`, plan:`<b>¥0</b><small>${msg("V3 已停止","V3 stopped")}</small>`};
+    if (paper.includes("E1") && has("DeepSeek V4 Pro") && has("Ark Plan")) return {used:`<b>≈10.69k AFP-equivalent</b><small>${msg("19.432M Token × DeepSeek V4 Pro AFP 系数 5.5 / 10k；套餐吃满等价约 ¥21.38。这里还能逐次审计 1,265 calls：平均 14.6K input/call，p95 33.4K，max 50.2K，>128K = 0/1,265。Ark 本身按 AFP 扣费，不因 128K 改 tariff；这些统计用于证明这条历史 lane 没有被“累计 19.4M Token”误判成长上下文。","19.432M tokens × DeepSeek V4 Pro AFP coefficient 5.5 / 10k; ≈¥21.38 at full-use plan equivalence. All 1,265 calls are auditable: mean 14.6K input/call, p95 33.4K, max 50.2K, >128K = 0/1,265. Ark is AFP-billed rather than context-tier billed; these statistics show why a cumulative 19.4M-token total must not be mistaken for long context.")}</small>`, plan:`<b>0 新 AFP / Token</b><small>${msg("该历史 ReasoningBank lane 已关闭","Historical ReasoningBank lane is closed")}</small>`};
+    if (model === "Hosted Qwen API") return {used:`<b>¥0</b>`, plan:`<b>${msg("exact model 未冻结 · 先做阶梯预算","Exact model not frozen · tier-aware budget first")}</b><small>${msg("P0 预计 52.8–105.6M input + 0.27–0.55M output。不能只报最低档。若仅把 qwen3.7-flash 当 preflight 参考：≤32K 约 ¥10.8–21.6；32–256K 约 ¥32.3–64.7；256K–1M 约 ¥64.7–129.4。真正的 P0 成本在 exact model/provider 冻结后按每次 call 的 input_tokens 分档求和；P1–P3 再用 P0 histogram 重估。","P0 is estimated at 52.8–105.6M input + 0.27–0.55M output. Do not report only the cheapest tier. Using qwen3.7-flash purely as a preflight reference: ≤32K ≈¥10.8–21.6; 32–256K ≈¥32.3–64.7; 256K–1M ≈¥64.7–129.4. Actual P0 cost will be summed call-by-call after the exact model/provider freeze; P1–P3 will be re-estimated from the P0 context histogram.")}</small>`};
     if (has("STRI-Cert")) return {used:`<b>${msg("CPU账未集中","CPU ledger not centralized")}</b>`, plan:`<b>≈¥0 model API</b>`};
     if (model === "Qwen3-8B") return {used:`<b>${msg("GPU·h 未集中","GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>¥0</b><small>${msg("不重跑","No rerun")}</small>`};
     if (has("235b-a22b")) return {used:`<b>¥0</b>`, plan:`<b>≈¥11.25</b><small>${msg("2.8M input + 0.28M output；input ¥2.009/M · output ¥20.076/M","2.8M input + 0.28M output; input ¥2.009/M · output ¥20.076/M")}</small>`};
     if (has("397b-a17b")) {
-      if (paper.includes("C1")) return {used:`<b>¥0</b>`, plan:`<b>≈¥1.9–3.9</b><small>${msg("预计量；hard cap≈¥9.63。≤128K input ¥1.204/M · output ¥7.224/M","Expected volume; hard cap≈¥9.63. ≤128K input ¥1.204/M · output ¥7.224/M")}</small>`};
-      return {used:`<b>¥0</b>`, plan:`<b>≈¥5.39</b><small>${msg("按 2.8M input + 0.28M output 估算","From estimated 2.8M input + 0.28M output")}</small>`};
+      if (paper.includes("C1")) return {used:`<b>¥0</b>`, plan:`<b>${msg("阶梯预算 ¥1.93–12.84","Tier-aware budget ¥1.93–12.84")}</b><small>${msg("预计 1–2M input + 0.1–0.2M output：若每次 call ≤128K，约 ¥1.93–3.85；128–256K 约 ¥3.21–6.43；256K–1M 约 ¥6.42–12.84。hard cap 5M/0.5M 对应三档约 ¥9.63 / ¥16.07 / ¥32.10。最终总成本按 per-call context tier 求和，不再默认最低档。","For 1–2M input + 0.1–0.2M output: if every call is ≤128K, ≈¥1.93–3.85; 128–256K ≈¥3.21–6.43; 256K–1M ≈¥6.42–12.84. The 5M/0.5M hard cap is ≈¥9.63 / ¥16.07 / ¥32.10 across the three tiers. Final cost is summed by per-call context tier rather than assuming tier 1.")}</small>`};
+      return {used:`<b>¥0</b>`, plan:`<b>${msg("阶梯预算 ¥5.39 / ¥9.00 / ¥17.97","Tier-aware budget ¥5.39 / ¥9.00 / ¥17.97")}</b><small>${msg("按 2.8M input + 0.28M output：≤128K / 128–256K / 256K–1M 三种全量情景分别约 ¥5.39 / ¥9.00 / ¥17.97；实际值由每次 call 的 tier mix 决定。","For 2.8M input + 0.28M output, the all-usage scenarios at ≤128K / 128–256K / 256K–1M are ≈¥5.39 / ¥9.00 / ¥17.97; the actual value depends on the call-level tier mix.")}</small>`};
     }
     if (has("HarmBench")) return {used:`<b>${msg("历史 GPU·h 未集中","Historical GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(10,20)}</b><small>${msg("10–20 A100 SXM 80G·h × 市场 ¥10.78/h","10–20 A100 SXM 80G·h × market ¥10.78/h")}</small>`};
     if (has("DeepSeek semantic evaluator")) return {used:`<b>${msg("价格估算待 exact evaluator tariff","Cost estimate needs exact evaluator tariff")}</b>`, plan:`<b>≈¥1.24*</b><small>${msg("*若按 DeepSeek V4 Pro off-peak 4.5/13.5 元/M，仅作预算参考","*If priced as DeepSeek V4 Pro off-peak 4.5/13.5 RMB/M; budget reference only")}</small>`};
     if (has("Canonical writer")) return {used:`<b>${msg("模型单价未集中","Model tariff not centralized")}</b>`, plan:`<b>¥0</b>`};
-    if (has("DeepSeek V4 Pro")) return {used:`<b>≈¥19.1 pay-go</b><small>${msg("典名低谷价参考；最终以服务商实测账单为准","Dianming off-peak reference; final = provider receipt")}</small>`, plan:`<b>≈¥166.5 pay-go</b><small>${msg("30.6M input + 2.15M output，off-peak 4.5/13.5 元/M","30.6M input + 2.15M output at off-peak 4.5/13.5 RMB/M")}</small>`};
+    if (has("DeepSeek V4 Pro")) return {used:`<b>≈¥19.1 pay-go</b><small>${msg("1,195 actor calls 的 measured tranche 平均约 3.0K input/call；累计 3.575M 并不等于单次 >128K。DeepSeek V4 Pro 当前主要是服务商/时段价差，不是 Qwen 式 128K context tier；最终以服务商 receipt 为准。","The measured 1,195-actor-call tranche averages ≈3.0K input/call; cumulative 3.575M does not mean any request is >128K. Current DeepSeek V4 Pro pricing is mainly provider/time-band dependent rather than a Qwen-style 128K context tier; final cost follows provider receipts.")}</small>`, plan:`<b>≈¥166.5 pay-go</b><small>${msg("30.6M input + 2.15M output，按典名低谷 4.5/13.5 元/M；若实际执行跨入其他时段，则按每次 call 的实际 tariff 重算。","30.6M input + 2.15M output at Dianming off-peak 4.5/13.5 RMB/M; if execution crosses other time bands, recompute each call at its actual tariff.")}</small>`};
     if (model === "Kimi K3") return {used:`<b>≈¥0.2–1.0*</b><small>${msg("*按 Ark 吃满等效 ¥2/M × 估算 token，仅作参考","*Ark full-use equivalent ¥2/M × estimated tokens; reference only")}</small>`, plan:`<b>¥0</b>`};
     if (has("Second backbone") || has("第二 backbone")) return {used:`<b>¥0</b>`, plan:`<b>${msg("模型未冻结 · 价格 TBD","Model not frozen · price TBD")}</b>`};
     if (has("Qwen2.5-7B-Instruct")) return {used:`<b>${msg("历史 GPU·h 未集中","Historical GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(80,150)}</b><small>${msg("80–150 A100 SXM 80G·h × 市场 ¥10.78/h","80–150 A100 SXM 80G·h × market ¥10.78/h")}</small>`};
@@ -4639,7 +4639,7 @@ function enhanceExperimentCostPriceColumns(root) {
     }
     if (has("Second VLA") || has("第二 VLA")) return {used:`<b>¥0</b>`, plan:`<b>${msg("GPU·h 待定","GPU-hours TBD")}</b><small>${gpuMarketNote}</small>`};
     if (has("OptimusVLA") || has("pi0.5")) return {used:`<b>${msg("资格化 GPU·h 未集中","Qualification GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>${msg("首条合法 rollout 后按市场 GPU·h 计价","Market GPU-hour price after first valid rollout")}</b><small>${gpuMarketNote}</small>`};
-    if (has("qwen3.7-plus")) return {used:`<b>≈¥0.37–1.49*</b><small>${msg("*0.5–2M total Token × 当前实测综合 ¥0.747/M","*0.5–2M total tokens × observed composite ¥0.747/M")}</small>`, plan:`<b>≈¥6.35–12.70</b><small>${msg("8.5–17M total estimated Token × ¥0.747/M","8.5–17M estimated total tokens × ¥0.747/M")}</small>`};
+    if (has("qwen3.7-plus")) return {used:`<b>≈¥0.37–1.49 historical*</b><small>${msg("*0.5–2M total Token × 历史实测综合 ¥0.747/M；因为缺 per-call receipt，这个历史值不反推 context tier。","*0.5–2M total tokens × historical observed composite ¥0.747/M; the missing per-call receipt prevents reconstructing its context-tier mix.")}</small>`, plan:`<b>${msg("阶梯预算 ¥19.31–79.63","Tier-aware budget ¥19.31–79.63")}</b><small>${msg("当前典名 qwen3.7-plus 的阈值是 256K，不是 128K。8–16M input + 0.5–1.0M output：若 call ≤256K，约 ¥19.31–38.62；若 call 在 256K–1M，约 ¥39.81–79.63。正式总成本逐 call 分档求和。","The current Dianming qwen3.7-plus threshold is 256K, not 128K. For 8–16M input + 0.5–1.0M output: calls ≤256K cost ≈¥19.31–38.62; calls in 256K–1M cost ≈¥39.81–79.63. The final total is summed call by call by tier.")}</small>`};
     if (has("Additional LLM") || has("额外 LLM")) return {used:`<b>¥0</b>`, plan:`<b>${msg("每模型价格取决于 exact family","Per-model price depends on exact family")}</b>`};
     if (has("BEDROOM-SG2SC") || model === "SGP-12" || model === "SGP-14") return {used:`<b>${msg("资格验证 GPU·h 未集中","Qualification GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(24,72)}</b><small>${msg("若正式单组件占用 24–72 A100·h：× 市场 ¥10.78/h；正式 run 后用实测替换","If a component occupies 24–72 A100·h: × market ¥10.78/h; replace with measured runtime")}</small>`};
     return {used:`<b>TBD</b>`, plan:`<b>TBD</b>`};
@@ -4682,6 +4682,35 @@ function enhanceExperimentVendorMatrix(root) {
   const summary = root.querySelector(".ec-family-summary");
   let rows = [...root.querySelectorAll(".ec-vendor-matrix tbody tr")];
   if (!input || !tbody || !rows.length || input.dataset.bound === "1") return;
+
+  // Context-tier prices are per request input length, not per paper/account token total.
+  // Keep every currently relevant Dianming tier visible so budget arithmetic cannot silently use tier 1.
+  const DIANMING_CONTEXT_TIERS = {
+    "qwen3.5-plus":[["≤128K",0.805,4.816],["128–256K",2.009,12.04],["256K–1M",4.011,24.08]],
+    "qwen3.5-flash":[["≤128K",0.203,2.009],["128–256K",0.805,8.029],["256K–1M",1.204,12.04]],
+    "qwen3.5-397b-a17b":[["≤128K",1.204,7.224],["128–256K",2.009,12.04],["256K–1M",4.011,24.08]],
+    "qwen3.5-35b-a3b":[["≤128K",0.399,3.213],["128–256K",1.603,12.845]],
+    "qwen3.5-27b":[["≤128K",0.602,4.816],["128–256K",1.806,14.448]],
+    "qwen3.5-122b-a10b":[["≤128K",0.805,6.419],["128–256K",2.009,16.058]],
+    "qwen-plus":[["≤128K",0.805,2.009],["128–256K",2.415,20.076],["256K–1M",4.823,48.167]],
+    "qwen-plus-latest":[["≤128K",0.805,2.009],["128–256K",2.415,20.076],["256K–1M",4.823,48.167]],
+    "qwen3-max-preview":[["≤32K",6.027,24.087],["32–128K",10.038,40.145],["128–256K",15.057,60.214]],
+    "qwen3-max":[["≤32K",2.513,10.038],["32–128K",4.018,16.058],["128–256K",7.028,28.098]],
+    "qwen3-coder-plus":[["≤32K",4.018,16.058],["32–128K",6.02,24.08],["128–256K",8.029,32.109],["256K–1M",16.058,64.218]],
+    "qwen3-coder-next":[["≤32K",1.003,4.014],["32–128K",1.505,6.021],["128–256K",2.509,10.035]],
+    "qwen3.6-plus":[["≤256K",1.932,11.557],["256K–1M",7.707,46.214]],
+    "qwen3.6-flash":[["≤256K",1.155,6.93],["256K–1M",4.62,27.727]],
+    "qwen3.7-flash":[["≤32K",0.2,0.8],["32–256K",0.6,2.4],["256K–1M",1.2,4.8]],
+    "qwen3.7-plus":[["≤256K",1.932,7.707],["256K–1M",3.983,15.897]],
+  };
+  const formatTierNumber = value => Number(value).toLocaleString(undefined,{maximumFractionDigits:3});
+  rows.forEach(row => {
+    const tiers = DIANMING_CONTEXT_TIERS[row.dataset.model || ""];
+    const cell = row.children[2];
+    if (!tiers || !cell) return;
+    cell.classList.add("ec-provider-dianming","ec-tiered-price");
+    cell.innerHTML = tiers.map(([label,inputPrice,outputPrice]) => `<div class="ec-price-tier"><span>${label}</span><b>${language === "zh" ? "入" : "in"} ¥${formatTierNumber(inputPrice)} / ${language === "zh" ? "出" : "out"} ¥${formatTierNumber(outputPrice)}</b></div>`).join("");
+  });
 
   const domesticFamilies = ["qwen","deepseek","kimi","glm","minimax","doubao","hunyuan","ernie"];
   const overseasFamilies = ["openai / gpt","claude","gemini","grok"];
