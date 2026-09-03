@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-FRESH4-Q08-TRANSPORT-STRESS-20260903",
+  "status": "FROZEN_PRE_QUALIFICATION_OUTCOME",
+  "role": "successor-only non-scientific transport/finalization qualification required by Q08 before any fresh4 scientific source acquisition",
+  "q08_successor_statistics_contract_sha256": "b523187e431ec952d0ba5d3a960ae878a5c8e421d5498c736ff557413184df6d",
+  "q08_adjudication_sha256": "0189f5828c9b620ce1dfbb74e1d0c21c4310ba955c11d07d5439737ef681a532",
+  "q03_controlled_output_closure_sha256": "af311a6a2785bff2d06cc12febf5288de5f4759a156d3ca4ac0407cd550837ea",
+  "fresh4_transport_amendment_sha256": "c1229439b0b0aa3e80e7c6e2747d49b5378263d93f5af192597735a5bcaa42da",
+  "fresh4_pool_sha256": "9582877385413807dea6316c25585d5714662cce17f83fa298934229dc4f0927",
+  "scientific_task_use": false,
+  "provider_envelope": {
+    "model_profile": "AtomGit-qwen3.8-27b",
+    "resolved_model": "qwen3.8-27b",
+    "allowed_tool": "mcp__c1output__submit_output",
+    "kind": "text",
+    "host_tools_allowed": false,
+    "max_tokens": 32768,
+    "live_timeout_seconds": 900,
+    "model_rounds_per_logical_output": 1,
+    "provider_wrapper_retries": 0,
+    "fresh_daemon_per_logical_output": true,
+    "growing_serialized_conversation_across_outputs": true
+  },
+  "episode": {
+    "logical_outputs": 8,
+    "nonfinal_outputs": 7,
+    "nonfinal_requirement": "captured content contains THOUGHT and exactly one parseable fenced bash command; command is not executed; a deterministic synthetic observation is appended to the conversation",
+    "final_output": 8,
+    "final_requirement": "captured content is an ordinary JSON object with exactly decision=finish and message=FRESH4_TRANSPORT_FINAL_OK; no markdown/fenced bash wrapper"
+  },
+  "pass_gate": [
+    "all 8 logical outputs attempted exactly once and pass controlled-output transport",
+    "all 8 outputs use only mcp__c1output__submit_output and kind=text",
+    "zero prohibited/native host tool attempts",
+    "exactly one model round per logical output",
+    "turns 1..7 each contain THOUGHT and exactly one parseable fenced bash command",
+    "turn 8 parses as the required ordinary JSON finish object",
+    "no timeout/error/truncation on any turn"
+  ],
+  "failure_action": "HOLD fresh4 source acquisition; do not run or consume any fresh4 scientific source task",
+  "success_authority": "fresh4 source prepare/prelaunch/smoke/acquire may proceed subject to their existing runtime and source gates",
+  "scientific_source_calls": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0
+}
