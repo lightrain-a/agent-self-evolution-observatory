@@ -1,0 +1,43 @@
+{
+  "authority": {
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v4_design": true,
+    "sq0_v4_execution": false
+  },
+  "by_kind": {
+    "FG_SEMANTIC_V3": {
+      "completed": 6,
+      "target_successes": 1,
+      "usable_target_failures": 5
+    },
+    "TNF_SEMANTIC_V3": {
+      "completed": 3,
+      "target_successes": 3,
+      "usable_target_failures": 0
+    }
+  },
+  "content_sha256": "ee2a82bbd3a6e38bbadac68ad0c320077a52dfc0b676fa81dd715c70a00875d6",
+  "development_iteration": 3,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prospective_v4_constraints": {
+    "fg_mechanism_change": "NONE; FRESH_PARAMETERIZATION_ONLY",
+    "fresh_cases_only": true,
+    "hidden_fixture_ids_forbidden": true,
+    "reuse_v3_case_bytes": false,
+    "terminal_newline_only_normalization_retained": true,
+    "tnf_change": "ADD_PUBLIC_DYNAMIC_POLICY_SELECTION_AND_SECOND_STAGE_ADJUSTMENT_COMPOSITION",
+    "tool_budget_not_used_as_difficulty_knob": true
+  },
+  "provider_requests_added": 0,
+  "root_causes": [
+    "Fresh FG semantic-composition cases produced five substantive failures in six completed cases, which is near the desired development failure regime.",
+    "The first three fresh TNF semantic-composition cases were all solved, making the final 9-10/12 failure window unreachable after the fourth overall target success.",
+    "The next development iteration must preserve the FG mechanism while increasing TNF target-local decision depth; it must not reduce tool budget, hide resource locators, or reuse observed cases."
+  ],
+  "schema_version": "ace-sq0-v3-root-cause-v1",
+  "scientific_effects_observed": 0,
+  "status": "SQ0_V3_TNF_TOO_EASY_FG_NEAR_TARGET_WINDOW"
+}
