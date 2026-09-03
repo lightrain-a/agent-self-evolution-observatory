@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R48-AB-IDENTIFICATION-CONDITIONAL-AUTHORITY",
+  "recorded_date": "2026-09-01",
+  "status": "CONDITIONAL_AB_SUBESTIMAND_EXECUTION_AUTHORITY_FROZEN_PREVALIDATION",
+  "role": "NARROW_SUBESTIMAND_AUTHORITY_WITHIN_EXISTING_HUMAN_BOUNDED_PRIMARY_SCOPE",
+  "bindings": {
+    "contract_path": "generated/d2-failure-memory-provenance-r48-ab-identification-operationalization-contract.json",
+    "contract_file_sha256": "9c769c4f71dae298ff9655a8f3a3dca53dff19e3f7f5ea3e54b4211feb9da716",
+    "contract_receipt_sha256": "3fddea2d82bbcea57fb66d5a50bc252134a82ce4805b372c562c4c0493445d21",
+    "parent_authority_path": "generated/d2-failure-memory-provenance-r45m1-replacement-execution-authority-v2.json",
+    "parent_authority_file_sha256": "7f81d7dfb133a6dcc603f7a9d8d80ecc4f0eb5f9bed0ac72a7acd3114f3a5871",
+    "parent_authority_receipt_sha256": "ae12bffededd5f91ee480f17c138ec47be38c723d0f939871839b335701e9891",
+    "migration_manifest_file_sha256": "3669c6fedbdb6e0f3c51d60fa2aff041aa8e5580761129c12bd82f8a774561cc",
+    "migration_manifest_receipt_sha256": "3c7927cab5ae636f0d37292e72995880c9fa8a34b092956475322d2e28a7b113"
+  },
+  "scope": {
+    "benchmark": "OSInteraction",
+    "clusters": 32,
+    "arms": [
+      "A_content_only",
+      "B_raw_provenance"
+    ],
+    "arm_runs": 64,
+    "estimand": "B_raw_provenance - A_content_only",
+    "conditional_on": [
+      "R46M2 strict source qualification PASS",
+      "R47M2 utilization qualification PASS"
+    ],
+    "C_D_execution": false,
+    "four_arm_program_completion_claim": false
+  },
+  "hard_limits": {
+    "second_A_B_run": false,
+    "unit_replacement": false,
+    "prompt_or_renderer_change_after_first_A_B_exposure": false,
+    "model_or_runtime_change": false,
+    "retrieval_rerun_between_arms": false,
+    "partial_effect_inspection": false,
+    "historical_pooling": false,
+    "C_D_invention_or_execution": false,
+    "optional_stopping": false
+  },
+  "prevalidation_accounting": {
+    "A_B_treatment_outcomes_observed": 0,
+    "primary_confirmatory_outcomes_observed": 0,
+    "partial_A_B_effect_inspected": false
+  },
+  "authority": {
+    "A_B_execution_conditionally": true,
+    "C_D_execution": false,
+    "local_gpu": true,
+    "external_provider_spend": false,
+    "scientific_belief": false,
+    "claim_expansion": false
+  },
+  "scientific_boundary": "A/B may close only the already-registered minimum L2 identification estimand. C/D remains NOT EXECUTED and PSMG efficacy remains NOT IDENTIFIED.",
+  "receipt_sha256": "99838fbbc7c9dfa2521a9c10a93545d69ba5c7fa4a72ca2d41fd556963ab761f"
+}

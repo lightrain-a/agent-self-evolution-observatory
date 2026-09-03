@@ -4627,7 +4627,7 @@ function enhanceExperimentCostPriceColumns(root) {
     if (has("HarmBench")) return {used:`<b>${msg("历史 GPU·h 未集中","Historical GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(10,20)}</b><small>${msg("10–20 A100 SXM 80G·h × 市场 ¥10.78/h","10–20 A100 SXM 80G·h × market ¥10.78/h")}</small>`};
     if (has("DeepSeek semantic evaluator")) return {used:`<b>${msg("价格估算待 exact evaluator tariff","Cost estimate needs exact evaluator tariff")}</b>`, plan:`<b>≈¥1.24*</b><small>${msg("*若按 DeepSeek V4 Pro off-peak 4.5/13.5 元/M，仅作预算参考","*If priced as DeepSeek V4 Pro off-peak 4.5/13.5 RMB/M; budget reference only")}</small>`};
     if (has("Canonical writer")) return {used:`<b>${msg("模型单价未集中","Model tariff not centralized")}</b>`, plan:`<b>¥0</b>`};
-    if (has("DeepSeek V4 Pro")) return {used:`<b>≈¥19.1 pay-go</b><small>${msg("典名 off-peak 参考；最终以 provider receipt 为准","Dianming off-peak reference; final = provider receipt")}</small>`, plan:`<b>≈¥166.5 pay-go</b><small>${msg("30.6M input + 2.15M output，off-peak 4.5/13.5 元/M","30.6M input + 2.15M output at off-peak 4.5/13.5 RMB/M")}</small>`};
+    if (has("DeepSeek V4 Pro")) return {used:`<b>≈¥19.1 pay-go</b><small>${msg("典名低谷价参考；最终以服务商实测账单为准","Dianming off-peak reference; final = provider receipt")}</small>`, plan:`<b>≈¥166.5 pay-go</b><small>${msg("30.6M input + 2.15M output，off-peak 4.5/13.5 元/M","30.6M input + 2.15M output at off-peak 4.5/13.5 RMB/M")}</small>`};
     if (model === "Kimi K3") return {used:`<b>≈¥0.2–1.0*</b><small>${msg("*按 Ark 吃满等效 ¥2/M × 估算 token，仅作参考","*Ark full-use equivalent ¥2/M × estimated tokens; reference only")}</small>`, plan:`<b>¥0</b>`};
     if (has("Second backbone") || has("第二 backbone")) return {used:`<b>¥0</b>`, plan:`<b>${msg("模型未冻结 · 价格 TBD","Model not frozen · price TBD")}</b>`};
     if (has("Qwen2.5-7B-Instruct")) return {used:`<b>${msg("历史 GPU·h 未集中","Historical GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(80,150)}</b><small>${msg("80–150 A100 SXM 80G·h × 市场 ¥10.78/h","80–150 A100 SXM 80G·h × market ¥10.78/h")}</small>`};
@@ -4641,7 +4641,7 @@ function enhanceExperimentCostPriceColumns(root) {
     if (has("OptimusVLA") || has("pi0.5")) return {used:`<b>${msg("资格化 GPU·h 未集中","Qualification GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>${msg("首条合法 rollout 后按市场 GPU·h 计价","Market GPU-hour price after first valid rollout")}</b><small>${gpuMarketNote}</small>`};
     if (has("qwen3.7-plus")) return {used:`<b>≈¥0.37–1.49*</b><small>${msg("*0.5–2M total Token × 当前实测综合 ¥0.747/M","*0.5–2M total tokens × observed composite ¥0.747/M")}</small>`, plan:`<b>≈¥6.35–12.70</b><small>${msg("8.5–17M total estimated Token × ¥0.747/M","8.5–17M estimated total tokens × ¥0.747/M")}</small>`};
     if (has("Additional LLM") || has("额外 LLM")) return {used:`<b>¥0</b>`, plan:`<b>${msg("每模型价格取决于 exact family","Per-model price depends on exact family")}</b>`};
-    if (has("BEDROOM-SG2SC") || model === "SGP-12" || model === "SGP-14") return {used:`<b>${msg("qualification GPU·h 未集中","Qualification GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(24,72)}</b><small>${msg("若正式单组件占用 24–72 A100·h：× 市场 ¥10.78/h；正式 run 后用实测替换","If a component occupies 24–72 A100·h: × market ¥10.78/h; replace with measured runtime")}</small>`};
+    if (has("BEDROOM-SG2SC") || model === "SGP-12" || model === "SGP-14") return {used:`<b>${msg("资格验证 GPU·h 未集中","Qualification GPU-hours not centralized")}</b><small>${gpuMarketNote}</small>`, plan:`<b>≈${gpuRange(24,72)}</b><small>${msg("若正式单组件占用 24–72 A100·h：× 市场 ¥10.78/h；正式 run 后用实测替换","If a component occupies 24–72 A100·h: × market ¥10.78/h; replace with measured runtime")}</small>`};
     return {used:`<b>TBD</b>`, plan:`<b>TBD</b>`};
   };
   let currentPaper = "";
@@ -4677,8 +4677,48 @@ function enhanceExperimentVendorMatrix(root) {
   if (pageId !== "experiment-costs" || !root) return;
   const input = root.querySelector("#ec-model-filter-input");
   const count = root.querySelector("#ec-model-filter-count");
-  const rows = [...root.querySelectorAll(".ec-vendor-matrix tbody tr")];
-  if (!input || !rows.length || input.dataset.bound === "1") return;
+  const table = root.querySelector(".ec-vendor-matrix>.matrix");
+  const tbody = table?.querySelector("tbody");
+  const summary = root.querySelector(".ec-family-summary");
+  let rows = [...root.querySelectorAll(".ec-vendor-matrix tbody tr")];
+  if (!input || !tbody || !rows.length || input.dataset.bound === "1") return;
+
+  const domesticFamilies = ["qwen","deepseek","kimi","glm","minimax","doubao","hunyuan","ernie"];
+  const overseasFamilies = ["openai / gpt","claude","gemini","grok"];
+  const familyOrder = [...domesticFamilies, ...overseasFamilies];
+  const familyRank = new Map(familyOrder.map((family, index) => [family, index]));
+  const cheapestInput = row => {
+    const cells = [...row.children].slice(1); // include Ark AFP full-use equivalent as an available unit price
+    const prices = cells.flatMap(cell => {
+      const text = cell.textContent || "";
+      const api = text.match(/(?:in|入)\s*¥\s*([0-9]+(?:\.[0-9]+)?)/i);
+      const ark = text.match(/AFP(?:\s+eq\.|\s+等效)?\s*¥\s*([0-9]+(?:\.[0-9]+)?)/i);
+      const match = api || ark;
+      return match ? [Number(match[1])] : [];
+    }).filter(Number.isFinite);
+    return prices.length ? Math.min(...prices) : Number.POSITIVE_INFINITY;
+  };
+
+  rows.forEach(row => { row.dataset.sortPrice = Number.isFinite(cheapestInput(row)) ? String(cheapestInput(row)) : ""; });
+  rows.sort((a, b) => {
+    const fa = (a.dataset.family || "").toLowerCase();
+    const fb = (b.dataset.family || "").toLowerCase();
+    const familyDelta = (familyRank.get(fa) ?? 999) - (familyRank.get(fb) ?? 999);
+    if (familyDelta) return familyDelta;
+    const pa = cheapestInput(a), pb = cheapestInput(b);
+    if (pa !== pb) return pa - pb;
+    return (a.dataset.model || "").localeCompare(b.dataset.model || "", undefined, {numeric:true, sensitivity:"base"});
+  });
+  rows.forEach((row, index) => {
+    const prevFamily = index ? (rows[index - 1].dataset.family || "").toLowerCase() : "";
+    const family = (row.dataset.family || "").toLowerCase();
+    row.classList.toggle("ec-family-start", index === 0 || family !== prevFamily);
+    tbody.appendChild(row);
+  });
+  if (summary) summary.innerHTML = language === "zh"
+    ? `<b>国内：</b>Qwen 32 · DeepSeek 6 · Kimi 5 · GLM 6 · MiniMax 6 · Doubao 3 · Hunyuan 3 · ERNIE 2　｜　<b>国外：</b>OpenAI / GPT 70 · Claude 12 · Gemini 11 · Grok 4<br><small>系列内按当前可获得渠道的最低可比单价（元 / 1M Token）从低到高；Ark AFP 套餐吃满等效价也参与排序。</small>`
+    : `<b>China:</b> Qwen 32 · DeepSeek 6 · Kimi 5 · GLM 6 · MiniMax 6 · Doubao 3 · Hunyuan 3 · ERNIE 2　|　<b>International:</b> OpenAI / GPT 70 · Claude 12 · Gemini 11 · Grok 4<br><small>Within each family, rows are sorted by the lowest currently available comparable unit price (RMB / 1M tokens), including Ark's full-use AFP equivalent.</small>`;
+
   const apply = () => {
     const query = input.value.trim().toLowerCase();
     let visible = 0;

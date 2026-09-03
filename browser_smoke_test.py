@@ -691,7 +691,7 @@ def main() -> None:
         temporal_prep=temporal_registry.get("latest_paper_preparation") or {}
         temporal_clean=temporal_prep.get("pass") is True
         temporal_action="NO_INTERNAL_ACTION" if temporal_clean else "PAPER_REPAIR_REQUIRED"
-        require(registry_summary == expected_registry_summary and temporal_registry.get("paper_stage") == expected_registry_stages.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") and temporal_registry.get("gate_clean_submission_ready") is temporal_clean and temporal_registry.get("immediate_submission_hold") is (not temporal_clean) and (temporal_registry.get("primary_next_action") or {}).get("action_class") == temporal_action and int(temporal_prep.get("required_gates") or 0) == 8 and (temporal_clean or bool(temporal_prep.get("blockers"))) and int(temporal_evidence.get("runtime_valid_rows") or 0) > 0 and int(temporal_evidence.get("distinct_endpoints") or 0) > 0 and int(temporal_evidence.get("institutional_systems") or 0) > 0 and bool(temporal_registry.get("latest_mock_review")) and failure_registry.get("paper_stage") == expected_registry_stages.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") and failure_registry.get("gate_clean_submission_ready") is True and failure_registry.get("active_unrefuted_claims") == 2, f"Research Portfolio must follow the latest canonical Temporal/Failure paper receipts without pinning an obsolete revision snapshot: {idea_portfolio['paperRegistry']}")
+        require(registry_summary == expected_registry_summary and temporal_registry.get("paper_stage") == expected_registry_stages.get("D2-PAPER-TEMPORAL-SKILL-CAUSAL-BOTTLENECK") and temporal_registry.get("gate_clean_submission_ready") is temporal_clean and temporal_registry.get("immediate_submission_hold") is (not temporal_clean) and (temporal_registry.get("primary_next_action") or {}).get("action_class") == temporal_action and int(temporal_prep.get("required_gates") or 0) == 8 and (temporal_clean or bool(temporal_prep.get("blockers"))) and int(temporal_evidence.get("runtime_valid_rows") or 0) > 0 and int(temporal_evidence.get("distinct_endpoints") or 0) > 0 and int(temporal_evidence.get("institutional_systems") or 0) > 0 and bool(temporal_registry.get("latest_mock_review")) and failure_registry.get("paper_stage") == expected_registry_stages.get("D2-PAPER-FAILURE-MEMORY-PROVENANCE") and failure_registry.get("gate_clean_submission_ready") is True and failure_registry.get("supported_claims") == 6 and failure_registry.get("active_unrefuted_claims") == 0, f"Research Portfolio must follow the latest canonical Temporal/Failure paper receipts without pinning an obsolete revision snapshot: {idea_portfolio['paperRegistry']}")
         p0e=idea_portfolio["striP0E"]
         require(p0e.get("status") == "STOP_FIXED_POLICY_DYNAMIC_BRIDGE" and p0e.get("principle_disposition") == "METHOD_NEGATIVE_PRINCIPLE_UNRESOLVED" and p0e.get("persistent_principle_dead_end_certified") is False and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False, f"qualified STRI P0-E machine boundary is stale: {p0e}")
         require("E-7c" in idea_portfolio["text"] and idea_portfolio["paperHandoffEvidence"] == 3 and p0e.get("stage2_locked") is True and p0e.get("new_gpu_authorized") is False, "STRI P0-E must stay a nested zero-authority E-7c evidence record rather than a peer Idea")
@@ -726,8 +726,8 @@ def main() -> None:
           ("/paper-e1.html", True, ("R*(A)","AutoSkill P19","12 / 32")),
           ("/paper-g1.html", True, ("BrowserART + AWM","HB 0/12","DS 3/12")),
           ("/paper-c1.html", True, ("Shopping","125/172","0.700 vs 0.595")),
-          ("/paper-e2.html", True, ("48 matched pairs","17 / 48","R17 · 17/48 · effect unopened")),
-          ("/paper-b1.html", True, ("AgentDojo financial","5/10 eligible","0 calls")),
+          ("/paper-e2.html", True, ("48 matched pairs","17 / 48","R17 · 17/48 · 效果 unopened")),
+          ("/paper-b1.html", True, ("350 / 350","+3.125 pp","0.0 pp")),
           ("/paper-a.html", False, ("MemoryVLA","LIBERO-Plus","0.5541")),
           ("/paper-b.html", False, ("MemoryVLA","24 scopes","longitudinal")),
           ("/paper-agent-constraint.html", False, ("AppWorld-derived matched families","PRE-F0.5","ARK_API_KEY")),
@@ -751,8 +751,7 @@ def main() -> None:
               download: document.querySelector('.cpp-hero .cpp-download-primary')?.getAttribute('href')||'',
               deepDiveClosed: !!document.querySelector('#research-archive:not([open])'),
               back: [...document.querySelectorAll('a')].some(a=>a.getAttribute('href')==='selected-paper.html'),
-              overflow: document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
-              text: document.body.textContent||''
+              overflow: document.documentElement.scrollWidth>document.documentElement.clientWidth+2
             };""")
             expected_quick_label = "0 · 先看懂问题"
             require(paper_view["quick"] == 1 and paper_view["quickLabel"] == expected_quick_label and paper_view["otherPaperCards"] == 0 and paper_view["pager"] == 0 and paper_view["modelCards"] >= 2 and paper_view["dataCards"] >= 2 and paper_view["design"] == 1 and paper_view["proofCards"] >= 3 and paper_view["evolution"] >= 6 and paper_view["origin"] >= 3 and paper_view["back"] and paper_view["deepDiveClosed"] and not paper_view["overflow"], f"beginner-first single-paper reader contract failed for {page}: {paper_view}")
@@ -760,7 +759,8 @@ def main() -> None:
             require(bool(paper_view["download"]) is formal_story, f"formal papers must expose the PDF action in the hero and working/scientific-object pages must not invent one: {page} {paper_view}")
             if page == "/paper-e1.html":
                 require(paper_view["download"] == "downloads/E1-STRI.pdf", f"E1 PDF target changed unexpectedly: {paper_view}")
-            require("讲给小白听" not in paper_view["text"] and all(marker in paper_view["text"] for marker in markers), f"single-paper content markers missing for {page}: markers={markers}")
+            marker_check = execute(session_id, """const compact=s=>String(s).replace(/\\s+/g,'');const t=document.body.textContent||'';const c=compact(t);return {required:arguments[0].map(x=>c.includes(compact(x))),forbidden:c.includes(compact(arguments[1])),fffd:(t.match(/\uFFFD/g)||[]).length};""", [list(markers), "讲给小白听"])
+            require(marker_check["fffd"] == 0 and not marker_check["forbidden"] and all(marker_check["required"]), f"single-paper content markers missing/corrupt for {page}: markers={markers} check={marker_check}")
 
         navigate("/experiments.html", 4)
         ensure_language("zh")
@@ -848,7 +848,7 @@ def main() -> None:
             "/domains.html": "mechanisms.html#chapter-domain-axis",
             "/evaluation.html": "mechanisms.html#chapter-evidence-axis",
             "/direction-board.html": "paper-ideas.html#discussed-ideas",
-            "/paper-roadmap.html": "selected-paper.html#group-paper-roadmap",
+            "/paper-roadmap.html": "selected-paper.html",
         }
         for old_path, expected_suffix in redirect_checks.items():
             navigate(old_path, 2)

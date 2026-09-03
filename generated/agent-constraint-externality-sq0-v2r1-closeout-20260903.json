@@ -1,0 +1,45 @@
+{
+  "accounting": {
+    "account_level_requests_not_attributable_to_scientific_model_rounds": 26,
+    "accounting_domain_note": "CodingPlan window counts are account-wide and may include concurrent non-SQ0 requests; scientific model rounds come from live per-turn token events.",
+    "appworld_tool_call_total": 309,
+    "completion_tokens_total": 69687,
+    "first_to_last_account_window_delta": 206,
+    "prompt_tokens_total": 7961224,
+    "reset_crossing_cases": [],
+    "scientific_model_round_count": 180,
+    "sum_case_local_account_window_delta": 203
+  },
+  "authority": {
+    "current_sq0_v2r1": false,
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v3_design": true,
+    "sq0_v3_execution": false
+  },
+  "confirmatory_reuse": false,
+  "content_sha256": "bef974f4969878b231fb63425de8b4f5ecf42ae8dd758fa00156bba6c32889c6",
+  "development_only": true,
+  "ledger_sha256": "8d086f0ee5f4d5b2951cf0432f3ca7d16b8e42f509bf1aaf2073d4207216d516",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "post_aggregate_semantic_diagnostic": {
+    "diagnostic_content_sha256": "aa350d6fb81d4db55e0b5ca49f762e835feb7dfe5f260c9552046b4b50861f8a",
+    "diagnostic_status": "SQ0_V2R1_RAW_FAILURES_ARE_FORMATTING_PSEUDO_FAILURES",
+    "semantic_failure_count": 0,
+    "semantic_failure_rate": 0.0
+  },
+  "raw_gate": {
+    "non_semantic_failure_units": [],
+    "usable_target_failure_count": 4,
+    "usable_target_failure_rate": 0.3333333333333333
+  },
+  "result_artifact": "generated/agent-constraint-externality-sq0-v2r1-mimo25pro-result-20260903.json",
+  "result_content_sha256": "f3286bcfc95ef4ca8a95196707e345b851df80792bc1f7a771d9d4cf34c30a01",
+  "result_file_sha256": "e23820724999c1e65c0fa4b1d4658e8dc637060f29edba57fc9bc4f546ed4a5b",
+  "schema_version": "ace-sq0-v2r1-closeout-v1",
+  "scientific_effects_observed": 0,
+  "status": "SQ0_V2R1_TOO_EASY_CLOSEOUT",
+  "verdict": "SQ0_V2R1_TARGET_CHALLENGE_TOO_EASY_STOP"
+}
