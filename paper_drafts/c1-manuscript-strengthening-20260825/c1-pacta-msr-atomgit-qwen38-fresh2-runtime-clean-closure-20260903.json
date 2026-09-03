@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH2-RUNTIME-CLEAN-20260903",
+  "status": "FRESH2_MSR_20_RUNTIME_READY_AFTER_TARGETED_BUILD_CLEAN",
+  "pass": true,
+  "execution_git_sha": "08fbed052262319842fe6798f4c970ee594934e7",
+  "parent_import_receipt_sha256": "e453b01f37d225260685d3a7dfb2adde0d78ec056c2a40858adeb2c98389710e",
+  "parent_runtime_qualification_sha256": "5294a440b89ce0f60eb60e37ef5820832c96cea3d6e1b8f7079a55d3d9dd9d29",
+  "repair_qualification_sha256": "ead533dadbfa1d71072e6c3774d37ed5be8509134955375821a99645de386615",
+  "qualified": 20,
+  "total": 20,
+  "source_qualified": 10,
+  "future_qualified": 10,
+  "repair_effect": {
+    "affected_instance": "psf__requests-1142",
+    "initial_untracked_count": 65,
+    "initial_untracked_only_build": true,
+    "tracked_tree_clean": true,
+    "targeted_clean": "git clean -fd -- build",
+    "targeted_clean_output": "Removing build/",
+    "post_reset_head_exact": true,
+    "post_reset_working_tree_clean": true
+  },
+  "provider_calls": 0,
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "probe_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "next_gate": "fresh2 source prelaunch under the same targeted normalization rule"
+}
