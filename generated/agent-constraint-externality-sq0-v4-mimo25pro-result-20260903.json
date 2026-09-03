@@ -1,0 +1,45 @@
+{
+  "acceptable_final_failure_counts": [
+    9,
+    10
+  ],
+  "appworld_tool_call_total": 448,
+  "authority": {
+    "appworld_ul": false,
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v4_closed": true,
+    "toolsandbox": false
+  },
+  "completed_case_count": 12,
+  "completion_tokens_total": 104494,
+  "confirmatory_reuse": false,
+  "content_sha256": "4ef0adcbfd8b487ae5f3266a26e3c9e8d2f1031b6870e00b6c50d1180ccf6e38",
+  "development_iteration": 4,
+  "development_only": true,
+  "execution_id": "CODINGPLAN-MIMO25PRO-SQ0-SEMANTIC-FAILURE-V4",
+  "futility_proven": false,
+  "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+  "ledger_sha256": "0e25280e816767471b2193cbff6b90e0fc1322b22898ef8c53635f6705c91211",
+  "model_id": "mimo-v2.5-pro",
+  "model_profile": "AtomGit-mimo-v2.5-pro",
+  "non_semantic_failure_units": [],
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "observed_usable_target_failure_rate": 0.9166666666666666,
+  "planned_case_count": 12,
+  "possible_final_failure_count_interval": [
+    11,
+    11
+  ],
+  "prompt_tokens_total": 7252576,
+  "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY",
+  "remaining_undispatched_case_count": 0,
+  "schema_version": "ace-sq0-v4-mimo25pro-result-v1",
+  "scientific_effects_observed": 0,
+  "scientific_model_round_count": 161,
+  "status": "SQ0_V4_TARGET_CHALLENGE_TOO_HARD_STOP",
+  "target_success_count": 1,
+  "usable_target_failure_count": 11
+}

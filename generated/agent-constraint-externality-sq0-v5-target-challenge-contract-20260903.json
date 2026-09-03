@@ -1,0 +1,213 @@
+{
+  "acceptable_final_failure_counts": [
+    9,
+    10
+  ],
+  "authority": {
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v5_execution": false
+  },
+  "case_count": 12,
+  "case_kinds": {
+    "FG_SEMANTIC_V5": 6,
+    "TNF_SEMANTIC_V5": 6
+  },
+  "cases": [
+    {
+      "case_id": "SQ0V5-FG-01",
+      "fixture_sha256": "e8d2fdfca38957b3bc8ae067c2608b376ca15ad5fa2c30c84efa4ca437b806e1",
+      "instruction_sha256": "de9ccbb92b4deeb33c9e646f851d3146b7e198e99d5816aa7665927a890d4356",
+      "kind": "FG_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "bf2ce193cc02876d41663065f5cd7b4745c829d2ba3c1a88b28cc05b78d41b68",
+        "2fe46c78940dfb91643ff413230db1179dca915892a41a61431e71a1ffc48eba"
+      ]
+    },
+    {
+      "case_id": "SQ0V5-FG-02",
+      "fixture_sha256": "71e6a3976680d2d6c120c1c4f889f6d126b80c9384d7587601425c37ce4550be",
+      "instruction_sha256": "f5c9975df506158c5bbdeb23dc28ffd2196a5510d1fad6fdd7b8c140862a0ea1",
+      "kind": "FG_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "b3d3747ad5b5dae1b5779db7bb7281b9758fd01edcf4174f80e40daf19e08766",
+        "f36720f02863a84314326adab47f240d4195b239c47af9ee0fffb5a3ddd335ef"
+      ]
+    },
+    {
+      "case_id": "SQ0V5-FG-03",
+      "fixture_sha256": "29ea0d9141adb33d846f56549a911656744c7e878a7036da5bee06c70603fe4a",
+      "instruction_sha256": "035b9aeb22c0d4a9727054a92a87735eefa70dd4f045bab6cf1a817b99981e56",
+      "kind": "FG_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "6304b8aae65653cf5b5d242318c55db117278fdda34b4cf9301662a91e4d99e8",
+        "435bb870a4ee0ab97f50d98ed92b6fe82bef71213cabaa6c2415a2ae62498004"
+      ]
+    },
+    {
+      "case_id": "SQ0V5-FG-04",
+      "fixture_sha256": "f5374c3ff7f232a5e67b1afd0cbf0c3976095fe39b30b9d04db481d71059271c",
+      "instruction_sha256": "48c20a54bf06164477373b464b3da325281f3d0d22e73fb27a3680dfa040250a",
+      "kind": "FG_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "a9395673fee5686538dc720dfecf8b6714ee4d8caf4c1baa235fdda85d51e443",
+        "e0a467db92a9635f2fdeb65590a0679e787cf08e08b4a70235ce986785ad4aa1"
+      ]
+    },
+    {
+      "case_id": "SQ0V5-FG-05",
+      "fixture_sha256": "c8c30399364e454ebd83211deaca6943e307d8b462a9005785534e9a5dfbf576",
+      "instruction_sha256": "fe851bc1b58171d79b35e3f3fe560b44e441c92efd34f6851c147a775acb21f9",
+      "kind": "FG_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "fadca0ced4390ead4d44046473186602dbbcf7cfa1281155742da9c870e83d89",
+        "763d5545673d3048a5493c1b4ff02772c08aa964c139d46f3918bb70ece72162"
+      ]
+    },
+    {
+      "case_id": "SQ0V5-FG-06",
+      "fixture_sha256": "16a86b91332076319971b11e359cddc914bdd8e017740adee5c5c68c54120e9a",
+      "instruction_sha256": "5c2832e52def5d59f7a730312d5b8c673af3e550e0100c5949738b6cfd7b2021",
+      "kind": "FG_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "79605f1a5b9beecda9cf1c2dc90a9e4cd1ff11154ce2add4128f3064ee4d4e36",
+        "ad3e828b3578bc8e9df390184416140bb088c190494d1fe19d676f13c76ca55b"
+      ]
+    },
+    {
+      "case_id": "SQ0V5-TNF-01",
+      "fixture_sha256": "f1372dc15fd4dd5e27f1c1b8525151ae973be2f553b7f4a0be4e0e43ca4d9dc5",
+      "instruction_sha256": "7d5eda69adf5038e3e67d87eecfd1cbbeb9f73fdb852dc44493c4ade01c5d61a",
+      "kind": "TNF_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "e7c82f7e1fb1df3debadf3f68a511b7c5011e4cc28d10ddfe0cb8bc00754d32b",
+        "f9f0618b4e4624ae2ba8fa07778a59e72dde356dd0f6da52ba31a1aa9675c209",
+        "154112bb4fdf2613ea057b4c7abae98d97644c0425161555b4ae5abe61a0bb4b",
+        "6d4fb90258c6434c8fdcdad9ba6887bbe127522affad6fbfe1a37ba4ee82b8d1",
+        "f050d6332adcbd80b673cef4088fda3a81f2404dc4aa8e5d5c83e1ea5ea41542"
+      ]
+    },
+    {
+      "case_id": "SQ0V5-TNF-02",
+      "fixture_sha256": "56b1a5d1389ea46ba1ca8cb7c730eaca6e564493f00e27b250cdcd1e5f5a43ff",
+      "instruction_sha256": "b539d27edbd22eca4b1b84e9b7dc8f6dfaecb2efac5af7b3bd8aecc34f844a8a",
+      "kind": "TNF_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "74bc90901cea114b778b17a932ee4e3fafc2a43d0637f1f9c14acba47bce28bb",
+        "5b113528efa7784131b8148bd7945aab8d82cb7e46a335076af7a3e180fd878c",
+        "22eb4738f617bbff79efc0a482b5bdcbe941ea21f24e7e23174ecf7517a91d2f",
+        "5b16833b53c8203aae8823798a3dfd2b964bb11e5babe1fcdc9ecc51f5213281",
+        "24dd969b1862272c05bb55c8599bbb4304b3bac4c24202e6030ae320ba067bc1"
+      ]
+    },
+    {
+      "case_id": "SQ0V5-TNF-03",
+      "fixture_sha256": "8fc432e5316f8e2fa149f8795568ed9874c72b220b10b653930814565c5eee0c",
+      "instruction_sha256": "7465d045269df3242622a74e14c35b51fcc4a147bce1f3df44bf54e7c1af2b99",
+      "kind": "TNF_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "30e6c955060705ddccdcba2ad1ab3c46fbcf703b8f288d6fae08758be5f76067",
+        "65a371c431edf4bea5fbe218b5e7443e82820b5889bc64552f5d0698c926af51",
+        "44c12880a57b228840967e3b167c82bf7a72c906752a3692cc48ea79c812bfe2",
+        "bf0e6d2baf41afb654589078d94485f67505a661c7873f862a97958171af12c0",
+        "cb29a53b3d475bfab4074bf4ee61147c18bc63d6319c01de651120f23bcb846d"
+      ]
+    },
+    {
+      "case_id": "SQ0V5-TNF-04",
+      "fixture_sha256": "600683949b1880574d0bd5af5cfb86c943684f7a4fefd0180f20e2b7a65d0e9b",
+      "instruction_sha256": "a99a3d2b508780d0f0130b8d8e27c41fa5f9a42d1feee105c22d5827ed94fed8",
+      "kind": "TNF_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "487592f967395a367371b42716e95c3a703ae87ba153ff9a5238aded669a592f",
+        "55c3f1bebe11b6963eaaa263e9ea56342aa278b3a5b19bf2eb0aa5cdbe6a91ae",
+        "ba9b2b09a145e2572511b32405e21227e2fbc540bbb159ea41191fbb4a2734bc",
+        "1f83556d0dd042c93b0a5c3012d3af82186c2738acafc4b8996c4c8d481dbff3",
+        "ce5df21dbbc5cf54fe80ac941466796b63aa7490fa627afef154160a41c69474"
+      ]
+    },
+    {
+      "case_id": "SQ0V5-TNF-05",
+      "fixture_sha256": "79c5121d017683c95e091d6947d9037880e05d335d324ae4db91a25239328064",
+      "instruction_sha256": "07a6782cbc3933a12ecd3252a55a56da35bc3517b3a2b935cd22f41dde64f5b7",
+      "kind": "TNF_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "f293278bd14dbb8d411d482ff7ecdb92c099eb907e8dce14323fb75fa79dde7d",
+        "f243faf2c64870de1f16800b63aa42db1af64276dc0a6963d9a9fc69deec40f3",
+        "b2012d46d7d77cec2c3669a08b6cf5dff6a823fb3c5d9bf30a8c441abf70f8e4",
+        "09fc7f0e63161030da438daf35cc89266c5a70e179c1b47d05da432510a230ab",
+        "8b3eb85fed5072dccc32bef8bd64d8191def9e0d8d6ca4e9d3b06fdb6e4175fa"
+      ]
+    },
+    {
+      "case_id": "SQ0V5-TNF-06",
+      "fixture_sha256": "624e765f9d8d16204685cf102432acaad2c82d38676e8c62d3ed613b8d884c04",
+      "instruction_sha256": "9e4ab0d53d79e1c9cf2df145fee9f27d426360300eb34e3d4b5e38e3fbae465b",
+      "kind": "TNF_SEMANTIC_V5",
+      "target_local_resource_hashes": [
+        "924e726217d1b45c27405330783d9d092ad2a79a073a9233271c4702cfa84f26",
+        "7ffcaff47166579662013ee423ae50a05f400d3eff931504f8cae6ad12bc52c4",
+        "bcea912b40afa5849da74c73aefef3004ff1da5ccc71e109659b5d637d88ee89",
+        "9c225b3377287318e30c7ca5fdeefddfd5b4c16a93a3d767c0438384a6c13469",
+        "6cddc17b93acf709c1f20a51a5d45fa97995063f772d110594281814df0d18ef"
+      ]
+    }
+  ],
+  "confirmatory_reuse": false,
+  "content_sha256": "4f9aa6fb6fbb2a1d7009ad7458bede9afc15ae8323fb353a55ac8cc04f3ad059",
+  "coupling_visible_to_sq0_model": false,
+  "design_change": {
+    "FG_SEMANTIC_V5": "V4_FG_MECHANISM_UNCHANGED_FRESH_PARAMETERIZATION_ONLY",
+    "TNF_SEMANTIC_V5": "V4_SEMANTIC_DECISION_GRAPH_UNCHANGED_PLUS_EXPLICIT_OUTPUT_FIELD_MAPPING",
+    "difficulty_not_from_tool_budget": true
+  },
+  "development_iteration": 5,
+  "failure_to_pass_disposition": "STOP_SQ0_DEVELOPMENT_NO_V6",
+  "final_sq0_calibration_iteration": true,
+  "freshness_audit": {
+    "case_id_overlap_count": 0,
+    "case_ids_unique": true,
+    "fixture_hash_overlap_count": 0,
+    "instruction_hash_overlap_count": 0,
+    "prior_development_sets_checked": [
+      "SQ0_V1",
+      "SQ0_V2R1",
+      "SQ0_V3",
+      "SQ0_V4",
+      "OLD_F0"
+    ],
+    "target_local_resource_hash_overlap_count": 0
+  },
+  "non_target_outcomes_visible_to_sq0_model": false,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "old_f0_case_reuse": false,
+  "protected_bundle": {
+    "path": "generated/agent-constraint-externality-sq0-v5-target-challenge-protected-20260903.bundle",
+    "sha256": "a2361538992e82b939a902973afa350a1686c1644308450ca02ed972dee3dc3b"
+  },
+  "provider_requests": 0,
+  "purpose": "DEVELOPMENT_ONLY_SOURCE_FAILURE_QUALIFICATION_NOT_CONFIRMATORY_F0_EVIDENCE",
+  "schema_version": "ace-sq0-v5-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "semantic_failure_definition": [
+    "NORMAL_SCIENTIFIC_TERMINAL",
+    "TARGET_EVALUATOR_FALSE_WITH_TERMINAL_NEWLINE_NORMALIZATION_ONLY",
+    "NO_PROVIDER_INTERFACE_OR_HARNESS_FAILURE",
+    "COMPLETE_TARGET_RELEVANT_TRAJECTORY_AVAILABLE"
+  ],
+  "sq0_id": "ACE-SQ0-V5-FINAL-CALIBRATION-20260903",
+  "status": "SQ0_V5_STATIC_DESIGN_READY_FINAL_CALIBRATION",
+  "tool_call_cap": 80,
+  "usable_failure_window": {
+    "max": 0.9,
+    "min": 0.75
+  },
+  "v1_case_reuse": false,
+  "v2r1_case_reuse": false,
+  "v3_case_reuse": false,
+  "v4_case_reuse": false,
+  "v4_closeout_content_sha256": "2e150e69bce09ab926e55ddf1ab568bc90a4cba65ea593179ab40c098a6c8172",
+  "v4_root_cause_content_sha256": "068cd0c01b6a08b227051035bed1f43131b6016c382b2acd7408cd0650139865"
+}
