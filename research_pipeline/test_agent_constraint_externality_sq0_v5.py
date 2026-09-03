@@ -5,7 +5,8 @@ import unittest
 
 from research_pipeline.agent_constraint_externality_runner_core import sha256_value
 from research_pipeline.agent_constraint_externality_sq0_v5_build import CONTRACT_OUTPUT, QUAL_OUTPUT, load_cases
-from research_pipeline.agent_constraint_externality_sq0_v5_live import AUTH_OUTPUT, EXEC_CONTRACT, Q1_OUTPUT, MODEL_ROUND_CAP, _futility_status, _unit_id
+from research_pipeline.agent_constraint_externality_sq0_v5_live import AUTH_OUTPUT, EXEC_CONTRACT, Q1_OUTPUT, MODEL_ROUND_CAP, RESULT_OUTPUT, _futility_status, _unit_id
+from research_pipeline.agent_constraint_externality_sq0_v5_closeout import CLOSEOUT, ROOT_CAUSE
 
 
 class SQ0V5Tests(unittest.TestCase):
@@ -51,5 +52,22 @@ class SQ0V5Tests(unittest.TestCase):
         self.assertEqual(c["execution_policy"]["futility_early_stop"]["acceptable_final_failure_counts"],[9,10])
         self.assertTrue(c["authority"]["sq0_v5_execution"])
         for k in ("f0_r1","probe","p1","toolsandbox","appworld_ul","paper_claim"):self.assertFalse(c["authority"][k])
+
+    def test_final_invalid_closeout_stops_sq0_without_v6(self)->None:
+        result=json.loads(RESULT_OUTPUT.read_text());close=json.loads(CLOSEOUT.read_text());root=json.loads(ROOT_CAUSE.read_text())
+        for x in (result,close,root):self._hash(x)
+        self.assertEqual(result["status"],"SQ0_V5_QUALIFICATION_INVALID_NON_SEMANTIC_FAILURE_STOP")
+        self.assertEqual(result["completed_case_count"],6);self.assertEqual(result["usable_target_failure_count"],6);self.assertEqual(result["target_success_count"],0)
+        self.assertEqual(result["non_semantic_failure_units"],["sq0v5:mimo-v2.5-pro|SQ0V5-TNF-01|1"])
+        self.assertEqual(close["status"],"SQ0_V5_FINAL_CALIBRATION_INVALID_STOP_NO_V6")
+        self.assertEqual(close["terminal_case_count"],7);self.assertEqual(close["true_never_dispatched_case_count"],5)
+        self.assertEqual(close["raw_result_remaining_undispatched_case_count"],6)
+        self.assertEqual(close["failure_to_pass_disposition"],"STOP_SQ0_DEVELOPMENT_NO_V6")
+        self.assertEqual(root["status"],"SQ0_V5_RECURRENT_ATOMCODE_NATIVE_READ_FILE_CONTAMINATION_FINAL_STOP")
+        self.assertEqual(root["attempted_native_tool"],"read_file")
+        self.assertEqual(root["historical_collision"]["status"],"SQ0_V2_VOID_NATIVE_READ_FILE_SCHEMA_CONTAMINATION")
+        for payload in (close,root):
+            for k in ("sq0","sq0_v6","f0_r1","probe","p1","toolsandbox","appworld_ul","paper_claim"):
+                self.assertFalse(payload["authority"][k])
 
 if __name__=="__main__":unittest.main()

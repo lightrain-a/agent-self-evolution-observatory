@@ -187,8 +187,8 @@
       "sha256": "b4e44193048e77145606260237fd288e98b4c3c33f7acfcb20f6ab7dbfb0302d"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 16486,
-      "sha256": "f216a273f122991b121ed84999be628a075d2453b6303090bceae6f1258662eb"
+      "bytes": 17344,
+      "sha256": "4d1b0ae308da139b044a5aec3d1f86b42f4eda2e47d451efa860625299e8cddb"
     },
     "generated/agent-constraint-externality-f0-repairs-manifest-mimo25pro-20260903.json": {
       "bytes": 1098,
@@ -438,6 +438,14 @@
       "bytes": 9535,
       "sha256": "118dd117f31dd6f81fd7f1e439526f8dce4f944707737f612335a570562128f4"
     },
+    "generated/agent-constraint-externality-sq0-v5-final-closeout-20260903.json": {
+      "bytes": 2712,
+      "sha256": "a7d00ca5efa9c92330b537dd8736c92a74a29160f480b6c0e3493dbab13b89fb"
+    },
+    "generated/agent-constraint-externality-sq0-v5-final-root-cause-20260903.json": {
+      "bytes": 2728,
+      "sha256": "a3a8a9fdd62d801b1d2ef7717146e896a41676a899c2c7245add36d436ea463d"
+    },
     "generated/agent-constraint-externality-sq0-v5-human-authorization-20260903.json": {
       "bytes": 924,
       "sha256": "0515d0fd30bab23b18d6e0b3a77dea2034b27f92128b27e5f16a276aa6fc2ded"
@@ -449,6 +457,10 @@
     "generated/agent-constraint-externality-sq0-v5-mimo25pro-mcp-q1-predispatch-20260903.json": {
       "bytes": 896,
       "sha256": "6773194d2ad86ad741820bc3c25c039db9f9b84d11288ec709e8ee0460ddfc74"
+    },
+    "generated/agent-constraint-externality-sq0-v5-mimo25pro-result-20260903.json": {
+      "bytes": 1483,
+      "sha256": "248b0c64104178531c0db0888b5dfc88795d82d9ce313b984160a9978918060b"
     },
     "generated/agent-constraint-externality-sq0-v5-static-qualification-20260903.json": {
       "bytes": 5162,
@@ -478,5 +490,5 @@
     "model_profile": "AtomGit-mimo-v2.5-pro",
     "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
   },
-  "status": "SQ0_V5_FINAL_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
+  "status": "SQ0_V5_FINAL_CALIBRATION_INVALID_STOP_NO_V6"
 }
