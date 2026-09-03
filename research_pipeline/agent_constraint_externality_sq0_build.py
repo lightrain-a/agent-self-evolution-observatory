@@ -130,9 +130,9 @@ def materialize_case(case: dict[str, Any], root: Path, task_id: str) -> dict[str
 
 
 def evaluate_case_from_state(case: dict[str, Any], *, source_db_root: Path, changes_db_root: Path, measurement_root: Path) -> bool:
-    required = {"gmail": {"emails","attachments","users"}, "file_system": {"files"}} if case["kind"] == "FG_CHAIN_V1" else {"file_system": {"files"}}
+    required = {"gmail": {"emails","attachments","users"}, "file_system": {"files"}} if case["kind"].startswith("FG_") else {"file_system": {"files"}}
     materialize_appworld_measurement_state(source_db_root=source_db_root, changes_db_root=changes_db_root, measurement_db_root=measurement_root, required_tables_by_app=required)
-    if case["kind"] == "FG_CHAIN_V1":
+    if case["kind"].startswith("FG_"):
         e = case["expected"]; gmail = sqlite3.connect(measurement_root/"gmail.db")
         try:
             recipient = gmail.execute("SELECT id FROM users WHERE email = ?", (e["recipient"],)).fetchone()

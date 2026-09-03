@@ -1,0 +1,69 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v2_execution": true,
+    "toolsandbox": false
+  },
+  "content_sha256": "78f20300dc01b6d609e86c7f6a7a19bb9567d5a8e6cdde882419a22e8e063306",
+  "execution_id": "CODINGPLAN-MIMO25PRO-SQ0-TARGET-FAILURE-V2",
+  "execution_policy": {
+    "aggregate_read_only_after_all_terminal": true,
+    "durable_dispatch_before_model_request": true,
+    "partial_outcome_redesign": false,
+    "unknown_after_dispatch_replay": false
+  },
+  "gate": {
+    "non_semantic_failure_invalidates_qualification": true,
+    "usable_failure_rate_max": 0.9,
+    "usable_failure_rate_min": 0.75
+  },
+  "harness": {
+    "ai_session_naming": false,
+    "id": "ATOMCODE_CODINGPLAN_MCP_V1",
+    "model_round_cap_per_case": 48,
+    "replacement_allowed": false,
+    "retry_allowed": false,
+    "sq0_bridge": true,
+    "subagents": false,
+    "tool_call_cap": 40
+  },
+  "human_authorization_content_sha256": "8828da23df2c01bbfff708ea87bf2a8baca94ad54e8bf817aaeeb385104414f4",
+  "model": {
+    "context_window": 1000000,
+    "id": "mimo-v2.5-pro",
+    "profile": "AtomGit-mimo-v2.5-pro",
+    "retry_max_attempts": 1
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "panel": {
+    "case_count": 12,
+    "case_ids": [
+      "SQ0V2-FG-01",
+      "SQ0V2-FG-02",
+      "SQ0V2-FG-03",
+      "SQ0V2-FG-04",
+      "SQ0V2-FG-05",
+      "SQ0V2-FG-06",
+      "SQ0V2-TNF-01",
+      "SQ0V2-TNF-02",
+      "SQ0V2-TNF-03",
+      "SQ0V2-TNF-04",
+      "SQ0V2-TNF-05",
+      "SQ0V2-TNF-06"
+    ],
+    "confirmatory_reuse": false,
+    "development_iteration": 2,
+    "one_episode_per_case": true
+  },
+  "q1_content_sha256": "c82069a32abdf224aa2bc4c7420b59abf34c2e01e595c99c8d27722a15f1f766",
+  "schema_version": "ace-sq0-v2-mimo25pro-execution-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "selected_backbone_content_sha256": "9f4a649f436552a550fe3e9d54664d6b5eb879cf68dae36b23a91859edf1f18e",
+  "static_contract_content_sha256": "0e7d7b6b19fd6c2677f5c5f054556cc5bd1b21c1a110d40cd97c7a754ba1b3f8",
+  "static_qualification_content_sha256": "0108582cafcd52ae4d204dcd3249f53c50691051cbf2f2b95dd7930e240bdfbf",
+  "status": "SQ0_V2_MIMO25PRO_EXECUTION_AUTHORIZED"
+}

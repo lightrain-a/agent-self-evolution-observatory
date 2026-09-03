@@ -53,7 +53,7 @@ def main():
           ("paper-g1.html",True,["HarmBench","DeepSeek","PV1"]),
           ("paper-c1.html",True,["Shopping","125/172","0.700"]),
           ("paper-e2.html",True,["WIN-C","MRW","17 / 48"]),
-          ("paper-b1.html",True,["AgentDojo","5/10","provenance"]),
+          ("paper-b1.html",True,["350 / 350","+3.125 pp","0.0 pp"]),
           ("paper-a.html",False,["MemoryVLA","LIBERO-Plus","0.5541"]),
           ("paper-b.html",False,["MemoryVLA","24","future re-exposure"]),
           ("paper-agent-constraint.html",False,["AppWorld","PRE-F0.5","0 calls · 0 outcomes"]),
@@ -75,7 +75,7 @@ def main():
               "paper-g1.html":["两个判分器有分歧时","新数据前"],
               "paper-c1.html":["它不是人","现实里这次购物本身只有一个实际发生的结果","不声称它同时成功又失败","正常系统只会根据这次结果 / 反馈写一份记忆","C1 才把同一条轨迹复制两份做反事实","一个具体购物例子","连续问三道门","172 次检索机会里有 125 次","0/36","34/36","购物只是一个任务"],
               "paper-e2.html":["只看赢家组（WIN-C）","保留诊断线索组（MRW）","做题和复盘分开"],
-              "paper-b1.html":["两张记忆卡","实验条件还不够干净，所以我们拒绝下结论","只改来源标签"],
+              "paper-b1.html":["模型确实会‘看到’来源信息","350/350","Qwen 是 +3.125pp","Llama 是 0pp","不是把成功强行翻成失败"],
               "paper-b.html":["当前这一回合是否真的受益","这段经验是否值得长期学进去","未来再次遇到类似情况"],
               "paper-agent-constraint.html":["世界 A · 完全独立（INDEPENDENT）","世界 B · 少量共享（LOW）","世界 C · 强共享（HIGH）","修一处、坏一处"],
               "paper-3d.html":["第一步：有没有读懂关系","第二步：有没有把关系结构记对","第三步：家具有没有真正摆对"]

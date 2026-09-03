@@ -4677,8 +4677,48 @@ function enhanceExperimentVendorMatrix(root) {
   if (pageId !== "experiment-costs" || !root) return;
   const input = root.querySelector("#ec-model-filter-input");
   const count = root.querySelector("#ec-model-filter-count");
-  const rows = [...root.querySelectorAll(".ec-vendor-matrix tbody tr")];
-  if (!input || !rows.length || input.dataset.bound === "1") return;
+  const table = root.querySelector(".ec-vendor-matrix>.matrix");
+  const tbody = table?.querySelector("tbody");
+  const summary = root.querySelector(".ec-family-summary");
+  let rows = [...root.querySelectorAll(".ec-vendor-matrix tbody tr")];
+  if (!input || !tbody || !rows.length || input.dataset.bound === "1") return;
+
+  const domesticFamilies = ["qwen","deepseek","kimi","glm","minimax","doubao","hunyuan","ernie"];
+  const overseasFamilies = ["openai / gpt","claude","gemini","grok"];
+  const familyOrder = [...domesticFamilies, ...overseasFamilies];
+  const familyRank = new Map(familyOrder.map((family, index) => [family, index]));
+  const cheapestInput = row => {
+    const cells = [...row.children].slice(1); // include Ark AFP full-use equivalent as an available unit price
+    const prices = cells.flatMap(cell => {
+      const text = cell.textContent || "";
+      const api = text.match(/(?:in|入)\s*¥\s*([0-9]+(?:\.[0-9]+)?)/i);
+      const ark = text.match(/AFP(?:\s+eq\.|\s+等效)?\s*¥\s*([0-9]+(?:\.[0-9]+)?)/i);
+      const match = api || ark;
+      return match ? [Number(match[1])] : [];
+    }).filter(Number.isFinite);
+    return prices.length ? Math.min(...prices) : Number.POSITIVE_INFINITY;
+  };
+
+  rows.forEach(row => { row.dataset.sortPrice = Number.isFinite(cheapestInput(row)) ? String(cheapestInput(row)) : ""; });
+  rows.sort((a, b) => {
+    const fa = (a.dataset.family || "").toLowerCase();
+    const fb = (b.dataset.family || "").toLowerCase();
+    const familyDelta = (familyRank.get(fa) ?? 999) - (familyRank.get(fb) ?? 999);
+    if (familyDelta) return familyDelta;
+    const pa = cheapestInput(a), pb = cheapestInput(b);
+    if (pa !== pb) return pa - pb;
+    return (a.dataset.model || "").localeCompare(b.dataset.model || "", undefined, {numeric:true, sensitivity:"base"});
+  });
+  rows.forEach((row, index) => {
+    const prevFamily = index ? (rows[index - 1].dataset.family || "").toLowerCase() : "";
+    const family = (row.dataset.family || "").toLowerCase();
+    row.classList.toggle("ec-family-start", index === 0 || family !== prevFamily);
+    tbody.appendChild(row);
+  });
+  if (summary) summary.innerHTML = language === "zh"
+    ? `<b>国内：</b>Qwen 32 · DeepSeek 6 · Kimi 5 · GLM 6 · MiniMax 6 · Doubao 3 · Hunyuan 3 · ERNIE 2　｜　<b>国外：</b>OpenAI / GPT 70 · Claude 12 · Gemini 11 · Grok 4<br><small>系列内按当前可获得渠道的最低可比单价（元 / 1M Token）从低到高；Ark AFP 套餐吃满等效价也参与排序。</small>`
+    : `<b>China:</b> Qwen 32 · DeepSeek 6 · Kimi 5 · GLM 6 · MiniMax 6 · Doubao 3 · Hunyuan 3 · ERNIE 2　|　<b>International:</b> OpenAI / GPT 70 · Claude 12 · Gemini 11 · Grok 4<br><small>Within each family, rows are sorted by the lowest currently available comparable unit price (RMB / 1M tokens), including Ark's full-use AFP equivalent.</small>`;
+
   const apply = () => {
     const query = input.value.trim().toLowerCase();
     let visible = 0;

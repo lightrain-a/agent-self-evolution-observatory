@@ -185,8 +185,12 @@ def main() -> None:
         fail(f"Temporal Skill D2 PaperState must preserve source-native evidence while latest Paper Preparation controls effective readiness: {d2_temporal}")
     if d2_proxy.get("paper_stage") != "SUBMISSION_READY" or d2_proxy.get("submission_ready") is not True or d2_proxy.get("gate_clean_submission_ready") is not True or (d2_proxy.get("latest_paper_preparation") or {}).get("pass") is not True or d2_proxy.get("source_kind") != "paper-first-discovery-candidate":
         fail(f"Proxy Reward D2 PaperState must remain ledger-ready and latest-gate-clean with paper-first provenance: {d2_proxy}")
-    if d2_failure.get("paper_stage") != "SUBMISSION_READY" or d2_failure.get("submission_ready") is not True or d2_failure.get("gate_clean_submission_ready") is not True or (d2_failure.get("latest_paper_preparation") or {}).get("pass") is not True or d2_failure.get("active_unrefuted_claims") != 2 or d2_failure.get("source_kind") != "paper-first-discovery-candidate" or (d2_failure.get("acceptance_authority") or {}).get("submission") is not False:
-        fail(f"Failure-Memory D2 PaperState must match its canonical SUBMISSION_READY ledger while retaining active-unrefuted claims and zero submission authority: {d2_failure}")
+    failure_claim_audit = d2_failure.get("latest_claim_audit") or {}
+    failure_ci = d2_failure.get("latest_manuscript_ci") or {}
+    failure_prebuttal = d2_failure.get("latest_prebuttal") or {}
+    failure_readiness = d2_failure.get("latest_submission_readiness") or {}
+    if d2_failure.get("paper_stage") != "SUBMISSION_READY" or d2_failure.get("submission_ready") is not True or d2_failure.get("gate_clean_submission_ready") is not True or d2_failure.get("immediate_submission_hold") is not False or d2_failure.get("contract_sha256") != "dbf81e071aaca6270d710c084c1d9f6b5ec78497c28fc9912f40b8d417f14ac7" or d2_failure.get("supported_claims") != 6 or d2_failure.get("active_unrefuted_claims") != 0 or failure_claim_audit.get("pass") is not True or failure_ci.get("pass") is not True or failure_prebuttal.get("pass") is not True or failure_readiness.get("submission_ready") is not True or d2_failure.get("source_kind") != "paper-first-discovery-candidate" or (d2_failure.get("acceptance_authority") or {}).get("submission") is not False:
+        fail(f"Failure-Memory D2 PaperState must match its R62/R64 canonical READY/SUBMISSION_READY ledger with six audited claims, clean manuscript gates, and zero submission authority: {d2_failure}")
     registry_summary = paper_registry.get("summary") or {}
     expected_stage_counts = dict(sorted(__import__("collections").Counter(row.get("paper_stage") for row in papers).items()))
     expected_gate_clean = sum(row.get("gate_clean_submission_ready") is True for row in papers)

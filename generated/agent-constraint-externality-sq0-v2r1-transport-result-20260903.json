@@ -1,0 +1,33 @@
+{
+  "authority": {
+    "f0_r1": false,
+    "p1": false,
+    "probe": false,
+    "sq0_v2r1_execution": false
+  },
+  "codingplan_account_window_delta": 9,
+  "content_sha256": "349470c5efb8cffc27a0c33fb8fc5193885f75b01f60b334c91392e0d4664321",
+  "contract_content_sha256": "85c7d09dd9ff7a5e7f29be403c6ff088ed2a04469be79b4b6d445b9228970415",
+  "error_message": null,
+  "mcp_tool_call_count": 8,
+  "model_id": "mimo-v2.5-pro",
+  "model_profile": "AtomGit-mimo-v2.5-pro",
+  "model_round_count": 9,
+  "native_tool_attempts": [],
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "prohibited_tool": null,
+  "schema_version": "ace-sq0-v2r1-transport-result-v1",
+  "scientific_outcomes_observed": 0,
+  "status": "SQ0_V2R1_TRANSPORT_QUALIFICATION_PASS",
+  "stop_reason": "stopped",
+  "tool_names": [
+    "mcp__appworld__supervisor__show_account_passwords",
+    "mcp__appworld__simple_note__login",
+    "mcp__appworld__supervisor__show_profile",
+    "mcp__appworld__simple_note__login",
+    "mcp__appworld__simple_note__search_notes",
+    "mcp__appworld__simple_note__show_note",
+    "mcp__appworld__file_system__login",
+    "mcp__appworld__file_system__show_file"
+  ]
+}

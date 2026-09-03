@@ -187,8 +187,8 @@
       "sha256": "b4e44193048e77145606260237fd288e98b4c3c33f7acfcb20f6ab7dbfb0302d"
     },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 10903,
-      "sha256": "ba734b16010b83f96e8fe7d02a1580fc4d1fb34357ab271f06e2927fb0e26f2e"
+      "bytes": 12775,
+      "sha256": "6e15e9969ff50b61ed76661af462d6785342708a4ca76e43f3b45bf97b19027d"
     },
     "generated/agent-constraint-externality-f0-repairs-manifest-mimo25pro-20260903.json": {
       "bytes": 1098,
@@ -294,6 +294,10 @@
       "bytes": 886,
       "sha256": "02080431c89eef1a3734eab0531ea1fe0ebae46c239d78751ec9c08a5bf0a0ce"
     },
+    "generated/agent-constraint-externality-sq0-mimo25pro-result-v1-20260903.json": {
+      "bytes": 1148,
+      "sha256": "956fed6496ac6b8b255eb5cde6f91e509cf81ccc6b0ebef21c8746256c995969"
+    },
     "generated/agent-constraint-externality-sq0-target-challenge-v1-contract-20260903.json": {
       "bytes": 8209,
       "sha256": "8fa34555463198f39b3b0a2e9feea1781a418b3f956349b32140d0392a27b6c3"
@@ -301,6 +305,62 @@
     "generated/agent-constraint-externality-sq0-target-challenge-v1-static-qualification-20260903.json": {
       "bytes": 4722,
       "sha256": "944c372a5971b7e4c20d3203122cc65a300f20fec0ea92a79e9da6b7f2061823"
+    },
+    "generated/agent-constraint-externality-sq0-target-challenge-v2-contract-20260903.json": {
+      "bytes": 4436,
+      "sha256": "2a7acb4e341e1bb1b5032ab53e470f41e697d455dbcb979e40030f4d6f5e225e"
+    },
+    "generated/agent-constraint-externality-sq0-target-challenge-v2-static-qualification-20260903.json": {
+      "bytes": 4710,
+      "sha256": "caa29e832f2fe3531117a760d9461cdf5d456ac4f574d33f391f35db57c28d18"
+    },
+    "generated/agent-constraint-externality-sq0-v1-closeout-20260903.json": {
+      "bytes": 1555,
+      "sha256": "ad1ddd0be6333c53ca0a7dee830e70bfde92a09ff69c33a496fd38dd1cf0691c"
+    },
+    "generated/agent-constraint-externality-sq0-v2-harness-contamination-void-20260903.json": {
+      "bytes": 1585,
+      "sha256": "fa74c1f85d84fe00943a51b3302e1a1e5373e49c69291f62004e75ae99c6b643"
+    },
+    "generated/agent-constraint-externality-sq0-v2-human-authorization-20260903.json": {
+      "bytes": 919,
+      "sha256": "655697ac4037c828fcaedf2b34074b70d2cf1017910019da97368f8ef2370800"
+    },
+    "generated/agent-constraint-externality-sq0-v2-mimo25pro-execution-contract-20260903.json": {
+      "bytes": 2260,
+      "sha256": "fca64deaa3836d7b33b303366596d94018d9a050055ccd11a132692fe3c57d82"
+    },
+    "generated/agent-constraint-externality-sq0-v2-mimo25pro-mcp-q1-predispatch-20260903.json": {
+      "bytes": 896,
+      "sha256": "a12374343a8181d9b83b8b9dc9e75567c8d39ca4bbd40f3adb5dbc1627611549"
+    },
+    "generated/agent-constraint-externality-sq0-v2r1-human-authorization-20260903.json": {
+      "bytes": 912,
+      "sha256": "c65d480bfc061b186f2f89657af693f21cb0cb7d0e8c5c512d8a95bb5382eabb"
+    },
+    "generated/agent-constraint-externality-sq0-v2r1-mimo25pro-execution-contract-20260903.json": {
+      "bytes": 2292,
+      "sha256": "8acf4be018a01bcc735c89946f76f840fb242e62a266d769b99bdeab075cd06d"
+    },
+    "generated/agent-constraint-externality-sq0-v2r1-mimo25pro-mcp-q1-predispatch-20260903.json": {
+      "bytes": 903,
+      "sha256": "d87bb364ef721f8d237a566ec661a45b8ff8b83a3d9ecf16ade13f4faf5c17e0"
+    },
+    "generated/agent-constraint-externality-sq0-v2r1-static-qualification-20260903.json": {
+      "bytes": 4804,
+      "sha256": "61eb31a6bf4c5881064af8b0445fabf541dc117d017b5bda15a658bd07bdd19b"
+    },
+    "generated/agent-constraint-externality-sq0-v2r1-target-challenge-contract-20260903.json": {
+      "bytes": 1436,
+      "sha256": "65bccdff9d4e2ff867722b4574082f51634342ba735a61c38cc5f16bae17c963"
+    },
+    "generated/agent-constraint-externality-sq0-v2r1-transport-contract-20260903.json": {
+      "bytes": 1349,
+      "sha256": "beb2e39c9eb59eb318b069a9ee8dc82c7c3d54b1c57937368d0e0b5ae7e532f5"
+    },
+    "generated/agent-constraint-externality-sq0-v2r1-transport-result-20260903.json": {
+      "bytes": 1167,
+      "sha256": "bd4b598cf857cd38509d274d8f2205561688062529ec99f4e9f569159c5d427a"
     }
   },
   "generated_at": "2026-09-01T15:35:00+08:00",
@@ -322,5 +382,5 @@
     "model_profile": "AtomGit-mimo-v2.5-pro",
     "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
   },
-  "status": "SQ0_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
+  "status": "SQ0_V2R1_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
 }
