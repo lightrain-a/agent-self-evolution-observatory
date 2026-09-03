@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "release": "R62-20260903",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1519,
+      "sha256": "6b54d86789e8c8c121f4b77a1cf3971e0dfa4c690e8a3ae3fde061dfa91ad6ec"
+    },
+    {
+      "path": "evidence/cross_backbone_adjudication.json",
+      "bytes": 4998,
+      "sha256": "67c1848831c93839697262c0626ee0c107c4643f7f94d440ad34fa7f41b6c572"
+    },
+    {
+      "path": "evidence/llama_ab.json",
+      "bytes": 5574,
+      "sha256": "4c22f9ee7e59c5f75b8a4ccb211300719d13e2dc4d1ac52592ab570a273cbbca"
+    },
+    {
+      "path": "evidence/llama_utilization.json",
+      "bytes": 3866,
+      "sha256": "0828f39f2491872feaf7e6e905d17cb6f0a015290b9e503421c25416f155690c"
+    },
+    {
+      "path": "evidence/qwen_ab.json",
+      "bytes": 5572,
+      "sha256": "1b631575d78eeb0beb7c38669ea01611a0ed165e0ea0109e8b0289dbc1ada0f1"
+    },
+    {
+      "path": "evidence/qwen_utilization.json",
+      "bytes": 3871,
+      "sha256": "261a99e3830983f1676bda6d8a199dec1b34e24331d0060f94421c93c7059bd0"
+    },
+    {
+      "path": "recompute.py",
+      "bytes": 3489,
+      "sha256": "1f3b19175920327527860529249aac9ae5eaaef3708093b3d08589fba622d378"
+    }
+  ],
+  "file_count": 7,
+  "scientific_authority": false,
+  "manifest_sha256": "ecb46ca383d070c383e6bd0071af55fab1b489c23edb840e74be2d2e3d690ab4"
+}

@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R56-FRESH-AB-CONDITIONAL-AUTHORITY",
+  "recorded_date": "2026-09-02",
+  "status": "R56_FRESH_AB_CONDITIONAL_AUTHORITY_FROZEN_PRE_VALIDATION_OUTCOME",
+  "authorized_by": "explicit current-conversation user directive: 继续; execution is conditional on the prospectively frozen R55 utilization gate PASS",
+  "bindings": {
+    "manifest_file_sha256": "cc2200f898175963e3d0762c370f6d83dad4d572850f88618f24b15f891ca38b",
+    "contract_file_sha256": "eea4fc4207905b735fd9659979e3483e230f0e07aaace093d2f0ac00c9f44aff",
+    "contract_receipt_sha256": "79f77f124e1ad66743952a3e461a3cf4cf368ef6d7e07b474d579ce5609b5ab1",
+    "r55_authority_file_sha256": "564dae06aaf69abfdc8580db84d1a9b74c3bd620aa3d5e2627f9bb0cf33f4119",
+    "r55_authority_receipt_sha256": "dd1589c65e2d906b71b4d3bc79d78a11239d64687d4b7bd72b4aaae9e98f4700",
+    "r54v2_receipt_file_sha256": "650e145a491f09555e40aa8c81c8598d8e1e2dc9febd906857fb8a3202f3aca3",
+    "selection_file_sha256": "39957119208258bd0bbd7a9a613cfa3403e9693229cb9452714c655774ad071c",
+    "frozen_retrieval_file_sha256": "fc906765f2f94b053996bef2d7a085b6a2534b0922f2929da253390d3b855b72",
+    "source_receipt_file_sha256": "64b64cb2ca170482fafe4bb89db96071e896d1a952dc6c9a8002093849a000b0",
+    "runner_sha256": "be4b7b4d0ce2808f4564705fc80e2261b771f2c66a5a22cc3d93bf3794211dbf"
+  },
+  "conditional_on": {
+    "R55_status": "UTILIZATION_QUALIFICATION_PASS",
+    "R55_pass": true,
+    "R55_primary_32_clusters_authorized_next": true
+  },
+  "scope": {
+    "clusters": 32,
+    "arms": [
+      "A_content_only",
+      "B_raw_provenance"
+    ],
+    "arm_runs": 64,
+    "estimand": "B_raw_provenance - A_content_only"
+  },
+  "hard_limits": {
+    "second_A_B_run": false,
+    "unit_replacement": false,
+    "C_D_execution": false,
+    "partial_effect_inspection": false,
+    "historical_pooling": false,
+    "optional_stopping": false
+  },
+  "authority": {
+    "A_B_execution_conditionally_after_R55_PASS": true,
+    "C_D_execution": false,
+    "local_gpu": true,
+    "external_provider_spend": false
+  },
+  "prevalidation_accounting": {
+    "utilization_treatment_outcomes_observed": 0,
+    "A_B_treatment_outcomes_observed": 0,
+    "primary_confirmatory_outcomes_observed": 0
+  },
+  "receipt_sha256": "9b9197256204c3154e48984f890fbd7aadc83e37cfd3598e7fe79d2c495ccb63"
+}

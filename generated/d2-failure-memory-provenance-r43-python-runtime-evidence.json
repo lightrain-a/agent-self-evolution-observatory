@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.2",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R43-PYTHON-RUNTIME-EVIDENCE",
+  "recorded_date": "2026-08-29",
+  "role": "CONTENT_ADDRESSED_ISOLATED_TARGET_SITE_IDENTITY",
+  "host": "workstation3090",
+  "private_runtime_root": "/home/hdd/yutong/b1-memrl-r43-runtime/site",
+  "base_python": "/home/hdd/yutong/envs/vlm_fp_231_exact/bin/python3.11",
+  "python_version": "3.11.15",
+  "file_count": 23442,
+  "bytes": 717635004,
+  "tree_sha256": "353284315ca6481db3010ff83a5791424f0fcbb4d3d1830b46b3bfba9626dd28",
+  "private_full_manifest_sha256": "ed146d1f040aaabbf8053ec821ba40e71085d98988b88ff5470ff465d6112cb6",
+  "private_full_manifest_file_sha256": "532c0da4ab3bcfaa9f02b18caa00cb77c62766c6b61ece5dc205dab18b4e1cc3",
+  "packages": {
+    "MemoryOS": "1.0.0",
+    "qdrant-client": "1.15.1",
+    "chonkie": "1.2.1",
+    "transformers": "4.57.6",
+    "openai": "1.109.1",
+    "docker": "7.1.0",
+    "tenacity": "9.1.2",
+    "colorama": "0.4.6",
+    "mysql-connector-python": "9.5.0",
+    "tokenizers": "0.22.2",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "pydantic": "2.13.5"
+  },
+  "llb_import_preflight": {
+    "passed": true,
+    "class": "memrl.run.llb_rl_runner.LLBRunner",
+    "benchmark_tasks_initialized": 0
+  },
+  "installation_scope": "external runtime target directory only; pinned MemRL checkout and base Python environment unmodified",
+  "runtime_locked_after_this_receipt": true,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false
+}

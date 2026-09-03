@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "policy_id": "D2-FAILURE-MEMORY-PROVENANCE-L2B-R19-POSTOUTCOME-CLAIM-POLICY",
+  "recorded_date": "2026-08-24",
+  "status": "R19_POSTOUTCOME_INTERPRETATION_AND_MANUSCRIPT_TRANSITIONS_FROZEN_PREOUTCOME",
+  "role": "PREOUTCOME_CLAIM_INTERPRETATION_POLICY_NO_EXECUTION_AUTHORITY",
+  "bindings": {
+    "source_zip_sha256": "932fadfe648aa5d440a54b74e69b72f5359773e31fbce888763f97bb28cce92c",
+    "source_section_sha256": {
+      "source/sections/00_abstract.tex": "ab751e32034e20d80c2783256c17f0da4ff537d3a4aa74943daf3a5bee4a3491",
+      "source/sections/01_intro.tex": "6bb2bc8a9ac52709194fb62d8ea0306c4b20355f386b147cf3ddcf0e99ecf5f6",
+      "source/sections/04_intervention.tex": "5931d0376b7498f00b30510053bcf1dc3ad4f0158ce17a5e63ac31cf21fa28a7",
+      "source/sections/06_limitations_conclusion.tex": "59b0e2ed27f98133420dd7517c4daa4856b3f6d10bbbc2d19c1c42e6bdc5f693",
+      "source/sections/07_appendix.tex": "01d559dc2aae482f3f31789e2683527f7a07fe70bfb73b537c0633d903ff2daf"
+    },
+    "r19_contract_sha256": "ed803f0958002ab2095563a56cff6328a054ff4c4d7bd9fc18fc97bb3bdc3282",
+    "r19_readiness_sha256": "606b6f68377777ad9b9d1794df95c69d6ad3ae3005b397cbee080396ffa24133",
+    "r18c_adjudication_sha256": "6b1625bcc9f5ce917019958c3555c3bb985999f0496ea22a961d609f76040abb"
+  },
+  "primary_gate": {
+    "independent_unit": "task",
+    "independent_n": 35,
+    "required_terminal_episodes": 140,
+    "estimand": "mean of the 35 task-level deltas",
+    "test": "two-sided task-level sign-flip randomization test",
+    "alpha": 0.05,
+    "practical_effect_floor_abs_delta": 0.15,
+    "support_if": "all 140 episodes complete AND abs(mean_delta) >= 0.15 AND p_two_sided < 0.05",
+    "otherwise": "INCONCLUSIVE_NO_NO_EFFECT_AUTHORITY",
+    "equivalence_margin": null,
+    "no_effect_claim_authorized": false
+  },
+  "outcome_branches": {
+    "A_SUPPORT_GATE_PASS": {
+      "condition": "all 140 valid terminal episodes complete AND abs(mean_delta)>=0.15 AND p_two_sided<0.05",
+      "scientific_status": "SUPPORTED_NARROWLY_ON_R19_COMPATIBILITY_SUBSTRATE",
+      "allowed": [
+        "State that visible source-outcome provenance metadata causally changes terminal WebArena performance on the frozen R19 ReasoningBank/Shopping compatibility substrate when source record and actionable memory bytes are held fixed.",
+        "Report the observed R19 mean delta, two-sided p-value, task-level interval, and observed sign.",
+        "Upgrade L2 from design/support debt to an executed narrow metadata-only causal result on R19."
+      ],
+      "forbidden": [
+        "failure-derived memories are generally harmful or generally helpful",
+        "endpoint-invariant provenance sign",
+        "first-party default Gemini policy replication",
+        "exact Python>=3.13 ReasoningBank runtime replication",
+        "financial AgentDojo L3 transport",
+        "cross-model, cross-runtime, or population prevalence generalization",
+        "pooling R4/R5/R6/bridge/R18/R19 into one effect estimate"
+      ]
+    },
+    "B_FULL_EXECUTION_GATE_NOT_PASS": {
+      "condition": "all 140 valid terminal episodes complete but support gate is not satisfied for any reason",
+      "scientific_status": "INCONCLUSIVE_NO_NO_EFFECT_AUTHORITY",
+      "allowed": [
+        "Report the complete R19 estimate, interval, and two-sided p-value.",
+        "State that the preregistered metadata-only test did not meet the joint practical-effect and significance support gate.",
+        "State that L2 was executed but remains unresolved under the frozen criterion."
+      ],
+      "forbidden": [
+        "no effect",
+        "equivalence",
+        "provenance does not matter",
+        "using a directional p-value to rescue a failed two-sided primary",
+        "changing the 0.15 effect floor or alpha after outcome exposure"
+      ]
+    },
+    "C_POST_EXPOSURE_SUPPORT_FAILURE": {
+      "condition": "any unresolved support failure after an R19 model completion, browser action, or evaluator call",
+      "scientific_status": "NO_VERDICT_SUPPORT_FAILURE",
+      "allowed": [
+        "Report the support failure class and the exact exposure boundary.",
+        "Preserve all pre-outcome contracts and support receipts."
+      ],
+      "forbidden": [
+        "retrying the affected episode under the same confirmatory attempt",
+        "treating partial cum_reward or incomplete evaluator state as a terminal score",
+        "continuing an invalid incomplete confirmatory schedule for a primary verdict",
+        "scientific positive or negative interpretation of the support failure"
+      ]
+    },
+    "D_PRE_EXPOSURE_SUPPORT_FAILURE": {
+      "condition": "support failure before the first R19 model completion, browser action, or evaluator call",
+      "scientific_status": "NO_VERDICT_PREOUTCOME_SUPPORT_FAILURE",
+      "allowed": [
+        "Use only the exact pre-exposure retry allowed by the newly authorized R19 contract, if that authority exists.",
+        "If the allowed retry cannot close support, stop before opening benchmark outcomes."
+      ],
+      "forbidden": [
+        "task/model/memory/threshold substitution",
+        "opening outcomes on a partially repaired contract"
+      ]
+    }
+  },
+  "manuscript_transition_map": {
+    "source/sections/00_abstract.tex": {
+      "A_SUPPORT_GATE_PASS": "Replace the sentence that L2 stops before calls with one narrow executed R19 result sentence; retain L1 mixed-sign and L3-debt boundaries.",
+      "B_FULL_EXECUTION_GATE_NOT_PASS": "Replace the R5-only L2 sentence with a complete-R19-but-inconclusive sentence; do not say no effect.",
+      "C_OR_D_SUPPORT_FAILURE": "Do not promote R19 into the abstract as an effect result; at most retain L2 as unresolved and move support details to appendix/supplement."
+    },
+    "source/sections/01_intro.tex": {
+      "A_SUPPORT_GATE_PASS": "Update the ladder-population paragraph so L2 is populated by R19 and distinguish its compatibility-substrate scope from L3.",
+      "B_FULL_EXECUTION_GATE_NOT_PASS": "State that a 35-task metadata-only R19 execution leaves L2 unresolved under the joint gate.",
+      "C_OR_D_SUPPORT_FAILURE": "Keep the main contribution claim methodological; mention no causal sign upgrade."
+    },
+    "source/sections/04_intervention.tex": {
+      "A_SUPPORT_GATE_PASS": "Add a dedicated Exact-information metadata intervention subsection with R19 cohort, exact-byte hold-fixed contract, 140-episode schedule, task-level inference, and result.",
+      "B_FULL_EXECUTION_GATE_NOT_PASS": "Add the same subsection but adjudicate it as inconclusive; report all primary statistics.",
+      "C_OR_D_SUPPORT_FAILURE": "Add only a bounded execution-status paragraph if useful; no effect table using incomplete scores."
+    },
+    "source/sections/06_limitations_conclusion.tex": {
+      "A_SUPPORT_GATE_PASS": "Retire only the claim that L2 has never executed; retain compatibility-runtime, single-substrate, no-default-Gemini, and L3 limitations.",
+      "B_FULL_EXECUTION_GATE_NOT_PASS": "Replace R5-only support-stop wording with executed-but-inconclusive R19 wording and retain no-effect prohibition.",
+      "C_OR_D_SUPPORT_FAILURE": "Record R18/R19 support boundary without converting it into a scientific negative."
+    },
+    "source/sections/07_appendix.tex": {
+      "ALL_BRANCHES": "Add full R19 preregistration hashes, cohort construction, evaluator/alias preflights, budgets, retry policy, and branch-specific adjudication receipt."
+    }
+  },
+  "anti_story_shopping": {
+    "outcome_branch_selected_by_rules_not_author": true,
+    "R18_artifacts_cannot_select_R19_story": true,
+    "R4_R6_directional_signs_cannot_override_R19_primary": true,
+    "R19_secondary_or_early_action_endpoint_cannot_replace_terminal_primary": true,
+    "posthoc_subgroup_or_task_removal_for_primary_claim": false
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "model_completions": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "submission": false
+  },
+  "verdict": "NO_VERDICT_PREOUTCOME_INTERPRETATION_POLICY_ONLY"
+}

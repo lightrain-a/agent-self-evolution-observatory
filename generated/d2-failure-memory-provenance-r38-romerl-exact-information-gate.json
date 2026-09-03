@@ -1,0 +1,182 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R38-ROMERL-EXACT-INFORMATION-GATE",
+  "recorded_date": "2026-08-25",
+  "status": "ROMERL_G1_G2_G3_PASS_BUNDLED_CHECKPOINT_STOP_AT_G4_NO_CONFIRMATORY_EXECUTION_AUTHORITY",
+  "role": "ZERO_OUTCOME_EXACT_INFORMATION_CLOSURE_AND_FRESH_CAPACITY_ADJUDICATION",
+  "scientific_relationship": "POST_R37_OFFLINE_DESIGN_AUDIT_NOT_R19_RESUME_NOT_CONFIRMATORY_EVIDENCE",
+  "parent_bindings": {
+    "romerl_substrate_audit_r37": {
+      "path": "generated/d2-failure-memory-provenance-r37-romerl-substrate-audit.json",
+      "sha256": "7a714bf71106386930abed470a9df28f77a2caab08b5e0ccaa9419134767623b"
+    },
+    "exact_information_adapter": {
+      "path": "research_pipeline/failure_memory_romerl_exact_information_adapter_r38.py",
+      "sha256": "48d52f39fa888835cd716d836107b8ef5ad23662149ae06224dbd080a032157f"
+    }
+  },
+  "pinned_external_surface": {
+    "repository": "https://github.com/YOUNG-fnxm/RoMeRL",
+    "commit_sha": "d3311e28abf9328ec5377c640763f79b9df5b9c9",
+    "release_mode": "evaluation-only active-slot checkpoint export",
+    "benchmark_universes": {
+      "OSInteraction": 500,
+      "DBBench": 500
+    },
+    "paper_transfer_partition": {
+      "rule": "fixed 7:3 random split",
+      "seed": 42,
+      "applies_to": [
+        "OSInteraction",
+        "DBBench"
+      ],
+      "split_is_not_embedded_in_bundled_romerl_runner": true
+    }
+  },
+  "G3_exact_information": {
+    "passed_now": true,
+    "state": "PASS_POST_RETRIEVAL_EXACT_INFORMATION_ADAPTER_OFFLINE",
+    "minimum_identification_arms": [
+      "content-only provenance-hidden",
+      "same actionable content plus truthful raw source-outcome provenance"
+    ],
+    "treatment_field": "source_outcome_success",
+    "held_fixed": [
+      "retrieval membership",
+      "retrieval cardinality",
+      "retrieval order",
+      "actionable content bytes",
+      "query-conditioned upstream retrieval result"
+    ],
+    "not_executor_visible": [
+      "memory_id",
+      "query bookkeeping",
+      "similarity",
+      "Q estimate",
+      "memory role",
+      "other metadata"
+    ],
+    "fail_closed_rules": [
+      "missing metadata.success rejects the row",
+      "non-boolean metadata.success rejects the row",
+      "the adapter never flips or synthesizes provenance",
+      "the adapter runs only after retrieval is frozen"
+    ],
+    "unit_tests": {
+      "passed": 6,
+      "total": 6
+    },
+    "pinned_checkpoint_integration": {
+      "OSInteraction": {
+        "rows_checked": 32,
+        "source_outcome_success_true": 21,
+        "source_outcome_success_false": 11,
+        "actionable_content_identical": true,
+        "retrieval_order_preserved": true,
+        "retrieval_cardinality_preserved": true,
+        "q_or_role_exposed_to_executor": false,
+        "frozen_retrieval_sha256": "437977d7c928aee835c018c82b8ce292b6f936ad9073ead7d9d484ba51ceaa5c"
+      },
+      "DBBench": {
+        "rows_checked": 32,
+        "source_outcome_success_true": 15,
+        "source_outcome_success_false": 17,
+        "actionable_content_identical": true,
+        "retrieval_order_preserved": true,
+        "retrieval_cardinality_preserved": true,
+        "q_or_role_exposed_to_executor": false,
+        "frozen_retrieval_sha256": "a72c640541a6aad7a485fd45809f503f523717952108b7c1cd12df04d57a6b53"
+      },
+      "selection_rule": "deterministic outcome-blind first 32 active memory IDs in sorted task/role traversal; schema integration only, not an inference sample",
+      "model_calls": 0,
+      "environment_actions": 0,
+      "outcome_measurements": 0
+    },
+    "scientific_interpretation": "RoMeRL can support the frozen hidden-versus-raw-provenance identification contrast without changing actionable memory content once retrieval has been frozen. This closes intervention design only; it is not a behavioral result."
+  },
+  "G4_fresh_capacity": {
+    "passed_now": false,
+    "state": "STOP_CURRENT_BUNDLED_CHECKPOINT_TASK_UNIVERSE_ALREADY_SOURCE_EXPOSED",
+    "frozen_reference_independent_units": 32,
+    "raw_manifest_counts_are_not_inference_units": true,
+    "source_memory_task_coverage": {
+      "OSInteraction": {
+        "benchmark_task_universe": 500,
+        "unique_task_ids_with_active_source_memory": 498,
+        "task_ids_without_active_source_memory_upper_bound": 2,
+        "can_supply_32_task_level_unexposed_units": false
+      },
+      "DBBench": {
+        "benchmark_task_universe": 500,
+        "unique_task_ids_with_active_source_memory": 500,
+        "task_ids_without_active_source_memory_upper_bound": 0,
+        "can_supply_32_task_level_unexposed_units": false
+      }
+    },
+    "logic": [
+      "the paper's 7:3 validation split is drawn from the same 500-task OS/DB universes",
+      "the bundled DB checkpoint has active provenance-bearing source memories for all 500 task IDs",
+      "the bundled OS checkpoint has active provenance-bearing source memories for 498 of 500 task IDs",
+      "therefore no choice of a held-out subset from those same universes can produce at least 32 task-level units that were unexposed to the bundled source-memory checkpoint",
+      "the exact seed-42 membership list is not needed for this upper-bound argument"
+    ],
+    "forbidden_shortcuts": [
+      "count 500 checkpoint tasks as 500 fresh future units",
+      "use the paper's 30% validation set while retaining a checkpoint that already contains source memories from those task IDs",
+      "declare within-task later episodes independent fresh tasks without a prospective cluster/episode estimand",
+      "rebuild a train-only RoMeRL checkpoint because writer/update code is not released",
+      "shrink the 32-unit reference because only two OS task IDs remain unexposed"
+    ],
+    "what_would_reopen_G4": [
+      "a first-party/source-faithful RoMeRL checkpoint generated only from a prospectively frozen source split, leaving at least 32 disjoint future task units",
+      "a newly released provenance-bearing RoMeRL checkpoint on a separate task universe with prospectively auditable source/future separation",
+      "another substrate that already exposes source-outcome provenance and at least 32 source-disjoint future units without reconstructing unpublished writer dynamics"
+    ],
+    "current_bundled_checkpoint_confirmatory_eligible": false
+  },
+  "gate_adjudication": {
+    "G1_RELEASE": true,
+    "G2_PROVENANCE_SCHEMA": true,
+    "G3_EXACT_INFORMATION": true,
+    "G4_FRESH_CAPACITY": false,
+    "G5_SUPPORT_AND_PREREGISTRATION": false,
+    "G6_AUTHORITY": false,
+    "gate_pass_now": false,
+    "passed_stages_now": [
+      "G1_RELEASE",
+      "G2_PROVENANCE_SCHEMA",
+      "G3_EXACT_INFORMATION"
+    ],
+    "blocking_stage": "G4_FRESH_CAPACITY",
+    "qualified_substrate_now": null
+  },
+  "candidate_disposition": {
+    "RoMeRL_bundled_checkpoint": "STOP_AS_FRESH_CONFIRMATORY_SUBSTRATE_AT_G4",
+    "RoMeRL_schema_construct_witness": "KEEP",
+    "RoMeRL_exact_information_adapter": "KEEP_AS_ZERO_OUTCOME_METHOD_ASSET",
+    "SMA_watch": "KEEP_WAITING_FOR_FIRST_PARTY_CODE_RELEASE",
+    "R19": "REMAINS_STOPPED",
+    "same_asset_27": "REMAINS_NON_CONFIRMATORY_INVENTORY"
+  },
+  "claim_policy": {
+    "new_scientific_behavioral_result": false,
+    "provenance_only_causal_sign_updated": false,
+    "PSMG_efficacy_updated": false,
+    "paper_claim_expansion_allowed": false,
+    "RoMeRL_may_be_called_confirmatory_evidence": false,
+    "RoMeRL_bundled_checkpoint_may_be_executed_for_B1_confirmation": false
+  },
+  "authority": {
+    "scientific_execution": false,
+    "experiment": false,
+    "model_calls": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "gpu": false,
+    "claim_expansion": false,
+    "submission": false
+  },
+  "next_action": "CONTINUE_BOUNDED_SUBSTRATE_DISCOVERY_WITH_G1_TO_G4_PREOUTCOME_AUDIT_ONLY",
+  "scientific_verdict": "NO_VERDICT_ROMERL_BUNDLED_CHECKPOINT_FAILS_FRESH_CAPACITY_WITHOUT_RELAXING_GATE"
+}

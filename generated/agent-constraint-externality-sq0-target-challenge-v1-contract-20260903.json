@@ -1,0 +1,179 @@
+{
+  "authority": {
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_execution": false
+  },
+  "case_count": 12,
+  "case_kinds": {
+    "FG_CHAIN_V1": 6,
+    "TNF_CHAIN_V1": 6
+  },
+  "cases": [
+    {
+      "case_id": "SQ0-FG-01",
+      "fixture_sha256": "b233c73bcaaa0defeb6843236e52bab2c759ab5901ef6dcf34a209c452337bc8",
+      "instruction_sha256": "22160b613f7798f3638db239f53650e4c0474c0ad1931f0711d2666f7b95808d",
+      "kind": "FG_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "102307a1564ea92dad6f385e4b74480dbba2ab1cb300cb223d803ec8d3ead0d5",
+        "42c07040f7d44ae4021eb7f9d009dc5be7c31ae5b3a8a48ab4b498c71bc32148"
+      ]
+    },
+    {
+      "case_id": "SQ0-FG-02",
+      "fixture_sha256": "e4733b026e37753b88130108b1e22f01238b545d063918e0deb62e5068ff8634",
+      "instruction_sha256": "ed0ce555faab791859b03b6ca290ba12ad2e6327b7a72b8575766f2c19874519",
+      "kind": "FG_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "223779a83047ed9d6f39ea04b406788865847ce8c857752bcfe5fd2129e4d70c",
+        "e608b25dca204e34abc8aed2f749426da2fc8de45bbfbb1bbfa0896c4fcd77f5"
+      ]
+    },
+    {
+      "case_id": "SQ0-FG-03",
+      "fixture_sha256": "df1ba92284ca0c8a243e81239b877078ea3745918956f1f379f6f23a4b5a77a1",
+      "instruction_sha256": "2f180f30cc2e6549677ebf889d51052753f75480ab768692004fad7313171e21",
+      "kind": "FG_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "9c63aac66217b4a3cd3a9d45759bcd0552b3383dfcc45bc72dabc6e3e5bc8445",
+        "718e89adfbdd3c395bc9656edeb5e2e27ecab10676d121d463be0a7a728c22e8"
+      ]
+    },
+    {
+      "case_id": "SQ0-FG-04",
+      "fixture_sha256": "bcdbf6dbeab4fa5cf71672f7371a2196503da41a86bae3cd521b4b1a2d3a99dd",
+      "instruction_sha256": "49aac86ebf646fedff58ca57319df8d923aa61047fc10904e7e3a1ae45b166e6",
+      "kind": "FG_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "e843b6d2ca98d81b880a668717021b1dd999f74166b2be082908f56abadd441b",
+        "aed0c4291be8e178ddf98e4dc3903409c72f521edab5e99e24a4f1c203d6ae7f"
+      ]
+    },
+    {
+      "case_id": "SQ0-FG-05",
+      "fixture_sha256": "fc6065964fd3849da5584632cc6605778ae8044035a0d5963e63e69b687da090",
+      "instruction_sha256": "f1aaaf003b67723327bb7d0c7ef11491882b90d8f1ca8c1268cf9c0048461b3f",
+      "kind": "FG_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "83467dacd845a93c483ead4105ae5b04162566f4cc9d795b35c6aaa08dbf2d22",
+        "3af8c44046b24d7856a0ff6689247950cc397c41e2b4b127147e55270dbf3e6d"
+      ]
+    },
+    {
+      "case_id": "SQ0-FG-06",
+      "fixture_sha256": "8f70a2b6e00a58152d56cfee2aedcada744371eb9f84dfe14165534c721fa84c",
+      "instruction_sha256": "caa53adab0fc311f65b9aa9b547f0605117b1f43c9b48ab7d326af4d923f33a8",
+      "kind": "FG_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "89e02a8c7e3bf5ca4b1759a48cee93f03e3f4207603095675f68e1b6325453a5",
+        "a571626179f26f891314b4efeb98a718562712bdaf88a6e0388ce0dedbcd29d7"
+      ]
+    },
+    {
+      "case_id": "SQ0-TNF-01",
+      "fixture_sha256": "c3c4543a55cff5c9004c634c277e49c7507f8e91728d7afb85cd1238b0b79d19",
+      "instruction_sha256": "c78ce72e0cd41caead982119230f76dc2769bf73794a175d17b2983106a0a069",
+      "kind": "TNF_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "05ab5d2d22e2aacb6a32d8556bc3a9e8b01a1abe563d952c0149126726a0d1cd",
+        "140e8156240f09d7b2c512336bb09e502e4d5b21c3a97ef1a15c01940940be9b",
+        "133ca68d78f62a45b9701a675f7cd28c1fd6c48532da6d62394fceceaeef62c7",
+        "3306108e1fa829e8889aadb99b340b77d079d4a34442b8248df532f286236739"
+      ]
+    },
+    {
+      "case_id": "SQ0-TNF-02",
+      "fixture_sha256": "1918175c66ee32e10c1e7de403d18e556482da02c3dca8453f6c35ba46b3dfa4",
+      "instruction_sha256": "b1765dd9b6dbb6fb616cb9f22434fcabf1aa132b29f65d166e5b3dae739104b6",
+      "kind": "TNF_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "51b76428d521f89ebf91dc61892c4a8f1c6245c62c2fae2b67584feaeb1ef032",
+        "6e58cfe01db01345037db5b40f3383be2e7c417b1806bfa06595b5edc17fd7a4",
+        "133ca68d78f62a45b9701a675f7cd28c1fd6c48532da6d62394fceceaeef62c7",
+        "d44410f8cca08c8c892e57fba25ad2bbf7c9351a3696d4b649b812e7dd9a8f14"
+      ]
+    },
+    {
+      "case_id": "SQ0-TNF-03",
+      "fixture_sha256": "ac284e88f1dc241910d78a95524dea2f748b541b2e0683ef78ab3fee22b7ab20",
+      "instruction_sha256": "01d2d6a75f7a6406928e1eba979c43f4bdc091b1d0f1abbd584df12870bc8c5a",
+      "kind": "TNF_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "25de961299700e44476a2ed987072b15a7beb1a8b79de85059c2f49de374630c",
+        "3398482b1f424659e00d933baf591af2e7583841dbbce9960a99af945b958981",
+        "133ca68d78f62a45b9701a675f7cd28c1fd6c48532da6d62394fceceaeef62c7",
+        "766c6fc2fdc99bb160be7855255ba0dcaf7a0d864eea703250dc0bcdc0d46dc5"
+      ]
+    },
+    {
+      "case_id": "SQ0-TNF-04",
+      "fixture_sha256": "cc4ffcc9ad9dd09312c00059fe1be60475062f9854d0d8c7f7214fac2bbe9fdc",
+      "instruction_sha256": "1d6d9eb654b9f4f38dbdc10f56b2b279ce6959439ebf6fd0de1f63d1fdd09b79",
+      "kind": "TNF_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "153b13e5df87eeb9bf2ce15096aff4edd40b1031a7c920645d35ffc1cfa865a6",
+        "7d4784d38f5381360b2dab181f1253a4407fc4bb22e0996e4201268b23d02362",
+        "133ca68d78f62a45b9701a675f7cd28c1fd6c48532da6d62394fceceaeef62c7",
+        "e564061097baa41650563bdb4585c364674e022404406ad22da15d748c31729f"
+      ]
+    },
+    {
+      "case_id": "SQ0-TNF-05",
+      "fixture_sha256": "d1e56094311eb76b88f34179f634b3fcb3020750d254c050d0d8a5b0227e919a",
+      "instruction_sha256": "6f7929489c08dfc939c30aa65b44933b8ce9348e5416b30c8e337bfb68c0ddce",
+      "kind": "TNF_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "8c51571818eea97c1211642fb86fdf9d2945aedcd4a6877a38aec027773ba0d0",
+        "b411a3b350dcfe59efc5862f9ba6ade466d9a641a7304247e331eadb3a92af7f",
+        "133ca68d78f62a45b9701a675f7cd28c1fd6c48532da6d62394fceceaeef62c7",
+        "3e4f42f5e67cee0de541d892c27916cc4a57cc629af65ca47122e076692aa76c"
+      ]
+    },
+    {
+      "case_id": "SQ0-TNF-06",
+      "fixture_sha256": "43e04e6b05f62fa61e126a349e9815f87d7ae19b97b780692deb558863c4b3d5",
+      "instruction_sha256": "b5f8e78f4ad9931293f65711eb2f2006beea62546d95aa7eb0e55a1bfaba5217",
+      "kind": "TNF_CHAIN_V1",
+      "target_local_resource_hashes": [
+        "fef38a8d68f94a3574bd9b400bb3961206124ff6229703388ce711334a9885e3",
+        "fafe45b2f498a967a70247cf196a07647ad916a8b0dade3e3fe8167dc29b57e3",
+        "133ca68d78f62a45b9701a675f7cd28c1fd6c48532da6d62394fceceaeef62c7",
+        "90ee0bfecffe88352c53467ea85cfc407de218b05df5a82a1322bae34af8350c"
+      ]
+    }
+  ],
+  "confirmatory_reuse": false,
+  "content_sha256": "ef949c4b26840644377f8fdf93a0c4fcf41d9bd99a535b0838d564401a124cdb",
+  "coupling_visible_to_sq0_model": false,
+  "non_target_outcomes_visible_to_sq0_model": false,
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "old_f0_source_cases_reused": false,
+  "outcome_usage": "SQ0 outcomes may calibrate the development recipe; these 12 cases are permanently excluded from confirmatory F0-R1.",
+  "protected_bundle": {
+    "path": "generated/agent-constraint-externality-sq0-target-challenge-v1-protected-20260903.bundle",
+    "sha256": "2fc979e53824c40ddd5dfa712d97d1175309bd34f0860438245a7ee729bd8725"
+  },
+  "provider_requests": 0,
+  "purpose": "DEVELOPMENT_ONLY_SOURCE_FAILURE_QUALIFICATION_NOT_CONFIRMATORY_F0_EVIDENCE",
+  "schema_version": "ace-sq0-target-challenge-v1-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "selected_backbone": "mimo-v2.5-pro",
+  "sq0_id": "ACE-SQ0-TARGET-CHALLENGE-V1-20260903",
+  "status": "SQ0_TARGET_CHALLENGE_V1_STATIC_DESIGN_READY",
+  "tool_budget_reason": "Cap is above public-oracle length so usable failures are semantic/task failures rather than forced cap failures; F0-R1 must separately requalify its own budget.",
+  "tool_call_cap": 24,
+  "usable_failure_definition": [
+    "NORMAL_SCIENTIFIC_TERMINAL",
+    "TARGET_EVALUATOR_FALSE",
+    "NO_PROVIDER_INTERFACE_OR_HARNESS_FAILURE",
+    "NO_MALFORMED_TOOL_CALL",
+    "COMPLETE_TARGET_RELEVANT_TRAJECTORY_AVAILABLE"
+  ],
+  "usable_failure_window": {
+    "max": 0.9,
+    "min": 0.75
+  }
+}

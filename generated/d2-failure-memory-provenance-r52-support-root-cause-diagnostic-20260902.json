@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R52-SUPPORT-ROOT-CAUSE-DIAGNOSTIC",
+  "recorded_date": "2026-09-02",
+  "status": "POST_STOP_DIAGNOSTIC_SOURCE_BANK_COVERAGE_DESIGN_PRIMARY_CAUSE_NO_RESCUE",
+  "role": "POST_R51_ZERO_TREATMENT_OUTCOME_ROOT_CAUSE_DIAGNOSTIC",
+  "bindings": {
+    "r51_path": "generated/d2-failure-memory-provenance-r51-r45m1-support-stop-adjudication.json",
+    "r51_file_sha256": "9d7aeb6623a05b49ae69c4e5dc95acde9808d679d18cd24e6eb0b9a1d8cccdc1",
+    "r51_receipt_sha256": "3f332deebf3aae910b08b049a48d9f7728a3579feecbd00e2d16db02eb49dc99",
+    "r43_unit_selection_path": "generated/d2-failure-memory-provenance-r43-unit-selection-evidence.json",
+    "r43_unit_selection_file_sha256": "b6ebf082ab943012074790d9c820ef3ec356a2a5a31f6bcf3a199428ca557e9a",
+    "r43_unit_selection_receipt_sha256": "772594e502e13c464090d2b6a6d6e65ab944fbbbaa4600b2387e87fa2ab0dd64",
+    "r43_manifest_path": "generated/d2-failure-memory-provenance-r43-memrl-g8-execution-manifest.json",
+    "r43_manifest_file_sha256": "dbd810dce063f5bdaaf7c40038a3329166f8ad11441dd11b49034491bf753de2"
+  },
+  "frozen_design_facts": {
+    "source_pool_tasks": 350,
+    "source_bank_selected_tasks": 128,
+    "source_selection_rule": "take 128 train task IDs with smallest SHA256(B1-R43-SOURCE-20260829|task_id)",
+    "source_selection_is_outcome_blind": true,
+    "source_selection_is_semantic_coverage_aware": false,
+    "source_selection_is_skill_signature_coverage_aware": false,
+    "validation_cluster_selection_rule": "hash-ranked exact sorted skill_list signatures; 32 primary plus 8 disjoint utilization",
+    "validation_selection_is_outcome_blind": true,
+    "preflight_support_proxy": "source/validation skill-union coverage",
+    "native_retrieval_gate": "cosine(task_instruction_embedding, source_query_embedding) >= 0.5 before Q-value hybrid ranking",
+    "proxy_matches_native_retrieval_gate": false,
+    "strict_primary_support_gate": "32/32 primary clusters must each have at least one eligible frozen retrieval before any validation treatment outcome"
+  },
+  "r51_observed_support": {
+    "primary_supported": 31,
+    "primary_total": 32,
+    "utilization_supported": 7,
+    "utilization_total": 8,
+    "both_source_provenance_polarities_retrievable": true,
+    "missing_primary_task_id": "279",
+    "missing_utilization_task_id": "483",
+    "validation_treatment_outcomes_observed": 0,
+    "A_B_treatment_outcomes_observed": 0,
+    "C_D_treatment_outcomes_observed": 0
+  },
+  "task_279_diagnostic": {
+    "instruction": "Modify the SSH daemon configuration file at /etc/ssh/sshd_config to change the port to 2222, disable root login, set max sessions to 2, and set client alive interval to 300. Create a backup file before making changes.",
+    "skill_list": ["chmod", "cp", "echo", "grep", "ls", "sed"],
+    "selected_128_max_instruction_cosine": 0.405628,
+    "selected_128_queries_at_or_above_0_5": 0,
+    "full_350_max_instruction_cosine": 0.835564,
+    "full_350_queries_at_or_above_0_5": 1,
+    "critical_full_pool_source_task_id": "371",
+    "critical_full_pool_source_instruction": "Update the SSH daemon configuration using sed to set: Port=2222, PermitRootLogin=no, X11Forwarding=no, ClientAliveInterval=300, ClientAliveCountMax=2, MaxAuthTries=2, MaxSessions=2, PasswordAuthentication=no, AllowUsers='user1 user2', UseDNS=no, and Protocol=2.",
+    "critical_source_hash_rank_among_350": 158,
+    "critical_source_in_128_bank": false,
+    "critical_source_would_be_in_first_256_by_same_hash_rule": true,
+    "selected_source_with_full_target_skill_coverage_exists": true,
+    "interpretation": "The 128-task hash subsample omitted the only full-pool semantic neighbor above the frozen 0.5 retrieval threshold. Skill-union coverage therefore produced a false-positive support proxy."
+  },
+  "task_483_diagnostic": {
+    "instruction": "Navigate to '/home/testuser', create nested directories 'dir1/dir2/dir3', create a file 'testfile.txt' in 'dir3', and write the current working directory path into the file.",
+    "skill_list": ["cd", "echo", "mkdir", "touch"],
+    "selected_128_max_instruction_cosine": 0.489862,
+    "selected_128_queries_at_or_above_0_5": 0,
+    "selected_128_queries_at_or_above_0_45": 4,
+    "full_350_max_instruction_cosine": 0.637119,
+    "full_350_queries_at_or_above_0_5": 8,
+    "full_pool_ge_0_5_source_hash_ranks": [205, 302, 199, 350, 294, 322, 264, 307],
+    "full_pool_ge_0_5_sources_in_128": 0,
+    "full_pool_ge_0_5_sources_in_first_256": 2,
+    "interpretation": "The 128-task subsample missed all eight full-pool semantic neighbors above threshold. The closest selected source was additionally only 0.010138 below the 0.5 cutoff, so threshold fragility is a secondary contributor for this utilization unit."
+  },
+  "post_stop_bank_size_sensitivity_current_40_only": {
+    "scientific_status": "DIAGNOSTIC_ONLY_MUST_NOT_RESCUE_R51_OR_SELECT_EXACT_FUTURE_SAMPLE_SIZE",
+    "method": "replay frozen MPNet task-instruction embedding coverage only; no agent action, environment reset, evaluator call, or treatment outcome",
+    "threshold": 0.5,
+    "rows": [
+      {"source_bank_size": 64, "primary_supported": 29, "primary_total": 32, "utilization_supported": 7, "utilization_total": 8, "min_primary_max_cosine": 0.3866, "min_utilization_max_cosine": 0.4898},
+      {"source_bank_size": 96, "primary_supported": 30, "primary_total": 32, "utilization_supported": 7, "utilization_total": 8, "min_primary_max_cosine": 0.4056, "min_utilization_max_cosine": 0.4898},
+      {"source_bank_size": 128, "primary_supported": 31, "primary_total": 32, "utilization_supported": 7, "utilization_total": 8, "min_primary_max_cosine": 0.4056, "min_utilization_max_cosine": 0.4898},
+      {"source_bank_size": 160, "primary_supported": 32, "primary_total": 32, "utilization_supported": 7, "utilization_total": 8, "min_primary_max_cosine": 0.5134, "min_utilization_max_cosine": 0.4898},
+      {"source_bank_size": 192, "primary_supported": 32, "primary_total": 32, "utilization_supported": 7, "utilization_total": 8, "min_primary_max_cosine": 0.5134, "min_utilization_max_cosine": 0.4898},
+      {"source_bank_size": 224, "primary_supported": 32, "primary_total": 32, "utilization_supported": 8, "utilization_total": 8, "min_primary_max_cosine": 0.5134, "min_utilization_max_cosine": 0.6371},
+      {"source_bank_size": 256, "primary_supported": 32, "primary_total": 32, "utilization_supported": 8, "utilization_total": 8, "min_primary_max_cosine": 0.5134, "min_utilization_max_cosine": 0.6371},
+      {"source_bank_size": 350, "primary_supported": 32, "primary_total": 32, "utilization_supported": 8, "utilization_total": 8, "min_primary_max_cosine": 0.5134, "min_utilization_max_cosine": 0.6371}
+    ]
+  },
+  "root_cause_adjudication": {
+    "primary_cause": "EXPERIMENT_DESIGN_SOURCE_BANK_CAPACITY_AND_COVERAGE_MISMATCH",
+    "secondary_cause": "SUPPORT_PROXY_MISMATCH_SKILL_UNION_VS_NATIVE_SEMANTIC_RETRIEVAL",
+    "secondary_task_483_factor": "FIXED_0_5_THRESHOLD_MARGIN_FRAGILITY",
+    "evidence_for_provenance_mechanism_failure": false,
+    "evidence_for_memory_utilization_mechanism_failure": false,
+    "why_not_mechanism_failure": "No validation treatment was opened. The experiment stopped before A/B or C/D execution, and the full source pool contains strong semantic support for the missing units.",
+    "why_32_of_32_was_required": "The preregistered A/B estimand requires the same frozen actionable memory retrieval to exist for every planned primary cluster. With zero retrieval on task 279, A and B have no defined provenance-bearing treatment surface for that independent unit. Dropping or replacing it after support inspection would change the frozen sample.",
+    "assessment_of_gate": "SCIENTIFICALLY_DEFENSIBLE_BUT_OPERATIONALLY_BRITTLE_GIVEN_COVERAGE_UNAWARE_SOURCE_SAMPLING"
+  },
+  "prospective_design_implications": {
+    "do_not_modify_or_rescue_R51": true,
+    "do_not_lower_0_5_threshold_on_current_run": true,
+    "do_not_drop_or_replace_task_279_or_483_in_current_run": true,
+    "recommended_future_changes": [
+      "Replace skill-union support proxy with the exact native retrieval-support calculation before source execution authority opens.",
+      "Use a larger source bank or a prospectively coverage-aware source selection rule based only on pre-outcome task/embedding structure.",
+      "Keep outcome-blindness, but require a pre-execution semantic coverage margin rather than mere command-union coverage.",
+      "For a fresh experiment, choose source-bank size prospectively from an independent calibration/support surface; the post-stop observation that 224 or 256 covers the current 40 units is diagnostic and cannot itself justify the exact future size.",
+      "Consider defining the future estimand on a prospectively qualified support set with a minimum independent-n rule, instead of coupling a random source subsample to an all-or-nothing 32/32 gate, if that estimand is declared before any target outcome."
+    ]
+  },
+  "claim_boundary": {
+    "R51_status_changed": false,
+    "R51_remains_support_stop": true,
+    "provenance_effect_estimated": false,
+    "PSMG_efficacy_estimated": false,
+    "may_be_used_to_rescue_current_run": false,
+    "may_be_used_as_design_diagnostic_for_new_prospective_experiment": true
+  },
+  "authority": {
+    "scientific_execution": false,
+    "validation_treatment": false,
+    "primary_execution": false,
+    "claim_expansion": false
+  },
+  "receipt_sha256": "6f16a3e8c56d07c7b82880100d1bd8c65d13a42d981541259c86f51340eab8f4"
+}

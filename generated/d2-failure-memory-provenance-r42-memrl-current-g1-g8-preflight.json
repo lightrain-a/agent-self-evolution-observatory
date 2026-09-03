@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R42-MEMRL-CURRENT-G1-G8-PREFLIGHT",
+  "recorded_date": "2026-08-29",
+  "status": "MEMRL_CURRENT_G1_G7_PASS_G8_MANIFEST_FREEZE_HOLD_ZERO_CONFIRMATORY_OUTCOMES",
+  "role": "CURRENT_B1_FRESH_SUBSTRATE_GATE_RECOMPILE",
+  "parent_bindings": {
+    "current_design": {
+      "path": "research_pipeline/b1_process_provenance_governance_design_20260827.json",
+      "sha256": "cd6a3d0fa8554b002046aecae30eeb7b8199b97436529dc0330a9d9dccfe2cff"
+    },
+    "historical_r19_contract": {
+      "path": "generated/d2-failure-memory-provenance-l2b-r19-contract.json",
+      "sha256": "ed803f0958002ab2095563a56cff6328a054ff4c4d7bd9fc18fc97bb3bdc3282"
+    },
+    "memrl_r39": {
+      "path": "generated/d2-failure-memory-provenance-r39-memrl-substrate-audit.json",
+      "sha256": "671e6aead6eb95cfee2656587d83c415c15a4d167f58921e28c93530532c8c0f"
+    },
+    "memrl_r40": {
+      "path": "generated/d2-failure-memory-provenance-r40-memrl-g5-preflight.json",
+      "sha256": "770edb5028b9cc39e8e24861115f78a94bdeac71226793dda85ee405bbbe35fd"
+    },
+    "memrl_r41": {
+      "path": "generated/d2-failure-memory-provenance-r41-memrl-g5-runtime-adjudication.json",
+      "sha256": "69b40e83baa4ea9ced4c9f1f12f9842f0ffe6b53fc08cc7564f249339303e339"
+    },
+    "image_compatibility": {
+      "path": "generated/d2-failure-memory-provenance-r42-memrl-image-compatibility-evidence.json",
+      "sha256": "03ce5510072bebb9d390cdb15c9dca7ce588feb30e42ebfacc32244bdbc0d29b"
+    }
+  },
+  "current_gate_contract": [
+    "G1 source outcome provenance comes from an independent environment or evaluator rather than researcher post-labeling",
+    "G2 actionable content can be matched or canonicalized without consulting confirmatory target outcomes",
+    "G3 the intended intervention changes only the declared provenance channel; backend-only relabel is reserved as a negative control",
+    "G4 fresh target tasks are disjoint from historical R19 and the remaining legacy 27 units",
+    "G5 frozen terminal or decisive-action endpoints are replayable under the same evaluator",
+    "G6 independent task, template, or family defines statistical n; seeds and requests are nested repetitions",
+    "G7 matching, exclusion, and support decisions are outcome-blind with respect to confirmatory targets",
+    "G8 manifest, estimands, exclusions, moderators, precision or power rule, and stopping rule are frozen before first confirmatory outcome"
+  ],
+  "current_gate_adjudication": {
+    "G1": {
+      "pass": true,
+      "evidence": "Released LLB terminal success is produced by the environment evaluator and propagated into source memory metadata.success; post-use q_value remains a separate field.",
+      "source": "R39.G2_provenance_schema"
+    },
+    "G2": {
+      "pass": true,
+      "evidence": "R39 freezes selected IDs/order/content bytes before arm projection and exposes provenance as a separate field without consulting future target outcomes.",
+      "source": "R39.G3_exact_information"
+    },
+    "G3": {
+      "pass": true,
+      "evidence": "Content-only versus truthful source_outcome_success arms are projected after identical retrieval; backend-only relabel remains an equivalence control and no retrieval rerun is allowed.",
+      "source": "R39.G3_exact_information"
+    },
+    "G4": {
+      "pass": true,
+      "evidence": "MemRL OSInteraction uses a separate 150-task validation split; the historical R19/legacy cohort is ReasoningBank/BrowserGym WebArena Shopping, so target task identity is disjoint by substrate and task namespace.",
+      "source": "R39.G4_fresh_capacity + frozen R19 contract"
+    },
+    "G5": {
+      "pass": true,
+      "evidence": "Native OSInteractionContainer reset/isolation/timeout/cleanup and repeated released evaluator replay pass on a fixed train support unit while validation treatment outcomes remain sealed.",
+      "source": "R41 runtime support adjudication"
+    },
+    "G6": {
+      "pass": true,
+      "evidence": "The inference unit is prospectively frozen as exact skill_list-signature dependency cluster; OSInteraction has 148 validation clusters versus the frozen 32-unit reference, while seeds/requests remain nested repetitions.",
+      "source": "R39.G4_fresh_capacity + R40 frozen_confirmatory_contract"
+    },
+    "G7": {
+      "pass": true,
+      "evidence": "Validation is read-only; matching/collision rules, retrieval membership, exclusions, and support requirements are frozen before arm projection and before any confirmatory outcome.",
+      "source": "R39.G4_fresh_capacity + R40 frozen_confirmatory_contract + R41 access accounting"
+    },
+    "G8": {
+      "pass": false,
+      "evidence": "Scientific estimands/moderators plus the R40 randomization/exclusion/missingness/multiplicity/test/stopping rules are frozen, and a fixed image candidate has 29/29 declared validation skills. The current E0-E5 execution manifest, exact model/embedding identities, and final confirmatory runtime image binding have not yet been sealed together in one content-addressed manifest.",
+      "source": "2026-08-27 design + R40 + R42 image compatibility",
+      "image_surface_compatible": true
+    }
+  },
+  "summary": {
+    "passed": 7,
+    "total": 8,
+    "passed_gates": [
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5",
+      "G6",
+      "G7"
+    ],
+    "blocking_gates": [
+      "G8"
+    ],
+    "confirmatory_validation_outcomes_observed": 0
+  },
+  "runtime_candidate": {
+    "image": {
+      "tag": "ubuntu2004_cuda1141_ssh:latest",
+      "id": "sha256:a42dc29f8d95292f261a309a21ba21ceff3a9edef516c54d40e5e9b51f253f1a",
+      "source_default_image_claimed": false,
+      "role": "prospective fixed runtime realization candidate"
+    },
+    "declared_validation_skills": 29,
+    "available_validation_skills": 29,
+    "all_declared_skills_available": true,
+    "final_confirmatory_image_frozen": false
+  },
+  "authority": {
+    "scientific": false,
+    "experiment": false,
+    "provider": false,
+    "gpu": false,
+    "submission": false
+  },
+  "next_action": "FREEZE_ONE_CONTENT_ADDRESSED_CURRENT_E0_E5_EXECUTION_MANIFEST_WITH_EXACT_MODELS_EMBEDDINGS_RUNTIME_IMAGE_ARM_REALIZATION_AND_STOPPING_RULES_BEFORE_ANY_VALIDATION_TREATMENT_OUTCOME",
+  "scientific_verdict": "NO_BEHAVIORAL_VERDICT_MEMRL_PASSES_CURRENT_G1_G7_AND_IS_BLOCKED_ONLY_ON_G8_EXECUTION_MANIFEST_FREEZE",
+  "receipt_sha256": "3dba83be9e38381b6b5266a38173d855694dc96ae14347525f3df78cea31594f"
+}

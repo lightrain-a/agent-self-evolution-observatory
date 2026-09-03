@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R40-MEMRL-G5-PREFLIGHT",
+  "recorded_date": "2026-08-25",
+  "status": "MEMRL_G5_PREREG_FROZEN_RUNTIME_SUPPORT_BLOCKED_NO_EXECUTION_AUTHORITY",
+  "role": "ZERO_OUTCOME_G5_PREREGISTRATION_AND_RUNTIME_PREFLIGHT",
+  "scientific_relationship": "POST_R39_G5_ONLY_NOT_R19_RESUME_NOT_CONFIRMATORY_EVIDENCE",
+  "parent_bindings": {
+    "memrl_g1_g4": {
+      "path": "generated/d2-failure-memory-provenance-r39-memrl-substrate-audit.json",
+      "sha256": "671e6aead6eb95cfee2656587d83c415c15a4d167f58921e28c93530532c8c0f"
+    },
+    "psmg_design": {
+      "path": "generated/d2-failure-memory-provenance-psmg-method-design-r27.json",
+      "sha256": "4d96dcf98c26785463d9638bc0ce7ae78d76fc874db784bc18348cb0ef4a98f1"
+    }
+  },
+  "frozen_confirmatory_contract": {
+    "substrate": "MemRL pinned at c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "primary_surface": "LifelongAgentBench OSInteraction validation split",
+    "secondary_surface": "DBBench validation split; replication only, not required to declare the primary endpoint",
+    "source_build": {
+      "source_split": "pinned public OSInteraction train split",
+      "future_split": "pinned public OSInteraction validation split",
+      "source_future_overlap_policy": "task IDs and exact/normalized instruction/script collisions must remain zero as frozen in R39",
+      "qualification_gate": [
+        "source build must finish without support retries after scientific exposure begins",
+        "both metadata.success polarities must exist among retrievable source memories",
+        "at least 32 prospectively defined validation dependency clusters must retain at least one eligible frozen retrieval",
+        "retrieval for every analyzed unit must be frozen before arm projection",
+        "failure of any qualification item yields SUPPORT_STOP_NO_VERDICT and no treatment outcomes may be interpreted"
+      ]
+    },
+    "arms": {
+      "A_content_only": "frozen retrieved actionable content; source-outcome provenance hidden from executor",
+      "B_raw_provenance": "identical frozen actionable content plus truthful metadata.success projected only as source_outcome_success",
+      "C_PSMG": "provenance available only to a prospectively frozen governance controller; executor receives governance-approved actionable content without raw provenance label",
+      "D_nonprovenance_controller": "same pre-outcome content/relevance/verification/utility information as C except the provenance variable under test"
+    },
+    "identification_estimand": "paired terminal success difference B_raw_provenance - A_content_only conditional on identical frozen retrieval",
+    "governance_estimand": "paired terminal success difference C_PSMG - D_nonprovenance_controller under matched pre-outcome information",
+    "primary_endpoint": "native LLB terminal task success",
+    "secondary_endpoints": [
+      "steps to terminal completion among valid episodes",
+      "support/retrieval coverage diagnostics"
+    ],
+    "inference_unit": "prospectively frozen exact skill_list-signature dependency cluster within OSInteraction validation",
+    "minimum_reference_independent_units": 32,
+    "randomization": "within eligible future unit, arm order generated from fixed seed 20260825 after unit eligibility/retrieval freeze and before any treatment outcome",
+    "exclusions": [
+      "pre-treatment source-build/support qualification failure",
+      "missing/non-boolean source provenance on a selected memory",
+      "retrieval mismatch across arms",
+      "actionable-content byte mismatch across A/B or controller-information mismatch across C/D",
+      "environment/evaluator failure before a valid terminal score"
+    ],
+    "missingness": "no outcome imputation; support failures remain support debt. A post-exposure infrastructure failure stops the affected confirmatory attempt and forbids ad-hoc retry unless a retry class was prospectively enumerated before exposure.",
+    "multiplicity": "A-vs-B identification and C-vs-D governance are distinct estimands; no pooling. OSInteraction is primary; DBBench is labeled replication. No endpoint substitution after outcomes.",
+    "interval_and_test_rule": "report paired cluster-level effect with 95% interval and a prospectively fixed randomization/permutation test; effect magnitude and interval are primary, p-value cannot upgrade a rung by itself",
+    "effect_relevance_floor": 0.15,
+    "no_interim_inference": true,
+    "no_optional_stopping_on_effect": true,
+    "R19_partial_outcomes_used_for_design": false,
+    "same_asset_27_used": false
+  },
+  "runtime_preflight": {
+    "memrl_repo": "/tmp/b1-memrl-audit-20260825",
+    "repo_present": true,
+    "pinned_commit_expected": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "commit_observed": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "commit_matches": true,
+    "checkout_clean": true,
+    "required_files_present": {
+      "configs/rl_llb_config.yaml": true,
+      "run/run_llb.py": true,
+      "memrl/run/llb_rl_runner.py": true,
+      "data/llb/os_interaction_train.json": true,
+      "data/llb/os_interaction_val.json": true,
+      "data/llb/db_train.json": true,
+      "data/llb/db_val.json": true
+    },
+    "all_required_files_present": true,
+    "docker_server_available": false,
+    "docker_probe_exit_code": 1,
+    "docker_probe_output": "failed to connect to the docker API at unix:///run/user/1006/docker.sock; check if the path is correct and if the daemon is running: dial unix /run/user/1006/docker.sock: connect: no such file or directory",
+    "model_calls": 0,
+    "environment_actions": 0,
+    "evaluator_calls": 0,
+    "treatment_outcomes_observed": 0
+  },
+  "G5_adjudication": {
+    "preregistration_contract_frozen": true,
+    "static_pinned_source_support": true,
+    "container_runtime_available_on_current_host": false,
+    "non_outcome_environment_support_smoke_completed": false,
+    "passed_now": false,
+    "state": "BLOCKED_CURRENT_HOST_DOCKER_DAEMON_UNAVAILABLE",
+    "why_not_pass": "LifelongAgentBench OS/DB requires containerized environments; current host cannot reach a Docker server."
+  },
+  "gate_adjudication": {
+    "G1_RELEASE": true,
+    "G2_PROVENANCE_SCHEMA": true,
+    "G3_EXACT_INFORMATION": true,
+    "G4_FRESH_CAPACITY": true,
+    "G5_SUPPORT_AND_PREREGISTRATION": false,
+    "G6_AUTHORITY": false,
+    "gate_pass_now": false,
+    "next_blocking_stage": "G5_RUNTIME_SUPPORT",
+    "qualified_for_confirmatory_execution_now": null
+  },
+  "candidate_disposition": {
+    "MemRL": "KEEP_AS_FIRST_G1_G4_QUALIFIED_CANDIDATE_G5_PREREG_FROZEN_RUNTIME_SUPPORT_BLOCKED",
+    "R19": "REMAINS_STOPPED",
+    "same_asset_27": "REMAINS_NON_CONFIRMATORY_INVENTORY",
+    "RoMeRL": "REMAINS_G4_STOP"
+  },
+  "claim_policy": {
+    "new_scientific_behavioral_result": false,
+    "provenance_only_causal_sign_updated": false,
+    "PSMG_efficacy_updated": false,
+    "paper_claim_expansion_allowed": false,
+    "confirmatory_execution_authorized": false
+  },
+  "authority": {
+    "scientific_execution": false,
+    "experiment": false,
+    "model_calls": false,
+    "browser_actions": false,
+    "evaluator_calls": false,
+    "gpu": false,
+    "claim_expansion": false,
+    "submission": false
+  },
+  "next_action": "MOVE_ONLY_THE_ZERO_OUTCOME_G5_RUNTIME_SUPPORT_PREFLIGHT_TO_A_DOCKER_CAPABLE_HOST_WITHOUT_CHANGING_THE_FROZEN_CONTRACT",
+  "scientific_verdict": "NO_VERDICT_G5_PREREGISTRATION_ADVANCES_BUT_CURRENT_HOST_SUPPORT_DOES_NOT_PASS"
+}
