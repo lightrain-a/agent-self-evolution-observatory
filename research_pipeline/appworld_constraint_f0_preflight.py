@@ -222,6 +222,11 @@ SQ0_V2_STATIC_QUALIFICATION = GENERATED / "agent-constraint-externality-sq0-targ
 SQ0_V2_HUMAN_AUTHORIZATION = GENERATED / "agent-constraint-externality-sq0-v2-human-authorization-20260903.json"
 SQ0_V2_MIMO25PRO_Q1 = GENERATED / "agent-constraint-externality-sq0-v2-mimo25pro-mcp-q1-predispatch-20260903.json"
 SQ0_V2_EXECUTION_CONTRACT = GENERATED / "agent-constraint-externality-sq0-v2-mimo25pro-execution-contract-20260903.json"
+SQ0_V2_VOID = GENERATED / "agent-constraint-externality-sq0-v2-harness-contamination-void-20260903.json"
+SQ0_V2R1_STATIC_CONTRACT = GENERATED / "agent-constraint-externality-sq0-v2r1-target-challenge-contract-20260903.json"
+SQ0_V2R1_STATIC_QUALIFICATION = GENERATED / "agent-constraint-externality-sq0-v2r1-static-qualification-20260903.json"
+SQ0_V2R1_TRANSPORT_CONTRACT = GENERATED / "agent-constraint-externality-sq0-v2r1-transport-contract-20260903.json"
+SQ0_V2R1_TRANSPORT_RESULT = GENERATED / "agent-constraint-externality-sq0-v2r1-transport-result-20260903.json"
 CAPABILITY_FAMILIES = (
     "ACE-FG-05", "ACE-FG-06", "ACE-TNF-05", "ACE-TNF-06"
 )
@@ -871,6 +876,44 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
             raise PreflightError("SQ0-V2 execution authority boundary drifted.")
         sq0_v2_execution_authorized = True
 
+    sq0_v2_void = read_json(SQ0_V2_VOID) if SQ0_V2_VOID.is_file() else {}
+    sq0_v2_void_active = False
+    if sq0_v2_void:
+        claimed=sq0_v2_void.get("content_sha256"); unsigned=dict(sq0_v2_void); unsigned.pop("content_sha256",None)
+        if sq0_v2_void.get("object_id")!=OBJECT_ID or claimed!=digest(unsigned):
+            raise PreflightError("SQ0-V2 void identity/hash mismatch.")
+        if sq0_v2_void.get("status")!="SQ0_V2_VOID_NATIVE_READ_FILE_SCHEMA_CONTAMINATION" or sq0_v2_void.get("valid_sq0_v2_measurements")!=0 or sq0_v2_void.get("appworld_tool_calls_executed")!=0:
+            raise PreflightError("SQ0-V2 contamination void classification drifted.")
+        sq0_v2_void_active=True
+        sq0_v2_execution_authorized=False
+
+    sq0_v2r1_transport_ready=False
+    sq0_v2r1_static_contract=read_json(SQ0_V2R1_STATIC_CONTRACT) if SQ0_V2R1_STATIC_CONTRACT.is_file() else {}
+    sq0_v2r1_static_qualification=read_json(SQ0_V2R1_STATIC_QUALIFICATION) if SQ0_V2R1_STATIC_QUALIFICATION.is_file() else {}
+    sq0_v2r1_transport_contract=read_json(SQ0_V2R1_TRANSPORT_CONTRACT) if SQ0_V2R1_TRANSPORT_CONTRACT.is_file() else {}
+    sq0_v2r1_transport_result=read_json(SQ0_V2R1_TRANSPORT_RESULT) if SQ0_V2R1_TRANSPORT_RESULT.is_file() else {}
+    if any((sq0_v2r1_static_contract,sq0_v2r1_static_qualification,sq0_v2r1_transport_contract,sq0_v2r1_transport_result)):
+        if not all((sq0_v2r1_static_contract,sq0_v2r1_static_qualification,sq0_v2r1_transport_contract)):
+            raise PreflightError("SQ0-V2R1 pre-transport artifact set is incomplete.")
+        if not sq0_v2_void_active:
+            raise PreflightError("SQ0-V2R1 requires frozen V2 harness-contamination void.")
+        for label,payload in (("SQ0-V2R1 static contract",sq0_v2r1_static_contract),("SQ0-V2R1 static qualification",sq0_v2r1_static_qualification),("SQ0-V2R1 transport contract",sq0_v2r1_transport_contract)):
+            if payload.get("object_id")!=OBJECT_ID:
+                raise PreflightError(f"{label} object identity mismatch.")
+            c=payload.get("content_sha256"); u=dict(payload); u.pop("content_sha256",None)
+            if c!=digest(u): raise PreflightError(f"{label} content hash mismatch.")
+        if sq0_v2r1_static_contract.get("status")!="SQ0_V2R1_STATIC_DESIGN_READY" or sq0_v2r1_static_contract.get("v2_case_reuse") is not False:
+            raise PreflightError("SQ0-V2R1 static design/reuse boundary drifted.")
+        if sq0_v2r1_static_qualification.get("status")!="SQ0_V2R1_PUBLIC_REACHABILITY_PASS" or sq0_v2r1_static_qualification.get("provider_requests")!=0 or sq0_v2r1_static_qualification.get("minimum_headroom",0)<15:
+            raise PreflightError("SQ0-V2R1 static qualification drifted.")
+        if sq0_v2r1_transport_contract.get("status")!="SQ0_V2R1_TRANSPORT_QUALIFICATION_AUTHORIZED" or sq0_v2r1_transport_contract.get("authority",{}).get("transport_qualification") is not True or sq0_v2r1_transport_contract.get("authority",{}).get("sq0_v2r1_execution") is not False:
+            raise PreflightError("SQ0-V2R1 transport authority boundary drifted.")
+        if sq0_v2r1_transport_result:
+            c=sq0_v2r1_transport_result.get("content_sha256"); u=dict(sq0_v2r1_transport_result); u.pop("content_sha256",None)
+            if sq0_v2r1_transport_result.get("object_id")!=OBJECT_ID or c!=digest(u): raise PreflightError("SQ0-V2R1 transport result identity/hash mismatch.")
+        else:
+            sq0_v2r1_transport_ready=True
+
     if CAPABILITY_R5_PARTIAL_RESULT.is_file():
         capability_result_path = CAPABILITY_R5_PARTIAL_RESULT
         capability_result = read_json(CAPABILITY_R5_PARTIAL_RESULT)
@@ -1171,6 +1214,10 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         readiness_status = "CODINGPLAN_CAPABILITY_PASS_F0_AUTHORIZATION_REQUIRED"
         blocker = "CodingPlan capability passed, but the distinct AtomCode MCP harness still requires separate human F0 authorization."
         next_action = "STOP_AWAIT_HUMAN_F0_AUTHORIZATION"
+    elif sq0_v2r1_transport_ready:
+        readiness_status = "SQ0_V2R1_TRANSPORT_QUALIFICATION_AUTHORIZED_READY"
+        blocker = "SQ0-V2 was voided before any AppWorld action because the official AtomCode coding-agent schema exposed native read_file; V2-R1 uses fresh cases and must first pass a non-scientific AppWorld-MCP tool-routing qualification."
+        next_action = "RUN_SQ0_V2R1_TRANSPORT_QUALIFICATION"
     elif sq0_v2_execution_authorized:
         readiness_status = "SQ0_V2_TARGET_FAILURE_QUALIFICATION_AUTHORIZED_READY"
         blocker = None
@@ -1537,6 +1584,15 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "sq0_v2_mcp_q1_status": sq0_v2_q1.get("status"),
         "sq0_v2_mcp_q1_model_requests": sq0_v2_q1.get("codingplan_model_requests"),
         "sq0_v2_execution_contract_status": sq0_v2_execution_contract.get("status"),
+        "sq0_v2_void_status": sq0_v2_void.get("status"),
+        "sq0_v2_void_active": sq0_v2_void_active,
+        "sq0_v2r1_static_contract_status": sq0_v2r1_static_contract.get("status"),
+        "sq0_v2r1_static_qualification_status": sq0_v2r1_static_qualification.get("status"),
+        "sq0_v2r1_static_max_public_tool_calls": sq0_v2r1_static_qualification.get("max_public_tool_calls"),
+        "sq0_v2r1_static_minimum_headroom": sq0_v2r1_static_qualification.get("minimum_headroom"),
+        "sq0_v2r1_transport_contract_status": sq0_v2r1_transport_contract.get("status"),
+        "sq0_v2r1_transport_result_status": sq0_v2r1_transport_result.get("status"),
+        "sq0_v2r1_transport_qualification_ready": sq0_v2r1_transport_ready,
         "sq0_v2_execution_authorized": sq0_v2_execution_authorized,
         "sq0_execution_authorized": sq0_execution_authorized and not sq0_v1_closed,
         "f0_r1_sq0_execution_authorized": sq0_execution_authorized and not sq0_v1_closed,
@@ -1548,7 +1604,9 @@ def build_artifacts() -> dict[str, dict[str, Any]]:
         "f0_source_appworld_tool_call_total": int(f0_source_closeout.get("appworld_tool_call_total", 0)),
         "f0_probe_episode_count": int(f0_source_closeout.get("probe_episode_count", 0)),
         "capability_model_selection_state": (
-            "SELECTED_MIMO25PRO_SQ0_V2_AUTHORIZED_AFTER_V1_TOO_EASY"
+            "SELECTED_MIMO25PRO_SQ0_V2R1_TRANSPORT_READY_AFTER_V2_VOID"
+            if sq0_v2r1_transport_ready
+            else "SELECTED_MIMO25PRO_SQ0_V2_AUTHORIZED_AFTER_V1_TOO_EASY"
             if sq0_v2_execution_authorized
             else "SELECTED_MIMO25PRO_SQ0_V1_TOO_EASY_STOP"
             if sq0_v1_closed
@@ -1678,7 +1736,9 @@ def main() -> None:
         SQ0_STATIC_CONTRACT, SQ0_STATIC_QUALIFICATION, SQ0_HUMAN_AUTHORIZATION,
         SQ0_MIMO25PRO_Q1, SQ0_EXECUTION_CONTRACT, SQ0_V1_RESULT, SQ0_V1_CLOSEOUT,
         SQ0_V2_STATIC_CONTRACT, SQ0_V2_STATIC_QUALIFICATION, SQ0_V2_HUMAN_AUTHORIZATION,
-        SQ0_V2_MIMO25PRO_Q1, SQ0_V2_EXECUTION_CONTRACT,
+        SQ0_V2_MIMO25PRO_Q1, SQ0_V2_EXECUTION_CONTRACT, SQ0_V2_VOID,
+        SQ0_V2R1_STATIC_CONTRACT, SQ0_V2R1_STATIC_QUALIFICATION, SQ0_V2R1_TRANSPORT_CONTRACT,
+        SQ0_V2R1_TRANSPORT_RESULT,
     ):
         if not path.is_file():
             continue

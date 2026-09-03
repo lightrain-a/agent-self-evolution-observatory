@@ -1,0 +1,37 @@
+{
+  "authority": {
+    "f0_r1": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_v2r1_execution": false,
+    "transport_qualification": false
+  },
+  "case_count": 12,
+  "case_kinds": {
+    "FG_JOIN_V2R1": 6,
+    "TNF_JOIN_V2R1": 6
+  },
+  "confirmatory_reuse": false,
+  "content_sha256": "b146db6d2357ee3a1a5ce1edd8868938623c96021b500f7f2c76abe1bd2b6d76",
+  "design_change": "FRESH_CASES_PLUS_APPWORLD_ROUTE_NOTE_AND_EXPLICIT_VIRTUAL_PATH_DISAMBIGUATION; V2_MULTI_STAGE_DIFFICULTY_RECIPE_PRESERVED",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "protected_bundle": {
+    "path": "generated/agent-constraint-externality-sq0-v2r1-target-challenge-protected-20260903.bundle",
+    "sha256": "dea58b7decc51e9c52722ede269f9b683c38b6f5f609e6a9eb36beb735c2f1bd"
+  },
+  "provider_requests": 0,
+  "schema_version": "ace-sq0-v2r1-contract-v1",
+  "scientific_outcomes_observed": 0,
+  "sq0_id": "ACE-SQ0-V2R1-TARGET-CHALLENGE-20260903",
+  "status": "SQ0_V2R1_STATIC_DESIGN_READY",
+  "tool_call_cap": 44,
+  "transport_constraint": "OFFICIAL_SIGNED_ATOMCODE_RETAINS_NATIVE_TOOLS; TASK/SYSTEM SURFACE DISAMBIGUATES APPWORLD VIRTUAL PATHS AND PRE-SCIENTIFIC TRANSPORT QUALIFICATION IS REQUIRED",
+  "usable_failure_window": {
+    "max": 0.9,
+    "min": 0.75
+  },
+  "v1_case_reuse": false,
+  "v2_case_reuse": false,
+  "v2_void_content_sha256": "0ad20a9299024e10e00583f2ea3d5492f73f2bd6dff94c7878747975ba55d783"
+}
