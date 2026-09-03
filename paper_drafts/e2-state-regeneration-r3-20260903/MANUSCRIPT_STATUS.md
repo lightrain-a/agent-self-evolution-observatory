@@ -145,9 +145,12 @@ After V4-R1 text alignment:
 - PDF pages: 15;
 - overfull boxes: 0;
 - undefined references/citations: 0;
-- PDF SHA-256: `2462bdf33c26c2cf01e47e03d6774822ff86cd1efa157432d10e6c0ed7ef9392`.
+- PDF SHA-256: `2462bdf33c26c2cf01e47e03d6774822ff86cd1efa157432d10e6c0ed7ef9392`;
+- 100-dpi render preflight: 15/15 pages rendered;
+- rendered edge-touch pages within an 8-pixel page boundary: 0;
+- extracted word bounding boxes outside the PDF page: 0.
 
-These checks qualify manuscript consistency only; they do not create scientific execution authority or a V4-R1 independent-review verdict.
+These checks qualify manuscript consistency and layout only; they do not create scientific execution authority or a V4-R1 independent-review verdict.
 
 ## Current authority boundary
 

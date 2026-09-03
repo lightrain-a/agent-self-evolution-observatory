@@ -16,12 +16,19 @@
     "current_results_sha256": "98171a6a3ef13b38ffc5ed82fb382be6f83b64518b995c13ea34091f1011a462",
     "discussion_sha256": "ec894e15603433b3ce47892d675fd936cebea6ae12d59f355e25ce598fe36ee8",
     "appendix_sha256": "31575507100ce655deefb748d850e26985956aeeb011fef46928c4d6571c997c",
-    "status_sha256": "b13bf6ce1bc01bf87f7cc7abb0ab9e77e313af9c491931d72f2d6a2d0d5418b9",
+    "status_sha256": "c7840465bda97d0ca79b2aa93f24efa68fed269162b382830884a442a97232f6",
     "pdf_sha256": "2462bdf33c26c2cf01e47e03d6774822ff86cd1efa157432d10e6c0ed7ef9392",
     "pages": 15,
     "compile_status": "PASS",
     "overfull_boxes": 0,
-    "undefined_references_or_citations": 0
+    "undefined_references_or_citations": 0,
+    "render_preflight": {
+      "dpi": 100,
+      "pages_rendered": 15,
+      "edge_boundary_pixels": 8,
+      "edge_touch_pages": 0,
+      "out_of_page_word_bboxes": 0
+    }
   },
   "v4_r1_alignment": {
     "frozen_protocol_commit": "51edbda1bd18ed6585def50dc8e5c12143d8b0bd",
