@@ -1,0 +1,74 @@
+{
+  "artifact_type": "e2-r17-state-regeneration-manuscript-review-repair-checkpoint",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PASS_R2_REVIEW_REPAIR_ZERO_PROVIDER_NO_CLAIM_EXPANSION",
+  "r1_manuscript_commit": "b93a93d084b4e84504fdcf2d2bb22fc489ea51a2",
+  "independent_review": {
+    "artifact": "generated/e2-r17-manuscript-r1-oracle-review-20260903.json",
+    "artifact_sha256": "4838def701a2200977f8728f1f7604d0bc4a31e186d46a52c8d972152b08d588",
+    "model": "GPT-5.6 Sol",
+    "thinking_effort": "Extra High (4/5)",
+    "conversation_id": "6a9976ea-7908-83e8-acf0-b57b0b203ca5",
+    "verdict": "REVISE_DESIGN_BEFORE_NEXT_PROVIDER_STAGE"
+  },
+  "working_title": "Same Evidence, Different Skill: State-Regeneration Instability in Self-Evolving Agents",
+  "manuscript_root": "paper_drafts/e2-state-regeneration-r2-20260903",
+  "manuscript": {
+    "main_tex_sha256": "d1f4782cc066ca69a5ee96f8afb8dfa8296fcf25aaaf2769ba209a665689269e",
+    "pdf_sha256": "65b7eaf1582d0b38af77617171e02801537b18306ad85e197a360cfe1a60a362",
+    "references_sha256": "7a67a8df96e8a553243c8981abd40021ee9b08c3b320b01b8ccd60a150fb98a7",
+    "compile_status": "PASS",
+    "pages_total": 15,
+    "discussion_starts_page": 12,
+    "appendix_starts_page": 14,
+    "overfull_boxes": 0,
+    "undefined_references": 0
+  },
+  "review_repairs": {
+    "title_and_claim_narrowed_to_state_regeneration_instability": true,
+    "causal_decomposition_no_longer_sold_as_independent_novelty": true,
+    "compiler_framed_as_controlled_generator_intervention": true,
+    "m3_retargeted_to_existing_exact_evidence_states": true,
+    "m3_new_updater_calls": 0,
+    "m4_generator_gate_independent_of_first_fail_source_and_interaction": true,
+    "score_only_generic_control": true,
+    "scope_matched_generic_control": true,
+    "validation_second_same_evidence_free_state_reserved_for_regeneration_probe": true,
+    "paper_stop_without_e3_backbone_benchmark_rescue": true
+  },
+  "method_objects": {
+    "compiler_path": "research_pipeline/e2_r17_state_compiler_bridge.py",
+    "compiler_sha256": "4d1d878dd38dfa1dc6a1e64ca2217b2acd9730c6a7586db779fa0bf0fbf3c284",
+    "compiler_test_path": "research_pipeline/test_e2_r17_state_compiler_bridge.py",
+    "compiler_test_sha256": "daf8faea7fc55e21049e73b1c009e75564feb05bacf1683b8959f1524ed36498",
+    "bridge_protocol_path": "generated/e2-r17-state-compiler-bridge-protocol-v3-review-repair-20260903.md",
+    "bridge_protocol_sha256": "74eb493266ae9c3f1a66e0f3e8d85f4279d458837444f8f9006cb5c1a2a1770a",
+    "m3_proposal_path": "generated/e2-r17-exact-evidence-frozen-state-regeneration-m3-proposal-20260903.md",
+    "m3_proposal_sha256": "ca430d2308df6dae4738c82e27d2bb11a30c1299bfb7424fa19ffb068b0816bd"
+  },
+  "tests": {
+    "compiler_tests": "15/15 PASS",
+    "review_repair_tests": "6/6 PASS",
+    "combined_adjacent_regression": "53/53 PASS"
+  },
+  "scientific_state": {
+    "recovery_v3_modified": false,
+    "partial_m2_outcome_read": false,
+    "m3_executed": false,
+    "m4_executed": false,
+    "e3_opened": false
+  },
+  "authority": {
+    "provider_io": false,
+    "recovery_v3_execution": false,
+    "m3_actor_measurement": false,
+    "m4_updater_or_actor": false,
+    "repeated_free_synthesis": false,
+    "e3": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "submission": false
+  },
+  "interpretation_boundary": "R2 is a manuscript and zero-provider design repair. It incorporates the independent review's verdict-changing fixes without reading Recovery V3 partial outcomes or granting any new scientific execution authority."
+}

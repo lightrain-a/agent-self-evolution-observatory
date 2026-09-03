@@ -1,0 +1,47 @@
+{
+  "artifact_type": "e2-r17-independent-manuscript-review",
+  "schema_version": "1.0",
+  "review_date": "2026-09-03",
+  "status": "COMPLETED_INDEPENDENT_MANUSCRIPT_REVIEW",
+  "reviewed_manuscript_commit": "b93a93d084b4e84504fdcf2d2bb22fc489ea51a2",
+  "reviewer": {
+    "route": "Oracle Browser / logged-in ChatGPT Agent project",
+    "server": "52",
+    "model": "GPT-5.6 Sol",
+    "thinking_effort": "Extra High (4/5)",
+    "session": "e2-r17-manuscript-r1-review-3",
+    "conversation_id": "6a9976ea-7908-83e8-acf0-b57b0b203ca5",
+    "prompt_submitted": true,
+    "completed": true
+  },
+  "verdict": "REVISE_DESIGN_BEFORE_NEXT_PROVIDER_STAGE",
+  "current_submission_assessment": "REJECT_OR_WEAK_REJECT_INSUFFICIENT_COMPLETED_EVIDENCE",
+  "core_assessment": "A potentially real paper remains. The defensible completed result is local state-regeneration instability consistent with a state-generation bottleneck, not a diagnosis of population state-generation variance. The residual novelty is the matched-evidence intervention at the state-generation realization, not failure feedback, diagnosis-to-repair, or persistent knowledge decomposition.",
+  "verdict_changing_actions": [
+    "Narrow title and claims from state-generation variance/localization to state-regeneration instability or candidate bottleneck unless repeated same-evidence synthesis plus fixed-state actor replication is added.",
+    "Retarget the smallest pre-M4 actor-noise experiment to frozen remeasurement of the historical First-Fail state, fresh First-Fail realization 1, fresh First-Fail realization 2, and one common frozen WIN-C comparator; no new updater call is necessary.",
+    "Repair M4 authority hierarchy so a positive matched-evidence generator effect can enter validation independently of First-Fail source superiority and the Evidence x Generator interaction.",
+    "Add a trajectory-blind state-scope-matched generic control in addition to SCORE_ONLY_GENERIC_MAX before attributing benefit to trajectory-conditioned diagnosis.",
+    "If regeneration/reproducibility remains a central contribution, add exactly one additional same-evidence FREE synthesis per fresh validation stream plus fixed-state actor remeasurement; otherwise describe COMP-vs-FREE only as a complete generation-method effect.",
+    "Predeclare that failure of the corrected fresh generator gate or failure to beat the scope-matched generic control stops the paper without E3, another backbone, or another benchmark rescue."
+  ],
+  "important_nonblockers": [
+    "The Evidence x Generator factorial itself is scientifically appropriate under matched learner-visible inputs.",
+    "First-Fail-4 equalizes replacement count, not information dose; it is an evidence-package-policy contrast.",
+    "State length/scope and free-form stochasticity do not invalidate the total complete-method COMP-vs-FREE effect, but they limit semantic-diagnosis and variance claims.",
+    "The paper can remain top-tier viable if the generator effect validates while First-Fail source superiority and interaction fail; that would yield a cleaner state-generation-method paper."
+  ],
+  "stop_condition": "Stop rather than expand if constrained state generation does not show a reproducible positive matched-evidence advantage on fresh streams, or if any apparent advantage is matched by the trajectory-blind scope-matched generic control.",
+  "failed_review_attempts_not_counted": [
+    "e2-r17-manuscript-r1-review",
+    "e2-r17-manuscript-r1-review-2"
+  ],
+  "authority": {
+    "scientific_provider_execution": false,
+    "recovery_v3_modification": false,
+    "m3_execution": false,
+    "m4_execution": false,
+    "e3": false,
+    "submission": false
+  }
+}
