@@ -268,14 +268,17 @@ def main() -> int:
             for label in range(NUM_UPDATES):
                 with sharding.set_mesh(mesh):
                     state, info = ptrain(train_rng, state, batch)
+                # Single-A100 resource realization: complete the current update before materializing
+                # the next real batch, preventing old/new decoded GPU batches from overlapping.
+                # This changes synchronization/lifetime only; it does not change sample order,
+                # RNG, optimizer math, EMA cadence, or update count.
+                jax.block_until_ready(state)
                 del info
                 completed_updates = label + 1; last_label = label
-                if label < NUM_UPDATES - 1:
-                    batch = next(data_iter)
+                current_step = int(jax.device_get(state.step))
+                if current_step != completed_updates:
+                    raise RuntimeError(f"train step drift label={label} state_step={current_step}")
                 if label % 100 == 0 or label == TERMINAL_LABEL:
-                    current_step = int(jax.device_get(state.step))
-                    if current_step != completed_updates:
-                        raise RuntimeError(f"train step drift label={label} state_step={current_step}")
                     prog = dict(started); prog.update({
                         "generated_at": datetime.now(timezone.utc).isoformat(),
                         "status": "PI05_PRACTICAL_BATCH16_FORMAL_TRAINING_RUNNING",
@@ -285,6 +288,9 @@ def main() -> int:
                     }); atomic_json(p["progress"], prog)
                 if (label % cfg.save_interval == 0 and label > 0) or label == TERMINAL_LABEL:
                     checkpoints.save_state(manager, state, loader, label)
+                if label < NUM_UPDATES - 1:
+                    del batch
+                    batch = next(data_iter)
 
             manager.wait_until_finished()
             if int(jax.device_get(state.step)) != NUM_UPDATES:
