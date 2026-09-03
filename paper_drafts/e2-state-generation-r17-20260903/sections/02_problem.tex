@@ -1,0 +1,15 @@
+\section{Problem Setting and Causal Decomposition}
+
+For task $x$ and initial persistent state $S_0$, search produces a frozen pool $T_K=\{\tau_1,\ldots,\tau_K\}$ with deterministic verifier scores $r_i\in\{0,1\}$. Acting uses a fixed projection $a(T_K)$: the highest-scoring trajectory, with original rollout order as tie-breaker. Learning independently receives a projection $g(T_K)$, rendered as an exact learner-visible package
+\begin{equation}
+E=\mathcal{R}(g(T_K))=(\text{trajectory text},\text{ selected verifier score}).
+\end{equation}
+The updater produces persistent state $S=U(E,S_0;\xi_U)$, and unseen task $q$ is evaluated as $Y(q;S)=\mathrm{Verify}(\pi(q,S;\xi_A))$. Here $\xi_U$ and $\xi_A$ denote residual updater and actor realization under the frozen provider configuration.
+
+This factorization yields three distinct questions. First, holding $U$ fixed, an \emph{evidence-package effect} compares $U(E_1)$ with $U(E_0)$. Second, holding $E$ fixed, a \emph{state-generation-method effect} compares two complete generators, e.g. $U_{\mathrm{comp}}(E)$ and $U_{\mathrm{free}}(E)$. Third, repeated synthesis from identical $E$ exposes \emph{state-realization variation}. Because the verifier score is part of the updater-visible record, our evidence intervention concerns a trajectory+score package; it does not identify trajectory text separately from score.
+
+This distinction matters whenever persistent state is generated language. If $Y(U(E_{\mathrm{fail}}))>Y(U(E_{\mathrm{win}}))$, either the failure package carried more reusable information or its sampled state realization happened to be better. Conversely, useful evidence can appear ineffective when a noisy state writer encodes it poorly. The generated state must therefore be measured rather than treated as invisible implementation detail.
+
+We maintain three evidence levels. \emph{State-level mechanism} experiments intervene on frozen states; \emph{automatic method} experiments prospectively convert evidence into state; \emph{confirmatory generalization} uses an untouched panel after method selection. The current G0--G3 study belongs to the first level, the Evidence$\times$Generator bridge to the second, and untouched E3 remains sealed for the third.
+
+\input{figures/fig1_state_generation}

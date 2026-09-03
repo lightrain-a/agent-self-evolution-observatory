@@ -1,0 +1,25 @@
+\section{Related Work and Novelty Boundary}
+
+The closest feedback study is \emph{Rethinking Self-Evolving Agent Skills}, which varies normal, failure-only, and success-only feedback across models and benchmarks and finds sparse, heterogeneous improvement~\citep{liu2026rethinking}. It already establishes that failed trajectories can matter; our question begins where that result stops: under matched evidence, does the state-generation realization itself remain a material factor?
+
+SkillRevise diagnoses execution-grounded defects, retrieves reusable repair principles, and applies anchored skill revisions~\citep{liu2026skillrevise}. Structured diagnosis and repair principles are therefore prior art, not our contribution. WikiSkill similarly separates raw traces, persistent accumulated knowledge, and executable skills~\citep{tang2026wikiskill}; we do not claim experience-to-persistent-knowledge compilation as new. MindMemOS is the first-party skill-evolution substrate used by our free-form baseline~\citep{liang2026mindmemos}. Other recent systems study behavioral validation, sustained evolution signals, and skill-library adaptation~\citep{he2026skillcommit,yan2026skillevo,han2026sisl}.
+
+Our residual novelty is narrower: \emph{matched-evidence state-generation variance as a causal object}, followed by a prospective Evidence$\times$Generator factorization. The typed compiler is not novel merely because it is structured; it matters only if controlling the state-writing interface prospectively changes utility or reproducibility relative to the native updater.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+Work & Main object & Update interface & Boundary \\
+\midrule
+Rethinking Skills & feedback condition over rounds & LLM optimizer + validation & failure feedback and heterogeneity are prior findings \\
+SkillRevise & repair weak authored skills & diagnosis + principles + LLM revision & structured diagnosis/repair are prior art \\
+WikiSkill & accumulate experience across evolution & trace $\rightarrow$ wiki $\rightarrow$ skill & persistent intermediate knowledge is prior art \\
+E2-R17 & matched-evidence generator variance & free-form vs. canonical typed state & exact-evidence replay + Evidence$\times$Generator test \\
+\bottomrule
+\end{tabularx}
+\caption{Closest novelty collisions and the residual object studied here.}
+\label{tab:related}
+\end{table}

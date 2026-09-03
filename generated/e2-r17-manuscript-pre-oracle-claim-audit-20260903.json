@@ -1,0 +1,107 @@
+{
+  "artifact_type": "e2-r17-manuscript-pre-oracle-claim-audit",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PASS_PRE_ORACLE_MANUSCRIPT_CLAIM_AUDIT",
+  "manuscript": {
+    "root": "paper_drafts/e2-state-generation-r17-20260903",
+    "title": "Same Evidence, Different Skill: Diagnosing State-Generation Variance in Self-Evolving Agents",
+    "pdf_path": "paper_drafts/e2-state-generation-r17-20260903/main.pdf",
+    "pdf_sha256": "fbebc63fbb008b2407ddcab049b476a219807e2fe09610c978bddae672452175",
+    "total_pdf_pages": 9,
+    "latex_overfull_boxes": 0,
+    "undefined_citations_or_references": 0,
+    "hyperref_warnings": 0,
+    "rendered_pages": 9,
+    "render_dimensions_at_110_dpi": "935x1210",
+    "blank_rendered_pages": 0
+  },
+  "numeric_claims": {
+    "repair2": {
+      "artifact": "generated/e2-r17-deepseek-v2-repair2-continuation-v2-scientific-adjudication-20260901.json",
+      "status": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+      "pairs": 48,
+      "learned_states": 96,
+      "heldout_units": 1728,
+      "mean_mrw_minus_win_c": 0.02314814814814815,
+      "median_mrw_minus_win_c": 0.013888888888888888,
+      "exact_one_sided_sign_flip_p": 0.171875,
+      "paired_bootstrap_95_ci": [-0.018518518518518507, 0.06597222222222222],
+      "manuscript_matches": true
+    },
+    "s1_witness_selector": {
+      "artifact": "generated/e2-r17-single-case-diagnostic-witness-s1-analysis-20260902.json",
+      "status": "S1_SIGNAL_FAIL_STOP_NO_S2",
+      "heldout": 18,
+      "win_c_successes": 13,
+      "first_fail_successes": 17,
+      "progress_fail_successes": 14,
+      "progress_contrast_successes": 14,
+      "manuscript_matches": true
+    },
+    "frozen_state_stability": {
+      "artifact": "generated/e2-r17-single-case-first-fail-stability-analysis-20260902.json",
+      "status": "FIRST_FAIL_FROZEN_STATE_STABILITY_PASS",
+      "rep1_first_fail_vs_win_c": [15, 14],
+      "rep2_first_fail_vs_win_c": [16, 12],
+      "mean_new_replicate_difference": 0.1388888888888889,
+      "manuscript_matches": true
+    },
+    "exact_evidence_replay": {
+      "artifact": "generated/e2-r17-single-case-first-fail-exact-replay-closeout-20260902.json",
+      "status": "FIRST_FAIL_EXACT_EVIDENCE_UPDATER_REPLICATION_FAIL_STATE_GENERATION_VARIANCE",
+      "rep1_first_fail_vs_win_c": [15, 15],
+      "rep2_first_fail_vs_win_c": [11, 12],
+      "mean_first_fail_minus_win_c": -0.027777777777777735,
+      "manuscript_matches": true
+    }
+  },
+  "prospective_objects": {
+    "current_g0_g3_micro": {
+      "valid_completed_units": 45,
+      "total_units": 72,
+      "unresolved_units": 27,
+      "partial_scores_accessed": false,
+      "recovery_v3_run_root_exists_at_audit": false,
+      "recovery_v3_lease_exists_at_audit": false,
+      "reported_as_completed_result": false
+    },
+    "state_compiler_bridge": {
+      "protocol": "generated/e2-r17-state-compiler-bridge-protocol-v2-20260903.md",
+      "suite_qualification": "generated/e2-r17-state-compiler-bridge-suite-qualification-20260903.json",
+      "provider_calls": 0,
+      "scientific_outcomes_accessed": false,
+      "screen_authority": false,
+      "validation_authority": false,
+      "e3_authority": false,
+      "reported_as_completed_result": false
+    }
+  },
+  "fresh_bridge_suite": {
+    "formal_tasks": 120,
+    "update_tasks": 96,
+    "screen_heldout": 12,
+    "validation_heldout": 12,
+    "screen_validation_disjoint": true,
+    "prior_task_id_overlap": 0,
+    "prior_xlsx_sha256_overlap": 0,
+    "uses_old_e3_blocks_5_6": false,
+    "logical_dataset_sha256": "25785a89d25424d7e8ed2d75d802f7e968a785d318b521272c38929b36342f05"
+  },
+  "novelty_boundary": {
+    "rethinking_self_evolving_agent_skills_arxiv": "2608.02636",
+    "skillrevise_arxiv": "2606.01139",
+    "wikiskill_arxiv": "2608.27454",
+    "claims_failure_feedback_as_novel": false,
+    "claims_structured_diagnosis_as_novel": false,
+    "claims_experience_to_persistent_knowledge_as_novel": false,
+    "residual_claim": "matched-evidence state-generation realization as an independently testable bottleneck, plus prospective evidence-source x complete state-generation-method factorization"
+  },
+  "authority": {
+    "provider_io": false,
+    "experiment_execution": false,
+    "partial_outcome_access": false,
+    "paper_result_promotion": false
+  },
+  "interpretation_boundary": "This audit qualifies the manuscript as an evidence-aligned draft for independent review. It does not promote pending M2/M4 stages into results or grant any scientific execution authority."
+}

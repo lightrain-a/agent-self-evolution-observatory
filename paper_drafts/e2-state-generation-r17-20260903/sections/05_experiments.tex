@@ -1,0 +1,60 @@
+\section{Experiments}
+\label{sec:experiments}
+
+Our controlled substrate uses the first-party MindMemOS SkillEvolver and deterministic SpreadsheetBench-style tasks~\citep{liang2026mindmemos}. Search pools, evidence renders, learned states, verifier inputs, and provider budgets are content-addressed; completion audits precede score access. Exact runtime/model bindings are deferred to Appendix~\ref{app:integrity}.
+
+\subsection{M2: State-Semantic Sufficiency}
+
+Before evaluating an automatic compiler, we ask whether the candidate persistent-state semantics are sufficient locally. On the selected development stream we freeze: G0 (initial skill), G1 (output reload/verification), G2 (Inspect$\rightarrow$Read$\rightarrow$Compute$\rightarrow$Write$\rightarrow$Save$\rightarrow$Reload/Verify), and G3 (G2 plus clean tool-error recovery). Each is evaluated on the same 18 development heldout tasks. The primary gate selects the simplest G1$<$G2$<$G3 arm exceeding G0 by at least $1/18$; a pre-outcome 17-task provider-era sensitivity can veto but never rescue a PASS.
+
+At this revision, 45/72 state-task units are validly complete and the remaining 27 are frozen for exactly-once recovery after a hosted quota reset. No partial scores have been opened. If M2 passes, only G0 and the simplest passing arm receive exactly two complete frozen-state remeasurements; failure stops the branch before automatic method evaluation.
+
+\subsection{M4: Prospective \texorpdfstring{Evidence $\times$ Generator}{Evidence x Generator} Bridge}
+
+Only after M2 and its stability gate survive do we authorize the automatic bridge:
+\begin{center}
+\small
+\begin{tabular}{lcc}
+\toprule
+ & Native free-form updater & Constrained compiler \\
+\midrule
+Winner & W\_FREE & W\_COMP \\
+First-Fail-4 & FF4\_FREE & FF4\_COMP \\
+\bottomrule
+\end{tabular}
+\end{center}
+All cells start from the same $S_0$ and frozen search pools; learning cannot alter the served acting winner. Winner exposes the served winner package on all eight update pools. First-Fail-4 deterministically replaces exactly four eligible mixed-pool winner packages with the lowest-index failed nonwinner and leaves the other four unchanged. This equalizes replacement count, not information content.
+
+\paragraph{Fresh evaluation.}
+The bridge uses a fresh b7--b9 suite with zero task-ID and XLSX-hash overlap with the earlier controlled suite and no use of untouched E3 b5/b6. Its 120 formal tasks comprise 96 update tasks (12 streams$\times$8), 12 SCREEN heldout tasks, and 12 disjoint VALIDATION heldout tasks. Six family-balanced streams are frozen for each stage. Suite construction and collision audits are Appendix~\ref{app:integrity}.
+
+For stream utility $J$, the primary contrasts are
+\begin{align}
+G_F &= J(\mathrm{FF4\_COMP})-J(\mathrm{FF4\_FREE}), \\
+S_C &= J(\mathrm{FF4\_COMP})-J(\mathrm{W\_COMP}), \\
+I &= G_F-[J(\mathrm{W\_COMP})-J(\mathrm{W\_FREE})].
+\end{align}
+SCREEN passes only if mean $G_F>0$ and $S_C>0$, each is positive on at least 4/6 streams, mean $I>0$, FF4\_COMP exceeds \texttt{SCORE\_ONLY\_GENERIC\_MAX}, and no parity/technical violation occurs. Otherwise VALIDATION remains sealed. If SCREEN passes, the unchanged method runs on the disjoint VALIDATION streams/panel under the same directional conditions. No threshold, primitive, compiler rule, or replacement dose can be changed between stages.
+
+\paragraph{Decision logic.}
+A failed generator contrast stops the state-generation method story. A positive generator contrast with failed source contrast supports at most reliable state compilation, not rejected-failure learning. A failed score-only falsifier removes trajectory-conditioned diagnosis. Only survival of generator, source, falsifier, and interaction gates makes a separate untouched-E3 proposal eligible; it does not automatically authorize E3.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.7cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.45cm}>{\raggedright\arraybackslash}X}
+\toprule
+Stage & Object & Status & Scientific role \\
+\midrule
+M0 & 48-pair evidence study & Complete: HOLD & evidence-source heterogeneity \\
+M1 & localization chain & Complete; development & candidate generator bottleneck \\
+M2 & G0/G1/G2/G3 & 45/72; scores sealed & state-semantic sufficiency \\
+M3 & frozen-state stability & not authorized & local stability \\
+M4 & Evidence$\times$Generator & zero-provider qualified & automatic method \\
+M5 & untouched E3 & sealed & confirmation \\
+\bottomrule
+\end{tabularx}
+\caption{Evidence ladder and current authority. Pending stages are not written as successful results.}
+\label{tab:stages}
+\end{table}

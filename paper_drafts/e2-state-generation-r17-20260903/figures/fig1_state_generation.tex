@@ -1,0 +1,46 @@
+\begin{figure}[t]
+\centering
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+  node distance=6mm and 7mm,
+  box/.style={draw, rounded corners, align=center, inner sep=5pt, minimum height=8mm},
+  small/.style={draw, rounded corners, align=center, inner sep=4pt, font=\small},
+  arr/.style={-{Latex[length=2mm]}, thick},
+  note/.style={align=center, font=\small}
+]
+\node[box] (pool) {Frozen search pool\\$T_K$};
+\node[box, right=of pool] (proj) {Learning projection\\$g(T_K)$};
+\node[box, right=of proj] (ev) {Exact learner-visible\\evidence package $E$};
+\draw[arr] (pool) -- (proj);
+\draw[arr] (proj) -- (ev);
+
+\node[small, below right=9mm and -2mm of ev] (u1) {free-form updater\\realization $\xi_U^{(1)}$};
+\node[small, below=5mm of u1] (u2) {free-form updater\\realization $\xi_U^{(2)}$};
+\node[small, right=8mm of u1] (s1) {persistent state\\$S^{(1)}$};
+\node[small, right=8mm of u2] (s2) {persistent state\\$S^{(2)}$};
+\node[small, right=8mm of s1] (y1) {future utility\\$Y^{(1)}$};
+\node[small, right=8mm of s2] (y2) {future utility\\$Y^{(2)}$};
+\draw[arr] (ev.south) |- (u1.west);
+\draw[arr] (ev.south) |- (u2.west);
+\draw[arr] (u1) -- (s1);
+\draw[arr] (u2) -- (s2);
+\draw[arr] (s1) -- (y1);
+\draw[arr] (s2) -- (y2);
+
+\node[note, below=5mm of u2] (obs) {Development observation: byte-identical $E$ can regenerate\\different persistent states and different downstream effects.};
+
+\node[small, below=18mm of ev] (diag) {typed diagnosis\\$D(E)$};
+\node[small, right=8mm of diag] (comp) {canonical compiler\\$C(D,S_0)$};
+\node[small, right=8mm of comp] (sc) {canonical state\\$S_C$};
+\node[small, right=8mm of sc] (yc) {future utility\\$Y_C$};
+\draw[arr] (ev) -- (diag);
+\draw[arr] (diag) -- (comp);
+\draw[arr] (comp) -- (sc);
+\draw[arr] (sc) -- (yc);
+
+\node[note, below=4mm of comp] {Proposed control: move free-form variation out of the\\state-writing interface while keeping evidence selection explicit.};
+\end{tikzpicture}%
+}
+\caption{\textbf{The evidence is not the state.} Our causal decomposition exposes persistent-state generation as a separate experimental factor. The top branch illustrates the exact-evidence replay: the same learner-visible evidence can enter fresh free-form updater realizations and yield different downstream behavior. The bottom branch shows the proposed variance-controlled interface, where evidence is mapped to a typed diagnosis and compiled canonically. The paper does not assume that the compiler is better; the prospective bridge tests that claim.}
+\label{fig:state-generation}
+\end{figure}

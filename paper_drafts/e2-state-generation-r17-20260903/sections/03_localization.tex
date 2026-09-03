@@ -1,0 +1,36 @@
+\section{Localizing the Bottleneck}
+\label{sec:localization}
+
+The mechanism was not inferred from one positive run. A sequence of frozen development experiments progressively removed simpler explanations (Table~\ref{tab:evidence-chain}).
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{1.55cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+Stage & Intervention & Result & Localization \\
+\midrule
+Repair2 & MRW vs. WIN-C, 48 pairs & mean $+2.31$ pp; $p=.171875$; 95\% boot. CI $[-1.85,+6.60]$ pp & no stable global evidence-source superiority \\
+S1 & WIN / First-Fail / Progress-Fail / Contrast & 13/18, 17/18, 14/18, 14/18 & proposed diagnostic selector fails \\
+Frozen state & remeasure historical strong state & FF vs. WIN: 15--14, 16--12 & useful state persists without updater \\
+Exact replay & byte-identical evidence, fresh updater & FF vs. WIN: 15--15, 11--12 & evidence does not regenerate historical utility \\
+\bottomrule
+\end{tabularx}
+\caption{Mechanism-localization chain. The last three stages are development-only and localize the next causal intervention; they are not pooled into a confirmatory treatment estimate.}
+\label{tab:evidence-chain}
+\end{table}
+
+\paragraph{Evidence selection alone is unresolved.}
+The closed study contains 48 matched update pairs, 96 learned states, and 1728 heldout units. WIN-C exposes the served winner; MRW uses the deterministic failed-nonwinner projection under the frozen mixed-pool rule while preserving the same acting winner. Mean MRW$-$WIN-C is $0.02315$ (SD $0.07797$); the preregistered one-sided sign-flip test gives $p=.171875$ and the bootstrap interval crosses zero. The immutable verdict is \texttt{HOLD\_MRW\_UNDERPOWERED\_OR\_HETEROGENEOUS}. This rejects a universal rejected-witness story while preserving heterogeneity as a fact to explain.
+
+\paragraph{A richer witness selector does not rescue the story.}
+On one explicitly development-only stream, Progress-Fail and Progress-Contrast each reached 14/18, below the historical First-Fail state at 17/18; the frozen continuation gate therefore stopped. We retain this failed intervention rather than tuning a witness score after outcomes.
+
+\paragraph{The strong state survives when the updater is removed.}
+We froze the historical First-Fail state and a matched WIN-C state and re-evaluated without state generation. Across two fresh replicates, First-Fail achieved 15/18 versus 14/18 and 16/18 versus 12/18. This is selected-case evidence, but it shows that the useful behavior can persist once the state itself is held fixed.
+
+\paragraph{Byte-identical evidence does not regenerate the strong state.}
+We reconstructed the exact learner-visible evidence that produced the strong development state; all 16 rendered packet hashes matched the originals. Two fresh paired updater realizations then yielded 15/18 versus 15/18 and 11/18 versus 12/18, rather than the historical +4/18 contrast. We therefore record a frozen \emph{state-generation replication failure}. With only two fresh realizations this is not a population variance estimate. It is a localization result: evidence bytes are insufficient to characterize the treatment consumed by the future actor, so state generation becomes an explicit experimental variable. The full machine-readable verdict identifier is preserved in Appendix~\ref{app:integrity}.
+
+The supportable claim at this stage is deliberately local: on a selected development case, a useful persistent state remained useful when frozen, whereas byte-identical evidence failed to reproduce the historical effect through fresh free-form synthesis. This motivates, but does not prove, a state-generation bottleneck.

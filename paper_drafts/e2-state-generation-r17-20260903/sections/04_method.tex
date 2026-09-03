@@ -1,0 +1,25 @@
+\section{Variance-Controlled State Generation}
+\label{sec:method}
+
+We intervene on the state-writing interface while preserving the learner-visible information set. Both generator arms receive the same eight rendered packages $E_i=(\text{trajectory text}_i,r_i)$. The constrained path cannot use arm, family, task/template identity, hidden labels, golden answers, heldout outcomes, or historical development results. A pre-execution parity audit binds its evidence hashes to those seen by the corresponding free-form updater.
+
+\paragraph{Typed diagnosis.}
+A deterministic parser extracts only visible execution signals: whether the trajectory reads the workbook, materializes a write, saves output, reloads and verifies output, encounters a tool error, and visibly recovers. These signals map to a small frozen diagnosis vocabulary with three repair primitives:
+\begin{equation}
+\texttt{VERIFY\_OUTPUT},\quad \texttt{COMPLETE\_WORKFLOW},\quad \texttt{RECOVER\_TOOL\_ERROR}.
+\end{equation}
+Successful selected trajectories do not automatically receive generic advice. For failures, missing materialization/save requests completion; saved-but-unverified output requests verification; and an unrecovered visible tool error requests recovery. The vocabulary is a frozen development object, not a universal error ontology.
+
+\paragraph{Canonical compilation.}
+Given diagnoses $\{d_i\}_{i=1}^{8}$, the compiler produces
+\begin{equation}
+S_C=C(S_0,\{d_i\}_{i=1}^{8})
+\end{equation}
+by taking the union of requested primitives, rendering them in fixed order, deduplicating repeated evidence, and removing redundant surfaces (the completion loop already includes reload/verification). Identical diagnosis bundles compile byte-identically. Zero-provider tests reproduce the exact frozen G1/G2/G3 state surfaces for corresponding diagnoses, connecting the automatic method to the earlier state-level intervention.
+
+The comparison with the native updater is a \emph{complete-method} effect, not an isolated effect of determinism: free-form synthesis can also differ in wording, length, scope, and redundancy. We therefore report state bytes/tokens and clause counts but do not post-hoc truncate free-form states to manufacture length matching.
+
+\paragraph{Strong generic falsifier.}
+A compiler may appear evidence-conditioned while merely noticing failure scores and injecting good spreadsheet hygiene. We freeze \texttt{SCORE\_ONLY\_GENERIC\_MAX}, which receives the same ordered eight binary selected scores but no trajectory text. All-success input returns $S_0$; any failure compiles the strongest nonredundant generic v1 bundle. A trajectory-conditioned diagnosis claim therefore requires FF4\_COMP to exceed this score-matched control. If not, at most a generic canonical-state result remains.
+
+Implementation details, exact primitive texts, state hashes, and static compiler tests are provided in Appendix~\ref{app:integrity}.
