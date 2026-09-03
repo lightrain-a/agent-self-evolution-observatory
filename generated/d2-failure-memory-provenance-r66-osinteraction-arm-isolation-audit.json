@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R66-OSINTERACTION-ARM-ISOLATION-AUDIT",
+  "recorded_date": "2026-09-03",
+  "status": "POSTCONFIRMATORY_IMPLEMENTATION_ISOLATION_AUDIT_PASS",
+  "role": "MANUSCRIPT_ONLY_RESET_AND_CONTAINER_ISOLATION_DOCUMENTATION",
+  "scientific_execution_changed": false,
+  "source_binding": {
+    "memrl_source_revision": "c1b322ca43de36ddf64c6712f89d0095bfc35ce0",
+    "osinteraction_task_py": "3rdparty/LifelongAgentBench/src/tasks/instance/os_interaction/task.py",
+    "osinteraction_task_py_sha256": "3912ea9ba093767ae5a8ff5fed59bae628dfcc09a26f706c8375ecbd3649509f",
+    "osinteraction_container_py": "3rdparty/LifelongAgentBench/src/tasks/instance/os_interaction/container.py",
+    "osinteraction_container_py_sha256": "b8ec612a3aa024f110caaf40b44df07360830c991357e153f62c6ac6153b2300",
+    "audited_from_git_commit_object": true,
+    "current_checkout_unrelated_untracked_files_ignored": true
+  },
+  "runner_binding": {
+    "shared_run_arm_exact_path": "research_pipeline/failure_memory_memrl_ab_identification_r48.py",
+    "shared_run_arm_exact_sha256": "6e28cfa75eef0d9833e0184cff5aaa0ff81957555b764f834c7c23c10324d2a1",
+    "qwen_r56_runner_sha256": "be4b7b4d0ce2808f4564705fc80e2261b771f2c66a5a22cc3d93bf3794211dbf",
+    "llama_r61_runner_sha256": "3232be72be617e4e471d5f17d317f0aa83903fe983d3d8df6442dc8336ccc72c"
+  },
+  "implementation_evidence": {
+    "fresh_task_object_per_arm": true,
+    "fresh_session_per_arm": true,
+    "task_reset_called_before_inference_loop": true,
+    "task_release_called_in_finally": true,
+    "osinteraction_reset_constructs_new_container": true,
+    "container_constructor_calls_docker_containers_run": true,
+    "container_remove_true": true,
+    "complete_terminates_container_and_clears_reference": true,
+    "release_terminates_nonnull_container": true,
+    "task_visible_container_state_expected_to_be_arm_local": true
+  },
+  "completed_run_evidence": {
+    "qwen_complete_units": 32,
+    "qwen_arm_runs": 64,
+    "qwen_status": "FRESH_AB_IDENTIFICATION_ESTIMATE_COMPLETE",
+    "qwen_receipt_sha256": "738a807debc5dbc83cfa7bb573a07df2bdd6bd131e3b6a27a1fdd438d44fcdcc",
+    "llama_complete_units": 32,
+    "llama_arm_runs": 64,
+    "llama_status": "FRESH_AB_IDENTIFICATION_ESTIMATE_COMPLETE",
+    "llama_receipt_sha256": "680a1fbdc4ddd573027be7b1292e7de9e43f8b3daf4dbf0f335160e88347ad5f"
+  },
+  "adjudication": {
+    "cross_arm_filesystem_user_process_inheritance_concern": "RESOLVED_BY_FRESH_CONTAINER_PER_ARM_IMPLEMENTATION",
+    "manuscript_wording": "Each arm starts from a newly constructed OSInteraction Docker container via task.reset(session); downstream observations may differ because they are treatment-induced, not because one arm inherits task-visible state from the other.",
+    "dedicated_per_arm_reset_timestamp_logged": false,
+    "dedicated_reset_success_bit_logged": false,
+    "evidence_strength": "code-level reset/container semantics plus 64/64 completed arm ledgers per executor; no dedicated reset timestamp receipt",
+    "rerun_required": false,
+    "rerun_condition": "Only if the bound reset/container implementation is shown not to restore the task-visible state relevant to OSInteraction."
+  },
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "952fb5c87fa56ed06b4a0e4131e4dc2a58eafb074b10fa730b3169e4e0b1c750"
+}

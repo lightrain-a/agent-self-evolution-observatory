@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
+  "receipt_id": "D2-FAILURE-MEMORY-PROVENANCE-R66-INDEPENDENT-ORACLE-REVIEW-SUMMARY",
+  "recorded_date": "2026-09-03",
+  "status": "INDEPENDENT_REVIEW_REVISE_CURRENT_NARROW_CLAIM_KEEP_EXPERIMENT",
+  "role": "ZERO_AUTHORITY_POSTCONFIRMATORY_METHODOLOGY_REVIEW",
+  "review_runtime": {
+    "oracle_version": "0.18.0",
+    "engine": "browser",
+    "server": "52",
+    "model": "GPT-5.6 Sol",
+    "model_selection_verified_from_chatgpt_dom": true,
+    "thinking_effort": "Extra High, 4 of 5",
+    "conversation_id": "6a9975b6-2108-83e9-8467-128921727b84",
+    "prompt_submitted": true,
+    "initial_session_meta_sha256": "c5533ad341cefaabce9b15eb6c68e58d485e0e7a44050aee6debcd978268e2c9",
+    "complete_three-turn_transcript_sha256": "6442f8a952c34c41c45be9c7734d8c2faa16604ddf5c4373f497be0fbbf60ab0",
+    "complete_three_turn_transcript_bytes": 43700,
+    "transcript_publicly_released": false
+  },
+  "verdict": "REVISE",
+  "pivot_required": false,
+  "main_experiment_rerun_required": false,
+  "verdict_changing_repairs": [
+    "Define the primary estimand as the closed-loop total effect of revealing an explicit truthful source-outcome indicator over fixed retrieved content and reset initial environment; do not claim realized downstream observations are held fixed.",
+    "Rename the treatment from broad raw provenance to explicit truthful source-outcome indicator / field revelation; the masked arm may still contain implicit source-outcome clues in memory text.",
+    "Treat first-action divergence as local policy sensitivity to field exposure, not proof of semantic provenance reasoning.",
+    "Keep the preregistered bootstrap and 15pp threshold unchanged, but add conservative sparse-discordance paired risk-difference inference and do not claim practical equivalence unless the margin is actually excluded.",
+    "Document per-arm OSInteraction reset/container isolation; rerun only if bound reset semantics fail to restore task-visible state.",
+    "Describe Llama strictly as executor-only replication on a shared frozen source-bank/retrieval/task/renderer substrate."
+  ],
+  "best_mechanistic_explanation": "Memory text already leaks substantial source-outcome information, so the explicit boolean contributes limited new information while remaining salient enough to break local action ties. Different first actions then enter a closed-loop OS environment whose errors and observations provide strong recovery signals, allowing many trajectories to reconverge. The binary terminal evaluator further coarsens behaviorally different trajectories into the same label, while heterogeneous positive and negative effects can cancel.",
+  "highest_information_optional_extension": "Run a format-matched explicit-field experiment with the same field/token surface in every arm and vary UNKNOWN-or-masked versus truthful versus reversed-or-shuffled values to separate field presence from semantic outcome information.",
+  "reviewer_prose_exposed_in_public_artifact": false,
+  "scientific_authority": false,
+  "experiment_authority": false,
+  "gpu_authority": false,
+  "submission_authority": false,
+  "receipt_sha256": "a9f71c8339833000a369863f37599a194718a3fa414cf6d3c6b871bdc54ab512"
+}

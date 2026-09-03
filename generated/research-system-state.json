@@ -64987,9 +64987,9 @@
         },
         {
           "paper_id": "D2-PAPER-FAILURE-MEMORY-PROVENANCE",
-          "title": "Does Memory Provenance Matter? Provenance Shifts Agent Behavior but Adds Little Terminal Value Beyond Memory Content",
-          "central_question": "Conditional on fixed actionable memory content, retrieval support, and target context, does truthful source-outcome provenance add terminal utility to an executor, and does that incremental value replicate across executor backbones?",
-          "contract_sha256": "dbf81e071aaca6270d710c084c1d9f6b5ec78497c28fc9912f40b8d417f14ac7",
+          "title": "Does Memory Provenance Matter? Explicit Source-Outcome Cues Shift Agent Actions but Rarely Change Terminal Outcomes",
+          "central_question": "Beyond identical retrieved memory content, what closed-loop effect follows from revealing an explicit truthful source-outcome indicator that would otherwise be masked?",
+          "contract_sha256": "db992f36a128578265c7fb27bf68cf1bf364f3639707321a9d0bf712b4814a55",
           "scientific_status": "READY",
           "current_state": "SUBMISSION_READY",
           "gate_clean_submission_ready": true,
@@ -65009,31 +65009,23 @@
             "structured_lesson_receipts": 0,
             "lesson_codes": [],
             "lesson_source_refs": [],
-            "decision_critical_objections": 8,
+            "decision_critical_objections": 5,
             "category_counts": {
-              "claim-scope": 1,
-              "generalization": 1,
-              "governance-identification": 1,
+              "causal-estimand": 1,
+              "isolation": 1,
               "mechanism": 1,
-              "method-positioning": 1,
-              "non-pooling": 1,
               "replication-scope": 1,
-              "selection-integrity": 1,
               "statistics": 1,
-              "utilization": 1
+              "treatment-scope": 1
             },
             "evidence_state_counts": {
-              "existing-evidence": 8,
-              "false-premise-with-evidence": 1,
-              "requires-new-claim": 1
+              "existing-evidence": 6
             },
             "action_class_counts": {
-              "narrative-repair": 8,
-              "prebuttal": 1,
-              "preserve-limitation": 1
+              "narrative-repair": 6
             },
             "targeted_experiment_proposals": 0,
-            "claim_expansion_requests_preserved_as_limitations": 1,
+            "claim_expansion_requests_preserved_as_limitations": 0,
             "reviewer_prose_exposed": false,
             "scientific_authority": false,
             "experiment_authority": false,
@@ -65043,60 +65035,63 @@
           "active_unrefuted_claims": 0,
           "unsupported_claims": 6,
           "limitations": [
-            "The fresh L2 evidence uses one frozen MemRL/OSInteraction source bank and two executor backbones; it is not a population theorem over models, tasks, or memory systems.",
-            "The Qwen and Llama confidence intervals are model-specific finite-sample intervals and are not pooled or interpreted as universal effect bounds.",
-            "Historical R4/R6 L1 experiments manipulate outcome-conditioned writer modes and therefore remain writer-bundle evidence rather than provenance-only identification.",
-            "The motivating financial audit still lacks the per-query artifacts and exact runtime bindings required for source-faithful L3 transport.",
-            "PSMG efficacy remains untested because the completed L2 experiments expose provenance to the executor rather than comparing a provenance-sensitive governor with a strongest same-information provenance-free controller."
+            "A may contain implicit source-outcome clues such as failure-reflection language; L2 identifies incremental structured-field revelation beyond that visible text.",
+            "Adding source_outcome_success changes prompt surface as well as information, so local action sensitivity is not uniquely attributable to semantic provenance reasoning.",
+            "Terminal discordance is sparse (1/32 Qwen; 4/32 Llama), making p=1.0 low-resolution and the preregistered empirical bootstrap unsuitable as an equivalence proof.",
+            "The conservative post-confirmatory intervals do not exclude a +15pp population effect; the preregistered 15pp threshold remains unchanged and is reported only as not reached by the observed point estimates.",
+            "Each arm starts from a fresh OSInteraction Docker container, but downstream observations may differ after actions diverge because they are treatment-induced mediators.",
+            "Llama reuses the Qwen/MemRL source bank, frozen retrieval, tasks, renderer, and evaluator; it is executor-only replication.",
+            "PSMG efficacy and source-faithful L3 transport remain untested."
           ],
           "reopen_conditions": [
-            "Reopen L3 transport claims only after a source-faithful financial ReasoningBank runtime and per-query artifacts are content-addressed and prospectively executed.",
-            "Reopen PSMG efficacy only after the provenance-sensitive governor, strongest same-information provenance-free comparator, calibration data, thresholds, and action mapping are frozen before target outcomes.",
-            "Reopen a broader cross-system generalization claim only with a separately preregistered independent memory substrate rather than additional outcome-driven reruns of the current surface."
+            "For a stronger semantic-provenance claim, prospectively freeze a format-matched UNKNOWN-or-masked versus truthful versus reversed-or-shuffled field experiment with the same structured field present in every arm.",
+            "Reopen PSMG efficacy only under a separate prospective governor-versus-strongest-same-information-provenance-free controller contract.",
+            "Reopen L3 only after the source-faithful financial ReasoningBank runtime and per-query artifacts are content-addressed.",
+            "Reopen broader system generalization only on an independent writer/retriever/memory substrate rather than further outcome-driven reruns of the current surface."
           ],
           "summary": {
-            "events": 118,
-            "allowed_transitions": 16,
+            "events": 136,
+            "allowed_transitions": 24,
             "blocked_transitions": 0,
-            "story_search_receipts": 2,
-            "mock_reviews": 8,
-            "claim_audit_receipts": 2,
-            "manuscript_ci_receipts": 10,
+            "story_search_receipts": 3,
+            "mock_reviews": 10,
+            "claim_audit_receipts": 3,
+            "manuscript_ci_receipts": 11,
             "post_draft_integrity_receipts": 0,
-            "prebuttal_receipts": 2,
-            "submission_readiness_receipts": 2,
+            "prebuttal_receipts": 3,
+            "submission_readiness_receipts": 3,
             "contract_revisions": 0,
-            "scientific_reopens": 1
+            "scientific_reopens": 2
           },
           "latest_story_search": {
             "pass": true,
-            "selected_story_id": "R62-S1",
-            "selected_story_title": "Provenance Shifts Agent Behavior but Adds Little Terminal Value Beyond Memory Content",
-            "story_search_sha256": "68f92f663b1837ed8b36286289617c2af226f08273b554d083db4a526c36b590",
-            "valid_candidates": 3,
-            "paper_design_memory_query_pack_sha256": "5a67ea32c8cff69b64b9b6f35abea6385d865aa9da72317337eecf4a9e7cf789",
-            "paper_design_memory_binding_sha256": "cd9cf58459647be90f0c72a22a94d7fc0a8f11ad26421ce9aa5fde8395252396",
-            "paper_design_memory_wiki_sha256": "43e2de9a6bf8972ac937459bc685174ac2ce6a36649074bbd31d0c836f325a02",
+            "selected_story_id": "R67-AUDIT-FIRST",
+            "selected_story_title": "From confounded provenance association to identifiable field exposure",
+            "story_search_sha256": "639936ea6485683db0efe36daf9cf006f3645dea5a312920aebd59f4b0b285f5",
+            "valid_candidates": 2,
+            "paper_design_memory_query_pack_sha256": "de1cc10e7135ec073ab93645cbab84040c33142374560be9c84da2e16f3f711f",
+            "paper_design_memory_binding_sha256": "25d67b402a57c6dc6308929fa830dc79b21235cc13dbd166b7118da8367c8961",
+            "paper_design_memory_wiki_sha256": "e3f5fc03bad2f8c7d9a9065328fd264987893d2da7f1e72ee40c4121ccb4109b",
             "paper_design_memory_selected": 3,
             "paper_design_review_lessons_selected": 1
           },
           "mock_pc_modes": {
-            "BLIND_MANUSCRIPT": "fd32f9f4b6ee3fe70751d0d95db8216f0c74d1af963927f3930ea3a7f4da5338",
-            "ARTIFACT_AWARE": "68dc9751a14810c032e423e668f81b19342a920261dda0913b4b803ac3a7fc6c"
+            "BLIND_MANUSCRIPT": "0c22bacda7b82d40e8a4b90cc85908fcd9876a1a32b64b170c548a0f011d0ac6",
+            "ARTIFACT_AWARE": "ec901a06b246b63f19b645d771d41f4673c678bcdb6ee46dcf0e8caabacb71dd"
           },
           "latest_mock_review": {
             "mode": "ARTIFACT_AWARE",
-            "review_sha256": "68dc9751a14810c032e423e668f81b19342a920261dda0913b4b803ac3a7fc6c",
+            "review_sha256": "ec901a06b246b63f19b645d771d41f4673c678bcdb6ee46dcf0e8caabacb71dd",
             "summary": {
-              "objections": 5,
-              "decision_critical": 4,
+              "objections": 3,
+              "decision_critical": 2,
               "targeted_experiment_proposals": 0,
               "claim_expansion_requests_preserved_as_limitations": 0
             }
           },
           "latest_claim_audit": {
             "pass": true,
-            "claim_audit_sha256": "7dda646f2e9d5e341a41bc4c314591c839c8bd0f3b7ce2c4e06e69a3d1c7a10f",
+            "claim_audit_sha256": "042b9d791848ed6ed46dce33bcb3d08a8e5d4ff895ad423a29a470659d520668",
             "blockers": []
           },
           "latest_manuscript_ci": {
@@ -65108,31 +65103,41 @@
           },
           "latest_prebuttal": {
             "pass": true,
-            "decision_critical": 8,
+            "decision_critical": 5,
             "blockers": []
           },
           "latest_paper_preparation": {
-            "pass": false,
-            "protocol_version": "",
-            "receipt_sha256": "",
-            "required_gates": 0,
-            "passed_gates": 0,
-            "gate_pass": {},
+            "pass": true,
+            "protocol_version": "1.0+r67-postoracle",
+            "receipt_sha256": "752e5999550ef5c6bb586fb4e27519b10a78cf28f5324b0f98146f40633b989a",
+            "required_gates": 8,
+            "passed_gates": 8,
+            "gate_pass": {
+              "causal-estimand": true,
+              "treatment-scope": true,
+              "sparse-discordance-statistics": true,
+              "arm-isolation": true,
+              "replication-scope": true,
+              "task252-boundary": true,
+              "pdf-qa": true,
+              "artifact-rebuild": true
+            },
             "blockers": []
           },
           "submission_readiness_context": {
-            "artifact_submission_ready": false,
-            "recommended_immediate_submission": "",
+            "artifact_submission_ready": true,
+            "recommended_immediate_submission": "READY_FOR_HUMAN_SUBMISSION",
             "scientific_status": "",
             "support_blocker": "",
-            "external_human_submission_authority_required_for_SUBMITTED": false,
+            "external_human_submission_authority_required_for_SUBMITTED": true,
             "c3_c4_evidence_state": "",
+            "exact_timesage_replication_debt": "",
             "post_repair_mock_pc_recommendations": [],
             "post_repair_mock_pc_scores": []
           },
           "latest_submission_readiness": {
             "submission_ready": true,
-            "receipt_sha256": "258a8d9afc508362aa37da4ebee77e8d78c7b9ca0710b9585f7c6b9d399c1ed1",
+            "receipt_sha256": "329d8663d53ab54c65eaec858a2089fd1575d3ec1595e4603dee7d0b84a285c9",
             "blockers": []
           },
           "latest_transition": {
