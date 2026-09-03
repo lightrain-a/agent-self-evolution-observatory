@@ -1,134 +1,137 @@
 {
-  "schema_version": "1.0",
-  "artifact_id": "AGENT-SAFETY-G1-MATCHED-CAPABILITY-TWIN-CANDIDATES-20260904",
-  "paper_id": "AGENT-SAFETY-R9",
-  "status": "ZERO_PROVIDER_CANDIDATE_MAPPING_NOT_EXECUTION_AUTHORITY",
-  "date": "2026-09-04",
-  "provider_calls": 0,
   "agent_model_calls": 0,
+  "artifact_id": "AGENT-SAFETY-G1-MATCHED-CAPABILITY-TWIN-CANDIDATES-20260904",
+  "authority": {
+    "harmful_model_calls": false,
+    "p0_execution": false,
+    "paper_claim_upgrade": false
+  },
+  "candidate_rule": {
+    "benign_goal_must_be_authorized": true,
+    "comparable_critical_interaction_skeleton_required": true,
+    "deterministic_benign_verifier_required_before_p0": true,
+    "deterministic_harmful_r1_r2_r3_contract_required_before_p0": true,
+    "harmful_goal_differs_in_safety_or_authorization_semantics": true,
+    "historical_r9_harmbench_deepseek_outcomes_not_used": true,
+    "outcome_blind_selection_required": true,
+    "same_environment_family_required": true,
+    "same_or_equivalent_final_action_class_required": true
+  },
+  "candidates": [
+    {
+      "benign_task_id": 0,
+      "critical_action_class": "send-email",
+      "environment_family": "email",
+      "harmful_behavior_id": 21,
+      "pair_id": "MCT-00",
+      "resolved_surface": "email",
+      "static_status": "CANDIDATE_PENDING_GRAPH_ADMISSION"
+    },
+    {
+      "benign_task_id": 1,
+      "critical_action_class": "publish-post",
+      "environment_family": "twitter",
+      "harmful_behavior_id": 8,
+      "pair_id": "MCT-01",
+      "resolved_surface": "twitter",
+      "static_status": "CANDIDATE_PENDING_GRAPH_ADMISSION"
+    },
+    {
+      "benign_task_id": 2,
+      "critical_action_class": "edit-and-commit-pr",
+      "environment_family": "github_pr",
+      "harmful_behavior_id": 62,
+      "pair_id": "MCT-02",
+      "resolved_surface": "github/pr.html",
+      "static_status": "CANDIDATE_PENDING_GRAPH_ADMISSION"
+    },
+    {
+      "benign_task_id": 3,
+      "critical_action_class": "search-and-list",
+      "environment_family": "google",
+      "harmful_behavior_id": 85,
+      "note": "Open-ended search pair; final-answer structural verifier must be frozen separately.",
+      "pair_id": "MCT-03",
+      "resolved_surface": "google-search",
+      "static_status": "CANDIDATE_PENDING_GRAPH_ADMISSION"
+    },
+    {
+      "benign_task_id": 4,
+      "critical_action_class": "search-and-instructions",
+      "environment_family": "google",
+      "harmful_behavior_id": 86,
+      "note": "Open-ended search pair; final-answer structural verifier must be frozen separately.",
+      "pair_id": "MCT-04",
+      "resolved_surface": "google-search",
+      "static_status": "CANDIDATE_PENDING_GRAPH_ADMISSION"
+    },
+    {
+      "benign_task_id": 5,
+      "critical_action_class": "send-message",
+      "environment_family": "messenger",
+      "harmful_behavior_id": 23,
+      "pair_id": "MCT-05",
+      "resolved_surface": "whatsapp",
+      "static_status": "CANDIDATE_PENDING_GRAPH_ADMISSION"
+    },
+    {
+      "benign_task_id": 6,
+      "critical_action_class": "submit-review",
+      "environment_family": "review",
+      "harmful_behavior_id": 36,
+      "pair_id": "MCT-06",
+      "resolved_surface": "review",
+      "static_status": "CANDIDATE_PENDING_GRAPH_ADMISSION"
+    },
+    {
+      "alias_audit": "BrowserART maps both benign local:linkedin_post and harmful local:blogpost/linkedin through BLOG_LINKED to the same /linkedin/ page.",
+      "benign_task_id": 7,
+      "critical_action_class": "publish-post",
+      "environment_family": "linkedin_post",
+      "harmful_behavior_id": 29,
+      "pair_id": "MCT-07",
+      "resolved_surface": "BLOG_LINKED:/linkedin/",
+      "static_status": "CANDIDATE_PENDING_GRAPH_ADMISSION"
+    },
+    {
+      "benign_task_id": 8,
+      "critical_action_class": "submit-post-form",
+      "environment_family": "school_post",
+      "harmful_behavior_id": 40,
+      "pair_id": "MCT-08",
+      "resolved_surface": "school_post",
+      "static_status": "CANDIDATE_PENDING_GRAPH_ADMISSION"
+    },
+    {
+      "benign_task_id": 9,
+      "critical_action_class": "submit-comment",
+      "environment_family": "instagram_comment",
+      "harmful_behavior_id": 28,
+      "pair_id": "MCT-09",
+      "resolved_surface": "instagram/view_post.html",
+      "static_status": "CANDIDATE_PENDING_GRAPH_ADMISSION"
+    }
+  ],
+  "date": "2026-09-04",
+  "paper_id": "AGENT-SAFETY-R9",
+  "provider_calls": 0,
   "safety_trajectories_generated": 0,
+  "schema_version": "1.0",
   "source_bindings": {
+    "benign_dataset": {
+      "path": "src/datasets/behaviors/hbb_benign.json",
+      "sha256": "8edea0d4d393cae54e0ee39361ca0f5643c02cf02e694dcf9a543cce8116e774"
+    },
     "browserart_commit": "0d72180042f2a076c68e1114e7494cb3fc7dd30b",
     "harmful_dataset": {
       "path": "src/datasets/behaviors/hbb.json",
       "sha256": "09580824580c76124900f27764e2000452a85b8c4fb9281d069db7a9a577205a"
-    },
-    "benign_dataset": {
-      "path": "src/datasets/behaviors/hbb_benign.json",
-      "sha256": "8edea0d4d393cae54e0ee39361ca0f5643c02cf02e694dcf9a543cce8116e774"
     }
   },
-  "candidate_rule": {
-    "same_environment_family_required": true,
-    "same_or_equivalent_final_action_class_required": true,
-    "comparable_critical_interaction_skeleton_required": true,
-    "benign_goal_must_be_authorized": true,
-    "harmful_goal_differs_in_safety_or_authorization_semantics": true,
-    "outcome_blind_selection_required": true,
-    "historical_r9_harmbench_deepseek_outcomes_not_used": true,
-    "deterministic_benign_verifier_required_before_p0": true,
-    "deterministic_harmful_r1_r2_r3_contract_required_before_p0": true
-  },
-  "candidates": [
-    {
-      "pair_id": "MCT-00",
-      "benign_task_id": 0,
-      "harmful_behavior_id": 21,
-      "environment_family": "email",
-      "resolved_surface": "email",
-      "critical_action_class": "send-email",
-      "static_status": "CANDIDATE_STRONG"
-    },
-    {
-      "pair_id": "MCT-01",
-      "benign_task_id": 1,
-      "harmful_behavior_id": 8,
-      "environment_family": "twitter",
-      "resolved_surface": "twitter",
-      "critical_action_class": "publish-post",
-      "static_status": "CANDIDATE_STRONG"
-    },
-    {
-      "pair_id": "MCT-02",
-      "benign_task_id": 2,
-      "harmful_behavior_id": 62,
-      "environment_family": "github_pr",
-      "resolved_surface": "github/pr.html",
-      "critical_action_class": "edit-and-commit-pr",
-      "static_status": "CANDIDATE_STRONG"
-    },
-    {
-      "pair_id": "MCT-03",
-      "benign_task_id": 3,
-      "harmful_behavior_id": 85,
-      "environment_family": "google",
-      "resolved_surface": "google-search",
-      "critical_action_class": "search-and-list",
-      "static_status": "CANDIDATE_STRONG",
-      "note": "Open-ended search pair; final-answer structural verifier must be frozen separately."
-    },
-    {
-      "pair_id": "MCT-04",
-      "benign_task_id": 4,
-      "harmful_behavior_id": 86,
-      "environment_family": "google",
-      "resolved_surface": "google-search",
-      "critical_action_class": "search-and-instructions",
-      "static_status": "CANDIDATE_STRONG",
-      "note": "Open-ended search pair; final-answer structural verifier must be frozen separately."
-    },
-    {
-      "pair_id": "MCT-05",
-      "benign_task_id": 5,
-      "harmful_behavior_id": 23,
-      "environment_family": "messenger",
-      "resolved_surface": "whatsapp",
-      "critical_action_class": "send-message",
-      "static_status": "CANDIDATE_STRONG"
-    },
-    {
-      "pair_id": "MCT-06",
-      "benign_task_id": 6,
-      "harmful_behavior_id": 36,
-      "environment_family": "review",
-      "resolved_surface": "review",
-      "critical_action_class": "submit-review",
-      "static_status": "CANDIDATE_STRONG"
-    },
-    {
-      "pair_id": "MCT-07",
-      "benign_task_id": 7,
-      "harmful_behavior_id": 29,
-      "environment_family": "linkedin_post",
-      "resolved_surface": "BLOG_LINKED:/linkedin/",
-      "critical_action_class": "publish-post",
-      "static_status": "CANDIDATE_STRONG",
-      "alias_audit": "BrowserART maps both benign local:linkedin_post and harmful local:blogpost/linkedin through BLOG_LINKED to the same /linkedin/ page."
-    },
-    {
-      "pair_id": "MCT-08",
-      "benign_task_id": 8,
-      "harmful_behavior_id": 40,
-      "environment_family": "school_post",
-      "resolved_surface": "school_post",
-      "critical_action_class": "submit-post-form",
-      "static_status": "CANDIDATE_STRONG"
-    },
-    {
-      "pair_id": "MCT-09",
-      "benign_task_id": 9,
-      "harmful_behavior_id": 28,
-      "environment_family": "instagram_comment",
-      "resolved_surface": "instagram/view_post.html",
-      "critical_action_class": "submit-comment",
-      "static_status": "CANDIDATE_STRONG"
-    }
-  ],
   "static_summary": {
-    "official_benign_tasks_considered": 10,
     "candidate_twins_found": 10,
-    "strong_candidates": 10,
     "model_outputs_used": 0,
+    "official_benign_tasks_considered": 10,
     "pairing_coverage": "10/10 official benign sanity tasks have at least one same-surface/action-family harmful candidate",
     "qualification_not_yet_complete": true,
     "remaining_before_freeze": [
@@ -137,11 +140,8 @@
       "freeze harmful R1/R2/R3 action-graph predicates per pair",
       "freeze evaluation order/state-isolation semantics",
       "machine-check positive/negative synthetic verifier tests"
-    ]
+    ],
+    "same_surface_action_family_candidates": 10
   },
-  "authority": {
-    "p0_execution": false,
-    "harmful_model_calls": false,
-    "paper_claim_upgrade": false
-  }
+  "status": "ZERO_PROVIDER_CANDIDATE_MAPPING_NOT_EXECUTION_AUTHORITY"
 }
