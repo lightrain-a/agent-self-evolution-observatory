@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-FRESH4-SOURCE-TRANSPORT-AMENDMENT-20260903",
+  "status": "FROZEN_PRE_SOURCE_OUTCOME",
+  "supersedes_only": "fresh4 source schedule action_kind=bash_action field",
+  "source_schedule_sha256": "43f0fcc39d773edee0ea1cfaeb25055374437839bc1037b28349849f39f87a9f",
+  "q03_controlled_output_closure_sha256": "af311a6a2785bff2d06cc12febf5288de5f4759a156d3ca4ac0407cd550837ea",
+  "reason": "The official MiniSWEAgent carrier stores complete assistant turns with THOUGHT plus one fenced bash command. Capturing only a bare bash action and reconstructing THOUGHT would introduce an artificial trajectory component visible to the ReasoningBank writer.",
+  "source_output_channel": {
+    "allowed_tool": "mcp__c1output__submit_output",
+    "kind": "text",
+    "content_semantics": "complete next MiniSWEAgent assistant turn obeying the conversation system prompt, including THOUGHT and exactly one fenced bash command",
+    "command_execution_by_bridge": false,
+    "command_execution_by_frozen_docker_loop": true,
+    "host_native_tools_allowed": false,
+    "model_rounds_per_logical_output": 1
+  },
+  "unchanged": {
+    "model": "qwen3.8-27b",
+    "profile": "AtomGit-qwen3.8-27b",
+    "source_max_tokens": 32768,
+    "first_decision_budget": 2048,
+    "timeout_seconds": 900,
+    "source_order": true,
+    "source_task_ids": true,
+    "all10_hard_gate": true,
+    "replacement": false,
+    "top_up": false
+  },
+  "prelaunch_requirement": "Before any real source task, a synthetic multi-step MiniSWEAgent smoke must use this exact source output channel and complete through Docker observation plus submission.",
+  "provider_calls": 0,
+  "scientific_source_calls": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0
+}
