@@ -6,6 +6,8 @@ from research_pipeline.e2_r17_state_compiler_bridge_v4_analysis import (
     diagnosis_control_classification,
     excess_state_realization_disagreement,
     first_realization_generator_contrast,
+    generator_factorial_main_effect,
+    generator_factorial_main_effect_sensitivity,
     generator_method_gate,
     realization_averaged_sensitivity,
     realization_localization_gate,
@@ -32,11 +34,45 @@ class StateCompilerBridgeV4AnalysisTest(unittest.TestCase):
         self.assertFalse(raw.passed)
         self.assertTrue(interpretation.trajectory_conditioned_diagnosis_supported)
 
-    def test_primary_validation_estimand_uses_first_free_realization_only(self) -> None:
+    def test_primary_factorial_generator_effect_uses_both_evidence_sources_and_free_a(self) -> None:
+        primary = generator_factorial_main_effect(
+            winner_compiled_utility=0.7,
+            winner_free_utility=0.5,
+            ff4_compiled_utility=0.8,
+            ff4_free_a_utility=0.5,
+        )
+        self.assertAlmostEqual(primary, 0.25)
         self.assertAlmostEqual(first_realization_generator_contrast(0.8, 0.5), 0.3)
+
+    def test_free_b_changes_sensitivity_without_changing_primary_factorial_estimand(self) -> None:
+        primary = generator_factorial_main_effect(
+            winner_compiled_utility=0.7,
+            winner_free_utility=0.5,
+            ff4_compiled_utility=0.8,
+            ff4_free_a_utility=0.5,
+        )
+        sensitivity = generator_factorial_main_effect_sensitivity(
+            winner_compiled_utility=0.7,
+            winner_free_utility=0.5,
+            ff4_compiled_utility=0.8,
+            ff4_free_a_utility=0.5,
+            ff4_free_b_utility=0.9,
+        )
+        self.assertAlmostEqual(primary, 0.25)
+        self.assertAlmostEqual(sensitivity, 0.15)
         self.assertAlmostEqual(realization_averaged_sensitivity(0.8, 0.5, 0.9), 0.1)
-        # The second draw can change sensitivity without changing the primary estimand.
-        self.assertAlmostEqual(first_realization_generator_contrast(0.8, 0.5), 0.3)
+
+    def test_primary_generator_main_effect_can_pass_without_ff4_specific_superiority(self) -> None:
+        # Winner-side generator benefit can establish a positive balanced factor
+        # effect even when FF4-specific generator contrast is slightly negative.
+        main = generator_factorial_main_effect(
+            winner_compiled_utility=0.9,
+            winner_free_utility=0.5,
+            ff4_compiled_utility=0.5,
+            ff4_free_a_utility=0.55,
+        )
+        self.assertGreater(main, 0.0)
+        self.assertLess(first_realization_generator_contrast(0.5, 0.55), 0.0)
 
     def test_cross_state_excess_detects_stable_state_level_difference(self) -> None:
         excess = excess_state_realization_disagreement(

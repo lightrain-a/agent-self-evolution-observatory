@@ -88,10 +88,36 @@ def diagnosis_control_classification(
     )
 
 
-def first_realization_generator_contrast(compiled_utility: float, free_a_utility: float) -> float:
-    """Primary deployed-realization estimand: deterministic compiler vs first FREE state."""
+def within_source_generator_contrast(compiled_utility: float, free_utility: float) -> float:
+    """Generator contrast within one frozen evidence source."""
 
-    return float(compiled_utility) - float(free_a_utility)
+    return float(compiled_utility) - float(free_utility)
+
+
+def generator_factorial_main_effect(
+    *,
+    winner_compiled_utility: float,
+    winner_free_utility: float,
+    ff4_compiled_utility: float,
+    ff4_free_a_utility: float,
+) -> float:
+    """Primary equal-weight generator main effect across Winner and FF4 evidence.
+
+    This is the natural generator-factor estimand of the balanced 2x2 design and
+    prevents the state-generation headline from depending on rejected-evidence
+    superiority. FF4-specific benefit remains a within-source contrast and the
+    evidence-by-generator interaction remains a separate moderator question.
+    """
+
+    winner = within_source_generator_contrast(winner_compiled_utility, winner_free_utility)
+    ff4 = within_source_generator_contrast(ff4_compiled_utility, ff4_free_a_utility)
+    return 0.5 * (winner + ff4)
+
+
+def first_realization_generator_contrast(compiled_utility: float, free_a_utility: float) -> float:
+    """FF4-specific first-realization contrast; secondary under factorial V4-R1."""
+
+    return within_source_generator_contrast(compiled_utility, free_a_utility)
 
 
 def realization_averaged_sensitivity(
@@ -99,9 +125,24 @@ def realization_averaged_sensitivity(
     free_a_utility: float,
     free_b_utility: float,
 ) -> float:
-    """Prespecified two-realization sensitivity; never a primary validation gate."""
+    """FF4-specific two-realization sensitivity; never a primary validation gate."""
 
     return float(compiled_utility) - 0.5 * (float(free_a_utility) + float(free_b_utility))
+
+
+def generator_factorial_main_effect_sensitivity(
+    *,
+    winner_compiled_utility: float,
+    winner_free_utility: float,
+    ff4_compiled_utility: float,
+    ff4_free_a_utility: float,
+    ff4_free_b_utility: float,
+) -> float:
+    """Two-FREE-realization sensitivity for the primary factorial main effect."""
+
+    winner = within_source_generator_contrast(winner_compiled_utility, winner_free_utility)
+    ff4_ab = realization_averaged_sensitivity(ff4_compiled_utility, ff4_free_a_utility, ff4_free_b_utility)
+    return 0.5 * (winner + ff4_ab)
 
 
 def _binary_vector(values: Sequence[float], *, name: str) -> tuple[float, ...]:
@@ -197,8 +238,11 @@ __all__ = [
     "directional_gate",
     "generator_method_gate",
     "diagnosis_control_classification",
+    "within_source_generator_contrast",
+    "generator_factorial_main_effect",
     "first_realization_generator_contrast",
     "realization_averaged_sensitivity",
+    "generator_factorial_main_effect_sensitivity",
     "cross_state_disagreement",
     "within_state_actor_disagreement",
     "excess_state_realization_disagreement",
