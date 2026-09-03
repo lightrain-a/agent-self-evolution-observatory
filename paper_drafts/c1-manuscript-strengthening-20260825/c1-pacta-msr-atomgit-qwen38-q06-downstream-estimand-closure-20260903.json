@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "experiment_id": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q06-DOWNSTREAM-ESTIMAND-20260903",
+  "status": "ATOMGIT_QWEN38_Q06_DOWNSTREAM_ESTIMAND_PASS",
+  "execution_git_sha": "1e9ebe24c8d54297486d903d5204320561f5fa74",
+  "prepare_sha256": "2b232945993e84ee9dc05d145f575e2c1977e546c86e5e52b43fe2d47bdabc7f",
+  "result_sha256": "bdac2e4534dabd1642746ec8cb963969820bbffa02fc94fd37dffcf547b6227a",
+  "selected_action_max_tokens": 4096,
+  "action_qualification": "2048 stopped on q03-first-06 output truncation after 5 PASS; 4096 passed all 12 exact Q0.3 bridge fixtures; larger candidates not executed",
+  "writer_max_tokens": 4096,
+  "binder_max_tokens": 2048,
+  "provider_sampling_control": "PROVIDER_MANAGED_NOT_EXPOSED_BY_ATOMCODE_5_0_9",
+  "sampling_diagnostic": {
+    "transport_valid": "12/12",
+    "native_tool_runtime_events": 0,
+    "q03-first-01_unique_actions": 4,
+    "q03-first-02_unique_actions": 5
+  },
+  "estimand": "Empirical provider-managed first-action distributions conditional on exactly one content-addressed realized writer draw per branch and exactly one content-addressed realized binder draw per branch/context. Writer/binder stochasticity is part of the realized state. No temperature-equivalence claim with Qwen397 is made.",
+  "mechanism_gate": "unchanged PACTA-MSR gate: G=min(B1,B2)>max(WS,WF), Gplus open 2..6/8, mean margin improvement >=0.05, positive improvement count >=5/8",
+  "fresh3_source_terminal_outcomes_used_to_choose_parameters": false,
+  "fresh3_source_artifacts_used_as_q06_fixtures": false,
+  "scientific_writer_calls": 0,
+  "scientific_binder_calls": 0,
+  "scientific_shadow_calls": 0,
+  "scientific_final_calls": 0,
+  "claim_authority": "NO_MSR_METHOD_EFFECT_EVIDENCE",
+  "next": "If and only if fresh3 source support is 10/10 provenance-valid, freeze the AtomGit-specific downstream execution object with Q0.5/Q0.6 ceilings and the conditional realized-state estimand before scientific writer/binder/shadow calls."
+}
