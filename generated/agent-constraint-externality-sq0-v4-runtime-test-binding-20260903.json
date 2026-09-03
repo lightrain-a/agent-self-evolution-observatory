@@ -1,0 +1,28 @@
+{
+  "appworld_import_path": "/data/wyt/agent-self-evolution-observatory/worktrees/agent-constraint-externality-20260831/cache/substrates/appworld-official-20260831/src/appworld/__init__.py",
+  "authority": {
+    "f0": false,
+    "p1": false,
+    "paper_claim": false,
+    "sq0_v4_execution": false
+  },
+  "f0_preflight_test": {
+    "path": "research_pipeline/test_agent_constraint_externality_f0_preflight.py",
+    "result": "8/8 PASS",
+    "sha256": "9f4db3e9a22e30f99a1e6988ad45189e942d35e387c43aa0baebbc588a99326c"
+  },
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-SQ0-V4-RUNTIME-TEST-BINDING-20260903",
+  "ordinary_shell_failure_classification": "ENVIRONMENT_BINDING_ONLY: /usr/bin/python3 lacks appworld; frozen AppWorld runtime imports it successfully.",
+  "recorded_at": "2026-09-03T22:47:40.508311+08:00",
+  "runtime_python_launcher": "runtimes/appworld-constraint-externality-py312/bin/python",
+  "runtime_python_resolved": "/usr/bin/python3.12",
+  "schema_version": 1,
+  "scientific_effects_observed": 0,
+  "scientific_outcomes_observed": 0,
+  "sq0_v4_test": {
+    "path": "research_pipeline/test_agent_constraint_externality_sq0_v4.py",
+    "result": "4/4 PASS",
+    "sha256": "5b81671eb94133f9545cdcc9fddb092b41ce6a042d0698d8cb4fec9cbfc17149"
+  },
+  "status": "SQ0_V4_RUNTIME_TEST_BINDING_PASS_ZERO_SCIENTIFIC_OUTCOME"
+}
