@@ -1,0 +1,115 @@
+{
+  "artifact_type": "e2-r17-state-compiler-bridge-suite-qualification",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PASS_ZERO_PROVIDER_FRESH_BRIDGE_SUITE_QUALIFICATION",
+  "scientific_object": "E2-R17-STATE-COMPILER-BRIDGE-SUITE-V1-20260903",
+  "authority": {
+    "suite_generation": true,
+    "zero_provider_static_audit": true,
+    "provider_io": false,
+    "search_pool_acquisition": false,
+    "updater_execution": false,
+    "bridge_actor_evaluation": false,
+    "screen_opening": false,
+    "validation_opening": false,
+    "e3_confirmation": false,
+    "paper_promotion": false
+  },
+  "suite": {
+    "root": "/data/wyt/e2-r17-search-projection/state-compiler-bridge-suite-v1-20260903",
+    "candidate_tasks": 162,
+    "formal_tasks": 120,
+    "update_tasks": 96,
+    "screen_heldout_tasks": 12,
+    "validation_heldout_tasks": 12,
+    "update_streams": 12,
+    "screen_streams": 6,
+    "validation_streams": 6,
+    "update_reserve_integrity_only": 12,
+    "heldout_reserve_integrity_only": 30,
+    "blocks": [7, 8, 9],
+    "uses_e3_blocks_5_6": false,
+    "screen_validation_heldout_disjoint": true,
+    "screen_validation_family_balanced": true,
+    "update_streams_family_homogeneous": true
+  },
+  "content_addressing": {
+    "logical_dataset_sha256": "25785a89d25424d7e8ed2d75d802f7e968a785d318b521272c38929b36342f05",
+    "suite_manifest_sha256": "ec26f9a899786d2c188f0324961b9a9b6eef28c39240fd5987b0145fb68bc9ba",
+    "split_manifest_sha256": "d1606c6a5caeaabd35361fc573b8bf015f20e7c9d8a5e3adc0a85b032a5b041b",
+    "metadata_sha256": "c4a966e03cf9c0c0d1ff20d23e8be6f2cbdfbca6225182ca705a84e27d306992",
+    "dataset_json_sha256": "1f1fae2efbf7d97d0ea6999779875e8bb37ca173f71aa5b05e690ad75b6cd26d"
+  },
+  "generator": {
+    "path": "research_pipeline/e2_r17_state_compiler_bridge_suite.py",
+    "sha256": "6b5368ce4d80decbe8cfefaea0e2b0c95fa16bff47b2e27067fae0d72d856afe",
+    "test_path": "research_pipeline/test_e2_r17_state_compiler_bridge_suite.py",
+    "test_sha256": "8cfb1d35c80dbe3809d23a6ea33ece17c8ae36424a75c07204ebbac0baa435cd",
+    "tests": "7/7 PASS",
+    "deterministic_rebuild_match": true
+  },
+  "runtime_fingerprint": {
+    "python_implementation": "CPython",
+    "python_version": "3.12.3",
+    "openpyxl_version": "3.1.5",
+    "zlib_compile_version": "1.3",
+    "zlib_runtime_version": "1.3"
+  },
+  "collision_audit": {
+    "prior_controlled_suite_task_ids": 378,
+    "new_candidate_task_ids": 162,
+    "task_id_overlap": 0,
+    "prior_xlsx_files": 756,
+    "new_xlsx_files": 324,
+    "xlsx_sha256_overlap": 0,
+    "old_e3_task_namespace_touched": false
+  },
+  "screen_stream_ids": [
+    "bridge-agj-01",
+    "bridge-fmv-00",
+    "bridge-ioc-01",
+    "bridge-msp-00",
+    "bridge-ska-00",
+    "bridge-tsr-01"
+  ],
+  "validation_stream_ids": [
+    "bridge-agj-00",
+    "bridge-fmv-01",
+    "bridge-ioc-00",
+    "bridge-msp-01",
+    "bridge-ska-01",
+    "bridge-tsr-00"
+  ],
+  "screen_heldout": [
+    "r17-b9-agj-p0",
+    "r17-b9-agj-p8",
+    "r17-b9-fmv-p5",
+    "r17-b9-fmv-p6",
+    "r17-b9-ioc-p5",
+    "r17-b9-ioc-p7",
+    "r17-b9-msp-p0",
+    "r17-b9-msp-p8",
+    "r17-b9-ska-p3",
+    "r17-b9-ska-p6",
+    "r17-b9-tsr-p1",
+    "r17-b9-tsr-p5"
+  ],
+  "validation_heldout": [
+    "r17-b9-agj-p1",
+    "r17-b9-agj-p3",
+    "r17-b9-fmv-p3",
+    "r17-b9-fmv-p8",
+    "r17-b9-ioc-p0",
+    "r17-b9-ioc-p8",
+    "r17-b9-msp-p2",
+    "r17-b9-msp-p3",
+    "r17-b9-ska-p2",
+    "r17-b9-ska-p7",
+    "r17-b9-tsr-p6",
+    "r17-b9-tsr-p7"
+  ],
+  "scientific_outcomes_accessed": false,
+  "provider_calls": 0,
+  "interpretation_boundary": "This qualifies only the fresh deterministic bridge task substrate. It grants no Stage-A or scientific provider authority and does not alter Recovery V3 or untouched E3."
+}

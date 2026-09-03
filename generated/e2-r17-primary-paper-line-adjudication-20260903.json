@@ -1,0 +1,61 @@
+{
+  "artifact_type": "e2-r17-primary-paper-line-adjudication",
+  "schema_version": "1.0",
+  "created_date": "2026-09-03",
+  "status": "PRIMARY_STATE_GENERATION_BOTTLENECK_PARK_SEMANTIC_TRANSFER",
+  "primary_line": {
+    "question": "Does free-form persistent-state synthesis create a reproducibility and utility bottleneck under matched trajectory evidence?",
+    "mechanism_chain": [
+      "selected trajectory+score evidence package",
+      "state-generation method",
+      "persistent state semantics",
+      "downstream behavior"
+    ],
+    "working_title": "Same Evidence, Different Skill: Diagnosing State-Generation Variance in Self-Evolving Agents",
+    "current_bridge_branch": "research/e2-r17-state-compiler-bridge-proposal-20260903",
+    "current_bridge_commit_before_this_adjudication": "369a3dd1e06b247dd953abda8ef4692fd0dab0b7"
+  },
+  "evidence": {
+    "closed_repair2": "HOLD_MRW_UNDERPOWERED_OR_HETEROGENEOUS",
+    "single_case_witness_selector": "S1_SIGNAL_FAIL_STOP_NO_S2",
+    "frozen_strong_state": "FIRST_FAIL_FROZEN_STATE_STABILITY_PASS",
+    "exact_evidence_replay": "FIRST_FAIL_EXACT_EVIDENCE_UPDATER_REPLICATION_FAIL_STATE_GENERATION_VARIANCE",
+    "current_deterministic_micro": "RECOVERY_V3_PENDING_45_OF_72_VALID_COMPLETE"
+  },
+  "semantic_transfer_v3": {
+    "branch": "research/e2-r17-semantic-transfer-v3-review-repair-20260903",
+    "commit": "c098761838df566d661c196089e689b0b666aa30",
+    "status_observed": "PRE_F0_V3_ZERO_PROVIDER_REVIEW_REPAIR_PASS",
+    "stage_a_provider_execution_authority": false,
+    "scientific_execution": false,
+    "scientific_outcomes_accessed": false,
+    "disposition": "PARK_SECONDARY_HYPOTHESIS_NO_STAGE_A_AUTHORITY_WHILE_STATE_GENERATOR_BRIDGE_UNRESOLVED",
+    "scientifically_invalidated": false
+  },
+  "novelty_boundaries": {
+    "skillrevise_arxiv": "2606.01139",
+    "skillrevise_collision": "trace-conditioned structured diagnosis, repair-principle retrieval, and execution-anchored skill revision are prior work and are not claimed as E2-R17 novelty",
+    "wikiskill_arxiv": "2608.27454",
+    "wikiskill_collision": "separating raw traces, persistent knowledge, and skills / compiling experience into persistent knowledge is prior work and is not claimed as E2-R17 novelty",
+    "rethinking_skills_arxiv": "2608.02636",
+    "rethinking_collision": "feedback-dependent skill evolution and usefulness of failed trajectories are prior observations and are not claimed as E2-R17 novelty",
+    "residual_novelty_target": "independently identifying state-generation realization variance under matched evidence and prospectively factorizing evidence source x complete state-generation method"
+  },
+  "experiment_ladder": [
+    "M0 closed evidence-source study",
+    "M1 single-case mechanism localization",
+    "M2 deterministic state-semantic micro",
+    "M3 exactly two frozen-state stability remeasurements if M2 passes",
+    "M4 prospective Winner vs First-Fail-4 x Free-form vs Constrained-Compiler bridge",
+    "M5 separate untouched E3 confirmation only after M4 passes"
+  ],
+  "authority": {
+    "provider_io": false,
+    "semantic_transfer_stage_a": false,
+    "state_compiler_stage_a": false,
+    "e3": false,
+    "second_backbone": false,
+    "public_benchmark": false,
+    "paper_result_promotion": false
+  }
+}
