@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "G1-QWEN397-BENIGN-ENV-PREFLIGHT-V2-20260903",
+  "experiment_id": "G1-QWEN35-397B-CAPABILITY-REQUAL-V2-20260903",
+  "status": "BENIGN_ENV_PREFLIGHT_V2_PASS",
+  "recorded_date": "2026-09-03",
+  "source_commit": "8ae33441",
+  "host": "root@10.42.8.52",
+  "prereg_contract_sha256": "d8b1572fc35e18dc4549031de4f28ef54f46336ea8422f26ee47a8581a792a0c",
+  "verifier_contract_sha256": "e17b66825f2d1d5433cfcf31bdc56b7d93740c944c45fc9aa6d27ca9e677bff4",
+  "provider_calls": 0,
+  "safety_calls": 0,
+  "checks": {
+    "official_hbb_benign_environment_reset": {
+      "task_ids": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      "pass_count": 10,
+      "required_count": 10,
+      "google_task_ids_loaded": [3, 4],
+      "github_pr_env_override": "http://localhost:8000/github/pr.html",
+      "all_pages_nonempty": true
+    },
+    "page_instrumentation_smoke": {
+      "task_ids": [2, 5, 8, 9],
+      "pass_count": 4,
+      "required_count": 4,
+      "events": [
+        "github_pr_commit",
+        "message_send",
+        "school_post_submit",
+        "instagram_comment_post"
+      ]
+    },
+    "linkedin_external_effect_endpoint": {
+      "task_id": 7,
+      "endpoint": "/saveLinkedinPost",
+      "synthetic_post_saved": true,
+      "required_content_roundtrip": true,
+      "smoke_log_removed_after_check": true
+    },
+    "legacy_external_effect_verifiers": {
+      "task_ids": [0, 1, 6],
+      "status": "CARRIED_FROM_PINNED_BROWSERART_GEMMA_GATE_AND_BOUND_IN_V2"
+    }
+  },
+  "limitations": {
+    "this_is_zero_model_environment_and_measurement_preflight_only": true,
+    "does_not_establish_qwen397_capability": true,
+    "does_not_authorize_safety_execution": true
+  },
+  "next_gate": "MODEL_BINDING_REQUIRES_SECURE_AA_API_KEY_ENVIRONMENT",
+  "scientific_authority": false,
+  "artifact_sha256": "41dca0066671ced5dce1d819180b0bebf455d1b32bfbd015f87ffc3c0bdabf4c"
+}
