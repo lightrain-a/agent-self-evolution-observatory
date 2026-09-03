@@ -1,0 +1,108 @@
+{
+  "authority": {
+    "appworld_ul": false,
+    "current_f0": false,
+    "design_only": true,
+    "f0_r1_execution": false,
+    "p1": false,
+    "paper_claim": false,
+    "probe": false,
+    "sq0_execution": false,
+    "toolsandbox": false
+  },
+  "content_sha256": "4198119e7cb143d73f31b3075bb7fb1acb0fbc0c30e197deeb3928e2471ef610",
+  "design_guardrails": {
+    "current_f0_remains_immutable": true,
+    "do_not_generate_repair_without_observed_target_failure": true,
+    "do_not_lower_six_repair_threshold_using_current_outcome": true,
+    "do_not_modify_and_replay_current_f0_source_instances": true,
+    "do_not_read_or_optimize_on_decisive_probe_outcomes_during_source_qualification": true,
+    "do_not_treat_current_f0_update_uptake_fail_as_mechanism_not_supported": true
+  },
+  "estimand_boundary": {
+    "conditional_population": "TARGET_FAILURES_THAT_YIELD_FROZEN_TARGET_LOCAL_REPAIRS",
+    "current_f0_contributes_mechanism_effect_samples": 0,
+    "mechanism_question_unchanged": true,
+    "primary_contrast": "UE_HIGH_MINUS_UE_INDEPENDENT_WITHIN_REPAIR_FAMILY"
+  },
+  "f0_r1_confirmatory_design": {
+    "minimum_usable_repair_families": 6,
+    "new_unobserved_confirmatory_families_required": true,
+    "partial_probe_effects_readable_during_execution": false,
+    "primary_metric_and_adjudication_should_remain_unchanged_unless_a_new_contract_explicitly_justifies_a_change": true,
+    "probe_arms": [
+      "INDEPENDENT",
+      "LOW",
+      "HIGH"
+    ],
+    "probe_branches": [
+      "NO_UPDATE",
+      "UPDATE"
+    ],
+    "probe_execution_only_after_all_source_results_and_repair_bytes_are_frozen_and_content_addressed": true,
+    "probe_seeds": [
+      1201,
+      1202,
+      1203
+    ],
+    "reuse_current_ACE_FG_01_to_04_or_ACE_TNF_01_to_04_as_confirmatory_families": false,
+    "same_target_local_challenge_across_source_and_all_probe_arms": true,
+    "same_update_bytes_across_all_update_replays": true,
+    "source_is_target_only": true,
+    "source_per_family": 1,
+    "suggested_family_count": 8
+  },
+  "lineage": {
+    "current_f0_source_closeout_artifact": "generated/agent-constraint-externality-f0-source-closeout-mimo25pro-20260903.json",
+    "current_f0_source_closeout_content_sha256": "6f2a1937136e291c5c6a440d281b0295d24c8113227fc005382f5f009c9bd7ab",
+    "root_cause_artifact": "generated/agent-constraint-externality-f0-uptake-root-cause-20260903.json",
+    "root_cause_content_sha256": "e56644d68807164f0fde829089e86a14d990f2d68e5ced243de67f218dbd07a1",
+    "selected_backbone_artifact": "generated/agent-constraint-externality-capability-backbone-selection-final-20260903.json",
+    "selected_backbone_content_sha256": "9f4a649f436552a550fe3e9d54664d6b5eb879cf68dae36b23a91859edf1f18e"
+  },
+  "motivation": "Separate general tool capability from the distinct prerequisite that a target-local source episode must actually yield enough usable target failures for automatic repair generation.",
+  "next_high_information_step": "Build only the new SQ0 target-challenge qualification set and statically audit source/probe target-local equivalence before requesting any new model execution authority.",
+  "object_id": "AGENT-CONSTRAINT-EXTERNALITY-20260831",
+  "provider_requests": 0,
+  "schema_version": "ace-f0-r1-source-failure-qualification-proposal-v1",
+  "scientific_outcomes_observed": 0,
+  "selected_backbone_policy": {
+    "no_post_f0_backbone_switch": true,
+    "reason": "MiMo 2.5 Pro passed the frozen general capability gate. The current F0 stop was caused by source-failure opportunity, not backbone capability or coupling-mechanism evidence.",
+    "retain_selected_backbone": true,
+    "selected_backbone": {
+      "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
+      "model_id": "mimo-v2.5-pro",
+      "model_profile": "AtomGit-mimo-v2.5-pro",
+      "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
+    }
+  },
+  "sq0_source_failure_qualification": {
+    "challenge_recipe_requirement": "The target-local challenge transformation must be defined outcome-blind and must not alter non-target topology. The same frozen target-local challenge recipe must later be present in every source/probe member of a confirmatory family.",
+    "coupling_label_visible": false,
+    "family_balance": {
+      "FG_like": 6,
+      "TNF_like": 6
+    },
+    "new_unobserved_instances_required": true,
+    "non_target_constraints_visible": false,
+    "probe_outcomes_visible": false,
+    "purpose": "Calibrate target-local challenge difficulty before any new decisive F0-R1 probe execution.",
+    "reuse_current_f0_source_instances": false,
+    "scientific_claim_authority": false,
+    "suggested_admission_window": {
+      "rationale": "Below 0.75 repeats the repair-opportunity shortage; a near-1.0 failure rate risks a challenge beyond the selected backbone's practically repairable regime.",
+      "usable_target_failure_rate_max": 0.9,
+      "usable_target_failure_rate_min": 0.75
+    },
+    "suggested_qualification_instance_count": 12,
+    "target_only": true,
+    "usable_target_failure_definition": [
+      "terminal scientific episode",
+      "no provider/interface/harness/malformed-tool failure",
+      "target evaluator false",
+      "durable target-relevant tool trajectory available for updater input"
+    ]
+  },
+  "status": "PROSPECTIVE_F0_R1_SOURCE_FAILURE_QUALIFICATION_PROPOSAL_ONLY"
+}

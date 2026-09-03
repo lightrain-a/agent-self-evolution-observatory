@@ -2,7 +2,7 @@
   "authority": {
     "appworld_ul": false,
     "capability_calibration": false,
-    "f0": true,
+    "f0": false,
     "m1_mock_qualification": false,
     "method": false,
     "p1": false,
@@ -158,6 +158,10 @@
       "bytes": 1862,
       "sha256": "014c8c99eec62417706144e9a9983e3650c87e9e531892d19651d4347b814a04"
     },
+    "generated/agent-constraint-externality-f0-adjudication-mimo25pro-20260903.json": {
+      "bytes": 574,
+      "sha256": "4c7da776cc6cf85ce79a0f43d71652a53adcce3d310a47a9fe079e901be8335e"
+    },
     "generated/agent-constraint-externality-f0-frozen-protocol-20260831.json": {
       "bytes": 4894,
       "sha256": "9dad5979de744bd4b1fb36dce27d8cb22b5f07754094d8b304c39ea4e9532810"
@@ -178,9 +182,25 @@
       "bytes": 1409,
       "sha256": "60ce4125f3a91daadfae366ee5a7c05385ae8e97317f44b6d75dfdae460dd6dd"
     },
+    "generated/agent-constraint-externality-f0-r1-source-failure-qualification-proposal-20260903.json": {
+      "bytes": 5321,
+      "sha256": "b4e44193048e77145606260237fd288e98b4c3c33f7acfcb20f6ab7dbfb0302d"
+    },
     "generated/agent-constraint-externality-f0-readiness-20260831.json": {
-      "bytes": 9289,
-      "sha256": "cea4d46ed3a0a09c70eb52170d2bbd40cc4eae79ec28f423a4c43904de5082f2"
+      "bytes": 10524,
+      "sha256": "0072606441c41b8026af175558cfd6adee10721d2d4f75bf2f82731bfa55fdb5"
+    },
+    "generated/agent-constraint-externality-f0-repairs-manifest-mimo25pro-20260903.json": {
+      "bytes": 1098,
+      "sha256": "96fe3468bbc893690ea18137c97c76e92ec032e3056d89e6e2be2a81c7fb724a"
+    },
+    "generated/agent-constraint-externality-f0-source-closeout-mimo25pro-20260903.json": {
+      "bytes": 2650,
+      "sha256": "c5e09f8a3e795d7cd08713de2d53658b800dd42f9f5ac05e8945770e2a1f0dfa"
+    },
+    "generated/agent-constraint-externality-f0-uptake-root-cause-20260903.json": {
+      "bytes": 8340,
+      "sha256": "b8a8cfe2ce4ee5084b1d14759d2974c3195147c2b4117b89f494f8056963b34d"
     },
     "generated/agent-constraint-externality-m1-runner-qualification-v1-20260901.json": {
       "bytes": 3202,
@@ -275,12 +295,12 @@
   "provider_calls": 296,
   "provider_calls_accounting_domain": "DIRECT_API_ONLY",
   "schema_version": "agent-constraint-externality-f0-preflight-manifest-v1",
-  "scientific_outcomes_observed": 0,
+  "scientific_outcomes_observed": 8,
   "selected_backbone": {
     "harness": "ATOMCODE_CODINGPLAN_MCP_V1",
     "model_id": "mimo-v2.5-pro",
     "model_profile": "AtomGit-mimo-v2.5-pro",
     "provider": "ATOMGIT_CODINGPLAN_SIGNED_GATEWAY"
   },
-  "status": "F0_SOURCE_AUTHORIZED_READY"
+  "status": "F0_UPDATE_UPTAKE_FAIL"
 }
