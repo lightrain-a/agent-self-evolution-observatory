@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "experiment": "C1-PACTA-MSR-ATOMGIT-QWEN38-Q03-CONTROLLED-OUTPUT-MCP-20260903",
+  "status": "FROZEN_PRE_PROVIDER_OUTCOME",
+  "model_condition": "AtomGit CodingPlan / AtomCode-mediated Qwen3.8-27B",
+  "motivation": "Fresh2 source step 1 was consumed-invalid because AtomCode/Qwen3.8 emitted a native list_directory tool intent despite --no-tools. Q0.3 tests a controlled output-only MCP transport before any fresh3 scientific task exists.",
+  "transport_change_only": true,
+  "allowed_tool": "mcp__c1output__submit_output",
+  "tool_semantics": {
+    "executes_environment_action": false,
+    "captures_output_only": true,
+    "kinds": ["bash_action", "text"],
+    "call_cap": 1
+  },
+  "host_tool_policy": "deny_and_stop_any_tool_other_than_exact_allowed_mcp_tool",
+  "model_round_requirement_per_fixture": 1,
+  "fixtures": {
+    "total": 12,
+    "action_exact": 4,
+    "action_realistic_synthetic": 4,
+    "text_exact": 4,
+    "real_scientific_tasks": 0
+  },
+  "pass_rule": "12/12 fixtures pass; exactly one allowed MCP output call; zero prohibited/native tools; exactly one model round; exact fixtures byte-exact; realistic bash output nonempty and free of markdown/THOUGHT wrappers",
+  "failure_action": "STOP interface qualification; do not create or execute fresh3",
+  "fresh2_reuse": false,
+  "source_max_tokens_if_later_authorized": 32768,
+  "first_decision_budget_if_later_authorized": 2048,
+  "atomcode_timeout_if_later_authorized_seconds": 900,
+  "provider_retries": 0,
+  "scientific_source_tasks_used": 0,
+  "future_task_executions": 0,
+  "writer_calls": 0,
+  "binder_calls": 0,
+  "shadow_calls": 0,
+  "final_calls": 0,
+  "forbidden": [
+    "reuse any fresh2 source/future task",
+    "execute host shell/filesystem/list_directory/web/coding tool inside AtomCode",
+    "allow a second output tool call",
+    "run a real SWE-bench task before Q0.3 PASS",
+    "switch model after observing Q0.3 output"
+  ]
+}
